@@ -41,7 +41,7 @@
 
 --     return output
 -- end
-local Enable_Module = true
+local Enable_Module = false
 if Enable_Module == true then
 
 	local isElfUI = IsAddOnLoaded("ElvUI")
