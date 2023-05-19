@@ -1,0 +1,22 @@
+## Interface: 100100
+## Author: Octo
+## Title: !!|cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r
+## Version: 2
+## IconTexture: 3586268
+## SavedVariables: Octo_ToDo_DragonflyLevels Octo_ToDo_DragonflyVars
+
+embeds.xml
+
+Localization.lua
+Octo_AUTO_ACCEPT_QUEST.lua
+Octo_AUTO_GOSSIP.lua
+Octo_AUTO_INPUT_DELETE.lua
+Octo_AUTO_OPEN.lua
+Octo_OPEN.lua
+Octo_CVar.lua
+Octo_ElvUI_DEV.lua
+Octo_ElvUI_GlobalFadePersist.lua
+Octo_Mail_Frame.lua
+Octo_SharedMedia.lua
+Octo_ToDo_Dragonfly.lua
+Octo_ZoneAbilityBinding.lua

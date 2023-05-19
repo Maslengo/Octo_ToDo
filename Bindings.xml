@@ -1,0 +1,12 @@
+<Bindings>
+	<Binding name="Octo TDD Open (не работает)" category="!|T3586268:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r">
+		ReloadUI()
+	</Binding>
+	<Binding name="ReloadUI" category="!|T3586268:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r">
+		ReloadUI()
+	</Binding>
+	 
+	<Binding name="CLICK myZA:LeftButton" category="!|T3586268:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r" />
+	<Binding name="CLICK myZA2:LeftButton" category="!|T3586268:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r" />
+	<Binding name="CLICK myZA3:LeftButton" category="!|T3586268:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r" />
+</Bindings>
