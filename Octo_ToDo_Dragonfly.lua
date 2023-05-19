@@ -1411,6 +1411,85 @@ function UPGRADERANKS_Frame()
 	UPGRADERANKS_Frame:SetPoint("CENTER", 0, 0)
 	UPGRADERANKS_Frame:Hide()
 end
+
+
+
+
+local function CreateFrameUsableItems_OnEnter(self)
+	self.icon:SetVertexColor(1, 1, 1, 1)
+end
+local function CreateFrameUsableItems_OnLeave(self)
+	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+	self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
+	GameTooltip:ClearLines()
+	GameTooltip:Hide()
+end
+local function CreateFrameUsableItems_OnEvent(self,event)
+	if event == "BAG_UPDATE" then
+		local sufficiently = GetItemCount(itemID, true, true, true) < self.count
+		self.icon:SetDesaturated(sufficiently)
+		self.icon:SetAlpha(sufficiently and .1 or 1)
+	elseif event == "PLAYER_REGEN_DISABLED" then
+		self:SetParent(UIParent)
+		self:ClearAllPoints()
+		self:Hide()
+	else
+		self:SetParent(Main_Frame)
+		self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, self.Ypos)
+		self:Show()
+	end
+end
+local function CreateFrameUsableItems_OnMouseDown(self)
+	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+	self.icon:SetVertexColor(1, 0, 0, sufficiently and .1 or 1)
+end
+local function CreateFrameUsableItems_OnMouseUp(self)
+	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+	self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
+end
+local function CreateFrameUsableItems(itemID, count, Ypos, r, g, b)
+	local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
+	Button.itemID = itemID
+	Button.Ypos = Ypos
+	Button.count = count
+	-- Button.r = r
+	-- Button.g = g
+	-- Button.b = b
+	Button:SetSize(curHeight, curHeight)
+	Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, Ypos)
+	Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Button:SetBackdropBorderColor(r, g, b, 0.2)
+	Button:RegisterEvent("PLAYER_REGEN_DISABLED")
+	Button:RegisterEvent("PLAYER_REGEN_ENABLED")
+	Button:RegisterEvent("BAG_UPDATE")
+	Button:HookScript("OnEvent", CreateFrameUsableItems_OnEvent)
+	Button:HookScript("OnEnter", CreateFrameUsableItems_OnEnter)
+	Button:HookScript("OnLeave", CreateFrameUsableItems_OnLeave)
+	Button:HookScript("OnMouseDown", CreateFrameUsableItems_OnMouseDown)
+	Button:HookScript("OnMouseUp", CreateFrameUsableItems_OnMouseUp)
+	Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+	Button:SetAttribute("type", "macro")
+	Button:SetAttribute("macrotext", "/use item:"..itemID)
+	local t = Button:CreateTexture(nil, "BACKGROUND")
+	Button.icon = t
+	--t:SetTexture("Interface\\ICONS\\INV_10_GearUpgrade_WhelplingsShadowflameFragment.blp")
+	t:SetTexture(select(10, GetItemInfo(itemID)))
+	t:SetVertexColor(1, 1, 1, 1)
+	t:SetAllPoints(Button)
+	Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
+	return Button
+end
+
+
+
+
+
+
+
+
+
+
+
 function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 	Main_Frame:SetClampedToScreen(false)
@@ -1574,6 +1653,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame.MarkOfHonor_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 	Main_Frame.MarkOfHonor_Button:SetBackdropBorderColor(0, 0.44, 0.98, 1)
 	Main_Frame.MarkOfHonor_Button:SetScript("OnEnter", function(self)
+			local i = 0
 			self:SetBackdropBorderColor(1, 0, 0, 1)
 			self.icon:SetVertexColor(1, 0, 0, 1)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
@@ -1581,6 +1661,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			GameTooltip:AddDoubleLine(" "," ")
 			for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
 				if CharInfo.ItemsInBag[137642] and CharInfo.ItemsInBag[137642] ~= 0 then
+					i = i + 1
 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 					local curServerShort = CharInfo.curServer
 					local text = (curServerShort):gsub("-", " "):gsub("'", " ")
@@ -1589,7 +1670,12 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 						curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
 					end
 					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[137642])
+				-- else
+				-- 	Main_Frame.MarkOfHonor_Button:Hide()
 				end
+			end
+			if i == 0 then
+				GameTooltip:AddLine("No Data")
 			end
 			GameTooltip:AddDoubleLine(" "," ")
 			GameTooltip:Show()
@@ -1609,7 +1695,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	end)
 	local t = Main_Frame.MarkOfHonor_Button:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.MarkOfHonor_Button.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\Ability_PVP_GladiatorMedallion.tga")
+	t:SetTexture("Interface\\ICONS\\Ability_PVP_GladiatorMedallion.blp")
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.MarkOfHonor_Button)
 	-----------------------------------------------------
@@ -1620,6 +1706,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame.MedalofHonor_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 	Main_Frame.MedalofHonor_Button:SetBackdropBorderColor(0, 0.8, 1, 1)
 	Main_Frame.MedalofHonor_Button:SetScript("OnEnter", function(self)
+			local i = 0
 			self:SetBackdropBorderColor(1, 0, 0, 1)
 			self.icon:SetVertexColor(1, 0, 0, 1)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
@@ -1627,6 +1714,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			GameTooltip:AddDoubleLine(" "," ")
 			for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
 				if CharInfo.ItemsInBag[204180] and CharInfo.ItemsInBag[204180] ~= 0 then
+					i = i + 1
 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 					local curServerShort = CharInfo.curServer
 					local text = (curServerShort):gsub("-", " "):gsub("'", " ")
@@ -1636,6 +1724,9 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 					end
 					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[204180])
 				end
+			end
+			if i == 0 then
+				GameTooltip:AddLine("No Data")
 			end
 			GameTooltip:AddDoubleLine(" "," ")
 			GameTooltip:Show()
@@ -1655,300 +1746,17 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	end)
 	local t = Main_Frame.MedalofHonor_Button:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.MedalofHonor_Button.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\PVPCurrency-Conquest-Horde.tga")
+	t:SetTexture("Interface\\ICONS\\PVPCurrency-Conquest-Horde.blp")
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.MedalofHonor_Button)
 	-----------------------------------------------------
+	-- ITEMID, count, Ypox, r, g, b
+	CreateFrameUsableItems(204075, 15, 0, .12, 1, 0)
+	CreateFrameUsableItems(204076, 15, -24, 0, .44, .98)
+	CreateFrameUsableItems(204077, 15, -48, .64, .21, .93)
+	CreateFrameUsableItems(204078, 15, -72, 1, .5, 0)
+	CreateFrameUsableItems(204717, 2, -96, .85, .8, .5)
 	-----------------------------------------------------
-	Main_Frame.WhelplingSCF_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
-	Main_Frame.WhelplingSCF_Button:SetSize(curHeight, curHeight)
-	Main_Frame.WhelplingSCF_Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, 0)
-	Main_Frame.WhelplingSCF_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	Main_Frame.WhelplingSCF_Button:SetBackdropBorderColor(1, 0, 0, 0)
-	Main_Frame.WhelplingSCF_Button:RegisterEvent("PLAYER_REGEN_DISABLED")
-	Main_Frame.WhelplingSCF_Button:RegisterEvent("PLAYER_REGEN_ENABLED")
-	Main_Frame.WhelplingSCF_Button:RegisterEvent("BAG_UPDATE")
-	Main_Frame.WhelplingSCF_Button:HookScript("OnEvent", function(self,event)
-			if event == "BAG_UPDATE" then
-				local sufficiently204075 = GetItemCount(204075, true, true, true) < 15
-				self.icon:SetDesaturated(sufficiently204075)
-				self.icon:SetAlpha(sufficiently204075 and .1 or 1)
-			elseif event == "PLAYER_REGEN_DISABLED" then
-				self:SetParent(UIParent)
-				self:ClearAllPoints()
-				self:Hide()
-			else
-				self:SetParent(Main_Frame)
-				self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, 0)
-				self:Show()
-			end
-	end)
-	Main_Frame.WhelplingSCF_Button:HookScript("OnEnter", function(self)
-			self:SetBackdropBorderColor(1, 0, 0, 1)
-			self.icon:SetVertexColor(1, 0, 0, 1)
-			-- GameTooltip:SetOwner(self, "ANCHOR_LEFT", -20, -30)
-			-- GameTooltip:ClearLines()
-			-- GameTooltip:AddDoubleLine(" "," ")
-			-- for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
-			--     if CharInfo.ItemsInBag[204075] and CharInfo.ItemsInBag[204075] >= 15 then
-			--         local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-			--         local curServerShort = CharInfo.curServer
-			--         local text = (curServerShort):gsub("-", " "):gsub("'", " ")
-			--         local a, b = strsplit(" ", text)
-			--         if b then
-			--             curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
-			--         end
-			--         GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[204075])
-			--     end
-			-- end
-			-- GameTooltip:AddDoubleLine(" "," ")
-			-- GameTooltip:Show()
-	end)
-	Main_Frame.WhelplingSCF_Button:HookScript("OnLeave", function(self)
-			local sufficiently204075 = GetItemCount(204075, true, true, true) < 15
-			self:SetBackdropBorderColor(1, 0, 0, sufficiently204075 and .1 or 1)
-			self.icon:SetVertexColor(1, 1, 1, sufficiently204075 and .1 or 1)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	Main_Frame.WhelplingSCF_Button:HookScript("OnMouseDown", function(self)
-			self:SetBackdropBorderColor(1, 0, 0)
-			self.icon:SetVertexColor(1, 0, 0)
-	end)
-	Main_Frame.WhelplingSCF_Button:HookScript("OnMouseUp", function(self)
-			self:SetBackdropBorderColor(1, 1, 1)
-			self.icon:SetVertexColor(1, 1, 1)
-	end)
-	Main_Frame.WhelplingSCF_Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-	Main_Frame.WhelplingSCF_Button:SetAttribute("type", "macro")
-	Main_Frame.WhelplingSCF_Button:SetAttribute("macrotext", "/use item:204075")
-	local t = Main_Frame.WhelplingSCF_Button:CreateTexture(nil, "BACKGROUND")
-	Main_Frame.WhelplingSCF_Button.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\INV_10_GearUpgrade_WhelplingsShadowflameFragment.tga")
-	t:SetVertexColor(1, 1, 1, 1)
-	t:SetAllPoints(Main_Frame.WhelplingSCF_Button)
-	Main_Frame.WhelplingSCF_Button:GetScript("OnEvent")(Main_Frame.WhelplingSCF_Button, "BAG_UPDATE")
-	-----------------------------------------------------
-	-----------------------------------------------------
-	Main_Frame.DrakeSCF_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
-	Main_Frame.DrakeSCF_Button:SetSize(curHeight, curHeight)
-	Main_Frame.DrakeSCF_Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, -30)
-	Main_Frame.DrakeSCF_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	Main_Frame.DrakeSCF_Button:SetBackdropBorderColor(1, 0, 0, 0)
-	Main_Frame.DrakeSCF_Button:RegisterEvent("PLAYER_REGEN_DISABLED")
-	Main_Frame.DrakeSCF_Button:RegisterEvent("PLAYER_REGEN_ENABLED")
-	Main_Frame.DrakeSCF_Button:RegisterEvent("BAG_UPDATE")
-	Main_Frame.DrakeSCF_Button:HookScript("OnEvent", function(self,event)
-			if event == "BAG_UPDATE" then
-				local sufficiently204076 = GetItemCount(204076, true, true, true) < 15
-				self.icon:SetDesaturated(sufficiently204076)
-				self.icon:SetAlpha(sufficiently204076 and .1 or 1)
-			elseif event == "PLAYER_REGEN_DISABLED" then
-				self:SetParent(UIParent)
-				self:ClearAllPoints()
-				self:Hide()
-			else
-				self:SetParent(Main_Frame)
-				self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, 0)
-				self:Show()
-			end
-	end)
-	Main_Frame.DrakeSCF_Button:HookScript("OnEnter", function(self)
-			self:SetBackdropBorderColor(1, 0, 0, 1)
-			self.icon:SetVertexColor(1, 0, 0, 1)
-			-- GameTooltip:SetOwner(self, "ANCHOR_LEFT", -20, -30)
-			-- GameTooltip:ClearLines()
-			-- GameTooltip:AddDoubleLine(" "," ")
-			-- for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
-			--     if CharInfo.ItemsInBag[204076] and CharInfo.ItemsInBag[204076] >= 15 then
-			--         local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-			--         local curServerShort = CharInfo.curServer
-			--         local text = (curServerShort):gsub("-", " "):gsub("'", " ")
-			--         local a, b = strsplit(" ", text)
-			--         if b then
-			--             curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
-			--         end
-			--         GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[204076])
-			--     end
-			-- end
-			-- GameTooltip:AddDoubleLine(" "," ")
-			-- GameTooltip:Show()
-	end)
-	Main_Frame.DrakeSCF_Button:HookScript("OnLeave", function(self)
-			local sufficiently204076 = GetItemCount(204076, true, true, true) < 15
-			self:SetBackdropBorderColor(1, 0, 0, sufficiently204076 and .1 or 1)
-			self.icon:SetVertexColor(1, 1, 1, sufficiently204076 and .1 or 1)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	Main_Frame.DrakeSCF_Button:HookScript("OnMouseDown", function(self)
-			self:SetBackdropBorderColor(1, 0, 0)
-			self.icon:SetVertexColor(1, 0, 0)
-	end)
-	Main_Frame.DrakeSCF_Button:HookScript("OnMouseUp", function(self)
-			self:SetBackdropBorderColor(1, 1, 1)
-			self.icon:SetVertexColor(1, 1, 1)
-	end)
-	Main_Frame.DrakeSCF_Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-	Main_Frame.DrakeSCF_Button:SetAttribute("type", "macro")
-	Main_Frame.DrakeSCF_Button:SetAttribute("macrotext", "/use item:204076")
-	local t = Main_Frame.DrakeSCF_Button:CreateTexture(nil, "BACKGROUND")
-	Main_Frame.DrakeSCF_Button.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\INV_10_GearUpgrade_WhelplingsShadowflameFragment.tga")
-	t:SetVertexColor(1, 1, 1, 1)
-	t:SetAllPoints(Main_Frame.DrakeSCF_Button)
-	Main_Frame.DrakeSCF_Button:GetScript("OnEvent")(Main_Frame.DrakeSCF_Button, "BAG_UPDATE")
-	-----------------------------------------------------
-	-----------------------------------------------------
-	Main_Frame.WyrmSCF_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
-	Main_Frame.WyrmSCF_Button:SetSize(curHeight, curHeight)
-	Main_Frame.WyrmSCF_Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, -60)
-	Main_Frame.WyrmSCF_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	Main_Frame.WyrmSCF_Button:SetBackdropBorderColor(1, 0, 0, 0)
-	Main_Frame.WyrmSCF_Button:RegisterEvent("PLAYER_REGEN_DISABLED")
-	Main_Frame.WyrmSCF_Button:RegisterEvent("PLAYER_REGEN_ENABLED")
-	Main_Frame.WyrmSCF_Button:RegisterEvent("BAG_UPDATE")
-	Main_Frame.WyrmSCF_Button:HookScript("OnEvent", function(self,event)
-			if event == "BAG_UPDATE" then
-				local sufficiently204077 = GetItemCount(204077, true, true, true) < 15
-				self.icon:SetDesaturated(sufficiently204077)
-				self.icon:SetAlpha(sufficiently204077 and .1 or 1)
-			elseif event == "PLAYER_REGEN_DISABLED" then
-				self:SetParent(UIParent)
-				self:ClearAllPoints()
-				self:Hide()
-			else
-				self:SetParent(Main_Frame)
-				self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, 0)
-				self:Show()
-			end
-	end)
-	Main_Frame.WyrmSCF_Button:HookScript("OnEnter", function(self)
-			self:SetBackdropBorderColor(1, 0, 0, 1)
-			self.icon:SetVertexColor(1, 0, 0, 1)
-			-- GameTooltip:SetOwner(self, "ANCHOR_LEFT", -20, -30)
-			-- GameTooltip:ClearLines()
-			-- GameTooltip:AddDoubleLine(" "," ")
-			-- for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
-			--     if CharInfo.ItemsInBag[204077] and CharInfo.ItemsInBag[204077] >= 15 then
-			--         local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-			--         local curServerShort = CharInfo.curServer
-			--         local text = (curServerShort):gsub("-", " "):gsub("'", " ")
-			--         local a, b = strsplit(" ", text)
-			--         if b then
-			--             curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
-			--         end
-			--         GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[204077])
-			--     end
-			-- end
-			-- GameTooltip:AddDoubleLine(" "," ")
-			-- GameTooltip:Show()
-	end)
-	Main_Frame.WyrmSCF_Button:HookScript("OnLeave", function(self)
-			local sufficiently204077 = GetItemCount(204077, true, true, true) < 15
-			self:SetBackdropBorderColor(1, 0, 0, sufficiently204077 and .1 or 1)
-			self.icon:SetVertexColor(1, 1, 1, sufficiently204077 and .1 or 1)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	Main_Frame.WyrmSCF_Button:HookScript("OnMouseDown", function(self)
-			self:SetBackdropBorderColor(1, 0, 0)
-			self.icon:SetVertexColor(1, 0, 0)
-	end)
-	Main_Frame.WyrmSCF_Button:HookScript("OnMouseUp", function(self)
-			self:SetBackdropBorderColor(1, 1, 1)
-			self.icon:SetVertexColor(1, 1, 1)
-	end)
-	Main_Frame.WyrmSCF_Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-	Main_Frame.WyrmSCF_Button:SetAttribute("type", "macro")
-	Main_Frame.WyrmSCF_Button:SetAttribute("macrotext", "/use item:204077")
-	local t = Main_Frame.WyrmSCF_Button:CreateTexture(nil, "BACKGROUND")
-	Main_Frame.WyrmSCF_Button.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\INV_10_GearUpgrade_WhelplingsShadowflameFragment.tga")
-	t:SetVertexColor(1, 1, 1, 1)
-	t:SetAllPoints(Main_Frame.WyrmSCF_Button)
-	Main_Frame.WyrmSCF_Button:GetScript("OnEvent")(Main_Frame.WyrmSCF_Button, "BAG_UPDATE")
-	-----------------------------------------------------
-	-----------------------------------------------------
-	Main_Frame.AspectSCF_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
-	Main_Frame.AspectSCF_Button:SetSize(curHeight, curHeight)
-	Main_Frame.AspectSCF_Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, -90)
-	Main_Frame.AspectSCF_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	Main_Frame.AspectSCF_Button:SetBackdropBorderColor(1, 0, 0, 0)
-	Main_Frame.AspectSCF_Button:RegisterEvent("PLAYER_REGEN_DISABLED")
-	Main_Frame.AspectSCF_Button:RegisterEvent("PLAYER_REGEN_ENABLED")
-	Main_Frame.AspectSCF_Button:RegisterEvent("BAG_UPDATE")
-	Main_Frame.AspectSCF_Button:HookScript("OnEvent", function(self,event)
-			if event == "BAG_UPDATE" then
-				local sufficiently204078 = GetItemCount(204078, true, true, true) < 15
-				self.icon:SetDesaturated(sufficiently204078)
-				self.icon:SetAlpha(sufficiently204078 and .1 or 1)
-			elseif event == "PLAYER_REGEN_DISABLED" then
-				self:SetParent(UIParent)
-				self:ClearAllPoints()
-				self:Hide()
-			else
-				self:SetParent(Main_Frame)
-				self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, 0)
-				self:Show()
-			end
-	end)
-	Main_Frame.AspectSCF_Button:HookScript("OnEnter", function(self)
-			self:SetBackdropBorderColor(1, 0, 0, 1)
-			self.icon:SetVertexColor(1, 0, 0, 1)
-			-- GameTooltip:SetOwner(self, "ANCHOR_LEFT", -20, -30)
-			-- GameTooltip:ClearLines()
-			-- GameTooltip:AddDoubleLine(" "," ")
-			-- for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
-			--     if CharInfo.ItemsInBag[204078] and CharInfo.ItemsInBag[204078] >= 15 then
-			--         local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-			--         local curServerShort = CharInfo.curServer
-			--         local text = (curServerShort):gsub("-", " "):gsub("'", " ")
-			--         local a, b = strsplit(" ", text)
-			--         if b then
-			--             curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
-			--         end
-			--         GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[204078])
-			--     end
-			-- end
-			-- GameTooltip:AddDoubleLine(" "," ")
-			-- GameTooltip:Show()
-	end)
-	Main_Frame.AspectSCF_Button:HookScript("OnLeave", function(self)
-			local sufficiently204078 = GetItemCount(204078, true, true, true) < 15
-			self:SetBackdropBorderColor(1, 0, 0, sufficiently204078 and .1 or 1)
-			self.icon:SetVertexColor(1, 1, 1, sufficiently204078 and .1 or 1)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	Main_Frame.AspectSCF_Button:HookScript("OnMouseDown", function(self)
-			self:SetBackdropBorderColor(1, 0, 0)
-			self.icon:SetVertexColor(1, 0, 0)
-	end)
-	Main_Frame.AspectSCF_Button:HookScript("OnMouseUp", function(self)
-			self:SetBackdropBorderColor(1, 1, 1)
-			self.icon:SetVertexColor(1, 1, 1)
-	end)
-	Main_Frame.AspectSCF_Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-	Main_Frame.AspectSCF_Button:SetAttribute("type", "macro")
-	Main_Frame.AspectSCF_Button:SetAttribute("macrotext", "/use item:204078")
-	local t = Main_Frame.AspectSCF_Button:CreateTexture(nil, "BACKGROUND")
-	Main_Frame.AspectSCF_Button.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\INV_10_GearUpgrade_WhelplingsShadowflameFragment.tga")
-	t:SetVertexColor(1, 1, 1, 1)
-	t:SetAllPoints(Main_Frame.AspectSCF_Button)
-	Main_Frame.AspectSCF_Button:GetScript("OnEvent")(Main_Frame.AspectSCF_Button, "BAG_UPDATE")
-	-----------------------------------------------------
-
-
-
-
-
-
-
-
-
-
 
 
 
