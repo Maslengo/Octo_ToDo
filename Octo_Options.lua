@@ -2,8 +2,6 @@ local AddonName, E = ...
 local config = CreateFrame("FRAME", AddonName.."config")
 -- config:RegisterEvent("VARIABLES_LOADED")
 config:Hide()
-
-
 	StaticPopupDialogs[AddonName.."GET_RELOAD"] = {
 	text = "|cffFF0000!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
 	button1 = YES,
@@ -12,35 +10,21 @@ config:Hide()
 	whileDead = 1,
 	OnAccept = function() ReloadUI() end,
 }
-
-
-
-
-
-
-
 config:SetScript("OnShow", function(self)
 	self:SetScript("OnShow", function(self)
 		self:SetPoint("TOPLEFT", -12, 8)
 	end)
 	self:SetPoint("TOPLEFT", -12, 8)
-
-
-
-
-
 	-- VERSION
 	local ver = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 	ver:SetPoint("TOPLEFT", 40, 20)
 	ver:SetTextColor(.5, .5, .5, 1)
 	ver:SetJustifyH("RIGHT")
 	ver:SetText(GetAddOnMetadata(AddonName, "Version"))
-
 	-- TITLE
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 	title:SetPoint("TOPLEFT", 16, -16)
 	title:SetText(AddonName)
-
 	-- BUTTON 1 CVar
 	-----------------------------------------------
 	self.btn_left1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -188,27 +172,6 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast = btn_left:GetChecked()
 	end)
 	self.btn_left14.text:SetText("MajorFactionsRenownToast")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	-----------------------------------------------
 	-----------------------------------------------
 	-- BUTTON 15 BugSack
@@ -233,16 +196,7 @@ config:SetScript("OnShow", function(self)
 	end)
 	self.btn_right16.text:SetText("|cffFF0000MountsJournal|r")
 	-----------------------------------------------
-
-
-
-
-
-
-
-
 end)
-
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config, AddonName)
 category.ID = AddonName

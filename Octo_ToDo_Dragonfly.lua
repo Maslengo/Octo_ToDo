@@ -49,8 +49,6 @@ function GenerateUniqueID()
 	end
 	return table.concat(s)
 end
-
-
 local function func_questName(questID)
 	local title = C_QuestLog.GetTitleForQuestID(questID) or ""
 	return title
@@ -256,7 +254,6 @@ function Collect_PVP_Raitings()
 	Octo_ToDo_DragonflyLevels[curGUID].PVP.ratingRBG = ratingRBG
 	Octo_ToDo_DragonflyLevels[curGUID].PVP.seasonBestRBG = seasonBestRBG
 	Octo_ToDo_DragonflyLevels[curGUID].PVP.winrateRBG = winrateRBG
-
 end
 function CollectAllProfessions()
 	local UnitLevel = UnitLevel("PLAYER")
@@ -578,7 +575,6 @@ function CollectRioRaiting()
 	if pRank[1] == nil then pRank[1] = NONE end
 	if RrLvl[1] == nil then RrLvl[1] = NONE end
 	if MrLvl[1] == nil then MrLvl[1] = NONE end
-
 -- 0	None
 -- 1	MythicPlus
 -- 2	RankedPvP
@@ -1401,10 +1397,6 @@ function UPGRADERANKS_Frame()
 	UPGRADERANKS_Frame:SetPoint("CENTER", 0, 0)
 	UPGRADERANKS_Frame:Hide()
 end
-
-
-
-
 local function CreateFrameUsableItems_OnEnter(self)
 	self.icon:SetVertexColor(1, 1, 1, 1)
 end
@@ -1462,24 +1454,12 @@ local function CreateFrameUsableItems(itemID, count, Ypos, r, g, b)
 	Button:SetAttribute("macrotext", "/use item:"..itemID)
 	local t = Button:CreateTexture(nil, "BACKGROUND")
 	Button.icon = t
-	--t:SetTexture("Interface\\ICONS\\INV_10_GearUpgrade_WhelplingsShadowflameFragment.blp")
 	t:SetTexture(select(10, GetItemInfo(itemID)))
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Button)
 	Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
 	return Button
 end
-
-
-
-
-
-
-
-
-
-
-
 function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 	Main_Frame:SetClampedToScreen(false)
@@ -1748,11 +1728,6 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	CreateFrameUsableItems(204078, 15, -72, 1, .5, 0)
 	CreateFrameUsableItems(204717, 2, -96, .85, .8, .5)
 	-----------------------------------------------------
-
-
-
-
-
 	-----------------------------------------------------
 	StaticPopupDialogs[AddonName.."DELETE_ADDONDATA_RELOAD"] = {
 		text = "|cffFF0000!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
@@ -2837,89 +2812,58 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Octo_ToDo_DragonflyVars.omb = Octo_ToDo_DragonflyVars.omb or {}
 		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.omb)
 		ldbi:Show(MinimapName)
-
-
-
-
-
-
 		Octo_ToDo_DragonflyVars.config = Octo_ToDo_DragonflyVars.config or {}
-
-
 		if Octo_ToDo_DragonflyVars.config.CVar == nil then  --RELOAD
 			Octo_ToDo_DragonflyVars.config.CVar = false
 		end
-
 		if Octo_ToDo_DragonflyVars.config.InputDelete == nil then --RELOAD
 			Octo_ToDo_DragonflyVars.config.InputDelete = false
 		end
-
 		if Octo_ToDo_DragonflyVars.config.UsableItems == nil then
 			Octo_ToDo_DragonflyVars.config.UsableItems = false
 		end
-
 		if Octo_ToDo_DragonflyVars.config.AutoOpen == nil then
 			Octo_ToDo_DragonflyVars.config.AutoOpen = true
 		end
-
 		if Octo_ToDo_DragonflyVars.config.AutoGossip == nil then
 			Octo_ToDo_DragonflyVars.config.AutoGossip = true
 		end
-
 		if Octo_ToDo_DragonflyVars.config.TalkingHeadFrame == nil then
 			Octo_ToDo_DragonflyVars.config.TalkingHeadFrame = true
 		end
-
 		if Octo_ToDo_DragonflyVars.config.HideObjectiveTracker == nil then
-			Octo_ToDo_DragonflyVars.config.HideObjectiveTracker = true
+			Octo_ToDo_DragonflyVars.config.HideObjectiveTracker = false
 		end
-
 		if Octo_ToDo_DragonflyVars.config.HideZoneText == nil then
 			Octo_ToDo_DragonflyVars.config.HideZoneText = true
 		end
-
 		if Octo_ToDo_DragonflyVars.config.Covenant == nil then
 			Octo_ToDo_DragonflyVars.config.Covenant = true
 		end
-
 		if Octo_ToDo_DragonflyVars.config.UIErrorsFrame == nil then
 			Octo_ToDo_DragonflyVars.config.UIErrorsFrame = false
 		end
-
 		if Octo_ToDo_DragonflyVars.config.RaidBossEmoteFrame == nil then
 			Octo_ToDo_DragonflyVars.config.RaidBossEmoteFrame = true
 		end
-
 		if Octo_ToDo_DragonflyVars.config.CinematicCanceler == nil then
 			Octo_ToDo_DragonflyVars.config.CinematicCanceler = true
 		end
-
 		if Octo_ToDo_DragonflyVars.config.BossBanner == nil then
 			Octo_ToDo_DragonflyVars.config.BossBanner = true
 		end
-
 		if Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast == nil then
 			Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast = true
 		end
-
-		if Octo_ToDo_DragonflyVars.config.BugSack == nil then
+		if Octo_ToDo_DragonflyVars.config.BugSack == nil then   --RELOAD
 			Octo_ToDo_DragonflyVars.config.BugSack = true
 		end
-
-		if Octo_ToDo_DragonflyVars.config.MountsJournal == nil then
+		if Octo_ToDo_DragonflyVars.config.MountsJournal == nil then   --RELOAD
 			Octo_ToDo_DragonflyVars.config.MountsJournal = true
 		end
-
-
-
 		for i, func in ipairs(E.modules) do
 			func()
 		end
-
-
-
-
-
 	elseif event == "UNIT_INVENTORY_CHANGED" and not InCombatLockdown() then
 		OctoilvlStr()
 		Octo_ToDo_DragonflyFrameUpdateValues()

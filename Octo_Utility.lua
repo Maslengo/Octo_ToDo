@@ -1,9 +1,5 @@
 local AddonName, E = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-
-
-
-
 -- TalkingHeadFrame
 tinsert(E.modules, function()
 	if Octo_ToDo_DragonflyVars.config.TalkingHeadFrame then
@@ -13,9 +9,6 @@ tinsert(E.modules, function()
 		end)
 	end
 end)
-
-
-
 --HideObjectiveTracker
 tinsert(E.modules, function()
 	if Octo_ToDo_DragonflyVars.config.HideObjectiveTracker then
@@ -31,7 +24,6 @@ tinsert(E.modules, function()
 		EventToastManagerFrame:UnregisterAllEvents()
 	end
 end)
-
 	----------------------------------------------------------------------------------------------------------------------------------
 	----------------------------------------------------------------------------------------------------------------------------------
 --Covenant
@@ -57,7 +49,6 @@ tinsert(E.modules, function()
 		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_EMOTE")
 		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_WHISPER")
 		RaidBossEmoteFrame:UnregisterEvent("CLEAR_BOSS_EMOTES")
-
 		RaidBossEmoteFrame:UnregisterAllEvents()
 		RaidBossEmoteFrame:Hide()
 		-- RaidBossEmoteFrameSlot1:Hide()
@@ -110,15 +101,12 @@ tinsert(E.modules, function()
 end)
 	----------------------------------------------------------------------------------------------------------------------------------
 	----------------------------------------------------------------------------------------------------------------------------------
-
-
 local function func_Octo_LoadAddOn(AddonName)
 	if select(5, GetAddOnInfo(AddonName)) == "DISABLED" then
 		EnableAddOn(AddonName)
 		LoadAddOn(AddonName)
 	end
 end
-
 --BugSack
 tinsert(E.modules, function()
 	if Octo_ToDo_DragonflyVars.config.BugSack then
@@ -132,11 +120,3 @@ tinsert(E.modules, function()
 		func_Octo_LoadAddOn("MountsJournal")
 	end
 end)
-
-
-
-
-
-
-
-

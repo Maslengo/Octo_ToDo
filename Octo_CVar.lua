@@ -1,5 +1,4 @@
 local AddonName, E = ...
-
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.CVar then
 			local isElfUI = IsAddOnLoaded("ElvUI")
@@ -103,7 +102,6 @@ tinsert(E.modules, function()
 						SetCVar("NamePlateMaximumClassificationScale", 1)
 						SetCVar("nameplateMaxScale", 1)
 						SetCVar("nameplateMaxScaleDistance", 10)
-
 						SetCVar("nameplateMinAlphaDistance", 10)
 						SetCVar("nameplateMinScale", 1)
 						SetCVar("nameplateMotion", 1) --(0 Наложение) (1 Друг над другом)
