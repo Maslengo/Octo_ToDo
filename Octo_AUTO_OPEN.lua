@@ -1,6 +1,5 @@
 local AddonName, engine = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
 
 local Octo_AUTO_OPEN = CreateFrame("Frame", AddonTitle)
 --local Enable_Module = true

@@ -49,18 +49,8 @@ function GenerateUniqueID()
 	end
 	return table.concat(s)
 end
-local function func_Octo_LoadAddOn(AddonName)
-	if select(5, GetAddOnInfo(AddonName)) == "DISABLED" then
-		EnableAddOn(AddonName)
-		LoadAddOn(AddonName)
-	end
-end
-func_Octo_LoadAddOn("!BugGrabber")
-func_Octo_LoadAddOn("BugSack")
-func_Octo_LoadAddOn("MountsJournal")
--- if not IsAddOnLoaded("MountsJournal") then
---     EnableAddOn("MountsJournal")
--- end
+
+
 local function func_questName(questID)
 	local title = C_QuestLog.GetTitleForQuestID(questID) or ""
 	return title
@@ -1584,6 +1574,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	end)
 	Main_Frame.OptionsButton:SetScript("OnClick", function()
 			Main_Frame:Hide()
+			Settings.OpenToCategory(AddonName, true)
 	end)
 	local t = Main_Frame.OptionsButton:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.OptionsButton.icon = t
@@ -1763,7 +1754,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 
 
 	-----------------------------------------------------
-	StaticPopupDialogs[AddonName.."GET_RELOAD"] = {
+	StaticPopupDialogs[AddonName.."DELETE_ADDONDATA_RELOAD"] = {
 		text = "|cffFF0000!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
 		button1 = YES,
 		button2 = NO,
@@ -1797,7 +1788,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			self.icon:SetVertexColor(1, 0, 0, 0.5)
 	end)
 	Main_Frame.RESETVARIABLES:SetScript("OnClick", function()
-			StaticPopup_Show(AddonName.."GET_RELOAD")
+			StaticPopup_Show(AddonName.."DELETE_ADDONDATA_RELOAD")
 	end)
 	local t = Main_Frame.RESETVARIABLES:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.RESETVARIABLES.icon = t
@@ -2875,6 +2866,52 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			Octo_ToDo_DragonflyVars.config.AutoGossip = true
 		end
 
+		if Octo_ToDo_DragonflyVars.config.TalkingHeadFrame == nil then
+			Octo_ToDo_DragonflyVars.config.TalkingHeadFrame = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.HideObjectiveTracker == nil then
+			Octo_ToDo_DragonflyVars.config.HideObjectiveTracker = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.HideZoneText == nil then
+			Octo_ToDo_DragonflyVars.config.HideZoneText = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.Covenant == nil then
+			Octo_ToDo_DragonflyVars.config.Covenant = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.UIErrorsFrame == nil then
+			Octo_ToDo_DragonflyVars.config.UIErrorsFrame = false
+		end
+
+		if Octo_ToDo_DragonflyVars.config.RaidBossEmoteFrame == nil then
+			Octo_ToDo_DragonflyVars.config.RaidBossEmoteFrame = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.CinematicCanceler == nil then
+			Octo_ToDo_DragonflyVars.config.CinematicCanceler = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.BossBanner == nil then
+			Octo_ToDo_DragonflyVars.config.BossBanner = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast == nil then
+			Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.BugSack == nil then
+			Octo_ToDo_DragonflyVars.config.BugSack = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.MountsJournal == nil then
+			Octo_ToDo_DragonflyVars.config.MountsJournal = true
+		end
+
+
+
 		for i, func in ipairs(E.modules) do
 			func()
 		end
@@ -2966,4 +3003,3 @@ end
 -- local ColorKyrian = CreateColor(1, 1, 1, 1)
 -- (KYRIAN_BLUE_COLOR:GetRGB())
 -- SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
-
