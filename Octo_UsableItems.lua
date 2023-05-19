@@ -1,34 +1,29 @@
-local AddonName, engine = ...
+local AddonName, E = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
-local Enable_Module = false
-
+-- local Enable_Module = false
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8 --0.1,0.1,0.1,1
-
-local OPEN_Frame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+local UsableItems_Frame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+E.UsableItems_Frame = UsableItems_Frame
 local UnitLevel = UnitLevel("PLAYER")
 local maxlevel = 70
-
 function Octo_MAIL_DragonflyOnLoad()
-	local Octo_OPEN_Frame = CreateFrame("Frame", nil)
-
-
-	Octo_OPEN_Frame:RegisterEvent("PLAYER_LOGIN")
-	-- Octo_OPEN_Frame:RegisterEvent("BAG_UPDATE")
-	Octo_OPEN_Frame:RegisterEvent("PLAYER_STARTED_MOVING")
-	Octo_OPEN_Frame:RegisterEvent("CHAT_MSG_LOOT")
-	Octo_OPEN_Frame:RegisterEvent("QUEST_COMPLETE")
-	Octo_OPEN_Frame:RegisterEvent("QUEST_FINISHED")
-	Octo_OPEN_Frame:SetScript("OnEvent", Octo_MAIL_DragonflyOnEvent)
+	local Octo_UsableItems_Frame = CreateFrame("Frame", nil)
+	Octo_UsableItems_Frame:RegisterEvent("PLAYER_LOGIN")
+	-- Octo_UsableItems_Frame:RegisterEvent("BAG_UPDATE")
+	Octo_UsableItems_Frame:RegisterEvent("PLAYER_STARTED_MOVING")
+	Octo_UsableItems_Frame:RegisterEvent("CHAT_MSG_LOOT")
+	Octo_UsableItems_Frame:RegisterEvent("QUEST_COMPLETE")
+	Octo_UsableItems_Frame:RegisterEvent("QUEST_FINISHED")
+	Octo_UsableItems_Frame:SetScript("OnEvent", Octo_MAIL_DragonflyOnEvent)
 end
-
 local white_list = {
+	[110560] = true, --TEST
 	--DRAENOR
 	[128313] = true,
 	[111956] = true,
 	[5523] = true,
-
 	[205682] = true,
 	[189765] = true,
 	[194072] = true,
@@ -138,11 +133,9 @@ local white_list = {
 	[205342] = true,
 	[205346] = true,
 }
-
 local white_list70 = {
 	[205423] = true,
 }
-
 local prof_white_list = {
 	[192130] = true,
 	[192131] = true,
@@ -340,8 +333,6 @@ local prof_white_list = {
 	[205433] = true,
 	[205437] = true,
 	[205444] = true,
-
-
 	[205954] = true, --Червоточина
 	[205213] = true,
 	[205211] = true,
@@ -377,12 +368,10 @@ local prof_white_list = {
 	--[204076] = true, --DrakesShadowflameCrestFragment RED
 	--[204075] = true, --WhelplingsShadowflameCrestFragment BLUE
 }
-
 if UnitLevel == 70 then
 	MergeTable(white_list, white_list70)
 	MergeTable(white_list, prof_white_list)
 end
-
 local icon = 0
 -- если пост клик и нет айтема, то хайдить (ну или при клике и если нет итема)
 function TESTFUNC()
@@ -399,15 +388,14 @@ function TESTFUNC()
 				-----------------------
 				if white_list[itemID] --[[and (countRED >= 15 or countBLUE >= 15)]] and not isLocked then
 					icon = iconFileID
-					MASLENGO_OPEN()
-					OPEN_Frame:Show()
+					MASLENGO_UsableItems()
+					UsableItems_Frame:Show()
 					break
 				end
 			end
 		end
 	end
 end
-
 function FUNC_Nazvanie(self, _, down)
 	if InCombatLockdown() or down ~= GetCVarBool("ActionButtonUseKeyDown") then return end
 	for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
@@ -420,8 +408,8 @@ function FUNC_Nazvanie(self, _, down)
 				--local hyperlink = containerInfo.hyperlink
 				local itemLink = C_Container.GetContainerItemLink(bag, slot)
 				-----------------------
-				if not white_list[itemID] and OPEN_Frame:IsShown() then
-					OPEN_Frame:Hide()
+				if not white_list[itemID] and UsableItems_Frame:IsShown() then
+					UsableItems_Frame:Hide()
 				end
 				if white_list[itemID] and not isLocked then
 					print (iconFileID)
@@ -432,65 +420,54 @@ function FUNC_Nazvanie(self, _, down)
 		end
 	end
 end
-
-function MASLENGO_OPEN()
-	OPEN_Frame:SetSize(64*scale, 64*scale)
-	--OPEN_Frame:SetClampedToScreen(false)
-	OPEN_Frame:SetFrameStrata("DIALOG")
-	OPEN_Frame:EnableMouse(true)
-	-- OPEN_Frame:SetMovable(true)
-	-- OPEN_Frame:RegisterForDrag("RightButton")
-	-- OPEN_Frame:SetScript("OnDragStart", OPEN_Frame.StartMoving)
-	-- OPEN_Frame:SetScript("OnDragStop", function() OPEN_Frame:StopMovingOrSizing() end)
-	OPEN_Frame:SetPoint("CENTER", -524, 524)
-	OPEN_Frame:SetBackdrop({
+E.TESTFUNC = TESTFUNC
+function MASLENGO_UsableItems()
+	UsableItems_Frame:SetSize(64*scale, 64*scale)
+	--UsableItems_Frame:SetClampedToScreen(false)
+	UsableItems_Frame:SetFrameStrata("DIALOG")
+	UsableItems_Frame:EnableMouse(true)
+	-- UsableItems_Frame:SetMovable(true)
+	-- UsableItems_Frame:RegisterForDrag("RightButton")
+	-- UsableItems_Frame:SetScript("OnDragStart", UsableItems_Frame.StartMoving)
+	-- UsableItems_Frame:SetScript("OnDragStop", function() UsableItems_Frame:StopMovingOrSizing() end)
+	UsableItems_Frame:SetPoint("CENTER", -524, 524)
+	UsableItems_Frame:SetBackdrop({
 			bgFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
 			edgeFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
-	OPEN_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	OPEN_Frame:SetBackdropBorderColor(0, 0, 0, 1)
-	OPEN_Frame.Button:SetAllPoints()
-	OPEN_Frame.Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-	OPEN_Frame.Button:SetAttribute("unit", "player")
-	OPEN_Frame.Button:SetAttribute("type", "macro")
-
-	OPEN_Frame.Button:SetScript("PreClick", FUNC_Nazvanie)
-
-	local t = OPEN_Frame.Button:CreateTexture(nil,"BACKGROUND")
-	OPEN_Frame.Button.icon = t
+	UsableItems_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+	UsableItems_Frame:SetBackdropBorderColor(0, 0, 0, 1)
+	UsableItems_Frame.Button:SetAllPoints()
+	UsableItems_Frame.Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+	UsableItems_Frame.Button:SetAttribute("unit", "player")
+	UsableItems_Frame.Button:SetAttribute("type", "macro")
+	UsableItems_Frame.Button:SetScript("PreClick", FUNC_Nazvanie)
+	local t = UsableItems_Frame.Button:CreateTexture(nil,"BACKGROUND")
+	UsableItems_Frame.Button.icon = t
 	--t:SetTexture("Interface\\AddOns\\Octo_ToDo_Dragonfly\\Media\\ui_sigil_nightfae_OLD.tga")
 	t:SetTexture(icon)
 	t:SetVertexColor(1,1,1,1)
-	t:SetAllPoints(OPEN_Frame.Button)
+	t:SetAllPoints(UsableItems_Frame.Button)
 end
-
-
-
 -- function MJMacroMixin:preClick(button, down)
 --     self.mounts.sFlags.forceModifier = self.forceModifier
 --     if InCombatLockdown() or down ~= GetCVarBool("ActionButtonUseKeyDown") then return end
 --     self:SetAttribute("macrotext", macroFrame:getMacro())
 -- end
-
-
-
-
-
-
 function Octo_MAIL_DragonflyOnEvent(self, event, ...)
-	if Enable_Module == true then
+	if Octo_ToDo_DragonflyVars.config.UsableItems then
 		if event == "PLAYER_LOGIN" then
-			OPEN_Frame.Button = CreateFrame("BUTTON", nil, OPEN_Frame, "SecureActionButtonTemplate")
+			UsableItems_Frame.Button = CreateFrame("BUTTON", nil, UsableItems_Frame, "SecureActionButtonTemplate")
 			self:RegisterEvent("BAG_UPDATE")
 			TESTFUNC()
 		elseif (event == "BAG_UPDATE" or event == "PLAYER_STARTED_MOVING" or event == "QUEST_COMPLETE" or event == "QUEST_FINISHED") and not InCombatLockdown() then
 			TESTFUNC()
-			-- if not OPEN_Frame:IsShown() then
-			-- 	OPEN_Frame:Show()
+			-- if not UsableItems_Frame:IsShown() then
+			-- 	UsableItems_Frame:Show()
 			-- end
 		elseif event == "CHAT_MSG_LOOT" and not InCombatLockdown()  then
-			OPEN_Frame:Hide()
+			UsableItems_Frame:Hide()
 		end
 	end
 end

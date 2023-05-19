@@ -3,7 +3,7 @@ local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
 
 local Octo_AUTO_OPEN = CreateFrame("Frame", AddonTitle)
-local Enable_Module = true
+--local Enable_Module = true
 --Octo_AUTO_OPEN:RegisterEvent("PLAYER_ENTERING_WORLD")
 Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")
 Octo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -271,7 +271,7 @@ end
 local openableScanQueued = false
 Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 	C_Timer.After(0.1, function()
-		if Enable_Module == true then
+		if Octo_ToDo_DragonflyVars.config.AutoOpen then
 			if event == "BAG_UPDATE" then
 				if not InCombatLockdown() and isDead == false  then
 					OpenableScan()

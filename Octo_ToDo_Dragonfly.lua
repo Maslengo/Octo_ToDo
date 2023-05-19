@@ -1,6 +1,7 @@
 -- OptionsFrame.image = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\OptionLogo2"):Point("TOPLEFT", 15, 5):Size(140, 140)
 -- OptionsFrame_title = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\logoname2"):Point("LEFT", OptionsFrame.image, "RIGHT", 15, -5):Size(512*0.7, 128*0.7)
-local AddonName, engine = ...
+local AddonName, E = ...
+E.modules = {}
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
@@ -3037,6 +3038,43 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Octo_ToDo_DragonflyVars.omb = Octo_ToDo_DragonflyVars.omb or {}
 		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.omb)
 		ldbi:Show(MinimapName)
+
+
+
+
+
+
+		Octo_ToDo_DragonflyVars.config = Octo_ToDo_DragonflyVars.config or {}
+
+
+		if Octo_ToDo_DragonflyVars.config.CVar == nil then  --RELOAD
+			Octo_ToDo_DragonflyVars.config.CVar = false
+		end
+
+		if Octo_ToDo_DragonflyVars.config.InputDelete == nil then --RELOAD
+			Octo_ToDo_DragonflyVars.config.InputDelete = false
+		end
+
+		if Octo_ToDo_DragonflyVars.config.UsableItems == nil then
+			Octo_ToDo_DragonflyVars.config.UsableItems = false
+		end
+
+		if Octo_ToDo_DragonflyVars.config.AutoOpen == nil then
+			Octo_ToDo_DragonflyVars.config.AutoOpen = true
+		end
+
+		if Octo_ToDo_DragonflyVars.config.AutoGossip == nil then
+			Octo_ToDo_DragonflyVars.config.AutoGossip = true
+		end
+
+		for i, func in ipairs(E.modules) do
+			func()
+		end
+
+
+
+
+
 	elseif event == "UNIT_INVENTORY_CHANGED" and not InCombatLockdown() then
 		OctoilvlStr()
 		Octo_ToDo_DragonflyFrameUpdateValues()
