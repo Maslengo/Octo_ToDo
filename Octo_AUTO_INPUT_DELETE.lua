@@ -1,4 +1,8 @@
 local AddonName, E = ...
+local AddonTitle = GetAddOnMetadata(AddonName, "Title")
+local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 tinsert(E.modules, function()
     if Octo_ToDo_DragonflyVars.config.InputDelete == true then
         local TypeDeleteLine = gsub(DELETE_GOOD_ITEM, "[\r\n]", "@")
@@ -9,7 +13,6 @@ tinsert(E.modules, function()
         StaticPopupDialogs["DELETE_QUEST_ITEM"].OnHyperlinkLeave = StaticPopupDialogs["DELETE_GOOD_ITEM"].OnHyperlinkLeave
         StaticPopupDialogs["DELETE_GOOD_QUEST_ITEM"].OnHyperlinkEnter = StaticPopupDialogs["DELETE_GOOD_ITEM"].OnHyperlinkEnter
         StaticPopupDialogs["DELETE_GOOD_QUEST_ITEM"].OnHyperlinkLeave = StaticPopupDialogs["DELETE_GOOD_ITEM"].OnHyperlinkLeave
-
         local easyDelFrame = CreateFrame("FRAME")
         easyDelFrame:RegisterEvent("DELETE_ITEM_CONFIRM")
         easyDelFrame:SetScript("OnEvent", function()

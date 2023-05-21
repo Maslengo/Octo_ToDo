@@ -1,5 +1,8 @@
 local AddonName, E = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
+local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 -- TalkingHeadFrame
 tinsert(E.modules, function()
 	if Octo_ToDo_DragonflyVars.config.TalkingHeadFrame then
@@ -122,6 +125,5 @@ tinsert(E.modules, function()
 		func_Octo_LoadAddOn("AutoTurnIn")
 		func_Octo_LoadAddOn("MountsJournal")
 		func_Octo_LoadAddOn("WowheadQuickLink")
-
 	end
 end)

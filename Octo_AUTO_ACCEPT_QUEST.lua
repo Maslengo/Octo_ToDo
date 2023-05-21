@@ -1,3 +1,8 @@
+local AddonName, E = ...
+local AddonTitle = GetAddOnMetadata(AddonName, "Title")
+local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 local Octo_AUTO_ACCEPT_QUEST = CreateFrame("Frame", AddonTitle)
 Octo_AUTO_ACCEPT_QUEST:RegisterEvent("QUEST_GREETING")
 Octo_AUTO_ACCEPT_QUEST:RegisterEvent("GOSSIP_SHOW")
@@ -17,7 +22,6 @@ end)
 -- PLAYER_SOFT_INTERACT_CHANGED
 -- QUEST_FINISHED
 -- PLAYER_INTERACTION_MANAGER_FRAME_HIDE
-
                             -- 1 rewards table: 000001F553BA35F0 
                             -- 1 flags 0 
                             -- 1 gossipOptionID 42453 

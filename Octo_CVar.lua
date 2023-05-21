@@ -1,4 +1,8 @@
 local AddonName, E = ...
+local AddonTitle = GetAddOnMetadata(AddonName, "Title")
+local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.CVar then
 			local isElfUI = IsAddOnLoaded("ElvUI")

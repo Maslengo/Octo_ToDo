@@ -1,6 +1,8 @@
 local AddonName, E = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 local bytetoB64 = {
 	[0]="a", "b", "c", "d", "e", "f", "g", "h",
 	"i", "j", "k", "l", "m", "n", "o", "p",
@@ -18,7 +20,6 @@ function GenerateUniqueID()
 	end
 	return table.concat(s)
 end
-
 local white_list = {
 	--[110560] = true, --TEST
 	--DRAENOR
@@ -134,7 +135,6 @@ local white_list = {
 	[205342] = true,
 	[205346] = true,
 }
-
 local function CreateFrameUsableItems_OnEnter(self)
 	self.icon:SetVertexColor(1, 1, 1, 1)
 end

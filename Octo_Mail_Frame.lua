@@ -1,11 +1,11 @@
-local AddonName, engine = ...
+local AddonName, E = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 local Enable_Module = false
-
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8 --0.1,0.1,0.1,1
-
 function Octo_MAIL_DragonflyOnLoad()
 	local Octo_Mail_Frame = CreateFrame("Frame", AddonTitle)
 	Octo_Mail_Frame:RegisterEvent("MAIL_SHOW")
@@ -17,7 +17,6 @@ function Octo_MAIL_DragonflyOnLoad()
 	Octo_Mail_Frame:RegisterEvent("PLAYER_STARTED_MOVING")
 	Octo_Mail_Frame:SetScript("OnEvent", Octo_MAIL_DragonflyOnEvent)
 end
-
 local ignore_list = {
 	[109076] = true, -- Планер
 	[166751] = true, --настой на опыт
@@ -26,7 +25,6 @@ local ignore_list = {
 	[191251] = true,
 	[193201] = true,
 	[81055] = true, -- Ярмарка
-
 	[180653] = true, -- КЛюч
 	[204193] = true,
 	[204075] = true,
@@ -36,16 +34,12 @@ local ignore_list = {
 	[204077] = true,
 	[204194] = true,
 	[204078] = true,
-
 }
 	local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 	local ilvlStr = avgItemLevelEquipped or 0
-
 -- local OILVLFrame = CreateFrame('GameTooltip', 'OILVLTooltip', nil, 'GameTooltipTemplate');
 -- OILVLFrame:SetOwner(UIParent, 'ANCHOR_NONE');
-
 local function MASLENGO_Mail()
-
 	SELL_Frame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
 	SELL_Frame:SetSize(64*scale, 64*scale)
 	--SELL_Frame:SetClampedToScreen(false)
@@ -63,11 +57,9 @@ local function MASLENGO_Mail()
 	})
 	SELL_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 	SELL_Frame:SetBackdropBorderColor(0, 0, 0, 1)
-
 	SELL_Frame.Button = CreateFrame("BUTTON", nil, SELL_Frame)
 	SELL_Frame.Button:SetAllPoints()
 	SELL_Frame.Button:RegisterForClicks("LeftButtonUp")
-
 	SELL_Frame.Button:SetScript("OnClick",function()
 			for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 				for slot=1, C_Container.GetContainerNumSlots(bag) do
@@ -79,7 +71,6 @@ local function MASLENGO_Mail()
 						local name, _, itemQuality, itemLevel, _, _, _,_, _, _, sellPrice = GetItemInfo(itemLink)
 						local effectiveILvl = GetDetailedItemLevelInfo(itemID) or 0
 						local baseILvl = tonumber(select(3,GetDetailedItemLevelInfo(itemID))) or 0
-
 						-----------------------
 						--if (itemLevel == nil) then return end
 						local ItemTooltip = _G["OctoScanningTooltip"] or
@@ -92,18 +83,15 @@ local function MASLENGO_Mail()
 						-- local foundEnchant = nil
 						local foundLevel = nil
 						-- local foundEmptySocket = nil
-
 						for i = 1, ItemTooltip:NumLines() do
 							-- foundEnchant = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ENCHANTED_TOOLTIP_LINE:gsub("%%s", "(.+)"))
 							-- if foundEnchant then
 							-- 	enchant = foundEnchant
 							-- end
-
 							foundLevel = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
 							if foundLevel then
 								itemLevel = tonumber(foundLevel) or 0
 							end
-
 							-- foundEmptySocket = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(EMPTY_SOCKET_PRISMATIC)
 							-- if foundEmptySocket then
 							-- 	emptySockets = emptySockets + 1
@@ -119,14 +107,12 @@ local function MASLENGO_Mail()
 			end
 		end
 	)
-
 	local t = SELL_Frame.Button:CreateTexture(nil,"BACKGROUND")
 	SELL_Frame.Button.icon = t
 	t:SetTexture("Interface\\AddOns\\Octo_ToDo_Dragonfly\\Media\\SELL.tga")
 	t:SetVertexColor(1,0,1,1)
 	t:SetAllPoints(SELL_Frame.Button)
 end
-
 local function MASLENGO_BANK()
 	---------------------------------------------------------------------------------------------------
 	FROMBANK_Frame = CreateFrame("BUTTON", nil, UIParent, "BackdropTemplate")
@@ -157,12 +143,6 @@ local function MASLENGO_BANK()
 	t:SetVertexColor(1,1,1,1)
 	t:SetAllPoints(FROMBANK_Frame.Button)
 	---------------------------------------------------------------------------------------------------
-
-
-
-
-
-
 	---------------------------------------------------------------------------------------------------
 	TOBANK_Frame = CreateFrame("BUTTON", nil, UIParent, "BackdropTemplate")
 	TOBANK_Frame:SetSize(64*scale, 64*scale)
@@ -192,7 +172,6 @@ local function MASLENGO_BANK()
 	t:SetAllPoints(TOBANK_Frame.Button)
 	---------------------------------------------------------------------------------------------------
 end
-
 function Octo_MAIL_DragonflyOnEvent(self, event, ...)
 	if Enable_Module == true then
 		--if event == "MAIL_SHOW" or
@@ -214,5 +193,4 @@ function Octo_MAIL_DragonflyOnEvent(self, event, ...)
 		end
 	end
 end
-
 Octo_MAIL_DragonflyOnLoad()

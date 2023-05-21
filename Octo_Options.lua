@@ -1,4 +1,8 @@
 local AddonName, E = ...
+local AddonTitle = GetAddOnMetadata(AddonName, "Title")
+local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 local config = CreateFrame("FRAME", AddonName.."config")
 -- config:RegisterEvent("VARIABLES_LOADED")
 config:Hide()

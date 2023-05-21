@@ -1,3 +1,8 @@
+local AddonName, E = ...
+local AddonTitle = GetAddOnMetadata(AddonName, "Title")
+local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 local Octo_AUTO_GOSSIP = CreateFrame("Frame", AddonTitle)
 --local Enable_Module = true
 -- Octo_AUTO_GOSSIP:RegisterEvent("QUEST_GREETING")
@@ -19,14 +24,14 @@ Octo_AUTO_GOSSIP:SetScript("OnEvent", function(self, event, ...)
 				-- print (info1)
 				-- print (info2)
 				if numQuests1 > 0 or numQuests2 > 0 or InCombatLockdown() then return end
--- title	string	
--- questLevel	number	
--- isTrivial	boolean	
--- frequency	number?	
--- repeatable	boolean?	
--- isComplete	boolean?	
--- isLegendary	boolean	
--- isIgnored	boolean	
+-- title	string
+-- questLevel	number
+-- isTrivial	boolean
+-- frequency	number?
+-- repeatable	boolean?
+-- isComplete	boolean?
+-- isLegendary	boolean
+-- isIgnored	boolean
 -- questID	number
 			local UnitID = "TARGET"
 			local guid = UnitGUID(UnitID)

@@ -1,9 +1,8 @@
--- OptionsFrame.image = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\OptionLogo2"):Point("TOPLEFT", 15, 5):Size(140, 140)
--- OptionsFrame_title = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\logoname2"):Point("LEFT", OptionsFrame.image, "RIGHT", 15, -5):Size(512*0.7, 128*0.7)
 local AddonName, E = ...
-E.modules = {}
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
@@ -15,7 +14,7 @@ local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScal
 local curWidth, curHeight = 96*scale , 20*scale -- ширина 80, высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
-local TotalLines = 25
+local TotalLines = 22
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local TotalMoney = 0
@@ -33,6 +32,8 @@ local bgFile = [[Interface\Buttons\WHITE8X8]]
 local LevelToShow = 60
 local ShowOnlyCurrentRealm = true
 local IconTexture = 3586268
+-- OptionsFrame.image = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\OptionLogo2"):Point("TOPLEFT", 15, 5):Size(140, 140)
+-- OptionsFrame_title = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\logoname2"):Point("LEFT", OptionsFrame.image, "RIGHT", 15, -5):Size(512*0.7, 128*0.7)
 local bytetoB64 = {
 	[0]="a", "b", "c", "d", "e", "f", "g", "h",
 	"i", "j", "k", "l", "m", "n", "o", "p",
@@ -1782,10 +1783,6 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
-
-
-
-
 	-- ITEMID, count, Ypox, r, g, b
 	CreateFrameUsableItems(204075, 5062636, 15, 0, .12, 1, 0)
 	CreateFrameUsableItems(204076, 5062624, 15, -24, 0, .44, .98)
@@ -2235,6 +2232,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					{"Рейды", CharInfo.RIO_RAID},
 					{"M+", CharInfo.RIO_KEYS},
 					{"PVP", CharInfo.RIO_PVPS},
+					{" ", " "},
+				{func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
+				{func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
 				}
 			end
 			--10
@@ -2255,11 +2255,11 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				{func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]}, --Печать бури
 				{func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]}, --Энергия стихий
 				{func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID[2003]}, --Припасы Драконьих островов
-				-- {" ", " "},
-				-- {"PVP: ", " "},
-				-- {func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
-				-- {func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
-				-- {func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]}, --Кровавые жетоны
+				{" ", " "},
+				{"PVP: ", " "},
+				{func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
+				{func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
+				{func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]}, --Кровавые жетоны
 				{" ", " "},
 				{"OLD: ", " "},
 				{func_currencyicon(2032)..func_currencyName(2032), func_currencyquantity(2032)},
@@ -2340,8 +2340,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if (CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0) and CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
 				tinsert(Char_Frame.CenterLines12.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]})
 				tinsert(Char_Frame.CenterLines12.tooltip, {"LFR","M+ 1-5"})
-
-
 			end
 			if #Char_Frame.CenterLines12.tooltip == 0 then
 				Char_Frame.CenterLines12.tooltip = nil
@@ -2590,72 +2588,72 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if #Char_Frame.CenterLines22.tooltip == 0 then
 				Char_Frame.CenterLines22.tooltip = nil
 			end
-			--23
-			Char_Frame.CenterLines23.CL:SetText("PVP")
-			Char_Frame.CenterLines23.tooltip = {
-				{CURRENCY..": ", " "},
-				{func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
-				{func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
-				{func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]}, --Кровавые жетоны
-				{" "," "},
-				{QUESTS_LABEL..": ", " "},
-				-- {func_questName(55509),CharInfo.questIDtable[55509]}, --ОЛО
-				-- {func_questName(55511),CharInfo.questIDtable[55511]}, --ОЛО
-				-- {func_questName(13183),CharInfo.questIDtable[13183]}, --ОЛО
-				-- {func_questName(56339),CharInfo.questIDtable[56339]}, --АШРАН
-				-- {func_questName(56337),CharInfo.questIDtable[56337]}, --АШРАН
-				{func_questName(75622),CharInfo.questIDtable[75622]},
-				{func_questName(71026),CharInfo.questIDtable[71026]},
-				{func_questName(72169),CharInfo.questIDtable[72169]},
-				{func_questName(72167),CharInfo.questIDtable[72167]},
-				{func_questName(72166),CharInfo.questIDtable[72166]},
-				{func_questName(72168),CharInfo.questIDtable[72168]},
-				{func_questName(72171),CharInfo.questIDtable[72171]},
-				{func_questName(72170),CharInfo.questIDtable[72170]},
-				-- {" "," "},
-				-- {"Предметы: ", " "},
-				-- {func_itemTexture(137642)..func_itemName(137642),CharInfo.ItemsInBag[137642]},
-				-- {func_itemTexture(204180)..func_itemName(204180),CharInfo.ItemsInBag[204180]},
-				{" "," "},
-				{"2v2: ", CharInfo.PVP.rating2v2.." WR:"..CharInfo.PVP.winrate2v2},
-				{"3v3: ", CharInfo.PVP.rating3v3.." WR:"..CharInfo.PVP.winrate3v3},
-				{"RBG: ", CharInfo.PVP.ratingRBG.." WR:"..CharInfo.PVP.winrateRBG},
-			}
-			--24
-			Char_Frame.CenterLines24.CL:SetText("PVE")
-			Char_Frame.CenterLines24.tooltip = {
-				{CURRENCY..": ", " "},
-				{func_currencyicon(2533)..func_currencyName(2533), CharInfo.CurrencyID[2533].."/"..CharInfo.CurrencyID_maxQuantity[2533]}, --Возрождающее пламя Тьмы
-				{func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]}, --Драконьи камни
-				{func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]}, --Печать бури
-				{func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]}, --Энергия стихий
-				{func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID[2003]}, --Припасы Драконьих островов
-				-- {" "," "},
-				-- {QUESTS_LABEL..": ", " "},
-				-- {func_questName(55509),CharInfo.questIDtable[55509]}, --ОЛО
-				-- {func_questName(55511),CharInfo.questIDtable[55511]}, --ОЛО
-				-- {func_questName(13183),CharInfo.questIDtable[13183]}, --ОЛО
-				-- {func_questName(56339),CharInfo.questIDtable[56339]}, --АШРАН
-				-- {func_questName(56337),CharInfo.questIDtable[56337]}, --АШРАН
-				-- {func_questName(75622),CharInfo.questIDtable[75622]},
-				-- {func_questName(71026),CharInfo.questIDtable[71026]},
-				-- {func_questName(72169),CharInfo.questIDtable[72169]},
-				-- {func_questName(72167),CharInfo.questIDtable[72167]},
-				-- {func_questName(72166),CharInfo.questIDtable[72166]},
-				-- {func_questName(72168),CharInfo.questIDtable[72168]},
-				-- {func_questName(72171),CharInfo.questIDtable[72171]},
-				-- {func_questName(72170),CharInfo.questIDtable[72170]},
-				{" "," "},
-				{"Предметы: ", " "},
-				{func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
-				{func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
-				-- {func_itemTexture(204075).."|cff1eff00"..func_itemName_NOCOLOR(204075).."|r", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]},
-				-- {func_itemTexture(204076).."|cff0070dd"..func_itemName_NOCOLOR(204076).."|r", CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]},
-				-- {func_itemTexture(204077).."|cffa335ee"..func_itemName_NOCOLOR(204077).."|r", CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]},
-				-- {func_itemTexture(204078).."|cffff8000"..func_itemName_NOCOLOR(204078).."|r", CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]},
-				--25
-				Char_Frame.CenterLines25.CL:SetText(Empty_Zero(CharInfo.PVP.ratingRBG))
-			}
+			-- --23
+			-- Char_Frame.CenterLines23.CL:SetText("PVP")
+			-- Char_Frame.CenterLines23.tooltip = {
+			-- 	{CURRENCY..": ", " "},
+			-- 	{func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
+			-- 	{func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
+			-- 	{func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]}, --Кровавые жетоны
+			-- 	{" "," "},
+			-- 	{QUESTS_LABEL..": ", " "},
+			-- 	-- {func_questName(55509),CharInfo.questIDtable[55509]}, --ОЛО
+			-- 	-- {func_questName(55511),CharInfo.questIDtable[55511]}, --ОЛО
+			-- 	-- {func_questName(13183),CharInfo.questIDtable[13183]}, --ОЛО
+			-- 	-- {func_questName(56339),CharInfo.questIDtable[56339]}, --АШРАН
+			-- 	-- {func_questName(56337),CharInfo.questIDtable[56337]}, --АШРАН
+			-- 	{func_questName(75622),CharInfo.questIDtable[75622]},
+			-- 	{func_questName(71026),CharInfo.questIDtable[71026]},
+			-- 	{func_questName(72169),CharInfo.questIDtable[72169]},
+			-- 	{func_questName(72167),CharInfo.questIDtable[72167]},
+			-- 	{func_questName(72166),CharInfo.questIDtable[72166]},
+			-- 	{func_questName(72168),CharInfo.questIDtable[72168]},
+			-- 	{func_questName(72171),CharInfo.questIDtable[72171]},
+			-- 	{func_questName(72170),CharInfo.questIDtable[72170]},
+			-- 	-- {" "," "},
+			-- 	-- {"Предметы: ", " "},
+			-- 	-- {func_itemTexture(137642)..func_itemName(137642),CharInfo.ItemsInBag[137642]},
+			-- 	-- {func_itemTexture(204180)..func_itemName(204180),CharInfo.ItemsInBag[204180]},
+			-- 	{" "," "},
+			-- 	{"2v2: ", CharInfo.PVP.rating2v2.." WR:"..CharInfo.PVP.winrate2v2},
+			-- 	{"3v3: ", CharInfo.PVP.rating3v3.." WR:"..CharInfo.PVP.winrate3v3},
+			-- 	{"RBG: ", CharInfo.PVP.ratingRBG.." WR:"..CharInfo.PVP.winrateRBG},
+			-- }
+			-- --24
+			-- Char_Frame.CenterLines24.CL:SetText("PVE")
+			-- Char_Frame.CenterLines24.tooltip = {
+			-- 	{CURRENCY..": ", " "},
+			-- 	{func_currencyicon(2533)..func_currencyName(2533), CharInfo.CurrencyID[2533].."/"..CharInfo.CurrencyID_maxQuantity[2533]}, --Возрождающее пламя Тьмы
+			-- 	{func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]}, --Драконьи камни
+			-- 	{func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]}, --Печать бури
+			-- 	{func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]}, --Энергия стихий
+			-- 	{func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID[2003]}, --Припасы Драконьих островов
+			-- 	-- {" "," "},
+			-- 	-- {QUESTS_LABEL..": ", " "},
+			-- 	-- {func_questName(55509),CharInfo.questIDtable[55509]}, --ОЛО
+			-- 	-- {func_questName(55511),CharInfo.questIDtable[55511]}, --ОЛО
+			-- 	-- {func_questName(13183),CharInfo.questIDtable[13183]}, --ОЛО
+			-- 	-- {func_questName(56339),CharInfo.questIDtable[56339]}, --АШРАН
+			-- 	-- {func_questName(56337),CharInfo.questIDtable[56337]}, --АШРАН
+			-- 	-- {func_questName(75622),CharInfo.questIDtable[75622]},
+			-- 	-- {func_questName(71026),CharInfo.questIDtable[71026]},
+			-- 	-- {func_questName(72169),CharInfo.questIDtable[72169]},
+			-- 	-- {func_questName(72167),CharInfo.questIDtable[72167]},
+			-- 	-- {func_questName(72166),CharInfo.questIDtable[72166]},
+			-- 	-- {func_questName(72168),CharInfo.questIDtable[72168]},
+			-- 	-- {func_questName(72171),CharInfo.questIDtable[72171]},
+			-- 	-- {func_questName(72170),CharInfo.questIDtable[72170]},
+			-- 	{" "," "},
+			-- 	{"Предметы: ", " "},
+			-- 	{func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
+			-- 	{func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
+			-- 	-- {func_itemTexture(204075).."|cff1eff00"..func_itemName_NOCOLOR(204075).."|r", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]},
+			-- 	-- {func_itemTexture(204076).."|cff0070dd"..func_itemName_NOCOLOR(204076).."|r", CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]},
+			-- 	-- {func_itemTexture(204077).."|cffa335ee"..func_itemName_NOCOLOR(204077).."|r", CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]},
+			-- 	-- {func_itemTexture(204078).."|cffff8000"..func_itemName_NOCOLOR(204078).."|r", CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]},
+			-- 	--25
+			-- 	Char_Frame.CenterLines25.CL:SetText(Empty_Zero(CharInfo.PVP.ratingRBG))
+			-- }
 			--------------------------------
 			if curGUID == curCharGUID then
 				Char_Frame.BG:Show()
@@ -2931,7 +2929,6 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Octo_ToDo_DragonflyVars.config.AnotherAddons == nil then   --RELOAD
 			Octo_ToDo_DragonflyVars.config.AnotherAddons = true
 		end
-
 		for i, func in ipairs(E.modules) do
 			func()
 		end

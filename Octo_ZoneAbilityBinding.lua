@@ -1,6 +1,8 @@
-local AddonName, engine = ...
+local AddonName, E = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 --print(AddonTitle.." v"..Version.." loaded")
 local Enable_Module = true
 if Enable_Module == true then
@@ -8,10 +10,8 @@ if Enable_Module == true then
 	_G["BINDING_NAME_" .. "CLICK myZA:LeftButton"] = "Activate Zone Ability Button"
 	_G["BINDING_NAME_" .. "CLICK myZA2:LeftButton"] = "Activate Zone Ability Button 2"
 	_G["BINDING_NAME_" .. "CLICK myZA3:LeftButton"] = "Activate Zone Ability Button 3"
-
 	local WaitingToUpdate = {}
 	local theSpell = {}
-
 	function CedUpdateZA()
 		theSpell = {}
 		local count = 0
@@ -24,7 +24,6 @@ if Enable_Module == true then
 			end
 		end
 	end
-
 	if not InCombatLockdown() then 
 		local ZAcount = 3
 		local ZAindex = ""

@@ -1,8 +1,8 @@
--- local AddonName, engine = ...
--- local AddonTitle = GetAddOnMetadata(AddonName, "Title")
--- local Version = GetAddOnMetadata(AddonName, "Version")
--- print(AddonTitle.." v"..Version.." loaded")
-
+local AddonName, E = ...
+local AddonTitle = GetAddOnMetadata(AddonName, "Title")
+local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 local LSM = LibStub("LibSharedMedia-3.0")
 --[[SOUND
 ]]
@@ -140,7 +140,6 @@ LSM:Register("sound", "|cFF00A7FFO_07_WhickedSick|r", [[Interface\Addons\]]..Add
 --
 LSM:Register("font", " |cFF00A3FF01|r |cffFF4C4FOcto|r", [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("font", " |cFF00A3FF02|r |cffFF4C4FOcto-Bold|r", [[Interface\Addons\]]..AddonName..[[\Media\font\02 Octo-Bold.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
-
 LSM:Register("font", "|cFF00A3FF03|r |cffFF4C4FGothamPro-Bold|r", [[Interface\Addons\]]..AddonName..[[\Media\font\03 GothamPro-Bold.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("font", "|cFF00A3FF04|r |cffFF4C4FGothamPro-Medium|r", [[Interface\Addons\]]..AddonName..[[\Media\font\04 GothamPro-Medium.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("font", "|cFF00A3FF05|r |cffFF4C4FMontserrat Bold|r", [[Interface\Addons\]]..AddonName..[[\Media\font\05 Montserrat Bold.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
@@ -170,7 +169,6 @@ LSM:Register("border", " |cFF00A3FF01|r |cffFF4C4FOcto|r", [[Interface\Addons\]]
 LSM:Register("statusbar", " |cFF00A3FF01|r |cffFF4C4FOcto|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\01 Octo.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", " |cFF00A3FF02|r |cffFF4C4FOcto-Blank|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\02 Octo-Blank.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", " |cFF00A3FF03|r |cffFF4C4FOcto|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\03 Octo.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
-
 LSM:Register("statusbar", "|cFF00A3FFO_03|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\O_03.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", "|cFF00A3FFO_04|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\O_04.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", "|cFF00A3FFO_05|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\O_05.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
@@ -192,7 +190,6 @@ LSM:Register("statusbar", "|cFF00A3FFO_20|r", [[Interface\Addons\]]..AddonName..
 LSM:Register("statusbar", "|cFF00A3FFO_21|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\O_21.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", "|cFF00A3FFO_22|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\O_22.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", "|cFF00A3FFO_23|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\O_23.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
-
 --Interface\Addons\]]..AddonName..[[\Media\statusbar\AtrocityUI
 LSM:Register("statusbar", "|cFF8e7cc3Atrocity|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\AtrocityUI\Atrocity.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", "|cFF8e7cc3Kait|r", [[Interface\Addons\]]..AddonName..[[\Media\statusbar\AtrocityUI\Kait.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)

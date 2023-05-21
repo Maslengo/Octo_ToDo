@@ -1,6 +1,8 @@
-local AddonName, engine = ...
+local AddonName, E = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-
+local Version = GetAddOnMetadata(AddonName, "Version")
+E.modules = {}
+--------------------------------------------------------------------------------
 local Octo_AUTO_OPEN = CreateFrame("Frame", AddonTitle)
 --local Enable_Module = true
 --Octo_AUTO_OPEN:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -12,8 +14,6 @@ Octo_AUTO_OPEN:RegisterEvent("PLAYER_STARTED_MOVING")
 local isDead = UnitIsDead("PLAYER")
 local UnitLevel = UnitLevel("PLAYER")
 -- local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
-
-
 local openableIDs = {
 	--PVP
 	[206271] = true,
@@ -50,7 +50,6 @@ local openableIDs = {
 	[171305] = true,
 	[198863] = true,
 	[203222] = true,
-
 	-- Арена мордабой
 	[92718] = true,
 	--PVP
@@ -171,24 +170,18 @@ local openableIDs = {
 	[7973] = true,  -- Big-mouth Clam (from Azshara, Dustwallow Marsh, Feralas, Stranglethorn Vale, Swamp of Sorrws, Tanaris, Hinterlands)
 	[15874] = true, -- Soft-shelled Clam (from: Desolace)
 }
-
-
-
 local openableIDs70lvl = {}
 if UnitLevel >= 60 then
 	openableIDs70lvl = {
 		[200073] = true, --Вальдраккенские сокровища 3kREP
 		[200072] = true, --фиоле Сейф Драконьей Погибели
 		[202142] = true, --синий Сейф Драконьей Погибели
-
 		[200468] = true, --фиоле Трофеи великой охоты
 		[200513] = true, --синий Трофеи великой охоты
 		[200515] = true, --зелен Трофеи великой охоты
 		[200516] = true, --белый Трофеи великой охоты
-
 		[202371] = true, --фиоле Сияющий сундук воинов стихий
 		[203681] = true, --синий Штормовой сундук воинов стихий
-
 		[204359] = true, -- Кошелек гонщика Запретного края
 		[203700] = true, --https://ru.wowhead.com/item=203701 https://ru.wowhead.com/npc=201714
 		[202171] = true,
@@ -199,10 +192,6 @@ if UnitLevel >= 60 then
 		[203220] = true, --Чудорыба
 	}
 end
-
-
-
-
 -- local isWorking = false
 -- local function OpenableScan()
 -- 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
@@ -225,7 +214,6 @@ end
 -- 		end
 -- 	end
 -- end
-
 -- local openableScanQueued = false
 -- Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 -- 	if isWorking or not Enable_Module then return end
@@ -245,7 +233,6 @@ end
 -- 		end
 -- 	end)
 -- end)
-
 local function OpenableScan()
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		for numSlots = C_Container.GetContainerNumSlots(bag),1,-1 do
@@ -266,7 +253,6 @@ local function OpenableScan()
 		end
 	end
 end
-
 local openableScanQueued = false
 Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 	C_Timer.After(0.1, function()
