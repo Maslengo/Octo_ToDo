@@ -32,6 +32,7 @@ local edgeFile = [[Interface\Buttons\WHITE8X8]]
 local bgFile = [[Interface\Buttons\WHITE8X8]]
 local LevelToShow = 60
 local ShowOnlyCurrentRealm = true
+local IconTexture = 3586268
 local bytetoB64 = {
 	[0]="a", "b", "c", "d", "e", "f", "g", "h",
 	"i", "j", "k", "l", "m", "n", "o", "p",
@@ -753,14 +754,14 @@ function CollectCurrentKEY()
 									-- elseif dungeon == "404" then Abbr_En_Name = "NELT" --Neltharus
 									-- elseif dungeon == "405" then Abbr_En_Name = "BH" --Brackenhide Hollow
 									-- elseif dungeon == "406" then Abbr_En_Name = "HOI" --Halls of Infusion
-								elseif dungeon == "405" then Abbr_En_Name = "BH(лощина)" --Brackenhide Hollow
-								elseif dungeon == "245" then Abbr_En_Name = "FH(гавань)" --Freehold
-								elseif dungeon == "406" then Abbr_En_Name = "HOI(чертоги)" --Halls of Infusion
-								elseif dungeon == "206" then Abbr_En_Name = "NL(логово)" --Neltharion's Lair
-								elseif dungeon == "404" then Abbr_En_Name = "NELT(нелтарий)" --Neltharus
-								elseif dungeon == "251" then Abbr_En_Name = "UNDR(подгнилье)" --The Underrot
-								elseif dungeon == "438" then Abbr_En_Name = "VP(вершина)" --The Vortex Pinnacle
-								elseif dungeon == "403" then Abbr_En_Name = "ULD(ульдаман)" --Uldaman: Legacy of Tyr
+								elseif dungeon == "405" then Abbr_En_Name = "BH(лощина)" --Brackenhide Hollow 393267
+								elseif dungeon == "245" then Abbr_En_Name = "FH(гавань)" --Freehold 410071
+								elseif dungeon == "406" then Abbr_En_Name = "HOI(чертоги)" --Halls of Infusion 393283
+								elseif dungeon == "206" then Abbr_En_Name = "NL(логово)" --Neltharion's Lair 410078
+								elseif dungeon == "404" then Abbr_En_Name = "NELT(нелтарий)" --Neltharus 393276
+								elseif dungeon == "251" then Abbr_En_Name = "UNDR(подгнилье)" --The Underrot 410074
+								elseif dungeon == "438" then Abbr_En_Name = "VP(вершина)" --The Vortex Pinnacle 410080
+								elseif dungeon == "403" then Abbr_En_Name = "ULD(ульдаман)" --Uldaman: Legacy of Tyr 393222
 								end
 								mkey = ("|cffa335ee"..lvl .. " " ..Abbr_En_Name.."|r")
 							end
@@ -1064,7 +1065,7 @@ local RARE_OSTROV_LIST = {74331, 74347, 74345, 74336, 74337, 74342, 74321, 74343
 local EVENTS_ZARALEK_LIST = {75612, 75471, 75455, 75664, 75611, 75478, 75451, 75461, 75705, 75454, 75450, 75222, 75370, 75494, 75441, 75156, 75624, 74352,
 }
 local itemID = {
-	205225, 206037, 205999, 206028, 138727, 138728, 138488, 138729, 138486, 167862, 206366, 204180, 204843, 206144, 206143, 206142, 206141, 206140, 206139, 185834, 201250, 204188, 204187, 204186, 204191, 204190, 204189, 203430, 203683, 203710, 204464, 205903, 204985, 205188, 205984, 204715, 204727, 204440, 204717, 24915, 24916, 24917, 24918, 24919, 49040, 50274, 51316, 51317, 51318, 51319, 51320, 51321, 52200, 52201, 52251, 52252, 52253, 122338, 122339, 122340, 122341, 128353, 129940, 129941, 129942, 129943, 129944, 129945, 129946, 129947, 129948, 129949, 129950, 129951, 129954, 129955, 133150, 133151, 133152, 133154, 133159, 133160, 137642, 141605, 141652, 143935, 143936, 143937, 143938, 143939, 143940, 143941, 143942, 143943, 143944, 143945, 143946, 143947, 151614, 151615, 166751, 167731, 167732, 167924, 167925, 167926, 167927, 167928, 167929, 167930, 167932, 168017, 168018, 180817, 183616, 187997, 187998, 188152, 189765, 190189, 190453, 190454, 190455, 190456, 191251, 191264, 191784, 191915, 192055, 192130, 192131, 192132, 193201, 193891, 193897, 193898, 193899, 193900, 193901, 193902, 193903, 193904, 193905, 193907, 193909, 193910, 193913, 194039, 194040, 194041, 194054, 194055, 194061, 194062, 194063, 194064, 194066, 194067, 194068, 194072, 194076, 194077, 194078, 194079, 194080, 194081, 194337, 194697, 194698, 194699, 194700, 194702, 194703, 194704, 194708, 197921, 198046, 198395, 198438, 198454, 198510, 198599, 198606, 198607, 198608, 198609, 198610, 198611, 198612, 198613, 198656, 198658, 198659, 198660, 198662, 198663, 198664, 198667, 198669, 198670, 198680, 198682, 198683, 198684, 198685, 198686, 198687, 198690, 198692, 198693, 198696, 198697, 198699, 198702, 198703, 198704, 198710, 198711, 198712, 198789, 198837, 198841, 198863, 198864, 198865, 198866, 198867, 198868, 198869, 198963, 198964, 198965, 198966, 198967, 198968, 198969, 198970, 198971, 198972, 198973, 198974, 198975, 198976, 198977, 198978, 199115, 199122, 199128, 199192, 199197, 199472, 199473, 199474, 199475, 199906, 200069, 200070, 200071, 200072, 200073, 200093, 200095, 200224, 200285, 200287, 200288, 200289, 200300, 200452, 200453, 200454, 200455, 200468, 200513, 200515, 200516, 200609, 200610, 200611, 200652, 200677, 200678, 200686, 200764, 200811, 200846, 200972, 200973, 200974, 200975, 200976, 200977, 200978, 200979, 200980, 200981, 200982, 201003, 201004, 201005, 201006, 201007, 201008, 201009, 201010, 201011, 201012, 201013, 201014, 201015, 201016, 201017, 201018, 201019, 201020, 201023, 201268, 201269, 201270, 201271, 201272, 201273, 201274, 201275, 201276, 201277, 201278, 201279, 201280, 201281, 201282, 201283, 201284, 201285, 201286, 201287, 201288, 201289, 201300, 201301, 201326, 201352, 201411, 201439, 201462, 201700, 201705, 201706, 201708, 201709, 201710, 201711, 201712, 201713, 201714, 201715, 201716, 201717, 201728, 201755, 201756, 201781, 201782, 201817, 201836, 201921, 201922, 201923, 201924, 201991, 202011, 202014, 202016, 202017, 202039, 202052, 202079, 202080, 202091, 202092, 202093, 202094, 202097, 202098, 202142, 202152, 202171, 202172, 202173, 202196, 202371, 202667, 202668, 202669, 202670, 202854, 202870, 202871, 202872, 203217, 203220, 203222, 203224, 203476, 203611, 203612, 203613, 203614, 203615, 203616, 203617, 203618, 203619, 203620, 203622, 203623, 203626, 203627, 203628, 203629, 203630, 203631, 203632, 203633, 203634, 203635, 203636, 203637, 203638, 203639, 203640, 203641, 203642, 203643, 203644, 203645, 203646, 203647, 203648, 203649, 203650, 203681, 203699, 203700, 203702, 204075, 204076, 204077, 204078, 204193, 204194, 204195, 204196, 204215, 204217, 204222, 204224, 204225, 204226, 204227, 204228, 204229, 204230, 204231, 204232, 204233, 204276, 204352, 204359, 204378, 204379, 204380, 204381, 204383, 204403, 204469, 204470, 204471, 204475, 204558, 204559, 204560, 204573, 204574, 204575, 204576, 204577, 204578, 204579, 204681, 204682, 204697, 204721, 204722, 204723, 204724, 204725, 204726, 204850, 204853, 204855, 204986, 204987, 204988, 204990, 204999, 205001, 205211, 205212, 205213, 205214, 205216, 205219, 205249, 205250, 205423, 205982, 205986, 205987, 205988, 205989, 206019, 206025, 206030, 206031, 206034, 206035, 205288, 205347,
+	122284, 205878, 205225, 206037, 205999, 206028, 138727, 138728, 138488, 138729, 138486, 167862, 206366, 204180, 204843, 206144, 206143, 206142, 206141, 206140, 206139, 185834, 201250, 204188, 204187, 204186, 204191, 204190, 204189, 203430, 203683, 203710, 204464, 205903, 204985, 205188, 205984, 204715, 204727, 204440, 204717, 24915, 24916, 24917, 24918, 24919, 49040, 50274, 51316, 51317, 51318, 51319, 51320, 51321, 52200, 52201, 52251, 52252, 52253, 122338, 122339, 122340, 122341, 128353, 129940, 129941, 129942, 129943, 129944, 129945, 129946, 129947, 129948, 129949, 129950, 129951, 129954, 129955, 133150, 133151, 133152, 133154, 133159, 133160, 137642, 141605, 141652, 143935, 143936, 143937, 143938, 143939, 143940, 143941, 143942, 143943, 143944, 143945, 143946, 143947, 151614, 151615, 166751, 167731, 167732, 167924, 167925, 167926, 167927, 167928, 167929, 167930, 167932, 168017, 168018, 180817, 183616, 187997, 187998, 188152, 189765, 190189, 190453, 190454, 190455, 190456, 191251, 191264, 191784, 191915, 192055, 192130, 192131, 192132, 193201, 193891, 193897, 193898, 193899, 193900, 193901, 193902, 193903, 193904, 193905, 193907, 193909, 193910, 193913, 194039, 194040, 194041, 194054, 194055, 194061, 194062, 194063, 194064, 194066, 194067, 194068, 194072, 194076, 194077, 194078, 194079, 194080, 194081, 194337, 194697, 194698, 194699, 194700, 194702, 194703, 194704, 194708, 197921, 198046, 198395, 198438, 198454, 198510, 198599, 198606, 198607, 198608, 198609, 198610, 198611, 198612, 198613, 198656, 198658, 198659, 198660, 198662, 198663, 198664, 198667, 198669, 198670, 198680, 198682, 198683, 198684, 198685, 198686, 198687, 198690, 198692, 198693, 198696, 198697, 198699, 198702, 198703, 198704, 198710, 198711, 198712, 198789, 198837, 198841, 198863, 198864, 198865, 198866, 198867, 198868, 198869, 198963, 198964, 198965, 198966, 198967, 198968, 198969, 198970, 198971, 198972, 198973, 198974, 198975, 198976, 198977, 198978, 199115, 199122, 199128, 199192, 199197, 199472, 199473, 199474, 199475, 199906, 200069, 200070, 200071, 200072, 200073, 200093, 200095, 200224, 200285, 200287, 200288, 200289, 200300, 200452, 200453, 200454, 200455, 200468, 200513, 200515, 200516, 200609, 200610, 200611, 200652, 200677, 200678, 200686, 200764, 200811, 200846, 200972, 200973, 200974, 200975, 200976, 200977, 200978, 200979, 200980, 200981, 200982, 201003, 201004, 201005, 201006, 201007, 201008, 201009, 201010, 201011, 201012, 201013, 201014, 201015, 201016, 201017, 201018, 201019, 201020, 201023, 201268, 201269, 201270, 201271, 201272, 201273, 201274, 201275, 201276, 201277, 201278, 201279, 201280, 201281, 201282, 201283, 201284, 201285, 201286, 201287, 201288, 201289, 201300, 201301, 201326, 201352, 201411, 201439, 201462, 201700, 201705, 201706, 201708, 201709, 201710, 201711, 201712, 201713, 201714, 201715, 201716, 201717, 201728, 201755, 201756, 201781, 201782, 201817, 201836, 201921, 201922, 201923, 201924, 201991, 202011, 202014, 202016, 202017, 202039, 202052, 202079, 202080, 202091, 202092, 202093, 202094, 202097, 202098, 202142, 202152, 202171, 202172, 202173, 202196, 202371, 202667, 202668, 202669, 202670, 202854, 202870, 202871, 202872, 203217, 203220, 203222, 203224, 203476, 203611, 203612, 203613, 203614, 203615, 203616, 203617, 203618, 203619, 203620, 203622, 203623, 203626, 203627, 203628, 203629, 203630, 203631, 203632, 203633, 203634, 203635, 203636, 203637, 203638, 203639, 203640, 203641, 203642, 203643, 203644, 203645, 203646, 203647, 203648, 203649, 203650, 203681, 203699, 203700, 203702, 204075, 204076, 204077, 204078, 204193, 204194, 204195, 204196, 204215, 204217, 204222, 204224, 204225, 204226, 204227, 204228, 204229, 204230, 204231, 204232, 204233, 204276, 204352, 204359, 204378, 204379, 204380, 204381, 204383, 204403, 204469, 204470, 204471, 204475, 204558, 204559, 204560, 204573, 204574, 204575, 204576, 204577, 204578, 204579, 204681, 204682, 204697, 204721, 204722, 204723, 204724, 204725, 204726, 204850, 204853, 204855, 204986, 204987, 204988, 204990, 204999, 205001, 205211, 205212, 205213, 205214, 205216, 205219, 205249, 205250, 205423, 205982, 205986, 205987, 205988, 205989, 206019, 206025, 206030, 206031, 206034, 206035, 205288, 205347,
 }
 -- local function itemID_TEST_INSERT()
 -- for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
@@ -1408,7 +1409,7 @@ local function CreateFrameUsableItems_OnLeave(self)
 end
 local function CreateFrameUsableItems_OnEvent(self,event)
 	if event == "BAG_UPDATE" then
-		local sufficiently = GetItemCount(itemID, true, true, true) < self.count
+		local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
 		self.icon:SetDesaturated(sufficiently)
 		self.icon:SetAlpha(sufficiently and .1 or 1)
 	elseif event == "PLAYER_REGEN_DISABLED" then
@@ -1429,11 +1430,12 @@ local function CreateFrameUsableItems_OnMouseUp(self)
 	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
 	self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
 end
-local function CreateFrameUsableItems(itemID, count, Ypos, r, g, b)
+local function CreateFrameUsableItems(itemID, Texture, count, Ypos, r, g, b)
 	local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
 	Button.itemID = itemID
-	Button.Ypos = Ypos
+	Button.Texture = Texture
 	Button.count = count
+	Button.Ypos = Ypos
 	-- Button.r = r
 	-- Button.g = g
 	-- Button.b = b
@@ -1454,7 +1456,7 @@ local function CreateFrameUsableItems(itemID, count, Ypos, r, g, b)
 	Button:SetAttribute("macrotext", "/use item:"..itemID)
 	local t = Button:CreateTexture(nil, "BACKGROUND")
 	Button.icon = t
-	t:SetTexture(select(10, GetItemInfo(itemID)))
+	t:SetTexture(Texture)--select(10, GetItemInfo(itemID)))
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Button)
 	Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
@@ -1553,8 +1555,14 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			self.icon:SetVertexColor(1, 0, 0, 0.5)
 	end)
 	Main_Frame.OptionsButton:SetScript("OnClick", function()
-			Main_Frame:Hide()
-			Settings.OpenToCategory(AddonName, true)
+			if Main_Frame and Main_Frame:IsShown() then
+				Main_Frame:Hide()
+			end
+			if SettingsPanel:IsVisible() and self:IsVisible() then
+				HideUIPanel(SettingsPanel)
+			else
+				Settings.OpenToCategory(AddonName, true)
+			end
 	end)
 	local t = Main_Frame.OptionsButton:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.OptionsButton.icon = t
@@ -1573,28 +1581,28 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 			GameTooltip:ClearLines()
 			--GameTooltip:AddLine("ToDragonbaneKeepTimer") -- "Title"
-			GameTooltip:AddLine(" ")
-			GameTooltip:AddLine("0 -> 398")
-			GameTooltip:AddLine("|cffa335ee2 -> 402|r")
-			GameTooltip:AddLine("|cffa335ee3 -> 405|r")
-			GameTooltip:AddLine("|cffa335ee4 -> 405|r")
-			GameTooltip:AddLine("|cffa335ee5 -> 408|r")
-			GameTooltip:AddLine("|cffa335ee6 -> 408|r")
-			GameTooltip:AddLine("|cffa335ee7 -> 411|r")
-			GameTooltip:AddLine("|cffa335ee8 -> 411|r")
-			GameTooltip:AddLine("|cffa335ee9 -> 415|r")
-			GameTooltip:AddLine("|cffff800010 -> 415|r")
-			GameTooltip:AddLine("|cffff800011 -> 418|r")
-			GameTooltip:AddLine("|cffff800012 -> 418|r")
-			GameTooltip:AddLine("|cffff800013 -> 421|r")
-			GameTooltip:AddLine("|cffff800014 -> 421|r")
-			GameTooltip:AddLine("|cffff800015 -> 424|r")
-			GameTooltip:AddLine("|cffff800016 -> 424|r")
-			GameTooltip:AddLine("|cffd9cc8017 -> 428|r")
-			GameTooltip:AddLine("|cffd9cc8018 -> 428|r")
-			GameTooltip:AddLine("|cffd9cc8019 -> 431|r")
-			GameTooltip:AddLine("|cffd9cc8020 -> 431|r")
-			GameTooltip:AddLine(" ")
+			GameTooltip:AddDoubleLine(" "," ")
+			GameTooltip:AddDoubleLine("0","398")
+			GameTooltip:AddDoubleLine("|cffa335ee2|r","|cffa335ee402|r")
+			GameTooltip:AddDoubleLine("|cffa335ee3|r","|cffa335ee405|r")
+			GameTooltip:AddDoubleLine("|cffa335ee4|r","|cffa335ee405|r")
+			GameTooltip:AddDoubleLine("|cffa335ee5|r","|cffa335ee408|r")
+			GameTooltip:AddDoubleLine("|cffa335ee6|r","|cffa335ee408|r")
+			GameTooltip:AddDoubleLine("|cffa335ee7|r","|cffa335ee411|r")
+			GameTooltip:AddDoubleLine("|cffa335ee8|r","|cffa335ee411|r")
+			GameTooltip:AddDoubleLine("|cffa335ee9|r","|cffa335ee415|r")
+			GameTooltip:AddDoubleLine("|cffff800010|r","|cffff8000415|r")
+			GameTooltip:AddDoubleLine("|cffff800011|r","|cffff8000418|r")
+			GameTooltip:AddDoubleLine("|cffff800012|r","|cffff8000418|r")
+			GameTooltip:AddDoubleLine("|cffff800013|r","|cffff8000421|r")
+			GameTooltip:AddDoubleLine("|cffff800014|r","|cffff8000421|r")
+			GameTooltip:AddDoubleLine("|cffff800015|r","|cffff8000424|r")
+			GameTooltip:AddDoubleLine("|cffff800016|r","|cffff8000424|r")
+			GameTooltip:AddDoubleLine("|cffd9cc8017|r","|cffd9cc80428|r")
+			GameTooltip:AddDoubleLine("|cffd9cc8018|r","|cffd9cc80428|r")
+			GameTooltip:AddDoubleLine("|cffd9cc8019|r","|cffd9cc80431|r")
+			GameTooltip:AddDoubleLine("|cffd9cc8020|r","|cffd9cc80431|r")
+			GameTooltip:AddDoubleLine(" "," ")
 			GameTooltip:Show()
 			UPGRADERANKS_Frame:Show()
 	end)
@@ -1721,12 +1729,69 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.MedalofHonor_Button)
 	-----------------------------------------------------
+	-----------------------------------------------------
+	Main_Frame.AlchemicalFlavorPocket_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
+	Main_Frame.AlchemicalFlavorPocket_Button:SetSize(curHeight, curHeight)
+	Main_Frame.AlchemicalFlavorPocket_Button:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -150)
+	Main_Frame.AlchemicalFlavorPocket_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.AlchemicalFlavorPocket_Button:SetBackdropBorderColor(.64, .21, .93, 1)
+	Main_Frame.AlchemicalFlavorPocket_Button:SetScript("OnEnter", function(self)
+			local i = 0
+			self:SetBackdropBorderColor(1, 0, 0, 1)
+			self.icon:SetVertexColor(1, 0, 0, 1)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+			GameTooltip:ClearLines()
+			GameTooltip:AddDoubleLine(" "," ")
+			for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
+				if CharInfo.ItemsInBag[200652] and CharInfo.ItemsInBag[200652] ~= 0 then
+					i = i + 1
+					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+					local curServerShort = CharInfo.curServer
+					local text = (curServerShort):gsub("-", " "):gsub("'", " ")
+					local a, b = strsplit(" ", text)
+					if b then
+						curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
+					end
+					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[200652])
+				end
+			end
+			if i == 0 then
+				GameTooltip:AddLine("No Data")
+			end
+			GameTooltip:AddDoubleLine(" "," ")
+			GameTooltip:Show()
+	end)
+	Main_Frame.AlchemicalFlavorPocket_Button:SetScript("OnLeave", function(self)
+			self:SetBackdropBorderColor(.64, .21, .93, 1)
+			self.icon:SetVertexColor(1, 1, 1, 1)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	Main_Frame.AlchemicalFlavorPocket_Button:SetScript("OnMouseDown", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, .5)
+			self.icon:SetVertexColor(1, 0, 0, .5)
+	end)
+	Main_Frame.AlchemicalFlavorPocket_Button:SetScript("OnClick", function()
+			Main_Frame:Hide()
+	end)
+	local t = Main_Frame.AlchemicalFlavorPocket_Button:CreateTexture(nil, "BACKGROUND")
+	Main_Frame.AlchemicalFlavorPocket_Button.icon = t
+	t:SetTexture("Interface\\ICONS\\inv_misc_food_legion_goochocovanilla_bottle.blp")
+	t:SetVertexColor(1, 1, 1, 1)
+	t:SetAllPoints(Main_Frame.AlchemicalFlavorPocket_Button)
+	-----------------------------------------------------
+	-----------------------------------------------------
+	-----------------------------------------------------
+
+
+
+
 	-- ITEMID, count, Ypox, r, g, b
-	CreateFrameUsableItems(204075, 15, 0, .12, 1, 0)
-	CreateFrameUsableItems(204076, 15, -24, 0, .44, .98)
-	CreateFrameUsableItems(204077, 15, -48, .64, .21, .93)
-	CreateFrameUsableItems(204078, 15, -72, 1, .5, 0)
-	CreateFrameUsableItems(204717, 2, -96, .85, .8, .5)
+	CreateFrameUsableItems(204075, 5062636, 15, 0, .12, 1, 0)
+	CreateFrameUsableItems(204076, 5062624, 15, -24, 0, .44, .98)
+	CreateFrameUsableItems(204077, 5062642, 15, -48, .64, .21, .93)
+	CreateFrameUsableItems(204078, 5062612, 15, -72, 1, .5, 0)
+	CreateFrameUsableItems(204717, 442739, 2, -96, .85, .8, .5)
 	-----------------------------------------------------
 	-----------------------------------------------------
 	StaticPopupDialogs[AddonName.."DELETE_ADDONDATA_RELOAD"] = {
@@ -2251,7 +2316,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.reputationID[2564] and CharInfo.reputationID[2564] ~= 0 then
 				Char_Frame.CenterLines11.CL:SetText(CharInfo.reputationID[2564])
 			end
-			--tinsert(Char_Frame.CenterLines11.tooltip, {"qwe", CharInfo.ItemsInBag[192055]})
 			if #Char_Frame.CenterLines11.tooltip == 0 then
 				Char_Frame.CenterLines11.tooltip = nil
 				Char_Frame.CenterLines11.CL:SetText("")
@@ -2275,6 +2339,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_2409)
 			if (CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0) and CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
 				tinsert(Char_Frame.CenterLines12.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]})
+				tinsert(Char_Frame.CenterLines12.tooltip, {"LFR","M+ 1-5"})
+
+
 			end
 			if #Char_Frame.CenterLines12.tooltip == 0 then
 				Char_Frame.CenterLines12.tooltip = nil
@@ -2736,10 +2803,6 @@ local function checkCharInfo(CharInfo)
 end
 function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 	if InCombatLockdown() then return end
-	-- if Main_Frame and Main_Frame:IsShown() and not InCombatLockdown() then
-	-- 	print (event)
-	-- 	Collect_PVP_Raitings()
-	-- end
 	if event == "ACTIONBAR_UPDATE_COOLDOWN" and not InCombatLockdown() then
 		if Main_Frame and Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
@@ -2791,14 +2854,24 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		local ldb_icon = ldb:NewDataObject(MinimapName, {
 				type = "data source",
 				text = MinimapName,
-				icon = 3528288,
+				icon = IconTexture,
 				OnClick = function(_, button)
-					Main_Frame:SetShown(not Main_Frame:IsShown())
-					-- PlaySoundFile("Interface\\AddOns\\Octo_ToDo_Dragonfly\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
-					CollectAllItemsInBag()
-					Fragments_Earned()
-					CollectAllReputations()
-					Collect_PVP_Raitings()
+					if not InCombatLockdown() then
+						Main_Frame:SetShown(not Main_Frame:IsShown())
+						PlaySoundFile("Interface\\AddOns\\Octo_ToDo_Dragonfly\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
+						CollectAllItemsInBag()
+						Fragments_Earned()
+						CollectAllReputations()
+						Collect_PVP_Raitings()
+						-- if Main_Frame and Main_Frame:IsShown() then
+						-- 	Main_Frame:Hide()
+						-- end
+						-- if SettingsPanel:IsVisible() and self:IsVisible() then
+						-- 	HideUIPanel(SettingsPanel)
+						-- else
+						-- 	Settings.OpenToCategory(AddonName, true)
+						-- end
+					end
 				end,
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
@@ -2855,12 +2928,10 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast == nil then
 			Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast = true
 		end
-		if Octo_ToDo_DragonflyVars.config.BugSack == nil then   --RELOAD
-			Octo_ToDo_DragonflyVars.config.BugSack = true
+		if Octo_ToDo_DragonflyVars.config.AnotherAddons == nil then   --RELOAD
+			Octo_ToDo_DragonflyVars.config.AnotherAddons = true
 		end
-		if Octo_ToDo_DragonflyVars.config.MountsJournal == nil then   --RELOAD
-			Octo_ToDo_DragonflyVars.config.MountsJournal = true
-		end
+
 		for i, func in ipairs(E.modules) do
 			func()
 		end
@@ -2897,6 +2968,9 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectCurrentKEY()
 		CollectAllQuests()
 		UPGRADERANKS_Frame()
+		C_Timer.After(1, function()
+			ChatFrame1:Clear()
+		end)
 		--itemID_TEST_INSERT()
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		Collect_PVP_Raitings()

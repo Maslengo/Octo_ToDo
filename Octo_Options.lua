@@ -165,36 +165,25 @@ config:SetScript("OnShow", function(self)
 	-----------------------------------------------
 	-- BUTTON 14 MajorFactionsRenownToast
 	-----------------------------------------------
-	self.btn_left14 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_left14:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -390)
-	self.btn_left14:SetChecked(Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast)
-	self.btn_left14:SetScript("OnClick", function(btn_left)
-		Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast = btn_left:GetChecked()
-	end)
-	self.btn_left14.text:SetText("MajorFactionsRenownToast")
+	-- self.btn_left14 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	-- self.btn_left14:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -390)
+	-- self.btn_left14:SetChecked(Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast)
+	-- self.btn_left14:SetScript("OnClick", function(btn_left)
+	-- 	Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast = btn_left:GetChecked()
+	-- end)
+	-- self.btn_left14.text:SetText("MajorFactionsRenownToast")
 	-----------------------------------------------
 	-----------------------------------------------
-	-- BUTTON 15 BugSack
+	-- BUTTON 15 AnotherAddons
 	-----------------------------------------------
 	self.btn_right15 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_right15:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, 0)
-	self.btn_right15:SetChecked(Octo_ToDo_DragonflyVars.config.BugSack)
+	self.btn_right15:SetChecked(Octo_ToDo_DragonflyVars.config.AnotherAddons)
 	self.btn_right15:SetScript("OnClick", function(btn_right)
-		Octo_ToDo_DragonflyVars.config.BugSack = btn_right:GetChecked()
+		Octo_ToDo_DragonflyVars.config.AnotherAddons = btn_right:GetChecked()
 		StaticPopup_Show(AddonName.."GET_RELOAD")
 	end)
-	self.btn_right15.text:SetText("|cffFF0000BugSack|r")
-	-----------------------------------------------
-	-- BUTTON 16 MountsJournal
-	-----------------------------------------------
-	self.btn_right16 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right16:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -30)
-	self.btn_right16:SetChecked(Octo_ToDo_DragonflyVars.config.MountsJournal)
-	self.btn_right16:SetScript("OnClick", function(btn_right)
-		Octo_ToDo_DragonflyVars.config.MountsJournal = btn_right:GetChecked()
-		StaticPopup_Show(AddonName.."GET_RELOAD")
-	end)
-	self.btn_right16.text:SetText("|cffFF0000MountsJournal|r")
+	self.btn_right15.text:SetText("|cffFF0000AnotherAddons|r\nBugGrabber, BugSack, AutoTurnIn, MountsJournal, WowheadQuickLink")
 	-----------------------------------------------
 end)
 -- ADD CATEGORY

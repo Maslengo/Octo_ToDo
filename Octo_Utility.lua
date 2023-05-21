@@ -22,6 +22,9 @@ tinsert(E.modules, function()
 	if Octo_ToDo_DragonflyVars.config.HideZoneText then
 		ZoneTextFrame:UnregisterAllEvents()
 		EventToastManagerFrame:UnregisterAllEvents()
+		if EventToastManagerFrame then
+			EventToastManagerFrame:Hide()
+		end
 	end
 end)
 	----------------------------------------------------------------------------------------------------------------------------------
@@ -96,7 +99,11 @@ end)
 --MajorFactionsRenownToast
 tinsert(E.modules, function()
 	if Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast then
-		--MajorFactionsRenownToast:UnregisterAllEvents()
+		if MajorFactionsRenownToast then
+			print("che za hooinya")
+			MajorFactionsRenownToast:UnregisterAllEvents()
+			MajorFactionsRenownToast:Hide()
+		end
 	end
 end)
 	----------------------------------------------------------------------------------------------------------------------------------
@@ -107,16 +114,14 @@ local function func_Octo_LoadAddOn(AddonName)
 		LoadAddOn(AddonName)
 	end
 end
---BugSack
+--AnotherAddons
 tinsert(E.modules, function()
-	if Octo_ToDo_DragonflyVars.config.BugSack then
+	if Octo_ToDo_DragonflyVars.config.AnotherAddons then
 		func_Octo_LoadAddOn("!BugGrabber")
 		func_Octo_LoadAddOn("BugSack")
-	end
-end)
---MountsJournal
-tinsert(E.modules, function()
-	if Octo_ToDo_DragonflyVars.config.MountsJournal then
+		func_Octo_LoadAddOn("AutoTurnIn")
 		func_Octo_LoadAddOn("MountsJournal")
+		func_Octo_LoadAddOn("WowheadQuickLink")
+
 	end
 end)

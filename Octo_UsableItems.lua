@@ -19,7 +19,7 @@ function Octo_MAIL_DragonflyOnLoad()
 	Octo_UsableItems_Frame:SetScript("OnEvent", Octo_MAIL_DragonflyOnEvent)
 end
 local white_list = {
-	[110560] = true, --TEST
+	--[110560] = true, --TEST
 	--DRAENOR
 	[128313] = true,
 	[111956] = true,
@@ -412,7 +412,7 @@ function FUNC_Nazvanie(self, _, down)
 					UsableItems_Frame:Hide()
 				end
 				if white_list[itemID] and not isLocked then
-					print (iconFileID)
+					-- print (iconFileID)
 					self:SetAttribute("macrotext", "/use item:"..itemID)
 					return
 				end
@@ -430,7 +430,7 @@ function MASLENGO_UsableItems()
 	-- UsableItems_Frame:RegisterForDrag("RightButton")
 	-- UsableItems_Frame:SetScript("OnDragStart", UsableItems_Frame.StartMoving)
 	-- UsableItems_Frame:SetScript("OnDragStop", function() UsableItems_Frame:StopMovingOrSizing() end)
-	UsableItems_Frame:SetPoint("CENTER", -524, 524)
+	UsableItems_Frame:SetPoint("TOPLEFT", 0, 0)
 	UsableItems_Frame:SetBackdrop({
 			bgFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
 			edgeFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",

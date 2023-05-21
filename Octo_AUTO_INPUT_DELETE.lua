@@ -1,7 +1,6 @@
 local AddonName, E = ...
 tinsert(E.modules, function()
     if Octo_ToDo_DragonflyVars.config.InputDelete == true then
-        print ("qwe")
         local TypeDeleteLine = gsub(DELETE_GOOD_ITEM, "[\r\n]", "@")
         local void, TypeDeleteLine = strsplit("@", TypeDeleteLine, 2)
         StaticPopupDialogs["DELETE_ITEM"].OnHyperlinkEnter = StaticPopupDialogs["DELETE_GOOD_ITEM"].OnHyperlinkEnter
