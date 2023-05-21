@@ -2463,11 +2463,11 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.ItemsInBag[204985] >= 1 or CharInfo.ItemsInBag[191784] >=1 then
 				tinsert(Char_Frame.CenterLines18.tooltip, {" ", " "})
 			end
-			if CharInfo.ItemsInBag[204985] >= 1 then
-				tinsert(Char_Frame.CenterLines18.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]})
-			end
 			if CharInfo.ItemsInBag[191784] >= 1 then
 				tinsert(Char_Frame.CenterLines18.tooltip, {func_itemTexture(191784)..func_itemName(191784), CharInfo.ItemsInBag[191784]})
+			end
+			if CharInfo.ItemsInBag[204985] >= 1 then
+				tinsert(Char_Frame.CenterLines18.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]})
 			end
 			if #Char_Frame.CenterLines18.tooltip == 0 then
 				Char_Frame.CenterLines18.tooltip = nil
@@ -2566,28 +2566,28 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			Main_Frame.TextLeft22:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r")
 			Char_Frame.CenterLines22.CL:SetText("|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r") -- 0.949, 0.902, 0.6 icon = 133784 https://www.wowhead.com/icons/name:coin
-			Char_Frame.CenterLines22.tooltip = {}
-			if CharInfo.GetBindLocation then
-				tinsert(Char_Frame.CenterLines22.tooltip, {"|cffFF0000"..func_itemTexture(6948)..CharInfo.GetBindLocation.."|r"})
-			end
-			if CharInfo.CurrentLocation then
-				tinsert(Char_Frame.CenterLines22.tooltip, {func_itemTexture(40536) ..CharInfo.CurrentLocation})
-			end
-			if CharInfo.specId and CharInfo.specName and CharInfo.specIcon then
-				tinsert(Char_Frame.CenterLines22.tooltip, {"|T"..CharInfo.specIcon..":16:16:::64:64:4:60:4:60|t"..classcolor:WrapTextInColorCode(CharInfo.specName)}) --SPECIALIZATION,
-			end
-			if CharInfo.avgItemLevel then
-				tinsert(Char_Frame.CenterLines22.tooltip, {LFG_LIST_ITEM_LEVEL_INSTR_SHORT, format("|cff%s%.1f|r", CharInfo.avgItemLevel >= 410 and "00ff00" or CharInfo.avgItemLevel >= 390 and "ffff00" or "ff0000", CharInfo.avgItemLevel)})
-			end
-			if CharInfo.avgItemLevelEquipped then
-				tinsert(Char_Frame.CenterLines22.tooltip, {STAT_AVERAGE_ITEM_LEVEL_EQUIPPED, format("|cff%s%.1f|r", CharInfo.avgItemLevelEquipped >= 410 and "00ff00" or CharInfo.avgItemLevelEquipped >= 390 and "ffff00" or "ff0000", CharInfo.avgItemLevelEquipped)})
-			end
-			if CharInfo.avgItemLevelPvp then
-				tinsert(Char_Frame.CenterLines22.tooltip, {LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("|cff%s%.1f|r", CharInfo.avgItemLevelPvp >= 410 and "00ff00" or CharInfo.avgItemLevelPvp >= 390 and "ffff00" or "ff0000", CharInfo.avgItemLevelPvp )})
-			end
-			if #Char_Frame.CenterLines22.tooltip == 0 then
-				Char_Frame.CenterLines22.tooltip = nil
-			end
+			-- Char_Frame.CenterLines22.tooltip = {}
+			-- if CharInfo.GetBindLocation then
+			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {"|cffFF0000"..func_itemTexture(6948)..CharInfo.GetBindLocation.."|r"})
+			-- end
+			-- if CharInfo.CurrentLocation then
+			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {func_itemTexture(40536) ..CharInfo.CurrentLocation})
+			-- end
+			-- if CharInfo.specId and CharInfo.specName and CharInfo.specIcon then
+			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {"|T"..CharInfo.specIcon..":16:16:::64:64:4:60:4:60|t"..classcolor:WrapTextInColorCode(CharInfo.specName)}) --SPECIALIZATION,
+			-- end
+			-- if CharInfo.avgItemLevel then
+			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {LFG_LIST_ITEM_LEVEL_INSTR_SHORT, format("|cff%s%.1f|r", CharInfo.avgItemLevel >= 410 and "00ff00" or CharInfo.avgItemLevel >= 390 and "ffff00" or "ff0000", CharInfo.avgItemLevel)})
+			-- end
+			-- if CharInfo.avgItemLevelEquipped then
+			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {STAT_AVERAGE_ITEM_LEVEL_EQUIPPED, format("|cff%s%.1f|r", CharInfo.avgItemLevelEquipped >= 410 and "00ff00" or CharInfo.avgItemLevelEquipped >= 390 and "ffff00" or "ff0000", CharInfo.avgItemLevelEquipped)})
+			-- end
+			-- if CharInfo.avgItemLevelPvp then
+			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("|cff%s%.1f|r", CharInfo.avgItemLevelPvp >= 410 and "00ff00" or CharInfo.avgItemLevelPvp >= 390 and "ffff00" or "ff0000", CharInfo.avgItemLevelPvp )})
+			-- end
+			-- if #Char_Frame.CenterLines22.tooltip == 0 then
+			-- 	Char_Frame.CenterLines22.tooltip = nil
+			-- end
 			-- --23
 			-- Char_Frame.CenterLines23.CL:SetText("PVP")
 			-- Char_Frame.CenterLines23.tooltip = {
