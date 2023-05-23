@@ -14,7 +14,7 @@ local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScal
 local curWidth, curHeight = 96*scale , 20*scale -- ширина 80, высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
-local TotalLines = 22
+local TotalLines = 23
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local TotalMoney = 0
@@ -1130,7 +1130,7 @@ local questIDtable = {
 	72167, -- 1500 на пвп
 	72170,
 	75622, -- трофей за пвп?
-	74771, 75694, 74905, 75887, 74570, 74569, 74568, 75888, 74775, 75665, 24548, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 64710, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 69927, 69928, 69929, 69930, 70750, 70866, 70893, 70906, 71026, 72068, 72166, 72168, 72169, 72171, 72373, 72374, 72375, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 73162, 74378, 74871, 75259, 75506, 76122, 36614,
+	74771, 75694, 74905, 75887, 74570, 74569, 74568, 75888, 74775, 75665, 24548, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 64710, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 69927, 69928, 69929, 69930, 70866, 70906, 71026, 72166, 72168, 72169, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 73162, 74378, 74871, 75506, 76122, 36614,
 }
 local Meta_Table = {
 	__index = function()
@@ -2569,6 +2569,16 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			Main_Frame.TextLeft22:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r")
 			Char_Frame.CenterLines22.CL:SetText("|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r") -- 0.949, 0.902, 0.6 icon = 133784 https://www.wowhead.com/icons/name:coin
+
+			--23
+			Main_Frame.TextLeft23:SetFormattedText(MAJOR_FACTION_RENOWN_LEVEL_TOAST, 42)
+			--Main_Frame.TextLeft23:SetText(MAJOR_FACTION_RENOWN_LEVEL_TOAST)
+
+
+
+
+
+
 			-- Char_Frame.CenterLines22.tooltip = {}
 			-- if CharInfo.GetBindLocation then
 			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {"|cffFF0000"..func_itemTexture(6948)..CharInfo.GetBindLocation.."|r"})
@@ -2743,6 +2753,7 @@ local function checkCharInfo(CharInfo)
 		CharInfo.RIO_RAID = ""
 		CharInfo.RIO_KEYS = ""
 		CharInfo.RIO_PVPS = ""
+		CharInfo.questIDtable = {}
 	end
 	if (CharInfo.tmstp or 0) < GetServerTime() then
 		CharInfo.tmstp = tmstpDayReset(1)
@@ -2968,9 +2979,9 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectCurrentKEY()
 		CollectAllQuests()
 		UPGRADERANKS_Frame()
-		C_Timer.After(1, function()
-			ChatFrame1:Clear()
-		end)
+		-- C_Timer.After(1, function()
+		-- 	ChatFrame1:Clear()
+		-- end)
 		--itemID_TEST_INSERT()
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		Collect_PVP_Raitings()
