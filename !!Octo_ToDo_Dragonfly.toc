@@ -10,9 +10,10 @@ embeds.xml
 Localization.lua
 Octo_AUTO_ACCEPT_QUEST.lua
 Octo_AUTO_OPEN.lua
-Octo_Options.lua
 Octo_ElvUI_GlobalFadePersist.lua
+Octo_Mail_Frame.lua
+Octo_Options.lua
 Octo_SharedMedia.lua
 Octo_ToDo_Dragonfly.lua
-Octo_ZoneAbilityBinding.lua
 Octo_Utility.lua
+Octo_ZoneAbilityBinding.lua

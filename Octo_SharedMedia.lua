@@ -1,7 +1,7 @@
 local AddonName, E = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
-E.modules = {}
+--E.modules = {}
 --------------------------------------------------------------------------------
 local LSM = LibStub("LibSharedMedia-3.0")
 --[[SOUND

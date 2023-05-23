@@ -1,7 +1,7 @@
 local AddonName, E = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
-E.modules = {}
+--E.modules = {}
 --------------------------------------------------------------------------------
 local Enable_Module = false
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
