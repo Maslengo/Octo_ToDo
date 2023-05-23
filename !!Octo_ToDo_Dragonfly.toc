@@ -11,7 +11,6 @@ Localization.lua
 Octo_AUTO_ACCEPT_QUEST.lua
 Octo_AUTO_GOSSIP.lua
 Octo_AUTO_OPEN.lua
-Octo_UsableItems.lua
 Octo_Options.lua
 Octo_ElvUI_GlobalFadePersist.lua
 Octo_Mail_Frame.lua
@@ -21,3 +20,4 @@ Octo_ZoneAbilityBinding.lua
 Octo_CVar.lua
 Octo_AUTO_INPUT_DELETE.lua
 Octo_Utility.lua
+Octo_UsableItems.lua

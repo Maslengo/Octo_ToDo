@@ -6,6 +6,7 @@ E.modules = {}
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.CVar then
 			local isElfUI = IsAddOnLoaded("ElvUI")
+
 			if isElfUI == true and not InCombatLockdown() then
 				C_Timer.After(1, function()
 						C_Container.SetSortBagsRightToLeft(false)
@@ -13,6 +14,7 @@ tinsert(E.modules, function()
 				end)
 			end
 			if isElfUI == false and not InCombatLockdown() then
+				print ("qwe")
 				C_Timer.After(1, function()
 						C_Container.SetSortBagsRightToLeft(false)
 						C_Container.SetInsertItemsLeftToRight(false)
@@ -21,6 +23,7 @@ tinsert(E.modules, function()
 			end
 			if not InCombatLockdown() then
 				C_Timer.After(1, function()
+						SetCVar("AutoPushSpellToActionBar", 0)
 						SetCVar("AllowDangerousScripts", 1)
 						SetCVar("alwaysShowActionBars", 1)
 						SetCVar("autoLootDefault", 1) --автолут 1 вкл

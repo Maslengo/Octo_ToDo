@@ -54,18 +54,37 @@ config:SetScript("OnShow", function(self)
 	-----------------------------------------------
 	-- BUTTON 3 UsableItems
 	-----------------------------------------------
+	-- self.btn_left3 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	-- self.btn_left3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -60)
+	-- self.btn_left3:SetChecked(Octo_ToDo_DragonflyVars.config.UsableItems)
+	-- self.btn_left3:SetScript("OnClick", function(btn_left)
+	-- 	Octo_ToDo_DragonflyVars.config.UsableItems = btn_left:GetChecked()
+	-- 	if Octo_ToDo_DragonflyVars.config.UsableItems == false then
+	-- 		if E.UsableItems_Frame then
+	-- 			E.UsableItems_Frame:Hide()
+	-- 		end
+	-- 	else
+	-- 		E.UsableItemFrame_OnLoad()
+	-- 		E.UsableItemFrame()
+	-- 	end
+	-- end)
+	-- self.btn_left3.text:SetText("UsableItems")
+
 	self.btn_left3 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -60)
 	self.btn_left3:SetChecked(Octo_ToDo_DragonflyVars.config.UsableItems)
 	self.btn_left3:SetScript("OnClick", function(btn_left)
 		Octo_ToDo_DragonflyVars.config.UsableItems = btn_left:GetChecked()
-		if Octo_ToDo_DragonflyVars.config.UsableItems == false then
-			E.UsableItems_Frame:Hide()
-		else
-			E.TESTFUNC()
-		end
+		StaticPopup_Show(AddonName.."GET_RELOAD")
 	end)
-	self.btn_left3.text:SetText("UsableItems")
+	self.btn_left3.text:SetText("|cffFF0000UsableItems|r")
+
+
+
+
+
+
+
 	-----------------------------------------------
 	-- BUTTON 4 AutoOpen
 	-----------------------------------------------
@@ -187,7 +206,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDo_DragonflyVars.config.AnotherAddons = btn_right:GetChecked()
 		StaticPopup_Show(AddonName.."GET_RELOAD")
 	end)
-	self.btn_right15.text:SetText("|cffFF0000AnotherAddons|r\nBugGrabber, BugSack, AutoTurnIn, MountsJournal, WowheadQuickLink")
+	self.btn_right15.text:SetText("|cffFF0000AnotherAddons|r\nBugGrabber, BugSack, AutoTurnIn, MountsJournal, WowheadQuickLink, Postal")
 	-----------------------------------------------
 end)
 -- ADD CATEGORY

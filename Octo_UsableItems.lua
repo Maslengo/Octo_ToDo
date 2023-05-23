@@ -3,475 +3,98 @@ local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
 E.modules = {}
 --------------------------------------------------------------------------------
--- local Enable_Module = false
-local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
-local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8 --0.1,0.1,0.1,1
-local UsableItems_Frame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
-E.UsableItems_Frame = UsableItems_Frame
-local UnitLevel = UnitLevel("PLAYER")
-local maxlevel = 70
-function Octo_MAIL_DragonflyOnLoad()
-	local Octo_UsableItems_Frame = CreateFrame("Frame", nil)
-	Octo_UsableItems_Frame:RegisterEvent("PLAYER_LOGIN")
-	-- Octo_UsableItems_Frame:RegisterEvent("BAG_UPDATE")
-	Octo_UsableItems_Frame:RegisterEvent("PLAYER_STARTED_MOVING")
-	Octo_UsableItems_Frame:RegisterEvent("CHAT_MSG_LOOT")
-	Octo_UsableItems_Frame:RegisterEvent("QUEST_COMPLETE")
-	Octo_UsableItems_Frame:RegisterEvent("QUEST_FINISHED")
-	Octo_UsableItems_Frame:SetScript("OnEvent", Octo_MAIL_DragonflyOnEvent)
-end
-local white_list = {
-	--[110560] = true, --TEST
-	--DRAENOR
-	[128313] = true,
-	[111956] = true,
-	[5523] = true,
-	[205682] = true,
-	[189765] = true,
-	[194072] = true,
-	[198395] = true,
-	[198438] = true,
-	[198863] = true,
-	[198864] = true,
-	[198865] = true,
-	[198866] = true,
-	[198867] = true,
-	[198868] = true,
-	[198869] = true,
-	[199192] = true,
-	[199197] = true,
-	[199472] = true,
-	[199473] = true,
-	[199474] = true,
-	[199475] = true,
-	[200069] = true,
-	[200070] = true,
-	[200072] = true,
-	[200073] = true,
-	[200095] = true,
-	[200285] = true,
-	[200287] = true,
-	[200288] = true,
-	[200289] = true,
-	[200300] = true,
-	[200452] = true,
-	[200453] = true,
-	[200454] = true,
-	[200455] = true,
-	[200468] = true,
-	[200513] = true,
-	[200515] = true,
-	[200516] = true,
-	[200609] = true,
-	[200610] = true,
-	[200611] = true,
-	[201326] = true,
-	[201352] = true,
-	[201439] = true,
-	[201462] = true,
-	[201728] = true,
-	[201755] = true,
-	[201756] = true,
-	[201781] = true,
-	[201782] = true,
-	[201817] = true,
-	[201921] = true,
-	[201922] = true,
-	[201923] = true,
-	[201924] = true,
-	[202052] = true,
-	[202052] = true,
-	[202079] = true,
-	[202080] = true,
-	[202091] = true,
-	[202092] = true,
-	[202093] = true,
-	[202094] = true,
-	[202097] = true,
-	[202098] = true,
-	[202142] = true,
-	[202171] = true,
-	[202171] = true,
-	[202172] = true,
-	[202371] = true,
-	[202667] = true,
-	[202668] = true,
-	[202669] = true,
-	[202670] = true,
-	[203217] = true,
-	[203220] = true,
-	[203222] = true,
-	[203224] = true,
-	[203476] = true,
-	[203681] = true,
-	[203699] = true,
-	[203700] = true,
-	[203702] = true,
-	[204359] = true,
-	[204378] = true,
-	[204379] = true,
-	[204380] = true,
-	[204381] = true,
-	[204383] = true,
-	[204558] = true,
-	[204559] = true,
-	[204560] = true,
-	[204573] = true,
-	[204574] = true,
-	[204575] = true,
-	[204576] = true,
-	[204577] = true,
-	[204578] = true,
-	[204579] = true,
-	[204721] = true,
-	[204722] = true,
-	[204723] = true,
-	[204724] = true,
-	[204725] = true,
-	[204726] = true,
-	-- [140192] = true, -- ХС тест
-	-- [204072] = true,
-	[205991] = true,
-	[205342] = true,
-	[205346] = true,
-}
-local white_list70 = {
-	[205423] = true,
-}
-local prof_white_list = {
-	[192130] = true,
-	[192131] = true,
-	[192132] = true,
-	[193891] = true,
-	[193897] = true,
-	[193898] = true,
-	[193899] = true,
-	[193900] = true,
-	[193901] = true,
-	[193902] = true,
-	[193903] = true,
-	[193904] = true,
-	[193905] = true,
-	[193907] = true,
-	[193909] = true,
-	[193910] = true,
-	[193913] = true,
-	[194039] = true,
-	[194040] = true,
-	[194041] = true,
-	[194054] = true,
-	[194055] = true,
-	[194061] = true,
-	[194062] = true,
-	[194063] = true,
-	[194064] = true,
-	[194066] = true,
-	[194067] = true,
-	[194068] = true,
-	[194076] = true,
-	[194077] = true,
-	[194078] = true,
-	[194079] = true,
-	[194080] = true,
-	[194081] = true,
-	[194337] = true,
-	[194697] = true,
-	[194698] = true,
-	[194699] = true,
-	[194700] = true,
-	[194702] = true,
-	[194703] = true,
-	[194704] = true,
-	[194708] = true,
-	[198454] = true,
-	[198510] = true,
-	[198599] = true,
-	[198606] = true,
-	[198607] = true,
-	[198608] = true,
-	[198609] = true,
-	[198610] = true,
-	[198611] = true,
-	[198612] = true,
-	[198613] = true,
-	[198653] = true,
-	[198656] = true,
-	[198658] = true,
-	[198659] = true,
-	[198660] = true,
-	[198662] = true,
-	[198663] = true,
-	[198664] = true,
-	[198667] = true,
-	[198669] = true,
-	[198670] = true,
-	[198680] = true,
-	[198682] = true,
-	[198683] = true,
-	[198684] = true,
-	[198685] = true,
-	[198686] = true,
-	[198687] = true,
-	[198690] = true,
-	[198692] = true,
-	[198693] = true,
-	[198696] = true,
-	[198697] = true,
-	[198699] = true,
-	[198702] = true,
-	[198703] = true,
-	[198704] = true,
-	[198710] = true,
-	[198711] = true,
-	[198712] = true,
-	[198789] = true,
-	[198837] = true,
-	[198841] = true,
-	[198963] = true,
-	[198964] = true,
-	[198965] = true,
-	[198966] = true,
-	[198967] = true,
-	[198968] = true,
-	[198969] = true,
-	[198970] = true,
-	[198971] = true,
-	[198972] = true,
-	[198973] = true,
-	[198974] = true,
-	[198975] = true,
-	[198976] = true,
-	[198977] = true,
-	[198978] = true,
-	[199115] = true,
-	[199122] = true,
-	[199128] = true,
-	[200677] = true,
-	[200678] = true,
-	[200972] = true,
-	[200973] = true,
-	[200974] = true,
-	[200975] = true,
-	[200976] = true,
-	[200977] = true,
-	[200978] = true,
-	[200979] = true,
-	[200980] = true,
-	[200981] = true,
-	[200982] = true,
-	[201003] = true,
-	[201004] = true,
-	[201005] = true,
-	[201006] = true,
-	[201007] = true,
-	[201008] = true,
-	[201009] = true,
-	[201010] = true,
-	[201011] = true,
-	[201012] = true,
-	[201013] = true,
-	[201014] = true,
-	[201015] = true,
-	[201016] = true,
-	[201017] = true,
-	[201018] = true,
-	[201019] = true,
-	[201020] = true,
-	[201023] = true,
-	[201268] = true,
-	[201269] = true,
-	[201270] = true,
-	[201271] = true,
-	[201272] = true,
-	[201273] = true,
-	[201274] = true,
-	[201275] = true,
-	[201276] = true,
-	[201277] = true,
-	[201278] = true,
-	[201279] = true,
-	[201280] = true,
-	[201281] = true,
-	[201282] = true,
-	[201283] = true,
-	[201284] = true,
-	[201285] = true,
-	[201286] = true,
-	[201287] = true,
-	[201288] = true,
-	[201289] = true,
-	[201300] = true,
-	[201301] = true,
-	[201700] = true,
-	[201705] = true,
-	[201706] = true,
-	[201708] = true,
-	[201709] = true,
-	[201710] = true,
-	[201711] = true,
-	[201712] = true,
-	[201713] = true,
-	[201714] = true,
-	[201715] = true,
-	[201716] = true,
-	[201717] = true,
-	[201718] = true,
-	[202011] = true,
-	[202014] = true,
-	[202016] = true,
-	[204222] = true,
-	[204224] = true,
-	[204225] = true,
-	[204226] = true,
-	[204227] = true,
-	[204228] = true,
-	[204229] = true,
-	[204230] = true,
-	[204231] = true,
-	[204232] = true,
-	[204233] = true,
-	[204987] = true,
-	[205426] = true,
-	[205433] = true,
-	[205437] = true,
-	[205444] = true,
-	[205954] = true, --Червоточина
-	[205213] = true,
-	[205211] = true,
-	[205212] = true,
-	[206031] = true,
-	[206034] = true,
-	[206035] = true,
-	[205216] = true,
-	[205214] = true,
-	[205219] = true,
-	[206030] = true,
-	[206019] = true,
-	[206025] = true,
-	[205001] = true,
-	[204990] = true,
-	[204999] = true,
-	[204471] = true,
-	[204475] = true,
-	[204855] = true,
-	[204470] = true,
-	[204469] = true,
-	[204853] = true,
-	[204471] = true,
-	[204850] = true,
-	[205988] = true,
-	[205987] = true,
-	[205986] = true,
-	[204986] = true,
-	[204987] = true,
-	[204988] = true,
-	--ПРОФ ХЗ
-	[204480] = true,
-	--[204076] = true, --DrakesShadowflameCrestFragment RED
-	--[204075] = true, --WhelplingsShadowflameCrestFragment BLUE
-}
-if UnitLevel == 70 then
-	MergeTable(white_list, white_list70)
-	MergeTable(white_list, prof_white_list)
-end
-local icon = 0
--- если пост клик и нет айтема, то хайдить (ну или при клике и если нет итема)
-function TESTFUNC()
-	--local countRED = GetItemCount(204076,true, true, true) --RED
-	--local countBLUE = GetItemCount(204075,true, true, true) --BLUE
-	for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-		for slot=1, C_Container.GetContainerNumSlots(bag) do
-			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-			if containerInfo then
-				local itemID = containerInfo.itemID
-				local iconFileID = containerInfo.iconFileID
-				local itemLink = C_Container.GetContainerItemLink(bag, slot)
-				local isLocked = containerInfo.isLocked -- Добавить
-				-----------------------
-				if white_list[itemID] --[[and (countRED >= 15 or countBLUE >= 15)]] and not isLocked then
-					icon = iconFileID
-					MASLENGO_UsableItems()
-					UsableItems_Frame:Show()
-					break
-				end
-			end
-		end
-	end
-end
-function FUNC_Nazvanie(self, _, down)
-	if InCombatLockdown() or down ~= GetCVarBool("ActionButtonUseKeyDown") then return end
-	for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-		for slot=1, C_Container.GetContainerNumSlots(bag) do
-			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-			if containerInfo then
-				local itemID = containerInfo.itemID
-				local iconFileID = containerInfo.iconFileID
-				local isLocked = containerInfo.isLocked -- Добавить
-				--local hyperlink = containerInfo.hyperlink
-				local itemLink = C_Container.GetContainerItemLink(bag, slot)
-				-----------------------
-				if not white_list[itemID] and UsableItems_Frame:IsShown() then
-					UsableItems_Frame:Hide()
-				end
-				if white_list[itemID] and not isLocked then
-					-- print (iconFileID)
-					self:SetAttribute("macrotext", "/use item:"..itemID)
-					return
-				end
-			end
-		end
-	end
-end
-E.TESTFUNC = TESTFUNC
-function MASLENGO_UsableItems()
-	UsableItems_Frame:SetSize(64*scale, 64*scale)
-	--UsableItems_Frame:SetClampedToScreen(false)
-	UsableItems_Frame:SetFrameStrata("DIALOG")
-	UsableItems_Frame:EnableMouse(true)
-	-- UsableItems_Frame:SetMovable(true)
-	-- UsableItems_Frame:RegisterForDrag("RightButton")
-	-- UsableItems_Frame:SetScript("OnDragStart", UsableItems_Frame.StartMoving)
-	-- UsableItems_Frame:SetScript("OnDragStop", function() UsableItems_Frame:StopMovingOrSizing() end)
-	UsableItems_Frame:SetPoint("TOPLEFT", 0, 0)
-	UsableItems_Frame:SetBackdrop({
-			bgFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
-			edgeFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
-			edgeSize = 1,
-	})
-	UsableItems_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	UsableItems_Frame:SetBackdropBorderColor(0, 0, 0, 1)
-	UsableItems_Frame.Button:SetAllPoints()
-	UsableItems_Frame.Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-	UsableItems_Frame.Button:SetAttribute("unit", "player")
-	UsableItems_Frame.Button:SetAttribute("type", "macro")
-	UsableItems_Frame.Button:SetScript("PreClick", FUNC_Nazvanie)
-	local t = UsableItems_Frame.Button:CreateTexture(nil,"BACKGROUND")
-	UsableItems_Frame.Button.icon = t
-	--t:SetTexture("Interface\\AddOns\\Octo_ToDo_Dragonfly\\Media\\ui_sigil_nightfae_OLD.tga")
-	t:SetTexture(icon)
-	t:SetVertexColor(1,1,1,1)
-	t:SetAllPoints(UsableItems_Frame.Button)
-end
--- function MJMacroMixin:preClick(button, down)
---     self.mounts.sFlags.forceModifier = self.forceModifier
---     if InCombatLockdown() or down ~= GetCVarBool("ActionButtonUseKeyDown") then return end
---     self:SetAttribute("macrotext", macroFrame:getMacro())
--- end
-function Octo_MAIL_DragonflyOnEvent(self, event, ...)
+
+tinsert(E.modules, function()
 	if Octo_ToDo_DragonflyVars.config.UsableItems then
-		if event == "PLAYER_LOGIN" then
-			UsableItems_Frame.Button = CreateFrame("BUTTON", nil, UsableItems_Frame, "SecureActionButtonTemplate")
-			self:RegisterEvent("BAG_UPDATE")
-			TESTFUNC()
-		elseif (event == "BAG_UPDATE" or event == "PLAYER_STARTED_MOVING" or event == "QUEST_COMPLETE" or event == "QUEST_FINISHED") and not InCombatLockdown() then
-			TESTFUNC()
-			-- if not UsableItems_Frame:IsShown() then
-			-- 	UsableItems_Frame:Show()
-			-- end
-		elseif event == "CHAT_MSG_LOOT" and not InCombatLockdown()  then
-			UsableItems_Frame:Hide()
+	local UnitLevel = UnitLevel("PLAYER")
+	local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
+	local bytetoB64 = {
+		[0]="a", "b", "c", "d", "e", "f", "g", "h",
+		"i", "j", "k", "l", "m", "n", "o", "p",
+		"q", "r", "s", "t", "u", "v", "w", "x",
+		"y", "z", "A", "B", "C", "D", "E", "F",
+		"G", "H", "I", "J", "K", "L", "M", "N",
+		"O", "P", "Q", "R", "S", "T", "U", "V",
+		"W", "X", "Y", "Z", "0", "1", "2", "3",
+		"4", "5", "6", "7", "8", "9", "(", ")"
+	}
+	function GenerateUniqueID()
+		local s = {}
+		for i=1, 11 do
+			tinsert(s, bytetoB64[math.random(0, 63)])
 		end
+		return table.concat(s)
 	end
-end
---комбат иввенты мана регент энейбел/дизейбл
-Octo_MAIL_DragonflyOnLoad()
+	local white_list = {
+		-- TEST
+		-- 122250, 122360, 110560,
+		5523,7973,21746,50160,54537,93724,111956,128313,136926,166297,168740,171209,171210,178040,178128,180085,180355,180592,180646,180647,180648,180649,180974,180976,180980,181372,181475,181476,181556,181557,181732,181733,181741,183699,183702,183703,184045,184046,184047,184048,184395,184522,184630,184631,184632,184633,184634,184635,184636,184637,184638,184639,184640,184641,184642,184643,184644,184645,184646,184647,184648,184843,184868,184869,185832,185972,185990,185991,185992,185993,186196,186531,186533,186650,186680,186688,186691,186693,186705,186706,186707,186708,186970,187028,187029,187278,187351,187354,187440,187543,187551,187569,187570,187571,187572,187573,187574,187575,187576,187577,187781,187787,189765,190178,190339,190610,190655,190656,191040,191139,191303,191701,192130,192131,192132,192892,192893,193891,193897,193898,193899,193900,193901,193902,193903,193904,193905,193907,193909,193910,193913,194039,194040,194041,194054,194055,194061,194062,194063,194064,194066,194067,194068,194072,194076,194077,194078,194079,194080,194081,194337,194697,194698,194699,194700,194702,194703,194704,194708,198395,198438,198454,198510,198599,198606,198607,198608,198609,198610,198611,198612,198613,198614,198656,198658,198659,198660,198662,198663,198664,198667,198669,198670,198680,198682,198683,198684,198685,198686,198687,198690,198692,198693,198696,198697,198699,198702,198703,198704,198710,198711,198712,198789,198791,198837,198841,198863,198864,198865,198866,198867,198868,198869,198963,198964,198965,198966,198967,198968,198969,198970,198971,198972,198973,198974,198975,198976,198977,198978,199115,199122,199128,199192,199197,199472,199473,199474,199475,200069,200070,200072,200073,200095,200156,200285,200287,200288,200289,200300,200452,200453,200454,200455,200468,200513,200515,200516,200609,200610,200611,200677,200678,200972,200973,200974,200975,200976,200977,200978,200979,200980,200981,200982,201003,201004,201005,201006,201007,201008,201009,201010,201011,201012,201013,201014,201015,201016,201017,201018,201019,201020,201023,201250,201268,201269,201270,201271,201272,201273,201274,201275,201276,201277,201278,201279,201280,201281,201282,201283,201284,201285,201286,201287,201288,201289,201300,201301,201326,201343,201352,201353,201439,201462,201700,201705,201706,201708,201709,201710,201711,201712,201713,201714,201715,201716,201717,201728,201754,201755,201756,201781,201782,201817,201921,201922,201923,201924,202011,202014,202016,202052,202054,202055,202056,202057,202058,202079,202080,202091,202092,202093,202094,202097,202098,202142,202171,202172,202371,202667,202668,202669,202670,203217,203220,203222,203224,203476,203681,203699,203700,203702,204222,204224,204225,204226,204227,204228,204229,204230,204231,204232,204233,204359,204378,204379,204380,204381,204383,204403,204469,204470,204471,204475,204480,204558,204559,204560,204573,204574,204575,204576,204577,204578,204579,204717,204721,204722,204723,204724,204725,204726,204850,204853,204855,204911,204986,204987,204988,204990,205001,205211,205212,205213,205214,205216,205219,205226,205247,205248,205249,205250,205251,205253,205254,205288,205342,205346,205347,205348,205350,205351,205352,205353,205354,205355,205356,205357,205358,205365,205367,205368,205369,205370,205371,205372,205373,205374,205424,205425,205426,205427,205428,205429,205430,205431,205432,205433,205434,205435,205436,205437,205438,205439,205440,205441,205442,205443,205444,205445,205682,205964,205982,205983,205985,205986,205987,205988,205989,205991,205992,205998,206019,206025,206030,206031,206034,206035,206135,206136
+	}
+	local white_list_plus15 = {
+		204075,
+		204076,
+		204077,
+		204078,
+	}
+	local white_list70 ={
+		205423,
+	}
+	if UnitLevel == 70 then
+		MergeTable(white_list, white_list70)
+	end
+		local UsableItems_Frame = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+		UsableItems_Frame:Hide()
+		UsableItems_Frame:SetSize(64*scale, 64*scale)
+		UsableItems_Frame:SetPoint("TOPLEFT", 0, 0)
+		UsableItems_Frame:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+		UsableItems_Frame:SetBackdropBorderColor(1, 1, 1, 1)
+		UsableItems_Frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+		UsableItems_Frame:SetAttribute("type", "macro")
+
+		local texture = UsableItems_Frame:CreateTexture(nil, "BACKGROUND")
+		UsableItems_Frame.icon = texture
+		texture:SetAllPoints(UsableItems_Frame)
+		texture:SetTexture(413587)
+
+		local function UsableItemFrame_OnLoad()
+			local EventFrame = CreateFrame("Frame", AddonTitle..GenerateUniqueID(), UIParent)
+			EventFrame:Hide()
+			EventFrame:RegisterEvent("PLAYER_LOGIN")
+			EventFrame:RegisterEvent("BAG_UPDATE")
+			EventFrame:RegisterEvent("VARIABLES_LOADED")
+			EventFrame:SetScript("OnEvent", UsableItemFrame_OnEvent)
+		end
+
+		function UsableItemFrame_OnEvent(self, event)
+			--[[if event == "VARIABLES_LOADED" then
+										if Octo_ToDo_DragonflyVars.config.UsableItems == false then
+											UsableItems_Frame:Hide()
+											return
+										end
+									else]]if event == "BAG_UPDATE" then
+				UsableItemFrame()
+			end
+		end
+
+		function UsableItemFrame()
+			for _, itemID in ipairs(white_list) do
+				UsableItems_Frame.itemID = itemID
+				if GetItemCount(itemID) >= 1 then
+					UsableItems_Frame:Show()
+					UsableItems_Frame:SetAttribute("macrotext", "/use item:"..itemID)
+					UsableItems_Frame.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
+					break
+				elseif GetItemCount(itemID) == 0 then
+					UsableItems_Frame:Hide()
+					UsableItems_Frame.icon:SetTexture(413587)
+				end
+			end
+		end
+
+
+		E.UsableItems_Frame = UsableItems_Frame
+		E.UsableItemFrame_OnLoad = UsableItemFrame_OnLoad
+		E.UsableItemFrame = UsableItemFrame
+		UsableItemFrame_OnLoad()
+	end
+end)

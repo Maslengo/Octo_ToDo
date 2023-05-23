@@ -22,7 +22,7 @@ local curMoney = 0
 local thursdayResetDay0EU = (1514358000-10800) --https://wowreset.com/ 14-3=11(ТСК)
 local thursdayResetDay0US = 1514300400
 local daytime = 86400 -- 60 * 60 * 24 --60 сек на 60 мин на 24 ч
-local NONE = "" --"|cff404040"..NONE.."|r"
+local NONE = "" --ColorGray..NONE.."|r"
 local DONE = "|cff00FF00Done|r"
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
 local regionalWeeklyStart = 1668981600
@@ -32,6 +32,7 @@ local bgFile = [[Interface\Buttons\WHITE8X8]]
 local LevelToShow = 60
 local ShowOnlyCurrentRealm = true
 local IconTexture = 3586268
+local ColorGray = "|cff404040"
 -- OptionsFrame.image = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\OptionLogo2"):Point("TOPLEFT", 15, 5):Size(140, 140)
 -- OptionsFrame_title = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\logoname2"):Point("LEFT", OptionsFrame.image, "RIGHT", 15, -5):Size(512*0.7, 128*0.7)
 local bytetoB64 = {
@@ -755,14 +756,14 @@ function CollectCurrentKEY()
 									-- elseif dungeon == "404" then Abbr_En_Name = "NELT" --Neltharus
 									-- elseif dungeon == "405" then Abbr_En_Name = "BH" --Brackenhide Hollow
 									-- elseif dungeon == "406" then Abbr_En_Name = "HOI" --Halls of Infusion
-								elseif dungeon == "405" then Abbr_En_Name = "BH(лощина)" --Brackenhide Hollow 393267
-								elseif dungeon == "245" then Abbr_En_Name = "FH(гавань)" --Freehold 410071
-								elseif dungeon == "406" then Abbr_En_Name = "HOI(чертоги)" --Halls of Infusion 393283
-								elseif dungeon == "206" then Abbr_En_Name = "NL(логово)" --Neltharion's Lair 410078
-								elseif dungeon == "404" then Abbr_En_Name = "NELT(нелтарий)" --Neltharus 393276
-								elseif dungeon == "251" then Abbr_En_Name = "UNDR(подгнилье)" --The Underrot 410074
-								elseif dungeon == "438" then Abbr_En_Name = "VP(вершина)" --The Vortex Pinnacle 410080
-								elseif dungeon == "403" then Abbr_En_Name = "ULD(ульдаман)" --Uldaman: Legacy of Tyr 393222
+								elseif dungeon == "405" then Abbr_En_Name = "BH" --Brackenhide Hollow 393267 (лощина)
+								elseif dungeon == "245" then Abbr_En_Name = "FH" --Freehold 410071 (гавань)
+								elseif dungeon == "406" then Abbr_En_Name = "HOI" --Halls of Infusion 393283 (чертоги)
+								elseif dungeon == "206" then Abbr_En_Name = "NL" --Neltharion's Lair 410078 (логово)
+								elseif dungeon == "404" then Abbr_En_Name = "NELT" --Neltharus 393276 (нелтарий)
+								elseif dungeon == "251" then Abbr_En_Name = "UNDR" --The Underrot 410074 (подгнилье)
+								elseif dungeon == "438" then Abbr_En_Name = "VP" --The Vortex Pinnacle 410080 (вершина)
+								elseif dungeon == "403" then Abbr_En_Name = "ULD" --Uldaman: Legacy of Tyr 393222 (ульдаман)
 								end
 								mkey = ("|cffa335ee"..lvl .. " " ..Abbr_En_Name.."|r")
 							end
@@ -1129,7 +1130,7 @@ local questIDtable = {
 	72167, -- 1500 на пвп
 	72170,
 	75622, -- трофей за пвп?
-	75694, 74905, 75887, 74570, 74569, 74568, 75888, 74775, 75665, 24548, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 64710, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 69927, 69928, 69929, 69930, 70750, 70866, 70893, 70906, 71026, 72068, 72166, 72168, 72169, 72171, 72373, 72374, 72375, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 73162, 74378, 74871, 75259, 75506, 76122, 36614,
+	74771, 75694, 74905, 75887, 74570, 74569, 74568, 75888, 74775, 75665, 24548, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 64710, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 69927, 69928, 69929, 69930, 70750, 70866, 70893, 70906, 71026, 72068, 72166, 72168, 72169, 72171, 72373, 72374, 72375, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 73162, 74378, 74871, 75259, 75506, 76122, 36614,
 }
 local Meta_Table = {
 	__index = function()
@@ -1153,7 +1154,7 @@ function CollectAllCurrency()
 		-- Octo_ToDo_DragonflyLevels[curGUID].CurrencyID[v] = maxQuantity
 		-- local c = "|cffffffff"
 		-- local r = "|r"
-		-- if maxQuantity > 0 and quantity == 0 then c = "|cff404040" end
+		-- if maxQuantity > 0 and quantity == 0 then c = ColorGray end
 		-- if maxQuantity > 0 and quantity == maxQuantity then c = "|cff00FF00" end
 		-- if maxQuantity ~= 0 and quantity >= 1 then
 		-- Octo_ToDo_DragonflyLevels[curGUID].CurrencyID[v] = c..CompactNumberFormat(quantity)..c.."/"..CompactNumberFormat(maxQuantity)..r
@@ -1731,12 +1732,12 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	t:SetAllPoints(Main_Frame.MedalofHonor_Button)
 	-----------------------------------------------------
 	-----------------------------------------------------
-	Main_Frame.AlchemicalFlavorPocket_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
-	Main_Frame.AlchemicalFlavorPocket_Button:SetSize(curHeight, curHeight)
-	Main_Frame.AlchemicalFlavorPocket_Button:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -150)
-	Main_Frame.AlchemicalFlavorPocket_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	Main_Frame.AlchemicalFlavorPocket_Button:SetBackdropBorderColor(.64, .21, .93, 1)
-	Main_Frame.AlchemicalFlavorPocket_Button:SetScript("OnEnter", function(self)
+	Main_Frame.ZskeraVaultKeyButton = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
+	Main_Frame.ZskeraVaultKeyButton:SetSize(curHeight, curHeight)
+	Main_Frame.ZskeraVaultKeyButton:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -150)
+	Main_Frame.ZskeraVaultKeyButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.ZskeraVaultKeyButton:SetBackdropBorderColor(.64, .21, .93, 1)
+	Main_Frame.ZskeraVaultKeyButton:SetScript("OnEnter", function(self)
 			local i = 0
 			self:SetBackdropBorderColor(1, 0, 0, 1)
 			self.icon:SetVertexColor(1, 0, 0, 1)
@@ -1744,7 +1745,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			GameTooltip:ClearLines()
 			GameTooltip:AddDoubleLine(" "," ")
 			for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
-				if CharInfo.ItemsInBag[200652] and CharInfo.ItemsInBag[200652] ~= 0 then
+				if CharInfo.ItemsInBag[202196] and CharInfo.ItemsInBag[202196] ~= 0 then
 					i = i + 1
 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 					local curServerShort = CharInfo.curServer
@@ -1753,7 +1754,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 					if b then
 						curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
 					end
-					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[200652])
+					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[202196])
 				end
 			end
 			if i == 0 then
@@ -1762,24 +1763,24 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			GameTooltip:AddDoubleLine(" "," ")
 			GameTooltip:Show()
 	end)
-	Main_Frame.AlchemicalFlavorPocket_Button:SetScript("OnLeave", function(self)
+	Main_Frame.ZskeraVaultKeyButton:SetScript("OnLeave", function(self)
 			self:SetBackdropBorderColor(.64, .21, .93, 1)
 			self.icon:SetVertexColor(1, 1, 1, 1)
 			GameTooltip:ClearLines()
 			GameTooltip:Hide()
 	end)
-	Main_Frame.AlchemicalFlavorPocket_Button:SetScript("OnMouseDown", function(self)
+	Main_Frame.ZskeraVaultKeyButton:SetScript("OnMouseDown", function(self)
 			self:SetBackdropBorderColor(1, 0, 0, .5)
 			self.icon:SetVertexColor(1, 0, 0, .5)
 	end)
-	Main_Frame.AlchemicalFlavorPocket_Button:SetScript("OnClick", function()
+	Main_Frame.ZskeraVaultKeyButton:SetScript("OnClick", function()
 			Main_Frame:Hide()
 	end)
-	local t = Main_Frame.AlchemicalFlavorPocket_Button:CreateTexture(nil, "BACKGROUND")
-	Main_Frame.AlchemicalFlavorPocket_Button.icon = t
-	t:SetTexture("Interface\\ICONS\\inv_misc_food_legion_goochocovanilla_bottle.blp")
+	local t = Main_Frame.ZskeraVaultKeyButton:CreateTexture(nil, "BACKGROUND")
+	Main_Frame.ZskeraVaultKeyButton.icon = t
+	t:SetTexture(4909720)
 	t:SetVertexColor(1, 1, 1, 1)
-	t:SetAllPoints(Main_Frame.AlchemicalFlavorPocket_Button)
+	t:SetAllPoints(Main_Frame.ZskeraVaultKeyButton)
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
@@ -2223,25 +2224,24 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			--9
 			Main_Frame.TextLeft9:SetText(func_itemTexture(180653)..func_itemName(180653))
 			Char_Frame.CenterLines9.CL:SetText(CharInfo.CurrentKey)
-			if CharInfo.CurrentKey == 0 then Char_Frame.CenterLines9.CL:SetText("") end
-			if CharInfo.CurrentKey ~= 0 and
-			CharInfo.RIO_RAID ~= "" or CharInfo.RIO_RAID ~= "0/6 |cffa335ee|r" and
-			CharInfo.RIO_KEYS ~= "" or CharInfo.RIO_KEYS ~= "0/8 |cffa335ee|r" and
-			CharInfo.RIO_PVPS ~= "" or CharInfo.RIO_PVPS ~= "0/5500 |cffa335ee|r" then
+			if CharInfo.CurrentKey == 0 then
+				Char_Frame.CenterLines9.CL:SetText("")
+			end
+			if CharInfo.CurrentKey ~= 0 and CharInfo.CurrentKey ~= 205225 and CharInfo.CurrentKey ~= 205999 then
 				Char_Frame.CenterLines9.tooltip = {
 					{"Рейды", CharInfo.RIO_RAID},
 					{"M+", CharInfo.RIO_KEYS},
 					{"PVP", CharInfo.RIO_PVPS},
 					{" ", " "},
-				{func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
-				{func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
+					{func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
+					{func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
 				}
 			end
 			--10
-			Main_Frame.TextLeft10:SetText(func_currencyicon(2245)..func_currencyName(2245)) -- Доблесть
-			Char_Frame.CenterLines10.CL:SetText("|cff404040Валюта|r")
+			--Main_Frame.TextLeft10:SetText(func_currencyicon(2245)..func_currencyName(2245)) -- Доблесть
+			Char_Frame.CenterLines10.CL:SetText(ColorGray..CURRENCY.."|r")
 			if CharInfo.CurrencyID[2245] >= 1 then
-				Char_Frame.CenterLines10.CL:SetText(func_currencyicon(2245).."|cff00ccff"..Empty_Zero(CharInfo.CurrencyID[2245]).."|r")
+				Char_Frame.CenterLines10.CL:SetText(func_currencyicon(2245)..Empty_Zero(CharInfo.CurrencyID[2245]))
 			end
 			Char_Frame.CenterLines10.tooltip = {
 				{"PVE: ", " "},
@@ -2272,13 +2272,13 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			--     if v ~= 2409 and v ~= 2410 and v ~= 2411 and v ~= 2412 then
 			--         local count = tonumber(CharInfo.CurrencyID[v])
 			--         if count ~= 0 and CharInfo.CurrencyID_maxQuantity[v] == 0 then
-			--             if CharInfo.CurrencyID[2245] == 0 then Char_Frame.CenterLines10.CL:SetText("|cff404040"..CURRENCY.."|r") end
+			--             if CharInfo.CurrencyID[2245] == 0 then Char_Frame.CenterLines10.CL:SetText(ColorGray..CURRENCY.."|r") end
 			--             Char_Frame.CenterLines10.tooltip[#Char_Frame.CenterLines10.tooltip+1] = {func_currencyicon(v)..func_currencyName(v), count}
 			--         elseif count ~= 0 and CharInfo.CurrencyID_maxQuantity[v] ~= 0 and (count ~= CharInfo.CurrencyID_maxQuantity[v]) then
-			--             if CharInfo.CurrencyID[2245] == 0 then Char_Frame.CenterLines10.CL:SetText("|cff404040"..CURRENCY.."|r") end
+			--             if CharInfo.CurrencyID[2245] == 0 then Char_Frame.CenterLines10.CL:SetText(ColorGray..CURRENCY.."|r") end
 			--             Char_Frame.CenterLines10.tooltip[#Char_Frame.CenterLines10.tooltip+1] = {func_currencyicon(v)..func_currencyName(v), count.."/"..CharInfo.CurrencyID_maxQuantity[v]}
 			--         elseif count ~= 0 and count == CharInfo.CurrencyID_maxQuantity[v] then
-			--             if CharInfo.CurrencyID[2245] == 0 then Char_Frame.CenterLines10.CL:SetText("|cff404040"..CURRENCY.."|r") end
+			--             if CharInfo.CurrencyID[2245] == 0 then Char_Frame.CenterLines10.CL:SetText(ColorGray..CURRENCY.."|r") end
 			--             Char_Frame.CenterLines10.tooltip[#Char_Frame.CenterLines10.tooltip+1] = {func_currencyicon(v)..func_currencyName(v), "|cff00FF00"..count.."/"..CharInfo.CurrencyID_maxQuantity[v].."|r"}
 			--         end
 			--     end
@@ -2287,16 +2287,16 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				Char_Frame.CenterLines10.tooltip = nil
 			end
 			--11
-			Main_Frame.TextLeft11:SetText(func_reputationName(2564))
+			--Main_Frame.TextLeft11:SetText(func_reputationName(2564))
 			Char_Frame.CenterLines11.tooltip = {}
 			-- for k, v in ipairs(reputationID) do
 			--     if CharInfo.reputationID[v] ~= 0 then
-			--         Char_Frame.CenterLines11.CL:SetText("|cff404040"..REPUTATION.."|r")
+			--         Char_Frame.CenterLines11.CL:SetText(ColorGray..REPUTATION.."|r")
 			--         Char_Frame.CenterLines11.tooltip[#Char_Frame.CenterLines11.tooltip+1] = {func_reputationName(v), CharInfo.reputationID[v]}
 			--     end
 			-- end
 			if CharInfo.reputationID ~= 0 then
-				Char_Frame.CenterLines11.CL:SetText("|cff404040"..REPUTATION.."|r")
+				Char_Frame.CenterLines11.CL:SetText(ColorGray..REPUTATION.."|r")
 			end
 			if CharInfo.reputationID[2564] ~= 0 then
 				tinsert(Char_Frame.CenterLines11.tooltip, {func_reputationName(2564), CharInfo.reputationID[2564]})
@@ -2321,6 +2321,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				Char_Frame.CenterLines11.CL:SetText("")
 			end
 			--12 204193 204075 2409
+			Main_Frame.TextLeft12:SetText(ColorGray..PLAYER_DIFFICULTY3..", M+ 1-5|r") -- LFR
 			Char_Frame.CenterLines12.tooltip = {}
 			local PEREMENNAYA_2409 = ""
 			if CharInfo.ItemsInBag[204193] >= 1 then
@@ -2339,13 +2340,13 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_2409)
 			if (CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0) and CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
 				tinsert(Char_Frame.CenterLines12.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]})
-				tinsert(Char_Frame.CenterLines12.tooltip, {"LFR","M+ 1-5"})
 			end
 			if #Char_Frame.CenterLines12.tooltip == 0 then
 				Char_Frame.CenterLines12.tooltip = nil
 				Char_Frame.CenterLines12.CL:SetText("")
 			end
 			--13 204195 204076 2410
+			Main_Frame.TextLeft13:SetText(ColorGray..PLAYER_DIFFICULTY1..", M+ 6-10|r") -- Обычный
 			Char_Frame.CenterLines13.tooltip = {}
 			local PEREMENNAYA_2410 = ""
 			if CharInfo.ItemsInBag[204195] >= 1 then
@@ -2370,6 +2371,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				Char_Frame.CenterLines13.CL:SetText("")
 			end
 			--14 204196 204077 2411
+			Main_Frame.TextLeft14:SetText(ColorGray..PLAYER_DIFFICULTY2..", M+ 11-15|r") -- Героический
 			Char_Frame.CenterLines14.tooltip = {}
 			local PEREMENNAYA_2411 = ""
 			if CharInfo.ItemsInBag[204196] >= 1 then
@@ -2394,6 +2396,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				Char_Frame.CenterLines14.CL:SetText("")
 			end
 			--15 204194 204078 2412
+			Main_Frame.TextLeft15:SetText(ColorGray..PLAYER_DIFFICULTY6..", M+ 16+|r") -- Эпохальный
 			Char_Frame.CenterLines15.tooltip = {}
 			local PEREMENNAYA_2412 = ""
 			if CharInfo.ItemsInBag[204194] >= 1 then
@@ -2502,7 +2505,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				-- {name = func_questName(56337), data = CharInfo.questIDtable[56337]},
 				-- {name = func_questName(72167), data = CharInfo.questIDtable[72167]},
 			}
-			Char_Frame.CenterLines19.CL:SetText("|cff404040".. QUESTS_LABEL .."|r")
+			Char_Frame.CenterLines19.CL:SetText(ColorGray..QUESTS_LABEL.."|r")
 			Char_Frame.CenterLines19.tooltip = {}
 			for k, v in ipairs(tinsertTABLE) do
 				if v.data ~= false and v.data ~= "" and v.data ~= 0 then
@@ -2525,8 +2528,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			for k, v in ipairs(itemID) do
 				local count = tonumber(CharInfo.ItemsInBag[v])
 				if count ~= 0 then
-					--if CharInfo.ItemsInBag[190453] == 0 and CharInfo.ItemsInBag[199197] == 0 then Char_Frame.CenterLines20.CL:SetText("|cff404040"..ITEMS.."|r") end
-					Char_Frame.CenterLines20.CL:SetText("|cff404040"..ITEMS.."|r")
+					--if CharInfo.ItemsInBag[190453] == 0 and CharInfo.ItemsInBag[199197] == 0 then Char_Frame.CenterLines20.CL:SetText(ColorGray..ITEMS.."|r") end
+					Char_Frame.CenterLines20.CL:SetText(ColorGray..ITEMS.."|r")
 					Char_Frame.CenterLines20.tooltip[#Char_Frame.CenterLines20.tooltip+1] = {func_itemTexture(v)..func_itemName(v), count}
 				end
 			end
@@ -2965,9 +2968,9 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectCurrentKEY()
 		CollectAllQuests()
 		UPGRADERANKS_Frame()
-		C_Timer.After(1, function()
-			ChatFrame1:Clear()
-		end)
+		-- C_Timer.After(1, function()
+		-- 	ChatFrame1:Clear()
+		-- end)
 		--itemID_TEST_INSERT()
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		Collect_PVP_Raitings()

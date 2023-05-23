@@ -125,5 +125,6 @@ tinsert(E.modules, function()
 		func_Octo_LoadAddOn("AutoTurnIn")
 		func_Octo_LoadAddOn("MountsJournal")
 		func_Octo_LoadAddOn("WowheadQuickLink")
+		func_Octo_LoadAddOn("Postal")
 	end
 end)

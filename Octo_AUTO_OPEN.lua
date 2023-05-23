@@ -15,6 +15,8 @@ local isDead = UnitIsDead("PLAYER")
 local UnitLevel = UnitLevel("PLAYER")
 -- local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
 local openableIDs = {
+	--PARAGON
+	[204378] = true,
 	--PVP
 	[206271] = true,
 	--new location
