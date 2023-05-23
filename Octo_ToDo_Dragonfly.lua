@@ -13,7 +13,7 @@ local r, g, b = classColor:GetRGB()
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 local curWidth, curHeight = 96*scale , 20*scale -- ширина 80, высота 20 24
 local curWidthTitle = curWidth*2
-local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
+local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 10, "OUTLINE"
 local TotalLines = 23
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
@@ -1130,7 +1130,7 @@ local questIDtable = {
 	72167, -- 1500 на пвп
 	72170,
 	75622, -- трофей за пвп?
-	74771, 75694, 74905, 75887, 74570, 74569, 74568, 75888, 74775, 75665, 24548, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 64710, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 69927, 69928, 69929, 69930, 70866, 70906, 71026, 72166, 72168, 72169, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 73162, 74378, 74871, 75506, 76122, 36614,
+	74771, 75694, 74905, 75887, 74570, 74569, 74568, 75888, 74775, 75665, 24548, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 64710, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 71026, 72166, 72168, 72169, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 74378, 74871, 75506, 76122, 36614,
 }
 local Meta_Table = {
 	__index = function()
@@ -1984,9 +1984,9 @@ function OctoilvlStr()
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	--------------------------------------------------
 	local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvp = GetAverageItemLevel()
-	collect.avgItemLevel = avgItemLevel or 0
-	collect.avgItemLevelEquipped = avgItemLevelEquipped or 0
-	collect.avgItemLevelPvp = avgItemLevelPvp or 0
+	collect.avgItemLevel = math.floor(avgItemLevel) or 0
+	collect.avgItemLevelEquipped = math.floor(avgItemLevelEquipped) or 0
+	collect.avgItemLevelPvp = math.floor(avgItemLevelPvp) or 0
 end
 function Octo_ToDo_DragonflyAddDataToAltFrame()
 	local curGUID = UnitGUID("PLAYER")
@@ -2549,10 +2549,13 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				elseif CharInfo.avgItemLevelEquipped > 400 then
 					pvpcolor = "|cffFFF371"
 				end
-				PEREMENNAYA_PVP = pvpcolor..math.floor(CharInfo.avgItemLevelEquipped).."/"..math.floor(CharInfo.avgItemLevel).."|r"
+				PEREMENNAYA_PVP = pvpcolor..CharInfo.avgItemLevelEquipped
+				if CharInfo.avgItemLevel > CharInfo.avgItemLevelEquipped then
+					PEREMENNAYA_PVP = PEREMENNAYA_PVP.."/"..CharInfo.avgItemLevel.."|r"
+				end
 				if CharInfo.avgItemLevelPvp and CharInfo.avgItemLevelPvp > CharInfo.avgItemLevel then
 					PEREMENNAYA_PVP = PEREMENNAYA_PVP.."|cff00FF00*|r"
-					tinsert(Char_Frame.CenterLines21.tooltip, {"PVP:",math.floor(CharInfo.avgItemLevelPvp)})
+					tinsert(Char_Frame.CenterLines21.tooltip, {"PVP:",CharInfo.avgItemLevelPvp})
 				end
 			end
 			if #Char_Frame.CenterLines21.tooltip == 0 then

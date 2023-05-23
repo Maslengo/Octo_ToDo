@@ -4,7 +4,7 @@ local Version = GetAddOnMetadata(AddonName, "Version")
 --E.modules = {}
 --------------------------------------------------------------------------------
 --print(AddonTitle.." v"..Version.." loaded")
-local Enable_Module = true
+local Enable_Module = false
 if Enable_Module == true then
 	BINDING_HEADER_ZoneAbilityBinding = "ZoneAbilityBinding"
 	_G["BINDING_NAME_" .. "CLICK myZA:LeftButton"] = "Activate Zone Ability Button"
