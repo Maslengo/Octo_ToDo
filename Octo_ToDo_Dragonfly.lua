@@ -2894,7 +2894,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			Octo_ToDo_DragonflyVars.config.InputDelete = false
 		end
 		if Octo_ToDo_DragonflyVars.config.UsableItems == nil then
-			Octo_ToDo_DragonflyVars.config.UsableItems = false
+			Octo_ToDo_DragonflyVars.config.UsableItems = true
 		end
 		if Octo_ToDo_DragonflyVars.config.AutoOpen == nil then
 			Octo_ToDo_DragonflyVars.config.AutoOpen = true
@@ -2968,9 +2968,9 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectCurrentKEY()
 		CollectAllQuests()
 		UPGRADERANKS_Frame()
-		-- C_Timer.After(1, function()
-		-- 	ChatFrame1:Clear()
-		-- end)
+		C_Timer.After(1, function()
+			ChatFrame1:Clear()
+		end)
 		--itemID_TEST_INSERT()
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		Collect_PVP_Raitings()
