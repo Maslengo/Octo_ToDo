@@ -2509,7 +2509,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				end
 				if CharInfo.avgItemLevelPvp and CharInfo.avgItemLevelPvp > CharInfo.avgItemLevel then
 					PEREMENNAYA_PVP = PEREMENNAYA_PVP.."|cff00FF00*|r"
-					tinsert(Char_Frame.CenterLines21.tooltip, {"PVP:",CharInfo.avgItemLevelPvp})
+					--print(string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp))
+					tinsert(Char_Frame.CenterLines21.tooltip, {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp)})
 				end
 			end
 			if #Char_Frame.CenterLines21.tooltip == 0 then
