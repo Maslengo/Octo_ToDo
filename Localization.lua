@@ -16,6 +16,7 @@ if L then
 	L["Fyrakk Asssaults"] = true
 	L["Researchers Under Fire"] = true
 	L["AddonName"] = AddonTitle
+	L["RESET"] = RESET
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -25,5 +26,6 @@ if L then
 	L["The Storm's Fury"] = "Неистовство бури"
 	L["Fyrakk Asssaults"] = "Налет Фиракка"
 	L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
+	L["RESET"] = "Сброс всех данных аддона"
 	--L["AddonName"] = AddonTitle
 end
