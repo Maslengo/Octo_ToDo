@@ -23,7 +23,8 @@ local thursdayResetDay0EU = (1514358000-10800) --https://wowreset.com/ 14-3=11(�
 local thursdayResetDay0US = 1514300400
 local daytime = 86400 -- 60 * 60 * 24 --60 сек на 60 мин на 24 ч
 local NONE = "" --ColorGray..NONE.."|r"
-local DONE = "|cff00FF00Done|r"
+local AddonColor = "|cff00FFFF"
+local DONE = AddonColor.."Done|r"
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
 local regionalWeeklyStart = 1668981600
 local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8 --0.1, 0.1, 0.1, 1
@@ -163,7 +164,7 @@ function ToDragonbaneKeepTimer() -- Драконья экспедиция
 	local ToDragonbaneKeepTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		ToDragonbaneKeepTimer = "|cff00FF00"..SecondsToClock(nextEventIn) .." "
+		ToDragonbaneKeepTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
 	return ToDragonbaneKeepTimer
 end
@@ -177,7 +178,7 @@ function GrandHuntsTimer() -- Кентавры Маруук
 	local GrandHuntsTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		GrandHuntsTimer = "|cff00FF00"..SecondsToClock(nextEventIn) .." "
+		GrandHuntsTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
 	return GrandHuntsTimer
 end
@@ -191,7 +192,7 @@ function CommunityFeastTimer() -- Искарские клыкарры
 	local CommunityFeastTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		CommunityFeastTimer = "|cff00FF00"..SecondsToClock(nextEventIn) .." "
+		CommunityFeastTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
 	return CommunityFeastTimer
 end
@@ -205,7 +206,7 @@ function PrimalStormsTimer() -- Праймал шторм
 	local PrimalStormsTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		PrimalStormsTimer = "|cff00FF00"..SecondsToClock(nextEventIn) .." "
+		PrimalStormsTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
 	return PrimalStormsTimer
 end
@@ -218,7 +219,7 @@ function ResearchersUnderFireTimer()
 	local ResearchersUnderFireTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		ResearchersUnderFireTimer = "|cff00FF00"..SecondsToClock(nextEventIn) .." "
+		ResearchersUnderFireTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
 	return ResearchersUnderFireTimer
 end
@@ -777,7 +778,7 @@ function CollectCurrentKEY()
 		collect.CurrentKey = mkey or 0
 		local hasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
 		--collect.hasAvailableRewards = hasAvailableRewards or false
-		if hasAvailableRewards == true then collect.CurrentKey = "|cff00FFFF>>VAULT<<|r" end
+		if hasAvailableRewards == true then collect.CurrentKey = AddonColor..">>VAULT<<|r" end
 	end
 end
 local function QuestsByID(questID)
@@ -921,8 +922,8 @@ local function CheckReputationByRepID(factionID)
 	elseif standingID == 6 then color ="|cff4FFF79" standingTEXT = " ("..FACTION_STANDING_LABEL6..")" -- color ="|cff1af05e" Honored
 	elseif standingID == 7 then color ="|cff4FFF79" standingTEXT = " ("..FACTION_STANDING_LABEL7..")" -- color ="|cff19ffc6" Revered
 		--БИРЮЗОВЫЙ
-	elseif standingID == 8 then color ="|cff00ffff" standingTEXT = " ("..FACTION_STANDING_LABEL8..")" -- color ="|cff00ffff" Exalted
-	elseif standingID == 9 then color ="|cff00ffff" standingTEXT = " ("..FACTION_STANDING_LABEL9..")" -- color ="|cff00ffff" Paragon
+	elseif standingID == 8 then color = AddonColor standingTEXT = " ("..FACTION_STANDING_LABEL8..")" -- color ="|cff00ffff" Exalted
+	elseif standingID == 9 then color = AddonColor standingTEXT = " ("..FACTION_STANDING_LABEL9..")" -- color ="|cff00ffff" Paragon
 	end
 	local reputationInfo = C_GossipInfo.GetFriendshipReputation(factionID)
 	local friendshipFactionID = reputationInfo.friendshipFactionID
@@ -939,7 +940,7 @@ local function CheckReputationByRepID(factionID)
 			local _, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(factionID)
 			if threshold then
 				local value = currentValue % threshold
-				vivod = dev_text.."|cff00ffff"..--[[CompactNumberFormat]](value).."/"..--[[CompactNumberFormat]](threshold)..r
+				vivod = dev_text..AddonColor..--[[CompactNumberFormat]](value).."/"..--[[CompactNumberFormat]](threshold)..r
 				if hasRewardPending then
 					vivod = dev_text..CheckCompletedByQuestID(rewardQuestID)
 				end
@@ -951,7 +952,7 @@ local function CheckReputationByRepID(factionID)
 			local currentValue = data.renownReputationEarned
 			local totalValue = data.renownLevelThreshold
 			local standing = data.renownLevel
-			vivod = dev_text..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue).."|cff00FF00("..--[[CompactNumberFormat]](standing)..")|r"
+			vivod = dev_text..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue)..AddonColor.."("..--[[CompactNumberFormat]](standing)..")|r"
 			if standing == 0 then vivod = 0 end
 			----------- ФРЕНД ФАКШН
 		elseif reputationInfo and friendshipFactionID ~= 0 then
@@ -972,10 +973,10 @@ local function CheckReputationByRepID(factionID)
 			elseif currentLevel == 3 then color ="|cffFFF371" standingTEXT = " (Buddy)" -- 3
 			elseif currentLevel == 4 then color ="|cffFFF371" standingTEXT = " (Friend)" -- 4
 			elseif currentLevel == 5 then color ="|cff4FFF79" standingTEXT = " (Good Friend)" -- 5
-			elseif currentLevel == 6 then color = "|cff00ffff" standingTEXT = " (Best Friend)" -- 6
+			elseif currentLevel == 6 then color = AddonColor standingTEXT = " (Best Friend)" -- 6
 			end
 			vivod = dev_text..color..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue) .. standingTEXT..r
-			if currentLevel == maxLevel then vivod = dev_text.."|cff00ffffDone|r" end
+			if currentLevel == maxLevel then vivod = dev_text..AddonColor.."Done|r" end
 			--if standing == 0 then vivod = 0 end
 			----------- Other
 		else
@@ -983,7 +984,7 @@ local function CheckReputationByRepID(factionID)
 			local currentValue = barValue-barMin
 			local totalValue = barMax-barMin
 			vivod = dev_text..color..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue)..standingTEXT..r
-			if currentValue == totalValue or nextThreshold == 0 then vivod = dev_text.."|cff00ffffDone|r" end
+			if currentValue == totalValue or nextThreshold == 0 then vivod = dev_text..AddonColor.."Done|r" end
 			--if standingID == 0 or currentValue == 0 then vivod = 0 end
 		end
 	end
@@ -1154,7 +1155,7 @@ function CollectAllCurrency()
 		-- local c = "|cffffffff"
 		-- local r = "|r"
 		-- if maxQuantity > 0 and quantity == 0 then c = ColorGray end
-		-- if maxQuantity > 0 and quantity == maxQuantity then c = "|cff00FF00" end
+		-- if maxQuantity > 0 and quantity == maxQuantity then c = AddonColor end
 		-- if maxQuantity ~= 0 and quantity >= 1 then
 		-- Octo_ToDo_DragonflyLevels[curGUID].CurrencyID[v] = c..CompactNumberFormat(quantity)..c.."/"..CompactNumberFormat(maxQuantity)..r
 		-- end
@@ -1268,21 +1269,21 @@ function CollectAllQuests()
 	for k, v in ipairs(RARE_ZARALEK_LIST) do
 		local qw = CheckCompletedByQuestID(v)
 		collect.RARE_ZARALEK_LIST[v] = qw or 0
-		if CheckCompletedByQuestID(v) == "|cff00FF00Done|r" and RARE_ZARALEK_count < #RARE_ZARALEK_LIST then
+		if CheckCompletedByQuestID(v) == AddonColor.."Done|r" and RARE_ZARALEK_count < #RARE_ZARALEK_LIST then
 			RARE_ZARALEK_count = RARE_ZARALEK_count +1
 		end
 	end
 	for k, v in ipairs(EVENTS_ZARALEK_LIST) do
 		local qw = CheckCompletedByQuestID(v)
 		collect.EVENTS_ZARALEK_LIST[v] = qw or 0
-		if CheckCompletedByQuestID(v) == "|cff00FF00Done|r" and EVENTS_ZARALEK_count < #EVENTS_ZARALEK_LIST then
+		if CheckCompletedByQuestID(v) == AddonColor.."Done|r" and EVENTS_ZARALEK_count < #EVENTS_ZARALEK_LIST then
 			EVENTS_ZARALEK_count = EVENTS_ZARALEK_count +1
 		end
 	end
 	for k, v in ipairs(RARE_OSTROV_LIST) do
 		local qw = CheckCompletedByQuestID(v)
 		collect.RARE_OSTROV_LIST[v] = qw or 0
-		if CheckCompletedByQuestID(v) == "|cff00FF00Done|r" and RARE_OSTROV_count < #RARE_OSTROV_LIST then
+		if CheckCompletedByQuestID(v) == AddonColor.."Done|r" and RARE_OSTROV_count < #RARE_OSTROV_LIST then
 			RARE_OSTROV_count = RARE_OSTROV_count +1
 		end
 	end
@@ -2005,7 +2006,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 		else
 			Char_Frame = Main_Frame[curCharGUID]
 		end
-
 		local ShowOnlyCurrentRealm = Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm
 		local LevelToShow = Octo_ToDo_DragonflyVars.config.LevelToShow
 		if ((ShowOnlyCurrentRealm == true and (CharInfo.curServer == GetRealmName())) and (CharInfo.UnitLevel >= LevelToShow)) or
@@ -2189,19 +2189,16 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				}
 			end
 			--10
-			--Main_Frame.TextLeft10:SetText(func_currencyicon(2245)..func_currencyName(2245)) -- Доблесть
 			Char_Frame.CenterLines10.CL:SetText(ColorGray..CURRENCY.."|r")
-			if CharInfo.CurrencyID[2245] >= 1 then
-				Char_Frame.CenterLines10.CL:SetText(func_currencyicon(2245)..Empty_Zero(CharInfo.CurrencyID[2245]))
+			local PEREMENNAYA_2245 = func_currencyicon(2245)..Empty_Zero(CharInfo.CurrencyID[2245])
+			if CharInfo.CurrencyID[2245] == CharInfo.CurrencyID_maxQuantity[2245] then
+				Char_Frame.CenterLines10.CL:SetText(AddonColor..PEREMENNAYA_2245.."|r")
+			elseif CharInfo.CurrencyID[2245] >= 1 then
+				Char_Frame.CenterLines10.CL:SetText(PEREMENNAYA_2245)
 			end
 			Char_Frame.CenterLines10.tooltip = {
 				{"PVE: ", " "},
 				{func_currencyicon(2533)..func_currencyName(2533), CharInfo.CurrencyID[2533].."/"..CharInfo.CurrencyID_maxQuantity[2533]}, --Возрождающее пламя Тьмы
-				-- {func_currencyicon(2409)..func_currencyName(2409), CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]}, --
-				-- {func_currencyicon(2410)..func_currencyName(2410), CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]}, --
-				-- {func_currencyicon(2411)..func_currencyName(2411), CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]}, --
-				-- {func_currencyicon(2412)..func_currencyName(2412), CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]}, --
-				-- {func_currencyicon(1191)..func_currencyName(1191), CharInfo.CurrencyID[1191].."/"..CharInfo.CurrencyID_maxQuantity[1191]}, --Доблесть
 				{func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]}, --Драконьи камни
 				{func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]}, --Печать бури
 				{func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]}, --Энергия стихий
@@ -2230,7 +2227,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			--             Char_Frame.CenterLines10.tooltip[#Char_Frame.CenterLines10.tooltip+1] = {func_currencyicon(v)..func_currencyName(v), count.."/"..CharInfo.CurrencyID_maxQuantity[v]}
 			--         elseif count ~= 0 and count == CharInfo.CurrencyID_maxQuantity[v] then
 			--             if CharInfo.CurrencyID[2245] == 0 then Char_Frame.CenterLines10.CL:SetText(ColorGray..CURRENCY.."|r") end
-			--             Char_Frame.CenterLines10.tooltip[#Char_Frame.CenterLines10.tooltip+1] = {func_currencyicon(v)..func_currencyName(v), "|cff00FF00"..count.."/"..CharInfo.CurrencyID_maxQuantity[v].."|r"}
+			--             Char_Frame.CenterLines10.tooltip[#Char_Frame.CenterLines10.tooltip+1] = {func_currencyicon(v)..func_currencyName(v), AddonColor..count.."/"..CharInfo.CurrencyID_maxQuantity[v].."|r"}
 			--         end
 			--     end
 			-- end
@@ -2286,7 +2283,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				PEREMENNAYA_2409 = PEREMENNAYA_2409.. "(+"..math.floor(CharInfo.ItemsInBag[204075]/15)..")"
 			end
 			if CharInfo.CurrencyID[2409] ~= 0 and (CharInfo.CurrencyID[2409] == CharInfo.CurrencyID_maxQuantity[2409]) then
-				PEREMENNAYA_2409 = PEREMENNAYA_2409.."|cff00FF00*|r"
+				PEREMENNAYA_2409 = PEREMENNAYA_2409..AddonColor.."*|r"
 			end
 			Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_2409)
 			if (CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0) and CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
@@ -2311,7 +2308,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				PEREMENNAYA_2410 = PEREMENNAYA_2410.. "(+"..math.floor(CharInfo.ItemsInBag[204076]/15)..")"
 			end
 			if CharInfo.CurrencyID[2410] ~= 0 and (CharInfo.CurrencyID[2410] == CharInfo.CurrencyID_maxQuantity[2410]) then
-				PEREMENNAYA_2410 = PEREMENNAYA_2410.."|cff00FF00*|r"
+				PEREMENNAYA_2410 = PEREMENNAYA_2410..AddonColor.."*|r"
 			end
 			Char_Frame.CenterLines13.CL:SetText(PEREMENNAYA_2410)
 			if (CharInfo.ItemsInBag[204195] ~= 0 or CharInfo.ItemsInBag[204076] ~= 0 or CharInfo.CurrencyID[2410] ~= 0) and CharInfo.CurrencyID_maxQuantity[2410] ~= 0 then
@@ -2336,7 +2333,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				PEREMENNAYA_2411 = PEREMENNAYA_2411.. "(+"..math.floor(CharInfo.ItemsInBag[204077]/15)..")"
 			end
 			if CharInfo.CurrencyID[2411] ~= 0 and (CharInfo.CurrencyID[2411] == CharInfo.CurrencyID_maxQuantity[2411]) then
-				PEREMENNAYA_2411 = PEREMENNAYA_2411.."|cff00FF00*|r"
+				PEREMENNAYA_2411 = PEREMENNAYA_2411..AddonColor.."*|r"
 			end
 			Char_Frame.CenterLines14.CL:SetText(PEREMENNAYA_2411)
 			if (CharInfo.ItemsInBag[204196] ~= 0 or CharInfo.ItemsInBag[204077] ~= 0 or CharInfo.CurrencyID[2411] ~= 0) and CharInfo.CurrencyID_maxQuantity[2411] ~= 0 then
@@ -2361,7 +2358,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				PEREMENNAYA_2412 = PEREMENNAYA_2412.. "(+"..math.floor(CharInfo.ItemsInBag[204078]/15)..")"
 			end
 			if CharInfo.CurrencyID[2412] ~= 0 and (CharInfo.CurrencyID[2412] == CharInfo.CurrencyID_maxQuantity[2412]) then
-				PEREMENNAYA_2412 = PEREMENNAYA_2412.."|cff00FF00*|r"
+				PEREMENNAYA_2412 = PEREMENNAYA_2412..AddonColor.."*|r"
 			end
 			Char_Frame.CenterLines15.CL:SetText(PEREMENNAYA_2412)
 			if (CharInfo.ItemsInBag[204194] ~= 0 or CharInfo.ItemsInBag[204078] ~= 0 or CharInfo.CurrencyID[2412] ~= 0) and CharInfo.CurrencyID_maxQuantity[2412] ~= 0 then
@@ -2508,7 +2505,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					PEREMENNAYA_PVP = PEREMENNAYA_PVP.."/"..CharInfo.avgItemLevel.."|r"
 				end
 				if CharInfo.avgItemLevelPvp and CharInfo.avgItemLevelPvp > CharInfo.avgItemLevel then
-					PEREMENNAYA_PVP = PEREMENNAYA_PVP.."|cff00FF00*|r"
+					PEREMENNAYA_PVP = PEREMENNAYA_PVP..AddonColor.."*|r"
 					--print(string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp))
 					tinsert(Char_Frame.CenterLines21.tooltip, {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp)})
 				end
@@ -2527,16 +2524,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			Main_Frame.TextLeft22:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r")
 			Char_Frame.CenterLines22.CL:SetText("|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r") -- 0.949, 0.902, 0.6 icon = 133784 https://www.wowhead.com/icons/name:coin
-
 			--23
 			--Main_Frame.TextLeft23:SetFormattedText(MAJOR_FACTION_RENOWN_LEVEL_TOAST, 42)
-
-
-
-
-
-
-
 			-- Char_Frame.CenterLines22.tooltip = {}
 			-- if CharInfo.GetBindLocation then
 			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {"|cffFF0000"..func_itemTexture(6948)..CharInfo.GetBindLocation.."|r"})
@@ -2678,17 +2667,17 @@ local function checkCharInfo(CharInfo)
 	CharInfo.Class = CharInfo.Class or 1
 	CharInfo.Faction = CharInfo.Faction or "Horde"
 	CharInfo.UnitLevel = CharInfo.UnitLevel or 1
-	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.Octopussy_3kREP == "|cff00FF00Done|r" then
+	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.Octopussy_3kREP == AddonColor.."Done|r" then
 		CharInfo.Octopussy_3kREP = false
 	end
-	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.Octopussy_FightingisItsOwnReward == "|cff00FF00Done|r" then
+	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.Octopussy_FightingisItsOwnReward == AddonColor.."Done|r" then
 		CharInfo.Octopussy_FightingisItsOwnReward = false
 	end
-	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.Octopussy_AWorthyAllyLoammNiffen == "|cff00FF00Done|r" then
+	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.Octopussy_AWorthyAllyLoammNiffen == AddonColor.."Done|r" then
 		CharInfo.Octopussy_AWorthyAllyLoammNiffen = false
 	end
 	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.CurrentKey ~= 0 then
-		CharInfo.CurrentKey = "|cff00FFFF>>VAULT<<|r"
+		CharInfo.CurrentKey = AddonColor..">>VAULT<<|r"
 	end
 	if (CharInfo.tmstp or 0) < GetServerTime() then
 		CharInfo.tmstp = tmstpDayReset(7)
@@ -2912,7 +2901,6 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Octo_ToDo_DragonflyVars.config.LevelToShow == nil then
 			Octo_ToDo_DragonflyVars.config.LevelToShow = 60
 		end
-
 		for i, func in ipairs(E.modules) do
 			func()
 		end
@@ -2949,7 +2937,6 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectCurrentKEY()
 		CollectAllQuests()
 		UPGRADERANKS_Frame()
-
 		--itemID_TEST_INSERT()
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		Collect_PVP_Raitings()

@@ -3,7 +3,6 @@ local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local Version = GetAddOnMetadata(AddonName, "Version")
 --E.modules = {}
 --------------------------------------------------------------------------------
-
 local bytetoB64 = {
 	[0]="a", "b", "c", "d", "e", "f", "g", "h",
 	"i", "j", "k", "l", "m", "n", "o", "p",
@@ -21,9 +20,6 @@ function GenerateUniqueID()
 	end
 	return table.concat(s)
 end
-
-
-
 local config = CreateFrame("FRAME", AddonName.."config")
 -- config:RegisterEvent("VARIABLES_LOADED")
 config:Hide()
@@ -36,17 +32,13 @@ config:Hide()
 	OnAccept = function() ReloadUI() end,
 }
 local indent = -24
-
-
 local function newSlider(slider_name, minRange, maxRange, stepSize, getValue, text)
 	local slider = CreateFrame("Slider", "OctoSlider"..slider_name, title, "OptionsSliderTemplate")
-
 	slider.minRange = minRange
 	slider.maxRange = maxRange
 	slider.stepSize = stepSize or 1
 	slider.getValue = getValue
 	slider.text = text
-
 	slider:SetWidth(140)
 	slider:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*4)
 	slider:SetMinMaxValues(minRange, maxRange)
@@ -66,7 +58,6 @@ local function newSlider(slider_name, minRange, maxRange, stepSize, getValue, te
 	slider.tooltipText = text
 	return slider
 end
-
 local function newButton(pos, line)
 	Button = CreateFrame("CheckButton", "CheckButton"..GenerateUniqueID(), config.title, "InterfaceOptionsCheckButtonTemplate")
 	Button:SetPoint("TOPLEFT", title, "BOTTOMLEFT", pos, indent*line)
@@ -76,11 +67,8 @@ local function newButton(pos, line)
 		StaticPopup_Show(AddonName.."GET_RELOAD")
 	end)
 	Button.text:SetText("|cffFF0000ShowOnlyCurrentRealm|r")
-
 	return Button
 end
-
-
 config:SetScript("OnShow", function(self)
 	self:SetScript("OnShow", function(self)
 		self:SetPoint("TOPLEFT", -12, 8)
@@ -96,8 +84,6 @@ config:SetScript("OnShow", function(self)
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 	title:SetPoint("TOPLEFT", 16, -16)
 	title:SetText(AddonName)
-
-
 	-- btn_left1 CVar
 	-----------------------------------------------
 	self.btn_left1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -288,7 +274,6 @@ config:SetScript("OnShow", function(self)
 	self.Slider_right4:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*5)
 	self.Slider_right4:SetMinMaxValues(1,70)
 	self.Slider_right4:SetValueStep(1)
-
 	local step = 1
 	self.Slider_right4:SetValue(Octo_ToDo_DragonflyVars.config.LevelToShow)
 	self.Slider_right4:SetScript("OnValueChanged", function (self, value)
@@ -298,16 +283,10 @@ config:SetScript("OnShow", function(self)
 		StaticPopup_Show(AddonName.."GET_RELOAD")
 	end)
 	self.Slider_right4:Show()
-
-
-
 	--newSlider(slider_name, minRange, maxRange, stepSize, getValue, text)
 	-- self.Slider_right4 = newSlider("1st slider", 1, 70, 1, Octo_ToDo_DragonflyVars.config.LevelToShow, "LevelToShow")
 	-- self.Slider_right4:Show()
-
 	-- local btn_right4 = newButton(200, 10)
-
-
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config, AddonName)

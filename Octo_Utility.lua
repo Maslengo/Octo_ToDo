@@ -113,7 +113,6 @@ tinsert(E.modules, function()
 				-- MajorFactionsRenownToast:Hide()
 				-- MajorFactionsRenownToast.ToastBG:Hide()
 				-- MajorFactionsRenownToast.IconSwirlModelScene:Hide()
-
 				MajorFactionsRenownToast.ToastBG:SetAlpha(0);
 				MajorFactionsRenownToast.IconSwirlModelScene:SetAlpha(0);
 				MajorFactionsRenownToast.Icon:SetAlpha(0);
@@ -121,9 +120,6 @@ tinsert(E.modules, function()
 				MajorFactionsRenownToast.RewardIcon:SetAlpha(0);
 				MajorFactionsRenownToast.RewardIconRing:SetAlpha(0);
 				MajorFactionsRenownToast.RewardDescription:SetAlpha(0);
-
-
-
 			end
 		end
 end)
@@ -570,10 +566,6 @@ end)
 --ShowOnlyCurrentRealm
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm then
-
-
-
-
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -581,14 +573,9 @@ end)
 --LevelToShow
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.LevelToShow then
-
-
-
-
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
-
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
