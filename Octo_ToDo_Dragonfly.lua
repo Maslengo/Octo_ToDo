@@ -2410,9 +2410,11 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 
 			if CharInfo.ItemsInBag[204440] >= 1 then
 				PEREMENNAYA_204440 = PEREMENNAYA_204440.. func_itemTexture(204440)..CharInfo.ItemsInBag[204440]
-			elseif CharInfo.ItemsInBag[204717] >= 1 then
+			end
+			if CharInfo.ItemsInBag[204717] >= 1 then
 				PEREMENNAYA_204440 = PEREMENNAYA_204440.. func_itemTexture(204717)..CharInfo.ItemsInBag[204717]
-			elseif CharInfo.ItemsInBag[204682] >= 1 then
+			end
+			if CharInfo.ItemsInBag[204682] >= 1 then
 				PEREMENNAYA_204440 = PEREMENNAYA_204440.. func_itemTexture(204682)..CharInfo.ItemsInBag[204682]
 			end
 
