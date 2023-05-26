@@ -2481,33 +2481,35 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				{name = L["The Storm's Fury"], data=CharInfo.Octopussy_StormsFury},
 				{name = L["Treasure Goblin"], data=CharInfo.Octopussy_TreasureGoblin},
 				{name = func_questName(70750), data=CharInfo.Octopussy_3kREP}, --"Помощь союзу"
+				{name ="", data =""},
 				{name = "WORLD BOSS", data=CharInfo.Octopussy_WB}, --"CharInfo.Octopussy_WB"
 				{name = "WORLD BOSS "..func_questName(74892), data=CharInfo.Octopussy_WB_NEW},
 				-- {name = DUNGEONS.. " (Поиски реликвии)", data=CharInfo.Octopussy_dungeons_RelicRecovery}, --"Octopussy_dungeons_RelicRecovery"
 				-- {name = DUNGEONS.." (Сохранение прошлого)", data=CharInfo.Octopussy_dungeons_PreservingthePast}, --"CharInfo.Octopussy_dungeons_PreservingthePast"
 				{name = PLAYER_DIFFICULTY_TIMEWALKER, data=CharInfo.Octopussy_Timewalk}, --"CharInfo.Octopussy_Timewalk"
 				{name = CALENDAR_FILTER_WEEKLY_HOLIDAYS, data=CharInfo.Octopussy_WeekendEvent}, --"CharInfo.Octopussy_WeekendEvent"
-				{name = func_questName(66133), data=CharInfo.Octopussy_KeysofLoyalty}, --"CharInfo.Octopussy_KeysofLoyalty" -- Присяга
-				{name = "Запечатанный бурей сундук", data=CharInfo.Octopussy_StormBoundChest}, --"CharInfo.Octopussy_StormBoundChest" https://www.wowhead.com/ru/object=386356/
+				--{name = func_questName(66133), data=CharInfo.Octopussy_KeysofLoyalty}, --"CharInfo.Octopussy_KeysofLoyalty" -- Присяга
+				--{name = "Запечатанный бурей сундук", data=CharInfo.Octopussy_StormBoundChest}, --"CharInfo.Octopussy_StormBoundChest" https://www.wowhead.com/ru/object=386356/
 
 				-- {name = func_itemName(49623), data=CharInfo.questIDtable[24548]}, --Кв на ШМ
 				{name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
 				{name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
 				{name = L["Fyrakk Asssaults"], data = CharInfo.Octopussy_FyrakkAssaults},
-				{name ="", data =""},
-				{name ="PVP: ", data =""},
-				{name = func_questName(55509), data = CharInfo.questIDtable[55509]}, --Оло
-				{name = func_questName(55511), data = CharInfo.questIDtable[55511]},
-				{name = func_questName(13183), data = CharInfo.questIDtable[13183]},
-				{name = func_questName(56339), data = CharInfo.questIDtable[56339]}, --Ашран
-				{name = func_questName(56337), data = CharInfo.questIDtable[56337]},
-				{name = func_questName(72167), data = CharInfo.questIDtable[72167]},
+				-- {name ="", data =""},
+				-- {name ="PVP: ", data =""},
+				-- {name = func_questName(55509), data = CharInfo.questIDtable[55509]}, --Оло
+				-- {name = func_questName(55511), data = CharInfo.questIDtable[55511]},
+				-- {name = func_questName(13183), data = CharInfo.questIDtable[13183]},
+				-- {name = func_questName(56339), data = CharInfo.questIDtable[56339]}, --Ашран
+				-- {name = func_questName(56337), data = CharInfo.questIDtable[56337]},
+				-- {name = func_questName(72167), data = CharInfo.questIDtable[72167]},
 			}
 			Char_Frame.CenterLines15.CL:SetText(ColorGray..QUESTS_LABEL.."|r")
 			Char_Frame.CenterLines15.tooltip = {}
 			for k, v in ipairs(tinsertTABLE) do
 				pizda = "|cffc9c3aa"
-				if v.data ~= false and v.data ~= "" and v.data ~= 0 then
+				if v.data == "|cff00FF00Done|r" then
+				--if v.data ~= false and v.data ~= "" and v.data ~= 0 then
 					pizda = AddonColor
 				end
 				tinsert(Char_Frame.CenterLines15.tooltip, {pizda..v.name.."|r", v.data})
@@ -2872,7 +2874,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Main_Frame and Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
 		end
-	elseif event == "PLAYER_LOGIN" and not InCombatLockdown() then
+	elseif event == "PLAYER_LOGIN" then
 		Collect_PVP_Raitings()
 		local curGUID = UnitGUID("PLAYER")
 		Octo_ToDo_DragonflyLevels[curGUID] = Octo_ToDo_DragonflyLevels[curGUID] or {}
@@ -2921,9 +2923,11 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectAllItemsInBag()
 		Fragments_Earned()
 	elseif event == "ZONE_CHANGED" and not InCombatLockdown() then
+		OctoQuestUpdate()
 		CollectAllItemsInBag()
 		Fragments_Earned()
 	elseif event == "ZONE_CHANGED_NEW_AREA" and not InCombatLockdown() then
+		OctoQuestUpdate()
 		CollectAllItemsInBag()
 		Fragments_Earned()
 	-- elseif event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
