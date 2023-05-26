@@ -17,6 +17,7 @@ if L then
 	L["Researchers Under Fire"] = true
 	L["AddonName"] = AddonTitle
 	L["RESET"] = RESET
+	L["Treasure Goblin"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -27,5 +28,6 @@ if L then
 	L["Fyrakk Asssaults"] = "Налет Фиракка"
 	L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
 	L["RESET"] = "Сброс всех данных аддона"
+	L["Treasure Goblin"] = "Алчный гоблин"
 	--L["AddonName"] = AddonTitle
 end

@@ -14,7 +14,7 @@ local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScal
 local curWidth, curHeight = 96*scale , 20*scale -- ширина 80, высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 10, "OUTLINE"
-local TotalLines = 22
+local TotalLines = 23
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local TotalMoney = 0
@@ -153,6 +153,98 @@ local function SecondsToClock(seconds)
 		mins = string.format("%01.f", math.floor(seconds/60 - (hours*60)))
 		return mins.."m"
 	end
+end
+local spawns = {
+    {mapId = 2112, name="|cff93c47d(Вальдракен)|r"},
+    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+    {mapId = 2022, name="|cff93c47d(Берега Пробуждения)|r"},
+    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+    {mapId = 2023, name="|cff93c47d(Равнины Он'ары)|r"},
+    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+    {mapId = 2024, name="|cff93c47d(Лазурный Простор)|r"},
+    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+    {mapId = 2025, name="|cff93c47d(Тальдразус)|r"},
+    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+    {mapId = 2112, name="|cff93c47d(Вальдракен)|r"},
+    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+    {mapId = 2022, name="|cff93c47d(Берега Пробуждения)|r"},
+    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+    {mapId = 2023, name="|cff93c47d(Равнины Он'ары)|r"},
+    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+    {mapId = 2024, name="|cff93c47d(Лазурный Простор)|r"},
+    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+    {mapId = 2025, name="|cff93c47d(Тальдразус)|r"},
+    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+}
+local spawns2 = {
+    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+    {mapId = 2112, name="|cff00FF00(Вальдракен)|r"},
+    {mapId = 84, name="|cff00FF00(Штормград)|r"},
+    {mapId = 2022, name="|cff00FF00(Берега Пробуждения)|r"},
+    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+    {mapId = 2023, name="|cff00FF00(Равнины Он'ары)|r"},
+    {mapId = 84, name="|cff00FF00(Штормград)|r"},
+    {mapId = 2024, name="|cff00FF00(Лазурный Простор)|r"},
+    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+    {mapId = 2025, name="|cff00FF00(Тальдразус)|r"},
+    {mapId = 84, name="|cff00FF00(Штормград)|r"},
+    {mapId = 2112, name="|cff00FF00(Вальдракен)|r"},
+    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+    {mapId = 2022, name="|cff00FF00(Берега Пробуждения)|r"},
+    {mapId = 84, name="|cff00FF00(Штормград)|r"},
+    {mapId = 2023, name="|cff00FF00(Равнины Он'ары)|r"},
+    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+    {mapId = 2024, name="|cff00FF00(Лазурный Простор)|r"},
+    {mapId = 84, name="|cff00FF00(Штормград)|r"},
+    {mapId = 2025, name="|cff00FF00(Тальдразус)|r"},
+}
+local HordeZnamya = 132485
+local AllyaZnamya = 132486
+function TreasureGoblinTimer()
+	local offset = 1675076400 -- = time({year=2023,month=1,day=30,hour=12})
+	local interval = 30*60
+	local interval2 = 1500
+    local uptime = GetTime()
+    if (last or 0) < uptime - 1 then
+        last = uptime
+        local n = #spawns
+        local current = (time() - offset) / interval
+        local remainder = (math.floor(current) - current + 1) * interval
+        local nextIndex = (math.ceil(current) - 1) % n + 1
+        local found = true
+        local spawnId, distance
+        for i = 0,n-1 do
+            spawnId = (nextIndex + i - 1) % n + 1
+            distance = i
+            break
+        end
+        if found then
+            local spawn = spawns[spawnId]
+            local spawnprev = spawns2[spawnId]
+            nextSpawn = spawn
+            nextLocation = spawn.name
+            prevLocation = spawnprev.name
+            local when = remainder + distance * interval
+            local timeleft = when - interval2
+            if when < 1500 then
+            	nextTime = "|cffFF0000"..SecondsToClock(when).."|r"
+                -- local s, f = SecondsToTimeAbbrev(when)
+                -- nextTime = s:format(f)
+            else
+            	nextTime = "|cff00FF00"..SecondsToClock(timeleft).."|r"
+                -- local t, f = SecondsToTimeAbbrev(timeleft)
+                -- nextTime = t:format(f)
+                nextLocation = prevLocation
+            end
+        else
+            nextSpawn = nil
+            nextLocation = ""
+            prevLocation = ""
+            nextTime = ""
+        end
+    end
+    local TreasureGoblinTimer = nextTime.. " ".. nextLocation
+	return TreasureGoblinTimer
 end
 function ToDragonbaneKeepTimer() -- Драконья экспедиция
 	-- local timePattern = "%02d:%02d";
@@ -1842,6 +1934,7 @@ function OctoQuestUpdate()
 	collect.Octopussy_KeysofLoyalty = CheckCompletedByQuestID(66133)--66419) -- Allegiance to One -- Присяга
 	collect.Octopussy_StormBoundChest = CheckCompletedByQuestID(74567)
 	collect.Octopussy_ResearchersUnderFire = CheckCompletedByQuestID(75643) --75643 или 75627 (хуита 74905)
+	collect.Octopussy_TreasureGoblin = CheckCompletedByQuestID(76215)
 	collect.Octopussy_WB = false
 	if C_QuestLog.IsQuestFlaggedCompleted(69927) then collect.Octopussy_WB = CheckCompletedByQuestID(69927)
 	elseif C_QuestLog.IsQuestFlaggedCompleted(69928) then collect.Octopussy_WB = CheckCompletedByQuestID(69928)
@@ -2520,6 +2613,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			Char_Frame.CenterLines22.CL:SetText("|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r") -- 0.949, 0.902, 0.6 icon = 133784 https://www.wowhead.com/icons/name:coin
 			--23
 			--Main_Frame.TextLeft23:SetFormattedText(MAJOR_FACTION_RENOWN_LEVEL_TOAST, 42)
+			--23 ТАЙМЕР ГОБЛИНА
+			Main_Frame.TextLeft23:SetText("|T577318:16:16:::64:64:4:60:4:60|t " .. TreasureGoblinTimer())
+			Char_Frame.CenterLines23.CL:SetText(CharInfo.Octopussy_TreasureGoblin or NONE)
 			-- Char_Frame.CenterLines22.tooltip = {}
 			-- if CharInfo.GetBindLocation then
 			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {"|cffFF0000"..func_itemTexture(6948)..CharInfo.GetBindLocation.."|r"})
@@ -2682,6 +2778,7 @@ local function checkCharInfo(CharInfo)
 		CharInfo.Octopussy_ResearchersUnderFire = false
 		CharInfo.Octopussy_WB = false
 		CharInfo.Octopussy_WB_NEW = false
+		CharInfo.Octopussy_TreasureGoblin = false
 		CharInfo.Octopussy_FyrakkAssaults = false
 		CharInfo.Octopussy_Timewalk = false
 		CharInfo.Octopussy_WeekendEvent = false
@@ -2764,6 +2861,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			CommunityFeastTimer()
 			PrimalStormsTimer()
 			ResearchersUnderFireTimer()
+			TreasureGoblinTimer()
 			CollectAllProfessions()
 			CollectRioRaiting()
 			--Collect_PVP_Raitings()
