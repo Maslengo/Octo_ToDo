@@ -23,7 +23,7 @@ local thursdayResetDay0EU = (1514358000-10800) --https://wowreset.com/ 14-3=11(�
 local thursdayResetDay0US = 1514300400
 local daytime = 86400 -- 60 * 60 * 24 --60 сек на 60 мин на 24 ч
 local NONE = "" --ColorGray..NONE.."|r"
-local AddonColor = "|cff00A3FF"
+local AddonColor = "|cff00FF00"
 local DONE = AddonColor.."Done|r"
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
 local regionalWeeklyStart = 1668981600
