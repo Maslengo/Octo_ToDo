@@ -14,7 +14,7 @@ local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScal
 local curWidth, curHeight = 96*scale , 20*scale -- ширина 80, высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 10, "OUTLINE"
-local TotalLines = 23
+local TotalLines = 22
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local TotalMoney = 0
@@ -2241,8 +2241,13 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				Char_Frame.CenterLines4.CL:SetText((CharInfo.Octopussy_StormsFury or NONE).." +"..(CharInfo.ItemsInBag[203476]+CharInfo.ItemsInBag[202371])..func_itemTexture(202371))
 			end
 			--5
-			Main_Frame.TextLeft5:SetText("|T236469:16:16:::64:64:4:60:4:60|t " .. ResearchersUnderFireTimer() .. " ".. L["Researchers Under Fire"])
-			Char_Frame.CenterLines5.CL:SetText(CharInfo.Octopussy_ResearchersUnderFire or NONE)
+			--5 ТАЙМЕР ГОБЛИНА
+			Main_Frame.TextLeft5:SetText("|T577318:16:16:::64:64:4:60:4:60|t " .. TreasureGoblinTimer())
+			Char_Frame.CenterLines5.CL:SetText(CharInfo.Octopussy_TreasureGoblin or NONE)
+
+
+			-- Main_Frame.TextLeft5:SetText("|T236469:16:16:::64:64:4:60:4:60|t " .. ResearchersUnderFireTimer() .. " ".. L["Researchers Under Fire"])
+			-- Char_Frame.CenterLines5.CL:SetText(CharInfo.Octopussy_ResearchersUnderFire or NONE)
 			--6
 			Main_Frame.TextLeft6:SetText("|T1603189:16:16:::64:64:4:60:4:60|t |cffFFFFFF".. func_questName(70750).."|r")
 			Char_Frame.CenterLines6.CL:SetText(CharInfo.Octopussy_3kREP or NONE)
@@ -2613,9 +2618,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			Char_Frame.CenterLines22.CL:SetText("|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r") -- 0.949, 0.902, 0.6 icon = 133784 https://www.wowhead.com/icons/name:coin
 			--23
 			--Main_Frame.TextLeft23:SetFormattedText(MAJOR_FACTION_RENOWN_LEVEL_TOAST, 42)
-			--23 ТАЙМЕР ГОБЛИНА
-			Main_Frame.TextLeft23:SetText("|T577318:16:16:::64:64:4:60:4:60|t " .. TreasureGoblinTimer())
-			Char_Frame.CenterLines23.CL:SetText(CharInfo.Octopussy_TreasureGoblin or NONE)
+
 			-- Char_Frame.CenterLines22.tooltip = {}
 			-- if CharInfo.GetBindLocation then
 			-- 	tinsert(Char_Frame.CenterLines22.tooltip, {"|cffFF0000"..func_itemTexture(6948)..CharInfo.GetBindLocation.."|r"})
