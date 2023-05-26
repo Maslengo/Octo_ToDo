@@ -9,15 +9,18 @@ local AddonName, engine = ...
 local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 local L = AL3:NewLocale("OctoTODO", "enUS", true, debug)
 if L then
+	L["AddonName"] = AddonTitle
+	L["RESET"] = RESET
+
 	L["Siege on Dragonbane Keep"] = true
 	L["Grand Hunt"] = true
 	L["Community Feast"] = true
 	L["The Storm's Fury"] = true
 	L["Fyrakk Asssaults"] = true
 	L["Researchers Under Fire"] = true
-	L["AddonName"] = AddonTitle
-	L["RESET"] = RESET
 	L["Treasure Goblin"] = true
+	L["Level"] = true
+	L["Battle Pet"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -29,5 +32,6 @@ if L then
 	L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
 	L["RESET"] = "Сброс всех данных аддона"
 	L["Treasure Goblin"] = "Алчный гоблин"
-	--L["AddonName"] = AddonTitle
+	L["Level"] = "Уровень"
+	L["Battle Pet"] = "Боевой питомец"
 end

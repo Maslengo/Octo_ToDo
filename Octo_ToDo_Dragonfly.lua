@@ -11,7 +11,7 @@ local _, className, curClass = UnitClass("PLAYER")
 local classColor = C_ClassColor.GetClassColor(className)
 local r, g, b = classColor:GetRGB()
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
-local curWidth, curHeight = 96*scale , 20*scale -- ширина 80, высота 20 24
+local curWidth, curHeight = 90*scale , 20*scale -- ширина 80, высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
 local TotalLines = 18
@@ -1924,9 +1924,11 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame:Hide()
 end
 function OctoQuestUpdate()
+	print ("Check")
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	collect.Octopussy_TreasureGoblin = CheckCompletedByQuestID(76215)
 	collect.Octopussy_Feast = CheckCompletedByQuestID(70893)
 	collect.Octopussy_DragonbaneKeep = CheckCompletedByQuestID(70866)
 	collect.Octopussy_TheGrandHunt = CheckCompletedByQuestID(70906)
@@ -1934,7 +1936,6 @@ function OctoQuestUpdate()
 	collect.Octopussy_KeysofLoyalty = CheckCompletedByQuestID(66133)--66419) -- Allegiance to One -- Присяга
 	collect.Octopussy_StormBoundChest = CheckCompletedByQuestID(74567)
 	collect.Octopussy_ResearchersUnderFire = CheckCompletedByQuestID(75643) --75643 или 75627 (хуита 74905)
-	collect.Octopussy_TreasureGoblin = CheckCompletedByQuestID(76215)
 	collect.Octopussy_WB = false
 	if C_QuestLog.IsQuestFlaggedCompleted(69927) then collect.Octopussy_WB = CheckCompletedByQuestID(69927)
 	elseif C_QuestLog.IsQuestFlaggedCompleted(69928) then collect.Octopussy_WB = CheckCompletedByQuestID(69928)
@@ -2406,24 +2407,28 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			--12
 			Main_Frame.TextLeft12:SetText(func_itemTexture(204440)..func_itemName(204440))
-			local PEREMENNAYA_204440 = func_itemTexture(204440)..CharInfo.ItemsInBag[204440]
-			Char_Frame.CenterLines12.tooltip = {}
-			if CharInfo.ItemsInBag[204440] == 0 and CharInfo.ItemsInBag[204717] == 1 then
-				Char_Frame.CenterLines12.CL:SetText(func_itemTexture(204717)..CharInfo.ItemsInBag[204717])
-			end
+			local PEREMENNAYA_204440 = ""
+
 			if CharInfo.ItemsInBag[204440] >= 1 then
-				Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440)
+				PEREMENNAYA_204440 = PEREMENNAYA_204440.. func_itemTexture(204440)..CharInfo.ItemsInBag[204440]
+			elseif CharInfo.ItemsInBag[204717] >= 1 then
+				PEREMENNAYA_204440 = PEREMENNAYA_204440.. func_itemTexture(204717)..CharInfo.ItemsInBag[204717]
+			elseif CharInfo.ItemsInBag[204682] >= 1 then
+				PEREMENNAYA_204440 = PEREMENNAYA_204440.. func_itemTexture(204682)..CharInfo.ItemsInBag[204682]
 			end
-			if CharInfo.ItemsInBag[204717] >=1 then
-				Char_Frame.CenterLines12.tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
-			end
-			if CharInfo.ItemsInBag[204717] >=2 then
-				Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
-			end
-			if #Char_Frame.CenterLines12.tooltip == 0 then
-				Char_Frame.CenterLines12.tooltip = nil
-				--Char_Frame.CenterLines12.CL:SetText("")
-			end
+
+			Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440)
+			-- if CharInfo.ItemsInBag[204440] >= 1 then
+			-- 	Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440)
+			-- end
+			-- if CharInfo.ItemsInBag[204717] >=1 then
+			-- 	Char_Frame.CenterLines12.tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
+			-- end
+			-- if CharInfo.ItemsInBag[204717] >=2 then
+			-- 	Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
+			-- end
+
+
 			--13 НОВЫЙ КАТАЛИСТ
 			Main_Frame.TextLeft13:SetText(func_currencyicon(2533)..func_currencyName(2533))
 			if CharInfo.CurrencyID[2533] >= 1 then
@@ -2465,45 +2470,48 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			--15
 			local tinsertTABLE = {
-				-- -- {name = L["Siege on Dragonbane Keep"], data=CharInfo.Octopussy_DragonbaneKeep},
-				-- -- {name = L["Grand Hunt"], data=CharInfo.Octopussy_TheGrandHunt},
-				-- -- {name = L["Community Feast"], data=CharInfo.Octopussy_Feast},
-				-- -- {name = L["The Storm's Fury"], data=CharInfo.Octopussy_StormsFury},
-				-- -- {name = func_questName(70750), data=CharInfo.Octopussy_3kREP}, --"Помощь союзу"
-				-- {name = "WORLD BOSS", data=CharInfo.Octopussy_WB}, --"CharInfo.Octopussy_WB"
-				-- {name = "WORLD BOSS "..func_questName(74892), data=CharInfo.Octopussy_WB_NEW},
-				-- {name = DUNGEONS.. " (Поиски реликвии)", data=CharInfo.Octopussy_dungeons_RelicRecovery}, --"Octopussy_dungeons_RelicRecovery"
-				-- {name = DUNGEONS.." (Сохранение прошлого)", data=CharInfo.Octopussy_dungeons_PreservingthePast}, --"CharInfo.Octopussy_dungeons_PreservingthePast"
-				-- {name = PLAYER_DIFFICULTY_TIMEWALKER, data=CharInfo.Octopussy_Timewalk}, --"CharInfo.Octopussy_Timewalk"
-				-- {name = CALENDAR_FILTER_WEEKLY_HOLIDAYS, data=CharInfo.Octopussy_WeekendEvent}, --"CharInfo.Octopussy_WeekendEvent"
-				-- {name = func_questName(66133), data=CharInfo.Octopussy_KeysofLoyalty}, --"CharInfo.Octopussy_KeysofLoyalty" -- Присяга
-				-- {name = "Запечатанный бурей сундук", data=CharInfo.Octopussy_StormBoundChest}, --"CharInfo.Octopussy_StormBoundChest" https://www.wowhead.com/ru/object=386356/
-				-- {name = func_questName(72528), data=CheckCompletedByQuestID(72528)},
-				-- {name = func_itemName(49623), data=CharInfo.questIDtable[24548]}, --Кв на ШМ
-				-- -- {name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
-				-- -- {name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
-				-- {name = L["Fyrakk Asssaults"], data = CharInfo.Octopussy_FyrakkAssaults},
-				-- -- {name ="", data =""},
-				-- -- {name ="PVP: ", data =""}
-				-- {name = func_questName(55509), data = CharInfo.questIDtable[55509]}, --Оло
-				-- {name = func_questName(55511), data = CharInfo.questIDtable[55511]},
-				-- {name = func_questName(13183), data = CharInfo.questIDtable[13183]},
-				-- {name = func_questName(56339), data = CharInfo.questIDtable[56339]}, --Ашран
-				-- {name = func_questName(56337), data = CharInfo.questIDtable[56337]},
-				-- {name = func_questName(72167), data = CharInfo.questIDtable[72167]},
+				-- {name = L["Siege on Dragonbane Keep"], data=CharInfo.Octopussy_DragonbaneKeep},
+				-- {name = L["Grand Hunt"], data=CharInfo.Octopussy_TheGrandHunt},
+				-- {name = L["Community Feast"], data=CharInfo.Octopussy_Feast},
+				-- {name = L["The Storm's Fury"], data=CharInfo.Octopussy_StormsFury},
+				-- {name = func_questName(70750), data=CharInfo.Octopussy_3kREP}, --"Помощь союзу"
+				{name = "WORLD BOSS", data=CharInfo.Octopussy_WB}, --"CharInfo.Octopussy_WB"
+				{name = "WORLD BOSS "..func_questName(74892), data=CharInfo.Octopussy_WB_NEW},
+				{name = DUNGEONS.. " (Поиски реликвии)", data=CharInfo.Octopussy_dungeons_RelicRecovery}, --"Octopussy_dungeons_RelicRecovery"
+				{name = DUNGEONS.." (Сохранение прошлого)", data=CharInfo.Octopussy_dungeons_PreservingthePast}, --"CharInfo.Octopussy_dungeons_PreservingthePast"
+				{name = PLAYER_DIFFICULTY_TIMEWALKER, data=CharInfo.Octopussy_Timewalk}, --"CharInfo.Octopussy_Timewalk"
+				{name = CALENDAR_FILTER_WEEKLY_HOLIDAYS, data=CharInfo.Octopussy_WeekendEvent}, --"CharInfo.Octopussy_WeekendEvent"
+				{name = func_questName(66133), data=CharInfo.Octopussy_KeysofLoyalty}, --"CharInfo.Octopussy_KeysofLoyalty" -- Присяга
+				{name = "Запечатанный бурей сундук", data=CharInfo.Octopussy_StormBoundChest}, --"CharInfo.Octopussy_StormBoundChest" https://www.wowhead.com/ru/object=386356/
+				{name = func_questName(72528), data=CheckCompletedByQuestID(72528)},
+				{name = func_itemName(49623), data=CharInfo.questIDtable[24548]}, --Кв на ШМ
+				-- {name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
+				-- {name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
+				{name = L["Fyrakk Asssaults"], data = CharInfo.Octopussy_FyrakkAssaults},
+				{name ="", data =""},
+				{name ="PVP: ", data =""},
+				{name = func_questName(55509), data = CharInfo.questIDtable[55509]}, --Оло
+				{name = func_questName(55511), data = CharInfo.questIDtable[55511]},
+				{name = func_questName(13183), data = CharInfo.questIDtable[13183]},
+				{name = func_questName(56339), data = CharInfo.questIDtable[56339]}, --Ашран
+				{name = func_questName(56337), data = CharInfo.questIDtable[56337]},
+				{name = func_questName(72167), data = CharInfo.questIDtable[72167]},
 			}
 			Char_Frame.CenterLines15.CL:SetText(ColorGray..QUESTS_LABEL.."|r")
 			Char_Frame.CenterLines15.tooltip = {}
 			for k, v in ipairs(tinsertTABLE) do
+				pizda = "|cffc9c3aa"
 				if v.data ~= false and v.data ~= "" and v.data ~= 0 then
-					tinsert(Char_Frame.CenterLines15.tooltip, {v.name, v.data})
+					pizda = AddonColor
 				end
+				tinsert(Char_Frame.CenterLines15.tooltip, {pizda..v.name.."|r", v.data})
+
 			end
-			for k, v in ipairs(questIDtable) do
-				if CharInfo.questIDtable[v] ~= "" and CharInfo.questIDtable[v] ~= 0 then
-					tinsert(Char_Frame.CenterLines15.tooltip, {func_questName(v), CharInfo.questIDtable[v]})
-				end
-			end
+			-- for k, v in ipairs(questIDtable) do
+			-- 	if CharInfo.questIDtable[v] ~= "" and CharInfo.questIDtable[v] ~= 0 then
+			-- 		tinsert(Char_Frame.CenterLines15.tooltip, {func_questName(v), CharInfo.questIDtable[v]})
+			-- 	end
+			-- end
 			if #Char_Frame.CenterLines15.tooltip == 0 then
 				Char_Frame.CenterLines15.tooltip = nil
 				Char_Frame.CenterLines15.CL:SetText("")
@@ -2725,19 +2733,19 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			OctoilvlStr()
 			CollectAllReputations()
 		end
-	elseif event == "QUEST_FINISHED" and not InCombatLockdown() then
+	elseif event == "QUEST_FINISHED" then
 		OctoQuestUpdate()
 		CollectAllQuests()
-	elseif event == "QUEST_COMPLETE" and not InCombatLockdown() then
+	elseif event == "QUEST_COMPLETE" then
 		OctoQuestUpdate()
 		CollectAllQuests()
-	elseif event == "QUEST_LOG_UPDATE" and not InCombatLockdown() then
+	elseif event == "QUEST_LOG_UPDATE" then
 		OctoQuestUpdate()
 		CollectAllQuests()
 		if Main_Frame and Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
 		end
-	elseif event == "PLAYER_MONEY" and not InCombatLockdown() then
+	elseif event == "PLAYER_MONEY" then
 		OctoMoneyUpdate()
 		if Main_Frame and Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
