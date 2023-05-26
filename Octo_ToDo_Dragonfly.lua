@@ -1924,7 +1924,6 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame:Hide()
 end
 function OctoQuestUpdate()
-	print ("Check")
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -2470,23 +2469,28 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			--15
 			local tinsertTABLE = {
-				-- {name = L["Siege on Dragonbane Keep"], data=CharInfo.Octopussy_DragonbaneKeep},
-				-- {name = L["Grand Hunt"], data=CharInfo.Octopussy_TheGrandHunt},
-				-- {name = L["Community Feast"], data=CharInfo.Octopussy_Feast},
-				-- {name = L["The Storm's Fury"], data=CharInfo.Octopussy_StormsFury},
-				-- {name = func_questName(70750), data=CharInfo.Octopussy_3kREP}, --"Помощь союзу"
+				-- {name = func_questName(72528), data=CheckCompletedByQuestID(72528)}, --БУДУЩИЙ КАТАЛИЗАТОР
+
+
+
+				{name = L["Siege on Dragonbane Keep"], data=CharInfo.Octopussy_DragonbaneKeep},
+				{name = L["Grand Hunt"], data=CharInfo.Octopussy_TheGrandHunt},
+				{name = L["Community Feast"], data=CharInfo.Octopussy_Feast},
+				{name = L["The Storm's Fury"], data=CharInfo.Octopussy_StormsFury},
+				{name = L["Treasure Goblin"], data=CharInfo.Octopussy_TreasureGoblin},
+				{name = func_questName(70750), data=CharInfo.Octopussy_3kREP}, --"Помощь союзу"
 				{name = "WORLD BOSS", data=CharInfo.Octopussy_WB}, --"CharInfo.Octopussy_WB"
 				{name = "WORLD BOSS "..func_questName(74892), data=CharInfo.Octopussy_WB_NEW},
-				{name = DUNGEONS.. " (Поиски реликвии)", data=CharInfo.Octopussy_dungeons_RelicRecovery}, --"Octopussy_dungeons_RelicRecovery"
-				{name = DUNGEONS.." (Сохранение прошлого)", data=CharInfo.Octopussy_dungeons_PreservingthePast}, --"CharInfo.Octopussy_dungeons_PreservingthePast"
+				-- {name = DUNGEONS.. " (Поиски реликвии)", data=CharInfo.Octopussy_dungeons_RelicRecovery}, --"Octopussy_dungeons_RelicRecovery"
+				-- {name = DUNGEONS.." (Сохранение прошлого)", data=CharInfo.Octopussy_dungeons_PreservingthePast}, --"CharInfo.Octopussy_dungeons_PreservingthePast"
 				{name = PLAYER_DIFFICULTY_TIMEWALKER, data=CharInfo.Octopussy_Timewalk}, --"CharInfo.Octopussy_Timewalk"
 				{name = CALENDAR_FILTER_WEEKLY_HOLIDAYS, data=CharInfo.Octopussy_WeekendEvent}, --"CharInfo.Octopussy_WeekendEvent"
 				{name = func_questName(66133), data=CharInfo.Octopussy_KeysofLoyalty}, --"CharInfo.Octopussy_KeysofLoyalty" -- Присяга
 				{name = "Запечатанный бурей сундук", data=CharInfo.Octopussy_StormBoundChest}, --"CharInfo.Octopussy_StormBoundChest" https://www.wowhead.com/ru/object=386356/
-				{name = func_questName(72528), data=CheckCompletedByQuestID(72528)},
-				{name = func_itemName(49623), data=CharInfo.questIDtable[24548]}, --Кв на ШМ
-				-- {name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
-				-- {name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
+
+				-- {name = func_itemName(49623), data=CharInfo.questIDtable[24548]}, --Кв на ШМ
+				{name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
+				{name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
 				{name = L["Fyrakk Asssaults"], data = CharInfo.Octopussy_FyrakkAssaults},
 				{name ="", data =""},
 				{name ="PVP: ", data =""},
