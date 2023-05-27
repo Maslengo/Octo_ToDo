@@ -267,31 +267,24 @@ config:SetScript("OnShow", function(self)
         end)
         self.btn_right3.text:SetText("|cffFF0000ShowOnlyCurrentRealm|r")
         -----------------------------------------------
-        --TITLE
+        --LevelToShowTEXT
         local LevelToShowTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
         LevelToShowTEXT:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*4)
         LevelToShowTEXT:SetText("LevelToShow: "..Octo_ToDo_DragonflyVars.config.LevelToShow)
-        -- Slider_right4 LevelToShow
-        self.Slider_right4 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
-        self.Slider_right4:SetWidth(140)
-        self.Slider_right4:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*5)
-        self.Slider_right4:SetMinMaxValues(1,70)
-        self.Slider_right4:SetValueStep(1)
+        self.Slider_right4plus5 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
+        self.Slider_right4plus5:SetWidth(140)
+        self.Slider_right4plus5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*5)
+        self.Slider_right4plus5:SetMinMaxValues(1,70)
+        self.Slider_right4plus5:SetValueStep(1)
         local step = 1
-        self.Slider_right4:SetValue(Octo_ToDo_DragonflyVars.config.LevelToShow)
-        self.Slider_right4:SetScript("OnValueChanged", function (self, value)
+        self.Slider_right4plus5:SetValue(Octo_ToDo_DragonflyVars.config.LevelToShow)
+        self.Slider_right4plus5:SetScript("OnValueChanged", function (self, value)
                 value = math.floor(value * step + .5) / step
                 Octo_ToDo_DragonflyVars.config.LevelToShow = value
                 LevelToShowTEXT:SetText("LevelToShow: "..Octo_ToDo_DragonflyVars.config.LevelToShow)
                 StaticPopup_Show(AddonName.."GET_RELOAD")
         end)
-        self.Slider_right4:Show()
-        --newSlider(slider_name, minRange, maxRange, stepSize, getValue, text)
-        -- self.Slider_right4 = newSlider("1st slider", 1, 70, 1, Octo_ToDo_DragonflyVars.config.LevelToShow, "LevelToShow")
-        -- self.Slider_right4:Show()
-        -- local btn_right4 = newButton(200, 10)
-
-
+        self.Slider_right4plus5:Show()
         -- btn_right6 AutoSellGrey
         -----------------------------------------------
         self.btn_right6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -313,7 +306,25 @@ config:SetScript("OnShow", function(self)
                 StaticPopup_Show(AddonName.."GET_RELOAD")
         end)
         self.btn_right7.text:SetText("|cffFF0000AutoRepair|r")
-
+        -----------------------------------------------
+        --Addon_curWidthTEXT
+        local Addon_curWidthTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+        Addon_curWidthTEXT:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*8)
+        Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
+        self.Slider_right8plus9 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
+        self.Slider_right8plus9:SetWidth(140)
+        self.Slider_right8plus9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*9)
+        self.Slider_right8plus9:SetMinMaxValues(60,140)
+        self.Slider_right8plus9:SetValueStep(1)
+        local step = 1
+        self.Slider_right8plus9:SetValue(Octo_ToDo_DragonflyVars.config.Addon_curWidth)
+        self.Slider_right8plus9:SetScript("OnValueChanged", function (self, value)
+                value = math.floor(value * step + .5) / step
+                Octo_ToDo_DragonflyVars.config.Addon_curWidth = value
+                Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
+                StaticPopup_Show(AddonName.."GET_RELOAD")
+        end)
+        self.Slider_right8plus9:Show()
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config, AddonName)

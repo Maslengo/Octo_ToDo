@@ -901,7 +901,8 @@ tinsert(E.modules, function()
 				end
 			end
 			function UsableItemFrame_OnEvent(self, event)
-				if event == "BAG_UPDATE" and not InCombatLockdown() then
+				local isGroup = IsInGroup(INSTANCE)
+				if event == "BAG_UPDATE" and not InCombatLockdown() and isGroup == false then
 					UsableItemFrame()
 				end
 			end
@@ -1055,7 +1056,7 @@ tinsert(E.modules, function()
 						if linkType == "battlepet" then
 							local speciesID, level, breedQuality = strsplit(":", linkOptions)
 							local qualityColor = BAG_ITEM_QUALITY_COLORS[tonumber(breedQuality)]
-							link = qualityColor:WrapTextInColorCode(name .. " |n" .. L["Level"] .. " " .. level .. L["Battle Pet"])
+							link = qualityColor:WrapTextInColorCode(name .. " |n" .. L["Level"] .. " " .. level .. " " .. L["Battle Pet"])
 						end
 						StaticPopup1Text:SetText(gsub(StaticPopup1Text:GetText(), gsub(TypeDeleteLine, "@", ""), "") .. "|n" .. link)
 					else
@@ -1067,7 +1068,7 @@ tinsert(E.modules, function()
 						if linkType == "battlepet" then
 							local speciesID, level, breedQuality = strsplit(":", linkOptions)
 							local qualityColor = BAG_ITEM_QUALITY_COLORS[tonumber(breedQuality)]
-							link = qualityColor:WrapTextInColorCode(name .. " |n" .. L["Level"] .. " " .. level .. L["Battle Pet"])
+							link = qualityColor:WrapTextInColorCode(name .. " |n" .. L["Level"] .. " " .. level .. " " .. L["Battle Pet"])
 						end
 						StaticPopup1Text:SetText(gsub(StaticPopup1Text:GetText(), gsub(TypeDeleteLine, "@", ""), "") .. "|n|n" .. link)
 					end
@@ -1193,3 +1194,12 @@ tinsert(E.modules, function()
 	end
 end)
 
+----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
+--Addon_curWidth
+tinsert(E.modules, function()
+		if Octo_ToDo_DragonflyVars.config.Addon_curWidth then
+		end
+end)
+----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------

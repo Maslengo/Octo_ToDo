@@ -11,7 +11,10 @@ local _, className, curClass = UnitClass("PLAYER")
 local classColor = C_ClassColor.GetClassColor(className)
 local r, g, b = classColor:GetRGB()
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
-local curWidth, curHeight = 93*scale , 20*scale -- ширина 80, высота 20 24
+--local curWidth = Octo_ToDo_DragonflyVars.config.Addon_curWidth*scale or 100*scale
+--print (Octo_ToDo_DragonflyVars.config.Addon_curWidth)
+local curWidth = 93*scale
+local curHeight = 20*scale -- высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
 local TotalLines = 18
@@ -201,7 +204,7 @@ local spawns2 = {
 local HordeZnamya = 132485
 local AllyaZnamya = 132486
 function TreasureGoblinTimer()
-	local offset = 1675076400 -- = time({year=2023,month=1,day=30,hour=12})
+	local offset = 1675076400+9 -- = time({year=2023,month=1,day=30,hour=12})
 	local interval = 30*60
 	local interval2 = 1500
 	local uptime = GetTime()
@@ -232,7 +235,9 @@ function TreasureGoblinTimer()
 				-- nextTime = s:format(f)
 			else
 				nextTime = "|cff00FF00"..SecondsToClock(timeleft).."|r"
-				PlaySoundFile("Interface\\AddOns\\"..AddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
+				if PlayCustomSound == true then
+					PlaySoundFile("Interface\\AddOns\\"..AddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
+				end
 				-- local t, f = SecondsToTimeAbbrev(timeleft)
 				-- nextTime = t:format(f)
 				nextLocation = prevLocation
@@ -1312,52 +1317,6 @@ end
 -- local itemFragmentTable = {
 --   204075,
 -- }
-local function Fragments_Earned()
-	local curGUID = UnitGUID("PLAYER")
-	local collect = Octo_ToDo_DragonflyLevels[curGUID]
-	-------------------------------------------------------------------------
-	--15 204193 204075
-	--16 204195 204076
-	--17 204196 204077
-	--18 204194 204078
-	local countGreen = GetItemCount(204075, true, true, true)
-	local countBlue = GetItemCount(204076, true, true, true)
-	local countPurple = GetItemCount(204077, true, true, true)
-	local countOrange = GetItemCount(204078, true, true, true)
-	-- for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-	--   for slot=1, C_Container.GetContainerNumSlots(bag) do
-	--     local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-	--     if containerInfo then
-	--       local itemID = containerInfo.itemID
-	--       --local iconFileID = containerInfo.iconFileID
-	--       local itemLink = C_Container.GetContainerItemLink(bag, slot)
-	--       --local isLocked = containerInfo.isLocked -- Добавить
-	--       local ItemTooltip = _G["Octo_FRAGMENTS_ScanningTooltip"] or
-	--       CreateFrame("GameTooltip", "Octo_FRAGMENTS_ScanningTooltip", WorldFrame, "GameTooltipTemplate")
-	--       ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
-	--       ItemTooltip:ClearLines()
-	--       ItemTooltip:SetHyperlink(itemLink)
-	--       local foundFragments = nil
-	--       local foundFragmentsnumber = 0
-	--       local foundLevel = nil
-	--       local emptySockets = 0
-	--       local foundEmptySocket = nil
-	--         for i = 1, ItemTooltip:NumLines() do
-	--           -- |c%s%s/%s|r
-	--           foundFragments = _G["Octo_FRAGMENTS_ScanningTooltipTextLeft" .. i]:GetText():match(ITEM_UPGRADE_FRAGMENTS_TOTAL)
-	--           if foundFragments then
-	--             --foundFragmentsnumber = tonumber(foundFragments) or 0
-	--             foundFragmentsnumber = foundFragmentsnumber + 1
-	--           end
-	--           foundEmptySocket = _G["Octo_FRAGMENTS_ScanningTooltipTextLeft" .. i]:GetText():match(EMPTY_SOCKET_PRISMATIC)
-	--           if foundEmptySocket then
-	--             emptySockets = emptySockets + 1
-	--           end
-	--         end
-	--     end
-	--   end
-	-- end
-end
 function CollectAllReputations()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -1526,70 +1485,70 @@ function UPGRADERANKS_Frame()
 	UPGRADERANKS_Frame:SetPoint("CENTER", 0, 0)
 	UPGRADERANKS_Frame:Hide()
 end
-local function CreateFrameUsableItems_OnEnter(self)
-	self.icon:SetVertexColor(1, 1, 1, 1)
-end
-local function CreateFrameUsableItems_OnLeave(self)
-	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
-	self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
-	GameTooltip:ClearLines()
-	GameTooltip:Hide()
-end
-local function CreateFrameUsableItems_OnEvent(self,event)
-	if event == "BAG_UPDATE" then
-		local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
-		self.icon:SetDesaturated(sufficiently)
-		self.icon:SetAlpha(sufficiently and .1 or 1)
-	elseif event == "PLAYER_REGEN_DISABLED" then
-		self:SetParent(UIParent)
-		self:ClearAllPoints()
-		self:Hide()
-	else
-		self:SetParent(Main_Frame)
-		self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, self.Ypos)
-		self:Show()
-	end
-end
-local function CreateFrameUsableItems_OnMouseDown(self)
-	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
-	self.icon:SetVertexColor(1, 0, 0, sufficiently and .1 or 1)
-end
-local function CreateFrameUsableItems_OnMouseUp(self)
-	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
-	self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
-end
-local function CreateFrameUsableItems(itemID, Texture, count, Ypos, r, g, b)
-	local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
-	Button.itemID = itemID
-	Button.Texture = Texture
-	Button.count = count
-	Button.Ypos = Ypos
-	-- Button.r = r
-	-- Button.g = g
-	-- Button.b = b
-	Button:SetSize(curHeight, curHeight)
-	Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, Ypos)
-	Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	Button:SetBackdropBorderColor(r, g, b, 0.2)
-	Button:RegisterEvent("PLAYER_REGEN_DISABLED")
-	Button:RegisterEvent("PLAYER_REGEN_ENABLED")
-	Button:RegisterEvent("BAG_UPDATE")
-	Button:HookScript("OnEvent", CreateFrameUsableItems_OnEvent)
-	Button:HookScript("OnEnter", CreateFrameUsableItems_OnEnter)
-	Button:HookScript("OnLeave", CreateFrameUsableItems_OnLeave)
-	Button:HookScript("OnMouseDown", CreateFrameUsableItems_OnMouseDown)
-	Button:HookScript("OnMouseUp", CreateFrameUsableItems_OnMouseUp)
-	Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-	Button:SetAttribute("type", "macro")
-	Button:SetAttribute("macrotext", "/use item:"..itemID)
-	local t = Button:CreateTexture(nil, "BACKGROUND")
-	Button.icon = t
-	t:SetTexture(Texture)--select(10, GetItemInfo(itemID)))
-	t:SetVertexColor(1, 1, 1, 1)
-	t:SetAllPoints(Button)
-	Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
-	return Button
-end
+-- local function CreateFrameUsableItems_OnEnter(self)
+-- 	self.icon:SetVertexColor(1, 1, 1, 1)
+-- end
+-- local function CreateFrameUsableItems_OnLeave(self)
+-- 	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+-- 	self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
+-- 	GameTooltip:ClearLines()
+-- 	GameTooltip:Hide()
+-- end
+-- local function CreateFrameUsableItems_OnEvent(self,event)
+-- 	if event == "BAG_UPDATE" then
+-- 		local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+-- 		self.icon:SetDesaturated(sufficiently)
+-- 		self.icon:SetAlpha(sufficiently and .1 or 1)
+-- 	elseif event == "PLAYER_REGEN_DISABLED" then
+-- 		self:SetParent(UIParent)
+-- 		self:ClearAllPoints()
+-- 		self:Hide()
+-- 	else
+-- 		self:SetParent(Main_Frame)
+-- 		self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, self.Ypos)
+-- 		self:Show()
+-- 	end
+-- end
+-- local function CreateFrameUsableItems_OnMouseDown(self)
+-- 	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+-- 	self.icon:SetVertexColor(1, 0, 0, sufficiently and .1 or 1)
+-- end
+-- local function CreateFrameUsableItems_OnMouseUp(self)
+-- 	local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+-- 	self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
+-- end
+-- local function CreateFrameUsableItems(itemID, Texture, count, Ypos, r, g, b)
+-- 	local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
+-- 	Button.itemID = itemID
+-- 	Button.Texture = Texture
+-- 	Button.count = count
+-- 	Button.Ypos = Ypos
+-- 	-- Button.r = r
+-- 	-- Button.g = g
+-- 	-- Button.b = b
+-- 	Button:SetSize(curHeight, curHeight)
+-- 	Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, Ypos)
+-- 	Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+-- 	Button:SetBackdropBorderColor(r, g, b, 0.2)
+-- 	Button:RegisterEvent("PLAYER_REGEN_DISABLED")
+-- 	Button:RegisterEvent("PLAYER_REGEN_ENABLED")
+-- 	Button:RegisterEvent("BAG_UPDATE")
+-- 	Button:HookScript("OnEvent", CreateFrameUsableItems_OnEvent)
+-- 	Button:HookScript("OnEnter", CreateFrameUsableItems_OnEnter)
+-- 	Button:HookScript("OnLeave", CreateFrameUsableItems_OnLeave)
+-- 	Button:HookScript("OnMouseDown", CreateFrameUsableItems_OnMouseDown)
+-- 	Button:HookScript("OnMouseUp", CreateFrameUsableItems_OnMouseUp)
+-- 	Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+-- 	Button:SetAttribute("type", "macro")
+-- 	Button:SetAttribute("macrotext", "/use item:"..itemID)
+-- 	local t = Button:CreateTexture(nil, "BACKGROUND")
+-- 	Button.icon = t
+-- 	t:SetTexture(Texture)--select(10, GetItemInfo(itemID)))
+-- 	t:SetVertexColor(1, 1, 1, 1)
+-- 	t:SetAllPoints(Button)
+-- 	Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
+-- 	return Button
+-- end
 function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 	Main_Frame:SetClampedToScreen(false)
@@ -1941,11 +1900,11 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-- ITEMID, count, Ypox, r, g, b
-	CreateFrameUsableItems(204075, 5062636, 15, 0, .12, 1, 0)
-	CreateFrameUsableItems(204076, 5062624, 15, -24, 0, .44, .98)
-	CreateFrameUsableItems(204077, 5062642, 15, -48, .64, .21, .93)
-	CreateFrameUsableItems(204078, 5062612, 15, -72, 1, .5, 0)
-	CreateFrameUsableItems(204717, 442739, 2, -96, .85, .8, .5)
+	-- CreateFrameUsableItems(204075, 5062636, 15, 0, .12, 1, 0)
+	-- CreateFrameUsableItems(204076, 5062624, 15, -24, 0, .44, .98)
+	-- CreateFrameUsableItems(204077, 5062642, 15, -48, .64, .21, .93)
+	-- CreateFrameUsableItems(204078, 5062612, 15, -72, 1, .5, 0)
+	-- CreateFrameUsableItems(204717, 442739, 2, -96, .85, .8, .5)
 	-----------------------------------------------------
 	-----------------------------------------------------
 	StaticPopupDialogs[AddonName.."DELETE_ADDONDATA_RELOAD"] = {
@@ -2350,6 +2309,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			if CharInfo.CurrentKey ~= 0 and CharInfo.CurrentKey ~= 205225 and CharInfo.CurrentKey ~= 205999 then
 				Char_Frame.CenterLines5.tooltip = {
+					{"RIO_weeklyBest: ", CharInfo.RIO_weeklyBest},
+					{" ", " "},
 					{"Рейды", CharInfo.RIO_RAID},
 					{"M+", CharInfo.RIO_KEYS},
 					{"PVP", CharInfo.RIO_PVPS},
@@ -2849,6 +2810,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			OctoilvlStr()
 			CollectAllReputations()
 			CollectAllQuests()
+			OctoQuestUpdate()
 		end
 	elseif event == "QUEST_FINISHED" then
 		OctoQuestUpdate()
@@ -2874,12 +2836,12 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			Octo_ToDo_DragonflyAddDataToAltFrame()
 		end
 	elseif event == "VARIABLES_LOADED" and not InCombatLockdown() then
-		if Octo_ToDo_DragonflyLevels == nil then
-			Octo_ToDo_DragonflyLevels = {
-			}
-		end
 		if Octo_ToDo_DragonflyVars == nil then
 			Octo_ToDo_DragonflyVars = {
+			}
+		end
+		if Octo_ToDo_DragonflyLevels == nil then
+			Octo_ToDo_DragonflyLevels = {
 			}
 		end
 		local MinimapName = AddonName.."Minimap"
@@ -2894,7 +2856,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 							PlaySoundFile("Interface\\AddOns\\"..AddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
 						end
 						CollectAllItemsInBag()
-						Fragments_Earned()
+						--Fragments_Earned()
 						CollectAllReputations()
 						Collect_PVP_Raitings()
 						-- if Main_Frame and Main_Frame:IsShown() then
@@ -2980,6 +2942,10 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Octo_ToDo_DragonflyVars.config.AutoRepair == nil then
 			Octo_ToDo_DragonflyVars.config.AutoRepair = true
 		end
+		if Octo_ToDo_DragonflyVars.config.Addon_curWidth == nil then
+			Octo_ToDo_DragonflyVars.config.Addon_curWidth = 93
+		end
+
 		for i, func in ipairs(E.modules) do
 			func()
 		end
@@ -3001,6 +2967,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		self:RegisterEvent("QUEST_LOG_UPDATE")
 		self:RegisterEvent("PLAYER_MONEY")
 		self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
+		self:RegisterEvent("PLAYER_STARTED_MOVING")
 		OctoQuestUpdate()
 		OctoMoneyUpdate()
 		OctoilvlStr()
@@ -3009,7 +2976,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		-- CurrencyTEST()
 		CollectAllProfessions()
 		CollectAllItemsInBag()
-		Fragments_Earned()
+		--Fragments_Earned()
 		CollectAllReputations()
 		TESTREP()
 		CollectRioRaiting()
@@ -3031,20 +2998,20 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Collect_PVP_Raitings()
 	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
 		CollectAllItemsInBag()
-		Fragments_Earned()
+		--Fragments_Earned()
 		CollectCurrentKEY()
 		--itemID_TEST_INSERT()
 	elseif event == "HEARTHSTONE_BOUND" and not InCombatLockdown() then
 		CollectAllItemsInBag()
-		Fragments_Earned()
+		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED" and not InCombatLockdown() then
 		OctoQuestUpdate()
 		CollectAllItemsInBag()
-		Fragments_Earned()
+		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED_NEW_AREA" and not InCombatLockdown() then
 		OctoQuestUpdate()
 		CollectAllItemsInBag()
-		Fragments_Earned()
+		--Fragments_Earned()
 		-- elseif event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
 		-- Collect_PVP_Raitings()
 	end
@@ -3068,4 +3035,3 @@ end
 -- local ColorKyrian = CreateColor(1, 1, 1, 1)
 -- (KYRIAN_BLUE_COLOR:GetRGB())
 -- SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
-
