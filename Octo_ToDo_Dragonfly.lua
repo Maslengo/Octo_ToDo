@@ -1160,6 +1160,13 @@ local RARE_OSTROV_LIST = {74331, 74347, 74345, 74336, 74337, 74342, 74321, 74343
 local EVENTS_ZARALEK_LIST = {75612, 75471, 75455, 75664, 75611, 75478, 75451, 75461, 75705, 75454, 75450, 75222, 75370, 75494, 75441, 75156, 75624, 74352,
 }
 local itemID = {
+
+--Сумки
+194019,
+194020,
+
+
+
 206018,
 206039,
 206003,
@@ -1285,6 +1292,7 @@ local function CollectAllItemsInBag()
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
 	local GetBindLocation = GetBindLocation()
+	local PlayerReagentnumSlots = C_Container.GetContainerNumSlots(BACKPACK_CONTAINER+NUM_BAG_SLOTS+1)
 	local mapID = C_Map.GetBestMapForUnit("player")
 	if mapID then
 		local info = C_Map.GetMapInfo(mapID)
@@ -1297,6 +1305,7 @@ local function CollectAllItemsInBag()
 				collect.GetBindLocation = GetBindLocation
 				collect.CurrentLocation = CurrentLocation
 			end
+			collect.PlayerReagentnumSlots = PlayerReagentnumSlots
 		end
 	end
 end
@@ -2256,10 +2265,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			Char_Frame.CharName:SetSize(curWidth, curHeight)
 			Char_Frame.CharName:SetPoint("TOP", Char_Frame, "TOP", 0, 0)
 			Char_Frame.CharName:SetFont(curFontTTF, curFontSize)
+
 			Char_Frame.CharName:SetText(classcolor:WrapTextInColorCode(CharInfo.Name))
-			-- if CharInfo.specIcon then
-			--   Char_Frame.CharName:SetText("|T"..CharInfo.specIcon..":16:16:::64:64:4:60:4:60|t"..classcolor:WrapTextInColorCode(CharInfo.Name))
-			-- end
 			Char_Frame.CharName:SetWordWrap(true)
 			Char_Frame.CharName:SetJustifyV("TOP")
 			Char_Frame.curServer:SetSize(curWidth, curHeight)
@@ -2673,8 +2680,10 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
 			end
 			Main_Frame.TextLeft18:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r")
-			Char_Frame.CenterLines18.CL:SetText("|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r") -- 0.949, 0.902, 0.6 icon = 133784 https://www.wowhead.com/icons/name:coin
-			--------------------------------
+			local PEREMENNAYA_MONEY = "|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r"
+			if CharInfo.PlayerReagentnumSlots == 0 then PEREMENNAYA_MONEY = PEREMENNAYA_MONEY.."|cffFF0000*|r" end
+			Char_Frame.CenterLines18.CL:SetText(PEREMENNAYA_MONEY)
+			--------------------------------------------------
 			if curGUID == curCharGUID then
 				Char_Frame.BG:Show()
 				Char_Frame.BG:SetAlpha(0.2)
@@ -2782,6 +2791,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.RARE_ZARALEK_count = CharInfo.RARE_ZARALEK_count or 0
 	CharInfo.RARE_OSTROV_count = CharInfo.RARE_OSTROV_count or 0
 	CharInfo.EVENTS_ZARALEK_count = CharInfo.EVENTS_ZARALEK_count or 0
+	CharInfo.PlayerReagentnumSlots = CharInfo.PlayerReagentnumSlots or 0
 	setmetatable(CharInfo.CurrencyID, Meta_Table)
 	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table)
 	setmetatable(CharInfo.PVP, Meta_Table)

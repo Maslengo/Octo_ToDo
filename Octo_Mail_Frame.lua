@@ -51,8 +51,8 @@ local function MASLENGO_Mail()
 	SELL_Frame:SetScript("OnDragStop", function() SELL_Frame:StopMovingOrSizing() end)
 	SELL_Frame:SetPoint("CENTER", -551, 12)
 	SELL_Frame:SetBackdrop({
-			bgFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
-			edgeFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
+			bgFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
+			edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
 	SELL_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
@@ -98,9 +98,21 @@ local function MASLENGO_Mail()
 							-- end
 						end
 						-----------------------
-						if sellPrice ~= 0 and itemQuality < 5 and not ignore_list[itemID] --[[and baseILvl > 1]] and itemLevel < ((ilvlStr/10)*9) then
+						-- if sellPrice ~= 0 and itemQuality < 5 and not ignore_list[itemID] --[[and baseILvl > 1]] and itemLevel < ((ilvlStr/10)*9) then
+						-- 	C_Container.UseContainerItem(bag,slot)
+						-- end
+
+						if sellPrice ~= 0
+							--and itemQuality < 5
+							and not ignore_list[itemID] --[[and baseILvl > 1]]  then
 							C_Container.UseContainerItem(bag,slot)
+							--SendMailFrame()
+							--/click SendMailMailButton
+								-- 	SELL_Frame.Button:SetAttribute("type", "macro")
+								-- SELL_Frame.Button:SetAttribute("macrotext", "/click SendMailMailButton")
+
 						end
+
 					end
 				end
 			end
@@ -108,7 +120,7 @@ local function MASLENGO_Mail()
 	)
 	local t = SELL_Frame.Button:CreateTexture(nil,"BACKGROUND")
 	SELL_Frame.Button.icon = t
-	t:SetTexture("Interface\\AddOns\\Octo_ToDo_Dragonfly\\Media\\SELL.tga")
+	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\SELL.tga")
 	t:SetVertexColor(1,0,1,1)
 	t:SetAllPoints(SELL_Frame.Button)
 end
@@ -120,8 +132,8 @@ local function MASLENGO_BANK()
 	FROMBANK_Frame:SetFrameStrata("DIALOG")
 	FROMBANK_Frame:SetPoint("CENTER", -500, 32)
 	FROMBANK_Frame:SetBackdrop({
-			bgFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
-			edgeFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
+			bgFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
+			edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
 	FROMBANK_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
@@ -138,7 +150,7 @@ local function MASLENGO_BANK()
 	)
 	local t = FROMBANK_Frame.Button:CreateTexture(nil,"BACKGROUND")
 	FROMBANK_Frame.Button.icon = t
-	t:SetTexture("Interface\\AddOns\\Octo_ToDo_Dragonfly\\Media\\Arrow_RIGHT.tga")
+	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\Arrow_RIGHT.tga")
 	t:SetVertexColor(1,1,1,1)
 	t:SetAllPoints(FROMBANK_Frame.Button)
 	---------------------------------------------------------------------------------------------------
@@ -149,8 +161,8 @@ local function MASLENGO_BANK()
 	TOBANK_Frame:SetFrameStrata("DIALOG")
 	TOBANK_Frame:SetPoint("CENTER", -500, -32)
 	TOBANK_Frame:SetBackdrop({
-			bgFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
-			edgeFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
+			bgFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
+			edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
 	TOBANK_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
@@ -166,7 +178,7 @@ local function MASLENGO_BANK()
 	)
 	local t = TOBANK_Frame.Button:CreateTexture(nil,"BACKGROUND")
 	TOBANK_Frame.Button.icon = t
-	t:SetTexture("Interface\\AddOns\\Octo_ToDo_Dragonfly\\Media\\Arrow_LEFT.tga")
+	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\Arrow_LEFT.tga")
 	t:SetVertexColor(1,1,1,1)
 	t:SetAllPoints(TOBANK_Frame.Button)
 	---------------------------------------------------------------------------------------------------
@@ -174,6 +186,8 @@ end
 function Octo_MAIL_DragonflyOnEvent(self, event, ...)
 	if Enable_Module == true then
 		if event == "MERCHANT_SHOW" and not InCombatLockdown() then
+			MASLENGO_Mail()
+		elseif event == "MAIL_SHOW" and not InCombatLockdown() then
 			MASLENGO_Mail()
 		elseif event == "SECURE_TRANSFER_CANCEL" or event == "MERCHANT_CLOSED" or event == "PLAYER_STARTED_MOVING" then
 			if SELL_Frame then
@@ -192,4 +206,3 @@ function Octo_MAIL_DragonflyOnEvent(self, event, ...)
 	end
 end
 Octo_MAIL_DragonflyOnLoad()
-
