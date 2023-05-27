@@ -11,7 +11,7 @@ local _, className, curClass = UnitClass("PLAYER")
 local classColor = C_ClassColor.GetClassColor(className)
 local r, g, b = classColor:GetRGB()
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
-local curWidth, curHeight = 90*scale , 20*scale -- ширина 80, высота 20 24
+local curWidth, curHeight = 93*scale , 20*scale -- ширина 80, высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
 local TotalLines = 18
@@ -67,8 +67,8 @@ local function func_itemName(itemID)
 	local itemName, _, itemQuality = GetItemInfo(itemID)
 	local name = ""
 	if itemQuality then
-		local r, g, b = GetItemQualityColor(itemQuality);
-		local color = CreateColor(r, g, b, 1);
+		local r, g, b = GetItemQualityColor(itemQuality)
+		local color = CreateColor(r, g, b, 1)
 		local name = color:WrapTextInColorCode(itemName)
 		return name
 	end
@@ -92,8 +92,8 @@ local function func_currencyName(currencyID)
 		iconFileID = info.iconFileID
 		quality = info.quality
 	end
-	local r, g, b = GetItemQualityColor(quality);
-	local color = CreateColor(r, g, b, 1);
+	local r, g, b = GetItemQualityColor(quality)
+	local color = CreateColor(r, g, b, 1)
 	local currencyName = color:WrapTextInColorCode(name)
 	return currencyName
 end
@@ -155,48 +155,48 @@ local function SecondsToClock(seconds)
 	end
 end
 local spawns = {
-    {mapId = 2112, name="|cff93c47d(Вальдракен)|r"},
-    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-    {mapId = 2022, name="|cff93c47d(Берега Пробуждения)|r"},
-    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
-    {mapId = 2023, name="|cff93c47d(Равнины Он'ары)|r"},
-    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-    {mapId = 2024, name="|cff93c47d(Лазурный Простор)|r"},
-    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
-    {mapId = 2025, name="|cff93c47d(Тальдразус)|r"},
-    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-    {mapId = 2112, name="|cff93c47d(Вальдракен)|r"},
-    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
-    {mapId = 2022, name="|cff93c47d(Берега Пробуждения)|r"},
-    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-    {mapId = 2023, name="|cff93c47d(Равнины Он'ары)|r"},
-    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
-    {mapId = 2024, name="|cff93c47d(Лазурный Простор)|r"},
-    {mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-    {mapId = 2025, name="|cff93c47d(Тальдразус)|r"},
-    {mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+	{mapId = 2112, name="|cff93c47d(Вальдракен)|r"},
+	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+	{mapId = 2022, name="|cff93c47d(Берега Пробуждения)|r"},
+	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+	{mapId = 2023, name="|cff93c47d(Равнины Он'ары)|r"},
+	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+	{mapId = 2024, name="|cff93c47d(Лазурный Простор)|r"},
+	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+	{mapId = 2025, name="|cff93c47d(Тальдразус)|r"},
+	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+	{mapId = 2112, name="|cff93c47d(Вальдракен)|r"},
+	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+	{mapId = 2022, name="|cff93c47d(Берега Пробуждения)|r"},
+	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+	{mapId = 2023, name="|cff93c47d(Равнины Он'ары)|r"},
+	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+	{mapId = 2024, name="|cff93c47d(Лазурный Простор)|r"},
+	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
+	{mapId = 2025, name="|cff93c47d(Тальдразус)|r"},
+	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
 }
 local spawns2 = {
-    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-    {mapId = 2112, name="|cff00FF00(Вальдракен)|r"},
-    {mapId = 84, name="|cff00FF00(Штормград)|r"},
-    {mapId = 2022, name="|cff00FF00(Берега Пробуждения)|r"},
-    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-    {mapId = 2023, name="|cff00FF00(Равнины Он'ары)|r"},
-    {mapId = 84, name="|cff00FF00(Штормград)|r"},
-    {mapId = 2024, name="|cff00FF00(Лазурный Простор)|r"},
-    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-    {mapId = 2025, name="|cff00FF00(Тальдразус)|r"},
-    {mapId = 84, name="|cff00FF00(Штормград)|r"},
-    {mapId = 2112, name="|cff00FF00(Вальдракен)|r"},
-    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-    {mapId = 2022, name="|cff00FF00(Берега Пробуждения)|r"},
-    {mapId = 84, name="|cff00FF00(Штормград)|r"},
-    {mapId = 2023, name="|cff00FF00(Равнины Он'ары)|r"},
-    {mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-    {mapId = 2024, name="|cff00FF00(Лазурный Простор)|r"},
-    {mapId = 84, name="|cff00FF00(Штормград)|r"},
-    {mapId = 2025, name="|cff00FF00(Тальдразус)|r"},
+	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+	{mapId = 2112, name="|cff00FF00(Вальдракен)|r"},
+	{mapId = 84, name="|cff00FF00(Штормград)|r"},
+	{mapId = 2022, name="|cff00FF00(Берега Пробуждения)|r"},
+	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+	{mapId = 2023, name="|cff00FF00(Равнины Он'ары)|r"},
+	{mapId = 84, name="|cff00FF00(Штормград)|r"},
+	{mapId = 2024, name="|cff00FF00(Лазурный Простор)|r"},
+	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+	{mapId = 2025, name="|cff00FF00(Тальдразус)|r"},
+	{mapId = 84, name="|cff00FF00(Штормград)|r"},
+	{mapId = 2112, name="|cff00FF00(Вальдракен)|r"},
+	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+	{mapId = 2022, name="|cff00FF00(Берега Пробуждения)|r"},
+	{mapId = 84, name="|cff00FF00(Штормград)|r"},
+	{mapId = 2023, name="|cff00FF00(Равнины Он'ары)|r"},
+	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
+	{mapId = 2024, name="|cff00FF00(Лазурный Простор)|r"},
+	{mapId = 84, name="|cff00FF00(Штормград)|r"},
+	{mapId = 2025, name="|cff00FF00(Тальдразус)|r"},
 }
 local HordeZnamya = 132485
 local AllyaZnamya = 132486
@@ -204,50 +204,51 @@ function TreasureGoblinTimer()
 	local offset = 1675076400 -- = time({year=2023,month=1,day=30,hour=12})
 	local interval = 30*60
 	local interval2 = 1500
-    local uptime = GetTime()
-    if (last or 0) < uptime - 1 then
-        last = uptime
-        local n = #spawns
-        local current = (time() - offset) / interval
-        local remainder = (math.floor(current) - current + 1) * interval
-        local nextIndex = (math.ceil(current) - 1) % n + 1
-        local found = true
-        local spawnId, distance
-        for i = 0,n-1 do
-            spawnId = (nextIndex + i - 1) % n + 1
-            distance = i
-            break
-        end
-        if found then
-            local spawn = spawns[spawnId]
-            local spawnprev = spawns2[spawnId]
-            nextSpawn = spawn
-            nextLocation = spawn.name
-            prevLocation = spawnprev.name
-            local when = remainder + distance * interval
-            local timeleft = when - interval2
-            if when < 1500 then
-            	nextTime = "|cffFF0000"..SecondsToClock(when).."|r"
-                -- local s, f = SecondsToTimeAbbrev(when)
-                -- nextTime = s:format(f)
-            else
-            	nextTime = "|cff00FF00"..SecondsToClock(timeleft).."|r"
-                -- local t, f = SecondsToTimeAbbrev(timeleft)
-                -- nextTime = t:format(f)
-                nextLocation = prevLocation
-            end
-        else
-            nextSpawn = nil
-            nextLocation = ""
-            prevLocation = ""
-            nextTime = ""
-        end
-    end
-    local TreasureGoblinTimer = nextTime.. " ".. nextLocation
+	local uptime = GetTime()
+	if (last or 0) < uptime - 1 then
+		last = uptime
+		local n = #spawns
+		local current = (time() - offset) / interval
+		local remainder = (math.floor(current) - current + 1) * interval
+		local nextIndex = (math.ceil(current) - 1) % n + 1
+		local found = true
+		local spawnId, distance
+		for i = 0,n-1 do
+			spawnId = (nextIndex + i - 1) % n + 1
+			distance = i
+			break
+		end
+		if found then
+			local spawn = spawns[spawnId]
+			local spawnprev = spawns2[spawnId]
+			nextSpawn = spawn
+			nextLocation = spawn.name
+			prevLocation = spawnprev.name
+			local when = remainder + distance * interval
+			local timeleft = when - interval2
+			if when < 1500 then
+				nextTime = "|cffFF0000"..SecondsToClock(when).."|r"
+				-- local s, f = SecondsToTimeAbbrev(when)
+				-- nextTime = s:format(f)
+			else
+				nextTime = "|cff00FF00"..SecondsToClock(timeleft).."|r"
+				PlaySoundFile("Interface\\AddOns\\"..AddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
+				-- local t, f = SecondsToTimeAbbrev(timeleft)
+				-- nextTime = t:format(f)
+				nextLocation = prevLocation
+			end
+		else
+			nextSpawn = nil
+			nextLocation = ""
+			prevLocation = ""
+			nextTime = ""
+		end
+	end
+	local TreasureGoblinTimer = nextTime.. " ".. nextLocation
 	return TreasureGoblinTimer
 end
 function ToDragonbaneKeepTimer() -- Драконья экспедиция
-	-- local timePattern = "%02d:%02d";
+	-- local timePattern = "%02d:%02d"
 	local TIMER = 1670342460 -- ToDragonbaneKeepTimer
 	local interval = 7200
 	local duration = 900
@@ -261,7 +262,7 @@ function ToDragonbaneKeepTimer() -- Драконья экспедиция
 	return ToDragonbaneKeepTimer
 end
 function GrandHuntsTimer() -- Кентавры Маруук
-	-- local timePattern = "%02d:%02d";
+	-- local timePattern = "%02d:%02d"
 	local TIMER = 1671307200-- 1675612800 -- GrandHuntsTimer
 	local interval = 7200-- 270000
 	local duration = 7199-- 900
@@ -275,7 +276,7 @@ function GrandHuntsTimer() -- Кентавры Маруук
 	return GrandHuntsTimer
 end
 function CommunityFeastTimer() -- Искарские клыкарры
-	-- local timePattern = "%02d:%02d";
+	-- local timePattern = "%02d:%02d"
 	local TIMER = 1677168000-- 1670331660 -- CommunityFeastTimer
 	local interval = 5400
 	local duration = 900
@@ -289,7 +290,7 @@ function CommunityFeastTimer() -- Искарские клыкарры
 	return CommunityFeastTimer
 end
 function PrimalStormsTimer() -- Праймал шторм
-	-- local timePattern = "%02d:%02d";
+	-- local timePattern = "%02d:%02d"
 	local TIMER = 1683804640-- 1671303600-- PrimalStormsTimer
 	local interval = 18000-- 10800
 	local duration = 7200
@@ -581,40 +582,40 @@ function CollectAllProfessions()
 	return
 end
 -- local function getThresholdRAID(pointsRAID)
--- 	local resultRAID = 7
--- 	-- local resultRAID = 0
--- 	-- if pointsRAID <= 2 then
--- 	-- resultRAID = 2
--- 	-- elseif pointsRAID > 2 and pointsRAID < 4 then
--- 	-- resultRAID = 4
--- 	-- elseif pointsRAID >= 4 then
--- 	-- resultRAID = 6
--- 	-- end
--- 	return resultRAID
+--     local resultRAID = 7
+--     -- local resultRAID = 0
+--     -- if pointsRAID <= 2 then
+--     -- resultRAID = 2
+--     -- elseif pointsRAID > 2 and pointsRAID < 4 then
+--     -- resultRAID = 4
+--     -- elseif pointsRAID >= 4 then
+--     -- resultRAID = 6
+--     -- end
+--     return resultRAID
 -- end
 -- local function getThresholdKEYS(pointsKEYS)
--- 	local resultKEYS = 8
--- 	-- local resultKEYS = 0
--- 	-- if pointsKEYS <= 1 then
--- 	-- resultKEYS = 1
--- 	-- elseif pointsKEYS > 1 and pointsKEYS < 4 then
--- 	-- resultKEYS = 4
--- 	-- elseif pointsKEYS >= 4 then
--- 	-- resultKEYS = 8
--- 	-- end
--- 	return resultKEYS
+--     local resultKEYS = 8
+--     -- local resultKEYS = 0
+--     -- if pointsKEYS <= 1 then
+--     -- resultKEYS = 1
+--     -- elseif pointsKEYS > 1 and pointsKEYS < 4 then
+--     -- resultKEYS = 4
+--     -- elseif pointsKEYS >= 4 then
+--     -- resultKEYS = 8
+--     -- end
+--     return resultKEYS
 -- end
 -- local function getThresholdPVP(pointsPVPS)
--- 	local resultPVPS = 5000
--- 	-- local resultPVPS = 0
--- 	-- if pointsPVPS <= 1250 then
--- 	-- resultPVPS = 1250
--- 	-- elseif pointsPVPS > 1250 and pointsPVPS < 2500 then
--- 	-- resultPVPS = 2500
--- 	-- elseif pointsPVPS >= 2500 then
--- 	-- resultPVPS = 5500
--- 	-- end
--- 	return resultPVPS
+--     local resultPVPS = 5000
+--     -- local resultPVPS = 0
+--     -- if pointsPVPS <= 1250 then
+--     -- resultPVPS = 1250
+--     -- elseif pointsPVPS > 1250 and pointsPVPS < 2500 then
+--     -- resultPVPS = 2500
+--     -- elseif pointsPVPS >= 2500 then
+--     -- resultPVPS = 5500
+--     -- end
+--     return resultPVPS
 -- end
 function CollectRioRaiting()
 	local UnitLevel = UnitLevel("PLAYER")
@@ -670,12 +671,12 @@ function CollectRioRaiting()
 	if pRank[1] == nil then pRank[1] = NONE end
 	if RrLvl[1] == nil then RrLvl[1] = NONE end
 	if MrLvl[1] == nil then MrLvl[1] = NONE end
--- 0	None
--- 1	MythicPlus
--- 2	RankedPvP
--- 3	Raid
--- 4	AlsoReceive
--- 5	Concession
+	-- 0    None
+	-- 1    MythicPlus
+	-- 2    RankedPvP
+	-- 3    Raid
+	-- 4    AlsoReceive
+	-- 5    Concession
 	-------------------------------------------------------------------------
 	local vaultDataRAID = C_WeeklyRewards.GetActivities()
 	local RAIDResult = 0
@@ -1159,6 +1160,25 @@ local RARE_OSTROV_LIST = {74331, 74347, 74345, 74336, 74337, 74342, 74321, 74343
 local EVENTS_ZARALEK_LIST = {75612, 75471, 75455, 75664, 75611, 75478, 75451, 75461, 75705, 75454, 75450, 75222, 75370, 75494, 75441, 75156, 75624, 74352,
 }
 local itemID = {
+206018,
+206039,
+206003,
+142549,
+142551,
+206008,
+206007,
+206274,
+142548,
+142547,
+143327,
+206275,
+206005,
+142542,
+143543,
+206276,
+76755,
+142545,
+142546,
 	206039, --Комплект вражды DIABLO 4
 	206006, 122284, 205878, 205225, 206037, 205999, 206028, 138727, 138728, 138488, 138729, 138486, 167862, 206366, 204180, 204843, 206144, 206143, 206142, 206141, 206140, 206139, 185834, 201250, 204188, 204187, 204186, 204191, 204190, 204189, 203430, 203683, 203710, 204464, 205903, 204985, 205188, 205984, 204715, 204727, 204440, 204717, 24915, 24916, 24917, 24918, 24919, 49040, 50274, 51316, 51317, 51318, 51319, 51320, 51321, 52200, 52201, 52251, 52252, 52253, 122338, 122339, 122340, 122341, 128353, 129940, 129941, 129942, 129943, 129944, 129945, 129946, 129947, 129948, 129949, 129950, 129951, 129954, 129955, 133150, 133151, 133152, 133154, 133159, 133160, 137642, 141605, 141652, 143935, 143936, 143937, 143938, 143939, 143940, 143941, 143942, 143943, 143944, 143945, 143946, 143947, 151614, 151615, 166751, 167731, 167732, 167924, 167925, 167926, 167927, 167928, 167929, 167930, 167932, 168017, 168018, 180817, 183616, 187997, 187998, 188152, 189765, 190189, 190453, 190454, 190455, 190456, 191251, 191264, 191784, 191915, 192055, 192130, 192131, 192132, 193201, 193891, 193897, 193898, 193899, 193900, 193901, 193902, 193903, 193904, 193905, 193907, 193909, 193910, 193913, 194039, 194040, 194041, 194054, 194055, 194061, 194062, 194063, 194064, 194066, 194067, 194068, 194072, 194076, 194077, 194078, 194079, 194080, 194081, 194337, 194697, 194698, 194699, 194700, 194702, 194703, 194704, 194708, 197921, 198046, 198395, 198438, 198454, 198510, 198599, 198606, 198607, 198608, 198609, 198610, 198611, 198612, 198613, 198656, 198658, 198659, 198660, 198662, 198663, 198664, 198667, 198669, 198670, 198680, 198682, 198683, 198684, 198685, 198686, 198687, 198690, 198692, 198693, 198696, 198697, 198699, 198702, 198703, 198704, 198710, 198711, 198712, 198789, 198837, 198841, 198863, 198864, 198865, 198866, 198867, 198868, 198869, 198963, 198964, 198965, 198966, 198967, 198968, 198969, 198970, 198971, 198972, 198973, 198974, 198975, 198976, 198977, 198978, 199115, 199122, 199128, 199192, 199197, 199472, 199473, 199474, 199475, 199906, 200069, 200070, 200071, 200072, 200073, 200093, 200095, 200224, 200285, 200287, 200288, 200289, 200300, 200452, 200453, 200454, 200455, 200468, 200513, 200515, 200516, 200609, 200610, 200611, 200652, 200677, 200678, 200686, 200764, 200811, 200846, 200972, 200973, 200974, 200975, 200976, 200977, 200978, 200979, 200980, 200981, 200982, 201003, 201004, 201005, 201006, 201007, 201008, 201009, 201010, 201011, 201012, 201013, 201014, 201015, 201016, 201017, 201018, 201019, 201020, 201023, 201268, 201269, 201270, 201271, 201272, 201273, 201274, 201275, 201276, 201277, 201278, 201279, 201280, 201281, 201282, 201283, 201284, 201285, 201286, 201287, 201288, 201289, 201300, 201301, 201326, 201352, 201411, 201439, 201462, 201700, 201705, 201706, 201708, 201709, 201710, 201711, 201712, 201713, 201714, 201715, 201716, 201717, 201728, 201755, 201756, 201781, 201782, 201817, 201836, 201921, 201922, 201923, 201924, 201991, 202011, 202014, 202016, 202017, 202039, 202052, 202079, 202080, 202091, 202092, 202093, 202094, 202097, 202098, 202142, 202152, 202171, 202172, 202173, 202196, 202371, 202667, 202668, 202669, 202670, 202854, 202870, 202871, 202872, 203217, 203220, 203222, 203224, 203476, 203611, 203612, 203613, 203614, 203615, 203616, 203617, 203618, 203619, 203620, 203622, 203623, 203626, 203627, 203628, 203629, 203630, 203631, 203632, 203633, 203634, 203635, 203636, 203637, 203638, 203639, 203640, 203641, 203642, 203643, 203644, 203645, 203646, 203647, 203648, 203649, 203650, 203681, 203699, 203700, 203702, 204075, 204076, 204077, 204078, 204193, 204194, 204195, 204196, 204215, 204217, 204222, 204224, 204225, 204226, 204227, 204228, 204229, 204230, 204231, 204232, 204233, 204276, 204352, 204359, 204378, 204379, 204380, 204381, 204383, 204403, 204469, 204470, 204471, 204475, 204558, 204559, 204560, 204573, 204574, 204575, 204576, 204577, 204578, 204579, 204681, 204682, 204697, 204721, 204722, 204723, 204724, 204725, 204726, 204850, 204853, 204855, 204986, 204987, 204988, 204990, 204999, 205001, 205211, 205212, 205213, 205214, 205216, 205219, 205249, 205250, 205423, 205982, 205986, 205987, 205988, 205989, 206019, 206025, 206030, 206031, 206034, 206035, 205288, 205347,
 }
@@ -1305,7 +1325,7 @@ local function Fragments_Earned()
 	--       --local isLocked = containerInfo.isLocked -- Добавить
 	--       local ItemTooltip = _G["Octo_FRAGMENTS_ScanningTooltip"] or
 	--       CreateFrame("GameTooltip", "Octo_FRAGMENTS_ScanningTooltip", WorldFrame, "GameTooltipTemplate")
-	--       ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+	--       ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
 	--       ItemTooltip:ClearLines()
 	--       ItemTooltip:SetHyperlink(itemLink)
 	--       local foundFragments = nil
@@ -1386,9 +1406,13 @@ function CollectAllQuests()
 	collect.EVENTS_ZARALEK_count = EVENTS_ZARALEK_count
 end
 local function tmstpDayReset(n)
-	n = n or 1
-	local thursdayReset = GetCurrentRegion() == 3 and thursdayResetDay0EU or thursdayResetDay0US
+	local n = n or 1
+	-- local thursdayResetDay0EU = (1514358000-10800) --https://wowreset.com/ 14-3=11(ТСК)
+	-- local thursdayResetDay0US = 1514300400
+	-- local thursdayReset = GetCurrentRegion() == 3 and thursdayResetDay0EU or thursdayResetDay0US
+	local thursdayReset = (1514358000-10800) --https://wowreset.com/ 14-3=11(ТСК)
 	local currTime = GetServerTime()
+	local xyu = (math.ceil((currTime - thursdayReset)/(daytime*n))*daytime*n)+thursdayReset
 	return (math.ceil((currTime - thursdayReset)/(daytime*n))*daytime*n)+thursdayReset
 end
 -- https://wago.io/fVZJC8tik
@@ -1744,8 +1768,8 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 						curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
 					end
 					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[137642])
-				-- else
-				-- 	Main_Frame.MarkOfHonor_Button:Hide()
+					-- else
+					--     Main_Frame.MarkOfHonor_Button:Hide()
 				end
 			end
 			if i == 0 then
@@ -1824,6 +1848,87 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.ZskeraVaultKeyButton)
 	-----------------------------------------------------
+	-----------------------------------------------------
+	Main_Frame.OtherItem_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
+	Main_Frame.OtherItem_Button:SetSize(curHeight, curHeight)
+	Main_Frame.OtherItem_Button:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -150)
+	Main_Frame.OtherItem_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.OtherItem_Button:SetBackdropBorderColor(0, 0.8, 1, 1)
+	local OtherItem_table = {
+		76755,
+		142542,
+		142545,
+		142546,
+		142547,
+		142548,
+		142549,
+		142551,
+		143327,
+		143543,
+		206003,
+		206005,
+		206007,
+		206008,
+		206018,
+		206039,
+		206274,
+		206275,
+		206276,
+	}
+	Main_Frame.OtherItem_Button:SetScript("OnEnter", function(self)
+			local i = 0
+			self:SetBackdropBorderColor(1, 0, 0, 1)
+			self.icon:SetVertexColor(1, 0, 0, 1)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+			GameTooltip:ClearLines()
+			GameTooltip:AddDoubleLine(" "," ")
+			for q, w in pairs(OtherItem_table) do
+				for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
+					if CharInfo.ItemsInBag[w] ~= 0 then
+						i = i + 1
+						local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+						local curServerShort = CharInfo.curServer
+						local text = (curServerShort):gsub("-", " "):gsub("'", " ")
+						local a, b = strsplit(" ", text)
+						if b then
+							curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
+						end
+						GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[w]..func_itemTexture(w)..func_itemName(w))
+					end
+				end
+			end
+
+			if i == 0 then
+				GameTooltip:AddLine("No Data")
+			end
+			GameTooltip:AddDoubleLine(" "," ")
+			GameTooltip:Show()
+	end)
+	Main_Frame.OtherItem_Button:SetScript("OnLeave", function(self)
+			self:SetBackdropBorderColor(0, 0.44, 0.98, 1)
+			self.icon:SetVertexColor(1, 1, 1, 1)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	Main_Frame.OtherItem_Button:SetScript("OnMouseDown", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, 0.5)
+			self.icon:SetVertexColor(1, 0, 0, 0.5)
+	end)
+	Main_Frame.OtherItem_Button:SetScript("OnClick", function()
+			Main_Frame:Hide()
+	end)
+	local t = Main_Frame.OtherItem_Button:CreateTexture(nil, "BACKGROUND")
+	Main_Frame.OtherItem_Button.icon = t
+	t:SetTexture(577318)
+	t:SetVertexColor(1, 1, 1, 1)
+	t:SetAllPoints(Main_Frame.OtherItem_Button)
+	-----------------------------------------------------
+	-----------------------------------------------------
+
+
+
+
+
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-- ITEMID, count, Ypox, r, g, b
@@ -2407,7 +2512,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			--12
 			Main_Frame.TextLeft12:SetText(func_itemTexture(204440)..func_itemName(204440))
 			local PEREMENNAYA_204440 = ""
-
 			if CharInfo.ItemsInBag[204440] >= 1 then
 				PEREMENNAYA_204440 = PEREMENNAYA_204440.. func_itemTexture(204440)..CharInfo.ItemsInBag[204440]
 			end
@@ -2417,19 +2521,16 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.ItemsInBag[204682] >= 1 then
 				PEREMENNAYA_204440 = PEREMENNAYA_204440.. func_itemTexture(204682)..CharInfo.ItemsInBag[204682]
 			end
-
 			Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440)
 			-- if CharInfo.ItemsInBag[204440] >= 1 then
-			-- 	Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440)
+			--     Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440)
 			-- end
 			-- if CharInfo.ItemsInBag[204717] >=1 then
-			-- 	Char_Frame.CenterLines12.tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
+			--     Char_Frame.CenterLines12.tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
 			-- end
 			-- if CharInfo.ItemsInBag[204717] >=2 then
-			-- 	Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
+			--     Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
 			-- end
-
-
 			--13 НОВЫЙ КАТАЛИСТ
 			Main_Frame.TextLeft13:SetText(func_currencyicon(2533)..func_currencyName(2533))
 			if CharInfo.CurrencyID[2533] >= 1 then
@@ -2465,6 +2566,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.ItemsInBag[204985] >= 1 then
 				tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]})
 			end
+			if CharInfo.ItemsInBag[204715] >= 1 then
+				tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204715)..func_itemName(204715), CharInfo.ItemsInBag[204715]})
+			end
 			if #Char_Frame.CenterLines14.tooltip == 0 then
 				Char_Frame.CenterLines14.tooltip = nil
 				Char_Frame.CenterLines14.CL:SetText("")
@@ -2472,9 +2576,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			--15
 			local tinsertTABLE = {
 				-- {name = func_questName(72528), data=CheckCompletedByQuestID(72528)}, --БУДУЩИЙ КАТАЛИЗАТОР
-
-
-
 				{name = L["Siege on Dragonbane Keep"], data=CharInfo.Octopussy_DragonbaneKeep},
 				{name = L["Grand Hunt"], data=CharInfo.Octopussy_TheGrandHunt},
 				{name = L["Community Feast"], data=CharInfo.Octopussy_Feast},
@@ -2490,7 +2591,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				{name = CALENDAR_FILTER_WEEKLY_HOLIDAYS, data=CharInfo.Octopussy_WeekendEvent}, --"CharInfo.Octopussy_WeekendEvent"
 				--{name = func_questName(66133), data=CharInfo.Octopussy_KeysofLoyalty}, --"CharInfo.Octopussy_KeysofLoyalty" -- Присяга
 				--{name = "Запечатанный бурей сундук", data=CharInfo.Octopussy_StormBoundChest}, --"CharInfo.Octopussy_StormBoundChest" https://www.wowhead.com/ru/object=386356/
-
 				-- {name = func_itemName(49623), data=CharInfo.questIDtable[24548]}, --Кв на ШМ
 				{name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
 				{name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
@@ -2509,16 +2609,15 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			for k, v in ipairs(tinsertTABLE) do
 				pizda = "|cffc9c3aa"
 				if v.data == "|cff00FF00Done|r" then
-				--if v.data ~= false and v.data ~= "" and v.data ~= 0 then
+					--if v.data ~= false and v.data ~= "" and v.data ~= 0 then
 					pizda = AddonColor
 				end
 				tinsert(Char_Frame.CenterLines15.tooltip, {pizda..v.name.."|r", v.data})
-
 			end
 			-- for k, v in ipairs(questIDtable) do
-			-- 	if CharInfo.questIDtable[v] ~= "" and CharInfo.questIDtable[v] ~= 0 then
-			-- 		tinsert(Char_Frame.CenterLines15.tooltip, {func_questName(v), CharInfo.questIDtable[v]})
-			-- 	end
+			--     if CharInfo.questIDtable[v] ~= "" and CharInfo.questIDtable[v] ~= 0 then
+			--         tinsert(Char_Frame.CenterLines15.tooltip, {func_questName(v), CharInfo.questIDtable[v]})
+			--     end
 			-- end
 			if #Char_Frame.CenterLines15.tooltip == 0 then
 				Char_Frame.CenterLines15.tooltip = nil
@@ -2558,7 +2657,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				end
 				if CharInfo.avgItemLevelPvp and CharInfo.avgItemLevelPvp > CharInfo.avgItemLevel then
 					PEREMENNAYA_PVP = PEREMENNAYA_PVP..AddonColor.."*|r"
-					--print(string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp))
 					tinsert(Char_Frame.CenterLines17.tooltip, {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp)})
 				end
 			end
@@ -2629,20 +2727,20 @@ local function checkCharInfo(CharInfo)
 	CharInfo.Class = CharInfo.Class or 1
 	CharInfo.Faction = CharInfo.Faction or "Horde"
 	CharInfo.UnitLevel = CharInfo.UnitLevel or 1
-	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.Octopussy_3kREP == AddonColor.."Done|r" then
+	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.Octopussy_3kREP == AddonColor.."Done|r" then
 		CharInfo.Octopussy_3kREP = false
 	end
-	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.Octopussy_FightingisItsOwnReward == AddonColor.."Done|r" then
+	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.Octopussy_FightingisItsOwnReward == AddonColor.."Done|r" then
 		CharInfo.Octopussy_FightingisItsOwnReward = false
 	end
-	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.Octopussy_AWorthyAllyLoammNiffen == AddonColor.."Done|r" then
+	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.Octopussy_AWorthyAllyLoammNiffen == AddonColor.."Done|r" then
 		CharInfo.Octopussy_AWorthyAllyLoammNiffen = false
 	end
-	if (CharInfo.tmstp or 0) < GetServerTime() and CharInfo.CurrentKey ~= 0 then
+	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.CurrentKey ~= 0 then
 		CharInfo.CurrentKey = AddonColor..">>VAULT<<|r"
 	end
-	if (CharInfo.tmstp or 0) < GetServerTime() then
-		CharInfo.tmstp = tmstpDayReset(7)
+	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
+		CharInfo.tmstp_Weekly = tmstpDayReset(7)
 		CharInfo.Octopussy_Feast = false
 		CharInfo.Octopussy_DragonbaneKeep = false
 		CharInfo.Octopussy_TheGrandHunt = false
@@ -2650,7 +2748,6 @@ local function checkCharInfo(CharInfo)
 		CharInfo.Octopussy_ResearchersUnderFire = false
 		CharInfo.Octopussy_WB = false
 		CharInfo.Octopussy_WB_NEW = false
-		CharInfo.Octopussy_TreasureGoblin = false
 		CharInfo.Octopussy_FyrakkAssaults = false
 		CharInfo.Octopussy_Timewalk = false
 		CharInfo.Octopussy_WeekendEvent = false
@@ -2663,10 +2760,11 @@ local function checkCharInfo(CharInfo)
 		CharInfo.RIO_RAID = ""
 		CharInfo.RIO_KEYS = ""
 		CharInfo.RIO_PVPS = ""
-		CharInfo.questIDtable = {}
+		--CharInfo.questIDtable = {}
 	end
-	if (CharInfo.tmstp or 0) < GetServerTime() then
-		CharInfo.tmstp = tmstpDayReset(1)
+	if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
+		CharInfo.Octopussy_TreasureGoblin = false
+		CharInfo.tmstp_Daily = tmstpDayReset(1)
 		CharInfo.RARE_ZARALEK_LIST = {}
 		CharInfo.EVENTS_ZARALEK_LIST = {}
 		CharInfo.RARE_OSTROV_LIST = {}
@@ -2740,6 +2838,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			CollectCurrentKEY()
 			OctoilvlStr()
 			CollectAllReputations()
+			CollectAllQuests()
 		end
 	elseif event == "QUEST_FINISHED" then
 		OctoQuestUpdate()
@@ -2789,12 +2888,12 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 						CollectAllReputations()
 						Collect_PVP_Raitings()
 						-- if Main_Frame and Main_Frame:IsShown() then
-						-- 	Main_Frame:Hide()
+						--     Main_Frame:Hide()
 						-- end
 						-- if SettingsPanel:IsVisible() and self:IsVisible() then
-						-- 	HideUIPanel(SettingsPanel)
+						--     HideUIPanel(SettingsPanel)
 						-- else
-						-- 	Settings.OpenToCategory(AddonName, true)
+						--     Settings.OpenToCategory(AddonName, true)
 						-- end
 					end
 				end,
@@ -2865,6 +2964,12 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Octo_ToDo_DragonflyVars.config.LevelToShow == nil then
 			Octo_ToDo_DragonflyVars.config.LevelToShow = 60
 		end
+		if Octo_ToDo_DragonflyVars.config.AutoSellGrey == nil then
+			Octo_ToDo_DragonflyVars.config.AutoSellGrey = true
+		end
+		if Octo_ToDo_DragonflyVars.config.AutoRepair == nil then
+			Octo_ToDo_DragonflyVars.config.AutoRepair = true
+		end
 		for i, func in ipairs(E.modules) do
 			func()
 		end
@@ -2930,7 +3035,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		OctoQuestUpdate()
 		CollectAllItemsInBag()
 		Fragments_Earned()
-	-- elseif event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
+		-- elseif event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
 		-- Collect_PVP_Raitings()
 	end
 end
@@ -2953,3 +3058,4 @@ end
 -- local ColorKyrian = CreateColor(1, 1, 1, 1)
 -- (KYRIAN_BLUE_COLOR:GetRGB())
 -- SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
+

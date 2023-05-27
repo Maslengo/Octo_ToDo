@@ -35,8 +35,8 @@ local ignore_list = {
 	[204194] = true,
 	[204078] = true,
 }
-	local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
-	local ilvlStr = avgItemLevelEquipped or 0
+local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
+local ilvlStr = avgItemLevelEquipped or 0
 -- local OILVLFrame = CreateFrame('GameTooltip', 'OILVLTooltip', nil, 'GameTooltipTemplate');
 -- OILVLFrame:SetOwner(UIParent, 'ANCHOR_NONE');
 local function MASLENGO_Mail()
@@ -86,7 +86,7 @@ local function MASLENGO_Mail()
 						for i = 1, ItemTooltip:NumLines() do
 							-- foundEnchant = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ENCHANTED_TOOLTIP_LINE:gsub("%%s", "(.+)"))
 							-- if foundEnchant then
-							-- 	enchant = foundEnchant
+							--     enchant = foundEnchant
 							-- end
 							foundLevel = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
 							if foundLevel then
@@ -94,12 +94,11 @@ local function MASLENGO_Mail()
 							end
 							-- foundEmptySocket = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(EMPTY_SOCKET_PRISMATIC)
 							-- if foundEmptySocket then
-							-- 	emptySockets = emptySockets + 1
+							--     emptySockets = emptySockets + 1
 							-- end
 						end
 						-----------------------
 						if sellPrice ~= 0 and itemQuality < 5 and not ignore_list[itemID] --[[and baseILvl > 1]] and itemLevel < ((ilvlStr/10)*9) then
-							--print (itemLink .. " ("..itemLevel..")" .. " sellPrice: " .. sellPrice)
 							C_Container.UseContainerItem(bag,slot)
 						end
 					end
@@ -174,7 +173,6 @@ local function MASLENGO_BANK()
 end
 function Octo_MAIL_DragonflyOnEvent(self, event, ...)
 	if Enable_Module == true then
-		--if event == "MAIL_SHOW" or
 		if event == "MERCHANT_SHOW" and not InCombatLockdown() then
 			MASLENGO_Mail()
 		elseif event == "SECURE_TRANSFER_CANCEL" or event == "MERCHANT_CLOSED" or event == "PLAYER_STARTED_MOVING" then
@@ -194,3 +192,4 @@ function Octo_MAIL_DragonflyOnEvent(self, event, ...)
 	end
 end
 Octo_MAIL_DragonflyOnLoad()
+
