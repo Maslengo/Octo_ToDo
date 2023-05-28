@@ -3352,9 +3352,15 @@ local function checkCharInfo(CharInfo)
 	CharInfo.Name = CharInfo.Name or 0
 	CharInfo.curServer = CharInfo.curServer or 0
 	CharInfo.Faction = CharInfo.Faction or 0
+<<<<<<< HEAD
 	CharInfo.classColor = CharInfo.classColor or {r = 0.5, g = 0.5, b = 0.5}
 	setmetatable(CharInfo, Meta_Table)
 	--setmetatable(CharInfo.classColor, Meta_Table)
+=======
+
+	setmetatable(CharInfo, Meta_Table)
+	setmetatable(CharInfo.classColor, Meta_Table)
+>>>>>>> origin/main
 	setmetatable(CharInfo.CurrencyID, Meta_Table)
 	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table)
 	setmetatable(CharInfo.EVENTS_ZARALEK_LIST, Meta_Table)
