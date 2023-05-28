@@ -150,6 +150,7 @@ tinsert(E.modules, function()
 			func_Octo_LoadAddOn("Simulationcraft")
 			func_Octo_LoadAddOn("SpeedyAutoLoot")
 			func_Octo_LoadAddOn("AdvancedInterfaceOptions")
+			func_Octo_LoadAddOn("Pawn")
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -869,6 +870,8 @@ tinsert(E.modules, function()
 				{itemid = 204076, count = 15}, --15
 				{itemid = 204077, count = 15}, --15
 				{itemid = 204078, count = 15}, --15
+
+				{itemid = 204352, count = 50},
 			}
 
 

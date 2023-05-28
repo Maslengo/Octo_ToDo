@@ -33,7 +33,7 @@ StaticPopupDialogs[AddonName.."GET_RELOAD"] = {
     whileDead = 1,
     OnAccept = function() ReloadUI() end,
 }
-local indent = -24
+local indent = 34
 local function newSlider(slider_name, minRange, maxRange, stepSize, getValue, text)
     local slider = CreateFrame("Slider", "OctoSlider"..slider_name, title, "OptionsSliderTemplate")
     slider.minRange = minRange
@@ -42,7 +42,7 @@ local function newSlider(slider_name, minRange, maxRange, stepSize, getValue, te
     slider.getValue = getValue
     slider.text = text
     slider:SetWidth(140)
-    slider:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*4)
+    slider:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*4)
     slider:SetMinMaxValues(minRange, maxRange)
     slider:SetValueStep(stepSize)
     slider:SetObeyStepOnDrag(true)
@@ -62,7 +62,7 @@ local function newSlider(slider_name, minRange, maxRange, stepSize, getValue, te
 end
 local function newButton(pos, line)
     Button = CreateFrame("CheckButton", "CheckButton"..GenerateUniqueID(), config.title, "InterfaceOptionsCheckButtonTemplate")
-    Button:SetPoint("TOPLEFT", title, "BOTTOMLEFT", pos, indent*line)
+    Button:SetPoint("TOPLEFT", title, "BOTTOMLEFT", pos, -indent*line)
     Button:SetChecked(Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm)
     Button:SetScript("OnClick", function(Button)
             Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm = Button:GetChecked()
@@ -89,7 +89,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left1 CVar
         -----------------------------------------------
         self.btn_left1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*1)
+        self.btn_left1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*1)
         self.btn_left1:SetChecked(Octo_ToDo_DragonflyVars.config.CVar)
         self.btn_left1:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.CVar = btn_left:GetChecked()
@@ -100,7 +100,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left2 InputDelete
         -----------------------------------------------
         self.btn_left2 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*2)
+        self.btn_left2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*2)
         self.btn_left2:SetChecked(Octo_ToDo_DragonflyVars.config.InputDelete)
         self.btn_left2:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.InputDelete = btn_left:GetChecked()
@@ -112,7 +112,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left3 UsableItems
         -----------------------------------------------
         self.btn_left3 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*3)
+        self.btn_left3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*3)
         self.btn_left3:SetChecked(Octo_ToDo_DragonflyVars.config.UsableItems)
         self.btn_left3:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.UsableItems = btn_left:GetChecked()
@@ -123,7 +123,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left4 AutoOpen
         -----------------------------------------------
         self.btn_left4 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left4:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*4)
+        self.btn_left4:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*4)
         self.btn_left4:SetChecked(Octo_ToDo_DragonflyVars.config.AutoOpen)
         self.btn_left4:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.AutoOpen = btn_left:GetChecked()
@@ -133,7 +133,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left5 AutoGossip
         -----------------------------------------------
         self.btn_left5 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*5)
+        self.btn_left5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*5)
         self.btn_left5:SetChecked(Octo_ToDo_DragonflyVars.config.AutoGossip)
         self.btn_left5:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.AutoGossip = btn_left:GetChecked()
@@ -143,7 +143,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left6 TalkingHeadFrame
         -----------------------------------------------
         self.btn_left6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*6)
+        self.btn_left6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*6)
         self.btn_left6:SetChecked(Octo_ToDo_DragonflyVars.config.TalkingHeadFrame)
         self.btn_left6:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.TalkingHeadFrame = btn_left:GetChecked()
@@ -153,7 +153,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left7 HideObjectiveTracker
         -----------------------------------------------
         self.btn_left7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*7)
+        self.btn_left7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*7)
         self.btn_left7:SetChecked(Octo_ToDo_DragonflyVars.config.HideObjectiveTracker)
         self.btn_left7:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.HideObjectiveTracker = btn_left:GetChecked()
@@ -163,7 +163,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left8 HideZoneText
         -----------------------------------------------
         self.btn_left8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*8)
+        self.btn_left8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*8)
         self.btn_left8:SetChecked(Octo_ToDo_DragonflyVars.config.HideZoneText)
         self.btn_left8:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.HideZoneText = btn_left:GetChecked()
@@ -173,7 +173,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left9 Covenant
         -----------------------------------------------
         self.btn_left9 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*9)
+        self.btn_left9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*9)
         self.btn_left9:SetChecked(Octo_ToDo_DragonflyVars.config.Covenant)
         self.btn_left9:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.Covenant = btn_left:GetChecked()
@@ -183,7 +183,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left10 UIErrorsFrame
         -----------------------------------------------
         self.btn_left10 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left10:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*10)
+        self.btn_left10:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*10)
         self.btn_left10:SetChecked(Octo_ToDo_DragonflyVars.config.UIErrorsFrame)
         self.btn_left10:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.UIErrorsFrame = btn_left:GetChecked()
@@ -193,7 +193,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left11 RaidBossEmoteFrame
         -----------------------------------------------
         self.btn_left11 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left11:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*11)
+        self.btn_left11:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*11)
         self.btn_left11:SetChecked(Octo_ToDo_DragonflyVars.config.RaidBossEmoteFrame)
         self.btn_left11:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.RaidBossEmoteFrame = btn_left:GetChecked()
@@ -203,7 +203,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left12 CinematicCanceler
         -----------------------------------------------
         self.btn_left12 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left12:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*12)
+        self.btn_left12:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*12)
         self.btn_left12:SetChecked(Octo_ToDo_DragonflyVars.config.CinematicCanceler)
         self.btn_left12:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.CinematicCanceler = btn_left:GetChecked()
@@ -213,7 +213,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left13 BossBanner
         -----------------------------------------------
         self.btn_left13 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left13:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*13)
+        self.btn_left13:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*13)
         self.btn_left13:SetChecked(Octo_ToDo_DragonflyVars.config.BossBanner)
         self.btn_left13:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.BossBanner = btn_left:GetChecked()
@@ -223,7 +223,7 @@ config:SetScript("OnShow", function(self)
         -- btn_left14 MajorFactionsRenownToast
         -----------------------------------------------
         self.btn_left14 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left14:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, indent*14)
+        self.btn_left14:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*14)
         self.btn_left14:SetChecked(Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast)
         self.btn_left14:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast = btn_left:GetChecked()
@@ -234,7 +234,7 @@ config:SetScript("OnShow", function(self)
         -- btn_right1 AnotherAddons
         -----------------------------------------------
         self.btn_right1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_right1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*1)
+        self.btn_right1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*1)
         self.btn_right1:SetChecked(Octo_ToDo_DragonflyVars.config.AnotherAddons)
         self.btn_right1:SetScript("OnClick", function(btn_right)
                 Octo_ToDo_DragonflyVars.config.AnotherAddons = btn_right:GetChecked()
@@ -246,7 +246,7 @@ config:SetScript("OnShow", function(self)
         -- btn_right2 ClearChat
         -----------------------------------------------
         self.btn_right2 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_right2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*2)
+        self.btn_right2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*2)
         self.btn_right2:SetChecked(Octo_ToDo_DragonflyVars.config.ClearChat)
         self.btn_right2:SetScript("OnClick", function(btn_right)
                 Octo_ToDo_DragonflyVars.config.ClearChat = btn_right:GetChecked()
@@ -259,7 +259,7 @@ config:SetScript("OnShow", function(self)
         -- btn_right3 ShowOnlyCurrentRealm
         -----------------------------------------------
         self.btn_right3 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_right3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*3)
+        self.btn_right3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*3)
         self.btn_right3:SetChecked(Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm)
         self.btn_right3:SetScript("OnClick", function(btn)
                 Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm = btn:GetChecked()
@@ -269,62 +269,65 @@ config:SetScript("OnShow", function(self)
         -----------------------------------------------
         --LevelToShowTEXT
         local LevelToShowTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-        LevelToShowTEXT:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*4)
-        LevelToShowTEXT:SetText("LevelToShow: "..Octo_ToDo_DragonflyVars.config.LevelToShow)
-        self.Slider_right4plus5 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
-        self.Slider_right4plus5:SetWidth(140)
-        self.Slider_right4plus5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*5)
-        self.Slider_right4plus5:SetMinMaxValues(1,70)
-        self.Slider_right4plus5:SetValueStep(1)
+        self.Slider_right4 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
+        self.Slider_right4:SetWidth(140)
+        self.Slider_right4:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*4)
+        self.Slider_right4:SetMinMaxValues(1,70)
+        self.Slider_right4:SetValueStep(1)
         local step = 1
-        self.Slider_right4plus5:SetValue(Octo_ToDo_DragonflyVars.config.LevelToShow)
-        self.Slider_right4plus5:SetScript("OnValueChanged", function (self, value)
+        self.Slider_right4:SetValue(Octo_ToDo_DragonflyVars.config.LevelToShow)
+        self.Slider_right4:SetScript("OnValueChanged", function (self, value)
                 value = math.floor(value * step + .5) / step
                 Octo_ToDo_DragonflyVars.config.LevelToShow = value
                 LevelToShowTEXT:SetText("LevelToShow: "..Octo_ToDo_DragonflyVars.config.LevelToShow)
                 StaticPopup_Show(AddonName.."GET_RELOAD")
         end)
-        self.Slider_right4plus5:Show()
-        -- btn_right6 AutoSellGrey
+        LevelToShowTEXT:SetPoint("LEFT", self.Slider_right4, "RIGHT", indent, 0)
+        LevelToShowTEXT:SetText("LevelToShow: "..Octo_ToDo_DragonflyVars.config.LevelToShow)
+        self.Slider_right4:Show()
+        -- btn_right5 AutoSellGrey
         -----------------------------------------------
-        self.btn_right6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_right6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*6)
-        self.btn_right6:SetChecked(Octo_ToDo_DragonflyVars.config.AutoSellGrey)
-        self.btn_right6:SetScript("OnClick", function(btn)
+        self.btn_right5 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+        self.btn_right5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*5)
+        self.btn_right5:SetChecked(Octo_ToDo_DragonflyVars.config.AutoSellGrey)
+        self.btn_right5:SetScript("OnClick", function(btn)
                 Octo_ToDo_DragonflyVars.config.AutoSellGrey = btn:GetChecked()
                 StaticPopup_Show(AddonName.."GET_RELOAD")
         end)
-        self.btn_right6.text:SetText("|cffFF0000AutoSellGrey|r")
+        self.btn_right5.text:SetText("|cffFF0000AutoSellGrey|r")
 
-        -- btn_right7 AutoRepair
+        -- btn_right6 AutoRepair
         -----------------------------------------------
-        self.btn_right7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_right7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*7)
-        self.btn_right7:SetChecked(Octo_ToDo_DragonflyVars.config.AutoRepair)
-        self.btn_right7:SetScript("OnClick", function(btn)
+        self.btn_right6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+        self.btn_right6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*6)
+        self.btn_right6:SetChecked(Octo_ToDo_DragonflyVars.config.AutoRepair)
+        self.btn_right6:SetScript("OnClick", function(btn)
                 Octo_ToDo_DragonflyVars.config.AutoRepair = btn:GetChecked()
                 StaticPopup_Show(AddonName.."GET_RELOAD")
         end)
-        self.btn_right7.text:SetText("|cffFF0000AutoRepair|r")
+        self.btn_right6.text:SetText("|cffFF0000AutoRepair|r")
         -----------------------------------------------
         --Addon_curWidthTEXT
         local Addon_curWidthTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-        Addon_curWidthTEXT:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*8)
-        Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
-        self.Slider_right8plus9 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
-        self.Slider_right8plus9:SetWidth(140)
-        self.Slider_right8plus9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, indent*9)
-        self.Slider_right8plus9:SetMinMaxValues(60,140)
-        self.Slider_right8plus9:SetValueStep(1)
+        self.Slider_right7 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
+        self.Slider_right7:SetWidth(140)
+        self.Slider_right7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*7)
+        self.Slider_right7:SetMinMaxValues(70,140)
+        self.Slider_right7:SetValueStep(1)
         local step = 1
-        self.Slider_right8plus9:SetValue(Octo_ToDo_DragonflyVars.config.Addon_curWidth)
-        self.Slider_right8plus9:SetScript("OnValueChanged", function (self, value)
+        self.Slider_right7:SetValue(Octo_ToDo_DragonflyVars.config.Addon_curWidth)
+        self.Slider_right7:SetScript("OnValueChanged", function (self, value)
                 value = math.floor(value * step + .5) / step
                 Octo_ToDo_DragonflyVars.config.Addon_curWidth = value
                 Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
                 StaticPopup_Show(AddonName.."GET_RELOAD")
         end)
-        self.Slider_right8plus9:Show()
+        Addon_curWidthTEXT:SetPoint("LEFT", self.Slider_right7, "RIGHT", indent, 0)
+        Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
+        self.Slider_right7:Show()
+
+
+        --Addon_curWidth
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config, AddonName)
