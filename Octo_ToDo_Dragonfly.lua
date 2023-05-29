@@ -2875,9 +2875,59 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			--3
 			Main_Frame.TextLeft3:SetText("|T1603189:16:16:::64:64:4:60:4:60|t |cffFFFFFF".. func_questName(70750).."|r")
 			Char_Frame.CenterLines3.CL:SetText(CharInfo.Octopussy_3kREP or NONE)
+			Char_Frame.CenterLines3.tooltip = {}
 			if CharInfo.ItemsInBag[200073] ~= 0 then
 				Char_Frame.CenterLines3.CL:SetText((CharInfo.Octopussy_3kREP or NONE).." +"..CharInfo.ItemsInBag[200073]..func_itemTexture(200073))
 			end
+
+			if C_QuestLog.IsOnQuest(72068) then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(72068)})
+			end
+			if C_QuestLog.IsOnQuest(72373) then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(72373)})
+			end
+			if C_QuestLog.IsOnQuest(72374) then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(72374)})
+			end
+			if C_QuestLog.IsOnQuest(72375) then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(72375)})
+			end
+			if C_QuestLog.IsOnQuest(75259) then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(75259)})
+			end
+			if C_QuestLog.IsOnQuest(70750) then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(70750)})
+			end
+			if C_QuestLog.IsOnQuest(75859) then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(75859)})
+			end
+			if C_QuestLog.IsOnQuest(75860) then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(75860)})
+			end
+			if C_QuestLog.IsOnQuest(75861) then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(75861)})
+			end
+
+
+
+			-- ля ты крыса
+			if CharInfo.ItemsInBag[76755] >= 1 then
+				PlaySoundFile("Interface\\AddOns\\"..AddonName.."\\Media\\sound\\Memes\\rat.ogg", "Master")
+			end
+
+
+
+
+
+
+
+
+
+			if #Char_Frame.CenterLines3.tooltip == 0 then
+				Char_Frame.CenterLines3.tooltip = nil
+			end
+
+
 			--4 1500 РЕПЫ НИФАМ
 			Main_Frame.TextLeft4:SetText(func_questName(75665))
 			if CharInfo.Octopussy_AWorthyAllyLoammNiffen then
@@ -3352,15 +3402,12 @@ local function checkCharInfo(CharInfo)
 	CharInfo.Name = CharInfo.Name or 0
 	CharInfo.curServer = CharInfo.curServer or 0
 	CharInfo.Faction = CharInfo.Faction or 0
-<<<<<<< HEAD
 	CharInfo.classColor = CharInfo.classColor or {r = 0.5, g = 0.5, b = 0.5}
 	setmetatable(CharInfo, Meta_Table)
-	--setmetatable(CharInfo.classColor, Meta_Table)
-=======
+	-- setmetatable(CharInfo.classColor.r, Meta_Table)
+	-- setmetatable(CharInfo.classColor.g, Meta_Table)
+	-- setmetatable(CharInfo.classColor.b, Meta_Table)
 
-	setmetatable(CharInfo, Meta_Table)
-	setmetatable(CharInfo.classColor, Meta_Table)
->>>>>>> origin/main
 	setmetatable(CharInfo.CurrencyID, Meta_Table)
 	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table)
 	setmetatable(CharInfo.EVENTS_ZARALEK_LIST, Meta_Table)

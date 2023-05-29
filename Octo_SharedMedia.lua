@@ -33,6 +33,7 @@ LSM:Register("sound", "|cFF00A4FFO_04_EAR RAPE Moaning|r", [[Interface\Addons\]]
 LSM:Register("sound", "|cFF00A4FFO_04_Ephey|r", [[Interface\Addons\]]..AddonName..[[\Media\sound\Memes\Ephey.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_ERA RAPE BLYAT|r", [[Interface\Addons\]]..AddonName..[[\Media\sound\Memes\ERA RAPE BLYAT.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Gnome Woo|r", [[Interface\Addons\]]..AddonName..[[\Media\sound\Memes\Gnome Woo.ogg]])
+LSM:Register("sound", "|cFF00A4FFO_04_rat|r", [[Interface\Addons\]]..AddonName..[[\Media\sound\Memes\rat.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Hehe Boy|r", [[Interface\Addons\]]..AddonName..[[\Media\sound\Memes\Hehe Boy.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Hey thats pretty good|r", [[Interface\Addons\]]..AddonName..[[\Media\sound\Memes\Hey thats pretty good.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Its a trap|r", [[Interface\Addons\]]..AddonName..[[\Media\sound\Memes\Its a trap.ogg]])
