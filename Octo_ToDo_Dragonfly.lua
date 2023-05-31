@@ -3358,7 +3358,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			Char_Frame.CenterLines18.CL:SetText(PEREMENNAYA_MONEY)
 			-- 19
 			TotalKills = TotalKills+ CharInfo.KillCount
-			Main_Frame.TextLeft19:SetText("Убийство Гоблина: " .. TotalKills)
+			Main_Frame.TextLeft19:SetText("Гоблинов убито: " .. TotalKills)
 			Char_Frame.CenterLines19.CL:SetText(Empty_Zero(CharInfo.KillCount))
 			--------------------------------------------------
 			if curGUID == curCharGUID then
