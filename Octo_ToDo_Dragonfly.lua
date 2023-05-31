@@ -352,9 +352,16 @@ function CollectKillCount()
 	local KillCount = 0
 	local npcid = GetNPCIDFromGUID(dstGuid)
 	if bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_PARTY) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_RAID) then
-		if npcIDs_table[npcid] then
-			collect.KillCount = collect.KillCount + 1
+		for _,v in pairs(npcIDs_table) do
+			if v == npcid then
+				collect.KillCount[v] = collect.KillCount[v] + 1
+			end
 		end
+
+
+		-- if npcIDs_table[npcid] then
+		-- 	collect.KillCount[npcid] = collect.KillCount[npcid] + 1
+		-- end
 	end
 end
 --LoadAddOn("Blizzard_PVPUI")
@@ -2836,6 +2843,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if curServer == CharInfo.curServer and CharInfo.Money ~= 0 then
 				curMoney = CharInfo.Money
 			end
+			TotalMoney = 0
 			TotalMoney = TotalMoney + curMoney
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			Char_Frame.DeleteButton = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), Char_Frame, "BackDropTemplate")
@@ -3357,9 +3365,10 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.PlayerReagentnumSlots == 0 then PEREMENNAYA_MONEY = PEREMENNAYA_MONEY.."|cffFF0000*|r" end
 			Char_Frame.CenterLines18.CL:SetText(PEREMENNAYA_MONEY)
 			-- 19
-			TotalKills = TotalKills+ CharInfo.KillCount
+			TotalKills = 0
+			TotalKills = TotalKills+ CharInfo.KillCount[205490]
 			Main_Frame.TextLeft19:SetText("Гоблинов убито: " .. TotalKills)
-			Char_Frame.CenterLines19.CL:SetText(Empty_Zero(CharInfo.KillCount))
+			Char_Frame.CenterLines19.CL:SetText(CharInfo.KillCount[205490])
 			--------------------------------------------------
 			if curGUID == curCharGUID then
 				Char_Frame.BG:Show()
@@ -3406,6 +3415,9 @@ function CollectPlayerInfo()
 	collect.classColor = classColor or {r = 0.5, g = 0.5, b = 0.5}
 end
 local function checkCharInfo(CharInfo)
+	CharInfo.KillCount = CharInfo.KillCount or {}
+	setmetatable(CharInfo.KillCount, Meta_Table)
+
 	CharInfo.CurrencyID = CharInfo.CurrencyID or {}
 	CharInfo.CurrencyID_maxQuantity = CharInfo.CurrencyID_maxQuantity or {}
 	CharInfo.EVENTS_ZARALEK_LIST = CharInfo.RARE_ZARALEK_LIST or {}
@@ -3428,7 +3440,6 @@ local function checkCharInfo(CharInfo)
 	CharInfo.RARE_ZARALEK_LIST = CharInfo.RARE_ZARALEK_LIST or {}
 	CharInfo.reputationID = CharInfo.reputationID or {}
 	CharInfo.Octopussy_Sniffin = CharInfo.Octopussy_Sniffin or 0
-	CharInfo.KillCount = CharInfo.KillCount or 0
 	-- setmetatable(CharInfo.UnitLevel, Meta_Table)
 	-- setmetatable(CharInfo.avgItemLevel, Meta_Table)
 	-- setmetatable(CharInfo.avgItemLevelPvp, Meta_Table)
