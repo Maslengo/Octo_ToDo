@@ -265,10 +265,10 @@ function ToDragonbaneKeepTimer() -- Драконья экспедиция
 	local duration = 900
 	local currTime = tonumber(GetServerTime())
 	local nextEventIn = interval - mod(currTime - TIMER, interval)
-	local ToDragonbaneKeepTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
+	local ToDragonbaneKeepTimer = "|cffFF0000"..SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		ToDragonbaneKeepTimer = AddonColor..SecondsToClock(nextEventIn) .." "
+		ToDragonbaneKeepTimer = AddonColor..SecondsToClock(nextEventIn) .."|r "
 	end
 	return ToDragonbaneKeepTimer .. " " .. L["Siege on Dragonbane Keep"]
 end
@@ -279,10 +279,10 @@ function GrandHuntsTimer() -- Кентавры Маруук
 	local duration = 7199-- 900
 	local currTime = tonumber(GetServerTime())
 	local nextEventIn = interval - mod(currTime - TIMER, interval)
-	local GrandHuntsTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
+	local GrandHuntsTimer = "|cffFF0000"..SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		GrandHuntsTimer = AddonColor..SecondsToClock(nextEventIn) .." "
+		GrandHuntsTimer = AddonColor..SecondsToClock(nextEventIn) .."|r "
 	end
 	return GrandHuntsTimer .. " " .. L["Grand Hunt"]
 end
@@ -293,10 +293,10 @@ function CommunityFeastTimer() -- Искарские клыкарры
 	local duration = 900
 	local currTime = tonumber(GetServerTime())
 	local nextEventIn = interval - mod(currTime - TIMER, interval)
-	local CommunityFeastTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
+	local CommunityFeastTimer = "|cffFF0000"..SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		CommunityFeastTimer = AddonColor..SecondsToClock(nextEventIn) .." "
+		CommunityFeastTimer = AddonColor..SecondsToClock(nextEventIn) .."|r "
 	end
 	return CommunityFeastTimer .. " " .. L["Community Feast"]
 end
@@ -307,10 +307,10 @@ function PrimalStormsTimer() -- Праймал шторм
 	local duration = 7200
 	local currTime = tonumber(GetServerTime())
 	local nextEventIn = interval - mod(currTime - TIMER, interval)
-	local PrimalStormsTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
+	local PrimalStormsTimer = "|cffFF0000"..SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		PrimalStormsTimer = AddonColor..SecondsToClock(nextEventIn) .." "
+		PrimalStormsTimer = AddonColor..SecondsToClock(nextEventIn) .."|r "
 	end
 	return PrimalStormsTimer .." ".. L["The Storm's Fury"]
 end
@@ -320,10 +320,10 @@ function ResearchersUnderFireTimer()
 	local duration = 1500
 	local currTime = tonumber(GetServerTime())
 	local nextEventIn = interval - mod(currTime - TIMER, interval)
-	local ResearchersUnderFireTimer = "|cffFF0000"..SecondsToClock(nextEventIn)
+	local ResearchersUnderFireTimer = "|cffFF0000"..SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		ResearchersUnderFireTimer = AddonColor..SecondsToClock(nextEventIn) .." "
+		ResearchersUnderFireTimer = AddonColor..SecondsToClock(nextEventIn) .."|r "
 	end
 	return ResearchersUnderFireTimer .." ".. L["Researchers Under Fire"]
 end
@@ -347,21 +347,17 @@ function CollectKillCount()
 	-- local strlower = _G.strlower
 	-- local format = _G.format
 	local npcIDs_table = {
-		[205490] = true, -- Алчный Гоблин
+		205490, -- Алчный Гоблин
 	}
 	local KillCount = 0
 	local npcid = GetNPCIDFromGUID(dstGuid)
 	if bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_PARTY) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_RAID) then
 		for _,v in pairs(npcIDs_table) do
 			if v == npcid then
-				collect.KillCount[v] = collect.KillCount[v] + 1
+				print ("|cFF00A3FF"..dstName.. "|r " .. AddonColor..collect.KillCount[npcid].. " +1..|r")
+				collect.KillCount[npcid] = collect.KillCount[npcid] + 1
 			end
 		end
-
-
-		-- if npcIDs_table[npcid] then
-		-- 	collect.KillCount[npcid] = collect.KillCount[npcid] + 1
-		-- end
 	end
 end
 --LoadAddOn("Blizzard_PVPUI")
@@ -3368,7 +3364,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			TotalKills = 0
 			TotalKills = TotalKills+ CharInfo.KillCount[205490]
 			Main_Frame.TextLeft19:SetText("Гоблинов убито: " .. TotalKills)
-			Char_Frame.CenterLines19.CL:SetText(CharInfo.KillCount[205490])
+			Char_Frame.CenterLines19.CL:SetText(Empty_Zero(CharInfo.KillCount[205490]))
 			--------------------------------------------------
 			if curGUID == curCharGUID then
 				Char_Frame.BG:Show()
