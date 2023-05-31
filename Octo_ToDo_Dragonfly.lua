@@ -22,7 +22,7 @@ local curWidth = 94*scale
 local curHeight = 20*scale -- высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
-local TotalLines = 20
+local TotalLines = 18
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local TotalMoney = 0
@@ -211,7 +211,7 @@ local AllyaZnamya = 132486
 function TreasureGoblinTimer()
 	local offset = 1675076400+9 -- = time({year=2023,month=1,day=30,hour=12})
 	local interval = 30*60
-	local interval2 = 1200
+	local interval2 = 1500
 	local uptime = GetTime()
 	if (last or 0) < uptime - 1 then
 		last = uptime
@@ -234,7 +234,7 @@ function TreasureGoblinTimer()
 			prevLocation = spawnprev.name
 			local when = remainder + distance * interval
 			local timeleft = when - interval2
-			if when < 1500 then
+			if when < interval2 then
 				nextTime = "|cffFF0000"..SecondsToClock(when).."|r"
 				-- local s, f = SecondsToTimeAbbrev(when)
 				-- nextTime = s:format(f)
@@ -2922,6 +2922,10 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			--1 ТАЙМЕР ГОБЛИНА
 			Main_Frame.TextLeft1:SetText("|T577318:16:16:::64:64:4:60:4:60|t " .. TreasureGoblinTimer())
 			Char_Frame.CenterLines1.CL:SetText(CharInfo.Octopussy_TreasureGoblin or NONE)
+			Char_Frame.CenterLines1.tooltip = {}
+			if CharInfo.CurrentLocation then
+				tinsert(Char_Frame.CenterLines1.tooltip,{CharInfo.CurrentLocation})
+			end
 			--2
 			Main_Frame.TextLeft2:SetText("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer() .." " .. L["Community Feast"])
 			Char_Frame.CenterLines2.CL:SetText(CharInfo.Octopussy_Feast or NONE)
@@ -3362,8 +3366,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			local PEREMENNAYA_MONEY = "|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r"
 			if CharInfo.PlayerReagentnumSlots == 0 then PEREMENNAYA_MONEY = PEREMENNAYA_MONEY.."|cffFF0000*|r" end
 			Char_Frame.CenterLines18.CL:SetText(PEREMENNAYA_MONEY)
-			--19
-			Char_Frame.CenterLines19.CL:SetText(CharInfo.CurrentLocation)
 			--------------------------------------------------
 			if curGUID == curCharGUID then
 				Char_Frame.BG:Show()
