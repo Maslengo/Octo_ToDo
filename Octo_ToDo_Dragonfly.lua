@@ -22,10 +22,11 @@ local curWidth = 94*scale
 local curHeight = 20*scale -- высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
-local TotalLines = 18
+local TotalLines = 19
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local TotalMoney = 0
+local TotalKills = 0
 local curMoney = 0
 local thursdayResetDay0EU = (1514358000-10800) --https://wowreset.com/ 14-3=11(ТСК)
 local thursdayResetDay0US = 1514300400
@@ -269,7 +270,7 @@ function ToDragonbaneKeepTimer() -- Драконья экспедиция
 		nextEventIn = nextEventIn - (interval - duration)
 		ToDragonbaneKeepTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
-	return ToDragonbaneKeepTimer
+	return ToDragonbaneKeepTimer .. " " .. L["Siege on Dragonbane Keep"]
 end
 function GrandHuntsTimer() -- Кентавры Маруук
 	-- local timePattern = "%02d:%02d"
@@ -283,7 +284,7 @@ function GrandHuntsTimer() -- Кентавры Маруук
 		nextEventIn = nextEventIn - (interval - duration)
 		GrandHuntsTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
-	return GrandHuntsTimer
+	return GrandHuntsTimer .. " " .. L["Grand Hunt"]
 end
 function CommunityFeastTimer() -- Искарские клыкарры
 	-- local timePattern = "%02d:%02d"
@@ -297,7 +298,7 @@ function CommunityFeastTimer() -- Искарские клыкарры
 		nextEventIn = nextEventIn - (interval - duration)
 		CommunityFeastTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
-	return CommunityFeastTimer
+	return CommunityFeastTimer .. " " .. L["Community Feast"]
 end
 function PrimalStormsTimer() -- Праймал шторм
 	-- local timePattern = "%02d:%02d"
@@ -311,7 +312,7 @@ function PrimalStormsTimer() -- Праймал шторм
 		nextEventIn = nextEventIn - (interval - duration)
 		PrimalStormsTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
-	return PrimalStormsTimer
+	return PrimalStormsTimer .." ".. L["The Storm's Fury"]
 end
 function ResearchersUnderFireTimer()
 	local TIMER = 1683804640
@@ -324,7 +325,37 @@ function ResearchersUnderFireTimer()
 		nextEventIn = nextEventIn - (interval - duration)
 		ResearchersUnderFireTimer = AddonColor..SecondsToClock(nextEventIn) .." "
 	end
-	return ResearchersUnderFireTimer
+	return ResearchersUnderFireTimer .." ".. L["Researchers Under Fire"]
+end
+local function GetNPCIDFromGUID(guid)
+	if guid then
+		local unit_type, _, _, _, _, mob_id = strsplit("-", guid)
+		if unit_type == "Pet" or unit_type == "Player" then
+			return 0
+		end
+		return (guid and mob_id and tonumber(mob_id)) or 0
+	end
+	return 0
+end
+function CollectKillCount()
+	local UnitLevel = UnitLevel("PLAYER")
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	--------------------------------------------------
+	local timestamp, eventType, hideCaster, srcGuid, srcName, srcFlags, srcRaidFlags, dstGuid, dstName, dstFlags, dstRaidFlags, spellId, spellName, spellSchool, auraType = CombatLogGetCurrentEventInfo()
+	local bit_band = _G.bit.band
+	-- local strlower = _G.strlower
+	-- local format = _G.format
+	local npcIDs_table = {
+		[205490] = true, -- Алчный Гоблин
+	}
+	local KillCount = 0
+	local npcid = GetNPCIDFromGUID(dstGuid)
+	if bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_PARTY) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_RAID) then
+		if npcIDs_table[npcid] then
+			collect.KillCount = collect.KillCount + 1
+		end
+	end
 end
 --LoadAddOn("Blizzard_PVPUI")
 function CollectPVPRaitings()
@@ -1786,8 +1817,6 @@ local itemID = {
 	205288,
 	205347,
 }
-
-
 local itemIDReputation = {
 	192055, -- Артефакт Драконьих островов
 	200443, -- Артефакт Драконьих островов (BOA)
@@ -1801,10 +1830,8 @@ local itemIDReputation = {
 	200449, -- Священный тотем клыкарров (BOA)
 	201470, -- История о незабываемой победе
 	201471, -- История о блистательной победе
-
 	206006, --Благодарность Хранителя Земли (2500 репы)
 }
-
 MergeTable(itemID, itemIDReputation)
 -- local function itemID_TEST_INSERT()
 -- for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
@@ -2035,6 +2062,7 @@ function Octo_ToDo_DragonflyOnLoad()
 	--EventFrame:RegisterEvent("PLAYER_STARTED_MOVING")
 	EventFrame:RegisterEvent("PLAYER_LOGOUT")
 	EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	EventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	-- -- EventFrame:RegisterEvent("VARIABLES_LOADED")
 	-- EventFrame:RegisterEvent("ARENA_SEASON_WORLD_STATE")
 	-- EventFrame:RegisterEvent("BATTLEFIELDS_CLOSED")
@@ -2607,39 +2635,26 @@ function OctoQuestUpdate()
 	elseif C_QuestLog.IsQuestFlaggedCompleted(69929) then collect.Octopussy_WB = CheckCompletedByQuestID(69929)
 	elseif C_QuestLog.IsQuestFlaggedCompleted(69930) then collect.Octopussy_WB = CheckCompletedByQuestID(69930)
 	end
-
-
-
-
 	collect.Octopussy_Sniffin = 0
-
-
 	local Octopussy_Sniffin = 0
-    if C_QuestLog.IsQuestFlaggedCompleted(75459) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75459)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(76027) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76027)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75621) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75621)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75397) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75397)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75517) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75517)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75619) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75619)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(76014) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76014)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75620) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75620)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(76081) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76081)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75390) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75390)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75234) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75234)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75516) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75516)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75996) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75996)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(76016) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76016)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(75393) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75393)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(76015) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76015)
-    elseif C_QuestLog.IsQuestFlaggedCompleted(76084) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76084)
-    end
-
-
-
-
-
-
-
+	if C_QuestLog.IsQuestFlaggedCompleted(75459) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75459)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(76027) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76027)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75621) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75621)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75397) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75397)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75517) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75517)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75619) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75619)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(76014) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76014)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75620) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75620)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(76081) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76081)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75390) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75390)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75234) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75234)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75516) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75516)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75996) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75996)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(76016) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76016)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(75393) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75393)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(76015) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76015)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(76084) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76084)
+	end
 	collect.Octopussy_WB_NEW = false
 	if C_QuestLog.IsQuestFlaggedCompleted(74892) then collect.Octopussy_WB_NEW = CheckCompletedByQuestID(74892)
 	end
@@ -2711,7 +2726,6 @@ function OctoQuestUpdate()
 	elseif C_QuestLog.IsOnQuest(75860) == true then collect.Octopussy_3kREP_IsOnQuest = 75860
 	elseif C_QuestLog.IsOnQuest(75861) == true then collect.Octopussy_3kREP_IsOnQuest = 75861
 	end
-
 	collect.Octopussy_FightingisItsOwnReward = "" --Славный бой – это уже награда
 	if C_QuestLog.IsOnQuest(76122) or C_QuestLog.IsQuestFlaggedCompleted(76122) == true then collect.Octopussy_FightingisItsOwnReward = CheckCompletedByQuestID(76122)
 	end
@@ -2745,16 +2759,17 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 		sorted[#sorted+1] = CharInfo
 	end
 	sort(sorted, function(a, b)
-			return
-			a.curServer < b.curServer or a.curServer == b.curServer
-			and
-			a.avgItemLevel < b.avgItemLevel or a.avgItemLevel == b.avgItemLevel
-			and
-			-- a.Faction < b.Faction or a.Faction == b.Faction
-			-- and
-			b.Name < a.Name
+			if a and b then
+				return
+				a.curServer < b.curServer or a.curServer == b.curServer
+				and
+				a.avgItemLevel < b.avgItemLevel or a.avgItemLevel == b.avgItemLevel
+				and
+				-- a.Faction < b.Faction or a.Faction == b.Faction
+				-- and
+				b.Name < a.Name
+			end
 	end)
-	TotalMoney = 0
 	for i, CharInfo in pairs(sorted) do
 		local curCharGUID = CharInfo.GUID
 		local curName = nil
@@ -2927,7 +2942,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				tinsert(Char_Frame.CenterLines1.tooltip,{CharInfo.CurrentLocation})
 			end
 			--2
-			Main_Frame.TextLeft2:SetText("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer() .." " .. L["Community Feast"])
+			Main_Frame.TextLeft2:SetText("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
 			Char_Frame.CenterLines2.CL:SetText(CharInfo.Octopussy_Feast or NONE)
 			if CharInfo.ItemsInBag[200652] ~= 0 then
 				Char_Frame.CenterLines2.CL:SetText((CharInfo.Octopussy_Feast or NONE).." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652))
@@ -2942,31 +2957,16 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.ItemsInBag[200073] ~= 0 then
 				Char_Frame.CenterLines3.CL:SetText((CharInfo.Octopussy_3kREP or NONE).." +"..CharInfo.ItemsInBag[200073]..func_itemTexture(200073))
 			end
-
 			if CharInfo.Octopussy_3kREP_IsOnQuest ~= 0 then
 				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(CharInfo.Octopussy_3kREP_IsOnQuest)})
 			end
-
-
-
 			-- ля ты крыса
 			if CharInfo.ItemsInBag[76755] >= 1 then
 				PlaySoundFile("Interface\\AddOns\\"..AddonName.."\\Media\\sound\\Memes\\rat.ogg", "Master")
 			end
-
-
-
-
-
-
-
-
-
 			if #Char_Frame.CenterLines3.tooltip == 0 then
 				Char_Frame.CenterLines3.tooltip = nil
 			end
-
-
 			--4 1500 РЕПЫ НИФАМ
 			Main_Frame.TextLeft4:SetText(func_questName(75665))
 			if CharInfo.Octopussy_AWorthyAllyLoammNiffen then
@@ -3048,18 +3048,11 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.reputationID[2564] and CharInfo.reputationID[2564] ~= 0 then
 				Char_Frame.CenterLines7.CL:SetText(CharInfo.reputationID[2564])
 			end
-
 			for k,v in ipairs (itemIDReputation) do
 				if CharInfo.ItemsInBag[v] ~= 0 then
 					tinsert(Char_Frame.CenterLines7.tooltip, {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]})
 				end
 			end
-
-
-
-
-
-
 			if #Char_Frame.CenterLines7.tooltip == 0 then
 				Char_Frame.CenterLines7.tooltip = nil
 				Char_Frame.CenterLines7.CL:SetText("")
@@ -3248,15 +3241,12 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.ItemsInBag[204186] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204186)..func_itemName(204186), CharInfo.ItemsInBag[204186]}) end
 			if CharInfo.ItemsInBag[204187] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204187)..func_itemName(204187), CharInfo.ItemsInBag[204187]}) end
 			if CharInfo.ItemsInBag[204188] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204188)..func_itemName(204188), CharInfo.ItemsInBag[204188]}) end
-
 			if CharInfo.ItemsInBag[190453] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(190453)..func_itemName(190453), CharInfo.ItemsInBag[190453]}) end
 			if CharInfo.ItemsInBag[191784] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(191784)..func_itemName(191784), CharInfo.ItemsInBag[191784]}) end
 			if CharInfo.ItemsInBag[204985] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]}) end
 			if CharInfo.ItemsInBag[204715] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204715)..func_itemName(204715), CharInfo.ItemsInBag[204715]}) end
 			if CharInfo.ItemsInBag[190456] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(190456)..func_itemName(190456), CharInfo.ItemsInBag[190456]}) end
 			if CharInfo.ItemsInBag[199197] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(199197)..func_itemName(199197), CharInfo.ItemsInBag[199197]}) end
-
-
 			if #Char_Frame.CenterLines14.tooltip == 0 then
 				Char_Frame.CenterLines14.tooltip = nil
 				Char_Frame.CenterLines14.CL:SetText("")
@@ -3264,13 +3254,14 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			--15
 			local tinsertTABLE = {
 				-- {name = func_questName(72528), data=CheckCompletedByQuestID(72528)}, --БУДУЩИЙ КАТАЛИЗАТОР
-				{name = L["Treasure Goblin"], data=CharInfo.Octopussy_TreasureGoblin},
+				{name = TreasureGoblinTimer(), data=CharInfo.Octopussy_TreasureGoblin},
 				{name ="", data =""},
-				{name = L["Siege on Dragonbane Keep"], data=CharInfo.Octopussy_DragonbaneKeep},
-				{name = L["Grand Hunt"], data=CharInfo.Octopussy_TheGrandHunt},
-				{name = L["Community Feast"], data=CharInfo.Octopussy_Feast},
-				{name = L["The Storm's Fury"], data=CharInfo.Octopussy_StormsFury},
-				{name = func_questName(70750), data=CharInfo.Octopussy_3kREP}, --"Помощь союзу"
+				{name = ToDragonbaneKeepTimer(), data=CharInfo.Octopussy_DragonbaneKeep},
+				{name = GrandHuntsTimer(), data=CharInfo.Octopussy_TheGrandHunt},
+				{name = CommunityFeastTimer(), data=CharInfo.Octopussy_Feast},
+				{name = PrimalStormsTimer(), data=CharInfo.Octopussy_StormsFury},
+				{name = ResearchersUnderFireTimer(), data = CharInfo.Octopussy_ResearchersUnderFire},
+				{name = --[[func_questName(CharInfo.Octopussy_3kREP_IsOnQuest) or]] func_questName(70750), data=CharInfo.Octopussy_3kREP}, --"Помощь союзу"
 				{name ="", data =""},
 				{name = "WORLD BOSS", data=CharInfo.Octopussy_WB}, --"CharInfo.Octopussy_WB"
 				{name = "WORLD BOSS "..func_questName(74892), data=CharInfo.Octopussy_WB_NEW},
@@ -3283,7 +3274,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				-- {name = func_itemName(49623), data=CharInfo.questIDtable[24548]}, --Кв на ШМ
 				{name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
 				{name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
-				{name = L["Researchers Under Fire"], data = CharInfo.Octopussy_ResearchersUnderFire},
 				{name = L["Fyrakk Asssaults"], data = CharInfo.Octopussy_FyrakkAssaults},
 				{name = "Раскопки с Мирратом", data = CharInfo.Octopussy_Sniffin.."/3"},
 				-- {name ="", data =""},
@@ -3366,6 +3356,10 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			local PEREMENNAYA_MONEY = "|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r"
 			if CharInfo.PlayerReagentnumSlots == 0 then PEREMENNAYA_MONEY = PEREMENNAYA_MONEY.."|cffFF0000*|r" end
 			Char_Frame.CenterLines18.CL:SetText(PEREMENNAYA_MONEY)
+			-- 19
+			TotalKills = TotalKills+ CharInfo.KillCount
+			Main_Frame.TextLeft19:SetText("Убийство Гоблина: " .. TotalKills)
+			Char_Frame.CenterLines19.CL:SetText(Empty_Zero(CharInfo.KillCount))
 			--------------------------------------------------
 			if curGUID == curCharGUID then
 				Char_Frame.BG:Show()
@@ -3409,9 +3403,6 @@ function CollectPlayerInfo()
 	collect.specId = specId
 	collect.specName = specName
 	collect.specIcon = specIcon
-
-
-
 	collect.classColor = classColor or {r = 0.5, g = 0.5, b = 0.5}
 end
 local function checkCharInfo(CharInfo)
@@ -3437,7 +3428,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.RARE_ZARALEK_LIST = CharInfo.RARE_ZARALEK_LIST or {}
 	CharInfo.reputationID = CharInfo.reputationID or {}
 	CharInfo.Octopussy_Sniffin = CharInfo.Octopussy_Sniffin or 0
-
+	CharInfo.KillCount = CharInfo.KillCount or 0
 	-- setmetatable(CharInfo.UnitLevel, Meta_Table)
 	-- setmetatable(CharInfo.avgItemLevel, Meta_Table)
 	-- setmetatable(CharInfo.avgItemLevelPvp, Meta_Table)
@@ -3446,7 +3437,6 @@ local function checkCharInfo(CharInfo)
 	-- setmetatable(CharInfo.Name, Meta_Table)
 	-- setmetatable(CharInfo.curServer, Meta_Table)
 	-- setmetatable(CharInfo.Faction, Meta_Table)
-
 	CharInfo.UnitLevel = CharInfo.UnitLevel or 0
 	CharInfo.avgItemLevel = CharInfo.avgItemLevel or 0
 	CharInfo.avgItemLevelPvp = CharInfo.avgItemLevelPvp or 0
@@ -3461,7 +3451,6 @@ local function checkCharInfo(CharInfo)
 	-- setmetatable(CharInfo.classColor.r, Meta_Table)
 	-- setmetatable(CharInfo.classColor.g, Meta_Table)
 	-- setmetatable(CharInfo.classColor.b, Meta_Table)
-
 	setmetatable(CharInfo.CurrencyID, Meta_Table)
 	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table)
 	setmetatable(CharInfo.EVENTS_ZARALEK_LIST, Meta_Table)
@@ -3528,7 +3517,7 @@ local function checkCharInfo(CharInfo)
 	end
 end
 function Octo_ToDo_DragonflyOnEvent(self, event, ...)
-	if InCombatLockdown() then return end
+	--if InCombatLockdown() then return end
 	if event == "ACTIONBAR_UPDATE_COOLDOWN" and not InCombatLockdown() then
 		if Main_Frame and Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
@@ -3718,6 +3707,11 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectAllQuests()
 		UPGRADERANKS_Frame()
 		--itemID_TEST_INSERT()
+	elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
+		local _, eventType = CombatLogGetCurrentEventInfo()
+		if eventType == "UNIT_DIED" then
+			CollectKillCount()
+		end
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		CollectPVPRaitings()
 	elseif event == "PLAYER_LEAVING_WORLD" and not InCombatLockdown() then
@@ -3769,5 +3763,6 @@ end
 -- local ColorKyrian = CreateColor(1, 1, 1, 1)
 -- (KYRIAN_BLUE_COLOR:GetRGB())
 -- SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
+
 
 

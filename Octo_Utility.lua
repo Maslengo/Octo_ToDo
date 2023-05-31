@@ -151,6 +151,8 @@ tinsert(E.modules, function()
 			func_Octo_LoadAddOn("SpeedyAutoLoot")
 			func_Octo_LoadAddOn("AdvancedInterfaceOptions")
 			func_Octo_LoadAddOn("Pawn")
+			func_Octo_LoadAddOn("Rarity")
+			func_Octo_LoadAddOn("Rarity_Options")
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -915,8 +917,8 @@ tinsert(E.modules, function()
 				end
 			end
 			function UsableItemFrame_OnEvent(self, event)
-				local isGroup = IsInGroup(INSTANCE)
-				if event == "BAG_UPDATE" and not InCombatLockdown() and isGroup == false then
+				--local isGroup = IsInGroup(INSTANCE)
+				if event == "BAG_UPDATE" and not InCombatLockdown() --[[and isGroup == false]] then
 					UsableItemFrame()
 				end
 			end
