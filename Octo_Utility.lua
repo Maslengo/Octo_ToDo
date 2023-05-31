@@ -174,6 +174,17 @@ tinsert(E.modules, function()
 			end
 			if not InCombatLockdown() then
 				C_Timer.After(1, function()
+
+						SetCVar("raidFramesDisplayAggroHighlight", 1)
+						SetCVar("raidFramesDisplayClassColor", 1)
+						SetCVar("raidFramesDisplayDebuffs", 1)
+						SetCVar("raidFramesDisplayIncomingHeals",1)
+						SetCVar("raidFramesDisplayOnlyDispellableDebuffs", 1)
+						SetCVar("raidFramesDisplayPowerBars", 0)
+
+
+
+
 						SetCVar("AutoPushSpellToActionBar", 0)
 						SetCVar("AllowDangerousScripts", 1)
 						SetCVar("alwaysShowActionBars", 1)
@@ -243,7 +254,7 @@ tinsert(E.modules, function()
 						SetCVar("nameplateMinAlpha", 0.6)
 						SetCVar("nameplateMinAlphaDistance", 10)
 						SetCVar("nameplateMinScale", 1)
-						SetCVar("nameplateMotion", 1) --(0 Наложение) (1 Друг над другом)
+						SetCVar("nameplateMotion", 0) --(0 Наложение) (1 Друг над другом) stack
 						SetCVar("nameplateMotionSpeed", 0.025)
 						SetCVar("nameplateOccludedAlphaMult", 0.4)
 						SetCVar("nameplateOverlapV", 1.1) --если выключено наложение нейплейтов (интерфейс-имена-друг над другом включено), то эта переменная указывает расстояние между неймплейтами по вертикали

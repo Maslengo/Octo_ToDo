@@ -18,6 +18,8 @@ function Octo_MAIL_DragonflyOnLoad()
 	Octo_Mail_Frame:SetScript("OnEvent", Octo_MAIL_DragonflyOnEvent)
 end
 local ignore_list = {
+	[205982] = true, --Карта раскопок
+	[204985] = true, --Обменный кирпич
 	[109076] = true, -- Планер
 	[166751] = true, --настой на опыт
 	[49040] = true, --Дживс

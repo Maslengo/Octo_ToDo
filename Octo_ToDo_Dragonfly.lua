@@ -22,7 +22,7 @@ local curWidth = 94*scale
 local curHeight = 20*scale -- высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
-local TotalLines = 19
+local TotalLines = 20
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local TotalMoney = 0
@@ -211,7 +211,7 @@ local AllyaZnamya = 132486
 function TreasureGoblinTimer()
 	local offset = 1675076400+9 -- = time({year=2023,month=1,day=30,hour=12})
 	local interval = 30*60
-	local interval2 = 1500
+	local interval2 = 1200
 	local uptime = GetTime()
 	if (last or 0) < uptime - 1 then
 		last = uptime
@@ -327,7 +327,7 @@ function ResearchersUnderFireTimer()
 	return ResearchersUnderFireTimer
 end
 --LoadAddOn("Blizzard_PVPUI")
-function Collect_PVP_Raitings()
+function CollectPVPRaitings()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -627,7 +627,7 @@ end
 --     -- end
 --     return resultPVPS
 -- end
-function CollectRioRaiting()
+function CollectDungeonsRaiting()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -1259,7 +1259,6 @@ local itemID = {
 	142546,
 	206039,
 	--Комплект вражды DIABLO 4
-	206006,
 	122284,
 	205878,
 	205225,
@@ -1390,7 +1389,6 @@ local itemID = {
 	191264,
 	191784,
 	191915,
-	192055,
 	192130,
 	192131,
 	192132,
@@ -1516,13 +1514,11 @@ local itemID = {
 	199473,
 	199474,
 	199475,
-	199906,
 	200069,
 	200070,
 	200071,
 	200072,
 	200073,
-	200093,
 	200095,
 	200224,
 	200285,
@@ -1604,7 +1600,6 @@ local itemID = {
 	201301,
 	201326,
 	201352,
-	201411,
 	201439,
 	201462,
 	201700,
@@ -1792,6 +1787,22 @@ local itemID = {
 	205288,
 	205347,
 }
+
+
+local itemIDReputation = {
+	192055, -- Артефакт Драконьих островов
+	200443, -- Артефакт Драконьих островов (BOA)
+	200093, -- Охотничий трофей кентавров
+	200447, -- Охотничий трофей кентавров (BOA)
+	199906, -- Реликвия титанов
+	200450, -- Реликвия титанов (BOA)
+	201411, -- Древний артефакт хранилища
+	201412, -- Древний артефакт хранилища (дает кв)
+
+	206006, --Благодарность Хранителя Земли (2500 репы)
+}
+
+MergeTable(itemID, itemIDReputation)
 -- local function itemID_TEST_INSERT()
 -- for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 -- for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
@@ -2593,6 +2604,39 @@ function OctoQuestUpdate()
 	elseif C_QuestLog.IsQuestFlaggedCompleted(69929) then collect.Octopussy_WB = CheckCompletedByQuestID(69929)
 	elseif C_QuestLog.IsQuestFlaggedCompleted(69930) then collect.Octopussy_WB = CheckCompletedByQuestID(69930)
 	end
+
+
+
+
+	collect.Octopussy_Sniffin = 0
+
+
+	local Octopussy_Sniffin = 0
+    if C_QuestLog.IsQuestFlaggedCompleted(75459) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75459)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(76027) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76027)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75621) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75621)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75397) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75397)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75517) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75517)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75619) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75619)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(76014) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76014)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75620) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75620)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(76081) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76081)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75390) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75390)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75234) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75234)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75516) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75516)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75996) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75996)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(76016) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76016)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(75393) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75393)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(76015) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76015)
+    elseif C_QuestLog.IsQuestFlaggedCompleted(76084) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76084)
+    end
+
+
+
+
+
+
+
 	collect.Octopussy_WB_NEW = false
 	if C_QuestLog.IsQuestFlaggedCompleted(74892) then collect.Octopussy_WB_NEW = CheckCompletedByQuestID(74892)
 	end
@@ -2945,7 +2989,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			Char_Frame.CenterLines5.CL:SetText(PEREMENNAYA_CurrentKey)
 			if CharInfo.CurrentKey ~= 0 then
 				Char_Frame.CenterLines5.tooltip = {
-					{"RIO_weeklyBest: ", CharInfo.RIO_weeklyBest},
+					{"Score", CharInfo.RIO_Score},
+					{"Weekly Best", CharInfo.RIO_weeklyBest},
 					{" ", " "},
 					{"Рейды", CharInfo.RIO_RAID},
 					{"M+", CharInfo.RIO_KEYS},
@@ -3008,6 +3053,18 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.reputationID[2564] and CharInfo.reputationID[2564] ~= 0 then
 				Char_Frame.CenterLines7.CL:SetText(CharInfo.reputationID[2564])
 			end
+
+			for k,v in ipairs (itemIDReputation) do
+				if CharInfo.ItemsInBag[v] ~= 0 then
+					tinsert(Char_Frame.CenterLines7.tooltip, {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]})
+				end
+			end
+
+
+
+
+
+
 			if #Char_Frame.CenterLines7.tooltip == 0 then
 				Char_Frame.CenterLines7.tooltip = nil
 				Char_Frame.CenterLines7.CL:SetText("")
@@ -3190,20 +3247,21 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					{"Квест", CharInfo.profID_prof2.profQuest.profQuest_count_prof2.."/"..CharInfo.profID_prof2.profQuest.questReq},
 					{"Трактаты", CharInfo.profID_prof2.treatise.treatise_count_prof2.."/"..CharInfo.profID_prof2.treatise.questReq},
 					{"Крафт", CharInfo.profID_prof2.craftOrder.craftOrder_count_prof2.."/"..CharInfo.profID_prof2.craftOrder.questReq},
+					{" ", " "},
 				}
 			end
-			if CharInfo.ItemsInBag[204985] >= 1 or CharInfo.ItemsInBag[191784] >=1 or CharInfo.ItemsInBag[204715] >= 1 then
-				tinsert(Char_Frame.CenterLines14.tooltip, {" ", " "})
-			end
-			if CharInfo.ItemsInBag[191784] >= 1 then
-				tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(191784)..func_itemName(191784), CharInfo.ItemsInBag[191784]})
-			end
-			if CharInfo.ItemsInBag[204985] >= 1 then
-				tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]})
-			end
-			if CharInfo.ItemsInBag[204715] >= 1 then
-				tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204715)..func_itemName(204715), CharInfo.ItemsInBag[204715]})
-			end
+			if CharInfo.ItemsInBag[204186] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204186)..func_itemName(204186), CharInfo.ItemsInBag[204186]}) end
+			if CharInfo.ItemsInBag[204187] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204187)..func_itemName(204187), CharInfo.ItemsInBag[204187]}) end
+			if CharInfo.ItemsInBag[204188] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204188)..func_itemName(204188), CharInfo.ItemsInBag[204188]}) end
+
+			if CharInfo.ItemsInBag[190453] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(190453)..func_itemName(190453), CharInfo.ItemsInBag[190453]}) end
+			if CharInfo.ItemsInBag[191784] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(191784)..func_itemName(191784), CharInfo.ItemsInBag[191784]}) end
+			if CharInfo.ItemsInBag[204985] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]}) end
+			if CharInfo.ItemsInBag[204715] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204715)..func_itemName(204715), CharInfo.ItemsInBag[204715]}) end
+			if CharInfo.ItemsInBag[190456] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(190456)..func_itemName(190456), CharInfo.ItemsInBag[190456]}) end
+			if CharInfo.ItemsInBag[199197] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(199197)..func_itemName(199197), CharInfo.ItemsInBag[199197]}) end
+
+
 			if #Char_Frame.CenterLines14.tooltip == 0 then
 				Char_Frame.CenterLines14.tooltip = nil
 				Char_Frame.CenterLines14.CL:SetText("")
@@ -3230,7 +3288,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				-- {name = func_itemName(49623), data=CharInfo.questIDtable[24548]}, --Кв на ШМ
 				{name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
 				{name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
+				{name = L["Researchers Under Fire"], data = CharInfo.Octopussy_ResearchersUnderFire},
 				{name = L["Fyrakk Asssaults"], data = CharInfo.Octopussy_FyrakkAssaults},
+				{name = "Раскопки с Мирратом", data = CharInfo.Octopussy_Sniffin.."/3"},
 				-- {name ="", data =""},
 				-- {name ="PVP: ", data =""},
 				-- {name = func_questName(55509), data = CharInfo.questIDtable[55509]}, --Оло
@@ -3245,7 +3305,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			for k, v in ipairs(tinsertTABLE) do
 				pizda = "|cffc9c3aa"
 				if v.data == "|cff00FF00Done|r" then
-					--if v.data ~= false and v.data ~= "" and v.data ~= 0 then
 					pizda = AddonColor
 				end
 				tinsert(Char_Frame.CenterLines15.tooltip, {pizda..v.name.."|r", v.data})
@@ -3384,6 +3443,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.RARE_OSTROV_LIST = CharInfo.RARE_OSTROV_LIST or {}
 	CharInfo.RARE_ZARALEK_LIST = CharInfo.RARE_ZARALEK_LIST or {}
 	CharInfo.reputationID = CharInfo.reputationID or {}
+	CharInfo.Octopussy_Sniffin = CharInfo.Octopussy_Sniffin or 0
 
 	-- setmetatable(CharInfo.UnitLevel, Meta_Table)
 	-- setmetatable(CharInfo.avgItemLevel, Meta_Table)
@@ -3456,6 +3516,7 @@ local function checkCharInfo(CharInfo)
 		CharInfo.Octopussy_dungeons_RelicRecovery = false
 		CharInfo.Octopussy_dungeons_PreservingthePast = false
 		CharInfo.Octopussy_StormBoundChest = false
+		CharInfo.Octopussy_Sniffin = 0
 		CharInfo.RIO_weeklyBest = ""
 		CharInfo.RIO_RAID = ""
 		CharInfo.RIO_KEYS = ""
@@ -3464,6 +3525,7 @@ local function checkCharInfo(CharInfo)
 	end
 	if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
 		CharInfo.tmstp_Daily = tmstpDayReset(1)
+		--CharInfo.classColor = {r = 0.5, g = 0.5, b = 0.5}
 		CharInfo.Octopussy_TreasureGoblin = false
 		CharInfo.RARE_ZARALEK_LIST = {}
 		CharInfo.EVENTS_ZARALEK_LIST = {}
@@ -3482,8 +3544,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			ResearchersUnderFireTimer()
 			TreasureGoblinTimer()
 			CollectAllProfessions()
-			CollectRioRaiting()
-			--Collect_PVP_Raitings()
+			CollectDungeonsRaiting()
+			--CollectPVPRaitings()
 			CollectCurrentKEY()
 			OctoilvlStr()
 			CollectAllReputations()
@@ -3536,7 +3598,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 						CollectAllItemsInBag()
 						--Fragments_Earned()
 						CollectAllReputations()
-						Collect_PVP_Raitings()
+						CollectPVPRaitings()
 						-- if Main_Frame and Main_Frame:IsShown() then
 						--     Main_Frame:Hide()
 						-- end
@@ -3644,7 +3706,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
 		self:RegisterEvent("PLAYER_STARTED_MOVING")
 		CollectPlayerInfo()
-		Collect_PVP_Raitings()
+		CollectPVPRaitings()
 		OctoQuestUpdate()
 		OctoMoneyUpdate()
 		OctoilvlStr()
@@ -3656,23 +3718,23 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		--Fragments_Earned()
 		CollectAllReputations()
 		TESTREP()
-		CollectRioRaiting()
+		CollectDungeonsRaiting()
 		CollectCurrentKEY()
 		CollectAllQuests()
 		UPGRADERANKS_Frame()
 		--itemID_TEST_INSERT()
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
-		Collect_PVP_Raitings()
+		CollectPVPRaitings()
 	elseif event == "PLAYER_LEAVING_WORLD" and not InCombatLockdown() then
 		-- OctoMoneyUpdate()
 		-- CollectAllCurrency()
-		CollectRioRaiting()
-		-- Collect_PVP_Raitings()
+		CollectDungeonsRaiting()
+		-- CollectPVPRaitings()
 		-- elseif event == "PLAYER_LOGOUT" then
 		-- CollectAllItemsInBag()
 		-- CollectCurrentKEY()
 	elseif event == "PLAYER_ENTERING_WORLD" and not InCombatLockdown() then
-		Collect_PVP_Raitings()
+		CollectPVPRaitings()
 	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
 		CollectAllItemsInBag()
 		--Fragments_Earned()
@@ -3690,7 +3752,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectAllItemsInBag()
 		--Fragments_Earned()
 		-- elseif event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
-		-- Collect_PVP_Raitings()
+		-- CollectPVPRaitings()
 	end
 end
 Octo_ToDo_DragonflyOnLoad()
