@@ -1516,7 +1516,6 @@ local itemID = {
 	199475,
 	200069,
 	200070,
-	200071,
 	200072,
 	200073,
 	200095,
@@ -1798,6 +1797,10 @@ local itemIDReputation = {
 	200450, -- Реликвия титанов (BOA)
 	201411, -- Древний артефакт хранилища
 	201412, -- Древний артефакт хранилища (дает кв)
+	200071, -- Священный тотем клыкарров
+	200449, -- Священный тотем клыкарров (BOA)
+	201470, -- История о незабываемой победе
+	201471, -- История о блистательной победе
 
 	206006, --Благодарность Хранителя Земли (2500 репы)
 }
@@ -2697,6 +2700,18 @@ function OctoQuestUpdate()
 	elseif C_QuestLog.IsOnQuest(75860) or C_QuestLog.IsQuestFlaggedCompleted(75860) == true then collect.Octopussy_3kREP = CheckCompletedByQuestID(75860)
 	elseif C_QuestLog.IsOnQuest(75861) or C_QuestLog.IsQuestFlaggedCompleted(75861) == true then collect.Octopussy_3kREP = CheckCompletedByQuestID(75861)
 	end
+	collect.Octopussy_3kREP_IsOnQuest = 0
+	if C_QuestLog.IsOnQuest(72068) == true then collect.Octopussy_3kREP_IsOnQuest = 72068
+	elseif C_QuestLog.IsOnQuest(72373) == true then collect.Octopussy_3kREP_IsOnQuest = 72373
+	elseif C_QuestLog.IsOnQuest(72374) == true then collect.Octopussy_3kREP_IsOnQuest = 72374
+	elseif C_QuestLog.IsOnQuest(72375) == true then collect.Octopussy_3kREP_IsOnQuest = 72375
+	elseif C_QuestLog.IsOnQuest(75259) == true then collect.Octopussy_3kREP_IsOnQuest = 75259
+	elseif C_QuestLog.IsOnQuest(70750) == true then collect.Octopussy_3kREP_IsOnQuest = 70750
+	elseif C_QuestLog.IsOnQuest(75859) == true then collect.Octopussy_3kREP_IsOnQuest = 75859
+	elseif C_QuestLog.IsOnQuest(75860) == true then collect.Octopussy_3kREP_IsOnQuest = 75860
+	elseif C_QuestLog.IsOnQuest(75861) == true then collect.Octopussy_3kREP_IsOnQuest = 75861
+	end
+
 	collect.Octopussy_FightingisItsOwnReward = "" --Славный бой – это уже награда
 	if C_QuestLog.IsOnQuest(76122) or C_QuestLog.IsQuestFlaggedCompleted(76122) == true then collect.Octopussy_FightingisItsOwnReward = CheckCompletedByQuestID(76122)
 	end
@@ -2924,32 +2939,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				Char_Frame.CenterLines3.CL:SetText((CharInfo.Octopussy_3kREP or NONE).." +"..CharInfo.ItemsInBag[200073]..func_itemTexture(200073))
 			end
 
-			if C_QuestLog.IsOnQuest(72068) then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(72068)})
-			end
-			if C_QuestLog.IsOnQuest(72373) then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(72373)})
-			end
-			if C_QuestLog.IsOnQuest(72374) then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(72374)})
-			end
-			if C_QuestLog.IsOnQuest(72375) then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(72375)})
-			end
-			if C_QuestLog.IsOnQuest(75259) then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(75259)})
-			end
-			if C_QuestLog.IsOnQuest(70750) then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(70750)})
-			end
-			if C_QuestLog.IsOnQuest(75859) then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(75859)})
-			end
-			if C_QuestLog.IsOnQuest(75860) then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(75860)})
-			end
-			if C_QuestLog.IsOnQuest(75861) then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(75861)})
+			if CharInfo.Octopussy_3kREP_IsOnQuest ~= 0 then
+				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(CharInfo.Octopussy_3kREP_IsOnQuest)})
 			end
 
 
@@ -3462,6 +3453,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.Name = CharInfo.Name or 0
 	CharInfo.curServer = CharInfo.curServer or 0
 	CharInfo.Faction = CharInfo.Faction or 0
+	CharInfo.Octopussy_3kREP_IsOnQuest = CharInfo.Octopussy_3kREP_IsOnQuest or 0
 	CharInfo.classColor = CharInfo.classColor or {r = 0.5, g = 0.5, b = 0.5}
 	setmetatable(CharInfo, Meta_Table)
 	-- setmetatable(CharInfo.classColor.r, Meta_Table)
@@ -3491,6 +3483,7 @@ local function checkCharInfo(CharInfo)
 	setmetatable(CharInfo.reputationID, Meta_Table)
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.Octopussy_3kREP == AddonColor.."Done|r" then
 		CharInfo.Octopussy_3kREP = false
+		CharInfo.Octopussy_3kREP_IsOnQuest = 0
 	end
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.Octopussy_FightingisItsOwnReward == AddonColor.."Done|r" then
 		CharInfo.Octopussy_FightingisItsOwnReward = false
