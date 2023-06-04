@@ -35,6 +35,8 @@ if L then
     L["Abandon: "] = true
     L["Current Location"] = true
     L["Number of quests"] = true
+    L["Bags"] = true
+    L["Bank"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -58,5 +60,7 @@ if L then
     L["Abandon"] = "Отменено: "
     L["Current Location"] = "Текущее местоположение"
     L["Number of quests"] = "Количество заданий"
+    L["Bags"] = "Сумки"
+    L["Bank"] = "Банк"
 end
 

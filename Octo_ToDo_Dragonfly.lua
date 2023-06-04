@@ -1966,6 +1966,23 @@ local function CollectAllItemsInBag()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
+	local usedSlots = 0
+    local totalSlots = 0
+    for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+        local numSlots = C_Container.GetContainerNumSlots(bag)
+        totalSlots = totalSlots + numSlots
+        local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
+
+        if BagType == 0 then
+            usedSlots = usedSlots + (numSlots - numberOfFreeSlots)
+        end
+    end
+	-------------------------------------------------------------------------
+
+
+
+
+
 	local GetBindLocation = GetBindLocation()
 	local PlayerReagentnumSlots = C_Container.GetContainerNumSlots(BACKPACK_CONTAINER+NUM_BAG_SLOTS+1)
 	local mapID = C_Map.GetBestMapForUnit("player")
@@ -1983,10 +2000,64 @@ local function CollectAllItemsInBag()
 			collect.PlayerReagentnumSlots = PlayerReagentnumSlots
 		end
 	end
+	collect.usedSlots = usedSlots
+	collect.totalSlots = totalSlots
 end
 -- local itemFragmentTable = {
 --   204075,
 -- }
+
+local function CollectBankInfo()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	-------------------------------------------------------------------------
+--REAGENTBANK_CONTAINER,BANK_CONTAINER
+--NUM_TOTAL_EQUIPPED_BAG_SLOTS+1,NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS
+
+	local usedSlotsBANK = 0
+    local totalSlotsBANK = 0
+
+	local usedSlotsBANKREAGENT = 0
+    local totalSlotsBANKREAGENT = 0
+
+	local usedSlotsBANKBAGS = 0
+    local totalSlotsBANKBAGS = 0
+
+    for bag = BANK_CONTAINER, BANK_CONTAINER do
+        local numSlots = C_Container.GetContainerNumSlots(bag)
+        totalSlotsBANK = totalSlotsBANK + numSlots
+        local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
+        if BagType == 0 then
+            usedSlotsBANK = usedSlotsBANK + (numSlots - numberOfFreeSlots)
+        end
+    end
+
+
+
+    for bag = REAGENTBANK_CONTAINER, REAGENTBANK_CONTAINER do
+        local numSlots = C_Container.GetContainerNumSlots(bag)
+        totalSlotsBANKREAGENT = totalSlotsBANKREAGENT + numSlots
+        local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
+        if BagType == 0 then
+            usedSlotsBANKREAGENT = usedSlotsBANKREAGENT + (numSlots - numberOfFreeSlots)
+        end
+    end
+    for bag = NUM_TOTAL_EQUIPPED_BAG_SLOTS+1, NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS do
+        local numSlots = C_Container.GetContainerNumSlots(bag)
+        totalSlotsBANKBAGS = totalSlotsBANKBAGS + numSlots
+        local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
+        if BagType == 0 then
+            usedSlotsBANKBAGS = usedSlotsBANKBAGS + (numSlots - numberOfFreeSlots)
+        end
+    end
+
+	-------------------------------------------------------------------------
+	collect.usedSlotsBANK = usedSlotsBANK + usedSlotsBANKREAGENT + usedSlotsBANKBAGS
+	collect.totalSlotsBANK = totalSlotsBANK + totalSlotsBANKREAGENT + totalSlotsBANKBAGS
+end
+
+
+
 function CollectAllReputations()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -2104,6 +2175,9 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	EventFrame:RegisterEvent("COVENANT_CHOSEN")
 	EventFrame:RegisterEvent("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
+	EventFrame:RegisterEvent("BANKFRAME_OPENED")
+	EventFrame:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
+	EventFrame:RegisterEvent("VOID_STORAGE_UPDATE")
 	-- -- EventFrame:RegisterEvent("VARIABLES_LOADED")
 	-- EventFrame:RegisterEvent("ARENA_SEASON_WORLD_STATE")
 	-- EventFrame:RegisterEvent("BATTLEFIELDS_CLOSED")
@@ -3401,6 +3475,12 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.maxNumQuestsCanAccept ~= 0 then
 				tinsert (Char_Frame.CenterLines18.tooltip, {L["Number of quests"],CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept})
 			end
+			if CharInfo.totalSlots ~= 0 then
+				tinsert (Char_Frame.CenterLines18.tooltip, {L["Bags"],CharInfo.usedSlots.."/"..CharInfo.totalSlots})
+			end
+			if CharInfo.totalSlotsBANK ~= 0 then
+				tinsert (Char_Frame.CenterLines18.tooltip, {L["Bank"],CharInfo.usedSlotsBANK.."/"..CharInfo.totalSlotsBANK})
+			end
 			local needReset = false
 			if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
 				needReset = true
@@ -3464,6 +3544,10 @@ local function checkCharInfo(CharInfo)
 	CharInfo.maxNumQuestsCanAccept = CharInfo.maxNumQuestsCanAccept or 0
 	CharInfo.pizdaDate = CharInfo.pizdaDate or 0
 	CharInfo.pizdaHours = CharInfo.pizdaHours or 0
+	CharInfo.usedSlots = CharInfo.usedSlots or 0
+	CharInfo.totalSlots = CharInfo.totalSlots or 0
+	CharInfo.usedSlotsBANK = CharInfo.usedSlotsBANK or 0
+	CharInfo.totalSlotsBANK = CharInfo.totalSlotsBANK or 0
 	CharInfo.Shadowland = CharInfo.Shadowland or {}
 	setmetatable(CharInfo.Shadowland, Meta_Table)
 	CharInfo.curCovID = CharInfo.curCovID or 0
@@ -3836,6 +3920,14 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		--Fragments_Earned()
 		-- elseif event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
 		-- CollectPVPRaitings()
+	elseif event == "BANKFRAME_OPENED" or event == "PLAYERBANKSLOTS_CHANGED" then
+		CollectBankInfo()
+	elseif event == "BAG_UPDATE" then
+		if BankFrame:IsShown() then
+			CollectBankInfo()
+		end
+	elseif event == "VOID_STORAGE_UPDATE" then
+
 	end
 end
 Octo_ToDo_DragonflyOnLoad()
