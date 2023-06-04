@@ -369,6 +369,40 @@ end
 --     end
 -- end
 --LoadAddOn("Blizzard_PVPUI")
+local function CollectKnownSpell()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	-------------------------------------------------------------------------
+	--366253
+	SpellIDTable = {
+		366253, -- Рыбная ловля дракьньих осттавов
+	}
+	for k,v in ipairs(SpellIDTable) do
+		local isKnown = IsSpellKnown(v)
+		collect.KnownSpell[v] = isKnown
+	end
+end
+
+
+local function CollectVoidStorage()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	-------------------------------------------------------------------------
+    local VOID_STORAGE_MAX = 80
+    local VOID_STORAGE_PAGES = 2
+    --Page 1
+    for i = 1, VOID_STORAGE_MAX do
+        local itemID, textureName, locked, recentDeposit, isFiltered, quality = GetVoidItemInfo(1, i)
+        collect.VOID_STORAGE_PAGE1[i] = itemID or 0
+    end
+    --Page 2
+    for i = 1, VOID_STORAGE_MAX do
+        local itemID, textureName, locked, recentDeposit, isFiltered, quality = GetVoidItemInfo(2, i)
+        collect.VOID_STORAGE_PAGE2[i] = itemID or 0
+    end
+
+
+end
 function CollectLoginTime()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
@@ -1942,17 +1976,17 @@ function CollectAllCurrency()
 		local quantity = data.quantity
 		local maxQuantity = data.maxQuantity
 		if v == 2167 and maxQuantity > 6 then maxQuantity = 6 end
-		Octo_ToDo_DragonflyLevels[curGUID].CurrencyID[v] = quantity
-		Octo_ToDo_DragonflyLevels[curGUID].CurrencyID_maxQuantity[v] = maxQuantity
+		collect.CurrencyID[v] = quantity
+		collect.CurrencyID_maxQuantity[v] = maxQuantity
 		--if CharInfo.UnitLevel >= 70 then tinsert(currencyID, 2167) end
 		-- == 0 and nil or quantity
-		-- Octo_ToDo_DragonflyLevels[curGUID].CurrencyID[v] = maxQuantity
+		-- collect.CurrencyID[v] = maxQuantity
 		-- local c = "|cffffffff"
 		-- local r = "|r"
 		-- if maxQuantity > 0 and quantity == 0 then c = ColorGray end
 		-- if maxQuantity > 0 and quantity == maxQuantity then c = AddonColor end
 		-- if maxQuantity ~= 0 and quantity >= 1 then
-		-- Octo_ToDo_DragonflyLevels[curGUID].CurrencyID[v] = c..CompactNumberFormat(quantity)..c.."/"..CompactNumberFormat(maxQuantity)..r
+		-- collect.CurrencyID[v] = c..CompactNumberFormat(quantity)..c.."/"..CompactNumberFormat(maxQuantity)..r
 		-- end
 	end
 end
@@ -1962,6 +1996,8 @@ local function Empty_Zero(number)
 	end
 	return number
 end
+
+
 local function CollectAllItemsInBag()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -1977,6 +2013,10 @@ local function CollectAllItemsInBag()
             usedSlots = usedSlots + (numSlots - numberOfFreeSlots)
         end
     end
+    if usedSlots > 0 and totalSlots > 0 then
+		collect.usedSlots = usedSlots
+		collect.totalSlots = totalSlots
+	end
 	-------------------------------------------------------------------------
 
 
@@ -2000,8 +2040,6 @@ local function CollectAllItemsInBag()
 			collect.PlayerReagentnumSlots = PlayerReagentnumSlots
 		end
 	end
-	collect.usedSlots = usedSlots
-	collect.totalSlots = totalSlots
 end
 -- local itemFragmentTable = {
 --   204075,
@@ -2178,6 +2216,9 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("BANKFRAME_OPENED")
 	EventFrame:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
 	EventFrame:RegisterEvent("VOID_STORAGE_UPDATE")
+	EventFrame:RegisterEvent("VOID_STORAGE_CONTENTS_UPDATE")
+	EventFrame:RegisterEvent("VOID_TRANSFER_DONE")
+	EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 	-- -- EventFrame:RegisterEvent("VARIABLES_LOADED")
 	-- EventFrame:RegisterEvent("ARENA_SEASON_WORLD_STATE")
 	-- EventFrame:RegisterEvent("BATTLEFIELDS_CLOSED")
@@ -3051,13 +3092,19 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			------------------------------------------------------------------------------------------
 			--1
 			Main_Frame.TextLeft1:SetText("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
-			Char_Frame.CenterLines1.CL:SetText(CharInfo.Octopussy_Feast or NONE)
+			local PEREMENNAYA_CommunityFeast = CharInfo.Octopussy_Feast
 			if CharInfo.ItemsInBag[200652] ~= 0 then
-				Char_Frame.CenterLines1.CL:SetText((CharInfo.Octopussy_Feast or NONE).." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652))
+				PEREMENNAYA_CommunityFeast = PEREMENNAYA_CommunityFeast.." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652)
 			end
 			if CharInfo.ItemsInBag[200095] ~= 0 then
-				Char_Frame.CenterLines1.CL:SetText((CharInfo.Octopussy_Feast or NONE).." +"..CharInfo.ItemsInBag[200095]..func_itemTexture(200095))
+				PEREMENNAYA_CommunityFeast = PEREMENNAYA_CommunityFeast.." +"..CharInfo.ItemsInBag[200095]..func_itemTexture(200095)
 			end
+			if CharInfo.KnownSpell[366253] == false or CharInfo.KnownSpell[366253] == 0 then
+				PEREMENNAYA_CommunityFeast = PEREMENNAYA_CommunityFeast .. "|cffFF0000*|r"
+			end
+
+
+			Char_Frame.CenterLines1.CL:SetText(PEREMENNAYA_CommunityFeast)
 			--2
 			Main_Frame.TextLeft2:SetText("|T1603189:16:16:::64:64:4:60:4:60|t |cffFFFFFF".. func_questName(70750).."|r")
 			Char_Frame.CenterLines2.CL:SetText(CharInfo.Octopussy_3kREP or NONE)
@@ -3425,6 +3472,24 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					Char_Frame.CenterLines15.tooltip[#Char_Frame.CenterLines15.tooltip+1] = {func_itemTexture(v)..func_itemName(v), count}
 				end
 			end
+
+			Char_Frame.CenterLines15.tooltip[#Char_Frame.CenterLines15.tooltip+1] = {" "," "}
+			for k, v in ipairs(CharInfo.VOID_STORAGE_PAGE1) do
+				if v ~= 0 then
+					Char_Frame.CenterLines15.tooltip[#Char_Frame.CenterLines15.tooltip+1] = {func_itemTexture(CharInfo.VOID_STORAGE_PAGE1[k])..func_itemName(CharInfo.VOID_STORAGE_PAGE1[k])}
+				end
+			end
+			for k, v in ipairs(CharInfo.VOID_STORAGE_PAGE2) do
+				if v ~= 0 then
+					tinsert(Char_Frame.CenterLines15.tooltip,{func_itemTexture(CharInfo.VOID_STORAGE_PAGE2[k])..func_itemName(CharInfo.VOID_STORAGE_PAGE2[k])})
+				end
+			end
+
+
+
+
+
+
 			if #Char_Frame.CenterLines15.tooltip == 0 then
 				Char_Frame.CenterLines15.tooltip = nil
 				Char_Frame.CenterLines15.CL:SetText(" ")
@@ -3489,6 +3554,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				Char_Frame.CenterLines18.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
 				Char_Frame.CenterLines18.CL:SetText((needReset and "|cffFF0000" or ColorGray).. CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours)
 			end
+
+
 			------------------------------------------------------------------------------------------
 			------------------------------------------------------------------------------------------
 			------------------------------------------------------------------------------------------
@@ -3539,6 +3606,8 @@ end
 local function checkCharInfo(CharInfo)
 	-- CharInfo.KillCount = CharInfo.KillCount or {}
 	-- setmetatable(CharInfo.KillCount, Meta_Table)
+	CharInfo.KnownSpell = CharInfo.KnownSpell or {}
+	setmetatable(CharInfo.KnownSpell, Meta_Table)
 	CharInfo.numShownEntries = CharInfo.numShownEntries or 0
 	CharInfo.numQuests = CharInfo.numQuests or 0
 	CharInfo.maxNumQuestsCanAccept = CharInfo.maxNumQuestsCanAccept or 0
@@ -3549,6 +3618,10 @@ local function checkCharInfo(CharInfo)
 	CharInfo.usedSlotsBANK = CharInfo.usedSlotsBANK or 0
 	CharInfo.totalSlotsBANK = CharInfo.totalSlotsBANK or 0
 	CharInfo.Shadowland = CharInfo.Shadowland or {}
+	CharInfo.VOID_STORAGE_PAGE1 = CharInfo.VOID_STORAGE_PAGE1 or {}
+	setmetatable(CharInfo.VOID_STORAGE_PAGE1, Meta_Table)
+	CharInfo.VOID_STORAGE_PAGE2 = CharInfo.VOID_STORAGE_PAGE2 or {}
+	setmetatable(CharInfo.VOID_STORAGE_PAGE2, Meta_Table)
 	setmetatable(CharInfo.Shadowland, Meta_Table)
 	CharInfo.curCovID = CharInfo.curCovID or 0
 	CharInfo.Kyrian = CharInfo.Kyrian or {}
@@ -3724,6 +3797,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		end
 	elseif event == "CURRENCY_DISPLAY_UPDATE" and not InCombatLockdown() then
 		CollectAllCurrency()
+		CollectKnownSpell()
 		-- CurrencyTEST()
 		if Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
@@ -3848,6 +3922,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			Octo_ToDo_DragonflyAddDataToAltFrame()
 		end
 	elseif event == "PLAYER_LOGIN" then
+		-- CollectVoidStorage()
 		local curGUID = UnitGUID("PLAYER")
 		Octo_ToDo_DragonflyLevels[curGUID] = Octo_ToDo_DragonflyLevels[curGUID] or {}
 		for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
@@ -3866,6 +3941,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		OctoilvlStr()
 		Octo_ToDo_DragonflyCreateAltFrame()
 		CollectAllCurrency()
+		CollectKnownSpell()
 		-- CurrencyTEST()
 		CollectAllProfessions()
 		CollectAllItemsInBag()
@@ -3926,8 +4002,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if BankFrame:IsShown() then
 			CollectBankInfo()
 		end
-	elseif event == "VOID_STORAGE_UPDATE" then
-
+	elseif event == "VOID_STORAGE_UPDATE" or event == "VOID_TRANSFER_DONE" or event == "VOID_STORAGE_CONTENTS_UPDATE" or event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
+		CollectVoidStorage()
 	end
 end
 Octo_ToDo_DragonflyOnLoad()
