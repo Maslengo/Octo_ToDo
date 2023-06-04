@@ -334,39 +334,39 @@ function ResearchersUnderFireTimer()
 	return ResearchersUnderFireTimer .." ".. L["Researchers Under Fire"]
 end
 -- local function GetNPCIDFromGUID(guid)
--- 	if guid then
--- 		local unit_type, _, _, _, _, mob_id = strsplit("-", guid)
--- 		if unit_type == "Pet" or unit_type == "Player" then
--- 			return 0
--- 		end
--- 		return (guid and mob_id and tonumber(mob_id)) or 0
--- 	end
--- 	return 0
+--     if guid then
+--         local unit_type, _, _, _, _, mob_id = strsplit("-", guid)
+--         if unit_type == "Pet" or unit_type == "Player" then
+--             return 0
+--         end
+--         return (guid and mob_id and tonumber(mob_id)) or 0
+--     end
+--     return 0
 -- end
 -- function CollectKillCount()
--- 	local UnitLevel = UnitLevel("PLAYER")
--- 	local curGUID = UnitGUID("PLAYER")
--- 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
--- 	--------------------------------------------------
--- 	local timestamp, eventType, hideCaster, srcGuid, srcName, srcFlags, srcRaidFlags, dstGuid, dstName, dstFlags, dstRaidFlags, spellId, spellName, spellSchool, auraType = CombatLogGetCurrentEventInfo()
--- 	local bit_band = _G.bit.band
--- 	-- local strlower = _G.strlower
--- 	-- local format = _G.format
--- 	local npcIDs_table = {
--- 		205490, -- Алчный Гоблин
--- 		195305,
--- 		195304,
--- 	}
--- 	local KillCount = 0
--- 	local npcid = GetNPCIDFromGUID(dstGuid)
--- 	if bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_PARTY) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_RAID) then
--- 		for _,v in pairs(npcIDs_table) do
--- 			if v == npcid then
--- 				print ("|cFF00A3FF"..dstName.. "|r " .. AddonColor..collect.KillCount[npcid].. " (+1)|r")
--- 				collect.KillCount[npcid] = collect.KillCount[npcid] + 1
--- 			end
--- 		end
--- 	end
+--     local UnitLevel = UnitLevel("PLAYER")
+--     local curGUID = UnitGUID("PLAYER")
+--     local collect = Octo_ToDo_DragonflyLevels[curGUID]
+--     --------------------------------------------------
+--     local timestamp, eventType, hideCaster, srcGuid, srcName, srcFlags, srcRaidFlags, dstGuid, dstName, dstFlags, dstRaidFlags, spellId, spellName, spellSchool, auraType = CombatLogGetCurrentEventInfo()
+--     local bit_band = _G.bit.band
+--     -- local strlower = _G.strlower
+--     -- local format = _G.format
+--     local npcIDs_table = {
+--         205490, -- Алчный Гоблин
+--         195305,
+--         195304,
+--     }
+--     local KillCount = 0
+--     local npcid = GetNPCIDFromGUID(dstGuid)
+--     if bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_PARTY) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_RAID) then
+--         for _,v in pairs(npcIDs_table) do
+--             if v == npcid then
+--                 print ("|cFF00A3FF"..dstName.. "|r " .. AddonColor..collect.KillCount[npcid].. " (+1)|r")
+--                 collect.KillCount[npcid] = collect.KillCount[npcid] + 1
+--             end
+--         end
+--     end
 -- end
 --LoadAddOn("Blizzard_PVPUI")
 function CollectLoginTime()
@@ -1247,10 +1247,10 @@ local function CurrencyTEST()
 end
 CurrencyTEST()
 -- local function curTest()
--- 	for k,v in ipairs(currencyID) do
--- 		--print (k,v)
--- 		print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
--- 	end
+--     for k,v in ipairs(currencyID) do
+--         --print (k,v)
+--         print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
+--     end
 -- end
 -- curTest()
 local RARE_ZARALEK_LIST = {75271,
@@ -2002,6 +2002,8 @@ function CollectAllQuests()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
+    local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
+    local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
 	local RARE_ZARALEK_count = 0
 	local RARE_OSTROV_count = 0
 	local EVENTS_ZARALEK_count = 0
@@ -2034,6 +2036,9 @@ function CollectAllQuests()
 	collect.RARE_ZARALEK_count = RARE_ZARALEK_count
 	collect.RARE_OSTROV_count = RARE_OSTROV_count
 	collect.EVENTS_ZARALEK_count = EVENTS_ZARALEK_count
+	collect.numShownEntries = numShownEntries
+	collect.numQuests = numQuests
+	collect.maxNumQuestsCanAccept = maxNumQuestsCanAccept
 end
 local function tmstpDayReset(n)
 	local n = n or 1
@@ -2492,6 +2497,63 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-- CreateFrameUsableItems(204717, 442739, 2, -96, .85, .8, .5)
 	-----------------------------------------------------
 	-----------------------------------------------------
+	-----------------------------------------------------
+	-----------------------------------------------------
+    local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
+	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
+		text = "|cffFF0000!!! ACHTUNG !!!|r\n".."Отменить все ("..numQuests..") задания?",
+		button1 = YES,
+		button2 = NO,
+		hideOnEscape = 1,
+		whileDead = 1,
+		OnAccept = function()
+			for i=1, numShownEntries do
+				if numQuests ~= 0 then
+					local questInfo = C_QuestLog.GetInfo(i)
+					if (not questInfo.isHeader and not questInfo.isHidden) then
+						print ("|cFF00A3FF"..L["Abandon"].."|r".."|cFFFF5771"..questInfo.title.."|r")
+						C_QuestLog.SetSelectedQuest(questInfo.questID)
+						C_QuestLog.SetAbandonQuest()
+						C_QuestLog.AbandonQuest()
+					end
+				end
+			end
+		end,
+	}
+	-----------------------------------------------------
+	Main_Frame.AbandonAllQuests = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
+	Main_Frame.AbandonAllQuests:SetSize(curHeight, curHeight)
+	Main_Frame.AbandonAllQuests:SetPoint("BOTTOMLEFT", Main_Frame, "BOTTOMRIGHT", 0, 30)
+	Main_Frame.AbandonAllQuests:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.AbandonAllQuests:SetBackdropBorderColor(1, 0, 0, 0)
+	Main_Frame.AbandonAllQuests:SetScript("OnEnter", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, 1)
+			self.icon:SetVertexColor(1, 0, 0, 1)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+			GameTooltip:ClearLines()
+			GameTooltip:AddLine(L["Abandon All Quests"].." ("..numQuests..")")
+			GameTooltip:Show()
+	end)
+	Main_Frame.AbandonAllQuests:SetScript("OnLeave", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, 0)
+			self.icon:SetVertexColor(1, 1, 1, 1)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	Main_Frame.AbandonAllQuests:SetScript("OnMouseDown", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, 0.5)
+			self.icon:SetVertexColor(1, 0, 0, 0.5)
+	end)
+	Main_Frame.AbandonAllQuests:SetScript("OnClick", function()
+			StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
+	end)
+	local t = Main_Frame.AbandonAllQuests:CreateTexture(nil, "BACKGROUND")
+	Main_Frame.AbandonAllQuests.icon = t
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\SadKitty.tga")
+	t:SetVertexColor(1, 1, 1, 1)
+	t:SetAllPoints(Main_Frame.AbandonAllQuests)
+	-----------------------------------------------------
+	-----------------------------------------------------
 	StaticPopupDialogs[GlobalAddonName.."DELETE_ADDONDATA_RELOAD"] = {
 		text = "|cffFF0000!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
 		button1 = YES,
@@ -2511,7 +2573,6 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			self.icon:SetVertexColor(1, 0, 0, 1)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 			GameTooltip:ClearLines()
-			--GameTooltip:AddLine("ToDragonbaneKeepTimer") -- "Title"
 			GameTooltip:AddLine(L["RESET"])
 			GameTooltip:Show()
 	end)
@@ -2530,9 +2591,12 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	end)
 	local t = Main_Frame.RESETVARIABLES:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.RESETVARIABLES.icon = t
-	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\SadKitty.tga")
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Facepalm.tga")
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.RESETVARIABLES)
+	-----------------------------------------------------
+	-----------------------------------------------------
+	-----------------------------------------------------
 	local _, className, curClass = UnitClass("PLAYER")
 	local classColor = C_ClassColor.GetClassColor(className)
 	local r, g, b = classColor:GetRGB()
@@ -2783,12 +2847,12 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				CF.CL = CL
 			end
 			-- for i = 1, TotalLines do
-			-- 	print ("qwe"..i)
-			-- 	if i == 1 then
-			-- 		Char_Frame["CenterLines"..i.."BG"] = Char_Frame:CreateTexture(nil,"BACKGROUND")
-			-- 		Char_Frame["CenterLines"..i.."BG"]:SetAllPoints(Char_Frame["CenterLines"..i])
-			-- 		Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(r,g,b,.2)
-			-- 	end
+			--     print ("qwe"..i)
+			--     if i == 1 then
+			--         Char_Frame["CenterLines"..i.."BG"] = Char_Frame:CreateTexture(nil,"BACKGROUND")
+			--         Char_Frame["CenterLines"..i.."BG"]:SetAllPoints(Char_Frame["CenterLines"..i])
+			--         Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(r,g,b,.2)
+			--     end
 			-- end
 		else
 			Char_Frame = Main_Frame[curCharGUID]
@@ -2970,30 +3034,30 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			Char_Frame.CenterLines5.tooltip = {
 				{"PVE: ", " "},
-				{func_currencyicon(2533)..func_currencyName(2533), Empty_Zero(CharInfo.CurrencyID[2533]).."/"..CharInfo.CurrencyID_maxQuantity[2533]}, --Возрождающее пламя Тьмы
-				{func_currencyicon(2245)..func_currencyName(2245), Empty_Zero(CharInfo.CurrencyID[2245]).."/"..CharInfo.CurrencyID_maxQuantity[2245]}, --Драконьи камни
-				{func_currencyicon(2122)..func_currencyName(2122), Empty_Zero(CharInfo.CurrencyID[2122])}, --Печать бури
-				{func_currencyicon(2118)..func_currencyName(2118), Empty_Zero(CharInfo.CurrencyID[2118])}, --Энергия стихий
-				{func_currencyicon(2003)..func_currencyName(2003), Empty_Zero(CharInfo.CurrencyID[2003])}, --Припасы Драконьих островов
+				{func_currencyicon(2533)..func_currencyName(2533), CharInfo.CurrencyID[2533].."/"..CharInfo.CurrencyID_maxQuantity[2533]}, --Возрождающее пламя Тьмы
+				{func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]}, --Драконьи камни
+				{func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]}, --Печать бури
+				{func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]}, --Энергия стихий
+				{func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID[2003]}, --Припасы Драконьих островов
 				{" ", " "},
 				{"PVP: ", " "},
-				{func_currencyicon(1602)..func_currencyName(1602), Empty_Zero(CharInfo.CurrencyID[1602]).."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
-				{func_currencyicon(1792)..func_currencyName(1792), Empty_Zero(CharInfo.CurrencyID[1792]).."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
-				{func_currencyicon(2123)..func_currencyName(2123), Empty_Zero(CharInfo.CurrencyID[2123])}, --Кровавые жетоны
+				{func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
+				{func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
+				{func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]}, --Кровавые жетоны
 				{" ", " "},
 				{"OLD: ", " "},
 				{func_currencyicon(2032)..func_currencyName(2032), func_currencyquantity(2032)},
-				{func_currencyicon(1166)..func_currencyName(1166), Empty_Zero(CharInfo.CurrencyID[1166])}, --Искаженный временем знак
-				{func_currencyicon(1226)..func_currencyName(1226), Empty_Zero(CharInfo.CurrencyID[1226])}, --Осколок пустоты
-				{func_currencyicon(1220)..func_currencyName(1220), Empty_Zero(CharInfo.CurrencyID[1220])}, --Ресурсы опллота класса
-				{func_currencyicon(824)..func_currencyName(824), Empty_Zero(CharInfo.CurrencyID[824]).."/"..CharInfo.CurrencyID_maxQuantity[824]}, --Ресурсы гарнизона
+				{func_currencyicon(1166)..func_currencyName(1166), CharInfo.CurrencyID[1166]}, --Искаженный временем знак
+				{func_currencyicon(1226)..func_currencyName(1226), CharInfo.CurrencyID[1226]}, --Осколок пустоты
+				{func_currencyicon(1220)..func_currencyName(1220), CharInfo.CurrencyID[1220]}, --Ресурсы опллота класса
+				{func_currencyicon(824)..func_currencyName(824), CharInfo.CurrencyID[824].."/"..CharInfo.CurrencyID_maxQuantity[824]}, --Ресурсы гарнизона
 			}
 			-- for k,v in pairs(CharInfo.CurrencyID) do
-			-- 	if k ~= nil and k ~= 0 then
-			-- 		print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
-			-- 		--Char_Frame.CenterLines5.tooltip[#Char_Frame.CenterLines5.tooltip+1] = {func_currencyicon(k)..func_currencyName(k), v}
-			-- 		--tinsert (Char_Frame.CenterLines5.tooltip,{"name:",CharInfo.CurrencyID(k)})
-			-- 	end
+			--     if k ~= nil and k ~= 0 then
+			--         print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
+			--         --Char_Frame.CenterLines5.tooltip[#Char_Frame.CenterLines5.tooltip+1] = {func_currencyicon(k)..func_currencyName(k), v}
+			--         --tinsert (Char_Frame.CenterLines5.tooltip,{"name:",CharInfo.CurrencyID(k)})
+			--     end
 			-- end
 			if #Char_Frame.CenterLines5.tooltip == 0 then
 				Char_Frame.CenterLines5.tooltip = nil
@@ -3332,7 +3396,10 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			Main_Frame.TextLeft18:SetText(L["Last Update"])
 			Char_Frame.CenterLines18.tooltip = {}
 			if CharInfo.CurrentLocation then
-				tinsert (Char_Frame.CenterLines18.tooltip, {CharInfo.CurrentLocation})
+				tinsert (Char_Frame.CenterLines18.tooltip, {L["Current Location"],CharInfo.CurrentLocation})
+			end
+			if CharInfo.maxNumQuestsCanAccept ~= 0 then
+				tinsert (Char_Frame.CenterLines18.tooltip, {L["Number of quests"],CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept})
 			end
 			local needReset = false
 			if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
@@ -3392,6 +3459,9 @@ end
 local function checkCharInfo(CharInfo)
 	-- CharInfo.KillCount = CharInfo.KillCount or {}
 	-- setmetatable(CharInfo.KillCount, Meta_Table)
+	CharInfo.numShownEntries = CharInfo.numShownEntries or 0
+	CharInfo.numQuests = CharInfo.numQuests or 0
+	CharInfo.maxNumQuestsCanAccept = CharInfo.maxNumQuestsCanAccept or 0
 	CharInfo.pizdaDate = CharInfo.pizdaDate or 0
 	CharInfo.pizdaHours = CharInfo.pizdaHours or 0
 	CharInfo.Shadowland = CharInfo.Shadowland or {}
@@ -3545,11 +3615,11 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		end
 	elseif event == "COVENANT_CHOSEN" then
 		C_Timer.After(1, function()
-			CollectCovenantAnima()
+				CollectCovenantAnima()
 		end)
 	elseif event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED" then
 		C_Timer.After(1, function()
-			CollectCovenantAnima()
+				CollectCovenantAnima()
 		end)
 	elseif event == "QUEST_FINISHED" then
 		OctoQuestUpdate()
@@ -3724,11 +3794,11 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		UPGRADERANKS_Frame()
 		CollectLoginTime()
 		--itemID_TEST_INSERT()
-	-- elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
-	-- 	local _, eventType = CombatLogGetCurrentEventInfo()
-	-- 	if eventType == "UNIT_DIED" then
-	-- 		CollectKillCount()
-	-- 	end
+		-- elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
+		--     local _, eventType = CombatLogGetCurrentEventInfo()
+		--     if eventType == "UNIT_DIED" then
+		--         CollectKillCount()
+		--     end
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		CollectPVPRaitings()
 		CollectLoginTime()
@@ -3787,3 +3857,5 @@ end
 -- local ColorKyrian = CreateColor(1, 1, 1, 1)
 -- (KYRIAN_BLUE_COLOR:GetRGB())
 -- SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
+
+

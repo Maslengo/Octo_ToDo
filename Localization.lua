@@ -31,6 +31,10 @@ if L then
 
     L["|cFF00A3FFTalking head frame|r |cffFF4C4Fcanceled.|r"] = true
     L["Last Update"] = true
+    L["Abandon All Quests"] = true
+    L["Abandon: "] = true
+    L["Current Location"] = true
+    L["Number of quests"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -50,5 +54,9 @@ if L then
     L["Your items have been repaired for: "] = "Ремонт обошелся в "
     L["Your items have been repaired using guild bank funds for: "] = "Ремонт обошелся гильдии в "
     L["Last Update"] = "Последнее Обновление"
+    L["Abandon All Quests"] = "Отменить все задания"
+    L["Abandon"] = "Отменено: "
+    L["Current Location"] = "Текущее местоположение"
+    L["Number of quests"] = "Количество заданий"
 end
 
