@@ -1,6 +1,6 @@
-local AddonName, E = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
+local GlobalAddonName, E = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 local bytetoB64 = {
@@ -39,11 +39,11 @@ local Height = 26 --Высота
 local questID = 70893--72068 --
 local mapID = 2024
 
-local Frame_CommunityFeast = CreateFrame("Frame", AddonName..GenerateUniqueID(), UIParent, "BackdropTemplate")
+local Frame_CommunityFeast = CreateFrame("Frame", GlobalAddonName..GenerateUniqueID(), UIParent, "BackdropTemplate")
 
 Frame_CommunityFeast:Hide()
 Frame_CommunityFeast:SetBackdrop({
-		edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
+		edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 		edgeSize = 1,
 })
 Frame_CommunityFeast:SetBackdropBorderColor(0, 0, 0, 1)
@@ -54,13 +54,13 @@ Frame_CommunityFeast:SetSize(Width, Height)
 
 Frame_CommunityFeast.BG = Frame_CommunityFeast:CreateTexture()
 Frame_CommunityFeast.BG:SetAllPoints(Frame_CommunityFeast)
-Frame_CommunityFeast.BG:SetTexture("Interface\\Addons\\"..AddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+Frame_CommunityFeast.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
 Frame_CommunityFeast.BG:SetVertexColor(0,0,0,.5)
 Frame_CommunityFeast.texture = Frame_CommunityFeast:CreateTexture()
 Frame_CommunityFeast.texture:SetSize(Width, Height)
 Frame_CommunityFeast.texture:SetVertexColor(1,0,0,1)
 Frame_CommunityFeast.texture:SetPoint("LEFT", Frame_CommunityFeast, "LEFT")
-Frame_CommunityFeast.texture:SetTexture("Interface\\Addons\\"..AddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+Frame_CommunityFeast.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
 
 
 local function OnEvent(self, event, ...)

@@ -1,6 +1,6 @@
-local AddonName, E = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
+local GlobalAddonName, E = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -22,10 +22,10 @@ function GenerateUniqueID()
     end
     return table.concat(s)
 end
-local config = CreateFrame("FRAME", AddonName.."config"..GenerateUniqueID())
+local config = CreateFrame("FRAME", GlobalAddonName.."config"..GenerateUniqueID())
 -- config:RegisterEvent("VARIABLES_LOADED")
 config:Hide()
-StaticPopupDialogs[AddonName.."GET_RELOAD"] = {
+StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
     text = "|cffFF0000!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
     button1 = YES,
     button2 = NO,
@@ -66,7 +66,7 @@ local function newButton(pos, line)
     Button:SetChecked(Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm)
     Button:SetScript("OnClick", function(Button)
             Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm = Button:GetChecked()
-            StaticPopup_Show(AddonName.."GET_RELOAD")
+            StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
     end)
     Button.text:SetText("|cffFF0000ShowOnlyCurrentRealm|r")
     return Button
@@ -81,11 +81,11 @@ config:SetScript("OnShow", function(self)
         ver:SetPoint("TOPLEFT", 40, 20)
         ver:SetTextColor(.5, .5, .5, 1)
         ver:SetJustifyH("RIGHT")
-        ver:SetText(GetAddOnMetadata(AddonName, "Version"))
+        ver:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
         -- TITLE
         local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
         title:SetPoint("TOPLEFT", 16, -16)
-        title:SetText(AddonName)
+        title:SetText(GlobalAddonName)
         -- btn_left1 CVar
         -----------------------------------------------
         self.btn_left1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -93,7 +93,7 @@ config:SetScript("OnShow", function(self)
         self.btn_left1:SetChecked(Octo_ToDo_DragonflyVars.config.CVar)
         self.btn_left1:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.CVar = btn_left:GetChecked()
-                StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         self.btn_left1.text:SetText("|cffFF0000CVar|r")
         -----------------------------------------------
@@ -104,7 +104,7 @@ config:SetScript("OnShow", function(self)
         self.btn_left2:SetChecked(Octo_ToDo_DragonflyVars.config.InputDelete)
         self.btn_left2:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.InputDelete = btn_left:GetChecked()
-                StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         self.btn_left2.text:SetText("|cffFF0000InputDelete|r")
         -----------------------------------------------
@@ -116,7 +116,7 @@ config:SetScript("OnShow", function(self)
         self.btn_left3:SetChecked(Octo_ToDo_DragonflyVars.config.UsableItems)
         self.btn_left3:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.UsableItems = btn_left:GetChecked()
-                StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         self.btn_left3.text:SetText("|cffFF0000UsableItems|r")
         -----------------------------------------------
@@ -238,7 +238,7 @@ config:SetScript("OnShow", function(self)
         self.btn_right1:SetChecked(Octo_ToDo_DragonflyVars.config.AnotherAddons)
         self.btn_right1:SetScript("OnClick", function(btn_right)
                 Octo_ToDo_DragonflyVars.config.AnotherAddons = btn_right:GetChecked()
-                StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         self.btn_right1.text:SetText("|cffFF0000AnotherAddons|r\nBugGrabber, BugSack, AutoTurnIn, MountsJournal, WowheadQuickLink, Postal,\n HidingBar, TalentTreeTweaks, Simulationcraft, SpeedyAutoLoot, AdvancedInterfaceOptions")
         -----------------------------------------------
@@ -250,8 +250,8 @@ config:SetScript("OnShow", function(self)
         self.btn_right2:SetChecked(Octo_ToDo_DragonflyVars.config.ClearChat)
         self.btn_right2:SetScript("OnClick", function(btn_right)
                 Octo_ToDo_DragonflyVars.config.ClearChat = btn_right:GetChecked()
-                StaticPopup_Show(AddonName.."GET_RELOAD")
-                --StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+                --StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         self.btn_right2.text:SetText("|cffFF0000ClearChat|r")
         -----------------------------------------------
@@ -263,7 +263,7 @@ config:SetScript("OnShow", function(self)
         self.btn_right3:SetChecked(Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm)
         self.btn_right3:SetScript("OnClick", function(btn)
                 Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm = btn:GetChecked()
-                StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         self.btn_right3.text:SetText("|cffFF0000ShowOnlyCurrentRealm|r")
         -----------------------------------------------
@@ -280,7 +280,7 @@ config:SetScript("OnShow", function(self)
                 value = math.floor(value * step + .5) / step
                 Octo_ToDo_DragonflyVars.config.LevelToShow = value
                 LevelToShowTEXT:SetText("LevelToShow: "..Octo_ToDo_DragonflyVars.config.LevelToShow)
-                StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         LevelToShowTEXT:SetPoint("LEFT", self.Slider_right4, "RIGHT", indent, 0)
         LevelToShowTEXT:SetText("LevelToShow: "..Octo_ToDo_DragonflyVars.config.LevelToShow)
@@ -292,7 +292,7 @@ config:SetScript("OnShow", function(self)
         self.btn_right5:SetChecked(Octo_ToDo_DragonflyVars.config.AutoSellGrey)
         self.btn_right5:SetScript("OnClick", function(btn)
                 Octo_ToDo_DragonflyVars.config.AutoSellGrey = btn:GetChecked()
-                StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         self.btn_right5.text:SetText("|cffFF0000AutoSellGrey|r")
 
@@ -303,7 +303,7 @@ config:SetScript("OnShow", function(self)
         self.btn_right6:SetChecked(Octo_ToDo_DragonflyVars.config.AutoRepair)
         self.btn_right6:SetScript("OnClick", function(btn)
                 Octo_ToDo_DragonflyVars.config.AutoRepair = btn:GetChecked()
-                StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         self.btn_right6.text:SetText("|cffFF0000AutoRepair|r")
         -----------------------------------------------
@@ -320,7 +320,7 @@ config:SetScript("OnShow", function(self)
                 value = math.floor(value * step + .5) / step
                 Octo_ToDo_DragonflyVars.config.Addon_curWidth = value
                 Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
-                StaticPopup_Show(AddonName.."GET_RELOAD")
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         Addon_curWidthTEXT:SetPoint("LEFT", self.Slider_right7, "RIGHT", indent, 0)
         Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
@@ -330,7 +330,7 @@ config:SetScript("OnShow", function(self)
         --Addon_curWidth
 end)
 -- ADD CATEGORY
-local category, layout = Settings.RegisterCanvasLayoutCategory(config, AddonName)
-category.ID = AddonName
+local category, layout = Settings.RegisterCanvasLayoutCategory(config, GlobalAddonName)
+category.ID = GlobalAddonName
 Settings.RegisterAddOnCategory(category)
 

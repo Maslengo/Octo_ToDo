@@ -1,12 +1,13 @@
 ## Interface: 100100
 ## Author: Octo
 ## Title: !!|cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r
-## Version: v39
+## Version: v40
 ## IconTexture: Interface\AddOns\!!Octo_ToDo_Dragonfly\Media\AddonTexture.tga
 ## SavedVariables: Octo_ToDo_DragonflyLevels Octo_ToDo_DragonflyVars
 
 embeds.xml
 
+LootFrame.lua
 Localization.lua
 Octo_CommunityFeast.lua
 Octo_AUTO_ACCEPT_QUEST.lua

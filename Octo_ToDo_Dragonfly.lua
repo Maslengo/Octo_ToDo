@@ -1,11 +1,12 @@
-local AddonName, E = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
+local GlobalAddonName, E = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 local Meta_Table = {
 	__index = function()
 		return 0
 	end
 }
+-- суббота 23:00
 --E.modules = {}
 --------------------------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
@@ -18,11 +19,11 @@ local r, g, b = classColor:GetRGB()
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 --local curWidth = Octo_ToDo_DragonflyVars.config.Addon_curWidth*scale or 100*scale
 --print (Octo_ToDo_DragonflyVars.config.Addon_curWidth)
-local curWidth = 94*scale
+local curWidth = 93*scale
 local curHeight = 20*scale -- высота 20 24
 local curWidthTitle = curWidth*2
-local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..AddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
-local TotalLines = 19
+local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..GlobalAddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
+local TotalLines = 18
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local TotalMoney = 0
@@ -39,11 +40,16 @@ local regionalWeeklyStart = 1668981600
 local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8 --0.1, 0.1, 0.1, 1
 local edgeFile = [[Interface\Buttons\WHITE8X8]]
 local bgFile = [[Interface\Buttons\WHITE8X8]]
-local IconTexture = [[Interface\Addons\]]..AddonName..[[\Media\AddonTexture.tga]]
+local IconTexture = [[Interface\Addons\]]..GlobalAddonName..[[\Media\AddonTexture.tga]]
 local ColorGray = "|cff404040"
 local PlayCustomSound = false
--- OptionsFrame.image = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\OptionLogo2"):Point("TOPLEFT", 15, 5):Size(140, 140)
--- OptionsFrame_title = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalAddonName.."\\media\\logoname2"):Point("LEFT", OptionsFrame.image, "RIGHT", 15, -5):Size(512*0.7, 128*0.7)
+local NFae_Color = "|cffb4a7d6"
+local Vent_Color = "|cffea9999"
+local Necr_Color = "|cff93c47d"
+local Kyri_Color = "|cff6fa8dc"
+local AnimaColor = "|cff00A3FF"
+-- OptionsFrame.image = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalGlobalAddonName.."\\media\\OptionLogo2"):Point("TOPLEFT", 15, 5):Size(140, 140)
+-- OptionsFrame_title = ELib:Texture(OptionsFrame, "Interface\\AddOns\\"..GlobalGlobalAddonName.."\\media\\logoname2"):Point("LEFT", OptionsFrame.image, "RIGHT", 15, -5):Size(512*0.7, 128*0.7)
 local bytetoB64 = {
 	[0]="a", "b", "c", "d", "e", "f", "g", "h",
 	"i", "j", "k", "l", "m", "n", "o", "p",
@@ -242,7 +248,7 @@ function TreasureGoblinTimer()
 			else
 				nextTime = "|cff00FF00"..SecondsToClock(timeleft).."|r"
 				if PlayCustomSound == true then
-					PlaySoundFile("Interface\\AddOns\\"..AddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
+					PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
 				end
 				-- local t, f = SecondsToTimeAbbrev(timeleft)
 				-- nextTime = t:format(f)
@@ -327,40 +333,83 @@ function ResearchersUnderFireTimer()
 	end
 	return ResearchersUnderFireTimer .." ".. L["Researchers Under Fire"]
 end
-local function GetNPCIDFromGUID(guid)
-	if guid then
-		local unit_type, _, _, _, _, mob_id = strsplit("-", guid)
-		if unit_type == "Pet" or unit_type == "Player" then
-			return 0
-		end
-		return (guid and mob_id and tonumber(mob_id)) or 0
-	end
-	return 0
-end
-function CollectKillCount()
+-- local function GetNPCIDFromGUID(guid)
+-- 	if guid then
+-- 		local unit_type, _, _, _, _, mob_id = strsplit("-", guid)
+-- 		if unit_type == "Pet" or unit_type == "Player" then
+-- 			return 0
+-- 		end
+-- 		return (guid and mob_id and tonumber(mob_id)) or 0
+-- 	end
+-- 	return 0
+-- end
+-- function CollectKillCount()
+-- 	local UnitLevel = UnitLevel("PLAYER")
+-- 	local curGUID = UnitGUID("PLAYER")
+-- 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+-- 	--------------------------------------------------
+-- 	local timestamp, eventType, hideCaster, srcGuid, srcName, srcFlags, srcRaidFlags, dstGuid, dstName, dstFlags, dstRaidFlags, spellId, spellName, spellSchool, auraType = CombatLogGetCurrentEventInfo()
+-- 	local bit_band = _G.bit.band
+-- 	-- local strlower = _G.strlower
+-- 	-- local format = _G.format
+-- 	local npcIDs_table = {
+-- 		205490, -- Алчный Гоблин
+-- 		195305,
+-- 		195304,
+-- 	}
+-- 	local KillCount = 0
+-- 	local npcid = GetNPCIDFromGUID(dstGuid)
+-- 	if bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_PARTY) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_RAID) then
+-- 		for _,v in pairs(npcIDs_table) do
+-- 			if v == npcid then
+-- 				print ("|cFF00A3FF"..dstName.. "|r " .. AddonColor..collect.KillCount[npcid].. " (+1)|r")
+-- 				collect.KillCount[npcid] = collect.KillCount[npcid] + 1
+-- 			end
+-- 		end
+-- 	end
+-- end
+--LoadAddOn("Blizzard_PVPUI")
+function CollectLoginTime()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	--------------------------------------------------
-	local timestamp, eventType, hideCaster, srcGuid, srcName, srcFlags, srcRaidFlags, dstGuid, dstName, dstFlags, dstRaidFlags, spellId, spellName, spellSchool, auraType = CombatLogGetCurrentEventInfo()
-	local bit_band = _G.bit.band
-	-- local strlower = _G.strlower
-	-- local format = _G.format
-	local npcIDs_table = {
-		205490, -- Алчный Гоблин
-	}
-	local KillCount = 0
-	local npcid = GetNPCIDFromGUID(dstGuid)
-	if bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_PARTY) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_RAID) then
-		for _,v in pairs(npcIDs_table) do
-			if v == npcid then
-				print ("|cFF00A3FF"..dstName.. "|r " .. AddonColor..collect.KillCount[npcid].. " +1..|r")
-				collect.KillCount[npcid] = collect.KillCount[npcid] + 1
-			end
-		end
-	end
+	--local xyi = date("%d.%m.%Y %H:%M:%S")
+	collect.pizdaDate = date("%d.%m.%Y")
+	collect.pizdaHours = date("%H:%M")
 end
---LoadAddOn("Blizzard_PVPUI")
+function CollectCovenantAnima()
+	local UnitLevel = UnitLevel("PLAYER")
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	--------------------------------------------------
+	local CovenantNames ={
+		[1] = "Kyrian",
+		[2] = "Venthyr",
+		[3] = "NightFae",
+		[4] = "Necrolord",
+	}
+	local curCovID = C_Covenants.GetActiveCovenantID()
+	local curCovName = CovenantNames[curCovID]
+	local curCovLevel = C_CovenantSanctumUI.GetRenownLevel()
+	local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(1813)
+	local curAnimaAmount = currencyInfo.quantity
+	if curCovID == 0 then return end
+	if curCovID == 1 then
+		collect.Shadowland[1] = curCovLevel or 0 --Kyrian.Renown
+		collect.Shadowland[2] = curAnimaAmount or 0 --Kyrian.Anima
+	elseif curCovID == 2 then
+		collect.Shadowland[3] = curCovLevel or 0 --Venthyr.Renown
+		collect.Shadowland[4] = curAnimaAmount or 0 --Venthyr.Anima
+	elseif curCovID == 3 then
+		collect.Shadowland[5] = curCovLevel or 0 --NightFae.Renown
+		collect.Shadowland[6] = curAnimaAmount or 0 --NightFae.Anima
+	elseif curCovID == 4 then
+		collect.Shadowland[7] = curCovLevel or 0 --Necrolord.Renown
+		collect.Shadowland[8] = curAnimaAmount or 0 --Necrolord.Anima
+	end
+	collect.Shadowland[9] = curCovID
+end
 function CollectPVPRaitings()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
@@ -1191,12 +1240,19 @@ local function CurrencyTEST()
 		table[i] = C_CurrencyInfo.GetCurrencyInfo(i)
 	end
 	for k, v in pairs(table) do
-		if k ~= nil and v ~= nil then
+		if k ~= nil and v ~= nil and k ~= 0 then
 			tinsert(currencyID, k)
 		end
 	end
 end
 CurrencyTEST()
+-- local function curTest()
+-- 	for k,v in ipairs(currencyID) do
+-- 		--print (k,v)
+-- 		print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
+-- 	end
+-- end
+-- curTest()
 local RARE_ZARALEK_LIST = {75271,
 	75285,
 	75298,
@@ -1269,29 +1325,6 @@ local EVENTS_ZARALEK_LIST = {75612,
 	74352,
 }
 local itemID = {
-	--Сумки
-	194019,
-	194020,
-	206018,
-	206039,
-	206003,
-	142549,
-	142551,
-	206008,
-	206007,
-	206274,
-	142548,
-	142547,
-	143327,
-	206275,
-	206005,
-	142542,
-	143543,
-	206276,
-	76755,
-	142545,
-	142546,
-	206039,
 	--Комплект вражды DIABLO 4
 	122284,
 	205878,
@@ -2049,8 +2082,6 @@ end
 function Octo_ToDo_DragonflyOnLoad()
 	local EventFrame = CreateFrame("FRAME", AddonTitle..GenerateUniqueID())
 	EventFrame:RegisterEvent("VARIABLES_LOADED")
-	EventFrame:RegisterEvent("COVENANT_CHOSEN")
-	EventFrame:RegisterEvent("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
 	EventFrame:RegisterEvent("PLAYER_LOGIN")
 	EventFrame:RegisterEvent("PLAYER_MONEY")
 	EventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
@@ -2062,10 +2093,12 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("QUEST_FINISHED")
 	EventFrame:RegisterEvent("QUEST_COMPLETE")
 	EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
-	--EventFrame:RegisterEvent("PLAYER_STARTED_MOVING")
+	EventFrame:RegisterEvent("PLAYER_STARTED_MOVING")
 	EventFrame:RegisterEvent("PLAYER_LOGOUT")
 	EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	EventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	EventFrame:RegisterEvent("COVENANT_CHOSEN")
+	EventFrame:RegisterEvent("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
 	-- -- EventFrame:RegisterEvent("VARIABLES_LOADED")
 	-- EventFrame:RegisterEvent("ARENA_SEASON_WORLD_STATE")
 	-- EventFrame:RegisterEvent("BATTLEFIELDS_CLOSED")
@@ -2102,14 +2135,14 @@ function UPGRADERANKS_Frame()
 	UPGRADERANKS_Frame:SetWidth(1024*scale*0.7111111111111111) -- Set these to whatever height/width is needed
 	UPGRADERANKS_Frame:SetHeight(512*scale*0.7111111111111111) -- for your Texture
 	UPGRADERANKS_Frame:SetBackdrop({
-			-- bgFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
-			edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
+			-- bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 3,
 	})
 	UPGRADERANKS_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 	UPGRADERANKS_Frame:SetBackdropBorderColor(0, 0, 0, 1)
 	local t = UPGRADERANKS_Frame:CreateTexture(nil, "BACKGROUND")
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\UPGRADERANKS.tga")
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\UPGRADERANKS.tga")
 	t:SetAllPoints(UPGRADERANKS_Frame)
 	UPGRADERANKS_Frame.texture = t
 	UPGRADERANKS_Frame:SetPoint("CENTER", 0, 0)
@@ -2158,7 +2191,7 @@ end
 --     -- Button.b = b
 --     Button:SetSize(curHeight, curHeight)
 --     Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, Ypos)
---     Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+--     Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 --     Button:SetBackdropBorderColor(r, g, b, 0.2)
 --     Button:RegisterEvent("PLAYER_REGEN_DISABLED")
 --     Button:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -2186,8 +2219,8 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame:SetPoint("CENTER", 0, 0)
 	Main_Frame:SetBackdrop({
 			--elvui
-			bgFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
-			edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
+			bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 			--Стандартный
 			-- bgFile = "Interface/Tooltips/UI-Tooltip-Background",
@@ -2211,7 +2244,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame.CloseButton = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
 	Main_Frame.CloseButton:SetSize(curHeight, curHeight)
 	Main_Frame.CloseButton:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, 0)
-	Main_Frame.CloseButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.CloseButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 	Main_Frame.CloseButton:SetBackdropBorderColor(1, 0, 0, 0)
 	Main_Frame.CloseButton:SetScript("OnEnter", function(self)
 			self:SetBackdropBorderColor(1, 0, 0, 1)
@@ -2236,7 +2269,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	end)
 	local t = Main_Frame.CloseButton:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.CloseButton.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\CloseTest.tga")
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga")
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.CloseButton)
 	Main_Frame.CloseButton:SetScript("OnKeyDown", function(self, key)
@@ -2251,7 +2284,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame.OptionsButton = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
 	Main_Frame.OptionsButton:SetSize(curHeight, curHeight)
 	Main_Frame.OptionsButton:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -30)
-	Main_Frame.OptionsButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.OptionsButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 	Main_Frame.OptionsButton:SetBackdropBorderColor(1, 0, 0, 0)
 	Main_Frame.OptionsButton:SetScript("OnEnter", function(self)
 			self:SetBackdropBorderColor(1, 0, 0, 1)
@@ -2278,19 +2311,19 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			if SettingsPanel:IsVisible() and self:IsVisible() then
 				HideUIPanel(SettingsPanel)
 			else
-				Settings.OpenToCategory(AddonName, true)
+				Settings.OpenToCategory(GlobalAddonName, true)
 			end
 	end)
 	local t = Main_Frame.OptionsButton:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.OptionsButton.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\OptionsButton.tga")
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\OptionsButton.tga")
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.OptionsButton)
 	-----------------------------------------------------
 	Main_Frame.TestButton = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
 	Main_Frame.TestButton:SetSize(curHeight, curHeight)
 	Main_Frame.TestButton:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -60)
-	Main_Frame.TestButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.TestButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 	Main_Frame.TestButton:SetBackdropBorderColor(1, 0, 0, 0)
 	Main_Frame.TestButton:SetScript("OnEnter", function(self)
 			self:SetBackdropBorderColor(1, 0, 0, 1)
@@ -2339,14 +2372,14 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	end)
 	local t = Main_Frame.TestButton:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.TestButton.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\ElvUI\\Arrow5.tga")
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow5.tga")
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.TestButton)
 	-----------------------------------------------------
 	Main_Frame.MarkOfHonor_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
 	Main_Frame.MarkOfHonor_Button:SetSize(curHeight, curHeight)
 	Main_Frame.MarkOfHonor_Button:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -90)
-	Main_Frame.MarkOfHonor_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.MarkOfHonor_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 	Main_Frame.MarkOfHonor_Button:SetBackdropBorderColor(0, 0.44, 0.98, 1)
 	Main_Frame.MarkOfHonor_Button:SetScript("OnEnter", function(self)
 			local i = 0
@@ -2399,7 +2432,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame.ZskeraVaultKeyButton = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
 	Main_Frame.ZskeraVaultKeyButton:SetSize(curHeight, curHeight)
 	Main_Frame.ZskeraVaultKeyButton:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -120)
-	Main_Frame.ZskeraVaultKeyButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.ZskeraVaultKeyButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 	Main_Frame.ZskeraVaultKeyButton:SetBackdropBorderColor(.64, .21, .93, 1)
 	Main_Frame.ZskeraVaultKeyButton:SetScript("OnEnter", function(self)
 			local i = 0
@@ -2447,78 +2480,6 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	t:SetAllPoints(Main_Frame.ZskeraVaultKeyButton)
 	-----------------------------------------------------
 	-----------------------------------------------------
-	Main_Frame.OtherItem_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
-	Main_Frame.OtherItem_Button:SetSize(curHeight, curHeight)
-	Main_Frame.OtherItem_Button:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -150)
-	Main_Frame.OtherItem_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	Main_Frame.OtherItem_Button:SetBackdropBorderColor(0, 0.8, 1, 1)
-	local OtherItem_table = {
-		76755,
-		142542,
-		142545,
-		142546,
-		142547,
-		142548,
-		142549,
-		142551,
-		143327,
-		143543,
-		206003,
-		206005,
-		206007,
-		206008,
-		206018,
-		206039,
-		206274,
-		206275,
-		206276,
-	}
-	Main_Frame.OtherItem_Button:SetScript("OnEnter", function(self)
-			local i = 0
-			self:SetBackdropBorderColor(1, 0, 0, 1)
-			self.icon:SetVertexColor(1, 0, 0, 1)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-			GameTooltip:ClearLines()
-			GameTooltip:AddDoubleLine(" "," ")
-			for q, w in pairs(OtherItem_table) do
-				for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
-					if CharInfo.ItemsInBag[w] ~= 0 then
-						i = i + 1
-						local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-						local curServerShort = CharInfo.curServer
-						local text = (curServerShort):gsub("-", " "):gsub("'", " ")
-						local a, b = strsplit(" ", text)
-						if b then
-							curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
-						end
-						GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[w]..func_itemName(w)..func_itemTexture(w))
-					end
-				end
-			end
-			if i == 0 then
-				GameTooltip:AddLine("No Data")
-			end
-			GameTooltip:AddDoubleLine(" "," ")
-			GameTooltip:Show()
-	end)
-	Main_Frame.OtherItem_Button:SetScript("OnLeave", function(self)
-			self:SetBackdropBorderColor(0, 0.44, 0.98, 1)
-			self.icon:SetVertexColor(1, 1, 1, 1)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	Main_Frame.OtherItem_Button:SetScript("OnMouseDown", function(self)
-			self:SetBackdropBorderColor(1, 0, 0, 0.5)
-			self.icon:SetVertexColor(1, 0, 0, 0.5)
-	end)
-	Main_Frame.OtherItem_Button:SetScript("OnClick", function()
-			Main_Frame:Hide()
-	end)
-	local t = Main_Frame.OtherItem_Button:CreateTexture(nil, "BACKGROUND")
-	Main_Frame.OtherItem_Button.icon = t
-	t:SetTexture(577318)
-	t:SetVertexColor(1, 1, 1, 1)
-	t:SetAllPoints(Main_Frame.OtherItem_Button)
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
@@ -2531,7 +2492,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-- CreateFrameUsableItems(204717, 442739, 2, -96, .85, .8, .5)
 	-----------------------------------------------------
 	-----------------------------------------------------
-	StaticPopupDialogs[AddonName.."DELETE_ADDONDATA_RELOAD"] = {
+	StaticPopupDialogs[GlobalAddonName.."DELETE_ADDONDATA_RELOAD"] = {
 		text = "|cffFF0000!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
 		button1 = YES,
 		button2 = NO,
@@ -2543,7 +2504,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame.RESETVARIABLES = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
 	Main_Frame.RESETVARIABLES:SetSize(curHeight, curHeight)
 	Main_Frame.RESETVARIABLES:SetPoint("BOTTOMLEFT", Main_Frame, "BOTTOMRIGHT", 0, 0)
-	Main_Frame.RESETVARIABLES:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.RESETVARIABLES:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 	Main_Frame.RESETVARIABLES:SetBackdropBorderColor(1, 0, 0, 0)
 	Main_Frame.RESETVARIABLES:SetScript("OnEnter", function(self)
 			self:SetBackdropBorderColor(1, 0, 0, 1)
@@ -2565,11 +2526,11 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			self.icon:SetVertexColor(1, 0, 0, 0.5)
 	end)
 	Main_Frame.RESETVARIABLES:SetScript("OnClick", function()
-			StaticPopup_Show(AddonName.."DELETE_ADDONDATA_RELOAD")
+			StaticPopup_Show(GlobalAddonName.."DELETE_ADDONDATA_RELOAD")
 	end)
 	local t = Main_Frame.RESETVARIABLES:CreateTexture(nil, "BACKGROUND")
 	Main_Frame.RESETVARIABLES.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\ElvUI\\SadKitty.tga")
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\SadKitty.tga")
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.RESETVARIABLES)
 	local _, className, curClass = UnitClass("PLAYER")
@@ -2773,6 +2734,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				b.Name < a.Name
 			end
 	end)
+	TotalMoney = 0
+	TotalKills = 0
 	for i, CharInfo in pairs(sorted) do
 		local curCharGUID = CharInfo.GUID
 		local curName = nil
@@ -2819,6 +2782,14 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				CL:SetTextColor(1, 1, 1, 1)
 				CF.CL = CL
 			end
+			-- for i = 1, TotalLines do
+			-- 	print ("qwe"..i)
+			-- 	if i == 1 then
+			-- 		Char_Frame["CenterLines"..i.."BG"] = Char_Frame:CreateTexture(nil,"BACKGROUND")
+			-- 		Char_Frame["CenterLines"..i.."BG"]:SetAllPoints(Char_Frame["CenterLines"..i])
+			-- 		Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(r,g,b,.2)
+			-- 	end
+			-- end
 		else
 			Char_Frame = Main_Frame[curCharGUID]
 		end
@@ -2839,7 +2810,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if curServer == CharInfo.curServer and CharInfo.Money ~= 0 then
 				curMoney = CharInfo.Money
 			end
-			TotalMoney = 0
 			TotalMoney = TotalMoney + curMoney
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			Char_Frame.DeleteButton = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), Char_Frame, "BackDropTemplate")
@@ -2872,7 +2842,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					Char_Frame.experience:SetWidth(CharInfo.currentXP/CharInfo.UnitXPMax*curWidth)
 				end
 				Char_Frame.experience:SetHeight(curHeight/2) --Высота
-				Char_Frame.experience:SetTexture("Interface\\Addons\\"..AddonName.."\\Media\\statusbar\\O_03.tga")
+				Char_Frame.experience:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\O_03.tga")
 				Char_Frame.experience:SetPoint("BOTTOMLEFT", Char_Frame, "TOPLEFT")
 				Char_Frame.experience:SetVertexColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b, 1)
 			elseif CharInfo.UnitLevel == 70 then
@@ -2895,7 +2865,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				Char_Frame.curServer:SetJustifyV("BOTTOM")
 			end
 			---------------------------------------------
-			-- StaticPopupDialogs[AddonName.."DELETE_CHARACTER"] = {
+			-- StaticPopupDialogs[GlobalAddonName.."DELETE_CHARACTER"] = {
 			--   text = DELETE.."?",
 			--   button1 = YES,
 			--   button2 = NO,
@@ -2907,7 +2877,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			Char_Frame.DeleteButton:SetSize(16, 10)
 			Char_Frame.DeleteButton:SetPoint("TOP", Char_Frame, "BOTTOM", 0, -4)
 			Char_Frame.DeleteButton:SetBackdrop({
-					edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", -- Interface/Addons/"..AddonName.."/Media/border/01 Octo.tga -- Interface/Buttons/white8x8
+					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", -- Interface/Addons/"..GlobalAddonName.."/Media/border/01 Octo.tga -- Interface/Buttons/white8x8
 					edgeSize = 1,
 			})
 			Char_Frame.DeleteButton:SetBackdropBorderColor(1, 0, 0, 0)
@@ -2930,54 +2900,46 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					self.icon:SetVertexColor(1, 0, 0, 0.5)
 			end)
 			Char_Frame.DeleteButton:SetScript("OnClick", function()
-					--StaticPopup_Show(AddonName.."DELETE_CHARACTER")
+					--StaticPopup_Show(GlobalAddonName.."DELETE_CHARACTER")
 					Octo_ToDo_DragonflyDeleteChar(curCharGUID)
 			end)
 			local t = Char_Frame.DeleteButton:CreateTexture(nil, "BACKGROUND")
 			Char_Frame.DeleteButton.icon = t
-			t:SetTexture("Interface\\Addons\\"..AddonName.."\\Media\\closeWHITE.tga")
+			t:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\closeWHITE.tga")
 			t:SetVertexColor(1, 1, 1, 1)
 			t:SetAllPoints(Char_Frame.DeleteButton)
-			--1 ТАЙМЕР ГОБЛИНА
-			Main_Frame.TextLeft1:SetText("|T577318:16:16:::64:64:4:60:4:60|t " .. TreasureGoblinTimer())
-			Char_Frame.CenterLines1.CL:SetText(CharInfo.Octopussy_TreasureGoblin or NONE)
-			Char_Frame.CenterLines1.tooltip = {}
-			if CharInfo.CurrentLocation then
-				tinsert(Char_Frame.CenterLines1.tooltip,{CharInfo.CurrentLocation})
-			end
-			--2
-			Main_Frame.TextLeft2:SetText("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
-			Char_Frame.CenterLines2.CL:SetText(CharInfo.Octopussy_Feast or NONE)
+			------------------------------------------------------------------------------------------
+			------------------------------------------------------------------------------------------
+			------------------------------------------------------------------------------------------
+			--1
+			Main_Frame.TextLeft1:SetText("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
+			Char_Frame.CenterLines1.CL:SetText(CharInfo.Octopussy_Feast or NONE)
 			if CharInfo.ItemsInBag[200652] ~= 0 then
-				Char_Frame.CenterLines2.CL:SetText((CharInfo.Octopussy_Feast or NONE).." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652))
+				Char_Frame.CenterLines1.CL:SetText((CharInfo.Octopussy_Feast or NONE).." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652))
 			end
 			if CharInfo.ItemsInBag[200095] ~= 0 then
-				Char_Frame.CenterLines2.CL:SetText((CharInfo.Octopussy_Feast or NONE).." +"..CharInfo.ItemsInBag[200095]..func_itemTexture(200095))
+				Char_Frame.CenterLines1.CL:SetText((CharInfo.Octopussy_Feast or NONE).." +"..CharInfo.ItemsInBag[200095]..func_itemTexture(200095))
 			end
-			--3
-			Main_Frame.TextLeft3:SetText("|T1603189:16:16:::64:64:4:60:4:60|t |cffFFFFFF".. func_questName(70750).."|r")
-			Char_Frame.CenterLines3.CL:SetText(CharInfo.Octopussy_3kREP or NONE)
-			Char_Frame.CenterLines3.tooltip = {}
+			--2
+			Main_Frame.TextLeft2:SetText("|T1603189:16:16:::64:64:4:60:4:60|t |cffFFFFFF".. func_questName(70750).."|r")
+			Char_Frame.CenterLines2.CL:SetText(CharInfo.Octopussy_3kREP or NONE)
+			Char_Frame.CenterLines2.tooltip = {}
 			if CharInfo.ItemsInBag[200073] ~= 0 then
-				Char_Frame.CenterLines3.CL:SetText((CharInfo.Octopussy_3kREP or NONE).." +"..CharInfo.ItemsInBag[200073]..func_itemTexture(200073))
+				Char_Frame.CenterLines2.CL:SetText((CharInfo.Octopussy_3kREP or NONE).." +"..CharInfo.ItemsInBag[200073]..func_itemTexture(200073))
 			end
 			if CharInfo.Octopussy_3kREP_IsOnQuest ~= 0 then
-				tinsert(Char_Frame.CenterLines3.tooltip,{func_questName(CharInfo.Octopussy_3kREP_IsOnQuest)})
+				tinsert(Char_Frame.CenterLines2.tooltip,{func_questName(CharInfo.Octopussy_3kREP_IsOnQuest)})
 			end
-			-- ля ты крыса
-			if CharInfo.ItemsInBag[76755] >= 1 then
-				PlaySoundFile("Interface\\AddOns\\"..AddonName.."\\Media\\sound\\Memes\\rat.ogg", "Master")
+			if #Char_Frame.CenterLines2.tooltip == 0 then
+				Char_Frame.CenterLines2.tooltip = nil
 			end
-			if #Char_Frame.CenterLines3.tooltip == 0 then
-				Char_Frame.CenterLines3.tooltip = nil
-			end
-			--4 1500 РЕПЫ НИФАМ
-			Main_Frame.TextLeft4:SetText(func_questName(75665))
+			--3 1500 РЕПЫ НИФАМ
+			Main_Frame.TextLeft3:SetText(func_questName(75665))
 			if CharInfo.Octopussy_AWorthyAllyLoammNiffen then
-				Char_Frame.CenterLines4.CL:SetText(CharInfo.Octopussy_AWorthyAllyLoammNiffen)
+				Char_Frame.CenterLines3.CL:SetText(CharInfo.Octopussy_AWorthyAllyLoammNiffen)
 			end
-			--5
-			Main_Frame.TextLeft5:SetText(func_itemTexture(180653)..func_itemName(180653))
+			--4
+			Main_Frame.TextLeft4:SetText(func_itemTexture(180653)..func_itemName(180653))
 			local PEREMENNAYA_CurrentKey = Empty_Zero(CharInfo.CurrentKey)
 			if CharInfo.ItemsInBag[205225] ~= 0 then
 				PEREMENNAYA_CurrentKey = PEREMENNAYA_CurrentKey .. func_itemTexture(205225)..CharInfo.ItemsInBag[205225]
@@ -2985,9 +2947,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.ItemsInBag[205999] ~= 0 then
 				PEREMENNAYA_CurrentKey = PEREMENNAYA_CurrentKey .. func_itemTexture(205999)..CharInfo.ItemsInBag[205999]
 			end
-			Char_Frame.CenterLines5.CL:SetText(PEREMENNAYA_CurrentKey)
+			Char_Frame.CenterLines4.CL:SetText(PEREMENNAYA_CurrentKey)
 			if CharInfo.CurrentKey ~= 0 then
-				Char_Frame.CenterLines5.tooltip = {
+				Char_Frame.CenterLines4.tooltip = {
 					{"Score", CharInfo.RIO_Score},
 					{"Weekly Best", CharInfo.RIO_weeklyBest},
 					{" ", " "},
@@ -2998,79 +2960,86 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					-- {func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
 				}
 			end
-			--6
-			Char_Frame.CenterLines6.CL:SetText(ColorGray..CURRENCY.."|r")
+			--5
+			Char_Frame.CenterLines5.CL:SetText(ColorGray..CURRENCY.."|r")
 			local PEREMENNAYA_2245 = func_currencyicon(2245)..Empty_Zero(CharInfo.CurrencyID[2245])
 			if CharInfo.CurrencyID[2245] == CharInfo.CurrencyID_maxQuantity[2245] then
-				Char_Frame.CenterLines6.CL:SetText(AddonColor..PEREMENNAYA_2245.."|r")
+				Char_Frame.CenterLines5.CL:SetText(AddonColor..PEREMENNAYA_2245.."|r")
 			elseif CharInfo.CurrencyID[2245] >= 1 then
-				Char_Frame.CenterLines6.CL:SetText(PEREMENNAYA_2245)
+				Char_Frame.CenterLines5.CL:SetText(PEREMENNAYA_2245)
 			end
-			Char_Frame.CenterLines6.tooltip = {
+			Char_Frame.CenterLines5.tooltip = {
 				{"PVE: ", " "},
-				{func_currencyicon(2533)..func_currencyName(2533), CharInfo.CurrencyID[2533].."/"..CharInfo.CurrencyID_maxQuantity[2533]}, --Возрождающее пламя Тьмы
-				{func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]}, --Драконьи камни
-				{func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]}, --Печать бури
-				{func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]}, --Энергия стихий
-				{func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID[2003]}, --Припасы Драконьих островов
+				{func_currencyicon(2533)..func_currencyName(2533), Empty_Zero(CharInfo.CurrencyID[2533]).."/"..CharInfo.CurrencyID_maxQuantity[2533]}, --Возрождающее пламя Тьмы
+				{func_currencyicon(2245)..func_currencyName(2245), Empty_Zero(CharInfo.CurrencyID[2245]).."/"..CharInfo.CurrencyID_maxQuantity[2245]}, --Драконьи камни
+				{func_currencyicon(2122)..func_currencyName(2122), Empty_Zero(CharInfo.CurrencyID[2122])}, --Печать бури
+				{func_currencyicon(2118)..func_currencyName(2118), Empty_Zero(CharInfo.CurrencyID[2118])}, --Энергия стихий
+				{func_currencyicon(2003)..func_currencyName(2003), Empty_Zero(CharInfo.CurrencyID[2003])}, --Припасы Драконьих островов
 				{" ", " "},
 				{"PVP: ", " "},
-				{func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
-				{func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
-				{func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]}, --Кровавые жетоны
+				{func_currencyicon(1602)..func_currencyName(1602), Empty_Zero(CharInfo.CurrencyID[1602]).."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
+				{func_currencyicon(1792)..func_currencyName(1792), Empty_Zero(CharInfo.CurrencyID[1792]).."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
+				{func_currencyicon(2123)..func_currencyName(2123), Empty_Zero(CharInfo.CurrencyID[2123])}, --Кровавые жетоны
 				{" ", " "},
 				{"OLD: ", " "},
 				{func_currencyicon(2032)..func_currencyName(2032), func_currencyquantity(2032)},
-				{func_currencyicon(1166)..func_currencyName(1166), CharInfo.CurrencyID[1166]}, --Искаженный временем знак
-				{func_currencyicon(1226)..func_currencyName(1226), CharInfo.CurrencyID[1226]}, --Осколок пустоты
-				{func_currencyicon(1220)..func_currencyName(1220), CharInfo.CurrencyID[1220]}, --Ресурсы опллота класса
-				{func_currencyicon(824)..func_currencyName(824), CharInfo.CurrencyID[824].."/"..CharInfo.CurrencyID_maxQuantity[824]}, --Ресурсы гарнизона
+				{func_currencyicon(1166)..func_currencyName(1166), Empty_Zero(CharInfo.CurrencyID[1166])}, --Искаженный временем знак
+				{func_currencyicon(1226)..func_currencyName(1226), Empty_Zero(CharInfo.CurrencyID[1226])}, --Осколок пустоты
+				{func_currencyicon(1220)..func_currencyName(1220), Empty_Zero(CharInfo.CurrencyID[1220])}, --Ресурсы опллота класса
+				{func_currencyicon(824)..func_currencyName(824), Empty_Zero(CharInfo.CurrencyID[824]).."/"..CharInfo.CurrencyID_maxQuantity[824]}, --Ресурсы гарнизона
 			}
-			if #Char_Frame.CenterLines6.tooltip == 0 then
-				Char_Frame.CenterLines6.tooltip = nil
+			-- for k,v in pairs(CharInfo.CurrencyID) do
+			-- 	if k ~= nil and k ~= 0 then
+			-- 		print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
+			-- 		--Char_Frame.CenterLines5.tooltip[#Char_Frame.CenterLines5.tooltip+1] = {func_currencyicon(k)..func_currencyName(k), v}
+			-- 		--tinsert (Char_Frame.CenterLines5.tooltip,{"name:",CharInfo.CurrencyID(k)})
+			-- 	end
+			-- end
+			if #Char_Frame.CenterLines5.tooltip == 0 then
+				Char_Frame.CenterLines5.tooltip = nil
 			end
-			--7
-			Char_Frame.CenterLines7.tooltip = {}
+			--6
+			Char_Frame.CenterLines6.tooltip = {}
 			if CharInfo.reputationID ~= 0 then
-				Char_Frame.CenterLines7.CL:SetText(ColorGray..REPUTATION.."|r")
+				Char_Frame.CenterLines6.CL:SetText(ColorGray..REPUTATION.."|r")
 			end
 			if CharInfo.reputationID[2564] ~= 0 then
-				tinsert(Char_Frame.CenterLines7.tooltip, {func_reputationName(2564), CharInfo.reputationID[2564]})
+				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2564), CharInfo.reputationID[2564]})
 			end
 			if CharInfo.reputationID[2507] ~= 0 then
-				tinsert(Char_Frame.CenterLines7.tooltip, {func_reputationName(2507), CharInfo.reputationID[2507]})
+				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2507), CharInfo.reputationID[2507]})
 			end
 			if CharInfo.reputationID[2503] ~= 0 then
-				tinsert(Char_Frame.CenterLines7.tooltip, {func_reputationName(2503), CharInfo.reputationID[2503]})
+				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2503), CharInfo.reputationID[2503]})
 			end
 			if CharInfo.reputationID[2511] ~= 0 then
-				tinsert(Char_Frame.CenterLines7.tooltip, {func_reputationName(2511), CharInfo.reputationID[2511]})
+				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2511), CharInfo.reputationID[2511]})
 			end
 			if CharInfo.reputationID[2510] ~= 0 then
-				tinsert(Char_Frame.CenterLines7.tooltip, {func_reputationName(2510), CharInfo.reputationID[2510]})
+				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2510), CharInfo.reputationID[2510]})
 			end
 			if CharInfo.reputationID[2564] and CharInfo.reputationID[2564] ~= 0 then
-				Char_Frame.CenterLines7.CL:SetText(CharInfo.reputationID[2564])
+				Char_Frame.CenterLines6.CL:SetText(CharInfo.reputationID[2564])
 			end
 			for k,v in ipairs (itemIDReputation) do
 				if CharInfo.ItemsInBag[v] ~= 0 then
-					tinsert(Char_Frame.CenterLines7.tooltip, {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]})
+					tinsert(Char_Frame.CenterLines6.tooltip, {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]})
 				end
 			end
-			if #Char_Frame.CenterLines7.tooltip == 0 then
-				Char_Frame.CenterLines7.tooltip = nil
-				Char_Frame.CenterLines7.CL:SetText("")
+			if #Char_Frame.CenterLines6.tooltip == 0 then
+				Char_Frame.CenterLines6.tooltip = nil
+				Char_Frame.CenterLines6.CL:SetText("")
 			end
-			--8 204193 204075 2409
-			Main_Frame.TextLeft8:SetText(ColorGray..PLAYER_DIFFICULTY3..", M+ 1-5|r") -- LFR
-			Char_Frame.CenterLines8.tooltip = {}
+			--7 204193 204075 2409
+			Main_Frame.TextLeft7:SetText(func_itemTexture(204193)..ColorGray..PLAYER_DIFFICULTY3..", M+ 1-5|r") -- LFR
+			Char_Frame.CenterLines7.tooltip = {}
 			local PEREMENNAYA_2409 = ""
 			if CharInfo.ItemsInBag[204193] >= 1 then
-				tinsert(Char_Frame.CenterLines8.tooltip, {func_itemTexture(204193)..func_itemName(204193), CharInfo.ItemsInBag[204193]})
-				PEREMENNAYA_2409 = func_itemTexture(204193).."|cff1eff00"..CharInfo.ItemsInBag[204193].."|r"
+				tinsert(Char_Frame.CenterLines7.tooltip, {func_itemTexture(204193)..func_itemName(204193), CharInfo.ItemsInBag[204193]})
+				PEREMENNAYA_2409 = "|cff1eff00"..CharInfo.ItemsInBag[204193].."|r"
 			end
 			if CharInfo.ItemsInBag[204075] >= 1 then
-				tinsert(Char_Frame.CenterLines8.tooltip, {func_itemTexture(204075)..func_itemName(204075), CharInfo.ItemsInBag[204075]})
+				tinsert(Char_Frame.CenterLines7.tooltip, {func_itemTexture(204075)..func_itemName(204075), CharInfo.ItemsInBag[204075]})
 			end
 			if CharInfo.ItemsInBag[204075] >= 15 then
 				PEREMENNAYA_2409 = PEREMENNAYA_2409.. "(+"..math.floor(CharInfo.ItemsInBag[204075]/15)..")"
@@ -3078,24 +3047,24 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.CurrencyID[2409] ~= 0 and (CharInfo.CurrencyID[2409] == CharInfo.CurrencyID_maxQuantity[2409]) then
 				PEREMENNAYA_2409 = PEREMENNAYA_2409..AddonColor.."*|r"
 			end
-			Char_Frame.CenterLines8.CL:SetText(PEREMENNAYA_2409)
+			Char_Frame.CenterLines7.CL:SetText(PEREMENNAYA_2409)
 			if (CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0) and CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
-				tinsert(Char_Frame.CenterLines8.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]})
+				tinsert(Char_Frame.CenterLines7.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]})
 			end
-			if #Char_Frame.CenterLines8.tooltip == 0 then
-				Char_Frame.CenterLines8.tooltip = nil
-				Char_Frame.CenterLines8.CL:SetText("")
+			if #Char_Frame.CenterLines7.tooltip == 0 then
+				Char_Frame.CenterLines7.tooltip = nil
+				Char_Frame.CenterLines7.CL:SetText("")
 			end
-			--9 204195 204076 2410
-			Main_Frame.TextLeft9:SetText(ColorGray..PLAYER_DIFFICULTY1..", M+ 6-10|r") -- Обычный
-			Char_Frame.CenterLines9.tooltip = {}
+			--8 204195 204076 2410
+			Main_Frame.TextLeft8:SetText(func_itemTexture(204195)..ColorGray..PLAYER_DIFFICULTY1..", M+ 6-10|r") -- Обычный
+			Char_Frame.CenterLines8.tooltip = {}
 			local PEREMENNAYA_2410 = ""
 			if CharInfo.ItemsInBag[204195] >= 1 then
-				tinsert(Char_Frame.CenterLines9.tooltip, {func_itemTexture(204195)..func_itemName(204195), CharInfo.ItemsInBag[204195]})
-				PEREMENNAYA_2410 = func_itemTexture(204195).."|cff0070dd"..CharInfo.ItemsInBag[204195].."|r"
+				tinsert(Char_Frame.CenterLines8.tooltip, {func_itemTexture(204195)..func_itemName(204195), CharInfo.ItemsInBag[204195]})
+				PEREMENNAYA_2410 = "|cff0070dd"..CharInfo.ItemsInBag[204195].."|r"
 			end
 			if CharInfo.ItemsInBag[204076] >= 1 then
-				tinsert(Char_Frame.CenterLines9.tooltip, {func_itemTexture(204076)..func_itemName(204076), CharInfo.ItemsInBag[204076]})
+				tinsert(Char_Frame.CenterLines8.tooltip, {func_itemTexture(204076)..func_itemName(204076), CharInfo.ItemsInBag[204076]})
 			end
 			if CharInfo.ItemsInBag[204076] >= 15 then
 				PEREMENNAYA_2410 = PEREMENNAYA_2410.. "(+"..math.floor(CharInfo.ItemsInBag[204076]/15)..")"
@@ -3103,24 +3072,24 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.CurrencyID[2410] ~= 0 and (CharInfo.CurrencyID[2410] == CharInfo.CurrencyID_maxQuantity[2410]) then
 				PEREMENNAYA_2410 = PEREMENNAYA_2410..AddonColor.."*|r"
 			end
-			Char_Frame.CenterLines9.CL:SetText(PEREMENNAYA_2410)
+			Char_Frame.CenterLines8.CL:SetText(PEREMENNAYA_2410)
 			if (CharInfo.ItemsInBag[204195] ~= 0 or CharInfo.ItemsInBag[204076] ~= 0 or CharInfo.CurrencyID[2410] ~= 0) and CharInfo.CurrencyID_maxQuantity[2410] ~= 0 then
-				tinsert(Char_Frame.CenterLines9.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]})
+				tinsert(Char_Frame.CenterLines8.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]})
 			end
-			if #Char_Frame.CenterLines9.tooltip == 0 then
-				Char_Frame.CenterLines9.tooltip = nil
-				Char_Frame.CenterLines9.CL:SetText("")
+			if #Char_Frame.CenterLines8.tooltip == 0 then
+				Char_Frame.CenterLines8.tooltip = nil
+				Char_Frame.CenterLines8.CL:SetText("")
 			end
-			--10 204196 204077 2411
-			Main_Frame.TextLeft10:SetText(ColorGray..PLAYER_DIFFICULTY2..", M+ 11-15|r") -- Героический
-			Char_Frame.CenterLines10.tooltip = {}
+			--9 204196 204077 2411
+			Main_Frame.TextLeft9:SetText(func_itemTexture(204196)..ColorGray..PLAYER_DIFFICULTY2..", M+ 11-15|r") -- Героический
+			Char_Frame.CenterLines9.tooltip = {}
 			local PEREMENNAYA_2411 = ""
 			if CharInfo.ItemsInBag[204196] >= 1 then
-				tinsert(Char_Frame.CenterLines10.tooltip, {func_itemTexture(204196)..func_itemName(204196), CharInfo.ItemsInBag[204196]})
-				PEREMENNAYA_2411 = func_itemTexture(204196).."|cffa335ee"..CharInfo.ItemsInBag[204196].."|r"
+				tinsert(Char_Frame.CenterLines9.tooltip, {func_itemTexture(204196)..func_itemName(204196), CharInfo.ItemsInBag[204196]})
+				PEREMENNAYA_2411 = "|cffa335ee"..CharInfo.ItemsInBag[204196].."|r"
 			end
 			if CharInfo.ItemsInBag[204077] >= 1 then
-				tinsert(Char_Frame.CenterLines10.tooltip, {func_itemTexture(204077)..func_itemName(204077), CharInfo.ItemsInBag[204077]})
+				tinsert(Char_Frame.CenterLines9.tooltip, {func_itemTexture(204077)..func_itemName(204077), CharInfo.ItemsInBag[204077]})
 			end
 			if CharInfo.ItemsInBag[204077] >= 15 then
 				PEREMENNAYA_2411 = PEREMENNAYA_2411.. "(+"..math.floor(CharInfo.ItemsInBag[204077]/15)..")"
@@ -3128,24 +3097,24 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.CurrencyID[2411] ~= 0 and (CharInfo.CurrencyID[2411] == CharInfo.CurrencyID_maxQuantity[2411]) then
 				PEREMENNAYA_2411 = PEREMENNAYA_2411..AddonColor.."*|r"
 			end
-			Char_Frame.CenterLines10.CL:SetText(PEREMENNAYA_2411)
+			Char_Frame.CenterLines9.CL:SetText(PEREMENNAYA_2411)
 			if (CharInfo.ItemsInBag[204196] ~= 0 or CharInfo.ItemsInBag[204077] ~= 0 or CharInfo.CurrencyID[2411] ~= 0) and CharInfo.CurrencyID_maxQuantity[2411] ~= 0 then
-				tinsert(Char_Frame.CenterLines10.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]})
+				tinsert(Char_Frame.CenterLines9.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]})
 			end
-			if #Char_Frame.CenterLines10.tooltip == 0 then
-				Char_Frame.CenterLines10.tooltip = nil
-				Char_Frame.CenterLines10.CL:SetText("")
+			if #Char_Frame.CenterLines9.tooltip == 0 then
+				Char_Frame.CenterLines9.tooltip = nil
+				Char_Frame.CenterLines9.CL:SetText("")
 			end
-			--11 204194 204078 2412
-			Main_Frame.TextLeft11:SetText(ColorGray..PLAYER_DIFFICULTY6..", M+ 16+|r") -- Эпохальный
-			Char_Frame.CenterLines11.tooltip = {}
+			--10 204194 204078 2412
+			Main_Frame.TextLeft10:SetText(func_itemTexture(204194)..ColorGray..PLAYER_DIFFICULTY6..", M+ 16+|r") -- Эпохальный
+			Char_Frame.CenterLines10.tooltip = {}
 			local PEREMENNAYA_2412 = ""
 			if CharInfo.ItemsInBag[204194] >= 1 then
-				tinsert(Char_Frame.CenterLines11.tooltip, {func_itemTexture(204194)..func_itemName(204194), CharInfo.ItemsInBag[204194]})
-				PEREMENNAYA_2412 = func_itemTexture(204194).."|cffff8000"..CharInfo.ItemsInBag[204194].."|r"
+				tinsert(Char_Frame.CenterLines10.tooltip, {func_itemTexture(204194)..func_itemName(204194), CharInfo.ItemsInBag[204194]})
+				PEREMENNAYA_2412 = "|cffff8000"..CharInfo.ItemsInBag[204194].."|r"
 			end
 			if CharInfo.ItemsInBag[204078] >= 1 then
-				tinsert(Char_Frame.CenterLines11.tooltip, {func_itemTexture(204078)..func_itemName(204078), CharInfo.ItemsInBag[204078]})
+				tinsert(Char_Frame.CenterLines10.tooltip, {func_itemTexture(204078)..func_itemName(204078), CharInfo.ItemsInBag[204078]})
 			end
 			if CharInfo.ItemsInBag[204078] >= 15 then
 				PEREMENNAYA_2412 = PEREMENNAYA_2412.. "(+"..math.floor(CharInfo.ItemsInBag[204078]/15)..")"
@@ -3153,17 +3122,17 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.CurrencyID[2412] ~= 0 and (CharInfo.CurrencyID[2412] == CharInfo.CurrencyID_maxQuantity[2412]) then
 				PEREMENNAYA_2412 = PEREMENNAYA_2412..AddonColor.."*|r"
 			end
-			Char_Frame.CenterLines11.CL:SetText(PEREMENNAYA_2412)
+			Char_Frame.CenterLines10.CL:SetText(PEREMENNAYA_2412)
 			if (CharInfo.ItemsInBag[204194] ~= 0 or CharInfo.ItemsInBag[204078] ~= 0 or CharInfo.CurrencyID[2412] ~= 0) and CharInfo.CurrencyID_maxQuantity[2412] ~= 0 then
-				tinsert(Char_Frame.CenterLines11.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]})
+				tinsert(Char_Frame.CenterLines10.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]})
 			end
-			if #Char_Frame.CenterLines11.tooltip == 0 then
-				Char_Frame.CenterLines11.tooltip = nil
-				Char_Frame.CenterLines11.CL:SetText("")
+			if #Char_Frame.CenterLines10.tooltip == 0 then
+				Char_Frame.CenterLines10.tooltip = nil
+				Char_Frame.CenterLines10.CL:SetText("")
 			end
-			--12
-			Main_Frame.TextLeft12:SetText(func_itemTexture(204440)..func_itemName(204440))
-			Char_Frame.CenterLines12.tooltip = {}
+			--11
+			Main_Frame.TextLeft11:SetText(func_itemTexture(204440)..func_itemName(204440))
+			Char_Frame.CenterLines11.tooltip = {}
 			local PEREMENNAYA_204440 = ""
 			if CharInfo.ItemsInBag[204440] >= 1 then
 				PEREMENNAYA_204440 = PEREMENNAYA_204440..func_itemTexture(204440)..CharInfo.ItemsInBag[204440]
@@ -3185,36 +3154,36 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			-- {func_itemName_NOCOLOR(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681]},
 			-- {func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682]},
 			-- {func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697]},
-			if CharInfo.ItemsInBag[204440] ~= 0 then tinsert(Char_Frame.CenterLines12.tooltip, {func_itemName(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440]}) end
-			if CharInfo.ItemsInBag[204717] ~= 0 then tinsert(Char_Frame.CenterLines12.tooltip, {func_itemName(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717]}) end
-			if CharInfo.ItemsInBag[204681] ~= 0 then tinsert(Char_Frame.CenterLines12.tooltip, {func_itemName(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681]}) end
-			if CharInfo.ItemsInBag[204682] ~= 0 then tinsert(Char_Frame.CenterLines12.tooltip, {func_itemName(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682]}) end
-			if CharInfo.ItemsInBag[204697] ~= 0 then tinsert(Char_Frame.CenterLines12.tooltip, {func_itemName(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697]}) end
-			-- if CharInfo.ItemsInBag[204440] == 0 then tinsert(Char_Frame.CenterLines12.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440].."|r"}) end
-			-- if CharInfo.ItemsInBag[204717] == 0 then tinsert(Char_Frame.CenterLines12.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717].."|r"}) end
-			-- if CharInfo.ItemsInBag[204681] == 0 then tinsert(Char_Frame.CenterLines12.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681].."|r"}) end
-			-- if CharInfo.ItemsInBag[204682] == 0 then tinsert(Char_Frame.CenterLines12.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682].."|r"}) end
-			-- if CharInfo.ItemsInBag[204697] == 0 then tinsert(Char_Frame.CenterLines12.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697].."|r"}) end
-			if #Char_Frame.CenterLines12.tooltip == 0 then
-				Char_Frame.CenterLines12.tooltip = nil
-				Char_Frame.CenterLines12.CL:SetText("")
+			if CharInfo.ItemsInBag[204440] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440]}) end
+			if CharInfo.ItemsInBag[204717] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717]}) end
+			if CharInfo.ItemsInBag[204681] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681]}) end
+			if CharInfo.ItemsInBag[204682] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682]}) end
+			if CharInfo.ItemsInBag[204697] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697]}) end
+			-- if CharInfo.ItemsInBag[204440] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440].."|r"}) end
+			-- if CharInfo.ItemsInBag[204717] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717].."|r"}) end
+			-- if CharInfo.ItemsInBag[204681] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681].."|r"}) end
+			-- if CharInfo.ItemsInBag[204682] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682].."|r"}) end
+			-- if CharInfo.ItemsInBag[204697] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697].."|r"}) end
+			if #Char_Frame.CenterLines11.tooltip == 0 then
+				Char_Frame.CenterLines11.tooltip = nil
+				Char_Frame.CenterLines11.CL:SetText("")
 			end
-			Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440)
+			Char_Frame.CenterLines11.CL:SetText(PEREMENNAYA_204440)
 			-- if CharInfo.ItemsInBag[204440] >= 1 then
-			--     Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440)
+			--     Char_Frame.CenterLines11.CL:SetText(PEREMENNAYA_204440)
 			-- end
 			-- if CharInfo.ItemsInBag[204717] >=1 then
-			--     Char_Frame.CenterLines12.tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
+			--     Char_Frame.CenterLines11.tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
 			-- end
 			-- if CharInfo.ItemsInBag[204717] >=2 then
-			--     Char_Frame.CenterLines12.CL:SetText(PEREMENNAYA_204440.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
+			--     Char_Frame.CenterLines11.CL:SetText(PEREMENNAYA_204440.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
 			-- end
-			--13 НОВЫЙ КАТАЛИСТ
-			Main_Frame.TextLeft13:SetText(func_currencyicon(2533)..func_currencyName(2533))
+			--12 НОВЫЙ КАТАЛИСТ
+			Main_Frame.TextLeft12:SetText(func_currencyicon(2533)..func_currencyName(2533))
 			if CharInfo.CurrencyID[2533] >= 1 then
-				Char_Frame.CenterLines13.CL:SetText(func_currencyicon(2533)..CharInfo.CurrencyID[2533])
+				Char_Frame.CenterLines12.CL:SetText(func_currencyicon(2533)..CharInfo.CurrencyID[2533])
 			end
-			--14
+			--13
 			local PEREMENNAYA_prof1_and_prof2 = ""
 			if CharInfo.profID_prof1.icon ~= 0 then
 				PEREMENNAYA_prof1_and_prof2 = CharInfo.profID_prof1.icon
@@ -3222,10 +3191,10 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.profID_prof2.icon ~= 0 then
 				PEREMENNAYA_prof1_and_prof2 = PEREMENNAYA_prof1_and_prof2.. " "..CharInfo.profID_prof2.icon
 			end
-			Char_Frame.CenterLines14.CL:SetText(PEREMENNAYA_prof1_and_prof2)
-			Char_Frame.CenterLines14.tooltip = {}
+			Char_Frame.CenterLines13.CL:SetText(PEREMENNAYA_prof1_and_prof2)
+			Char_Frame.CenterLines13.tooltip = {}
 			if CharInfo.prof1 ~= 0 or CharInfo.prof2 ~= 0 then
-				Char_Frame.CenterLines14.tooltip = {
+				Char_Frame.CenterLines13.tooltip = {
 					{Empty_Zero(CharInfo.profID_prof1.icon).."|cffa335ee"..Empty_Zero(CharInfo.profID_prof1.name).."|r"},
 					{"Сундуки", CharInfo.profID_prof1.chest.chest_count_prof1.."/"..CharInfo.profID_prof1.chest.questReq},
 					{"Лут", CharInfo.profID_prof1.drops.drops_count_prof1.."/"..CharInfo.profID_prof1.drops.questReq},
@@ -3242,24 +3211,23 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					{" ", " "},
 				}
 			end
-			if CharInfo.ItemsInBag[204186] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204186)..func_itemName(204186), CharInfo.ItemsInBag[204186]}) end
-			if CharInfo.ItemsInBag[204187] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204187)..func_itemName(204187), CharInfo.ItemsInBag[204187]}) end
-			if CharInfo.ItemsInBag[204188] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204188)..func_itemName(204188), CharInfo.ItemsInBag[204188]}) end
-			if CharInfo.ItemsInBag[190453] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(190453)..func_itemName(190453), CharInfo.ItemsInBag[190453]}) end
-			if CharInfo.ItemsInBag[191784] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(191784)..func_itemName(191784), CharInfo.ItemsInBag[191784]}) end
-			if CharInfo.ItemsInBag[204985] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]}) end
-			if CharInfo.ItemsInBag[204715] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(204715)..func_itemName(204715), CharInfo.ItemsInBag[204715]}) end
-			if CharInfo.ItemsInBag[190456] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(190456)..func_itemName(190456), CharInfo.ItemsInBag[190456]}) end
-			if CharInfo.ItemsInBag[199197] >= 1 then tinsert(Char_Frame.CenterLines14.tooltip, {func_itemTexture(199197)..func_itemName(199197), CharInfo.ItemsInBag[199197]}) end
-			if #Char_Frame.CenterLines14.tooltip == 0 then
-				Char_Frame.CenterLines14.tooltip = nil
-				Char_Frame.CenterLines14.CL:SetText("")
+			if CharInfo.ItemsInBag[204186] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204186)..func_itemName(204186), CharInfo.ItemsInBag[204186]}) end
+			if CharInfo.ItemsInBag[204187] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204187)..func_itemName(204187), CharInfo.ItemsInBag[204187]}) end
+			if CharInfo.ItemsInBag[204188] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204188)..func_itemName(204188), CharInfo.ItemsInBag[204188]}) end
+			if CharInfo.ItemsInBag[190453] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(190453)..func_itemName(190453), CharInfo.ItemsInBag[190453]}) end
+			if CharInfo.ItemsInBag[191784] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(191784)..func_itemName(191784), CharInfo.ItemsInBag[191784]}) end
+			if CharInfo.ItemsInBag[204985] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]}) end
+			if CharInfo.ItemsInBag[204715] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204715)..func_itemName(204715), CharInfo.ItemsInBag[204715]}) end
+			if CharInfo.ItemsInBag[190456] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(190456)..func_itemName(190456), CharInfo.ItemsInBag[190456]}) end
+			if CharInfo.ItemsInBag[199197] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(199197)..func_itemName(199197), CharInfo.ItemsInBag[199197]}) end
+			if #Char_Frame.CenterLines13.tooltip == 0 then
+				Char_Frame.CenterLines13.tooltip = nil
+				Char_Frame.CenterLines13.CL:SetText("")
 			end
-			--15
+			--14
 			local tinsertTABLE = {
 				-- {name = func_questName(72528), data=CheckCompletedByQuestID(72528)}, --БУДУЩИЙ КАТАЛИЗАТОР
 				{name = TreasureGoblinTimer(), data=CharInfo.Octopussy_TreasureGoblin},
-				{name ="", data =""},
 				{name = ToDragonbaneKeepTimer(), data=CharInfo.Octopussy_DragonbaneKeep},
 				{name = GrandHuntsTimer(), data=CharInfo.Octopussy_TheGrandHunt},
 				{name = CommunityFeastTimer(), data=CharInfo.Octopussy_Feast},
@@ -3289,45 +3257,45 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				-- {name = func_questName(56337), data = CharInfo.questIDtable[56337]},
 				-- {name = func_questName(72167), data = CharInfo.questIDtable[72167]},
 			}
-			Char_Frame.CenterLines15.CL:SetText(ColorGray..QUESTS_LABEL.."|r")
-			Char_Frame.CenterLines15.tooltip = {}
+			Char_Frame.CenterLines14.CL:SetText(ColorGray..QUESTS_LABEL.."|r")
+			Char_Frame.CenterLines14.tooltip = {}
 			for k, v in ipairs(tinsertTABLE) do
-				pizda = "|cffc9c3aa"
+				vagina = "|cffc9c3aa"
 				if v.data == "|cff00FF00Done|r" then
-					pizda = AddonColor
+					vagina = AddonColor
 				end
-				tinsert(Char_Frame.CenterLines15.tooltip, {pizda..v.name.."|r", v.data})
+				tinsert(Char_Frame.CenterLines14.tooltip, {vagina..v.name.."|r", v.data})
 			end
 			-- for k, v in ipairs(questIDtable) do
 			--     if CharInfo.questIDtable[v] ~= "" and CharInfo.questIDtable[v] ~= 0 then
-			--         tinsert(Char_Frame.CenterLines15.tooltip, {func_questName(v), CharInfo.questIDtable[v]})
+			--         tinsert(Char_Frame.CenterLines14.tooltip, {func_questName(v), CharInfo.questIDtable[v]})
 			--     end
 			-- end
-			if #Char_Frame.CenterLines15.tooltip == 0 then
-				Char_Frame.CenterLines15.tooltip = nil
-				Char_Frame.CenterLines15.CL:SetText("")
+			if #Char_Frame.CenterLines14.tooltip == 0 then
+				Char_Frame.CenterLines14.tooltip = nil
+				Char_Frame.CenterLines14.CL:SetText("")
 			end
-			--16
-			-- Char_Frame.CenterLines16.CL:SetText(func_itemTexture(190453)..Empty_Zero(CharInfo.ItemsInBag[190453]))
-			-- if CharInfo.ItemsInBag[199197] ~= 0 then Char_Frame.CenterLines16.CL:SetText("|cffFF00FF"..func_itemTexture(190453)..CharInfo.ItemsInBag[190453].." (+"..CharInfo.ItemsInBag[199197]..")|r") end
-			Char_Frame.CenterLines16.tooltip = {}
+			--15
+			-- Char_Frame.CenterLines15.CL:SetText(func_itemTexture(190453)..Empty_Zero(CharInfo.ItemsInBag[190453]))
+			-- if CharInfo.ItemsInBag[199197] ~= 0 then Char_Frame.CenterLines15.CL:SetText("|cffFF00FF"..func_itemTexture(190453)..CharInfo.ItemsInBag[190453].." (+"..CharInfo.ItemsInBag[199197]..")|r") end
+			Char_Frame.CenterLines15.tooltip = {}
 			for k, v in ipairs(itemID) do
 				local count = tonumber(CharInfo.ItemsInBag[v])
 				if count ~= 0 then
-					--if CharInfo.ItemsInBag[190453] == 0 and CharInfo.ItemsInBag[199197] == 0 then Char_Frame.CenterLines16.CL:SetText(ColorGray..ITEMS.."|r") end
-					Char_Frame.CenterLines16.CL:SetText(ColorGray..ITEMS.."|r")
-					Char_Frame.CenterLines16.tooltip[#Char_Frame.CenterLines16.tooltip+1] = {func_itemTexture(v)..func_itemName(v), count}
+					--if CharInfo.ItemsInBag[190453] == 0 and CharInfo.ItemsInBag[199197] == 0 then Char_Frame.CenterLines15.CL:SetText(ColorGray..ITEMS.."|r") end
+					Char_Frame.CenterLines15.CL:SetText(ColorGray..ITEMS.."|r")
+					Char_Frame.CenterLines15.tooltip[#Char_Frame.CenterLines15.tooltip+1] = {func_itemTexture(v)..func_itemName(v), count}
 				end
 			end
-			if #Char_Frame.CenterLines16.tooltip == 0 then
-				Char_Frame.CenterLines16.tooltip = nil
-				Char_Frame.CenterLines16.CL:SetText(" ")
+			if #Char_Frame.CenterLines15.tooltip == 0 then
+				Char_Frame.CenterLines15.tooltip = nil
+				Char_Frame.CenterLines15.CL:SetText(" ")
 			end
-			--17
-			--Char_Frame.CenterLines17.CL:SetText(format("|cff%s%.1f|r", CharInfo.avgItemLevel >= 430 and "00ff00" or CharInfo.avgItemLevel >= 400 and "ffff00" or "ff0000", CharInfo.avgItemLevel))
-			Main_Frame.TextLeft17:SetText(LFG_LIST_ITEM_LEVEL_INSTR_SHORT)
+			--16
+			--Char_Frame.CenterLines16.CL:SetText(format("|cff%s%.1f|r", CharInfo.avgItemLevel >= 430 and "00ff00" or CharInfo.avgItemLevel >= 400 and "ffff00" or "ff0000", CharInfo.avgItemLevel))
+			Main_Frame.TextLeft16:SetText(LFG_LIST_ITEM_LEVEL_INSTR_SHORT)
 			local PEREMENNAYA_PVP = ""
-			Char_Frame.CenterLines17.tooltip = {}
+			Char_Frame.CenterLines16.tooltip = {}
 			local pvpcolor = "|cffFF0000"
 			if CharInfo.avgItemLevelEquipped and CharInfo.avgItemLevel then
 				if CharInfo.avgItemLevelEquipped > 440 then
@@ -3341,31 +3309,42 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				end
 				if CharInfo.avgItemLevelPvp and CharInfo.avgItemLevelPvp > CharInfo.avgItemLevel then
 					PEREMENNAYA_PVP = PEREMENNAYA_PVP..AddonColor.."*|r"
-					tinsert(Char_Frame.CenterLines17.tooltip, {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp)})
+					tinsert(Char_Frame.CenterLines16.tooltip, {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp)})
 				end
 			end
-			if #Char_Frame.CenterLines17.tooltip == 0 then
-				Char_Frame.CenterLines17.tooltip = nil
-				--Char_Frame.CenterLines17.CL:SetText(" ")
+			if #Char_Frame.CenterLines16.tooltip == 0 then
+				Char_Frame.CenterLines16.tooltip = nil
+				--Char_Frame.CenterLines16.CL:SetText(" ")
 			end
-			Char_Frame.CenterLines17.CL:SetText(PEREMENNAYA_PVP)
-			--18
+			Char_Frame.CenterLines16.CL:SetText(PEREMENNAYA_PVP)
+			--17
 			local curServerShort = GetRealmName()
 			local text = (curServerShort):gsub("-", " "):gsub("'", " ")
 			local a, b = strsplit(" ", text)
 			if b then
 				curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
 			end
-			Main_Frame.TextLeft18:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r")
+			Main_Frame.TextLeft17:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r")
 			local PEREMENNAYA_MONEY = "|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r"
 			if CharInfo.PlayerReagentnumSlots == 0 then PEREMENNAYA_MONEY = PEREMENNAYA_MONEY.."|cffFF0000*|r" end
-			Char_Frame.CenterLines18.CL:SetText(PEREMENNAYA_MONEY)
-			-- 19
-			TotalKills = 0
-			TotalKills = TotalKills+ CharInfo.KillCount[205490]
-			Main_Frame.TextLeft19:SetText("Гоблинов убито: " .. TotalKills)
-			Char_Frame.CenterLines19.CL:SetText(Empty_Zero(CharInfo.KillCount[205490]))
-			--------------------------------------------------
+			Char_Frame.CenterLines17.CL:SetText(PEREMENNAYA_MONEY)
+			--18
+			Main_Frame.TextLeft18:SetText(L["Last Update"])
+			Char_Frame.CenterLines18.tooltip = {}
+			if CharInfo.CurrentLocation then
+				tinsert (Char_Frame.CenterLines18.tooltip, {CharInfo.CurrentLocation})
+			end
+			local needReset = false
+			if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
+				needReset = true
+			end
+			if CharInfo.pizdaDate ~= 0 and CharInfo.pizdaDate ~= 0 then
+				Char_Frame.CenterLines18.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
+				Char_Frame.CenterLines18.CL:SetText((needReset and "|cffFF0000" or ColorGray).. CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours)
+			end
+			------------------------------------------------------------------------------------------
+			------------------------------------------------------------------------------------------
+			------------------------------------------------------------------------------------------
 			if curGUID == curCharGUID then
 				Char_Frame.BG:Show()
 				Char_Frame.BG:SetAlpha(0.2)
@@ -3411,9 +3390,29 @@ function CollectPlayerInfo()
 	collect.classColor = classColor or {r = 0.5, g = 0.5, b = 0.5}
 end
 local function checkCharInfo(CharInfo)
-	CharInfo.KillCount = CharInfo.KillCount or {}
-	setmetatable(CharInfo.KillCount, Meta_Table)
-
+	-- CharInfo.KillCount = CharInfo.KillCount or {}
+	-- setmetatable(CharInfo.KillCount, Meta_Table)
+	CharInfo.pizdaDate = CharInfo.pizdaDate or 0
+	CharInfo.pizdaHours = CharInfo.pizdaHours or 0
+	CharInfo.Shadowland = CharInfo.Shadowland or {}
+	setmetatable(CharInfo.Shadowland, Meta_Table)
+	CharInfo.curCovID = CharInfo.curCovID or 0
+	CharInfo.Kyrian = CharInfo.Kyrian or {}
+	CharInfo.Venthyr = CharInfo.Venthyr or {}
+	CharInfo.NightFae = CharInfo.NightFae or {}
+	CharInfo.Necrolord = CharInfo.Necrolord or {}
+	-- setmetatable(CharInfo.CurrencyID, Meta_Table)
+	-- setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table)
+	-- setmetatable(CharInfo.EVENTS_ZARALEK_LIST, Meta_Table)
+	-- setmetatable(CharInfo.ItemsInBag, Meta_Table)
+	CharInfo.Kyrian.Renown = CharInfo.Kyrian.Renown or 0
+	CharInfo.Venthyr.Renown = CharInfo.Venthyr.Renown or 0
+	CharInfo.NightFae.Renown = CharInfo.NightFae.Renown or 0
+	CharInfo.Necrolord.Renown = CharInfo.Necrolord.Renown or 0
+	CharInfo.Kyrian.Anima = CharInfo.Kyrian.Anima or 0
+	CharInfo.Venthyr.Anima = CharInfo.Venthyr.Anima or 0
+	CharInfo.NightFae.Anima = CharInfo.NightFae.Anima or 0
+	CharInfo.Necrolord.Anima = CharInfo.Necrolord.Anima or 0
 	CharInfo.CurrencyID = CharInfo.CurrencyID or {}
 	CharInfo.CurrencyID_maxQuantity = CharInfo.CurrencyID_maxQuantity or {}
 	CharInfo.EVENTS_ZARALEK_LIST = CharInfo.RARE_ZARALEK_LIST or {}
@@ -3542,7 +3541,16 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			CollectAllReputations()
 			CollectAllQuests()
 			OctoQuestUpdate()
+			CollectLoginTime()
 		end
+	elseif event == "COVENANT_CHOSEN" then
+		C_Timer.After(1, function()
+			CollectCovenantAnima()
+		end)
+	elseif event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED" then
+		C_Timer.After(1, function()
+			CollectCovenantAnima()
+		end)
 	elseif event == "QUEST_FINISHED" then
 		OctoQuestUpdate()
 		CollectAllQuests()
@@ -3575,7 +3583,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			Octo_ToDo_DragonflyLevels = {
 			}
 		end
-		local MinimapName = AddonName.."Minimap"
+		local MinimapName = GlobalAddonName.."Minimap"
 		local ldb_icon = ldb:NewDataObject(MinimapName, {
 				type = "data source",
 				text = MinimapName,
@@ -3584,7 +3592,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 					if not InCombatLockdown() then
 						Main_Frame:SetShown(not Main_Frame:IsShown())
 						if PlayCustomSound == true then
-							PlaySoundFile("Interface\\AddOns\\"..AddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
+							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
 						end
 						CollectAllItemsInBag()
 						--Fragments_Earned()
@@ -3596,7 +3604,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 						-- if SettingsPanel:IsVisible() and self:IsVisible() then
 						--     HideUIPanel(SettingsPanel)
 						-- else
-						--     Settings.OpenToCategory(AddonName, true)
+						--     Settings.OpenToCategory(GlobalAddonName, true)
 						-- end
 					end
 				end,
@@ -3609,10 +3617,10 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 					GameTooltip:Hide()
 				end,
 		})
-		Octo_ToDo_DragonflyVars.omb = Octo_ToDo_DragonflyVars.omb or {}
-		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.omb)
-		ldbi:Show(MinimapName)
 		Octo_ToDo_DragonflyVars.config = Octo_ToDo_DragonflyVars.config or {}
+		Octo_ToDo_DragonflyVars.config.minimapPos = Octo_ToDo_DragonflyVars.config.minimapPos or 244
+		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.config)
+		ldbi:Show(MinimapName)
 		if Octo_ToDo_DragonflyVars.config.CVar == nil then  --RELOAD
 			Octo_ToDo_DragonflyVars.config.CVar = false
 		end
@@ -3696,6 +3704,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		self:RegisterEvent("PLAYER_MONEY")
 		self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
 		self:RegisterEvent("PLAYER_STARTED_MOVING")
+		CollectCovenantAnima()
 		CollectPlayerInfo()
 		CollectPVPRaitings()
 		OctoQuestUpdate()
@@ -3713,39 +3722,47 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectCurrentKEY()
 		CollectAllQuests()
 		UPGRADERANKS_Frame()
+		CollectLoginTime()
 		--itemID_TEST_INSERT()
-	elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
-		local _, eventType = CombatLogGetCurrentEventInfo()
-		if eventType == "UNIT_DIED" then
-			CollectKillCount()
-		end
+	-- elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
+	-- 	local _, eventType = CombatLogGetCurrentEventInfo()
+	-- 	if eventType == "UNIT_DIED" then
+	-- 		CollectKillCount()
+	-- 	end
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		CollectPVPRaitings()
+		CollectLoginTime()
 	elseif event == "PLAYER_LEAVING_WORLD" and not InCombatLockdown() then
 		-- OctoMoneyUpdate()
 		-- CollectAllCurrency()
 		CollectDungeonsRaiting()
+		CollectLoginTime()
 		-- CollectPVPRaitings()
 		-- elseif event == "PLAYER_LOGOUT" then
 		-- CollectAllItemsInBag()
 		-- CollectCurrentKEY()
 	elseif event == "PLAYER_ENTERING_WORLD" and not InCombatLockdown() then
 		CollectPVPRaitings()
+		CollectLoginTime()
 	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
 		CollectAllItemsInBag()
 		--Fragments_Earned()
 		CollectCurrentKEY()
+		CollectLoginTime()
 		--itemID_TEST_INSERT()
 	elseif event == "HEARTHSTONE_BOUND" and not InCombatLockdown() then
 		CollectAllItemsInBag()
+		CollectLoginTime()
 		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED" and not InCombatLockdown() then
 		OctoQuestUpdate()
 		CollectAllItemsInBag()
+		CollectLoginTime()
 		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED_NEW_AREA" and not InCombatLockdown() then
 		OctoQuestUpdate()
 		CollectAllItemsInBag()
+		CollectLoginTime()
 		--Fragments_Earned()
 		-- elseif event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
 		-- CollectPVPRaitings()
@@ -3770,6 +3787,3 @@ end
 -- local ColorKyrian = CreateColor(1, 1, 1, 1)
 -- (KYRIAN_BLUE_COLOR:GetRGB())
 -- SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
-
-
-

@@ -1,15 +1,15 @@
-local AddonName, E = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
+local GlobalAddonName, E = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 --E.modules = {}
 --------------------------------------------------------------------------------
 local AL3 = LibStub("AceLocale-3.0")
 local debug = false
-local AddonName, engine = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
+local GlobalAddonName, engine = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 local L = AL3:NewLocale("OctoTODO", "enUS", true, debug)
 if L then
-    L["AddonName"] = AddonTitle
+    L["GlobalAddonName"] = AddonTitle
     L["RESET"] = RESET
 
     L["Siege on Dragonbane Keep"] = true
@@ -30,6 +30,7 @@ if L then
 
 
     L["|cFF00A3FFTalking head frame|r |cffFF4C4Fcanceled.|r"] = true
+    L["Last Update"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -48,5 +49,6 @@ if L then
     L["You don't have enough money to repair."] = "У Вас недостаточно денег для ремонта."
     L["Your items have been repaired for: "] = "Ремонт обошелся в "
     L["Your items have been repaired using guild bank funds for: "] = "Ремонт обошелся гильдии в "
+    L["Last Update"] = "Последнее Обновление"
 end
 

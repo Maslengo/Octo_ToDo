@@ -1,6 +1,6 @@
-local AddonName, E = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
+local GlobalAddonName, E = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 --E.modules = {}
 --------------------------------------------------------------------------------
 local Octo_AUTO_ACCEPT_QUEST = CreateFrame("Frame", AddonTitle)
@@ -18,6 +18,14 @@ Octo_AUTO_ACCEPT_QUEST:SetScript("OnEvent", function(self, event, ...)
             --CompleteQuest()
         end
 end)
+
+
+
+
+
+
+
+
 -- QUEST_DETAIL
 -- PLAYER_SOFT_INTERACT_CHANGED
 -- QUEST_FINISHED

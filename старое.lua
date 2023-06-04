@@ -1,6 +1,6 @@
-local AddonName, engine = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
+local GlobalAddonName, engine = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 print(AddonTitle.." v"..Version.." loaded")
 
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
@@ -914,7 +914,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		C_Timer.After(1, function()
 				Octo_ToDo_DragonflyCreateAltFrame()
 		end)
-		local MinimapName = AddonName.."Minimap"
+		local MinimapName = GlobalAddonName.."Minimap"
 		local ldb_icon = ldb:NewDataObject(MinimapName, {
 				type = "data source",
 				text = MinimapName,

@@ -1,6 +1,6 @@
-local AddonName, E = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
+local GlobalAddonName, E = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 --E.modules = {}
 --------------------------------------------------------------------------------
 local Enable_Module = false
@@ -53,8 +53,8 @@ local function MASLENGO_Mail()
 	SELL_Frame:SetScript("OnDragStop", function() SELL_Frame:StopMovingOrSizing() end)
 	SELL_Frame:SetPoint("CENTER", -551, 12)
 	SELL_Frame:SetBackdrop({
-			bgFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
-			edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
+			bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
 	SELL_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
@@ -133,7 +133,7 @@ local function MASLENGO_Mail()
 	)
 	local t = SELL_Frame.Button:CreateTexture(nil,"BACKGROUND")
 	SELL_Frame.Button.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\SELL.tga")
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SELL.tga")
 	t:SetVertexColor(1,0,1,1)
 	t:SetAllPoints(SELL_Frame.Button)
 end
@@ -145,8 +145,8 @@ local function MASLENGO_BANK()
 	FROMBANK_Frame:SetFrameStrata("DIALOG")
 	FROMBANK_Frame:SetPoint("CENTER", -500, 32)
 	FROMBANK_Frame:SetBackdrop({
-			bgFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
-			edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
+			bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
 	FROMBANK_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
@@ -163,7 +163,7 @@ local function MASLENGO_BANK()
 	)
 	local t = FROMBANK_Frame.Button:CreateTexture(nil,"BACKGROUND")
 	FROMBANK_Frame.Button.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\Arrow_RIGHT.tga")
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_RIGHT.tga")
 	t:SetVertexColor(1,1,1,1)
 	t:SetAllPoints(FROMBANK_Frame.Button)
 	---------------------------------------------------------------------------------------------------
@@ -174,8 +174,8 @@ local function MASLENGO_BANK()
 	TOBANK_Frame:SetFrameStrata("DIALOG")
 	TOBANK_Frame:SetPoint("CENTER", -500, -32)
 	TOBANK_Frame:SetBackdrop({
-			bgFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
-			edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga",
+			bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
 	TOBANK_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
@@ -191,7 +191,7 @@ local function MASLENGO_BANK()
 	)
 	local t = TOBANK_Frame.Button:CreateTexture(nil,"BACKGROUND")
 	TOBANK_Frame.Button.icon = t
-	t:SetTexture("Interface\\AddOns\\"..AddonName.."\\Media\\Arrow_LEFT.tga")
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_LEFT.tga")
 	t:SetVertexColor(1,1,1,1)
 	t:SetAllPoints(TOBANK_Frame.Button)
 	---------------------------------------------------------------------------------------------------

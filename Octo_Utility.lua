@@ -1,6 +1,6 @@
-local AddonName, E = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
+local GlobalAddonName, E = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -27,11 +27,20 @@ end)
 --HideZoneText
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.HideZoneText then
-			ZoneTextFrame:UnregisterAllEvents()
-			EventToastManagerFrame:UnregisterAllEvents()
-			if EventToastManagerFrame then
+
+			ZoneTextFrame:HookScript("OnShow", function(self, ...)
+				ZoneTextFrame:UnregisterAllEvents()
+				SubZoneTextFrame:UnregisterAllEvents()
+				ZoneTextString:Hide()
+				SubZoneTextString:Hide()
+				PVPArenaTextString:Hide()
+			end)
+
+			EventToastManagerFrame:HookScript("OnShow", function(self,...)
+				EventToastManagerFrame:UnregisterAllEvents()
 				EventToastManagerFrame:Hide()
-			end
+
+			end)
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -99,8 +108,10 @@ end)
 --BossBanner
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.BossBanner then
-			BossBanner:UnregisterAllEvents()
-			BossBanner:Hide()
+			BossBanner:HookScript("OnShow", function(self, ...)
+				BossBanner:UnregisterAllEvents()
+				BossBanner:Hide()
+			end)
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -109,27 +120,27 @@ end)
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast then
 			if MajorFactionsRenownToast then
-				print("che za hooinya")
-				-- MajorFactionsRenownToast:UnregisterAllEvents()
-				-- MajorFactionsRenownToast:Hide()
-				-- MajorFactionsRenownToast.ToastBG:Hide()
-				-- MajorFactionsRenownToast.IconSwirlModelScene:Hide()
-				MajorFactionsRenownToast.ToastBG:SetAlpha(0)
-				MajorFactionsRenownToast.IconSwirlModelScene:SetAlpha(0)
-				MajorFactionsRenownToast.Icon:SetAlpha(0)
-				MajorFactionsRenownToast.RenownLabel:SetAlpha(0)
-				MajorFactionsRenownToast.RewardIcon:SetAlpha(0)
-				MajorFactionsRenownToast.RewardIconRing:SetAlpha(0)
-				MajorFactionsRenownToast.RewardDescription:SetAlpha(0)
+				MajorFactionsRenownToast:HookScript("OnShow", function(self, ...)
+					--MajorFactionsRenownToast:UnregisterAllEvents()
+					--MajorFactionsRenownToast:Hide()
+					MajorFactionsRenownToast.Icon.Texture:Hide()
+					MajorFactionsRenownToast.ToastBG:Hide()
+					MajorFactionsRenownToast.IconSwirlModelScene:Hide()
+					MajorFactionsRenownToast.Icon:Hide()
+					MajorFactionsRenownToast.RenownLabel:Hide()
+					MajorFactionsRenownToast.RewardIcon:Hide()
+					MajorFactionsRenownToast.RewardIconRing:Hide()
+					MajorFactionsRenownToast.RewardDescription:Hide()
+				end)
 			end
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
-local function func_Octo_LoadAddOn(AddonName)
-	if select(5, GetAddOnInfo(AddonName)) == "DISABLED" then
-		EnableAddOn(AddonName)
-		LoadAddOn(AddonName)
+local function func_Octo_LoadAddOn(GlobalAddonName)
+	if select(5, GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
+		EnableAddOn(GlobalAddonName)
+		LoadAddOn(GlobalAddonName)
 	end
 end
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -209,14 +220,14 @@ tinsert(E.modules, function()
 						SetCVar("findYourselfMode", 0)
 						SetCVar("floatingCombatTextAllSpellMechanics", 0)
 						SetCVar("floatingCombatTextAuras", 0)
-						SetCVar("floatingCombatTextCombatDamage", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageAllAutos", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageDirectionalScale", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatHealing", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
+						SetCVar("floatingCombatTextCombatDamage", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageAllAutos", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageDirectionalScale", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatHealing", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatLogPeriodicSpells", 1) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
 						SetCVar("floatingCombatTextCombatState", 0) --Проки по центру экрана
 						SetCVar("floatingCombatTextComboPoints", 0)
 						SetCVar("floatingCombatTextDamageReduction", 0)
@@ -227,8 +238,8 @@ tinsert(E.modules, function()
 						SetCVar("floatingCombatTextHonorGains", 0)
 						SetCVar("floatingCombatTextLowManaHealth", 0)
 						SetCVar("floatingCombatTextPeriodicEnergyGains", 0)
-						SetCVar("floatingCombatTextPetMeleeDamage", 0) --ТУТ
-						SetCVar("floatingCombatTextPetSpellDamage", 0) --ТУТ
+						SetCVar("floatingCombatTextPetMeleeDamage", 1) --ТУТ
+						SetCVar("floatingCombatTextPetSpellDamage", 1) --ТУТ
 						SetCVar("floatingCombatTextReactives", 0)
 						SetCVar("floatingCombatTextRepChanges", 0)
 						SetCVar("floatingCombatTextSpellMechanics", 0)
@@ -256,10 +267,10 @@ tinsert(E.modules, function()
 						SetCVar("nameplateMinAlpha", 0.6)
 						SetCVar("nameplateMinAlphaDistance", 10)
 						SetCVar("nameplateMinScale", 1)
-						SetCVar("nameplateMotion", 0) --(0 Наложение) (1 Друг над другом) stack
+						SetCVar("nameplateMotion", 1) --(0 Наложение) (1 Друг над другом) stack
 						SetCVar("nameplateMotionSpeed", 0.025)
 						SetCVar("nameplateOccludedAlphaMult", 0.4)
-						SetCVar("nameplateOverlapV", 1.1) --если выключено наложение нейплейтов (интерфейс-имена-друг над другом включено), то эта переменная указывает расстояние между неймплейтами по вертикали
+						SetCVar("nameplateOverlapV", 1) --если выключено наложение нейплейтов (интерфейс-имена-друг над другом включено), то эта переменная указывает расстояние между неймплейтами по вертикали
 						SetCVar("NameplatePersonalHideDelayAlpha", 0.45)
 						SetCVar("NameplatePersonalHideDelaySeconds", 3)
 						SetCVar("NameplatePersonalShowInCombat", 1)
@@ -899,7 +910,7 @@ tinsert(E.modules, function()
 			UsableItems_Frame:Hide()
 			UsableItems_Frame:SetSize(64*scale, 64*scale)
 			UsableItems_Frame:SetPoint("TOPLEFT", 0, 0)
-			UsableItems_Frame:SetBackdrop({ edgeFile = "Interface\\Addons\\"..AddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 4})
+			UsableItems_Frame:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 4})
 			UsableItems_Frame:SetBackdropBorderColor(1, 1, 1, 1)
 			UsableItems_Frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 			UsableItems_Frame:SetAttribute("type", "macro")
