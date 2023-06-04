@@ -2219,6 +2219,7 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("VOID_STORAGE_CONTENTS_UPDATE")
 	EventFrame:RegisterEvent("VOID_TRANSFER_DONE")
 	EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
+	EventFrame:RegisterEvent("SPELLS_CHANGED")
 	-- -- EventFrame:RegisterEvent("VARIABLES_LOADED")
 	-- EventFrame:RegisterEvent("ARENA_SEASON_WORLD_STATE")
 	-- EventFrame:RegisterEvent("BATTLEFIELDS_CLOSED")
@@ -4004,6 +4005,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		end
 	elseif event == "VOID_STORAGE_UPDATE" or event == "VOID_TRANSFER_DONE" or event == "VOID_STORAGE_CONTENTS_UPDATE" or event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
 		CollectVoidStorage()
+	elseif event == "SPELLS_CHANGED" then
+		CollectKnownSpell()
 	end
 end
 Octo_ToDo_DragonflyOnLoad()
