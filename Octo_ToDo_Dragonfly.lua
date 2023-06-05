@@ -3880,7 +3880,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			Octo_ToDo_DragonflyVars.config.CVar = false
 		end
 		if Octo_ToDo_DragonflyVars.config.InputDelete == nil then --RELOAD
-			Octo_ToDo_DragonflyVars.config.InputDelete = false
+			Octo_ToDo_DragonflyVars.config.InputDelete = true
 		end
 		if Octo_ToDo_DragonflyVars.config.UsableItems == nil then
 			Octo_ToDo_DragonflyVars.config.UsableItems = true
