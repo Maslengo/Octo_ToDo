@@ -379,6 +379,8 @@ tinsert(E.modules, function()
 				return table.concat(s)
 			end
 			local white_list = {
+				{itemid = 205423, count = 1},
+				{itemid = 92794, count = 1},
 				{itemid = 206006, count = 1},
 				{itemid = 5523, count = 1},
 				{itemid = 7973, count = 1},
@@ -900,6 +902,7 @@ tinsert(E.modules, function()
 
 
 			local white_list70 ={
+				{itemid = 92794, count = 1},
 				{itemid = 205423, count = 1},
 				{itemid = 205966, count = 1},
 			}

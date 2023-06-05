@@ -29,7 +29,7 @@ local curServer = GetRealmName()
 local TotalMoney = 0
 local TotalKills = 0
 local curMoney = 0
-local thursdayResetDay0EU = (1514358000-10800) --https://wowreset.com/ 14-3=11(ТСК)
+local thursdayReset = (1514358000-10800) --https://wowreset.com/ 14-3=11(ТСК) --thursdayResetDay0EU
 local thursdayResetDay0US = 1514300400
 local daytime = 86400 -- 60 * 60 * 24 --60 сек на 60 мин на 24 ч
 local NONE = "" --ColorGray..NONE.."|r"
@@ -170,48 +170,48 @@ local function SecondsToClock(seconds)
 	end
 end
 local spawns = {
-	{mapId = 2112, name="|cff93c47d(Вальдракен)|r"},
-	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-	{mapId = 2022, name="|cff93c47d(Берега Пробуждения)|r"},
-	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
-	{mapId = 2023, name="|cff93c47d(Равнины Он'ары)|r"},
-	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-	{mapId = 2024, name="|cff93c47d(Лазурный Простор)|r"},
-	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
-	{mapId = 2025, name="|cff93c47d(Тальдразус)|r"},
-	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-	{mapId = 2112, name="|cff93c47d(Вальдракен)|r"},
-	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
-	{mapId = 2022, name="|cff93c47d(Берега Пробуждения)|r"},
-	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-	{mapId = 2023, name="|cff93c47d(Равнины Он'ары)|r"},
-	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
-	{mapId = 2024, name="|cff93c47d(Лазурный Простор)|r"},
-	{mapId = 84, name="|cff6d9eeb(Штормград)|r"},
-	{mapId = 2025, name="|cff93c47d(Тальдразус)|r"},
-	{mapId = 85, name="|cfff6b26b(Оргриммар)|r"},
+	{mapId = 2112, name="(Вальдракен)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2022, name="(Берега Пробуждения)"},
+	{mapId = 85, name="(Оргриммар)"},
+	{mapId = 2023, name="(Равнины Он'ары)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2024, name="(Лазурный Простор)"},
+	{mapId = 85, name="(Оргриммар)"},
+	{mapId = 2025, name="(Тальдразус)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2112, name="(Вальдракен)"},
+	{mapId = 85, name="(Оргриммар)"},
+	{mapId = 2022, name="(Берега Пробуждения)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2023, name="(Равнины Он'ары)"},
+	{mapId = 85, name="(Оргриммар)"},
+	{mapId = 2024, name="(Лазурный Простор)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2025, name="(Тальдразус)"},
+	{mapId = 85, name="(Оргриммар)"},
 }
 local spawns2 = {
-	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-	{mapId = 2112, name="|cff00FF00(Вальдракен)|r"},
-	{mapId = 84, name="|cff00FF00(Штормград)|r"},
-	{mapId = 2022, name="|cff00FF00(Берега Пробуждения)|r"},
-	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-	{mapId = 2023, name="|cff00FF00(Равнины Он'ары)|r"},
-	{mapId = 84, name="|cff00FF00(Штормград)|r"},
-	{mapId = 2024, name="|cff00FF00(Лазурный Простор)|r"},
-	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-	{mapId = 2025, name="|cff00FF00(Тальдразус)|r"},
-	{mapId = 84, name="|cff00FF00(Штормград)|r"},
-	{mapId = 2112, name="|cff00FF00(Вальдракен)|r"},
-	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-	{mapId = 2022, name="|cff00FF00(Берега Пробуждения)|r"},
-	{mapId = 84, name="|cff00FF00(Штормград)|r"},
-	{mapId = 2023, name="|cff00FF00(Равнины Он'ары)|r"},
-	{mapId = 85, name="|cff00FF00(Оргриммар)|r"},
-	{mapId = 2024, name="|cff00FF00(Лазурный Простор)|r"},
-	{mapId = 84, name="|cff00FF00(Штормград)|r"},
-	{mapId = 2025, name="|cff00FF00(Тальдразус)|r"},
+	{mapId = 85, name="(Оргриммар)"},
+	{mapId = 2112, name="(Вальдракен)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2022, name="(Берега Пробуждения)"},
+	{mapId = 85, name="(Оргриммар)"},
+	{mapId = 2023, name="(Равнины Он'ары)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2024, name="(Лазурный Простор)"},
+	{mapId = 85, name="(Оргриммар)"},
+	{mapId = 2025, name="(Тальдразус)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2112, name="(Вальдракен)"},
+	{mapId = 85, name="(Оргриммар)"},
+	{mapId = 2022, name="(Берега Пробуждения)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2023, name="(Равнины Он'ары)"},
+	{mapId = 85, name="(Оргриммар)"},
+	{mapId = 2024, name="(Лазурный Простор)"},
+	{mapId = 84, name="(Штормград)"},
+	{mapId = 2025, name="(Тальдразус)"},
 }
 local HordeZnamya = 132485
 local AllyaZnamya = 132486
@@ -382,8 +382,6 @@ local function CollectKnownSpell()
 		collect.KnownSpell[v] = isKnown
 	end
 end
-
-
 local function CollectVoidStorage()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -400,8 +398,6 @@ local function CollectVoidStorage()
         local itemID, textureName, locked, recentDeposit, isFiltered, quality = GetVoidItemInfo(2, i)
         collect.VOID_STORAGE_PAGE2[i] = itemID or 0
     end
-
-
 end
 function CollectLoginTime()
 	local UnitLevel = UnitLevel("PLAYER")
@@ -1900,7 +1896,8 @@ local itemIDReputation = {
 	200449, -- Священный тотем клыкарров (BOA)
 	201470, -- История о незабываемой победе
 	201471, -- История о блистательной победе
-	206006, --Благодарность Хранителя Земли (2500 репы)
+	206006, -- Благодарность Хранителя Земли (2500 репы)
+	202854, -- Чудо рыба 10.0.7
 }
 MergeTable(itemID, itemIDReputation)
 -- local function itemID_TEST_INSERT()
@@ -1996,8 +1993,6 @@ local function Empty_Zero(number)
 	end
 	return number
 end
-
-
 local function CollectAllItemsInBag()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -2008,7 +2003,6 @@ local function CollectAllItemsInBag()
         local numSlots = C_Container.GetContainerNumSlots(bag)
         totalSlots = totalSlots + numSlots
         local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
-
         if BagType == 0 then
             usedSlots = usedSlots + (numSlots - numberOfFreeSlots)
         end
@@ -2018,11 +2012,6 @@ local function CollectAllItemsInBag()
 		collect.totalSlots = totalSlots
 	end
 	-------------------------------------------------------------------------
-
-
-
-
-
 	local GetBindLocation = GetBindLocation()
 	local PlayerReagentnumSlots = C_Container.GetContainerNumSlots(BACKPACK_CONTAINER+NUM_BAG_SLOTS+1)
 	local mapID = C_Map.GetBestMapForUnit("player")
@@ -2044,23 +2033,18 @@ end
 -- local itemFragmentTable = {
 --   204075,
 -- }
-
 local function CollectBankInfo()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
 --REAGENTBANK_CONTAINER,BANK_CONTAINER
 --NUM_TOTAL_EQUIPPED_BAG_SLOTS+1,NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS
-
 	local usedSlotsBANK = 0
     local totalSlotsBANK = 0
-
 	local usedSlotsBANKREAGENT = 0
     local totalSlotsBANKREAGENT = 0
-
 	local usedSlotsBANKBAGS = 0
     local totalSlotsBANKBAGS = 0
-
     for bag = BANK_CONTAINER, BANK_CONTAINER do
         local numSlots = C_Container.GetContainerNumSlots(bag)
         totalSlotsBANK = totalSlotsBANK + numSlots
@@ -2069,9 +2053,6 @@ local function CollectBankInfo()
             usedSlotsBANK = usedSlotsBANK + (numSlots - numberOfFreeSlots)
         end
     end
-
-
-
     for bag = REAGENTBANK_CONTAINER, REAGENTBANK_CONTAINER do
         local numSlots = C_Container.GetContainerNumSlots(bag)
         totalSlotsBANKREAGENT = totalSlotsBANKREAGENT + numSlots
@@ -2088,14 +2069,10 @@ local function CollectBankInfo()
             usedSlotsBANKBAGS = usedSlotsBANKBAGS + (numSlots - numberOfFreeSlots)
         end
     end
-
 	-------------------------------------------------------------------------
 	collect.usedSlotsBANK = usedSlotsBANK + usedSlotsBANKREAGENT + usedSlotsBANKBAGS
 	collect.totalSlotsBANK = totalSlotsBANK + totalSlotsBANKREAGENT + totalSlotsBANKBAGS
 end
-
-
-
 function CollectAllReputations()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -2151,10 +2128,6 @@ function CollectAllQuests()
 end
 local function tmstpDayReset(n)
 	local n = n or 1
-	-- local thursdayResetDay0EU = (1514358000-10800) --https://wowreset.com/ 14-3=11(ТСК)
-	-- local thursdayResetDay0US = 1514300400
-	-- local thursdayReset = GetCurrentRegion() == 3 and thursdayResetDay0EU or thursdayResetDay0US
-	local thursdayReset = (1514358000-10800) --https://wowreset.com/ 14-3=11(ТСК)
 	local currTime = GetServerTime()
 	local xyu = (math.ceil((currTime - thursdayReset)/(daytime*n))*daytime*n)+thursdayReset
 	return (math.ceil((currTime - thursdayReset)/(daytime*n))*daytime*n)+thursdayReset
@@ -2603,6 +2576,59 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
+	Main_Frame.ShadowflameEssenceButton = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
+	Main_Frame.ShadowflameEssenceButton:SetSize(curHeight, curHeight)
+	Main_Frame.ShadowflameEssenceButton:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -150)
+	Main_Frame.ShadowflameEssenceButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.ShadowflameEssenceButton:SetBackdropBorderColor(.64, .21, .93, 1)
+	Main_Frame.ShadowflameEssenceButton:SetScript("OnEnter", function(self)
+			local i = 0
+			self:SetBackdropBorderColor(1, 0, 0, 1)
+			self.icon:SetVertexColor(1, 0, 0, 1)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+			GameTooltip:ClearLines()
+			GameTooltip:AddDoubleLine(" "," ")
+			for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
+				if CharInfo.ItemsInBag[204464] and CharInfo.ItemsInBag[204464] ~= 0 then
+					i = i + 1
+					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+					local curServerShort = CharInfo.curServer
+					local text = (curServerShort):gsub("-", " "):gsub("'", " ")
+					local a, b = strsplit(" ", text)
+					if b then
+						curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
+					end
+					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[204464])
+				end
+			end
+			if i == 0 then
+				GameTooltip:AddLine("No Data")
+			end
+			GameTooltip:AddDoubleLine(" "," ")
+			GameTooltip:Show()
+	end)
+	Main_Frame.ShadowflameEssenceButton:SetScript("OnLeave", function(self)
+			self:SetBackdropBorderColor(.64, .21, .93, 1)
+			self.icon:SetVertexColor(1, 1, 1, 1)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	Main_Frame.ShadowflameEssenceButton:SetScript("OnMouseDown", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, .5)
+			self.icon:SetVertexColor(1, 0, 0, .5)
+	end)
+	Main_Frame.ShadowflameEssenceButton:SetScript("OnClick", function()
+			Main_Frame:Hide()
+	end)
+	local t = Main_Frame.ShadowflameEssenceButton:CreateTexture(nil, "BACKGROUND")
+	Main_Frame.ShadowflameEssenceButton.icon = t
+	t:SetTexture(5009042)
+	t:SetVertexColor(1, 1, 1, 1)
+	t:SetAllPoints(Main_Frame.ShadowflameEssenceButton)
+	-----------------------------------------------------
+	-----------------------------------------------------
+	-----------------------------------------------------
+	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-- ITEMID, count, Ypox, r, g, b
@@ -2623,17 +2649,22 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		hideOnEscape = 1,
 		whileDead = 1,
 		OnAccept = function()
-			for i=1, numShownEntries do
-				if numQuests ~= 0 then
-					local questInfo = C_QuestLog.GetInfo(i)
-					if (not questInfo.isHeader and not questInfo.isHidden) then
-						print ("|cFF00A3FF"..L["Abandon"].."|r".."|cFFFF5771"..questInfo.title.."|r")
-						C_QuestLog.SetSelectedQuest(questInfo.questID)
-						C_QuestLog.SetAbandonQuest()
-						C_QuestLog.AbandonQuest()
+			C_Timer.After(1,function()
+				for i=1, numShownEntries do
+					if numQuests ~= 0 then
+						local questInfo = C_QuestLog.GetInfo(i)
+						if questInfo then
+							if (not questInfo.isHeader and not questInfo.isHidden) then
+								print ("|cFF00A3FF"..L["Abandon"].."|r".."|cFFFF5771"..questInfo.title.."|r")
+								C_QuestLog.SetSelectedQuest(questInfo.questID)
+								C_QuestLog.SetAbandonQuest()
+								C_QuestLog.AbandonQuest()
+							end
+						end
 					end
 				end
-			end
+				print (DONE)
+			end)
 		end,
 	}
 	-----------------------------------------------------
@@ -3100,11 +3131,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.ItemsInBag[200095] ~= 0 then
 				PEREMENNAYA_CommunityFeast = PEREMENNAYA_CommunityFeast.." +"..CharInfo.ItemsInBag[200095]..func_itemTexture(200095)
 			end
-			if CharInfo.KnownSpell[366253] == false or CharInfo.KnownSpell[366253] == 0 then
+			if CharInfo.UnitLevel >= 58 and (CharInfo.KnownSpell[366253] == false or CharInfo.KnownSpell[366253] == 0) then
 				PEREMENNAYA_CommunityFeast = PEREMENNAYA_CommunityFeast .. "|cffFF0000*|r"
 			end
-
-
 			Char_Frame.CenterLines1.CL:SetText(PEREMENNAYA_CommunityFeast)
 			--2
 			Main_Frame.TextLeft2:SetText("|T1603189:16:16:::64:64:4:60:4:60|t |cffFFFFFF".. func_questName(70750).."|r")
@@ -3411,6 +3440,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				Char_Frame.CenterLines13.CL:SetText("")
 			end
 			--14
+			Main_Frame.TextLeft14:SetText(QUESTS_LABEL)
 			local tinsertTABLE = {
 				-- {name = func_questName(72528), data=CheckCompletedByQuestID(72528)}, --БУДУЩИЙ КАТАЛИЗАТОР
 				{name = TreasureGoblinTimer(), data=CharInfo.Octopussy_TreasureGoblin},
@@ -3443,13 +3473,16 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				-- {name = func_questName(56337), data = CharInfo.questIDtable[56337]},
 				-- {name = func_questName(72167), data = CharInfo.questIDtable[72167]},
 			}
-			Char_Frame.CenterLines14.CL:SetText(ColorGray..QUESTS_LABEL.."|r")
+			-- Char_Frame.CenterLines14.CL:SetText(ColorGray..QUESTS_LABEL.."|r")
+			if CharInfo.maxNumQuestsCanAccept ~= 0 then
+				Char_Frame.CenterLines14.CL:SetText(CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept)
+			end
 			Char_Frame.CenterLines14.tooltip = {}
 			for k, v in ipairs(tinsertTABLE) do
-				vagina = "|cffc9c3aa"
-				if v.data == "|cff00FF00Done|r" then
-					vagina = AddonColor
-				end
+				 vagina = "|cffc9c3aa"
+				-- if v.data == "|cff00FF00Done|r" then
+				-- 	vagina = AddonColor
+				-- end
 				tinsert(Char_Frame.CenterLines14.tooltip, {vagina..v.name.."|r", v.data})
 			end
 			-- for k, v in ipairs(questIDtable) do
@@ -3473,7 +3506,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					Char_Frame.CenterLines15.tooltip[#Char_Frame.CenterLines15.tooltip+1] = {func_itemTexture(v)..func_itemName(v), count}
 				end
 			end
-
 			Char_Frame.CenterLines15.tooltip[#Char_Frame.CenterLines15.tooltip+1] = {" "," "}
 			for k, v in ipairs(CharInfo.VOID_STORAGE_PAGE1) do
 				if v ~= 0 then
@@ -3485,12 +3517,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					tinsert(Char_Frame.CenterLines15.tooltip,{func_itemTexture(CharInfo.VOID_STORAGE_PAGE2[k])..func_itemName(CharInfo.VOID_STORAGE_PAGE2[k])})
 				end
 			end
-
-
-
-
-
-
 			if #Char_Frame.CenterLines15.tooltip == 0 then
 				Char_Frame.CenterLines15.tooltip = nil
 				Char_Frame.CenterLines15.CL:SetText(" ")
@@ -3548,15 +3574,15 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				tinsert (Char_Frame.CenterLines18.tooltip, {L["Bank"],CharInfo.usedSlotsBANK.."/"..CharInfo.totalSlotsBANK})
 			end
 			local needReset = false
-			if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
+			local prevReset = thursdayReset - 604800
+
+			if (CharInfo.tmstp_Daily or 0) < prevReset then
 				needReset = true
 			end
 			if CharInfo.pizdaDate ~= 0 and CharInfo.pizdaDate ~= 0 then
 				Char_Frame.CenterLines18.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-				Char_Frame.CenterLines18.CL:SetText((needReset and "|cffFF0000" or ColorGray).. CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours)
+				Char_Frame.CenterLines18.CL:SetText((needReset and "|cffFF0000" or ColorGray)..CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours)
 			end
-
-
 			------------------------------------------------------------------------------------------
 			------------------------------------------------------------------------------------------
 			------------------------------------------------------------------------------------------
@@ -4028,5 +4054,3 @@ end
 -- local ColorKyrian = CreateColor(1, 1, 1, 1)
 -- (KYRIAN_BLUE_COLOR:GetRGB())
 -- SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
-
-
