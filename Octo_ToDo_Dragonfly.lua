@@ -1883,6 +1883,22 @@ local itemID = {
 	206035,
 	205288,
 	205347,
+	192055, -- Артефакт Драконьих островов
+	200443, -- Артефакт Драконьих островов (BOA)
+	200093, -- Охотничий трофей кентавров
+	200447, -- Охотничий трофей кентавров (BOA)
+	199906, -- Реликвия титанов
+	200450, -- Реликвия титанов (BOA)
+	201411, -- Древний артефакт хранилища
+	201412, -- Древний артефакт хранилища (дает кв)
+	200071, -- Священный тотем клыкарров
+	200449, -- Священный тотем клыкарров (BOA)
+	201470, -- История о незабываемой победе
+	201471, -- История о блистательной победе
+	206006, -- Благодарность Хранителя Земли (2500 репы)
+	202854, -- Чудо рыба 10.0.7
+
+
 }
 local itemIDReputation = {
 	192055, -- Артефакт Драконьих островов
@@ -1900,7 +1916,7 @@ local itemIDReputation = {
 	206006, -- Благодарность Хранителя Земли (2500 репы)
 	202854, -- Чудо рыба 10.0.7
 }
-MergeTable(itemID, itemIDReputation)
+--MergeTable(itemID, itemIDReputation)
 -- local function itemID_TEST_INSERT()
 -- for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 -- for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
@@ -2008,7 +2024,7 @@ local function CollectAllItemsInBag()
             usedSlots = usedSlots + (numSlots - numberOfFreeSlots)
         end
     end
-    if usedSlots > 0 and totalSlots > 0 then
+    if collect and usedSlots > 0 and totalSlots > 0 then
 		collect.usedSlots = usedSlots
 		collect.totalSlots = totalSlots
 	end
@@ -2699,17 +2715,17 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-- CreateFrameUsableItems(204078, 5062612, 15, -72, 1, .5, 0)
 	-- CreateFrameUsableItems(204717, 442739, 2, -96, .85, .8, .5)
 	-- Expansion, texture, Ypox, r,g,b
-	local qz = -21
-	CreateFrameExpansion("Classic", 254652, 0, 104/255, 204/255, 239/255)
-	CreateFrameExpansion("TBC", 236415, qz*1, 79/255, 1, 121/255)
-	CreateFrameExpansion("WotLK", 630787, qz*2, 0, 163/255, 1)
-	CreateFrameExpansion("Cata", 4622499, qz*3, 1, 179/255, 0)
-	CreateFrameExpansion("MoP", 626190, qz*4, 0, 1, 186/255)
-	CreateFrameExpansion("WoD", 236452, qz*5, 200/255, 100/255, 0)
-	CreateFrameExpansion("Legion", 135794, qz*6, 30/255, 1, 0)
-	CreateFrameExpansion("BfA", 2484334, qz*7, 100/255, 100/255, 1)
-	CreateFrameExpansion("SL", 3586268, qz*8, 201/255, 195/255, 170/255)
-	CreateFrameExpansion("DF", 4640492, qz*9, 232/255, 277/255, 121/255)
+	-- local qz = -21
+	-- CreateFrameExpansion("Classic", 254652, 0, 104/255, 204/255, 239/255)
+	-- CreateFrameExpansion("TBC", 236415, qz*1, 79/255, 1, 121/255)
+	-- CreateFrameExpansion("WotLK", 630787, qz*2, 0, 163/255, 1)
+	-- CreateFrameExpansion("Cata", 4622499, qz*3, 1, 179/255, 0)
+	-- CreateFrameExpansion("MoP", 626190, qz*4, 0, 1, 186/255)
+	-- CreateFrameExpansion("WoD", 236452, qz*5, 200/255, 100/255, 0)
+	-- CreateFrameExpansion("Legion", 135794, qz*6, 30/255, 1, 0)
+	-- CreateFrameExpansion("BfA", 2484334, qz*7, 100/255, 100/255, 1)
+	-- CreateFrameExpansion("SL", 3586268, qz*8, 201/255, 195/255, 170/255)
+	-- CreateFrameExpansion("DF", 4640492, qz*9, 232/255, 277/255, 121/255)
 
 
 	-----------------------------------------------------
@@ -3230,7 +3246,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			--4
 			Main_Frame.TextLeft4:SetText(func_itemTexture(180653)..func_itemName(180653))
-			local PEREMENNAYA_CurrentKey = Empty_Zero(CharInfo.CurrentKey)
+			local PEREMENNAYA_CurrentKey = Empty_Zero(CharInfo.CurrentKey) or " "
 			if CharInfo.ItemsInBag[205225] ~= 0 then
 				PEREMENNAYA_CurrentKey = PEREMENNAYA_CurrentKey .. func_itemTexture(205225)..CharInfo.ItemsInBag[205225]
 			end
@@ -3246,8 +3262,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					{"Рейды", CharInfo.RIO_RAID},
 					{"M+", CharInfo.RIO_KEYS},
 					{"PVP", CharInfo.RIO_PVPS},
-					-- {func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
-					-- {func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
+					{func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
+					{func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
 				}
 			end
 			--5
@@ -3922,7 +3938,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 						if PlayCustomSound == true then
 							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
 						end
-						CollectAllItemsInBag()
+						-- CollectAllItemsInBag()
 						--Fragments_Earned()
 						CollectAllReputations()
 						CollectPVPRaitings()
@@ -4044,7 +4060,6 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectKnownSpell()
 		-- CurrencyTEST()
 		CollectAllProfessions()
-		CollectAllItemsInBag()
 		--Fragments_Earned()
 		CollectAllReputations()
 		TESTREP()
@@ -4052,7 +4067,6 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectCurrentKEY()
 		CollectAllQuests()
 		UPGRADERANKS_Frame()
-		CollectLoginTime()
 		--itemID_TEST_INSERT()
 		-- elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
 		--     local _, eventType = CombatLogGetCurrentEventInfo()
@@ -4061,7 +4075,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		--     end
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		CollectPVPRaitings()
-		CollectLoginTime()
+		--CollectLoginTime()
 	elseif event == "PLAYER_LEAVING_WORLD" and not InCombatLockdown() then
 		-- OctoMoneyUpdate()
 		-- CollectAllCurrency()
@@ -4074,25 +4088,26 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 	elseif event == "PLAYER_ENTERING_WORLD" and not InCombatLockdown() then
 		CollectPVPRaitings()
 		CollectLoginTime()
+		CollectAllItemsInBag()
 	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
 		CollectAllItemsInBag()
 		--Fragments_Earned()
 		CollectCurrentKEY()
-		CollectLoginTime()
+		-- CollectLoginTime()
 		--itemID_TEST_INSERT()
 	elseif event == "HEARTHSTONE_BOUND" and not InCombatLockdown() then
-		CollectAllItemsInBag()
-		CollectLoginTime()
+		-- CollectAllItemsInBag()
+		-- CollectLoginTime()
 		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED" and not InCombatLockdown() then
 		OctoQuestUpdate()
-		CollectAllItemsInBag()
-		CollectLoginTime()
+		-- CollectAllItemsInBag()
+		-- CollectLoginTime()
 		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED_NEW_AREA" and not InCombatLockdown() then
 		OctoQuestUpdate()
-		CollectAllItemsInBag()
-		CollectLoginTime()
+		-- CollectAllItemsInBag()
+		-- CollectLoginTime()
 		--Fragments_Earned()
 		-- elseif event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
 		-- CollectPVPRaitings()

@@ -883,7 +883,7 @@ tinsert(E.modules, function()
 				{itemid = 205991, count = 1},
 				{itemid = 205992, count = 1},
 				{itemid = 205998, count = 1},
-				-- {itemid = 206006, count = 1},
+				{itemid = 206006, count = 1},
 				{itemid = 206019, count = 1},
 				{itemid = 206025, count = 1},
 				{itemid = 206030, count = 1},
