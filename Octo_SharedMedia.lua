@@ -196,4 +196,3 @@ LSM:Register("statusbar", "|cFF00A3FFO_23|r", [[Interface\Addons\]]..GlobalAddon
 --Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI
 LSM:Register("statusbar", "|cFF8e7cc3Atrocity|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI\Atrocity.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", "|cFF8e7cc3Kait|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI\Kait.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
-

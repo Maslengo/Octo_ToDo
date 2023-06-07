@@ -103,9 +103,6 @@ local function MASLENGO_Mail()
 						-- if sellPrice ~= 0 and itemQuality < 5 and not ignore_list[itemID] --[[and baseILvl > 1]] and itemLevel < ((ilvlStr/10)*9) then
 						-- 	C_Container.UseContainerItem(bag,slot)
 						-- end
-
-
-
 -- 0	Poor	Poor	ITEM_QUALITY0_DESC
 -- 1	Common	Common	ITEM_QUALITY1_DESC
 -- 2	Uncommon	Uncommon	ITEM_QUALITY2_DESC
@@ -116,16 +113,12 @@ local function MASLENGO_Mail()
 -- 7	Heirloom	Heirloom	ITEM_QUALITY7_DESC
 -- 8	WoWToken	WoW Token	ITEM_QUALITY8_DESC
 						if sellPrice ~= 0 and itemQuality < 4 and not ignore_list[itemID] --[[and baseILvl > 1]] then
-
-
 							C_Container.UseContainerItem(bag,slot)
 							--SendMailFrame()
 							--/click SendMailMailButton
 								-- 	SELL_Frame.Button:SetAttribute("type", "macro")
 								-- SELL_Frame.Button:SetAttribute("macrotext", "/click SendMailMailButton")
-
 						end
-
 					end
 				end
 			end

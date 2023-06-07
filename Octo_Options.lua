@@ -295,7 +295,6 @@ config:SetScript("OnShow", function(self)
                 StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
         self.btn_right5.text:SetText("|cffFF0000AutoSellGrey|r")
-
         -- btn_right6 AutoRepair
         -----------------------------------------------
         self.btn_right6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -325,12 +324,9 @@ config:SetScript("OnShow", function(self)
         -- Addon_curWidthTEXT:SetPoint("LEFT", self.Slider_right7, "RIGHT", indent, 0)
         -- Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
         -- self.Slider_right7:Show()
-
-
         --Addon_curWidth
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config, GlobalAddonName)
 category.ID = GlobalAddonName
 Settings.RegisterAddOnCategory(category)
-

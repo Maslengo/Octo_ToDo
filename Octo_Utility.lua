@@ -27,40 +27,29 @@ end)
 --HideZoneText
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.HideZoneText then
-
 			ZoneTextFrame:HookScript("OnShow", function(self, ...)
-				print ("ZoneTextFrame Hide")
 				ZoneTextFrame:UnregisterAllEvents()
 				ZoneTextFrame:Hide()
 			end)
 			PVPArenaTextString:HookScript("OnShow", function(self, ...)
-				print ("PVPArenaTextString Hide")
 				-- PVPArenaTextString:UnregisterAllEvents()
 				PVPArenaTextString:Hide()
 			end)
 			SubZoneTextFrame:HookScript("OnShow", function(self, ...)
-				print ("SubZoneTextFrame Hide")
 				SubZoneTextFrame:UnregisterAllEvents()
 				SubZoneTextFrame:Hide()
 			end)
 			ZoneTextString:HookScript("OnShow", function(self, ...)
-				print ("ZoneTextString Hide")
 				-- ZoneTextString:UnregisterAllEvents()
 				ZoneTextString:Hide()
 			end)
 			SubZoneTextString:HookScript("OnShow", function(self, ...)
-				print ("SubZoneTextString Hide")
 				-- SubZoneTextString:UnregisterAllEvents()
 				SubZoneTextString:Hide()
 			end)
-
-
-
-
 			EventToastManagerFrame:HookScript("OnShow", function(self,...)
 				EventToastManagerFrame:UnregisterAllEvents()
 				EventToastManagerFrame:Hide()
-
 			end)
 		end
 end)
@@ -209,17 +198,12 @@ tinsert(E.modules, function()
 			end
 			if not InCombatLockdown() then
 				C_Timer.After(1, function()
-
 						SetCVar("raidFramesDisplayAggroHighlight", 1)
 						SetCVar("raidFramesDisplayClassColor", 1)
 						SetCVar("raidFramesDisplayDebuffs", 1)
 						SetCVar("raidFramesDisplayIncomingHeals",1)
 						SetCVar("raidFramesDisplayOnlyDispellableDebuffs", 1)
 						SetCVar("raidFramesDisplayPowerBars", 0)
-
-
-
-
 						SetCVar("AutoPushSpellToActionBar", 0)
 						SetCVar("AllowDangerousScripts", 1)
 						SetCVar("alwaysShowActionBars", 1)
@@ -401,16 +385,13 @@ tinsert(E.modules, function()
 				return table.concat(s)
 			end
 			local white_list = {
-
 				{itemid = 204717, count = 2}, --2
-
 				{itemid = 204075, count = 15}, --15
 				{itemid = 204076, count = 15}, --15
 				{itemid = 204077, count = 15}, --15
 				{itemid = 204078, count = 15}, --15
-
 				{itemid = 204352, count = 50},
-
+				{itemid = 205967, count = 1},
 				{itemid = 111956, count = 1},
 				{itemid = 128313, count = 1},
 				{itemid = 136926, count = 1},
@@ -921,8 +902,6 @@ tinsert(E.modules, function()
 				{itemid = 92794, count = 1},
 				{itemid = 93724, count = 1},
 			}
-
-
 			local white_list70 ={
 				{itemid = 205423, count = 1},
 				{itemid = 205966, count = 1},
@@ -975,7 +954,6 @@ tinsert(E.modules, function()
 					end
 				end
 			end
-
 			E.UsableItems_Frame = UsableItems_Frame
 			E.UsableItemFrame_OnLoad = UsableItemFrame_OnLoad
 			E.UsableItemFrame = UsableItemFrame
@@ -1194,9 +1172,6 @@ end)
 -- Battlepet   17  Battle Pets Enum.BattlePetTypes
 -- WoWToken    18  WoW Token
 -- Profession  19  Profession  Enum.ItemProfessionSubclass Added in 10.0.0
-
-
-
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --AutoRepair
@@ -1207,7 +1182,6 @@ tinsert(E.modules, function()
 				repairAllCost, canRepair = GetRepairAllCost()
 				local money = GetMoney()
 				local locale = GetLocale()
-
 				if canRepair and repairAllCost > money then
 					print ("|cFFFF5771"..L["We need more gold"].."|r "..GetCoinTextureString((repairAllCost-money)))
 					if locale ~= "ruRU" then
@@ -1247,7 +1221,6 @@ tinsert(E.modules, function()
 		f:RegisterEvent("MERCHANT_SHOW")
 	end
 end)
-
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --Addon_curWidth

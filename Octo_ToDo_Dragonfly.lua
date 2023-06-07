@@ -386,18 +386,18 @@ local function CollectVoidStorage()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
-    local VOID_STORAGE_MAX = 80
-    local VOID_STORAGE_PAGES = 2
-    --Page 1
-    for i = 1, VOID_STORAGE_MAX do
-        local itemID, textureName, locked, recentDeposit, isFiltered, quality = GetVoidItemInfo(1, i)
-        collect.VOID_STORAGE_PAGE1[i] = itemID or 0
-    end
-    --Page 2
-    for i = 1, VOID_STORAGE_MAX do
-        local itemID, textureName, locked, recentDeposit, isFiltered, quality = GetVoidItemInfo(2, i)
-        collect.VOID_STORAGE_PAGE2[i] = itemID or 0
-    end
+	local VOID_STORAGE_MAX = 80
+	local VOID_STORAGE_PAGES = 2
+	--Page 1
+	for i = 1, VOID_STORAGE_MAX do
+		local itemID, textureName, locked, recentDeposit, isFiltered, quality = GetVoidItemInfo(1, i)
+		collect.VOID_STORAGE_PAGE1[i] = itemID or 0
+	end
+	--Page 2
+	for i = 1, VOID_STORAGE_MAX do
+		local itemID, textureName, locked, recentDeposit, isFiltered, quality = GetVoidItemInfo(2, i)
+		collect.VOID_STORAGE_PAGE2[i] = itemID or 0
+	end
 end
 function CollectLoginTime()
 	local UnitLevel = UnitLevel("PLAYER")
@@ -1897,8 +1897,6 @@ local itemID = {
 	201471, -- История о блистательной победе
 	206006, -- Благодарность Хранителя Земли (2500 репы)
 	202854, -- Чудо рыба 10.0.7
-
-
 }
 local itemIDReputation = {
 	192055, -- Артефакт Драконьих островов
@@ -2015,16 +2013,16 @@ local function CollectAllItemsInBag()
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
 	local usedSlots = 0
-    local totalSlots = 0
-    for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-        local numSlots = C_Container.GetContainerNumSlots(bag)
-        totalSlots = totalSlots + numSlots
-        local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
-        if BagType == 0 then
-            usedSlots = usedSlots + (numSlots - numberOfFreeSlots)
-        end
-    end
-    if collect and usedSlots > 0 and totalSlots > 0 then
+	local totalSlots = 0
+	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+		local numSlots = C_Container.GetContainerNumSlots(bag)
+		totalSlots = totalSlots + numSlots
+		local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
+		if BagType == 0 then
+			usedSlots = usedSlots + (numSlots - numberOfFreeSlots)
+		end
+	end
+	if collect and usedSlots > 0 and totalSlots > 0 then
 		collect.usedSlots = usedSlots
 		collect.totalSlots = totalSlots
 	end
@@ -2057,35 +2055,35 @@ local function CollectBankInfo()
 --REAGENTBANK_CONTAINER,BANK_CONTAINER
 --NUM_TOTAL_EQUIPPED_BAG_SLOTS+1,NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS
 	local usedSlotsBANK = 0
-    local totalSlotsBANK = 0
+	local totalSlotsBANK = 0
 	local usedSlotsBANKREAGENT = 0
-    local totalSlotsBANKREAGENT = 0
+	local totalSlotsBANKREAGENT = 0
 	local usedSlotsBANKBAGS = 0
-    local totalSlotsBANKBAGS = 0
-    for bag = BANK_CONTAINER, BANK_CONTAINER do
-        local numSlots = C_Container.GetContainerNumSlots(bag)
-        totalSlotsBANK = totalSlotsBANK + numSlots
-        local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
-        if BagType == 0 then
-            usedSlotsBANK = usedSlotsBANK + (numSlots - numberOfFreeSlots)
-        end
-    end
-    for bag = REAGENTBANK_CONTAINER, REAGENTBANK_CONTAINER do
-        local numSlots = C_Container.GetContainerNumSlots(bag)
-        totalSlotsBANKREAGENT = totalSlotsBANKREAGENT + numSlots
-        local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
-        if BagType == 0 then
-            usedSlotsBANKREAGENT = usedSlotsBANKREAGENT + (numSlots - numberOfFreeSlots)
-        end
-    end
-    for bag = NUM_TOTAL_EQUIPPED_BAG_SLOTS+1, NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS do
-        local numSlots = C_Container.GetContainerNumSlots(bag)
-        totalSlotsBANKBAGS = totalSlotsBANKBAGS + numSlots
-        local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
-        if BagType == 0 then
-            usedSlotsBANKBAGS = usedSlotsBANKBAGS + (numSlots - numberOfFreeSlots)
-        end
-    end
+	local totalSlotsBANKBAGS = 0
+	for bag = BANK_CONTAINER, BANK_CONTAINER do
+		local numSlots = C_Container.GetContainerNumSlots(bag)
+		totalSlotsBANK = totalSlotsBANK + numSlots
+		local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
+		if BagType == 0 then
+			usedSlotsBANK = usedSlotsBANK + (numSlots - numberOfFreeSlots)
+		end
+	end
+	for bag = REAGENTBANK_CONTAINER, REAGENTBANK_CONTAINER do
+		local numSlots = C_Container.GetContainerNumSlots(bag)
+		totalSlotsBANKREAGENT = totalSlotsBANKREAGENT + numSlots
+		local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
+		if BagType == 0 then
+			usedSlotsBANKREAGENT = usedSlotsBANKREAGENT + (numSlots - numberOfFreeSlots)
+		end
+	end
+	for bag = NUM_TOTAL_EQUIPPED_BAG_SLOTS+1, NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS do
+		local numSlots = C_Container.GetContainerNumSlots(bag)
+		totalSlotsBANKBAGS = totalSlotsBANKBAGS + numSlots
+		local numberOfFreeSlots, BagType = C_Container.GetContainerNumFreeSlots(bag)
+		if BagType == 0 then
+			usedSlotsBANKBAGS = usedSlotsBANKBAGS + (numSlots - numberOfFreeSlots)
+		end
+	end
 	-------------------------------------------------------------------------
 	collect.usedSlotsBANK = usedSlotsBANK + usedSlotsBANKREAGENT + usedSlotsBANKBAGS
 	collect.totalSlotsBANK = totalSlotsBANK + totalSlotsBANKREAGENT + totalSlotsBANKBAGS
@@ -2105,8 +2103,8 @@ function CollectAllQuests()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
-    local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
-    local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
+	local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
+	local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
 	local RARE_ZARALEK_count = 0
 	local RARE_OSTROV_count = 0
 	local EVENTS_ZARALEK_count = 0
@@ -2323,68 +2321,62 @@ end
 --     Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
 --     return Button
 -- end
-
 local function CreateFrameExpansion_OnEnter(self)
-    self.icon:SetVertexColor(1, 1, 1, 1)
+	self.icon:SetVertexColor(1, 1, 1, 1)
 end
 local function CreateFrameExpansion_OnLeave(self)
-    self.icon:SetVertexColor(1, 1, 1, 1)
-    GameTooltip:ClearLines()
-    GameTooltip:Hide()
+	self.icon:SetVertexColor(1, 1, 1, 1)
+	GameTooltip:ClearLines()
+	GameTooltip:Hide()
 end
 local function CreateFrameExpansion_OnEvent(self,event)
-     if event == "PLAYER_REGEN_DISABLED" then
-        self:SetParent(UIParent)
-        self:ClearAllPoints()
-        self:Hide()
-    else
-        self:SetParent(Main_Frame)
-        self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, self.Ypos)
-        self:Show()
-    end
+	 if event == "PLAYER_REGEN_DISABLED" then
+		self:SetParent(UIParent)
+		self:ClearAllPoints()
+		self:Hide()
+	else
+		self:SetParent(Main_Frame)
+		self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, self.Ypos)
+		self:Show()
+	end
 end
 local function CreateFrameExpansion_OnMouseDown(self)
-    self.icon:SetVertexColor(1, 0, 0, 1)
+	self.icon:SetVertexColor(1, 0, 0, 1)
 end
 local function CreateFrameExpansion_OnMouseUp(self)
-    self.icon:SetVertexColor(1, 1, 1, 1)
+	self.icon:SetVertexColor(1, 1, 1, 1)
 end
 local function CreateFrameExpansion(Expansion, Texture, Ypos, r, g, b)
-    local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
-    Button.Expansion = Expansion
-    Button.Texture = Texture
-    Button.Ypos = Ypos
-    Button:SetSize(curHeight, curHeight)
-    Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, Ypos)
-    Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-    Button:SetBackdropBorderColor(r, g, b, 0.2)
-    Button:RegisterEvent("PLAYER_REGEN_DISABLED")
-    Button:RegisterEvent("PLAYER_REGEN_ENABLED")
-    Button:RegisterEvent("BAG_UPDATE")
-    Button:HookScript("OnEvent", CreateFrameExpansion_OnEvent)
-    Button:HookScript("OnEnter", CreateFrameExpansion_OnEnter)
-    Button:HookScript("OnLeave", CreateFrameExpansion_OnLeave)
-    Button:HookScript("OnMouseDown", CreateFrameExpansion_OnMouseDown)
-    Button:HookScript("OnMouseUp", CreateFrameExpansion_OnMouseUp)
-    Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-    -- Button:SetAttribute("type", "macro")
-    -- Button:SetAttribute("macrotext", "/use item:"..itemID)
-    local t = Button:CreateTexture(nil, "BACKGROUND")
-    Button.icon = t
-    t:SetTexture(Texture)--select(10, GetItemInfo(itemID)))
-    t:SetVertexColor(1, 1, 1, 1)
-    t:SetAllPoints(Button)
-    Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
-    return Button
+	local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
+	Button.Expansion = Expansion
+	Button.Texture = Texture
+	Button.Ypos = Ypos
+	Button:SetSize(curHeight, curHeight)
+	Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, Ypos)
+	Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Button:SetBackdropBorderColor(r, g, b, 0.2)
+	Button:RegisterEvent("PLAYER_REGEN_DISABLED")
+	Button:RegisterEvent("PLAYER_REGEN_ENABLED")
+	Button:RegisterEvent("BAG_UPDATE")
+	Button:HookScript("OnEvent", CreateFrameExpansion_OnEvent)
+	Button:HookScript("OnEnter", CreateFrameExpansion_OnEnter)
+	Button:HookScript("OnLeave", CreateFrameExpansion_OnLeave)
+	Button:HookScript("OnMouseDown", CreateFrameExpansion_OnMouseDown)
+	Button:HookScript("OnMouseUp", CreateFrameExpansion_OnMouseUp)
+	Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+	-- Button:SetAttribute("type", "macro")
+	-- Button:SetAttribute("macrotext", "/use item:"..itemID)
+	local t = Button:CreateTexture(nil, "BACKGROUND")
+	Button.icon = t
+	t:SetTexture(Texture)--select(10, GetItemInfo(itemID)))
+	t:SetVertexColor(1, 1, 1, 1)
+	t:SetAllPoints(Button)
+	Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
+	return Button
 end
-
-
-
-
-
+local Main_Frame = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 
 function Octo_ToDo_DragonflyCreateAltFrame()
-	Main_Frame = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 	Main_Frame:SetClampedToScreen(false)
 	Main_Frame:SetFrameStrata("DIALOG")
 	Main_Frame:SetPoint("CENTER", 0, 0)
@@ -2726,13 +2718,11 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	CreateFrameExpansion("BfA", 2484334, qz*7, 100/255, 100/255, 1)
 	CreateFrameExpansion("SL", 3586268, qz*8, 201/255, 195/255, 170/255)
 	CreateFrameExpansion("DF", 4640492, qz*9, 232/255, 277/255, 121/255)
-
-
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
-    local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
+	local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
 	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
 		text = "|cffFF0000!!! ACHTUNG !!!|r\n".."Отменить все ("..numQuests..") задания?",
 		button1 = YES,
@@ -3293,9 +3283,15 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				{func_currencyicon(1166)..func_currencyName(1166), CharInfo.CurrencyID[1166]}, --Искаженный временем знак
 				{func_currencyicon(1560)..func_currencyName(1560), CharInfo.CurrencyID[1560]}, --Ресурсы для войны
 				{func_currencyicon(1220)..func_currencyName(1220), CharInfo.CurrencyID[1220]}, --Ресурсы опллота класса
-				{func_currencyicon(1226)..func_currencyName(1226), CharInfo.CurrencyID[1226]}, --Осколок пустоты
 				{func_currencyicon(824)..func_currencyName(824), CharInfo.CurrencyID[824].."/"..CharInfo.CurrencyID_maxQuantity[824]}, --Ресурсы гарнизона
-				{func_currencyicon(1755)..func_currencyName(1755), CharInfo.CurrencyID[1755]},
+				{" ", " "},
+				{"Монетки: "," "},
+				{func_currencyicon(1580).."|cff6464ffBFA|r "..func_currencyName(1580), CharInfo.CurrencyID[1580].."/"..CharInfo.CurrencyID_maxQuantity[1580]}, --Печать судьбы воина
+				{func_currencyicon(1273).."|cff1eff00LEG|r "..func_currencyName(1273), CharInfo.CurrencyID[1273].."/"..CharInfo.CurrencyID_maxQuantity[1273]}, --Печать сломанной судьбы
+				{func_currencyicon(994).."|cffc86400WoD|r "..func_currencyName(994), CharInfo.CurrencyID[994].."/"..CharInfo.CurrencyID_maxQuantity[994]}, --Печать закаленной судьбы
+				{func_currencyicon(1129).."|cffc86400WoD|r "..func_currencyName(1129), CharInfo.CurrencyID[1129].."/"..CharInfo.CurrencyID_maxQuantity[1129]}, --Печать закаленной судьбы
+				{func_currencyicon(697).."|cff00ffbaMoP|r "..func_currencyName(697), CharInfo.CurrencyID[697].."/"..CharInfo.CurrencyID_maxQuantity[697]}, --Большой амулет удачи
+				{func_currencyicon(776).."|cff00ffbaMoP|r "..func_currencyName(776), CharInfo.CurrencyID[776].."/"..CharInfo.CurrencyID_maxQuantity[776]}, --Закаленная в бою печать
 			}
 			-- for k,v in pairs(CharInfo.CurrencyID) do
 			--     if k ~= nil and k ~= 0 then
@@ -3648,12 +3644,12 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if b then
 				curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
 			end
-
 			-- Char_Frame.CenterLines17.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-			--Main_Frame.TextLeft17:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r")
 			Main_Frame.TextLeft17:SetText(curServerShort..": "..GetCoinTextureString(TotalMoney-TotalMoney % 10000))
-			--local PEREMENNAYA_MONEY = "|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r"
-			local PEREMENNAYA_MONEY = GetCoinTextureString(CharInfo.Money - CharInfo.Money % 10000)
+			local PEREMENNAYA_MONEY = GetCoinTextureString(CharInfo.Money - CharInfo.Money % 10000) or 0
+			if CharInfo.Money - CharInfo.Money % 10000 < 10000000 then -- меньше тысячи
+				PEREMENNAYA_MONEY = ColorGray..PEREMENNAYA_MONEY.."|r"
+			end
 			if CharInfo.PlayerReagentnumSlots == 0 then PEREMENNAYA_MONEY = PEREMENNAYA_MONEY.."|cffFF0000*|r" end
 			Char_Frame.CenterLines17.CL:SetText(PEREMENNAYA_MONEY)
 			--18

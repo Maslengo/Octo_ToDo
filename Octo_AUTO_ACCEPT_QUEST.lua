@@ -18,14 +18,6 @@ Octo_AUTO_ACCEPT_QUEST:SetScript("OnEvent", function(self, event, ...)
             --CompleteQuest()
         end
 end)
-
-
-
-
-
-
-
-
 -- QUEST_DETAIL
 -- PLAYER_SOFT_INTERACT_CHANGED
 -- QUEST_FINISHED
@@ -38,4 +30,3 @@ end)
 -- 1 orderIndex 1
 -- 1 icon 132060
 -- 1 selectOptionWhenOnlyOption true
-
