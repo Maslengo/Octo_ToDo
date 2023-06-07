@@ -2715,17 +2715,17 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-- CreateFrameUsableItems(204078, 5062612, 15, -72, 1, .5, 0)
 	-- CreateFrameUsableItems(204717, 442739, 2, -96, .85, .8, .5)
 	-- Expansion, texture, Ypox, r,g,b
-	-- local qz = -21
-	-- CreateFrameExpansion("Classic", 254652, 0, 104/255, 204/255, 239/255)
-	-- CreateFrameExpansion("TBC", 236415, qz*1, 79/255, 1, 121/255)
-	-- CreateFrameExpansion("WotLK", 630787, qz*2, 0, 163/255, 1)
-	-- CreateFrameExpansion("Cata", 4622499, qz*3, 1, 179/255, 0)
-	-- CreateFrameExpansion("MoP", 626190, qz*4, 0, 1, 186/255)
-	-- CreateFrameExpansion("WoD", 236452, qz*5, 200/255, 100/255, 0)
-	-- CreateFrameExpansion("Legion", 135794, qz*6, 30/255, 1, 0)
-	-- CreateFrameExpansion("BfA", 2484334, qz*7, 100/255, 100/255, 1)
-	-- CreateFrameExpansion("SL", 3586268, qz*8, 201/255, 195/255, 170/255)
-	-- CreateFrameExpansion("DF", 4640492, qz*9, 232/255, 277/255, 121/255)
+	local qz = -21
+	CreateFrameExpansion("Classic", 254652, 0, 104/255, 204/255, 239/255)
+	CreateFrameExpansion("TBC", 236415, qz*1, 79/255, 1, 121/255)
+	CreateFrameExpansion("WotLK", 630787, qz*2, 0, 163/255, 1)
+	CreateFrameExpansion("Cata", 4622499, qz*3, 1, 179/255, 0)
+	CreateFrameExpansion("MoP", 626190, qz*4, 0, 1, 186/255)
+	CreateFrameExpansion("WoD", 236452, qz*5, 200/255, 100/255, 0)
+	CreateFrameExpansion("Legion", 135794, qz*6, 30/255, 1, 0)
+	CreateFrameExpansion("BfA", 2484334, qz*7, 100/255, 100/255, 1)
+	CreateFrameExpansion("SL", 3586268, qz*8, 201/255, 195/255, 170/255)
+	CreateFrameExpansion("DF", 4640492, qz*9, 232/255, 277/255, 121/255)
 
 
 	-----------------------------------------------------
@@ -3003,7 +3003,7 @@ function OctoMoneyUpdate()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	--------------------------------------------------
-	local Money = GetMoney()/10000
+	local Money = GetMoney()
 	collect.Money = Money
 end
 function OctoilvlStr()
@@ -3213,6 +3213,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			------------------------------------------------------------------------------------------
 			------------------------------------------------------------------------------------------
 			------------------------------------------------------------------------------------------
+			Main_Frame.TextLeft0:SetText(ColorGray..Version.."|r")
 			--1
 			Main_Frame.TextLeft1:SetText("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
 			local PEREMENNAYA_CommunityFeast = CharInfo.Octopussy_Feast or " "
@@ -3262,8 +3263,8 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 					{"Рейды", CharInfo.RIO_RAID},
 					{"M+", CharInfo.RIO_KEYS},
 					{"PVP", CharInfo.RIO_PVPS},
-					{func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
-					{func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
+					-- {func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
+					-- {func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
 				}
 			end
 			--5
@@ -3647,8 +3648,12 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if b then
 				curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
 			end
-			Main_Frame.TextLeft17:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r")
-			local PEREMENNAYA_MONEY = "|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r"
+
+			-- Char_Frame.CenterLines17.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
+			--Main_Frame.TextLeft17:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r")
+			Main_Frame.TextLeft17:SetText(curServerShort..": "..GetCoinTextureString(TotalMoney-TotalMoney % 10000))
+			--local PEREMENNAYA_MONEY = "|T133784:16:16:::64:64:4:60:4:60|t".."|cffFFF371"..CompactNumberFormat(CharInfo.Money).."|r"
+			local PEREMENNAYA_MONEY = GetCoinTextureString(CharInfo.Money - CharInfo.Money % 10000)
 			if CharInfo.PlayerReagentnumSlots == 0 then PEREMENNAYA_MONEY = PEREMENNAYA_MONEY.."|cffFF0000*|r" end
 			Char_Frame.CenterLines17.CL:SetText(PEREMENNAYA_MONEY)
 			--18
@@ -3668,7 +3673,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			if CharInfo.pizdaDate ~= 0 and CharInfo.pizdaDate ~= 0 then
 				Char_Frame.CenterLines18.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-				Char_Frame.CenterLines18.CL:SetText((CharInfo.needReset and "|cffFF0000" or ColorGray)..CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours)
+				Char_Frame.CenterLines18.CL:SetText((CharInfo.needReset and "|cffFF0000" or "|cffFFFFFF")..CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours)
 			end
 			------------------------------------------------------------------------------------------
 			------------------------------------------------------------------------------------------
@@ -3720,45 +3725,37 @@ end
 local function checkCharInfo(CharInfo)
 	-- CharInfo.KillCount = CharInfo.KillCount or {}
 	-- setmetatable(CharInfo.KillCount, Meta_Table)
-	CharInfo.KnownSpell = CharInfo.KnownSpell or {}
-	setmetatable(CharInfo.KnownSpell, Meta_Table)
-	CharInfo.numShownEntries = CharInfo.numShownEntries or 0
-	CharInfo.numQuests = CharInfo.numQuests or 0
-	CharInfo.maxNumQuestsCanAccept = CharInfo.maxNumQuestsCanAccept or 0
-	CharInfo.pizdaDate = CharInfo.pizdaDate or 0
-	CharInfo.pizdaHours = CharInfo.pizdaHours or 0
-	CharInfo.needReset = CharInfo.needReset or false
-	CharInfo.usedSlots = CharInfo.usedSlots or 0
-	CharInfo.totalSlots = CharInfo.totalSlots or 0
-	CharInfo.usedSlotsBANK = CharInfo.usedSlotsBANK or 0
-	CharInfo.totalSlotsBANK = CharInfo.totalSlotsBANK or 0
-	CharInfo.Shadowland = CharInfo.Shadowland or {}
-	CharInfo.VOID_STORAGE_PAGE1 = CharInfo.VOID_STORAGE_PAGE1 or {}
-	setmetatable(CharInfo.VOID_STORAGE_PAGE1, Meta_Table)
-	CharInfo.VOID_STORAGE_PAGE2 = CharInfo.VOID_STORAGE_PAGE2 or {}
-	setmetatable(CharInfo.VOID_STORAGE_PAGE2, Meta_Table)
-	setmetatable(CharInfo.Shadowland, Meta_Table)
+	CharInfo.avgItemLevel = CharInfo.avgItemLevel or 0
+	CharInfo.avgItemLevelEquipped = CharInfo.avgItemLevelEquipped or 0
+	CharInfo.avgItemLevelPvp = CharInfo.avgItemLevelPvp or 0
+	CharInfo.Class = CharInfo.Class or 0
+	CharInfo.classColor = CharInfo.classColor or {r = 0.5, g = 0.5, b = 0.5}
 	CharInfo.curCovID = CharInfo.curCovID or 0
-	CharInfo.Kyrian = CharInfo.Kyrian or {}
-	CharInfo.Venthyr = CharInfo.Venthyr or {}
-	CharInfo.NightFae = CharInfo.NightFae or {}
-	CharInfo.Necrolord = CharInfo.Necrolord or {}
-	-- setmetatable(CharInfo.CurrencyID, Meta_Table)
-	-- setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table)
-	-- setmetatable(CharInfo.EVENTS_ZARALEK_LIST, Meta_Table)
-	-- setmetatable(CharInfo.ItemsInBag, Meta_Table)
-	CharInfo.Kyrian.Renown = CharInfo.Kyrian.Renown or 0
-	CharInfo.Venthyr.Renown = CharInfo.Venthyr.Renown or 0
-	CharInfo.NightFae.Renown = CharInfo.NightFae.Renown or 0
-	CharInfo.Necrolord.Renown = CharInfo.Necrolord.Renown or 0
-	CharInfo.Kyrian.Anima = CharInfo.Kyrian.Anima or 0
-	CharInfo.Venthyr.Anima = CharInfo.Venthyr.Anima or 0
-	CharInfo.NightFae.Anima = CharInfo.NightFae.Anima or 0
-	CharInfo.Necrolord.Anima = CharInfo.Necrolord.Anima or 0
 	CharInfo.CurrencyID = CharInfo.CurrencyID or {}
 	CharInfo.CurrencyID_maxQuantity = CharInfo.CurrencyID_maxQuantity or {}
+	CharInfo.curServer = CharInfo.curServer or 0
 	CharInfo.EVENTS_ZARALEK_LIST = CharInfo.RARE_ZARALEK_LIST or {}
+	CharInfo.Faction = CharInfo.Faction or 0
 	CharInfo.ItemsInBag = CharInfo.ItemsInBag or {}
+	CharInfo.KnownSpell = CharInfo.KnownSpell or {}
+	CharInfo.Kyrian = CharInfo.Kyrian or {}
+	CharInfo.Kyrian.Anima = CharInfo.Kyrian.Anima or 0
+	CharInfo.Kyrian.Renown = CharInfo.Kyrian.Renown or 0
+	CharInfo.maxNumQuestsCanAccept = CharInfo.maxNumQuestsCanAccept or 0
+	CharInfo.Name = CharInfo.Name or 0
+	CharInfo.Necrolord = CharInfo.Necrolord or {}
+	CharInfo.Necrolord.Anima = CharInfo.Necrolord.Anima or 0
+	CharInfo.Necrolord.Renown = CharInfo.Necrolord.Renown or 0
+	CharInfo.needReset = CharInfo.needReset or false
+	CharInfo.NightFae = CharInfo.NightFae or {}
+	CharInfo.NightFae.Anima = CharInfo.NightFae.Anima or 0
+	CharInfo.NightFae.Renown = CharInfo.NightFae.Renown or 0
+	CharInfo.numQuests = CharInfo.numQuests or 0
+	CharInfo.numShownEntries = CharInfo.numShownEntries or 0
+	CharInfo.Octopussy_3kREP_IsOnQuest = CharInfo.Octopussy_3kREP_IsOnQuest or 0
+	CharInfo.Octopussy_Sniffin = CharInfo.Octopussy_Sniffin or 0
+	CharInfo.pizdaDate = CharInfo.pizdaDate or 0
+	CharInfo.pizdaHours = CharInfo.pizdaHours or 0
 	CharInfo.profID_prof1 = CharInfo.profID_prof1 or {}
 	CharInfo.profID_prof1.chest = CharInfo.profID_prof1.chest or {}
 	CharInfo.profID_prof1.craftOrder = CharInfo.profID_prof1.craftOrder or {}
@@ -3776,33 +3773,23 @@ local function checkCharInfo(CharInfo)
 	CharInfo.RARE_OSTROV_LIST = CharInfo.RARE_OSTROV_LIST or {}
 	CharInfo.RARE_ZARALEK_LIST = CharInfo.RARE_ZARALEK_LIST or {}
 	CharInfo.reputationID = CharInfo.reputationID or {}
-	CharInfo.Octopussy_Sniffin = CharInfo.Octopussy_Sniffin or 0
-	-- setmetatable(CharInfo.UnitLevel, Meta_Table)
-	-- setmetatable(CharInfo.avgItemLevel, Meta_Table)
-	-- setmetatable(CharInfo.avgItemLevelPvp, Meta_Table)
-	-- setmetatable(CharInfo.avgItemLevelEquipped, Meta_Table)
-	-- setmetatable(CharInfo.Class, Meta_Table)
-	-- setmetatable(CharInfo.Name, Meta_Table)
-	-- setmetatable(CharInfo.curServer, Meta_Table)
-	-- setmetatable(CharInfo.Faction, Meta_Table)
+	CharInfo.Shadowland = CharInfo.Shadowland or {}
+	CharInfo.totalSlots = CharInfo.totalSlots or 0
+	CharInfo.totalSlotsBANK = CharInfo.totalSlotsBANK or 0
 	CharInfo.UnitLevel = CharInfo.UnitLevel or 0
-	CharInfo.avgItemLevel = CharInfo.avgItemLevel or 0
-	CharInfo.avgItemLevelPvp = CharInfo.avgItemLevelPvp or 0
-	CharInfo.avgItemLevelEquipped = CharInfo.avgItemLevelEquipped or 0
-	CharInfo.Class = CharInfo.Class or 0
-	CharInfo.Name = CharInfo.Name or 0
-	CharInfo.curServer = CharInfo.curServer or 0
-	CharInfo.Faction = CharInfo.Faction or 0
-	CharInfo.Octopussy_3kREP_IsOnQuest = CharInfo.Octopussy_3kREP_IsOnQuest or 0
-	CharInfo.classColor = CharInfo.classColor or {r = 0.5, g = 0.5, b = 0.5}
+	CharInfo.usedSlots = CharInfo.usedSlots or 0
+	CharInfo.usedSlotsBANK = CharInfo.usedSlotsBANK or 0
+	CharInfo.Venthyr = CharInfo.Venthyr or {}
+	CharInfo.Venthyr.Anima = CharInfo.Venthyr.Anima or 0
+	CharInfo.Venthyr.Renown = CharInfo.Venthyr.Renown or 0
+	CharInfo.VOID_STORAGE_PAGE1 = CharInfo.VOID_STORAGE_PAGE1 or {}
+	CharInfo.VOID_STORAGE_PAGE2 = CharInfo.VOID_STORAGE_PAGE2 or {}
 	setmetatable(CharInfo, Meta_Table)
-	-- setmetatable(CharInfo.classColor.r, Meta_Table)
-	-- setmetatable(CharInfo.classColor.g, Meta_Table)
-	-- setmetatable(CharInfo.classColor.b, Meta_Table)
-	setmetatable(CharInfo.CurrencyID, Meta_Table)
 	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table)
+	setmetatable(CharInfo.CurrencyID, Meta_Table)
 	setmetatable(CharInfo.EVENTS_ZARALEK_LIST, Meta_Table)
 	setmetatable(CharInfo.ItemsInBag, Meta_Table)
+	setmetatable(CharInfo.KnownSpell, Meta_Table)
 	setmetatable(CharInfo.profID_prof1, Meta_Table)
 	setmetatable(CharInfo.profID_prof1.chest, Meta_Table)
 	setmetatable(CharInfo.profID_prof1.craftOrder, Meta_Table)
@@ -3820,6 +3807,9 @@ local function checkCharInfo(CharInfo)
 	setmetatable(CharInfo.RARE_OSTROV_LIST, Meta_Table)
 	setmetatable(CharInfo.RARE_ZARALEK_LIST, Meta_Table)
 	setmetatable(CharInfo.reputationID, Meta_Table)
+	setmetatable(CharInfo.Shadowland, Meta_Table)
+	setmetatable(CharInfo.VOID_STORAGE_PAGE1, Meta_Table)
+	setmetatable(CharInfo.VOID_STORAGE_PAGE2, Meta_Table)
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.Octopussy_3kREP == AddonColor.."Done|r" then
 		CharInfo.Octopussy_3kREP = false
 		CharInfo.Octopussy_3kREP_IsOnQuest = 0
@@ -3954,7 +3944,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 				end,
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-					GameTooltip_SetTitle(GameTooltip, AddonTitle)
+					GameTooltip_SetTitle(GameTooltip, AddonTitle.." "..Version)
 					GameTooltip:Show()
 				end,
 				OnLeave = function()
@@ -3992,8 +3982,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Octo_ToDo_DragonflyVars.config.Covenant == nil then
 			Octo_ToDo_DragonflyVars.config.Covenant = true
 		end
-		if Octo_ToDo_DragonflyVars.config.UIErrorsFrame == nil then
-			Octo_ToDo_DragonflyVars.config.UIErrorsFrame = false
+		if Octo_ToDo_DragonflyVars.config.UIErrorsFrameScale == nil then
+			Octo_ToDo_DragonflyVars.config.UIErrorsFrameScale = true
 		end
 		if Octo_ToDo_DragonflyVars.config.RaidBossEmoteFrame == nil then
 			Octo_ToDo_DragonflyVars.config.RaidBossEmoteFrame = true
@@ -4096,18 +4086,18 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		-- CollectLoginTime()
 		--itemID_TEST_INSERT()
 	elseif event == "HEARTHSTONE_BOUND" and not InCombatLockdown() then
-		-- CollectAllItemsInBag()
-		-- CollectLoginTime()
+		CollectAllItemsInBag()
+		CollectLoginTime()
 		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED" and not InCombatLockdown() then
 		OctoQuestUpdate()
-		-- CollectAllItemsInBag()
-		-- CollectLoginTime()
+		CollectAllItemsInBag()
+		CollectLoginTime()
 		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED_NEW_AREA" and not InCombatLockdown() then
 		OctoQuestUpdate()
-		-- CollectAllItemsInBag()
-		-- CollectLoginTime()
+		CollectAllItemsInBag()
+		CollectLoginTime()
 		--Fragments_Earned()
 		-- elseif event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
 		-- CollectPVPRaitings()

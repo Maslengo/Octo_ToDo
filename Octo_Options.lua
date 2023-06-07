@@ -180,15 +180,15 @@ config:SetScript("OnShow", function(self)
         end)
         self.btn_left9.text:SetText("Covenant")
         -----------------------------------------------
-        -- btn_left10 UIErrorsFrame
+        -- btn_left10 UIErrorsFrameScale
         -----------------------------------------------
         self.btn_left10 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
         self.btn_left10:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*10)
-        self.btn_left10:SetChecked(Octo_ToDo_DragonflyVars.config.UIErrorsFrame)
+        self.btn_left10:SetChecked(Octo_ToDo_DragonflyVars.config.UIErrorsFrameScale)
         self.btn_left10:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.UIErrorsFrame = btn_left:GetChecked()
         end)
-        self.btn_left10.text:SetText("UIErrorsFrame")
+        self.btn_left10.text:SetText("UIErrorsFrameScale")
         -----------------------------------------------
         -- btn_left11 RaidBossEmoteFrame
         -----------------------------------------------

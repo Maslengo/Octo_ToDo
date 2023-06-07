@@ -29,12 +29,33 @@ tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.HideZoneText then
 
 			ZoneTextFrame:HookScript("OnShow", function(self, ...)
+				print ("ZoneTextFrame Hide")
 				ZoneTextFrame:UnregisterAllEvents()
-				SubZoneTextFrame:UnregisterAllEvents()
-				ZoneTextString:Hide()
-				SubZoneTextString:Hide()
+				ZoneTextFrame:Hide()
+			end)
+			PVPArenaTextString:HookScript("OnShow", function(self, ...)
+				print ("PVPArenaTextString Hide")
+				-- PVPArenaTextString:UnregisterAllEvents()
 				PVPArenaTextString:Hide()
 			end)
+			SubZoneTextFrame:HookScript("OnShow", function(self, ...)
+				print ("SubZoneTextFrame Hide")
+				SubZoneTextFrame:UnregisterAllEvents()
+				SubZoneTextFrame:Hide()
+			end)
+			ZoneTextString:HookScript("OnShow", function(self, ...)
+				print ("ZoneTextString Hide")
+				-- ZoneTextString:UnregisterAllEvents()
+				ZoneTextString:Hide()
+			end)
+			SubZoneTextString:HookScript("OnShow", function(self, ...)
+				print ("SubZoneTextString Hide")
+				-- SubZoneTextString:UnregisterAllEvents()
+				SubZoneTextString:Hide()
+			end)
+
+
+
 
 			EventToastManagerFrame:HookScript("OnShow", function(self,...)
 				EventToastManagerFrame:UnregisterAllEvents()
@@ -54,10 +75,11 @@ tinsert(E.modules, function()
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
---UIErrorsFrame
+--UIErrorsFrameScale
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.UIErrorsFrame then
-			UIErrorsFrame:Hide()
+		if Octo_ToDo_DragonflyVars.config.UIErrorsFrameScale then
+			UIErrorsFrame:SetScale(.7111111111111111)
+			-- UIErrorsFrame:Hide()
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -849,7 +871,6 @@ tinsert(E.modules, function()
 				{itemid = 205372, count = 1},
 				{itemid = 205373, count = 1},
 				{itemid = 205374, count = 1},
-				{itemid = 205423, count = 1},
 				{itemid = 205424, count = 1},
 				{itemid = 205425, count = 1},
 				{itemid = 205426, count = 1},
@@ -903,6 +924,7 @@ tinsert(E.modules, function()
 
 
 			local white_list70 ={
+				{itemid = 205423, count = 1},
 				{itemid = 205966, count = 1},
 			}
 			if UnitLevel == 70 then
