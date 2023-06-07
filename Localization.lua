@@ -37,6 +37,7 @@ if L then
     L["Number of quests"] = true
     L["Bags"] = true
     L["Bank"] = true
+    L["We need more gold"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -62,5 +63,6 @@ if L then
     L["Number of quests"] = "Количество заданий"
     L["Bags"] = "Сумки"
     L["Bank"] = "Банк"
+    L["We need more gold"] = "Нужно больше золота!"
 end
 

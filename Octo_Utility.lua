@@ -220,14 +220,14 @@ tinsert(E.modules, function()
 						SetCVar("findYourselfMode", 0)
 						SetCVar("floatingCombatTextAllSpellMechanics", 0)
 						SetCVar("floatingCombatTextAuras", 0)
-						SetCVar("floatingCombatTextCombatDamage", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageAllAutos", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageDirectionalScale", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatHealing", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatLogPeriodicSpells", 1) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
+						SetCVar("floatingCombatTextCombatDamage", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageAllAutos", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageDirectionalScale", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatHealing", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
 						SetCVar("floatingCombatTextCombatState", 0) --Проки по центру экрана
 						SetCVar("floatingCombatTextComboPoints", 0)
 						SetCVar("floatingCombatTextDamageReduction", 0)
@@ -238,8 +238,8 @@ tinsert(E.modules, function()
 						SetCVar("floatingCombatTextHonorGains", 0)
 						SetCVar("floatingCombatTextLowManaHealth", 0)
 						SetCVar("floatingCombatTextPeriodicEnergyGains", 0)
-						SetCVar("floatingCombatTextPetMeleeDamage", 1) --ТУТ
-						SetCVar("floatingCombatTextPetSpellDamage", 1) --ТУТ
+						SetCVar("floatingCombatTextPetMeleeDamage", 0) --ТУТ
+						SetCVar("floatingCombatTextPetSpellDamage", 0) --ТУТ
 						SetCVar("floatingCombatTextReactives", 0)
 						SetCVar("floatingCombatTextRepChanges", 0)
 						SetCVar("floatingCombatTextSpellMechanics", 0)
@@ -379,15 +379,16 @@ tinsert(E.modules, function()
 				return table.concat(s)
 			end
 			local white_list = {
-				{itemid = 205423, count = 1},
-				{itemid = 92794, count = 1},
-				{itemid = 206006, count = 1},
-				{itemid = 5523, count = 1},
-				{itemid = 7973, count = 1},
-				{itemid = 21746, count = 1},
-				{itemid = 50160, count = 1},
-				{itemid = 54537, count = 1},
-				{itemid = 93724, count = 1},
+
+				{itemid = 204717, count = 2}, --2
+
+				{itemid = 204075, count = 15}, --15
+				{itemid = 204076, count = 15}, --15
+				{itemid = 204077, count = 15}, --15
+				{itemid = 204078, count = 15}, --15
+
+				{itemid = 204352, count = 50},
+
 				{itemid = 111956, count = 1},
 				{itemid = 128313, count = 1},
 				{itemid = 136926, count = 1},
@@ -848,6 +849,7 @@ tinsert(E.modules, function()
 				{itemid = 205372, count = 1},
 				{itemid = 205373, count = 1},
 				{itemid = 205374, count = 1},
+				{itemid = 205423, count = 1},
 				{itemid = 205424, count = 1},
 				{itemid = 205425, count = 1},
 				{itemid = 205426, count = 1},
@@ -881,6 +883,7 @@ tinsert(E.modules, function()
 				{itemid = 205991, count = 1},
 				{itemid = 205992, count = 1},
 				{itemid = 205998, count = 1},
+				-- {itemid = 206006, count = 1},
 				{itemid = 206019, count = 1},
 				{itemid = 206025, count = 1},
 				{itemid = 206030, count = 1},
@@ -889,21 +892,17 @@ tinsert(E.modules, function()
 				{itemid = 206035, count = 1},
 				{itemid = 206135, count = 1},
 				{itemid = 206136, count = 1},
-
-				{itemid = 204717, count = 2}, --2
-
-				{itemid = 204075, count = 15}, --15
-				{itemid = 204076, count = 15}, --15
-				{itemid = 204077, count = 15}, --15
-				{itemid = 204078, count = 15}, --15
-
-				{itemid = 204352, count = 50},
+				{itemid = 21746, count = 1},
+				{itemid = 50160, count = 1},
+				{itemid = 54537, count = 1},
+				{itemid = 5523, count = 1},
+				{itemid = 7973, count = 1},
+				{itemid = 92794, count = 1},
+				{itemid = 93724, count = 1},
 			}
 
 
 			local white_list70 ={
-				{itemid = 92794, count = 1},
-				{itemid = 205423, count = 1},
 				{itemid = 205966, count = 1},
 			}
 			if UnitLevel == 70 then
@@ -954,14 +953,6 @@ tinsert(E.modules, function()
 					end
 				end
 			end
-
-
-
-
-
-
-
-
 
 			E.UsableItems_Frame = UsableItems_Frame
 			E.UsableItemFrame_OnLoad = UsableItemFrame_OnLoad
@@ -1192,8 +1183,18 @@ tinsert(E.modules, function()
 		local function OnEvent(self, event)
 			if (CanMerchantRepair()) then
 				repairAllCost, canRepair = GetRepairAllCost()
+				local money = GetMoney()
+				local locale = GetLocale()
+
+				if canRepair and repairAllCost > money then
+					print ("|cFFFF5771"..L["We need more gold"].."|r "..GetCoinTextureString((repairAllCost-money)))
+					if locale ~= "ruRU" then
+						PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_ENG.ogg", "Master")
+					else
+						PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg", "Master")
+					end
 				-- If merchant can repair and there is something to repair
-				if (canRepair and repairAllCost > 0) then
+				else if (canRepair and repairAllCost > 0) then
 					costTextureString = GetCoinTextureString(repairAllCost)
 					-- Use Guild Bank
 					guildRepairedItems = false
@@ -1210,7 +1211,7 @@ tinsert(E.modules, function()
 						end
 					end
 					-- Use own funds
-					if (repairAllCost <= GetMoney() and not guildRepairedItems) then
+					if (repairAllCost <= money and not guildRepairedItems) then
 						RepairAllItems(false)
 						print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
 						--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired for: "]..costTextureString, 255, 255, 255)
@@ -1218,6 +1219,7 @@ tinsert(E.modules, function()
 				end
 			end
 		end
+	end
 		local f = CreateFrame("Frame")
 		f:SetScript("OnEvent", OnEvent)
 		f:RegisterEvent("MERCHANT_SHOW")

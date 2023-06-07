@@ -407,6 +407,7 @@ function CollectLoginTime()
 	--local xyi = date("%d.%m.%Y %H:%M:%S")
 	collect.pizdaDate = date("%d.%m.%Y")
 	collect.pizdaHours = date("%H:%M")
+	collect.needReset = false
 end
 function CollectCovenantAnima()
 	local UnitLevel = UnitLevel("PLAYER")
@@ -2306,6 +2307,66 @@ end
 --     Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
 --     return Button
 -- end
+
+local function CreateFrameExpansion_OnEnter(self)
+    self.icon:SetVertexColor(1, 1, 1, 1)
+end
+local function CreateFrameExpansion_OnLeave(self)
+    self.icon:SetVertexColor(1, 1, 1, 1)
+    GameTooltip:ClearLines()
+    GameTooltip:Hide()
+end
+local function CreateFrameExpansion_OnEvent(self,event)
+     if event == "PLAYER_REGEN_DISABLED" then
+        self:SetParent(UIParent)
+        self:ClearAllPoints()
+        self:Hide()
+    else
+        self:SetParent(Main_Frame)
+        self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, self.Ypos)
+        self:Show()
+    end
+end
+local function CreateFrameExpansion_OnMouseDown(self)
+    self.icon:SetVertexColor(1, 0, 0, 1)
+end
+local function CreateFrameExpansion_OnMouseUp(self)
+    self.icon:SetVertexColor(1, 1, 1, 1)
+end
+local function CreateFrameExpansion(Expansion, Texture, Ypos, r, g, b)
+    local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
+    Button.Expansion = Expansion
+    Button.Texture = Texture
+    Button.Ypos = Ypos
+    Button:SetSize(curHeight, curHeight)
+    Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, Ypos)
+    Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+    Button:SetBackdropBorderColor(r, g, b, 0.2)
+    Button:RegisterEvent("PLAYER_REGEN_DISABLED")
+    Button:RegisterEvent("PLAYER_REGEN_ENABLED")
+    Button:RegisterEvent("BAG_UPDATE")
+    Button:HookScript("OnEvent", CreateFrameExpansion_OnEvent)
+    Button:HookScript("OnEnter", CreateFrameExpansion_OnEnter)
+    Button:HookScript("OnLeave", CreateFrameExpansion_OnLeave)
+    Button:HookScript("OnMouseDown", CreateFrameExpansion_OnMouseDown)
+    Button:HookScript("OnMouseUp", CreateFrameExpansion_OnMouseUp)
+    Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+    -- Button:SetAttribute("type", "macro")
+    -- Button:SetAttribute("macrotext", "/use item:"..itemID)
+    local t = Button:CreateTexture(nil, "BACKGROUND")
+    Button.icon = t
+    t:SetTexture(Texture)--select(10, GetItemInfo(itemID)))
+    t:SetVertexColor(1, 1, 1, 1)
+    t:SetAllPoints(Button)
+    Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
+    return Button
+end
+
+
+
+
+
+
 function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 	Main_Frame:SetClampedToScreen(false)
@@ -2637,6 +2698,20 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-- CreateFrameUsableItems(204077, 5062642, 15, -48, .64, .21, .93)
 	-- CreateFrameUsableItems(204078, 5062612, 15, -72, 1, .5, 0)
 	-- CreateFrameUsableItems(204717, 442739, 2, -96, .85, .8, .5)
+	-- Expansion, texture, Ypox, r,g,b
+	local qz = -21
+	CreateFrameExpansion("Classic", 254652, 0, 104/255, 204/255, 239/255)
+	CreateFrameExpansion("TBC", 236415, qz*1, 79/255, 1, 121/255)
+	CreateFrameExpansion("WotLK", 630787, qz*2, 0, 163/255, 1)
+	CreateFrameExpansion("Cata", 4622499, qz*3, 1, 179/255, 0)
+	CreateFrameExpansion("MoP", 626190, qz*4, 0, 1, 186/255)
+	CreateFrameExpansion("WoD", 236452, qz*5, 200/255, 100/255, 0)
+	CreateFrameExpansion("Legion", 135794, qz*6, 30/255, 1, 0)
+	CreateFrameExpansion("BfA", 2484334, qz*7, 100/255, 100/255, 1)
+	CreateFrameExpansion("SL", 3586268, qz*8, 201/255, 195/255, 170/255)
+	CreateFrameExpansion("DF", 4640492, qz*9, 232/255, 277/255, 121/255)
+
+
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
@@ -3124,7 +3199,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			------------------------------------------------------------------------------------------
 			--1
 			Main_Frame.TextLeft1:SetText("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
-			local PEREMENNAYA_CommunityFeast = CharInfo.Octopussy_Feast
+			local PEREMENNAYA_CommunityFeast = CharInfo.Octopussy_Feast or " "
 			if CharInfo.ItemsInBag[200652] ~= 0 then
 				PEREMENNAYA_CommunityFeast = PEREMENNAYA_CommunityFeast.." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652)
 			end
@@ -3199,9 +3274,11 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				{"OLD: ", " "},
 				{func_currencyicon(2032)..func_currencyName(2032), func_currencyquantity(2032)},
 				{func_currencyicon(1166)..func_currencyName(1166), CharInfo.CurrencyID[1166]}, --Искаженный временем знак
-				{func_currencyicon(1226)..func_currencyName(1226), CharInfo.CurrencyID[1226]}, --Осколок пустоты
+				{func_currencyicon(1560)..func_currencyName(1560), CharInfo.CurrencyID[1560]}, --Ресурсы для войны
 				{func_currencyicon(1220)..func_currencyName(1220), CharInfo.CurrencyID[1220]}, --Ресурсы опллота класса
+				{func_currencyicon(1226)..func_currencyName(1226), CharInfo.CurrencyID[1226]}, --Осколок пустоты
 				{func_currencyicon(824)..func_currencyName(824), CharInfo.CurrencyID[824].."/"..CharInfo.CurrencyID_maxQuantity[824]}, --Ресурсы гарнизона
+				{func_currencyicon(1755)..func_currencyName(1755), CharInfo.CurrencyID[1755]},
 			}
 			-- for k,v in pairs(CharInfo.CurrencyID) do
 			--     if k ~= nil and k ~= 0 then
@@ -3573,15 +3650,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			if CharInfo.totalSlotsBANK ~= 0 then
 				tinsert (Char_Frame.CenterLines18.tooltip, {L["Bank"],CharInfo.usedSlotsBANK.."/"..CharInfo.totalSlotsBANK})
 			end
-			local needReset = false
-			local prevReset = thursdayReset - 604800
-
-			if (CharInfo.tmstp_Daily or 0) < prevReset then
-				needReset = true
-			end
 			if CharInfo.pizdaDate ~= 0 and CharInfo.pizdaDate ~= 0 then
 				Char_Frame.CenterLines18.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-				Char_Frame.CenterLines18.CL:SetText((needReset and "|cffFF0000" or ColorGray)..CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours)
+				Char_Frame.CenterLines18.CL:SetText((CharInfo.needReset and "|cffFF0000" or ColorGray)..CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours)
 			end
 			------------------------------------------------------------------------------------------
 			------------------------------------------------------------------------------------------
@@ -3640,6 +3711,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.maxNumQuestsCanAccept = CharInfo.maxNumQuestsCanAccept or 0
 	CharInfo.pizdaDate = CharInfo.pizdaDate or 0
 	CharInfo.pizdaHours = CharInfo.pizdaHours or 0
+	CharInfo.needReset = CharInfo.needReset or false
 	CharInfo.usedSlots = CharInfo.usedSlots or 0
 	CharInfo.totalSlots = CharInfo.totalSlots or 0
 	CharInfo.usedSlotsBANK = CharInfo.usedSlotsBANK or 0
@@ -3774,6 +3846,7 @@ local function checkCharInfo(CharInfo)
 		CharInfo.RARE_ZARALEK_LIST = {}
 		CharInfo.EVENTS_ZARALEK_LIST = {}
 		CharInfo.RARE_OSTROV_LIST = {}
+		CharInfo.needReset = true
 	end
 end
 function Octo_ToDo_DragonflyOnEvent(self, event, ...)

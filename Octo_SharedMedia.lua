@@ -67,6 +67,8 @@ LSM:Register("sound", "|cFF00A4FFO_04_Porn Hub|r", [[Interface\Addons\]]..Global
 LSM:Register("sound", "|cFF00A4FFO_04_Really Nigga|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\Really Nigga.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Ricefields|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\Ricefields.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Roblox Death|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\Roblox Death.ogg]])
+LSM:Register("sound", "|cFF00A4FFO_04_WeNeedMoreGold_ENG|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\WeNeedMoreGold_ENG.ogg]])
+LSM:Register("sound", "|cFF00A4FFO_04_WeNeedMoreGold_RU|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\WeNeedMoreGold_RU.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Surprise motherfucker|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\Surprise motherfucker.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Why are you running|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\Why are you running.ogg]])
 --Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Naruto
