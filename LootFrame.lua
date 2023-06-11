@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 --------------------------------------------------------------------------------
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 local bytetoB64 = {
@@ -70,13 +69,13 @@ function Loot_Frame_OnEvent(self, event, ...)
 	if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA" then
 		local difficultyID = select(3, GetInstanceInfo()) or "|cffFF0000-|r"
 		if difficultyID == 14 or difficultyID == 15 or difficultyID == 16 or difficultyID == 17 then
-			if select(5, GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" then
+			if select(5, GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" and RC_Frame then
 				RC_Frame:Show()
 			end
 			Loot_Frame:Show()
 		end
 		if (difficultyID ~= 14 and difficultyID ~= 15 and difficultyID ~= 16 and difficultyID ~= 17) then
-			if select(5, GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" then
+			if select(5, GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" and RC_Frame then
 				RC_Frame:Hide()
 			end
 			Loot_Frame:Hide()

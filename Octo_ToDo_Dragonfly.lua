@@ -1,25 +1,42 @@
 local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local Version = GetAddOnMetadata(GlobalAddonName, "Version")
-local Meta_Table = {
+local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
+local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
+local Meta_Table_0 = {
 	__index = function()
 		return 0
 	end
 }
+local Meta_Table_False = {
+	__index = function()
+		return false
+	end
+}
+if  PTR_IssueReporter then
+	PTR_IssueReporter:Hide()
+end
+if WeeklyRewardExpirationWarningDialog then
+	WeeklyRewardExpirationWarningDialog:Hide()
+end
 -- суббота 23:00
 --E.modules = {}
 --------------------------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-local Main_Frame, EventFrame = nil, nil
-local _, className, curClass = UnitClass("PLAYER")
-local classColor = C_ClassColor.GetClassColor(className)
+local Button = nil
+local CF = nil
+local Char_Frame = nil
+local EventFrame = nil
+local Main_Frame = nil
+local UPGRADERANKS_Frame = nil
+local className, classFilename, classId  = UnitClass("PLAYER")
+local classColor = C_ClassColor.GetClassColor(classFilename)
 local r, g, b = classColor:GetRGB()
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 --local curWidth = Octo_ToDo_DragonflyVars.config.Addon_curWidth*scale or 100*scale
 --print (Octo_ToDo_DragonflyVars.config.Addon_curWidth)
-local curWidth = 93*scale
+local curWidth = 96*scale
 local curHeight = 20*scale -- высота 20 24
 local curWidthTitle = curWidth*2
 local curFontTTF, curFontSize, curFontOutline = [[Interface\Addons\]]..GlobalAddonName..[[\Media\font\01 Octo.TTF]], 11, "OUTLINE"
@@ -135,7 +152,7 @@ local function Central_Frame_Mouse_OnEnter(self)
 	parent:GetScript("OnEnter")(parent)
 	-----------------------------------
 	if not self.tooltip then return end
-	GameTooltip:SetOwner(self, "ANCHOR_TOP", 0, 10)
+	GameTooltip:SetOwner(self, "ANCHOR_BOTTOM", 0, -10)
 	GameTooltip:AddLine(" ")
 	for _, v in pairs(self.tooltip) do
 		if v[2] ~= "0/0" then
@@ -404,7 +421,7 @@ function CollectLoginTime()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	--------------------------------------------------
-	--local xyi = date("%d.%m.%Y %H:%M:%S")
+	local xyi = date("%d.%m.%Y %H:%M:%S")
 	collect.pizdaDate = date("%d.%m.%Y")
 	collect.pizdaHours = date("%H:%M")
 	collect.needReset = false
@@ -1119,7 +1136,7 @@ local function CheckCompletedByQuestID(questID)
 	return Octopussy
 end
 local function CheckReputationByRepID(factionID)
-	local vivod = 0
+	local Vivod = 0
 	local Octo_REPUTATION_DEV_text = false
 	local friendshipRank, friendshipMaxRank
 	local name, description, standingID, barMin, barMax, barValue, atWarWith, canToggleAtWar, isHeader, _, _, isWatched, isChild, factionID, hasBonusRepGain, canBeLFGBonus = GetFactionInfoByID(factionID)
@@ -1145,7 +1162,7 @@ local function CheckReputationByRepID(factionID)
 	local reputationInfo = C_GossipInfo.GetFriendshipReputation(factionID)
 	local friendshipFactionID = reputationInfo.friendshipFactionID
 	if not barMax then
-		vivod = "not barMax"
+		Vivod = "not barMax"
 	elseif factionID and barMax and barMin ~= 0 then
 		--elseif factionID and barMax and isChild == false then
 		local dev_text = ""
@@ -1157,9 +1174,9 @@ local function CheckReputationByRepID(factionID)
 			local _, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(factionID)
 			if threshold then
 				local value = currentValue % threshold
-				vivod = dev_text..AddonColor..--[[CompactNumberFormat]](value).."/"..--[[CompactNumberFormat]](threshold)..r
+				Vivod = dev_text..AddonColor..--[[CompactNumberFormat]](value).."/"..--[[CompactNumberFormat]](threshold)..r
 				if hasRewardPending then
-					vivod = dev_text..CheckCompletedByQuestID(rewardQuestID)
+					Vivod = dev_text..CheckCompletedByQuestID(rewardQuestID)
 				end
 			end
 			----------- МАЖОР ФАКШН
@@ -1169,8 +1186,8 @@ local function CheckReputationByRepID(factionID)
 			local currentValue = data.renownReputationEarned
 			local totalValue = data.renownLevelThreshold
 			local standing = data.renownLevel
-			vivod = dev_text..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue)..AddonColor.."("..--[[CompactNumberFormat]](standing)..")|r"
-			if standing == 0 then vivod = 0 end
+			Vivod = dev_text..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue)..AddonColor.."("..--[[CompactNumberFormat]](standing)..")|r"
+			if standing == 0 then Vivod = 0 end
 			----------- ФРЕНД ФАКШН
 		elseif reputationInfo and friendshipFactionID ~= 0 then
 			if Octo_REPUTATION_DEV_text == true then dev_text = "|cffF3BC41ФРЕНД ФАКШН: |r" end
@@ -1192,20 +1209,20 @@ local function CheckReputationByRepID(factionID)
 			elseif currentLevel == 5 then color ="|cff4FFF79" standingTEXT = " (Good Friend)" -- 5
 			elseif currentLevel == 6 then color = AddonColor standingTEXT = " (Best Friend)" -- 6
 			end
-			vivod = dev_text..color..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue) .. standingTEXT..r
-			if currentLevel == maxLevel then vivod = dev_text..AddonColor.."Done|r" end
-			--if standing == 0 then vivod = 0 end
+			Vivod = dev_text..color..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue) .. standingTEXT..r
+			if currentLevel == maxLevel then Vivod = dev_text..AddonColor.."Done|r" end
+			--if standing == 0 then Vivod = 0 end
 			----------- Other
 		else
 			if Octo_REPUTATION_DEV_text == true then dev_text = "|cffAF61FFOther: |r" end
 			local currentValue = barValue-barMin
 			local totalValue = barMax-barMin
-			vivod = dev_text..color..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue)..standingTEXT..r
-			if currentValue == totalValue or nextThreshold == 0 then vivod = dev_text..AddonColor.."Done|r" end
-			--if standingID == 0 or currentValue == 0 then vivod = 0 end
+			Vivod = dev_text..color..--[[CompactNumberFormat]](currentValue).."/"..--[[CompactNumberFormat]](totalValue)..standingTEXT..r
+			if currentValue == totalValue or nextThreshold == 0 then Vivod = dev_text..AddonColor.."Done|r" end
+			--if standingID == 0 or currentValue == 0 then Vivod = 0 end
 		end
 	end
-	return vivod
+	return Vivod
 end
 local function GetCurrencyInfo(id)
 	local data = C_CurrencyInfo.GetCurrencyInfo(id)
@@ -1356,6 +1373,11 @@ local EVENTS_ZARALEK_LIST = {75612,
 	74352,
 }
 local itemID = {
+	113509, -- TEST ЖРАЧКА МАГА
+	92426,
+	92441,
+	83078,
+	92471,
 	--Комплект вражды DIABLO 4
 	122284,
 	205878,
@@ -1969,14 +1991,118 @@ local function TESTREP()
 	end
 end
 local questIDtable = {
+	-- PALADIN WARRIOR DEATHKNIGHT
+	24545, -- Святость и скверна
+	24743, -- Грань Тьмы
+	24547, -- Пиршество душ
+	24749, -- Сила нечестивости
+	24756, -- Сила крови
+	24757, -- Сила льда
+	24548, -- Расколотый трон
+	24549, -- Темная Скорбь...
+	24748, -- Последняя битва Короля-лича
+	--WARLOCK
+	32295, -- Необычная книга
+	32307, -- Чтец мертвого языка
+	32309, -- История шести мастеров (HORDE)
+	32310, -- История шести мастеров (Alliance)
+	32317, -- В поисках камней души
+	32324, -- В поисках сигнала
+	32325, -- Проникновение в Черный храм
+
+
+
+	--Sniffen
+	75459,
+	76027,
+	75621,
+	75397,
+	75517,
+	75619,
+	76014,
+	75620,
+	76081,
+	75390,
+	75234,
+	75516,
+	75996,
+	76016,
+	75393,
+	76015,
+	76084,
 	-- Ученики фиррака
-	75239, --Шадейсетал
-	55509, 55511, 13183, --ОЛО
-	56339, 56337, --Ашран
-	72167, -- 1500 на пвп
+	75239,
+	--Шадейсетал
+	55509,
+	55511,
+	13183,
+	--ОЛО
+	56339,
+	56337,
+	--Ашран
+	72167,-- 1500 на пвп
 	72170,
-	75622, -- трофей за пвп?
-	74771, 75694, 74905, 75887, 74570, 74569, 74568, 75888, 74775, 75665, 24548, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 64710, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 71026, 72166, 72168, 72169, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 74378, 74871, 75506, 76122, 36614,
+	75622,-- трофей за пвп?
+	74771,
+	75694,
+	74905,
+	75887,
+	74570,
+	74569,
+	74568,
+	75888,
+	74775,
+	75665,
+	40168,
+	40173,
+	40786,
+	40787,
+	45563,
+	47148,
+	55498,
+	55499,
+	64710,
+	66133,
+	66419,
+	66860,
+	66861,
+	66862,
+	66863,
+	66864,
+	66865,
+	66866,
+	66867,
+	66868,
+	66870,
+	66871,
+	66873,
+	66874,
+	66875,
+	71026,
+	72166,
+	72168,
+	72169,
+	72171,
+	72646,
+	72647,
+	72648,
+	72649,
+	72719,
+	72720,
+	72721,
+	72722,
+	72723,
+	72724,
+	72725,
+	72726,
+	72727,
+	72728,
+	72810,
+	74378,
+	74871,
+	75506,
+	76122,
+	36614,
 }
 ---------------------------------------------------------------------------------------------------------
 function CollectAllCurrency()
@@ -2052,8 +2178,8 @@ local function CollectBankInfo()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
---REAGENTBANK_CONTAINER,BANK_CONTAINER
---NUM_TOTAL_EQUIPPED_BAG_SLOTS+1,NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS
+	--REAGENTBANK_CONTAINER,BANK_CONTAINER
+	--NUM_TOTAL_EQUIPPED_BAG_SLOTS+1,NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS
 	local usedSlotsBANK = 0
 	local totalSlotsBANK = 0
 	local usedSlotsBANKREAGENT = 0
@@ -2182,7 +2308,7 @@ local WA_Utf8Sub = function(input, size)
 	return output
 end
 function Octo_ToDo_DragonflyOnLoad()
-	local EventFrame = CreateFrame("FRAME", AddonTitle..GenerateUniqueID())
+	EventFrame = CreateFrame("FRAME", AddonTitle..GenerateUniqueID())
 	EventFrame:RegisterEvent("VARIABLES_LOADED")
 	EventFrame:RegisterEvent("PLAYER_LOGIN")
 	EventFrame:RegisterEvent("PLAYER_MONEY")
@@ -2330,7 +2456,7 @@ local function CreateFrameExpansion_OnLeave(self)
 	GameTooltip:Hide()
 end
 local function CreateFrameExpansion_OnEvent(self,event)
-	 if event == "PLAYER_REGEN_DISABLED" then
+	if event == "PLAYER_REGEN_DISABLED" then
 		self:SetParent(UIParent)
 		self:ClearAllPoints()
 		self:Hide()
@@ -2347,7 +2473,7 @@ local function CreateFrameExpansion_OnMouseUp(self)
 	self.icon:SetVertexColor(1, 1, 1, 1)
 end
 local function CreateFrameExpansion(Expansion, Texture, Ypos, r, g, b)
-	local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
+	Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
 	Button.Expansion = Expansion
 	Button.Texture = Texture
 	Button.Ypos = Ypos
@@ -2374,12 +2500,11 @@ local function CreateFrameExpansion(Expansion, Texture, Ypos, r, g, b)
 	Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
 	return Button
 end
-local Main_Frame = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
-
 function Octo_ToDo_DragonflyCreateAltFrame()
+	Main_Frame = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 	Main_Frame:SetClampedToScreen(false)
 	Main_Frame:SetFrameStrata("DIALOG")
-	Main_Frame:SetPoint("CENTER", 0, 0)
+	Main_Frame:SetPoint("TOP", 0, -200*scale)
 	Main_Frame:SetBackdrop({
 			--elvui
 			bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -2698,6 +2823,68 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
+	Main_Frame.DraughtofTenLandsButton = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
+	Main_Frame.DraughtofTenLandsButton:SetSize(curHeight, curHeight)
+	Main_Frame.DraughtofTenLandsButton:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -180)
+	Main_Frame.DraughtofTenLandsButton:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.DraughtofTenLandsButton:SetBackdropBorderColor(0, 1, 0, 1)
+	Main_Frame.DraughtofTenLandsButton:SetScript("OnEnter", function(self)
+			local i = 0
+			self:SetBackdropBorderColor(1, 0, 0, 1)
+			self.icon:SetVertexColor(1, 0, 0, 1)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+			GameTooltip:ClearLines()
+			GameTooltip:AddDoubleLine(" "," ")
+			for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
+					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+					local curServerShort = CharInfo.curServer
+					local text = (curServerShort):gsub("-", " "):gsub("'", " ")
+					local a, b = strsplit(" ", text)
+					if b then
+						curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
+					end
+
+				if CharInfo.ItemsInBag[166751] and CharInfo.ItemsInBag[166751] ~= 0 then
+					i = i + 1
+					GameTooltip:AddDoubleLine(func_itemTexture(166751)..classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"), CharInfo.ItemsInBag[166751])
+				end
+				if CharInfo.CurrencyID[1716] >= 5 then
+					i = i + 1
+					GameTooltip:AddDoubleLine(func_currencyicon(1716)..classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"), CharInfo.CurrencyID[1716])
+				end
+
+
+			end
+			if i == 0 then
+				GameTooltip:AddLine("No Data")
+			end
+			GameTooltip:AddDoubleLine(" "," ")
+			GameTooltip:Show()
+	end)
+	Main_Frame.DraughtofTenLandsButton:SetScript("OnLeave", function(self)
+			self:SetBackdropBorderColor(.64, .21, .93, 1)
+			self.icon:SetVertexColor(1, 1, 1, 1)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	Main_Frame.DraughtofTenLandsButton:SetScript("OnMouseDown", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, .5)
+			self.icon:SetVertexColor(1, 0, 0, .5)
+	end)
+	Main_Frame.DraughtofTenLandsButton:SetScript("OnClick", function()
+			Main_Frame:Hide()
+	end)
+	local t = Main_Frame.DraughtofTenLandsButton:CreateTexture(nil, "BACKGROUND")
+	Main_Frame.DraughtofTenLandsButton.icon = t
+	t:SetTexture(967526)
+	t:SetVertexColor(1, 1, 1, 1)
+	t:SetAllPoints(Main_Frame.DraughtofTenLandsButton)
+	-----------------------------------------------------
+	-----------------------------------------------------
+	-----------------------------------------------------
+	-----------------------------------------------------
+	-----------------------------------------------------
+	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-- ITEMID, count, Ypox, r, g, b
@@ -2708,7 +2895,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-- CreateFrameUsableItems(204717, 442739, 2, -96, .85, .8, .5)
 	-- Expansion, texture, Ypox, r,g,b
 	local qz = -21
-	CreateFrameExpansion("Classic", 254652, 0, 104/255, 204/255, 239/255)
+	CreateFrameExpansion("Classic", 254652, qz*0, 104/255, 204/255, 239/255)
 	CreateFrameExpansion("TBC", 236415, qz*1, 79/255, 1, 121/255)
 	CreateFrameExpansion("WotLK", 630787, qz*2, 0, 163/255, 1)
 	CreateFrameExpansion("Cata", 4622499, qz*3, 1, 179/255, 0)
@@ -2731,20 +2918,20 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		whileDead = 1,
 		OnAccept = function()
 			C_Timer.After(1,function()
-				for i=1, numShownEntries do
-					if numQuests ~= 0 then
-						local questInfo = C_QuestLog.GetInfo(i)
-						if questInfo then
-							if (not questInfo.isHeader and not questInfo.isHidden) then
-								print ("|cFF00A3FF"..L["Abandon"].."|r".."|cFFFF5771"..questInfo.title.."|r")
-								C_QuestLog.SetSelectedQuest(questInfo.questID)
-								C_QuestLog.SetAbandonQuest()
-								C_QuestLog.AbandonQuest()
+					for i=1, numShownEntries do
+						if numQuests ~= 0 then
+							local questInfo = C_QuestLog.GetInfo(i)
+							if questInfo then
+								if (not questInfo.isHeader and not questInfo.isHidden) then
+									print ("|cFF00A3FF"..L["Abandon"].."|r".."|cFFFF5771"..questInfo.title.."|r")
+									C_QuestLog.SetSelectedQuest(questInfo.questID)
+									C_QuestLog.SetAbandonQuest()
+									C_QuestLog.AbandonQuest()
+								end
 							end
 						end
 					end
-				end
-				print (DONE)
+					print (DONE)
 			end)
 		end,
 	}
@@ -2825,9 +3012,9 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
-	local _, className, curClass = UnitClass("PLAYER")
-	local classColor = C_ClassColor.GetClassColor(className)
-	local r, g, b = classColor:GetRGB()
+	-- local className, classFilename, classId  = UnitClass("PLAYER")
+	-- local classColor = C_ClassColor.GetClassColor(classFilename)
+	-- local r, g, b = classColor:GetRGB()
 	local function FrameLine_OnEnter(self)
 		self.BG:SetColorTexture(r, g, b, 0.2) --горизонт
 	end
@@ -2891,26 +3078,6 @@ function OctoQuestUpdate()
 	elseif C_QuestLog.IsQuestFlaggedCompleted(69929) then collect.Octopussy_WB = CheckCompletedByQuestID(69929)
 	elseif C_QuestLog.IsQuestFlaggedCompleted(69930) then collect.Octopussy_WB = CheckCompletedByQuestID(69930)
 	end
-	collect.Octopussy_Sniffin = 0
-	local Octopussy_Sniffin = 0
-	if C_QuestLog.IsQuestFlaggedCompleted(75459) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75459)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(76027) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76027)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75621) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75621)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75397) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75397)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75517) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75517)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75619) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75619)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(76014) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76014)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75620) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75620)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(76081) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76081)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75390) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75390)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75234) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75234)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75516) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75516)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75996) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75996)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(76016) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76016)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(75393) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(75393)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(76015) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76015)
-	elseif C_QuestLog.IsQuestFlaggedCompleted(76084) then collect.Octopussy_Sniffin = Octopussy_Sniffin+1  -- CheckCompletedByQuestID(76084)
-	end
 	collect.Octopussy_WB_NEW = false
 	if C_QuestLog.IsQuestFlaggedCompleted(74892) then collect.Octopussy_WB_NEW = CheckCompletedByQuestID(74892)
 	end
@@ -2960,7 +3127,7 @@ function OctoQuestUpdate()
 	elseif C_QuestLog.IsOnQuest(66874) or C_QuestLog.IsQuestFlaggedCompleted(66874) then collect.Octopussy_dungeons_PreservingthePast = CheckCompletedByQuestID(66874)
 	elseif C_QuestLog.IsOnQuest(66875) or C_QuestLog.IsQuestFlaggedCompleted(66875) then collect.Octopussy_dungeons_PreservingthePast = CheckCompletedByQuestID(66875)
 	end
-	collect.Octopussy_3kREP = ""
+	collect.Octopussy_3kREP = false
 	if C_QuestLog.IsOnQuest(72068) or C_QuestLog.IsQuestFlaggedCompleted(72068) == true then collect.Octopussy_3kREP = CheckCompletedByQuestID(72068)
 	elseif C_QuestLog.IsOnQuest(72373) or C_QuestLog.IsQuestFlaggedCompleted(72373) == true then collect.Octopussy_3kREP = CheckCompletedByQuestID(72373)
 	elseif C_QuestLog.IsOnQuest(72374) or C_QuestLog.IsQuestFlaggedCompleted(72374) == true then collect.Octopussy_3kREP = CheckCompletedByQuestID(72374)
@@ -2982,10 +3149,10 @@ function OctoQuestUpdate()
 	elseif C_QuestLog.IsOnQuest(75860) == true then collect.Octopussy_3kREP_IsOnQuest = 75860
 	elseif C_QuestLog.IsOnQuest(75861) == true then collect.Octopussy_3kREP_IsOnQuest = 75861
 	end
-	collect.Octopussy_FightingisItsOwnReward = "" --Славный бой – это уже награда
+	collect.Octopussy_FightingisItsOwnReward = false --Славный бой – это уже награда
 	if C_QuestLog.IsOnQuest(76122) or C_QuestLog.IsQuestFlaggedCompleted(76122) == true then collect.Octopussy_FightingisItsOwnReward = CheckCompletedByQuestID(76122)
 	end
-	collect.Octopussy_AWorthyAllyLoammNiffen = "" --Достойный союзник: лоаммские ниффы
+	collect.Octopussy_AWorthyAllyLoammNiffen = false --Достойный союзник: лоаммские ниффы
 	if C_QuestLog.IsOnQuest(75665) or C_QuestLog.IsQuestFlaggedCompleted(75665) == true then collect.Octopussy_AWorthyAllyLoammNiffen = CheckCompletedByQuestID(75665)
 	end
 end
@@ -3005,7 +3172,15 @@ function OctoilvlStr()
 	collect.avgItemLevelEquipped = math.floor(avgItemLevelEquipped)
 	collect.avgItemLevelPvp = math.floor(avgItemLevelPvp)
 end
+
+
+
+
+
+
+
 function Octo_ToDo_DragonflyAddDataToAltFrame()
+	-- print ("Octo_ToDo_DragonflyAddDataToAltFrame"..GetTime())
 	local curGUID = UnitGUID("PLAYER")
 	local UnitLevel = UnitLevel("PLAYER")
 	--------------------------------------------------------------------------------------
@@ -3035,7 +3210,6 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 		curName = "UnLogged Char" else
 			curName = CharInfo.Name
 		end
-		local Char_Frame
 		if not Main_Frame[curCharGUID] then
 			Main_Frame[curCharGUID] = CreateFrame("Frame", AddonTitle..GenerateUniqueID(), Main_Frame, "BackdropTemplate")
 			Char_Frame = Main_Frame[curCharGUID]
@@ -3054,7 +3228,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			-- Char_Frame:SetBackdropColor(bgCr, bgCg, bgCb, 0)
 			-- Char_Frame:SetBackdropBorderColor(0, 0, 0, 0.15)
 			for i = 1, TotalLines do
-				local CF = CreateFrame("Frame", AddonTitle..GenerateUniqueID(), Char_Frame)
+				CF = CreateFrame("Frame", AddonTitle..GenerateUniqueID(), Char_Frame)
 				Char_Frame["CenterLines"..i] = CF
 				CF.index = i
 				CF:SetSize(curWidth, curHeight)
@@ -3073,18 +3247,562 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				CL:SetJustifyH("CENTER")
 				CL:SetTextColor(1, 1, 1, 1)
 				CF.CL = CL
+
 			end
-			-- for i = 1, TotalLines do
-			--     print ("qwe"..i)
-			--     if i == 1 then
-			--         Char_Frame["CenterLines"..i.."BG"] = Char_Frame:CreateTexture(nil,"BACKGROUND")
-			--         Char_Frame["CenterLines"..i.."BG"]:SetAllPoints(Char_Frame["CenterLines"..i])
-			--         Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(r,g,b,.2)
-			--     end
-			-- end
 		else
 			Char_Frame = Main_Frame[curCharGUID]
 		end
+
+
+
+
+		for i = 1, TotalLines do
+				local TEXTLEFT = Main_Frame["TextLeft"..i]
+				local TEXTCENT = Char_Frame["CenterLines"..i]
+				TEXTCENT.tooltip = {}
+				local VivodCent = " "
+				local VivodLeft = " "
+				--Main_Frame.TextLeft0:SetText(ColorGray..AddonVersion.."|r")
+				if i == 1 then
+					-- Char_Frame["CenterLines"..i.."BG"] = Char_Frame:CreateTexture(nil,"BACKGROUND")
+					-- Char_Frame["CenterLines"..i.."BG"]:SetAllPoints(Char_Frame["CenterLines"..i])
+					-- Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(r,g,b,.2)
+					-- ТЕКС СЛЕВА
+					VivodLeft = ("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
+					-- ТЕКСТ В ЦЕНТРЕ
+					VivodCent = CharInfo.Octopussy_Feast
+					if CharInfo.ItemsInBag[200652] ~= 0 then
+						VivodCent = VivodCent.." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652)
+					end
+					if CharInfo.ItemsInBag[200095] ~= 0 then
+						VivodCent = VivodCent.." +"..CharInfo.ItemsInBag[200095]..func_itemTexture(200095)
+					end
+					if CharInfo.UnitLevel >= 58 and (CharInfo.KnownSpell[366253] == false or CharInfo.KnownSpell[366253] == 0) then
+						VivodCent = VivodCent .. "|cffFF0000*|r"
+					end
+				end
+				if i == 2 then
+					VivodLeft = "|T1603189:16:16:::64:64:4:60:4:60|t |cffFFFFFF".. func_questName(70750).."|r"
+					if CharInfo.Octopussy_3kREP_IsOnQuest ~= 0 then
+						tinsert(TEXTCENT.tooltip,{func_questName(CharInfo.Octopussy_3kREP_IsOnQuest)})
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.Octopussy_3kREP then
+						VivodCent = CharInfo.Octopussy_3kREP
+					end
+					if CharInfo.ItemsInBag[200073] ~= 0 then
+						VivodCent = VivodCent.." +"..CharInfo.ItemsInBag[200073]..func_itemTexture(200073)
+					end
+				end
+				if i == 3 then
+					VivodLeft = func_questName(75665)
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.Octopussy_AWorthyAllyLoammNiffen then
+						VivodCent = CharInfo.Octopussy_AWorthyAllyLoammNiffen
+					end
+				end
+				if i == 4 then
+					VivodLeft = func_itemTexture(180653)..func_itemName(180653)
+					if CharInfo.CurrentKey ~= 0 then
+						TEXTCENT.tooltip = {
+							{"Score", CharInfo.RIO_Score},
+							{"Weekly Best", CharInfo.RIO_weeklyBest},
+							{" ", " "},
+							{"Рейды", CharInfo.RIO_RAID},
+							{"M+", CharInfo.RIO_KEYS},
+							{"PVP", CharInfo.RIO_PVPS},
+						}
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					VivodCent = Empty_Zero(CharInfo.CurrentKey)
+					if CharInfo.ItemsInBag[205225] ~= 0 then
+						VivodCent = VivodCent .. func_itemTexture(205225)..CharInfo.ItemsInBag[205225]
+					end
+					if CharInfo.ItemsInBag[205999] ~= 0 then
+						VivodCent = VivodCent .. func_itemTexture(205999)..CharInfo.ItemsInBag[205999]
+					end
+				end
+				if i == 5 then
+					TEXTCENT.tooltip = {
+						{"PVE: ", " "},
+						{func_currencyicon(2533)..func_currencyName(2533), CharInfo.CurrencyID[2533].."/"..CharInfo.CurrencyID_maxQuantity[2533]}, --Возрождающее пламя Тьмы
+						{func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]}, --Драконьи камни
+						{func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]}, --Печать бури
+						{func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]}, --Энергия стихий
+						{func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID[2003]}, --Припасы Драконьих островов
+						{" ", " "},
+						{"PVP: ", " "},
+						{func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
+						{func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
+						{func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]}, --Кровавые жетоны
+						{" ", " "},
+						{"OLD: ", " "},
+						{func_currencyicon(2032)..func_currencyName(2032), func_currencyquantity(2032)},
+						{func_currencyicon(1166)..func_currencyName(1166), CharInfo.CurrencyID[1166]}, --Искаженный временем знак
+						{func_currencyicon(1560)..func_currencyName(1560), CharInfo.CurrencyID[1560]}, --Ресурсы для войны
+						{func_currencyicon(1220)..func_currencyName(1220), CharInfo.CurrencyID[1220]}, --Ресурсы опллота класса
+						{func_currencyicon(824)..func_currencyName(824), CharInfo.CurrencyID[824].."/"..CharInfo.CurrencyID_maxQuantity[824]}, --Ресурсы гарнизона
+						-- {" ", " "},
+						-- {"Монетки: "," "},
+						-- {func_currencyicon(1580).."|cff6464ffBFA|r "..func_currencyName(1580), CharInfo.CurrencyID[1580].."/"..CharInfo.CurrencyID_maxQuantity[1580]}, --Печать судьбы воина
+						-- {func_currencyicon(1273).."|cff1eff00LEG|r "..func_currencyName(1273), CharInfo.CurrencyID[1273].."/"..CharInfo.CurrencyID_maxQuantity[1273]}, --Печать сломанной судьбы
+						-- {func_currencyicon(994).."|cffc86400WoD|r "..func_currencyName(994), CharInfo.CurrencyID[994].."/"..CharInfo.CurrencyID_maxQuantity[994]}, --Печать закаленной судьбы
+						-- {func_currencyicon(1129).."|cffc86400WoD|r "..func_currencyName(1129), CharInfo.CurrencyID[1129].."/"..CharInfo.CurrencyID_maxQuantity[1129]}, --Печать закаленной судьбы
+						-- {func_currencyicon(697).."|cff00ffbaMoP|r "..func_currencyName(697), CharInfo.CurrencyID[697].."/"..CharInfo.CurrencyID_maxQuantity[697]}, --Большой амулет удачи
+						-- {func_currencyicon(776).."|cff00ffbaMoP|r "..func_currencyName(776), CharInfo.CurrencyID[776].."/"..CharInfo.CurrencyID_maxQuantity[776]}, --Закаленная в бою печать
+					}
+					-- for k,v in pairs(CharInfo.CurrencyID) do
+					--     if k ~= nil and k ~= 0 then
+					--         print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
+					--         --TEXTCENT.tooltip[#TEXTCENT.tooltip+1] = {func_currencyicon(k)..func_currencyName(k), v}
+					--         --tinsert (TEXTCENT.tooltip,{"name:",CharInfo.CurrencyID(k)})
+					--     end
+					-- end
+					-- ТЕКСТ В ЦЕНТРЕ
+					VivodCent = ColorGray..CURRENCY.."|r"
+					if CharInfo.CurrencyID[2245] ~= 0 then
+						VivodCent = func_currencyicon(2245)..Empty_Zero(CharInfo.CurrencyID[2245])
+					end
+					if CharInfo.CurrencyID[2245] == CharInfo.CurrencyID_maxQuantity[2245] then
+						VivodCent = AddonColor..VivodCent.."|r"
+					end
+				end
+				if i == 6 then
+					if CharInfo.reputationID[2564] ~= 0 then
+						tinsert(TEXTCENT.tooltip, {func_reputationName(2564), CharInfo.reputationID[2564]})
+					end
+					if CharInfo.reputationID[2507] ~= 0 then
+						tinsert(TEXTCENT.tooltip, {func_reputationName(2507), CharInfo.reputationID[2507]})
+					end
+					if CharInfo.reputationID[2503] ~= 0 then
+						tinsert(TEXTCENT.tooltip, {func_reputationName(2503), CharInfo.reputationID[2503]})
+					end
+					if CharInfo.reputationID[2511] ~= 0 then
+						tinsert(TEXTCENT.tooltip, {func_reputationName(2511), CharInfo.reputationID[2511]})
+					end
+					if CharInfo.reputationID[2510] ~= 0 then
+						tinsert(TEXTCENT.tooltip, {func_reputationName(2510), CharInfo.reputationID[2510]})
+					end
+					for k,v in ipairs (itemIDReputation) do
+						if CharInfo.ItemsInBag[v] ~= 0 then
+							tinsert(TEXTCENT.tooltip, {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]})
+						end
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.reputationID ~= 0 then
+						VivodCent = ColorGray..REPUTATION.."|r"
+					end
+					if CharInfo.reputationID[2564] and CharInfo.reputationID[2564] ~= 0 then
+						VivodCent = CharInfo.reputationID[2564]
+					end
+				end
+				if i == 7 then --7 204193 204075 2409
+					VivodLeft = func_itemTexture(204193)..ColorGray..PLAYER_DIFFICULTY3..", M+ 1-5|r"
+					if CharInfo.ItemsInBag[204075] >= 1 then
+						tinsert(TEXTCENT.tooltip, {func_itemTexture(204075)..func_itemName(204075), CharInfo.ItemsInBag[204075]})
+					end
+					if (CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0) and CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
+						tinsert(TEXTCENT.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]})
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.ItemsInBag[204193] >= 1 then
+						tinsert(TEXTCENT.tooltip, {func_itemTexture(204193)..func_itemName(204193), CharInfo.ItemsInBag[204193]})
+						VivodCent = "|cff1eff00"..CharInfo.ItemsInBag[204193].."|r"
+					end
+					if CharInfo.ItemsInBag[204075] >= 15 then
+						VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204075]/15)..")"
+					end
+					if CharInfo.CurrencyID[2409] ~= 0 and (CharInfo.CurrencyID[2409] == CharInfo.CurrencyID_maxQuantity[2409]) then
+						VivodCent = VivodCent..AddonColor.."*|r"
+					end
+				end
+				if i == 8 then --8 204195 204076 2410
+					VivodLeft = func_itemTexture(204195)..ColorGray..PLAYER_DIFFICULTY1..", M+ 6-10|r"
+					if CharInfo.ItemsInBag[204076] >= 1 then
+						tinsert(TEXTCENT.tooltip, {func_itemTexture(204076)..func_itemName(204076), CharInfo.ItemsInBag[204076]})
+					end
+					if (CharInfo.ItemsInBag[204195] ~= 0 or CharInfo.ItemsInBag[204076] ~= 0 or CharInfo.CurrencyID[2410] ~= 0) and CharInfo.CurrencyID_maxQuantity[2410] ~= 0 then
+						tinsert(TEXTCENT.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]})
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.ItemsInBag[204195] >= 1 then
+						tinsert(TEXTCENT.tooltip, {func_itemTexture(204195)..func_itemName(204195), CharInfo.ItemsInBag[204195]})
+						VivodCent = "|cff0070dd"..CharInfo.ItemsInBag[204195].."|r"
+					end
+					if CharInfo.ItemsInBag[204076] >= 15 then
+						VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204076]/15)..")"
+					end
+					if CharInfo.CurrencyID[2410] ~= 0 and (CharInfo.CurrencyID[2410] == CharInfo.CurrencyID_maxQuantity[2410]) then
+						VivodCent = VivodCent..AddonColor.."*|r"
+					end
+				end
+				if i == 9 then --9 204196 204077 2411
+					VivodLeft = func_itemTexture(204196)..ColorGray..PLAYER_DIFFICULTY2..", M+ 11-15|r"
+					if CharInfo.ItemsInBag[204077] >= 1 then
+						tinsert(TEXTCENT.tooltip, {func_itemTexture(204077)..func_itemName(204077), CharInfo.ItemsInBag[204077]})
+					end
+					if (CharInfo.ItemsInBag[204196] ~= 0 or CharInfo.ItemsInBag[204077] ~= 0 or CharInfo.CurrencyID[2411] ~= 0) and CharInfo.CurrencyID_maxQuantity[2411] ~= 0 then
+						tinsert(TEXTCENT.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]})
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.ItemsInBag[204196] >= 1 then
+						tinsert(TEXTCENT.tooltip, {func_itemTexture(204196)..func_itemName(204196), CharInfo.ItemsInBag[204196]})
+						VivodCent = "|cffa335ee"..CharInfo.ItemsInBag[204196].."|r"
+					end
+					if CharInfo.ItemsInBag[204077] >= 15 then
+						VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204077]/15)..")"
+					end
+					if CharInfo.CurrencyID[2411] ~= 0 and (CharInfo.CurrencyID[2411] == CharInfo.CurrencyID_maxQuantity[2411]) then
+						VivodCent = VivodCent..AddonColor.."*|r"
+					end
+				end
+				if i == 10 then --10 204194 204078 2412
+					VivodLeft = func_itemTexture(204194)..ColorGray..PLAYER_DIFFICULTY6..", M+ 16+|r"
+					if CharInfo.ItemsInBag[204078] >= 1 then
+						tinsert(TEXTCENT.tooltip, {func_itemTexture(204078)..func_itemName(204078), CharInfo.ItemsInBag[204078]})
+					end
+					if (CharInfo.ItemsInBag[204194] ~= 0 or CharInfo.ItemsInBag[204078] ~= 0 or CharInfo.CurrencyID[2412] ~= 0) and CharInfo.CurrencyID_maxQuantity[2412] ~= 0 then
+						tinsert(TEXTCENT.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]})
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.ItemsInBag[204194] >= 1 then
+						tinsert(TEXTCENT.tooltip, {func_itemTexture(204194)..func_itemName(204194), CharInfo.ItemsInBag[204194]})
+						VivodCent = "|cffff8000"..CharInfo.ItemsInBag[204194].."|r"
+					end
+					if CharInfo.ItemsInBag[204078] >= 15 then
+						VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204078]/15)..")"
+					end
+					if CharInfo.CurrencyID[2412] ~= 0 and (CharInfo.CurrencyID[2412] == CharInfo.CurrencyID_maxQuantity[2412]) then
+						VivodCent = VivodCent..AddonColor.."*|r"
+					end
+				end
+				if i == 11 then
+					VivodLeft = func_itemTexture(204440)..func_itemName(204440)
+					-- {func_itemName_NOCOLOR(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440]},
+					-- {func_itemName_NOCOLOR(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717]},
+					-- {func_itemName_NOCOLOR(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681]},
+					-- {func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682]},
+					-- {func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697]},
+					if CharInfo.ItemsInBag[204440] ~= 0 then tinsert(TEXTCENT.tooltip, {func_itemName(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440]}) end
+					if CharInfo.ItemsInBag[204717] ~= 0 then tinsert(TEXTCENT.tooltip, {func_itemName(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717]}) end
+					if CharInfo.ItemsInBag[204681] ~= 0 then tinsert(TEXTCENT.tooltip, {func_itemName(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681]}) end
+					if CharInfo.ItemsInBag[204682] ~= 0 then tinsert(TEXTCENT.tooltip, {func_itemName(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682]}) end
+					if CharInfo.ItemsInBag[204697] ~= 0 then tinsert(TEXTCENT.tooltip, {func_itemName(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697]}) end
+					-- if CharInfo.ItemsInBag[204440] == 0 then tinsert(TEXTCENT.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440].."|r"}) end
+					-- if CharInfo.ItemsInBag[204717] == 0 then tinsert(TEXTCENT.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717].."|r"}) end
+					-- if CharInfo.ItemsInBag[204681] == 0 then tinsert(TEXTCENT.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681].."|r"}) end
+					-- if CharInfo.ItemsInBag[204682] == 0 then tinsert(TEXTCENT.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682].."|r"}) end
+					-- if CharInfo.ItemsInBag[204697] == 0 then tinsert(TEXTCENT.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697].."|r"}) end
+					-- if CharInfo.ItemsInBag[204440] >= 1 then
+					--     TEXTCENT.CL:SetText(VivodCent)
+					-- end
+					-- if CharInfo.ItemsInBag[204717] >=1 then
+					--     TEXTCENT.tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
+					-- end
+					-- if CharInfo.ItemsInBag[204717] >=2 then
+					--     TEXTCENT.CL:SetText(VivodCent.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
+					-- end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.ItemsInBag[204440] >= 1 then
+						VivodCent = VivodCent..func_itemTexture(204440)..CharInfo.ItemsInBag[204440]
+					end
+					if CharInfo.ItemsInBag[204717] >= 1 then
+						VivodCent = VivodCent..func_itemTexture(204717)..CharInfo.ItemsInBag[204717]
+					end
+					if CharInfo.ItemsInBag[204681] >= 1 then
+						VivodCent = VivodCent..func_itemTexture(204681)..CharInfo.ItemsInBag[204681]
+					end
+					if CharInfo.ItemsInBag[204682] >= 1 then
+						VivodCent = VivodCent..func_itemTexture(204682)..CharInfo.ItemsInBag[204682]
+					end
+					if CharInfo.ItemsInBag[204697] >= 1 then
+						VivodCent = VivodCent..func_itemTexture(204697)..CharInfo.ItemsInBag[204697]
+					end
+				end
+				if i == 12 then -- НОВЫЙ КАТАЛИСТ
+					VivodLeft = func_currencyicon(2533)..func_currencyName(2533)
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.CurrencyID[2533] >= 1 then
+						VivodCent = func_currencyicon(2533)..CharInfo.CurrencyID[2533]
+					end
+				end
+				if i == 13 then
+					if CharInfo.prof1 ~= 0 or CharInfo.prof2 ~= 0 then
+						TEXTCENT.tooltip = {
+							{Empty_Zero(CharInfo.profID_prof1.icon).."|cffa335ee"..Empty_Zero(CharInfo.profID_prof1.name).."|r"},
+							{"Сундуки", CharInfo.profID_prof1.chest.chest_count_prof1.."/"..CharInfo.profID_prof1.chest.questReq},
+							{"Лут", CharInfo.profID_prof1.drops.drops_count_prof1.."/"..CharInfo.profID_prof1.drops.questReq},
+							{"Квест", CharInfo.profID_prof1.profQuest.profQuest_count_prof1.."/"..CharInfo.profID_prof1.profQuest.questReq},
+							{"Трактаты", CharInfo.profID_prof1.treatise.treatise_count_prof1.."/"..CharInfo.profID_prof1.treatise.questReq},
+							{"Крафт", CharInfo.profID_prof1.craftOrder.craftOrder_count_prof1.."/"..CharInfo.profID_prof1.craftOrder.questReq},
+							{" ", " "},
+							{Empty_Zero(CharInfo.profID_prof2.icon).."|cffa335ee"..Empty_Zero(CharInfo.profID_prof2.name).."|r"},
+							{"Сундуки", CharInfo.profID_prof2.chest.chest_count_prof2.."/"..CharInfo.profID_prof2.chest.questReq},
+							{"Лут", CharInfo.profID_prof2.drops.drops_count_prof2.."/"..CharInfo.profID_prof2.drops.questReq},
+							{"Квест", CharInfo.profID_prof2.profQuest.profQuest_count_prof2.."/"..CharInfo.profID_prof2.profQuest.questReq},
+							{"Трактаты", CharInfo.profID_prof2.treatise.treatise_count_prof2.."/"..CharInfo.profID_prof2.treatise.questReq},
+							{"Крафт", CharInfo.profID_prof2.craftOrder.craftOrder_count_prof2.."/"..CharInfo.profID_prof2.craftOrder.questReq},
+							{" ", " "},
+						}
+					end
+					if CharInfo.ItemsInBag[204186] >= 1 then tinsert(TEXTCENT.tooltip, {func_itemTexture(204186)..func_itemName(204186), CharInfo.ItemsInBag[204186]}) end
+					if CharInfo.ItemsInBag[204187] >= 1 then tinsert(TEXTCENT.tooltip, {func_itemTexture(204187)..func_itemName(204187), CharInfo.ItemsInBag[204187]}) end
+					if CharInfo.ItemsInBag[204188] >= 1 then tinsert(TEXTCENT.tooltip, {func_itemTexture(204188)..func_itemName(204188), CharInfo.ItemsInBag[204188]}) end
+					if CharInfo.ItemsInBag[190453] >= 1 then tinsert(TEXTCENT.tooltip, {func_itemTexture(190453)..func_itemName(190453), CharInfo.ItemsInBag[190453]}) end
+					if CharInfo.ItemsInBag[191784] >= 1 then tinsert(TEXTCENT.tooltip, {func_itemTexture(191784)..func_itemName(191784), CharInfo.ItemsInBag[191784]}) end
+					if CharInfo.ItemsInBag[204985] >= 1 then tinsert(TEXTCENT.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]}) end
+					if CharInfo.ItemsInBag[204715] >= 1 then tinsert(TEXTCENT.tooltip, {func_itemTexture(204715)..func_itemName(204715), CharInfo.ItemsInBag[204715]}) end
+					if CharInfo.ItemsInBag[190456] >= 1 then tinsert(TEXTCENT.tooltip, {func_itemTexture(190456)..func_itemName(190456), CharInfo.ItemsInBag[190456]}) end
+					if CharInfo.ItemsInBag[199197] >= 1 then tinsert(TEXTCENT.tooltip, {func_itemTexture(199197)..func_itemName(199197), CharInfo.ItemsInBag[199197]}) end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.profID_prof1.icon ~= 0 then
+						VivodCent = CharInfo.profID_prof1.icon
+					end
+					if CharInfo.profID_prof2.icon ~= 0 then
+						VivodCent = VivodCent.. " "..CharInfo.profID_prof2.icon
+					end
+				end
+				if i == 14 then
+					local tinsertTABLE = {
+						-- {name = func_questName(72528), data=CheckCompletedByQuestID(72528)}, --БУДУЩИЙ КАТАЛИЗАТОР
+						{name = TreasureGoblinTimer(), data=CharInfo.Octopussy_TreasureGoblin},
+						{name = ToDragonbaneKeepTimer(), data=CharInfo.Octopussy_DragonbaneKeep},
+						{name = GrandHuntsTimer(), data=CharInfo.Octopussy_TheGrandHunt},
+						{name = CommunityFeastTimer(), data=CharInfo.Octopussy_Feast},
+						{name = PrimalStormsTimer(), data=CharInfo.Octopussy_StormsFury},
+						{name = ResearchersUnderFireTimer(), data = CharInfo.Octopussy_ResearchersUnderFire},
+						{name = func_questName(70750), data=CharInfo.Octopussy_3kREP}, --"Помощь союзу"
+						{name ="", data =""},
+						{name = "WORLD BOSS", data=CharInfo.Octopussy_WB}, --"CharInfo.Octopussy_WB"
+						{name = "WORLD BOSS "..func_questName(74892), data=CharInfo.Octopussy_WB_NEW},
+						{name = PLAYER_DIFFICULTY_TIMEWALKER, data=CharInfo.Octopussy_Timewalk}, --"CharInfo.Octopussy_Timewalk"
+						{name = CALENDAR_FILTER_WEEKLY_HOLIDAYS, data=CharInfo.Octopussy_WeekendEvent}, --"CharInfo.Octopussy_WeekendEvent"
+						{name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
+						{name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
+						{name = L["Fyrakk Asssaults"], data = CharInfo.Octopussy_FyrakkAssaults},
+					}
+					if CharInfo.UnitLevel >= 70 then
+
+						local questID = 75459
+						local countSniffen = 0
+						if CharInfo.questIDtable[75459] == "|cff00FF00Done|r" then
+							questID = 76027 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[76027] == "|cff00FF00Done|r" then
+							questID = 75621 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75621] == "|cff00FF00Done|r" then
+							questID = 75397 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75397] == "|cff00FF00Done|r" then
+							questID = 75517 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75517] == "|cff00FF00Done|r" then
+							questID = 75619 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75619] == "|cff00FF00Done|r" then
+							questID = 76014 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[76014] == "|cff00FF00Done|r" then
+							questID = 75620 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75620] == "|cff00FF00Done|r" then
+							questID = 76081 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[76081] == "|cff00FF00Done|r" then
+							questID = 75390 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75390] == "|cff00FF00Done|r" then
+							questID = 75234 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75234] == "|cff00FF00Done|r" then
+							questID = 75516 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75516] == "|cff00FF00Done|r" then
+							questID = 75996 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75996] == "|cff00FF00Done|r" then
+							questID = 76016 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[76016] == "|cff00FF00Done|r" then
+							questID = 75393 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[75393] == "|cff00FF00Done|r" then
+							questID = 76015 countSniffen = countSniffen + 1
+						end
+						if CharInfo.questIDtable[76015] == "|cff00FF00Done|r" then
+							questID = 76084 countSniffen = countSniffen + 1
+						end
+						tinsert(tinsertTABLE,{name = "Раскопки с Мирратом", data = "|cffc9c3aa"..countSniffen.."/17|r"})
+					end
+
+
+
+
+
+
+					if CharInfo.classFilename == "WARRIOR" or CharInfo.classFilename == "PALADIN" or CharInfo.classFilename == "DEATHKNIGHT" --[[and CharInfo.UnitLevel >= 30]]  then
+						local questID = 24545
+						local countShadowmourne = 1
+						if CharInfo.questIDtable[24545] == "|cff00FF00Done|r" then
+							questID = 24743 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[24743] == "|cff00FF00Done|r" then
+							questID = 24547 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[24547] == "|cff00FF00Done|r" then
+							questID = 24749 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[24749] == "|cff00FF00Done|r" then
+							questID = 24756 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[24756] == "|cff00FF00Done|r" then
+							questID = 24757 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[24757] == "|cff00FF00Done|r" then
+							questID = 24548 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[24548] == "|cff00FF00Done|r" then
+							questID = 24549 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[24549] == "|cff00FF00Done|r" then
+							questID = 24748 countShadowmourne = countShadowmourne + 1
+						end
+						tinsert(tinsertTABLE,{name = " "," "})
+						tinsert(tinsertTABLE,{name = "|cff00A3FFКлассовые задания:|r"," "})
+						tinsert(tinsertTABLE,{name = countShadowmourne.."/9 "..func_questName(questID), data = CharInfo.questIDtable[questID]})
+					end
+					if CharInfo.classFilename == "WARLOCK" --[[and CharInfo.UnitLevel >= 35]] then
+						local questID = 32295
+						local countShadowmourne = 1
+						if CharInfo.questIDtable[32295] == "|cff00FF00Done|r" then
+							questID = 32307 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[32307] == "|cff00FF00Done|r" and CharInfo.Faction == "Horde" then
+							questID = 32309 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[32307] == "|cff00FF00Done|r" and CharInfo.Faction == "Alliance" then
+							questID = 32310 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[32309] == "|cff00FF00Done|r" or CharInfo.questIDtable[32310] == "|cff00FF00Done|r" then
+							questID = 32317 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[32317] == "|cff00FF00Done|r" then
+							questID = 32324 countShadowmourne = countShadowmourne + 1
+						end
+						if CharInfo.questIDtable[32324] == "|cff00FF00Done|r" then
+							questID = 32325 countShadowmourne = countShadowmourne + 1
+						end
+						tinsert(tinsertTABLE,{name = " "," "})
+						tinsert(tinsertTABLE,{name = "|cff00A3FFКлассовые задания:|r"," "})
+						tinsert(tinsertTABLE,{name = countShadowmourne.."/6 "..func_questName(questID), data = CharInfo.questIDtable[questID]})
+					end
+					for k, v in ipairs(tinsertTABLE) do
+						color = "|cffc9c3aa"
+						-- if v.data == "|cff00FF00Done|r" then
+						--     color = AddonColor
+						-- end
+						tinsert(TEXTCENT.tooltip, {color..v.name.."|r", v.data})
+					end
+					-- for k, v in ipairs(questIDtable) do
+					--     if CharInfo.questIDtable[v] ~= "" and CharInfo.questIDtable[v] ~= 0 then
+					--         tinsert(TEXTCENT.tooltip, {func_questName(v), CharInfo.questIDtable[v]})
+					--     end
+					-- end
+					-- ТЕКСТ В ЦЕНТРЕ
+					VivodCent = ColorGray..QUESTS_LABEL.."|r"
+				end
+				if i == 15 then
+					-- TEXTCENT.CL:SetText(func_itemTexture(190453)..Empty_Zero(CharInfo.ItemsInBag[190453]))
+					-- if CharInfo.ItemsInBag[199197] ~= 0 then TEXTCENT.CL:SetText("|cffFF00FF"..func_itemTexture(190453)..CharInfo.ItemsInBag[190453].." (+"..CharInfo.ItemsInBag[199197]..")|r") end
+					TEXTCENT.tooltip[#TEXTCENT.tooltip+1] = {" "," "}
+					for k, v in ipairs(CharInfo.VOID_STORAGE_PAGE1) do
+						if v ~= 0 then
+							TEXTCENT.tooltip[#TEXTCENT.tooltip+1] = {func_itemTexture(CharInfo.VOID_STORAGE_PAGE1[k])..func_itemName(CharInfo.VOID_STORAGE_PAGE1[k])}
+						end
+					end
+					for k, v in ipairs(CharInfo.VOID_STORAGE_PAGE2) do
+						if v ~= 0 then
+							tinsert(TEXTCENT.tooltip,{func_itemTexture(CharInfo.VOID_STORAGE_PAGE2[k])..func_itemName(CharInfo.VOID_STORAGE_PAGE2[k])})
+						end
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					for k, v in ipairs(itemID) do
+						local count = tonumber(CharInfo.ItemsInBag[v])
+						if count ~= 0 then
+							--if CharInfo.ItemsInBag[190453] == 0 and CharInfo.ItemsInBag[199197] == 0 then TEXTCENT.CL:SetText(ColorGray..ITEMS.."|r") end
+							VivodCent = ColorGray..ITEMS.."|r"
+							TEXTCENT.tooltip[#TEXTCENT.tooltip+1] = {func_itemTexture(v)..func_itemName(v), count}
+						end
+					end
+				end
+				if i == 16 then
+					--TEXTCENT.CL:SetText(format("|cff%s%.1f|r", CharInfo.avgItemLevel >= 430 and "00ff00" or CharInfo.avgItemLevel >= 400 and "ffff00" or "ff0000", CharInfo.avgItemLevel))
+					VivodLeft = LFG_LIST_ITEM_LEVEL_INSTR_SHORT
+					local pvpcolor = "|cffFF0000"
+					if CharInfo.avgItemLevelEquipped and CharInfo.avgItemLevel then
+						if CharInfo.avgItemLevelEquipped > 440 then
+							pvpcolor = "|cff4FFF79"
+						elseif CharInfo.avgItemLevelEquipped > 400 then
+							pvpcolor = "|cffFFF371"
+						end
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.avgItemLevelEquipped and CharInfo.avgItemLevel then
+						VivodCent = pvpcolor..CharInfo.avgItemLevelEquipped
+						if CharInfo.avgItemLevel > CharInfo.avgItemLevelEquipped then
+							VivodCent = VivodCent.."/"..CharInfo.avgItemLevel.."|r"
+						end
+						if CharInfo.avgItemLevelPvp and CharInfo.avgItemLevelPvp > CharInfo.avgItemLevel then
+							VivodCent = VivodCent..AddonColor.."*|r"
+							tinsert(TEXTCENT.tooltip, {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp)})
+						end
+					end
+				end
+				if i == 17 then
+					local curServerShort = GetRealmName()
+					local text = (curServerShort):gsub("-", " "):gsub("'", " ")
+					local a, b = strsplit(" ", text)
+					if b then
+						curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
+					end
+					-- TEXTCENT.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
+					VivodLeft = curServerShort..": "..GetCoinTextureString(TotalMoney-TotalMoney % 10000)
+					-- ТЕКСТ В ЦЕНТРЕ
+					VivodCent = GetCoinTextureString(CharInfo.Money - CharInfo.Money % 10000) or 0
+					if CharInfo.Money - CharInfo.Money % 10000 < 10000000 then -- меньше тысячи
+						VivodCent = ColorGray..VivodCent.."|r"
+					end
+					if CharInfo.PlayerReagentnumSlots == 0 then VivodCent = VivodCent.."|cffFF0000*|r" end
+				end
+				if i == 18 then
+					VivodLeft = L["Last Update"]
+					if CharInfo.CurrentLocation then
+						tinsert (TEXTCENT.tooltip, {L["Current Location"],CharInfo.CurrentLocation})
+					end
+					if CharInfo.maxNumQuestsCanAccept ~= 0 then
+						tinsert (TEXTCENT.tooltip, {QUESTS_LABEL,CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept})
+					end
+					if CharInfo.totalSlots ~= 0 then
+						tinsert (TEXTCENT.tooltip, {L["Bags"],CharInfo.usedSlots.."/"..CharInfo.totalSlots})
+					end
+					if CharInfo.totalSlotsBANK ~= 0 then
+						tinsert (TEXTCENT.tooltip, {L["Bank"],CharInfo.usedSlotsBANK.."/"..CharInfo.totalSlotsBANK})
+					end
+					-- ТЕКСТ В ЦЕНТРЕ
+					if CharInfo.pizdaDate ~= 0 and CharInfo.pizdaDate ~= 0 then
+						TEXTCENT.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
+						VivodCent = (CharInfo.needReset and "|cffFF0000" or "|cffFFFFFF")..CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours
+					end
+				end
+				--Конец
+				TEXTLEFT:SetText(VivodLeft)
+				TEXTCENT.CL:SetText(VivodCent)
+				if #TEXTCENT.tooltip == 0 then
+					TEXTCENT.tooltip = nil
+				end
+		end
+
 		local ShowOnlyCurrentRealm = Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm
 		local LevelToShow = Octo_ToDo_DragonflyVars.config.LevelToShow
 		if ((ShowOnlyCurrentRealm == true and (CharInfo.curServer == GetRealmName())) and (CharInfo.UnitLevel >= LevelToShow)) or
@@ -3200,483 +3918,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			t:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\closeWHITE.tga")
 			t:SetVertexColor(1, 1, 1, 1)
 			t:SetAllPoints(Char_Frame.DeleteButton)
-			------------------------------------------------------------------------------------------
-			------------------------------------------------------------------------------------------
-			------------------------------------------------------------------------------------------
-			Main_Frame.TextLeft0:SetText(ColorGray..Version.."|r")
-			--1
-			Main_Frame.TextLeft1:SetText("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
-			local PEREMENNAYA_CommunityFeast = CharInfo.Octopussy_Feast or " "
-			if CharInfo.ItemsInBag[200652] ~= 0 then
-				PEREMENNAYA_CommunityFeast = PEREMENNAYA_CommunityFeast.." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652)
-			end
-			if CharInfo.ItemsInBag[200095] ~= 0 then
-				PEREMENNAYA_CommunityFeast = PEREMENNAYA_CommunityFeast.." +"..CharInfo.ItemsInBag[200095]..func_itemTexture(200095)
-			end
-			if CharInfo.UnitLevel >= 58 and (CharInfo.KnownSpell[366253] == false or CharInfo.KnownSpell[366253] == 0) then
-				PEREMENNAYA_CommunityFeast = PEREMENNAYA_CommunityFeast .. "|cffFF0000*|r"
-			end
-			Char_Frame.CenterLines1.CL:SetText(PEREMENNAYA_CommunityFeast)
-			--2
-			Main_Frame.TextLeft2:SetText("|T1603189:16:16:::64:64:4:60:4:60|t |cffFFFFFF".. func_questName(70750).."|r")
-			Char_Frame.CenterLines2.CL:SetText(CharInfo.Octopussy_3kREP or NONE)
-			Char_Frame.CenterLines2.tooltip = {}
-			if CharInfo.ItemsInBag[200073] ~= 0 then
-				Char_Frame.CenterLines2.CL:SetText((CharInfo.Octopussy_3kREP or NONE).." +"..CharInfo.ItemsInBag[200073]..func_itemTexture(200073))
-			end
-			if CharInfo.Octopussy_3kREP_IsOnQuest ~= 0 then
-				tinsert(Char_Frame.CenterLines2.tooltip,{func_questName(CharInfo.Octopussy_3kREP_IsOnQuest)})
-			end
-			if #Char_Frame.CenterLines2.tooltip == 0 then
-				Char_Frame.CenterLines2.tooltip = nil
-			end
-			--3 1500 РЕПЫ НИФАМ
-			Main_Frame.TextLeft3:SetText(func_questName(75665))
-			if CharInfo.Octopussy_AWorthyAllyLoammNiffen then
-				Char_Frame.CenterLines3.CL:SetText(CharInfo.Octopussy_AWorthyAllyLoammNiffen)
-			end
-			--4
-			Main_Frame.TextLeft4:SetText(func_itemTexture(180653)..func_itemName(180653))
-			local PEREMENNAYA_CurrentKey = Empty_Zero(CharInfo.CurrentKey) or " "
-			if CharInfo.ItemsInBag[205225] ~= 0 then
-				PEREMENNAYA_CurrentKey = PEREMENNAYA_CurrentKey .. func_itemTexture(205225)..CharInfo.ItemsInBag[205225]
-			end
-			if CharInfo.ItemsInBag[205999] ~= 0 then
-				PEREMENNAYA_CurrentKey = PEREMENNAYA_CurrentKey .. func_itemTexture(205999)..CharInfo.ItemsInBag[205999]
-			end
-			Char_Frame.CenterLines4.CL:SetText(PEREMENNAYA_CurrentKey)
-			if CharInfo.CurrentKey ~= 0 then
-				Char_Frame.CenterLines4.tooltip = {
-					{"Score", CharInfo.RIO_Score},
-					{"Weekly Best", CharInfo.RIO_weeklyBest},
-					{" ", " "},
-					{"Рейды", CharInfo.RIO_RAID},
-					{"M+", CharInfo.RIO_KEYS},
-					{"PVP", CharInfo.RIO_PVPS},
-					-- {func_itemTexture(205225)..func_itemName(205225),CharInfo.ItemsInBag[205225].."/12"},
-					-- {func_itemTexture(205999)..func_itemName(205999),CharInfo.ItemsInBag[205999]},
-				}
-			end
-			--5
-			Char_Frame.CenterLines5.CL:SetText(ColorGray..CURRENCY.."|r")
-			local PEREMENNAYA_2245 = func_currencyicon(2245)..Empty_Zero(CharInfo.CurrencyID[2245])
-			if CharInfo.CurrencyID[2245] == CharInfo.CurrencyID_maxQuantity[2245] then
-				Char_Frame.CenterLines5.CL:SetText(AddonColor..PEREMENNAYA_2245.."|r")
-			elseif CharInfo.CurrencyID[2245] >= 1 then
-				Char_Frame.CenterLines5.CL:SetText(PEREMENNAYA_2245)
-			end
-			Char_Frame.CenterLines5.tooltip = {
-				{"PVE: ", " "},
-				{func_currencyicon(2533)..func_currencyName(2533), CharInfo.CurrencyID[2533].."/"..CharInfo.CurrencyID_maxQuantity[2533]}, --Возрождающее пламя Тьмы
-				{func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]}, --Драконьи камни
-				{func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]}, --Печать бури
-				{func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]}, --Энергия стихий
-				{func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID[2003]}, --Припасы Драконьих островов
-				{" ", " "},
-				{"PVP: ", " "},
-				{func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]}, --Очки завоевания
-				{func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]}, --Честь
-				{func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]}, --Кровавые жетоны
-				{" ", " "},
-				{"OLD: ", " "},
-				{func_currencyicon(2032)..func_currencyName(2032), func_currencyquantity(2032)},
-				{func_currencyicon(1166)..func_currencyName(1166), CharInfo.CurrencyID[1166]}, --Искаженный временем знак
-				{func_currencyicon(1560)..func_currencyName(1560), CharInfo.CurrencyID[1560]}, --Ресурсы для войны
-				{func_currencyicon(1220)..func_currencyName(1220), CharInfo.CurrencyID[1220]}, --Ресурсы опллота класса
-				{func_currencyicon(824)..func_currencyName(824), CharInfo.CurrencyID[824].."/"..CharInfo.CurrencyID_maxQuantity[824]}, --Ресурсы гарнизона
-				{" ", " "},
-				{"Монетки: "," "},
-				{func_currencyicon(1580).."|cff6464ffBFA|r "..func_currencyName(1580), CharInfo.CurrencyID[1580].."/"..CharInfo.CurrencyID_maxQuantity[1580]}, --Печать судьбы воина
-				{func_currencyicon(1273).."|cff1eff00LEG|r "..func_currencyName(1273), CharInfo.CurrencyID[1273].."/"..CharInfo.CurrencyID_maxQuantity[1273]}, --Печать сломанной судьбы
-				{func_currencyicon(994).."|cffc86400WoD|r "..func_currencyName(994), CharInfo.CurrencyID[994].."/"..CharInfo.CurrencyID_maxQuantity[994]}, --Печать закаленной судьбы
-				{func_currencyicon(1129).."|cffc86400WoD|r "..func_currencyName(1129), CharInfo.CurrencyID[1129].."/"..CharInfo.CurrencyID_maxQuantity[1129]}, --Печать закаленной судьбы
-				{func_currencyicon(697).."|cff00ffbaMoP|r "..func_currencyName(697), CharInfo.CurrencyID[697].."/"..CharInfo.CurrencyID_maxQuantity[697]}, --Большой амулет удачи
-				{func_currencyicon(776).."|cff00ffbaMoP|r "..func_currencyName(776), CharInfo.CurrencyID[776].."/"..CharInfo.CurrencyID_maxQuantity[776]}, --Закаленная в бою печать
-			}
-			-- for k,v in pairs(CharInfo.CurrencyID) do
-			--     if k ~= nil and k ~= 0 then
-			--         print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
-			--         --Char_Frame.CenterLines5.tooltip[#Char_Frame.CenterLines5.tooltip+1] = {func_currencyicon(k)..func_currencyName(k), v}
-			--         --tinsert (Char_Frame.CenterLines5.tooltip,{"name:",CharInfo.CurrencyID(k)})
-			--     end
-			-- end
-			if #Char_Frame.CenterLines5.tooltip == 0 then
-				Char_Frame.CenterLines5.tooltip = nil
-			end
-			--6
-			Char_Frame.CenterLines6.tooltip = {}
-			if CharInfo.reputationID ~= 0 then
-				Char_Frame.CenterLines6.CL:SetText(ColorGray..REPUTATION.."|r")
-			end
-			if CharInfo.reputationID[2564] ~= 0 then
-				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2564), CharInfo.reputationID[2564]})
-			end
-			if CharInfo.reputationID[2507] ~= 0 then
-				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2507), CharInfo.reputationID[2507]})
-			end
-			if CharInfo.reputationID[2503] ~= 0 then
-				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2503), CharInfo.reputationID[2503]})
-			end
-			if CharInfo.reputationID[2511] ~= 0 then
-				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2511), CharInfo.reputationID[2511]})
-			end
-			if CharInfo.reputationID[2510] ~= 0 then
-				tinsert(Char_Frame.CenterLines6.tooltip, {func_reputationName(2510), CharInfo.reputationID[2510]})
-			end
-			if CharInfo.reputationID[2564] and CharInfo.reputationID[2564] ~= 0 then
-				Char_Frame.CenterLines6.CL:SetText(CharInfo.reputationID[2564])
-			end
-			for k,v in ipairs (itemIDReputation) do
-				if CharInfo.ItemsInBag[v] ~= 0 then
-					tinsert(Char_Frame.CenterLines6.tooltip, {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]})
-				end
-			end
-			if #Char_Frame.CenterLines6.tooltip == 0 then
-				Char_Frame.CenterLines6.tooltip = nil
-				Char_Frame.CenterLines6.CL:SetText("")
-			end
-			--7 204193 204075 2409
-			Main_Frame.TextLeft7:SetText(func_itemTexture(204193)..ColorGray..PLAYER_DIFFICULTY3..", M+ 1-5|r") -- LFR
-			Char_Frame.CenterLines7.tooltip = {}
-			local PEREMENNAYA_2409 = ""
-			if CharInfo.ItemsInBag[204193] >= 1 then
-				tinsert(Char_Frame.CenterLines7.tooltip, {func_itemTexture(204193)..func_itemName(204193), CharInfo.ItemsInBag[204193]})
-				PEREMENNAYA_2409 = "|cff1eff00"..CharInfo.ItemsInBag[204193].."|r"
-			end
-			if CharInfo.ItemsInBag[204075] >= 1 then
-				tinsert(Char_Frame.CenterLines7.tooltip, {func_itemTexture(204075)..func_itemName(204075), CharInfo.ItemsInBag[204075]})
-			end
-			if CharInfo.ItemsInBag[204075] >= 15 then
-				PEREMENNAYA_2409 = PEREMENNAYA_2409.. "(+"..math.floor(CharInfo.ItemsInBag[204075]/15)..")"
-			end
-			if CharInfo.CurrencyID[2409] ~= 0 and (CharInfo.CurrencyID[2409] == CharInfo.CurrencyID_maxQuantity[2409]) then
-				PEREMENNAYA_2409 = PEREMENNAYA_2409..AddonColor.."*|r"
-			end
-			Char_Frame.CenterLines7.CL:SetText(PEREMENNAYA_2409)
-			if (CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0) and CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
-				tinsert(Char_Frame.CenterLines7.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]})
-			end
-			if #Char_Frame.CenterLines7.tooltip == 0 then
-				Char_Frame.CenterLines7.tooltip = nil
-				Char_Frame.CenterLines7.CL:SetText("")
-			end
-			--8 204195 204076 2410
-			Main_Frame.TextLeft8:SetText(func_itemTexture(204195)..ColorGray..PLAYER_DIFFICULTY1..", M+ 6-10|r") -- Обычный
-			Char_Frame.CenterLines8.tooltip = {}
-			local PEREMENNAYA_2410 = ""
-			if CharInfo.ItemsInBag[204195] >= 1 then
-				tinsert(Char_Frame.CenterLines8.tooltip, {func_itemTexture(204195)..func_itemName(204195), CharInfo.ItemsInBag[204195]})
-				PEREMENNAYA_2410 = "|cff0070dd"..CharInfo.ItemsInBag[204195].."|r"
-			end
-			if CharInfo.ItemsInBag[204076] >= 1 then
-				tinsert(Char_Frame.CenterLines8.tooltip, {func_itemTexture(204076)..func_itemName(204076), CharInfo.ItemsInBag[204076]})
-			end
-			if CharInfo.ItemsInBag[204076] >= 15 then
-				PEREMENNAYA_2410 = PEREMENNAYA_2410.. "(+"..math.floor(CharInfo.ItemsInBag[204076]/15)..")"
-			end
-			if CharInfo.CurrencyID[2410] ~= 0 and (CharInfo.CurrencyID[2410] == CharInfo.CurrencyID_maxQuantity[2410]) then
-				PEREMENNAYA_2410 = PEREMENNAYA_2410..AddonColor.."*|r"
-			end
-			Char_Frame.CenterLines8.CL:SetText(PEREMENNAYA_2410)
-			if (CharInfo.ItemsInBag[204195] ~= 0 or CharInfo.ItemsInBag[204076] ~= 0 or CharInfo.CurrencyID[2410] ~= 0) and CharInfo.CurrencyID_maxQuantity[2410] ~= 0 then
-				tinsert(Char_Frame.CenterLines8.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]})
-			end
-			if #Char_Frame.CenterLines8.tooltip == 0 then
-				Char_Frame.CenterLines8.tooltip = nil
-				Char_Frame.CenterLines8.CL:SetText("")
-			end
-			--9 204196 204077 2411
-			Main_Frame.TextLeft9:SetText(func_itemTexture(204196)..ColorGray..PLAYER_DIFFICULTY2..", M+ 11-15|r") -- Героический
-			Char_Frame.CenterLines9.tooltip = {}
-			local PEREMENNAYA_2411 = ""
-			if CharInfo.ItemsInBag[204196] >= 1 then
-				tinsert(Char_Frame.CenterLines9.tooltip, {func_itemTexture(204196)..func_itemName(204196), CharInfo.ItemsInBag[204196]})
-				PEREMENNAYA_2411 = "|cffa335ee"..CharInfo.ItemsInBag[204196].."|r"
-			end
-			if CharInfo.ItemsInBag[204077] >= 1 then
-				tinsert(Char_Frame.CenterLines9.tooltip, {func_itemTexture(204077)..func_itemName(204077), CharInfo.ItemsInBag[204077]})
-			end
-			if CharInfo.ItemsInBag[204077] >= 15 then
-				PEREMENNAYA_2411 = PEREMENNAYA_2411.. "(+"..math.floor(CharInfo.ItemsInBag[204077]/15)..")"
-			end
-			if CharInfo.CurrencyID[2411] ~= 0 and (CharInfo.CurrencyID[2411] == CharInfo.CurrencyID_maxQuantity[2411]) then
-				PEREMENNAYA_2411 = PEREMENNAYA_2411..AddonColor.."*|r"
-			end
-			Char_Frame.CenterLines9.CL:SetText(PEREMENNAYA_2411)
-			if (CharInfo.ItemsInBag[204196] ~= 0 or CharInfo.ItemsInBag[204077] ~= 0 or CharInfo.CurrencyID[2411] ~= 0) and CharInfo.CurrencyID_maxQuantity[2411] ~= 0 then
-				tinsert(Char_Frame.CenterLines9.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]})
-			end
-			if #Char_Frame.CenterLines9.tooltip == 0 then
-				Char_Frame.CenterLines9.tooltip = nil
-				Char_Frame.CenterLines9.CL:SetText("")
-			end
-			--10 204194 204078 2412
-			Main_Frame.TextLeft10:SetText(func_itemTexture(204194)..ColorGray..PLAYER_DIFFICULTY6..", M+ 16+|r") -- Эпохальный
-			Char_Frame.CenterLines10.tooltip = {}
-			local PEREMENNAYA_2412 = ""
-			if CharInfo.ItemsInBag[204194] >= 1 then
-				tinsert(Char_Frame.CenterLines10.tooltip, {func_itemTexture(204194)..func_itemName(204194), CharInfo.ItemsInBag[204194]})
-				PEREMENNAYA_2412 = "|cffff8000"..CharInfo.ItemsInBag[204194].."|r"
-			end
-			if CharInfo.ItemsInBag[204078] >= 1 then
-				tinsert(Char_Frame.CenterLines10.tooltip, {func_itemTexture(204078)..func_itemName(204078), CharInfo.ItemsInBag[204078]})
-			end
-			if CharInfo.ItemsInBag[204078] >= 15 then
-				PEREMENNAYA_2412 = PEREMENNAYA_2412.. "(+"..math.floor(CharInfo.ItemsInBag[204078]/15)..")"
-			end
-			if CharInfo.CurrencyID[2412] ~= 0 and (CharInfo.CurrencyID[2412] == CharInfo.CurrencyID_maxQuantity[2412]) then
-				PEREMENNAYA_2412 = PEREMENNAYA_2412..AddonColor.."*|r"
-			end
-			Char_Frame.CenterLines10.CL:SetText(PEREMENNAYA_2412)
-			if (CharInfo.ItemsInBag[204194] ~= 0 or CharInfo.ItemsInBag[204078] ~= 0 or CharInfo.CurrencyID[2412] ~= 0) and CharInfo.CurrencyID_maxQuantity[2412] ~= 0 then
-				tinsert(Char_Frame.CenterLines10.tooltip, {"Weekly CAP: ", CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]})
-			end
-			if #Char_Frame.CenterLines10.tooltip == 0 then
-				Char_Frame.CenterLines10.tooltip = nil
-				Char_Frame.CenterLines10.CL:SetText("")
-			end
-			--11
-			Main_Frame.TextLeft11:SetText(func_itemTexture(204440)..func_itemName(204440))
-			Char_Frame.CenterLines11.tooltip = {}
-			local PEREMENNAYA_204440 = ""
-			if CharInfo.ItemsInBag[204440] >= 1 then
-				PEREMENNAYA_204440 = PEREMENNAYA_204440..func_itemTexture(204440)..CharInfo.ItemsInBag[204440]
-			end
-			if CharInfo.ItemsInBag[204717] >= 1 then
-				PEREMENNAYA_204440 = PEREMENNAYA_204440..func_itemTexture(204717)..CharInfo.ItemsInBag[204717]
-			end
-			if CharInfo.ItemsInBag[204681] >= 1 then
-				PEREMENNAYA_204440 = PEREMENNAYA_204440..func_itemTexture(204681)..CharInfo.ItemsInBag[204681]
-			end
-			if CharInfo.ItemsInBag[204682] >= 1 then
-				PEREMENNAYA_204440 = PEREMENNAYA_204440..func_itemTexture(204682)..CharInfo.ItemsInBag[204682]
-			end
-			if CharInfo.ItemsInBag[204697] >= 1 then
-				PEREMENNAYA_204440 = PEREMENNAYA_204440..func_itemTexture(204697)..CharInfo.ItemsInBag[204697]
-			end
-			-- {func_itemName_NOCOLOR(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440]},
-			-- {func_itemName_NOCOLOR(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717]},
-			-- {func_itemName_NOCOLOR(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681]},
-			-- {func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682]},
-			-- {func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697]},
-			if CharInfo.ItemsInBag[204440] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440]}) end
-			if CharInfo.ItemsInBag[204717] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717]}) end
-			if CharInfo.ItemsInBag[204681] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681]}) end
-			if CharInfo.ItemsInBag[204682] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682]}) end
-			if CharInfo.ItemsInBag[204697] ~= 0 then tinsert(Char_Frame.CenterLines11.tooltip, {func_itemName(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697]}) end
-			-- if CharInfo.ItemsInBag[204440] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440].."|r"}) end
-			-- if CharInfo.ItemsInBag[204717] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717].."|r"}) end
-			-- if CharInfo.ItemsInBag[204681] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681].."|r"}) end
-			-- if CharInfo.ItemsInBag[204682] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682].."|r"}) end
-			-- if CharInfo.ItemsInBag[204697] == 0 then tinsert(Char_Frame.CenterLines11.tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697].."|r"}) end
-			if #Char_Frame.CenterLines11.tooltip == 0 then
-				Char_Frame.CenterLines11.tooltip = nil
-				Char_Frame.CenterLines11.CL:SetText("")
-			end
-			Char_Frame.CenterLines11.CL:SetText(PEREMENNAYA_204440)
-			-- if CharInfo.ItemsInBag[204440] >= 1 then
-			--     Char_Frame.CenterLines11.CL:SetText(PEREMENNAYA_204440)
-			-- end
-			-- if CharInfo.ItemsInBag[204717] >=1 then
-			--     Char_Frame.CenterLines11.tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
-			-- end
-			-- if CharInfo.ItemsInBag[204717] >=2 then
-			--     Char_Frame.CenterLines11.CL:SetText(PEREMENNAYA_204440.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
-			-- end
-			--12 НОВЫЙ КАТАЛИСТ
-			Main_Frame.TextLeft12:SetText(func_currencyicon(2533)..func_currencyName(2533))
-			if CharInfo.CurrencyID[2533] >= 1 then
-				Char_Frame.CenterLines12.CL:SetText(func_currencyicon(2533)..CharInfo.CurrencyID[2533])
-			end
-			--13
-			local PEREMENNAYA_prof1_and_prof2 = ""
-			if CharInfo.profID_prof1.icon ~= 0 then
-				PEREMENNAYA_prof1_and_prof2 = CharInfo.profID_prof1.icon
-			end
-			if CharInfo.profID_prof2.icon ~= 0 then
-				PEREMENNAYA_prof1_and_prof2 = PEREMENNAYA_prof1_and_prof2.. " "..CharInfo.profID_prof2.icon
-			end
-			Char_Frame.CenterLines13.CL:SetText(PEREMENNAYA_prof1_and_prof2)
-			Char_Frame.CenterLines13.tooltip = {}
-			if CharInfo.prof1 ~= 0 or CharInfo.prof2 ~= 0 then
-				Char_Frame.CenterLines13.tooltip = {
-					{Empty_Zero(CharInfo.profID_prof1.icon).."|cffa335ee"..Empty_Zero(CharInfo.profID_prof1.name).."|r"},
-					{"Сундуки", CharInfo.profID_prof1.chest.chest_count_prof1.."/"..CharInfo.profID_prof1.chest.questReq},
-					{"Лут", CharInfo.profID_prof1.drops.drops_count_prof1.."/"..CharInfo.profID_prof1.drops.questReq},
-					{"Квест", CharInfo.profID_prof1.profQuest.profQuest_count_prof1.."/"..CharInfo.profID_prof1.profQuest.questReq},
-					{"Трактаты", CharInfo.profID_prof1.treatise.treatise_count_prof1.."/"..CharInfo.profID_prof1.treatise.questReq},
-					{"Крафт", CharInfo.profID_prof1.craftOrder.craftOrder_count_prof1.."/"..CharInfo.profID_prof1.craftOrder.questReq},
-					{" ", " "},
-					{Empty_Zero(CharInfo.profID_prof2.icon).."|cffa335ee"..Empty_Zero(CharInfo.profID_prof2.name).."|r"},
-					{"Сундуки", CharInfo.profID_prof2.chest.chest_count_prof2.."/"..CharInfo.profID_prof2.chest.questReq},
-					{"Лут", CharInfo.profID_prof2.drops.drops_count_prof2.."/"..CharInfo.profID_prof2.drops.questReq},
-					{"Квест", CharInfo.profID_prof2.profQuest.profQuest_count_prof2.."/"..CharInfo.profID_prof2.profQuest.questReq},
-					{"Трактаты", CharInfo.profID_prof2.treatise.treatise_count_prof2.."/"..CharInfo.profID_prof2.treatise.questReq},
-					{"Крафт", CharInfo.profID_prof2.craftOrder.craftOrder_count_prof2.."/"..CharInfo.profID_prof2.craftOrder.questReq},
-					{" ", " "},
-				}
-			end
-			if CharInfo.ItemsInBag[204186] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204186)..func_itemName(204186), CharInfo.ItemsInBag[204186]}) end
-			if CharInfo.ItemsInBag[204187] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204187)..func_itemName(204187), CharInfo.ItemsInBag[204187]}) end
-			if CharInfo.ItemsInBag[204188] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204188)..func_itemName(204188), CharInfo.ItemsInBag[204188]}) end
-			if CharInfo.ItemsInBag[190453] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(190453)..func_itemName(190453), CharInfo.ItemsInBag[190453]}) end
-			if CharInfo.ItemsInBag[191784] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(191784)..func_itemName(191784), CharInfo.ItemsInBag[191784]}) end
-			if CharInfo.ItemsInBag[204985] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204985)..func_itemName(204985), CharInfo.ItemsInBag[204985]}) end
-			if CharInfo.ItemsInBag[204715] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(204715)..func_itemName(204715), CharInfo.ItemsInBag[204715]}) end
-			if CharInfo.ItemsInBag[190456] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(190456)..func_itemName(190456), CharInfo.ItemsInBag[190456]}) end
-			if CharInfo.ItemsInBag[199197] >= 1 then tinsert(Char_Frame.CenterLines13.tooltip, {func_itemTexture(199197)..func_itemName(199197), CharInfo.ItemsInBag[199197]}) end
-			if #Char_Frame.CenterLines13.tooltip == 0 then
-				Char_Frame.CenterLines13.tooltip = nil
-				Char_Frame.CenterLines13.CL:SetText("")
-			end
-			--14
-			Main_Frame.TextLeft14:SetText(QUESTS_LABEL)
-			local tinsertTABLE = {
-				-- {name = func_questName(72528), data=CheckCompletedByQuestID(72528)}, --БУДУЩИЙ КАТАЛИЗАТОР
-				{name = TreasureGoblinTimer(), data=CharInfo.Octopussy_TreasureGoblin},
-				{name = ToDragonbaneKeepTimer(), data=CharInfo.Octopussy_DragonbaneKeep},
-				{name = GrandHuntsTimer(), data=CharInfo.Octopussy_TheGrandHunt},
-				{name = CommunityFeastTimer(), data=CharInfo.Octopussy_Feast},
-				{name = PrimalStormsTimer(), data=CharInfo.Octopussy_StormsFury},
-				{name = ResearchersUnderFireTimer(), data = CharInfo.Octopussy_ResearchersUnderFire},
-				{name = --[[func_questName(CharInfo.Octopussy_3kREP_IsOnQuest) or]] func_questName(70750), data=CharInfo.Octopussy_3kREP}, --"Помощь союзу"
-				{name ="", data =""},
-				{name = "WORLD BOSS", data=CharInfo.Octopussy_WB}, --"CharInfo.Octopussy_WB"
-				{name = "WORLD BOSS "..func_questName(74892), data=CharInfo.Octopussy_WB_NEW},
-				-- {name = DUNGEONS.. " (Поиски реликвии)", data=CharInfo.Octopussy_dungeons_RelicRecovery}, --"Octopussy_dungeons_RelicRecovery"
-				-- {name = DUNGEONS.." (Сохранение прошлого)", data=CharInfo.Octopussy_dungeons_PreservingthePast}, --"CharInfo.Octopussy_dungeons_PreservingthePast"
-				{name = PLAYER_DIFFICULTY_TIMEWALKER, data=CharInfo.Octopussy_Timewalk}, --"CharInfo.Octopussy_Timewalk"
-				{name = CALENDAR_FILTER_WEEKLY_HOLIDAYS, data=CharInfo.Octopussy_WeekendEvent}, --"CharInfo.Octopussy_WeekendEvent"
-				--{name = func_questName(66133), data=CharInfo.Octopussy_KeysofLoyalty}, --"CharInfo.Octopussy_KeysofLoyalty" -- Присяга
-				--{name = "Запечатанный бурей сундук", data=CharInfo.Octopussy_StormBoundChest}, --"CharInfo.Octopussy_StormBoundChest" https://www.wowhead.com/ru/object=386356/
-				-- {name = func_itemName(49623), data=CharInfo.questIDtable[24548]}, --Кв на ШМ
-				{name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
-				{name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
-				{name = L["Fyrakk Asssaults"], data = CharInfo.Octopussy_FyrakkAssaults},
-				{name = "Раскопки с Мирратом", data = CharInfo.Octopussy_Sniffin.."/3"},
-				-- {name ="", data =""},
-				-- {name ="PVP: ", data =""},
-				-- {name = func_questName(55509), data = CharInfo.questIDtable[55509]}, --Оло
-				-- {name = func_questName(55511), data = CharInfo.questIDtable[55511]},
-				-- {name = func_questName(13183), data = CharInfo.questIDtable[13183]},
-				-- {name = func_questName(56339), data = CharInfo.questIDtable[56339]}, --Ашран
-				-- {name = func_questName(56337), data = CharInfo.questIDtable[56337]},
-				-- {name = func_questName(72167), data = CharInfo.questIDtable[72167]},
-			}
-			-- Char_Frame.CenterLines14.CL:SetText(ColorGray..QUESTS_LABEL.."|r")
-			if CharInfo.maxNumQuestsCanAccept ~= 0 then
-				Char_Frame.CenterLines14.CL:SetText(CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept)
-			end
-			Char_Frame.CenterLines14.tooltip = {}
-			for k, v in ipairs(tinsertTABLE) do
-				 vagina = "|cffc9c3aa"
-				-- if v.data == "|cff00FF00Done|r" then
-				-- 	vagina = AddonColor
-				-- end
-				tinsert(Char_Frame.CenterLines14.tooltip, {vagina..v.name.."|r", v.data})
-			end
-			-- for k, v in ipairs(questIDtable) do
-			--     if CharInfo.questIDtable[v] ~= "" and CharInfo.questIDtable[v] ~= 0 then
-			--         tinsert(Char_Frame.CenterLines14.tooltip, {func_questName(v), CharInfo.questIDtable[v]})
-			--     end
-			-- end
-			if #Char_Frame.CenterLines14.tooltip == 0 then
-				Char_Frame.CenterLines14.tooltip = nil
-				Char_Frame.CenterLines14.CL:SetText("")
-			end
-			--15
-			-- Char_Frame.CenterLines15.CL:SetText(func_itemTexture(190453)..Empty_Zero(CharInfo.ItemsInBag[190453]))
-			-- if CharInfo.ItemsInBag[199197] ~= 0 then Char_Frame.CenterLines15.CL:SetText("|cffFF00FF"..func_itemTexture(190453)..CharInfo.ItemsInBag[190453].." (+"..CharInfo.ItemsInBag[199197]..")|r") end
-			Char_Frame.CenterLines15.tooltip = {}
-			for k, v in ipairs(itemID) do
-				local count = tonumber(CharInfo.ItemsInBag[v])
-				if count ~= 0 then
-					--if CharInfo.ItemsInBag[190453] == 0 and CharInfo.ItemsInBag[199197] == 0 then Char_Frame.CenterLines15.CL:SetText(ColorGray..ITEMS.."|r") end
-					Char_Frame.CenterLines15.CL:SetText(ColorGray..ITEMS.."|r")
-					Char_Frame.CenterLines15.tooltip[#Char_Frame.CenterLines15.tooltip+1] = {func_itemTexture(v)..func_itemName(v), count}
-				end
-			end
-			Char_Frame.CenterLines15.tooltip[#Char_Frame.CenterLines15.tooltip+1] = {" "," "}
-			for k, v in ipairs(CharInfo.VOID_STORAGE_PAGE1) do
-				if v ~= 0 then
-					Char_Frame.CenterLines15.tooltip[#Char_Frame.CenterLines15.tooltip+1] = {func_itemTexture(CharInfo.VOID_STORAGE_PAGE1[k])..func_itemName(CharInfo.VOID_STORAGE_PAGE1[k])}
-				end
-			end
-			for k, v in ipairs(CharInfo.VOID_STORAGE_PAGE2) do
-				if v ~= 0 then
-					tinsert(Char_Frame.CenterLines15.tooltip,{func_itemTexture(CharInfo.VOID_STORAGE_PAGE2[k])..func_itemName(CharInfo.VOID_STORAGE_PAGE2[k])})
-				end
-			end
-			if #Char_Frame.CenterLines15.tooltip == 0 then
-				Char_Frame.CenterLines15.tooltip = nil
-				Char_Frame.CenterLines15.CL:SetText(" ")
-			end
-			--16
-			--Char_Frame.CenterLines16.CL:SetText(format("|cff%s%.1f|r", CharInfo.avgItemLevel >= 430 and "00ff00" or CharInfo.avgItemLevel >= 400 and "ffff00" or "ff0000", CharInfo.avgItemLevel))
-			Main_Frame.TextLeft16:SetText(LFG_LIST_ITEM_LEVEL_INSTR_SHORT)
-			local PEREMENNAYA_PVP = ""
-			Char_Frame.CenterLines16.tooltip = {}
-			local pvpcolor = "|cffFF0000"
-			if CharInfo.avgItemLevelEquipped and CharInfo.avgItemLevel then
-				if CharInfo.avgItemLevelEquipped > 440 then
-					pvpcolor = "|cff4FFF79"
-				elseif CharInfo.avgItemLevelEquipped > 400 then
-					pvpcolor = "|cffFFF371"
-				end
-				PEREMENNAYA_PVP = pvpcolor..CharInfo.avgItemLevelEquipped
-				if CharInfo.avgItemLevel > CharInfo.avgItemLevelEquipped then
-					PEREMENNAYA_PVP = PEREMENNAYA_PVP.."/"..CharInfo.avgItemLevel.."|r"
-				end
-				if CharInfo.avgItemLevelPvp and CharInfo.avgItemLevelPvp > CharInfo.avgItemLevel then
-					PEREMENNAYA_PVP = PEREMENNAYA_PVP..AddonColor.."*|r"
-					tinsert(Char_Frame.CenterLines16.tooltip, {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp)})
-				end
-			end
-			if #Char_Frame.CenterLines16.tooltip == 0 then
-				Char_Frame.CenterLines16.tooltip = nil
-				--Char_Frame.CenterLines16.CL:SetText(" ")
-			end
-			Char_Frame.CenterLines16.CL:SetText(PEREMENNAYA_PVP)
-			--17
-			local curServerShort = GetRealmName()
-			local text = (curServerShort):gsub("-", " "):gsub("'", " ")
-			local a, b = strsplit(" ", text)
-			if b then
-				curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
-			end
-			-- Char_Frame.CenterLines17.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-			Main_Frame.TextLeft17:SetText(curServerShort..": "..GetCoinTextureString(TotalMoney-TotalMoney % 10000))
-			local PEREMENNAYA_MONEY = GetCoinTextureString(CharInfo.Money - CharInfo.Money % 10000) or 0
-			if CharInfo.Money - CharInfo.Money % 10000 < 10000000 then -- меньше тысячи
-				PEREMENNAYA_MONEY = ColorGray..PEREMENNAYA_MONEY.."|r"
-			end
-			if CharInfo.PlayerReagentnumSlots == 0 then PEREMENNAYA_MONEY = PEREMENNAYA_MONEY.."|cffFF0000*|r" end
-			Char_Frame.CenterLines17.CL:SetText(PEREMENNAYA_MONEY)
-			--18
-			Main_Frame.TextLeft18:SetText(L["Last Update"])
-			Char_Frame.CenterLines18.tooltip = {}
-			if CharInfo.CurrentLocation then
-				tinsert (Char_Frame.CenterLines18.tooltip, {L["Current Location"],CharInfo.CurrentLocation})
-			end
-			if CharInfo.maxNumQuestsCanAccept ~= 0 then
-				tinsert (Char_Frame.CenterLines18.tooltip, {L["Number of quests"],CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept})
-			end
-			if CharInfo.totalSlots ~= 0 then
-				tinsert (Char_Frame.CenterLines18.tooltip, {L["Bags"],CharInfo.usedSlots.."/"..CharInfo.totalSlots})
-			end
-			if CharInfo.totalSlotsBANK ~= 0 then
-				tinsert (Char_Frame.CenterLines18.tooltip, {L["Bank"],CharInfo.usedSlotsBANK.."/"..CharInfo.totalSlotsBANK})
-			end
-			if CharInfo.pizdaDate ~= 0 and CharInfo.pizdaDate ~= 0 then
-				Char_Frame.CenterLines18.CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-				Char_Frame.CenterLines18.CL:SetText((CharInfo.needReset and "|cffFF0000" or "|cffFFFFFF")..CharInfo.pizdaDate.."\n"..CharInfo.pizdaHours)
-			end
-			------------------------------------------------------------------------------------------
-			------------------------------------------------------------------------------------------
-			------------------------------------------------------------------------------------------
 			if curGUID == curCharGUID then
 				Char_Frame.BG:Show()
-				Char_Frame.BG:SetAlpha(0.2)
+				Char_Frame.BG:SetAlpha(.2)
 			end
 		end
 		local curAltFrameWidth = #Main_Frame.AllCharFrames * curWidth/2
@@ -3709,7 +3953,9 @@ function CollectPlayerInfo()
 	collect.UnitXPMax = UnitXPMax
 	collect.Name = curCharName
 	collect.curServer = curServer
-	collect.Class = curClass
+	collect.className = className
+	collect.classFilename = classFilename
+	collect.classId = classId
 	collect.GUID = curGUID
 	collect.Faction = UnitFactionGroup("PLAYER")
 	collect.UnitLevel = UnitLevel
@@ -3719,12 +3965,12 @@ function CollectPlayerInfo()
 	collect.classColor = classColor or {r = 0.5, g = 0.5, b = 0.5}
 end
 local function checkCharInfo(CharInfo)
-	-- CharInfo.KillCount = CharInfo.KillCount or {}
-	-- setmetatable(CharInfo.KillCount, Meta_Table)
 	CharInfo.avgItemLevel = CharInfo.avgItemLevel or 0
 	CharInfo.avgItemLevelEquipped = CharInfo.avgItemLevelEquipped or 0
 	CharInfo.avgItemLevelPvp = CharInfo.avgItemLevelPvp or 0
-	CharInfo.Class = CharInfo.Class or 0
+	CharInfo.className = CharInfo.className or 0
+	CharInfo.classFilename = CharInfo.classFilename or 0
+	CharInfo.classId = CharInfo.classId or 0
 	CharInfo.classColor = CharInfo.classColor or {r = 0.5, g = 0.5, b = 0.5}
 	CharInfo.curCovID = CharInfo.curCovID or 0
 	CharInfo.CurrencyID = CharInfo.CurrencyID or {}
@@ -3734,22 +3980,29 @@ local function checkCharInfo(CharInfo)
 	CharInfo.Faction = CharInfo.Faction or 0
 	CharInfo.ItemsInBag = CharInfo.ItemsInBag or {}
 	CharInfo.KnownSpell = CharInfo.KnownSpell or {}
-	CharInfo.Kyrian = CharInfo.Kyrian or {}
-	CharInfo.Kyrian.Anima = CharInfo.Kyrian.Anima or 0
-	CharInfo.Kyrian.Renown = CharInfo.Kyrian.Renown or 0
 	CharInfo.maxNumQuestsCanAccept = CharInfo.maxNumQuestsCanAccept or 0
 	CharInfo.Name = CharInfo.Name or 0
-	CharInfo.Necrolord = CharInfo.Necrolord or {}
-	CharInfo.Necrolord.Anima = CharInfo.Necrolord.Anima or 0
-	CharInfo.Necrolord.Renown = CharInfo.Necrolord.Renown or 0
 	CharInfo.needReset = CharInfo.needReset or false
-	CharInfo.NightFae = CharInfo.NightFae or {}
-	CharInfo.NightFae.Anima = CharInfo.NightFae.Anima or 0
-	CharInfo.NightFae.Renown = CharInfo.NightFae.Renown or 0
 	CharInfo.numQuests = CharInfo.numQuests or 0
 	CharInfo.numShownEntries = CharInfo.numShownEntries or 0
+	CharInfo.Octopussy_3kREP = CharInfo.Octopussy_3kREP or false
 	CharInfo.Octopussy_3kREP_IsOnQuest = CharInfo.Octopussy_3kREP_IsOnQuest or 0
-	CharInfo.Octopussy_Sniffin = CharInfo.Octopussy_Sniffin or 0
+	CharInfo.Octopussy_AWorthyAllyLoammNiffen = CharInfo.Octopussy_AWorthyAllyLoammNiffen or false
+	CharInfo.Octopussy_DragonbaneKeep = CharInfo.Octopussy_DragonbaneKeep or false
+	CharInfo.Octopussy_dungeons_PreservingthePast = CharInfo.Octopussy_dungeons_PreservingthePast or false
+	CharInfo.Octopussy_dungeons_RelicRecovery = CharInfo.Octopussy_dungeons_RelicRecovery or false
+	CharInfo.Octopussy_Feast = CharInfo.Octopussy_Feast or false
+	CharInfo.Octopussy_FightingisItsOwnReward = CharInfo.Octopussy_FightingisItsOwnReward or false
+	CharInfo.Octopussy_FyrakkAssaults = CharInfo.Octopussy_FyrakkAssaults or false
+	CharInfo.Octopussy_KeysofLoyalty = CharInfo.Octopussy_KeysofLoyalty or false
+	CharInfo.Octopussy_ResearchersUnderFire = CharInfo.Octopussy_ResearchersUnderFire or false
+	CharInfo.Octopussy_StormBoundChest = CharInfo.Octopussy_StormBoundChest or false
+	CharInfo.Octopussy_StormsFury = CharInfo.Octopussy_StormsFury or false
+	CharInfo.Octopussy_TheGrandHunt = CharInfo.Octopussy_TheGrandHunt or false
+	CharInfo.Octopussy_Timewalk = CharInfo.Octopussy_Timewalk or false
+	CharInfo.Octopussy_TreasureGoblin = CharInfo.Octopussy_TreasureGoblin or false
+	CharInfo.Octopussy_WB_NEW = CharInfo.Octopussy_WB_NEW or false
+	CharInfo.Octopussy_WeekendEvent = CharInfo.Octopussy_WeekendEvent or false
 	CharInfo.pizdaDate = CharInfo.pizdaDate or 0
 	CharInfo.pizdaHours = CharInfo.pizdaHours or 0
 	CharInfo.profID_prof1 = CharInfo.profID_prof1 or {}
@@ -3775,37 +4028,34 @@ local function checkCharInfo(CharInfo)
 	CharInfo.UnitLevel = CharInfo.UnitLevel or 0
 	CharInfo.usedSlots = CharInfo.usedSlots or 0
 	CharInfo.usedSlotsBANK = CharInfo.usedSlotsBANK or 0
-	CharInfo.Venthyr = CharInfo.Venthyr or {}
-	CharInfo.Venthyr.Anima = CharInfo.Venthyr.Anima or 0
-	CharInfo.Venthyr.Renown = CharInfo.Venthyr.Renown or 0
 	CharInfo.VOID_STORAGE_PAGE1 = CharInfo.VOID_STORAGE_PAGE1 or {}
 	CharInfo.VOID_STORAGE_PAGE2 = CharInfo.VOID_STORAGE_PAGE2 or {}
-	setmetatable(CharInfo, Meta_Table)
-	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table)
-	setmetatable(CharInfo.CurrencyID, Meta_Table)
-	setmetatable(CharInfo.EVENTS_ZARALEK_LIST, Meta_Table)
-	setmetatable(CharInfo.ItemsInBag, Meta_Table)
-	setmetatable(CharInfo.KnownSpell, Meta_Table)
-	setmetatable(CharInfo.profID_prof1, Meta_Table)
-	setmetatable(CharInfo.profID_prof1.chest, Meta_Table)
-	setmetatable(CharInfo.profID_prof1.craftOrder, Meta_Table)
-	setmetatable(CharInfo.profID_prof1.drops, Meta_Table)
-	setmetatable(CharInfo.profID_prof1.profQuest, Meta_Table)
-	setmetatable(CharInfo.profID_prof1.treatise, Meta_Table)
-	setmetatable(CharInfo.profID_prof2, Meta_Table)
-	setmetatable(CharInfo.profID_prof2.chest, Meta_Table)
-	setmetatable(CharInfo.profID_prof2.craftOrder, Meta_Table)
-	setmetatable(CharInfo.profID_prof2.drops, Meta_Table)
-	setmetatable(CharInfo.profID_prof2.profQuest, Meta_Table)
-	setmetatable(CharInfo.profID_prof2.treatise, Meta_Table)
-	setmetatable(CharInfo.PVP, Meta_Table)
-	setmetatable(CharInfo.questIDtable, Meta_Table)
-	setmetatable(CharInfo.RARE_OSTROV_LIST, Meta_Table)
-	setmetatable(CharInfo.RARE_ZARALEK_LIST, Meta_Table)
-	setmetatable(CharInfo.reputationID, Meta_Table)
-	setmetatable(CharInfo.Shadowland, Meta_Table)
-	setmetatable(CharInfo.VOID_STORAGE_PAGE1, Meta_Table)
-	setmetatable(CharInfo.VOID_STORAGE_PAGE2, Meta_Table)
+	setmetatable(CharInfo, Meta_Table_0)
+	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table_0)
+	setmetatable(CharInfo.CurrencyID, Meta_Table_0)
+	setmetatable(CharInfo.EVENTS_ZARALEK_LIST, Meta_Table_0)
+	setmetatable(CharInfo.ItemsInBag, Meta_Table_0)
+	setmetatable(CharInfo.KnownSpell, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof1, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof1.chest, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof1.craftOrder, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof1.drops, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof1.profQuest, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof1.treatise, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof2, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof2.chest, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof2.craftOrder, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof2.drops, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof2.profQuest, Meta_Table_0)
+	setmetatable(CharInfo.profID_prof2.treatise, Meta_Table_0)
+	setmetatable(CharInfo.PVP, Meta_Table_0)
+	setmetatable(CharInfo.questIDtable, Meta_Table_0)
+	setmetatable(CharInfo.RARE_OSTROV_LIST, Meta_Table_0)
+	setmetatable(CharInfo.RARE_ZARALEK_LIST, Meta_Table_0)
+	setmetatable(CharInfo.reputationID, Meta_Table_0)
+	setmetatable(CharInfo.Shadowland, Meta_Table_0)
+	setmetatable(CharInfo.VOID_STORAGE_PAGE1, Meta_Table_0)
+	setmetatable(CharInfo.VOID_STORAGE_PAGE2, Meta_Table_0)
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.Octopussy_3kREP == AddonColor.."Done|r" then
 		CharInfo.Octopussy_3kREP = false
 		CharInfo.Octopussy_3kREP_IsOnQuest = 0
@@ -3834,7 +4084,6 @@ local function checkCharInfo(CharInfo)
 		CharInfo.Octopussy_dungeons_RelicRecovery = false
 		CharInfo.Octopussy_dungeons_PreservingthePast = false
 		CharInfo.Octopussy_StormBoundChest = false
-		CharInfo.Octopussy_Sniffin = 0
 		CharInfo.RIO_weeklyBest = ""
 		CharInfo.RIO_RAID = ""
 		CharInfo.RIO_KEYS = ""
@@ -3940,7 +4189,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 				end,
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-					GameTooltip_SetTitle(GameTooltip, AddonTitle.." "..Version)
+					GameTooltip_SetTitle(GameTooltip, AddonTitle.." "..AddonVersion)
 					GameTooltip:Show()
 				end,
 				OnLeave = function()
@@ -3949,6 +4198,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		})
 		Octo_ToDo_DragonflyVars.config = Octo_ToDo_DragonflyVars.config or {}
 		Octo_ToDo_DragonflyVars.config.minimapPos = Octo_ToDo_DragonflyVars.config.minimapPos or 244
+		Octo_ToDo_DragonflyVars.config.AddonVersion = tonumber(AddonVersion)
 		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.config)
 		ldbi:Show(MinimapName)
 		if Octo_ToDo_DragonflyVars.config.CVar == nil then  --RELOAD

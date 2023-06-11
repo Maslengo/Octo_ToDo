@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 --E.modules = {}
 --------------------------------------------------------------------------------
 C_Timer.After(1, function()

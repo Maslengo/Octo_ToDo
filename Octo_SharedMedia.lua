@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 --E.modules = {}
 --------------------------------------------------------------------------------
 local LSM = LibStub("LibSharedMedia-3.0")

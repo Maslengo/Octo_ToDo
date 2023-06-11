@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -67,7 +66,9 @@ end)
 --UIErrorsFrameScale
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.UIErrorsFrameScale then
-			UIErrorsFrame:SetScale(.7111111111111111)
+    		UIErrorsFrame:SetPoint("TOP", 0, -54)
+    		UIErrorsFrame:SetAlpha(0.7)
+			--UIErrorsFrame:SetScale(.7111111111111111)
 			-- UIErrorsFrame:Hide()
 		end
 end)
@@ -198,6 +199,7 @@ tinsert(E.modules, function()
 			end
 			if not InCombatLockdown() then
 				C_Timer.After(1, function()
+						SetCVar("displaySpellActivationOverlays", 1)
 						SetCVar("raidFramesDisplayAggroHighlight", 1)
 						SetCVar("raidFramesDisplayClassColor", 1)
 						SetCVar("raidFramesDisplayDebuffs", 1)
@@ -385,12 +387,6 @@ tinsert(E.modules, function()
 				return table.concat(s)
 			end
 			local white_list = {
-				{itemid = 204717, count = 2}, --2
-				{itemid = 204075, count = 15}, --15
-				{itemid = 204076, count = 15}, --15
-				{itemid = 204077, count = 15}, --15
-				{itemid = 204078, count = 15}, --15
-				{itemid = 204352, count = 50},
 				{itemid = 205967, count = 1},
 				{itemid = 111956, count = 1},
 				{itemid = 128313, count = 1},
@@ -901,6 +897,14 @@ tinsert(E.modules, function()
 				{itemid = 7973, count = 1},
 				{itemid = 92794, count = 1},
 				{itemid = 93724, count = 1},
+
+
+				{itemid = 204717, count = 2}, --2
+				{itemid = 204075, count = 15}, --15
+				{itemid = 204076, count = 15}, --15
+				{itemid = 204077, count = 15}, --15
+				{itemid = 204078, count = 15}, --15
+				{itemid = 204352, count = 50},
 			}
 			local white_list70 ={
 				{itemid = 205423, count = 1},

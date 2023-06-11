@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local Version = GetAddOnMetadata(GlobalAddonName, "Version")
+local AddonVersion = GetAddOnMetadata(GlobalAddonName, "AddonVersion")
 E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -76,12 +76,12 @@ config:SetScript("OnShow", function(self)
                 self:SetPoint("TOPLEFT", -12, 8)
         end)
         self:SetPoint("TOPLEFT", -12, 8)
-        -- VERSION
+        -- AddonVersion
         local ver = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
         ver:SetPoint("TOPLEFT", 40, 20)
         ver:SetTextColor(.5, .5, .5, 1)
         ver:SetJustifyH("RIGHT")
-        ver:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
+        ver:SetText(GetAddOnMetadata(GlobalAddonName, "AddonVersion"))
         -- TITLE
         local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
         title:SetPoint("TOPLEFT", 16, -16)
@@ -186,7 +186,7 @@ config:SetScript("OnShow", function(self)
         self.btn_left10:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*10)
         self.btn_left10:SetChecked(Octo_ToDo_DragonflyVars.config.UIErrorsFrameScale)
         self.btn_left10:SetScript("OnClick", function(btn_left)
-                Octo_ToDo_DragonflyVars.config.UIErrorsFrame = btn_left:GetChecked()
+                Octo_ToDo_DragonflyVars.config.UIErrorsFrameScale = btn_left:GetChecked()
         end)
         self.btn_left10.text:SetText("UIErrorsFrameScale")
         -----------------------------------------------

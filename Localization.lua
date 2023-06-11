@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local Version = GetAddOnMetadata(GlobalAddonName, "Version")
 --E.modules = {}
 --------------------------------------------------------------------------------
 local AL3 = LibStub("AceLocale-3.0")
@@ -34,7 +33,6 @@ if L then
     L["Abandon All Quests"] = true
     L["Abandon: "] = true
     L["Current Location"] = true
-    L["Number of quests"] = true
     L["Bags"] = true
     L["Bank"] = true
     L["We need more gold"] = true
@@ -60,7 +58,6 @@ if L then
     L["Abandon All Quests"] = "Отменить все задания"
     L["Abandon"] = "Отменено: "
     L["Current Location"] = "Текущее местоположение"
-    L["Number of quests"] = "Количество заданий"
     L["Bags"] = "Сумки"
     L["Bank"] = "Банк"
     L["We need more gold"] = "Нужно больше золота!"
