@@ -2134,6 +2134,16 @@ local function Empty_Zero(number)
 	end
 	return number
 end
+local function CollectAppliedMountEquipmentID()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	-------------------------------------------------------------------------
+    local canUseMountEquipment = C_PlayerInfo.CanPlayerUseMountEquipment()
+    local itemID = C_MountJournal.GetAppliedMountEquipmentID()
+	collect.canUseMountEquipment = canUseMountEquipment
+	collect.currentMountItemID = itemID
+end
+
 local function CollectAllItemsInBag()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -2334,6 +2344,7 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("VOID_TRANSFER_DONE")
 	EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 	EventFrame:RegisterEvent("SPELLS_CHANGED")
+	EventFrame:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
 	-- -- EventFrame:RegisterEvent("VARIABLES_LOADED")
 	-- EventFrame:RegisterEvent("ARENA_SEASON_WORLD_STATE")
 	-- EventFrame:RegisterEvent("BATTLEFIELDS_CLOSED")
@@ -3777,17 +3788,20 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				end
 				if i == 18 then
 					VivodLeft = L["Last Update"]
+					if CharInfo.currentMountItemID ~= 0 then
+						tinsert(TEXTCENT.tooltip, {func_itemTexture(CharInfo.currentMountItemID)..func_itemName(CharInfo.currentMountItemID)})
+					end
 					if CharInfo.CurrentLocation then
-						tinsert (TEXTCENT.tooltip, {L["Current Location"],CharInfo.CurrentLocation})
+						tinsert(TEXTCENT.tooltip, {L["Current Location"],CharInfo.CurrentLocation})
 					end
 					if CharInfo.maxNumQuestsCanAccept ~= 0 then
-						tinsert (TEXTCENT.tooltip, {QUESTS_LABEL,CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept})
+						tinsert(TEXTCENT.tooltip, {QUESTS_LABEL,CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept})
 					end
 					if CharInfo.totalSlots ~= 0 then
-						tinsert (TEXTCENT.tooltip, {L["Bags"],CharInfo.usedSlots.."/"..CharInfo.totalSlots})
+						tinsert(TEXTCENT.tooltip, {L["Bags"],CharInfo.usedSlots.."/"..CharInfo.totalSlots})
 					end
 					if CharInfo.totalSlotsBANK ~= 0 then
-						tinsert (TEXTCENT.tooltip, {L["Bank"],CharInfo.usedSlotsBANK.."/"..CharInfo.totalSlotsBANK})
+						tinsert(TEXTCENT.tooltip, {L["Bank"],CharInfo.usedSlotsBANK.."/"..CharInfo.totalSlotsBANK})
 					end
 					-- ТЕКСТ В ЦЕНТРЕ
 					if CharInfo.pizdaDate ~= 0 and CharInfo.pizdaDate ~= 0 then
@@ -4030,6 +4044,8 @@ local function checkCharInfo(CharInfo)
 	CharInfo.usedSlotsBANK = CharInfo.usedSlotsBANK or 0
 	CharInfo.VOID_STORAGE_PAGE1 = CharInfo.VOID_STORAGE_PAGE1 or {}
 	CharInfo.VOID_STORAGE_PAGE2 = CharInfo.VOID_STORAGE_PAGE2 or {}
+	CharInfo.canUseMountEquipment = CharInfo.canUseMountEquipment or false
+	CharInfo.currentMountItemID = CharInfo.currentMountItemID or 0
 	setmetatable(CharInfo, Meta_Table_0)
 	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table_0)
 	setmetatable(CharInfo.CurrencyID, Meta_Table_0)
@@ -4325,6 +4341,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectPVPRaitings()
 		CollectLoginTime()
 		CollectAllItemsInBag()
+		CollectAppliedMountEquipmentID()
 	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
 		CollectAllItemsInBag()
 		--Fragments_Earned()
@@ -4357,6 +4374,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectVoidStorage()
 	elseif event == "SPELLS_CHANGED" then
 		CollectKnownSpell()
+	elseif event == "PLAYER_MOUNT_DISPLAY_CHANGED" then
+		CollectAppliedMountEquipmentID()
 	end
 end
 Octo_ToDo_DragonflyOnLoad()
