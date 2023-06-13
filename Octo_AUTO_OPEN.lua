@@ -170,7 +170,7 @@ local openableIDs = {
     [44113] = true, -- Small Spice Bag (Northrend Cooking Daily)
     [44475] = true, -- Reinforced Crate
     --[5523] = true,  -- Small Barnacled Clam (from: Ashenvale, Azuremyst Isle, Bloodmyst Isle, Darkshore, Redridge Mountains, Silverpine Forest, Westfall)
-    [5524] = true,  -- Thick-shelled Clam (from: Blackfathom Depths, Hillsbrad Foothills, Wetlands)
+    -- [5524] = true,  -- Thick-shelled Clam (from: Blackfathom Depths, Hillsbrad Foothills, Wetlands)
     [7973] = true,  -- Big-mouth Clam (from Azshara, Dustwallow Marsh, Feralas, Stranglethorn Vale, Swamp of Sorrws, Tanaris, Hinterlands)
     [15874] = true, -- Soft-shelled Clam (from: Desolace)
 }

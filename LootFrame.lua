@@ -78,7 +78,9 @@ function Loot_Frame_OnEvent(self, event, ...)
 			if select(5, GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" and RC_Frame then
 				RC_Frame:Hide()
 			end
-			Loot_Frame:Hide()
+			if Loot_Frame:IsShown() then
+				Loot_Frame:Hide()
+			end
 		end
 	end
 end

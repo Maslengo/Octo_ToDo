@@ -387,6 +387,8 @@ tinsert(E.modules, function()
 				return table.concat(s)
 			end
 			local white_list = {
+				{itemid = 5523, count = 1},
+				{itemid = 5524, count = 1},
 				{itemid = 205967, count = 1},
 				{itemid = 111956, count = 1},
 				{itemid = 128313, count = 1},
@@ -1050,6 +1052,7 @@ tinsert(E.modules, function()
 								if #info == 1 and not IsShiftKeyDown() then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+									print ("|cFF00A3FFAUTO_GOSSIP SELECT:|r |cff00FF00("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t|cFFFF5771"..v.name.."|r")
 								end
 							end
 						end
