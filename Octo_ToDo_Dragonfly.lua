@@ -2,22 +2,12 @@ local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
 local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
-local Meta_Table_0 = {
-	__index = function()
-		return 0
-	end
-}
-local Meta_Table_False = {
-	__index = function()
-		return false
-	end
-}
-if  PTR_IssueReporter then
-	PTR_IssueReporter:Hide()
-end
-if WeeklyRewardExpirationWarningDialog then
-	WeeklyRewardExpirationWarningDialog:Hide()
-end
+local Meta_Table_0 = {__index = function() return 0 end}
+local Meta_Table_1 = {__index = function() return 1 end}
+local Meta_Table_false = {__index = function() return false end}
+local Meta_Table_true = {__index = function() return true end}
+if PTR_IssueReporter then PTR_IssueReporter:Hide() end
+if WeeklyRewardExpirationWarningDialog then WeeklyRewardExpirationWarningDialog:Hide() end
 -- суббота 23:00
 --E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
@@ -29,7 +19,7 @@ local Char_Frame = nil
 local EventFrame = nil
 local Main_Frame = nil
 local UPGRADERANKS_Frame = nil
-local className, classFilename, classId  = UnitClass("PLAYER")
+local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = C_ClassColor.GetClassColor(classFilename)
 local r, g, b = classColor:GetRGB()
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
@@ -349,39 +339,39 @@ function ResearchersUnderFireTimer()
 	return ResearchersUnderFireTimer .." ".. L["Researchers Under Fire"]
 end
 -- local function GetNPCIDFromGUID(guid)
---     if guid then
---         local unit_type, _, _, _, _, mob_id = strsplit("-", guid)
---         if unit_type == "Pet" or unit_type == "Player" then
---             return 0
---         end
---         return (guid and mob_id and tonumber(mob_id)) or 0
---     end
---     return 0
+-- if guid then
+-- local unit_type, _, _, _, _, mob_id = strsplit("-", guid)
+-- if unit_type == "Pet" or unit_type == "Player" then
+-- return 0
+-- end
+-- return (guid and mob_id and tonumber(mob_id)) or 0
+-- end
+-- return 0
 -- end
 -- function CollectKillCount()
---     local UnitLevel = UnitLevel("PLAYER")
---     local curGUID = UnitGUID("PLAYER")
---     local collect = Octo_ToDo_DragonflyLevels[curGUID]
---     --------------------------------------------------
---     local timestamp, eventType, hideCaster, srcGuid, srcName, srcFlags, srcRaidFlags, dstGuid, dstName, dstFlags, dstRaidFlags, spellId, spellName, spellSchool, auraType = CombatLogGetCurrentEventInfo()
---     local bit_band = _G.bit.band
---     -- local strlower = _G.strlower
---     -- local format = _G.format
---     local npcIDs_table = {
---         205490, -- Алчный Гоблин
---         195305,
---         195304,
---     }
---     local KillCount = 0
---     local npcid = GetNPCIDFromGUID(dstGuid)
---     if bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_PARTY) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_RAID) then
---         for _,v in pairs(npcIDs_table) do
---             if v == npcid then
---                 print ("|cFF00A3FF"..dstName.. "|r " .. AddonColor..collect.KillCount[npcid].. " (+1)|r")
---                 collect.KillCount[npcid] = collect.KillCount[npcid] + 1
---             end
---         end
---     end
+-- local UnitLevel = UnitLevel("PLAYER")
+-- local curGUID = UnitGUID("PLAYER")
+-- local collect = Octo_ToDo_DragonflyLevels[curGUID]
+-- --------------------------------------------------
+-- local timestamp, eventType, hideCaster, srcGuid, srcName, srcFlags, srcRaidFlags, dstGuid, dstName, dstFlags, dstRaidFlags, spellId, spellName, spellSchool, auraType = CombatLogGetCurrentEventInfo()
+-- local bit_band = _G.bit.band
+-- -- local strlower = _G.strlower
+-- -- local format = _G.format
+-- local npcIDs_table = {
+-- 205490, -- Алчный Гоблин
+-- 195305,
+-- 195304,
+-- }
+-- local KillCount = 0
+-- local npcid = GetNPCIDFromGUID(dstGuid)
+-- if bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_PARTY) or bit_band(srcFlags, COMBATLOG_OBJECT_AFFILIATION_RAID) then
+-- for _,v in pairs(npcIDs_table) do
+-- if v == npcid then
+-- print ("|cFF00A3FF"..dstName.. "|r " .. AddonColor..collect.KillCount[npcid].. " (+1)|r")
+-- collect.KillCount[npcid] = collect.KillCount[npcid] + 1
+-- end
+-- end
+-- end
 -- end
 --LoadAddOn("Blizzard_PVPUI")
 local SpellIDTable = {
@@ -727,40 +717,40 @@ function CollectAllProfessions()
 	return
 end
 -- local function getThresholdRAID(pointsRAID)
---     local resultRAID = 7
---     -- local resultRAID = 0
---     -- if pointsRAID <= 2 then
---     -- resultRAID = 2
---     -- elseif pointsRAID > 2 and pointsRAID < 4 then
---     -- resultRAID = 4
---     -- elseif pointsRAID >= 4 then
---     -- resultRAID = 6
---     -- end
---     return resultRAID
+-- local resultRAID = 7
+-- -- local resultRAID = 0
+-- -- if pointsRAID <= 2 then
+-- -- resultRAID = 2
+-- -- elseif pointsRAID > 2 and pointsRAID < 4 then
+-- -- resultRAID = 4
+-- -- elseif pointsRAID >= 4 then
+-- -- resultRAID = 6
+-- -- end
+-- return resultRAID
 -- end
 -- local function getThresholdKEYS(pointsKEYS)
---     local resultKEYS = 8
---     -- local resultKEYS = 0
---     -- if pointsKEYS <= 1 then
---     -- resultKEYS = 1
---     -- elseif pointsKEYS > 1 and pointsKEYS < 4 then
---     -- resultKEYS = 4
---     -- elseif pointsKEYS >= 4 then
---     -- resultKEYS = 8
---     -- end
---     return resultKEYS
+-- local resultKEYS = 8
+-- -- local resultKEYS = 0
+-- -- if pointsKEYS <= 1 then
+-- -- resultKEYS = 1
+-- -- elseif pointsKEYS > 1 and pointsKEYS < 4 then
+-- -- resultKEYS = 4
+-- -- elseif pointsKEYS >= 4 then
+-- -- resultKEYS = 8
+-- -- end
+-- return resultKEYS
 -- end
 -- local function getThresholdPVP(pointsPVPS)
---     local resultPVPS = 5000
---     -- local resultPVPS = 0
---     -- if pointsPVPS <= 1250 then
---     -- resultPVPS = 1250
---     -- elseif pointsPVPS > 1250 and pointsPVPS < 2500 then
---     -- resultPVPS = 2500
---     -- elseif pointsPVPS >= 2500 then
---     -- resultPVPS = 5500
---     -- end
---     return resultPVPS
+-- local resultPVPS = 5000
+-- -- local resultPVPS = 0
+-- -- if pointsPVPS <= 1250 then
+-- -- resultPVPS = 1250
+-- -- elseif pointsPVPS > 1250 and pointsPVPS < 2500 then
+-- -- resultPVPS = 2500
+-- -- elseif pointsPVPS >= 2500 then
+-- -- resultPVPS = 5500
+-- -- end
+-- return resultPVPS
 -- end
 function CollectDungeonsRaiting()
 	local UnitLevel = UnitLevel("PLAYER")
@@ -816,12 +806,12 @@ function CollectDungeonsRaiting()
 	if pRank[1] == nil then pRank[1] = NONE end
 	if RrLvl[1] == nil then RrLvl[1] = NONE end
 	if MrLvl[1] == nil then MrLvl[1] = NONE end
-	-- 0    None
-	-- 1    MythicPlus
-	-- 2    RankedPvP
-	-- 3    Raid
-	-- 4    AlsoReceive
-	-- 5    Concession
+	-- 0 None
+	-- 1 MythicPlus
+	-- 2 RankedPvP
+	-- 3 Raid
+	-- 4 AlsoReceive
+	-- 5 Concession
 	-------------------------------------------------------------------------
 	local vaultDataRAID = C_WeeklyRewards.GetActivities()
 	local RAIDResult = 0
@@ -1299,10 +1289,10 @@ local function CurrencyTEST()
 end
 CurrencyTEST()
 -- local function curTest()
---     for k,v in ipairs(currencyID) do
---         --print (k,v)
---         print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
---     end
+-- for k,v in ipairs(currencyID) do
+-- --print (k,v)
+-- print (func_currencyicon(k)..func_currencyName(k),v.." ID: "..k)
+-- end
 -- end
 -- curTest()
 local RARE_ZARALEK_LIST = {75271,
@@ -1377,7 +1367,7 @@ local EVENTS_ZARALEK_LIST = {75612,
 	74352,
 }
 local itemID = {
-	113509, -- TEST ЖРАЧКА МАГА
+	205367, -- Дар обязанного исследователя
 	92426,
 	92441,
 	83078,
@@ -1948,7 +1938,7 @@ local itemIDReputation = {
 -- if containerInfo then
 -- for k, v in pairs(containerInfo) do
 -- if k == "itemID" then
---   tinsert(itemID, v)
+-- tinsert(itemID, v)
 -- end
 -- end
 -- end
@@ -1956,11 +1946,11 @@ local itemIDReputation = {
 -- end
 -- end
 local reputationID = {
-	2564, -- Лоаммские ниффы
 	2507, -- Драконья экспедиция
 	2503, -- Кентавры Маруук
 	2511, -- Искарские клыкарры
 	2510, -- Союз Вальдраккена
+	2564, -- Лоаммские ниффы
 	2517, -- Гневион
 	2518, -- Сабеллиан
 	-- 2526, -- Фурболги из клана Зимней Шкуры
@@ -2183,7 +2173,7 @@ function CollectAllItemsInBag()
 	end
 end
 -- local itemFragmentTable = {
---   204075,
+-- 204075,
 -- }
 function CollectBankInfo()
 	local curGUID = UnitGUID("PLAYER")
@@ -2408,43 +2398,101 @@ local table_func_otrisovka = {
 	--5
 	function(CharInfo, tooltip, CL)
 		local VivodLeft, VivodCent = "", ""
+
+		if CharInfo.CurrencyID[2245] ~= 0 or CharInfo.CurrencyID[2122] ~= 0 or CharInfo.CurrencyID[2118] ~= 0 or CharInfo.CurrencyID[2003] ~= 0 then
 			tooltip[#tooltip+1] = {"PVE: ", " "}
-			tooltip[#tooltip+1] = {func_currencyicon(2533)..func_currencyName(2533), CharInfo.CurrencyID[2533].."/"..CharInfo.CurrencyID_maxQuantity[2533]} --Возрождающее пламя Тьмы
+		end
+		if CharInfo.CurrencyID[2245] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]} --Драконьи камни
+		end
+		if CharInfo.CurrencyID[2122] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]} --Печать бури
+		end
+		if CharInfo.CurrencyID[2118] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]} --Энергия стихий
+		end
+		if CharInfo.CurrencyID[2003] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID[2003]} --Припасы Драконьих островов
-			tooltip[#tooltip+1] = {" ", " "}
+		end
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		if CharInfo.CurrencyID[1602] ~= 0 or CharInfo.CurrencyID[1792] ~= 0 or CharInfo.CurrencyID[2123] ~= 0 then
+			--tooltip[#tooltip+1] = {" ", " "}
 			tooltip[#tooltip+1] = {"PVP: ", " "}
+		end
+		if CharInfo.CurrencyID[1602] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]} --Очки завоевания
+		end
+		if CharInfo.CurrencyID[1792] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]} --Честь
+		end
+		if CharInfo.CurrencyID[2123] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]} --Кровавые жетоны
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"OLD: ", " "}
+		end
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+
+
+		if CharInfo.CurrencyID[2032] ~= 0 or CharInfo.CurrencyID[1166] ~= 0 or CharInfo.CurrencyID[1560] ~= 0 or CharInfo.CurrencyID[1220] ~= 0 or CharInfo.CurrencyID[824] ~= 0 then
+			--tooltip[#tooltip+1] = {" ", " "}
+			tooltip[#tooltip+1] = {"Other: ", " "}
+		end
+		if CharInfo.CurrencyID[2032] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(2032)..func_currencyName(2032), func_currencyquantity(2032)}
+		end
+		if CharInfo.CurrencyID[1166] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(1166)..func_currencyName(1166), CharInfo.CurrencyID[1166]} --Искаженный временем знак
+		end
+		if CharInfo.CurrencyID[1560] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(1560)..func_currencyName(1560), CharInfo.CurrencyID[1560]} --Ресурсы для войны
+		end
+		if CharInfo.CurrencyID[1220] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(1220)..func_currencyName(1220), CharInfo.CurrencyID[1220]} --Ресурсы опллота класса
+		end
+		if CharInfo.CurrencyID[824] ~= 0 then
 			tooltip[#tooltip+1] = {func_currencyicon(824)..func_currencyName(824), CharInfo.CurrencyID[824].."/"..CharInfo.CurrencyID_maxQuantity[824]} --Ресурсы гарнизона
-			-- {" ", " "},
-			-- {"Монетки: "," "},
-			-- {func_currencyicon(1580).."|cff6464ffBFA|r "..func_currencyName(1580), CharInfo.CurrencyID[1580].."/"..CharInfo.CurrencyID_maxQuantity[1580]}, --Печать судьбы воина
-			-- {func_currencyicon(1273).."|cff1eff00LEG|r "..func_currencyName(1273), CharInfo.CurrencyID[1273].."/"..CharInfo.CurrencyID_maxQuantity[1273]}, --Печать сломанной судьбы
-			-- {func_currencyicon(994).."|cffc86400WoD|r "..func_currencyName(994), CharInfo.CurrencyID[994].."/"..CharInfo.CurrencyID_maxQuantity[994]}, --Печать закаленной судьбы
-			-- {func_currencyicon(1129).."|cffc86400WoD|r "..func_currencyName(1129), CharInfo.CurrencyID[1129].."/"..CharInfo.CurrencyID_maxQuantity[1129]}, --Печать закаленной судьбы
-			-- {func_currencyicon(697).."|cff00ffbaMoP|r "..func_currencyName(697), CharInfo.CurrencyID[697].."/"..CharInfo.CurrencyID_maxQuantity[697]}, --Большой амулет удачи
-			-- {func_currencyicon(776).."|cff00ffbaMoP|r "..func_currencyName(776), CharInfo.CurrencyID[776].."/"..CharInfo.CurrencyID_maxQuantity[776]}, --Закаленная в бою печать
+		end
+
+
+
+		if CharInfo.CurrencyID[1580] ~= 0 or CharInfo.CurrencyID[1273] ~= 0 or CharInfo.CurrencyID[994] ~= 0  or CharInfo.CurrencyID[1129] ~= 0  or CharInfo.CurrencyID[697] ~= 0  or CharInfo.CurrencyID[776] ~= 0 then
+			--tooltip[#tooltip+1] = {" ", " "}
+			tooltip[#tooltip+1] = {"Монетки: "," "}
+		end
+
+		if CharInfo.CurrencyID[1580] ~= 0 then
+			tooltip[#tooltip+1] = {func_currencyicon(1580).."|cff6464ffBFA|r "..func_currencyName(1580), CharInfo.CurrencyID[1580].."/"..CharInfo.CurrencyID_maxQuantity[1580]} --Печать судьбы воина
+		end
+		if CharInfo.CurrencyID[1273] ~= 0 then
+			tooltip[#tooltip+1] = {func_currencyicon(1273).."|cff1eff00LEG|r "..func_currencyName(1273), CharInfo.CurrencyID[1273].."/"..CharInfo.CurrencyID_maxQuantity[1273]} --Печать сломанной судьбы
+		end
+		if CharInfo.CurrencyID[994] ~= 0 then
+			tooltip[#tooltip+1] = {func_currencyicon(994).."|cffc86400WoD|r "..func_currencyName(994), CharInfo.CurrencyID[994].."/"..CharInfo.CurrencyID_maxQuantity[994]} --Печать закаленной судьбы
+		end
+		if CharInfo.CurrencyID[1129] ~= 0 then
+			tooltip[#tooltip+1] = {func_currencyicon(1129).."|cffc86400WoD|r "..func_currencyName(1129), CharInfo.CurrencyID[1129].."/"..CharInfo.CurrencyID_maxQuantity[1129]} --Печать закаленной судьбы
+		end
+		if CharInfo.CurrencyID[697] ~= 0 then
+			tooltip[#tooltip+1] = {func_currencyicon(697).."|cff00ffbaMoP|r "..func_currencyName(697), CharInfo.CurrencyID[697].."/"..CharInfo.CurrencyID_maxQuantity[697]} --Большой амулет удачи
+		end
+		if CharInfo.CurrencyID[776] ~= 0 then
+			tooltip[#tooltip+1] = {func_currencyicon(776).."|cff00ffbaMoP|r "..func_currencyName(776), CharInfo.CurrencyID[776].."/"..CharInfo.CurrencyID_maxQuantity[776]} --Закаленная в бою печать
+		end
 
 
 
 
 
 		-- for k,v in pairs(CharInfo.CurrencyID) do
-		--     if k ~= nil and k ~= 0 then
-		--         print (func_currencyicon(k)..func_currencyName(k),v.."    ID: "..k)
-		--         --tooltip[#tooltip+1] = {func_currencyicon(k)..func_currencyName(k), v}
-		--         --tinsert (tooltip,{"name:",CharInfo.CurrencyID(k)})
-		--     end
+		-- if k ~= nil and k ~= 0 then
+		-- print (func_currencyicon(k)..func_currencyName(k),v.." ID: "..k)
+		-- --tooltip[#tooltip+1] = {func_currencyicon(k)..func_currencyName(k), v}
+		-- --tinsert (tooltip,{"name:",CharInfo.CurrencyID(k)})
+		-- end
 		-- end
 		-- ТЕКСТ В ЦЕНТРЕ
 		VivodCent = ColorGray..CURRENCY.."|r"
@@ -2459,9 +2507,6 @@ local table_func_otrisovka = {
 	--6
 	function(CharInfo, tooltip, CL)
 		local VivodLeft, VivodCent = "", ""
-		if CharInfo.reputationID[2564] ~= 0 then
-			tinsert(tooltip, {func_reputationName(2564), CharInfo.reputationID[2564]})
-		end
 		if CharInfo.reputationID[2507] ~= 0 then
 			tinsert(tooltip, {func_reputationName(2507), CharInfo.reputationID[2507]})
 		end
@@ -2473,6 +2518,9 @@ local table_func_otrisovka = {
 		end
 		if CharInfo.reputationID[2510] ~= 0 then
 			tinsert(tooltip, {func_reputationName(2510), CharInfo.reputationID[2510]})
+		end
+		if CharInfo.reputationID[2564] ~= 0 then
+			tinsert(tooltip, {func_reputationName(2564), CharInfo.reputationID[2564]})
 		end
 		for k,v in ipairs (itemIDReputation) do
 			if CharInfo.ItemsInBag[v] ~= 0 then
@@ -2600,13 +2648,13 @@ local table_func_otrisovka = {
 		-- if CharInfo.ItemsInBag[204682] == 0 then tinsert(tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682].."|r"}) end
 		-- if CharInfo.ItemsInBag[204697] == 0 then tinsert(tooltip, {"|cffc9c3aa"..func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697].."|r"}) end
 		-- if CharInfo.ItemsInBag[204440] >= 1 then
-		--     CL:SetText(VivodCent)
+		-- CL:SetText(VivodCent)
 		-- end
 		-- if CharInfo.ItemsInBag[204717] >=1 then
-		--     tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
+		-- tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
 		-- end
 		-- if CharInfo.ItemsInBag[204717] >=2 then
-		--     CL:SetText(VivodCent.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
+		-- CL:SetText(VivodCent.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
 		-- end
 		-- ТЕКСТ В ЦЕНТРЕ
 		if CharInfo.ItemsInBag[204440] >= 1 then
@@ -2751,7 +2799,7 @@ local table_func_otrisovka = {
 			end
 			tinsert(tinsertTABLE,{name = "Раскопки с Мирратом", data = "|cffc9c3aa"..countSniffen.."/17|r"})
 		end
-		if CharInfo.classFilename == "WARRIOR" or CharInfo.classFilename == "PALADIN" or CharInfo.classFilename == "DEATHKNIGHT" --[[and CharInfo.UnitLevel >= 30]]  then
+		if CharInfo.classFilename == "WARRIOR" or CharInfo.classFilename == "PALADIN" or CharInfo.classFilename == "DEATHKNIGHT" --[[and CharInfo.UnitLevel >= 30]] then
 			local questID = 24545
 			local countShadowmourne = 1
 			if CharInfo.questIDtable[24545] == "|cff00FF00Done|r" then
@@ -2810,14 +2858,14 @@ local table_func_otrisovka = {
 		for k, v in ipairs(tinsertTABLE) do
 			color = "|cffc9c3aa"
 			-- if v.data == "|cff00FF00Done|r" then
-			--     color = AddonColor
+			-- color = AddonColor
 			-- end
 			tinsert(tooltip, {color..v.name.."|r", v.data})
 		end
 		-- for k, v in ipairs(questIDtable) do
-		--     if CharInfo.questIDtable[v] ~= "" and CharInfo.questIDtable[v] ~= 0 then
-		--         tinsert(tooltip, {func_questName(v), CharInfo.questIDtable[v]})
-		--     end
+		-- if CharInfo.questIDtable[v] ~= "" and CharInfo.questIDtable[v] ~= 0 then
+		-- tinsert(tooltip, {func_questName(v), CharInfo.questIDtable[v]})
+		-- end
 		-- end
 		-- ТЕКСТ В ЦЕНТРЕ
 		VivodCent = ColorGray..QUESTS_LABEL.."|r"
@@ -3004,68 +3052,68 @@ function UPGRADERANKS_Frame()
 	UPGRADERANKS_Frame:Hide()
 end
 -- local function CreateFrameUsableItems_OnEnter(self)
---     self.icon:SetVertexColor(1, 1, 1, 1)
+-- self.icon:SetVertexColor(1, 1, 1, 1)
 -- end
 -- local function CreateFrameUsableItems_OnLeave(self)
---     local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
---     self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
---     GameTooltip:ClearLines()
---     GameTooltip:Hide()
+-- local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+-- self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
+-- GameTooltip:ClearLines()
+-- GameTooltip:Hide()
 -- end
 -- local function CreateFrameUsableItems_OnEvent(self,event)
---     if event == "BAG_UPDATE" then
---         local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
---         self.icon:SetDesaturated(sufficiently)
---         self.icon:SetAlpha(sufficiently and .1 or 1)
---     elseif event == "PLAYER_REGEN_DISABLED" then
---         self:SetParent(UIParent)
---         self:ClearAllPoints()
---         self:Hide()
---     else
---         self:SetParent(Main_Frame)
---         self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, self.Ypos)
---         self:Show()
---     end
+-- if event == "BAG_UPDATE" then
+-- local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+-- self.icon:SetDesaturated(sufficiently)
+-- self.icon:SetAlpha(sufficiently and .1 or 1)
+-- elseif event == "PLAYER_REGEN_DISABLED" then
+-- self:SetParent(UIParent)
+-- self:ClearAllPoints()
+-- self:Hide()
+-- else
+-- self:SetParent(Main_Frame)
+-- self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, self.Ypos)
+-- self:Show()
+-- end
 -- end
 -- local function CreateFrameUsableItems_OnMouseDown(self)
---     local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
---     self.icon:SetVertexColor(1, 0, 0, sufficiently and .1 or 1)
+-- local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+-- self.icon:SetVertexColor(1, 0, 0, sufficiently and .1 or 1)
 -- end
 -- local function CreateFrameUsableItems_OnMouseUp(self)
---     local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
---     self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
+-- local sufficiently = GetItemCount(self.itemID, true, true, true) < self.count
+-- self.icon:SetVertexColor(1, 1, 1, sufficiently and .1 or 1)
 -- end
 -- local function CreateFrameUsableItems(itemID, Texture, count, Ypos, r, g, b)
---     local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
---     Button.itemID = itemID
---     Button.Texture = Texture
---     Button.count = count
---     Button.Ypos = Ypos
---     -- Button.r = r
---     -- Button.g = g
---     -- Button.b = b
---     Button:SetSize(curHeight, curHeight)
---     Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, Ypos)
---     Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
---     Button:SetBackdropBorderColor(r, g, b, 0.2)
---     Button:RegisterEvent("PLAYER_REGEN_DISABLED")
---     Button:RegisterEvent("PLAYER_REGEN_ENABLED")
---     Button:RegisterEvent("BAG_UPDATE")
---     Button:HookScript("OnEvent", CreateFrameUsableItems_OnEvent)
---     Button:HookScript("OnEnter", CreateFrameUsableItems_OnEnter)
---     Button:HookScript("OnLeave", CreateFrameUsableItems_OnLeave)
---     Button:HookScript("OnMouseDown", CreateFrameUsableItems_OnMouseDown)
---     Button:HookScript("OnMouseUp", CreateFrameUsableItems_OnMouseUp)
---     Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
---     Button:SetAttribute("type", "macro")
---     Button:SetAttribute("macrotext", "/use item:"..itemID)
---     local t = Button:CreateTexture(nil, "BACKGROUND")
---     Button.icon = t
---     t:SetTexture(Texture)--select(10, GetItemInfo(itemID)))
---     t:SetVertexColor(1, 1, 1, 1)
---     t:SetAllPoints(Button)
---     Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
---     return Button
+-- local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
+-- Button.itemID = itemID
+-- Button.Texture = Texture
+-- Button.count = count
+-- Button.Ypos = Ypos
+-- -- Button.r = r
+-- -- Button.g = g
+-- -- Button.b = b
+-- Button:SetSize(curHeight, curHeight)
+-- Button:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, Ypos)
+-- Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+-- Button:SetBackdropBorderColor(r, g, b, 0.2)
+-- Button:RegisterEvent("PLAYER_REGEN_DISABLED")
+-- Button:RegisterEvent("PLAYER_REGEN_ENABLED")
+-- Button:RegisterEvent("BAG_UPDATE")
+-- Button:HookScript("OnEvent", CreateFrameUsableItems_OnEvent)
+-- Button:HookScript("OnEnter", CreateFrameUsableItems_OnEnter)
+-- Button:HookScript("OnLeave", CreateFrameUsableItems_OnLeave)
+-- Button:HookScript("OnMouseDown", CreateFrameUsableItems_OnMouseDown)
+-- Button:HookScript("OnMouseUp", CreateFrameUsableItems_OnMouseUp)
+-- Button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+-- Button:SetAttribute("type", "macro")
+-- Button:SetAttribute("macrotext", "/use item:"..itemID)
+-- local t = Button:CreateTexture(nil, "BACKGROUND")
+-- Button.icon = t
+-- t:SetTexture(Texture)--select(10, GetItemInfo(itemID)))
+-- t:SetVertexColor(1, 1, 1, 1)
+-- t:SetAllPoints(Button)
+-- Button:GetScript("OnEvent")(Button, "BAG_UPDATE")
+-- return Button
 -- end
 local function CreateFrameExpansion_OnEnter(self)
 	self.icon:SetVertexColor(1, 1, 1, 1)
@@ -3308,7 +3356,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 					end
 					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[137642])
 					-- else
-					--     Main_Frame.MarkOfHonor_Button:Hide()
+					-- Main_Frame.MarkOfHonor_Button:Hide()
 				end
 			end
 			if i == 0 then
@@ -3633,7 +3681,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
-	-- local className, classFilename, classId  = UnitClass("PLAYER")
+	-- local className, classFilename, classId = UnitClass("PLAYER")
 	-- local classColor = C_ClassColor.GetClassColor(classFilename)
 	-- local r, g, b = classColor:GetRGB()
 	local function FrameLine_OnEnter(self)
@@ -3873,7 +3921,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 		end
 		local ShowOnlyCurrentRealm = Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm
 		local LevelToShow = Octo_ToDo_DragonflyVars.config.LevelToShow
-		TotalMoneyAllServer = TotalMoneyAllServer +  CharInfo.Money
+		TotalMoneyAllServer = TotalMoneyAllServer + CharInfo.Money
 		if ((ShowOnlyCurrentRealm == true and (CharInfo.curServer == GetRealmName())) and (CharInfo.UnitLevel >= LevelToShow)) or (ShowOnlyCurrentRealm == false and CharInfo.UnitLevel >= LevelToShow) or (curGUID == CharInfo.GUID) then
 			CharInfo.GUID = curCharGUID
 			Char_Frame:SetSize(curWidth, curHeight)
@@ -3943,12 +3991,12 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			end
 			---------------------------------------------
 			-- StaticPopupDialogs[GlobalAddonName.."DELETE_CHARACTER"] = {
-			--   text = DELETE.."?",
-			--   button1 = YES,
-			--   button2 = NO,
-			--   hideOnEscape = 1,
-			--   whileDead = 1,
-			--   OnAccept = function() Octo_ToDo_DragonflyDeleteChar(curCharGUID) end,
+			-- text = DELETE.."?",
+			-- button1 = YES,
+			-- button2 = NO,
+			-- hideOnEscape = 1,
+			-- whileDead = 1,
+			-- OnAccept = function() Octo_ToDo_DragonflyDeleteChar(curCharGUID) end,
 			-- }
 			---------------------------------------------
 			Char_Frame.DeleteButton:SetSize(16, 10)
@@ -4116,7 +4164,7 @@ local function checkCharInfo(CharInfo)
 	setmetatable(CharInfo.CurrencyID, Meta_Table_0)
 	setmetatable(CharInfo.EVENTS_ZARALEK_LIST, Meta_Table_0)
 	setmetatable(CharInfo.ItemsInBag, Meta_Table_0)
-	setmetatable(CharInfo.KnownSpell, Meta_Table_False)
+	setmetatable(CharInfo.KnownSpell, Meta_Table_false)
 	setmetatable(CharInfo.profID_prof1, Meta_Table_0)
 	setmetatable(CharInfo.profID_prof1.chest, Meta_Table_0)
 	setmetatable(CharInfo.profID_prof1.craftOrder, Meta_Table_0)
@@ -4189,6 +4237,7 @@ end
 function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 	--if InCombatLockdown() then return end
 	if event == "ACTIONBAR_UPDATE_COOLDOWN" and not InCombatLockdown() then
+		-- print (GetExpansionLevel(), GetAccountExpansionLevel(), GetServerExpansionLevel(), LE_EXPANSION_LEVEL_CURRENT)
 		if Main_Frame and Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
 			ToDragonbaneKeepTimer()
@@ -4266,12 +4315,12 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 						CollectAllReputations()
 						CollectPVPRaitings()
 						-- if Main_Frame and Main_Frame:IsShown() then
-						--     Main_Frame:Hide()
+						-- Main_Frame:Hide()
 						-- end
 						-- if SettingsPanel:IsVisible() and self:IsVisible() then
-						--     HideUIPanel(SettingsPanel)
+						-- HideUIPanel(SettingsPanel)
 						-- else
-						--     Settings.OpenToCategory(GlobalAddonName, true)
+						-- Settings.OpenToCategory(GlobalAddonName, true)
 						-- end
 					end
 				end,
@@ -4289,7 +4338,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Octo_ToDo_DragonflyVars.config.AddonVersion = tonumber(AddonVersion)
 		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.config)
 		ldbi:Show(MinimapName)
-		if Octo_ToDo_DragonflyVars.config.CVar == nil then  --RELOAD
+		if Octo_ToDo_DragonflyVars.config.CVar == nil then --RELOAD
 			Octo_ToDo_DragonflyVars.config.CVar = false
 		end
 		if Octo_ToDo_DragonflyVars.config.InputDelete == nil then --RELOAD
@@ -4331,7 +4380,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast == nil then
 			Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast = true
 		end
-		if Octo_ToDo_DragonflyVars.config.AnotherAddons == nil then   --RELOAD
+		if Octo_ToDo_DragonflyVars.config.AnotherAddons == nil then --RELOAD
 			Octo_ToDo_DragonflyVars.config.AnotherAddons = true
 		end
 		if Octo_ToDo_DragonflyVars.config.ClearChat == nil then
@@ -4396,10 +4445,10 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		end)
 		--itemID_TEST_INSERT()
 		-- elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
-		--     local _, eventType = CombatLogGetCurrentEventInfo()
-		--     if eventType == "UNIT_DIED" then
-		--         CollectKillCount()
-		--     end
+		-- local _, eventType = CombatLogGetCurrentEventInfo()
+		-- if eventType == "UNIT_DIED" then
+		-- CollectKillCount()
+		-- end
 	elseif event == "PLAYER_LOGOUT" and not InCombatLockdown() then
 		CollectPVPRaitings()
 		--CollectLoginTime()

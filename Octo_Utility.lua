@@ -231,6 +231,7 @@ tinsert(E.modules, function()
 						C_Container.SortBags()
 				end)
 			end
+			if InCombatLockdown() then print ("CAN't CVAR") end
 			if not InCombatLockdown() then
 				C_Timer.After(1, function()
 						SetCVar("displaySpellActivationOverlays", 1)
@@ -965,13 +966,19 @@ tinsert(E.modules, function()
 					EventFrame:Hide()
 					EventFrame:RegisterEvent("PLAYER_LOGIN")
 					EventFrame:RegisterEvent("BAG_UPDATE")
+					EventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+					EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 					EventFrame:SetScript("OnEvent", UsableItemFrame_OnEvent)
 				end
 			end
 			function UsableItemFrame_OnEvent(self, event)
 				--local isGroup = IsInGroup(INSTANCE)
-				if event == "BAG_UPDATE" and not InCombatLockdown() --[[and isGroup == false]] then
+				if event == "BAG_UPDATE" or event == "PLAYER_REGEN_ENABLED" and not InCombatLockdown() --[[and isGroup == false]] then
 					UsableItemFrame()
+				elseif event == "PLAYER_REGEN_DISABLED" then
+					if UsableItems_Frame:IsShown() then
+						UsableItems_Frame:Hide()
+					end
 				end
 			end
 			function UsableItemFrame()
@@ -986,7 +993,7 @@ tinsert(E.modules, function()
 						-- local color = CreateColor(r, g, b, 1)
 						-- local name = color:WrapTextInColorCode(itemName)
 						break
-					elseif GetItemCount(v.itemid) <= (v.count-1) then
+					elseif GetItemCount(v.itemid) <= (v.count-1) and UsableItems_Frame:IsShown() then
 						UsableItems_Frame:Hide()
 						UsableItems_Frame.icon:SetTexture(413587)
 					end
@@ -1067,6 +1074,7 @@ tinsert(E.modules, function()
 								v.name:find("Задание") or
 								v.name:find("cff0000FF")
 								and not IsShiftKeyDown() then
+									print ("NAME")
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print ("|cFF00A3FFAUTO_GOSSIP SELECT:|r |cff00FF00("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t|cFFFF5771"..v.name.."|r")
