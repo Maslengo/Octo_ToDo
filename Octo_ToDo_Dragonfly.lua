@@ -2324,7 +2324,7 @@ local table_func_otrisovka = {
 		local VivodLeft = ("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
 		-- ТЕКСТ В ЦЕНТРЕ
 		if CharInfo.Octopussy_Feast then
-			local VivodCent = CharInfo.Octopussy_Feast
+			VivodCent = CharInfo.Octopussy_Feast
 		end
 		if CharInfo.ItemsInBag[200652] ~= 0 then
 			VivodCent = VivodCent.." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652)
@@ -2393,7 +2393,9 @@ local table_func_otrisovka = {
 			-- tinsert(tooltip, {"PVP", CharInfo.RIO_PVPS})
 		end
 		-- ТЕКСТ В ЦЕНТРЕ
-		VivodCent = Empty_Zero(CharInfo.CurrentKey)
+		if CharInfo.CurrentKey then
+			VivodCent = Empty_Zero(CharInfo.CurrentKey)
+		end
 		if CharInfo.ItemsInBag[205225] ~= 0 then
 			VivodCent = VivodCent .. func_itemTexture(205225)..CharInfo.ItemsInBag[205225]
 		end
@@ -2881,7 +2883,9 @@ local table_func_otrisovka = {
 		-- CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
 		VivodLeft = curServerShort..": "..GetCoinTextureString(TotalMoney-TotalMoney % 10000)
 		-- ТЕКСТ В ЦЕНТРЕ
-		VivodCent = GetCoinTextureString(CharInfo.Money - CharInfo.Money % 10000) or 0
+		if CharInfo.Money then
+			VivodCent = GetCoinTextureString(CharInfo.Money - CharInfo.Money % 10000) or 0
+		end
 		if CharInfo.Money - CharInfo.Money % 10000 < 10000000 then -- меньше тысячи
 			VivodCent = ColorGray..VivodCent.."|r"
 		end
