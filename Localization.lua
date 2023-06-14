@@ -15,7 +15,7 @@ if L then
     L["Grand Hunt"] = true
     L["Community Feast"] = true
     L["The Storm's Fury"] = true
-    L["Fyrakk Asssaults"] = true
+    L["Fyrakk Asssaults (Local)"] = true
     L["Researchers Under Fire"] = true
     L["Treasure Goblin"] = true
     L["Level"] = true
@@ -43,7 +43,7 @@ if L then
     L["Grand Hunt"] = "Великая охота"
     L["Community Feast"] = "Большое пиршество"
     L["The Storm's Fury"] = "Неистовство бури"
-    L["Fyrakk Asssaults"] = "Налет Фиракка"
+    L["Fyrakk Asssaults (Local)"] = "Налет Фиракка (Локалка)"
     L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
     L["RESET"] = "Сброс всех данных аддона"
     L["Treasure Goblin"] = "Алчный гоблин"

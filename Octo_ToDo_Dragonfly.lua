@@ -2323,7 +2323,9 @@ local table_func_otrisovka = {
 		-- ТЕКС СЛЕВА
 		local VivodLeft = ("|T629056:16:16:::64:64:4:60:4:60|t " .. CommunityFeastTimer())
 		-- ТЕКСТ В ЦЕНТРЕ
-		local VivodCent = CharInfo.Octopussy_Feast
+		if CharInfo.Octopussy_Feast then
+			local VivodCent = CharInfo.Octopussy_Feast
+		end
 		if CharInfo.ItemsInBag[200652] ~= 0 then
 			VivodCent = VivodCent.." +"..CharInfo.ItemsInBag[200652]..func_itemTexture(200652)
 		end
@@ -2687,7 +2689,7 @@ local table_func_otrisovka = {
 			{name = CALENDAR_FILTER_WEEKLY_HOLIDAYS, data=CharInfo.Octopussy_WeekendEvent}, --"CharInfo.Octopussy_WeekendEvent"
 			{name = func_questName(76122), data=CharInfo.Octopussy_FightingisItsOwnReward},
 			{name = func_questName(75665), data=CharInfo.Octopussy_AWorthyAllyLoammNiffen},
-			{name = L["Fyrakk Asssaults"], data = CharInfo.Octopussy_FyrakkAssaults},
+			{name = L["Fyrakk Asssaults (Local)"], data = CharInfo.Octopussy_FyrakkAssaults},
 		}
 		if CharInfo.UnitLevel >= 70 then
 			local questID = 75459
@@ -4334,8 +4336,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Octo_ToDo_DragonflyVars.config.AutoRepair == nil then
 			Octo_ToDo_DragonflyVars.config.AutoRepair = true
 		end
-		if Octo_ToDo_DragonflyVars.config.Addon_curWidth == nil then
-			Octo_ToDo_DragonflyVars.config.Addon_curWidth = 93
+		if Octo_ToDo_DragonflyVars.config.HideErrorMessages == nil then
+			Octo_ToDo_DragonflyVars.config.HideErrorMessages = false
 		end
 		for i, func in ipairs(E.modules) do
 			func()

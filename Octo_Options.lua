@@ -240,7 +240,7 @@ config:SetScript("OnShow", function(self)
                 Octo_ToDo_DragonflyVars.config.AnotherAddons = btn_right:GetChecked()
                 StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
-        self.btn_right1.text:SetText("|cffFF0000AnotherAddons|r\nBugGrabber, BugSack, AutoTurnIn, MountsJournal,\n WowheadQuickLink, Postal, HidingBar, TalentTreeTweaks, Simulationcraft,\n SpeedyAutoLoot, AdvancedInterfaceOptions, Pawn, Rarity")
+        self.btn_right1.text:SetText("|cffFF0000AnotherAddons|r")
         -----------------------------------------------
         -----------------------------------------------
         -- btn_right2 ClearChat
@@ -306,25 +306,17 @@ config:SetScript("OnShow", function(self)
         end)
         self.btn_right6.text:SetText("|cffFF0000AutoRepair|r")
         -----------------------------------------------
-        --Addon_curWidthTEXT
-        -- local Addon_curWidthTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-        -- self.Slider_right7 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
-        -- self.Slider_right7:SetWidth(140)
-        -- self.Slider_right7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*7)
-        -- self.Slider_right7:SetMinMaxValues(70,140)
-        -- self.Slider_right7:SetValueStep(1)
-        -- local step = 1
-        -- self.Slider_right7:SetValue(Octo_ToDo_DragonflyVars.config.Addon_curWidth)
-        -- self.Slider_right7:SetScript("OnValueChanged", function (self, value)
-        --         value = math.floor(value * step + .5) / step
-        --         Octo_ToDo_DragonflyVars.config.Addon_curWidth = value
-        --         Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
-        --         StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-        -- end)
-        -- Addon_curWidthTEXT:SetPoint("LEFT", self.Slider_right7, "RIGHT", indent, 0)
-        -- Addon_curWidthTEXT:SetText("Addon_curWidth: "..Octo_ToDo_DragonflyVars.config.Addon_curWidth)
-        -- self.Slider_right7:Show()
-        --Addon_curWidth
+        -- btn_right7 HideErrorMessages
+        -----------------------------------------------
+        self.btn_right7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+        self.btn_right7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 200, -indent*7)
+        self.btn_right7:SetChecked(Octo_ToDo_DragonflyVars.config.HideErrorMessages)
+        self.btn_right7:SetScript("OnClick", function(btn)
+                Octo_ToDo_DragonflyVars.config.HideErrorMessages = btn:GetChecked()
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+        end)
+        self.btn_right7.text:SetText("|cffFF0000HideErrorMessages|r")
+        -----------------------------------------------
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config, GlobalAddonName)

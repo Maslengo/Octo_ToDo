@@ -26,30 +26,62 @@ end)
 --HideZoneText
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.HideZoneText then
-			ZoneTextFrame:HookScript("OnShow", function(self, ...)
-				ZoneTextFrame:UnregisterAllEvents()
-				ZoneTextFrame:Hide()
-			end)
+
+			ZoneTextFrame:SetScript("OnShow", ZoneTextFrame.Hide);
+			SubZoneTextFrame:SetScript("OnShow", SubZoneTextFrame.Hide);
+
+
+
+
+
+
+			-- ZoneTextFrame:HookScript("OnShow", function(self, ...)
+			-- 		ZoneTextFrame:UnregisterAllEvents()
+			-- 		ZoneTextFrame:Hide()
+			-- end)
+			-- SubZoneTextFrame:HookScript("OnShow", function(self, ...)
+			-- 		SubZoneTextFrame:UnregisterAllEvents()
+			-- 		SubZoneTextFrame:Hide()
+			-- end)
 			PVPArenaTextString:HookScript("OnShow", function(self, ...)
-				-- PVPArenaTextString:UnregisterAllEvents()
-				PVPArenaTextString:Hide()
-			end)
-			SubZoneTextFrame:HookScript("OnShow", function(self, ...)
-				SubZoneTextFrame:UnregisterAllEvents()
-				SubZoneTextFrame:Hide()
+					-- PVPArenaTextString:UnregisterAllEvents()
+					PVPArenaTextString:Hide()
 			end)
 			ZoneTextString:HookScript("OnShow", function(self, ...)
-				-- ZoneTextString:UnregisterAllEvents()
-				ZoneTextString:Hide()
+					-- ZoneTextString:UnregisterAllEvents()
+					ZoneTextString:Hide()
 			end)
 			SubZoneTextString:HookScript("OnShow", function(self, ...)
-				-- SubZoneTextString:UnregisterAllEvents()
-				SubZoneTextString:Hide()
+					-- SubZoneTextString:UnregisterAllEvents()
+					SubZoneTextString:Hide()
 			end)
-			EventToastManagerFrame:HookScript("OnShow", function(self,...)
-				EventToastManagerFrame:UnregisterAllEvents()
-				EventToastManagerFrame:Hide()
+			-- EventToastManagerFrame:HookScript("OnShow", function(self,...)
+			-- 		EventToastManagerFrame:UnregisterAllEvents()
+			-- 		EventToastManagerFrame:Hide()
+			-- end)
+			hooksecurefunc(EventToastManagerFrame, "Show", function()
+				if not EventToastManagerFrame.HideButton:IsShown() then
+					if EventToastManagerFrame.currentDisplayingToast then
+						if IsInJailersTower() then
+							-- Show floor summary
+							local title = EventToastManagerFrame.currentDisplayingToast.Title:GetText() or nil
+							if title and strfind(title, JAILERS_TOWER_SCENARIO_FLOOR) then
+								-- Add right-click to close floor summary
+								EventToastManagerFrame.currentDisplayingToast:SetScript("OnMouseDown", function(self, btn)
+									if btn == "RightButton" then
+										EventToastManagerFrame:CloseActiveToasts()
+										return
+									end
+								end)
+								return
+							end
+						end
+						EventToastManagerFrame.currentDisplayingToast:OnAnimatedOut()
+					end
+				end
 			end)
+
+
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -66,8 +98,8 @@ end)
 --UIErrorsFrameScale
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.UIErrorsFrameScale then
-    		UIErrorsFrame:SetPoint("TOP", 0, -54)
-    		UIErrorsFrame:SetAlpha(0.7)
+			UIErrorsFrame:SetPoint("TOP", 0, -54)
+			UIErrorsFrame:SetAlpha(0.7)
 			--UIErrorsFrame:SetScale(.7111111111111111)
 			-- UIErrorsFrame:Hide()
 		end
@@ -121,8 +153,10 @@ end)
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.BossBanner then
 			BossBanner:HookScript("OnShow", function(self, ...)
-				BossBanner:UnregisterAllEvents()
-				BossBanner:Hide()
+					BossBanner:UnregisterEvent("ENCOUNTER_LOOT_RECEIVED")
+					BossBanner:UnregisterEvent("BOSS_KILL")
+					-- BossBanner:UnregisterAllEvents()
+					-- BossBanner:Hide()
 			end)
 		end
 end)
@@ -133,16 +167,16 @@ tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.MajorFactionsRenownToast then
 			if MajorFactionsRenownToast then
 				MajorFactionsRenownToast:HookScript("OnShow", function(self, ...)
-					--MajorFactionsRenownToast:UnregisterAllEvents()
-					--MajorFactionsRenownToast:Hide()
-					MajorFactionsRenownToast.Icon.Texture:Hide()
-					MajorFactionsRenownToast.ToastBG:Hide()
-					MajorFactionsRenownToast.IconSwirlModelScene:Hide()
-					MajorFactionsRenownToast.Icon:Hide()
-					MajorFactionsRenownToast.RenownLabel:Hide()
-					MajorFactionsRenownToast.RewardIcon:Hide()
-					MajorFactionsRenownToast.RewardIconRing:Hide()
-					MajorFactionsRenownToast.RewardDescription:Hide()
+						--MajorFactionsRenownToast:UnregisterAllEvents()
+						--MajorFactionsRenownToast:Hide()
+						MajorFactionsRenownToast.Icon.Texture:Hide()
+						MajorFactionsRenownToast.ToastBG:Hide()
+						MajorFactionsRenownToast.IconSwirlModelScene:Hide()
+						MajorFactionsRenownToast.Icon:Hide()
+						MajorFactionsRenownToast.RenownLabel:Hide()
+						MajorFactionsRenownToast.RewardIcon:Hide()
+						MajorFactionsRenownToast.RewardIconRing:Hide()
+						MajorFactionsRenownToast.RewardDescription:Hide()
 				end)
 			end
 		end
@@ -213,7 +247,7 @@ tinsert(E.modules, function()
 						SetCVar("cameraDistanceMaxZoomFactor", 2.6)
 						SetCVar("cameraSmoothStyle", 0) --не выравнивать камеру в движении
 						SetCVar("colorChatNamesByClass", 1)
-						SetCVar("combinedBags", 1)  --/console combinedBags 1
+						SetCVar("combinedBags", 1) --/console combinedBags 1
 						SetCVar("displayFreeBagSlots", 1) --отображает кол-во свободного места
 						SetCVar("doNotFlashLowHealthWarning", 1)
 						SetCVar("enableFloatingCombatText", 0) --НЕ надо, отображение на экране дополнительных сообщений
@@ -294,7 +328,7 @@ tinsert(E.modules, function()
 						SetCVar("nameplateShowEnemyPets", 0)
 						SetCVar("nameplateShowEnemyTotems", 1)
 						SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
-						SetCVar("nameplateShowOnlyNames", 0)  --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
+						SetCVar("nameplateShowOnlyNames", 0) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
 						SetCVar("nameplateShowSelf", 0) --- PIZDA
 						SetCVar("nameplateTargetBehindMaxDistance", 30)
 						SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
@@ -899,8 +933,6 @@ tinsert(E.modules, function()
 				{itemid = 7973, count = 1},
 				{itemid = 92794, count = 1},
 				{itemid = 93724, count = 1},
-
-
 				{itemid = 204717, count = 2}, --2
 				{itemid = 204075, count = 15}, --15
 				{itemid = 204076, count = 15}, --15
@@ -1131,109 +1163,133 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --AutoSellGrey
 tinsert(E.modules, function()
-	if Octo_ToDo_DragonflyVars.config.AutoSellGrey then
-		local function OnEvent(self, event)
-			totalPrice = 0
-			--for myBags = 0,4 do
-			for myBags = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-				for bagSlots = 1, C_Container.GetContainerNumSlots(myBags) do
-					CurrentItemLink = C_Container.GetContainerItemLink(myBags, bagSlots)
-					if CurrentItemLink then
-						_, _, itemRarity, _, _, _, _, _, _, _, itemSellPrice, classID, subclassID = GetItemInfo(CurrentItemLink)
-						itemInfo = C_Container.GetContainerItemInfo(myBags, bagSlots)
-						if itemRarity == 0 and itemSellPrice ~= 0 and classID ~= 2 and classID ~= 4 then
-							totalPrice = totalPrice + (itemSellPrice * itemInfo.stackCount)
-							C_Container.UseContainerItem(myBags, bagSlots)
-							PickupMerchantItem()
+		if Octo_ToDo_DragonflyVars.config.AutoSellGrey then
+			local function OnEvent(self, event)
+				totalPrice = 0
+				--for myBags = 0,4 do
+				for myBags = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+					for bagSlots = 1, C_Container.GetContainerNumSlots(myBags) do
+						CurrentItemLink = C_Container.GetContainerItemLink(myBags, bagSlots)
+						if CurrentItemLink then
+							_, _, itemRarity, _, _, _, _, _, _, _, itemSellPrice, classID, subclassID = GetItemInfo(CurrentItemLink)
+							itemInfo = C_Container.GetContainerItemInfo(myBags, bagSlots)
+							if itemRarity == 0 and itemSellPrice ~= 0 and classID ~= 2 and classID ~= 4 then
+								totalPrice = totalPrice + (itemSellPrice * itemInfo.stackCount)
+								C_Container.UseContainerItem(myBags, bagSlots)
+								PickupMerchantItem()
+							end
 						end
 					end
 				end
+				if totalPrice ~= 0 then
+					print("|cFF00A3FFAutoSellGrey|r|cff00FF00 +".. GetCoinTextureString(totalPrice) .. "|r")
+					--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Vendored gray items for: "]..GetCoinTextureString(totalPrice), 255, 255, 255)
+				end
 			end
-			if totalPrice ~= 0 then
-				print("|cFF00A3FFAutoSellGrey|r|cff00FF00 +".. GetCoinTextureString(totalPrice) .. "|r")
-				--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Vendored gray items for: "]..GetCoinTextureString(totalPrice), 255, 255, 255)
-			end
+			local f = CreateFrame("Frame")
+			f:SetScript("OnEvent", OnEvent)
+			f:RegisterEvent("MERCHANT_SHOW")
 		end
-		local f = CreateFrame("Frame")
-		f:SetScript("OnEvent", OnEvent)
-		f:RegisterEvent("MERCHANT_SHOW")
-	end
 end)
--- Consumable  0   Consumable  Enum.ItemConsumableSubclass
--- Container   1   Container
--- Weapon  2   Weapon  Enum.ItemWeaponSubclass
--- Gem 3   Gem Enum.ItemGemSubclass
--- Armor   4   Armor   Enum.ItemArmorSubclass
--- Reagent 5   Reagent Enum.ItemReagentSubclass    Obsolete
--- Projectile  6   Projectile      Obsolete
--- Tradegoods  7   Tradeskill
--- ItemEnhancement 8   Item Enhancement
--- Recipe  9   Recipe  Enum.ItemRecipeSubclass
--- CurrencyTokenObsolete   10  Money(OBSOLETE)
--- Quiver  11  Quiver      Obsolete
--- Questitem   12  Quest
--- Key 13  Key
--- PermanentObsolete   14  Permanent(OBSOLETE)
--- Miscellaneous   15  Miscellaneous   Enum.ItemMiscellaneousSubclass
--- Glyph   16  Glyph
--- Battlepet   17  Battle Pets Enum.BattlePetTypes
--- WoWToken    18  WoW Token
--- Profession  19  Profession  Enum.ItemProfessionSubclass Added in 10.0.0
+-- Consumable 0 Consumable Enum.ItemConsumableSubclass
+-- Container 1 Container
+-- Weapon 2 Weapon Enum.ItemWeaponSubclass
+-- Gem 3 Gem Enum.ItemGemSubclass
+-- Armor 4 Armor Enum.ItemArmorSubclass
+-- Reagent 5 Reagent Enum.ItemReagentSubclass Obsolete
+-- Projectile 6 Projectile Obsolete
+-- Tradegoods 7 Tradeskill
+-- ItemEnhancement 8 Item Enhancement
+-- Recipe 9 Recipe Enum.ItemRecipeSubclass
+-- CurrencyTokenObsolete 10 Money(OBSOLETE)
+-- Quiver 11 Quiver Obsolete
+-- Questitem 12 Quest
+-- Key 13 Key
+-- PermanentObsolete 14 Permanent(OBSOLETE)
+-- Miscellaneous 15 Miscellaneous Enum.ItemMiscellaneousSubclass
+-- Glyph 16 Glyph
+-- Battlepet 17 Battle Pets Enum.BattlePetTypes
+-- WoWToken 18 WoW Token
+-- Profession 19 Profession Enum.ItemProfessionSubclass Added in 10.0.0
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --AutoRepair
 tinsert(E.modules, function()
-	if Octo_ToDo_DragonflyVars.config.AutoRepair then
-		local function OnEvent(self, event)
-			if (CanMerchantRepair()) then
-				repairAllCost, canRepair = GetRepairAllCost()
-				local money = GetMoney()
-				local locale = GetLocale()
-				if canRepair and repairAllCost > money then
-					print ("|cFFFF5771"..L["We need more gold"].."|r "..GetCoinTextureString((repairAllCost-money)))
-					if locale ~= "ruRU" then
-						PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_ENG.ogg", "Master")
-					else
-						PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg", "Master")
-					end
-				-- If merchant can repair and there is something to repair
-				else if (canRepair and repairAllCost > 0) then
-					costTextureString = GetCoinTextureString(repairAllCost)
-					-- Use Guild Bank
-					guildRepairedItems = false
-					if (IsInGuild() and CanGuildBankRepair()) then
-						-- Checks if guild has enough money
-						local amount = GetGuildBankWithdrawMoney()
-						local guildBankMoney = GetGuildBankMoney()
-						amount = amount == -1 and guildBankMoney or min(amount, guildBankMoney)
-						if (amount >= repairAllCost) then
-							RepairAllItems(true)
-							guildRepairedItems = true
-							print("|cFF00A3FFAutoRepair|r|cffFF4C4F -"..  costTextureString.."|r")
-							--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired using guild bank funds for: "]..costTextureString, 255, 255, 255)
+		if Octo_ToDo_DragonflyVars.config.AutoRepair then
+			local function OnEvent(self, event)
+				if (CanMerchantRepair()) then
+					repairAllCost, canRepair = GetRepairAllCost()
+					local money = GetMoney()
+					local locale = GetLocale()
+					if canRepair and repairAllCost > money then
+						print ("|cFFFF5771"..L["We need more gold"].."|r "..GetCoinTextureString((repairAllCost-money)))
+						if locale ~= "ruRU" then
+							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_ENG.ogg", "Master")
+						else
+							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg", "Master")
 						end
-					end
-					-- Use own funds
-					if (repairAllCost <= money and not guildRepairedItems) then
-						RepairAllItems(false)
-						print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
-						--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired for: "]..costTextureString, 255, 255, 255)
+						-- If merchant can repair and there is something to repair
+					else if (canRepair and repairAllCost > 0) then
+							costTextureString = GetCoinTextureString(repairAllCost)
+							-- Use Guild Bank
+							guildRepairedItems = false
+							if (IsInGuild() and CanGuildBankRepair()) then
+								-- Checks if guild has enough money
+								local amount = GetGuildBankWithdrawMoney()
+								local guildBankMoney = GetGuildBankMoney()
+								amount = amount == -1 and guildBankMoney or min(amount, guildBankMoney)
+								if (amount >= repairAllCost) then
+									RepairAllItems(true)
+									guildRepairedItems = true
+									print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
+									--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired using guild bank funds for: "]..costTextureString, 255, 255, 255)
+								end
+							end
+							-- Use own funds
+							if (repairAllCost <= money and not guildRepairedItems) then
+								RepairAllItems(false)
+								print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
+								--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired for: "]..costTextureString, 255, 255, 255)
+							end
+						end
 					end
 				end
 			end
+			local f = CreateFrame("Frame")
+			f:SetScript("OnEvent", OnEvent)
+			f:RegisterEvent("MERCHANT_SHOW")
 		end
-	end
-		local f = CreateFrame("Frame")
-		f:SetScript("OnEvent", OnEvent)
-		f:RegisterEvent("MERCHANT_SHOW")
-	end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
---Addon_curWidth
+--HideErrorMessages
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.Addon_curWidth then
+		if Octo_ToDo_DragonflyVars.config.HideErrorMessages then
+			local OrigErrHandler = UIErrorsFrame:GetScript("OnEvent")
+			UIErrorsFrame:SetScript("OnEvent", function (self, event, id, err, ...)
+					if event == "UI_ERROR_MESSAGE" then
+						if     err == ERR_INV_FULL or
+						err == ERR_QUEST_LOG_FULL or
+						err == ERR_RAID_GROUP_ONLY    or
+						err == ERR_PARTY_LFG_BOOT_LIMIT or
+						err == ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE or
+						err == ERR_PARTY_LFG_BOOT_IN_COMBAT or
+						err == ERR_PARTY_LFG_BOOT_IN_PROGRESS or
+						err == ERR_PARTY_LFG_BOOT_LOOT_ROLLS or
+						err == ERR_PARTY_LFG_TELEPORT_IN_COMBAT or
+						err == ERR_PET_SPELL_DEAD or
+						err == ERR_PLAYER_DEAD or
+						err == SPELL_FAILED_TARGET_NO_POCKETS or
+						err == ERR_ALREADY_PICKPOCKETED or
+						err:find(format(ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S, ".+")) then
+							return OrigErrHandler(self, event, id, err, ...)
+						end
+					elseif event == "UI_INFO_MESSAGE"then
+						return OrigErrHandler(self, event, id, err, ...)
+					end
+			end)
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
+
