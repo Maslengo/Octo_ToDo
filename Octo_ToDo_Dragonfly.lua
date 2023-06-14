@@ -230,55 +230,55 @@ local spawns2 = {
 	{mapId = 84, name="(Штормград)"},
 	{mapId = 2025, name="(Тальдразус)"},
 }
-function TreasureGoblinTimer()
-	local offset = 1675076400+9 -- = time({year=2023,month=1,day=30,hour=12})
-	local interval = 30*60
-	local interval2 = 1500
-	local uptime = GetTime()
-	if (last or 0) < uptime - 1 then
-		last = uptime
-		local n = #spawns
-		local current = (time() - offset) / interval
-		local remainder = (math.floor(current) - current + 1) * interval
-		local nextIndex = (math.ceil(current) - 1) % n + 1
-		local found = true
-		local spawnId, distance
-		for i = 0,n-1 do
-			spawnId = (nextIndex + i - 1) % n + 1
-			distance = i
-			break
-		end
-		if found then
-			local spawn = spawns[spawnId]
-			local spawnprev = spawns2[spawnId]
-			nextSpawn = spawn
-			nextLocation = spawn.name
-			prevLocation = spawnprev.name
-			local when = remainder + distance * interval
-			local timeleft = when - interval2
-			if when < interval2 then
-				nextTime = "|cffFF0000"..SecondsToClock(when).."|r"
-				-- local s, f = SecondsToTimeAbbrev(when)
-				-- nextTime = s:format(f)
-			else
-				nextTime = "|cff00FF00"..SecondsToClock(timeleft).."|r"
-				if PlayCustomSound == true then
-					PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
-				end
-				-- local t, f = SecondsToTimeAbbrev(timeleft)
-				-- nextTime = t:format(f)
-				nextLocation = prevLocation
-			end
-		else
-			nextSpawn = nil
-			nextLocation = ""
-			prevLocation = ""
-			nextTime = ""
-		end
-	end
-	local TreasureGoblinTimer = nextTime.. " ".. nextLocation
-	return TreasureGoblinTimer
-end
+-- function TreasureGoblinTimer()
+-- 	local offset = 1675076400+9 -- = time({year=2023,month=1,day=30,hour=12})
+-- 	local interval = 30*60
+-- 	local interval2 = 1500
+-- 	local uptime = GetTime()
+-- 	if (last or 0) < uptime - 1 then
+-- 		last = uptime
+-- 		local n = #spawns
+-- 		local current = (time() - offset) / interval
+-- 		local remainder = (math.floor(current) - current + 1) * interval
+-- 		local nextIndex = (math.ceil(current) - 1) % n + 1
+-- 		local found = true
+-- 		local spawnId, distance
+-- 		for i = 0,n-1 do
+-- 			spawnId = (nextIndex + i - 1) % n + 1
+-- 			distance = i
+-- 			break
+-- 		end
+-- 		if found then
+-- 			local spawn = spawns[spawnId]
+-- 			local spawnprev = spawns2[spawnId]
+-- 			nextSpawn = spawn
+-- 			nextLocation = spawn.name
+-- 			prevLocation = spawnprev.name
+-- 			local when = remainder + distance * interval
+-- 			local timeleft = when - interval2
+-- 			if when < interval2 then
+-- 				nextTime = "|cffFF0000"..SecondsToClock(when).."|r"
+-- 				-- local s, f = SecondsToTimeAbbrev(when)
+-- 				-- nextTime = s:format(f)
+-- 			else
+-- 				nextTime = "|cff00FF00"..SecondsToClock(timeleft).."|r"
+-- 				if PlayCustomSound == true then
+-- 					PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
+-- 				end
+-- 				-- local t, f = SecondsToTimeAbbrev(timeleft)
+-- 				-- nextTime = t:format(f)
+-- 				nextLocation = prevLocation
+-- 			end
+-- 		else
+-- 			nextSpawn = nil
+-- 			nextLocation = ""
+-- 			prevLocation = ""
+-- 			nextTime = ""
+-- 		end
+-- 	end
+-- 	local TreasureGoblinTimer = nextTime.. " ".. nextLocation
+-- 	return TreasureGoblinTimer
+-- end
 function ToDragonbaneKeepTimer() -- Драконья экспедиция
 	-- local timePattern = "%02d:%02d"
 	local TIMER = 1670342460 -- ToDragonbaneKeepTimer
@@ -1995,6 +1995,7 @@ local function TESTREP()
 	end
 end
 local questIDtable = {
+	75497, -- Дар катализатор 10.1.0
 	-- PALADIN WARRIOR DEATHKNIGHT
 	24545, -- Святость и скверна
 	24743, -- Грань Тьмы
@@ -2633,6 +2634,10 @@ local table_func_otrisovka = {
 		if CharInfo.CurrencyID[2533] >= 1 then
 			VivodCent = func_currencyicon(2533)..CharInfo.CurrencyID[2533]
 		end
+		-- if CharInfo.questIDtable[75497] == "|cff00FF00Done|r" then
+		-- 	VivodCent = VivodCent .. "*"
+		-- end
+		return VivodCent, VivodLeft
 	end,
 	--13
 	function(CharInfo, tooltip, CL)
@@ -2676,7 +2681,7 @@ local table_func_otrisovka = {
 		local VivodLeft, VivodCent = "", ""
 		local tinsertTABLE = {
 			-- {name = func_questName(72528), data=CheckCompletedByQuestID(72528)}, --БУДУЩИЙ КАТАЛИЗАТОР
-			{name = TreasureGoblinTimer(), data=CharInfo.Octopussy_TreasureGoblin},
+			-- {name = TreasureGoblinTimer(), data=CharInfo.Octopussy_TreasureGoblin},
 			{name = ToDragonbaneKeepTimer(), data=CharInfo.Octopussy_DragonbaneKeep},
 			{name = GrandHuntsTimer(), data=CharInfo.Octopussy_TheGrandHunt},
 			{name = CommunityFeastTimer(), data=CharInfo.Octopussy_Feast},
@@ -3679,7 +3684,7 @@ function OctoQuestUpdate()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
-	collect.Octopussy_TreasureGoblin = CheckCompletedByQuestID(76215)
+	-- collect.Octopussy_TreasureGoblin = CheckCompletedByQuestID(76215)
 	collect.Octopussy_Feast = CheckCompletedByQuestID(70893)
 	collect.Octopussy_DragonbaneKeep = CheckCompletedByQuestID(70866)
 	collect.Octopussy_TheGrandHunt = CheckCompletedByQuestID(70906)
@@ -4073,7 +4078,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.Octopussy_StormsFury = CharInfo.Octopussy_StormsFury or false
 	CharInfo.Octopussy_TheGrandHunt = CharInfo.Octopussy_TheGrandHunt or false
 	CharInfo.Octopussy_Timewalk500CURRENCY = CharInfo.Octopussy_Timewalk500CURRENCY or false
-	CharInfo.Octopussy_TreasureGoblin = CharInfo.Octopussy_TreasureGoblin or false
+	-- CharInfo.Octopussy_TreasureGoblin = CharInfo.Octopussy_TreasureGoblin or false
 	CharInfo.Octopussy_WB_NEW = CharInfo.Octopussy_WB_NEW or false
 	CharInfo.Octopussy_WeekendEvent = CharInfo.Octopussy_WeekendEvent or false
 	CharInfo.Octopussy_Timewalk5DUNGEONS = CharInfo.Octopussy_Timewalk5DUNGEONS or false
@@ -4167,10 +4172,14 @@ local function checkCharInfo(CharInfo)
 		CharInfo.RIO_PVPS = ""
 		--CharInfo.questIDtable = {}
 	end
+	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.CurrencyID[2533] < 8 then
+		CharInfo.CurrencyID[2533] = CharInfo.CurrencyID[2533] + 1
+	end
+
 	if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
 		CharInfo.tmstp_Daily = tmstpDayReset(1)
 		--CharInfo.classColor = {r = 0.5, g = 0.5, b = 0.5}
-		CharInfo.Octopussy_TreasureGoblin = false
+		-- CharInfo.Octopussy_TreasureGoblin = false
 		CharInfo.RARE_ZARALEK_LIST = {}
 		CharInfo.EVENTS_ZARALEK_LIST = {}
 		CharInfo.RARE_OSTROV_LIST = {}
@@ -4187,7 +4196,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 			CommunityFeastTimer()
 			PrimalStormsTimer()
 			ResearchersUnderFireTimer()
-			TreasureGoblinTimer()
+			-- TreasureGoblinTimer()
 			CollectAllProfessions()
 			CollectDungeonsRaiting()
 			--CollectPVPRaitings()
