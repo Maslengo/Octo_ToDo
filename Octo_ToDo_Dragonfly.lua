@@ -2419,7 +2419,7 @@ local table_func_otrisovka = {
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if CharInfo.CurrencyID[1602] ~= 0 or CharInfo.CurrencyID[1792] ~= 0 or CharInfo.CurrencyID[2123] ~= 0 then
-			--tooltip[#tooltip+1] = {" ", " "}
+			tooltip[#tooltip+1] = {" ", " "}
 			tooltip[#tooltip+1] = {"PVP: ", " "}
 		end
 		if CharInfo.CurrencyID[1602] ~= 0 then
@@ -2438,7 +2438,7 @@ local table_func_otrisovka = {
 
 
 		if CharInfo.CurrencyID[2032] ~= 0 or CharInfo.CurrencyID[1166] ~= 0 or CharInfo.CurrencyID[1560] ~= 0 or CharInfo.CurrencyID[1220] ~= 0 or CharInfo.CurrencyID[824] ~= 0 then
-			--tooltip[#tooltip+1] = {" ", " "}
+			tooltip[#tooltip+1] = {" ", " "}
 			tooltip[#tooltip+1] = {"Other: ", " "}
 		end
 		if CharInfo.CurrencyID[2032] ~= 0 then
@@ -2460,7 +2460,7 @@ local table_func_otrisovka = {
 
 
 		if CharInfo.CurrencyID[1580] ~= 0 or CharInfo.CurrencyID[1273] ~= 0 or CharInfo.CurrencyID[994] ~= 0  or CharInfo.CurrencyID[1129] ~= 0  or CharInfo.CurrencyID[697] ~= 0  or CharInfo.CurrencyID[776] ~= 0 then
-			--tooltip[#tooltip+1] = {" ", " "}
+			tooltip[#tooltip+1] = {" ", " "}
 			tooltip[#tooltip+1] = {"Монетки: "," "}
 		end
 
@@ -2679,12 +2679,12 @@ local table_func_otrisovka = {
 		local VivodLeft, VivodCent = "", ""
 		VivodLeft = func_currencyicon(2533)..func_currencyName(2533)
 		-- ТЕКСТ В ЦЕНТРЕ
-		if CharInfo.CurrencyID[2533] >= 1 then
+		if CharInfo.CurrencyID[2533] then
 			VivodCent = func_currencyicon(2533)..CharInfo.CurrencyID[2533]
 		end
-		-- if CharInfo.questIDtable[75497] == "|cff00FF00Done|r" then
-		-- 	VivodCent = VivodCent .. "*"
-		-- end
+		if CharInfo.CurrencyID[2533] < 8 and CharInfo.needReset then
+			VivodCent = func_currencyicon(2533)..CharInfo.CurrencyID[2533]+1
+		end
 		return VivodCent, VivodLeft
 	end,
 	--13
@@ -4223,7 +4223,6 @@ local function checkCharInfo(CharInfo)
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.CurrencyID[2533] < 8 then
 		CharInfo.CurrencyID[2533] = CharInfo.CurrencyID[2533] + 1
 	end
-
 	if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
 		CharInfo.tmstp_Daily = tmstpDayReset(1)
 		--CharInfo.classColor = {r = 0.5, g = 0.5, b = 0.5}
