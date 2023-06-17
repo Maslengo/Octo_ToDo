@@ -135,7 +135,6 @@ local openableIDs = {
     [180985] = true,
     [168740] = true, --bleskotron7000
     [185765] = true, --кожа
-    [187431] = true, --WEAPON
     [183701] = true, -- kyrian
     [140227] = true, --legion blood
     -- LOVE
