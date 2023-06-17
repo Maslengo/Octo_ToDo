@@ -926,9 +926,9 @@ function CollectDungeonsRaiting()
 		end
 	end
 	--Set Rewards ILVL
-	if pRank[1] == nil then pRank[1] = NONE end
-	if RrLvl[1] == nil then RrLvl[1] = NONE end
-	if MrLvl[1] == nil then MrLvl[1] = NONE end
+	if pRank[1] == nil then pRank[1] = "" end
+	if RrLvl[1] == nil then RrLvl[1] = "" end
+	if MrLvl[1] == nil then MrLvl[1] = "" end
 	-- 0 None
 	-- 1 MythicPlus
 	-- 2 RankedPvP
@@ -1170,9 +1170,8 @@ function CollectCurrentKEY()
 	end
 	if collect then
 		collect.CurrentKey = mkey or 0
-		local hasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
-		--collect.hasAvailableRewards = hasAvailableRewards or false
-		if hasAvailableRewards == true then collect.CurrentKey = Addon_Color..">>VAULT<<|r" end
+		local HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
+		collect.HasAvailableRewards = HasAvailableRewards
 	end
 end
 local function QuestsByID(questID)
@@ -1847,7 +1846,7 @@ local WA_Utf8Sub = function(input, size)
 end
 local table_func_otrisovka = {}
 local function pizdalishe()
-	----------------------------------------------------------------
+	-- Осада Драконьей Погибели
 	if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1861,7 +1860,7 @@ local function pizdalishe()
 				return VivodCent, VivodLeft
 		end)
 	end
-	----------------------------------------------------------------
+	-- Великая охота
 	if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1875,7 +1874,7 @@ local function pizdalishe()
 				return VivodCent, VivodLeft
 		end)
 	end
-	----------------------------------------------------------------
+	-- Большое пиршество
 	if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1898,7 +1897,7 @@ local function pizdalishe()
 				return VivodCent, VivodLeft
 		end)
 	end
-	----------------------------------------------------------------
+	-- Неистовство бури
 	if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1912,7 +1911,7 @@ local function pizdalishe()
 				return VivodCent, VivodLeft
 		end)
 	end
-	----------------------------------------------------------------
+	-- Исследователли под огнем
 	if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1926,7 +1925,7 @@ local function pizdalishe()
 				return VivodCent, VivodLeft
 		end)
 	end
-	----------------------------------------------------------------
+	-- Помощь союзу
 	if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1945,7 +1944,7 @@ local function pizdalishe()
 				return VivodCent, VivodLeft
 		end)
 	end
-	----------------------------------------------------------------
+	-- Достойный союзник: лоаммские ниффы
 	if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1958,7 +1957,7 @@ local function pizdalishe()
 				return VivodCent, VivodLeft
 		end)
 	end
-	----------------------------------------------------------------
+	-- Эпохальный ключ
 	if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 		tinsert(table_func_otrisovka,
 			--4
@@ -1993,12 +1992,16 @@ local function pizdalishe()
 				if CharInfo.CurrentKey then
 					VivodCent = Empty_Zero(CharInfo.CurrentKey)
 				end
+				if CharInfo.HasAvailableRewards then
+					VivodCent = VivodCent .. Addon_Color..">V<|r"
+				end
 				if CharInfo.ItemsInBag[205225] ~= 0 then
 					VivodCent = VivodCent .. func_itemTexture(205225)..CharInfo.ItemsInBag[205225]
 				end
 				if CharInfo.ItemsInBag[205999] ~= 0 then
 					VivodCent = VivodCent .. func_itemTexture(205999)..CharInfo.ItemsInBag[205999]
 				end
+
 				return VivodCent, VivodLeft
 		end)
 	end
@@ -2395,6 +2398,30 @@ local function pizdalishe()
 					VivodCent = CharInfo.Octopussy_SL_Weekly_ZMWBAntros_count
 				end
 				VivodLeft = func_texturefromIcon(3528312)..func_questName(65143)
+				return VivodCent, VivodLeft
+		end)
+	end
+	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_Shadowlands then
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_SL_Weekly_MawMorgeth__count ~= NONE then
+					VivodCent = CharInfo.Octopussy_SL_Weekly_MawMorgeth__count
+				end
+				VivodLeft = func_texturefromIcon(3528312)..func_questName(64531)
+				return VivodCent, VivodLeft
+		end)
+	end
+	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_Shadowlands then
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_SL_Weekly_WB__count ~= NONE then
+					VivodCent = CharInfo.Octopussy_SL_Weekly_WB__count
+				end
+				VivodLeft = func_texturefromIcon(3528312).."Мировой босс ШЛ"
 				return VivodCent, VivodLeft
 		end)
 	end
@@ -3387,17 +3414,17 @@ local tableTEST = {
 		reset = "Weekly",
 		expansion = "SL",
 		place = "",
-		desc = "",
+		desc = "WB",
 		questID = {61813,61814,61815,61816},
 		max = 1
 	},
 	{
 		name_save = "Morgeth",
-		name_quest = "Мировой босс ШЛ (Мор'гет)",
+		name_quest = func_questName(64531),
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Maw",
-		desc = "",
+		desc = "WB",
 		questID = {64531},
 		max = 1
 	},
@@ -3471,16 +3498,16 @@ local tableTEST = {
 		questID = {72728,72720,72722,72723},
 		max = 1
 	},
-	{
-		name_save = "Timewalk5DUNGEONS",
-		name_quest = "Таймволк 5 инстов",
-		reset = "Weekly",
-		expansion = "DF",
-		place = "",
-		desc = "",
-		questID = {72727,72810,72719,72725,72726},
-		max = 1
-	},
+	-- {
+	-- 	name_save = "Timewalk5DUNGEONS",
+	-- 	name_quest = "Таймволк 5 инстов",
+	-- 	reset = "Weekly",
+	-- 	expansion = "DF",
+	-- 	place = "",
+	-- 	desc = "",
+	-- 	questID = {72727,72810,72719,72725,72726},
+	-- 	max = 1
+	-- },
 	{
 		name_save = "PVP",
 		name_quest = "ПВП",
@@ -3857,7 +3884,7 @@ local tableTEST = {
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
-		desc = "",
+		desc = "WB",
 		questID = {69927,69928,69929,69930},
 		max = 1
 	},
@@ -3873,7 +3900,7 @@ local tableTEST = {
 	},
 	{
 		name_save = "Timewalk500CURRENCY",
-		name_quest = PLAYER_DIFFICULTY_TIMEWALKER.."Timewalk500CURRENCY",
+		name_quest = PLAYER_DIFFICULTY_TIMEWALKER.."(500 cur)",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -4052,6 +4079,7 @@ function OctoQuestUpdate()
 			local count = 0
 			local vivod = ""
 			for z,x in pairs(v.questID) do
+				local IsOnQuest = C_QuestLog.IsOnQuest(x)
 				if v.max > 1 then
 					if C_QuestLog.IsQuestFlaggedCompleted(x) == true then
 						count = count + 1
@@ -4070,11 +4098,11 @@ function OctoQuestUpdate()
 				-- end
 			end
 			if collect then
-				if collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] == nil or
-				collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] == "noname"
-				then
+				-- if collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] == nil or
+				-- collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] == "noname"
+				-- then
 					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] = v.name_quest or "noname"
-				end
+				-- end
 				if v.max == 1 then
 					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_count"] = vivod
 				elseif v.max > 1 then
@@ -4413,6 +4441,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.VOID_STORAGE_PAGE2 = CharInfo.VOID_STORAGE_PAGE2 or {}
 	CharInfo.canUseMountEquipment = CharInfo.canUseMountEquipment or false
 	CharInfo.currentMountItemID = CharInfo.currentMountItemID or 0
+	CharInfo.HasAvailableRewards =  CharInfo.HasAvailableRewards or false
 	setmetatable(CharInfo, Meta_Table_0)
 	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table_0)
 	setmetatable(CharInfo.CurrencyID, Meta_Table_0)
@@ -4437,7 +4466,7 @@ local function checkCharInfo(CharInfo)
 	setmetatable(CharInfo.VOID_STORAGE_PAGE1, Meta_Table_0)
 	setmetatable(CharInfo.VOID_STORAGE_PAGE2, Meta_Table_0)
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.CurrentKey ~= 0 then
-		CharInfo.CurrentKey = Addon_Color..">>VAULT<<|r"
+		CharInfo.CurrentKey = Addon_Color..">VAULT<|r"
 	end
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
 		CharInfo.tmstp_Weekly = tmstpDayReset(7)

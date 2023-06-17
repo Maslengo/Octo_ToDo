@@ -56,9 +56,9 @@ if L then
     L["Grand Hunt"] = "Великая охота"
     L["Community Feast"] = "Большое пиршество"
     L["The Storm's Fury"] = "Неистовство бури"
+    L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
 	L["Keys of Loyalty"] = "Ключи преданности"
     L["Fyrakk Asssaults (Local)"] = "Налет Фиракка (Локалка)"
-    L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
     L["RESET"] = "Сброс всех данных аддона"
     L["Treasure Goblin"] = "Алчный гоблин"
     L["Level"] = "Уровень"

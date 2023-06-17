@@ -3,10 +3,10 @@ local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local function TableConcat(t1,t2)
-   for i=1,#t2 do
-      t1[#t1+1] = t2[i]
-   end
-   return t1
+	for i=1,#t2 do
+		t1[#t1+1] = t2[i]
+	end
+	return t1
 end
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -32,22 +32,15 @@ end)
 --HideZoneText
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.HideZoneText then
-
 			ZoneTextFrame:SetScript("OnShow", ZoneTextFrame.Hide);
 			SubZoneTextFrame:SetScript("OnShow", SubZoneTextFrame.Hide);
-
-
-
-
-
-
 			-- ZoneTextFrame:HookScript("OnShow", function(self, ...)
-			-- 		ZoneTextFrame:UnregisterAllEvents()
-			-- 		ZoneTextFrame:Hide()
+			--         ZoneTextFrame:UnregisterAllEvents()
+			--         ZoneTextFrame:Hide()
 			-- end)
 			-- SubZoneTextFrame:HookScript("OnShow", function(self, ...)
-			-- 		SubZoneTextFrame:UnregisterAllEvents()
-			-- 		SubZoneTextFrame:Hide()
+			--         SubZoneTextFrame:UnregisterAllEvents()
+			--         SubZoneTextFrame:Hide()
 			-- end)
 			PVPArenaTextString:HookScript("OnShow", function(self, ...)
 					-- PVPArenaTextString:UnregisterAllEvents()
@@ -62,32 +55,30 @@ tinsert(E.modules, function()
 					SubZoneTextString:Hide()
 			end)
 			-- EventToastManagerFrame:HookScript("OnShow", function(self,...)
-			-- 		EventToastManagerFrame:UnregisterAllEvents()
-			-- 		EventToastManagerFrame:Hide()
+			--         EventToastManagerFrame:UnregisterAllEvents()
+			--         EventToastManagerFrame:Hide()
 			-- end)
 			hooksecurefunc(EventToastManagerFrame, "Show", function()
-				if not EventToastManagerFrame.HideButton:IsShown() then
-					if EventToastManagerFrame.currentDisplayingToast then
-						if IsInJailersTower() then
-							-- Show floor summary
-							local title = EventToastManagerFrame.currentDisplayingToast.Title:GetText() or nil
-							if title and strfind(title, JAILERS_TOWER_SCENARIO_FLOOR) then
-								-- Add right-click to close floor summary
-								EventToastManagerFrame.currentDisplayingToast:SetScript("OnMouseDown", function(self, btn)
-									if btn == "RightButton" then
-										EventToastManagerFrame:CloseActiveToasts()
-										return
-									end
-								end)
-								return
+					if not EventToastManagerFrame.HideButton:IsShown() then
+						if EventToastManagerFrame.currentDisplayingToast then
+							if IsInJailersTower() then
+								-- Show floor summary
+								local title = EventToastManagerFrame.currentDisplayingToast.Title:GetText() or nil
+								if title and strfind(title, JAILERS_TOWER_SCENARIO_FLOOR) then
+									-- Add right-click to close floor summary
+									EventToastManagerFrame.currentDisplayingToast:SetScript("OnMouseDown", function(self, btn)
+											if btn == "RightButton" then
+												EventToastManagerFrame:CloseActiveToasts()
+												return
+											end
+									end)
+									return
+								end
 							end
+							EventToastManagerFrame.currentDisplayingToast:OnAnimatedOut()
 						end
-						EventToastManagerFrame.currentDisplayingToast:OnAnimatedOut()
 					end
-				end
 			end)
-
-
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -408,183 +399,33 @@ tinsert(E.modules, function()
 				return table.concat(s)
 			end
 			local white_list = {
-				{itemid = 174283, count =1},
-				{itemid = 186974, count =1},
-				{itemid = 187911, count =1},
-				{itemid = 168207, count =1},
-				{itemid = 170540, count =1},
-				{itemid = 176331, count =1},
-				{itemid = 176408, count =1},
-				{itemid = 176409, count =1},
-				{itemid = 176443, count =1},
-				{itemid = 184662, count =1},
-				{itemid = 186614, count =1},
-				{itemid = 186615, count =1},
-				{itemid = 186636, count =1},
-				{itemid = 186678, count =1},
-				{itemid = 186679, count =1},
-				{itemid = 187034, count =1},
-				{itemid = 187082, count =1},
-				{itemid = 187083, count =1},
-				{itemid = 187085, count =1},
-				{itemid = 187086, count =1},
-				{itemid = 187087, count =1},
-				{itemid = 187088, count =1},
-				{itemid = 187089, count =1},
-				{itemid = 187090, count =1},
-				{itemid = 187095, count =1},
-				{itemid = 187098, count =1},
-				{itemid = 187099, count =1},
-				{itemid = 187100, count =1},
-				{itemid = 187101, count =1},
-				{itemid = 188690, count =1},
-				{itemid = 188737, count =1},
-				{itemid = 188743, count =1},
-				{itemid = 188744, count =1},
-				{itemid = 188745, count =1},
-				{itemid = 188746, count =1},
-				{itemid = 188747, count =1},
-				{itemid = 188748, count =1},
-				{itemid = 188749, count =1},
-				{itemid = 188750, count =1},
-				{itemid = 188752, count =1},
-				{itemid = 188753, count =1},
-
--- {itemid = 176315, count = 1},
--- {itemid = 176426, count = 1},
--- {itemid = 176959, count = 1},
--- {itemid = 177732, count = 1},
--- {itemid = 177740, count = 1},
--- {itemid = 177742, count = 1},
--- {itemid = 177743, count = 1},
--- {itemid = 177753, count = 1},
--- {itemid = 178585, count = 1},
--- {itemid = 179368, count = 1},
--- {itemid = 179369, count = 1},
--- {itemid = 179370, count = 1},
--- {itemid = 179986, count = 1},
-{itemid = 182628, count = 1},
-{itemid = 182631, count = 1},
-{itemid = 182632, count = 1},
-{itemid = 182634, count = 1},
-{itemid = 182640, count = 1},
-{itemid = 183115, count = 1},
-{itemid = 183116, count = 1},
-{itemid = 183117, count = 1},
-{itemid = 183191, count = 1},
-{itemid = 183192, count = 1},
-{itemid = 183193, count = 1},
-{itemid = 183194, count = 1},
-{itemid = 183195, count = 1},
-{itemid = 183217, count = 1},
-{itemid = 183219, count = 1},
-{itemid = 183221, count = 1},
-{itemid = 183226, count = 1},
-{itemid = 183230, count = 1},
-{itemid = 183232, count = 1},
-{itemid = 183236, count = 1},
-{itemid = 183237, count = 1},
-{itemid = 183239, count = 1},
-{itemid = 183247, count = 1},
-{itemid = 183254, count = 1},
-{itemid = 183255, count = 1},
-{itemid = 183259, count = 1},
-{itemid = 183262, count = 1},
-{itemid = 183263, count = 1},
-{itemid = 183270, count = 1},
-{itemid = 183273, count = 1},
-{itemid = 183276, count = 1},
-{itemid = 183280, count = 1},
-{itemid = 183281, count = 1},
-{itemid = 183286, count = 1},
-{itemid = 183287, count = 1},
-{itemid = 183291, count = 1},
-{itemid = 183292, count = 1},
-{itemid = 183294, count = 1},
-{itemid = 183302, count = 1},
-{itemid = 183305, count = 1},
-{itemid = 183307, count = 1},
-{itemid = 183308, count = 1},
-{itemid = 183312, count = 1},
-{itemid = 183320, count = 1},
-{itemid = 183321, count = 1},
-{itemid = 183322, count = 1},
-{itemid = 183327, count = 1},
-{itemid = 183328, count = 1},
-{itemid = 183335, count = 1},
-{itemid = 183337, count = 1},
-{itemid = 183339, count = 1},
-{itemid = 183342, count = 1},
-{itemid = 183343, count = 1},
-{itemid = 183351, count = 1},
-{itemid = 183355, count = 1},
-{itemid = 183357, count = 1},
-{itemid = 183359, count = 1},
-{itemid = 183360, count = 1},
-{itemid = 183363, count = 1},
-{itemid = 183364, count = 1},
-{itemid = 183371, count = 1},
-{itemid = 183372, count = 1},
-{itemid = 183377, count = 1},
-{itemid = 183382, count = 1},
-{itemid = 183383, count = 1},
-{itemid = 183388, count = 1},
-{itemid = 183390, count = 1},
-{itemid = 183393, count = 1},
-{itemid = 184198, count = 1},
-{itemid = 184242, count = 1},
-{itemid = 184276, count = 1},
-{itemid = 184277, count = 1},
-{itemid = 184278, count = 1},
-{itemid = 184561, count = 1},
-{itemid = 187027, count = 1},
-{itemid = 187030, count = 1},
-{itemid = 187031, count = 1},
-{itemid = 187032, count = 1},
-{itemid = 187038, count = 1},
-{itemid = 187039, count = 1},
-{itemid = 187040, count = 1},
-{itemid = 187041, count = 1},
-{itemid = 187042, count = 1},
-{itemid = 187043, count = 1},
-{itemid = 187044, count = 1},
-{itemid = 187045, count = 1},
-{itemid = 187046, count = 1},
-{itemid = 187075, count = 1},
-{itemid = 187096, count = 1},
-{itemid = 188686, count = 1},
-{itemid = 188687, count = 1},
-{itemid = 188688, count = 1},
-{itemid = 188700, count = 1},
-
-
-
-
-
-
-
-
-				{itemid = 187219, count = 6},
-				{itemid = 190198, count = 5},
-				{itemid = 187728, count = 10},
-
-
-
-				{itemid = 186524, count = 1},
-				{itemid = 186580, count = 1},
-				{itemid = 186593, count = 1},
-				{itemid = 186473, count = 1},
-				{itemid = 187346, count = 1},
-				{itemid = 5523, count = 1},
-				{itemid = 5524, count = 1},
-				{itemid = 205967, count = 1},
+				-- {itemid = 176315, count = 1},
+				-- {itemid = 176426, count = 1},
+				-- {itemid = 176959, count = 1},
+				-- {itemid = 177732, count = 1},
+				-- {itemid = 177740, count = 1},
+				-- {itemid = 177742, count = 1},
+				-- {itemid = 177743, count = 1},
+				-- {itemid = 177753, count = 1},
+				-- {itemid = 178585, count = 1},
+				-- {itemid = 179368, count = 1},
+				-- {itemid = 179369, count = 1},
+				-- {itemid = 179370, count = 1},
+				-- {itemid = 179986, count = 1},
 				{itemid = 111956, count = 1},
 				{itemid = 128313, count = 1},
 				{itemid = 136926, count = 1},
 				{itemid = 166297, count = 1},
+				{itemid = 168207, count = 1},
 				{itemid = 168740, count = 1},
+				{itemid = 170540, count = 1},
 				{itemid = 171209, count = 1},
 				{itemid = 171210, count = 1},
+				{itemid = 174283, count = 1},
+				{itemid = 176331, count = 1},
+				{itemid = 176408, count = 1},
+				{itemid = 176409, count = 1},
+				{itemid = 176443, count = 1},
 				{itemid = 178040, count = 1},
 				{itemid = 178128, count = 1},
 				{itemid = 180085, count = 1},
@@ -605,6 +446,74 @@ tinsert(E.modules, function()
 				{itemid = 181732, count = 1},
 				{itemid = 181733, count = 1},
 				{itemid = 181741, count = 1},
+				{itemid = 182628, count = 1},
+				{itemid = 182631, count = 1},
+				{itemid = 182632, count = 1},
+				{itemid = 182634, count = 1},
+				{itemid = 182640, count = 1},
+				{itemid = 183115, count = 1},
+				{itemid = 183116, count = 1},
+				{itemid = 183117, count = 1},
+				{itemid = 183191, count = 1},
+				{itemid = 183192, count = 1},
+				{itemid = 183193, count = 1},
+				{itemid = 183194, count = 1},
+				{itemid = 183195, count = 1},
+				{itemid = 183217, count = 1},
+				{itemid = 183219, count = 1},
+				{itemid = 183221, count = 1},
+				{itemid = 183226, count = 1},
+				{itemid = 183230, count = 1},
+				{itemid = 183232, count = 1},
+				{itemid = 183236, count = 1},
+				{itemid = 183237, count = 1},
+				{itemid = 183239, count = 1},
+				{itemid = 183247, count = 1},
+				{itemid = 183254, count = 1},
+				{itemid = 183255, count = 1},
+				{itemid = 183259, count = 1},
+				{itemid = 183262, count = 1},
+				{itemid = 183263, count = 1},
+				{itemid = 183270, count = 1},
+				{itemid = 183273, count = 1},
+				{itemid = 183276, count = 1},
+				{itemid = 183280, count = 1},
+				{itemid = 183281, count = 1},
+				{itemid = 183286, count = 1},
+				{itemid = 183287, count = 1},
+				{itemid = 183291, count = 1},
+				{itemid = 183292, count = 1},
+				{itemid = 183294, count = 1},
+				{itemid = 183302, count = 1},
+				{itemid = 183305, count = 1},
+				{itemid = 183307, count = 1},
+				{itemid = 183308, count = 1},
+				{itemid = 183312, count = 1},
+				{itemid = 183320, count = 1},
+				{itemid = 183321, count = 1},
+				{itemid = 183322, count = 1},
+				{itemid = 183327, count = 1},
+				{itemid = 183328, count = 1},
+				{itemid = 183335, count = 1},
+				{itemid = 183337, count = 1},
+				{itemid = 183339, count = 1},
+				{itemid = 183342, count = 1},
+				{itemid = 183343, count = 1},
+				{itemid = 183351, count = 1},
+				{itemid = 183355, count = 1},
+				{itemid = 183357, count = 1},
+				{itemid = 183359, count = 1},
+				{itemid = 183360, count = 1},
+				{itemid = 183363, count = 1},
+				{itemid = 183364, count = 1},
+				{itemid = 183371, count = 1},
+				{itemid = 183372, count = 1},
+				{itemid = 183377, count = 1},
+				{itemid = 183382, count = 1},
+				{itemid = 183383, count = 1},
+				{itemid = 183388, count = 1},
+				{itemid = 183390, count = 1},
+				{itemid = 183393, count = 1},
 				{itemid = 183699, count = 1},
 				{itemid = 183702, count = 1},
 				{itemid = 183703, count = 1},
@@ -612,8 +521,14 @@ tinsert(E.modules, function()
 				{itemid = 184046, count = 1},
 				{itemid = 184047, count = 1},
 				{itemid = 184048, count = 1},
+				{itemid = 184198, count = 1},
+				{itemid = 184242, count = 1},
+				{itemid = 184276, count = 1},
+				{itemid = 184277, count = 1},
+				{itemid = 184278, count = 1},
 				{itemid = 184395, count = 1},
 				{itemid = 184522, count = 1},
+				{itemid = 184561, count = 1},
 				{itemid = 184630, count = 1},
 				{itemid = 184631, count = 1},
 				{itemid = 184632, count = 1},
@@ -633,6 +548,7 @@ tinsert(E.modules, function()
 				{itemid = 184646, count = 1},
 				{itemid = 184647, count = 1},
 				{itemid = 184648, count = 1},
+				{itemid = 184662, count = 1},
 				{itemid = 184843, count = 1},
 				{itemid = 184868, count = 1},
 				{itemid = 184869, count = 1},
@@ -643,9 +559,18 @@ tinsert(E.modules, function()
 				{itemid = 185992, count = 1},
 				{itemid = 185993, count = 1},
 				{itemid = 186196, count = 1},
+				{itemid = 186473, count = 1},
+				{itemid = 186524, count = 1},
 				{itemid = 186531, count = 1},
 				{itemid = 186533, count = 1},
+				{itemid = 186580, count = 1},
+				{itemid = 186593, count = 1},
+				{itemid = 186614, count = 1},
+				{itemid = 186615, count = 1},
+				{itemid = 186636, count = 1},
 				{itemid = 186650, count = 1},
+				{itemid = 186678, count = 1},
+				{itemid = 186679, count = 1},
 				{itemid = 186680, count = 1},
 				{itemid = 186688, count = 1},
 				{itemid = 186691, count = 1},
@@ -655,9 +580,41 @@ tinsert(E.modules, function()
 				{itemid = 186707, count = 1},
 				{itemid = 186708, count = 1},
 				{itemid = 186970, count = 1},
+				{itemid = 186974, count = 1},
+				{itemid = 187027, count = 1},
 				{itemid = 187028, count = 1},
 				{itemid = 187029, count = 1},
+				{itemid = 187030, count = 1},
+				{itemid = 187031, count = 1},
+				{itemid = 187032, count = 1},
+				{itemid = 187034, count = 1},
+				{itemid = 187038, count = 1},
+				{itemid = 187039, count = 1},
+				{itemid = 187040, count = 1},
+				{itemid = 187041, count = 1},
+				{itemid = 187042, count = 1},
+				{itemid = 187043, count = 1},
+				{itemid = 187044, count = 1},
+				{itemid = 187045, count = 1},
+				{itemid = 187046, count = 1},
+				{itemid = 187075, count = 1},
+				{itemid = 187082, count = 1},
+				{itemid = 187083, count = 1},
+				{itemid = 187085, count = 1},
+				{itemid = 187086, count = 1},
+				{itemid = 187087, count = 1},
+				{itemid = 187088, count = 1},
+				{itemid = 187089, count = 1},
+				{itemid = 187090, count = 1},
+				{itemid = 187095, count = 1},
+				{itemid = 187096, count = 1},
+				{itemid = 187098, count = 1},
+				{itemid = 187099, count = 1},
+				{itemid = 187100, count = 1},
+				{itemid = 187101, count = 1},
+				{itemid = 187219, count = 6},
 				{itemid = 187278, count = 1},
+				{itemid = 187346, count = 1},
 				{itemid = 187351, count = 1},
 				{itemid = 187354, count = 1},
 				{itemid = 187440, count = 1},
@@ -672,10 +629,30 @@ tinsert(E.modules, function()
 				{itemid = 187575, count = 1},
 				{itemid = 187576, count = 1},
 				{itemid = 187577, count = 1},
+				{itemid = 187728, count = 10},
 				{itemid = 187781, count = 1},
 				{itemid = 187787, count = 1},
+				{itemid = 187911, count = 1},
+				{itemid = 188686, count = 1},
+				{itemid = 188687, count = 1},
+				{itemid = 188688, count = 1},
+				{itemid = 188690, count = 1},
+				{itemid = 188700, count = 1},
+				{itemid = 188737, count = 1},
+				{itemid = 188743, count = 1},
+				{itemid = 188744, count = 1},
+				{itemid = 188745, count = 1},
+				{itemid = 188746, count = 1},
+				{itemid = 188747, count = 1},
+				{itemid = 188748, count = 1},
+				{itemid = 188749, count = 1},
+				{itemid = 188750, count = 1},
+				{itemid = 188752, count = 1},
+				{itemid = 188753, count = 1},
 				{itemid = 189765, count = 1},
 				{itemid = 190178, count = 1},
+				{itemid = 190198, count = 5},
+				{itemid = 190198, count = 5},
 				{itemid = 190339, count = 1},
 				{itemid = 190610, count = 1},
 				{itemid = 190655, count = 1},
@@ -953,6 +930,10 @@ tinsert(E.modules, function()
 				{itemid = 203699, count = 1},
 				{itemid = 203700, count = 1},
 				{itemid = 203702, count = 1},
+				{itemid = 204075, count = 15}, --15
+				{itemid = 204076, count = 15}, --15
+				{itemid = 204077, count = 15}, --15
+				{itemid = 204078, count = 15}, --15
 				{itemid = 204222, count = 1},
 				{itemid = 204224, count = 1},
 				{itemid = 204225, count = 1},
@@ -964,6 +945,7 @@ tinsert(E.modules, function()
 				{itemid = 204231, count = 1},
 				{itemid = 204232, count = 1},
 				{itemid = 204233, count = 1},
+				{itemid = 204352, count = 50},
 				{itemid = 204359, count = 1},
 				{itemid = 204378, count = 1},
 				{itemid = 204379, count = 1},
@@ -986,6 +968,7 @@ tinsert(E.modules, function()
 				{itemid = 204577, count = 1},
 				{itemid = 204578, count = 1},
 				{itemid = 204579, count = 1},
+				{itemid = 204717, count = 2}, --2
 				{itemid = 204721, count = 1},
 				{itemid = 204722, count = 1},
 				{itemid = 204723, count = 1},
@@ -1062,6 +1045,7 @@ tinsert(E.modules, function()
 				{itemid = 205445, count = 1},
 				{itemid = 205682, count = 1},
 				{itemid = 205964, count = 1},
+				{itemid = 205967, count = 1},
 				{itemid = 205983, count = 1},
 				{itemid = 205985, count = 1},
 				{itemid = 205986, count = 1},
@@ -1084,15 +1068,11 @@ tinsert(E.modules, function()
 				{itemid = 50160, count = 1},
 				{itemid = 54537, count = 1},
 				{itemid = 5523, count = 1},
+				{itemid = 5523, count = 1},
+				{itemid = 5524, count = 1},
 				{itemid = 7973, count = 1},
 				{itemid = 92794, count = 1},
 				{itemid = 93724, count = 1},
-				{itemid = 204717, count = 2}, --2
-				{itemid = 204075, count = 15}, --15
-				{itemid = 204076, count = 15}, --15
-				{itemid = 204077, count = 15}, --15
-				{itemid = 204078, count = 15}, --15
-				{itemid = 204352, count = 50},
 			}
 			local white_list70 ={
 				{itemid = 205423, count = 1},
@@ -1467,3 +1447,4 @@ tinsert(E.modules, function()
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
+
