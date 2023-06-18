@@ -36,6 +36,8 @@ local Green_Color = "|cff4FFF79"
 local Yellow_Color = "|cffFFF371"
 local Purple_Color = "|cffAF61FF"
 local Orange_Color = "|cffFF661A"
+local Horde_Icon = "|T132485:16:16:::64:64:4:60:4:60|t"
+local Alliance_Icon = "|T132486:16:16:::64:64:4:60:4:60|t"
 local Kyri_Color_r, Kyri_Color_g, Kyri_Color_b = 0.44, 0.66, 0.86
 local Necr_Color_r, Necr_Color_g, Necr_Color_b = 0.58, 0.77, 0.49
 local NFae_Color_r, NFae_Color_g, NFae_Color_b = 0.56, 0.49, 0.76
@@ -1352,7 +1354,7 @@ local function CheckReputationByRepID(factionID)
 		local _, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(factionID)
 		if threshold then
 			local value = currentValue % threshold
-			Vivod = dev_text..Addon_Color..--[[CompactNumberFormat]](value).."/"..--[[CompactNumberFormat]](threshold)..r
+			Vivod = dev_text..Blue_Color..--[[CompactNumberFormat]](value).."/"..--[[CompactNumberFormat]](threshold)..r
 			if hasRewardPending then
 				Vivod = dev_text..CheckCompletedByQuestID(rewardQuestID)
 			end
@@ -1663,16 +1665,23 @@ function CollectAllCurrency()
 		if collect then
 			collect.CurrencyID[v] = quantity
 			collect.CurrencyID_maxQuantity[v] = maxQuantity
-			--if CharInfo.UnitLevel >= 70 then tinsert(Octo_Table_currencyID_ALL, 2167) end
-			-- == 0 and nil or quantity
-			-- collect.Octo_Table_currencyID_ALL[v] = maxQuantity
-			-- local c = "|cffffffff"
-			-- local r = "|r"
-			-- if maxQuantity > 0 and quantity == 0 then c = Gray_Color end
-			-- if maxQuantity > 0 and quantity == maxQuantity then c = Addon_Color end
-			-- if maxQuantity ~= 0 and quantity >= 1 then
-			-- collect.Octo_Table_currencyID_ALL[v] = c..CompactNumberFormat(quantity)..c.."/"..CompactNumberFormat(maxQuantity)..r
-			-- end
+			if maxQuantity ~= 0 then
+				if quantity ~= maxQuantity then
+					if quantity ~= 0 then
+						collect.CurrencyID_Total[v] = quantity.."/"..maxQuantity
+					else
+						collect.CurrencyID_Total[v] = Gray_Color..quantity.."/"..maxQuantity.."|r"
+					end
+				else
+					collect.CurrencyID_Total[v] = Green_Color..quantity.."/"..maxQuantity.."|r"
+				end
+			else
+				if quantity ~= 0 then
+					collect.CurrencyID_Total[v] = quantity
+				else
+					collect.CurrencyID_Total[v] = Gray_Color..quantity.."|r"
+				end
+			end
 		end
 	end
 end
@@ -2001,7 +2010,6 @@ local function pizdalishe()
 				if CharInfo.ItemsInBag[205999] ~= 0 then
 					VivodCent = VivodCent .. func_itemTexture(205999)..CharInfo.ItemsInBag[205999]
 				end
-
 				return VivodCent, VivodLeft
 		end)
 	end
@@ -2169,8 +2177,8 @@ local function pizdalishe()
 				if CharInfo.CurrencyID[2533] ~= 0 then
 					VivodCent = func_currencyicon(2533)..CharInfo.CurrencyID[2533]
 				end
-				if CharInfo.CurrencyID[2533] < CharInfo.CurrencyID_maxQuantity[2533] and CharInfo.needReset then
-					VivodCent = func_currencyicon(2533)..CharInfo.CurrencyID[2533]+1
+				if CharInfo.CurrencyID[2533] < CharInfo.CurrencyID_maxQuantity[2533] and CharInfo.needReset == true then
+					VivodCent = func_currencyicon(2533)..CharInfo.CurrencyID[2533] + 1
 				end
 				if CharInfo.CurrencyID[2533] == CharInfo.CurrencyID_maxQuantity[2533] then
 					VivodCent = Addon_Color..VivodCent.."|r"
@@ -2394,6 +2402,18 @@ local function pizdalishe()
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count
+				end
+				VivodLeft = func_texturefromIcon(4066373)..func_questName(63949)
+				return VivodCent, VivodLeft
+		end)
+	end
+	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_Shadowlands then
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
 				if CharInfo.Octopussy_SL_Weekly_ZMWBAntros_count ~= NONE then
 					VivodCent = CharInfo.Octopussy_SL_Weekly_ZMWBAntros_count
 				end
@@ -2406,8 +2426,8 @@ local function pizdalishe()
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_SL_Weekly_MawMorgeth__count ~= NONE then
-					VivodCent = CharInfo.Octopussy_SL_Weekly_MawMorgeth__count
+				if CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_count
 				end
 				VivodLeft = func_texturefromIcon(3528312)..func_questName(64531)
 				return VivodCent, VivodLeft
@@ -2418,8 +2438,8 @@ local function pizdalishe()
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_SL_Weekly_WB__count ~= NONE then
-					VivodCent = CharInfo.Octopussy_SL_Weekly_WB__count
+				if CharInfo.Octopussy_SL_Weekly_WBWB_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_SL_Weekly_WBWB_count
 				end
 				VivodLeft = func_texturefromIcon(3528312).."Мировой босс ШЛ"
 				return VivodCent, VivodLeft
@@ -2446,10 +2466,10 @@ local function pizdalishe()
 			if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {Blue_Color.."Dragonflight".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]} --Драконьи камни
-				tooltip[#tooltip+1] = {func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID[2122]} --Печать бури
-				tooltip[#tooltip+1] = {func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID[2118]} --Энергия стихий
-				tooltip[#tooltip+1] = {func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID[2003]} --Припасы Драконьих островов
+				tooltip[#tooltip+1] = {func_currencyicon(2245)..func_currencyName(2245), CharInfo.CurrencyID_Total[2245]} --Драконьи камни
+				tooltip[#tooltip+1] = {func_currencyicon(2122)..func_currencyName(2122), CharInfo.CurrencyID_Total[2122]} --Печать бури
+				tooltip[#tooltip+1] = {func_currencyicon(2118)..func_currencyName(2118), CharInfo.CurrencyID_Total[2118]} --Энергия стихий
+				tooltip[#tooltip+1] = {func_currencyicon(2003)..func_currencyName(2003), CharInfo.CurrencyID_Total[2003]} --Припасы Драконьих островов
 				if CharInfo.CurrencyID[2245] ~= 0 then
 					VivodCent = func_currencyicon(2245)..Empty_Zero(CharInfo.CurrencyID[2245])
 				end
@@ -2461,19 +2481,19 @@ local function pizdalishe()
 			if Octo_ToDo_DragonflyVars.config.LINE_Shadowlands then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {Blue_Color.."Shadowlands".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(2009)..func_currencyName(2009), CharInfo.CurrencyID[2009]}
-				tooltip[#tooltip+1] = {func_currencyicon(1906)..func_currencyName(1906), CharInfo.CurrencyID[1906]}
-				tooltip[#tooltip+1] = {func_currencyicon(1828)..func_currencyName(1828), CharInfo.CurrencyID[1828]}
-				tooltip[#tooltip+1] = {func_currencyicon(1977)..func_currencyName(1977), CharInfo.CurrencyID[1977]}
-				tooltip[#tooltip+1] = {func_currencyicon(1813)..func_currencyName(1813), CharInfo.CurrencyID[1813].."/"..CharInfo.CurrencyID_maxQuantity[1813]} -- Запасенная анима
-				tooltip[#tooltip+1] = {func_currencyicon(1979)..func_currencyName(1979), CharInfo.CurrencyID[1979]}
-				tooltip[#tooltip+1] = {func_currencyicon(1904)..func_currencyName(1904), CharInfo.CurrencyID[1904].."/"..CharInfo.CurrencyID_maxQuantity[1904]} -- Знания о Башне
-				tooltip[#tooltip+1] = {func_currencyicon(1819)..func_currencyName(1819), CharInfo.CurrencyID[1819]}
-				tooltip[#tooltip+1] = {func_currencyicon(1931)..func_currencyName(1931), CharInfo.CurrencyID[1931]}
-				tooltip[#tooltip+1] = {func_currencyicon(1767)..func_currencyName(1767), CharInfo.CurrencyID[1767]}
-				tooltip[#tooltip+1] = {func_currencyicon(1885)..func_currencyName(1885), CharInfo.CurrencyID[1885]}
-				tooltip[#tooltip+1] = {func_currencyicon(1820)..func_currencyName(1820), CharInfo.CurrencyID[1820].."/"..CharInfo.CurrencyID_maxQuantity[1820]} -- Насыщенный рубин
-				tooltip[#tooltip+1] = {func_currencyicon(1816)..func_currencyName(1816), CharInfo.CurrencyID[1816]}
+				tooltip[#tooltip+1] = {func_currencyicon(2009)..func_currencyName(2009), CharInfo.CurrencyID_Total[2009]}
+				tooltip[#tooltip+1] = {func_currencyicon(1906)..func_currencyName(1906), CharInfo.CurrencyID_Total[1906]}
+				tooltip[#tooltip+1] = {func_currencyicon(1828)..func_currencyName(1828), CharInfo.CurrencyID_Total[1828]}
+				tooltip[#tooltip+1] = {func_currencyicon(1977)..func_currencyName(1977), CharInfo.CurrencyID_Total[1977]}
+				tooltip[#tooltip+1] = {func_currencyicon(1813)..func_currencyName(1813), CharInfo.CurrencyID_Total[1813]} -- Запасенная анима
+				tooltip[#tooltip+1] = {func_currencyicon(1979)..func_currencyName(1979), CharInfo.CurrencyID_Total[1979]}
+				tooltip[#tooltip+1] = {func_currencyicon(1904)..func_currencyName(1904), CharInfo.CurrencyID_Total[1904]} -- Знания о Башне
+				tooltip[#tooltip+1] = {func_currencyicon(1819)..func_currencyName(1819), CharInfo.CurrencyID_Total[1819]}
+				tooltip[#tooltip+1] = {func_currencyicon(1931)..func_currencyName(1931), CharInfo.CurrencyID_Total[1931]}
+				tooltip[#tooltip+1] = {func_currencyicon(1767)..func_currencyName(1767), CharInfo.CurrencyID_Total[1767]}
+				tooltip[#tooltip+1] = {func_currencyicon(1885)..func_currencyName(1885), CharInfo.CurrencyID_Total[1885]}
+				tooltip[#tooltip+1] = {func_currencyicon(1820)..func_currencyName(1820), CharInfo.CurrencyID_Total[1820]} -- Насыщенный рубин
+				tooltip[#tooltip+1] = {func_currencyicon(1816)..func_currencyName(1816), CharInfo.CurrencyID_Total[1816]}
 				if CharInfo.Possible_Anima == 0 and CharInfo.Possible_CatalogedResearch == 0 then
 					VivodCent = Gray_Color..CURRENCY.."|r"
 				end
@@ -2498,43 +2518,94 @@ local function pizdalishe()
 			if Octo_ToDo_DragonflyVars.config.LINE_BattleforAzeroth then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {Blue_Color.."Battle for Azeroth".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(1580)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1580), CharInfo.CurrencyID[1580].."/"..CharInfo.CurrencyID_maxQuantity[1580]} --Печать судьбы воина
-				tooltip[#tooltip+1] = {func_currencyicon(1803)..func_currencyName(1803), CharInfo.CurrencyID[1803]}
-				tooltip[#tooltip+1] = {func_currencyicon(1721)..func_currencyName(1721), CharInfo.CurrencyID[1721]}
-				tooltip[#tooltip+1] = {func_currencyicon(1587)..func_currencyName(1587), CharInfo.CurrencyID[1587].."/"..CharInfo.CurrencyID_maxQuantity[1587]}
-				tooltip[#tooltip+1] = {func_currencyicon(1299)..func_currencyName(1299), CharInfo.CurrencyID[1299].."/"..CharInfo.CurrencyID_maxQuantity[1299]}
-				tooltip[#tooltip+1] = {func_currencyicon(1565)..func_currencyName(1565), CharInfo.CurrencyID[1565].."/"..CharInfo.CurrencyID_maxQuantity[1565]}
-				tooltip[#tooltip+1] = {func_currencyicon(1715)..func_currencyName(1715), CharInfo.CurrencyID[1715].."/"..CharInfo.CurrencyID_maxQuantity[1715]}
-				tooltip[#tooltip+1] = {func_currencyicon(1755)..func_currencyName(1755), CharInfo.CurrencyID[1755]}
-				tooltip[#tooltip+1] = {func_currencyicon(1710)..func_currencyName(1710), CharInfo.CurrencyID[1710]}
+				tooltip[#tooltip+1] = {func_currencyicon(1580)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1580), CharInfo.CurrencyID_Total[1580]} --Печать судьбы воина
+				tooltip[#tooltip+1] = {func_currencyicon(1803)..func_currencyName(1803), CharInfo.CurrencyID_Total[1803]}
+				tooltip[#tooltip+1] = {func_currencyicon(1721)..func_currencyName(1721), CharInfo.CurrencyID_Total[1721]}
+				tooltip[#tooltip+1] = {func_currencyicon(1587)..func_currencyName(1587), CharInfo.CurrencyID_Total[1587]}
+				tooltip[#tooltip+1] = {func_currencyicon(1299)..func_currencyName(1299), CharInfo.CurrencyID_Total[1299]}
+				tooltip[#tooltip+1] = {func_currencyicon(1565)..func_currencyName(1565), CharInfo.CurrencyID_Total[1565]}
+				tooltip[#tooltip+1] = {func_currencyicon(1715)..func_currencyName(1715), CharInfo.CurrencyID_Total[1715]}
+				tooltip[#tooltip+1] = {func_currencyicon(1755)..func_currencyName(1755), CharInfo.CurrencyID_Total[1755]}
+				tooltip[#tooltip+1] = {func_currencyicon(1710)..func_currencyName(1710), CharInfo.CurrencyID_Total[1710]}
 				if CharInfo.Faction == "Horde" then
-					tooltip[#tooltip+1] = {func_currencyicon(1716)..func_currencyName(1716), CharInfo.CurrencyID[1716]}
+					tooltip[#tooltip+1] = {func_currencyicon(1716)..func_currencyName(1716), CharInfo.CurrencyID_Total[1716]}
 				else
-					tooltip[#tooltip+1] = {func_currencyicon(1717)..func_currencyName(1717), CharInfo.CurrencyID[1717]}
+					tooltip[#tooltip+1] = {func_currencyicon(1717)..func_currencyName(1717), CharInfo.CurrencyID_Total[1717]}
 				end
-				tooltip[#tooltip+1] = {func_currencyicon(1560)..func_currencyName(1560), CharInfo.CurrencyID[1560]}
-				tooltip[#tooltip+1] = {func_currencyicon(1719)..func_currencyName(1719), CharInfo.CurrencyID[1719]}
-				tooltip[#tooltip+1] = {func_currencyicon(1718)..func_currencyName(1718), CharInfo.CurrencyID[1718]}
+				tooltip[#tooltip+1] = {func_currencyicon(1560)..func_currencyName(1560), CharInfo.CurrencyID_Total[1560]}
+				tooltip[#tooltip+1] = {func_currencyicon(1719)..func_currencyName(1719), CharInfo.CurrencyID_Total[1719]}
+				tooltip[#tooltip+1] = {func_currencyicon(1718)..func_currencyName(1718), CharInfo.CurrencyID_Total[1718]}
 			end
 			----------------------------------------------------------------
 			if Octo_ToDo_DragonflyVars.config.LINE_Legion then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {Blue_Color.."Legion".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(1273)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1273), CharInfo.CurrencyID[1273].."/"..CharInfo.CurrencyID_maxQuantity[1273]} --Печать сломанной судьбы
+				tooltip[#tooltip+1] = {func_currencyicon(1273)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1273), CharInfo.CurrencyID_Total[1273]} --Печать сломанной судьбы
+				tooltip[#tooltip+1] = {func_currencyicon(1356)..func_currencyName(1356),CharInfo.CurrencyID_Total[1356]}
+				tooltip[#tooltip+1] = {func_currencyicon(1275)..func_currencyName(1275),CharInfo.CurrencyID_Total[1275]}
+				tooltip[#tooltip+1] = {func_currencyicon(1357)..func_currencyName(1357),CharInfo.CurrencyID_Total[1357]}
+				tooltip[#tooltip+1] = {func_currencyicon(1508)..func_currencyName(1508),CharInfo.CurrencyID_Total[1508]}
+				tooltip[#tooltip+1] = {func_currencyicon(1416)..func_currencyName(1416),CharInfo.CurrencyID_Total[1416]}
+				tooltip[#tooltip+1] = {func_currencyicon(1342)..func_currencyName(1342),CharInfo.CurrencyID_Total[1342]}
+				tooltip[#tooltip+1] = {func_currencyicon(1355)..func_currencyName(1355),CharInfo.CurrencyID_Total[1355]}
+				tooltip[#tooltip+1] = {func_currencyicon(1154)..func_currencyName(1154),CharInfo.CurrencyID_Total[1154]}
+				tooltip[#tooltip+1] = {func_currencyicon(1314)..func_currencyName(1314),CharInfo.CurrencyID_Total[1314]}
+				tooltip[#tooltip+1] = {func_currencyicon(1149)..func_currencyName(1149),CharInfo.CurrencyID_Total[1149]}
+				tooltip[#tooltip+1] = {func_currencyicon(1533)..func_currencyName(1533),CharInfo.CurrencyID_Total[1533]}
+				tooltip[#tooltip+1] = {func_currencyicon(1226)..func_currencyName(1226),CharInfo.CurrencyID_Total[1226]}
+				tooltip[#tooltip+1] = {func_currencyicon(1155)..func_currencyName(1155),CharInfo.CurrencyID_Total[1155]}
+				tooltip[#tooltip+1] = {func_currencyicon(1220)..func_currencyName(1220),CharInfo.CurrencyID_Total[1220]}
+				tooltip[#tooltip+1] = {func_currencyicon(1268)..func_currencyName(1268),CharInfo.CurrencyID_Total[1268]}
 			end
 			----------------------------------------------------------------
 			if Octo_ToDo_DragonflyVars.config.LINE_WarlordsofDraenor then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {Blue_Color.."Warlords of Draenor".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(994)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(994), CharInfo.CurrencyID[994].."/"..CharInfo.CurrencyID_maxQuantity[994]} --Печать закаленной судьбы
-				tooltip[#tooltip+1] = {func_currencyicon(1129)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1129), CharInfo.CurrencyID[1129].."/"..CharInfo.CurrencyID_maxQuantity[1129]} --Печать закаленной судьбы
+				tooltip[#tooltip+1] = {func_currencyicon(994)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(994), CharInfo.CurrencyID_Total[994]} --Печать закаленной судьбы
+				tooltip[#tooltip+1] = {func_currencyicon(1129)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1129), CharInfo.CurrencyID_Total[1129]} --Печать закаленной судьбы
+				tooltip[#tooltip+1] = {func_currencyicon(823)..func_currencyName(823),CharInfo.CurrencyID_Total[823]}
+				tooltip[#tooltip+1] = {func_currencyicon(824)..func_currencyName(824),CharInfo.CurrencyID_Total[824]}
+				tooltip[#tooltip+1] = {func_currencyicon(1101)..func_currencyName(1101),CharInfo.CurrencyID_Total[1101]}
+				tooltip[#tooltip+1] = {func_currencyicon(980)..func_currencyName(980),CharInfo.CurrencyID_Total[980]}
+				tooltip[#tooltip+1] = {func_currencyicon(1017)..func_currencyName(1017),CharInfo.CurrencyID_Total[1017]}
+				tooltip[#tooltip+1] = {func_currencyicon(910)..func_currencyName(910),CharInfo.CurrencyID_Total[910]}
+				tooltip[#tooltip+1] = {func_currencyicon(944)..func_currencyName(944),CharInfo.CurrencyID_Total[944]}
+				tooltip[#tooltip+1] = {func_currencyicon(1008)..func_currencyName(1008),CharInfo.CurrencyID_Total[1008]}
+				tooltip[#tooltip+1] = {func_currencyicon(1020)..func_currencyName(1020),CharInfo.CurrencyID_Total[1020]}
+				tooltip[#tooltip+1] = {func_currencyicon(999)..func_currencyName(999),CharInfo.CurrencyID_Total[999]}
 			end
 			----------------------------------------------------------------
 			if Octo_ToDo_DragonflyVars.config.LINE_MistsofPandaria then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {Blue_Color.."Mists of Pandaria".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(697)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(697), CharInfo.CurrencyID[697].."/"..CharInfo.CurrencyID_maxQuantity[697]} --Большой амулет удачи
-				tooltip[#tooltip+1] = {func_currencyicon(776)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(776), CharInfo.CurrencyID[776].."/"..CharInfo.CurrencyID_maxQuantity[776]} --Закаленная в бою печать
+				tooltip[#tooltip+1] = {func_currencyicon(697)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(697), CharInfo.CurrencyID_Total[697]} --Большой амулет удачи
+				tooltip[#tooltip+1] = {func_currencyicon(776)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(776), CharInfo.CurrencyID_Total[776]} --Закаленная в бою печать
+				tooltip[#tooltip+1] = {func_currencyicon(777)..func_currencyName(777),CharInfo.CurrencyID_Total[777]}
+				tooltip[#tooltip+1] = {func_currencyicon(738)..func_currencyName(738),CharInfo.CurrencyID_Total[738]}
+				tooltip[#tooltip+1] = {func_currencyicon(752)..func_currencyName(752),CharInfo.CurrencyID_Total[752]}
+				tooltip[#tooltip+1] = {func_currencyicon(789)..func_currencyName(789),CharInfo.CurrencyID_Total[789]}
+			end
+			----------------------------------------------------------------
+			if Octo_ToDo_DragonflyVars.config.LINE_Cataclysm then
+				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+				tooltip[#tooltip+1] = {Blue_Color.."Cataclysm".."|r", " "}
+				tooltip[#tooltip+1] = {func_currencyicon(416)..func_currencyName(416),CharInfo.CurrencyID_Total[416]}
+				tooltip[#tooltip+1] = {func_currencyicon(361)..func_currencyName(361),CharInfo.CurrencyID_Total[361]}
+				tooltip[#tooltip+1] = {func_currencyicon(615)..func_currencyName(615),CharInfo.CurrencyID_Total[615]}
+				tooltip[#tooltip+1] = {func_currencyicon(614)..func_currencyName(614),CharInfo.CurrencyID_Total[614]}
+			end
+			----------------------------------------------------------------
+			if Octo_ToDo_DragonflyVars.config.LINE_WrathoftheLichKing then
+				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+				tooltip[#tooltip+1] = {Blue_Color.."Wrath of the Lich King".."|r", " "}
+				tooltip[#tooltip+1] = {func_currencyicon(241)..func_currencyName(241),CharInfo.CurrencyID_Total[241]}
+				tooltip[#tooltip+1] = {func_currencyicon(61)..func_currencyName(61),CharInfo.CurrencyID_Total[61]}
+			end
+			----------------------------------------------------------------
+			if Octo_ToDo_DragonflyVars.config.LINE_TheBurningCrusade then
+				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+				tooltip[#tooltip+1] = {Blue_Color.."The Burning Crusade".."|r", " "}
+				tooltip[#tooltip+1] = {func_currencyicon(1704)..func_currencyName(1704),CharInfo.CurrencyID_Total[1704]}
 			end
 			----------------------------------------------------------------
 			if #tooltip > 0 then
@@ -2542,23 +2613,23 @@ local function pizdalishe()
 			end
 			tooltip[#tooltip+1] = {Blue_Color..L["Other"].."|r", " "}
 			tooltip[#tooltip+1] = {func_currencyicon(2032)..func_currencyName(2032), func_currencyquantity(2032)}
-			tooltip[#tooltip+1] = {func_currencyicon(81)..func_currencyName(81), CharInfo.CurrencyID[81]}
-			tooltip[#tooltip+1] = {func_currencyicon(1379)..func_currencyName(1379), CharInfo.CurrencyID[1379]}
-			tooltip[#tooltip+1] = {func_currencyicon(515)..func_currencyName(515), CharInfo.CurrencyID[515]}
-			tooltip[#tooltip+1] = {func_currencyicon(402)..func_currencyName(402), CharInfo.CurrencyID[402]}
-			tooltip[#tooltip+1] = {func_currencyicon(1401)..func_currencyName(1401), CharInfo.CurrencyID[1401]}
-			tooltip[#tooltip+1] = {func_currencyicon(1388)..func_currencyName(1388), CharInfo.CurrencyID[1388]}
+			tooltip[#tooltip+1] = {func_currencyicon(81)..func_currencyName(81), CharInfo.CurrencyID_Total[81]}
+			tooltip[#tooltip+1] = {func_currencyicon(1379)..func_currencyName(1379), CharInfo.CurrencyID_Total[1379]}
+			tooltip[#tooltip+1] = {func_currencyicon(515)..func_currencyName(515), CharInfo.CurrencyID_Total[515]}
+			tooltip[#tooltip+1] = {func_currencyicon(402)..func_currencyName(402), CharInfo.CurrencyID_Total[402]}
+			tooltip[#tooltip+1] = {func_currencyicon(1401)..func_currencyName(1401), CharInfo.CurrencyID_Total[1401]}
+			tooltip[#tooltip+1] = {func_currencyicon(1388)..func_currencyName(1388), CharInfo.CurrencyID_Total[1388]}
 			tooltip[#tooltip+1] = {" "," "}
 			tooltip[#tooltip+1] = {Blue_Color..GROUP_FINDER.."|r",""}
-			tooltip[#tooltip+1] = {func_currencyicon(1166)..func_currencyName(1166), CharInfo.CurrencyID[1166]} --Искаженный временем знак
+			tooltip[#tooltip+1] = {func_currencyicon(1166)..func_currencyName(1166), CharInfo.CurrencyID_Total[1166]} --Искаженный временем знак
 			if #tooltip > 0 then
 				tooltip[#tooltip+1] = {" ", " "}
 			end
 			tooltip[#tooltip+1] = {Blue_Color.."PvP".."|r", " "}
-			tooltip[#tooltip+1] = {func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID[1602].."/"..CharInfo.CurrencyID_maxQuantity[1602]} --Очки завоевания
-			tooltip[#tooltip+1] = {func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID[1792].."/"..CharInfo.CurrencyID_maxQuantity[1792]} --Честь
-			tooltip[#tooltip+1] = {func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID[2123]} -- Кровавые жетоны
-			tooltip[#tooltip+1] = {func_currencyicon(391)..func_currencyName(391), CharInfo.CurrencyID[391]} -- Рекомендательный значок Тол Барада
+			tooltip[#tooltip+1] = {func_currencyicon(1602)..func_currencyName(1602), CharInfo.CurrencyID_Total[1602]} --Очки завоевания
+			tooltip[#tooltip+1] = {func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID_Total[1792]} --Честь
+			tooltip[#tooltip+1] = {func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID_Total[2123]} -- Кровавые жетоны
+			tooltip[#tooltip+1] = {func_currencyicon(391)..func_currencyName(391), CharInfo.CurrencyID_Total[391]} -- Рекомендательный значок Тол Барада
 			return VivodCent, VivodLeft
 	end)
 	-- РЕПУТАЦИЯ
@@ -2566,35 +2637,385 @@ local function pizdalishe()
 		function(CharInfo, tooltip, CL, BG)
 			local VivodCent, VivodLeft = "", ""
 			if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
-				tinsert(tooltip, {func_reputationName(2507), CharInfo.reputationID[2507]})
-				tinsert(tooltip, {func_reputationName(2503), CharInfo.reputationID[2503]})
-				tinsert(tooltip, {func_reputationName(2511), CharInfo.reputationID[2511]})
-				tinsert(tooltip, {func_reputationName(2510), CharInfo.reputationID[2510]})
-				tinsert(tooltip, {func_reputationName(2564), CharInfo.reputationID[2564]})
-				for k,v in ipairs (Octo_Table_itemID_Reputation) do
-					if CharInfo.ItemsInBag[v] ~= 0 then
-						tinsert(tooltip, {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]})
-					end
+				-- if #tooltip > 0 then
+				-- 	tooltip[#tooltip+1] = {" ", " "}
+				-- end
+				-- tooltip[#tooltip+1] = {Blue_Color..ITEMS.."|r", " "}
+				-- for k,v in ipairs (Octo_Table_itemID_Reputation) do
+				-- 	if CharInfo.ItemsInBag[v] ~= 0 then
+				-- 		tinsert(tooltip, {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]})
+				-- 	end
+				-- end
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
 				end
+				tooltip[#tooltip+1] = {Blue_Color.."Dragonflight".."|r", " "}
+				tooltip[#tooltip+1] = {func_reputationName(2507), CharInfo.reputationID[2507]}
+				tooltip[#tooltip+1] = {func_reputationName(2503), CharInfo.reputationID[2503]}
+				tooltip[#tooltip+1] = {func_reputationName(2511), CharInfo.reputationID[2511]}
+				tooltip[#tooltip+1] = {func_reputationName(2510), CharInfo.reputationID[2510]}
+				tooltip[#tooltip+1] = {func_reputationName(2564), CharInfo.reputationID[2564]}
+				tooltip[#tooltip+1] = {func_reputationName(2568), CharInfo.reputationID[2568]}
+				tooltip[#tooltip+1] = {func_reputationName(2544), CharInfo.reputationID[2544]}
+				tooltip[#tooltip+1] = {func_reputationName(2526), CharInfo.reputationID[2526]}
+				tooltip[#tooltip+1] = {func_reputationName(2550), CharInfo.reputationID[2550]}
+				tooltip[#tooltip+1] = {func_reputationName(2517), CharInfo.reputationID[2517]}
+				tooltip[#tooltip+1] = {func_reputationName(2518), CharInfo.reputationID[2518]}
 			end
 			if Octo_ToDo_DragonflyVars.config.LINE_Shadowlands then
-				tinsert(tooltip, {func_reputationName(2432), CharInfo.reputationID[2432]})
-				tinsert(tooltip, {func_reputationName(2413), CharInfo.reputationID[2413]})
-				tinsert(tooltip, {func_reputationName(2464), CharInfo.reputationID[2464]})
-				tinsert(tooltip, {func_reputationName(2465), CharInfo.reputationID[2465]})
-				tinsert(tooltip, {func_reputationName(2472), CharInfo.reputationID[2472]})
-				tinsert(tooltip, {func_reputationName(2470), CharInfo.reputationID[2470]})
-				tinsert(tooltip, {func_reputationName(2439), CharInfo.reputationID[2439]})
-				tinsert(tooltip, {func_reputationName(2410), CharInfo.reputationID[2410]})
-				tinsert(tooltip, {func_reputationName(2407), CharInfo.reputationID[2407]})
-				tinsert(tooltip, {func_reputationName(2478), CharInfo.reputationID[2478]})
-				tinsert(tooltip, {func_reputationName(2462), CharInfo.reputationID[2462]})
-				tinsert(tooltip, {func_reputationName(2445), CharInfo.reputationID[2445]})
-				tinsert(tooltip, {func_reputationName(2460), CharInfo.reputationID[2460]})
-				tinsert(tooltip, {func_reputationName(2458), CharInfo.reputationID[2458]})
-				tinsert(tooltip, {func_reputationName(2453), CharInfo.reputationID[2453]})
-				tinsert(tooltip, {func_reputationName(2455), CharInfo.reputationID[2455]})
-				tinsert(tooltip, {func_reputationName(2463), CharInfo.reputationID[2463]})
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {Blue_Color.."Shadowlands".."|r", " "}
+				tooltip[#tooltip+1] = {func_reputationName(2439), CharInfo.reputationID[2439]}
+				tooltip[#tooltip+1] = {func_reputationName(2464), CharInfo.reputationID[2464]}
+				tooltip[#tooltip+1] = {func_reputationName(2463), CharInfo.reputationID[2463]}
+				tooltip[#tooltip+1] = {func_reputationName(2478), CharInfo.reputationID[2478]}
+				tooltip[#tooltip+1] = {func_reputationName(2445), CharInfo.reputationID[2445]}
+				tooltip[#tooltip+1] = {func_reputationName(2472), CharInfo.reputationID[2472]}
+				tooltip[#tooltip+1] = {func_reputationName(2470), CharInfo.reputationID[2470]}
+				tooltip[#tooltip+1] = {func_reputationName(2413), CharInfo.reputationID[2413]}
+				tooltip[#tooltip+1] = {func_reputationName(2407), CharInfo.reputationID[2407]}
+				tooltip[#tooltip+1] = {func_reputationName(2410), CharInfo.reputationID[2410]}
+				tooltip[#tooltip+1] = {func_reputationName(2462), CharInfo.reputationID[2462]}
+				tooltip[#tooltip+1] = {func_reputationName(2465), CharInfo.reputationID[2465]}
+				tooltip[#tooltip+1] = {func_reputationName(2432), CharInfo.reputationID[2432]}
+				tooltip[#tooltip+1] = {func_reputationName(2449), CharInfo.reputationID[2449]}
+				-- tooltip[#tooltip+1] = {func_reputationName(2422), CharInfo.reputationID[2422]}
+				tooltip[#tooltip+1] = {func_reputationName(2455), CharInfo.reputationID[2455]}
+				tooltip[#tooltip+1] = {func_reputationName(2457), CharInfo.reputationID[2457]}
+				-- tooltip[#tooltip+1] = {func_reputationName(2479), CharInfo.reputationID[2479]}
+				tooltip[#tooltip+1] = {func_reputationName(2450), CharInfo.reputationID[2450]}
+				tooltip[#tooltip+1] = {func_reputationName(2456), CharInfo.reputationID[2456]}
+				tooltip[#tooltip+1] = {func_reputationName(2446), CharInfo.reputationID[2446]}
+				tooltip[#tooltip+1] = {func_reputationName(2469), CharInfo.reputationID[2469]}
+				tooltip[#tooltip+1] = {func_reputationName(2460), CharInfo.reputationID[2460]}
+				tooltip[#tooltip+1] = {func_reputationName(2458), CharInfo.reputationID[2458]}
+				tooltip[#tooltip+1] = {func_reputationName(2447), CharInfo.reputationID[2447]}
+				tooltip[#tooltip+1] = {func_reputationName(2454), CharInfo.reputationID[2454]}
+				tooltip[#tooltip+1] = {func_reputationName(2459), CharInfo.reputationID[2459]}
+				tooltip[#tooltip+1] = {func_reputationName(2448), CharInfo.reputationID[2448]}
+				tooltip[#tooltip+1] = {func_reputationName(2461), CharInfo.reputationID[2461]}
+				-- tooltip[#tooltip+1] = {func_reputationName(2442), CharInfo.reputationID[2442]}
+				-- tooltip[#tooltip+1] = {func_reputationName(2471), CharInfo.reputationID[2471]}
+				-- tooltip[#tooltip+1] = {func_reputationName(2441), CharInfo.reputationID[2441]}
+				tooltip[#tooltip+1] = {func_reputationName(2451), CharInfo.reputationID[2451]}
+				tooltip[#tooltip+1] = {func_reputationName(2452), CharInfo.reputationID[2452]}
+				tooltip[#tooltip+1] = {func_reputationName(2453), CharInfo.reputationID[2453]}
+				-- tooltip[#tooltip+1] = {func_reputationName(2444), CharInfo.reputationID[2444]}
+				-- tooltip[#tooltip+1] = {func_reputationName(2474), CharInfo.reputationID[2474]}
+				-- tooltip[#tooltip+1] = {func_reputationName(2473), CharInfo.reputationID[2473]}
+				-- tooltip[#tooltip+1] = {func_reputationName(2440), CharInfo.reputationID[2440]}
+			end
+			if Octo_ToDo_DragonflyVars.config.LINE_BattleforAzeroth then
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {Blue_Color.."Battle for Azeroth".."|r", " "}
+
+if CharInfo.Faction == "Horde" then
+	tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2103), CharInfo.reputationID[2103]}
+	tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2158), CharInfo.reputationID[2158]}
+else
+	tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2160), CharInfo.reputationID[2160]}
+	-- tooltip[#tooltip+1] = {func_reputationName(2120), CharInfo.reputationID[2120]}
+end
+
+
+
+				tooltip[#tooltip+1] = {func_reputationName(2417), CharInfo.reputationID[2417]}
+				tooltip[#tooltip+1] = {func_reputationName(2159), CharInfo.reputationID[2159]}
+				tooltip[#tooltip+1] = {func_reputationName(2415), CharInfo.reputationID[2415]}
+				tooltip[#tooltip+1] = {func_reputationName(2161), CharInfo.reputationID[2161]}
+				tooltip[#tooltip+1] = {func_reputationName(2162), CharInfo.reputationID[2162]}
+				tooltip[#tooltip+1] = {func_reputationName(2400), CharInfo.reputationID[2400]}
+				tooltip[#tooltip+1] = {func_reputationName(2157), CharInfo.reputationID[2157]}
+				tooltip[#tooltip+1] = {func_reputationName(2156), CharInfo.reputationID[2156]}
+				tooltip[#tooltip+1] = {func_reputationName(2395), CharInfo.reputationID[2395]}
+				tooltip[#tooltip+1] = {func_reputationName(2391), CharInfo.reputationID[2391]}
+				tooltip[#tooltip+1] = {func_reputationName(2373), CharInfo.reputationID[2373]}
+				tooltip[#tooltip+1] = {func_reputationName(2164), CharInfo.reputationID[2164]}
+				tooltip[#tooltip+1] = {func_reputationName(2163), CharInfo.reputationID[2163]}
+				tooltip[#tooltip+1] = {func_reputationName(2388), CharInfo.reputationID[2388]}
+				tooltip[#tooltip+1] = {func_reputationName(2427), CharInfo.reputationID[2427]}
+				tooltip[#tooltip+1] = {func_reputationName(2379), CharInfo.reputationID[2379]}
+				tooltip[#tooltip+1] = {func_reputationName(2378), CharInfo.reputationID[2378]}
+				tooltip[#tooltip+1] = {func_reputationName(2382), CharInfo.reputationID[2382]}
+				tooltip[#tooltip+1] = {func_reputationName(2375), CharInfo.reputationID[2375]}
+				tooltip[#tooltip+1] = {func_reputationName(2416), CharInfo.reputationID[2416]}
+				tooltip[#tooltip+1] = {func_reputationName(2392), CharInfo.reputationID[2392]}
+				tooltip[#tooltip+1] = {func_reputationName(2385), CharInfo.reputationID[2385]}
+				tooltip[#tooltip+1] = {func_reputationName(2384), CharInfo.reputationID[2384]}
+				tooltip[#tooltip+1] = {func_reputationName(2233), CharInfo.reputationID[2233]}
+				tooltip[#tooltip+1] = {func_reputationName(2376), CharInfo.reputationID[2376]}
+				tooltip[#tooltip+1] = {func_reputationName(2381), CharInfo.reputationID[2381]}
+				tooltip[#tooltip+1] = {func_reputationName(2111), CharInfo.reputationID[2111]}
+				tooltip[#tooltip+1] = {func_reputationName(2370), CharInfo.reputationID[2370]}
+				tooltip[#tooltip+1] = {func_reputationName(2389), CharInfo.reputationID[2389]}
+				tooltip[#tooltip+1] = {func_reputationName(2390), CharInfo.reputationID[2390]}
+				tooltip[#tooltip+1] = {func_reputationName(2264), CharInfo.reputationID[2264]}
+				tooltip[#tooltip+1] = {func_reputationName(2265), CharInfo.reputationID[2265]}
+				tooltip[#tooltip+1] = {func_reputationName(2383), CharInfo.reputationID[2383]}
+				tooltip[#tooltip+1] = {func_reputationName(2387), CharInfo.reputationID[2387]}
+				tooltip[#tooltip+1] = {func_reputationName(2386), CharInfo.reputationID[2386]}
+				tooltip[#tooltip+1] = {func_reputationName(2380), CharInfo.reputationID[2380]}
+				tooltip[#tooltip+1] = {func_reputationName(2418), CharInfo.reputationID[2418]}
+				tooltip[#tooltip+1] = {func_reputationName(2377), CharInfo.reputationID[2377]}
+				tooltip[#tooltip+1] = {func_reputationName(2374), CharInfo.reputationID[2374]}
+				tooltip[#tooltip+1] = {func_reputationName(2401), CharInfo.reputationID[2401]}
+			end
+			if Octo_ToDo_DragonflyVars.config.LINE_Legion then
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {Blue_Color.."Legion".."|r", " "}
+				tooltip[#tooltip+1] = {func_reputationName(2018), CharInfo.reputationID[2018]}
+				tooltip[#tooltip+1] = {func_reputationName(1975), CharInfo.reputationID[1975]}
+				tooltip[#tooltip+1] = {func_reputationName(1859), CharInfo.reputationID[1859]}
+				tooltip[#tooltip+1] = {func_reputationName(2097), CharInfo.reputationID[2097]}
+				tooltip[#tooltip+1] = {func_reputationName(1948), CharInfo.reputationID[1948]}
+				tooltip[#tooltip+1] = {func_reputationName(1900), CharInfo.reputationID[1900]}
+				tooltip[#tooltip+1] = {func_reputationName(2098), CharInfo.reputationID[2098]}
+				tooltip[#tooltip+1] = {func_reputationName(1894), CharInfo.reputationID[1894]}
+				tooltip[#tooltip+1] = {func_reputationName(2102), CharInfo.reputationID[2102]}
+				tooltip[#tooltip+1] = {func_reputationName(2170), CharInfo.reputationID[2170]}
+				tooltip[#tooltip+1] = {func_reputationName(1828), CharInfo.reputationID[1828]}
+				tooltip[#tooltip+1] = {func_reputationName(1883), CharInfo.reputationID[1883]}
+				tooltip[#tooltip+1] = {func_reputationName(2101), CharInfo.reputationID[2101]}
+				tooltip[#tooltip+1] = {func_reputationName(2165), CharInfo.reputationID[2165]}
+				tooltip[#tooltip+1] = {func_reputationName(2135), CharInfo.reputationID[2135]}
+				tooltip[#tooltip+1] = {func_reputationName(2045), CharInfo.reputationID[2045]}
+				tooltip[#tooltip+1] = {func_reputationName(2099), CharInfo.reputationID[2099]}
+				tooltip[#tooltip+1] = {func_reputationName(2100), CharInfo.reputationID[2100]}
+				tooltip[#tooltip+1] = {func_reputationName(2089), CharInfo.reputationID[2089]}
+				tooltip[#tooltip+1] = {func_reputationName(2086), CharInfo.reputationID[2086]}
+				tooltip[#tooltip+1] = {func_reputationName(2085), CharInfo.reputationID[2085]}
+				tooltip[#tooltip+1] = {func_reputationName(2090), CharInfo.reputationID[2090]}
+				tooltip[#tooltip+1] = {func_reputationName(2087), CharInfo.reputationID[2087]}
+				tooltip[#tooltip+1] = {func_reputationName(1899), CharInfo.reputationID[1899]}
+				tooltip[#tooltip+1] = {func_reputationName(2091), CharInfo.reputationID[2091]}
+				tooltip[#tooltip+1] = {func_reputationName(1984), CharInfo.reputationID[1984]}
+				tooltip[#tooltip+1] = {func_reputationName(2166), CharInfo.reputationID[2166]}
+				tooltip[#tooltip+1] = {func_reputationName(1815), CharInfo.reputationID[1815]}
+				tooltip[#tooltip+1] = {func_reputationName(2088), CharInfo.reputationID[2088]}
+				tooltip[#tooltip+1] = {func_reputationName(1947), CharInfo.reputationID[1947]}
+				tooltip[#tooltip+1] = {func_reputationName(1989), CharInfo.reputationID[1989]}
+				tooltip[#tooltip+1] = {func_reputationName(1862), CharInfo.reputationID[1862]}
+				tooltip[#tooltip+1] = {func_reputationName(1888), CharInfo.reputationID[1888]}
+				tooltip[#tooltip+1] = {func_reputationName(1861), CharInfo.reputationID[1861]}
+				tooltip[#tooltip+1] = {func_reputationName(1919), CharInfo.reputationID[1919]}
+				tooltip[#tooltip+1] = {func_reputationName(1860), CharInfo.reputationID[1860]}
+			end
+			if Octo_ToDo_DragonflyVars.config.LINE_WarlordsofDraenor then
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {Blue_Color.."Warlords of Draenor".."|r", " "}
+				tooltip[#tooltip+1] = {func_reputationName(1445), CharInfo.reputationID[1445]}
+				tooltip[#tooltip+1] = {func_reputationName(1711), CharInfo.reputationID[1711]}
+				tooltip[#tooltip+1] = {func_reputationName(1708), CharInfo.reputationID[1708]}
+				tooltip[#tooltip+1] = {func_reputationName(1849), CharInfo.reputationID[1849]}
+				tooltip[#tooltip+1] = {func_reputationName(1710), CharInfo.reputationID[1710]}
+				tooltip[#tooltip+1] = {func_reputationName(1515), CharInfo.reputationID[1515]}
+				tooltip[#tooltip+1] = {func_reputationName(1850), CharInfo.reputationID[1850]}
+				tooltip[#tooltip+1] = {func_reputationName(1731), CharInfo.reputationID[1731]}
+				tooltip[#tooltip+1] = {func_reputationName(1847), CharInfo.reputationID[1847]}
+				tooltip[#tooltip+1] = {func_reputationName(1848), CharInfo.reputationID[1848]}
+				tooltip[#tooltip+1] = {func_reputationName(1738), CharInfo.reputationID[1738]}
+				tooltip[#tooltip+1] = {func_reputationName(1733), CharInfo.reputationID[1733]}
+				tooltip[#tooltip+1] = {func_reputationName(1735), CharInfo.reputationID[1735]}
+				tooltip[#tooltip+1] = {func_reputationName(1740), CharInfo.reputationID[1740]}
+				tooltip[#tooltip+1] = {func_reputationName(1739), CharInfo.reputationID[1739]}
+				tooltip[#tooltip+1] = {func_reputationName(1520), CharInfo.reputationID[1520]}
+				tooltip[#tooltip+1] = {func_reputationName(1737), CharInfo.reputationID[1737]}
+				tooltip[#tooltip+1] = {func_reputationName(1741), CharInfo.reputationID[1741]}
+				tooltip[#tooltip+1] = {func_reputationName(1736), CharInfo.reputationID[1736]}
+				tooltip[#tooltip+1] = {func_reputationName(1732), CharInfo.reputationID[1732]}
+			end
+			if Octo_ToDo_DragonflyVars.config.LINE_MistsofPandaria then
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {Blue_Color.."Mists of Pandaria".."|r", " "}
+				tooltip[#tooltip+1] = {func_reputationName(1492), CharInfo.reputationID[1492]}
+				tooltip[#tooltip+1] = {func_reputationName(1435), CharInfo.reputationID[1435]}
+				tooltip[#tooltip+1] = {func_reputationName(1341), CharInfo.reputationID[1341]}
+				tooltip[#tooltip+1] = {func_reputationName(1302), CharInfo.reputationID[1302]}
+				tooltip[#tooltip+1] = {func_reputationName(1376), CharInfo.reputationID[1376]}
+				tooltip[#tooltip+1] = {func_reputationName(1269), CharInfo.reputationID[1269]}
+				tooltip[#tooltip+1] = {func_reputationName(1272), CharInfo.reputationID[1272]}
+				tooltip[#tooltip+1] = {func_reputationName(1375), CharInfo.reputationID[1375]}
+				tooltip[#tooltip+1] = {func_reputationName(1270), CharInfo.reputationID[1270]}
+				tooltip[#tooltip+1] = {func_reputationName(1359), CharInfo.reputationID[1359]}
+				tooltip[#tooltip+1] = {func_reputationName(1271), CharInfo.reputationID[1271]}
+				tooltip[#tooltip+1] = {func_reputationName(1358), CharInfo.reputationID[1358]}
+				tooltip[#tooltip+1] = {func_reputationName(1387), CharInfo.reputationID[1387]}
+				tooltip[#tooltip+1] = {func_reputationName(1337), CharInfo.reputationID[1337]}
+				tooltip[#tooltip+1] = {func_reputationName(1388), CharInfo.reputationID[1388]}
+				tooltip[#tooltip+1] = {func_reputationName(1345), CharInfo.reputationID[1345]}
+				tooltip[#tooltip+1] = {func_reputationName(1242), CharInfo.reputationID[1242]}
+				tooltip[#tooltip+1] = {func_reputationName(1228), CharInfo.reputationID[1228]}
+				tooltip[#tooltip+1] = {func_reputationName(1278), CharInfo.reputationID[1278]}
+				tooltip[#tooltip+1] = {func_reputationName(1277), CharInfo.reputationID[1277]}
+				tooltip[#tooltip+1] = {func_reputationName(1216), CharInfo.reputationID[1216]}
+				tooltip[#tooltip+1] = {func_reputationName(1283), CharInfo.reputationID[1283]}
+				tooltip[#tooltip+1] = {func_reputationName(1276), CharInfo.reputationID[1276]}
+				tooltip[#tooltip+1] = {func_reputationName(1273), CharInfo.reputationID[1273]}
+				tooltip[#tooltip+1] = {func_reputationName(1275), CharInfo.reputationID[1275]}
+				tooltip[#tooltip+1] = {func_reputationName(1279), CharInfo.reputationID[1279]}
+				tooltip[#tooltip+1] = {func_reputationName(1281), CharInfo.reputationID[1281]}
+				tooltip[#tooltip+1] = {func_reputationName(1282), CharInfo.reputationID[1282]}
+				tooltip[#tooltip+1] = {func_reputationName(1280), CharInfo.reputationID[1280]}
+				tooltip[#tooltip+1] = {func_reputationName(1440), CharInfo.reputationID[1440]}
+				tooltip[#tooltip+1] = {func_reputationName(1351), CharInfo.reputationID[1351]}
+			end
+			if Octo_ToDo_DragonflyVars.config.LINE_Cataclysm then
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {Blue_Color.."Cataclysm".."|r", " "}
+				tooltip[#tooltip+1] = {func_reputationName(1204), CharInfo.reputationID[1204]}
+				tooltip[#tooltip+1] = {func_reputationName(1173), CharInfo.reputationID[1173]}
+				tooltip[#tooltip+1] = {func_reputationName(1135), CharInfo.reputationID[1135]}
+				tooltip[#tooltip+1] = {func_reputationName(1171), CharInfo.reputationID[1171]}
+				tooltip[#tooltip+1] = {func_reputationName(1172), CharInfo.reputationID[1172]}
+				tooltip[#tooltip+1] = {func_reputationName(1174), CharInfo.reputationID[1174]}
+				tooltip[#tooltip+1] = {func_reputationName(1158), CharInfo.reputationID[1158]}
+				tooltip[#tooltip+1] = {func_reputationName(1177), CharInfo.reputationID[1177]}
+				tooltip[#tooltip+1] = {func_reputationName(1178), CharInfo.reputationID[1178]}
+			end
+			if Octo_ToDo_DragonflyVars.config.LINE_WrathoftheLichKing then
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {Blue_Color.."Wrath of the Lich King".."|r", " "}
+				tooltip[#tooltip+1] = {func_reputationName(1073), CharInfo.reputationID[1073]}
+				tooltip[#tooltip+1] = {func_reputationName(1119), CharInfo.reputationID[1119]}
+				tooltip[#tooltip+1] = {func_reputationName(1098), CharInfo.reputationID[1098]}
+				tooltip[#tooltip+1] = {func_reputationName(1105), CharInfo.reputationID[1105]}
+				tooltip[#tooltip+1] = {func_reputationName(1156), CharInfo.reputationID[1156]}
+				tooltip[#tooltip+1] = {func_reputationName(1106), CharInfo.reputationID[1106]}
+				tooltip[#tooltip+1] = {func_reputationName(1104), CharInfo.reputationID[1104]}
+				tooltip[#tooltip+1] = {func_reputationName(1094), CharInfo.reputationID[1094]}
+				tooltip[#tooltip+1] = {func_reputationName(1091), CharInfo.reputationID[1091]}
+				tooltip[#tooltip+1] = {func_reputationName(1090), CharInfo.reputationID[1090]}
+				tooltip[#tooltip+1] = {func_reputationName(1124), CharInfo.reputationID[1124]}
+				tooltip[#tooltip+1] = {func_reputationName(1050), CharInfo.reputationID[1050]}
+				tooltip[#tooltip+1] = {func_reputationName(1037), CharInfo.reputationID[1037]}
+				tooltip[#tooltip+1] = {func_reputationName(1068), CharInfo.reputationID[1068]}
+				tooltip[#tooltip+1] = {func_reputationName(1064), CharInfo.reputationID[1064]}
+				tooltip[#tooltip+1] = {func_reputationName(1067), CharInfo.reputationID[1067]}
+				tooltip[#tooltip+1] = {func_reputationName(1052), CharInfo.reputationID[1052]}
+				tooltip[#tooltip+1] = {func_reputationName(1126), CharInfo.reputationID[1126]}
+				tooltip[#tooltip+1] = {func_reputationName(1085), CharInfo.reputationID[1085]}
+				tooltip[#tooltip+1] = {func_reputationName(1117), CharInfo.reputationID[1117]}
+			end
+			if Octo_ToDo_DragonflyVars.config.LINE_TheBurningCrusade then
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {Blue_Color.."The Burning Crusade".."|r", " "}
+				tooltip[#tooltip+1] = {func_reputationName(1015), CharInfo.reputationID[1015]}
+				tooltip[#tooltip+1] = {func_reputationName(1031), CharInfo.reputationID[1031]}
+				tooltip[#tooltip+1] = {func_reputationName(1038), CharInfo.reputationID[1038]}
+				tooltip[#tooltip+1] = {func_reputationName(933), CharInfo.reputationID[933]}
+				tooltip[#tooltip+1] = {func_reputationName(989), CharInfo.reputationID[989]}
+				tooltip[#tooltip+1] = {func_reputationName(978), CharInfo.reputationID[978]}
+				tooltip[#tooltip+1] = {func_reputationName(942), CharInfo.reputationID[942]}
+				tooltip[#tooltip+1] = {func_reputationName(934), CharInfo.reputationID[934]}
+				tooltip[#tooltip+1] = {func_reputationName(970), CharInfo.reputationID[970]}
+				tooltip[#tooltip+1] = {func_reputationName(932), CharInfo.reputationID[932]}
+				tooltip[#tooltip+1] = {func_reputationName(941), CharInfo.reputationID[941]}
+				tooltip[#tooltip+1] = {func_reputationName(1077), CharInfo.reputationID[1077]}
+				tooltip[#tooltip+1] = {func_reputationName(990), CharInfo.reputationID[990]}
+				tooltip[#tooltip+1] = {func_reputationName(967), CharInfo.reputationID[967]}
+				tooltip[#tooltip+1] = {func_reputationName(935), CharInfo.reputationID[935]}
+				tooltip[#tooltip+1] = {func_reputationName(1011), CharInfo.reputationID[1011]}
+				tooltip[#tooltip+1] = {func_reputationName(1012), CharInfo.reputationID[1012]}
+				tooltip[#tooltip+1] = {func_reputationName(946), CharInfo.reputationID[946]}
+				tooltip[#tooltip+1] = {func_reputationName(947), CharInfo.reputationID[947]}
+				tooltip[#tooltip+1] = {func_reputationName(922), CharInfo.reputationID[922]}
+				tooltip[#tooltip+1] = {func_reputationName(936), CharInfo.reputationID[936]}
+			end
+			if Octo_ToDo_DragonflyVars.config.LINE_Classic then
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {Blue_Color.."Classic".."|r", " "}
+				if CharInfo.Faction == "Alliance" then
+					-- Alliance
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(469), CharInfo.reputationID[469]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(891), CharInfo.reputationID[891]}
+
+
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2524), CharInfo.reputationID[2524]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(1353), CharInfo.reputationID[1353]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(72), CharInfo.reputationID[72]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(69), CharInfo.reputationID[69]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(47), CharInfo.reputationID[47]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(54), CharInfo.reputationID[54]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(1134), CharInfo.reputationID[1134]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(930), CharInfo.reputationID[930]}
+					-----------
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(509), CharInfo.reputationID[509]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(1682), CharInfo.reputationID[1682]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(890), CharInfo.reputationID[890]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(730), CharInfo.reputationID[730]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(1419), CharInfo.reputationID[1419]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(1691), CharInfo.reputationID[1691]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2011), CharInfo.reputationID[2011]}
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2371), CharInfo.reputationID[2371]}
+
+
+
+				end
+				if CharInfo.Faction == "Horde" then
+					-- Horde
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(67), CharInfo.reputationID[67]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(892), CharInfo.reputationID[892]}
+
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2523), CharInfo.reputationID[2523]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(1352), CharInfo.reputationID[1352]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(911), CharInfo.reputationID[911]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(76), CharInfo.reputationID[76]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(530), CharInfo.reputationID[530]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(1133), CharInfo.reputationID[1133]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(81), CharInfo.reputationID[81]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(68), CharInfo.reputationID[68]}
+					-----------
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(510), CharInfo.reputationID[510]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(1681), CharInfo.reputationID[1681]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(889), CharInfo.reputationID[889]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(729), CharInfo.reputationID[729]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(1374), CharInfo.reputationID[1374]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(1690), CharInfo.reputationID[1690]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2010), CharInfo.reputationID[2010]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2372), CharInfo.reputationID[2372]}
+
+
+				end
+
+
+				tooltip[#tooltip+1] = {func_reputationName(349), CharInfo.reputationID[349]}
+				tooltip[#tooltip+1] = {func_reputationName(87), CharInfo.reputationID[87]}
+				tooltip[#tooltip+1] = {func_reputationName(749), CharInfo.reputationID[749]}
+				tooltip[#tooltip+1] = {func_reputationName(529), CharInfo.reputationID[529]}
+				tooltip[#tooltip+1] = {func_reputationName(21), CharInfo.reputationID[21]}
+				tooltip[#tooltip+1] = {func_reputationName(169), CharInfo.reputationID[169]}
+				tooltip[#tooltip+1] = {func_reputationName(70), CharInfo.reputationID[70]}
+				tooltip[#tooltip+1] = {func_reputationName(369), CharInfo.reputationID[369]}
+				tooltip[#tooltip+1] = {func_reputationName(609), CharInfo.reputationID[609]}
+				tooltip[#tooltip+1] = {func_reputationName(576), CharInfo.reputationID[576]}
+				tooltip[#tooltip+1] = {func_reputationName(577), CharInfo.reputationID[577]}
+				tooltip[#tooltip+1] = {func_reputationName(59), CharInfo.reputationID[59]}
+				tooltip[#tooltip+1] = {func_reputationName(470), CharInfo.reputationID[470]}
+				tooltip[#tooltip+1] = {func_reputationName(910), CharInfo.reputationID[910]}
+				tooltip[#tooltip+1] = {func_reputationName(270), CharInfo.reputationID[270]}
+				-- tooltip[#tooltip+1] = {func_reputationName(589), CharInfo.reputationID[589]}
+				tooltip[#tooltip+1] = {func_reputationName(809), CharInfo.reputationID[809]}
+				tooltip[#tooltip+1] = {func_reputationName(92), CharInfo.reputationID[92]}
+				tooltip[#tooltip+1] = {func_reputationName(909), CharInfo.reputationID[909]}
+				tooltip[#tooltip+1] = {func_reputationName(93), CharInfo.reputationID[93]}
 			end
 			-- ТЕКСТ В ЦЕНТРЕ
 			VivodCent = Gray_Color..REPUTATION.."|r"
@@ -2638,7 +3059,7 @@ local function pizdalishe()
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_name, CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ReturnLostSouls_name, CharInfo.Octopussy_SL_Weekly_ReturnLostSouls_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_TradingFavors_name, CharInfo.Octopussy_SL_Weekly_TradingFavors_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WB_name, CharInfo.Octopussy_SL_Weekly_WB_count}
+				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WBWB_name, CharInfo.Octopussy_SL_Weekly_WBWB_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {Blue_Color..L["Zereth Mortis"].."|r", " "}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_name, CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count}
@@ -2680,7 +3101,7 @@ local function pizdalishe()
 				tooltip[#tooltip+1] = {Blue_Color..L["Maw"].."|r", " "}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_name, CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_name, CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawMorgeth_name, CharInfo.Octopussy_SL_Weekly_MawMorgeth_count}
+				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_name, CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawTorghast_name, CharInfo.Octopussy_SL_Weekly_MawTorghast_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawHelswornChest_name, CharInfo.Octopussy_SL_Daily_MawHelswornChest_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawQuest_name, CharInfo.Octopussy_SL_Daily_MawQuest_count}
@@ -3499,14 +3920,14 @@ local tableTEST = {
 		max = 1
 	},
 	-- {
-	-- 	name_save = "Timewalk5DUNGEONS",
-	-- 	name_quest = "Таймволк 5 инстов",
-	-- 	reset = "Weekly",
-	-- 	expansion = "DF",
-	-- 	place = "",
-	-- 	desc = "",
-	-- 	questID = {72727,72810,72719,72725,72726},
-	-- 	max = 1
+	--     name_save = "Timewalk5DUNGEONS",
+	--     name_quest = "Таймволк 5 инстов",
+	--     reset = "Weekly",
+	--     expansion = "DF",
+	--     place = "",
+	--     desc = "",
+	--     questID = {72727,72810,72719,72725,72726},
+	--     max = 1
 	-- },
 	{
 		name_save = "PVP",
@@ -4087,7 +4508,9 @@ function OctoQuestUpdate()
 					vivod = count
 				else
 					local IsComplete = CheckCompletedByQuestID(x)
-					vivod = IsComplete
+					if IsComplete ~= NONE then
+						vivod = IsComplete
+					end
 				end
 				-- elseif v.max == 1 then
 				--     if C_QuestLog.IsQuestFlaggedCompleted(x) == true then
@@ -4101,7 +4524,7 @@ function OctoQuestUpdate()
 				-- if collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] == nil or
 				-- collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] == "noname"
 				-- then
-					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] = v.name_quest or "noname"
+				collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] = v.name_quest or "noname"
 				-- end
 				if v.max == 1 then
 					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_count"] = vivod
@@ -4402,6 +4825,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.curCovID = CharInfo.curCovID or 0
 	CharInfo.CurrencyID = CharInfo.CurrencyID or {}
 	CharInfo.CurrencyID_maxQuantity = CharInfo.CurrencyID_maxQuantity or {}
+	CharInfo.CurrencyID_Total = CharInfo.CurrencyID_Total or {}
 	CharInfo.curServer = CharInfo.curServer or 0
 	CharInfo.Faction = CharInfo.Faction or 0
 	CharInfo.ItemsInBag = CharInfo.ItemsInBag or {}
@@ -4444,6 +4868,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.HasAvailableRewards =  CharInfo.HasAvailableRewards or false
 	setmetatable(CharInfo, Meta_Table_0)
 	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table_0)
+	setmetatable(CharInfo.CurrencyID_Total, Meta_Table_0)
 	setmetatable(CharInfo.CurrencyID, Meta_Table_0)
 	setmetatable(CharInfo.ItemsInBag, Meta_Table_0)
 	setmetatable(CharInfo.KnownSpell, Meta_Table_false)
@@ -4470,10 +4895,62 @@ local function checkCharInfo(CharInfo)
 	end
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
 		CharInfo.tmstp_Weekly = tmstpDayReset(7)
-		--CharInfo.OctopussyWeekly_Feast = 0
+		CharInfo.Octopussy_SL_Weekly_KorthiaITEMResearchReportAncientShrines_count = 0
+		CharInfo.Octopussy_SL_Weekly_KorthiaRares_count = 0
+		CharInfo.Octopussy_SL_Weekly_KorthiaRIFTStolenAnimaVessel_count = 0
+		CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count = 0
+		CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies_count = 0
+		CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch_count = 0
+		CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_count = 0
+		CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count = 0
+		CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_count = 0
+		CharInfo.Octopussy_SL_Weekly_MawTorghast_count = 0
+		CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count = 0
+		CharInfo.Octopussy_SL_Weekly_ReturnLostSouls_count = 0
+		CharInfo.Octopussy_SL_Weekly_TradingFavors_count = 0
+		CharInfo.Octopussy_SL_Weekly_WBWB_count = 0
+		CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count = 0
+		CharInfo.Octopussy_SL_Weekly_ZMWBAntros_count = 0
+		CharInfo.Octopussy_DF_Weekly_3kREP_count = 0
+		CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count = 0
+		CharInfo.Octopussy_DF_Weekly_Feast_count = 0
+		CharInfo.Octopussy_DF_Weekly_FightingisItsOwnReward_count = 0
+		CharInfo.Octopussy_DF_Weekly_FyrakkAssaults_count = 0
+		CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count = 0
+		CharInfo.Octopussy_DF_Weekly_PVP_count = 0
+		CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count = 0
+		CharInfo.Octopussy_DF_Weekly_StormBoundChest_count = 0
+		CharInfo.Octopussy_DF_Weekly_StormsFury_count = 0
+		CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count = 0
+		CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_count = 0
+		CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count = 0
+		CharInfo.Octopussy_DF_Weekly_WB_count = 0
+		CharInfo.Octopussy_DF_Weekly_WeekendEvent_count = 0
+		CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count = 0
+		CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_count = 0
+		CharInfo.Octopussy_DF_Weekly_ZaralekCavernWBZaqaliElders_count = 0
 	end
 	if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
 		CharInfo.tmstp_Daily = tmstpDayReset(1)
+		CharInfo.Octopussy_SL_Daily_KorthiaCollection_count = 0
+		CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel_count = 0
+		CharInfo.Octopussy_SL_Daily_KorthiaMobs_count = 0
+		CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger_count = 0
+		CharInfo.Octopussy_SL_Daily_KorthiaRIFTRiftboundCache_count = 0
+		CharInfo.Octopussy_SL_Daily_KorthiaRIFTSpectralBoundChest_count = 0
+		CharInfo.Octopussy_SL_Daily_KorthiaRIFTZovaalsVault_count = 0
+		CharInfo.Octopussy_SL_Daily_MawHelswornChest_count = 0
+		CharInfo.Octopussy_SL_Daily_MawQuest_count = 0
+		CharInfo.Octopussy_SL_Daily_ZMGetLockStatus_count = 0
+		CharInfo.Octopussy_SL_Daily_ZMPryingEyeDiscovery_count = 0
+		CharInfo.Octopussy_SL_Daily_ZMPUZZLECACHES_count = 0
+		CharInfo.Octopussy_SL_Daily_ZMRares_count = 0
+		CharInfo.Octopussy_SL_Daily_ZMRaresDuneDominance_count = 0
+		CharInfo.Octopussy_SL_Daily_ZMTREASURES_count = 0
+		CharInfo.Octopussy_SL_Daily_ZMworldQuests_count = 0
+		CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares_count = 0
+		CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents_count = 0
+		CharInfo.Octopussy_DF_Daily_ZaralekCavernRares_count = 0
 		CharInfo.needReset = true
 	end
 end
@@ -4797,3 +5274,5 @@ end
 -- local ColorKyrian = CreateColor(1, 1, 1, 1)
 -- (KYRIAN_Blue_Color:GetRGB())
 -- SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
+
+
