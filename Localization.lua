@@ -49,6 +49,7 @@ if L then
     L["Class quests"] = true
     L["Other"] = true
     L["Coins"] = true
+    L["Bind Location"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -87,5 +88,6 @@ if L then
     L["Class quests"] = "Классовые задания"
     L["Other"] = "Разное"
     L["Coins"] = "Монетки"
+    L["Bind Location"] = "Место привязки"
 end
 
