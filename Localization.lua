@@ -50,6 +50,8 @@ if L then
     L["Other"] = true
     L["Coins"] = true
     L["Bind Location"] = true
+    L["Transferable Anima"] = true
+    L["Garrison 3 Level"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -89,5 +91,7 @@ if L then
     L["Other"] = "Разное"
     L["Coins"] = "Монетки"
     L["Bind Location"] = "Место привязки"
+    L["Transferable Anima"] = "Переносимая анима"
+    L["Garrison 3 Level"] = "Гарнизон 3 уровня"
 end
 
