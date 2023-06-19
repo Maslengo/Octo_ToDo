@@ -287,6 +287,39 @@ local function SecondsToClock(seconds)
 		return mins.."m"
 	end
 end
+
+
+function LegionInvasionTimer()
+	local TIMER = (1547586000-10800)
+	local interval = 66600
+	local duration = 21600
+	local currTime = tonumber(GetServerTime())
+	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local LegionInvasionTimer = Red_Color..SecondsToClock(nextEventIn) .."|r "
+	if nextEventIn > (interval - duration) then
+		nextEventIn = nextEventIn - (interval - duration)
+		LegionInvasionTimer = Addon_Color..SecondsToClock(nextEventIn) .."|r "
+	end
+	return LegionInvasionTimer
+end
+
+function BfAInvasionTimer()
+	local TIMER = (1547586000-10800)
+	local interval = 68400
+	local duration = 25200
+	local currTime = tonumber(GetServerTime())
+	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local BfAInvasionTimer = Red_Color..SecondsToClock(nextEventIn) .."|r "
+	if nextEventIn > (interval - duration) then
+		nextEventIn = nextEventIn - (interval - duration)
+		BfAInvasionTimer = Addon_Color..SecondsToClock(nextEventIn) .."|r "
+	end
+	return BfAInvasionTimer
+end
+
+
+
+
 function ToDragonbaneKeepTimer() -- Драконья экспедиция
 	-- local timePattern = "%02d:%02d"
 	local TIMER = 1670342460 -- ToDragonbaneKeepTimer
@@ -1725,6 +1758,18 @@ function CollectAllQuestsBounties()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
+	collect["bounty_Legion1"] = 0
+	collect["bounty_Legion1_icon"] = 0
+	collect["bounty_Legion1_questID"] = 0
+	collect["bounty_Legion1_end"] = 0
+	collect["bounty_Legion2"] = 0
+	collect["bounty_Legion2_icon"] = 0
+	collect["bounty_Legion2_questID"] = 0
+	collect["bounty_Legion2_end"] = 0
+	collect["bounty_Legion3"] = 0
+	collect["bounty_Legion3_icon"] = 0
+	collect["bounty_Legion3_questID"] = 0
+	collect["bounty_Legion3_end"] = 0
 	local bounties_Legion = C_QuestLog.GetBountiesForMapID(619) -- Broken Isles
 	if bounties_Legion then
 		for i=1,#bounties_Legion do
@@ -1747,13 +1792,26 @@ function CollectAllQuestsBounties()
 			end
 			local faction_icon = "|T"..d.icon..":0|t "
 			if collect and not InCombatLockdown() then
-				collect["bounty_Legion"..i] = faction_icon..CheckCompletedByQuestID(d.questID)
+				collect["bounty_Legion"..i] = CheckCompletedByQuestID(d.questID)
+				collect["bounty_Legion"..i.."_icon"] = faction_icon
 				collect["bounty_Legion"..i.."_questID"] = d.questID
 				collect["bounty_Legion"..i.."_end"] = time() + secondsLeft * 60
 			end
 		end
 	end
 	local bounties_BfA = C_QuestLog.GetBountiesForMapID(875) --	Zandalar
+	collect["bounty_BfA1"] = 0
+	collect["bounty_BfA1_icon"] = 0
+	collect["bounty_BfA1_questID"] = 0
+	collect["bounty_BfA1_end"] = 0
+	collect["bounty_BfA2"] = 0
+	collect["bounty_BfA2_icon"] = 0
+	collect["bounty_BfA2_questID"] = 0
+	collect["bounty_BfA2_end"] = 0
+	collect["bounty_BfA3"] = 0
+	collect["bounty_BfA3_icon"] = 0
+	collect["bounty_BfA3_questID"] = 0
+	collect["bounty_BfA3_end"] = 0
 	if bounties_BfA then
 		for i=1,#bounties_BfA do
 			local d = bounties_BfA[i]
@@ -2355,6 +2413,13 @@ local function O_otrisovka()
 	end
 	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_BattleforAzeroth then
+
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodLeft = (BfAInvasionTimer().."BfAInvasionTimer")
+				return VivodCent, VivodLeft
+		end)
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -2460,7 +2525,7 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Assault: The Black Empire
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count then
+				if CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count ~= NONE then
 					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count)
 				end
 				VivodLeft = Purple_Color..func_questName(56064).."|r"
@@ -2469,7 +2534,7 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- miniVision
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_miniVision_count then
+				if CharInfo.Octopussy_BfA_Weekly_miniVision_count ~= NONE then
 					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_miniVision_count)
 				end
 				VivodLeft = Purple_Color.."Mini Vision".."|r"
@@ -2491,7 +2556,7 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Warfront: The Battle for Stromgarde
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_Warfront1_count then
+				if CharInfo.Octopussy_BfA_Weekly_Warfront1_count ~= NONE then
 					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_Warfront1_count)
 				end
 				VivodLeft = "Warfront: Stromgarde"
@@ -2500,7 +2565,7 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Warfront: The Battle for Darkshore
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_Warfront2_count then
+				if CharInfo.Octopussy_BfA_Weekly_Warfront2_count ~= NONE then
 					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_Warfront2_count)
 				end
 				VivodLeft = "Warfront: Darkshore"
@@ -2509,7 +2574,7 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Heroic Warfront
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count then
+				if CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count ~= NONE then
 					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count)
 				end
 				VivodLeft = "Warfront: Heroic"
@@ -2554,6 +2619,16 @@ local function O_otrisovka()
 	end
 	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_Legion then
+
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodLeft = (LegionInvasionTimer().."LegionInvasionTimer")
+				return VivodCent, VivodLeft
+		end)
+
+
+
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -3067,94 +3142,95 @@ local function O_otrisovka()
 				end
 				tooltip[#tooltip+1] = {Blue_Color.."Battle for Azeroth".."|r", " "}
 				if CharInfo.Faction == "Horde" then
-					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2103), CharInfo.reputationID[2103]}
-					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2158), CharInfo.reputationID[2158]}
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2103), CharInfo.reputationID[2103]} --Империя Зандалари
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2158), CharInfo.reputationID[2158]} --Жители Вол'дуна
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2373), CharInfo.reputationID[2373]} --Освобожденные
+					-- tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2111), CharInfo.reputationID[2111]} --Зандаларские динозавры
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2157), CharInfo.reputationID[2157]} --Армия Чести
+					tooltip[#tooltip+1] = {Horde_Icon..func_reputationName(2156), CharInfo.reputationID[2156]} --Экспедиция Таланджи
 				else
-					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2160), CharInfo.reputationID[2160]}
-					-- tooltip[#tooltip+1] = {func_reputationName(2120), CharInfo.reputationID[2120]}
+					-- tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2160), CharInfo.reputationID[2160]} --Адмиралтейство Праудмуров
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2159), CharInfo.reputationID[2159]} --7-й легион
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2400), CharInfo.reputationID[2400]} --Клинки Волн
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2395), CharInfo.reputationID[2395]} --Улей Медокрылов
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2161), CharInfo.reputationID[2161]} --Орден Пылающих Углей
+					tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2162), CharInfo.reputationID[2162]} --Орден Возрождения Шторма
+					-- tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2120), CharInfo.reputationID[2120]} --Кул-Тирас - Тирагард
+					-- tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2264), CharInfo.reputationID[2264]} --Кул-Тирас - Друствар
+					-- tooltip[#tooltip+1] = {Alliance_Icon..func_reputationName(2265), CharInfo.reputationID[2265]} --Кул-Тирас - долина Штормов
 				end
-				tooltip[#tooltip+1] = {func_reputationName(2417), CharInfo.reputationID[2417]}
-				tooltip[#tooltip+1] = {func_reputationName(2159), CharInfo.reputationID[2159]}
-				tooltip[#tooltip+1] = {func_reputationName(2415), CharInfo.reputationID[2415]}
-				tooltip[#tooltip+1] = {func_reputationName(2161), CharInfo.reputationID[2161]}
-				tooltip[#tooltip+1] = {func_reputationName(2162), CharInfo.reputationID[2162]}
-				tooltip[#tooltip+1] = {func_reputationName(2400), CharInfo.reputationID[2400]}
-				tooltip[#tooltip+1] = {func_reputationName(2157), CharInfo.reputationID[2157]}
-				tooltip[#tooltip+1] = {func_reputationName(2156), CharInfo.reputationID[2156]}
-				tooltip[#tooltip+1] = {func_reputationName(2395), CharInfo.reputationID[2395]}
-				tooltip[#tooltip+1] = {func_reputationName(2391), CharInfo.reputationID[2391]}
-				tooltip[#tooltip+1] = {func_reputationName(2373), CharInfo.reputationID[2373]}
-				tooltip[#tooltip+1] = {func_reputationName(2164), CharInfo.reputationID[2164]}
-				tooltip[#tooltip+1] = {func_reputationName(2163), CharInfo.reputationID[2163]}
-				tooltip[#tooltip+1] = {func_reputationName(2388), CharInfo.reputationID[2388]}
-				tooltip[#tooltip+1] = {func_reputationName(2427), CharInfo.reputationID[2427]}
-				tooltip[#tooltip+1] = {func_reputationName(2379), CharInfo.reputationID[2379]}
-				tooltip[#tooltip+1] = {func_reputationName(2378), CharInfo.reputationID[2378]}
-				tooltip[#tooltip+1] = {func_reputationName(2382), CharInfo.reputationID[2382]}
-				tooltip[#tooltip+1] = {func_reputationName(2375), CharInfo.reputationID[2375]}
-				tooltip[#tooltip+1] = {func_reputationName(2416), CharInfo.reputationID[2416]}
-				tooltip[#tooltip+1] = {func_reputationName(2392), CharInfo.reputationID[2392]}
-				tooltip[#tooltip+1] = {func_reputationName(2385), CharInfo.reputationID[2385]}
-				tooltip[#tooltip+1] = {func_reputationName(2384), CharInfo.reputationID[2384]}
-				tooltip[#tooltip+1] = {func_reputationName(2233), CharInfo.reputationID[2233]}
-				tooltip[#tooltip+1] = {func_reputationName(2376), CharInfo.reputationID[2376]}
-				tooltip[#tooltip+1] = {func_reputationName(2381), CharInfo.reputationID[2381]}
-				tooltip[#tooltip+1] = {func_reputationName(2111), CharInfo.reputationID[2111]}
-				tooltip[#tooltip+1] = {func_reputationName(2370), CharInfo.reputationID[2370]}
-				tooltip[#tooltip+1] = {func_reputationName(2389), CharInfo.reputationID[2389]}
-				tooltip[#tooltip+1] = {func_reputationName(2390), CharInfo.reputationID[2390]}
-				tooltip[#tooltip+1] = {func_reputationName(2264), CharInfo.reputationID[2264]}
-				tooltip[#tooltip+1] = {func_reputationName(2265), CharInfo.reputationID[2265]}
-				tooltip[#tooltip+1] = {func_reputationName(2383), CharInfo.reputationID[2383]}
-				tooltip[#tooltip+1] = {func_reputationName(2387), CharInfo.reputationID[2387]}
-				tooltip[#tooltip+1] = {func_reputationName(2386), CharInfo.reputationID[2386]}
-				tooltip[#tooltip+1] = {func_reputationName(2380), CharInfo.reputationID[2380]}
-				tooltip[#tooltip+1] = {func_reputationName(2418), CharInfo.reputationID[2418]}
-				tooltip[#tooltip+1] = {func_reputationName(2377), CharInfo.reputationID[2377]}
-				tooltip[#tooltip+1] = {func_reputationName(2374), CharInfo.reputationID[2374]}
-				tooltip[#tooltip+1] = {func_reputationName(2401), CharInfo.reputationID[2401]}
+				tooltip[#tooltip+1] = {func_reputationName(2417), CharInfo.reputationID[2417]} --Ульдумский союз
+				tooltip[#tooltip+1] = {func_reputationName(2415), CharInfo.reputationID[2415]} --Раджани
+				tooltip[#tooltip+1] = {func_reputationName(2391), CharInfo.reputationID[2391]} --Ржавоболтское сопротивление
+				tooltip[#tooltip+1] = {func_reputationName(2164), CharInfo.reputationID[2164]} --Защитники Азерот
+				tooltip[#tooltip+1] = {func_reputationName(2163), CharInfo.reputationID[2163]} --Тортолланские искатели
+				tooltip[#tooltip+1] = {func_reputationName(2388), CharInfo.reputationID[2388]} --Поэн Солежабрик
+				tooltip[#tooltip+1] = {func_reputationName(2427), CharInfo.reputationID[2427]} --Молодой акир
+				tooltip[#tooltip+1] = {func_reputationName(2375), CharInfo.reputationID[2375]} --Мастер охоты Акана
+				tooltip[#tooltip+1] = {func_reputationName(2376), CharInfo.reputationID[2376]} --Оракул Ори
+				tooltip[#tooltip+1] = {func_reputationName(2370), CharInfo.reputationID[2370]} --Обучение динозавров – Дикорог
+				tooltip[#tooltip+1] = {func_reputationName(2389), CharInfo.reputationID[2389]} --Нери Остроерш
+				tooltip[#tooltip+1] = {func_reputationName(2390), CharInfo.reputationID[2390]} --Вим Соленодух
+				tooltip[#tooltip+1] = {func_reputationName(2377), CharInfo.reputationID[2377]} --Мастер клинка Иновари
+
+				-- tooltip[#tooltip+1] = {func_reputationName(2233), CharInfo.reputationID[2233]} --Dino Training - Pterrodax
+				-- tooltip[#tooltip+1] = {func_reputationName(2416), CharInfo.reputationID[2416]} --Раджани (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2392), CharInfo.reputationID[2392]} --Ржавоболтское сопротивление (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2385), CharInfo.reputationID[2385]} --Армия Чести (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2384), CharInfo.reputationID[2384]} --7-й легион (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2381), CharInfo.reputationID[2381]} --Орден Возрождения Шторма (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2379), CharInfo.reputationID[2379]} --Адмиралтейство Праудмуров (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2378), CharInfo.reputationID[2378]} --Империя Зандалари (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2382), CharInfo.reputationID[2382]} --Жители Вол'дуна (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2383), CharInfo.reputationID[2383]} --Орден Пылающих Углей (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2387), CharInfo.reputationID[2387]} --Тортолланские искатели (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2386), CharInfo.reputationID[2386]} --Защитники Азерот (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2380), CharInfo.reputationID[2380]} --Экспедиция Таланджи (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2418), CharInfo.reputationID[2418]} --Ульдумский союз (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2374), CharInfo.reputationID[2374]} --Освобожденные (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2401), CharInfo.reputationID[2401]} --Анкоа из клана Клинков Волн (идеал)
 			end
 			if Octo_ToDo_DragonflyVars.config.LINE_Legion then
 				if #tooltip > 0 then
 					tooltip[#tooltip+1] = {" ", " "}
 				end
 				tooltip[#tooltip+1] = {Blue_Color.."Legion".."|r", " "}
-				tooltip[#tooltip+1] = {func_reputationName(2018), CharInfo.reputationID[2018]}
-				tooltip[#tooltip+1] = {func_reputationName(1975), CharInfo.reputationID[1975]}
-				tooltip[#tooltip+1] = {func_reputationName(1859), CharInfo.reputationID[1859]}
-				tooltip[#tooltip+1] = {func_reputationName(2097), CharInfo.reputationID[2097]}
-				tooltip[#tooltip+1] = {func_reputationName(1948), CharInfo.reputationID[1948]}
-				tooltip[#tooltip+1] = {func_reputationName(1900), CharInfo.reputationID[1900]}
-				tooltip[#tooltip+1] = {func_reputationName(2098), CharInfo.reputationID[2098]}
-				tooltip[#tooltip+1] = {func_reputationName(1894), CharInfo.reputationID[1894]}
-				tooltip[#tooltip+1] = {func_reputationName(2102), CharInfo.reputationID[2102]}
-				tooltip[#tooltip+1] = {func_reputationName(2170), CharInfo.reputationID[2170]}
-				tooltip[#tooltip+1] = {func_reputationName(1828), CharInfo.reputationID[1828]}
-				tooltip[#tooltip+1] = {func_reputationName(1883), CharInfo.reputationID[1883]}
-				tooltip[#tooltip+1] = {func_reputationName(2101), CharInfo.reputationID[2101]}
-				tooltip[#tooltip+1] = {func_reputationName(2165), CharInfo.reputationID[2165]}
-				tooltip[#tooltip+1] = {func_reputationName(2135), CharInfo.reputationID[2135]}
-				tooltip[#tooltip+1] = {func_reputationName(2045), CharInfo.reputationID[2045]}
-				tooltip[#tooltip+1] = {func_reputationName(2099), CharInfo.reputationID[2099]}
-				tooltip[#tooltip+1] = {func_reputationName(2100), CharInfo.reputationID[2100]}
-				tooltip[#tooltip+1] = {func_reputationName(2089), CharInfo.reputationID[2089]}
-				tooltip[#tooltip+1] = {func_reputationName(2086), CharInfo.reputationID[2086]}
-				tooltip[#tooltip+1] = {func_reputationName(2085), CharInfo.reputationID[2085]}
-				tooltip[#tooltip+1] = {func_reputationName(2090), CharInfo.reputationID[2090]}
-				tooltip[#tooltip+1] = {func_reputationName(2087), CharInfo.reputationID[2087]}
-				tooltip[#tooltip+1] = {func_reputationName(1899), CharInfo.reputationID[1899]}
-				tooltip[#tooltip+1] = {func_reputationName(2091), CharInfo.reputationID[2091]}
-				tooltip[#tooltip+1] = {func_reputationName(1984), CharInfo.reputationID[1984]}
-				tooltip[#tooltip+1] = {func_reputationName(2166), CharInfo.reputationID[2166]}
-				tooltip[#tooltip+1] = {func_reputationName(1815), CharInfo.reputationID[1815]}
-				tooltip[#tooltip+1] = {func_reputationName(2088), CharInfo.reputationID[2088]}
-				tooltip[#tooltip+1] = {func_reputationName(1947), CharInfo.reputationID[1947]}
-				tooltip[#tooltip+1] = {func_reputationName(1989), CharInfo.reputationID[1989]}
-				tooltip[#tooltip+1] = {func_reputationName(1862), CharInfo.reputationID[1862]}
-				tooltip[#tooltip+1] = {func_reputationName(1888), CharInfo.reputationID[1888]}
-				tooltip[#tooltip+1] = {func_reputationName(1861), CharInfo.reputationID[1861]}
-				tooltip[#tooltip+1] = {func_reputationName(1919), CharInfo.reputationID[1919]}
-				tooltip[#tooltip+1] = {func_reputationName(1860), CharInfo.reputationID[1860]}
+				tooltip[#tooltip+1] = {func_reputationName(2018), CharInfo.reputationID[2018]} --Отмщение Когтя
+				tooltip[#tooltip+1] = {func_reputationName(1975), CharInfo.reputationID[1975]} --Кудесник Маргосс
+				tooltip[#tooltip+1] = {func_reputationName(1859), CharInfo.reputationID[1859]} --Помраченные
+				tooltip[#tooltip+1] = {func_reputationName(2097), CharInfo.reputationID[2097]} --Илиссия Водная
+				tooltip[#tooltip+1] = {func_reputationName(1948), CharInfo.reputationID[1948]} --Валарьяры
+				tooltip[#tooltip+1] = {func_reputationName(1900), CharInfo.reputationID[1900]} --Двор Фарондиса
+				tooltip[#tooltip+1] = {func_reputationName(2098), CharInfo.reputationID[2098]} --Хранительница Рейна
+				tooltip[#tooltip+1] = {func_reputationName(1894), CharInfo.reputationID[1894]} --Стражи
+				tooltip[#tooltip+1] = {func_reputationName(2102), CharInfo.reputationID[2102]} --Бесс
+				tooltip[#tooltip+1] = {func_reputationName(2170), CharInfo.reputationID[2170]} --Защитники Аргуса
+				tooltip[#tooltip+1] = {func_reputationName(1828), CharInfo.reputationID[1828]} --Племена Крутогорья
+				tooltip[#tooltip+1] = {func_reputationName(1883), CharInfo.reputationID[1883]} --Ткачи Снов
+				tooltip[#tooltip+1] = {func_reputationName(2101), CharInfo.reputationID[2101]} --Ша'лет
+				tooltip[#tooltip+1] = {func_reputationName(2165), CharInfo.reputationID[2165]} --Армия Света
+				tooltip[#tooltip+1] = {func_reputationName(2135), CharInfo.reputationID[2135]} --Хроми
+				tooltip[#tooltip+1] = {func_reputationName(2045), CharInfo.reputationID[2045]} --Армия погибели Легиона
+				tooltip[#tooltip+1] = {func_reputationName(2099), CharInfo.reputationID[2099]} --Акуле Речной Рог
+				tooltip[#tooltip+1] = {func_reputationName(2100), CharInfo.reputationID[2100]} --Корбин
+				-- tooltip[#tooltip+1] = {func_reputationName(2089), CharInfo.reputationID[2089]} --Помраченные (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2086), CharInfo.reputationID[2086]} --Валарьяры (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2085), CharInfo.reputationID[2085]} --Племена Крутогорья (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2090), CharInfo.reputationID[2090]} --Стражи (идеал)
+				-- tooltip[#tooltip+1] = {func_reputationName(2087), CharInfo.reputationID[2087]} --Двор Фарондиса (идеал)
+				tooltip[#tooltip+1] = {func_reputationName(1899), CharInfo.reputationID[1899]} --Лунные стражи
+				-- tooltip[#tooltip+1] = {func_reputationName(2091), CharInfo.reputationID[2091]} --Армия погибели Легиона (идеал)
+				tooltip[#tooltip+1] = {func_reputationName(1984), CharInfo.reputationID[1984]} --Спасатели
+				-- tooltip[#tooltip+1] = {func_reputationName(2166), CharInfo.reputationID[2166]} --Армия Света (идеал)
+				tooltip[#tooltip+1] = {func_reputationName(1815), CharInfo.reputationID[1815]} --Выжившие из Гилнеаса
+				-- tooltip[#tooltip+1] = {func_reputationName(2088), CharInfo.reputationID[2088]} --Ткачи Снов (идеал)
+				tooltip[#tooltip+1] = {func_reputationName(1947), CharInfo.reputationID[1947]} --Иллидари
+				tooltip[#tooltip+1] = {func_reputationName(1989), CharInfo.reputationID[1989]} --Лунные стражи
+				tooltip[#tooltip+1] = {func_reputationName(1862), CharInfo.reputationID[1862]} --Жажда магии Окулета
+				tooltip[#tooltip+1] = {func_reputationName(1888), CharInfo.reputationID[1888]} --Яндвикские врайкулы
+				tooltip[#tooltip+1] = {func_reputationName(1861), CharInfo.reputationID[1861]} --Arcane Thirst (Silgryn) DEPRECATED
+				tooltip[#tooltip+1] = {func_reputationName(1919), CharInfo.reputationID[1919]} --Жажда магии Вальтруа
+				tooltip[#tooltip+1] = {func_reputationName(1860), CharInfo.reputationID[1860]} --Жажда магии Талисры
 			end
 			if Octo_ToDo_DragonflyVars.config.LINE_WarlordsofDraenor then
 				if #tooltip > 0 then
@@ -5665,6 +5741,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 	elseif event == "ACTIONBAR_UPDATE_COOLDOWN" and not InCombatLockdown() and Main_Frame and Main_Frame:IsShown() then
 		-- print (GetExpansionLevel(), GetAccountExpansionLevel(), GetServerExpansionLevel(), LE_EXPANSION_LEVEL_CURRENT)
 		Octo_ToDo_DragonflyAddDataToAltFrame()
+		LegionInvasionTimer()
+		BfAInvasionTimer()
 		ToDragonbaneKeepTimer()
 		GrandHuntsTimer()
 		CommunityFeastTimer()
@@ -5678,6 +5756,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectAllReputations()
 		CollectAllQuests()
 		CollectAllQuestsBounties()
+		OctoQuestUpdate()
 		CollectIslandBfA()
 		CollectLoginTime()
 	elseif event == "COVENANT_CHOSEN" then
@@ -5689,33 +5768,33 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 				CollectCovenantAnima()
 		end)
 	elseif event == "QUEST_FINISHED" then
-		OctoQuestUpdate()
 		CollectAllQuests()
 		CollectAllQuestsBounties()
+		OctoQuestUpdate()
 		CollectIslandBfA()
 		Octo_ToDo_DragonflyAddDataToAltFrame()
 	elseif event == "QUEST_TURNED_IN" then
-		OctoQuestUpdate()
 		CollectAllQuests()
 		CollectAllQuestsBounties()
+		OctoQuestUpdate()
 		CollectIslandBfA()
 		Octo_ToDo_DragonflyAddDataToAltFrame()
 	elseif event == "QUEST_REMOVED" then
-		OctoQuestUpdate()
 		CollectAllQuests()
 		CollectAllQuestsBounties()
+		OctoQuestUpdate()
 		CollectIslandBfA()
 		Octo_ToDo_DragonflyAddDataToAltFrame()
 	elseif event == "QUEST_COMPLETE" then
-		OctoQuestUpdate()
 		CollectAllQuests()
 		CollectAllQuestsBounties()
+		OctoQuestUpdate()
 		CollectIslandBfA()
 		Octo_ToDo_DragonflyAddDataToAltFrame()
 	elseif event == "QUEST_LOG_UPDATE" then
-		OctoQuestUpdate()
 		CollectAllQuests()
 		CollectAllQuestsBounties()
+		OctoQuestUpdate()
 		CollectIslandBfA()
 		if Main_Frame and Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
@@ -5753,7 +5832,6 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectCovenantAnima()
 		CollectPlayerInfo()
 		CollectPVPRaitings()
-		OctoQuestUpdate()
 		OctoMoneyUpdate()
 		OctoilvlStr()
 		Octo_ToDo_DragonflyCreateAltFrame()
@@ -5767,6 +5845,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectCurrentKEY()
 		CollectAllQuests()
 		CollectAllQuestsBounties()
+		OctoQuestUpdate()
 		CollectIslandBfA()
 		UPGRADERANKS_Frame()
 		C_Timer.After(3, function()
