@@ -131,7 +131,6 @@ local Octo_Table_itemID_Cataloged_Research = {
 	{itemiD = 187350, count = 300},
 }
 local Octo_Table_itemID_ALL = {
-	113509, -- Булки мага
 	24915,24916,24917,24918,24919,49040,50274,51316,51317,51318,51319,51320,51321,52200,52201,52251,52252,52253,83078,92426,92441,92471,122284,122338,122339,122340,122341,128353,129940,129941,129942,129943,129944,129945,129946,129947,129948,129949,129950,129951,129954,129955,133150,133151,133152,133154,133159,133160,137642,138486,138488,138727,138728,138729,141605,141652,143935,143936,143937,143938,143939,143940,143941,143942,143943,143944,143945,143946,143947,151614,151615,166751,167731,167732,167862,167924,167925,167926,167927,167928,167929,167930,167932,168017,168018,180817,183616,185834,187997,187998,188152,189765,190189,190453,190454,190455,190456,191251,191264,191784,191915,192130,192131,192132,193201,193891,193897,193898,193899,193900,193901,193902,193903,193904,193905,193907,193909,193910,193913,194039,194040,194041,194054,194055,194061,194062,194063,194064,194066,194067,194068,194072,194076,194077,194078,194079,194080,194081,194337,194697,194698,194699,194700,194702,194703,194704,194708,197921,198046,198395,198438,198454,198510,198599,198606,198607,198608,198609,198610,198611,198612,198613,198656,198658,198659,198660,198662,198663,198664,198667,198669,198670,198680,198682,198683,198684,198685,198686,198687,198690,198692,198693,198696,198697,198699,198702,198703,198704,198710,198711,198712,198789,198837,198841,198863,198864,198865,198866,198867,198868,198869,198963,198964,198965,198966,198967,198968,198969,198970,198971,198972,198973,198974,198975,198976,198977,198978,199115,199122,199128,199192,199197,199472,199473,199474,199475,200069,200070,200072,200073,200095,200224,200285,200287,200288,200289,200300,200452,200453,200454,200455,200468,200513,200515,200516,200609,200610,200611,200652,200677,200678,200686,200764,200811,200846,200972,200973,200974,200975,200976,200977,200978,200979,200980,200981,200982,201003,201004,201005,201006,201007,201008,201009,201010,201011,201012,201013,201014,201015,201016,201017,201018,201019,201020,201023,201250,201268,201269,201270,201271,201272,201273,201274,201275,201276,201277,201278,201279,201280,201281,201282,201283,201284,201285,201286,201287,201288,201289,201300,201301,201326,201352,201439,201462,201700,201705,201706,201708,201709,201710,201711,201712,201713,201714,201715,201716,201717,201728,201755,201756,201781,201782,201817,201836,201921,201922,201923,201924,201991,202011,202014,202016,202017,202039,202052,202079,202080,202091,202092,202093,202094,202097,202098,202142,202152,202171,202172,202173,202196,202371,202667,202668,202669,202670,202870,202871,202872,203217,203220,203222,203224,203430,203476,203611,203612,203613,203614,203615,203616,203617,203618,203619,203620,203622,203623,203626,203627,203628,203629,203630,203631,203632,203633,203634,203635,203636,203637,203638,203639,203640,203641,203642,203643,203644,203645,203646,203647,203648,203649,203650,203681,203683,203699,203700,203702,203710,204075,204076,204077,204078,204180,204186,204187,204188,204189,204190,204191,204193,204194,204195,204196,204215,204217,204222,204224,204225,204226,204227,204228,204229,204230,204231,204232,204233,204276,204352,204359,204378,204379,204380,204381,204383,204403,204440,204464,204469,204470,204471,204475,204558,204559,204560,204573,204574,204575,204576,204577,204578,204579,204681,204682,204697,204715,204717,204721,204722,204723,204724,204725,204726,204727,204843,204850,204853,204855,204985,204986,204987,204988,204990,204999,205001,205188,205211,205212,205213,205214,205216,205219,205225,205249,205250,205288,205347,205367,205423,205878,205903,205982,205984,205986,205987,205988,205989,205999,206019,206025,206028,206030,206031,206034,206035,206037,206139,206140,206141,206142,206143,206144,206366,
 }
 local Octo_Table_QuestID = {
@@ -140,7 +139,14 @@ local Octo_Table_QuestID = {
 local Octo_Table_itemID_Reputation = {
 	192055,200443,200093,200447,199906,200450,201411,201412,200071,200449,201470,201471,206006,202854,190941
 }
+
+local Octo_Table_itemID_DFMountsSkins = {
+	192111,192523,194034,194106,194521,194549,194705,194838,196961,196962,196963,196964,196965,196966,196967,196968,196969,196970,196971,196972,196973,196974,196975,196976,196977,196978,196979,196980,196981,196982,196983,196984,196985,196986,196987,196988,196989,196990,196991,196992,196993,196994,196995,196996,196997,196998,196999,197000,197001,197002,197003,197004,197005,197006,197007,197008,197009,197010,197011,197012,197013,197014,197015,197016,197017,197018,197019,197020,197021,197022,197023,197090,197091,197093,197094,197095,197096,197097,197098,197099,197100,197101,197102,197103,197104,197105,197106,197107,197108,197109,197110,197111,197112,197113,197114,197115,197116,197117,197118,197119,197120,197121,197122,197123,197124,197125,197126,197127,197128,197129,197130,197131,197132,197133,197134,197135,197136,197137,197138,197139,197140,197141,197142,197143,197144,197145,197146,197147,197148,197149,197150,197151,197152,197153,197154,197155,197156,197346,197347,197348,197349,197350,197351,197352,197353,197354,197355,197356,197357,197358,197359,197360,197361,197362,197363,197364,197365,197366,197367,197368,197369,197370,197371,197372,197373,197374,197375,197376,197377,197378,197379,197380,197381,197382,197383,197384,197385,197386,197387,197388,197389,197390,197391,197392,197393,197394,197395,197396,197397,197398,197399,197400,197401,197402,197403,197404,197405,197406,197407,197408,197577,197578,197579,197580,197581,197582,197583,197584,197585,197586,197587,197588,197589,197590,197591,197592,197593,197594,197595,197596,197597,197598,197599,197600,197601,197602,197603,197604,197605,197606,197607,197608,197609,197610,197611,197612,197613,197614,197615,197616,197617,197618,197619,197620,197621,197622,197623,197624,197625,197626,197627,197628,197629,197630,197634,197635,197636,198438,198891,198892,198893,198894,198895,198896,198899,198901,198902,198903,198904,199192,201734,201735,201736,201737,201738,201739,201741,201742,201743,201790,201792,202102,202273,202274,202275,202277,202278,202279,202280,203299,203300,203303,203304,203306,203307,203308,203309,203310,203311,203312,203313,203314,203315,203316,203317,203318,203319,203320,203321,203322,203323,203324,203325,203327,203328,203329,203330,203331,203332,203333,203334,203335,203336,203337,203338,203339,203340,203341,203342,203343,203344,203345,203346,203347,203348,203349,203350,203351,203352,203353,203354,203355,203357,203358,203359,203360,203361,203362,203363,203364,203365,204359,204361,205226,205341,205865,205876,206955,
+}
+
+
 TableConcat (Octo_Table_itemID_ALL,Octo_Table_itemID_Reputation)
+TableConcat (Octo_Table_itemID_ALL,Octo_Table_itemID_DFMountsSkins)
 
 local Octo_Table_SpellID = {
 	--Рыбалка
@@ -2066,6 +2072,7 @@ local function O_otrisovka()
 				return VivodCent, VivodLeft
 		end)
 	end
+	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_Shadowlands then
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -2283,6 +2290,32 @@ local function O_otrisovka()
 		end)
 	end
 	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_BattleforAzeroth then
+		tinsert(table_func_otrisovka, -- Создание гарнизона
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_BfA_Weekly_WBWB_count ~= NONE then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WBWB_count)
+				end
+				VivodLeft = CharInfo.Octopussy_BfA_Weekly_WBWB_name
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Создание гарнизона
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_BfA_Weekly_NazjatarWBTerroroftheDepths_count ~= NONE then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_NazjatarWBTerroroftheDepths_count)
+				end
+				VivodLeft = CharInfo.Octopussy_BfA_Weekly_NazjatarWBTerroroftheDepths_name
+				return VivodCent, VivodLeft
+		end)
+
+
+	end
+	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_Legion then
+	end
+	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_WarlordsofDraenor then
 		tinsert(table_func_otrisovka, -- Создание гарнизона
 			function(CharInfo, tooltip, CL, BG)
@@ -2297,27 +2330,27 @@ local function O_otrisovka()
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
 				CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-				if CharInfo.CurrencyID[824] < 2000 then
-					VivodCent = VivodCent.."|cffFF0000"..CharInfo.CurrencyID[824]..func_currencyicon(824)
+
+				if CharInfo.UnitLevel > 40 then
+					if CharInfo.CurrencyID[824] < 2000 then
+						VivodCent = VivodCent.."|cffFF0000"..CharInfo.CurrencyID[824]..func_currencyicon(824)
+					else
+						VivodCent = VivodCent..CharInfo.CurrencyID[824]..func_currencyicon(824).."|r"
+					end
+
+					if CharInfo.Money/10000 < 5000 then
+						VivodCent = VivodCent.."|cffFF0000"..GetCoinTextureString(CharInfo.Money-CharInfo.Money%10000)
+					else
+						VivodCent = VivodCent..GetCoinTextureString(CharInfo.Money-CharInfo.Money%10000).."|r"
+					end
+					if CharInfo.Octo_Table_QuestID[36614] ~= NONE then
+						CL:SetFont(curFontTTF, curFontSize, curFontOutline)
+						VivodCent = CharInfo.Octo_Table_QuestID[36614]
+					end
 				else
-					VivodCent = VivodCent..CharInfo.CurrencyID[824]..func_currencyicon(824).."|r"
+					VivodCent = func_texturefromIcon(894556).."|cffFF0000"..CharInfo.UnitLevel.."/40|r"
 				end
 
-				if CharInfo.Money/10000 < 5000 then
-					VivodCent = VivodCent.."|cffFF0000"..GetCoinTextureString(CharInfo.Money-CharInfo.Money%10000)
-				else
-					VivodCent = VivodCent..GetCoinTextureString(CharInfo.Money-CharInfo.Money%10000).."|r"
-				end
-
-
-
-
-
-				if CharInfo.Octo_Table_QuestID[36614] ~= NONE then
-
-					CL:SetFont(curFontTTF, curFontSize, curFontOutline)
-					VivodCent = CharInfo.Octo_Table_QuestID[36614]
-				end
 				VivodLeft = L["Garrison 3 Level"]
 
 				return VivodCent, VivodLeft
@@ -2332,19 +2365,29 @@ local function O_otrisovka()
 				return VivodCent, VivodLeft
 		end)
 	end
-	tinsert(table_func_otrisovka,
-		function(CharInfo, tooltip, CL, BG)
-			local VivodCent, VivodLeft = "", ""
-			if CharInfo.ItemsInBag[113509] ~= 0 then
-				VivodCent = func_itemTexture(113509)..CharInfo.ItemsInBag[113509] -- БУЛКИ МАГА
-			end
-			return VivodCent, VivodLeft
-	end)
+	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_MistsofPandaria then
+	end
+	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_Cataclysm then
+	end
+	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_WrathoftheLichKing then
+	end
+	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_TheBurningCrusade then
+	end
+	----------------------------------------------------------------
+	if Octo_ToDo_DragonflyVars.config.LINE_Classic then
+	end
+
+
+
+
 	-- ВАЛЮТА
 	tinsert(table_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local VivodCent, VivodLeft = "", ""
-			VivodCent = Gray_Color..CURRENCY.."|r"
 			----------------------------------------------------------------
 			if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
@@ -2514,14 +2557,15 @@ local function O_otrisovka()
 			tooltip[#tooltip+1] = {func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID_Total[1792]} --Честь
 			tooltip[#tooltip+1] = {func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID_Total[2123]} -- Кровавые жетоны
 			tooltip[#tooltip+1] = {func_currencyicon(391)..func_currencyName(391), CharInfo.CurrencyID_Total[391]} -- Рекомендательный значок Тол Барада
+
+
+			if #tooltip ~= 0 then
+				VivodCent = Gray_Color..CURRENCY.."|r"
+			end
+
 			return VivodCent, VivodLeft
 	end)
 	-- РЕПУТАЦИЯ
-	-- 0None
-	-- 1Kyrian
-	-- 4Necrolord
-	-- 3NightFae
-	-- 2Venthyr
 	tinsert(table_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local VivodCent, VivodLeft = "", ""
@@ -2535,7 +2579,11 @@ local function O_otrisovka()
 				--     tooltip[#tooltip+1] = {" ", " "}
 				-- end
 				-- tooltip[#tooltip+1] = {Blue_Color..ITEMS.."|r", " "}
-
+				-- 0None
+				-- 1Kyrian
+				-- 4Necrolord
+				-- 3NightFae
+				-- 2Venthyr
 				if #tooltip > 0 then
 					tooltip[#tooltip+1] = {" ", " "}
 				end
@@ -2918,7 +2966,9 @@ local function O_otrisovka()
 				tooltip[#tooltip+1] = {func_reputationName(93), CharInfo.reputationID[93]}
 			end
 			-- ТЕКСТ В ЦЕНТРЕ
-			VivodCent = Gray_Color..REPUTATION.."|r"
+			if #tooltip ~= 0 then
+				VivodCent = Gray_Color..REPUTATION.."|r"
+			end
 			return VivodCent, VivodLeft
 	end)
 	-- ЗАДАНИЯ
@@ -3016,19 +3066,19 @@ local function O_otrisovka()
 					tooltip[#tooltip+1] = {CharInfo.Octopussy_MoP_Once_Warlock_name, CharInfo.Octopussy_MoP_Once_Warlock_count}
 				end
 			end
-			VivodCent = Gray_Color..QUESTS_LABEL.."|r"
+			if #tooltip ~= 0 then
+				VivodCent = Gray_Color..QUESTS_LABEL.."|r"
+			end
 			return VivodCent, VivodLeft
 	end)
 	-- ПРЕДМЕТЫ
 	tinsert(table_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local VivodCent, VivodLeft = "", ""
-			tooltip[#tooltip+1] = {" "," "}
 			-- ТЕКСТ В ЦЕНТРЕ
 			for k, v in ipairs(Octo_Table_itemID_ALL) do
 				local count = tonumber(CharInfo.ItemsInBag[v])
 				if count ~= 0 then
-					VivodCent = Gray_Color..ITEMS.."|r"
 					tooltip[#tooltip+1] = {func_itemTexture(v)..func_itemName(v), count}
 				end
 			end
@@ -3041,6 +3091,9 @@ local function O_otrisovka()
 				if v ~= 0 then
 					tinsert(tooltip,{func_itemTexture(CharInfo.VOID_STORAGE_PAGE2[k])..func_itemName(CharInfo.VOID_STORAGE_PAGE2[k])})
 				end
+			end
+			if #tooltip ~= 0 then
+				VivodCent = Gray_Color..ITEMS.."|r"
 			end
 			return VivodCent, VivodLeft
 	end)
@@ -3266,7 +3319,7 @@ function UPGRADERANKS_Frame()
 end
 local function CreateFrameUsableItems_OnEnter(self)
 	self.icon:SetVertexColor(1, 1, 1, 1)
-	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 10)
 	GameTooltip:ClearLines()
 	GameTooltip:AddLine(func_itemName(self.itemID))
 	GameTooltip:Show()
@@ -3299,7 +3352,7 @@ local function CreateFrameUsableItems_OnEvent(self,event)
 		self:Hide()
 	else
 		self:SetParent(Main_Frame)
-		self:SetPoint("TOPLEFT", Main_Frame, "TOPLEFT", -curHeight-1, self.Ypos)
+		self:SetPoint("BOTTOMLEFT", Main_Frame, "TOPLEFT", self.Xpos, self.Ypos+1)
 		self:Show()
 	end
 end
@@ -3321,20 +3374,26 @@ local function CreateFrameUsableItems_OnMouseUp(self)
 		self.icon:SetVertexColor(1, 1, 1, 1)
 	end
 end
-local function CreateFrameUsableItems(itemID, Texture, count, Ypos, r, g, b, spellID)
+local function CreateFrameUsableItems(itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
 	local Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "SecureActionButtonTemplate,BackDropTemplate")
 	Button.itemID = itemID
 	Button.Texture = Texture
 	Button.count = count
 	Button.Ypos = Ypos
+	Button.Xpos = Xpos
+	Button.r = r
+	Button.g = g
+	Button.b = b
 	Button.spellID = spellID
-	-- Button.r = r
-	-- Button.g = g
-	-- Button.b = b
+	-- local _, _, itemQuality = GetItemInfo(itemID)
+	-- if itemQuality then
+	-- 	local ir, ig, ib, iA = GetItemQualityColor(itemQuality)
+	-- end
+
 	Button:SetSize(curHeight, curHeight)
-	Button:SetPoint("BOTTOMRIGHT", Main_Frame, "BOTTOMRIGHT", curHeight+1, Ypos)
+	Button:SetPoint("BOTTOMLEFT", Main_Frame, "TOPLEFT", Xpos, Ypos+1)
 	Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	Button:SetBackdropBorderColor(r, g, b, 0.2)
+	Button:SetBackdropBorderColor(r, g, b, 1)
 	Button:RegisterEvent("PLAYER_REGEN_DISABLED")
 	Button:RegisterEvent("PLAYER_REGEN_ENABLED")
 	Button:RegisterEvent("BAG_UPDATE")
@@ -3477,7 +3536,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			GameTooltip:ClearLines()
 			GameTooltip:AddDoubleLine(" "," ")
 			for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
-				if CharInfo.ItemsInBag[137642] and CharInfo.ItemsInBag[137642] ~= 0 then
+				if CharInfo.ItemsInBag[137642] and CharInfo.ItemsInBag[137642] ~= 0 and CharInfo.ItemsInBag[202196] and CharInfo.ItemsInBag[202196] ~= 0 then
 					i = i + 1
 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 					local curServerShort = CharInfo.curServer
@@ -3486,7 +3545,8 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 					if b then
 						curServerShort = WA_Utf8Sub(a, 1)..WA_Utf8Sub(b, 1):upper() else curServerShort = WA_Utf8Sub(a, 3):lower()
 					end
-					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),CharInfo.ItemsInBag[137642])
+					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),func_itemTexture(137642)..CharInfo.ItemsInBag[137642])
+					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..curServerShort..")"),func_itemTexture(202196)..CharInfo.ItemsInBag[202196])
 					-- else
 					-- Main_Frame.MarkOfHonor_Button:Hide()
 				end
@@ -3635,27 +3695,28 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 
 
 	--------
-	-- itemID, Texture, count, Ypos, r, g, b, spellID
+	-- itemID, Texture, count, Xpos, Ypos, spellID
 	local prof1, prof2 = GetProfessions()
 	local prof1 = prof1 and select(7, GetProfessionInfo(prof1))
 	local prof2 = prof2 and select(7, GetProfessionInfo(prof2))
 	if prof1 == 202 or prof2 == 202 then --ИНЖА
-		local Ypox = 30
+		local Xpos = 21
+		local Ypos = 0
 		--DF
-		CreateFrameUsableItems(198156, 4548860, 15, Ypox*0, .12, 1, 0) -- Генератор червоточин: Драконьи острова
+		CreateFrameUsableItems(198156, 4548860, 15, Xpos*0, Ypos*0, 0, .43, .86) -- Генератор червоточин: Драконьи острова
 		--SL
-		CreateFrameUsableItems(172924, 3610528, 15, Ypox*1, .12, 1, 0) -- Генератор червоточин: Темные Земли
+		CreateFrameUsableItems(172924, 3610528, 15, Xpos*1, Ypos*1, 0, .43, .86) -- Генератор червоточин: Темные Земли
 		--BFA
-		CreateFrameUsableItems(168808, 2000840, 15, Ypox*2, .12, 1, 0) -- Генератор червоточин: Зандалар
-		CreateFrameUsableItems(168807, 2000841, 15, Ypox*3, .12, 1, 0) -- Генератор червоточин: Кул-Тирас
+		CreateFrameUsableItems(168808, 2000840, 15, Xpos*2, Ypos*2, 0, .43, .86) -- Генератор червоточин: Зандалар
+		CreateFrameUsableItems(168807, 2000841, 15, Xpos*3, Ypos*3, 0, .43, .86) -- Генератор червоточин: Кул-Тирас
 		--LEGION
-		CreateFrameUsableItems(151652, 237560, 15, Ypox*4, .12, 1, 0) -- Генератор червоточин: Аргус
+		CreateFrameUsableItems(151652, 237560, 15, Xpos*4, Ypos*4, 0, .43, .86) -- Генератор червоточин: Аргус
 		--WOD
-		CreateFrameUsableItems(112059, 892831, 15, Ypox*5, .12, 1, 0) -- Центрифуга червоточины
+		CreateFrameUsableItems(112059, 892831, 15, Xpos*5, Ypos*5, 0, .43, .86) -- Центрифуга червоточины
 		--PANDA
-		CreateFrameUsableItems(87215, 651094, 15, Ypox*6, .12, 1, 0) -- Генератор червоточин: Пандария
+		CreateFrameUsableItems(87215, 651094, 15, Xpos*6, Ypos*6, 0, .43, .86) -- Генератор червоточин: Пандария
 		--WOTLK
-		CreateFrameUsableItems(48933, 135778, 15, Ypox*7, .12, 1, 0) -- Генератор червоточин: Нордскол
+		CreateFrameUsableItems(48933, 135778, 15, Xpos*7, Ypos*7, 0, .43, .86) -- Генератор червоточин: Нордскол
 
 	end
 	-----------------------------------------------------
@@ -4384,6 +4445,32 @@ local tableTEST = {
 		questID = {65179,65213,65216,65210,65180,65214,65211,65217,64940,65212,65209,65215,},
 		max = 12
 	},
+
+	{
+		name_save = "WB",
+		name_quest = "WB BfA",
+		reset = "Weekly",
+		expansion = "BfA",
+		place = "",
+		desc = "WB",
+		questID = {52157,52163,52166,52181,52169,52196},
+		max = 1,
+	},
+
+	{
+		name_save = "TerroroftheDepths", --Глубинный ужас
+		name_quest = func_questName(56056),
+		reset = "Weekly",
+		expansion = "BfA",
+		place = "Nazjatar",
+		desc = "WB",
+		questID = {56056},
+		max = 1,
+	},
+
+
+
+
 } -- For table
 function OctoQuestUpdate()
 	local UnitLevel = UnitLevel("PLAYER")
@@ -4660,9 +4747,11 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				local TEXTCENT = Char_Frame["CenterLines"..i]
 				local BG = Char_Frame["CenterLines"..i.."BG"]
 				TEXTCENT.tooltip = {}
-				local VivodCent, VivodLeft = table_func_otrisovka[i](CharInfo, TEXTCENT.tooltip, TEXTCENT.CL, BG)
-				TEXTLEFT:SetText(VivodLeft or "L")
-				TEXTCENT.CL:SetText(VivodCent or "C")
+				local VivodCent = "C"
+				local VivodLeft = "L"
+				VivodCent, VivodLeft = table_func_otrisovka[i](CharInfo, TEXTCENT.tooltip, TEXTCENT.CL, BG)
+				TEXTLEFT:SetText(VivodLeft)
+				TEXTCENT.CL:SetText(VivodCent)
 				if #TEXTCENT.tooltip == 0 or #TEXTCENT.tooltip[1] == 0 then
 					TEXTCENT.tooltip = nil
 				end
@@ -4979,7 +5068,6 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 						if PlayCustomSound == true then
 							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
 						end
-						-- CollectAllItemsInBag()
 						--Fragments_Earned()
 						CollectAllReputations()
 						CollectPVPRaitings()
@@ -5111,7 +5199,6 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectLoginTime()
 		-- CollectPVPRaitings()
 		-- elseif event == "PLAYER_LOGOUT" then
-		-- CollectAllItemsInBag()
 		-- CollectCurrentKEY()
 	elseif event == "PLAYER_ENTERING_WORLD" and not InCombatLockdown() then
 		CollectPVPRaitings()
