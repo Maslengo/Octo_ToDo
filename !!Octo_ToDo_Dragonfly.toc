@@ -1,7 +1,7 @@
 ## Interface: 100100
 ## Author: Octo
 ## Title: !!|cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r
-## Version: v56.7(10.1.0)(19.06.2023)
+## Version: v56.8(10.1.0)(19.06.2023)
 ## IconTexture: Interface\AddOns\!!Octo_ToDo_Dragonfly\Media\AddonTexture.tga
 ## SavedVariables: Octo_ToDo_DragonflyLevels Octo_ToDo_DragonflyVars
 

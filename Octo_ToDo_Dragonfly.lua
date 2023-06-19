@@ -3677,10 +3677,10 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 	EventFrame:RegisterEvent("SPELLS_CHANGED")
 	EventFrame:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
-	EventFrame:RegisterEvent("UNIT_SPELLCAST_START")
-	EventFrame:RegisterEvent("UNIT_SPELLCAST_STOP")
-	--EventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	EventFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
+	-- EventFrame:RegisterEvent("UNIT_SPELLCAST_START")
+	-- EventFrame:RegisterEvent("UNIT_SPELLCAST_STOP")
+	-- EventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	-- EventFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
 	-- -- EventFrame:RegisterEvent("VARIABLES_LOADED")
 	-- EventFrame:RegisterEvent("ARENA_SEASON_WORLD_STATE")
 	-- EventFrame:RegisterEvent("BATTLEFIELDS_CLOSED")
@@ -5656,12 +5656,12 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Octo_ToDo_DragonflyVars.config.AddonVersion = tonumber(AddonVersion)
 		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.config)
 		ldbi:Show(MinimapName)
-	elseif event == "UNIT_SPELLCAST_START" or event == "UNIT_SPELLCAST_STOP"  or event == "UNIT_SPELLCAST_INTERRUPTED" then
-		if Main_Frame and Main_Frame:IsShown() then
-			print ("Main_Frame:Hide()")
-			Main_Frame:Hide()
+	-- elseif event == "UNIT_SPELLCAST_START" or event == "UNIT_SPELLCAST_STOP"  or event == "UNIT_SPELLCAST_INTERRUPTED" then
+	-- 	if Main_Frame and Main_Frame:IsShown() then
+	-- 		print ("Main_Frame:Hide()")
+	-- 		Main_Frame:Hide()
 
-		end
+	-- 	end
 	elseif event == "ACTIONBAR_UPDATE_COOLDOWN" and not InCombatLockdown() and Main_Frame and Main_Frame:IsShown() then
 		-- print (GetExpansionLevel(), GetAccountExpansionLevel(), GetServerExpansionLevel(), LE_EXPANSION_LEVEL_CURRENT)
 		Octo_ToDo_DragonflyAddDataToAltFrame()
