@@ -2385,28 +2385,36 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Ресурсы для войны
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodCent = Empty_Zero(CharInfo.CurrencyID[1560])
+				if CharInfo.CurrencyID_Total[1560] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1560]
+				end
 				VivodLeft = func_currencyicon(1560)..func_currencyName(1560)
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka, -- Радужная манажемчужина
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodCent = Empty_Zero(CharInfo.CurrencyID[1721])
+				if CharInfo.CurrencyID_Total[1721] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1721]
+				end
 				VivodLeft = func_currencyicon(1721)..func_currencyName(1721)
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka, -- Эхо Ни'алоты
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodCent = Empty_Zero(CharInfo.CurrencyID[1803])
+				if CharInfo.CurrencyID_Total[1803] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1803]
+				end
 				VivodLeft = func_currencyicon(1803)..func_currencyName(1803)
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka, -- Сгусток видений
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodCent = Empty_Zero(CharInfo.CurrencyID[1755])
+				if CharInfo.CurrencyID_Total[1755] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1755]
+				end
 				if CharInfo.ItemsInBag[173363] ~= 0 then
 					VivodCent = VivodCent .." +"..CharInfo.ItemsInBag[173363]..func_itemTexture(173363)
 				end
@@ -2416,28 +2424,36 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Заряженные реликвии
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodCent = Empty_Zero(CharInfo.CurrencyID[1719])
+				if CharInfo.CurrencyID_Total[1719] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1719]
+				end
 				VivodLeft = func_currencyicon(1719)..func_currencyName(1719)
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka, -- Дублон мореплавателя
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodCent = Empty_Zero(CharInfo.CurrencyID[1710])
+				if CharInfo.CurrencyID_Total[1710] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1710]
+				end
 				VivodLeft = func_currencyicon(1710)..func_currencyName(1710)
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka, -- Военная медаль Армии Чести
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodCent = Empty_Zero(CharInfo.CurrencyID[1716])
+				if CharInfo.CurrencyID_Total[1716] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1716]
+				end
 				VivodLeft = func_currencyicon(1716)..func_currencyName(1716)
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka, -- Пыль титанов
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodCent = Empty_Zero(CharInfo.CurrencyID[1718])
+				if CharInfo.CurrencyID_Total[1718] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1718]
+				end
 				VivodLeft = func_currencyicon(1718)..func_currencyName(1718)
 				return VivodCent, VivodLeft
 		end)
@@ -2541,20 +2557,17 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_Legion_Weekly_WBALL_count ~= NONE then
-					VivodCent = Empty_Zero(CharInfo.Octopussy_Legion_Weekly_WBALL_count)
+				if CharInfo.CurrencyID[1273] then
+					VivodCent = CharInfo.CurrencyID_Total[1273].."(+"..CharInfo.Octopussy_Legion_Weekly_coinsQuests_count..")"
 				end
-				VivodLeft = WorldBoss_Icon.."World Boss"
+				VivodLeft = func_currencyicon(1273)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(1273)
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka, -- Дымчатый аргунит
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
 				if CharInfo.CurrencyID[1508] ~= 0 then
-					VivodCent = CharInfo.CurrencyID[1508].."/"..CharInfo.CurrencyID_maxQuantity[1508]
-				end
-				if CharInfo.CurrencyID[1508] == CharInfo.CurrencyID_maxQuantity[1508] then
-					VivodCent = Green_Color..VivodCent.."|r"
+					VivodCent = CharInfo.CurrencyID_Total[1508]
 				end
 				VivodLeft = func_currencyicon(1508)..func_currencyName(1508)
 				return VivodCent, VivodLeft
@@ -2562,11 +2575,8 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Припасы Армии погибели Легиона
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.CurrencyID[1342] ~= 0 then
-					VivodCent = CharInfo.CurrencyID[1342].."/"..CharInfo.CurrencyID_maxQuantity[1342]
-				end
-				if CharInfo.CurrencyID[1342] == CharInfo.CurrencyID_maxQuantity[1342] then
-					VivodCent = Green_Color..VivodCent.."|r"
+				if CharInfo.CurrencyID_Total[1342] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1342]
 				end
 				VivodLeft = func_currencyicon(1342)..func_currencyName(1342)
 				return VivodCent, VivodLeft
@@ -2574,8 +2584,8 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Ресурсы оплота класса
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.CurrencyID[1220] ~= 0 then
-					VivodCent = CharInfo.CurrencyID[1220]
+				if CharInfo.CurrencyID_Total[1220] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1220]
 				end
 				VivodLeft = func_currencyicon(1220)..func_currencyName(1220)
 				return VivodCent, VivodLeft
@@ -2583,8 +2593,8 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Осколок Пустоты
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.CurrencyID[1226] ~= 0 then
-					VivodCent = CharInfo.CurrencyID[1226]
+				if CharInfo.CurrencyID_Total[1226] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1226]
 				end
 				VivodLeft = func_currencyicon(1226)..func_currencyName(1226)
 				return VivodCent, VivodLeft
@@ -2592,8 +2602,8 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- Пробуждающая сущность
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.CurrencyID[1533] ~= 0 then
-					VivodCent = CharInfo.CurrencyID[1533]
+				if CharInfo.CurrencyID_Total[1533] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1533]
 				end
 				VivodLeft = func_currencyicon(1533)..func_currencyName(1533)
 				return VivodCent, VivodLeft
@@ -2646,11 +2656,30 @@ local function O_otrisovka()
 	end
 	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_WarlordsofDraenor then
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[1129] then
+					VivodCent = CharInfo.CurrencyID_Total[1129].."(+"..CharInfo.Octopussy_WoD_Weekly_coinsQuests_count..")"
+				end
+				VivodLeft = func_currencyicon(1129)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(1129)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[1129] then
+					VivodCent = CharInfo.CurrencyID_Total[994]
+				end
+				VivodLeft = func_currencyicon(994)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(994)
+				return VivodCent, VivodLeft
+		end)
+
 		tinsert(table_func_otrisovka, --
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.CurrencyID[823] ~= 0 then
-					VivodCent = CharInfo.CurrencyID[823]
+				if CharInfo.CurrencyID_Total[823] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[823]
 				end
 				VivodLeft = func_currencyicon(823)..func_currencyName(823)
 				return VivodCent, VivodLeft
@@ -2658,11 +2687,8 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, --
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.CurrencyID[1101] ~= 0 then
-					VivodCent = CharInfo.CurrencyID[1101].."/"..CharInfo.CurrencyID_maxQuantity[1101]
-				end
-				if CharInfo.CurrencyID[1101] == CharInfo.CurrencyID_maxQuantity[1101] then
-					VivodCent = Green_Color..VivodCent.."|r"
+				if CharInfo.CurrencyID_Total[1101] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[1101]
 				end
 				VivodLeft = func_currencyicon(1101)..func_currencyName(1101)
 				return VivodCent, VivodLeft
@@ -2670,11 +2696,8 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, --
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.CurrencyID[824] ~= 0 then
-					VivodCent = CharInfo.CurrencyID[824].."/"..CharInfo.CurrencyID_maxQuantity[824]
-				end
-				if CharInfo.CurrencyID[824] == CharInfo.CurrencyID_maxQuantity[824] then
-					VivodCent = Green_Color..VivodCent.."|r"
+				if CharInfo.CurrencyID_Total[824] ~= "|cff4040400|r" then
+					VivodCent = CharInfo.CurrencyID_Total[824]
 				end
 				VivodLeft = func_currencyicon(824)..func_currencyName(824)
 				return VivodCent, VivodLeft
@@ -2725,6 +2748,24 @@ local function O_otrisovka()
 	end
 	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_MistsofPandaria then
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[697] then
+					VivodCent = CharInfo.CurrencyID_Total[697]
+				end
+				VivodLeft = func_currencyicon(697)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(697)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[776] then
+					VivodCent = CharInfo.CurrencyID_Total[776]
+				end
+				VivodLeft = func_currencyicon(776)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(776)
+				return VivodCent, VivodLeft
+		end)
 	end
 	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_Cataclysm then
@@ -2799,7 +2840,7 @@ local function O_otrisovka()
 			if Octo_ToDo_DragonflyVars.config.LINE_BattleforAzeroth then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {"    "..Blue_Color.."Battle for Azeroth".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(1580)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1580), CharInfo.CurrencyID_Total[1580].."(+"..CharInfo.Octopussy_BfA_Weekly_coinsQuests_count..")"} --Печать судьбы воина
+				tooltip[#tooltip+1] = {func_currencyicon(1580)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(1580), CharInfo.CurrencyID_Total[1580].."(+"..CharInfo.Octopussy_BfA_Weekly_coinsQuests_count..")"} --Печать судьбы воина
 				tooltip[#tooltip+1] = {func_currencyicon(1803)..func_currencyName(1803), CharInfo.CurrencyID_Total[1803]}
 				tooltip[#tooltip+1] = {func_currencyicon(1721)..func_currencyName(1721), CharInfo.CurrencyID_Total[1721]}
 				tooltip[#tooltip+1] = {func_currencyicon(1587)..func_currencyName(1587), CharInfo.CurrencyID_Total[1587]}
@@ -2821,7 +2862,7 @@ local function O_otrisovka()
 			if Octo_ToDo_DragonflyVars.config.LINE_Legion then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {"    "..Blue_Color.."Legion".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(1273)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1273), CharInfo.CurrencyID_Total[1273].."(+"..CharInfo.Octopussy_Legion_Weekly_coinsQuests_count..")"} --Печать сломанной судьбы
+				tooltip[#tooltip+1] = {func_currencyicon(1273)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(1273), CharInfo.CurrencyID_Total[1273].."(+"..CharInfo.Octopussy_Legion_Weekly_coinsQuests_count..")"} --Печать сломанной судьбы
 				tooltip[#tooltip+1] = {func_currencyicon(1356)..func_currencyName(1356),CharInfo.CurrencyID_Total[1356]}
 				tooltip[#tooltip+1] = {func_currencyicon(1275)..func_currencyName(1275),CharInfo.CurrencyID_Total[1275]}
 				tooltip[#tooltip+1] = {func_currencyicon(1357)..func_currencyName(1357),CharInfo.CurrencyID_Total[1357]}
@@ -2842,8 +2883,8 @@ local function O_otrisovka()
 			if Octo_ToDo_DragonflyVars.config.LINE_WarlordsofDraenor then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {"    "..Blue_Color.."Warlords of Draenor".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(1129)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1129), CharInfo.CurrencyID_Total[1129].."(+"..CharInfo.Octopussy_WoD_Weekly_coinsQuests_count..")"} --Печать неизбежной судьбы
-				tooltip[#tooltip+1] = {func_currencyicon(994)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(994), CharInfo.CurrencyID_Total[994]} --Печать закаленной судьбы
+				tooltip[#tooltip+1] = {func_currencyicon(1129)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(1129), CharInfo.CurrencyID_Total[1129].."(+"..CharInfo.Octopussy_WoD_Weekly_coinsQuests_count..")"} --Печать неизбежной судьбы
+				tooltip[#tooltip+1] = {func_currencyicon(994)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(994), CharInfo.CurrencyID_Total[994]} --Печать закаленной судьбы
 				tooltip[#tooltip+1] = {func_currencyicon(823)..func_currencyName(823),CharInfo.CurrencyID_Total[823]}
 				tooltip[#tooltip+1] = {func_currencyicon(824)..func_currencyName(824),CharInfo.CurrencyID_Total[824]}
 				tooltip[#tooltip+1] = {func_currencyicon(1101)..func_currencyName(1101),CharInfo.CurrencyID_Total[1101]}
@@ -2859,8 +2900,8 @@ local function O_otrisovka()
 			if Octo_ToDo_DragonflyVars.config.LINE_MistsofPandaria then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {"    "..Blue_Color.."Mists of Pandaria".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(697)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(697), CharInfo.CurrencyID_Total[697]} --Большой амулет удачи
-				tooltip[#tooltip+1] = {func_currencyicon(776)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(776), CharInfo.CurrencyID_Total[776]} --Закаленная в бою печать
+				tooltip[#tooltip+1] = {func_currencyicon(697)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(697), CharInfo.CurrencyID_Total[697]} --Большой амулет удачи
+				tooltip[#tooltip+1] = {func_currencyicon(776)..Blue_Color.."("..L["Coins"]..") |r"..func_currencyName(776), CharInfo.CurrencyID_Total[776]} --Закаленная в бою печать
 				tooltip[#tooltip+1] = {func_currencyicon(777)..func_currencyName(777),CharInfo.CurrencyID_Total[777]}
 				tooltip[#tooltip+1] = {func_currencyicon(738)..func_currencyName(738),CharInfo.CurrencyID_Total[738]}
 				tooltip[#tooltip+1] = {func_currencyicon(752)..func_currencyName(752),CharInfo.CurrencyID_Total[752]}
@@ -3636,6 +3677,10 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 	EventFrame:RegisterEvent("SPELLS_CHANGED")
 	EventFrame:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
+	EventFrame:RegisterEvent("UNIT_SPELLCAST_START")
+	EventFrame:RegisterEvent("UNIT_SPELLCAST_STOP")
+	--EventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	EventFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
 	-- -- EventFrame:RegisterEvent("VARIABLES_LOADED")
 	-- EventFrame:RegisterEvent("ARENA_SEASON_WORLD_STATE")
 	-- EventFrame:RegisterEvent("BATTLEFIELDS_CLOSED")
@@ -5611,6 +5656,12 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Octo_ToDo_DragonflyVars.config.AddonVersion = tonumber(AddonVersion)
 		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.config)
 		ldbi:Show(MinimapName)
+	elseif event == "UNIT_SPELLCAST_START" or event == "UNIT_SPELLCAST_STOP"  or event == "UNIT_SPELLCAST_INTERRUPTED" then
+		if Main_Frame and Main_Frame:IsShown() then
+			print ("Main_Frame:Hide()")
+			Main_Frame:Hide()
+
+		end
 	elseif event == "ACTIONBAR_UPDATE_COOLDOWN" and not InCombatLockdown() and Main_Frame and Main_Frame:IsShown() then
 		-- print (GetExpansionLevel(), GetAccountExpansionLevel(), GetServerExpansionLevel(), LE_EXPANSION_LEVEL_CURRENT)
 		Octo_ToDo_DragonflyAddDataToAltFrame()
