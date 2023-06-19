@@ -42,6 +42,7 @@ local Kyrian_Icon = "|T3257748:16:16:::64:64:4:60:4:60|t"
 local Necrolord_Icon = "|T3257749:16:16:::64:64:4:60:4:60|t"
 local NightFae_Icon = "|T3257750:16:16:::64:64:4:60:4:60|t"
 local Venthyr_Icon = "|T3257751:16:16:::64:64:4:60:4:60|t"
+local WorldBoss_Icon = "|T3528312:16:16:::64:64:4:60:4:60|t"
 local Kyri_Color_r, Kyri_Color_g, Kyri_Color_b = 0.44, 0.66, 0.86
 local Necr_Color_r, Necr_Color_g, Necr_Color_b = 0.58, 0.77, 0.49
 local NFae_Color_r, NFae_Color_g, NFae_Color_b = 0.56, 0.49, 0.76
@@ -131,23 +132,19 @@ local Octo_Table_itemID_Cataloged_Research = {
 	{itemiD = 187350, count = 300},
 }
 local Octo_Table_itemID_ALL = {
-	24915,24916,24917,24918,24919,49040,50274,51316,51317,51318,51319,51320,51321,52200,52201,52251,52252,52253,83078,92426,92441,92471,122284,122338,122339,122340,122341,128353,129940,129941,129942,129943,129944,129945,129946,129947,129948,129949,129950,129951,129954,129955,133150,133151,133152,133154,133159,133160,137642,138486,138488,138727,138728,138729,141605,141652,143935,143936,143937,143938,143939,143940,143941,143942,143943,143944,143945,143946,143947,151614,151615,166751,167731,167732,167862,167924,167925,167926,167927,167928,167929,167930,167932,168017,168018,180817,183616,185834,187997,187998,188152,189765,190189,190453,190454,190455,190456,191251,191264,191784,191915,192130,192131,192132,193201,193891,193897,193898,193899,193900,193901,193902,193903,193904,193905,193907,193909,193910,193913,194039,194040,194041,194054,194055,194061,194062,194063,194064,194066,194067,194068,194072,194076,194077,194078,194079,194080,194081,194337,194697,194698,194699,194700,194702,194703,194704,194708,197921,198046,198395,198438,198454,198510,198599,198606,198607,198608,198609,198610,198611,198612,198613,198656,198658,198659,198660,198662,198663,198664,198667,198669,198670,198680,198682,198683,198684,198685,198686,198687,198690,198692,198693,198696,198697,198699,198702,198703,198704,198710,198711,198712,198789,198837,198841,198863,198864,198865,198866,198867,198868,198869,198963,198964,198965,198966,198967,198968,198969,198970,198971,198972,198973,198974,198975,198976,198977,198978,199115,199122,199128,199192,199197,199472,199473,199474,199475,200069,200070,200072,200073,200095,200224,200285,200287,200288,200289,200300,200452,200453,200454,200455,200468,200513,200515,200516,200609,200610,200611,200652,200677,200678,200686,200764,200811,200846,200972,200973,200974,200975,200976,200977,200978,200979,200980,200981,200982,201003,201004,201005,201006,201007,201008,201009,201010,201011,201012,201013,201014,201015,201016,201017,201018,201019,201020,201023,201250,201268,201269,201270,201271,201272,201273,201274,201275,201276,201277,201278,201279,201280,201281,201282,201283,201284,201285,201286,201287,201288,201289,201300,201301,201326,201352,201439,201462,201700,201705,201706,201708,201709,201710,201711,201712,201713,201714,201715,201716,201717,201728,201755,201756,201781,201782,201817,201836,201921,201922,201923,201924,201991,202011,202014,202016,202017,202039,202052,202079,202080,202091,202092,202093,202094,202097,202098,202142,202152,202171,202172,202173,202196,202371,202667,202668,202669,202670,202870,202871,202872,203217,203220,203222,203224,203430,203476,203611,203612,203613,203614,203615,203616,203617,203618,203619,203620,203622,203623,203626,203627,203628,203629,203630,203631,203632,203633,203634,203635,203636,203637,203638,203639,203640,203641,203642,203643,203644,203645,203646,203647,203648,203649,203650,203681,203683,203699,203700,203702,203710,204075,204076,204077,204078,204180,204186,204187,204188,204189,204190,204191,204193,204194,204195,204196,204215,204217,204222,204224,204225,204226,204227,204228,204229,204230,204231,204232,204233,204276,204352,204359,204378,204379,204380,204381,204383,204403,204440,204464,204469,204470,204471,204475,204558,204559,204560,204573,204574,204575,204576,204577,204578,204579,204681,204682,204697,204715,204717,204721,204722,204723,204724,204725,204726,204727,204843,204850,204853,204855,204985,204986,204987,204988,204990,204999,205001,205188,205211,205212,205213,205214,205216,205219,205225,205249,205250,205288,205347,205367,205423,205878,205903,205982,205984,205986,205987,205988,205989,205999,206019,206025,206028,206030,206031,206034,206035,206037,206139,206140,206141,206142,206143,206144,206366,
-}
-local Octo_Table_QuestID = {
-	13183,24545,24547,24548,24549,24743,24748,24749,24756,24757,32295,32307,32309,32310,32317,32324,32325,40168,40173,40786,40787,45563,47148,55498,55499,55509,55511,56337,56339,64367,64710,65143,65282,66042,66133,66419,66860,66861,66862,66863,66864,66865,66866,66867,66868,66870,66871,66873,66874,66875,71026,72166,72167,72168,72169,72170,72171,72646,72647,72648,72649,72719,72720,72721,72722,72723,72724,72725,72726,72727,72728,72810,74378,74568,74569,74570,74771,74775,74871,74905,75234,75239,75390,75393,75397,75459,75497,75506,75516,75517,75619,75620,75621,75622,75665,75694,75887,75888,75996,76014,76015,76016,76027,76081,76084,76122,13183,24545,24547,24548,24549,24743,24748,24749,24756,24757,32295,32307,32309,32310,32317,32324,32325,36614,40168,40173,40786,40787,45563,47148,55498,55499,55509,55511,56337,56339,60242,60243,60244,60245,60246,60247,60248,60249,60250,60251,60252,60253,60254,60255,60256,60257,60646,60762,60775,61075,61079,61088,61103,61104,61765,61813,61814,61815,61816,61981,61982,61983,61984,62214,62234,62284,62285,62286,62287,62288,62631,62632,62633,62634,62635,62636,62637,62638,62639,62640,62858,62859,62860,62861,62862,62863,62864,62865,62866,62867,62868,62869,63543,63815,63816,63817,63818,63822,63823,63824,63825,63826,63830,63949,63993,63995,63996,63997,63998,63999,64021,64027,64044,64045,64055,64056,64057,64058,64059,64060,64061,64152,64209,64232,64233,64243,64245,64246,64247,64251,64256,64257,64258,64263,64265,64269,64270,64272,64273,64276,64278,64283,64284,64285,64291,64300,64303,64307,64313,64316,64317,64318,64320,64338,64339,64341,64342,64343,64344,64347,64348,64349,64351,64354,64355,64356,64357,64358,64359,64360,64361,64362,64363,64364,64366,64367,64428,64433,64434,64435,64436,64439,64440,64442,64455,64456,64457,64470,64471,64472,64522,64531,64564,64565,64575,64709,64710,64747,64748,64749,64750,64751,64752,64753,64754,64755,64756,64757,64828,65143,65266,65282,66042,66133,66419,66860,66861,66862,66863,66864,66865,66866,66867,66868,66870,66871,66873,66874,66875,71026,72166,72167,72168,72169,72170,72171,72646,72647,72648,72649,72719,72720,72721,72722,72723,72724,72725,72726,72727,72728,72810,74300,74305,74306,74307,74321,74322,74325,74328,74329,74330,74331,74332,74333,74336,74337,74338,74339,74341,74342,74343,74344,74345,74346,74347,74349,74352,74378,74568,74569,74570,74771,74775,74871,74905,75156,75222,75234,75239,75267,75269,75271,75274,75276,75285,75292,75296,75298,75314,75322,75326,75334,75336,75338,75340,75342,75349,75353,75358,75360,75364,75366,75370,75390,75393,75397,75441,75450,75451,75454,75455,75459,75461,75471,75476,75478,75494,75497,75506,75516,75517,75576,75611,75612,75619,75620,75621,75622,75624,75664,75665,75694,75705,75887,75888,75996,76014,76015,76016,76027,76081,76084,76122,39246,34378
+	124124,173363,24915,24916,24917,24918,24919,49040,50274,51316,51317,51318,51319,51320,51321,52200,52201,52251,52252,52253,83078,92426,92441,92471,122284,122338,122339,122340,122341,128353,129940,129941,129942,129943,129944,129945,129946,129947,129948,129949,129950,129951,129954,129955,133150,133151,133152,133154,133159,133160,137642,138486,138488,138727,138728,138729,141605,141652,143935,143936,143937,143938,143939,143940,143941,143942,143943,143944,143945,143946,143947,151614,151615,166751,167731,167732,167862,167924,167925,167926,167927,167928,167929,167930,167932,168017,168018,180817,183616,185834,187997,187998,188152,189765,190189,190453,190454,190455,190456,191251,191264,191784,191915,192130,192131,192132,193201,193891,193897,193898,193899,193900,193901,193902,193903,193904,193905,193907,193909,193910,193913,194039,194040,194041,194054,194055,194061,194062,194063,194064,194066,194067,194068,194072,194076,194077,194078,194079,194080,194081,194337,194697,194698,194699,194700,194702,194703,194704,194708,197921,198046,198395,198438,198454,198510,198599,198606,198607,198608,198609,198610,198611,198612,198613,198656,198658,198659,198660,198662,198663,198664,198667,198669,198670,198680,198682,198683,198684,198685,198686,198687,198690,198692,198693,198696,198697,198699,198702,198703,198704,198710,198711,198712,198789,198837,198841,198863,198864,198865,198866,198867,198868,198869,198963,198964,198965,198966,198967,198968,198969,198970,198971,198972,198973,198974,198975,198976,198977,198978,199115,199122,199128,199192,199197,199472,199473,199474,199475,200069,200070,200072,200073,200095,200224,200285,200287,200288,200289,200300,200452,200453,200454,200455,200468,200513,200515,200516,200609,200610,200611,200652,200677,200678,200686,200764,200811,200846,200972,200973,200974,200975,200976,200977,200978,200979,200980,200981,200982,201003,201004,201005,201006,201007,201008,201009,201010,201011,201012,201013,201014,201015,201016,201017,201018,201019,201020,201023,201250,201268,201269,201270,201271,201272,201273,201274,201275,201276,201277,201278,201279,201280,201281,201282,201283,201284,201285,201286,201287,201288,201289,201300,201301,201326,201352,201439,201462,201700,201705,201706,201708,201709,201710,201711,201712,201713,201714,201715,201716,201717,201728,201755,201756,201781,201782,201817,201836,201921,201922,201923,201924,201991,202011,202014,202016,202017,202039,202052,202079,202080,202091,202092,202093,202094,202097,202098,202142,202152,202171,202172,202173,202196,202371,202667,202668,202669,202670,202870,202871,202872,203217,203220,203222,203224,203430,203476,203611,203612,203613,203614,203615,203616,203617,203618,203619,203620,203622,203623,203626,203627,203628,203629,203630,203631,203632,203633,203634,203635,203636,203637,203638,203639,203640,203641,203642,203643,203644,203645,203646,203647,203648,203649,203650,203681,203683,203699,203700,203702,203710,204075,204076,204077,204078,204180,204186,204187,204188,204189,204190,204191,204193,204194,204195,204196,204215,204217,204222,204224,204225,204226,204227,204228,204229,204230,204231,204232,204233,204276,204352,204359,204378,204379,204380,204381,204383,204403,204440,204464,204469,204470,204471,204475,204558,204559,204560,204573,204574,204575,204576,204577,204578,204579,204681,204682,204697,204715,204717,204721,204722,204723,204724,204725,204726,204727,204843,204850,204853,204855,204985,204986,204987,204988,204990,204999,205001,205188,205211,205212,205213,205214,205216,205219,205225,205249,205250,205288,205347,205367,205423,205878,205903,205982,205984,205986,205987,205988,205989,205999,206019,206025,206028,206030,206031,206034,206035,206037,206139,206140,206141,206142,206143,206144,206366,
 }
 local Octo_Table_itemID_Reputation = {
 	192055,200443,200093,200447,199906,200450,201411,201412,200071,200449,201470,201471,206006,202854,190941
 }
-
 local Octo_Table_itemID_DFMountsSkins = {
 	192111,192523,194034,194106,194521,194549,194705,194838,196961,196962,196963,196964,196965,196966,196967,196968,196969,196970,196971,196972,196973,196974,196975,196976,196977,196978,196979,196980,196981,196982,196983,196984,196985,196986,196987,196988,196989,196990,196991,196992,196993,196994,196995,196996,196997,196998,196999,197000,197001,197002,197003,197004,197005,197006,197007,197008,197009,197010,197011,197012,197013,197014,197015,197016,197017,197018,197019,197020,197021,197022,197023,197090,197091,197093,197094,197095,197096,197097,197098,197099,197100,197101,197102,197103,197104,197105,197106,197107,197108,197109,197110,197111,197112,197113,197114,197115,197116,197117,197118,197119,197120,197121,197122,197123,197124,197125,197126,197127,197128,197129,197130,197131,197132,197133,197134,197135,197136,197137,197138,197139,197140,197141,197142,197143,197144,197145,197146,197147,197148,197149,197150,197151,197152,197153,197154,197155,197156,197346,197347,197348,197349,197350,197351,197352,197353,197354,197355,197356,197357,197358,197359,197360,197361,197362,197363,197364,197365,197366,197367,197368,197369,197370,197371,197372,197373,197374,197375,197376,197377,197378,197379,197380,197381,197382,197383,197384,197385,197386,197387,197388,197389,197390,197391,197392,197393,197394,197395,197396,197397,197398,197399,197400,197401,197402,197403,197404,197405,197406,197407,197408,197577,197578,197579,197580,197581,197582,197583,197584,197585,197586,197587,197588,197589,197590,197591,197592,197593,197594,197595,197596,197597,197598,197599,197600,197601,197602,197603,197604,197605,197606,197607,197608,197609,197610,197611,197612,197613,197614,197615,197616,197617,197618,197619,197620,197621,197622,197623,197624,197625,197626,197627,197628,197629,197630,197634,197635,197636,198438,198891,198892,198893,198894,198895,198896,198899,198901,198902,198903,198904,199192,201734,201735,201736,201737,201738,201739,201741,201742,201743,201790,201792,202102,202273,202274,202275,202277,202278,202279,202280,203299,203300,203303,203304,203306,203307,203308,203309,203310,203311,203312,203313,203314,203315,203316,203317,203318,203319,203320,203321,203322,203323,203324,203325,203327,203328,203329,203330,203331,203332,203333,203334,203335,203336,203337,203338,203339,203340,203341,203342,203343,203344,203345,203346,203347,203348,203349,203350,203351,203352,203353,203354,203355,203357,203358,203359,203360,203361,203362,203363,203364,203365,204359,204361,205226,205341,205865,205876,206955,
 }
-
-
 TableConcat (Octo_Table_itemID_ALL,Octo_Table_itemID_Reputation)
 TableConcat (Octo_Table_itemID_ALL,Octo_Table_itemID_DFMountsSkins)
-
+local Octo_Table_QuestID = {
+	13183,24545,24547,24548,24549,24743,24748,24749,24756,24757,32295,32307,32309,32310,32317,32324,32325,40168,40173,40786,40787,45563,47148,55498,55499,55509,55511,56337,56339,64367,64710,65143,65282,66042,66133,66419,66860,66861,66862,66863,66864,66865,66866,66867,66868,66870,66871,66873,66874,66875,71026,72166,72167,72168,72169,72170,72171,72646,72647,72648,72649,72719,72720,72721,72722,72723,72724,72725,72726,72727,72728,72810,74378,74568,74569,74570,74771,74775,74871,74905,75234,75239,75390,75393,75397,75459,75497,75506,75516,75517,75619,75620,75621,75622,75665,75694,75887,75888,75996,76014,76015,76016,76027,76081,76084,76122,13183,24545,24547,24548,24549,24743,24748,24749,24756,24757,32295,32307,32309,32310,32317,32324,32325,36614,40168,40173,40786,40787,45563,47148,55498,55499,55509,55511,56337,56339,60242,60243,60244,60245,60246,60247,60248,60249,60250,60251,60252,60253,60254,60255,60256,60257,60646,60762,60775,61075,61079,61088,61103,61104,61765,61813,61814,61815,61816,61981,61982,61983,61984,62214,62234,62284,62285,62286,62287,62288,62631,62632,62633,62634,62635,62636,62637,62638,62639,62640,62858,62859,62860,62861,62862,62863,62864,62865,62866,62867,62868,62869,63543,63815,63816,63817,63818,63822,63823,63824,63825,63826,63830,63949,63993,63995,63996,63997,63998,63999,64021,64027,64044,64045,64055,64056,64057,64058,64059,64060,64061,64152,64209,64232,64233,64243,64245,64246,64247,64251,64256,64257,64258,64263,64265,64269,64270,64272,64273,64276,64278,64283,64284,64285,64291,64300,64303,64307,64313,64316,64317,64318,64320,64338,64339,64341,64342,64343,64344,64347,64348,64349,64351,64354,64355,64356,64357,64358,64359,64360,64361,64362,64363,64364,64366,64367,64428,64433,64434,64435,64436,64439,64440,64442,64455,64456,64457,64470,64471,64472,64522,64531,64564,64565,64575,64709,64710,64747,64748,64749,64750,64751,64752,64753,64754,64755,64756,64757,64828,65143,65266,65282,66042,66133,66419,66860,66861,66862,66863,66864,66865,66866,66867,66868,66870,66871,66873,66874,66875,71026,72166,72167,72168,72169,72170,72171,72646,72647,72648,72649,72719,72720,72721,72722,72723,72724,72725,72726,72727,72728,72810,74300,74305,74306,74307,74321,74322,74325,74328,74329,74330,74331,74332,74333,74336,74337,74338,74339,74341,74342,74343,74344,74345,74346,74347,74349,74352,74378,74568,74569,74570,74771,74775,74871,74905,75156,75222,75234,75239,75267,75269,75271,75274,75276,75285,75292,75296,75298,75314,75322,75326,75334,75336,75338,75340,75342,75349,75353,75358,75360,75364,75366,75370,75390,75393,75397,75441,75450,75451,75454,75455,75459,75461,75471,75476,75478,75494,75497,75506,75516,75517,75576,75611,75612,75619,75620,75621,75622,75624,75664,75665,75694,75705,75887,75888,75996,76014,76015,76016,76027,76081,76084,76122,39246,34378
+}
 local Octo_Table_SpellID = {
 	--Рыбалка
 	366253, -- Рыбная ловля дракьньих осттавов
@@ -202,18 +199,17 @@ local function func_reputationName(factionID)
 end
 local function func_itemName(itemID)
 	local itemName, _, itemQuality = GetItemInfo(itemID)
-	local name = ""
 	if itemQuality then
 		local r, g, b = GetItemQualityColor(itemQuality)
 		local color = CreateColor(r, g, b, 1)
-		local name = color:WrapTextInColorCode(itemName)
-		return name
+		local itemNameColored = color:WrapTextInColorCode(itemName)
+		return itemNameColored or "noname"
 	end
-	return name
+	return itemName or "noname"
 end
 local function func_itemName_NOCOLOR(itemID)
-	local itemName, _, itemQuality = GetItemInfo(itemID)
-	return itemName
+	local itemName = GetItemInfo(itemID)
+	return itemName or "noname"
 end
 local function func_itemTexture(itemID)
 	local itemTexture = select(10, GetItemInfo(itemID)) or 134400 --https://www.wowhead.com/ru/icon=134400/inv-misc-questionmark
@@ -403,7 +399,9 @@ function CollectKnownSpell()
 	--366253
 	for k,v in ipairs(Octo_Table_SpellID) do
 		local isKnown = IsSpellKnown(v)
-		collect.KnownSpell[v] = isKnown
+		if collect and not InCombatLockdown() then
+			collect.KnownSpell[v] = isKnown
+		end
 	end
 end
 function CollectVoidStorage()
@@ -937,7 +935,7 @@ function CollectPossibleAnima()
 	end
 	Possible_Anima = Possible_Anima
 	Possible_CatalogedResearch = Possible_CatalogedResearch
-	if collect then
+	if collect and not InCombatLockdown() then
 		collect.Possible_Anima = Possible_Anima
 		collect.Possible_CatalogedResearch = Possible_CatalogedResearch
 	end
@@ -1064,7 +1062,7 @@ function CollectCurrentKEY()
 		end
 	else mkey = 0
 	end
-	if collect then
+	if collect and not InCombatLockdown() then
 		collect.CurrentKey = mkey or 0
 		local HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
 		collect.HasAvailableRewards = HasAvailableRewards
@@ -1558,7 +1556,7 @@ function CollectAllCurrency()
 		local quantity = data.quantity
 		local maxQuantity = data.maxQuantity
 		if v == 2167 and maxQuantity > 6 then maxQuantity = 6 end
-		if collect then
+		if collect and not InCombatLockdown() then
 			collect.CurrencyID[v] = quantity
 			collect.CurrencyID_maxQuantity[v] = maxQuantity
 			if maxQuantity ~= 0 then
@@ -1593,7 +1591,7 @@ function CollectAppliedMountEquipmentID()
 	-------------------------------------------------------------------------
 	local canUseMountEquipment = C_PlayerInfo.CanPlayerUseMountEquipment()
 	local itemID = C_MountJournal.GetAppliedMountEquipmentID()
-	if collect then
+	if collect and not InCombatLockdown() then
 		collect.canUseMountEquipment = canUseMountEquipment
 		collect.currentMountItemID = itemID
 	end
@@ -1602,6 +1600,7 @@ function CollectAllItemsInBag()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
+	local PlayerReagentnumSlots = C_Container.GetContainerNumSlots(BACKPACK_CONTAINER+NUM_BAG_SLOTS+1)
 	local usedSlots = 0
 	local totalSlots = 0
 	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
@@ -1612,26 +1611,28 @@ function CollectAllItemsInBag()
 			usedSlots = usedSlots + (numSlots - numberOfFreeSlots)
 		end
 	end
-	if collect and usedSlots > 0 and totalSlots > 0 then
-		collect.usedSlots = usedSlots
-		collect.totalSlots = totalSlots
-	end
 	-------------------------------------------------------------------------
-	local BindLocation = GetBindLocation()
-	local PlayerReagentnumSlots = C_Container.GetContainerNumSlots(BACKPACK_CONTAINER+NUM_BAG_SLOTS+1)
-	local mapID = C_Map.GetBestMapForUnit("player")
-	if mapID then
-		local info = C_Map.GetMapInfo(mapID)
-		local CurrentLocation= "noname"
-		CurrentLocation = info.name
 		if collect and not InCombatLockdown() then
 			for k, v in ipairs(Octo_Table_itemID_ALL) do
 				local count = GetItemCount(v, true, true, true)
-				collect.ItemsInBag[v] = count or 0
-				collect.BindLocation = BindLocation
-				collect.CurrentLocation = CurrentLocation
+				collect.ItemsInBag[v] = count
 			end
 			collect.PlayerReagentnumSlots = PlayerReagentnumSlots
+			collect.usedSlots = usedSlots
+			collect.totalSlots = totalSlots
+		end
+end
+function CollectLocations()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	-------------------------------------------------------------------------
+	local mapID = C_Map.GetBestMapForUnit("player")
+	if mapID then
+		local BindLocation = GetBindLocation()
+		local info = C_Map.GetMapInfo(mapID)
+		if info and collect and not InCombatLockdown() then
+			collect.BindLocation = BindLocation
+			collect.CurrentLocation = info.name or "no CurrentLocation"
 		end
 	end
 end
@@ -1675,7 +1676,7 @@ function CollectBankInfo()
 		end
 	end
 	-------------------------------------------------------------------------
-	if collect then
+	if collect and not InCombatLockdown() then
 		collect.usedSlotsBANK = usedSlotsBANK + usedSlotsBANKREAGENT + usedSlotsBANKBAGS
 		collect.totalSlotsBANK = totalSlotsBANK + totalSlotsBANKREAGENT + totalSlotsBANKBAGS
 	end
@@ -1684,7 +1685,7 @@ function CollectAllReputations()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
-	if collect then
+	if collect and not InCombatLockdown() then
 		for k, v in pairs(Octo_Table_reputation) do
 			local rep = CheckReputationByRepID(v)
 			collect.reputationID[v] = rep or 0
@@ -1703,12 +1704,85 @@ function CollectAllQuests()
 		collect.Octo_Table_QuestID[v] = qw or 0
 	end
 	----------------------------------------
-	if collect then
+	if collect and not InCombatLockdown() then
 		collect.numShownEntries = numShownEntries
 		collect.numQuests = numQuests
 		collect.maxNumQuestsCanAccept = maxNumQuestsCanAccept
 	end
 end
+function CollectIslandBfA()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	-------------------------------------------------------------------------
+	local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
+	if questID then
+		if collect and not InCombatLockdown() then
+			collect.islandBfA = CheckCompletedByQuestID(questID)
+		end
+	end
+end
+function CollectAllQuestsBounties()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	-------------------------------------------------------------------------
+	local bounties_Legion = C_QuestLog.GetBountiesForMapID(619) -- Broken Isles
+	if bounties_Legion then
+		for i=1,#bounties_Legion do
+			local d = bounties_Legion[i]
+			local factionName = GetFactionInfoByID(d.factionID)
+			local questIndex = C_QuestLog.GetLogIndexForQuestID(d.questID)
+			if questIndex > 0 then
+				local questData = C_QuestLog.GetInfo(questIndex)
+				if questData and questData.title then
+					factionName = questData.title
+				end
+			end
+			local currQ, maxQ = 0,0
+			local secondsLeft = C_TaskQuest.GetQuestTimeLeftMinutes(d.questID)
+			if secondsLeft then
+				local strsecondsLeft = format("%dh %dm",(secondsLeft / 60) % 24,secondsLeft % 60)
+				if secondsLeft >= 1440 then
+					strsecondsLeft = floor(secondsLeft / 1440).."d "..strsecondsLeft
+				end
+			end
+			local faction_icon = "|T"..d.icon..":0|t "
+			if collect and not InCombatLockdown() then
+				collect["bounty_Legion"..i] = faction_icon..CheckCompletedByQuestID(d.questID)
+				collect["bounty_Legion"..i.."_questID"] = d.questID
+				collect["bounty_Legion"..i.."_end"] = time() + secondsLeft * 60
+			end
+		end
+	end
+	local bounties_BfA = C_QuestLog.GetBountiesForMapID(875) --	Zandalar
+	if bounties_BfA then
+		for i=1,#bounties_BfA do
+			local d = bounties_BfA[i]
+			local factionName = GetFactionInfoByID(d.factionID)
+			local questIndex = C_QuestLog.GetLogIndexForQuestID(d.questID)
+			if questIndex > 0 then
+				local questData = C_QuestLog.GetInfo(questIndex)
+				if questData and questData.title then
+					factionName = questData.title
+				end
+			end
+			local currQ, maxQ = 0,0
+			local secondsLeft = C_TaskQuest.GetQuestTimeLeftMinutes(d.questID)
+			if secondsLeft then
+				local strsecondsLeft = format("%dh %dm",(secondsLeft / 60) % 24,secondsLeft % 60)
+				if secondsLeft >= 1440 then
+					strsecondsLeft = floor(secondsLeft / 1440).."d "..strsecondsLeft
+				end
+			end
+			local faction_icon = "|T"..d.icon..":0|t "
+			if collect and not InCombatLockdown() then
+				collect["bounty_BfA"..i] = CheckCompletedByQuestID(d.questID)
+				collect["bounty_BfA"..i.."_icon"] = faction_icon
+				collect["bounty_BfA"..i.."_questID"] = d.questID
+				collect["bounty_BfA"..i.."_end"] = time() + secondsLeft * 60
+			end
+		end
+	end
+end -- For func
 local function tmstpDayReset(n)
 	local n = n or 1
 	local currTime = GetServerTime()
@@ -1751,31 +1825,76 @@ local WA_Utf8Sub = function(input, size)
 end
 local table_func_otrisovka = {}
 local function O_otrisovka()
+	-- Эпохальный ключ
+	tinsert(table_func_otrisovka,
+		--4
+		function(CharInfo, tooltip, CL, BG)
+			local VivodCent, VivodLeft = "", ""
+			VivodLeft = func_itemTexture(180653)..func_itemName(180653)
+			if CharInfo.CurrentKey ~= 0 then
+				tooltip[#tooltip+1] = {"Score", CharInfo.RIO_Score}
+				tooltip[#tooltip+1] = {"Weekly Best", CharInfo.RIO_weeklyBest}
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {"Рейды", CharInfo.RIO_RAID}
+				tooltip[#tooltip+1] = {"M+", CharInfo.RIO_KEYS}
+				tooltip[#tooltip+1] = {"PVP", CharInfo.RIO_PVPS}
+				-- tooltip[#tooltip+1] = {
+				-- {"Score", CharInfo.RIO_Score},
+				-- {"Weekly Best", CharInfo.RIO_weeklyBest},
+				-- {" ", " "},
+				-- {"Рейды", CharInfo.RIO_RAID},
+				-- {"M+", CharInfo.RIO_KEYS},
+				-- {"PVP", CharInfo.RIO_PVPS},
+				-- }
+				-- tooltip[#tooltip+1] = {"Score", CharInfo.RIO_Score}
+				-- tooltip[#tooltip+1] = {"Weekly Best", CharInfo.RIO_weeklyBest}
+				-- tooltip[#tooltip+1] = {" ", " "}
+				-- tooltip[#tooltip+1] = {"Рейды", CharInfo.RIO_RAID}
+				-- tooltip[#tooltip+1] = {"M+", CharInfo.RIO_KEYS}
+				-- tooltip[#tooltip+1] = {"PVP", CharInfo.RIO_PVPS}
+			end
+			-- ТЕКСТ В ЦЕНТРЕ
+			if CharInfo.CurrentKey then
+				VivodCent = Empty_Zero(CharInfo.CurrentKey)
+			end
+			if CharInfo.HasAvailableRewards then
+				VivodCent = VivodCent .. Addon_Color..">V<|r"
+			end
+			if CharInfo.ItemsInBag[205225] ~= 0 then
+				VivodCent = VivodCent .. func_itemTexture(205225)..CharInfo.ItemsInBag[205225]
+			end
+			if CharInfo.ItemsInBag[205999] ~= 0 then
+				VivodCent = VivodCent .. func_itemTexture(205999)..CharInfo.ItemsInBag[205999]
+			end
+			return VivodCent, VivodLeft
+	end)
 	if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
-		-- Осада Драконьей Погибели
-		tinsert(table_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local VivodCent, VivodLeft = "", ""
-				-- ТЕКС СЛЕВА
-				local VivodLeft = (func_texturefromIcon(3753264).. ToDragonbaneKeepTimer()..L["Siege on Dragonbane Keep"])
-				-- ТЕКСТ В ЦЕНТРЕ
-				if CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count ~= NONE then
-					VivodCent = CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count
-				end
-				return VivodCent, VivodLeft
-		end)
-		-- Великая охота
-		tinsert(table_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local VivodCent, VivodLeft = "", ""
-				-- ТЕКС СЛЕВА
-				local VivodLeft = (func_texturefromIcon(1519430) .. GrandHuntsTimer()..L["Grand Hunt"])
-				-- ТЕКСТ В ЦЕНТРЕ
-				if CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count ~= NONE then
-					VivodCent = CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count
-				end
-				return VivodCent, VivodLeft
-		end)
+		-- -- Осада Драконьей Погибели
+		-- tinsert(table_func_otrisovka,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local VivodCent, VivodLeft = "", ""
+		-- 		-- ТЕКС СЛЕВА
+		-- 		local VivodLeft = (func_texturefromIcon(3753264).. ToDragonbaneKeepTimer()..L["Siege on Dragonbane Keep"])
+		-- 		-- ТЕКСТ В ЦЕНТРЕ
+		-- 		if CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count ~= NONE then
+		-- 			VivodCent = CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count
+		-- 		end
+		-- 		return VivodCent, VivodLeft
+		-- end)
+		-- -- Великая охота
+		-- tinsert(table_func_otrisovka,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local VivodCent, VivodLeft = "", ""
+		-- 		-- ТЕКС СЛЕВА
+		-- 		local VivodLeft = (func_texturefromIcon(1519430) .. GrandHuntsTimer()..L["Grand Hunt"])
+		-- 		-- ТЕКСТ В ЦЕНТРЕ
+		-- 		if CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count ~= NONE then
+		-- 			VivodCent = CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count
+		-- 		end
+		-- 		return VivodCent, VivodLeft
+		-- end)
 		-- Большое пиршество
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1797,30 +1916,30 @@ local function O_otrisovka()
 				end
 				return VivodCent, VivodLeft
 		end)
-		-- Неистовство бури
-		tinsert(table_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local VivodCent, VivodLeft = "", ""
-				-- ТЕКС СЛЕВА
-				local VivodLeft = (func_texturefromIcon(236469).. PrimalStormsTimer()..L["The Storm's Fury"])
-				-- ТЕКСТ В ЦЕНТРЕ
-				if CharInfo.Octopussy_DF_Weekly_StormsFury_count ~= NONE then
-					VivodCent = CharInfo.Octopussy_DF_Weekly_StormsFury_count
-				end
-				return VivodCent, VivodLeft
-		end)
-		-- Исследователли под огнем
-		tinsert(table_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local VivodCent, VivodLeft = "", ""
-				-- ТЕКС СЛЕВА
-				local VivodLeft = (func_texturefromIcon(236469) .. ResearchersUnderFireTimer()..L["Researchers Under Fire"])
-				-- ТЕКСТ В ЦЕНТРЕ
-				if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= NONE then
-					VivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
-				end
-				return VivodCent, VivodLeft
-		end)
+		-- -- Неистовство бури
+		-- tinsert(table_func_otrisovka,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local VivodCent, VivodLeft = "", ""
+		-- 		-- ТЕКС СЛЕВА
+		-- 		local VivodLeft = (func_texturefromIcon(236469).. PrimalStormsTimer()..L["The Storm's Fury"])
+		-- 		-- ТЕКСТ В ЦЕНТРЕ
+		-- 		if CharInfo.Octopussy_DF_Weekly_StormsFury_count ~= NONE then
+		-- 			VivodCent = CharInfo.Octopussy_DF_Weekly_StormsFury_count
+		-- 		end
+		-- 		return VivodCent, VivodLeft
+		-- end)
+		-- -- Исследователли под огнем
+		-- tinsert(table_func_otrisovka,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local VivodCent, VivodLeft = "", ""
+		-- 		-- ТЕКС СЛЕВА
+		-- 		local VivodLeft = (func_texturefromIcon(236469) .. ResearchersUnderFireTimer()..L["Researchers Under Fire"])
+		-- 		-- ТЕКСТ В ЦЕНТРЕ
+		-- 		if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= NONE then
+		-- 			VivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
+		-- 		end
+		-- 		return VivodCent, VivodLeft
+		-- end)
 		-- Помощь союзу
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1849,51 +1968,7 @@ local function O_otrisovka()
 				end
 				return VivodCent, VivodLeft
 		end)
-		-- Эпохальный ключ
-		tinsert(table_func_otrisovka,
-			--4
-			function(CharInfo, tooltip, CL, BG)
-				local VivodCent, VivodLeft = "", ""
-				VivodLeft = func_itemTexture(180653)..func_itemName(180653)
-				if CharInfo.CurrentKey ~= 0 then
-					tooltip[#tooltip+1] = {"Score", CharInfo.RIO_Score}
-					tooltip[#tooltip+1] = {"Weekly Best", CharInfo.RIO_weeklyBest}
-					if #tooltip > 0 then
-						tooltip[#tooltip+1] = {" ", " "}
-					end
-					tooltip[#tooltip+1] = {"Рейды", CharInfo.RIO_RAID}
-					tooltip[#tooltip+1] = {"M+", CharInfo.RIO_KEYS}
-					tooltip[#tooltip+1] = {"PVP", CharInfo.RIO_PVPS}
-					-- tooltip[#tooltip+1] = {
-					-- {"Score", CharInfo.RIO_Score},
-					-- {"Weekly Best", CharInfo.RIO_weeklyBest},
-					-- {" ", " "},
-					-- {"Рейды", CharInfo.RIO_RAID},
-					-- {"M+", CharInfo.RIO_KEYS},
-					-- {"PVP", CharInfo.RIO_PVPS},
-					-- }
-					-- tooltip[#tooltip+1] = {"Score", CharInfo.RIO_Score}
-					-- tooltip[#tooltip+1] = {"Weekly Best", CharInfo.RIO_weeklyBest}
-					-- tooltip[#tooltip+1] = {" ", " "}
-					-- tooltip[#tooltip+1] = {"Рейды", CharInfo.RIO_RAID}
-					-- tooltip[#tooltip+1] = {"M+", CharInfo.RIO_KEYS}
-					-- tooltip[#tooltip+1] = {"PVP", CharInfo.RIO_PVPS}
-				end
-				-- ТЕКСТ В ЦЕНТРЕ
-				if CharInfo.CurrentKey then
-					VivodCent = Empty_Zero(CharInfo.CurrentKey)
-				end
-				if CharInfo.HasAvailableRewards then
-					VivodCent = VivodCent .. Addon_Color..">V<|r"
-				end
-				if CharInfo.ItemsInBag[205225] ~= 0 then
-					VivodCent = VivodCent .. func_itemTexture(205225)..CharInfo.ItemsInBag[205225]
-				end
-				if CharInfo.ItemsInBag[205999] ~= 0 then
-					VivodCent = VivodCent .. func_itemTexture(205999)..CharInfo.ItemsInBag[205999]
-				end
-				return VivodCent, VivodLeft
-		end)
+		-- Фрагмент 1
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -1917,6 +1992,7 @@ local function O_otrisovka()
 				end
 				return VivodCent, VivodLeft
 		end)
+		-- Фрагмент 2
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -1940,6 +2016,7 @@ local function O_otrisovka()
 				end
 				return VivodCent, VivodLeft
 		end)
+		-- Фрагмент 3
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -1963,6 +2040,7 @@ local function O_otrisovka()
 				end
 				return VivodCent, VivodLeft
 		end)
+		-- Фрагмент 4
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -1986,15 +2064,10 @@ local function O_otrisovka()
 				end
 				return VivodCent, VivodLeft
 		end)
+		-- Искра пламени Тьмы
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodLeft = func_itemTexture(204440)..func_itemName(204440)
-				-- {func_itemName_NOCOLOR(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440]},
-				-- {func_itemName_NOCOLOR(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717]},
-				-- {func_itemName_NOCOLOR(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681]},
-				-- {func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682]},
-				-- {func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697]},
 				if CharInfo.ItemsInBag[204440] ~= 0 then
 					tooltip[#tooltip+1] = {func_itemName(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440]}
 				end
@@ -2010,30 +2083,6 @@ local function O_otrisovka()
 				if CharInfo.ItemsInBag[204697] ~= 0 then
 					tooltip[#tooltip+1] = {func_itemName(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697]}
 				end
-				-- if CharInfo.ItemsInBag[204440] == 0 then
-				--     tooltip[#tooltip+1] = {"|cffc9c3aa"..func_itemName_NOCOLOR(204440), func_itemTexture(204440)..CharInfo.ItemsInBag[204440].."|r"}
-				-- end
-				-- if CharInfo.ItemsInBag[204717] == 0 then
-				--     tooltip[#tooltip+1] = {"|cffc9c3aa"..func_itemName_NOCOLOR(204717), func_itemTexture(204717)..CharInfo.ItemsInBag[204717].."|r"}
-				-- end
-				-- if CharInfo.ItemsInBag[204681] == 0 then
-				--     tooltip[#tooltip+1] = {"|cffc9c3aa"..func_itemName_NOCOLOR(204681), func_itemTexture(204681)..CharInfo.ItemsInBag[204681].."|r"}
-				-- end
-				-- if CharInfo.ItemsInBag[204682] == 0 then
-				--     tooltip[#tooltip+1] = {"|cffc9c3aa"..func_itemName_NOCOLOR(204682), func_itemTexture(204682)..CharInfo.ItemsInBag[204682].."|r"}
-				-- end
-				-- if CharInfo.ItemsInBag[204697] == 0 then
-				--     tooltip[#tooltip+1] = {"|cffc9c3aa"..func_itemName_NOCOLOR(204697), func_itemTexture(204697)..CharInfo.ItemsInBag[204697].."|r"}
-				-- end
-				-- if CharInfo.ItemsInBag[204440] >= 1 then
-				-- CL:SetText(VivodCent)
-				-- end
-				-- if CharInfo.ItemsInBag[204717] >=1 then
-				-- tooltip = {{func_itemTexture(204717)..func_itemName(204717), CharInfo.ItemsInBag[204717]}, }
-				-- end
-				-- if CharInfo.ItemsInBag[204717] >=2 then
-				-- CL:SetText(VivodCent.."|cffFF00FF(+"..(math.floor(CharInfo.ItemsInBag[204717]/2)) ..")|r")
-				-- end
 				-- ТЕКСТ В ЦЕНТРЕ
 				if CharInfo.ItemsInBag[204440] >= 1 then
 					VivodCent = VivodCent..func_itemTexture(204440)..CharInfo.ItemsInBag[204440]
@@ -2050,8 +2099,10 @@ local function O_otrisovka()
 				if CharInfo.ItemsInBag[204697] >= 1 then
 					VivodCent = VivodCent..func_itemTexture(204697)..CharInfo.ItemsInBag[204697]
 				end
+				VivodLeft = Gray_Color..func_itemTexture(204440)..func_itemName_NOCOLOR(204440).."|r"
 				return VivodCent, VivodLeft
 		end)
+		-- Возрождающееся пламя Тьмы
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -2069,6 +2120,19 @@ local function O_otrisovka()
 				if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.CurrencyID[2533] < 8 then
 					VivodCent = Red_Color..VivodCent .."|r"
 				end
+				return VivodCent, VivodLeft
+		end)
+		-- Драконьи камни
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[2245] ~= 0 then
+					VivodCent = CharInfo.CurrencyID[2245].."/"..CharInfo.CurrencyID_maxQuantity[2245]
+				end
+				if CharInfo.CurrencyID[2245] == CharInfo.CurrencyID_maxQuantity[2245] then
+					VivodCent = Green_Color..VivodCent.."|r"
+				end
+				VivodLeft = func_currencyicon(2245)..func_currencyName(2245)
 				return VivodCent, VivodLeft
 		end)
 	end
@@ -2255,28 +2319,28 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_SL_Weekly_ZMWBAntros_count ~= NONE then
-					VivodCent = CharInfo.Octopussy_SL_Weekly_ZMWBAntros_count
+				if CharInfo.Octopussy_SL_Weekly_WBALL_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_SL_Weekly_WBALL_count
 				end
-				VivodLeft = func_texturefromIcon(3528312)..func_questName(65143)
+				VivodLeft = WorldBoss_Icon.."World Boss"
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_count ~= NONE then
-					VivodCent = CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_count
+				if CharInfo.Octopussy_SL_Weekly_WBZMAntros_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_SL_Weekly_WBZMAntros_count
 				end
-				VivodLeft = func_texturefromIcon(3528312)..func_questName(64531)
+				VivodLeft = WorldBoss_Icon.."World Boss: "..func_questName(65143)
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_SL_Weekly_WBWB_count ~= NONE then
-					VivodCent = CharInfo.Octopussy_SL_Weekly_WBWB_count
+				if CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count
 				end
-				VivodLeft = func_texturefromIcon(3528312).."Мировой босс ШЛ"
+				VivodLeft = WorldBoss_Icon.."World Boss: "..func_questName(64531)
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka,
@@ -2291,32 +2355,330 @@ local function O_otrisovka()
 	end
 	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_BattleforAzeroth then
-		tinsert(table_func_otrisovka, -- Создание гарнизона
+		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_WBWB_count ~= NONE then
-					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WBWB_count)
+				if CharInfo.Octopussy_BfA_Weekly_WBALL_count ~= NONE then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WBALL_count)
 				end
-				VivodLeft = CharInfo.Octopussy_BfA_Weekly_WBWB_name
+				VivodLeft = WorldBoss_Icon.."World Boss"
 				return VivodCent, VivodLeft
 		end)
-		tinsert(table_func_otrisovka, -- Создание гарнизона
+		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_NazjatarWBTerroroftheDepths_count ~= NONE then
-					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_NazjatarWBTerroroftheDepths_count)
+				if CharInfo.Octopussy_BfA_Weekly_WBNazjatarTerroroftheDepths_count ~= NONE then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WBNazjatarTerroroftheDepths_count)
 				end
-				VivodLeft = CharInfo.Octopussy_BfA_Weekly_NazjatarWBTerroroftheDepths_name
+				VivodLeft = WorldBoss_Icon.."World Boss: "..func_questName(56056)
 				return VivodCent, VivodLeft
 		end)
-
-
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_BfA_Weekly_WBAssault_count ~= NONE then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WBAssault_count)
+				end
+				VivodLeft = WorldBoss_Icon.."World Boss: Assault"
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Ресурсы для войны
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodCent = Empty_Zero(CharInfo.CurrencyID[1560])
+				VivodLeft = func_currencyicon(1560)..func_currencyName(1560)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Радужная манажемчужина
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodCent = Empty_Zero(CharInfo.CurrencyID[1721])
+				VivodLeft = func_currencyicon(1721)..func_currencyName(1721)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Эхо Ни'алоты
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodCent = Empty_Zero(CharInfo.CurrencyID[1803])
+				VivodLeft = func_currencyicon(1803)..func_currencyName(1803)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Сгусток видений
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodCent = Empty_Zero(CharInfo.CurrencyID[1755])
+				if CharInfo.ItemsInBag[173363] ~= 0 then
+					VivodCent = VivodCent .." +"..CharInfo.ItemsInBag[173363]..func_itemTexture(173363)
+				end
+				VivodLeft = func_currencyicon(1755)..func_currencyName(1755)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Заряженные реликвии
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodCent = Empty_Zero(CharInfo.CurrencyID[1719])
+				VivodLeft = func_currencyicon(1719)..func_currencyName(1719)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Дублон мореплавателя
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodCent = Empty_Zero(CharInfo.CurrencyID[1710])
+				VivodLeft = func_currencyicon(1710)..func_currencyName(1710)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Военная медаль Армии Чести
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodCent = Empty_Zero(CharInfo.CurrencyID[1716])
+				VivodLeft = func_currencyicon(1716)..func_currencyName(1716)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Пыль титанов
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodCent = Empty_Zero(CharInfo.CurrencyID[1718])
+				VivodLeft = func_currencyicon(1718)..func_currencyName(1718)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Assault: The Black Empire
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count)
+				end
+				VivodLeft = Purple_Color..func_questName(56064).."|r"
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- miniVision
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_BfA_Weekly_miniVision_count then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_miniVision_count)
+				end
+				VivodLeft = Purple_Color.."Mini Vision".."|r"
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Assault: The Black Empire
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.islandBfA then
+					VivodCent = Empty_Zero(CharInfo.islandBfA)
+				end
+				VivodLeft = "CollectIslandBfA"
+				local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
+				if questID then
+					VivodLeft = func_questName(questID)
+				end
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Warfront: The Battle for Stromgarde
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_BfA_Weekly_Warfront1_count then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_Warfront1_count)
+				end
+				VivodLeft = "Warfront: Stromgarde"
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Warfront: The Battle for Darkshore
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_BfA_Weekly_Warfront2_count then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_Warfront2_count)
+				end
+				VivodLeft = "Warfront: Darkshore"
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Heroic Warfront
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count)
+				end
+				VivodLeft = "Warfront: Heroic"
+				return VivodCent, VivodLeft
+		end)
+		-- bounty_BfA1
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.bounty_BfA1 ~= 0 and CharInfo.bounty_BfA1_questID ~= 0 then
+					VivodCent = CharInfo.bounty_BfA1_icon..CharInfo.bounty_BfA1
+					tooltip[#tooltip+1] = {func_questName(CharInfo.bounty_BfA1_questID)}
+					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_BfA1_end) or ""}
+				end
+				VivodLeft = "bounty_BfA1"
+				return VivodCent, VivodLeft
+		end)
+		-- bounty_BfA2
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.bounty_BfA2 ~= 0 and CharInfo.bounty_BfA2_questID ~= 0 then
+					VivodCent = CharInfo.bounty_BfA2_icon..CharInfo.bounty_BfA2
+					tooltip[#tooltip+1] = {func_questName(CharInfo.bounty_BfA2_questID)}
+					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_BfA2_end) or ""}
+				end
+				VivodLeft = "bounty_BfA2"
+				return VivodCent, VivodLeft
+		end)
+		-- bounty_BfA3
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.bounty_BfA3 ~= 0 and CharInfo.bounty_BfA3_questID ~= 0 then
+					VivodCent = CharInfo.bounty_BfA3_icon..CharInfo.bounty_BfA3
+					tooltip[#tooltip+1] = {func_questName(CharInfo.bounty_BfA3_questID)}
+					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_BfA3_end) or ""}
+				end
+				VivodLeft = "bounty_BfA3"
+				return VivodCent, VivodLeft
+		end)
 	end
 	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_Legion then
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_Legion_Weekly_WBALL_count ~= NONE then
+					VivodCent = Empty_Zero(CharInfo.Octopussy_Legion_Weekly_WBALL_count)
+				end
+				VivodLeft = WorldBoss_Icon.."World Boss"
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Дымчатый аргунит
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[1508] ~= 0 then
+					VivodCent = CharInfo.CurrencyID[1508].."/"..CharInfo.CurrencyID_maxQuantity[1508]
+				end
+				if CharInfo.CurrencyID[1508] == CharInfo.CurrencyID_maxQuantity[1508] then
+					VivodCent = Green_Color..VivodCent.."|r"
+				end
+				VivodLeft = func_currencyicon(1508)..func_currencyName(1508)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Припасы Армии погибели Легиона
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[1342] ~= 0 then
+					VivodCent = CharInfo.CurrencyID[1342].."/"..CharInfo.CurrencyID_maxQuantity[1342]
+				end
+				if CharInfo.CurrencyID[1342] == CharInfo.CurrencyID_maxQuantity[1342] then
+					VivodCent = Green_Color..VivodCent.."|r"
+				end
+				VivodLeft = func_currencyicon(1342)..func_currencyName(1342)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Ресурсы оплота класса
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[1220] ~= 0 then
+					VivodCent = CharInfo.CurrencyID[1220]
+				end
+				VivodLeft = func_currencyicon(1220)..func_currencyName(1220)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Осколок Пустоты
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[1226] ~= 0 then
+					VivodCent = CharInfo.CurrencyID[1226]
+				end
+				VivodLeft = func_currencyicon(1226)..func_currencyName(1226)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Пробуждающая сущность
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[1533] ~= 0 then
+					VivodCent = CharInfo.CurrencyID[1533]
+				end
+				VivodLeft = func_currencyicon(1533)..func_currencyName(1533)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, -- Кровь Саргераса
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.ItemsInBag[124124] ~= 0 then
+					VivodCent = CharInfo.ItemsInBag[124124]
+				end
+				VivodLeft = Gray_Color..func_itemTexture(124124)..func_itemName_NOCOLOR(124124).."|r"
+				return VivodCent, VivodLeft
+		end)
+		-- bounty_Legion1
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.bounty_Legion1 ~= 0 and CharInfo.bounty_Legion1_questID ~= 0 then
+					VivodCent = CharInfo.bounty_Legion1_icon..CharInfo.bounty_Legion1
+					tooltip[#tooltip+1] = {func_questName(CharInfo.bounty_Legion1_questID)}
+					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_Legion1_end) or ""}
+				end
+				VivodLeft = "bounty_Legion1"
+				return VivodCent, VivodLeft
+		end)
+		-- bounty_Legion2
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.bounty_Legion2 ~= 0 and CharInfo.bounty_Legion2_questID ~= 0 then
+					VivodCent = CharInfo.bounty_Legion2_icon..CharInfo.bounty_Legion2
+					tooltip[#tooltip+1] = {func_questName(CharInfo.bounty_Legion2_questID)}
+					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_Legion2_end) or ""}
+				end
+				VivodLeft = "bounty_Legion2"
+				return VivodCent, VivodLeft
+		end)
+		-- bounty_Legion3
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.bounty_Legion3 ~= 0 and CharInfo.bounty_Legion3_questID ~= 0 then
+					VivodCent = CharInfo.bounty_Legion3_icon..CharInfo.bounty_Legion3
+					tooltip[#tooltip+1] = {func_questName(CharInfo.bounty_Legion3_questID)}
+					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_Legion3_end) or ""}
+				end
+				VivodLeft = "bounty_Legion3"
+				return VivodCent, VivodLeft
+		end)
 	end
 	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_WarlordsofDraenor then
+		tinsert(table_func_otrisovka, --
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[823] ~= 0 then
+					VivodCent = CharInfo.CurrencyID[823]
+				end
+				VivodLeft = func_currencyicon(823)..func_currencyName(823)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, --
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[1101] ~= 0 then
+					VivodCent = CharInfo.CurrencyID[1101].."/"..CharInfo.CurrencyID_maxQuantity[1101]
+				end
+				if CharInfo.CurrencyID[1101] == CharInfo.CurrencyID_maxQuantity[1101] then
+					VivodCent = Green_Color..VivodCent.."|r"
+				end
+				VivodLeft = func_currencyicon(1101)..func_currencyName(1101)
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka, --
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.CurrencyID[824] ~= 0 then
+					VivodCent = CharInfo.CurrencyID[824].."/"..CharInfo.CurrencyID_maxQuantity[824]
+				end
+				if CharInfo.CurrencyID[824] == CharInfo.CurrencyID_maxQuantity[824] then
+					VivodCent = Green_Color..VivodCent.."|r"
+				end
+				VivodLeft = func_currencyicon(824)..func_currencyName(824)
+				return VivodCent, VivodLeft
+		end)
 		tinsert(table_func_otrisovka, -- Создание гарнизона
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -2330,14 +2692,12 @@ local function O_otrisovka()
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
 				CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-
 				if CharInfo.UnitLevel > 40 then
 					if CharInfo.CurrencyID[824] < 2000 then
 						VivodCent = VivodCent.."|cffFF0000"..CharInfo.CurrencyID[824]..func_currencyicon(824)
 					else
 						VivodCent = VivodCent..CharInfo.CurrencyID[824]..func_currencyicon(824).."|r"
 					end
-
 					if CharInfo.Money/10000 < 5000 then
 						VivodCent = VivodCent.."|cffFF0000"..GetCoinTextureString(CharInfo.Money-CharInfo.Money%10000)
 					else
@@ -2350,9 +2710,7 @@ local function O_otrisovka()
 				else
 					VivodCent = func_texturefromIcon(894556).."|cffFF0000"..CharInfo.UnitLevel.."/40|r"
 				end
-
 				VivodLeft = L["Garrison 3 Level"]
-
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka, -- Владычество над морями
@@ -2380,10 +2738,6 @@ local function O_otrisovka()
 	----------------------------------------------------------------
 	if Octo_ToDo_DragonflyVars.config.LINE_Classic then
 	end
-
-
-
-
 	-- ВАЛЮТА
 	tinsert(table_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
@@ -2445,7 +2799,7 @@ local function O_otrisovka()
 			if Octo_ToDo_DragonflyVars.config.LINE_BattleforAzeroth then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {"    "..Blue_Color.."Battle for Azeroth".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(1580)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1580), CharInfo.CurrencyID_Total[1580]} --Печать судьбы воина
+				tooltip[#tooltip+1] = {func_currencyicon(1580)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1580), CharInfo.CurrencyID_Total[1580].."(+"..CharInfo.Octopussy_BfA_Weekly_coinsQuests_count..")"} --Печать судьбы воина
 				tooltip[#tooltip+1] = {func_currencyicon(1803)..func_currencyName(1803), CharInfo.CurrencyID_Total[1803]}
 				tooltip[#tooltip+1] = {func_currencyicon(1721)..func_currencyName(1721), CharInfo.CurrencyID_Total[1721]}
 				tooltip[#tooltip+1] = {func_currencyicon(1587)..func_currencyName(1587), CharInfo.CurrencyID_Total[1587]}
@@ -2467,7 +2821,7 @@ local function O_otrisovka()
 			if Octo_ToDo_DragonflyVars.config.LINE_Legion then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {"    "..Blue_Color.."Legion".."|r", " "}
-				tooltip[#tooltip+1] = {func_currencyicon(1273)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1273), CharInfo.CurrencyID_Total[1273]} --Печать сломанной судьбы
+				tooltip[#tooltip+1] = {func_currencyicon(1273)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1273), CharInfo.CurrencyID_Total[1273].."(+"..CharInfo.Octopussy_Legion_Weekly_coinsQuests_count..")"} --Печать сломанной судьбы
 				tooltip[#tooltip+1] = {func_currencyicon(1356)..func_currencyName(1356),CharInfo.CurrencyID_Total[1356]}
 				tooltip[#tooltip+1] = {func_currencyicon(1275)..func_currencyName(1275),CharInfo.CurrencyID_Total[1275]}
 				tooltip[#tooltip+1] = {func_currencyicon(1357)..func_currencyName(1357),CharInfo.CurrencyID_Total[1357]}
@@ -2488,8 +2842,8 @@ local function O_otrisovka()
 			if Octo_ToDo_DragonflyVars.config.LINE_WarlordsofDraenor then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {"    "..Blue_Color.."Warlords of Draenor".."|r", " "}
+				tooltip[#tooltip+1] = {func_currencyicon(1129)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1129), CharInfo.CurrencyID_Total[1129].."(+"..CharInfo.Octopussy_WoD_Weekly_coinsQuests_count..")"} --Печать неизбежной судьбы
 				tooltip[#tooltip+1] = {func_currencyicon(994)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(994), CharInfo.CurrencyID_Total[994]} --Печать закаленной судьбы
-				tooltip[#tooltip+1] = {func_currencyicon(1129)..Blue_Color.."("..L["Coins"]..")|r"..func_currencyName(1129), CharInfo.CurrencyID_Total[1129]} --Печать закаленной судьбы
 				tooltip[#tooltip+1] = {func_currencyicon(823)..func_currencyName(823),CharInfo.CurrencyID_Total[823]}
 				tooltip[#tooltip+1] = {func_currencyicon(824)..func_currencyName(824),CharInfo.CurrencyID_Total[824]}
 				tooltip[#tooltip+1] = {func_currencyicon(1101)..func_currencyName(1101),CharInfo.CurrencyID_Total[1101]}
@@ -2557,12 +2911,9 @@ local function O_otrisovka()
 			tooltip[#tooltip+1] = {func_currencyicon(1792)..func_currencyName(1792), CharInfo.CurrencyID_Total[1792]} --Честь
 			tooltip[#tooltip+1] = {func_currencyicon(2123)..func_currencyName(2123), CharInfo.CurrencyID_Total[2123]} -- Кровавые жетоны
 			tooltip[#tooltip+1] = {func_currencyicon(391)..func_currencyName(391), CharInfo.CurrencyID_Total[391]} -- Рекомендательный значок Тол Барада
-
-
 			if #tooltip ~= 0 then
 				VivodCent = Gray_Color..CURRENCY.."|r"
 			end
-
 			return VivodCent, VivodLeft
 	end)
 	-- РЕПУТАЦИЯ
@@ -2570,9 +2921,9 @@ local function O_otrisovka()
 		function(CharInfo, tooltip, CL, BG)
 			local VivodCent, VivodLeft = "", ""
 			for k,v in ipairs (Octo_Table_itemID_Reputation) do
-			    if CharInfo.ItemsInBag[v] ~= 0 then
-			        tooltip[#tooltip+1] = {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]}
-			    end
+				if CharInfo.ItemsInBag[v] ~= 0 then
+					tooltip[#tooltip+1] = {func_itemTexture(v)..func_itemName(v), CharInfo.ItemsInBag[v]}
+				end
 			end
 			if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
 				-- if #tooltip > 0 then
@@ -2587,7 +2938,7 @@ local function O_otrisovka()
 				if #tooltip > 0 then
 					tooltip[#tooltip+1] = {" ", " "}
 				end
-				tooltip[#tooltip+1] = {Blue_Color.."Dragonflight".."|r", " "}
+				tooltip[#tooltip+1] = {"    "..Blue_Color.."Dragonflight".."|r", " "}
 				tooltip[#tooltip+1] = {func_reputationName(2507), CharInfo.reputationID[2507]}
 				tooltip[#tooltip+1] = {func_reputationName(2503), CharInfo.reputationID[2503]}
 				tooltip[#tooltip+1] = {func_reputationName(2511), CharInfo.reputationID[2511]}
@@ -2976,7 +3327,7 @@ local function O_otrisovka()
 		function(CharInfo, tooltip, CL, BG)
 			local VivodCent, VivodLeft = "", ""
 			if Octo_ToDo_DragonflyVars.config.LINE_Dragonflight then
-				tooltip[#tooltip+1] = {Blue_Color.."Dragonflight".."|r", " "}
+				tooltip[#tooltip+1] = {"    "..Blue_Color.."Dragonflight".."|r", " "}
 				tooltip[#tooltip+1] = {ToDragonbaneKeepTimer()..CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_name, CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count}
 				tooltip[#tooltip+1] = {GrandHuntsTimer()..CharInfo.Octopussy_DF_Weekly_TheGrandHunt_name, CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count}
 				tooltip[#tooltip+1] = {CommunityFeastTimer()..CharInfo.Octopussy_DF_Weekly_Feast_name, CharInfo.Octopussy_DF_Weekly_Feast_count}
@@ -2990,30 +3341,30 @@ local function O_otrisovka()
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_StormBoundChest_name, CharInfo.Octopussy_DF_Weekly_StormBoundChest_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_name, CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_name, CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_WB_name, CharInfo.Octopussy_DF_Weekly_WB_count}
+				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_WBALL_name, CharInfo.Octopussy_DF_Weekly_WBALL_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_WeekendEvent_name, CharInfo.Octopussy_DF_Weekly_WeekendEvent_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-				tooltip[#tooltip+1] = {Blue_Color..L["Zaralek Cavern"].."|r", " "}
+				tooltip[#tooltip+1] = {"    "..Blue_Color..L["Zaralek Cavern"].."|r", " "}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_name, CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_name, CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_ZaralekCavernWBZaqaliElders_name, CharInfo.Octopussy_DF_Weekly_ZaralekCavernWBZaqaliElders_count}
+				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_name, CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents_name, CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Daily_ZaralekCavernRares_name, CharInfo.Octopussy_DF_Daily_ZaralekCavernRares_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-				tooltip[#tooltip+1] = {Blue_Color..L["The Forbidden Reach"].."|r", " "}
+				tooltip[#tooltip+1] = {"    "..Blue_Color..L["The Forbidden Reach"].."|r", " "}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares_name, CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares_count}
 			end
 			if Octo_ToDo_DragonflyVars.config.LINE_Shadowlands then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-				tooltip[#tooltip+1] = {Blue_Color.."Shadowlands".."|r", " "}
+				tooltip[#tooltip+1] = {"    "..Blue_Color.."Shadowlands".."|r", " "}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_name, CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ReturnLostSouls_name, CharInfo.Octopussy_SL_Weekly_ReturnLostSouls_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_TradingFavors_name, CharInfo.Octopussy_SL_Weekly_TradingFavors_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WBWB_name, CharInfo.Octopussy_SL_Weekly_WBWB_count}
+				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WBALL_name, CharInfo.Octopussy_SL_Weekly_WBALL_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-				tooltip[#tooltip+1] = {Blue_Color..L["Zereth Mortis"].."|r", " "}
+				tooltip[#tooltip+1] = {"    "..Blue_Color..L["Zereth Mortis"].."|r", " "}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_name, CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ZMWBAntros_name, CharInfo.Octopussy_SL_Weekly_ZMWBAntros_count}
+				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WBZMAntros_name, CharInfo.Octopussy_SL_Weekly_WBZMAntros_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_ZMGetLockStatus_name, CharInfo.Octopussy_SL_Daily_ZMGetLockStatus_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_ZMPryingEyeDiscovery_name, CharInfo.Octopussy_SL_Daily_ZMPryingEyeDiscovery_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_ZMPUZZLECACHES_name, CharInfo.Octopussy_SL_Daily_ZMPUZZLECACHES_count}
@@ -3024,41 +3375,56 @@ local function O_otrisovka()
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ZMConcordance_name, CharInfo.Octopussy_SL_Once_ZMConcordance_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ZMUndulatingFoliage_name, CharInfo.Octopussy_SL_Once_ZMUndulatingFoliage_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-				tooltip[#tooltip+1] = {Blue_Color..L["Korthia"].."|r", " "}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_name, CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaRares_name, CharInfo.Octopussy_SL_Weekly_KorthiaRares_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaMobs_name, CharInfo.Octopussy_SL_Daily_KorthiaMobs_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger_name, CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaCollection_name, CharInfo.Octopussy_SL_Daily_KorthiaCollection_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies_name, CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch_name, CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel_name, CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaRIFTRiftboundCache_name, CharInfo.Octopussy_SL_Daily_KorthiaRIFTRiftboundCache_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaRIFTStolenAnimaVessel_name, CharInfo.Octopussy_SL_Weekly_KorthiaRIFTStolenAnimaVessel_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaRIFTSpectralBoundChest_name, CharInfo.Octopussy_SL_Daily_KorthiaRIFTSpectralBoundChest_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaRIFTZovaalsVault_name, CharInfo.Octopussy_SL_Daily_KorthiaRIFTZovaalsVault_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaITEMResearchReportAncientShrines_name, CharInfo.Octopussy_SL_Weekly_KorthiaITEMResearchReportAncientShrines_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_KorthiaITEMResearchReportAdaptiveAlloys_name, CharInfo.Octopussy_SL_Once_KorthiaITEMResearchReportAdaptiveAlloys_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_KorthiaITEMResearchReportAllSeeingCrystal_name, CharInfo.Octopussy_SL_Once_KorthiaITEMResearchReportAllSeeingCrystal_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_KorthiaITEMResearchReportFirstAlloys_name, CharInfo.Octopussy_SL_Once_KorthiaITEMResearchReportFirstAlloys_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_KorthiaITEMResearchReportRelicExaminationTechniques_name, CharInfo.Octopussy_SL_Once_KorthiaITEMResearchReportRelicExaminationTechniques_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_KorthiaITEMTreatiseBondsofStygiainMortals_name, CharInfo.Octopussy_SL_Once_KorthiaITEMTreatiseBondsofStygiainMortals_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_KorthiaITEMTreatiseRecognizingStygiaanditsUses_name, CharInfo.Octopussy_SL_Once_KorthiaITEMTreatiseRecognizingStygiaanditsUses_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_KorthiaITEMTreatiseRelicsAboundintheShadowlands_name, CharInfo.Octopussy_SL_Once_KorthiaITEMTreatiseRelicsAboundintheShadowlands_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop_name, CharInfo.Octopussy_SL_Once_KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_KorthiaITEMVaultAnimaTracker_name, CharInfo.Octopussy_SL_Once_KorthiaITEMVaultAnimaTracker_count}
+				tooltip[#tooltip+1] = {"    "..Blue_Color..L["Korthia"].."|r", " "}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaCollection_name, CharInfo.Octopussy_SL_Daily_KorthiaCollection_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel_name, CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaMobs_name, CharInfo.Octopussy_SL_Daily_KorthiaMobs_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger_name, CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_RIFTKorthiaStolenAnimaVessel_name, CharInfo.Octopussy_SL_Weekly_RIFTKorthiaStolenAnimaVessel_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_RIFTKorthiaRiftboundCache_name, CharInfo.Octopussy_SL_Daily_RIFTKorthiaRiftboundCache_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_RIFTKorthiaSpectralBoundChest_name, CharInfo.Octopussy_SL_Daily_RIFTKorthiaSpectralBoundChest_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_RIFTKorthiaZovaalsVault_name, CharInfo.Octopussy_SL_Daily_RIFTKorthiaZovaalsVault_count}
+
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch_name, CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaRares_name, CharInfo.Octopussy_SL_Weekly_KorthiaRares_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_name, CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies_name, CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies_count}
+
+
+
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportAdaptiveAlloys_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportAdaptiveAlloys_count}
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportAllSeeingCrystal_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportAllSeeingCrystal_count}
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportFirstAlloys_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportFirstAlloys_count}
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportRelicExaminationTechniques_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportRelicExaminationTechniques_count}
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaTreatiseBondsofStygiainMortals_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaTreatiseBondsofStygiainMortals_count}
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaTreatiseRecognizingStygiaanditsUses_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaTreatiseRecognizingStygiaanditsUses_count}
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaTreatiseRelicsAboundintheShadowlands_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaTreatiseRelicsAboundintheShadowlands_count}
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaTreatiseTheStudyofAnimaandHarnessingEveryDrop_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaTreatiseTheStudyofAnimaandHarnessingEveryDrop_count}
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaVaultAnimaTracker_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaVaultAnimaTracker_count}
+-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportAncientShrines_name, CharInfo.Octopussy_SL_Once_ITEMKorthiaResearchReportAncientShrines_count}
+
+
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-				tooltip[#tooltip+1] = {Blue_Color..L["Maw"].."|r", " "}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_name, CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_name, CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_name, CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawTorghast_name, CharInfo.Octopussy_SL_Weekly_MawTorghast_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawHelswornChest_name, CharInfo.Octopussy_SL_Daily_MawHelswornChest_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawQuest_name, CharInfo.Octopussy_SL_Daily_MawQuest_count}
+				tooltip[#tooltip+1] = {"    "..Blue_Color..L["Maw"].."|r", " "}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_name, CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_name, CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawQuest_name, CharInfo.Octopussy_SL_Daily_MawQuest_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawHelswornChest_name, CharInfo.Octopussy_SL_Daily_MawHelswornChest_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_name, CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count}
+tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawTorghast_name, CharInfo.Octopussy_SL_Weekly_MawTorghast_count}
+
+
+
+				-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_name, CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_count}
+				-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_name, CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count}
+				-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_name, CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count}
+				-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawTorghast_name, CharInfo.Octopussy_SL_Weekly_MawTorghast_count}
+				-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawHelswornChest_name, CharInfo.Octopussy_SL_Daily_MawHelswornChest_count}
+				-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawQuest_name, CharInfo.Octopussy_SL_Daily_MawQuest_count}
 			end
 			if CharInfo.classFilename == "WARRIOR" or CharInfo.classFilename == "PALADIN" or CharInfo.classFilename == "DEATHKNIGHT" or CharInfo.classFilename == "WARLOCK" then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-				tooltip[#tooltip+1] = {Blue_Color..L["Class quests"].."|r"," "}
+				tooltip[#tooltip+1] = {"    "..Blue_Color..L["Class quests"].."|r"," "}
 				if CharInfo.classFilename == "WARRIOR" or CharInfo.classFilename == "PALADIN" or CharInfo.classFilename == "DEATHKNIGHT" then
 					tooltip[#tooltip+1] = {CharInfo.Octopussy_WotLK_Once_Shadowmourne_name, CharInfo.Octopussy_WotLK_Once_Shadowmourne_count}
 				end
@@ -3252,6 +3618,8 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("ZONE_CHANGED")
 	EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	EventFrame:RegisterEvent("QUEST_FINISHED")
+	EventFrame:RegisterEvent("QUEST_TURNED_IN")
+	EventFrame:RegisterEvent("QUEST_REMOVED")
 	EventFrame:RegisterEvent("QUEST_COMPLETE")
 	EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
 	EventFrame:RegisterEvent("PLAYER_STARTED_MOVING")
@@ -3389,7 +3757,6 @@ local function CreateFrameUsableItems(itemID, Texture, count, Xpos, Ypos, r, g, 
 	-- if itemQuality then
 	-- 	local ir, ig, ib, iA = GetItemQualityColor(itemQuality)
 	-- end
-
 	Button:SetSize(curHeight, curHeight)
 	Button:SetPoint("BOTTOMLEFT", Main_Frame, "TOPLEFT", Xpos, Ypos+1)
 	Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
@@ -3627,7 +3994,6 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Main_Frame.ZskeraVaultKeyButton)
 	-----------------------------------------------------
-
 	local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
 	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
 		text = Red_Color.."!!! ACHTUNG !!!|r\n".."Отменить все ("..numQuests..") задания?",
@@ -3654,46 +4020,37 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			end)
 		end,
 	}
-
-
-
-    Main_Frame.AbandonAllQuests = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
-    Main_Frame.AbandonAllQuests:SetSize(curHeight, curHeight)
-    Main_Frame.AbandonAllQuests:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -120)
-    Main_Frame.AbandonAllQuests:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-    Main_Frame.AbandonAllQuests:SetBackdropBorderColor(1, 0, 0, 0)
-    Main_Frame.AbandonAllQuests:SetScript("OnEnter", function(self)
-            self:SetBackdropBorderColor(1, 0, 0, 1)
-            self.icon:SetVertexColor(1, 0, 0, 1)
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-            GameTooltip:ClearLines()
-            GameTooltip:AddLine(L["Abandon All Quests"].." ("..numQuests..")")
-            GameTooltip:Show()
-    end)
-    Main_Frame.AbandonAllQuests:SetScript("OnLeave", function(self)
-            self:SetBackdropBorderColor(1, 0, 0, 0)
-            self.icon:SetVertexColor(1, 1, 1, 1)
-            GameTooltip:ClearLines()
-            GameTooltip:Hide()
-    end)
-    Main_Frame.AbandonAllQuests:SetScript("OnMouseDown", function(self)
-            self:SetBackdropBorderColor(1, 0, 0, 0.5)
-            self.icon:SetVertexColor(1, 0, 0, 0.5)
-    end)
-    Main_Frame.AbandonAllQuests:SetScript("OnClick", function()
-            StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
-    end)
-    local t = Main_Frame.AbandonAllQuests:CreateTexture(nil, "BACKGROUND")
-    Main_Frame.AbandonAllQuests.icon = t
-    t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\SadKitty.tga")
-    t:SetVertexColor(1, 1, 1, 1)
-    t:SetAllPoints(Main_Frame.AbandonAllQuests)
-
-
-
-
-
-
+	Main_Frame.AbandonAllQuests = CreateFrame("Button", AddonTitle..GenerateUniqueID(), Main_Frame, "BackDropTemplate")
+	Main_Frame.AbandonAllQuests:SetSize(curHeight, curHeight)
+	Main_Frame.AbandonAllQuests:SetPoint("TOPRIGHT", Main_Frame, "TOPRIGHT", curHeight+1, -120)
+	Main_Frame.AbandonAllQuests:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Main_Frame.AbandonAllQuests:SetBackdropBorderColor(1, 0, 0, 0)
+	Main_Frame.AbandonAllQuests:SetScript("OnEnter", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, 1)
+			self.icon:SetVertexColor(1, 0, 0, 1)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+			GameTooltip:ClearLines()
+			GameTooltip:AddLine(L["Abandon All Quests"].." ("..numQuests..")")
+			GameTooltip:Show()
+	end)
+	Main_Frame.AbandonAllQuests:SetScript("OnLeave", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, 0)
+			self.icon:SetVertexColor(1, 1, 1, 1)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	Main_Frame.AbandonAllQuests:SetScript("OnMouseDown", function(self)
+			self:SetBackdropBorderColor(1, 0, 0, 0.5)
+			self.icon:SetVertexColor(1, 0, 0, 0.5)
+	end)
+	Main_Frame.AbandonAllQuests:SetScript("OnClick", function()
+			StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
+	end)
+	local t = Main_Frame.AbandonAllQuests:CreateTexture(nil, "BACKGROUND")
+	Main_Frame.AbandonAllQuests.icon = t
+	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\SadKitty.tga")
+	t:SetVertexColor(1, 1, 1, 1)
+	t:SetAllPoints(Main_Frame.AbandonAllQuests)
 	--------
 	-- itemID, Texture, count, Xpos, Ypos, spellID
 	local prof1, prof2 = GetProfessions()
@@ -3717,11 +4074,9 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		CreateFrameUsableItems(87215, 651094, 15, Xpos*6, Ypos*6, 0, .43, .86) -- Генератор червоточин: Пандария
 		--WOTLK
 		CreateFrameUsableItems(48933, 135778, 15, Xpos*7, Ypos*7, 0, .43, .86) -- Генератор червоточин: Нордскол
-
 	end
 	-----------------------------------------------------
 	-----------------------------------------------------
-
 	-----------------------------------------------------
 	-----------------------------------------------------
 	-----------------------------------------------------
@@ -3775,19 +4130,31 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	Main_Frame:Hide()
 end
 local tableTEST = {
+	----------------------------------------------------------------
 	{
-		name_save = "ShapingFate",
-		name_quest = "Определяя судьбу",
+		name_save = "ALL",
+		name_quest = WorldBoss_Icon.."WB: ALL",
 		reset = "Weekly",
-		expansion = "SL",
-		place = "Korthia",
-		desc = "",
-		questID = {63949},
+		expansion = "DF",
+		place = "",
+		desc = "WB",
+		questID = {69927,69928,69929,69930},
 		max = 1
 	},
 	{
-		name_save = "WB",
-		name_quest = "Мировой босс ШЛ",
+		name_save = "ZaqaliElders",
+		name_quest = WorldBoss_Icon.."WB: Zaqali Elders",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "ZaralekCavern",
+		desc = "WB",
+		questID = {74892},
+		max = 1
+	},
+	----------------------------------------------------------------
+	{
+		name_save = "ALL",
+		name_quest = WorldBoss_Icon.."WB: ALL",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "",
@@ -3796,13 +4163,76 @@ local tableTEST = {
 		max = 1
 	},
 	{
+		name_save = "Antros",
+		name_quest = WorldBoss_Icon.."WB: Antros",
+		reset = "Weekly",
+		expansion = "SL",
+		place = "ZM",
+		desc = "WB",
+		questID = {65143},
+		max = 1
+	},
+	{
 		name_save = "Morgeth",
-		name_quest = func_questName(64531),
+		name_quest = WorldBoss_Icon.."WB: Mor'geth",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Maw",
 		desc = "WB",
 		questID = {64531},
+		max = 1
+	},
+	----------------------------------------------------------------
+	{
+		name_save = "ALL",
+		name_quest = WorldBoss_Icon.."WB: ALL",
+		reset = "Weekly",
+		expansion = "BfA",
+		place = "",
+		desc = "WB",
+		questID = {52157,52163,52166,52181,52169,52196},
+		max = 1,
+	},
+	{
+		name_save = "TerroroftheDepths",
+		name_quest = WorldBoss_Icon.."WB: Terror of the Depths",
+		reset = "Weekly",
+		expansion = "BfA",
+		place = "Nazjatar",
+		desc = "WB",
+		questID = {56056},
+		max = 1,
+	},
+	{
+		name_save = "Assault",
+		name_quest = WorldBoss_Icon.."WB: Vuk'laz the Earthbreaker",
+		reset = "Weekly",
+		expansion = "BfA",
+		place = "",
+		desc = "WB",
+		questID = {55466},
+		max = 1,
+	},
+	----------------------------------------------------------------
+	{
+		name_save = "ALL",
+		name_quest = WorldBoss_Icon.."WB: ALL",
+		reset = "Weekly",
+		expansion = "Legion",
+		place = "",
+		desc = "WB",
+		questID = {43512,43193,43448,43985,42819,43192,43513,42270,42779,42269,44287},
+		max = 1,
+	},
+	----------------------------------------------------------------
+	{
+		name_save = "ShapingFate",
+		name_quest = "Определяя судьбу",
+		reset = "Weekly",
+		expansion = "SL",
+		place = "Korthia",
+		desc = "",
+		questID = {63949},
 		max = 1
 	},
 	{
@@ -4078,7 +4508,7 @@ local tableTEST = {
 	{
 		name_save = "ResearchReportAncientShrines", -- Отчет об исследованиях: древние святилища
 		name_quest = func_itemTexture(186716)..func_itemName(186716),
-		reset = "Weekly",
+		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
 		desc = "ITEM",
@@ -4144,16 +4574,6 @@ local tableTEST = {
 		desc = "",
 		questID = {75271,75285,75298,75326,75576,75314,75296,75353,75358,75274,75366,75336,75269,75334,75322,75267,75476,75276,75342,75338,75340,75360,75292,75349,75364},
 		max = 25
-	},
-	{
-		name_save = "ZaqaliElders",
-		name_quest = "Мировой босс ДФ (Старейшины закали)",
-		reset = "Weekly",
-		expansion = "DF",
-		place = "ZaralekCavern",
-		desc = "WB",
-		questID = {74892},
-		max = 1
 	},
 	{
 		name_save = "AWorthyAllyLoammNiffen", --Достойный союзник: лоаммские ниффы
@@ -4256,16 +4676,6 @@ local tableTEST = {
 		max = 1
 	},
 	{
-		name_save = "WB",
-		name_quest = "Мировой босс ДФ",
-		reset = "Weekly",
-		expansion = "DF",
-		place = "",
-		desc = "WB",
-		questID = {69927,69928,69929,69930},
-		max = 1
-	},
-	{
 		name_save = "FyrakkAssaults",
 		name_quest = L["Fyrakk Asssaults (Local)"],
 		reset = "Weekly",
@@ -4343,16 +4753,6 @@ local tableTEST = {
 		place = "ZM",
 		desc = "",
 		questID = {66042},
-		max = 1
-	},
-	{
-		name_save = "Antros", --Антрос
-		name_quest = func_texturefromIcon(3528312)..func_questName(65143),
-		reset = "Weekly",
-		expansion = "SL",
-		place = "ZM",
-		desc = "WB",
-		questID = {65143},
 		max = 1
 	},
 	{
@@ -4445,32 +4845,86 @@ local tableTEST = {
 		questID = {65179,65213,65216,65210,65180,65214,65211,65217,64940,65212,65209,65215,},
 		max = 12
 	},
-
 	{
-		name_save = "WB",
-		name_quest = "WB BfA",
+		name_save = "coinsQuests",
+		name_quest = "coinsQuests WoD",
+		reset = "Weekly",
+		expansion = "WoD",
+		place = "",
+		desc = "",
+		questID = {36058,36055,37452,37453,36056,37457,37456,36054,37455,37454,36057,37458,37459},
+		max = 3,
+	},
+	{
+		name_save = "coinsQuests",
+		name_quest = "coinsQuests Legion",
+		reset = "Weekly",
+		expansion = "Legion",
+		place = "",
+		desc = "",
+		questID = {43895,43897,43896,43892,43893,43894,47851,47864,47865,43510},
+		max = 2,
+	},
+	{
+		name_save = "coinsQuests",
+		name_quest = "coinsQuests BfA",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
-		desc = "WB",
-		questID = {52157,52163,52166,52181,52169,52196},
-		max = 1,
+		desc = "",
+		questID = {52835,52834,52837,52840,52838,52839},
+		max = 2,
 	},
-
 	{
-		name_save = "TerroroftheDepths", --Глубинный ужас
-		name_quest = func_questName(56056),
+		name_save = "miniVision",
+		name_quest = "miniVision",
 		reset = "Weekly",
 		expansion = "BfA",
-		place = "Nazjatar",
-		desc = "WB",
-		questID = {56056},
+		place = "",
+		desc = "",
+		questID = {58168,58155,58151,58167,58156},
+		max = 6,
+	},
+	{
+		name_save = "AssaultTheBlackEmpire",
+		name_quest = "Assault: The Black Empire",
+		reset = "Weekly",
+		expansion = "BfA",
+		place = "",
+		desc = "",
+		questID = {56064,},
 		max = 1,
 	},
-
-
-
-
+	{
+		name_save = "Warfront1",
+		name_quest = "Warfront1",
+		reset = "Weekly",
+		expansion = "BfA",
+		place = "",
+		desc = "",
+		questID = {53416,53414},
+		max = 1,
+	},
+	{
+		name_save = "Warfront2",
+		name_quest = "Warfront2",
+		reset = "Weekly",
+		expansion = "BfA",
+		place = "",
+		desc = "",
+		questID = {53955,53992},
+		max = 1,
+	},
+	{
+		name_save = "WarfrontHC",
+		name_quest = "WarfrontHC",
+		reset = "Weekly",
+		expansion = "BfA",
+		place = "",
+		desc = "",
+		questID = {56137,56136,57959,57960},
+		max = 1,
+	},
 } -- For table
 function OctoQuestUpdate()
 	local UnitLevel = UnitLevel("PLAYER")
@@ -4502,19 +4956,15 @@ function OctoQuestUpdate()
 				--     end
 				-- end
 			end
-			if collect then
-				-- if collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] == nil or
-				-- collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] == "noname"
-				-- then
-				collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] = v.name_quest or "noname"
-				-- end
+			if collect and not InCombatLockdown() then
+				collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] = v.name_quest or NONE
 				if v.max == 1 then
-					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_count"] = vivod
+					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = vivod
 				elseif v.max > 1 then
 					if vivod == v.max and v.max > 1 then
-						collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_count"] = DONE
+						collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = DONE
 					else
-						collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_count"] = vivod.."/"..v.max
+						collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = vivod.."/"..v.max
 					end
 				end
 			end
@@ -4526,7 +4976,7 @@ function OctoMoneyUpdate()
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	--------------------------------------------------
 	local Money = GetMoney()
-	if collect then
+	if collect and not InCombatLockdown() then
 		collect.Money = Money
 	end
 end
@@ -4535,7 +4985,7 @@ function OctoilvlStr()
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	--------------------------------------------------
 	local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvp = GetAverageItemLevel()
-	if collect then
+	if collect and not InCombatLockdown() then
 		collect.avgItemLevel = math.floor(avgItemLevel)
 		collect.avgItemLevelEquipped = math.floor(avgItemLevelEquipped)
 		collect.avgItemLevelPvp = math.floor(avgItemLevelPvp)
@@ -4783,7 +5233,7 @@ function CollectPlayerInfo()
 	local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
 	local currentXP = UnitXP("PLAYER") or 0
 	local UnitXPMax = UnitXPMax("PLAYER") or 0
-	if collect then
+	if collect and not InCombatLockdown() then
 		collect.currentXP = currentXP
 		collect.UnitXPMax = UnitXPMax
 		collect.Name = curCharName
@@ -4803,8 +5253,8 @@ end
 local function checkCharInfo(CharInfo)
 	for k,v in pairs(tableTEST) do
 		for q,w in pairs(v) do
-			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_name"] or "noname"
-			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_count"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.place..v.desc..v.name_save.."_count"] or 0
+			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] or NONE
+			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] or NONE
 		end
 	end
 	CharInfo.avgItemLevel = CharInfo.avgItemLevel or 0
@@ -4861,6 +5311,31 @@ local function checkCharInfo(CharInfo)
 	CharInfo.HasAvailableRewards =  CharInfo.HasAvailableRewards or false
 	CharInfo.BindLocation = CharInfo.BindLocation or 0
 	CharInfo.CurrentLocation = CharInfo.CurrentLocation or 0
+	CharInfo.islandBfA = CharInfo.islandBfA or 0
+	CharInfo.bounty_BfA1 = CharInfo.bounty_BfA1 or 0
+	CharInfo.bounty_BfA2 = CharInfo.bounty_BfA2 or 0
+	CharInfo.bounty_BfA3 = CharInfo.bounty_BfA3 or 0
+	CharInfo.bounty_BfA1_end = CharInfo.bounty_BfA1_end or 0
+	CharInfo.bounty_BfA2_end = CharInfo.bounty_BfA2_end or 0
+	CharInfo.bounty_BfA3_end = CharInfo.bounty_BfA3_end or 0
+	CharInfo.bounty_BfA1_questID = CharInfo.bounty_BfA1_questID or 0
+	CharInfo.bounty_BfA2_questID = CharInfo.bounty_BfA2_questID or 0
+	CharInfo.bounty_BfA3_questID = CharInfo.bounty_BfA3_questID or 0
+	CharInfo.bounty_BfA1_icon = CharInfo.bounty_BfA1_icon or 0
+	CharInfo.bounty_BfA2_icon = CharInfo.bounty_BfA2_icon or 0
+	CharInfo.bounty_BfA3_icon = CharInfo.bounty_BfA3_icon or 0
+	CharInfo.bounty_Legion1 = CharInfo.bounty_Legion1 or 0
+	CharInfo.bounty_Legion2 = CharInfo.bounty_Legion2 or 0
+	CharInfo.bounty_Legion3 = CharInfo.bounty_Legion3 or 0
+	CharInfo.bounty_Legion1_end = CharInfo.bounty_Legion1_end or 0
+	CharInfo.bounty_Legion2_end = CharInfo.bounty_Legion2_end or 0
+	CharInfo.bounty_Legion3_end = CharInfo.bounty_Legion3_end or 0
+	CharInfo.bounty_Legion1_questID = CharInfo.bounty_Legion1_questID or 0
+	CharInfo.bounty_Legion2_questID = CharInfo.bounty_Legion2_questID or 0
+	CharInfo.bounty_Legion3_questID = CharInfo.bounty_Legion3_questID or 0
+	CharInfo.bounty_Legion1_icon = CharInfo.bounty_Legion1_icon or 0
+	CharInfo.bounty_Legion2_icon = CharInfo.bounty_Legion2_icon or 0
+	CharInfo.bounty_Legion3_icon = CharInfo.bounty_Legion3_icon or 0
 	setmetatable(CharInfo, Meta_Table_0)
 	setmetatable(CharInfo.CurrencyID_maxQuantity, Meta_Table_0)
 	setmetatable(CharInfo.CurrencyID_Total, Meta_Table_0)
@@ -4891,63 +5366,101 @@ local function checkCharInfo(CharInfo)
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
 		CharInfo.tmstp_Weekly = tmstpDayReset(7)
 		CharInfo.needResetWeekly = true
-		CharInfo.Octopussy_SL_Weekly_KorthiaITEMResearchReportAncientShrines_count = 0
-		CharInfo.Octopussy_SL_Weekly_KorthiaRares_count = 0
-		CharInfo.Octopussy_SL_Weekly_KorthiaRIFTStolenAnimaVessel_count = 0
-		CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count = 0
-		CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies_count = 0
-		CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch_count = 0
-		CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_count = 0
-		CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count = 0
-		CharInfo.Octopussy_SL_Weekly_MawWBMorgeth_count = 0
-		CharInfo.Octopussy_SL_Weekly_MawTorghast_count = 0
-		CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count = 0
-		CharInfo.Octopussy_SL_Weekly_ReturnLostSouls_count = 0
-		CharInfo.Octopussy_SL_Weekly_TradingFavors_count = 0
-		CharInfo.Octopussy_SL_Weekly_WBWB_count = 0
-		CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count = 0
-		CharInfo.Octopussy_SL_Weekly_ZMWBAntros_count = 0
-		CharInfo.Octopussy_DF_Weekly_3kREP_count = 0
-		CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count = 0
-		CharInfo.Octopussy_DF_Weekly_Feast_count = 0
-		CharInfo.Octopussy_DF_Weekly_FightingisItsOwnReward_count = 0
-		CharInfo.Octopussy_DF_Weekly_FyrakkAssaults_count = 0
-		CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count = 0
-		CharInfo.Octopussy_DF_Weekly_PVP_count = 0
-		CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count = 0
-		CharInfo.Octopussy_DF_Weekly_StormBoundChest_count = 0
-		CharInfo.Octopussy_DF_Weekly_StormsFury_count = 0
-		CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count = 0
-		CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_count = 0
-		CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count = 0
-		CharInfo.Octopussy_DF_Weekly_WB_count = 0
-		CharInfo.Octopussy_DF_Weekly_WeekendEvent_count = 0
-		CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count = 0
-		CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_count = 0
-		CharInfo.Octopussy_DF_Weekly_ZaralekCavernWBZaqaliElders_count = 0
+CharInfo.Octopussy_DF_Weekly_3kREP = NONE
+CharInfo.Octopussy_DF_Weekly_DragonbaneKeep = NONE
+CharInfo.Octopussy_DF_Weekly_Feast = NONE
+CharInfo.Octopussy_DF_Weekly_FightingisItsOwnReward = NONE
+CharInfo.Octopussy_DF_Weekly_FyrakkAssaults = NONE
+CharInfo.Octopussy_DF_Weekly_KeysofLoyalty = NONE
+CharInfo.Octopussy_DF_Weekly_PVP = NONE
+CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire = NONE
+CharInfo.Octopussy_DF_Weekly_StormBoundChest = NONE
+CharInfo.Octopussy_DF_Weekly_StormsFury = NONE
+CharInfo.Octopussy_DF_Weekly_TheGrandHunt = NONE
+CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY = NONE
+CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS = NONE
+CharInfo.Octopussy_DF_Weekly_WBALL = NONE
+CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders = NONE
+CharInfo.Octopussy_DF_Weekly_WeekendEvent = NONE
+CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen = NONE
+CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking = NONE
+CharInfo.Octopussy_SL_Weekly_ITEMKorthiaResearchReportAncientShrines = NONE
+CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch = NONE
+CharInfo.Octopussy_SL_Weekly_KorthiaRares = NONE
+CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate = NONE
+CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies = NONE
+CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn = NONE
+CharInfo.Octopussy_SL_Weekly_MawCovenantAssault = NONE
+CharInfo.Octopussy_SL_Weekly_MawTorghast = NONE
+CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir = NONE
+CharInfo.Octopussy_SL_Weekly_ReturnLostSouls = NONE
+CharInfo.Octopussy_SL_Weekly_RIFTKorthiaStolenAnimaVessel = NONE
+CharInfo.Octopussy_SL_Weekly_TradingFavors = NONE
+CharInfo.Octopussy_SL_Weekly_WBALL = NONE
+CharInfo.Octopussy_SL_Weekly_WBMawMorgeth = NONE
+CharInfo.Octopussy_SL_Weekly_WBZMAntros = NONE
+CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns = NONE
+CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire = NONE
+CharInfo.Octopussy_BfA_Weekly_coinsQuests = NONE
+CharInfo.Octopussy_BfA_Weekly_miniVision = NONE
+CharInfo.Octopussy_BfA_Weekly_Warfront1 = NONE
+CharInfo.Octopussy_BfA_Weekly_Warfront2 = NONE
+CharInfo.Octopussy_BfA_Weekly_WarfrontHC = NONE
+CharInfo.Octopussy_BfA_Weekly_WBALL = NONE
+CharInfo.Octopussy_BfA_Weekly_WBAssault = NONE
+CharInfo.Octopussy_BfA_Weekly_WBNazjatarTerroroftheDepths = NONE
+CharInfo.Octopussy_Legion_Weekly_coinsQuests = NONE
+CharInfo.Octopussy_Legion_Weekly_WBALL = NONE
+CharInfo.Octopussy_WoD_Weekly_coinsQuests = NONE
 	end
 	if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
 		CharInfo.tmstp_Daily = tmstpDayReset(1)
+CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares = NONE
+CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents = NONE
+CharInfo.Octopussy_DF_Daily_ZaralekCavernRares = NONE
+CharInfo.Octopussy_SL_Daily_KorthiaCollection = NONE
+CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel = NONE
+CharInfo.Octopussy_SL_Daily_KorthiaMobs = NONE
+CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger = NONE
+CharInfo.Octopussy_SL_Daily_MawHelswornChest = NONE
+CharInfo.Octopussy_SL_Daily_MawQuest = NONE
+CharInfo.Octopussy_SL_Daily_RIFTKorthiaRiftboundCache = NONE
+CharInfo.Octopussy_SL_Daily_RIFTKorthiaSpectralBoundChest = NONE
+CharInfo.Octopussy_SL_Daily_RIFTKorthiaZovaalsVault = NONE
+CharInfo.Octopussy_SL_Daily_ZMGetLockStatus = NONE
+CharInfo.Octopussy_SL_Daily_ZMPryingEyeDiscovery = NONE
+CharInfo.Octopussy_SL_Daily_ZMPUZZLECACHES = NONE
+CharInfo.Octopussy_SL_Daily_ZMRares = NONE
+CharInfo.Octopussy_SL_Daily_ZMRaresDuneDominance = NONE
+CharInfo.Octopussy_SL_Daily_ZMTREASURES = NONE
+CharInfo.Octopussy_SL_Daily_ZMworldQuests = NONE
+
+
 		CharInfo.needResetDaily = true
-		CharInfo.Octopussy_SL_Daily_KorthiaCollection_count = 0
-		CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel_count = 0
-		CharInfo.Octopussy_SL_Daily_KorthiaMobs_count = 0
-		CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger_count = 0
-		CharInfo.Octopussy_SL_Daily_KorthiaRIFTRiftboundCache_count = 0
-		CharInfo.Octopussy_SL_Daily_KorthiaRIFTSpectralBoundChest_count = 0
-		CharInfo.Octopussy_SL_Daily_KorthiaRIFTZovaalsVault_count = 0
-		CharInfo.Octopussy_SL_Daily_MawHelswornChest_count = 0
-		CharInfo.Octopussy_SL_Daily_MawQuest_count = 0
-		CharInfo.Octopussy_SL_Daily_ZMGetLockStatus_count = 0
-		CharInfo.Octopussy_SL_Daily_ZMPryingEyeDiscovery_count = 0
-		CharInfo.Octopussy_SL_Daily_ZMPUZZLECACHES_count = 0
-		CharInfo.Octopussy_SL_Daily_ZMRares_count = 0
-		CharInfo.Octopussy_SL_Daily_ZMRaresDuneDominance_count = 0
-		CharInfo.Octopussy_SL_Daily_ZMTREASURES_count = 0
-		CharInfo.Octopussy_SL_Daily_ZMworldQuests_count = 0
-		CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares_count = 0
-		CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents_count = 0
-		CharInfo.Octopussy_DF_Daily_ZaralekCavernRares_count = 0
+		CharInfo.bounty_BfA1 = 0
+		CharInfo.bounty_BfA2 = 0
+		CharInfo.bounty_BfA3 = 0
+		CharInfo.bounty_BfA1_end = 0
+		CharInfo.bounty_BfA2_end = 0
+		CharInfo.bounty_BfA3_end = 0
+		CharInfo.bounty_BfA1_questID = 0
+		CharInfo.bounty_BfA2_questID = 0
+		CharInfo.bounty_BfA3_questID = 0
+		CharInfo.bounty_BfA1_icon = 0
+		CharInfo.bounty_BfA2_icon = 0
+		CharInfo.bounty_BfA3_icon = 0
+		CharInfo.bounty_Legion1 = 0
+		CharInfo.bounty_Legion2 = 0
+		CharInfo.bounty_Legion3 = 0
+		CharInfo.bounty_Legion1_end = 0
+		CharInfo.bounty_Legion2_end = 0
+		CharInfo.bounty_Legion3_end = 0
+		CharInfo.bounty_Legion1_questID = 0
+		CharInfo.bounty_Legion2_questID = 0
+		CharInfo.bounty_Legion3_questID = 0
+		CharInfo.bounty_Legion1_icon = 0
+		CharInfo.bounty_Legion2_icon = 0
+		CharInfo.bounty_Legion3_icon = 0
 	end
 end
 function Octo_ToDo_DragonflyOnEvent(self, event, ...)
@@ -5000,8 +5513,11 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		if Octo_ToDo_DragonflyVars.config.BossBanner == nil then
 			Octo_ToDo_DragonflyVars.config.BossBanner = true
 		end
-		if Octo_ToDo_DragonflyVars.config.AnotherAddons == nil then --RELOAD
-			Octo_ToDo_DragonflyVars.config.AnotherAddons = true
+		if Octo_ToDo_DragonflyVars.config.AnotherAddonsCasual == nil then --RELOAD
+			Octo_ToDo_DragonflyVars.config.AnotherAddonsCasual = false
+		end
+		if Octo_ToDo_DragonflyVars.config.AnotherAddonsRAID == nil then --RELOAD
+			Octo_ToDo_DragonflyVars.config.AnotherAddonsRAID = false
 		end
 		if Octo_ToDo_DragonflyVars.config.ClearChat == nil then
 			Octo_ToDo_DragonflyVars.config.ClearChat = true
@@ -5110,6 +5626,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		OctoilvlStr()
 		CollectAllReputations()
 		CollectAllQuests()
+		CollectAllQuestsBounties()
+		CollectIslandBfA()
 		CollectLoginTime()
 	elseif event == "COVENANT_CHOSEN" then
 		C_Timer.After(1, function()
@@ -5122,14 +5640,32 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 	elseif event == "QUEST_FINISHED" then
 		OctoQuestUpdate()
 		CollectAllQuests()
+		CollectAllQuestsBounties()
+		CollectIslandBfA()
+		Octo_ToDo_DragonflyAddDataToAltFrame()
+	elseif event == "QUEST_TURNED_IN" then
+		OctoQuestUpdate()
+		CollectAllQuests()
+		CollectAllQuestsBounties()
+		CollectIslandBfA()
+		Octo_ToDo_DragonflyAddDataToAltFrame()
+	elseif event == "QUEST_REMOVED" then
+		OctoQuestUpdate()
+		CollectAllQuests()
+		CollectAllQuestsBounties()
+		CollectIslandBfA()
 		Octo_ToDo_DragonflyAddDataToAltFrame()
 	elseif event == "QUEST_COMPLETE" then
 		OctoQuestUpdate()
 		CollectAllQuests()
+		CollectAllQuestsBounties()
+		CollectIslandBfA()
 		Octo_ToDo_DragonflyAddDataToAltFrame()
 	elseif event == "QUEST_LOG_UPDATE" then
 		OctoQuestUpdate()
 		CollectAllQuests()
+		CollectAllQuestsBounties()
+		CollectIslandBfA()
 		if Main_Frame and Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
 		end
@@ -5179,6 +5715,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectDungeonsRaiting()
 		CollectCurrentKEY()
 		CollectAllQuests()
+		CollectAllQuestsBounties()
+		CollectIslandBfA()
 		UPGRADERANKS_Frame()
 		C_Timer.After(3, function()
 				Octo_ToDo_DragonflyAddDataToAltFrame()
@@ -5204,6 +5742,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectPVPRaitings()
 		CollectLoginTime()
 		CollectAllItemsInBag()
+		CollectLocations()
 		CollectAppliedMountEquipmentID()
 		CollectPossibleAnima()
 	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
@@ -5214,17 +5753,17 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		-- CollectLoginTime()
 		--itemID_TEST_INSERT()
 	elseif event == "HEARTHSTONE_BOUND" and not InCombatLockdown() then
-		CollectAllItemsInBag()
+		CollectLocations()
 		CollectPossibleAnima()
 		CollectLoginTime()
 		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED" and not InCombatLockdown() then
-		CollectAllItemsInBag()
+		CollectLocations()
 		CollectPossibleAnima()
 		CollectLoginTime()
 		--Fragments_Earned()
 	elseif event == "ZONE_CHANGED_NEW_AREA" and not InCombatLockdown() then
-		CollectAllItemsInBag()
+		CollectLocations()
 		CollectPossibleAnima()
 		CollectLoginTime()
 		--Fragments_Earned()
@@ -5249,8 +5788,10 @@ SLASH_Octo1, SLASH_Octo2 = '/Octo', '/OctoDF'
 function SlashCmdList.Octo(msg, editBox)
 	Main_Frame:SetShown(not Main_Frame:IsShown())
 	CollectAllItemsInBag()
+	CollectLocations()
 	CollectPossibleAnima()
 	CollectAllReputations()
+	Octo_ToDo_DragonflyAddDataToAltFrame()
 end
 SLASH_GSEARCH1 = "/gsearch"
 SlashCmdList.GSEARCH = function(msg)
@@ -5264,4 +5805,3 @@ end
 -- local ColorKyrian = CreateColor(1, 1, 1, 1)
 -- (KYRIAN_Blue_Color:GetRGB())
 -- SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
-

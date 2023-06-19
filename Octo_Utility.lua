@@ -190,6 +190,47 @@ tinsert(E.modules, function()
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
+--AnotherAddonsRAID
+tinsert(E.modules, function()
+		if Octo_ToDo_DragonflyVars.config.AnotherAddonsRAID then
+			func_Octo_LoadAddOn("!BugGrabber")
+			func_Octo_LoadAddOn("AddOnSkins")
+			func_Octo_LoadAddOn("AdvancedInterfaceOptions")
+			func_Octo_LoadAddOn("BigWigs")
+			func_Octo_LoadAddOn("BigWigs_Core")
+			func_Octo_LoadAddOn("BigWigs_Options")
+			func_Octo_LoadAddOn("BigWigs_Plugins")
+			func_Octo_LoadAddOn("BigWigs_Aberrus")
+			func_Octo_LoadAddOn("BugSack")
+			func_Octo_LoadAddOn("Details")
+			func_Octo_LoadAddOn("ElvUI")
+			func_Octo_LoadAddOn("ElvUI_Libraries")
+			func_Octo_LoadAddOn("ElvUI_Options")
+			func_Octo_LoadAddOn("MountsJournal")
+			func_Octo_LoadAddOn("OmniCC")
+			func_Octo_LoadAddOn("OmniCC_Config")
+			func_Octo_LoadAddOn("OmniCD")
+			func_Octo_LoadAddOn("Parrot")
+			func_Octo_LoadAddOn("Pawn")
+			func_Octo_LoadAddOn("Plater")
+			func_Octo_LoadAddOn("Postal")
+			func_Octo_LoadAddOn("RCLootCouncil")
+			func_Octo_LoadAddOn("SharedMedia")
+			func_Octo_LoadAddOn("SharedMedia_Causese")
+			func_Octo_LoadAddOn("SharedMedia_MyMedia")
+			func_Octo_LoadAddOn("SharedMedia_Naowh")
+			func_Octo_LoadAddOn("Simulationcraft")
+			func_Octo_LoadAddOn("TalentTreeTweaks")
+			func_Octo_LoadAddOn("TrufiGCD")
+			func_Octo_LoadAddOn("WeakAuras")
+			func_Octo_LoadAddOn("WeakAurasArchive")
+			func_Octo_LoadAddOn("WeakAurasModelPaths")
+			func_Octo_LoadAddOn("WeakAurasOptions")
+			func_Octo_LoadAddOn("WeakAurasTemplates")
+			func_Octo_LoadAddOn("WowheadQuickLink")
+		end
+end)
+----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --CVAR
 tinsert(E.modules, function()
@@ -399,6 +440,11 @@ tinsert(E.modules, function()
 				return table.concat(s)
 			end
 			local white_list = {
+				-- {itemid = 191251, count = 30},
+				-- {itemid = 193201, count = 3},
+
+
+
 				{itemid = 194549, count = 1},
 				{itemid = 197616, count = 1},
 				{itemid = 197582, count = 1},

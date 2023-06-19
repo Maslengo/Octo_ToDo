@@ -222,91 +222,101 @@ config:SetScript("OnShow", function(self)
         -----------------------------------------------
         -----------------------------------------------
         -----------------------------------------------
-        -- btn_left14 AnotherAddons
+        -- btn_left14 AnotherAddonsCasual
         -----------------------------------------------
         self.btn_left14 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
         self.btn_left14:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*14)
-        self.btn_left14:SetChecked(Octo_ToDo_DragonflyVars.config.AnotherAddons)
+        self.btn_left14:SetChecked(Octo_ToDo_DragonflyVars.config.AnotherAddonsCasual)
         self.btn_left14:SetScript("OnClick", function(btn_left)
-                Octo_ToDo_DragonflyVars.config.AnotherAddons = btn_left:GetChecked()
+                Octo_ToDo_DragonflyVars.config.AnotherAddonsCasual = btn_left:GetChecked()
                 StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
-        self.btn_left14.text:SetText("|cffFF0000AnotherAddons|r")
-        -----------------------------------------------
-        -----------------------------------------------
-        -- btn_left15 ClearChat
+        self.btn_left14.text:SetText("|cffFF0000AnotherAddonsCasual|r")
+        -- btn_left15 AnotherAddonsRAID
         -----------------------------------------------
         self.btn_left15 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
         self.btn_left15:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*15)
-        self.btn_left15:SetChecked(Octo_ToDo_DragonflyVars.config.ClearChat)
+        self.btn_left15:SetChecked(Octo_ToDo_DragonflyVars.config.AnotherAddonsRAID)
         self.btn_left15:SetScript("OnClick", function(btn_left)
+                Octo_ToDo_DragonflyVars.config.AnotherAddonsRAID = btn_left:GetChecked()
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+        end)
+        self.btn_left15.text:SetText("|cffFF0000AnotherAddonsRAID|r")
+        -----------------------------------------------
+        -----------------------------------------------
+        -- btn_left16 ClearChat
+        -----------------------------------------------
+        self.btn_left16 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+        self.btn_left16:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*16)
+        self.btn_left16:SetChecked(Octo_ToDo_DragonflyVars.config.ClearChat)
+        self.btn_left16:SetScript("OnClick", function(btn_left)
                 Octo_ToDo_DragonflyVars.config.ClearChat = btn_left:GetChecked()
                 StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
                 --StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
-        self.btn_left15.text:SetText("|cffFF0000ClearChat|r")
+        self.btn_left16.text:SetText("|cffFF0000ClearChat|r")
         -----------------------------------------------
         -----------------------------------------------
-        -- btn_left16 ShowOnlyCurrentRealm
+        -- btn_left17 ShowOnlyCurrentRealm
         -----------------------------------------------
-        self.btn_left16 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left16:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*16)
-        self.btn_left16:SetChecked(Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm)
-        self.btn_left16:SetScript("OnClick", function(btn)
+        self.btn_left17 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+        self.btn_left17:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*17)
+        self.btn_left17:SetChecked(Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm)
+        self.btn_left17:SetScript("OnClick", function(btn)
                 Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm = btn:GetChecked()
                 StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
-        self.btn_left16.text:SetText("|cffFF0000ShowOnlyCurrentRealm|r")
+        self.btn_left17.text:SetText("|cffFF0000ShowOnlyCurrentRealm|r")
         -----------------------------------------------
-        --LevelToShowTEXT
+        -- Slider_right18 LevelToShowTEXT
         local LevelToShowTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-        self.Slider_right17 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
-        self.Slider_right17:SetWidth(140)
-        self.Slider_right17:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*17)
-        self.Slider_right17:SetMinMaxValues(1,70)
-        self.Slider_right17:SetValueStep(1)
+        self.Slider_right18 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
+        self.Slider_right18:SetWidth(140)
+        self.Slider_right18:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*18)
+        self.Slider_right18:SetMinMaxValues(1,70)
+        self.Slider_right18:SetValueStep(1)
         local step = 1
-        self.Slider_right17:SetValue(Octo_ToDo_DragonflyVars.config.LevelToShow)
-        self.Slider_right17:SetScript("OnValueChanged", function (self, value)
+        self.Slider_right18:SetValue(Octo_ToDo_DragonflyVars.config.LevelToShow)
+        self.Slider_right18:SetScript("OnValueChanged", function (self, value)
                 value = math.floor(value * step + .5) / step
                 Octo_ToDo_DragonflyVars.config.LevelToShow = value
                 LevelToShowTEXT:SetText("LevelToShow: "..Octo_ToDo_DragonflyVars.config.LevelToShow)
                 StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
-        LevelToShowTEXT:SetPoint("LEFT", self.Slider_right17, "RIGHT", indent, 0)
+        LevelToShowTEXT:SetPoint("LEFT", self.Slider_right18, "RIGHT", indent, 0)
         LevelToShowTEXT:SetText("LevelToShow: "..Octo_ToDo_DragonflyVars.config.LevelToShow)
-        self.Slider_right17:Show()
-        -- btn_left18 AutoSellGrey
-        -----------------------------------------------
-        self.btn_left18 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-        self.btn_left18:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*18)
-        self.btn_left18:SetChecked(Octo_ToDo_DragonflyVars.config.AutoSellGrey)
-        self.btn_left18:SetScript("OnClick", function(btn)
-                Octo_ToDo_DragonflyVars.config.AutoSellGrey = btn:GetChecked()
-                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-        end)
-        self.btn_left18.text:SetText("|cffFF0000AutoSellGrey|r")
-        -- btn_left19 AutoRepair
+        self.Slider_right18:Show()
+        -- btn_left19 AutoSellGrey
         -----------------------------------------------
         self.btn_left19 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
         self.btn_left19:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*19)
-        self.btn_left19:SetChecked(Octo_ToDo_DragonflyVars.config.AutoRepair)
+        self.btn_left19:SetChecked(Octo_ToDo_DragonflyVars.config.AutoSellGrey)
         self.btn_left19:SetScript("OnClick", function(btn)
-                Octo_ToDo_DragonflyVars.config.AutoRepair = btn:GetChecked()
+                Octo_ToDo_DragonflyVars.config.AutoSellGrey = btn:GetChecked()
                 StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
-        self.btn_left19.text:SetText("|cffFF0000AutoRepair|r")
-        -----------------------------------------------
-        -- btn_left20 HideErrorMessages
+        self.btn_left19.text:SetText("|cffFF0000AutoSellGrey|r")
+        -- btn_left19 AutoRepair
         -----------------------------------------------
         self.btn_left20 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
         self.btn_left20:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*20)
-        self.btn_left20:SetChecked(Octo_ToDo_DragonflyVars.config.HideErrorMessages)
+        self.btn_left20:SetChecked(Octo_ToDo_DragonflyVars.config.AutoRepair)
         self.btn_left20:SetScript("OnClick", function(btn)
+                Octo_ToDo_DragonflyVars.config.AutoRepair = btn:GetChecked()
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+        end)
+        self.btn_left20.text:SetText("|cffFF0000AutoRepair|r")
+        -----------------------------------------------
+        -- btn_left21 HideErrorMessages
+        -----------------------------------------------
+        self.btn_left21 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+        self.btn_left21:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*21)
+        self.btn_left21:SetChecked(Octo_ToDo_DragonflyVars.config.HideErrorMessages)
+        self.btn_left21:SetScript("OnClick", function(btn)
                 Octo_ToDo_DragonflyVars.config.HideErrorMessages = btn:GetChecked()
                 StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
         end)
-        self.btn_left20.text:SetText("|cffFF0000HideErrorMessages|r")
+        self.btn_left21.text:SetText("|cffFF0000HideErrorMessages|r")
         -----------------------------------------------
         -- btn_right1 LINE_Classic
         -----------------------------------------------
