@@ -490,7 +490,7 @@ function CollectCloaklvl()
 	-------------------------------------------------------------------------
 	--local itemName, itemLink = GetItemInfo(169223)
 	local hasItem = GetItemCount(169223, true, true, true)
-	if hasItem == true then
+	if hasItem == 1 then
 		local itemLink = GetInventoryItemLink("player",15)
 		if itemLink then
 			local itemID = itemLink:match("item:(%d+)")
@@ -2678,17 +2678,21 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- cloak_lvl
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.cloak_lvl ~= 0 then
-					VivodCent = Empty_Zero(CharInfo.cloak_lvl)
-					if CharInfo.cloak_lvl == 15 then
-						VivodCent = Green_Color..VivodCent.."|r"
+				if CharInfo.ItemsInBag[169223] == 0 then
+					VivodCent = Red_Color.."no cloak|r"
+				end
+				if CharInfo.ItemsInBag[169223] ~= 0 then
+					if CharInfo.cloak_lvl ~= 0 then
+						VivodCent = CharInfo.cloak_lvl.." lvl"
+						if CharInfo.cloak_lvl == 15 then
+							VivodCent = Green_Color..VivodCent.."|r"
+						end
+					end
+					if CharInfo.cloak_res ~= 0 then
+						CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
+						VivodCent = VivodCent.."|n"..CharInfo.cloak_res
 					end
 				end
-				if CharInfo.cloak_res ~= 0 then
-					CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-					VivodCent = VivodCent.."|n"..CharInfo.cloak_res
-				end
-
 				VivodLeft = func_itemTexture(169223)..func_itemName(169223)
 				return VivodCent, VivodLeft
 		end)
@@ -2858,6 +2862,20 @@ local function O_otrisovka()
 				VivodLeft = Gray_Color..func_itemTexture(124124)..func_itemName_NOCOLOR(124124).."|r"
 				return VivodCent, VivodLeft
 		end)
+
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_Legion_Weekly_WBALL_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_Legion_Weekly_WBALL_count
+				end
+				VivodLeft = WorldBoss_Icon.."World Boss"
+				return VivodCent, VivodLeft
+		end)
+
+
+
+
 
 		tinsert(table_func_otrisovka, -- Баланс сил
 			function(CharInfo, tooltip, CL, BG)
@@ -4218,6 +4236,14 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 					i = i + 1
 					GameTooltip:AddDoubleLine(func_itemTexture(86547)..CharInfo.ItemsInBag[86547], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 				end
+				if CharInfo.ItemsInBag[183616] ~= 0 then
+					i = i + 1
+					GameTooltip:AddDoubleLine(func_itemTexture(183616)..CharInfo.ItemsInBag[183616], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+				end
+
+
+
+
 			end
 			if i == 0 then
 				GameTooltip:AddLine("No Data")
@@ -6011,6 +6037,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 	elseif (event == "UNIT_INVENTORY_CHANGED" or event == "PLAYER_EQUIPMENT_CHANGED" or event == "PLAYER_AVG_ITEM_LEVEL_UPDATE") and not InCombatLockdown() then
 		OctoilvlStr()
 		CollectPlayerInfo()
+		CollectCloaklvl()
 		if Main_Frame and Main_Frame:IsShown() then
 			Octo_ToDo_DragonflyAddDataToAltFrame()
 		end
