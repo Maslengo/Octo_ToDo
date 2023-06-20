@@ -4078,15 +4078,15 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 				local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 				if (CharInfo.ItemsInBag[137642] ~= 0) then
 					i = i + 1
-					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"),func_itemTexture(137642)..CharInfo.ItemsInBag[137642])
+					GameTooltip:AddDoubleLine(func_itemTexture(137642)..CharInfo.ItemsInBag[137642], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 				end
 				if CharInfo.ItemsInBag[202196] ~= 0 then
 					i = i + 1
-					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"),func_itemTexture(202196)..CharInfo.ItemsInBag[202196])
+					GameTooltip:AddDoubleLine(func_itemTexture(202196)..CharInfo.ItemsInBag[202196], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 				end
 				if CharInfo.ItemsInBag[86547] ~= 0 then
 					i = i + 1
-					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"),func_itemTexture(86547)..CharInfo.ItemsInBag[86547])
+					GameTooltip:AddDoubleLine(func_itemTexture(86547)..CharInfo.ItemsInBag[86547], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 				end
 			end
 			if i == 0 then
