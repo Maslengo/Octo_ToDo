@@ -9,6 +9,8 @@ local Meta_Table_true = {__index = function() return true end}
 local Octo_REPUTATION_DEV_text = false
 if PTR_IssueReporter then PTR_IssueReporter:Hide() end
 if WeeklyRewardExpirationWarningDialog then WeeklyRewardExpirationWarningDialog:Hide() end
+local inspectScantip = CreateFrame("GameTooltip", "LegToDoScanningTooltip", nil, "GameTooltipTemplate")
+inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 -- суббота 23:00
 --E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
@@ -132,6 +134,7 @@ local Octo_Table_itemID_Cataloged_Research = {
 	{itemiD = 187350, count = 300},
 }
 local Octo_Table_itemID_ALL = {
+	169223,174764,174765,174759,174767,174760,174766,174758,174768,174756,174761,
 	86547,124124,173363,24915,24916,24917,24918,24919,49040,50274,51316,51317,51318,51319,51320,51321,52200,52201,52251,52252,52253,83078,92426,92441,92471,122284,122338,122339,122340,122341,128353,129940,129941,129942,129943,129944,129945,129946,129947,129948,129949,129950,129951,129954,129955,133150,133151,133152,133154,133159,133160,137642,138486,138488,138727,138728,138729,141605,141652,143935,143936,143937,143938,143939,143940,143941,143942,143943,143944,143945,143946,143947,151614,151615,166751,167731,167732,167862,167924,167925,167926,167927,167928,167929,167930,167932,168017,168018,180817,183616,185834,187997,187998,188152,189765,190189,190453,190454,190455,190456,191251,191264,191784,191915,192130,192131,192132,193201,193891,193897,193898,193899,193900,193901,193902,193903,193904,193905,193907,193909,193910,193913,194039,194040,194041,194054,194055,194061,194062,194063,194064,194066,194067,194068,194072,194076,194077,194078,194079,194080,194081,194337,194697,194698,194699,194700,194702,194703,194704,194708,197921,198046,198395,198438,198454,198510,198599,198606,198607,198608,198609,198610,198611,198612,198613,198656,198658,198659,198660,198662,198663,198664,198667,198669,198670,198680,198682,198683,198684,198685,198686,198687,198690,198692,198693,198696,198697,198699,198702,198703,198704,198710,198711,198712,198789,198837,198841,198863,198864,198865,198866,198867,198868,198869,198963,198964,198965,198966,198967,198968,198969,198970,198971,198972,198973,198974,198975,198976,198977,198978,199115,199122,199128,199192,199197,199472,199473,199474,199475,200069,200070,200072,200073,200095,200224,200285,200287,200288,200289,200300,200452,200453,200454,200455,200468,200513,200515,200516,200609,200610,200611,200652,200677,200678,200686,200764,200811,200846,200972,200973,200974,200975,200976,200977,200978,200979,200980,200981,200982,201003,201004,201005,201006,201007,201008,201009,201010,201011,201012,201013,201014,201015,201016,201017,201018,201019,201020,201023,201250,201268,201269,201270,201271,201272,201273,201274,201275,201276,201277,201278,201279,201280,201281,201282,201283,201284,201285,201286,201287,201288,201289,201300,201301,201326,201352,201439,201462,201700,201705,201706,201708,201709,201710,201711,201712,201713,201714,201715,201716,201717,201728,201755,201756,201781,201782,201817,201836,201921,201922,201923,201924,201991,202011,202014,202016,202017,202039,202052,202079,202080,202091,202092,202093,202094,202097,202098,202142,202152,202171,202172,202173,202196,202371,202667,202668,202669,202670,202870,202871,202872,203217,203220,203222,203224,203430,203476,203611,203612,203613,203614,203615,203616,203617,203618,203619,203620,203622,203623,203626,203627,203628,203629,203630,203631,203632,203633,203634,203635,203636,203637,203638,203639,203640,203641,203642,203643,203644,203645,203646,203647,203648,203649,203650,203681,203683,203699,203700,203702,203710,204075,204076,204077,204078,204180,204186,204187,204188,204189,204190,204191,204193,204194,204195,204196,204215,204217,204222,204224,204225,204226,204227,204228,204229,204230,204231,204232,204233,204276,204352,204359,204378,204379,204380,204381,204383,204403,204440,204464,204469,204470,204471,204475,204558,204559,204560,204573,204574,204575,204576,204577,204578,204579,204681,204682,204697,204715,204717,204721,204722,204723,204724,204725,204726,204727,204843,204850,204853,204855,204985,204986,204987,204988,204990,204999,205001,205188,205211,205212,205213,205214,205216,205219,205225,205249,205250,205288,205347,205367,205423,205878,205903,205982,205984,205986,205987,205988,205989,205999,206019,206025,206028,206030,206031,206034,206035,206037,206139,206140,206141,206142,206143,206144,206366,
 }
 local Octo_Table_itemID_Reputation = {
@@ -143,7 +146,7 @@ local Octo_Table_itemID_DFMountsSkins = {
 TableConcat (Octo_Table_itemID_ALL,Octo_Table_itemID_Reputation)
 TableConcat (Octo_Table_itemID_ALL,Octo_Table_itemID_DFMountsSkins)
 local Octo_Table_QuestID = {
-	13183,24545,24547,24548,24549,24743,24748,24749,24756,24757,32295,32307,32309,32310,32317,32324,32325,40168,40173,40786,40787,45563,47148,55498,55499,55509,55511,56337,56339,64367,64710,65143,65282,66042,66133,66419,66860,66861,66862,66863,66864,66865,66866,66867,66868,66870,66871,66873,66874,66875,71026,72166,72167,72168,72169,72170,72171,72646,72647,72648,72649,72719,72720,72721,72722,72723,72724,72725,72726,72727,72728,72810,74378,74568,74569,74570,74771,74775,74871,74905,75234,75239,75390,75393,75397,75459,75497,75506,75516,75517,75619,75620,75621,75622,75665,75694,75887,75888,75996,76014,76015,76016,76027,76081,76084,76122,13183,24545,24547,24548,24549,24743,24748,24749,24756,24757,32295,32307,32309,32310,32317,32324,32325,36614,40168,40173,40786,40787,45563,47148,55498,55499,55509,55511,56337,56339,60242,60243,60244,60245,60246,60247,60248,60249,60250,60251,60252,60253,60254,60255,60256,60257,60646,60762,60775,61075,61079,61088,61103,61104,61765,61813,61814,61815,61816,61981,61982,61983,61984,62214,62234,62284,62285,62286,62287,62288,62631,62632,62633,62634,62635,62636,62637,62638,62639,62640,62858,62859,62860,62861,62862,62863,62864,62865,62866,62867,62868,62869,63543,63815,63816,63817,63818,63822,63823,63824,63825,63826,63830,63949,63993,63995,63996,63997,63998,63999,64021,64027,64044,64045,64055,64056,64057,64058,64059,64060,64061,64152,64209,64232,64233,64243,64245,64246,64247,64251,64256,64257,64258,64263,64265,64269,64270,64272,64273,64276,64278,64283,64284,64285,64291,64300,64303,64307,64313,64316,64317,64318,64320,64338,64339,64341,64342,64343,64344,64347,64348,64349,64351,64354,64355,64356,64357,64358,64359,64360,64361,64362,64363,64364,64366,64367,64428,64433,64434,64435,64436,64439,64440,64442,64455,64456,64457,64470,64471,64472,64522,64531,64564,64565,64575,64709,64710,64747,64748,64749,64750,64751,64752,64753,64754,64755,64756,64757,64828,65143,65266,65282,66042,66133,66419,66860,66861,66862,66863,66864,66865,66866,66867,66868,66870,66871,66873,66874,66875,71026,72166,72167,72168,72169,72170,72171,72646,72647,72648,72649,72719,72720,72721,72722,72723,72724,72725,72726,72727,72728,72810,74300,74305,74306,74307,74321,74322,74325,74328,74329,74330,74331,74332,74333,74336,74337,74338,74339,74341,74342,74343,74344,74345,74346,74347,74349,74352,74378,74568,74569,74570,74771,74775,74871,74905,75156,75222,75234,75239,75267,75269,75271,75274,75276,75285,75292,75296,75298,75314,75322,75326,75334,75336,75338,75340,75342,75349,75353,75358,75360,75364,75366,75370,75390,75393,75397,75441,75450,75451,75454,75455,75459,75461,75471,75476,75478,75494,75497,75506,75516,75517,75576,75611,75612,75619,75620,75621,75622,75624,75664,75665,75694,75705,75887,75888,75996,76014,76015,76016,76027,76081,76084,76122,39246,34378
+	43533,13183,24545,24547,24548,24549,24743,24748,24749,24756,24757,32295,32307,32309,32310,32317,32324,32325,40168,40173,40786,40787,45563,47148,55498,55499,55509,55511,56337,56339,64367,64710,65143,65282,66042,66133,66419,66860,66861,66862,66863,66864,66865,66866,66867,66868,66870,66871,66873,66874,66875,71026,72166,72167,72168,72169,72170,72171,72646,72647,72648,72649,72719,72720,72721,72722,72723,72724,72725,72726,72727,72728,72810,74378,74568,74569,74570,74771,74775,74871,74905,75234,75239,75390,75393,75397,75459,75497,75506,75516,75517,75619,75620,75621,75622,75665,75694,75887,75888,75996,76014,76015,76016,76027,76081,76084,76122,13183,24545,24547,24548,24549,24743,24748,24749,24756,24757,32295,32307,32309,32310,32317,32324,32325,36614,40168,40173,40786,40787,45563,47148,55498,55499,55509,55511,56337,56339,60242,60243,60244,60245,60246,60247,60248,60249,60250,60251,60252,60253,60254,60255,60256,60257,60646,60762,60775,61075,61079,61088,61103,61104,61765,61813,61814,61815,61816,61981,61982,61983,61984,62214,62234,62284,62285,62286,62287,62288,62631,62632,62633,62634,62635,62636,62637,62638,62639,62640,62858,62859,62860,62861,62862,62863,62864,62865,62866,62867,62868,62869,63543,63815,63816,63817,63818,63822,63823,63824,63825,63826,63830,63949,63993,63995,63996,63997,63998,63999,64021,64027,64044,64045,64055,64056,64057,64058,64059,64060,64061,64152,64209,64232,64233,64243,64245,64246,64247,64251,64256,64257,64258,64263,64265,64269,64270,64272,64273,64276,64278,64283,64284,64285,64291,64300,64303,64307,64313,64316,64317,64318,64320,64338,64339,64341,64342,64343,64344,64347,64348,64349,64351,64354,64355,64356,64357,64358,64359,64360,64361,64362,64363,64364,64366,64367,64428,64433,64434,64435,64436,64439,64440,64442,64455,64456,64457,64470,64471,64472,64522,64531,64564,64565,64575,64709,64710,64747,64748,64749,64750,64751,64752,64753,64754,64755,64756,64757,64828,65143,65266,65282,66042,66133,66419,66860,66861,66862,66863,66864,66865,66866,66867,66868,66870,66871,66873,66874,66875,71026,72166,72167,72168,72169,72170,72171,72646,72647,72648,72649,72719,72720,72721,72722,72723,72724,72725,72726,72727,72728,72810,74300,74305,74306,74307,74321,74322,74325,74328,74329,74330,74331,74332,74333,74336,74337,74338,74339,74341,74342,74343,74344,74345,74346,74347,74349,74352,74378,74568,74569,74570,74771,74775,74871,74905,75156,75222,75234,75239,75267,75269,75271,75274,75276,75285,75292,75296,75298,75314,75322,75326,75334,75336,75338,75340,75342,75349,75353,75358,75360,75364,75366,75370,75390,75393,75397,75441,75450,75451,75454,75455,75459,75461,75471,75476,75478,75494,75497,75506,75516,75517,75576,75611,75612,75619,75620,75621,75622,75624,75664,75665,75694,75705,75888,75996,76014,76015,76016,76027,76081,76084,76122,39246,34378
 }
 local Octo_Table_SpellID = {
 	--Рыбалка
@@ -313,8 +316,8 @@ function LegionInvasionTimer()
 	end
 	return LegionInvasionTimer
 end
-function BfAInvasionTimer()
-	local TIMER = (1547586000-10800)
+function BfAInvasionTimer() --PVP
+	local TIMER = (1547586000+3600) --(1547586000-10800)
 	local interval = 68400
 	local duration = 25200
 	local currTime = tonumber(GetServerTime())
@@ -326,6 +329,27 @@ function BfAInvasionTimer()
 	end
 	return BfAInvasionTimer
 end
+
+
+function BfAAssaultTimer() --NZOTH
+	local TIMER = (1547586000+3600+3600+3600+3600+3600+3600+3600) --(1547586000-10800)
+	local interval = 86400
+	local duration = 86400
+	local currTime = tonumber(GetServerTime())
+	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local BfAAssaultTimer = Red_Color..SecondsToClock(nextEventIn) .."|r "
+	if nextEventIn > (interval - duration) then
+		nextEventIn = nextEventIn - (interval - duration)
+		BfAAssaultTimer = Addon_Color..SecondsToClock(nextEventIn) .."|r "
+	end
+	return BfAAssaultTimer
+end
+
+
+
+
+
+
 function ToDragonbaneKeepTimer() -- Драконья экспедиция
 	-- local timePattern = "%02d:%02d"
 	local TIMER = 1670342460 -- ToDragonbaneKeepTimer
@@ -443,17 +467,6 @@ function CollectKnownSpell()
 		end
 	end
 end
-local function formatAzeriteNum(num)
-	if num < 5000 then
-		return tostring(num)
-	elseif num < 100000 then
-		return format("%.1fk",num/1000)
-	elseif num < 1000000 then
-		return format("%dk",num/1000)
-	else
-		return format("%.2fm",num/1000000)
-	end
-end
 function CollectAzerite()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -464,28 +477,79 @@ function CollectAzerite()
 		local currentLevel = C_AzeriteItem.GetPowerLevel(azeriteItemLocation)
 		if totalLevelXP and totalLevelXP ~= 0 then
 			if collect and not InCombatLockdown() then
-				collect.azerite = Green_Color..currentLevel.."|r|n"..Gray_Color.."("..floor(xp / totalLevelXP * 100).."%, -"..CompactNumberFormat(totalLevelXP - xp)..")|r"
+				collect.azeriteLVL = currentLevel
+				collect.azeriteEXP = floor(xp / totalLevelXP * 100).."%, -"..CompactNumberFormat(totalLevelXP - xp)
 			end
 		end
 	end
+end
 
-
+function CollectCloaklvl()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
-	local itemLink = GetInventoryItemLink("player",15)
-	if itemLink then
-		local itemID = itemLink:match("item:(%d+)")
-		if itemID == "169223" then
-			local ilvl = select(4,GetItemInfo(itemLink))
-			if ilvl then
-				if collect and not InCombatLockdown() then
-					collect.cloak_lvl = min(15, max((ilvl - 125) / 2 + 1, 1))
+	--local itemName, itemLink = GetItemInfo(169223)
+	local hasItem = GetItemCount(169223, true, true, true)
+	if hasItem == true then
+		local itemLink = GetInventoryItemLink("player",15)
+		if itemLink then
+			local itemID = itemLink:match("item:(%d+)")
+			if itemID == "169223" then
+				local itemLevel = select(4,GetItemInfo(itemLink))
+				if itemLevel then
+					if collect and not InCombatLockdown() then
+						collect.cloak_lvl = min(15, max((itemLevel - 125) / 2 + 1, 1))
+					end
 				end
 			end
 		end
+
+		if itemLink and itemLink:find("item:169223:") then
+			inspectScantip:SetInventoryItem("player", 15)
+			if inspectScantip:NumLines() > 0 then
+				for j=2, inspectScantip:NumLines() do
+					local text = _G["LegToDoScanningTooltipTextLeft"..j]:GetText()
+					if text and text ~= "" then
+						local res = text:gsub("[,]",""):gsub("(%d+)[ ]+(%d+)","%1%2"):match("%+(%d+) ?"..(ITEM_MOD_CORRUPTION_RESISTANCE or "Corruption resistance").."$")
+
+						if res then
+							if collect and not InCombatLockdown() then
+								collect.cloak_res = res
+								break
+							end
+						end
+					end
+				end
+			end
+			inspectScantip:ClearLines()
+		end
+	else
+		collect.cloak_lvl = 0
+		collect.cloak_res = 0
 	end
 
 
+
 end
+
+
+function CollectArtifact()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	-------------------------------------------------------------------------
+	local _,_,_,quantity1,reqQuantity1 = GetAchievementCriteriaInfo(11152,1)
+	local _,_,_,quantity2,reqQuantity2 = GetAchievementCriteriaInfo(11153,1)
+	local _,_,_,quantity3,reqQuantity3 = GetAchievementCriteriaInfo(11154,1)
+
+
+
+	-- print("Dungeons: "..quantity1.."/"..reqQuantity1)
+	-- print("WQs: "..quantity2.."/"..reqQuantity2)
+	-- print("Kills: "..quantity3.."/"..reqQuantity3)
+
+end
+
+
 function CollectVoidStorage()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -1929,9 +1993,7 @@ local function O_otrisovka()
 			if CharInfo.CurrentKey ~= 0 then
 				tooltip[#tooltip+1] = {"Score", CharInfo.RIO_Score}
 				tooltip[#tooltip+1] = {"Weekly Best", CharInfo.RIO_weeklyBest}
-				if #tooltip > 0 then
-					tooltip[#tooltip+1] = {" ", " "}
-				end
+				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {"Рейды", CharInfo.RIO_RAID}
 				tooltip[#tooltip+1] = {"M+", CharInfo.RIO_KEYS}
 				tooltip[#tooltip+1] = {"PVP", CharInfo.RIO_PVPS}
@@ -2453,7 +2515,52 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodLeft = (BfAInvasionTimer().."BfAInvasionTimer")
+				VivodLeft = (BfAInvasionTimer().."BfAInvasionTimer (PVP)")
+				if CharInfo.Octopussy_BfA_Daily_InvasionQuests_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_BfA_Daily_InvasionQuests_count
+				end
+				if CharInfo.Octopussy_BfA_Daily_InvasionQuests_questID ~= NONE then
+					tooltip[#tooltip+1] = {func_questName(CharInfo.Octopussy_BfA_Daily_InvasionQuests_questID)}
+				end
+				return VivodCent, VivodLeft
+		end)
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodLeft = (BfAAssaultTimer().."BfAAssaultTimer (N'zoth)")
+				if CharInfo.Octopussy_BfA_Daily_AssaultQuests_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_BfA_Daily_AssaultQuests_count
+				end
+
+				if CharInfo.ItemsInBag[174765] ~= 0 then
+					VivodCent = VivodCent..CharInfo.ItemsInBag[174765]..func_itemTexture(174765)
+				end
+				if CharInfo.ItemsInBag[174761] ~= 0 then
+					VivodCent = VivodCent..CharInfo.ItemsInBag[174761]..func_itemTexture(174761)
+				end
+				if CharInfo.ItemsInBag[174767] ~= 0 then
+					VivodCent = VivodCent..CharInfo.ItemsInBag[174767]..func_itemTexture(174767)
+				end
+				if CharInfo.ItemsInBag[174766] ~= 0 then
+					VivodCent = VivodCent..CharInfo.ItemsInBag[174766]..func_itemTexture(174766)
+				end
+				if CharInfo.ItemsInBag[174768] ~= 0 then
+					VivodCent = VivodCent..CharInfo.ItemsInBag[174768]..func_itemTexture(174768)
+				end
+
+
+
+				if CharInfo.Octopussy_BfA_Daily_AssaultQuests_questID ~= NONE then
+					tooltip[#tooltip+1] = {func_questName(CharInfo.Octopussy_BfA_Daily_AssaultQuests_questID)}
+				end
+
+				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+				tooltip[#tooltip+1] = {func_itemTexture(174764)..CharInfo.ItemsInBag[174764].."/6", "Ульдум "..CharInfo.ItemsInBag[174765]..func_itemTexture(174765)}
+				tooltip[#tooltip+1] = {func_itemTexture(174756)..CharInfo.ItemsInBag[174756].."/6", "Ульдум "..CharInfo.ItemsInBag[174761]..func_itemTexture(174761)}
+				tooltip[#tooltip+1] = {func_itemTexture(174759)..CharInfo.ItemsInBag[174759].."/6", "Вечноцветущий дол "..CharInfo.ItemsInBag[174767]..func_itemTexture(174767)}
+				tooltip[#tooltip+1] = {func_itemTexture(174760)..CharInfo.ItemsInBag[174760].."/6", "Вечноцветущий дол "..CharInfo.ItemsInBag[174766]..func_itemTexture(174766)}
+				tooltip[#tooltip+1] = {func_itemTexture(174758)..CharInfo.ItemsInBag[174758].."/6", "Вечноцветущий дол, Ульдум "..CharInfo.ItemsInBag[174768]..func_itemTexture(174768)}
+
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka,
@@ -2561,9 +2668,9 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka, -- azerite
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				if CharInfo.azerite ~= 0 then
+				if CharInfo.azeriteLVL ~= 0 then
 					CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
-					VivodCent = Empty_Zero(CharInfo.azerite)
+					VivodCent = Empty_Zero(Green_Color..CharInfo.azeriteLVL.."|r").."|n"..Gray_Color..CharInfo.azeriteEXP.."|r"
 				end
 				VivodLeft = func_itemTexture(158075)..func_itemName(158075)
 				return VivodCent, VivodLeft
@@ -2577,6 +2684,11 @@ local function O_otrisovka()
 						VivodCent = Green_Color..VivodCent.."|r"
 					end
 				end
+				if CharInfo.cloak_res ~= 0 then
+					CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
+					VivodCent = VivodCent.."|n"..CharInfo.cloak_res
+				end
+
 				VivodLeft = func_itemTexture(169223)..func_itemName(169223)
 				return VivodCent, VivodLeft
 		end)
@@ -2746,6 +2858,23 @@ local function O_otrisovka()
 				VivodLeft = Gray_Color..func_itemTexture(124124)..func_itemName_NOCOLOR(124124).."|r"
 				return VivodCent, VivodLeft
 		end)
+
+		tinsert(table_func_otrisovka, -- Баланс сил
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_Legion_Once_BalanceofPower_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_Legion_Once_BalanceofPower_count
+				end
+				if Octo_Table_QuestID[43533] == "|cff4FFF79Done|r" then
+					VivodCent = DONE
+				end
+				VivodLeft = func_questName(43533)
+				return VivodCent, VivodLeft
+		end)
+
+
+
+
 		-- bounty_Legion1
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -3804,6 +3933,7 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 	EventFrame:RegisterEvent("SPELLS_CHANGED")
 	EventFrame:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
+	EventFrame:RegisterEvent("AZERITE_ITEM_EXPERIENCE_CHANGED")
 	-- EventFrame:RegisterEvent("UNIT_SPELLCAST_START")
 	-- EventFrame:RegisterEvent("UNIT_SPELLCAST_STOP")
 	-- EventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
@@ -4803,7 +4933,7 @@ local tableTEST = {
 		expansion = "DF",
 		place = "",
 		desc = "",
-		questID = {74501,75280},
+		questID = {74501,75280}, --75887
 		max = 1
 	},
 	{
@@ -5046,18 +5176,66 @@ local tableTEST = {
 		questID = {56137,56136,57959,57960},
 		max = 1,
 	},
+	-- Баланс сил
+	{
+		name_save = "BalanceofPower",
+		name_quest = "Balance of Power",
+		reset = "Once",
+		expansion = "Legion",
+		place = "",
+		desc = "",
+		questID = {43496,43503,43501,43505,40668,43514,43517,43518,43519,43581,43520,43521,43522,43938,43527,43937,43523,40673,43524,40675,43525,40678,43526,40603,40608,40613,40614,40672,40615,43898,43528,43530,43531,43532,43533,},
+		max = 33,
+	},
+	-- InvasionQuests https://www.wowhead.com/ru/quests/battle-for-azeroth/tiragarde-sound#200-2+1+12
+	{
+		name_save = "InvasionQuests", --PVP
+		name_quest = "Invasion Quests",
+		reset = "Daily",
+		expansion = "BfA",
+		place = "",
+		desc = "",
+		questID = {
+			54134,54136,53711,53701,54138,51982,
+			53883,54137,53885,53939,54135,54132,
+		},
+		max = 1,
+	},
+	{
+		name_save = "AssaultQuests", --Nzoth
+		name_quest = "Assault Quests",
+		reset = "Daily",
+		expansion = "BfA",
+		place = "",
+		desc = "",
+		questID = {
+			55350,
+		},
+		max = 1,
+	},
+
+
+
+
+
+
+
+
+
+
 } -- For table
 function OctoQuestUpdate()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	local IsOnQuest = false
 	----------------------------------------------------------------
 	for k,v in pairs(tableTEST) do
 		for q,w in pairs(v) do
 			local count = 0
 			local vivod = ""
 			for z,x in pairs(v.questID) do
-				local IsOnQuest = C_QuestLog.IsOnQuest(x)
+				IsOnQuest = C_QuestLog.IsOnQuest(x)
 				if v.max > 1 then
 					if C_QuestLog.IsQuestFlaggedCompleted(x) == true then
 						count = count + 1
@@ -5076,6 +5254,9 @@ function OctoQuestUpdate()
 				--         vivod = NONE
 				--     end
 				-- end
+				if IsOnQuest == true then
+					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] = x or NONE
+				end
 			end
 			if collect and not InCombatLockdown() then
 				collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] = v.name_quest or NONE
@@ -5088,6 +5269,7 @@ function OctoQuestUpdate()
 						collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = vivod.."/"..v.max
 					end
 				end
+
 			end
 		end
 	end
@@ -5383,6 +5565,12 @@ local function checkCharInfo(CharInfo)
 		for q,w in pairs(v) do
 			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] or NONE
 			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] or NONE
+			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] or NONE
+
+
+
+
+
 		end
 	end
 	CharInfo.avgItemLevel = CharInfo.avgItemLevel or 0
@@ -5397,8 +5585,10 @@ local function checkCharInfo(CharInfo)
 	CharInfo.CurrencyID_maxQuantity = CharInfo.CurrencyID_maxQuantity or {}
 	CharInfo.CurrencyID_Total = CharInfo.CurrencyID_Total or {}
 	CharInfo.curServer = CharInfo.curServer or 0
-	CharInfo.azerite = CharInfo.azerite or 0
+	CharInfo.azeriteLVL = CharInfo.azeriteLVL or 0
+	CharInfo.azeriteEXP = CharInfo.azeriteEXP or 0
 	CharInfo.cloak_lvl = CharInfo.cloak_lvl or 0
+	CharInfo.cloak_res = CharInfo.cloak_res or 0
 	CharInfo.curServerShort = CharInfo.curServerShort or 0
 	CharInfo.Faction = CharInfo.Faction or 0
 	CharInfo.ItemsInBag = CharInfo.ItemsInBag or {}
@@ -5750,6 +5940,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Octo_ToDo_DragonflyAddDataToAltFrame()
 		LegionInvasionTimer()
 		BfAInvasionTimer()
+		BfAAssaultTimer()
 		ToDragonbaneKeepTimer()
 		GrandHuntsTimer()
 		CommunityFeastTimer()
@@ -5855,6 +6046,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectIslandBfA()
 		UPGRADERANKS_Frame()
 		CollectAzerite()
+		CollectCloaklvl()
+		CollectArtifact()
 		C_Timer.After(3, function()
 				Octo_ToDo_DragonflyAddDataToAltFrame()
 		end)
@@ -5883,6 +6076,8 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectAppliedMountEquipmentID()
 		CollectPossibleAnima()
 		CollectAzerite()
+		CollectCloaklvl()
+		CollectArtifact()
 	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
 		CollectAllItemsInBag()
 		CollectPossibleAnima()
@@ -5919,6 +6114,9 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectKnownSpell()
 	elseif event == "PLAYER_MOUNT_DISPLAY_CHANGED" then
 		CollectAppliedMountEquipmentID()
+	elseif event == "AZERITE_ITEM_EXPERIENCE_CHANGED" then
+		CollectAzerite()
+		CollectCloaklvl()
 	end
 end
 Octo_ToDo_DragonflyOnLoad()

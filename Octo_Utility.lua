@@ -442,8 +442,14 @@ tinsert(E.modules, function()
 				return table.concat(s)
 			end
 			local white_list = {
+				{itemid = 174764, count = 6}, -- 174765
+				{itemid = 174759, count = 6}, -- 174767
+				{itemid = 174760, count = 6}, -- 174766
+				{itemid = 174758, count = 6}, -- 174768
+				{itemid = 174756, count = 6}, -- 174761
 				-- {itemid = 191251, count = 30},
 				-- {itemid = 193201, count = 3},
+				{itemid = 175062, count = 1},
 				{itemid = 194549, count = 1},
 				{itemid = 197616, count = 1},
 				{itemid = 197582, count = 1},

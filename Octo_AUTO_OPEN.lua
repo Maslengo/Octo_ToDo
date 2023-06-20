@@ -14,6 +14,8 @@ local isDead = UnitIsDead("PLAYER")
 local UnitLevel = UnitLevel("PLAYER")
 -- local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
 local openableIDs = {
+    [174961] = true,
+    [166292] = true,
     [173372] = true,
     [206039] = true, --Комплект вражды DIABLO 4
     --PARAGON
