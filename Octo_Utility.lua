@@ -206,6 +206,7 @@ tinsert(E.modules, function()
 			func_Octo_LoadAddOn("ElvUI")
 			func_Octo_LoadAddOn("ElvUI_Libraries")
 			func_Octo_LoadAddOn("ElvUI_Options")
+			func_Octo_LoadAddOn("MRT")
 			func_Octo_LoadAddOn("MountsJournal")
 			func_Octo_LoadAddOn("OmniCC")
 			func_Octo_LoadAddOn("OmniCC_Config")
@@ -222,6 +223,7 @@ tinsert(E.modules, function()
 			func_Octo_LoadAddOn("Simulationcraft")
 			func_Octo_LoadAddOn("TalentTreeTweaks")
 			func_Octo_LoadAddOn("TrufiGCD")
+			func_Octo_LoadAddOn("WagoAppCompanion")
 			func_Octo_LoadAddOn("WeakAuras")
 			func_Octo_LoadAddOn("WeakAurasArchive")
 			func_Octo_LoadAddOn("WeakAurasModelPaths")
@@ -442,9 +444,6 @@ tinsert(E.modules, function()
 			local white_list = {
 				-- {itemid = 191251, count = 30},
 				-- {itemid = 193201, count = 3},
-
-
-
 				{itemid = 194549, count = 1},
 				{itemid = 197616, count = 1},
 				{itemid = 197582, count = 1},
@@ -817,6 +816,9 @@ tinsert(E.modules, function()
 				-- {itemid = 179369, count = 1},
 				-- {itemid = 179370, count = 1},
 				-- {itemid = 179986, count = 1},
+
+
+				{itemid = 186472, count = 1},
 				{itemid = 111956, count = 1},
 				{itemid = 128313, count = 1},
 				{itemid = 136926, count = 1},
