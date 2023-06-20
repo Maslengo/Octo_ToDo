@@ -179,6 +179,19 @@ local Octo_Table_reputation = {21,47,54,59,67,68,69,70,72,76,81,87,92,93,169,270
 --         end
 --     end
 -- end
+local function CompactNumberFormat(number)
+	if not number then
+		number = 0
+	end
+	if number == 0 then
+		return 0
+	elseif number < 1000 then
+		return (math.floor((number+0.5)-0.5)/10)*10
+	elseif number < 1000000 then
+		return (math.floor(number/100)/10) .."k"
+	else return (math.floor(number/100000)/10) .."m"
+	end
+end
 local function func_texturefromIcon(textureID)
 	return "|T"..textureID..":16:16:::64:64:4:60:4:60|t"
 end
@@ -430,7 +443,6 @@ function CollectKnownSpell()
 		end
 	end
 end
-
 local function formatAzeriteNum(num)
 	if num < 5000 then
 		return tostring(num)
@@ -442,25 +454,38 @@ local function formatAzeriteNum(num)
 		return format("%.2fm",num/1000000)
 	end
 end
-
 function CollectAzerite()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
 	-------------------------------------------------------------------------
 	local azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem()
-
 	if azeriteItemLocation then
 		local xp, totalLevelXP = C_AzeriteItem.GetAzeriteItemXPInfo(azeriteItemLocation)
-		local currentLevel = C_AzeriteItem.GetPowerLevel(azeriteItemLocation);
-
+		local currentLevel = C_AzeriteItem.GetPowerLevel(azeriteItemLocation)
 		if totalLevelXP and totalLevelXP ~= 0 then
 			if collect and not InCombatLockdown() then
-				collect.azerite = "|cffff0000"..currentLevel .. "|r|n|cff888888("..floor(xp / totalLevelXP * 100).."%, -"..formatAzeriteNum(totalLevelXP - xp)..")"
+				collect.azerite = Green_Color..currentLevel.."|r|n"..Gray_Color.."("..floor(xp / totalLevelXP * 100).."%, -"..CompactNumberFormat(totalLevelXP - xp)..")|r"
 			end
 		end
 	end
-end
 
+
+	-------------------------------------------------------------------------
+	local itemLink = GetInventoryItemLink("player",15)
+	if itemLink then
+		local itemID = itemLink:match("item:(%d+)")
+		if itemID == "169223" then
+			local ilvl = select(4,GetItemInfo(itemLink))
+			if ilvl then
+				if collect and not InCombatLockdown() then
+					collect.cloak_lvl = min(15, max((ilvl - 125) / 2 + 1, 1))
+				end
+			end
+		end
+	end
+
+
+end
 function CollectVoidStorage()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -1133,19 +1158,6 @@ local function QuestsByID(questID)
 		end
 	end
 	return count
-end
-local function CompactNumberFormat(number)
-	if not number then
-		number = 0
-	end
-	if number == 0 then
-		return 0
-	elseif number < 1000 then
-		return (math.floor((number+0.5)-0.5)/10)*10
-	elseif number < 1000000 then
-		return (math.floor(number/100)/10) .."k"
-	else return (math.floor(number/100000)/10) .."m"
-	end
 end
 local function CheckCompletedByQuestID(questID)
 	local Octopussy = ""
@@ -2556,6 +2568,18 @@ local function O_otrisovka()
 				VivodLeft = func_itemTexture(158075)..func_itemName(158075)
 				return VivodCent, VivodLeft
 		end)
+		tinsert(table_func_otrisovka, -- cloak_lvl
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				if CharInfo.cloak_lvl ~= 0 then
+					VivodCent = Empty_Zero(CharInfo.cloak_lvl)
+					if CharInfo.cloak_lvl == 15 then
+						VivodCent = Green_Color..VivodCent.."|r"
+					end
+				end
+				VivodLeft = func_itemTexture(169223)..func_itemName(169223)
+				return VivodCent, VivodLeft
+		end)
 		tinsert(table_func_otrisovka, -- Assault: The Black Empire
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -3195,21 +3219,15 @@ local function O_otrisovka()
 				tooltip[#tooltip+1] = {func_reputationName(2391), CharInfo.reputationID[2391]} --Ржавоболтское сопротивление
 				tooltip[#tooltip+1] = {func_reputationName(2164), CharInfo.reputationID[2164]} --Защитники Азерот
 				tooltip[#tooltip+1] = {func_reputationName(2163), CharInfo.reputationID[2163]} --Тортолланские искатели
-
 				if CharInfo.Faction == "Horde" then
 					tooltip[#tooltip+1] = {func_texturefromIcon(2267047)..func_reputationName(2389), CharInfo.reputationID[2389]} --Нери Остроерш
 					tooltip[#tooltip+1] = {func_texturefromIcon(2267047)..func_reputationName(2388), CharInfo.reputationID[2388]} --Поэн Солежабрик
 					tooltip[#tooltip+1] = {func_texturefromIcon(2267047)..func_reputationName(2390), CharInfo.reputationID[2390]} --Вим Соленодух
 				else
-
 					tooltip[#tooltip+1] = {func_texturefromIcon(2267047)..func_reputationName(2375), CharInfo.reputationID[2375]} --Мастер охоты Акана
 					tooltip[#tooltip+1] = {func_texturefromIcon(2267047)..func_reputationName(2376), CharInfo.reputationID[2376]} --Оракул Ори
 					tooltip[#tooltip+1] = {func_texturefromIcon(2267047)..func_reputationName(2377), CharInfo.reputationID[2377]} --Мастер клинка Иновари
 				end
-
-
-
-
 				tooltip[#tooltip+1] = {func_reputationName(2427), CharInfo.reputationID[2427]} --Молодой акир
 				-- tooltip[#tooltip+1] = {func_reputationName(2370), CharInfo.reputationID[2370]} --Обучение динозавров – Дикорог
 				-- tooltip[#tooltip+1] = {func_reputationName(2233), CharInfo.reputationID[2233]} --Dino Training - Pterrodax
@@ -3595,7 +3613,6 @@ local function O_otrisovka()
 					tooltip[#tooltip+1] = {func_itemTexture(v)..func_itemName(v), count}
 				end
 			end
-
 			if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 			for k, v in ipairs(CharInfo.VOID_STORAGE_PAGE1) do
 				if v ~= 0 then
@@ -5381,6 +5398,7 @@ local function checkCharInfo(CharInfo)
 	CharInfo.CurrencyID_Total = CharInfo.CurrencyID_Total or {}
 	CharInfo.curServer = CharInfo.curServer or 0
 	CharInfo.azerite = CharInfo.azerite or 0
+	CharInfo.cloak_lvl = CharInfo.cloak_lvl or 0
 	CharInfo.curServerShort = CharInfo.curServerShort or 0
 	CharInfo.Faction = CharInfo.Faction or 0
 	CharInfo.ItemsInBag = CharInfo.ItemsInBag or {}
@@ -5864,6 +5882,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		CollectLocations()
 		CollectAppliedMountEquipmentID()
 		CollectPossibleAnima()
+		CollectAzerite()
 	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
 		CollectAllItemsInBag()
 		CollectPossibleAnima()
