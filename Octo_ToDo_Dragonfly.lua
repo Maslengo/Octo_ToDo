@@ -2154,7 +2154,7 @@ local function O_otrisovka()
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
-				VivodLeft = func_itemTexture(204193)..Gray_Color..PLAYER_DIFFICULTY3..", M+ 1-5|r"
+				--VivodLeft = func_itemTexture(204193)..Gray_Color..PLAYER_DIFFICULTY3..", M+ 1-5|r"
 				if CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0 or CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
 					tooltip[#tooltip+1] = {func_itemTexture(204075)..Green_Color..func_itemName_NOCOLOR(204075).."|r", CharInfo.ItemsInBag[204075]..Gray_Color.." ("..CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]..")|r"}
 				end
@@ -2202,78 +2202,78 @@ local function O_otrisovka()
 				end
 				return VivodCent, VivodLeft
 		end)
-		-- Фрагмент 2
-		tinsert(table_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local VivodCent, VivodLeft = "", ""
-				VivodLeft = func_itemTexture(204195)..Gray_Color..PLAYER_DIFFICULTY1..", M+ 6-10|r"
-				if CharInfo.ItemsInBag[204076] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204076)..func_itemName(204076), CharInfo.ItemsInBag[204076]}
-				end
-				if (CharInfo.ItemsInBag[204195] ~= 0 or CharInfo.ItemsInBag[204076] ~= 0 or CharInfo.CurrencyID[2410] ~= 0) and CharInfo.CurrencyID_maxQuantity[2410] ~= 0 then
-					tooltip[#tooltip+1] = {"Weekly CAP: ", CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]}
-				end
-				-- ТЕКСТ В ЦЕНТРЕ
-				if CharInfo.ItemsInBag[204195] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204195)..func_itemName(204195), CharInfo.ItemsInBag[204195]}
-					VivodCent = Blue_Color..CharInfo.ItemsInBag[204195].."|r"
-				end
-				if CharInfo.ItemsInBag[204076] >= 15 then
-					VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204076]/15)..")"
-				end
-				if CharInfo.CurrencyID[2410] ~= 0 and (CharInfo.CurrencyID[2410] == CharInfo.CurrencyID_maxQuantity[2410]) then
-					VivodCent = VivodCent..Addon_Color.."+|r"
-				end
-				return VivodCent, VivodLeft
-		end)
-		-- Фрагмент 3
-		tinsert(table_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local VivodCent, VivodLeft = "", ""
-				VivodLeft = func_itemTexture(204196)..Gray_Color..PLAYER_DIFFICULTY2..", M+ 11-15|r"
-				if CharInfo.ItemsInBag[204077] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204077)..func_itemName(204077), CharInfo.ItemsInBag[204077]}
-				end
-				if (CharInfo.ItemsInBag[204196] ~= 0 or CharInfo.ItemsInBag[204077] ~= 0 or CharInfo.CurrencyID[2411] ~= 0) and CharInfo.CurrencyID_maxQuantity[2411] ~= 0 then
-					tooltip[#tooltip+1] = {"Weekly CAP: ", CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]}
-				end
-				-- ТЕКСТ В ЦЕНТРЕ
-				if CharInfo.ItemsInBag[204196] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204196)..func_itemName(204196), CharInfo.ItemsInBag[204196]}
-					VivodCent = Purple_Color..CharInfo.ItemsInBag[204196].."|r"
-				end
-				if CharInfo.ItemsInBag[204077] >= 15 then
-					VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204077]/15)..")"
-				end
-				if CharInfo.CurrencyID[2411] ~= 0 and (CharInfo.CurrencyID[2411] == CharInfo.CurrencyID_maxQuantity[2411]) then
-					VivodCent = VivodCent..Addon_Color.."+|r"
-				end
-				return VivodCent, VivodLeft
-		end)
-		-- Фрагмент 4
-		tinsert(table_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local VivodCent, VivodLeft = "", ""
-				VivodLeft = func_itemTexture(204194)..Gray_Color..PLAYER_DIFFICULTY6..", M+ 16+|r"
-				if CharInfo.ItemsInBag[204078] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204078)..func_itemName(204078), CharInfo.ItemsInBag[204078]}
-				end
-				if (CharInfo.ItemsInBag[204194] ~= 0 or CharInfo.ItemsInBag[204078] ~= 0 or CharInfo.CurrencyID[2412] ~= 0) and CharInfo.CurrencyID_maxQuantity[2412] ~= 0 then
-					tooltip[#tooltip+1] = {"Weekly CAP: ", CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]}
-				end
-				-- ТЕКСТ В ЦЕНТРЕ
-				if CharInfo.ItemsInBag[204194] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204194)..func_itemName(204194), CharInfo.ItemsInBag[204194]}
-					VivodCent = Orange_Color..CharInfo.ItemsInBag[204194].."|r"
-				end
-				if CharInfo.ItemsInBag[204078] >= 15 then
-					VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204078]/15)..")"
-				end
-				if CharInfo.CurrencyID[2412] ~= 0 and (CharInfo.CurrencyID[2412] == CharInfo.CurrencyID_maxQuantity[2412]) then
-					VivodCent = VivodCent..Addon_Color.."+|r"
-				end
-				return VivodCent, VivodLeft
-		end)
+		-- -- Фрагмент 2
+		-- tinsert(table_func_otrisovka,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local VivodCent, VivodLeft = "", ""
+		-- 		VivodLeft = func_itemTexture(204195)..Gray_Color..PLAYER_DIFFICULTY1..", M+ 6-10|r"
+		-- 		if CharInfo.ItemsInBag[204076] >= 1 then
+		-- 			tooltip[#tooltip+1] = {func_itemTexture(204076)..func_itemName(204076), CharInfo.ItemsInBag[204076]}
+		-- 		end
+		-- 		if (CharInfo.ItemsInBag[204195] ~= 0 or CharInfo.ItemsInBag[204076] ~= 0 or CharInfo.CurrencyID[2410] ~= 0) and CharInfo.CurrencyID_maxQuantity[2410] ~= 0 then
+		-- 			tooltip[#tooltip+1] = {"Weekly CAP: ", CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]}
+		-- 		end
+		-- 		-- ТЕКСТ В ЦЕНТРЕ
+		-- 		if CharInfo.ItemsInBag[204195] >= 1 then
+		-- 			tooltip[#tooltip+1] = {func_itemTexture(204195)..func_itemName(204195), CharInfo.ItemsInBag[204195]}
+		-- 			VivodCent = Blue_Color..CharInfo.ItemsInBag[204195].."|r"
+		-- 		end
+		-- 		if CharInfo.ItemsInBag[204076] >= 15 then
+		-- 			VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204076]/15)..")"
+		-- 		end
+		-- 		if CharInfo.CurrencyID[2410] ~= 0 and (CharInfo.CurrencyID[2410] == CharInfo.CurrencyID_maxQuantity[2410]) then
+		-- 			VivodCent = VivodCent..Addon_Color.."+|r"
+		-- 		end
+		-- 		return VivodCent, VivodLeft
+		-- end)
+		-- -- Фрагмент 3
+		-- tinsert(table_func_otrisovka,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local VivodCent, VivodLeft = "", ""
+		-- 		VivodLeft = func_itemTexture(204196)..Gray_Color..PLAYER_DIFFICULTY2..", M+ 11-15|r"
+		-- 		if CharInfo.ItemsInBag[204077] >= 1 then
+		-- 			tooltip[#tooltip+1] = {func_itemTexture(204077)..func_itemName(204077), CharInfo.ItemsInBag[204077]}
+		-- 		end
+		-- 		if (CharInfo.ItemsInBag[204196] ~= 0 or CharInfo.ItemsInBag[204077] ~= 0 or CharInfo.CurrencyID[2411] ~= 0) and CharInfo.CurrencyID_maxQuantity[2411] ~= 0 then
+		-- 			tooltip[#tooltip+1] = {"Weekly CAP: ", CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]}
+		-- 		end
+		-- 		-- ТЕКСТ В ЦЕНТРЕ
+		-- 		if CharInfo.ItemsInBag[204196] >= 1 then
+		-- 			tooltip[#tooltip+1] = {func_itemTexture(204196)..func_itemName(204196), CharInfo.ItemsInBag[204196]}
+		-- 			VivodCent = Purple_Color..CharInfo.ItemsInBag[204196].."|r"
+		-- 		end
+		-- 		if CharInfo.ItemsInBag[204077] >= 15 then
+		-- 			VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204077]/15)..")"
+		-- 		end
+		-- 		if CharInfo.CurrencyID[2411] ~= 0 and (CharInfo.CurrencyID[2411] == CharInfo.CurrencyID_maxQuantity[2411]) then
+		-- 			VivodCent = VivodCent..Addon_Color.."+|r"
+		-- 		end
+		-- 		return VivodCent, VivodLeft
+		-- end)
+		-- -- Фрагмент 4
+		-- tinsert(table_func_otrisovka,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local VivodCent, VivodLeft = "", ""
+		-- 		VivodLeft = func_itemTexture(204194)..Gray_Color..PLAYER_DIFFICULTY6..", M+ 16+|r"
+		-- 		if CharInfo.ItemsInBag[204078] >= 1 then
+		-- 			tooltip[#tooltip+1] = {func_itemTexture(204078)..func_itemName(204078), CharInfo.ItemsInBag[204078]}
+		-- 		end
+		-- 		if (CharInfo.ItemsInBag[204194] ~= 0 or CharInfo.ItemsInBag[204078] ~= 0 or CharInfo.CurrencyID[2412] ~= 0) and CharInfo.CurrencyID_maxQuantity[2412] ~= 0 then
+		-- 			tooltip[#tooltip+1] = {"Weekly CAP: ", CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]}
+		-- 		end
+		-- 		-- ТЕКСТ В ЦЕНТРЕ
+		-- 		if CharInfo.ItemsInBag[204194] >= 1 then
+		-- 			tooltip[#tooltip+1] = {func_itemTexture(204194)..func_itemName(204194), CharInfo.ItemsInBag[204194]}
+		-- 			VivodCent = Orange_Color..CharInfo.ItemsInBag[204194].."|r"
+		-- 		end
+		-- 		if CharInfo.ItemsInBag[204078] >= 15 then
+		-- 			VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204078]/15)..")"
+		-- 		end
+		-- 		if CharInfo.CurrencyID[2412] ~= 0 and (CharInfo.CurrencyID[2412] == CharInfo.CurrencyID_maxQuantity[2412]) then
+		-- 			VivodCent = VivodCent..Addon_Color.."+|r"
+		-- 		end
+		-- 		return VivodCent, VivodLeft
+		-- end)
 		-- Искра пламени Тьмы
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
