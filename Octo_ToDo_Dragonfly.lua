@@ -54,7 +54,6 @@ local classColor = C_ClassColor.GetClassColor(classFilename)
 local r, g, b = classColor:GetRGB()
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 --local curWidth = Octo_ToDo_DragonflyVars.config.Addon_curWidth*scale or 100*scale
---print (Octo_ToDo_DragonflyVars.config.Addon_curWidth)
 local curWidth = 96*scale
 local curHeight = 20*scale -- высота 20 24
 local curWidthTitle = curWidth*2
@@ -329,8 +328,6 @@ function BfAInvasionTimer() --PVP
 	end
 	return BfAInvasionTimer
 end
-
-
 function BfAAssaultTimer() --NZOTH
 	local TIMER = (1547586000+3600+3600+3600+3600+3600+3600+3600) --(1547586000-10800)
 	local interval = 86400
@@ -344,12 +341,6 @@ function BfAAssaultTimer() --NZOTH
 	end
 	return BfAAssaultTimer
 end
-
-
-
-
-
-
 function ToDragonbaneKeepTimer() -- Драконья экспедиция
 	-- local timePattern = "%02d:%02d"
 	local TIMER = 1670342460 -- ToDragonbaneKeepTimer
@@ -483,7 +474,6 @@ function CollectAzerite()
 		end
 	end
 end
-
 function CollectCloaklvl()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -503,7 +493,6 @@ function CollectCloaklvl()
 				end
 			end
 		end
-
 		if itemLink and itemLink:find("item:169223:") then
 			inspectScantip:SetInventoryItem("player", 15)
 			if inspectScantip:NumLines() > 0 then
@@ -511,7 +500,6 @@ function CollectCloaklvl()
 					local text = _G["LegToDoScanningTooltipTextLeft"..j]:GetText()
 					if text and text ~= "" then
 						local res = text:gsub("[,]",""):gsub("(%d+)[ ]+(%d+)","%1%2"):match("%+(%d+) ?"..(ITEM_MOD_CORRUPTION_RESISTANCE or "Corruption resistance").."$")
-
 						if res then
 							if collect and not InCombatLockdown() then
 								collect.cloak_res = res
@@ -527,12 +515,7 @@ function CollectCloaklvl()
 		collect.cloak_lvl = 0
 		collect.cloak_res = 0
 	end
-
-
-
 end
-
-
 function CollectArtifact()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -540,16 +523,10 @@ function CollectArtifact()
 	local _,_,_,quantity1,reqQuantity1 = GetAchievementCriteriaInfo(11152,1)
 	local _,_,_,quantity2,reqQuantity2 = GetAchievementCriteriaInfo(11153,1)
 	local _,_,_,quantity3,reqQuantity3 = GetAchievementCriteriaInfo(11154,1)
-
-
-
-	-- print("Dungeons: "..quantity1.."/"..reqQuantity1)
-	-- print("WQs: "..quantity2.."/"..reqQuantity2)
-	-- print("Kills: "..quantity3.."/"..reqQuantity3)
-
+	-- ("Dungeons: "..quantity1.."/"..reqQuantity1)
+	-- ("WQs: "..quantity2.."/"..reqQuantity2)
+	-- ("Kills: "..quantity3.."/"..reqQuantity3)
 end
-
-
 function CollectVoidStorage()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DragonflyLevels[curGUID]
@@ -2087,15 +2064,15 @@ local function O_otrisovka()
 		-- end)
 		-- Исследователли под огнем
 		tinsert(table_func_otrisovka,
-		    function(CharInfo, tooltip, CL, BG)
-		        local VivodCent, VivodLeft = "", ""
-		        -- ТЕКС СЛЕВА
-		        local VivodLeft = (func_texturefromIcon(236469) .. ResearchersUnderFireTimer()..L["Researchers Under Fire"])
-		        -- ТЕКСТ В ЦЕНТРЕ
-		        if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= NONE then
-		            VivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
-		        end
-		        return VivodCent, VivodLeft
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				-- ТЕКС СЛЕВА
+				local VivodLeft = (func_texturefromIcon(236469) .. ResearchersUnderFireTimer()..L["Researchers Under Fire"])
+				-- ТЕКСТ В ЦЕНТРЕ
+				if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
+				end
+				return VivodCent, VivodLeft
 		end)
 		-- Помощь союзу
 		tinsert(table_func_otrisovka,
@@ -2112,7 +2089,6 @@ local function O_otrisovka()
 				if CharInfo.Octopussy_DF_Weekly_3kREP_questID ~= NONE then
 					tooltip[#tooltip+1] = {func_questName(CharInfo.Octopussy_DF_Weekly_3kREP_questID)}
 				end
-
 				if CharInfo.ItemsInBag[200073] ~= 0 then
 					VivodCent = VivodCent.." +"..CharInfo.ItemsInBag[200073]..func_itemTexture(200073)
 				end
@@ -2146,10 +2122,6 @@ local function O_otrisovka()
 				end
 				return VivodCent, VivodLeft
 		end)
-
-
-
-
 		-- Фрагмент 1
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -2158,19 +2130,15 @@ local function O_otrisovka()
 				if CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0 or CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
 					tooltip[#tooltip+1] = {func_itemTexture(204075)..Green_Color..func_itemName_NOCOLOR(204075).."|r", CharInfo.ItemsInBag[204075]..Gray_Color.." ("..CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]..")|r"}
 				end
-
 				if CharInfo.ItemsInBag[204076] >= 1 then
 					tooltip[#tooltip+1] = {func_itemTexture(204076)..Blue_Color..func_itemName_NOCOLOR(204076).."|r", CharInfo.ItemsInBag[204076]..Gray_Color.." ("..CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]..")|r"}
 				end
-
 				if CharInfo.ItemsInBag[204077] >= 1 then
 					tooltip[#tooltip+1] = {func_itemTexture(204077)..Purple_Color..func_itemName_NOCOLOR(204077).."|r", CharInfo.ItemsInBag[204077]..Gray_Color.." ("..CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]..")|r"}
 				end
-
 				if CharInfo.ItemsInBag[204078] >= 1 then
 					tooltip[#tooltip+1] = {func_itemTexture(204078)..Orange_Color..func_itemName_NOCOLOR(204078).."|r", CharInfo.ItemsInBag[204078]..Gray_Color.." ("..CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]..")|r"}
 				end
-
 				-- ТЕКСТ В ЦЕНТРЕ
 				if CharInfo.ItemsInBag[204193] >= 1 then
 					-- tooltip[#tooltip+1] = {func_itemTexture(204193)..func_itemName(204193), CharInfo.ItemsInBag[204193]}
@@ -2188,12 +2156,6 @@ local function O_otrisovka()
 					-- tooltip[#tooltip+1] = {func_itemTexture(204194)..func_itemName(204194), CharInfo.ItemsInBag[204194]}
 					VivodCent = VivodCent.." "..Orange_Color..CharInfo.ItemsInBag[204194].."|r"
 				end
-
-
-
-
-
-
 				if CharInfo.ItemsInBag[204075] >= 15 then
 					VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204075]/15)..")"
 				end
@@ -2584,7 +2546,6 @@ local function O_otrisovka()
 				if CharInfo.Octopussy_BfA_Daily_AssaultQuests_count ~= NONE then
 					VivodCent = CharInfo.Octopussy_BfA_Daily_AssaultQuests_count
 				end
-
 				if CharInfo.ItemsInBag[174765] ~= 0 then
 					VivodCent = VivodCent..CharInfo.ItemsInBag[174765]..func_itemTexture(174765)
 				end
@@ -2600,20 +2561,15 @@ local function O_otrisovka()
 				if CharInfo.ItemsInBag[174768] ~= 0 then
 					VivodCent = VivodCent..CharInfo.ItemsInBag[174768]..func_itemTexture(174768)
 				end
-
-
-
 				if CharInfo.Octopussy_BfA_Daily_AssaultQuests_questID ~= NONE then
 					tooltip[#tooltip+1] = {func_questName(CharInfo.Octopussy_BfA_Daily_AssaultQuests_questID)}
 				end
-
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {func_itemTexture(174764)..CharInfo.ItemsInBag[174764].."/6", "Ульдум "..CharInfo.ItemsInBag[174765]..func_itemTexture(174765)}
 				tooltip[#tooltip+1] = {func_itemTexture(174756)..CharInfo.ItemsInBag[174756].."/6", "Ульдум "..CharInfo.ItemsInBag[174761]..func_itemTexture(174761)}
 				tooltip[#tooltip+1] = {func_itemTexture(174759)..CharInfo.ItemsInBag[174759].."/6", "Вечноцветущий дол "..CharInfo.ItemsInBag[174767]..func_itemTexture(174767)}
 				tooltip[#tooltip+1] = {func_itemTexture(174760)..CharInfo.ItemsInBag[174760].."/6", "Вечноцветущий дол "..CharInfo.ItemsInBag[174766]..func_itemTexture(174766)}
 				tooltip[#tooltip+1] = {func_itemTexture(174758)..CharInfo.ItemsInBag[174758].."/6", "Вечноцветущий дол, Ульдум "..CharInfo.ItemsInBag[174768]..func_itemTexture(174768)}
-
 				return VivodCent, VivodLeft
 		end)
 		tinsert(table_func_otrisovka,
@@ -2916,7 +2872,6 @@ local function O_otrisovka()
 				VivodLeft = Gray_Color..func_itemTexture(124124)..func_itemName_NOCOLOR(124124).."|r"
 				return VivodCent, VivodLeft
 		end)
-
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -2926,11 +2881,6 @@ local function O_otrisovka()
 				VivodLeft = WorldBoss_Icon.."World Boss"
 				return VivodCent, VivodLeft
 		end)
-
-
-
-
-
 		tinsert(table_func_otrisovka, -- Баланс сил
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -2943,10 +2893,6 @@ local function O_otrisovka()
 				VivodLeft = func_questName(43533)
 				return VivodCent, VivodLeft
 		end)
-
-
-
-
 		-- bounty_Legion1
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -4294,10 +4240,6 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 					i = i + 1
 					GameTooltip:AddDoubleLine(func_itemTexture(183616)..CharInfo.ItemsInBag[183616], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 				end
-
-
-
-
 			end
 			if i == 0 then
 				GameTooltip:AddLine("No Data")
@@ -5003,7 +4945,7 @@ local tableTEST = {
 		expansion = "DF",
 		place = "",
 		desc = "",
-		questID = {75643},
+		questID = {75630}, --75643
 		max = 1
 	},
 	{
@@ -5293,16 +5235,6 @@ local tableTEST = {
 		},
 		max = 1,
 	},
-
-
-
-
-
-
-
-
-
-
 } -- For table
 function OctoQuestUpdate()
 	local UnitLevel = UnitLevel("PLAYER")
@@ -5349,7 +5281,6 @@ function OctoQuestUpdate()
 						collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = vivod.."/"..v.max
 					end
 				end
-
 			end
 		end
 	end
@@ -5646,11 +5577,6 @@ local function checkCharInfo(CharInfo)
 			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] or NONE
 			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] or NONE
 			CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] = CharInfo["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] or NONE
-
-
-
-
-
 		end
 	end
 	CharInfo.avgItemLevel = CharInfo.avgItemLevel or 0
@@ -6010,13 +5936,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Octo_ToDo_DragonflyVars.config.AddonVersion = tonumber(AddonVersion)
 		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.config)
 		ldbi:Show(MinimapName)
-		-- elseif event == "UNIT_SPELLCAST_START" or event == "UNIT_SPELLCAST_STOP"  or event == "UNIT_SPELLCAST_INTERRUPTED" then
-		--     if Main_Frame and Main_Frame:IsShown() then
-		--         print ("Main_Frame:Hide()")
-		--         Main_Frame:Hide()
-		--     end
 	elseif event == "ACTIONBAR_UPDATE_COOLDOWN" and not InCombatLockdown() and Main_Frame and Main_Frame:IsShown() then
-		-- print (GetExpansionLevel(), GetAccountExpansionLevel(), GetServerExpansionLevel(), LE_EXPANSION_LEVEL_CURRENT)
 		Octo_ToDo_DragonflyAddDataToAltFrame()
 		LegionInvasionTimer()
 		BfAInvasionTimer()
