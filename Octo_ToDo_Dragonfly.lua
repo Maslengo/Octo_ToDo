@@ -2085,18 +2085,18 @@ local function O_otrisovka()
 		--         end
 		--         return VivodCent, VivodLeft
 		-- end)
-		-- -- Исследователли под огнем
-		-- tinsert(table_func_otrisovka,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local VivodCent, VivodLeft = "", ""
-		--         -- ТЕКС СЛЕВА
-		--         local VivodLeft = (func_texturefromIcon(236469) .. ResearchersUnderFireTimer()..L["Researchers Under Fire"])
-		--         -- ТЕКСТ В ЦЕНТРЕ
-		--         if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= NONE then
-		--             VivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
-		--         end
-		--         return VivodCent, VivodLeft
-		-- end)
+		-- Исследователли под огнем
+		tinsert(table_func_otrisovka,
+		    function(CharInfo, tooltip, CL, BG)
+		        local VivodCent, VivodLeft = "", ""
+		        -- ТЕКС СЛЕВА
+		        local VivodLeft = (func_texturefromIcon(236469) .. ResearchersUnderFireTimer()..L["Researchers Under Fire"])
+		        -- ТЕКСТ В ЦЕНТРЕ
+		        if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= NONE then
+		            VivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
+		        end
+		        return VivodCent, VivodLeft
+		end)
 		-- Помощь союзу
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -2109,6 +2109,10 @@ local function O_otrisovka()
 				if CharInfo.Octopussy_DF_Weekly_3kREP_count ~= NONE then
 					VivodCent = CharInfo.Octopussy_DF_Weekly_3kREP_count
 				end
+				if CharInfo.Octopussy_DF_Weekly_3kREP_questID ~= NONE then
+					tooltip[#tooltip+1] = {func_questName(CharInfo.Octopussy_DF_Weekly_3kREP_questID)}
+				end
+
 				if CharInfo.ItemsInBag[200073] ~= 0 then
 					VivodCent = VivodCent.." +"..CharInfo.ItemsInBag[200073]..func_itemTexture(200073)
 				end
@@ -2123,24 +2127,73 @@ local function O_otrisovka()
 				if CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count ~= NONE then
 					VivodCent = CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count
 				end
+				if CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_questID ~= NONE then
+					tooltip[#tooltip+1] = {func_questName(CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_questID)}
+				end
 				return VivodCent, VivodLeft
 		end)
+		-- Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders
+		tinsert(table_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
+				VivodLeft = WorldBoss_Icon.."World Boss: "..func_questName(74892)
+				-- ТЕКСТ В ЦЕНТРЕ
+				if CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_count ~= NONE then
+					VivodCent = CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_count
+				end
+				if CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_questID ~= NONE then
+					tooltip[#tooltip+1] = {func_questName(CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_questID)}
+				end
+				return VivodCent, VivodLeft
+		end)
+
+
+
+
 		-- Фрагмент 1
 		tinsert(table_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
 				VivodLeft = func_itemTexture(204193)..Gray_Color..PLAYER_DIFFICULTY3..", M+ 1-5|r"
-				if CharInfo.ItemsInBag[204075] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204075)..func_itemName(204075), CharInfo.ItemsInBag[204075]}
+				if CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0 or CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
+					tooltip[#tooltip+1] = {func_itemTexture(204075)..Green_Color..func_itemName_NOCOLOR(204075).."|r", CharInfo.ItemsInBag[204075]..Gray_Color.." ("..CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]..")|r"}
 				end
-				if (CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0) and CharInfo.CurrencyID_maxQuantity[2409] ~= 0 then
-					tooltip[#tooltip+1] = {"Weekly CAP: ", CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]}
+
+				if CharInfo.ItemsInBag[204076] >= 1 then
+					tooltip[#tooltip+1] = {func_itemTexture(204076)..Blue_Color..func_itemName_NOCOLOR(204076).."|r", CharInfo.ItemsInBag[204076]..Gray_Color.." ("..CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]..")|r"}
 				end
+
+				if CharInfo.ItemsInBag[204077] >= 1 then
+					tooltip[#tooltip+1] = {func_itemTexture(204077)..Purple_Color..func_itemName_NOCOLOR(204077).."|r", CharInfo.ItemsInBag[204077]..Gray_Color.." ("..CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]..")|r"}
+				end
+
+				if CharInfo.ItemsInBag[204078] >= 1 then
+					tooltip[#tooltip+1] = {func_itemTexture(204078)..Orange_Color..func_itemName_NOCOLOR(204078).."|r", CharInfo.ItemsInBag[204078]..Gray_Color.." ("..CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]..")|r"}
+				end
+
 				-- ТЕКСТ В ЦЕНТРЕ
 				if CharInfo.ItemsInBag[204193] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204193)..func_itemName(204193), CharInfo.ItemsInBag[204193]}
+					-- tooltip[#tooltip+1] = {func_itemTexture(204193)..func_itemName(204193), CharInfo.ItemsInBag[204193]}
 					VivodCent = Green_Color..CharInfo.ItemsInBag[204193].."|r"
 				end
+				if CharInfo.ItemsInBag[204195] >= 1 then
+					-- tooltip[#tooltip+1] = {func_itemTexture(204195)..func_itemName(204195), CharInfo.ItemsInBag[204195]}
+					VivodCent = VivodCent.." "..Blue_Color..CharInfo.ItemsInBag[204195].."|r"
+				end
+				if CharInfo.ItemsInBag[204196] >= 1 then
+					-- tooltip[#tooltip+1] = {func_itemTexture(204196)..func_itemName(204196), CharInfo.ItemsInBag[204196]}
+					VivodCent = VivodCent.." "..Purple_Color..CharInfo.ItemsInBag[204196].."|r"
+				end
+				if CharInfo.ItemsInBag[204194] >= 1 then
+					-- tooltip[#tooltip+1] = {func_itemTexture(204194)..func_itemName(204194), CharInfo.ItemsInBag[204194]}
+					VivodCent = VivodCent.." "..Orange_Color..CharInfo.ItemsInBag[204194].."|r"
+				end
+
+
+
+
+
+
 				if CharInfo.ItemsInBag[204075] >= 15 then
 					VivodCent = VivodCent.. "(+"..math.floor(CharInfo.ItemsInBag[204075]/15)..")"
 				end
@@ -2682,6 +2735,7 @@ local function O_otrisovka()
 					VivodCent = Red_Color.."no cloak|r"
 				end
 				if CharInfo.ItemsInBag[169223] ~= 0 then
+					VivodCent = Orange_Color.. "neeed to equip|r"
 					if CharInfo.cloak_lvl ~= 0 then
 						VivodCent = CharInfo.cloak_lvl.." lvl"
 						if CharInfo.cloak_lvl == 15 then
@@ -5713,74 +5767,74 @@ local function checkCharInfo(CharInfo)
 	if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
 		CharInfo.tmstp_Weekly = tmstpDayReset(7)
 		CharInfo.needResetWeekly = true
-		CharInfo.Octopussy_DF_Weekly_3kREP = NONE
-		CharInfo.Octopussy_DF_Weekly_DragonbaneKeep = NONE
-		CharInfo.Octopussy_DF_Weekly_Feast = NONE
-		CharInfo.Octopussy_DF_Weekly_FightingisItsOwnReward = NONE
-		CharInfo.Octopussy_DF_Weekly_FyrakkAssaults = NONE
-		CharInfo.Octopussy_DF_Weekly_KeysofLoyalty = NONE
-		CharInfo.Octopussy_DF_Weekly_PVP = NONE
-		CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire = NONE
-		CharInfo.Octopussy_DF_Weekly_StormBoundChest = NONE
-		CharInfo.Octopussy_DF_Weekly_StormsFury = NONE
-		CharInfo.Octopussy_DF_Weekly_TheGrandHunt = NONE
-		CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY = NONE
-		CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS = NONE
-		CharInfo.Octopussy_DF_Weekly_WBALL = NONE
-		CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders = NONE
-		CharInfo.Octopussy_DF_Weekly_WeekendEvent = NONE
-		CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen = NONE
-		CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking = NONE
-		CharInfo.Octopussy_SL_Weekly_ITEMKorthiaResearchReportAncientShrines = NONE
-		CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch = NONE
-		CharInfo.Octopussy_SL_Weekly_KorthiaRares = NONE
-		CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate = NONE
-		CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies = NONE
-		CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn = NONE
-		CharInfo.Octopussy_SL_Weekly_MawCovenantAssault = NONE
-		CharInfo.Octopussy_SL_Weekly_MawTorghast = NONE
-		CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir = NONE
-		CharInfo.Octopussy_SL_Weekly_ReturnLostSouls = NONE
-		CharInfo.Octopussy_SL_Weekly_RIFTKorthiaStolenAnimaVessel = NONE
-		CharInfo.Octopussy_SL_Weekly_TradingFavors = NONE
-		CharInfo.Octopussy_SL_Weekly_WBALL = NONE
-		CharInfo.Octopussy_SL_Weekly_WBMawMorgeth = NONE
-		CharInfo.Octopussy_SL_Weekly_WBZMAntros = NONE
-		CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns = NONE
-		CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire = NONE
-		CharInfo.Octopussy_BfA_Weekly_coinsQuests = NONE
-		CharInfo.Octopussy_BfA_Weekly_miniVision = NONE
-		CharInfo.Octopussy_BfA_Weekly_Warfront1 = NONE
-		CharInfo.Octopussy_BfA_Weekly_Warfront2 = NONE
-		CharInfo.Octopussy_BfA_Weekly_WarfrontHC = NONE
-		CharInfo.Octopussy_BfA_Weekly_WBALL = NONE
-		CharInfo.Octopussy_BfA_Weekly_WBAssault = NONE
-		CharInfo.Octopussy_BfA_Weekly_WBNazjatarTerroroftheDepths = NONE
-		CharInfo.Octopussy_Legion_Weekly_coinsQuests = NONE
-		CharInfo.Octopussy_Legion_Weekly_WBALL = NONE
-		CharInfo.Octopussy_WoD_Weekly_coinsQuests = NONE
+		CharInfo.Octopussy_DF_Weekly_3kREP_count = NONE
+		CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count = NONE
+		CharInfo.Octopussy_DF_Weekly_Feast_count = NONE
+		CharInfo.Octopussy_DF_Weekly_FightingisItsOwnReward_count = NONE
+		CharInfo.Octopussy_DF_Weekly_FyrakkAssaults_count = NONE
+		CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count = NONE
+		CharInfo.Octopussy_DF_Weekly_PVP_count = NONE
+		CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count = NONE
+		CharInfo.Octopussy_DF_Weekly_StormBoundChest_count = NONE
+		CharInfo.Octopussy_DF_Weekly_StormsFury_count = NONE
+		CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count = NONE
+		CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_count = NONE
+		CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count = NONE
+		CharInfo.Octopussy_DF_Weekly_WBALL_count = NONE
+		CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_count = NONE
+		CharInfo.Octopussy_DF_Weekly_WeekendEvent_count = NONE
+		CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count = NONE
+		CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_count = NONE
+		CharInfo.Octopussy_SL_Weekly_ITEMKorthiaResearchReportAncientShrines_count = NONE
+		CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch_count = NONE
+		CharInfo.Octopussy_SL_Weekly_KorthiaRares_count = NONE
+		CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count = NONE
+		CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies_count = NONE
+		CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_count = NONE
+		CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count = NONE
+		CharInfo.Octopussy_SL_Weekly_MawTorghast_count = NONE
+		CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count = NONE
+		CharInfo.Octopussy_SL_Weekly_ReturnLostSouls_count = NONE
+		CharInfo.Octopussy_SL_Weekly_RIFTKorthiaStolenAnimaVessel_count = NONE
+		CharInfo.Octopussy_SL_Weekly_TradingFavors_count = NONE
+		CharInfo.Octopussy_SL_Weekly_WBALL_count = NONE
+		CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count = NONE
+		CharInfo.Octopussy_SL_Weekly_WBZMAntros_count = NONE
+		CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count = NONE
+		CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count = NONE
+		CharInfo.Octopussy_BfA_Weekly_coinsQuests_count = NONE
+		CharInfo.Octopussy_BfA_Weekly_miniVision_count = NONE
+		CharInfo.Octopussy_BfA_Weekly_Warfront1_count = NONE
+		CharInfo.Octopussy_BfA_Weekly_Warfront2_count = NONE
+		CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count = NONE
+		CharInfo.Octopussy_BfA_Weekly_WBALL_count = NONE
+		CharInfo.Octopussy_BfA_Weekly_WBAssault_count = NONE
+		CharInfo.Octopussy_BfA_Weekly_WBNazjatarTerroroftheDepths_count = NONE
+		CharInfo.Octopussy_Legion_Weekly_coinsQuests_count = NONE
+		CharInfo.Octopussy_Legion_Weekly_WBALL_count = NONE
+		CharInfo.Octopussy_WoD_Weekly_coinsQuests_count = NONE
 	end
 	if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
 		CharInfo.tmstp_Daily = tmstpDayReset(1)
-		CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares = NONE
-		CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents = NONE
-		CharInfo.Octopussy_DF_Daily_ZaralekCavernRares = NONE
-		CharInfo.Octopussy_SL_Daily_KorthiaCollection = NONE
-		CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel = NONE
-		CharInfo.Octopussy_SL_Daily_KorthiaMobs = NONE
-		CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger = NONE
-		CharInfo.Octopussy_SL_Daily_MawHelswornChest = NONE
-		CharInfo.Octopussy_SL_Daily_MawQuest = NONE
-		CharInfo.Octopussy_SL_Daily_RIFTKorthiaRiftboundCache = NONE
-		CharInfo.Octopussy_SL_Daily_RIFTKorthiaSpectralBoundChest = NONE
-		CharInfo.Octopussy_SL_Daily_RIFTKorthiaZovaalsVault = NONE
-		CharInfo.Octopussy_SL_Daily_ZMGetLockStatus = NONE
-		CharInfo.Octopussy_SL_Daily_ZMPryingEyeDiscovery = NONE
-		CharInfo.Octopussy_SL_Daily_ZMPUZZLECACHES = NONE
-		CharInfo.Octopussy_SL_Daily_ZMRares = NONE
-		CharInfo.Octopussy_SL_Daily_ZMRaresDuneDominance = NONE
-		CharInfo.Octopussy_SL_Daily_ZMTREASURES = NONE
-		CharInfo.Octopussy_SL_Daily_ZMworldQuests = NONE
+		CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares_count = NONE
+		CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents_count = NONE
+		CharInfo.Octopussy_DF_Daily_ZaralekCavernRares_count = NONE
+		CharInfo.Octopussy_SL_Daily_KorthiaCollection_count = NONE
+		CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel_count = NONE
+		CharInfo.Octopussy_SL_Daily_KorthiaMobs_count = NONE
+		CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger_count = NONE
+		CharInfo.Octopussy_SL_Daily_MawHelswornChest_count = NONE
+		CharInfo.Octopussy_SL_Daily_MawQuest_count = NONE
+		CharInfo.Octopussy_SL_Daily_RIFTKorthiaRiftboundCache_count = NONE
+		CharInfo.Octopussy_SL_Daily_RIFTKorthiaSpectralBoundChest_count = NONE
+		CharInfo.Octopussy_SL_Daily_RIFTKorthiaZovaalsVault_count = NONE
+		CharInfo.Octopussy_SL_Daily_ZMGetLockStatus_count = NONE
+		CharInfo.Octopussy_SL_Daily_ZMPryingEyeDiscovery_count = NONE
+		CharInfo.Octopussy_SL_Daily_ZMPUZZLECACHES_count = NONE
+		CharInfo.Octopussy_SL_Daily_ZMRares_count = NONE
+		CharInfo.Octopussy_SL_Daily_ZMRaresDuneDominance_count = NONE
+		CharInfo.Octopussy_SL_Daily_ZMTREASURES_count = NONE
+		CharInfo.Octopussy_SL_Daily_ZMworldQuests_count = NONE
 		CharInfo.needResetDaily = true
 		CharInfo.bounty_BfA1 = 0
 		CharInfo.bounty_BfA2 = 0
