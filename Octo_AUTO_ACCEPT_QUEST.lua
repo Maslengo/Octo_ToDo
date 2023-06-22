@@ -11,11 +11,11 @@ Octo_AUTO_ACCEPT_QUEST:RegisterEvent("QUEST_COMPLETE")
 Octo_AUTO_ACCEPT_QUEST:RegisterEvent("QUEST_LOG_UPDATE")
 Octo_AUTO_ACCEPT_QUEST:RegisterEvent("QUEST_ACCEPTED")
 Octo_AUTO_ACCEPT_QUEST:SetScript("OnEvent", function(self, event, ...)
-        if not IsShiftKeyDown() and (GossipFrame:IsShown() or QuestFrame:IsShown()) then
-            --QuestFrameAcceptButton
-            AcceptQuest()
-            --CompleteQuest()
-        end
+	if not IsShiftKeyDown() and (GossipFrame:IsShown() or QuestFrame:IsShown()) then
+	    --QuestFrameAcceptButton
+	    AcceptQuest()
+	    --CompleteQuest()
+	end
 end)
 -- QUEST_DETAIL
 -- PLAYER_SOFT_INTERACT_CHANGED

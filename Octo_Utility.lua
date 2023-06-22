@@ -167,11 +167,12 @@ local function func_Octo_LoadAddOn(GlobalAddonName)
 end
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
---AnotherAddons
+--AnotherAddonsCasual
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.AnotherAddons then
+		if Octo_ToDo_DragonflyVars.config.AnotherAddonsCasual then
 			func_Octo_LoadAddOn("!BugGrabber")
 			func_Octo_LoadAddOn("BugSack")
+			func_Octo_LoadAddOn("AstralKeys")
 			func_Octo_LoadAddOn("AutoTurnIn")
 			func_Octo_LoadAddOn("MountsJournal")
 			func_Octo_LoadAddOn("MountsJournal_ElvUI_Skin")
@@ -449,6 +450,24 @@ tinsert(E.modules, function()
 				{itemid = 174756, count = 6}, -- 174761
 				-- {itemid = 191251, count = 30},
 				-- {itemid = 193201, count = 3},
+				{itemid = 190741, count = 1},
+				{itemid = 190755, count = 1},
+				{itemid = 190756, count = 1},
+				{itemid = 190757, count = 1},
+				{itemid = 190758, count = 1},
+				{itemid = 190759, count = 1},
+				{itemid = 190760, count = 1},
+				{itemid = 190761, count = 1},
+				{itemid = 190762, count = 1},
+				{itemid = 190763, count = 1},
+				{itemid = 190764, count = 1},
+				{itemid = 191036, count = 1},
+				{itemid = 191037, count = 1},
+				{itemid = 190941, count = 1},
+				{itemid = 188167, count = 1},
+				{itemid = 190184, count = 1},
+				{itemid = 114053, count = 1},
+				{itemid = 117394, count = 1},
 				{itemid = 175062, count = 1},
 				{itemid = 194549, count = 1},
 				{itemid = 197616, count = 1},
@@ -808,7 +827,6 @@ tinsert(E.modules, function()
 				{itemid = 203332, count = 1},
 				{itemid = 203333, count = 1},
 				{itemid = 203306, count = 1},
-
 				-- {itemid = 176315, count = 1},
 				-- {itemid = 176426, count = 1},
 				-- {itemid = 176959, count = 1},
@@ -822,8 +840,6 @@ tinsert(E.modules, function()
 				-- {itemid = 179369, count = 1},
 				-- {itemid = 179370, count = 1},
 				-- {itemid = 179986, count = 1},
-
-
 				{itemid = 186472, count = 1},
 				{itemid = 111956, count = 1},
 				{itemid = 128313, count = 1},
@@ -1708,20 +1724,6 @@ tinsert(E.modules, function()
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
---ShowOnlyCurrentRealm
-tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.ShowOnlyCurrentRealm then
-		end
-end)
-----------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------
---LevelToShow
-tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.LevelToShow then
-		end
-end)
-----------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------
 --AutoSellGrey
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.AutoSellGrey then
@@ -1849,13 +1851,6 @@ tinsert(E.modules, function()
 						return OrigErrHandler(self, event, id, err, ...)
 					end
 			end)
-		end
-end)
-----------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------
---ShowCurrency
-tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.ShowCurrency then
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------

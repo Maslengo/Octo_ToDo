@@ -37,9 +37,7 @@ local Width = 446 --Ширина
 local Height = 26 --Высота
 local questID = 70893--72068 --
 local mapID = 2024
-
 local Frame_CommunityFeast = CreateFrame("Frame", GlobalAddonName..GenerateUniqueID(), UIParent, "BackdropTemplate")
-
 Frame_CommunityFeast:Hide()
 Frame_CommunityFeast:SetBackdrop({
 		edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -49,8 +47,6 @@ Frame_CommunityFeast:SetBackdropBorderColor(0, 0, 0, 1)
 Frame_CommunityFeast:SetPoint("TOP",0,-220)
 Frame_CommunityFeast:SetFrameStrata("BACKGROUND")
 Frame_CommunityFeast:SetSize(Width, Height)
-
-
 Frame_CommunityFeast.BG = Frame_CommunityFeast:CreateTexture()
 Frame_CommunityFeast.BG:SetAllPoints(Frame_CommunityFeast)
 Frame_CommunityFeast.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
@@ -60,8 +56,6 @@ Frame_CommunityFeast.texture:SetSize(Width, Height)
 Frame_CommunityFeast.texture:SetVertexColor(1,0,0,1)
 Frame_CommunityFeast.texture:SetPoint("LEFT", Frame_CommunityFeast, "LEFT")
 Frame_CommunityFeast.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-
-
 local function OnEvent(self, event, ...)
 	local curMapID = C_Map.GetBestMapForUnit("player") or 0
 	if curMapID == mapID --[[and C_QuestLog.IsQuestFlaggedCompleted(questID) == false and]]  and C_QuestLog.IsOnQuest(questID) == true --[[and C_QuestLog.IsComplete(questID) == false]] then
@@ -75,10 +69,9 @@ local function OnEvent(self, event, ...)
 		elseif objectives[1].numFulfilled >= 1 then
 			Frame_CommunityFeast.texture:SetWidth((Width/objectives[1].numRequired)*objectives[1].numFulfilled)
 		end
-
 	else
 		Frame_CommunityFeast:Hide()
 	end
 end
-
 EventFrame:SetScript("OnEvent", OnEvent) --for function
+

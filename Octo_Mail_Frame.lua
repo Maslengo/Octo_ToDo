@@ -2,20 +2,10 @@ local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 --E.modules = {}
 --------------------------------------------------------------------------------
+local Octo_Show_Dev = false
 local Enable_Module = false
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8 --0.1,0.1,0.1,1
-function Octo_MAIL_DragonflyOnLoad()
-	local Octo_Mail_Frame = CreateFrame("Frame", AddonTitle)
-	Octo_Mail_Frame:RegisterEvent("MAIL_SHOW")
-	Octo_Mail_Frame:RegisterEvent("SECURE_TRANSFER_CANCEL")
-	Octo_Mail_Frame:RegisterEvent("MERCHANT_SHOW")
-	Octo_Mail_Frame:RegisterEvent("MERCHANT_CLOSED")
-	Octo_Mail_Frame:RegisterEvent("BANKFRAME_OPENED")
-	Octo_Mail_Frame:RegisterEvent("BANKFRAME_CLOSED")
-	Octo_Mail_Frame:RegisterEvent("PLAYER_STARTED_MOVING")
-	Octo_Mail_Frame:SetScript("OnEvent", Octo_MAIL_DragonflyOnEvent)
-end
 local ignore_list = {
 	[205982] = true, --Карта раскопок
 	[204985] = true, --Обменный кирпич
@@ -38,30 +28,56 @@ local ignore_list = {
 }
 local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 local ilvlStr = avgItemLevelEquipped or 0
--- local OILVLFrame = CreateFrame('GameTooltip', 'OILVLTooltip', nil, 'GameTooltipTemplate');
--- OILVLFrame:SetOwner(UIParent, 'ANCHOR_NONE');
-local function MASLENGO_Mail()
-	SELL_Frame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
-	SELL_Frame:SetSize(64*scale, 64*scale)
-	--SELL_Frame:SetClampedToScreen(false)
-	SELL_Frame:SetFrameStrata("DIALOG")
-	SELL_Frame:EnableMouse(true)
-	SELL_Frame:SetMovable(true)
-	SELL_Frame:RegisterForDrag("RightButton")
-	SELL_Frame:SetScript("OnDragStart", SELL_Frame.StartMoving)
-	SELL_Frame:SetScript("OnDragStop", function() SELL_Frame:StopMovingOrSizing() end)
-	SELL_Frame:SetPoint("CENTER", -551, 12)
-	SELL_Frame:SetBackdrop({
+local OctoFrame_MailEvent, OctoFrame_Sell, OctoFrame_Button, OctoFrame_foundLevel = nil, nil, nil, nil
+
+function Octo_MAIL_DragonflyOnLoad()
+	if not OctoFrame_MailEvent then
+		OctoFrame_MailEvent = CreateFrame("Frame", AddonTitle)
+		if Octo_Show_Dev == true then
+			print ("OctoFrame_MailEvent = CreateFrame")
+		end
+	end
+	OctoFrame_MailEvent:RegisterEvent("MAIL_SHOW")
+	OctoFrame_MailEvent:RegisterEvent("SECURE_TRANSFER_CANCEL")
+	OctoFrame_MailEvent:RegisterEvent("MERCHANT_SHOW")
+	OctoFrame_MailEvent:RegisterEvent("MERCHANT_CLOSED")
+	OctoFrame_MailEvent:RegisterEvent("BANKFRAME_OPENED")
+	OctoFrame_MailEvent:RegisterEvent("BANKFRAME_CLOSED")
+	OctoFrame_MailEvent:RegisterEvent("PLAYER_STARTED_MOVING")
+	OctoFrame_MailEvent:SetScript("OnEvent", Octo_MAIL_DragonflyOnEvent)
+end
+function MASLENGO_Mail()
+	if not OctoFrame_Sell then
+		OctoFrame_Sell = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+		if Octo_Show_Dev == true then
+			print ("OctoFrame_Sell = CreateFrame")
+		end
+	end
+	OctoFrame_Sell:SetSize(64*scale, 64*scale)
+	--OctoFrame_Sell:SetClampedToScreen(false)
+	OctoFrame_Sell:SetFrameStrata("DIALOG")
+	OctoFrame_Sell:EnableMouse(true)
+	OctoFrame_Sell:SetMovable(true)
+	OctoFrame_Sell:RegisterForDrag("RightButton")
+	OctoFrame_Sell:SetScript("OnDragStart", OctoFrame_Sell.StartMoving)
+	OctoFrame_Sell:SetScript("OnDragStop", function() OctoFrame_Sell:StopMovingOrSizing() end)
+	OctoFrame_Sell:SetPoint("CENTER", -551, 12)
+	OctoFrame_Sell:SetBackdrop({
 			bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
-	SELL_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	SELL_Frame:SetBackdropBorderColor(0, 0, 0, 1)
-	SELL_Frame.Button = CreateFrame("BUTTON", nil, SELL_Frame)
-	SELL_Frame.Button:SetAllPoints()
-	SELL_Frame.Button:RegisterForClicks("LeftButtonUp")
-	SELL_Frame.Button:SetScript("OnClick",function()
+	OctoFrame_Sell:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+	OctoFrame_Sell:SetBackdropBorderColor(0, 0, 0, 1)
+	if not OctoFrame_Button then
+		OctoFrame_Button = CreateFrame("BUTTON", nil, OctoFrame_Sell)
+		if Octo_Show_Dev == true then
+			print ("Button = CreateFrame")
+		end
+	end
+	OctoFrame_Button:SetAllPoints()
+	OctoFrame_Button:RegisterForClicks("LeftButtonUp")
+	OctoFrame_Button:SetScript("OnClick",function()
 			for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 				for slot=1, C_Container.GetContainerNumSlots(bag) do
 					local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
@@ -82,56 +98,58 @@ local function MASLENGO_Mail()
 						local enchant = ""
 						local emptySockets = 0
 						-- local foundEnchant = nil
-						local foundLevel = nil
 						-- local foundEmptySocket = nil
 						for i = 1, ItemTooltip:NumLines() do
 							-- foundEnchant = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ENCHANTED_TOOLTIP_LINE:gsub("%%s", "(.+)"))
 							-- if foundEnchant then
-							--     enchant = foundEnchant
+							-- enchant = foundEnchant
 							-- end
-							foundLevel = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
-							if foundLevel then
-								itemLevel = tonumber(foundLevel) or 0
+							OctoFrame_foundLevel = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
+							if OctoFrame_foundLevel then
+								itemLevel = tonumber(OctoFrame_foundLevel) or 0
 							end
 							-- foundEmptySocket = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(EMPTY_SOCKET_PRISMATIC)
 							-- if foundEmptySocket then
-							--     emptySockets = emptySockets + 1
+							-- emptySockets = emptySockets + 1
 							-- end
 						end
 						-----------------------
 						-- if sellPrice ~= 0 and itemQuality < 5 and not ignore_list[itemID] --[[and baseILvl > 1]] and itemLevel < ((ilvlStr/10)*9) then
 						-- 	C_Container.UseContainerItem(bag,slot)
 						-- end
--- 0	Poor	Poor	ITEM_QUALITY0_DESC
--- 1	Common	Common	ITEM_QUALITY1_DESC
--- 2	Uncommon	Uncommon	ITEM_QUALITY2_DESC
--- 3	Rare	Rare	ITEM_QUALITY3_DESC
--- 4	Epic	Epic	ITEM_QUALITY4_DESC
--- 5	Legendary	Legendary	ITEM_QUALITY5_DESC
--- 6	Artifact	Artifact	ITEM_QUALITY6_DESC
--- 7	Heirloom	Heirloom	ITEM_QUALITY7_DESC
--- 8	WoWToken	WoW Token	ITEM_QUALITY8_DESC
+						-- 0	Poor	Poor	ITEM_QUALITY0_DESC
+						-- 1	Common	Common	ITEM_QUALITY1_DESC
+						-- 2	Uncommon	Uncommon	ITEM_QUALITY2_DESC
+						-- 3	Rare	Rare	ITEM_QUALITY3_DESC
+						-- 4	Epic	Epic	ITEM_QUALITY4_DESC
+						-- 5	Legendary	Legendary	ITEM_QUALITY5_DESC
+						-- 6	Artifact	Artifact	ITEM_QUALITY6_DESC
+						-- 7	Heirloom	Heirloom	ITEM_QUALITY7_DESC
+						-- 8	WoWToken	WoW Token	ITEM_QUALITY8_DESC
 						if sellPrice ~= 0 and itemQuality < 4 and not ignore_list[itemID] --[[and baseILvl > 1]] then
 							C_Container.UseContainerItem(bag,slot)
 							--SendMailFrame()
 							--/click SendMailMailButton
-								-- 	SELL_Frame.Button:SetAttribute("type", "macro")
-								-- SELL_Frame.Button:SetAttribute("macrotext", "/click SendMailMailButton")
+								-- OctoFrame_Button:SetAttribute("type", "macro")
+								-- OctoFrame_Button:SetAttribute("macrotext", "/click SendMailMailButton")
 						end
 					end
 				end
 			end
 		end
 	)
-	local t = SELL_Frame.Button:CreateTexture(nil,"BACKGROUND")
-	SELL_Frame.Button.icon = t
+	local t = OctoFrame_Button:CreateTexture(nil,"BACKGROUND")
+	OctoFrame_Button.icon = t
 	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SELL.tga")
 	t:SetVertexColor(1,0,1,1)
-	t:SetAllPoints(SELL_Frame.Button)
+	t:SetAllPoints(OctoFrame_Button)
 end
 local function MASLENGO_BANK()
 	---------------------------------------------------------------------------------------------------
 	FROMBANK_Frame = CreateFrame("BUTTON", nil, UIParent, "BackdropTemplate")
+	if Octo_Show_Dev == true then
+		print ("FROMBANK_Frame = CreateFrame")
+	end
 	FROMBANK_Frame:SetSize(64*scale, 64*scale)
 	--FROMBANK_Frame:SetClampedToScreen(false)
 	FROMBANK_Frame:SetFrameStrata("DIALOG")
@@ -144,6 +162,9 @@ local function MASLENGO_BANK()
 	FROMBANK_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 	FROMBANK_Frame:SetBackdropBorderColor(0, 0, 0, 1)
 	FROMBANK_Frame.Button = CreateFrame("BUTTON", nil, FROMBANK_Frame, "SecureActionButtonTemplate")
+	if Octo_Show_Dev == true then
+		print ("Button = CreateFrame")
+	end
 	FROMBANK_Frame.Button:SetAllPoints()
 	FROMBANK_Frame.Button:RegisterForClicks("LeftButtonDown", "LeftButtonUp", "RightButtonUp", "RightButtonDown")
 	FROMBANK_Frame.Button:SetAttribute("type", "macro")
@@ -161,6 +182,9 @@ local function MASLENGO_BANK()
 	---------------------------------------------------------------------------------------------------
 	---------------------------------------------------------------------------------------------------
 	TOBANK_Frame = CreateFrame("BUTTON", nil, UIParent, "BackdropTemplate")
+	if Octo_Show_Dev == true then
+		print ("TOBANK_Frame = CreateFrame")
+	end
 	TOBANK_Frame:SetSize(64*scale, 64*scale)
 	--TOBANK_Frame:SetClampedToScreen(false)
 	TOBANK_Frame:SetFrameStrata("DIALOG")
@@ -173,6 +197,9 @@ local function MASLENGO_BANK()
 	TOBANK_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 	TOBANK_Frame:SetBackdropBorderColor(0, 0, 0, 1)
 	TOBANK_Frame.Button = CreateFrame("BUTTON", nil, TOBANK_Frame, "SecureActionButtonTemplate")
+	if Octo_Show_Dev == true then
+		print ("Button = CreateFrame")
+	end
 	TOBANK_Frame.Button:SetAllPoints()
 	TOBANK_Frame.Button:RegisterForClicks("LeftButtonDown", "LeftButtonUp", "RightButtonUp", "RightButtonDown")
 	TOBANK_Frame.Button:SetAttribute("type", "macro")
@@ -195,10 +222,10 @@ function Octo_MAIL_DragonflyOnEvent(self, event, ...)
 		elseif event == "MAIL_SHOW" and not InCombatLockdown() then
 			MASLENGO_Mail()
 		elseif event == "SECURE_TRANSFER_CANCEL" or event == "MERCHANT_CLOSED" or event == "PLAYER_STARTED_MOVING" then
-			if SELL_Frame then
-				SELL_Frame:Hide()
+			if OctoFrame_Sell then
+				OctoFrame_Sell:Hide()
 			end
-		elseif event == "BANKFRAME_OPENED" and not InCombatLockdown()  then
+		elseif event == "BANKFRAME_OPENED" and not InCombatLockdown() then
 			MASLENGO_BANK()
 		elseif event == "BANKFRAME_CLOSED" or event == "PLAYER_STARTED_MOVING" then
 			if FROMBANK_Frame then
