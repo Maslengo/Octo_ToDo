@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
-local Enable_Module = true
+local Enable_Module = false
 if Enable_Module == true then
 	local OctoFrame_EventFrame = nil
 	local Octo_Frame_Loot = nil

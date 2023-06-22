@@ -6003,7 +6003,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Collect_BfA_Azerite()
 		Collect_BfA_Cloaklvl()
 		Collect_Legion_Artifact()
-	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
+	elseif event == "BAG_UPDATE" and not InCombatLockdown() and (not IsAnyStandardHeldBagOpen() or ContainerFrameCombinedBags:IsShown()) then
 		Collect_ALL_ItemsInBag()
 		Collect_SL_PossibleAnima()
 		Collect_ALL_CurrentKEY()
