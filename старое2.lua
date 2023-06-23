@@ -1,6 +1,6 @@
 local AddonName, engine = ...
-local AddonTitle = GetAddOnMetadata(AddonName, "Title")
-local Version = GetAddOnMetadata(AddonName, "Version")
+local AddonTitle = C_AddOns.GetAddOnMetadata(AddonName, "Title")
+local Version = C_AddOns.GetAddOnMetadata(AddonName, "Version")
 print(AddonTitle.." v"..Version.." loaded")
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local Octo_ToDo_ShadowlandsAltFrame, EventFrame = nil, nil

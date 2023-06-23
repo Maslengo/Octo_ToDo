@@ -1,6 +1,6 @@
 local GlobalAddonName, engine = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 print(AddonTitle.." v"..AddonVersion.." loaded")
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local Octo_ToDo_DragonflyAltFrame, EventFrame = nil, nil

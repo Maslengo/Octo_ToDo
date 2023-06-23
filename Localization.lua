@@ -1,11 +1,9 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --E.modules = {}
 --------------------------------------------------------------------------------
 local AL3 = LibStub("AceLocale-3.0")
 local debug = false
-local GlobalAddonName, engine = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 local L = AL3:NewLocale("OctoTODO", "enUS", true, debug)
 if L then
 	L["GlobalAddonName"] = AddonTitle
@@ -49,6 +47,7 @@ if L then
 	L["Your items have been repaired using guild bank funds for: "] = true
 	L["Zaralek Cavern"] = true
 	L["Zereth Mortis"] = true
+	L["Bodyguards"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -78,7 +77,7 @@ if L then
 	L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
 	L["RESET"] = "Сброс всех данных аддона"
 	L["Siege on Dragonbane Keep"] = "Осада Драконьей Погибели"
-	L["The Forbidden Reach"] = "Запретный край"
+	L["The Forbidden Reach"] = "Запретный край (10.0.7)"
 	L["The Storm's Fury"] = "Неистовство бури"
 	L["Transferable Anima"] = "Переносимая анима"
 	L["Treasure Goblin"] = "Алчный гоблин"
@@ -88,7 +87,8 @@ if L then
 	L["You don't have enough money to repair."] = "У Вас недостаточно денег для ремонта."
 	L["Your items have been repaired for: "] = "Ремонт обошелся в "
 	L["Your items have been repaired using guild bank funds for: "] = "Ремонт обошелся гильдии в "
-	L["Zaralek Cavern"] = "Пещера Заралек"
+	L["Zaralek Cavern"] = "Пещера Заралек (10.1.0)"
 	L["Zereth Mortis"] = "Зерет Мортис"
+	L["Bodyguards"] = "Телохранители"
 end
 

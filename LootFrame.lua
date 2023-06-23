@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 local Enable_Module = false
 if Enable_Module == true then

@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --E.modules = {}
 --------------------------------------------------------------------------------
 local Octo_Show_Dev = false

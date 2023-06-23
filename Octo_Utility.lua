@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local function TableConcat(t1,t2)
@@ -204,8 +204,8 @@ tinsert(E.modules, function()
 			func_Octo_LoadAddOn("BigWigs_Aberrus")
 			func_Octo_LoadAddOn("BugSack")
 			func_Octo_LoadAddOn("Details")
-			func_Octo_LoadAddOn("ElvUI")
 			func_Octo_LoadAddOn("ElvUI_Libraries")
+			func_Octo_LoadAddOn("ElvUI")
 			func_Octo_LoadAddOn("ElvUI_Options")
 			func_Octo_LoadAddOn("MRT")
 			func_Octo_LoadAddOn("MountsJournal")
@@ -450,6 +450,94 @@ tinsert(E.modules, function()
 				{itemid = 174756, count = 6}, -- 174761
 				-- {itemid = 191251, count = 30},
 				-- {itemid = 193201, count = 3},
+
+				{itemid = 202639, count = 1},
+				{itemid = 202639, count = 1},
+				{itemid = 202639, count = 1},
+				{itemid = 202639, count = 1},
+				{itemid = 202640, count = 1},
+				{itemid = 202640, count = 1},
+				{itemid = 202640, count = 1},
+				{itemid = 202640, count = 1},
+				{itemid = 202637, count = 1},
+				{itemid = 202637, count = 1},
+				{itemid = 202637, count = 1},
+				{itemid = 202637, count = 1},
+				{itemid = 202630, count = 1},
+				{itemid = 202630, count = 1},
+				{itemid = 202630, count = 1},
+				{itemid = 202630, count = 1},
+				{itemid = 202638, count = 1},
+				{itemid = 202638, count = 1},
+				{itemid = 202638, count = 1},
+				{itemid = 202638, count = 1},
+				{itemid = 202632, count = 1},
+				{itemid = 202632, count = 1},
+				{itemid = 202632, count = 1},
+				{itemid = 202632, count = 1},
+				{itemid = 202635, count = 1},
+				{itemid = 202635, count = 1},
+				{itemid = 202635, count = 1},
+				{itemid = 202635, count = 1},
+				{itemid = 202622, count = 1},
+				{itemid = 202622, count = 1},
+				{itemid = 202622, count = 1},
+				{itemid = 202622, count = 1},
+				{itemid = 202628, count = 1},
+				{itemid = 202628, count = 1},
+				{itemid = 202628, count = 1},
+				{itemid = 202628, count = 1},
+				{itemid = 202625, count = 1},
+				{itemid = 202625, count = 1},
+				{itemid = 202625, count = 1},
+				{itemid = 202625, count = 1},
+				{itemid = 202633, count = 1},
+				{itemid = 202633, count = 1},
+				{itemid = 202633, count = 1},
+				{itemid = 202633, count = 1},
+				{itemid = 202636, count = 1},
+				{itemid = 202636, count = 1},
+				{itemid = 202636, count = 1},
+				{itemid = 202636, count = 1},
+				{itemid = 202623, count = 1},
+				{itemid = 202623, count = 1},
+				{itemid = 202623, count = 1},
+				{itemid = 202623, count = 1},
+				{itemid = 202629, count = 1},
+				{itemid = 202629, count = 1},
+				{itemid = 202629, count = 1},
+				{itemid = 202629, count = 1},
+				{itemid = 202626, count = 1},
+				{itemid = 202626, count = 1},
+				{itemid = 202626, count = 1},
+				{itemid = 202626, count = 1},
+				{itemid = 202621, count = 1},
+				{itemid = 202621, count = 1},
+				{itemid = 202621, count = 1},
+				{itemid = 202621, count = 1},
+				{itemid = 202631, count = 1},
+				{itemid = 202631, count = 1},
+				{itemid = 202631, count = 1},
+				{itemid = 202631, count = 1},
+				{itemid = 202634, count = 1},
+				{itemid = 202634, count = 1},
+				{itemid = 202634, count = 1},
+				{itemid = 202634, count = 1},
+				{itemid = 202627, count = 1},
+				{itemid = 202627, count = 1},
+				{itemid = 202627, count = 1},
+				{itemid = 202627, count = 1},
+				{itemid = 202624, count = 1},
+				{itemid = 202624, count = 1},
+				{itemid = 202624, count = 1},
+				{itemid = 202624, count = 1},
+
+
+
+
+
+
+
 				{itemid = 190741, count = 1},
 				{itemid = 190755, count = 1},
 				{itemid = 190756, count = 1},

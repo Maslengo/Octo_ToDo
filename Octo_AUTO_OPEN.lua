@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --E.modules = {}
 --------------------------------------------------------------------------------
 local Octo_AUTO_OPEN = CreateFrame("Frame", AddonTitle)
@@ -12,6 +12,12 @@ Octo_AUTO_OPEN:RegisterEvent("LOOT_READY")
 Octo_AUTO_OPEN:RegisterEvent("PLAYER_STARTED_MOVING")
 local isDead = UnitIsDead("PLAYER")
 local UnitLevel = UnitLevel("PLAYER")
+local function TableConcat(table1, table2)
+	for i=1, #table2 do
+		table1[#table1+1] = table2[i]
+	end
+	return table1
+end
 -- local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
 local openableIDs = {
 	-- [152107] = true,
@@ -21,6 +27,10 @@ local openableIDs = {
 	-- [174961] = true,
 	-- [166292] = true,
 	-- [173372] = true,
+	[153132] = true,
+	[173372] = true,
+	[174484] = true,
+	[174959] = true,
 	[206039] = true, --Комплект вражды DIABLO 4
 	--PARAGON
 	[204378] = true,
@@ -174,69 +184,30 @@ local openableIDs = {
 	[7973] = true,  -- Big-mouth Clam (from Azshara, Dustwallow Marsh, Feralas, Stranglethorn Vale, Swamp of Sorrws, Tanaris, Hinterlands)
 	[15874] = true, -- Soft-shelled Clam (from: Desolace)
 }
-local openableIDs70lvl = {}
+local openableIDs70lvl = {
+	[173363] = true,
+	[200073] = true, --Вальдраккенские сокровища 3kREP
+	[200072] = true, --фиоле Сейф Драконьей Погибели
+	[202142] = true, --синий Сейф Драконьей Погибели
+	[200468] = true, --фиоле Трофеи великой охоты
+	[200513] = true, --синий Трофеи великой охоты
+	[200515] = true, --зелен Трофеи великой охоты
+	[200516] = true, --белый Трофеи великой охоты
+	[202371] = true, --фиоле Сияющий сундук воинов стихий
+	[203681] = true, --синий Штормовой сундук воинов стихий
+	[204359] = true, -- Кошелек гонщика Запретного края
+	[203700] = true, --https://ru.wowhead.com/item=203701 https://ru.wowhead.com/npc=201714
+	[202171] = true,
+	[203217] = true,
+	[203699] = true,
+	--[202080] = true, -- Сундук событие выходного с героика
+	-- 10.0.7 новый остров
+	[203220] = true, --Чудорыба
+}
 if UnitLevel >= 60 then
-	openableIDs70lvl = {
-		[200073] = true, --Вальдраккенские сокровища 3kREP
-		[200072] = true, --фиоле Сейф Драконьей Погибели
-		[202142] = true, --синий Сейф Драконьей Погибели
-		[200468] = true, --фиоле Трофеи великой охоты
-		[200513] = true, --синий Трофеи великой охоты
-		[200515] = true, --зелен Трофеи великой охоты
-		[200516] = true, --белый Трофеи великой охоты
-		[202371] = true, --фиоле Сияющий сундук воинов стихий
-		[203681] = true, --синий Штормовой сундук воинов стихий
-		[204359] = true, -- Кошелек гонщика Запретного края
-		[203700] = true, --https://ru.wowhead.com/item=203701 https://ru.wowhead.com/npc=201714
-		[202171] = true,
-		[203217] = true,
-		[203699] = true,
-		--[202080] = true, -- Сундук событие выходного с героика
-		-- 10.0.7 новый остров
-		[203220] = true, --Чудорыба
-	}
+	TableConcat(openableIDs,openableIDs70lvl)
 end
--- local isWorking = false
--- local function OpenableScan()
---     for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
---         for numSlots = C_Container.GetContainerNumSlots(bag),1,-1 do
---             local containerInfo = C_Container.GetContainerItemInfo(bag, numSlots)
---             if containerInfo then
---                 local itemID = containerInfo.itemID
---                 local isLocked = containerInfo.isLocked
---                 local iconFileID = containerInfo.iconFileID
---                 local name, itemLink = GetItemInfo(itemID)
---                 if (openableIDs[itemID] or openableIDs70lvl[itemID]) and not isLocked then
---                     C_Container.UseContainerItem(bag, numSlots)
---                     if iconFileID and itemLink then
---                         print("|cFF00A3FFADDON:|r".." |cFFFF4C4FOpening item:|r |T "..iconFileID..":16:16:::64:64:4:60:4:60|t "..itemLink)
---                     end
---                     isWorking = false
---                     return
---                 end
---             end
---         end
---     end
--- end
--- local openableScanQueued = false
--- Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
---     if isWorking or not Enable_Module then return end
---     isWorking = true
---     C_Timer.After(0.1, function()
---         if event == "BAG_UPDATE" then
---             if not InCombatLockdown() and isDead == false then
---                 OpenableScan()
---             else
---                 openableScanQueued = true
---             end
---         elseif event == "PLAYER_REGEN_ENABLED" then
---             if openableScanQueued then
---                 openableScanQueued = false
---                 OpenableScan()
---             end
---         end
---     end)
--- end)
+
 local function OpenableScan()
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		for numSlots = C_Container.GetContainerNumSlots(bag),1,-1 do
@@ -246,7 +217,7 @@ local function OpenableScan()
 				local isLocked = containerInfo.isLocked
 				local iconFileID = containerInfo.iconFileID
 				local name, itemLink = GetItemInfo(itemID)
-				if (openableIDs[itemID] or openableIDs70lvl[itemID]) and not isLocked then
+				if openableIDs[itemID] and not isLocked then
 					C_Container.UseContainerItem(bag, numSlots)
 					--self:SetAttribute("macrotext", "/use item:"..itemID)
 					if iconFileID and itemLink then

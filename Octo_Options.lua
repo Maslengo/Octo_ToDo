@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ config:SetScript("OnShow", function(self)
 	ver:SetPoint("LEFT", title, "RIGHT", 0 ,0)
 	ver:SetTextColor(.5, .5, .5, 1)
 	ver:SetJustifyH("RIGHT")
-	ver:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
+	ver:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 	-- btn_left1 CVar
 	-----------------------------------------------
 	self.btn_left1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
