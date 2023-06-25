@@ -318,6 +318,17 @@ config:SetScript("OnShow", function(self)
 	end)
 	self.btn_left21.text:SetText("|cffFF0000HideErrorMessages|r")
 	-----------------------------------------------
+	-- btn_left22 SellFrame
+	-----------------------------------------------
+	self.btn_left22 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	self.btn_left22:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*22)
+	self.btn_left22:SetChecked(Octo_ToDo_DragonflyVars.config.SellFrame)
+	self.btn_left22:SetScript("OnClick", function(btn)
+		Octo_ToDo_DragonflyVars.config.SellFrame = btn:GetChecked()
+		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	end)
+	self.btn_left22.text:SetText("|cffFF0000SellFrame|r")
+	-----------------------------------------------
 	-- btn_right1 LINE_Classic
 	-----------------------------------------------
 	self.btn_right1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")

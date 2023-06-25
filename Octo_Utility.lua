@@ -9,6 +9,26 @@ local function TableConcat(t1,t2)
 	return t1
 end
 ----------------------------------------------------------------------------------------------------------------------------------
+local Octo_Show_Dev = false
+local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
+local OctoTable_bytetoB64 = {
+	[0]="a", "b", "c", "d", "e", "f", "g", "h",
+	"i", "j", "k", "l", "m", "n", "o", "p",
+	"q", "r", "s", "t", "u", "v", "w", "x",
+	"y", "z", "A", "B", "C", "D", "E", "F",
+	"G", "H", "I", "J", "K", "L", "M", "N",
+	"O", "P", "Q", "R", "S", "T", "U", "V",
+	"W", "X", "Y", "Z", "0", "1", "2", "3",
+	"4", "5", "6", "7", "8", "9", "(", ")"
+}
+local function GenerateUniqueID()
+	local s = {}
+	for i=1, 11 do
+		tinsert(s, OctoTable_bytetoB64[math.random(0, 63)])
+	end
+	return table.concat(s)
+end
+----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 -- TalkingHeadFrame
 tinsert(E.modules, function()
@@ -79,6 +99,40 @@ tinsert(E.modules, function()
 						end
 					end
 			end)
+			if not IsAddOnLoaded("Blizzard_MajorFactions") then
+				--print ("load Blizzard_MajorFactions")
+				LoadAddOn("Blizzard_MajorFactions")
+				return
+			end
+			if MajorFactionRenownFrame then
+				HideUIPanel(MajorFactionRenownFrame)
+				print ("MajorFactionRenownFrame SHOW")
+			end
+			MajorFactionRenownFrame:HookScript("OnShow", function(self, ...)
+					MajorFactionRenownFrame:Hide()
+					print ("MajorFactionRenownFrame:Hide() OnShow")
+			end)
+			MajorFactionRenownFrame:HookScript("OnEvent", function(self, ...)
+					MajorFactionRenownFrame:Hide()
+					print ("MajorFactionRenownFrame:Hide() OnEvent")
+			end)
+			MajorFactionsRenownToast:HookScript("OnShow", function(self, ...)
+					MajorFactionsRenownToast:Hide()
+					print ("MajorFactionsRenownToast:Hide() OnShow")
+			end)
+			MajorFactionsRenownToast:HookScript("OnEvent", function(self, ...)
+					MajorFactionsRenownToast:Hide()
+					print ("MajorFactionsRenownToast:Hide() OnEvent")
+			end)
+			PlayBanner.RenownLabel:HookScript("OnShow", function(self, ...)
+					PlayBanner.RenownLabel:Hide()
+					print ("PlayBanner.RenownLabel:Hide() OnShow")
+			end)
+			-- func_Octo_LoadAddOn(Blizzard_MajorFactionRenownToast)
+			--Blizzard_MajorFactionRenownToast.lua
+			-- MajorFactionRenownToast.IconSwirlModelScene:Show()
+			-- MajorFactionRenownToast.ToastBG:Show()
+			-- MajorFactionRenownToast.RewardDescription:Show()
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -350,7 +404,7 @@ tinsert(E.modules, function()
 						SetCVar("nameplateShowEnemyPets", 0)
 						SetCVar("nameplateShowEnemyTotems", 1)
 						SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
-						SetCVar("nameplateShowOnlyNames", 0) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
+						SetCVar("nameplateShowOnlyNames", 1) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
 						SetCVar("nameplateShowSelf", 0) --- PIZDA
 						SetCVar("nameplateTargetBehindMaxDistance", 30)
 						SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
@@ -424,6 +478,7 @@ end)
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.UsableItems then
 			local UnitLevel = UnitLevel("PLAYER")
+			local className, classFilename, classId = UnitClass("PLAYER")
 			local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 			local bytetoB64 = {
 				[0]="a", "b", "c", "d", "e", "f", "g", "h",
@@ -443,495 +498,57 @@ tinsert(E.modules, function()
 				return table.concat(s)
 			end
 			local white_list = {
-				{itemid = 174764, count = 6}, -- 174765
-				{itemid = 174759, count = 6}, -- 174767
-				{itemid = 174760, count = 6}, -- 174766
-				{itemid = 174758, count = 6}, -- 174768
-				{itemid = 174756, count = 6}, -- 174761
-				-- {itemid = 191251, count = 30},
-				-- {itemid = 193201, count = 3},
-
-				{itemid = 202639, count = 1},
-				{itemid = 202639, count = 1},
-				{itemid = 202639, count = 1},
-				{itemid = 202639, count = 1},
-				{itemid = 202640, count = 1},
-				{itemid = 202640, count = 1},
-				{itemid = 202640, count = 1},
-				{itemid = 202640, count = 1},
-				{itemid = 202637, count = 1},
-				{itemid = 202637, count = 1},
-				{itemid = 202637, count = 1},
-				{itemid = 202637, count = 1},
-				{itemid = 202630, count = 1},
-				{itemid = 202630, count = 1},
-				{itemid = 202630, count = 1},
-				{itemid = 202630, count = 1},
-				{itemid = 202638, count = 1},
-				{itemid = 202638, count = 1},
-				{itemid = 202638, count = 1},
-				{itemid = 202638, count = 1},
-				{itemid = 202632, count = 1},
-				{itemid = 202632, count = 1},
-				{itemid = 202632, count = 1},
-				{itemid = 202632, count = 1},
-				{itemid = 202635, count = 1},
-				{itemid = 202635, count = 1},
-				{itemid = 202635, count = 1},
-				{itemid = 202635, count = 1},
-				{itemid = 202622, count = 1},
-				{itemid = 202622, count = 1},
-				{itemid = 202622, count = 1},
-				{itemid = 202622, count = 1},
-				{itemid = 202628, count = 1},
-				{itemid = 202628, count = 1},
-				{itemid = 202628, count = 1},
-				{itemid = 202628, count = 1},
-				{itemid = 202625, count = 1},
-				{itemid = 202625, count = 1},
-				{itemid = 202625, count = 1},
-				{itemid = 202625, count = 1},
-				{itemid = 202633, count = 1},
-				{itemid = 202633, count = 1},
-				{itemid = 202633, count = 1},
-				{itemid = 202633, count = 1},
-				{itemid = 202636, count = 1},
-				{itemid = 202636, count = 1},
-				{itemid = 202636, count = 1},
-				{itemid = 202636, count = 1},
-				{itemid = 202623, count = 1},
-				{itemid = 202623, count = 1},
-				{itemid = 202623, count = 1},
-				{itemid = 202623, count = 1},
-				{itemid = 202629, count = 1},
-				{itemid = 202629, count = 1},
-				{itemid = 202629, count = 1},
-				{itemid = 202629, count = 1},
-				{itemid = 202626, count = 1},
-				{itemid = 202626, count = 1},
-				{itemid = 202626, count = 1},
-				{itemid = 202626, count = 1},
-				{itemid = 202621, count = 1},
-				{itemid = 202621, count = 1},
-				{itemid = 202621, count = 1},
-				{itemid = 202621, count = 1},
-				{itemid = 202631, count = 1},
-				{itemid = 202631, count = 1},
-				{itemid = 202631, count = 1},
-				{itemid = 202631, count = 1},
-				{itemid = 202634, count = 1},
-				{itemid = 202634, count = 1},
-				{itemid = 202634, count = 1},
-				{itemid = 202634, count = 1},
-				{itemid = 202627, count = 1},
-				{itemid = 202627, count = 1},
-				{itemid = 202627, count = 1},
-				{itemid = 202627, count = 1},
-				{itemid = 202624, count = 1},
-				{itemid = 202624, count = 1},
-				{itemid = 202624, count = 1},
-				{itemid = 202624, count = 1},
-
-
-
-
-
-
-
-				{itemid = 190741, count = 1},
-				{itemid = 190755, count = 1},
-				{itemid = 190756, count = 1},
-				{itemid = 190757, count = 1},
-				{itemid = 190758, count = 1},
-				{itemid = 190759, count = 1},
-				{itemid = 190760, count = 1},
-				{itemid = 190761, count = 1},
-				{itemid = 190762, count = 1},
-				{itemid = 190763, count = 1},
-				{itemid = 190764, count = 1},
-				{itemid = 191036, count = 1},
-				{itemid = 191037, count = 1},
-				{itemid = 190941, count = 1},
-				{itemid = 188167, count = 1},
-				{itemid = 190184, count = 1},
+				{itemid = 111956, count = 1},
+				{itemid = 114052, count = 1},
 				{itemid = 114053, count = 1},
 				{itemid = 117394, count = 1},
-				{itemid = 175062, count = 1},
-				{itemid = 194549, count = 1},
-				{itemid = 197616, count = 1},
-				{itemid = 197582, count = 1},
-				{itemid = 197609, count = 1},
-				{itemid = 197615, count = 1},
-				{itemid = 197589, count = 1},
-				{itemid = 197613, count = 1},
-				{itemid = 197577, count = 1},
-				{itemid = 197605, count = 1},
-				{itemid = 199192, count = 1},
-				{itemid = 197601, count = 1},
-				{itemid = 197585, count = 1},
-				{itemid = 197618, count = 1},
-				{itemid = 197588, count = 1},
-				{itemid = 197610, count = 1},
-				{itemid = 197603, count = 1},
-				{itemid = 197623, count = 1},
-				{itemid = 197592, count = 1},
-				{itemid = 197614, count = 1},
-				{itemid = 197580, count = 1},
-				{itemid = 197619, count = 1},
-				{itemid = 197594, count = 1},
-				{itemid = 204359, count = 1},
-				{itemid = 197591, count = 1},
-				{itemid = 197606, count = 1},
-				{itemid = 197590, count = 1},
-				{itemid = 197579, count = 1},
-				{itemid = 197620, count = 1},
-				{itemid = 197584, count = 1},
-				{itemid = 197622, count = 1},
-				{itemid = 197627, count = 1},
-				{itemid = 197595, count = 1},
-				{itemid = 197593, count = 1},
-				{itemid = 197587, count = 1},
-				{itemid = 197630, count = 1},
-				{itemid = 197625, count = 1},
-				{itemid = 197628, count = 1},
-				{itemid = 197581, count = 1},
-				{itemid = 197602, count = 1},
-				{itemid = 197607, count = 1},
-				{itemid = 197583, count = 1},
-				{itemid = 197621, count = 1},
-				{itemid = 197626, count = 1},
-				{itemid = 197604, count = 1},
-				{itemid = 197599, count = 1},
-				{itemid = 197578, count = 1},
-				{itemid = 197598, count = 1},
-				{itemid = 197608, count = 1},
-				{itemid = 197612, count = 1},
-				{itemid = 197617, count = 1},
-				{itemid = 197636, count = 1},
-				{itemid = 197634, count = 1},
-				{itemid = 197635, count = 1},
-				{itemid = 197624, count = 1},
-				{itemid = 197611, count = 1},
-				{itemid = 197597, count = 1},
-				{itemid = 197586, count = 1},
-				{itemid = 197596, count = 1},
-				{itemid = 197629, count = 1},
-				{itemid = 197600, count = 1},
-				{itemid = 201739, count = 1},
-				{itemid = 202102, count = 1},
-				{itemid = 198903, count = 1},
-				{itemid = 198438, count = 1},
-				{itemid = 201743, count = 1},
-				{itemid = 198904, count = 1},
-				{itemid = 198902, count = 1},
-				{itemid = 194521, count = 1},
-				{itemid = 196970, count = 1},
-				{itemid = 196986, count = 1},
-				{itemid = 196983, count = 1},
-				{itemid = 197008, count = 1},
-				{itemid = 196964, count = 1},
-				{itemid = 196966, count = 1},
-				{itemid = 196968, count = 1},
-				{itemid = 197013, count = 1},
-				{itemid = 197016, count = 1},
-				{itemid = 196999, count = 1},
-				{itemid = 196988, count = 1},
-				{itemid = 197022, count = 1},
-				{itemid = 196994, count = 1},
-				{itemid = 197021, count = 1},
-				{itemid = 197015, count = 1},
-				{itemid = 196991, count = 1},
-				{itemid = 196989, count = 1},
-				{itemid = 196973, count = 1},
-				{itemid = 196980, count = 1},
-				{itemid = 196985, count = 1},
-				{itemid = 196963, count = 1},
-				{itemid = 197007, count = 1},
-				{itemid = 196981, count = 1},
-				{itemid = 196982, count = 1},
-				{itemid = 196975, count = 1},
-				{itemid = 196962, count = 1},
-				{itemid = 196965, count = 1},
-				{itemid = 196996, count = 1},
-				{itemid = 196961, count = 1},
-				{itemid = 197023, count = 1},
-				{itemid = 197012, count = 1},
-				{itemid = 196976, count = 1},
-				{itemid = 197010, count = 1},
-				{itemid = 196987, count = 1},
-				{itemid = 196992, count = 1},
-				{itemid = 197011, count = 1},
-				{itemid = 197017, count = 1},
-				{itemid = 197009, count = 1},
-				{itemid = 196995, count = 1},
-				{itemid = 198893, count = 1},
-				{itemid = 197018, count = 1},
-				{itemid = 196977, count = 1},
-				{itemid = 197001, count = 1},
-				{itemid = 201734, count = 1},
-				{itemid = 197019, count = 1},
-				{itemid = 197002, count = 1},
-				{itemid = 196998, count = 1},
-				{itemid = 197003, count = 1},
-				{itemid = 196974, count = 1},
-				{itemid = 196972, count = 1},
-				{itemid = 196979, count = 1},
-				{itemid = 197000, count = 1},
-				{itemid = 196997, count = 1},
-				{itemid = 205226, count = 1},
-				{itemid = 197006, count = 1},
-				{itemid = 197020, count = 1},
-				{itemid = 197014, count = 1},
-				{itemid = 196967, count = 1},
-				{itemid = 197004, count = 1},
-				{itemid = 197005, count = 1},
-				{itemid = 196990, count = 1},
-				{itemid = 201736, count = 1},
-				{itemid = 196993, count = 1},
-				{itemid = 196969, count = 1},
-				{itemid = 198891, count = 1},
-				{itemid = 196971, count = 1},
-				{itemid = 196978, count = 1},
-				{itemid = 196984, count = 1},
-				{itemid = 198892, count = 1},
-				{itemid = 205876, count = 1},
-				{itemid = 194705, count = 1},
-				{itemid = 197142, count = 1},
-				{itemid = 197125, count = 1},
-				{itemid = 197090, count = 1},
-				{itemid = 197147, count = 1},
-				{itemid = 197131, count = 1},
-				{itemid = 206955, count = 1},
-				{itemid = 197094, count = 1},
-				{itemid = 197091, count = 1},
-				{itemid = 197116, count = 1},
-				{itemid = 197141, count = 1},
-				{itemid = 197120, count = 1},
-				{itemid = 197127, count = 1},
-				{itemid = 197105, count = 1},
-				{itemid = 197096, count = 1},
-				{itemid = 197149, count = 1},
-				{itemid = 197135, count = 1},
-				{itemid = 197138, count = 1},
-				{itemid = 197144, count = 1},
-				{itemid = 197099, count = 1},
-				{itemid = 197130, count = 1},
-				{itemid = 197111, count = 1},
-				{itemid = 197093, count = 1},
-				{itemid = 197150, count = 1},
-				{itemid = 197115, count = 1},
-				{itemid = 194106, count = 1},
-				{itemid = 197104, count = 1},
-				{itemid = 197136, count = 1},
-				{itemid = 197128, count = 1},
-				{itemid = 197117, count = 1},
-				{itemid = 197121, count = 1},
-				{itemid = 197156, count = 1},
-				{itemid = 197108, count = 1},
-				{itemid = 201792, count = 1},
-				{itemid = 197134, count = 1},
-				{itemid = 197132, count = 1},
-				{itemid = 197140, count = 1},
-				{itemid = 197124, count = 1},
-				{itemid = 197137, count = 1},
-				{itemid = 197101, count = 1},
-				{itemid = 197112, count = 1},
-				{itemid = 201735, count = 1},
-				{itemid = 197143, count = 1},
-				{itemid = 197098, count = 1},
-				{itemid = 197153, count = 1},
-				{itemid = 197122, count = 1},
-				{itemid = 197123, count = 1},
-				{itemid = 197148, count = 1},
-				{itemid = 197154, count = 1},
-				{itemid = 197103, count = 1},
-				{itemid = 197145, count = 1},
-				{itemid = 197100, count = 1},
-				{itemid = 197113, count = 1},
-				{itemid = 197155, count = 1},
-				{itemid = 197102, count = 1},
-				{itemid = 201737, count = 1},
-				{itemid = 197129, count = 1},
-				{itemid = 197146, count = 1},
-				{itemid = 197114, count = 1},
-				{itemid = 197126, count = 1},
-				{itemid = 197139, count = 1},
-				{itemid = 197107, count = 1},
-				{itemid = 197097, count = 1},
-				{itemid = 197119, count = 1},
-				{itemid = 197152, count = 1},
-				{itemid = 198895, count = 1},
-				{itemid = 194838, count = 1},
-				{itemid = 198894, count = 1},
-				{itemid = 197118, count = 1},
-				{itemid = 197095, count = 1},
-				{itemid = 197109, count = 1},
-				{itemid = 197110, count = 1},
-				{itemid = 197133, count = 1},
-				{itemid = 198896, count = 1},
-				{itemid = 197106, count = 1},
-				{itemid = 197151, count = 1},
-				{itemid = 201790, count = 1},
-				{itemid = 194034, count = 1},
-				{itemid = 197394, count = 1},
-				{itemid = 197404, count = 1},
-				{itemid = 197367, count = 1},
-				{itemid = 197400, count = 1},
-				{itemid = 197348, count = 1},
-				{itemid = 197368, count = 1},
-				{itemid = 197372, count = 1},
-				{itemid = 197396, count = 1},
-				{itemid = 197392, count = 1},
-				{itemid = 197346, count = 1},
-				{itemid = 197351, count = 1},
-				{itemid = 202277, count = 1},
-				{itemid = 202278, count = 1},
-				{itemid = 197377, count = 1},
-				{itemid = 197352, count = 1},
-				{itemid = 197383, count = 1},
-				{itemid = 197347, count = 1},
-				{itemid = 197369, count = 1},
-				{itemid = 197350, count = 1},
-				{itemid = 197398, count = 1},
-				{itemid = 197362, count = 1},
-				{itemid = 202280, count = 1},
-				{itemid = 197382, count = 1},
-				{itemid = 197357, count = 1},
-				{itemid = 197399, count = 1},
-				{itemid = 197390, count = 1},
-				{itemid = 202279, count = 1},
-				{itemid = 197376, count = 1},
-				{itemid = 197353, count = 1},
-				{itemid = 197397, count = 1},
-				{itemid = 197401, count = 1},
-				{itemid = 197355, count = 1},
-				{itemid = 198899, count = 1},
-				{itemid = 192523, count = 1},
-				{itemid = 197379, count = 1},
-				{itemid = 197403, count = 1},
-				{itemid = 202274, count = 1},
-				{itemid = 197402, count = 1},
-				{itemid = 197391, count = 1},
-				{itemid = 202275, count = 1},
-				{itemid = 197361, count = 1},
-				{itemid = 197385, count = 1},
-				{itemid = 201741, count = 1},
-				{itemid = 197389, count = 1},
-				{itemid = 201742, count = 1},
-				{itemid = 197360, count = 1},
-				{itemid = 202273, count = 1},
-				{itemid = 197395, count = 1},
-				{itemid = 197370, count = 1},
-				{itemid = 197374, count = 1},
-				{itemid = 197393, count = 1},
-				{itemid = 197359, count = 1},
-				{itemid = 197381, count = 1},
-				{itemid = 197363, count = 1},
-				{itemid = 197378, count = 1},
-				{itemid = 201738, count = 1},
-				{itemid = 192111, count = 1},
-				{itemid = 197387, count = 1},
-				{itemid = 197407, count = 1},
-				{itemid = 197358, count = 1},
-				{itemid = 197349, count = 1},
-				{itemid = 198901, count = 1},
-				{itemid = 197375, count = 1},
-				{itemid = 197365, count = 1},
-				{itemid = 197373, count = 1},
-				{itemid = 197386, count = 1},
-				{itemid = 197366, count = 1},
-				{itemid = 197371, count = 1},
-				{itemid = 197408, count = 1},
-				{itemid = 197406, count = 1},
-				{itemid = 197388, count = 1},
-				{itemid = 197384, count = 1},
-				{itemid = 197364, count = 1},
-				{itemid = 197354, count = 1},
-				{itemid = 197356, count = 1},
-				{itemid = 197380, count = 1},
-				{itemid = 197405, count = 1},
-				{itemid = 204361, count = 1},
-				{itemid = 205865, count = 1},
-				{itemid = 203308, count = 1},
-				{itemid = 203303, count = 1},
-				{itemid = 203318, count = 1},
-				{itemid = 203350, count = 1},
-				{itemid = 203299, count = 1},
-				{itemid = 203328, count = 1},
-				{itemid = 205341, count = 1},
-				{itemid = 203316, count = 1},
-				{itemid = 203338, count = 1},
-				{itemid = 203310, count = 1},
-				{itemid = 203324, count = 1},
-				{itemid = 203335, count = 1},
-				{itemid = 203327, count = 1},
-				{itemid = 203313, count = 1},
-				{itemid = 203300, count = 1},
-				{itemid = 203352, count = 1},
-				{itemid = 203351, count = 1},
-				{itemid = 203353, count = 1},
-				{itemid = 203346, count = 1},
-				{itemid = 203363, count = 1},
-				{itemid = 203312, count = 1},
-				{itemid = 203331, count = 1},
-				{itemid = 203358, count = 1},
-				{itemid = 203317, count = 1},
-				{itemid = 203304, count = 1},
-				{itemid = 203336, count = 1},
-				{itemid = 203354, count = 1},
-				{itemid = 203341, count = 1},
-				{itemid = 203309, count = 1},
-				{itemid = 203307, count = 1},
-				{itemid = 203325, count = 1},
-				{itemid = 203364, count = 1},
-				{itemid = 203360, count = 1},
-				{itemid = 203334, count = 1},
-				{itemid = 203323, count = 1},
-				{itemid = 203320, count = 1},
-				{itemid = 203342, count = 1},
-				{itemid = 203361, count = 1},
-				{itemid = 203339, count = 1},
-				{itemid = 203322, count = 1},
-				{itemid = 203348, count = 1},
-				{itemid = 203345, count = 1},
-				{itemid = 203357, count = 1},
-				{itemid = 203337, count = 1},
-				{itemid = 203314, count = 1},
-				{itemid = 203365, count = 1},
-				{itemid = 203343, count = 1},
-				{itemid = 203329, count = 1},
-				{itemid = 203362, count = 1},
-				{itemid = 203321, count = 1},
-				{itemid = 203355, count = 1},
-				{itemid = 203347, count = 1},
-				{itemid = 203311, count = 1},
-				{itemid = 203340, count = 1},
-				{itemid = 203315, count = 1},
-				{itemid = 203319, count = 1},
-				{itemid = 203330, count = 1},
-				{itemid = 203359, count = 1},
-				{itemid = 203349, count = 1},
-				{itemid = 203344, count = 1},
-				{itemid = 203332, count = 1},
-				{itemid = 203333, count = 1},
-				{itemid = 203306, count = 1},
-				-- {itemid = 176315, count = 1},
-				-- {itemid = 176426, count = 1},
-				-- {itemid = 176959, count = 1},
-				-- {itemid = 177732, count = 1},
-				-- {itemid = 177740, count = 1},
-				-- {itemid = 177742, count = 1},
-				-- {itemid = 177743, count = 1},
-				-- {itemid = 177753, count = 1},
-				-- {itemid = 178585, count = 1},
-				-- {itemid = 179368, count = 1},
-				-- {itemid = 179369, count = 1},
-				-- {itemid = 179370, count = 1},
-				-- {itemid = 179986, count = 1},
-				{itemid = 186472, count = 1},
-				{itemid = 111956, count = 1},
 				{itemid = 128313, count = 1},
+				{itemid = 130199, count = 1},
 				{itemid = 136926, count = 1},
+				{itemid = 139879, count = 1},
+				{itemid = 141371, count = 1},
+				{itemid = 141372, count = 1},
+				{itemid = 147212, count = 1},
+				{itemid = 147213, count = 1},
+				{itemid = 147214, count = 1},
+				{itemid = 147215, count = 1},
+				{itemid = 147216, count = 1},
+				{itemid = 147217, count = 1},
+				{itemid = 147218, count = 1},
+				{itemid = 147219, count = 1},
+				{itemid = 147220, count = 1},
+				{itemid = 147221, count = 1},
+				{itemid = 147222, count = 1},
+				{itemid = 147223, count = 1},
+				{itemid = 147708, count = 1},
+				{itemid = 147729, count = 1},
+				{itemid = 152095, count = 1},
+				{itemid = 152735, count = 1},
+				{itemid = 152736, count = 1},
+				{itemid = 152799, count = 1},
+				{itemid = 153059, count = 1},
+				{itemid = 153060, count = 1},
+				{itemid = 153061, count = 1},
+				{itemid = 153062, count = 1},
+				{itemid = 153063, count = 1},
+				{itemid = 153064, count = 1},
+				{itemid = 153065, count = 1},
+				{itemid = 153066, count = 1},
+				{itemid = 153067, count = 1},
+				{itemid = 153068, count = 1},
+				{itemid = 153205, count = 1},
+				{itemid = 153206, count = 1},
+				{itemid = 153207, count = 1},
+				{itemid = 153208, count = 1},
+				{itemid = 153209, count = 1},
+				{itemid = 153210, count = 1},
+				{itemid = 153211, count = 1},
+				{itemid = 153212, count = 1},
+				{itemid = 153213, count = 1},
+				{itemid = 153214, count = 1},
+				{itemid = 153215, count = 1},
+				{itemid = 153216, count = 1},
+				{itemid = 156630, count = 1},
 				{itemid = 166297, count = 1},
 				{itemid = 168207, count = 1},
 				{itemid = 168740, count = 1},
@@ -939,6 +556,12 @@ tinsert(E.modules, function()
 				{itemid = 171209, count = 1},
 				{itemid = 171210, count = 1},
 				{itemid = 174283, count = 1},
+				{itemid = 174756, count = 6},
+				{itemid = 174758, count = 6},
+				{itemid = 174759, count = 6},
+				{itemid = 174760, count = 6},
+				{itemid = 174764, count = 6},
+				{itemid = 175062, count = 1},
 				{itemid = 176331, count = 1},
 				{itemid = 176408, count = 1},
 				{itemid = 176409, count = 1},
@@ -1076,6 +699,7 @@ tinsert(E.modules, function()
 				{itemid = 185992, count = 1},
 				{itemid = 185993, count = 1},
 				{itemid = 186196, count = 1},
+				{itemid = 186472, count = 1},
 				{itemid = 186473, count = 1},
 				{itemid = 186524, count = 1},
 				{itemid = 186531, count = 1},
@@ -1150,6 +774,7 @@ tinsert(E.modules, function()
 				{itemid = 187781, count = 1},
 				{itemid = 187787, count = 1},
 				{itemid = 187911, count = 1},
+				{itemid = 188167, count = 1},
 				{itemid = 188686, count = 1},
 				{itemid = 188687, count = 1},
 				{itemid = 188688, count = 1},
@@ -1168,19 +793,36 @@ tinsert(E.modules, function()
 				{itemid = 188753, count = 1},
 				{itemid = 189765, count = 1},
 				{itemid = 190178, count = 1},
+				{itemid = 190184, count = 1},
 				{itemid = 190198, count = 5},
 				{itemid = 190198, count = 5},
 				{itemid = 190339, count = 1},
 				{itemid = 190610, count = 1},
 				{itemid = 190655, count = 1},
 				{itemid = 190656, count = 1},
+				{itemid = 190741, count = 1},
+				{itemid = 190755, count = 1},
+				{itemid = 190756, count = 1},
+				{itemid = 190757, count = 1},
+				{itemid = 190758, count = 1},
+				{itemid = 190759, count = 1},
+				{itemid = 190760, count = 1},
+				{itemid = 190761, count = 1},
+				{itemid = 190762, count = 1},
+				{itemid = 190763, count = 1},
+				{itemid = 190764, count = 1},
+				{itemid = 190941, count = 1},
+				{itemid = 191036, count = 1},
+				{itemid = 191037, count = 1},
 				{itemid = 191040, count = 1},
 				{itemid = 191139, count = 1},
 				{itemid = 191303, count = 1},
 				{itemid = 191701, count = 1},
+				{itemid = 192111, count = 1},
 				{itemid = 192130, count = 1},
 				{itemid = 192131, count = 1},
 				{itemid = 192132, count = 1},
+				{itemid = 192523, count = 1},
 				{itemid = 192892, count = 1},
 				{itemid = 192893, count = 1},
 				{itemid = 193891, count = 1},
@@ -1197,6 +839,7 @@ tinsert(E.modules, function()
 				{itemid = 193909, count = 1},
 				{itemid = 193910, count = 1},
 				{itemid = 193913, count = 1},
+				{itemid = 194034, count = 1},
 				{itemid = 194039, count = 1},
 				{itemid = 194040, count = 1},
 				{itemid = 194041, count = 1},
@@ -1216,7 +859,10 @@ tinsert(E.modules, function()
 				{itemid = 194079, count = 1},
 				{itemid = 194080, count = 1},
 				{itemid = 194081, count = 1},
+				{itemid = 194106, count = 1},
 				{itemid = 194337, count = 1},
+				{itemid = 194521, count = 1},
+				{itemid = 194549, count = 1},
 				{itemid = 194697, count = 1},
 				{itemid = 194698, count = 1},
 				{itemid = 194699, count = 1},
@@ -1224,8 +870,260 @@ tinsert(E.modules, function()
 				{itemid = 194702, count = 1},
 				{itemid = 194703, count = 1},
 				{itemid = 194704, count = 1},
+				{itemid = 194705, count = 1},
 				{itemid = 194708, count = 1},
+				{itemid = 194838, count = 1},
+				{itemid = 196961, count = 1},
+				{itemid = 196962, count = 1},
+				{itemid = 196963, count = 1},
+				{itemid = 196964, count = 1},
+				{itemid = 196965, count = 1},
+				{itemid = 196966, count = 1},
+				{itemid = 196967, count = 1},
+				{itemid = 196968, count = 1},
+				{itemid = 196969, count = 1},
+				{itemid = 196970, count = 1},
+				{itemid = 196971, count = 1},
+				{itemid = 196972, count = 1},
+				{itemid = 196973, count = 1},
+				{itemid = 196974, count = 1},
+				{itemid = 196975, count = 1},
+				{itemid = 196976, count = 1},
+				{itemid = 196977, count = 1},
+				{itemid = 196978, count = 1},
+				{itemid = 196979, count = 1},
+				{itemid = 196980, count = 1},
+				{itemid = 196981, count = 1},
+				{itemid = 196982, count = 1},
+				{itemid = 196983, count = 1},
+				{itemid = 196984, count = 1},
+				{itemid = 196985, count = 1},
+				{itemid = 196986, count = 1},
+				{itemid = 196987, count = 1},
+				{itemid = 196988, count = 1},
+				{itemid = 196989, count = 1},
+				{itemid = 196990, count = 1},
+				{itemid = 196991, count = 1},
+				{itemid = 196992, count = 1},
+				{itemid = 196993, count = 1},
+				{itemid = 196994, count = 1},
+				{itemid = 196995, count = 1},
+				{itemid = 196996, count = 1},
+				{itemid = 196997, count = 1},
+				{itemid = 196998, count = 1},
+				{itemid = 196999, count = 1},
+				{itemid = 197000, count = 1},
+				{itemid = 197001, count = 1},
+				{itemid = 197002, count = 1},
+				{itemid = 197003, count = 1},
+				{itemid = 197004, count = 1},
+				{itemid = 197005, count = 1},
+				{itemid = 197006, count = 1},
+				{itemid = 197007, count = 1},
+				{itemid = 197008, count = 1},
+				{itemid = 197009, count = 1},
+				{itemid = 197010, count = 1},
+				{itemid = 197011, count = 1},
+				{itemid = 197012, count = 1},
+				{itemid = 197013, count = 1},
+				{itemid = 197014, count = 1},
+				{itemid = 197015, count = 1},
+				{itemid = 197016, count = 1},
+				{itemid = 197017, count = 1},
+				{itemid = 197018, count = 1},
+				{itemid = 197019, count = 1},
+				{itemid = 197020, count = 1},
+				{itemid = 197021, count = 1},
+				{itemid = 197022, count = 1},
+				{itemid = 197023, count = 1},
+				{itemid = 197090, count = 1},
+				{itemid = 197091, count = 1},
+				{itemid = 197093, count = 1},
+				{itemid = 197094, count = 1},
+				{itemid = 197095, count = 1},
+				{itemid = 197096, count = 1},
+				{itemid = 197097, count = 1},
+				{itemid = 197098, count = 1},
+				{itemid = 197099, count = 1},
+				{itemid = 197100, count = 1},
+				{itemid = 197101, count = 1},
+				{itemid = 197102, count = 1},
+				{itemid = 197103, count = 1},
+				{itemid = 197104, count = 1},
+				{itemid = 197105, count = 1},
+				{itemid = 197106, count = 1},
+				{itemid = 197107, count = 1},
+				{itemid = 197108, count = 1},
+				{itemid = 197109, count = 1},
+				{itemid = 197110, count = 1},
+				{itemid = 197111, count = 1},
+				{itemid = 197112, count = 1},
+				{itemid = 197113, count = 1},
+				{itemid = 197114, count = 1},
+				{itemid = 197115, count = 1},
+				{itemid = 197116, count = 1},
+				{itemid = 197117, count = 1},
+				{itemid = 197118, count = 1},
+				{itemid = 197119, count = 1},
+				{itemid = 197120, count = 1},
+				{itemid = 197121, count = 1},
+				{itemid = 197122, count = 1},
+				{itemid = 197123, count = 1},
+				{itemid = 197124, count = 1},
+				{itemid = 197125, count = 1},
+				{itemid = 197126, count = 1},
+				{itemid = 197127, count = 1},
+				{itemid = 197128, count = 1},
+				{itemid = 197129, count = 1},
+				{itemid = 197130, count = 1},
+				{itemid = 197131, count = 1},
+				{itemid = 197132, count = 1},
+				{itemid = 197133, count = 1},
+				{itemid = 197134, count = 1},
+				{itemid = 197135, count = 1},
+				{itemid = 197136, count = 1},
+				{itemid = 197137, count = 1},
+				{itemid = 197138, count = 1},
+				{itemid = 197139, count = 1},
+				{itemid = 197140, count = 1},
+				{itemid = 197141, count = 1},
+				{itemid = 197142, count = 1},
+				{itemid = 197143, count = 1},
+				{itemid = 197144, count = 1},
+				{itemid = 197145, count = 1},
+				{itemid = 197146, count = 1},
+				{itemid = 197147, count = 1},
+				{itemid = 197148, count = 1},
+				{itemid = 197149, count = 1},
+				{itemid = 197150, count = 1},
+				{itemid = 197151, count = 1},
+				{itemid = 197152, count = 1},
+				{itemid = 197153, count = 1},
+				{itemid = 197154, count = 1},
+				{itemid = 197155, count = 1},
+				{itemid = 197156, count = 1},
+				{itemid = 197346, count = 1},
+				{itemid = 197347, count = 1},
+				{itemid = 197348, count = 1},
+				{itemid = 197349, count = 1},
+				{itemid = 197350, count = 1},
+				{itemid = 197351, count = 1},
+				{itemid = 197352, count = 1},
+				{itemid = 197353, count = 1},
+				{itemid = 197354, count = 1},
+				{itemid = 197355, count = 1},
+				{itemid = 197356, count = 1},
+				{itemid = 197357, count = 1},
+				{itemid = 197358, count = 1},
+				{itemid = 197359, count = 1},
+				{itemid = 197360, count = 1},
+				{itemid = 197361, count = 1},
+				{itemid = 197362, count = 1},
+				{itemid = 197363, count = 1},
+				{itemid = 197364, count = 1},
+				{itemid = 197365, count = 1},
+				{itemid = 197366, count = 1},
+				{itemid = 197367, count = 1},
+				{itemid = 197368, count = 1},
+				{itemid = 197369, count = 1},
+				{itemid = 197370, count = 1},
+				{itemid = 197371, count = 1},
+				{itemid = 197372, count = 1},
+				{itemid = 197373, count = 1},
+				{itemid = 197374, count = 1},
+				{itemid = 197375, count = 1},
+				{itemid = 197376, count = 1},
+				{itemid = 197377, count = 1},
+				{itemid = 197378, count = 1},
+				{itemid = 197379, count = 1},
+				{itemid = 197380, count = 1},
+				{itemid = 197381, count = 1},
+				{itemid = 197382, count = 1},
+				{itemid = 197383, count = 1},
+				{itemid = 197384, count = 1},
+				{itemid = 197385, count = 1},
+				{itemid = 197386, count = 1},
+				{itemid = 197387, count = 1},
+				{itemid = 197388, count = 1},
+				{itemid = 197389, count = 1},
+				{itemid = 197390, count = 1},
+				{itemid = 197391, count = 1},
+				{itemid = 197392, count = 1},
+				{itemid = 197393, count = 1},
+				{itemid = 197394, count = 1},
+				{itemid = 197395, count = 1},
+				{itemid = 197396, count = 1},
+				{itemid = 197397, count = 1},
+				{itemid = 197398, count = 1},
+				{itemid = 197399, count = 1},
+				{itemid = 197400, count = 1},
+				{itemid = 197401, count = 1},
+				{itemid = 197402, count = 1},
+				{itemid = 197403, count = 1},
+				{itemid = 197404, count = 1},
+				{itemid = 197405, count = 1},
+				{itemid = 197406, count = 1},
+				{itemid = 197407, count = 1},
+				{itemid = 197408, count = 1},
+				{itemid = 197577, count = 1},
+				{itemid = 197578, count = 1},
+				{itemid = 197579, count = 1},
+				{itemid = 197580, count = 1},
+				{itemid = 197581, count = 1},
+				{itemid = 197582, count = 1},
+				{itemid = 197583, count = 1},
+				{itemid = 197584, count = 1},
+				{itemid = 197585, count = 1},
+				{itemid = 197586, count = 1},
+				{itemid = 197587, count = 1},
+				{itemid = 197588, count = 1},
+				{itemid = 197589, count = 1},
+				{itemid = 197590, count = 1},
+				{itemid = 197591, count = 1},
+				{itemid = 197592, count = 1},
+				{itemid = 197593, count = 1},
+				{itemid = 197594, count = 1},
+				{itemid = 197595, count = 1},
+				{itemid = 197596, count = 1},
+				{itemid = 197597, count = 1},
+				{itemid = 197598, count = 1},
+				{itemid = 197599, count = 1},
+				{itemid = 197600, count = 1},
+				{itemid = 197601, count = 1},
+				{itemid = 197602, count = 1},
+				{itemid = 197603, count = 1},
+				{itemid = 197604, count = 1},
+				{itemid = 197605, count = 1},
+				{itemid = 197606, count = 1},
+				{itemid = 197607, count = 1},
+				{itemid = 197608, count = 1},
+				{itemid = 197609, count = 1},
+				{itemid = 197610, count = 1},
+				{itemid = 197611, count = 1},
+				{itemid = 197612, count = 1},
+				{itemid = 197613, count = 1},
+				{itemid = 197614, count = 1},
+				{itemid = 197615, count = 1},
+				{itemid = 197616, count = 1},
+				{itemid = 197617, count = 1},
+				{itemid = 197618, count = 1},
+				{itemid = 197619, count = 1},
+				{itemid = 197620, count = 1},
+				{itemid = 197621, count = 1},
+				{itemid = 197622, count = 1},
+				{itemid = 197623, count = 1},
+				{itemid = 197624, count = 1},
+				{itemid = 197625, count = 1},
+				{itemid = 197626, count = 1},
+				{itemid = 197627, count = 1},
+				{itemid = 197628, count = 1},
+				{itemid = 197629, count = 1},
+				{itemid = 197630, count = 1},
+				{itemid = 197634, count = 1},
+				{itemid = 197635, count = 1},
+				{itemid = 197636, count = 1},
 				{itemid = 198395, count = 1},
+				{itemid = 198438, count = 1},
 				{itemid = 198438, count = 1},
 				{itemid = 198454, count = 1},
 				{itemid = 198510, count = 1},
@@ -1279,6 +1177,17 @@ tinsert(E.modules, function()
 				{itemid = 198867, count = 1},
 				{itemid = 198868, count = 1},
 				{itemid = 198869, count = 1},
+				{itemid = 198891, count = 1},
+				{itemid = 198892, count = 1},
+				{itemid = 198893, count = 1},
+				{itemid = 198894, count = 1},
+				{itemid = 198895, count = 1},
+				{itemid = 198896, count = 1},
+				{itemid = 198899, count = 1},
+				{itemid = 198901, count = 1},
+				{itemid = 198902, count = 1},
+				{itemid = 198903, count = 1},
+				{itemid = 198904, count = 1},
 				{itemid = 198963, count = 1},
 				{itemid = 198964, count = 1},
 				{itemid = 198965, count = 1},
@@ -1298,6 +1207,7 @@ tinsert(E.modules, function()
 				{itemid = 199115, count = 1},
 				{itemid = 199122, count = 1},
 				{itemid = 199128, count = 1},
+				{itemid = 199192, count = 1},
 				{itemid = 199192, count = 1},
 				{itemid = 199197, count = 1},
 				{itemid = 199472, count = 1},
@@ -1403,11 +1313,22 @@ tinsert(E.modules, function()
 				{itemid = 201716, count = 1},
 				{itemid = 201717, count = 1},
 				{itemid = 201728, count = 1},
+				{itemid = 201734, count = 1},
+				{itemid = 201735, count = 1},
+				{itemid = 201736, count = 1},
+				{itemid = 201737, count = 1},
+				{itemid = 201738, count = 1},
+				{itemid = 201739, count = 1},
+				{itemid = 201741, count = 1},
+				{itemid = 201742, count = 1},
+				{itemid = 201743, count = 1},
 				{itemid = 201754, count = 1},
 				{itemid = 201755, count = 1},
 				{itemid = 201756, count = 1},
 				{itemid = 201781, count = 1},
 				{itemid = 201782, count = 1},
+				{itemid = 201790, count = 1},
+				{itemid = 201792, count = 1},
 				{itemid = 201817, count = 1},
 				{itemid = 201921, count = 1},
 				{itemid = 201922, count = 1},
@@ -1430,10 +1351,98 @@ tinsert(E.modules, function()
 				{itemid = 202094, count = 1},
 				{itemid = 202097, count = 1},
 				{itemid = 202098, count = 1},
+				{itemid = 202102, count = 1},
 				{itemid = 202142, count = 1},
 				{itemid = 202171, count = 1},
 				{itemid = 202172, count = 1},
+				{itemid = 202273, count = 1},
+				{itemid = 202274, count = 1},
+				{itemid = 202275, count = 1},
+				{itemid = 202277, count = 1},
+				{itemid = 202278, count = 1},
+				{itemid = 202279, count = 1},
+				{itemid = 202280, count = 1},
 				{itemid = 202371, count = 1},
+				{itemid = 202621, count = 1},
+				{itemid = 202621, count = 1},
+				{itemid = 202621, count = 1},
+				{itemid = 202621, count = 1},
+				{itemid = 202622, count = 1},
+				{itemid = 202622, count = 1},
+				{itemid = 202622, count = 1},
+				{itemid = 202622, count = 1},
+				{itemid = 202623, count = 1},
+				{itemid = 202623, count = 1},
+				{itemid = 202623, count = 1},
+				{itemid = 202623, count = 1},
+				{itemid = 202624, count = 1},
+				{itemid = 202624, count = 1},
+				{itemid = 202624, count = 1},
+				{itemid = 202624, count = 1},
+				{itemid = 202625, count = 1},
+				{itemid = 202625, count = 1},
+				{itemid = 202625, count = 1},
+				{itemid = 202625, count = 1},
+				{itemid = 202626, count = 1},
+				{itemid = 202626, count = 1},
+				{itemid = 202626, count = 1},
+				{itemid = 202626, count = 1},
+				{itemid = 202627, count = 1},
+				{itemid = 202627, count = 1},
+				{itemid = 202627, count = 1},
+				{itemid = 202627, count = 1},
+				{itemid = 202628, count = 1},
+				{itemid = 202628, count = 1},
+				{itemid = 202628, count = 1},
+				{itemid = 202628, count = 1},
+				{itemid = 202629, count = 1},
+				{itemid = 202629, count = 1},
+				{itemid = 202629, count = 1},
+				{itemid = 202629, count = 1},
+				{itemid = 202630, count = 1},
+				{itemid = 202630, count = 1},
+				{itemid = 202630, count = 1},
+				{itemid = 202630, count = 1},
+				{itemid = 202631, count = 1},
+				{itemid = 202631, count = 1},
+				{itemid = 202631, count = 1},
+				{itemid = 202631, count = 1},
+				{itemid = 202632, count = 1},
+				{itemid = 202632, count = 1},
+				{itemid = 202632, count = 1},
+				{itemid = 202632, count = 1},
+				{itemid = 202633, count = 1},
+				{itemid = 202633, count = 1},
+				{itemid = 202633, count = 1},
+				{itemid = 202633, count = 1},
+				{itemid = 202634, count = 1},
+				{itemid = 202634, count = 1},
+				{itemid = 202634, count = 1},
+				{itemid = 202634, count = 1},
+				{itemid = 202635, count = 1},
+				{itemid = 202635, count = 1},
+				{itemid = 202635, count = 1},
+				{itemid = 202635, count = 1},
+				{itemid = 202636, count = 1},
+				{itemid = 202636, count = 1},
+				{itemid = 202636, count = 1},
+				{itemid = 202636, count = 1},
+				{itemid = 202637, count = 1},
+				{itemid = 202637, count = 1},
+				{itemid = 202637, count = 1},
+				{itemid = 202637, count = 1},
+				{itemid = 202638, count = 1},
+				{itemid = 202638, count = 1},
+				{itemid = 202638, count = 1},
+				{itemid = 202638, count = 1},
+				{itemid = 202639, count = 1},
+				{itemid = 202639, count = 1},
+				{itemid = 202639, count = 1},
+				{itemid = 202639, count = 1},
+				{itemid = 202640, count = 1},
+				{itemid = 202640, count = 1},
+				{itemid = 202640, count = 1},
+				{itemid = 202640, count = 1},
 				{itemid = 202667, count = 1},
 				{itemid = 202668, count = 1},
 				{itemid = 202669, count = 1},
@@ -1442,15 +1451,82 @@ tinsert(E.modules, function()
 				{itemid = 203220, count = 1},
 				{itemid = 203222, count = 1},
 				{itemid = 203224, count = 1},
+				{itemid = 203299, count = 1},
+				{itemid = 203300, count = 1},
+				{itemid = 203303, count = 1},
+				{itemid = 203304, count = 1},
+				{itemid = 203306, count = 1},
+				{itemid = 203307, count = 1},
+				{itemid = 203308, count = 1},
+				{itemid = 203309, count = 1},
+				{itemid = 203310, count = 1},
+				{itemid = 203311, count = 1},
+				{itemid = 203312, count = 1},
+				{itemid = 203313, count = 1},
+				{itemid = 203314, count = 1},
+				{itemid = 203315, count = 1},
+				{itemid = 203316, count = 1},
+				{itemid = 203317, count = 1},
+				{itemid = 203318, count = 1},
+				{itemid = 203319, count = 1},
+				{itemid = 203320, count = 1},
+				{itemid = 203321, count = 1},
+				{itemid = 203322, count = 1},
+				{itemid = 203323, count = 1},
+				{itemid = 203324, count = 1},
+				{itemid = 203325, count = 1},
+				{itemid = 203327, count = 1},
+				{itemid = 203328, count = 1},
+				{itemid = 203329, count = 1},
+				{itemid = 203330, count = 1},
+				{itemid = 203331, count = 1},
+				{itemid = 203332, count = 1},
+				{itemid = 203333, count = 1},
+				{itemid = 203334, count = 1},
+				{itemid = 203335, count = 1},
+				{itemid = 203336, count = 1},
+				{itemid = 203337, count = 1},
+				{itemid = 203338, count = 1},
+				{itemid = 203339, count = 1},
+				{itemid = 203340, count = 1},
+				{itemid = 203341, count = 1},
+				{itemid = 203342, count = 1},
+				{itemid = 203343, count = 1},
+				{itemid = 203344, count = 1},
+				{itemid = 203345, count = 1},
+				{itemid = 203346, count = 1},
+				{itemid = 203347, count = 1},
+				{itemid = 203348, count = 1},
+				{itemid = 203349, count = 1},
+				{itemid = 203350, count = 1},
+				{itemid = 203351, count = 1},
+				{itemid = 203352, count = 1},
+				{itemid = 203353, count = 1},
+				{itemid = 203354, count = 1},
+				{itemid = 203355, count = 1},
+				{itemid = 203357, count = 1},
+				{itemid = 203358, count = 1},
+				{itemid = 203359, count = 1},
+				{itemid = 203360, count = 1},
+				{itemid = 203361, count = 1},
+				{itemid = 203362, count = 1},
+				{itemid = 203363, count = 1},
+				{itemid = 203364, count = 1},
+				{itemid = 203365, count = 1},
 				{itemid = 203476, count = 1},
+				{itemid = 203646, count = 1},
+				{itemid = 203647, count = 1},
+				{itemid = 203648, count = 1},
+				{itemid = 203649, count = 1},
+				{itemid = 203650, count = 1},
 				{itemid = 203681, count = 1},
 				{itemid = 203699, count = 1},
 				{itemid = 203700, count = 1},
 				{itemid = 203702, count = 1},
-				{itemid = 204075, count = 15}, --15
-				{itemid = 204076, count = 15}, --15
-				{itemid = 204077, count = 15}, --15
-				{itemid = 204078, count = 15}, --15
+				{itemid = 204075, count = 15},
+				{itemid = 204076, count = 15},
+				{itemid = 204077, count = 15},
+				{itemid = 204078, count = 15},
 				{itemid = 204222, count = 1},
 				{itemid = 204224, count = 1},
 				{itemid = 204225, count = 1},
@@ -1464,6 +1540,8 @@ tinsert(E.modules, function()
 				{itemid = 204233, count = 1},
 				{itemid = 204352, count = 50},
 				{itemid = 204359, count = 1},
+				{itemid = 204359, count = 1},
+				{itemid = 204361, count = 1},
 				{itemid = 204378, count = 1},
 				{itemid = 204379, count = 1},
 				{itemid = 204380, count = 1},
@@ -1485,7 +1563,7 @@ tinsert(E.modules, function()
 				{itemid = 204577, count = 1},
 				{itemid = 204578, count = 1},
 				{itemid = 204579, count = 1},
-				{itemid = 204717, count = 2}, --2
+				{itemid = 204717, count = 2},
 				{itemid = 204721, count = 1},
 				{itemid = 204722, count = 1},
 				{itemid = 204723, count = 1},
@@ -1508,6 +1586,7 @@ tinsert(E.modules, function()
 				{itemid = 205216, count = 1},
 				{itemid = 205219, count = 1},
 				{itemid = 205226, count = 1},
+				{itemid = 205226, count = 1},
 				{itemid = 205247, count = 1},
 				{itemid = 205248, count = 1},
 				{itemid = 205249, count = 1},
@@ -1516,6 +1595,7 @@ tinsert(E.modules, function()
 				{itemid = 205253, count = 1},
 				{itemid = 205254, count = 1},
 				{itemid = 205288, count = 1},
+				{itemid = 205341, count = 1},
 				{itemid = 205342, count = 1},
 				{itemid = 205346, count = 1},
 				{itemid = 205347, count = 1},
@@ -1561,6 +1641,8 @@ tinsert(E.modules, function()
 				{itemid = 205444, count = 1},
 				{itemid = 205445, count = 1},
 				{itemid = 205682, count = 1},
+				{itemid = 205865, count = 1},
+				{itemid = 205876, count = 1},
 				{itemid = 205964, count = 1},
 				{itemid = 205967, count = 1},
 				{itemid = 205983, count = 1},
@@ -1581,6 +1663,7 @@ tinsert(E.modules, function()
 				{itemid = 206035, count = 1},
 				{itemid = 206135, count = 1},
 				{itemid = 206136, count = 1},
+				{itemid = 206955, count = 1},
 				{itemid = 21746, count = 1},
 				{itemid = 50160, count = 1},
 				{itemid = 54537, count = 1},
@@ -1597,6 +1680,95 @@ tinsert(E.modules, function()
 			}
 			if UnitLevel == 70 then
 				TableConcat(white_list, white_list70)
+			end
+			local Krokuun_Plate ={
+				{itemid = 153143, count = 1},
+				{itemid = 153153, count = 1},
+				{itemid = 152743, count = 1},
+				{itemid = 153146, count = 1},
+				{itemid = 153150, count = 1},
+				{itemid = 153157, count = 1},
+				{itemid = 153140, count = 1},
+				{itemid = 153155, count = 1},
+				-- ОСТРОВ
+				{itemid = 203633, count = 1},
+				{itemid = 203643, count = 1},
+				{itemid = 203623, count = 1},
+				{itemid = 203640, count = 1},
+				{itemid = 203615, count = 1},
+				{itemid = 203626, count = 1},
+				{itemid = 203634, count = 1},
+				{itemid = 203611, count = 1},
+			}
+			local Krokuun_ChainMail = {
+				{itemid = 153138, count = 1},
+				{itemid = 153158, count = 1},
+				{itemid = 153149, count = 1},
+				{itemid = 153152, count = 1},
+				{itemid = 152741, count = 1},
+				{itemid = 153147, count = 1},
+				{itemid = 153137, count = 1},
+				{itemid = 152744, count = 1},
+				-- ОСТРОВ
+				{itemid = 203631, count = 1},
+				{itemid = 203644, count = 1},
+				{itemid = 203620, count = 1},
+				{itemid = 203639, count = 1},
+				{itemid = 203617, count = 1},
+				{itemid = 203628, count = 1},
+				{itemid = 203636, count = 1},
+				{itemid = 203613, count = 1},
+			}
+			local Krokuun_Leather = {
+				{itemid = 153136, count = 1},
+				{itemid = 152739, count = 1},
+				{itemid = 152737, count = 1},
+				{itemid = 153142, count = 1},
+				{itemid = 153151, count = 1},
+				{itemid = 153145, count = 1},
+				{itemid = 153148, count = 1},
+				{itemid = 153139, count = 1},
+				-- ОСТРОВ
+				{itemid = 203630, count = 1},
+				{itemid = 203645, count = 1},
+				{itemid = 203619, count = 1},
+				{itemid = 203638, count = 1},
+				{itemid = 203618, count = 1},
+				{itemid = 203629, count = 1},
+				{itemid = 203637, count = 1},
+				{itemid = 203614, count = 1},
+			}
+			local Krokuun_Cloth = {
+				{itemid = 152738, count = 1},
+				{itemid = 152734, count = 1},
+				{itemid = 153135, count = 1},
+				{itemid = 152742, count = 1},
+				{itemid = 153141, count = 1},
+				{itemid = 153154, count = 1},
+				{itemid = 153144, count = 1},
+				{itemid = 153156, count = 1},
+				-- ОСТРОВ
+				{itemid = 203632, count = 1},
+				{itemid = 203642, count = 1},
+				{itemid = 203622, count = 1},
+				{itemid = 203641, count = 1},
+				{itemid = 203616, count = 1},
+				{itemid = 203627, count = 1},
+				{itemid = 203635, count = 1},
+				{itemid = 203612, count = 1},
+			}
+
+			if classFilename == "WARRIOR" or classFilename == "PALADIN" or classFilename == "DEATHKNIGHT" then
+				TableConcat(white_list, Krokuun_Plate)
+			end
+			if classFilename == "HUNTER" or classFilename == "EVOKER" or classFilename == "SHAMAN" then
+				TableConcat(white_list, Krokuun_ChainMail)
+			end
+			if classFilename == "DRUID" or classFilename == "MONK" or classFilename == "DEMONHUNTER" or classFilename == "ROGUE" then
+				TableConcat(white_list, Krokuun_Leather)
+			end
+			if classFilename == "PRIEST" or classFilename == "MAGE" or classFilename == "WARLOCK" then
+				TableConcat(white_list, Krokuun_Cloth)
 			end
 			local UsableItems_Frame = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
 			UsableItems_Frame:Hide()
@@ -1939,6 +2111,292 @@ tinsert(E.modules, function()
 						return OrigErrHandler(self, event, id, err, ...)
 					end
 			end)
+		end
+end)
+----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
+--SellFrame
+tinsert(E.modules, function()
+		if Octo_ToDo_DragonflyVars.config.SellFrame then
+			local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8
+			local OctoFrame_Events = nil
+			local OctoFrame_SellOther = nil
+			local OctoFrame_foundLevelTooltip = nil
+			local OctoFrame_FROMBANK = nil
+			local OctoFrame_TOBANK = nil
+			local ignore_list = {
+				[49040] = true,
+				[81055] = true,
+				[109076] = true,
+				[166751] = true,
+				[180653] = true,
+				[191251] = true,
+				[193201] = true,
+				[203703] = true,
+				[204075] = true,
+				[204076] = true,
+				[204077] = true,
+				[204078] = true,
+				[204193] = true,
+				[204194] = true,
+				[204195] = true,
+				[204196] = true,
+				[204985] = true,
+				[205982] = true,
+			}
+			local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
+			local ilvlStr = avgItemLevelEquipped or 0
+			function Octo_Trade_DragonflyOnLoad()
+				if not OctoFrame_Events then
+					OctoFrame_Events = CreateFrame("Frame", AddonTitle..GenerateUniqueID())
+					OctoFrame_Events:Hide()
+					if Octo_Show_Dev == true then
+						print ("OctoFrame_Events = CreateFrame")
+					end
+				end
+				OctoFrame_Events:RegisterEvent("Trade_SHOW")
+				OctoFrame_Events:RegisterEvent("SECURE_TRANSFER_CANCEL")
+				OctoFrame_Events:RegisterEvent("MERCHANT_SHOW")
+				OctoFrame_Events:RegisterEvent("MERCHANT_CLOSED")
+				OctoFrame_Events:RegisterEvent("BANKFRAME_OPENED")
+				OctoFrame_Events:RegisterEvent("BANKFRAME_CLOSED")
+				OctoFrame_Events:RegisterEvent("PLAYER_STARTED_MOVING")
+				OctoFrame_Events:RegisterEvent("MAIL_SHOW")
+				OctoFrame_Events:SetScript("OnEvent", Octo_Trade_DragonflyOnEvent)
+			end
+			function MASLENGO_Trade()
+				if not OctoFrame_SellOther then
+					OctoFrame_SellOther = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellOther:Hide()
+					if Octo_Show_Dev == true then
+						print ("OctoFrame_SellOther = CreateFrame")
+					end
+				end
+				OctoFrame_SellOther:SetSize(64*scale, 64*scale)
+				OctoFrame_SellOther:SetFrameStrata("DIALOG")
+				OctoFrame_SellOther:EnableMouse(true)
+				OctoFrame_SellOther:SetMovable(true)
+				OctoFrame_SellOther:RegisterForDrag("RightButton")
+				OctoFrame_SellOther:SetScript("OnDragStart", OctoFrame_SellOther.StartMoving)
+				OctoFrame_SellOther:SetScript("OnDragStop", function() OctoFrame_SellOther:StopMovingOrSizing() end)
+				OctoFrame_SellOther:SetPoint("CENTER", -551, 12)
+				OctoFrame_SellOther:SetBackdrop({
+						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeSize = 1,
+				})
+				OctoFrame_SellOther:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				OctoFrame_SellOther:SetBackdropBorderColor(0, 0, 0, 1)
+				OctoFrame_SellOther:RegisterForClicks("LeftButtonUp")
+				OctoFrame_SellOther:SetScript("OnClick",function()
+						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+							for slot=1, C_Container.GetContainerNumSlots(bag) do
+								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
+								if containerInfo then
+									local itemID = containerInfo.itemID
+									local itemLink = C_Container.GetContainerItemLink(bag, slot)
+									local name, _, itemQuality, itemLevel, _, _, _,_, _, _, sellPrice = GetItemInfo(itemLink)
+									local effectiveILvl = GetDetailedItemLevelInfo(itemID) or 0
+									local baseILvl = tonumber(select(3,GetDetailedItemLevelInfo(itemID))) or 0
+									local ItemTooltip = _G["OctoScanningTooltip"] or
+									CreateFrame("GameTooltip", "OctoScanningTooltip", WorldFrame, "GameTooltipTemplate")
+									ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+									ItemTooltip:ClearLines()
+									ItemTooltip:SetHyperlink(itemLink)
+									local enchant = ""
+									local emptySockets = 0
+									for i = 1, ItemTooltip:NumLines() do
+										if not OctoFrame_foundLevelTooltip then
+											OctoFrame_foundLevelTooltip = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
+											if Octo_Show_Dev == true then
+												print ("OctoFrame_foundLevelTooltip = CreateFrame")
+											end
+										end
+										if OctoFrame_foundLevelTooltip then
+											itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
+										end
+									end
+									if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality < 5 then
+										C_Container.UseContainerItem(bag,slot)
+									end
+								end
+							end
+						end
+					end
+				)
+				OctoFrame_SellOther.icon = OctoFrame_SellOther:CreateTexture(nil,"BACKGROUND")
+				OctoFrame_SellOther.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Sell.tga")
+				OctoFrame_SellOther.icon:SetAllPoints(OctoFrame_SellOther)
+				OctoFrame_SellOther:Show()
+				----------------------------------------------------------------------------------------------------------------------------------
+				if not OctoFrame_SellAll then
+					OctoFrame_SellAll = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellAll:Hide()
+					if Octo_Show_Dev == true then
+						print ("OctoFrame_SellAll = CreateFrame")
+					end
+				end
+				OctoFrame_SellAll:SetSize(64*scale, 64*scale)
+				OctoFrame_SellAll:SetFrameStrata("DIALOG")
+				OctoFrame_SellAll:EnableMouse(true)
+				OctoFrame_SellAll:SetMovable(true)
+				OctoFrame_SellAll:RegisterForDrag("RightButton")
+				OctoFrame_SellAll:SetScript("OnDragStart", OctoFrame_SellAll.StartMoving)
+				OctoFrame_SellAll:SetScript("OnDragStop", function() OctoFrame_SellAll:StopMovingOrSizing() end)
+				OctoFrame_SellAll:SetPoint("CENTER", -551, -53)
+				OctoFrame_SellAll:SetBackdrop({
+						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeSize = 1,
+				})
+				OctoFrame_SellAll:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				OctoFrame_SellAll:SetBackdropBorderColor(0, 0, 0, 1)
+				OctoFrame_SellAll:RegisterForClicks("LeftButtonUp")
+				OctoFrame_SellAll:SetScript("OnClick",function()
+						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+							for slot=1, C_Container.GetContainerNumSlots(bag) do
+								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
+								if containerInfo then
+									local itemID = containerInfo.itemID
+									-- local itemLink = C_Container.GetContainerItemLink(bag, slot)
+									-- local name, _, itemQuality, itemLevel, _, _, _,_, _, _, sellPrice = GetItemInfo(itemLink)
+									-- local effectiveILvl = GetDetailedItemLevelInfo(itemID) or 0
+									-- local baseILvl = tonumber(select(3,GetDetailedItemLevelInfo(itemID))) or 0
+									-- local ItemTooltip = _G["OctoScanningTooltip"] or
+									-- CreateFrame("GameTooltip", "OctoScanningTooltip", WorldFrame, "GameTooltipTemplate")
+									-- ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+									-- ItemTooltip:ClearLines()
+									-- ItemTooltip:SetHyperlink(itemLink)
+									-- local enchant = ""
+									-- local emptySockets = 0
+									-- for i = 1, ItemTooltip:NumLines() do
+									--     if not OctoFrame_foundLevelTooltip then
+									--         OctoFrame_foundLevelTooltip = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
+									--         if Octo_Show_Dev == true then
+									--             print ("OctoFrame_foundLevelTooltip = CreateFrame")
+									--         end
+									--     end
+									--     if OctoFrame_foundLevelTooltip then
+									--         itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
+									--     end
+									-- end
+									if itemID then
+										C_Container.UseContainerItem(bag,slot)
+									end
+								end
+							end
+						end
+					end
+				)
+				OctoFrame_SellAll.icon = OctoFrame_SellAll:CreateTexture(nil,"BACKGROUND")
+				OctoFrame_SellAll.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SellAll.tga")
+				OctoFrame_SellAll.icon:SetAllPoints(OctoFrame_SellAll)
+				OctoFrame_SellAll:Show()
+				----------------------------------------------------------------------------------------------------------------------------------
+			end
+			local function MASLENGO_BANK()
+				OctoFrame_FROMBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+				OctoFrame_FROMBANK:Hide()
+				if Octo_Show_Dev == true then
+					print ("OctoFrame_FROMBANK = CreateFrame")
+				end
+				OctoFrame_FROMBANK:SetSize(64*scale, 64*scale)
+				OctoFrame_FROMBANK:SetFrameStrata("DIALOG")
+				OctoFrame_FROMBANK:SetPoint("CENTER", -500, 32)
+				OctoFrame_FROMBANK:SetBackdrop({
+						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeSize = 1,
+				})
+				OctoFrame_FROMBANK:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				OctoFrame_FROMBANK:SetBackdropBorderColor(0, 0, 0, 1)
+				OctoFrame_FROMBANK:RegisterForClicks("LeftButtonUp")
+				OctoFrame_FROMBANK:SetScript("OnClick",function()
+						for bag=REAGENTBANK_CONTAINER, BANK_CONTAINER do
+							for slot=1, C_Container.GetContainerNumSlots(bag) do
+								local n = C_Container.GetContainerItemLink(bag,slot)
+								if n then
+									C_Container.UseContainerItem(bag,slot)
+								end
+							end
+						end
+						for bag=NUM_TOTAL_EQUIPPED_BAG_SLOTS+1, NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS do
+							for slot=1, C_Container.GetContainerNumSlots(bag) do
+								local n = C_Container.GetContainerItemLink(bag,slot)
+								if n then
+									C_Container.UseContainerItem(bag,slot)
+								end
+							end
+						end
+					end
+				)
+				OctoFrame_FROMBANK.RightEdge:SetVertexColor(0, 1, 0)
+				OctoFrame_FROMBANK.icon = OctoFrame_FROMBANK:CreateTexture(nil,"BACKGROUND")
+				OctoFrame_FROMBANK.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_RIGHT.tga")
+				OctoFrame_FROMBANK.icon:SetAllPoints(OctoFrame_FROMBANK)
+				OctoFrame_FROMBANK:Show()
+				----------------------------------------------------------------------------------------------------------------------------------
+				OctoFrame_TOBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+				OctoFrame_TOBANK:Hide()
+				if Octo_Show_Dev == true then
+					print ("OctoFrame_TOBANK = CreateFrame")
+				end
+				OctoFrame_TOBANK:SetSize(64*scale, 64*scale)
+				OctoFrame_TOBANK:SetFrameStrata("DIALOG")
+				OctoFrame_TOBANK:SetPoint("CENTER", -500, -32)
+				OctoFrame_TOBANK:SetBackdrop({
+						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeSize = 1,
+				})
+				OctoFrame_TOBANK:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				OctoFrame_TOBANK:SetBackdropBorderColor(0, 0, 0, 1)
+				OctoFrame_TOBANK:RegisterForClicks("LeftButtonUp")
+				OctoFrame_TOBANK:RegisterForClicks("LeftButtonUp")
+				OctoFrame_TOBANK:SetScript("OnClick",function()
+						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+							for slot=1, C_Container.GetContainerNumSlots(bag) do
+								local itemLink = C_Container.GetContainerItemLink(bag,slot)
+								if itemLink then
+									C_Container.UseContainerItem(bag,slot)
+								end
+							end
+						end
+					end
+				)
+				OctoFrame_TOBANK.LeftEdge:SetVertexColor(0, 1, 0)
+				OctoFrame_TOBANK.icon = OctoFrame_TOBANK:CreateTexture(nil,"BACKGROUND")
+				OctoFrame_TOBANK.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_LEFT.tga")
+				OctoFrame_TOBANK.icon:SetAllPoints(OctoFrame_TOBANK)
+				OctoFrame_TOBANK:Show()
+				----------------------------------------------------------------------------------------------------------------------------------
+			end
+			function Octo_Trade_DragonflyOnEvent(self, event, ...)
+				if event == "MERCHANT_SHOW" and not InCombatLockdown() then
+					MASLENGO_Trade()
+				elseif event == "Trade_SHOW" and not InCombatLockdown() then
+					MASLENGO_Trade()
+				elseif event == "SECURE_TRANSFER_CANCEL" or event == "MERCHANT_CLOSED" or event == "PLAYER_STARTED_MOVING" then
+					if OctoFrame_SellOther then
+						OctoFrame_SellOther:Hide()
+					end
+					if OctoFrame_SellAll then
+						OctoFrame_SellAll:Hide()
+					end
+				elseif event == "BANKFRAME_OPENED" and not InCombatLockdown() then
+					MASLENGO_BANK()
+				elseif event == "BANKFRAME_CLOSED" or event == "PLAYER_STARTED_MOVING" then
+					if OctoFrame_FROMBANK then
+						OctoFrame_FROMBANK:Hide()
+					end
+					if OctoFrame_TOBANK then
+						OctoFrame_TOBANK:Hide()
+					end
+				elseif event == "MAIL_SHOW" then
+					MASLENGO_Trade()
+				end
+			end
+			Octo_Trade_DragonflyOnLoad()
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------

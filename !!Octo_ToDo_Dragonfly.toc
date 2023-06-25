@@ -1,18 +1,19 @@
 ## Interface: 100100
-## Author: Octo
 ## Title: !!|cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r
-## Version: v58.1(10.1.0)(23.06.2023)
+## Notes: Hello World!
+## Author: Octo
+## Version: v58.2(10.1.0)(26.06.2023)
 ## IconTexture: Interface\AddOns\!!Octo_ToDo_Dragonfly\Media\AddonTexture.tga
-## SavedVariables: Octo_ToDo_DragonflyLevels Octo_ToDo_DragonflyVars
+## SavedVariables: Octo_ToDo_DragonflyLevels Octo_ToDo_DragonflyVars Octo_ToDo_DragonflyArtifact
 
 embeds.xml
 
 LootFrame.lua
 Localization.lua
+Octo_ArtifactData.lua
 Octo_CommunityFeast.lua
 Octo_AUTO_ACCEPT_QUEST.lua
 Octo_AUTO_OPEN.lua
-Octo_Mail_Frame.lua
 Octo_Options.lua
 Octo_SharedMedia.lua
 Octo_ToDo_Dragonfly.lua
