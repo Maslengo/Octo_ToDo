@@ -8,6 +8,21 @@ local function TableConcat(t1,t2)
 	end
 	return t1
 end
+local Kyri_Color = "|cff6fa8dc"
+local Necr_Color = "|cff93c47d"
+local NFae_Color = "|cffb4a7d6"
+local Vent_Color = "|cffea9999"
+local Cyan_Color = "|cff00ccff"
+local Rift_Color = "|cffbf9eff"
+local Gray_Color = "|cff404040"
+local Addon_Color = "|cff4FFF79"
+local White_Color = "|cffFFF7D7"
+local Blue_Color = "|cff00A3FF"
+local Red_Color = "|cffFF4C4F"
+local Green_Color = "|cff4FFF79"
+local Yellow_Color = "|cffFFF371"
+local Purple_Color = "|cffAF61FF"
+local Orange_Color = "|cffFF661A"
 ----------------------------------------------------------------------------------------------------------------------------------
 local Octo_Show_Dev = false
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
@@ -55,12 +70,12 @@ tinsert(E.modules, function()
 			ZoneTextFrame:SetScript("OnShow", ZoneTextFrame.Hide);
 			SubZoneTextFrame:SetScript("OnShow", SubZoneTextFrame.Hide);
 			-- ZoneTextFrame:HookScript("OnShow", function(self, ...)
-			--         ZoneTextFrame:UnregisterAllEvents()
-			--         ZoneTextFrame:Hide()
+			-- ZoneTextFrame:UnregisterAllEvents()
+			-- ZoneTextFrame:Hide()
 			-- end)
 			-- SubZoneTextFrame:HookScript("OnShow", function(self, ...)
-			--         SubZoneTextFrame:UnregisterAllEvents()
-			--         SubZoneTextFrame:Hide()
+			-- SubZoneTextFrame:UnregisterAllEvents()
+			-- SubZoneTextFrame:Hide()
 			-- end)
 			PVPArenaTextString:HookScript("OnShow", function(self, ...)
 					-- PVPArenaTextString:UnregisterAllEvents()
@@ -75,8 +90,8 @@ tinsert(E.modules, function()
 					SubZoneTextString:Hide()
 			end)
 			-- EventToastManagerFrame:HookScript("OnShow", function(self,...)
-			--         EventToastManagerFrame:UnregisterAllEvents()
-			--         EventToastManagerFrame:Hide()
+			-- EventToastManagerFrame:UnregisterAllEvents()
+			-- EventToastManagerFrame:Hide()
 			-- end)
 			hooksecurefunc(EventToastManagerFrame, "Show", function()
 					if not EventToastManagerFrame.HideButton:IsShown() then
@@ -309,6 +324,10 @@ tinsert(E.modules, function()
 			if InCombatLockdown() then print ("CAN't CVAR") end
 			if not InCombatLockdown() then
 				C_Timer.After(1, function()
+						--SetCVar("questPOI", 101)
+						SetCVar("alwaysCompareItems", 1)
+						SetCVar("rotateMinimap", 0)
+						SetCVar("showBattlefieldMinimap", 0)
 						SetCVar("displaySpellActivationOverlays", 1)
 						SetCVar("raidFramesDisplayAggroHighlight", 1)
 						SetCVar("raidFramesDisplayClassColor", 1)
@@ -490,14 +509,47 @@ tinsert(E.modules, function()
 				"W", "X", "Y", "Z", "0", "1", "2", "3",
 				"4", "5", "6", "7", "8", "9", "(", ")"
 			}
-			function GenerateUniqueID()
+			local function GenerateUniqueID()
 				local s = {}
 				for i=1, 11 do
 					tinsert(s, bytetoB64[math.random(0, 63)])
 				end
 				return table.concat(s)
 			end
+			local function func_itemName(self)
+				local itemName, _, itemQuality = GetItemInfo(self)
+				if itemQuality then
+					local r, g, b = GetItemQualityColor(itemQuality)
+					local color = CreateColor(r, g, b, 1)
+					local itemNameColored = color:WrapTextInColorCode(itemName)
+					return itemNameColored or Red_Color..RETRIEVING_ITEM_INFO.."|r"
+				end
+				return itemName or Red_Color..RETRIEVING_ITEM_INFO.."|r"
+			end
 			local white_list = {
+-- https://www.wowhead.com/ru/item=205151/%D0%B8%D0%B7%D0%B2%D0%B8%D0%BB%D0%B8%D1%81%D0%BA#comments
+
+-- https://www.wowhead.com/ru/item=206009/ https://www.wowhead.com/ru/item=206010/ https://www.wowhead.com/ru/item=206014/
+-- https://www.wowhead.com/ru/item=206014/ https://www.wowhead.com/ru/item=206011/ https://www.wowhead.com/ru/item=206015/
+-- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
+-- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
+-- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
+
+
+
+
+				{itemid = 128315, count = 1},
+				{itemid = 180765, count = 1},
+				{itemid = 186482, count = 1},
+				{itemid = 181821, count = 1},
+				{itemid = 182332, count = 1},
+				{itemid = 186487, count = 1},
+				{itemid = 186476, count = 1},
+				{itemid = 186493, count = 1},
+				{itemid = 186503, count = 1},
+				{itemid = 186497, count = 1},
+				{itemid = 186515, count = 1},
+				{itemid = 186507, count = 1},
 				{itemid = 111956, count = 1},
 				{itemid = 114052, count = 1},
 				{itemid = 114053, count = 1},
@@ -1673,14 +1725,13 @@ tinsert(E.modules, function()
 				{itemid = 7973, count = 1},
 				{itemid = 92794, count = 1},
 				{itemid = 93724, count = 1},
+				{itemid = 122457, count = 1},
+				{itemid = 201782, count = 1},
 			}
 			local white_list70 ={
 				{itemid = 205423, count = 1},
 				{itemid = 205966, count = 1},
 			}
-			if UnitLevel == 70 then
-				TableConcat(white_list, white_list70)
-			end
 			local Krokuun_Plate ={
 				{itemid = 153143, count = 1},
 				{itemid = 153153, count = 1},
@@ -1757,33 +1808,61 @@ tinsert(E.modules, function()
 				{itemid = 203635, count = 1},
 				{itemid = 203612, count = 1},
 			}
-
 			if classFilename == "WARRIOR" or classFilename == "PALADIN" or classFilename == "DEATHKNIGHT" then
-				TableConcat(white_list, Krokuun_Plate)
+				TableConcat(white_list70, Krokuun_Plate)
 			end
 			if classFilename == "HUNTER" or classFilename == "EVOKER" or classFilename == "SHAMAN" then
-				TableConcat(white_list, Krokuun_ChainMail)
+				TableConcat(white_list70, Krokuun_ChainMail)
 			end
 			if classFilename == "DRUID" or classFilename == "MONK" or classFilename == "DEMONHUNTER" or classFilename == "ROGUE" then
-				TableConcat(white_list, Krokuun_Leather)
+				TableConcat(white_list70, Krokuun_Leather)
 			end
 			if classFilename == "PRIEST" or classFilename == "MAGE" or classFilename == "WARLOCK" then
-				TableConcat(white_list, Krokuun_Cloth)
+				TableConcat(white_list70, Krokuun_Cloth)
 			end
-			local UsableItems_Frame = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+			if UnitLevel == 70 then
+				TableConcat(white_list, white_list70)
+			end
+			local function UsableItems_Frame_OnEnter(self)
+				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, 10)
+				GameTooltip:ClearLines()
+				GameTooltip:AddLine(func_itemName(self.itemid))
+				GameTooltip:Show()
+			end
+			local function UsableItems_Frame_OnLeave(self)
+				GameTooltip:ClearLines()
+				GameTooltip:Hide()
+			end
+			--local function UsableItems_Frame(itemID)
+			if not UsableItems_Frame then
+				UsableItems_Frame = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+				UsableItems_Frame:Hide()
+				if Octo_Show_Dev == true then
+					print ("UsableItems_Frame = CreateFrame")
+				end
+			end
 			UsableItems_Frame:Hide()
 			UsableItems_Frame:SetSize(64*scale, 64*scale)
 			UsableItems_Frame:SetPoint("TOPLEFT", 0, 0)
 			UsableItems_Frame:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 4})
 			UsableItems_Frame:SetBackdropBorderColor(1, 1, 1, 1)
+			UsableItems_Frame:HookScript("OnEnter", UsableItems_Frame_OnEnter)
+			UsableItems_Frame:HookScript("OnLeave", UsableItems_Frame_OnLeave)
 			UsableItems_Frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 			UsableItems_Frame:SetAttribute("type", "macro")
 			local texture = UsableItems_Frame:CreateTexture(nil, "BACKGROUND")
 			UsableItems_Frame.icon = texture
 			texture:SetAllPoints(UsableItems_Frame)
 			texture:SetTexture(413587)
+			--end
 			local function UsableItemFrame_OnLoad()
-				local EventFrame = CreateFrame("Frame", AddonTitle..GenerateUniqueID(), UIParent)
+				if not EventFrame then
+					EventFrame = CreateFrame("Frame", AddonTitle..GenerateUniqueID(), UIParent)
+					EventFrame:Hide()
+					if Octo_Show_Dev == true then
+						print ("EventFrame = CreateFrame")
+					end
+				end
 				if not InCombatLockdown() then
 					EventFrame:Hide()
 					EventFrame:RegisterEvent("PLAYER_LOGIN")
@@ -1805,6 +1884,24 @@ tinsert(E.modules, function()
 			end
 			function UsableItemFrame()
 				if not InCombatLockdown() and UsableItems_Frame then
+					local testtable = {}
+					for myBags = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+						for bagSlots = 1, C_Container.GetContainerNumSlots(myBags) do
+							CurrentItemLink = C_Container.GetContainerItemLink(myBags, bagSlots)
+							if CurrentItemLink then
+								local itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, sellPrice, classID, subclassID, bindType, expacID, setID, isCraftingReagent = GetItemInfo(CurrentItemLink)
+								local itemInfo = C_Container.GetContainerItemInfo(myBags, bagSlots)
+								if (classID == 15 and (subclassID == 2 or subclassID == 5 )) -- 2ПЕТЫ  5маунты
+								-- or (classID == 15 and (subclassID == 4) and itemQuality == 4 and expacID ~= 7) -- 4сундуки эпик
+								-- or (classID == 9) -- РЕЦЕПТЫ
+								then
+									local itemID = tonumber(strmatch(itemLink, "item:(%d+):"))
+									local testtable = {{itemid = itemID, count = 1},}
+									TableConcat (white_list, testtable)
+								end
+							end
+						end
+					end
 					for _, v in pairs(white_list) do
 						if GetItemCount(v.itemid) >= v.count then
 							UsableItems_Frame:Show()
@@ -1815,10 +1912,12 @@ tinsert(E.modules, function()
 							UsableItems_Frame:SetBackdropBorderColor(r, g, b, 1)
 							-- local color = CreateColor(r, g, b, 1)
 							-- local name = color:WrapTextInColorCode(itemName)
+							UsableItems_Frame.itemid = v.itemid
 							break
 						elseif GetItemCount(v.itemid) <= (v.count-1) and UsableItems_Frame:IsShown() then
 							UsableItems_Frame:Hide()
 							UsableItems_Frame.icon:SetTexture(413587)
+
 						end
 					end
 				end
@@ -1834,7 +1933,13 @@ end)
 --AUTO GOSSIP
 tinsert(E.modules, function()
 		if Octo_ToDo_DragonflyVars.config.AutoGossip then
-			local Octo_AUTO_GOSSIP = CreateFrame("Frame", AddonTitle)
+			if not Octo_AUTO_GOSSIP then
+				Octo_AUTO_GOSSIP = CreateFrame("Frame", AddonTitle)
+				Octo_AUTO_GOSSIP:Hide()
+				if Octo_Show_Dev == true then
+					print ("Octo_AUTO_GOSSIP = CreateFrame")
+				end
+			end
 			Octo_AUTO_GOSSIP:RegisterEvent("GOSSIP_SHOW")
 			Octo_AUTO_GOSSIP:SetScript("OnEvent", function(self, event, ...)
 					if Octo_ToDo_DragonflyVars.config.AutoGossip and event == "GOSSIP_SHOW" then
@@ -1887,6 +1992,7 @@ tinsert(E.modules, function()
 						}
 						local Second_Option = {
 							[201398] = true, -- 1 в городе
+							--[205089] = true,
 						}
 						if guid and UnitGUID(UnitID):match("%a+") ~= "Player" then
 							local info = C_GossipInfo.GetOptions()
@@ -1901,6 +2007,7 @@ tinsert(E.modules, function()
 								v.name:find("Задание") or
 								v.name:find("сказать") or
 								v.name:find("Пропустить") or
+								v.name:find("Указать на Ральфа мистеру Солнечноцветику.") or
 								v.name:find("cff0000FF")
 								and not IsShiftKeyDown() then
 									print ("NAME")
@@ -1942,7 +2049,13 @@ tinsert(E.modules, function()
 			StaticPopupDialogs["DELETE_QUEST_ITEM"].OnHyperlinkLeave = StaticPopupDialogs["DELETE_GOOD_ITEM"].OnHyperlinkLeave
 			StaticPopupDialogs["DELETE_GOOD_QUEST_ITEM"].OnHyperlinkEnter = StaticPopupDialogs["DELETE_GOOD_ITEM"].OnHyperlinkEnter
 			StaticPopupDialogs["DELETE_GOOD_QUEST_ITEM"].OnHyperlinkLeave = StaticPopupDialogs["DELETE_GOOD_ITEM"].OnHyperlinkLeave
-			local easyDelFrame = CreateFrame("FRAME")
+			if not easyDelFrame then
+				easyDelFrame = CreateFrame("FRAME")
+				easyDelFrame:Hide()
+				if Octo_Show_Dev == true then
+					print ("easyDelFrame = CreateFrame")
+				end
+			end
 			easyDelFrame:RegisterEvent("DELETE_ITEM_CONFIRM")
 			easyDelFrame:SetScript("OnEvent", function()
 					if StaticPopup1EditBox:IsShown() then
@@ -2009,9 +2122,15 @@ tinsert(E.modules, function()
 					--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Vendored gray items for: "]..GetCoinTextureString(totalPrice), 255, 255, 255)
 				end
 			end
-			local f = CreateFrame("Frame")
-			f:SetScript("OnEvent", OnEvent)
-			f:RegisterEvent("MERCHANT_SHOW")
+			if not AutoSellGreyFrame then
+				AutoSellGreyFrame = CreateFrame("Frame")
+				AutoSellGreyFrame:Hide()
+				if Octo_Show_Dev == true then
+					print ("AutoSellGreyFrame = CreateFrame")
+				end
+			end
+			AutoSellGreyFrame:SetScript("OnEvent", OnEvent)
+			AutoSellGreyFrame:RegisterEvent("MERCHANT_SHOW")
 		end
 end)
 -- Consumable 0 Consumable Enum.ItemConsumableSubclass
@@ -2078,9 +2197,15 @@ tinsert(E.modules, function()
 					end
 				end
 			end
-			local f = CreateFrame("Frame")
-			f:SetScript("OnEvent", OnEvent)
-			f:RegisterEvent("MERCHANT_SHOW")
+			if not AutoRepairFrame then
+				AutoRepairFrame = CreateFrame("Frame")
+				AutoRepairFrame:Hide()
+				if Octo_Show_Dev == true then
+					print ("AutoRepairFrame = CreateFrame")
+				end
+			end
+			AutoRepairFrame:SetScript("OnEvent", OnEvent)
+			AutoRepairFrame:RegisterEvent("MERCHANT_SHOW")
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -2091,9 +2216,9 @@ tinsert(E.modules, function()
 			local OrigErrHandler = UIErrorsFrame:GetScript("OnEvent")
 			UIErrorsFrame:SetScript("OnEvent", function (self, event, id, err, ...)
 					if event == "UI_ERROR_MESSAGE" then
-						if     err == ERR_INV_FULL or
+						if err == ERR_INV_FULL or
 						err == ERR_QUEST_LOG_FULL or
-						err == ERR_RAID_GROUP_ONLY    or
+						err == ERR_RAID_GROUP_ONLY or
 						err == ERR_PARTY_LFG_BOOT_LIMIT or
 						err == ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE or
 						err == ERR_PARTY_LFG_BOOT_IN_COMBAT or
@@ -2270,15 +2395,15 @@ tinsert(E.modules, function()
 									-- local enchant = ""
 									-- local emptySockets = 0
 									-- for i = 1, ItemTooltip:NumLines() do
-									--     if not OctoFrame_foundLevelTooltip then
-									--         OctoFrame_foundLevelTooltip = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
-									--         if Octo_Show_Dev == true then
-									--             print ("OctoFrame_foundLevelTooltip = CreateFrame")
-									--         end
-									--     end
-									--     if OctoFrame_foundLevelTooltip then
-									--         itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
-									--     end
+									-- if not OctoFrame_foundLevelTooltip then
+									-- OctoFrame_foundLevelTooltip = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
+									-- if Octo_Show_Dev == true then
+									-- print ("OctoFrame_foundLevelTooltip = CreateFrame")
+									-- end
+									-- end
+									-- if OctoFrame_foundLevelTooltip then
+									-- itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
+									-- end
 									-- end
 									if itemID then
 										C_Container.UseContainerItem(bag,slot)
@@ -2295,10 +2420,12 @@ tinsert(E.modules, function()
 				----------------------------------------------------------------------------------------------------------------------------------
 			end
 			local function MASLENGO_BANK()
-				OctoFrame_FROMBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
-				OctoFrame_FROMBANK:Hide()
-				if Octo_Show_Dev == true then
-					print ("OctoFrame_FROMBANK = CreateFrame")
+				if not OctoFrame_FROMBANK then
+					OctoFrame_FROMBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_FROMBANK:Hide()
+					if Octo_Show_Dev == true then
+						print ("OctoFrame_FROMBANK = CreateFrame")
+					end
 				end
 				OctoFrame_FROMBANK:SetSize(64*scale, 64*scale)
 				OctoFrame_FROMBANK:SetFrameStrata("DIALOG")
@@ -2336,10 +2463,12 @@ tinsert(E.modules, function()
 				OctoFrame_FROMBANK.icon:SetAllPoints(OctoFrame_FROMBANK)
 				OctoFrame_FROMBANK:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
-				OctoFrame_TOBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
-				OctoFrame_TOBANK:Hide()
-				if Octo_Show_Dev == true then
-					print ("OctoFrame_TOBANK = CreateFrame")
+				if not OctoFrame_TOBANK then
+					OctoFrame_TOBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_TOBANK:Hide()
+					if Octo_Show_Dev == true then
+						print ("OctoFrame_TOBANK = CreateFrame")
+					end
 				end
 				OctoFrame_TOBANK:SetSize(64*scale, 64*scale)
 				OctoFrame_TOBANK:SetFrameStrata("DIALOG")
@@ -2401,4 +2530,5 @@ tinsert(E.modules, function()
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
+
 

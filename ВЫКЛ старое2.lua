@@ -1,9 +1,8 @@
-local GlobalAddonName, engine = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
-print(AddonTitle.." v"..AddonVersion.." loaded")
+local AddonName, engine = ...
+local AddonTitle = C_AddOns.GetAddOnMetadata(AddonName, "Title")
+local Version = C_AddOns.GetAddOnMetadata(AddonName, "Version")
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-local Octo_ToDo_DragonflyAltFrame, EventFrame = nil, nil
+local Octo_ToDo_ShadowlandsAltFrame, EventFrame = nil, nil
 local ColorKyrianR, ColorKyrianG, ColorKyrianB, ColorKyrianA = 111/255, 168/255, 220/255, 1
 local ColorNecrolordR, ColorNecrolordG, ColorNecrolordB, ColorNecrolordA = 147/255, 196/255, 125/255, 1
 local ColorNightFaeR, ColorNightFaeG, ColorNightFaeB, ColorNightFaeA = 142/255, 124/255, 195/255 , 1
@@ -13,9 +12,9 @@ local classColor = C_ClassColor.GetClassColor(className)
 local r,g,b = classColor:GetRGB()
 local curWidth, curHeight = 80, 20 --ширина 45, высота 45 24
 local curWidthTitle = curWidth*1.5
-local curFontTTF, curFontSize13, curFontOutline = [[Interface\Addons\Octo_ToDo_Dragonfly\Media\font\01 Octo.TTF]], 11, "OUTLINE"
+local curFontTTF, curFontSize13, curFontOutline = [[Interface\Addons\Octo_ToDo_Shadowlands\Media\font\01 Octo.TTF]], 11, "OUTLINE"
 local curFontSize11 = 11
-local curFontTest1,curFontTest2,curFontTest3 = [[Interface\Addons\Octo_ToDo_Dragonfly\Media\font\01 Octo.TTF]], curFontSize11, curFontOutline
+local curFontTest1,curFontTest2,curFontTest3 = [[Interface\Addons\Octo_ToDo_Shadowlands\Media\font\01 Octo.TTF]], curFontSize11, curFontOutline
 local TotalLines = 23
 local grayR,grayG,grayB,grayA = 0.5,0.5,0.5,1
 local curCharName, _ = UnitFullName("PLAYER")
@@ -23,7 +22,6 @@ local curServer = GetRealmName()
 local CovenantNames ={[1] = "Kyrian",[2] = "Venthyr",[3] = "NightFae",[4] = "Necrolord",}
 local TotalTransAnima = 0
 local TotalMoney = 0
-local curMoney = 0
 local Calltable = {}
 local thursdayResetDay0EU = 1514358000
 local thursdayResetDay0US = 1514300400
@@ -34,11 +32,107 @@ local daytime = 86400 --60 * 60 * 24
 -- 2 Venthyr
 -- 3 NightFae
 -- 4 Necrolord
+local function calling_sort(a,b)
+	return (C_TaskQuest.GetQuestTimeLeftSeconds(a.questID or 0) or 0) < (C_TaskQuest.GetQuestTimeLeftSeconds(b.questID or 0) or 0)
+end
+local CQuestID = {
+	{60425, 60426, 60418, 60427}, --1 Призыв в Бастионе, A Calling in Bastion, Беды на родине, Troubles at Home
+	{60430, 60429, 60420, 60431}, --2 Призыв в Малдраксусе, A Calling in Maldraxxus, Беды на родине, Troubles at Home
+	{60424, 60423, 60419, 60422}, --3 Призыв Арденвельда, A Call to Ardenweald, Беды на родине, Troubles at Home
+	{60434, 60433, 60421, 60432}, --4 Призыв Ревендрета, A Call to Revendreth, Беды на родине, Troubles at Home
+	{62692, 62694, 62693, 62691}, --5 призыв в, A Calling in...
+	{60454, 60455, 60452, 60456}, --6 Буря в Утробе, Storm the Maw
+	{60377, 60376, 60374, 60375}, --7 Горы сталекости, Bonemetal Bonanza
+	{60372, 60371, 60369, 60370}, --8 Добротная древесина, A Wealth of Wealdwood
+	{60358, 60363, 60364, 60365}, --9 Захват золотника, Gildenite Grab
+	{60439, 60440, 60438, 60441}, --10 Испытания Арденвельда, Challenges in Ardenweald
+	{60442, 60443, 60437, 60444}, --11 Испытания Бастиона, Challenges in Bastion
+	{60447, 60445, 60436, 60446}, --12 Испытания Малдраксуса, Challenges in Maldraxxus
+	{60450, 60449, 60435, 60448}, --13 Испытания Ревендрета, Challenges in Revendreth
+	{60380, 60379, 60373, 60378}, --14 Источник скорбной лозы, A Source of Sorrowvine
+	{60465, 60464, 60462, 60463}, --15 Очарование анимы, Anima Appeal
+	{60391, 60390, 60381, 60389}, --16 Помощь Арденвельду, Aiding Ardenweald
+	{60392, 60393, 60384, 60394}, --17 Помощь Бастиону, Aiding Bastion
+	{60395, 60396, 60383, 60397}, --18 Помощь Малдраксусу, Aiding Maldraxxus
+	{60400, 60398, 60382, 60399}, --19 Помощь Ревендрету, Aiding Revendreth
+	{60415, 60416, 60414, 60417}, --20 Редкие ресурсы, Rare Resources
+	{60458, 60459, 60457, 60460}, --21 Сбор анимы, Anima Salvage
+	{60404, 60405, 60387, 60406}, --22 Обучение в Бастионе, Training in Bastion, Обучение войск, Training Our Forces
+	{60407, 60408, 60386, 60409}, --23 Обучение в Малдраксусе, Training in Maldraxxus, Обучение войск, Training Our Forces
+	{60403, 60402, 60388, 60401}, --24 Обучение в Арденвельде, Training in Ardenweald, Обучение войск, Training Our Forces
+	{60412, 60411, 60385, 60410}, --25 Обучение в Ревендрете, Training in Revendreth, Обучение войск, Training Our Forces
+	--{61982, 61983, 61984, 61981}, --Наполнение резервуара, 1000 анимы
+}
 local function tmstpDayReset(n)
 	n = n or 1
 	local thursdayReset = GetCurrentRegion() == 3 and thursdayResetDay0EU or thursdayResetDay0US
 	local currTime = GetServerTime()
 	return (math.ceil((currTime - thursdayReset)/(daytime*n))*daytime*n)+thursdayReset
+end
+function Callings(calling) --нужно вызывать=()
+	local curActivCov = C_Covenants.GetActiveCovenantID() --ВЫКЛ
+	local UnitLevel = UnitLevel("PLAYER") --ВЫКЛ
+	if curActivCov == 0 then return end --ВЫКЛ
+	local curGUID = UnitGUID("PLAYER")
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Octo_ToDo_ShadowlandsLevels[curGUID] = Octo_ToDo_ShadowlandsLevels[curGUID] or {}
+	local collect = Octo_ToDo_ShadowlandsLevels[curGUID]
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	local unlocked = C_CovenantCallings.AreCallingsUnlocked()
+	if unlocked then
+		if calling then
+			local activeCallings = {}
+			for i = 1, Constants.Callings.MaxCallings  do
+				activeCallings[i] = calling[i]
+				local Call = collect["Call"..i]
+				Call.obj = "|cff00ff00"..DONE.."|r"
+				Call.tmstpEnd = tmstpDayReset()
+			end
+			--sort(activeCallings,calling_sort)
+			for k, v in ipairs(activeCallings) do
+				local currQ, maxQ = 0,0
+				for objectiveIndex = 1, v.numObjectives do
+					local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(v.questID, objectiveIndex, false)
+					--print (v.icon)
+					currQ = numFulfilled or 0
+					maxQ = numRequired or 0
+					if objectiveType == "progressbar" then
+						currQ = finished and 100 or GetQuestProgressBarPercent(v.questID) or 0
+						maxQ = 100
+					end
+					if not numRequired then
+						currQ, maxQ = 0, 1
+					end
+				end
+				local bountyStr = format("|cff%s%d/%d",currQ==maxQ and "00ff00" or "ff0000",currQ,maxQ)
+				local QuestTimeLeft = C_TaskQuest.GetQuestTimeLeftSeconds(v.questID) or 0
+				local Call
+				if QuestTimeLeft < 86400 then
+					Call = collect.Call1
+				elseif QuestTimeLeft < 172800 then
+					Call = collect.Call2
+				else
+					Call = collect.Call3
+				end
+				Call.questID = v.questID
+				--"|T133784:12:12:::64:64:4:60:4:60|t"..
+				Call.icon = v.icon
+				local questTitle, factionID, capped, displayAsObjective = C_TaskQuest.GetQuestInfoByQuestID(v.questID)
+				-- print (questTitle, factionID, capped, displayAsObjective)
+				Call.obj = maxQ == 100 and currQ/maxQ.."%" or currQ.."/"..maxQ
+				local IsOnQuest = C_QuestLog.IsOnQuest(v.questID)
+				if IsOnQuest then
+					if currQ == maxQ then
+						Call.obj = "|cffAF61FFможно сдать|r" -- (0,69, 0,38, 1,00, 1) --AF61FF фиолетовый
+					else
+						Call.obj = "|cffffff00"..Call.obj.."|r" --yellow
+					end
+				else
+					Call.obj = "|cff808080"..Call.obj.."|r" --gray
+				end
+			end
+		end
+	end
 end
 local function CompactNumberFormat(number)
 	if not number then number = 0 end
@@ -69,7 +163,7 @@ local WA_Utf8Sub = function(input, size)
 	end
 	return output
 end
-function Octo_ToDo_DragonflyOnLoad()
+function Octo_ToDo_ShadowlandsOnLoad()
 	EventFrame = CreateFrame("FRAME", nil)
 	EventFrame:RegisterEvent("VARIABLES_LOADED")
 	EventFrame:RegisterEvent("COVENANT_CHOSEN")
@@ -78,89 +172,89 @@ function Octo_ToDo_DragonflyOnLoad()
 	EventFrame:RegisterEvent("PLAYER_LOGIN")
 	EventFrame:RegisterEvent("PLAYER_MONEY")
 	EventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
-	EventFrame:SetScript("OnEvent", function(...) Octo_ToDo_DragonflyOnEvent(...) end)
+	EventFrame:SetScript("OnEvent", function(...) Octo_ToDo_ShadowlandsOnEvent(...) end)
 end
-function Octo_ToDo_DragonflyCreateAltFrame()
-	Octo_ToDo_DragonflyAltFrame = CreateFrame("BUTTON", nil, UIParent, "BackdropTemplate")
-	Octo_ToDo_DragonflyAltFrame:SetClampedToScreen(true)
-	Octo_ToDo_DragonflyAltFrame:SetFrameStrata("TOOLTIP")
-	Octo_ToDo_DragonflyAltFrame:SetPoint("CENTER", 0, 0)
-	Octo_ToDo_DragonflyAltFrame:SetBackdrop({
-			bgFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\background\\Square_White.tga",
-			edgeFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga",
+function Octo_ToDo_ShadowlandsCreateAltFrame()
+	Octo_ToDo_ShadowlandsAltFrame = CreateFrame("BUTTON", nil, UIParent, "BackdropTemplate")
+	Octo_ToDo_ShadowlandsAltFrame:SetClampedToScreen(true)
+	Octo_ToDo_ShadowlandsAltFrame:SetFrameStrata("TOOLTIP")
+	Octo_ToDo_ShadowlandsAltFrame:SetPoint("CENTER", 0, 0)
+	Octo_ToDo_ShadowlandsAltFrame:SetBackdrop({
+			bgFile = "Interface\\Addons\\Octo_ToDo_Shadowlands\\Media\\background\\Square_White.tga",
+			edgeFile = "Interface\\Addons\\Octo_ToDo_Shadowlands\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
-	Octo_ToDo_DragonflyAltFrame:SetBackdropColor(14/255, 14/255, 14/255, 0.80)
-	Octo_ToDo_DragonflyAltFrame:SetScript("OnShow", function() Octo_ToDo_DragonflyAddDataToAltFrame()
+	Octo_ToDo_ShadowlandsAltFrame:SetBackdropColor(14/255, 14/255, 14/255, 0.80)
+	Octo_ToDo_ShadowlandsAltFrame:SetScript("OnShow", function() C_CovenantCallings.RequestCallings() Octo_ToDo_ShadowlandsAddDataToAltFrame()
 	end)
-	Octo_ToDo_DragonflyAltFrame:EnableMouse(true)
-	Octo_ToDo_DragonflyAltFrame:SetMovable(true)
-	Octo_ToDo_DragonflyAltFrame:RegisterForDrag("LeftButton")
-	Octo_ToDo_DragonflyAltFrame:SetScript("OnDragStart", Octo_ToDo_DragonflyAltFrame.StartMoving)
-	Octo_ToDo_DragonflyAltFrame:SetScript("OnDragStop", function() Octo_ToDo_DragonflyAltFrame:StopMovingOrSizing() end)
-	Octo_ToDo_DragonflyAltFrame:RegisterForClicks("RightButtonUp")
-	Octo_ToDo_DragonflyAltFrame:SetScript("OnClick", function(self) self:Hide() end)
-	Octo_ToDo_DragonflyAltFrame:SetScript("OnKeyDown", function(self, key)
+	Octo_ToDo_ShadowlandsAltFrame:EnableMouse(true)
+	Octo_ToDo_ShadowlandsAltFrame:SetMovable(true)
+	Octo_ToDo_ShadowlandsAltFrame:RegisterForDrag("LeftButton")
+	Octo_ToDo_ShadowlandsAltFrame:SetScript("OnDragStart", Octo_ToDo_ShadowlandsAltFrame.StartMoving)
+	Octo_ToDo_ShadowlandsAltFrame:SetScript("OnDragStop", function() Octo_ToDo_ShadowlandsAltFrame:StopMovingOrSizing() end)
+	Octo_ToDo_ShadowlandsAltFrame:RegisterForClicks("RightButtonUp")
+	Octo_ToDo_ShadowlandsAltFrame:SetScript("OnClick", function(self) self:Hide() end)
+	Octo_ToDo_ShadowlandsAltFrame:SetScript("OnKeyDown", function(self, key)
 			if key == GetBindingKey("TOGGLEGAMEMENU") then
 				self:Hide()
 				self:SetPropagateKeyboardInput(false)
 			else self:SetPropagateKeyboardInput(true)
 			end
 	end)
-	Octo_ToDo_DragonflyAltFrame.CloseButton = CreateFrame("Button", nil, Octo_ToDo_DragonflyAltFrame, "BackDropTemplate")
-	Octo_ToDo_DragonflyAltFrame.CloseButton:SetSize(curHeight, curHeight)
-	Octo_ToDo_DragonflyAltFrame.CloseButton:SetPoint("TOPRIGHT", Octo_ToDo_DragonflyAltFrame, "TOPRIGHT", curHeight, 0)
-	Octo_ToDo_DragonflyAltFrame.CloseButton:SetBackdrop({ edgeFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	Octo_ToDo_DragonflyAltFrame.CloseButton:SetBackdropBorderColor(1, 0, 0, 0)
-	Octo_ToDo_DragonflyAltFrame.CloseButton:SetScript("OnEnter", function(self)
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton = CreateFrame("Button", nil, Octo_ToDo_ShadowlandsAltFrame, "BackDropTemplate")
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton:SetSize(curHeight, curHeight)
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton:SetPoint("TOPRIGHT", Octo_ToDo_ShadowlandsAltFrame, "TOPRIGHT", curHeight, 0)
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton:SetBackdrop({ edgeFile = "Interface\\Addons\\Octo_ToDo_Shadowlands\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton:SetBackdropBorderColor(1, 0, 0, 0)
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton:SetScript("OnEnter", function(self)
 			self:SetBackdropBorderColor(1, 0, 0, 1)
 			self.icon:SetVertexColor(1,0,0,1)
 	end)
-	Octo_ToDo_DragonflyAltFrame.CloseButton:SetScript("OnLeave", function(self)
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton:SetScript("OnLeave", function(self)
 			self:SetBackdropBorderColor(1, 0, 0, 0)
 			self.icon:SetVertexColor(1,1,1,1)
 	end)
-	Octo_ToDo_DragonflyAltFrame.CloseButton:SetScript("OnMouseDown", function(self)
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton:SetScript("OnMouseDown", function(self)
 			self:SetBackdropBorderColor(1, 0, 0, 0.5)
 			self.icon:SetVertexColor(1,0,0,0.5)
 	end)
-	Octo_ToDo_DragonflyAltFrame.CloseButton:SetScript("OnClick", function()
-			Octo_ToDo_DragonflyAltFrame:Hide()
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton:SetScript("OnClick", function()
+			Octo_ToDo_ShadowlandsAltFrame:Hide()
 	end)
-	local t = Octo_ToDo_DragonflyAltFrame.CloseButton:CreateTexture(nil,"BACKGROUND")
-	Octo_ToDo_DragonflyAltFrame.CloseButton.icon = t
-	t:SetTexture("Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\close.tga")
+	local t = Octo_ToDo_ShadowlandsAltFrame.CloseButton:CreateTexture(nil,"BACKGROUND")
+	Octo_ToDo_ShadowlandsAltFrame.CloseButton.icon = t
+	t:SetTexture("Interface\\Addons\\Octo_ToDo_Shadowlands\\Media\\close.tga")
 	t:SetVertexColor(1,1,1,1)
-	t:SetAllPoints(Octo_ToDo_DragonflyAltFrame.CloseButton)
+	t:SetAllPoints(Octo_ToDo_ShadowlandsAltFrame.CloseButton)
 	local toyID1 = 172924
 	local PlayerHasToy = PlayerHasToy(toyID1)
 	if PlayerHasToy == false then
 		local itemName = GetItemInfo(toyID1)
-		Octo_ToDo_DragonflyAltFrame.WormholeButton = CreateFrame("Button", nil, Octo_ToDo_DragonflyAltFrame, "SecureActionButtonTemplate") --"SecureActionButtonTemplate" "BackDropTemplate"
-		Octo_ToDo_DragonflyAltFrame.WormholeButton:SetSize(curHeight, curHeight)
-		Octo_ToDo_DragonflyAltFrame.WormholeButton:SetPoint("BOTTOMRIGHT", Octo_ToDo_DragonflyAltFrame, "BOTTOMRIGHT", curHeight, 0)
-		Octo_ToDo_DragonflyAltFrame.WormholeButton:SetAttribute("type", "macro")
-		Octo_ToDo_DragonflyAltFrame.WormholeButton:SetAttribute("macrotext",[[/use item:172924]])
-		Octo_ToDo_DragonflyAltFrame.WormholeButton:SetScript("OnEnter", function(self)
+		Octo_ToDo_ShadowlandsAltFrame.WormholeButton = CreateFrame("Button", nil, Octo_ToDo_ShadowlandsAltFrame, "SecureActionButtonTemplate") --"SecureActionButtonTemplate" "BackDropTemplate"
+		Octo_ToDo_ShadowlandsAltFrame.WormholeButton:SetSize(curHeight, curHeight)
+		Octo_ToDo_ShadowlandsAltFrame.WormholeButton:SetPoint("BOTTOMRIGHT", Octo_ToDo_ShadowlandsAltFrame, "BOTTOMRIGHT", curHeight, 0)
+		Octo_ToDo_ShadowlandsAltFrame.WormholeButton:SetAttribute("type", "macro")
+		Octo_ToDo_ShadowlandsAltFrame.WormholeButton:SetAttribute("macrotext",[[/use item:172924]])
+		Octo_ToDo_ShadowlandsAltFrame.WormholeButton:SetScript("OnEnter", function(self)
 				GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT")
 				GameTooltip:ClearLines()
 				GameTooltip:SetToyByItemID(172924)
 				GameTooltip:Show()
 				self.icon:SetVertexColor(1,1,1,1)
 		end)
-		Octo_ToDo_DragonflyAltFrame.WormholeButton:SetScript("OnLeave", function(self)
+		Octo_ToDo_ShadowlandsAltFrame.WormholeButton:SetScript("OnLeave", function(self)
 				GameTooltip:ClearLines()
 				GameTooltip:Hide()
 				self.icon:SetVertexColor(1,1,1,1)
 		end)
-		Octo_ToDo_DragonflyAltFrame.WormholeButton:HookScript("OnMouseDown", function(self)
+		Octo_ToDo_ShadowlandsAltFrame.WormholeButton:HookScript("OnMouseDown", function(self)
 				self.icon:SetVertexColor(1,1,1,0.5)
 		end)
-		local t = Octo_ToDo_DragonflyAltFrame.WormholeButton:CreateTexture(nil,"BACKGROUND")
-		Octo_ToDo_DragonflyAltFrame.WormholeButton.icon = t
-		t:SetTexture("Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\inv_engineering_90_wormholegenerator.tga")
+		local t = Octo_ToDo_ShadowlandsAltFrame.WormholeButton:CreateTexture(nil,"BACKGROUND")
+		Octo_ToDo_ShadowlandsAltFrame.WormholeButton.icon = t
+		t:SetTexture("Interface\\Addons\\Octo_ToDo_Shadowlands\\Media\\inv_engineering_90_wormholegenerator.tga")
 		t:SetVertexColor(1,1,1,1)
-		t:SetAllPoints(Octo_ToDo_DragonflyAltFrame.WormholeButton)
+		t:SetAllPoints(Octo_ToDo_ShadowlandsAltFrame.WormholeButton)
 	end
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	local function FrameLine_OnEnter(self) self.BG:SetColorTexture(grayR,grayG,grayB,.4) end
@@ -169,10 +263,10 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		local fname, f
 		if i ~= 0 then
 			fname = "FrameLine"..i
-			Octo_ToDo_DragonflyAltFrame[fname] = CreateFrame("Frame", nil, Octo_ToDo_DragonflyAltFrame)
-			f = Octo_ToDo_DragonflyAltFrame[fname]
+			Octo_ToDo_ShadowlandsAltFrame[fname] = CreateFrame("Frame", nil, Octo_ToDo_ShadowlandsAltFrame)
+			f = Octo_ToDo_ShadowlandsAltFrame[fname]
 			f:SetHeight(curHeight)
-			f:SetPoint("TOPLEFT", Octo_ToDo_DragonflyAltFrame, "TOPLEFT", 0, -curHeight*i)
+			f:SetPoint("TOPLEFT", Octo_ToDo_ShadowlandsAltFrame, "TOPLEFT", 0, -curHeight*i)
 			f:SetPoint("RIGHT")
 			f:SetScript("OnEnter", FrameLine_OnEnter)
 			f:SetScript("OnLeave", FrameLine_OnLeave)
@@ -182,10 +276,10 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 			f.BG:SetAllPoints()
 		end
 		fname = "TextLeft"..i
-		Octo_ToDo_DragonflyAltFrame[fname] = Octo_ToDo_DragonflyAltFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		f = Octo_ToDo_DragonflyAltFrame[fname]
+		Octo_ToDo_ShadowlandsAltFrame[fname] = Octo_ToDo_ShadowlandsAltFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		f = Octo_ToDo_ShadowlandsAltFrame[fname]
 		f:SetSize(curWidthTitle, curHeight)
-		f:SetPoint("TOPLEFT", Octo_ToDo_DragonflyAltFrame, "TOPLEFT", 6, -curHeight*i)
+		f:SetPoint("TOPLEFT", Octo_ToDo_ShadowlandsAltFrame, "TOPLEFT", 6, -curHeight*i)
 		f:SetFont(curFontTTF, curFontSize11)
 		f:SetJustifyV("MIDDLE")
 		f:SetJustifyH("LEFT")
@@ -206,9 +300,9 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		if i == 13 then f:SetText("|T3950362:16:16:::64:64:4:60:4:60|t |cff0070ddШифры предвечных|r") end
 		if i == 14 then f:SetText("|T1523630:16:16:::64:64:4:60:4:60|t |cffa335eeОчки завоевания|r") end
 		if i == 15 then f:SetText("|T1455894:16:16:::64:64:4:60:4:60|t |cff0070ddЧесть|r") end
-		if i == 16 then f:SetText("|T629056:16:16:::64:64:4:60:4:60|t 3kREP") end
-		if i == 17 then f:SetText("|T1603189:16:16:::64:64:4:60:4:60|t Feast") end
-		if i == 18 then f:SetText("|T3528312:16:16:::64:64:4:60:4:60|t WB") end
+		if i == 16 then f:SetText("|T4074774:16:16:::64:64:4:60:4:60|t ZM") end
+		if i == 17 then f:SetText("|T3528312:16:16:::64:64:4:60:4:60|t WB") end
+		if i == 18 then f:SetText("|T3528288:16:16:::64:64:4:60:4:60|t 1000 anima") end
 		if i == 19 then f:SetText(" ") end --Call1
 		if i == 20 then f:SetText(" ") end --Call2
 		if i == 21 then f:SetText(" ") end --Call3
@@ -216,8 +310,8 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		if i == 23 then f:SetText(" ") end
 	end
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	Octo_ToDo_DragonflyAddDataToAltFrame()
-	Octo_ToDo_DragonflyAltFrame:Hide()
+	Octo_ToDo_ShadowlandsAddDataToAltFrame()
+	Octo_ToDo_ShadowlandsAltFrame:Hide()
 end
 function OctoQuestUpdate()
 	local curActivCov = C_Covenants.GetActiveCovenantID()
@@ -225,127 +319,54 @@ function OctoQuestUpdate()
 	--if curActivCov == 0 --[[or UnitLevel < 60]] then return end
 	local curGUID = UnitGUID("PLAYER")
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	local questID_3kREP = 72068
-	local maslengo_3kREP = ""
-	--сделан
-	if C_QuestLog.IsQuestFlaggedCompleted(questID_3kREP) == true then maslengo_3kREP = (DONE)
-		--можно сдать
-	elseif C_QuestLog.IsComplete(questID_3kREP) == true then maslengo_3kREP = " >>> МОЖНО СДАТЬ <<<"
-		--не сделан и нет квеста
-	elseif C_QuestLog.IsQuestFlaggedCompleted(questID_3kREP) == false and C_QuestLog.IsOnQuest(questID_3kREP) == false then maslengo_3kREP = (NONE)
-		--есть кв и нельзя сдать
-	elseif C_QuestLog.IsOnQuest(questID_3kREP) == true and C_QuestLog.IsComplete(questID_3kREP) == false then
-		local objectives = C_QuestLog.GetQuestObjectives(questID_3kREP)
-		if objectives == nil then return "" end
-		local OBJF1 = "" local OBJR1 = "" local C1 = " |cFFFF5771" local R1 = "|r"
-		local OBJF2 = "" local OBJR2 = "" local C2 = " |cFFFF5771" local R2 = "|r"
-		local OBJF3 = "" local OBJR3 = "" local C3 = " |cFFFF5771" local R3 = "|r"
-		local OBJF4 = "" local OBJR4 = "" local C4 = " |cFFFF5771" local R4 = "|r"
-		local OBJF5 = "" local OBJR5 = "" local C5 = " |cFFFF5771" local R5 = "|r"
-		if objectives[1] == nil then OBJF1 = "" OBJR1 = "" else if objectives[1].numFulfilled == objectives[1].numRequired then OBJF1 = "|cff4FFF79done|r" OBJR1 = "" else if objectives[1].numFulfilled >= 0 then OBJF1 = objectives[1].numFulfilled.."/" OBJR1 = objectives[1].numRequired end end end
-		if OBJF1 == OBJR1 then C1 = "|cff4FFF79" end
-		if objectives[2] == nil then OBJF2 = "" OBJR2 = "" else if objectives[2].numFulfilled == objectives[2].numRequired then OBJF2 = "|cff4FFF79done|r" OBJR2 = "" else if objectives[2].numFulfilled >= 0 then OBJF2 = objectives[2].numFulfilled.."/" OBJR2 = objectives[2].numRequired end end end
-		if OBJF2 == OBJR2 then C2 = "|cff4FFF79" end
-		if objectives[3] == nil then OBJF3 = "" OBJR3 = "" else if objectives[3].numFulfilled == objectives[3].numRequired then OBJF3 = "|cff4FFF79done|r" OBJR3 = "" else if objectives[3].numFulfilled >= 0 then OBJF3 = objectives[3].numFulfilled.."/" OBJR3 = objectives[3].numRequired end end end
-		if OBJF3 == OBJR3 then C3 = "|cff4FFF79" end
-		if objectives[4] == nil then OBJF4 = "" OBJR4 = "" else if objectives[4].numFulfilled == objectives[4].numRequired then OBJF4 = "|cff4FFF79done|r" OBJR4 = "" else if objectives[4].numFulfilled >= 0 then OBJF4 = objectives[4].numFulfilled.."/" OBJR4 = objectives[4].numRequired end end end
-		if OBJF4 == OBJR4 then C4 = "|cff4FFF79" end
-		if objectives[5] == nil then OBJF5 = "" OBJR5 = "" else if objectives[5].numFulfilled == objectives[5].numRequired then OBJF5 = "|cff4FFF79done|r" OBJR5 = "" else if objectives[5].numFulfilled >= 0 then OBJF5 = objectives[5].numFulfilled.."/" OBJR5 = objectives[5].numRequired end end end
-		if OBJF5 == OBJR5 then C5 = "|cff4FFF79" end
-		if objectives then
-			if objectives[5] then
-				maslengo_3kREP = "|cffFFFF00"..objectives[5].numFulfilled .. "/" .. objectives[5].numRequired.."|r"
-			elseif objectives[4] then
-				maslengo_3kREP = "|cffFFFF00"..objectives[4].numFulfilled .. "/" .. objectives[4].numRequired.."|r"
-			elseif objectives[3] then
-				maslengo_3kREP = "|cffFFFF00"..objectives[3].numFulfilled .. "/" .. objectives[3].numRequired.."|r"
-			elseif objectives[2] then
-				maslengo_3kREP = "|cffFFFF00"..objectives[2].numFulfilled .. "/" .. objectives[2].numRequired.."|r"
-			elseif objectives[1] then
-				maslengo_3kREP = "|cffFFFF00"..objectives[1].numFulfilled .. "/" .. objectives[1].numRequired.."|r"
-			end
-		end
-	end
-	--local questID_3kREP = 72068
-	--local maslengo_3kREP = ""
-	--if C_QuestLog.IsComplete(questID_3kREP) == true then maslengo_3kREP = 100
-	--elseif C_QuestLog.IsQuestFlaggedCompleted(questID_3kREP) == true then maslengo_Feast = true
-	--end
-	--local maslengo_3kREP = C_QuestLog.IsQuestFlaggedCompleted(questID_3kREP)
-	-- if maslengo_3kREP == false and C_QuestLog.IsOnQuest(questID_3kREP) then
-	--    local objectives = C_QuestLog.GetQuestObjectives(questID_3kREP)
-	--     if objectives and objectives[2] then
-	--         maslengo_3kREP = "|cffFFFF00"..objectives[2].numFulfilled .. "/" .. objectives[2].numRequired.."|r"
-	--     end
-	-- end
-	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	local questID_Feast = 70893
-	local maslengo_Feast = ""
-	--сделан
-	if C_QuestLog.IsQuestFlaggedCompleted(questID_Feast) == true then maslengo_Feast = (DONE)
-		--можно сдать
-	elseif C_QuestLog.IsComplete(questID_Feast) == true then maslengo_Feast = " >>> МОЖНО СДАТЬ <<<"
-		--не сделан и нет квеста
-	elseif C_QuestLog.IsQuestFlaggedCompleted(questID_Feast) == false and C_QuestLog.IsOnQuest(questID_Feast) == false then maslengo_Feast = (NONE)
-		--есть кв и нельзя сдать
-	elseif C_QuestLog.IsOnQuest(questID_Feast) == true and C_QuestLog.IsComplete(questID_Feast) == false then
-		local objectives = C_QuestLog.GetQuestObjectives(questID_Feast)
-		if objectives == nil then return "" end
-		local OBJF1 = "" local OBJR1 = "" local C1 = " |cFFFF5771" local R1 = "|r"
-		local OBJF2 = "" local OBJR2 = "" local C2 = " |cFFFF5771" local R2 = "|r"
-		local OBJF3 = "" local OBJR3 = "" local C3 = " |cFFFF5771" local R3 = "|r"
-		local OBJF4 = "" local OBJR4 = "" local C4 = " |cFFFF5771" local R4 = "|r"
-		local OBJF5 = "" local OBJR5 = "" local C5 = " |cFFFF5771" local R5 = "|r"
-		if objectives[1] == nil then OBJF1 = "" OBJR1 = "" else if objectives[1].numFulfilled == objectives[1].numRequired then OBJF1 = "|cff4FFF79done|r" OBJR1 = "" else if objectives[1].numFulfilled >= 0 then OBJF1 = objectives[1].numFulfilled.."/" OBJR1 = objectives[1].numRequired end end end
-		if OBJF1 == OBJR1 then C1 = "|cff4FFF79" end
-		if objectives[2] == nil then OBJF2 = "" OBJR2 = "" else if objectives[2].numFulfilled == objectives[2].numRequired then OBJF2 = "|cff4FFF79done|r" OBJR2 = "" else if objectives[2].numFulfilled >= 0 then OBJF2 = objectives[2].numFulfilled.."/" OBJR2 = objectives[2].numRequired end end end
-		if OBJF2 == OBJR2 then C2 = "|cff4FFF79" end
-		if objectives[3] == nil then OBJF3 = "" OBJR3 = "" else if objectives[3].numFulfilled == objectives[3].numRequired then OBJF3 = "|cff4FFF79done|r" OBJR3 = "" else if objectives[3].numFulfilled >= 0 then OBJF3 = objectives[3].numFulfilled.."/" OBJR3 = objectives[3].numRequired end end end
-		if OBJF3 == OBJR3 then C3 = "|cff4FFF79" end
-		if objectives[4] == nil then OBJF4 = "" OBJR4 = "" else if objectives[4].numFulfilled == objectives[4].numRequired then OBJF4 = "|cff4FFF79done|r" OBJR4 = "" else if objectives[4].numFulfilled >= 0 then OBJF4 = objectives[4].numFulfilled.."/" OBJR4 = objectives[4].numRequired end end end
-		if OBJF4 == OBJR4 then C4 = "|cff4FFF79" end
-		if objectives[5] == nil then OBJF5 = "" OBJR5 = "" else if objectives[5].numFulfilled == objectives[5].numRequired then OBJF5 = "|cff4FFF79done|r" OBJR5 = "" else if objectives[5].numFulfilled >= 0 then OBJF5 = objectives[5].numFulfilled.."/" OBJR5 = objectives[5].numRequired end end end
-		if OBJF5 == OBJR5 then C5 = "|cff4FFF79" end
-		if objectives then
-			if objectives[5] then
-				maslengo_Feast = "|cffFFFF00"..objectives[5].numFulfilled .. "/" .. objectives[5].numRequired.."|r"
-			elseif objectives[4] then
-				maslengo_Feast = "|cffFFFF00"..objectives[4].numFulfilled .. "/" .. objectives[4].numRequired.."|r"
-			elseif objectives[3] then
-				maslengo_Feast = "|cffFFFF00"..objectives[3].numFulfilled .. "/" .. objectives[3].numRequired.."|r"
-			elseif objectives[2] then
-				maslengo_Feast = "|cffFFFF00"..objectives[2].numFulfilled .. "/" .. objectives[2].numRequired.."|r"
-			elseif objectives[1] then
-				maslengo_Feast = "|cffFFFF00"..objectives[1].numFulfilled .. "/" .. objectives[1].numRequired.."|r"
-			end
-		end
-	end
-	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	local questIDWB = 65143
 	local maslengoWB = C_QuestLog.IsQuestFlaggedCompleted(questIDWB)
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	Octo_ToDo_DragonflyLevels[curGUID] = Octo_ToDo_DragonflyLevels[curGUID] or {}
-	local collect = Octo_ToDo_DragonflyLevels[curGUID]
-	collect.maslengo_3kREP = maslengo_3kREP
-	collect.maslengo_Feast = maslengo_Feast
+	local questID = 66042
+	local maslengoZM = ""
+	if C_QuestLog.IsComplete(questID) == true then maslengoZM = 100 --100(можно сдать)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(questID) == true then maslengoZM = true --true(сделан)
+	elseif C_QuestLog.IsQuestFlaggedCompleted(questID) == false and C_QuestLog.IsOnQuest(questID) == false then maslengoZM = false --false (не сделан и нет квеста)
+	elseif C_QuestLog.IsComplete(questID) == false and C_QuestLog.IsOnQuest(questID) == true then
+		maslengoZM = GetQuestProgressBarPercent(questID) --не сделан и есть квест
+	end
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	local questIDanima1k = 61982
+	if curActivCov == 1 then questIDanima1k = 61982 --Кирии
+	elseif curActivCov == 3 then questIDanima1k = 61984 --Ночной народец
+	elseif curActivCov == 4 then questIDanima1k = 61983 --Некролорды
+	elseif curActivCov == 2 then questIDanima1k = 61981 --Вентиры
+	end
+	local maslengoanima1k = C_QuestLog.IsQuestFlaggedCompleted(questIDanima1k)
+	if maslengoanima1k == false and C_QuestLog.IsOnQuest(questIDanima1k) then
+		local objectives = C_QuestLog.GetQuestObjectives(questIDanima1k)
+		if objectives and objectives[1] then
+			maslengoanima1k = "|cffFFFF00"..objectives[1].numFulfilled .. "/" .. objectives[1].numRequired.."|r"
+		end
+	end
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Octo_ToDo_ShadowlandsLevels[curGUID] = Octo_ToDo_ShadowlandsLevels[curGUID] or {}
+	local collect = Octo_ToDo_ShadowlandsLevels[curGUID]
 	collect.maslengoWB = maslengoWB
+	collect.maslengoZM = maslengoZM
+	collect.maslengoanima1k = maslengoanima1k
 end
 function OctoMoneyUpdate()
-	--local curActivCov = C_Covenants.GetActiveCovenantID() --ВЫКЛ
-	--local UnitLevel = UnitLevel("PLAYER") --ВЫКЛ
-	--if curActivCov == 0 --[[or UnitLevel < 60]] then return end --ВЫКЛ
+	local curActivCov = C_Covenants.GetActiveCovenantID() --ВЫКЛ
+	local UnitLevel = UnitLevel("PLAYER") --ВЫКЛ
+	if curActivCov == 0 --[[or UnitLevel < 60]] then return end --ВЫКЛ
 	local curGUID = UnitGUID("PLAYER")
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	local Money = GetMoney()/10000
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	Octo_ToDo_DragonflyLevels[curGUID] = Octo_ToDo_DragonflyLevels[curGUID] or {}
-	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	Octo_ToDo_ShadowlandsLevels[curGUID] = Octo_ToDo_ShadowlandsLevels[curGUID] or {}
+	local collect = Octo_ToDo_ShadowlandsLevels[curGUID]
 	collect.Money = Money
 end
 function OctoAllCurrency()
-	--local curActivCov = C_Covenants.GetActiveCovenantID() --ВЫКЛ
-	--local UnitLevel = UnitLevel("PLAYER") --ВЫКЛ
-	--if curActivCov == 0 --[[or UnitLevel < 60]] then return end --ВЫКЛ
+	local curActivCov = C_Covenants.GetActiveCovenantID() --ВЫКЛ
+	local UnitLevel = UnitLevel("PLAYER") --ВЫКЛ
+	if curActivCov == 0 --[[or UnitLevel < 60]] then return end --ВЫКЛ
 	local curGUID = UnitGUID("PLAYER")
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	local currencyInfoCosmicFlux = C_CurrencyInfo.GetCurrencyInfo(2009)--CenterLines8 Космический ветер - 2009
@@ -363,8 +384,8 @@ function OctoAllCurrency()
 	local currencyInfoHonor = C_CurrencyInfo.GetCurrencyInfo(1792)--CenterLines15 Честь - 1792
 	local Honor = currencyInfoHonor.quantity
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	Octo_ToDo_DragonflyLevels[curGUID] = Octo_ToDo_DragonflyLevels[curGUID] or {}
-	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	Octo_ToDo_ShadowlandsLevels[curGUID] = Octo_ToDo_ShadowlandsLevels[curGUID] or {}
+	local collect = Octo_ToDo_ShadowlandsLevels[curGUID]
 	collect.CosmicFlux = CosmicFlux
 	collect.SoulCinders = SoulCinders
 	collect.SoulAsh = SoulAsh
@@ -376,24 +397,24 @@ end
 function OctoilvlStr()
 	local curActivCov = C_Covenants.GetActiveCovenantID() --ВЫКЛ
 	local UnitLevel = UnitLevel("PLAYER") --ВЫКЛ
-	--if curActivCov == 0 --[[or UnitLevel < 60]] then return end --ВЫКЛ
+	if curActivCov == 0 --[[or UnitLevel < 60]] then return end --ВЫКЛ
 	local curGUID = UnitGUID("PLAYER")
 	------------------------------------------------------------------------------------------------------------------------
 	local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 	--local ilvlStr = format("|cff%s%.1f|r",avgItemLevelEquipped >= 213 and "00ff00" or avgItemLevelEquipped >= 200 and "ffff00" or "ff0000",avgItemLevelEquipped)
 	local ilvlStr = avgItemLevelEquipped or 0
 	------------------------------------------------------------------------------------------------------------------------
-	Octo_ToDo_DragonflyLevels[curGUID] = Octo_ToDo_DragonflyLevels[curGUID] or {}
-	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	Octo_ToDo_ShadowlandsLevels[curGUID] = Octo_ToDo_ShadowlandsLevels[curGUID] or {}
+	local collect = Octo_ToDo_ShadowlandsLevels[curGUID]
 	collect.ilvlStr = ilvlStr or 0
 end
-function Octo_ToDo_DragonflyAddDataToAltFrame()
+function Octo_ToDo_ShadowlandsAddDataToAltFrame()
 	local curGUID = UnitGUID("PLAYER")
 	local otstyp = 7
 	local UnitLevel = UnitLevel("PLAYER")
-	Octo_ToDo_DragonflyAltFrame.AllCharFrames = {}
+	Octo_ToDo_ShadowlandsAltFrame.AllCharFrames = {}
 	local sorted = {}
-	for curCharGUID, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
+	for curCharGUID, CharInfo in pairs(Octo_ToDo_ShadowlandsLevels) do
 		sorted[#sorted+1] = CharInfo
 	end
 	sort(sorted,function(a,b)
@@ -412,9 +433,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 		local curName = nil
 		if CharInfo.Name == nil then curName = "UnLogged Char" else curName = CharInfo.Name end
 		local CurCharFrame
-		if not Octo_ToDo_DragonflyAltFrame[curCharGUID] then
-			Octo_ToDo_DragonflyAltFrame[curCharGUID] = CreateFrame("FRAME", nil, Octo_ToDo_DragonflyAltFrame)
-			CurCharFrame = Octo_ToDo_DragonflyAltFrame[curCharGUID]
+		if not Octo_ToDo_ShadowlandsAltFrame[curCharGUID] then
+			Octo_ToDo_ShadowlandsAltFrame[curCharGUID] = CreateFrame("FRAME", nil, Octo_ToDo_ShadowlandsAltFrame)
+			CurCharFrame = Octo_ToDo_ShadowlandsAltFrame[curCharGUID]
 			CurCharFrame:SetPoint("BOTTOM", 0, 0)
 			CurCharFrame.BG = CurCharFrame:CreateTexture(nil,"BACKGROUND")
 			CurCharFrame.BG:Hide()
@@ -469,17 +490,17 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			CurCharFrame.CenterLines8BG:SetAllPoints(CurCharFrame.CenterLines8)
 			CurCharFrame.CenterLines8BG:SetColorTexture(ColorVenthyrR,ColorVenthyrG,ColorVenthyrB,0.3)
 		else
-			CurCharFrame = Octo_ToDo_DragonflyAltFrame[curCharGUID]
+			CurCharFrame = Octo_ToDo_ShadowlandsAltFrame[curCharGUID]
 		end
 		------------------------------------------------------------------------------------------------------------------------
 		CharInfo.GUID = curCharGUID
 		if CharInfo.Anima == nil then CharInfo.Anima = {NightFae = 0, Venthyr = 0, Necrolord = 0, Kyrian = 0} end
 		CurCharFrame:SetSize(curWidth, curHeight)
-		Octo_ToDo_DragonflyAltFrame:SetBackdropBorderColor(0, 0, 0, 1)
-		Octo_ToDo_DragonflyAltFrame:SetBackdropColor(14/255, 14/255, 14/255, 0.80)
-		if #Octo_ToDo_DragonflyAltFrame.AllCharFrames == 0 then CurCharFrame:SetPoint("TOPRIGHT", 0, 0)
-		else CurCharFrame:SetPoint("TOPRIGHT", Octo_ToDo_DragonflyAltFrame.AllCharFrames[#Octo_ToDo_DragonflyAltFrame.AllCharFrames], "TOPLEFT", 0, 0) end
-		Octo_ToDo_DragonflyAltFrame.AllCharFrames[#Octo_ToDo_DragonflyAltFrame.AllCharFrames + 1] = CurCharFrame
+		Octo_ToDo_ShadowlandsAltFrame:SetBackdropBorderColor(0, 0, 0, 1)
+		Octo_ToDo_ShadowlandsAltFrame:SetBackdropColor(14/255, 14/255, 14/255, 0.80)
+		if #Octo_ToDo_ShadowlandsAltFrame.AllCharFrames == 0 then CurCharFrame:SetPoint("TOPRIGHT", 0, 0)
+		else CurCharFrame:SetPoint("TOPRIGHT", Octo_ToDo_ShadowlandsAltFrame.AllCharFrames[#Octo_ToDo_ShadowlandsAltFrame.AllCharFrames], "TOPLEFT", 0, 0) end
+		Octo_ToDo_ShadowlandsAltFrame.AllCharFrames[#Octo_ToDo_ShadowlandsAltFrame.AllCharFrames + 1] = CurCharFrame
 		local curTranfAnima = 0
 		local curAnimaKyrian = CharInfo.Anima.Kyrian or 0
 		if curAnimaKyrian < 1000 then curAnimaKyrian = 0 else curAnimaKyrian = (math.floor((curAnimaKyrian)/1000))*1000 end
@@ -494,9 +515,9 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 		TotalTransAnima = TotalTransAnima + curTranfAnima
 		------------------------------------------------------------------------------------------------------------------------
 		local curMoney = 0
-		--if curServer == CharInfo.curServer and CharInfo.Money ~= 0 then curMoney = CharInfo.Money end
+		if curServer == CharInfo.curServer and CharInfo.Money ~= 0 then curMoney = CharInfo.Money end
 		--------print (TotalMoney + curMoney, TotalMoney, curMoney, CharInfo.Name, CharInfo.curServer)
-		--TotalMoney = TotalMoney + curMoney
+		TotalMoney = TotalMoney + curMoney
 		------------------------------------------------------------------------------------------------------------------------
 		local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 		------------------------------------------------------------------------------------------------------------------------
@@ -527,7 +548,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 		CurCharFrame.DeleteButton:SetSize(16, 10)
 		CurCharFrame.DeleteButton:SetPoint("TOP", CurCharFrame, "BOTTOM", 0, -4)
 		CurCharFrame.DeleteButton:SetBackdrop({
-				edgeFile = "Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\border\\01 Octo.tga", --Interface/Addons/Octo_ToDo_Dragonfly/Media/border/01 Octo.tga --Interface/Buttons/white8x8
+				edgeFile = "Interface\\Addons\\Octo_ToDo_Shadowlands\\Media\\border\\01 Octo.tga", --Interface/Addons/Octo_ToDo_Shadowlands/Media/border/01 Octo.tga --Interface/Buttons/white8x8
 				edgeSize = 1,
 		})
 		CurCharFrame.DeleteButton:SetBackdropBorderColor(1, 0, 0, 0)
@@ -549,10 +570,10 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 				self:SetBackdropBorderColor(1, 0, 0, 0.5)
 				self.icon:SetVertexColor(1,0,0,0.5)
 		end)
-		CurCharFrame.DeleteButton:SetScript("OnClick", function() Octo_ToDo_DragonflyDeleteChar(curCharGUID) end)
+		CurCharFrame.DeleteButton:SetScript("OnClick", function() Octo_ToDo_ShadowlandsDeleteChar(curCharGUID) end)
 		local t = CurCharFrame.DeleteButton:CreateTexture(nil,"BACKGROUND")
 		CurCharFrame.DeleteButton.icon = t
-		t:SetTexture("Interface\\Addons\\Octo_ToDo_Dragonfly\\Media\\close.tga")
+		t:SetTexture("Interface\\Addons\\Octo_ToDo_Shadowlands\\Media\\close.tga")
 		t:SetVertexColor(1,1,1,1)
 		t:SetAllPoints(CurCharFrame.DeleteButton)
 		------------------------------------------------------------------------------------------------------------------------
@@ -608,34 +629,34 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 		if CharInfo.Honor == 0 or CharInfo.Honor == nil then CurCharFrame.CenterLines15:SetTextColor(grayR,grayG,grayB,grayA) end
 		if (CharInfo.Honor) > 10000 then CurCharFrame.CenterLines15:SetTextColor(1,1,0,1) end
 		--16
-		CurCharFrame.CenterLines16:SetText(CharInfo.maslengo_3kREP or NONE)
-		--16
-		CurCharFrame.CenterLines17:SetText(CharInfo.maslengo_Faest or NONE)
+		--CurCharFrame.CenterLines16:SetText(CharInfo.maslengoZM)
+		CurCharFrame.CenterLines16:SetText("NO DATA")
+		if CharInfo.maslengoZM == nil then
+			CurCharFrame.CenterLines16:SetText("NO DATA")
+		elseif CharInfo.maslengoZM then
+			if type(CharInfo.maslengoZM) == "number" then --100
+				if CharInfo.maslengoZM == 100 then
+					CurCharFrame.CenterLines16:SetText("Можно сдать") --true
+					CurCharFrame.CenterLines16:SetTextColor(0,69, 0,38, 1,00, 1) --AF61FF фиолетовый
+				else
+					CurCharFrame.CenterLines16:SetText(CharInfo.maslengoZM.."%") --сейчас выполняется в %
+					CurCharFrame.CenterLines16:SetTextColor(1, 1, 0, 1) --желтый
+					CurCharFrame.CenterLines16:SetFont(curFontTTF, curFontSize13, curFontOutline)
+				end
+			else
+				CurCharFrame.CenterLines16:SetText(DONE)
+				CurCharFrame.CenterLines16:SetTextColor(0, 1, 0, 1)
+			end
+		else
+			CurCharFrame.CenterLines16:SetText(NONE)
+			CurCharFrame.CenterLines16:SetTextColor(1, 0, 0, 1)
+		end
 		--17
-		--[[CurCharFrame.CenterLines17:SetText("NO DATA")
-if CharInfo.maslengo_Feast == nil then
-CurCharFrame.CenterLines17:SetText("NO DATA")
-elseif CharInfo.maslengo_Feast then
-if type(CharInfo.questID_Feast) == "number" then --100
-if CharInfo.maslengo_Feast == 100 then
-CurCharFrame.CenterLines17:SetText("Можно сдать") --true
-CurCharFrame.CenterLines17:SetTextColor(0,69, 0,38, 1,00, 1) --AF61FF фиолетовый
-else
-CurCharFrame.CenterLines17:SetText(CharInfo.maslengo_Feast.."%") --сейчас выполняется в %
-CurCharFrame.CenterLines17:SetTextColor(1, 1, 0, 1) --желтый
-CurCharFrame.CenterLines17:SetFont(curFontTTF, curFontSize13, curFontOutline)
-end
-else
-CurCharFrame.CenterLines17:SetText(DONE)
-CurCharFrame.CenterLines17:SetTextColor(0, 1, 0, 1)
-end
-else
-CurCharFrame.CenterLines17:SetText(NONE)
-CurCharFrame.CenterLines17:SetTextColor(1, 0, 0, 1)
-end]]
+		CurCharFrame.CenterLines17:SetText(CharInfo.maslengoWB and DONE or NONE)
+		if CharInfo.maslengoWB then CurCharFrame.CenterLines17:SetTextColor(0,1,0,1) else CurCharFrame.CenterLines17:SetTextColor(1,0,0,1) end
 		--18
-		CurCharFrame.CenterLines18:SetText(CharInfo.maslengoWB and DONE or NONE)
-		if CharInfo.maslengoWB then CurCharFrame.CenterLines18:SetTextColor(0,1,0,1) else CurCharFrame.CenterLines18:SetTextColor(1,0,0,1) end
+		CurCharFrame.CenterLines18:SetText(CharInfo.maslengoanima1k or NONE)
+		if CharInfo.maslengoanima1k == true then CurCharFrame.CenterLines18:SetTextColor(0,1,0,1) CurCharFrame.CenterLines18:SetText(DONE) else CurCharFrame.CenterLines18:SetTextColor(1,0,0,1) end
 		--Call1
 		if (CharInfo.Call1.tmstpEnd or 0) < GetServerTime() then   --tmstpDayReset
 			CharInfo.Call1.obj = CharInfo.Call2.obj
@@ -721,39 +742,39 @@ end]]
 	local text = (curServerShort):gsub("-", " "):gsub("'", " ")
 	local a, b = strsplit(" ", text)
 	if b then curServerShort = WA_Utf8Sub(a,1)..WA_Utf8Sub(b,1):upper() else curServerShort = WA_Utf8Sub(a,3):lower() end
-	Octo_ToDo_DragonflyAltFrame.TextLeft0:SetText("|T3528288:16:16:::64:64:4:60:4:60|t ".."|cff00A3FF"..CompactNumberFormat(TotalTransAnima).."|r") --Line0? TotalTransAnima
-	Octo_ToDo_DragonflyAltFrame.TextLeft22:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r") --Line21 Money
-	local curAltFrameWidth = #Octo_ToDo_DragonflyAltFrame.AllCharFrames * curWidth/2
-	Octo_ToDo_DragonflyAltFrame:SetSize(curAltFrameWidth*2+curWidthTitle, curHeight*(TotalLines+1)) --Width ширина, Height высота pizda ПИЗДА
+	Octo_ToDo_ShadowlandsAltFrame.TextLeft0:SetText("|T3528288:16:16:::64:64:4:60:4:60|t ".."|cff00A3FF"..CompactNumberFormat(TotalTransAnima).."|r") --Line0? TotalTransAnima
+	Octo_ToDo_ShadowlandsAltFrame.TextLeft22:SetText("|T133784:16:16:::64:64:4:60:4:60|t ".."|cffFFF371"..curServerShort..": "..CompactNumberFormat(TotalMoney).."|r") --Line21 Money
+	local curAltFrameWidth = #Octo_ToDo_ShadowlandsAltFrame.AllCharFrames * curWidth/2
+	Octo_ToDo_ShadowlandsAltFrame:SetSize(curAltFrameWidth*2+curWidthTitle, curHeight*(TotalLines+1)) --Width ширина, Height высота pizda ПИЗДА
 end
-function Octo_ToDo_DragonflyDeleteChar(curGUID)
-	Octo_ToDo_DragonflyLevels[curGUID] = nil
-	for X, Y in pairs(Octo_ToDo_DragonflyAltFrame.AllCharFrames) do
-		if Y == Octo_ToDo_DragonflyAltFrame[curGUID] then
-			Octo_ToDo_DragonflyAltFrame.AllCharFrames[X].parent = nil
-			Octo_ToDo_DragonflyAltFrame.AllCharFrames[X]:Hide()
-			Octo_ToDo_DragonflyAltFrame.AllCharFrames[X] = nil
+function Octo_ToDo_ShadowlandsDeleteChar(curGUID)
+	Octo_ToDo_ShadowlandsLevels[curGUID] = nil
+	for X, Y in pairs(Octo_ToDo_ShadowlandsAltFrame.AllCharFrames) do
+		if Y == Octo_ToDo_ShadowlandsAltFrame[curGUID] then
+			Octo_ToDo_ShadowlandsAltFrame.AllCharFrames[X].parent = nil
+			Octo_ToDo_ShadowlandsAltFrame.AllCharFrames[X]:Hide()
+			Octo_ToDo_ShadowlandsAltFrame.AllCharFrames[X] = nil
 		end
 	end
-	Octo_ToDo_DragonflyAddDataToAltFrame()
+	Octo_ToDo_ShadowlandsAddDataToAltFrame()
 end
-function Octo_ToDo_DragonflyFrameUpdateValues()
+function Octo_ToDo_ShadowlandsFrameUpdateValues()
 	local curGUID = UnitGUID("PLAYER")
 	local curCovID = C_Covenants.GetActiveCovenantID()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curActivCov = C_Covenants.GetActiveCovenantID()
 	--if curCovID ~= nil and curCovID ~= 0 --[[and UnitLevel >= 60]] then
-	local collect = Octo_ToDo_DragonflyLevels[curGUID] or 0
+	local collect = Octo_ToDo_ShadowlandsLevels[curGUID] or 0
 	local curCovName = CovenantNames[curCovID] or 0
 	local curCovLevel = C_CovenantSanctumUI.GetRenownLevel() or 0
 	local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(1813) or 0 --Запасенная анима
 	local curAnimaAmount = currencyInfo.quantity or 0
-	if not collect.NightFae or collect.NightFae == nil  then collect.NightFae = 0 end
+	if not collect.NightFae then collect.NightFae = 0 end
 	if not collect.Venthyr then collect.Venthyr = 0 end
 	if not collect.Necrolord then collect.Necrolord = 0 end
 	if not collect.Kyrian then collect.Kyrian = 0 end
 	if collect.Anima == nil then collect.Anima = {NightFae = 0, Venthyr = 0, Necrolord = 0, Kyrian = 0} or 0 end
-	collect.classColor = classColor or {r = 0.5, g = 0.5, b = 0.5}
+	collect.classColor = classColor
 	collect.Name = curCharName --CharInfo.Name --classColor:WrapTextInColorCode(curCharName)
 	collect.curServer = curServer --CharInfo.curServer --classColor:WrapTextInColorCode(curServer)
 	collect.Class = curClass --CharInfo.Class
@@ -761,9 +782,9 @@ function Octo_ToDo_DragonflyFrameUpdateValues()
 	collect.GUID = curGUID --CharInfo.GUID
 	collect.Faction = UnitFactionGroup("PLAYER") --CharInfo.Faction
 	collect.UnitLevel = UnitLevel --CharInfo.UnitLevel
-	Octo_ToDo_DragonflyLevels[curGUID] = Octo_ToDo_DragonflyLevels[curGUID] or {}
-	Octo_ToDo_DragonflyLevels[curGUID][curCovName] = curCovLevel or 0
-	Octo_ToDo_DragonflyLevels[curGUID].Anima[curCovName] = curAnimaAmount or 0
+	Octo_ToDo_ShadowlandsLevels[curGUID] = Octo_ToDo_ShadowlandsLevels[curGUID] or {}
+	Octo_ToDo_ShadowlandsLevels[curGUID][curCovName] = curCovLevel or 0
+	Octo_ToDo_ShadowlandsLevels[curGUID].Anima[curCovName] = curAnimaAmount or 0
 	--end
 end
 local function checkCharInfo(CharInfo)
@@ -790,68 +811,68 @@ local function checkCharInfo(CharInfo)
 	CharInfo.Call1 = CharInfo.Call1 or {}
 	CharInfo.Call2 = CharInfo.Call2 or {}
 	CharInfo.Call3 = CharInfo.Call3 or {}
-	if CharInfo.maslengo_Feast == nil then CharInfo.maslengo_Feast = false end
+	if CharInfo.maslengoZM == nil then CharInfo.maslengoZM = false end
 	if CharInfo.maslengoWB == nil then CharInfo.maslengoWB = false end
 	if (CharInfo.tmstp or 0) < GetServerTime() then
 		CharInfo.tmstp = tmstpDayReset(7)
-		CharInfo.maslengo_Feast = false
+		CharInfo.maslengoZM = false
 		CharInfo.maslengoWB = false
-		CharInfo.maslengo_3kREP = false
+		CharInfo.maslengoanima1k = false
 	end
 end
-function Octo_ToDo_DragonflyOnEvent(self, event, ...)
+function Octo_ToDo_ShadowlandsOnEvent(self, event, ...)
 	if event == "COVENANT_CHOSEN" then
-		Octo_ToDo_DragonflyFrameUpdateValues()
-		if Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+		Octo_ToDo_ShadowlandsFrameUpdateValues()
+		if Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 		C_Timer.After(1, function()
-				Octo_ToDo_DragonflyFrameUpdateValues()
-				if Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+				Octo_ToDo_ShadowlandsFrameUpdateValues()
+				if Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 		end)
 		C_Timer.After(3, function()
-				Octo_ToDo_DragonflyFrameUpdateValues()
-				if Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+				Octo_ToDo_ShadowlandsFrameUpdateValues()
+				if Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 		end)
-		--elseif event == "COVENANT_CALLINGS_UPDATED" then
-		--Callings(...)
-		if Octo_ToDo_DragonflyAltFrame and Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+	elseif event == "COVENANT_CALLINGS_UPDATED" then
+		Callings(...)
+		if Octo_ToDo_ShadowlandsAltFrame and Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 	elseif event == "QUEST_LOG_UPDATE" then
 		OctoQuestUpdate()
-		if Octo_ToDo_DragonflyAltFrame and Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+		if Octo_ToDo_ShadowlandsAltFrame and Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 	elseif event == "PLAYER_MONEY" then
 		OctoMoneyUpdate()
-		if Octo_ToDo_DragonflyAltFrame and Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+		if Octo_ToDo_ShadowlandsAltFrame and Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 	elseif event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED" then
-		Octo_ToDo_DragonflyFrameUpdateValues()
-		if Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+		Octo_ToDo_ShadowlandsFrameUpdateValues()
+		if Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 		C_Timer.After(1, function()
-				Octo_ToDo_DragonflyFrameUpdateValues()
-				Octo_ToDo_DragonflyAddDataToAltFrame()
-				if Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+				Octo_ToDo_ShadowlandsFrameUpdateValues()
+				Octo_ToDo_ShadowlandsAddDataToAltFrame()
+				if Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 		end)
 	elseif event == "CURRENCY_DISPLAY_UPDATE" then
 		local currencyID = ...
 		if currencyID == 1813 or currencyID == 2009 or currencyID == 1906 or currencyID == 1828 or currencyID == 1979 or currencyID == 1602 or currencyID == 1792 then
-			Octo_ToDo_DragonflyFrameUpdateValues()
+			Octo_ToDo_ShadowlandsFrameUpdateValues()
 			OctoAllCurrency()
-			if Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+			if Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 		end
 	elseif event == "VARIABLES_LOADED" then
-		if Octo_ToDo_DragonflyLevels == nil then Octo_ToDo_DragonflyLevels = {} end
-		if Octo_ToDo_DragonflyVars == nil then Octo_ToDo_DragonflyVars = {} end
-		for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
+		if Octo_ToDo_ShadowlandsLevels == nil then Octo_ToDo_ShadowlandsLevels = {} end
+		if Octo_ToDo_ShadowlandsVars == nil then Octo_ToDo_ShadowlandsVars = {} end
+		for k, CharInfo in pairs(Octo_ToDo_ShadowlandsLevels) do
 			checkCharInfo(CharInfo)
 		end
-		--Octo_ToDo_DragonflyFrameUpdateValues()
+		Octo_ToDo_ShadowlandsFrameUpdateValues()
 		C_Timer.After(1, function()
-				Octo_ToDo_DragonflyCreateAltFrame()
+				Octo_ToDo_ShadowlandsCreateAltFrame()
 		end)
-		local MinimapName = GlobalAddonName.."Minimap"
+		local MinimapName = AddonName.."Minimap"
 		local ldb_icon = ldb:NewDataObject(MinimapName, {
 				type = "data source",
 				text = MinimapName,
 				icon = 3528288,
 				OnClick = function(_, button)
-					Octo_ToDo_DragonflyAltFrame:SetShown(not Octo_ToDo_DragonflyAltFrame:IsShown())
+					Octo_ToDo_ShadowlandsAltFrame:SetShown(not Octo_ToDo_ShadowlandsAltFrame:IsShown())
 				end,
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
@@ -862,29 +883,28 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 					GameTooltip:Hide()
 				end,
 		})
-		Octo_ToDo_DragonflyVars.omb = Octo_ToDo_DragonflyVars.omb or {}
-		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DragonflyVars.omb)
+		Octo_ToDo_ShadowlandsVars.omb = Octo_ToDo_ShadowlandsVars.omb or {}
+		ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_ShadowlandsVars.omb)
 		ldbi:Show(MinimapName)
 	elseif event == "UNIT_INVENTORY_CHANGED" then
 		OctoilvlStr()
-		Octo_ToDo_DragonflyFrameUpdateValues()
-		if Octo_ToDo_DragonflyAltFrame and Octo_ToDo_DragonflyAltFrame:IsShown() then Octo_ToDo_DragonflyAddDataToAltFrame() end
+		Octo_ToDo_ShadowlandsFrameUpdateValues()
+		if Octo_ToDo_ShadowlandsAltFrame and Octo_ToDo_ShadowlandsAltFrame:IsShown() then Octo_ToDo_ShadowlandsAddDataToAltFrame() end
 	elseif event == "PLAYER_LOGIN" then
-		Octo_ToDo_DragonflyFrameUpdateValues()
 		self:RegisterEvent("QUEST_LOG_UPDATE")
 		self:RegisterEvent("PLAYER_MONEY")
-		--self:RegisterEvent("COVENANT_CALLINGS_UPDATED")
+		self:RegisterEvent("COVENANT_CALLINGS_UPDATED")
 		OctoQuestUpdate()
 		OctoMoneyUpdate()
 		OctoAllCurrency()
 		OctoilvlStr()
-		--C_CovenantCallings.RequestCallings()
-		--Callings()
+		C_CovenantCallings.RequestCallings()
+		Callings()
 	end
 end
-Octo_ToDo_DragonflyOnLoad()
+Octo_ToDo_ShadowlandsOnLoad()
 Octo.SlashCommands["RC"] = function()
-	Octo_ToDo_DragonflyAltFrame:SetShown()
+	Octo_ToDo_ShadowlandsAltFrame:SetShown()
 end
 Octo.SlashCommands["rc"] = Octo.SlashCommands["RC"]
 -- SLASH_GSEARCH1 = "/gsearch"
@@ -923,5 +943,5 @@ GOSSIP:SetScript("OnEvent", function(self, event, ...)
 end)
 --local ColorKyrian = CreateColor(1,1,1,1)
 --(KYRIAN_BLUE_COLOR:GetRGB())
---SetAtlas("Dragonfly-landingbutton-kyrian-highlight")
+--SetAtlas("shadowlands-landingbutton-kyrian-highlight")
 
