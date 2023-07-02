@@ -48,6 +48,7 @@ if L then
 	L["Zaralek Cavern"] = true
 	L["Zereth Mortis"] = true
 	L["Bodyguards"] = true
+	L["Storylines"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -90,5 +91,6 @@ if L then
 	L["Zaralek Cavern"] = "Пещера Заралек (10.1.0)"
 	L["Zereth Mortis"] = "Зерет Мортис"
 	L["Bodyguards"] = "Телохранители"
+	L["Storylines"] = "Сюжетные линии"
 end
 

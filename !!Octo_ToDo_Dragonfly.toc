@@ -2,9 +2,9 @@
 ## Title: !!|cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r
 ## Notes: Hello World!
 ## Author: Octo
-## Version: v58.4(10.1.0)(30.06.2023)
+## Version: v58.5(10.1.0)(03.07.2023)
 ## IconTexture: Interface\AddOns\!!Octo_ToDo_Dragonfly\Media\AddonTexture.tga
-## SavedVariables: Octo_ToDo_DragonflyLevels Octo_ToDo_DragonflyVars Octo_ToDo_DragonflyArtifact
+## SavedVariables: Octo_ToDo_DragonflyLevels Octo_ToDo_DragonflyVars Octo_ToDo_DragonflyArtifact Octo_ToDo_DragonflyOther
 
 embeds.xml
 

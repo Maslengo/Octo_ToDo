@@ -1,9 +1,9 @@
 <Bindings>
-	<Binding name = "ReloadUI" category = "!!|T3586268:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r">
+	<Binding name = "ReloadUI" category = "!!|T4644002:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r">
 		<!-- Main_Frame:SetShown(not Main_Frame:IsShown()) -->
 		ReloadUI()
 	</Binding>
-	<Binding name = "MAINMENU_BUTTON" category = "!!|T3586268:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r">
+	<Binding name = "MAINMENU_BUTTON" category = "!!|T4644002:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r">
 		<!-- GameMenuFrame:Show() -->
 		GameMenuFrame:SetShown(not GameMenuFrame:IsShown())
 	</Binding>

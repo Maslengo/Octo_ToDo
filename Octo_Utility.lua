@@ -277,6 +277,7 @@ tinsert(E.modules, function()
 			func_Octo_LoadAddOn("ElvUI")
 			func_Octo_LoadAddOn("ElvUI_Options")
 			func_Octo_LoadAddOn("MRT")
+			-- func_Octo_LoadAddOn("ExRT_Reminder")
 			func_Octo_LoadAddOn("MountsJournal")
 			func_Octo_LoadAddOn("OmniCC")
 			func_Octo_LoadAddOn("OmniCC_Config")
@@ -535,9 +536,9 @@ tinsert(E.modules, function()
 -- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
 -- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
 
-
-
-
+				{itemid = 114108, count = 1},
+				{itemid = 201323, count = 1},
+				{itemid = 204217, count = 1},
 				{itemid = 128315, count = 1},
 				{itemid = 180765, count = 1},
 				{itemid = 186482, count = 1},
@@ -1892,6 +1893,7 @@ tinsert(E.modules, function()
 								local itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, sellPrice, classID, subclassID, bindType, expacID, setID, isCraftingReagent = GetItemInfo(CurrentItemLink)
 								local itemInfo = C_Container.GetContainerItemInfo(myBags, bagSlots)
 								if (classID == 15 and (subclassID == 2 or subclassID == 5 )) -- 2ПЕТЫ  5маунты
+								or (classID == 8 and subclassID)
 								-- or (classID == 15 and (subclassID == 4) and itemQuality == 4 and expacID ~= 7) -- 4сундуки эпик
 								-- or (classID == 9) -- РЕЦЕПТЫ
 								then
@@ -2010,7 +2012,6 @@ tinsert(E.modules, function()
 								v.name:find("Указать на Ральфа мистеру Солнечноцветику.") or
 								v.name:find("cff0000FF")
 								and not IsShiftKeyDown() then
-									print ("NAME")
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print ("|cFF00A3FFAUTO_GOSSIP SELECT:|r |cff00FF00("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t|cFFFF5771"..v.name.."|r")

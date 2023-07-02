@@ -133,8 +133,7 @@ local OctoTable_itemID_Cataloged_Research = {
 	{itemiD = 187350, count = 300},
 }
 local OctoTable_itemID_ALL = {
-	206579, 12811,
-	64527, 201325, 188152, 206046, 158075, 122457, 169223, 174764, 174765, 174759, 174767, 174760, 174766, 174758, 174768, 174756, 174761, 86547, 124124, 173363, 24915, 24916, 24917, 24918, 24919, 49040, 50274, 51316, 51317, 51318, 51319, 51320, 51321, 52200, 52201, 52251, 52252, 52253, 83078, 92426, 92441, 92471, 122284, 122338, 122339, 122340, 122341, 128353, 129940, 129941, 129942, 129943, 129944, 129945, 129946, 129947, 129948, 129949, 129950, 129951, 129954, 129955, 133150, 133151, 133152, 133154, 133159, 133160, 137642, 138486, 138488, 138727, 138728, 138729, 141605, 141652, 143935, 143936, 143937, 143938, 143939, 143940, 143941, 143942, 143943, 143944, 143945, 143946, 143947, 151614, 151615, 166751, 167731, 167732, 167862, 167924, 167925, 167926, 167927, 167928, 167929, 167930, 167932, 168017, 168018, 180817, 183616, 185834, 187997, 187998, 189765, 190189, 190453, 190454, 190455, 190456, 191251, 191264, 191784, 191915, 192130, 192131, 192132, 193201, 193891, 193897, 193898, 193899, 193900, 193901, 193902, 193903, 193904, 193905, 193907, 193909, 193910, 193913, 194039, 194040, 194041, 194054, 194055, 194061, 194062, 194063, 194064, 194066, 194067, 194068, 194072, 194076, 194077, 194078, 194079, 194080, 194081, 194337, 194697, 194698, 194699, 194700, 194702, 194703, 194704, 194708, 197921, 198046, 198395, 198438, 198454, 198510, 198599, 198606, 198607, 198608, 198609, 198610, 198611, 198612, 198613, 198656, 198658, 198659, 198660, 198662, 198663, 198664, 198667, 198669, 198670, 198680, 198682, 198683, 198684, 198685, 198686, 198687, 198690, 198692, 198693, 198696, 198697, 198699, 198702, 198703, 198704, 198710, 198711, 198712, 198789, 198837, 198841, 198863, 198864, 198865, 198866, 198867, 198868, 198869, 198963, 198964, 198965, 198966, 198967, 198968, 198969, 198970, 198971, 198972, 198973, 198974, 198975, 198976, 198977, 198978, 199115, 199122, 199128, 199192, 199197, 199472, 199473, 199474, 199475, 200069, 200070, 200072, 200073, 200095, 200224, 200285, 200287, 200288, 200289, 200300, 200452, 200453, 200454, 200455, 200468, 200513, 200515, 200516, 200609, 200610, 200611, 200652, 200677, 200678, 200686, 200764, 200811, 200846, 200972, 200973, 200974, 200975, 200976, 200977, 200978, 200979, 200980, 200981, 200982, 201003, 201004, 201005, 201006, 201007, 201008, 201009, 201010, 201011, 201012, 201013, 201014, 201015, 201016, 201017, 201018, 201019, 201020, 201023, 201250, 201268, 201269, 201270, 201271, 201272, 201273, 201274, 201275, 201276, 201277, 201278, 201279, 201280, 201281, 201282, 201283, 201284, 201285, 201286, 201287, 201288, 201289, 201300, 201301, 201326, 201352, 201439, 201462, 201700, 201705, 201706, 201708, 201709, 201710, 201711, 201712, 201713, 201714, 201715, 201716, 201717, 201728, 201755, 201756, 201781, 201782, 201817, 201836, 201921, 201922, 201923, 201924, 201991, 202011, 202014, 202016, 202017, 202039, 202052, 202079, 202080, 202091, 202092, 202093, 202094, 202097, 202098, 202142, 202152, 202171, 202172, 202173, 202196, 202371, 202667, 202668, 202669, 202670, 202870, 202871, 202872, 203217, 203220, 203222, 203224, 203430, 203476, 203611, 203612, 203613, 203614, 203615, 203616, 203617, 203618, 203619, 203620, 203622, 203623, 203626, 203627, 203628, 203629, 203630, 203631, 203632, 203633, 203634, 203635, 203636, 203637, 203638, 203639, 203640, 203641, 203642, 203643, 203644, 203645, 203646, 203647, 203648, 203649, 203650, 203681, 203683, 203699, 203700, 203702, 203710, 204075, 204076, 204077, 204078, 204180, 204186, 204187, 204188, 204189, 204190, 204191, 204193, 204194, 204195, 204196, 204215, 204217, 204222, 204224, 204225, 204226, 204227, 204228, 204229, 204230, 204231, 204232, 204233, 204276, 204352, 204359, 204378, 204379, 204380, 204381, 204383, 204403, 204440, 204464, 204469, 204470, 204471, 204475, 204558, 204559, 204560, 204573, 204574, 204575, 204576, 204577, 204578, 204579, 204681, 204682, 204697, 204715, 204717, 204721, 204722, 204723, 204724, 204725, 204726, 204727, 204843, 204850, 204853, 204855, 204985, 204986, 204987, 204988, 204990, 204999, 205001, 205188, 205211, 205212, 205213, 205214, 205216, 205219, 205225, 205249, 205250, 205288, 205347, 205367, 205423, 205878, 205903, 205982, 205984, 205986, 205987, 205988, 205989, 205999, 206019, 206025, 206028, 206030, 206031, 206034, 206035, 206037, 206139, 206140, 206141, 206142, 206143, 206144, 206366,
+	206579, 12811, 187508, 64527, 201325, 188152, 206046, 158075, 122457, 169223, 174764, 174765, 174759, 174767, 174760, 174766, 174758, 174768, 174756, 174761, 86547, 124124, 173363, 24915, 24916, 24917, 24918, 24919, 49040, 50274, 51316, 51317, 51318, 51319, 51320, 51321, 52200, 52201, 52251, 52252, 52253, 83078, 92426, 92441, 92471, 122284, 122338, 122339, 122340, 122341, 128353, 129940, 129941, 129942, 129943, 129944, 129945, 129946, 129947, 129948, 129949, 129950, 129951, 129954, 129955, 133150, 133151, 133152, 133154, 133159, 133160, 137642, 138486, 138488, 138727, 138728, 138729, 141605, 141652, 143935, 143936, 143937, 143938, 143939, 143940, 143941, 143942, 143943, 143944, 143945, 143946, 143947, 151614, 151615, 166751, 167731, 167732, 167862, 167924, 167925, 167926, 167927, 167928, 167929, 167930, 167932, 168017, 168018, 180817, 183616, 185834, 187997, 187998, 189765, 190189, 190453, 190454, 190455, 190456, 191251, 191264, 191784, 191915, 192130, 192131, 192132, 193201, 193891, 193897, 193898, 193899, 193900, 193901, 193902, 193903, 193904, 193905, 193907, 193909, 193910, 193913, 194039, 194040, 194041, 194054, 194055, 194061, 194062, 194063, 194064, 194066, 194067, 194068, 194072, 194076, 194077, 194078, 194079, 194080, 194081, 194337, 194697, 194698, 194699, 194700, 194702, 194703, 194704, 194708, 197921, 198046, 198395, 198438, 198454, 198510, 198599, 198606, 198607, 198608, 198609, 198610, 198611, 198612, 198613, 198656, 198658, 198659, 198660, 198662, 198663, 198664, 198667, 198669, 198670, 198680, 198682, 198683, 198684, 198685, 198686, 198687, 198690, 198692, 198693, 198696, 198697, 198699, 198702, 198703, 198704, 198710, 198711, 198712, 198789, 198837, 198841, 198863, 198864, 198865, 198866, 198867, 198868, 198869, 198963, 198964, 198965, 198966, 198967, 198968, 198969, 198970, 198971, 198972, 198973, 198974, 198975, 198976, 198977, 198978, 199115, 199122, 199128, 199192, 199197, 199472, 199473, 199474, 199475, 200069, 200070, 200072, 200073, 200095, 200224, 200285, 200287, 200288, 200289, 200300, 200452, 200453, 200454, 200455, 200468, 200513, 200515, 200516, 200609, 200610, 200611, 200652, 200677, 200678, 200686, 200764, 200811, 200846, 200972, 200973, 200974, 200975, 200976, 200977, 200978, 200979, 200980, 200981, 200982, 201003, 201004, 201005, 201006, 201007, 201008, 201009, 201010, 201011, 201012, 201013, 201014, 201015, 201016, 201017, 201018, 201019, 201020, 201023, 201250, 201268, 201269, 201270, 201271, 201272, 201273, 201274, 201275, 201276, 201277, 201278, 201279, 201280, 201281, 201282, 201283, 201284, 201285, 201286, 201287, 201288, 201289, 201300, 201301, 201326, 201352, 201439, 201462, 201700, 201705, 201706, 201708, 201709, 201710, 201711, 201712, 201713, 201714, 201715, 201716, 201717, 201728, 201755, 201756, 201781, 201782, 201817, 201836, 201921, 201922, 201923, 201924, 201991, 202011, 202014, 202016, 202017, 202039, 202052, 202079, 202080, 202091, 202092, 202093, 202094, 202097, 202098, 202142, 202152, 202171, 202172, 202173, 202196, 202371, 202667, 202668, 202669, 202670, 202870, 202871, 202872, 203217, 203220, 203222, 203224, 203430, 203476, 203611, 203612, 203613, 203614, 203615, 203616, 203617, 203618, 203619, 203620, 203622, 203623, 203626, 203627, 203628, 203629, 203630, 203631, 203632, 203633, 203634, 203635, 203636, 203637, 203638, 203639, 203640, 203641, 203642, 203643, 203644, 203645, 203646, 203647, 203648, 203649, 203650, 203681, 203683, 203699, 203700, 203702, 203710, 204075, 204076, 204077, 204078, 204180, 204186, 204187, 204188, 204189, 204190, 204191, 204193, 204194, 204195, 204196, 204215, 204217, 204222, 204224, 204225, 204226, 204227, 204228, 204229, 204230, 204231, 204232, 204233, 204276, 204352, 204359, 204378, 204379, 204380, 204381, 204383, 204403, 204440, 204464, 204469, 204470, 204471, 204475, 204558, 204559, 204560, 204573, 204574, 204575, 204576, 204577, 204578, 204579, 204681, 204682, 204697, 204715, 204717, 204721, 204722, 204723, 204724, 204725, 204726, 204727, 204843, 204850, 204853, 204855, 204985, 204986, 204987, 204988, 204990, 204999, 205001, 205188, 205211, 205212, 205213, 205214, 205216, 205219, 205225, 205249, 205250, 205288, 205347, 205367, 205423, 205878, 205903, 205982, 205984, 205986, 205987, 205988, 205989, 205999, 206019, 206025, 206028, 206030, 206031, 206034, 206035, 206037, 206139, 206140, 206141, 206142, 206143, 206144, 206366,
 }
 local OctoTable_itemID_Holiday = {
 	17194, 17195, 17202, 17405, 17685, 17712, 17726, 17727, 18597, 18598, 21191, 21213, 21216, 21267, 21270, 21271, 21310, 21314, 21315, 21327, 21328, 21363, 21519, 21536, 21557, 21558, 21559, 21560, 21561, 21562, 21569, 21570, 21571, 21574, 21576, 21589, 21590, 21591, 21592, 21593, 21595, 21640, 21713, 21714, 21716, 21718, 21747, 21812, 21813, 21816, 21817, 21818, 21819, 21820, 21821, 21822, 21823, 21829, 21830, 21831, 21833, 21960, 21975, 21979, 21980, 21981, 22117, 22119, 22120, 22121, 22122, 22123, 22131, 22132, 22133, 22134, 22135, 22136, 22140, 22141, 22142, 22143, 22144, 22145, 22154, 22155, 22156, 22157, 22158, 22159, 22160, 22161, 22162, 22163, 22164, 22165, 22166, 22167, 22168, 22169, 22170, 22171, 22172, 22173, 22174, 22175, 22176, 22177, 22178, 22218, 22261, 22262, 22263, 22283, 22284, 22285, 22286, 22287, 22288, 22289, 22290, 22291, 22292, 22293, 22294, 22295, 22296, 22297, 22298, 22299, 22300, 23022, 23247, 31880, 31881, 33189, 34191, 34426, 34480, 34684, 35557, 37586, 37710, 37816, 43504, 45072, 46709, 46740, 49909, 49927, 50160, 50161, 54516, 54535, 54537, 67443, 70722, 70931, 70938, 73792, 90883, 90888, 90892, 93626, 104318, 104319, 104323, 104324, 108631, 108632, 108633, 108634, 108635, 116163, 116442, 116443, 116444, 116445, 116648, 116651, 116689, 116690, 116691, 116692, 116757, 116761, 116762, 116763, 116810, 116811, 116812, 116828, 116856, 116888, 116889, 116890, 116891, 117392, 117393, 117394, 128510, 128632, 128643, 128648, 129929, 138990, 139036, 147884, 150366, 150735, 150740, 150747, 150748, 150749, 150750, 151268, 155823, 165657, 167872, 168010, 168011, 172219, 172222, 172223, 172224, 172225, 187422, 187520, 191925, 191937, 192093, 192094,
@@ -146,7 +145,7 @@ local OctoTable_itemID_DFMountsSkins = {
 	192111, 192523, 194034, 194106, 194521, 194549, 194705, 194838, 196961, 196962, 196963, 196964, 196965, 196966, 196967, 196968, 196969, 196970, 196971, 196972, 196973, 196974, 196975, 196976, 196977, 196978, 196979, 196980, 196981, 196982, 196983, 196984, 196985, 196986, 196987, 196988, 196989, 196990, 196991, 196992, 196993, 196994, 196995, 196996, 196997, 196998, 196999, 197000, 197001, 197002, 197003, 197004, 197005, 197006, 197007, 197008, 197009, 197010, 197011, 197012, 197013, 197014, 197015, 197016, 197017, 197018, 197019, 197020, 197021, 197022, 197023, 197090, 197091, 197093, 197094, 197095, 197096, 197097, 197098, 197099, 197100, 197101, 197102, 197103, 197104, 197105, 197106, 197107, 197108, 197109, 197110, 197111, 197112, 197113, 197114, 197115, 197116, 197117, 197118, 197119, 197120, 197121, 197122, 197123, 197124, 197125, 197126, 197127, 197128, 197129, 197130, 197131, 197132, 197133, 197134, 197135, 197136, 197137, 197138, 197139, 197140, 197141, 197142, 197143, 197144, 197145, 197146, 197147, 197148, 197149, 197150, 197151, 197152, 197153, 197154, 197155, 197156, 197346, 197347, 197348, 197349, 197350, 197351, 197352, 197353, 197354, 197355, 197356, 197357, 197358, 197359, 197360, 197361, 197362, 197363, 197364, 197365, 197366, 197367, 197368, 197369, 197370, 197371, 197372, 197373, 197374, 197375, 197376, 197377, 197378, 197379, 197380, 197381, 197382, 197383, 197384, 197385, 197386, 197387, 197388, 197389, 197390, 197391, 197392, 197393, 197394, 197395, 197396, 197397, 197398, 197399, 197400, 197401, 197402, 197403, 197404, 197405, 197406, 197407, 197408, 197577, 197578, 197579, 197580, 197581, 197582, 197583, 197584, 197585, 197586, 197587, 197588, 197589, 197590, 197591, 197592, 197593, 197594, 197595, 197596, 197597, 197598, 197599, 197600, 197601, 197602, 197603, 197604, 197605, 197606, 197607, 197608, 197609, 197610, 197611, 197612, 197613, 197614, 197615, 197616, 197617, 197618, 197619, 197620, 197621, 197622, 197623, 197624, 197625, 197626, 197627, 197628, 197629, 197630, 197634, 197635, 197636, 198438, 198891, 198892, 198893, 198894, 198895, 198896, 198899, 198901, 198902, 198903, 198904, 199192, 201734, 201735, 201736, 201737, 201738, 201739, 201741, 201742, 201743, 201790, 201792, 202102, 202273, 202274, 202275, 202277, 202278, 202279, 202280, 203299, 203300, 203303, 203304, 203306, 203307, 203308, 203309, 203310, 203311, 203312, 203313, 203314, 203315, 203316, 203317, 203318, 203319, 203320, 203321, 203322, 203323, 203324, 203325, 203327, 203328, 203329, 203330, 203331, 203332, 203333, 203334, 203335, 203336, 203337, 203338, 203339, 203340, 203341, 203342, 203343, 203344, 203345, 203346, 203347, 203348, 203349, 203350, 203351, 203352, 203353, 203354, 203355, 203357, 203358, 203359, 203360, 203361, 203362, 203363, 203364, 203365, 204359, 204361, 205226, 205341, 205865, 205876, 206955,
 }
 local OctoTable_QuestID = {
-	49015, 46246, 46666, 38242, 43533, 13183, 24545, 24547, 24548, 24549, 24743, 24748, 24749, 24756, 24757, 32295, 32307, 32309, 32310, 32317, 32324, 32325, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 55509, 55511, 56337, 56339, 64367, 64710, 65143, 65282, 66042, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 71026, 72166, 72167, 72168, 72169, 72170, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 74378, 74568, 74569, 74570, 74771, 74775, 74871, 74905, 75234, 75239, 75390, 75393, 75397, 75459, 75497, 75506, 75516, 75517, 75619, 75620, 75621, 75622, 75665, 75694, 75887, 75888, 75996, 76014, 76015, 76016, 76027, 76081, 76084, 76122, 13183, 24545, 24547, 24548, 24549, 24743, 24748, 24749, 24756, 24757, 32295, 32307, 32309, 32310, 32317, 32324, 32325, 36614, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 55509, 55511, 56337, 56339, 60242, 60243, 60244, 60245, 60246, 60247, 60248, 60249, 60250, 60251, 60252, 60253, 60254, 60255, 60256, 60257, 60646, 60762, 60775, 61075, 61079, 61088, 61103, 61104, 61765, 61813, 61814, 61815, 61816, 61981, 61982, 61983, 61984, 62214, 62234, 62284, 62285, 62286, 62287, 62288, 62631, 62632, 62633, 62634, 62635, 62636, 62637, 62638, 62639, 62640, 62858, 62859, 62860, 62861, 62862, 62863, 62864, 62865, 62866, 62867, 62868, 62869, 63543, 63815, 63816, 63817, 63818, 63822, 63823, 63824, 63825, 63826, 63830, 63949, 63993, 63995, 63996, 63997, 63998, 63999, 64021, 64027, 64044, 64045, 64055, 64056, 64057, 64058, 64059, 64060, 64061, 64152, 64209, 64232, 64233, 64243, 64245, 64246, 64247, 64251, 64256, 64257, 64258, 64263, 64265, 64269, 64270, 64272, 64273, 64276, 64278, 64283, 64284, 64285, 64291, 64300, 64303, 64307, 64313, 64316, 64317, 64318, 64320, 64338, 64339, 64341, 64342, 64343, 64344, 64347, 64348, 64349, 64351, 64354, 64355, 64356, 64357, 64358, 64359, 64360, 64361, 64362, 64363, 64364, 64366, 64367, 64428, 64433, 64434, 64435, 64436, 64439, 64440, 64442, 64455, 64456, 64457, 64470, 64471, 64472, 64522, 64531, 64564, 64565, 64575, 64709, 64710, 64747, 64748, 64749, 64750, 64751, 64752, 64753, 64754, 64755, 64756, 64757, 64828, 65143, 65266, 65282, 66042, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 71026, 72166, 72167, 72168, 72169, 72170, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 74300, 74305, 74306, 74307, 74321, 74322, 74325, 74328, 74329, 74330, 74331, 74332, 74333, 74336, 74337, 74338, 74339, 74341, 74342, 74343, 74344, 74345, 74346, 74347, 74349, 74352, 74378, 74568, 74569, 74570, 74771, 74775, 74871, 74905, 75156, 75222, 75234, 75239, 75267, 75269, 75271, 75274, 75276, 75285, 75292, 75296, 75298, 75314, 75322, 75326, 75334, 75336, 75338, 75340, 75342, 75349, 75353, 75358, 75360, 75364, 75366, 75370, 75390, 75393, 75397, 75441, 75450, 75451, 75454, 75455, 75459, 75461, 75471, 75476, 75478, 75494, 75497, 75506, 75516, 75517, 75576, 75611, 75612, 75619, 75620, 75621, 75622, 75624, 75664, 75665, 75694, 75705, 75888, 75996, 76014, 76015, 76016, 76027, 76081, 76084, 76122, 39246, 34378
+	49015, 46246, 46666, 38242, 43533, 13183, 24545, 24547, 24548, 24549, 24743, 24748, 24749, 24756, 24757, 32295, 32307, 32309, 32310, 32317, 32324, 32325, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 55509, 55511, 56337, 56339, 64367, 64710, 65143, 65282, 66042, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 71026, 72166, 72167, 72168, 72169, 72170, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 74378, 74568, 74569, 74570, 74771, 74775, 74871, 74905, 75234, 75239, 75390, 75393, 75397, 75459, 75497, 75506, 75516, 75517, 75619, 75620, 75621, 75622, 75665, 75694, 75887, 75888, 75996, 76014, 76015, 76016, 76027, 76081, 76084, 76122, 13183, 24545, 24547, 24548, 24549, 24743, 24748, 24749, 24756, 24757, 32295, 32307, 32309, 32310, 32317, 32324, 32325, 36614, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 55509, 55511, 56337, 56339, 60242, 60243, 60244, 60245, 60246, 60247, 60248, 60249, 60250, 60251, 60252, 60253, 60254, 60255, 60256, 60257, 60646, 60762, 60775, 61075, 61079, 61088, 61103, 61104, 61765, 61813, 61814, 61815, 61816, 61981, 61982, 61983, 61984, 62214, 62234, 62284, 62285, 62286, 62287, 62288, 62631, 62632, 62633, 62634, 62635, 62636, 62637, 62638, 62639, 62640, 62858, 62859, 62860, 62861, 62862, 62863, 62864, 62865, 62866, 62867, 62868, 62869, 63543, 63815, 63816, 63817, 63818, 63822, 63823, 63824, 63825, 63826, 63830, 63949, 63993, 63995, 63996, 63997, 63998, 63999, 64021, 64027, 64044, 64045, 64055, 64056, 64057, 64058, 64059, 64060, 64061, 64152, 64209, 64232, 64233, 64243, 64245, 64246, 64247, 64251, 64256, 64257, 64258, 64263, 64265, 64269, 64270, 64272, 64273, 64276, 64278, 64283, 64284, 64285, 64291, 64300, 64303, 64307, 64313, 64316, 64317, 64318, 64320, 64338, 64339, 64341, 64342, 64343, 64344, 64347, 64348, 64349, 64351, 64354, 64355, 64356, 64357, 64358, 64359, 64360, 64361, 64362, 64363, 64364, 64366, 64367, 64428, 64433, 64434, 64435, 64436, 64439, 64440, 64442, 64455, 64456, 64457, 64470, 64471, 64472, 64522, 64531, 64564, 64565, 64575, 64709, 64710, 64747, 64748, 64749, 64750, 64751, 64752, 64753, 64754, 64755, 64756, 64757, 64828, 65143, 65266, 65282, 66042, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 71026, 72166, 72167, 72168, 72169, 72170, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 74300, 74305, 74306, 74307, 74321, 74322, 74325, 74328, 74329, 74330, 74331, 74332, 74333, 74336, 74337, 74338, 74339, 74341, 74342, 74343, 74344, 74345, 74346, 74347, 74349, 74352, 74378, 74568, 74569, 74570, 74771, 74775, 74871, 74905, 75156, 75222, 75234, 75267, 75269, 75271, 75274, 75276, 75285, 75292, 75296, 75298, 75314, 75322, 75326, 75334, 75336, 75338, 75340, 75342, 75349, 75353, 75358, 75360, 75364, 75366, 75370, 75390, 75393, 75397, 75441, 75450, 75451, 75454, 75455, 75459, 75461, 75471, 75476, 75478, 75494, 75497, 75506, 75516, 75517, 75576, 75611, 75612, 75619, 75620, 75621, 75622, 75624, 75664, 75665, 75694, 75705, 75888, 75996, 76014, 76015, 76016, 76027, 76081, 76084, 76122, 39246, 34378
 }
 local OctoTable_SpellID = {
 
@@ -653,6 +652,22 @@ local OctoTable_UniversalQuest = {
 		max = 12,
 	},
 	{
+		name_save = "Storylines",
+		name_quest = "Storylines: ".. L["Zaralek Cavern"],
+		reset = "Once",
+		expansion = "DF",
+		place = "ZaralekCavern",
+		desc = "",
+		questID = {--[[74381, 73076, 72712, 72713, 72545, 73094, 72714, 72715, 73137, 72717, 72975, 75456, 72976, ]] 72977, 72978, 72981, 72873, 72872, 72970, 72980, 72874, 72979, 72973, 72974, 75643, 75644, 74334, 72958, 74375, 72959, 72961, 72962, 75419, 72963, 72964, 72965, 72966, 72908, 72909, 72910, 72911, 72912, 72913, 72914, 72915, 72916, 74494, 72917, 72918, 72919, 72920, 75145, 72987, 75367, 74393, 74538, 74539, 74540, 74542, 74557, 74562, 74563, 72922, 72923, 72924, 72925, 72926, 72928, 72931, 72927, 72929, 72930, 74521, 74522, 74523, 74525, 75018, 75028, 75029, 75417, },
+		max = 67, -- 80-13
+	},
+
+
+
+
+
+
+	{
 		name_save = "Rares",
 		name_quest = "Рарки",
 		reset = "Daily",
@@ -704,7 +719,7 @@ local OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "KeysofLoyalty",
-		name_quest = L["Keys of Loyalty"],
+		name_quest = L["Keys of Loyalty"].." (Локалка)",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -873,6 +888,16 @@ local OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
+		name_save = "CatchingUp",
+		name_quest = "Наверстываем!",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {67100, 67137, 67295, 67564, 69946, 69979, },
+		max = 6
+	},
+	{
 		name_save = "PryingEyeDiscovery",
 		name_quest = "ZM_PryingEyeDiscovery",
 		reset = "Daily",
@@ -1026,6 +1051,16 @@ local OctoTable_UniversalQuest = {
 		max = 17,
 	},
 	{
+		name_save = "Sarkareth",
+		name_quest = "Aberrus, the Shadowed Crucible: Sarkareth",
+		reset = "Once",
+		expansion = "DF",
+		place = "Aberrus",
+		desc = "",
+		questID = {75694, },
+		max = 1,
+	},
+	{
 		name_save = "Excavations",
 		name_quest = "Broken Shore - Excavations",
 		reset = "Once",
@@ -1055,7 +1090,7 @@ local OctoTable_UniversalQuest = {
 		expansion = "",
 		place = "",
 		desc = "",
-		questID = {31752,34774,40753,56042},
+		questID = {31752, 34774, 40753, 56042},
 		max = 1,
 	},
 	{
@@ -1103,6 +1138,26 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 25,
 	},
+
+	{
+		name_save = "SummerFestival",
+		name_quest = "Summer Festival",
+		reset = "Month",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {9330,9331,9332,11581,11584,11732,11734,11735,11736,11737,11738,11739,11740,11741,11742,11743,11744,11745,11746,11747,11749,11750,11751,11752,11753,11754,11755,11756,11757,11758,11759,11760,11761,11762,11763,11835,11836,11837,11838,11839,11840,11841,11842,11843,11844,11845,11846,11847,11848,11849,11850,11851,11852,11853,11854,11855,11856,11857,11858,11859,11860,11862,11863,11933,13440,13442,13443,13444,13445,13446,13447,13449,13493,13494,13495,13496,13497,13498,13499,13500,28910,28912,28913,28915,28916,28921,28923,28924,28927,28930,28931,28933,28943,28946,28947,28949,29030,29031,29036,32497,32498,32499,32500,32501,32502,32503,32509,44570,44571,44572,44573,44574,44575,44576,44577,44580,44582,44614,44624,54736,54739,54742,54745,54747,54750,},
+		max = 125,
+	},
+
+
+
+
+
+
+
+
+
 }
 local function TableConcat(table1, table2)
 	for i=1, #table2 do
@@ -1323,15 +1378,15 @@ local function CheckCompletedByQuestID(self)
 		end
 		if objectives then
 			if objectives[5] then
-				Octopussy = Red_Color..CompactNumberFormat(objectives[5].numFulfilled).."/"..CompactNumberFormat(objectives[5].numRequired).."|r"
+				Octopussy = Red_Color..(objectives[5].numFulfilled).."/"..(objectives[5].numRequired).."|r"
 			elseif objectives[4] then
-				Octopussy = Red_Color..CompactNumberFormat(objectives[4].numFulfilled).."/"..CompactNumberFormat(objectives[4].numRequired).."|r"
+				Octopussy = Red_Color..(objectives[4].numFulfilled).."/"..(objectives[4].numRequired).."|r"
 			elseif objectives[3] then
-				Octopussy = Red_Color..CompactNumberFormat(objectives[3].numFulfilled).."/"..CompactNumberFormat(objectives[3].numRequired).."|r"
+				Octopussy = Red_Color..(objectives[3].numFulfilled).."/"..(objectives[3].numRequired).."|r"
 			elseif objectives[2] then
-				Octopussy = Red_Color..CompactNumberFormat(objectives[2].numFulfilled).."/"..CompactNumberFormat(objectives[2].numRequired).."|r"
+				Octopussy = Red_Color..(objectives[2].numFulfilled).."/"..(objectives[2].numRequired).."|r"
 			elseif objectives[1] then
-				Octopussy = Red_Color..CompactNumberFormat(objectives[1].numFulfilled).."/"..CompactNumberFormat(objectives[1].numRequired).."|r"
+				Octopussy = Red_Color..(objectives[1].numFulfilled).."/"..(objectives[1].numRequired).."|r"
 			end
 		end
 	end
@@ -1498,6 +1553,7 @@ local function checkCharInfo(self)
 	self.Name = self.Name or 0
 	self.needResetDaily = self.needResetDaily or false
 	self.needResetWeekly = self.needResetWeekly or false
+	self.needResetMonth = self.needResetMonth or false
 	self.numQuests = self.numQuests or 0
 	self.numShownEntries = self.numShownEntries or 0
 	self.Possible_Anima = self.Possible_Anima or 0
@@ -1641,6 +1697,24 @@ local function checkCharInfo(self)
 		self.bounty_Legion2_icon = 0
 		self.bounty_Legion3_icon = 0
 	end
+
+	if (self.tmstp_Month or 0) < GetServerTime() then
+		self.tmstp_Month = tmstpDayReset(30)
+		self.needResetMonth = true
+		for k, v in pairs(OctoTable_UniversalQuest) do
+			for q, w in pairs(v) do
+				self["Octopussy_"..v.expansion.."_Month_"..v.desc..v.place..v.name_save.."_name"] = NONE
+				self["Octopussy_"..v.expansion.."_Month_"..v.desc..v.place..v.name_save.."_count"] = NONE
+				self["Octopussy_"..v.expansion.."_Month_"..v.desc..v.place..v.name_save.."_questID"] = NONE
+			end
+		end
+	end
+
+
+
+
+
+
 end
 local function CreateFrameUsableItems_OnEnter(self)
 	self.icon:SetVertexColor(1, 1, 1, 1)
@@ -1784,7 +1858,7 @@ local function CreateFrameUsableItems(itemID, Texture, count, Xpos, Ypos, r, g, 
 	local t = Button:CreateTexture(nil, "BACKGROUND")
 	Button.icon = t
 	t:SetTexture(Texture)
-	t:SetVertexColor(1, 1, 1, 1)
+	--t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(Button)
 	--Button:GetScript("OnEvent")(Button, "BAG_UPDATE" or "TOYS_UPDATED" or "ACTIONBAR_UPDATE_COOLDOWN" or "PLAYER_REGEN_DISABLED" or "PLAYER_REGEN_ENABLED" or "SPELLS_CHANGED" or "SPELL_UPDATE_CHARGES" or "SPELL_UPDATE_COOLDOWN" or "TRAINER_UPDATE")
 	Button:GetScript("OnEvent")(Button, "PLAYER_REGEN_DISABLED" or "PLAYER_REGEN_ENABLED" or "SPELLS_CHANGED" or "SPELL_UPDATE_COOLDOWN")
@@ -1951,6 +2025,7 @@ function Collect_ALL_LoginTime()
 	collect.loginHour = date("%H:%M")
 	collect.needResetWeekly = false
 	collect.needResetDaily = false
+	collect.needResetMonth = false
 end
 function Collect_SL_CovenantAnima()
 	if OctoDev_ShowFunction then
@@ -2806,6 +2881,9 @@ function Collect_ALL_UNIVERSALQuestUpdate()
 		end
 	end
 end
+
+
+
 function Collect_ALL_MoneyUpdate()
 	if OctoDev_ShowFunction then
 		print (Purple_Color.."function: |r".."Collect_ALL_MoneyUpdate"..Random_Color..GetTime().."|r")
@@ -2909,6 +2987,9 @@ function Collect_All_Holiday()
 	if OctoDev_ShowFunction then
 		print (Purple_Color.."function: |r".."Collect_All_Holiday"..Random_Color..GetTime().."|r")
 	end
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyOther
+	collect.Holiday = {}
 	if not IsAddOnLoaded("Blizzard_Calendar") then
 		LoadAddOn("Blizzard_Calendar")
 		Calendar_Toggle()
@@ -2933,7 +3014,13 @@ function Collect_All_Holiday()
 		local title = event.title
 		local startTime = event.startTime
 		local endTime = event.endTime
+
 		if startTime and endTime then
+
+
+
+
+
 			local startTime_year = startTime.year
 			local startTime_month = startTime.month
 			local startTime_monthDay = startTime.monthDay
@@ -2946,9 +3033,23 @@ function Collect_All_Holiday()
 			local endTime_weekday = endTime.weekday
 			local endTime_hour = endTime.hour
 			local endTime_minute = endTime.minute
-			--print (startTime_monthDay, startTime_month, startTime_year, endTime_monthDay, endTime_month, endTime_year)
-			--print (id, title, startTime, endTime)
+			if collect.Holiday[i] == nil then
+				collect.Holiday[i] = {}
+			end
+			collect.Holiday[i].id = id
+			collect.Holiday[i].title = title
+			collect.Holiday[i].startTime = startTime
+			collect.Holiday[i].endTime = endTime
+			collect.Holiday[i].vivod = Yellow_Color..title.."|r до: "..endTime_monthDay.."/"..endTime_month.."/"..endTime_year
+			collect.Holiday[i].endTime = endTime_monthDay.."/"..endTime_month.."/"..endTime_year
+
+
 			if event.sequenceType ~= "END" then
+
+
+
+
+
 				if title and (ShowALL
 					or id == 62
 					or id == 141
@@ -3348,17 +3449,31 @@ function O_otrisovka()
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
+				if CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_questID ~= NONE then
+					VivodLeft = "Storylines: "..func_questName(CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_questID)
+					tooltip[#tooltip+1] = {func_questName(CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_questID)}
+				else
+					VivodLeft = "Storylines: "..L["Zaralek Cavern"]
+				end
+				if CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_count ~= NONE and CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_count ~= "0/80" and CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_count ~= "0/67" then
+					VivodCent = CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_count
+				end
+				return VivodCent, VivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local VivodCent, VivodLeft = "", ""
 				if CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0 then
-					tooltip[#tooltip+1] = {func_itemTexture(204075)..Green_Color..func_itemName_NOCOLOR(204075).."|r", CharInfo.ItemsInBag[204075]..Gray_Color.." ("..CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]..")|r"}
+					tooltip[#tooltip+1] = {func_itemTexture(204075)..Green_Color..func_itemName_NOCOLOR(204075).."|r"..Gray_Color.." LFR, M+1-5".."|r", CharInfo.ItemsInBag[204075]..Gray_Color.." ("..CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]..")|r"}
 				end
 				if CharInfo.ItemsInBag[204076] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204076)..Blue_Color..func_itemName_NOCOLOR(204076).."|r", CharInfo.ItemsInBag[204076]..Gray_Color.." ("..CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]..")|r"}
+					tooltip[#tooltip+1] = {func_itemTexture(204076)..Blue_Color..func_itemName_NOCOLOR(204076).."|r"..Gray_Color.." Normal, M+6-10".."|r", CharInfo.ItemsInBag[204076]..Gray_Color.." ("..CharInfo.CurrencyID[2410].."/"..CharInfo.CurrencyID_maxQuantity[2410]..")|r"}
 				end
 				if CharInfo.ItemsInBag[204077] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204077)..Purple_Color..func_itemName_NOCOLOR(204077).."|r", CharInfo.ItemsInBag[204077]..Gray_Color.." ("..CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]..")|r"}
+					tooltip[#tooltip+1] = {func_itemTexture(204077)..Purple_Color..func_itemName_NOCOLOR(204077).."|r"..Gray_Color.." Heroic, M+11-15".."|r", CharInfo.ItemsInBag[204077]..Gray_Color.." ("..CharInfo.CurrencyID[2411].."/"..CharInfo.CurrencyID_maxQuantity[2411]..")|r"}
 				end
 				if CharInfo.ItemsInBag[204078] >= 1 then
-					tooltip[#tooltip+1] = {func_itemTexture(204078)..Orange_Color..func_itemName_NOCOLOR(204078).."|r", CharInfo.ItemsInBag[204078]..Gray_Color.." ("..CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]..")|r"}
+					tooltip[#tooltip+1] = {func_itemTexture(204078)..Orange_Color..func_itemName_NOCOLOR(204078).."|r"..Gray_Color.." Mythic, M+16+".."|r", CharInfo.ItemsInBag[204078]..Gray_Color.." ("..CharInfo.CurrencyID[2412].."/"..CharInfo.CurrencyID_maxQuantity[2412]..")|r"}
 				end
 				if CharInfo.ItemsInBag[204193] >= 1 then
 					VivodCent = Green_Color..CharInfo.ItemsInBag[204193].." |r"
@@ -5410,16 +5525,18 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_WeekendEvent_name, CharInfo.Octopussy_DF_Weekly_WeekendEvent_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {Blue_Color..L["Zaralek Cavern"].."|r", " "}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_name, CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_name, CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count}
+				tooltip[#tooltip+1] = {WorldBoss_Icon..func_questName(74892), CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_count}
+				tooltip[#tooltip+1] = {func_texturefromIcon(5062638)..func_questName(75694), CharInfo.Octopussy_DF_Once_AberrusSarkareth_count}
+				tooltip[#tooltip+1] = {L["Storylines"], CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_count}
+				tooltip[#tooltip+1] = {func_questName(75665), CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_name, CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_count}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseekingItems_name, CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseekingItems_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents_name, CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Daily_ZaralekCavernRares_name, CharInfo.Octopussy_DF_Daily_ZaralekCavernRares_count}
+				tooltip[#tooltip+1] = {"Events", CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents_count}
+				tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Daily_ZaralekCavernRares_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {Blue_Color..L["The Forbidden Reach"].."|r", " "}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares_name, CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares_count}
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Weekly_StormBoundChest_name, CharInfo.Octopussy_DF_Weekly_StormBoundChest_count}
+				tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares_count}
+				tooltip[#tooltip+1] = {"Запечатанный бурей сундук", CharInfo.Octopussy_DF_Weekly_StormBoundChest_count}
 			end
 			if Octo_ToDo_DragonflyVars.config.LINE_Shadowlands then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
@@ -5481,6 +5598,20 @@ function O_otrisovka()
 					end
 				end
 			end
+
+			for i = 0, #Octo_ToDo_DragonflyOther.Holiday do
+				if i ~= 0 then
+					if Octo_ToDo_DragonflyOther.Holiday[i].id == 341 then
+						if CharInfo.Octopussy_DF_Month_SummerFestival_count ~= NONE then
+							tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Month_SummerFestival_name, CharInfo.Octopussy_DF_Month_SummerFestival_count.."("..func_itemTexture(23247)..CharInfo.ItemsInBag[23247]..")"}
+						end
+					end
+				end
+			end
+
+
+
+
 			if #tooltip ~= 0 then
 				VivodCent = Gray_Color..QUESTS_LABEL.."|r"
 			end
@@ -5518,6 +5649,9 @@ function O_otrisovka()
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local VivodCent, VivodLeft = "", ""
+			if CharInfo.Octopussy_DF_Once_CatchingUp_count ~= DONE then
+				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Once_CatchingUp_name.." /way 60, 72", CharInfo.Octopussy_DF_Once_CatchingUp_count}
+			end
 			if CharInfo.prof1 ~= 0 or CharInfo.prof2 ~= 0 then
 				tooltip[#tooltip+1]= {Empty_Zero(CharInfo.profID_prof1.icon)..Purple_Color..Empty_Zero(CharInfo.profID_prof1.name).."|r"}
 				tooltip[#tooltip+1]= {"Сундуки", CharInfo.profID_prof1.chest.chest_count_prof1.."/"..CharInfo.profID_prof1.chest.questReq}
@@ -5545,7 +5679,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {func_itemTexture(190453)..Gray_Color..func_itemName_NOCOLOR(190453).."|r", Gray_Color..CharInfo.ItemsInBag[190453].."|r"}
 			end
 			if CharInfo.ItemsInBag[191784] >= 1 then
-				tooltip[#tooltip+1] = {func_itemTexture(191784)..func_itemName(191784), CharInfo.ItemsInBag[191784]}
+				tooltip[#tooltip+1] = {func_itemTexture(191784)..func_itemName(191784).." /way 52, 33", CharInfo.ItemsInBag[191784]}
 			else
 				tooltip[#tooltip+1] = {func_itemTexture(191784)..Gray_Color..func_itemName_NOCOLOR(191784).."|r", Gray_Color..CharInfo.ItemsInBag[191784].."|r"}
 			end
@@ -5779,7 +5913,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 	local t = OctoFrame_Close_Button:CreateTexture(nil, "BACKGROUND")
 	OctoFrame_Close_Button.icon = t
 	t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga")
-	t:SetVertexColor(1, 1, 1, 1)
+	----t:SetVertexColor(1, 1, 1, 1)
 	t:SetAllPoints(OctoFrame_Close_Button)
 	OctoFrame_Close_Button:SetScript("OnKeyDown", function(self, key)
 			if key == GetBindingKey("TOGGLEGAMEMENU") then
@@ -5827,7 +5961,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		local t = OctoFrame_Options_Button:CreateTexture(nil, "BACKGROUND")
 		OctoFrame_Options_Button.icon = t
 		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\OptionsButton.tga")
-		t:SetVertexColor(1, 1, 1, 1)
+		----t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_Options_Button)
 	end
 	if not OctoFrame_MarkOfHonor_Button then
@@ -5850,50 +5984,43 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 					if (CharInfo.ItemsInBag[137642] ~= 0) then
 						i = i + 1
-						GameTooltip:AddDoubleLine(func_itemTexture(137642)..CharInfo.ItemsInBag[137642], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						GameTooltip:AddDoubleLine(func_texturefromIcon(1322720)..CharInfo.ItemsInBag[137642], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
 					if CharInfo.ItemsInBag[202196] ~= 0 then
 						i = i + 1
-						GameTooltip:AddDoubleLine(func_itemTexture(202196)..CharInfo.ItemsInBag[202196], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						GameTooltip:AddDoubleLine(func_texturefromIcon(4909720)..CharInfo.ItemsInBag[202196], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
 					if CharInfo.ItemsInBag[86547] ~= 0 then
 						i = i + 1
-						GameTooltip:AddDoubleLine(func_itemTexture(86547)..CharInfo.ItemsInBag[86547], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						GameTooltip:AddDoubleLine(func_texturefromIcon(237230)..CharInfo.ItemsInBag[86547], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
 					if CharInfo.ItemsInBag[183616] ~= 0 then
 						i = i + 1
-						GameTooltip:AddDoubleLine(func_itemTexture(183616)..CharInfo.ItemsInBag[183616], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						GameTooltip:AddDoubleLine(func_texturefromIcon(133291)..CharInfo.ItemsInBag[183616], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
 					if CharInfo.ItemsInBag[166751] ~= 0 then
 						i = i + 1
-						GameTooltip:AddDoubleLine(func_itemTexture(166751)..CharInfo.ItemsInBag[166751], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						GameTooltip:AddDoubleLine(func_texturefromIcon(967526)..CharInfo.ItemsInBag[166751], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
 					if CharInfo.ItemsInBag[122457] ~= 0 then
 						i = i + 1
-						GameTooltip:AddDoubleLine(func_itemTexture(122457)..CharInfo.ItemsInBag[122457], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						GameTooltip:AddDoubleLine(func_texturefromIcon(667491)..CharInfo.ItemsInBag[122457], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+					end
+					if CharInfo.ItemsInBag[190189] ~= 0 then
+					i = i + 1
+					GameTooltip:AddDoubleLine(func_texturefromIcon(519378)..CharInfo.ItemsInBag[190189], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
 					if CharInfo.ItemsInBag[204464] ~= 0 then
 						i = i + 1
-						GameTooltip:AddDoubleLine("$$$"..func_itemTexture(204464)..CharInfo.ItemsInBag[204464], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						GameTooltip:AddDoubleLine("$$$"..func_texturefromIcon(5009042)..CharInfo.ItemsInBag[204464], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
 					if CharInfo.ItemsInBag[201325] ~= 0 then
 						i = i + 1
-						GameTooltip:AddDoubleLine("$$$"..func_itemTexture(201325)..CharInfo.ItemsInBag[201325], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						GameTooltip:AddDoubleLine("$$$"..func_texturefromIcon(4644002)..CharInfo.ItemsInBag[201325], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
-
-
-
-
-
-
-
-					-- if CharInfo.ItemsInBag[190189] ~= 0 then
-					-- i = i + 1
-					-- GameTooltip:AddDoubleLine(func_itemTexture(190189)..CharInfo.ItemsInBag[190189], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-					-- end
 					if CharInfo.ItemsInBag[12811] ~= 0 then
 						i = i + 1
-						GameTooltip:AddDoubleLine("$$$"..func_itemTexture(12811)..CharInfo.ItemsInBag[12811], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						GameTooltip:AddDoubleLine("$$$"..func_texturefromIcon(134122)..CharInfo.ItemsInBag[12811], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
 				end
 				if i == 0 then
@@ -5918,7 +6045,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		local t = OctoFrame_MarkOfHonor_Button:CreateTexture(nil, "BACKGROUND")
 		OctoFrame_MarkOfHonor_Button.icon = t
 		t:SetTexture(1322720)
-		t:SetVertexColor(1, 1, 1, 1)
+		----t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_MarkOfHonor_Button)
 	end
 	if not OctoFrame_QuestFeast_Button then
@@ -5970,8 +6097,77 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		local t = OctoFrame_QuestFeast_Button:CreateTexture(nil, "BACKGROUND")
 		OctoFrame_QuestFeast_Button.icon = t
 		t:SetTexture(629056)
-		t:SetVertexColor(1, 1, 1, 1)
+		----t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_QuestFeast_Button)
+	end
+	if not OctoFrame_Events_Button then
+		OctoFrame_Events_Button = CreateFrame("Button", AddonTitle..GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+		if OctoDev_ShowCreateFrame == true then
+			print ("Events_Button"..Random_Color..GetTime().."|r")
+		end
+		OctoFrame_Events_Button:SetSize(curHeight, curHeight)
+		OctoFrame_Events_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -120)
+		OctoFrame_Events_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+		OctoFrame_Events_Button:SetBackdropBorderColor(0, 0, 0, 1)
+		OctoFrame_Events_Button:SetScript("OnEnter", function(self)
+				local countLines = 0
+				self:SetBackdropBorderColor(0, 0, 0, 1)
+				self.icon:SetVertexColor(1, 0, 0, 1)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+				GameTooltip:ClearLines()
+				GameTooltip:AddDoubleLine(" ", " ")
+
+				for i = 0, #Octo_ToDo_DragonflyOther.Holiday do
+					if i ~= 0 then
+						GameTooltip:AddDoubleLine(Yellow_Color..Octo_ToDo_DragonflyOther.Holiday[i].title.."|r"..Gray_Color..Octo_ToDo_DragonflyOther.Holiday[i].id.."|r",Octo_ToDo_DragonflyOther.Holiday[i].endTime)
+						-- 341 Огненный солнцеворот
+						-- 1383 Добро пожаловать в Санктуарий
+						if Octo_ToDo_DragonflyOther.Holiday[i].id == 341 then
+							for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
+								if k == UnitGUID("PLAYER") then
+									GameTooltip:AddDoubleLine(" ", " ")
+									GameTooltip:AddDoubleLine(" ", " ")
+									GameTooltip:AddDoubleLine(CharInfo.Octopussy_DF_Month_SummerFestival_name, CharInfo.Octopussy_DF_Month_SummerFestival_count.."("..func_itemTexture(23247)..CharInfo.ItemsInBag[23247]..")")
+								end
+							end
+						end
+					end
+				end
+				-- for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
+				-- 	local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+				-- 	if CharInfo.Octopussy_DF_Weekly_Feast_count ~= DONE and CharInfo.UnitLevel >= 60 then
+				-- 		countLines = countLines +1
+				-- 		GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"), CharInfo.Octopussy_DF_Weekly_Feast_count)
+				-- 	end
+				-- 	if CharInfo.ItemsInBag[200652] ~= 0 then
+				-- 		countLines = countLines + 1
+				-- 		GameTooltip:AddDoubleLine("$$$"..func_itemTexture(200652)..CharInfo.ItemsInBag[200652], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+				-- 	end
+				-- end
+				if i == 0 then
+					GameTooltip:AddLine("No Data")
+				end
+				GameTooltip:AddDoubleLine(" ", " ")
+				GameTooltip:Show()
+		end)
+		OctoFrame_Events_Button:SetScript("OnLeave", function(self)
+				self:SetBackdropBorderColor(0, 0, 0, 1)
+				self.icon:SetVertexColor(1, 1, 1, 1)
+				GameTooltip:ClearLines()
+				GameTooltip:Hide()
+		end)
+		OctoFrame_Events_Button:SetScript("OnMouseDown", function(self)
+				self:SetBackdropBorderColor(1, 0, 0, .5)
+				self.icon:SetVertexColor(1, 0, 0, .5)
+		end)
+		OctoFrame_Events_Button:SetScript("OnClick", function()
+				OctoFrame_Main_Frame:Hide()
+		end)
+		local t = OctoFrame_Events_Button:CreateTexture(nil, "BACKGROUND")
+		OctoFrame_Events_Button.icon = t
+		t:SetTexture(237579)--298591)
+		----t:SetVertexColor(1, 1, 1, 1)
+		t:SetAllPoints(OctoFrame_Events_Button)
 	end
 	if not OctoFrame_AbandonAllQuests_Button then
 		local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
@@ -6032,7 +6228,7 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		local t = OctoFrame_AbandonAllQuests_Button:CreateTexture(nil, "BACKGROUND")
 		OctoFrame_AbandonAllQuests_Button.icon = t
 		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\SadKitty.tga")
-		t:SetVertexColor(1, 1, 1, 1)
+		--t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_AbandonAllQuests_Button)
 	end
 	local prof1, prof2 = GetProfessions()
@@ -6084,9 +6280,6 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		f:SetJustifyV("MIDDLE")
 		f:SetJustifyH("LEFT")
 		f:SetTextColor(1, 1, 1, 1)
-		if i == 0 then
-			OctoFrame_Main_Frame[fname]:SetText(Collect_All_Holiday())
-		end
 	end
 	Octo_ToDo_DragonflyAddDataToAltFrame()
 	OctoFrame_Main_Frame:Hide()
@@ -6272,7 +6465,7 @@ function Octo_ToDo_DragonflyAddDataToAltFrame()
 			local t = OctoFrame_Char_FrameDeleteButton:CreateTexture(nil, "BACKGROUND")
 			OctoFrame_Char_FrameDeleteButton.icon = t
 			t:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\closeWHITE.tga")
-			t:SetVertexColor(1, 1, 1, 1)
+			--t:SetVertexColor(1, 1, 1, 1)
 			t:SetAllPoints(OctoFrame_Char_FrameDeleteButton)
 			if curGUID == curCharGUID then
 				OctoFrame_Char_Frame.BG:Show()
@@ -6316,6 +6509,12 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		end
 		if Octo_ToDo_DragonflyArtifact == nil then
 			Octo_ToDo_DragonflyArtifact = {}
+		end
+		if Octo_ToDo_DragonflyOther == nil then
+			Octo_ToDo_DragonflyOther = {}
+		end
+		if Octo_ToDo_DragonflyOther.Holiday == nil then
+			Octo_ToDo_DragonflyOther.Holiday = {}
 		end
 		for classFilename, v in pairs(E.Globals.CLASS_ARTIFACT_DATA) do -- classList
 			for itemID in pairs(E.Globals.CLASS_ARTIFACT_DATA[classFilename]) do -- artifactList
