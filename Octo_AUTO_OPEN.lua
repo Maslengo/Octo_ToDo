@@ -27,6 +27,7 @@ local openableIDs = {
 	-- [174961] = true,
 	-- [166292] = true,
 	-- [173372] = true,
+	[117394] = true,
 	[103624] = true,
 	[205964] = true,
 	[204381] = true,

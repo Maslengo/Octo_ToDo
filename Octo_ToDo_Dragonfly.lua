@@ -148,11 +148,8 @@ local OctoTable_QuestID = {
 	49015, 46246, 46666, 38242, 43533, 13183, 24545, 24547, 24548, 24549, 24743, 24748, 24749, 24756, 24757, 32295, 32307, 32309, 32310, 32317, 32324, 32325, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 55509, 55511, 56337, 56339, 64367, 64710, 65143, 65282, 66042, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 71026, 72166, 72167, 72168, 72169, 72170, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 74378, 74568, 74569, 74570, 74771, 74775, 74871, 74905, 75234, 75239, 75390, 75393, 75397, 75459, 75497, 75506, 75516, 75517, 75619, 75620, 75621, 75622, 75665, 75694, 75887, 75888, 75996, 76014, 76015, 76016, 76027, 76081, 76084, 76122, 13183, 24545, 24547, 24548, 24549, 24743, 24748, 24749, 24756, 24757, 32295, 32307, 32309, 32310, 32317, 32324, 32325, 36614, 40168, 40173, 40786, 40787, 45563, 47148, 55498, 55499, 55509, 55511, 56337, 56339, 60242, 60243, 60244, 60245, 60246, 60247, 60248, 60249, 60250, 60251, 60252, 60253, 60254, 60255, 60256, 60257, 60646, 60762, 60775, 61075, 61079, 61088, 61103, 61104, 61765, 61813, 61814, 61815, 61816, 61981, 61982, 61983, 61984, 62214, 62234, 62284, 62285, 62286, 62287, 62288, 62631, 62632, 62633, 62634, 62635, 62636, 62637, 62638, 62639, 62640, 62858, 62859, 62860, 62861, 62862, 62863, 62864, 62865, 62866, 62867, 62868, 62869, 63543, 63815, 63816, 63817, 63818, 63822, 63823, 63824, 63825, 63826, 63830, 63949, 63993, 63995, 63996, 63997, 63998, 63999, 64021, 64027, 64044, 64045, 64055, 64056, 64057, 64058, 64059, 64060, 64061, 64152, 64209, 64232, 64233, 64243, 64245, 64246, 64247, 64251, 64256, 64257, 64258, 64263, 64265, 64269, 64270, 64272, 64273, 64276, 64278, 64283, 64284, 64285, 64291, 64300, 64303, 64307, 64313, 64316, 64317, 64318, 64320, 64338, 64339, 64341, 64342, 64343, 64344, 64347, 64348, 64349, 64351, 64354, 64355, 64356, 64357, 64358, 64359, 64360, 64361, 64362, 64363, 64364, 64366, 64367, 64428, 64433, 64434, 64435, 64436, 64439, 64440, 64442, 64455, 64456, 64457, 64470, 64471, 64472, 64522, 64531, 64564, 64565, 64575, 64709, 64710, 64747, 64748, 64749, 64750, 64751, 64752, 64753, 64754, 64755, 64756, 64757, 64828, 65143, 65266, 65282, 66042, 66133, 66419, 66860, 66861, 66862, 66863, 66864, 66865, 66866, 66867, 66868, 66870, 66871, 66873, 66874, 66875, 71026, 72166, 72167, 72168, 72169, 72170, 72171, 72646, 72647, 72648, 72649, 72719, 72720, 72721, 72722, 72723, 72724, 72725, 72726, 72727, 72728, 72810, 74300, 74305, 74306, 74307, 74321, 74322, 74325, 74328, 74329, 74330, 74331, 74332, 74333, 74336, 74337, 74338, 74339, 74341, 74342, 74343, 74344, 74345, 74346, 74347, 74349, 74352, 74378, 74568, 74569, 74570, 74771, 74775, 74871, 74905, 75156, 75222, 75234, 75267, 75269, 75271, 75274, 75276, 75285, 75292, 75296, 75298, 75314, 75322, 75326, 75334, 75336, 75338, 75340, 75342, 75349, 75353, 75358, 75360, 75364, 75366, 75370, 75390, 75393, 75397, 75441, 75450, 75451, 75454, 75455, 75459, 75461, 75471, 75476, 75478, 75494, 75497, 75506, 75516, 75517, 75576, 75611, 75612, 75619, 75620, 75621, 75622, 75624, 75664, 75665, 75694, 75705, 75888, 75996, 76014, 76015, 76016, 76027, 76081, 76084, 76122, 39246, 34378
 }
 local OctoTable_SpellID = {
-
 	366252, --Травничество DF
-
-
-
+	264245, -- Алхимия Пандарии
 	20222, -- Гоблин-инженер
 	4036, -- Инженерное дело
 	264479, -- Инженерное дело Запределья
@@ -661,12 +658,6 @@ local OctoTable_UniversalQuest = {
 		questID = {--[[74381, 73076, 72712, 72713, 72545, 73094, 72714, 72715, 73137, 72717, 72975, 75456, 72976, ]] 72977, 72978, 72981, 72873, 72872, 72970, 72980, 72874, 72979, 72973, 72974, 75643, 75644, 74334, 72958, 74375, 72959, 72961, 72962, 75419, 72963, 72964, 72965, 72966, 72908, 72909, 72910, 72911, 72912, 72913, 72914, 72915, 72916, 74494, 72917, 72918, 72919, 72920, 75145, 72987, 75367, 74393, 74538, 74539, 74540, 74542, 74557, 74562, 74563, 72922, 72923, 72924, 72925, 72926, 72928, 72931, 72927, 72929, 72930, 74521, 74522, 74523, 74525, 75018, 75028, 75029, 75417, },
 		max = 67, -- 80-13
 	},
-
-
-
-
-
-
 	{
 		name_save = "Rares",
 		name_quest = "Рарки",
@@ -1138,7 +1129,6 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 25,
 	},
-
 	{
 		name_save = "SummerFestival",
 		name_quest = "Summer Festival",
@@ -1146,18 +1136,12 @@ local OctoTable_UniversalQuest = {
 		expansion = "DF",
 		place = "",
 		desc = "",
-		questID = {9330,9331,9332,11581,11584,11732,11734,11735,11736,11737,11738,11739,11740,11741,11742,11743,11744,11745,11746,11747,11749,11750,11751,11752,11753,11754,11755,11756,11757,11758,11759,11760,11761,11762,11763,11835,11836,11837,11838,11839,11840,11841,11842,11843,11844,11845,11846,11847,11848,11849,11850,11851,11852,11853,11854,11855,11856,11857,11858,11859,11860,11862,11863,11933,13440,13442,13443,13444,13445,13446,13447,13449,13493,13494,13495,13496,13497,13498,13499,13500,28910,28912,28913,28915,28916,28921,28923,28924,28927,28930,28931,28933,28943,28946,28947,28949,29030,29031,29036,32497,32498,32499,32500,32501,32502,32503,32509,44570,44571,44572,44573,44574,44575,44576,44577,44580,44582,44614,44624,54736,54739,54742,54745,54747,54750,},
-		max = 125,
+		questID = {9330,9331,9332,11581,11584,11732,11734,11735,11736,11737,11738,11739,11740,11741,11742,11743,11744,11745,11746,11747,11749,11750,11751,11752,11753,11754,11755,11756,11757,11758,11759,11760,11761,11762,11763,11835,11836,11837,11838,11839,11840,11841,11842,11843,11844,11845,11846,11847,11848,11849,11850,11851,11852,11853,11854,11855,11856,11857,11858,11859,11860,11862,11863,11933,13440,13442,13443,13444,13445,13446,13447,13449,13493,13494,13495,13496,13497,13498,13499,13500,28910,28912,28913,28915,28916,28921,28923,28924,28927,28930,28931,28933,28943,28946,28947,28949,29030,29031,29036,32497,32498,32499,32500,32501,32502,32503,32509,44570,44571,44572,44573,44574,44575,44576,44577,44580,44582,44614,44624,54736,54739,54742,54745,54747,54750,75398,75617,75640,75645,75647,75650,},
+		max = 131,
 	},
-
-
-
-
-
-
-
-
-
+}
+local OctoTable_journalInstanceID = {
+	63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,184,185,186,187,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,246,247,248,249,250,251,252,253,254,255,256,257,258,259,260,261,262,271,272,273,274,275,276,277,278,279,280,281,282,283,284,285,286,302,303,311,312,313,316,317,320,321,322,324,330,362,369,385,457,476,477,536,537,547,556,557,558,559,669,707,716,721,726,727,740,741,742,743,744,745,746,747,748,749,750,751,752,753,754,755,756,757,758,759,760,761,762,767,768,777,786,800,822,860,861,875,900,945,946,959,968,1001,1002,1012,1021,1022,1023,1028,1030,1031,1036,1041,1176,1177,1178,1179,1180,1182,1183,1184,1185,1186,1187,1188,1189,1190,1192,1193,1194,1195,1196,1197,1198,1199,1200,1201,1202,1203,1204,1205,1206
 }
 local function TableConcat(table1, table2)
 	for i=1, #table2 do
@@ -1697,10 +1681,10 @@ local function checkCharInfo(self)
 		self.bounty_Legion2_icon = 0
 		self.bounty_Legion3_icon = 0
 	end
-
 	if (self.tmstp_Month or 0) < GetServerTime() then
 		self.tmstp_Month = tmstpDayReset(30)
 		self.needResetMonth = true
+		self.ItemsInBag[23247] = 0
 		for k, v in pairs(OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
 				self["Octopussy_"..v.expansion.."_Month_"..v.desc..v.place..v.name_save.."_name"] = NONE
@@ -1709,12 +1693,6 @@ local function checkCharInfo(self)
 			end
 		end
 	end
-
-
-
-
-
-
 end
 local function CreateFrameUsableItems_OnEnter(self)
 	self.icon:SetVertexColor(1, 1, 1, 1)
@@ -2881,9 +2859,6 @@ function Collect_ALL_UNIVERSALQuestUpdate()
 		end
 	end
 end
-
-
-
 function Collect_ALL_MoneyUpdate()
 	if OctoDev_ShowFunction then
 		print (Purple_Color.."function: |r".."Collect_ALL_MoneyUpdate"..Random_Color..GetTime().."|r")
@@ -2995,10 +2970,8 @@ function Collect_All_Holiday()
 		Calendar_Toggle()
 		CalendarFrame:Hide()
 	end
-	local ShowALL = false
+	local ShowALL = true
 	local vivod = ""
-	local textureS = "|TInterface\\Addons\\WeakAuras\\PowerAurasMedia\\Auras\\Aura78:0|t"
-	local textureX = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:0|t"
 	local currentCalendarTime = C_DateAndTime.GetCurrentCalendarTime()
 	local month = 0
 	local minute = currentCalendarTime.minute -- The current time in minutes [0-59]
@@ -3014,13 +2987,7 @@ function Collect_All_Holiday()
 		local title = event.title
 		local startTime = event.startTime
 		local endTime = event.endTime
-
 		if startTime and endTime then
-
-
-
-
-
 			local startTime_year = startTime.year
 			local startTime_month = startTime.month
 			local startTime_monthDay = startTime.monthDay
@@ -3038,18 +3005,12 @@ function Collect_All_Holiday()
 			end
 			collect.Holiday[i].id = id
 			collect.Holiday[i].title = title
-			collect.Holiday[i].startTime = startTime
-			collect.Holiday[i].endTime = endTime
+			--collect.Holiday[i].startTime = startTime
+			--collect.Holiday[i].endTime = endTime
 			collect.Holiday[i].vivod = Yellow_Color..title.."|r до: "..endTime_monthDay.."/"..endTime_month.."/"..endTime_year
+			collect.Holiday[i].startTime = startTime_monthDay.."/"..startTime_month.."/"..startTime_year
 			collect.Holiday[i].endTime = endTime_monthDay.."/"..endTime_month.."/"..endTime_year
-
-
 			if event.sequenceType ~= "END" then
-
-
-
-
-
 				if title and (ShowALL
 					or id == 62
 					or id == 141
@@ -3092,7 +3053,72 @@ function Collect_All_Holiday()
 	end
 	return vivod
 end
-function Timer_Legion_Invasion()
+local raidsDiffsNames = {
+	PLAYER_DIFFICULTY1,PLAYER_DIFFICULTY2,PLAYER_DIFFICULTY6,
+}
+ function Collect_All_journalInstance()
+	if OctoDev_ShowFunction then
+		print (Purple_Color.."function: |r".."Collect_All_journalInstance"..Random_Color..GetTime().."|r")
+	end
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDo_DragonflyLevels[curGUID]
+	----------------------------------------------------------------
+   	collect.journalInstance = {}
+	local maslengo = ""
+	local vivod = ""
+	if collect.journalInstance == nil then
+		collect.journalInstance = {}
+	end
+	for _, v in pairs(OctoTable_journalInstanceID) do
+		if collect.journalInstance[v] == nil then
+			collect.journalInstance[v] = {}
+		end
+		local name, description, bgImage, buttonImage1, loreImage, buttonImage2, dungeonAreaMapID, link, shouldDisplayDifficulty, mapID = EJ_GetInstanceInfo(v)
+		-- setmetatable(collect.journalInstance[v], Meta_Table_NONE)
+ 		local res = {}
+		for i=1, GetNumSavedInstances() do
+			local instanceName, instanceID, instanceReset, instanceDifficulty, locked, extended, instanceIDMostSig, isRaid, maxPlayers, difficultyName, totalBosses, defeatedBosses = GetSavedInstanceInfo(i)
+			if instanceName == name then
+			-- print (instanceName, instanceID, instanceReset, instanceDifficulty, locked, extended, instanceIDMostSig, isRaid, maxPlayers, difficultyName, totalBosses, defeatedBosses)
+   			collect.journalInstance[v].name = name or NONE
+			collect.journalInstance[v].description = description or NONE
+			collect.journalInstance[v].bgImage = bgImage or NONE
+			collect.journalInstance[v].buttonImage1 = buttonImage1 or NONE
+			collect.journalInstance[v].loreImage = loreImage or NONE
+			collect.journalInstance[v].buttonImage2 = buttonImage2 or NONE
+			collect.journalInstance[v].dungeonAreaMapID = dungeonAreaMapID or NONE
+			collect.journalInstance[v].link = link or NONE
+			collect.journalInstance[v].shouldDisplayDifficulty = shouldDisplayDifficulty or NONE
+			collect.journalInstance[v].mapID = mapID or NONE
+       			collect.journalInstance[v].instanceName = instanceName or NONE
+			collect.journalInstance[v].instanceID = instanceID or NONE
+			collect.journalInstance[v].instanceReset = instanceReset or NONE
+			collect.journalInstance[v].instanceDifficulty = instanceDifficulty or NONE
+			collect.journalInstance[v].locked = locked or NONE
+			collect.journalInstance[v].extended = extended or NONE
+			collect.journalInstance[v].instanceIDMostSig = instanceIDMostSig or NONE
+			collect.journalInstance[v].isRaid = isRaid or NONE
+			collect.journalInstance[v].maxPlayers = maxPlayers or NONE
+			collect.journalInstance[v].difficultyName = difficultyName or NONE
+			collect.journalInstance[v].totalBosses = totalBosses or NONE
+			collect.journalInstance[v].defeatedBosses = defeatedBosses or NONE
+   		end
+     			-- local inArr = IsInArray(OctoTable_journalInstanceID,instanceName)
+			-- if inArr then
+			-- 	defeatedBosses = locked and defeatedBosses or 0
+ 			-- 	if instancesMaxBossesFix[inArr] then
+			-- 		totalBosses = instancesMaxBossesFix[inArr]
+			-- 	end
+ 			-- 	local _,_,lastBossDefeated = GetSavedInstanceEncounterInfo(i, instancesLastBoss[i] or totalBosses)
+			-- 	if defeatedBosses == 0 and lastBossDefeated then
+			-- 		lastBossDefeated = false
+			-- 	end
+ 			-- 	res[inArr] = format("|cff%s%d/%d",totalBosses==defeatedBosses and "00ff00" or lastBossDefeated and "ffff00" or "ff0000",defeatedBosses,totalBosses)
+			-- end
+		end
+	end
+end
+     function Timer_Legion_Invasion()
 	if OctoDev_ShowFunction then
 		-- print ("Timer_Legion_Invasion"..Random_Color..GetTime().."|r")
 	end
@@ -3718,12 +3744,6 @@ function O_otrisovka()
 				end
 				return VivodCent, VivodLeft
 		end)
-
-
-
-
-
-
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local VivodCent, VivodLeft = "", ""
@@ -5598,20 +5618,17 @@ function O_otrisovka()
 					end
 				end
 			end
-
 			for i = 0, #Octo_ToDo_DragonflyOther.Holiday do
 				if i ~= 0 then
 					if Octo_ToDo_DragonflyOther.Holiday[i].id == 341 then
 						if CharInfo.Octopussy_DF_Month_SummerFestival_count ~= NONE then
-							tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Month_SummerFestival_name, CharInfo.Octopussy_DF_Month_SummerFestival_count.."("..func_itemTexture(23247)..CharInfo.ItemsInBag[23247]..")"}
+							if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+							tooltip[#tooltip+1] = {Blue_Color.."Events".."|r", " "}
+							tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Month_SummerFestival_name, CharInfo.Octopussy_DF_Month_SummerFestival_count.." ("..func_itemTexture(23247)..CharInfo.ItemsInBag[23247]..")"}
 						end
 					end
 				end
 			end
-
-
-
-
 			if #tooltip ~= 0 then
 				VivodCent = Gray_Color..QUESTS_LABEL.."|r"
 			end
@@ -5830,7 +5847,6 @@ function O_otrisovka()
 				CL:SetFont(curFontTTF, curFontSize-1, curFontOutline)
 				VivodCent = (CharInfo.needResetDaily and Red_Color or White_Color)..CharInfo.loginHour.."\n"..CharInfo.loginDay
 			end
-			VivodLeft = Timer_Daily_Reset()..Gray_Color.."Daily Reset|r"
 			return VivodCent, VivodLeft
 	end)
 end
@@ -6116,21 +6132,26 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 				GameTooltip:ClearLines()
 				GameTooltip:AddDoubleLine(" ", " ")
-
+				--local currentDay = date("%d.%m.%Y")
+				GameTooltip:AddDoubleLine(" ", date("%d.%m.%Y"))
+				GameTooltip:AddDoubleLine(" ", " ")
 				for i = 0, #Octo_ToDo_DragonflyOther.Holiday do
 					if i ~= 0 then
-						GameTooltip:AddDoubleLine(Yellow_Color..Octo_ToDo_DragonflyOther.Holiday[i].title.."|r"..Gray_Color..Octo_ToDo_DragonflyOther.Holiday[i].id.."|r",Octo_ToDo_DragonflyOther.Holiday[i].endTime)
+						GameTooltip:AddDoubleLine(Yellow_Color..Octo_ToDo_DragonflyOther.Holiday[i].title.."|r"..Gray_Color..Octo_ToDo_DragonflyOther.Holiday[i].id.."|r",Octo_ToDo_DragonflyOther.Holiday[i].startTime.." - "..Octo_ToDo_DragonflyOther.Holiday[i].endTime)
 						-- 341 Огненный солнцеворот
 						-- 1383 Добро пожаловать в Санктуарий
-						if Octo_ToDo_DragonflyOther.Holiday[i].id == 341 then
-							for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
-								if k == UnitGUID("PLAYER") then
-									GameTooltip:AddDoubleLine(" ", " ")
-									GameTooltip:AddDoubleLine(" ", " ")
-									GameTooltip:AddDoubleLine(CharInfo.Octopussy_DF_Month_SummerFestival_name, CharInfo.Octopussy_DF_Month_SummerFestival_count.."("..func_itemTexture(23247)..CharInfo.ItemsInBag[23247]..")")
-								end
-							end
-						end
+						-- 479 Ярмарка Новолуния
+						-- 613 Бонус за локальные задания
+						-- 1244 PvP-потасовка: разборка Шадо-Пан
+     						-- if Octo_ToDo_DragonflyOther.Holiday[i].id == 341 then
+						-- 	for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
+						-- 		if k == UnitGUID("PLAYER") then
+						-- 			GameTooltip:AddDoubleLine(" ", " ")
+						-- 			GameTooltip:AddDoubleLine(" ", " ")
+						-- 			GameTooltip:AddDoubleLine(CharInfo.Octopussy_DF_Month_SummerFestival_name, CharInfo.Octopussy_DF_Month_SummerFestival_count.."("..func_itemTexture(23247)..CharInfo.ItemsInBag[23247]..")")
+						-- 		end
+						-- 	end
+						-- end
 					end
 				end
 				-- for k, CharInfo in pairs(Octo_ToDo_DragonflyLevels) do
@@ -6280,6 +6301,9 @@ function Octo_ToDo_DragonflyCreateAltFrame()
 		f:SetJustifyV("MIDDLE")
 		f:SetJustifyH("LEFT")
 		f:SetTextColor(1, 1, 1, 1)
+		if i == 0 then
+			OctoFrame_Main_Frame[fname]:SetText(Timer_Daily_Reset()..Gray_Color.."Daily Reset|r")
+		end
 	end
 	Octo_ToDo_DragonflyAddDataToAltFrame()
 	OctoFrame_Main_Frame:Hide()
@@ -6503,7 +6527,12 @@ function Octo_ToDo_DragonflyDeleteChar(curGUID)
 end
 function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 	if event == "VARIABLES_LOADED" and not InCombatLockdown() then
-		if OctoDev_ShowEvents == true then print (Green_Color.."event: |r"..event..Random_Color..SecondsToClock(GetTime()).."|r") end
+			if not IsAddOnLoaded("Blizzard_MacroUI") then
+				--print ("load Blizzard_MacroUI")
+				LoadAddOn("Blizzard_MacroUI")
+				--return
+			end
+   		if OctoDev_ShowEvents == true then print (Green_Color.."event: |r"..event..Random_Color..SecondsToClock(GetTime()).."|r") end
 		if Octo_ToDo_DragonflyVars == nil then
 			Octo_ToDo_DragonflyVars = {}
 		end
@@ -6745,6 +6774,7 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 		Collect_Legion_Artifact()
 		Collect_SL_CovenantAnima()
 		Collect_SL_PossibleAnima()
+		Collect_All_journalInstance()
 		Octo_ToDo_DragonflyCreateAltFrame()
 		Octo_ToDo_DragonflyAddDataToAltFrame()
 		C_Timer.After(1, function()
@@ -6758,8 +6788,6 @@ function Octo_ToDo_DragonflyOnEvent(self, event, ...)
 					end
 				end
 		end)
-
-
 	-- elseif event == "ACTIONBAR_UPDATE_COOLDOWN" and not InCombatLockdown() and OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then
 	-- 	Timer_Legion_Invasion()
 	-- 	Timer_BfA_Invasion()
