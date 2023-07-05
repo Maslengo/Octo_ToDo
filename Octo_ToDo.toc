@@ -2,23 +2,19 @@
 ## Title: |cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v59(10.1.0)(05.07.2023)
+## Version: v59.1(10.1.0)(05.07.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture
 ## SavedVariables: Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther WowheadQuickLinkCfg
 
 embeds.xml
 Octo_ToDo_WowheadQuickLinkConfig.xml
 
+Data\Octo_Globals.lua
 Data\Octo_ArtifactData.lua
-
-
-
-
 
 Octo_Localization.lua
 Octo_ToDo.lua
 Octo_ToDo_CommunityFeast.lua
-Octo_ToDo_LootFrame.lua
 Octo_ToDo_WowheadQuickLink.lua
 Octo_ToDo_WowheadQuickLinkConfig.lua
 Octo_ToDo_WowheadQuickLinkStrategies.lua

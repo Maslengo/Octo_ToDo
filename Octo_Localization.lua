@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
---E.modules = {}
 --------------------------------------------------------------------------------
 local AL3 = LibStub("AceLocale-3.0")
 local debug = false

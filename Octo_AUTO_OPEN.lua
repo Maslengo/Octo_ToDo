@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
---E.modules = {}
 --------------------------------------------------------------------------------
 local Octo_AUTO_OPEN = CreateFrame("Frame", AddonTitle)
 --local Enable_Module = true
@@ -27,15 +26,10 @@ local openableIDs = {
 	-- [174961] = true,
 	-- [166292] = true,
 	-- [173372] = true,
-
-
-[205370] = true,
-[205369] = true,
-[205368] = true,
-[205367] = true,
-
-
-
+	[205370] = true,
+	[205369] = true,
+	[205368] = true,
+	[205367] = true,
 	[90840] = true,
 	[87217] = true,
 	[117394] = true,

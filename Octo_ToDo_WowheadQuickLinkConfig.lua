@@ -51,7 +51,7 @@ local function Hide()
 end
 
 local function SetUrl()
-    WowheadQuickLinkConfig_FinalUrlText:SetText(string.format(E.baseWowheadUrl, WowheadQuickLinkCfg.prefix, "<type>", "<id>", WowheadQuickLinkCfg.suffix))
+    WowheadQuickLinkConfig_FinalUrlText:SetText(string.format(E.Octo_Globals.baseWowheadUrl, WowheadQuickLinkCfg.prefix, "<type>", "<id>", WowheadQuickLinkCfg.suffix))
 end
 SLASH_WOWHEAD_QUICK_LINK1 = "/wql"
 SLASH_WOWHEAD_QUICK_LINK2 = "/wowheadquicklink"

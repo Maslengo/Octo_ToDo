@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-E.Globals = {}
 local Kyri_Color = "|cff6fa8dc"
 local Necr_Color = "|cff93c47d"
 local NFae_Color = "|cffb4a7d6"
@@ -15,7 +14,7 @@ local Green_Color = "|cff4FFF79"
 local Yellow_Color = "|cffFFF371"
 local Purple_Color = "|cffAF61FF"
 local Orange_Color = "|cffFF661A"
-E.Globals.CLASS_ARTIFACT_DATA = {
+E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 	WARRIOR = {
 		-- Стром'кар, Миротворец
 		[128910] = {
@@ -5618,7 +5617,7 @@ E.Globals.CLASS_ARTIFACT_DATA = {
 	EVOKER = {
 	},
 }
-E.Globals.UNLOCK_DATA = {
+E.Octo_Globals.UNLOCK_DATA = {
 	[51791] = {
 		["unlock"] = "Complete the achievement, 'Fisherfriend of the Isles.'",
 		["unlockOCto"] = "Друг рыболовов",

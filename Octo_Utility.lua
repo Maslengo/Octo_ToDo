@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
-E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local function TableConcat(t1,t2)
 	for i=1,#t2 do
@@ -47,7 +46,7 @@ local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScal
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 -- TalkingHeadFrame
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.TalkingHeadFrame then
 			hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
 					self:Hide()
@@ -58,7 +57,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --LootFrame
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.LootFrame then
 			----------------------------------------------------------------------------------------------------------------------------------
 			----------------------------------------------------------------------------------------------------------------------------------
@@ -151,7 +150,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --HideZoneText
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.HideZoneText then
 			ZoneTextFrame:SetScript("OnShow", ZoneTextFrame.Hide);
 			SubZoneTextFrame:SetScript("OnShow", SubZoneTextFrame.Hide);
@@ -210,7 +209,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --Covenant
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.Covenant then
 			CovenantChoiceToast:UnregisterAllEvents()
 			CovenantRenownToast:UnregisterAllEvents()
@@ -219,7 +218,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --UIErrorsFrameScale
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.UIErrorsFrameScale then
 			UIErrorsFrame:SetPoint("TOP", 0, -54)
 			UIErrorsFrame:SetAlpha(0.7)
@@ -230,7 +229,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --RaidBossEmoteFrame
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.RaidBossEmoteFrame then
 			RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_EMOTE")
 			RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_WHISPER")
@@ -253,7 +252,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --CinematicCanceler
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.CinematicCanceler then
 			CinematicFrame:HookScript("OnShow", function(self, ...)
 					if IsModifierKeyDown() then
@@ -273,7 +272,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --BossBanner
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.BossBanner then
 			BossBanner:HookScript("OnShow", function(self, ...)
 					BossBanner:UnregisterEvent("ENCOUNTER_LOOT_RECEIVED")
@@ -294,7 +293,7 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --AnotherAddonsCasual
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AnotherAddonsCasual then
 			func_Octo_LoadAddOn("!BugGrabber")
 			func_Octo_LoadAddOn("BugSack")
@@ -317,7 +316,7 @@ tinsert(E.modules, function()
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --AnotherAddonsRAID
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AnotherAddonsRAID then
 			func_Octo_LoadAddOn("!BugGrabber")
 			func_Octo_LoadAddOn("AddOnSkins")
@@ -361,7 +360,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --CVAR
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.CVar then
 			if isElfUI == true and not InCombatLockdown() then
 				C_Timer.After(1, function()
@@ -549,7 +548,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --USABLEITEMS
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.UsableItems then
 			local UnitLevel = UnitLevel("PLAYER")
 			local className, classFilename, classId = UnitClass("PLAYER")
@@ -1966,7 +1965,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --AUTO GOSSIP
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AutoGossip then
 			if not Octo_AUTO_GOSSIP then
 				Octo_AUTO_GOSSIP = CreateFrame("Frame", AddonTitle)
@@ -2070,7 +2069,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 -- AUTO INPUT DELET
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.InputDelete then
 			local TypeDeleteLine = gsub(DELETE_GOOD_ITEM, "[\r\n]", "@")
 			local void, TypeDeleteLine = strsplit("@", TypeDeleteLine, 2)
@@ -2116,7 +2115,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --ClearChat
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.ClearChat then
 			C_Timer.After(1, function()
 					ChatFrame1:Clear()
@@ -2126,7 +2125,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --AutoSellGrey
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AutoSellGrey then
 			local function OnEvent(self, event)
 				totalPrice = 0
@@ -2181,7 +2180,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --AutoRepair
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AutoRepair then
 			local function OnEvent(self, event)
 				if (CanMerchantRepair()) then
@@ -2233,7 +2232,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --HideErrorMessages
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.HideErrorMessages then
 			local OrigErrHandler = UIErrorsFrame:GetScript("OnEvent")
 			UIErrorsFrame:SetScript("OnEvent", function (self, event, id, err, ...)
@@ -2263,7 +2262,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --SellFrame
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.SellFrame then
 			local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8
 			local OctoFrame_Events = nil
@@ -2530,7 +2529,7 @@ tinsert(E.modules, function()
 		end
 end)
 -- GlobalFadePersist
-tinsert(E.modules, function()
+tinsert(E.Octo_Globals.modules, function()
 	if Octo_ToDoVars.config.GlobalFadePersist then
 		--------------------------------------------------------------------------------
 		C_Timer.After(1, function()

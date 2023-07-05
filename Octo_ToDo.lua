@@ -2906,9 +2906,9 @@ function Collect_All_Transmoge()
 	-- local collect = Octo_ToDoLevels[curGUID]
 	------------
 	local _, playerClass, classID = UnitClass("player")
-	for classFilename, v in pairs(E.Globals.CLASS_ARTIFACT_DATA) do -- classList
-		for itemID in pairs(E.Globals.CLASS_ARTIFACT_DATA[classFilename]) do -- artifactList
-			local artifactData = E.Globals.CLASS_ARTIFACT_DATA[classFilename][itemID]
+	for classFilename, v in pairs(E.Octo_Globals.CLASS_ARTIFACT_DATA) do -- classList
+		for itemID in pairs(E.Octo_Globals.CLASS_ARTIFACT_DATA[classFilename]) do -- artifactList
+			local artifactData = E.Octo_Globals.CLASS_ARTIFACT_DATA[classFilename][itemID]
 			local _, specNameLocale, _, specIcon = GetSpecializationInfoByID(artifactData.specID)
 			for index, data in pairs(artifactData.sets) do
 				local sourceID = data.sourceID
@@ -2960,10 +2960,10 @@ function Collect_All_Transmoge()
 							collect_Artifact.ArtifactNameLocale = ArtifactNameLocale
 							collect_Artifact.specIcon = specIcon
 							collect_Artifact.index = index
-							if E.Globals.UNLOCK_DATA[data.unlock] then
-								local unlock = E.Globals.UNLOCK_DATA[data.unlock].unlock
-								local unlockOCto = E.Globals.UNLOCK_DATA[data.unlock].unlockOCto
-								local unlockAchievementID = E.Globals.UNLOCK_DATA[data.unlock].AchievementID
+							if E.Octo_Globals.UNLOCK_DATA[data.unlock] then
+								local unlock = E.Octo_Globals.UNLOCK_DATA[data.unlock].unlock
+								local unlockOCto = E.Octo_Globals.UNLOCK_DATA[data.unlock].unlockOCto
+								local unlockAchievementID = E.Octo_Globals.UNLOCK_DATA[data.unlock].AchievementID
 								collect_Artifact.unlock = unlock
 								collect_Artifact.unlockOCto = unlockOCto
 								collect_Artifact.unlockAchievementID = unlockAchievementID
@@ -6573,9 +6573,9 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoOther.Holiday == nil then
 			Octo_ToDoOther.Holiday = {}
 		end
-		for classFilename, v in pairs(E.Globals.CLASS_ARTIFACT_DATA) do -- classList
-			for itemID in pairs(E.Globals.CLASS_ARTIFACT_DATA[classFilename]) do -- artifactList
-				local artifactData = E.Globals.CLASS_ARTIFACT_DATA[classFilename][itemID]
+		for classFilename, v in pairs(E.Octo_Globals.CLASS_ARTIFACT_DATA) do -- classList
+			for itemID in pairs(E.Octo_Globals.CLASS_ARTIFACT_DATA[classFilename]) do -- artifactList
+				local artifactData = E.Octo_Globals.CLASS_ARTIFACT_DATA[classFilename][itemID]
 				local _, specNameLocale, _, specIcon = GetSpecializationInfoByID(artifactData.specID)
 				for index, data in pairs(artifactData.sets) do
 					local appearanceID = data.appearanceID
@@ -6704,7 +6704,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 			Octo_ToDoVars.config.LINE_Dragonflight = true
 		end
 		O_otrisovka()
-		for i, func in ipairs(E.modules) do
+		for i, func in ipairs(E.Octo_Globals.modules) do
 			func()
 		end
 		local MinimapName = GlobalAddonName.."Minimap"

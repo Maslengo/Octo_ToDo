@@ -1,6 +1,4 @@
 local GlobalAddonName, E = ...
-E.strategies = {}
-E.altStrategies = {}
 local strategies = {
 	wowhead = {},
 	wowheadAzEs = {},
@@ -16,7 +14,7 @@ local regions = {
 	[5] = "cn"
 }
 
-function E.strategies.GetWowheadUrl(dataSources)
+function E.Octo_Globals.strategies.GetWowheadUrl(dataSources)
 	for _, strategy in pairs(strategies.wowhead) do
 		local id, type = strategy(dataSources)
 		if id and type then
@@ -27,32 +25,32 @@ function E.strategies.GetWowheadUrl(dataSources)
 				typeStr = type:sub(1, 1):upper() .. type:sub(2)
 			end
 			return "Wowhead " .. typeStr,
-			string.format(E.baseWowheadUrl, WowheadQuickLinkCfg.prefix, type, id, WowheadQuickLinkCfg.suffix)
+			string.format(E.Octo_Globals.baseWowheadUrl, WowheadQuickLinkCfg.prefix, type, id, WowheadQuickLinkCfg.suffix)
 		end
 	end
 end
 
-function E.strategies.GetWowheadAzEsUrl(dataSources)
+function E.Octo_Globals.strategies.GetWowheadAzEsUrl(dataSources)
 	for _, strategy in pairs(strategies.wowheadAzEs) do
 		local id = strategy(dataSources)
 		if id then
 			return "Wowhead Azerite Essence",
-			string.format(E.baseWowheadAzEsUrl, WowheadQuickLinkCfg.prefix, id, WowheadQuickLinkCfg.suffix)
+			string.format(E.Octo_Globals.baseWowheadAzEsUrl, WowheadQuickLinkCfg.prefix, id, WowheadQuickLinkCfg.suffix)
 		end
 	end
 end
 
-function E.strategies.GetWowheadTradingPostActivityUrl(dataSources)
+function E.Octo_Globals.strategies.GetWowheadTradingPostActivityUrl(dataSources)
 	for _, strategy in pairs(strategies.wowheadTradingPostActivity) do
 		local id = strategy(dataSources)
 		if id then
 			return "Wowhead Trading Post Activity",
-			string.format(E.baseWowheadTradingPostActivityUrl, WowheadQuickLinkCfg.prefix, id, WowheadQuickLinkCfg.suffix)
+			string.format(E.Octo_Globals.baseWowheadTradingPostActivityUrl, WowheadQuickLinkCfg.prefix, id, WowheadQuickLinkCfg.suffix)
 		end
 	end
 end
 
-function E.strategies.GetArmoryUrl(dataSources)
+function E.Octo_Globals.strategies.GetArmoryUrl(dataSources)
 	for _, strategy in pairs(strategies.armory) do
 		local _, locale, realm, name = strategy(dataSources)
 		if locale and realm and name then
@@ -60,12 +58,12 @@ function E.strategies.GetArmoryUrl(dataSources)
 			elseif realm == "Ревущий-фьорд" then realm = "howling-fjord"
 			elseif realm == "Гордунни" then realm = "Gordunni"
 			end
-			return "Armory", string.format(E.baseArmoryUrl, locale, realm, name)
+			return "Armory", string.format(E.Octo_Globals.baseArmoryUrl, locale, realm, name)
 		end
 	end
 end
 
-function E.altStrategies.GetRaiderIoUrl(dataSources)
+function E.Octo_Globals.altStrategies.GetRaiderIoUrl(dataSources)
 	for _, strategy in pairs(strategies.armory) do
 		local region, _, realm, name = strategy(dataSources)
 		if region and realm and name then
@@ -73,7 +71,7 @@ function E.altStrategies.GetRaiderIoUrl(dataSources)
 			elseif realm == "Ревущий-фьорд" then realm = "howling-fjord"
 			elseif realm == "Гордунни" then realm = "Gordunni"
 			end
-			return "Raider.IO", string.format(E.baseRaiderIoUrl, region, realm, name)
+			return "Raider.IO", string.format(E.Octo_Globals.baseRaiderIoUrl, region, realm, name)
 		end
 	end
 end

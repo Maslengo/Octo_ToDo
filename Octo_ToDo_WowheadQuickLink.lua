@@ -1,9 +1,4 @@
 local GlobalAddonName, E = ...
-E.baseWowheadUrl = "https://%swowhead.com/%s=%s%s"
-E.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
-E.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
-E.baseArmoryUrl = "https://worldofwarcraft.com/%s/character/%s/%s"
-E.baseRaiderIoUrl = "https://raider.io/characters/%s/%s/%s"
 local popupText = "%s Link\nCTRL-C to copy"
 
 local function ShowUrlPopup(header, url)
@@ -27,11 +22,11 @@ local function GetDataSources()
 end
 
 function RunWowheadQuickLink()
-	CreateUrl(GetDataSources(), E.strategies)
+	CreateUrl(GetDataSources(), E.Octo_Globals.strategies)
 end
 
 function RunAlternativeQuickLink()
-	CreateUrl(GetDataSources(), E.altStrategies)
+	CreateUrl(GetDataSources(), E.Octo_Globals.altStrategies)
 end
 StaticPopupDialogs["WowheadQuickLinkUrl"] = {
 	text = popupText,

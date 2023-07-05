@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
--- E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local function TableConcat(t1,t2)
 	for i=1,#t2 do
