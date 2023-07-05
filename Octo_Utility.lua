@@ -65,14 +65,14 @@ tinsert(E.Octo_Globals.modules, function()
 			local Octo_Frame_Loot = nil
 			local Octo_Frame_RCLootCouncil = nil
 			local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
-			do
-				if not OctoFrame_EventFrame then
-					OctoFrame_EventFrame = CreateFrame("FRAME", AddonTitle..GenerateUniqueID())
-				end
-				OctoFrame_EventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-				OctoFrame_EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-				OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED")
-				OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+			if not OctoFrame_EventFrame then
+				OctoFrame_EventFrame = CreateFrame("FRAME", AddonTitle..GenerateUniqueID())
+			end
+			OctoFrame_EventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+			OctoFrame_EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+			OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED")
+			OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+			if not InCombatLockdown() then
 				OctoFrame_EventFrame:SetScript("OnEvent", function(...) Octo_Frame_OnEvent(...) end)
 			end
 			local normal_difficulty = 14
@@ -119,7 +119,7 @@ tinsert(E.Octo_Globals.modules, function()
 			Octo_Frame_RCLootCouncil:SetAttribute("macrotext", "/rc open")
 			--------------------------------------------------------------------------------
 			function Octo_Frame_OnEvent(self, event, ...)
-				if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA" then
+				if (event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA") and not InCombatLockdown() then
 					local difficultyID = select(3, GetInstanceInfo()) or "|cffFF0000-|r"
 					if difficultyID == 14 or difficultyID == 15 or difficultyID == 16 or difficultyID == 17 then
 						if isRCLootCouncil and Octo_Frame_RCLootCouncil then
@@ -295,66 +295,66 @@ end
 --AnotherAddonsCasual
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AnotherAddonsCasual then
-			func_Octo_LoadAddOn("!BugGrabber")
-			func_Octo_LoadAddOn("BugSack")
-			func_Octo_LoadAddOn("AstralKeys")
-			func_Octo_LoadAddOn("AutoTurnIn")
-			func_Octo_LoadAddOn("MountsJournal")
-			func_Octo_LoadAddOn("MountsJournal_ElvUI_Skin")
-			func_Octo_LoadAddOn("HidingBar")
-			func_Octo_LoadAddOn("HidingBar_Options")
-			func_Octo_LoadAddOn("Postal")
-			func_Octo_LoadAddOn("TalentTreeTweaks")
-			func_Octo_LoadAddOn("Simulationcraft")
-			func_Octo_LoadAddOn("SpeedyAutoLoot")
-			func_Octo_LoadAddOn("AdvancedInterfaceOptions")
-			func_Octo_LoadAddOn("Pawn")
-			func_Octo_LoadAddOn("Rarity")
-			func_Octo_LoadAddOn("Rarity_Options")
-			func_Octo_LoadAddOn("Plater")
+			-- func_Octo_LoadAddOn("!BugGrabber")
+			-- func_Octo_LoadAddOn("BugSack")
+			-- func_Octo_LoadAddOn("AstralKeys")
+			-- func_Octo_LoadAddOn("AutoTurnIn")
+			-- func_Octo_LoadAddOn("MountsJournal")
+			-- func_Octo_LoadAddOn("MountsJournal_ElvUI_Skin")
+			-- func_Octo_LoadAddOn("HidingBar")
+			-- func_Octo_LoadAddOn("HidingBar_Options")
+			-- func_Octo_LoadAddOn("Postal")
+			-- func_Octo_LoadAddOn("TalentTreeTweaks")
+			-- func_Octo_LoadAddOn("Simulationcraft")
+			-- func_Octo_LoadAddOn("SpeedyAutoLoot")
+			-- func_Octo_LoadAddOn("AdvancedInterfaceOptions")
+			-- func_Octo_LoadAddOn("Pawn")
+			-- func_Octo_LoadAddOn("Rarity")
+			-- func_Octo_LoadAddOn("Rarity_Options")
+			-- func_Octo_LoadAddOn("Plater")
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --AnotherAddonsRAID
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AnotherAddonsRAID then
-			func_Octo_LoadAddOn("!BugGrabber")
-			func_Octo_LoadAddOn("AddOnSkins")
-			func_Octo_LoadAddOn("AdvancedInterfaceOptions")
-			func_Octo_LoadAddOn("BigWigs")
-			func_Octo_LoadAddOn("BigWigs_Core")
-			func_Octo_LoadAddOn("BigWigs_Options")
-			func_Octo_LoadAddOn("BigWigs_Plugins")
-			func_Octo_LoadAddOn("BigWigs_Aberrus")
-			func_Octo_LoadAddOn("BugSack")
-			func_Octo_LoadAddOn("Details")
-			func_Octo_LoadAddOn("ElvUI_Libraries")
-			func_Octo_LoadAddOn("ElvUI")
-			func_Octo_LoadAddOn("ElvUI_Options")
-			func_Octo_LoadAddOn("MRT")
-			-- func_Octo_LoadAddOn("ExRT_Reminder")
-			func_Octo_LoadAddOn("MountsJournal")
-			func_Octo_LoadAddOn("OmniCC")
-			func_Octo_LoadAddOn("OmniCC_Config")
-			func_Octo_LoadAddOn("OmniCD")
-			func_Octo_LoadAddOn("Parrot")
-			func_Octo_LoadAddOn("Pawn")
-			func_Octo_LoadAddOn("Plater")
-			func_Octo_LoadAddOn("Postal")
-			func_Octo_LoadAddOn("RCLootCouncil")
-			func_Octo_LoadAddOn("SharedMedia")
-			func_Octo_LoadAddOn("SharedMedia_Causese")
-			func_Octo_LoadAddOn("SharedMedia_MyMedia")
-			func_Octo_LoadAddOn("SharedMedia_Naowh")
-			func_Octo_LoadAddOn("Simulationcraft")
-			func_Octo_LoadAddOn("TalentTreeTweaks")
-			func_Octo_LoadAddOn("TrufiGCD")
-			func_Octo_LoadAddOn("WagoAppCompanion")
-			func_Octo_LoadAddOn("WeakAuras")
-			func_Octo_LoadAddOn("WeakAurasArchive")
-			func_Octo_LoadAddOn("WeakAurasModelPaths")
-			func_Octo_LoadAddOn("WeakAurasOptions")
-			func_Octo_LoadAddOn("WeakAurasTemplates")
+			-- func_Octo_LoadAddOn("!BugGrabber")
+			-- func_Octo_LoadAddOn("AddOnSkins")
+			-- func_Octo_LoadAddOn("AdvancedInterfaceOptions")
+			-- func_Octo_LoadAddOn("BigWigs")
+			-- func_Octo_LoadAddOn("BigWigs_Core")
+			-- func_Octo_LoadAddOn("BigWigs_Options")
+			-- func_Octo_LoadAddOn("BigWigs_Plugins")
+			-- func_Octo_LoadAddOn("BigWigs_Aberrus")
+			-- func_Octo_LoadAddOn("BugSack")
+			-- func_Octo_LoadAddOn("Details")
+			-- func_Octo_LoadAddOn("ElvUI_Libraries")
+			-- func_Octo_LoadAddOn("ElvUI")
+			-- func_Octo_LoadAddOn("ElvUI_Options")
+			-- func_Octo_LoadAddOn("MRT")
+			-- -- func_Octo_LoadAddOn("ExRT_Reminder")
+			-- func_Octo_LoadAddOn("MountsJournal")
+			-- func_Octo_LoadAddOn("OmniCC")
+			-- func_Octo_LoadAddOn("OmniCC_Config")
+			-- func_Octo_LoadAddOn("OmniCD")
+			-- func_Octo_LoadAddOn("Parrot")
+			-- func_Octo_LoadAddOn("Pawn")
+			-- func_Octo_LoadAddOn("Plater")
+			-- func_Octo_LoadAddOn("Postal")
+			-- func_Octo_LoadAddOn("RCLootCouncil")
+			-- func_Octo_LoadAddOn("SharedMedia")
+			-- func_Octo_LoadAddOn("SharedMedia_Causese")
+			-- func_Octo_LoadAddOn("SharedMedia_MyMedia")
+			-- func_Octo_LoadAddOn("SharedMedia_Naowh")
+			-- func_Octo_LoadAddOn("Simulationcraft")
+			-- func_Octo_LoadAddOn("TalentTreeTweaks")
+			-- func_Octo_LoadAddOn("TrufiGCD")
+			-- func_Octo_LoadAddOn("WagoAppCompanion")
+			-- func_Octo_LoadAddOn("WeakAuras")
+			-- func_Octo_LoadAddOn("WeakAurasArchive")
+			-- func_Octo_LoadAddOn("WeakAurasModelPaths")
+			-- func_Octo_LoadAddOn("WeakAurasOptions")
+			-- func_Octo_LoadAddOn("WeakAurasTemplates")
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -411,14 +411,14 @@ tinsert(E.Octo_Globals.modules, function()
 						SetCVar("findYourselfMode", 0)
 						SetCVar("floatingCombatTextAllSpellMechanics", 0)
 						SetCVar("floatingCombatTextAuras", 0)
-						SetCVar("floatingCombatTextCombatDamage", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageAllAutos", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageDirectionalScale", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatHealing", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 0) --ТУТ
-						SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
+						SetCVar("floatingCombatTextCombatDamage", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageAllAutos", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageDirectionalScale", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatHealing", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 1) --ТУТ
+						SetCVar("floatingCombatTextCombatLogPeriodicSpells", 1) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
 						SetCVar("floatingCombatTextCombatState", 0) --Проки по центру экрана
 						SetCVar("floatingCombatTextComboPoints", 0)
 						SetCVar("floatingCombatTextDamageReduction", 0)
@@ -429,8 +429,8 @@ tinsert(E.Octo_Globals.modules, function()
 						SetCVar("floatingCombatTextHonorGains", 0)
 						SetCVar("floatingCombatTextLowManaHealth", 0)
 						SetCVar("floatingCombatTextPeriodicEnergyGains", 0)
-						SetCVar("floatingCombatTextPetMeleeDamage", 0) --ТУТ
-						SetCVar("floatingCombatTextPetSpellDamage", 0) --ТУТ
+						SetCVar("floatingCombatTextPetMeleeDamage", 1) --ТУТ
+						SetCVar("floatingCombatTextPetSpellDamage", 1) --ТУТ
 						SetCVar("floatingCombatTextReactives", 0)
 						SetCVar("floatingCombatTextRepChanges", 0)
 						SetCVar("floatingCombatTextSpellMechanics", 0)

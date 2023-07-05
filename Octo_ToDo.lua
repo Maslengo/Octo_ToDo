@@ -3303,14 +3303,14 @@ local function PlaySoundFile_whisper(self)
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\rat.ogg", "Master")
 	elseif self == "woo" then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
-	elseif self == "homyak" then
-		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_homyak.ogg", "Master")
 	elseif self == "ispanci" then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_ispanci.ogg", "Master")
 	elseif self == "kabanchik" then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_kabanchik.ogg", "Master")
-	elseif self == "kabanchik_brigada" then
-		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_kabanchik_brigada.ogg", "Master")
+	-- elseif self == "homyak" then
+	-- 	PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_homyak.ogg", "Master")
+	-- elseif self == "kabanchik_brigada" then
+	-- 	PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_kabanchik_brigada.ogg", "Master")
 	end
 end
 function Octo_ToDoOnLoad()
