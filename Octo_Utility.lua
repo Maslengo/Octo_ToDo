@@ -47,7 +47,7 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------
 -- TalkingHeadFrame
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.TalkingHeadFrame then
+		if Octo_ToDoVars.config.TalkingHeadFrame then
 			hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
 					self:Hide()
 					print(L["|cFF00A3FFTalking head frame|r |cffFF4C4Fcanceled.|r"])
@@ -58,7 +58,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --HideObjectiveTracker
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.HideObjectiveTracker then
+		if Octo_ToDoVars.config.HideObjectiveTracker then
 			ObjectiveTrackerFrame:Hide()
 		end
 end)
@@ -66,7 +66,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --HideZoneText
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.HideZoneText then
+		if Octo_ToDoVars.config.HideZoneText then
 			ZoneTextFrame:SetScript("OnShow", ZoneTextFrame.Hide);
 			SubZoneTextFrame:SetScript("OnShow", SubZoneTextFrame.Hide);
 			-- ZoneTextFrame:HookScript("OnShow", function(self, ...)
@@ -114,35 +114,6 @@ tinsert(E.modules, function()
 						end
 					end
 			end)
-			if not IsAddOnLoaded("Blizzard_MajorFactions") then
-				--print ("load Blizzard_MajorFactions")
-				LoadAddOn("Blizzard_MajorFactions")
-				return
-			end
-			if MajorFactionRenownFrame then
-				HideUIPanel(MajorFactionRenownFrame)
-				print ("MajorFactionRenownFrame SHOW")
-			end
-			MajorFactionRenownFrame:HookScript("OnShow", function(self, ...)
-					MajorFactionRenownFrame:Hide()
-					print ("MajorFactionRenownFrame:Hide() OnShow")
-			end)
-			MajorFactionRenownFrame:HookScript("OnEvent", function(self, ...)
-					MajorFactionRenownFrame:Hide()
-					print ("MajorFactionRenownFrame:Hide() OnEvent")
-			end)
-			MajorFactionsRenownToast:HookScript("OnShow", function(self, ...)
-					MajorFactionsRenownToast:Hide()
-					print ("MajorFactionsRenownToast:Hide() OnShow")
-			end)
-			MajorFactionsRenownToast:HookScript("OnEvent", function(self, ...)
-					MajorFactionsRenownToast:Hide()
-					print ("MajorFactionsRenownToast:Hide() OnEvent")
-			end)
-			PlayBanner.RenownLabel:HookScript("OnShow", function(self, ...)
-					PlayBanner.RenownLabel:Hide()
-					print ("PlayBanner.RenownLabel:Hide() OnShow")
-			end)
 			-- func_Octo_LoadAddOn(Blizzard_MajorFactionRenownToast)
 			--Blizzard_MajorFactionRenownToast.lua
 			-- MajorFactionRenownToast.IconSwirlModelScene:Show()
@@ -154,7 +125,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --Covenant
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.Covenant then
+		if Octo_ToDoVars.config.Covenant then
 			CovenantChoiceToast:UnregisterAllEvents()
 			CovenantRenownToast:UnregisterAllEvents()
 		end
@@ -163,7 +134,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --UIErrorsFrameScale
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.UIErrorsFrameScale then
+		if Octo_ToDoVars.config.UIErrorsFrameScale then
 			UIErrorsFrame:SetPoint("TOP", 0, -54)
 			UIErrorsFrame:SetAlpha(0.7)
 			--UIErrorsFrame:SetScale(.7111111111111111)
@@ -174,7 +145,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --RaidBossEmoteFrame
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.RaidBossEmoteFrame then
+		if Octo_ToDoVars.config.RaidBossEmoteFrame then
 			RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_EMOTE")
 			RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_WHISPER")
 			RaidBossEmoteFrame:UnregisterEvent("CLEAR_BOSS_EMOTES")
@@ -197,7 +168,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --CinematicCanceler
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.CinematicCanceler then
+		if Octo_ToDoVars.config.CinematicCanceler then
 			CinematicFrame:HookScript("OnShow", function(self, ...)
 					if IsModifierKeyDown() then
 					return end --если нажат модификатор, то запустится мувик
@@ -217,7 +188,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --BossBanner
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.BossBanner then
+		if Octo_ToDoVars.config.BossBanner then
 			BossBanner:HookScript("OnShow", function(self, ...)
 					BossBanner:UnregisterEvent("ENCOUNTER_LOOT_RECEIVED")
 					BossBanner:UnregisterEvent("BOSS_KILL")
@@ -238,7 +209,7 @@ end
 ----------------------------------------------------------------------------------------------------------------------------------
 --AnotherAddonsCasual
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.AnotherAddonsCasual then
+		if Octo_ToDoVars.config.AnotherAddonsCasual then
 			func_Octo_LoadAddOn("!BugGrabber")
 			func_Octo_LoadAddOn("BugSack")
 			func_Octo_LoadAddOn("AstralKeys")
@@ -247,7 +218,6 @@ tinsert(E.modules, function()
 			func_Octo_LoadAddOn("MountsJournal_ElvUI_Skin")
 			func_Octo_LoadAddOn("HidingBar")
 			func_Octo_LoadAddOn("HidingBar_Options")
-			func_Octo_LoadAddOn("WowheadQuickLink")
 			func_Octo_LoadAddOn("Postal")
 			func_Octo_LoadAddOn("TalentTreeTweaks")
 			func_Octo_LoadAddOn("Simulationcraft")
@@ -262,7 +232,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --AnotherAddonsRAID
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.AnotherAddonsRAID then
+		if Octo_ToDoVars.config.AnotherAddonsRAID then
 			func_Octo_LoadAddOn("!BugGrabber")
 			func_Octo_LoadAddOn("AddOnSkins")
 			func_Octo_LoadAddOn("AdvancedInterfaceOptions")
@@ -300,14 +270,13 @@ tinsert(E.modules, function()
 			func_Octo_LoadAddOn("WeakAurasModelPaths")
 			func_Octo_LoadAddOn("WeakAurasOptions")
 			func_Octo_LoadAddOn("WeakAurasTemplates")
-			func_Octo_LoadAddOn("WowheadQuickLink")
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --CVAR
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.CVar then
+		if Octo_ToDoVars.config.CVar then
 			local isElfUI = IsAddOnLoaded("ElvUI")
 			if isElfUI == true and not InCombatLockdown() then
 				C_Timer.After(1, function()
@@ -496,7 +465,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --USABLEITEMS
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.UsableItems then
+		if Octo_ToDoVars.config.UsableItems then
 			local UnitLevel = UnitLevel("PLAYER")
 			local className, classFilename, classId = UnitClass("PLAYER")
 			local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
@@ -535,6 +504,17 @@ tinsert(E.modules, function()
 -- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
 -- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
 -- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
+				{itemid = 202098, count = 1},
+				{itemid = 202097, count = 1},
+				{itemid = 202099, count = 1},
+				{itemid = 202100, count = 1},
+				{itemid = 202101, count = 1},
+
+
+
+
+
+
 
 				{itemid = 114108, count = 1},
 				{itemid = 201323, count = 1},
@@ -1934,7 +1914,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --AUTO GOSSIP
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.AutoGossip then
+		if Octo_ToDoVars.config.AutoGossip then
 			if not Octo_AUTO_GOSSIP then
 				Octo_AUTO_GOSSIP = CreateFrame("Frame", AddonTitle)
 				Octo_AUTO_GOSSIP:Hide()
@@ -1944,7 +1924,7 @@ tinsert(E.modules, function()
 			end
 			Octo_AUTO_GOSSIP:RegisterEvent("GOSSIP_SHOW")
 			Octo_AUTO_GOSSIP:SetScript("OnEvent", function(self, event, ...)
-					if Octo_ToDo_DragonflyVars.config.AutoGossip and event == "GOSSIP_SHOW" then
+					if Octo_ToDoVars.config.AutoGossip and event == "GOSSIP_SHOW" then
 						--https://wowpedia.fandom.com/wiki/Category:API_namespaces/C_GossipInfo
 						local numQuests1 = C_GossipInfo.GetNumActiveQuests()
 						local numQuests2 = C_GossipInfo.GetNumAvailableQuests()
@@ -2041,7 +2021,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 -- AUTO INPUT DELET
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.InputDelete then
+		if Octo_ToDoVars.config.InputDelete then
 			local TypeDeleteLine = gsub(DELETE_GOOD_ITEM, "[\r\n]", "@")
 			local void, TypeDeleteLine = strsplit("@", TypeDeleteLine, 2)
 			StaticPopupDialogs["DELETE_ITEM"].OnHyperlinkEnter = StaticPopupDialogs["DELETE_GOOD_ITEM"].OnHyperlinkEnter
@@ -2090,7 +2070,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --ClearChat
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.ClearChat then
+		if Octo_ToDoVars.config.ClearChat then
 			C_Timer.After(1, function()
 					ChatFrame1:Clear()
 			end)
@@ -2100,7 +2080,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --AutoSellGrey
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.AutoSellGrey then
+		if Octo_ToDoVars.config.AutoSellGrey then
 			local function OnEvent(self, event)
 				totalPrice = 0
 				--for myBags = 0,4 do
@@ -2158,7 +2138,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --AutoRepair
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.AutoRepair then
+		if Octo_ToDoVars.config.AutoRepair then
 			local function OnEvent(self, event)
 				if (CanMerchantRepair()) then
 					repairAllCost, canRepair = GetRepairAllCost()
@@ -2213,7 +2193,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --HideErrorMessages
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.HideErrorMessages then
+		if Octo_ToDoVars.config.HideErrorMessages then
 			local OrigErrHandler = UIErrorsFrame:GetScript("OnEvent")
 			UIErrorsFrame:SetScript("OnEvent", function (self, event, id, err, ...)
 					if event == "UI_ERROR_MESSAGE" then
@@ -2243,7 +2223,7 @@ end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --SellFrame
 tinsert(E.modules, function()
-		if Octo_ToDo_DragonflyVars.config.SellFrame then
+		if Octo_ToDoVars.config.SellFrame then
 			local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8
 			local OctoFrame_Events = nil
 			local OctoFrame_SellOther = nil
@@ -2272,7 +2252,7 @@ tinsert(E.modules, function()
 			}
 			local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 			local ilvlStr = avgItemLevelEquipped or 0
-			function Octo_Trade_DragonflyOnLoad()
+			function Octo_Trade_OnLoad()
 				if not OctoFrame_Events then
 					OctoFrame_Events = CreateFrame("Frame", AddonTitle..GenerateUniqueID())
 					OctoFrame_Events:Hide()
@@ -2288,7 +2268,7 @@ tinsert(E.modules, function()
 				OctoFrame_Events:RegisterEvent("BANKFRAME_CLOSED")
 				OctoFrame_Events:RegisterEvent("PLAYER_STARTED_MOVING")
 				OctoFrame_Events:RegisterEvent("MAIL_SHOW")
-				OctoFrame_Events:SetScript("OnEvent", Octo_Trade_DragonflyOnEvent)
+				OctoFrame_Events:SetScript("OnEvent", Octo_Trade_OnEvent)
 			end
 			function MASLENGO_Trade()
 				if not OctoFrame_SellOther then
@@ -2350,7 +2330,7 @@ tinsert(E.modules, function()
 						end
 					end
 				)
-				OctoFrame_SellOther.icon = OctoFrame_SellOther:CreateTexture(nil,"BACKGROUND")
+				OctoFrame_SellOther.icon = OctoFrame_SellOther:CreateTexture(nil,"ARTWORK")
 				OctoFrame_SellOther.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Sell.tga")
 				OctoFrame_SellOther.icon:SetAllPoints(OctoFrame_SellOther)
 				OctoFrame_SellOther:Show()
@@ -2414,7 +2394,7 @@ tinsert(E.modules, function()
 						end
 					end
 				)
-				OctoFrame_SellAll.icon = OctoFrame_SellAll:CreateTexture(nil,"BACKGROUND")
+				OctoFrame_SellAll.icon = OctoFrame_SellAll:CreateTexture(nil,"ARTWORK")
 				OctoFrame_SellAll.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SellAll.tga")
 				OctoFrame_SellAll.icon:SetAllPoints(OctoFrame_SellAll)
 				OctoFrame_SellAll:Show()
@@ -2459,7 +2439,7 @@ tinsert(E.modules, function()
 					end
 				)
 				OctoFrame_FROMBANK.RightEdge:SetVertexColor(0, 1, 0)
-				OctoFrame_FROMBANK.icon = OctoFrame_FROMBANK:CreateTexture(nil,"BACKGROUND")
+				OctoFrame_FROMBANK.icon = OctoFrame_FROMBANK:CreateTexture(nil,"ARTWORK")
 				OctoFrame_FROMBANK.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_RIGHT.tga")
 				OctoFrame_FROMBANK.icon:SetAllPoints(OctoFrame_FROMBANK)
 				OctoFrame_FROMBANK:Show()
@@ -2495,13 +2475,13 @@ tinsert(E.modules, function()
 					end
 				)
 				OctoFrame_TOBANK.LeftEdge:SetVertexColor(0, 1, 0)
-				OctoFrame_TOBANK.icon = OctoFrame_TOBANK:CreateTexture(nil,"BACKGROUND")
+				OctoFrame_TOBANK.icon = OctoFrame_TOBANK:CreateTexture(nil,"ARTWORK")
 				OctoFrame_TOBANK.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_LEFT.tga")
 				OctoFrame_TOBANK.icon:SetAllPoints(OctoFrame_TOBANK)
 				OctoFrame_TOBANK:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 			end
-			function Octo_Trade_DragonflyOnEvent(self, event, ...)
+			function Octo_Trade_OnEvent(self, event, ...)
 				if event == "MERCHANT_SHOW" and not InCombatLockdown() then
 					MASLENGO_Trade()
 				elseif event == "Trade_SHOW" and not InCombatLockdown() then
@@ -2526,7 +2506,7 @@ tinsert(E.modules, function()
 					MASLENGO_Trade()
 				end
 			end
-			Octo_Trade_DragonflyOnLoad()
+			Octo_Trade_OnLoad()
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------

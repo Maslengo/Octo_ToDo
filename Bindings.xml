@@ -1,10 +1,35 @@
 <Bindings>
-	<Binding name = "ReloadUI" category = "!!|T4644002:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r">
-		<!-- Main_Frame:SetShown(not Main_Frame:IsShown()) -->
-		ReloadUI()
-	</Binding>
-	<Binding name = "MAINMENU_BUTTON" category = "!!|T4644002:0|t |cFF00A3FFOcto|r |cFFFF5771ToDo_Dragonfly|r">
-		<!-- GameMenuFrame:Show() -->
-		GameMenuFrame:SetShown(not GameMenuFrame:IsShown())
-	</Binding>
+    <Binding name="WOWHEAD_QUICK_LINK_NAME" header="WOWHEAD_QUICK_LINK_HEADER" category="|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r">
+        RunWowheadQuickLink()
+    </Binding>
+    <Binding name="WOWHEAD_QUICK_LINK_RAIDERIO_NAME" category="|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r">
+        RunAlternativeQuickLink()
+    </Binding>
+    <Binding
+        name = "CLICK myZA1:LeftButton"
+        category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r"
+        >
+    </Binding>
+    <Binding
+        name = "CLICK myZA2:LeftButton"
+        category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r"
+        >
+    </Binding>
+    <Binding
+        name = "CLICK myZA3:LeftButton"
+        category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r"
+        >
+    </Binding>
+   <Binding
+        name = "ReloadUI"
+        category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r"
+    >
+        ReloadUI()
+    </Binding>
+    <Binding
+        name = "MAINMENU_BUTTON"
+        category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r"
+        >
+        GameMenuFrame:SetShown(not GameMenuFrame:IsShown())
+    </Binding>
 </Bindings>

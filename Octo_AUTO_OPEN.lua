@@ -27,6 +27,8 @@ local openableIDs = {
 	-- [174961] = true,
 	-- [166292] = true,
 	-- [173372] = true,
+	[90840] = true,
+	[87217] = true,
 	[117394] = true,
 	[103624] = true,
 	[205964] = true,
@@ -238,7 +240,7 @@ end
 local openableScanQueued = false
 Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 		C_Timer.After(0.1, function()
-				if Octo_ToDo_DragonflyVars.config.AutoOpen then
+				if Octo_ToDoVars.config.AutoOpen then
 					if event == "BAG_UPDATE" then
 						if not InCombatLockdown() and isDead == false  then
 							OpenableScan()
