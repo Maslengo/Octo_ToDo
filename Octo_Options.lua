@@ -3,6 +3,26 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
+
+local Kyri_Color = "|cff6fa8dc"
+local Necr_Color = "|cff93c47d"
+local NFae_Color = "|cffb4a7d6"
+local Vent_Color = "|cffea9999"
+local Cyan_Color = "|cff00ccff"
+local Rift_Color = "|cffbf9eff"
+local Gray_Color = "|cff404040"
+local Addon_Color = "|cff4FFF79"
+local White_Color = "|cffFFF7D7"
+local Blue_Color = "|cff00A3FF"
+local Red_Color = "|cffFF4C4F"
+local Green_Color = "|cff4FFF79"
+local Yellow_Color = "|cffFFF371"
+local Purple_Color = "|cffAF61FF"
+local Orange_Color = "|cffFF661A"
+
+
+
+
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 local bytetoB64 = {
@@ -26,7 +46,7 @@ local config = CreateFrame("FRAME", GlobalAddonName.."config"..GenerateUniqueID(
 -- config:RegisterEvent("VARIABLES_LOADED")
 config:Hide()
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
-    text = "|cffFF0000!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
+    text = Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
     button1 = YES,
     button2 = NO,
     hideOnEscape = 1,
@@ -68,7 +88,7 @@ local function newButton(pos, line)
 	    Octo_ToDoVars.config.ShowOnlyCurrentRealm = Button:GetChecked()
 	    StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
     end)
-    Button.text:SetText("|cffFF0000ShowOnlyCurrentRealm|r")
+    Button.text:SetText(Red_Color.."ShowOnlyCurrentRealm|r")
     return Button
 end
 config:SetScript("OnShow", function(self)
@@ -95,7 +115,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.CVar = btn_left:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left1.text:SetText("|cffFF0000CVar|r")
+	self.btn_left1.text:SetText(Red_Color.."CVar|r")
 	-----------------------------------------------
 	-- btn_left2 InputDelete
 	-----------------------------------------------
@@ -106,7 +126,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.InputDelete = btn_left:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left2.text:SetText("|cffFF0000InputDelete|r")
+	self.btn_left2.text:SetText(Red_Color.."InputDelete|r")
 	-----------------------------------------------
 	-----------------------------------------------
 	-- btn_left3 UsableItems
@@ -118,7 +138,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.UsableItems = btn_left:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left3.text:SetText("|cffFF0000UsableItems|r")
+	self.btn_left3.text:SetText(Red_Color.."UsableItems|r")
 	-----------------------------------------------
 	-- btn_left4 AutoOpen
 	-----------------------------------------------
@@ -149,16 +169,6 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.TalkingHeadFrame = btn_left:GetChecked()
 	end)
 	self.btn_left6.text:SetText("TalkingHeadFrame")
-	-----------------------------------------------
-	-- btn_left7 HideObjectiveTracker
-	-----------------------------------------------
-	self.btn_left7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_left7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*7)
-	self.btn_left7:SetChecked(Octo_ToDoVars.config.HideObjectiveTracker)
-	self.btn_left7:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.HideObjectiveTracker = btn_left:GetChecked()
-	end)
-	self.btn_left7.text:SetText("HideObjectiveTracker")
 	-----------------------------------------------
 	-- btn_left8 HideZoneText
 	-----------------------------------------------
@@ -231,7 +241,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.AnotherAddonsCasual = btn_left:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left14.text:SetText("|cffFF0000AnotherAddonsCasual|r")
+	self.btn_left14.text:SetText(Red_Color.."AnotherAddonsCasual|r")
 	-- btn_left15 AnotherAddonsRAID
 	-----------------------------------------------
 	self.btn_left15 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -241,7 +251,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.AnotherAddonsRAID = btn_left:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left15.text:SetText("|cffFF0000AnotherAddonsRAID|r")
+	self.btn_left15.text:SetText(Red_Color.."AnotherAddonsRAID|r")
 	-----------------------------------------------
 	-----------------------------------------------
 	-- btn_left16 ClearChat
@@ -254,7 +264,7 @@ config:SetScript("OnShow", function(self)
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		--StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left16.text:SetText("|cffFF0000ClearChat|r")
+	self.btn_left16.text:SetText(Red_Color.."ClearChat|r")
 	-----------------------------------------------
 	-----------------------------------------------
 	-- btn_left17 ShowOnlyCurrentRealm
@@ -266,7 +276,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.ShowOnlyCurrentRealm = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left17.text:SetText("|cffFF0000ShowOnlyCurrentRealm|r")
+	self.btn_left17.text:SetText(Red_Color.."ShowOnlyCurrentRealm|r")
 	-----------------------------------------------
 	-- Slider_right18 LevelToShowTEXT
 	local LevelToShowTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -295,7 +305,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.AutoSellGrey = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left19.text:SetText("|cffFF0000AutoSellGrey|r")
+	self.btn_left19.text:SetText(Red_Color.."AutoSellGrey|r")
 	-- btn_left19 AutoRepair
 	-----------------------------------------------
 	self.btn_left20 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -305,7 +315,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.AutoRepair = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left20.text:SetText("|cffFF0000AutoRepair|r")
+	self.btn_left20.text:SetText(Red_Color.."AutoRepair|r")
 	-----------------------------------------------
 	-- btn_left21 HideErrorMessages
 	-----------------------------------------------
@@ -316,7 +326,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.HideErrorMessages = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left21.text:SetText("|cffFF0000HideErrorMessages|r")
+	self.btn_left21.text:SetText(Red_Color.."HideErrorMessages|r")
 	-----------------------------------------------
 	-- btn_left22 SellFrame
 	-----------------------------------------------
@@ -327,8 +337,43 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.SellFrame = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left22.text:SetText("|cffFF0000SellFrame|r")
+	self.btn_left22.text:SetText(Red_Color.."SellFrame|r")
 	-----------------------------------------------
+
+
+
+
+
+
+
+
+
+	--ELVUI
+	-- btn_left23 GlobalFadePersist
+	-----------------------------------------------
+local isElfUI = IsAddOnLoaded("ElvUI")
+	self.btn_left23 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	self.btn_left23:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*23)
+	self.btn_left23:SetChecked(Octo_ToDoVars.config.GlobalFadePersist)
+	self.btn_left23:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.GlobalFadePersist = btn:GetChecked()
+		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	end)
+if isElfUI then
+	self.btn_left23.text:SetText(Blue_Color.."ElvUI|r "..Red_Color.."GlobalFadePersist|r")
+else
+	self.btn_left23.text:SetText(Orange_Color.."None ElvUI|r (GlobalFadePersist)")
+end
+	-----------------------------------------------
+
+
+
+
+
+
+
+
+
 	-- btn_right1 LINE_Classic
 	-----------------------------------------------
 	self.btn_right1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
