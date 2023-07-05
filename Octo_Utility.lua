@@ -1,5 +1,6 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local function TableConcat(t1,t2)
@@ -7,6 +8,23 @@ local function TableConcat(t1,t2)
 		t1[#t1+1] = t2[i]
 	end
 	return t1
+end
+local OctoTable_bytetoB64 = {
+    [0]="a", "b", "c", "d", "e", "f", "g", "h",
+    "i", "j", "k", "l", "m", "n", "o", "p",
+    "q", "r", "s", "t", "u", "v", "w", "x",
+    "y", "z", "A", "B", "C", "D", "E", "F",
+    "G", "H", "I", "J", "K", "L", "M", "N",
+    "O", "P", "Q", "R", "S", "T", "U", "V",
+    "W", "X", "Y", "Z", "0", "1", "2", "3",
+    "4", "5", "6", "7", "8", "9", "(", ")"
+}
+function GenerateUniqueID()
+    local s = {}
+    for i=1, 11 do
+	tinsert(s, OctoTable_bytetoB64[math.random(0, 63)])
+    end
+    return table.concat(s)
 end
 local Kyri_Color = "|cff6fa8dc"
 local Necr_Color = "|cff93c47d"
@@ -23,26 +41,9 @@ local Green_Color = "|cff4FFF79"
 local Yellow_Color = "|cffFFF371"
 local Purple_Color = "|cffAF61FF"
 local Orange_Color = "|cffFF661A"
-----------------------------------------------------------------------------------------------------------------------------------
-local Octo_Show_Dev = false
+local isElfUI = IsAddOnLoaded("ElvUI")
+local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
-local OctoTable_bytetoB64 = {
-	[0]="a", "b", "c", "d", "e", "f", "g", "h",
-	"i", "j", "k", "l", "m", "n", "o", "p",
-	"q", "r", "s", "t", "u", "v", "w", "x",
-	"y", "z", "A", "B", "C", "D", "E", "F",
-	"G", "H", "I", "J", "K", "L", "M", "N",
-	"O", "P", "Q", "R", "S", "T", "U", "V",
-	"W", "X", "Y", "Z", "0", "1", "2", "3",
-	"4", "5", "6", "7", "8", "9", "(", ")"
-}
-local function GenerateUniqueID()
-	local s = {}
-	for i=1, 11 do
-		tinsert(s, OctoTable_bytetoB64[math.random(0, 63)])
-	end
-	return table.concat(s)
-end
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 -- TalkingHeadFrame
@@ -50,8 +51,101 @@ tinsert(E.modules, function()
 		if Octo_ToDoVars.config.TalkingHeadFrame then
 			hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
 					self:Hide()
-					print(L["|cFF00A3FFTalking head frame|r |cffFF4C4Fcanceled.|r"])
+					print("|cffd177ffT|r|cffcd78fea|r|cffc87afdl|r|cffc37cfbk|r|cffbe7efai|r|cffba80f9n|r|cffb582f7g|r |cffb084f6h|r|cffab86f5e|r|cffa688f3a|r|cffa28af2d|r |cff9d8cf1f|r|cff988eefr|r|cff9390eea|r|cff8f92edm|r|cff8a94ebe|r |cff8596eac|r|cff8098e9a|r|cff7b9ae7n|r|cff779ce6c|r|cff729ee5e|r|cff6da0e3l|r|cff68a2e2e|r|cff63a4e0d|r")
 			end)
+		end
+end)
+----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
+--LootFrame
+tinsert(E.modules, function()
+		if Octo_ToDoVars.config.LootFrame then
+			----------------------------------------------------------------------------------------------------------------------------------
+			----------------------------------------------------------------------------------------------------------------------------------
+			local OctoFrame_EventFrame = nil
+			local Octo_Frame_Loot = nil
+			local Octo_Frame_RCLootCouncil = nil
+			local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
+			do
+				if not OctoFrame_EventFrame then
+					OctoFrame_EventFrame = CreateFrame("FRAME", AddonTitle..GenerateUniqueID())
+				end
+				OctoFrame_EventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+				OctoFrame_EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+				OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED")
+				OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+				OctoFrame_EventFrame:SetScript("OnEvent", function(...) Octo_Frame_OnEvent(...) end)
+			end
+			local normal_difficulty = 14
+			local heroic_difficulty = 15
+			local mythic_difficulty = 16
+			local LFG_difficulty = 17
+			-- https://wowpedia.fandom.com/wiki/DifficultyID
+			--------------------------------------------------------------------------------
+			if not Octo_Frame_Loot then
+				Octo_Frame_Loot = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+			end
+			Octo_Frame_Loot:Hide()
+			Octo_Frame_Loot:SetSize(24*scale, 24*scale)
+			Octo_Frame_Loot:SetPoint("TOPLEFT", 64, 0)
+			Octo_Frame_Loot:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+			Octo_Frame_Loot:SetBackdropBorderColor(0, 0, 0, 1)
+			Octo_Frame_Loot:RegisterForClicks("LeftButtonUp")
+			local texture = Octo_Frame_Loot:CreateTexture(nil, "BACKGROUND")
+			Octo_Frame_Loot.icon = texture
+			texture:SetAllPoints(Octo_Frame_Loot)
+			texture:SetTexture(413587)
+			Octo_Frame_Loot:Hide()
+			Octo_Frame_Loot:SetScript("OnClick",
+				function(_, button)
+					GroupLootHistoryFrame:SetShown(not GroupLootHistoryFrame:IsShown())
+			end)
+			--if select(5, GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" then
+			--------------------------------------------------------------------------------
+			if not Octo_Frame_RCLootCouncil then
+				Octo_Frame_RCLootCouncil = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+			end
+			Octo_Frame_RCLootCouncil:Hide()
+			Octo_Frame_RCLootCouncil:SetSize(24*scale, 24*scale)
+			Octo_Frame_RCLootCouncil:SetPoint("TOPLEFT", 128, 0)
+			Octo_Frame_RCLootCouncil:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+			Octo_Frame_RCLootCouncil:SetBackdropBorderColor(0, 0, 0, 1)
+			Octo_Frame_RCLootCouncil:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+			local texture = Octo_Frame_RCLootCouncil:CreateTexture(nil, "BACKGROUND")
+			Octo_Frame_RCLootCouncil.icon = texture
+			texture:SetAllPoints(Octo_Frame_RCLootCouncil)
+			texture:SetTexture(133785)
+			Octo_Frame_RCLootCouncil:Hide()
+			Octo_Frame_RCLootCouncil:SetAttribute("type", "macro")
+			Octo_Frame_RCLootCouncil:SetAttribute("macrotext", "/rc open")
+			--------------------------------------------------------------------------------
+			function Octo_Frame_OnEvent(self, event, ...)
+				if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA" then
+					local difficultyID = select(3, GetInstanceInfo()) or "|cffFF0000-|r"
+					if difficultyID == 14 or difficultyID == 15 or difficultyID == 16 or difficultyID == 17 then
+						if isRCLootCouncil and Octo_Frame_RCLootCouncil then
+							Octo_Frame_RCLootCouncil:Show()
+						end
+						Octo_Frame_Loot:Show()
+					end
+					if (difficultyID ~= 14 and difficultyID ~= 15 and difficultyID ~= 16 and difficultyID ~= 17) then
+						if isRCLootCouncil and Octo_Frame_RCLootCouncil then
+							Octo_Frame_RCLootCouncil:Hide()
+						end
+						if Octo_Frame_Loot:IsShown() then
+							Octo_Frame_Loot:Hide()
+						end
+					end
+				end
+			end
+			if InCombatLockdown then
+				if Octo_Frame_Loot and Octo_Frame_Loot:IsShown() then
+					Octo_Frame_Loot:Hide()
+				end
+				if Octo_Frame_RCLootCouncil and Octo_Frame_RCLootCouncil:IsShown() then
+					Octo_Frame_RCLootCouncil:Hide()
+				end
+			end
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -269,7 +363,6 @@ end)
 --CVAR
 tinsert(E.modules, function()
 		if Octo_ToDoVars.config.CVar then
-			local isElfUI = IsAddOnLoaded("ElvUI")
 			if isElfUI == true and not InCombatLockdown() then
 				C_Timer.After(1, function()
 						C_Container.SetSortBagsRightToLeft(false)
@@ -461,23 +554,6 @@ tinsert(E.modules, function()
 			local UnitLevel = UnitLevel("PLAYER")
 			local className, classFilename, classId = UnitClass("PLAYER")
 			local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
-			local bytetoB64 = {
-				[0]="a", "b", "c", "d", "e", "f", "g", "h",
-				"i", "j", "k", "l", "m", "n", "o", "p",
-				"q", "r", "s", "t", "u", "v", "w", "x",
-				"y", "z", "A", "B", "C", "D", "E", "F",
-				"G", "H", "I", "J", "K", "L", "M", "N",
-				"O", "P", "Q", "R", "S", "T", "U", "V",
-				"W", "X", "Y", "Z", "0", "1", "2", "3",
-				"4", "5", "6", "7", "8", "9", "(", ")"
-			}
-			local function GenerateUniqueID()
-				local s = {}
-				for i=1, 11 do
-					tinsert(s, bytetoB64[math.random(0, 63)])
-				end
-				return table.concat(s)
-			end
 			local function func_itemName(self)
 				local itemName, _, itemQuality = GetItemInfo(self)
 				if itemQuality then
@@ -489,25 +565,17 @@ tinsert(E.modules, function()
 				return itemName or Red_Color..RETRIEVING_ITEM_INFO.."|r"
 			end
 			local white_list = {
--- https://www.wowhead.com/ru/item=205151/%D0%B8%D0%B7%D0%B2%D0%B8%D0%BB%D0%B8%D1%81%D0%BA#comments
-
--- https://www.wowhead.com/ru/item=206009/ https://www.wowhead.com/ru/item=206010/ https://www.wowhead.com/ru/item=206014/
--- https://www.wowhead.com/ru/item=206014/ https://www.wowhead.com/ru/item=206011/ https://www.wowhead.com/ru/item=206015/
--- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
--- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
--- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
+				-- https://www.wowhead.com/ru/item=205151/%D0%B8%D0%B7%D0%B2%D0%B8%D0%BB%D0%B8%D1%81%D0%BA#comments
+				-- https://www.wowhead.com/ru/item=206009/ https://www.wowhead.com/ru/item=206010/ https://www.wowhead.com/ru/item=206014/
+				-- https://www.wowhead.com/ru/item=206014/ https://www.wowhead.com/ru/item=206011/ https://www.wowhead.com/ru/item=206015/
+				-- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
+				-- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
+				-- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
 				{itemid = 202098, count = 1},
 				{itemid = 202097, count = 1},
 				{itemid = 202099, count = 1},
 				{itemid = 202100, count = 1},
 				{itemid = 202101, count = 1},
-
-
-
-
-
-
-
 				{itemid = 114108, count = 1},
 				{itemid = 201323, count = 1},
 				{itemid = 204217, count = 1},
@@ -1810,9 +1878,6 @@ tinsert(E.modules, function()
 			if not UsableItems_Frame then
 				UsableItems_Frame = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
 				UsableItems_Frame:Hide()
-				if Octo_Show_Dev == true then
-					print ("UsableItems_Frame = CreateFrame")
-				end
 			end
 			UsableItems_Frame:Hide()
 			UsableItems_Frame:SetSize(64*scale, 64*scale)
@@ -1832,9 +1897,6 @@ tinsert(E.modules, function()
 				if not EventFrame then
 					EventFrame = CreateFrame("Frame", AddonTitle..GenerateUniqueID(), UIParent)
 					EventFrame:Hide()
-					if Octo_Show_Dev == true then
-						print ("EventFrame = CreateFrame")
-					end
 				end
 				if not InCombatLockdown() then
 					EventFrame:Hide()
@@ -1891,7 +1953,6 @@ tinsert(E.modules, function()
 						elseif GetItemCount(v.itemid) <= (v.count-1) and UsableItems_Frame:IsShown() then
 							UsableItems_Frame:Hide()
 							UsableItems_Frame.icon:SetTexture(413587)
-
 						end
 					end
 				end
@@ -1910,9 +1971,6 @@ tinsert(E.modules, function()
 			if not Octo_AUTO_GOSSIP then
 				Octo_AUTO_GOSSIP = CreateFrame("Frame", AddonTitle)
 				Octo_AUTO_GOSSIP:Hide()
-				if Octo_Show_Dev == true then
-					print ("Octo_AUTO_GOSSIP = CreateFrame")
-				end
 			end
 			Octo_AUTO_GOSSIP:RegisterEvent("GOSSIP_SHOW")
 			Octo_AUTO_GOSSIP:SetScript("OnEvent", function(self, event, ...)
@@ -2025,9 +2083,6 @@ tinsert(E.modules, function()
 			if not easyDelFrame then
 				easyDelFrame = CreateFrame("FRAME")
 				easyDelFrame:Hide()
-				if Octo_Show_Dev == true then
-					print ("easyDelFrame = CreateFrame")
-				end
 			end
 			easyDelFrame:RegisterEvent("DELETE_ITEM_CONFIRM")
 			easyDelFrame:SetScript("OnEvent", function()
@@ -2098,9 +2153,6 @@ tinsert(E.modules, function()
 			if not AutoSellGreyFrame then
 				AutoSellGreyFrame = CreateFrame("Frame")
 				AutoSellGreyFrame:Hide()
-				if Octo_Show_Dev == true then
-					print ("AutoSellGreyFrame = CreateFrame")
-				end
 			end
 			AutoSellGreyFrame:SetScript("OnEvent", OnEvent)
 			AutoSellGreyFrame:RegisterEvent("MERCHANT_SHOW")
@@ -2173,9 +2225,6 @@ tinsert(E.modules, function()
 			if not AutoRepairFrame then
 				AutoRepairFrame = CreateFrame("Frame")
 				AutoRepairFrame:Hide()
-				if Octo_Show_Dev == true then
-					print ("AutoRepairFrame = CreateFrame")
-				end
 			end
 			AutoRepairFrame:SetScript("OnEvent", OnEvent)
 			AutoRepairFrame:RegisterEvent("MERCHANT_SHOW")
@@ -2248,9 +2297,6 @@ tinsert(E.modules, function()
 				if not OctoFrame_Events then
 					OctoFrame_Events = CreateFrame("Frame", AddonTitle..GenerateUniqueID())
 					OctoFrame_Events:Hide()
-					if Octo_Show_Dev == true then
-						print ("OctoFrame_Events = CreateFrame")
-					end
 				end
 				OctoFrame_Events:RegisterEvent("Trade_SHOW")
 				OctoFrame_Events:RegisterEvent("SECURE_TRANSFER_CANCEL")
@@ -2266,9 +2312,6 @@ tinsert(E.modules, function()
 				if not OctoFrame_SellOther then
 					OctoFrame_SellOther = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellOther:Hide()
-					if Octo_Show_Dev == true then
-						print ("OctoFrame_SellOther = CreateFrame")
-					end
 				end
 				OctoFrame_SellOther:SetSize(64*scale, 64*scale)
 				OctoFrame_SellOther:SetFrameStrata("DIALOG")
@@ -2306,9 +2349,6 @@ tinsert(E.modules, function()
 									for i = 1, ItemTooltip:NumLines() do
 										if not OctoFrame_foundLevelTooltip then
 											OctoFrame_foundLevelTooltip = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
-											if Octo_Show_Dev == true then
-												print ("OctoFrame_foundLevelTooltip = CreateFrame")
-											end
 										end
 										if OctoFrame_foundLevelTooltip then
 											itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
@@ -2330,9 +2370,6 @@ tinsert(E.modules, function()
 				if not OctoFrame_SellAll then
 					OctoFrame_SellAll = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellAll:Hide()
-					if Octo_Show_Dev == true then
-						print ("OctoFrame_SellAll = CreateFrame")
-					end
 				end
 				OctoFrame_SellAll:SetSize(64*scale, 64*scale)
 				OctoFrame_SellAll:SetFrameStrata("DIALOG")
@@ -2370,9 +2407,6 @@ tinsert(E.modules, function()
 									-- for i = 1, ItemTooltip:NumLines() do
 									-- if not OctoFrame_foundLevelTooltip then
 									-- OctoFrame_foundLevelTooltip = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
-									-- if Octo_Show_Dev == true then
-									-- print ("OctoFrame_foundLevelTooltip = CreateFrame")
-									-- end
 									-- end
 									-- if OctoFrame_foundLevelTooltip then
 									-- itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
@@ -2396,9 +2430,6 @@ tinsert(E.modules, function()
 				if not OctoFrame_FROMBANK then
 					OctoFrame_FROMBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_FROMBANK:Hide()
-					if Octo_Show_Dev == true then
-						print ("OctoFrame_FROMBANK = CreateFrame")
-					end
 				end
 				OctoFrame_FROMBANK:SetSize(64*scale, 64*scale)
 				OctoFrame_FROMBANK:SetFrameStrata("DIALOG")
@@ -2439,9 +2470,6 @@ tinsert(E.modules, function()
 				if not OctoFrame_TOBANK then
 					OctoFrame_TOBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_TOBANK:Hide()
-					if Octo_Show_Dev == true then
-						print ("OctoFrame_TOBANK = CreateFrame")
-					end
 				end
 				OctoFrame_TOBANK:SetSize(64*scale, 64*scale)
 				OctoFrame_TOBANK:SetFrameStrata("DIALOG")
@@ -2501,17 +2529,11 @@ tinsert(E.modules, function()
 			Octo_Trade_OnLoad()
 		end
 end)
-
-
-
-
-
 -- GlobalFadePersist
 tinsert(E.modules, function()
 	if Octo_ToDoVars.config.GlobalFadePersist then
 		--------------------------------------------------------------------------------
 		C_Timer.After(1, function()
-				local isElfUI = IsAddOnLoaded("ElvUI")
 				if isElfUI then
 					local E, L, V, P, G = unpack(ElvUI) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
 					local GFP = E:NewModule('ElvUI_GlobalFadePersist', 'AceHook-3.0', 'AceEvent-3.0') --Create a plugin within ElvUI and adopt AceHook-3.0, AceEvent-3.0 and AceTimer-3.0. We can make use of these later.
@@ -2551,13 +2573,7 @@ tinsert(E.modules, function()
 					E:RegisterModule(GFP:GetName())
 				end
 		end)
-
 	end
 end)
-
-
-
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
-
-

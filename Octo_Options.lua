@@ -1,9 +1,31 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
-E.modules = {}
+-- E.modules = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
-
+local function TableConcat(t1,t2)
+	for i=1,#t2 do
+		t1[#t1+1] = t2[i]
+	end
+	return t1
+end
+local OctoTable_bytetoB64 = {
+    [0]="a", "b", "c", "d", "e", "f", "g", "h",
+    "i", "j", "k", "l", "m", "n", "o", "p",
+    "q", "r", "s", "t", "u", "v", "w", "x",
+    "y", "z", "A", "B", "C", "D", "E", "F",
+    "G", "H", "I", "J", "K", "L", "M", "N",
+    "O", "P", "Q", "R", "S", "T", "U", "V",
+    "W", "X", "Y", "Z", "0", "1", "2", "3",
+    "4", "5", "6", "7", "8", "9", "(", ")"
+}
+function GenerateUniqueID()
+    local s = {}
+    for i=1, 11 do
+	tinsert(s, OctoTable_bytetoB64[math.random(0, 63)])
+    end
+    return table.concat(s)
+end
 local Kyri_Color = "|cff6fa8dc"
 local Necr_Color = "|cff93c47d"
 local NFae_Color = "|cffb4a7d6"
@@ -19,29 +41,11 @@ local Green_Color = "|cff4FFF79"
 local Yellow_Color = "|cffFFF371"
 local Purple_Color = "|cffAF61FF"
 local Orange_Color = "|cffFF661A"
-
-
-
-
+local isElfUI = IsAddOnLoaded("ElvUI")
+local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
+local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
-local bytetoB64 = {
-    [0]="a", "b", "c", "d", "e", "f", "g", "h",
-    "i", "j", "k", "l", "m", "n", "o", "p",
-    "q", "r", "s", "t", "u", "v", "w", "x",
-    "y", "z", "A", "B", "C", "D", "E", "F",
-    "G", "H", "I", "J", "K", "L", "M", "N",
-    "O", "P", "Q", "R", "S", "T", "U", "V",
-    "W", "X", "Y", "Z", "0", "1", "2", "3",
-    "4", "5", "6", "7", "8", "9", "(", ")"
-}
-function GenerateUniqueID()
-    local s = {}
-    for i=1, 11 do
-	tinsert(s, bytetoB64[math.random(0, 63)])
-    end
-    return table.concat(s)
-end
 local config = CreateFrame("FRAME", GlobalAddonName.."config"..GenerateUniqueID())
 -- config:RegisterEvent("VARIABLES_LOADED")
 config:Hide()
@@ -88,7 +92,7 @@ local function newButton(pos, line)
 	    Octo_ToDoVars.config.ShowOnlyCurrentRealm = Button:GetChecked()
 	    StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
     end)
-    Button.text:SetText(Red_Color.."ShowOnlyCurrentRealm|r")
+    Button.text:SetText("ShowOnlyCurrentRealm")
     return Button
 end
 config:SetScript("OnShow", function(self)
@@ -99,34 +103,24 @@ config:SetScript("OnShow", function(self)
 	-- TITLE
 	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 	title:SetPoint("TOPLEFT", 0, 30)
-	title:SetText(GlobalAddonName)
+	title:SetText(AddonTitle)
 	-- AddonVersion
 	local ver = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-	ver:SetPoint("LEFT", title, "RIGHT", 0 ,0)
+	ver:SetPoint("BOTTOMLEFT", title, "BOTTOMRIGHT", 0 ,0)
 	ver:SetTextColor(.5, .5, .5, 1)
 	ver:SetJustifyH("RIGHT")
 	ver:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
-	-- btn_left1 CVar
-	-----------------------------------------------
-	self.btn_left1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_left1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*1)
-	self.btn_left1:SetChecked(Octo_ToDoVars.config.CVar)
-	self.btn_left1:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.CVar = btn_left:GetChecked()
-		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-	end)
-	self.btn_left1.text:SetText(Red_Color.."CVar|r")
 	-----------------------------------------------
 	-- btn_left2 InputDelete
 	-----------------------------------------------
 	self.btn_left2 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*2)
 	self.btn_left2:SetChecked(Octo_ToDoVars.config.InputDelete)
-	self.btn_left2:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.InputDelete = btn_left:GetChecked()
+	self.btn_left2:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.InputDelete = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left2.text:SetText(Red_Color.."InputDelete|r")
+	self.btn_left2.text:SetText("InputDelete")
 	-----------------------------------------------
 	-----------------------------------------------
 	-- btn_left3 UsableItems
@@ -134,19 +128,19 @@ config:SetScript("OnShow", function(self)
 	self.btn_left3 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*3)
 	self.btn_left3:SetChecked(Octo_ToDoVars.config.UsableItems)
-	self.btn_left3:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.UsableItems = btn_left:GetChecked()
+	self.btn_left3:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.UsableItems = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left3.text:SetText(Red_Color.."UsableItems|r")
+	self.btn_left3.text:SetText("UsableItems")
 	-----------------------------------------------
 	-- btn_left4 AutoOpen
 	-----------------------------------------------
 	self.btn_left4 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left4:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*4)
 	self.btn_left4:SetChecked(Octo_ToDoVars.config.AutoOpen)
-	self.btn_left4:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.AutoOpen = btn_left:GetChecked()
+	self.btn_left4:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.AutoOpen = btn:GetChecked()
 	end)
 	self.btn_left4.text:SetText("AutoOpen")
 	-----------------------------------------------
@@ -155,8 +149,8 @@ config:SetScript("OnShow", function(self)
 	self.btn_left5 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*5)
 	self.btn_left5:SetChecked(Octo_ToDoVars.config.AutoGossip)
-	self.btn_left5:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.AutoGossip = btn_left:GetChecked()
+	self.btn_left5:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.AutoGossip = btn:GetChecked()
 	end)
 	self.btn_left5.text:SetText("AutoGossip")
 	-----------------------------------------------
@@ -165,8 +159,8 @@ config:SetScript("OnShow", function(self)
 	self.btn_left6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*6)
 	self.btn_left6:SetChecked(Octo_ToDoVars.config.TalkingHeadFrame)
-	self.btn_left6:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.TalkingHeadFrame = btn_left:GetChecked()
+	self.btn_left6:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.TalkingHeadFrame = btn:GetChecked()
 	end)
 	self.btn_left6.text:SetText("TalkingHeadFrame")
 	-----------------------------------------------
@@ -175,8 +169,8 @@ config:SetScript("OnShow", function(self)
 	self.btn_left8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*8)
 	self.btn_left8:SetChecked(Octo_ToDoVars.config.HideZoneText)
-	self.btn_left8:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.HideZoneText = btn_left:GetChecked()
+	self.btn_left8:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.HideZoneText = btn:GetChecked()
 	end)
 	self.btn_left8.text:SetText("HideZoneText")
 	-----------------------------------------------
@@ -185,8 +179,8 @@ config:SetScript("OnShow", function(self)
 	self.btn_left9 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*9)
 	self.btn_left9:SetChecked(Octo_ToDoVars.config.Covenant)
-	self.btn_left9:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.Covenant = btn_left:GetChecked()
+	self.btn_left9:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.Covenant = btn:GetChecked()
 	end)
 	self.btn_left9.text:SetText("Covenant")
 	-----------------------------------------------
@@ -195,8 +189,8 @@ config:SetScript("OnShow", function(self)
 	self.btn_left10 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left10:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*10)
 	self.btn_left10:SetChecked(Octo_ToDoVars.config.UIErrorsFrameScale)
-	self.btn_left10:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.UIErrorsFrameScale = btn_left:GetChecked()
+	self.btn_left10:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.UIErrorsFrameScale = btn:GetChecked()
 	end)
 	self.btn_left10.text:SetText("UIErrorsFrameScale")
 	-----------------------------------------------
@@ -205,8 +199,8 @@ config:SetScript("OnShow", function(self)
 	self.btn_left11 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left11:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*11)
 	self.btn_left11:SetChecked(Octo_ToDoVars.config.RaidBossEmoteFrame)
-	self.btn_left11:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.RaidBossEmoteFrame = btn_left:GetChecked()
+	self.btn_left11:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.RaidBossEmoteFrame = btn:GetChecked()
 	end)
 	self.btn_left11.text:SetText("RaidBossEmoteFrame")
 	-----------------------------------------------
@@ -215,8 +209,8 @@ config:SetScript("OnShow", function(self)
 	self.btn_left12 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left12:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*12)
 	self.btn_left12:SetChecked(Octo_ToDoVars.config.CinematicCanceler)
-	self.btn_left12:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.CinematicCanceler = btn_left:GetChecked()
+	self.btn_left12:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.CinematicCanceler = btn:GetChecked()
 	end)
 	self.btn_left12.text:SetText("CinematicCanceler")
 	-----------------------------------------------
@@ -225,8 +219,8 @@ config:SetScript("OnShow", function(self)
 	self.btn_left13 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left13:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*13)
 	self.btn_left13:SetChecked(Octo_ToDoVars.config.BossBanner)
-	self.btn_left13:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.BossBanner = btn_left:GetChecked()
+	self.btn_left13:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.BossBanner = btn:GetChecked()
 	end)
 	self.btn_left13.text:SetText("BossBanner")
 	-----------------------------------------------
@@ -237,21 +231,21 @@ config:SetScript("OnShow", function(self)
 	self.btn_left14 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left14:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*14)
 	self.btn_left14:SetChecked(Octo_ToDoVars.config.AnotherAddonsCasual)
-	self.btn_left14:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.AnotherAddonsCasual = btn_left:GetChecked()
+	self.btn_left14:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.AnotherAddonsCasual = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left14.text:SetText(Red_Color.."AnotherAddonsCasual|r")
+	self.btn_left14.text:SetText("AnotherAddonsCasual")
 	-- btn_left15 AnotherAddonsRAID
 	-----------------------------------------------
 	self.btn_left15 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left15:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*15)
 	self.btn_left15:SetChecked(Octo_ToDoVars.config.AnotherAddonsRAID)
-	self.btn_left15:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.AnotherAddonsRAID = btn_left:GetChecked()
+	self.btn_left15:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.AnotherAddonsRAID = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left15.text:SetText(Red_Color.."AnotherAddonsRAID|r")
+	self.btn_left15.text:SetText("AnotherAddonsRAID")
 	-----------------------------------------------
 	-----------------------------------------------
 	-- btn_left16 ClearChat
@@ -259,12 +253,12 @@ config:SetScript("OnShow", function(self)
 	self.btn_left16 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 	self.btn_left16:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*16)
 	self.btn_left16:SetChecked(Octo_ToDoVars.config.ClearChat)
-	self.btn_left16:SetScript("OnClick", function(btn_left)
-		Octo_ToDoVars.config.ClearChat = btn_left:GetChecked()
+	self.btn_left16:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.ClearChat = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		--StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left16.text:SetText(Red_Color.."ClearChat|r")
+	self.btn_left16.text:SetText("ClearChat")
 	-----------------------------------------------
 	-----------------------------------------------
 	-- btn_left17 ShowOnlyCurrentRealm
@@ -276,7 +270,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.ShowOnlyCurrentRealm = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left17.text:SetText(Red_Color.."ShowOnlyCurrentRealm|r")
+	self.btn_left17.text:SetText("ShowOnlyCurrentRealm")
 	-----------------------------------------------
 	-- Slider_right18 LevelToShowTEXT
 	local LevelToShowTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
@@ -305,7 +299,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.AutoSellGrey = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left19.text:SetText(Red_Color.."AutoSellGrey|r")
+	self.btn_left19.text:SetText("AutoSellGrey")
 	-- btn_left19 AutoRepair
 	-----------------------------------------------
 	self.btn_left20 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -315,7 +309,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.AutoRepair = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left20.text:SetText(Red_Color.."AutoRepair|r")
+	self.btn_left20.text:SetText("AutoRepair")
 	-----------------------------------------------
 	-- btn_left21 HideErrorMessages
 	-----------------------------------------------
@@ -326,7 +320,7 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.HideErrorMessages = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left21.text:SetText(Red_Color.."HideErrorMessages|r")
+	self.btn_left21.text:SetText("HideErrorMessages")
 	-----------------------------------------------
 	-- btn_left22 SellFrame
 	-----------------------------------------------
@@ -337,47 +331,41 @@ config:SetScript("OnShow", function(self)
 		Octo_ToDoVars.config.SellFrame = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-	self.btn_left22.text:SetText(Red_Color.."SellFrame|r")
+	self.btn_left22.text:SetText("SellFrame")
 	-----------------------------------------------
-
-
-
-
-
-
-
-
-
-	--ELVUI
-	-- btn_left23 GlobalFadePersist
+	-- btn_center1 GlobalFadePersist
 	-----------------------------------------------
-local isElfUI = IsAddOnLoaded("ElvUI")
-	self.btn_left23 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_left23:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*23)
-	self.btn_left23:SetChecked(Octo_ToDoVars.config.GlobalFadePersist)
-	self.btn_left23:SetScript("OnClick", function(btn)
+	self.btn_center1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	self.btn_center1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*1)
+	self.btn_center1:SetChecked(Octo_ToDoVars.config.GlobalFadePersist)
+	self.btn_center1:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.GlobalFadePersist = btn:GetChecked()
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
-if isElfUI then
-	self.btn_left23.text:SetText(Blue_Color.."ElvUI|r "..Red_Color.."GlobalFadePersist|r")
-else
-	self.btn_left23.text:SetText(Orange_Color.."None ElvUI|r (GlobalFadePersist)")
-end
+	if isElvUI then
+		self.btn_center1.text:SetText("GlobalFadePersist"..Green_Color.." (ElvUI ENABLED)|r")
+	else
+		self.btn_center1.text:SetText(Gray_Color.."GlobalFadePersist".." (ElvUI DISABLED)|r")
+	end
 	-----------------------------------------------
-
-
-
-
-
-
-
-
-
+	-- btn_center2 LootFrame
+	-----------------------------------------------
+	self.btn_center2 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	self.btn_center2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*2)
+	self.btn_center2:SetChecked(Octo_ToDoVars.config.LootFrame)
+	self.btn_center2:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.LootFrame = btn:GetChecked()
+		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	end)
+	if isRCLootCouncil then
+		self.btn_center2.text:SetText("LootFrame"..Green_Color.." (RCLootCouncil ENABLED)|r")
+	else
+		self.btn_center2.text:SetText(Gray_Color.."LootFrame".." (RCLootCouncil DISABLED)|r")
+	end
 	-- btn_right1 LINE_Classic
 	-----------------------------------------------
 	self.btn_right1 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*1)
+	self.btn_right1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*1)
 	self.btn_right1:SetChecked(Octo_ToDoVars.config.LINE_Classic)
 	self.btn_right1:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_Classic = btn:GetChecked()
@@ -388,7 +376,7 @@ end
 	-- btn_right2 LINE_TheBurningCrusade
 	-----------------------------------------------
 	self.btn_right2 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*2)
+	self.btn_right2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*2)
 	self.btn_right2:SetChecked(Octo_ToDoVars.config.LINE_TheBurningCrusade)
 	self.btn_right2:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_TheBurningCrusade = btn:GetChecked()
@@ -399,7 +387,7 @@ end
 	-- btn_right3 LINE_WrathoftheLichKing
 	-----------------------------------------------
 	self.btn_right3 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*3)
+	self.btn_right3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*3)
 	self.btn_right3:SetChecked(Octo_ToDoVars.config.LINE_WrathoftheLichKing)
 	self.btn_right3:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_WrathoftheLichKing = btn:GetChecked()
@@ -410,7 +398,7 @@ end
 	-- btn_right4 LINE_Cataclysm
 	-----------------------------------------------
 	self.btn_right4 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right4:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*4)
+	self.btn_right4:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*4)
 	self.btn_right4:SetChecked(Octo_ToDoVars.config.LINE_Cataclysm)
 	self.btn_right4:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_Cataclysm = btn:GetChecked()
@@ -421,7 +409,7 @@ end
 	-- btn_right5 LINE_MistsofPandaria
 	-----------------------------------------------
 	self.btn_right5 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*5)
+	self.btn_right5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*5)
 	self.btn_right5:SetChecked(Octo_ToDoVars.config.LINE_MistsofPandaria)
 	self.btn_right5:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_MistsofPandaria = btn:GetChecked()
@@ -432,7 +420,7 @@ end
 	-- btn_right6 LINE_WarlordsofDraenor
 	-----------------------------------------------
 	self.btn_right6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*6)
+	self.btn_right6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*6)
 	self.btn_right6:SetChecked(Octo_ToDoVars.config.LINE_WarlordsofDraenor)
 	self.btn_right6:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_WarlordsofDraenor = btn:GetChecked()
@@ -443,7 +431,7 @@ end
 	-- btn_right7 LINE_Legion
 	-----------------------------------------------
 	self.btn_right7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*7)
+	self.btn_right7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*7)
 	self.btn_right7:SetChecked(Octo_ToDoVars.config.LINE_Legion)
 	self.btn_right7:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_Legion = btn:GetChecked()
@@ -454,7 +442,7 @@ end
 	-- btn_right8 LINE_BattleforAzeroth
 	-----------------------------------------------
 	self.btn_right8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*8)
+	self.btn_right8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*8)
 	self.btn_right8:SetChecked(Octo_ToDoVars.config.LINE_BattleforAzeroth)
 	self.btn_right8:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_BattleforAzeroth = btn:GetChecked()
@@ -465,7 +453,7 @@ end
 	-- btn_right9 LINE_Shadowlands
 	-----------------------------------------------
 	self.btn_right9 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*9)
+	self.btn_right9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*9)
 	self.btn_right9:SetChecked(Octo_ToDoVars.config.LINE_Shadowlands)
 	self.btn_right9:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_Shadowlands = btn:GetChecked()
@@ -476,7 +464,7 @@ end
 	-- btn_right10 LINE_Dragonflight
 	-----------------------------------------------
 	self.btn_right10 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-	self.btn_right10:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 400, -indent*10)
+	self.btn_right10:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*10)
 	self.btn_right10:SetChecked(Octo_ToDoVars.config.LINE_Dragonflight)
 	self.btn_right10:SetScript("OnClick", function(btn)
 		Octo_ToDoVars.config.LINE_Dragonflight = btn:GetChecked()
@@ -484,9 +472,18 @@ end
 	end)
 	self.btn_right10.text:SetText("|cffe8e379".."Dragonflight|r")
 	-----------------------------------------------
+	-- btn_left24 CVar
+	-----------------------------------------------
+	self.btn_right24 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	self.btn_right24:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 600, -indent*24)
+	self.btn_right24:SetChecked(Octo_ToDoVars.config.CVar)
+	self.btn_right24:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.CVar = btn:GetChecked()
+		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	end)
+	self.btn_right24.text:SetText("CVar")
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config, GlobalAddonName)
 category.ID = GlobalAddonName
 Settings.RegisterAddOnCategory(category)
-
