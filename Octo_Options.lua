@@ -40,7 +40,7 @@ local Green_Color = "|cff4FFF79"
 local Yellow_Color = "|cffFFF371"
 local Purple_Color = "|cffAF61FF"
 local Orange_Color = "|cffFF661A"
-local isElfUI = IsAddOnLoaded("ElvUI")
+local isElvUI = IsAddOnLoaded("ElvUI")
 local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 ----------------------------------------------------------------------------------------------------------------------------------

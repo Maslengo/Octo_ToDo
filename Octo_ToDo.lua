@@ -1172,6 +1172,10 @@ local function GenerateUniqueID()
 	end
 	return table.concat(s)
 end
+local function hex2rgb(self)
+	self = self:gsub("#","")
+	return tonumber("0x"..self:sub(1,2)), tonumber("0x"..self:sub(3,4)), tonumber("0x"..self:sub(5,6))
+end
 local function CompactNumberFormat(self)
 	if not self then
 		self = 0
@@ -3323,8 +3327,10 @@ function Octo_ToDoOnLoad()
 			print ("OctoFrame_EventFrame"..Random_Color..GetTime().."|r")
 		end
 	end
+	OctoFrame_EventFrame:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
 	OctoFrame_EventFrame:RegisterEvent("AZERITE_ITEM_EXPERIENCE_CHANGED")
 	OctoFrame_EventFrame:RegisterEvent("BAG_UPDATE")
+	OctoFrame_EventFrame:RegisterEvent("BAG_UPDATE_COOLDOWN")
 	OctoFrame_EventFrame:RegisterEvent("BANKFRAME_OPENED")
 	OctoFrame_EventFrame:RegisterEvent("CALENDAR_CLOSE_EVENT")
 	OctoFrame_EventFrame:RegisterEvent("CALENDAR_NEW_EVENT")
@@ -6803,6 +6809,40 @@ function Octo_ToDoOnEvent(self, event, ...)
 		Collect_All_journalInstance()
 		Octo_ToDoCreateAltFrame()
 		Octo_ToDoAddDataToAltFrame()
+	elseif event == "ACTIONBAR_UPDATE_COOLDOWN" and not InCombatLockdown() then
+		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then
+			-- Collect_ALL_PlayerInfo()
+			-- Collect_ALL_BankInfo()
+			-- Collect_All_Currency()
+			-- Collect_ALL_CurrentKEY()
+			-- Collect_ALL_DungeonsRaiting()
+			-- Collect_All_Holiday()
+			-- Collect_ALL_ItemLevel()
+			-- Collect_ALL_ItemsInBag()
+			-- Collect_ALL_KnownSpell()
+			-- Collect_ALL_Locations()
+			-- Collect_ALL_LoginTime()
+			-- Collect_ALL_Mail()
+			-- Collect_ALL_MoneyOnLogin()
+			-- Collect_ALL_MoneyUpdate()
+			-- Collect_ALL_MountEquipmentID()
+			-- Collect_All_Professions()
+			-- Collect_ALL_PVPRaitings()
+			-- Collect_All_Quests()
+			-- Collect_All_Reputations()
+			-- Collect_All_Transmoge()
+			-- Collect_ALL_UNIVERSALQuestUpdate()
+			-- Collect_ALL_VoidStorage()
+			-- Collect_BfA_Azerite()
+			-- Collect_BfA_Cloaklvl()
+			-- Collect_BfA_Island()
+			-- Collect_BfA_QuestsBounties()
+			-- Collect_Legion_Artifact()
+			-- Collect_SL_CovenantAnima()
+			-- Collect_SL_PossibleAnima()
+			-- Collect_All_journalInstance()
+			Octo_ToDoAddDataToAltFrame()
+		end
 	elseif event == "COVENANT_CHOSEN" then
 		if OctoDev_ShowEvents == true then print (Green_Color.."event: |r"..event..Random_Color..SecondsToClock(GetTime()).."|r") end
 		C_Timer.After(1, function()
@@ -6850,7 +6890,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		Collect_BfA_Azerite()
 		Collect_BfA_Cloaklvl()
 		-- Collect_Legion_Artifact()
-	elseif event == "BAG_UPDATE" and not InCombatLockdown() then
+	elseif event == "BAG_UPDATE" and not InCombatLockdown() and not IsAnyStandardHeldBagOpen() then --[[(not IsAnyStandardHeldBagOpen() or ContainerFrameCombinedBags:IsShown()) ]]
 		if OctoDev_ShowEvents == true then print (Green_Color.."event: |r"..event..Random_Color..SecondsToClock(GetTime()).."|r") end
 		Collect_ALL_ItemsInBag()
 		Collect_SL_PossibleAnima()
@@ -6858,11 +6898,22 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if BankFrame:IsShown() then
 			Collect_ALL_BankInfo()
 		end
+	-- elseif event == "BAG_UPDATE_COOLDOWN" and not InCombatLockdown() then
+	-- 	if OctoDev_ShowEvents == true then print (Green_Color.."event: |r"..event..Random_Color..SecondsToClock(GetTime()).."|r") end
+	-- 	Collect_ALL_ItemsInBag()
+	-- 	Collect_SL_PossibleAnima()
+	-- 	Collect_ALL_CurrentKEY()
+	-- 	if BankFrame:IsShown() then
+	-- 		Collect_ALL_BankInfo()
+	-- 	end
 	elseif (event == "HEARTHSTONE_BOUND" or event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA") and not InCombatLockdown() then
 		if OctoDev_ShowEvents == true then print (Green_Color.."event: |r"..event..Random_Color..SecondsToClock(GetTime()).."|r") end
 		Collect_ALL_Locations()
 	elseif (event == "BANKFRAME_OPENED" or event == "PLAYERBANKSLOTS_CHANGED") and not InCombatLockdown() then
 		if OctoDev_ShowEvents == true then print (Green_Color.."event: |r"..event..Random_Color..SecondsToClock(GetTime()).."|r") end
+		Collect_ALL_ItemsInBag()
+		Collect_SL_PossibleAnima()
+		Collect_ALL_CurrentKEY()
 		Collect_ALL_BankInfo()
 	elseif event == "VOID_STORAGE_UPDATE" or event == "VOID_TRANSFER_DONE" or event == "VOID_STORAGE_CONTENTS_UPDATE" or event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
 		if OctoDev_ShowEvents == true then print (Green_Color.."event: |r"..event..Random_Color..SecondsToClock(GetTime()).."|r") end

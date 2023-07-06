@@ -46,7 +46,7 @@ Frame_CommunityFeast:SetBackdrop({
 })
 Frame_CommunityFeast:SetBackdropBorderColor(0, 0, 0, 1)
 Frame_CommunityFeast:SetPoint("TOP",0,-220)
-Frame_CommunityFeast:SetFrameStrata("BACKGROUND")
+Frame_CommunityFeast:SetFrameStrata("HIGH")
 Frame_CommunityFeast:SetSize(Width, Height)
 Frame_CommunityFeast.BG = Frame_CommunityFeast:CreateTexture()
 Frame_CommunityFeast.BG:SetAllPoints(Frame_CommunityFeast)

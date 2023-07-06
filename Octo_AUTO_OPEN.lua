@@ -230,7 +230,7 @@ local function OpenableScan()
 					C_Container.UseContainerItem(bag, numSlots)
 					--self:SetAttribute("macrotext", "/use item:"..itemID)
 					if iconFileID and itemLink then
-						print("|cFF00A3FFADDON:|r".." |cFFFF4C4FOpening item:|r |T "..iconFileID..":16:16:::64:64:4:60:4:60|t "..itemLink)
+						print("|cffd177ffA|r|cffc77bfdu|r|cffbd7ffat|r|cffb483f7o|r |cffa987f4O|r|cff9f8bf1p|r|cff968fefe|r|cff8b93ecn|r |cff8197e9I|r|cff779be6t|r|cff6d9fe3e|r|cff63a4e0m|r |T "..iconFileID..":16:16:::64:64:4:60:4:60|t "..itemLink)
 					end
 				end
 			end

@@ -9,21 +9,21 @@ local function TableConcat(t1,t2)
 	return t1
 end
 local OctoTable_bytetoB64 = {
-    [0]="a", "b", "c", "d", "e", "f", "g", "h",
-    "i", "j", "k", "l", "m", "n", "o", "p",
-    "q", "r", "s", "t", "u", "v", "w", "x",
-    "y", "z", "A", "B", "C", "D", "E", "F",
-    "G", "H", "I", "J", "K", "L", "M", "N",
-    "O", "P", "Q", "R", "S", "T", "U", "V",
-    "W", "X", "Y", "Z", "0", "1", "2", "3",
-    "4", "5", "6", "7", "8", "9", "(", ")"
+	[0]="a", "b", "c", "d", "e", "f", "g", "h",
+	"i", "j", "k", "l", "m", "n", "o", "p",
+	"q", "r", "s", "t", "u", "v", "w", "x",
+	"y", "z", "A", "B", "C", "D", "E", "F",
+	"G", "H", "I", "J", "K", "L", "M", "N",
+	"O", "P", "Q", "R", "S", "T", "U", "V",
+	"W", "X", "Y", "Z", "0", "1", "2", "3",
+	"4", "5", "6", "7", "8", "9", "(", ")"
 }
 function GenerateUniqueID()
-    local s = {}
-    for i=1, 11 do
-	tinsert(s, OctoTable_bytetoB64[math.random(0, 63)])
-    end
-    return table.concat(s)
+	local s = {}
+	for i=1, 11 do
+		tinsert(s, OctoTable_bytetoB64[math.random(0, 63)])
+	end
+	return table.concat(s)
 end
 local Kyri_Color = "|cff6fa8dc"
 local Necr_Color = "|cff93c47d"
@@ -40,7 +40,7 @@ local Green_Color = "|cff4FFF79"
 local Yellow_Color = "|cffFFF371"
 local Purple_Color = "|cffAF61FF"
 local Orange_Color = "|cffFF661A"
-local isElfUI = IsAddOnLoaded("ElvUI")
+local isElvUI = IsAddOnLoaded("ElvUI")
 local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -257,14 +257,14 @@ tinsert(E.Octo_Globals.modules, function()
 			CinematicFrame:HookScript("OnShow", function(self, ...)
 					if IsModifierKeyDown() then
 					return end --если нажат модификатор, то запустится мувик
-					print("|cFF00A3FFCinematic|r |cffFF4C4Fcanceled.|r")
+					print("|cffd177ffC|r|cffcb79fei|r|cffc47cfcn|r|cffbd7ffae|r|cffb682f8m|r|cffaf85f6a|r|cffa887f4t|r|cffa18af2i|r|cff9a8df0c|r |cff9490eec|r|cff8d93eca|r|cff8695ean|r|cff7f98e8c|r|cff789be6e|r|cff719ee4l|r|cff6aa1e2e|r|cff63a4e0d|r")
 					CinematicFrame_CancelCinematic()
 			end)
 			local omfpf = _G["MovieFrame_PlayMovie"] --запускает мувик?
 			_G["MovieFrame_PlayMovie"] = function(...)
 				if IsModifierKeyDown() then
 					return omfpf(...) end
-				print("|cFF00A3FFMovie|r |cffFF4C4Fcanceled.|r")
+				print("|cffd177ffM|r|cffc87afdo|r|cffbf7efav|r|cffb682f8i|r|cffad86f5e|r |cffa489f3c|r|cff9a8df0a|r|cff9191edn|r|cff8895ebc|r|cff7f98e8e|r|cff769ce6l|r|cff6da0e3e|r|cff63a4e0d|r")
 				GameMovieFinished() return true
 			end
 		end
@@ -295,23 +295,23 @@ end
 --AnotherAddonsCasual
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AnotherAddonsCasual then
-			-- func_Octo_LoadAddOn("!BugGrabber")
-			-- func_Octo_LoadAddOn("BugSack")
-			-- func_Octo_LoadAddOn("AstralKeys")
-			-- func_Octo_LoadAddOn("AutoTurnIn")
-			-- func_Octo_LoadAddOn("MountsJournal")
-			-- func_Octo_LoadAddOn("MountsJournal_ElvUI_Skin")
-			-- func_Octo_LoadAddOn("HidingBar")
-			-- func_Octo_LoadAddOn("HidingBar_Options")
-			-- func_Octo_LoadAddOn("Postal")
-			-- func_Octo_LoadAddOn("TalentTreeTweaks")
-			-- func_Octo_LoadAddOn("Simulationcraft")
-			-- func_Octo_LoadAddOn("SpeedyAutoLoot")
-			-- func_Octo_LoadAddOn("AdvancedInterfaceOptions")
-			-- func_Octo_LoadAddOn("Pawn")
-			-- func_Octo_LoadAddOn("Rarity")
-			-- func_Octo_LoadAddOn("Rarity_Options")
-			-- func_Octo_LoadAddOn("Plater")
+			func_Octo_LoadAddOn("!BugGrabber")
+			func_Octo_LoadAddOn("BugSack")
+			func_Octo_LoadAddOn("AstralKeys")
+			func_Octo_LoadAddOn("AutoTurnIn")
+			func_Octo_LoadAddOn("MountsJournal")
+			func_Octo_LoadAddOn("MountsJournal_ElvUI_Skin")
+			func_Octo_LoadAddOn("HidingBar")
+			func_Octo_LoadAddOn("HidingBar_Options")
+			func_Octo_LoadAddOn("Postal")
+			func_Octo_LoadAddOn("TalentTreeTweaks")
+			func_Octo_LoadAddOn("Simulationcraft")
+			func_Octo_LoadAddOn("SpeedyAutoLoot")
+			func_Octo_LoadAddOn("AdvancedInterfaceOptions")
+			func_Octo_LoadAddOn("Pawn")
+			func_Octo_LoadAddOn("Rarity")
+			func_Octo_LoadAddOn("Rarity_Options")
+			func_Octo_LoadAddOn("Plater")
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -362,13 +362,13 @@ end)
 --CVAR
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.CVar then
-			if isElfUI == true and not InCombatLockdown() then
+			if isElvUI == true and not InCombatLockdown() then
 				C_Timer.After(1, function()
 						C_Container.SetSortBagsRightToLeft(false)
 						C_Container.SetInsertItemsLeftToRight(false)
 				end)
 			end
-			if isElfUI == false and not InCombatLockdown() then
+			if isElvUI == false and not InCombatLockdown() then
 				C_Timer.After(1, function()
 						C_Container.SetSortBagsRightToLeft(false)
 						C_Container.SetInsertItemsLeftToRight(false)
@@ -2043,22 +2043,22 @@ tinsert(E.Octo_Globals.modules, function()
 								and not IsShiftKeyDown() then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									print ("|cFF00A3FFAUTO_GOSSIP SELECT:|r |cff00FF00("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t|cFFFF5771"..v.name.."|r")
+									print ("|cffd177ffA|r|cffca7afdu|r|cffc37dfbt|r|cffbb80f9o|r |cffb483f7G|r|cffad86f5o|r|cffa589f3s|r|cff9e8cf1s|r|cff978fefi|r|cff8f92edp|r |cff8895ebS|r|cff8198e9e|r|cff799be7l|r|cff729ee5e|r|cff6ba1e3c|r|cff63a4e0t|r "..Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
 								end
 								if First_Option[targetNPCID] and not IsShiftKeyDown() then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									print ("|cFF00A3FFAUTO_GOSSIP SELECT:|r |cff00FF00("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t|cFFFF5771"..v.name.."|r")
+									print ("|cffd177ffA|r|cffca7afdu|r|cffc37dfbt|r|cffbb80f9o|r |cffb483f7G|r|cffad86f5o|r|cffa589f3s|r|cff9e8cf1s|r|cff978fefi|r|cff8f92edp|r |cff8895ebS|r|cff8198e9e|r|cff799be7l|r|cff729ee5e|r|cff6ba1e3c|r|cff63a4e0t|r "..Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
 								end
 								if Second_Option[targetNPCID] and not IsShiftKeyDown() and i == 2 then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									print ("|cFF00A3FFAUTO_GOSSIP SELECT:|r |cff00FF00("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t|cFFFF5771"..v.name.."|r")
+									print ("|cffd177ffA|r|cffca7afdu|r|cffc37dfbt|r|cffbb80f9o|r |cffb483f7G|r|cffad86f5o|r|cffa589f3s|r|cff9e8cf1s|r|cff978fefi|r|cff8f92edp|r |cff8895ebS|r|cff8198e9e|r|cff799be7l|r|cff729ee5e|r|cff6ba1e3c|r|cff63a4e0t|r "..Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
 								end
 								if #info == 1 and not IsShiftKeyDown() then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									print ("|cFF00A3FFAUTO_GOSSIP SELECT:|r |cff00FF00("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t|cFFFF5771"..v.name.."|r")
+									print ("|cffd177ffA|r|cffca7afdu|r|cffc37dfbt|r|cffbb80f9o|r |cffb483f7G|r|cffad86f5o|r|cffa589f3s|r|cff9e8cf1s|r|cff978fefi|r|cff8f92edp|r |cff8895ebS|r|cff8198e9e|r|cff799be7l|r|cff729ee5e|r|cff6ba1e3c|r|cff63a4e0t|r "..Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
 								end
 							end
 						end
@@ -2145,8 +2145,8 @@ tinsert(E.Octo_Globals.modules, function()
 					end
 				end
 				if totalPrice ~= 0 then
-					print("|cFF00A3FFAutoSellGrey|r|cff00FF00 +".. GetCoinTextureString(totalPrice) .. "|r")
-					--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Vendored gray items for: "]..GetCoinTextureString(totalPrice), 255, 255, 255)
+					-- print("|cFF00A3FFAutoSellGrey|r|cff00FF00 +".. GetCoinTextureString(totalPrice) .. "|r")
+					-- DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Vendored gray items for: "]..GetCoinTextureString(totalPrice), 255, 255, 255)
 				end
 			end
 			if not AutoSellGreyFrame then
@@ -2207,15 +2207,15 @@ tinsert(E.Octo_Globals.modules, function()
 								if (amount >= repairAllCost) then
 									RepairAllItems(true)
 									guildRepairedItems = true
-									print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
-									--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired using guild bank funds for: "]..costTextureString, 255, 255, 255)
+									-- print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
+									-- DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired using guild bank funds for: "]..costTextureString, 255, 255, 255)
 								end
 							end
 							-- Use own funds
 							if (repairAllCost <= money and not guildRepairedItems) then
 								RepairAllItems(false)
-								print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
-								--DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired for: "]..costTextureString, 255, 255, 255)
+								-- print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
+								-- DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired for: "]..costTextureString, 255, 255, 255)
 							end
 						end
 					end
@@ -2267,6 +2267,7 @@ tinsert(E.Octo_Globals.modules, function()
 			local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8
 			local OctoFrame_Events = nil
 			local OctoFrame_SellOther = nil
+			local OctoFrame_SellConsumable = nil
 			local OctoFrame_foundLevelTooltip = nil
 			local OctoFrame_FROMBANK = nil
 			local OctoFrame_TOBANK = nil
@@ -2308,18 +2309,61 @@ tinsert(E.Octo_Globals.modules, function()
 				OctoFrame_Events:SetScript("OnEvent", Octo_Trade_OnEvent)
 			end
 			function MASLENGO_Trade()
+				----------------------------------------------------------------------------------------------------------------------------------
+				if not OctoFrame_SellConsumable then
+					OctoFrame_SellConsumable = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellConsumable:Hide()
+				end
+				OctoFrame_SellConsumable:SetSize(64*scale, 64*scale)
+				OctoFrame_SellConsumable:SetFrameStrata("HIGH")
+				OctoFrame_SellConsumable:EnableMouse(true)
+				OctoFrame_SellConsumable:SetMovable(true)
+				OctoFrame_SellConsumable:RegisterForDrag("RightButton")
+				OctoFrame_SellConsumable:SetScript("OnDragStart", OctoFrame_SellConsumable.StartMoving)
+				OctoFrame_SellConsumable:SetScript("OnDragStop", function() OctoFrame_SellConsumable:StopMovingOrSizing() end)
+				OctoFrame_SellConsumable:SetPoint("CENTER", -551, 65)
+				OctoFrame_SellConsumable:SetBackdrop({
+						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+						edgeSize = 1,
+				})
+				OctoFrame_SellConsumable:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				OctoFrame_SellConsumable:SetBackdropBorderColor(0, 0, 0, 1)
+				OctoFrame_SellConsumable:RegisterForClicks("LeftButtonUp")
+				OctoFrame_SellConsumable:SetScript("OnClick",function()
+						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+							for slot=1, C_Container.GetContainerNumSlots(bag) do
+								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
+								if containerInfo then
+									local itemID = containerInfo.itemID
+									local itemLink = C_Container.GetContainerItemLink(bag, slot)
+									-- local _, _, _, _, _, _, classID = select(6, GetItemInfo(itemID))
+									local classID = select(12, GetItemInfo(itemID))
+									if itemID and classID == 0 then
+										C_Container.UseContainerItem(bag,slot)
+									end
+								end
+							end
+						end
+					end
+				)
+				OctoFrame_SellConsumable.icon = OctoFrame_SellConsumable:CreateTexture(nil,"ARTWORK")
+				OctoFrame_SellConsumable.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ui_sigil_kyrian.tga")
+				OctoFrame_SellConsumable.icon:SetAllPoints(OctoFrame_SellConsumable)
+				OctoFrame_SellConsumable:Show()
+				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_SellOther then
 					OctoFrame_SellOther = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellOther:Hide()
 				end
 				OctoFrame_SellOther:SetSize(64*scale, 64*scale)
-				OctoFrame_SellOther:SetFrameStrata("DIALOG")
+				OctoFrame_SellOther:SetFrameStrata("HIGH")
 				OctoFrame_SellOther:EnableMouse(true)
 				OctoFrame_SellOther:SetMovable(true)
 				OctoFrame_SellOther:RegisterForDrag("RightButton")
 				OctoFrame_SellOther:SetScript("OnDragStart", OctoFrame_SellOther.StartMoving)
 				OctoFrame_SellOther:SetScript("OnDragStop", function() OctoFrame_SellOther:StopMovingOrSizing() end)
-				OctoFrame_SellOther:SetPoint("CENTER", -551, 12)
+				OctoFrame_SellOther:SetPoint("CENTER", -551, 0)
 				OctoFrame_SellOther:SetBackdrop({
 						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -2371,13 +2415,13 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_SellAll:Hide()
 				end
 				OctoFrame_SellAll:SetSize(64*scale, 64*scale)
-				OctoFrame_SellAll:SetFrameStrata("DIALOG")
+				OctoFrame_SellAll:SetFrameStrata("HIGH")
 				OctoFrame_SellAll:EnableMouse(true)
 				OctoFrame_SellAll:SetMovable(true)
 				OctoFrame_SellAll:RegisterForDrag("RightButton")
 				OctoFrame_SellAll:SetScript("OnDragStart", OctoFrame_SellAll.StartMoving)
 				OctoFrame_SellAll:SetScript("OnDragStop", function() OctoFrame_SellAll:StopMovingOrSizing() end)
-				OctoFrame_SellAll:SetPoint("CENTER", -551, -53)
+				OctoFrame_SellAll:SetPoint("CENTER", -551, -65)
 				OctoFrame_SellAll:SetBackdrop({
 						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -2431,7 +2475,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_FROMBANK:Hide()
 				end
 				OctoFrame_FROMBANK:SetSize(64*scale, 64*scale)
-				OctoFrame_FROMBANK:SetFrameStrata("DIALOG")
+				OctoFrame_FROMBANK:SetFrameStrata("HIGH")
 				OctoFrame_FROMBANK:SetPoint("CENTER", -500, 32)
 				OctoFrame_FROMBANK:SetBackdrop({
 						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -2471,7 +2515,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_TOBANK:Hide()
 				end
 				OctoFrame_TOBANK:SetSize(64*scale, 64*scale)
-				OctoFrame_TOBANK:SetFrameStrata("DIALOG")
+				OctoFrame_TOBANK:SetFrameStrata("HIGH")
 				OctoFrame_TOBANK:SetPoint("CENTER", -500, -32)
 				OctoFrame_TOBANK:SetBackdrop({
 						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -2506,6 +2550,9 @@ tinsert(E.Octo_Globals.modules, function()
 				elseif event == "Trade_SHOW" and not InCombatLockdown() then
 					MASLENGO_Trade()
 				elseif event == "SECURE_TRANSFER_CANCEL" or event == "MERCHANT_CLOSED" or event == "PLAYER_STARTED_MOVING" then
+					if OctoFrame_SellConsumable then
+						OctoFrame_SellConsumable:Hide()
+					end
 					if OctoFrame_SellOther then
 						OctoFrame_SellOther:Hide()
 					end
@@ -2530,49 +2577,50 @@ tinsert(E.Octo_Globals.modules, function()
 end)
 -- GlobalFadePersist
 tinsert(E.Octo_Globals.modules, function()
-	if Octo_ToDoVars.config.GlobalFadePersist then
-		--------------------------------------------------------------------------------
-		C_Timer.After(1, function()
-				if isElfUI then
-					local E, L, V, P, G = unpack(ElvUI) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
-					local GFP = E:NewModule('ElvUI_GlobalFadePersist', 'AceHook-3.0', 'AceEvent-3.0') --Create a plugin within ElvUI and adopt AceHook-3.0, AceEvent-3.0 and AceTimer-3.0. We can make use of these later.
-					local EP = LibStub("LibElvUIPlugin-1.0") --We can use this to automatically insert our GUI tables when ElvUI_Config is loaded.
-					local AB = E:GetModule("ActionBars")
-					function FadeParent_OnEvent(self, event)
-						if UnitInVehicle("player") and (event == 'UNIT_ENTERED_VEHICLE' or 'UNIT_ENTERING_VEHICLE') then
-							self.mouseLock = true
-							E:UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
-						else
-							self.mouseLock = false
-							E:UIFrameFadeOut(self, 0.2, self:GetAlpha(), 1 - AB.db.globalFadeAlpha)
+		if Octo_ToDoVars.config.GlobalFadePersist then
+			--------------------------------------------------------------------------------
+			C_Timer.After(1, function()
+					if isElvUI then
+						local E, L, V, P, G = unpack(ElvUI) --Import: Engine, Locales, PrivateDB, ProfileDB, GlobalDB
+						local GFP = E:NewModule('ElvUI_GlobalFadePersist', 'AceHook-3.0', 'AceEvent-3.0') --Create a plugin within ElvUI and adopt AceHook-3.0, AceEvent-3.0 and AceTimer-3.0. We can make use of these later.
+						local EP = LibStub("LibElvUIPlugin-1.0") --We can use this to automatically insert our GUI tables when ElvUI_Config is loaded.
+						local AB = E:GetModule("ActionBars")
+						function FadeParent_OnEvent(self, event)
+							if UnitInVehicle("player") and (event == 'UNIT_ENTERED_VEHICLE' or 'UNIT_ENTERING_VEHICLE') then
+								self.mouseLock = true
+								E:UIFrameFadeIn(self, 0.2, self:GetAlpha(), 1)
+							else
+								self.mouseLock = false
+								E:UIFrameFadeOut(self, 0.2, self:GetAlpha(), 1 - AB.db.globalFadeAlpha)
+							end
 						end
+						function GFP:Initialize()
+							--Register plugin so options are properly inserted when config is loaded
+							EP:RegisterPlugin(GFP:GetName())
+							-- Register vehicle and player death events to fadeParent for easy checking
+							AB.fadeParent:RegisterEvent("UNIT_ENTERING_VEHICLE")
+							AB.fadeParent:RegisterEvent("UNIT_ENTERED_VEHICLE")
+							AB.fadeParent:RegisterEvent("UNIT_EXITING_VEHICLE")
+							AB.fadeParent:RegisterEvent("UNIT_EXITED_VEHICLE")
+							AB.fadeParent:RegisterEvent("PLAYER_DEAD")
+							-- Unregister events we no longer care about (more efficient)
+							AB.fadeParent:UnregisterEvent("PLAYER_REGEN_DISABLED")
+							AB.fadeParent:UnregisterEvent("PLAYER_REGEN_ENABLED")
+							AB.fadeParent:UnregisterEvent("PLAYER_TARGET_CHANGED")
+							AB.fadeParent:UnregisterEvent("UNIT_SPELLCAST_START", "player")
+							AB.fadeParent:UnregisterEvent("UNIT_SPELLCAST_STOP", "player")
+							AB.fadeParent:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_START", "player")
+							AB.fadeParent:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_STOP", "player")
+							AB.fadeParent:UnregisterEvent("UNIT_HEALTH", "player")
+							AB.fadeParent:UnregisterEvent("PLAYER_FOCUS_CHANGED")
+							-- Finally, override the default script for this event in ElvUI
+							AB.fadeParent:SetScript("OnEvent", FadeParent_OnEvent)
+						end
+						E:RegisterModule(GFP:GetName())
 					end
-					function GFP:Initialize()
-						--Register plugin so options are properly inserted when config is loaded
-						EP:RegisterPlugin(GFP:GetName())
-						-- Register vehicle and player death events to fadeParent for easy checking
-						AB.fadeParent:RegisterEvent("UNIT_ENTERING_VEHICLE")
-						AB.fadeParent:RegisterEvent("UNIT_ENTERED_VEHICLE")
-						AB.fadeParent:RegisterEvent("UNIT_EXITING_VEHICLE")
-						AB.fadeParent:RegisterEvent("UNIT_EXITED_VEHICLE")
-						AB.fadeParent:RegisterEvent("PLAYER_DEAD")
-						-- Unregister events we no longer care about (more efficient)
-						AB.fadeParent:UnregisterEvent("PLAYER_REGEN_DISABLED")
-						AB.fadeParent:UnregisterEvent("PLAYER_REGEN_ENABLED")
-						AB.fadeParent:UnregisterEvent("PLAYER_TARGET_CHANGED")
-						AB.fadeParent:UnregisterEvent("UNIT_SPELLCAST_START", "player")
-						AB.fadeParent:UnregisterEvent("UNIT_SPELLCAST_STOP", "player")
-						AB.fadeParent:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_START", "player")
-						AB.fadeParent:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_STOP", "player")
-						AB.fadeParent:UnregisterEvent("UNIT_HEALTH", "player")
-						AB.fadeParent:UnregisterEvent("PLAYER_FOCUS_CHANGED")
-						-- Finally, override the default script for this event in ElvUI
-						AB.fadeParent:SetScript("OnEvent", FadeParent_OnEvent)
-					end
-					E:RegisterModule(GFP:GetName())
-				end
-		end)
-	end
+			end)
+		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
+
