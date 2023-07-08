@@ -1,5 +1,6 @@
 local GlobalAddonName, E = ...
 local frame = CreateFrame("Frame")
+frame:Hide()
 frame:RegisterEvent("ADDON_LOADED")
 frame:RegisterEvent("PLAYER_LOGIN")
 WowheadQuickLinkCfg = WowheadQuickLinkCfg or {}

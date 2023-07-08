@@ -406,6 +406,7 @@ local function HookTooltip(tooltip)
 	end)
 end
 local eventHookFrame = CreateFrame("Frame")
+eventHookFrame:Hide()
 eventHookFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 eventHookFrame:SetScript("OnEvent",
 	function(self, event, arg1)

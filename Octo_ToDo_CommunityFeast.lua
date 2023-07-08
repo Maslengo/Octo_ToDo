@@ -12,13 +12,6 @@ local bytetoB64 = {
 	"W", "X", "Y", "Z", "0", "1", "2", "3",
 	"4", "5", "6", "7", "8", "9", "(", ")"
 }
-function GenerateUniqueID()
-	local s = {}
-	for i=1, 11 do
-		tinsert(s, bytetoB64[math.random(0, 63)])
-	end
-	return table.concat(s)
-end
 local EventFrame = CreateFrame("Frame")
 -- EventFrame:RegisterEvent("CHAT_MSG_CHANNEL")
 EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -38,7 +31,7 @@ local Width = 446 --Ширина
 local Height = 26 --Высота
 local questID = 70893--72068 --
 local mapID = 2024
-local Frame_CommunityFeast = CreateFrame("Frame", GlobalAddonName..GenerateUniqueID(), UIParent, "BackdropTemplate")
+local Frame_CommunityFeast = CreateFrame("Frame", GlobalAddonName..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 Frame_CommunityFeast:Hide()
 Frame_CommunityFeast:SetBackdrop({
 		edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",

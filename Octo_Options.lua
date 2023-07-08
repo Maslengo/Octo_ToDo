@@ -8,48 +8,16 @@ local function TableConcat(t1,t2)
 	end
 	return t1
 end
-local OctoTable_bytetoB64 = {
-    [0]="a", "b", "c", "d", "e", "f", "g", "h",
-    "i", "j", "k", "l", "m", "n", "o", "p",
-    "q", "r", "s", "t", "u", "v", "w", "x",
-    "y", "z", "A", "B", "C", "D", "E", "F",
-    "G", "H", "I", "J", "K", "L", "M", "N",
-    "O", "P", "Q", "R", "S", "T", "U", "V",
-    "W", "X", "Y", "Z", "0", "1", "2", "3",
-    "4", "5", "6", "7", "8", "9", "(", ")"
-}
-function GenerateUniqueID()
-    local s = {}
-    for i=1, 11 do
-	tinsert(s, OctoTable_bytetoB64[math.random(0, 63)])
-    end
-    return table.concat(s)
-end
-local Kyri_Color = "|cff6fa8dc"
-local Necr_Color = "|cff93c47d"
-local NFae_Color = "|cffb4a7d6"
-local Vent_Color = "|cffea9999"
-local Cyan_Color = "|cff00ccff"
-local Rift_Color = "|cffbf9eff"
-local Gray_Color = "|cff404040"
-local Addon_Color = "|cff4FFF79"
-local White_Color = "|cffFFF7D7"
-local Blue_Color = "|cff00A3FF"
-local Red_Color = "|cffFF4C4F"
-local Green_Color = "|cff4FFF79"
-local Yellow_Color = "|cffFFF371"
-local Purple_Color = "|cffAF61FF"
-local Orange_Color = "|cffFF661A"
 local isElvUI = IsAddOnLoaded("ElvUI")
 local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
-local config = CreateFrame("FRAME", GlobalAddonName.."config"..GenerateUniqueID())
+local config = CreateFrame("FRAME", GlobalAddonName.."config"..E.Octo_Func.GenerateUniqueID())
 -- config:RegisterEvent("VARIABLES_LOADED")
 config:Hide()
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
-    text = Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
+    text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
     button1 = YES,
     button2 = NO,
     hideOnEscape = 1,
@@ -84,7 +52,7 @@ local function newSlider(slider_name, minRange, maxRange, stepSize, getValue, te
     return slider
 end
 local function newButton(pos, line)
-    Button = CreateFrame("CheckButton", "CheckButton"..GenerateUniqueID(), config.title, "InterfaceOptionsCheckButtonTemplate")
+    Button = CreateFrame("CheckButton", "CheckButton"..E.Octo_Func.GenerateUniqueID(), config.title, "InterfaceOptionsCheckButtonTemplate")
     Button:SetPoint("TOPLEFT", title, "BOTTOMLEFT", pos, -indent*line)
     Button:SetChecked(Octo_ToDoVars.config.ShowOnlyCurrentRealm)
     Button:SetScript("OnClick", function(Button)
@@ -342,9 +310,9 @@ config:SetScript("OnShow", function(self)
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
 	if isElvUI then
-		self.btn_center1.text:SetText("GlobalFadePersist"..Green_Color.." (ElvUI ENABLED)|r")
+		self.btn_center1.text:SetText("GlobalFadePersist"..E.Octo_Globals.Green_Color.." (ElvUI ENABLED)|r")
 	else
-		self.btn_center1.text:SetText(Gray_Color.."GlobalFadePersist".." (ElvUI DISABLED)|r")
+		self.btn_center1.text:SetText(E.Octo_Globals.Gray_Color.."GlobalFadePersist".." (ElvUI DISABLED)|r")
 	end
 	-----------------------------------------------
 	-- btn_center2 LootFrame
@@ -357,9 +325,9 @@ config:SetScript("OnShow", function(self)
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
 	if isRCLootCouncil then
-		self.btn_center2.text:SetText("LootFrame"..Green_Color.." (RCLootCouncil ENABLED)|r")
+		self.btn_center2.text:SetText("LootFrame"..E.Octo_Globals.Green_Color.." (RCLootCouncil ENABLED)|r")
 	else
-		self.btn_center2.text:SetText(Gray_Color.."LootFrame".." (RCLootCouncil DISABLED)|r")
+		self.btn_center2.text:SetText(E.Octo_Globals.Gray_Color.."LootFrame".." (RCLootCouncil DISABLED)|r")
 	end
 	-- btn_right1 LINE_Classic
 	-----------------------------------------------

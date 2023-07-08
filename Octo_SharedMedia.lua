@@ -3,9 +3,6 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 local LSM = LibStub("LibSharedMedia-3.0")
---[[SOUND
-]]
-local GlobalAddonName = ...
 --Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Anime
 LSM:Register("sound", "|cFF00A1FFO_01_ayaya|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Anime\ayaya.ogg]])
 LSM:Register("sound", "|cFF00A1FFO_01_Fuck You|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Anime\Fuck You.ogg]])

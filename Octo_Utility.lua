@@ -8,49 +8,18 @@ local function TableConcat(t1,t2)
 	end
 	return t1
 end
-local OctoTable_bytetoB64 = {
-	[0]="a", "b", "c", "d", "e", "f", "g", "h",
-	"i", "j", "k", "l", "m", "n", "o", "p",
-	"q", "r", "s", "t", "u", "v", "w", "x",
-	"y", "z", "A", "B", "C", "D", "E", "F",
-	"G", "H", "I", "J", "K", "L", "M", "N",
-	"O", "P", "Q", "R", "S", "T", "U", "V",
-	"W", "X", "Y", "Z", "0", "1", "2", "3",
-	"4", "5", "6", "7", "8", "9", "(", ")"
-}
-function GenerateUniqueID()
-	local s = {}
-	for i=1, 11 do
-		tinsert(s, OctoTable_bytetoB64[math.random(0, 63)])
-	end
-	return table.concat(s)
-end
-local Kyri_Color = "|cff6fa8dc"
-local Necr_Color = "|cff93c47d"
-local NFae_Color = "|cffb4a7d6"
-local Vent_Color = "|cffea9999"
-local Cyan_Color = "|cff00ccff"
-local Rift_Color = "|cffbf9eff"
-local Gray_Color = "|cff404040"
-local Addon_Color = "|cff4FFF79"
-local White_Color = "|cffFFF7D7"
-local Blue_Color = "|cff00A3FF"
-local Red_Color = "|cffFF4C4F"
-local Green_Color = "|cff4FFF79"
-local Yellow_Color = "|cffFFF371"
-local Purple_Color = "|cffAF61FF"
-local Orange_Color = "|cffFF661A"
 local isElvUI = IsAddOnLoaded("ElvUI")
 local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 ----------------------------------------------------------------------------------------------------------------------------------
+local UnitLevel = UnitLevel("PLAYER")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- TalkingHeadFrame
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.TalkingHeadFrame then
 			hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
 					self:Hide()
-					print("|cffd177ffT|r|cffcd78fea|r|cffc87afdl|r|cffc37cfbk|r|cffbe7efai|r|cffba80f9n|r|cffb582f7g|r |cffb084f6h|r|cffab86f5e|r|cffa688f3a|r|cffa28af2d|r |cff9d8cf1f|r|cff988eefr|r|cff9390eea|r|cff8f92edm|r|cff8a94ebe|r |cff8596eac|r|cff8098e9a|r|cff7b9ae7n|r|cff779ce6c|r|cff729ee5e|r|cff6da0e3l|r|cff68a2e2e|r|cff63a4e0d|r")
+					print(E.Octo_Func.func_Gradient("Talking Head Frame canceled", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
 			end)
 		end
 end)
@@ -64,9 +33,9 @@ tinsert(E.Octo_Globals.modules, function()
 			local OctoFrame_EventFrame = nil
 			local Octo_Frame_Loot = nil
 			local Octo_Frame_RCLootCouncil = nil
-			local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
+
 			if not OctoFrame_EventFrame then
-				OctoFrame_EventFrame = CreateFrame("FRAME", AddonTitle..GenerateUniqueID())
+				OctoFrame_EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
 			end
 			OctoFrame_EventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 			OctoFrame_EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -82,7 +51,7 @@ tinsert(E.Octo_Globals.modules, function()
 			-- https://wowpedia.fandom.com/wiki/DifficultyID
 			--------------------------------------------------------------------------------
 			if not Octo_Frame_Loot then
-				Octo_Frame_Loot = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+				Octo_Frame_Loot = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
 			end
 			Octo_Frame_Loot:Hide()
 			Octo_Frame_Loot:SetSize(24*scale, 24*scale)
@@ -102,7 +71,7 @@ tinsert(E.Octo_Globals.modules, function()
 			--if select(5, GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" then
 			--------------------------------------------------------------------------------
 			if not Octo_Frame_RCLootCouncil then
-				Octo_Frame_RCLootCouncil = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+				Octo_Frame_RCLootCouncil = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
 			end
 			Octo_Frame_RCLootCouncil:Hide()
 			Octo_Frame_RCLootCouncil:SetSize(24*scale, 24*scale)
@@ -257,14 +226,14 @@ tinsert(E.Octo_Globals.modules, function()
 			CinematicFrame:HookScript("OnShow", function(self, ...)
 					if IsModifierKeyDown() then
 					return end --если нажат модификатор, то запустится мувик
-					print("|cffd177ffC|r|cffcb79fei|r|cffc47cfcn|r|cffbd7ffae|r|cffb682f8m|r|cffaf85f6a|r|cffa887f4t|r|cffa18af2i|r|cff9a8df0c|r |cff9490eec|r|cff8d93eca|r|cff8695ean|r|cff7f98e8c|r|cff789be6e|r|cff719ee4l|r|cff6aa1e2e|r|cff63a4e0d|r")
+					print(E.Octo_Func.func_Gradient("Cinematic canceled", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
 					CinematicFrame_CancelCinematic()
 			end)
 			local omfpf = _G["MovieFrame_PlayMovie"] --запускает мувик?
 			_G["MovieFrame_PlayMovie"] = function(...)
 				if IsModifierKeyDown() then
 					return omfpf(...) end
-				print("|cffd177ffM|r|cffc87afdo|r|cffbf7efav|r|cffb682f8i|r|cffad86f5e|r |cffa489f3c|r|cff9a8df0a|r|cff9191edn|r|cff8895ebc|r|cff7f98e8e|r|cff769ce6l|r|cff6da0e3e|r|cff63a4e0d|r")
+				print(E.Octo_Func.func_Gradient("Movie canceled", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
 				GameMovieFinished() return true
 			end
 		end
@@ -304,7 +273,7 @@ tinsert(E.Octo_Globals.modules, function()
 			func_Octo_LoadAddOn("HidingBar")
 			func_Octo_LoadAddOn("HidingBar_Options")
 			func_Octo_LoadAddOn("Postal")
-			func_Octo_LoadAddOn("TalentTreeTweaks")
+			-- func_Octo_LoadAddOn("TalentTreeTweaks")
 			func_Octo_LoadAddOn("Simulationcraft")
 			func_Octo_LoadAddOn("SpeedyAutoLoot")
 			func_Octo_LoadAddOn("AdvancedInterfaceOptions")
@@ -550,18 +519,17 @@ end)
 --USABLEITEMS
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.UsableItems then
-			local UnitLevel = UnitLevel("PLAYER")
 			local className, classFilename, classId = UnitClass("PLAYER")
-			local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
+
 			local function func_itemName(self)
 				local itemName, _, itemQuality = GetItemInfo(self)
 				if itemQuality then
 					local r, g, b = GetItemQualityColor(itemQuality)
 					local color = CreateColor(r, g, b, 1)
 					local itemNameColored = color:WrapTextInColorCode(itemName)
-					return itemNameColored or Red_Color..RETRIEVING_ITEM_INFO.."|r"
+					return itemNameColored or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 				end
-				return itemName or Red_Color..RETRIEVING_ITEM_INFO.."|r"
+				return itemName or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 			end
 			local white_list = {
 				-- https://www.wowhead.com/ru/item=205151/%D0%B8%D0%B7%D0%B2%D0%B8%D0%BB%D0%B8%D1%81%D0%BA#comments
@@ -570,6 +538,7 @@ tinsert(E.Octo_Globals.modules, function()
 				-- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
 				-- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
 				-- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
+				{itemid = 111350, count = 1},
 				{itemid = 202098, count = 1},
 				{itemid = 202097, count = 1},
 				{itemid = 202099, count = 1},
@@ -791,7 +760,7 @@ tinsert(E.Octo_Globals.modules, function()
 				{itemid = 185992, count = 1},
 				{itemid = 185993, count = 1},
 				{itemid = 186196, count = 1},
-				{itemid = 186472, count = 1},
+				-- {itemid = 186472, count = 1},
 				{itemid = 186473, count = 1},
 				{itemid = 186524, count = 1},
 				{itemid = 186531, count = 1},
@@ -885,7 +854,8 @@ tinsert(E.Octo_Globals.modules, function()
 				{itemid = 188753, count = 1},
 				{itemid = 189765, count = 1},
 				{itemid = 190178, count = 1},
-				{itemid = 190184, count = 1},
+				{itemid = 188198, count = 1},
+				-- {itemid = 190184, count = 1},
 				{itemid = 190198, count = 5},
 				{itemid = 190198, count = 5},
 				{itemid = 190339, count = 1},
@@ -1875,7 +1845,7 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 			--local function UsableItems_Frame(itemID)
 			if not UsableItems_Frame then
-				UsableItems_Frame = CreateFrame("Button", AddonTitle..GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+				UsableItems_Frame = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
 				UsableItems_Frame:Hide()
 			end
 			UsableItems_Frame:Hide()
@@ -1894,7 +1864,7 @@ tinsert(E.Octo_Globals.modules, function()
 			--end
 			local function UsableItemFrame_OnLoad()
 				if not EventFrame then
-					EventFrame = CreateFrame("Frame", AddonTitle..GenerateUniqueID(), UIParent)
+					EventFrame = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent)
 					EventFrame:Hide()
 				end
 				if not InCombatLockdown() then
@@ -2043,22 +2013,22 @@ tinsert(E.Octo_Globals.modules, function()
 								and not IsShiftKeyDown() then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									print ("|cffd177ffA|r|cffca7afdu|r|cffc37dfbt|r|cffbb80f9o|r |cffb483f7G|r|cffad86f5o|r|cffa589f3s|r|cff9e8cf1s|r|cff978fefi|r|cff8f92edp|r |cff8895ebS|r|cff8198e9e|r|cff799be7l|r|cff729ee5e|r|cff6ba1e3c|r|cff63a4e0t|r "..Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
+									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
 								end
 								if First_Option[targetNPCID] and not IsShiftKeyDown() then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									print ("|cffd177ffA|r|cffca7afdu|r|cffc37dfbt|r|cffbb80f9o|r |cffb483f7G|r|cffad86f5o|r|cffa589f3s|r|cff9e8cf1s|r|cff978fefi|r|cff8f92edp|r |cff8895ebS|r|cff8198e9e|r|cff799be7l|r|cff729ee5e|r|cff6ba1e3c|r|cff63a4e0t|r "..Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
+									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
 								end
 								if Second_Option[targetNPCID] and not IsShiftKeyDown() and i == 2 then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									print ("|cffd177ffA|r|cffca7afdu|r|cffc37dfbt|r|cffbb80f9o|r |cffb483f7G|r|cffad86f5o|r|cffa589f3s|r|cff9e8cf1s|r|cff978fefi|r|cff8f92edp|r |cff8895ebS|r|cff8198e9e|r|cff799be7l|r|cff729ee5e|r|cff6ba1e3c|r|cff63a4e0t|r "..Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
+									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
 								end
 								if #info == 1 and not IsShiftKeyDown() then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									print ("|cffd177ffA|r|cffca7afdu|r|cffc37dfbt|r|cffbb80f9o|r |cffb483f7G|r|cffad86f5o|r|cffa589f3s|r|cff9e8cf1s|r|cff978fefi|r|cff8f92edp|r |cff8895ebS|r|cff8198e9e|r|cff799be7l|r|cff729ee5e|r|cff6ba1e3c|r|cff63a4e0t|r "..Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
+									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
 								end
 							end
 						end
@@ -2295,7 +2265,7 @@ tinsert(E.Octo_Globals.modules, function()
 			local ilvlStr = avgItemLevelEquipped or 0
 			function Octo_Trade_OnLoad()
 				if not OctoFrame_Events then
-					OctoFrame_Events = CreateFrame("Frame", AddonTitle..GenerateUniqueID())
+					OctoFrame_Events = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID())
 					OctoFrame_Events:Hide()
 				end
 				OctoFrame_Events:RegisterEvent("Trade_SHOW")
@@ -2311,7 +2281,7 @@ tinsert(E.Octo_Globals.modules, function()
 			function MASLENGO_Trade()
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_SellConsumable then
-					OctoFrame_SellConsumable = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellConsumable = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellConsumable:Hide()
 				end
 				OctoFrame_SellConsumable:SetSize(64*scale, 64*scale)
@@ -2353,7 +2323,7 @@ tinsert(E.Octo_Globals.modules, function()
 				OctoFrame_SellConsumable:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_SellOther then
-					OctoFrame_SellOther = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellOther = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellOther:Hide()
 				end
 				OctoFrame_SellOther:SetSize(64*scale, 64*scale)
@@ -2411,7 +2381,7 @@ tinsert(E.Octo_Globals.modules, function()
 				OctoFrame_SellOther:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_SellAll then
-					OctoFrame_SellAll = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellAll = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellAll:Hide()
 				end
 				OctoFrame_SellAll:SetSize(64*scale, 64*scale)
@@ -2471,7 +2441,7 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 			local function MASLENGO_BANK()
 				if not OctoFrame_FROMBANK then
-					OctoFrame_FROMBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_FROMBANK = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_FROMBANK:Hide()
 				end
 				OctoFrame_FROMBANK:SetSize(64*scale, 64*scale)
@@ -2511,7 +2481,7 @@ tinsert(E.Octo_Globals.modules, function()
 				OctoFrame_FROMBANK:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_TOBANK then
-					OctoFrame_TOBANK = CreateFrame("BUTTON", AddonTitle..GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_TOBANK = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_TOBANK:Hide()
 				end
 				OctoFrame_TOBANK:SetSize(64*scale, 64*scale)
