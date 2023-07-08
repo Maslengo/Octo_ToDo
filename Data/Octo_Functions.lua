@@ -159,19 +159,19 @@ end
 local func_percent = E.Octo_Func.func_percent
 ----------------------------------------------------------------
 function E.Octo_Func.func_Gradient(text, firstColor, secondColor)
-	local vivod, maslengo, total = "", "", utf8len(text)-1 -- output
+	local vivod, maslengo, total = "", "", utf8len(text)-1 --
 	local r1, g1, b1 = E.Octo_Func.func_hex2rgb(firstColor)
 	local r2, g2, b2 = E.Octo_Func.func_hex2rgb(secondColor)
-	local TESTr, TESTg, TESTb = (r2-r1)/total, (g2-g1)/total, (b2-b1)/total
+	local rdelta, gdelta, bdelta = (r2-r1)/total, (g2-g1)/total, (b2-b1)/total
 	local r3 = r1
 	local g3 = g1
 	local b3 = b1
 	for i = 1, total do
 		-- print (i, math.floor(r3+.5), math.floor(g3+.5), math.floor(b3+.5), utf8sub(text, i, i), total)
 		maslengo = maslengo..("|cff%02x%02x%02x%s|r"):format(math.floor(r3+.5), math.floor(g3+.5), math.floor(b3+.5), utf8sub(text, i, i))
-		r3 = r3 + TESTr
-		g3 = g3 + TESTg
-		b3 = b3 + TESTb
+		r3 = r3 + rdelta
+		g3 = g3 + gdelta
+		b3 = b3 + bdelta
 	end
 	vivod = maslengo..secondColor..utf8sub(text, utf8len(text)).."|r"
 	return vivod
@@ -352,8 +352,8 @@ local Empty_Zero = E.Octo_Func.Empty_Zero
 ----------------------------------------------------------------
 function E.Octo_Func.tmstpDayReset(self)
 	local self = self or 1
-	local currTime = GetServerTime()
-	return (math.ceil((currTime - thursdayReset)/(daytime*self))*daytime*self)+thursdayReset
+
+	return (math.ceil((E.Octo_Globals.currTime - E.Octo_Globals.thursdayReset)/(E.Octo_Globals.daytime*self))*E.Octo_Globals.daytime*self)+E.Octo_Globals.thursdayReset
 end
 local tmstpDayReset = E.Octo_Func.tmstpDayReset
 ----------------------------------------------------------------

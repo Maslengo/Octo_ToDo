@@ -8,9 +8,11 @@ E.Octo_Globals.baseArmoryUrl = "https://worldofwarcraft.com/%s/character/%s/%s"
 E.Octo_Globals.baseRaiderIoUrl = "https://raider.io/characters/%s/%s/%s"
 E.Octo_Globals.strategies = {}
 E.Octo_Globals.altStrategies = {}
-
-
-
+E.Octo_Globals.thursdayReset = (1514358000-10800)
+E.Octo_Globals.thursdayResetDay0US = 1514300400
+E.Octo_Globals.daytime = 86400
+E.Octo_Globals.currTime = tonumber(GetServerTime())
+E.Octo_Globals.curExpansionMaxLevel = 70
 
 
 

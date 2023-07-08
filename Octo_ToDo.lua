@@ -33,14 +33,12 @@ local WorldBoss_Icon = "|T3528312:16:16:::64:64:4:60:4:60|t"
 local Rares_Icon = "|T135903:16:16:::64:64:4:60:4:60|t"
 local Unknown_Icon = "|T134400:16:16:::64:64:4:60:4:60|t"
 local Money_Icon = "|T133784:12:12:::64:64:4:64:4:64|t"
-local grayR, grayG, grayB, grayA = 0.5, 0.5, 0.5, 1
 local classColor = C_ClassColor.GetClassColor(classFilename)
 local r, g, b = classColor:GetRGB()
 local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 local curWidth = 90*scale
 local curHeight = 20*scale
 local curWidthTitle = curWidth*2
-local curExpansionMaxLevel = 70
 local fontObject9 = CreateFont("OctoFont9")
 fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 9, "OUTLINE")
 local fontObject10 = CreateFont("OctoFont10")
@@ -54,9 +52,8 @@ local TotalMoney = 0
 local TotalMoneyAllServer = 0
 local TotalTransAnima = 0
 local TotalKills = 0
-local thursdayReset = (1514358000-10800)
-local thursdayResetDay0US = 1514300400
-local daytime = 86400
+
+
 local NONE = E.Octo_Globals.Gray_Color.."None|r"
 local DONE = E.Octo_Globals.Addon_Color.."Done|r"
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
@@ -2755,8 +2752,7 @@ function Timer_Legion_Invasion()
 	local TIMER = (1547586000-10800)
 	local interval = 66600
 	local duration = 21600
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	local Timer_Legion_Invasion = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2768,8 +2764,7 @@ function Timer_BfA_Invasion()
 	local TIMER = (1547586000+3600)
 	local interval = 68400
 	local duration = 25200
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	local Timer_BfA_Invasion = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2781,8 +2776,7 @@ function Timer_BfA_Assault()
 	local TIMER = (1547586000+3600+3600+3600+3600+3600+3600+3600)
 	local interval = 86400
 	local duration = 86400
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	local Timer_BfA_Assault = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2794,8 +2788,7 @@ function Timer_DF_ToDragonbaneKeep()
 	local TIMER = 1670342460
 	local interval = 7200
 	local duration = 900
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	local Timer_DF_ToDragonbaneKeep = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2807,8 +2800,7 @@ function Timer_DF_GrandHunts()
 	local TIMER = 1671307200
 	local interval = 7200
 	local duration = 7199
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	local Timer_DF_GrandHunts = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2820,8 +2812,7 @@ function Timer_DF_CommunityFeast()
 	local TIMER = 1677168000
 	local interval = 5400
 	local duration = 900
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	local Timer_DF_CommunityFeast = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2833,8 +2824,7 @@ function Timer_DF_PrimalStorms()
 	local TIMER = 1683804640
 	local interval = 18000
 	local duration = 7200
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	local Timer_DF_PrimalStorms = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2846,8 +2836,7 @@ function Timer_DF_ResearchersUnderFire()
 	local TIMER = 1683804640
 	local interval = 3600
 	local duration = 1500
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	local Timer_DF_ResearchersUnderFire = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2859,8 +2848,7 @@ function Timer_SL_Maw_Assault()
 	local TIMER = 3780
 	local interval = 7200
 	local duration = 900
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	local Timer_SL_Maw_Assault = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2872,8 +2860,7 @@ function Timer_Daily_Reset()
 	local TIMER = 1687579264
 	local interval = 86400
 	local duration = 1
-	local currTime = tonumber(GetServerTime())
-	local nextEventIn = interval - mod(currTime - TIMER, interval)
+	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
 	if (nextEventIn/60/60) < 4 then
 		local Timer_Daily_Reset = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 		if nextEventIn > (interval - duration) then
@@ -5968,7 +5955,7 @@ function Octo_ToDoAddDataToAltFrame()
 			else
 				OctoFrame_Char_Frame.CharNameBG:SetColorTexture(0, 0, .5, .2)
 			end
-			if CharInfo.UnitLevel ~= curExpansionMaxLevel then
+			if CharInfo.UnitLevel ~= E.Octo_Globals.curExpansionMaxLevel then
 				if CharInfo.currentXP == 0 then
 					OctoFrame_Char_Frame.experience:SetWidth(0.1)
 				else
