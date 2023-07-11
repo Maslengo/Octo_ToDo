@@ -27,8 +27,8 @@ EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 -- EventFrame:RegisterEvent("PLAYER_STOPPED_MOVING")
 -- EventFrame:RegisterEvent("OPEN_WORLD_MAP")
 -- EventFrame:RegisterEvent("WORLD_MAP_UPDATE")
-local Width = 446 --Ширина
-local Height = 26 --Высота
+local Width = 446*E.Octo_Globals.scale --Ширина
+local Height = 26*E.Octo_Globals.scale --Высота
 local questID = 70893--72068 --
 local mapID = 2024
 local Frame_CommunityFeast = CreateFrame("Frame", GlobalAddonName..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")

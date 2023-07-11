@@ -167,7 +167,6 @@ function E.Octo_Func.func_Gradient(text, firstColor, secondColor)
 	local g3 = g1
 	local b3 = b1
 	for i = 1, total do
-		-- print (i, math.floor(r3+.5), math.floor(g3+.5), math.floor(b3+.5), utf8sub(text, i, i), total)
 		maslengo = maslengo..("|cff%02x%02x%02x%s|r"):format(math.floor(r3+.5), math.floor(g3+.5), math.floor(b3+.5), utf8sub(text, i, i))
 		r3 = r3 + rdelta
 		g3 = g3 + gdelta

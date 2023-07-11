@@ -55,6 +55,7 @@ function E.Octo_Globals.strategies.GetArmoryUrl(dataSources)
 		local _, locale, realm, name = strategy(dataSources)
 		if locale and realm and name then
 			if realm == "СвежевательДуш" then realm = "Soulflayer"
+			elseif realm == "Свежеватель-Душ" then realm = "Soulflayer"
 			elseif realm == "Ревущий-фьорд" then realm = "howling-fjord"
 			elseif realm == "Гордунни" then realm = "Gordunni"
 			end

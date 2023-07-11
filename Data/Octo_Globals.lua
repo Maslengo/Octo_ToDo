@@ -13,15 +13,21 @@ E.Octo_Globals.thursdayResetDay0US = 1514300400
 E.Octo_Globals.daytime = 86400
 E.Octo_Globals.currTime = tonumber(GetServerTime())
 E.Octo_Globals.curExpansionMaxLevel = 70
-
-
-
+E.Octo_Globals.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
+E.Octo_Globals.curWidth = 96*E.Octo_Globals.scale
+E.Octo_Globals.curHeight = 20*E.Octo_Globals.scale
+E.Octo_Globals.curWidthTitle = E.Octo_Globals.curWidth*2
+E.Octo_Globals.ilvlToShow = 400
+----------------------------------------------------------------
+--COLORS--------------------------------------------------------
+----------------------------------------------------------------
 E.Octo_Globals.Addon_Color = "|cff4FFF79"
 E.Octo_Globals.Addon_Left_Color = "|cffd177ff"
 E.Octo_Globals.Addon_Right_Color = "|cff63a4e0"
 E.Octo_Globals.Blue_Color = "|cff00A3FF"
 E.Octo_Globals.Cyan_Color = "|cff00ccff"
 E.Octo_Globals.Gray_Color = "|cff404040"
+E.Octo_Globals.DarkGray_Color = "|cff202020"
 E.Octo_Globals.Green_Color = "|cff4FFF79"
 E.Octo_Globals.Orange_Color = "|cffFF661A"
 E.Octo_Globals.Purple_Color = "|cffAF61FF"
@@ -29,26 +35,30 @@ E.Octo_Globals.Red_Color = "|cffFF4C4F"
 E.Octo_Globals.Rift_Color = "|cffbf9eff"
 E.Octo_Globals.White_Color = "|cffFFF7D7"
 E.Octo_Globals.Yellow_Color = "|cffFFF371"
-
 E.Octo_Globals.Kyrian_Color = "|cff6fa8dc"
 E.Octo_Globals.Kyrian_r_Color = 0.44
 E.Octo_Globals.Kyrian_g_Color = 0.66
 E.Octo_Globals.Kyrian_b_Color = 0.86
-
 E.Octo_Globals.Necrolord_Color = "|cff93c47d"
 E.Octo_Globals.Necrolord_r_Color = 0.58
 E.Octo_Globals.Necrolord_g_Color = 0.77
 E.Octo_Globals.Necrolord_b_Color = 0.49
-
 E.Octo_Globals.NightFae_Color = "|cffb4a7d6"
 E.Octo_Globals.NightFae_r_Color = 0.56
 E.Octo_Globals.NightFae_g_Color = 0.49
 E.Octo_Globals.NightFae_b_Color = 0.76
-
 E.Octo_Globals.Venthyr_Color = "|cffea9999"
 E.Octo_Globals.Venthyr_r_Color = 0.88
 E.Octo_Globals.Venthyr_g_Color = 0.40
 E.Octo_Globals.Venthyr_b_Color = 0.40
-
-
-
+----------------------------------------------------------------
+E.Octo_Globals.Classic_Color = "|cff68ccef"
+E.Octo_Globals.TheBurningCrusade_Color = "|cff4fff79"
+E.Octo_Globals.WrathoftheLichKing_Color = "|cff00a3ff"
+E.Octo_Globals.Cataclysm_Color = "|cffffb300"
+E.Octo_Globals.MistsofPandaria_Color = "|cff00ffba"
+E.Octo_Globals.WarlordsofDraenor_Color = "|cffc86400"
+E.Octo_Globals.Legion_Color = "|cff1eff00"
+E.Octo_Globals.BattleforAzeroth_Color = "|cff6464ff"
+E.Octo_Globals.Shadowlands_Color = "|cffc9c3aa"
+E.Octo_Globals.Dragonflight_Color = "|cffe8e379"

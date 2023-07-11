@@ -10,7 +10,6 @@ local function TableConcat(t1,t2)
 end
 local isElvUI = IsAddOnLoaded("ElvUI")
 local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
-local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 ----------------------------------------------------------------------------------------------------------------------------------
 local UnitLevel = UnitLevel("PLAYER")
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -54,7 +53,7 @@ tinsert(E.Octo_Globals.modules, function()
 				Octo_Frame_Loot = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
 			end
 			Octo_Frame_Loot:Hide()
-			Octo_Frame_Loot:SetSize(24*scale, 24*scale)
+			Octo_Frame_Loot:SetSize(24*E.Octo_Globals.scale, 24*E.Octo_Globals.scale)
 			Octo_Frame_Loot:SetPoint("TOPLEFT", 64, 0)
 			Octo_Frame_Loot:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 			Octo_Frame_Loot:SetBackdropBorderColor(0, 0, 0, 1)
@@ -74,7 +73,7 @@ tinsert(E.Octo_Globals.modules, function()
 				Octo_Frame_RCLootCouncil = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
 			end
 			Octo_Frame_RCLootCouncil:Hide()
-			Octo_Frame_RCLootCouncil:SetSize(24*scale, 24*scale)
+			Octo_Frame_RCLootCouncil:SetSize(24*E.Octo_Globals.scale, 24*E.Octo_Globals.scale)
 			Octo_Frame_RCLootCouncil:SetPoint("TOPLEFT", 128, 0)
 			Octo_Frame_RCLootCouncil:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 			Octo_Frame_RCLootCouncil:SetBackdropBorderColor(0, 0, 0, 1)
@@ -259,13 +258,13 @@ local function func_Octo_LoadAddOn(GlobalAddonName)
 		LoadAddOn(GlobalAddonName)
 	end
 end
+func_Octo_LoadAddOn("!BugGrabber")
+func_Octo_LoadAddOn("BugSack")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --AnotherAddonsCasual
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AnotherAddonsCasual then
-			func_Octo_LoadAddOn("!BugGrabber")
-			func_Octo_LoadAddOn("BugSack")
 			func_Octo_LoadAddOn("AstralKeys")
 			func_Octo_LoadAddOn("AutoTurnIn")
 			func_Octo_LoadAddOn("MountsJournal")
@@ -273,7 +272,6 @@ tinsert(E.Octo_Globals.modules, function()
 			func_Octo_LoadAddOn("HidingBar")
 			func_Octo_LoadAddOn("HidingBar_Options")
 			func_Octo_LoadAddOn("Postal")
-			-- func_Octo_LoadAddOn("TalentTreeTweaks")
 			func_Octo_LoadAddOn("Simulationcraft")
 			func_Octo_LoadAddOn("SpeedyAutoLoot")
 			func_Octo_LoadAddOn("AdvancedInterfaceOptions")
@@ -281,49 +279,48 @@ tinsert(E.Octo_Globals.modules, function()
 			func_Octo_LoadAddOn("Rarity")
 			func_Octo_LoadAddOn("Rarity_Options")
 			func_Octo_LoadAddOn("Plater")
+			-- func_Octo_LoadAddOn("TalentTreeTweaks")
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
 --AnotherAddonsRAID
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AnotherAddonsRAID then
-			-- func_Octo_LoadAddOn("!BugGrabber")
-			-- func_Octo_LoadAddOn("AddOnSkins")
+			func_Octo_LoadAddOn("AddOnSkins")
+			func_Octo_LoadAddOn("BigWigs")
+			func_Octo_LoadAddOn("BigWigs_Core")
+			func_Octo_LoadAddOn("BigWigs_Plugins")
+			func_Octo_LoadAddOn("BigWigs_Options")
+			func_Octo_LoadAddOn("BigWigs_Aberrus")
+			func_Octo_LoadAddOn("Details")
+			func_Octo_LoadAddOn("ElvUI_Libraries")
+			func_Octo_LoadAddOn("ElvUI")
+			func_Octo_LoadAddOn("ElvUI_Options")
+			func_Octo_LoadAddOn("OmniCC")
+			func_Octo_LoadAddOn("OmniCC_Config")
+			func_Octo_LoadAddOn("Pawn")
+			func_Octo_LoadAddOn("Plater")
+			func_Octo_LoadAddOn("SharedMedia")
+			func_Octo_LoadAddOn("SharedMedia_Causese")
+			func_Octo_LoadAddOn("SharedMedia_MyMedia")
+			func_Octo_LoadAddOn("SharedMedia_Naowh")
+			func_Octo_LoadAddOn("WeakAuras")
+			func_Octo_LoadAddOn("WeakAurasArchive")
+			func_Octo_LoadAddOn("WeakAurasModelPaths")
+			func_Octo_LoadAddOn("WeakAurasOptions")
+			func_Octo_LoadAddOn("WeakAurasTemplates")
 			-- func_Octo_LoadAddOn("AdvancedInterfaceOptions")
-			-- func_Octo_LoadAddOn("BigWigs")
-			-- func_Octo_LoadAddOn("BigWigs_Core")
-			-- func_Octo_LoadAddOn("BigWigs_Options")
-			-- func_Octo_LoadAddOn("BigWigs_Plugins")
-			-- func_Octo_LoadAddOn("BigWigs_Aberrus")
-			-- func_Octo_LoadAddOn("BugSack")
-			-- func_Octo_LoadAddOn("Details")
-			-- func_Octo_LoadAddOn("ElvUI_Libraries")
-			-- func_Octo_LoadAddOn("ElvUI")
-			-- func_Octo_LoadAddOn("ElvUI_Options")
 			-- func_Octo_LoadAddOn("MRT")
-			-- -- func_Octo_LoadAddOn("ExRT_Reminder")
+			-- func_Octo_LoadAddOn("ExRT_Reminder")
 			-- func_Octo_LoadAddOn("MountsJournal")
-			-- func_Octo_LoadAddOn("OmniCC")
-			-- func_Octo_LoadAddOn("OmniCC_Config")
 			-- func_Octo_LoadAddOn("OmniCD")
 			-- func_Octo_LoadAddOn("Parrot")
-			-- func_Octo_LoadAddOn("Pawn")
-			-- func_Octo_LoadAddOn("Plater")
 			-- func_Octo_LoadAddOn("Postal")
 			-- func_Octo_LoadAddOn("RCLootCouncil")
-			-- func_Octo_LoadAddOn("SharedMedia")
-			-- func_Octo_LoadAddOn("SharedMedia_Causese")
-			-- func_Octo_LoadAddOn("SharedMedia_MyMedia")
-			-- func_Octo_LoadAddOn("SharedMedia_Naowh")
 			-- func_Octo_LoadAddOn("Simulationcraft")
 			-- func_Octo_LoadAddOn("TalentTreeTweaks")
 			-- func_Octo_LoadAddOn("TrufiGCD")
 			-- func_Octo_LoadAddOn("WagoAppCompanion")
-			-- func_Octo_LoadAddOn("WeakAuras")
-			-- func_Octo_LoadAddOn("WeakAurasArchive")
-			-- func_Octo_LoadAddOn("WeakAurasModelPaths")
-			-- func_Octo_LoadAddOn("WeakAurasOptions")
-			-- func_Octo_LoadAddOn("WeakAurasTemplates")
 		end
 end)
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -538,6 +535,7 @@ tinsert(E.Octo_Globals.modules, function()
 				-- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
 				-- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
 				-- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
+				{itemid = 157827, count = 1},
 				{itemid = 111350, count = 1},
 				{itemid = 202098, count = 1},
 				{itemid = 202097, count = 1},
@@ -1849,7 +1847,7 @@ tinsert(E.Octo_Globals.modules, function()
 				UsableItems_Frame:Hide()
 			end
 			UsableItems_Frame:Hide()
-			UsableItems_Frame:SetSize(64*scale, 64*scale)
+			UsableItems_Frame:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
 			UsableItems_Frame:SetPoint("TOPLEFT", 0, 0)
 			UsableItems_Frame:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 4})
 			UsableItems_Frame:SetBackdropBorderColor(1, 1, 1, 1)
@@ -1990,9 +1988,10 @@ tinsert(E.Octo_Globals.modules, function()
 							[91483] = true,
 							[180162] = true,
 							[161509] = true,
+							[203011] = true,
 						}
 						local Second_Option = {
-							[201398] = true, -- 1 в городе
+							[201398] = true,
 							--[205089] = true,
 						}
 						if guid and UnitGUID(UnitID):match("%a+") ~= "Player" then
@@ -2014,18 +2013,15 @@ tinsert(E.Octo_Globals.modules, function()
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
-								end
-								if First_Option[targetNPCID] and not IsShiftKeyDown() then
+								elseif First_Option[targetNPCID] and not IsShiftKeyDown() then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
-								end
-								if Second_Option[targetNPCID] and not IsShiftKeyDown() and i == 2 then
+								elseif Second_Option[targetNPCID] and not IsShiftKeyDown() and i == 2 then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
-								end
-								if #info == 1 and not IsShiftKeyDown() then
+								elseif #info == 1 and not IsShiftKeyDown() then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
@@ -2284,7 +2280,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_SellConsumable = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellConsumable:Hide()
 				end
-				OctoFrame_SellConsumable:SetSize(64*scale, 64*scale)
+				OctoFrame_SellConsumable:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
 				OctoFrame_SellConsumable:SetFrameStrata("HIGH")
 				OctoFrame_SellConsumable:EnableMouse(true)
 				OctoFrame_SellConsumable:SetMovable(true)
@@ -2326,7 +2322,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_SellOther = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellOther:Hide()
 				end
-				OctoFrame_SellOther:SetSize(64*scale, 64*scale)
+				OctoFrame_SellOther:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
 				OctoFrame_SellOther:SetFrameStrata("HIGH")
 				OctoFrame_SellOther:EnableMouse(true)
 				OctoFrame_SellOther:SetMovable(true)
@@ -2384,7 +2380,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_SellAll = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellAll:Hide()
 				end
-				OctoFrame_SellAll:SetSize(64*scale, 64*scale)
+				OctoFrame_SellAll:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
 				OctoFrame_SellAll:SetFrameStrata("HIGH")
 				OctoFrame_SellAll:EnableMouse(true)
 				OctoFrame_SellAll:SetMovable(true)
@@ -2444,7 +2440,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_FROMBANK = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_FROMBANK:Hide()
 				end
-				OctoFrame_FROMBANK:SetSize(64*scale, 64*scale)
+				OctoFrame_FROMBANK:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
 				OctoFrame_FROMBANK:SetFrameStrata("HIGH")
 				OctoFrame_FROMBANK:SetPoint("CENTER", -500, 32)
 				OctoFrame_FROMBANK:SetBackdrop({
@@ -2484,7 +2480,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_TOBANK = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_TOBANK:Hide()
 				end
-				OctoFrame_TOBANK:SetSize(64*scale, 64*scale)
+				OctoFrame_TOBANK:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
 				OctoFrame_TOBANK:SetFrameStrata("HIGH")
 				OctoFrame_TOBANK:SetPoint("CENTER", -500, -32)
 				OctoFrame_TOBANK:SetBackdrop({
