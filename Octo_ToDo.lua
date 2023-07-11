@@ -1,6 +1,3 @@
--- Nagano Ichika
--- https://vk.com/video?notsafe=1&q=Nagano%20Ichika
--- 27130 ачив поинтов
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
@@ -56,7 +53,7 @@ local TotalMoneyAllServer = 0
 local TotalTransAnima = 0
 local TotalKills = 0
 local NONE = E.Octo_Globals.Gray_Color.."None|r"
-local DONE = E.Octo_Globals.Addon_Color.."Done|r"
+local DONE = E.Octo_Globals.Green_Color.."Done|r"
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
 local regionalWeeklyStart = 1668981600
 local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8
@@ -1201,10 +1198,10 @@ local function CheckReputationByRepID(self)
 		color = E.Octo_Globals.Green_Color
 		standingTEXT = " ("..FACTION_STANDING_LABEL7..")"
 	elseif standingID == 8 then
-		color = E.Octo_Globals.Addon_Color
+		color = E.Octo_Globals.Green_Color
 		standingTEXT = " ("..FACTION_STANDING_LABEL8..")"
 	elseif standingID == 9 then
-		color = E.Octo_Globals.Addon_Color
+		color = E.Octo_Globals.Green_Color
 		standingTEXT = " ("..FACTION_STANDING_LABEL9..")"
 	end
 	local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
@@ -1224,7 +1221,7 @@ local function CheckReputationByRepID(self)
 		local currentValue = data.renownReputationEarned
 		local totalValue = data.renownLevelThreshold
 		local standing = data.renownLevel
-		vivod = (currentValue).."/"..(totalValue)..E.Octo_Globals.Addon_Color.."("..(standing)..")|r"
+		vivod = (currentValue).."/"..(totalValue)..E.Octo_Globals.Green_Color.."("..(standing)..")|r"
 		if standing == 0 then vivod = 0 end
 	elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
 		local friendshipFactionID = reputationInfo.friendshipFactionID or 0
@@ -1242,13 +1239,13 @@ local function CheckReputationByRepID(self)
 		end
 		standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
 		vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
-		if currentLevel == maxLevel then vivod = E.Octo_Globals.Addon_Color.."Done|r" end
+		if currentLevel == maxLevel then vivod = E.Octo_Globals.Green_Color.."Done|r" end
 	else
 		if barValue then
 			local currentValue = barValue-barMin
 			local totalValue = barMax-barMin
 			vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
-			if currentValue == totalValue or nextThreshold == 0 then vivod = E.Octo_Globals.Addon_Color.."Done|r" end
+			if currentValue == totalValue or nextThreshold == 0 then vivod = E.Octo_Globals.Green_Color.."Done|r" end
 		end
 	end
 	return vivod
@@ -1375,7 +1372,7 @@ local function checkCharInfo(self)
 	setmetatable(self.VOID_STORAGE_PAGE1, Meta_Table_0)
 	setmetatable(self.VOID_STORAGE_PAGE2, Meta_Table_0)
 	if (self.tmstp_Weekly or 0) < GetServerTime() and self.CurrentKey ~= 0 then
-		self.CurrentKey = E.Octo_Globals.Addon_Color..">VAULT<|r"
+		self.CurrentKey = E.Octo_Globals.Green_Color..">VAULT<|r"
 	end
 	if (self.tmstp_Weekly or 0) < GetServerTime() and self.Octopussy_DF_Weekly_3kREP_count == DONE then
 		self.Octopussy_DF_Weekly_3kREP_count = NONE
@@ -2771,7 +2768,7 @@ function Timer_Legion_Invasion()
 	local Timer_Legion_Invasion = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_Legion_Invasion = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+		Timer_Legion_Invasion = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_Legion_Invasion
 end
@@ -2783,7 +2780,7 @@ function Timer_BfA_Invasion()
 	local Timer_BfA_Invasion = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_BfA_Invasion = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+		Timer_BfA_Invasion = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_BfA_Invasion
 end
@@ -2795,7 +2792,7 @@ function Timer_BfA_Assault()
 	local Timer_BfA_Assault = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_BfA_Assault = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+		Timer_BfA_Assault = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_BfA_Assault
 end
@@ -2807,7 +2804,7 @@ function Timer_DF_ToDragonbaneKeep()
 	local Timer_DF_ToDragonbaneKeep = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_ToDragonbaneKeep = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+		Timer_DF_ToDragonbaneKeep = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_DF_ToDragonbaneKeep
 end
@@ -2819,7 +2816,7 @@ function Timer_DF_GrandHunts()
 	local Timer_DF_GrandHunts = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_GrandHunts = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+		Timer_DF_GrandHunts = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_DF_GrandHunts
 end
@@ -2831,7 +2828,7 @@ function Timer_DF_CommunityFeast()
 	local Timer_DF_CommunityFeast = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_CommunityFeast = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+		Timer_DF_CommunityFeast = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_DF_CommunityFeast
 end
@@ -2843,7 +2840,7 @@ function Timer_DF_PrimalStorms()
 	local Timer_DF_PrimalStorms = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_PrimalStorms = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+		Timer_DF_PrimalStorms = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_DF_PrimalStorms
 end
@@ -2855,7 +2852,7 @@ function Timer_DF_ResearchersUnderFire()
 	local Timer_DF_ResearchersUnderFire = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_ResearchersUnderFire = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+		Timer_DF_ResearchersUnderFire = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_DF_ResearchersUnderFire
 end
@@ -2867,7 +2864,7 @@ function Timer_SL_Maw_Assault()
 	local Timer_SL_Maw_Assault = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_SL_Maw_Assault = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+		Timer_SL_Maw_Assault = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_SL_Maw_Assault
 end
@@ -2880,7 +2877,7 @@ function Timer_Daily_Reset()
 		local Timer_Daily_Reset = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 		if nextEventIn > (interval - duration) then
 			nextEventIn = nextEventIn - (interval - duration)
-			Timer_Daily_Reset = E.Octo_Globals.Addon_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+			Timer_Daily_Reset = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 		end
 		return Timer_Daily_Reset..E.Octo_Globals.Gray_Color.."Daily Reset|r"
 	else
@@ -2968,7 +2965,7 @@ function O_otrisovka()
 				vivodCent = E.Octo_Func.Empty_Zero(CharInfo.CurrentKey)
 			end
 			if CharInfo.HasAvailableRewards then
-				vivodCent = vivodCent..E.Octo_Globals.Addon_Color..">V<|r"
+				vivodCent = vivodCent..E.Octo_Globals.Green_Color..">V<|r"
 			end
 			if CharInfo.ItemsInBag[205225] ~= 0 or CharInfo.ItemsInBag[205999] ~= 0 or CharInfo.ItemsInBag[206046] ~= 0 or CharInfo.ItemsInBag[204843] ~= 0 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
@@ -3074,7 +3071,7 @@ function O_otrisovka()
 					vivodCent = vivodCent..E.Octo_Globals.Orange_Color..CharInfo.ItemsInBag[204194].." |r"
 				end
 				if CharInfo.CurrencyID[2409] ~= 0 and (CharInfo.CurrencyID[2409] == CharInfo.CurrencyID_maxQuantity[2409]) then
-					vivodCent = vivodCent..E.Octo_Globals.Addon_Color.."+|r"
+					vivodCent = vivodCent..E.Octo_Globals.Green_Color.."+|r"
 				end
 				return vivodCent, vivodLeft
 		end)
@@ -3101,7 +3098,7 @@ function O_otrisovka()
 					vivodCent = CharInfo.CurrencyID[2533] + 1
 				end
 				if CharInfo.CurrencyID[2533] == CharInfo.CurrencyID_maxQuantity[2533] then
-					vivodCent = E.Octo_Globals.Addon_Color..vivodCent.."|r"
+					vivodCent = E.Octo_Globals.Green_Color..vivodCent.."|r"
 				end
 				if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.CurrencyID[2533] < 8 then
 					vivodCent = E.Octo_Globals.Red_Color..vivodCent .."|r"
@@ -4519,7 +4516,7 @@ function O_otrisovka()
 					vivodCent = E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID[2245])
 				end
 				if CharInfo.CurrencyID[2245] == CharInfo.CurrencyID_maxQuantity[2245] then
-					vivodCent = E.Octo_Globals.Addon_Color..vivodCent.."|r"
+					vivodCent = E.Octo_Globals.Green_Color..vivodCent.."|r"
 				end
 			end
 			if Octo_ToDoVars.config.LINE_Shadowlands then
@@ -4547,11 +4544,11 @@ function O_otrisovka()
 				if CharInfo.Possible_CatalogedResearch ~= 0 then
 					vivodCent = vivodCent.." "..E.Octo_Globals.Rift_Color..CharInfo.Possible_CatalogedResearch.."|r"
 				end
-				if CharInfo.OctoTable_QuestID[64367] ~= E.Octo_Globals.Addon_Color.."Done|r" then
+				if CharInfo.OctoTable_QuestID[64367] ~= E.Octo_Globals.Green_Color.."Done|r" then
 					tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(187136)..E.Octo_Func.func_itemName(187136), E.Octo_Globals.Rift_Color.."(Korthia)|r".."Нужно купить +50%".. E.Octo_Func.func_currencyicon(1931)}
 					vivodCent = vivodCent..E.Octo_Globals.Rift_Color.."-".."|r"
 				end
-				if CharInfo.OctoTable_QuestID[65282] ~= E.Octo_Globals.Addon_Color.."Done|r" then
+				if CharInfo.OctoTable_QuestID[65282] ~= E.Octo_Globals.Green_Color.."Done|r" then
 					tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(188793)..E.Octo_Func.func_itemName(188793), E.Octo_Globals.Cyan_Color.."(ZerethMortis)|r".."Нужно купить +50%".. E.Octo_Func.func_currencyicon(1979)}
 					vivodCent = vivodCent..E.Octo_Globals.Cyan_Color.."-".."|r"
 				end
@@ -5373,7 +5370,7 @@ function O_otrisovka()
 					vivodCent = vivodCent.."/"..CharInfo.avgItemLevel.."|r"
 				end
 				if CharInfo.avgItemLevelPvp and CharInfo.avgItemLevelPvp > CharInfo.avgItemLevel then
-					vivodCent = vivodCent..E.Octo_Globals.Addon_Color.."++|r"
+					vivodCent = vivodCent..E.Octo_Globals.Green_Color.."++|r"
 					tooltip[#tooltip+1] = {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.avgItemLevelPvp)}
 				end
 			end
