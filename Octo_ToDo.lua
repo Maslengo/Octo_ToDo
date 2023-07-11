@@ -6094,7 +6094,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.AnotherAddonsCasual == nil then Octo_ToDoVars.config.AnotherAddonsCasual = false end
 		if Octo_ToDoVars.config.AnotherAddonsRAID == nil then Octo_ToDoVars.config.AnotherAddonsRAID = false end
 		if Octo_ToDoVars.config.ClearChat == nil then Octo_ToDoVars.config.ClearChat = true end
-		if Octo_ToDoVars.config.ShowOnlyCurrentRealm == nil then Octo_ToDoVars.config.ShowOnlyCurrentRealm = true end
+		if Octo_ToDoVars.config.ShowOnlyCurrentRealm == nil then Octo_ToDoVars.config.ShowOnlyCurrentRealm = false end
 		if Octo_ToDoVars.config.AutoSellGrey == nil then Octo_ToDoVars.config.AutoSellGrey = true end
 		if Octo_ToDoVars.config.AutoRepair == nil then Octo_ToDoVars.config.AutoRepair = true end
 		if Octo_ToDoVars.config.HideErrorMessages == nil then Octo_ToDoVars.config.HideErrorMessages = true end
