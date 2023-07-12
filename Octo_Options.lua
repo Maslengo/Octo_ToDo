@@ -67,15 +67,16 @@ config:SetScript("OnShow", function(self)
 	end)
 	self:SetPoint("TOPLEFT", 0, 0)
 	-- TITLE
-	local title = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+	local title = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 	title:SetPoint("TOPLEFT", 10, 30)
-	title:SetText(AddonTitle)
+	title:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+	title:SetTextColor(.5, .5, .5, 1)
 	-- AddonVersion
-	local ver = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-	ver:SetPoint("BOTTOMLEFT", title, "BOTTOMRIGHT", 0 ,0)
-	ver:SetTextColor(.5, .5, .5, 1)
-	ver:SetJustifyH("RIGHT")
-	ver:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+	-- local ver = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+	-- ver:SetPoint("BOTTOMLEFT", title, "BOTTOMRIGHT", 0 ,0)
+	-- ver:SetTextColor(.5, .5, .5, 1)
+	-- ver:SetJustifyH("RIGHT")
+	-- ver:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 	-----------------------------------------------
 	--  TEXT LEFT
 	-----------------------------------------------
@@ -430,11 +431,11 @@ RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*21)
 	self.Slider_right14:SetWidth(140)
 	self.Slider_right14:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*14)
 	self.Slider_right14:SetMinMaxValues(1,70)
-	self.Slider_right14:SetValueStep(1)
 	local step = 1
+	self.Slider_right14:SetValueStep(step)
 	self.Slider_right14:SetValue(Octo_ToDoVars.config.LevelToShow)
 	self.Slider_right14:SetScript("OnValueChanged", function (self, value)
-		value = math.floor(value * step + .5) / step
+		value = math.floor(value * (1 / step) + .5) / (1 / step)
 		Octo_ToDoVars.config.LevelToShow = value
 		LevelToShowTEXT:SetText("LevelToShow: "..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShow.."|r")
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
@@ -447,14 +448,13 @@ RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*21)
 	-----------------------------------------------
 	local itemLevelToShowTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	self.Slider_right16 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
-	self.Slider_right16:SetWidth(140)
+	self.Slider_right16:SetWidth(140*E.Octo_Globals.scale)
 	self.Slider_right16:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*16)
-	self.Slider_right16:SetMinMaxValues(1,470)
-	self.Slider_right16:SetValueStep(1)
-	local step = 1
+	self.Slider_right16:SetMinMaxValues(1,560)
+	local step = 5
 	self.Slider_right16:SetValue(Octo_ToDoVars.config.itemLevelToShow)
 	self.Slider_right16:SetScript("OnValueChanged", function (self, value)
-		value = math.floor(value * step + .5) / step
+		value = math.floor(value * (1 / step) + .5) / (1 / step)
 		Octo_ToDoVars.config.itemLevelToShow = value
 		itemLevelToShowTEXT:SetText("itemLevelToShow: "..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.itemLevelToShow.."|r")
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
@@ -470,11 +470,11 @@ RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*21)
 	self.Slider_right18:SetWidth(140)
 	self.Slider_right18:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*18)
 	self.Slider_right18:SetMinMaxValues(80,120)
-	self.Slider_right18:SetValueStep(1)
 	local step = 1
+	self.Slider_right18:SetValueStep(step)
 	self.Slider_right18:SetValue(Octo_ToDoVars.config.curWidth)
 	self.Slider_right18:SetScript("OnValueChanged", function (self, value)
-		value = math.floor(value * step + .5) / step
+		value = math.floor(value * (1 / step) + .5) / (1 / step)
 		Octo_ToDoVars.config.curWidth = value
 		curWidthTEXT:SetText("curWidth: "..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.curWidth.."|r")
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
@@ -518,6 +518,6 @@ RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*21)
 	self.btn_right24.text:SetText(E.Octo_Func.func_Gradient("CVar", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
 end)
 -- ADD CATEGORY
-local category, layout = Settings.RegisterCanvasLayoutCategory(config, GlobalAddonName)
-category.ID = GlobalAddonName
+local category, layout = Settings.RegisterCanvasLayoutCategory(config, AddonTitle)
+category.ID = AddonTitle
 Settings.RegisterAddOnCategory(category)

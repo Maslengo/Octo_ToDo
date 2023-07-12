@@ -108,7 +108,6 @@ function E.Octo_Func.utf8reverse(s)
 end
 local utf8reverse = E.Octo_Func.utf8reverse
 ----------------------------------------------------------------
-----------------------------------------------------------------
 function E.Octo_Func.WA_Utf8Sub(input, size)
 	local output = ""
 	if type(input) ~= "string" then
