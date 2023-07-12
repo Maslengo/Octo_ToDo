@@ -3019,11 +3019,11 @@ function O_otrisovka()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.Octo_Func.func_texturefromIcon(1603189)..E.Octo_Func.func_questName(70750)
-				if CharInfo.Octopussy_DF_Weekly_3kREP_count ~= NONE then
+				if CharInfo.Octopussy_DF_Weekly_3kREP_count ~= NONE and CharInfo.Octopussy_DF_Weekly_3kREP_count ~= "" then
 					vivodCent = CharInfo.Octopussy_DF_Weekly_3kREP_count
-				end
-				if CharInfo.Octopussy_DF_Weekly_3kREP_questID ~= NONE then
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_DF_Weekly_3kREP_questID)}
+					if CharInfo.Octopussy_DF_Weekly_3kREP_questID ~= NONE then
+						tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_DF_Weekly_3kREP_questID)}
+					end
 				end
 				if CharInfo.ItemsInBag[200073] ~= 0 then
 					vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200073]..E.Octo_Func.func_itemTexture(200073)
