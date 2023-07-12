@@ -80,6 +80,7 @@ L["UIErrorsFramePosition"] = true
 L["Functions"] = true
 L["Modules"] = true
 L["DisplaySettings"] = true
+L["Time Rift"] = true
 
 
 
@@ -455,6 +456,7 @@ L["UIErrorsFramePosition"] = "Смена позиции фрейма ошибо�
 L["Functions"] = "Функции"
 L["Modules"] = "Модули"
 L["DisplaySettings"] = "Настройки отображения"
+L["Time Rift"] = "Портал времени"
 
 
 

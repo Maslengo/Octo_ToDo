@@ -2,12 +2,6 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
-local function TableConcat(t1,t2)
-	for i=1,#t2 do
-		t1[#t1+1] = t2[i]
-	end
-	return t1
-end
 local isElvUI = IsAddOnLoaded("ElvUI")
 local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 ----------------------------------------------------------------------------------------------------------------------------------

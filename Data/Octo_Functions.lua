@@ -351,7 +351,7 @@ local Empty_Zero = E.Octo_Func.Empty_Zero
 function E.Octo_Func.tmstpDayReset(self)
 	local self = self or 1
 
-	return (math.ceil((E.Octo_Globals.currTime - E.Octo_Globals.thursdayReset)/(E.Octo_Globals.daytime*self))*E.Octo_Globals.daytime*self)+E.Octo_Globals.thursdayReset
+	return (math.ceil((tonumber(GetServerTime()) - E.Octo_Globals.thursdayReset)/(E.Octo_Globals.daytime*self))*E.Octo_Globals.daytime*self)+E.Octo_Globals.thursdayReset
 end
 local tmstpDayReset = E.Octo_Func.tmstpDayReset
 ----------------------------------------------------------------

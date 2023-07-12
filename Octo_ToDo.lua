@@ -2762,7 +2762,7 @@ function Timer_Legion_Invasion()
 	local TIMER = (1547586000-10800)
 	local interval = 66600
 	local duration = 21600
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_Legion_Invasion = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2774,7 +2774,7 @@ function Timer_BfA_Invasion()
 	local TIMER = (1547586000+3600)
 	local interval = 68400
 	local duration = 25200
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_BfA_Invasion = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2786,7 +2786,7 @@ function Timer_BfA_Assault()
 	local TIMER = (1547586000+3600+3600+3600+3600+3600+3600+3600)
 	local interval = 86400
 	local duration = 86400
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_BfA_Assault = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2798,7 +2798,7 @@ function Timer_DF_ToDragonbaneKeep()
 	local TIMER = 1670342460
 	local interval = 7200
 	local duration = 900
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_DF_ToDragonbaneKeep = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2810,7 +2810,7 @@ function Timer_DF_GrandHunts()
 	local TIMER = 1671307200
 	local interval = 7200
 	local duration = 7199
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_DF_GrandHunts = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2819,11 +2819,10 @@ function Timer_DF_GrandHunts()
 	return Timer_DF_GrandHunts
 end
 function Timer_DF_CommunityFeast()
-	-- print ("Timer_DF_CommunityFeast"..GetTime())
 	local TIMER = 1677168000
 	local interval = 5400
 	local duration = 900
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_DF_CommunityFeast = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2835,7 +2834,7 @@ function Timer_DF_PrimalStorms()
 	local TIMER = 1683804640
 	local interval = 18000
 	local duration = 7200
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_DF_PrimalStorms = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2847,7 +2846,7 @@ function Timer_DF_ResearchersUnderFire()
 	local TIMER = 1683804640
 	local interval = 3600
 	local duration = 1500
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_DF_ResearchersUnderFire = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2855,11 +2854,23 @@ function Timer_DF_ResearchersUnderFire()
 	end
 	return Timer_DF_ResearchersUnderFire
 end
+function Timer_DF_TimeRift()
+	local TIMER = 1689159620 -- начало в 16:00
+	local interval = 60*60 -- каждый час
+	local duration = 15*60 -- 15 минут
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
+	local Timer_DF_TimeRift = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+	if nextEventIn > (interval - duration) then
+		nextEventIn = nextEventIn - (interval - duration)
+		Timer_DF_TimeRift = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+	end
+	return Timer_DF_TimeRift
+end
 function Timer_SL_Maw_Assault()
 	local TIMER = 3780
 	local interval = 7200
 	local duration = 900
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_SL_Maw_Assault = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
@@ -2871,7 +2882,7 @@ function Timer_Daily_Reset()
 	local TIMER = 1687579264
 	local interval = 86400
 	local duration = 1
-	local nextEventIn = interval - mod(E.Octo_Globals.currTime - TIMER, interval)
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	if (nextEventIn/60/60) < 4 then
 		local Timer_Daily_Reset = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 		if nextEventIn > (interval - duration) then
@@ -2938,7 +2949,7 @@ function Octo_ToDoOnLoad()
 	OctoFrame_EventFrame:RegisterEvent("CHAT_MSG_BN_WHISPER_INFORM")
 	OctoFrame_EventFrame:RegisterEvent("READY_CHECK")
 	OctoFrame_EventFrame:RegisterEvent("UI_INFO_MESSAGE")
-	local group = OctoFrame_EventFrame:CreateAnimationGroup()
+	-- local group = OctoFrame_EventFrame:CreateAnimationGroup()
 	OctoFrame_EventFrame:SetScript("OnEvent", function(...)
 			Octo_ToDoOnEvent(...)
 	end)
@@ -3015,6 +3026,12 @@ function O_otrisovka()
 				end
 				return vivodCent, vivodLeft
 		end)
+
+
+
+
+
+
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -3104,6 +3121,51 @@ function O_otrisovka()
 				end
 				return vivodCent, vivodLeft
 		end)
+
+
+
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				local vivodLeft = (E.Octo_Func.func_texturefromIcon(628677)..Timer_DF_TimeRift()..L["Time Rift"])
+				-- if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= NONE then
+				-- 	vivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
+				-- end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.CurrencyID[2594] ~= 0 then
+					vivodCent = CharInfo.CurrencyID[2594]
+				end
+				vivodLeft = E.Octo_Func.func_currencyicon(2594)..E.Octo_Func.func_currencyName(2594)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[207030] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[207030]
+				end
+				vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(207030)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[207002] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[207002]
+				end
+				vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
+				return vivodCent, vivodLeft
+		end)
+
+
+
+
+
+
 	end
 	if Octo_ToDoVars.config.LINE_Shadowlands then
 		tinsert(OctoTable_func_otrisovka,
@@ -6284,6 +6346,17 @@ function Octo_ToDoOnEvent(self, event, ...)
 			-- Collect_SL_CovenantAnima()
 			-- Collect_SL_PossibleAnima()
 			-- Collect_All_journalInstance()
+			Timer_Legion_Invasion()
+			Timer_BfA_Invasion()
+			Timer_BfA_Assault()
+			Timer_DF_ToDragonbaneKeep()
+			Timer_DF_GrandHunts()
+			Timer_DF_CommunityFeast()
+			Timer_DF_PrimalStorms()
+			Timer_DF_ResearchersUnderFire()
+			Timer_DF_TimeRift()
+			Timer_SL_Maw_Assault()
+			Timer_Daily_Reset()
 			Octo_ToDoAddDataToAltFrame()
 		end
 	elseif event == "COVENANT_CHOSEN" or event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED" then
@@ -6377,8 +6450,10 @@ end
 Octo_ToDoOnLoad()
 SLASH_Octo1, SLASH_Octo2 = '/Octo', '/OctoDF'
 function SlashCmdList.Octo(msg, editBox)
-	OctoFrame_Main_Frame:SetShown(not OctoFrame_Main_Frame:IsShown())
-	Octo_ToDoAddDataToAltFrame()
+	if not InCombatLockdown() then
+		OctoFrame_Main_Frame:SetShown(not OctoFrame_Main_Frame:IsShown())
+		Octo_ToDoAddDataToAltFrame()
+	end
 end
 SLASH_GSEARCH1 = "/gsearch"
 SlashCmdList.GSEARCH = function(msg)
