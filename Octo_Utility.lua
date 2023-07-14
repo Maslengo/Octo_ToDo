@@ -26,7 +26,7 @@ tinsert(E.Octo_Globals.modules, function()
 			local OctoFrame_EventFrame = nil
 			local Octo_Frame_Loot = nil
 			local Octo_Frame_RCLootCouncil = nil
- 			if not OctoFrame_EventFrame then
+			if not OctoFrame_EventFrame then
 				OctoFrame_EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
 			end
 			OctoFrame_EventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -497,7 +497,7 @@ end)
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.UsableItems then
 			local className, classFilename, classId = UnitClass("PLAYER")
- 			local function func_itemName(self)
+			local function func_itemName(self)
 				local itemName, _, itemQuality = GetItemInfo(self)
 				if itemQuality then
 					local r, g, b = GetItemQualityColor(itemQuality)
@@ -507,13 +507,13 @@ tinsert(E.Octo_Globals.modules, function()
 				end
 				return itemName or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 			end
-				-- https://www.wowhead.com/ru/item=205151/%D0%B8%D0%B7%D0%B2%D0%B8%D0%BB%D0%B8%D1%81%D0%BA#comments
-				-- https://www.wowhead.com/ru/item=206009/ https://www.wowhead.com/ru/item=206010/ https://www.wowhead.com/ru/item=206014/
-				-- https://www.wowhead.com/ru/item=206014/ https://www.wowhead.com/ru/item=206011/ https://www.wowhead.com/ru/item=206015/
-				-- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
-				-- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
-				-- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
- 			if classFilename == "WARRIOR" or classFilename == "PALADIN" or classFilename == "DEATHKNIGHT" then
+			-- https://www.wowhead.com/ru/item=205151/%D0%B8%D0%B7%D0%B2%D0%B8%D0%BB%D0%B8%D1%81%D0%BA#comments
+			-- https://www.wowhead.com/ru/item=206009/ https://www.wowhead.com/ru/item=206010/ https://www.wowhead.com/ru/item=206014/
+			-- https://www.wowhead.com/ru/item=206014/ https://www.wowhead.com/ru/item=206011/ https://www.wowhead.com/ru/item=206015/
+			-- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
+			-- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
+			-- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
+			if classFilename == "WARRIOR" or classFilename == "PALADIN" or classFilename == "DEATHKNIGHT" then
 				E.Octo_Func.TableConcat(E.Octo_Table.white_list_70, E.Octo_Table.white_list_Krokuun_Plate)
 			end
 			if classFilename == "HUNTER" or classFilename == "EVOKER" or classFilename == "SHAMAN" then
@@ -590,7 +590,7 @@ tinsert(E.Octo_Globals.modules, function()
 							if CurrentItemLink then
 								local itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, sellPrice, classID, subclassID, bindType, expacID, setID, isCraftingReagent = GetItemInfo(CurrentItemLink)
 								local itemInfo = C_Container.GetContainerItemInfo(myBags, bagSlots)
-								if (classID == 15 and (subclassID == 2 or subclassID == 5 )) -- 2ПЕТЫ  5маунты
+								if (classID == 15 and (subclassID == 2 or subclassID == 5 )) -- 2ПЕТЫ 5маунты
 								or (classID == 8 and subclassID)
 								-- or (classID == 15 and (subclassID == 4) and itemQuality == 4 and expacID ~= 7) -- 4сундуки эпик
 								-- or (classID == 9) -- РЕЦЕПТЫ
@@ -1305,8 +1305,8 @@ tinsert(E.Octo_Globals.modules, function()
 				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_ACCEPTED")
 			end
 			local function OnEvent(self, event, ...)
-				if not IsShiftKeyDown() then
-					if event == "QUEST_DETAIL" then
+				if event == "QUEST_DETAIL" then
+					if not IsShiftKeyDown() then
 						-- print (AddonTitle.." "..event)
 						if QuestIsFromAreaTrigger() then
 							AcceptQuest()
@@ -1314,76 +1314,80 @@ tinsert(E.Octo_Globals.modules, function()
 							AcknowledgeAutoAcceptQuest()
 						end
 						AcceptQuest()
-					elseif event == "QUEST_COMPLETE" then
+					end
+				elseif event == "QUEST_COMPLETE" then
+					if not IsShiftKeyDown() then
 						-- print (AddonTitle.." "..event)
 						if GetNumQuestChoices() <= 1 then
 							GetQuestReward(1)
 						else
 							-- print ("ДОХЪУ")
 						end
-					elseif event == "QUEST_GREETING" then -- Запускается при разговоре с NPC, который предлагает или принимает более одного квеста, т. е. имеет более одного активного или доступного квеста.
+					end
+				elseif event == "QUEST_GREETING" then -- Запускается при разговоре с NPC, который предлагает или принимает более одного квеста, т. е. имеет более одного активного или доступного квеста.
+					if not IsShiftKeyDown() then
 						-- print (AddonTitle.." "..event)
-				-- turn in all completed quests
-					for index = 1, GetNumActiveQuests() do
+						-- turn in all completed quests
+						for index = 1, GetNumActiveQuests() do
 							local _, isComplete = GetActiveTitle(index)
 							if isComplete and not C_QuestLog.IsWorldQuest(GetActiveQuestID(index)) then
 								SelectActiveQuest(index)
 							end
-					end
-				-- accept all available quests
-					for index = 1, GetNumAvailableQuests() do
-						local isTrivial, _, isRepeatable, _, questID = GetAvailableQuestInfo(index)
+						end
+						-- accept all available quests
+						for index = 1, GetNumAvailableQuests() do
+							local isTrivial, _, isRepeatable, _, questID = GetAvailableQuestInfo(index)
 							--if (not isTrivial or isTrackingTrivialQuests()) and (not isRepeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
 							if isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
 								return
 							else
 								SelectAvailableQuest(index)
 							end
+						end
 					end
-					elseif event == "GOSSIP_SHOW" then
+				elseif event == "GOSSIP_SHOW" then
+					if not IsShiftKeyDown() then
 						-- print (AddonTitle.." "..event)
-				-- turn in all completed quests
-					if C_GossipInfo.GetActiveQuests() ~= 0 then
-						for _, info in pairs(C_GossipInfo.GetActiveQuests()) do
-							if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
-								C_GossipInfo.SelectActiveQuest(info.questID)
+						-- turn in all completed quests
+						if C_GossipInfo.GetActiveQuests() ~= 0 then
+							for _, info in pairs(C_GossipInfo.GetActiveQuests()) do
+								if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
+									C_GossipInfo.SelectActiveQuest(info.questID)
+								end
 							end
 						end
-					end
-				-- accept all available quests
-					if C_GossipInfo.GetAvailableQuests() ~= 0 then
+						-- accept all available quests
+						if C_GossipInfo.GetAvailableQuests() ~= 0 then
 							for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
-							--if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
-							if info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
-								return
-							else
-								C_GossipInfo.SelectAvailableQuest(info.questID)
+								--if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
+								if info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
+									return
+								else
+									C_GossipInfo.SelectAvailableQuest(info.questID)
+								end
 							end
 						end
 					end
-					elseif event == "QUEST_PROGRESS" then
+				elseif event == "QUEST_PROGRESS" then
+					if not IsShiftKeyDown() then
 						-- print (AddonTitle.." "..event)
 						CompleteQuest()
-					-- elseif event == "QUEST_LOG_UPDATE" then
-					-- 	print (AddonTitle.." "..event)
-					-- elseif event == "QUEST_ACCEPTED" then
-					-- 	print (AddonTitle.." "..event)
+						-- elseif event == "QUEST_LOG_UPDATE" then
+						--     print (AddonTitle.." "..event)
+						-- elseif event == "QUEST_ACCEPTED" then
+						--     print (AddonTitle.." "..event)
 					end
 				end
-				Octo_AutoTurnInOnLoad()
-				Octo_AutoTurnInFrame_EventFrame:SetScript("OnEvent", OnEvent) --for function
 			end
+			Octo_AutoTurnInOnLoad()
+			Octo_AutoTurnInFrame_EventFrame:SetScript("OnEvent", OnEvent) --for function
 		end
 end)
-
-
-
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --AutoTurnQuests
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.SORTING then
-
 			if isElvUI == true and not InCombatLockdown() then
 				C_Timer.After(1, function()
 						C_Container.SetSortBagsRightToLeft(false)
@@ -1397,7 +1401,6 @@ tinsert(E.Octo_Globals.modules, function()
 						C_Container.SortBags()
 				end)
 			end
-
-
 		end
-	end)
+end)
+
