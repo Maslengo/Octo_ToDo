@@ -1305,73 +1305,74 @@ tinsert(E.Octo_Globals.modules, function()
 				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_ACCEPTED")
 			end
 			local function OnEvent(self, event, ...)
-				if event == "QUEST_DETAIL" then
-					-- print (AddonTitle.." "..event)
-					if QuestIsFromAreaTrigger() then
+				if not IsShiftKeyDown() then
+					if event == "QUEST_DETAIL" then
+						-- print (AddonTitle.." "..event)
+						if QuestIsFromAreaTrigger() then
+							AcceptQuest()
+						elseif QuestGetAutoAccept() then
+							AcknowledgeAutoAcceptQuest()
+						end
 						AcceptQuest()
-					elseif QuestGetAutoAccept() then
-						AcknowledgeAutoAcceptQuest()
-					end
-					AcceptQuest()
-				elseif event == "QUEST_COMPLETE" then
-					-- print (AddonTitle.." "..event)
-					if GetNumQuestChoices() <= 1 then
-						GetQuestReward(1)
-					else
-						-- print ("ДОХЪУ")
-					end
-				elseif event == "QUEST_GREETING" then -- Запускается при разговоре с NPC, который предлагает или принимает более одного квеста, т. е. имеет более одного активного или доступного квеста.
-					-- print (AddonTitle.." "..event)
-			-- turn in all completed quests
-				for index = 1, GetNumActiveQuests() do
-						local _, isComplete = GetActiveTitle(index)
-						if isComplete and not C_QuestLog.IsWorldQuest(GetActiveQuestID(index)) then
-							SelectActiveQuest(index)
-						end
-				end
-			-- accept all available quests
-				for index = 1, GetNumAvailableQuests() do
-					local isTrivial, _, isRepeatable, _, questID = GetAvailableQuestInfo(index)
-						--if (not isTrivial or isTrackingTrivialQuests()) and (not isRepeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
-						if isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
-							return
+					elseif event == "QUEST_COMPLETE" then
+						-- print (AddonTitle.." "..event)
+						if GetNumQuestChoices() <= 1 then
+							GetQuestReward(1)
 						else
-							SelectAvailableQuest(index)
+							-- print ("ДОХЪУ")
 						end
-				end
-				elseif event == "GOSSIP_SHOW" then
-					-- print (AddonTitle.." "..event)
-			-- turn in all completed quests
-				if C_GossipInfo.GetActiveQuests() ~= 0 then
-					for _, info in pairs(C_GossipInfo.GetActiveQuests()) do
-						if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
-							C_GossipInfo.SelectActiveQuest(info.questID)
+					elseif event == "QUEST_GREETING" then -- Запускается при разговоре с NPC, который предлагает или принимает более одного квеста, т. е. имеет более одного активного или доступного квеста.
+						-- print (AddonTitle.." "..event)
+				-- turn in all completed quests
+					for index = 1, GetNumActiveQuests() do
+							local _, isComplete = GetActiveTitle(index)
+							if isComplete and not C_QuestLog.IsWorldQuest(GetActiveQuestID(index)) then
+								SelectActiveQuest(index)
+							end
+					end
+				-- accept all available quests
+					for index = 1, GetNumAvailableQuests() do
+						local isTrivial, _, isRepeatable, _, questID = GetAvailableQuestInfo(index)
+							--if (not isTrivial or isTrackingTrivialQuests()) and (not isRepeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
+							if isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
+								return
+							else
+								SelectAvailableQuest(index)
+							end
+					end
+					elseif event == "GOSSIP_SHOW" then
+						-- print (AddonTitle.." "..event)
+				-- turn in all completed quests
+					if C_GossipInfo.GetActiveQuests() ~= 0 then
+						for _, info in pairs(C_GossipInfo.GetActiveQuests()) do
+							if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
+								C_GossipInfo.SelectActiveQuest(info.questID)
+							end
 						end
 					end
-				end
-			-- accept all available quests
-				if C_GossipInfo.GetAvailableQuests() ~= 0 then
-						for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
-						--if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
-						if info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
-							return
-						else
-							C_GossipInfo.SelectAvailableQuest(info.questID)
+				-- accept all available quests
+					if C_GossipInfo.GetAvailableQuests() ~= 0 then
+							for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
+							--if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
+							if info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
+								return
+							else
+								C_GossipInfo.SelectAvailableQuest(info.questID)
+							end
 						end
 					end
+					elseif event == "QUEST_PROGRESS" then
+						-- print (AddonTitle.." "..event)
+						CompleteQuest()
+					-- elseif event == "QUEST_LOG_UPDATE" then
+					-- 	print (AddonTitle.." "..event)
+					-- elseif event == "QUEST_ACCEPTED" then
+					-- 	print (AddonTitle.." "..event)
+					end
 				end
-				elseif event == "QUEST_PROGRESS" then
-					-- print (AddonTitle.." "..event)
-					CompleteQuest()
-				-- elseif event == "QUEST_LOG_UPDATE" then
-				-- 	print (AddonTitle.." "..event)
-				-- elseif event == "QUEST_ACCEPTED" then
-				-- 	print (AddonTitle.." "..event)
-				end
+				Octo_AutoTurnInOnLoad()
+				Octo_AutoTurnInFrame_EventFrame:SetScript("OnEvent", OnEvent) --for function
 			end
-			Octo_AutoTurnInOnLoad()
-			Octo_AutoTurnInFrame_EventFrame:SetScript("OnEvent", OnEvent) --for function
-
 		end
 end)
 

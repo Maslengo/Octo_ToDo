@@ -2767,7 +2767,6 @@ function Collect_All_journalInstance()
 			local DiffAbbr = ""
 			local name, lockoutId, reset, difficultyId, locked, extended, instanceIDMostSig, isRaid, maxPlayers, difficultyName, totalBosses, defeatedBosses, extendDisabled, instanceId = GetSavedInstanceInfo(i)
 			if locked then
-
 				if difficultyId == 17 then
 					DiffAbbr = "LFR"
 				elseif difficultyId == 1 or difficultyId == 14 then
@@ -3141,7 +3140,15 @@ function O_otrisovka()
 				vivodLeft = E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245)
 				return vivodCent, vivodLeft
 		end)
-
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[206579] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[206579]
+				end
+				vivodLeft = E.Octo_Func.func_itemTexture(206579)..E.Octo_Func.func_itemName(206579)
+				return vivodCent, vivodLeft
+		end)
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
