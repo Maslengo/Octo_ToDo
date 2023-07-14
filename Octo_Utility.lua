@@ -954,6 +954,8 @@ tinsert(E.Octo_Globals.modules, function()
 				[204196] = true,
 				[204985] = true,
 				[205982] = true,
+				[207002] = true,
+				[111820] = true,
 			}
 			local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 			local ilvlStr = avgItemLevelEquipped or 0
@@ -1061,7 +1063,8 @@ tinsert(E.Octo_Globals.modules, function()
 											itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
 										end
 									end
-									if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality < 5 then
+									if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality < 4 and itemLevel < 100 and itemLevel ~= 0 then --5 фиолет
+										print (itemLevel, itemLink)
 										C_Container.UseContainerItem(bag,slot)
 									end
 								end
