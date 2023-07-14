@@ -295,6 +295,54 @@ RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*21)
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
 	self.btn_center5.text:SetText(E.Octo_Func.func_Gradient("UsableItems", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+
+
+
+
+	-----------------------------------------------
+	-- btn_center6 AutoTurnQuests
+	-----------------------------------------------
+	self.btn_center6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	self.btn_center6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*6)
+	self.btn_center6:SetChecked(Octo_ToDoVars.config.AutoTurnQuests)
+	self.btn_center6:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.AutoTurnQuests = btn:GetChecked()
+		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	end)
+	self.btn_center6.text:SetText(E.Octo_Func.func_Gradient("AutoTurnQuests", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+	-----------------------------------------------
+	-- btn_center7 TrivialQuests
+	-----------------------------------------------
+	self.btn_center7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	self.btn_center7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*7)
+	self.btn_center7:SetChecked(Octo_ToDoVars.config.TrivialQuests)
+	self.btn_center7:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.TrivialQuests = btn:GetChecked()
+		--StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	end)
+	self.btn_center7.text:SetText(E.Octo_Func.func_Gradient("TrivialQuests", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+
+	-----------------------------------------------
+	-- btn_center8 RepeatableQuests
+	-----------------------------------------------
+	self.btn_center8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	self.btn_center8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*8)
+	self.btn_center8:SetChecked(Octo_ToDoVars.config.RepeatableQuests)
+	self.btn_center8:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.RepeatableQuests = btn:GetChecked()
+		--StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	end)
+	self.btn_center8.text:SetText(E.Octo_Func.func_Gradient("RepeatableQuests", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+
+
+
+
+
+
+
+
+
+
 	-----------------------------------------------
 	-- btn_right2 LINE_Classic
 	-----------------------------------------------
@@ -510,6 +558,17 @@ RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*21)
 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 	end)
 	self.btn_right24.text:SetText(E.Octo_Func.func_Gradient("CVar", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+	-----------------------------------------------
+	-- btn_left25 SORTING
+	-----------------------------------------------
+	self.btn_right25 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+	self.btn_right25:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*25)
+	self.btn_right25:SetChecked(Octo_ToDoVars.config.SORTING)
+	self.btn_right25:SetScript("OnClick", function(btn)
+		Octo_ToDoVars.config.SORTING = btn:GetChecked()
+		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	end)
+	self.btn_right25.text:SetText(E.Octo_Func.func_Gradient("SORTING", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config, AddonTitle)

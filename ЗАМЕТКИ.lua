@@ -1,4 +1,5 @@
 function()
+	MajorFactionRenownFrame
 	----------------------------------------------------------------
 	-- Horizontal gradient:
 	function Gradient(x, y, w, h, r1, g1, b1, t1, r2, g2, b2, t2)

@@ -16,7 +16,8 @@ E.Octo_Globals.curExpansionMaxLevel = 70
 E.Octo_Globals.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
 E.Octo_Globals.curWidth = 96*E.Octo_Globals.scale
 E.Octo_Globals.curHeight = 20*E.Octo_Globals.scale
-E.Octo_Globals.curWidthTitle = E.Octo_Globals.curWidth*2
+--E.Octo_Globals.curWidthTitle = E.Octo_Globals.curWidth*2
+E.Octo_Globals.curWidthTitle = 200
 E.Octo_Globals.ilvlToShow = 400
 ----------------------------------------------------------------
 --COLORS--------------------------------------------------------
@@ -62,3 +63,13 @@ E.Octo_Globals.Legion_Color = "|cff1eff00"
 E.Octo_Globals.BattleforAzeroth_Color = "|cff6464ff"
 E.Octo_Globals.Shadowlands_Color = "|cffc9c3aa"
 E.Octo_Globals.Dragonflight_Color = "|cffe8e379"
+-- local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+-- local FONTEND = FONT_COLOR_CODE_CLOSE
+-- local GOLDFONT = NORMAL_FONT_COLOR_CODE
+-- local YELLOWFONT = LIGHTYELLOW_FONT_COLOR_CODE
+-- local REDFONT = RED_FONT_COLOR_CODE
+-- local GREENFONT = GREEN_FONT_COLOR_CODE
+-- local WHITEFONT = HIGHLIGHT_FONT_COLOR_CODE
+-- local GRAYFONT = GRAY_FONT_COLOR_CODE
+-- local GRAY_COLOR = { 0.5, 0.5, 0.5, 1 }
+-- local INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED = INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED
