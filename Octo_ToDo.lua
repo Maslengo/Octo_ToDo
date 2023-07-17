@@ -1283,7 +1283,7 @@ local function checkCharInfo(self)
 			for q,w in pairs(v) do
 				for e, r in pairs(w) do
 					if e == "instanceReset" then
-						print (k, q, e, r, GetServerTime())
+						-- print (k, q, e, r, GetServerTime())
 						if GetServerTime() >= r then
 							self.journalInstance[k] = {}
 							-- k это ИД инста
