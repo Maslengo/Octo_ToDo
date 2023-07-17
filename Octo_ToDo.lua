@@ -3408,64 +3408,6 @@ function O_otrisovka()
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[206579] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[206579] --..E.Octo_Func.func_texturefromIcon(610575)
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(610575)..E.Octo_Func.func_itemName(206579)
-				BG:SetColorTexture(.3,.3,.3, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[207702] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[207702] --..E.Octo_Func.func_texturefromIcon(4622301)
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(4622301)..E.Octo_Func.func_itemName(207702)
-				BG:SetColorTexture(.3,.3,.3, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[206576] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[206576] --..E.Octo_Func.func_texturefromIcon(135441)
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(135441)..E.Octo_Func.func_itemName(206576)
-				BG:SetColorTexture(.3,.3,.3, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[206375] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[206375] --..E.Octo_Func.func_texturefromIcon(133445)
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(133445)..E.Octo_Func.func_itemName(206375)
-				BG:SetColorTexture(.3,.3,.3, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[206374] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[206374] --..E.Octo_Func.func_texturefromIcon(133446)
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(133446)..E.Octo_Func.func_itemName(206374)
-				BG:SetColorTexture(.3,.3,.3, .1)
-				return vivodCent, vivodLeft
-		end)
-
-
-
-
-
-
-
-
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
 				if CharInfo.CurrencyID[2594] ~= 0 then
 					vivodCent = CharInfo.CurrencyID[2594]
 				end
@@ -3490,6 +3432,69 @@ function O_otrisovka()
 				end
 				return vivodCent, vivodLeft
 		end)
+
+
+
+
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[206579] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[206579] --..E.Octo_Func.func_texturefromIcon(610575)
+				end
+				vivodLeft = E.Octo_Func.func_texturefromIcon(610575)..E.Octo_Func.func_itemName(206579)
+				BG:SetColorTexture(.4,.4,.4, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[207702] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[207702] --..E.Octo_Func.func_texturefromIcon(4622301)
+				end
+				vivodLeft = E.Octo_Func.func_texturefromIcon(4622301)..E.Octo_Func.func_itemName(207702)
+				BG:SetColorTexture(.4,.4,.4, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[206576] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[206576] --..E.Octo_Func.func_texturefromIcon(135441)
+				end
+				vivodLeft = E.Octo_Func.func_texturefromIcon(135441)..E.Octo_Func.func_itemName(206576)
+				BG:SetColorTexture(.4,.4,.4, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[206375] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[206375] --..E.Octo_Func.func_texturefromIcon(133445)
+				end
+				vivodLeft = E.Octo_Func.func_texturefromIcon(133445)..E.Octo_Func.func_itemName(206375)
+				BG:SetColorTexture(.4,.4,.4, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[206374] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[206374] --..E.Octo_Func.func_texturefromIcon(133446)
+				end
+				vivodLeft = E.Octo_Func.func_texturefromIcon(133446)..E.Octo_Func.func_itemName(206374)
+				BG:SetColorTexture(.4,.4,.4, .1)
+				return vivodCent, vivodLeft
+		end)
+
+
+
+
+
+
+
+
+
 		----------------ЦУЙЦУЙЦУ
 		-- tinsert(OctoTable_func_otrisovka,
 		-- 	function(CharInfo, tooltip, CL, BG)
