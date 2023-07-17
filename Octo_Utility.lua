@@ -997,6 +997,7 @@ tinsert(E.Octo_Globals.modules, function()
 				[154177] = true,
 				[154172] = true,
 				[154175] = true,
+				[154173] = true,
 			}
 			local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 			local ilvlStr = avgItemLevelEquipped or 0
