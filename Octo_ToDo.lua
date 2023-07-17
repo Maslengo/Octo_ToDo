@@ -1277,19 +1277,30 @@ local function checkCharInfo(self)
 	if self.journalInstance == nil or self.journalInstance == 0 then
 		self.journalInstance = {}
 	end
+
+	for k, v in pairs(self.journalInstance) do
+		if k then
+			for q,w in pairs(v) do
+				for e, r in pairs(w) do
+					if e == "instanceReset" then
+						print (k, q, e, r, GetServerTime())
+						if GetServerTime() >= r then
+							self.journalInstance[k] = {}
+							-- k это ИД инста
+							-- Q это ИД сложности
+						end
+					end
+				end
+			end
+		end
+	end
+
+
+
+
+
 -- 	--if self.needResetDaily then self.journalInstance = {} end --ДЕЙЛИ РЕСЕТ
--- 	for _, v in pairs(E.Octo_Table.OctoTable_journalInstanceID) do
--- 		if self.journalInstance[v] == nil then self.journalInstance[v] = {} end
--- 		for _, w in pairs(E.Octo_Table.OctoTable_instanceDifficulty) do
--- 			if self.journalInstance[v][w] == nil then self.journalInstance[v][w] = {} end
--- 			-- setmetatable(self.journalInstance[v][w].name, Meta_Table_Empty)
--- 			-- setmetatable(self.journalInstance[v][w].vivod, Meta_Table_Empty)
--- 			-- setmetatable(self.journalInstance[v][w].reset, Meta_Table_Empty)
--- 			-- if self.journalInstance[v][w].name == nil then self.journalInstance[v][w].name = "" end
--- 			-- if self.journalInstance[v][w].vivod == nil then self.journalInstance[v][w].vivod = "" end
--- 			-- if self.journalInstance[v][w].reset == nil then self.journalInstance[v][w].reset = "" end
--- 		end
--- 	end
+
 -- setmetatable(self.journalInstance[v][w], Meta_Table_Empty)
 -- setmetatable(self.journalInstance[v], Meta_Table_Empty)
 	for k, v in pairs(OctoTable_UniversalQuest) do
