@@ -150,10 +150,10 @@ end
 local func_hex2rgb = E.Octo_Func.func_hex2rgb
 ----------------------------------------------------------------
 function E.Octo_Func.func_percent(percent, maxvalue)
-    if tonumber(percent) and tonumber(maxvalue) then
-        return (maxvalue*percent)/100
-    end
-    return false
+ if tonumber(percent) and tonumber(maxvalue) then
+ return (maxvalue*percent)/100
+ end
+ return false
 end
 local func_percent = E.Octo_Func.func_percent
 ----------------------------------------------------------------
@@ -321,9 +321,15 @@ end
 local func_spellName = E.Octo_Func.func_spellName
 ----------------------------------------------------------------
 function E.Octo_Func.SecondsToClock(self)
+	local days, hours, mins, secs = "", "", "", ""
 	local self = tonumber(self)
 	if self <= 0 or self == nil then
 		return "0:00"
+	elseif self >= 86400 then
+		days = floor(self / 86400)
+		hours = floor(mod(self, 86400) / 3600)
+		mins = floor(mod(self, 3600) / 60)
+		return days.."d "..hours.."h "..mins.."m"
 	elseif self >= 3600 then
 		hours = string.format("%01.f", math.floor(self/3600))
 		mins = string.format("%02.f", math.floor(self/60 - (hours*60)))
@@ -350,7 +356,6 @@ local Empty_Zero = E.Octo_Func.Empty_Zero
 ----------------------------------------------------------------
 function E.Octo_Func.tmstpDayReset(self)
 	local self = self or 1
-
 	return (math.ceil((tonumber(GetServerTime()) - E.Octo_Globals.thursdayReset)/(E.Octo_Globals.daytime*self))*E.Octo_Globals.daytime*self)+E.Octo_Globals.thursdayReset
 end
 local tmstpDayReset = E.Octo_Func.tmstpDayReset
@@ -366,4 +371,3 @@ local tmstpDayReset = E.Octo_Func.tmstpDayReset
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-

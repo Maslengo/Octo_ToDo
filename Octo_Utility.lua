@@ -6,6 +6,9 @@ local isElvUI = IsAddOnLoaded("ElvUI")
 local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 ----------------------------------------------------------------------------------------------------------------------------------
 local UnitLevel = UnitLevel("PLAYER")
+						local ignore_list_NPC = {
+							--[206572] = true,
+						}
 ----------------------------------------------------------------------------------------------------------------------------------
 -- TalkingHeadFrame
 tinsert(E.Octo_Globals.modules, function()
@@ -496,17 +499,7 @@ end)
 --USABLEITEMS
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.UsableItems then
-			local className, classFilename, classId = UnitClass("PLAYER")
-			local function func_itemName(self)
-				local itemName, _, itemQuality = GetItemInfo(self)
-				if itemQuality then
-					local r, g, b = GetItemQualityColor(itemQuality)
-					local color = CreateColor(r, g, b, 1)
-					local itemNameColored = color:WrapTextInColorCode(itemName)
-					return itemNameColored or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-				end
-				return itemName or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-			end
+			local classFilename = select(2, UnitClass("PLAYER"))
 			-- https://www.wowhead.com/ru/item=205151/%D0%B8%D0%B7%D0%B2%D0%B8%D0%BB%D0%B8%D1%81%D0%BA#comments
 			-- https://www.wowhead.com/ru/item=206009/ https://www.wowhead.com/ru/item=206010/ https://www.wowhead.com/ru/item=206014/
 			-- https://www.wowhead.com/ru/item=206014/ https://www.wowhead.com/ru/item=206011/ https://www.wowhead.com/ru/item=206015/
@@ -528,10 +521,50 @@ tinsert(E.Octo_Globals.modules, function()
 			if UnitLevel == 70 then
 				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_70)
 			end
+			--ТОКЕНЫ
+			if classFilename == "WARRIOR" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_WARRIOR)
+			end
+			if classFilename == "PALADIN" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_PALADIN)
+			end
+			if classFilename == "HUNTER" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_HUNTER)
+			end
+			if classFilename == "ROGUE" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_ROGUE)
+			end
+			if classFilename == "PRIEST" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_PRIEST)
+			end
+			if classFilename == "DEATHKNIGHT" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_DEATHKNIGHT)
+			end
+			if classFilename == "SHAMAN" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_SHAMAN)
+			end
+			if classFilename == "MAGE" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_MAGE)
+			end
+			if classFilename == "WARLOCK" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_WARLOCK)
+			end
+			if classFilename == "MONK" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_MONK)
+			end
+			if classFilename == "DRUID" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_DRUID)
+			end
+			if classFilename == "DEMONHUNTER" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_DEMONHUNTER)
+			end
+			if classFilename == "EVOKER" then
+				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_EVOKER)
+			end
 			local function UsableItems_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, 10)
 				GameTooltip:ClearLines()
-				GameTooltip:AddLine(func_itemName(self.itemid))
+				GameTooltip:AddLine(E.Octo_Func.func_itemName(self.itemid))
 				GameTooltip:Show()
 			end
 			local function UsableItems_Frame_OnLeave(self)
@@ -707,19 +740,19 @@ tinsert(E.Octo_Globals.modules, function()
 								v.name:find("Указать на Ральфа мистеру Солнечноцветику.") or
 								v.name:find("Можешь снова активировать этого голиафа?") or
 								v.name:find("cff0000FF")
-								and not IsShiftKeyDown() then
+								and not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
-								elseif First_Option[targetNPCID] and not IsShiftKeyDown() then
+								elseif First_Option[targetNPCID] and not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
-								elseif Second_Option[targetNPCID] and not IsShiftKeyDown() and i == 2 then
+								elseif Second_Option[targetNPCID] and not IsShiftKeyDown() and i == 2 --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
-								elseif #info == 1 and not IsShiftKeyDown() then
+								elseif #info == 1 and not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
@@ -956,6 +989,14 @@ tinsert(E.Octo_Globals.modules, function()
 				[205982] = true,
 				[207002] = true,
 				[111820] = true,
+				--ТРИНЬКЕТЫ
+				[167555] = true,
+				[77530] = true,
+				[154174] = true,
+				[154176] = true,
+				[154177] = true,
+				[154172] = true,
+				[154175] = true,
 			}
 			local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 			local ilvlStr = avgItemLevelEquipped or 0
@@ -1063,8 +1104,7 @@ tinsert(E.Octo_Globals.modules, function()
 											itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
 										end
 									end
-									if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality < 4 and itemLevel < 100 and itemLevel ~= 0 then --5 фиолет
-										print (itemLevel, itemLink)
+									if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality < 5 --[[and itemLevel < 150 and itemLevel ~= 0]] then --5 фиолет
 										C_Container.UseContainerItem(bag,slot)
 									end
 								end
@@ -1349,28 +1389,27 @@ tinsert(E.Octo_Globals.modules, function()
 						end
 					end
 				elseif event == "GOSSIP_SHOW" then
-					if not IsShiftKeyDown() then
-						-- print (AddonTitle.." "..event)
-						-- turn in all completed quests
-						if C_GossipInfo.GetActiveQuests() ~= 0 then
-							for _, info in pairs(C_GossipInfo.GetActiveQuests()) do
-								if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
-									C_GossipInfo.SelectActiveQuest(info.questID)
+						if not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
+							-- turn in all completed quests
+							if C_GossipInfo.GetActiveQuests() ~= 0 then
+								for _, info in pairs(C_GossipInfo.GetActiveQuests()) do
+									if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
+										C_GossipInfo.SelectActiveQuest(info.questID)
+									end
+								end
+							end
+							-- accept all available quests
+							if C_GossipInfo.GetAvailableQuests() ~= 0 then
+								for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
+									--if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
+									if info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
+										return
+									else
+										C_GossipInfo.SelectAvailableQuest(info.questID)
+									end
 								end
 							end
 						end
-						-- accept all available quests
-						if C_GossipInfo.GetAvailableQuests() ~= 0 then
-							for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
-								--if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
-								if info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
-									return
-								else
-									C_GossipInfo.SelectAvailableQuest(info.questID)
-								end
-							end
-						end
-					end
 				elseif event == "QUEST_PROGRESS" then
 					if not IsShiftKeyDown() then
 						-- print (AddonTitle.." "..event)
@@ -1406,4 +1445,3 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 		end
 end)
-
