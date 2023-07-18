@@ -1270,21 +1270,23 @@ local function CheckReputationByRepID(self)
 	return vivod
 end
 local function checkCharInfo(self)
--- self.journalInstance = {}
 	self.VOID_STORAGE_PAGE1 = {}
 	self.VOID_STORAGE_PAGE2 = {}
 
+	if self.needResetWeekly == true then
+		self.journalInstance = {}
+	end
 	if self.journalInstance == nil or self.journalInstance == 0 then
 		self.journalInstance = {}
 	end
-
+	local ServerTime = GetServerTime()
 	for k, v in pairs(self.journalInstance) do
 		if k then
 			for q,w in pairs(v) do
 				for e, r in pairs(w) do
 					if e == "instanceReset" then
 						-- print (k, q, e, r, GetServerTime())
-						if GetServerTime() >= r then
+						if ServerTime >= r then
 							self.journalInstance[k] = {}
 							-- k это ИД инста
 							-- Q это ИД сложности
@@ -1294,7 +1296,6 @@ local function checkCharInfo(self)
 			end
 		end
 	end
-
 
 
 
@@ -2997,6 +2998,7 @@ function Collect_All_journalInstance()
 	local numsaved = GetNumSavedInstances()
 	local DiffAbbr = ""
 	local instancesLastBoss = {}
+	local ServerTime = GetServerTime()
 	-- collect.journalInstance = {}
 	local res = {}
 	if collect.journalInstance == 0 then
@@ -3055,7 +3057,7 @@ function Collect_All_journalInstance()
 						collect.journalInstance[instanceId][instanceDifficulty].defeatedBosses = defeatedBosses
 						collect.journalInstance[instanceId][instanceDifficulty].extendDisabled = extendDisabled
 						collect.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
-						collect.journalInstance[instanceId][instanceDifficulty].Time = E.Octo_Func.SecondsToClock(instanceReset-GetServerTime())
+						collect.journalInstance[instanceId][instanceDifficulty].Time = E.Octo_Func.SecondsToClock(instanceReset-ServerTime)
 						-- collect.journalInstance[instanceId][instanceDifficulty].link = GetSavedInstanceChatLink(i)
 					end
 				end
@@ -3225,7 +3227,7 @@ function Octo_ToDoOnLoad()
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_AVG_ITEM_LEVEL_UPDATE")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
-	OctoFrame_EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
+	-- OctoFrame_EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_LOGIN")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_LOGOUT")
@@ -3244,9 +3246,9 @@ function Octo_ToDoOnLoad()
 	OctoFrame_EventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
 	OctoFrame_EventFrame:RegisterEvent("UPDATE_PENDING_MAIL")
 	OctoFrame_EventFrame:RegisterEvent("VARIABLES_LOADED")
-	OctoFrame_EventFrame:RegisterEvent("VOID_STORAGE_CONTENTS_UPDATE")
-	OctoFrame_EventFrame:RegisterEvent("VOID_STORAGE_UPDATE")
-	OctoFrame_EventFrame:RegisterEvent("VOID_TRANSFER_DONE")
+	-- OctoFrame_EventFrame:RegisterEvent("VOID_STORAGE_CONTENTS_UPDATE")
+	-- OctoFrame_EventFrame:RegisterEvent("VOID_STORAGE_UPDATE")
+	-- OctoFrame_EventFrame:RegisterEvent("VOID_TRANSFER_DONE")
 	OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -3454,7 +3456,7 @@ function O_otrisovka()
 					vivodCent = CharInfo.ItemsInBag[206579] --..E.Octo_Func.func_texturefromIcon(610575)
 				end
 				vivodLeft = E.Octo_Func.func_texturefromIcon(610575)..E.Octo_Func.func_itemName(206579)
-				BG:SetColorTexture(.4,.4,.4, .1)
+				BG:SetColorTexture(.5,.5,.5, .1)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka,
@@ -3464,7 +3466,7 @@ function O_otrisovka()
 					vivodCent = CharInfo.ItemsInBag[207702] --..E.Octo_Func.func_texturefromIcon(4622301)
 				end
 				vivodLeft = E.Octo_Func.func_texturefromIcon(4622301)..E.Octo_Func.func_itemName(207702)
-				BG:SetColorTexture(.4,.4,.4, .1)
+				BG:SetColorTexture(.5,.5,.5, .1)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka,
@@ -3474,7 +3476,7 @@ function O_otrisovka()
 					vivodCent = CharInfo.ItemsInBag[206576] --..E.Octo_Func.func_texturefromIcon(135441)
 				end
 				vivodLeft = E.Octo_Func.func_texturefromIcon(135441)..E.Octo_Func.func_itemName(206576)
-				BG:SetColorTexture(.4,.4,.4, .1)
+				BG:SetColorTexture(.5,.5,.5, .1)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka,
@@ -3484,7 +3486,7 @@ function O_otrisovka()
 					vivodCent = CharInfo.ItemsInBag[206375] --..E.Octo_Func.func_texturefromIcon(133445)
 				end
 				vivodLeft = E.Octo_Func.func_texturefromIcon(133445)..E.Octo_Func.func_itemName(206375)
-				BG:SetColorTexture(.4,.4,.4, .1)
+				BG:SetColorTexture(.5,.5,.5, .1)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka,
@@ -3494,7 +3496,7 @@ function O_otrisovka()
 					vivodCent = CharInfo.ItemsInBag[206374] --..E.Octo_Func.func_texturefromIcon(133446)
 				end
 				vivodLeft = E.Octo_Func.func_texturefromIcon(133446)..E.Octo_Func.func_itemName(206374)
-				BG:SetColorTexture(.4,.4,.4, .1)
+				BG:SetColorTexture(.5,.5,.5, .1)
 				return vivodCent, vivodLeft
 		end)
 
@@ -5617,12 +5619,13 @@ function O_otrisovka()
 			local vivodCent, vivodLeft = "", ""
 			-- if Octo_ToDoVars.config.LINE_Dragonflight then
 			-- end
+			local ServerTime = GetServerTime()
 			for _, v in pairs(E.Octo_Table.OctoTable_journalInstanceID) do
 				if CharInfo.journalInstance[v] ~= nil then
 					for _, w in pairs(E.Octo_Table.OctoTable_instanceDifficulty) do
 						if CharInfo.journalInstance[v][w] ~= nil then
 							if CharInfo.journalInstance[v][w].vivod ~= nil and CharInfo.journalInstance[v][w].Time ~= nil then
-								tooltip[#tooltip+1] = {CharInfo.journalInstance[v][w].instanceName.."("..CharInfo.journalInstance[v][w].difficultyName..")"..E.Octo_Globals.Red_Color..CharInfo.journalInstance[v][w].Time.."|r", CharInfo.journalInstance[v][w].vivod}
+								tooltip[#tooltip+1] = {CharInfo.journalInstance[v][w].instanceName.."("..CharInfo.journalInstance[v][w].difficultyName..")"..E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(CharInfo.journalInstance[v][w].instanceReset-ServerTime).."|r", CharInfo.journalInstance[v][w].vivod}
 							end
 						end
 					end
