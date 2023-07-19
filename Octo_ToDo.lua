@@ -6495,7 +6495,7 @@ function Octo_ToDoCreateAltFrame()
 					for _, v in pairs(E.Octo_Table.T3Items) do
 						if (CharInfo.ItemsInBag[v] ~= 0) then
 							i = i + 1
-							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v) ..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 						end
 					end
 
@@ -6909,7 +6909,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.AutoRepair == nil then Octo_ToDoVars.config.AutoRepair = true end
 		if Octo_ToDoVars.config.HideErrorMessages == nil then Octo_ToDoVars.config.HideErrorMessages = true end
 		if Octo_ToDoVars.config.SellFrame == nil then Octo_ToDoVars.config.SellFrame = false end
-		if Octo_ToDoVars.config.AutoTurnQuests == nil then Octo_ToDoVars.config.AutoTurnQuests = true end
+		if Octo_ToDoVars.config.AutoTurnQuests == nil then Octo_ToDoVars.config.AutoTurnQuests = false end
 		if Octo_ToDoVars.config.TrivialQuests == nil then Octo_ToDoVars.config.TrivialQuests = false end
 		if Octo_ToDoVars.config.RepeatableQuests == nil then Octo_ToDoVars.config.RepeatableQuests = false end
 		if Octo_ToDoVars.config.GlobalFadePersist == nil then Octo_ToDoVars.config.GlobalFadePersist = false end

@@ -1407,20 +1407,20 @@ tinsert(E.Octo_Globals.modules, function()
 					if not IsShiftKeyDown() then
 						-- print (AddonTitle.." "..event)
 						-- turn in all completed quests
-						for index = 1, GetNumActiveQuests() do
-							local _, isComplete = GetActiveTitle(index)
-							if isComplete and not C_QuestLog.IsWorldQuest(GetActiveQuestID(index)) then
-								SelectActiveQuest(index)
+						for i = 1, GetNumActiveQuests() do
+							local _, isComplete = GetActiveTitle(i)
+							if isComplete and not C_QuestLog.IsWorldQuest(GetActiveQuestID(i)) then
+								SelectActiveQuest(i)
 							end
 						end
 						-- accept all available quests
-						for index = 1, GetNumAvailableQuests() do
-							local isTrivial, _, isRepeatable, _, questID = GetAvailableQuestInfo(index)
+						for i = 1, GetNumAvailableQuests() do
+							local isTrivial, _, isRepeatable, _, questID = GetAvailableQuestInfo(i)
 							--if (not isTrivial or isTrackingTrivialQuests()) and (not isRepeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
-							if isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
+							if (isTrivial and Octo_ToDoVars.config.TrivialQuests == false) and (isRepeatable and Octo_ToDoVars.config.RepeatableQuests == false) then
 								return
 							else
-								SelectAvailableQuest(index)
+								SelectAvailableQuest(i)
 							end
 						end
 					end
@@ -1437,8 +1437,9 @@ tinsert(E.Octo_Globals.modules, function()
 						-- accept all available quests
 						if C_GossipInfo.GetAvailableQuests() ~= 0 then
 							for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
-								--if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
-								if info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
+								-- print (info.title, info.questLevel, info.repeatable, info.frequency,  info.isIgnored, info.isLegendary)
+								-- if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
+								if (info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false) and (info.repeatable and Octo_ToDoVars.config.RepeatableQuests == false) then
 									return
 								else
 									C_GossipInfo.SelectAvailableQuest(info.questID)
