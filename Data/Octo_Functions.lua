@@ -150,10 +150,10 @@ end
 local func_hex2rgb = E.Octo_Func.func_hex2rgb
 ----------------------------------------------------------------
 function E.Octo_Func.func_percent(percent, maxvalue)
- if tonumber(percent) and tonumber(maxvalue) then
- return (maxvalue*percent)/100
- end
- return false
+	if tonumber(percent) and tonumber(maxvalue) then
+		return (maxvalue*percent)/100
+	end
+	return false
 end
 local func_percent = E.Octo_Func.func_percent
 ----------------------------------------------------------------
@@ -371,3 +371,4 @@ local tmstpDayReset = E.Octo_Func.tmstpDayReset
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+

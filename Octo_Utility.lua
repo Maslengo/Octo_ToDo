@@ -6,9 +6,9 @@ local isElvUI = IsAddOnLoaded("ElvUI")
 local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 ----------------------------------------------------------------------------------------------------------------------------------
 local UnitLevel = UnitLevel("PLAYER")
-						local ignore_list_NPC = {
-							--[206572] = true,
-						}
+local ignore_list_NPC = {
+	--[206572] = true,
+}
 ----------------------------------------------------------------------------------------------------------------------------------
 -- TalkingHeadFrame
 tinsert(E.Octo_Globals.modules, function()
@@ -46,7 +46,7 @@ tinsert(E.Octo_Globals.modules, function()
 			-- https://wowpedia.fandom.com/wiki/DifficultyID
 			--------------------------------------------------------------------------------
 			if not Octo_Frame_Loot then
-				Octo_Frame_Loot = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+				Octo_Frame_Loot = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 			end
 			Octo_Frame_Loot:Hide()
 			Octo_Frame_Loot:SetSize(24*E.Octo_Globals.scale, 24*E.Octo_Globals.scale)
@@ -66,7 +66,7 @@ tinsert(E.Octo_Globals.modules, function()
 			--if select(5, GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" then
 			--------------------------------------------------------------------------------
 			if not Octo_Frame_RCLootCouncil then
-				Octo_Frame_RCLootCouncil = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+				Octo_Frame_RCLootCouncil = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 			end
 			Octo_Frame_RCLootCouncil:Hide()
 			Octo_Frame_RCLootCouncil:SetSize(24*E.Octo_Globals.scale, 24*E.Octo_Globals.scale)
@@ -138,7 +138,7 @@ tinsert(E.Octo_Globals.modules, function()
 					-- SubZoneTextString:UnregisterAllEvents()
 					SubZoneTextString:Hide()
 			end)
-			-- EventToastManagerFrame:HookScript("OnShow", function(self,...)
+			-- EventToastManagerFrame:HookScript("OnShow", function(self, ...)
 			-- EventToastManagerFrame:UnregisterAllEvents()
 			-- EventToastManagerFrame:Hide()
 			-- end)
@@ -254,8 +254,41 @@ local function func_Octo_LoadAddOn(GlobalAddonName)
 		LoadAddOn(GlobalAddonName)
 	end
 end
+func_Octo_LoadAddOn("MountsJournal")
 func_Octo_LoadAddOn("!BugGrabber")
 func_Octo_LoadAddOn("BugSack")
+----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------
+--StaticPopup1Button1
+tinsert(E.Octo_Globals.modules, function()
+		if Octo_ToDoVars.config.StaticPopup1Button1 then
+			----------------------------------------------------------------------------------------------------------------------------------
+			----------------------------------------------------------------------------------------------------------------------------------
+			local function accept()
+				StaticPopup1Button1:Click()
+				-- print ("accept")
+			end
+			function Octo_OnLoad()
+				local EventFrame = nil
+				if not EventFrame then
+					EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
+				end
+				EventFrame:RegisterEvent("EQUIP_BIND_CONFIRM")
+				EventFrame:SetScript("OnEvent", function(...)
+						Octo_OnEvent(...)
+				end)
+			end
+			function Octo_OnEvent(self, event, ...)
+				if event == "EQUIP_BIND_CONFIRM" and not InCombatLockdown() then
+					accept()
+				end
+			end
+			Octo_OnLoad()
+			-- /run local function accept() StaticPopup1Button1:Click() end
+			-- StaticPopupDialogs["BID_AUCTION"].OnShow=accept
+			-- StaticPopupDialogs["BUYOUT_AUCTION"].OnShow=accept
+		end
+end)
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --AnotherAddonsCasual
@@ -335,7 +368,7 @@ tinsert(E.Octo_Globals.modules, function()
 						SetCVar("raidFramesDisplayAggroHighlight", 1)
 						SetCVar("raidFramesDisplayClassColor", 1)
 						SetCVar("raidFramesDisplayDebuffs", 1)
-						SetCVar("raidFramesDisplayIncomingHeals",1)
+						SetCVar("raidFramesDisplayIncomingHeals", 1)
 						SetCVar("raidFramesDisplayOnlyDispellableDebuffs", 1)
 						SetCVar("raidFramesDisplayPowerBars", 0)
 						SetCVar("AutoPushSpellToActionBar", 0) -- Выставление спеллов на бар
@@ -573,7 +606,7 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 			--local function UsableItems_Frame(itemID)
 			if not UsableItems_Frame then
-				UsableItems_Frame = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate,BackDropTemplate")
+				UsableItems_Frame = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 				UsableItems_Frame:Hide()
 			end
 			UsableItems_Frame:Hide()
@@ -629,7 +662,7 @@ tinsert(E.Octo_Globals.modules, function()
 								-- or (classID == 9) -- РЕЦЕПТЫ
 								then
 									local itemID = tonumber(strmatch(itemLink, "item:(%d+):"))
-									local testtable = {{itemid = itemID, count = 1},}
+									local testtable = {{itemid = itemID, count = 1}, }
 									E.Octo_Func.TableConcat (E.Octo_Table.white_list_ALL, testtable)
 								end
 							end
@@ -739,6 +772,7 @@ tinsert(E.Octo_Globals.modules, function()
 								v.name:find("Пропустить") or
 								v.name:find("Указать на Ральфа мистеру Солнечноцветику.") or
 								v.name:find("Можешь снова активировать этого голиафа?") or
+								v.name:find("Начать испытание") or
 								v.name:find("cff0000FF")
 								and not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
@@ -826,7 +860,7 @@ tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.AutoSellGrey then
 			local function OnEvent(self, event)
 				totalPrice = 0
-				--for myBags = 0,4 do
+				--for myBags = 0, 4 do
 				for myBags = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 					for bagSlots = 1, C_Container.GetContainerNumSlots(myBags) do
 						CurrentItemLink = C_Container.GetContainerItemLink(myBags, bagSlots)
@@ -1023,7 +1057,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_SellConsumable:Hide()
 				end
 				OctoFrame_SellConsumable:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
-				OctoFrame_SellConsumable:SetFrameStrata("HIGH")
+				OctoFrame_SellConsumable:SetFrameStrata("LOW")
 				OctoFrame_SellConsumable:EnableMouse(true)
 				OctoFrame_SellConsumable:SetMovable(true)
 				OctoFrame_SellConsumable:RegisterForDrag("RightButton")
@@ -1038,7 +1072,7 @@ tinsert(E.Octo_Globals.modules, function()
 				OctoFrame_SellConsumable:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 				OctoFrame_SellConsumable:SetBackdropBorderColor(0, 0, 0, 1)
 				OctoFrame_SellConsumable:RegisterForClicks("LeftButtonUp")
-				OctoFrame_SellConsumable:SetScript("OnClick",function()
+				OctoFrame_SellConsumable:SetScript("OnClick", function()
 						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 							for slot=1, C_Container.GetContainerNumSlots(bag) do
 								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
@@ -1048,14 +1082,14 @@ tinsert(E.Octo_Globals.modules, function()
 									-- local _, _, _, _, _, _, classID = select(6, GetItemInfo(itemID))
 									local classID = select(12, GetItemInfo(itemID))
 									if itemID and classID == 0 then
-										C_Container.UseContainerItem(bag,slot)
+										C_Container.UseContainerItem(bag, slot)
 									end
 								end
 							end
 						end
 					end
 				)
-				OctoFrame_SellConsumable.icon = OctoFrame_SellConsumable:CreateTexture(nil,"ARTWORK")
+				OctoFrame_SellConsumable.icon = OctoFrame_SellConsumable:CreateTexture(nil, "ARTWORK")
 				OctoFrame_SellConsumable.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ui_sigil_kyrian.tga")
 				OctoFrame_SellConsumable.icon:SetAllPoints(OctoFrame_SellConsumable)
 				OctoFrame_SellConsumable:Show()
@@ -1065,7 +1099,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_SellOther:Hide()
 				end
 				OctoFrame_SellOther:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
-				OctoFrame_SellOther:SetFrameStrata("HIGH")
+				OctoFrame_SellOther:SetFrameStrata("LOW")
 				OctoFrame_SellOther:EnableMouse(true)
 				OctoFrame_SellOther:SetMovable(true)
 				OctoFrame_SellOther:RegisterForDrag("RightButton")
@@ -1080,16 +1114,16 @@ tinsert(E.Octo_Globals.modules, function()
 				OctoFrame_SellOther:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 				OctoFrame_SellOther:SetBackdropBorderColor(0, 0, 0, 1)
 				OctoFrame_SellOther:RegisterForClicks("LeftButtonUp")
-				OctoFrame_SellOther:SetScript("OnClick",function()
+				OctoFrame_SellOther:SetScript("OnClick", function()
 						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 							for slot=1, C_Container.GetContainerNumSlots(bag) do
 								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 								if containerInfo then
 									local itemID = containerInfo.itemID
 									local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									local name, _, itemQuality, itemLevel, _, _, _,_, _, _, sellPrice = GetItemInfo(itemLink)
+									local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = GetItemInfo(itemLink)
 									local effectiveILvl = GetDetailedItemLevelInfo(itemID) or 0
-									local baseILvl = tonumber(select(3,GetDetailedItemLevelInfo(itemID))) or 0
+									local baseILvl = tonumber(select(3, GetDetailedItemLevelInfo(itemID))) or 0
 									local ItemTooltip = _G["OctoScanningTooltip"] or
 									CreateFrame("GameTooltip", "OctoScanningTooltip", WorldFrame, "GameTooltipTemplate")
 									ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
@@ -1106,14 +1140,14 @@ tinsert(E.Octo_Globals.modules, function()
 										end
 									end
 									if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality < 5 --[[and itemLevel < 150 and itemLevel ~= 0]] then --5 фиолет
-										C_Container.UseContainerItem(bag,slot)
+										C_Container.UseContainerItem(bag, slot)
 									end
 								end
 							end
 						end
 					end
 				)
-				OctoFrame_SellOther.icon = OctoFrame_SellOther:CreateTexture(nil,"ARTWORK")
+				OctoFrame_SellOther.icon = OctoFrame_SellOther:CreateTexture(nil, "ARTWORK")
 				OctoFrame_SellOther.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Sell.tga")
 				OctoFrame_SellOther.icon:SetAllPoints(OctoFrame_SellOther)
 				OctoFrame_SellOther:Show()
@@ -1123,7 +1157,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_SellAll:Hide()
 				end
 				OctoFrame_SellAll:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
-				OctoFrame_SellAll:SetFrameStrata("HIGH")
+				OctoFrame_SellAll:SetFrameStrata("LOW")
 				OctoFrame_SellAll:EnableMouse(true)
 				OctoFrame_SellAll:SetMovable(true)
 				OctoFrame_SellAll:RegisterForDrag("RightButton")
@@ -1138,16 +1172,16 @@ tinsert(E.Octo_Globals.modules, function()
 				OctoFrame_SellAll:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 				OctoFrame_SellAll:SetBackdropBorderColor(0, 0, 0, 1)
 				OctoFrame_SellAll:RegisterForClicks("LeftButtonUp")
-				OctoFrame_SellAll:SetScript("OnClick",function()
+				OctoFrame_SellAll:SetScript("OnClick", function()
 						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 							for slot=1, C_Container.GetContainerNumSlots(bag) do
 								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 								if containerInfo then
 									local itemID = containerInfo.itemID
 									-- local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									-- local name, _, itemQuality, itemLevel, _, _, _,_, _, _, sellPrice = GetItemInfo(itemLink)
+									-- local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = GetItemInfo(itemLink)
 									-- local effectiveILvl = GetDetailedItemLevelInfo(itemID) or 0
-									-- local baseILvl = tonumber(select(3,GetDetailedItemLevelInfo(itemID))) or 0
+									-- local baseILvl = tonumber(select(3, GetDetailedItemLevelInfo(itemID))) or 0
 									-- local ItemTooltip = _G["OctoScanningTooltip"] or
 									-- CreateFrame("GameTooltip", "OctoScanningTooltip", WorldFrame, "GameTooltipTemplate")
 									-- ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
@@ -1164,14 +1198,14 @@ tinsert(E.Octo_Globals.modules, function()
 									-- end
 									-- end
 									if itemID then
-										C_Container.UseContainerItem(bag,slot)
+										C_Container.UseContainerItem(bag, slot)
 									end
 								end
 							end
 						end
 					end
 				)
-				OctoFrame_SellAll.icon = OctoFrame_SellAll:CreateTexture(nil,"ARTWORK")
+				OctoFrame_SellAll.icon = OctoFrame_SellAll:CreateTexture(nil, "ARTWORK")
 				OctoFrame_SellAll.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SellAll.tga")
 				OctoFrame_SellAll.icon:SetAllPoints(OctoFrame_SellAll)
 				OctoFrame_SellAll:Show()
@@ -1183,7 +1217,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_FROMBANK:Hide()
 				end
 				OctoFrame_FROMBANK:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
-				OctoFrame_FROMBANK:SetFrameStrata("HIGH")
+				OctoFrame_FROMBANK:SetFrameStrata("LOW")
 				OctoFrame_FROMBANK:SetPoint("CENTER", -500, 32)
 				OctoFrame_FROMBANK:SetBackdrop({
 						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -1193,27 +1227,27 @@ tinsert(E.Octo_Globals.modules, function()
 				OctoFrame_FROMBANK:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 				OctoFrame_FROMBANK:SetBackdropBorderColor(0, 0, 0, 1)
 				OctoFrame_FROMBANK:RegisterForClicks("LeftButtonUp")
-				OctoFrame_FROMBANK:SetScript("OnClick",function()
+				OctoFrame_FROMBANK:SetScript("OnClick", function()
 						for bag=REAGENTBANK_CONTAINER, BANK_CONTAINER do
 							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local n = C_Container.GetContainerItemLink(bag,slot)
+								local n = C_Container.GetContainerItemLink(bag, slot)
 								if n then
-									C_Container.UseContainerItem(bag,slot)
+									C_Container.UseContainerItem(bag, slot)
 								end
 							end
 						end
 						for bag=NUM_TOTAL_EQUIPPED_BAG_SLOTS+1, NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS do
 							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local n = C_Container.GetContainerItemLink(bag,slot)
+								local n = C_Container.GetContainerItemLink(bag, slot)
 								if n then
-									C_Container.UseContainerItem(bag,slot)
+									C_Container.UseContainerItem(bag, slot)
 								end
 							end
 						end
 					end
 				)
 				OctoFrame_FROMBANK.RightEdge:SetVertexColor(0, 1, 0)
-				OctoFrame_FROMBANK.icon = OctoFrame_FROMBANK:CreateTexture(nil,"ARTWORK")
+				OctoFrame_FROMBANK.icon = OctoFrame_FROMBANK:CreateTexture(nil, "ARTWORK")
 				OctoFrame_FROMBANK.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_RIGHT.tga")
 				OctoFrame_FROMBANK.icon:SetAllPoints(OctoFrame_FROMBANK)
 				OctoFrame_FROMBANK:Show()
@@ -1223,7 +1257,7 @@ tinsert(E.Octo_Globals.modules, function()
 					OctoFrame_TOBANK:Hide()
 				end
 				OctoFrame_TOBANK:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
-				OctoFrame_TOBANK:SetFrameStrata("HIGH")
+				OctoFrame_TOBANK:SetFrameStrata("LOW")
 				OctoFrame_TOBANK:SetPoint("CENTER", -500, -32)
 				OctoFrame_TOBANK:SetBackdrop({
 						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -1234,19 +1268,19 @@ tinsert(E.Octo_Globals.modules, function()
 				OctoFrame_TOBANK:SetBackdropBorderColor(0, 0, 0, 1)
 				OctoFrame_TOBANK:RegisterForClicks("LeftButtonUp")
 				OctoFrame_TOBANK:RegisterForClicks("LeftButtonUp")
-				OctoFrame_TOBANK:SetScript("OnClick",function()
+				OctoFrame_TOBANK:SetScript("OnClick", function()
 						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local itemLink = C_Container.GetContainerItemLink(bag,slot)
+								local itemLink = C_Container.GetContainerItemLink(bag, slot)
 								if itemLink then
-									C_Container.UseContainerItem(bag,slot)
+									C_Container.UseContainerItem(bag, slot)
 								end
 							end
 						end
 					end
 				)
 				OctoFrame_TOBANK.LeftEdge:SetVertexColor(0, 1, 0)
-				OctoFrame_TOBANK.icon = OctoFrame_TOBANK:CreateTexture(nil,"ARTWORK")
+				OctoFrame_TOBANK.icon = OctoFrame_TOBANK:CreateTexture(nil, "ARTWORK")
 				OctoFrame_TOBANK.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_LEFT.tga")
 				OctoFrame_TOBANK.icon:SetAllPoints(OctoFrame_TOBANK)
 				OctoFrame_TOBANK:Show()
@@ -1390,35 +1424,35 @@ tinsert(E.Octo_Globals.modules, function()
 						end
 					end
 				elseif event == "GOSSIP_SHOW" then
-						if not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
-							-- turn in all completed quests
-							if C_GossipInfo.GetActiveQuests() ~= 0 then
-								for _, info in pairs(C_GossipInfo.GetActiveQuests()) do
-									if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
-										C_GossipInfo.SelectActiveQuest(info.questID)
-									end
-								end
-							end
-							-- accept all available quests
-							if C_GossipInfo.GetAvailableQuests() ~= 0 then
-								for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
-									--if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
-									if info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
-										return
-									else
-										C_GossipInfo.SelectAvailableQuest(info.questID)
-									end
+					if not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
+						-- turn in all completed quests
+						if C_GossipInfo.GetActiveQuests() ~= 0 then
+							for _, info in pairs(C_GossipInfo.GetActiveQuests()) do
+								if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
+									C_GossipInfo.SelectActiveQuest(info.questID)
 								end
 							end
 						end
+						-- accept all available quests
+						if C_GossipInfo.GetAvailableQuests() ~= 0 then
+							for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
+								--if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
+								if info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false then
+									return
+								else
+									C_GossipInfo.SelectAvailableQuest(info.questID)
+								end
+							end
+						end
+					end
 				elseif event == "QUEST_PROGRESS" then
 					if not IsShiftKeyDown() then
 						-- print (AddonTitle.." "..event)
 						CompleteQuest()
 						-- elseif event == "QUEST_LOG_UPDATE" then
-						--     print (AddonTitle.." "..event)
+						-- print (AddonTitle.." "..event)
 						-- elseif event == "QUEST_ACCEPTED" then
-						--     print (AddonTitle.." "..event)
+						-- print (AddonTitle.." "..event)
 					end
 				end
 			end
@@ -1446,3 +1480,4 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 		end
 end)
+

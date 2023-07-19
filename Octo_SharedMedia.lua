@@ -133,10 +133,10 @@ LSM:Register("sound", "|cFF00A7FFO_07_Retribution|r", [[Interface\Addons\]]..Glo
 LSM:Register("sound", "|cFF00A7FFO_07_Unstoppable|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\ut4\Unstoppable.ogg]])
 LSM:Register("sound", "|cFF00A7FFO_07_WhickedSick|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\ut4\WhickedSick.ogg]])
 --[[BACKGROUND
-]]
+ ]]
 --Interface\Addons\]]..GlobalAddonName..[[\Media\background
 --[[FONT
-]]
+ ]]
 --Interface\Addons\]]..GlobalAddonName..[[\Media\font\
 --
 LSM:Register("font", " |cFF00A3FF01|r |cffFF4C4FOcto|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\font\01 Octo.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
@@ -161,11 +161,11 @@ LSM:Register("font", "|cFF00A3FF19|r |cffFF4C4FRobotoCondensedBold|r", [[Interfa
 LSM:Register("font", "|cFF00A3FF20|r |cffFF4C4FMontserrat-Bold|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\font\20 Montserrat-Bold.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("font", "|cFF00A3FF21|r |cffFF4C4FBitcrusherCdRg-Bold|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\font\21 BitcrusherCdRg-Bold.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 --[[BORDER
-]]
+ ]]
 --Interface\Addons\]]..GlobalAddonName..[[\Media\border\
 LSM:Register("border", " |cFF00A3FF01|r |cffFF4C4FOcto|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\border\01 Octo.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 --[[STATUSBAR
-]]
+ ]]
 --Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\
 LSM:Register("statusbar", " |cFF00A3FF01|r |cffFF4C4FOcto|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\01 Octo.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", " |cFF00A3FF02|r |cffFF4C4FOcto-Blank|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\02 Octo-Blank.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
@@ -194,3 +194,4 @@ LSM:Register("statusbar", "|cFF00A3FFO_23|r", [[Interface\Addons\]]..GlobalAddon
 --Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI
 LSM:Register("statusbar", "|cFF8e7cc3Atrocity|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI\Atrocity.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("statusbar", "|cFF8e7cc3Kait|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI\Kait.tga]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
+
