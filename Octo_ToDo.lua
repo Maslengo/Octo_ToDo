@@ -6083,6 +6083,10 @@ function O_otrisovka()
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
+			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+			if CharInfo.className ~= 0 then
+				tooltip[#tooltip+1] = {classcolor:WrapTextInColorCode(CharInfo.className), classcolor:WrapTextInColorCode(E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName)}
+			end
 			if CharInfo.BindLocation ~= 0 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(134414)..L["Bind Location"], CharInfo.BindLocation}
 			end
@@ -6101,15 +6105,15 @@ function O_otrisovka()
 			if CharInfo.PlayerReagentnumSlots == 0 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(4549254)..E.Octo_Globals.Red_Color..L["No Reagent Bag"].."|r", " "}
 			end
-			if CharInfo.currentMountItemID ~= 0 then
-				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(CharInfo.currentMountItemID)..E.Octo_Func.func_itemName(CharInfo.currentMountItemID)}
-			end
 			if CharInfo.warmode ~= 0 then
 				if CharInfo.warmode == false then
 					tooltip[#tooltip+1] = {L["Warmode"], E.Octo_Globals.Red_Color..L["OFF"].."|r"}
 				else
 					tooltip[#tooltip+1] = {L["Warmode"], E.Octo_Globals.Green_Color..L["ON"].."|r"}
 				end
+			end
+			if CharInfo.currentMountItemID ~= 0 then
+				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(CharInfo.currentMountItemID)..E.Octo_Func.func_itemName(CharInfo.currentMountItemID)}
 			end
 			if CharInfo.loginDay ~= 0 and CharInfo.loginDay ~= 0 then
 				CL:SetFontObject(OctoFont10)
