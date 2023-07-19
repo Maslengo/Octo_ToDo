@@ -70,7 +70,7 @@ LSM:Register("sound", "|cFF00A4FFO_04_Why are you running|r", [[Interface\Addons
 LSM:Register("sound", "|cFF00A4FFO_04_YameteKudasai|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\YameteKudasai.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_YameteKudasaiFULL|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\YameteKudasaiFULL.ogg]])
 --Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Naruto
-LSM:Register("sound", "|cFF00A5FFO_05_Chidori Kouken1|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Naruto\Chidori Kouken1.ogg]])
+-- LSM:Register("sound", "|cFF00A5FFO_05_Chidori Kouken1|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Naruto\Chidori Kouken1.ogg]])
 LSM:Register("sound", "|cFF00A5FFO_05_Chidori Kouken2|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Naruto\Chidori Kouken2.ogg]])
 LSM:Register("sound", "|cFF00A5FFO_05_Hand Sign|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Naruto\Hand Sign.ogg]])
 LSM:Register("sound", "|cFF00A5FFO_05_Jutsu|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Naruto\Jutsu.ogg]])

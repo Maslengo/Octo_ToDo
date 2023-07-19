@@ -6478,7 +6478,7 @@ function Octo_ToDoCreateAltFrame()
 
 	if not OctoFrame_Phylacterweave_Button then
 		OctoFrame_Phylacterweave_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-		OctoFrame_Phylacterweave_Button:SetSize(E.Octo_Globals.curHeight*2, E.Octo_Globals.curHeight*2)
+		OctoFrame_Phylacterweave_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
 		OctoFrame_Phylacterweave_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -150)
 		OctoFrame_Phylacterweave_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 		OctoFrame_Phylacterweave_Button:SetBackdropBorderColor(0, .44, .98, 1)

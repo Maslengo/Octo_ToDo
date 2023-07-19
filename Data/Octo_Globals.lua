@@ -17,7 +17,7 @@ E.Octo_Globals.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:Ge
 E.Octo_Globals.curWidth = 96*E.Octo_Globals.scale
 E.Octo_Globals.curHeight = 20*E.Octo_Globals.scale
 --E.Octo_Globals.curWidthTitle = E.Octo_Globals.curWidth*2
-E.Octo_Globals.curWidthTitle = 250
+E.Octo_Globals.curWidthTitle = 200
 E.Octo_Globals.ilvlToShow = 400
 ----------------------------------------------------------------
 --COLORS--------------------------------------------------------

@@ -203,15 +203,7 @@ end
 local TableConcat = E.Octo_Func.TableConcat
 ----------------------------------------------------------------
 function E.Octo_Func.PlaySoundFile_whisper(self)
-	if self == ":rat:" or self == "rat" then
-		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\rat.ogg", "Master")
-	elseif self == "woo" then
-		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\Gnome Woo.ogg", "Master")
-	elseif self == "ispanci" then
-		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_ispanci.ogg", "Master")
-	elseif self == "kabanchik" then
-		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_kabanchik.ogg", "Master")
-	else
+	if self then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\"..self..".ogg", "Master")
 	end
 end
