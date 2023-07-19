@@ -211,6 +211,8 @@ function E.Octo_Func.PlaySoundFile_whisper(self)
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_ispanci.ogg", "Master")
 	elseif self == "kabanchik" then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\MEME_kabanchik.ogg", "Master")
+	else
+		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\"..self..".ogg", "Master")
 	end
 end
 local PlaySoundFile_whisper = E.Octo_Func.PlaySoundFile_whisper

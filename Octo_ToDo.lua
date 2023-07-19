@@ -1103,6 +1103,8 @@ local OctoTable_UniversalQuest = {
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Holiday)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Reputation)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_DFMountsSkins)
+E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.T3Items)
+
 local function Central_Frame_Mouse_OnEnter(self)
 	local parent = self:GetParent():GetParent()["FrameLine"..self.index]
 	parent:GetScript("OnEnter")(parent)
@@ -3547,56 +3549,7 @@ function O_otrisovka()
 				BG:SetColorTexture(.64, .21, .93, .1)
 				return vivodCent, vivodLeft
 		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[206579] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[206579]
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(610575)..E.Octo_Func.func_itemName(206579)
-				BG:SetColorTexture(0, .8, 1, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[207702] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[207702]
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(4622301)..E.Octo_Func.func_itemName(207702)
-				BG:SetColorTexture(0, .8, 1, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[206576] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[206576]
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(135441)..E.Octo_Func.func_itemName(206576)
-				BG:SetColorTexture(0, .8, 1, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[206375] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[206375]
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(133445)..E.Octo_Func.func_itemName(206375)
-				BG:SetColorTexture(0, .8, 1, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[206374] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[206374]
-				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(133446)..E.Octo_Func.func_itemName(206374)
-				BG:SetColorTexture(0, .8, 1, .1)
-				return vivodCent, vivodLeft
-		end)
+
 
 
 
@@ -6522,6 +6475,64 @@ function Octo_ToDoCreateAltFrame()
 		----t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_Events_Button)
 	end
+
+	if not OctoFrame_Phylacterweave_Button then
+		OctoFrame_Phylacterweave_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+		OctoFrame_Phylacterweave_Button:SetSize(E.Octo_Globals.curHeight*2, E.Octo_Globals.curHeight*2)
+		OctoFrame_Phylacterweave_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -150)
+		OctoFrame_Phylacterweave_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+		OctoFrame_Phylacterweave_Button:SetBackdropBorderColor(0, .44, .98, 1)
+		OctoFrame_Phylacterweave_Button:SetScript("OnEnter", function(self)
+				local i = 0
+				self:SetBackdropBorderColor(1, 0, 0, 1)
+				self.icon:SetVertexColor(1, 0, 0, 1)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+				GameTooltip:ClearLines()
+				GameTooltip:AddDoubleLine(" ", " ")
+				for k, CharInfo in pairs(Octo_ToDoLevels) do
+					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+
+					for _, v in pairs(E.Octo_Table.T3Items) do
+						if (CharInfo.ItemsInBag[v] ~= 0) then
+							i = i + 1
+							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v) ..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+						end
+					end
+
+				end
+				if i == 0 then
+					GameTooltip:AddLine("No Data")
+				end
+				GameTooltip:AddDoubleLine(" ", " ")
+				GameTooltip:Show()
+		end)
+		OctoFrame_Phylacterweave_Button:SetScript("OnLeave", function(self)
+				self:SetBackdropBorderColor(0, .44, .98, 1)
+				self.icon:SetVertexColor(1, 1, 1, 1)
+				GameTooltip:ClearLines()
+				GameTooltip:Hide()
+		end)
+		OctoFrame_Phylacterweave_Button:SetScript("OnMouseDown", function(self)
+				self:SetBackdropBorderColor(1, 0, 0, .5)
+				self.icon:SetVertexColor(1, 0, 0, .5)
+		end)
+		OctoFrame_Phylacterweave_Button:SetScript("OnClick", function()
+				OctoFrame_Main_Frame:Hide()
+		end)
+		local t = OctoFrame_Phylacterweave_Button:CreateTexture(nil, "BACKGROUND")
+		OctoFrame_Phylacterweave_Button.icon = t
+		t:SetTexture(610575)
+		----t:SetVertexColor(1, 1, 1, 1)
+		t:SetAllPoints(OctoFrame_Phylacterweave_Button)
+	end
+
+
+
+
+
+
+
+
 	if not OctoFrame_AbandonAllQuests_Button then
 		local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
 		StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
@@ -6581,6 +6592,7 @@ function Octo_ToDoCreateAltFrame()
 		--t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_AbandonAllQuests_Button)
 	end
+	----------------------------------------------------
 	local prof1, prof2 = GetProfessions()
 	local prof1 = prof1 and select(7, GetProfessionInfo(prof1))
 	local prof2 = prof2 and select(7, GetProfessionInfo(prof2))
