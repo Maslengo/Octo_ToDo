@@ -773,6 +773,7 @@ tinsert(E.Octo_Globals.modules, function()
 								v.name:find("Указать на Ральфа мистеру Солнечноцветику.") or
 								v.name:find("Можешь снова активировать этого голиафа?") or
 								v.name:find("Начать испытание") or
+								v.name:find("Начать копать") or
 								v.name:find("cff0000FF")
 								and not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)

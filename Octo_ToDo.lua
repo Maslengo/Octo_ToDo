@@ -1067,6 +1067,38 @@ local OctoTable_UniversalQuest = {
 		questID = {9324, 9325, 9326, 9330, 9331, 9332, 11580, 11581, 11583, 11584, 11732, 11734, 11735, 11736, 11737, 11738, 11739, 11740, 11741, 11742, 11743, 11744, 11745, 11746, 11747, 11749, 11750, 11751, 11752, 11753, 11754, 11755, 11756, 11757, 11758, 11759, 11760, 11761, 11762, 11763, 11764, 11765, 11766, 11767, 11768, 11769, 11770, 11771, 11772, 11773, 11774, 11775, 11776, 11777, 11778, 11779, 11780, 11781, 11782, 11783, 11784, 11786, 11787, 11799, 11800, 11801, 11802, 11803, 11804, 11805, 11806, 11807, 11808, 11809, 11810, 11811, 11812, 11813, 11814, 11815, 11816, 11817, 11818, 11820, 11821, 11822, 11823, 11824, 11825, 11826, 11827, 11828, 11829, 11830, 11831, 11832, 11833, 11834, 11835, 11836, 11837, 11838, 11839, 11840, 11841, 11842, 11843, 11844, 11845, 11846, 11847, 11848, 11849, 11850, 11851, 11852, 11853, 11854, 11855, 11856, 11857, 11858, 11859, 11860, 11862, 11863, 11933, 11935, 13440, 13441, 13442, 13443, 13444, 13445, 13446, 13447, 13449, 13450, 13451, 13453, 13454, 13455, 13457, 13458, 13485, 13486, 13487, 13488, 13489, 13490, 13491, 13492, 13493, 13494, 13495, 13496, 13497, 13498, 13499, 13500, 28910, 28911, 28912, 28913, 28914, 28915, 28916, 28917, 28918, 28919, 28920, 28921, 28922, 28923, 28924, 28925, 28926, 28927, 28928, 28929, 28930, 28931, 28932, 28933, 28943, 28944, 28945, 28946, 28947, 28948, 28949, 28950, 29030, 29031, 29036, 32496, 32497, 32498, 32499, 32500, 32501, 32502, 32503, 32509, 32510, 44570, 44571, 44572, 44573, 44574, 44575, 44576, 44577, 44579, 44580, 44582, 44583, 44613, 44614, 44624, 44627, 54736, 54737, 54739, 54741, 54742, 54743, 54744, 54745, 54746, 54747, 54749, 54750, 75398, 75617, 75640, 75645, 75647, 75650, },
 		max = 131,
 	},
+	{
+		name_save = "TemporalAcquisitionsSpecialist", --https://www.wowhead.com/ru/achievement=18554/
+		name_quest = "Temporal Acquisitions Specialist",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			-- Azmourne - Scourge:
+			76406, -- https://www.wowhead.com/quest=76406/the-sins-of-the-ashbringer
+			76547, -- https://www.wowhead.com/quest=76547/all-that-glitters
+			-- A.Z.E.R.O.T.H. - Mecha:
+			76521, -- https://www.wowhead.com/quest=76521/buzzing-boffins
+			76404, -- https://www.wowhead.com/quest=76404/cogs-in-a-machine
+			-- Azmerloth - Murlocs:
+			76548, -- https://www.wowhead.com/quest=76548/a-fishy-gift
+			76379, -- https://www.wowhead.com/quest=76379/a-murloc-and-a-dragon-walk-into-a-time-rift
+			-- Azewrath - Fel/Demons:
+			76459, -- https://www.wowhead.com/quest=76459/the-resistance
+			76362, -- https://www.wowhead.com/quest=76362/an-antlered-skull
+			-- Azq'roth - Void/Black Empire:
+			76546, -- https://www.wowhead.com/quest=76546/mantid-methodology
+			76453, -- https://www.wowhead.com/quest=76453/a-stony-reception
+			-- Warlands - Alliance/Horde:
+			76544, -- https://www.wowhead.com/quest=76544/wasteland-warriors
+			76449, -- https://www.wowhead.com/quest=76449/the-endless-conflict
+			-- Ulderoth - Titans:
+			76351, -- https://www.wowhead.com/quest=76351/titanic-beasts
+			76533, -- https://www.wowhead.com/quest=76533/dangerous-documentation
+		},
+		max = 14,
+	}
 }
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Holiday)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Reputation)
@@ -3327,21 +3359,69 @@ function O_otrisovka()
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				local vivodLeft = (E.Octo_Func.func_texturefromIcon(628677)..Timer_DF_TimeRift()..L["Time Rift"])
-				if CharInfo.Octopussy_DF_Daily_TimeRift_count ~= NONE then
-					vivodCent = CharInfo.Octopussy_DF_Daily_TimeRift_count
-				end
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
 				local vivodLeft = (E.Octo_Func.func_texturefromIcon(236469)..Timer_DF_ResearchersUnderFire()..L["Researchers Under Fire"])
 				if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= NONE then
 					vivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
 				end
 				return vivodCent, vivodLeft
 		end)
+
+
+
+
+
+
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				local vivodLeft = (E.Octo_Func.func_texturefromIcon(628677)..Timer_DF_TimeRift()..L["Time Rift"])
+				if CharInfo.Octopussy_DF_Daily_TimeRift_count ~= NONE then
+					vivodCent = CharInfo.Octopussy_DF_Daily_TimeRift_count
+				end
+				if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
+					vivodCent = vivodCent.."("..CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count..")"
+				end
+				if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE then
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azmourne - Scourge:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76406),CharInfo.OctoTable_QuestID[76406]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76547),CharInfo.OctoTable_QuestID[76547]}
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    A.Z.E.R.O.T.H. - Mecha:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76521),CharInfo.OctoTable_QuestID[76521]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76404),CharInfo.OctoTable_QuestID[76404]}
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azmerloth - Murlocs:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76548),CharInfo.OctoTable_QuestID[76548]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76379),CharInfo.OctoTable_QuestID[76379]}
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azewrath - Fel/Demons:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76459),CharInfo.OctoTable_QuestID[76459]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76362),CharInfo.OctoTable_QuestID[76362]}
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azq'roth - Void/Black Empire:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76546),CharInfo.OctoTable_QuestID[76546]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76453),CharInfo.OctoTable_QuestID[76453]}
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Warlands - Alliance/Horde:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76544),CharInfo.OctoTable_QuestID[76544]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76449),CharInfo.OctoTable_QuestID[76449]}
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Ulderoth - Titans:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76351),CharInfo.OctoTable_QuestID[76351]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76533),CharInfo.OctoTable_QuestID[76533]}
+				end
+
+				return vivodCent, vivodLeft
+		end)
+		-- tinsert(OctoTable_func_otrisovka,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft = "", ""
+		-- 		if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
+		-- 			vivodCent = CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count
+		-- 		end
+		-- 		vivodLeft = L["Temporal Acquisitions Specialist"]
+		-- 		return vivodCent, vivodLeft
+		-- end)
 		-- tinsert(OctoTable_func_otrisovka,
 		-- function(CharInfo, tooltip, CL, BG)
 		-- local vivodCent, vivodLeft = "", ""
@@ -3418,6 +3498,9 @@ function O_otrisovka()
 				local vivodCent, vivodLeft = "", ""
 				if CharInfo.CurrencyID[2594] ~= 0 then
 					vivodCent = CharInfo.CurrencyID[2594]
+					if CharInfo.CurrencyID[2594] < 500 then
+						vivodCent = E.Octo_Globals.Gray_Color..vivodCent.."|r"
+					end
 				end
 				vivodLeft = E.Octo_Func.func_currencyicon(2594)..E.Octo_Func.func_currencyName(2594)
 				return vivodCent, vivodLeft
@@ -3440,6 +3523,10 @@ function O_otrisovka()
 				end
 				return vivodCent, vivodLeft
 		end)
+
+
+
+
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -3510,6 +3597,11 @@ function O_otrisovka()
 				BG:SetColorTexture(0, .8, 1, .1)
 				return vivodCent, vivodLeft
 		end)
+
+
+
+
+
 		----------------ЦУЙЦУЙЦУ
 		-- tinsert(OctoTable_func_otrisovka,
 		-- function(CharInfo, tooltip, CL, BG)
@@ -7086,4 +7178,3 @@ SlashCmdList.GSEARCH = function(msg)
 end
 SlashCmdList["RELOAD"] = ReloadUI
 SLASH_RELOAD1 = "/rl"
-
