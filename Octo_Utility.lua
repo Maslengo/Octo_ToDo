@@ -1140,8 +1140,10 @@ tinsert(E.Octo_Globals.modules, function()
 											itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
 										end
 									end
-									if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality < 5 --[[and itemLevel < 150 and itemLevel ~= 0]] then --5 фиолет
-										C_Container.UseContainerItem(bag, slot)
+									if sellPrice and itemQuality then
+										if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality < 5 --[[and itemLevel < 150 and itemLevel ~= 0]] then --5 фиолет
+											C_Container.UseContainerItem(bag, slot)
+										end
 									end
 								end
 							end

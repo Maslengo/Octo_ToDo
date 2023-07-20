@@ -205,6 +205,7 @@ local TableConcat = E.Octo_Func.TableConcat
 function E.Octo_Func.PlaySoundFile_whisper(self)
 	if self then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\"..self..".ogg", "Master")
+		-- PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Naruto\\"..self..".ogg", "Master")
 	end
 end
 local PlaySoundFile_whisper = E.Octo_Func.PlaySoundFile_whisper

@@ -1005,7 +1005,7 @@ local OctoTable_UniversalQuest = {
 	{
 		name_save = "TimeRift",
 		name_quest = L["Time Rift"],
-		reset = "Daily",
+		reset = "Weekly",
 		expansion = "DF",
 		place = "",
 		desc = "",
@@ -3377,13 +3377,13 @@ function O_otrisovka()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				local vivodLeft = (E.Octo_Func.func_texturefromIcon(628677)..Timer_DF_TimeRift()..L["Time Rift"])
-				if CharInfo.Octopussy_DF_Daily_TimeRift_count ~= NONE then
-					vivodCent = CharInfo.Octopussy_DF_Daily_TimeRift_count
+				if CharInfo.Octopussy_DF_Weekly_TimeRift_count ~= NONE then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_TimeRift_count
 				end
 				if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
 					vivodCent = vivodCent.."("..CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count..")"
 				end
-				if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE then
+				if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
 					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azmourne - Scourge:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76406),CharInfo.OctoTable_QuestID[76406]}
 					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76547),CharInfo.OctoTable_QuestID[76547]}
@@ -5556,7 +5556,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {Timer_DF_CommunityFeast()..L["Community Feast"], CharInfo.Octopussy_DF_Weekly_Feast_count}
 				tooltip[#tooltip+1] = {Timer_DF_PrimalStorms()..L["The Storm's Fury"], CharInfo.Octopussy_DF_Weekly_StormsFury_count}
 				tooltip[#tooltip+1] = {Timer_DF_ResearchersUnderFire()..L["Researchers Under Fire"], CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count}
-				tooltip[#tooltip+1] = {Timer_DF_TimeRift()..L["Time Rift"], CharInfo.Octopussy_DF_Daily_TimeRift_count}
+				tooltip[#tooltip+1] = {Timer_DF_TimeRift()..L["Time Rift"], CharInfo.Octopussy_DF_Weekly_TimeRift_count}
 				tooltip[#tooltip+1] = {L["Aiding the Accord"], CharInfo.Octopussy_DF_Weekly_3kREP_count}
 				tooltip[#tooltip+1] = {L["Keys of Loyalty"], CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count}
 				tooltip[#tooltip+1] = {L["PvP"], CharInfo.Octopussy_DF_Weekly_PVP_count}
@@ -5571,15 +5571,15 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {L["A Worthy Ally: Loamm Niffen"], CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count}
 				tooltip[#tooltip+1] = {L["Sniffenseeking"] , CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_count}
 				tooltip[#tooltip+1] = {L["Sniffenseeking (items)"], CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseekingItems_count}
-				tooltip[#tooltip+1] = {"Events", CharInfo.Octopussy_DF_Daily_ZaralekCavernEvents_count}
-				tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Daily_ZaralekCavernRares_count}
+				tooltip[#tooltip+1] = {"Events", CharInfo.Octopussy_DF_Weekly_ZaralekCavernEvents_count}
+				tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Weekly_ZaralekCavernRares_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {L["Fighting is Its Own Reward"], CharInfo.Octopussy_DF_Weekly_FightingisItsOwnReward_count}
 				tooltip[#tooltip+1] = {L["Fyrakk Asssaults"], CharInfo.Octopussy_DF_Weekly_FyrakkAssaults_count}
 				tooltip[#tooltip+1] = {L["Disciple of Fyrakk"], CharInfo.Octopussy_DF_Weekly_DiscipleofFyrakk_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»"..L["The Forbidden Reach"].."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Daily_TheForbiddenReachRares_count}
+				tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Weekly_TheForbiddenReachRares_count}
 				tooltip[#tooltip+1] = {L["Storm-Bound Chest"], CharInfo.Octopussy_DF_Weekly_StormBoundChest_count}
 			end
 			if Octo_ToDoVars.config.LINE_Shadowlands then
@@ -5970,7 +5970,7 @@ function O_otrisovka()
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
 			if CharInfo.Octopussy_DF_Once_CatchingUp_count ~= DONE then
-				tooltip[#tooltip+1] = {CharInfo.Octopussy_DF_Once_CatchingUp_name.." /way 60, 72", CharInfo.Octopussy_DF_Once_CatchingUp_count}
+				tooltip[#tooltip+1] = {E.Octo_Globals.Red_Color.."Нужно сделать квест: |r"..CharInfo.Octopussy_DF_Once_CatchingUp_name.." /way 60, 72", CharInfo.Octopussy_DF_Once_CatchingUp_count}
 			end
 			if CharInfo.prof1 ~= 0 or CharInfo.prof2 ~= 0 then
 				tooltip[#tooltip+1]= {E.Octo_Func.Empty_Zero(CharInfo.profID_prof1.icon)..E.Octo_Globals.Purple_Color..E.Octo_Func.Empty_Zero(CharInfo.profID_prof1.name).."|r"}
@@ -7124,7 +7124,28 @@ function Octo_ToDoOnEvent(self, event, ...)
 			Collect_ALL_BankInfo()
 		end
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
-	elseif event == "CHAT_MSG_LOOT" or event == "MERCHANT_SHOW" or event == "MERCHANT_CLOSED" or event == "PLAYER_ENTERING_WORLD" or event == "MAIL_INBOX_UPDATE" or event == "MAIL_SHOW" or event == "UPDATE_PENDING_MAIL" or event == "UI_INFO_MESSAGE" and not InCombatLockdown() then
+	elseif
+			-- event == "CHAT_MSG_LOOT" or
+			event == "PLAYER_MONEY" or
+			event == "MERCHANT_SHOW" or
+			event == "MERCHANT_CLOSED" or
+			event == "PLAYER_ENTERING_WORLD" or
+			event == "MAIL_INBOX_UPDATE" or
+			event == "MAIL_SHOW" or
+			event == "UPDATE_PENDING_MAIL" or
+			event == "UI_INFO_MESSAGE" or
+			event == "HEARTHSTONE_BOUND" or
+			event == "ZONE_CHANGED" or
+			event == "ZONE_CHANGED_NEW_AREA" or
+			event == "SPELLS_CHANGED" or
+			event == "ENCOUNTER_END" or
+			event == "PLAYER_REGEN_ENABLED" or
+			event == "ZONE_CHANGED" or
+			event == "ZONE_CHANGED_NEW_AREA" or
+			event == "READY_CHECK" or
+			event == "COVENANT_CHOSEN" or
+			event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED"
+			and not InCombatLockdown() then
 		Collect_ALL_ItemsInBag()
 		Collect_SL_PossibleAnima()
 		Collect_ALL_CurrentKEY()
