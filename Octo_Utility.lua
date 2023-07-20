@@ -357,9 +357,12 @@ end)
 --CVAR
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.CVar then
-			if InCombatLockdown() then print ("CAN't CVAR") end
-			if not InCombatLockdown() then
+			if InCombatLockdown() == true then
+				print ("InCombatLockdown()")
+			elseif not InCombatLockdown() then
 				C_Timer.After(1, function()
+						SetCVar("nameplateMotion", 0) --(0 Наложение) (1 Друг над другом) stack
+						SetCVar("nameplateShowOnlyNames", 0) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
 						--SetCVar("questPOI", 101)
 						SetCVar("alwaysCompareItems", 0)
 						SetCVar("rotateMinimap", 0)
@@ -393,14 +396,14 @@ tinsert(E.Octo_Globals.modules, function()
 						SetCVar("findYourselfMode", 0)
 						SetCVar("floatingCombatTextAllSpellMechanics", 0)
 						SetCVar("floatingCombatTextAuras", 0)
-						SetCVar("floatingCombatTextCombatDamage", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageAllAutos", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatDamageDirectionalScale", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatHealing", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 1) --ТУТ
-						SetCVar("floatingCombatTextCombatLogPeriodicSpells", 1) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
+						SetCVar("floatingCombatTextCombatDamage", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageAllAutos", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatDamageDirectionalScale", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatHealing", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 0) --ТУТ
+						SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
 						SetCVar("floatingCombatTextCombatState", 0) --Проки по центру экрана
 						SetCVar("floatingCombatTextComboPoints", 0)
 						SetCVar("floatingCombatTextDamageReduction", 0)
@@ -411,8 +414,8 @@ tinsert(E.Octo_Globals.modules, function()
 						SetCVar("floatingCombatTextHonorGains", 0)
 						SetCVar("floatingCombatTextLowManaHealth", 0)
 						SetCVar("floatingCombatTextPeriodicEnergyGains", 0)
-						SetCVar("floatingCombatTextPetMeleeDamage", 1) --ТУТ
-						SetCVar("floatingCombatTextPetSpellDamage", 1) --ТУТ
+						SetCVar("floatingCombatTextPetMeleeDamage", 0) --ТУТ
+						SetCVar("floatingCombatTextPetSpellDamage", 0) --ТУТ
 						SetCVar("floatingCombatTextReactives", 0)
 						SetCVar("floatingCombatTextRepChanges", 0)
 						SetCVar("floatingCombatTextSpellMechanics", 0)
@@ -440,7 +443,6 @@ tinsert(E.Octo_Globals.modules, function()
 						SetCVar("nameplateMinAlpha", 0.6)
 						SetCVar("nameplateMinAlphaDistance", 10)
 						SetCVar("nameplateMinScale", 1)
-						SetCVar("nameplateMotion", 1) --(0 Наложение) (1 Друг над другом) stack
 						SetCVar("nameplateMotionSpeed", 0.025)
 						SetCVar("nameplateOccludedAlphaMult", 0.4)
 						SetCVar("nameplateOverlapV", 1) --если выключено наложение нейплейтов (интерфейс-имена-друг над другом включено), то эта переменная указывает расстояние между неймплейтами по вертикали
@@ -459,7 +461,6 @@ tinsert(E.Octo_Globals.modules, function()
 						SetCVar("nameplateShowEnemyPets", 0)
 						SetCVar("nameplateShowEnemyTotems", 1)
 						SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
-						SetCVar("nameplateShowOnlyNames", 1) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
 						SetCVar("nameplateShowSelf", 0) --- PIZDA
 						SetCVar("nameplateTargetBehindMaxDistance", 30)
 						SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
@@ -773,7 +774,7 @@ tinsert(E.Octo_Globals.modules, function()
 								v.name:find("Указать на Ральфа мистеру Солнечноцветику.") or
 								v.name:find("Можешь снова активировать этого голиафа?") or
 								v.name:find("Начать испытание") or
-								v.name:find("Начать копать") or
+								-- v.name:find("Начать копать") or
 								v.name:find("cff0000FF")
 								and not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)

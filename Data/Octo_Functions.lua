@@ -80,12 +80,12 @@ end
 local utf8replace = E.Octo_Func.utf8replace
 ----------------------------------------------------------------
 function E.Octo_Func.utf8upper(s)
-	return utf8replace(s, E.Octo_Func.Octo_Table.Octo_Func.utf8_lc_uc)
+	return utf8replace(s, E.Octo_Table.utf8_lc_uc)
 end
 local utf8upper = E.Octo_Func.utf8upper
 ----------------------------------------------------------------
 function E.Octo_Func.utf8lower(s)
-	return utf8replace(s, E.Octo_Func.Octo_Table.Octo_Func.utf8_uc_lc)
+	return utf8replace(s, E.Octo_Table.utf8_uc_lc)
 end
 local utf8lower = E.Octo_Func.utf8lower
 ----------------------------------------------------------------
@@ -149,6 +149,15 @@ function E.Octo_Func.func_hex2rgb(self)
 end
 local func_hex2rgb = E.Octo_Func.func_hex2rgb
 ----------------------------------------------------------------
+function E.Octo_Func.func_rgb2hex(r ,g, b, a)
+	local r, g, b, a = r, g, b, a
+	if not a then
+		a = 1
+	end
+	return "|c"..string.format("%02x", math.floor(a*255))..E.Octo_Func.utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+end
+local rgbToHex = E.Octo_Func.rgbToHex
+----------------------------------------------------------------
 function E.Octo_Func.func_percent(percent, maxvalue)
 	if tonumber(percent) and tonumber(maxvalue) then
 		return (maxvalue*percent)/100
@@ -158,7 +167,9 @@ end
 local func_percent = E.Octo_Func.func_percent
 ----------------------------------------------------------------
 function E.Octo_Func.func_Gradient(text, firstColor, secondColor)
-	local vivod, maslengo, total = "", "", utf8len(text)-1 --
+	local vivod = ""
+	local maslengo = ""
+	local total = utf8len(text)-1
 	local r1, g1, b1 = E.Octo_Func.func_hex2rgb(firstColor)
 	local r2, g2, b2 = E.Octo_Func.func_hex2rgb(secondColor)
 	local rdelta, gdelta, bdelta = (r2-r1)/total, (g2-g1)/total, (b2-b1)/total
@@ -366,4 +377,3 @@ local tmstpDayReset = E.Octo_Func.tmstpDayReset
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
