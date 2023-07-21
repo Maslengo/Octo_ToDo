@@ -2,6 +2,9 @@ local GlobalAddonName, E = ...
 E.Octo_Func = {}
 ----------------------------------------------------------------
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
+local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
+_G["OctoTODO"] = OctoTODO
+local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
 function E.Octo_Func.utf8charbytes(s, i)
 	i = i or 1
@@ -335,19 +338,19 @@ function E.Octo_Func.SecondsToClock(self)
 		days = floor(self / 86400)
 		hours = floor(mod(self, 86400) / 3600)
 		mins = floor(mod(self, 3600) / 60)
-		return days.."d "..hours.."h "..mins.."m"
+		return days..L["d. "]..hours..L["h. "]..mins..L["m. "]
 	elseif self >= 3600 then
 		hours = string.format("%01.f", math.floor(self/3600))
 		mins = string.format("%02.f", math.floor(self/60 - (hours*60)))
-		return hours.."h "..mins.."m"
+		return hours..L["h. "]..mins..L["m. "]
 	elseif self >= 600 then
 		hours = string.format("%01.f", math.floor(self/3600))
 		mins = string.format("%02.f", math.floor(self/60 - (hours*60)))
-		return mins.."m"
+		return mins..L["m. "]
 	else
 		hours = string.format("%01.f", math.floor(self/3600))
 		mins = string.format("%01.f", math.floor(self/60 - (hours*60)))
-		return mins.."m"
+		return mins..L["m. "]
 	end
 end
 local SecondsToClock = E.Octo_Func.SecondsToClock

@@ -2912,7 +2912,7 @@ function Collect_All_journalInstance()
 	local instancesLastBoss = {}
 	local ServerTime = GetServerTime()
 	-- collect.journalInstance = {}
-	local res = {}
+	-- local res = {}
 	if collect.journalInstance == 0 then
 		collect.journalInstance = {}
 	end
@@ -2955,6 +2955,7 @@ function Collect_All_journalInstance()
 						----------------------------------------------------------------
 						----------------------------------------------------------------
 						vivod = color..defeatedBosses.."/"..totalBosses.."|r"
+						-- print (instanceName, vivod)
 						-- print (i, instanceId, instanceDifficulty, instanceName, difficultyName, vivod, GetTime(), instanceReset, Time)
 						collect.journalInstance[instanceId][instanceDifficulty].instanceName = instanceName
 						collect.journalInstance[instanceId][instanceDifficulty].vivod = vivod
@@ -7017,6 +7018,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Other\\Readycheck.ogg", "Master")
 	end
 	if event == "ENCOUNTER_END" or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA" or event == "PLAYER_LEAVE_COMBAT" then
+		print (event)
 		Collect_All_journalInstance()
 		C_Timer.After(1, function()
 				Collect_All_journalInstance()

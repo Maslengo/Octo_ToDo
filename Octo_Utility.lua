@@ -357,9 +357,10 @@ end)
 --CVAR
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.CVar then
-			if InCombatLockdown() == true then
+			if InCombatLockdown() then
 				print ("InCombatLockdown()")
-			elseif not InCombatLockdown() then
+			else
+				print ("СИВАР")
 				C_Timer.After(1, function()
 						SetCVar("nameplateMotion", 0) --(0 Наложение) (1 Друг над другом) stack
 						SetCVar("nameplateShowOnlyNames", 0) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
