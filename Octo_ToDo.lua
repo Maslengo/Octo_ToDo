@@ -3161,7 +3161,6 @@ function Octo_ToDoOnLoad()
 	-- OctoFrame_EventFrame:RegisterEvent("VOID_STORAGE_UPDATE")
 	-- OctoFrame_EventFrame:RegisterEvent("VOID_TRANSFER_DONE")
 	OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 	OctoFrame_EventFrame:RegisterEvent("CHAT_MSG_WHISPER")
 	OctoFrame_EventFrame:RegisterEvent("CHAT_MSG_WHISPER_INFORM")
@@ -6972,7 +6971,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		end
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
-	if --[[event == "CHAT_MSG_LOOT" or]] event == "PLAYER_MONEY" or event == "MERCHANT_SHOW" or event == "MERCHANT_CLOSED" or event == "PLAYER_ENTERING_WORLD" or event == "MAIL_INBOX_UPDATE" or event == "MAIL_SHOW" or event == "UPDATE_PENDING_MAIL" or event == "UI_INFO_MESSAGE" or event == "HEARTHSTONE_BOUND" or event == "SPELLS_CHANGED" or event == "ENCOUNTER_END" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA" or event == "COVENANT_CHOSEN" or event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED" and not InCombatLockdown() then
+	if --[[event == "CHAT_MSG_LOOT" or]] event == "PLAYER_MONEY" or event == "MERCHANT_SHOW" or event == "MERCHANT_CLOSED" or event == "PLAYER_ENTERING_WORLD" or event == "MAIL_INBOX_UPDATE" or event == "MAIL_SHOW" or event == "UPDATE_PENDING_MAIL" or event == "UI_INFO_MESSAGE" or event == "HEARTHSTONE_BOUND" or event == "SPELLS_CHANGED" or event == "ENCOUNTER_END" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED_NEW_AREA" or event == "COVENANT_CHOSEN" or event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED" and not InCombatLockdown() then
 		Collect_ALL_ItemsInBag()
 		Collect_SL_PossibleAnima()
 		Collect_ALL_CurrentKEY()
@@ -6981,7 +6980,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		end
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
-	if event == "HEARTHSTONE_BOUND" or event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA" and not InCombatLockdown() then
+	if event == "HEARTHSTONE_BOUND" or event == "ZONE_CHANGED_NEW_AREA" and not InCombatLockdown() then
 		Collect_ALL_Locations()
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
@@ -7017,9 +7016,10 @@ function Octo_ToDoOnEvent(self, event, ...)
 	if event == "READY_CHECK" then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Other\\Readycheck.ogg", "Master")
 	end
-	if event == "ENCOUNTER_END" or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED" or event == "ZONE_CHANGED_NEW_AREA" or event == "PLAYER_LEAVE_COMBAT" then
-		print (event)
+	if event == "ENCOUNTER_END" or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED_NEW_AREA" or event == "PLAYER_LEAVE_COMBAT" then
+
 		Collect_All_journalInstance()
+		RequestRaidInfo()
 		C_Timer.After(1, function()
 				Collect_All_journalInstance()
 				if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
