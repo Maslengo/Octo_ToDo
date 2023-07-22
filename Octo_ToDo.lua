@@ -3179,11 +3179,28 @@ function Octo_ToDoOnLoad()
 	OctoFrame_EventFrame:SetScript("OnEvent", function(...)
 			Octo_ToDoOnEvent(...)
 	end)
+
+
+
+
+
 	if not inspectScantip then
 		inspectScantip = CreateFrame("GameTooltip", "LegToDoScanningTooltip", nil, "GameTooltipTemplate")
 		inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
+
+-- local EventFrame = nil
+-- if not EventFrame then
+-- 	EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
+-- end
+-- EventFrame:SetScript("OnKeyDown", function(self, key)
+-- 		if key == GetBindingKey("TOGGLEGAMEMENU") then
+-- 			Collect_ALL_ItemsInBag()
+-- 		end
+-- end)
+
+
 function O_otrisovka()
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
@@ -7025,7 +7042,9 @@ function Octo_ToDoOnEvent(self, event, ...)
 				if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 		end)
 	end
+
 end
+
 Octo_ToDoOnLoad()
 SLASH_Octo1, SLASH_Octo2 = "/Octo", "/OctoDF"
 function SlashCmdList.Octo(msg, editBox)
