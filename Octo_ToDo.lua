@@ -51,6 +51,7 @@ local curServer = GetRealmName()
 local TotalMoney = 0
 local TotalMoneyAllServer = 0
 local TotalTransAnima = 0
+local TotalTransParacausalFlakes = 0
 local TotalKills = 0
 local NONE = E.Octo_Globals.Gray_Color.."None|r"
 local DONE = E.Octo_Globals.Green_Color.."Done|r"
@@ -1097,7 +1098,20 @@ local OctoTable_UniversalQuest = {
 			76533, -- https://www.wowhead.com/quest=76533/dangerous-documentation
 		},
 		max = 14,
-	}
+	},
+	{
+		name_save = "TheVeiledOssuary",
+		name_quest = L["The Veiled Ossuary"],
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			72900,72921,72933,72934,73069,75023,72935,72936,72937,72938,72656,72939,73227,73026,73091,
+			72940,73399,73404,73405,73406,
+		},
+		max = 15,
+	},
 }
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Holiday)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Reputation)
@@ -1302,8 +1316,16 @@ local function CheckReputationByRepID(self)
 	return vivod
 end
 local function checkCharInfo(self)
-	-- self.VOID_STORAGE_PAGE1 = {}
-	-- self.VOID_STORAGE_PAGE2 = {}
+	----------------------------------------------------------------
+	--УДАЛЕНИЕ------------------------------------------------------
+	----------------------------------------------------------------
+	self.VOID_STORAGE_PAGE1 = {}
+	self.VOID_STORAGE_PAGE2 = {}
+	self.profID_prof1 = {}
+	self.profID_prof2 = {}
+	self.prof1 = 0
+	self.prof2 = 0
+	----------------------------------------------------------------
 	if self.needResetWeekly == true then
 		self.journalInstance = {}
 	end
@@ -1337,6 +1359,10 @@ local function checkCharInfo(self)
 			self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] = self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] or NONE
 		end
 	end
+	self.professions = self.professions or {}
+	-- for k,v in pairs(E.Octo_Table.Octo_ProfessionsskillLine) do
+	-- 	self.professions[k] = self.professions[k] or {}
+	-- end
 	self.avgItemLevel = self.avgItemLevel or 0
 	self.avgItemLevelEquipped = self.avgItemLevelEquipped or 0
 	self.avgItemLevelPvp = self.avgItemLevelPvp or 0
@@ -1369,18 +1395,6 @@ local function checkCharInfo(self)
 	self.loginDate = self.loginDate or 0
 	self.loginDay = self.loginDay or 0
 	self.loginHour = self.loginHour or 0
-	self.profID_prof1 = self.profID_prof1 or {}
-	self.profID_prof1.chest = self.profID_prof1.chest or {}
-	self.profID_prof1.craftOrder = self.profID_prof1.craftOrder or {}
-	self.profID_prof1.drops = self.profID_prof1.drops or {}
-	self.profID_prof1.profQuest = self.profID_prof1.profQuest or {}
-	self.profID_prof1.treatise = self.profID_prof1.treatise or {}
-	self.profID_prof2 = self.profID_prof2 or {}
-	self.profID_prof2.chest = self.profID_prof2.chest or {}
-	self.profID_prof2.craftOrder = self.profID_prof2.craftOrder or {}
-	self.profID_prof2.drops = self.profID_prof2.drops or {}
-	self.profID_prof2.profQuest = self.profID_prof2.profQuest or {}
-	self.profID_prof2.treatise = self.profID_prof2.treatise or {}
 	self.PVP = self.PVP or {}
 	self.OctoTable_QuestID = self.OctoTable_QuestID or {}
 	self.reputationID = self.reputationID or {}
@@ -1432,18 +1446,6 @@ local function checkCharInfo(self)
 	setmetatable(self.CurrencyID, Meta_Table_0)
 	setmetatable(self.ItemsInBag, Meta_Table_0)
 	setmetatable(self.KnownSpell, Meta_Table_false)
-	setmetatable(self.profID_prof1, Meta_Table_0)
-	setmetatable(self.profID_prof1.chest, Meta_Table_0)
-	setmetatable(self.profID_prof1.craftOrder, Meta_Table_0)
-	setmetatable(self.profID_prof1.drops, Meta_Table_0)
-	setmetatable(self.profID_prof1.profQuest, Meta_Table_0)
-	setmetatable(self.profID_prof1.treatise, Meta_Table_0)
-	setmetatable(self.profID_prof2, Meta_Table_0)
-	setmetatable(self.profID_prof2.chest, Meta_Table_0)
-	setmetatable(self.profID_prof2.craftOrder, Meta_Table_0)
-	setmetatable(self.profID_prof2.drops, Meta_Table_0)
-	setmetatable(self.profID_prof2.profQuest, Meta_Table_0)
-	setmetatable(self.profID_prof2.treatise, Meta_Table_0)
 	setmetatable(self.PVP, Meta_Table_0)
 	setmetatable(self.OctoTable_QuestID, Meta_Table_NONE)
 	setmetatable(self.reputationID, Meta_Table_0)
@@ -1904,202 +1906,167 @@ function Collect_All_Professions()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDoLevels[curGUID]
-	local prof1, prof2 = GetProfessions()
-	local prof1 = prof1 and select(7, GetProfessionInfo(prof1))
-	local prof2 = prof2 and select(7, GetProfessionInfo(prof2))
-	collect.prof1 = prof1 or 0
-	collect.prof2 = prof2 or 0
-	local profID = {
-		name = 0,
-		icon = 0,
-		chest = {questReq = 0, questID = {}},
-		craftOrder = {questReq = 0, questID = {}},
-		drops = {questReq = 0, questID = {}},
-		profQuest = {questReq = 0, questID = {}},
-		treatise = {questReq = 0, questID = {}},
-	}
-	local iconAL = 4620669
-	local iconBS = 4620670
-	local iconEC = 4620672
-	local iconEG = 4620673
-	local iconHB = 4620675
-	local iconIS = 4620676
-	local iconJC = 4620677
-	local iconLW = 4620678
-	local iconMN = 4620679
-	local iconSK = 4620680
-	local iconTL = 4620681
-	table[171] = {
-		name = " Алхимия",
-		icon = "|T"..iconAL..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {66373, 66374}},
-		craftOrder = {questReq = 0, questID = {}},
-		drops = {questReq = 2, questID = {70511, 70504}},
-		profQuest = {questReq = 2, questID = {70530, 66940, 66938, 72427, 70532, 70531, 70533, 66937}},
-		treatise = {questReq = 1, questID = {74108}}, }
-	table[164] = {
-		name = " Кузнечное дело",
-		icon = "|T"..iconBS..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {66381, 66382}},
-		craftOrder = {questReq = 1, questID = {70589}},
-		drops = {questReq = 2, questID = {70513, 70512}},
-		profQuest = {questReq = 2, questID = {66941, 70233, 66517, 66897, 70235, 72398, 70234, 70211}},
-		treatise = {questReq = 1, questID = {74109}}, }
-	table[333] = {
-		name = " Наложение чар",
-		icon = "|T"..iconEC..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {66377, 66378}},
-		craftOrder = {questReq = 0, questID = {}},
-		drops = {questReq = 2, questID = {70515, 70514}},
-		profQuest = {questReq = 2, questID = {66884, 66900, 66935, 72155, 72172, 72173, 72175, 72423}},
-		treatise = {questReq = 1, questID = {74110}}, }
-	table[202] = {
-		name = " Инженерное дело",
-		icon = "|T"..iconEG..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {66379, 66380}},
-		craftOrder = {questReq = 1, questID = {70591}},
-		drops = {questReq = 2, questID = {70517, 70516}},
-		profQuest = {questReq = 2, questID = {72396, 70545, 66891, 70540, 66890, 66942, 70557, 70539}},
-		treatise = {questReq = 1, questID = {74111}}, }
-	table[182] = {
-		name = " Травничество",
-		icon = "|T"..iconHB..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {}},
-		craftOrder = {questReq = 0, questID = {}},
-		drops = {questReq = 6, questID = {71857, 71858, 71859, 71860, 71861, 71864}},
-		profQuest = {questReq = 1, questID = {70614, 70613, 70616, 70615}},
-		treatise = {questReq = 1, questID = {74107}}, }
-	table[773] = {
-		name = " Начертание",
-		icon = "|T"..iconIS..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {66375, 66376}},
-		craftOrder = {questReq = 1, questID = {70592}},
-		drops = {questReq = 2, questID = {70519, 70518}},
-		profQuest = {questReq = 2, questID = {66943, 66944, 70559, 70561, 70558, 70560, 66945, 72438}},
-		treatise = {questReq = 1, questID = {74105}}, }
-	table[755] = {
-		name = " Ювелирное дело",
-		icon = "|T"..iconJC..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {66388, 66389}},
-		craftOrder = {questReq = 1, questID = {70593}},
-		drops = {questReq = 2, questID = {70521, 70520}},
-		profQuest = {questReq = 2, questID = {66516, 70565, 66950, 66949, 72428, 70564, 70563, 70562}},
-		treatise = {questReq = 1, questID = {74112}}, }
-	table[165] = {
-		name = " Кожевничество",
-		icon = "|T"..iconLW..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {66384, 66385}},
-		craftOrder = {questReq = 1, questID = {70594}},
-		drops = {questReq = 2, questID = {70523, 70522}},
-		profQuest = {questReq = 2, questID = {66364, 66951, 70569, 70568, 70567, 70571, 72407, 66363}},
-		treatise = {questReq = 1, questID = {74113}}, }
-	table[186] = {
-		name = " Горное дело",
-		icon = "|T"..iconMN..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {}},
-		craftOrder = {questReq = 0, questID = {}},
-		drops = {questReq = 6, questID = {72160, 72161, 72162, 72163, 72164, 72165}},
-		profQuest = {questReq = 1, questID = {70617, 70618, 72157, 72156}},
-		treatise = {questReq = 1, questID = {74106}}, }
-	table[393] = {
-		name = " Снятие шкур",
-		icon = "|T"..iconSK..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {}},
-		craftOrder = {questReq = 0, questID = {}},
-		drops = {questReq = 6, questID = {70381, 70383, 70384, 70385, 70386, 70389}},
-		profQuest = {questReq = 4, questID = {70620, 72159, 70619, 72158}},
-		treatise = {questReq = 1, questID = {74114}}, }
-	table[197] = {
-		name = " Портяжное делло",
-		icon = "|T"..iconTL..":16:16:::64:64:4:60:4:60|t",
-		chest = {questReq = 2, questID = {66386, 66387}},
-		craftOrder = {questReq = 1, questID = {70595}},
-		drops = {questReq = 2, questID = {70524, 70525}},
-		profQuest = {questReq = 2, questID = {72410, 70587, 66952, 70586, 70572, 70582, 66953, 66899}},
-		treatise = {questReq = 1, questID = {74115}}, }
-	if prof1 then
-		local chest_count_prof1 = 0
-		local craftOrder_count_prof1 = 0
-		local drops_count_prof1 = 0
-		local profQuest_count_prof1 = 0
-		local treatise_count_prof1 = 0
-		for _, v in ipairs(table[prof1].chest.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				chest_count_prof1 = chest_count_prof1 + 1
-			end
+	collect.professions = {}
+	----------------------------------------------------------------
+	local chest_count = 0
+	local craftOrder_count = 0
+	local drops_count = 0
+	local profQuest_count = 0
+	local treatise_count = 0
+	----------------------------------------------------------------
+	local ProfTable = {}
+	local prof1, prof2, archaeology, fishing, cooking = GetProfessions()
+	if prof1 then tinsert(ProfTable, prof1) end
+	if prof2 then tinsert(ProfTable, prof2) end
+	if archaeology then tinsert(ProfTable, archaeology) end
+	if fishing then tinsert(ProfTable, fishing) end
+	if cooking then tinsert(ProfTable, cooking) end
+	for k, v in pairs(ProfTable) do
+		local name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier, specializationIndex, specializationOffset = GetProfessionInfo(v)
+		if skillLine then
+			collect.professions[skillLine] = collect.professions[skillLine] or {}
+			collect.professions[skillLine].name = name
+			collect.professions[skillLine].icon = E.Octo_Func.func_texturefromIcon(icon)
+			collect.professions[skillLine].skillLevel = skillLevel
+			collect.professions[skillLine].maxSkillLevel = maxSkillLevel
+			collect.professions[skillLine].numAbilities = numAbilities
+			collect.professions[skillLine].spelloffset = spelloffset
+			collect.professions[skillLine].skillLine = skillLine
+			collect.professions[skillLine].skillModifier = skillModifier
+			collect.professions[skillLine].specializationIndex = specializationIndex
+			collect.professions[skillLine].specializationOffset = specializationOffset
 		end
-		for _, v in ipairs(table[prof1].craftOrder.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				craftOrder_count_prof1 = craftOrder_count_prof1 + 1
-			end
-		end
-		for _, v in ipairs(table[prof1].drops.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				drops_count_prof1 = drops_count_prof1 + 1
-			end
-		end
-		for _, v in ipairs(table[prof1].profQuest.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				profQuest_count_prof1 = profQuest_count_prof1 + 1
-			end
-		end
-		for _, v in ipairs(table[prof1].treatise.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				treatise_count_prof1 = treatise_count_prof1 + 1
-			end
-		end
-		Octo_ToDoLevels[curGUID].profID_prof1 =
-		{
-			name = table[prof1].name or "noname",
-			icon = table[prof1].icon or 0,
-			chest = {questReq = table[prof1].chest.questReq, chest_count_prof1 = chest_count_prof1},
-			craftOrder = {questReq = table[prof1].craftOrder.questReq, craftOrder_count_prof1 = craftOrder_count_prof1},
-			drops = {questReq = table[prof1].drops.questReq, drops_count_prof1 = drops_count_prof1},
-			profQuest = {questReq = table[prof1].profQuest.questReq, profQuest_count_prof1 = profQuest_count_prof1},
-			treatise = {questReq = table[prof1].treatise.questReq, treatise_count_prof1 = treatise_count_prof1},
+		table[171] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {66373, 66374}},
+			craftOrder = {questReq = 0, questID = {}},
+			drops = {questReq = 2, questID = {70511, 70504}},
+			profQuest = {questReq = 2, questID = {70530, 66940, 66938, 72427, 70532, 70531, 70533, 66937}},
+			treatise = {questReq = 1, questID = {74108}},
 		}
-	end
-	if prof2 then
-		local chest_count_prof2 = 0
-		local craftOrder_count_prof2 = 0
-		local drops_count_prof2 = 0
-		local profQuest_count_prof2 = 0
-		local treatise_count_prof2 = 0
-		for _, v in ipairs(table[prof2].chest.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				chest_count_prof2 = chest_count_prof2 + 1
-			end
-		end
-		for _, v in ipairs(table[prof2].craftOrder.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				craftOrder_count_prof2 = craftOrder_count_prof2 + 1
-			end
-		end
-		for _, v in ipairs(table[prof2].drops.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				drops_count_prof2 = drops_count_prof2 + 1
-			end
-		end
-		for _, v in ipairs(table[prof2].profQuest.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				profQuest_count_prof2 = profQuest_count_prof2 + 1
-			end
-		end
-		for _, v in ipairs(table[prof2].treatise.questID) do
-			if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-				treatise_count_prof2 = treatise_count_prof2 + 1
-			end
-		end
-		Octo_ToDoLevels[curGUID].profID_prof2 =
-		{
-			name = table[prof2].name or "noname",
-			icon = table[prof2].icon or 0,
-			chest = {questReq = table[prof2].chest.questReq, chest_count_prof2 = chest_count_prof2},
-			craftOrder = {questReq = table[prof2].craftOrder.questReq, craftOrder_count_prof2 = craftOrder_count_prof2},
-			drops = {questReq = table[prof2].drops.questReq, drops_count_prof2 = drops_count_prof2},
-			profQuest = {questReq = table[prof2].profQuest.questReq, profQuest_count_prof2 = profQuest_count_prof2},
-			treatise = {questReq = table[prof2].treatise.questReq, treatise_count_prof2 = treatise_count_prof2},
+		table[164] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {66381, 66382}},
+			craftOrder = {questReq = 1, questID = {70589}},
+			drops = {questReq = 2, questID = {70513, 70512}},
+			profQuest = {questReq = 2, questID = {66941, 70233, 66517, 66897, 70235, 72398, 70234, 70211}},
+			treatise = {questReq = 1, questID = {74109}},
 		}
+		table[333] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {66377, 66378}},
+			craftOrder = {questReq = 0, questID = {}},
+			drops = {questReq = 2, questID = {70515, 70514}},
+			profQuest = {questReq = 2, questID = {66884, 66900, 66935, 72155, 72172, 72173, 72175, 72423}},
+			treatise = {questReq = 1, questID = {74110}},
+		}
+		table[202] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {66379, 66380}},
+			craftOrder = {questReq = 1, questID = {70591}},
+			drops = {questReq = 2, questID = {70517, 70516}},
+			profQuest = {questReq = 2, questID = {72396, 70545, 66891, 70540, 66890, 66942, 70557, 70539}},
+			treatise = {questReq = 1, questID = {74111}},
+		}
+		table[182] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {}},
+			craftOrder = {questReq = 0, questID = {}},
+			drops = {questReq = 6, questID = {71857, 71858, 71859, 71860, 71861, 71864}},
+			profQuest = {questReq = 1, questID = {70614, 70613, 70616, 70615}},
+			treatise = {questReq = 1, questID = {74107}},
+		}
+		table[773] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {66375, 66376}},
+			craftOrder = {questReq = 1, questID = {70592}},
+			drops = {questReq = 2, questID = {70519, 70518}},
+			profQuest = {questReq = 2, questID = {66943, 66944, 70559, 70561, 70558, 70560, 66945, 72438}},
+			treatise = {questReq = 1, questID = {74105}},
+		}
+		table[755] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {66388, 66389}},
+			craftOrder = {questReq = 1, questID = {70593}},
+			drops = {questReq = 2, questID = {70521, 70520}},
+			profQuest = {questReq = 2, questID = {66516, 70565, 66950, 66949, 72428, 70564, 70563, 70562}},
+			treatise = {questReq = 1, questID = {74112}},
+		}
+		table[165] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {66384, 66385}},
+			craftOrder = {questReq = 1, questID = {70594}},
+			drops = {questReq = 2, questID = {70523, 70522}},
+			profQuest = {questReq = 2, questID = {66364, 66951, 70569, 70568, 70567, 70571, 72407, 66363}},
+			treatise = {questReq = 1, questID = {74113}},
+		}
+		table[186] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {}},
+			craftOrder = {questReq = 0, questID = {}},
+			drops = {questReq = 6, questID = {72160, 72161, 72162, 72163, 72164, 72165}},
+			profQuest = {questReq = 1, questID = {70617, 70618, 72157, 72156}},
+			treatise = {questReq = 1, questID = {74106}},
+		}
+		table[393] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {}},
+			craftOrder = {questReq = 0, questID = {}},
+			drops = {questReq = 6, questID = {70381, 70383, 70384, 70385, 70386, 70389}},
+			profQuest = {questReq = 4, questID = {70620, 72159, 70619, 72158}},
+			treatise = {questReq = 1, questID = {74114}},
+		}
+		table[197] = {
+			name = name,
+			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+			chest = {questReq = 2, questID = {66386, 66387}},
+			craftOrder = {questReq = 1, questID = {70595}},
+			drops = {questReq = 2, questID = {70524, 70525}},
+			profQuest = {questReq = 2, questID = {72410, 70587, 66952, 70586, 70572, 70582, 66953, 66899}},
+			treatise = {questReq = 1, questID = {74115}},
+		}
+		if E.Octo_Table.Octo_ProfessionsskillLine[skillLine] then
+			for _, v in ipairs(table[skillLine].chest.questID) do
+				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+					chest_count = chest_count + 1
+				end
+			end
+			for _, v in ipairs(table[skillLine].craftOrder.questID) do
+				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+					craftOrder_count = craftOrder_count + 1
+				end
+			end
+			for _, v in ipairs(table[skillLine].drops.questID) do
+				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+					drops_count = drops_count + 1
+				end
+			end
+			for _, v in ipairs(table[skillLine].profQuest.questID) do
+				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+					profQuest_count = profQuest_count + 1
+				end
+			end
+			for _, v in ipairs(table[skillLine].treatise.questID) do
+				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+					treatise_count = treatise_count + 1
+				end
+			end
+			collect.professions[skillLine].chest = {questReq = table[skillLine].chest.questReq, chest_count = chest_count}
+			collect.professions[skillLine].craftOrder = {questReq = table[skillLine].craftOrder.questReq, craftOrder_count = craftOrder_count}
+			collect.professions[skillLine].drops = {questReq = table[skillLine].drops.questReq, drops_count = drops_count}
+			collect.professions[skillLine].profQuest = {questReq = table[skillLine].profQuest.questReq, profQuest_count = profQuest_count}
+			collect.professions[skillLine].treatise = {questReq = table[skillLine].treatise.questReq, treatise_count = treatise_count}
+		end
 	end
 	return
 end
@@ -3079,7 +3046,7 @@ end
 function Timer_DF_TimeRift()
 	local TIMER = 1689159620 -- начало в 16:00
 	local interval = 60*60 -- каждый час
-	local duration = 15*60 -- 15 минут
+	local duration = 10*60 -- 10 минут
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	local Timer_DF_TimeRift = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	if nextEventIn > (interval - duration) then
@@ -3157,10 +3124,13 @@ function Octo_ToDoOnLoad()
 	OctoFrame_EventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
 	OctoFrame_EventFrame:RegisterEvent("UPDATE_PENDING_MAIL")
 	OctoFrame_EventFrame:RegisterEvent("VARIABLES_LOADED")
+	OctoFrame_EventFrame:RegisterEvent("TRAINER_UPDATE")
+	OctoFrame_EventFrame:RegisterEvent("CHAT_MSG_SKILL")
+	OctoFrame_EventFrame:RegisterEvent("CHAT_MSG_SYSTEM")
 	-- OctoFrame_EventFrame:RegisterEvent("VOID_STORAGE_CONTENTS_UPDATE")
 	-- OctoFrame_EventFrame:RegisterEvent("VOID_STORAGE_UPDATE")
 	-- OctoFrame_EventFrame:RegisterEvent("VOID_TRANSFER_DONE")
-	OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	-- OctoFrame_EventFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 	OctoFrame_EventFrame:RegisterEvent("CHAT_MSG_WHISPER")
 	OctoFrame_EventFrame:RegisterEvent("CHAT_MSG_WHISPER_INFORM")
@@ -3179,17 +3149,11 @@ function Octo_ToDoOnLoad()
 	OctoFrame_EventFrame:SetScript("OnEvent", function(...)
 			Octo_ToDoOnEvent(...)
 	end)
-
-
-
-
-
 	if not inspectScantip then
 		inspectScantip = CreateFrame("GameTooltip", "LegToDoScanningTooltip", nil, "GameTooltipTemplate")
 		inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
-
 -- local EventFrame = nil
 -- if not EventFrame then
 -- 	EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
@@ -3199,8 +3163,6 @@ end
 -- 			Collect_ALL_ItemsInBag()
 -- 		end
 -- end)
-
-
 function O_otrisovka()
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
@@ -3400,7 +3362,8 @@ function O_otrisovka()
 						vivodCent = E.Octo_Globals.Gray_Color..vivodCent.."|r"
 					end
 				end
-				vivodLeft = E.Octo_Func.func_currencyicon(2594)..E.Octo_Func.func_currencyName(2594)
+				vivodLeft = E.Octo_Func.func_currencyicon(2594)..L["Transferable Flakes"]..": "..E.Octo_Globals.Blue_Color..TotalTransParacausalFlakes.."|r"
+				--vivodLeft = E.Octo_Func.func_currencyicon(2594)..E.Octo_Func.func_currencyName(2594)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka,
@@ -5455,7 +5418,8 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {Timer_DF_ResearchersUnderFire()..L["Researchers Under Fire"], CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count}
 				tooltip[#tooltip+1] = {WorldBoss_Icon..E.Octo_Func.func_questName(74892), CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_count}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5062638)..E.Octo_Func.func_questName(75694), CharInfo.Octopussy_DF_Once_AberrusSarkareth_count}
-				tooltip[#tooltip+1] = {L["Storylines"], CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_count}
+				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["Zaralek Cavern"]..")", CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_count}
+				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["The Veiled Ossuary"]..")", CharInfo.Octopussy_DF_Once_TheVeiledOssuary_count}
 				tooltip[#tooltip+1] = {L["A Worthy Ally: Loamm Niffen"], CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count}
 				tooltip[#tooltip+1] = {L["Sniffenseeking"] , CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_count}
 				tooltip[#tooltip+1] = {L["Sniffenseeking (items)"], CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseekingItems_count}
@@ -5549,7 +5513,7 @@ function O_otrisovka()
 			end
 			return vivodCent, vivodLeft
 	end)
-	--Рейды тест
+	--Рейды тест Инсты
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
@@ -5561,7 +5525,7 @@ function O_otrisovka()
 					for _, w in pairs(E.Octo_Table.OctoTable_instanceDifficulty) do
 						if CharInfo.journalInstance[v][w] ~= nil then
 							if CharInfo.journalInstance[v][w].vivod ~= nil and CharInfo.journalInstance[v][w].Time ~= nil then
-								tooltip[#tooltip+1] = {CharInfo.journalInstance[v][w].instanceName.."("..CharInfo.journalInstance[v][w].difficultyName..")"..E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(CharInfo.journalInstance[v][w].instanceReset-ServerTime).."|r", CharInfo.journalInstance[v][w].vivod}
+								tooltip[#tooltip+1] = {CharInfo.journalInstance[v][w].instanceName.."("..CharInfo.journalInstance[v][w].difficultyName..") "..E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(CharInfo.journalInstance[v][w].instanceReset-ServerTime).."|r", CharInfo.journalInstance[v][w].vivod}
 							end
 						end
 					end
@@ -5861,22 +5825,30 @@ function O_otrisovka()
 			if CharInfo.Octopussy_DF_Once_CatchingUp_count ~= DONE then
 				tooltip[#tooltip+1] = {E.Octo_Globals.Red_Color.."Нужно сделать квест: |r"..CharInfo.Octopussy_DF_Once_CatchingUp_name.." /way 60, 72", CharInfo.Octopussy_DF_Once_CatchingUp_count}
 			end
-			if CharInfo.prof1 ~= 0 or CharInfo.prof2 ~= 0 then
-				tooltip[#tooltip+1]= {E.Octo_Func.Empty_Zero(CharInfo.profID_prof1.icon)..E.Octo_Globals.Purple_Color..E.Octo_Func.Empty_Zero(CharInfo.profID_prof1.name).."|r"}
-				tooltip[#tooltip+1]= {"Сундуки", CharInfo.profID_prof1.chest.chest_count_prof1.."/"..CharInfo.profID_prof1.chest.questReq}
-				tooltip[#tooltip+1]= {"Лут", CharInfo.profID_prof1.drops.drops_count_prof1.."/"..CharInfo.profID_prof1.drops.questReq}
-				tooltip[#tooltip+1]= {"Квест", CharInfo.profID_prof1.profQuest.profQuest_count_prof1.."/"..CharInfo.profID_prof1.profQuest.questReq}
-				tooltip[#tooltip+1]= {"Трактаты", CharInfo.profID_prof1.treatise.treatise_count_prof1.."/"..CharInfo.profID_prof1.treatise.questReq}
-				tooltip[#tooltip+1]= {"Крафт", CharInfo.profID_prof1.craftOrder.craftOrder_count_prof1.."/"..CharInfo.profID_prof1.craftOrder.questReq}
-				tooltip[#tooltip+1]= {" ", " "}
-				tooltip[#tooltip+1]= {E.Octo_Func.Empty_Zero(CharInfo.profID_prof2.icon)..E.Octo_Globals.Purple_Color..E.Octo_Func.Empty_Zero(CharInfo.profID_prof2.name).."|r"}
-				tooltip[#tooltip+1]= {"Сундуки", CharInfo.profID_prof2.chest.chest_count_prof2.."/"..CharInfo.profID_prof2.chest.questReq}
-				tooltip[#tooltip+1]= {"Лут", CharInfo.profID_prof2.drops.drops_count_prof2.."/"..CharInfo.profID_prof2.drops.questReq}
-				tooltip[#tooltip+1]= {"Квест", CharInfo.profID_prof2.profQuest.profQuest_count_prof2.."/"..CharInfo.profID_prof2.profQuest.questReq}
-				tooltip[#tooltip+1]= {"Трактаты", CharInfo.profID_prof2.treatise.treatise_count_prof2.."/"..CharInfo.profID_prof2.treatise.questReq}
-				tooltip[#tooltip+1]= {"Крафт", CharInfo.profID_prof2.craftOrder.craftOrder_count_prof2.."/"..CharInfo.profID_prof2.craftOrder.questReq}
-				tooltip[#tooltip+1]= {" ", " "}
+			for k,v in pairs(E.Octo_Table.Octo_ProfessionsskillLine) do
+				if CharInfo.professions[k] then
+					if CharInfo.professions[k].icon and CharInfo.professions[k].name and CharInfo.professions[k].skillLevel and CharInfo.professions[k].maxSkillLevel then
+						tooltip[#tooltip+1]= {E.Octo_Func.Empty_Zero(CharInfo.professions[k].icon)..E.Octo_Globals.Orange_Color..E.Octo_Func.Empty_Zero(CharInfo.professions[k].name).."|r "..CharInfo.professions[k].skillLevel.."/"..CharInfo.professions[k].maxSkillLevel}
+					end
+					tooltip[#tooltip+1]= {"Сундуки", CharInfo.professions[k].chest.chest_count.."/"..CharInfo.professions[k].chest.questReq}
+					tooltip[#tooltip+1]= {"Лут", CharInfo.professions[k].drops.drops_count.."/"..CharInfo.professions[k].drops.questReq}
+					tooltip[#tooltip+1]= {"Квест", CharInfo.professions[k].profQuest.profQuest_count.."/"..CharInfo.professions[k].profQuest.questReq}
+					tooltip[#tooltip+1]= {"Трактаты", CharInfo.professions[k].treatise.treatise_count.."/"..CharInfo.professions[k].treatise.questReq}
+					tooltip[#tooltip+1]= {"Крафт", CharInfo.professions[k].craftOrder.craftOrder_count.."/"..CharInfo.professions[k].craftOrder.questReq}
+					tooltip[#tooltip+1]= {" ", " "}
+					if CharInfo.professions[k].icon then
+						vivodCent = vivodCent..CharInfo.professions[k].icon.." "
+					end
+				end
 			end
+			for k,v in pairs(E.Octo_Table.Octo_ProfessionsskillLine_Other) do
+				if CharInfo.professions[k] then
+					if CharInfo.professions[k].icon and CharInfo.professions[k].name and CharInfo.professions[k].skillLevel and CharInfo.professions[k].maxSkillLevel then
+						tooltip[#tooltip+1]= {E.Octo_Func.Empty_Zero(CharInfo.professions[k].icon)..E.Octo_Globals.Orange_Color..E.Octo_Func.Empty_Zero(CharInfo.professions[k].name).."|r "..CharInfo.professions[k].skillLevel.."/"..CharInfo.professions[k].maxSkillLevel}
+					end
+				end
+			end
+			tooltip[#tooltip+1]= {" ", " "}
 			if CharInfo.ItemsInBag[199197] >= 1 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(199197)..E.Octo_Func.func_itemName(199197), CharInfo.ItemsInBag[199197]}
 			else
@@ -5948,12 +5920,6 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204188)..E.Octo_Func.func_itemName(204188), CharInfo.ItemsInBag[204188]}
 			else
 				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204188)..E.Octo_Globals.Gray_Color..E.Octo_Func.func_itemName_NOCOLOR(204188).."|r", E.Octo_Globals.Gray_Color..CharInfo.ItemsInBag[204188].."|r"}
-			end
-			if CharInfo.profID_prof1.icon ~= 0 then
-				vivodCent = CharInfo.profID_prof1.icon
-			end
-			if CharInfo.profID_prof2.icon ~= 0 then
-				vivodCent = vivodCent.. " "..CharInfo.profID_prof2.icon
 			end
 			return vivodCent, vivodLeft
 	end)
@@ -6537,6 +6503,7 @@ function Octo_ToDoAddDataToAltFrame()
 	TotalMoneyAllServer = 0
 	TotalKills = 0
 	TotalTransAnima = 0
+	TotalTransParacausalFlakes = 0
 	for curCharGUID, CharInfo in pairs(Octo_ToDoLevels) do
 		sorted[#sorted+1] = CharInfo
 		TotalMoneyAllServer = TotalMoneyAllServer + CharInfo.Money
@@ -6549,6 +6516,9 @@ function Octo_ToDoAddDataToAltFrame()
 			math.floor(CharInfo.Shadowland[4]/1000)*1000 +
 			math.floor(CharInfo.Shadowland[6]/1000)*1000 +
 			math.floor(CharInfo.Shadowland[8]/1000)*1000
+		end
+		if CharInfo.CurrencyID[2594] >= 500 then
+			TotalTransParacausalFlakes = TotalTransParacausalFlakes + math.floor(CharInfo.CurrencyID[2594]/500)*500
 		end
 	end
 	sort(sorted, function(a, b)
@@ -6782,7 +6752,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.AnotherAddonsCasual == nil then Octo_ToDoVars.config.AnotherAddonsCasual = false end
 		if Octo_ToDoVars.config.StaticPopup1Button1 == nil then Octo_ToDoVars.config.StaticPopup1Button1 = false end
 		if Octo_ToDoVars.config.AnotherAddonsRAID == nil then Octo_ToDoVars.config.AnotherAddonsRAID = false end
-		if Octo_ToDoVars.config.ClearChat == nil then Octo_ToDoVars.config.ClearChat = true end
+		if Octo_ToDoVars.config.ClearChat == nil then Octo_ToDoVars.config.ClearChat = false end
 		if Octo_ToDoVars.config.ShowOnlyCurrentRealm == nil then Octo_ToDoVars.config.ShowOnlyCurrentRealm = false end
 		if Octo_ToDoVars.config.AutoSellGrey == nil then Octo_ToDoVars.config.AutoSellGrey = true end
 		if Octo_ToDoVars.config.AutoRepair == nil then Octo_ToDoVars.config.AutoRepair = true end
@@ -6906,6 +6876,11 @@ function Octo_ToDoOnEvent(self, event, ...)
 		Collect_All_journalInstance()
 		Octo_ToDoCreateAltFrame()
 		Octo_ToDoAddDataToAltFrame()
+	end
+	if event == "CHAT_MSG_SKILL" or event == "CHAT_MSG_SYSTEM" and not InCombatLockdown() then --event == "TRAINER_UPDATE" or
+		-- print (event, "Collect_All_Professions")
+		Collect_All_Professions()
+		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
 	if event == "UI_INFO_MESSAGE" then
 		Collect_ALL_PlayerInfo()
@@ -7031,20 +7006,19 @@ function Octo_ToDoOnEvent(self, event, ...)
 		E.Octo_Func.PlaySoundFile_whisper(...)
 	end
 	if event == "READY_CHECK" then
+		print ("READY_CHECK")
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Other\\Readycheck.ogg", "Master")
 	end
-	if event == "ENCOUNTER_END" or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED_NEW_AREA" or event == "PLAYER_LEAVE_COMBAT" then
-
+	if event == "ENCOUNTER_END" or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED_NEW_AREA" or event == "PLAYER_LEAVE_COMBAT" and not InCombatLockdown() then
+		--print (event, "|cff505050Collect_All_journalInstance()|r")
 		Collect_All_journalInstance()
-		RequestRaidInfo()
+		-- RequestRaidInfo()
 		C_Timer.After(1, function()
 				Collect_All_journalInstance()
 				if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 		end)
 	end
-
 end
-
 Octo_ToDoOnLoad()
 SLASH_Octo1, SLASH_Octo2 = "/Octo", "/OctoDF"
 function SlashCmdList.Octo(msg, editBox)

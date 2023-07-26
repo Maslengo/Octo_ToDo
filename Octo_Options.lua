@@ -496,8 +496,8 @@ config:SetScript("OnShow", function(self)
 		self.Slider_right18 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
 		self.Slider_right18:SetWidth(140)
 		self.Slider_right18:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*18)
-		self.Slider_right18:SetMinMaxValues(80, 120)
-		local step = 1
+		self.Slider_right18:SetMinMaxValues(60, 120)
+		local step = 2
 		self.Slider_right18:SetValueStep(step)
 		self.Slider_right18:SetValue(Octo_ToDoVars.config.curWidth)
 		self.Slider_right18:SetScript("OnValueChanged", function (self, value)

@@ -37,6 +37,7 @@ if L then
 	L["The Forbidden Reach"] = true
 	L["The Storm's Fury"] = true
 	L["Transferable Anima"] = true
+	L["Transferable Flakes"] = true
 	L["Treasure Goblin"] = true
 	L["Vendored gray items for: "] = true
 	L["Venthyr"] = true
@@ -47,7 +48,7 @@ if L then
 	L["Zaralek Cavern"] = true
 	L["Zereth Mortis"] = true
 	L["Bodyguards"] = true
-	L["Storylines"] = true
+	L["Storyline"] = true
 	L["No Reagent Bag"] = true
 	L["Mythic Keystone"] = true
 	L["Disciple of Fyrakk"] = true
@@ -90,6 +91,7 @@ if L then
 	L["h. "] = true
 	L["m. "] = true
 	L["s. "] = true
+	L["The Veiled Ossuary"] = true
 
 L["Deadmines"] = true
 L["Shadowfang Keep"] = true
@@ -597,9 +599,10 @@ if L then
 	L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
 	L["RESET"] = "Сброс всех данных аддона"
 	L["Siege on Dragonbane Keep"] = "Осада Драконьей Погибели"
-	L["The Forbidden Reach"] = "Запретный край (10.0.7)"
+	L["The Forbidden Reach"] = "Запретный край" -- "Запретный край (10.0.7)"
 	L["The Storm's Fury"] = "Неистовство бури"
 	L["Transferable Anima"] = "Переносимая анима"
+	L["Transferable Flakes"] = "Переносимая стружка"
 	L["Treasure Goblin"] = "Алчный гоблин"
 	L["Vendored gray items for: "] = "Серые предметы проданы на сумму: "
 	L["Venthyr"] = "Вентиры"
@@ -607,10 +610,10 @@ if L then
 	L["You don't have enough money to repair."] = "У Вас недостаточно денег для ремонта."
 	L["Your items have been repaired for: "] = "Ремонт обошелся в "
 	L["Your items have been repaired using guild bank funds for: "] = "Ремонт обошелся гильдии в "
-	L["Zaralek Cavern"] = "Пещера Заралек (10.1.0)"
+	L["Zaralek Cavern"] = "Пещера Заралек" -- "Пещера Заралек (10.1.0)"
 	L["Zereth Mortis"] = "Зерет Мортис"
 	L["Bodyguards"] = "Телохранители"
-	L["Storylines"] = "Сюжетные линии"
+	L["Storyline"] = "|cffd6bfa6Сюжетная линия|r"
 	L["No Reagent Bag"] = "Нет сумки реагентов"
 	L["Mythic Keystone"] = "Эпохальный ключ"
 	L["Disciple of Fyrakk"] = "Ученик Фиракка"
@@ -650,6 +653,7 @@ if L then
 	L["h. "] = "ч. "
 	L["m. "] = "м. "
 	L["s. "] = "с. "
+	L["The Veiled Ossuary"] = "Тайный склеп"
 
 L["Deadmines"] = "Мертвые копи"
 L["Shadowfang Keep"] = "Крепость Темного Клыка"
