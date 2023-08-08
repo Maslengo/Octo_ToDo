@@ -23,8 +23,8 @@ E.Octo_Globals.ilvlToShow = 400
 --COLORS--------------------------------------------------------
 ----------------------------------------------------------------
 E.Octo_Globals.Addon_Color = "|cff4FFF79"
-E.Octo_Globals.Addon_Left_Color = "|cffd177ff"
-E.Octo_Globals.Addon_Right_Color = "|cff63a4e0"
+E.Octo_Globals.Addon_Left_Color = "|cffd177ff"--"|cffF919D1"
+E.Octo_Globals.Addon_Right_Color = "|cff63a4e0"--"|cffFC9910"
 E.Octo_Globals.Blue_Color = "|cff00A3FF"
 E.Octo_Globals.Cyan_Color = "|cff00ccff"
 E.Octo_Globals.Gray_Color = "|cff404040"
