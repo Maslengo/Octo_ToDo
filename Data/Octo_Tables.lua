@@ -345,6 +345,7 @@ E.Octo_Table.AutoOpen_openableIDs70lvl = {
 	[203220] = true,
 }
 E.Octo_Table.white_list_ALL = {
+	{itemid = 206770, count = 1},
 	{itemid = 206768, count = 1},
 	{itemid = 201388, count = 1},
 	{itemid = 123858, count = 1},
@@ -393,7 +394,7 @@ E.Octo_Table.white_list_ALL = {
 	{itemid = 206803, count = 1},
 	{itemid = 208138, count = 1},
 	{itemid = 208617, count = 1},
-	{itemid = 206964, count = 1},
+	-- {itemid = 206964, count = 1},
 	{itemid = 207024, count = 1},
 	{itemid = 208132, count = 1},
 	{itemid = 208133, count = 1},
@@ -443,7 +444,7 @@ E.Octo_Table.white_list_ALL = {
 	{itemid = 207076, count = 1},
 	{itemid = 207077, count = 1},
 	{itemid = 207078, count = 1},
-	{itemid = 206972, count = 1},
+	-- {itemid = 206972, count = 1},
 	{itemid = 146949, count = 1},
 	{itemid = 206676, count = 1},
 	{itemid = 206764, count = 1},
