@@ -3370,11 +3370,11 @@ function O_otrisovka()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.Octo_Func.func_currencyicon(2533)..E.Octo_Func.func_currencyName(2533)
-				if CharInfo.CurrencyID[2533] < (CharInfo.CurrencyID_maxQuantity[2533] or 8) and CharInfo.needResetWeekly == true then
-					vivodCent = CharInfo.CurrencyID[2533] + 1
-				end
 				if CharInfo.CurrencyID[2533] ~= 0 then
 					vivodCent = CharInfo.CurrencyID[2533]..E.Octo_Func.func_texturefromIcon(4914678)
+				end
+				if CharInfo.CurrencyID[2533] < (CharInfo.CurrencyID_maxQuantity[2533] or 8) and CharInfo.needResetWeekly == true then
+					vivodCent = E.Octo_Globals.Red_Color..CharInfo.CurrencyID[2533].."?|r"..E.Octo_Func.func_texturefromIcon(4914678)
 				end
 				-- if CharInfo.CurrencyID[2533] == CharInfo.CurrencyID_maxQuantity[2533] then
 				-- 	vivodCent = E.Octo_Globals.Green_Color..vivodCent.."|r"
@@ -4966,7 +4966,8 @@ function O_otrisovka()
 			end
 			if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 			tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»"..L["Other"].."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2032)..E.Octo_Func.func_currencyName(2032), E.Octo_Func.func_currencyquantity(2032)}
+			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2032)..E.Octo_Func.func_currencyName(2032), E.Octo_Func.func_currencyquantity(2032)} -- все персы
+			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2588)..E.Octo_Func.func_currencyName(2588), CharInfo.CurrencyID_Total[2588]}
 			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1379)..E.Octo_Func.func_currencyName(1379), CharInfo.CurrencyID_Total[1379]}
 			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(515)..E.Octo_Func.func_currencyName(515), CharInfo.CurrencyID_Total[515]}
 			if Octo_ToDoVars.config.LINE_MistsofPandaria then
