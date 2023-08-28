@@ -1439,6 +1439,9 @@ local function checkCharInfo(self)
 	self.bounty_Legion2_icon = self.bounty_Legion2_icon or 0
 	self.bounty_Legion3_icon = self.bounty_Legion3_icon or 0
 	self.hasMail = self.hasMail or false
+	self.RIO_RAIDResult = self.RIO_RAIDResult or 0
+	self.RIO_KEYSResult = self.RIO_KEYSResult or 0
+	self.RIO_PVPSResult = self.RIO_PVPSResult or 0
 	self.MoneyOnLogin = self.Money
 	setmetatable(self, Meta_Table_0)
 	setmetatable(self.CurrencyID_maxQuantity, Meta_Table_0)
@@ -1473,6 +1476,9 @@ local function checkCharInfo(self)
 				end
 			end
 		end
+		self.RIO_RAIDResult = 0
+		self.RIO_KEYSResult = 0
+		self.RIO_PVPSResult = 0
 	end
 	if (self.tmstp_Daily or 0) < GetServerTime() then
 		self.tmstp_Daily = E.Octo_Func.tmstpDayReset(1)
@@ -2167,8 +2173,11 @@ function Collect_ALL_DungeonsRaiting()
 	collect.RIO_Score = RIO_Score
 	collect.RIO_weeklyBest = (E.Octo_Globals.Purple_Color..max.."|r") or ""
 	collect.RIO_RAID = RAID or ""
+	collect.RIO_RAIDResult = RAIDResult or 0
 	collect.RIO_KEYS = KEYS or ""
+	collect.RIO_KEYSResult = KEYSResult or 0
 	collect.RIO_PVPS = PVPS or ""
+	collect.RIO_PVPSResult = PVPSResult or 0
 end
 function Collect_SL_PossibleAnima()
 	if Octo_DEV_FUNC == true then
@@ -2758,7 +2767,7 @@ function Collect_All_Holiday()
 	collect.Holiday = {}
 	if not IsAddOnLoaded("Blizzard_Calendar") then
 		LoadAddOn("Blizzard_Calendar")
-		ShowUIPanel(CalendarFrame)
+		ShowUIPanel(CalendarFrame, true)
 		HideUIPanel(CalendarFrame)
 		-- Calendar_Toggle()
 		-- CalendarFrame:Hide()
@@ -3168,7 +3177,7 @@ function O_otrisovka()
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
 			vivodLeft = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.Purple_Color..L["Mythic Keystone"].."|r"
-			if CharInfo.CurrentKey ~= 0 then
+			if CharInfo.CurrentKey ~= 0 or CharInfo.RIO_RAIDResult ~= 0 or CharInfo.RIO_KEYSResult ~= 0 or CharInfo.RIO_PVPSResult ~= 0 then
 				tooltip[#tooltip+1] = {"Score", CharInfo.RIO_Score}
 				tooltip[#tooltip+1] = {"Weekly Best", CharInfo.RIO_weeklyBest}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
@@ -6318,6 +6327,64 @@ function Octo_ToDoCreateAltFrame()
 		t:SetTexture(135331)
 		----t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_Phylacterweave_Button)
+	end
+
+	if not OctoFrame_WeeklyRewardsFrame_Button then
+		OctoFrame_WeeklyRewardsFrame_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+		OctoFrame_WeeklyRewardsFrame_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+		OctoFrame_WeeklyRewardsFrame_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -180)
+		OctoFrame_WeeklyRewardsFrame_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+		OctoFrame_WeeklyRewardsFrame_Button:SetBackdropBorderColor(0, .44, .98, 1)
+		OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnEnter", function(self)
+				self:SetBackdropBorderColor(1, 0, 0, 1)
+				self.icon:SetVertexColor(1, 0, 0, 1)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+				GameTooltip:ClearLines()
+				GameTooltip:AddDoubleLine(" ", " ")
+				GameTooltip:AddDoubleLine(GREAT_VAULT_REWARDS)
+				GameTooltip:AddDoubleLine(" ", " ")
+				GameTooltip:Show()
+		end)
+		OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnLeave", function(self)
+				self:SetBackdropBorderColor(0, .44, .98, 1)
+				self.icon:SetVertexColor(1, 1, 1, 1)
+				GameTooltip:ClearLines()
+				GameTooltip:Hide()
+		end)
+		OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnMouseDown", function(self)
+				self:SetBackdropBorderColor(1, 0, 0, .5)
+				self.icon:SetVertexColor(1, 0, 0, .5)
+		end)
+		OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnClick", function()
+				OctoFrame_Main_Frame:Hide()
+				if not WeeklyRewardsFrame then
+					WeeklyRewards_LoadUI()
+				end
+				if not WeeklyRewardsFrame:IsVisible() then
+					ShowUIPanel(WeeklyRewardsFrame, true)
+					WeeklyRewardsFrame:SetScale(0.9)
+				end
+		end)
+		local t = OctoFrame_WeeklyRewardsFrame_Button:CreateTexture(nil, "BACKGROUND")
+		OctoFrame_WeeklyRewardsFrame_Button.icon = t
+
+
+
+		for k, CharInfo in pairs(Octo_ToDoLevels) do
+			local curGUID = UnitGUID("PLAYER")
+			if k == curGUID then
+				if CharInfo.RIO_RAIDResult ~= 0 or CharInfo.RIO_KEYSResult ~= 0 or CharInfo.RIO_PVPSResult ~= 0 then
+					t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_ON.tga")
+				else
+					t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_OFF.tga")
+				end
+			end
+		end
+
+
+
+		----t:SetVertexColor(1, 1, 1, 1)
+		t:SetAllPoints(OctoFrame_WeeklyRewardsFrame_Button)
 	end
 	if not OctoFrame_AbandonAllQuests_Button then
 		local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
