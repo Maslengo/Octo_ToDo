@@ -3337,7 +3337,7 @@ function O_otrisovka()
 					vivodCent = CharInfo.CurrencyID[2533]..E.Octo_Func.func_texturefromIcon(4914678)
 				end
 				if CharInfo.CurrencyID[2533] < (CharInfo.CurrencyID_maxQuantity[2533] or 8) and CharInfo.needResetWeekly == true then
-					vivodCent = E.Octo_Globals.Red_Color..CharInfo.CurrencyID[2533].."?|r"..E.Octo_Func.func_texturefromIcon(4914678)
+					vivodCent = E.Octo_Globals.Red_Color..CharInfo.CurrencyID[2533].."|r"..E.Octo_Func.func_texturefromIcon(4914678)
 				end
 				return vivodCent, vivodLeft
 		end)
