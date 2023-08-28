@@ -3273,42 +3273,6 @@ function O_otrisovka()
 				BG:SetColorTexture(.64, .21, .93, .1)
 				return vivodCent, vivodLeft
 		end)
-		-- tinsert(OctoTable_func_otrisovka,
-		-- 	function(CharInfo, tooltip, CL, BG)
-		-- 		local vivodCent, vivodLeft = "", ""
-		-- 		if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
-		-- 			vivodCent = CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count
-		-- 		end
-		-- 		vivodLeft = L["Temporal Acquisitions Specialist"]
-		-- 		return vivodCent, vivodLeft
-		-- end)
-		-- tinsert(OctoTable_func_otrisovka,
-		-- function(CharInfo, tooltip, CL, BG)
-		-- local vivodCent, vivodLeft = "", ""
-		-- vivodLeft = E.Octo_Func.func_texturefromIcon(1603189)..E.Octo_Func.func_questName(70750)
-		-- if CharInfo.Octopussy_DF_Weekly_3kREP_count ~= NONE and CharInfo.Octopussy_DF_Weekly_3kREP_count ~= "" then
-		-- vivodCent = CharInfo.Octopussy_DF_Weekly_3kREP_count
-		-- if CharInfo.Octopussy_DF_Weekly_3kREP_questID ~= NONE then
-		-- tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_DF_Weekly_3kREP_questID)}
-		-- end
-		-- end
-		-- if CharInfo.ItemsInBag[200073] ~= 0 then
-		-- vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200073]..E.Octo_Func.func_itemTexture(200073)
-		-- end
-		-- return vivodCent, vivodLeft
-		-- end)
-		-- tinsert(OctoTable_func_otrisovka,
-		-- function(CharInfo, tooltip, CL, BG)
-		-- local vivodCent, vivodLeft = "", ""
-		-- vivodLeft = L["A Worthy Ally: Loamm Niffen"]
-		-- if CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count ~= NONE then
-		-- vivodCent = CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count
-		-- end
-		-- if CharInfo.ItemsInBag[205982] ~= 0 then
-		-- vivodCent = vivodCent.. " +"..CharInfo.ItemsInBag[205982]..E.Octo_Func.func_texturefromIcon(1500869)
-		-- end
-		-- return vivodCent, vivodLeft
-		-- end)
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -3363,7 +3327,6 @@ function O_otrisovka()
 					end
 				end
 				vivodLeft = E.Octo_Func.func_currencyicon(2594)..L["Transferable Flakes"]..": "..E.Octo_Globals.Blue_Color..TotalTransParacausalFlakes.."|r"
-				--vivodLeft = E.Octo_Func.func_currencyicon(2594)..E.Octo_Func.func_currencyName(2594)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka,
@@ -3376,12 +3339,6 @@ function O_otrisovka()
 				if CharInfo.CurrencyID[2533] < (CharInfo.CurrencyID_maxQuantity[2533] or 8) and CharInfo.needResetWeekly == true then
 					vivodCent = E.Octo_Globals.Red_Color..CharInfo.CurrencyID[2533].."?|r"..E.Octo_Func.func_texturefromIcon(4914678)
 				end
-				-- if CharInfo.CurrencyID[2533] == CharInfo.CurrencyID_maxQuantity[2533] then
-				-- 	vivodCent = E.Octo_Globals.Green_Color..vivodCent.."|r"
-				-- end
-				-- if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.CurrencyID[2533] < 8 then
-				-- 	vivodCent = E.Octo_Globals.Red_Color..vivodCent .."|r"
-				-- end
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka,
@@ -3390,7 +3347,8 @@ function O_otrisovka()
 				if CharInfo.ItemsInBag[207030] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[207030]..E.Octo_Func.func_texturefromIcon(2026009)
 				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(207030)
+				-- vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(207030)
+				vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Globals.WOW_Epic_Color..L["Dilated Time Capsule"].."|r"
 				BG:SetColorTexture(.64, .21, .93, .1)
 				return vivodCent, vivodLeft
 		end)
@@ -3400,29 +3358,11 @@ function O_otrisovka()
 				if CharInfo.ItemsInBag[207002] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[207002]
 				end
-				vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
+				-- vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
+				vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Globals.WOW_Rare_Color..L["Encapsulated Destiny"].."|r"
 				BG:SetColorTexture(.64, .21, .93, .1)
 				return vivodCent, vivodLeft
 		end)
-		----------------ЦУЙЦУЙЦУ
-		-- tinsert(OctoTable_func_otrisovka,
-		-- function(CharInfo, tooltip, CL, BG)
-		-- local vivodCent, vivodLeft = "", ""
-		-- if CharInfo.ItemsInBag[207030] ~= 0 then
-		-- vivodCent = CharInfo.ItemsInBag[207030]
-		-- end
-		-- vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(207030)
-		-- return vivodCent, vivodLeft
-		-- end)
-		-- tinsert(OctoTable_func_otrisovka,
-		-- function(CharInfo, tooltip, CL, BG)
-		-- local vivodCent, vivodLeft = "", ""
-		-- if CharInfo.ItemsInBag[207002] ~= 0 then
-		-- vivodCent = CharInfo.ItemsInBag[207002]
-		-- end
-		-- vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
-		-- return vivodCent, vivodLeft
-		-- end)
 	end
 	if Octo_ToDoVars.config.LINE_Shadowlands then
 		tinsert(OctoTable_func_otrisovka,

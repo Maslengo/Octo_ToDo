@@ -92,6 +92,8 @@ if L then
 	L["m. "] = true
 	L["s. "] = true
 	L["The Veiled Ossuary"] = true
+	L["Dilated Time Capsule"] = true
+	L["Encapsulated Destiny"] = true
 
 L["Deadmines"] = true
 L["Shadowfang Keep"] = true
@@ -654,6 +656,8 @@ if L then
 	L["m. "] = "м. "
 	L["s. "] = "с. "
 	L["The Veiled Ossuary"] = "Тайный склеп"
+	L["Dilated Time Capsule"] = "Капсула растянутого времени"
+	L["Encapsulated Destiny"] = "Инкапсулированная судьба"
 
 L["Deadmines"] = "Мертвые копи"
 L["Shadowfang Keep"] = "Крепость Темного Клыка"

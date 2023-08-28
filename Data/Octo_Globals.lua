@@ -52,6 +52,15 @@ E.Octo_Globals.Venthyr_Color = "|cffea9999"
 E.Octo_Globals.Venthyr_r_Color = 0.88
 E.Octo_Globals.Venthyr_g_Color = 0.40
 E.Octo_Globals.Venthyr_b_Color = 0.40
+E.Octo_Globals.WOW_Poor_Color = "|cff9d9d9d"
+E.Octo_Globals.WOW_Common_Color = "|cffffffff"
+E.Octo_Globals.WOW_Uncommon_Color = "|cff1eff00"
+E.Octo_Globals.WOW_Rare_Color = "|cff0070dd"
+E.Octo_Globals.WOW_Epic_Color = "|cffa335ee"
+E.Octo_Globals.WOW_Legendary_Color = "|cffff8000"
+E.Octo_Globals.WOW_Artifact_Color = "|cffd9cc80"
+E.Octo_Globals.WOW_Heirloom_Color = "|cff00ccff"
+E.Octo_Globals.WOW_WoWToken_Color = "|cff00ccff"
 ----------------------------------------------------------------
 E.Octo_Globals.Classic_Color = "|cff68ccef"
 E.Octo_Globals.TheBurningCrusade_Color = "|cff4fff79"
