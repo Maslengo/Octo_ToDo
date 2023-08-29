@@ -761,12 +761,17 @@ tinsert(E.Octo_Globals.modules, function()
 							[180162] = true,
 							[161509] = true,
 							[203011] = true,
+							[200172] = true, -- test
+							[200171] = true, -- test
+							[200170] = true, -- test
+							[199198] = true, -- test
 						}
 						local Second_Option = {
 							[201398] = true,
 							--[205089] = true,
 						}
-						if guid and UnitGUID(UnitID):match("%a+") ~= "Player" then
+
+						if guid and UnitGUID(UnitID):match("%a+") ~= "Player" and not IsShiftKeyDown() then
 							local info = C_GossipInfo.GetOptions()
 							local targetNPCID = tonumber(UnitGUID(UnitID):match("-(%d+)-%x+$"), 10)
 							for i, v in ipairs(info) do
@@ -782,21 +787,24 @@ tinsert(E.Octo_Globals.modules, function()
 								v.name:find("Указать на Ральфа мистеру Солнечноцветику.") or
 								v.name:find("Можешь снова активировать этого голиафа?") or
 								v.name:find("Начать испытание") or
+								v.name:find("Я готов.") or
+								v.name:find("Я готова.") or
+								v.name:find("Эти цветы - от Киригосы.") or
 								-- v.name:find("Начать копать") or
 								v.name:find("cff0000FF")
-								and not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
+								 --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
-								elseif First_Option[targetNPCID] and not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
+								elseif First_Option[targetNPCID] --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
-								elseif Second_Option[targetNPCID] and not IsShiftKeyDown() and i == 2 --[[and not ignore_list_NPC[targetNPCID] then]] then
+								elseif Second_Option[targetNPCID] and i == 2 --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
-								elseif #info == 1 and not IsShiftKeyDown() --[[and not ignore_list_NPC[targetNPCID] then]] then
+								elseif #info == 1 --[[and not ignore_list_NPC[targetNPCID] then]] then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.."("..i..")|r |T"..v.icon..":16:16:::64:64:4:60:4:60|t"..v.name)
@@ -1448,7 +1456,7 @@ tinsert(E.Octo_Globals.modules, function()
 						-- accept all available quests
 						if C_GossipInfo.GetAvailableQuests() ~= 0 then
 							for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
-								-- print (info.title, info.questLevel, info.repeatable, info.frequency,  info.isIgnored, info.isLegendary)
+								-- print (info.title, info.questLevel, info.repeatable, info.frequency, info.isIgnored, info.isLegendary)
 								-- if (not info.isTrivial --[[or isTrackingTrivialQuests()]]) and (not info.repeatable --[[or addon.db.profile.general.acceptRepeatables]]) then
 								if (info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false) and (info.repeatable and Octo_ToDoVars.config.RepeatableQuests == false) then
 									return

@@ -1107,10 +1107,29 @@ local OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			72900,72921,72933,72934,73069,75023,72935,72936,72937,72938,72656,72939,73227,73026,73091,
-			72940,73399,73404,73405,73406,
+			--The Veiled Ossuary (Тайных склеп)
+			72900, 72921, 72933, 72934, 73069, 75023, 72935,
+			72936,72937, 72938, --Нексус
+			--72940, 73399, 73404, 73405, 73406, -- НЕ УЧИТЫВАТЬ
+			--Лес хрусталльной песни
+			73091,
+			73090, 72670, 72674, 72679, 74783,
+			-- Пиратская бухта
+			73026, -
+			72988, 72527, 72529, 72530, 72532, 72533, 72534, 73181,
+			-- Нефритовый лес
+			73227,
+			72650, 72651, 72653, 72654, 72652, 72655, 74291,
+			-- Терамор
+			72939,
+			73188, 72831, 72832, 72833, 74335,
+			-- Зимние Ключи
+			72656,
+			72657, 74354, 72659, 72660, 72661, 74356,
+			--United Again
+			75244, 72942, 72946, 72947, 72948, 72949, 72950, 72951,
 		},
-		max = 15,
+		max = 54,
 	},
 }
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Holiday)
@@ -6328,7 +6347,6 @@ function Octo_ToDoCreateAltFrame()
 		----t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_Phylacterweave_Button)
 	end
-
 	if not OctoFrame_WeeklyRewardsFrame_Button then
 		OctoFrame_WeeklyRewardsFrame_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
 		OctoFrame_WeeklyRewardsFrame_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
@@ -6367,9 +6385,6 @@ function Octo_ToDoCreateAltFrame()
 		end)
 		local t = OctoFrame_WeeklyRewardsFrame_Button:CreateTexture(nil, "BACKGROUND")
 		OctoFrame_WeeklyRewardsFrame_Button.icon = t
-
-
-
 		for k, CharInfo in pairs(Octo_ToDoLevels) do
 			local curGUID = UnitGUID("PLAYER")
 			if k == curGUID then
@@ -6380,9 +6395,6 @@ function Octo_ToDoCreateAltFrame()
 				end
 			end
 		end
-
-
-
 		----t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_WeeklyRewardsFrame_Button)
 	end
