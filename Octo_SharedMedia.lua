@@ -33,6 +33,7 @@ LSM:Register("sound", "|cFF00A4FFO_04_rat|r", [[Interface\Addons\]]..GlobalAddon
 LSM:Register("sound", "|cFF00A4FFO_04_Hehe Boy|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\Hehe Boy.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Hey thats pretty good|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\Hey thats pretty good.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Its a trap|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\Its a trap.ogg]])
+LSM:Register("sound", "|cFF00A4FFO_04_katongoukamekkyaku|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\katongoukamekkyaku.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Allahu_akbar|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Allahu_akbar.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_AnnihilationGun|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_AnnihilationGun.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Dun_dun_dun|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Dun_dun_dun.ogg]])

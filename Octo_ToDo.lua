@@ -5380,6 +5380,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {L["Weekend Event"], CharInfo.Octopussy_DF_Weekly_WeekendEvent_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.1.5".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				tooltip[#tooltip+1] = {E.Octo_Func.func_questName(77236), CheckCompletedByQuestID(77236)} -- 1 на аккаунт
 				tooltip[#tooltip+1] = {Timer_DF_TimeRift()..L["Time Rift"], CharInfo.Octopussy_DF_Weekly_TimeRift_count}
 				tooltip[#tooltip+1] = {L["Temporal Acquisitions Specialist"], CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
@@ -5987,7 +5988,13 @@ function O_otrisovka()
 			-- tooltip[#tooltip+1] = {CharInfo.classColorHex.."TEST HEX CLASS COLOR|r", " "}
 			if CharInfo.loginDay ~= 0 and CharInfo.loginDay ~= 0 then
 				CL:SetFontObject(OctoFont10)
-				vivodCent = (CharInfo.needResetDaily and E.Octo_Globals.Red_Color or E.Octo_Globals.White_Color)..CharInfo.loginHour.."\n"..CharInfo.loginDay
+				vivodCent = CharInfo.loginHour.."\n"..CharInfo.loginDay
+				if CharInfo.needResetWeekly == true then
+					vivodCent = E.Octo_Globals.Gray_Color..vivodCent.."|r"
+				elseif CharInfo.needResetDaily == true then
+					vivodCent = E.Octo_Globals.Red_Color..vivodCent.."|r"
+				end
+				-- vivodCent = (CharInfo.needResetDaily and E.Octo_Globals.Red_Color or E.Octo_Globals.White_Color)..CharInfo.loginHour.."\n"..CharInfo.loginDay
 			end
 			return vivodCent, vivodLeft
 	end)
