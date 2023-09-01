@@ -133,6 +133,22 @@ LSM:Register("sound", "|cFF00A7FFO_07_Rampage|r", [[Interface\Addons\]]..GlobalA
 LSM:Register("sound", "|cFF00A7FFO_07_Retribution|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\ut4\Retribution.ogg]])
 LSM:Register("sound", "|cFF00A7FFO_07_Unstoppable|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\ut4\Unstoppable.ogg]])
 LSM:Register("sound", "|cFF00A7FFO_07_WhickedSick|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\ut4\WhickedSick.ogg]])
+--Interface\Addons\]]..GlobalAddonName..[[\Media\DevilMayCry\
+LSM:Register("sound", "|cFF00A7FFO_08_KillingMaxRank|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\1 KillingMaxRank.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_MultiKillingMaxRank|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\2 MultiKillingMaxRank.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Dirty|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\3 Dirty.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Cruel|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\4 Cruel.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Brutal|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\5 Brutal.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Anarchic|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\6 Anarchic.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Savage|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\7 Savage.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Sadistic|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\8 Sadistic.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_SENSATIONAL|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\9 SENSATIONAL.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Crush Him|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\10 Crush Him.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Can Not Hide|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\11 Can Not Hide.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_KILL THEM ALL|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\12 KILL THEM ALL.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Really Hate You|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\13 Really Hate You.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Kill Yourself|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\14 Kill Yourself.ogg]])
+LSM:Register("sound", "|cFF00A7FFO_08_Devil May Cry|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\DevilMayCry\15 Devil May Cry.ogg]])
 --[[BACKGROUND
  ]]
 --Interface\Addons\]]..GlobalAddonName..[[\Media\background
