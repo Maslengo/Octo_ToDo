@@ -1013,6 +1013,26 @@ local OctoTable_UniversalQuest = {
 		max = 1,
 	},
 	{
+		name_save = "DreamsurgeInvestigation",
+		name_quest = L["Dreamsurge Investigation"],
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {77414, },
+		max = 1,
+	},
+	{
+		name_save = "ShapingtheDreamsurge",
+		name_quest = L["Shaping the Dreamsurge"],
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {77251, },
+		max = 1,
+	},
+	{
 		name_save = "Rares",
 		name_quest = "Darkshore - Rares",
 		reset = "Daily",
@@ -1462,6 +1482,14 @@ local function checkCharInfo(self)
 	self.RIO_KEYSResult = self.RIO_KEYSResult or 0
 	self.RIO_PVPSResult = self.RIO_PVPSResult or 0
 	self.MoneyOnLogin = self.Money
+	self.AberrusTransmog = self.AberrusTransmog or {}
+	for _,v in pairs (E.Octo_Globals.TransmogCollectionType) do
+		self.AberrusTransmog[v] = self.AberrusTransmog[v] or {}
+		for _,w in pairs(E.Octo_Globals.difficultyName) do
+			self.AberrusTransmog[v][w] = self.AberrusTransmog[v][w] or "-"
+		end
+		-- setmetatable(self.AberrusTransmog[v], Meta_Table_false)
+	end
 	setmetatable(self, Meta_Table_0)
 	setmetatable(self.CurrencyID_maxQuantity, Meta_Table_0)
 	setmetatable(self.CurrencyID_Total, Meta_Table_0)
@@ -2975,6 +3003,87 @@ function Collect_All_journalInstance()
 	end
 	----------------------------------------------------------------
 end -- for function
+-- function QWEQWE()
+-- 	local localizedClass, englishClass, classIndex = UnitClass("PLAYER");
+-- 	for k,v in pairs(E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA[englishClass]) do
+-- 		print (k,v)
+-- 	end
+-- end
+-- QWEQWE()
+function Collect_AberrusTransmog()
+	print ("Collect_AberrusTransmog")
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDoLevels[curGUID]
+	----------------------------------------------------------------
+	local localizedClass, englishClass, classIndex = UnitClass("PLAYER");
+	local function GetItemLinkFromSourceID(sourceID)
+		return select(6, C_TransmogCollection.GetAppearanceSourceInfo(sourceID))
+	end
+	-- 202452 -- Шлем Латы Пал
+	-- 202454 -- Ботинки Латы Пал
+	local vivod = ""
+	-- local maslengo = ""
+	local octo = ""
+	local sourceNames = {"", "BossDrop", "Quest", "Vendor", "WorldDrop", "achievement", "Professions"}
+	for k,v in pairs(E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA[englishClass]) do
+		for i = 1, #E.Octo_Globals.TransmogCollectionType do
+			local appearancesList = C_TransmogCollection.GetCategoryAppearances(i)
+			for appearanceIndex = 1, #appearancesList do
+				local appearancesCollected = appearancesList[appearanceIndex].isCollected
+				local appearancesVisualID = appearancesList[appearanceIndex].visualID
+				local sources = C_TransmogCollection.GetAppearanceSources(appearancesVisualID)
+				if sources then
+					for sourceIndex = 1, #sources do
+						local itemID = sources[sourceIndex].itemID
+						for _, z in pairs (E.Octo_Globals.TransmogCollectionType) do
+							if E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA[englishClass][z] == itemID then -- and sourceNames[(sources[sourceIndex].sourceType or 0) + 1] == "BossDrop" then
+								local sourceItemLink = GetItemLinkFromSourceID(sources[sourceIndex].sourceID)
+								local _,_,_, linkType, linkID,_,_,_,_,_,_,_,_,_,_,QWE = (":|H"):split(sourceItemLink)
+								print (sourceItemLink:gsub("|", "||"), "|cffFF0000"..QWE.."|r") -- 12 https://wowpedia.fandom.com/wiki/ItemLink itemContext: Scenario: Normal
+								if QWE == "" or QWE == 0 then
+									vivod = "LFR"
+									collect.AberrusTransmog[z][vivod] = "|cff00FF00"..tostringall(appearancesCollected).."|r"
+								end
+								if QWE == 4 then
+									vivod = "Normal"
+									collect.AberrusTransmog[z][vivod] = "|cff00FF00"..tostringall(appearancesCollected).."|r"
+								end
+								if QWE == 5 then
+									vivod = "Heroic"
+									collect.AberrusTransmog[z][vivod] = "|cff00FF00"..tostringall(appearancesCollected).."|r"
+								end
+								if QWE == 6 then
+									vivod = "Mythic"
+									collect.AberrusTransmog[z][vivod] = "|cff00FF00"..tostringall(appearancesCollected).."|r"
+								end
+								-- print (tonumber(QWE) or 0, octo, z, tostringall(appearancesCollected))
+								--print (z, octo, tostringall(appearancesCollected))
+								-- if appearancesCollected == true then
+								-- 	collect.AberrusTransmog[z][vivod] = "|cff00FF00"..tostringall(appearancesCollected).."|r"
+								-- else
+								-- 	collect.AberrusTransmog[z][vivod] = "|cffFF0000"..tostringall(appearancesCollected).."|r"
+								-- end
+								-- maslengo = maslengo
+								-- ..tostringall(appearancesCollected).." "
+								-- ..tostringall(appearancesVisualID).." "
+								-- ..tostringall(sources[sourceIndex].sourceID).." "
+								-- ..tostringall(sources[sourceIndex].isCollected).." "
+								-- .."|cff606060"..tostringall(sources[sourceIndex].itemID).." |r"
+								-- -- .."|cffa335ee"..tostringall(GetItemInfo(sources[sourceIndex].itemID)).." |r"
+								-- ..tostringall(sourceNames[(sources[sourceIndex].sourceType or 0) + 1]).." "
+								-- .."|n"
+							-- else
+							--     maslengo = maslengo..""
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	-- vivod = maslengo
+	-- return vivod
+end
 function Timer_Legion_Invasion()
 	local TIMER = (1547586000-10800)
 	local interval = 66600
@@ -3082,6 +3191,18 @@ function Timer_DF_TimeRift()
 		Timer_DF_TimeRift = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
 	end
 	return Timer_DF_TimeRift
+end
+function Timer_DF_Dreamsurges()
+	local TIMER = 1689159620 -- начало в 16:00
+	local interval = 30*60 -- каждые пол часа
+	local duration = 5*60 -- 5 минут
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
+	local Timer_DF_Dreamsurges = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+	if nextEventIn > (interval - duration) then
+		nextEventIn = nextEventIn - (interval - duration)
+		Timer_DF_Dreamsurges = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn) .."|r "
+	end
+	return Timer_DF_Dreamsurges
 end
 function Timer_SL_Maw_Assault()
 	local TIMER = 3780
@@ -3262,48 +3383,6 @@ function O_otrisovka()
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				local vivodLeft = (E.Octo_Func.func_texturefromIcon(628677)..Timer_DF_TimeRift()..L["Time Rift"])
-				if CharInfo.Octopussy_DF_Weekly_TimeRift_count ~= NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_TimeRift_count
-				end
-				-- if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
-				-- 	vivodCent = vivodCent.."("..CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count..")"
-				-- end
-				-- if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azmourne - Scourge:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76406),CharInfo.OctoTable_QuestID[76406]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76547),CharInfo.OctoTable_QuestID[76547]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    A.Z.E.R.O.T.H. - Mecha:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76521),CharInfo.OctoTable_QuestID[76521]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76404),CharInfo.OctoTable_QuestID[76404]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azmerloth - Murlocs:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76548),CharInfo.OctoTable_QuestID[76548]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76379),CharInfo.OctoTable_QuestID[76379]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azewrath - Fel/Demons:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76459),CharInfo.OctoTable_QuestID[76459]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76362),CharInfo.OctoTable_QuestID[76362]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azq'roth - Void/Black Empire:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76546),CharInfo.OctoTable_QuestID[76546]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76453),CharInfo.OctoTable_QuestID[76453]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Warlands - Alliance/Horde:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76544),CharInfo.OctoTable_QuestID[76544]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76449),CharInfo.OctoTable_QuestID[76449]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Ulderoth - Titans:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76351),CharInfo.OctoTable_QuestID[76351]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76533),CharInfo.OctoTable_QuestID[76533]}
-				-- end
-				BG:SetColorTexture(.64, .21, .93, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
 				if CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.ItemsInBag[204193] ~= 0 or CharInfo.ItemsInBag[204075] ~= 0 or CharInfo.CurrencyID[2409] ~= 0 then
 					tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204075)..E.Octo_Globals.Green_Color..E.Octo_Func.func_itemName_NOCOLOR(204075).."|r"..E.Octo_Globals.Gray_Color.." LFR, M+1-5".."|r", CharInfo.ItemsInBag[204075]..E.Octo_Globals.Gray_Color.." ("..CharInfo.CurrencyID[2409].."/"..CharInfo.CurrencyID_maxQuantity[2409]..")|r"}
 				end
@@ -3372,6 +3451,51 @@ function O_otrisovka()
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
+				local vivodLeft = (E.Octo_Func.func_texturefromIcon(628677)..Timer_DF_TimeRift()..L["Time Rift"])
+				if CharInfo.Octopussy_DF_Weekly_TimeRift_count ~= NONE then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_TimeRift_count
+				end
+				-- if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
+				-- 	vivodCent = vivodCent.."("..CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count..")"
+				-- end
+				-- if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azmourne - Scourge:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76406),CharInfo.OctoTable_QuestID[76406]}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76547),CharInfo.OctoTable_QuestID[76547]}
+				-- 	tooltip[#tooltip+1] = {" ", " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    A.Z.E.R.O.T.H. - Mecha:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76521),CharInfo.OctoTable_QuestID[76521]}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76404),CharInfo.OctoTable_QuestID[76404]}
+				-- 	tooltip[#tooltip+1] = {" ", " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azmerloth - Murlocs:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76548),CharInfo.OctoTable_QuestID[76548]}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76379),CharInfo.OctoTable_QuestID[76379]}
+				-- 	tooltip[#tooltip+1] = {" ", " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azewrath - Fel/Demons:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76459),CharInfo.OctoTable_QuestID[76459]}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76362),CharInfo.OctoTable_QuestID[76362]}
+				-- 	tooltip[#tooltip+1] = {" ", " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Azq'roth - Void/Black Empire:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76546),CharInfo.OctoTable_QuestID[76546]}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76453),CharInfo.OctoTable_QuestID[76453]}
+				-- 	tooltip[#tooltip+1] = {" ", " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Warlands - Alliance/Horde:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76544),CharInfo.OctoTable_QuestID[76544]}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76449),CharInfo.OctoTable_QuestID[76449]}
+				-- 	tooltip[#tooltip+1] = {" ", " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("    Ulderoth - Titans:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76351),CharInfo.OctoTable_QuestID[76351]}
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76533),CharInfo.OctoTable_QuestID[76533]}
+				-- end
+				for _, v in pairs(E.Octo_Globals.TransmogCollectionType) do
+					tooltip[#tooltip+1] = {v, tostringall(CharInfo.AberrusTransmog[v].LFR).."/"..tostringall(CharInfo.AberrusTransmog[v].Normal).."/"..tostringall(CharInfo.AberrusTransmog[v].Heroic).."/"..tostringall(CharInfo.AberrusTransmog[v].Mythic)}
+				end
+				BG:SetColorTexture(.64, .21, .93, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
 				if CharInfo.ItemsInBag[207030] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[207030]..E.Octo_Func.func_texturefromIcon(2026009)
 				end
@@ -3389,6 +3513,59 @@ function O_otrisovka()
 				-- vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
 				vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Globals.WOW_Rare_Color..L["Encapsulated Destiny"].."|r"
 				BG:SetColorTexture(.64, .21, .93, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				local vivodLeft = (E.Octo_Func.func_texturefromIcon(134206)..Timer_DF_Dreamsurges()..L["SonNayavu"])
+				if CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count ~= NONE then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count
+				end
+				BG:SetColorTexture(.31, 1, .47, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				local vivodLeft = (E.Octo_Func.func_texturefromIcon(4643985)..L["Shaping the Dreamsurge"])
+				if CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count ~= NONE then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count
+				end
+				BG:SetColorTexture(.31, 1, .47, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[208153] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[208153]..E.Octo_Func.func_texturefromIcon(4643985)
+				end
+				-- vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(208153)
+				vivodLeft = E.Octo_Func.func_texturefromIcon(4643985)..E.Octo_Globals.WOW_Epic_Color..L["Dreamsurge Chrysalis"].."|r"
+				BG:SetColorTexture(.31, 1, .47, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[209419] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[209419].."/20"..E.Octo_Func.func_texturefromIcon(1044087)
+				end
+				-- vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(209419)
+				vivodLeft = E.Octo_Func.func_texturefromIcon(1044087)..E.Octo_Globals.WOW_Rare_Color..L["Charred Elemental Remains"].."|r"
+				BG:SetColorTexture(.31, 1, .47, .1)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.ItemsInBag[207026] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[207026]..E.Octo_Func.func_texturefromIcon(132858)
+				end
+				-- vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(207026)
+				vivodLeft = E.Octo_Func.func_texturefromIcon(132858)..E.Octo_Globals.WOW_Uncommon_Color..L["Dreamsurge Coalescence"].."|r"
+				BG:SetColorTexture(.31, 1, .47, .1)
 				return vivodCent, vivodLeft
 		end)
 	end
@@ -5379,6 +5556,10 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {L["PLAYER_DIFFICULTY_TIMEWALKER"].." (5 dungeons)", CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count}
 				tooltip[#tooltip+1] = {L["Weekend Event"], CharInfo.Octopussy_DF_Weekly_WeekendEvent_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.1.7".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				tooltip[#tooltip+1] = {Timer_DF_Dreamsurges()..L["Dreamsurges"], CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count}
+				tooltip[#tooltip+1] = {L["Shaping the Dreamsurge"], CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count}
+				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.1.5".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_questName(77236), CheckCompletedByQuestID(77236)} -- 1 на аккаунт
 				tooltip[#tooltip+1] = {Timer_DF_TimeRift()..L["Time Rift"], CharInfo.Octopussy_DF_Weekly_TimeRift_count}
@@ -6760,6 +6941,8 @@ function Octo_ToDoOnEvent(self, event, ...)
 				end
 			end
 		end
+		-- for k,v in pairs(E.Octo_Globals.TransmogCollectionType) do
+		-- end
 		if Octo_ToDoVars.config == nil then Octo_ToDoVars.config = {} end
 		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars.config.CVar == nil then Octo_ToDoVars.config.CVar = false end
@@ -6901,6 +7084,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		Collect_SL_CovenantAnima()
 		Collect_SL_PossibleAnima()
 		Collect_All_journalInstance()
+		-- Collect_AberrusTransmog()
 		Octo_ToDoCreateAltFrame()
 		Octo_ToDoAddDataToAltFrame()
 		C_Timer.After(5, function()
@@ -6929,6 +7113,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 			Timer_DF_PrimalStorms()
 			Timer_DF_ResearchersUnderFire()
 			Timer_DF_TimeRift()
+			Timer_DF_Dreamsurges()
 			Timer_SL_Maw_Assault()
 			Timer_Daily_Reset()
 			Octo_ToDoAddDataToAltFrame()

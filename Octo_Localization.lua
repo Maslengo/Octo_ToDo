@@ -82,6 +82,7 @@ if L then
 	L["Modules"] = true
 	L["DisplaySettings"] = true
 	L["Time Rift"] = true
+	L["Dreamsurges"] = true
 	L["Storm-Bound Chest"] = true
 	L["Shadowmourne"] = true
 	L["Green Fire"] = true
@@ -93,7 +94,13 @@ if L then
 	L["s. "] = true
 	L["The Veiled Ossuary"] = true
 	L["Dilated Time Capsule"] = true
+	L["Dreamsurge Chrysalis"] = true
+	L["Dreamsurge Coalescence"] = true
+	L["Charred Elemental Remains"] = true
 	L["Encapsulated Destiny"] = true
+	L["Dreamsurge Investigation"] = true
+	L["Shaping the Dreamsurge"] = true
+	L["SonNayavu"] = true
 
 L["Deadmines"] = true
 L["Shadowfang Keep"] = true
@@ -274,6 +281,7 @@ L["Dragon Isles"] = true
 L["The Nokud Offensive"] = true
 L["Aberrus, the Shadowed Crucible"] = true
 L["Dawn of the Infinite"] = true
+
 
 
 	-- print (LOC_OPTION_OFF, VIDEO_OPTIONS_ENABLED)
@@ -646,6 +654,7 @@ if L then
 	L["Modules"] = "Модули"
 	L["DisplaySettings"] = "Настройки отображения"
 	L["Time Rift"] = "Портал времени"
+	L["Dreamsurges"] = "Прилив Снов"
 	L["Storm-Bound Chest"] = "Запечатанный бурей сундук"
 	L["Shadowmourne"] = "Темная Скорбь"
 	L["Green Fire"] = "Зелёный Огонь"
@@ -657,7 +666,13 @@ if L then
 	L["s. "] = "с. "
 	L["The Veiled Ossuary"] = "Тайный склеп"
 	L["Dilated Time Capsule"] = "Капсула растянутого времени"
+	L["Dreamsurge Chrysalis"] = "Хризалида Дикого Сна"
+	L["Dreamsurge Coalescence"] = "Слияние Прилива Снов"
+	L["Charred Elemental Remains"] = "Обугленные останки элементалей"
 	L["Encapsulated Destiny"] = "Инкапсулированная судьба"
+	L["Dreamsurge Investigation"] = "Исследование Прилива Снов"
+	L["Shaping the Dreamsurge"] = "Укрощение Прилива Снов"
+	L["SonNayavu"] = "Сон наяву"
 
 L["Deadmines"] = "Мертвые копи"
 L["Shadowfang Keep"] = "Крепость Темного Клыка"
