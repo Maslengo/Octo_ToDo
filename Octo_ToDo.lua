@@ -3084,6 +3084,12 @@ function Collect_AberrusTransmog()
 	-- vivod = maslengo
 	-- return vivod
 end
+function Collect_All_Quest_Tooltip()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDoLevels[curGUID]
+	----------------------------------------------------------------
+	collect.DreamsurgeInvestigation = E.Octo_Func.All_objectives(77414)
+end
 function Timer_Legion_Invasion()
 	local TIMER = (1547586000-10800)
 	local interval = 66600
@@ -3487,9 +3493,15 @@ function O_otrisovka()
 				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76351),CharInfo.OctoTable_QuestID[76351]}
 				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76533),CharInfo.OctoTable_QuestID[76533]}
 				-- end
-				for _, v in pairs(E.Octo_Globals.TransmogCollectionType) do
-					tooltip[#tooltip+1] = {v, tostringall(CharInfo.AberrusTransmog[v].LFR).."/"..tostringall(CharInfo.AberrusTransmog[v].Normal).."/"..tostringall(CharInfo.AberrusTransmog[v].Heroic).."/"..tostringall(CharInfo.AberrusTransmog[v].Mythic)}
-				end
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				-- for _, v in pairs(E.Octo_Globals.TransmogCollectionType) do
+				-- 	tooltip[#tooltip+1] = {v, tostringall(CharInfo.AberrusTransmog[v].LFR).."/"..tostringall(CharInfo.AberrusTransmog[v].Normal).."/"..tostringall(CharInfo.AberrusTransmog[v].Heroic).."/"..tostringall(CharInfo.AberrusTransmog[v].Mythic)}
+				-- end
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				----------------------------------------------------------------
 				BG:SetColorTexture(.64, .21, .93, .1)
 				return vivodCent, vivodLeft
 		end)
@@ -3504,23 +3516,26 @@ function O_otrisovka()
 				BG:SetColorTexture(.64, .21, .93, .1)
 				return vivodCent, vivodLeft
 		end)
+		-- tinsert(OctoTable_func_otrisovka,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft = "", ""
+		-- 		if CharInfo.ItemsInBag[207002] ~= 0 then
+		-- 			vivodCent = CharInfo.ItemsInBag[207002]
+		-- 		end
+		-- 		-- vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
+		-- 		vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Globals.WOW_Rare_Color..L["Encapsulated Destiny"].."|r"
+		-- 		BG:SetColorTexture(.64, .21, .93, .1)
+		-- 		return vivodCent, vivodLeft
+		-- end)
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.ItemsInBag[207002] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[207002]
-				end
-				-- vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
-				vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Globals.WOW_Rare_Color..L["Encapsulated Destiny"].."|r"
-				BG:SetColorTexture(.64, .21, .93, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				local vivodLeft = (E.Octo_Func.func_texturefromIcon(134206)..Timer_DF_Dreamsurges()..L["SonNayavu"])
+				local vivodLeft = (E.Octo_Func.func_texturefromIcon(134206)..Timer_DF_Dreamsurges()..L["Dreamsurges"])
 				if CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count ~= NONE then
 					vivodCent = CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count
+				end
+				if CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count ~= NONE and CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count ~= DONE and CharInfo.DreamsurgeInvestigation ~= 0 then
+					tooltip[#tooltip+1] = {CharInfo.DreamsurgeInvestigation}
 				end
 				BG:SetColorTexture(.31, 1, .47, .1)
 				return vivodCent, vivodLeft
@@ -7019,6 +7034,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 						Collect_All_Professions()
 						Collect_ALL_PVPRaitings()
 						Collect_All_Quests()
+						Collect_All_Quest_Tooltip()
 						Collect_All_Reputations()
 						Collect_All_Transmoge()
 						Collect_ALL_UNIVERSALQuestUpdate()
@@ -7072,6 +7088,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		Collect_All_Professions()
 		Collect_ALL_PVPRaitings()
 		Collect_All_Quests()
+		Collect_All_Quest_Tooltip()
 		Collect_All_Reputations()
 		Collect_All_Transmoge()
 		Collect_ALL_UNIVERSALQuestUpdate()
@@ -7129,6 +7146,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 	end
 	if event == "QUEST_LOG_UPDATE" and not InCombatLockdown() then
 		Collect_All_Quests()
+		Collect_All_Quest_Tooltip()
 		Collect_BfA_QuestsBounties()
 		Collect_ALL_UNIVERSALQuestUpdate()
 		Collect_BfA_Island()

@@ -100,7 +100,6 @@ if L then
 	L["Encapsulated Destiny"] = true
 	L["Dreamsurge Investigation"] = true
 	L["Shaping the Dreamsurge"] = true
-	L["SonNayavu"] = true
 
 L["Deadmines"] = true
 L["Shadowfang Keep"] = true
@@ -672,7 +671,6 @@ if L then
 	L["Encapsulated Destiny"] = "Инкапсулированная судьба"
 	L["Dreamsurge Investigation"] = "Исследование Прилива Снов"
 	L["Shaping the Dreamsurge"] = "Укрощение Прилива Снов"
-	L["SonNayavu"] = "Сон наяву"
 
 L["Deadmines"] = "Мертвые копи"
 L["Shadowfang Keep"] = "Крепость Темного Клыка"
