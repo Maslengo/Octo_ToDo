@@ -100,6 +100,28 @@ if L then
 	L["Encapsulated Destiny"] = true
 	L["Dreamsurge Investigation"] = true
 	L["Shaping the Dreamsurge"] = true
+	L["Reforging the Tyr's Guard"] = true
+	L["Tyr's Fall"] = true
+
+	L["Head"] = true
+	L["Shoulder"] = true
+	L["Back"] = true
+	L["Chest"] = true
+	L["Wrist"] = true
+	L["Hands"] = true
+	L["Waist"] = true
+	L["Legs"] = true
+	L["Feet"] = true
+
+
+
+
+
+
+
+
+
+
 
 L["Deadmines"] = true
 L["Shadowfang Keep"] = true
@@ -671,6 +693,18 @@ if L then
 	L["Encapsulated Destiny"] = "Инкапсулированная судьба"
 	L["Dreamsurge Investigation"] = "Исследование Прилива Снов"
 	L["Shaping the Dreamsurge"] = "Укрощение Прилива Снов"
+	L["Reforging the Tyr's Guard"] = "Возрождение Стражей Тира"
+	L["Tyr's Fall"] = "Последнее пристанище Тира"
+
+	L["Head"] = "Голова"
+	L["Shoulder"] = "Плечи"
+	L["Back"] = "Спина"
+	L["Chest"] = "Грудь"
+	L["Wrist"] = "Запястья"
+	L["Hands"] = "Кисти рук"
+	L["Waist"] = "Пояс"
+	L["Legs"] = "Ноги"
+	L["Feet"] = "Ступни"
 
 L["Deadmines"] = "Мертвые копи"
 L["Shadowfang Keep"] = "Крепость Темного Клыка"
