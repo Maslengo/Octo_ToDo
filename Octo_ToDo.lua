@@ -3028,10 +3028,8 @@ function Collect_All_journalInstance()
 	end
 	----------------------------------------------------------------
 end
-
-
 function Collect_AberrusTransmog()
-	print ("Collect_AberrusTransmog")
+	-- print ("Collect_AberrusTransmog")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDoLevels[curGUID]
 	----------------------------------------------------------------
@@ -3052,13 +3050,6 @@ function Collect_AberrusTransmog()
 		end
 	end
 end
-
-
-
-
-
-
-
 function Collect_All_Quest_Tooltip()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDoLevels[curGUID]
@@ -3483,16 +3474,6 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {L["Waist"], CharInfo.AberrusTransmog.Waist.LFR.."/"..CharInfo.AberrusTransmog.Waist.Normal.."/"..CharInfo.AberrusTransmog.Waist.Heroic.."/"..CharInfo.AberrusTransmog.Waist.Mythic}
 				tooltip[#tooltip+1] = {L["Legs"], CharInfo.AberrusTransmog.Legs.LFR.."/"..CharInfo.AberrusTransmog.Legs.Normal.."/"..CharInfo.AberrusTransmog.Legs.Heroic.."/"..CharInfo.AberrusTransmog.Legs.Mythic}
 				tooltip[#tooltip+1] = {L["Feet"], CharInfo.AberrusTransmog.Feet.LFR.."/"..CharInfo.AberrusTransmog.Feet.Normal.."/"..CharInfo.AberrusTransmog.Feet.Heroic.."/"..CharInfo.AberrusTransmog.Feet.Mythic}
-
-
-
-
-
-
-
-
-
-
 				----------------------------------------------------------------
 				----------------------------------------------------------------
 				----------------------------------------------------------------
