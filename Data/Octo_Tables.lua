@@ -377,7 +377,7 @@ E.Octo_Table.white_list_ALL = {
 	{itemid = 140404, count = 1},
 	----
 	{itemid = 206792, count = 1},
-	{itemid = 206958, count = 1},
+	{itemid = 156688, count = 1},
 	{itemid = 208134, count = 1},
 	{itemid = 206679, count = 1},
 	{itemid = 206777, count = 1},

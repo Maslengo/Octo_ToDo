@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 	WARRIOR = {
-		-- Стром'кар, Миротворец
+		 -- Стром'кар, Миротворец
 		[128910] = {
 			["name"] = "Strom'kar, the Warbreaker",
 			["childID"] = 0,
@@ -154,12 +154,12 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Боевые мечи валарьяров
+		 -- Боевые мечи валарьяров
 		[128908] = {
 			["name"] = "Warswords of the Valarjar",
 			["childID"] = 134553,
 			["specIDnumber"] = 2,
-			["specID"] = 72  ,
+			["specID"] = 72 ,
 			["sets"] = {
 				[15] = {
 					["name"] = "Arm of the Dragonrider",
@@ -307,8 +307,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[134553] = "Warswords of the Valarjar",
-		-- Панцирь Хранителя Земли
+		 -- [134553] = "Warswords of the Valarjar",
+		 -- Панцирь Хранителя Земли
 		[128289] = {
 			["name"] = "Scale of the Earth-Warder",
 			["childID"] = 128288,
@@ -461,10 +461,10 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128288] = "Scaleshard"
+		 -- [128288] = "Scaleshard"
 	},
 	PALADIN = {
-		-- Серебряная Длань
+		 -- Серебряная Длань
 		[128823] = {
 			["name"] = "The Silver Hand",
 			["childID"] = 0,
@@ -617,8 +617,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128824] = "Tome of the Silver Hand",
-		-- Страж Истины
+		 -- [128824] = "Tome of the Silver Hand",
+		 -- Страж Истины
 		[128866] = {
 			["name"] = "Truthguard",
 			["childID"] = 128867,
@@ -771,8 +771,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128867] = "Oathseeker",
-		-- Испепелитель
+		 -- [128867] = "Oathseeker",
+		 -- Испепелитель
 		[120978] = {
 			["name"] = "Ashbringer",
 			["childID"] = 0,
@@ -927,7 +927,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 		},
 	},
 	HUNTER = {
-		-- Мощь Титанов
+		 -- Мощь Титанов
 		[128861] = {
 			["name"] = "Titanstrike",
 			["childID"] = 0,
@@ -1080,7 +1080,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Тас'дора, наследие Ветрокрылых
+		 -- Тас'дора, наследие Ветрокрылых
 		[128826] = {
 			["name"] = "Thas'dorah, Legacy of the Windrunners",
 			["childID"] = 0,
@@ -1233,7 +1233,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Хищный Коготь
+		 -- Хищный Коготь
 		[128808] = {
 			["name"] = "Talonclaw, Spear of the Wild Gods",
 			["childID"] = 0,
@@ -1388,7 +1388,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 		},
 	},
 	ROGUE = {
-		-- Убийцы Королей
+		 -- Убийцы Королей
 		[128870] = {
 			["name"] = "The Kingslayers",
 			["childID"] = 128869,
@@ -1541,8 +1541,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128869] = "The Kingslayers",
-		-- Клинки Ужаса
+		 -- [128869] = "The Kingslayers",
+		 -- Клинки Ужаса
 		[128872] = {
 			["name"] = "The Dreadblades",
 			["childID"] = 134552,
@@ -1695,8 +1695,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[134552] = "The Dreadblades",
-		-- Клыки Пожирателя
+		 -- [134552] = "The Dreadblades",
+		 -- Клыки Пожирателя
 		[128476] = {
 			["name"] = "Fangs of the Devourer",
 			["childID"] = 128479,
@@ -1849,10 +1849,10 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128479] = "Fangs of the Devourer",
+		 -- [128479] = "Fangs of the Devourer",
 	},
 	PRIEST = {
-		-- Ярость Света
+		 -- Ярость Света
 		[128868] = {
 			["name"] = "Light's Wrath",
 			["childID"] = 0,
@@ -2005,7 +2005,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Т'ууре, Светоч наару
+		 -- Т'ууре, Светоч наару
 		[128825] = {
 			["name"] = "T'uure, Beacon of the Naaru",
 			["childID"] = 0,
@@ -2158,7 +2158,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Ксал'атат, клинок Темной Империи
+		 -- Ксал'атат, клинок Темной Империи
 		[128827] = {
 			["name"] = "Xal'atath, Blade of the Black Empire",
 			["childID"] = 133958,
@@ -2311,10 +2311,10 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[133958] = "Secrets of the Void",
+		 -- [133958] = "Secrets of the Void",
 	},
 	SHAMAN = {
-		-- Кулак Ра-дена
+		 -- Кулак Ра-дена
 		[128935] = {
 			["name"] = "The Fist of Ra-den",
 			["childID"] = 128936,
@@ -2467,8 +2467,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128936] = "The Highkeeper's Ward",
-		-- Молот Рока
+		 -- [128936] = "The Highkeeper's Ward",
+		 -- Молот Рока
 		[128819] = {
 			["name"] = "Doomhammer",
 			["childID"] = 128873,
@@ -2621,8 +2621,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128873] = "Fury of the Stonemother",
-		-- Шарас'дал, Скипетр Приливов
+		 -- [128873] = "Fury of the Stonemother",
+		 -- Шарас'дал, Скипетр Приливов
 		[128911] = {
 			["name"] = "Sharas'dal, Scepter of Tides",
 			["childID"] = 128934,
@@ -2775,10 +2775,10 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128934] = "Shield of the Sea Queen",
+		 -- [128934] = "Shield of the Sea Queen",
 	},
 	MAGE = {
-		-- Алунет
+		 -- Алунет
 		[127857] = {
 			["name"] = "Aluneth, Greatstaff of the Magna",
 			["childID"] = 0,
@@ -2931,7 +2931,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Фело'мелорн
+		 -- Фело'мелорн
 		[128820] = {
 			["name"] = "Felo'melorn",
 			["childID"] = 133959,
@@ -3084,8 +3084,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[133959] = "Heart of the Phoenix",
-		-- Полярная Ночь
+		 -- [133959] = "Heart of the Phoenix",
+		 -- Полярная Ночь
 		[128862] = {
 			["name"] = "Ebonchill, Greatstaff of Alodi",
 			["childID"] = 0,
@@ -3240,7 +3240,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 		},
 	},
 	WARLOCK = {
-		-- Ултхалеш, Жнец Мертвого Ветра
+		 -- Ултхалеш, Жнец Мертвого Ветра
 		[128942] = {
 			["name"] = "Ulthalesh, the Deadwind Harvester",
 			["childID"] = 0,
@@ -3393,7 +3393,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Череп Ман'ари
+		 -- Череп Ман'ари
 		[128943] = {
 			["name"] = "Skull of the Man'ari",
 			["childID"] = 137246,
@@ -3546,8 +3546,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[137246] = "Spine of Thal'kiel",
-		-- Скипетр Саргераса
+		 -- [137246] = "Spine of Thal'kiel",
+		 -- Скипетр Саргераса
 		[128941] = {
 			["name"] = "Scepter of Sargeras",
 			["childID"] = 0,
@@ -3702,7 +3702,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 		},
 	},
 	MONK = {
-		-- Фу Цань, Спутник Странников
+		 -- Фу Цань, Спутник Странников
 		[128938] = {
 			["name"] = "Fu Zan, the Wanderer's Companion",
 			["childID"] = 0,
@@ -3855,7 +3855,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Шей-лун, Посох Туманов
+		 -- Шей-лун, Посох Туманов
 		[128937] = {
 			["name"] = "Sheilun, Staff of the Mists",
 			["childID"] = 0,
@@ -4008,7 +4008,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Кулаки Небес
+		 -- Кулаки Небес
 		[128940] = {
 			["name"] = "Fists of the Heavens",
 			["childID"] = 133948,
@@ -4161,10 +4161,10 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[133948] = "Fists of the Heavens",
+		 -- [133948] = "Fists of the Heavens",
 	},
 	DRUID = {
-		-- Коса Элуны
+		 -- Коса Элуны
 		[128858] = {
 			["name"] = "Scythe of Elune",
 			["childID"] = 0,
@@ -4317,8 +4317,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128859] = "Fangs of Ashamane",
-		-- Клыки Пеплошкурой
+		 -- [128859] = "Fangs of Ashamane",
+		 -- Клыки Пеплошкурой
 		[128860] = {
 			["name"] = "Fangs of Ashamane",
 			["childID"] = 128859,
@@ -4495,7 +4495,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Когти Урсока
+		 -- Когти Урсока
 		[128821] = {
 			["name"] = "Claws of Ursoc",
 			["childID"] = 128822,
@@ -4672,8 +4672,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128822] = "Claws of Ursoc",
-		-- Г'ханир, Изначальное Древо
+		 -- [128822] = "Claws of Ursoc",
+		 -- Г'ханир, Изначальное Древо
 		[128306] = {
 			["name"] = "G'Hanir, the Mother Tree",
 			["childID"] = 0,
@@ -4828,7 +4828,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 		},
 	},
 	DEMONHUNTER = {
-		-- Парные клинки Искусителя
+		 -- Парные клинки Искусителя
 		[127829] = {
 			["name"] = "Twinblades of the Deceiver",
 			["childID"] = 127830,
@@ -4981,8 +4981,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[127830] = "Twinblades of the Deceiver",
-		-- Альдрахийские боевые клинки
+		 -- [127830] = "Twinblades of the Deceiver",
+		 -- Альдрахийские боевые клинки
 		[128832] = {
 			["name"] = "The Aldrachi Warblades",
 			["childID"] = 128831,
@@ -5135,10 +5135,10 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128831] = "Aldrachi Warblades",
+		 -- [128831] = "Aldrachi Warblades",
 	},
 	DEATHKNIGHT = {
-		-- Проклятый Пожиратель
+		 -- Проклятый Пожиратель
 		[128402] = {
 			["name"] = "Maw of the Damned",
 			["childID"] = 0,
@@ -5291,7 +5291,7 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		-- Клинки падшего принца
+		 -- Клинки падшего принца
 		[128292] = {
 			["name"] = "Blades of the Fallen Prince",
 			["childID"] = 128293,
@@ -5444,8 +5444,8 @@ E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 				},
 			},
 		},
-		--[128293] = "Blades of the Fallen Prince",
-		-- Апокалипсис
+		 -- [128293] = "Blades of the Fallen Prince",
+		 -- Апокалипсис
 		[128403] = {
 			["name"] = "Apocalypse",
 			["childID"] = 0,
@@ -5608,247 +5608,247 @@ E.Octo_Globals.UNLOCK_DATA = {
 		["unlockOCto"] = "Друг рыболовов",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	----------------------------------------------------------------
-	-- MAIN ARTEFACT
-	----------------------------------------------------------------
-	--2
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	 -- MAIN ARTEFACT
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	 -- 2
 	[37718] = {
 		["unlock"] = "Recover one of the Pillars of Creation.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании + Солп созидания|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--3
+	 -- 3
 	[37719] = {
 		["unlock"] = "Recover Light's Heart and bring it to the safety of your Order Hall.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании + Найдите Сердце Света|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--4
+	 -- 4
 	[37720] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--1
-	-- Паладин ХОЛИ
+	 -- 1
+	 -- Паладин ХОЛИ
 	[88093] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- Паладин ПРОТ
+	 -- Паладин ПРОТ
 	[88092] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- Паладин РЕТ
+	 -- Паладин РЕТ
 	[88084] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- Друид сова
+	 -- Друид сова
 	[88089] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- Друид КОт
+	 -- Друид КОт
 	[38419] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- Друид медведь
+	 -- Друид медведь
 	[37270] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- друид дерево
+	 -- друид дерево
 	[88086] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- вар армс
+	 -- вар армс
 	[42302] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- вар фури
+	 -- вар фури
 	[88095] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- вар прот
+	 -- вар прот
 	[88083] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- шаман элем
+	 -- шаман элем
 	[88100] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- шаман энх
+	 -- шаман энх
 	[88098] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- шаман рест
+	 -- шаман рест
 	[88099] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- рога ликвидация
+	 -- рога ликвидация
 	[88103] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- рога головорез
+	 -- рога головорез
 	[88101] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- рога скрытность
+	 -- рога скрытность
 	[88102] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ХАНТ бм
+	 -- ХАНТ бм
 	[88111] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ХАНТ мм
+	 -- ХАНТ мм
 	[88110] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ХАНТ сурв
+	 -- ХАНТ сурв
 	[88112] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ВАРЛОК колдовство
+	 -- ВАРЛОК колдовство
 	[88108] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ВАРЛОК демон
+	 -- ВАРЛОК демон
 	[88109] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ВАРЛОК разрушение
+	 -- ВАРЛОК разрушение
 	[88107] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- МОНК хмелевар
+	 -- МОНК хмелевар
 	[88115] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- МОНК ткачтуманов
+	 -- МОНК ткачтуманов
 	[88113] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- МОНК ДД
+	 -- МОНК ДД
 	[88114] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- МАГ тайная
+	 -- МАГ тайная
 	[88082] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- МАГ огонь
+	 -- МАГ огонь
 	[88096] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- МАГ лёд
+	 -- МАГ лёд
 	[88097] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ДК кровь
+	 -- ДК кровь
 	[88090] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ДК лёд
+	 -- ДК лёд
 	[88085] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ДК нечестивый
+	 -- ДК нечестивый
 	[88091] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ДХ истребление
+	 -- ДХ истребление
 	[88117] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ДХ месть
+	 -- ДХ месть
 	[88116] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ПРИСТ ДЦ
+	 -- ПРИСТ ДЦ
 	[88105] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- ПРИСТ ХОЛИ
+	 -- ПРИСТ ХОЛИ
 	[88104] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ПРИСТ ШП
+	 -- ПРИСТ ШП
 	[88106] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
 		["unlockOCto"] = E.Octo_Globals.Gray_Color.."Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	----------------------------------------------------------------
-	-- CLASS COMPAIGN
-	----------------------------------------------------------------
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	 -- CLASS COMPAIGN
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[37724] = {
 		["unlock"] = "Complete the achievement, 'This Side Up.'",
 		["unlockOCto"] = E.Octo_Globals.Cyan_Color.."Кампания класса..Этой стороной вверх|r",
@@ -5869,9 +5869,9 @@ E.Octo_Globals.UNLOCK_DATA = {
 		["unlockOCto"] = E.Octo_Globals.Cyan_Color.."Кампания класса|r",
 		["AchievementID"] = {10746, 0, 0, 0}
 	},
-	----------------------------------------------------------------
-	-- HONOR
-	----------------------------------------------------------------
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	 -- HONOR
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[37726] = {
 		["unlock"] = "Participate in Player vs. Player combat and reach Honor Level 10.",
 		["unlockOCto"] = E.Octo_Globals.Yellow_Color.."Honor 10|r",
@@ -5892,9 +5892,9 @@ E.Octo_Globals.UNLOCK_DATA = {
 		["unlockOCto"] = E.Octo_Globals.Yellow_Color.."Honor 80|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	----------------------------------------------------------------
-	-- Balance of Power
-	----------------------------------------------------------------
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	 -- Balance of Power
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[37725] = {
 		["unlock"] = "Complete the quest line, 'Balance of Power.'",
 		["unlockOCto"] = E.Octo_Globals.Purple_Color.. "Баланс сил|r",
@@ -5915,9 +5915,9 @@ E.Octo_Globals.UNLOCK_DATA = {
 		["unlockOCto"] = E.Octo_Globals.Purple_Color.. "Слава герою Legion + Баланс сил|r",
 		["AchievementID"] = {10459, 0, 0, 0}
 	},
-	----------------------------------------------------------------
-	-- MageTower
-	----------------------------------------------------------------
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	 -- MageTower
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[44681] = {
 		["unlock"] = "Complete the quest line, 'Imp Mother Challenge.'",
 		["unlockOCto"] = E.Octo_Globals.Blue_Color.."Испытание: мать бесов MageTower|r",
@@ -6098,8 +6098,8 @@ E.Octo_Globals.UNLOCK_DATA = {
 		["unlockOCto"] = E.Octo_Globals.Blue_Color.."Испытание: Ксилем MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- KJ HERO
-	----------------------------------------------------------------
+	 -- KJ HERO
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[52482] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Black Rook Threat.'",
 		["unlockOCto"] = E.Octo_Globals.Blue_Color.. "Угроза Черной Ладьи + KJ HERO|r",
@@ -6280,9 +6280,9 @@ E.Octo_Globals.UNLOCK_DATA = {
 		["unlockOCto"] = E.Octo_Globals.Blue_Color.. "Испытание: Ксилем + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
-	----------------------------------------------------------------
-	-- 10 RBG
-	----------------------------------------------------------------
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	 -- 10 RBG
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[52618] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
 		["unlockOCto"] = E.Octo_Globals.Blue_Color.. "Испытание: Ксилем + 10 RBG|r",
@@ -6463,9 +6463,9 @@ E.Octo_Globals.UNLOCK_DATA = {
 		["unlockOCto"] = E.Octo_Globals.Blue_Color.. "Угроза Черной Ладьи + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
-	----------------------------------------------------------------
-	-- 10 Dung
-	----------------------------------------------------------------
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	 -- 10 Dung
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[52649] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Xylem Challenge.'",
 		["unlockOCto"] = E.Octo_Globals.Blue_Color.. "Испытание: Ксилем + 10 dung|r",
@@ -6646,9 +6646,9 @@ E.Octo_Globals.UNLOCK_DATA = {
 		["unlockOCto"] = E.Octo_Globals.Blue_Color.. "Испытание: Угроза червей Скверны + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
-	----------------------------------------------------------------
-	-- Hidden Artifact
-	----------------------------------------------------------------
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+	 -- Hidden Artifact
+	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[39784] = {
 		["unlock"] = "Complete 30 Legion dungeons after unlocking a hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact 30 dung|r",
@@ -6664,217 +6664,217 @@ E.Octo_Globals.UNLOCK_DATA = {
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact 1000 PvP|r",
 		["AchievementID"] = {11154, 0, 0, 0}
 	},
-	--Паладин ХОЛИ
+	 -- Паладин ХОЛИ
 	[42287] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- Паладин ПРОТ
+	 -- Паладин ПРОТ
 	[42288] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- Паладин РЕТ
+	 -- Паладин РЕТ
 	[42289] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--Друид сова
+	 -- Друид сова
 	[42271] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--Друид КОт
+	 -- Друид КОт
 	[42273] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--Друид медведь
+	 -- Друид медведь
 	[42274] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--друид дерево
+	 -- друид дерево
 	[42275] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- вар армс
+	 -- вар армс
 	[42302] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- вар фури
+	 -- вар фури
 	[42303] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- вар прот
+	 -- вар прот
 	[42304] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- шаман элем
+	 -- шаман элем
 	[42296] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- шаман энх
+	 -- шаман энх
 	[42297] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	-- шаман рест
+	 -- шаман рест
 	[42298] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--рога ликвидация
+	 -- рога ликвидация
 	[42293] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--рога головорез
+	 -- рога головорез
 	[42294] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--рога скрытность
+	 -- рога скрытность
 	[42295] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ХАНТ бм
+	 -- ХАНТ бм
 	[42277] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ХАНТ мм
+	 -- ХАНТ мм
 	[42278] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ХАНТ сурв
+	 -- ХАНТ сурв
 	[42279] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ВАРЛОК колдовство
+	 -- ВАРЛОК колдовство
 	[42299] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ВАРЛОК демон
+	 -- ВАРЛОК демон
 	[42300] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ВАРЛОК разрушение
+	 -- ВАРЛОК разрушение
 	[42301] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--МОНК хмелевар
+	 -- МОНК хмелевар
 	[42284] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--МОНК ткачтуманов
+	 -- МОНК ткачтуманов
 	[42285] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--МОНК ДД
+	 -- МОНК ДД
 	[42286] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--МАГ тайная
+	 -- МАГ тайная
 	[42281] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--МАГ огонь
+	 -- МАГ огонь
 	[42282] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--МАГ лёд
+	 -- МАГ лёд
 	[42283] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ДК кровь
+	 -- ДК кровь
 	[42265] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ДК лёд
+	 -- ДК лёд
 	[42266] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ДК нечестивый
+	 -- ДК нечестивый
 	[42267] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ДХ истребление
+	 -- ДХ истребление
 	[42268] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ДХ месть
+	 -- ДХ месть
 	[42270] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ПРИСТ ДЦ
+	 -- ПРИСТ ДЦ
 	[42290] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ПРИСТ ХОЛИ
+	 -- ПРИСТ ХОЛИ
 	[42291] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
-	--ПРИСТ ШП
+	 -- ПРИСТ ШП
 	[42292] = {
 		["unlock"] = "hidden artifact appearance.",
 		["unlockOCto"] = E.Octo_Globals.Red_Color.."Hidden Artifact|r",
@@ -6886,8 +6886,8 @@ E.Octo_Globals.TransmogCollectionType = {
 	"Shoulder", -- 2 Плечи
 	"Back", -- 3 Спина
 	"Chest", -- 4 Грудь
-	-- "Shirt",
-	-- "Tabard",
+	 -- "Shirt",
+	 -- "Tabard",
 	"Wrist", -- 7 Запястья
 	"Hands", -- 8 Кисти рук
 	"Waist", -- 9 Пояс
@@ -6902,7 +6902,7 @@ E.Octo_Globals.difficultyName = {
 }
 E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 	WARRIOR = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 185918,
 			["Normal"] = 186315,
 			["Heroic"] = 185920,
@@ -6914,13 +6914,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186299,
 			["Mythic"] = 186300,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186324,
 			["Normal"] = 184420,
 			["Heroic"] = 186322,
 			["Mythic"] = 186323,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186673,
 			["Normal"] = 184550,
 			["Heroic"] = 186671,
@@ -6958,55 +6958,55 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	PALADIN = {
-		["Head"] = {  -- Голова 202452
+		["Head"] = { -- Голова
 			["LFR"] = 185994,
 			["Normal"] = 184426,
 			["Heroic"] = 185995,
 			["Mythic"] = 185996,
 		},
-		["Shoulder"] = { -- Плечи 202450
+		["Shoulder"] = { -- Плечи
 			["LFR"] = 185982,
 			["Normal"] = 184424,
 			["Heroic"] = 185983,
 			["Mythic"] = 185984,
 		},
-		["Chest"] = {-- Грудь 202455
+		["Chest"] = { -- Грудь
 			["LFR"] = 186011,
 			["Normal"] = 184429,
 			["Heroic"] = 186009,
 			["Mythic"] = 186010,
 		},
-		["Waist"] = {-- пояс гер+миф 202449
+		["Waist"] = { -- Пояс
 			["LFR"] = 185981,
 			["Normal"] = 184423,
 			["Heroic"] = 186674,
 			["Mythic"] = 186675,
 		},
-		["Legs"] = { -- Ноги 202451
+		["Legs"] = { -- Ноги
 			["LFR"] = 185993,
 			["Normal"] = 184425,
 			["Heroic"] = 185991,
 			["Mythic"] = 185992,
 		},
-		["Feet"] = { -- Ступни 202454
+		["Feet"] = { -- Ступни
 			["LFR"] = 186008,
 			["Normal"] = 184428,
 			["Heroic"] = 186006,
 			["Mythic"] = 186007,
 		},
-		["Wrist"] = { -- Запястья 202448
+		["Wrist"] = { -- Запястья
 			["LFR"] = 186670,
 			["Normal"] = 184555,
 			["Heroic"] = 186668,
 			["Mythic"] = 185977,
 		},
-		["Hands"] = { -- Кисти рук 202453
+		["Hands"] = { -- Кисти рук
 			["LFR"] = 186005,
 			["Normal"] = 184427,
 			["Heroic"] = 186003,
 			["Mythic"] = 186004,
 		},
-		["Back"] = { -- Спина 202447
+		["Back"] = { -- Спина
 			["LFR"] = 186014,
 			["Normal"] = 184421,
 			["Heroic"] = 186012,
@@ -7014,7 +7014,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	HUNTER = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186081,
 			["Normal"] = 184563,
 			["Heroic"] = 186082,
@@ -7026,13 +7026,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186070,
 			["Mythic"] = 186071,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186098,
 			["Normal"] = 184456,
 			["Heroic"] = 186096,
 			["Mythic"] = 186097,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186540,
 			["Normal"] = 185560,
 			["Heroic"] = 186538,
@@ -7070,7 +7070,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	ROGUE = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186122,
 			["Normal"] = 184471,
 			["Heroic"] = 186120,
@@ -7082,13 +7082,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186109,
 			["Mythic"] = 186110,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186131,
 			["Normal"] = 184474,
 			["Heroic"] = 186129,
 			["Mythic"] = 186130,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186107,
 			["Normal"] = 184468,
 			["Heroic"] = 186105,
@@ -7126,7 +7126,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	PRIEST = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186244,
 			["Normal"] = 184516,
 			["Heroic"] = 186245,
@@ -7138,13 +7138,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186229,
 			["Mythic"] = 186230,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186233,
 			["Normal"] = 184519,
 			["Heroic"] = 186231,
 			["Mythic"] = 186232,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186227,
 			["Normal"] = 184513,
 			["Heroic"] = 186225,
@@ -7182,7 +7182,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	SHAMAN = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186042,
 			["Normal"] = 186050,
 			["Heroic"] = 186043,
@@ -7194,13 +7194,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186031,
 			["Mythic"] = 186032,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186059,
 			["Normal"] = 184447,
 			["Heroic"] = 186057,
 			["Mythic"] = 186058,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186023,
 			["Normal"] = 184441,
 			["Heroic"] = 186021,
@@ -7238,7 +7238,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	MAGE = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186354,
 			["Normal"] = 184525,
 			["Heroic"] = 186352,
@@ -7250,13 +7250,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186341,
 			["Mythic"] = 186342,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186363,
 			["Normal"] = 184528,
 			["Heroic"] = 186361,
 			["Mythic"] = 186362,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186331,
 			["Normal"] = 184522,
 			["Heroic"] = 186332,
@@ -7294,7 +7294,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	WARLOCK = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186204,
 			["Normal"] = 186212,
 			["Heroic"] = 186205,
@@ -7306,13 +7306,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186190,
 			["Mythic"] = 186191,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186200,
 			["Normal"] = 184510,
 			["Heroic"] = 186198,
 			["Mythic"] = 186199,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186465,
 			["Normal"] = 184562,
 			["Heroic"] = 186463,
@@ -7350,7 +7350,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	MONK = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 185777,
 			["Normal"] = 187683,
 			["Heroic"] = 185778,
@@ -7362,13 +7362,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 185772,
 			["Mythic"] = 185773,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 185786,
 			["Normal"] = 184483,
 			["Heroic"] = 185787,
 			["Mythic"] = 185788,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 185768,
 			["Normal"] = 184477,
 			["Heroic"] = 185769,
@@ -7406,7 +7406,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	DRUID = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186159,
 			["Normal"] = 186167,
 			["Heroic"] = 186160,
@@ -7418,13 +7418,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186148,
 			["Mythic"] = 186149,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186176,
 			["Normal"] = 184492,
 			["Heroic"] = 186174,
 			["Mythic"] = 186175,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186138,
 			["Normal"] = 186146,
 			["Heroic"] = 186139,
@@ -7462,7 +7462,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	DEMONHUNTER = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186427,
 			["Normal"] = 186435,
 			["Heroic"] = 186428,
@@ -7474,13 +7474,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186416,
 			["Mythic"] = 186417,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186444,
 			["Normal"] = 184501,
 			["Heroic"] = 186442,
 			["Mythic"] = 186443,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186414,
 			["Normal"] = 184495,
 			["Heroic"] = 186412,
@@ -7518,7 +7518,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	DEATHKNIGHT = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186279,
 			["Normal"] = 187677,
 			["Heroic"] = 186277,
@@ -7530,13 +7530,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186283,
 			["Mythic"] = 186284,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186685,
 			["Normal"] = 184572,
 			["Heroic"] = 186683,
 			["Mythic"] = 186684,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186273,
 			["Normal"] = 184432,
 			["Heroic"] = 186271,
@@ -7574,7 +7574,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 	EVOKER = {
-		["Head"] = {  -- Голова
+		["Head"] = { -- Голова
 			["LFR"] = 186388,
 			["Normal"] = 186396,
 			["Heroic"] = 186389,
@@ -7586,13 +7586,13 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186377,
 			["Mythic"] = 186378,
 		},
-		["Chest"] = {-- Грудь
+		["Chest"] = { -- Грудь
 			["LFR"] = 186405,
 			["Normal"] = 184465,
 			["Heroic"] = 186403,
 			["Mythic"] = 186404,
 		},
-		["Waist"] = {-- Пояс
+		["Waist"] = { -- Пояс
 			["LFR"] = 186367,
 			["Normal"] = 186375,
 			["Heroic"] = 186368,
@@ -7630,149 +7630,149 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 	},
 }
--- E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
--- 	WARRIOR = {
--- 		["Head"] = 202443, -- Голова
--- 		["Shoulder"] = 202441, -- Плечи
--- 		["Chest"] = 202446, -- Грудь
--- 		["Waist"] = 202440, -- пояс
--- 		["Legs"] = 202442, -- Ноги
--- 		["Feet"] = 202445, -- Ступни
--- 		["Wrist"] = 204390, -- Запястья
--- 		["Hands"] = 202444, -- Кисти рук
--- 		["Back"] = 202438, -- Спина
--- 	},
--- 	PALADIN = {
--- 		["Head"] = 202452, -- Голова
--- 		["Shoulder"] = 202450, -- Плечи
--- 		["Chest"] = 202455, -- Грудь
--- 		["Waist"] = 202449, -- пояс
--- 		-- ["Waist"] = 204400, -- пояс гер+миф
--- 		["Legs"] = 202451, -- Ноги
--- 		["Feet"] = 202454, -- Ступни
--- 		["Wrist"] = 202582, -- Запястья
--- 		["Hands"] = 202453, -- Кисти рук
--- 		["Back"] = 202447, -- Спина
--- 	},
--- 	HUNTER = {
--- 		["Head"] = 202479, -- Голова
--- 		["Shoulder"] = 202477, -- Плечи
--- 		["Chest"] = 202482, -- Грудь
--- 		["Waist"] = 202476, -- пояс
--- 		["Legs"] = 202478, -- Ноги
--- 		["Feet"] = 202481, -- Ступни
--- 		["Wrist"] = 202475, -- Запястья
--- 		["Hands"] = 202480, -- Кисти рук
--- 		["Back"] = 202474, -- Спина
--- 	},
--- 	ROGUE = {
--- 		["Head"] = 202497, -- Голова
--- 		["Shoulder"] = 202495, -- Плечи
--- 		["Chest"] = 202500, -- Грудь
--- 		["Waist"] = 202494, -- пояс
--- 		["Legs"] = 202496, -- Ноги
--- 		["Feet"] = 204391, -- Ступни
--- 		["Wrist"] = 202594, -- Запястья
--- 		["Hands"] = 202498, -- Кисти рук
--- 		["Back"] = 202492, -- Спина
--- 	},
--- 	PRIEST = {
--- 		["Head"] = 202542, -- Голова
--- 		["Shoulder"] = 202540, -- Плечи
--- 		["Chest"] = 202545, -- Грудь
--- 		["Waist"] = 202539, -- пояс
--- 		["Legs"] = 202541, -- Ноги
--- 		["Feet"] = 202544, -- Ступни
--- 		["Wrist"] = 204393, -- Запястья
--- 		["Hands"] = 202543, -- Кисти рук
--- 		["Back"] = 202537, -- Спина
--- 	},
--- 	SHAMAN = {
--- 		["Head"] = 202470, -- Голова
--- 		["Shoulder"] = 202468, -- Плечи
--- 		["Chest"] = 202473, -- Грудь
--- 		["Waist"] = 204423, -- пояс
--- 		["Legs"] = 202469, -- Ноги
--- 		["Feet"] = 202588, -- Ступни
--- 		["Wrist"] = 202604, -- Запястья
--- 		["Hands"] = 202471, -- Кисти рук
--- 		["Back"] = 202573, -- Спина
--- 	},
--- 	MAGE = {
--- 		["Head"] = 202551, -- Голова
--- 		["Shoulder"] = 202549, -- Плечи
--- 		["Chest"] = 202554, -- Грудь
--- 		["Waist"] = 202652, -- пояс
--- 		["Legs"] = 202550, -- Ноги
--- 		["Feet"] = 202553, -- Ступни
--- 		["Wrist"] = 204410, -- Запястья
--- 		["Hands"] = 202552, -- Кисти рук
--- 		["Back"] = 202546, -- Спина
--- 	},
--- 	WARLOCK = {
--- 		["Head"] = 202533, -- Голова
--- 		["Shoulder"] = 202531, -- Плечи
--- 		["Chest"] = 202536, -- Грудь
--- 		["Waist"] = 202589, -- пояс
--- 		["Legs"] = 202532, -- Ноги
--- 		["Feet"] = 202603, -- Ступни
--- 		["Wrist"] = 202593, -- Запястья
--- 		["Hands"] = 202534, -- Кисти рук
--- 		["Back"] = 202528, -- Спина
--- 	},
--- 	MONK = {
--- 		["Head"] = 202506, -- Голова
--- 		["Shoulder"] = 202504, -- Плечи
--- 		["Chest"] = 202509, -- Грудь
--- 		["Waist"] = 202503, -- пояс
--- 		["Legs"] = 202505, -- Ноги
--- 		["Feet"] = 202508, -- Ступни
--- 		["Wrist"] = 202502, -- Запястья
--- 		["Hands"] = 202507, -- Кисти рук
--- 		["Back"] = 202501, -- Спина
--- 	},
--- 	DRUID = {
--- 		["Head"] = 202515, -- Голова
--- 		["Shoulder"] = 202513, -- Плечи
--- 		["Chest"] = 202518, -- Грудь
--- 		["Waist"] = 202512, -- пояс
--- 		["Legs"] = 202514, -- Ноги
--- 		["Feet"] = 202574, -- Ступни
--- 		["Wrist"] = 202511, -- Запястья
--- 		["Hands"] = 202516, -- Кисти рук
--- 		["Back"] = 202510, -- Спина
--- 	},
--- 	DEMONHUNTER = {
--- 		["Head"] = 202524, -- Голова
--- 		["Shoulder"] = 202522, -- Плечи
--- 		["Chest"] = 202527, -- Грудь
--- 		["Waist"] = 202521, -- пояс
--- 		["Legs"] = 202523, -- Ноги
--- 		["Feet"] = 202526, -- Ступни
--- 		["Wrist"] = 204394, -- Запястья
--- 		["Hands"] = 202525, -- Кисти рук
--- 		["Back"] = 202519, -- Спина
--- 	},
--- 	DEATHKNIGHT = {
--- 		["Head"] = 202461, -- Голова
--- 		["Shoulder"] = 202459, -- Плечи
--- 		["Chest"] = 202464, -- Грудь
--- 		["Waist"] = 202458, -- пояс
--- 		["Legs"] = 202460, -- Ноги
--- 		["Feet"] = 202576, -- Ступни
--- 		["Wrist"] = 202457, -- Запястья
--- 		["Hands"] = 202462, -- Кисти рук
--- 		["Back"] = 202456, -- Спина
--- 	},
--- 	EVOKER = {
--- 		["Head"] = 202488, -- Голова
--- 		["Shoulder"] = 202486, -- Плечи
--- 		["Chest"] = 202491, -- Грудь
--- 		["Waist"] = 202605, -- пояс
--- 		["Legs"] = 202487, -- Ноги
--- 		["Feet"] = 204424, -- Ступни
--- 		["Wrist"] = 202484, -- Запястья
--- 		["Hands"] = 202489, -- Кисти рук
--- 		["Back"] = 202483, -- Спина
--- 	},
--- }
+ -- E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
+ -- 	WARRIOR = {
+ -- 		["Head"] = 202443, -- Голова
+ -- 		["Shoulder"] = 202441, -- Плечи
+ -- 		["Chest"] = 202446, -- Грудь
+ -- 		["Waist"] = 202440, -- пояс
+ -- 		["Legs"] = 202442, -- Ноги
+ -- 		["Feet"] = 202445, -- Ступни
+ -- 		["Wrist"] = 204390, -- Запястья
+ -- 		["Hands"] = 202444, -- Кисти рук
+ -- 		["Back"] = 202438, -- Спина
+ -- 	},
+ -- 	PALADIN = {
+ -- 		["Head"] = 202452, -- Голова
+ -- 		["Shoulder"] = 202450, -- Плечи
+ -- 		["Chest"] = 202455, -- Грудь
+ -- 		["Waist"] = 202449, -- пояс
+ -- 		 -- ["Waist"] = 204400, -- пояс гер+миф
+ -- 		["Legs"] = 202451, -- Ноги
+ -- 		["Feet"] = 202454, -- Ступни
+ -- 		["Wrist"] = 202582, -- Запястья
+ -- 		["Hands"] = 202453, -- Кисти рук
+ -- 		["Back"] = 202447, -- Спина
+ -- 	},
+ -- 	HUNTER = {
+ -- 		["Head"] = 202479, -- Голова
+ -- 		["Shoulder"] = 202477, -- Плечи
+ -- 		["Chest"] = 202482, -- Грудь
+ -- 		["Waist"] = 202476, -- пояс
+ -- 		["Legs"] = 202478, -- Ноги
+ -- 		["Feet"] = 202481, -- Ступни
+ -- 		["Wrist"] = 202475, -- Запястья
+ -- 		["Hands"] = 202480, -- Кисти рук
+ -- 		["Back"] = 202474, -- Спина
+ -- 	},
+ -- 	ROGUE = {
+ -- 		["Head"] = 202497, -- Голова
+ -- 		["Shoulder"] = 202495, -- Плечи
+ -- 		["Chest"] = 202500, -- Грудь
+ -- 		["Waist"] = 202494, -- пояс
+ -- 		["Legs"] = 202496, -- Ноги
+ -- 		["Feet"] = 204391, -- Ступни
+ -- 		["Wrist"] = 202594, -- Запястья
+ -- 		["Hands"] = 202498, -- Кисти рук
+ -- 		["Back"] = 202492, -- Спина
+ -- 	},
+ -- 	PRIEST = {
+ -- 		["Head"] = 202542, -- Голова
+ -- 		["Shoulder"] = 202540, -- Плечи
+ -- 		["Chest"] = 202545, -- Грудь
+ -- 		["Waist"] = 202539, -- пояс
+ -- 		["Legs"] = 202541, -- Ноги
+ -- 		["Feet"] = 202544, -- Ступни
+ -- 		["Wrist"] = 204393, -- Запястья
+ -- 		["Hands"] = 202543, -- Кисти рук
+ -- 		["Back"] = 202537, -- Спина
+ -- 	},
+ -- 	SHAMAN = {
+ -- 		["Head"] = 202470, -- Голова
+ -- 		["Shoulder"] = 202468, -- Плечи
+ -- 		["Chest"] = 202473, -- Грудь
+ -- 		["Waist"] = 204423, -- пояс
+ -- 		["Legs"] = 202469, -- Ноги
+ -- 		["Feet"] = 202588, -- Ступни
+ -- 		["Wrist"] = 202604, -- Запястья
+ -- 		["Hands"] = 202471, -- Кисти рук
+ -- 		["Back"] = 202573, -- Спина
+ -- 	},
+ -- 	MAGE = {
+ -- 		["Head"] = 202551, -- Голова
+ -- 		["Shoulder"] = 202549, -- Плечи
+ -- 		["Chest"] = 202554, -- Грудь
+ -- 		["Waist"] = 202652, -- пояс
+ -- 		["Legs"] = 202550, -- Ноги
+ -- 		["Feet"] = 202553, -- Ступни
+ -- 		["Wrist"] = 204410, -- Запястья
+ -- 		["Hands"] = 202552, -- Кисти рук
+ -- 		["Back"] = 202546, -- Спина
+ -- 	},
+ -- 	WARLOCK = {
+ -- 		["Head"] = 202533, -- Голова
+ -- 		["Shoulder"] = 202531, -- Плечи
+ -- 		["Chest"] = 202536, -- Грудь
+ -- 		["Waist"] = 202589, -- пояс
+ -- 		["Legs"] = 202532, -- Ноги
+ -- 		["Feet"] = 202603, -- Ступни
+ -- 		["Wrist"] = 202593, -- Запястья
+ -- 		["Hands"] = 202534, -- Кисти рук
+ -- 		["Back"] = 202528, -- Спина
+ -- 	},
+ -- 	MONK = {
+ -- 		["Head"] = 202506, -- Голова
+ -- 		["Shoulder"] = 202504, -- Плечи
+ -- 		["Chest"] = 202509, -- Грудь
+ -- 		["Waist"] = 202503, -- пояс
+ -- 		["Legs"] = 202505, -- Ноги
+ -- 		["Feet"] = 202508, -- Ступни
+ -- 		["Wrist"] = 202502, -- Запястья
+ -- 		["Hands"] = 202507, -- Кисти рук
+ -- 		["Back"] = 202501, -- Спина
+ -- 	},
+ -- 	DRUID = {
+ -- 		["Head"] = 202515, -- Голова
+ -- 		["Shoulder"] = 202513, -- Плечи
+ -- 		["Chest"] = 202518, -- Грудь
+ -- 		["Waist"] = 202512, -- пояс
+ -- 		["Legs"] = 202514, -- Ноги
+ -- 		["Feet"] = 202574, -- Ступни
+ -- 		["Wrist"] = 202511, -- Запястья
+ -- 		["Hands"] = 202516, -- Кисти рук
+ -- 		["Back"] = 202510, -- Спина
+ -- 	},
+ -- 	DEMONHUNTER = {
+ -- 		["Head"] = 202524, -- Голова
+ -- 		["Shoulder"] = 202522, -- Плечи
+ -- 		["Chest"] = 202527, -- Грудь
+ -- 		["Waist"] = 202521, -- пояс
+ -- 		["Legs"] = 202523, -- Ноги
+ -- 		["Feet"] = 202526, -- Ступни
+ -- 		["Wrist"] = 204394, -- Запястья
+ -- 		["Hands"] = 202525, -- Кисти рук
+ -- 		["Back"] = 202519, -- Спина
+ -- 	},
+ -- 	DEATHKNIGHT = {
+ -- 		["Head"] = 202461, -- Голова
+ -- 		["Shoulder"] = 202459, -- Плечи
+ -- 		["Chest"] = 202464, -- Грудь
+ -- 		["Waist"] = 202458, -- пояс
+ -- 		["Legs"] = 202460, -- Ноги
+ -- 		["Feet"] = 202576, -- Ступни
+ -- 		["Wrist"] = 202457, -- Запястья
+ -- 		["Hands"] = 202462, -- Кисти рук
+ -- 		["Back"] = 202456, -- Спина
+ -- 	},
+ -- 	EVOKER = {
+ -- 		["Head"] = 202488, -- Голова
+ -- 		["Shoulder"] = 202486, -- Плечи
+ -- 		["Chest"] = 202491, -- Грудь
+ -- 		["Waist"] = 202605, -- пояс
+ -- 		["Legs"] = 202487, -- Ноги
+ -- 		["Feet"] = 204424, -- Ступни
+ -- 		["Wrist"] = 202484, -- Запястья
+ -- 		["Hands"] = 202489, -- Кисти рук
+ -- 		["Back"] = 202483, -- Спина
+ -- 	},
+ -- }

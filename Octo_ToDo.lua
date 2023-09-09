@@ -960,15 +960,34 @@ local OctoTable_UniversalQuest = {
 		max = 17,
 	},
 	{
-		name_save = "Sarkareth",
+		name_save = "AberrustheShadowedCrucibleSarkareth",
 		name_quest = "Aberrus, the Shadowed Crucible: Sarkareth",
 		reset = "Once",
 		expansion = "DF",
-		place = "Aberrus",
+		place = "",
 		desc = "",
 		questID = {75694, },
 		max = 1,
 	},
+
+
+	{
+		name_save = "VaultoftheIncarnatesFuryoftheStormEater",
+		name_quest = "Vault of the Incarnates: Fury of the Storm-Eater",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {66847, },
+		max = 1,
+	},
+
+
+
+
+
+
+
 	{
 		name_save = "Excavations",
 		name_quest = "Broken Shore - Excavations",
@@ -1159,7 +1178,7 @@ local OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			72440,72441,72442,72526,72443,72444, -- Tyr's Fall
+			72440, 72441, 72442, 72526, 72443, 72444, -- Tyr's Fall
 		},
 		max = 6,
 	},
@@ -1171,10 +1190,36 @@ local OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			75632,75633,75634,76171,75950,75951,75952,75953,75635,76176,75636,75637,75638, -- Reforging the Tyr's Guard
+			75632, 75633, 75634, 76171, 75950, 75951, 75952, 75953, 75635, 76176, 75636, 75637, 75638, -- Reforging the Tyr's Guard
 		},
 		max = 13,
 	},
+
+
+
+	{
+		name_save = "TheCoalitionofFlames",
+		name_quest = L["The Coalition of Flames"],
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			76982,75918,75919,75920,75921,75922,75923,
+		},
+		max = 7,
+	},
+
+
+
+
+
+
+
+
+
+
+
 }
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Holiday)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Reputation)
@@ -5551,6 +5596,19 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {L["Shaping the Dreamsurge"], CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count}
 				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["Tyr's Fall"]..")", CharInfo.Octopussy_DF_Once_TyrsFall_count}
 				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["Reforging the Tyr's Guard"]..")", CharInfo.Octopussy_DF_Once_ReforgingtheTyrsGuard_count}
+				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["The Coalition of Flames"]..")", CharInfo.Octopussy_DF_Once_TheCoalitionofFlames_count}
+
+
+
+
+
+
+
+
+
+
+
+
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.1.5".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_questName(77236), CheckCompletedByQuestID(77236)} -- 1 на аккаунт
@@ -5560,7 +5618,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»"..L["Zaralek Cavern"].."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {Timer_DF_ResearchersUnderFire()..L["Researchers Under Fire"], CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count}
 				tooltip[#tooltip+1] = {WorldBoss_Icon..E.Octo_Func.func_questName(74892), CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_count}
-				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5062638)..E.Octo_Func.func_questName(75694), CharInfo.Octopussy_DF_Once_AberrusSarkareth_count}
+				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5062638)..E.Octo_Func.func_questName(75694), CharInfo.Octopussy_DF_Once_AberrustheShadowedCrucibleSarkareth_count}
 				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["Zaralek Cavern"]..")", CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_count}
 				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["The Veiled Ossuary"]..")", CharInfo.Octopussy_DF_Once_TheVeiledOssuary_count}
 				tooltip[#tooltip+1] = {L["A Worthy Ally: Loamm Niffen"], CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count}
@@ -5573,6 +5631,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {L["Fyrakk Asssaults"], CharInfo.Octopussy_DF_Weekly_FyrakkAssaults_count}
 				tooltip[#tooltip+1] = {L["Disciple of Fyrakk"], CharInfo.Octopussy_DF_Weekly_DiscipleofFyrakk_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(4643981)..E.Octo_Func.func_questName(66847), CharInfo.Octopussy_DF_Once_VaultoftheIncarnatesFuryoftheStormEater_count}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»"..L["The Forbidden Reach"].."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {Timer_DF_PrimalStorms()..L["The Storm's Fury"], CharInfo.Octopussy_DF_Weekly_StormsFury_count}
 				tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Weekly_TheForbiddenReachRares_count}
@@ -6327,6 +6386,10 @@ function Octo_ToDoCreateAltFrame()
 					if CharInfo.ItemsInBag[12811] ~= 0 then
 						i = i + 1
 						GameTooltip:AddDoubleLine("$$$"..E.Octo_Func.func_texturefromIcon(134122)..CharInfo.ItemsInBag[12811], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+					end
+					if CharInfo.ItemsInBag[200652] ~= 0 then
+						i = i + 1
+						GameTooltip:AddDoubleLine("$$$"..E.Octo_Func.func_itemTexture(200652)..CharInfo.ItemsInBag[200652], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
 					end
 				end
 				if i == 0 then

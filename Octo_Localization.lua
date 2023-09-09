@@ -112,7 +112,7 @@ if L then
 	L["Waist"] = true
 	L["Legs"] = true
 	L["Feet"] = true
-
+	L["The Coalition of Flames"] = true
 
 
 
@@ -705,6 +705,7 @@ if L then
 	L["Waist"] = "Пояс"
 	L["Legs"] = "Ноги"
 	L["Feet"] = "Ступни"
+	L["The Coalition of Flames"] = "Союз пламени"
 
 L["Deadmines"] = "Мертвые копи"
 L["Shadowfang Keep"] = "Крепость Темного Клыка"

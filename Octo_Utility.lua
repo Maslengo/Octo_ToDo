@@ -373,12 +373,15 @@ end)
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.CVar then
 			C_Timer.After(1, function()
-					-- SetCVar("nameplateShowOnlyNames", 1)
-					-- SetCVar("nameplateShowFriends", 1)
-					-- SetCVar("nameplateVerticalScale", 1)
-					SetCVar("nameplateShowOnlyNames", 0) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
-					SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
-					SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
+					SetCVar("nameplateShowOnlyNames", 1)
+					SetCVar("nameplateShowFriends", 1)
+					SetCVar("nameplateVerticalScale", 1)
+					-- SetCVar("nameplateShowOnlyNames", 0) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
+					-- SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
+					-- SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
+
+
+
 					SetCVar("nameplateMotion", 0) --(0 Наложение) (1 Друг над другом) stack
 					--SetCVar("questPOI", 101)
 					SetCVar("alwaysCompareItems", 0)
@@ -1129,7 +1132,7 @@ tinsert(E.Octo_Globals.modules, function()
 					end
 				)
 				OctoFrame_SellConsumable.icon = OctoFrame_SellConsumable:CreateTexture(nil, "ARTWORK")
-				OctoFrame_SellConsumable.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ui_sigil_kyrian.tga")
+				OctoFrame_SellConsumable.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Trade_Alchemy_DPotion_A28.tga")
 				OctoFrame_SellConsumable.icon:SetAllPoints(OctoFrame_SellConsumable)
 				OctoFrame_SellConsumable:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
