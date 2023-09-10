@@ -2359,11 +2359,11 @@ function Collect_ALL_CurrentKEY()
 					for k, v in pairs(containerInfo) do
 						if k ~= nil and k == "hyperlink" then
 							if v and (
+								v:find("item:180653") or
 								v:find("item:138019") or
 								v:find("keystone:") or
-								v:find("Ключ:") or
-								v:find("item:158923") or
-								v:find("item:180653")
+								-- v:find("Ключ:") or
+								v:find("item:158923")
 							)
 							then
 								local name = v
@@ -2372,7 +2372,9 @@ function Collect_ALL_CurrentKEY()
 								elseif name:find("Мехагон") then
 									name = name:gsub("^[^ ]+ ", "")
 								end
-								local _, _, dungeon, lvl, expire = strsplit(":", name)
+								local dungeon = select(3, strsplit(":", name))
+								local lvl = select(4, strsplit(":", name))
+								local expire = select(5, strsplit(":", name))
 								local dungeonNAME = C_ChallengeMode.GetMapUIInfo(dungeon)
 								local Abbr_En_Name = "whz"
 								if dungeon == "56" then Abbr_En_Name = "SB"
@@ -7279,13 +7281,12 @@ function Octo_ToDoOnEvent(self, event, ...)
 	if event == "BANKFRAME_OPENED" or event == "PLAYERBANKSLOTS_CHANGED" and not InCombatLockdown() --[[and not IsAnyStandardHeldBagOpen()]] then --[[(not IsAnyStandardHeldBagOpen() or ContainerFrameCombinedBags:IsShown()) ]]
 		-- Collect_ALL_ItemsInBag()
 		-- Collect_SL_PossibleAnima()
-		-- Collect_ALL_CurrentKEY()
 		if BankFrame:IsShown() then
 			Collect_ALL_BankInfo()
 		end
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
-	if --[[event == "CHAT_MSG_LOOT" or]] event == "PLAYER_MONEY" or event == "MERCHANT_SHOW" or event == "MERCHANT_CLOSED" or event == "PLAYER_ENTERING_WORLD" or event == "MAIL_INBOX_UPDATE" or event == "MAIL_SHOW" or event == "UPDATE_PENDING_MAIL" or event == "UI_INFO_MESSAGE" or event == "HEARTHSTONE_BOUND" or event == "SPELLS_CHANGED" or event == "ENCOUNTER_END" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED_NEW_AREA" or event == "COVENANT_CHOSEN" or event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED" and not InCombatLockdown() then
+	if --[[event == "CHAT_MSG_LOOT" or]] event == "PLAYER_MONEY" or event == "MERCHANT_SHOW" or event == "MERCHANT_CLOSED" or event == "MAIL_INBOX_UPDATE" or event == "MAIL_SHOW" or event == "UPDATE_PENDING_MAIL" or event == "UI_INFO_MESSAGE" or event == "HEARTHSTONE_BOUND" or event == "SPELLS_CHANGED" or event == "ENCOUNTER_END" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED_NEW_AREA" or event == "COVENANT_CHOSEN" or event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED" and not InCombatLockdown() then
 		Collect_ALL_ItemsInBag()
 		Collect_SL_PossibleAnima()
 		Collect_ALL_CurrentKEY()
