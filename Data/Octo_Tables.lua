@@ -277,6 +277,15 @@ E.Octo_Table.AutoOpen_openableIDs70lvl = {
 	[203220] = true,
 }
 E.Octo_Table.white_list_ALL = {
+
+	{itemid = 203430, count = 5}, -- желтые
+	{itemid = 203683, count = 5}, -- синии
+	{itemid = 203710, count = 3}, -- фиолет
+
+
+
+
+
 	{itemid = 208200, count = 1},
 	{itemid = 208198, count = 1},
 

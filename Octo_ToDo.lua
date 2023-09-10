@@ -3512,6 +3512,8 @@ function O_otrisovka()
 				-- for _, v in pairs(E.Octo_Globals.TransmogCollectionType) do
 				-- 	tooltip[#tooltip+1] = {v, CharInfo.AberrusTransmog[v].LFR.."/"..CharInfo.AberrusTransmog[v].Normal.."/"..CharInfo.AberrusTransmog[v].Heroic.."/"..CharInfo.AberrusTransmog[v].Mythic}
 				-- end
+				tooltip[#tooltip+1] = {L["in the pipeline"], " "}
+				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {L["Head"], CharInfo.AberrusTransmog.Head.LFR.."/"..CharInfo.AberrusTransmog.Head.Normal.."/"..CharInfo.AberrusTransmog.Head.Heroic.."/"..CharInfo.AberrusTransmog.Head.Mythic}
 				tooltip[#tooltip+1] = {L["Shoulder"], CharInfo.AberrusTransmog.Shoulder.LFR.."/"..CharInfo.AberrusTransmog.Shoulder.Normal.."/"..CharInfo.AberrusTransmog.Shoulder.Heroic.."/"..CharInfo.AberrusTransmog.Shoulder.Mythic}
 				tooltip[#tooltip+1] = {L["Back"], CharInfo.AberrusTransmog.Back.LFR.."/"..CharInfo.AberrusTransmog.Back.Normal.."/"..CharInfo.AberrusTransmog.Back.Heroic.."/"..CharInfo.AberrusTransmog.Back.Mythic}
