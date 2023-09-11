@@ -278,6 +278,29 @@ E.Octo_Table.AutoOpen_openableIDs70lvl = {
 }
 E.Octo_Table.white_list_ALL = {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	{itemid = 203430, count = 5}, -- желтые
 	{itemid = 203683, count = 5}, -- синии
 	{itemid = 203710, count = 3}, -- фиолет
@@ -1605,6 +1628,164 @@ E.Octo_Table.white_list_ALL = {
 	{itemid = 92794, count = 1},
 	{itemid = 122457, count = 1},
 	{itemid = 201782, count = 1},
+	--дренор
+	{itemid = 116131, count = 1},
+	{itemid = 116118, count = 1},
+	{itemid = 118695, count = 1},
+	{itemid = 119416, count = 1},
+	--профы
+	{itemid = 111921, count = 1}, -- инжа
+	{itemid = 109558, count = 1}, -- алхимия
+
+	-- музыка
+	{itemid = 122236, count = 1},
+	{itemid = 122197, count = 1},
+	{itemid = 122233, count = 1},
+	{itemid = 122234, count = 1},
+	{itemid = 122232, count = 1},
+	{itemid = 122195, count = 1},
+	{itemid = 122222, count = 1},
+	{itemid = 122204, count = 1},
+	{itemid = 122198, count = 1},
+	{itemid = 122200, count = 1},
+	{itemid = 122214, count = 1},
+	{itemid = 122238, count = 1},
+	{itemid = 122239, count = 1},
+	{itemid = 122196, count = 1},
+	{itemid = 122221, count = 1},
+	{itemid = 122199, count = 1},
+	{itemid = 122223, count = 1},
+	{itemid = 122215, count = 1},
+	{itemid = 122207, count = 1},
+	{itemid = 122228, count = 1},
+	{itemid = 122224, count = 1},
+	{itemid = 122219, count = 1},
+	{itemid = 122613, count = 1},
+	{itemid = 122237, count = 1},
+	{itemid = 122226, count = 1},
+	{itemid = 122209, count = 1},
+	{itemid = 122202, count = 1},
+	{itemid = 122231, count = 1},
+	{itemid = 122206, count = 1},
+	{itemid = 122211, count = 1},
+	{itemid = 122229, count = 1},
+	{itemid = 122217, count = 1},
+	{itemid = 122201, count = 1},
+	{itemid = 122218, count = 1},
+	{itemid = 122213, count = 1},
+	{itemid = 122210, count = 1},
+	{itemid = 122205, count = 1},
+	{itemid = 122216, count = 1},
+	{itemid = 122208, count = 1},
+	{itemid = 122212, count = 1},
+	{itemid = 122203, count = 1},
+
+
+
+
+
+
+	-- Гарнизон
+	{itemid = 116186, count = 1},
+	{itemid = 116186, count = 1},
+	{itemid = 109257, count = 1},
+	{itemid = 109257, count = 1},
+	{itemid = 111930, count = 1},
+	{itemid = 111930, count = 1},
+	{itemid = 111973, count = 1},
+	{itemid = 111973, count = 1},
+	{itemid = 111975, count = 1},
+	{itemid = 111975, count = 1},
+	{itemid = 111979, count = 1},
+	{itemid = 111979, count = 1},
+	{itemid = 111989, count = 1},
+	{itemid = 111989, count = 1},
+	{itemid = 111991, count = 1},
+	{itemid = 111991, count = 1},
+	{itemid = 111993, count = 1},
+	{itemid = 111993, count = 1},
+	{itemid = 109255, count = 1},
+	{itemid = 109255, count = 1},
+	{itemid = 116249, count = 1},
+	{itemid = 116249, count = 1},
+	{itemid = 111997, count = 1},
+	{itemid = 111997, count = 1},
+	{itemid = 111928, count = 1},
+	{itemid = 111928, count = 1},
+	{itemid = 111999, count = 1},
+	{itemid = 111999, count = 1},
+	{itemid = 111977, count = 1},
+	{itemid = 111977, count = 1},
+	{itemid = 111987, count = 1},
+	{itemid = 111987, count = 1},
+	{itemid = 111987, count = 1},
+	{itemid = 111987, count = 1},
+	{itemid = 111983, count = 1},
+	{itemid = 111983, count = 1},
+	{itemid = 111981, count = 1},
+	{itemid = 111981, count = 1},
+	{itemid = 116197, count = 1},
+	{itemid = 116197, count = 1},
+	{itemid = 111971, count = 1},
+	{itemid = 111971, count = 1},
+	{itemid = 112003, count = 1},
+	{itemid = 112003, count = 1},
+	{itemid = 116201, count = 1},
+	{itemid = 116201, count = 1},
+	{itemid = 111969, count = 1},
+	{itemid = 111969, count = 1},
+	{itemid = 116432, count = 1},
+	{itemid = 116432, count = 1},
+	{itemid = 109254, count = 1},
+	{itemid = 109254, count = 1},
+	{itemid = 109256, count = 1},
+	{itemid = 109256, count = 1},
+	{itemid = 109577, count = 1},
+	{itemid = 109577, count = 1},
+	{itemid = 111927, count = 1},
+	{itemid = 111927, count = 1},
+	{itemid = 111929, count = 1},
+	{itemid = 111929, count = 1},
+	{itemid = 111957, count = 1},
+	{itemid = 111957, count = 1},
+	{itemid = 111968, count = 1},
+	{itemid = 111968, count = 1},
+	{itemid = 111970, count = 1},
+	{itemid = 111970, count = 1},
+	{itemid = 111972, count = 1},
+	{itemid = 111972, count = 1},
+	{itemid = 111974, count = 1},
+	{itemid = 111974, count = 1},
+	{itemid = 111976, count = 1},
+	{itemid = 111976, count = 1},
+	{itemid = 111978, count = 1},
+	{itemid = 111978, count = 1},
+	{itemid = 111980, count = 1},
+	{itemid = 111980, count = 1},
+	{itemid = 111982, count = 1},
+	{itemid = 111982, count = 1},
+	{itemid = 111986, count = 1},
+	{itemid = 111986, count = 1},
+	{itemid = 111988, count = 1},
+	{itemid = 111988, count = 1},
+	{itemid = 111990, count = 1},
+	{itemid = 111990, count = 1},
+	{itemid = 111992, count = 1},
+	{itemid = 111992, count = 1},
+	{itemid = 111998, count = 1},
+	{itemid = 111998, count = 1},
+	{itemid = 112002, count = 1},
+	{itemid = 112002, count = 1},
+	{itemid = 116185, count = 1},
+	{itemid = 116185, count = 1},
+	{itemid = 116196, count = 1},
+	{itemid = 116196, count = 1},
+	{itemid = 116200, count = 1},
+	{itemid = 116200, count = 1},
+	{itemid = 116248, count = 1},
+	{itemid = 116248, count = 1},
+	{itemid = 116431, count = 1},
+	{itemid = 116431, count = 1},
 }
 E.Octo_Table.white_list_70 ={
 	{itemid = 205423, count = 1},

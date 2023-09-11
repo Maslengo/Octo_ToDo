@@ -3512,7 +3512,7 @@ function O_otrisovka()
 				-- for _, v in pairs(E.Octo_Globals.TransmogCollectionType) do
 				-- 	tooltip[#tooltip+1] = {v, CharInfo.AberrusTransmog[v].LFR.."/"..CharInfo.AberrusTransmog[v].Normal.."/"..CharInfo.AberrusTransmog[v].Heroic.."/"..CharInfo.AberrusTransmog[v].Mythic}
 				-- end
-				tooltip[#tooltip+1] = {L["in the pipeline"], " "}
+				tooltip[#tooltip+1] = {L["InDev"], " "}
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {L["Head"], CharInfo.AberrusTransmog.Head.LFR.."/"..CharInfo.AberrusTransmog.Head.Normal.."/"..CharInfo.AberrusTransmog.Head.Heroic.."/"..CharInfo.AberrusTransmog.Head.Mythic}
 				tooltip[#tooltip+1] = {L["Shoulder"], CharInfo.AberrusTransmog.Shoulder.LFR.."/"..CharInfo.AberrusTransmog.Shoulder.Normal.."/"..CharInfo.AberrusTransmog.Shoulder.Heroic.."/"..CharInfo.AberrusTransmog.Shoulder.Mythic}
@@ -4370,120 +4370,144 @@ function O_otrisovka()
 				local vivodCent, vivodLeft = "", ""
 				local QWE = Octo_ToDoArtifact
 				if CharInfo.classFilename == "WARRIOR" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.WARRIOR) do
 						for q, w in pairs (v) do
 							if QWE.WARRIOR[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARRIOR[k][q].specIcon)..QWE.WARRIOR[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARRIOR[k][q].specIcon)--..QWE.WARRIOR[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.WARRIOR[k][q].unlockOCto.."("..QWE.WARRIOR[k][q].name..")", QWE.WARRIOR[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "PALADIN" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.PALADIN) do
 						for q, w in pairs (v) do
 							if QWE.PALADIN[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PALADIN[k][q].specIcon)..QWE.PALADIN[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PALADIN[k][q].specIcon)--..QWE.PALADIN[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.PALADIN[k][q].unlockOCto.."("..QWE.PALADIN[k][q].name..")", QWE.PALADIN[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "HUNTER" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.HUNTER) do
 						for q, w in pairs (v) do
 							if QWE.HUNTER[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.HUNTER[k][q].specIcon)..QWE.HUNTER[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.HUNTER[k][q].specIcon)--..QWE.HUNTER[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.HUNTER[k][q].unlockOCto.."("..QWE.HUNTER[k][q].name..")", QWE.HUNTER[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "ROGUE" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.ROGUE) do
 						for q, w in pairs (v) do
 							if QWE.ROGUE[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.ROGUE[k][q].specIcon)..QWE.ROGUE[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.ROGUE[k][q].specIcon)--..QWE.ROGUE[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.ROGUE[k][q].unlockOCto.."("..QWE.ROGUE[k][q].name..")", QWE.ROGUE[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "PRIEST" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.PRIEST) do
 						for q, w in pairs (v) do
 							if QWE.PRIEST[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PRIEST[k][q].specIcon)..QWE.PRIEST[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PRIEST[k][q].specIcon)--..QWE.PRIEST[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.PRIEST[k][q].unlockOCto.."("..QWE.PRIEST[k][q].name..")", QWE.PRIEST[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DEATHKNIGHT" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DEATHKNIGHT) do
 						for q, w in pairs (v) do
 							if QWE.DEATHKNIGHT[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEATHKNIGHT[k][q].specIcon)..QWE.DEATHKNIGHT[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEATHKNIGHT[k][q].specIcon)--..QWE.DEATHKNIGHT[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DEATHKNIGHT[k][q].unlockOCto.."("..QWE.DEATHKNIGHT[k][q].name..")", QWE.DEATHKNIGHT[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "SHAMAN" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.SHAMAN) do
 						for q, w in pairs (v) do
 							if QWE.SHAMAN[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.SHAMAN[k][q].specIcon)..QWE.SHAMAN[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.SHAMAN[k][q].specIcon)--..QWE.SHAMAN[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.SHAMAN[k][q].unlockOCto.."("..QWE.SHAMAN[k][q].name..")", QWE.SHAMAN[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "MAGE" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.MAGE) do
 						for q, w in pairs (v) do
 							if QWE.MAGE[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MAGE[k][q].specIcon)..QWE.MAGE[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MAGE[k][q].specIcon)--..QWE.MAGE[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.MAGE[k][q].unlockOCto.."("..QWE.MAGE[k][q].name..")", QWE.MAGE[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "WARLOCK" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.WARLOCK) do
 						for q, w in pairs (v) do
 							if QWE.WARLOCK[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARLOCK[k][q].specIcon)..QWE.WARLOCK[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARLOCK[k][q].specIcon)--..QWE.WARLOCK[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.WARLOCK[k][q].unlockOCto.."("..QWE.WARLOCK[k][q].name..")", QWE.WARLOCK[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "MONK" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.MONK) do
 						for q, w in pairs (v) do
 							if QWE.MONK[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MONK[k][q].specIcon)..QWE.MONK[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MONK[k][q].specIcon)--..QWE.MONK[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.MONK[k][q].unlockOCto.."("..QWE.MONK[k][q].name..")", QWE.MONK[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DRUID" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DRUID) do
 						for q, w in pairs (v) do
 							if QWE.DRUID[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DRUID[k][q].specIcon)..QWE.DRUID[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DRUID[k][q].specIcon)--..QWE.DRUID[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DRUID[k][q].unlockOCto.."("..QWE.DRUID[k][q].name..")", QWE.DRUID[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DEMONHUNTER" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DEMONHUNTER) do
 						for q, w in pairs (v) do
 							if QWE.DEMONHUNTER[k][q].specIDnumber == 1 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEMONHUNTER[k][q].specIcon)..QWE.DEMONHUNTER[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEMONHUNTER[k][q].specIcon)--..QWE.DEMONHUNTER[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DEMONHUNTER[k][q].unlockOCto.."("..QWE.DEMONHUNTER[k][q].name..")", QWE.DEMONHUNTER[k][q].vivod}
 							end
 						end
@@ -4497,120 +4521,144 @@ function O_otrisovka()
 				local vivodCent, vivodLeft = "", ""
 				local QWE = Octo_ToDoArtifact
 				if CharInfo.classFilename == "WARRIOR" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.WARRIOR) do
 						for q, w in pairs (v) do
 							if QWE.WARRIOR[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARRIOR[k][q].specIcon)..QWE.WARRIOR[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARRIOR[k][q].specIcon)--..QWE.WARRIOR[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.WARRIOR[k][q].unlockOCto.."("..QWE.WARRIOR[k][q].name..")", QWE.WARRIOR[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "PALADIN" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.PALADIN) do
 						for q, w in pairs (v) do
 							if QWE.PALADIN[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PALADIN[k][q].specIcon)..QWE.PALADIN[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PALADIN[k][q].specIcon)--..QWE.PALADIN[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.PALADIN[k][q].unlockOCto.."("..QWE.PALADIN[k][q].name..")", QWE.PALADIN[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "HUNTER" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.HUNTER) do
 						for q, w in pairs (v) do
 							if QWE.HUNTER[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.HUNTER[k][q].specIcon)..QWE.HUNTER[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.HUNTER[k][q].specIcon)--..QWE.HUNTER[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.HUNTER[k][q].unlockOCto.."("..QWE.HUNTER[k][q].name..")", QWE.HUNTER[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "ROGUE" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.ROGUE) do
 						for q, w in pairs (v) do
 							if QWE.ROGUE[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.ROGUE[k][q].specIcon)..QWE.ROGUE[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.ROGUE[k][q].specIcon)--..QWE.ROGUE[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.ROGUE[k][q].unlockOCto.."("..QWE.ROGUE[k][q].name..")", QWE.ROGUE[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "PRIEST" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.PRIEST) do
 						for q, w in pairs (v) do
 							if QWE.PRIEST[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PRIEST[k][q].specIcon)..QWE.PRIEST[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PRIEST[k][q].specIcon)--..QWE.PRIEST[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.PRIEST[k][q].unlockOCto.."("..QWE.PRIEST[k][q].name..")", QWE.PRIEST[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DEATHKNIGHT" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DEATHKNIGHT) do
 						for q, w in pairs (v) do
 							if QWE.DEATHKNIGHT[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEATHKNIGHT[k][q].specIcon)..QWE.DEATHKNIGHT[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEATHKNIGHT[k][q].specIcon)--..QWE.DEATHKNIGHT[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DEATHKNIGHT[k][q].unlockOCto.."("..QWE.DEATHKNIGHT[k][q].name..")", QWE.DEATHKNIGHT[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "SHAMAN" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.SHAMAN) do
 						for q, w in pairs (v) do
 							if QWE.SHAMAN[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.SHAMAN[k][q].specIcon)..QWE.SHAMAN[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.SHAMAN[k][q].specIcon)--..QWE.SHAMAN[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.SHAMAN[k][q].unlockOCto.."("..QWE.SHAMAN[k][q].name..")", QWE.SHAMAN[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "MAGE" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.MAGE) do
 						for q, w in pairs (v) do
 							if QWE.MAGE[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MAGE[k][q].specIcon)..QWE.MAGE[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MAGE[k][q].specIcon)--..QWE.MAGE[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.MAGE[k][q].unlockOCto.."("..QWE.MAGE[k][q].name..")", QWE.MAGE[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "WARLOCK" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.WARLOCK) do
 						for q, w in pairs (v) do
 							if QWE.WARLOCK[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARLOCK[k][q].specIcon)..QWE.WARLOCK[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARLOCK[k][q].specIcon)--..QWE.WARLOCK[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.WARLOCK[k][q].unlockOCto.."("..QWE.WARLOCK[k][q].name..")", QWE.WARLOCK[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "MONK" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.MONK) do
 						for q, w in pairs (v) do
 							if QWE.MONK[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MONK[k][q].specIcon)..QWE.MONK[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MONK[k][q].specIcon)--..QWE.MONK[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.MONK[k][q].unlockOCto.."("..QWE.MONK[k][q].name..")", QWE.MONK[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DRUID" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DRUID) do
 						for q, w in pairs (v) do
 							if QWE.DRUID[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DRUID[k][q].specIcon)..QWE.DRUID[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DRUID[k][q].specIcon)--..QWE.DRUID[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DRUID[k][q].unlockOCto.."("..QWE.DRUID[k][q].name..")", QWE.DRUID[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DEMONHUNTER" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DEMONHUNTER) do
 						for q, w in pairs (v) do
 							if QWE.DEMONHUNTER[k][q].specIDnumber == 2 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEMONHUNTER[k][q].specIcon)..QWE.DEMONHUNTER[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEMONHUNTER[k][q].specIcon)--..QWE.DEMONHUNTER[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DEMONHUNTER[k][q].unlockOCto.."("..QWE.DEMONHUNTER[k][q].name..")", QWE.DEMONHUNTER[k][q].vivod}
 							end
 						end
@@ -4624,120 +4672,144 @@ function O_otrisovka()
 				local vivodCent, vivodLeft = "", ""
 				local QWE = Octo_ToDoArtifact
 				if CharInfo.classFilename == "WARRIOR" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.WARRIOR) do
 						for q, w in pairs (v) do
 							if QWE.WARRIOR[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARRIOR[k][q].specIcon)..QWE.WARRIOR[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARRIOR[k][q].specIcon)--..QWE.WARRIOR[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.WARRIOR[k][q].unlockOCto.."("..QWE.WARRIOR[k][q].name..")", QWE.WARRIOR[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "PALADIN" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.PALADIN) do
 						for q, w in pairs (v) do
 							if QWE.PALADIN[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PALADIN[k][q].specIcon)..QWE.PALADIN[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PALADIN[k][q].specIcon)--..QWE.PALADIN[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.PALADIN[k][q].unlockOCto.."("..QWE.PALADIN[k][q].name..")", QWE.PALADIN[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "HUNTER" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.HUNTER) do
 						for q, w in pairs (v) do
 							if QWE.HUNTER[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.HUNTER[k][q].specIcon)..QWE.HUNTER[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.HUNTER[k][q].specIcon)--..QWE.HUNTER[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.HUNTER[k][q].unlockOCto.."("..QWE.HUNTER[k][q].name..")", QWE.HUNTER[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "ROGUE" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.ROGUE) do
 						for q, w in pairs (v) do
 							if QWE.ROGUE[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.ROGUE[k][q].specIcon)..QWE.ROGUE[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.ROGUE[k][q].specIcon)--..QWE.ROGUE[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.ROGUE[k][q].unlockOCto.."("..QWE.ROGUE[k][q].name..")", QWE.ROGUE[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "PRIEST" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.PRIEST) do
 						for q, w in pairs (v) do
 							if QWE.PRIEST[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PRIEST[k][q].specIcon)..QWE.PRIEST[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PRIEST[k][q].specIcon)--..QWE.PRIEST[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.PRIEST[k][q].unlockOCto.."("..QWE.PRIEST[k][q].name..")", QWE.PRIEST[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DEATHKNIGHT" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DEATHKNIGHT) do
 						for q, w in pairs (v) do
 							if QWE.DEATHKNIGHT[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEATHKNIGHT[k][q].specIcon)..QWE.DEATHKNIGHT[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEATHKNIGHT[k][q].specIcon)--..QWE.DEATHKNIGHT[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DEATHKNIGHT[k][q].unlockOCto.."("..QWE.DEATHKNIGHT[k][q].name..")", QWE.DEATHKNIGHT[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "SHAMAN" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.SHAMAN) do
 						for q, w in pairs (v) do
 							if QWE.SHAMAN[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.SHAMAN[k][q].specIcon)..QWE.SHAMAN[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.SHAMAN[k][q].specIcon)--..QWE.SHAMAN[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.SHAMAN[k][q].unlockOCto.."("..QWE.SHAMAN[k][q].name..")", QWE.SHAMAN[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "MAGE" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.MAGE) do
 						for q, w in pairs (v) do
 							if QWE.MAGE[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MAGE[k][q].specIcon)..QWE.MAGE[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MAGE[k][q].specIcon)--..QWE.MAGE[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.MAGE[k][q].unlockOCto.."("..QWE.MAGE[k][q].name..")", QWE.MAGE[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "WARLOCK" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.WARLOCK) do
 						for q, w in pairs (v) do
 							if QWE.WARLOCK[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARLOCK[k][q].specIcon)..QWE.WARLOCK[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARLOCK[k][q].specIcon)--..QWE.WARLOCK[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.WARLOCK[k][q].unlockOCto.."("..QWE.WARLOCK[k][q].name..")", QWE.WARLOCK[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "MONK" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.MONK) do
 						for q, w in pairs (v) do
 							if QWE.MONK[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MONK[k][q].specIcon)..QWE.MONK[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MONK[k][q].specIcon)--..QWE.MONK[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.MONK[k][q].unlockOCto.."("..QWE.MONK[k][q].name..")", QWE.MONK[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DRUID" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DRUID) do
 						for q, w in pairs (v) do
 							if QWE.DRUID[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DRUID[k][q].specIcon)..QWE.DRUID[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DRUID[k][q].specIcon)--..QWE.DRUID[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DRUID[k][q].unlockOCto.."("..QWE.DRUID[k][q].name..")", QWE.DRUID[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DEMONHUNTER" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DEMONHUNTER) do
 						for q, w in pairs (v) do
 							if QWE.DEMONHUNTER[k][q].specIDnumber == 3 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEMONHUNTER[k][q].specIcon)..QWE.DEMONHUNTER[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEMONHUNTER[k][q].specIcon)--..QWE.DEMONHUNTER[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DEMONHUNTER[k][q].unlockOCto.."("..QWE.DEMONHUNTER[k][q].name..")", QWE.DEMONHUNTER[k][q].vivod}
 							end
 						end
@@ -4751,120 +4823,144 @@ function O_otrisovka()
 				local vivodCent, vivodLeft = "", ""
 				local QWE = Octo_ToDoArtifact
 				if CharInfo.classFilename == "WARRIOR" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.WARRIOR) do
 						for q, w in pairs (v) do
 							if QWE.WARRIOR[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARRIOR[k][q].specIcon)..QWE.WARRIOR[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARRIOR[k][q].specIcon)--..QWE.WARRIOR[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.WARRIOR[k][q].unlockOCto.."("..QWE.WARRIOR[k][q].name..")", QWE.WARRIOR[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "PALADIN" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.PALADIN) do
 						for q, w in pairs (v) do
 							if QWE.PALADIN[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PALADIN[k][q].specIcon)..QWE.PALADIN[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PALADIN[k][q].specIcon)--..QWE.PALADIN[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.PALADIN[k][q].unlockOCto.."("..QWE.PALADIN[k][q].name..")", QWE.PALADIN[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "HUNTER" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.HUNTER) do
 						for q, w in pairs (v) do
 							if QWE.HUNTER[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.HUNTER[k][q].specIcon)..QWE.HUNTER[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.HUNTER[k][q].specIcon)--..QWE.HUNTER[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.HUNTER[k][q].unlockOCto.."("..QWE.HUNTER[k][q].name..")", QWE.HUNTER[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "ROGUE" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.ROGUE) do
 						for q, w in pairs (v) do
 							if QWE.ROGUE[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.ROGUE[k][q].specIcon)..QWE.ROGUE[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.ROGUE[k][q].specIcon)--..QWE.ROGUE[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.ROGUE[k][q].unlockOCto.."("..QWE.ROGUE[k][q].name..")", QWE.ROGUE[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "PRIEST" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.PRIEST) do
 						for q, w in pairs (v) do
 							if QWE.PRIEST[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PRIEST[k][q].specIcon)..QWE.PRIEST[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.PRIEST[k][q].specIcon)--..QWE.PRIEST[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.PRIEST[k][q].unlockOCto.."("..QWE.PRIEST[k][q].name..")", QWE.PRIEST[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DEATHKNIGHT" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DEATHKNIGHT) do
 						for q, w in pairs (v) do
 							if QWE.DEATHKNIGHT[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEATHKNIGHT[k][q].specIcon)..QWE.DEATHKNIGHT[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEATHKNIGHT[k][q].specIcon)--..QWE.DEATHKNIGHT[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DEATHKNIGHT[k][q].unlockOCto.."("..QWE.DEATHKNIGHT[k][q].name..")", QWE.DEATHKNIGHT[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "SHAMAN" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.SHAMAN) do
 						for q, w in pairs (v) do
 							if QWE.SHAMAN[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.SHAMAN[k][q].specIcon)..QWE.SHAMAN[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.SHAMAN[k][q].specIcon)--..QWE.SHAMAN[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.SHAMAN[k][q].unlockOCto.."("..QWE.SHAMAN[k][q].name..")", QWE.SHAMAN[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "MAGE" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.MAGE) do
 						for q, w in pairs (v) do
 							if QWE.MAGE[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MAGE[k][q].specIcon)..QWE.MAGE[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MAGE[k][q].specIcon)--..QWE.MAGE[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.MAGE[k][q].unlockOCto.."("..QWE.MAGE[k][q].name..")", QWE.MAGE[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "WARLOCK" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.WARLOCK) do
 						for q, w in pairs (v) do
 							if QWE.WARLOCK[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARLOCK[k][q].specIcon)..QWE.WARLOCK[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.WARLOCK[k][q].specIcon)--..QWE.WARLOCK[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.WARLOCK[k][q].unlockOCto.."("..QWE.WARLOCK[k][q].name..")", QWE.WARLOCK[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "MONK" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.MONK) do
 						for q, w in pairs (v) do
 							if QWE.MONK[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MONK[k][q].specIcon)..QWE.MONK[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.MONK[k][q].specIcon)--..QWE.MONK[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.MONK[k][q].unlockOCto.."("..QWE.MONK[k][q].name..")", QWE.MONK[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DRUID" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DRUID) do
 						for q, w in pairs (v) do
 							if QWE.DRUID[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DRUID[k][q].specIcon)..QWE.DRUID[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DRUID[k][q].specIcon)--..QWE.DRUID[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DRUID[k][q].unlockOCto.."("..QWE.DRUID[k][q].name..")", QWE.DRUID[k][q].vivod}
 							end
 						end
 					end
 				end
 				if CharInfo.classFilename == "DEMONHUNTER" then
+					tooltip[#tooltip+1] = {L["InDev"], " "}
+					tooltip[#tooltip+1] = {" ", " "}
 					for k, v in pairs(QWE.DEMONHUNTER) do
 						for q, w in pairs (v) do
 							if QWE.DEMONHUNTER[k][q].specIDnumber == 4 then
-								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEMONHUNTER[k][q].specIcon)..QWE.DEMONHUNTER[k][q].specNameLocale
+								vivodCent = E.Octo_Func.func_texturefromIcon(QWE.DEMONHUNTER[k][q].specIcon)--..QWE.DEMONHUNTER[k][q].specNameLocale
 								tooltip[#tooltip+1] = {QWE.DEMONHUNTER[k][q].unlockOCto.."("..QWE.DEMONHUNTER[k][q].name..")", QWE.DEMONHUNTER[k][q].vivod}
 							end
 						end

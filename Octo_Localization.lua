@@ -302,7 +302,8 @@ L["Dragon Isles"] = true
 L["The Nokud Offensive"] = true
 L["Aberrus, the Shadowed Crucible"] = true
 L["Dawn of the Infinite"] = true
-L["in the pipeline"] = true
+L["InDev"] = true --"|cffFF0000(In the pipeline)|r"
+L["In the pipeline"] = true
 
 
 	-- print (LOC_OPTION_OFF, VIDEO_OPTIONS_ENABLED)
@@ -706,7 +707,7 @@ if L then
 	L["Legs"] = "Ноги"
 	L["Feet"] = "Ступни"
 	L["The Coalition of Flames"] = "Союз пламени"
-	L["in the pipeline"] = "|cffFF0000В стадии разработки|r"
+	L["InDev"] = "|cffFF0000(В стадии разработки)|r"
 
 L["Deadmines"] = "Мертвые копи"
 L["Shadowfang Keep"] = "Крепость Темного Клыка"
