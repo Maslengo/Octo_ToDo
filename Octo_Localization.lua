@@ -304,6 +304,7 @@ L["Aberrus, the Shadowed Crucible"] = true
 L["Dawn of the Infinite"] = true
 L["InDev"] = true --"|cffFF0000(In the pipeline)|r"
 L["In the pipeline"] = true
+L["HideCovenant"] = true
 
 
 	-- print (LOC_OPTION_OFF, VIDEO_OPTIONS_ENABLED)

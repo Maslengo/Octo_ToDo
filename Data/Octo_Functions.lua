@@ -407,6 +407,14 @@ function E.Octo_Func.All_objectives(self)
 end
 local All_objectives = E.Octo_Func.All_objectives
 ----------------------------------------------------------------
+function E.Octo_Func.HandleDefaultBindings(binding_name, default_key)
+    local bind1, bind2 = GetBindingKey(binding_name)
+    local action = GetBindingAction(default_key)
+    if bind1 == nil and bind2 == nil and action == "" then
+        SetBinding(default_key, binding_name)
+    end
+end
+local HandleDefaultBindings = E.Octo_Func.HandleDefaultBindings
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -25,7 +25,7 @@ function E.Octo_Globals.strategies.GetWowheadUrl(dataSources)
 				typeStr = type:sub(1, 1):upper() .. type:sub(2)
 			end
 			return "Wowhead " .. typeStr,
-			string.format(E.Octo_Globals.baseWowheadUrl, WowheadQuickLinkCfg.prefix, type, id, WowheadQuickLinkCfg.suffix)
+			string.format(E.Octo_Globals.baseWowheadUrl, Octo_ToDoOther.prefix, type, id, Octo_ToDoOther.suffix)
 		end
 	end
 end
@@ -35,7 +35,7 @@ function E.Octo_Globals.strategies.GetWowheadAzEsUrl(dataSources)
 		local id = strategy(dataSources)
 		if id then
 			return "Wowhead Azerite Essence",
-			string.format(E.Octo_Globals.baseWowheadAzEsUrl, WowheadQuickLinkCfg.prefix, id, WowheadQuickLinkCfg.suffix)
+			string.format(E.Octo_Globals.baseWowheadAzEsUrl, Octo_ToDoOther.prefix, id, Octo_ToDoOther.suffix)
 		end
 	end
 end
@@ -45,7 +45,7 @@ function E.Octo_Globals.strategies.GetWowheadTradingPostActivityUrl(dataSources)
 		local id = strategy(dataSources)
 		if id then
 			return "Wowhead Trading Post Activity",
-			string.format(E.Octo_Globals.baseWowheadTradingPostActivityUrl, WowheadQuickLinkCfg.prefix, id, WowheadQuickLinkCfg.suffix)
+			string.format(E.Octo_Globals.baseWowheadTradingPostActivityUrl, Octo_ToDoOther.prefix, id, Octo_ToDoOther.suffix)
 		end
 	end
 end

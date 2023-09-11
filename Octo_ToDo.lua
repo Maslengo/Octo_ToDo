@@ -38,6 +38,7 @@ local WorldBoss_Icon = "|T3528312:16:16:::64:64:4:60:4:60|t"
 local Rares_Icon = "|T135903:16:16:::64:64:4:60:4:60|t"
 local Unknown_Icon = "|T134400:16:16:::64:64:4:60:4:60|t"
 local Money_Icon = "|T133784:12:12:::64:64:4:64:4:64|t"
+local Token_Icon = "|T1120721:12:12:::64:64:4:64:4:64|t"
 local classColor = C_ClassColor.GetClassColor(classFilename)
 local r, g, b = classColor:GetRGB()
 local fontObject9 = CreateFont("OctoFont9")
@@ -969,8 +970,6 @@ local OctoTable_UniversalQuest = {
 		questID = {75694, },
 		max = 1,
 	},
-
-
 	{
 		name_save = "VaultoftheIncarnatesFuryoftheStormEater",
 		name_quest = "Vault of the Incarnates: Fury of the Storm-Eater",
@@ -981,13 +980,6 @@ local OctoTable_UniversalQuest = {
 		questID = {66847, },
 		max = 1,
 	},
-
-
-
-
-
-
-
 	{
 		name_save = "Excavations",
 		name_quest = "Broken Shore - Excavations",
@@ -1194,9 +1186,6 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 13,
 	},
-
-
-
 	{
 		name_save = "TheCoalitionofFlames",
 		name_quest = L["The Coalition of Flames"],
@@ -1209,23 +1198,13 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 7,
 	},
-
-
-
-
-
-
-
-
-
-
-
 }
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Holiday)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Reputation)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_DFMountsSkins)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.T3Items)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.Dreamsurges_Items)
+-- E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_currencyID_ALL, E.Octo_Table.OctoTable_currencyID_Professions)
 local function Central_Frame_Mouse_OnEnter(self)
 	local parent = self:GetParent():GetParent()["FrameLine"..self.index]
 	parent:GetScript("OnEnter")(parent)
@@ -1917,9 +1896,6 @@ function Collect_Legion_Artifact()
 	local _, _, _, quantity1, reqQuantity1 = GetAchievementCriteriaInfo(11152, 1)
 	local _, _, _, quantity2, reqQuantity2 = GetAchievementCriteriaInfo(11153, 1)
 	local _, _, _, quantity3, reqQuantity3 = GetAchievementCriteriaInfo(11154, 1)
-	-- print("Dungeons: "..quantity1.."/"..reqQuantity1)
-	-- print("WQs: "..quantity2.."/"..reqQuantity2)
-	-- print("Kills: "..quantity3.."/"..reqQuantity3)
 end
 -- function Collect_ALL_VoidStorage()
 -- if Octo_DEV_FUNC == true then
@@ -2029,166 +2005,169 @@ function Collect_All_Professions()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDoLevels[curGUID]
-	collect.professions = {}
-	----------------------------------------------------------------
-	local chest_count = 0
-	local craftOrder_count = 0
-	local drops_count = 0
-	local profQuest_count = 0
-	local treatise_count = 0
-	----------------------------------------------------------------
-	local ProfTable = {}
-	local prof1, prof2, archaeology, fishing, cooking = GetProfessions()
-	if prof1 then tinsert(ProfTable, prof1) end
-	if prof2 then tinsert(ProfTable, prof2) end
-	if archaeology then tinsert(ProfTable, archaeology) end
-	if fishing then tinsert(ProfTable, fishing) end
-	if cooking then tinsert(ProfTable, cooking) end
-	for k, v in pairs(ProfTable) do
-		local name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier, specializationIndex, specializationOffset = GetProfessionInfo(v)
-		if skillLine then
-			collect.professions[skillLine] = collect.professions[skillLine] or {}
-			collect.professions[skillLine].name = name
-			collect.professions[skillLine].icon = E.Octo_Func.func_texturefromIcon(icon)
-			collect.professions[skillLine].skillLevel = skillLevel
-			collect.professions[skillLine].maxSkillLevel = maxSkillLevel
-			collect.professions[skillLine].numAbilities = numAbilities
-			collect.professions[skillLine].spelloffset = spelloffset
-			collect.professions[skillLine].skillLine = skillLine
-			collect.professions[skillLine].skillModifier = skillModifier
-			collect.professions[skillLine].specializationIndex = specializationIndex
-			collect.professions[skillLine].specializationOffset = specializationOffset
-		end
-		table[171] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {66373, 66374}},
-			craftOrder = {questReq = 0, questID = {}},
-			drops = {questReq = 2, questID = {70511, 70504}},
-			profQuest = {questReq = 2, questID = {70530, 66940, 66938, 72427, 70532, 70531, 70533, 66937}},
-			treatise = {questReq = 1, questID = {74108}},
-		}
-		table[164] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {66381, 66382}},
-			craftOrder = {questReq = 1, questID = {70589}},
-			drops = {questReq = 2, questID = {70513, 70512}},
-			profQuest = {questReq = 2, questID = {66941, 70233, 66517, 66897, 70235, 72398, 70234, 70211}},
-			treatise = {questReq = 1, questID = {74109}},
-		}
-		table[333] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {66377, 66378}},
-			craftOrder = {questReq = 0, questID = {}},
-			drops = {questReq = 2, questID = {70515, 70514}},
-			profQuest = {questReq = 2, questID = {66884, 66900, 66935, 72155, 72172, 72173, 72175, 72423}},
-			treatise = {questReq = 1, questID = {74110}},
-		}
-		table[202] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {66379, 66380}},
-			craftOrder = {questReq = 1, questID = {70591}},
-			drops = {questReq = 2, questID = {70517, 70516}},
-			profQuest = {questReq = 2, questID = {72396, 70545, 66891, 70540, 66890, 66942, 70557, 70539}},
-			treatise = {questReq = 1, questID = {74111}},
-		}
-		table[182] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {}},
-			craftOrder = {questReq = 0, questID = {}},
-			drops = {questReq = 6, questID = {71857, 71858, 71859, 71860, 71861, 71864}},
-			profQuest = {questReq = 1, questID = {70614, 70613, 70616, 70615}},
-			treatise = {questReq = 1, questID = {74107}},
-		}
-		table[773] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {66375, 66376}},
-			craftOrder = {questReq = 1, questID = {70592}},
-			drops = {questReq = 2, questID = {70519, 70518}},
-			profQuest = {questReq = 2, questID = {66943, 66944, 70559, 70561, 70558, 70560, 66945, 72438}},
-			treatise = {questReq = 1, questID = {74105}},
-		}
-		table[755] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {66388, 66389}},
-			craftOrder = {questReq = 1, questID = {70593}},
-			drops = {questReq = 2, questID = {70521, 70520}},
-			profQuest = {questReq = 2, questID = {66516, 70565, 66950, 66949, 72428, 70564, 70563, 70562}},
-			treatise = {questReq = 1, questID = {74112}},
-		}
-		table[165] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {66384, 66385}},
-			craftOrder = {questReq = 1, questID = {70594}},
-			drops = {questReq = 2, questID = {70523, 70522}},
-			profQuest = {questReq = 2, questID = {66364, 66951, 70569, 70568, 70567, 70571, 72407, 66363}},
-			treatise = {questReq = 1, questID = {74113}},
-		}
-		table[186] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {}},
-			craftOrder = {questReq = 0, questID = {}},
-			drops = {questReq = 6, questID = {72160, 72161, 72162, 72163, 72164, 72165}},
-			profQuest = {questReq = 1, questID = {70617, 70618, 72157, 72156}},
-			treatise = {questReq = 1, questID = {74106}},
-		}
-		table[393] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {}},
-			craftOrder = {questReq = 0, questID = {}},
-			drops = {questReq = 6, questID = {70381, 70383, 70384, 70385, 70386, 70389}},
-			profQuest = {questReq = 4, questID = {70620, 72159, 70619, 72158}},
-			treatise = {questReq = 1, questID = {74114}},
-		}
-		table[197] = {
-			name = name,
-			icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
-			chest = {questReq = 2, questID = {66386, 66387}},
-			craftOrder = {questReq = 1, questID = {70595}},
-			drops = {questReq = 2, questID = {70524, 70525}},
-			profQuest = {questReq = 2, questID = {72410, 70587, 66952, 70586, 70572, 70582, 66953, 66899}},
-			treatise = {questReq = 1, questID = {74115}},
-		}
-		if E.Octo_Table.Octo_ProfessionsskillLine[skillLine] then
-			for _, v in ipairs(table[skillLine].chest.questID) do
-				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-					chest_count = chest_count + 1
-				end
+	if collect then
+		collect.professions = collect.professions or {}
+
+		----------------------------------------------------------------
+		local chest_count = 0
+		local craftOrder_count = 0
+		local drops_count = 0
+		local profQuest_count = 0
+		local treatise_count = 0
+		----------------------------------------------------------------
+		local ProfTable = {}
+		local prof1, prof2, archaeology, fishing, cooking = GetProfessions()
+		if prof1 then tinsert(ProfTable, prof1) end
+		if prof2 then tinsert(ProfTable, prof2) end
+		if archaeology then tinsert(ProfTable, archaeology) end
+		if fishing then tinsert(ProfTable, fishing) end
+		if cooking then tinsert(ProfTable, cooking) end
+		for k, v in pairs(ProfTable) do
+			local name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier, specializationIndex, specializationOffset = GetProfessionInfo(v)
+			if skillLine then
+				collect.professions[skillLine] = collect.professions[skillLine] or {}
+				collect.professions[skillLine].name = name
+				collect.professions[skillLine].icon = E.Octo_Func.func_texturefromIcon(icon)
+				collect.professions[skillLine].skillLevel = skillLevel
+				collect.professions[skillLine].maxSkillLevel = maxSkillLevel
+				collect.professions[skillLine].numAbilities = numAbilities
+				collect.professions[skillLine].spelloffset = spelloffset
+				collect.professions[skillLine].skillLine = skillLine
+				collect.professions[skillLine].skillModifier = skillModifier
+				collect.professions[skillLine].specializationIndex = specializationIndex
+				collect.professions[skillLine].specializationOffset = specializationOffset
 			end
-			for _, v in ipairs(table[skillLine].craftOrder.questID) do
-				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-					craftOrder_count = craftOrder_count + 1
+			table[171] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {66373, 66374}},
+				craftOrder = {questReq = 0, questID = {}},
+				drops = {questReq = 2, questID = {70511, 70504}},
+				profQuest = {questReq = 2, questID = {70530, 66940, 66938, 72427, 70532, 70531, 70533, 66937}},
+				treatise = {questReq = 1, questID = {74108}},
+			}
+			table[164] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {66381, 66382}},
+				craftOrder = {questReq = 1, questID = {70589}},
+				drops = {questReq = 2, questID = {70513, 70512}},
+				profQuest = {questReq = 2, questID = {66941, 70233, 66517, 66897, 70235, 72398, 70234, 70211}},
+				treatise = {questReq = 1, questID = {74109}},
+			}
+			table[333] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {66377, 66378}},
+				craftOrder = {questReq = 0, questID = {}},
+				drops = {questReq = 2, questID = {70515, 70514}},
+				profQuest = {questReq = 2, questID = {66884, 66900, 66935, 72155, 72172, 72173, 72175, 72423}},
+				treatise = {questReq = 1, questID = {74110}},
+			}
+			table[202] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {66379, 66380}},
+				craftOrder = {questReq = 1, questID = {70591}},
+				drops = {questReq = 2, questID = {70517, 70516}},
+				profQuest = {questReq = 2, questID = {72396, 70545, 66891, 70540, 66890, 66942, 70557, 70539}},
+				treatise = {questReq = 1, questID = {74111}},
+			}
+			table[182] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {}},
+				craftOrder = {questReq = 0, questID = {}},
+				drops = {questReq = 6, questID = {71857, 71858, 71859, 71860, 71861, 71864}},
+				profQuest = {questReq = 1, questID = {70614, 70613, 70616, 70615}},
+				treatise = {questReq = 1, questID = {74107}},
+			}
+			table[773] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {66375, 66376}},
+				craftOrder = {questReq = 1, questID = {70592}},
+				drops = {questReq = 2, questID = {70519, 70518}},
+				profQuest = {questReq = 2, questID = {66943, 66944, 70559, 70561, 70558, 70560, 66945, 72438}},
+				treatise = {questReq = 1, questID = {74105}},
+			}
+			table[755] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {66388, 66389}},
+				craftOrder = {questReq = 1, questID = {70593}},
+				drops = {questReq = 2, questID = {70521, 70520}},
+				profQuest = {questReq = 2, questID = {66516, 70565, 66950, 66949, 72428, 70564, 70563, 70562}},
+				treatise = {questReq = 1, questID = {74112}},
+			}
+			table[165] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {66384, 66385}},
+				craftOrder = {questReq = 1, questID = {70594}},
+				drops = {questReq = 2, questID = {70523, 70522}},
+				profQuest = {questReq = 2, questID = {66364, 66951, 70569, 70568, 70567, 70571, 72407, 66363}},
+				treatise = {questReq = 1, questID = {74113}},
+			}
+			table[186] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {}},
+				craftOrder = {questReq = 0, questID = {}},
+				drops = {questReq = 6, questID = {72160, 72161, 72162, 72163, 72164, 72165}},
+				profQuest = {questReq = 1, questID = {70617, 70618, 72157, 72156}},
+				treatise = {questReq = 1, questID = {74106}},
+			}
+			table[393] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {}},
+				craftOrder = {questReq = 0, questID = {}},
+				drops = {questReq = 6, questID = {70381, 70383, 70384, 70385, 70386, 70389}},
+				profQuest = {questReq = 4, questID = {70620, 72159, 70619, 72158}},
+				treatise = {questReq = 1, questID = {74114}},
+			}
+			table[197] = {
+				name = name,
+				icon = "|T"..icon..":16:16:::64:64:4:60:4:60|t",
+				chest = {questReq = 2, questID = {66386, 66387}},
+				craftOrder = {questReq = 1, questID = {70595}},
+				drops = {questReq = 2, questID = {70524, 70525}},
+				profQuest = {questReq = 2, questID = {72410, 70587, 66952, 70586, 70572, 70582, 66953, 66899}},
+				treatise = {questReq = 1, questID = {74115}},
+			}
+			if E.Octo_Table.Octo_ProfessionsskillLine[skillLine] then
+				for _, v in ipairs(table[skillLine].chest.questID) do
+					if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+						chest_count = chest_count + 1
+					end
 				end
-			end
-			for _, v in ipairs(table[skillLine].drops.questID) do
-				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-					drops_count = drops_count + 1
+				for _, v in ipairs(table[skillLine].craftOrder.questID) do
+					if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+						craftOrder_count = craftOrder_count + 1
+					end
 				end
-			end
-			for _, v in ipairs(table[skillLine].profQuest.questID) do
-				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-					profQuest_count = profQuest_count + 1
+				for _, v in ipairs(table[skillLine].drops.questID) do
+					if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+						drops_count = drops_count + 1
+					end
 				end
-			end
-			for _, v in ipairs(table[skillLine].treatise.questID) do
-				if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
-					treatise_count = treatise_count + 1
+				for _, v in ipairs(table[skillLine].profQuest.questID) do
+					if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+						profQuest_count = profQuest_count + 1
+					end
 				end
+				for _, v in ipairs(table[skillLine].treatise.questID) do
+					if C_QuestLog.IsQuestFlaggedCompleted(v) == true then
+						treatise_count = treatise_count + 1
+					end
+				end
+				collect.professions[skillLine].chest = {questReq = table[skillLine].chest.questReq, chest_count = chest_count}
+				collect.professions[skillLine].craftOrder = {questReq = table[skillLine].craftOrder.questReq, craftOrder_count = craftOrder_count}
+				collect.professions[skillLine].drops = {questReq = table[skillLine].drops.questReq, drops_count = drops_count}
+				collect.professions[skillLine].profQuest = {questReq = table[skillLine].profQuest.questReq, profQuest_count = profQuest_count}
+				collect.professions[skillLine].treatise = {questReq = table[skillLine].treatise.questReq, treatise_count = treatise_count}
 			end
-			collect.professions[skillLine].chest = {questReq = table[skillLine].chest.questReq, chest_count = chest_count}
-			collect.professions[skillLine].craftOrder = {questReq = table[skillLine].craftOrder.questReq, craftOrder_count = craftOrder_count}
-			collect.professions[skillLine].drops = {questReq = table[skillLine].drops.questReq, drops_count = drops_count}
-			collect.professions[skillLine].profQuest = {questReq = table[skillLine].profQuest.questReq, profQuest_count = profQuest_count}
-			collect.professions[skillLine].treatise = {questReq = table[skillLine].treatise.questReq, treatise_count = treatise_count}
 		end
 	end
 	return
@@ -3079,6 +3058,9 @@ function Collect_AberrusTransmog()
 	-- print ("Collect_AberrusTransmog")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDoLevels[curGUID]
+	if Octo_ToDoTransmog == nil then
+		Octo_ToDoTransmog = {}
+	end
 	----------------------------------------------------------------
 	local englishClass = select(2, UnitClass("PLAYER"))
 	local color = E.Octo_Globals.White_Color
@@ -3086,11 +3068,20 @@ function Collect_AberrusTransmog()
 		for difficultyName, sourceID in pairs(v) do
 			if sourceID then
 				local isCollected = select(5, C_TransmogCollection.GetAppearanceSourceInfo(sourceID))
+				if Octo_ToDoTransmog[englishClass] == nil then
+					Octo_ToDoTransmog[englishClass] = {}
+				end
+				if Octo_ToDoTransmog[englishClass][itemType] == nil then
+					Octo_ToDoTransmog[englishClass][itemType] = {}
+				end
+				setmetatable(Octo_ToDoTransmog[englishClass][itemType], Meta_Table_0)
 				if isCollected == true then
 					color = E.Octo_Globals.Green_Color
+					Octo_ToDoTransmog[englishClass][itemType][difficultyName] = color.."done|r"
 					collect.AberrusTransmog[itemType][difficultyName] = color.."done|r"
 				else
 					color = E.Octo_Globals.Red_Color
+					Octo_ToDoTransmog[englishClass][itemType][difficultyName] = color.."done|r"
 					collect.AberrusTransmog[itemType][difficultyName] = color.."nope|r"
 				end
 			end
@@ -3102,6 +3093,39 @@ function Collect_All_Quest_Tooltip()
 	local collect = Octo_ToDoLevels[curGUID]
 	----------------------------------------------------------------
 	collect.DreamsurgeInvestigation = E.Octo_Func.All_objectives(77414)
+end
+function Collect_Token_Price()
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDoOther
+	----------------------------------------------------------------
+	-- PLAYER_LOGIN, PLAYER_ENTERING_WORLD, PLAYER_MONEY, TOKEN_MARKET_PRICE_UPDATED
+	-- TOKEN_FILTER_LABEL
+	-- ITEM_QUALITY8_DESC
+	----------------------------------------------------------------
+	if not IsAddOnLoaded("Blizzard_WowTokenUI") then
+		LoadAddOn("Blizzard_WowTokenUI")
+		-- return
+	end
+	if not IsAddOnLoaded("Blizzard_AuctionHouseShared") then
+		LoadAddOn("Blizzard_AuctionHouseShared")
+		-- return
+	end
+	if not IsAddOnLoaded("Blizzard_AuctionHouseUI") then
+		LoadAddOn("Blizzard_AuctionHouseUI")
+		-- return
+	end
+	if not IsAddOnLoaded("Blizzard_TokenUI") then
+		LoadAddOn("Blizzard_TokenUI")
+		-- return
+	end
+	if not IsAddOnLoaded("Blizzard_StoreUI") then
+		LoadAddOn("Blizzard_StoreUI")
+		return
+	end
+	----------------------------------------------------------------
+	local TokenPrice = C_WowTokenPublic.GetCurrentMarketPrice()
+	----------------------------------------------------------------
+	collect.TokenPrice = TokenPrice or 0
 end
 function Timer_Legion_Invasion()
 	local TIMER = (1547586000-10800)
@@ -3277,6 +3301,7 @@ function Octo_ToDoOnLoad()
 	-- OctoFrame_EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_LOGIN")
+	OctoFrame_EventFrame:RegisterEvent("TOKEN_MARKET_PRICE_UPDATED")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_LOGOUT")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_MONEY")
 	OctoFrame_EventFrame:RegisterEvent("PLAYER_MOUNT_DISPLAY_CHANGED")
@@ -5697,18 +5722,6 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["Tyr's Fall"]..")", CharInfo.Octopussy_DF_Once_TyrsFall_count}
 				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["Reforging the Tyr's Guard"]..")", CharInfo.Octopussy_DF_Once_ReforgingtheTyrsGuard_count}
 				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["The Coalition of Flames"]..")", CharInfo.Octopussy_DF_Once_TheCoalitionofFlames_count}
-
-
-
-
-
-
-
-
-
-
-
-
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.1.5".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_questName(77236), CheckCompletedByQuestID(77236)} -- 1 на аккаунт
@@ -6124,6 +6137,9 @@ function O_otrisovka()
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
+			if Octo_ToDoOther.TokenPrice and Octo_ToDoOther.TokenPrice ~= 0 then
+				vivodLeft = Token_Icon..TOKEN_FILTER_LABEL.." "..E.Octo_Globals.Yellow_Color..E.Octo_Func.CompactNumberFormat(Octo_ToDoOther.TokenPrice/10000)..Money_Icon.."|r"
+			end
 			if CharInfo.Octopussy_DF_Once_CatchingUp_count ~= DONE then
 				tooltip[#tooltip+1] = {E.Octo_Globals.Red_Color.."Нужно сделать квест: |r"..CharInfo.Octopussy_DF_Once_CatchingUp_name.." /way 60, 72", CharInfo.Octopussy_DF_Once_CatchingUp_count}
 			end
@@ -6237,10 +6253,10 @@ function O_otrisovka()
 			end
 			-- CL:SetFontObject(OctoFont10)
 			if CharInfo.Money then
-				vivodLeft = curServerShort..": "..E.Octo_Func.CompactNumberFormat(TotalMoney/10000)..Money_Icon
+				vivodLeft = curServerShort..": "..E.Octo_Globals.Yellow_Color..E.Octo_Func.CompactNumberFormat(TotalMoney/10000).."|r"..Money_Icon
 			end
 			if TotalMoneyAllServer ~= TotalMoney then
-				vivodLeft = vivodLeft.." ("..E.Octo_Func.CompactNumberFormat(TotalMoneyAllServer/10000)..Money_Icon..")"
+				vivodLeft = vivodLeft.." Total: "..E.Octo_Globals.Yellow_Color..E.Octo_Func.CompactNumberFormat(TotalMoneyAllServer/10000)..Money_Icon.."|r"
 			end
 			if CharInfo.Money then
 				vivodCent = E.Octo_Func.CompactNumberFormat(CharInfo.Money/10000)..Money_Icon
@@ -6542,7 +6558,7 @@ function Octo_ToDoCreateAltFrame()
 					end
 				end
 				if i == 0 then
-					GameTooltip:AddLine("No Data")
+					GameTooltip:AddLine(E.Octo_Globals.Green_Color.."All done|r")
 				end
 				GameTooltip:AddDoubleLine(" ", " ")
 				GameTooltip:Show()
@@ -7117,7 +7133,15 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars == nil then Octo_ToDoVars = {} end
 		if Octo_ToDoArtifact == nil then Octo_ToDoArtifact = {} end
 		if Octo_ToDoOther == nil then Octo_ToDoOther = {} end
+		if Octo_ToDoOther.prefix == nil then Octo_ToDoOther.prefix = "ru." end
+		if Octo_ToDoOther.suffix == nil then Octo_ToDoOther.suffix = "" end
+		if Octo_ToDoOther.TokenPrice == nil then Octo_ToDoOther.TokenPrice = 0 end
+
+
+
 		if Octo_ToDoOther.Holiday == nil then Octo_ToDoOther.Holiday = {} end
+
+
 		for classFilename, v in pairs(E.Octo_Globals.CLASS_ARTIFACT_DATA) do
 			for itemID in pairs(E.Octo_Globals.CLASS_ARTIFACT_DATA[classFilename]) do
 				local artifactData = E.Octo_Globals.CLASS_ARTIFACT_DATA[classFilename][itemID]
@@ -7238,7 +7262,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 				end,
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-					GameTooltip_SetTitle(GameTooltip, AddonTitle.." "..AddonVersion)
+					GameTooltip_SetTitle(GameTooltip, AddonTitle.." "..E.Octo_Globals.LightGray_Color..AddonVersion.."|r")
 					GameTooltip:Show()
 				end,
 				OnLeave = function()
@@ -7253,10 +7277,17 @@ function Octo_ToDoOnEvent(self, event, ...)
 	end
 	if event == "PLAYER_LOGIN" and not InCombatLockdown() then
 		local curGUID = UnitGUID("PLAYER")
+		if Octo_ToDoOther.default_bindings_set == nil then
+			E.Octo_Func.HandleDefaultBindings("WOWHEAD_QUICK_LINK_NAME", "CTRL-C")
+			E.Octo_Func.HandleDefaultBindings("WOWHEAD_QUICK_LINK_RAIDERIO_NAME", "CTRL-SHIFT-C")
+			SaveBindings(GetCurrentBindingSet())
+			Octo_ToDoOther.default_bindings_set = true
+		end
 		Octo_ToDoLevels[curGUID] = Octo_ToDoLevels[curGUID] or {}
 		for k, CharInfo in pairs(Octo_ToDoLevels) do
 			checkCharInfo(CharInfo)
 		end
+		-- Collect_Token_Price()
 		Collect_ALL_PlayerInfo()
 		Collect_ALL_BankInfo()
 		Collect_All_Currency()
@@ -7296,6 +7327,9 @@ function Octo_ToDoOnEvent(self, event, ...)
 				Octo_ToDoVars.config.AnotherAddonsRAID = false
 			end
 		end)
+	end
+	if event == "TOKEN_MARKET_PRICE_UPDATED" then
+		Collect_Token_Price()
 	end
 	if event == "CHAT_MSG_SKILL" or event == "CHAT_MSG_SYSTEM" and not InCombatLockdown() then --event == "TRAINER_UPDATE" or
 		-- print (event, "Collect_All_Professions")
@@ -7341,6 +7375,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 	end
 	if event == "PLAYER_MONEY" and not InCombatLockdown() then
 		Collect_ALL_MoneyUpdate()
+		Collect_Token_Price()
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
 	if event == "CURRENCY_DISPLAY_UPDATE" and not InCombatLockdown() then
@@ -7365,6 +7400,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
 	if event == "PLAYER_ENTERING_WORLD" and not InCombatLockdown() then
+		Collect_Token_Price()
 		Collect_ALL_PVPRaitings()
 		Collect_ALL_LoginTime()
 		Collect_ALL_ItemsInBag()
