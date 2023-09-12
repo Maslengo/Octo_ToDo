@@ -1194,7 +1194,7 @@ local OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			76982,75918,75919,75920,75921,75922,75923,
+			76982, 75918, 75919, 75920, 75921, 75922, 75923,
 		},
 		max = 7,
 	},
@@ -1449,7 +1449,7 @@ local function checkCharInfo(self)
 	end
 	self.professions = self.professions or {}
 	-- for k, v in pairs(E.Octo_Table.Octo_ProfessionsskillLine) do
-	-- 	self.professions[k] = self.professions[k] or {}
+	--     self.professions[k] = self.professions[k] or {}
 	-- end
 	self.avgItemLevel = self.avgItemLevel or 0
 	self.avgItemLevelEquipped = self.avgItemLevelEquipped or 0
@@ -2007,7 +2007,6 @@ function Collect_All_Professions()
 	local collect = Octo_ToDoLevels[curGUID]
 	if collect then
 		collect.professions = collect.professions or {}
-
 		----------------------------------------------------------------
 		local chest_count = 0
 		local craftOrder_count = 0
@@ -3125,7 +3124,9 @@ function Collect_Token_Price()
 	----------------------------------------------------------------
 	local TokenPrice = C_WowTokenPublic.GetCurrentMarketPrice()
 	----------------------------------------------------------------
-	collect.TokenPrice = TokenPrice or 0
+	if TokenPrice then
+		collect.TokenPrice = TokenPrice or 0
+	end
 end
 function Timer_Legion_Invasion()
 	local TIMER = (1547586000-10800)
@@ -3349,12 +3350,12 @@ function Octo_ToDoOnLoad()
 end
 -- local EventFrame = nil
 -- if not EventFrame then
--- 	EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
+--     EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
 -- end
 -- EventFrame:SetScript("OnKeyDown", function(self, key)
--- 		if key == GetBindingKey("TOGGLEGAMEMENU") then
--- 			Collect_ALL_ItemsInBag()
--- 		end
+--         if key == GetBindingKey("TOGGLEGAMEMENU") then
+--             Collect_ALL_ItemsInBag()
+--         end
 -- end)
 function O_otrisovka()
 	tinsert(OctoTable_func_otrisovka,
@@ -3396,7 +3397,7 @@ function O_otrisovka()
 			end
 			return vivodCent, vivodLeft
 	end)
-	if Octo_ToDoVars.config.LINE_Dragonflight then
+	if Octo_ToDoVars.config.ExpansionToShow == 10 then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -3500,42 +3501,42 @@ function O_otrisovka()
 					vivodCent = CharInfo.Octopussy_DF_Weekly_TimeRift_count
 				end
 				-- if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
-				-- 	vivodCent = vivodCent.."("..CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count..")"
+				--     vivodCent = vivodCent.."("..CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count..")"
 				-- end
 				-- if CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= NONE and CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count ~= "0/14" then
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Azmourne - Scourge:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76406), CharInfo.OctoTable_QuestID[76406]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76547), CharInfo.OctoTable_QuestID[76547]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" A.Z.E.R.O.T.H. - Mecha:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76521), CharInfo.OctoTable_QuestID[76521]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76404), CharInfo.OctoTable_QuestID[76404]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Azmerloth - Murlocs:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76548), CharInfo.OctoTable_QuestID[76548]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76379), CharInfo.OctoTable_QuestID[76379]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Azewrath - Fel/Demons:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76459), CharInfo.OctoTable_QuestID[76459]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76362), CharInfo.OctoTable_QuestID[76362]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Azq'roth - Void/Black Empire:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76546), CharInfo.OctoTable_QuestID[76546]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76453), CharInfo.OctoTable_QuestID[76453]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Warlands - Alliance/Horde:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76544), CharInfo.OctoTable_QuestID[76544]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76449), CharInfo.OctoTable_QuestID[76449]}
-				-- 	tooltip[#tooltip+1] = {" ", " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Ulderoth - Titans:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76351), CharInfo.OctoTable_QuestID[76351]}
-				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76533), CharInfo.OctoTable_QuestID[76533]}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Azmourne - Scourge:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76406), CharInfo.OctoTable_QuestID[76406]}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76547), CharInfo.OctoTable_QuestID[76547]}
+				--     tooltip[#tooltip+1] = {" ", " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" A.Z.E.R.O.T.H. - Mecha:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76521), CharInfo.OctoTable_QuestID[76521]}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76404), CharInfo.OctoTable_QuestID[76404]}
+				--     tooltip[#tooltip+1] = {" ", " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Azmerloth - Murlocs:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76548), CharInfo.OctoTable_QuestID[76548]}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76379), CharInfo.OctoTable_QuestID[76379]}
+				--     tooltip[#tooltip+1] = {" ", " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Azewrath - Fel/Demons:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76459), CharInfo.OctoTable_QuestID[76459]}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76362), CharInfo.OctoTable_QuestID[76362]}
+				--     tooltip[#tooltip+1] = {" ", " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Azq'roth - Void/Black Empire:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76546), CharInfo.OctoTable_QuestID[76546]}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76453), CharInfo.OctoTable_QuestID[76453]}
+				--     tooltip[#tooltip+1] = {" ", " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Warlands - Alliance/Horde:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76544), CharInfo.OctoTable_QuestID[76544]}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76449), CharInfo.OctoTable_QuestID[76449]}
+				--     tooltip[#tooltip+1] = {" ", " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient(" Ulderoth - Titans:", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76351), CharInfo.OctoTable_QuestID[76351]}
+				--     tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76533), CharInfo.OctoTable_QuestID[76533]}
 				-- end
 				----------------------------------------------------------------
 				----------------------------------------------------------------
 				----------------------------------------------------------------
 				-- for _, v in pairs(E.Octo_Globals.TransmogCollectionType) do
-				-- 	tooltip[#tooltip+1] = {v, CharInfo.AberrusTransmog[v].LFR.."/"..CharInfo.AberrusTransmog[v].Normal.."/"..CharInfo.AberrusTransmog[v].Heroic.."/"..CharInfo.AberrusTransmog[v].Mythic}
+				--     tooltip[#tooltip+1] = {v, CharInfo.AberrusTransmog[v].LFR.."/"..CharInfo.AberrusTransmog[v].Normal.."/"..CharInfo.AberrusTransmog[v].Heroic.."/"..CharInfo.AberrusTransmog[v].Mythic}
 				-- end
 				tooltip[#tooltip+1] = {L["InDev"], " "}
 				tooltip[#tooltip+1] = {" ", " "}
@@ -3566,15 +3567,15 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 		-- tinsert(OctoTable_func_otrisovka,
-		-- 	function(CharInfo, tooltip, CL, BG)
-		-- 		local vivodCent, vivodLeft = "", ""
-		-- 		if CharInfo.ItemsInBag[207002] ~= 0 then
-		-- 			vivodCent = CharInfo.ItemsInBag[207002]
-		-- 		end
-		-- 		-- vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
-		-- 		vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Globals.WOW_Rare_Color..L["Encapsulated Destiny"].."|r"
-		-- 		BG:SetColorTexture(.64, .21, .93, .1)
-		-- 		return vivodCent, vivodLeft
+		--     function(CharInfo, tooltip, CL, BG)
+		--         local vivodCent, vivodLeft = "", ""
+		--         if CharInfo.ItemsInBag[207002] ~= 0 then
+		--             vivodCent = CharInfo.ItemsInBag[207002]
+		--         end
+		--         -- vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
+		--         vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Globals.WOW_Rare_Color..L["Encapsulated Destiny"].."|r"
+		--         BG:SetColorTexture(.64, .21, .93, .1)
+		--         return vivodCent, vivodLeft
 		-- end)
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -3633,7 +3634,7 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 	end
-	if Octo_ToDoVars.config.LINE_Shadowlands then
+	if Octo_ToDoVars.config.ExpansionToShow == 9 then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -3880,7 +3881,7 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 	end
-	if Octo_ToDoVars.config.LINE_BattleforAzeroth then
+	if Octo_ToDoVars.config.ExpansionToShow == 8 then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -4189,7 +4190,7 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 	end
-	if Octo_ToDoVars.config.LINE_Legion then
+	if Octo_ToDoVars.config.ExpansionToShow == 7 then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -4994,7 +4995,7 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 	end
-	if Octo_ToDoVars.config.LINE_WarlordsofDraenor then
+	if Octo_ToDoVars.config.ExpansionToShow == 6 then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -5096,7 +5097,7 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 	end
-	if Octo_ToDoVars.config.LINE_MistsofPandaria then
+	if Octo_ToDoVars.config.ExpansionToShow == 5 then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -5116,19 +5117,19 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 	end
-	if Octo_ToDoVars.config.LINE_Cataclysm then
+	if Octo_ToDoVars.config.ExpansionToShow == 4 then
 	end
-	if Octo_ToDoVars.config.LINE_WrathoftheLichKing then
+	if Octo_ToDoVars.config.ExpansionToShow == 3 then
 	end
-	if Octo_ToDoVars.config.LINE_TheBurningCrusade then
+	if Octo_ToDoVars.config.ExpansionToShow == 2 then
 	end
-	if Octo_ToDoVars.config.LINE_Classic then
+	if Octo_ToDoVars.config.ExpansionToShow == 1 then
 	end
 	-- Валюта
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
-			if Octo_ToDoVars.config.LINE_Dragonflight then
+			if Octo_ToDoVars.config.ExpansionToShow == 10 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Dragonflight".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245), CharInfo.CurrencyID_Total[2245]}
@@ -5137,7 +5138,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2118)..E.Octo_Func.func_currencyName(2118), CharInfo.CurrencyID_Total[2118]}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2003)..E.Octo_Func.func_currencyName(2003), CharInfo.CurrencyID_Total[2003]}
 			end
-			if Octo_ToDoVars.config.LINE_Shadowlands then
+			if Octo_ToDoVars.config.ExpansionToShow == 9 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Shadowlands".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2009)..E.Octo_Func.func_currencyName(2009), CharInfo.CurrencyID_Total[2009]}
@@ -5172,7 +5173,7 @@ function O_otrisovka()
 				end
 				vivodLeft = L["Transferable Anima"]..": "..E.Octo_Globals.Blue_Color..TotalTransAnima.."|r"
 			end
-			if Octo_ToDoVars.config.LINE_BattleforAzeroth then
+			if Octo_ToDoVars.config.ExpansionToShow == 8 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Battle for Azeroth".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1580)..E.Octo_Globals.Blue_Color.."("..L["Coins"]..") |r"..E.Octo_Func.func_currencyName(1580), CharInfo.CurrencyID_Total[1580].."(+"..CharInfo.Octopussy_BfA_Weekly_coinsQuests_count..")"}
@@ -5193,7 +5194,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1719)..E.Octo_Func.func_currencyName(1719), CharInfo.CurrencyID_Total[1719]}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1718)..E.Octo_Func.func_currencyName(1718), CharInfo.CurrencyID_Total[1718]}
 			end
-			if Octo_ToDoVars.config.LINE_Legion then
+			if Octo_ToDoVars.config.ExpansionToShow == 7 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Legion".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1273)..E.Octo_Globals.Blue_Color.."("..L["Coins"]..") |r"..E.Octo_Func.func_currencyName(1273), CharInfo.CurrencyID_Total[1273].."(+"..CharInfo.Octopussy_Legion_Weekly_coinsQuests_count..")"}
@@ -5213,7 +5214,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1220)..E.Octo_Func.func_currencyName(1220), CharInfo.CurrencyID_Total[1220]}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1268)..E.Octo_Func.func_currencyName(1268), CharInfo.CurrencyID_Total[1268]}
 			end
-			if Octo_ToDoVars.config.LINE_WarlordsofDraenor then
+			if Octo_ToDoVars.config.ExpansionToShow == 6 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Warlords of Draenor".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1129)..E.Octo_Globals.Blue_Color.."("..L["Coins"]..") |r"..E.Octo_Func.func_currencyName(1129), CharInfo.CurrencyID_Total[1129].."(+"..CharInfo.Octopussy_WoD_Weekly_coinsQuests_count..")"}
@@ -5229,7 +5230,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1020)..E.Octo_Func.func_currencyName(1020), CharInfo.CurrencyID_Total[1020]}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(999)..E.Octo_Func.func_currencyName(999), CharInfo.CurrencyID_Total[999]}
 			end
-			if Octo_ToDoVars.config.LINE_MistsofPandaria then
+			if Octo_ToDoVars.config.ExpansionToShow == 5 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Mists of Pandaria".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(697)..E.Octo_Globals.Blue_Color.."("..L["Coins"]..") |r"..E.Octo_Func.func_currencyName(697), CharInfo.CurrencyID_Total[697]}
@@ -5239,7 +5240,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(752)..E.Octo_Func.func_currencyName(752), CharInfo.CurrencyID_Total[752]}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(789)..E.Octo_Func.func_currencyName(789), CharInfo.CurrencyID_Total[789]}
 			end
-			if Octo_ToDoVars.config.LINE_Cataclysm then
+			if Octo_ToDoVars.config.ExpansionToShow == 4 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Cataclysm".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(416)..E.Octo_Func.func_currencyName(416), CharInfo.CurrencyID_Total[416]}
@@ -5247,13 +5248,13 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(615)..E.Octo_Func.func_currencyName(615), CharInfo.CurrencyID_Total[615]}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(614)..E.Octo_Func.func_currencyName(614), CharInfo.CurrencyID_Total[614]}
 			end
-			if Octo_ToDoVars.config.LINE_WrathoftheLichKing then
+			if Octo_ToDoVars.config.ExpansionToShow == 3 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Wrath of the Lich King".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(241)..E.Octo_Func.func_currencyName(241), CharInfo.CurrencyID_Total[241]}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(61)..E.Octo_Func.func_currencyName(61), CharInfo.CurrencyID_Total[61]}
 			end
-			if Octo_ToDoVars.config.LINE_TheBurningCrusade then
+			if Octo_ToDoVars.config.ExpansionToShow == 2 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."The Burning Crusade".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1704)..E.Octo_Func.func_currencyName(1704), CharInfo.CurrencyID_Total[1704]}
@@ -5266,7 +5267,7 @@ function O_otrisovka()
 			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1602)..E.Octo_Func.func_currencyName(1602), CharInfo.CurrencyID_Total[1602]}
 			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1792)..E.Octo_Func.func_currencyName(1792), CharInfo.CurrencyID_Total[1792]}
 			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2123)..E.Octo_Func.func_currencyName(2123), CharInfo.CurrencyID_Total[2123]}
-			if Octo_ToDoVars.config.LINE_Cataclysm then
+			if Octo_ToDoVars.config.ExpansionToShow == 4 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(391)..E.Octo_Func.func_currencyName(391), CharInfo.CurrencyID_Total[391]}
 			end
 			if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
@@ -5275,10 +5276,10 @@ function O_otrisovka()
 			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2588)..E.Octo_Func.func_currencyName(2588), CharInfo.CurrencyID_Total[2588]}
 			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1379)..E.Octo_Func.func_currencyName(1379), CharInfo.CurrencyID_Total[1379]}
 			tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(515)..E.Octo_Func.func_currencyName(515), CharInfo.CurrencyID_Total[515]}
-			if Octo_ToDoVars.config.LINE_MistsofPandaria then
+			if Octo_ToDoVars.config.ExpansionToShow == 5 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(402)..E.Octo_Func.func_currencyName(402), CharInfo.CurrencyID_Total[402]}
 			end
-			if Octo_ToDoVars.config.LINE_WrathoftheLichKing then
+			if Octo_ToDoVars.config.ExpansionToShow == 3 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(81)..E.Octo_Func.func_currencyName(81), CharInfo.CurrencyID_Total[81]}
 			end
 			if #tooltip ~= 0 then
@@ -5295,7 +5296,7 @@ function O_otrisovka()
 					tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v), CharInfo.ItemsInBag[v]}
 				end
 			end
-			if Octo_ToDoVars.config.LINE_Dragonflight then
+			if Octo_ToDoVars.config.ExpansionToShow == 10 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Dragonflight".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2507), CharInfo.reputationID[2507]} -- Драконья экспедиция
@@ -5324,7 +5325,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2544), CharInfo.reputationID[2544]} -- Консорциум ремесленников – филиал на Драконьих островах
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2526), CharInfo.reputationID[2526]} -- Фурболги из клана Зимней Шкуры
 			end
-			if Octo_ToDoVars.config.LINE_Shadowlands then
+			if Octo_ToDoVars.config.ExpansionToShow == 9 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Shadowlands".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = { E.Octo_Func.func_reputationName(2478), CharInfo.reputationID[2478]} -- Просветленные
@@ -5385,7 +5386,7 @@ function O_otrisovka()
 				-- tooltip[#tooltip+1] = { E.Octo_Func.func_reputationName(2473), CharInfo.reputationID[2473]} -- Кодекс архивариуса (идеал)
 				-- tooltip[#tooltip+1] = { E.Octo_Func.func_reputationName(2440), CharInfo.reputationID[2440]} -- Неумирающая армия (Идеал)
 			end
-			if Octo_ToDoVars.config.LINE_BattleforAzeroth then
+			if Octo_ToDoVars.config.ExpansionToShow == 8 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Battle for Azeroth".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				if CharInfo.Faction == "Horde" then
@@ -5443,7 +5444,7 @@ function O_otrisovka()
 				-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2374), CharInfo.reputationID[2374]} -- Освобожденные (идеал)
 				-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2401), CharInfo.reputationID[2401]} -- Анкоа из клана Клинков Волн (идеал)
 			end
-			if Octo_ToDoVars.config.LINE_Legion then
+			if Octo_ToDoVars.config.ExpansionToShow == 7 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Legion".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(1585245)..E.Octo_Func.func_reputationName(2045), CharInfo.reputationID[2045]} -- Армия погибели Легиона
@@ -5484,7 +5485,7 @@ function O_otrisovka()
 				-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2088), CharInfo.reputationID[2088]} -- Ткачи Снов (идеал)
 				--tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(1861), CharInfo.reputationID[1861]} -- Arcane Thirst (Silgryn) DEPRECATED
 			end
-			if Octo_ToDoVars.config.LINE_WarlordsofDraenor then
+			if Octo_ToDoVars.config.ExpansionToShow == 6 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Warlords of Draenor".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(1052654)..E.Octo_Func.func_reputationName(1711), CharInfo.reputationID[1711]} -- Археологическое общество Хитрой Шестеренки
@@ -5516,7 +5517,7 @@ function O_otrisovka()
 				--tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(1520), CharInfo.reputationID[1520]} -- Изгнанники клана Призрачной Луны
 				--tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(1732), CharInfo.reputationID[1732]} -- Дренорcкая Экспедиция Хитрой Шестеренки
 			end
-			if Octo_ToDoVars.config.LINE_MistsofPandaria then
+			if Octo_ToDoVars.config.ExpansionToShow == 5 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Mists of Pandaria".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(838811)..E.Octo_Func.func_reputationName(1435), CharInfo.reputationID[1435]} -- Натиск Шадо-Пан
@@ -5556,7 +5557,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(1440), CharInfo.reputationID[1440]} -- Восстание Черного Копья
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(1351), CharInfo.reputationID[1351]} -- Хмелевары
 			end
-			if Octo_ToDoVars.config.LINE_Cataclysm then
+			if Octo_ToDoVars.config.ExpansionToShow == 4 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Cataclysm".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(456567)..E.Octo_Func.func_reputationName(1135), CharInfo.reputationID[1135]} -- Служители Земли
@@ -5572,7 +5573,7 @@ function O_otrisovka()
 				end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(1204), CharInfo.reputationID[1204]} -- Хиджальские мстители
 			end
-			if Octo_ToDoVars.config.LINE_WrathoftheLichKing then
+			if Octo_ToDoVars.config.ExpansionToShow == 3 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Wrath of the Lich King".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(1073), CharInfo.reputationID[1073]} -- Калу'ак
@@ -5599,7 +5600,7 @@ function O_otrisovka()
 					tooltip[#tooltip+1] = {Alliance_Icon..E.Octo_Func.func_reputationName(1068), CharInfo.reputationID[1068]} -- Лига исследователей
 				end
 			end
-			if Octo_ToDoVars.config.LINE_TheBurningCrusade then
+			if Octo_ToDoVars.config.ExpansionToShow == 2 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."The Burning Crusade".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(936), CharInfo.reputationID[936]} -- Город Шаттрат
@@ -5630,7 +5631,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(990), CharInfo.reputationID[990]} -- Песчаная Чешуя
 				tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(1015), CharInfo.reputationID[1015]} -- Крылья Пустоты
 			end
-			if Octo_ToDoVars.config.LINE_Classic then
+			if Octo_ToDoVars.config.ExpansionToShow == 1 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Classic".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				if CharInfo.Faction == "Alliance" then
@@ -5703,7 +5704,7 @@ function O_otrisovka()
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
-			if Octo_ToDoVars.config.LINE_Dragonflight then
+			if Octo_ToDoVars.config.ExpansionToShow == 10 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Dragonflight".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {WorldBoss_Icon..L["World Boss"], CharInfo.Octopussy_DF_Weekly_WBALL_count}
 				tooltip[#tooltip+1] = {Timer_DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"], CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count}
@@ -5750,7 +5751,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Weekly_TheForbiddenReachRares_count}
 				tooltip[#tooltip+1] = {L["Storm-Bound Chest"], CharInfo.Octopussy_DF_Weekly_StormBoundChest_count}
 			end
-			if Octo_ToDoVars.config.LINE_Shadowlands then
+			if Octo_ToDoVars.config.ExpansionToShow == 9 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Shadowlands".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 				tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_name, CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count}
@@ -5832,7 +5833,7 @@ function O_otrisovka()
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
-			-- if Octo_ToDoVars.config.LINE_Dragonflight then
+			-- if Octo_ToDoVars.config.ExpansionToShow == 10 then
 			-- end
 			local ServerTime = GetServerTime()
 			for _, v in pairs(E.Octo_Table.OctoTable_journalInstanceID) do
@@ -5851,263 +5852,6 @@ function O_otrisovka()
 			end
 			return vivodCent, vivodLeft
 	end)
-	-- -- Рейды
-	-- tinsert(OctoTable_func_otrisovka,
-	-- function(CharInfo, tooltip, CL, BG)
-	-- local vivodCent, vivodLeft = "", ""
-	-- if Octo_ToDoVars.config.LINE_Dragonflight then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Dragonflight".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["Vault of the Incarnates"], CharInfo.journalInstance[2522].vivod}
-	-- tooltip[#tooltip+1] = {L["Aberrus, the Shadowed Crucible"], CharInfo.journalInstance[2569].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["Algeth'ar Academy"], CharInfo.journalInstance[2526].vivod}
-	-- tooltip[#tooltip+1] = {L["Brackenhide Hollow"], CharInfo.journalInstance[2520].vivod}
-	-- tooltip[#tooltip+1] = {L["Halls of Infusion"], CharInfo.journalInstance[2527].vivod}
-	-- tooltip[#tooltip+1] = {L["Neltharus"], CharInfo.journalInstance[2519].vivod}
-	-- tooltip[#tooltip+1] = {L["Ruby Life Pools"], CharInfo.journalInstance[2521].vivod}
-	-- tooltip[#tooltip+1] = {L["The Azure Vault"], CharInfo.journalInstance[2515].vivod}
-	-- tooltip[#tooltip+1] = {L["The Nokhud Offensive"] , CharInfo.journalInstance[2516].vivod}
-	-- tooltip[#tooltip+1] = {L["Uldaman: Legacy of Tyr"], CharInfo.journalInstance[2451].vivod}
-	-- tooltip[#tooltip+1] = {L["Dawn of the Infinite"], CharInfo.journalInstance[2579].vivod}
-	-- end
-	-- if Octo_ToDoVars.config.LINE_Shadowlands then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Shadowlands".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["Castle Nathria"], CharInfo.journalInstance[2296].vivod}
-	-- tooltip[#tooltip+1] = {L["Sanctum of Domination"], CharInfo.journalInstance[2450].vivod}
-	-- tooltip[#tooltip+1] = {L["Sepulcher of the First Ones"], CharInfo.journalInstance[2481].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["The Necrotic Wake"], CharInfo.journalInstance[1182].vivod}
-	-- tooltip[#tooltip+1] = {L["Spires of Ascension"], CharInfo.journalInstance[1186].vivod}
-	-- tooltip[#tooltip+1] = {L["Plaguefall"], CharInfo.journalInstance[1183].vivod}
-	-- tooltip[#tooltip+1] = {L["Theater of Pain"], CharInfo.journalInstance[1187].vivod}
-	-- tooltip[#tooltip+1] = {L["Mists of Tirna Scithe"], CharInfo.journalInstance[1184].vivod}
-	-- tooltip[#tooltip+1] = {L["De Other Side"], CharInfo.journalInstance[1188].vivod}
-	-- tooltip[#tooltip+1] = {L["Halls of Atonement"], CharInfo.journalInstance[1185].vivod}
-	-- tooltip[#tooltip+1] = {L["Sanguine Depths"], CharInfo.journalInstance[1189].vivod}
-	-- tooltip[#tooltip+1] = {L["Tazavesh, the Veiled Market"], CharInfo.journalInstance[1194].vivod}
-	-- end
-	-- if Octo_ToDoVars.config.LINE_BattleforAzeroth then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Battle for Azeroth".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["Uldir"], CharInfo.journalInstance[1031].vivod}
-	-- tooltip[#tooltip+1] = {L["Battle of Dazar'alor"], CharInfo.journalInstance[1176].vivod}
-	-- tooltip[#tooltip+1] = {L["Crucible of Storms"], CharInfo.journalInstance[1177].vivod}
-	-- tooltip[#tooltip+1] = {L["The Eternal Palace"], CharInfo.journalInstance[1179].vivod}
-	-- tooltip[#tooltip+1] = {L["Ny'alotha, the Waking City"], CharInfo.journalInstance[1180].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["Atal'Dazar"], CharInfo.journalInstance[968].vivod}
-	-- tooltip[#tooltip+1] = {L["Freehold"], CharInfo.journalInstance[1001].vivod}
-	-- tooltip[#tooltip+1] = {L["Kings' Rest"], CharInfo.journalInstance[1041].vivod}
-	-- tooltip[#tooltip+1] = {L["The MOTHERLODE!!"], CharInfo.journalInstance[1012].vivod}
-	-- tooltip[#tooltip+1] = {L["Operation: Mechagon"], CharInfo.journalInstance[1178].vivod}
-	-- tooltip[#tooltip+1] = {L["Siege of Boralus"], CharInfo.journalInstance[1023].vivod}
-	-- tooltip[#tooltip+1] = {L["The Underrot"], CharInfo.journalInstance[1022].vivod}
-	-- tooltip[#tooltip+1] = {L["Shrine of the Storm"], CharInfo.journalInstance[1036].vivod}
-	-- tooltip[#tooltip+1] = {L["Tol Dagor"], CharInfo.journalInstance[1002].vivod}
-	-- tooltip[#tooltip+1] = {L["Waycrest Manor"], CharInfo.journalInstance[1021].vivod}
-	-- tooltip[#tooltip+1] = {L["Temple of Sethraliss"], CharInfo.journalInstance[1030].vivod}
-	-- end
-	-- if Octo_ToDoVars.config.LINE_Legion then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Legion".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["The Emerald Nightmare"], CharInfo.journalInstance[768].vivod}
-	-- tooltip[#tooltip+1] = {L["Trial of Valor"], CharInfo.journalInstance[861].vivod}
-	-- tooltip[#tooltip+1] = {L["The Nighthold"], CharInfo.journalInstance[786].vivod}
-	-- tooltip[#tooltip+1] = {L["Tomb of Sargeras"], CharInfo.journalInstance[875].vivod}
-	-- tooltip[#tooltip+1] = {L["Antorus, the Burning Throne"], CharInfo.journalInstance[946].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["Return to Karazhan"], CharInfo.journalInstance[860].vivod}
-	-- tooltip[#tooltip+1] = {L["Vault of the Wardens"], CharInfo.journalInstance[707].vivod}
-	-- tooltip[#tooltip+1] = {L["The Arcway"], CharInfo.journalInstance[726].vivod}
-	-- tooltip[#tooltip+1] = {L["Court of Stars"], CharInfo.journalInstance[800].vivod}
-	-- tooltip[#tooltip+1] = {L["Black Rook Hold"], CharInfo.journalInstance[740].vivod}
-	-- tooltip[#tooltip+1] = {L["Neltharion's Lair"], CharInfo.journalInstance[767].vivod}
-	-- tooltip[#tooltip+1] = {L["Eye of Azshara"], CharInfo.journalInstance[716].vivod}
-	-- tooltip[#tooltip+1] = {L["Seat of the Triumvirate"], CharInfo.journalInstance[945].vivod}
-	-- tooltip[#tooltip+1] = {L["Cathedral of Eternal Night"], CharInfo.journalInstance[900].vivod}
-	-- tooltip[#tooltip+1] = {L["Maw of Souls"], CharInfo.journalInstance[727].vivod}
-	-- tooltip[#tooltip+1] = {L["Darkheart Thicket"], CharInfo.journalInstance[762].vivod}
-	-- tooltip[#tooltip+1] = {L["Halls of Valor"], CharInfo.journalInstance[721].vivod}
-	-- tooltip[#tooltip+1] = {L["Assault on Violet Hold"], CharInfo.journalInstance[777].vivod}
-	-- end
-	-- if Octo_ToDoVars.config.LINE_WarlordsofDraenor then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Warlords of Draenor".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["Highmaul"], CharInfo.journalInstance[477].vivod}
-	-- tooltip[#tooltip+1] = {L["Blackrock Foundry"], CharInfo.journalInstance[457].vivod}
-	-- tooltip[#tooltip+1] = {L["Hellfire Citadel"], CharInfo.journalInstance[669].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["Auchindoun"], CharInfo.journalInstance[547].vivod}
-	-- tooltip[#tooltip+1] = {L["Upper Blackrock Spire"], CharInfo.journalInstance[559].vivod}
-	-- tooltip[#tooltip+1] = {L["The Everbloom"], CharInfo.journalInstance[556].vivod}
-	-- tooltip[#tooltip+1] = {L["Grimrail Depot"], CharInfo.journalInstance[536].vivod}
-	-- tooltip[#tooltip+1] = {L["Iron Docks"], CharInfo.journalInstance[558].vivod}
-	-- tooltip[#tooltip+1] = {L["Skyreach"], CharInfo.journalInstance[476].vivod}
-	-- tooltip[#tooltip+1] = {L["Shadowmoon Burial Grounds"], CharInfo.journalInstance[537].vivod}
-	-- tooltip[#tooltip+1] = {L["Bloodmaul Slag Mines"], CharInfo.journalInstance[385].vivod}
-	-- end
-	-- if Octo_ToDoVars.config.LINE_MistsofPandaria then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Mists of Pandaria".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["Mogu'shan Vaults"], CharInfo.journalInstance[317].vivod}
-	-- tooltip[#tooltip+1] = {L["Heart of Fear"], CharInfo.journalInstance[330].vivod}
-	-- tooltip[#tooltip+1] = {L["Terrace of Endless Spring"], CharInfo.journalInstance[320].vivod}
-	-- tooltip[#tooltip+1] = {L["Throne of Thunder"], CharInfo.journalInstance[362].vivod}
-	-- tooltip[#tooltip+1] = {L["Siege of Orgrimmar"], CharInfo.journalInstance[369].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["Gate of the Setting Sun"], CharInfo.journalInstance[303].vivod}
-	-- tooltip[#tooltip+1] = {L["Mogu'shan Palace"], CharInfo.journalInstance[321].vivod}
-	-- tooltip[#tooltip+1] = {L["Scarlet Halls"], CharInfo.journalInstance[311].vivod}
-	-- tooltip[#tooltip+1] = {L["Scarlet Monastery"], CharInfo.journalInstance[316].vivod}
-	-- tooltip[#tooltip+1] = {L["Shado-Pan Monastery"], CharInfo.journalInstance[312].vivod}
-	-- tooltip[#tooltip+1] = {L["Scholomance"], CharInfo.journalInstance[1007].vivod}
-	-- tooltip[#tooltip+1] = {L["Siege of Niuzao Temple"], CharInfo.journalInstance[324].vivod}
-	-- tooltip[#tooltip+1] = {L["Stormstout Brewery"], CharInfo.journalInstance[302].vivod}
-	-- tooltip[#tooltip+1] = {L["Temple of the Jade Serpent"], CharInfo.journalInstance[313].vivod}
-	-- end
-	-- if Octo_ToDoVars.config.LINE_Cataclysm then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Cataclysm".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["Baradin Hold"], CharInfo.journalInstance[75].vivod}
-	-- tooltip[#tooltip+1] = {L["The Bastion of Twilight"], CharInfo.journalInstance[72].vivod}
-	-- tooltip[#tooltip+1] = {L["Blackwing Descent"], CharInfo.journalInstance[73].vivod}
-	-- tooltip[#tooltip+1] = {L["Throne of the Four Winds"], CharInfo.journalInstance[74].vivod}
-	-- tooltip[#tooltip+1] = {L["Firelands"], CharInfo.journalInstance[78].vivod}
-	-- tooltip[#tooltip+1] = {L["Dragon Soul"], CharInfo.journalInstance[187].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["The Vortex Pinnacle"], CharInfo.journalInstance[68].vivod}
-	-- tooltip[#tooltip+1] = {L["Hour of Twilight"], CharInfo.journalInstance[186].vivod}
-	-- tooltip[#tooltip+1] = {L["Grim Batol"], CharInfo.journalInstance[71].vivod}
-	-- tooltip[#tooltip+1] = {L["Lost City of the Tol'vir"], CharInfo.journalInstance[69].vivod}
-	-- tooltip[#tooltip+1] = {L["Zul'Aman"], CharInfo.journalInstance[77].vivod}
-	-- tooltip[#tooltip+1] = {L["Zul'Gurub"], CharInfo.journalInstance[76].vivod}
-	-- tooltip[#tooltip+1] = {L["Well of Eternity"], CharInfo.journalInstance[185].vivod}
-	-- tooltip[#tooltip+1] = {L["The Stonecore"], CharInfo.journalInstance[67].vivod}
-	-- tooltip[#tooltip+1] = {L["End Time"], CharInfo.journalInstance[184].vivod}
-	-- tooltip[#tooltip+1] = {L["Shadowfang Keep"], CharInfo.journalInstance[64].vivod}
-	-- tooltip[#tooltip+1] = {L["Deadmines"], CharInfo.journalInstance[63].vivod}
-	-- tooltip[#tooltip+1] = {L["Blackrock Caverns"], CharInfo.journalInstance[66].vivod}
-	-- tooltip[#tooltip+1] = {L["Throne of the Tides"], CharInfo.journalInstance[65].vivod}
-	-- tooltip[#tooltip+1] = {L["Halls of Origination"], CharInfo.journalInstance[70].vivod}
-	-- end
-	-- if Octo_ToDoVars.config.LINE_WrathoftheLichKing then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Wrath of the Lich King".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["Vault of Archavon"], CharInfo.journalInstance[249].vivod}
-	-- tooltip[#tooltip+1] = {L["Naxxramas"], CharInfo.journalInstance[533].vivod}
-	-- tooltip[#tooltip+1] = {L["The Obsidian Sanctum"], CharInfo.journalInstance[603].vivod}
-	-- tooltip[#tooltip+1] = {L["The Eye of Eternity"], CharInfo.journalInstance[615].vivod}
-	-- tooltip[#tooltip+1] = {L["Ulduar"], CharInfo.journalInstance[616].vivod}
-	-- tooltip[#tooltip+1] = {L["Trial of the Crusader"], CharInfo.journalInstance[624].vivod}
-	-- tooltip[#tooltip+1] = {L["Onyxia's Lair"], CharInfo.journalInstance[631].vivod}
-	-- tooltip[#tooltip+1] = {L["Icecrown Citadel"], CharInfo.journalInstance[649].vivod}
-	-- tooltip[#tooltip+1] = {L["The Ruby Sanctum"], CharInfo.journalInstance[724].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["Azjol-Nerub"], CharInfo.journalInstance[272].vivod}
-	-- tooltip[#tooltip+1] = {L["The Violet Hold"], CharInfo.journalInstance[283].vivod}
-	-- tooltip[#tooltip+1] = {L["Ahn'kahet: The Old Kingdom"], CharInfo.journalInstance[271].vivod}
-	-- tooltip[#tooltip+1] = {L["Utgarde Pinnacle"], CharInfo.journalInstance[286].vivod}
-	-- tooltip[#tooltip+1] = {L["Gundrak"], CharInfo.journalInstance[274].vivod}
-	-- tooltip[#tooltip+1] = {L["Halls of Reflection"], CharInfo.journalInstance[276].vivod}
-	-- tooltip[#tooltip+1] = {L["Trial of the Champion"], CharInfo.journalInstance[284].vivod}
-	-- tooltip[#tooltip+1] = {L["Drak'Tharon Keep"], CharInfo.journalInstance[273].vivod}
-	-- tooltip[#tooltip+1] = {L["Utgarde Keep"], CharInfo.journalInstance[285].vivod}
-	-- tooltip[#tooltip+1] = {L["The Forge of Souls"], CharInfo.journalInstance[280].vivod}
-	-- tooltip[#tooltip+1] = {L["The Nexus"], CharInfo.journalInstance[281].vivod}
-	-- tooltip[#tooltip+1] = {L["The Oculus"], CharInfo.journalInstance[282].vivod}
-	-- tooltip[#tooltip+1] = {L["The Culling of Stratholme"], CharInfo.journalInstance[279].vivod}
-	-- tooltip[#tooltip+1] = {L["Halls of Stone"], CharInfo.journalInstance[277].vivod}
-	-- tooltip[#tooltip+1] = {L["Halls of Lightning"], CharInfo.journalInstance[275].vivod}
-	-- tooltip[#tooltip+1] = {L["Pit of Saron"], CharInfo.journalInstance[278].vivod}
-	-- end
-	-- if Octo_ToDoVars.config.LINE_TheBurningCrusade then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."The Burning Crusade".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["Karazhan"], CharInfo.journalInstance[745].vivod}
-	-- tooltip[#tooltip+1] = {L["Gruul's Lair"], CharInfo.journalInstance[746].vivod}
-	-- tooltip[#tooltip+1] = {L["Magtheridon's Lair"], CharInfo.journalInstance[747].vivod}
-	-- tooltip[#tooltip+1] = {L["Serpentshrine Cavern"], CharInfo.journalInstance[748].vivod}
-	-- tooltip[#tooltip+1] = {L["The Eye"], CharInfo.journalInstance[749].vivod}
-	-- tooltip[#tooltip+1] = {L["The Battle for Mount Hyjal"], CharInfo.journalInstance[750].vivod}
-	-- tooltip[#tooltip+1] = {L["Black Temple"], CharInfo.journalInstance[751].vivod}
-	-- tooltip[#tooltip+1] = {L["Sunwell Plateau"], CharInfo.journalInstance[752].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["The Arcatraz"], CharInfo.journalInstance[254].vivod}
-	-- tooltip[#tooltip+1] = {L["Auchenai Crypts"], CharInfo.journalInstance[247].vivod}
-	-- tooltip[#tooltip+1] = {L["Hellfire Ramparts"], CharInfo.journalInstance[248].vivod}
-	-- tooltip[#tooltip+1] = {L["The Botanica"], CharInfo.journalInstance[257].vivod}
-	-- tooltip[#tooltip+1] = {L["Mana-Tombs"], CharInfo.journalInstance[250].vivod}
-	-- tooltip[#tooltip+1] = {L["The Blood Furnace"], CharInfo.journalInstance[256].vivod}
-	-- tooltip[#tooltip+1] = {L["The Mechanar"], CharInfo.journalInstance[258].vivod}
-	-- tooltip[#tooltip+1] = {L["The Underbog"], CharInfo.journalInstance[262].vivod}
-	-- tooltip[#tooltip+1] = {L["The Steamvault"], CharInfo.journalInstance[261].vivod}
-	-- tooltip[#tooltip+1] = {L["The Shattered Halls"], CharInfo.journalInstance[259].vivod}
-	-- tooltip[#tooltip+1] = {L["Sethekk Halls"], CharInfo.journalInstance[252].vivod}
-	-- tooltip[#tooltip+1] = {L["Old Hillsbrad Foothills"], CharInfo.journalInstance[251].vivod}
-	-- tooltip[#tooltip+1] = {L["Shadow Labyrinth"], CharInfo.journalInstance[253].vivod}
-	-- tooltip[#tooltip+1] = {L["Magisters' Terrace"], CharInfo.journalInstance[249].vivod}
-	-- tooltip[#tooltip+1] = {L["The Slave Pens"], CharInfo.journalInstance[260].vivod}
-	-- tooltip[#tooltip+1] = {L["The Black Morass"], CharInfo.journalInstance[255].vivod}
-	-- end
-	-- if Octo_ToDoVars.config.LINE_Classic then
-	-- if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Classic".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {L["Molten Core"], CharInfo.journalInstance[741].vivod}
-	-- tooltip[#tooltip+1] = {L["Blackwing Lair"], CharInfo.journalInstance[742].vivod}
-	-- tooltip[#tooltip+1] = {L["Ruins of Ahn'Qiraj"], CharInfo.journalInstance[743].vivod}
-	-- tooltip[#tooltip+1] = {L["Temple of Ahn'Qiraj"], CharInfo.journalInstance[744].vivod}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- tooltip[#tooltip+1] = {L["Blackrock Depths"], CharInfo.journalInstance[228].vivod}
-	-- tooltip[#tooltip+1] = {L["Gnomeregan"], CharInfo.journalInstance[231].vivod}
-	-- tooltip[#tooltip+1] = {L["Dire Maul"], CharInfo.journalInstance[230].vivod}
-	-- tooltip[#tooltip+1] = {L["Scarlet Halls"], CharInfo.journalInstance[311].vivod}
-	-- tooltip[#tooltip+1] = {L["Zul'Farrak"], CharInfo.journalInstance[241].vivod}
-	-- tooltip[#tooltip+1] = {L["Shadowfang Keep"], CharInfo.journalInstance[64].vivod}
-	-- tooltip[#tooltip+1] = {L["Razorfen Downs"], CharInfo.journalInstance[233].vivod}
-	-- tooltip[#tooltip+1] = {L["Razorfen Kraul"], CharInfo.journalInstance[234].vivod}
-	-- tooltip[#tooltip+1] = {L["Maraudon"], CharInfo.journalInstance[232].vivod}
-	-- -- tooltip[#tooltip+1] = {L["Deadmines"], CharInfo.journalInstance[63].vivod}
-	-- tooltip[#tooltip+1] = {L["Scarlet Monastery - OLD"], CharInfo.journalInstance[235].vivod}
-	-- -- tooltip[#tooltip+1] = {L["Scholomance"], CharInfo.journalInstance[246].vivod}
-	-- tooltip[#tooltip+1] = {L["Blackfathom Deeps"], CharInfo.journalInstance[227].vivod}
-	-- tooltip[#tooltip+1] = {L["Lower Blackrock Spire"], CharInfo.journalInstance[229].vivod}
-	-- tooltip[#tooltip+1] = {L["Ragefire Chasm"], CharInfo.journalInstance[226].vivod}
-	-- tooltip[#tooltip+1] = {L["Wailing Caverns"], CharInfo.journalInstance[240].vivod}
-	-- end
-	-- if #tooltip ~= 0 then
-	-- vivodCent = E.Octo_Globals.Gray_Color.."Инсты".."|r" -- RAIDS
-	-- end
-	-- return vivodCent, vivodLeft
-	-- end)
-	-- -- Поздемелья
-	-- tinsert(OctoTable_func_otrisovka,
-	-- function(CharInfo, tooltip, CL, BG)
-	-- local vivodCent, vivodLeft = "", ""
-	-- if Octo_ToDoVars.config.LINE_Dragonflight then
-	-- tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Dragonflight".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-	-- tooltip[#tooltip+1] = {"Академия Алгет'ар", " "}
-	-- tooltip[#tooltip+1] = {"Лощина Бурошкуров", " "}
-	-- tooltip[#tooltip+1] = {"Чертоги Насыщения", " "}
-	-- tooltip[#tooltip+1] = {"Нелтарий", " "}
-	-- tooltip[#tooltip+1] = {"Рубиновые Омуты Жизни", " "}
-	-- tooltip[#tooltip+1] = {"Лазурное хранилище", " "}
-	-- tooltip[#tooltip+1] = {"Наступление клана Нокхуд", " "}
-	-- tooltip[#tooltip+1] = {"Ульдаман", " "}
-	-- tooltip[#tooltip+1] = {"Рассвет Бесконечности", " "}
-	-- tooltip[#tooltip+1] = {" ", " "}
-	-- -- tooltip[#tooltip+1] = {"Зал Хранителей", " "}
-	-- -- tooltip[#tooltip+1] = {"Большие раскопки", " "}
-	-- -- tooltip[#tooltip+1] = {"Монастырь Алого ордена", " "}
-	-- -- tooltip[#tooltip+1] = {"Ульдерот", " "}
-	-- end
-	-- if #tooltip ~= 0 then
-	-- vivodCent = E.Octo_Globals.Gray_Color..DUNGEONS.."|r"
-	-- end
-	-- return vivodCent, vivodLeft
-	-- end)
-	-- Предметы
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
@@ -7136,12 +6880,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoOther.prefix == nil then Octo_ToDoOther.prefix = "ru." end
 		if Octo_ToDoOther.suffix == nil then Octo_ToDoOther.suffix = "" end
 		if Octo_ToDoOther.TokenPrice == nil then Octo_ToDoOther.TokenPrice = 0 end
-
-
-
 		if Octo_ToDoOther.Holiday == nil then Octo_ToDoOther.Holiday = {} end
-
-
 		for classFilename, v in pairs(E.Octo_Globals.CLASS_ARTIFACT_DATA) do
 			for itemID in pairs(E.Octo_Globals.CLASS_ARTIFACT_DATA[classFilename]) do
 				local artifactData = E.Octo_Globals.CLASS_ARTIFACT_DATA[classFilename][itemID]
@@ -7198,19 +6937,10 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.TrivialQuests == nil then Octo_ToDoVars.config.TrivialQuests = false end
 		if Octo_ToDoVars.config.RepeatableQuests == nil then Octo_ToDoVars.config.RepeatableQuests = false end
 		if Octo_ToDoVars.config.GlobalFadePersist == nil then Octo_ToDoVars.config.GlobalFadePersist = false end
-		if Octo_ToDoVars.config.LINE_Classic == nil then Octo_ToDoVars.config.LINE_Classic = false end
-		if Octo_ToDoVars.config.LINE_TheBurningCrusade == nil then Octo_ToDoVars.config.LINE_TheBurningCrusade = false end
-		if Octo_ToDoVars.config.LINE_WrathoftheLichKing == nil then Octo_ToDoVars.config.LINE_WrathoftheLichKing = false end
-		if Octo_ToDoVars.config.LINE_Cataclysm == nil then Octo_ToDoVars.config.LINE_Cataclysm = false end
-		if Octo_ToDoVars.config.LINE_MistsofPandaria == nil then Octo_ToDoVars.config.LINE_MistsofPandaria = false end
-		if Octo_ToDoVars.config.LINE_WarlordsofDraenor == nil then Octo_ToDoVars.config.LINE_WarlordsofDraenor = false end
-		if Octo_ToDoVars.config.LINE_Legion == nil then Octo_ToDoVars.config.LINE_Legion = false end
-		if Octo_ToDoVars.config.LINE_BattleforAzeroth == nil then Octo_ToDoVars.config.LINE_BattleforAzeroth = false end
-		if Octo_ToDoVars.config.LINE_Shadowlands == nil then Octo_ToDoVars.config.LINE_Shadowlands = false end
-		if Octo_ToDoVars.config.LINE_Dragonflight == nil then Octo_ToDoVars.config.LINE_Dragonflight = true end
 		if Octo_ToDoVars.config.LevelToShow == nil then Octo_ToDoVars.config.LevelToShow = 60 end
 		if Octo_ToDoVars.config.itemLevelToShow == nil then Octo_ToDoVars.config.itemLevelToShow = 100 end
 		if Octo_ToDoVars.config.curWidth == nil then Octo_ToDoVars.config.curWidth = 96 end
+		if Octo_ToDoVars.config.ExpansionToShow == nil then Octo_ToDoVars.config.ExpansionToShow = tonumber(GetBuildInfo():match("(.-)%.")) or 1 end
 		if Octo_ToDoVars.config.curWidth ~= nil then
 			E.Octo_Globals.curWidth = Octo_ToDoVars.config.curWidth
 			--E.Octo_Globals.curWidthTitle = E.Octo_Globals.curWidth*2
@@ -7278,8 +7008,8 @@ function Octo_ToDoOnEvent(self, event, ...)
 	if event == "PLAYER_LOGIN" and not InCombatLockdown() then
 		local curGUID = UnitGUID("PLAYER")
 		if Octo_ToDoOther.default_bindings_set == nil then
-			E.Octo_Func.HandleDefaultBindings("WOWHEAD_QUICK_LINK_NAME", "CTRL-C")
-			E.Octo_Func.HandleDefaultBindings("WOWHEAD_QUICK_LINK_RAIDERIO_NAME", "CTRL-SHIFT-C")
+			E.Octo_Func.HandleDefaultBindings("Quick Link (wowhead.com)", "CTRL-C")
+			E.Octo_Func.HandleDefaultBindings("Quick Link (raider.io)", "CTRL-SHIFT-C")
 			SaveBindings(GetCurrentBindingSet())
 			Octo_ToDoOther.default_bindings_set = true
 		end
@@ -7323,9 +7053,9 @@ function Octo_ToDoOnEvent(self, event, ...)
 		Octo_ToDoCreateAltFrame()
 		Octo_ToDoAddDataToAltFrame()
 		C_Timer.After(5, function()
-			if Octo_ToDoVars.config.AnotherAddonsRAID then
-				Octo_ToDoVars.config.AnotherAddonsRAID = false
-			end
+				if Octo_ToDoVars.config.AnotherAddonsRAID then
+					Octo_ToDoVars.config.AnotherAddonsRAID = false
+				end
 		end)
 	end
 	if event == "TOKEN_MARKET_PRICE_UPDATED" then
@@ -7495,3 +7225,4 @@ SlashCmdList.GSEARCH = function(msg)
 end
 SlashCmdList["RELOAD"] = ReloadUI
 SLASH_RELOAD1 = "/rl"
+

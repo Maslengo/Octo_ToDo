@@ -36,6 +36,7 @@ E.Octo_Globals.Purple_Color = "|cffAF61FF"
 E.Octo_Globals.Red_Color = "|cffFF4C4F"
 E.Octo_Globals.Rift_Color = "|cffbf9eff"
 E.Octo_Globals.White_Color = "|cffFFF7D7"
+E.Octo_Globals.Black_Color = "|cff000000"
 E.Octo_Globals.Yellow_Color = "|cffFFF371"
 E.Octo_Globals.Kyrian_Color = "|cff6fa8dc"
 E.Octo_Globals.Kyrian_r_Color = 0.44

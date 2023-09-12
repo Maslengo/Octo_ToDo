@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
+local lsfdd = LibStub("LibSFDropDown-1.4")
 local isElvUI = IsAddOnLoaded("ElvUI")
 local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -62,7 +63,7 @@ config:SetScript("OnShow", function(self)
 		self:SetPoint("TOPLEFT", 0, 0)
 		-- TITLE
 		local title = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-		title:SetPoint("TOPLEFT", 10, 30)
+		title:SetPoint("TOPLEFT", 4, 30)
 		title:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 		title:SetTextColor(.5, .5, .5, 1)
 		-- AddonVersion
@@ -75,26 +76,26 @@ config:SetScript("OnShow", function(self)
 		-- TEXT LEFT
 		-----------------------------------------------
 		local LEFTTEXT1 = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		LEFTTEXT1:SetText(E.Octo_Globals.Gray_Color..L["Functions"].."|r")
-		LEFTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 5, -indent*1)
+		LEFTTEXT1:SetText(E.Octo_Globals.LightGray_Color..L["Functions"].."|r")
+		LEFTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 5, -indent*1-4)
 		-----------------------------------------------
 		-- TEXT LEFT
 		-----------------------------------------------
 		local CENTERTEXT1 = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		CENTERTEXT1:SetText(E.Octo_Globals.Gray_Color..L["Modules"].."|r")
-		CENTERTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 255, -indent*1)
+		CENTERTEXT1:SetText(E.Octo_Globals.LightGray_Color..L["Modules"].."|r")
+		CENTERTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 255, -indent*1-4)
 		-----------------------------------------------
 		-- TEXT LEFT
 		-----------------------------------------------
 		local RIGHTTEXT1 = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		RIGHTTEXT1:SetText(E.Octo_Globals.Gray_Color..L["DisplaySettings"].."|r")
-		RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*1)
+		RIGHTTEXT1:SetText(E.Octo_Globals.LightGray_Color..L["DisplaySettings"].."|r")
+		RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*1-4)
 		-----------------------------------------------
 		-- TEXT LEFT
 		-----------------------------------------------
 		local RIGHTTEXT1 = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		RIGHTTEXT1:SetText(E.Octo_Globals.Gray_Color.."DEV".."|r")
-		RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*20)
+		RIGHTTEXT1:SetText(E.Octo_Globals.LightGray_Color.."DEV".."|r")
+		RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 505, -indent*19-4)
 		-----------------------------------------------
 		-- btn_left2 AutoSellGrey
 		-----------------------------------------------
@@ -256,7 +257,7 @@ config:SetScript("OnShow", function(self)
 		if isElvUI then
 			self.btn_center2.text:SetText(E.Octo_Func.func_Gradient("GlobalFadePersist", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." (ElvUI ENABLED)|r")
 		else
-			self.btn_center2.text:SetText(E.Octo_Globals.Gray_Color.."GlobalFadePersist".." (ElvUI DISABLED)|r")
+			self.btn_center2.text:SetText(E.Octo_Globals.LightGray_Color.."GlobalFadePersist".." (ElvUI DISABLED)|r")
 		end
 		-----------------------------------------------
 		-- btn_center3 LootFrame
@@ -271,7 +272,7 @@ config:SetScript("OnShow", function(self)
 		if isRCLootCouncil then
 			self.btn_center3.text:SetText(E.Octo_Func.func_Gradient("LootFrame", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." (RCLootCouncil ENABLED)|r")
 		else
-			self.btn_center3.text:SetText(E.Octo_Globals.Gray_Color.."LootFrame".." (RCLootCouncil DISABLED)|r")
+			self.btn_center3.text:SetText(E.Octo_Globals.LightGray_Color.."LootFrame".." (RCLootCouncil DISABLED)|r")
 		end
 		-----------------------------------------------
 		-- btn_center4 SellFrame
@@ -329,242 +330,178 @@ config:SetScript("OnShow", function(self)
 		end)
 		self.btn_center8.text:SetText(E.Octo_Func.func_Gradient("RepeatableQuests", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
 		-----------------------------------------------
-		-- btn_right2 LINE_Classic
+		-- btn_right2 TEST
 		-----------------------------------------------
-		self.btn_right2 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*2)
-		self.btn_right2:SetChecked(Octo_ToDoVars.config.LINE_Classic)
-		self.btn_right2:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_Classic = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		local Expansions_Table = {
+			"|cff68ccefClassic|r",
+			"|cff4fff79The Burning Crusade|r",
+			"|cff00a3ffWrath of the Lich King|r",
+			"|cffffb300Cataclysm|r",
+			"|cff00ffbaMists of Pandaria|r",
+			"|cffc86400Warlords of Draenor|r",
+			"|cff1eff00Legion|r",
+			"|cff6464ffBattle for Azeroth|r",
+			"|cffc9c3aaShadowlands|r",
+			"|cffe8e379Dragonflight|r",
+		}
+
+		local btn_right2 = lsfdd:CreateButton(self, 140, 22)
+		btn_right2:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*2)
+		btn_right2:ddSetSelectedValue(Octo_ToDoVars.config.ExpansionToShow)
+		-- print (tonumber(GetBuildInfo():match("(.-)%.")))
+
+		local function selectFunction(menuButton)
+			btn_right2:ddSetSelectedValue(menuButton.value)
+			Octo_ToDoVars.config.ExpansionToShow = menuButton.value
+		 	StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end
+
+		btn_right2:ddInitialize(function(self, level)
+			local info = {}
+			for k, v in ipairs(Expansions_Table) do
+				info.text = v
+				info.value = k
+				info.func = selectFunction
+				self:ddAddButton(info, level)
+			end
 		end)
-		self.btn_right2.text:SetText(E.Octo_Func.func_Gradient("Classic", E.Octo_Globals.Classic_Color, E.Octo_Globals.Classic_Color))
 		-----------------------------------------------
-		-- btn_right3 LINE_TheBurningCrusade
+		-- btn_right3 ShowOnlyCurrentRealm
 		-----------------------------------------------
 		self.btn_right3 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 		self.btn_right3:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*3)
-		self.btn_right3:SetChecked(Octo_ToDoVars.config.LINE_TheBurningCrusade)
+		self.btn_right3:SetChecked(Octo_ToDoVars.config.ShowOnlyCurrentRealm)
 		self.btn_right3:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_TheBurningCrusade = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_right3.text:SetText(E.Octo_Func.func_Gradient("The Burning Crusade", E.Octo_Globals.TheBurningCrusade_Color, E.Octo_Globals.TheBurningCrusade_Color))
-		-----------------------------------------------
-		-- btn_right4 LINE_WrathoftheLichKing
-		-----------------------------------------------
-		self.btn_right4 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right4:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*4)
-		self.btn_right4:SetChecked(Octo_ToDoVars.config.LINE_WrathoftheLichKing)
-		self.btn_right4:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_WrathoftheLichKing = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_right4.text:SetText(E.Octo_Func.func_Gradient("Wrath of the Lich King", E.Octo_Globals.WrathoftheLichKing_Color, E.Octo_Globals.WrathoftheLichKing_Color))
-		-----------------------------------------------
-		-- btn_right5 LINE_Cataclysm
-		-----------------------------------------------
-		self.btn_right5 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*5)
-		self.btn_right5:SetChecked(Octo_ToDoVars.config.LINE_Cataclysm)
-		self.btn_right5:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_Cataclysm = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_right5.text:SetText(E.Octo_Func.func_Gradient("Cataclysm", E.Octo_Globals.Cataclysm_Color, E.Octo_Globals.Cataclysm_Color))
-		-----------------------------------------------
-		-- btn_right6 LINE_MistsofPandaria
-		-----------------------------------------------
-		self.btn_right6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*6)
-		self.btn_right6:SetChecked(Octo_ToDoVars.config.LINE_MistsofPandaria)
-		self.btn_right6:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_MistsofPandaria = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_right6.text:SetText(E.Octo_Func.func_Gradient("Mists of Pandaria", E.Octo_Globals.MistsofPandaria_Color, E.Octo_Globals.MistsofPandaria_Color))
-		-----------------------------------------------
-		-- btn_right7 LINE_WarlordsofDraenor
-		-----------------------------------------------
-		self.btn_right7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*7)
-		self.btn_right7:SetChecked(Octo_ToDoVars.config.LINE_WarlordsofDraenor)
-		self.btn_right7:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_WarlordsofDraenor = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_right7.text:SetText(E.Octo_Func.func_Gradient("Warlords of Draenor", E.Octo_Globals.WarlordsofDraenor_Color, E.Octo_Globals.WarlordsofDraenor_Color))
-		-----------------------------------------------
-		-- btn_right8 LINE_Legion
-		-----------------------------------------------
-		self.btn_right8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*8)
-		self.btn_right8:SetChecked(Octo_ToDoVars.config.LINE_Legion)
-		self.btn_right8:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_Legion = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_right8.text:SetText(E.Octo_Func.func_Gradient("Legion", E.Octo_Globals.Legion_Color, E.Octo_Globals.Legion_Color))
-		-----------------------------------------------
-		-- btn_right9 LINE_BattleforAzeroth
-		-----------------------------------------------
-		self.btn_right9 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*9)
-		self.btn_right9:SetChecked(Octo_ToDoVars.config.LINE_BattleforAzeroth)
-		self.btn_right9:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_BattleforAzeroth = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_right9.text:SetText(E.Octo_Func.func_Gradient("Battle for Azeroth", E.Octo_Globals.BattleforAzeroth_Color, E.Octo_Globals.BattleforAzeroth_Color))
-		-----------------------------------------------
-		-- btn_right10 LINE_Shadowlands
-		-----------------------------------------------
-		self.btn_right10 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right10:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*10)
-		self.btn_right10:SetChecked(Octo_ToDoVars.config.LINE_Shadowlands)
-		self.btn_right10:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_Shadowlands = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_right10.text:SetText(E.Octo_Func.func_Gradient("Shadowlands", E.Octo_Globals.Shadowlands_Color, E.Octo_Globals.Shadowlands_Color))
-		-----------------------------------------------
-		-- btn_right11 LINE_Dragonflight
-		-----------------------------------------------
-		self.btn_right11 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right11:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*11)
-		self.btn_right11:SetChecked(Octo_ToDoVars.config.LINE_Dragonflight)
-		self.btn_right11:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.LINE_Dragonflight = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_right11.text:SetText(E.Octo_Func.func_Gradient("Dragonflight", E.Octo_Globals.Dragonflight_Color, E.Octo_Globals.Dragonflight_Color))
-		-----------------------------------------------
-		-----------------------------------------------
-		-- btn_right12 ShowOnlyCurrentRealm
-		-----------------------------------------------
-		self.btn_right12 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right12:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*12)
-		self.btn_right12:SetChecked(Octo_ToDoVars.config.ShowOnlyCurrentRealm)
-		self.btn_right12:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.ShowOnlyCurrentRealm = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self.btn_right12.text:SetText("ShowOnlyCurrentRealm")
+		self.btn_right3.text:SetText("ShowOnlyCurrentRealm")
 		-----------------------------------------------
-		-- Slider_right14 LevelToShowTEXT
+		-- Slider_right5 LevelToShowTEXT
 		-----------------------------------------------
 		local LevelToShowTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self.Slider_right14 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
-		self.Slider_right14:SetWidth(140)
-		self.Slider_right14:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*14)
-		self.Slider_right14:SetMinMaxValues(1, 70)
+		self.Slider_right5 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
+		self.Slider_right5:SetWidth(140)
+		self.Slider_right5:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*5)
+		self.Slider_right5:SetMinMaxValues(1, 70)
 		local step = 1
-		self.Slider_right14:SetValueStep(step)
-		self.Slider_right14:SetValue(Octo_ToDoVars.config.LevelToShow)
-		self.Slider_right14:SetScript("OnValueChanged", function (self, value)
+		self.Slider_right5:SetValueStep(step)
+		self.Slider_right5:SetValue(Octo_ToDoVars.config.LevelToShow)
+		self.Slider_right5:SetScript("OnValueChanged", function (self, value)
 				value = math.floor(value * (1 / step) + .5) / (1 / step)
 				Octo_ToDoVars.config.LevelToShow = value
 				LevelToShowTEXT:SetText("LevelToShow: "..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShow.."|r")
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		LevelToShowTEXT:SetPoint("BOTTOMLEFT", self.Slider_right14, "TOPLEFT", indent, 0)
+		LevelToShowTEXT:SetPoint("BOTTOMLEFT", self.Slider_right5, "TOPLEFT", indent, 0)
 		LevelToShowTEXT:SetText("LevelToShow: "..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShow.."|r")
-		self.Slider_right14:Show()
+		self.Slider_right5:Show()
 		-----------------------------------------------
-		-- Slider_right16 itemLevelToShowTEXT
+		-- Slider_right7 itemLevelToShowTEXT
 		-----------------------------------------------
 		local itemLevelToShowTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self.Slider_right16 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
-		self.Slider_right16:SetWidth(140*E.Octo_Globals.scale)
-		self.Slider_right16:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*16)
-		self.Slider_right16:SetMinMaxValues(1, 560)
+		self.Slider_right7 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
+		self.Slider_right7:SetWidth(140*E.Octo_Globals.scale)
+		self.Slider_right7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*7)
+		self.Slider_right7:SetMinMaxValues(1, 560)
 		local step = 5
-		self.Slider_right16:SetValue(Octo_ToDoVars.config.itemLevelToShow)
-		self.Slider_right16:SetScript("OnValueChanged", function (self, value)
+		self.Slider_right7:SetValue(Octo_ToDoVars.config.itemLevelToShow)
+		self.Slider_right7:SetScript("OnValueChanged", function (self, value)
 				value = math.floor(value * (1 / step) + .5) / (1 / step)
 				Octo_ToDoVars.config.itemLevelToShow = value
 				itemLevelToShowTEXT:SetText("itemLevelToShow: "..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.itemLevelToShow.."|r")
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		itemLevelToShowTEXT:SetPoint("BOTTOMLEFT", self.Slider_right16, "TOPLEFT", indent, 0)
+		itemLevelToShowTEXT:SetPoint("BOTTOMLEFT", self.Slider_right7, "TOPLEFT", indent, 0)
 		itemLevelToShowTEXT:SetText("itemLevelToShow: "..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.itemLevelToShow.."|r")
-		self.Slider_right16:Show()
+		self.Slider_right7:Show()
 		-----------------------------------------------
-		-- Slider_right18 itemLevelToShowTEXT
+		-- Slider_right9 itemLevelToShowTEXT
 		-----------------------------------------------
 		local curWidthTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self.Slider_right18 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
-		self.Slider_right18:SetWidth(140)
-		self.Slider_right18:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*18)
-		self.Slider_right18:SetMinMaxValues(60, 120)
+		self.Slider_right9 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
+		self.Slider_right9:SetWidth(140)
+		self.Slider_right9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*9)
+		self.Slider_right9:SetMinMaxValues(60, 120)
 		local step = 2
-		self.Slider_right18:SetValueStep(step)
-		self.Slider_right18:SetValue(Octo_ToDoVars.config.curWidth)
-		self.Slider_right18:SetScript("OnValueChanged", function (self, value)
+		self.Slider_right9:SetValueStep(step)
+		self.Slider_right9:SetValue(Octo_ToDoVars.config.curWidth)
+		self.Slider_right9:SetScript("OnValueChanged", function (self, value)
 				value = math.floor(value * (1 / step) + .5) / (1 / step)
 				Octo_ToDoVars.config.curWidth = value
 				curWidthTEXT:SetText("curWidth: "..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.curWidth.."|r")
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		curWidthTEXT:SetPoint("BOTTOMLEFT", self.Slider_right18, "TOPLEFT", indent, 0)
+		curWidthTEXT:SetPoint("BOTTOMLEFT", self.Slider_right9, "TOPLEFT", indent, 0)
 		curWidthTEXT:SetText("curWidth: "..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curWidth.."|r")
-		self.Slider_right18:Show()
+		self.Slider_right9:Show()
 		-----------------------------------------------
 		-----------------------------------------------
-		-- btn_right22 StaticPopup1Button1
+		-- btn_right20 StaticPopup1Button1
 		-----------------------------------------------
-		self.btn_right22 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right22:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*21)
-		self.btn_right22:SetChecked(Octo_ToDoVars.config.StaticPopup1Button1)
-		self.btn_right22:SetScript("OnClick", function(btn)
+		self.btn_right20 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_right20:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*20)
+		self.btn_right20:SetChecked(Octo_ToDoVars.config.StaticPopup1Button1)
+		self.btn_right20:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.StaticPopup1Button1 = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self.btn_right22.text:SetText(E.Octo_Func.func_Gradient("StaticPopup1Button1", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+		self.btn_right20.text:SetText(E.Octo_Func.func_Gradient("StaticPopup1Button1", E.Octo_Globals.LightGray_Color, E.Octo_Globals.LightGray_Color))
 		-----------------------------------------------
-		-- btn_right22 AnotherAddonsCasual
+		-- btn_right21 AnotherAddonsCasual
 		-----------------------------------------------
-		self.btn_right22 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right22:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*22)
-		self.btn_right22:SetChecked(Octo_ToDoVars.config.AnotherAddonsCasual)
-		self.btn_right22:SetScript("OnClick", function(btn)
+		self.btn_right21 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_right21:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*21)
+		self.btn_right21:SetChecked(Octo_ToDoVars.config.AnotherAddonsCasual)
+		self.btn_right21:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.AnotherAddonsCasual = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self.btn_right22.text:SetText(E.Octo_Func.func_Gradient("AnotherAddonsCasual", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+		self.btn_right21.text:SetText(E.Octo_Func.func_Gradient("AnotherAddonsCasual", E.Octo_Globals.LightGray_Color, E.Octo_Globals.LightGray_Color))
 		-----------------------------------------------
-		-- btn_right23 AnotherAddonsRAID
+		-- btn_right22 AnotherAddonsRAID
 		-----------------------------------------------
-		self.btn_right23 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right23:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*23)
-		self.btn_right23:SetChecked(Octo_ToDoVars.config.AnotherAddonsRAID)
-		self.btn_right23:SetScript("OnClick", function(btn)
+		self.btn_right22 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_right22:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*22)
+		self.btn_right22:SetChecked(Octo_ToDoVars.config.AnotherAddonsRAID)
+		self.btn_right22:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.AnotherAddonsRAID = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self.btn_right23.text:SetText(E.Octo_Func.func_Gradient("AnotherAddonsRAID", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+		self.btn_right22.text:SetText(E.Octo_Func.func_Gradient("AnotherAddonsRAID", E.Octo_Globals.LightGray_Color, E.Octo_Globals.LightGray_Color))
 		-----------------------------------------------
-		-- btn_left24 CVar
+		-- btn_left23 CVar
 		-----------------------------------------------
-		self.btn_right24 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right24:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*24)
-		self.btn_right24:SetChecked(Octo_ToDoVars.config.CVar)
-		self.btn_right24:SetScript("OnClick", function(btn)
+		self.btn_right23 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_right23:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*23)
+		self.btn_right23:SetChecked(Octo_ToDoVars.config.CVar)
+		self.btn_right23:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.CVar = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self.btn_right24.text:SetText(E.Octo_Func.func_Gradient("CVar", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+		self.btn_right23.text:SetText(E.Octo_Func.func_Gradient("CVar", E.Octo_Globals.LightGray_Color, E.Octo_Globals.LightGray_Color))
 		-----------------------------------------------
-		-- btn_left25 SORTING
+		-- btn_left24 SORTING
 		-----------------------------------------------
-		self.btn_right25 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_right25:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*25)
-		self.btn_right25:SetChecked(Octo_ToDoVars.config.SORTING)
-		self.btn_right25:SetScript("OnClick", function(btn)
+		self.btn_right24 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_right24:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*24)
+		self.btn_right24:SetChecked(Octo_ToDoVars.config.SORTING)
+		self.btn_right24:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.SORTING = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self.btn_right25.text:SetText(E.Octo_Func.func_Gradient("SORTING", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+		self.btn_right24.text:SetText(E.Octo_Func.func_Gradient("SORTING", E.Octo_Globals.LightGray_Color, E.Octo_Globals.LightGray_Color))
+
+
+
+
+
+
+
+
+
+
+
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config, AddonTitle)

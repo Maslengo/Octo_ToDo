@@ -313,6 +313,7 @@ tinsert(E.Octo_Globals.modules, function()
 			func_Octo_LoadAddOn("Rarity")
 			func_Octo_LoadAddOn("Rarity_Options")
 			func_Octo_LoadAddOn("Plater")
+			func_Octo_LoadAddOn("ParagonReputation")
 			-- func_Octo_LoadAddOn("TalentTreeTweaks")
 		end
 end)

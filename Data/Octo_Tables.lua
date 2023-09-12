@@ -290,6 +290,7 @@ E.Octo_Table.AutoOpen_openableIDs70lvl = {
 	[203220] = true,
 }
 E.Octo_Table.white_list_ALL = {
+	{itemid = 122284, count = 1},
 	{itemid = 204180, count = 1},
 	{itemid = 188793, count = 1},
 	{itemid = 190944, count = 1},
