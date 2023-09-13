@@ -1026,7 +1026,7 @@ local OctoTable_UniversalQuest = {
 	{
 		name_save = "DreamsurgeInvestigation",
 		name_quest = L["Dreamsurge Investigation"],
-		reset = "Weekly",
+		reset = "Once",
 		expansion = "DF",
 		place = "",
 		desc = "",
@@ -3090,8 +3090,9 @@ end
 function Collect_All_Quest_Tooltip()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDoLevels[curGUID]
+	local qwid = 77414
 	----------------------------------------------------------------
-	collect.DreamsurgeInvestigation = E.Octo_Func.All_objectives(77414)
+	collect.DreamsurgeInvestigation = E.Octo_Func.All_objectives(qwid)
 end
 function Collect_Token_Price()
 	local curGUID = UnitGUID("PLAYER")
@@ -3581,10 +3582,10 @@ function O_otrisovka()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				local vivodLeft = (E.Octo_Func.func_texturefromIcon(134206)..Timer_DF_Dreamsurges()..L["Dreamsurges"])
-				if CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count ~= NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count
+				if CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count ~= NONE then
+					vivodCent = CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count
 				end
-				if CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count ~= NONE and CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count ~= DONE and CharInfo.DreamsurgeInvestigation ~= 0 and CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count ~= "" then
+				if CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count ~= NONE and CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count ~= DONE and CharInfo.DreamsurgeInvestigation ~= 0 and CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count ~= "" then
 					tooltip[#tooltip+1] = {CharInfo.DreamsurgeInvestigation}
 				end
 				BG:SetColorTexture(.31, 1, .47, .1)
@@ -5718,7 +5719,7 @@ function O_otrisovka()
 				tooltip[#tooltip+1] = {L["Weekend Event"], CharInfo.Octopussy_DF_Weekly_WeekendEvent_count}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.1.7".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				tooltip[#tooltip+1] = {Timer_DF_Dreamsurges()..L["Dreamsurges"], CharInfo.Octopussy_DF_Weekly_DreamsurgeInvestigation_count}
+				tooltip[#tooltip+1] = {Timer_DF_Dreamsurges()..L["Dreamsurges"], CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count}
 				tooltip[#tooltip+1] = {L["Shaping the Dreamsurge"], CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count}
 				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["Tyr's Fall"]..")", CharInfo.Octopussy_DF_Once_TyrsFall_count}
 				tooltip[#tooltip+1] = {L["Storyline"].." ("..L["Reforging the Tyr's Guard"]..")", CharInfo.Octopussy_DF_Once_ReforgingtheTyrsGuard_count}

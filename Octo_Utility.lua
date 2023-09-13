@@ -814,6 +814,7 @@ tinsert(E.Octo_Globals.modules, function()
 								v.name:find("Начать испытание") or
 								v.name:find("Я готов.") or
 								v.name:find("Я готова.") or
+								v.name:find("У меня потерялся ключ.") or
 								v.name:find("Эти цветы - от Киригосы.") or
 								-- v.name:find("Начать копать") or
 								v.name:find("cff0000FF")
