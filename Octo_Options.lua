@@ -161,89 +161,136 @@ config:SetScript("OnShow", function(self)
 		end)
 		self.btn_left7.text:SetText(WHITE_FONT_COLOR_CODE..L["CinematicCanceler"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-		-- btn_left8 ClearChat
+		-- btn_center8 AutoTurnQuests
 		-----------------------------------------------
-		self.btn_left8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_left8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*8)
-		self.btn_left8:SetChecked(Octo_ToDoVars.config.ClearChat)
-		self.btn_left8:SetScript("OnClick", function(btn)
+		self.btn_center8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_center8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*8)
+		self.btn_center8:SetChecked(Octo_ToDoVars.config.AutoTurnQuests)
+		self.btn_center8:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.AutoTurnQuests = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self.btn_center8.text:SetText(WHITE_FONT_COLOR_CODE..L["Auto Turn Quests"]..FONT_COLOR_CODE_CLOSE)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		-----------------------------------------------
+		-- btn_left9 ClearChat
+		-----------------------------------------------
+		self.btn_left9 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_left9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*9)
+		self.btn_left9:SetChecked(Octo_ToDoVars.config.ClearChat)
+		self.btn_left9:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.ClearChat = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 				--StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self.btn_left8.text:SetText(WHITE_FONT_COLOR_CODE..L["ClearChat"]..FONT_COLOR_CODE_CLOSE)
+		self.btn_left9.text:SetText(WHITE_FONT_COLOR_CODE..L["ClearChat"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-		-- btn_left9 TalkingHeadFrame
-		-----------------------------------------------
-		self.btn_left9 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_left9:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*9)
-		self.btn_left9:SetChecked(Octo_ToDoVars.config.TalkingHeadFrame)
-		self.btn_left9:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.TalkingHeadFrame = btn:GetChecked()
-		end)
-		self.btn_left9.text:SetText(WHITE_FONT_COLOR_CODE..L["TalkingHeadFrame"]..FONT_COLOR_CODE_CLOSE)
-		-----------------------------------------------
-		-- btn_left10 HideZoneText
+		-- btn_left10 TalkingHeadFrame
 		-----------------------------------------------
 		self.btn_left10 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 		self.btn_left10:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*10)
-		self.btn_left10:SetChecked(Octo_ToDoVars.config.HideZoneText)
+		self.btn_left10:SetChecked(Octo_ToDoVars.config.TalkingHeadFrame)
 		self.btn_left10:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.HideZoneText = btn:GetChecked()
+				Octo_ToDoVars.config.TalkingHeadFrame = btn:GetChecked()
 		end)
-		self.btn_left10.text:SetText(WHITE_FONT_COLOR_CODE..L["HideZoneText"]..FONT_COLOR_CODE_CLOSE)
+		self.btn_left10.text:SetText(WHITE_FONT_COLOR_CODE..L["TalkingHeadFrame"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-		-- btn_left11 Covenant
+		-- btn_left11 HideZoneText
 		-----------------------------------------------
 		self.btn_left11 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 		self.btn_left11:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*11)
-		self.btn_left11:SetChecked(Octo_ToDoVars.config.Covenant)
+		self.btn_left11:SetChecked(Octo_ToDoVars.config.HideZoneText)
 		self.btn_left11:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.Covenant = btn:GetChecked()
+				Octo_ToDoVars.config.HideZoneText = btn:GetChecked()
 		end)
-		self.btn_left11.text:SetText(WHITE_FONT_COLOR_CODE..L["HideCovenant"]..FONT_COLOR_CODE_CLOSE)
+		self.btn_left11.text:SetText(WHITE_FONT_COLOR_CODE..L["HideZoneText"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-		-- btn_left12 RaidBossEmoteFrame
+		-- btn_left12 Covenant
 		-----------------------------------------------
 		self.btn_left12 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 		self.btn_left12:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*12)
-		self.btn_left12:SetChecked(Octo_ToDoVars.config.RaidBossEmoteFrame)
+		self.btn_left12:SetChecked(Octo_ToDoVars.config.Covenant)
 		self.btn_left12:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.RaidBossEmoteFrame = btn:GetChecked()
+				Octo_ToDoVars.config.Covenant = btn:GetChecked()
 		end)
-		self.btn_left12.text:SetText(WHITE_FONT_COLOR_CODE..L["RaidBossEmoteFrame"]..FONT_COLOR_CODE_CLOSE)
+		self.btn_left12.text:SetText(WHITE_FONT_COLOR_CODE..L["HideCovenant"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-		-- btn_left13 BossBanner
+		-- btn_left13 RaidBossEmoteFrame
 		-----------------------------------------------
 		self.btn_left13 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 		self.btn_left13:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*13)
-		self.btn_left13:SetChecked(Octo_ToDoVars.config.BossBanner)
+		self.btn_left13:SetChecked(Octo_ToDoVars.config.RaidBossEmoteFrame)
 		self.btn_left13:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.BossBanner = btn:GetChecked()
+				Octo_ToDoVars.config.RaidBossEmoteFrame = btn:GetChecked()
 		end)
-		self.btn_left13.text:SetText(WHITE_FONT_COLOR_CODE..L["BossBanner"]..FONT_COLOR_CODE_CLOSE)
+		self.btn_left13.text:SetText(WHITE_FONT_COLOR_CODE..L["RaidBossEmoteFrame"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-		-- btn_left14 HideErrorMessages
+		-- btn_left14 BossBanner
 		-----------------------------------------------
 		self.btn_left14 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 		self.btn_left14:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*14)
-		self.btn_left14:SetChecked(Octo_ToDoVars.config.HideErrorMessages)
+		self.btn_left14:SetChecked(Octo_ToDoVars.config.BossBanner)
 		self.btn_left14:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.HideErrorMessages = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+				Octo_ToDoVars.config.BossBanner = btn:GetChecked()
 		end)
-		self.btn_left14.text:SetText(WHITE_FONT_COLOR_CODE..L["HideErrorMessages"]..FONT_COLOR_CODE_CLOSE)
+		self.btn_left14.text:SetText(WHITE_FONT_COLOR_CODE..L["BossBanner"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-		-- btn_left15 UIErrorsFramePosition
+		-- btn_left15 HideErrorMessages
 		-----------------------------------------------
 		self.btn_left15 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 		self.btn_left15:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*15)
-		self.btn_left15:SetChecked(Octo_ToDoVars.config.UIErrorsFramePosition)
+		self.btn_left15:SetChecked(Octo_ToDoVars.config.HideErrorMessages)
 		self.btn_left15:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.HideErrorMessages = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self.btn_left15.text:SetText(WHITE_FONT_COLOR_CODE..L["HideErrorMessages"]..FONT_COLOR_CODE_CLOSE)
+		-----------------------------------------------
+		-- btn_left16 UIErrorsFramePosition
+		-----------------------------------------------
+		self.btn_left16 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_left16:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*16)
+		self.btn_left16:SetChecked(Octo_ToDoVars.config.UIErrorsFramePosition)
+		self.btn_left16:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.UIErrorsFramePosition = btn:GetChecked()
 		end)
-		self.btn_left15.text:SetText(WHITE_FONT_COLOR_CODE..L["UIErrorsFramePosition"]..FONT_COLOR_CODE_CLOSE)
+		self.btn_left16.text:SetText(WHITE_FONT_COLOR_CODE..L["UIErrorsFramePosition"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		-----------------------------------------------
 		-- btn_center2 GlobalFadePersist
 		-----------------------------------------------
@@ -297,38 +344,27 @@ config:SetScript("OnShow", function(self)
 		end)
 		self.btn_center5.text:SetText(WHITE_FONT_COLOR_CODE.."UsableItems"..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-		-- btn_center6 AutoTurnQuests
-		-----------------------------------------------
-		self.btn_center6 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_center6:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*6)
-		self.btn_center6:SetChecked(Octo_ToDoVars.config.AutoTurnQuests)
-		self.btn_center6:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.AutoTurnQuests = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_center6.text:SetText(WHITE_FONT_COLOR_CODE.."AutoTurnQuests"..FONT_COLOR_CODE_CLOSE)
-		-----------------------------------------------
 		-- btn_center7 TrivialQuests
 		-----------------------------------------------
-		self.btn_center7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_center7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*7)
-		self.btn_center7:SetChecked(Octo_ToDoVars.config.TrivialQuests)
-		self.btn_center7:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.TrivialQuests = btn:GetChecked()
-				--StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_center7.text:SetText(WHITE_FONT_COLOR_CODE.."TrivialQuests"..FONT_COLOR_CODE_CLOSE)
+		-- self.btn_center7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		-- self.btn_center7:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*7)
+		-- self.btn_center7:SetChecked(Octo_ToDoVars.config.TrivialQuests)
+		-- self.btn_center7:SetScript("OnClick", function(btn)
+		-- 		Octo_ToDoVars.config.TrivialQuests = btn:GetChecked()
+		-- 		--StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		-- end)
+		-- self.btn_center7.text:SetText(BLACK_FONT_COLOR_CODE.."TrivialQuests"..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
 		-- btn_center8 RepeatableQuests
 		-----------------------------------------------
-		self.btn_center8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		self.btn_center8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*8)
-		self.btn_center8:SetChecked(Octo_ToDoVars.config.RepeatableQuests)
-		self.btn_center8:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.RepeatableQuests = btn:GetChecked()
-				--StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self.btn_center8.text:SetText(WHITE_FONT_COLOR_CODE.."RepeatableQuests"..FONT_COLOR_CODE_CLOSE)
+		-- self.btn_center8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		-- self.btn_center8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*8)
+		-- self.btn_center8:SetChecked(Octo_ToDoVars.config.RepeatableQuests)
+		-- self.btn_center8:SetScript("OnClick", function(btn)
+		-- 		Octo_ToDoVars.config.RepeatableQuests = btn:GetChecked()
+		-- 		--StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		-- end)
+		-- self.btn_center8.text:SetText(BLACK_FONT_COLOR_CODE.."RepeatableQuests"..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
 		-- btn_right2 Expansions
 		-----------------------------------------------

@@ -1,4 +1,6 @@
 local GlobalAddonName, E = ...
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+--------------------------------------------------------------------------------
 -- https://docs.google.com/spreadsheets/d/1FEBCvYp19_x3Cikh1xV6RyN1Q-BVRVFdSzUQiz-eIns/edit#gid=1913676639
 E.Octo_Table.Octo_ProfessionsSpells = {
 									--First Aid

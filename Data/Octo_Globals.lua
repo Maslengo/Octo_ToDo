@@ -1,4 +1,6 @@
 local GlobalAddonName, E = ...
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+--------------------------------------------------------------------------------
 E.Octo_Globals = {}
 E.Octo_Globals.modules = {}
 E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/%s=%s"
@@ -27,8 +29,6 @@ E.Octo_Globals.regions = {
     [4] = "tw",
     [5] = "cn"
 }
-
-
 ----------------------------------------------------------------
 --COLORS--------------------------------------------------------
 ----------------------------------------------------------------

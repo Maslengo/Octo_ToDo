@@ -1,4 +1,6 @@
 local GlobalAddonName, E = ...
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+--------------------------------------------------------------------------------
 E.Octo_Globals.CLASS_ARTIFACT_DATA = {
 	WARRIOR = {
 		 -- Стром'кар, Миротворец

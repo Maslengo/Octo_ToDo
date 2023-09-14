@@ -1,4 +1,6 @@
 local GlobalAddonName, E = ...
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+--------------------------------------------------------------------------------
 E.Octo_Func = {}
 ----------------------------------------------------------------
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
