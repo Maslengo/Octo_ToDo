@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 E.Octo_Globals = {}
 E.Octo_Globals.modules = {}
-E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/%s=%s%s"
+E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/%s=%s"
 E.Octo_Globals.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
 E.Octo_Globals.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
 E.Octo_Globals.baseArmoryUrl = "https://worldofwarcraft.com/%s/character/%s/%s"
@@ -19,6 +19,16 @@ E.Octo_Globals.curHeight = 20*E.Octo_Globals.scale
 --E.Octo_Globals.curWidthTitle = E.Octo_Globals.curWidth*2
 E.Octo_Globals.curWidthTitle = 200
 E.Octo_Globals.ilvlToShow = 400
+
+E.Octo_Globals.regions = {
+    [1] = "us",
+    [2] = "kr",
+    [3] = "eu",
+    [4] = "tw",
+    [5] = "cn"
+}
+
+
 ----------------------------------------------------------------
 --COLORS--------------------------------------------------------
 ----------------------------------------------------------------

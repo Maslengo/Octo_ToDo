@@ -113,6 +113,10 @@ if L then
 	L["Legs"] = true
 	L["Feet"] = true
 	L["The Coalition of Flames"] = true
+	L["Only Current Realm"] = true
+	L["Player level: "] = true
+	L["Item level: "] = true -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
+	L["Width: "] = true
 
 
 
@@ -709,6 +713,10 @@ if L then
 	L["Feet"] = "Ступни"
 	L["The Coalition of Flames"] = "Союз пламени"
 	L["InDev"] = "|cffFF0000(В стадии разработки)|r"
+	L["Only Current Realm"] = "Только текущий сервер"
+	L["Player level: "] = "Уровень игрока: "
+	L["Item level: "] = "Уровень предметов: " -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
+	L["Width: "] = "Ширина: "
 
 L["Deadmines"] = "Мертвые копи"
 L["Shadowfang Keep"] = "Крепость Темного Клыка"

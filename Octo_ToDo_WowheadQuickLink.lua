@@ -28,12 +28,12 @@ end
 function RunAlternativeQuickLink()
 	CreateUrl(GetDataSources(), E.Octo_Globals.altStrategies)
 end
+
 StaticPopupDialogs["WowheadQuickLinkUrl"] = {
 	text = popupText,
 	button1 = "Close",
 	OnShow =
 	function(self, data)
-
 		local function HidePopup(self) self:GetParent():Hide() end
 		self.editBox:SetScript("OnEscapePressed", HidePopup)
 		self.editBox:SetScript("OnEnterPressed", HidePopup)
