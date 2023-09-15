@@ -139,6 +139,8 @@ E.Octo_Table.raidsDiffsNames = {
 	PLAYER_DIFFICULTY1, PLAYER_DIFFICULTY2, PLAYER_DIFFICULTY6,
 }
 E.Octo_Table.AutoOpen_openableIDs = {
+	[104272] = true,
+	[208142] = true,
 	[209833] = true,
 	[7973] = true,
 	[15874] = true,
@@ -313,6 +315,14 @@ E.Octo_Table.AutoOpen_openableIDs70lvl = {
 	[203220] = true,
 }
 E.Octo_Table.white_list_ALL = {
+
+	{itemid = 208151, count = 1},
+	{itemid = 201393, count = 1},
+	{itemid = 208150, count = 1},
+	{itemid = 114002, count = 1},
+	{itemid = 208831, count = 1},
+	{itemid = 208149, count = 1},
+	{itemid = 207594, count = 1},
 	{itemid = 139593, count = 1},
 
 	{itemid = 206037, count = 1},

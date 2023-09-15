@@ -51,6 +51,13 @@ LSM:Register("sound", "|cFF00A4FFO_04_ny che - full|r", [[Interface\Addons\]]..G
 LSM:Register("sound", "|cFF00A4FFO_04_ny che - narod|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_ny che - narod.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_O_kurwa|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_O_kurwa.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Ou_eee|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Ou_eee.ogg]])
+
+
+
+LSM:Register("sound", "|cFF00A4FFO_04_Raspishy_Full|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Raspishy_Full.ogg]])
+LSM:Register("sound", "|cFF00A4FFO_04_Raspishy_Short|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Raspishy_Short.ogg]])
+
+
 LSM:Register("sound", "|cFF00A4FFO_04_Risitaskekw|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Risitaskekw.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_Savage_fap|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Savage_fap.ogg]])
 LSM:Register("sound", "|cFF00A4FFO_04_The_rap_battle_parody_oh|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_The_rap_battle_parody_oh.ogg]])
