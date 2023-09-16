@@ -381,6 +381,16 @@ tinsert(E.Octo_Globals.modules, function()
 					SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
 					SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
 
+					SetCVar("floatingCombatTextCombatDamage", 1) --ТУТ
+					SetCVar("floatingCombatTextCombatDamageAllAutos", 1) --ТУТ
+					SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 1) --ТУТ
+					SetCVar("floatingCombatTextCombatDamageDirectionalScale", 1) --ТУТ
+					SetCVar("floatingCombatTextCombatHealing", 1) --ТУТ
+					SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 1) --ТУТ
+					SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 1) --ТУТ
+					SetCVar("floatingCombatTextCombatLogPeriodicSpells", 1) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
+					SetCVar("floatingCombatTextPetMeleeDamage", 1) --ТУТ
+					SetCVar("floatingCombatTextPetSpellDamage", 1) --ТУТ
 
 
 					SetCVar("nameplateMotion", 1) --(0 Наложение) (1 Друг над другом) stack
@@ -417,14 +427,6 @@ tinsert(E.Octo_Globals.modules, function()
 					SetCVar("findYourselfMode", 0)
 					SetCVar("floatingCombatTextAllSpellMechanics", 0)
 					SetCVar("floatingCombatTextAuras", 0)
-					SetCVar("floatingCombatTextCombatDamage", 0) --ТУТ
-					SetCVar("floatingCombatTextCombatDamageAllAutos", 0) --ТУТ
-					SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 0) --ТУТ
-					SetCVar("floatingCombatTextCombatDamageDirectionalScale", 0) --ТУТ
-					SetCVar("floatingCombatTextCombatHealing", 0) --ТУТ
-					SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 0) --ТУТ
-					SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 0) --ТУТ
-					SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0) --ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
 					SetCVar("floatingCombatTextCombatState", 0) --Проки по центру экрана
 					SetCVar("floatingCombatTextComboPoints", 0)
 					SetCVar("floatingCombatTextDamageReduction", 0)
@@ -435,8 +437,6 @@ tinsert(E.Octo_Globals.modules, function()
 					SetCVar("floatingCombatTextHonorGains", 0)
 					SetCVar("floatingCombatTextLowManaHealth", 0)
 					SetCVar("floatingCombatTextPeriodicEnergyGains", 0)
-					SetCVar("floatingCombatTextPetMeleeDamage", 0) --ТУТ
-					SetCVar("floatingCombatTextPetSpellDamage", 0) --ТУТ
 					SetCVar("floatingCombatTextReactives", 0)
 					SetCVar("floatingCombatTextRepChanges", 0)
 					SetCVar("floatingCombatTextSpellMechanics", 0)

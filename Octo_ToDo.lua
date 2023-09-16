@@ -3716,7 +3716,7 @@ function O_otrisovka()
 				end
 
 
-				tooltip[#tooltip+1] = {L["InDev"], " "}
+				tooltip[#tooltip+1] = {L["InDev"], "LFR/Norm/Hero/Myth"}
 				tooltip[#tooltip+1] = {L["Head"], CharInfo.AberrusTransmog.Head.LFR.."/"..CharInfo.AberrusTransmog.Head.Normal.."/"..CharInfo.AberrusTransmog.Head.Heroic.."/"..CharInfo.AberrusTransmog.Head.Mythic}
 				tooltip[#tooltip+1] = {L["Shoulder"], CharInfo.AberrusTransmog.Shoulder.LFR.."/"..CharInfo.AberrusTransmog.Shoulder.Normal.."/"..CharInfo.AberrusTransmog.Shoulder.Heroic.."/"..CharInfo.AberrusTransmog.Shoulder.Mythic}
 				tooltip[#tooltip+1] = {L["Back"], CharInfo.AberrusTransmog.Back.LFR.."/"..CharInfo.AberrusTransmog.Back.Normal.."/"..CharInfo.AberrusTransmog.Back.Heroic.."/"..CharInfo.AberrusTransmog.Back.Mythic}
@@ -6779,7 +6779,7 @@ function Octo_ToDoCreateAltFrame()
 								local questInfo = C_QuestLog.GetInfo(i)
 								if questInfo then
 									if (not questInfo.isHeader and not questInfo.isHidden) then
-										print (E.Octo_Globals.Blue_Color..L["Abandon"].."|r"..E.Octo_Globals.Red_Color..questInfo.title.."|r")
+										print (E.Octo_Func.func_Gradient(L["Abandon"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..questInfo.title)
 										C_QuestLog.SetSelectedQuest(questInfo.questID)
 										C_QuestLog.SetAbandonQuest()
 										C_QuestLog.AbandonQuest()
