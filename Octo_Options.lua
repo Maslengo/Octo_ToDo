@@ -3,8 +3,6 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local lsfdd = LibStub("LibSFDropDown-1.4")
-local isElvUI = IsAddOnLoaded("ElvUI")
-local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 local config = CreateFrame("FRAME", GlobalAddonName.."config"..E.Octo_Func.GenerateUniqueID())
@@ -301,7 +299,7 @@ config:SetScript("OnShow", function(self)
 				Octo_ToDoVars.config.GlobalFadePersist = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		if isElvUI then
+		if E.Octo_Globals.isElvUI then
 			self.btn_center2.text:SetText(E.Octo_Func.func_Gradient("GlobalFadePersist", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." (ElvUI ENABLED)|r")
 		else
 			self.btn_center2.text:SetText(E.Octo_Globals.LightGray_Color.."GlobalFadePersist".." (ElvUI DISABLED)|r")
@@ -316,7 +314,7 @@ config:SetScript("OnShow", function(self)
 				Octo_ToDoVars.config.LootFrame = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		if isRCLootCouncil then
+		if E.Octo_Globals.isRCLootCouncil then
 			self.btn_center3.text:SetText(E.Octo_Func.func_Gradient("LootFrame", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." (RCLootCouncil ENABLED)|r")
 		else
 			self.btn_center3.text:SetText(E.Octo_Globals.LightGray_Color.."LootFrame".." (RCLootCouncil DISABLED)|r")

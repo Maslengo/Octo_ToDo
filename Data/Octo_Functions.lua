@@ -418,6 +418,14 @@ function E.Octo_Func.HandleDefaultBindings(binding_name, default_key)
 end
 local HandleDefaultBindings = E.Octo_Func.HandleDefaultBindings
 ----------------------------------------------------------------
+function E.Octo_Func.func_Octo_LoadAddOn(GlobalAddonName)
+	if select(5, GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
+		EnableAddOn(GlobalAddonName)
+		LoadAddOn(GlobalAddonName)
+	end
+end
+
+local func_Octo_LoadAddOn = E.Octo_Func.func_Octo_LoadAddOn
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

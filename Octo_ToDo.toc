@@ -1,20 +1,90 @@
 ## Interface: 100107
-## Title: |cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
+## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v62.8(10.1.7)(16.09.2023)
+## Version: v62.9(10.1.7)(17.09.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture
-## SavedVariables: Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog
+## SavedVariables: Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog Octo_ToDoConsumables
 
 XML\embeds.xml
 
 Octo_Localization.lua
 
+Data\Tables\1.lua
+Data\Tables\AutoOpen_openableIDs.lua
+Data\Tables\AutoOpen_openableIDs70lvl.lua
+Data\Tables\Dreamsurges_Items.lua
+Data\Tables\interrupts.lua
+Data\Tables\OctoTable_bytetoB64.lua
+Data\Tables\OctoTable_currencyID_ALL.lua
+Data\Tables\OctoTable_currencyID_Professions.lua
+Data\Tables\OctoTable_instanceDifficulty.lua
+Data\Tables\OctoTable_itemID_ALL.lua
+Data\Tables\OctoTable_itemID_Cataloged_Research.lua
+Data\Tables\OctoTable_itemID_DFMountsSkins.lua
+Data\Tables\OctoTable_itemID_Holiday.lua
+Data\Tables\OctoTable_itemID_Reputation.lua
+Data\Tables\OctoTable_journalInstanceID.lua
+Data\Tables\OctoTable_QuestID.lua
+Data\Tables\OctoTable_reputation_ALL.lua
+Data\Tables\OctoTable_SpellID.lua
+Data\Tables\raidsDiffsNames.lua
+Data\Tables\T3Items.lua
+Data\Tables\utf8_lc_uc.lua
+Data\Tables\utf8_uc_lc.lua
+Data\Tables\white_list_70.lua
+Data\Tables\white_list_ALL.lua
+Data\Tables\white_list_Krokuun_ChainMail.lua
+Data\Tables\white_list_Krokuun_Cloth.lua
+Data\Tables\white_list_Krokuun_Leather.lua
+Data\Tables\white_list_Krokuun_Plate.lua
+Data\Tables\wowhead_prefix_Table.lua
+
+Data\Tables\Tokens\white_list_DEATHKNIGHT.lua
+Data\Tables\Tokens\white_list_DEMONHUNTER.lua
+Data\Tables\Tokens\white_list_DRUID.lua
+Data\Tables\Tokens\white_list_EVOKER.lua
+Data\Tables\Tokens\white_list_HUNTER.lua
+Data\Tables\Tokens\white_list_MAGE.lua
+Data\Tables\Tokens\white_list_MONK.lua
+Data\Tables\Tokens\white_list_PALADIN.lua
+Data\Tables\Tokens\white_list_PRIEST.lua
+Data\Tables\Tokens\white_list_ROGUE.lua
+Data\Tables\Tokens\white_list_SHAMAN.lua
+Data\Tables\Tokens\white_list_WARLOCK.lua
+Data\Tables\Tokens\white_list_WARRIOR.lua
+
 Data\Octo_Globals.lua
-Data\Octo_Tables.lua
 Data\Octo_Functions.lua
 Data\Octo_ArtifactData.lua
 Data\Octo_ProfessionsSpells.lua
+
+Moduls\DEV\Another_Addons_Casual.lua
+Moduls\DEV\Another_Addons_Raid.lua
+Moduls\DEV\Auto_Sorting.lua
+Moduls\DEV\CVAR.lua
+Moduls\DEV\StaticPopup1Button1.lua
+
+Moduls\Auto_Chat_Clearing.lua
+Moduls\Auto_Cinematic_Canceler.lua
+Moduls\Auto_Gossip.lua
+Moduls\Auto_Input_Delete.lua
+Moduls\Auto_Repair.lua
+Moduls\Auto_Sell_Grey.lua
+Moduls\Auto_Turn_Quests.lua
+Moduls\Hide_Boss_Banner.lua
+Moduls\Hide_Covenant.lua
+Moduls\Hide_Error_Messages.lua
+Moduls\Hide_Raid_Boss_Emote_Frame.lua
+Moduls\Hide_Talking_Head_Frame.lua
+Moduls\Hide_Zone_Text.lua
+Moduls\Module_Global_Fade_Persist.lua
+Moduls\Module_Loot_Frame.lua
+Moduls\Module_Sell_Frame.lua
+Moduls\Module_Usable_Items.lua
+Moduls\UIErrorsFramePosition.lua
+
+
 
 Octo_ToDo.lua
 Octo_ToDo_CommunityFeast.lua

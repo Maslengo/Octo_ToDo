@@ -29,6 +29,14 @@ E.Octo_Globals.regions = {
     [4] = "tw",
     [5] = "cn"
 }
+
+-- E.Octo_Globals.isElvUI = IsAddOnLoaded("ElvUI")
+local _, _, _, isElvUI = GetAddOnInfo("ElvUI")
+E.Octo_Globals.isElvUI = isElvUI
+local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
+E.Octo_Globals.isRCLootCouncil = isRCLootCouncil
+local _, _, _, isWeakAuras = GetAddOnInfo("WeakAuras")
+E.Octo_Globals.isWeakAuras = isWeakAuras
 ----------------------------------------------------------------
 --COLORS--------------------------------------------------------
 ----------------------------------------------------------------
