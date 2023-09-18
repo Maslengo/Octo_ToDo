@@ -1602,12 +1602,7 @@ local function checkCharInfo(self)
 	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	 -- УДАЛЕНИЕ -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-	self.VOID_STORAGE_PAGE1 = {}
-	self.VOID_STORAGE_PAGE2 = {}
-	self.profID_prof1 = {}
-	self.profID_prof2 = {}
-	self.prof1 = 0
-	self.prof2 = 0
+	self.AberrusTransmog = {}
 	 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	if self.needResetWeekly == true then
 		self.journalInstance = {}
@@ -1642,10 +1637,8 @@ local function checkCharInfo(self)
 			self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] = self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] or NONE
 		end
 	end
+	self.GreatVault = self.GreatVault or {}
 	self.professions = self.professions or {}
-	 -- for k, v in pairs(E.Octo_Table.Octo_ProfessionsskillLine) do
-	 -- self.professions[k] = self.professions[k] or {}
-	 -- end
 	self.avgItemLevel = self.avgItemLevel or 0
 	self.avgItemLevelEquipped = self.avgItemLevelEquipped or 0
 	self.avgItemLevelPvp = self.avgItemLevelPvp or 0
@@ -1689,8 +1682,6 @@ local function checkCharInfo(self)
 	self.MoneyOnLogin = self.MoneyOnLogin or 0
 	self.usedSlots = self.usedSlots or 0
 	self.usedSlotsBANK = self.usedSlotsBANK or 0
-	 -- self.VOID_STORAGE_PAGE1 = self.VOID_STORAGE_PAGE1 or {}
-	 -- self.VOID_STORAGE_PAGE2 = self.VOID_STORAGE_PAGE2 or {}
 	self.canUseMountEquipment = self.canUseMountEquipment or false
 	self.currentMountItemID = self.currentMountItemID or 0
 	self.HasAvailableRewards = self.HasAvailableRewards or false
@@ -1722,10 +1713,27 @@ local function checkCharInfo(self)
 	self.bounty_Legion2_icon = self.bounty_Legion2_icon or 0
 	self.bounty_Legion3_icon = self.bounty_Legion3_icon or 0
 	self.hasMail = self.hasMail or false
-	self.RIO_RAIDResult = self.RIO_RAIDResult or 0
-	self.RIO_KEYSResult = self.RIO_KEYSResult or 0
-	self.RIO_PVPSResult = self.RIO_PVPSResult or 0
 	self.MoneyOnLogin = self.Money
+	self.RIO_Score = self.RIO_Score or 0
+	self.RIO_weeklyBest = self.RIO_weeklyBest or 0
+	for QWE = 1, 3 do
+		self.GreatVault[QWE] = self.GreatVault[QWE] or {}
+		self.GreatVault[QWE].progress = self.GreatVault[QWE].progress or 0
+		self.GreatVault[QWE].threshold = self.GreatVault[QWE].threshold or 0
+		self.GreatVault[QWE].hyperlink = self.GreatVault[QWE].hyperlink or {}
+		self.GreatVault[QWE].hyperlink_STRING = self.GreatVault[QWE].hyperlink_STRING or 0
+		self.GreatVault[QWE].hyperlink[1] = self.GreatVault[QWE].hyperlink[1] or 0
+		self.GreatVault[QWE].hyperlink[2] = self.GreatVault[QWE].hyperlink[2] or 0
+		self.GreatVault[QWE].hyperlink[3] = self.GreatVault[QWE].hyperlink[3] or 0
+		if QWE == 1 then
+			self.GreatVault[QWE].type = self.GreatVault[QWE].type or MYTHIC_DUNGEONS
+		elseif QWE == 2 then
+			self.GreatVault[QWE].type = self.GreatVault[QWE].type or CALENDAR_TYPE_PVP
+		elseif QWE == 3 then
+			self.GreatVault[QWE].type = self.GreatVault[QWE].type or RAIDS
+		end
+		-- setmetatable(self.GreatVault[QWE].hyperlink, Meta_Table_0)
+	end
 	setmetatable(self, Meta_Table_0)
 	setmetatable(self.CurrencyID_maxQuantity, Meta_Table_0)
 	setmetatable(self.CurrencyID_Total, Meta_Table_0)
@@ -1736,8 +1744,6 @@ local function checkCharInfo(self)
 	setmetatable(self.OctoTable_QuestID, Meta_Table_NONE)
 	setmetatable(self.reputationID, Meta_Table_0)
 	setmetatable(self.Shadowland, Meta_Table_0)
-	 -- setmetatable(self.VOID_STORAGE_PAGE1, Meta_Table_0)
-	 -- setmetatable(self.VOID_STORAGE_PAGE2, Meta_Table_0)
 	if (self.tmstp_Weekly or 0) < GetServerTime() and self.CurrentKey ~= 0 then
 		self.CurrentKey = E.Octo_Globals.Green_Color..">VAULT<|r"
 	end
@@ -1759,9 +1765,14 @@ local function checkCharInfo(self)
 				end
 			end
 		end
-		self.RIO_RAIDResult = 0
-		self.RIO_KEYSResult = 0
-		self.RIO_PVPSResult = 0
+		for i = 1, 3 do
+			self.GreatVault[i].hyperlink[1] = 0
+			self.GreatVault[i].hyperlink[2] = 0
+			self.GreatVault[i].hyperlink[3] = 0
+			self.GreatVault[i].hyperlink_STRING = 0
+			self.GreatVault[i].progress = 0
+		end
+		self.OctoTable_QuestID[77251] = NONE
 	end
 	if (self.tmstp_Daily or 0) < GetServerTime() then
 		self.tmstp_Daily = E.Octo_Func.tmstpDayReset(1)
@@ -2084,23 +2095,6 @@ function Collect_Legion_Artifact()
 	local _, _, _, quantity2, reqQuantity2 = GetAchievementCriteriaInfo(11153, 1)
 	local _, _, _, quantity3, reqQuantity3 = GetAchievementCriteriaInfo(11154, 1)
 end
- -- function Collect_ALL_VoidStorage()
- -- if Octo_DEV_FUNC == true then
- -- print ("Collect_ALL_VoidStorage")
- -- end
- -- local curGUID = UnitGUID("PLAYER")
- -- local collect = Octo_ToDoLevels[curGUID]
- -- local VOID_STORAGE_MAX = 80
- -- local VOID_STORAGE_PAGES = 2
- -- for i = 1, VOID_STORAGE_MAX do
- -- local itemID, textureName, locked, recentDeposit, isFiltered, quality = GetVoidItemInfo(1, i)
- -- collect.VOID_STORAGE_PAGE1[i] = itemID or 0
- -- end
- -- for i = 1, VOID_STORAGE_MAX do
- -- local itemID, textureName, locked, recentDeposit, isFiltered, quality = GetVoidItemInfo(2, i)
- -- collect.VOID_STORAGE_PAGE2[i] = itemID or 0
- -- end
- -- end
 function Collect_ALL_LoginTime()
 	if Octo_DEV_FUNC == true then
 		print ("Collect_ALL_LoginTime")
@@ -2358,108 +2352,66 @@ function Collect_All_Professions()
 	end
 	return
 end
-function Collect_ALL_DungeonsRaiting()
-	if Octo_DEV_FUNC == true then
-		print ("Collect_ALL_DungeonsRaiting")
-	end
-	local UnitLevel = UnitLevel("PLAYER")
+function Collect_ALL_GreatVault()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDoLevels[curGUID]
-	local RIO_Score = C_ChallengeMode.GetOverallDungeonScore("PLAYER")
-	local info = C_MythicPlus.GetRunHistory(false, true)
-	local mapID = C_ChallengeMode.GetMapTable()
-	local vault = C_WeeklyRewards.GetActivities()
-	local RrLvl = {}
-	local PrLvl = {false, false, false}
-	local MrLvl = {}
-	local pRank = {}
-	for _, v in ipairs(vault) do
-		for i = 1, 3 do
-			if v.index == i then
-				if v.type == 3 then
-					local ilvl = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(v.id))
-					tinsert(RrLvl, ilvl)
-				end
-				if v.type == 2 then
-					if v.progress >= v.threshold then
-						PrLvl[i] = true
+	----------------------------------------------------------------
+	local mapChallengeModeIDs = C_ChallengeMode.GetMapTable()
+	C_MythicPlus.RequestRewards()
+	local currentWeekBestLevel, weeklyRewardLevel, nextDifficultyWeeklyRewardLevel, nextBestLevel = C_MythicPlus.GetWeeklyChestRewardLevel() or 0
+	C_MythicPlus.RequestMapInfo()
+	for i = 1, #mapChallengeModeIDs do
+		local _, level = C_MythicPlus.GetWeeklyBestForMap(mapChallengeModeIDs[i])
+		if level and level > currentWeekBestLevel then
+			currentWeekBestLevel = level
+		end
+	end
+	collect.RIO_Score = C_ChallengeMode.GetOverallDungeonScore("PLAYER")
+	collect.RIO_weeklyBest = currentWeekBestLevel
+	----------------------------------------------------------------
+	for _, i in pairs(Enum.WeeklyRewardChestThresholdType) do
+		local test
+		local hyperlink_STRING
+		local activities = C_WeeklyRewards.GetActivities(i)
+		for k = 1, 3 do
+			local activityInfo = activities[k]
+			if activityInfo then
+				local type = activityInfo.type
+				if collect and type ~= 0 then
+					collect.GreatVault[type].progress = activityInfo.progress
+					collect.GreatVault[type].threshold = activityInfo.threshold
+					local hyperlink = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+					if hyperlink then
+						collect.GreatVault[type].hyperlink[k] = hyperlink
 					end
-					if PrLvl[i] == true then
-						local ilvl = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(v.id))
-						tinsert(pRank, ilvl)
+					if type == 1 then collect.GreatVault[type].type = MYTHIC_DUNGEONS end
+					if type == 2 then collect.GreatVault[type].type = CALENDAR_TYPE_PVP end
+					if type == 3 then collect.GreatVault[type].type = RAIDS end
+					--------------------------------
+					hyperlink_STRING = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+					if hyperlink and type == 1 then
+						test = test and test..", "..hyperlink_STRING or hyperlink_STRING
+						if test ~= nil then
+							collect.GreatVault[type].hyperlink_STRING = test
+						end
 					end
-				end
-				if v.type == 1 then
-					local ilvl = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(v.id))
-					tinsert(MrLvl, ilvl)
+					if hyperlink and type == 2 then
+						test = test and test..", "..hyperlink_STRING or hyperlink_STRING
+						if test ~= nil then
+							collect.GreatVault[type].hyperlink_STRING = test
+						end
+					end
+					if hyperlink and type == 3 then
+						test = test and test..", "..hyperlink_STRING or hyperlink_STRING
+						if test ~= nil then
+							collect.GreatVault[type].hyperlink_STRING = test
+						end
+					end
 				end
 			end
 		end
 	end
-	if pRank[1] == nil then pRank[1] = "" end
-	if RrLvl[1] == nil then RrLvl[1] = "" end
-	if MrLvl[1] == nil then MrLvl[1] = "" end
-	local vaultDataRAID = C_WeeklyRewards.GetActivities()
-	local RAIDResult = 0
-	local RAIDThreshold = 0
-	for i = 7, 9 do
-		local activityInfoRAID = vaultDataRAID[i]
-		if activityInfoRAID then
-			RAIDResult = activityInfoRAID.progress
-			RAIDThreshold = activityInfoRAID.threshold
-		else
-			RAIDResult = 0
-			RAIDThreshold = 0
-		end
-	end
-	local RAID = RAIDResult.."/"..RAIDThreshold.." |cffa335ee"..table.concat(RrLvl, "/").."|r"
-	local vaultDataKEYS = C_WeeklyRewards.GetActivities()
-	local KEYSResult = 0
-	local KEYSThreshold = 0
-	for i = 1, 3 do
-		local activityInfoKEYS = vaultDataKEYS[i]
-		if activityInfoKEYS then
-			KEYSResult = activityInfoKEYS.progress
-			KEYSThreshold = activityInfoKEYS.threshold
-		else
-			KEYSResult = 0
-			KEYSThreshold = 0
-		end
-	end
-	local KEYS = KEYSResult.."/"..KEYSThreshold.." |cffa335ee"..table.concat(MrLvl, "/").."|r"
-	local vaultDataPVPS = C_WeeklyRewards.GetActivities()
-	local PVPSResult = 0
-	local PVPSThreshold = 0
-	for i = 4, 6 do
-		local activityInfoPVPS = vaultDataPVPS[i]
-		if activityInfoPVPS then
-			PVPSResult = activityInfoPVPS.progress
-			PVPSThreshold = activityInfoPVPS.threshold
-		else
-			PVPSResult = 0
-			PVPSThreshold = 0
-		end
-	end
-	local PVPS = PVPSResult.."/"..PVPSThreshold.." |cffa335ee"..table.concat(pRank, "/").."|r"
-	local mythicPlusMaps = C_ChallengeMode.GetMapTable()
-	C_MythicPlus.RequestRewards()
-	local max = C_MythicPlus.GetWeeklyChestRewardLevel() or 0
-	C_MythicPlus.RequestMapInfo()
-	for i = 1, #mythicPlusMaps do
-		local _, level = C_MythicPlus.GetWeeklyBestForMap(mythicPlusMaps[i])
-		if level and level > max then
-			max = level
-		end
-	end
-	if max == 0 then max = "" end
-	collect.RIO_Score = RIO_Score
-	collect.RIO_weeklyBest = (E.Octo_Globals.Purple_Color..max.."|r") or ""
-	collect.RIO_RAID = RAID or ""
-	collect.RIO_RAIDResult = RAIDResult or 0
-	collect.RIO_KEYS = KEYS or ""
-	collect.RIO_KEYSResult = KEYSResult or 0
-	collect.RIO_PVPS = PVPS or ""
-	collect.RIO_PVPSResult = PVPSResult or 0
+	----------------------------------------------------------------
 end
 function Collect_SL_PossibleAnima()
 	if Octo_DEV_FUNC == true then
@@ -2976,9 +2928,9 @@ function Collect_ALL_MoneyOnLogin()
 		collect.MoneyOnLogin = Money
 	end
 end
-function Collect_All_Transmoge()
+function Collect_All_Legion_Transmoge()
 	if Octo_DEV_FUNC == true then
-		print ("Collect_All_Transmoge")
+		print ("Collect_All_Legion_Transmoge")
 	end
 	 -- local curGUID = UnitGUID("PLAYER")
 	 -- local collect = Octo_ToDoLevels[curGUID]
@@ -3582,16 +3534,42 @@ function O_otrisovka()
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
 			vivodLeft = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.Purple_Color..L["Mythic Keystone"].."|r"
-			if CharInfo.RIO_RAIDResult ~= 0 or CharInfo.RIO_KEYSResult ~= 0 or CharInfo.RIO_PVPSResult ~= 0 then
-				tooltip[#tooltip+1] = {"Score", CharInfo.RIO_Score}
-				tooltip[#tooltip+1] = {"Weekly Best", CharInfo.RIO_weeklyBest}
-				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-				tooltip[#tooltip+1] = {"Рейды", CharInfo.RIO_RAID}
-				tooltip[#tooltip+1] = {"M+", CharInfo.RIO_KEYS}
-				tooltip[#tooltip+1] = {"PVP", CharInfo.RIO_PVPS}
+			if CharInfo.RIO_Score ~= 0 then
+				tooltip[#tooltip+1] = {DUNGEON_SCORE, E.Octo_Globals.Orange_Color..CharInfo.RIO_Score.."|r"}
 			end
-			if CharInfo.CurrentKey then
-				vivodCent = E.Octo_Func.Empty_Zero(CharInfo.CurrentKey)
+			if CharInfo.RIO_weeklyBest ~= 0 then
+				tooltip[#tooltip+1] = {"Weekly Best", E.Octo_Globals.Orange_Color..CharInfo.RIO_weeklyBest.."|r"}
+				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+			end
+
+
+			for i = 1, 3 do
+				if CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
+					tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Globals.Purple_Color..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
+				elseif CharInfo.GreatVault[i].progress ~= 0 then
+					tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
+				end
+			end
+
+
+
+
+
+
+
+			-- for i = 1, 3 do
+			-- 	if CharInfo.GreatVault[i].hyperlink[3] ~= 0 then
+			-- 		tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Globals.Purple_Color..CharInfo.GreatVault[i].hyperlink[1].." "..CharInfo.GreatVault[i].hyperlink[2].." "..CharInfo.GreatVault[i].hyperlink[3].."|r"}
+			-- 	elseif CharInfo.GreatVault[i].hyperlink[2] ~= 0 then
+			-- 		tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Globals.Purple_Color..CharInfo.GreatVault[i].hyperlink[1].." "..CharInfo.GreatVault[i].hyperlink[2].."|r"}
+			-- 	elseif CharInfo.GreatVault[i].hyperlink[1] ~= 0 then
+			-- 		tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Globals.Purple_Color..CharInfo.GreatVault[i].hyperlink[1].."|r"}
+			-- 	elseif CharInfo.GreatVault[i].progress ~= 0 then
+			-- 		tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
+			-- 	end
+			-- end
+			if CharInfo.CurrentKey ~= 0 then
+				vivodCent = CharInfo.CurrentKey
 			end
 			if CharInfo.HasAvailableRewards then
 				vivodCent = vivodCent..E.Octo_Globals.Green_Color..">V<|r"
@@ -3599,33 +3577,65 @@ function O_otrisovka()
 			if CharInfo.ItemsInBag[205225] ~= 0 or CharInfo.ItemsInBag[205999] ~= 0 or CharInfo.ItemsInBag[206046] ~= 0 or CharInfo.ItemsInBag[204843] ~= 0 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 			end
-			if CharInfo.ItemsInBag[205225] ~= 0 then
-				vivodCent = vivodCent..E.Octo_Globals.Green_Color.."+|r"
-				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(205225)..E.Octo_Func.func_itemName(205225), CharInfo.ItemsInBag[205225]}
-			end
-			if CharInfo.ItemsInBag[205999] ~= 0 then
-				vivodCent = vivodCent..E.Octo_Globals.Green_Color.."+|r"
-				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(205999)..E.Octo_Func.func_itemName(205999), CharInfo.ItemsInBag[205999]}
-			end
 			if CharInfo.ItemsInBag[206046] ~= 0 then
-				vivodCent = vivodCent..E.Octo_Globals.Green_Color.."+|r"
-				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206046)..E.Octo_Func.func_itemName(206046), CharInfo.ItemsInBag[206046]}
+				vivodCent = vivodCent..E.Octo_Globals.Purple_Color.."+|r"
+				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206046)..E.Octo_Globals.Purple_Color..E.Octo_Func.func_itemName_NOCOLOR(206046).."|r", CharInfo.ItemsInBag[206046]}
 			end
 			if CharInfo.ItemsInBag[204843] ~= 0 then
-				vivodCent = vivodCent..E.Octo_Globals.Green_Color.."+|r"
-				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204843)..E.Octo_Func.func_itemName(204843), CharInfo.ItemsInBag[204843]}
+				vivodCent = vivodCent..E.Octo_Globals.Pink_Color.."+|r"
+				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204843)..E.Octo_Globals.Pink_Color..E.Octo_Func.func_itemName_NOCOLOR(204843).."|r", CharInfo.ItemsInBag[204843]}
+			end
+			if CharInfo.ItemsInBag[205999] ~= 0 then
+				vivodCent = vivodCent..E.Octo_Globals.Orange_Color.."+|r"
+				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(205999)..E.Octo_Globals.Orange_Color..E.Octo_Func.func_itemName_NOCOLOR(205999).."|r", CharInfo.ItemsInBag[205999]}
+			end
+			if CharInfo.ItemsInBag[205225] ~= 0 then
+				vivodCent = vivodCent..E.Octo_Globals.LightGray_Color.."+|r"
+				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(205225)..E.Octo_Globals.LightGray_Color..E.Octo_Func.func_itemName_NOCOLOR(205225).."|r", CharInfo.ItemsInBag[205225]}
 			end
 			return vivodCent, vivodLeft
 	end)
-	tinsert(OctoTable_func_otrisovka,
-		function(CharInfo, tooltip, CL, BG)
-			local vivodCent, vivodLeft = "", ""
-			vivodLeft = "Weekly Best"
-			if CharInfo.RIO_weeklyBest ~= 0 then
-				vivodCent = E.Octo_Globals.WOW_Epic_Color..CharInfo.RIO_weeklyBest.."|r"
-			end
-			return vivodCent, vivodLeft
-	end)
+
+	-- tinsert(OctoTable_func_otrisovka,
+	-- 	function(CharInfo, tooltip, CL, BG)
+	-- 		local vivodCent, vivodLeft = "", ""
+	-- 		if CharInfo.RIO_Score ~= 0 then
+	-- 			vivodCent = E.Octo_Globals.WOW_Artifact_Color..CharInfo.RIO_Score.."|r"
+	-- 		end
+	-- 		vivodLeft = DUNGEON_SCORE
+	-- 		return vivodCent, vivodLeft
+	-- end)
+
+	-- tinsert(OctoTable_func_otrisovka,
+	-- 	function(CharInfo, tooltip, CL, BG)
+	-- 		local vivodCent, vivodLeft = "", ""
+	-- 		local test = 0
+	-- 		for i = 1, 3 do
+	-- 			if CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
+	-- 				tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Globals.Purple_Color..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
+	-- 			elseif CharInfo.GreatVault[i].progress ~= 0 then
+	-- 				tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
+	-- 			end
+	-- 		end
+	-- 		for i = 1, 3 do
+	-- 			if CharInfo.GreatVault[i].hyperlink[1] ~= 0 then
+	-- 				test = test + 1
+	-- 			end
+	-- 			if CharInfo.GreatVault[i].hyperlink[2] ~= 0 then
+	-- 				test = test + 1
+	-- 			end
+	-- 			if CharInfo.GreatVault[i].hyperlink[3] ~= 0 then
+	-- 				test = test + 1
+	-- 			end
+	-- 		end
+	-- 		if test ~= 0 then
+	-- 			vivodCent = E.Octo_Globals.Orange_Color..test.."/9|r"
+	-- 		end
+	-- 		vivodLeft = GREAT_VAULT_REWARDS
+	-- 		return vivodCent, vivodLeft
+	-- end)
+
+
 	if Octo_ToDoVars.config.ExpansionToShow == 10 then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -3775,84 +3785,48 @@ function O_otrisovka()
 				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76351), CharInfo.OctoTable_QuestID[76351]}
 				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76533), CharInfo.OctoTable_QuestID[76533]}
 				-- end
-				-- BG:SetColorTexture(.64, .21, .93, .1)
+				BG:SetColorTexture(.64, .21, .93, .1)
 				return vivodCent, vivodLeft
 		end)
-		-- tinsert(OctoTable_func_otrisovka,
-		-- 	function(CharInfo, tooltip, CL, BG)
-		-- 		local vivodCent, vivodLeft = "", ""
-		-- 		if CharInfo.ItemsInBag[207030] ~= 0 then
-		-- 			vivodCent = CharInfo.ItemsInBag[207030]..E.Octo_Func.func_texturefromIcon(2026009)
-		-- 		end
-		-- 		 -- vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(207030)
-		-- 		vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Globals.WOW_Epic_Color..L["Dilated Time Capsule"].."|r"
-		-- 		BG:SetColorTexture(.64, .21, .93, .1)
-		-- 		return vivodCent, vivodLeft
-		-- end)
-		 -- tinsert(OctoTable_func_otrisovka,
-		 -- function(CharInfo, tooltip, CL, BG)
-		 -- local vivodCent, vivodLeft = "", ""
-		 -- if CharInfo.ItemsInBag[207002] ~= 0 then
-		 -- vivodCent = CharInfo.ItemsInBag[207002]
-		 -- end
-		 -- -- vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
-		 -- vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Globals.WOW_Rare_Color..L["Encapsulated Destiny"].."|r"
-		 -- BG:SetColorTexture(.64, .21, .93, .1)
-		 -- return vivodCent, vivodLeft
-		 -- end)
+
+
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				local vivodLeft = (E.Octo_Func.func_texturefromIcon(134206)..Timer_DF_Dreamsurges()..L["Dreamsurges"])
-				if CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count ~= NONE then
-					vivodCent = CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count
-				end
+
+
+				tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..E.Octo_Func.func_questName(77414).."|r", CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count}
 				if CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count ~= NONE and CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count ~= DONE and CharInfo.DreamsurgeInvestigation ~= 0 and CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count ~= "" then
-					tooltip[#tooltip+1] = {CharInfo.DreamsurgeInvestigation}
+					tooltip[#tooltip+1] = {CharInfo.DreamsurgeInvestigation, " "}
 				end
-				BG:SetColorTexture(.31, 1, .47, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				local vivodLeft = (E.Octo_Func.func_texturefromIcon(4643985)..L["Shaping the Dreamsurge"])
+				tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..E.Octo_Func.func_questName(77251).."|r", CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count}
+				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+
+
+
+
 				if CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count ~= NONE then
 					vivodCent = CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count
 				end
-				BG:SetColorTexture(.31, 1, .47, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+
+
+
+
+
+
 				if CharInfo.ItemsInBag[208153] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[208153]..E.Octo_Func.func_texturefromIcon(4643985)
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(4643985)..E.Octo_Globals.WOW_Epic_Color..L["Dreamsurge Chrysalis"].."|r", CharInfo.ItemsInBag[208153]}
+					vivodCent = vivodCent..E.Octo_Globals.WOW_Epic_Color.." +|r"
 				end
-				 -- vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(208153)
-				vivodLeft = E.Octo_Func.func_texturefromIcon(4643985)..E.Octo_Globals.WOW_Epic_Color..L["Dreamsurge Chrysalis"].."|r"
-				BG:SetColorTexture(.31, 1, .47, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
 				if CharInfo.ItemsInBag[209419] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[209419].."/20"..E.Octo_Func.func_texturefromIcon(1044087)
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(1044087)..E.Octo_Globals.WOW_Rare_Color..L["Charred Elemental Remains"].."|r", CharInfo.ItemsInBag[209419].."/20"}
+					vivodCent = vivodCent..E.Octo_Globals.WOW_Rare_Color.."+|r"
 				end
-				 -- vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(209419)
-				vivodLeft = E.Octo_Func.func_texturefromIcon(1044087)..E.Octo_Globals.WOW_Rare_Color..L["Charred Elemental Remains"].."|r"
-				BG:SetColorTexture(.31, 1, .47, .1)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
 				if CharInfo.ItemsInBag[207026] ~= 0 then
-					vivodCent = CharInfo.ItemsInBag[207026]..E.Octo_Func.func_texturefromIcon(132858)
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(132858)..E.Octo_Globals.WOW_Uncommon_Color..L["Dreamsurge Coalescence"].."|r", CharInfo.ItemsInBag[207026]}
+					vivodCent = vivodCent..E.Octo_Globals.WOW_Uncommon_Color.."+|r"
 				end
-				 -- vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(207026)
-				vivodLeft = E.Octo_Func.func_texturefromIcon(132858)..E.Octo_Globals.WOW_Uncommon_Color..L["Dreamsurge Coalescence"].."|r"
 				BG:SetColorTexture(.31, 1, .47, .1)
 				return vivodCent, vivodLeft
 		end)
@@ -6048,7 +6022,7 @@ function O_otrisovka()
 				end
 			end
 			if #tooltip ~= 0 then
-				vivodCent = E.Octo_Globals.Gray_Color..QUESTS_LABEL.."|r ("..CharInfo.numQuests..")"
+				vivodCent = E.Octo_Globals.Gray_Color..QUESTS_LABEL.." ("..CharInfo.numQuests..")|r"
 			end
 			return vivodCent, vivodLeft
 	end)
@@ -6753,10 +6727,12 @@ function Octo_ToDoCreateAltFrame()
 		for k, CharInfo in pairs(Octo_ToDoLevels) do
 			local curGUID = UnitGUID("PLAYER")
 			if k == curGUID then
-				if CharInfo.RIO_RAIDResult ~= 0 or CharInfo.RIO_KEYSResult ~= 0 or CharInfo.RIO_PVPSResult ~= 0 then
-					t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_ON.tga")
-				else
-					t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_OFF.tga")
+				for i = 1, 3 do
+					if CharInfo.GreatVault[i].hyperlink[i] ~= 0 then
+						t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_ON.tga")
+					else
+						t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_OFF.tga")
+					end
 				end
 			end
 		end
@@ -7245,7 +7221,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 						Collect_ALL_BankInfo()
 						Collect_All_Currency()
 						Collect_ALL_CurrentKEY()
-						Collect_ALL_DungeonsRaiting()
+						Collect_ALL_GreatVault()
 						Collect_All_Holiday()
 						Collect_ALL_ItemLevel()
 						Collect_ALL_ItemsInBag()
@@ -7262,7 +7238,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 						Collect_All_Quests()
 						Collect_All_Quest_Tooltip()
 						Collect_All_Reputations()
-						Collect_All_Transmoge()
+						Collect_All_Legion_Transmoge()
 						Collect_ALL_UNIVERSALQuestUpdate()
 						Collect_BfA_Azerite()
 						Collect_BfA_Cloaklvl()
@@ -7306,7 +7282,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		Collect_ALL_BankInfo()
 		Collect_All_Currency()
 		Collect_ALL_CurrentKEY()
-		Collect_ALL_DungeonsRaiting()
+		Collect_ALL_GreatVault()
 		Collect_All_Holiday()
 		Collect_ALL_ItemLevel()
 		Collect_ALL_ItemsInBag()
@@ -7323,7 +7299,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		Collect_All_Quests()
 		Collect_All_Quest_Tooltip()
 		Collect_All_Reputations()
-		Collect_All_Transmoge()
+		Collect_All_Legion_Transmoge()
 		Collect_ALL_UNIVERSALQuestUpdate()
 		Collect_BfA_Azerite()
 		Collect_BfA_Cloaklvl()
@@ -7408,7 +7384,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
 	if event == "PLAYER_LEAVING_WORLD" and not InCombatLockdown() then
-		Collect_ALL_DungeonsRaiting()
+		Collect_ALL_GreatVault()
 		Collect_ALL_LoginTime()
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
