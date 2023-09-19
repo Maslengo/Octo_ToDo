@@ -2,9 +2,9 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v63.0(10.1.7)(19.09.2023)
+## Version: v63.1(10.1.7)(19.09.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture
-## SavedVariables: Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoConsumables
+## SavedVariables: Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog Octo_ToDoAutoItems
 
 XML\embeds.xml
 
@@ -18,6 +18,7 @@ Data\Tables\interrupts.lua
 Data\Tables\OctoTable_bytetoB64.lua
 Data\Tables\OctoTable_currencyID_ALL.lua
 Data\Tables\OctoTable_currencyID_Professions.lua
+Data\Tables\OctoTable_EnglishClasses.lua
 Data\Tables\OctoTable_instanceDifficulty.lua
 Data\Tables\OctoTable_itemID_ALL.lua
 Data\Tables\OctoTable_itemID_Cataloged_Research.lua
@@ -70,6 +71,7 @@ Moduls\Auto_Cinematic_Canceler.lua
 Moduls\Auto_Gossip.lua
 Moduls\Auto_Input_Delete.lua
 Moduls\Auto_Repair.lua
+Moduls\Auto_Screenshot.lua
 Moduls\Auto_Sell_Grey.lua
 Moduls\Auto_Turn_Quests.lua
 Moduls\Hide_Boss_Banner.lua

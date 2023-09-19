@@ -272,7 +272,17 @@ config:SetScript("OnShow", function(self)
 		end)
 		self.btn_left16.text:SetText(WHITE_FONT_COLOR_CODE..L["UIErrorsFramePosition"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-
+		-----------------------------------------------
+		-- btn_left17 Auto_Screenshot
+		-----------------------------------------------
+		self.btn_left17 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_left17:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*17)
+		self.btn_left17:SetChecked(Octo_ToDoVars.config.Auto_Screenshot)
+		self.btn_left17:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.Auto_Screenshot = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self.btn_left17.text:SetText(WHITE_FONT_COLOR_CODE..L["Auto_Screenshot"]..FONT_COLOR_CODE_CLOSE)
 
 
 

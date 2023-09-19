@@ -117,6 +117,21 @@ if L then
 	L["Aiding the Accord"] = true
 	L["InDev"] = true
 	L["HideCovenant"] = true
+	L["Total: "] = true
+	L["Consumables"] = true
+	L["Parts"] = true
+	L["Elemental"] = true
+	L["Optional Reagents"] = true
+	L["Trade Goods"] = true
+	L["Auto_Screenshot"] = true
+
+
+
+
+
+
+
+
 	-- print (LOC_OPTION_OFF, VIDEO_OPTIONS_ENABLED)
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
@@ -143,7 +158,7 @@ if L then
 	L["Maw"] = "Утроба"
 	L["Necrolord"] = "Некролорды"
 	L["Night Fae"] = "Ночной народец"
-	L["Other"] = "Разное"
+	L["Other"] = "Другое"
 	L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
 	L["RESET"] = "Сброс всех данных аддона"
 	L["Siege on Dragonbane Keep"] = "Осада Драконьей Погибели"
@@ -229,4 +244,11 @@ if L then
 	L["Width: "] = "Ширина: "
 	L["Auto Turn Quests"] = "Автопринятие заданий"
 	L["Aiding the Accord"] = "Помощь союзу"
+	L["Total: "] = "Всего: "
+	L["Consumables"] = "Расходуемые предметы"
+	L["Parts"] = "Детали"
+	L["Elemental"] = "Стихии"
+	L["Optional Reagents"] = "Дополнительные реагенты"
+	L["Trade Goods"] = "Хозяйственные товары"
+	L["Auto_Screenshot"] = "Автоскриншот"
 end
