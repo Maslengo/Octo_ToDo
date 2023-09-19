@@ -6587,36 +6587,9 @@ function Octo_ToDoCreateAltFrame()
 				for i = 0, #Octo_ToDoOther.Holiday do
 					if i ~= 0 then
 						GameTooltip:AddDoubleLine(E.Octo_Globals.Yellow_Color..Octo_ToDoOther.Holiday[i].title.."|r"..E.Octo_Globals.Gray_Color..Octo_ToDoOther.Holiday[i].id.."|r", Octo_ToDoOther.Holiday[i].startTime.." - "..Octo_ToDoOther.Holiday[i].endTime)
-						-- 62 Праздник фейерверков
-						-- 341 Огненный солнцеворот
-						-- 1383 Добро пожаловать в Санктуарий
-						-- 479 Ярмарка Новолуния
-						-- 613 Бонус за локальные задания
-						-- 671 PvP-потасовка: драка Песни Войны
-						-- 1063 Путешествие во времени по подземельям
-						-- 1244 PvP-потасовка: разборка Шадо-Пан
-						-- if Octo_ToDoOther.Holiday[i].id == 341 then
-						-- for k, CharInfo in pairs(Octo_ToDoLevels) do
-						-- if k == UnitGUID("PLAYER") then
-						-- GameTooltip:AddDoubleLine(" ", " ")
-						-- GameTooltip:AddDoubleLine(" ", " ")
-						-- GameTooltip:AddDoubleLine(CharInfo.Octopussy_DF_Month_SummerFestival_name, CharInfo.Octopussy_DF_Month_SummerFestival_count.."("..E.Octo_Func.func_itemTexture(23247)..CharInfo.ItemsInBag[23247]..")")
-						-- end
-						-- end
-						-- end
+
 					end
 				end
-				-- for k, CharInfo in pairs(Octo_ToDoLevels) do
-				-- local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-				-- if CharInfo.Octopussy_DF_Weekly_Feast_count ~= DONE and CharInfo.UnitLevel >= 60 then
-				-- countLines = countLines +1
-				-- GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"), CharInfo.Octopussy_DF_Weekly_Feast_count)
-				-- end
-				-- if CharInfo.ItemsInBag[200652] ~= 0 then
-				-- countLines = countLines + 1
-				-- GameTooltip:AddDoubleLine("$$$"..E.Octo_Func.func_itemTexture(200652)..CharInfo.ItemsInBag[200652], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-				-- end
-				-- end
 				if i == 0 then
 					GameTooltip:AddLine("No Data")
 				end
@@ -6853,364 +6826,364 @@ function Octo_ToDoCreateAltFrame()
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if not OctoFrame_Parts_Button then
-		OctoFrame_Parts_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-		OctoFrame_Parts_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoFrame_Parts_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -270)
-		OctoFrame_Parts_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-		OctoFrame_Parts_Button:SetBackdropBorderColor(0, .44, .98, 1)
-		OctoFrame_Parts_Button:SetScript("OnEnter", function(self)
-				local i = 0
-				self:SetBackdropBorderColor(1, 0, 0, 1)
-				self.icon:SetVertexColor(1, 0, 0, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-				GameTooltip:ClearLines()
-				GameTooltip:AddDoubleLine(L["Parts"], " ")
-				GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
-				GameTooltip:AddDoubleLine(" ", " ")
-				----------------
-				for v, q in pairs(Octo_ToDoAutoItems.Parts) do
-					for k, CharInfo in pairs(Octo_ToDoLevels) do
-						local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-						if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
-							end
-						elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-							end
-						end
-					end
-				end
-				----------------
-				if i == 0 then
-					GameTooltip:AddLine("No Data")
-				end
-				GameTooltip:AddDoubleLine(" ", " ")
-				GameTooltip:Show()
-		end)
-		OctoFrame_Parts_Button:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(0, .44, .98, 1)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		OctoFrame_Parts_Button:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, .5)
-				self.icon:SetVertexColor(1, 0, 0, .5)
-		end)
-		OctoFrame_Parts_Button:SetScript("OnClick", function()
-				OctoFrame_Main_Frame:Hide()
-		end)
-		local t = OctoFrame_Parts_Button:CreateTexture(nil, "BACKGROUND")
-		OctoFrame_Parts_Button.icon = t
-		t:SetTexture("Interface/Icons/INV_Gizmo_FelIronCasing")
-		----t:SetVertexColor(1, 1, 1, 1)
-		t:SetAllPoints(OctoFrame_Parts_Button)
-	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	if not OctoFrame_Elemental_Button then
-		OctoFrame_Elemental_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-		OctoFrame_Elemental_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoFrame_Elemental_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -300)
-		OctoFrame_Elemental_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-		OctoFrame_Elemental_Button:SetBackdropBorderColor(0, .44, .98, 1)
-		OctoFrame_Elemental_Button:SetScript("OnEnter", function(self)
-				local i = 0
-				self:SetBackdropBorderColor(1, 0, 0, 1)
-				self.icon:SetVertexColor(1, 0, 0, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-				GameTooltip:ClearLines()
-				GameTooltip:AddDoubleLine(L["Elemental"], " ")
-				GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
-				GameTooltip:AddDoubleLine(" ", " ")
-				----------------
-				for v, q in pairs(Octo_ToDoAutoItems.Elemental) do
-					for k, CharInfo in pairs(Octo_ToDoLevels) do
-						local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-						if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
-							end
-						elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-							end
-						end
-					end
-				end
-				----------------
-				if i == 0 then
-					GameTooltip:AddLine("No Data")
-				end
-				GameTooltip:AddDoubleLine(" ", " ")
-				GameTooltip:Show()
-		end)
-		OctoFrame_Elemental_Button:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(0, .44, .98, 1)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		OctoFrame_Elemental_Button:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, .5)
-				self.icon:SetVertexColor(1, 0, 0, .5)
-		end)
-		OctoFrame_Elemental_Button:SetScript("OnClick", function()
-				OctoFrame_Main_Frame:Hide()
-		end)
-		local t = OctoFrame_Elemental_Button:CreateTexture(nil, "BACKGROUND")
-		OctoFrame_Elemental_Button.icon = t
-		t:SetTexture("Interface/Icons/INV_Elemental_Primal_Air")
-		----t:SetVertexColor(1, 1, 1, 1)
-		t:SetAllPoints(OctoFrame_Elemental_Button)
-	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	if not OctoFrame_OptionalReagents_Button then
-		OctoFrame_OptionalReagents_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-		OctoFrame_OptionalReagents_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoFrame_OptionalReagents_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -330)
-		OctoFrame_OptionalReagents_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-		OctoFrame_OptionalReagents_Button:SetBackdropBorderColor(0, .44, .98, 1)
-		OctoFrame_OptionalReagents_Button:SetScript("OnEnter", function(self)
-				local i = 0
-				self:SetBackdropBorderColor(1, 0, 0, 1)
-				self.icon:SetVertexColor(1, 0, 0, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-				GameTooltip:ClearLines()
-				GameTooltip:AddDoubleLine(L["Optional Reagents"], " ")
-				GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
-				GameTooltip:AddDoubleLine(" ", " ")
-				----------------
-				for v, q in pairs(Octo_ToDoAutoItems.OptionalReagents) do
-					for k, CharInfo in pairs(Octo_ToDoLevels) do
-						local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-						if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
-							end
-						elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-							end
-						end
-					end
-				end
-				----------------
-				if i == 0 then
-					GameTooltip:AddLine("No Data")
-				end
-				GameTooltip:AddDoubleLine(" ", " ")
-				GameTooltip:Show()
-		end)
-		OctoFrame_OptionalReagents_Button:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(0, .44, .98, 1)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		OctoFrame_OptionalReagents_Button:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, .5)
-				self.icon:SetVertexColor(1, 0, 0, .5)
-		end)
-		OctoFrame_OptionalReagents_Button:SetScript("OnClick", function()
-				OctoFrame_Main_Frame:Hide()
-		end)
-		local t = OctoFrame_OptionalReagents_Button:CreateTexture(nil, "BACKGROUND")
-		OctoFrame_OptionalReagents_Button.icon = t
-		t:SetTexture("Interface/Icons/INV_Bijou_Green")
-		----t:SetVertexColor(1, 1, 1, 1)
-		t:SetAllPoints(OctoFrame_OptionalReagents_Button)
-	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	if not OctoFrame_Other_Button then
-		OctoFrame_Other_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-		OctoFrame_Other_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoFrame_Other_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -360)
-		OctoFrame_Other_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-		OctoFrame_Other_Button:SetBackdropBorderColor(0, .44, .98, 1)
-		OctoFrame_Other_Button:SetScript("OnEnter", function(self)
-				local i = 0
-				self:SetBackdropBorderColor(1, 0, 0, 1)
-				self.icon:SetVertexColor(1, 0, 0, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-				GameTooltip:ClearLines()
-				GameTooltip:AddDoubleLine(L["Other"], " ")
-				GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
-				GameTooltip:AddDoubleLine(" ", " ")
-				----------------
-				for v, q in pairs(Octo_ToDoAutoItems.Other) do
-					for k, CharInfo in pairs(Octo_ToDoLevels) do
-						local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-						if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
-							end
-						elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-							end
-						end
-					end
-				end
-				----------------
-				if i == 0 then
-					GameTooltip:AddLine("No Data")
-				end
-				GameTooltip:AddDoubleLine(" ", " ")
-				GameTooltip:Show()
-		end)
-		OctoFrame_Other_Button:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(0, .44, .98, 1)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		OctoFrame_Other_Button:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, .5)
-				self.icon:SetVertexColor(1, 0, 0, .5)
-		end)
-		OctoFrame_Other_Button:SetScript("OnClick", function()
-				OctoFrame_Main_Frame:Hide()
-		end)
-		local t = OctoFrame_Other_Button:CreateTexture(nil, "BACKGROUND")
-		OctoFrame_Other_Button.icon = t
-		t:SetTexture("Interface/Icons/INV_Misc_Rune_09")
-		----t:SetVertexColor(1, 1, 1, 1)
-		t:SetAllPoints(OctoFrame_Other_Button)
-	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	if not OctoFrame_TradeGoods_Button then
-		OctoFrame_TradeGoods_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-		OctoFrame_TradeGoods_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoFrame_TradeGoods_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -390)
-		OctoFrame_TradeGoods_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-		OctoFrame_TradeGoods_Button:SetBackdropBorderColor(0, .44, .98, 1)
-		OctoFrame_TradeGoods_Button:SetScript("OnEnter", function(self)
-				local i = 0
-				self:SetBackdropBorderColor(1, 0, 0, 1)
-				self.icon:SetVertexColor(1, 0, 0, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-				GameTooltip:ClearLines()
-				GameTooltip:AddDoubleLine(L["Trade Goods"], " ")
-				GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
-				GameTooltip:AddDoubleLine(" ", " ")
-				----------------
-				for v, q in pairs(Octo_ToDoAutoItems.TradeGoods) do
-					for k, CharInfo in pairs(Octo_ToDoLevels) do
-						local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-						if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
-							end
-						elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
-							if (CharInfo.ItemsInBag[v] ~= 0) then
-								i = i + 1
-								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-							end
-						end
-					end
-				end
-				----------------
-				if i == 0 then
-					GameTooltip:AddLine("No Data")
-				end
-				GameTooltip:AddDoubleLine(" ", " ")
-				GameTooltip:Show()
-		end)
-		OctoFrame_TradeGoods_Button:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(0, .44, .98, 1)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		OctoFrame_TradeGoods_Button:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, .5)
-				self.icon:SetVertexColor(1, 0, 0, .5)
-		end)
-		OctoFrame_TradeGoods_Button:SetScript("OnClick", function()
-				OctoFrame_Main_Frame:Hide()
-		end)
-		local t = OctoFrame_TradeGoods_Button:CreateTexture(nil, "BACKGROUND")
-		OctoFrame_TradeGoods_Button.icon = t
-		t:SetTexture("Interface/Icons/Ability_Ensnare")
-		----t:SetVertexColor(1, 1, 1, 1)
-		t:SetAllPoints(OctoFrame_TradeGoods_Button)
-	end
-	----------------------------------------------------------------
-	-- if not OctoFrame_AbandonAllQuests_Button then
-	--     local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
-	--     StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
-	--         text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n".."Отменить все ("..numQuests..") задания?",
-	--         button1 = YES,
-	--         button2 = NO,
-	--         hideOnEscape = 1,
-	--         whileDead = 1,
-	--         OnAccept = function()
-	--             C_Timer.After(1, function()
-	--                     for i = 1, numShownEntries do
-	--                         if numQuests ~= 0 then
-	--                             local questInfo = C_QuestLog.GetInfo(i)
-	--                             if questInfo then
-	--                                 if (not questInfo.isHeader and not questInfo.isHidden) then
-	--                                     print (E.Octo_Func.func_Gradient(L["Abandon"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..questInfo.title)
-	--                                     C_QuestLog.SetSelectedQuest(questInfo.questID)
-	--                                     C_QuestLog.SetAbandonQuest()
-	--                                     C_QuestLog.AbandonQuest()
-	--                                 end
-	--                             end
-	--                         end
-	--                     end
-	--                     print (DONE)
-	--             end)
-	--         end,
-	--     }
-	--     OctoFrame_AbandonAllQuests_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-	--     OctoFrame_AbandonAllQuests_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-	--     OctoFrame_AbandonAllQuests_Button:SetPoint("BOTTOMLEFT", OctoFrame_Main_Frame, "BOTTOMRIGHT", 1, 0)
-	--     OctoFrame_AbandonAllQuests_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	--     OctoFrame_AbandonAllQuests_Button:SetBackdropBorderColor(1, 0, 0, 0)
-	--     OctoFrame_AbandonAllQuests_Button:SetScript("OnEnter", function(self)
-	--             self:SetBackdropBorderColor(1, 0, 0, 1)
-	--             self.icon:SetVertexColor(1, 0, 0, 1)
-	--             GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-	--             GameTooltip:ClearLines()
-	--             GameTooltip:AddLine(L["Abandon All Quests"].." ("..numQuests..")")
-	--             GameTooltip:Show()
-	--     end)
-	--     OctoFrame_AbandonAllQuests_Button:SetScript("OnLeave", function(self)
-	--             self:SetBackdropBorderColor(1, 0, 0, 0)
-	--             self.icon:SetVertexColor(1, 1, 1, 1)
-	--             GameTooltip:ClearLines()
-	--             GameTooltip:Hide()
-	--     end)
-	--     OctoFrame_AbandonAllQuests_Button:SetScript("OnMouseDown", function(self)
-	--             self:SetBackdropBorderColor(1, 0, 0, .5)
-	--             self.icon:SetVertexColor(1, 0, 0, .5)
-	--     end)
-	--     OctoFrame_AbandonAllQuests_Button:SetScript("OnClick", function()
-	--             StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
-	--     end)
-	--     local t = OctoFrame_AbandonAllQuests_Button:CreateTexture(nil, "BACKGROUND")
-	--     OctoFrame_AbandonAllQuests_Button.icon = t
-	--     t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\SadKitty.tga")
-	--      -- t:SetVertexColor(1, 1, 1, 1)
-	--     t:SetAllPoints(OctoFrame_AbandonAllQuests_Button)
+	-- if not OctoFrame_Parts_Button then
+	-- 	OctoFrame_Parts_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+	-- 	OctoFrame_Parts_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+	-- 	OctoFrame_Parts_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -270)
+	-- 	OctoFrame_Parts_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	-- 	OctoFrame_Parts_Button:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 	OctoFrame_Parts_Button:SetScript("OnEnter", function(self)
+	-- 			local i = 0
+	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
+	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
+	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:AddDoubleLine(L["Parts"], " ")
+	-- 			GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			----------------
+	-- 			for v, q in pairs(Octo_ToDoAutoItems.Parts) do
+	-- 				for k, CharInfo in pairs(Octo_ToDoLevels) do
+	-- 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+	-- 					if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
+	-- 						end
+	-- 					elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+	-- 						end
+	-- 					end
+	-- 				end
+	-- 			end
+	-- 			----------------
+	-- 			if i == 0 then
+	-- 				GameTooltip:AddLine("No Data")
+	-- 			end
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			GameTooltip:Show()
+	-- 	end)
+	-- 	OctoFrame_Parts_Button:SetScript("OnLeave", function(self)
+	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:Hide()
+	-- 	end)
+	-- 	OctoFrame_Parts_Button:SetScript("OnMouseDown", function(self)
+	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
+	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
+	-- 	end)
+	-- 	OctoFrame_Parts_Button:SetScript("OnClick", function()
+	-- 			OctoFrame_Main_Frame:Hide()
+	-- 	end)
+	-- 	local t = OctoFrame_Parts_Button:CreateTexture(nil, "BACKGROUND")
+	-- 	OctoFrame_Parts_Button.icon = t
+	-- 	t:SetTexture("Interface/Icons/INV_Gizmo_FelIronCasing")
+	-- 	----t:SetVertexColor(1, 1, 1, 1)
+	-- 	t:SetAllPoints(OctoFrame_Parts_Button)
 	-- end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- if not OctoFrame_Elemental_Button then
+	-- 	OctoFrame_Elemental_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+	-- 	OctoFrame_Elemental_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+	-- 	OctoFrame_Elemental_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -300)
+	-- 	OctoFrame_Elemental_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	-- 	OctoFrame_Elemental_Button:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 	OctoFrame_Elemental_Button:SetScript("OnEnter", function(self)
+	-- 			local i = 0
+	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
+	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
+	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:AddDoubleLine(L["Elemental"], " ")
+	-- 			GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			----------------
+	-- 			for v, q in pairs(Octo_ToDoAutoItems.Elemental) do
+	-- 				for k, CharInfo in pairs(Octo_ToDoLevels) do
+	-- 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+	-- 					if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
+	-- 						end
+	-- 					elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+	-- 						end
+	-- 					end
+	-- 				end
+	-- 			end
+	-- 			----------------
+	-- 			if i == 0 then
+	-- 				GameTooltip:AddLine("No Data")
+	-- 			end
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			GameTooltip:Show()
+	-- 	end)
+	-- 	OctoFrame_Elemental_Button:SetScript("OnLeave", function(self)
+	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:Hide()
+	-- 	end)
+	-- 	OctoFrame_Elemental_Button:SetScript("OnMouseDown", function(self)
+	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
+	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
+	-- 	end)
+	-- 	OctoFrame_Elemental_Button:SetScript("OnClick", function()
+	-- 			OctoFrame_Main_Frame:Hide()
+	-- 	end)
+	-- 	local t = OctoFrame_Elemental_Button:CreateTexture(nil, "BACKGROUND")
+	-- 	OctoFrame_Elemental_Button.icon = t
+	-- 	t:SetTexture("Interface/Icons/INV_Elemental_Primal_Air")
+	-- 	----t:SetVertexColor(1, 1, 1, 1)
+	-- 	t:SetAllPoints(OctoFrame_Elemental_Button)
+	-- end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- if not OctoFrame_OptionalReagents_Button then
+	-- 	OctoFrame_OptionalReagents_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+	-- 	OctoFrame_OptionalReagents_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+	-- 	OctoFrame_OptionalReagents_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -330)
+	-- 	OctoFrame_OptionalReagents_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	-- 	OctoFrame_OptionalReagents_Button:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 	OctoFrame_OptionalReagents_Button:SetScript("OnEnter", function(self)
+	-- 			local i = 0
+	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
+	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
+	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:AddDoubleLine(L["Optional Reagents"], " ")
+	-- 			GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			----------------
+	-- 			for v, q in pairs(Octo_ToDoAutoItems.OptionalReagents) do
+	-- 				for k, CharInfo in pairs(Octo_ToDoLevels) do
+	-- 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+	-- 					if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
+	-- 						end
+	-- 					elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+	-- 						end
+	-- 					end
+	-- 				end
+	-- 			end
+	-- 			----------------
+	-- 			if i == 0 then
+	-- 				GameTooltip:AddLine("No Data")
+	-- 			end
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			GameTooltip:Show()
+	-- 	end)
+	-- 	OctoFrame_OptionalReagents_Button:SetScript("OnLeave", function(self)
+	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:Hide()
+	-- 	end)
+	-- 	OctoFrame_OptionalReagents_Button:SetScript("OnMouseDown", function(self)
+	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
+	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
+	-- 	end)
+	-- 	OctoFrame_OptionalReagents_Button:SetScript("OnClick", function()
+	-- 			OctoFrame_Main_Frame:Hide()
+	-- 	end)
+	-- 	local t = OctoFrame_OptionalReagents_Button:CreateTexture(nil, "BACKGROUND")
+	-- 	OctoFrame_OptionalReagents_Button.icon = t
+	-- 	t:SetTexture("Interface/Icons/INV_Bijou_Green")
+	-- 	----t:SetVertexColor(1, 1, 1, 1)
+	-- 	t:SetAllPoints(OctoFrame_OptionalReagents_Button)
+	-- end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- if not OctoFrame_Other_Button then
+	-- 	OctoFrame_Other_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+	-- 	OctoFrame_Other_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+	-- 	OctoFrame_Other_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -360)
+	-- 	OctoFrame_Other_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	-- 	OctoFrame_Other_Button:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 	OctoFrame_Other_Button:SetScript("OnEnter", function(self)
+	-- 			local i = 0
+	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
+	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
+	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:AddDoubleLine(L["Other"], " ")
+	-- 			GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			----------------
+	-- 			for v, q in pairs(Octo_ToDoAutoItems.Other) do
+	-- 				for k, CharInfo in pairs(Octo_ToDoLevels) do
+	-- 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+	-- 					if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
+	-- 						end
+	-- 					elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+	-- 						end
+	-- 					end
+	-- 				end
+	-- 			end
+	-- 			----------------
+	-- 			if i == 0 then
+	-- 				GameTooltip:AddLine("No Data")
+	-- 			end
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			GameTooltip:Show()
+	-- 	end)
+	-- 	OctoFrame_Other_Button:SetScript("OnLeave", function(self)
+	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:Hide()
+	-- 	end)
+	-- 	OctoFrame_Other_Button:SetScript("OnMouseDown", function(self)
+	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
+	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
+	-- 	end)
+	-- 	OctoFrame_Other_Button:SetScript("OnClick", function()
+	-- 			OctoFrame_Main_Frame:Hide()
+	-- 	end)
+	-- 	local t = OctoFrame_Other_Button:CreateTexture(nil, "BACKGROUND")
+	-- 	OctoFrame_Other_Button.icon = t
+	-- 	t:SetTexture("Interface/Icons/INV_Misc_Rune_09")
+	-- 	----t:SetVertexColor(1, 1, 1, 1)
+	-- 	t:SetAllPoints(OctoFrame_Other_Button)
+	-- end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- if not OctoFrame_TradeGoods_Button then
+	-- 	OctoFrame_TradeGoods_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+	-- 	OctoFrame_TradeGoods_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+	-- 	OctoFrame_TradeGoods_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -390)
+	-- 	OctoFrame_TradeGoods_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	-- 	OctoFrame_TradeGoods_Button:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 	OctoFrame_TradeGoods_Button:SetScript("OnEnter", function(self)
+	-- 			local i = 0
+	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
+	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
+	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:AddDoubleLine(L["Trade Goods"], " ")
+	-- 			GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			----------------
+	-- 			for v, q in pairs(Octo_ToDoAutoItems.TradeGoods) do
+	-- 				for k, CharInfo in pairs(Octo_ToDoLevels) do
+	-- 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+	-- 					if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
+	-- 						end
+	-- 					elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
+	-- 						if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 							i = i + 1
+	-- 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+	-- 						end
+	-- 					end
+	-- 				end
+	-- 			end
+	-- 			----------------
+	-- 			if i == 0 then
+	-- 				GameTooltip:AddLine("No Data")
+	-- 			end
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			GameTooltip:Show()
+	-- 	end)
+	-- 	OctoFrame_TradeGoods_Button:SetScript("OnLeave", function(self)
+	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:Hide()
+	-- 	end)
+	-- 	OctoFrame_TradeGoods_Button:SetScript("OnMouseDown", function(self)
+	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
+	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
+	-- 	end)
+	-- 	OctoFrame_TradeGoods_Button:SetScript("OnClick", function()
+	-- 			OctoFrame_Main_Frame:Hide()
+	-- 	end)
+	-- 	local t = OctoFrame_TradeGoods_Button:CreateTexture(nil, "BACKGROUND")
+	-- 	OctoFrame_TradeGoods_Button.icon = t
+	-- 	t:SetTexture("Interface/Icons/Ability_Ensnare")
+	-- 	----t:SetVertexColor(1, 1, 1, 1)
+	-- 	t:SetAllPoints(OctoFrame_TradeGoods_Button)
+	-- end
+	----------------------------------------------------------------
+	if not OctoFrame_AbandonAllQuests_Button then
+		local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
+		StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
+			text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n".."Отменить все ("..numQuests..") задания?",
+			button1 = YES,
+			button2 = NO,
+			hideOnEscape = 1,
+			whileDead = 1,
+			OnAccept = function()
+				C_Timer.After(1, function()
+						for i = 1, numShownEntries do
+							if numQuests ~= 0 then
+								local questInfo = C_QuestLog.GetInfo(i)
+								if questInfo then
+									if (not questInfo.isHeader and not questInfo.isHidden) then
+										print (E.Octo_Func.func_Gradient(L["Abandon"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..questInfo.title)
+										C_QuestLog.SetSelectedQuest(questInfo.questID)
+										C_QuestLog.SetAbandonQuest()
+										C_QuestLog.AbandonQuest()
+									end
+								end
+							end
+						end
+						print (DONE)
+				end)
+			end,
+		}
+		OctoFrame_AbandonAllQuests_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+		OctoFrame_AbandonAllQuests_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+		OctoFrame_AbandonAllQuests_Button:SetPoint("BOTTOMLEFT", OctoFrame_Main_Frame, "BOTTOMRIGHT", 1, 0)
+		OctoFrame_AbandonAllQuests_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+		OctoFrame_AbandonAllQuests_Button:SetBackdropBorderColor(1, 0, 0, 0)
+		OctoFrame_AbandonAllQuests_Button:SetScript("OnEnter", function(self)
+				self:SetBackdropBorderColor(1, 0, 0, 1)
+				self.icon:SetVertexColor(1, 0, 0, 1)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+				GameTooltip:ClearLines()
+				GameTooltip:AddLine(L["Abandon All Quests"].." ("..numQuests..")")
+				GameTooltip:Show()
+		end)
+		OctoFrame_AbandonAllQuests_Button:SetScript("OnLeave", function(self)
+				self:SetBackdropBorderColor(1, 0, 0, 0)
+				self.icon:SetVertexColor(1, 1, 1, 1)
+				GameTooltip:ClearLines()
+				GameTooltip:Hide()
+		end)
+		OctoFrame_AbandonAllQuests_Button:SetScript("OnMouseDown", function(self)
+				self:SetBackdropBorderColor(1, 0, 0, .5)
+				self.icon:SetVertexColor(1, 0, 0, .5)
+		end)
+		OctoFrame_AbandonAllQuests_Button:SetScript("OnClick", function()
+				StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
+		end)
+		local t = OctoFrame_AbandonAllQuests_Button:CreateTexture(nil, "BACKGROUND")
+		OctoFrame_AbandonAllQuests_Button.icon = t
+		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\SadKitty.tga")
+		 -- t:SetVertexColor(1, 1, 1, 1)
+		t:SetAllPoints(OctoFrame_AbandonAllQuests_Button)
+	end
 	----------------------------
 	local prof1, prof2 = GetProfessions()
 	local prof1 = prof1 and select(7, GetProfessionInfo(prof1))
