@@ -1610,6 +1610,7 @@ local function checkCharInfo(self)
 	self.AberrusTransmog = {}
 	if self.needResetWeekly == true then
 		self.journalInstance = {}
+		self.RIO_weeklyBest = 0
 	end
 	if self.journalInstance == nil or self.journalInstance == 0 then
 		self.journalInstance = {}
@@ -1755,8 +1756,17 @@ local function checkCharInfo(self)
 	setmetatable(self.reputationID, Meta_Table_0)
 	setmetatable(self.Shadowland, Meta_Table_0)
 	if (self.tmstp_Weekly or 0) < GetServerTime() and self.CurrentKey ~= 0 then
-		self.CurrentKey = E.Octo_Globals.Green_Color..">VAULT<|r"
+		self.CurrentKey = 0
 	end
+
+	if (self.tmstp_Weekly or 0) < GetServerTime() and (self.GreatVault[1].progress) ~= 0 then
+		self.HasAvailableRewards = true
+	end
+
+
+
+
+
 	if (self.tmstp_Weekly or 0) < GetServerTime() and self.Octopussy_DF_Weekly_3kREP_count == DONE then
 		self.Octopussy_DF_Weekly_3kREP_count = NONE
 	end
@@ -3650,7 +3660,7 @@ function O_otrisovka()
 				vivodCent = CharInfo.CurrentKey
 			end
 			if CharInfo.HasAvailableRewards then
-				vivodCent = vivodCent..E.Octo_Globals.Green_Color..">V<|r"
+				vivodCent = vivodCent..E.Octo_Globals.Blue_Color..">Vault<|r"
 			end
 			if CharInfo.ItemsInBag[205225] ~= 0 or CharInfo.ItemsInBag[205999] ~= 0 or CharInfo.ItemsInBag[206046] ~= 0 or CharInfo.ItemsInBag[204843] ~= 0 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
