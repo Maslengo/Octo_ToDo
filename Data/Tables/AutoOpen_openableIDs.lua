@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.Octo_Table.AutoOpen_openableIDs = {
+    [117393] = true,
     [104272] = true,
     [208142] = true,
     [209833] = true,

@@ -45,6 +45,7 @@ local Unknown_Icon = "|T134400:16:16:::64:64:4:60:4:60|t"
 local Money_Icon = "|T133784:12:12:::64:64:4:64:4:64|t"
 local Token_Icon = "|T1120721:12:12:::64:64:4:64:4:64|t"
 -- local MailBox_Icon = "|T1418621:12:12:::64:64:4:64:4:64|t"
+-- local MailBox_Icon = "|T".."Interface/AddOns/Octo_ToDo/Media/ElvUI/Mail0.tga"..":12:12:::64:64:4:64:4:64|t"
 local MailBox_Icon = "|T1506457:12:12:::64:64:4:64:4:64|t"
 local classColor = C_ClassColor.GetClassColor(classFilename)
 local r, g, b = classColor:GetRGB()
@@ -1298,6 +1299,54 @@ local OctoTable_UniversalQuest = {
 		max = 131,
 	},
 	{
+		name_save = "Brewfest",
+		name_quest = "Brewfest",
+		reset = "Month",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			77155,77152,77153,77747,76531,77099,77745,77095,77746,77096,77744,77097,
+		},
+		max = 12,
+	},
+	{
+		name_save = "Brewfest_BarrelingDown", --Делай бочку https://ru.wowhead.com/quest=77208 D
+		name_quest = "Barreling Down",
+		reset = "Daily",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			77208,
+		},
+		max = 1,
+	},
+	{
+		name_save = "Brewfest_BubblingBrews", --Пузырящийся напиток https://ru.wowhead.com/quest=76591 D
+		name_quest = "Bubbling Brews",
+		reset = "Daily",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			76591,
+		},
+		max = 1,
+	},
+	{
+		name_save = "Brewfest_DirebrewsDireBrew", --Худое варево Худовара https://www.wowhead.com/ru/quest=12492/
+		name_quest = "Direbrew's Dire Brew",
+		reset = "Month",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			12492,
+		},
+		max = 1,
+	},
+	{
 		name_save = "TemporalAcquisitionsSpecialist", -- https://www.wowhead.com/ru/achievement = 18554/
 		name_quest = "Temporal Acquisitions Specialist",
 		reset = "Once",
@@ -1642,6 +1691,13 @@ local function checkCharInfo(self)
 			self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] = self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] or NONE
 		end
 	end
+	self.LFGInstance = self.LFGInstance or {}
+	for dungeonID, name in pairs(E.Octo_Table.OctoTable_LFGDungeons) do
+		self.LFGInstance[dungeonID] = self.LFGInstance[dungeonID] or {}
+		self.LFGInstance[dungeonID].D_name = self.LFGInstance[dungeonID].D_name or name
+		self.LFGInstance[dungeonID].donetoday = self.LFGInstance[dungeonID].donetoday or NONE
+	end
+	self.LFGInstance = self.LFGInstance or {}
 	self.GreatVault = self.GreatVault or {}
 	self.professions = self.professions or {}
 	self.avgItemLevel = self.avgItemLevel or 0
@@ -1755,18 +1811,9 @@ local function checkCharInfo(self)
 	setmetatable(self.OctoTable_QuestID, Meta_Table_NONE)
 	setmetatable(self.reputationID, Meta_Table_0)
 	setmetatable(self.Shadowland, Meta_Table_0)
-	if (self.tmstp_Weekly or 0) < GetServerTime() and self.CurrentKey ~= 0 then
-		self.CurrentKey = 0
-	end
-
-	if (self.tmstp_Weekly or 0) < GetServerTime() and (self.GreatVault[1].progress) ~= 0 then
+	if (self.tmstp_Weekly or 0) < GetServerTime() and (self.GreatVault[1].hyperlink_STRING ~= 0 or self.GreatVault[2].hyperlink_STRING ~= 0 or self.GreatVault[3].hyperlink_STRING ~= 0) then
 		self.HasAvailableRewards = true
 	end
-
-
-
-
-
 	if (self.tmstp_Weekly or 0) < GetServerTime() and self.Octopussy_DF_Weekly_3kREP_count == DONE then
 		self.Octopussy_DF_Weekly_3kREP_count = NONE
 	end
@@ -1776,6 +1823,9 @@ local function checkCharInfo(self)
 	if (self.tmstp_Weekly or 0) < GetServerTime() then
 		self.tmstp_Weekly = E.Octo_Func.tmstpDayReset(7)
 		self.needResetWeekly = true
+		self.CurrentKey = 0
+		self.CurrentKeyFULL = 0
+		self.CurrentKeyLevel = 0
 		for _, v in pairs(OctoTable_UniversalQuest) do
 			for _, w in pairs(v) do
 				if v.name_save ~= "3kREP" and v.name_save ~= "Feast" then
@@ -1803,6 +1853,9 @@ local function checkCharInfo(self)
 				self["Octopussy_"..v.expansion.."_Daily_"..v.desc..v.place..v.name_save.."_count"] = NONE
 				self["Octopussy_"..v.expansion.."_Daily_"..v.desc..v.place..v.name_save.."_questID"] = NONE
 			end
+		end
+		for dungeonID, v in pairs(E.Octo_Table.OctoTable_LFGDungeons) do
+			self.LFGInstance[dungeonID].donetoday = NONE
 		end
 		self.bounty_BfA1 = 0
 		self.bounty_BfA2 = 0
@@ -2511,6 +2564,8 @@ function Collect_ALL_CurrentKEY()
 								end
 								local dungeon = select(3, strsplit(":", name))
 								local lvl = select(4, strsplit(":", name))
+								collect.CurrentKeyLevel = lvl or 0
+								collect.CurrentKeyFULL = dungeon or 0
 								local expire = select(5, strsplit(":", name))
 								local dungeonNAME = C_ChallengeMode.GetMapUIInfo(dungeon)
 								local Abbr_En_Name = "whz"
@@ -3222,7 +3277,59 @@ function Collect_All_journalInstance()
 		--------------------------------
 	end
 	--------------------------------
+	-- collect.LFGInstance = {} -- УДАЛЕНИЕ
+	collect.LFGInstance = collect.LFGInstance or {}
+	----------------------------------------------------------------
+	for i=1, GetNumRandomDungeons() do
+		local dungeonID, name = GetLFGRandomDungeonInfo(i)
+		if dungeonID then
+			-- Octo_ToDoAutoItems.LFGInstance[dungeonID] = Octo_ToDoAutoItems.LFGInstance[dungeonID] or {}
+			Octo_ToDoAutoItems.LFGInstance[dungeonID] = name
+			-- collect.LFGInstance[dungeonID] = {}
+		end
+	end
+
+	for dungeonID, name in pairs(E.Octo_Table.OctoTable_LFGDungeons) do
+	    local D_name, D_typeID, D_subtypeID, D_minLevel, D_maxLevel, D_recLevel, D_minRecLevel, D_maxRecLevel, D_expansionLevel, D_groupID, D_textureFilename, D_difficulty, D_maxPlayers, D_description, D_isHoliday, D_bonusRepAmount, D_minPlayers, D_isTimeWalker, D_name2, D_minGearLevel, D_isScalingDungeon, D_lfgMapID = GetLFGDungeonInfo(dungeonID)
+		local donetoday, money = GetLFGDungeonRewards(dungeonID)
+		if D_name then
+			collect.LFGInstance[dungeonID] = collect.LFGInstance[dungeonID] or {}
+			collect.LFGInstance[dungeonID].D_name = D_name
+			-- collect.LFGInstance[dungeonID].D_typeID = D_typeID
+			-- collect.LFGInstance[dungeonID].D_subtypeID = D_subtypeID
+			-- collect.LFGInstance[dungeonID].D_minLevel = D_minLevel
+			-- collect.LFGInstance[dungeonID].D_maxLevel = D_maxLevel
+			-- collect.LFGInstance[dungeonID].D_recLevel = D_recLevel
+			-- collect.LFGInstance[dungeonID].D_minRecLevel = D_minRecLevel
+			-- collect.LFGInstance[dungeonID].D_maxRecLevel = D_maxRecLevel
+			-- collect.LFGInstance[dungeonID].D_expansionLevel = D_expansionLevel
+			-- collect.LFGInstance[dungeonID].D_groupID = D_groupID
+			-- collect.LFGInstance[dungeonID].D_textureFilename = D_textureFilename
+			-- collect.LFGInstance[dungeonID].D_difficulty = D_difficulty
+			-- collect.LFGInstance[dungeonID].D_maxPlayers = D_maxPlayers
+			-- collect.LFGInstance[dungeonID].D_description = D_description
+			-- collect.LFGInstance[dungeonID].D_isHoliday = D_isHoliday
+			-- collect.LFGInstance[dungeonID].D_bonusRepAmount = D_bonusRepAmount
+			-- collect.LFGInstance[dungeonID].D_minPlayers = D_minPlayers
+			-- collect.LFGInstance[dungeonID].D_isTimeWalker = D_isTimeWalker
+			-- collect.LFGInstance[dungeonID].D_name2 = D_name2
+			-- collect.LFGInstance[dungeonID].D_minGearLevel = D_minGearLevel
+			-- collect.LFGInstance[dungeonID].D_isScalingDungeon = D_isScalingDungeon
+			-- collect.LFGInstance[dungeonID].D_lfgMapID = D_lfgMapID
+			if donetoday == true then
+				collect.LFGInstance[dungeonID].donetoday = DONE
+			else
+				collect.LFGInstance[dungeonID].donetoday = NONE
+			end
+			-- collect.LFGInstance[dungeonID].money = money
+		end
+	end
+
 end
+
+
+
+
 function Collect_AberrusTransmog()
 	-- print ("Collect_AberrusTransmog")
 	local curGUID = UnitGUID("PLAYER")
@@ -3355,6 +3462,7 @@ function Collect_ALL_Consumables()
 		end
 	end
 end
+
 function Timer_Legion_Invasion()
 	local TIMER = (1547586000-10800)
 	local interval = 66600
@@ -3664,6 +3772,9 @@ function O_otrisovka()
 			end
 			if CharInfo.ItemsInBag[205225] ~= 0 or CharInfo.ItemsInBag[205999] ~= 0 or CharInfo.ItemsInBag[206046] ~= 0 or CharInfo.ItemsInBag[204843] ~= 0 then
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+			end
+			if CharInfo.CurrentKeyFULL ~= 0 then
+				tooltip[#tooltip+1] = {CharInfo.CurrentKeyFULL.." "..CharInfo.CurrentKeyLevel, ""}
 			end
 			if CharInfo.ItemsInBag[206046] ~= 0 then
 				vivodCent = vivodCent..E.Octo_Globals.Purple_Color.."+|r"
@@ -6276,9 +6387,9 @@ function O_otrisovka()
 			-- vivodLeft = LFG_LIST_ITEM_LEVEL_INSTR_SHORT
 			local pvpcolor = E.Octo_Globals.Red_Color
 			if CharInfo.avgItemLevelEquipped and CharInfo.avgItemLevel then
-				if CharInfo.avgItemLevelEquipped > 440 then
+				if CharInfo.avgItemLevelEquipped >= 440 then
 					pvpcolor = E.Octo_Globals.Green_Color
-				elseif CharInfo.avgItemLevelEquipped > 400 then
+				elseif CharInfo.avgItemLevelEquipped >= 400 then
 					pvpcolor = E.Octo_Globals.Yellow_Color
 				end
 			end
@@ -6334,6 +6445,93 @@ function O_otrisovka()
 			end
 			return vivodCent, vivodLeft
 	end)
+
+
+
+
+
+
+
+	tinsert(OctoTable_func_otrisovka,
+		function(CharInfo, tooltip, CL, BG)
+			local vivodCent, vivodLeft = "", ""
+			if CharInfo.LFGInstance[287].D_name ~= NONE then
+				vivodLeft = E.Octo_Func.func_texturefromIcon(236701)..CharInfo.LFGInstance[287].D_name
+			end
+			if CharInfo.LFGInstance[287].donetoday ~= NONE then
+				vivodCent = CharInfo.LFGInstance[287].donetoday
+			end
+			BG:SetColorTexture(1,.95,.44,.1)
+			return vivodCent, vivodLeft
+	end)
+
+	tinsert(OctoTable_func_otrisovka, -- EVENT ID 372 (Brewfest)
+		function(CharInfo, tooltip, CL, BG)
+			local vivodCent, vivodLeft = "", ""
+			vivodLeft = E.Octo_Func.func_texturefromIcon(236701)..E.Octo_Func.func_itemName(37829)
+			-- vivodLeft = E.Octo_Func.func_texturefromIcon(236701).."Brewfest"
+			if CharInfo.ItemsInBag[37829] ~= 0 then
+				vivodCent = CharInfo.ItemsInBag[37829]..Money_Icon
+			end
+			BG:SetColorTexture(1,.95,.44,.1)
+			return vivodCent, vivodLeft
+	end)
+	tinsert(OctoTable_func_otrisovka,
+		function(CharInfo, tooltip, CL, BG)
+			local vivodCent, vivodLeft = "", ""
+			vivodLeft = E.Octo_Func.func_texturefromIcon(236701).. E.Octo_Globals.Yellow_Color.."Once |r"..E.Octo_Func.func_questName(12492)
+			if CharInfo.Octopussy_DF_Month_Brewfest_DirebrewsDireBrew_count ~= NONE then
+				vivodCent = CharInfo.Octopussy_DF_Month_Brewfest_DirebrewsDireBrew_count
+			end
+			BG:SetColorTexture(1,.95,.44,.1)
+			return vivodCent, vivodLeft
+	end)
+	tinsert(OctoTable_func_otrisovka,
+		function(CharInfo, tooltip, CL, BG)
+			local vivodCent, vivodLeft = "", ""
+			vivodLeft = E.Octo_Func.func_texturefromIcon(236701).. E.Octo_Globals.Yellow_Color.."Once |r"..E.Octo_Func.func_questName(77155)
+			if CharInfo.Octopussy_DF_Month_Brewfest_count ~= NONE then
+				vivodCent = CharInfo.Octopussy_DF_Month_Brewfest_count
+			end
+			BG:SetColorTexture(1,.95,.44,.1)
+			return vivodCent, vivodLeft
+	end)
+	tinsert(OctoTable_func_otrisovka,
+		function(CharInfo, tooltip, CL, BG)
+			local vivodCent, vivodLeft = "", ""
+			vivodLeft = E.Octo_Func.func_texturefromIcon(236701).. E.Octo_Globals.Blue_Color.."Daily |r"..E.Octo_Func.func_questName(77208)
+			if CharInfo.Octopussy_DF_Daily_Brewfest_BarrelingDown_count ~= NONE then
+				vivodCent = CharInfo.Octopussy_DF_Daily_Brewfest_BarrelingDown_count
+			end
+			BG:SetColorTexture(1,.95,.44,.1)
+			return vivodCent, vivodLeft
+	end)
+	tinsert(OctoTable_func_otrisovka,
+		function(CharInfo, tooltip, CL, BG)
+			local vivodCent, vivodLeft = "", ""
+			vivodLeft = E.Octo_Func.func_texturefromIcon(236701).. E.Octo_Globals.Blue_Color.."Daily |r"..E.Octo_Func.func_questName(76591)
+			if CharInfo.Octopussy_DF_Daily_Brewfest_BubblingBrews_count ~= NONE then
+				vivodCent = CharInfo.Octopussy_DF_Daily_Brewfest_BubblingBrews_count
+			end
+			BG:SetColorTexture(1,.95,.44,.1)
+			return vivodCent, vivodLeft
+	end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	-- tinsert(OctoTable_func_otrisovka,
 	--     function(CharInfo, tooltip, CL, BG)
 	--         local vivodCent, vivodLeft = " ", " "
@@ -6597,7 +6795,6 @@ function Octo_ToDoCreateAltFrame()
 				for i = 0, #Octo_ToDoOther.Holiday do
 					if i ~= 0 then
 						GameTooltip:AddDoubleLine(E.Octo_Globals.Yellow_Color..Octo_ToDoOther.Holiday[i].title.."|r"..E.Octo_Globals.Gray_Color..Octo_ToDoOther.Holiday[i].id.."|r", Octo_ToDoOther.Holiday[i].startTime.." - "..Octo_ToDoOther.Holiday[i].endTime)
-
 					end
 				end
 				if i == 0 then
@@ -7456,16 +7653,33 @@ function Octo_ToDoDeleteChar(curGUID)
 end
 function Octo_ToDoOnEvent(self, event, ...)
 	if event == "VARIABLES_LOADED" and not InCombatLockdown() then
+
+		Octo_ToDoLevels = Octo_ToDoLevels or {}
+		Octo_ToDoVars = Octo_ToDoVars or {}
+		Octo_ToDoArtifact = Octo_ToDoArtifact or {}
+		Octo_ToDoOther = Octo_ToDoOther or {}
+		Octo_ToDoTransmog = Octo_ToDoTransmog or {}
+		Octo_ToDoAutoItems = Octo_ToDoAutoItems or {}
+
+		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars == nil then Octo_ToDoVars = {} end
 		if Octo_ToDoArtifact == nil then Octo_ToDoArtifact = {} end
+		if Octo_ToDoOther == nil then Octo_ToDoOther = {} end
+		if Octo_ToDoTransmog == nil then Octo_ToDoTransmog = {} end
 		if Octo_ToDoAutoItems == nil then Octo_ToDoAutoItems = {} end
+
+
+
+
+
+
+		if Octo_ToDoAutoItems.LFGInstance == nil then Octo_ToDoAutoItems.LFGInstance = {} end
 		if Octo_ToDoAutoItems.Consumables == nil then Octo_ToDoAutoItems.Consumables = {} end
 		if Octo_ToDoAutoItems.Parts == nil then Octo_ToDoAutoItems.Parts = {} end
 		if Octo_ToDoAutoItems.Elemental == nil then Octo_ToDoAutoItems.Elemental = {} end
 		if Octo_ToDoAutoItems.OptionalReagents == nil then Octo_ToDoAutoItems.OptionalReagents = {} end
 		if Octo_ToDoAutoItems.Other == nil then Octo_ToDoAutoItems.Other = {} end
 		if Octo_ToDoAutoItems.TradeGoods == nil then Octo_ToDoAutoItems.TradeGoods = {} end
-		if Octo_ToDoOther == nil then Octo_ToDoOther = {} end
 		if Octo_ToDoOther.prefix == nil then Octo_ToDoOther.prefix = "Русский" end
 		if Octo_ToDoOther.TokenPrice == nil then Octo_ToDoOther.TokenPrice = 0 end
 		if Octo_ToDoOther.Holiday == nil then Octo_ToDoOther.Holiday = {} end
@@ -7506,7 +7720,6 @@ function Octo_ToDoOnEvent(self, event, ...)
 		-- for k, v in pairs(E.Octo_Globals.TransmogCollectionType) do
 		-- end
 		if Octo_ToDoVars.config == nil then Octo_ToDoVars.config = {} end
-		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars.config.CVar == nil then Octo_ToDoVars.config.CVar = false end
 		if Octo_ToDoVars.config.SORTING == nil then Octo_ToDoVars.config.SORTING = false end
 		if Octo_ToDoVars.config.InputDelete == nil then Octo_ToDoVars.config.InputDelete = true end
@@ -7525,7 +7738,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.StaticPopup1Button1 == nil then Octo_ToDoVars.config.StaticPopup1Button1 = false end
 		if Octo_ToDoVars.config.AnotherAddonsRAID == nil then Octo_ToDoVars.config.AnotherAddonsRAID = false end
 		if Octo_ToDoVars.config.ClearChat == nil then Octo_ToDoVars.config.ClearChat = false end
-		if Octo_ToDoVars.config.ShowOnlyCurrentRealm == nil then Octo_ToDoVars.config.ShowOnlyCurrentRealm = false end
+		if Octo_ToDoVars.config.ShowOnlyCurrentRealm == nil then Octo_ToDoVars.config.ShowOnlyCurrentRealm = true end
 		if Octo_ToDoVars.config.AutoSellGrey == nil then Octo_ToDoVars.config.AutoSellGrey = true end
 		if Octo_ToDoVars.config.AutoRepair == nil then Octo_ToDoVars.config.AutoRepair = true end
 		if Octo_ToDoVars.config.Auto_Screenshot == nil then Octo_ToDoVars.config.Auto_Screenshot = false end
@@ -7823,5 +8036,3 @@ SlashCmdList.GSEARCH = function(msg)
 end
 SlashCmdList["RELOAD"] = ReloadUI
 SLASH_RELOAD1 = "/rl"
-
-
