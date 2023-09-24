@@ -7952,6 +7952,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		Collect_BfA_Azerite()
 		Collect_BfA_Cloaklvl()
 		Collect_Legion_Artifact()
+		Collect_All_journalInstance()
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
 	if event == "BANKFRAME_OPENED" or event == "PLAYERBANKSLOTS_CHANGED" and not InCombatLockdown() --[[and not IsAnyStandardHeldBagOpen()]] then --[[(not IsAnyStandardHeldBagOpen() or ContainerFrameCombinedBags:IsShown()) ]]
