@@ -3278,58 +3278,51 @@ function Collect_All_journalInstance()
 	end
 	--------------------------------
 	-- collect.LFGInstance = {} -- УДАЛЕНИЕ
-	collect.LFGInstance = collect.LFGInstance or {}
+	-- collect.LFGInstance = collect.LFGInstance or {}
 	----------------------------------------------------------------
 	for i=1, GetNumRandomDungeons() do
 		local dungeonID, name = GetLFGRandomDungeonInfo(i)
 		if dungeonID then
-			-- Octo_ToDoAutoItems.LFGInstance[dungeonID] = Octo_ToDoAutoItems.LFGInstance[dungeonID] or {}
 			Octo_ToDoAutoItems.LFGInstance[dungeonID] = name
-			-- collect.LFGInstance[dungeonID] = {}
 		end
 	end
-
 	for dungeonID, name in pairs(E.Octo_Table.OctoTable_LFGDungeons) do
-	    local D_name, D_typeID, D_subtypeID, D_minLevel, D_maxLevel, D_recLevel, D_minRecLevel, D_maxRecLevel, D_expansionLevel, D_groupID, D_textureFilename, D_difficulty, D_maxPlayers, D_description, D_isHoliday, D_bonusRepAmount, D_minPlayers, D_isTimeWalker, D_name2, D_minGearLevel, D_isScalingDungeon, D_lfgMapID = GetLFGDungeonInfo(dungeonID)
-		local donetoday, money = GetLFGDungeonRewards(dungeonID)
-		if D_name then
-			collect.LFGInstance[dungeonID] = collect.LFGInstance[dungeonID] or {}
-			collect.LFGInstance[dungeonID].D_name = D_name
-			-- collect.LFGInstance[dungeonID].D_typeID = D_typeID
-			-- collect.LFGInstance[dungeonID].D_subtypeID = D_subtypeID
-			-- collect.LFGInstance[dungeonID].D_minLevel = D_minLevel
-			-- collect.LFGInstance[dungeonID].D_maxLevel = D_maxLevel
-			-- collect.LFGInstance[dungeonID].D_recLevel = D_recLevel
-			-- collect.LFGInstance[dungeonID].D_minRecLevel = D_minRecLevel
-			-- collect.LFGInstance[dungeonID].D_maxRecLevel = D_maxRecLevel
-			-- collect.LFGInstance[dungeonID].D_expansionLevel = D_expansionLevel
-			-- collect.LFGInstance[dungeonID].D_groupID = D_groupID
-			-- collect.LFGInstance[dungeonID].D_textureFilename = D_textureFilename
-			-- collect.LFGInstance[dungeonID].D_difficulty = D_difficulty
-			-- collect.LFGInstance[dungeonID].D_maxPlayers = D_maxPlayers
-			-- collect.LFGInstance[dungeonID].D_description = D_description
-			-- collect.LFGInstance[dungeonID].D_isHoliday = D_isHoliday
-			-- collect.LFGInstance[dungeonID].D_bonusRepAmount = D_bonusRepAmount
-			-- collect.LFGInstance[dungeonID].D_minPlayers = D_minPlayers
-			-- collect.LFGInstance[dungeonID].D_isTimeWalker = D_isTimeWalker
-			-- collect.LFGInstance[dungeonID].D_name2 = D_name2
-			-- collect.LFGInstance[dungeonID].D_minGearLevel = D_minGearLevel
-			-- collect.LFGInstance[dungeonID].D_isScalingDungeon = D_isScalingDungeon
-			-- collect.LFGInstance[dungeonID].D_lfgMapID = D_lfgMapID
-			if donetoday == true then
-				collect.LFGInstance[dungeonID].donetoday = DONE
-			else
-				collect.LFGInstance[dungeonID].donetoday = NONE
-			end
-			-- collect.LFGInstance[dungeonID].money = money
+		-- local D_name, D_typeID, D_subtypeID, D_minLevel, D_maxLevel, D_recLevel, D_minRecLevel, D_maxRecLevel, D_expansionLevel, D_groupID, D_textureFilename, D_difficulty, D_maxPlayers, D_description, D_isHoliday, D_bonusRepAmount, D_minPlayers, D_isTimeWalker, D_name2, D_minGearLevel, D_isScalingDungeon, D_lfgMapID = GetLFGDungeonInfo(dungeonID)
+		-- local donetoday, money = GetLFGDungeonRewards(dungeonID)
+		local D_name = GetLFGDungeonInfo(dungeonID)
+		local donetoday = GetLFGDungeonRewards(dungeonID)
+		collect.LFGInstance[dungeonID] = collect.LFGInstance[dungeonID] or {}
+		collect.LFGInstance[dungeonID].D_name = D_name
+		-- collect.LFGInstance[dungeonID].D_typeID = D_typeID
+		-- collect.LFGInstance[dungeonID].D_subtypeID = D_subtypeID
+		-- collect.LFGInstance[dungeonID].D_minLevel = D_minLevel
+		-- collect.LFGInstance[dungeonID].D_maxLevel = D_maxLevel
+		-- collect.LFGInstance[dungeonID].D_recLevel = D_recLevel
+		-- collect.LFGInstance[dungeonID].D_minRecLevel = D_minRecLevel
+		-- collect.LFGInstance[dungeonID].D_maxRecLevel = D_maxRecLevel
+		-- collect.LFGInstance[dungeonID].D_expansionLevel = D_expansionLevel
+		-- collect.LFGInstance[dungeonID].D_groupID = D_groupID
+		-- collect.LFGInstance[dungeonID].D_textureFilename = D_textureFilename
+		-- collect.LFGInstance[dungeonID].D_difficulty = D_difficulty
+		-- collect.LFGInstance[dungeonID].D_maxPlayers = D_maxPlayers
+		-- collect.LFGInstance[dungeonID].D_description = D_description
+		-- collect.LFGInstance[dungeonID].D_isHoliday = D_isHoliday
+		-- collect.LFGInstance[dungeonID].D_bonusRepAmount = D_bonusRepAmount
+		-- collect.LFGInstance[dungeonID].D_minPlayers = D_minPlayers
+		-- collect.LFGInstance[dungeonID].D_isTimeWalker = D_isTimeWalker
+		-- collect.LFGInstance[dungeonID].D_name2 = D_name2
+		-- collect.LFGInstance[dungeonID].D_minGearLevel = D_minGearLevel
+		-- collect.LFGInstance[dungeonID].D_isScalingDungeon = D_isScalingDungeon
+		-- collect.LFGInstance[dungeonID].D_lfgMapID = D_lfgMapID
+		if donetoday == true then
+			collect.LFGInstance[dungeonID].donetoday = DONE
+		-- else
+		-- 	collect.LFGInstance[dungeonID].donetoday = NONE
 		end
+		-- print (dungeonID, name, donetoday, collect.LFGInstance[dungeonID].donetoday)
+		-- collect.LFGInstance[dungeonID].money = money
 	end
-
 end
-
-
-
-
 function Collect_AberrusTransmog()
 	-- print ("Collect_AberrusTransmog")
 	local curGUID = UnitGUID("PLAYER")
@@ -3462,7 +3455,6 @@ function Collect_ALL_Consumables()
 		end
 	end
 end
-
 function Timer_Legion_Invasion()
 	local TIMER = (1547586000-10800)
 	local interval = 66600
@@ -6445,13 +6437,6 @@ function O_otrisovka()
 			end
 			return vivodCent, vivodLeft
 	end)
-
-
-
-
-
-
-
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
@@ -6464,7 +6449,6 @@ function O_otrisovka()
 			BG:SetColorTexture(1,.95,.44,.1)
 			return vivodCent, vivodLeft
 	end)
-
 	tinsert(OctoTable_func_otrisovka, -- EVENT ID 372 (Brewfest)
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
@@ -6516,22 +6500,6 @@ function O_otrisovka()
 			BG:SetColorTexture(1,.95,.44,.1)
 			return vivodCent, vivodLeft
 	end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	-- tinsert(OctoTable_func_otrisovka,
 	--     function(CharInfo, tooltip, CL, BG)
 	--         local vivodCent, vivodLeft = " ", " "
@@ -7653,26 +7621,18 @@ function Octo_ToDoDeleteChar(curGUID)
 end
 function Octo_ToDoOnEvent(self, event, ...)
 	if event == "VARIABLES_LOADED" and not InCombatLockdown() then
-
 		Octo_ToDoLevels = Octo_ToDoLevels or {}
 		Octo_ToDoVars = Octo_ToDoVars or {}
 		Octo_ToDoArtifact = Octo_ToDoArtifact or {}
 		Octo_ToDoOther = Octo_ToDoOther or {}
 		Octo_ToDoTransmog = Octo_ToDoTransmog or {}
 		Octo_ToDoAutoItems = Octo_ToDoAutoItems or {}
-
 		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars == nil then Octo_ToDoVars = {} end
 		if Octo_ToDoArtifact == nil then Octo_ToDoArtifact = {} end
 		if Octo_ToDoOther == nil then Octo_ToDoOther = {} end
 		if Octo_ToDoTransmog == nil then Octo_ToDoTransmog = {} end
 		if Octo_ToDoAutoItems == nil then Octo_ToDoAutoItems = {} end
-
-
-
-
-
-
 		if Octo_ToDoAutoItems.LFGInstance == nil then Octo_ToDoAutoItems.LFGInstance = {} end
 		if Octo_ToDoAutoItems.Consumables == nil then Octo_ToDoAutoItems.Consumables = {} end
 		if Octo_ToDoAutoItems.Parts == nil then Octo_ToDoAutoItems.Parts = {} end
