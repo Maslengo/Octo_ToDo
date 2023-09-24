@@ -1318,7 +1318,8 @@ local OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			77208,
+			-- Alliance
+			77208, -- Horde
 		},
 		max = 1,
 	},
@@ -1330,7 +1331,7 @@ local OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			76591,
+			76591, -- Alliance -- Horde
 		},
 		max = 1,
 	},
@@ -1342,7 +1343,8 @@ local OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			12492,
+			12491,
+			12492, -- Alliance -- Horde
 		},
 		max = 1,
 	},
