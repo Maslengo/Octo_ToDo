@@ -37,6 +37,8 @@ local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
 E.Octo_Globals.isRCLootCouncil = isRCLootCouncil
 local _, _, _, isWeakAuras = GetAddOnInfo("WeakAuras")
 E.Octo_Globals.isWeakAuras = isWeakAuras
+local _, _, _, isTomTom = GetAddOnInfo("TomTom")
+E.Octo_Globals.isTomTom = isTomTom
 ----------------------------------------------------------------
 --COLORS--------------------------------------------------------
 ----------------------------------------------------------------

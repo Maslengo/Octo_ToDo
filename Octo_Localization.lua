@@ -124,6 +124,8 @@ if L then
 	L["Optional Reagents"] = true
 	L["Trade Goods"] = true
 	L["Auto_Screenshot"] = true
+	L["When Time Needs Mending"] = true
+	L["Current Date"] = true
 
 
 
@@ -251,4 +253,6 @@ if L then
 	L["Optional Reagents"] = "Дополнительные реагенты"
 	L["Trade Goods"] = "Хозяйственные товары"
 	L["Auto_Screenshot"] = "Автоскриншот"
+	L["When Time Needs Mending"] = "Исцелить само время"
+	L["Current Date"] = "Текущая дата"
 end

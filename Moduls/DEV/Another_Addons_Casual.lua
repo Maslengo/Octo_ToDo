@@ -4,6 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --AnotherAddonsCasual
 tinsert(E.Octo_Globals.modules, function()
         if Octo_ToDoVars.config.AnotherAddonsCasual then
+            E.Octo_Func.func_Octo_LoadAddOn("TomTom")
             E.Octo_Func.func_Octo_LoadAddOn("AstralKeys")
             -- E.Octo_Func.func_Octo_LoadAddOn("AutoTurnIn")
             E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
