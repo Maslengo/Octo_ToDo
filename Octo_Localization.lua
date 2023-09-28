@@ -126,7 +126,7 @@ if L then
 	L["Auto_Screenshot"] = true
 	L["When Time Needs Mending"] = true
 	L["Current Date"] = true
-
+	L["About"] = true
 
 
 
@@ -255,4 +255,5 @@ if L then
 	L["Auto_Screenshot"] = "Автоскриншот"
 	L["When Time Needs Mending"] = "Исцелить само время"
 	L["Current Date"] = "Текущая дата"
+	L["About"] = "Об аддоне"
 end

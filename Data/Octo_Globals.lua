@@ -105,3 +105,5 @@ E.Octo_Globals.Dragonflight_Color = "|cffe8e379"
 -- local GRAYFONT = GRAY_FONT_COLOR_CODE
 -- local GRAY_COLOR = { 0.5, 0.5, 0.5, 1 }
 -- local INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED = INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED
+E.Octo_Globals.NONE = E.Octo_Globals.Gray_Color.."None|r"
+E.Octo_Globals.DONE = E.Octo_Globals.Green_Color.."Done|r"

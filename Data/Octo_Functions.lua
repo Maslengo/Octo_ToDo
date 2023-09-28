@@ -154,7 +154,7 @@ function E.Octo_Func.func_hex2rgb(self)
 end
 local func_hex2rgb = E.Octo_Func.func_hex2rgb
 ----------------------------------------------------------------
-function E.Octo_Func.func_rgb2hex(r ,g, b, a)
+function E.Octo_Func.func_rgb2hex(r , g, b, a)
 	local r, g, b, a = r, g, b, a
 	if not a then
 		a = 1
@@ -242,8 +242,11 @@ function E.Octo_Func.CompactNumberFormat(self)
 end
 local CompactNumberFormat = E.Octo_Func.CompactNumberFormat
 ----------------------------------------------------------------
-function E.Octo_Func.func_texturefromIcon(self)
-	return "|T"..self..":16:16:::64:64:4:60:4:60|t"
+function E.Octo_Func.func_texturefromIcon(self, size)
+	if not size then
+		size = 16
+	end
+	return "|T"..self..":"..size..":"..size..":::64:64:4:60:4:60|t"
 end
 local func_texturefromIcon = E.Octo_Func.func_texturefromIcon
 ----------------------------------------------------------------
@@ -261,13 +264,15 @@ function E.Octo_Func.func_reputationName(self)
 	end
 	local color = "|cffFFFFFF"
 	local r = "|r"
-	if self == 1168 then color = "|cff909090" end
+	if self == 1168 then
+		color = "|cff909090"
+	end
 	return color..name..r
 end
 local func_reputationName = E.Octo_Func.func_reputationName
 ----------------------------------------------------------------
-function E.Octo_Func.func_itemName(self)
-	local itemName, _, itemQuality = GetItemInfo(self)
+function E.Octo_Func.func_itemName(itemID)
+	local itemName, _, itemQuality = GetItemInfo(itemID)
 	if itemQuality then
 		local r, g, b = GetItemQualityColor(itemQuality)
 		local color = CreateColor(r, g, b, 1)
@@ -275,6 +280,21 @@ function E.Octo_Func.func_itemName(self)
 		return itemNameColored or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
 	return itemName or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+
+
+	-- local itemName = E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+
+	-- if C_Item.DoesItemExistByID(itemID) then
+	-- 	local item = Item:CreateFromItemID(itemID)
+	-- 	if item:IsItemDataCached() then
+	-- 		itemName = item:GetItemName()
+	-- 	else
+	-- 		item:ContinueOnItemLoad(function()
+	-- 			itemName = item:ч()
+	-- 		end)
+	-- 	end
+	-- 	return itemName
+	-- end
 end
 local func_itemName = E.Octo_Func.func_itemName
 ----------------------------------------------------------------
@@ -372,49 +392,48 @@ end
 local tmstpDayReset = E.Octo_Func.tmstpDayReset
 ----------------------------------------------------------------
 function E.Octo_Func.All_objectives(self)
-    local Octopussy = ""
-    local objectives = C_QuestLog.GetQuestObjectives(self)
-    local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(self, 1, false)
-    if objectives == nil then
-        return ""
-    end
-    if objectiveType == "progressbar" then
-        return "|cffFF0000"..GetQuestProgressBarPercent(self).."%|r"
-    end
-
-    if objectives then
-        if objectives[5] then
-            Octopussy = Octopussy..(objectives[5].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[5].text.."|r\n"
-            Octopussy = Octopussy..(objectives[4].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[4].text.."|r\n"
-            Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
-            Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
-            Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
-        elseif objectives[4] then
-            Octopussy = Octopussy..(objectives[4].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[4].text.."|r\n"
-            Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
-            Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
-            Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
-        elseif objectives[3] then
-            Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
-            Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
-            Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
-        elseif objectives[2] then
-            Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
-            Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
-        elseif objectives[1] then
-            Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
-        end
-    end
-    return Octopussy
+	local Octopussy = ""
+	local objectives = C_QuestLog.GetQuestObjectives(self)
+	local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(self, 1, false)
+	if objectives == nil then
+		return ""
+	end
+	if objectiveType == "progressbar" then
+		return "|cffFF0000"..GetQuestProgressBarPercent(self).."%|r"
+	end
+	if objectives then
+		if objectives[5] then
+			Octopussy = Octopussy..(objectives[5].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[5].text.."|r\n"
+			Octopussy = Octopussy..(objectives[4].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[4].text.."|r\n"
+			Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
+			Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
+			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+		elseif objectives[4] then
+			Octopussy = Octopussy..(objectives[4].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[4].text.."|r\n"
+			Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
+			Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
+			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+		elseif objectives[3] then
+			Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
+			Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
+			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+		elseif objectives[2] then
+			Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
+			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+		elseif objectives[1] then
+			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+		end
+	end
+	return Octopussy
 end
 local All_objectives = E.Octo_Func.All_objectives
 ----------------------------------------------------------------
 function E.Octo_Func.HandleDefaultBindings(binding_name, default_key)
-    local bind1, bind2 = GetBindingKey(binding_name)
-    local action = GetBindingAction(default_key)
-    if bind1 == nil and bind2 == nil and action == "" then
-        SetBinding(default_key, binding_name)
-    end
+	local bind1, bind2 = GetBindingKey(binding_name)
+	local action = GetBindingAction(default_key)
+	if bind1 == nil and bind2 == nil and action == "" then
+		SetBinding(default_key, binding_name)
+	end
 end
 local HandleDefaultBindings = E.Octo_Func.HandleDefaultBindings
 ----------------------------------------------------------------
@@ -424,9 +443,43 @@ function E.Octo_Func.func_Octo_LoadAddOn(GlobalAddonName)
 		LoadAddOn(GlobalAddonName)
 	end
 end
-
 local func_Octo_LoadAddOn = E.Octo_Func.func_Octo_LoadAddOn
 ----------------------------------------------------------------
+function E.Octo_Func.CheckCompletedByQuestID(self)
+	local vivod
+	local TEST = ""
+	if C_QuestLog.IsQuestFlaggedCompleted(self) == true then
+		vivod = (E.Octo_Globals.DONE)
+	elseif C_QuestLog.IsComplete(self) == true then
+		vivod = E.Octo_Globals.Purple_Color..">>СДАЙ<<|r"
+	elseif C_QuestLog.IsQuestFlaggedCompleted(self) == false and C_QuestLog.IsOnQuest(self) == false then
+		vivod = (E.Octo_Globals.NONE)
+	elseif C_QuestLog.IsOnQuest(self) == true --[[and C_QuestLog.IsComplete(self) == false ]]then
+		local objectives = C_QuestLog.GetQuestObjectives(self)
+		if objectives == nil then
+			return ""
+		end
+		for i = 1, #objectives do
+			if objectives[i] then
+				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(self, i, false)
+				if objectiveType == "progressbar" then
+					TEST = E.Octo_Globals.Red_Color..GetQuestProgressBarPercent(self).."%|r"
+				else
+					if objectives[i].numFulfilled == objectives[i].numRequired then
+						--TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
+						TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."|r"
+					else
+						TEST = E.Octo_Globals.Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
+					end
+				end
+			end
+				vivod = vivod and vivod.."»"..TEST or TEST
+		end
+
+	end
+	return vivod
+end
+local CheckCompletedByQuestID = E.Octo_Func.CheckCompletedByQuestID
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -435,3 +488,4 @@ local func_Octo_LoadAddOn = E.Octo_Func.func_Octo_LoadAddOn
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+

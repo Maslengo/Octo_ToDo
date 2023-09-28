@@ -16,9 +16,12 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 local indent = 24
 
 -- MAIN
-local config = CreateFrame("FRAME", GlobalAddonName.."config"..E.Octo_Func.GenerateUniqueID())
-config:Hide()
-config:SetScript("OnShow", function(self)
+local config_MAIN = nil
+if not config_MAIN then
+	config_MAIN = CreateFrame("FRAME", GlobalAddonName.."config_MAIN"..E.Octo_Func.GenerateUniqueID())
+end
+config_MAIN:Hide()
+config_MAIN:SetScript("OnShow", function(self)
 		self:SetPoint("TOPLEFT", 0, 0)
 		-- TITLE
 		local title = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
@@ -408,6 +411,18 @@ config:SetScript("OnShow", function(self)
 		end)
 		self.btn_center16.text:SetText(WHITE_FONT_COLOR_CODE.."ShowLogoutTime"..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
+		-----------------------------------------------
+		-- btn_center17 AidingtheAccord
+		-----------------------------------------------
+		self.btn_center17 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		self.btn_center17:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*17)
+		self.btn_center17:SetChecked(Octo_ToDoVars.config.AidingtheAccord)
+		self.btn_center17:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.AidingtheAccord = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self.btn_center17.text:SetText(E.Octo_Func.func_texturefromIcon(1603189)..WHITE_FONT_COLOR_CODE..L["Aiding the Accord"]..FONT_COLOR_CODE_CLOSE)
+		-----------------------------------------------
 		-- btn_center7 TrivialQuests
 		-----------------------------------------------
 		-- self.btn_center7 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -617,15 +632,30 @@ config:SetScript("OnShow", function(self)
 end)
 
 -- ADD CATEGORY
-local category, layout = Settings.RegisterCanvasLayoutCategory(config, AddonTitle)
-layout:AddAnchorPoint("TOPLEFT", -12, 8)
-layout:AddAnchorPoint("BOTTOMRIGHT", 0, 0)
+local category, layout = Settings.RegisterCanvasLayoutCategory(config_MAIN, AddonTitle)
+-- layout:AddAnchorPoint("TOPLEFT", -12, 8)
+-- layout:AddAnchorPoint("BOTTOMRIGHT", 0, 0)
 category.ID = AddonTitle
 Settings.RegisterAddOnCategory(category)
 
--- ABOUT
-local aboutConfig = CreateFrame("FRAME", GlobalAddonName.."ConfigAbout"..E.Octo_Func.GenerateUniqueID())
-aboutConfig:Hide()
-aboutConfig:SetScript("OnShow", function(self)
-		self:SetPoint("TOPLEFT", 0, 0)
-	end)
+-- -- ABOUT
+-- local aboutConfig = CreateFrame("FRAME", GlobalAddonName.."ConfigAbout"..E.Octo_Func.GenerateUniqueID())
+-- aboutConfig:Hide()
+-- aboutConfig:SetScript("OnShow", function(self)
+-- 		self:SetPoint("TOPLEFT", 0, 0)
+-- 	end)
+
+
+
+-- -- ADD SUBCATEGORY
+-- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, aboutConfig,  "|cffe8e379Dragonflight|r")
+-- subcategory.ID = "|cffe8e379Dragonflight|r"
+-- Settings.RegisterAddOnCategory(subcategory)
+
+
+
+
+-- -- ADD SUBCATEGORY
+-- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, aboutConfig,  "2")
+-- subcategory.ID = "2"
+-- Settings.RegisterAddOnCategory(subcategory)
