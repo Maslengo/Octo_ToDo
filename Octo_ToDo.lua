@@ -5447,49 +5447,49 @@ function O_otrisovka()
 	if Octo_ToDoVars.config.ShowHoliday == true then
 		for eventID, v in pairs(Octo_ToDo_SmartCollect.Holiday.Active) do
 			if eventID == 628 then -- Путешествие во времени по подземельям (Катазклизм)
- 				tinsert(OctoTable_func_otrisovka,
+				tinsert(OctoTable_func_otrisovka,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
 						vivodLeft = E.Octo_Func.func_texturefromIcon(514016)..PLAYER_DIFFICULTY_TIMEWALKER
 						if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
 						end
-  						BG:SetColorTexture(0, .65, 1, .1)
+						BG:SetColorTexture(0, .65, 1, .1)
 						return vivodCent, vivodLeft
 				end)
- 				tinsert(OctoTable_func_otrisovka,
+				tinsert(OctoTable_func_otrisovka,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
 						vivodLeft = E.Octo_Func.func_texturefromIcon(514016)..E.Octo_Func.func_questName(40786)
 						if CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_count
 						end
-  						BG:SetColorTexture(0, .65, 1, .1)
+						BG:SetColorTexture(0, .65, 1, .1)
 						return vivodCent, vivodLeft
 				end)
- 				tinsert(OctoTable_func_otrisovka,
+				tinsert(OctoTable_func_otrisovka,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
 						vivodLeft = E.Octo_Func.func_texturefromIcon(463446)..E.Octo_Func.func_currencyName(1166)
 						if CharInfo.CurrencyID[1166] ~= 0 then
 							vivodCent = CharInfo.CurrencyID[1166]
 						end
-  						BG:SetColorTexture(0, .65, 1, .1)
+						BG:SetColorTexture(0, .65, 1, .1)
 						return vivodCent, vivodLeft
 				end)
 			end -- for 628
 			if eventID == 341 then -- Summer Festival
- 				tinsert(OctoTable_func_otrisovka,
+				tinsert(OctoTable_func_otrisovka,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
 						vivodLeft = "SummerFestival"
 						if CharInfo.Octopussy_DF_Month_SummerFestival_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Month_SummerFestival_count.." ("..CharInfo.ItemsInBag[23247]..E.Octo_Func.func_itemTexture(23247)..")"
 						end
-  						BG:SetColorTexture(1, .95, .44, .1)
+						BG:SetColorTexture(1, .95, .44, .1)
 						return vivodCent, vivodLeft
 				end)
-            end -- for 341
+			end -- for 341
 			if eventID == 372 then -- BREWFEST
 				tinsert(OctoTable_func_otrisovka,
 					function(CharInfo, tooltip, CL, BG)
@@ -5577,7 +5577,7 @@ function O_otrisovka()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 372
-       	end
+		end
 	end
 	-- Рейды тест Инсты
 	if Octo_ToDoVars.config.ShowInstanceCD == true then
@@ -6549,7 +6549,8 @@ function Octo_ToDoCreateAltFrame()
 	})
 	OctoFrame_Main_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 	OctoFrame_Main_Frame:SetBackdropBorderColor(0, 0, 0, 1) -- бордер
-	OctoFrame_Main_Frame:SetScript("OnShow", function() Octo_ToDoAddDataToAltFrame()
+	OctoFrame_Main_Frame:SetScript("OnShow", function()
+		Octo_ToDoAddDataToAltFrame()
 	end)
 	OctoFrame_Main_Frame:EnableMouse(true)
 	OctoFrame_Main_Frame:SetMovable(true)
@@ -7186,7 +7187,6 @@ function Octo_ToDoCreateAltFrame()
 	OctoFrame_Main_Frame:Hide()
 end
 function Octo_ToDoAddDataToAltFrame()
-	-- print ("Octo_ToDoAddDataToAltFrame()")
 	local curGUID = UnitGUID("PLAYER")
 	local UnitLevel = UnitLevel("PLAYER")
 	local ShowOnlyCurrentRealm = Octo_ToDoVars.config.ShowOnlyCurrentRealm
@@ -7280,6 +7280,7 @@ function Octo_ToDoAddDataToAltFrame()
 				end
 			else
 				OctoFrame_Char_Frame = OctoFrame_Main_Frame[curCharGUID]
+
 			end
 			OctoFrame_Char_Frame:SetSize(E.Octo_Globals.curWidth, E.Octo_Globals.curHeight)
 			if #OctoFrame_Main_Frame.AllCharFrames == 0 then
@@ -7288,13 +7289,6 @@ function Octo_ToDoAddDataToAltFrame()
 				OctoFrame_Char_Frame:SetPoint("TOPRIGHT", OctoFrame_Main_Frame.AllCharFrames[#OctoFrame_Main_Frame.AllCharFrames], "TOPLEFT", 0, 0)
 			end
 			OctoFrame_Main_Frame.AllCharFrames[#OctoFrame_Main_Frame.AllCharFrames + 1] = OctoFrame_Char_Frame
-			-- if OctoFrame_Char_Frame.CharNameBG then
-			-- if CharInfo.Faction == "Horde" then
-			-- OctoFrame_Char_Frame.CharNameBG:SetColorTexture(.5, 0, 0, .2)
-			-- else
-			-- OctoFrame_Char_Frame.CharNameBG:SetColorTexture(0, 0, .5, .2)
-			-- end
-			-- end
 			if CharInfo.UnitLevel ~= E.Octo_Globals.curExpansionMaxLevel then
 				if CharInfo.currentXP == 0 then
 					OctoFrame_Char_Frame.experience:SetWidth(0.1)
@@ -7313,21 +7307,6 @@ function Octo_ToDoAddDataToAltFrame()
 				OctoFrame_Char_Frame.UnitLevel:Hide()
 				OctoFrame_Char_Frame.UnitLevelBG:Hide()
 			end
-			-- OctoFrame_Char_Frame.CharName:SetSize(E.Octo_Globals.curWidth, E.Octo_Globals.curHeight)
-			-- OctoFrame_Char_Frame.CharName:SetFontObject(OctoFont11)
-			-- OctoFrame_Char_Frame.CharName:SetPoint("TOP", OctoFrame_Char_Frame, "TOP", 0, 0)
-			-- OctoFrame_Char_Frame.CharName:SetText(classcolor:WrapTextInColorCode(CharInfo.Name))
-			-- OctoFrame_Char_Frame.CharName:SetWordWrap(true)
-			-- OctoFrame_Char_Frame.CharName:SetJustifyV("CENTER")
-			-- if Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
-			-- OctoFrame_Char_Frame.CharName:SetJustifyV("TOP")
-			-- OctoFrame_Char_Frame.curServer:SetSize(E.Octo_Globals.curWidth, E.Octo_Globals.curHeight)
-			-- OctoFrame_Char_Frame.curServer:SetPoint("TOP", OctoFrame_Char_Frame, "TOP", 0, 0)
-			-- OctoFrame_Char_Frame.curServer:SetFontObject(OctoFont9)
-			-- OctoFrame_Char_Frame.curServer:SetText(classcolor:WrapTextInColorCode(CharInfo.curServer))
-			-- OctoFrame_Char_Frame.curServer:SetWordWrap(false)
-			-- OctoFrame_Char_Frame.curServer:SetJustifyV("BOTTOM")
-			-- end
 			if curGUID == curCharGUID then
 				OctoFrame_Char_Frame.BG:Show()
 				OctoFrame_Char_Frame.BG:SetAlpha(.2)
@@ -7346,41 +7325,47 @@ function Octo_ToDoAddDataToAltFrame()
 					TEXTCENT.tooltip = nil
 				end
 			end
-			if not OctoFrame_Char_FrameDeleteButton then
-				OctoFrame_Char_FrameDeleteButton = CreateFrame("BUTTON", "OctoFrame_Char_FrameDeleteButton"..i, OctoFrame_Char_Frame, "BackDropTemplate")
-				OctoFrame_Char_FrameDeleteButton:SetSize(16, 10)
-				OctoFrame_Char_FrameDeleteButton:SetPoint("TOP", OctoFrame_Char_Frame, "BOTTOM", 0, -4)
-				OctoFrame_Char_FrameDeleteButton:SetBackdrop({
-						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeSize = 1,
-				})
-				OctoFrame_Char_FrameDeleteButton:SetBackdropBorderColor(1, 0, 0, 0)
-				OctoFrame_Char_FrameDeleteButton:SetScript("OnEnter", function(self)
-						self:SetBackdropBorderColor(1, 0, 0, 1)
-						self.icon:SetVertexColor(1, 0, 0, 1)
-						GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-						GameTooltip:ClearLines()
-						GameTooltip:SetText(DELETE)
-						GameTooltip:Show()
-				end)
-				OctoFrame_Char_FrameDeleteButton:SetScript("OnLeave", function(self)
-						self:SetBackdropBorderColor(1, 0, 0, 0)
-						self.icon:SetVertexColor(1, 1, 1, 1)
-						GameTooltip:ClearLines()
-						GameTooltip:Hide()
-				end)
-				OctoFrame_Char_FrameDeleteButton:SetScript("OnMouseDown", function(self)
-						self:SetBackdropBorderColor(1, 0, 0, .5)
-						self.icon:SetVertexColor(1, 0, 0, .5)
-				end)
-				OctoFrame_Char_FrameDeleteButton:SetScript("OnClick", function()
-						Octo_ToDoDeleteChar(curCharGUID)
-				end)
-				local t = OctoFrame_Char_FrameDeleteButton:CreateTexture(nil, "BACKGROUND")
-				OctoFrame_Char_FrameDeleteButton.icon = t
-				t:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\closeWHITE.tga")
-				t:SetAllPoints(OctoFrame_Char_FrameDeleteButton)
-			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			-- OctoFrame_Char_Frame.DeleteButton = CreateFrame("BUTTON", "OctoFrame_Char_Frame.DeleteButton"..i, OctoFrame_Char_Frame, "BackDropTemplate")
+			-- OctoFrame_Char_Frame.DeleteButton:SetSize(16, 10)
+			-- OctoFrame_Char_Frame.DeleteButton:SetPoint("TOP", OctoFrame_Char_Frame, "BOTTOM", 0, -4)
+			-- OctoFrame_Char_Frame.DeleteButton:SetBackdrop({
+			-- 		edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+			-- 		edgeSize = 1,
+			-- })
+			-- OctoFrame_Char_Frame.DeleteButton:SetBackdropBorderColor(1, 0, 0, 0)
+			-- OctoFrame_Char_Frame.DeleteButton:SetScript("OnEnter", function(self)
+			-- 		self:SetBackdropBorderColor(1, 0, 0, 1)
+			-- 		self.icon:SetVertexColor(1, 0, 0, 1)
+			-- 		GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+			-- 		GameTooltip:ClearLines()
+			-- 		GameTooltip:SetText(DELETE)
+			-- 		GameTooltip:Show()
+			-- end)
+			-- OctoFrame_Char_Frame.DeleteButton:SetScript("OnLeave", function(self)
+			-- 		self:SetBackdropBorderColor(1, 0, 0, 0)
+			-- 		self.icon:SetVertexColor(1, 1, 1, 1)
+			-- 		GameTooltip:ClearLines()
+			-- 		GameTooltip:Hide()
+			-- end)
+			-- OctoFrame_Char_Frame.DeleteButton:SetScript("OnMouseDown", function(self)
+			-- 		self:SetBackdropBorderColor(1, 0, 0, .5)
+			-- 		self.icon:SetVertexColor(1, 0, 0, .5)
+			-- end)
+			-- OctoFrame_Char_Frame.DeleteButton:SetScript("OnClick", function()
+			-- 		Octo_ToDoDeleteChar(curCharGUID)
+			-- end)
+			-- local t = OctoFrame_Char_Frame.DeleteButton:CreateTexture(nil, "BACKGROUND")
+			-- OctoFrame_Char_Frame.DeleteButton.icon = t
+			-- t:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\closeWHITE.tga")
+			-- t:SetAllPoints(OctoFrame_Char_Frame.DeleteButton)
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
 		end -- if
 		local curAltFrameWidth = #OctoFrame_Main_Frame.AllCharFrames * E.Octo_Globals.curWidth/2
 		OctoFrame_Main_Frame:SetSize(curAltFrameWidth*2+E.Octo_Globals.curWidthTitle, E.Octo_Globals.curHeight*(#OctoTable_func_otrisovka)) -- ТУТ БЫЛА ЗАЛУПА
@@ -7713,12 +7698,27 @@ function Octo_ToDoOnEvent(self, event, ...)
 		end
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
-	if --[[event == "CHAT_MSG_LOOT" or]] event == "PLAYER_MONEY" or event == "MERCHANT_SHOW" or event == "MERCHANT_CLOSED" or event == "MAIL_INBOX_UPDATE" or event == "MAIL_SHOW" or event == "UPDATE_PENDING_MAIL" or event == "UI_INFO_MESSAGE" or event == "HEARTHSTONE_BOUND" or event == "SPELLS_CHANGED" or event == "ENCOUNTER_END" or event == "PLAYER_REGEN_ENABLED" or event == "ZONE_CHANGED_NEW_AREA" or event == "COVENANT_CHOSEN" or event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED"
+	 --[[event == "CHAT_MSG_LOOT" or]]
+		if event == "PLAYER_MONEY"
+		or event == "MERCHANT_SHOW"
+		or event == "MERCHANT_CLOSED"
+		or event == "MAIL_INBOX_UPDATE"
+		or event == "MAIL_SHOW"
+		-- or event == "UPDATE_PENDING_MAIL"
+		or event == "UI_INFO_MESSAGE"
+		or event == "HEARTHSTONE_BOUND"
+		or event == "SPELLS_CHANGED"
+		or event == "ENCOUNTER_END"
+		or event == "PLAYER_REGEN_ENABLED"
+		or event == "ZONE_CHANGED_NEW_AREA"
+		or event == "COVENANT_CHOSEN"
+		or event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED"
+
 		or event == "ITEM_PUSH"
 		or event == "ITEM_COUNT_CHANGED"
 		-- or event == "BAG_NEW_ITEMS_UPDATED"
 		or event == "NEW_TOY_ADDED"
-		or event == "ITEM_LOCKED"
+		-- or event == "ITEM_LOCKED"
 
 
 
@@ -7726,6 +7726,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 
 
 		and not InCombatLockdown() then
+			-- print ("|cffFF00FF"..event.."|r"..GetTime())
 		Collect_ALL_ItemsInBag()
 		Collect_ALL_Consumables()
 		Collect_SL_PossibleAnima()
