@@ -219,7 +219,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 		["Wrist"] = { -- Запястья
 			["LFR"] = 186104,
-			["Normal"] = 184567,
+			["Normal"] = 184467, -- 186611
 			["Heroic"] = 186611,
 			["Mythic"] = 186612,
 		},
