@@ -195,8 +195,8 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 	ROGUE = {
 		["Head"] = { -- Голова
 			["LFR"] = 186122,
-			["Normal"] = 184471,
-			["Heroic"] = 186120,
+			["Normal"] = 184575, -- 186650 186651
+			["Heroic"] = 186650, -- 186120
 			["Mythic"] = 186121,
 		},
 		["Shoulder"] = { -- Плечи
@@ -220,8 +220,8 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		["Wrist"] = { -- Запястья
 			["LFR"] = 186104,
 			["Normal"] = 184567,
-			["Heroic"] = 186102,
-			["Mythic"] = 186103,
+			["Heroic"] = 186611,
+			["Mythic"] = 186612,
 		},
 		["Hands"] = { -- Кисти рук
 			["LFR"] = 186125,
@@ -231,7 +231,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		},
 		["Waist"] = { -- Пояс
 			["LFR"] = 186107,
-			["Normal"] = 184468,
+			["Normal"] = 184472,
 			["Heroic"] = 186105,
 			["Mythic"] = 186106,
 		},
@@ -244,7 +244,7 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 		["Feet"] = { -- Ботинки
 			["LFR"] = 186128,
 			["Normal"] = 184473,
-			["Heroic"] = 186126,
+			["Heroic"] = 186608,
 			["Mythic"] = 186127,
 		},
 	},
