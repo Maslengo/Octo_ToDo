@@ -78,7 +78,7 @@ if L then
 	L["Functions"] = true
 	L["Modules"] = true
 	L["DisplaySettings"] = true
-	L["Time Rift"] = true
+	L["TimeRift"] = true
 	L["Dreamsurges"] = true
 	L["Storm-Bound Chest"] = true
 	L["Shadowmourne"] = true
@@ -127,6 +127,7 @@ if L then
 	L["When Time Needs Mending"] = true
 	L["Current Date"] = true
 	L["About"] = true
+	L["Portals"] = true
 
 
 
@@ -208,7 +209,7 @@ if L then
 	L["Functions"] = "Функции"
 	L["Modules"] = "Модули"
 	L["DisplaySettings"] = "Настройки отображения"
-	L["Time Rift"] = "Портал времени"
+	L["TimeRift"] = "Портал времени"
 	L["Dreamsurges"] = "Прилив Снов"
 	L["Storm-Bound Chest"] = "Запечатанный бурей сундук"
 	L["Shadowmourne"] = "Темная Скорбь"
@@ -239,7 +240,7 @@ if L then
 	L["Legs"] = "Ноги"
 	L["Feet"] = "Ступни"
 	L["The Coalition of Flames"] = "Союз пламени"
-	L["InDev"] = "|cffFF0000(В стадии разработки)|r"
+	L["InDev"] = "|cffFF0000В стадии разработки|r"
 	L["Only Current Realm"] = "Только текущий сервер"
 	L["Player level: "] = "Уровень игрока: "
 	L["Item level: "] = "Уровень предметов: " -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
@@ -256,4 +257,5 @@ if L then
 	L["When Time Needs Mending"] = "Исцелить само время"
 	L["Current Date"] = "Текущая дата"
 	L["About"] = "Об аддоне"
+	L["Portals"] = "Порталы"
 end

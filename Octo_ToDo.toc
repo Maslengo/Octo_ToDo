@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v64.0(10.1.7)(29.09.2023)
+## Version: v64.1(10.1.7)(30.09.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture
 ## SavedVariables: Octo_ToDo_SmartCollect Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog
 
@@ -28,6 +28,7 @@ Data\Tables\OctoTable_itemID_Holiday.lua
 Data\Tables\OctoTable_itemID_Reputation.lua
 Data\Tables\OctoTable_journalInstanceID.lua
 Data\Tables\OctoTable_LFGDungeons.lua
+Data\Tables\OctoTable_Portals.lua
 Data\Tables\OctoTable_QuestID.lua
 Data\Tables\OctoTable_reputation_ALL.lua
 Data\Tables\OctoTable_SpellID.lua
@@ -61,6 +62,7 @@ Data\Octo_Globals.lua
 Data\Octo_Functions.lua
 Data\Octo_ArtifactData.lua
 Data\Octo_ProfessionsSpells.lua
+Data\Aberrus_the_Shadowed_Crucible_DATA.lua
 
 Moduls\DEV\Another_Addons_Casual.lua
 Moduls\DEV\Another_Addons_Raid.lua

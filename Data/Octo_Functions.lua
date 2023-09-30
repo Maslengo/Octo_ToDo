@@ -244,7 +244,7 @@ local CompactNumberFormat = E.Octo_Func.CompactNumberFormat
 ----------------------------------------------------------------
 function E.Octo_Func.func_texturefromIcon(self, size)
 	if not size then
-		size = 16
+		size = 18
 	end
 	return "|T"..self..":"..size..":"..size..":::64:64:4:60:4:60|t"
 end
@@ -462,12 +462,15 @@ function E.Octo_Func.CheckCompletedByQuestID(self)
 		for i = 1, #objectives do
 			if objectives[i] then
 				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(self, i, false)
+				-- if self == 77414 then
+				-- 	print (objectiveType, objectiveText, finished)
+				-- end
 				if objectiveType == "progressbar" then
 					TEST = E.Octo_Globals.Red_Color..GetQuestProgressBarPercent(self).."%|r"
 				else
-					if objectives[i].numFulfilled == objectives[i].numRequired then
-						--TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
-						TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."|r"
+					if finished then
+						TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
+						-- TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."|r"
 					else
 						TEST = E.Octo_Globals.Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
 					end
@@ -488,4 +491,3 @@ local CheckCompletedByQuestID = E.Octo_Func.CheckCompletedByQuestID
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-

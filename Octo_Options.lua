@@ -136,18 +136,18 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self.btn_left7.text:SetText(WHITE_FONT_COLOR_CODE..L["CinematicCanceler"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
-		-- btn_center8 AutoTurnQuests
+		-- btn_left8 AutoTurnQuests
 		-----------------------------------------------
-		if not self.btn_center8 then
-			self.btn_center8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		if not self.btn_left8 then
+			self.btn_left8 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 		end
-		self.btn_center8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*8)
-		self.btn_center8:SetChecked(Octo_ToDoVars.config.AutoTurnQuests)
-		self.btn_center8:SetScript("OnClick", function(btn)
+		self.btn_left8:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -indent*8)
+		self.btn_left8:SetChecked(Octo_ToDoVars.config.AutoTurnQuests)
+		self.btn_left8:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.AutoTurnQuests = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self.btn_center8.text:SetText(WHITE_FONT_COLOR_CODE..L["Auto Turn Quests"]..FONT_COLOR_CODE_CLOSE)
+		self.btn_left8.text:SetText(WHITE_FONT_COLOR_CODE..L["Auto Turn Quests"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
 		-- btn_left9 ClearChat
 		-----------------------------------------------
@@ -488,6 +488,49 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self.btn_center17.text:SetText(E.Octo_Func.func_texturefromIcon(1603189)..WHITE_FONT_COLOR_CODE..L["Aiding the Accord"]..FONT_COLOR_CODE_CLOSE)
 		-----------------------------------------------
+		-- btn_center18 TimeRift
+		-----------------------------------------------
+		if not self.btn_center18 then
+			self.btn_center18 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		end
+		self.btn_center18:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*18)
+		self.btn_center18:SetChecked(Octo_ToDoVars.config.TimeRift)
+		self.btn_center18:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.TimeRift = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self.btn_center18.text:SetText(E.Octo_Func.func_texturefromIcon(628677)..E.Octo_Globals.Purple_Color..L["TimeRift"]..FONT_COLOR_CODE_CLOSE)
+		-----------------------------------------------
+		-- btn_center19 Dreamsurges
+		-----------------------------------------------
+		if not self.btn_center19 then
+			self.btn_center19 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		end
+		self.btn_center19:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*19)
+		self.btn_center19:SetChecked(Octo_ToDoVars.config.Dreamsurges)
+		self.btn_center19:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.Dreamsurges = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self.btn_center19.text:SetText(E.Octo_Func.func_texturefromIcon(134206)..E.Octo_Globals.Green_Color..L["Dreamsurges"]..FONT_COLOR_CODE_CLOSE)
+		-----------------------------------------------
+		-- btn_center20 Portals
+		-----------------------------------------------
+		if not self.btn_center20 then
+			self.btn_center20 = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		end
+		self.btn_center20:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 250, -indent*20)
+		self.btn_center20:SetChecked(Octo_ToDoVars.config.Portals)
+		self.btn_center20:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.Portals = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self.btn_center20.text:SetText(E.Octo_Func.func_texturefromIcon(134414)..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE)
+
+
+
+
+		-----------------------------------------------
 		-- btn_right2 Expansions
 		-----------------------------------------------
 		local Expansions_Table = {
@@ -523,13 +566,6 @@ config_MAIN:SetScript("OnShow", function(self)
 				end
 		end)
 		-----------------------------------------------
-		-- TEXT LEFT 3
-		-----------------------------------------------
-		if not RIGHTTEXT1 then
-			RIGHTTEXT1 = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-		end
-		RIGHTTEXT1:SetText("wowhead prefix")
-		RIGHTTEXT1:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*3-6)
 		-----------------------------------------------
 		-- btn_right4 wowhead prefix
 		-----------------------------------------------
@@ -705,28 +741,85 @@ config_MAIN:SetScript("OnShow", function(self)
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config_MAIN, AddonTitle)
--- layout:AddAnchorPoint("TOPLEFT", -12, 8)
--- layout:AddAnchorPoint("BOTTOMRIGHT", 0, 0)
 category.ID = AddonTitle
 Settings.RegisterAddOnCategory(category)
 
 
--- -- ABOUT
--- local aboutConfig = CreateFrame("FRAME", GlobalAddonName.."ConfigAbout"..E.Octo_Func.GenerateUniqueID())
--- aboutConfig:Hide()
--- aboutConfig:SetScript("OnShow", function(self)
---         self:SetPoint("TOPLEFT", 0, 0)
---     end)
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	local Currency_Table = {
+		2245,
+		2594,
+		2122,
+		2118,
+		2003,
+
+		2009,
+		1906,
+		1828,
+		1977,
+		1813,
+		1979,
+		1904,
+		1819,
+		1931,
+		1767,
+		1885,
+		1820,
+		1816,
+	}
+	local TESTTABLEQWE = 15
+	config_FIRST = CreateFrame("FRAME", GlobalAddonName.."config_FIRST"..E.Octo_Func.GenerateUniqueID())
+	config_FIRST:Hide()
+	config_FIRST:SetScript("OnShow", function(self)
+			self:SetPoint("TOPLEFT", 0, 0)
+			-- TITLE_FIRST
+			if not title_FIRST then
+				title_FIRST = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+			end
+			title_FIRST:SetPoint("TOPLEFT", 4, 30)
+			title_FIRST:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+			title_FIRST:SetTextColor(.5, .5, .5, 1)
+			-----------------------------------------------
+			-- TEXT LEFT
+			-----------------------------------------------
+			-- if not LEFTTEXT1_FIRST then
+			-- 	LEFTTEXT1_FIRST = self:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+			-- end
+			-- LEFTTEXT1_FIRST:SetText(L["Functions"])
+			-- LEFTTEXT1_FIRST:SetPoint("TOPLEFT", title_FIRST, "BOTTOMLEFT", 0, -indent*1-4)
+			-----------------------------------------------
+			-- BUTTON
+			-----------------------------------------------
+			for number, currencyID in pairs(Currency_Table) do
+				if not self[number] then
+					self[number] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+				end
+				self[number]:SetPoint("TOPLEFT", title_FIRST, "BOTTOMLEFT", 0, -indent*number)
+				self[number]:SetChecked(Octo_ToDoVars.config.AutoSellGrey)
+				self[number]:SetScript("OnClick", function(btn)
+						Octo_ToDoVars.config.AutoSellGrey = btn:GetChecked()
+						StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+				end)
+				self[number].text:SetText(E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID))
+			end
+			-----------------------------------------------
 
 
--- -- ADD SUBCATEGORY
--- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, aboutConfig, "|cffe8e379Dragonflight|r")
--- subcategory.ID = "|cffe8e379Dragonflight|r"
--- Settings.RegisterAddOnCategory(subcategory)
 
+	end)
+	-- ADD SUBCATEGORY
+	local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, config_FIRST, L["InDev"])
+	subcategory.ID = L["InDev"]
+	Settings.RegisterAddOnCategory(subcategory)
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
 
 -- -- ADD SUBCATEGORY
 -- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, aboutConfig, "2")
 -- subcategory.ID = "2"
 -- Settings.RegisterAddOnCategory(subcategory)
-
