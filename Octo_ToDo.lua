@@ -5719,7 +5719,7 @@ function O_otrisovka()
 				tinsert(OctoTable_func_otrisovka,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1542852)..E.Octo_Func.func_questName(57637)
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542852)..L["Firelands"]
 						if CharInfo.Octopussy_Cataclysm_Month_Timewalk_DisturbanceDetectedFirelands_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_Cataclysm_Month_Timewalk_DisturbanceDetectedFirelands_count
 						end

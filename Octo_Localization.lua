@@ -128,6 +128,7 @@ if L then
 	L["Current Date"] = true
 	L["About"] = true
 	L["Portals"] = true
+	L["Firelands"] = true
 
 
 
@@ -258,4 +259,5 @@ if L then
 	L["Current Date"] = "Текущая дата"
 	L["About"] = "Об аддоне"
 	L["Portals"] = "Порталы"
+	L["Firelands"] = "Огненные Просторы"
 end
