@@ -673,6 +673,30 @@ config_MAIN:SetScript("OnShow", function(self)
 		curWidthTEXT:SetText(L["Width: "]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curWidth..FONT_COLOR_CODE_CLOSE)
 		self.Slider_right13:Show()
 		-----------------------------------------------
+		-- Slider_right15 itemLevelToShowTEXT
+		-----------------------------------------------
+		if not curWidthTitleTEXT then
+			curWidthTitleTEXT = self:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		end
+		if not self.Slider_right15 then
+			self.Slider_right15 = CreateFrame("Slider", nil, self, "OptionsSliderTemplate")
+		end
+		self.Slider_right15:SetWidth(140)
+		self.Slider_right15:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 500, -indent*15)
+		self.Slider_right15:SetMinMaxValues(100, 400)
+		local step = 5
+		self.Slider_right15:SetValueStep(step)
+		self.Slider_right15:SetValue(Octo_ToDoVars.config.curWidthTitle)
+		self.Slider_right15:SetScript("OnValueChanged", function (self, value)
+				value = math.floor(value * (1 / step) + .5) / (1 / step)
+				Octo_ToDoVars.config.curWidthTitle = value
+				curWidthTitleTEXT:SetText("curWidthTitle"..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.curWidthTitle..FONT_COLOR_CODE_CLOSE)
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		curWidthTitleTEXT:SetPoint("BOTTOMLEFT", self.Slider_right15, "TOPLEFT", indent, 0)
+		curWidthTitleTEXT:SetText("curWidthTitle"..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curWidthTitle..FONT_COLOR_CODE_CLOSE)
+		self.Slider_right15:Show()
+		-----------------------------------------------
 		-----------------------------------------------
 		-- btn_right20 StaticPopup1Button1
 		-----------------------------------------------

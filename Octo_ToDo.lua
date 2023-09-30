@@ -784,9 +784,9 @@ local OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "Timewalk500CURRENCY",
+		name_save = "Timewalk_500CURRENCY",
 		name_quest = PLAYER_DIFFICULTY_TIMEWALKER.."(500 cur)",
-		reset = "Weekly",
+		reset = "Month",
 		expansion = "DF",
 		place = "",
 		desc = "",
@@ -795,6 +795,26 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
+	{
+		name_save = "Timewalk_DisturbanceDetectedFirelands",
+		name_quest = PLAYER_DIFFICULTY_TIMEWALKER.."Disturbance Detected: Firelands",
+		reset = "Month",
+		expansion = "Cataclysm",
+		place = "",
+		desc = "",
+		questID = {
+			57637
+		},
+		max = 1
+	},
+
+
+
+
+
+
+
+
 	{
 		name_save = "Timewalk5DUNGEONS",
 		name_quest = PLAYER_DIFFICULTY_TIMEWALKER.."Timewalk5DUNGEONS",
@@ -1461,6 +1481,12 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 7,
 	},
+
+
+
+
+
+
 }
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Holiday)
 E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Reputation)
@@ -5684,8 +5710,18 @@ function O_otrisovka()
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
 						vivodLeft = E.Octo_Func.func_texturefromIcon(514016)..E.Octo_Func.func_questName(40786)
-						if CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_count ~= E.Octo_Globals.NONE then
-							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_count
+						if CharInfo.Octopussy_DF_Month_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
+							vivodCent = CharInfo.Octopussy_DF_Month_Timewalk_500CURRENCY_count
+						end
+						BG:SetColorTexture(0, .65, 1, BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+				tinsert(OctoTable_func_otrisovka,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542852)..E.Octo_Func.func_questName(57637)
+						if CharInfo.Octopussy_Cataclysm_Month_Timewalk_DisturbanceDetectedFirelands_count ~= E.Octo_Globals.NONE then
+							vivodCent = CharInfo.Octopussy_Cataclysm_Month_Timewalk_DisturbanceDetectedFirelands_count
 						end
 						BG:SetColorTexture(0, .65, 1, BGALPHA)
 						return vivodCent, vivodLeft
@@ -6420,7 +6456,7 @@ function O_otrisovka()
 					tooltip[#tooltip+1] = {L["Aiding the Accord"], CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count}
 					tooltip[#tooltip+1] = {L["Keys of Loyalty"], CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count}
 					tooltip[#tooltip+1] = {L["PvP"], CharInfo.Octopussy_DF_Weekly_PVP_count}
-					-- tooltip[#tooltip+1] = {L["PLAYER_DIFFICULTY_TIMEWALKER"].." (500)", CharInfo.Octopussy_DF_Weekly_Timewalk500CURRENCY_count}
+					-- tooltip[#tooltip+1] = {L["PLAYER_DIFFICULTY_TIMEWALKER"].." (500)", CharInfo.Octopussy_DF_Month_Timewalk_500CURRENCY_count}
 					-- tooltip[#tooltip+1] = {L["PLAYER_DIFFICULTY_TIMEWALKER"].." (5 dungeons)", CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count}
 					tooltip[#tooltip+1] = {L["Weekend Event"], CharInfo.Octopussy_DF_Weekly_WeekendEvent_count}
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
@@ -7745,7 +7781,6 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.GlobalFadePersist == nil then Octo_ToDoVars.config.GlobalFadePersist = false end
 		if Octo_ToDoVars.config.LevelToShow == nil then Octo_ToDoVars.config.LevelToShow = 60 end
 		if Octo_ToDoVars.config.itemLevelToShow == nil then Octo_ToDoVars.config.itemLevelToShow = 100 end
-		if Octo_ToDoVars.config.curWidth == nil then Octo_ToDoVars.config.curWidth = 96 end
 		if Octo_ToDoVars.config.ExpansionToShow == nil then Octo_ToDoVars.config.ExpansionToShow = tonumber(GetBuildInfo():match("(.-)%.")) or 1 end
 		if Octo_ToDoVars.config.ShowHoliday == nil then Octo_ToDoVars.config.ShowHoliday = false end
 		if Octo_ToDoVars.config.ShowTransmogrification == nil then Octo_ToDoVars.config.ShowTransmogrification = false end
@@ -7762,7 +7797,10 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.Dreamsurges == nil then Octo_ToDoVars.config.Dreamsurges = false end
 		if Octo_ToDoVars.config.TimeRift == nil then Octo_ToDoVars.config.TimeRift = false end
 		if Octo_ToDoVars.config.Portals == nil then Octo_ToDoVars.config.Portals = false end
+		if Octo_ToDoVars.config.curWidth == nil then Octo_ToDoVars.config.curWidth = 96 end
 		if Octo_ToDoVars.config.curWidth ~= nil then E.Octo_Globals.curWidth = Octo_ToDoVars.config.curWidth end
+		if Octo_ToDoVars.config.curWidthTitle == nil then Octo_ToDoVars.config.curWidthTitle = 200 end
+		if Octo_ToDoVars.config.curWidthTitle ~= nil then E.Octo_Globals.curWidthTitle = Octo_ToDoVars.config.curWidthTitle end
 		O_otrisovka()
 		for i, func in ipairs(E.Octo_Globals.modules) do
 			func()
