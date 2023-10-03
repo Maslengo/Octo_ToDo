@@ -8010,7 +8010,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		-- or event == "BAG_NEW_ITEMS_UPDATED"
 		-- or event == "ITEM_LOCKED"
 		Collect_ALL_ItemsInBag()
-		print ("|cffFF00FF"..event.."|r".."Collect_ALL_ItemsInBag")
+		-- print ("|cffFF00FF"..event.."|r".."Collect_ALL_ItemsInBag")
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
 	if (event == "ITEM_CHANGED" or event == "TRANSMOG_COLLECTION_SOURCE_ADDED") and not InCombatLockdown() then
