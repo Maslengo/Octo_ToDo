@@ -1886,7 +1886,7 @@ end
 local function CreateFrameUsableItems_OnLeave(self)
 	local hasToy = PlayerHasToy(self.itemID)
 	local hasItem = GetItemCount(self.itemID, true, true, true) < self.count
-	if hasToy == true or hasItem == true then
+	if hasToy == true and hasItem == true then
 		self.icon:SetVertexColor(1, 1, 1, 1)
 	else
 		self.icon:SetVertexColor(1, 1, 1, .2)
@@ -1915,7 +1915,7 @@ local function CreateFrameUsableItems_OnEvent(self, event)
 		local startTime, duration = C_Container.GetItemCooldown(self.itemID)
 		local hasToy = PlayerHasToy(self.itemID)
 		local hasItem = GetItemCount(self.itemID, true, true, true) < self.count
-		if hasToy == true or hasItem == true then
+		if hasToy == true and hasItem == true then
 			self.icon:SetDesaturated(false)
 			self.icon:SetAlpha(1)
 		else
@@ -1947,7 +1947,7 @@ end
 local function CreateFrameUsableItems_OnMouseDown(self)
 	local hasToy = PlayerHasToy(self.itemID)
 	local hasItem = GetItemCount(self.itemID, true, true, true) < self.count
-	if hasToy == true or hasItem == true then
+	if hasToy == true and hasItem == true then
 		self.icon:SetVertexColor(1, 0, 0, .1)
 	else
 		self.icon:SetVertexColor(1, 0, 0, 1)
@@ -1956,7 +1956,7 @@ end
 local function CreateFrameUsableItems_OnMouseUp(self)
 	local hasToy = PlayerHasToy(self.itemID)
 	local hasItem = GetItemCount(self.itemID, true, true, true) < self.count
-	if hasToy == true or hasItem == true then
+	if hasToy == true and hasItem == true then
 		self.icon:SetVertexColor(1, 1, 1, .1)
 	else
 		self.icon:SetVertexColor(1, 1, 1, 1)
