@@ -706,7 +706,7 @@ local OctoTable_UniversalQuest = {
 		max = 25
 	},
 	{
-		name_save = "Feast",
+		name_save = "CommunityFeast",
 		name_quest = L["Community Feast"],
 		reset = "Weekly",
 		expansion = "DF",
@@ -1795,8 +1795,8 @@ local function checkCharInfo(self)
 		self.HasAvailableRewards = true
 		self.GreatVault = {}
 	end
-	if (self.tmstp_Weekly or 0) < GetServerTime() and self.Octopussy_DF_Weekly_Feast_count == E.Octo_Globals.DONE then
-		self.Octopussy_DF_Weekly_Feast_count = E.Octo_Globals.NONE
+	if (self.tmstp_Weekly or 0) < GetServerTime() and self.Octopussy_DF_Weekly_CommunityFeast_count == E.Octo_Globals.DONE then
+		self.Octopussy_DF_Weekly_CommunityFeast_count = E.Octo_Globals.NONE
 	end
 	if (self.tmstp_Weekly or 0) < GetServerTime() then
 		self.tmstp_Weekly = E.Octo_Func.tmstpDayReset(7)
@@ -1804,15 +1804,6 @@ local function checkCharInfo(self)
 		self.CurrentKey = 0
 		self.CurrentKeyFULL = 0
 		self.CurrentKeyLevel = 0
-		-- for _, v in pairs(OctoTable_UniversalQuest) do
-		-- 	for _, w in pairs(v) do
-		-- 		if v.name_save ~= "AidingtheAccord" and v.name_save ~= "Feast" then
-		-- 			self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_name"] = E.Octo_Globals.NONE
-		-- 			self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_count"] = E.Octo_Globals.NONE
-		-- 			self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_questID"] = E.Octo_Globals.NONE
-		-- 		end
-		-- 	end
-		-- end
 	end
 	if (self.tmstp_Daily or 0) < GetServerTime() then
 		self.tmstp_Daily = E.Octo_Func.tmstpDayReset(1)
@@ -5333,37 +5324,42 @@ function O_otrisovka()
 					return vivodCent, vivodLeft
 			end)
 		end
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				local vivodLeft = (E.Octo_Func.func_texturefromIcon(629056).. Timer_DF_CommunityFeast()..L["Community Feast"])
-				if CharInfo.Octopussy_DF_Weekly_Feast_count ~= E.Octo_Globals.NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_Feast_count
-				end
-				if CharInfo.ItemsInBag[200652] ~= 0 then
-					vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200652]..E.Octo_Func.func_itemTexture(200652)
-				end
-				if CharInfo.ItemsInBag[200095] ~= 0 then
-					vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200095]..E.Octo_Func.func_itemTexture(200095)
-				end
-				if CharInfo.UnitLevel >= 58 and (CharInfo.KnownSpell[366253] == false or CharInfo.KnownSpell[366253] == 0) then
-					vivodCent = vivodCent..E.Octo_Globals.Red_Color.."-|r"
-				end
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				local vivodLeft = (E.Octo_Func.func_texturefromIcon(236469)..Timer_DF_ResearchersUnderFire()..L["Researchers Under Fire"])
-				if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= "0/4" then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
-					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_EPIC, CharInfo.OctoTable_QuestID[75630]} -- MAW_BUFF_QUALITY_STRING_EPIC Epic
-					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_RARE, CharInfo.OctoTable_QuestID[75629]} -- MAW_BUFF_QUALITY_STRING_RARE Rare
-					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_UNCOMMON, CharInfo.OctoTable_QuestID[75628]} -- MAW_BUFF_QUALITY_STRING_UNCOMMON Uncommon
-					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_COMMON, CharInfo.OctoTable_QuestID[75627]} -- MAW_BUFF_QUALITY_STRING_COMMON Common
-				end
-				return vivodCent, vivodLeft
-		end)
+		if Octo_ToDoVars.config.CommunityFeast == true then
+			tinsert(OctoTable_func_otrisovka,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local vivodLeft = (E.Octo_Func.func_texturefromIcon(629056).. Timer_DF_CommunityFeast()..L["Community Feast"])
+					if CharInfo.Octopussy_DF_Weekly_CommunityFeast_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_DF_Weekly_CommunityFeast_count
+					end
+					if CharInfo.ItemsInBag[200652] ~= 0 then
+						vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200652]..E.Octo_Func.func_itemTexture(200652)
+					end
+					if CharInfo.ItemsInBag[200095] ~= 0 then
+						vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200095]..E.Octo_Func.func_itemTexture(200095)
+					end
+					if CharInfo.UnitLevel >= 58 and (CharInfo.KnownSpell[366253] == false or CharInfo.KnownSpell[366253] == 0) then
+						vivodCent = vivodCent..E.Octo_Globals.Red_Color.."-|r"
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDoVars.config.ResearchersUnderFire == true then
+			tinsert(OctoTable_func_otrisovka,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local vivodLeft = (E.Octo_Func.func_texturefromIcon(236469)..Timer_DF_ResearchersUnderFire()..L["Researchers Under Fire"])
+					if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= "0/4" then
+						vivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
+						tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_EPIC, CharInfo.OctoTable_QuestID[75630]} -- MAW_BUFF_QUALITY_STRING_EPIC Epic
+						tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_RARE, CharInfo.OctoTable_QuestID[75629]} -- MAW_BUFF_QUALITY_STRING_RARE Rare
+						tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_UNCOMMON, CharInfo.OctoTable_QuestID[75628]} -- MAW_BUFF_QUALITY_STRING_UNCOMMON Uncommon
+						tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_COMMON, CharInfo.OctoTable_QuestID[75627]} -- MAW_BUFF_QUALITY_STRING_COMMON Common
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -5754,7 +5750,7 @@ function O_otrisovka()
 				end
 				if #tooltip ~= 0 then
 					-- vivodCent = E.Octo_Globals.Yellow_Color.."КД|r"
-					vivodCent = E.Octo_Globals.Gray_Color.."Instance Tracker|r"
+					vivodCent = E.Octo_Globals.Gray_Color..DUNGEONS.."|r"
 				end
 				return vivodCent, vivodLeft
 		end)
@@ -6348,7 +6344,7 @@ function O_otrisovka()
 					tooltip[#tooltip+1] = {WorldBoss_Icon..L["World Boss"], CharInfo.Octopussy_DF_Weekly_WBALL_count}
 					tooltip[#tooltip+1] = {Timer_DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"], CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count}
 					tooltip[#tooltip+1] = {Timer_DF_GrandHunts()..L["Grand Hunt"], CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count}
-					tooltip[#tooltip+1] = {Timer_DF_CommunityFeast()..L["Community Feast"], CharInfo.Octopussy_DF_Weekly_Feast_count}
+					tooltip[#tooltip+1] = {Timer_DF_CommunityFeast()..L["Community Feast"], CharInfo.Octopussy_DF_Weekly_CommunityFeast_count}
 					tooltip[#tooltip+1] = {L["Aiding the Accord"], CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count}
 					tooltip[#tooltip+1] = {L["Keys of Loyalty"], CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count}
 					tooltip[#tooltip+1] = {L["PvP"], CharInfo.Octopussy_DF_Weekly_PVP_count}
@@ -6957,9 +6953,9 @@ function Octo_ToDoCreateAltFrame()
 				GameTooltip:AddDoubleLine(" ", " ")
 				for k, CharInfo in pairs(Octo_ToDoLevels) do
 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-					if CharInfo.Octopussy_DF_Weekly_Feast_count ~= E.Octo_Globals.DONE and CharInfo.UnitLevel >= 60 then
+					if CharInfo.Octopussy_DF_Weekly_CommunityFeast_count ~= E.Octo_Globals.DONE and CharInfo.UnitLevel >= 60 then
 						i = i +1
-						GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"), CharInfo.Octopussy_DF_Weekly_Feast_count)
+						GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"), CharInfo.Octopussy_DF_Weekly_CommunityFeast_count)
 					end
 					if CharInfo.ItemsInBag[200652] ~= 0 then
 						i = i + 1
@@ -7791,6 +7787,8 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.ShowItemLevel == nil then Octo_ToDoVars.config.ShowItemLevel = true end
 		if Octo_ToDoVars.config.ShowLogoutTime == nil then Octo_ToDoVars.config.ShowLogoutTime = true end
 		if Octo_ToDoVars.config.AidingtheAccord == nil then Octo_ToDoVars.config.AidingtheAccord = false end
+		if Octo_ToDoVars.config.CommunityFeast == nil then Octo_ToDoVars.config.CommunityFeast = true end
+		if Octo_ToDoVars.config.ResearchersUnderFire == nil then Octo_ToDoVars.config.ResearchersUnderFire = true end
 		if Octo_ToDoVars.config.Dreamsurges == nil then Octo_ToDoVars.config.Dreamsurges = false end
 		if Octo_ToDoVars.config.TimeRift == nil then Octo_ToDoVars.config.TimeRift = false end
 		if Octo_ToDoVars.config.Portals == nil then Octo_ToDoVars.config.Portals = false end
@@ -7993,9 +7991,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
 	 --[[event == "CHAT_MSG_LOOT" or]]
-	if
-		(event == "ZONE_CHANGED_NEW_AREA"
-		or event == "ITEM_COUNT_CHANGED")
+	if (event == "ZONE_CHANGED_NEW_AREA" or event == "ITEM_COUNT_CHANGED") and not InCombatLockdown() then
 		-- or event == "NEW_TOY_ADDED"
 		-- or event == "PLAYER_REGEN_ENABLED"
 		-- or event == "PLAYER_MONEY"
@@ -8013,9 +8009,8 @@ function Octo_ToDoOnEvent(self, event, ...)
 		-- or event == "ITEM_PUSH"
 		-- or event == "BAG_NEW_ITEMS_UPDATED"
 		-- or event == "ITEM_LOCKED"
-		and not InCombatLockdown() then
 		Collect_ALL_ItemsInBag()
-		-- print ("|cffFF00FF"..event.."|r")
+		print ("|cffFF00FF"..event.."|r".."Collect_ALL_ItemsInBag")
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
 	if (event == "ITEM_CHANGED" or event == "TRANSMOG_COLLECTION_SOURCE_ADDED") and not InCombatLockdown() then

@@ -275,14 +275,52 @@ config_MAIN:SetScript("OnShow", function(self)
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
 		end
 		self[pizda]:SetPoint("TOPLEFT", title, "BOTTOMLEFT", POS_CENTER, -indent*number)
+		self[pizda]:SetChecked(Octo_ToDoVars.config.CommunityFeast)
+		self[pizda]:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.CommunityFeast = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..L["Community Feast"]..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(1603189)..
+		--
+		local number = 3
+		local pizda = E.Octo_Func.GenerateUniqueID()
+		if not self[pizda] then
+			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		end
+		self[pizda]:SetPoint("TOPLEFT", title, "BOTTOMLEFT", POS_CENTER, -indent*number)
+		self[pizda]:SetChecked(Octo_ToDoVars.config.ResearchersUnderFire)
+		self[pizda]:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.ResearchersUnderFire = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..L["Researchers Under Fire"]..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(1603189)..
+
+
+
+
+
+
+
+
+
+
+
+
+		--
+		local number = 4
+		local pizda = E.Octo_Func.GenerateUniqueID()
+		if not self[pizda] then
+			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		end
+		self[pizda]:SetPoint("TOPLEFT", title, "BOTTOMLEFT", POS_CENTER, -indent*number)
 		self[pizda]:SetChecked(Octo_ToDoVars.config.ShowTransmogrification)
 		self[pizda]:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.ShowTransmogrification = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE.."ShowTransmogrification"..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(1673939)..
+		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..TRANSMOGRIFICATION.." (Аберрий)"..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(1673939)..
 		--
-		local number = 3
+		local number = 5
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -295,7 +333,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(E.Octo_Globals.Purple_Color..L["TimeRift"]..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(628677)..
 		--
-		local number = 4
+		local number = 6
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -308,7 +346,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(E.Octo_Globals.Green_Color..L["Dreamsurges"]..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(134206)..
 		--
-		local number = 5
+		local number = 7
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -319,9 +357,9 @@ config_MAIN:SetScript("OnShow", function(self)
 				Octo_ToDoVars.config.ShowHoliday = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self[pizda].text:SetText(E.Octo_Globals.Yellow_Color.."ShowHoliday"..FONT_COLOR_CODE_CLOSE)
+		self[pizda].text:SetText(E.Octo_Globals.Yellow_Color..CALENDAR_FILTER_HOLIDAYS..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 6
+		local number = 8
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -332,9 +370,9 @@ config_MAIN:SetScript("OnShow", function(self)
 				Octo_ToDoVars.config.InstanceTracker = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE.."InstanceTracker"..FONT_COLOR_CODE_CLOSE)
+		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..DUNGEONS..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 7
+		local number = 9
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -347,7 +385,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..CURRENCY..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 8
+		local number = 9
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -360,7 +398,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..REPUTATION..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 9
+		local number = 10
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -373,7 +411,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..QUESTS_LABEL..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 10
+		local number = 11
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -386,7 +424,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..L["ShowSkips"]..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 11
+		local number = 12
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -399,7 +437,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..ITEMS..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 12
+		local number = 13
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -412,7 +450,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE.."Профессии"..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 13
+		local number = 14
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -425,7 +463,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE.."Деньги"..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 14
+		local number = 15
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
@@ -438,7 +476,7 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE.."Уровень предметов"..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 15
+		local number = 16
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then
 			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
