@@ -2,9 +2,9 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v64.5(10.1.7)(30.09.2023)
+## Version: v64.6(10.1.7)(03.10.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture
-## SavedVariables: Octo_ToDo_SmartCollect Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog
+## SavedVariables: Octo_ToDo_SmartCollectNEW Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog
 
 XML\embeds.xml
 
@@ -17,7 +17,6 @@ Data\Tables\Dreamsurges_Items.lua
 Data\Tables\interrupts.lua
 Data\Tables\OctoTable_bytetoB64.lua
 Data\Tables\OctoTable_currencyID_ALL.lua
-Data\Tables\OctoTable_currencyID_Professions.lua
 Data\Tables\OctoTable_EnglishClasses.lua
 Data\Tables\OctoTable_EventsIDs.lua
 Data\Tables\OctoTable_instanceDifficulty.lua
@@ -27,8 +26,11 @@ Data\Tables\OctoTable_itemID_DFMountsSkins.lua
 Data\Tables\OctoTable_itemID_Holiday.lua
 Data\Tables\OctoTable_itemID_Reputation.lua
 Data\Tables\OctoTable_journalInstanceID.lua
+Data\Tables\OctoTable_KeystoneAbbr.lua
 Data\Tables\OctoTable_LFGDungeons.lua
 Data\Tables\OctoTable_Portals.lua
+Data\Tables\OctoTable_Professions.lua
+Data\Tables\OctoTable_Professions_currencyID.lua
 Data\Tables\OctoTable_QuestID.lua
 Data\Tables\OctoTable_reputation_ALL.lua
 Data\Tables\OctoTable_SpellID.lua
@@ -38,6 +40,7 @@ Data\Tables\utf8_lc_uc.lua
 Data\Tables\utf8_uc_lc.lua
 Data\Tables\white_list_70.lua
 Data\Tables\white_list_ALL.lua
+Data\Tables\white_list_ALL_SETS.lua
 Data\Tables\white_list_Krokuun_ChainMail.lua
 Data\Tables\white_list_Krokuun_Cloth.lua
 Data\Tables\white_list_Krokuun_Leather.lua
@@ -96,7 +99,6 @@ Octo_ToDo.lua
 Octo_ToDo_CommunityFeast.lua
 Octo_ToDo_WowheadQuickLink.lua
 Octo_ToDo_WowheadQuickLinkStrategies.lua
-Octo_Utility.lua
 Octo_Options.lua
 Octo_AUTO_OPEN.lua
 Octo_SharedMedia.lua

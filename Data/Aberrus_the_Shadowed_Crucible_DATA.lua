@@ -261,11 +261,29 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Heroic"] = 186229,
 			["Mythic"] = 186230,
 		},
+		["Back"] = { -- Спина
+			["LFR"] = 186221,
+			["Normal"] = 184511, -- 185606
+			["Heroic"] = 186219, -- 186699
+			["Mythic"] = 186220, -- 186699
+		},
 		["Chest"] = { -- Грудь
 			["LFR"] = 186233,
 			["Normal"] = 184519,
 			["Heroic"] = 186231,
 			["Mythic"] = 186232,
+		},
+		["Wrist"] = { -- Запястья
+			["LFR"] = 186224, -- 186474
+			["Normal"] = 185558,
+			["Heroic"] = 186472,
+			["Mythic"] = 186473,
+		},
+		["Hands"] = { -- Кисти рук
+			["LFR"] = 186255,
+			["Normal"] = 184517,
+			["Heroic"] = 186253,
+			["Mythic"] = 186254,
 		},
 		["Waist"] = { -- Пояс
 			["LFR"] = 186227,
@@ -284,24 +302,6 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 			["Normal"] = 184518,
 			["Heroic"] = 186256,
 			["Mythic"] = 186257,
-		},
-		["Wrist"] = { -- Запястья
-			["LFR"] = 186224, -- 186474
-			["Normal"] = 185558,
-			["Heroic"] = 186472,
-			["Mythic"] = 186473,
-		},
-		["Hands"] = { -- Кисти рук
-			["LFR"] = 186255,
-			["Normal"] = 184517,
-			["Heroic"] = 186253,
-			["Mythic"] = 186254,
-		},
-		["Back"] = { -- Спина
-			["LFR"] = 186221,
-			["Normal"] = 184511, -- 185606
-			["Heroic"] = 186219, -- 186699
-			["Mythic"] = 186700, -- 186220 -- ПИЗДА
 		},
 	},
 	SHAMAN = {

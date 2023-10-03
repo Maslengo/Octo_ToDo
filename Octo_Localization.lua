@@ -129,6 +129,8 @@ if L then
 	L["About"] = true
 	L["Portals"] = true
 	L["Firelands"] = true
+	L["Dawn of the Infinites"] = true
+	L["ShowSkips"] = true
 
 
 
@@ -260,4 +262,6 @@ if L then
 	L["About"] = "Об аддоне"
 	L["Portals"] = "Порталы"
 	L["Firelands"] = "Огненные Просторы"
+	L["Dawn of the Infinites"] = "Рассвет Бесконечности"
+	L["ShowSkips"] = "Проходки"
 end

@@ -67,6 +67,7 @@ tinsert(E.Octo_Globals.modules, function()
 			if classFilename == "EVOKER" then
 				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_EVOKER)
 			end
+			E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_ALL_SETS)
 			local function UsableItems_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
 				GameTooltip:ClearLines()
@@ -137,6 +138,27 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 			function UsableItemFrame()
 				if not InCombatLockdown() and UsableItems_Frame then
+					local PIZDATABLE_PETS = {}
+					local PIZDATABLE_MOUNTS = {}
+						for k, v in pairs(Octo_ToDo_SmartCollectNEW.Items.Pets) do
+							if k then
+								PIZDATABLE_PETS = {
+										{itemid = k, count = 1},
+								}
+							end
+						end
+						for k, v in pairs(Octo_ToDo_SmartCollectNEW.Items.Mounts) do
+							if k then
+								PIZDATABLE_MOUNTS = {
+										{itemid = k, count = 1},
+								}
+							end
+						end
+
+
+					E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, PIZDATABLE_PETS)
+					E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, PIZDATABLE_MOUNTS)
+
 					for _, v in pairs(E.Octo_Table.white_list_ALL) do
 						if GetItemCount(v.itemid) >= v.count then
 							UsableItems_Frame:Show()

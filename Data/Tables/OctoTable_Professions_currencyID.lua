@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
-E.Octo_Table.OctoTable_currencyID_Professions = {
+E.Octo_Table.OctoTable_Professions_currencyID = {
     2028, -- начертание
     2024, -- алх
     2035, -- горн

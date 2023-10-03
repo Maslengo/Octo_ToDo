@@ -125,6 +125,22 @@ E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance = {
 	344597, --портал-орибос
 	395289, --портал-вальдраккен
 }
+-- E.Octo_Table.OctoTable_Portals_DRUID = {
+-- 	193753, --Сноходец
+-- }
+-- E.Octo_Table.OctoTable_Portals_DEATHKNIGHT = {
+-- 	50977,
+-- }
+-- E.Octo_Table.OctoTable_Portals_SHAMAN = {
+-- 	556,
+-- }
+-- E.Octo_Table.OctoTable_Portals_MONK = {
+-- 	126892,
+-- }
+
+
+
+
 -- https://www.wowhead.com/ru/spell=343140/портал
 -- https://www.wowhead.com/ru/spell=281400/портал-в-боралус
 -- https://www.wowhead.com/ru/spell=132620/портал-в-вечноцветущий-дол

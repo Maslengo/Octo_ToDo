@@ -92,6 +92,8 @@ tinsert(E.Octo_Globals.modules, function()
                                 v.name:find("У меня потерялся ключ.") or
                                 v.name:find("Эти цветы - от Киригосы.") or
                                 v.name:find("Напасть.") or
+                                v.name:find("Телепорт к Ночному Шпилю.") or -- Элисанда
+                                v.name:find("Телепорт к Купели Ночи") or -- Гул'дан
                                 -- v.name:find("Начать копать") or
                                 v.name:find("cff0000FF")
                                  --[[and not ignore_list_NPC[targetNPCID] then]] then

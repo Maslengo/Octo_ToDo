@@ -1,7 +1,0 @@
-local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-
-
-
-
--- local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")

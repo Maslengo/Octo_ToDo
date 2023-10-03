@@ -69,6 +69,11 @@ function E.Octo_Globals.strategies.GetArmoryUrl(dataSources)
 			elseif realm == "Ревущий-фьорд" then realm = "howling-fjord"
 			elseif realm == "Ревущийфьорд" then realm = "howling-fjord"
 			elseif realm == "Гордунни" then realm = "Gordunni"
+			elseif realm == "ВечнаяПесня" then realm = "Eversong"
+			elseif realm == "Вечная-Песня" then realm = "Eversong"
+			elseif realm == "Ясеневыйлес" then realm = "ashenvale"
+			elseif realm == "Подземье" then realm = "deepholm"
+			elseif realm == "Термоштепсель" then realm = "thermaplugg"
 			end
 			return "blizzard armory",
 			string.format(E.Octo_Globals.baseArmoryUrl, locale, realm, name)
