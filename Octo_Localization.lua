@@ -197,7 +197,7 @@ if L then
 	L["Sniffenseeking (items)"] = "Нюхорысканье ("..ITEMS..")"
 	L["AutoSellGrey"] = "Автопродажа серого хлама"
 	L["AutoRepair"] = "Автопочинка"
-	L["InputDelete"] = "Автозаполнение 'УДАЛИТЬ'"
+	L["InputDelete"] = "Автозаполнение 'УДАЛИТЬ' или 'ЗАБЫТЬ'"
 	L["AutoOpen"] = "Автооткрытие предметов"
 	L["AutoGossip"] = "Авторазговор с НПЦ"
 	L["CinematicCanceler"] = "Автопропуск видео"

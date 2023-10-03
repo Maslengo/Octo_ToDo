@@ -654,7 +654,7 @@ config_MAIN:SetScript("OnShow", function(self)
 				Octo_ToDoVars.config.Portals = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE)
+		self[pizda].text:SetText(E.Octo_Func.func_texturefromIcon(3610528)..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE)
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(config_MAIN, AddonTitle)
