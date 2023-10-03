@@ -823,8 +823,8 @@ config_FIRST:SetScript("OnShow", function(self)
 		end
 end)
 -- ADD SUBCATEGORY
-local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, config_FIRST, "DEV")
-subcategory.ID = "DEV"
+local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, config_FIRST, "Yamete Kudasai")
+subcategory.ID = "Yamete Kudasai"
 Settings.RegisterAddOnCategory(subcategory)
 -----
 -----
