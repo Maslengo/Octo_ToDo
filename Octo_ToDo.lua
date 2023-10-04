@@ -3854,6 +3854,7 @@ function Octo_ToDoOnLoad()
 	OctoFrame_EventFrame:RegisterEvent("CHAT_MSG_LOOT")
 	OctoFrame_EventFrame:RegisterEvent("ITEM_PUSH")
 	OctoFrame_EventFrame:RegisterEvent("ITEM_COUNT_CHANGED")
+	OctoFrame_EventFrame:RegisterEvent("MAIL_SEND_SUCCESS")
 	OctoFrame_EventFrame:RegisterEvent("BAG_NEW_ITEMS_UPDATED")
 	OctoFrame_EventFrame:RegisterEvent("NEW_TOY_ADDED")
 	OctoFrame_EventFrame:RegisterEvent("ITEM_LOCKED")
@@ -8436,7 +8437,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if OctoFrame_Main_Frame and OctoFrame_Main_Frame:IsShown() then Octo_ToDoAddDataToAltFrame() end
 	end
 	 --[[event == "CHAT_MSG_LOOT" or]]
-	if (event == "ZONE_CHANGED_NEW_AREA" or event == "ITEM_COUNT_CHANGED") and not InCombatLockdown() then
+	if (event == "ZONE_CHANGED_NEW_AREA" or event == "ITEM_COUNT_CHANGED" or event == "MAIL_SEND_SUCCESS") and not InCombatLockdown() then
 		-- or event == "NEW_TOY_ADDED"
 		-- or event == "PLAYER_REGEN_ENABLED"
 		-- or event == "PLAYER_MONEY"
