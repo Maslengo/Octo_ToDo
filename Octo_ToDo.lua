@@ -1680,7 +1680,6 @@ local function checkCharInfo(self)
 		self.LFGInstance[dungeonID].donetoday = self.LFGInstance[dungeonID].donetoday or E.Octo_Globals.NONE
 	end
 	self.LFGInstance = self.LFGInstance or {}
-	self.GreatVault = self.GreatVault or {}
 	self.professions = self.professions or {}
 	self.avgItemLevel = self.avgItemLevel or 0
 	self.avgItemLevelEquipped = self.avgItemLevelEquipped or 0
@@ -2585,6 +2584,7 @@ function Collect_ALL_GreatVault()
 			if activityInfo then
 				local type = activityInfo.type
 				if collect and type ~= 0 and type ~= nil then
+					collect.GreatVault[type] = collect.GreatVault[type] or {}
 					collect.GreatVault[type].progress = activityInfo.progress
 					collect.GreatVault[type].threshold = activityInfo.threshold
 					local hyperlink = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
@@ -3746,6 +3746,10 @@ function O_otrisovka()
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 			end
 			for i = 1, 3 do
+				CharInfo.GreatVault[i] = CharInfo.GreatVault[i] or {}
+				CharInfo.GreatVault[i].hyperlink_STRING = CharInfo.GreatVault[i].hyperlink_STRING or 0
+				CharInfo.GreatVault[i].progress = CharInfo.GreatVault[i].progress or 0
+				CharInfo.GreatVault[i].threshold = CharInfo.GreatVault[i].threshold or 0
 				if CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
 					tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Globals.Purple_Color..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
 				elseif CharInfo.GreatVault[i].progress ~= 0 then
@@ -5344,7 +5348,6 @@ function O_otrisovka()
 					return vivodCent, vivodLeft
 			end)
 		end
-
 		if Octo_ToDoVars.config.ResearchersUnderFire == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
@@ -7099,7 +7102,7 @@ function Octo_ToDoCreateAltFrame()
 				GameTooltip:AddDoubleLine(" ", " ")
 				for k, CharInfo in pairs(Octo_ToDoLevels) do
 					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-					for _, v in pairs(E.Octo_Table.Dreamsurges_Items) do
+					for _, v in ipairs(E.Octo_Table.Dreamsurges_Items) do
 						if (CharInfo.ItemsInBag[v] ~= 0) then
 							i = i + 1
 							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
