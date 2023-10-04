@@ -117,34 +117,18 @@ tinsert(E.Octo_Globals.modules, function()
 					local map = C_Map.GetBestMapForUnit("player")
 					if difficultyID == 23 then
 						for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-							-- for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
 							for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
 								local itemID = C_Container.GetContainerItemID(bag, slot)
 								if itemID == 180653 then
 									C_Container.UseContainerItem(bag, slot)
 								end
-								-- local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-								-- if containerInfo then
-								-- 	-- KeyLevel
-								-- 	local hyperlink = containerInfo.hyperlink
-								-- 	if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") then
-								-- 		-- if hyperlink:find("Каражан") then
-								-- 		-- 	hyperlink = hyperlink:gsub("^[^:]+: ", "Кара: ")
-								-- 		-- elseif hyperlink:find("Мехагон") then
-								-- 		-- 	hyperlink = hyperlink:gsub("^[^ ]+ ", "")
-								-- 		-- end
-								-- 		local KeydungeonID = select(3, strsplit(":", hyperlink)) -- COLLECT ИД ключа
-								-- 		UseContainerItem(bag, slot)
-								-- 	end
-								-- end
 							end
 						end
 					end
 					----------------------------------------------------------------
-				end
-
-
+				end -- for event
 				if event == "READY_CHECK" then
+					----------------------------------------------------------------
 					local difficultyID = select(3, GetInstanceInfo()) or "|cffFF0000-|r"
 					-- local map = C_Map.GetBestMapForUnit("player")
 					if difficultyID == 23 then
@@ -163,9 +147,9 @@ tinsert(E.Octo_Globals.modules, function()
 							end
 						end
 					end
-				end
+					----------------------------------------------------------------
+				end -- for event
 			end
 			ChallengesKeystoneFrameOnLoad()
 		end
 end)
-
