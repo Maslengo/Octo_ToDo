@@ -129,6 +129,7 @@ if L then
 	L["About"] = true
 	L["Portals"] = true
 	L["Firelands"] = true
+	L["Black Temple"] = true
 	L["Dawn of the Infinites"] = true
 	L["ShowSkips"] = true
 
@@ -197,7 +198,7 @@ if L then
 	L["Sniffenseeking (items)"] = "Нюхорысканье ("..ITEMS..")"
 	L["AutoSellGrey"] = "Автопродажа серого хлама"
 	L["AutoRepair"] = "Автопочинка"
-	L["InputDelete"] = "Автозаполнение 'УДАЛИТЬ' или 'ЗАБЫТЬ'"
+	L["InputDelete"] = "Автозаполнение 'УДАЛИТЬ'"
 	L["AutoOpen"] = "Автооткрытие предметов"
 	L["AutoGossip"] = "Авторазговор с НПЦ"
 	L["CinematicCanceler"] = "Автопропуск видео"
@@ -264,4 +265,5 @@ if L then
 	L["Firelands"] = "Огненные Просторы"
 	L["Dawn of the Infinites"] = "Рассвет Бесконечности"
 	L["ShowSkips"] = "Проходки"
+	L["Black Temple"] = "Чёрный Храм"
 end

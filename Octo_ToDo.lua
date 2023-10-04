@@ -33,6 +33,7 @@ local OctoFrame_AbandonAllQuests_Button = nil
 local OctoFrame_Char_FrameDeleteButton = nil
 --------------------------------
 local className, classFilename, classId = UnitClass("PLAYER")
+local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
 local Horde_Icon = E.Octo_Func.func_texturefromIcon(132485)--"|T132485:16:16:::64:64:4:60:4:60|t"
 local Alliance_Icon = E.Octo_Func.func_texturefromIcon(132486)--"|T132486:16:16:::64:64:4:60:4:60|t"
 local Kyrian_Icon = E.Octo_Func.func_texturefromIcon(3257748)--"|T3257748:16:16:::64:64:4:60:4:60|t"
@@ -64,7 +65,7 @@ local TotalMoneyAllServer = 0
 local TotalTransAnima = 0
 local TotalTransParacausalFlakes = 0
 local TotalKills = 0
-local BGALPHA = .1
+local BGALPHA = .05
 -- local E.Octo_Globals.NONE = E.Octo_Globals.Gray_Color.."None|r"
 -- local E.Octo_Globals.DONE = E.Octo_Globals.Green_Color.."Done|r"
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
@@ -101,6 +102,9 @@ E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.Skinning)
 E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.Jewelcrafting)
 E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.Inscription)
 E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.Archeology)
+E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_EventsIDs, E.Octo_Table.WorldEvents.Holiday)
+E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_EventsIDs, E.Octo_Table.WorldEvents.Recurring)
+E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_EventsIDs, E.Octo_Table.WorldEvents.Uncategorized)
 local OctoTable_func_otrisovka = {
 }
 local OctoTable_UniversalQuest = {
@@ -309,14 +313,62 @@ local OctoTable_UniversalQuest = {
 		max = 2
 	},
 	{
-		name_save = "WeekendEvent",
-		name_quest = "Событие выходного дня",
+		name_save = "TheWorldAwaits",
+		name_quest = "The World Awaits",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
 		desc = "",
 		questID = {
-			72728, 72720, 72722, 72723
+			72728
+		},
+		max = 1
+	},
+	{
+		name_save = "TheArenaCalls",
+		name_quest = "The Arena Calls",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			72720
+		},
+		max = 1
+	},
+	{
+		name_save = "EmissaryofWar",
+		name_quest = "Emissary of War",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			72722
+		},
+		max = 1
+	},
+	{
+		name_save = "ACalltoBattle",
+		name_quest = "A Call to Battle",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			72723
+		},
+		max = 1
+	},
+	{
+		name_save = "SomethingDifferent",
+		name_quest = "Something Different",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			47148
 		},
 		max = 1
 	},
@@ -819,7 +871,7 @@ local OctoTable_UniversalQuest = {
 	{
 		name_save = "Timewalk_500CURRENCY",
 		name_quest = PLAYER_DIFFICULTY_TIMEWALKER.."(500 cur)",
-		reset = "Month",
+		reset = "Weekly",
 		expansion = "DF",
 		place = "",
 		desc = "",
@@ -829,14 +881,26 @@ local OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "Timewalk_DisturbanceDetectedFirelands",
-		name_quest = PLAYER_DIFFICULTY_TIMEWALKER.."Disturbance Detected: Firelands",
-		reset = "Month",
-		expansion = "Cataclysm",
+		name_save = "Timewalk_RAIDS_Cataclysm",  -- Cataclysm
+		name_quest = "Timewalk_RAIDS_Cataclysm",
+		reset = "Weekly",
+		expansion = "DF",
 		place = "",
 		desc = "",
 		questID = {
-			57637
+			57637,
+		},
+		max = 1
+	},
+	{
+		name_save = "Timewalk_RAIDS_BurningCrusade", -- Burning Crusade
+		name_quest = "Timewalk_RAIDS_BurningCrusade",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			47523,
 		},
 		max = 1
 	},
@@ -1357,6 +1421,18 @@ local OctoTable_UniversalQuest = {
 		max = 131,
 	},
 	{
+		name_save = "TheEasternKingdomsCupBegins",
+		name_quest = "The Eastern Kingdoms Cup Begins",
+		reset = "Month",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			77839,
+		},
+		max = 1,
+	},
+	{
 		name_save = "Brewfest",
 		name_quest = "Brewfest",
 		reset = "Month",
@@ -1506,6 +1582,133 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 7,
 	},
+
+
+
+
+
+
+
+
+	{
+		name_save = "DarkmoonFaire",
+		name_quest = "Darkmoon Faire",
+		reset = "Daily",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+    -- { name="1. Большая Крутая Гонка", id=37911},
+    -- { name="2. В яблочко!", id=29438},
+    -- { name="3. Вызов огнекрыла", id=36481},
+    -- { name="4. Гноллобой", id=29463},
+    -- { name="5. Искусство быть пушечным ядром", id=29436},
+    -- { name="6. Командир танка", id=29434},
+    -- { name="7. Крутая Гонка", id=37910},
+    -- { name="8. Цель: черепаха", id=29455},
+    -- { name="9. Танцы Новой Луны", id=64783},
+    --{ name="Боец арены", id=29760},
+    --{ name="Великий стратег", id=29451},
+    --{ name="Вражеский знак различия", id=29457},
+    --{ name="Гибель матери стаи", id=33354},
+    --{ name="Джокер из колоды Железа", id=35504},
+    --{ name="Загадочный гримуар", id=29445},
+    --{ name="Захваченное знамя", id=29456},
+    --{ name="Захваченный дневник", id=29458},
+    --{ name="Изготовление призов", id=29517},
+    --{ name="Изумительное оружие", id=29446},
+    --{ name="Инструменты ворожбы", id=29464},
+    --{ name="Интересный кристалл", id=29443},
+    --{ name="Испытай свою силу", id=29433},
+    --{ name="Коктейль с пузырьками", id=29506},
+    --{ name="Колода карт Новолуния: Аристократы", id=13326},
+    --{ name="Колода карт Новолуния: Безумие", id=10941},
+    --{ name="Колода карт Новолуния: Благословения", id=10938},
+    --{ name="Колода карт Новолуния: Бык", id=30450},
+    --{ name="Колода карт Новолуния: Вихри", id=10939},
+    --{ name="Колода карт Новолуния: Вулканы", id=27664},
+    --{ name="Колода карт Новолуния: Журавль", id=30449},
+    --{ name="Колода карт Новолуния: Звери", id=7907},
+    --{ name="Колода карт Новолуния: Землетрясения", id=27667},
+    --{ name="Колода карт Новолуния: Змея", id=30451},
+    --{ name="Колода карт Новолуния: Нежить", id=13327},
+    --{ name="Колода карт Новолуния: Полководцы", id=7928},
+    --{ name="Колода карт Новолуния: Порталы", id=7927},
+    --{ name="Колода карт Новолуния: Призмы", id=13324},
+    --{ name="Колода карт Новолуния: Тигр", id=30452},
+    --{ name="Колода карт Новолуния: Ураганы", id=27665},
+    --{ name="Колода карт Новолуния: Хаос", id=13325},
+    --{ name="Колода карт Новолуния: Цунами", id=27666},
+    --{ name="Колода карт Новолуния: Элементали", id=7929},
+    --{ name="Колода карт Новолуния: Ярость", id=10940},
+    --{ name="Кстати, о танках", id=29511},
+    --{ name="Лягушки с хрустящей корочкой", id=29509},
+    --{ name="Малышке нужны новые подковы", id=29508},
+    --{ name="Мастер-боец арены", id=29761},
+    --{ name="Морской хот-дог", id=29513},
+    --{ name="Необычное яйцо", id=29444},
+    --{ name="Отскоблить шкуры", id=29519},
+    --{ name="Повторное использование и переработка", id=29518},
+    --{ name="Потомство Жабжаб", id=7946},
+    --{ name="Предсказание будущего", id=29515},
+    --{ name="Пусть ярмарка сверкает", id=29516},
+    --{ name="Развлечения для самых маленьких", id=29507},
+    --{ name="Справочник ярмарки Новолуния", id=29601},
+    --{ name="Ты найдешь свою удачу...", id=7937},
+    --{ name="Ты найдешь свою удачу...", id=7944},
+    --{ name="Ты найдешь свою удачу...", id=7945},
+    --{ name="Утилизация хлама", id=29510},
+    --{ name="Флаги, флаги повсюду!", id=29520},
+    --{ name="Целебные травы", id=29514},
+			37911,29438,36481,29463,29436,29434,37910,29455,64783,
+		},
+		max = 9,
+	},
+
+
+	{
+		name_save = "WarcraftRumble",
+		name_quest = "Warcraft Rumble",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			73182,
+			75039,
+			74850,
+			74851,
+			75036,
+			73928,
+			75040,
+			73936,
+			75041,
+			75037,
+			74852,
+			74843,
+			75038,
+			73180,
+			74849,
+			74287,
+			74845,
+			74848,
+			73952,
+			74286,
+			74844,
+		},
+		max = 21,
+	},
+
+
+
+
+
+
+
+
+
+
+
 }
 local function FUNC_PROF_TEST()
 	-- https://wowpedia.fandom.com/wiki/API_GetProfessions
@@ -1642,6 +1845,7 @@ local function checkCharInfo(self)
 	if self.needResetWeekly == true then
 		self.journalInstance = {}
 		self.RIO_weeklyBest = 0
+		self.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count = E.Octo_Globals.NONE
 	end
 	if self.journalInstance == nil or self.journalInstance == 0 then
 		self.journalInstance = {}
@@ -1803,10 +2007,18 @@ local function checkCharInfo(self)
 		self.CurrentKey = 0
 		self.CurrentKeyFULL = 0
 		self.CurrentKeyLevel = 0
+		for k, v in pairs(OctoTable_UniversalQuest) do
+			for q, w in pairs(v) do
+				self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_name"] = E.Octo_Globals.NONE
+				self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_count"] = E.Octo_Globals.NONE
+				self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_questID"] = E.Octo_Globals.NONE
+			end
+		end
 	end
 	if (self.tmstp_Daily or 0) < GetServerTime() then
 		self.tmstp_Daily = E.Octo_Func.tmstpDayReset(1)
 		self.needResetDaily = true
+		Octo_ToDo_SmartCollectNEW.Holiday.Active = {}
 		Octo_ToDoVars.config.AnotherAddonsCasual = false
 		Octo_ToDoVars.config.AnotherAddonsRAID = false
 		for k, v in pairs(OctoTable_UniversalQuest) do
@@ -1843,7 +2055,6 @@ local function checkCharInfo(self)
 		self.bounty_Legion1_icon = 0
 		self.bounty_Legion2_icon = 0
 		self.bounty_Legion3_icon = 0
-		Octo_ToDo_SmartCollectNEW.Holiday.Active = {}
 	end
 	if (self.tmstp_Month or 0) < GetServerTime() then
 		self.tmstp_Month = E.Octo_Func.tmstpDayReset(30)
@@ -2812,11 +3023,10 @@ function Collect_ALL_ItemsInBag()
 							end
 						end
 					end
+					-- TOYS?
 					-- MISCELLANEOUS Разное
 					-- MOUNTS Транспорт
 					if itemType == MISCELLANEOUS and itemSubType == MOUNTS then
-						-- Octo_ToDo_SmartCollectNEW.Items.Mounts[itemID] = Octo_ToDo_SmartCollectNEW.Items.Mounts[itemID] or {}
-						-- Octo_ToDo_SmartCollectNEW.Items.Mounts[itemID] = true
 						Octo_ToDo_SmartCollectNEW.Items.Mounts = Octo_ToDo_SmartCollectNEW.Items.Mounts or {}
 						Octo_ToDo_SmartCollectNEW.Items.Mounts[itemID] = true
 					end
@@ -3208,7 +3418,8 @@ function Collect_All_Holiday()
 			local endTime_weekday = endTime.weekday
 			local endTime_hour = endTime.hour
 			local endTime_minute = endTime.minute
-			-- if sequenceType ~= "END" then
+			if sequenceType ~= "END" then
+				if E.Octo_Table.OctoTable_EventsIDs[title] then
 				-- if title and E.Octo_Table.OctoTable_EventsIDs[id] then
 					if collect.Active[id] == nil then
 						collect.Active[id] = {}
@@ -3223,8 +3434,8 @@ function Collect_All_Holiday()
 						vivod = vivod.."\n"
 					end
 					vivod = vivod..E.Octo_Globals.Yellow_Color..title.."|r до: "..endTime_monthDay.."/"..endTime_month.."/"..endTime_year
-				-- end
-			-- end
+				end
+			end
 		end
 	end
 	return vivod
@@ -5587,13 +5798,23 @@ function O_otrisovka()
 					return vivodCent, vivodLeft
 			end)
 		end
-		-- Праздники
-		if Octo_ToDoVars.config.ShowHoliday == true then
+		-- События
+		if Octo_ToDoVars.config.ShowEvents == true then
 				if Octo_ToDo_SmartCollectNEW.Holiday.Active[628] then -- Путешествие во времени по подземельям (Катазклизм)
 					tinsert(OctoTable_func_otrisovka,
 						function(CharInfo, tooltip, CL, BG)
 							local vivodCent, vivodLeft = "", ""
-							vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..E.Octo_Func.func_questName(72810)
+							vivodLeft = E.Octo_Func.func_texturefromIcon(514016).."Cataclysm"
+							if CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
+								vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count
+							end
+							BG:SetColorTexture(0, .65, 1, BGALPHA)
+							return vivodCent, vivodLeft
+					end)
+					tinsert(OctoTable_func_otrisovka,
+						function(CharInfo, tooltip, CL, BG)
+							local vivodCent, vivodLeft = "", ""
+							vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS
 							if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
 								vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
 							end
@@ -5603,19 +5824,9 @@ function O_otrisovka()
 					tinsert(OctoTable_func_otrisovka,
 						function(CharInfo, tooltip, CL, BG)
 							local vivodCent, vivodLeft = "", ""
-							vivodLeft = E.Octo_Func.func_texturefromIcon(514016)..E.Octo_Func.func_questName(40786)
-							if CharInfo.Octopussy_DF_Month_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
-								vivodCent = CharInfo.Octopussy_DF_Month_Timewalk_500CURRENCY_count
-							end
-							BG:SetColorTexture(0, .65, 1, BGALPHA)
-							return vivodCent, vivodLeft
-					end)
-					tinsert(OctoTable_func_otrisovka,
-						function(CharInfo, tooltip, CL, BG)
-							local vivodCent, vivodLeft = "", ""
 							vivodLeft = E.Octo_Func.func_texturefromIcon(1542852)..L["Firelands"]
-							if CharInfo.Octopussy_Cataclysm_Month_Timewalk_DisturbanceDetectedFirelands_count ~= E.Octo_Globals.NONE then
-								vivodCent = CharInfo.Octopussy_Cataclysm_Month_Timewalk_DisturbanceDetectedFirelands_count
+							if CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_Cataclysm_count ~= E.Octo_Globals.NONE then
+								vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_Cataclysm_count
 							end
 							BG:SetColorTexture(0, .65, 1, BGALPHA)
 							return vivodCent, vivodLeft
@@ -5631,6 +5842,172 @@ function O_otrisovka()
 							return vivodCent, vivodLeft
 					end)
 				end -- for 628
+				if Octo_ToDo_SmartCollectNEW.Holiday.Active[622] then -- Путешествие во времени по подземельям (Burning Crusade)
+					tinsert(OctoTable_func_otrisovka,
+						function(CharInfo, tooltip, CL, BG)
+							local vivodCent, vivodLeft = "", ""
+							vivodLeft = E.Octo_Func.func_texturefromIcon(514016).."Burning Crusade"
+							if CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
+								vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count
+							end
+							BG:SetColorTexture(0, .65, 1, BGALPHA)
+							return vivodCent, vivodLeft
+					end)
+					tinsert(OctoTable_func_otrisovka,
+						function(CharInfo, tooltip, CL, BG)
+							local vivodCent, vivodLeft = "", ""
+							vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS
+							if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
+								vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
+							end
+							BG:SetColorTexture(0, .65, 1, BGALPHA)
+							return vivodCent, vivodLeft
+					end)
+					tinsert(OctoTable_func_otrisovka,
+						function(CharInfo, tooltip, CL, BG)
+							local vivodCent, vivodLeft = "", ""
+							vivodLeft = E.Octo_Func.func_texturefromIcon(1542852)..L["Black Temple"]
+							if CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_BurningCrusade_count ~= E.Octo_Globals.NONE then
+								vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_BurningCrusade_count
+							end
+							BG:SetColorTexture(0, .65, 1, BGALPHA)
+							return vivodCent, vivodLeft
+					end)
+					tinsert(OctoTable_func_otrisovka,
+						function(CharInfo, tooltip, CL, BG)
+							local vivodCent, vivodLeft = "", ""
+							vivodLeft = E.Octo_Func.func_texturefromIcon(463446)..E.Octo_Func.func_currencyName(1166)
+							if CharInfo.CurrencyID[1166] ~= 0 then
+								vivodCent = CharInfo.CurrencyID[1166]
+							end
+							BG:SetColorTexture(0, .65, 1, BGALPHA)
+							return vivodCent, vivodLeft
+					end)
+				end -- for 622
+				if Octo_ToDo_SmartCollectNEW.Holiday.Active[1400] then -- Кубок Восточных королевств
+					tinsert(OctoTable_func_otrisovka,
+						function(CharInfo, tooltip, CL, BG)
+							local vivodCent, vivodLeft = "", ""
+							vivodLeft = Octo_ToDo_SmartCollectNEW.Holiday.Collect[1400]
+							if CharInfo.Octopussy_DF_Month_TheEasternKingdomsCupBegins_count ~= E.Octo_Globals.NONE then
+								vivodCent = CharInfo.Octopussy_DF_Month_TheEasternKingdomsCupBegins_count
+							end
+							BG:SetColorTexture(1, .79, .54, BGALPHA)
+							return vivodCent, vivodLeft
+					end)
+					tinsert(OctoTable_func_otrisovka,
+						function(CharInfo, tooltip, CL, BG)
+							local vivodCent, vivodLeft = "", ""
+							vivodLeft = E.Octo_Func.func_texturefromIcon(4638724)..E.Octo_Func.func_currencyName(2588)
+							if CharInfo.CurrencyID[2588] ~= 0 then
+								vivodCent = CharInfo.CurrencyID[2588]
+							end
+							BG:SetColorTexture(1, .79, .54, BGALPHA)
+							return vivodCent, vivodLeft
+					end)
+				end -- for 1400
+				if Octo_ToDo_SmartCollectNEW.Holiday.Active[479] then -- Ярмарка Новолуния (Darkmoon Faire)
+					tinsert(OctoTable_func_otrisovka,
+						function(CharInfo, tooltip, CL, BG)
+							local vivodCent, vivodLeft = "", ""
+							vivodLeft = E.Octo_Func.func_texturefromIcon(354435)..E.Octo_Globals.Blue_Color.."Daily |r"..Octo_ToDo_SmartCollectNEW.Holiday.Collect[479]
+							if CharInfo.Octopussy_DF_Daily_DarkmoonFaire_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Daily_DarkmoonFaire_count ~= "0/9" then
+								vivodCent = CharInfo.Octopussy_DF_Daily_DarkmoonFaire_count
+							end
+							BG:SetColorTexture(.54, .12, 1, BGALPHA)
+							return vivodCent, vivodLeft
+					end)
+					tinsert(OctoTable_func_otrisovka,
+						function(CharInfo, tooltip, CL, BG)
+							local vivodCent, vivodLeft = "", ""
+							vivodLeft = E.Octo_Func.func_texturefromIcon(134481)..E.Octo_Func.func_currencyName(515)
+							if CharInfo.CurrencyID[515] ~= 0 then
+								vivodCent = CharInfo.CurrencyID[515]
+							end
+							BG:SetColorTexture(.54, .12, 1, BGALPHA)
+							return vivodCent, vivodLeft
+					end)
+					-- -- БИЛЕТЫ
+					-- tinsert(OctoTable_func_otrisovka,
+					-- 	function(CharInfo, tooltip, CL, BG)
+					-- 		local vivodCent, vivodLeft = "", ""
+					-- 		vivodLeft = E.Octo_Func.func_texturefromIcon(134481)..E.Octo_Func.func_itemName(81055)
+					-- 		if CharInfo.ItemsInBag[81055] ~= 0 then
+					-- 			vivodCent = CharInfo.ItemsInBag[81055]
+					-- 		end
+					-- 		BG:SetColorTexture(.54, .12, 1, BGALPHA)
+					-- 		return vivodCent, vivodLeft
+					-- end)
+				end -- for 479
+		end
+		-- События (PvP)
+		if Octo_ToDoVars.config.ShowPVPEvents == true then
+			if Octo_ToDo_SmartCollectNEW.Holiday.Active[602] then -- "Бонус на полях боя",
+				tinsert(OctoTable_func_otrisovka,
+					function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					if englishFaction == "Horde" then
+						vivodLeft = Horde_Icon
+					else
+						vivodLeft = Alliance_Icon
+					end
+					if CharInfo.Faction == "Horde" then
+						BG:SetColorTexture(1, .3, .31, BGALPHA)
+					else
+						BG:SetColorTexture(0, .65, 1, BGALPHA)
+					end
+					if CharInfo.Octopussy_DF_Weekly_ACalltoBattle_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_DF_Weekly_ACalltoBattle_count
+					end
+					vivodLeft = vivodLeft.. Octo_ToDo_SmartCollectNEW.Holiday.Collect[602]
+					return vivodCent, vivodLeft
+				end)
+			end
+			if Octo_ToDo_SmartCollectNEW.Holiday.Active[1049] or Octo_ToDo_SmartCollectNEW.Holiday.Active[671] or Octo_ToDo_SmartCollectNEW.Holiday.Active[1244] then
+				tinsert(OctoTable_func_otrisovka,
+					function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					if englishFaction == "Horde" then
+						vivodLeft = Horde_Icon
+					else
+						vivodLeft = Alliance_Icon
+					end
+					if CharInfo.Faction == "Horde" then
+						BG:SetColorTexture(1, .3, .31, BGALPHA)
+					else
+						BG:SetColorTexture(0, .65, 1, BGALPHA)
+					end
+					if CharInfo.Octopussy_DF_Weekly_SomethingDifferent_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_DF_Weekly_SomethingDifferent_count
+					end
+					vivodLeft = vivodLeft.."PvP-потасовка"
+					return vivodCent, vivodLeft
+				end)
+			end
+			if Octo_ToDo_SmartCollectNEW.Holiday.Active[610] then -- "Бонус за стычки на арене",
+				tinsert(OctoTable_func_otrisovka,
+					function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					if englishFaction == "Horde" then
+						vivodLeft = Horde_Icon
+					else
+						vivodLeft = Alliance_Icon
+					end
+					if CharInfo.Faction == "Horde" then
+						BG:SetColorTexture(1, .3, .31, BGALPHA)
+					else
+						BG:SetColorTexture(0, .65, 1, BGALPHA)
+					end
+					if CharInfo.Octopussy_DF_Weekly_TheArenaCalls_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_DF_Weekly_TheArenaCalls_count
+					end
+					vivodLeft = vivodLeft.. Octo_ToDo_SmartCollectNEW.Holiday.Collect[610]
+					return vivodCent, vivodLeft
+				end)
+			end
+		end
+		-- Праздники
+		if Octo_ToDoVars.config.ShowHoliday == true then
 				if Octo_ToDo_SmartCollectNEW.Holiday.Active[341] then -- Summer Festival
 					tinsert(OctoTable_func_otrisovka,
 						function(CharInfo, tooltip, CL, BG)
@@ -5753,8 +6130,9 @@ function O_otrisovka()
 				end
 				if #tooltip ~= 0 then
 					-- vivodCent = E.Octo_Globals.Yellow_Color.."КД|r"
-					vivodCent = E.Octo_Globals.Gray_Color..DUNGEONS.."|r"
+					vivodCent = E.Octo_Globals.Gray_Color..RAID_INFORMATION.."|r"
 				end
+				vivodLeft = "InstanceTracker"
 				return vivodCent, vivodLeft
 		end)
 	end
@@ -6351,9 +6729,8 @@ function O_otrisovka()
 					tooltip[#tooltip+1] = {L["Aiding the Accord"], CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count}
 					tooltip[#tooltip+1] = {L["Keys of Loyalty"], CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count}
 					tooltip[#tooltip+1] = {L["PvP"], CharInfo.Octopussy_DF_Weekly_PVP_count}
-					-- tooltip[#tooltip+1] = {L["PLAYER_DIFFICULTY_TIMEWALKER"].." (500)", CharInfo.Octopussy_DF_Month_Timewalk_500CURRENCY_count}
+					-- tooltip[#tooltip+1] = {L["PLAYER_DIFFICULTY_TIMEWALKER"].." (500)", CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count}
 					-- tooltip[#tooltip+1] = {L["PLAYER_DIFFICULTY_TIMEWALKER"].." (5 dungeons)", CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count}
-					tooltip[#tooltip+1] = {L["Weekend Event"], CharInfo.Octopussy_DF_Weekly_WeekendEvent_count}
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.1.7".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 					tooltip[#tooltip+1] = {Timer_DF_Dreamsurges()..L["Dreamsurges"], CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count}
@@ -6458,7 +6835,7 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 	end
-	--ПРОХОДКИ
+	-- ПРОХОДКИ
 	if Octo_ToDoVars.config.ShowSkips == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -6728,6 +7105,105 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 	end
+
+	-- Rumble Crossover Event (Account)
+	tinsert(OctoTable_func_otrisovka,
+		function(CharInfo, tooltip, CL, BG)
+			local vivodCent, vivodLeft = "", ""
+			local curGUID = UnitGUID("PLAYER")
+			vivodLeft = "Rumble Crossover Event (Account)"
+				if Octo_ToDoLevels[curGUID].Octopussy_DF_Once_WarcraftRumble_count ~= E.Octo_Globals.DONE then
+					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Orange_Color.."БЕРЕГА ПРОБУЖДЕНИЯ".."|r", " "}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(73182) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2022 56.4 19.2 (Монетка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75039) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2022 56.4 19.2 (Обёртка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74850) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2022 63.1 78.6 (Обёртка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74851) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2022 34.6 63.7 (Обёртка)".."|r")}
+
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Green_Color.."РАВНИНЫ ОНАРА".."|r", " "}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75036) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2023 81.8 77.9 (Обёртка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(73928) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2023 19.1 81.9 (Монетка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75040) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2023 19.1 81.9 (Обёртка)".."|r")}
+
+
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Necrolord_Color.."ЛАЗУРНЫЙ ПРОСТОР".."|r", " "}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(73936) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2024 7.4 47.5 (Монетка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75041) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2024 7.4 47.5 (Обёртка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75037) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2024 57.3 37.7 (Обёртка)".."|r")}
+
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."ТАЛЬДРАЗУС".."|r", " "}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74852) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2025 57.0 66.8 (Обёртка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74843) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2025 49.2 58.4 (Монетка AND Обёртка)".."|r")} -- ХЗ
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75038) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2025 49.2 58.4 (Монетка AND Обёртка)".."|r")} -- ХЗ
+					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."Вальдраккен".."|r", " "}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(73180) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2112 45.5 47.1 (Монетка)".."|r")} -- ХЗ
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74849) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2112 46.1 46.7 (Обёртка)".."|r")} -- ХЗ
+
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Red_Color.."Оргриммар".."|r", " "}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74287) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #1 56.0 12.0 (Обёртка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74845) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #85 54.3 77.5 (Монетка)".."|r")} -- ХЗ
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74848) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #85 54.1 75.4 (Обёртка)".."|r")} -- ХЗ
+
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."Штормград".."|r", " "}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(73952) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #84 75.1 86.0 (Обёртка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74286) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #84 38.7 46.1 (Обёртка)".."|r")}
+					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74844) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #84 31.2 37.4 (Монетка)".."|r")}
+					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Orange_Color.."БЕРЕГА ПРОБУЖДЕНИЯ".."|r", " "}
+					-- tooltip[#tooltip+1] = {"/way #2022 56.4 19.2 (Монетка", (C_QuestLog.IsQuestFlaggedCompleted(73182) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #2022 56.4 19.2 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75039) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #2022 63.1 78.6 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74850) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #2022 34.6 63.7 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74851) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+
+					-- tooltip[#tooltip+1] = {" ", " "}
+					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Green_Color.."РАВНИНЫ ОНАРА".."|r", " "}
+					-- tooltip[#tooltip+1] = {"/way #2023 81.8 77.9 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75036) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #2023 19.1 81.9 (Монетка)", (C_QuestLog.IsQuestFlaggedCompleted(73928) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #2023 19.1 81.9 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75040) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+
+
+					-- tooltip[#tooltip+1] = {" ", " "}
+					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Necrolord_Color.."ЛАЗУРНЫЙ ПРОСТОР".."|r", " "}
+					-- tooltip[#tooltip+1] = {"/way #2024 7.4 47.5 (Монетка)", (C_QuestLog.IsQuestFlaggedCompleted(73936) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #2024 7.4 47.5 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75041) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #2024 57.3 37.7 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75037) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+
+					-- tooltip[#tooltip+1] = {" ", " "}
+					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."ТАЛЬДРАЗУС".."|r", " "}
+					-- tooltip[#tooltip+1] = {"/way #2025 57.0 66.8 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74852) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #2025 49.2 58.4 (Монетка AND Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74843) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
+					-- tooltip[#tooltip+1] = {"/way #2025 49.2 58.4 (Монетка AND Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75038) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
+					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."Вальдраккен".."|r", " "}
+					-- tooltip[#tooltip+1] = {"/way #2112 45.5 47.1 (Монетка)", (C_QuestLog.IsQuestFlaggedCompleted(73180) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
+					-- tooltip[#tooltip+1] = {"/way #2112 46.1 46.7 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74849) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
+
+					-- tooltip[#tooltip+1] = {" ", " "}
+					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Red_Color.."Оргриммар".."|r", " "}
+					-- tooltip[#tooltip+1] = {"/way #1 56.0 12.0 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74287) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #85 54.3 77.5 (Монетка)", (C_QuestLog.IsQuestFlaggedCompleted(74845) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
+					-- tooltip[#tooltip+1] = {"/way #85 54.1 75.4 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74848) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
+
+					-- tooltip[#tooltip+1] = {" ", " "}
+					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."Штормград".."|r", " "}
+					-- tooltip[#tooltip+1] = {"/way #84 75.1 86.0 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(73952) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #84 38.7 46.1 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74286) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+					-- tooltip[#tooltip+1] = {"/way #84 31.2 37.4 (Монетка)", (C_QuestLog.IsQuestFlaggedCompleted(74844) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
+				else
+					vivodCent = E.Octo_Globals.DONE
+				end
+			return vivodCent, vivodLeft
+	end)
+
+
+
+
+
+
+
+
 end
 local function func_OctoFrame_TEST_Button()
 	for k, CharInfo in pairs(Octo_ToDoLevels) do
@@ -7698,6 +8174,7 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDo_SmartCollectNEW.Holiday.Active == nil then Octo_ToDo_SmartCollectNEW.Holiday.Active = {} end
 		if Octo_ToDo_SmartCollectNEW.Holiday.Collect == nil then Octo_ToDo_SmartCollectNEW.Holiday.Collect = {} end
 		if Octo_ToDo_SmartCollectNEW.Items.Consumables == nil then Octo_ToDo_SmartCollectNEW.Items.Consumables = {} end
+		if Octo_ToDo_SmartCollectNEW.Items.Toys == nil then Octo_ToDo_SmartCollectNEW.Items.Toys = {} end
 		if Octo_ToDo_SmartCollectNEW.Items.GrayItemsTrash == nil then Octo_ToDo_SmartCollectNEW.Items.GrayItemsTrash = {} end
 		if Octo_ToDo_SmartCollectNEW.Items.GrayItemsArmor == nil then Octo_ToDo_SmartCollectNEW.Items.GrayItemsArmor = {} end
 		if Octo_ToDo_SmartCollectNEW.Items.Mounts == nil then Octo_ToDo_SmartCollectNEW.Items.Mounts = {} end
@@ -7778,6 +8255,8 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.itemLevelToShow == nil then Octo_ToDoVars.config.itemLevelToShow = 100 end
 		if Octo_ToDoVars.config.ExpansionToShow == nil then Octo_ToDoVars.config.ExpansionToShow = tonumber(GetBuildInfo():match("(.-)%.")) or 1 end
 		if Octo_ToDoVars.config.ShowHoliday == nil then Octo_ToDoVars.config.ShowHoliday = false end
+		if Octo_ToDoVars.config.ShowEvents == nil then Octo_ToDoVars.config.ShowEvents = false end
+		if Octo_ToDoVars.config.ShowPVPEvents == nil then Octo_ToDoVars.config.ShowPVPEvents = false end
 		if Octo_ToDoVars.config.ShowTransmogrification == nil then Octo_ToDoVars.config.ShowTransmogrification = false end
 		if Octo_ToDoVars.config.ShowSkips == nil then Octo_ToDoVars.config.ShowSkips = false end
 		if Octo_ToDoVars.config.InstanceTracker == nil then Octo_ToDoVars.config.InstanceTracker = true end

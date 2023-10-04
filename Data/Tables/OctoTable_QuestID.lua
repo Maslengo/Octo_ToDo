@@ -3,6 +3,16 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.Octo_Table.OctoTable_QuestID = {
 
+74844,
+74845,
+73180,
+73182,
+73928,
+73936,
+74843,
+
+
+
 37029,
 37030,
 37031,

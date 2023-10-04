@@ -12,6 +12,32 @@ E.Octo_Table.white_list_ALL = {
 	{itemid = 52340, count = 1},
 	{itemid = 142156, count = 1},
 	{itemid = 150737, count = 1},
+	{itemid = 82800, count = 1}, -- TEST PETS
+	{itemid = 202859, count = 1},
+	{itemid = 202163, count = 1},
+	-- {itemid = 29436, count = 1},
+	{itemid = 202862, count = 1},
+	{itemid = 202863, count = 1},
+	{itemid = 202864, count = 1},
+	{itemid = 202261, count = 1},
+	{itemid = 202262, count = 1},
+	{itemid = 202263, count = 1},
+	{itemid = 202851, count = 1},
+	{itemid = 202852, count = 1},
+	{itemid = 202853, count = 1},
+	{itemid = 202856, count = 1},
+	{itemid = 202857, count = 1},
+	{itemid = 202858, count = 1},
+	{itemid = 202865, count = 1},
+	{itemid = 202866, count = 1},
+	{itemid = 202867, count = 1},
+	{itemid = 201931, count = 1},
+	{itemid = 202259, count = 1},
+	{itemid = 202260, count = 1},
+	{itemid = 202859, count = 1},
+	{itemid = 202861, count = 1},
+	{itemid = 202860, count = 1},
+
 
 
 
