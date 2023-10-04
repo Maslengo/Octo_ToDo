@@ -1582,14 +1582,6 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 7,
 	},
-
-
-
-
-
-
-
-
 	{
 		name_save = "DarkmoonFaire",
 		name_quest = "Darkmoon Faire",
@@ -1664,8 +1656,6 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 9,
 	},
-
-
 	{
 		name_save = "WarcraftRumble",
 		name_quest = "Warcraft Rumble",
@@ -1698,17 +1688,6 @@ local OctoTable_UniversalQuest = {
 		},
 		max = 21,
 	},
-
-
-
-
-
-
-
-
-
-
-
 }
 local function FUNC_PROF_TEST()
 	-- https://wowpedia.fandom.com/wiki/API_GetProfessions
@@ -7105,7 +7084,6 @@ function O_otrisovka()
 				return vivodCent, vivodLeft
 		end)
 	end
-
 	-- Rumble Crossover Event (Account)
 	tinsert(OctoTable_func_otrisovka,
 		function(CharInfo, tooltip, CL, BG)
@@ -7118,20 +7096,16 @@ function O_otrisovka()
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75039) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2022 56.4 19.2 (Обёртка)".."|r")}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74850) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2022 63.1 78.6 (Обёртка)".."|r")}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74851) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2022 34.6 63.7 (Обёртка)".."|r")}
-
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Green_Color.."РАВНИНЫ ОНАРА".."|r", " "}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75036) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2023 81.8 77.9 (Обёртка)".."|r")}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(73928) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2023 19.1 81.9 (Монетка)".."|r")}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75040) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2023 19.1 81.9 (Обёртка)".."|r")}
-
-
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Necrolord_Color.."ЛАЗУРНЫЙ ПРОСТОР".."|r", " "}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(73936) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2024 7.4 47.5 (Монетка)".."|r")}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75041) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2024 7.4 47.5 (Обёртка)".."|r")}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(75037) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2024 57.3 37.7 (Обёртка)".."|r")}
-
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."ТАЛЬДРАЗУС".."|r", " "}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74852) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2025 57.0 66.8 (Обёртка)".."|r")}
@@ -7140,13 +7114,11 @@ function O_otrisovka()
 					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."Вальдраккен".."|r", " "}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(73180) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2112 45.5 47.1 (Монетка)".."|r")} -- ХЗ
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74849) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #2112 46.1 46.7 (Обёртка)".."|r")} -- ХЗ
-
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Red_Color.."Оргриммар".."|r", " "}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74287) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #1 56.0 12.0 (Обёртка)".."|r")}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74845) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #85 54.3 77.5 (Монетка)".."|r")} -- ХЗ
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(74848) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #85 54.1 75.4 (Обёртка)".."|r")} -- ХЗ
-
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."Штормград".."|r", " "}
 					tooltip[#tooltip+1] = {(C_QuestLog.IsQuestFlaggedCompleted(73952) and E.Octo_Globals.DONE or E.Octo_Globals.NONE.."/way #84 75.1 86.0 (Обёртка)".."|r")}
@@ -7157,20 +7129,16 @@ function O_otrisovka()
 					-- tooltip[#tooltip+1] = {"/way #2022 56.4 19.2 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75039) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
 					-- tooltip[#tooltip+1] = {"/way #2022 63.1 78.6 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74850) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
 					-- tooltip[#tooltip+1] = {"/way #2022 34.6 63.7 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74851) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
-
 					-- tooltip[#tooltip+1] = {" ", " "}
 					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Green_Color.."РАВНИНЫ ОНАРА".."|r", " "}
 					-- tooltip[#tooltip+1] = {"/way #2023 81.8 77.9 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75036) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
 					-- tooltip[#tooltip+1] = {"/way #2023 19.1 81.9 (Монетка)", (C_QuestLog.IsQuestFlaggedCompleted(73928) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
 					-- tooltip[#tooltip+1] = {"/way #2023 19.1 81.9 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75040) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
-
-
 					-- tooltip[#tooltip+1] = {" ", " "}
 					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Necrolord_Color.."ЛАЗУРНЫЙ ПРОСТОР".."|r", " "}
 					-- tooltip[#tooltip+1] = {"/way #2024 7.4 47.5 (Монетка)", (C_QuestLog.IsQuestFlaggedCompleted(73936) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
 					-- tooltip[#tooltip+1] = {"/way #2024 7.4 47.5 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75041) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
 					-- tooltip[#tooltip+1] = {"/way #2024 57.3 37.7 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(75037) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
-
 					-- tooltip[#tooltip+1] = {" ", " "}
 					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."ТАЛЬДРАЗУС".."|r", " "}
 					-- tooltip[#tooltip+1] = {"/way #2025 57.0 66.8 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74852) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
@@ -7179,13 +7147,11 @@ function O_otrisovka()
 					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."Вальдраккен".."|r", " "}
 					-- tooltip[#tooltip+1] = {"/way #2112 45.5 47.1 (Монетка)", (C_QuestLog.IsQuestFlaggedCompleted(73180) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
 					-- tooltip[#tooltip+1] = {"/way #2112 46.1 46.7 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74849) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
-
 					-- tooltip[#tooltip+1] = {" ", " "}
 					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Red_Color.."Оргриммар".."|r", " "}
 					-- tooltip[#tooltip+1] = {"/way #1 56.0 12.0 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74287) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
 					-- tooltip[#tooltip+1] = {"/way #85 54.3 77.5 (Монетка)", (C_QuestLog.IsQuestFlaggedCompleted(74845) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
 					-- tooltip[#tooltip+1] = {"/way #85 54.1 75.4 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(74848) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)} -- ХЗ
-
 					-- tooltip[#tooltip+1] = {" ", " "}
 					-- tooltip[#tooltip+1] = {"    "..E.Octo_Globals.Blue_Color.."Штормград".."|r", " "}
 					-- tooltip[#tooltip+1] = {"/way #84 75.1 86.0 (Обёртка)", (C_QuestLog.IsQuestFlaggedCompleted(73952) and E.Octo_Globals.DONE or E.Octo_Globals.NONE)}
@@ -7196,14 +7162,6 @@ function O_otrisovka()
 				end
 			return vivodCent, vivodLeft
 	end)
-
-
-
-
-
-
-
-
 end
 local function func_OctoFrame_TEST_Button()
 	for k, CharInfo in pairs(Octo_ToDoLevels) do
@@ -7224,7 +7182,7 @@ local function func_OctoFrame_TEST_Button()
 				if CharInfo.OctoTable_QuestID[77155] ~= E.Octo_Globals.DONE then TomTom:AddWaypoint(2025, 52.20/100, 81.50/100) end
 				if CharInfo.OctoTable_QuestID[77153] ~= E.Octo_Globals.DONE then TomTom:AddWaypoint(2112, 47.87/100, 47.74/100) end
 			else
-				print (E.Octo_Func.func_Gradient("ALL E.Octo_Globals.DONE", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+				print (E.Octo_Func.func_Gradient("ALL DONE", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
 			end
 		end
 	end
@@ -7515,160 +7473,10 @@ function Octo_ToDoCreateAltFrame()
 		t:SetAllPoints(OctoFrame_Events_Button)
 	end
 	----------------------------------------------------------------
-	-- if not OctoFrame_Phylacterweave_Button then
-	-- 	OctoFrame_Phylacterweave_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-	-- 	OctoFrame_Phylacterweave_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-	-- 	OctoFrame_Phylacterweave_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -150)
-	-- 	OctoFrame_Phylacterweave_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	-- 	OctoFrame_Phylacterweave_Button:SetBackdropBorderColor(0, .44, .98, 1)
-	-- 	OctoFrame_Phylacterweave_Button:SetScript("OnEnter", function(self)
-	-- 			local i = 0
-	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
-	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
-	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-	-- 			GameTooltip:ClearLines()
-	-- 			GameTooltip:AddDoubleLine(" ", " ")
-	-- 			for k, CharInfo in pairs(Octo_ToDoLevels) do
-	-- 				local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-	-- 				for _, v in pairs(E.Octo_Table.T3Items) do
-	-- 					if (CharInfo.ItemsInBag[v] ~= 0) then
-	-- 						i = i + 1
-	-- 						GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-	-- 					end
-	-- 				end
-	-- 			end
-	-- 			if i == 0 then
-	-- 				GameTooltip:AddLine("No Data")
-	-- 			end
-	-- 			GameTooltip:AddDoubleLine(" ", " ")
-	-- 			GameTooltip:Show()
-	-- 	end)
-	-- 	OctoFrame_Phylacterweave_Button:SetScript("OnLeave", function(self)
-	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
-	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
-	-- 			GameTooltip:ClearLines()
-	-- 			GameTooltip:Hide()
-	-- 	end)
-	-- 	OctoFrame_Phylacterweave_Button:SetScript("OnMouseDown", function(self)
-	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
-	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
-	-- 	end)
-	-- 	OctoFrame_Phylacterweave_Button:SetScript("OnClick", function()
-	-- 			OctoFrame_Main_Frame:Hide()
-	-- 	end)
-	-- 	local t = OctoFrame_Phylacterweave_Button:CreateTexture(nil, "BACKGROUND")
-	-- 	OctoFrame_Phylacterweave_Button.icon = t
-	-- 	t:SetTexture(135331)
-	-- 	----t:SetVertexColor(1, 1, 1, 1)
-	-- 	t:SetAllPoints(OctoFrame_Phylacterweave_Button)
-	-- end
-	----------------------------------------------------------------
-	if not OctoFrame_Dreamsurges_Button then
-		OctoFrame_Dreamsurges_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-		OctoFrame_Dreamsurges_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoFrame_Dreamsurges_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -180)
-		OctoFrame_Dreamsurges_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-		OctoFrame_Dreamsurges_Button:SetBackdropBorderColor(0, .44, .98, 1)
-		OctoFrame_Dreamsurges_Button:SetScript("OnEnter", function(self)
-				local i = 0
-				self:SetBackdropBorderColor(1, 0, 0, 1)
-				self.icon:SetVertexColor(1, 0, 0, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-				GameTooltip:ClearLines()
-				GameTooltip:AddDoubleLine(" ", " ")
-				for k, CharInfo in pairs(Octo_ToDoLevels) do
-					local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-					for _, v in ipairs(E.Octo_Table.Dreamsurges_Items) do
-						if (CharInfo.ItemsInBag[v] ~= 0) then
-							i = i + 1
-							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-						end
-					end
-				end
-				if i == 0 then
-					GameTooltip:AddLine("No Data")
-				end
-				GameTooltip:AddDoubleLine(" ", " ")
-				GameTooltip:Show()
-		end)
-		OctoFrame_Dreamsurges_Button:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(0, .44, .98, 1)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		OctoFrame_Dreamsurges_Button:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, .5)
-				self.icon:SetVertexColor(1, 0, 0, .5)
-		end)
-		OctoFrame_Dreamsurges_Button:SetScript("OnClick", function()
-				OctoFrame_Main_Frame:Hide()
-		end)
-		local t = OctoFrame_Dreamsurges_Button:CreateTexture(nil, "BACKGROUND")
-		OctoFrame_Dreamsurges_Button.icon = t
-		t:SetTexture(134206)
-		----t:SetVertexColor(1, 1, 1, 1)
-		t:SetAllPoints(OctoFrame_Dreamsurges_Button)
-	end
-	----------------------------------------------------------------
-	-- if not OctoFrame_WeeklyRewardsFrame_Button then
-	-- 	OctoFrame_WeeklyRewardsFrame_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
-	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -210)
-	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetBackdropBorderColor(0, .44, .98, 1)
-	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnEnter", function(self)
-	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
-	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
-	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-	-- 			GameTooltip:ClearLines()
-	-- 			GameTooltip:AddDoubleLine(" ", " ")
-	-- 			GameTooltip:AddDoubleLine(GREAT_VAULT_REWARDS)
-	-- 			GameTooltip:AddDoubleLine(" ", " ")
-	-- 			GameTooltip:Show()
-	-- 	end)
-	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnLeave", function(self)
-	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
-	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
-	-- 			GameTooltip:ClearLines()
-	-- 			GameTooltip:Hide()
-	-- 	end)
-	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnMouseDown", function(self)
-	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
-	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
-	-- 	end)
-	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnClick", function()
-	-- 			OctoFrame_Main_Frame:Hide()
-	-- 			if not WeeklyRewardsFrame then
-	-- 				WeeklyRewards_LoadUI()
-	-- 			end
-	-- 			if not WeeklyRewardsFrame:IsVisible() then
-	-- 				ShowUIPanel(WeeklyRewardsFrame, true)
-	-- 				WeeklyRewardsFrame:SetScale(0.9)
-	-- 			end
-	-- 	end)
-	-- 	local t = OctoFrame_WeeklyRewardsFrame_Button:CreateTexture(nil, "BACKGROUND")
-	-- 	OctoFrame_WeeklyRewardsFrame_Button.icon = t
-	-- 	for k, CharInfo in pairs(Octo_ToDoLevels) do
-	-- 		local curGUID = UnitGUID("PLAYER")
-	-- 		if k == curGUID then
-	-- 			for i = 1, 3 do
-	-- 				if CharInfo.GreatVault[i].hyperlink[i] ~= 0 then
-	-- 					t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_ON.tga")
-	-- 				else
-	-- 					t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_OFF.tga")
-	-- 				end
-	-- 			end
-	-- 		end
-	-- 	end
-	-- 	----t:SetVertexColor(1, 1, 1, 1)
-	-- 	t:SetAllPoints(OctoFrame_WeeklyRewardsFrame_Button)
-	-- end
-	----------------------------------------------------------------
 	if not OctoFrame_consumables_Button then
 		OctoFrame_consumables_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
 		OctoFrame_consumables_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoFrame_consumables_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -240)
+		OctoFrame_consumables_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -150)
 		OctoFrame_consumables_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 		OctoFrame_consumables_Button:SetBackdropBorderColor(0, .44, .98, 1)
 		OctoFrame_consumables_Button:SetScript("OnEnter", function(self)
@@ -7725,6 +7533,156 @@ function Octo_ToDoCreateAltFrame()
 		----t:SetVertexColor(1, 1, 1, 1)
 		t:SetAllPoints(OctoFrame_consumables_Button)
 	end
+	----------------------------------------------------------------
+	-- if not OctoFrame_Phylacterweave_Button then
+	-- 	OctoFrame_Phylacterweave_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+	-- 	OctoFrame_Phylacterweave_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+	-- 	OctoFrame_Phylacterweave_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -150)
+	-- 	OctoFrame_Phylacterweave_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	-- 	OctoFrame_Phylacterweave_Button:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 	OctoFrame_Phylacterweave_Button:SetScript("OnEnter", function(self)
+	-- 			local i = 0
+	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
+	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
+	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			for k, CharInfo in pairs(Octo_ToDoLevels) do
+	-- 				local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+	-- 				for _, v in pairs(E.Octo_Table.T3Items) do
+	-- 					if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 						i = i + 1
+	-- 						GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+	-- 					end
+	-- 				end
+	-- 			end
+	-- 			if i == 0 then
+	-- 				GameTooltip:AddLine("No Data")
+	-- 			end
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			GameTooltip:Show()
+	-- 	end)
+	-- 	OctoFrame_Phylacterweave_Button:SetScript("OnLeave", function(self)
+	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:Hide()
+	-- 	end)
+	-- 	OctoFrame_Phylacterweave_Button:SetScript("OnMouseDown", function(self)
+	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
+	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
+	-- 	end)
+	-- 	OctoFrame_Phylacterweave_Button:SetScript("OnClick", function()
+	-- 			OctoFrame_Main_Frame:Hide()
+	-- 	end)
+	-- 	local t = OctoFrame_Phylacterweave_Button:CreateTexture(nil, "BACKGROUND")
+	-- 	OctoFrame_Phylacterweave_Button.icon = t
+	-- 	t:SetTexture(135331)
+	-- 	----t:SetVertexColor(1, 1, 1, 1)
+	-- 	t:SetAllPoints(OctoFrame_Phylacterweave_Button)
+	-- end
+	----------------------------------------------------------------
+	-- if not OctoFrame_Dreamsurges_Button then
+	-- 	OctoFrame_Dreamsurges_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+	-- 	OctoFrame_Dreamsurges_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+	-- 	OctoFrame_Dreamsurges_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -180)
+	-- 	OctoFrame_Dreamsurges_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	-- 	OctoFrame_Dreamsurges_Button:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 	OctoFrame_Dreamsurges_Button:SetScript("OnEnter", function(self)
+	-- 			local i = 0
+	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
+	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
+	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			for k, CharInfo in pairs(Octo_ToDoLevels) do
+	-- 				local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+	-- 				for _, v in ipairs(E.Octo_Table.Dreamsurges_Items) do
+	-- 					if (CharInfo.ItemsInBag[v] ~= 0) then
+	-- 						i = i + 1
+	-- 						GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
+	-- 					end
+	-- 				end
+	-- 			end
+	-- 			if i == 0 then
+	-- 				GameTooltip:AddLine("No Data")
+	-- 			end
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			GameTooltip:Show()
+	-- 	end)
+	-- 	OctoFrame_Dreamsurges_Button:SetScript("OnLeave", function(self)
+	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:Hide()
+	-- 	end)
+	-- 	OctoFrame_Dreamsurges_Button:SetScript("OnMouseDown", function(self)
+	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
+	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
+	-- 	end)
+	-- 	OctoFrame_Dreamsurges_Button:SetScript("OnClick", function()
+	-- 			OctoFrame_Main_Frame:Hide()
+	-- 	end)
+	-- 	local t = OctoFrame_Dreamsurges_Button:CreateTexture(nil, "BACKGROUND")
+	-- 	OctoFrame_Dreamsurges_Button.icon = t
+	-- 	t:SetTexture(134206)
+	-- 	----t:SetVertexColor(1, 1, 1, 1)
+	-- 	t:SetAllPoints(OctoFrame_Dreamsurges_Button)
+	-- end
+	----------------------------------------------------------------
+	-- if not OctoFrame_WeeklyRewardsFrame_Button then
+	-- 	OctoFrame_WeeklyRewardsFrame_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
+	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetPoint("TOPLEFT", OctoFrame_Main_Frame, "TOPRIGHT", 1, -210)
+	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnEnter", function(self)
+	-- 			self:SetBackdropBorderColor(1, 0, 0, 1)
+	-- 			self.icon:SetVertexColor(1, 0, 0, 1)
+	-- 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			GameTooltip:AddDoubleLine(GREAT_VAULT_REWARDS)
+	-- 			GameTooltip:AddDoubleLine(" ", " ")
+	-- 			GameTooltip:Show()
+	-- 	end)
+	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnLeave", function(self)
+	-- 			self:SetBackdropBorderColor(0, .44, .98, 1)
+	-- 			self.icon:SetVertexColor(1, 1, 1, 1)
+	-- 			GameTooltip:ClearLines()
+	-- 			GameTooltip:Hide()
+	-- 	end)
+	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnMouseDown", function(self)
+	-- 			self:SetBackdropBorderColor(1, 0, 0, .5)
+	-- 			self.icon:SetVertexColor(1, 0, 0, .5)
+	-- 	end)
+	-- 	OctoFrame_WeeklyRewardsFrame_Button:SetScript("OnClick", function()
+	-- 			OctoFrame_Main_Frame:Hide()
+	-- 			if not WeeklyRewardsFrame then
+	-- 				WeeklyRewards_LoadUI()
+	-- 			end
+	-- 			if not WeeklyRewardsFrame:IsVisible() then
+	-- 				ShowUIPanel(WeeklyRewardsFrame, true)
+	-- 				WeeklyRewardsFrame:SetScale(0.9)
+	-- 			end
+	-- 	end)
+	-- 	local t = OctoFrame_WeeklyRewardsFrame_Button:CreateTexture(nil, "BACKGROUND")
+	-- 	OctoFrame_WeeklyRewardsFrame_Button.icon = t
+	-- 	for k, CharInfo in pairs(Octo_ToDoLevels) do
+	-- 		local curGUID = UnitGUID("PLAYER")
+	-- 		if k == curGUID then
+	-- 			for i = 1, 3 do
+	-- 				if CharInfo.GreatVault[i].hyperlink[i] ~= 0 then
+	-- 					t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_ON.tga")
+	-- 				else
+	-- 					t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\WeeklyRewardsFrame_OFF.tga")
+	-- 				end
+	-- 			end
+	-- 		end
+	-- 	end
+	-- 	----t:SetVertexColor(1, 1, 1, 1)
+	-- 	t:SetAllPoints(OctoFrame_WeeklyRewardsFrame_Button)
+	-- end
 	----------------------------------------------------------------
 	if not OctoFrame_TEST_Button then
 		OctoFrame_TEST_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoFrame_Main_Frame, "BackDropTemplate")
