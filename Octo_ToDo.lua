@@ -8193,6 +8193,8 @@ function Octo_ToDoOnEvent(self, event, ...)
 		if Octo_ToDoVars.config.UsableItems == nil then Octo_ToDoVars.config.UsableItems = true end
 		if Octo_ToDoVars.config.AutoOpen == nil then Octo_ToDoVars.config.AutoOpen = true end
 		if Octo_ToDoVars.config.AutoGossip == nil then Octo_ToDoVars.config.AutoGossip = true end
+		if Octo_ToDoVars.config.Hide_ObjectivesInInstance == nil then Octo_ToDoVars.config.Hide_ObjectivesInInstance = false end
+		if Octo_ToDoVars.config.ChallengesKeystoneFrame == nil then Octo_ToDoVars.config.ChallengesKeystoneFrame = false end
 		if Octo_ToDoVars.config.TalkingHeadFrame == nil then Octo_ToDoVars.config.TalkingHeadFrame = true end
 		if Octo_ToDoVars.config.LootFrame == nil then Octo_ToDoVars.config.LootFrame = false end
 		if Octo_ToDoVars.config.HideZoneText == nil then Octo_ToDoVars.config.HideZoneText = true end

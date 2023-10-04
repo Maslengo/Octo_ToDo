@@ -256,6 +256,51 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE.."UsableItems (Слева сверху)"..FONT_COLOR_CODE_CLOSE)
 		--
+		local number = 18
+		local pizda = E.Octo_Func.GenerateUniqueID()
+		if not self[pizda] then
+			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		end
+		self[pizda]:SetPoint("TOPLEFT", title, "BOTTOMLEFT", POS_LEFT, -indent*number)
+		self[pizda]:SetChecked(Octo_ToDoVars.config.Hide_ObjectivesInInstance)
+		self[pizda]:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.Hide_ObjectivesInInstance = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE.."Hide_ObjectivesInInstance"..FONT_COLOR_CODE_CLOSE)
+		--
+		local number = 19
+		local pizda = E.Octo_Func.GenerateUniqueID()
+		if not self[pizda] then
+			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		end
+		self[pizda]:SetPoint("TOPLEFT", title, "BOTTOMLEFT", POS_LEFT, -indent*number)
+		self[pizda]:SetChecked(Octo_ToDoVars.config.ChallengesKeystoneFrame)
+		self[pizda]:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.ChallengesKeystoneFrame = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE.."ChallengesKeystoneFrame"..FONT_COLOR_CODE_CLOSE)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		--
 		local number = 1
 		local pizda = E.Octo_Func.GenerateUniqueID()
 		if not self[pizda] then

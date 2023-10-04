@@ -9,7 +9,7 @@ tinsert(E.Octo_Globals.modules, function()
                     --[206572] = true,
                 }
             if not Octo_AUTO_GOSSIP then
-                Octo_AUTO_GOSSIP = CreateFrame("Frame", AddonTitle)
+                Octo_AUTO_GOSSIP = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID())
                 Octo_AUTO_GOSSIP:Hide()
             end
             Octo_AUTO_GOSSIP:RegisterEvent("GOSSIP_SHOW")

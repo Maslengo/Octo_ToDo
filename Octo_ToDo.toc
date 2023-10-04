@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v65.7(10.1.7)(04.10.2023)
+## Version: v65.8(10.1.7)(04.10.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture
 ## SavedVariables: Octo_ToDo_SmartCollectNEW Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog
 
@@ -81,9 +81,11 @@ Moduls\Auto_Repair.lua
 Moduls\Auto_Screenshot.lua
 Moduls\Auto_Sell_Grey.lua
 Moduls\Auto_Turn_Quests.lua
+Moduls\ChallengesKeystoneFrame.lua
 Moduls\Hide_Boss_Banner.lua
 Moduls\Hide_Covenant.lua
 Moduls\Hide_Error_Messages.lua
+Moduls\Hide_ObjectivesInInstance.lua
 Moduls\Hide_Raid_Boss_Emote_Frame.lua
 Moduls\Hide_Talking_Head_Frame.lua
 Moduls\Hide_Zone_Text.lua
