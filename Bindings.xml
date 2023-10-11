@@ -1,0 +1,21 @@
+<Bindings>
+
+	<Binding
+		name = "Quick Link (wowhead.com)"
+		category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r">
+		RunWowheadQuickLink()
+	</Binding>
+
+	<Binding
+		name = "Quick Link (raider.io)"
+		category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r">
+		RunAlternativeQuickLink()
+	</Binding>
+
+	<Binding
+		name  =  "ReloadUI"
+		category  =  "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r">
+		ReloadUI()
+	</Binding>
+
+</Bindings>

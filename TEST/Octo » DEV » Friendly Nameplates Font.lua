@@ -1,0 +1,12 @@
+local data = WeakAuras.GetData(aura_env.id)
+local font, height, flags = aura_env.region.text:GetFont()
+local sr, sg, sb, sa = aura_env.region.text:GetShadowColor()
+local sx, sy = aura_env.region.text:GetShadowOffset()
+local function SetFont(obj, optSize)
+    obj:SetFont(font, optSize, flags)
+    obj:SetShadowColor(sr, sg, sb, sa)
+    obj:SetShadowOffset(sx, sy)
+end
+C_Timer.After(0,function()
+        SetFont(SystemFont_NamePlateFixed,height)
+end)
