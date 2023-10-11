@@ -1670,4 +1670,22 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 11,
 	},
+	{
+		name_save = "SeeingRed",
+		name_quest = "SeeingRed",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			77408,77409,77410,77411,77789,77412,77795,
+		},
+		max = 7,
+	},
+
+
+
+
+
+
 }

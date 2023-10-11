@@ -126,11 +126,35 @@ local function func_Octo_ToDo_SECOND_Frame_TEST_Button()
 	-- TomTom:AddWaypoint(2133, 47.38/100, 48.55/100)
 	-- TomTom:AddWaypoint(2133, 43.28/100, 23.72/100)
 	-- TomTom:AddWaypoint(2133, 61.25/100, 71.81/100)
-	TomTom:AddWaypoint(2022, 39.75/100, 55.03/100)-- Mammoth-Tamer Tavok
-	TomTom:AddWaypoint(2022, 33.28/100, 72.19/100)-- Burning Ascent Tame Magmammoth
-	TomTom:AddWaypoint(2022, 23.63/100, 71.49/100)-- Dragonbane Keep Tame Magmammoth
-	TomTom:AddWaypoint(2022, 37.20/100, 44.51/100)-- Smoldering Perch Tame Magmammoth
-	TomTom:AddWaypoint(2022, 66.29/100, 24.56/100)-- Scalecracker Keep Tame Magmammoth
+
+
+
+
+
+	-- TomTom:AddWaypoint(2022, 39.75/100, 55.03/100)-- Mammoth-Tamer Tavok
+	-- TomTom:AddWaypoint(2022, 33.28/100, 72.19/100)-- Burning Ascent Tame Magmammoth
+	-- TomTom:AddWaypoint(2022, 23.63/100, 71.49/100)-- Dragonbane Keep Tame Magmammoth
+	-- TomTom:AddWaypoint(2022, 37.20/100, 44.51/100)-- Smoldering Perch Tame Magmammoth
+	-- TomTom:AddWaypoint(2022, 66.29/100, 24.56/100)-- Scalecracker Keep Tame Magmammoth
+
+
+
+	TomTom:AddWaypoint(2023, 29.79/100, 62.22/100,{title = "Erezsra"}) --Erezsra
+	TomTom:AddWaypoint(2023, 29.69/100, 60.22/100,{title = "Erezsra entrance"}) --Erezsra entrance
+	TomTom:AddWaypoint(2023, 25.25/100, 65.27/100,{title = "Sayliasra"}) --Sayliasra
+	TomTom:AddWaypoint(2023, 19.12/100, 82.96/100,{title = "Lucidra"}) --Lucidra
+	TomTom:AddWaypoint(2023, 18.12/100, 53.88/100,{title = "Aiyelasra"}) --Aiyelasra
+	TomTom:AddWaypoint(2023, 29.43/100, 41.38/100,{title = "Taelyasra"}) --Taelyasra
+	TomTom:AddWaypoint(2023, 33.55/100, 53.22/100,{title = "Felyasra"}) --Felyasra
+
+
+
+
+
+
+
+
+
 end
 function Collect_All_Pois()
 	if Octo_DEV_FUNC == true then
@@ -909,7 +933,7 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 			Octo_ToDo_SECOND_Frame_EventFrame:UnregisterAllEvents()
 			return
 		end
-		O_otrisovka_SECOND()
+		-- O_otrisovka_SECOND()
 		local MinimapName = GlobalAddonName.."Octo_ToDo_SECOND_Minimap"
 		local ldb_icon = ldb:NewDataObject(MinimapName, {
 				type = "data source",
@@ -946,8 +970,11 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 		ldbi:Show(MinimapName)
 	end
 	if event == "PLAYER_LOGIN" and not InCombatLockdown() and SHOWADDON == true then
-		Octo_ToDo_SECOND_CreateAltFrame()
-		Octo_ToDo_SECOND_AddDataToAltFrame()
+		C_Timer.After(2, function()
+			O_otrisovka_SECOND()
+			Octo_ToDo_SECOND_CreateAltFrame()
+			Octo_ToDo_SECOND_AddDataToAltFrame()
+		end)
 	end
 end
 Octo_ToDo_SECOND_OnLoad()

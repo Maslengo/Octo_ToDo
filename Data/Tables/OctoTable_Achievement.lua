@@ -178,9 +178,9 @@ E.Octo_Table.OctoTable_Achievement.Quests ={
 	-- 18509,
 	-- 18543,
 	-- 18555,
-	15325,
+	-- 15325, -- ALLYANCE
+	-- 15638, -- HORDE
 	15394,
-	15638,
 	15794,
 	15795,
 	15796,

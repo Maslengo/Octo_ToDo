@@ -601,7 +601,12 @@ function E.Octo_Func.func_achievementquantity(self, i)
 	elseif completedCrit == false and quantity == 0 then
 		color = E.Octo_Globals.Red_Color
 	end
-	vivod = vivod..color..quantity.." / "..reqQuantity.."|r"
+	if quantity then
+		vivod = vivod..color..quantity.." / "..reqQuantity.."|r"
+	else
+		vivod = vivod..color.."0/1PIZDA".."|r"
+	end
+
 	return vivod
 end
 local func_achievementquantity = E.Octo_Func.func_achievementquantity

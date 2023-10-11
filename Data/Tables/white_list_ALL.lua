@@ -2,6 +2,19 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.Octo_Table.white_list_ALL = {
+    {itemid = 206195, count = 1},
+    {itemid = 208684, count = 1},
+    {itemid = 208755, count = 1},
+    {itemid = 208683, count = 1},
+    {itemid = 208677, count = 1},
+    {itemid = 208662, count = 1},
+    {itemid = 208685, count = 1},
+    {itemid = 208688, count = 1},
+    {itemid = 208686, count = 1},
+
+
+
+
 
 
 

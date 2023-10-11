@@ -4,6 +4,28 @@ local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local lsfdd = LibStub("LibSFDropDown-1.4")
 --
+local Expansions_Table = {
+	"|cff68ccefClassic"..FONT_COLOR_CODE_CLOSE,
+	"|cff4fff79The Burning Crusade"..FONT_COLOR_CODE_CLOSE,
+	"|cff00a3ffWrath of the Lich King"..FONT_COLOR_CODE_CLOSE,
+	"|cffffb300Cataclysm"..FONT_COLOR_CODE_CLOSE,
+	"|cff00ffbaMists of Pandaria"..FONT_COLOR_CODE_CLOSE,
+	"|cffc86400Warlords of Draenor"..FONT_COLOR_CODE_CLOSE,
+	"|cff1eff00Legion"..FONT_COLOR_CODE_CLOSE,
+	"|cff6464ffBattle for Azeroth"..FONT_COLOR_CODE_CLOSE,
+	"|cffc9c3aaShadowlands"..FONT_COLOR_CODE_CLOSE,
+	"|cffe8e379Dragonflight"..FONT_COLOR_CODE_CLOSE,
+}
+local Achievements_Table = {
+	"ElementalStorm", -- 1
+	"Исследование", -- 2
+	"Задания", -- 3
+	DUNGEONS, -- 4
+	RAIDS, -- 5
+	REPUTATION, -- 6
+	COLLECTIONS, -- 7
+	E.Octo_Globals.NONE,
+}
 --
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
@@ -537,63 +559,52 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(WHITE_FONT_COLOR_CODE.."Время выхода"..FONT_COLOR_CODE_CLOSE)
 		--
-		local Expansions_Table = {
-			"|cff68ccefClassic"..FONT_COLOR_CODE_CLOSE,
-			"|cff4fff79The Burning Crusade"..FONT_COLOR_CODE_CLOSE,
-			"|cff00a3ffWrath of the Lich King"..FONT_COLOR_CODE_CLOSE,
-			"|cffffb300Cataclysm"..FONT_COLOR_CODE_CLOSE,
-			"|cff00ffbaMists of Pandaria"..FONT_COLOR_CODE_CLOSE,
-			"|cffc86400Warlords of Draenor"..FONT_COLOR_CODE_CLOSE,
-			"|cff1eff00Legion"..FONT_COLOR_CODE_CLOSE,
-			"|cff6464ffBattle for Azeroth"..FONT_COLOR_CODE_CLOSE,
-			"|cffc9c3aaShadowlands"..FONT_COLOR_CODE_CLOSE,
-			"|cffe8e379Dragonflight"..FONT_COLOR_CODE_CLOSE,
-		}
+
 		local number = 1
 		local pizda = E.Octo_Func.GenerateUniqueID()
-		if not btn_right2 then
-			btn_right2 = lsfdd:CreateButton(self, 140, 22)
+		if not btn_right1 then
+			btn_right1 = lsfdd:CreateButton(self, 140, 22)
 		end
-		btn_right2:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		btn_right2:ddSetSelectedValue(Octo_ToDoVars.config.ExpansionToShow)
+		btn_right1:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+		btn_right1:ddSetSelectedValue(Octo_ToDoVars.config.ExpansionToShow)
 		-- print (tonumber(GetBuildInfo():match("(.-)%.")))
-		local function selectFunction(menuButton)
-			btn_right2:ddSetSelectedValue(menuButton.value)
+		local function selectFunctionExpansion(menuButton)
+			btn_right1:ddSetSelectedValue(menuButton.value)
 			Octo_ToDoVars.config.ExpansionToShow = menuButton.value
 			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
-		btn_right2:ddInitialize(function(self, level)
+		btn_right1:ddInitialize(function(self, level)
 				local info = {}
 				for k, v in ipairs(Expansions_Table) do
 					info.text = v
 					info.value = k
-					info.func = selectFunction
+					info.func = selectFunctionExpansion
 					self:ddAddButton(info, level)
 				end
 		end)
 		--
 		local number = 2
 		local pizda = E.Octo_Func.GenerateUniqueID()
-		if not btn_right4 then
-			btn_right4 = lsfdd:CreateButton(self, 140, 22)
+		if not btn_right2 then
+			btn_right2 = lsfdd:CreateButton(self, 140, 22)
 		end
-		btn_right4:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		btn_right4:ddSetSelectedValue(Octo_ToDoOther.prefix)
-		local function selectFunction(menuButton)
-			btn_right4:ddSetSelectedValue(menuButton.value)
+		btn_right2:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+		btn_right2:ddSetSelectedValue(Octo_ToDoOther.prefix)
+		local function selectFunctionprefix(menuButton)
+			btn_right2:ddSetSelectedValue(menuButton.value)
 			Octo_ToDoOther.prefix = menuButton.value
 			-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
-		btn_right4:ddInitialize(function(self, level)
+		btn_right2:ddInitialize(function(self, level)
 				local info = {}
 				for k, v in ipairs(E.Octo_Table.wowhead_prefix_Table) do
 					info.text = v
 					info.value = v
-					info.func = selectFunction
+					info.func = selectFunctionprefix
 					self:ddAddButton(info, level)
 				end
 		end)
-		--
+
 		--
 		local number = 4
 		local pizda = E.Octo_Func.GenerateUniqueID()
@@ -773,35 +784,26 @@ config_MAIN:SetScript("OnShow", function(self)
 		self[pizda].text:SetText(E.Octo_Func.func_texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
 
 		--
-		local Achievements_Table = {
-			"ElementalStorm", -- 1
-			"Исследование", -- 2
-			"Задания", -- 3
-			DUNGEONS, -- 4
-			RAIDS, -- 5
-			REPUTATION, -- 6
-			COLLECTIONS, -- 7
-			E.Octo_Globals.NONE,
-		}
+
 		local number = 17
 		local pizda = E.Octo_Func.GenerateUniqueID()
-		if not btn_right2 then
-			btn_right2 = lsfdd:CreateButton(self, 140, 22)
+		if not btn_right17 then
+			btn_right17 = lsfdd:CreateButton(self, 140, 22)
 		end
-		btn_right2:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		btn_right2:ddSetSelectedValue(Octo_ToDoVars.config.AchievementToShow)
+		btn_right17:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+		btn_right17:ddSetSelectedValue(Octo_ToDoVars.config.AchievementToShow)
 		-- print (tonumber(GetBuildInfo():match("(.-)%.")))
-		local function selectFunction(menuButton)
-			btn_right2:ddSetSelectedValue(menuButton.value)
+		local function selectFunctionAchievement(menuButton)
+			btn_right17:ddSetSelectedValue(menuButton.value)
 			Octo_ToDoVars.config.AchievementToShow = menuButton.value
 			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
-		btn_right2:ddInitialize(function(self, level)
+		btn_right17:ddInitialize(function(self, level)
 				local info = {}
 				for k, v in ipairs(Achievements_Table) do
 					info.text = v
 					info.value = k
-					info.func = selectFunction
+					info.func = selectFunctionAchievement
 					self:ddAddButton(info, level)
 				end
 		end)
