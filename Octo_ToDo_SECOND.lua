@@ -289,16 +289,16 @@ function O_otrisovka_SECOND()
 				{mapID = 2024, name = E.Octo_Globals.Necrolord_Color.."Лазурный ".."|r"},
 				{mapID = 2025, name = E.Octo_Globals.Blue_Color.."Тальдразус ".."|r"},
 			}
-			for _, v in pairs(Octo_ToDo_SmartCollectNEW.Pois) do
-				if v.atlasName:find("^ElementalStorm") then
-					vivodLeft = vivodLeft..E.Octo_Func.OnlyFirstWord(v.description)
-					for q, w in ipairs(DF_MAP_LIST) do
-						if v.mapID == w.mapID then
-							vivodLeft = vivodLeft.." - "..w.name
-						end
-					end
-				end
-			end
+			-- for _, v in pairs(Octo_ToDo_SmartCollectNEW.Pois) do
+			-- 	if v.atlasName:find("^ElementalStorm") then
+			-- 		vivodLeft = vivodLeft..E.Octo_Func.OnlyFirstWord(v.description)
+			-- 		for q, w in ipairs(DF_MAP_LIST) do
+			-- 			if v.mapID == w.mapID then
+			-- 				vivodLeft = vivodLeft.." - "..w.name
+			-- 			end
+			-- 		end
+			-- 	end
+			-- end
 			local count = 0
 			for k, AchievementID in pairs(E.Octo_Table.OctoTable_Achievement.ElementalStorm) do
 				if Octo_ToDo_SmartCollectNEW.Achievement.ElementalStorm[AchievementID].name and Octo_ToDo_SmartCollectNEW.Achievement.ElementalStorm[AchievementID].completed == false then
@@ -579,7 +579,13 @@ function O_otrisovka_SECOND()
 				end
 			end
 		end
-
+		-- local frame = CreateFrame("Frame")
+		-- frame:RegisterEvent("{{api|t=e|ACHIEVEMENT_EARNED}}")
+		-- frame:HookScript("OnEvent", function(event, arg1)
+		-- 	if (event == "ACHIEVEMENT_EARNED") then
+		-- 		print("Hurray!  You earned " .. select(2,{{api|GetAchievementInfo}}(arg1)))
+		-- 	end
+		-- end)
 		if Octo_ToDoVars.config.AchievementToShow == 7 then
 			for k, AchievementID in pairs(E.Octo_Table.OctoTable_Achievement.Collections) do
 				if E.Octo_Func.func_achievementComplete(AchievementID) == false then
@@ -596,11 +602,23 @@ function O_otrisovka_SECOND()
 							for i = 1, numCriteria do
 								tooltip[#tooltip+1] = {E.Octo_Func.func_achievementcriteriaString(AchievementID,i), E.Octo_Func.func_achievementquantity(AchievementID,i)}
 							end
+							-- CL:SetScript("OnClick", function(self)
+							-- 	print ("QWE")
+							-- 	AddTrackedAchievement(AchievementID)
+							-- end)
 							return vivodCent, vivodLeft
 					end)
 				end
 			end
 		end
+
+
+
+
+
+
+
+
 	end
 
 

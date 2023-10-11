@@ -770,43 +770,43 @@ config_MAIN:SetScript("OnShow", function(self)
 		end)
 		self[pizda].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 16
-		local pizda = E.Octo_Func.GenerateUniqueID()
-		if not self[pizda] then
-			self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
-		end
-		self[pizda]:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizda]:SetChecked(Octo_ToDoVars.config.Achievements)
-		self[pizda]:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.Achievements = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		self[pizda].text:SetText(E.Octo_Func.func_texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
+		-- local number = 16
+		-- local pizda = E.Octo_Func.GenerateUniqueID()
+		-- if not self[pizda] then
+		-- 	self[pizda] = CreateFrame("CheckButton", nil, self, "InterfaceOptionsCheckButtonTemplate")
+		-- end
+		-- self[pizda]:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+		-- self[pizda]:SetChecked(Octo_ToDoVars.config.Achievements)
+		-- self[pizda]:SetScript("OnClick", function(btn)
+		-- 		Octo_ToDoVars.config.Achievements = btn:GetChecked()
+		-- 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		-- end)
+		-- self[pizda].text:SetText(E.Octo_Func.func_texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
 
-		--
+		-- --
 
-		local number = 17
-		local pizda = E.Octo_Func.GenerateUniqueID()
-		if not btn_right17 then
-			btn_right17 = lsfdd:CreateButton(self, 140, 22)
-		end
-		btn_right17:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		btn_right17:ddSetSelectedValue(Octo_ToDoVars.config.AchievementToShow)
-		-- print (tonumber(GetBuildInfo():match("(.-)%.")))
-		local function selectFunctionAchievement(menuButton)
-			btn_right17:ddSetSelectedValue(menuButton.value)
-			Octo_ToDoVars.config.AchievementToShow = menuButton.value
-			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end
-		btn_right17:ddInitialize(function(self, level)
-				local info = {}
-				for k, v in ipairs(Achievements_Table) do
-					info.text = v
-					info.value = k
-					info.func = selectFunctionAchievement
-					self:ddAddButton(info, level)
-				end
-		end)
+		-- local number = 17
+		-- local pizda = E.Octo_Func.GenerateUniqueID()
+		-- if not btn_right17 then
+		-- 	btn_right17 = lsfdd:CreateButton(self, 140, 22)
+		-- end
+		-- btn_right17:SetPoint("TOPLEFT", title_MAIN, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+		-- btn_right17:ddSetSelectedValue(Octo_ToDoVars.config.AchievementToShow)
+		-- -- print (tonumber(GetBuildInfo():match("(.-)%.")))
+		-- local function selectFunctionAchievement(menuButton)
+		-- 	btn_right17:ddSetSelectedValue(menuButton.value)
+		-- 	Octo_ToDoVars.config.AchievementToShow = menuButton.value
+		-- 	StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		-- end
+		-- btn_right17:ddInitialize(function(self, level)
+		-- 		local info = {}
+		-- 		for k, v in ipairs(Achievements_Table) do
+		-- 			info.text = v
+		-- 			info.value = k
+		-- 			info.func = selectFunctionAchievement
+		-- 			self:ddAddButton(info, level)
+		-- 		end
+		-- end)
 		--
 
 
