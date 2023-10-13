@@ -681,7 +681,7 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
 					-- GameTooltip_SetTitle(GameTooltip, AddonTitle.." "..E.Octo_Globals.LightGray_Color..AddonVersion.."|r")
-					GameTooltip_SetTitle(GameTooltip, E.Octo_Func.func_Gradient(GlobalAddonName.." Achievements", E.Octo_Globals.Green_Color, E.Octo_Globals.Addon_Right_Color))
+					GameTooltip_SetTitle(GameTooltip, E.Octo_Func.func_Gradient(GlobalAddonName.." Achievements", E.Octo_Globals.Green_Color, E.Octo_Globals.Addon_Right_Color).."|n".."Подлагивает")
 					GameTooltip:Show()
 				end,
 				OnLeave = function()

@@ -4150,9 +4150,9 @@ function O_otrisovka_FIRST()
 					-- or CharInfo.classFilename == "DEATHKNIGHT"
 					-- or CharInfo.classFilename == "EVOKER"
 					then
-						tooltip[#tooltip+1] = {E.Octo_Globals.DONE, CharInfo.classColorHex.."LFR/Norm/Hero/Myth".."|r"}
+						tooltip[#tooltip+1] = {"Вроде работает", CharInfo.classColorHex.."LFR/Norm/Hero/Myth".."|r"}
 					else
-						tooltip[#tooltip+1] = {"|cffFF0000".."Нет".."|r", CharInfo.classColorHex.."LFR/Norm/Hero/Myth".."|r"}
+						tooltip[#tooltip+1] = {L["InDev"], CharInfo.classColorHex.."LFR/Norm/Hero/Myth".."|r"}
 						vivodCent = vivodCent.."|cffFF0000".."*".."|r"
 					end
 					for _, classFilename in pairs(E.Octo_Table.OctoTable_EnglishClasses) do
@@ -6869,7 +6869,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
 					-- GameTooltip_SetTitle(GameTooltip, AddonTitle.." "..E.Octo_Globals.LightGray_Color..AddonVersion.."|r")
-					GameTooltip_SetTitle(GameTooltip, E.Octo_Func.func_Gradient(GlobalAddonName, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+					GameTooltip_SetTitle(GameTooltip, E.Octo_Func.func_Gradient(GlobalAddonName, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).."|n".."ПКМ - Настройки")
 					GameTooltip:Show()
 				end,
 				OnLeave = function()
