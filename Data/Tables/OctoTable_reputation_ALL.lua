@@ -8,94 +8,85 @@ E.Octo_Table.OctoTable_reputation_ALL = {
 
 
 E.Octo_Table.OctoTable_reputation_Classic = {
-	-- 469, -- Alliance
-	-- 891, -- Alliance
-	-- 1353, -- Alliance
-	-- 72, -- Alliance
-	-- 69, -- Alliance
-	-- 47, -- Alliance
-	-- 54, -- Alliance
-	-- 1134, -- Alliance
-	-- 930, -- Alliance
-	-- 509, -- Alliance
-	-- 1682, -- Alliance
-	-- 890, -- Alliance
-	-- 730, -- Alliance
-	-- 1419, -- Alliance
-	-- 1691, -- Alliance
-	-- 2011, -- Alliance
-	-- 2371, -- Alliance
-	67, -- Horde
-	892, -- Horde
-	1352, -- Horde
-	911, -- Horde
-	76, -- Horde
-	530, -- Horde
-	1133, -- Horde
-	81, -- Horde
-	68, -- Horde
-	510, -- Horde
-	1681, -- Horde
-	889, -- Horde
-	729, -- Horde
-	1374, -- Horde
-	1690, -- Horde
-	2010, -- Horde
-	2372, -- Horde
+	{repID = 21, faction = "Both"},
+	{repID = 59, faction = "Both"},
+	{repID = 70, faction = "Both"},
+	{repID = 87, faction = "Both"},
+	{repID = 92, faction = "Both"},
+	{repID = 93, faction = "Both"},
+	{repID = 169, faction = "Both"},
+	{repID = 270, faction = "Both"},
+	{repID = 349, faction = "Both"},
+	{repID = 369, faction = "Both"},
+	{repID = 470, faction = "Both"},
+	{repID = 529, faction = "Both"},
+	{repID = 576, faction = "Both"},
+	{repID = 577, faction = "Both"},
+	{repID = 609, faction = "Both"},
+	{repID = 749, faction = "Both"},
+	{repID = 809, faction = "Both"},
+	{repID = 909, faction = "Both"},
+	{repID = 910, faction = "Both"},
 
-	349,
-	87,
-	749,
-	529,
-	21,
-	169,
-	70,
-	369,
-	609,
-	576,
-	577,
-	59,
-	470,
-	910,
-	270,
-	809,
-	92,
-	909,
-	93,
+	{repID = 47, faction = "Alliance"}, -- Alliance
+	{repID = 54, faction = "Alliance"}, -- Alliance
+	{repID = 69, faction = "Alliance"}, -- Alliance
+	{repID = 72, faction = "Alliance"}, -- Alliance
+	{repID = 469, faction = "Alliance"}, -- Alliance
+	{repID = 509, faction = "Alliance"}, -- Alliance
+	{repID = 730, faction = "Alliance"}, -- Alliance
+	{repID = 890, faction = "Alliance"}, -- Alliance
+	{repID = 891, faction = "Alliance"}, -- Alliance
+	{repID = 930, faction = "Alliance"}, -- Alliance
+	{repID = 1134, faction = "Alliance"}, -- Alliance
+	{repID = 1353, faction = "Alliance"}, -- Alliance
+	{repID = 1419, faction = "Alliance"}, -- Alliance
+	{repID = 1682, faction = "Alliance"}, -- Alliance
+	{repID = 1691, faction = "Alliance"}, -- Alliance
+	{repID = 2011, faction = "Alliance"}, -- Alliance
+	{repID = 2371, faction = "Alliance"}, -- Alliance
+
+	{repID = 67, faction = "Horde"}, -- Horde
+	{repID = 68, faction = "Horde"}, -- Horde
+	{repID = 76, faction = "Horde"}, -- Horde
+	{repID = 81, faction = "Horde"}, -- Horde
+	{repID = 510, faction = "Horde"}, -- Horde
+	{repID = 530, faction = "Horde"}, -- Horde
+	{repID = 729, faction = "Horde"}, -- Horde
+	{repID = 889, faction = "Horde"}, -- Horde
+	{repID = 892, faction = "Horde"}, -- Horde
+	{repID = 911, faction = "Horde"}, -- Horde
+	{repID = 1133, faction = "Horde"}, -- Horde
+	{repID = 1352, faction = "Horde"}, -- Horde
+	{repID = 1374, faction = "Horde"}, -- Horde
+	{repID = 1681, faction = "Horde"}, -- Horde
+	{repID = 1690, faction = "Horde"}, -- Horde
+	{repID = 2010, faction = "Horde"}, -- Horde
+	{repID = 2372, faction = "Horde"}, -- Horde
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 E.Octo_Table.OctoTable_reputation_BC = {
-	936,
-	1031,
-	1077,
-	935,
-	1011,
-	934,
-	932,
-	947, -- Horde
-	941, -- Horde
-	-- 978, -- Alliance
-	-- 946, -- Alliance
-	922,
-	942,
-	970,
-	933,
-	989,
-	1038,
-	967,
-	1012,
-	990,
-	1015,
+	{repID = 922, faction = "Both",},
+	{repID = 932, faction = "Both",},
+	{repID = 933, faction = "Both",},
+	{repID = 934, faction = "Both",},
+	{repID = 935, faction = "Both",},
+	{repID = 936, faction = "Both",},
+	{repID = 942, faction = "Both",},
+	{repID = 967, faction = "Both",},
+	{repID = 970, faction = "Both",},
+	{repID = 989, faction = "Both",},
+	{repID = 990, faction = "Both",},
+	{repID = 1011, faction = "Both",},
+	{repID = 1012, faction = "Both",},
+	{repID = 1015, faction = "Both",},
+	{repID = 1031, faction = "Both",},
+	{repID = 1038, faction = "Both",},
+	{repID = 1077, faction = "Both",},
+
+	{repID = 946, faction = "Alliance",},
+	{repID = 978, faction = "Alliance",},
+
+	{repID = 941, faction = "Horde",},
+	{repID = 947, faction = "Horde",},
 }

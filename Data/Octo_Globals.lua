@@ -21,7 +21,8 @@ E.Octo_Globals.curHeight = 20*E.Octo_Globals.scale
 --E.Octo_Globals.curWidthTitle = E.Octo_Globals.curWidth*2
 E.Octo_Globals.curWidthTitle = 200
 E.Octo_Globals.ilvlToShow = 400
-
+E.Octo_Globals.Addon_Height = 400
+E.Octo_Globals.BGALPHA = .1
 E.Octo_Globals.regions = {
     [1] = "us",
     [2] = "kr",
@@ -108,3 +109,6 @@ E.Octo_Globals.Dragonflight_Color = "|cffe8e379"
 -- local INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED = INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED
 E.Octo_Globals.NONE = E.Octo_Globals.Gray_Color.."None|r"
 E.Octo_Globals.DONE = E.Octo_Globals.Green_Color.."Done|r"
+
+E.Octo_Globals.Event_Color = "|cff4FFF79"
+E.Octo_Globals.Function_Color = "|cff00A3FF"

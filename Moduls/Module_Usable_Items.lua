@@ -178,6 +178,9 @@ tinsert(E.Octo_Globals.modules, function()
 					else
 						for _, v in pairs(E.Octo_Table.white_list_ALL) do
 							if GetItemCount(v.itemid) >= v.count then
+								if v.itemid == 32502 then -- https://ru.wowhead.com/quest=11020
+									v.itemid = 32503
+								end
 								UsableItems_Frame:Show()
 								UsableItems_Frame:SetAttribute("macrotext", "/use item:"..v.itemid)
 								UsableItems_Frame.icon:SetTexture(select(10, GetItemInfo(v.itemid)) or 413587)

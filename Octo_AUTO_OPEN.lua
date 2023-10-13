@@ -4,7 +4,6 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local Octo_AUTO_OPEN = CreateFrame("Frame", AddonTitle)
 Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")
 Octo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
-Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE")
 Octo_AUTO_OPEN:RegisterEvent("LOOT_READY")
 Octo_AUTO_OPEN:RegisterEvent("PLAYER_STARTED_MOVING")
 local isDead = UnitIsDead("PLAYER")
@@ -35,7 +34,7 @@ local openableScanQueued = false
 Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 		C_Timer.After(0.1, function()
 				if Octo_ToDoVars.config.AutoOpen then
-					if event == "BAG_UPDATE" then
+					if event == "BAG_UPDATE_DELAYED" then
 						if not InCombatLockdown() and isDead == false  then
 							OpenableScan()
 						else

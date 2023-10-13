@@ -117,7 +117,7 @@ if L then
 	L["Aiding the Accord"] = true
 	L["InDev"] = true
 	L["HideCovenant"] = true
-	L["Total: "] = true
+	L["Total"] = true
 	L["Consumables"] = true
 	L["Parts"] = true
 	L["Elemental"] = true
@@ -245,14 +245,14 @@ if L then
 	L["Legs"] = "Ноги"
 	L["Feet"] = "Ступни"
 	L["The Coalition of Flames"] = "Союз пламени"
-	L["InDev"] = "|cffFF0000В стадии разработки|r"
+	L["InDev"] = "|cffFF0000В разработке|r"
 	L["Only Current Realm"] = "Только текущий сервер"
 	L["Player level: "] = "Уровень игрока: "
 	L["Item level: "] = "Уровень предметов: " -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
 	L["Width: "] = "Ширина: "
 	L["Auto Turn Quests"] = "Автопринятие заданий"
 	L["Aiding the Accord"] = "Помощь союзу"
-	L["Total: "] = "Всего: "
+	L["Total"] = "Всего"
 	L["Consumables"] = "Расходуемые предметы"
 	L["Parts"] = "Детали"
 	L["Elemental"] = "Стихии"

@@ -426,14 +426,14 @@ function E.Octo_Func.All_objectives(self)
 end
 local All_objectives = E.Octo_Func.All_objectives
 ----------------------------------------------------------------
-function E.Octo_Func.HandleDefaultBindings(binding_name, default_key)
-	local bind1, bind2 = GetBindingKey(binding_name)
-	local action = GetBindingAction(default_key)
-	if bind1 == nil and bind2 == nil and action == "" then
-		SetBinding(default_key, binding_name)
-	end
-end
-local HandleDefaultBindings = E.Octo_Func.HandleDefaultBindings
+-- function E.Octo_Func.HandleDefaultBindings(binding_name, default_key)
+-- 	local bind1, bind2 = GetBindingKey(binding_name)
+-- 	local action = GetBindingAction(default_key)
+-- 	if bind1 == nil and bind2 == nil and action == "" then
+-- 		SetBinding(default_key, binding_name)
+-- 	end
+-- end
+-- local HandleDefaultBindings = E.Octo_Func.HandleDefaultBindings
 ----------------------------------------------------------------
 function E.Octo_Func.func_Octo_LoadAddOn(GlobalAddonName)
 	if select(5, GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
@@ -579,7 +579,7 @@ function E.Octo_Func.func_achievementcriteriaString(self, i)
 	elseif completedCrit == false and quantity == 0 then
 		color = E.Octo_Globals.Red_Color
 	end
-	if criteriaString then
+	if criteriaString and criteriaString ~= "" then
 		vivod = vivod..color..criteriaString.."|r"
 	else
 		vivod = vivod..color..description.."|r"
@@ -618,5 +618,14 @@ function E.Octo_Func.func_achievementdescription(self)
 end
 local func_achievementdescription = E.Octo_Func.func_achievementdescription
 ----------------------------------------------------------------
+function E.Octo_Func.func_CurServerShort(self)
+	local text = (self):gsub("-", " "):gsub("'", " ")
+	local a, b = strsplit(" ", text)
+	if b then
+		self = E.Octo_Func.WA_Utf8Sub(a, 1)..E.Octo_Func.WA_Utf8Sub(b, 1):upper() else self = E.Octo_Func.WA_Utf8Sub(a, 3):lower()
+	end
+	return self
+end
+local func_CurServerShort = E.Octo_Func.func_CurServerShort
 ----------------------------------------------------------------
 

@@ -26,56 +26,62 @@ tinsert(E.Octo_Globals.modules, function()
 				end
 			end
 			function myfunction()
-				local difficultyID = select(3, GetInstanceInfo()) or "|cffFF0000-|r"
+				local name, instanceType, difficultyID = GetInstanceInfo()
+				-- print (instanceType, difficultyID)
+				-- local difficultyID = select(3, GetInstanceInfo()) or "|cffFF0000-|r"
 				-- https://wowpedia.fandom.com/wiki/DifficultyID
 				-- PARTY
-				if difficultyID == 1 -- Normal party
-				or difficultyID == 2 -- Heroic party isHeroic
-				or difficultyID == 8 -- Mythic Keystone party isHeroic, isChallengeMode
-				or difficultyID == 19 -- Event party
-				or difficultyID == 23 -- Mythic party isHeroic, displayMythic
-				or difficultyID == 24 -- Timewalking party
-				or difficultyID == 150 -- Normal party
-				-- PVP
-				or difficultyID == 29 -- PvEvP Scenario pvp
-				or difficultyID == 34 -- PvP pvp
-				-- raid
-				or difficultyID == 3 -- 10 Player raid toggleDifficultyID: 5
-				or difficultyID == 4 -- 25 Player raid toggleDifficultyID: 6
-				or difficultyID == 5 -- 10 Player (Heroic) raid isHeroic, toggleDifficultyID: 3
-				or difficultyID == 6 -- 25 Player (Heroic) raid isHeroic, toggleDifficultyID: 4
-				or difficultyID == 7 -- Looking For Raid raid Legacy LFRs prior to SoO
-				or difficultyID == 9 -- 40 Player raid
-				or difficultyID == 14 -- Normal raid
-				or difficultyID == 15 -- Heroic raid displayHeroic
-				or difficultyID == 16 -- Mythic raid isHeroic, displayMythic
-				or difficultyID == 17 -- Looking For Raid raid
-				or difficultyID == 18 -- Event raid
-				or difficultyID == 33 -- Timewalking raid
-				or difficultyID == 151 -- Looking For Raid raid Timewalking
-				-- scenario
-				-- or difficultyID == 11 -- Heroic Scenario	scenario isHeroic
-				-- or difficultyID == 12 -- Normal Scenario scenario
-				-- or difficultyID == 20 -- Event Scenario scenario
-				-- or difficultyID == 25 -- World PvP Scenario scenario
-				-- or difficultyID == 30 -- Event scenario
-				-- or difficultyID == 32 -- World PvP Scenario scenario
-				-- or difficultyID == 38 -- Normal scenario
-				-- or difficultyID == 39 -- Heroic scenario displayHeroic
-				-- or difficultyID == 40 -- Mythic scenario displayMythic
-				-- or difficultyID == 45 -- PvP scenario displayHeroic
-				-- or difficultyID == 147 -- Normal scenario Warfronts
-				-- or difficultyID == 149 -- Heroic scenario displayHeroic Warfronts
-				-- or difficultyID == 152 -- Visions of N'Zoth scenario
-				-- or difficultyID == 153 -- Teeming Island scenario displayHeroic
-				-- or difficultyID == 167 -- Torghast scenario
-				-- or difficultyID == 168 -- Path of Ascension: Courage scenario
-				-- or difficultyID == 169 -- Path of Ascension: Loyalty scenario
-				-- or difficultyID == 170 -- Path of Ascension: Wisdom scenario
-				-- or difficultyID == 171 -- Path of Ascension: Humility scenario
-				then
-					ObjectiveTrackerFrame:Hide()
-					-- print (E.Octo_Globals.Red_Color.."ObjectiveTrackerFrame:Hide()".."|r")
+-- 				instanceType
+-- string - "none" if the player is not in an instance, "scenario" for scenarios, "party" for dungeons, "raid" for raids, "arena" for arenas, and "pvp" for battlegrounds. Many of the following return values will be nil or otherwise useless in the case of "none".
+				if instanceType == "party" or instanceType == "raid" or instanceType == "arena" or instanceType == "pvp" then
+					-- if difficultyID == 1 -- Normal party (DRAENOR)
+					if difficultyID == 2 -- Heroic party isHeroic
+					or difficultyID == 8 -- Mythic Keystone party isHeroic, isChallengeMode
+					or difficultyID == 19 -- Event party
+					or difficultyID == 23 -- Mythic party isHeroic, displayMythic
+					or difficultyID == 24 -- Timewalking party
+					or difficultyID == 150 -- Normal party
+					-- PVP
+					or difficultyID == 29 -- PvEvP Scenario pvp
+					or difficultyID == 34 -- PvP pvp
+					-- raid
+					or difficultyID == 3 -- 10 Player raid toggleDifficultyID: 5
+					or difficultyID == 4 -- 25 Player raid toggleDifficultyID: 6
+					or difficultyID == 5 -- 10 Player (Heroic) raid isHeroic, toggleDifficultyID: 3
+					or difficultyID == 6 -- 25 Player (Heroic) raid isHeroic, toggleDifficultyID: 4
+					or difficultyID == 7 -- Looking For Raid raid Legacy LFRs prior to SoO
+					or difficultyID == 9 -- 40 Player raid
+					or difficultyID == 14 -- Normal raid
+					or difficultyID == 15 -- Heroic raid displayHeroic
+					or difficultyID == 16 -- Mythic raid isHeroic, displayMythic
+					or difficultyID == 17 -- Looking For Raid raid
+					or difficultyID == 18 -- Event raid
+					or difficultyID == 33 -- Timewalking raid
+					or difficultyID == 151 -- Looking For Raid raid Timewalking
+					-- scenario
+					-- or difficultyID == 11 -- Heroic Scenario	scenario isHeroic
+					-- or difficultyID == 12 -- Normal Scenario scenario
+					-- or difficultyID == 20 -- Event Scenario scenario
+					-- or difficultyID == 25 -- World PvP Scenario scenario
+					-- or difficultyID == 30 -- Event scenario
+					-- or difficultyID == 32 -- World PvP Scenario scenario
+					-- or difficultyID == 38 -- Normal scenario
+					-- or difficultyID == 39 -- Heroic scenario displayHeroic
+					-- or difficultyID == 40 -- Mythic scenario displayMythic
+					-- or difficultyID == 45 -- PvP scenario displayHeroic
+					-- or difficultyID == 147 -- Normal scenario Warfronts
+					-- or difficultyID == 149 -- Heroic scenario displayHeroic Warfronts
+					-- or difficultyID == 152 -- Visions of N'Zoth scenario
+					-- or difficultyID == 153 -- Teeming Island scenario displayHeroic
+					-- or difficultyID == 167 -- Torghast scenario
+					-- or difficultyID == 168 -- Path of Ascension: Courage scenario
+					-- or difficultyID == 169 -- Path of Ascension: Loyalty scenario
+					-- or difficultyID == 170 -- Path of Ascension: Wisdom scenario
+					-- or difficultyID == 171 -- Path of Ascension: Humility scenario
+					then
+						ObjectiveTrackerFrame:Hide()
+						-- print (E.Octo_Globals.Red_Color.."ObjectiveTrackerFrame:Hide()".."|r")
+					end
 				else
 					ObjectiveTrackerFrame:Show()
 					-- print (E.Octo_Globals.Green_Color.."ObjectiveTrackerFrame:Show()".."|r")
