@@ -613,7 +613,49 @@ MAIN_Config:SetScript("OnShow", function(self)
 		LevelToShowTEXT:SetText(L["Player level: "]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
 		self[pizza]:Show()
 		--
-		local number = 5.5
+		local number = 6
+		local pizza = E.Octo_Func.GenerateUniqueID()
+		LevelToShowMAXTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
+		self[pizza]:SetWidth(140)
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+		self[pizza]:SetMinMaxValues(1, 70)
+		local step = 1
+		self[pizza]:SetValueStep(step)
+		self[pizza]:SetValue(Octo_ToDoVars.config.LevelToShowMAX)
+		self[pizza]:SetScript("OnValueChanged", function (self, value)
+				value = math.floor(value * (1 / step) + .5) / (1 / step)
+				Octo_ToDoVars.config.LevelToShowMAX = value
+				LevelToShowMAXTEXT:SetText(L["Player level: "]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShowMAX..FONT_COLOR_CODE_CLOSE)
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		LevelToShowMAXTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
+		LevelToShowMAXTEXT:SetText(L["Player MAX level: "]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShowMAX..FONT_COLOR_CODE_CLOSE)
+		self[pizza]:Show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		--
+		local number = 8
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		itemLevelToShowTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
@@ -632,7 +674,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		itemLevelToShowTEXT:SetText(L["Item level: "]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.itemLevelToShow..FONT_COLOR_CODE_CLOSE)
 		self[pizza]:Show()
 		--
-		local number = 7
+		local number = 10
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		curWidthTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
@@ -652,7 +694,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		curWidthTEXT:SetText(L["Width: "]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curWidth..FONT_COLOR_CODE_CLOSE)
 		self[pizza]:Show()
 		--
-		local number = 8.5
+		local number = 12
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		curWidthTitleTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
@@ -672,7 +714,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		curWidthTitleTEXT:SetText("curWidthTitle"..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curWidthTitle..FONT_COLOR_CODE_CLOSE)
 		self[pizza]:Show()
 		--
-		local number = 10
+		local number = 14
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		curWidthTitleAchievementTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
@@ -692,7 +734,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		curWidthTitleAchievementTEXT:SetText("curWidthTitleAchievement"..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curWidthTitleAchievement..FONT_COLOR_CODE_CLOSE)
 		self[pizza]:Show()
 		--
-		local number = 11.5
+		local number = 16
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		curHeightTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
@@ -712,7 +754,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		curHeightTEXT:SetText("curHeight"..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curHeight..FONT_COLOR_CODE_CLOSE)
 		self[pizza]:Show()
 		--
-		local number = 13
+		local number = 18
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		Addon_HeightTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
@@ -732,7 +774,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Addon_HeightTEXT:SetText("Addon_Height"..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.Addon_Height..FONT_COLOR_CODE_CLOSE)
 		self[pizza]:Show()
 		--
-		local number = 14
+		local number = 19
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
@@ -745,7 +787,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..L["Only Current Realm"]..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 15
+		local number = 20
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
@@ -758,7 +800,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE..L["InDev"])
 		--
-		local number = 16
+		local number = 21
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)

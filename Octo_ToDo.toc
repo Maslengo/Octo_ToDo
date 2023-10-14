@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v66.5(10.1.7)(14.10.2023)
+## Version: v66.6(10.1.7)(14.10.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
 ## SavedVariables: Octo_ToDo_Achievement Octo_ToDo_SmartCollectNEW Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog
 
@@ -37,6 +37,7 @@ Data\Tables\OctoTable_Professions_currencyID.lua
 Data\Tables\OctoTable_QuestID.lua
 Data\Tables\OctoTable_Race.lua
 Data\Tables\OctoTable_reputation_ALL.lua
+Data\Tables\OctoTable_ScoutingMap.lua
 Data\Tables\OctoTable_SpellID.lua
 Data\Tables\OctoTable_UniversalQuest.lua
 Data\Tables\raidsDiffsNames.lua

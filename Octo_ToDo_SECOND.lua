@@ -221,13 +221,14 @@ function Collect_NEW_Achievement()
 		Octo_ToDo_Achievement[title].pizda = pizda or ""
 
 		for i=1, total do
-			local AchievementID, name, _, completedAchi, _, _, _, _, _, icon = GetAchievementInfo(categoryID, i)
+			local AchievementID, name, points, completedAchi, _, _, _, _, _, icon = GetAchievementInfo(categoryID, i)
 			if AchievementID then
 				Octo_ToDo_Achievement[title].AchievementID = Octo_ToDo_Achievement[title].AchievementID or {}
 				Octo_ToDo_Achievement[title].AchievementID[AchievementID] = Octo_ToDo_Achievement[title].AchievementID[AchievementID] or {}
-				Octo_ToDo_Achievement[title].AchievementID[AchievementID].name = name
+				Octo_ToDo_Achievement[title].AchievementID[AchievementID].name = E.Octo_Func.func_achievementName(AchievementID)
 				Octo_ToDo_Achievement[title].AchievementID[AchievementID].completed = completedAchi
-				Octo_ToDo_Achievement[title].AchievementID[AchievementID].icon = icon
+				Octo_ToDo_Achievement[title].AchievementID[AchievementID].icon = E.Octo_Func.func_texturefromIcon(icon)
+				Octo_ToDo_Achievement[title].AchievementID[AchievementID].points = points
 			end
 		end
 	end
@@ -278,7 +279,7 @@ function O_otrisovka_SECOND()
 							tinsert(OctoTable_func_otrisovka_SECOND,
 								function(CharInfo, tooltip, CL, BG)
 									local vivodCent, vivodLeft = "", ""
-									vivodLeft = E.Octo_Func.func_achievementName(AchievementID)
+									vivodLeft = info.icon..info.name.." "..info.points
 									vivodCent = E.Octo_Func.func_achievementvivod(AchievementID)
 										local numCriteria = GetAchievementNumCriteria(AchievementID)
 										if numCriteria ~= 1 then
@@ -365,11 +366,11 @@ function Octo_ToDo_SECOND_CreateAltFrame()
 	if not Octo_ToDo_SECOND_Frame_Close_Button then
 		Octo_ToDo_SECOND_Frame_Close_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_SECOND_Frame_Main_Frame, "BackDropTemplate")
 		Octo_ToDo_SECOND_Frame_Close_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		Octo_ToDo_SECOND_Frame_Close_Button:SetPoint("BOTTOMRIGHT", Octo_ToDo_SECOND_Frame_Main_Frame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*0, 1)
+		Octo_ToDo_SECOND_Frame_Close_Button:SetPoint("BOTTOMRIGHT", Octo_ToDo_SECOND_Frame_Main_Frame, "TOPRIGHT", E.Octo_Globals.curHeight, 1)
 		Octo_ToDo_SECOND_Frame_Close_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 		Octo_ToDo_SECOND_Frame_Close_Button:SetBackdropBorderColor(1, 0, 0, 0)
 		Octo_ToDo_SECOND_Frame_Close_Button:SetScript("OnEnter", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, 1)
+				-- self:SetBackdropBorderColor(1, 0, 0, 1)
 				self.icon:SetVertexColor(1, 0, 0, 1)
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 				GameTooltip:ClearLines()
@@ -377,13 +378,13 @@ function Octo_ToDo_SECOND_CreateAltFrame()
 				GameTooltip:Show()
 		end)
 		Octo_ToDo_SECOND_Frame_Close_Button:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, 0)
+				-- self:SetBackdropBorderColor(1, 0, 0, 0)
 				self.icon:SetVertexColor(1, 1, 1, 1)
 				GameTooltip:ClearLines()
 				GameTooltip:Hide()
 		end)
 		Octo_ToDo_SECOND_Frame_Close_Button:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, .5)
+				-- self:SetBackdropBorderColor(1, 0, 0, .5)
 				self.icon:SetVertexColor(1, 0, 0, .5)
 		end)
 		Octo_ToDo_SECOND_Frame_Close_Button:SetScript("OnClick", function()
@@ -454,11 +455,11 @@ function Octo_ToDo_SECOND_CreateAltFrame()
 		self:SetAlpha(.2)
 	end
 	if not Octo_scroll then
-		Octo_scroll = lsfdd:CreateButton(Octo_ToDo_SECOND_Frame_Main_Frame, 140, 22)
+		Octo_scroll = lsfdd:CreateButton(Octo_ToDo_SECOND_Frame_Main_Frame, 160, 22)
 		Octo_scroll:SetPoint("TOPLEFT", Octo_ToDo_SECOND_Frame_Main_Frame, "BOTTOMLEFT", -3, -2)
 		Octo_scroll:SetAlpha(.2)
 		Octo_scroll:HookScript("OnEnter", scroll_OnEnter)
-		Octo_scroll:HookScript("OnLeave", scroll_OnLeave)
+		-- Octo_scroll:HookScript("OnLeave", scroll_OnLeave)
 		Octo_scroll:ddSetSelectedValue(Octo_ToDoVars.config.AchievementToShow)
 		local function selectFunctionAchievement(menuButton)
 			Octo_scroll:ddSetSelectedValue(menuButton.value)

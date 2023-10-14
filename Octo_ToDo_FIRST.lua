@@ -464,20 +464,26 @@ local function CreateFrameUsableItems_OnEnter(self)
 	self.icon:SetVertexColor(1, 1, 1, 1)
 	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 10)
 	--
-	local startTime, duration = C_Container.GetItemCooldown(self.itemID)
-	if startTime ~= nil and startTime ~= 0 then
-		GameTooltip:ClearLines()
-		GameTooltip:AddLine(E.Octo_Func.func_itemName(self.itemID).." "..E.Octo_Func.SecondsToClock(duration-(GetTime()-startTime)))
-		GameTooltip:Show()
-		self.icon:SetDesaturated(true)
-		self.icon:SetAlpha(.5)
-	else
-		GameTooltip:ClearLines()
-		GameTooltip:AddLine(E.Octo_Func.func_itemName(self.itemID))
-		GameTooltip:Show()
-		self.icon:SetDesaturated(false)
-		self.icon:SetAlpha(1)
-	end
+	local itemLink = select(2, GetItemInfo(self.itemID))
+	GameTooltip:SetHyperlink(itemLink)
+	GameTooltip:Show()
+
+
+
+	-- local startTime, duration = C_Container.GetItemCooldown(self.itemID)
+	-- if startTime ~= nil and startTime ~= 0 then
+	-- 	GameTooltip:ClearLines()
+	-- 	GameTooltip:AddLine(E.Octo_Func.func_itemName(self.itemID).." "..E.Octo_Func.SecondsToClock(duration-(GetTime()-startTime)))
+	-- 	GameTooltip:Show()
+	-- 	self.icon:SetDesaturated(true)
+	-- 	self.icon:SetAlpha(.5)
+	-- else
+	-- 	GameTooltip:ClearLines()
+	-- 	GameTooltip:AddLine(E.Octo_Func.func_itemName(self.itemID))
+	-- 	GameTooltip:Show()
+	-- 	self.icon:SetDesaturated(false)
+	-- 	self.icon:SetAlpha(1)
+	-- end
 	--
 	local isKnown = IsSpellKnown(self.spellID)
 	if isKnown == false then
@@ -537,7 +543,7 @@ local function CreateFrameUsableItems_OnEvent(self, event)
 			self.icon:SetAlpha(1)
 		end
 		--
-		local isKnown = IsSpellKnown(self.spellID)
+		local isKnown = IsSpellKnown(self.spellID, false)
 		if isKnown == false then
 			self.icon:SetVertexColor(1, 0, 0, 1)
 		end
@@ -590,7 +596,8 @@ local function CreateFrameUsableItems(itemID, Texture, count, Xpos, Ypos, r, g, 
 	Button.b = b
 	Button.spellID = spellID
 	Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-	Button:SetPoint("TOPRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPLEFT", Xpos-1, Ypos)
+	-- Button:SetPoint("TOPRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPLEFT", Xpos-1, Ypos)
+	Button:SetPoint("BOTTOMLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPLEFT", Xpos, Ypos+1)
 	Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 	-- Button:SetBackdropBorderColor(r, g, b, 1)
 	Button:SetBackdropBorderColor(0, 0, 0, 1)
@@ -2320,7 +2327,7 @@ function Octo_ToDo_FIRST_OnLoad()
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TOYS_UPDATED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TRAINER_UPDATE")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TRANSMOG_COLLECTION_SOURCE_ADDED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("UI_INFO_MESSAGE")
+	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("UI_INFO_MESSAGE")
 	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("UNIT_INVENTORY_CHANGED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("UPDATE_PENDING_MAIL")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_LEAVE_COMBAT")
@@ -2347,11 +2354,11 @@ function O_otrisovka_FIRST()
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
 			CL:SetFontObject(OctoFont12)
-			vivodCent = CharInfo.classColorHex..CharInfo.Name
+			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
 			if CharInfo.Faction == "Horde" then
-				BG:SetColorTexture(.5, 0, 0, E.Octo_Globals.BGALPHA)
+				BG:SetColorTexture(.5, 0, 0, E.Octo_Globals.BGALPHA*3)
 			else
-				BG:SetColorTexture(0, 0, .5, E.Octo_Globals.BGALPHA)
+				BG:SetColorTexture(0, 0, .5, E.Octo_Globals.BGALPHA*3)
 			end
 			if CharInfo.hasMail then
 				BG:SetColorTexture(1, 1, 1, E.Octo_Globals.BGALPHA)
@@ -2361,10 +2368,13 @@ function O_otrisovka_FIRST()
 				CL:SetFontObject(OctoFont9)
 				vivodCent = vivodCent.."|n"..CharInfo.curServer
 			end
+			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= 70 then
+				vivodCent = CharInfo.UnitLevel.." "..vivodCent
+			end
 			--
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-			if CharInfo.className ~= 0 then
-				tooltip[#tooltip+1] = {classcolor:WrapTextInColorCode(CharInfo.className), classcolor:WrapTextInColorCode(E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName)}
+			if CharInfo.className ~= 0 and CharInfo.RaceLocal ~= 0 then
+				tooltip[#tooltip+1] = {classcolor:WrapTextInColorCode(CharInfo.className.." ("..CharInfo.RaceLocal..")"), classcolor:WrapTextInColorCode(E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName)}
 			end
 			if CharInfo.BindLocation ~= 0 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(134414)..L["Bind Location"], CharInfo.BindLocation}
@@ -2384,7 +2394,7 @@ function O_otrisovka_FIRST()
 			--
 			vivodLeft = Timer_Daily_Reset()
 			-- print ("Timer_Daily_Reset")
-			return vivodCent.."|r", vivodLeft
+			return vivodCent, vivodLeft
 	end)
 	-- ЭПОХАЛЬНЫЙ КЛЮЧ
 	tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2492,6 +2502,45 @@ function O_otrisovka_FIRST()
 		end
 	end
 	if Octo_ToDoVars.config.ExpansionToShow == 2 then
+
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(23572)..E.Octo_Func.func_itemName(23572)
+				if CharInfo.ItemsInBag[23572] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[23572]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(30183)..E.Octo_Func.func_itemName(30183)
+				if CharInfo.ItemsInBag[30183] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[30183]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(32428)..E.Octo_Func.func_itemName(32428)
+				if CharInfo.ItemsInBag[32428] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[32428]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(34664)..E.Octo_Func.func_itemName(34664)
+				if CharInfo.ItemsInBag[34664] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[34664]
+				end
+				return vivodCent, vivodLeft
+		end)
+
+
 		for k, v in ipairs(E.Octo_Table.OctoTable_reputation_BC) do
 			if Octo_ToDoVars.config.reputation[v.repID] == true then
 				tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2507,8 +2556,83 @@ function O_otrisovka_FIRST()
 		end
 	end
 	if Octo_ToDoVars.config.ExpansionToShow == 3 then
+
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(43102)..E.Octo_Func.func_itemName(43102)
+				if CharInfo.ItemsInBag[43102] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[43102]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(45087)..E.Octo_Func.func_itemName(45087)
+				if CharInfo.ItemsInBag[45087] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[45087]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(47556)..E.Octo_Func.func_itemName(47556)
+				if CharInfo.ItemsInBag[47556] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[47556]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(49908)..E.Octo_Func.func_itemName(49908)
+				if CharInfo.ItemsInBag[49908] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[49908]
+				end
+				return vivodCent, vivodLeft
+		end)
+
+
+
+
+
 	end
 	if Octo_ToDoVars.config.ExpansionToShow == 4 then
+
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(52078)..E.Octo_Func.func_itemName(52078)
+				if CharInfo.ItemsInBag[52078] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[52078]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(69237)..E.Octo_Func.func_itemName(69237)
+				if CharInfo.ItemsInBag[69237] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[69237]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(71998)..E.Octo_Func.func_itemName(71998)
+				if CharInfo.ItemsInBag[71998] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[71998]
+				end
+				return vivodCent, vivodLeft
+		end)
+
+
+
+
+
 	end
 	if Octo_ToDoVars.config.ExpansionToShow == 5 then
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -5773,7 +5897,7 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 	if not Octo_ToDo_FIRST_Frame_Close_Button then
 		Octo_ToDo_FIRST_Frame_Close_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 		Octo_ToDo_FIRST_Frame_Close_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		Octo_ToDo_FIRST_Frame_Close_Button:SetPoint("BOTTOMRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*0, 1)
+		Octo_ToDo_FIRST_Frame_Close_Button:SetPoint("BOTTOMRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", E.Octo_Globals.curHeight, 1)
 		Octo_ToDo_FIRST_Frame_Close_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 		Octo_ToDo_FIRST_Frame_Close_Button:SetBackdropBorderColor(1, 0, 0, 0)
 		Octo_ToDo_FIRST_Frame_Close_Button:SetScript("OnEnter", function(self)
@@ -6322,23 +6446,23 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 		local Faction = UnitFactionGroup("PLAYER")
 		if prof1 == 202 or prof2 == 202 then
 			-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
-			CreateFrameUsableItems(198156, 4548860, 1, Xpos*0, Ypos*0, 0, .43, .86, 366254) -- Генератор червоточин: Драконьи острова
-			CreateFrameUsableItems(172924, 3610528, 1, Xpos*1, Ypos*1, 0, .43, .86, 310542) -- Генератор червоточин: Темные Земли
+			CreateFrameUsableItems(198156, 4548860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254) -- Генератор червоточин: Драконьи острова
+			CreateFrameUsableItems(172924, 3610528, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542) -- Генератор червоточин: Темные Земли
 			if Faction == "Horde" then
-				CreateFrameUsableItems(168808, 2000840, 1, Xpos*2, Ypos*2, 0, .43, .86, 265807) -- Генератор червоточин: Зандалар
-				CreateFrameUsableItems(168807, 2000841, 1, Xpos*3, Ypos*3, 0, .43, .86, 265807) -- Генератор червоточин: Кул-Тирас
+				CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 265807) -- Генератор червоточин: Зандалар
+				CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 265807) -- Генератор червоточин: Кул-Тирас
 			else
-				CreateFrameUsableItems(168808, 2000840, 1, Xpos*2, Ypos*2, 0, .43, .86, 264492) -- Генератор червоточин: Зандалар
-				CreateFrameUsableItems(168807, 2000841, 1, Xpos*3, Ypos*3, 0, .43, .86, 264492) -- Генератор червоточин: Кул-Тирас
+				CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 264492) -- Генератор червоточин: Зандалар
+				CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 264492) -- Генератор червоточин: Кул-Тирас
 			end
-			CreateFrameUsableItems(151652, 237560, 1, Xpos*4, Ypos*4, 0, .43, .86, 264490) -- Генератор червоточин: Аргус
-			CreateFrameUsableItems(112059, 892831, 1, Xpos*5, Ypos*5, 0, .43, .86, 264487) -- Центрифуга червоточины
-			CreateFrameUsableItems(87215, 651094, 1, Xpos*6, Ypos*6, 0, .43, .86, 264485) -- Генератор червоточин: Пандария
-			CreateFrameUsableItems(48933, 135778, 1, Xpos*7, Ypos*7, 0, .43, .86, 264481) -- Генератор червоточин: Нордскол
+			CreateFrameUsableItems(151652, 237560, 1, Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 264490) -- Генератор червоточин: Аргус
+			CreateFrameUsableItems(112059, 892831, 1, Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 264487) -- Центрифуга червоточины
+			CreateFrameUsableItems(87215, 651094, 1, Xpos*6+Ypos*1, Ypos*7, 0, .43, .86, 264485) -- Генератор червоточин: Пандария
+			CreateFrameUsableItems(48933, 135778, 1, Xpos*7+Ypos*1, Ypos*8, 0, .43, .86, 264481) -- Генератор червоточин: Нордскол
 			-- ЕСТЬ ИНЖА
-			CreateFrameUsableItems(110560, 1041860, 1, Xpos*8, Ypos*8, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
-			CreateFrameUsableItems(6948, 134414, 1, Xpos*9, Ypos*9, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-			CreateFrameUsableItems(140192, 1444943, 1, Xpos*10, Ypos*10, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+			CreateFrameUsableItems(110560, 1041860, 1, Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
+			CreateFrameUsableItems(6948, 134414, 1, Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+			CreateFrameUsableItems(140192, 1444943, 1, Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 			if classFilename == "DRUID" then
 				CreateFrameUsableSpells(193753, select(3, GetSpellInfo(193753)), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Сноходец
 			end
@@ -6353,9 +6477,9 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 			end
 		else
 			-- НЕТ ИНЖИ
-			CreateFrameUsableItems(110560, 1041860, 1, Xpos*0, Ypos*0, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
-			CreateFrameUsableItems(6948, 134414, 1, Xpos*1, Ypos*1, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-			CreateFrameUsableItems(140192, 1444943, 1, Xpos*2, Ypos*2, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+			CreateFrameUsableItems(110560, 1041860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
+			CreateFrameUsableItems(6948, 134414, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+			CreateFrameUsableItems(140192, 1444943, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 			if classFilename == "DRUID" then
 				CreateFrameUsableSpells(193753, select(3, GetSpellInfo(193753)), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Сноходец
 			end
@@ -6369,41 +6493,55 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 				CreateFrameUsableSpells(126892, select(3, GetSpellInfo(126892)), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Духовное путешествие
 			end
 		end
-		-- (spellID, Texture, Xpos, Ypos, r, g, b)
-		for k, v in pairs(E.Octo_Table.OctoTable_Portals_MoP) do
-			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
-		end
-		for k, v in pairs(E.Octo_Table.OctoTable_Portals_WoD) do
-			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*3, (Ypos*k), 0, .43, .86)
-		end
-		for k, v in pairs(E.Octo_Table.OctoTable_Portals_Legion) do
-			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*4, (Ypos*k), 0, .43, .86)
-		end
-		for k, v in pairs(E.Octo_Table.OctoTable_Portals_BfA) do
-			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*5, (Ypos*k), 0, .43, .86)
-		end
-		for k, v in pairs(E.Octo_Table.OctoTable_Portals_SL) do
-			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*6, (Ypos*k), 0, .43, .86)
-		end
-		for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF) do
-			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*7, (Ypos*k), 0, .43, .86)
-		end
-		if classFilename == "MAGE" and Faction == "Horde" then
-			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Horde) do
-				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
+		local UnitLevel = UnitLevel("PLAYER")
+		if UnitLevel >= 20 then
+			-- (spellID, Texture, Xpos, Ypos, r, g, b)
+			for k, v in pairs(E.Octo_Table.OctoTable_Portals_MoP) do
+				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
 			end
-			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Horde) do
-				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+			for k, v in pairs(E.Octo_Table.OctoTable_Portals_WoD) do
+				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*3, (Ypos*k), 0, .43, .86)
+			end
+			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Legion) do
+				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*4, (Ypos*k), 0, .43, .86)
+			end
+			for k, v in pairs(E.Octo_Table.OctoTable_Portals_BfA) do
+				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*5, (Ypos*k), 0, .43, .86)
+			end
+			for k, v in pairs(E.Octo_Table.OctoTable_Portals_SL) do
+				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*6, (Ypos*k), 0, .43, .86)
+			end
+			for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF) do
+				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*7, (Ypos*k), 0, .43, .86)
+			end
+			if classFilename == "MAGE" and Faction == "Horde" then
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Horde) do
+					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
+				end
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Horde) do
+					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+				end
+			end
+			if classFilename == "MAGE" and Faction == "Alliance" then
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Alliance) do
+					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
+				end
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance) do
+					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+				end
+			end
+			-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
+
+		else
+			local  count = 0
+			for k, v in pairs(E.Octo_Table.OctoTable_ScoutingMap) do
+				if v.faction == englishFaction or v.faction == "Both" then
+					count = count + 1
+					CreateFrameUsableItems(v.toyID, v.icon, 1, Xpos*0+Ypos*2, (Ypos*count), 0, .43, .86, 6603) -- Камень возвращения в гарнизон
+				end
 			end
 		end
-		if classFilename == "MAGE" and Faction == "Alliance" then
-			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Alliance) do
-				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
-			end
-			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance) do
-				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
-			end
-		end
+
 	end
 	local function FrameLine_OnEnter(self)
 		if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
@@ -6452,6 +6590,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	local UnitLevel = UnitLevel("PLAYER")
 	local ShowOnlyCurrentRealm = Octo_ToDoVars.config.ShowOnlyCurrentRealm
 	local LevelToShow = Octo_ToDoVars.config.LevelToShow
+	local LevelToShowMAX = Octo_ToDoVars.config.LevelToShowMAX
 	local itemLevelToShow = Octo_ToDoVars.config.itemLevelToShow
 	Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames = {}
 	local sorted = {}
@@ -6481,7 +6620,9 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			end
 	end)
 	for i, CharInfo in pairs(sorted) do
-		if ((ShowOnlyCurrentRealm == true and (CharInfo.curServer == GetRealmName())) and (CharInfo.avgItemLevel >= itemLevelToShow) and (CharInfo.UnitLevel >= LevelToShow)) or (ShowOnlyCurrentRealm == false and (CharInfo.avgItemLevel >= itemLevelToShow) and (CharInfo.UnitLevel >= LevelToShow)) or (curGUID == CharInfo.GUID) then
+		if ((ShowOnlyCurrentRealm == true and (CharInfo.curServer == GetRealmName())) and (CharInfo.avgItemLevel >= itemLevelToShow) and (CharInfo.UnitLevel >= Octo_ToDoVars.config.LevelToShow) and (CharInfo.UnitLevel <= Octo_ToDoVars.config.LevelToShowMAX))
+			or (ShowOnlyCurrentRealm == false and (CharInfo.avgItemLevel >= itemLevelToShow) and (CharInfo.UnitLevel >= LevelToShow))
+			or (curGUID == CharInfo.GUID) then
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			local curCharGUID = CharInfo.GUID
 			-- if not MAIN_FRAME then
@@ -6713,6 +6854,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDoVars.config.RepeatableQuests == nil then Octo_ToDoVars.config.RepeatableQuests = false end
 		if Octo_ToDoVars.config.GlobalFadePersist == nil then Octo_ToDoVars.config.GlobalFadePersist = false end
 		if Octo_ToDoVars.config.LevelToShow == nil then Octo_ToDoVars.config.LevelToShow = 60 end
+		if Octo_ToDoVars.config.LevelToShowMAX == nil then Octo_ToDoVars.config.LevelToShowMAX = 70 end
 		if Octo_ToDoVars.config.itemLevelToShow == nil then Octo_ToDoVars.config.itemLevelToShow = 100 end
 		if Octo_ToDoVars.config.ExpansionToShow == nil then Octo_ToDoVars.config.ExpansionToShow = tonumber(GetBuildInfo():match("(.-)%.")) or 1 end
 		if Octo_ToDoVars.config.AchievementToShow == nil then Octo_ToDoVars.config.AchievementToShow = 8 end
@@ -6836,6 +6978,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 							Collect_All_Holiday()
 							Collect_ALL_ItemLevel()
 							Collect_ALL_ItemsInBag()
+							TEST_FUNC()
 							Collect_ALL_KnownSpell()
 							Collect_ALL_Locations()
 							Collect_ALL_LoginTime()
@@ -6929,10 +7072,10 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_All_Professions()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
-	if (event == "UI_INFO_MESSAGE") and not InCombatLockdown() then
-		Collect_ALL_PlayerInfo()
-		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
-	end
+	-- if (event == "UI_INFO_MESSAGE") and not InCombatLockdown() then
+	-- 	Collect_ALL_PlayerInfo()
+	-- 	if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+	-- end
 	if (event == "ACTIONBAR_UPDATE_COOLDOWN") and not InCombatLockdown() and Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then
 		print ("ЙЦУЙЦУЙЦУЙЦУ")
 			Timer_Legion_Invasion()
@@ -7021,6 +7164,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		C_Timer.After(5, function()
 				if not InCombatLockdown() then
 					Collect_ALL_ItemsInBag()
+					TEST_FUNC()
 					if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 				end
 		end)
