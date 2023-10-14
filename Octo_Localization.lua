@@ -17,6 +17,8 @@ if L then
 	L["Current Location"] = true
 	L["Expire on"] = true
 	L["Fyrakk Asssaults"] = true
+	L["Garrison 1 Level"] = true
+	L["Garrison 2 Level"] = true
 	L["Garrison 3 Level"] = true
 	L["Grand Hunt"] = true
 	L["Keys of Loyalty"] = true
@@ -157,6 +159,8 @@ if L then
 	L["Current Location"] = "Текущее местоположение"
 	L["Expire on"] = "Истекает"
 	L["Fyrakk Asssaults"] = "Налет Фиракка (Локалка)"
+	L["Garrison 1 Level"] = "Гарнизон 1 уровня"
+	L["Garrison 2 Level"] = "Гарнизон 2 уровня"
 	L["Garrison 3 Level"] = "Гарнизон 3 уровня"
 	L["Grand Hunt"] = "Великая охота"
 	L["Keys of Loyalty"] = "Ключи преданности"
@@ -248,8 +252,8 @@ if L then
 	L["The Coalition of Flames"] = "Союз пламени"
 	L["InDev"] = "|cffFF0000В разработке|r"
 	L["Only Current Realm"] = "Только текущий сервер"
-	L["Player level: "] = "Минимальный уровень: "
-	L["Player MAX level: "] = "Максимальный уровень: "
+	L["Player level: "] = "Мин. уровень: "
+	L["Player MAX level: "] = "Макс. уровень: "
 	L["Item level: "] = "Уровень предметов: " -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
 	L["Width: "] = "Ширина: "
 	L["Auto Turn Quests"] = "Автопринятие заданий"

@@ -301,6 +301,7 @@ local function checkCharInfo(self)
 	self.raceID = self.raceID or 0
 	self.currentXP = self.currentXP or 0
 	self.UnitXPMax = self.UnitXPMax or 0
+	self.UnitXPPercent = self.UnitXPPercent or 0
 	self.numShownEntries = self.numShownEntries or 0
 	self.Possible_Anima = self.Possible_Anima or 0
 	self.Possible_CatalogedResearch = self.Possible_CatalogedResearch or 0
@@ -772,10 +773,7 @@ function Collect_ALL_PlayerInfo()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDoLevels[curGUID]
 	--
-	local UnitLevel = UnitLevel("PLAYER") or 0
 	local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
-	local currentXP = UnitXP("PLAYER") or 0
-	local UnitXPMax = UnitXPMax("PLAYER") or 0
 	local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
 	local curServerShort = GetRealmName()
 	local text = (curServerShort):gsub("-", " "):gsub("'", " ")
@@ -785,8 +783,6 @@ function Collect_ALL_PlayerInfo()
 	end
 	if collect and not InCombatLockdown() then
 		collect.curServerShort = curServerShort
-		collect.currentXP = currentXP
-		collect.UnitXPMax = UnitXPMax
 		collect.Name = curCharName
 		collect.curServer = curServer
 		collect.className = className
@@ -794,7 +790,7 @@ function Collect_ALL_PlayerInfo()
 		collect.classId = classId
 		collect.GUID = curGUID
 		collect.Faction = UnitFactionGroup("PLAYER")
-		collect.UnitLevel = UnitLevel
+
 		collect.specId = specId
 		collect.specName = specName
 		collect.specIcon = specIcon
@@ -805,6 +801,26 @@ function Collect_ALL_PlayerInfo()
 		collect.classColorHex = E.Octo_Func.func_rgb2hex(classColor.r, classColor.g, classColor.b)
 	end
 end
+function Collect_Player_Level()
+	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == false then
+		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."Collect_Player_Level()".."|r")
+	end
+	local curGUID = UnitGUID("PLAYER")
+	local collect = Octo_ToDoLevels[curGUID]
+	--
+	local UnitLevel = UnitLevel("PLAYER") or 0
+	local currentXP = UnitXP("PLAYER") or 0
+	local UnitXPMax = UnitXPMax("PLAYER") or 0
+	local UnitXPPercent = math.ceil((currentXP/UnitXPMax)*100)
+	-- print (UnitLevel, UnitXPPercent.."%")
+	if collect then
+		collect.UnitLevel = UnitLevel
+		collect.currentXP = currentXP
+		collect.UnitXPMax = UnitXPMax
+		collect.UnitXPPercent = UnitXPPercent
+	end
+end
+
 function Collect_ALL_Mail()
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."Collect_ALL_Mail()".."|r")
@@ -2332,6 +2348,7 @@ function Octo_ToDo_FIRST_OnLoad()
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("UPDATE_PENDING_MAIL")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_LEAVE_COMBAT")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("VARIABLES_LOADED")
+	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_XP_UPDATE")
 	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("RECEIVED_ACHIEVEMENT_LIST")
@@ -2373,9 +2390,18 @@ function O_otrisovka_FIRST()
 			end
 			--
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-			if CharInfo.className ~= 0 and CharInfo.RaceLocal ~= 0 then
-				tooltip[#tooltip+1] = {classcolor:WrapTextInColorCode(CharInfo.className.." ("..CharInfo.RaceLocal..")"), classcolor:WrapTextInColorCode(E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName)}
+
+			if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal  then
+				tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."("..CharInfo.curServer..")".."|r", E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.classColorHex..CharInfo.specName.."|r"}
+				if CharInfo.UnitLevel ~= 70 and CharInfo.UnitXPPercent then
+					tooltip[#tooltip+1] = {LEVEL..": "..CharInfo.UnitLevel.." "..CharInfo.UnitXPPercent.."%", CharInfo.classColorHex..CharInfo.RaceLocal.."|r"}
+				else
+					tooltip[#tooltip+1] = {" ", CharInfo.classColorHex..CharInfo.RaceLocal.."|r"}
+				end
+					tooltip[#tooltip+1] = {" "," "}
 			end
+
+
 			if CharInfo.BindLocation ~= 0 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(134414)..L["Bind Location"], CharInfo.BindLocation}
 			end
@@ -2706,9 +2732,24 @@ function O_otrisovka_FIRST()
 				if CharInfo.OctoTable_QuestID[34378] ~= E.Octo_Globals.NONE then
 					vivodCent = CharInfo.OctoTable_QuestID[34378]
 				end
-				vivodLeft = E.Octo_Func.func_questName(34378)
+				vivodLeft = L["Garrison 1 Level"]
 				return vivodCent, vivodLeft
 		end)
+
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				if CharInfo.OctoTable_QuestID[36567] ~= E.Octo_Globals.NONE then
+					vivodCent = CharInfo.OctoTable_QuestID[36567]
+				end
+				vivodLeft = L["Garrison 2 Level"]
+				return vivodCent, vivodLeft
+		end)
+
+
+
+
+
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -6625,27 +6666,27 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			or (curGUID == CharInfo.GUID) then
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			local curCharGUID = CharInfo.GUID
-			-- if not MAIN_FRAME then
-			--     MAIN_FRAME = CreateFrame("Frame")
+			-- if not MEME_FRAME then
+			--     MEME_FRAME = CreateFrame("Frame")
 			-- end
-			-- if not MAIN_FRAME[curCharGUID] then
+			-- if not MEME_FRAME[curCharGUID] then
 			--     local size = 32
-			--     MAIN_FRAME[curCharGUID] = CreateFrame("Frame", "MAIN_FRAME[curCharGUID]", Octo_ToDo_FIRST_Frame_Main_Frame, "BackdropTemplate")
-			--     MAIN_FRAME[curCharGUID]:SetPoint("BOTTOM", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, 0)
-			--     MAIN_FRAME[curCharGUID]:SetSize(E.Octo_Globals.curWidth*E.Octo_Globals.scale, E.Octo_Globals.curHeight/2*E.Octo_Globals.scale)
-			--     MAIN_FRAME[curCharGUID]:SetFrameStrata("LOW")
-			--     MAIN_FRAME[curCharGUID]:SetBackdrop({
+			--     MEME_FRAME[curCharGUID] = CreateFrame("Frame", "MEME_FRAME[curCharGUID]", Octo_ToDo_FIRST_Frame_Main_Frame, "BackdropTemplate")
+			--     MEME_FRAME[curCharGUID]:SetPoint("BOTTOM", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, 0)
+			--     MEME_FRAME[curCharGUID]:SetSize(E.Octo_Globals.curWidth*E.Octo_Globals.scale, E.Octo_Globals.curHeight/2*E.Octo_Globals.scale)
+			--     MEME_FRAME[curCharGUID]:SetFrameStrata("LOW")
+			--     MEME_FRAME[curCharGUID]:SetBackdrop({
 			--             bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			--             edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			--             edgeSize = 1,
 			--     })
-			--     MAIN_FRAME[curCharGUID]:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-			--     MAIN_FRAME[curCharGUID]:SetBackdropBorderColor(0, 0, 0, 1)
-			--     MAIN_FRAME[curCharGUID].icon = MAIN_FRAME[curCharGUID]:CreateTexture(nil, "ARTWORK")
-			--     MAIN_FRAME[curCharGUID].icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Melli.tga")
-			--     MAIN_FRAME[curCharGUID].icon:SetAllPoints(MAIN_FRAME[curCharGUID])
-			--     MAIN_FRAME[curCharGUID]:Show()
-			--     local model = CreateFrame("PlayerModel", nil, MAIN_FRAME[curCharGUID])
+			--     MEME_FRAME[curCharGUID]:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+			--     MEME_FRAME[curCharGUID]:SetBackdropBorderColor(0, 0, 0, 1)
+			--     MEME_FRAME[curCharGUID].icon = MEME_FRAME[curCharGUID]:CreateTexture(nil, "ARTWORK")
+			--     MEME_FRAME[curCharGUID].icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Melli.tga")
+			--     MEME_FRAME[curCharGUID].icon:SetAllPoints(MEME_FRAME[curCharGUID])
+			--     MEME_FRAME[curCharGUID]:Show()
+			--     local model = CreateFrame("PlayerModel", nil, MEME_FRAME[curCharGUID])
 			--     model:SetPoint("BOTTOM", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, 0)
 			--     model:SetSize(220, 220)
 			--     -- model:SetPoint("TOPLEFT", 25, 20)
@@ -7059,6 +7100,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_All_journalInstance()
 		Octo_ToDo_FIRST_CreateAltFrame()
 		Octo_ToDo_FIRST_AddDataToAltFrame()
+		Collect_Player_Level()
 		C_Timer.After(5, function()
 				if Octo_ToDoVars.config.AnotherAddonsRAID then
 					Octo_ToDoVars.config.AnotherAddonsRAID = false
@@ -7076,6 +7118,10 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	-- 	Collect_ALL_PlayerInfo()
 	-- 	if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	-- end
+	if event == "PLAYER_XP_UPDATE" then
+		Collect_Player_Level()
+		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+	end
 	if (event == "ACTIONBAR_UPDATE_COOLDOWN") and not InCombatLockdown() and Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then
 		print ("ЙЦУЙЦУЙЦУЙЦУ")
 			Timer_Legion_Invasion()
