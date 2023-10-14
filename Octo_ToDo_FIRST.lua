@@ -463,9 +463,10 @@ local function CreateFrameUsableItems_OnEnter(self)
 		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."CreateFrameUsableItems_OnEnter".."|r")
 	end
 	self.icon:SetVertexColor(1, 1, 1, 1)
-	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 10)
+	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 0)
 	--
 	local itemLink = select(2, GetItemInfo(self.itemID))
+	GameTooltip:ClearLines()
 	GameTooltip:SetHyperlink(itemLink)
 	GameTooltip:Show()
 
@@ -502,19 +503,21 @@ local function CreateFrameUsableItems_OnLeave(self)
 	else
 		self.icon:SetVertexColor(1, 1, 1, .2)
 	end
+	GameTooltip:ClearLines()
+	GameTooltip:Hide()
 	--
-	local startTime, duration = C_Container.GetItemCooldown(self.itemID)
-	if startTime ~= nil and startTime ~= 0 then
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
-		self.icon:SetDesaturated(true)
-		self.icon:SetAlpha(.5)
-	else
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
-		self.icon:SetDesaturated(false)
-		self.icon:SetAlpha(1)
-	end
+	-- local startTime, duration = C_Container.GetItemCooldown(self.itemID)
+	-- if startTime ~= nil and startTime ~= 0 then
+	-- 	GameTooltip:ClearLines()
+	-- 	GameTooltip:Hide()
+	-- 	self.icon:SetDesaturated(true)
+	-- 	self.icon:SetAlpha(.5)
+	-- else
+	-- 	GameTooltip:ClearLines()
+	-- 	GameTooltip:Hide()
+	-- 	self.icon:SetDesaturated(false)
+	-- 	self.icon:SetAlpha(1)
+	-- end
 	--
 	local isKnown = IsSpellKnown(self.spellID)
 	if isKnown == false then
@@ -626,28 +629,28 @@ local function CreateFrameUsableSpells_OnEnter(self)
 		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."CreateFrameUsableSpells_OnEnter".."|r")
 	end
 	self.icon:SetVertexColor(1, 1, 1, 1)
-	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 10)
+	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 0)
 	--
-	local startTime, duration = GetSpellCooldown(self.spellID)
+	-- local startTime, duration = GetSpellCooldown(self.spellID)
 	local isKnown = IsSpellKnown(self.spellID)
 	if isKnown == true then
 		self.icon:SetVertexColor(1, 1, 1, 1)
 	else
 		self.icon:SetVertexColor(1, 0, 0, .2)
 	end
-	if startTime ~= nil and startTime ~= 0 then
-		GameTooltip:ClearLines()
-		GameTooltip:AddLine(E.Octo_Func.func_spellName(self.spellID).." "..E.Octo_Func.SecondsToClock(duration-(GetTime()-startTime)))
-		GameTooltip:Show()
-		-- self.icon:SetDesaturated(true)
-		-- self.icon:SetAlpha(.5)
-	else
-		GameTooltip:ClearLines()
-		GameTooltip:AddLine(E.Octo_Func.func_spellName(self.spellID))
-		GameTooltip:Show()
-		-- self.icon:SetDesaturated(false)
-		-- self.icon:SetAlpha(1)
-	end
+	-- if startTime ~= nil and startTime ~= 0 then
+	-- 	GameTooltip:ClearLines()
+	-- 	GameTooltip:AddLine(E.Octo_Func.func_spellName(self.spellID).." "..E.Octo_Func.SecondsToClock(duration-(GetTime()-startTime)))
+	-- 	GameTooltip:Show()
+	-- 	-- self.icon:SetDesaturated(true)
+	-- 	-- self.icon:SetAlpha(.5)
+	-- else
+	-- 	GameTooltip:ClearLines()
+	-- 	GameTooltip:AddLine(E.Octo_Func.func_spellName(self.spellID))
+	-- 	GameTooltip:Show()
+	-- 	-- self.icon:SetDesaturated(false)
+	-- 	-- self.icon:SetAlpha(1)
+	-- end
 end
 local function CreateFrameUsableSpells_OnLeave(self)
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
@@ -659,19 +662,21 @@ local function CreateFrameUsableSpells_OnLeave(self)
 	else
 		self.icon:SetVertexColor(1, 0, 0, .2)
 	end
+	GameTooltip:ClearLines()
+	GameTooltip:Hide()
 	--
-	local startTime, duration = GetSpellCooldown(self.spellID)
-	if startTime ~= nil and startTime ~= 0 then
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
-		-- self.icon:SetDesaturated(true)
-		-- self.icon:SetAlpha(.5)
-	else
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
-		-- self.icon:SetDesaturated(false)
-		-- self.icon:SetAlpha(1)
-	end
+	-- local startTime, duration = GetSpellCooldown(self.spellID)
+	-- if startTime ~= nil and startTime ~= 0 then
+	-- 	GameTooltip:ClearLines()
+	-- 	GameTooltip:Hide()
+	-- 	-- self.icon:SetDesaturated(true)
+	-- 	-- self.icon:SetAlpha(.5)
+	-- else
+	-- 	GameTooltip:ClearLines()
+	-- 	GameTooltip:Hide()
+	-- 	-- self.icon:SetDesaturated(false)
+	-- 	-- self.icon:SetAlpha(1)
+	-- end
 	--
 end
 local function CreateFrameUsableSpells_OnEvent(self, event)
@@ -802,7 +807,7 @@ function Collect_ALL_PlayerInfo()
 	end
 end
 function Collect_Player_Level()
-	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == false then
+	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."Collect_Player_Level()".."|r")
 	end
 	local curGUID = UnitGUID("PLAYER")
@@ -2381,12 +2386,13 @@ function O_otrisovka_FIRST()
 				BG:SetColorTexture(1, 1, 1, E.Octo_Globals.BGALPHA)
 				vivodCent = MailBox_Icon..vivodCent
 			end
+			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= 70 then
+				CL:SetFontObject(OctoFont10)
+				vivodCent = CharInfo.UnitLevel.." "..vivodCent
+			end
 			if Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
 				CL:SetFontObject(OctoFont9)
 				vivodCent = vivodCent.."|n"..CharInfo.curServer
-			end
-			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= 70 then
-				vivodCent = CharInfo.UnitLevel.." "..vivodCent
 			end
 			--
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)

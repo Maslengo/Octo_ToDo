@@ -15,6 +15,7 @@ E.Octo_Table.white_list_ALL = {
     {itemid = 32502, count = 1},
     {itemid = 120301, count = 1},
     {itemid = 120302, count = 1},
+    {itemid = 168419, count = 1},
     -- {itemid = 25433, count = 1},
 
 
