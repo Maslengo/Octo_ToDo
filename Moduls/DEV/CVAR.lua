@@ -18,7 +18,6 @@ tinsert(E.Octo_Globals.modules, function()
 						SetCVar("showPingsInChat", 0) -- Enables ping details being shown in chat.
 						SetCVar("Sound_EnablePingSounds", 0) -- Enable Ping Sounds
 						SetCVar("Sound_PingVolume", 0) -- Ping Volume (0.0 to 1.0)
-						SetCVar("pingCategoryTutorialShown", 1) --
 						----
 						SetCVar("raidFramesDisplayOnlyHealerPowerBars", 1)
 						SetCVar("LowLatencyMode", 2) -- 0=None, 1=BuiltIn, 2=Reflex
@@ -182,17 +181,23 @@ tinsert(E.Octo_Globals.modules, function()
 						SetCVar("UnitNamePlayerPVPTitle", 0)
 						SetCVar("WorldTextScale", 0.7111111111111111)
 						SetCVar("xpBarText", 1)
-						-- SetCVar("gameTip", 120)
+
+
+						SetCVar("interactKeyWarningTutorial", 0)
+						SetCVar("lastGarrisonMissionTutorial", 8)
+						SetCVar("lastVoidStorageTutorial", 3)
+						SetCVar("orderHallMissionTutorial", 851970)
+						SetCVar("pingCategoryTutorialShown", 1)
+						SetCVar("dangerousShipyardMissionWarningAlreadyShown", 1)
+						SetCVar("shipyardMissionTutorialAreaBuff", 1)
+						SetCVar("shipyardMissionTutorialBlockade", 1)
+						SetCVar("shipyardMissionTutorialFirst", 1)
+
+						SetCVar("showTutorials", 0)
+						SetCVar("showNPETutorials", 0) -- 1
+						SetCVar("gameTip", 0)
 						-- SetCVar("closedExtraAbilityTutorials", 1)
 						-- SetCVar("covenantMissionTutorial", 1)
-						-- SetCVar("lastGarrisonMissionTutorial", 8)
-						-- SetCVar("lastVoidStorageTutorial", 3)
-						-- SetCVar("orderHallMissionTutorial", 851970)
-						-- SetCVar("shipyardMissionTutorialAreaBuff", 0)
-						-- SetCVar("shipyardMissionTutorialBlocade", 1)
-						-- SetCVar("shipyardMissionTutorialFirst", 1)
-						-- SetCVar("showNPETutorials", 1)
-						-- SetCVar("showTutorials", 0)
 						-- SetCVar("soulbindsActivatedTutorial", 1)
 						-- SetCVar("soulbindsLandingPageTutorial", 1)
 						-- SetCVar("soulbindsViewedTutorial", 1)

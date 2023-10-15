@@ -239,6 +239,8 @@ function Octo_ToDo_SECOND_OnLoad()
 	end
 	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("VARIABLES_LOADED")
 	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("PLAYER_LOGIN")
+	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("PLAYER_STARTED_MOVING")
+	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("PLAYER_STOPPED_MOVING")
 	Octo_ToDo_SECOND_Frame_EventFrame:SetScript("OnEvent", function(...)
 			Octo_ToDo_SECOND_OnEvent(...)
 	end)
@@ -694,6 +696,12 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 		Octo_ToDoVars.config.AddonVersion = tonumber(AddonVersion)
 		ldbi:Register(MinimapName, ldb_icon, Octo_ToDoVars.minimap_SECOND)
 		ldbi:Show(MinimapName)
+	end
+	if event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
+		if Octo_ToDo_SECOND_Frame_Main_Frame and Octo_ToDo_SECOND_Frame_Main_Frame:IsShown() then Octo_ToDo_SECOND_Frame_Main_Frame:SetAlpha(E.Octo_Globals.BGALPHA*5) end
+	end
+	if event == "PLAYER_STOPPED_MOVING" then
+		if Octo_ToDo_SECOND_Frame_Main_Frame then Octo_ToDo_SECOND_Frame_Main_Frame:SetAlpha(1) end
 	end
 	if event == "PLAYER_LOGIN" and not InCombatLockdown() and SHOWADDON == true then
 		C_Timer.After(2, function()

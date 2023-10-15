@@ -17,10 +17,20 @@ tinsert(E.Octo_Globals.modules, function()
 			local OctoFrame_TOBANK = nil
 			local ignore_list = {
 				[49040] = true,
+				[77530] = true,
 				[81055] = true,
 				[109076] = true,
+				[111820] = true,
+				[154172] = true,
+				[154173] = true,
+				[154174] = true,
+				[154175] = true,
+				[154176] = true,
+				[154177] = true,
 				[166751] = true,
+				[167555] = true,
 				[180653] = true,
+				[188152] = true,
 				[191251] = true,
 				[193201] = true,
 				[203703] = true,
@@ -35,16 +45,6 @@ tinsert(E.Octo_Globals.modules, function()
 				[204985] = true,
 				[205982] = true,
 				[207002] = true,
-				[111820] = true,
-				--ТРИНЬКЕТЫ
-				[167555] = true,
-				[77530] = true,
-				[154174] = true,
-				[154176] = true,
-				[154177] = true,
-				[154172] = true,
-				[154175] = true,
-				[154173] = true,
 			}
 			local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 			local ilvlStr = avgItemLevelEquipped or 0
@@ -66,7 +66,7 @@ tinsert(E.Octo_Globals.modules, function()
 			function MASLENGO_Trade()
 				local function SetQAButtonGameTooltip(button, text)
 					button:SetScript("OnEnter", function(self)
-						GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -32)
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 						GameTooltip:ClearLines()
 						GameTooltip:SetText(text)
 						GameTooltip:Show()
@@ -166,8 +166,25 @@ tinsert(E.Octo_Globals.modules, function()
 				if not OctoFrame_SellOther then
 					OctoFrame_SellOther = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellOther:Hide()
-					SetQAButtonGameTooltip(OctoFrame_SellOther, "itemQuality < фиолет")
+					-- SetQAButtonGameTooltip(OctoFrame_SellOther, "itemQuality < фиолет")
 				end
+				OctoFrame_SellOther:SetScript("OnEnter", function(self)
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+						GameTooltip:ClearLines()
+						GameTooltip:AddLine("itemQuality < фиолет")
+						GameTooltip:AddLine(" ")
+						GameTooltip:AddLine("ignore_list: ")
+						for k, v in pairs(ignore_list) do
+							if GetItemInfo(k) then
+								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(k)..E.Octo_Func.func_itemName(k), k)
+							end
+						end
+						GameTooltip:Show()
+				end)
+				OctoFrame_SellOther:SetScript("OnLeave", function(self)
+					GameTooltip:ClearLines()
+					GameTooltip:Hide()
+				end)
 				OctoFrame_SellOther:SetSize(size*E.Octo_Globals.scale, size*E.Octo_Globals.scale)
 				OctoFrame_SellOther:SetFrameStrata("LOW")
 				OctoFrame_SellOther:EnableMouse(true)
@@ -227,8 +244,25 @@ tinsert(E.Octo_Globals.modules, function()
 				if not OctoFrame_SellOtherFiolet then
 					OctoFrame_SellOtherFiolet = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellOtherFiolet:Hide()
-					SetQAButtonGameTooltip(OctoFrame_SellOtherFiolet, "itemQuality = фиолет")
+					-- SetQAButtonGameTooltip(OctoFrame_SellOtherFiolet, "itemQuality = фиолет")
 				end
+				OctoFrame_SellOtherFiolet:SetScript("OnEnter", function(self)
+						GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+						GameTooltip:ClearLines()
+						GameTooltip:AddLine("itemQuality = фиолет")
+						GameTooltip:AddLine(" ")
+						GameTooltip:AddLine("ignore_list: ")
+						for k, v in pairs(ignore_list) do
+							if GetItemInfo(k) then
+								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(k)..E.Octo_Func.func_itemName(k), k)
+							end
+						end
+						GameTooltip:Show()
+				end)
+				OctoFrame_SellOtherFiolet:SetScript("OnLeave", function(self)
+					GameTooltip:ClearLines()
+					GameTooltip:Hide()
+				end)
 				OctoFrame_SellOtherFiolet:SetSize(size*E.Octo_Globals.scale, size*E.Octo_Globals.scale)
 				OctoFrame_SellOtherFiolet:SetFrameStrata("LOW")
 				OctoFrame_SellOtherFiolet:EnableMouse(true)
@@ -313,7 +347,9 @@ tinsert(E.Octo_Globals.modules, function()
 								if containerInfo then
 									local itemID = containerInfo.itemID
 									if itemID then
-										C_Container.UseContainerItem(bag, slot)
+										if not ignore_list[itemID] then
+											C_Container.UseContainerItem(bag, slot)
+										end
 									end
 								end
 							end
