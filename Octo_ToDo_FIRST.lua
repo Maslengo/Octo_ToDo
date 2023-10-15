@@ -463,7 +463,7 @@ local function CreateFrameUsableItems_OnEnter(self)
 		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."CreateFrameUsableItems_OnEnter".."|r")
 	end
 	self.icon:SetVertexColor(1, 1, 1, 1)
-	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 0)
+	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT", 0, 0)
 	--
 	local itemLink = select(2, GetItemInfo(self.itemID))
 	if itemLink then
@@ -593,7 +593,7 @@ local function CreateFrameUsableSpells_OnEnter(self)
 		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."CreateFrameUsableSpells_OnEnter".."|r")
 	end
 	self.icon:SetVertexColor(1, 1, 1, 1)
-	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 0)
+	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT", 0, 0)
 	--
 	-- local startTime, duration = GetSpellCooldown(self.spellID)
 	local isKnown = IsSpellKnown(self.spellID)

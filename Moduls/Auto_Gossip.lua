@@ -26,7 +26,6 @@ tinsert(E.Octo_Globals.modules, function()
                         local First_Option = {
                             [168432] = true,
                             [149626] = true,
-                            [167032] = true,
                             [167298] = true,
                             [167598] = true,
                             [168441] = true,
@@ -76,7 +75,7 @@ tinsert(E.Octo_Globals.modules, function()
                             local targetNPCID = tonumber(UnitGUID(UnitID):match("-(%d+)-%x+$"), 10)
                             for i, v in ipairs(info) do
                                 if
-                                v.name == "Выбрать временную линию." or
+                                -- v.name == "Выбрать временную линию." or
                                 v.name:find("Попробовать") or
                                 v.name:find("Кинуук") or
                                 v.name:find("Нужно добавить") or
