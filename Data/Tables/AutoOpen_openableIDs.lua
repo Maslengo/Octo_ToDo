@@ -10,6 +10,15 @@ E.Octo_Table.AutoOpen_openableIDs = {
     [201818] = true,
     [210063] = true,
 
+    [156698] = true,
+    [209024] = true,
+    [139137] = true,
+    [37586] = true,
+    [149574] = true,
+    [117392] = true,
+    [54516] = true,
+
+
 
 
 
@@ -36,7 +45,6 @@ E.Octo_Table.AutoOpen_openableIDs = {
     [34863] = true,
     [35313] = true,
     [35348] = true,
-    [37586] = true,
     [44113] = true,
     [44475] = true,
     [46007] = true,

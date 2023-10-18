@@ -15,7 +15,8 @@ E.Octo_Table.OctoTable_itemID_ALL = {
 	52078,
 	69237,
 	71998,
-
+	37011,
+	33226,
 
 
 	205686,
@@ -34,7 +35,7 @@ E.Octo_Table.OctoTable_itemID_ALL = {
 	206013,
 	206017,
 	206021,
-
+	37011,
 
 
 

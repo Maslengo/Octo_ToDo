@@ -830,7 +830,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 		self[pizza]:SetChecked(Octo_ToDoVars.config.Octo_debug_Function_FIRST)
 		self[pizza]:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.Octo_debug_Function_FIRST = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+				-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
@@ -843,11 +843,26 @@ FIRST_Config:SetScript("OnShow", function(self)
 		self[pizza]:SetChecked(Octo_ToDoVars.config.Octo_debug_Event_FIRST)
 		self[pizza]:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.Octo_debug_Event_FIRST = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+				-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22)..E.Octo_Globals.Event_Color.."Octo_debug_Event_FIRST".."|r")
+				--
+		local number = 1
+		local pizza = E.Octo_Func.GenerateUniqueID()
+		self[pizza] = CreateFrame("CheckButton", nil, FIRST_scrollChild, "InterfaceOptionsCheckButtonTemplate")
+		self[pizza]:SetPoint("TOPLEFT", FIRST_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+		self[pizza]:SetChecked(Octo_ToDoVars.config.Octo_debug_BUTTONS_FIRST)
+		self[pizza]:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.Octo_debug_BUTTONS_FIRST = btn:GetChecked()
+				-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+				self[pizza].text:SetJustifyV("MIDDLE")
+		self[pizza].text:SetJustifyH("LEFT")
+		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22)..E.Octo_Globals.Event_Color.."Octo_debug_BUTTONS_FIRST".."|r")
+
+
 		--
 		local number = 2
 		local pizza = E.Octo_Func.GenerateUniqueID()
@@ -856,7 +871,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 		self[pizza]:SetChecked(Octo_ToDoVars.config.Octo_debug_Function_SECOND)
 		self[pizza]:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.Octo_debug_Function_SECOND = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+				-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
@@ -869,11 +884,36 @@ FIRST_Config:SetScript("OnShow", function(self)
 		self[pizza]:SetChecked(Octo_ToDoVars.config.Octo_debug_Event_SECOND)
 		self[pizza]:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.Octo_debug_Event_SECOND = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+				-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 22)..E.Octo_Globals.Event_Color.."Octo_debug_Event_SECOND".."|r")
+		--
+		local number = 2
+		local pizza = E.Octo_Func.GenerateUniqueID()
+		self[pizza] = CreateFrame("CheckButton", nil, FIRST_scrollChild, "InterfaceOptionsCheckButtonTemplate")
+		self[pizza]:SetPoint("TOPLEFT", FIRST_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+		self[pizza]:SetChecked(Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND)
+		self[pizza]:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND = btn:GetChecked()
+				-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+				self[pizza].text:SetJustifyV("MIDDLE")
+		self[pizza].text:SetJustifyH("LEFT")
+		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 22)..E.Octo_Globals.Event_Color.."Octo_debug_BUTTONS_SECOND".."|r")
+
+
+
+
+
+
+
+
+
+
+
+
 		--
 		local number = 3
 		local pizza = E.Octo_Func.GenerateUniqueID()

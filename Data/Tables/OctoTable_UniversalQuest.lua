@@ -1562,6 +1562,82 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 21,
 	},
+
+	{
+		name_save = "SeeingRed",
+		name_quest = "SeeingRed",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			77408,77409,77410,77411,77789,77412,77795,
+		},
+		max = 7,
+	},
+	-- {
+	-- 	name_save = "Rumiastrasza",
+	-- 	name_quest = "Rumiastrasza",
+	-- 	reset = "Once",
+	-- 	expansion = "DF",
+	-- 	place = "",
+	-- 	desc = "",
+	-- 	questID = {
+	-- 		70930, -- all-tea-no-shadeleaf
+	-- 		70958, -- finest-fungi-at-the-feast
+	-- 		70987, -- hearts-of-starch
+	-- 		70981, -- savory-seas
+	-- 		70988, -- the-eggs-the-thing
+	-- 		70932, -- the-life-of-spice
+	-- 		70957, -- the-sea-out-west
+	-- 		67071, -- what-a-long-sweet-trip-its-been
+	-- 	},
+	-- 	max = 8,
+	-- },
+
+	{
+		name_save = "Garrison1",
+		name_quest = "Garrison1",
+		reset = "Once",
+		expansion = "Draenor",
+		place = "",
+		desc = "",
+		questID = {
+			34378, -- Horde
+			34586, -- Alliance
+		},
+		max = 1,
+	},
+	{
+		name_save = "Garrison2",
+		name_quest = "Garrison2",
+		reset = "Once",
+		expansion = "Draenor",
+		place = "",
+		desc = "",
+		questID = {
+			36567, -- Horde
+			36592, -- Alliance
+		},
+		max = 1,
+	},
+	{
+		name_save = "Garrison3",
+		name_quest = "Garrison3",
+		reset = "Once",
+		expansion = "Draenor",
+		place = "",
+		desc = "",
+		questID = {
+			36614, -- Horde
+			 -- Alliance
+		},
+		max = 1,
+	},
+
+
+
+	-- ARMOR
 	{
 		name_save = "WorgenHeritageArmor",
 		name_quest = "WorgenHeritageArmor",-- = Alliance_Icon.."Worgen Heritage Armor",
@@ -1670,17 +1746,143 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 11,
 	},
+	-- Allied Races Quests
+
 	{
-		name_save = "SeeingRed",
-		name_quest = "SeeingRed",
+		name_save = "DarkIronDwarfHeritageArmorAllied",
+		name_quest = "DarkIronDwarfHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
 		desc = "",
 		questID = {
-			77408,77409,77410,77411,77789,77412,77795,
+			51483,
 		},
-		max = 7,
+		max = 1,
+	},
+	{
+		name_save = "ZandalariTrollHeritageArmorAllied",
+		name_quest = "ZandalariTrollHeritageArmorAllied",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			53721,
+		},
+		max = 1,
+	},
+	{
+		name_save = "VulperaHeritageArmorAllied",
+		name_quest = "VulperaHeritageArmorAllied",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			58435,
+		},
+		max = 1,
+	},
+	{
+		name_save = "LightforgedDraeneiHeritageArmorAllied",
+		name_quest = "LightforgedDraeneiHeritageArmorAllied",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			49782,
+		},
+		max = 1,
+	},
+	{
+		name_save = "NightborneHeritageArmorAllied",
+		name_quest = "NightborneHeritageArmorAllied",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			49784,
+		},
+		max = 1,
+	},
+	{
+		name_save = "VoidElfHeritageArmorAllied",
+		name_quest = "VoidElfHeritageArmorAllied",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			49928,
+		},
+		max = 1,
+	},
+	{
+		name_save = "MechagnomeHeritageArmorAllied",
+		name_quest = "MechagnomeHeritageArmorAllied",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			58436,
+		},
+		max = 1,
+	},
+	{
+		name_save = "KulTiranHeritageArmorAllied",
+		name_quest = "KulTiranHeritageArmorAllied",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			53722,
+		},
+		max = 1,
+	},
+	{
+		name_save = "MagharOrcHeritageArmorAllied",
+		name_quest = "MagharOrcHeritageArmorAllied",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			51484,
+		},
+		max = 1,
+	},
+	{
+		name_save = "HighmountainTaurenHeritageArmorAllied",
+		name_quest = "HighmountainTaurenHeritageArmorAllied",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			49783,
+		},
+		max = 1,
+	},
+
+
+
+
+	{
+		name_save = "HallowsEnd",
+		name_quest = "HallowsEnd",
+		reset = "Month",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			12286,12331,12332,12333,12334,12335,12336,12337,12339,12340,12341,12342,12343,12344,12345,12347,12348,12349,12350,12351,12352,12353,12354,12355,12356,12357,12358,12359,12360,12361,12362,12363,12364,12365,12366,12367,12368,12369,12370,12371,12373,12374,12376,12377,12378,12380,12381,12382,12383,12384,12386,12387,12388,12389,12390,12391,12392,12393,12394,12395,12396,12397,12398,12399,12400,12401,12402,12403,12404,12406,12407,12408,12409,12940,12941,12944,12945,12946,12947,12950,13433,13434,13435,13436,13437,13438,13439,13448,13452,13456,13459,13460,13461,13462,13463,13464,13465,13466,13467,13468,13469,13470,13471,13472,13473,13474,13501,13548,28951,28952,28953,28954,28955,28956,28957,28958,28959,28960,28961,28962,28963,28964,28965,28966,28967,28968,28969,28970,28971,28972,28973,28974,28975,28976,28977,28978,28979,28980,28981,28982,28983,28984,28985,28986,28987,28988,28989,28990,28991,28992,28993,28994,28995,28996,28998,28999,29000,29001,29002,29003,29004,29005,29006,29007,29008,29009,29010,29011,29012,29013,29014,29016,29017,29018,29019,29020,29054,29144,29371,29374,29375,29377,32020,32021,32022,32023,32024,32026,32027,32028,32029,32031,32032,32033,32034,32036,32037,32039,32040,32041,32042,32043,32044,32046,32047,32048,32049,32050,32051,32052,39657,39719,43055,43056,43057,43259,54709,54710,75667,75668,75669,75670,75671,75672,75673,75674,75675,75676,75677,75678,75679,75681,75682,75683,75685,75686,75687,75688,75689,75690,75691,75692,75693,75695,75696,75697,75698,75699,75700,75701,75702,75703,75704,77698,
+		},
+		max = 254,
 	},
 
 
@@ -1688,4 +1890,10 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 
 
 
+
+
+
 }
+
+
+

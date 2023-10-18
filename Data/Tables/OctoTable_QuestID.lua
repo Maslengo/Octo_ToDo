@@ -52,7 +52,7 @@ E.Octo_Table.OctoTable_QuestID = {
 76083,
 76085,
 76086,
-
+24547,
 
 
     36567,

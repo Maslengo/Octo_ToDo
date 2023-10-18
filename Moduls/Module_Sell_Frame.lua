@@ -16,6 +16,8 @@ tinsert(E.Octo_Globals.modules, function()
 			local OctoFrame_FROMBANK = nil
 			local OctoFrame_TOBANK = nil
 			local ignore_list = {
+				[49888] = true,
+				[49908] = true,
 				[49040] = true,
 				[77530] = true,
 				[81055] = true,

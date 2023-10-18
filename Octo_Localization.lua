@@ -136,6 +136,7 @@ if L then
 	L["Dawn of the Infinites"] = true
 	L["ShowSkips"] = true
 	L["Race quests"] = true
+	L["Allied Races Quests"] = true
 	L["Seeing Red"] = true
 
 
@@ -274,5 +275,6 @@ if L then
 	L["ShowSkips"] = "Проходки"
 	L["Black Temple"] = "Чёрный Храм"
 	L["Race quests"] = "Рассовые задания"
+	L["Allied Races Quests"] = "Задания: Союзные расы"
 	L["Seeing Red"] = "Ярость или стыд?"
 end
