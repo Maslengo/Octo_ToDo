@@ -6,7 +6,7 @@ E.Octo_Table.OctoTable_itemID_ALL = {
 	30183,
 	32428,
 	34664,
-
+	37583,
 	43102,
 	45087,
 	47556,

@@ -4801,7 +4801,7 @@ function O_otrisovka_FIRST()
 						if CharInfo.Octopussy_DF_Month_HallowsEnd_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Month_HallowsEnd_count
 						end
-						vivodLeft = E.Octo_Func.func_texturefromIcon(132940)..E.Octo_Func.func_questName(12397)
+						vivodLeft = E.Octo_Func.func_texturefromIcon(132940)..E.Octo_Func.func_itemName(37586)
 						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
 				end)
@@ -4815,6 +4815,18 @@ function O_otrisovka_FIRST()
 						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
 				end)
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						if CharInfo.ItemsInBag[37583] ~= 0 then
+							vivodCent = CharInfo.ItemsInBag[37583]
+						end
+						vivodLeft = E.Octo_Func.func_texturefromIcon(134139)..E.Octo_Func.func_itemName(37583)
+						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+
+
 
 
 

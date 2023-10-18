@@ -657,8 +657,8 @@ end
 if C_QuestLog.IsQuestFlaggedCompleted(75691) == false then
     TomTom:AddWaypoint(2023, 41.91/100, 60.44/100, {title = E.Octo_Func.func_GetMapName(2023)})
 end
-if C_QuestLog.IsQuestFlaggedCompleted(75681) == false then
-    TomTom:AddWaypoint(2023, 46.22/100, 40.60/100, {title = E.Octo_Func.func_GetMapName(2023)})
+if C_QuestLog.IsQuestFlaggedCompleted(75684) == false then -- 75681
+    TomTom:AddWaypoint(2023, 46.22/100, 40.60/100, {title = E.Octo_Func.func_GetMapName(2023)}) -- 46224060 /way #2023 46.22 40.60
 end
 if C_QuestLog.IsQuestFlaggedCompleted(75687) == false then
     TomTom:AddWaypoint(2023, 57.13/100, 76.70/100, {title = E.Octo_Func.func_GetMapName(2023)})
