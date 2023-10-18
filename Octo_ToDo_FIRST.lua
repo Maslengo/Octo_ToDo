@@ -370,7 +370,6 @@ local function checkCharInfo(self)
 		self.CurrentKeyLevel = 0
 		self.journalInstance = {}
 		self.RIO_weeklyBest = 0
-
 		for k, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
 				self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_name"] = E.Octo_Globals.NONE
@@ -1910,10 +1909,6 @@ function Collect_All_journalInstance()
 		-- 		collect.LFGInstance[dungeonID].donetoday = E.Octo_Globals.DONE
 		-- 	end
 		-- end
-
-
-
-
 		for i=1, GetNumRandomDungeons() do
 			local dungeonID, name = GetLFGRandomDungeonInfo(i)
 			local D_name = GetLFGDungeonInfo(dungeonID)
@@ -1926,15 +1921,6 @@ function Collect_All_journalInstance()
 				collect.LFGInstance[dungeonID].donetoday = E.Octo_Globals.NONE
 			end
 		end
-
-
-
-
-
-
-
-
-
 	end
 end
 function Collect_AberrusTransmog()
@@ -4815,24 +4801,6 @@ function O_otrisovka_FIRST()
 						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
 				end)
-				tinsert(OctoTable_func_otrisovka_FIRST,
-					function(CharInfo, tooltip, CL, BG)
-						local vivodCent, vivodLeft = "", ""
-						if CharInfo.ItemsInBag[37583] ~= 0 then
-							vivodCent = CharInfo.ItemsInBag[37583]
-						end
-						vivodLeft = E.Octo_Func.func_texturefromIcon(134139)..E.Octo_Func.func_itemName(37583)
-						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
-						return vivodCent, vivodLeft
-				end)
-
-
-
-
-
-
-
-
 			end -- for 372
 		end
 	end
@@ -7166,7 +7134,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	-- 	if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	-- end
 	if event == "PLAYER_XP_UPDATE" then
-
 -- PLAYER_ENTERING_WORLD,
 -- QUEST_LOG_UPDATE,
 -- UNIT_QUEST_LOG_CHANGED,
@@ -7177,8 +7144,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 -- TIME_PLAYED_MSG,
 -- ENABLE_XP_GAIN,
 -- DISABLE_XP_GAIN
-
-
 		Collect_Player_Level()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
