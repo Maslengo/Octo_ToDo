@@ -79,13 +79,10 @@ tinsert(E.Octo_Globals.modules, function()
                             local info = C_GossipInfo.GetOptions()
                             local targetNPCID = tonumber(UnitGUID(UnitID):match("-(%d+)-%x+$"), 10)
                             for i, v in ipairs(info) do
-                                print (i, v.name)
+                                -- print (i, v.name)
                                 if
                                 -- v.name == "Выбрать временную линию." or
-                                v.name:find("проклятие") or
-                                v.name:find("проклятье") or
-                                v.name:find("Проклятие") or
-                                v.name:find("Проклятье") or
+                                v.name:find("получить печать") or
                                 v.name:find("Попробовать") or
                                 v.name:find("Кинуук") or
                                 v.name:find("Нужно добавить") or

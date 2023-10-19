@@ -894,7 +894,6 @@ E.Octo_Table.white_list_ALL_SETS = {
     {itemid = 206339, count = 1},
     {itemid = 206340, count = 1},
     {itemid = 190528, count = 1},
-    {itemid = 114807, count = 1},
     {itemid = 190850, count = 1},
     {itemid = 206322, count = 1},
     {itemid = 206323, count = 1},

@@ -554,42 +554,48 @@ MAIN_Config:SetScript("OnShow", function(self)
 		--
 		local number = 1
 		local pizza = E.Octo_Func.GenerateUniqueID()
-		btn_right1 = lsfdd:CreateButton(MAIN_scrollChild, 140, 22)
+		btn_right1 = lsfdd:CreateStretchButtonOriginal(MAIN_scrollChild, 140, 22) -- lsfdd:CreateButton
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		btn_right1:ddSetSelectedValue(Octo_ToDoVars.config.ExpansionToShow)
+		btn_right1:SetText(EXPANSION_FILTER_TEXT)
+		btn_right1:ddSetDisplayMode(GlobalAddonName)
 		-- print (tonumber(GetBuildInfo():match("(.-)%.")))
 		local function selectFunctionExpansion(menuButton)
-			btn_right1:ddSetSelectedValue(menuButton.value)
 			Octo_ToDoVars.config.ExpansionToShow = menuButton.value
 			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
-		btn_right1:ddInitialize(function(self, level)
+		btn_right1:ddSetInitFunc(function(self, level, value)
 				local info = {}
-				for k, v in ipairs(Expansions_Table) do
-					info.text = v
-					info.value = k
-					info.func = selectFunctionExpansion
-					self:ddAddButton(info, level)
+				if not value then
+					for k, v in ipairs(Expansions_Table) do
+						info.text = v
+						info.value = k
+						info.checked = Octo_ToDoVars.config.ExpansionToShow == k
+						info.func = selectFunctionExpansion
+						self:ddAddButton(info, level)
+					end
 				end
 		end)
 		--
 		local number = 2
 		local pizza = E.Octo_Func.GenerateUniqueID()
-		btn_right2 = lsfdd:CreateButton(MAIN_scrollChild, 140, 22)
+		btn_right2 = lsfdd:CreateStretchButtonOriginal(MAIN_scrollChild, 140, 22) -- lsfdd:CreateButton
 		btn_right2:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		btn_right2:ddSetSelectedValue(Octo_ToDoOther.prefix)
+		btn_right2:SetText("Wowhead prefix")
+		btn_right2:ddSetDisplayMode(GlobalAddonName)
 		local function selectFunctionprefix(menuButton)
-			btn_right2:ddSetSelectedValue(menuButton.value)
 			Octo_ToDoOther.prefix = menuButton.value
 			-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
-		btn_right2:ddInitialize(function(self, level)
+		btn_right2:ddSetInitFunc(function(self, level, value)
 				local info = {}
-				for k, v in ipairs(E.Octo_Table.wowhead_prefix_Table) do
-					info.text = v
-					info.value = v
-					info.func = selectFunctionprefix
-					self:ddAddButton(info, level)
+				if not value then
+					for k, v in ipairs(E.Octo_Table.wowhead_prefix_Table) do
+						info.text = v
+						info.value = k
+						info.checked = Octo_ToDoOther.prefix == k
+						info.func = selectFunctionprefix
+						self:ddAddButton(info, level)
+					end
 				end
 		end)
 		--
@@ -776,7 +782,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		end)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
-		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE..L["InDev"])
+		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE) -- ..L["InDev"]
 		--
 		local number = 18
 		local pizza = E.Octo_Func.GenerateUniqueID()

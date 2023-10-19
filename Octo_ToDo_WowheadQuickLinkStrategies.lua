@@ -8,15 +8,15 @@ local strategies = {
 local tooltipStates = {}
 local output_preffix = ""
 local function check_WTF()
-	if Octo_ToDoOther.prefix == "Русский" then output_preffix = "ru."
-	elseif Octo_ToDoOther.prefix == "Deutsch" then output_preffix = "de."
-	elseif Octo_ToDoOther.prefix == "English" then output_preffix = ""
-	elseif Octo_ToDoOther.prefix == "Español" then output_preffix = "es."
-	elseif Octo_ToDoOther.prefix == "Français" then output_preffix = "fr."
-	elseif Octo_ToDoOther.prefix == "Italiano" then output_preffix = "it."
-	elseif Octo_ToDoOther.prefix == "Português Brasileiro" then output_preffix = "pt."
-	elseif Octo_ToDoOther.prefix == "한국어" then output_preffix = "ko."
-	elseif Octo_ToDoOther.prefix == "简体中文" then output_preffix = "cn."
+	if Octo_ToDoOther.prefix == 1 then output_preffix = "ru." -- Русский"
+	elseif Octo_ToDoOther.prefix == 2 then output_preffix = "de." -- Deutsch"
+	elseif Octo_ToDoOther.prefix == 3 then output_preffix = "" -- English"
+	elseif Octo_ToDoOther.prefix == 4 then output_preffix = "es." -- Español"
+	elseif Octo_ToDoOther.prefix == 5 then output_preffix = "fr." -- Français"
+	elseif Octo_ToDoOther.prefix == 6 then output_preffix = "it." -- Italiano"
+	elseif Octo_ToDoOther.prefix == 7 then output_preffix = "pt." -- Português Brasileiro
+	elseif Octo_ToDoOther.prefix == 8 then output_preffix = "ko." -- 한국어"
+	elseif Octo_ToDoOther.prefix == 9 then output_preffix = "cn." -- 简体中文"
 	end
 end
 

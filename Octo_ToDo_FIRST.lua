@@ -6593,15 +6593,10 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 	end
 	local function FrameLine_OnEnter(self)
-		-- if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
-		-- 	ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."FrameLine_OnEnter".."|r")
-		-- end
 		self.BG:SetColorTexture(r, g, b, E.Octo_Globals.BGALPHA*2)
+		Octo_ToDo_FIRST_Frame_Main_Frame:SetAlpha(1)
 	end
 	local function FrameLine_OnLeave(self)
-		-- if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
-		-- 	ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."FrameLine_OnLeave".."|r")
-		-- end
 		self.BG:SetColorTexture(0, 0, 0, 0)
 	end
 	for i = 1, #OctoTable_func_otrisovka_FIRST do -- БЭКГРАУНД
@@ -6859,6 +6854,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	end
 	if (event == "VARIABLES_LOADED") and not InCombatLockdown() then
 		if Octo_ToDo_SmartCollectNEW == nil then Octo_ToDo_SmartCollectNEW = {} end
+		if Octo_Achi_MAIN == nil then Octo_Achi_MAIN = {} end
 		if Octo_ToDo_Achievement == nil then Octo_ToDo_Achievement = {} end
 		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars == nil then Octo_ToDoVars = {} end
@@ -6910,7 +6906,8 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDoVars.config.LevelToShowMAX == nil then Octo_ToDoVars.config.LevelToShowMAX = 70 end
 		if Octo_ToDoVars.config.itemLevelToShow == nil then Octo_ToDoVars.config.itemLevelToShow = 100 end
 		if Octo_ToDoVars.config.ExpansionToShow == nil then Octo_ToDoVars.config.ExpansionToShow = tonumber(GetBuildInfo():match("(.-)%.")) or 1 end
-		if Octo_ToDoVars.config.AchievementToShow == nil then Octo_ToDoVars.config.AchievementToShow = 8 end
+		if Octo_ToDoVars.config.AchievementToShow == nil then Octo_ToDoVars.config.AchievementToShow = 92 end
+		if Octo_ToDoVars.config.AchievementShowCompleted == nil then Octo_ToDoVars.config.AchievementShowCompleted = true end
 		if Octo_ToDoVars.config.ShowEvents == nil then Octo_ToDoVars.config.ShowEvents = true end
 		if Octo_ToDoVars.config.ShowPVPEvents == nil then Octo_ToDoVars.config.ShowPVPEvents = false end
 		if Octo_ToDoVars.config.ShowHoliday == nil then Octo_ToDoVars.config.ShowHoliday = true end
@@ -6972,7 +6969,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_SmartCollectNEW.Items.OptionalReagents == nil then Octo_ToDo_SmartCollectNEW.Items.OptionalReagents = {} end
 		if Octo_ToDo_SmartCollectNEW.Items.Other == nil then Octo_ToDo_SmartCollectNEW.Items.Other = {} end
 		if Octo_ToDo_SmartCollectNEW.Items.TradeGoods == nil then Octo_ToDo_SmartCollectNEW.Items.TradeGoods = {} end
-		if Octo_ToDoOther.prefix == nil then Octo_ToDoOther.prefix = "Русский" end
+		if Octo_ToDoOther.prefix == nil then Octo_ToDoOther.prefix = 1 end
 		if Octo_ToDoOther.TokenPrice == nil then Octo_ToDoOther.TokenPrice = 0 end
 		for _, classFilename in pairs(E.Octo_Table.OctoTable_EnglishClasses) do
 			Octo_ToDoTransmog[classFilename] = Octo_ToDoTransmog[classFilename] or {}
