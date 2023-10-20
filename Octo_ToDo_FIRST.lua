@@ -380,7 +380,7 @@ local function checkCharInfo(self)
 	if (self.tmstp_Daily or 0) < GetServerTime() then
 		self.tmstp_Daily = E.Octo_Func.tmstpDayReset(1)
 		self.needResetDaily = true
-		Octo_ToDo_SmartCollectNEW.Holiday.Active = {}
+		Octo_ToDo_SmartCollectNEW2.Holiday.Active = {}
 		Octo_ToDoVars.config.AnotherAddonsCasual = false
 		Octo_ToDoVars.config.AnotherAddonsRAID = false
 		for k, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
@@ -1604,12 +1604,53 @@ function Collect_All_Legion_Transmoge()
 		end
 	end
 end
+
+local function function_setBackup()
+	-- local backup = calendar.filterBackup
+	-- backup.calendarShowHolidays = GetCVarBool("calendarShowHolidays")
+	-- backup.calendarShowDarkmoon = GetCVarBool("calendarShowDarkmoon")
+	-- backup.calendarShowLockouts = GetCVarBool("calendarShowLockouts")
+	-- backup.calendarShowWeeklyHolidays = GetCVarBool("calendarShowWeeklyHolidays")
+	-- backup.calendarShowBattlegrounds = GetCVarBool("calendarShowBattlegrounds")
+
+	-- if not backup.calendarShowHolidays then SetCVar("calendarShowHolidays", "1") end
+	-- if not backup.calendarShowDarkmoon then SetCVar("calendarShowDarkmoon", "1") end
+	-- if backup.calendarShowLockouts then SetCVar("calendarShowLockouts", "0") end
+	-- if backup.calendarShowWeeklyHolidays then SetCVar("calendarShowWeeklyHolidays", "0") end
+	-- if backup.calendarShowBattlegrounds then SetCVar("calendarShowBattlegrounds", "0") end
+
+	-- self.dateBackup = C_Calendar.GetMonthInfo()
+	-- if CalendarFrame then
+	-- 	CalendarFrame:UnregisterEvent("CALENDAR_UPDATE_EVENT_LIST")
+	-- 	CalendarEventPickerFrame:UnregisterEvent("CALENDAR_UPDATE_EVENT_LIST")
+	-- end
+end
+
+
+
+local function function_restoreBackup()
+	-- local backup = calendar.filterBackup
+	-- if not backup.calendarShowHolidays then SetCVar("calendarShowHolidays", "0") end
+	-- if not backup.calendarShowDarkmoon then SetCVar("calendarShowDarkmoon", "0") end
+	-- if backup.calendarShowLockouts then SetCVar("calendarShowLockouts", "1") end
+	-- if backup.calendarShowWeeklyHolidays then SetCVar("calendarShowWeeklyHolidays", "1") end
+	-- if backup.calendarShowBattlegrounds then SetCVar("calendarShowBattlegrounds", "1") end
+
+	-- C_Calendar.SetAbsMonth(self.dateBackup.month, self.dateBackup.year)
+	-- if CalendarFrame then
+	-- 	CalendarFrame:RegisterEvent("CALENDAR_UPDATE_EVENT_LIST")
+	-- 	CalendarEventPickerFrame:RegisterEvent("CALENDAR_UPDATE_EVENT_LIST")
+	-- end
+end
+
+
 function Collect_All_Holiday()
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."Collect_All_Holiday()".."|r")
 	end
+	function_setBackup()
 	local curGUID = UnitGUID("PLAYER")
-	local collect = Octo_ToDo_SmartCollectNEW.Holiday
+	local collect = Octo_ToDo_SmartCollectNEW2.Holiday
 	if not IsAddOnLoaded("Blizzard_Calendar") then
 		LoadAddOn("Blizzard_Calendar")
 		ShowUIPanel(CalendarFrame, true)
@@ -1673,7 +1714,7 @@ function Collect_All_Holiday()
 			end
 		end
 	end
-	return vivod
+	function_restoreBackup()
 end
 local function IsInArray(arr, subj)
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
@@ -1786,7 +1827,7 @@ function Collect_All_journalInstance()
 		for i=1, GetNumRandomDungeons() do
 			local dungeonID, name = GetLFGRandomDungeonInfo(i)
 			if dungeonID then
-				Octo_ToDo_SmartCollectNEW.LFGInstance[dungeonID] = name
+				Octo_ToDo_SmartCollectNEW2.LFGInstance[dungeonID] = name
 			end
 		end
 		-- for dungeonID, name in pairs(E.Octo_Table.OctoTable_LFGDungeons) do
@@ -4274,7 +4315,7 @@ function O_otrisovka_FIRST()
 		end
 		-- События
 		if Octo_ToDoVars.config.ShowEvents == true then
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[628] then -- Путешествие во времени по подземельям (Катазклизм)
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[628] then -- Путешествие во времени по подземельям (Катазклизм)
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4316,7 +4357,7 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 628
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[622] then -- Путешествие во времени по подземельям (Burning Crusade)
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[622] then -- Путешествие во времени по подземельям (Burning Crusade)
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4358,7 +4399,7 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 622
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[1265] then -- Путешествие во времени по подземельям (Legion)
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[1265] then -- Путешествие во времени по подземельям (Legion)
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4390,7 +4431,7 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 1265
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[652] then -- Путешествие во времени по подземельям (Mists of Pandaria)
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[652] then -- Путешествие во времени по подземельям (Mists of Pandaria)
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4422,7 +4463,7 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 1265
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[1352] then -- Подземелья Dragonfly
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[1352] then -- Подземелья Dragonfly
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4434,11 +4475,11 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 1352
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[1400] then -- Кубок Восточных королевств
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[1400] then -- Кубок Восточных королевств
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = Octo_ToDo_SmartCollectNEW.Holiday.Collect[1400]
+						vivodLeft = Octo_ToDo_SmartCollectNEW2.Holiday.Collect[1400]
 						if CharInfo.Octopussy_DF_Month_TheEasternKingdomsCupBegins_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Month_TheEasternKingdomsCupBegins_count
 						end
@@ -4456,11 +4497,11 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 1400
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[479] then -- Ярмарка Новолуния (Darkmoon Faire)
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[479] then -- Ярмарка Новолуния (Darkmoon Faire)
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(354435)..E.Octo_Globals.Blue_Color.."Daily |r"..Octo_ToDo_SmartCollectNEW.Holiday.Collect[479]
+						vivodLeft = E.Octo_Func.func_texturefromIcon(354435)..E.Octo_Globals.Blue_Color.."Daily |r"..Octo_ToDo_SmartCollectNEW2.Holiday.Collect[479]
 						if CharInfo.Octopussy_DF_Daily_DarkmoonFaire_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Daily_DarkmoonFaire_count ~= "0/9" then
 							vivodCent = CharInfo.Octopussy_DF_Daily_DarkmoonFaire_count
 						end
@@ -4492,7 +4533,7 @@ function O_otrisovka_FIRST()
 		end
 		-- События (PvP)
 		if Octo_ToDoVars.config.ShowPVPEvents == true then
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[602] then -- "Бонус на полях боя",
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[602] then -- "Бонус на полях боя",
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4509,11 +4550,11 @@ function O_otrisovka_FIRST()
 						if CharInfo.Octopussy_DF_Weekly_ACalltoBattle_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_ACalltoBattle_count
 						end
-						vivodLeft = vivodLeft..Octo_ToDo_SmartCollectNEW.Holiday.Collect[602]
+						vivodLeft = vivodLeft..Octo_ToDo_SmartCollectNEW2.Holiday.Collect[602]
 						return vivodCent, vivodLeft
 				end)
 			end
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[1049] or Octo_ToDo_SmartCollectNEW.Holiday.Active[671] or Octo_ToDo_SmartCollectNEW.Holiday.Active[1244] or Octo_ToDo_SmartCollectNEW.Holiday.Active[1169] then
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[1049] or Octo_ToDo_SmartCollectNEW2.Holiday.Active[671] or Octo_ToDo_SmartCollectNEW2.Holiday.Active[1244] or Octo_ToDo_SmartCollectNEW2.Holiday.Active[1169] then
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4534,7 +4575,7 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[610] then -- "Бонус за стычки на арене",
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[610] then -- "Бонус за стычки на арене",
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4551,14 +4592,14 @@ function O_otrisovka_FIRST()
 						if CharInfo.Octopussy_DF_Weekly_TheArenaCalls_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_TheArenaCalls_count
 						end
-						vivodLeft = vivodLeft..Octo_ToDo_SmartCollectNEW.Holiday.Collect[610]
+						vivodLeft = vivodLeft..Octo_ToDo_SmartCollectNEW2.Holiday.Collect[610]
 						return vivodCent, vivodLeft
 				end)
 			end
 		end
 		-- Праздники
 		if Octo_ToDoVars.config.ShowHoliday == true then
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[341] then -- Summer Festival
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[341] then -- Summer Festival
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4570,7 +4611,7 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 341
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[372] then -- BREWFEST
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[372] then -- BREWFEST
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -4657,7 +4698,7 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 372
-			if Octo_ToDo_SmartCollectNEW.Holiday.Active[324] then -- Тыквовин
+			if Octo_ToDo_SmartCollectNEW2.Holiday.Active[324] then -- Тыквовин
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -6072,8 +6113,8 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 					local classcolor = CreateColor(rPerc, gPerc, bPerc)
 					GameTooltip:AddDoubleLine(classcolor:WrapTextInColorCode(L["Current Date"]), classcolor:WrapTextInColorCode(date("%d/%m/%Y")))
 					GameTooltip:AddDoubleLine(" ", " ")
-					for eventID, v in pairs(Octo_ToDo_SmartCollectNEW.Holiday.Active) do
-						GameTooltip:AddDoubleLine(E.Octo_Globals.Yellow_Color..Octo_ToDo_SmartCollectNEW.Holiday.Active[eventID].title.."|r"..E.Octo_Globals.Gray_Color.." (id: "..Octo_ToDo_SmartCollectNEW.Holiday.Active[eventID].id..")|r", Octo_ToDo_SmartCollectNEW.Holiday.Active[eventID].startTime.." - "..Octo_ToDo_SmartCollectNEW.Holiday.Active[eventID].endTime)
+					for eventID, v in pairs(Octo_ToDo_SmartCollectNEW2.Holiday.Active) do
+						GameTooltip:AddDoubleLine(E.Octo_Globals.Yellow_Color..Octo_ToDo_SmartCollectNEW2.Holiday.Active[eventID].title.."|r"..E.Octo_Globals.Gray_Color.." (id: "..Octo_ToDo_SmartCollectNEW2.Holiday.Active[eventID].id..")|r", Octo_ToDo_SmartCollectNEW2.Holiday.Active[eventID].startTime.." - "..Octo_ToDo_SmartCollectNEW2.Holiday.Active[eventID].endTime)
 					end
 					if i == 0 then
 						GameTooltip:AddLine("No Data")
@@ -6470,16 +6511,20 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	TotalTransAnima = 0
 	TotalTransParacausalFlakes = 0
 	for curCharGUID, CharInfo in pairs(Octo_ToDoLevels) do
-		sorted[#sorted+1] = CharInfo
-		if CharInfo.Shadowland[2] >= 1000 or CharInfo.Shadowland[4] >= 1000 or CharInfo.Shadowland[6] >= 1000 or CharInfo.Shadowland[8] >= 1000 then
-			TotalTransAnima = TotalTransAnima +
-			math.floor(CharInfo.Shadowland[2]/1000)*1000 +
-			math.floor(CharInfo.Shadowland[4]/1000)*1000 +
-			math.floor(CharInfo.Shadowland[6]/1000)*1000 +
-			math.floor(CharInfo.Shadowland[8]/1000)*1000
-		end
-		if CharInfo.CurrencyID[2594] >= 500 then
-			TotalTransParacausalFlakes = TotalTransParacausalFlakes + math.floor(CharInfo.CurrencyID[2594]/500)*500
+		if ((ShowOnlyCurrentRealm == true and (CharInfo.curServer == GetRealmName())) and (CharInfo.avgItemLevel >= itemLevelToShow) and (CharInfo.UnitLevel >= Octo_ToDoVars.config.LevelToShow) and (CharInfo.UnitLevel <= Octo_ToDoVars.config.LevelToShowMAX))
+			or (ShowOnlyCurrentRealm == false and (CharInfo.avgItemLevel >= itemLevelToShow) and (CharInfo.UnitLevel >= Octo_ToDoVars.config.LevelToShow) and (CharInfo.UnitLevel <= Octo_ToDoVars.config.LevelToShowMAX))
+			or (curGUID == CharInfo.GUID) then
+			sorted[#sorted+1] = CharInfo
+			if CharInfo.Shadowland[2] >= 1000 or CharInfo.Shadowland[4] >= 1000 or CharInfo.Shadowland[6] >= 1000 or CharInfo.Shadowland[8] >= 1000 then
+				TotalTransAnima = TotalTransAnima +
+				math.floor(CharInfo.Shadowland[2]/1000)*1000 +
+				math.floor(CharInfo.Shadowland[4]/1000)*1000 +
+				math.floor(CharInfo.Shadowland[6]/1000)*1000 +
+				math.floor(CharInfo.Shadowland[8]/1000)*1000
+			end
+			if CharInfo.CurrencyID[2594] >= 500 then
+				TotalTransParacausalFlakes = TotalTransParacausalFlakes + math.floor(CharInfo.CurrencyID[2594]/500)*500
+			end
 		end
 	end
 	sort(sorted, function(a, b)
@@ -6497,164 +6542,157 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			end
 	end)
 	for i, CharInfo in pairs(sorted) do
-		if ((ShowOnlyCurrentRealm == true and (CharInfo.curServer == GetRealmName())) and (CharInfo.avgItemLevel >= itemLevelToShow) and (CharInfo.UnitLevel >= Octo_ToDoVars.config.LevelToShow) and (CharInfo.UnitLevel <= Octo_ToDoVars.config.LevelToShowMAX))
-			or (ShowOnlyCurrentRealm == false and (CharInfo.avgItemLevel >= itemLevelToShow) and (CharInfo.UnitLevel >= Octo_ToDoVars.config.LevelToShow) and (CharInfo.UnitLevel <= Octo_ToDoVars.config.LevelToShowMAX))
-			or (curGUID == CharInfo.GUID) then
-			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-			local curCharGUID = CharInfo.GUID
-			-- if CharInfo.classFilename == "DEATHKNIGHT" then
-			-- 	if not MEME_FRAME then
-			-- 		MEME_FRAME = CreateFrame("Frame")
-			-- 		MEME_FRAME:Hide()
-			-- 	end
-			-- 	if not MEME_FRAME[curCharGUID] then
-			-- 		MEME_FRAME[curCharGUID] = CreateFrame("Frame", "MEME_FRAME[curCharGUID]"..curCharGUID, Octo_ToDo_FIRST_Frame_Main_Frame, "BackdropTemplate")
-			-- 		MEME_FRAME[curCharGUID]:SetPoint("BOTTOM", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, 0)
-			-- 		MEME_FRAME[curCharGUID]:SetSize(E.Octo_Globals.curWidth*E.Octo_Globals.scale, E.Octo_Globals.curHeight/2*E.Octo_Globals.scale)
-			-- 		MEME_FRAME[curCharGUID]:SetFrameStrata("LOW")
-			-- 		MEME_FRAME[curCharGUID]:SetBackdrop({
-			-- 				bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-			-- 				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-			-- 				edgeSize = 1,
-			-- 		})
-			-- 		MEME_FRAME[curCharGUID]:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-			-- 		MEME_FRAME[curCharGUID]:SetBackdropBorderColor(0, 0, 0, 1)
-			-- 		MEME_FRAME[curCharGUID].icon = MEME_FRAME[curCharGUID]:CreateTexture(nil, "ARTWORK")
-			-- 		MEME_FRAME[curCharGUID].icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Melli.tga")
-			-- 		MEME_FRAME[curCharGUID].icon:SetAllPoints(MEME_FRAME[curCharGUID])
-			-- 		MEME_FRAME[curCharGUID]:Show()
-			-- 		local model = CreateFrame("PlayerModel", "model"..curCharGUID, MEME_FRAME[curCharGUID])
-			-- 		model:SetPoint("BOTTOM", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, 0)
-			-- 		model:SetSize(220, 220)
-			-- 		-- model:SetPoint("TOPLEFT", 25, 20)
-			-- 		model:SetDisplayInfo(39490) --
-			-- 		model:SetRotation(.4)
-			-- 		model:PlayAnimKit(1371)
-			-- 		-- 39490 chaika
-			-- 		-- 63509 arrow
-			-- 		-- 49585 garrosh
-			-- 		-- 55907 juk
-			-- 		-- [65309] = "creature/dhmaletank/dhmaletank.m2",
-			-- 		-- [66406] = "creature/dhmaletank/dhmaletank.m2",
-			-- 		-- [68671] = "creature/dhmaletank/dhmaletank.m2",
-			-- 		-- [70373] = "creature/dhmaletank/dhmaletank.m2",
-			-- 						-- murloccostume.m2 21723
-			-- 	end
-			-- end
-			if not Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID] then
-				Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID] = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID().."Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID]", Octo_ToDo_FIRST_Frame_Main_Frame.scrollChild, "BackdropTemplate")
-				Octo_ToDo_FIRST_Frame_Char_Frame = Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID]
-				Octo_ToDo_FIRST_Frame_Char_Frame:SetPoint("BOTTOM", 0, 0)
-				Octo_ToDo_FIRST_Frame_Char_Frame.BG = Octo_ToDo_FIRST_Frame_Char_Frame:CreateTexture(nil, "BACKGROUND")
-				Octo_ToDo_FIRST_Frame_Char_Frame.BG:Hide()
-				Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetPoint("TOPLEFT", 0, -E.Octo_Globals.curHeight) -- ФОН ЗАЛОГИНЕНОГО ПЕРСОНАЖА (рога - желтый)
-				Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetPoint("BOTTOMRIGHT", 0, 0)
-				Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetColorTexture(r, g, b, 1)
-				for i = 1, #OctoTable_func_otrisovka_FIRST do
-					CharInfo.GUID = curCharGUID
-					local CF = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID().."CF"..i, Octo_ToDo_FIRST_Frame_Char_Frame)
-					Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i] = CF
-					CF.index = i
-					CF:SetSize(E.Octo_Globals.curWidth, E.Octo_Globals.curHeight)
-					CF:SetPoint("TOP", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, -E.Octo_Globals.curHeight*(i-1))
-					CF:SetScript("OnEnter", Central_Frame_Mouse_OnEnter)
-					CF:SetScript("OnLeave", Central_Frame_Mouse_OnLeave)
-					CF:SetMouseClickEnabled(false)
-					local CL = CF:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-					CL:SetAllPoints()
-					CL:SetFontObject(OctoFont11)
-					CL:SetJustifyV("MIDDLE")
-					CL:SetJustifyH("CENTER")
-					CL:SetTextColor(1, 1, 1, 1)
-					Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"] = Octo_ToDo_FIRST_Frame_Char_Frame:CreateTexture(nil, "BACKGROUND")
-					Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetAllPoints(Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i])
-					Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(r, g, b, 0)
-					CF.CL = CL
-				end
-			else
-				Octo_ToDo_FIRST_Frame_Char_Frame = Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID]
-			end
-			Octo_ToDo_FIRST_Frame_Char_Frame:SetSize(E.Octo_Globals.curWidth, E.Octo_Globals.curHeight)
-			if #Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames == 0 then
-				Octo_ToDo_FIRST_Frame_Char_Frame:SetPoint("TOPRIGHT", 0, 0)
-			else
-				Octo_ToDo_FIRST_Frame_Char_Frame:SetPoint("TOPRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames[#Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames], "TOPLEFT", 0, 0)
-			end
-			Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames[#Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames + 1] = Octo_ToDo_FIRST_Frame_Char_Frame
-			if curGUID == curCharGUID then
-				Octo_ToDo_FIRST_Frame_Char_Frame.BG:Show()
-				Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetAlpha(E.Octo_Globals.BGALPHA*2)
-			end
+		local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+		local curCharGUID = CharInfo.GUID
+		-- if CharInfo.classFilename == "DEATHKNIGHT" then
+		-- 	if not MEME_FRAME then
+		-- 		MEME_FRAME = CreateFrame("Frame")
+		-- 		MEME_FRAME:Hide()
+		-- 	end
+		-- 	if not MEME_FRAME[curCharGUID] then
+		-- 		MEME_FRAME[curCharGUID] = CreateFrame("Frame", "MEME_FRAME[curCharGUID]"..curCharGUID, Octo_ToDo_FIRST_Frame_Main_Frame, "BackdropTemplate")
+		-- 		MEME_FRAME[curCharGUID]:SetPoint("BOTTOM", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, 0)
+		-- 		MEME_FRAME[curCharGUID]:SetSize(E.Octo_Globals.curWidth*E.Octo_Globals.scale, E.Octo_Globals.curHeight/2*E.Octo_Globals.scale)
+		-- 		MEME_FRAME[curCharGUID]:SetFrameStrata("LOW")
+		-- 		MEME_FRAME[curCharGUID]:SetBackdrop({
+		-- 				bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+		-- 				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+		-- 				edgeSize = 1,
+		-- 		})
+		-- 		MEME_FRAME[curCharGUID]:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+		-- 		MEME_FRAME[curCharGUID]:SetBackdropBorderColor(0, 0, 0, 1)
+		-- 		MEME_FRAME[curCharGUID].icon = MEME_FRAME[curCharGUID]:CreateTexture(nil, "ARTWORK")
+		-- 		MEME_FRAME[curCharGUID].icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Melli.tga")
+		-- 		MEME_FRAME[curCharGUID].icon:SetAllPoints(MEME_FRAME[curCharGUID])
+		-- 		MEME_FRAME[curCharGUID]:Show()
+		-- 		local model = CreateFrame("PlayerModel", "model"..curCharGUID, MEME_FRAME[curCharGUID])
+		-- 		model:SetPoint("BOTTOM", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, 0)
+		-- 		model:SetSize(220, 220)
+		-- 		-- model:SetPoint("TOPLEFT", 25, 20)
+		-- 		model:SetDisplayInfo(39490) --
+		-- 		model:SetRotation(.4)
+		-- 		model:PlayAnimKit(1371)
+		-- 		-- 39490 chaika
+		-- 		-- 63509 arrow
+		-- 		-- 49585 garrosh
+		-- 		-- 55907 juk
+		-- 		-- [65309] = "creature/dhmaletank/dhmaletank.m2",
+		-- 		-- [66406] = "creature/dhmaletank/dhmaletank.m2",
+		-- 		-- [68671] = "creature/dhmaletank/dhmaletank.m2",
+		-- 		-- [70373] = "creature/dhmaletank/dhmaletank.m2",
+		-- 						-- murloccostume.m2 21723
+		-- 	end
+		-- end
+		if not Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID] then
+			Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID] = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID().."Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID]", Octo_ToDo_FIRST_Frame_Main_Frame.scrollChild, "BackdropTemplate")
+			Octo_ToDo_FIRST_Frame_Char_Frame = Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID]
+			Octo_ToDo_FIRST_Frame_Char_Frame:SetPoint("BOTTOM", 0, 0)
+			Octo_ToDo_FIRST_Frame_Char_Frame.BG = Octo_ToDo_FIRST_Frame_Char_Frame:CreateTexture(nil, "BACKGROUND")
+			Octo_ToDo_FIRST_Frame_Char_Frame.BG:Hide()
+			Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetPoint("TOPLEFT", 0, -E.Octo_Globals.curHeight) -- ФОН ЗАЛОГИНЕНОГО ПЕРСОНАЖА (рога - желтый)
+			Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetPoint("BOTTOMRIGHT", 0, 0)
+			Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetColorTexture(r, g, b, 1)
 			for i = 1, #OctoTable_func_otrisovka_FIRST do
-				local TEXTLEFT = Octo_ToDo_FIRST_Frame_Main_Frame["TextLeft"..i]
-				local TEXTCENT = Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i]
-				local BG = Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]
-				TEXTCENT.tooltip = {}
-				local vivodCent = " "
-				local vivodLeft = " "
-				vivodCent, vivodLeft = OctoTable_func_otrisovka_FIRST[i](CharInfo, TEXTCENT.tooltip, TEXTCENT.CL, BG)
-				TEXTLEFT:SetText(vivodLeft or "leftText")
-				TEXTCENT.CL:SetText(vivodCent or "centText")
-				if #TEXTCENT.tooltip == 0 or #TEXTCENT.tooltip[1] == 0 then
-					TEXTCENT.tooltip = nil
-				end
+				CharInfo.GUID = curCharGUID
+				local CF = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID().."CF"..i, Octo_ToDo_FIRST_Frame_Char_Frame)
+				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i] = CF
+				CF.index = i
+				CF:SetSize(E.Octo_Globals.curWidth, E.Octo_Globals.curHeight)
+				CF:SetPoint("TOP", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, -E.Octo_Globals.curHeight*(i-1))
+				CF:SetScript("OnEnter", Central_Frame_Mouse_OnEnter)
+				CF:SetScript("OnLeave", Central_Frame_Mouse_OnLeave)
+				CF:SetMouseClickEnabled(false)
+				local CL = CF:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+				CL:SetAllPoints()
+				CL:SetFontObject(OctoFont11)
+				CL:SetJustifyV("MIDDLE")
+				CL:SetJustifyH("CENTER")
+				CL:SetTextColor(1, 1, 1, 1)
+				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"] = Octo_ToDo_FIRST_Frame_Char_Frame:CreateTexture(nil, "BACKGROUND")
+				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetAllPoints(Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i])
+				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(r, g, b, 0)
+				CF.CL = CL
 			end
-			--
-			--
-			--
-			--
-			if not Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton then
-				Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton = CreateFrame("Frame")
-				Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton:Hide()
-			end
-			if not Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID] then
-				Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID] = CreateFrame("BUTTON", "Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]"..i, Octo_ToDo_FIRST_Frame_Char_Frame, "BackDropTemplate")
-			end
-			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetSize(16, 10)
-			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetPoint("TOP", Octo_ToDo_FIRST_Frame_Char_Frame, "BOTTOM", 0, -4)
-			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetBackdrop({
-			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-			edgeSize = 1,
-			})
-			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetBackdropBorderColor(1, 0, 0, 0)
-			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetScript("OnEnter", function(self)
-			self:SetBackdropBorderColor(1, 0, 0, 1)
-			self.icon:SetVertexColor(1, 0, 0, 1)
-			GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
-			GameTooltip:ClearLines()
-			GameTooltip:SetText(DELETE)
-			GameTooltip:Show()
-			end)
-			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetScript("OnLeave", function(self)
-			self:SetBackdropBorderColor(1, 0, 0, 0)
-			self.icon:SetVertexColor(1, 1, 1, 1)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-			end)
-			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetScript("OnMouseDown", function(self)
-			self:SetBackdropBorderColor(1, 0, 0, .5)
-			self.icon:SetVertexColor(1, 0, 0, .5)
-			end)
-			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetScript("OnClick", function()
-			Octo_ToDoDeleteChar(curCharGUID)
-			end)
-			local t = Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:CreateTexture(nil, "BACKGROUND")
-			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID].icon = t
-			t:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\closeWHITE.tga")
-			t:SetAllPoints(Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID])
-		end -- if
-		local curAltFrameWidth = #Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames * E.Octo_Globals.curWidth/2
-		local width = curAltFrameWidth*2+E.Octo_Globals.curWidthTitle
-		local height = E.Octo_Globals.curHeight*(#OctoTable_func_otrisovka_FIRST)
-		Octo_ToDo_FIRST_Frame_Main_Frame.scrollChild:SetSize(width, height)
-		if height > E.Octo_Globals.Addon_Height then
-			height = E.Octo_Globals.Addon_Height
-			Octo_ToDo_FIRST_Frame_Main_Frame.ScrollBar:Show()
 		else
-			Octo_ToDo_FIRST_Frame_Main_Frame.ScrollBar:Hide()
+			Octo_ToDo_FIRST_Frame_Char_Frame = Octo_ToDo_FIRST_Frame_Main_Frame[curCharGUID]
 		end
-		Octo_ToDo_FIRST_Frame_Main_Frame:SetSize(width, height) -- ТУТ БЫЛА ЗАЛУПА
-	end -- for
+		Octo_ToDo_FIRST_Frame_Char_Frame:SetSize(E.Octo_Globals.curWidth, E.Octo_Globals.curHeight)
+		if #Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames == 0 then
+			Octo_ToDo_FIRST_Frame_Char_Frame:SetPoint("TOPRIGHT", 0, 0)
+		else
+			Octo_ToDo_FIRST_Frame_Char_Frame:SetPoint("TOPRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames[#Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames], "TOPLEFT", 0, 0)
+		end
+		Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames[#Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames + 1] = Octo_ToDo_FIRST_Frame_Char_Frame
+		if curGUID == curCharGUID then
+			Octo_ToDo_FIRST_Frame_Char_Frame.BG:Show()
+			Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetAlpha(E.Octo_Globals.BGALPHA*2)
+		end
+		for i = 1, #OctoTable_func_otrisovka_FIRST do
+			local TEXTLEFT = Octo_ToDo_FIRST_Frame_Main_Frame["TextLeft"..i]
+			local TEXTCENT = Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i]
+			local BG = Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]
+			TEXTCENT.tooltip = {}
+			local vivodCent = " "
+			local vivodLeft = " "
+			vivodCent, vivodLeft = OctoTable_func_otrisovka_FIRST[i](CharInfo, TEXTCENT.tooltip, TEXTCENT.CL, BG)
+			TEXTLEFT:SetText(vivodLeft or "leftText")
+			TEXTCENT.CL:SetText(vivodCent or "centText")
+			if #TEXTCENT.tooltip == 0 or #TEXTCENT.tooltip[1] == 0 then
+				TEXTCENT.tooltip = nil
+			end
+		end
+		--
+		if not Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton then
+			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton = CreateFrame("Frame")
+			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton:Hide()
+		end
+		if not Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID] then
+			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID] = CreateFrame("BUTTON", "Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]"..i, Octo_ToDo_FIRST_Frame_Char_Frame, "BackDropTemplate")
+		end
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetSize(16, 10)
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetPoint("TOP", Octo_ToDo_FIRST_Frame_Char_Frame, "BOTTOM", 0, -4)
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetBackdrop({
+		edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+		edgeSize = 1,
+		})
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetBackdropBorderColor(1, 0, 0, 0)
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetScript("OnEnter", function(self)
+		self:SetBackdropBorderColor(1, 0, 0, 1)
+		self.icon:SetVertexColor(1, 0, 0, 1)
+		GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
+		GameTooltip:ClearLines()
+		GameTooltip:SetText(DELETE)
+		GameTooltip:Show()
+		end)
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetScript("OnLeave", function(self)
+		self:SetBackdropBorderColor(1, 0, 0, 0)
+		self.icon:SetVertexColor(1, 1, 1, 1)
+		GameTooltip:ClearLines()
+		GameTooltip:Hide()
+		end)
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetScript("OnMouseDown", function(self)
+		self:SetBackdropBorderColor(1, 0, 0, .5)
+		self.icon:SetVertexColor(1, 0, 0, .5)
+		end)
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetScript("OnClick", function()
+		Octo_ToDoDeleteChar(curCharGUID)
+		end)
+		local t = Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:CreateTexture(nil, "BACKGROUND")
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID].icon = t
+		t:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\closeWHITE.tga")
+		t:SetAllPoints(Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID])
+	end -- if
+	local curAltFrameWidth = #Octo_ToDo_FIRST_Frame_Main_Frame.AllCharFrames * E.Octo_Globals.curWidth/2
+	local width = curAltFrameWidth*2+E.Octo_Globals.curWidthTitle
+	local height = E.Octo_Globals.curHeight*(#OctoTable_func_otrisovka_FIRST)
+	Octo_ToDo_FIRST_Frame_Main_Frame.scrollChild:SetSize(width, height)
+	if height > E.Octo_Globals.Addon_Height then
+		height = E.Octo_Globals.Addon_Height
+		Octo_ToDo_FIRST_Frame_Main_Frame.ScrollBar:Show()
+	else
+		Octo_ToDo_FIRST_Frame_Main_Frame.ScrollBar:Hide()
+	end
+	Octo_ToDo_FIRST_Frame_Main_Frame:SetSize(width, height) -- ТУТ БЫЛА ЗАЛУПА
 end
 function Octo_ToDoDeleteChar(curGUID)
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
@@ -6686,7 +6724,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		end
 	end
 	if (event == "VARIABLES_LOADED") and not InCombatLockdown() then
-		if Octo_ToDo_SmartCollectNEW == nil then Octo_ToDo_SmartCollectNEW = {} end
+		if Octo_ToDo_SmartCollectNEW2 == nil then Octo_ToDo_SmartCollectNEW2 = {} end
 		if Octo_Achi_MAIN == nil then Octo_Achi_MAIN = {} end
 		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars == nil then Octo_ToDoVars = {} end
@@ -6783,11 +6821,11 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDoVars.config.Octo_debug_Event_SECOND ~= nil then E.Octo_Globals.Octo_debug_Event_SECOND = Octo_ToDoVars.config.Octo_debug_Event_SECOND end
 		if Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND == nil then Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND = false end
 		if Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND ~= nil then E.Octo_Globals.Octo_debug_BUTTONS_SECOND = Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND end
-		if Octo_ToDo_SmartCollectNEW == nil then Octo_ToDo_SmartCollectNEW = {} end
-		if Octo_ToDo_SmartCollectNEW.LFGInstance == nil then Octo_ToDo_SmartCollectNEW.LFGInstance = {} end
-		if Octo_ToDo_SmartCollectNEW.Holiday == nil then Octo_ToDo_SmartCollectNEW.Holiday = {} end
-		if Octo_ToDo_SmartCollectNEW.Holiday.Active == nil then Octo_ToDo_SmartCollectNEW.Holiday.Active = {} end
-		if Octo_ToDo_SmartCollectNEW.Holiday.Collect == nil then Octo_ToDo_SmartCollectNEW.Holiday.Collect = {} end
+		if Octo_ToDo_SmartCollectNEW2 == nil then Octo_ToDo_SmartCollectNEW2 = {} end
+		if Octo_ToDo_SmartCollectNEW2.LFGInstance == nil then Octo_ToDo_SmartCollectNEW2.LFGInstance = {} end
+		if Octo_ToDo_SmartCollectNEW2.Holiday == nil then Octo_ToDo_SmartCollectNEW2.Holiday = {} end
+		if Octo_ToDo_SmartCollectNEW2.Holiday.Active == nil then Octo_ToDo_SmartCollectNEW2.Holiday.Active = {} end
+		if Octo_ToDo_SmartCollectNEW2.Holiday.Collect == nil then Octo_ToDo_SmartCollectNEW2.Holiday.Collect = {} end
 		if Octo_ToDoOther.prefix == nil then Octo_ToDoOther.prefix = 1 end
 		if Octo_ToDoOther.TokenPrice == nil then Octo_ToDoOther.TokenPrice = 0 end
 		for _, classFilename in pairs(E.Octo_Table.OctoTable_EnglishClasses) do
@@ -6848,7 +6886,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 							Collect_ALL_PlayerInfo()
 							Collect_All_Currency()
 							Collect_ALL_GreatVault()
-							Collect_All_Holiday()
 							Collect_ALL_ItemLevel()
 							Collect_ALL_ItemsInBag()
 							Collect_ALL_KnownSpell()
@@ -7064,16 +7101,16 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_ALL_Mail()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
-	if (event == "PLAYER_ENTERING_WORLD" or event == "CALENDAR_OPEN_EVENT") and not InCombatLockdown() then
-	-- or event == "LFG_COMPLETION_REWARD"
-	-- or event == "LFG_UPDATE_RANDOM_INFO"
-	-- or event == "CALENDAR_UPDATE_EVENT_LIST"
-	-- or event == "CALENDAR_UPDATE_EVENT"
-	-- or event == "CALENDAR_CLOSE_EVENT"
-	-- or event == "CALENDAR_NEW_EVENT"
-		Collect_All_Holiday()
-		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
-	end
+	-- if (event == "PLAYER_ENTERING_WORLD" or event == "CALENDAR_OPEN_EVENT") and not InCombatLockdown() then
+	-- -- or event == "LFG_COMPLETION_REWARD"
+	-- -- or event == "LFG_UPDATE_RANDOM_INFO"
+	-- -- or event == "CALENDAR_UPDATE_EVENT_LIST"
+	-- -- or event == "CALENDAR_UPDATE_EVENT"
+	-- -- or event == "CALENDAR_CLOSE_EVENT"
+	-- -- or event == "CALENDAR_NEW_EVENT"
+	-- 	Collect_All_Holiday()
+	-- 	if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+	-- end
 	if event == "PLAYER_REGEN_DISABLED" or InCombatLockdown() then
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then
 			Octo_ToDo_FIRST_Frame_Main_Frame:Hide()

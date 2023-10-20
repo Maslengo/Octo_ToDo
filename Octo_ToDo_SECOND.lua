@@ -1815,7 +1815,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 end
 function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 	if event == "VARIABLES_LOADED" and not InCombatLockdown() then
-		if Octo_ToDo_SmartCollectNEW == nil then Octo_ToDo_SmartCollectNEW = {} end
+		if Octo_ToDo_SmartCollectNEW2 == nil then Octo_ToDo_SmartCollectNEW2 = {} end
 		if Octo_Achi_MAIN == nil then Octo_Achi_MAIN = {} end
 		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars == nil then Octo_ToDoVars = {} end

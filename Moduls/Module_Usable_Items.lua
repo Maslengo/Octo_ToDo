@@ -13,17 +13,17 @@ local function func_coloredText(fontstring)
 	local r, g, b, a = fontstring:GetTextColor()
 	return E.Octo_Func.func_rgb2hex(r, g, b, a)..text.."|r"
 end
--- local function TEST_FUNC(self)
-function TEST_FUNC()
+local function TEST_FUNC(self)
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."TEST_FUNC()".."|r")
 	end
+	local count = 0
 	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
 			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 			if containerInfo then
 				local itemID = containerInfo.itemID
-				if itemID then
+				if itemID and itemID == self then
 					local link = containerInfo.hyperlink
 					-- local _, link = GetItemInfo(itemID)
 					inspectScantip:ClearLines()
@@ -44,84 +44,29 @@ function TEST_FUNC()
 								-- tinsert(E.Octo_Table.white_list_ALL, {itemid = itemID, count = 1},)
 								-- print (text, inspectScantip:NumLines(), E.Octo_Func.func_rgb2hexDEV(r, g, b, a))
 								if QWE:find("^|cffFF2020") --[[and QWE:find(USE_COLON)]] then
-									print (link)
+									count = count + 1
 								end
 							end
 						end
 					end
+					-- print (count, link)
 					inspectScantip:ClearLines()
 				end
 			end
 		end
 	end
+	return count
 end
 --USABLEITEMS
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.UsableItems then
-			local UnitLevel = UnitLevel("PLAYER")
-			local classFilename = select(2, UnitClass("PLAYER"))
 			-- https://www.wowhead.com/ru/item=205151/%D0%B8%D0%B7%D0%B2%D0%B8%D0%BB%D0%B8%D1%81%D0%BA#comments
 			-- https://www.wowhead.com/ru/item=206009/ https://www.wowhead.com/ru/item=206010/ https://www.wowhead.com/ru/item=206014/
 			-- https://www.wowhead.com/ru/item=206014/ https://www.wowhead.com/ru/item=206011/ https://www.wowhead.com/ru/item=206015/
 			-- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
 			-- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
 			-- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
-			if classFilename == "WARRIOR" or classFilename == "PALADIN" or classFilename == "DEATHKNIGHT" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_70, E.Octo_Table.white_list_Krokuun_Plate)
-			end
-			if classFilename == "HUNTER" or classFilename == "EVOKER" or classFilename == "SHAMAN" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_70, E.Octo_Table.white_list_Krokuun_ChainMail)
-			end
-			if classFilename == "DRUID" or classFilename == "MONK" or classFilename == "DEMONHUNTER" or classFilename == "ROGUE" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_70, E.Octo_Table.white_list_Krokuun_Leather)
-			end
-			if classFilename == "PRIEST" or classFilename == "MAGE" or classFilename == "WARLOCK" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_70, E.Octo_Table.white_list_Krokuun_Cloth)
-			end
-			if UnitLevel == 70 then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_70)
-			end
-			--ТОКЕНЫ
-			if classFilename == "WARRIOR" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_WARRIOR)
-			end
-			if classFilename == "PALADIN" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_PALADIN)
-			end
-			if classFilename == "HUNTER" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_HUNTER)
-			end
-			if classFilename == "ROGUE" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_ROGUE)
-			end
-			if classFilename == "PRIEST" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_PRIEST)
-			end
-			if classFilename == "DEATHKNIGHT" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_DEATHKNIGHT)
-			end
-			if classFilename == "SHAMAN" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_SHAMAN)
-			end
-			if classFilename == "MAGE" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_MAGE)
-			end
-			if classFilename == "WARLOCK" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_WARLOCK)
-			end
-			if classFilename == "MONK" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_MONK)
-			end
-			if classFilename == "DRUID" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_DRUID)
-			end
-			if classFilename == "DEMONHUNTER" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_DEMONHUNTER)
-			end
-			if classFilename == "EVOKER" then
-				E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_EVOKER)
-			end
-			E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, E.Octo_Table.white_list_ALL_SETS)
+
 			local function UsableItems_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
 				GameTooltip:ClearLines()
@@ -185,8 +130,7 @@ tinsert(E.Octo_Globals.modules, function()
 			function UsableItemFrame_OnEvent(self, event)
 				-- if (event == "ITEM_COUNT_CHANGED" or event == "ITEM_COUNT_UPDATE" or event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED" or event == "PLAYER_ENTERING_WORLD") and not InCombatLockdown() --[[and isGroup == false]] then
 				if (event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED") and not InCombatLockdown() --[[and isGroup == false]] then
-					C_Timer.After(2, function()
-						-- TEST_FUNC()
+					C_Timer.After(.1, function()
 						UsableItemFrame()
 					end)
 				elseif event == "PLAYER_REGEN_DISABLED" then
@@ -216,7 +160,7 @@ tinsert(E.Octo_Globals.modules, function()
 						-- UsableItems_Frame_TEXTCOUNT:SetText("")
 					else
 						for _, v in pairs(E.Octo_Table.white_list_ALL) do
-							if GetItemCount(v.itemid) >= v.count --[[and TEST_FUNC(v.itemid) == true]] then
+							if GetItemCount(v.itemid) >= v.count and TEST_FUNC(v.itemid) == 0 then
 								if v.itemid == 32502 then -- https://ru.wowhead.com/quest=11020
 									v.itemid = 32503
 								end
