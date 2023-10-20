@@ -54,10 +54,10 @@ E.Octo_Table.white_list_ALL = {
     {itemid = 116804, count = 1},
     {itemid = 33154, count = 1},
     {itemid = 140590, count = 1},
-
-
-
-
+    {itemid = 104013, count = 1},
+    {itemid = 104012, count = 1},
+    {itemid = 104010, count = 1},
+    {itemid = 104009, count = 1},
 
 
 
@@ -267,7 +267,7 @@ E.Octo_Table.white_list_ALL = {
 	{itemid = 147217, count = 1},
 	{itemid = 147218, count = 1},
 	{itemid = 147219, count = 1},
-	{itemid = 147220, count = 1},
+	-- {itemid = 147220, count = 1},
 	{itemid = 147221, count = 1},
 	{itemid = 147222, count = 1},
 	{itemid = 147223, count = 1},

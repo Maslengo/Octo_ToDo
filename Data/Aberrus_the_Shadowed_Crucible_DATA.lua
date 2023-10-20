@@ -754,52 +754,52 @@ E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA = {
 	},
 }
 E.Octo_Globals.Aberrus_the_Shadowed_Crucible_DATA_ITEMID = {
-    WARRIOR = {
-        ["LFR"] = {
-            ["Head"] = 202443, -- Голова
-            ["Shoulder"] = 202441, -- Плечи
-            ["Back"] = 202438, -- Спина
-            ["Chest"] = 202446, -- Грудь
-            ["Wrist"] = 204390, -- Запястья
-            ["Hands"] = 202444, -- Кисти рук
-            ["Waist"] = 202577, -- пояс
-            ["Legs"] = 202442, -- Ноги
-            ["Feet"] = 202445, -- Ботинки
-        },
-        ["Normal"] = {
-            ["Head"] = 202443,
-            ["Shoulder"] = 204431,
-            ["Back"] = 202438,
-            ["Chest"] = 202446,
-            ["Wrist"] = 204390,
-            ["Hands"] = 202444,
-            ["Waist"] = 202440,
-            ["Legs"] = 202597,
-            ["Feet"] = 202445,
-        },
-        ["Heroic"] = {
-            ["Head"] = 202443,
-            ["Shoulder"] = 202441,
-            ["Back"] = 202438,
-            ["Chest"] = 202446,
-            ["Wrist"] = 202439,
-            ["Hands"] = 202444,
-            ["Waist"] = 202577,
-            ["Legs"] = 202442,
-            ["Feet"] = 202445,
-        },
-        ["Mythic"] = {
-            ["Head"] = 202443,
-            ["Shoulder"] = 202441,
-            ["Back"] = 202438,
-            ["Chest"] = 202446,
-            ["Wrist"] = 202439,
-            ["Hands"] = 202444,
-            ["Waist"] = 202577,
-            ["Legs"] = 202442,
-            ["Feet"] = 204396,
-        },
-    },
+	WARRIOR = {
+		["LFR"] = {
+			["Head"] = 202443, -- Голова
+			["Shoulder"] = 202441, -- Плечи
+			["Back"] = 202438, -- Спина
+			["Chest"] = 202446, -- Грудь
+			["Wrist"] = 204390, -- Запястья
+			["Hands"] = 202444, -- Кисти рук
+			["Waist"] = 202577, -- пояс
+			["Legs"] = 202442, -- Ноги
+			["Feet"] = 202445, -- Ботинки
+		},
+		["Normal"] = {
+			["Head"] = 202443,
+			["Shoulder"] = 204431,
+			["Back"] = 202438,
+			["Chest"] = 202446,
+			["Wrist"] = 204390,
+			["Hands"] = 202444,
+			["Waist"] = 202440,
+			["Legs"] = 202597,
+			["Feet"] = 202445,
+		},
+		["Heroic"] = {
+			["Head"] = 202443,
+			["Shoulder"] = 202441,
+			["Back"] = 202438,
+			["Chest"] = 202446,
+			["Wrist"] = 202439,
+			["Hands"] = 202444,
+			["Waist"] = 202577,
+			["Legs"] = 202442,
+			["Feet"] = 202445,
+		},
+		["Mythic"] = {
+			["Head"] = 202443,
+			["Shoulder"] = 202441,
+			["Back"] = 202438,
+			["Chest"] = 202446,
+			["Wrist"] = 202439,
+			["Hands"] = 202444,
+			["Waist"] = 202577,
+			["Legs"] = 202442,
+			["Feet"] = 204396,
+		},
+	},
 }
 
 E.Octo_Globals.InventoryType = {

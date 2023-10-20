@@ -782,7 +782,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		end)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
-		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE) -- ..L["InDev"]
+		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE..L["InDev"])
 		--
 		local number = 18
 		local pizza = E.Octo_Func.GenerateUniqueID()
@@ -795,7 +795,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		end)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
-		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE..L["InDev"])
+		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE) -- ..L["InDev"]
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, AddonTitle)

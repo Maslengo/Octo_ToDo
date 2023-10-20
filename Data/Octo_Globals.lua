@@ -24,11 +24,11 @@ E.Octo_Globals.ilvlToShow = 400
 E.Octo_Globals.Addon_Height = 400
 E.Octo_Globals.BGALPHA = .1
 E.Octo_Globals.regions = {
-    [1] = "us",
-    [2] = "kr",
-    [3] = "eu",
-    [4] = "tw",
-    [5] = "cn"
+	[1] = "us",
+	[2] = "kr",
+	[3] = "eu",
+	[4] = "tw",
+	[5] = "cn"
 }
 
 -- E.Octo_Globals.isElvUI = IsAddOnLoaded("ElvUI")

@@ -162,7 +162,17 @@ function E.Octo_Func.func_rgb2hex(r, g, b, a)
 	-- print ("c"..string.format("%02x", math.floor(a*255))..E.Octo_Func.utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255))))
 	return "|c"..string.format("%02x", math.floor(a*255))..E.Octo_Func.utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
-local rgbToHex = E.Octo_Func.rgbToHex
+local func_rgb2hex = E.Octo_Func.func_rgb2hex
+----------------------------------------------------------------
+function E.Octo_Func.func_rgb2hexDEV(r, g, b, a)
+	local r, g, b, a = r, g, b, a
+	if not a then
+		a = 1
+	end
+	-- print ("c"..string.format("%02x", math.floor(a*255))..E.Octo_Func.utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255))))
+	return "c"..string.format("%02x", math.floor(a*255))..E.Octo_Func.utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+end
+local func_rgb2hexDEV = E.Octo_Func.func_rgb2hexDEV
 ----------------------------------------------------------------
 function E.Octo_Func.func_percent(percent, maxvalue)
 	if tonumber(percent) and tonumber(maxvalue) then

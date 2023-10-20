@@ -1374,74 +1374,6 @@ local function func_Octo_ToDo_SECOND_Frame_TEST_Button()
 		TomTom:AddWaypoint(97, 48.49/100, 49.05/100, {title = E.Octo_Func.func_GetMapName(97)})
 	end
 end
-function Collect_All_Pois()
-	if Octo_ToDoVars.config.Octo_debug_Function_SECOND == true then
-		ChatFrame1.AddMessage(E.Octo_Globals.Function_Color.."Collect_All_Pois()".."|r")
-	end
-	Octo_ToDo_SmartCollectNEW.Pois = {}
-	local DF_MAP_LIST = {
-		2022,
-		2023,
-		2024,
-		2025,
-	}
-	for _, mapID in ipairs(DF_MAP_LIST) do
-		local pois = C_AreaPoiInfo.GetAreaPOIForMap(mapID)
-		if #pois ~= 0 then
-			for i=1, #pois do
-				local poiData = C_AreaPoiInfo.GetAreaPOIInfo(mapID, pois[i])
-				-- if poiData and type(poiData.atlasName) == "string" then
-				-- if poiData and type(poiData.atlasName) == "string" and (poiData.atlasName:find("^ElementalStorm") or poiData.atlasName == "racing") then
-				if poiData and type(poiData.atlasName) == "string" and (poiData.atlasName:find("^ElementalStorm")) then
-					Octo_ToDo_SmartCollectNEW.Pois[i] = Octo_ToDo_SmartCollectNEW.Pois[i] or {}
-					Octo_ToDo_SmartCollectNEW.Pois[i].mapID = mapID
-					Octo_ToDo_SmartCollectNEW.Pois[i].atlasName = poiData.atlasName
-					Octo_ToDo_SmartCollectNEW.Pois[i].name = poiData.name
-					Octo_ToDo_SmartCollectNEW.Pois[i].description = poiData.description
-				end
-			end
-		end
-	end
-end
-function Collect_NEW_Achievement()
-	if Octo_ToDoVars.config.Octo_debug_Function_SECOND == true then
-		ChatFrame1.AddMessage(E.Octo_Globals.Function_Color.."Collect_NEW_Achievement()".."|r")
-	end
-	----------------------------------------------------------------
-	-- Octo_ToDo_Achievement = {} -- ЧИСТКА
-	----------------------------------------------------------------
-	for k, categoryID in ipairs(GetCategoryList()) do
-		local total, completed, incompleted = GetCategoryNumAchievements(categoryID, true)
-		local title, parentCategoryID = GetCategoryInfo(categoryID)
-		local vivod = completed.."/"..total
-		-- " ("..completed.."/"..total..")"
-		if total == completed then
-			vivod = E.Octo_Globals.DONE
-		else
-			if completed == 0 then
-				vivod = E.Octo_Globals.Red_Color..vivod.."|r"
-			else
-				vivod = E.Octo_Globals.Yellow_Color..vivod.."|r"
-			end
-		end
-		Octo_ToDo_Achievement[title] = Octo_ToDo_Achievement[title] or {}
-		Octo_ToDo_Achievement[title].title = title
-		Octo_ToDo_Achievement[title].categoryID = categoryID
-		Octo_ToDo_Achievement[title].parentCategoryID = parentCategoryID
-		Octo_ToDo_Achievement[title].vivod = vivod or ""
-		for i=1, total do
-			local AchievementID, name, points, completedAchi, _, _, _, _, _, icon = GetAchievementInfo(categoryID, i)
-			if AchievementID then
-				Octo_ToDo_Achievement[title].AchievementID = Octo_ToDo_Achievement[title].AchievementID or {}
-				Octo_ToDo_Achievement[title].AchievementID[AchievementID] = Octo_ToDo_Achievement[title].AchievementID[AchievementID] or {}
-				Octo_ToDo_Achievement[title].AchievementID[AchievementID].name = E.Octo_Func.func_achievementName(AchievementID)
-				Octo_ToDo_Achievement[title].AchievementID[AchievementID].completed = completedAchi
-				Octo_ToDo_Achievement[title].AchievementID[AchievementID].icon = E.Octo_Func.func_texturefromIcon(icon)
-				Octo_ToDo_Achievement[title].AchievementID[AchievementID].points = points
-			end
-		end
-	end
-end
 function Octo_ToDo_SECOND_OnLoad()
 	if not Octo_ToDo_SECOND_Frame_EventFrame then
 		Octo_ToDo_SECOND_Frame_EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
@@ -1471,29 +1403,6 @@ function O_otrisovka_SECOND()
 			end
 			return vivodCent.."|r", vivodLeft
 	end)
-	-- for k, v in pairs(Octo_ToDo_Achievement) do
-	-- 	if k == Octo_ToDoVars.config.AchievementToShow then
-	-- 		for AchievementID, info in pairs(v.AchievementID) do
-	-- 			if info.completed ~= true then
-	-- 				tinsert(OctoTable_func_otrisovka_SECOND,
-	-- 					function(CharInfo, tooltip, CL, BG)
-	-- 						local vivodCent, vivodLeft = "", ""
-	-- 						vivodLeft = info.icon..info.name.." "..info.points
-	-- 						vivodCent = E.Octo_Func.func_achievementvivod(AchievementID)
-	-- 						local numCriteria = GetAchievementNumCriteria(AchievementID)
-	-- 						if numCriteria ~= 1 then
-	-- 							tooltip[#tooltip+1] = {E.Octo_Func.func_achievementdescription(AchievementID), " "}
-	-- 							tooltip[#tooltip+1] = {" ", " "}
-	-- 						end
-	-- 						for i = 1, numCriteria do
-	-- 							tooltip[#tooltip+1] = {E.Octo_Func.func_achievementcriteriaString(AchievementID, i), E.Octo_Func.func_achievementquantity(AchievementID, i)}
-	-- 						end
-	-- 						return vivodCent, vivodLeft
-	-- 				end)
-	-- 			end
-	-- 		end
-	-- 	end
-	-- end
 	if Octo_ToDoVars.config.AchievementToShow ~= 0 then
 		local categoryID = Octo_ToDoVars.config.AchievementToShow
 		local total = GetCategoryNumAchievements(categoryID, true)
@@ -1908,7 +1817,6 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 	if event == "VARIABLES_LOADED" and not InCombatLockdown() then
 		if Octo_ToDo_SmartCollectNEW == nil then Octo_ToDo_SmartCollectNEW = {} end
 		if Octo_Achi_MAIN == nil then Octo_Achi_MAIN = {} end
-		if Octo_ToDo_Achievement == nil then Octo_ToDo_Achievement = {} end
 		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars == nil then Octo_ToDoVars = {} end
 		if Octo_ToDoVars.config == nil then Octo_ToDoVars.config = {} end
@@ -1936,9 +1844,6 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 							--  Octo_ToDo_SECOND_Frame_Main_FramePIZDA:Hide()
 							-- end
 							Octo_ToDo_SECOND_Frame_Main_Frame:SetShown(not Octo_ToDo_SECOND_Frame_Main_Frame:IsShown())
-							Collect_All_Pois()
-							-- Collect_All_Achievement()
-							-- Collect_NEW_Achievement()
 							Octo_ToDo_SECOND_AddDataToAltFrame()
 						end
 					else

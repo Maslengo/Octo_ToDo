@@ -1,6 +1,60 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
+local inspectScantip = nil
+if not inspectScantip then
+	inspectScantip = CreateFrame("GameTooltip", "OctoToDoScanningTooltip", nil, "GameTooltipTemplate")
+	inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
+end
+local function func_coloredText(fontstring)
+	if not fontstring then return nil end
+	local text = fontstring:GetText()
+	if not text then return nil end
+	local r, g, b, a = fontstring:GetTextColor()
+	return E.Octo_Func.func_rgb2hex(r, g, b, a)..text.."|r"
+end
+-- local function TEST_FUNC(self)
+function TEST_FUNC()
+	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."TEST_FUNC()".."|r")
+	end
+	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
+			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
+			if containerInfo then
+				local itemID = containerInfo.itemID
+				if itemID then
+					local link = containerInfo.hyperlink
+					-- local _, link = GetItemInfo(itemID)
+					inspectScantip:ClearLines()
+					inspectScantip:SetHyperlink(link)
+					if inspectScantip:NumLines() > 0 then
+						for i = 1, inspectScantip:NumLines() do
+							local text = _G["OctoToDoScanningTooltipTextLeft"..i]:GetText()
+							local r, g, b, a = _G["OctoToDoScanningTooltipTextLeft"..i]:GetTextColor()
+							local QWE = func_coloredText(_G["OctoToDoScanningTooltipTextLeft"..i])
+							if text and text ~= "" and QWE then
+								-- cff0070DD -- синий шмот
+								-- cffFF2020 красный
+								-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
+								-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
+								-- if QWE:find("|cffFF2020|r") then -- RED COLOR
+								-- elseif QWE:find("Использование:") and itemID then
+								-- print (E.Octo_Func.func_rgb2hexDEV(r, g, b, a).."tinsert"..link)
+								-- tinsert(E.Octo_Table.white_list_ALL, {itemid = itemID, count = 1},)
+								-- print (text, inspectScantip:NumLines(), E.Octo_Func.func_rgb2hexDEV(r, g, b, a))
+								if QWE:find("^|cffFF2020") --[[and QWE:find(USE_COLON)]] then
+									print (link)
+								end
+							end
+						end
+					end
+					inspectScantip:ClearLines()
+				end
+			end
+		end
+	end
+end
 --USABLEITEMS
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDoVars.config.UsableItems then
@@ -99,7 +153,6 @@ tinsert(E.Octo_Globals.modules, function()
 			UsableItems_Frame_TEXTNAME:SetPoint("TOPLEFT", UsableItems_Frame, "TOPRIGHT")
 			UsableItems_Frame_TEXTNAME:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 22, "OUTLINE")
 			UsableItems_Frame_TEXTNAME:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
-
 			if not UsableItems_Frame_TEXTCOUNT then
 				UsableItems_Frame_TEXTCOUNT = UsableItems_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			end
@@ -130,9 +183,12 @@ tinsert(E.Octo_Globals.modules, function()
 				end
 			end
 			function UsableItemFrame_OnEvent(self, event)
-				if event == "ITEM_COUNT_CHANGED" or event == "ITEM_COUNT_UPDATE" or event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED" or event == "PLAYER_ENTERING_WORLD" and not InCombatLockdown() --[[and isGroup == false]] then
-					-- print (event)
-					UsableItemFrame()
+				-- if (event == "ITEM_COUNT_CHANGED" or event == "ITEM_COUNT_UPDATE" or event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED" or event == "PLAYER_ENTERING_WORLD") and not InCombatLockdown() --[[and isGroup == false]] then
+				if (event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED") and not InCombatLockdown() --[[and isGroup == false]] then
+					C_Timer.After(2, function()
+						-- TEST_FUNC()
+						UsableItemFrame()
+					end)
 				elseif event == "PLAYER_REGEN_DISABLED" then
 					if UsableItems_Frame:IsShown() then
 						UsableItems_Frame:Hide()
@@ -141,24 +197,7 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 			function UsableItemFrame()
 				if not InCombatLockdown() and UsableItems_Frame then
-
-					for k, v in pairs(Octo_ToDo_SmartCollectNEW.Items.Pets) do
-						if k then
-							E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, {{itemid = k, count = 1},})
-						end
-					end
-					for k, v in pairs(Octo_ToDo_SmartCollectNEW.Items.Mounts) do
-						if k then
-							E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, {{itemid = k, count = 1},})
-						end
-					end
-					for k, v in pairs(Octo_ToDo_SmartCollectNEW.Items.Toys) do
-						if k then
-							E.Octo_Func.TableConcat(E.Octo_Table.white_list_ALL, {{itemid = k, count = 1},})
-						end
-					end
-
-					local itemID =  191251
+					local itemID = 191251
 					if (GetItemCount(191251) >= 30 and GetItemCount(193201) >= 3) then
 						UsableItems_Frame:Show()
 						UsableItems_Frame:SetAttribute("macrotext", "/use item:"..itemID)
@@ -170,14 +209,14 @@ tinsert(E.Octo_Globals.modules, function()
 						UsableItems_Frame_TEXTNAME:SetText(E.Octo_Func.func_itemName(itemID))
 						UsableItems_Frame_TEXTCOUNT:SetText(GetItemCount(itemID, true, true, true))
 						-- break
-					-- elseif (GetItemCount(191251) < 30 and GetItemCount(193201) < 3) and UsableItems_Frame:IsShown() then
-					-- 	UsableItems_Frame:Hide()
-					-- 	UsableItems_Frame.icon:SetTexture(413587)
-					-- 	UsableItems_Frame_TEXTNAME:SetText("")
-					-- 	UsableItems_Frame_TEXTCOUNT:SetText("")
+						-- elseif (GetItemCount(191251) < 30 and GetItemCount(193201) < 3) and UsableItems_Frame:IsShown() then
+						-- UsableItems_Frame:Hide()
+						-- UsableItems_Frame.icon:SetTexture(413587)
+						-- UsableItems_Frame_TEXTNAME:SetText("")
+						-- UsableItems_Frame_TEXTCOUNT:SetText("")
 					else
 						for _, v in pairs(E.Octo_Table.white_list_ALL) do
-							if GetItemCount(v.itemid) >= v.count then
+							if GetItemCount(v.itemid) >= v.count --[[and TEST_FUNC(v.itemid) == true]] then
 								if v.itemid == 32502 then -- https://ru.wowhead.com/quest=11020
 									v.itemid = 32503
 								end
@@ -207,3 +246,4 @@ tinsert(E.Octo_Globals.modules, function()
 			UsableItemFrame_OnLoad()
 		end
 end)
+

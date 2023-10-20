@@ -16,8 +16,7 @@ E.Octo_Func.func_Octo_LoadAddOn("BugSack")
 -- E.Octo_Func.func_Octo_LoadAddOn("Rarity")
 -- E.Octo_Func.func_Octo_LoadAddOn("Rarity_Options")
 E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
--- FRAMES --
---
+-- FRAMES
 local Button = nil
 local CF = nil
 local Octo_ToDo_FIRST_Frame_Char_Frame = nil
@@ -1174,56 +1173,11 @@ function Collect_ALL_GreatVault()
 	--
 end
 local function func_coloredText(fontstring)
-	-- if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."func_coloredText".."|r")
-	-- end
 	if not fontstring then return nil end
 	local text = fontstring:GetText()
 	if not text then return nil end
 	local r, g, b, a = fontstring:GetTextColor()
 	return E.Octo_Func.func_rgb2hex(r, g, b, a)..text.."|r"
-	-- return string.format("|c%02x%02x%02x%02x"..text.."|r", textAlpha*255, textR*255, textG*255, textB*255)
-end
-function TEST_FUNC()
-	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."TEST_FUNC()".."|r")
-	end
-	-- local PIZDATABLE_TOYS_TOOLTIP = {}
-	-- E.Octo_Table.white_list_ALL
-	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
-			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-			if containerInfo then
-				local itemID = containerInfo.itemID
-				local link = containerInfo.hyperlink
-				-- local _, link = GetItemInfo(itemID)
-				inspectScantip:ClearLines()
-				inspectScantip:SetHyperlink(link)
-				if inspectScantip:NumLines() > 0 then
-					for i = 1, inspectScantip:NumLines() do
-						local text = _G["OctoToDoScanningTooltipTextLeft"..i]:GetText()
-						local r, g, b, a = _G["OctoToDoScanningTooltipTextLeft"..i]:GetTextColor()
-						local QWE = func_coloredText(_G["OctoToDoScanningTooltipTextLeft"..i])
-						if text and text ~= "" then
-							-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
-							-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
-							-- if QWE:find("|cffFF2020|r") then -- RED COLOR
-							if QWE:find(TOY) and not QWE:find("|cffFF2020") then
-								Octo_ToDo_SmartCollectNEW.Items.Toys[itemID] = true
-								-- PIZDATABLE_TOYS_TOOLTIP = {
-								-- {itemid = itemID, count = 1},
-								-- }
-								ChatFrame1:AddMessage(E.Octo_Func.func_itemTexture(itemID)..E.Octo_Func.func_itemName(itemID), itemID, i, QWE)
-							end
-							-- SPELL_FAILED_CUSTOM_ERROR_77
-						end
-					end
-				end
-				inspectScantip:ClearLines()
-			end
-		end
-	end
-	-- E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_EventsIDs, PIZDATABLE_TOYS_TOOLTIP)
 end
 function Collect_All_Currency()
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
@@ -1325,71 +1279,6 @@ function Collect_ALL_ItemsInBag()
 					if itemID == 183727 then
 						Possible_Anima = Possible_Anima + (3 * stackCount)
 					end
-				end
-				-- subclassID
-				-- 5 ЕДА
-				if itemID then
-					if itemQuality == 0 and sellPrice ~= 0 and classID ~= 2 and classID ~= 4 then
-						Octo_ToDo_SmartCollectNEW.Items.GrayItemsTrash[itemID] = Octo_ToDo_SmartCollectNEW.Items.GrayItemsTrash[itemID] or {}
-						Octo_ToDo_SmartCollectNEW.Items.GrayItemsTrash[itemID] = true
-					end
-					if itemQuality == 0 and sellPrice ~= 0 and (classID == 2 or classID == 4) then
-						Octo_ToDo_SmartCollectNEW.Items.GrayItemsArmor[itemID] = Octo_ToDo_SmartCollectNEW.Items.GrayItemsArmor[itemID] or {}
-						Octo_ToDo_SmartCollectNEW.Items.GrayItemsArmor[itemID] = true
-					end
-					if bindType == 0 and expacID >= 9 then
-						if classID == 0 and itemQuality < 3 and subclassID ~= 0 then
-							Octo_ToDo_SmartCollectNEW.Items.Consumables[itemID] = Octo_ToDo_SmartCollectNEW.Items.Consumables[itemID] or {}
-							Octo_ToDo_SmartCollectNEW.Items.Consumables[itemID] = true
-						end
-						if classID == 7 then
-							if subclassID == 1 then
-								Octo_ToDo_SmartCollectNEW.Items.Parts[itemID] = Octo_ToDo_SmartCollectNEW.Items.Parts[itemID] or {}
-								Octo_ToDo_SmartCollectNEW.Items.Parts[itemID] = true
-							end
-							if subclassID == 10 then
-								Octo_ToDo_SmartCollectNEW.Items.Elemental[itemID] = Octo_ToDo_SmartCollectNEW.Items.Elemental[itemID] or {}
-								Octo_ToDo_SmartCollectNEW.Items.Elemental[itemID] = true
-							end
-							if subclassID == 18 then
-								Octo_ToDo_SmartCollectNEW.Items.OptionalReagents[itemID] = Octo_ToDo_SmartCollectNEW.Items.OptionalReagents[itemID] or {}
-								Octo_ToDo_SmartCollectNEW.Items.OptionalReagents[itemID] = true
-							end
-							if subclassID == 11 then
-								Octo_ToDo_SmartCollectNEW.Items.Other[itemID] = Octo_ToDo_SmartCollectNEW.Items.Other[itemID] or {}
-								Octo_ToDo_SmartCollectNEW.Items.Other[itemID] = true
-							end
-							if subclassID == -1 then
-								Octo_ToDo_SmartCollectNEW.Items.TradeGoods[itemID] = Octo_ToDo_SmartCollectNEW.Items.TradeGoods[itemID] or {}
-								Octo_ToDo_SmartCollectNEW.Items.TradeGoods[itemID] = true
-							end
-						end
-					end
-					-- TOYS?
-					-- MISCELLANEOUS Разное
-					-- MOUNTS Транспорт
-					if itemType == MISCELLANEOUS and itemSubType == "Хлам" and classID == 15 and subclassID == 0 and bindType == 1 and itemQuality >= 3 then
-						Octo_ToDo_SmartCollectNEW.Items.Toys = Octo_ToDo_SmartCollectNEW.Items.Toys or {}
-						Octo_ToDo_SmartCollectNEW.Items.Toys[itemID] = true
-					end
-					if itemType == MISCELLANEOUS and itemSubType == MOUNTS then
-						Octo_ToDo_SmartCollectNEW.Items.Mounts = Octo_ToDo_SmartCollectNEW.Items.Mounts or {}
-						Octo_ToDo_SmartCollectNEW.Items.Mounts[itemID] = true
-					end
-					if itemType == MISCELLANEOUS and itemSubType == "Питомцы" or itemSubType == "Pets" then
-						Octo_ToDo_SmartCollectNEW.Items.Pets = Octo_ToDo_SmartCollectNEW.Items.Pets or {}
-						Octo_ToDo_SmartCollectNEW.Items.Pets[itemID] = true
-					end
-				end
-			end
-		end
-	end
-	if collect and not InCombatLockdown() then
-		for q, w in pairs(Octo_ToDo_SmartCollectNEW.Items) do
-			for k, v in pairs(w) do
-				if k then
-					local count = GetItemCount(k, true, true, true)
-					collect.ItemsInBag[k] = count
 				end
 			end
 		end
@@ -6211,66 +6100,6 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 			-- t:SetVertexColor(1, 1, 1, 1)
 			t:SetAllPoints(Octo_ToDo_FIRST_Frame_Events_Button)
 		end
-		if not Octo_ToDo_FIRST_Frame_consumables_Button then
-			Octo_ToDo_FIRST_Frame_consumables_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
-			Octo_ToDo_FIRST_Frame_consumables_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_consumables_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 24, -150)
-			Octo_ToDo_FIRST_Frame_consumables_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-			Octo_ToDo_FIRST_Frame_consumables_Button:SetBackdropBorderColor(0, .44, .98, 1)
-			Octo_ToDo_FIRST_Frame_consumables_Button:SetScript("OnEnter", function(self)
-					local i = 0
-					self:SetBackdropBorderColor(1, 0, 0, 1)
-					self.icon:SetVertexColor(1, 0, 0, 1)
-					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-					GameTooltip:ClearLines()
-					GameTooltip:AddDoubleLine(L["Consumables"], " ")
-					GameTooltip:AddDoubleLine((Octo_ToDoVars.config.ShowOnlyCurrentRealm and E.Octo_Globals.Green_Color or E.Octo_Globals.Red_Color)..L["Only Current Realm"], " ")
-					GameTooltip:AddDoubleLine(" ", " ")
-					--
-					for v, q in pairs(Octo_ToDo_SmartCollectNEW.Items.Consumables) do
-						for k, CharInfo in pairs(Octo_ToDoLevels) do
-							local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
-							if curServer == CharInfo.curServer and Octo_ToDoVars.config.ShowOnlyCurrentRealm == true then
-								if (CharInfo.ItemsInBag[v] ~= 0) then
-									i = i + 1
-									if v ~= nil then
-										GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name))
-									end
-								end
-							elseif Octo_ToDoVars.config.ShowOnlyCurrentRealm == false then
-								if (CharInfo.ItemsInBag[v] ~= 0) then
-									i = i + 1
-									GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(v)..E.Octo_Func.func_itemName(v).." "..CharInfo.ItemsInBag[v], classcolor:WrapTextInColorCode(CharInfo.Name.."("..CharInfo.curServerShort..")"))
-								end
-							end
-						end
-					end
-					--
-					if i == 0 then
-						GameTooltip:AddLine("No Data")
-					end
-					GameTooltip:AddDoubleLine(" ", " ")
-					GameTooltip:Show()
-			end)
-			Octo_ToDo_FIRST_Frame_consumables_Button:SetScript("OnLeave", function(self)
-					self:SetBackdropBorderColor(0, .44, .98, 1)
-					self.icon:SetVertexColor(1, 1, 1, 1)
-					GameTooltip:ClearLines()
-					GameTooltip:Hide()
-			end)
-			Octo_ToDo_FIRST_Frame_consumables_Button:SetScript("OnMouseDown", function(self)
-					self:SetBackdropBorderColor(1, 0, 0, .5)
-					self.icon:SetVertexColor(1, 0, 0, .5)
-			end)
-			Octo_ToDo_FIRST_Frame_consumables_Button:SetScript("OnClick", function()
-					Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
-			end)
-			local t = Octo_ToDo_FIRST_Frame_consumables_Button:CreateTexture(nil, "BACKGROUND")
-			Octo_ToDo_FIRST_Frame_consumables_Button.icon = t
-			t:SetTexture(967534)
-			-- t:SetVertexColor(1, 1, 1, 1)
-			t:SetAllPoints(Octo_ToDo_FIRST_Frame_consumables_Button)
-		end
 		--
 		if not Octo_ToDo_FIRST_Frame_Phylacterweave_Button then
 		    Octo_ToDo_FIRST_Frame_Phylacterweave_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
@@ -6658,6 +6487,10 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 				return
 				a.curServer < b.curServer or a.curServer == b.curServer
 				and
+				a.UnitLevel < b.UnitLevel or a.UnitLevel == b.UnitLevel
+				and
+				a.UnitXPPercent < b.UnitXPPercent or a.UnitXPPercent == b.UnitXPPercent
+				and
 				a.avgItemLevel < b.avgItemLevel or a.avgItemLevel == b.avgItemLevel
 				and
 				b.Name < a.Name
@@ -6855,7 +6688,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	if (event == "VARIABLES_LOADED") and not InCombatLockdown() then
 		if Octo_ToDo_SmartCollectNEW == nil then Octo_ToDo_SmartCollectNEW = {} end
 		if Octo_Achi_MAIN == nil then Octo_Achi_MAIN = {} end
-		if Octo_ToDo_Achievement == nil then Octo_ToDo_Achievement = {} end
 		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars == nil then Octo_ToDoVars = {} end
 		if Octo_ToDoVars.config == nil then Octo_ToDoVars.config = {} end
@@ -6951,24 +6783,11 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDoVars.config.Octo_debug_Event_SECOND ~= nil then E.Octo_Globals.Octo_debug_Event_SECOND = Octo_ToDoVars.config.Octo_debug_Event_SECOND end
 		if Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND == nil then Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND = false end
 		if Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND ~= nil then E.Octo_Globals.Octo_debug_BUTTONS_SECOND = Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND end
-		Octo_ToDo_SmartCollectNEW.Items = Octo_ToDo_SmartCollectNEW.Items or {}
-		Octo_ToDo_SmartCollectNEW.Pois = Octo_ToDo_SmartCollectNEW.Pois or {}
 		if Octo_ToDo_SmartCollectNEW == nil then Octo_ToDo_SmartCollectNEW = {} end
 		if Octo_ToDo_SmartCollectNEW.LFGInstance == nil then Octo_ToDo_SmartCollectNEW.LFGInstance = {} end
 		if Octo_ToDo_SmartCollectNEW.Holiday == nil then Octo_ToDo_SmartCollectNEW.Holiday = {} end
 		if Octo_ToDo_SmartCollectNEW.Holiday.Active == nil then Octo_ToDo_SmartCollectNEW.Holiday.Active = {} end
 		if Octo_ToDo_SmartCollectNEW.Holiday.Collect == nil then Octo_ToDo_SmartCollectNEW.Holiday.Collect = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.Consumables == nil then Octo_ToDo_SmartCollectNEW.Items.Consumables = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.Toys == nil then Octo_ToDo_SmartCollectNEW.Items.Toys = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.GrayItemsTrash == nil then Octo_ToDo_SmartCollectNEW.Items.GrayItemsTrash = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.GrayItemsArmor == nil then Octo_ToDo_SmartCollectNEW.Items.GrayItemsArmor = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.Mounts == nil then Octo_ToDo_SmartCollectNEW.Items.Mounts = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.Pets == nil then Octo_ToDo_SmartCollectNEW.Items.Pets = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.Parts == nil then Octo_ToDo_SmartCollectNEW.Items.Parts = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.Elemental == nil then Octo_ToDo_SmartCollectNEW.Items.Elemental = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.OptionalReagents == nil then Octo_ToDo_SmartCollectNEW.Items.OptionalReagents = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.Other == nil then Octo_ToDo_SmartCollectNEW.Items.Other = {} end
-		if Octo_ToDo_SmartCollectNEW.Items.TradeGoods == nil then Octo_ToDo_SmartCollectNEW.Items.TradeGoods = {} end
 		if Octo_ToDoOther.prefix == nil then Octo_ToDoOther.prefix = 1 end
 		if Octo_ToDoOther.TokenPrice == nil then Octo_ToDoOther.TokenPrice = 0 end
 		for _, classFilename in pairs(E.Octo_Table.OctoTable_EnglishClasses) do
