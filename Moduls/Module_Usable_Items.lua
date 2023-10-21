@@ -130,7 +130,7 @@ tinsert(E.Octo_Globals.modules, function()
 			function UsableItemFrame_OnEvent(self, event)
 				-- if (event == "ITEM_COUNT_CHANGED" or event == "ITEM_COUNT_UPDATE" or event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED" or event == "PLAYER_ENTERING_WORLD") and not InCombatLockdown() --[[and isGroup == false]] then
 				if (event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED") and not InCombatLockdown() --[[and isGroup == false]] then
-					C_Timer.After(.1, function()
+					C_Timer.After(.2, function()
 						UsableItemFrame()
 					end)
 				elseif event == "PLAYER_REGEN_DISABLED" then
@@ -152,35 +152,30 @@ tinsert(E.Octo_Globals.modules, function()
 						UsableItems_Frame.itemid = itemID
 						UsableItems_Frame_TEXTNAME:SetText(E.Octo_Func.func_itemName(itemID))
 						UsableItems_Frame_TEXTCOUNT:SetText(GetItemCount(itemID, true, true, true))
-						-- break
-						-- elseif (GetItemCount(191251) < 30 and GetItemCount(193201) < 3) and UsableItems_Frame:IsShown() then
-						-- UsableItems_Frame:Hide()
-						-- UsableItems_Frame.icon:SetTexture(413587)
-						-- UsableItems_Frame_TEXTNAME:SetText("")
-						-- UsableItems_Frame_TEXTCOUNT:SetText("")
 					else
-						for _, v in pairs(E.Octo_Table.white_list_ALL) do
-							if GetItemCount(v.itemid) >= v.count and TEST_FUNC(v.itemid) == 0 then
-								if v.itemid == 32502 then -- https://ru.wowhead.com/quest=11020
-									v.itemid = 32503
+						for itemid, count in pairs(E.Octo_Table.white_list_ALL_2) do
+							if GetItemCount(itemid) >= count and TEST_FUNC(itemid) == 0 then
+								if itemid == 32502 then -- https://ru.wowhead.com/quest=11020
+									itemid = 32503
 								end
 								UsableItems_Frame:Show()
-								UsableItems_Frame:SetAttribute("macrotext", "/use item:"..v.itemid)
-								UsableItems_Frame.icon:SetTexture(select(10, GetItemInfo(v.itemid)) or 413587)
-								local itemQuality = (select(3, GetItemInfo(v.itemid)) or 0)
+								UsableItems_Frame:SetAttribute("macrotext", "/use item:"..itemid)
+								UsableItems_Frame.icon:SetTexture(select(10, GetItemInfo(itemid)) or 413587)
+								local itemQuality = (select(3, GetItemInfo(itemid)) or 0)
 								local r, g, b = GetItemQualityColor(itemQuality)
 								UsableItems_Frame:SetBackdropBorderColor(r, g, b, 1)
-								UsableItems_Frame.itemid = v.itemid
-								UsableItems_Frame_TEXTNAME:SetText(E.Octo_Func.func_itemName(v.itemid))
-								UsableItems_Frame_TEXTCOUNT:SetText(GetItemCount(v.itemid, true, true, true))
+								UsableItems_Frame.itemid = itemid
+								UsableItems_Frame_TEXTNAME:SetText(E.Octo_Func.func_itemName(itemid))
+								UsableItems_Frame_TEXTCOUNT:SetText(GetItemCount(itemid, true, true, true))
 								break
-							elseif GetItemCount(v.itemid) <= (v.count-1) or (GetItemCount(191251) < 30 and GetItemCount(193201) < 3) and UsableItems_Frame:IsShown() then
+							elseif GetItemCount(itemid) <= (count-1) or (GetItemCount(191251) < 30 and GetItemCount(193201) < 3) and UsableItems_Frame:IsShown() then
 								UsableItems_Frame:Hide()
 								UsableItems_Frame.icon:SetTexture(413587)
 								UsableItems_Frame_TEXTNAME:SetText("")
 								UsableItems_Frame_TEXTCOUNT:SetText("")
 							end
 						end
+						--
 					end
 				end
 			end

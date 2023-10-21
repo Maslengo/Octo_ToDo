@@ -112,8 +112,8 @@ if L then
 	L["Feet"] = true
 	L["The Coalition of Flames"] = true
 	L["Only Current Realm"] = true
-	L["Player level: "] = true
-	L["Player MAX level: "] = true
+	L["Player level"] = true
+	L["Player MAX level"] = true
 	L["Item level: "] = true -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
 	L["Width: "] = true
 	L["Auto Turn Quests"] = true
@@ -253,8 +253,8 @@ if L then
 	L["The Coalition of Flames"] = "Союз пламени"
 	L["InDev"] = "|cffFF0000В разработке|r"
 	L["Only Current Realm"] = "Только текущий сервер"
-	L["Player level: "] = "Мин. уровень: "
-	L["Player MAX level: "] = "Макс. уровень: "
+	L["Player level"] = "Мин. уровень"
+	L["Player MAX level"] = "Макс. уровень"
 	L["Item level: "] = "Уровень предметов: " -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
 	L["Width: "] = "Ширина: "
 	L["Auto Turn Quests"] = "Автопринятие заданий"

@@ -612,11 +612,11 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza]:SetScript("OnValueChanged", function (self, value)
 				value = math.floor(value * (1 / step) + .5) / (1 / step)
 				Octo_ToDoVars.config.LevelToShow = value
-				LevelToShowTEXT:SetText(L["Player level: "]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
+				LevelToShowTEXT:SetText(L["Player level"]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
 		LevelToShowTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		LevelToShowTEXT:SetText(L["Player level: "]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
+		LevelToShowTEXT:SetText(L["Player level"]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
 		self[pizza]:Show()
 		--
 		local number = 5.5
@@ -632,11 +632,11 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza]:SetScript("OnValueChanged", function (self, value)
 				value = math.floor(value * (1 / step) + .5) / (1 / step)
 				Octo_ToDoVars.config.LevelToShowMAX = value
-				LevelToShowMAXTEXT:SetText(L["Player level: "]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShowMAX..FONT_COLOR_CODE_CLOSE)
+				LevelToShowMAXTEXT:SetText(L["Player MAX level"]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShowMAX..FONT_COLOR_CODE_CLOSE)
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
 		LevelToShowMAXTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		LevelToShowMAXTEXT:SetText(L["Player MAX level: "]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShowMAX..FONT_COLOR_CODE_CLOSE)
+		LevelToShowMAXTEXT:SetText(L["Player MAX level"]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShowMAX..FONT_COLOR_CODE_CLOSE)
 		self[pizza]:Show()
 		--
 		local number = 7
@@ -796,6 +796,59 @@ MAIN_Config:SetScript("OnShow", function(self)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE) -- ..L["InDev"]
+
+
+
+
+		-- https://wowpedia.fandom.com/wiki/Patch_10.0.0/API_changes
+		-- https://github.com/Gethe/wow-ui-source/tree/live/Interface/SharedXML/Slider
+		-- local slider_scale = 0.8
+		-- local multiplier = 2-slider_scale
+		-- local number = 24
+		-- local pizza = E.Octo_Func.GenerateUniqueID()
+		-- self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
+		-- self[pizza]:SetScale(slider_scale)
+		-- self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER*multiplier, -indent*number*multiplier)
+		-- local minValue = 1
+		-- local maxValue = 70
+		-- local steps = maxValue-minValue
+		-- local formatters = {
+		-- 	[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
+		-- 		return L["Player level"]
+		-- 	end,
+		-- 	[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
+		-- 		return E.Octo_Globals.Green_Color..value.."|r"
+		-- 	end,
+		-- }
+		-- self[pizza]:Init(Octo_ToDoVars.config.LevelToShow, minValue, maxValue, steps, formatters)
+		-- self[pizza]:SetWidth(200)
+		-- self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+		-- 	Octo_ToDoVars.config.LevelToShow = value
+		-- 	-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		-- end)
+
+
+
+
+		-- self[pizza]:SetMinMaxValues(1, 70)
+		-- self[pizza]:SetValueStep(step)
+		-- -- self[pizza]:SetValue(Octo_ToDoVars.config.LevelToShow)
+		-- self[pizza]:SetScript("OnValueChanged", function (self, value)
+		-- 		value = math.floor(value * (1 / step) + .5) / (1 / step)
+		-- 		Octo_ToDoVars.config.LevelToShow = value
+		-- 		--LevelToShowTEXT:SetText(L["Player level"]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
+		-- 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		-- end)
+		--LevelToShowTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
+		--LevelToShowTEXT:SetText(L["Player level"]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
+		-- self[pizza]:Show()
+
+
+
+
+
+
+
 end)
 -- ADD CATEGORY
 local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, AddonTitle)

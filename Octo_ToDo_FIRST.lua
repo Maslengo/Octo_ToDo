@@ -1280,9 +1280,45 @@ function Collect_ALL_ItemsInBag()
 						Possible_Anima = Possible_Anima + (3 * stackCount)
 					end
 				end
+				-- Разное MISCELLANEOUS
+				-- Другое OTHER
+				-- Транспорт MOUNTS
+				-- Улучшение предмета ITEM_UPGRADE
+				-- Оружие ENCHSLOT_WEAPON
+				--
+				-- Чарки
+				if itemType == ITEM_UPGRADE then
+					-- print ("tinsert Чарки", itemID, hyperlink)
+					--tinsert(E.Octo_Table.white_list_ALL_2, itemID, 1)
+					E.Octo_Table.white_list_ALL_2[itemID] = 1
+				end
+				if itemType == "Рецепт" then
+					-- print ("tinsert Рецепт", itemID, hyperlink)
+					--tinsert(E.Octo_Table.white_list_ALL_2, itemID, 1)
+					E.Octo_Table.white_list_ALL_2[itemID] = 1
+				end
+				-- Toys (JUNK?)
+				if itemType == MISCELLANEOUS and itemSubType == "Хлам" and classID == 15 and subclassID == 0 and bindType == 1 and expacID >= 1 and itemQuality >= 1 then
+					-- print ("tinsert Разное Хлам", itemID, hyperlink)
+					--tinsert(E.Octo_Table.white_list_ALL_2, itemID, 1)
+					E.Octo_Table.white_list_ALL_2[itemID] = 1
+				end
+				-- Mounts
+				if itemType == MISCELLANEOUS and itemSubType == MOUNTS then
+					-- print ("tinsert Разное Транспорт", itemID, hyperlink)
+					--tinsert(E.Octo_Table.white_list_ALL_2, itemID, 1)
+					E.Octo_Table.white_list_ALL_2[itemID] = 1
+				end
+				-- Pets
+				if itemType == MISCELLANEOUS and itemSubType == "Питомцы" or itemSubType == "Pets" then
+					-- print ("tinsert Разное Питомцы", itemID, hyperlink)
+					--tinsert(E.Octo_Table.white_list_ALL_2, itemID, 1)
+					E.Octo_Table.white_list_ALL_2[itemID] = 1
+				end
 			end
 		end
 	end
+	--
 	if collect and not InCombatLockdown() then
 		for k, v in ipairs(E.Octo_Table.OctoTable_itemID_ALL) do
 			local count = GetItemCount(v, true, true, true)
@@ -2264,13 +2300,20 @@ function O_otrisovka_FIRST()
 			--
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal  then
-				tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."("..CharInfo.curServer..")".."|r", E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.classColorHex..CharInfo.specName.."|r"}
+				tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", " "}
 				if CharInfo.UnitLevel ~= 70 and CharInfo.UnitXPPercent then
-					tooltip[#tooltip+1] = {LEVEL..": "..CharInfo.UnitLevel.." "..CharInfo.UnitXPPercent.."%", CharInfo.classColorHex..CharInfo.RaceLocal.."|r"}
+					tooltip[#tooltip+1] = {CharInfo.RaceLocal.." "..CharInfo.classColorHex..CharInfo.UnitLevel.."-го|r уровня "..CharInfo.classColorHex..CharInfo.UnitXPPercent.."%|r", " "} -- LEVEL_GAINED
 				else
-					tooltip[#tooltip+1] = {" ", CharInfo.classColorHex..CharInfo.RaceLocal.."|r"}
+					tooltip[#tooltip+1] = {CharInfo.RaceLocal, " "}
 				end
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName.." "..CharInfo.className, " "}
+					if CharInfo.Faction == "Horde" then
+						tooltip[#tooltip+1] = {THE_HORDE, " "}
+					else
+						tooltip[#tooltip+1] = {THE_ALLIANCE, " "}
+					end
 					tooltip[#tooltip+1] = {" "," "}
+
 			end
 			if CharInfo.BindLocation ~= 0 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(134414)..L["Bind Location"], CharInfo.BindLocation}
@@ -6530,15 +6573,24 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	sort(sorted, function(a, b)
 			if a and b then
 				return
+				-- a.Faction < b.Faction or a.Faction == b.Faction
+				-- and
 				a.curServer < b.curServer or a.curServer == b.curServer
 				and
 				a.UnitLevel < b.UnitLevel or a.UnitLevel == b.UnitLevel
 				and
+				-- a.classFilename < b.classFilename or a.classFilename == b.classFilename
+				-- and
+				-- a.className < b.className or a.className == b.className
+				-- and
+				-- a.classId < b.classId or a.classId == b.classId
+				-- and
 				a.UnitXPPercent < b.UnitXPPercent or a.UnitXPPercent == b.UnitXPPercent
 				and
 				a.avgItemLevel < b.avgItemLevel or a.avgItemLevel == b.avgItemLevel
 				and
 				b.Name < a.Name
+				-- a.classId < b.classId
 			end
 	end)
 	for i, CharInfo in pairs(sorted) do
@@ -6725,6 +6777,11 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	end
 	if (event == "VARIABLES_LOADED") and not InCombatLockdown() then
 		if Octo_ToDo_SmartCollectNEW2 == nil then Octo_ToDo_SmartCollectNEW2 = {} end
+		-- if Octo_ToDo_SmartCollectNEW2.items == nil then Octo_ToDo_SmartCollectNEW2.items = {} end
+		if Octo_ToDo_SmartCollectNEW2.LFGInstance == nil then Octo_ToDo_SmartCollectNEW2.LFGInstance = {} end
+		if Octo_ToDo_SmartCollectNEW2.Holiday == nil then Octo_ToDo_SmartCollectNEW2.Holiday = {} end
+		if Octo_ToDo_SmartCollectNEW2.Holiday.Active == nil then Octo_ToDo_SmartCollectNEW2.Holiday.Active = {} end
+		if Octo_ToDo_SmartCollectNEW2.Holiday.Collect == nil then Octo_ToDo_SmartCollectNEW2.Holiday.Collect = {} end
 		if Octo_Achi_MAIN == nil then Octo_Achi_MAIN = {} end
 		if Octo_ToDoLevels == nil then Octo_ToDoLevels = {} end
 		if Octo_ToDoVars == nil then Octo_ToDoVars = {} end
@@ -6821,11 +6878,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDoVars.config.Octo_debug_Event_SECOND ~= nil then E.Octo_Globals.Octo_debug_Event_SECOND = Octo_ToDoVars.config.Octo_debug_Event_SECOND end
 		if Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND == nil then Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND = false end
 		if Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND ~= nil then E.Octo_Globals.Octo_debug_BUTTONS_SECOND = Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND end
-		if Octo_ToDo_SmartCollectNEW2 == nil then Octo_ToDo_SmartCollectNEW2 = {} end
-		if Octo_ToDo_SmartCollectNEW2.LFGInstance == nil then Octo_ToDo_SmartCollectNEW2.LFGInstance = {} end
-		if Octo_ToDo_SmartCollectNEW2.Holiday == nil then Octo_ToDo_SmartCollectNEW2.Holiday = {} end
-		if Octo_ToDo_SmartCollectNEW2.Holiday.Active == nil then Octo_ToDo_SmartCollectNEW2.Holiday.Active = {} end
-		if Octo_ToDo_SmartCollectNEW2.Holiday.Collect == nil then Octo_ToDo_SmartCollectNEW2.Holiday.Collect = {} end
+
 		if Octo_ToDoOther.prefix == nil then Octo_ToDoOther.prefix = 1 end
 		if Octo_ToDoOther.TokenPrice == nil then Octo_ToDoOther.TokenPrice = 0 end
 		for _, classFilename in pairs(E.Octo_Table.OctoTable_EnglishClasses) do

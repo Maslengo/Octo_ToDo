@@ -1622,6 +1622,7 @@ function Octo_ToDo_SECOND_CreateAltFrame()
 					end
 					if parentCategoryID == value or parentCategoryID == -1 and not value then
 						info.hasArrow = parentCategoryID == -1 and categoryID ~= 92
+						info.keepShownOnClick = true
 						info.notCheckable = false
 						info.text = name ..vivod --.. E.Octo_Globals.Gray_Color.." id:"..categoryID.."|r"
 						info.value = categoryID
@@ -1632,6 +1633,7 @@ function Octo_ToDo_SECOND_CreateAltFrame()
 				end
 				if level == 1 then
 					self:ddAddSeparator(level)
+					info.keepShownOnClick = true
 					info.notCheckable = false
 					info.text = "Показывать завершенные"
 					info.hasArrow = nil
