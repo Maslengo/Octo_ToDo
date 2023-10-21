@@ -455,20 +455,16 @@ local function CreateFrameUsableItems_OnLeave(self)
 	-- end
 	local hasToy = PlayerHasToy(self.itemID)
 	local hasItem = GetItemCount(self.itemID, true, true, true) <= self.count
-	if hasToy == true or hasItem == true then
-		self.icon:SetVertexColor(1, 1, 1, 1)
-	else
-		self.icon:SetVertexColor(1, .5, .5, .3)
-	end
+	local isKnown = IsSpellKnown(self.spellID)
 	GameTooltip:ClearLines()
 	GameTooltip:Hide()
 	self:SetBackdropBorderColor(0, 0, 0, 1)
-	local isKnown = IsSpellKnown(self.spellID)
-	if isKnown == true then
+	if isKnown == true and (hasToy == true or hasItem == true) then
 		self.icon:SetVertexColor(1, 1, 1, 1)
 	else
 		self.icon:SetVertexColor(1, .5, .5, .3)
 	end
+
 	if self.itemID == 110560 and (C_QuestLog.IsQuestFlaggedCompleted(34378) == false and C_QuestLog.IsQuestFlaggedCompleted(34586) == false) then
 		self.icon:SetVertexColor(1, .5, .5, .3)
 	end
@@ -484,15 +480,17 @@ local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 		local startTime, duration = C_Container.GetItemCooldown(self.itemID)
 		local hasToy = PlayerHasToy(self.itemID)
 		local hasItem = GetItemCount(self.itemID, true, true, true) <= self.count
-		if hasToy == true or hasItem == true then
-			self.icon:SetDesaturated(false)
-			self.icon:SetAlpha(1)
-		else
-			self.icon:SetDesaturated(true)
-			self.icon:SetAlpha(.5)
-		end
 		local isKnown = IsSpellKnown(self.spellID)
-		if isKnown == false then
+		-- if hasToy == true or hasItem == true then
+		-- 	self.icon:SetDesaturated(false)
+		-- 	self.icon:SetAlpha(1)
+		-- else
+		-- 	self.icon:SetDesaturated(true)
+		-- 	self.icon:SetAlpha(.5)
+		-- end
+		if isKnown == true and (hasToy == true or hasItem == true) then
+			self.icon:SetVertexColor(1, 1, 1, 1)
+		else
 			self.icon:SetVertexColor(1, .5, .5, .3)
 		end
 		if self.itemID == 110560 and (C_QuestLog.IsQuestFlaggedCompleted(34378) == false and C_QuestLog.IsQuestFlaggedCompleted(34586) == false) then
