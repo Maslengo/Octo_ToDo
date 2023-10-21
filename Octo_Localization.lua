@@ -116,6 +116,7 @@ if L then
 	L["Player MAX level"] = true
 	L["Item level: "] = true -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
 	L["Width: "] = true
+	L["curWidthTitle: "] = true
 	L["Auto Turn Quests"] = true
 	L["Aiding the Accord"] = true
 	L["InDev"] = true
@@ -257,6 +258,7 @@ if L then
 	L["Player MAX level"] = "Макс. уровень"
 	L["Item level: "] = "Уровень предметов: " -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
 	L["Width: "] = "Ширина: "
+	-- L["curWidthTitle: "] = true
 	L["Auto Turn Quests"] = "Автопринятие заданий"
 	L["Aiding the Accord"] = "Помощь союзу"
 	L["Total"] = "Всего"

@@ -3,6 +3,8 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local lsfdd = LibStub("LibSFDropDown-1.4")
+local slider_scale = 0.8
+local multiplier = 2-slider_scale
 --
 local Expansions_Table = {
 	"|cff68ccefClassic"..FONT_COLOR_CODE_CLOSE,
@@ -35,7 +37,7 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	whileDead = 1,
 	OnAccept = function() ReloadUI() end,
 }
-local indent = 22
+local indent = 28
 local POS_LEFT = 6
 local POS_RIGHT = 474
 local POS_CENTER = POS_RIGHT/2
@@ -599,166 +601,223 @@ MAIN_Config:SetScript("OnShow", function(self)
 				end
 		end)
 		--
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		local number = 3
+		local config = "LevelToShow"
+		local text = L["Player level"]
+		local minValue = 1
+		local maxValue = 70
+		--------
+		local pizza = E.Octo_Func.GenerateUniqueID()
+		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
+		self[pizza]:SetScale(slider_scale)
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT*multiplier+11, -indent*number*multiplier)
+		local steps = maxValue-minValue
+		local formatters = {
+			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
+				return text
+			end,
+			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
+				return E.Octo_Globals.Green_Color..value.."|r"
+			end,
+		}
+		self[pizza]:Init(Octo_ToDoVars.config[config], minValue, maxValue, steps, formatters)
+		self[pizza]:SetWidth(200)
+		self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+			Octo_ToDoVars.config[config] = value
+			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		----------------------------------------------------------------
 		local number = 4
+		local config = "LevelToShowMAX"
+		local text = L["Player MAX level"]
+		local minValue = 1
+		local maxValue = 70
+		--------
 		local pizza = E.Octo_Func.GenerateUniqueID()
-		LevelToShowTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
-		self[pizza]:SetWidth(140)
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizza]:SetMinMaxValues(1, 70)
-		local step = 1
-		self[pizza]:SetValueStep(step)
-		self[pizza]:SetValue(Octo_ToDoVars.config.LevelToShow)
-		self[pizza]:SetScript("OnValueChanged", function (self, value)
-				value = math.floor(value * (1 / step) + .5) / (1 / step)
-				Octo_ToDoVars.config.LevelToShow = value
-				LevelToShowTEXT:SetText(L["Player level"]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
+		self[pizza]:SetScale(slider_scale)
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT*multiplier+11, -indent*number*multiplier)
+		local steps = maxValue-minValue
+		local formatters = {
+			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
+				return text
+			end,
+			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
+				return E.Octo_Globals.Green_Color..value.."|r"
+			end,
+		}
+		self[pizza]:Init(Octo_ToDoVars.config[config], minValue, maxValue, steps, formatters)
+		self[pizza]:SetWidth(200)
+		self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+			Octo_ToDoVars.config[config] = value
+			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		LevelToShowTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		LevelToShowTEXT:SetText(L["Player level"]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
-		self[pizza]:Show()
-		--
-		local number = 5.5
+		----------------------------------------------------------------
+		local number = 5
+		local config = "itemLevelToShow"
+		local text = L["Item level: "]
+		local minValue = 1
+		local maxValue = 560
+		--------
 		local pizza = E.Octo_Func.GenerateUniqueID()
-		LevelToShowMAXTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
-		self[pizza]:SetWidth(140)
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizza]:SetMinMaxValues(1, 70)
-		local step = 1
-		self[pizza]:SetValueStep(step)
-		self[pizza]:SetValue(Octo_ToDoVars.config.LevelToShowMAX)
-		self[pizza]:SetScript("OnValueChanged", function (self, value)
-				value = math.floor(value * (1 / step) + .5) / (1 / step)
-				Octo_ToDoVars.config.LevelToShowMAX = value
-				LevelToShowMAXTEXT:SetText(L["Player MAX level"]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShowMAX..FONT_COLOR_CODE_CLOSE)
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
+		self[pizza]:SetScale(slider_scale)
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT*multiplier+11, -indent*number*multiplier)
+		local steps = maxValue-minValue
+		local formatters = {
+			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
+				return text
+			end,
+			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
+				return E.Octo_Globals.Green_Color..value.."|r"
+			end,
+		}
+		self[pizza]:Init(Octo_ToDoVars.config[config], minValue, maxValue, steps, formatters)
+		self[pizza]:SetWidth(200)
+		self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+			Octo_ToDoVars.config[config] = value
+			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		LevelToShowMAXTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		LevelToShowMAXTEXT:SetText(L["Player MAX level"]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShowMAX..FONT_COLOR_CODE_CLOSE)
-		self[pizza]:Show()
-		--
+		----------------------------------------------------------------
+		local number = 6
+		local config = "curWidth"
+		local text = L["Width: "]
+		local minValue = 60
+		local maxValue = 160
+		--------
+		local pizza = E.Octo_Func.GenerateUniqueID()
+		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
+		self[pizza]:SetScale(slider_scale)
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT*multiplier+11, -indent*number*multiplier)
+		local steps = maxValue-minValue
+		local formatters = {
+			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
+				return text
+			end,
+			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
+				return E.Octo_Globals.Green_Color..value.."|r"
+			end,
+		}
+		self[pizza]:Init(Octo_ToDoVars.config[config], minValue, maxValue, steps, formatters)
+		self[pizza]:SetWidth(200)
+		self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+			Octo_ToDoVars.config[config] = value
+			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		----------------------------------------------------------------
 		local number = 7
+		local config = "curWidthTitle"
+		local text = L["curWidthTitle: "]
+		local minValue = 100
+		local maxValue = 400
+		--------
 		local pizza = E.Octo_Func.GenerateUniqueID()
-		itemLevelToShowTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
-		self[pizza]:SetWidth(140*E.Octo_Globals.scale)
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizza]:SetMinMaxValues(1, 560)
-		local step = 5
-		self[pizza]:SetValue(Octo_ToDoVars.config.itemLevelToShow)
-		self[pizza]:SetScript("OnValueChanged", function (self, value)
-				value = math.floor(value * (1 / step) + .5) / (1 / step)
-				Octo_ToDoVars.config.itemLevelToShow = value
-				itemLevelToShowTEXT:SetText(L["Item level: "]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.itemLevelToShow..FONT_COLOR_CODE_CLOSE)
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
+		self[pizza]:SetScale(slider_scale)
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT*multiplier+11, -indent*number*multiplier)
+		local steps = maxValue-minValue
+		local formatters = {
+			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
+				return text
+			end,
+			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
+				return E.Octo_Globals.Green_Color..value.."|r"
+			end,
+		}
+		self[pizza]:Init(Octo_ToDoVars.config[config], minValue, maxValue, steps, formatters)
+		self[pizza]:SetWidth(200)
+		self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+			Octo_ToDoVars.config[config] = value
+			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		itemLevelToShowTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		itemLevelToShowTEXT:SetText(L["Item level: "]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.itemLevelToShow..FONT_COLOR_CODE_CLOSE)
-		self[pizza]:Show()
-		--
-		local number = 8.5
+		----------------------------------------------------------------
+		local number = 8
+		local config = "curWidthTitleAchievement"
+		local text = "curWidthTitleAchievement"
+		local minValue = 100
+		local maxValue = 400
+		--------
 		local pizza = E.Octo_Func.GenerateUniqueID()
-		curWidthTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
-		self[pizza]:SetWidth(140)
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizza]:SetMinMaxValues(60, 160)
-		local step = 2
-		self[pizza]:SetValueStep(step)
-		self[pizza]:SetValue(Octo_ToDoVars.config.curWidth)
-		self[pizza]:SetScript("OnValueChanged", function (self, value)
-				value = math.floor(value * (1 / step) + .5) / (1 / step)
-				Octo_ToDoVars.config.curWidth = value
-				curWidthTEXT:SetText(L["Width: "]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.curWidth..FONT_COLOR_CODE_CLOSE.." px")
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
+		self[pizza]:SetScale(slider_scale)
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT*multiplier+11, -indent*number*multiplier)
+		local steps = maxValue-minValue
+		local formatters = {
+			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
+				return text
+			end,
+			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
+				return E.Octo_Globals.Green_Color..value.."|r"
+			end,
+		}
+		self[pizza]:Init(Octo_ToDoVars.config[config], minValue, maxValue, steps, formatters)
+		self[pizza]:SetWidth(200)
+		self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+			Octo_ToDoVars.config[config] = value
+			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		curWidthTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		curWidthTEXT:SetText(L["Width: "]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curWidth..FONT_COLOR_CODE_CLOSE.." px")
-		self[pizza]:Show()
-		--
+		----------------------------------------------------------------
+		local number = 9
+		local config = "curHeight"
+		local text = "Высота строк: "
+		local minValue = 10
+		local maxValue = 30
+		--------
+		local pizza = E.Octo_Func.GenerateUniqueID()
+		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
+		self[pizza]:SetScale(slider_scale)
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT*multiplier+11, -indent*number*multiplier)
+		local steps = maxValue-minValue
+		local formatters = {
+			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
+				return text
+			end,
+			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
+				return E.Octo_Globals.Green_Color..value.."|r"
+			end,
+		}
+		self[pizza]:Init(Octo_ToDoVars.config[config], minValue, maxValue, steps, formatters)
+		self[pizza]:SetWidth(200)
+		self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+			Octo_ToDoVars.config[config] = value
+			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+		----------------------------------------------------------------
 		local number = 10
+		local config = "Addon_Height"
+		local text = "Количество строк: /20"
+		local minValue = 200
+		local maxValue = 1200
+		--------
 		local pizza = E.Octo_Func.GenerateUniqueID()
-		curWidthTitleTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
-		self[pizza]:SetWidth(140)
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizza]:SetMinMaxValues(100, 400)
-		local step = 5
-		self[pizza]:SetValueStep(step)
-		self[pizza]:SetValue(Octo_ToDoVars.config.curWidthTitle)
-		self[pizza]:SetScript("OnValueChanged", function (self, value)
-				value = math.floor(value * (1 / step) + .5) / (1 / step)
-				Octo_ToDoVars.config.curWidthTitle = value
-				curWidthTitleTEXT:SetText("curWidthTitle"..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.curWidthTitle..FONT_COLOR_CODE_CLOSE.." px")
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
+		self[pizza]:SetScale(slider_scale)
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT*multiplier+11, -indent*number*multiplier)
+		local steps = maxValue-minValue
+		local formatters = {
+			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
+				return text
+			end,
+			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
+				return E.Octo_Globals.Green_Color..value.."|r" -- math.floor(value/20+.5)
+			end,
+		}
+		self[pizza]:Init(Octo_ToDoVars.config[config], minValue, maxValue, steps, formatters)
+		self[pizza]:SetWidth(200)
+		self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+			Octo_ToDoVars.config[config] = value
+			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		curWidthTitleTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		curWidthTitleTEXT:SetText("curWidthTitle"..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curWidthTitle..FONT_COLOR_CODE_CLOSE.." px")
-		self[pizza]:Show()
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
 		--
-		local number = 11.5
-		local pizza = E.Octo_Func.GenerateUniqueID()
-		curWidthTitleAchievementTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
-		self[pizza]:SetWidth(140)
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizza]:SetMinMaxValues(100, 400)
-		local step = 5
-		self[pizza]:SetValueStep(step)
-		self[pizza]:SetValue(Octo_ToDoVars.config.curWidthTitleAchievement)
-		self[pizza]:SetScript("OnValueChanged", function (self, value)
-				value = math.floor(value * (1 / step) + .5) / (1 / step)
-				Octo_ToDoVars.config.curWidthTitleAchievement = value
-				curWidthTitleAchievementTEXT:SetText("curWidthTitleAchievement"..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.curWidthTitleAchievement..FONT_COLOR_CODE_CLOSE.." px")
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		curWidthTitleAchievementTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		curWidthTitleAchievementTEXT:SetText("curWidthTitleAchievement"..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curWidthTitleAchievement..FONT_COLOR_CODE_CLOSE.." px")
-		self[pizza]:Show()
 		--
-		local number = 13
-		local pizza = E.Octo_Func.GenerateUniqueID()
-		curHeightTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
-		self[pizza]:SetWidth(140)
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizza]:SetMinMaxValues(10, 30)
-		local step = 1
-		self[pizza]:SetValueStep(step)
-		self[pizza]:SetValue(Octo_ToDoVars.config.curHeight)
-		self[pizza]:SetScript("OnValueChanged", function (self, value)
-				value = math.floor(value * (1 / step) + .5) / (1 / step)
-				Octo_ToDoVars.config.curHeight = value
-				curHeightTEXT:SetText("Высота строк: "..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.curHeight..FONT_COLOR_CODE_CLOSE.." px")
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		curHeightTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		curHeightTEXT:SetText("Высота строк: "..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.curHeight..FONT_COLOR_CODE_CLOSE.." px")
-		self[pizza]:Show()
-		--
-		local number = 14.5
-		local pizza = E.Octo_Func.GenerateUniqueID()
-		Addon_HeightTEXT = MAIN_scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "OptionsSliderTemplate")
-		self[pizza]:SetWidth(140)
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizza]:SetMinMaxValues(200, 1200)
-		local step = 20
-		self[pizza]:SetValueStep(step)
-		self[pizza]:SetValue(Octo_ToDoVars.config.Addon_Height)
-		self[pizza]:SetScript("OnValueChanged", function (self, value)
-				value = math.floor(value * (1 / step) + .5) / (1 / step)
-				Octo_ToDoVars.config.Addon_Height = value
-				Addon_HeightTEXT:SetText("Количество строк: "..E.Octo_Globals.Red_Color..(Octo_ToDoVars.config.Addon_Height)/step..FONT_COLOR_CODE_CLOSE)
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-		Addon_HeightTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		Addon_HeightTEXT:SetText("Количество строк: "..E.Octo_Globals.Green_Color..(Octo_ToDoVars.config.Addon_Height)/step..FONT_COLOR_CODE_CLOSE)
-		self[pizza]:Show()
-		--
-		local number = 16
+		local number = 11
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
@@ -771,7 +830,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..L["Only Current Realm"]..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 17
+		local number = 12
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
@@ -784,7 +843,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE..L["InDev"])
 		--
-		local number = 18
+		local number = 13
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
@@ -802,46 +861,8 @@ MAIN_Config:SetScript("OnShow", function(self)
 
 		-- https://wowpedia.fandom.com/wiki/Patch_10.0.0/API_changes
 		-- https://github.com/Gethe/wow-ui-source/tree/live/Interface/SharedXML/Slider
-		-- local slider_scale = 0.8
-		-- local multiplier = 2-slider_scale
-		-- local number = 24
-		-- local pizza = E.Octo_Func.GenerateUniqueID()
-		-- self[pizza] = CreateFrame("Slider", nil, MAIN_scrollChild, "MinimalSliderWithSteppersTemplate")
-		-- self[pizza]:SetScale(slider_scale)
-		-- self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER*multiplier, -indent*number*multiplier)
-		-- local minValue = 1
-		-- local maxValue = 70
-		-- local steps = maxValue-minValue
-		-- local formatters = {
-		-- 	[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
-		-- 		return L["Player level"]
-		-- 	end,
-		-- 	[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
-		-- 		return E.Octo_Globals.Green_Color..value.."|r"
-		-- 	end,
-		-- }
-		-- self[pizza]:Init(Octo_ToDoVars.config.LevelToShow, minValue, maxValue, steps, formatters)
-		-- self[pizza]:SetWidth(200)
-		-- self[pizza]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
-		-- 	Octo_ToDoVars.config.LevelToShow = value
-		-- 	-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		-- end)
 
 
-
-
-		-- self[pizza]:SetMinMaxValues(1, 70)
-		-- self[pizza]:SetValueStep(step)
-		-- -- self[pizza]:SetValue(Octo_ToDoVars.config.LevelToShow)
-		-- self[pizza]:SetScript("OnValueChanged", function (self, value)
-		-- 		value = math.floor(value * (1 / step) + .5) / (1 / step)
-		-- 		Octo_ToDoVars.config.LevelToShow = value
-		-- 		--LevelToShowTEXT:SetText(L["Player level"]..E.Octo_Globals.Red_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
-		-- 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		-- end)
-		--LevelToShowTEXT:SetPoint("BOTTOMLEFT", self[pizza], "TOPLEFT", indent, 0)
-		--LevelToShowTEXT:SetText(L["Player level"]..E.Octo_Globals.Green_Color..Octo_ToDoVars.config.LevelToShow..FONT_COLOR_CODE_CLOSE)
-		-- self[pizza]:Show()
 
 
 

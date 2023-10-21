@@ -1298,7 +1298,7 @@ function Collect_ALL_ItemsInBag()
 					E.Octo_Table.white_list_ALL_2[itemID] = 1
 				end
 				-- Toys (JUNK?)
-				if itemType == MISCELLANEOUS and itemSubType == "Хлам" and classID == 15 and subclassID == 0 and bindType == 1 and expacID >= 1 and itemQuality >= 1 then
+				if itemType == MISCELLANEOUS and itemSubType == "Хлам" and classID == 15 and subclassID == 0 and bindType == 1 and expacID >= 1 and itemQuality >= 2 then
 					-- print ("tinsert Разное Хлам", itemID, hyperlink)
 					--tinsert(E.Octo_Table.white_list_ALL_2, itemID, 1)
 					E.Octo_Table.white_list_ALL_2[itemID] = 1
