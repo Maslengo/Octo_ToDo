@@ -454,7 +454,7 @@ local function CreateFrameUsableItems_OnLeave(self)
 	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."CreateFrameUsableItems_OnLeave".."|r")
 	-- end
 	local hasToy = PlayerHasToy(self.itemID)
-	local hasItem = GetItemCount(self.itemID, true, true, true) <= self.count
+	local hasItem = GetItemCount(self.itemID, true, true, true) >= self.count
 	local isKnown = IsSpellKnown(self.spellID)
 	GameTooltip:ClearLines()
 	GameTooltip:Hide()
