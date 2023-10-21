@@ -479,7 +479,7 @@ local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 	if (event == "TOYS_UPDATED"  or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
 		local startTime, duration = C_Container.GetItemCooldown(self.itemID)
 		local hasToy = PlayerHasToy(self.itemID)
-		local hasItem = GetItemCount(self.itemID, true, true, true) <= self.count
+		local hasItem = GetItemCount(self.itemID, true, true, true) >= self.count
 		local isKnown = IsSpellKnown(self.spellID)
 		-- if hasToy == true or hasItem == true then
 		-- 	self.icon:SetDesaturated(false)
