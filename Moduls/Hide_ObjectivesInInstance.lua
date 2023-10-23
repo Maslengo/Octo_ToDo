@@ -31,15 +31,15 @@ tinsert(E.Octo_Globals.modules, function()
 				-- local difficultyID = select(3, GetInstanceInfo()) or "|cffFF0000-|r"
 				-- https://wowpedia.fandom.com/wiki/DifficultyID
 				-- PARTY
--- 				instanceType
--- string - "none" if the player is not in an instance, "scenario" for scenarios, "party" for dungeons, "raid" for raids, "arena" for arenas, and "pvp" for battlegrounds. Many of the following return values will be nil or otherwise useless in the case of "none".
+				-- instanceType
+				-- string - "none" if the player is not in an instance, "scenario" for scenarios, "party" for dungeons, "raid" for raids, "arena" for arenas, and "pvp" for battlegrounds. Many of the following return values will be nil or otherwise useless in the case of "none".
 				if instanceType == "party" or instanceType == "raid" or instanceType == "arena" or instanceType == "pvp" then
 					-- if difficultyID == 1 -- Normal party (DRAENOR)
 					if difficultyID == 2 -- Heroic party isHeroic
 					or difficultyID == 8 -- Mythic Keystone party isHeroic, isChallengeMode
-					or difficultyID == 19 -- Event party
+					-- or difficultyID == 19 -- Event party
 					or difficultyID == 23 -- Mythic party isHeroic, displayMythic
-					or difficultyID == 24 -- Timewalking party
+					-- or difficultyID == 24 -- Timewalking party
 					or difficultyID == 150 -- Normal party
 					-- PVP
 					or difficultyID == 29 -- PvEvP Scenario pvp
@@ -55,9 +55,9 @@ tinsert(E.Octo_Globals.modules, function()
 					or difficultyID == 15 -- Heroic raid displayHeroic
 					or difficultyID == 16 -- Mythic raid isHeroic, displayMythic
 					or difficultyID == 17 -- Looking For Raid raid
-					or difficultyID == 18 -- Event raid
-					or difficultyID == 33 -- Timewalking raid
-					or difficultyID == 151 -- Looking For Raid raid Timewalking
+					-- or difficultyID == 18 -- Event raid
+					-- or difficultyID == 33 -- Timewalking raid
+					-- or difficultyID == 151 -- Looking For Raid raid Timewalking
 					-- scenario
 					-- or difficultyID == 11 -- Heroic Scenario	scenario isHeroic
 					-- or difficultyID == 12 -- Normal Scenario scenario
@@ -108,6 +108,105 @@ tinsert(E.Octo_Globals.modules, function()
 			-- [21:00] [8]=2520,
 			-- [21:00] [9]=5
 			Hide_ObjectivesInInstanceOnLoad()
-		end
-end)
 
+
+
+
+
+
+
+if E.Octo_Globals.isElvUI == true or E.Octo_Globals.isElvUI == false then
+	if ObjectiveTrackerFrame then
+		local className, classFilename, classId = UnitClass("PLAYER")
+		local classColor = C_ClassColor.GetClassColor(classFilename)
+		local r, g, b = classColor:GetRGB()
+		local function Current_numQuests()
+				local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
+				local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
+				--return E.Octo_Func.func_Gradient(numQuests.." / "..maxNumQuestsCanAccept, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+				return numQuests.." / "..maxNumQuestsCanAccept
+		end
+
+
+
+
+-- TRACKER_HEADER_OBJECTIVE = "QWE1"
+-- OBJECTIVES_LABEL = "QWE2"
+-- OBJECTIVES_TRACKER_LABEL = "QWE3"
+-- TASKS_COLON = "QWE4"
+
+
+
+
+
+-- TRACKER_HEADER_QUESTS = E.Octo_Globals.func_Gradient(TRACKER_HEADER_QUESTS, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+		ObjectiveTrackerFrame.NineSlice.BottomEdge:SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.BottomLeftCorner:SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.BottomRightCorner:SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.Center:SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.LeftEdge:SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.RightEdge:SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.TopEdge:SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.TopLeftCorner:SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.TopRightCorner:SetAlpha(0)
+
+
+		Octo_ToDo_Objective = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID().."Octo_ToDo_Objective", ObjectiveTrackerFrame.NineSlice, "BackDropTemplate")
+		-- Octo_ToDo_Objective:RegisterEvent("QUEST_ACCEPTED")
+		-- Octo_ToDo_Objective:RegisterEvent("QUEST_COMPLETE")
+		-- Octo_ToDo_Objective:RegisterEvent("QUEST_FINISHED")
+		Octo_ToDo_Objective:RegisterEvent("QUEST_LOG_UPDATE")
+		-- Octo_ToDo_Objective:RegisterEvent("QUEST_REMOVED")
+		-- Octo_ToDo_Objective:RegisterEvent("QUEST_TURNED_IN")
+
+-- PLAYER_ENTERING_WORLD,
+-- QUEST_LOG_UPDATE,
+-- UNIT_QUEST_LOG_CHANGED,
+-- QUEST_DATA_LOAD_RESULT
+
+
+
+		Octo_ToDo_Objective:SetAllPoints()
+		Octo_ToDo_Objective:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+		Octo_ToDo_Objective:SetBackdropBorderColor(0, 0, 0, 1)
+		local t = Octo_ToDo_Objective:CreateTexture(nil, "BACKGROUND")
+		Octo_ToDo_Objective.icon = t
+		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+		t:SetAllPoints(Octo_ToDo_Objective)
+		t:SetColorTexture(0, 0, 0, 0.6)
+
+		local vivod = TRACKER_HEADER_QUESTS
+		Octo_ToDo_Objective:SetScript("OnEvent", function(self)
+			TRACKER_HEADER_QUESTS = vivod.." "..E.Octo_Func.func_Gradient(Current_numQuests(), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+		end)
+
+
+		-- ObjectiveTrackerFrame.NineSlice.MEME = ObjectiveTrackerFrame.NineSlice:CreateTexture(nil, "ARTWORK")
+		-- ObjectiveTrackerFrame.NineSlice.MEME:SetPoint("TOPLEFT", 0, 0)
+		-- ObjectiveTrackerFrame.NineSlice.MEME:SetPoint("BOTTOMRIGHT", 0, 0)
+		-- ObjectiveTrackerFrame.NineSlice.MEME:SetTexture("Interface/AddOns/"..GlobalAddonName.."/Media/MEME/1.tga")
+		-- ObjectiveTrackerFrame.NineSlice.MEME:SetColorTexture(1, 1, 1, 1)
+
+
+
+
+
+
+
+
+
+
+
+		-- ObjectiveTrackerFrame.NineSlice.BottomEdge:SetColorTexture(0, 0, 0, 1)
+		-- ObjectiveTrackerFrame.NineSlice.BottomLeftCorner:SetColorTexture(0, 0, 0, 1)
+		-- ObjectiveTrackerFrame.NineSlice.BottomRightCorner:SetColorTexture(0, 0, 0, 1)
+		-- ObjectiveTrackerFrame.NineSlice.Center:SetColorTexture(0, 0, 0, 1)
+		-- ObjectiveTrackerFrame.NineSlice.LeftEdge:SetColorTexture(0, 0, 0, 1)
+		-- ObjectiveTrackerFrame.NineSlice.RightEdge:SetColorTexture(0, 0, 0, 1)
+		-- ObjectiveTrackerFrame.NineSlice.TopEdge:SetColorTexture(0, 0, 0, 1)
+		-- ObjectiveTrackerFrame.NineSlice.TopLeftCorner:SetColorTexture(0, 0, 0, 1)
+		-- ObjectiveTrackerFrame.NineSlice.TopRightCorner:SetColorTexture(0, 0, 0, 1)
+		end
+		end
+	end
+end)

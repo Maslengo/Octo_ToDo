@@ -1,10 +1,10 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
-local inspectScantip = nil
-if not inspectScantip then
-	inspectScantip = CreateFrame("GameTooltip", "OctoToDoScanningTooltip", nil, "GameTooltipTemplate")
-	inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
+local inspectScantipUSABLE = nil
+if not inspectScantipUSABLE then
+	inspectScantipUSABLE = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUSABLE", nil, "GameTooltipTemplate")
+	inspectScantipUSABLE:SetOwner(UIParent, "ANCHOR_NONE")
 end
 local function func_coloredText(fontstring)
 	if not fontstring then return nil end
@@ -22,36 +22,36 @@ local function TEST_FUNC(self)
 		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
 			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 			if containerInfo then
-				local itemID = containerInfo.itemID
-				if itemID and itemID == self then
-					local link = containerInfo.hyperlink
-					-- local _, link = GetItemInfo(itemID)
-					inspectScantip:ClearLines()
-					inspectScantip:SetHyperlink(link)
-					if inspectScantip:NumLines() > 0 then
-						for i = 1, inspectScantip:NumLines() do
-							local text = _G["OctoToDoScanningTooltipTextLeft"..i]:GetText()
-							local r, g, b, a = _G["OctoToDoScanningTooltipTextLeft"..i]:GetTextColor()
-							local QWE = func_coloredText(_G["OctoToDoScanningTooltipTextLeft"..i])
-							if text and text ~= "" and QWE then
-								-- cff0070DD -- синий шмот
-								-- cffFF2020 красный
-								-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
-								-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
-								-- if QWE:find("|cffFF2020|r") then -- RED COLOR
-								-- elseif QWE:find("Использование:") and itemID then
-								-- print (E.Octo_Func.func_rgb2hexDEV(r, g, b, a).."tinsert"..link)
-								-- tinsert(E.Octo_Table.white_list_ALL, {itemid = itemID, count = 1},)
-								-- print (text, inspectScantip:NumLines(), E.Octo_Func.func_rgb2hexDEV(r, g, b, a))
-								if QWE:find("^|cffFF2020") --[[and QWE:find(USE_COLON)]] then
-									count = count + 1
+							local itemID = containerInfo.itemID
+							if itemID and itemID == self then
+								local link = containerInfo.hyperlink
+								-- local _, link = GetItemInfo(itemID)
+								inspectScantipUSABLE:ClearLines()
+								inspectScantipUSABLE:SetHyperlink(link)
+								if inspectScantipUSABLE:NumLines() > 0 then
+									for i = 1, inspectScantipUSABLE:NumLines() do
+										local text = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetText()
+										local r, g, b, a = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetTextColor()
+										local QWE = func_coloredText(_G["OctoToDoScanningTooltipUSABLETextLeft"..i])
+										if text and text ~= "" and QWE ~= nil then
+											-- cff0070DD -- синий шмот
+											-- cffFF2020 красный
+											-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
+											-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
+											-- if QWE:find("|cffFF2020|r") then -- RED COLOR
+											-- elseif QWE:find("Использование:") and itemID then
+											-- print (E.Octo_Func.func_rgb2hexDEV(r, g, b, a).."tinsert"..link)
+											-- tinsert(E.Octo_Table.white_list_ALL, {itemid = itemID, count = 1},)
+											-- print (text, inspectScantipUSABLE:NumLines(), E.Octo_Func.func_rgb2hexDEV(r, g, b, a))
+											if QWE:find("^|cffFF2020") --[[and QWE:find(USE_COLON)]] then
+												count = count + 1
+											end
+										end
+									end
 								end
+								-- print (count, link)
+								inspectScantipUSABLE:ClearLines()
 							end
-						end
-					end
-					-- print (count, link)
-					inspectScantip:ClearLines()
-				end
 			end
 		end
 	end
@@ -66,7 +66,6 @@ tinsert(E.Octo_Globals.modules, function()
 			-- https://www.wowhead.com/ru/item=206015/ https://www.wowhead.com/ru/item=206012/ https://www.wowhead.com/ru/item=206016/
 			-- https://www.wowhead.com/ru/item=206016/ https://www.wowhead.com/ru/item=206013/ https://www.wowhead.com/ru/item=206017/
 			-- https://www.wowhead.com/ru/item=206017/ https://www.wowhead.com/ru/item=206021/ https://www.wowhead.com/ru/item=205151/
-
 			local function UsableItems_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
 				GameTooltip:ClearLines()
@@ -185,4 +184,3 @@ tinsert(E.Octo_Globals.modules, function()
 			UsableItemFrame_OnLoad()
 		end
 end)
-

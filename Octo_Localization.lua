@@ -87,6 +87,7 @@ if L then
 	L["Green Fire"] = true
 	L["Some Wicked Things"] = true
 	L["Temporal Acquisitions Specialist"] = true
+	L["y. "] = true
 	L["d. "] = true
 	L["h. "] = true
 	L["m. "] = true
@@ -228,6 +229,7 @@ if L then
 	L["Green Fire"] = "Зелёный Огонь"
 	L["Some Wicked Things"] = "Некоторые неприятные вещи (10.1.5)"
 	L["Temporal Acquisitions Specialist"] = "Темпоральный специалист по снабжению"
+	L["y. "] = "г. "
 	L["d. "] = "д. "
 	L["h. "] = "ч. "
 	L["m. "] = "м. "

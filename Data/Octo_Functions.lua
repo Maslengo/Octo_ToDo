@@ -360,10 +360,16 @@ end
 local func_spellName = E.Octo_Func.func_spellName
 ----------------------------------------------------------------
 function E.Octo_Func.SecondsToClock(self)
-	local days, hours, mins, secs = "", "", "", ""
+	local years, days, hours, mins, secs = "", "", "", "", ""
 	local self = tonumber(self)
 	if self <= 0 or self == nil then
 		return "0:00"
+	elseif self >= (86400*365) then
+		years = floor(self / (86400*365))
+		days = floor(mod(self, 31536000) / 86400)	-- 365 дней в году
+		hours = floor(mod(self, 86400) / 3600) -- * 24 часа в дне
+		mins = floor(mod(self, 3600) / 60)	-- * 60 минут в часу
+		return years..L["y. "]..days..L["d. "]..hours..L["h. "]..mins..L["m. "]
 	elseif self >= 86400 then
 		days = floor(self / 86400)
 		hours = floor(mod(self, 86400) / 3600)

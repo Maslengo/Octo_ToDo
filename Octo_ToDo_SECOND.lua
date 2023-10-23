@@ -1380,8 +1380,8 @@ function Octo_ToDo_SECOND_OnLoad()
 	end
 	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("VARIABLES_LOADED")
 	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("PLAYER_LOGIN")
-	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("PLAYER_STARTED_MOVING")
-	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("PLAYER_STOPPED_MOVING")
+	-- Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("PLAYER_STARTED_MOVING")
+	-- Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("PLAYER_STOPPED_MOVING")
 	Octo_ToDo_SECOND_Frame_EventFrame:SetScript("OnEvent", function(...)
 			Octo_ToDo_SECOND_OnEvent(...)
 	end)
@@ -1414,7 +1414,7 @@ function O_otrisovka_SECOND()
 						tinsert(OctoTable_func_otrisovka_SECOND,
 							function(CharInfo, tooltip, CL, BG)
 								local vivodCent, vivodLeft = "", ""
-								vivodLeft = E.Octo_Func.func_texturefromIcon(icon)..name..E.Octo_Globals.Yellow_Color.." id:"..AchievementID.."|r"
+								vivodLeft = i..") "..E.Octo_Func.func_texturefromIcon(icon)..name..E.Octo_Globals.Yellow_Color.." "..points.."|r".." ".. E.Octo_Globals.Gray_Color.." id: "..AchievementID.."|r"
 								vivodCent = E.Octo_Func.func_achievementvivod(AchievementID)
 								local numCriteria = GetAchievementNumCriteria(AchievementID)
 								if numCriteria ~= 1 then
@@ -1622,7 +1622,7 @@ function Octo_ToDo_SECOND_CreateAltFrame()
 					end
 					if parentCategoryID == value or parentCategoryID == -1 and not value then
 						info.hasArrow = parentCategoryID == -1 and categoryID ~= 92
-						info.keepShownOnClick = true
+						info.keepShownOnClick = false
 						info.notCheckable = false
 						info.text = name ..vivod --.. E.Octo_Globals.Gray_Color.." id:"..categoryID.."|r"
 						info.value = categoryID
@@ -1849,6 +1849,12 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 							Octo_ToDo_SECOND_AddDataToAltFrame()
 						end
 					else
+						if Octo_ToDo_FIRST_Frame_Main_FramePIZDA and Octo_ToDo_FIRST_Frame_Main_FramePIZDA:IsShown() then
+							Octo_ToDo_FIRST_Frame_Main_FramePIZDA:Hide()
+						end
+						if Octo_ToDo_SECOND_Frame_Main_FramePIZDA and Octo_ToDo_SECOND_Frame_Main_FramePIZDA:IsShown() then
+							Octo_ToDo_SECOND_Frame_Main_FramePIZDA:Hide()
+						end
 						if SettingsPanel:IsVisible() and self:IsVisible() then
 							HideUIPanel(SettingsPanel)
 						else

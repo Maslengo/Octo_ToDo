@@ -18,16 +18,6 @@ local Expansions_Table = {
 	"|cffc9c3aaShadowlands"..FONT_COLOR_CODE_CLOSE,
 	"|cffe8e379Dragonflight"..FONT_COLOR_CODE_CLOSE,
 }
-local Achievements_Table = {
-	"ElementalStorm", -- 1
-	"Исследование", -- 2
-	"Задания", -- 3
-	DUNGEONS, -- 4
-	RAIDS, -- 5
-	REPUTATION, -- 6
-	COLLECTIONS, -- 7
-	E.Octo_Globals.NONE,
-}
 --
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
@@ -306,6 +296,23 @@ MAIN_Config:SetScript("OnShow", function(self)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE.."ChallengesKeystoneFrame"..FONT_COLOR_CODE_CLOSE)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		--
 		local number = 1
 		local pizza = E.Octo_Func.GenerateUniqueID()
@@ -519,19 +526,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
-		self[pizza]:SetChecked(Octo_ToDoVars.config.ShowMoney)
-		self[pizza]:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.ShowMoney = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-				self[pizza].text:SetJustifyV("MIDDLE")
-		self[pizza].text:SetJustifyH("LEFT")
-		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE.."Деньги"..FONT_COLOR_CODE_CLOSE)
-		--
-		local number = 18
-		local pizza = E.Octo_Func.GenerateUniqueID()
-		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
 		self[pizza]:SetChecked(Octo_ToDoVars.config.ShowItemLevel)
 		self[pizza]:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.ShowItemLevel = btn:GetChecked()
@@ -541,7 +535,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE.."Уровень предметов"..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 19
+		local number = 18
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -619,6 +613,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
 				return text
 			end,
+
 			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
 				return E.Octo_Globals.Green_Color..value.."|r"
 			end,
@@ -841,7 +836,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		end)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
-		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE..L["InDev"])
+		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE.." "..L["InDev"])
 		--
 		local number = 13
 		local pizza = E.Octo_Func.GenerateUniqueID()
@@ -855,6 +850,49 @@ MAIN_Config:SetScript("OnShow", function(self)
 				self[pizza].text:SetJustifyV("MIDDLE")
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE) -- ..L["InDev"]
+
+
+		--
+		local number = 17
+		local pizza = E.Octo_Func.GenerateUniqueID()
+		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
+		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+		self[pizza]:SetChecked(Octo_ToDoVars.config.ShowMoney)
+		self[pizza]:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.ShowMoney = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+				self[pizza].text:SetJustifyV("MIDDLE")
+		self[pizza].text:SetJustifyH("LEFT")
+		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE.."Всего денег"..FONT_COLOR_CODE_CLOSE)
+
+
+
+
+
+        --
+        local number = 18
+        local pizza = E.Octo_Func.GenerateUniqueID()
+        self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
+        self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
+        self[pizza]:SetChecked(Octo_ToDoVars.config.ShowTime)
+        self[pizza]:SetScript("OnClick", function(btn)
+                Octo_ToDoVars.config.ShowTime = btn:GetChecked()
+                StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+        end)
+                self[pizza].text:SetJustifyV("MIDDLE")
+        self[pizza].text:SetJustifyH("LEFT")
+        self[pizza].text:SetText(WHITE_FONT_COLOR_CODE.."Общее время игры"..FONT_COLOR_CODE_CLOSE)
+        --
+
+
+
+
+
+
+
+
+
 
 
 
