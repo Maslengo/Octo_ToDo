@@ -1390,7 +1390,7 @@ function O_otrisovka_SECOND()
 	tinsert(OctoTable_func_otrisovka_SECOND,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
-			vivodLeft = Timer_ElementalStorm()
+			vivodLeft = Timer_ElementalStorm().. "Elemental Storm"
 			vivodCent = CharInfo.classColorHex..CharInfo.Name
 			if CharInfo.Faction == "Horde" then
 				BG:SetColorTexture(.5, 0, 0, E.Octo_Globals.BGALPHA)
@@ -1635,6 +1635,7 @@ function Octo_ToDo_SECOND_CreateAltFrame()
 					self:ddAddSeparator(level)
 					info.keepShownOnClick = true
 					info.notCheckable = false
+					info.isNotRadio = true
 					info.text = "Показывать завершенные"
 					info.hasArrow = nil
 					info.checked = Octo_ToDoVars.config.AchievementShowCompleted
@@ -1865,7 +1866,7 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
 					-- GameTooltip_SetTitle(GameTooltip, AddonTitle.." "..E.Octo_Globals.LightGray_Color..AddonVersion.."|r")
-					GameTooltip_SetTitle(GameTooltip, E.Octo_Func.func_Gradient(GlobalAddonName.." Achievements", E.Octo_Globals.Green_Color, E.Octo_Globals.Addon_Right_Color).."|n".."Подлагивает")
+					GameTooltip_SetTitle(GameTooltip, E.Octo_Func.func_Gradient(GlobalAddonName.." Achievements", E.Octo_Globals.Green_Color, E.Octo_Globals.Addon_Right_Color).."|n".."ПКМ - Настройки")
 					GameTooltip:Show()
 				end,
 				OnLeave = function()

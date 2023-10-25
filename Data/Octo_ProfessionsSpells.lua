@@ -2,28 +2,7 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 -- https://docs.google.com/spreadsheets/d/1FEBCvYp19_x3Cikh1xV6RyN1Q-BVRVFdSzUQiz-eIns/edit#gid=1913676639
-E.Octo_Table.Octo_ProfessionsSpells = {
-									--First Aid
-									--Blacksmithing
-									--Leatherworking
-									--Alchemy
-									--Herbalism
-									--Cooking
-									--Mining
-									--Tailoring
-									--Engineering
-									--Enchanting
-									--Fishing
-									--Skinning
-									--Jewelcrafting Bc icon
-									--Inscription Wrath of the Lich King
-									--Archeology Cataclysm
-}
 
-
-E.Octo_Table.Octo_ProfessionsskillLine_ALL = {
-
-}
 E.Octo_Table.Octo_ProfessionsskillLine = {
 	[164] = true,--Blacksmithing
 	[165] = true,--Leatherworking
@@ -61,21 +40,3 @@ E.Octo_Table.Octo_ProfessionsSkillLinedb = {
 	773, 2514, 2513, 2512, 2511, 2510, 2509, 2508, 2507, 2756, 2828, --Inscription Wrath of the Lich King
 	794, --Archeology Cataclysm
 }
-
-E.Octo_Table.WORLD_QUEST_ICONS_BY_PROFESSION = {
-	[129] = "worldquest-icon-firstaid",
-	[164] = "worldquest-icon-blacksmithing",
-	[165] = "worldquest-icon-leatherworking",
-	[171] = "worldquest-icon-alchemy",
-	[182] = "worldquest-icon-herbalism",
-	[186] = "worldquest-icon-mining",
-	[202] = "worldquest-icon-engineering",
-	[333] = "worldquest-icon-enchanting",
-	[755] = "worldquest-icon-jewelcrafting",
-	[773] = "worldquest-icon-inscription",
-	[794] = "worldquest-icon-archaeology",
-	[356] = "worldquest-icon-fishing",
-	[185] = "worldquest-icon-cooking",
-	[197] = "worldquest-icon-tailoring",
-	[393] = "worldquest-icon-skinning",
-};

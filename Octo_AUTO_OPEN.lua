@@ -7,10 +7,6 @@ Octo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
 Octo_AUTO_OPEN:RegisterEvent("LOOT_READY")
 Octo_AUTO_OPEN:RegisterEvent("PLAYER_STARTED_MOVING")
 local isDead = UnitIsDead("PLAYER")
-local UnitLevel = UnitLevel("PLAYER")
-if UnitLevel >= 70 then
-	E.Octo_Func.TableConcat(E.Octo_Table.AutoOpen_openableIDs, E.Octo_Table.AutoOpen_openableIDs70lvl)
-end
 local function OpenableScan()
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		for numSlots = C_Container.GetContainerNumSlots(bag),1,-1 do

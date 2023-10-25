@@ -353,20 +353,20 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..L["Researchers Under Fire"]..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(1603189)..
 		--
-		local number = 4
-		local pizza = E.Octo_Func.GenerateUniqueID()
-		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
-		self[pizza]:SetChecked(Octo_ToDoVars.config.ShowTransmogrification)
-		self[pizza]:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.ShowTransmogrification = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-				self[pizza].text:SetJustifyV("MIDDLE")
-		self[pizza].text:SetJustifyH("LEFT")
-		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..TRANSMOGRIFICATION.." (Аберрий)"..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(1673939)..
+		-- local number = 4
+		-- local pizza = E.Octo_Func.GenerateUniqueID()
+		-- self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
+		-- self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
+		-- self[pizza]:SetChecked(Octo_ToDoVars.config.ShowTransmogrification)
+		-- self[pizza]:SetScript("OnClick", function(btn)
+		-- 		Octo_ToDoVars.config.ShowTransmogrification = btn:GetChecked()
+		-- 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		-- end)
+		-- 		self[pizza].text:SetJustifyV("MIDDLE")
+		-- self[pizza].text:SetJustifyH("LEFT")
+		-- self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..TRANSMOGRIFICATION.." (Аберрий)"..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(1673939)..
 		--
-		local number = 5
+		local number = 4
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -379,7 +379,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Globals.Purple_Color..L["TimeRift"]..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(628677)..
 		--
-		local number = 6
+		local number = 5
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -392,7 +392,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Globals.Green_Color..L["Dreamsurges"]..FONT_COLOR_CODE_CLOSE) -- E.Octo_Func.func_texturefromIcon(134206)..
 		--
-		local number = 7
+		local number = 6
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -405,7 +405,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Globals.Yellow_Color..EVENTS_LABEL..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 8
+		local number = 7
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -418,7 +418,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Globals.Yellow_Color..EVENTS_LABEL.." (PvP)"..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 9
+		local number = 8
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -431,7 +431,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(E.Octo_Globals.Yellow_Color..CALENDAR_FILTER_HOLIDAYS..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 10
+		local number = 9
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -444,7 +444,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..DUNGEONS..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 11
+		local number = 10
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -457,7 +457,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..CURRENCY..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 12
+		local number = 11
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -470,7 +470,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..REPUTATION..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 13
+		local number = 12
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -483,20 +483,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..QUESTS_LABEL..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 14
-		local pizza = E.Octo_Func.GenerateUniqueID()
-		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
-		self[pizza]:SetChecked(Octo_ToDoVars.config.ShowSkips)
-		self[pizza]:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.ShowSkips = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-				self[pizza].text:SetJustifyV("MIDDLE")
-		self[pizza].text:SetJustifyH("LEFT")
-		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..L["ShowSkips"]..FONT_COLOR_CODE_CLOSE)
-		--
-		local number = 15
+		local number = 13
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -509,7 +496,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE..ITEMS..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 16
+		local number = 14
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -522,7 +509,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE.."Профессии"..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 17
+		local number = 15
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -535,7 +522,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 		self[pizza].text:SetText(WHITE_FONT_COLOR_CODE.."Уровень предметов"..FONT_COLOR_CODE_CLOSE)
 		--
-		local number = 18
+		local number = 16
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_CENTER, -indent*number)
@@ -1154,150 +1141,9 @@ local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, F
 subcategory.ID = L["InDev"].."FIRST_Config"
 Settings.RegisterAddOnCategory(subcategory)
 ----------------------------------------------------------------
---------------------------SECOND_Config-------------------------
-----------------------------------------------------------------
-local SECOND_Config = CreateFrame("ScrollFrame", GlobalAddonName.."SECOND_Config")
-SECOND_Config:Hide()
-local SECOND_ScrollBar = CreateFrame("EventFrame", nil, SECOND_Config, "MinimalScrollBar")
-SECOND_ScrollBar:SetPoint("TOPLEFT", SECOND_Config, "TOPRIGHT", 6, 0)
-SECOND_ScrollBar:SetPoint("BOTTOMLEFT", SECOND_Config, "BOTTOMRIGHT", 6, 0)
-local SECOND_scrollChild = CreateFrame("Frame", nil, SECOND_Config)
-SECOND_Config:SetScrollChild(SECOND_scrollChild)
-SECOND_Config:SetAllPoints()
-SECOND_scrollChild:SetSize(1, 1)
-ScrollUtil.InitScrollFrameWithScrollBar(SECOND_Config, SECOND_ScrollBar)
-local SECOND_OnMouseWheel = SECOND_Config:GetScript("OnMouseWheel")
-SECOND_Config:SetScript("OnMouseWheel", function(self, ...)
-		if SECOND_ScrollBar:IsShown() then
-			SECOND_OnMouseWheel(self, ...)
-		end
-end)
--- SECOND_TITLE
-SECOND_TITLE = SECOND_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-SECOND_TITLE:SetPoint("TOPLEFT", 4, 30)
-SECOND_TITLE:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
-SECOND_TITLE:SetTextColor(.5, .5, .5, 1)
-----------------------------------------------------------------
-SECOND_Config:SetScript("OnShow", function(self)
-		self:SetScript("OnShow", nil)
-		local curGUID = UnitGUID("PLAYER")
-		local englishFaction = UnitFactionGroup("PLAYER")
-		local count = 0
-		for curCharGUID, CharInfo in pairs(Octo_ToDoLevels) do
-			if curCharGUID == curGUID then
-				for k, v in pairs(E.Octo_Table.OctoTable_reputation_BC) do
-					if CharInfo.Faction == v.faction or v.faction == "Both" then
-						local pizza = E.Octo_Func.GenerateUniqueID()
-						if not self[pizza] then
-							count = count + 1
-							self[pizza] = CreateFrame("CheckButton", nil, SECOND_scrollChild, "InterfaceOptionsCheckButtonTemplate")
-							self[pizza]:SetPoint("TOPLEFT", SECOND_scrollChild, "BOTTOMLEFT", POS_LEFT, -indent*count)
-							self[pizza]:SetChecked(Octo_ToDoVars.config.reputation[v.repID])
-							self[pizza]:SetScript("OnClick", function(btn)
-									Octo_ToDoVars.config.reputation[v.repID] = btn:GetChecked()
-									StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-							end)
-									self[pizza].text:SetJustifyV("MIDDLE")
-		self[pizza].text:SetJustifyH("LEFT")
-							self[pizza].text:SetText("repID: "..v.repID.." "..E.Octo_Func.func_reputationName(v.repID).." "..CharInfo.reputationID[v.repID])
-						end
-					end
-				end
-				break
-			end
-		end
-end)
--- ADD SUBCATEGORY
-local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, SECOND_Config, L["InDev"].."SECOND_Config")
-subcategory.ID = L["InDev"].."SECOND_Config"
-Settings.RegisterAddOnCategory(subcategory)
-----------------------------------------------------------------
---------------------------THIRD_Config--------------------------
-----------------------------------------------------------------
-local THIRD_Config = CreateFrame("ScrollFrame", GlobalAddonName.."THIRD_Config")
-THIRD_Config:Hide()
-local THIRD_ScrollBar = CreateFrame("EventFrame", nil, THIRD_Config, "MinimalScrollBar")
-THIRD_ScrollBar:SetPoint("TOPLEFT", THIRD_Config, "TOPRIGHT", 6, 0)
-THIRD_ScrollBar:SetPoint("BOTTOMLEFT", THIRD_Config, "BOTTOMRIGHT", 6, 0)
-local THIRD_scrollChild = CreateFrame("Frame", nil, THIRD_Config)
-THIRD_Config:SetScrollChild(THIRD_scrollChild)
-THIRD_Config:SetAllPoints()
-THIRD_scrollChild:SetSize(1, 1)
-ScrollUtil.InitScrollFrameWithScrollBar(THIRD_Config, THIRD_ScrollBar)
-local THIRD_OnMouseWheel = THIRD_Config:GetScript("OnMouseWheel")
-THIRD_Config:SetScript("OnMouseWheel", function(self, ...)
-		if THIRD_ScrollBar:IsShown() then
-			THIRD_OnMouseWheel(self, ...)
-		end
-end)
--- THIRD_TITLE
-THIRD_TITLE = THIRD_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-THIRD_TITLE:SetPoint("TOPLEFT", 4, 30)
-THIRD_TITLE:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
-THIRD_TITLE:SetTextColor(.5, .5, .5, 1)
-----------------------------------------------------------------
-THIRD_Config:SetScript("OnShow", function(self)
-		self:SetScript("OnShow", nil)
-		local curGUID = UnitGUID("PLAYER")
-		local englishFaction = UnitFactionGroup("PLAYER")
-		local count = 0
-		local count2 = 0
-		for curCharGUID, CharInfo in pairs(Octo_ToDoLevels) do
-			if curCharGUID == curGUID then
-				for k, v in pairs(E.Octo_Table.OctoTable_reputation_Classic) do
-					if CharInfo.Faction == v.faction or v.faction == "Both" then
-						local pizza = E.Octo_Func.GenerateUniqueID()
-						if not self[pizza] then
-							count = count + 1
-							self[pizza] = CreateFrame("CheckButton", nil, THIRD_scrollChild, "InterfaceOptionsCheckButtonTemplate")
-							self[pizza]:SetPoint("TOPLEFT", THIRD_scrollChild, "BOTTOMLEFT", POS_LEFT, -indent*count)
-							self[pizza]:SetChecked(Octo_ToDoVars.config.reputation[v.repID])
-							self[pizza]:SetScript("OnClick", function(btn)
-									Octo_ToDoVars.config.reputation[v.repID] = btn:GetChecked()
-									StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-							end)
-									self[pizza].text:SetJustifyV("MIDDLE")
-		self[pizza].text:SetJustifyH("LEFT")
-							self[pizza].text:SetText("ID: "..v.repID.." "..E.Octo_Func.func_reputationName(v.repID).." "..CharInfo.reputationID[v.repID])
-						end
-					end
-				end
-				for k, currencyID in pairs(E.Octo_Table.OctoTable_currencyID_ALL) do
-					local pizza = E.Octo_Func.GenerateUniqueID()
-					if not self[pizza] then
-						count2 = count2 + 1
-						self[pizza] = CreateFrame("CheckButton", nil, THIRD_scrollChild, "InterfaceOptionsCheckButtonTemplate")
-						self[pizza]:SetPoint("TOPLEFT", THIRD_scrollChild, "BOTTOMLEFT", 350, -indent*count2)
-						self[pizza]:SetChecked(Octo_ToDoVars.config.reputation[currencyID])
-						self[pizza]:SetScript("OnClick", function(btn)
-								Octo_ToDoVars.config.reputation[currencyID] = btn:GetChecked()
-								StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-						end)
-								self[pizza].text:SetJustifyV("MIDDLE")
-		self[pizza].text:SetJustifyH("LEFT")
-						self[pizza].text:SetText("ID: "..currencyID.." "..E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID).." "..CharInfo.CurrencyID_Total[currencyID])
-					end
-				end
-				break
-			end
-		end
-end)
--- ADD SUBCATEGORY
-local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, THIRD_Config, L["InDev"].."THIRD_Config")
-subcategory.ID = L["InDev"].."THIRD_Config"
-Settings.RegisterAddOnCategory(subcategory)
-----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 FIRST_Config.MEME = FIRST_Config:CreateTexture(nil, "BACKGROUND")
 FIRST_Config.MEME:SetAllPoints()
 FIRST_Config.MEME:SetTexture("Interface/AddOns/"..GlobalAddonName.."/Media/MEME/1.tga")
 FIRST_Config.MEME:SetAlpha(.5)
-SECOND_Config.MEME = SECOND_Config:CreateTexture(nil, "BACKGROUND")
-SECOND_Config.MEME:SetAllPoints()
-SECOND_Config.MEME:SetTexture("Interface/AddOns/"..GlobalAddonName.."/Media/MEME/2.tga")
-SECOND_Config.MEME:SetAlpha(.5)
-THIRD_Config.MEME = THIRD_Config:CreateTexture(nil, "BACKGROUND")
-THIRD_Config.MEME:SetAllPoints()
-THIRD_Config.MEME:SetTexture("Interface/AddOns/"..GlobalAddonName.."/Media/MEME/5.tga")
-THIRD_Config.MEME:SetAlpha(.5)

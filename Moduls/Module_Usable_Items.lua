@@ -22,36 +22,36 @@ local function TEST_FUNC(self)
 		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
 			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 			if containerInfo then
-							local itemID = containerInfo.itemID
-							if itemID and itemID == self then
-								local link = containerInfo.hyperlink
-								-- local _, link = GetItemInfo(itemID)
-								inspectScantipUSABLE:ClearLines()
-								inspectScantipUSABLE:SetHyperlink(link)
-								if inspectScantipUSABLE:NumLines() > 0 then
-									for i = 1, inspectScantipUSABLE:NumLines() do
-										local text = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetText()
-										local r, g, b, a = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetTextColor()
-										local QWE = func_coloredText(_G["OctoToDoScanningTooltipUSABLETextLeft"..i])
-										if text and text ~= "" and QWE ~= nil then
-											-- cff0070DD -- синий шмот
-											-- cffFF2020 красный
-											-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
-											-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
-											-- if QWE:find("|cffFF2020|r") then -- RED COLOR
-											-- elseif QWE:find("Использование:") and itemID then
-											-- print (E.Octo_Func.func_rgb2hexDEV(r, g, b, a).."tinsert"..link)
-											-- tinsert(E.Octo_Table.white_list_ALL, {itemid = itemID, count = 1},)
-											-- print (text, inspectScantipUSABLE:NumLines(), E.Octo_Func.func_rgb2hexDEV(r, g, b, a))
-											if QWE:find("^|cffFF2020") --[[and QWE:find(USE_COLON)]] then
-												count = count + 1
-											end
-										end
-									end
+				local itemID = containerInfo.itemID
+				if itemID and itemID == self then
+					local link = containerInfo.hyperlink
+					-- local _, link = GetItemInfo(itemID)
+					inspectScantipUSABLE:ClearLines()
+					inspectScantipUSABLE:SetHyperlink(link)
+					if inspectScantipUSABLE:NumLines() > 0 then
+						for i = 1, inspectScantipUSABLE:NumLines() do
+							local text = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetText()
+							local r, g, b, a = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetTextColor()
+							local QWE = func_coloredText(_G["OctoToDoScanningTooltipUSABLETextLeft"..i])
+							if text and text ~= "" and QWE ~= nil then
+								-- cff0070DD -- синий шмот
+								-- cffFF2020 красный
+								-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
+								-- if QWE:find("У вас еще нет такой модели") and not QWE:find("|cffFF2020") then
+								-- if QWE:find("|cffFF2020|r") then -- RED COLOR
+								-- elseif QWE:find("Использование:") and itemID then
+								-- print (E.Octo_Func.func_rgb2hexDEV(r, g, b, a).."tinsert"..link)
+								-- tinsert(E.Octo_Table.white_list_ALL, {itemid = itemID, count = 1},)
+								-- print (text, inspectScantipUSABLE:NumLines(), E.Octo_Func.func_rgb2hexDEV(r, g, b, a))
+								if QWE:find("^|cffFF2020") --[[and QWE:find(USE_COLON)]] then
+									count = count + 1
 								end
-								-- print (count, link)
-								inspectScantipUSABLE:ClearLines()
 							end
+						end
+					end
+					-- print (count, link)
+					inspectScantipUSABLE:ClearLines()
+				end
 			end
 		end
 	end

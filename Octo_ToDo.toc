@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v68.4(10.1.7)(23.10.2023)
+## Version: v68.5(10.1.7)(25.10.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
 ## SavedVariables:  Octo_ToDo_SmartCollectNEW2 Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog
 
@@ -10,49 +10,33 @@ XML\embeds.xml
 
 Octo_Localization.lua
 
-Templates\ScrollFrame.lua
+Data\Octo_Globals.lua
 
 Data\Tables\1.lua
 Data\Tables\AutoOpen_openableIDs.lua
-Data\Tables\AutoOpen_openableIDs70lvl.lua
-Data\Tables\Dreamsurges_Items.lua
 Data\Tables\interrupts.lua
-Data\Tables\OctoTable_Achievement.lua
+Data\Tables\OctoTable_ArtifactData.lua
 Data\Tables\OctoTable_bytetoB64.lua
 Data\Tables\OctoTable_currencyID_ALL.lua
-Data\Tables\OctoTable_EnglishClasses.lua
-Data\Tables\OctoTable_EventsIDs.lua
 Data\Tables\OctoTable_instanceDifficulty.lua
 Data\Tables\OctoTable_itemID_ALL.lua
 Data\Tables\OctoTable_itemID_Cataloged_Research.lua
-Data\Tables\OctoTable_itemID_DFMountsSkins.lua
-Data\Tables\OctoTable_itemID_Holiday.lua
-Data\Tables\OctoTable_itemID_Reputation.lua
 Data\Tables\OctoTable_journalInstanceID.lua
 Data\Tables\OctoTable_KeystoneAbbr.lua
 Data\Tables\OctoTable_LFGDungeons.lua
 Data\Tables\OctoTable_Portals.lua
 Data\Tables\OctoTable_Professions.lua
-Data\Tables\OctoTable_Professions_currencyID.lua
 Data\Tables\OctoTable_QuestID.lua
 Data\Tables\OctoTable_Race.lua
 Data\Tables\OctoTable_reputation_ALL.lua
-Data\Tables\OctoTable_ScoutingMap.lua
-Data\Tables\OctoTable_SpellID.lua
 Data\Tables\OctoTable_UniversalQuest.lua
-Data\Tables\raidsDiffsNames.lua
-Data\Tables\T3Items.lua
 Data\Tables\utf8_lc_uc.lua
 Data\Tables\utf8_uc_lc.lua
-Data\Tables\white_list_ALL.lua
 Data\Tables\white_list_ALL_2.lua
 Data\Tables\wowhead_prefix_Table.lua
 
-Data\Octo_Globals.lua
 Data\Octo_Functions.lua
-Data\Octo_ArtifactData.lua
 Data\Octo_ProfessionsSpells.lua
-Data\Aberrus_the_Shadowed_Crucible_DATA.lua
 
 Moduls\DEV\Another_Addons_Casual.lua
 Moduls\DEV\Another_Addons_Raid.lua

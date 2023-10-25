@@ -45,12 +45,12 @@ tinsert(E.Octo_Globals.modules, function()
 					or difficultyID == 29 -- PvEvP Scenario pvp
 					or difficultyID == 34 -- PvP pvp
 					-- raid
-					or difficultyID == 3 -- 10 Player raid toggleDifficultyID: 5
-					or difficultyID == 4 -- 25 Player raid toggleDifficultyID: 6
-					or difficultyID == 5 -- 10 Player (Heroic) raid isHeroic, toggleDifficultyID: 3
-					or difficultyID == 6 -- 25 Player (Heroic) raid isHeroic, toggleDifficultyID: 4
+					-- or difficultyID == 3 -- 10 Player raid toggleDifficultyID: 5
+					-- or difficultyID == 4 -- 25 Player raid toggleDifficultyID: 6
+					-- or difficultyID == 5 -- 10 Player (Heroic) raid isHeroic, toggleDifficultyID: 3
+					-- or difficultyID == 6 -- 25 Player (Heroic) raid isHeroic, toggleDifficultyID: 4
 					or difficultyID == 7 -- Looking For Raid raid Legacy LFRs prior to SoO
-					or difficultyID == 9 -- 40 Player raid
+					-- or difficultyID == 9 -- 40 Player raid
 					or difficultyID == 14 -- Normal raid
 					or difficultyID == 15 -- Heroic raid displayHeroic
 					or difficultyID == 16 -- Mythic raid isHeroic, displayMythic
@@ -108,13 +108,6 @@ tinsert(E.Octo_Globals.modules, function()
 			-- [21:00] [8]=2520,
 			-- [21:00] [9]=5
 			Hide_ObjectivesInInstanceOnLoad()
-
-
-
-
-
-
-
 if E.Octo_Globals.isElvUI == true or E.Octo_Globals.isElvUI == false then
 	if ObjectiveTrackerFrame then
 		local className, classFilename, classId = UnitClass("PLAYER")
@@ -126,31 +119,20 @@ if E.Octo_Globals.isElvUI == true or E.Octo_Globals.isElvUI == false then
 				--return E.Octo_Func.func_Gradient(numQuests.." / "..maxNumQuestsCanAccept, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
 				return numQuests.." / "..maxNumQuestsCanAccept
 		end
-
-
-
-
--- TRACKER_HEADER_OBJECTIVE = "QWE1"
--- OBJECTIVES_LABEL = "QWE2"
--- OBJECTIVES_TRACKER_LABEL = "QWE3"
--- TASKS_COLON = "QWE4"
-
-
-
-
-
--- TRACKER_HEADER_QUESTS = E.Octo_Globals.func_Gradient(TRACKER_HEADER_QUESTS, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
-		ObjectiveTrackerFrame.NineSlice.BottomEdge:SetAlpha(0)
-		ObjectiveTrackerFrame.NineSlice.BottomLeftCorner:SetAlpha(0)
-		ObjectiveTrackerFrame.NineSlice.BottomRightCorner:SetAlpha(0)
-		ObjectiveTrackerFrame.NineSlice.Center:SetAlpha(0)
-		ObjectiveTrackerFrame.NineSlice.LeftEdge:SetAlpha(0)
-		ObjectiveTrackerFrame.NineSlice.RightEdge:SetAlpha(0)
-		ObjectiveTrackerFrame.NineSlice.TopEdge:SetAlpha(0)
-		ObjectiveTrackerFrame.NineSlice.TopLeftCorner:SetAlpha(0)
-		ObjectiveTrackerFrame.NineSlice.TopRightCorner:SetAlpha(0)
-
-
+		-- TRACKER_HEADER_OBJECTIVE = "QWE1"
+		-- OBJECTIVES_LABEL = "QWE2"
+		-- OBJECTIVES_TRACKER_LABEL = "QWE3"
+		-- TASKS_COLON = "QWE4"
+		-- TRACKER_HEADER_QUESTS = E.Octo_Globals.func_Gradient(TRACKER_HEADER_QUESTS, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+		ObjectiveTrackerFrame.NineSlice.BottomEdge:Hide()--SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.BottomLeftCorner:Hide()--SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.BottomRightCorner:Hide()--SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.Center:Hide()--SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.LeftEdge:Hide()--SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.RightEdge:Hide()--SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.TopEdge:Hide()--SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.TopLeftCorner:Hide()--SetAlpha(0)
+		ObjectiveTrackerFrame.NineSlice.TopRightCorner:Hide()--SetAlpha(0)
 		Octo_ToDo_Objective = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID().."Octo_ToDo_Objective", ObjectiveTrackerFrame.NineSlice, "BackDropTemplate")
 		-- Octo_ToDo_Objective:RegisterEvent("QUEST_ACCEPTED")
 		-- Octo_ToDo_Objective:RegisterEvent("QUEST_COMPLETE")
@@ -158,14 +140,10 @@ if E.Octo_Globals.isElvUI == true or E.Octo_Globals.isElvUI == false then
 		Octo_ToDo_Objective:RegisterEvent("QUEST_LOG_UPDATE")
 		-- Octo_ToDo_Objective:RegisterEvent("QUEST_REMOVED")
 		-- Octo_ToDo_Objective:RegisterEvent("QUEST_TURNED_IN")
-
--- PLAYER_ENTERING_WORLD,
--- QUEST_LOG_UPDATE,
--- UNIT_QUEST_LOG_CHANGED,
--- QUEST_DATA_LOAD_RESULT
-
-
-
+		-- PLAYER_ENTERING_WORLD,
+		-- QUEST_LOG_UPDATE,
+		-- UNIT_QUEST_LOG_CHANGED,
+		-- QUEST_DATA_LOAD_RESULT
 		Octo_ToDo_Objective:SetAllPoints()
 		Octo_ToDo_Objective:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 		Octo_ToDo_Objective:SetBackdropBorderColor(0, 0, 0, 1)
@@ -174,29 +152,15 @@ if E.Octo_Globals.isElvUI == true or E.Octo_Globals.isElvUI == false then
 		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
 		t:SetAllPoints(Octo_ToDo_Objective)
 		t:SetColorTexture(0, 0, 0, 0.6)
-
 		local vivod = TRACKER_HEADER_QUESTS
 		Octo_ToDo_Objective:SetScript("OnEvent", function(self)
 			TRACKER_HEADER_QUESTS = vivod.." "..E.Octo_Func.func_Gradient(Current_numQuests(), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
 		end)
-
-
 		-- ObjectiveTrackerFrame.NineSlice.MEME = ObjectiveTrackerFrame.NineSlice:CreateTexture(nil, "ARTWORK")
 		-- ObjectiveTrackerFrame.NineSlice.MEME:SetPoint("TOPLEFT", 0, 0)
 		-- ObjectiveTrackerFrame.NineSlice.MEME:SetPoint("BOTTOMRIGHT", 0, 0)
 		-- ObjectiveTrackerFrame.NineSlice.MEME:SetTexture("Interface/AddOns/"..GlobalAddonName.."/Media/MEME/1.tga")
 		-- ObjectiveTrackerFrame.NineSlice.MEME:SetColorTexture(1, 1, 1, 1)
-
-
-
-
-
-
-
-
-
-
-
 		-- ObjectiveTrackerFrame.NineSlice.BottomEdge:SetColorTexture(0, 0, 0, 1)
 		-- ObjectiveTrackerFrame.NineSlice.BottomLeftCorner:SetColorTexture(0, 0, 0, 1)
 		-- ObjectiveTrackerFrame.NineSlice.BottomRightCorner:SetColorTexture(0, 0, 0, 1)

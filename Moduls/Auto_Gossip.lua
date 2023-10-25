@@ -61,17 +61,15 @@ tinsert(E.Octo_Globals.modules, function()
 							[180162] = true,
 							[161509] = true,
 							[203011] = true,
-							[200172] = true, -- test
-							[200171] = true, -- test
-							[200170] = true, -- test
-							[199198] = true, -- test
-
+							[200172] = true,
+							[200171] = true,
+							[200170] = true,
+							[199198] = true,
 							[56592] = true, -- DONE ДАГЕРА
 						}
 						local Second_Option = {
 							[201398] = true,
 							[56591] = true,  -- DONE Вошебный посох
-							--[205089] = true,
 						}
 						local Third_Option = {
 							[56585] = true, -- DONE ХИЛ

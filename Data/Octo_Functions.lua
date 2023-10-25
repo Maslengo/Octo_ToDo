@@ -265,8 +265,12 @@ end
 local func_texturefromIcon = E.Octo_Func.func_texturefromIcon
 ----------------------------------------------------------------
 function E.Octo_Func.func_questName(self)
-	local title = C_QuestLog.GetTitleForQuestID(self) or "notitle"
-	return title
+	local title = C_QuestLog.GetTitleForQuestID(self)
+	if title then
+		return title
+	else
+		return E.Octo_Globals.Red_Color.."notitle".."|r"
+	end
 end
 local func_questName = E.Octo_Func.func_questName
 ----------------------------------------------------------------
@@ -274,7 +278,7 @@ function E.Octo_Func.func_reputationName(self)
 	local name = GetFactionInfoByID(self)
 	if not name then
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
-		name = reputationInfo.name or "NONAME"
+		name = reputationInfo.name or E.Octo_Globals.Red_Color.."NONAME".."|r"
 	end
 	local color = "|cffFFFFFF"
 	local r = "|r"
@@ -331,6 +335,8 @@ function E.Octo_Func.func_currencyName(self)
 		local color = CreateColor(r, g, b, 1)
 		local currencyName = color:WrapTextInColorCode(name)
 		return currencyName
+	else
+		return E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
 end
 local func_currencyName = E.Octo_Func.func_currencyName
@@ -338,7 +344,9 @@ local func_currencyName = E.Octo_Func.func_currencyName
 function E.Octo_Func.func_currencyicon(self)
 	local info = C_CurrencyInfo.GetCurrencyInfo(self)
 	if info then
-		iconFileID = info.iconFileID or 134400
+		iconFileID = info.iconFileID
+	else
+		iconFileID = 134400
 	end
 	return "|T"..iconFileID..":16:16:::64:64:4:60:4:60|t"
 end
