@@ -538,6 +538,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 				local info = {}
 				if not value then
 					for k, v in ipairs(E.Octo_Table.OctoTable_Expansions_Table) do
+						info.isNotRadio = true
 						info.text = v
 						info.value = k
 						info.checked = Octo_ToDoVars.config.ExpansionToShow == k
@@ -561,6 +562,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 				local info = {}
 				if not value then
 					for k, v in ipairs(E.Octo_Table.wowhead_prefix_Table) do
+						info.isNotRadio = true
 						info.text = v
 						info.value = k
 						info.checked = Octo_ToDoOther.prefix == k

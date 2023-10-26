@@ -6477,6 +6477,7 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 						-- info.r = 1
 						-- info.g = 0
 						-- info.b = 0
+						info.isNotRadio = true
 						info.text = v
 						info.value = k
 						info.checked = Octo_ToDoVars.config.ExpansionToShow == k
