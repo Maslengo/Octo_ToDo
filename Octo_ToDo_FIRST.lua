@@ -6084,6 +6084,9 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 			text:SetTextColor(1, 1, 1, 1)
 			Octo_Frame_Token_Price:HookScript("OnShow", function(self)
 				text:SetText(Token_PriceOnShow())
+				C_Timer.After(1, function()
+					text:SetText(Token_PriceOnShow())
+				end)
 			end)
 		end
 		--
@@ -7066,6 +7069,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		ldbi:Show(MinimapName)
 	end
 	if (event == "PLAYER_LOGIN") and not InCombatLockdown() then
+		C_WowTokenPublic.UpdateMarketPrice()
 		local curGUID = UnitGUID("PLAYER")
 		Octo_ToDoLevels[curGUID] = Octo_ToDoLevels[curGUID] or {}
 		for k, CharInfo in pairs(Octo_ToDoLevels) do
