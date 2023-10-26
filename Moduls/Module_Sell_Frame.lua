@@ -41,7 +41,6 @@ local ignore_list = {
 --     C_Item.RequestLoadItemDataByID(E.Octo_Table.OctoTable_itemID_ALL[i])
 -- end
 for itemID, v in pairs(ignore_list) do
-	print (itemID, v)
 	C_Item.RequestLoadItemDataByID(itemID)
 end
 
