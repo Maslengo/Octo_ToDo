@@ -21,10 +21,6 @@ tinsert(E.Octo_Globals.modules, function()
 						end
 					end
 				end
-				if totalPrice ~= 0 then
-					-- print("|cFF00A3FFAutoSellGrey|r|cff00FF00 +".. GetCoinTextureString(totalPrice) .. "|r")
-					-- DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Vendored gray items for: "]..GetCoinTextureString(totalPrice), 255, 255, 255)
-				end
 			end
 			if not AutoSellGreyFrame then
 				AutoSellGreyFrame = CreateFrame("Frame")

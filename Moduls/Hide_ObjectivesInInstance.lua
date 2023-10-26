@@ -27,12 +27,6 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 			function myfunction()
 				local name, instanceType, difficultyID = GetInstanceInfo()
-				-- print (instanceType, difficultyID)
-				-- local difficultyID = select(3, GetInstanceInfo()) or "|cffFF0000-|r"
-				-- https://wowpedia.fandom.com/wiki/DifficultyID
-				-- PARTY
-				-- instanceType
-				-- string - "none" if the player is not in an instance, "scenario" for scenarios, "party" for dungeons, "raid" for raids, "arena" for arenas, and "pvp" for battlegrounds. Many of the following return values will be nil or otherwise useless in the case of "none".
 				if instanceType == "party" or instanceType == "raid" or instanceType == "arena" or instanceType == "pvp" then
 					-- if difficultyID == 1 -- Normal party (DRAENOR)
 					if difficultyID == 2 -- Heroic party isHeroic
@@ -80,11 +74,9 @@ tinsert(E.Octo_Globals.modules, function()
 					-- or difficultyID == 171 -- Path of Ascension: Humility scenario
 					then
 						ObjectiveTrackerFrame:Hide()
-						-- print (E.Octo_Globals.Red_Color.."ObjectiveTrackerFrame:Hide()".."|r")
 					end
 				else
 					ObjectiveTrackerFrame:Show()
-					-- print (E.Octo_Globals.Green_Color.."ObjectiveTrackerFrame:Show()".."|r")
 				end
 			end
 			-- Dump: value=GetInstanceInfo()

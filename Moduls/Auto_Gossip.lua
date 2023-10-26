@@ -85,7 +85,7 @@ tinsert(E.Octo_Globals.modules, function()
 								if #info == 1 then
 									C_GossipInfo.SelectOption(v.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
+									ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 								else
 									if
 										v.name:find("получить печать") or
@@ -133,24 +133,23 @@ tinsert(E.Octo_Globals.modules, function()
 									then
 										C_GossipInfo.SelectOption(v.gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
+										ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 									elseif First_Option[targetNPCID] and i == 1 then
-										print (v.gossipOptionID)
 										C_GossipInfo.SelectOption(v.gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
+										ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 									elseif Second_Option[targetNPCID] and i == 2 then
 										C_GossipInfo.SelectOption(v.gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
+										ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 									elseif Third_Option[targetNPCID] and i == 3 then
 										C_GossipInfo.SelectOption(v.gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
+										ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 									elseif Fourth_Option[targetNPCID] and i == 4 then
 										C_GossipInfo.SelectOption(v.gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										print (E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
+										ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 									end
 								end
 							end

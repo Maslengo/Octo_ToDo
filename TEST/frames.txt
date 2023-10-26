@@ -1,0 +1,37 @@
+	if CharacterFrame then
+		CharacterFrame:EnableMouse(true)
+		CharacterFrame:SetMovable(true)
+		CharacterFrame:RegisterForDrag("LeftButton")
+		CharacterFrame:SetScript("OnDragStart", CharacterFrame.StartMoving)
+		CharacterFrame:SetScript("OnDragStop", function() CharacterFrame:StopMovingOrSizing() end)
+	end
+
+	if InspectFrame then
+		InspectFrame:EnableMouse(true)
+		InspectFrame:SetMovable(true)
+		InspectFrame:RegisterForDrag("LeftButton")
+		InspectFrame:SetScript("OnDragStart", InspectFrame.StartMoving)
+		InspectFrame:SetScript("OnDragStop", function() InspectFrame:StopMovingOrSizing() end)
+	end
+
+	if WorldMapFrame then
+		WorldMapFrame:EnableMouse(true)
+		WorldMapFrame:SetMovable(true)
+		WorldMapFrame:RegisterForDrag("LeftButton")
+		WorldMapFrame:SetScript("OnDragStart", WorldMapFrame.StartMoving)
+		WorldMapFrame:SetScript("OnDragStop", function() WorldMapFrame:StopMovingOrSizing() end)
+	end
+	ClassTalentFrame_LoadUI()
+	LoadAddOn('Blizzard_ClassTalentUI')
+	local talentTab = ClassTalentFrame.TalentsTab
+	if not ClassTalentFrame:IsShown() then
+		ToggleTalentFrame()
+		print ("ToggleTalentFrame()")
+		if ClassTalentFrame then
+			ClassTalentFrame:EnableMouse(true)
+			ClassTalentFrame:SetMovable(true)
+			ClassTalentFrame:RegisterForDrag("LeftButton")
+			ClassTalentFrame:SetScript("OnDragStart", ClassTalentFrame.StartMoving)
+			ClassTalentFrame:SetScript("OnDragStop", function() ClassTalentFrame:StopMovingOrSizing() end)
+		end
+	end

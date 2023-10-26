@@ -218,7 +218,6 @@ tinsert(E.Octo_Globals.modules, function()
 			if E.Octo_Globals.isWeakAuras == false then
 				C_Timer.After(1, function()
 					SetCVar("spellActivationOverlayOpacity", 1) --интерфейс - бой - предупреждения
-					-- print ("spellActivationOverlayOpacity 1")
 					SetCVar("floatingCombatTextCombatDamage", 1) --ТУТ
 					SetCVar("floatingCombatTextCombatDamageAllAutos", 1) --ТУТ
 					SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 1) --ТУТ
@@ -233,7 +232,6 @@ tinsert(E.Octo_Globals.modules, function()
 			else
 				C_Timer.After(1, function()
 					SetCVar("spellActivationOverlayOpacity", 0) --интерфейс - бой - предупреждения
-					-- print ("spellActivationOverlayOpacity 0")
 					SetCVar("floatingCombatTextCombatDamage", 0) --ТУТ
 					SetCVar("floatingCombatTextCombatDamageAllAutos", 0) --ТУТ
 					SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 0) --ТУТ

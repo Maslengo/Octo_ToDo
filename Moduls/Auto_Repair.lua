@@ -11,7 +11,7 @@ tinsert(E.Octo_Globals.modules, function()
 					local money = GetMoney()
 					local locale = GetLocale()
 					if canRepair and repairAllCost > money then
-						print (E.Octo_Func.func_Gradient(L["We need more gold"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).." "..GetCoinTextureString((repairAllCost-money)))
+						ChatFrame1:AddMessage(E.Octo_Func.func_Gradient(L["We need more gold"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).." "..GetCoinTextureString((repairAllCost-money)))
 						if locale == "ruRU" then
 							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg", "Master")
 						else
@@ -30,15 +30,11 @@ tinsert(E.Octo_Globals.modules, function()
 								if (amount >= repairAllCost) then
 									RepairAllItems(true)
 									guildRepairedItems = true
-									-- print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
-									-- DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired using guild bank funds for: "]..costTextureString, 255, 255, 255)
 								end
 							end
 							-- Use own funds
 							if (repairAllCost <= money and not guildRepairedItems) then
 								RepairAllItems(false)
-								-- print("|cFF00A3FFAutoRepair|r|cffFF4C4F -".. costTextureString.."|r")
-								-- DEFAULT_CHAT_FRAME:AddMessage(AddonTitle .. L["Your items have been repaired for: "]..costTextureString, 255, 255, 255)
 							end
 						end
 					end

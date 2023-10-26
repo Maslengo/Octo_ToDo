@@ -7,146 +7,7 @@ local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-----------------------------------------------------------------
-function E.Octo_Func.utf8charbytes(s, i)
-	i = i or 1
-	local c = strbyte(s, i)
-	if c > 0 and c <= 127 then
-		return 1
-	elseif c >= 194 and c <= 223 then
-		local c2 = strbyte(s, i + 1)
-		return 2
-	elseif c >= 224 and c <= 239 then
-		local c2 = strbyte(s, i + 1)
-		local c3 = strbyte(s, i + 2)
-		return 3
-	elseif c >= 240 and c <= 244 then
-		local c2 = strbyte(s, i + 1)
-		local c3 = strbyte(s, i + 2)
-		local c4 = strbyte(s, i + 3)
-		return 4
-	else
-	end
-end
-local utf8charbytes = E.Octo_Func.utf8charbytes
-----------------------------------------------------------------
-function E.Octo_Func.utf8len(s)
-	local pos = 1
-	local bytes = strlen(s)
-	local len = 0
-	while pos <= bytes do
-		len = len + 1
-		pos = pos + utf8charbytes(s, pos)
-	end
-	return len
-end
-local utf8len = E.Octo_Func.utf8len
-----------------------------------------------------------------
-function E.Octo_Func.utf8sub(s, i, j)
-	j = j or -1
-	local pos = 1
-	local bytes = strlen(s)
-	local len = 0
-	local l = (i >= 0 and j >= 0) or utf8len(s)
-	local startChar = (i >= 0) and i or l + i + 1
-	local endChar = (j >= 0) and j or l + j + 1
-	if startChar > endChar then
-		return ""
-	end
-	local startByte, endByte = 1, bytes
-	while pos <= bytes do
-		len = len + 1
-		if len == startChar then
-			startByte = pos
-		end
-		pos = pos + utf8charbytes(s, pos)
-		if len == endChar then
-			endByte = pos - 1
-			break
-		end
-	end
-	return strsub(s, startByte, endByte)
-end
-local utf8sub = E.Octo_Func.utf8sub
-----------------------------------------------------------------
-function E.Octo_Func.utf8replace(s, mapping)
-	local pos = 1
-	local bytes = strlen(s)
-	local charbytes
-	local newstr = ""
-	while pos <= bytes do
-		charbytes = utf8charbytes(s, pos)
-		local c = strsub(s, pos, pos + charbytes - 1)
-		newstr = newstr..(mapping[c] or c)
-		pos = pos + charbytes
-	end
-	return newstr
-end
-local utf8replace = E.Octo_Func.utf8replace
-----------------------------------------------------------------
-function E.Octo_Func.utf8upper(s)
-	return utf8replace(s, E.Octo_Table.utf8_lc_uc)
-end
-local utf8upper = E.Octo_Func.utf8upper
-----------------------------------------------------------------
-function E.Octo_Func.utf8lower(s)
-	return utf8replace(s, E.Octo_Table.utf8_uc_lc)
-end
-local utf8lower = E.Octo_Func.utf8lower
-----------------------------------------------------------------
-function E.Octo_Func.utf8reverse(s)
-	local bytes = strlen(s)
-	local pos = bytes
-	local charbytes
-	local newstr = ""
-	while pos > 0 do
-		c = strbyte(s, pos)
-		while c >= 128 and c <= 191 do
-			pos = pos - 1
-			c = strbyte(pos)
-		end
-		charbytes = utf8charbytes(s, pos)
-		newstr = newstr..strsub(s, pos, pos + charbytes - 1)
-		pos = pos - 1
-	end
-	return newstr
-end
-local utf8reverse = E.Octo_Func.utf8reverse
-----------------------------------------------------------------
-function E.Octo_Func.WA_Utf8Sub(input, size)
-	local output = ""
-	if type(input) ~= "string" then
-		return output
-	end
-	local i = 1
-	while (size > 0) do
-		local byte = input:byte(i)
-		if not byte then
-			return output
-		end
-		if byte < 128 then
-			output = output..input:sub(i, i)
-			size = size - 1
-		elseif byte < 192 then
-			output = output..input:sub(i, i)
-		elseif byte < 244 then
-			output = output..input:sub(i, i)
-			size = size - 1
-		end
-		i = i + 1
-	end
-	while (true) do
-		local byte = input:byte(i)
-		if byte and byte >= 128 and byte < 192 then
-			output = output..input:sub(i, i)
-		else
-			break
-		end
-		i = i + 1
-	end
-	return output
-end
-local WA_Utf8Sub = E.Octo_Func.WA_Utf8Sub
+local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 function E.Octo_Func.func_hex2rgb(self)
 	self = self:gsub("|cff", "")
@@ -159,8 +20,7 @@ function E.Octo_Func.func_rgb2hex(r, g, b, a)
 	if not a then
 		a = 1
 	end
-	-- print ("c"..string.format("%02x", math.floor(a*255))..E.Octo_Func.utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255))))
-	return "|c"..string.format("%02x", math.floor(a*255))..E.Octo_Func.utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
 local func_rgb2hex = E.Octo_Func.func_rgb2hex
 ----------------------------------------------------------------
@@ -169,8 +29,7 @@ function E.Octo_Func.func_rgb2hexDEV(r, g, b, a)
 	if not a then
 		a = 1
 	end
-	-- print ("c"..string.format("%02x", math.floor(a*255))..E.Octo_Func.utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255))))
-	return "c"..string.format("%02x", math.floor(a*255))..E.Octo_Func.utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+	return "c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
 local func_rgb2hexDEV = E.Octo_Func.func_rgb2hexDEV
 ----------------------------------------------------------------
@@ -203,15 +62,6 @@ function E.Octo_Func.func_Gradient(text, firstColor, secondColor)
 end
 local Gradient = E.Octo_Func.func_Gradient
 ----------------------------------------------------------------
-function E.Octo_Func.WA_GetClassColor(classFilename)
-	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[classFilename]
-	if color then
-		return color.colorStr
-	end
-	return "ffffffff"
-end
-local WA_GetClassColor = E.Octo_Func.WA_GetClassColor
-----------------------------------------------------------------
 function E.Octo_Func.GenerateUniqueID()
 	local s = {}
 	for i=1, 11 do
@@ -232,7 +82,6 @@ local TableConcat = E.Octo_Func.TableConcat
 function E.Octo_Func.PlaySoundFile_whisper(self)
 	if self then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\"..self..".ogg", "Master")
-		-- PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Naruto\\"..self..".ogg", "Master")
 	end
 end
 local PlaySoundFile_whisper = E.Octo_Func.PlaySoundFile_whisper
@@ -289,35 +138,37 @@ function E.Octo_Func.func_reputationName(self)
 end
 local func_reputationName = E.Octo_Func.func_reputationName
 ----------------------------------------------------------------
+function E.Octo_Func.func_itemName_NOCOLOR(itemID)
+	local itemName_NOCOLOR = "itemName_NOCOLOR"
+	if C_Item.DoesItemExistByID(itemID) then
+		local item = Item:CreateFromItemID(itemID)
+		if item:IsItemDataCached() then
+			itemName_NOCOLOR = item:GetItemName()
+			-- print ("|cff00FF00Cached|r"..itemName_NOCOLOR)
+		else
+			item:ContinueOnItemLoad(function()
+					itemName_NOCOLOR = item:GetItemName()
+					-- print ("|cffFF0000Not Cached|r"..itemName_NOCOLOR)
+			end)
+		end
+		return itemName_NOCOLOR
+	end
+end
+local func_itemName_NOCOLOR = E.Octo_Func.func_itemName_NOCOLOR
+----------------------------------------------------------------
 function E.Octo_Func.func_itemName(itemID)
-	local itemName, _, itemQuality = GetItemInfo(itemID)
+	local itemName = func_itemName_NOCOLOR(itemID) or "itemName"
+	local itemQuality = select(3, GetItemInfo(itemID))
 	if itemQuality then
+		-- local r, g, b = ITEM_QUALITY_COLORS[itemQuality].color
 		local r, g, b = GetItemQualityColor(itemQuality)
 		local color = CreateColor(r, g, b, 1)
 		local itemNameColored = color:WrapTextInColorCode(itemName)
 		return itemNameColored or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
 	return itemName or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-	-- local itemName = E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-	-- if C_Item.DoesItemExistByID(itemID) then
-	-- local item = Item:CreateFromItemID(itemID)
-	-- if item:IsItemDataCached() then
-	-- itemName = item:GetItemName()
-	-- else
-	-- item:ContinueOnItemLoad(function()
-	-- itemName = item:ч()
-	-- end)
-	-- end
-	-- return itemName
-	-- end
 end
 local func_itemName = E.Octo_Func.func_itemName
-----------------------------------------------------------------
-function E.Octo_Func.func_itemName_NOCOLOR(self)
-	local itemName = GetItemInfo(self)
-	return itemName or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-end
-local func_itemName_NOCOLOR = E.Octo_Func.func_itemName_NOCOLOR
 ----------------------------------------------------------------
 function E.Octo_Func.func_itemTexture(self)
 	local itemTexture = select(10, GetItemInfo(self)) or 134400
@@ -374,9 +225,9 @@ function E.Octo_Func.SecondsToClock(self)
 		return "0:00"
 	elseif self >= (86400*365) then
 		years = floor(self / (86400*365))
-		days = floor(mod(self, 31536000) / 86400)	-- 365 дней в году
-		hours = floor(mod(self, 86400) / 3600) -- * 24 часа в дне
-		mins = floor(mod(self, 3600) / 60)	-- * 60 минут в часу
+		days = floor(mod(self, 31536000) / 86400)
+		hours = floor(mod(self, 86400) / 3600)
+		mins = floor(mod(self, 3600) / 60)
 		return years..L["y. "]..days..L["d. "]..hours..L["h. "]..mins..L["m. "]
 	elseif self >= 86400 then
 		days = floor(self / 86400)
@@ -450,15 +301,6 @@ function E.Octo_Func.All_objectives(self)
 end
 local All_objectives = E.Octo_Func.All_objectives
 ----------------------------------------------------------------
--- function E.Octo_Func.HandleDefaultBindings(binding_name, default_key)
--- 	local bind1, bind2 = GetBindingKey(binding_name)
--- 	local action = GetBindingAction(default_key)
--- 	if bind1 == nil and bind2 == nil and action == "" then
--- 		SetBinding(default_key, binding_name)
--- 	end
--- end
--- local HandleDefaultBindings = E.Octo_Func.HandleDefaultBindings
-----------------------------------------------------------------
 function E.Octo_Func.func_Octo_LoadAddOn(GlobalAddonName)
 	if select(5, GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
 		EnableAddOn(GlobalAddonName)
@@ -484,15 +326,11 @@ function E.Octo_Func.CheckCompletedByQuestID(self)
 		for i = 1, #objectives do
 			if objectives[i] then
 				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(self, i, false)
-				-- if self == 77414 then
-				-- print (objectiveType, objectiveText, finished)
-				-- end
 				if objectiveType == "progressbar" then
 					TEST = E.Octo_Globals.Red_Color..GetQuestProgressBarPercent(self).."%|r"
 				else
 					if finished then
 						TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
-						-- TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."|r"
 					else
 						TEST = E.Octo_Globals.Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
 					end
@@ -630,7 +468,6 @@ function E.Octo_Func.func_achievementquantity(self, i)
 	else
 		vivod = vivod..color.."0/1PIZDA".."|r"
 	end
-
 	return vivod
 end
 local func_achievementquantity = E.Octo_Func.func_achievementquantity
@@ -645,7 +482,7 @@ function E.Octo_Func.func_CurServerShort(self)
 	local text = (self):gsub("-", " "):gsub("'", " ")
 	local a, b = strsplit(" ", text)
 	if b then
-		self = E.Octo_Func.WA_Utf8Sub(a, 1)..E.Octo_Func.WA_Utf8Sub(b, 1):upper() else self = E.Octo_Func.WA_Utf8Sub(a, 3):lower()
+		self = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper() else self = utf8sub(a, 3, 1):lower()
 	end
 	return self
 end
@@ -679,4 +516,3 @@ local func_GetMapName = E.Octo_Func.func_GetMapName
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-

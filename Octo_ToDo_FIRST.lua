@@ -10,6 +10,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local lsfdd = LibStub("LibSFDropDown-1.4")
+local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 --
 E.Octo_Func.func_Octo_LoadAddOn("!BugGrabber")
 E.Octo_Func.func_Octo_LoadAddOn("BugSack")
@@ -93,6 +94,7 @@ E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.Skinning)
 E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.Jewelcrafting)
 E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.Inscription)
 E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.Archeology)
+E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_QuestID, E.Octo_Table.OctoTable_QuestID_Paragon)
 local OctoTable_func_otrisovka_FIRST = {
 }
 local function Central_Frame_Mouse_OnEnter(self)
@@ -733,7 +735,7 @@ function Collect_ALL_PlayerInfo()
 	local text = (curServerShort):gsub("-", " "):gsub("'", " ")
 	local a, b = strsplit(" ", text)
 	if b then
-		curServerShort = E.Octo_Func.WA_Utf8Sub(a, 1)..E.Octo_Func.WA_Utf8Sub(b, 1):upper() else curServerShort = E.Octo_Func.WA_Utf8Sub(a, 3):lower()
+		curServerShort = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper() else curServerShort = utf8sub(a, 3, 1):lower()
 	end
 	if collect and not InCombatLockdown() then
 		collect.curServerShort = curServerShort
@@ -1293,7 +1295,11 @@ function Collect_ALL_ItemsInBag()
 						local text = _G["OctoToDoScanningTooltipFIRSTTextLeft"..i]:GetText()
 						local r, g, b, a = _G["OctoToDoScanningTooltipFIRSTTextLeft"..i]:GetTextColor()
 						local QWE = func_coloredText(_G["OctoToDoScanningTooltipFIRSTTextLeft"..i])
-						if QWE:find(E.Octo_Func.OnlyFirstWord(ITEM_CLASSES_ALLOWED)) and QWE:find(USE_COLON) or QWE:find("Манускрипт наблюдений за драконами") then
+						if QWE:find(E.Octo_Func.OnlyFirstWord(ITEM_CLASSES_ALLOWED)) and QWE:find(USE_COLON)
+							or QWE:find("Манускрипт наблюдений за драконами")
+							-- or QWE:find(TRANSMOGRIFY_STYLE_UNCOLLECTED)
+							-- or QWE:find(TRANSMOGRIFY_TOOLTIP_APPEARANCE_UNKNOWN)
+							then
 							E.Octo_Table.white_list_ALL_2[itemID] = 1
 						end
 					end
@@ -1344,19 +1350,19 @@ function Collect_ALL_ItemsInBag()
 				-- Оружие ENCHSLOT_WEAPON
 				-- -- ITEM_CLASSES_ALLOWED Классы:
 				-- Чарки
-				if itemType == ITEM_UPGRADE then
-					-- ChatFrame1:AddMessage("tinsert: "..ITEM_UPGRADE..hyperlink)
-					E.Octo_Table.white_list_ALL_2[itemID] = 1
-				end
+				-- if itemType == ITEM_UPGRADE then
+				-- 	-- ChatFrame1:AddMessage("tinsert: "..ITEM_UPGRADE..hyperlink)
+				-- 	E.Octo_Table.white_list_ALL_2[itemID] = 1
+				-- end
 				if itemType == "Рецепт" then
 					-- ChatFrame1:AddMessage("tinsert: ".."Рецепт"..hyperlink)
 					E.Octo_Table.white_list_ALL_2[itemID] = 1
 				end
 				-- Toys (JUNK?)
-				if itemType == MISCELLANEOUS and itemSubType == "Хлам" and classID == 15 and subclassID == 0 and bindType == 1 and expacID >= 1 and itemQuality >= 2 then
-					-- ChatFrame1:AddMessage("tinsert: "..MISCELLANEOUS.."Хлам"..hyperlink)
-					E.Octo_Table.white_list_ALL_2[itemID] = 1
-				end
+				-- if itemType == MISCELLANEOUS and itemSubType == "Хлам" and classID == 15 and subclassID == 0 and bindType == 1 and expacID >= 1 and itemQuality >= 2 then
+				-- 	-- ChatFrame1:AddMessage("tinsert: "..MISCELLANEOUS.."Хлам"..hyperlink)
+				-- 	E.Octo_Table.white_list_ALL_2[itemID] = 1
+				-- end
 				-- Mounts
 				if itemType == MISCELLANEOUS and itemSubType == MOUNTS then
 					-- ChatFrame1:AddMessage("tinsert: "..MISCELLANEOUS..MOUNTS..hyperlink)
@@ -1939,43 +1945,6 @@ function Collect_All_Quest_Tooltip()
 	local qwid = 77414
 	--
 	collect.DreamsurgeInvestigation = E.Octo_Func.All_objectives(qwid)
-end
-function Collect_Token_Price()
-	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."Collect_Token_Price()".."|r")
-	end
-	local curGUID = UnitGUID("PLAYER")
-	local collect = Octo_ToDoOther
-	--
-	-- TOKEN_FILTER_LABEL
-	-- ITEM_QUALITY8_DESC
-	--
-	-- if not IsAddOnLoaded("Blizzard_WowTokenUI") then
-	-- 	LoadAddOn("Blizzard_WowTokenUI")
-	-- 	-- return
-	-- end
-	-- if not IsAddOnLoaded("Blizzard_AuctionHouseShared") then
-	-- 	LoadAddOn("Blizzard_AuctionHouseShared")
-	-- 	-- return
-	-- end
-	-- if not IsAddOnLoaded("Blizzard_AuctionHouseUI") then
-	-- 	LoadAddOn("Blizzard_AuctionHouseUI")
-	-- 	-- return
-	-- end
-	-- if not IsAddOnLoaded("Blizzard_TokenUI") then
-	-- 	LoadAddOn("Blizzard_TokenUI")
-	-- 	-- return
-	-- end
-	-- if not IsAddOnLoaded("Blizzard_StoreUI") then
-	-- 	LoadAddOn("Blizzard_StoreUI")
-	-- 	return
-	-- end
-	--
-	local TokenPrice = C_WowTokenPublic.GetCurrentMarketPrice()
-	--
-	if TokenPrice then
-		collect.TokenPrice = TokenPrice or 0
-	end
 end
 function Timer_Legion_Invasion()
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
@@ -5610,6 +5579,16 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
+				for k, questID in pairs(E.Octo_Table.OctoTable_QuestID_Paragon) do
+					if CharInfo.OctoTable_QuestID[questID] ~= (E.Octo_Globals.NONE or E.Octo_Globals.DONE) then
+						tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»"..L["Paragon"].."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+						tooltip[#tooltip+1] = {E.Octo_Func.func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
+						if #tooltip > 0 then
+							-- tooltip[#tooltip+1] = {" ", " "}
+							vivodCent = vivodCent..E.Octo_Globals.Addon_Left_Color.." *".."|r"
+						end
+					end
+				end
 				if Octo_ToDoVars.config.ExpansionToShow == 10 then
 					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Dragonflight".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 					tooltip[#tooltip+1] = {WorldBoss_Icon..L["World Boss"], CharInfo.Octopussy_DF_Weekly_WBALL_count}
@@ -5732,7 +5711,7 @@ function O_otrisovka_FIRST()
 					end
 				end
 				if #tooltip ~= 0 then
-					vivodCent = E.Octo_Globals.Gray_Color..QUESTS_LABEL.." ("..CharInfo.numQuests..")|r"
+					vivodCent = vivodCent..E.Octo_Globals.Gray_Color..QUESTS_LABEL.." ("..CharInfo.numQuests..")|r"
 				end
 				return vivodCent, vivodLeft
 		end)
@@ -5921,9 +5900,6 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if Octo_ToDoOther.TokenPrice and Octo_ToDoOther.TokenPrice ~= 0 then
-					vivodLeft = Token_Icon..TOKEN_FILTER_LABEL.." "..E.Octo_Globals.Yellow_Color..E.Octo_Func.CompactNumberFormat(Octo_ToDoOther.TokenPrice/10000)..Money_Icon.."|r"
-				end
 				if CharInfo.loginDay ~= 0 and CharInfo.loginDay ~= 0 then
 					CL:SetFontObject(OctoFont10)
 					vivodCent = CharInfo.loginHour.."\n"..CharInfo.loginDay
@@ -5962,6 +5938,37 @@ local function TotalMoneyAllServerOnShow()
 		TotalMoneyAllServer = TotalMoneyAllServer + CharInfo.Money
 	end
 	return classColorHexCurrent..E.Octo_Func.CompactNumberFormat(TotalMoneyAllServer/10000).."|r"..Money_Icon
+end
+local function Token_PriceOnShow()
+	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."Token_PriceOnShow".."|r")
+	end
+	if not IsAddOnLoaded("Blizzard_WowTokenUI") then
+		LoadAddOn("Blizzard_WowTokenUI")
+		-- ChatFrame1:AddMessage("Blizzard_WowTokenUI")
+	end
+	if not IsAddOnLoaded("Blizzard_AuctionHouseShared") then
+		LoadAddOn("Blizzard_AuctionHouseShared")
+		-- ChatFrame1:AddMessage("Blizzard_AuctionHouseShared")
+	end
+	if not IsAddOnLoaded("Blizzard_AuctionHouseUI") then
+		LoadAddOn("Blizzard_AuctionHouseUI")
+		-- ChatFrame1:AddMessage("Blizzard_AuctionHouseUI")
+	end
+	if not IsAddOnLoaded("Blizzard_TokenUI") then
+		LoadAddOn("Blizzard_TokenUI")
+		-- ChatFrame1:AddMessage("Blizzard_TokenUI")
+	end
+	if not IsAddOnLoaded("Blizzard_StoreUI") then
+		LoadAddOn("Blizzard_StoreUI")
+		-- ChatFrame1:AddMessage("Blizzard_StoreUI")
+	end
+	local TokenPrice = C_WowTokenPublic.GetCurrentMarketPrice()
+	if TokenPrice then
+		return TOKEN_FILTER_LABEL..": "..classColorHexCurrent..E.Octo_Func.CompactNumberFormat(TokenPrice/10000).."|r"..Money_Icon
+	else
+		return ""
+	end
 end
 local function TotalTimeAllServerOnShow()
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
@@ -6071,6 +6078,25 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 			end
 		end
 		--
+			if not Octo_Frame_Token_Price then
+				Octo_Frame_Token_Price = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
+				Octo_Frame_Token_Price:SetSize(400, E.Octo_Globals.curHeight)
+				if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
+					Octo_Frame_Token_Price:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMLEFT", 4, -44)
+				else
+					Octo_Frame_Token_Price:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMLEFT", 4, -22)
+				end
+				Octo_Frame_Token_Price:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+				Octo_Frame_Token_Price:SetBackdropBorderColor(1, 0, 0, 0)
+				Octo_Frame_Token_Price:HookScript("OnShow", Token_PriceOnShow)
+				local text = Octo_Frame_Token_Price:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+				text:SetAllPoints()
+				text:SetFontObject(OctoFont11)
+				text:SetJustifyV("MIDDLE")
+				text:SetJustifyH("LEFT")
+				text:SetTextColor(1, 1, 1, 1)
+				text:SetText(Token_PriceOnShow())
+			end
 		--
 	end
 	if Octo_ToDoVars.config.ShowTime then
@@ -6908,7 +6934,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND == nil then Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND = false end
 		if Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND ~= nil then E.Octo_Globals.Octo_debug_BUTTONS_SECOND = Octo_ToDoVars.config.Octo_debug_BUTTONS_SECOND end
 		if Octo_ToDoOther.prefix == nil then Octo_ToDoOther.prefix = 1 end
-		if Octo_ToDoOther.TokenPrice == nil then Octo_ToDoOther.TokenPrice = 0 end
 		for classFilename, v in pairs(E.Octo_Table.CLASS_ARTIFACT_DATA) do
 			for itemID in pairs(E.Octo_Table.CLASS_ARTIFACT_DATA[classFilename]) do
 				local artifactData = E.Octo_Table.CLASS_ARTIFACT_DATA[classFilename][itemID]
@@ -7051,9 +7076,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 				end
 		end)
 	end
-	if (event == "TOKEN_MARKET_PRICE_UPDATED") and not InCombatLockdown() then
-		Collect_Token_Price()
-	end
 	if (event == "CHAT_MSG_SKILL" or event == "CHAT_MSG_SYSTEM") and not InCombatLockdown() then -- event == "TRAINER_UPDATE" or
 		Collect_All_Professions()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
@@ -7102,7 +7124,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	end
 	if (event == "PLAYER_MONEY") and not InCombatLockdown() then
 		Collect_ALL_MoneyUpdate()
-		Collect_Token_Price()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "CURRENCY_DISPLAY_UPDATE") and not InCombatLockdown() then
@@ -7125,7 +7146,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_ENTERING_WORLD") and not InCombatLockdown() then
-		Collect_Token_Price()
 		Collect_ALL_PVPRaitings()
 		Collect_ALL_LoginTime()
 		Collect_ALL_ItemsInBag()
@@ -7153,7 +7173,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		-- or event == "ITEM_PUSH"
 		-- or event == "BAG_NEW_ITEMS_UPDATED"
 		-- or event == "ITEM_LOCKED"
-		C_Timer.After(5, function()
+		C_Timer.After(2, function()
 				if not InCombatLockdown() then
 					Collect_ALL_ItemsInBag()
 					if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end

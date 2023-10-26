@@ -140,13 +140,7 @@ if L then
 	L["Allied Races Quests"] = true
 	L["Seeing Red"] = true
 	L["Ulduar"] = true
-
-
-
-
-
-
-	-- print (LOC_OPTION_OFF, VIDEO_OPTIONS_ENABLED)
+	L["Paragon"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -281,4 +275,5 @@ if L then
 	L["Allied Races Quests"] = "Задания: Союзные расы"
 	L["Seeing Red"] = "Ярость или стыд?"
 	L["Ulduar"] = "Ульдуар"
+	L["Paragon"] = "Парагон"
 end

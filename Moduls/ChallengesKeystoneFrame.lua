@@ -79,7 +79,7 @@ tinsert(E.Octo_Globals.modules, function()
 											if autoStart and nil ~= C_ChallengeMode.GetSlottedKeystoneInfo() then
 												C_ChallengeMode.StartChallengeMode()
 												ChallengesKeystoneFrame:Hide()
-												print(E.Octo_Func.func_Gradient("Key started automatically", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+												ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Key started automatically", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
 											end
 										else
 											if x == cTime then
@@ -140,7 +140,7 @@ tinsert(E.Octo_Globals.modules, function()
 									local hyperlink = containerInfo.hyperlink
 									if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") then
 										if C_MythicPlus.GetOwnedKeystoneMapID() == select(8,GetInstanceInfo()) then
-											print ("Your Key? "..hyperlink)
+											ChatFrame1:AddMessage ("Your Key? "..hyperlink)
 										end
 									end
 								end

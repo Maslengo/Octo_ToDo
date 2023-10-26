@@ -541,7 +541,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
 		btn_right1:SetText(EXPANSION_FILTER_TEXT)
 		btn_right1:ddSetDisplayMode(GlobalAddonName)
-		-- print (tonumber(GetBuildInfo():match("(.-)%.")))
 		local function selectFunctionExpansion(menuButton)
 			Octo_ToDoVars.config.ExpansionToShow = menuButton.value
 			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
