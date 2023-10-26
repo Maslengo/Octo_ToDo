@@ -68,10 +68,10 @@ local TotalTransParacausalFlakes = 0
 -- local E.Octo_Globals.DONE = E.Octo_Globals.Green_Color.."Done|r"
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
 local regionalWeeklyStart = 1668981600
-local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8
 local edgeFile = "Interface\\Buttons\\WHITE8X8"
 local bgFile = "Interface\\Buttons\\WHITE8X8"
 local AddonTexture_FIRST = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_FIRST.tga"
+--------------------------------
 local Meta_Table_0 = {__index = function() return 0 end}
 local Meta_Table_1 = {__index = function() return 1 end}
 local Meta_Table_false = {__index = function() return false end}
@@ -5579,13 +5579,14 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
+				vivodCent = QUESTS_LABEL
 				for k, questID in pairs(E.Octo_Table.OctoTable_QuestID_Paragon) do
 					if CharInfo.OctoTable_QuestID[questID] ~= (E.Octo_Globals.NONE or E.Octo_Globals.DONE) then
 						tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»"..L["Paragon"].."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 						tooltip[#tooltip+1] = {E.Octo_Func.func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
 						if #tooltip > 0 then
-							-- tooltip[#tooltip+1] = {" ", " "}
-							vivodCent = vivodCent..E.Octo_Globals.Addon_Left_Color.." *".."|r"
+							tooltip[#tooltip+1] = {" ", " "}
+							vivodCent = E.Octo_Func.func_Gradient(vivodCent, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
 						end
 					end
 				end
@@ -5711,7 +5712,7 @@ function O_otrisovka_FIRST()
 					end
 				end
 				if #tooltip ~= 0 then
-					vivodCent = vivodCent..E.Octo_Globals.Gray_Color..QUESTS_LABEL.." ("..CharInfo.numQuests..")|r"
+					vivodCent = E.Octo_Globals.Gray_Color..vivodCent.."|r"
 				end
 				return vivodCent, vivodLeft
 		end)
@@ -6010,7 +6011,7 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
-	Octo_ToDo_FIRST_Frame_Main_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+	Octo_ToDo_FIRST_Frame_Main_Frame:SetBackdropColor(E.Octo_Globals.bgCr, E.Octo_Globals.bgCg, E.Octo_Globals.bgCb, E.Octo_Globals.bgCa)
 	Octo_ToDo_FIRST_Frame_Main_Frame:SetBackdropBorderColor(0, 0, 0, 1) -- бордер
 	Octo_ToDo_FIRST_Frame_Main_Frame:SetScript("OnShow", function()
 			Octo_ToDo_FIRST_AddDataToAltFrame()
@@ -6445,7 +6446,47 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 		t:SetAllPoints(Octo_ToDo_FIRST_Frame_AbandonAllQuests_Button)
 	end
 	--
-	if Octo_ToDoVars.config.Portals == true then
+	local function scroll_OnEnter(self)
+		self:SetAlpha(1)
+	end
+	local function scroll_OnLeave(self)
+		self:SetAlpha(.2)
+	end
+	if not dd then
+		local dd = lsfdd:CreateStretchButtonOriginal(Octo_ToDo_FIRST_Frame_Main_Frame, 160, 22)
+		dd:SetPoint("BOTTOMLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPLEFT", 0, 2)
+		local function selectFunctionExpansion(menuButton)
+			Octo_ToDoVars.config.ExpansionToShow = menuButton.value
+			-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+			if Octo_ToDo_FIRST_Frame_Main_FramePIZDA and Octo_ToDo_FIRST_Frame_Main_FramePIZDA:IsShown() then
+				Octo_ToDo_FIRST_Frame_Main_FramePIZDA:Hide()
+			end
+			if Octo_ToDo_SECOND_Frame_Main_FramePIZDA and Octo_ToDo_SECOND_Frame_Main_FramePIZDA:IsShown() then
+				Octo_ToDo_SECOND_Frame_Main_FramePIZDA:Hide()
+			end
+		end
+		-- dd:SetText(OPTIONS)
+		dd:SetText(EXPANSION_FILTER_TEXT)
+		dd:ddSetDisplayMode(GlobalAddonName)
+		dd:ddSetInitFunc(function(self, level, value)
+				local info = {}
+				if not value then
+					for k, v in ipairs(E.Octo_Table.OctoTable_Expansions_Table) do
+						-- info.hasColorSwatch = true
+						-- info.opacity = 0.5 -- Red color value of the color swatch
+						-- info.r = 1
+						-- info.g = 0
+						-- info.b = 0
+						info.text = v
+						info.value = k
+						info.checked = Octo_ToDoVars.config.ExpansionToShow == k
+						info.func = selectFunctionExpansion
+						self:ddAddButton(info, level)
+					end
+				end
+		end)
+	end
+	if Octo_ToDoVars.config.PortalsNEW == true then
 		local Xpos = 0
 		local Ypos = -21
 		local prof1, prof2 = GetProfessions()
@@ -6655,7 +6696,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 		-- 				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 		-- 				edgeSize = 1,
 		-- 		})
-		-- 		MEME_FRAME[curCharGUID]:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+		-- 		MEME_FRAME[curCharGUID]:SetBackdropColor(E.Octo_Globals.bgCr, E.Octo_Globals.bgCg, E.Octo_Globals.bgCb, E.Octo_Globals.bgCa)
 		-- 		MEME_FRAME[curCharGUID]:SetBackdropBorderColor(0, 0, 0, 1)
 		-- 		MEME_FRAME[curCharGUID].icon = MEME_FRAME[curCharGUID]:CreateTexture(nil, "ARTWORK")
 		-- 		MEME_FRAME[curCharGUID].icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Melli.tga")
@@ -6897,7 +6938,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDoVars.config.ResearchersUnderFire == nil then Octo_ToDoVars.config.ResearchersUnderFire = true end
 		if Octo_ToDoVars.config.Dreamsurges == nil then Octo_ToDoVars.config.Dreamsurges = false end
 		if Octo_ToDoVars.config.TimeRift == nil then Octo_ToDoVars.config.TimeRift = false end
-		if Octo_ToDoVars.config.Portals == nil then Octo_ToDoVars.config.Portals = false end
+		if Octo_ToDoVars.config.PortalsNEW == nil then Octo_ToDoVars.config.PortalsNEW = false end
 		if Octo_ToDoVars.config.Achievements == nil then Octo_ToDoVars.config.Achievements = false end
 		if Octo_ToDoVars.config.curHeight == nil then Octo_ToDoVars.config.curHeight = 20 end
 		if Octo_ToDoVars.config.curHeight ~= nil then E.Octo_Globals.curHeight = Octo_ToDoVars.config.curHeight end

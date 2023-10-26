@@ -6,18 +6,7 @@ local lsfdd = LibStub("LibSFDropDown-1.4")
 local slider_scale = 0.8
 local multiplier = 2-slider_scale
 --
-local Expansions_Table = {
-	"|cff68ccefClassic"..FONT_COLOR_CODE_CLOSE,
-	"|cff4fff79The Burning Crusade"..FONT_COLOR_CODE_CLOSE,
-	"|cff00a3ffWrath of the Lich King"..FONT_COLOR_CODE_CLOSE,
-	"|cffffb300Cataclysm"..FONT_COLOR_CODE_CLOSE,
-	"|cff00ffbaMists of Pandaria"..FONT_COLOR_CODE_CLOSE,
-	"|cffc86400Warlords of Draenor"..FONT_COLOR_CODE_CLOSE,
-	"|cff1eff00Legion"..FONT_COLOR_CODE_CLOSE,
-	"|cff6464ffBattle for Azeroth"..FONT_COLOR_CODE_CLOSE,
-	"|cffc9c3aaShadowlands"..FONT_COLOR_CODE_CLOSE,
-	"|cffe8e379Dragonflight"..FONT_COLOR_CODE_CLOSE,
-}
+
 --
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
@@ -548,7 +537,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		btn_right1:ddSetInitFunc(function(self, level, value)
 				local info = {}
 				if not value then
-					for k, v in ipairs(Expansions_Table) do
+					for k, v in ipairs(E.Octo_Table.OctoTable_Expansions_Table) do
 						info.text = v
 						info.value = k
 						info.checked = Octo_ToDoVars.config.ExpansionToShow == k
@@ -815,19 +804,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
-		self[pizza]:SetChecked(Octo_ToDoVars.config.Portals)
-		self[pizza]:SetScript("OnClick", function(btn)
-				Octo_ToDoVars.config.Portals = btn:GetChecked()
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
-		end)
-				self[pizza].text:SetJustifyV("MIDDLE")
-		self[pizza].text:SetJustifyH("LEFT")
-		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE.." "..L["InDev"])
-		--
-		local number = 13
-		local pizza = E.Octo_Func.GenerateUniqueID()
-		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
-		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
 		self[pizza]:SetChecked(Octo_ToDoVars.config.Achievements)
 		self[pizza]:SetScript("OnClick", function(btn)
 				Octo_ToDoVars.config.Achievements = btn:GetChecked()
@@ -839,7 +815,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 
 
 		--
-		local number = 17
+		local number = 15
 		local pizza = E.Octo_Func.GenerateUniqueID()
 		self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
 		self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
@@ -857,7 +833,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 
 
         --
-        local number = 18
+        local number = 16
         local pizza = E.Octo_Func.GenerateUniqueID()
         self[pizza] = CreateFrame("CheckButton", nil, MAIN_scrollChild, "InterfaceOptionsCheckButtonTemplate")
         self[pizza]:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*number)
@@ -1134,6 +1110,34 @@ FIRST_Config:SetScript("OnShow", function(self)
 		self[pizza].text:SetJustifyH("LEFT")
 			self[pizza].text:SetText(E.Octo_Globals.LightGray_Color.."LootFrame".." (RCLootCouncil DISABLED)"..FONT_COLOR_CODE_CLOSE)
 		end
+
+
+
+
+		--
+		local number = 11
+		local pizza = E.Octo_Func.GenerateUniqueID()
+		self[pizza] = CreateFrame("CheckButton", nil, FIRST_scrollChild, "InterfaceOptionsCheckButtonTemplate")
+		self[pizza]:SetPoint("TOPLEFT", FIRST_scrollChild, "BOTTOMLEFT", POS_LEFT, -indent*number)
+		self[pizza]:SetChecked(Octo_ToDoVars.config.PortalsNEW)
+		self[pizza]:SetScript("OnClick", function(btn)
+				Octo_ToDoVars.config.PortalsNEW = btn:GetChecked()
+				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+		end)
+				self[pizza].text:SetJustifyV("MIDDLE")
+		self[pizza].text:SetJustifyH("LEFT")
+		self[pizza].text:SetText(E.Octo_Func.func_texturefromIcon(3610528, 20).." "..WHITE_FONT_COLOR_CODE..L["Portals"]..FONT_COLOR_CODE_CLOSE.." "..L["InDev"])
+		--
+
+
+
+
+
+
+
+
+
+
 end)
 -- ADD SUBCATEGORY
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIRST_Config, L["InDev"].."FIRST_Config")

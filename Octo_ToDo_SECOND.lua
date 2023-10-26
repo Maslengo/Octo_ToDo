@@ -58,24 +58,22 @@ local curServer = GetRealmName()
 -- local E.Octo_Globals.DONE = E.Octo_Globals.Green_Color.."Done|r"
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
 local regionalWeeklyStart = 1668981600
-local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8
 local edgeFile = "Interface\\Buttons\\WHITE8X8"
 local bgFile = "Interface\\Buttons\\WHITE8X8"
 local AddonTexture_SECOND = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_SECOND.tga"
 --------------------------------
-local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
-local menuBackdrop = {
-	bgFile = "Interface/ChatFrame/ChatFrameBackground",
-	edgeFile = "Interface/ChatFrame/ChatFrameBackground",
-	tile = true, edgeSize = 1 * scale, tileSize = 5 * scale,
-}
-lsfdd:CreateMenuStyle(GlobalAddonName, function(parent)
-	local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
-	f:SetBackdrop(menuBackdrop)
-	f:SetBackdropColor(.06, .06, .1, .9)
-	f:SetBackdropBorderColor(.5, .5, .5, .8)
-	return f
-end)
+-- local menuBackdrop = {
+-- 	bgFile = "Interface/ChatFrame/ChatFrameBackground",
+-- 	edgeFile = "Interface/ChatFrame/ChatFrameBackground",
+-- 	tile = true, edgeSize = 1 * E.Octo_Globals.scale, tileSize = 5 * E.Octo_Globals.scale,
+-- }
+-- lsfdd:CreateMenuStyle(GlobalAddonName, function(parent)
+-- 	local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+-- 	f:SetBackdrop(menuBackdrop)
+-- 	f:SetBackdropColor(.06, .06, .1, .9)
+-- 	f:SetBackdropBorderColor(.5, .5, .5, .8)
+-- 	return f
+-- end)
 -----------------------
 local OctoTable_func_otrisovka_SECOND = {
 }
@@ -1476,7 +1474,7 @@ function Octo_ToDo_SECOND_CreateAltFrame()
 			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
-	Octo_ToDo_SECOND_Frame_Main_Frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+	Octo_ToDo_SECOND_Frame_Main_Frame:SetBackdropColor(E.Octo_Globals.bgCr, E.Octo_Globals.bgCg, E.Octo_Globals.bgCb, E.Octo_Globals.bgCa)
 	Octo_ToDo_SECOND_Frame_Main_Frame:SetBackdropBorderColor(0, 0, 0, 1) -- бордер
 	Octo_ToDo_SECOND_Frame_Main_Frame:SetScript("OnShow", function()
 			Octo_ToDo_SECOND_AddDataToAltFrame()

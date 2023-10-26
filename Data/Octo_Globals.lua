@@ -40,6 +40,10 @@ local _, _, _, isWeakAuras = GetAddOnInfo("WeakAuras")
 E.Octo_Globals.isWeakAuras = isWeakAuras
 local _, _, _, isTomTom = GetAddOnInfo("TomTom")
 E.Octo_Globals.isTomTom = isTomTom
+E.Octo_Globals.bgCr = 14/255
+E.Octo_Globals.bgCg = 14/255
+E.Octo_Globals.bgCb = 14/255
+E.Octo_Globals.bgCa = 0.8
 ----------------------------------------------------------------
 --COLORS--------------------------------------------------------
 ----------------------------------------------------------------

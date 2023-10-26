@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v68.8(10.1.7)(26.10.2023)
+## Version: v68.9(10.1.7)(26.10.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
 ## SavedVariables:  Octo_ToDo_SmartCollectNEW2 Octo_ToDoLevels Octo_ToDoVars Octo_ToDoArtifact Octo_ToDoOther Octo_ToDoTransmog
 
@@ -19,6 +19,7 @@ Data\Tables\AutoOpen_openableIDs.lua
 Data\Tables\OctoTable_ArtifactData.lua
 Data\Tables\OctoTable_bytetoB64.lua
 Data\Tables\OctoTable_currencyID_ALL.lua
+Data\Tables\OctoTable_Expansions_Table.lua
 Data\Tables\OctoTable_instanceDifficulty.lua
 Data\Tables\OctoTable_itemID_ALL.lua
 Data\Tables\OctoTable_itemID_Cataloged_Research.lua
@@ -68,6 +69,7 @@ Moduls\Module_Sell_Frame.lua
 Moduls\Module_Usable_Items.lua
 Moduls\UIErrorsFramePosition.lua
 
+Octo_ToDo_CreateMenuStyle.lua
 Octo_ToDo_FIRST.lua
 Octo_ToDo_SECOND.lua
 Octo_ToDo_CommunityFeast.lua
