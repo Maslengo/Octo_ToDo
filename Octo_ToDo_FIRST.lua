@@ -5943,32 +5943,14 @@ local function Token_PriceOnShow()
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Function_Color.."Token_PriceOnShow".."|r")
 	end
-	if not IsAddOnLoaded("Blizzard_WowTokenUI") then
-		LoadAddOn("Blizzard_WowTokenUI")
-		-- ChatFrame1:AddMessage("Blizzard_WowTokenUI")
-	end
-	if not IsAddOnLoaded("Blizzard_AuctionHouseShared") then
-		LoadAddOn("Blizzard_AuctionHouseShared")
-		-- ChatFrame1:AddMessage("Blizzard_AuctionHouseShared")
-	end
-	if not IsAddOnLoaded("Blizzard_AuctionHouseUI") then
-		LoadAddOn("Blizzard_AuctionHouseUI")
-		-- ChatFrame1:AddMessage("Blizzard_AuctionHouseUI")
-	end
-	if not IsAddOnLoaded("Blizzard_TokenUI") then
-		LoadAddOn("Blizzard_TokenUI")
-		-- ChatFrame1:AddMessage("Blizzard_TokenUI")
-	end
-	if not IsAddOnLoaded("Blizzard_StoreUI") then
-		LoadAddOn("Blizzard_StoreUI")
-		-- ChatFrame1:AddMessage("Blizzard_StoreUI")
-	end
 	local TokenPrice = C_WowTokenPublic.GetCurrentMarketPrice()
-	if TokenPrice then
-		return TOKEN_FILTER_LABEL..": "..classColorHexCurrent..E.Octo_Func.CompactNumberFormat(TokenPrice/10000).."|r"..Money_Icon
+	if TokenPrice == nil then
+		C_WowTokenPublic.UpdateMarketPrice()
+		vivod = ""
 	else
-		return ""
+		vivod = TOKEN_FILTER_LABEL..": "..classColorHexCurrent..E.Octo_Func.CompactNumberFormat(TokenPrice/10000).."|r"..Money_Icon
 	end
+	return vivod
 end
 local function TotalTimeAllServerOnShow()
 	if Octo_ToDoVars.config.Octo_debug_Function_FIRST == true then
@@ -6057,7 +6039,9 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 			text:SetJustifyV("MIDDLE")
 			text:SetJustifyH("LEFT")
 			text:SetTextColor(1, 1, 1, 1)
-			text:SetText(E.Octo_Func.func_CurServerShort(curServer)..": "..TotalMoneyCurServerOnShow())
+			Octo_Frame_TotalMoneyCurServer:HookScript("OnShow", function(self)
+				text:SetText(E.Octo_Func.func_CurServerShort(curServer)..": "..TotalMoneyCurServerOnShow())
+			end)
 		end
 		--
 		if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
@@ -6074,29 +6058,33 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 				text:SetJustifyV("MIDDLE")
 				text:SetJustifyH("LEFT")
 				text:SetTextColor(1, 1, 1, 1)
-				text:SetText(L["Total"]..": "..TotalMoneyAllServerOnShow())
+				Octo_Frame_TotalMoneyAllServer:HookScript("OnShow", function(self)
+					text:SetText(L["Total"]..": "..TotalMoneyAllServerOnShow())
+				end)
 			end
 		end
 		--
-			if not Octo_Frame_Token_Price then
-				Octo_Frame_Token_Price = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
-				Octo_Frame_Token_Price:SetSize(400, E.Octo_Globals.curHeight)
-				if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
-					Octo_Frame_Token_Price:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMLEFT", 4, -44)
-				else
-					Octo_Frame_Token_Price:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMLEFT", 4, -22)
-				end
-				Octo_Frame_Token_Price:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-				Octo_Frame_Token_Price:SetBackdropBorderColor(1, 0, 0, 0)
-				Octo_Frame_Token_Price:HookScript("OnShow", Token_PriceOnShow)
-				local text = Octo_Frame_Token_Price:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-				text:SetAllPoints()
-				text:SetFontObject(OctoFont11)
-				text:SetJustifyV("MIDDLE")
-				text:SetJustifyH("LEFT")
-				text:SetTextColor(1, 1, 1, 1)
-				text:SetText(Token_PriceOnShow())
+		if not Octo_Frame_Token_Price then
+			Octo_Frame_Token_Price = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
+			Octo_Frame_Token_Price:SetSize(400, E.Octo_Globals.curHeight)
+			if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
+				Octo_Frame_Token_Price:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMLEFT", 4, -44)
+			else
+				Octo_Frame_Token_Price:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMLEFT", 4, -22)
 			end
+			Octo_Frame_Token_Price:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+			Octo_Frame_Token_Price:SetBackdropBorderColor(1, 0, 0, 0)
+			Octo_Frame_Token_Price:HookScript("OnShow", Token_PriceOnShow)
+			local text = Octo_Frame_Token_Price:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			text:SetAllPoints()
+			text:SetFontObject(OctoFont11)
+			text:SetJustifyV("MIDDLE")
+			text:SetJustifyH("LEFT")
+			text:SetTextColor(1, 1, 1, 1)
+			Octo_Frame_Token_Price:HookScript("OnShow", function(self)
+				text:SetText(Token_PriceOnShow())
+			end)
+		end
 		--
 	end
 	if Octo_ToDoVars.config.ShowTime then
