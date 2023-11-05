@@ -2316,7 +2316,7 @@ function O_otrisovka_FIRST()
 				else
 					tooltip[#tooltip+1] = {THE_ALLIANCE, " "}
 				end
-				tooltip[#tooltip+1] = {" "," "}
+				tooltip[#tooltip+1] = {" ", " "}
 			end
 			if CharInfo.BindLocation ~= 0 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(134414)..L["Bind Location"], CharInfo.BindLocation}
@@ -2325,7 +2325,7 @@ function O_otrisovka_FIRST()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(132319)..L["Current Location"], CharInfo.CurrentLocation}
 			end
 			-- if CharInfo.maxNumQuestsCanAccept ~= 0 then
-			--     tooltip[#tooltip+1] = {QUESTS_LABEL, CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept}
+			--  tooltip[#tooltip+1] = {QUESTS_LABEL, CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept}
 			-- end
 			if CharInfo.totalSlots ~= 0 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133634)..L["Bags"], CharInfo.classColorHex..(CharInfo.usedSlots.."/"..CharInfo.totalSlots).."|r"}
@@ -2334,16 +2334,17 @@ function O_otrisovka_FIRST()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(4549254)..E.Octo_Globals.Red_Color..L["No Reagent Bag"].."|r", " "}
 			end
 			if CharInfo.realTotalTime ~= 0 and CharInfo.realLevelTime ~= 0 then
-				tooltip[#tooltip+1] = {" "," "}
+				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.classColorHex..(E.Octo_Func.SecondsToClock(CharInfo.realTotalTime)).."|r")}
 				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.classColorHex..(E.Octo_Func.SecondsToClock(CharInfo.realLevelTime)).."|r")}
 			end
+			if CharInfo.ItemsInBag[188152] == 0 or CharInfo.ItemsInBag[111820] == 0 then
+				tooltip[#tooltip+1] = {" ", " "}
+			end
 			if CharInfo.ItemsInBag[188152] == 0 then
-				tooltip[#tooltip+1] = {" "," "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(188152)..E.Octo_Func.func_itemName(188152), E.Octo_Globals.NONE}
 			end
 			if CharInfo.ItemsInBag[111820] == 0 then
-				tooltip[#tooltip+1] = {" "," "}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(111820)..E.Octo_Func.func_itemName(111820), E.Octo_Globals.NONE}
 			end
 			--
@@ -3584,31 +3585,31 @@ function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         for className, classTable in pairs(E.Octo_Globals.OctoTable_LegionArtifacts) do
-		--             if CharInfo.classFilename == className then
-		--                 vivodCent = E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)
-		--                 for specName, specTable in pairs(classTable) do
-		--                     tooltip[#tooltip+1] = {"1", Octo_ToDo_DB_LegionArtifacts[className][specName][24]}
-		--                 end
-		--             end
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   for className, classTable in pairs(E.Octo_Globals.OctoTable_LegionArtifacts) do
+		--    if CharInfo.classFilename == className then
+		--     vivodCent = E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)
+		--     for specName, specTable in pairs(classTable) do
+		--      tooltip[#tooltip+1] = {"1", Octo_ToDo_DB_LegionArtifacts[className][specName][24]}
+		--     end
+		--    end
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-		--     for className, classTable in pairs(E.Octo_Globals.OctoTable_LegionArtifacts) do
-		--         if CharInfo.classFilename == className then
-		--             for specName, specTable in pairs(classTable) do
-		--                 tinsert(OctoTable_func_otrisovka_FIRST,
-		--                     function(CharInfo, tooltip, CL, BG)
-		--                         local vivodCent, vivodLeft = " ", " "
-		--                         vivodCent = specName
-		--                         return vivodCent, vivodLeft
-		--                 end)
-		--             end
-		--         end
-		--     end
+		--  for className, classTable in pairs(E.Octo_Globals.OctoTable_LegionArtifacts) do
+		--   if CharInfo.classFilename == className then
+		--    for specName, specTable in pairs(classTable) do
+		--     tinsert(OctoTable_func_otrisovka_FIRST,
+		--      function(CharInfo, tooltip, CL, BG)
+		--       local vivodCent, vivodLeft = " ", " "
+		--       vivodCent = specName
+		--       return vivodCent, vivodLeft
+		--     end)
+		--    end
+		--   end
+		--  end
 		-- end
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
@@ -4257,121 +4258,121 @@ function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.ExpansionToShow == 10 then
 		--ACHI
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         vivodLeft = "1 неделя"
-		--         if CharInfo.ItemsInBag[206009] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206009)..CharInfo.ItemsInBag[206009]
-		--         end
-		--         if CharInfo.ItemsInBag[206010] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206010)..CharInfo.ItemsInBag[206010]
-		--         end
-		--         if CharInfo.ItemsInBag[206009] ~= 0 or CharInfo.ItemsInBag[206010] ~= 0 then
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206009)..E.Octo_Func.func_itemName(206009),CharInfo.ItemsInBag[206009]}
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206010)..E.Octo_Func.func_itemName(206010),CharInfo.ItemsInBag[206010]}
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   vivodLeft = "1 неделя"
+		--   if CharInfo.ItemsInBag[206009] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206009)..CharInfo.ItemsInBag[206009]
+		--   end
+		--   if CharInfo.ItemsInBag[206010] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206010)..CharInfo.ItemsInBag[206010]
+		--   end
+		--   if CharInfo.ItemsInBag[206009] ~= 0 or CharInfo.ItemsInBag[206010] ~= 0 then
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206009)..E.Octo_Func.func_itemName(206009), CharInfo.ItemsInBag[206009]}
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206010)..E.Octo_Func.func_itemName(206010), CharInfo.ItemsInBag[206010]}
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         vivodLeft = "2 неделя"
-		--         if CharInfo.ItemsInBag[206014] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206014)..CharInfo.ItemsInBag[206014]
-		--         end
-		--         if CharInfo.ItemsInBag[206011] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206011)..CharInfo.ItemsInBag[206011]
-		--         end
-		--         if CharInfo.ItemsInBag[206014] ~= 0 or CharInfo.ItemsInBag[206011] ~= 0 then
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206014)..E.Octo_Func.func_itemName(206014),CharInfo.ItemsInBag[206014]}
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206011)..E.Octo_Func.func_itemName(206011),CharInfo.ItemsInBag[206011]}
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   vivodLeft = "2 неделя"
+		--   if CharInfo.ItemsInBag[206014] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206014)..CharInfo.ItemsInBag[206014]
+		--   end
+		--   if CharInfo.ItemsInBag[206011] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206011)..CharInfo.ItemsInBag[206011]
+		--   end
+		--   if CharInfo.ItemsInBag[206014] ~= 0 or CharInfo.ItemsInBag[206011] ~= 0 then
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206014)..E.Octo_Func.func_itemName(206014), CharInfo.ItemsInBag[206014]}
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206011)..E.Octo_Func.func_itemName(206011), CharInfo.ItemsInBag[206011]}
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         vivodLeft = "3 неделя"
-		--         if CharInfo.ItemsInBag[206015] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206015)..CharInfo.ItemsInBag[206015]
-		--         end
-		--         if CharInfo.ItemsInBag[206012] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206012)..CharInfo.ItemsInBag[206012]
-		--         end
-		--         if CharInfo.ItemsInBag[206015] ~= 0 or CharInfo.ItemsInBag[206012] ~= 0 then
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206015)..E.Octo_Func.func_itemName(206015),CharInfo.ItemsInBag[206015]}
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206012)..E.Octo_Func.func_itemName(206012),CharInfo.ItemsInBag[206012]}
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   vivodLeft = "3 неделя"
+		--   if CharInfo.ItemsInBag[206015] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206015)..CharInfo.ItemsInBag[206015]
+		--   end
+		--   if CharInfo.ItemsInBag[206012] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206012)..CharInfo.ItemsInBag[206012]
+		--   end
+		--   if CharInfo.ItemsInBag[206015] ~= 0 or CharInfo.ItemsInBag[206012] ~= 0 then
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206015)..E.Octo_Func.func_itemName(206015), CharInfo.ItemsInBag[206015]}
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206012)..E.Octo_Func.func_itemName(206012), CharInfo.ItemsInBag[206012]}
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         vivodLeft = "4 неделя"
-		--         if CharInfo.ItemsInBag[206016] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206016)..CharInfo.ItemsInBag[206016]
-		--         end
-		--         if CharInfo.ItemsInBag[206013] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206013)..CharInfo.ItemsInBag[206013]
-		--         end
-		--         if CharInfo.ItemsInBag[206016] ~= 0 or CharInfo.ItemsInBag[206013] ~= 0 then
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206016)..E.Octo_Func.func_itemName(206016),CharInfo.ItemsInBag[206016]}
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206013)..E.Octo_Func.func_itemName(206013),CharInfo.ItemsInBag[206013]}
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   vivodLeft = "4 неделя"
+		--   if CharInfo.ItemsInBag[206016] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206016)..CharInfo.ItemsInBag[206016]
+		--   end
+		--   if CharInfo.ItemsInBag[206013] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206013)..CharInfo.ItemsInBag[206013]
+		--   end
+		--   if CharInfo.ItemsInBag[206016] ~= 0 or CharInfo.ItemsInBag[206013] ~= 0 then
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206016)..E.Octo_Func.func_itemName(206016), CharInfo.ItemsInBag[206016]}
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206013)..E.Octo_Func.func_itemName(206013), CharInfo.ItemsInBag[206013]}
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         vivodLeft = "5 неделя"
-		--         if CharInfo.ItemsInBag[206017] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206017)..CharInfo.ItemsInBag[206017]
-		--         end
-		--         if CharInfo.ItemsInBag[206021] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206021)..CharInfo.ItemsInBag[206021]
-		--         end
-		--         if CharInfo.ItemsInBag[206017] ~= 0 or CharInfo.ItemsInBag[206021] ~= 0 then
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206017)..E.Octo_Func.func_itemName(206017),CharInfo.ItemsInBag[206017]}
-		--             tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206021)..E.Octo_Func.func_itemName(206021),CharInfo.ItemsInBag[206021]}
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   vivodLeft = "5 неделя"
+		--   if CharInfo.ItemsInBag[206017] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206017)..CharInfo.ItemsInBag[206017]
+		--   end
+		--   if CharInfo.ItemsInBag[206021] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(206021)..CharInfo.ItemsInBag[206021]
+		--   end
+		--   if CharInfo.ItemsInBag[206017] ~= 0 or CharInfo.ItemsInBag[206021] ~= 0 then
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206017)..E.Octo_Func.func_itemName(206017), CharInfo.ItemsInBag[206017]}
+		--    tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206021)..E.Octo_Func.func_itemName(206021), CharInfo.ItemsInBag[206021]}
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- -- --ACHI
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         vivodLeft = E.Octo_Func.func_itemTexture(199836)..E.Octo_Func.func_itemName(199836)
-		--         if CharInfo.ItemsInBag[199836] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(199836)..CharInfo.ItemsInBag[199836]
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   vivodLeft = E.Octo_Func.func_itemTexture(199836)..E.Octo_Func.func_itemName(199836)
+		--   if CharInfo.ItemsInBag[199836] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(199836)..CharInfo.ItemsInBag[199836]
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         vivodLeft = E.Octo_Func.func_itemTexture(199837)..E.Octo_Func.func_itemName(199837)
-		--         if CharInfo.ItemsInBag[199837] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(199837)..CharInfo.ItemsInBag[199837]
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   vivodLeft = E.Octo_Func.func_itemTexture(199837)..E.Octo_Func.func_itemName(199837)
+		--   if CharInfo.ItemsInBag[199837] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(199837)..CharInfo.ItemsInBag[199837]
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         vivodLeft = E.Octo_Func.func_itemTexture(199838)..E.Octo_Func.func_itemName(199838)
-		--         if CharInfo.ItemsInBag[199838] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(199838)..CharInfo.ItemsInBag[199838]
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   vivodLeft = E.Octo_Func.func_itemTexture(199838)..E.Octo_Func.func_itemName(199838)
+		--   if CharInfo.ItemsInBag[199838] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(199838)..CharInfo.ItemsInBag[199838]
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		--     function(CharInfo, tooltip, CL, BG)
-		--         local vivodCent, vivodLeft = "", ""
-		--         vivodLeft = E.Octo_Func.func_itemTexture(199839)..E.Octo_Func.func_itemName(199839)
-		--         if CharInfo.ItemsInBag[199839] ~= 0 then
-		--             vivodCent = vivodCent..E.Octo_Func.func_itemTexture(199839)..CharInfo.ItemsInBag[199839]
-		--         end
-		--         return vivodCent, vivodLeft
+		--  function(CharInfo, tooltip, CL, BG)
+		--   local vivodCent, vivodLeft = "", ""
+		--   vivodLeft = E.Octo_Func.func_itemTexture(199839)..E.Octo_Func.func_itemName(199839)
+		--   if CharInfo.ItemsInBag[199839] ~= 0 then
+		--    vivodCent = vivodCent..E.Octo_Func.func_itemTexture(199839)..CharInfo.ItemsInBag[199839]
+		--   end
+		--   return vivodCent, vivodLeft
 		-- end)
 		-- -- ACHI
 		-- Помощь союзу
@@ -4600,14 +4601,14 @@ function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 			-- tinsert(OctoTable_func_otrisovka_FIRST,
-			--     function(CharInfo, tooltip, CL, BG)
-			--         local vivodCent, vivodLeft = "", ""
-			--         vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
-			--         if CharInfo.ItemsInBag[207002] ~= 0 then
-			--             vivodCent = E.Octo_Globals.WOW_Rare_Color..CharInfo.ItemsInBag[207002].."|r"
-			--         end
-			--         BG:SetColorTexture(.64, .21, .93, E.Octo_Globals.BGALPHA)
-			--         return vivodCent, vivodLeft
+			--  function(CharInfo, tooltip, CL, BG)
+			--   local vivodCent, vivodLeft = "", ""
+			--   vivodLeft = E.Octo_Func.func_texturefromIcon(1391676)..E.Octo_Func.func_itemName(207002)
+			--   if CharInfo.ItemsInBag[207002] ~= 0 then
+			--    vivodCent = E.Octo_Globals.WOW_Rare_Color..CharInfo.ItemsInBag[207002].."|r"
+			--   end
+			--   BG:SetColorTexture(.64, .21, .93, E.Octo_Globals.BGALPHA)
+			--   return vivodCent, vivodLeft
 			-- end)
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -6919,7 +6920,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 				-- if E.Octo_Table.OctoTable_BG[i] then
 					Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, 0)
 				-- else
-				-- 	Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, .1)  -- НОВЫЙ БЕКГРАУНД
+				-- 	Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, .1) -- НОВЫЙ БЕКГРАУНД
 				-- end
 				CF.CL = CL
 			end
@@ -7056,10 +7057,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.HideErrorMessages == nil then Octo_ToDo_DB_Vars.config.HideErrorMessages = false end
 		if Octo_ToDo_DB_Vars.config.UIErrorsFramePosition == nil then Octo_ToDo_DB_Vars.config.UIErrorsFramePosition = false end
 		if Octo_ToDo_DB_Vars.config.Auto_Screenshot == nil then Octo_ToDo_DB_Vars.config.Auto_Screenshot = false end
-		if Octo_ToDo_DB_Vars.config.ItemsUsable == nil then Octo_ToDo_DB_Vars.config.ItemsUsable = true end
-		if Octo_ToDo_DB_Vars.config.ItemsUsable == false then Octo_ToDo_DB_Vars.config.ItemsUsable = true end
-
-
 		if Octo_ToDo_DB_Vars.config.ItemsUsable == nil then Octo_ToDo_DB_Vars.config.ItemsUsable = false end
 		if Octo_ToDo_DB_Vars.config.ItemsDelete == nil then Octo_ToDo_DB_Vars.config.ItemsDelete = false end
 		if Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance == nil then Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance = false end
@@ -7209,7 +7206,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 							Collect_All_Quest_Tooltip()
 							Collect_All_Reputations()
 							Collect_All_Legion_Transmoge()
-							Collect_All_Legion_TransmogeNEW()
+							-- Collect_All_Legion_TransmogeNEW()
 							Collect_ALL_UNIVERSALQuestUpdate()
 							Collect_BfA_Azerite()
 							Collect_BfA_Cloaklvl()
@@ -7294,7 +7291,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_All_Quest_Tooltip()
 		Collect_All_Reputations()
 		Collect_All_Legion_Transmoge()
-		Collect_All_Legion_TransmogeNEW()
+		-- Collect_All_Legion_TransmogeNEW()
 		Collect_ALL_UNIVERSALQuestUpdate()
 		Collect_BfA_Azerite()
 		Collect_BfA_Cloaklvl()
