@@ -2,54 +2,9 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
-local ignore_list = {
-	[49888] = true,
-	[49908] = true,
-	[49040] = true,
-	[77530] = true,
-	[81055] = true,
-	[109076] = true,
-	[111820] = true,
-	[154172] = true,
-	[154173] = true,
-	[154174] = true,
-	[154175] = true,
-	[154176] = true,
-	[154177] = true,
-	[166751] = true,
-	[167555] = true,
-	[180653] = true,
-	[188152] = true,
-	[191251] = true,
-	[193201] = true,
-	[203703] = true,
-	[204075] = true,
-	[204076] = true,
-	[204077] = true,
-	[204078] = true,
-	[204193] = true,
-	[204194] = true,
-	[204195] = true,
-	[204196] = true,
-	[204985] = true,
-	[205982] = true,
-	[207002] = true,
-	[208153] = true,
-}
-
--- for i = 1, #E.Octo_Table.OctoTable_itemID_ALL do
---     C_Item.RequestLoadItemDataByID(E.Octo_Table.OctoTable_itemID_ALL[i])
--- end
-for itemID, v in pairs(ignore_list) do
-	C_Item.RequestLoadItemDataByID(itemID)
-end
-
-
-
-
 --SellFrame
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.SellFrame then
+		if Octo_ToDo_DB_Vars.config.SellFrame then
 			local size = 32
 			local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8
 			local OctoFrame_Events = nil
@@ -60,13 +15,6 @@ tinsert(E.Octo_Globals.modules, function()
 			local OctoFrame_foundLevelTooltip = nil
 			local OctoFrame_FROMBANK = nil
 			local OctoFrame_TOBANK = nil
-
-
-
-
-
-
-
 			local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 			local ilvlStr = avgItemLevelEquipped or 0
 			function Octo_Trade_OnLoad()
@@ -194,8 +142,8 @@ tinsert(E.Octo_Globals.modules, function()
 						GameTooltip:ClearLines()
 						GameTooltip:AddLine("itemQuality < фиолет")
 						GameTooltip:AddLine(" ")
-						GameTooltip:AddLine("ignore_list: ")
-						for k, v in pairs(ignore_list) do
+						GameTooltip:AddLine("E.Octo_Table.OctoTable_itemID_Ignore_List: ")
+						for k, v in pairs(E.Octo_Table.OctoTable_itemID_Ignore_List) do
 							if GetItemInfo(k) then
 								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(k)..E.Octo_Func.func_itemName(k), k)
 							end
@@ -248,7 +196,7 @@ tinsert(E.Octo_Globals.modules, function()
 										end
 									end
 									if sellPrice and itemQuality then
-										if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality < 4 --[[and itemLevel < 150 and itemLevel ~= 0]] then --4 фиолет
+										if not E.Octo_Table.OctoTable_itemID_Ignore_List[itemID] and sellPrice ~= 0 and itemQuality < 4 --[[and itemLevel < 150 and itemLevel ~= 0]] then --4 фиолет
 											C_Container.UseContainerItem(bag, slot)
 										end
 									end
@@ -272,8 +220,8 @@ tinsert(E.Octo_Globals.modules, function()
 						GameTooltip:ClearLines()
 						GameTooltip:AddLine("itemQuality = фиолет")
 						GameTooltip:AddLine(" ")
-						GameTooltip:AddLine("ignore_list: ")
-						for k, v in pairs(ignore_list) do
+						GameTooltip:AddLine("E.Octo_Table.OctoTable_itemID_Ignore_List: ")
+						for k, v in pairs(E.Octo_Table.OctoTable_itemID_Ignore_List) do
 							if GetItemInfo(k) then
 								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(k)..E.Octo_Func.func_itemName(k), k)
 							end
@@ -326,7 +274,7 @@ tinsert(E.Octo_Globals.modules, function()
 										end
 									end
 									if sellPrice and itemQuality then
-										if not ignore_list[itemID] and sellPrice ~= 0 and itemQuality <= 4 --[[and itemLevel < 150 and itemLevel ~= 0]] then --4 фиолет
+										if not E.Octo_Table.OctoTable_itemID_Ignore_List[itemID] and sellPrice ~= 0 and itemQuality <= 4 --[[and itemLevel < 150 and itemLevel ~= 0]] then --4 фиолет
 											C_Container.UseContainerItem(bag, slot)
 										end
 									end
@@ -368,7 +316,7 @@ tinsert(E.Octo_Globals.modules, function()
 								if containerInfo then
 									local itemID = containerInfo.itemID
 									if itemID then
-										if not ignore_list[itemID] then
+										if not E.Octo_Table.OctoTable_itemID_Ignore_List[itemID] then
 											C_Container.UseContainerItem(bag, slot)
 										end
 									end

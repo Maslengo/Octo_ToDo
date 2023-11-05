@@ -2,8 +2,7 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.AutoTurnQuests then
-
+		if Octo_ToDo_DB_Vars.config.AutoTurnQuests then
 			local Octo_AutoTurnInFrame_EventFrame = nil
 			function Octo_AutoTurnInOnLoad()
 				if not Octo_AutoTurnInFrame_EventFrame then
@@ -20,7 +19,6 @@ tinsert(E.Octo_Globals.modules, function()
 			local function OnEvent(self, event, ...)
 				if event == "QUEST_DETAIL" then
 					if not IsShiftKeyDown() then
-
 						if QuestIsFromAreaTrigger() then
 							AcceptQuest()
 						elseif QuestGetAutoAccept() then
@@ -32,7 +30,6 @@ tinsert(E.Octo_Globals.modules, function()
 					if not IsShiftKeyDown() then
 						if GetNumQuestChoices() <= 1 then
 							GetQuestReward(1)
-
 						end
 					end
 				elseif event == "QUEST_GREETING" then
@@ -45,7 +42,7 @@ tinsert(E.Octo_Globals.modules, function()
 						end
 						for i = 1, GetNumAvailableQuests() do
 							local isTrivial, _, isRepeatable, _, questID = GetAvailableQuestInfo(i)
-							if (isTrivial and Octo_ToDoVars.config.TrivialQuests == false) and (isRepeatable and Octo_ToDoVars.config.RepeatableQuests == false) then
+							if isTrivial and isRepeatable then
 								return
 							else
 								SelectAvailableQuest(i)
@@ -63,7 +60,7 @@ tinsert(E.Octo_Globals.modules, function()
 						end
 						if C_GossipInfo.GetAvailableQuests() ~= 0 then
 							for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
-								if (info.isTrivial and Octo_ToDoVars.config.TrivialQuests == false) and (info.repeatable and Octo_ToDoVars.config.RepeatableQuests == false) then
+								if info.isTrivial and info.repeatable then
 									return
 								else
 									C_GossipInfo.SelectAvailableQuest(info.questID)

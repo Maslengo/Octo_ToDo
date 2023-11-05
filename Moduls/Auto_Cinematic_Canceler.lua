@@ -4,7 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --CinematicCanceler
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.CinematicCanceler then
+		if Octo_ToDo_DB_Vars.config.CinematicCanceler then
 			CinematicFrame:HookScript("OnShow", function(self, ...)
 					if IsModifierKeyDown() then
 						return

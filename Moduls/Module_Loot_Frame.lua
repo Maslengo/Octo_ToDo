@@ -4,7 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --LootFrame
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.LootFrame then
+		if Octo_ToDo_DB_Vars.config.LootFrame then
 			----------------------------------------------------------------------------------------------------------------------------------
 			----------------------------------------------------------------------------------------------------------------------------------
 			local OctoFrame_EventFrame = nil

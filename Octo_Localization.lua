@@ -141,6 +141,12 @@ if L then
 	L["Seeing Red"] = true
 	L["Ulduar"] = true
 	L["Paragon"] = true
+	L["Superbloom"] = true
+	L["Dreamseeds"] = true
+	L["Dream Wardens"] = true
+	L["Emerald Dewdrop"] = true
+	L["Crests"] = true
+	L["Flightstones"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -276,4 +282,10 @@ if L then
 	L["Seeing Red"] = "Ярость или стыд?"
 	L["Ulduar"] = "Ульдуар"
 	L["Paragon"] = "Парагон"
+	L["Superbloom"] = "Цветочный бум"
+	L["Dreamseeds"] = "Dreamseeds"
+	L["Dream Wardens"] = "Dream Wardens"
+	L["Emerald Dewdrop"] = "Emerald Dewdrop"
+	L["Crests"] = "Crests"
+	L["Flightstones"] = "Драконьи камни"
 end

@@ -71,6 +71,15 @@ function E.Octo_Func.GenerateUniqueID()
 end
 local GenerateUniqueID = E.Octo_Func.GenerateUniqueID
 ----------------------------------------------------------------
+function E.Octo_Func.GenerateUnique_Color()
+	local s = {}
+	for i=1, 6 do
+		tinsert(s, E.Octo_Table.OctoTable_bytetoB64_Color[math.random(0, 15)])
+	end
+	return table.concat(s)
+end
+local GenerateUnique_Color = E.Octo_Func.GenerateUnique_Color
+----------------------------------------------------------------
 function E.Octo_Func.TableConcat(table1, table2)
 	for i=1, #table2 do
 		table1[#table1+1] = table2[i]
@@ -161,9 +170,10 @@ function E.Octo_Func.func_itemName(itemID)
 	local itemQuality = select(3, GetItemInfo(itemID))
 	if itemQuality then
 		-- local r, g, b = ITEM_QUALITY_COLORS[itemQuality].color
-		local r, g, b = GetItemQualityColor(itemQuality)
-		local color = CreateColor(r, g, b, 1)
-		local itemNameColored = color:WrapTextInColorCode(itemName)
+		-- local r, g, b = GetItemQualityColor(itemQuality)
+		-- local color = CreateColor(r, g, b, 1)
+		-- local itemNameColored = color:WrapTextInColorCode(itemName)
+		local itemNameColored = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
 		return itemNameColored or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
 	return itemName or E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
@@ -482,7 +492,9 @@ function E.Octo_Func.func_CurServerShort(self)
 	local text = (self):gsub("-", " "):gsub("'", " ")
 	local a, b = strsplit(" ", text)
 	if b then
-		self = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper() else self = utf8sub(a, 3, 1):lower()
+		self = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
+	else
+		self = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
 	end
 	return self
 end

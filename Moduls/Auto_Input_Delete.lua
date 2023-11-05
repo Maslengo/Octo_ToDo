@@ -3,7 +3,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- AUTO_INPUT_DELETE
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.InputDelete then
+		if Octo_ToDo_DB_Vars.config.InputDelete then
 			local TypeDeleteLine = gsub(DELETE_GOOD_ITEM, "[\r\n]", "@")
 			local void, TypeDeleteLine = strsplit("@", TypeDeleteLine, 2)
 			StaticPopupDialogs["DELETE_ITEM"].OnHyperlinkEnter = StaticPopupDialogs["DELETE_GOOD_ITEM"].OnHyperlinkEnter

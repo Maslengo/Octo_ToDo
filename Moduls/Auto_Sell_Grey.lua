@@ -3,7 +3,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --AutoSellGrey
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.AutoSellGrey then
+		if Octo_ToDo_DB_Vars.config.AutoSellGrey then
 			local function OnEvent(self, event)
 				totalPrice = 0
 				--for myBags = 0, 4 do

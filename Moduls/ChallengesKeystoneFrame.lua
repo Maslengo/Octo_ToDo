@@ -4,7 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --ChallengesKeystoneFrame
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.ChallengesKeystoneFrame then
+		if Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame then
 			function ChallengesKeystoneFrameOnLoad()
 				local EventFrame = nil
 				if not EventFrame then

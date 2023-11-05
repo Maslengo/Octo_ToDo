@@ -4,7 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --Hide_ObjectivesInInstance
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.Hide_ObjectivesInInstance then
+		if Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance then
 			function Hide_ObjectivesInInstanceOnLoad()
 				local EventFrame = nil
 				if not EventFrame then
@@ -125,7 +125,7 @@ if E.Octo_Globals.isElvUI == true or E.Octo_Globals.isElvUI == false then
 		ObjectiveTrackerFrame.NineSlice.TopEdge:Hide()--SetAlpha(0)
 		ObjectiveTrackerFrame.NineSlice.TopLeftCorner:Hide()--SetAlpha(0)
 		ObjectiveTrackerFrame.NineSlice.TopRightCorner:Hide()--SetAlpha(0)
-		Octo_ToDo_Objective = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID().."Octo_ToDo_Objective", ObjectiveTrackerFrame.NineSlice, "BackDropTemplate")
+		Octo_ToDo_Objective = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID().."Octo_ToDo_Objective", ObjectiveTrackerFrame.NineSlice, "BackDropTemplate")
 		-- Octo_ToDo_Objective:RegisterEvent("QUEST_ACCEPTED")
 		-- Octo_ToDo_Objective:RegisterEvent("QUEST_COMPLETE")
 		-- Octo_ToDo_Objective:RegisterEvent("QUEST_FINISHED")

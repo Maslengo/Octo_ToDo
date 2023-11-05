@@ -4,7 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --HideZoneText
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.HideZoneText then
+		if Octo_ToDo_DB_Vars.config.HideZoneText then
 			ZoneTextFrame:SetScript("OnShow", ZoneTextFrame.Hide);
 			SubZoneTextFrame:SetScript("OnShow", SubZoneTextFrame.Hide);
 			-- ZoneTextFrame:HookScript("OnShow", function(self, ...)

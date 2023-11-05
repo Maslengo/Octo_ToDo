@@ -3,7 +3,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName,  "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --Auto_Screenshot
 tinsert(E.Octo_Globals.modules,  function()
-		if Octo_ToDoVars.config.Auto_Screenshot then
+		if Octo_ToDo_DB_Vars.config.Auto_Screenshot then
 			local EventFrame = nil
 			local function Octo_OnLoad()
 				if not EventFrame then

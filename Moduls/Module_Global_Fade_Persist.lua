@@ -3,7 +3,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- GlobalFadePersist
 tinsert(E.Octo_Globals.modules, function()
-		if Octo_ToDoVars.config.GlobalFadePersist then
+		if Octo_ToDo_DB_Vars.config.GlobalFadePersist then
 			--------------------------------------------------------------------------------
 			C_Timer.After(1, function()
 					if E.Octo_Globals.isElvUI == true then

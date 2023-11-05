@@ -591,6 +591,35 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
+		name_save = "AWorthyAllyDreamWardens",
+		name_quest = "AWorthyAllyDreamWardens",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "EmeraldDream",
+		questID = {
+			78444
+		},
+		max = 1
+	},
+	{
+		name_save = "BloomingDreamseeds",
+		name_quest = "BloomingDreamseeds",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "EmeraldDream",
+		questID = {
+			78821
+		},
+		max = 1
+	},
+
+
+
+
+
+	{
 		name_save = "Sniffenseeking",
 		name_quest = "Sniffenseeking",
 		reset = "Weekly",
@@ -829,7 +858,20 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			72068, 72373, 72374, 72375, 75259, 70750, 75859, 75860, 75861, 77254, 77976
+			70750, --aiding-the-accord
+			72068, --aiding-the-accord-a-feast-for-all
+			72374, --aiding-the-accord-dragonbane-keep
+			77976, --aiding-the-accord-dreamsurge
+			75861, --aiding-the-accord-suffusion-camp
+			72373, --aiding-the-accord-the-hunt-is-on
+			72375, --aiding-the-accord-the-isles-call
+			77254, --aiding-the-accord-time-rift
+			75860, --aiding-the-accord-researchers-under-fire
+			75859, --aiding-the-accord-sniffenseeking
+			75259, --aiding-the-accord-zskera-vaults
+			-- 78861, --aiding-the-accord (NEW)
+			78446, --aiding-the-accord-superbloom (NEW)
+			78447, --aiding-the-accord-emerald-bounty (NEW)
 		},
 		max = 1
 	},
@@ -1770,4 +1812,26 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1,
 	},
+
+
+
+
+
+	{
+		name_save = "DayoftheDead",
+		name_quest = "DayoftheDead",
+		reset = "Once",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = { 13952, 14175, 14170, 14171, 14174, 27846, 27841, 14166, 14167, 14177, 14168, 14169, 14176, 14172, 14173,
+		},
+		max = 1,
+	},
+
+
+
+
+
+
 }

@@ -8,18 +8,17 @@ local strategies = {
 local tooltipStates = {}
 local output_preffix = ""
 local function check_WTF()
-	if Octo_ToDoOther.prefix == 1 then output_preffix = "ru." -- Русский"
-	elseif Octo_ToDoOther.prefix == 2 then output_preffix = "de." -- Deutsch"
-	elseif Octo_ToDoOther.prefix == 3 then output_preffix = "" -- English"
-	elseif Octo_ToDoOther.prefix == 4 then output_preffix = "es." -- Español"
-	elseif Octo_ToDoOther.prefix == 5 then output_preffix = "fr." -- Français"
-	elseif Octo_ToDoOther.prefix == 6 then output_preffix = "it." -- Italiano"
-	elseif Octo_ToDoOther.prefix == 7 then output_preffix = "pt." -- Português Brasileiro
-	elseif Octo_ToDoOther.prefix == 8 then output_preffix = "ko." -- 한국어"
-	elseif Octo_ToDoOther.prefix == 9 then output_preffix = "cn." -- 简体中文"
+	if Octo_ToDo_DB_Vars.config.prefix == 1 then output_preffix = "ru." -- Русский"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 2 then output_preffix = "de." -- Deutsch"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 3 then output_preffix = "" -- English"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 4 then output_preffix = "es." -- Español"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 5 then output_preffix = "fr." -- Français"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 6 then output_preffix = "it." -- Italiano"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 7 then output_preffix = "pt." -- Português Brasileiro
+	elseif Octo_ToDo_DB_Vars.config.prefix == 8 then output_preffix = "ko." -- 한국어"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 9 then output_preffix = "cn." -- 简体中文"
 	end
 end
-
 function E.Octo_Globals.strategies.GetWowheadUrl(dataSources)
 	check_WTF()
 	for _, strategy in pairs(strategies.wowhead) do
@@ -36,7 +35,6 @@ function E.Octo_Globals.strategies.GetWowheadUrl(dataSources)
 		end
 	end
 end
-
 function E.Octo_Globals.strategies.GetWowheadAzEsUrl(dataSources)
 	check_WTF()
 	for _, strategy in pairs(strategies.wowheadAzEs) do
@@ -47,7 +45,6 @@ function E.Octo_Globals.strategies.GetWowheadAzEsUrl(dataSources)
 		end
 	end
 end
-
 function E.Octo_Globals.strategies.GetWowheadTradingPostActivityUrl(dataSources)
 	check_WTF()
 	for _, strategy in pairs(strategies.wowheadTradingPostActivity) do
@@ -58,7 +55,6 @@ function E.Octo_Globals.strategies.GetWowheadTradingPostActivityUrl(dataSources)
 		end
 	end
 end
-
 function E.Octo_Globals.strategies.GetArmoryUrl(dataSources)
 	for _, strategy in pairs(strategies.armory) do
 		local _, locale, realm, name = strategy(dataSources)
@@ -74,7 +70,6 @@ function E.Octo_Globals.strategies.GetArmoryUrl(dataSources)
 			-- elseif realm == "Подземье" then realm = "deepholm"
 			-- elseif realm == "Термоштепсель" then realm = "thermaplugg"
 			-- end
-
 			if realm == "Гордунни" then realm = "Gordunni"
 			elseif realm == "Король-лич" then realm = "Lich-King"
 			elseif realm == "СвежевательДуш" then realm = "Soulflayer"
@@ -101,18 +96,11 @@ function E.Octo_Globals.strategies.GetArmoryUrl(dataSources)
 			elseif realm == "Рок-Делар" then realm = "Rhok'delar"
 			elseif realm == "ВестникРока" then realm = "Harbinger-of-Doom"
 			end
-
-
-
-
-
-
 			return "blizzard armory",
 			string.format(E.Octo_Globals.baseArmoryUrl, locale, realm, name)
 		end
 	end
 end
-
 function E.Octo_Globals.altStrategies.GetRaiderIoUrl(dataSources)
 	for _, strategy in pairs(strategies.armory) do
 		local region, _, realm, name = strategy(dataSources)
@@ -121,7 +109,6 @@ function E.Octo_Globals.altStrategies.GetRaiderIoUrl(dataSources)
 			-- elseif realm == "Ревущий-фьорд" then realm = "howling-fjord"
 			-- elseif realm == "Гордунни" then realm = "Gordunni"
 			-- end
-
 			if realm == "Гордунни" then realm = "Gordunni"
 			elseif realm == "Король-лич" then realm = "Lich-King"
 			elseif realm == "СвежевательДуш" then realm = "Soulflayer"
@@ -148,14 +135,6 @@ function E.Octo_Globals.altStrategies.GetRaiderIoUrl(dataSources)
 			elseif realm == "Рок-Делар" then realm = "Rhok'delar"
 			elseif realm == "ВестникРока" then realm = "Harbinger-of-Doom"
 			end
-
-
-
-
-
-
-
-
 			return "raider.io",
 			string.format(E.Octo_Globals.baseRaiderIoUrl, region, realm, name)
 		end
