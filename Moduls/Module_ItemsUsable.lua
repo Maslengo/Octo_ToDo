@@ -34,7 +34,6 @@ local function TEST_FUNC(self)
 							local r, g, b, a = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetTextColor()
 							local QWE = func_coloredText(_G["OctoToDoScanningTooltipUSABLETextLeft"..i])
 							if text and text ~= "" and QWE ~= nil then
-								print (QWE)
 								if QWE:find("^|cffFF2020") or QWE:find("^|cffFF0000") then
 									count = count + 1
 								end
