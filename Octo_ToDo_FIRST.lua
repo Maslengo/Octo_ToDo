@@ -2256,6 +2256,7 @@ function Octo_ToDo_FIRST_OnLoad()
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_LEAVE_COMBAT")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("VARIABLES_LOADED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_XP_UPDATE")
+	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_LEVEL_UP")
 	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
 	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("RECEIVED_ACHIEVEMENT_LIST")
@@ -6072,6 +6073,31 @@ local function TotalTimeAllServerOnShow()
 	return classColorHexCurrent..(E.Octo_Func.SecondsToClock(TotalTimeAllServer)).."|r"
 	--return E.Octo_Func.func_Gradient(E.Octo_Func.SecondsToClock(TotalTimeAllServer), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
 end
+local function TotalTimeAllServer70OnShow()
+	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TotalTimeAllServer70OnShow".."|r")
+	end
+	local TotalTimeAllServer70 = 0
+	for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+		if CharInfo.UnitLevel == 70 then
+			TotalTimeAllServer70 = TotalTimeAllServer70 + CharInfo.realLevelTime
+		end
+	end
+	return classColorHexCurrent..(E.Octo_Func.SecondsToClock(TotalTimeAllServer70)).."|r"
+	--return E.Octo_Func.func_Gradient(E.Octo_Func.SecondsToClock(TotalTimeAllServer), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+end
+
+
+
+
+
+
+
+
+
+
+
+
 function Octo_ToDo_FIRST_CreateAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Octo_ToDo_FIRST_CreateAltFrame".."|r")
@@ -6202,8 +6228,7 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 		--
 	end
-	if Octo_ToDo_DB_Vars.config.ShowTime then
-		-- TotalTimeAllServerOnShow
+	if Octo_ToDo_DB_Vars.config.ShowTimeAll then
 		if not Octo_Frame_TotalTimeAllServer then
 			Octo_Frame_TotalTimeAllServer = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 			Octo_Frame_TotalTimeAllServer:SetSize(400, E.Octo_Globals.curHeight)
@@ -6211,7 +6236,6 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 			Octo_Frame_TotalTimeAllServer:SetPoint("TOPRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMRIGHT", -4, -2)
 			Octo_Frame_TotalTimeAllServer:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 			Octo_Frame_TotalTimeAllServer:SetBackdropBorderColor(1, 0, 0, 0)
-			-- Octo_Frame_TotalTimeAllServer:HookScript("OnShow", TotalTimeAllServerOnShow)
 			local text = Octo_Frame_TotalTimeAllServer:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			text:SetAllPoints()
 			text:SetFontObject(OctoFont11)
@@ -6222,7 +6246,32 @@ function Octo_ToDo_FIRST_CreateAltFrame()
 				text:SetText(string.format(TIME_PLAYED_TOTAL, TotalTimeAllServerOnShow()))
 			end)
 		end
+		if Octo_ToDo_DB_Vars.config.ShowTime70 then
+			if not Octo_Frame_TotalTimeAllServer70 then
+				Octo_Frame_TotalTimeAllServer70 = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
+				Octo_Frame_TotalTimeAllServer70:SetSize(400, E.Octo_Globals.curHeight)
+				Octo_Frame_TotalTimeAllServer70:EnableMouse(false)
+				Octo_Frame_TotalTimeAllServer70:SetPoint("TOPRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMRIGHT", -4, -22)
+				Octo_Frame_TotalTimeAllServer70:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+				Octo_Frame_TotalTimeAllServer70:SetBackdropBorderColor(1, 0, 0, 0)
+				local text = Octo_Frame_TotalTimeAllServer70:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+				text:SetAllPoints()
+				text:SetFontObject(OctoFont11)
+				text:SetJustifyV("MIDDLE")
+				text:SetJustifyH("RIGHT")
+				text:SetTextColor(1, 1, 1, 1)
+				Octo_Frame_TotalTimeAllServer70:HookScript("OnShow", function(self)
+					text:SetText(string.format("%s", TotalTimeAllServer70OnShow()))
+				end)
+			end
+		end
 	end
+
+
+
+
+
+
 	--
 	if not Octo_ToDo_FIRST_Frame_Close_Button then
 		Octo_ToDo_FIRST_Frame_Close_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
@@ -7007,6 +7056,10 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.HideErrorMessages == nil then Octo_ToDo_DB_Vars.config.HideErrorMessages = false end
 		if Octo_ToDo_DB_Vars.config.UIErrorsFramePosition == nil then Octo_ToDo_DB_Vars.config.UIErrorsFramePosition = false end
 		if Octo_ToDo_DB_Vars.config.Auto_Screenshot == nil then Octo_ToDo_DB_Vars.config.Auto_Screenshot = false end
+		if Octo_ToDo_DB_Vars.config.ItemsUsable == nil then Octo_ToDo_DB_Vars.config.ItemsUsable = true end
+		if Octo_ToDo_DB_Vars.config.ItemsUsable == false then Octo_ToDo_DB_Vars.config.ItemsUsable = true end
+
+
 		if Octo_ToDo_DB_Vars.config.ItemsUsable == nil then Octo_ToDo_DB_Vars.config.ItemsUsable = false end
 		if Octo_ToDo_DB_Vars.config.ItemsDelete == nil then Octo_ToDo_DB_Vars.config.ItemsDelete = false end
 		if Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance == nil then Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance = false end
@@ -7043,7 +7096,8 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.AchievementToShow == nil then Octo_ToDo_DB_Vars.config.AchievementToShow = 92 end
 		if Octo_ToDo_DB_Vars.config.AchievementShowCompleted == nil then Octo_ToDo_DB_Vars.config.AchievementShowCompleted = true end
 		if Octo_ToDo_DB_Vars.config.ShowTotalMoney == nil then Octo_ToDo_DB_Vars.config.ShowTotalMoney = true end
-		if Octo_ToDo_DB_Vars.config.ShowTime == nil then Octo_ToDo_DB_Vars.config.ShowTime = true end
+		if Octo_ToDo_DB_Vars.config.ShowTimeAll == nil then Octo_ToDo_DB_Vars.config.ShowTimeAll = true end
+		if Octo_ToDo_DB_Vars.config.ShowTime70 == nil then Octo_ToDo_DB_Vars.config.ShowTime70 = true end
 		if Octo_ToDo_DB_Vars.config.ResetAllChars == nil then Octo_ToDo_DB_Vars.config.ResetAllChars = true end
 		if Octo_ToDo_DB_Vars.config.PortalsNEW == nil then Octo_ToDo_DB_Vars.config.PortalsNEW = false end
 		if Octo_ToDo_DB_Vars.config.Achievements == nil then Octo_ToDo_DB_Vars.config.Achievements = false end
