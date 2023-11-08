@@ -4640,13 +4640,10 @@ function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 2", CharInfo.OctoTable_QuestID[78551]}
 							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 3", CharInfo.OctoTable_QuestID[78547]}
 							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 4", CharInfo.OctoTable_QuestID[78552]}
-
 							-- tooltip[#tooltip+1] = {"Treasures Magical Bloom", CharInfo.OctoTable_QuestID[78033]}
 							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Ursol", CharInfo.OctoTable_QuestID[78095]}
 							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Aviana", CharInfo.OctoTable_QuestID[78367]}
 							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Goldrinn", CharInfo.OctoTable_QuestID[78368]}
-
-
 							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Ashamane", CharInfo.OctoTable_QuestID[77855]} -- ? Treasures Reliquary of Ashamane
 							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Ashamane", CharInfo.OctoTable_QuestID[77857]} -- ? Treasures Reliquary of Ashamane
 							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Ashamane", CharInfo.OctoTable_QuestID[77860]} -- ? Treasures Reliquary of Ashamane
@@ -4660,149 +4657,115 @@ function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
-
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					vivodLeft = E.Octo_Globals.Once..L["Storyline"]
-					if CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "0/58" then
+					if CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "0/59" and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "1/59" then
 						vivodCent = CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count
-
-
-
-							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 1", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_1EmeraldDreamStorylines_count}
-
+							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 1: "..L["The Coalition of Flames"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_1EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_1EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(75918), CharInfo.OctoTable_QuestID[75918]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(75919), CharInfo.OctoTable_QuestID[75919]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(75920), CharInfo.OctoTable_QuestID[75920]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(75921), CharInfo.OctoTable_QuestID[75921]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(75922), CharInfo.OctoTable_QuestID[75922]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(75923), CharInfo.OctoTable_QuestID[75923]}
+								tooltip[#tooltip+1] = {"1. "..E.Octo_Func.func_questName(76982), CharInfo.OctoTable_QuestID[76982]}
+								tooltip[#tooltip+1] = {"2. "..E.Octo_Func.func_questName(75918), CharInfo.OctoTable_QuestID[75918]}
+								tooltip[#tooltip+1] = {"3. "..E.Octo_Func.func_questName(75919), CharInfo.OctoTable_QuestID[75919]}
+								tooltip[#tooltip+1] = {"4. "..E.Octo_Func.func_questName(75920), CharInfo.OctoTable_QuestID[75920]}
+								tooltip[#tooltip+1] = {"5. "..E.Octo_Func.func_questName(75921), CharInfo.OctoTable_QuestID[75921]}
+								tooltip[#tooltip+1] = {"6. "..E.Octo_Func.func_questName(75922), CharInfo.OctoTable_QuestID[75922]}
+								tooltip[#tooltip+1] = {"7. "..E.Octo_Func.func_questName(75923), CharInfo.OctoTable_QuestID[75923]}
 							end
-
 							if CharInfo.Octopussy_DF_Once_2EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
 								tooltip[#tooltip+1] = {" ", " "}
 							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 2", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_2EmeraldDreamStorylines_count}
-
+							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 2: "..L["Enter the Dream"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_2EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_2EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76317), CharInfo.OctoTable_QuestID[76317]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76318), CharInfo.OctoTable_QuestID[76318]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76319), CharInfo.OctoTable_QuestID[76319]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76320), CharInfo.OctoTable_QuestID[76320]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76321), CharInfo.OctoTable_QuestID[76321]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76322), CharInfo.OctoTable_QuestID[76322]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(77818), CharInfo.OctoTable_QuestID[77818]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76323), CharInfo.OctoTable_QuestID[76323]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76324), CharInfo.OctoTable_QuestID[76324]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76325), CharInfo.OctoTable_QuestID[76325]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76326), CharInfo.OctoTable_QuestID[76326]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(77283), CharInfo.OctoTable_QuestID[77283]}
+								tooltip[#tooltip+1] = {"8. "..E.Octo_Func.func_questName(76317), CharInfo.OctoTable_QuestID[76317]}
+								tooltip[#tooltip+1] = {"9. "..E.Octo_Func.func_questName(76318), CharInfo.OctoTable_QuestID[76318]}
+								tooltip[#tooltip+1] = {"10. "..E.Octo_Func.func_questName(76319), CharInfo.OctoTable_QuestID[76319]}
+								tooltip[#tooltip+1] = {"11. "..E.Octo_Func.func_questName(76320), CharInfo.OctoTable_QuestID[76320]}
+								tooltip[#tooltip+1] = {"12. "..E.Octo_Func.func_questName(76321), CharInfo.OctoTable_QuestID[76321]}
+								tooltip[#tooltip+1] = {"13. "..E.Octo_Func.func_questName(76322), CharInfo.OctoTable_QuestID[76322]}
+								tooltip[#tooltip+1] = {"14. "..E.Octo_Func.func_questName(77818), CharInfo.OctoTable_QuestID[77818]}
+								tooltip[#tooltip+1] = {"15. "..E.Octo_Func.func_questName(76323), CharInfo.OctoTable_QuestID[76323]}
+								tooltip[#tooltip+1] = {"16. "..E.Octo_Func.func_questName(76324), CharInfo.OctoTable_QuestID[76324]}
+								tooltip[#tooltip+1] = {"17. "..E.Octo_Func.func_questName(76325), CharInfo.OctoTable_QuestID[76325]}
+								tooltip[#tooltip+1] = {"18. "..E.Octo_Func.func_questName(76326), CharInfo.OctoTable_QuestID[76326]}
+								tooltip[#tooltip+1] = {"19. "..E.Octo_Func.func_questName(77283), CharInfo.OctoTable_QuestID[77283]}
 							end
-
-
 							if CharInfo.Octopussy_DF_Once_3EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
 								tooltip[#tooltip+1] = {" ", " "}
 							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 3", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_3EmeraldDreamStorylines_count}
-
+							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 3: "..L["Druids of the Flame"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_3EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_3EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(77436), CharInfo.OctoTable_QuestID[77436]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76433), CharInfo.OctoTable_QuestID[76433]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76434), CharInfo.OctoTable_QuestID[76434]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76435), CharInfo.OctoTable_QuestID[76435]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76437), CharInfo.OctoTable_QuestID[76437]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76441), CharInfo.OctoTable_QuestID[76441]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76442), CharInfo.OctoTable_QuestID[76442]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76443), CharInfo.OctoTable_QuestID[76443]}
+								tooltip[#tooltip+1] = {"20. "..E.Octo_Func.func_questName(77436), CharInfo.OctoTable_QuestID[77436]}
+								tooltip[#tooltip+1] = {"21. "..E.Octo_Func.func_questName(76433), CharInfo.OctoTable_QuestID[76433]}
+								tooltip[#tooltip+1] = {"22. "..E.Octo_Func.func_questName(76434), CharInfo.OctoTable_QuestID[76434]}
+								tooltip[#tooltip+1] = {"23. "..E.Octo_Func.func_questName(76435), CharInfo.OctoTable_QuestID[76435]}
+								tooltip[#tooltip+1] = {"24. "..E.Octo_Func.func_questName(76437), CharInfo.OctoTable_QuestID[76437]}
+								tooltip[#tooltip+1] = {"25. "..E.Octo_Func.func_questName(76441), CharInfo.OctoTable_QuestID[76441]}
+								tooltip[#tooltip+1] = {"26. "..E.Octo_Func.func_questName(76442), CharInfo.OctoTable_QuestID[76442]}
+								tooltip[#tooltip+1] = {"27. "..E.Octo_Func.func_questName(76443), CharInfo.OctoTable_QuestID[76443]}
 							end
-
-
 							if CharInfo.Octopussy_DF_Once_4EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
 								tooltip[#tooltip+1] = {" ", " "}
 							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 4", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_4EmeraldDreamStorylines_count}
-
+							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 4: "..L["Ice and Fire"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_4EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_4EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76403), CharInfo.OctoTable_QuestID[76403]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76342), CharInfo.OctoTable_QuestID[76342]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76343), CharInfo.OctoTable_QuestID[76343]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76344), CharInfo.OctoTable_QuestID[76344]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76345), CharInfo.OctoTable_QuestID[76345]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76532), CharInfo.OctoTable_QuestID[76532]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76348), CharInfo.OctoTable_QuestID[76348]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76347), CharInfo.OctoTable_QuestID[76347]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(77178), CharInfo.OctoTable_QuestID[77178]}
+								tooltip[#tooltip+1] = {"28. "..E.Octo_Func.func_questName(76403), CharInfo.OctoTable_QuestID[76403]}
+								tooltip[#tooltip+1] = {"29. "..E.Octo_Func.func_questName(76342), CharInfo.OctoTable_QuestID[76342]}
+								tooltip[#tooltip+1] = {"30. "..E.Octo_Func.func_questName(76343), CharInfo.OctoTable_QuestID[76343]}
+								tooltip[#tooltip+1] = {"31. "..E.Octo_Func.func_questName(76344), CharInfo.OctoTable_QuestID[76344]}
+								tooltip[#tooltip+1] = {"32. "..E.Octo_Func.func_questName(76345), CharInfo.OctoTable_QuestID[76345]}
+								tooltip[#tooltip+1] = {"33. "..E.Octo_Func.func_questName(76532), CharInfo.OctoTable_QuestID[76532]}
+								tooltip[#tooltip+1] = {"34. "..E.Octo_Func.func_questName(76348), CharInfo.OctoTable_QuestID[76348]}
+								tooltip[#tooltip+1] = {"35. "..E.Octo_Func.func_questName(76347), CharInfo.OctoTable_QuestID[76347]}
+								tooltip[#tooltip+1] = {"36. "..E.Octo_Func.func_questName(77178), CharInfo.OctoTable_QuestID[77178]}
 							end
-
-
 							if CharInfo.Octopussy_DF_Once_5EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
 								tooltip[#tooltip+1] = {" ", " "}
 							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 5", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_5EmeraldDreamStorylines_count}
-
+							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 5: "..L["Eye of Ysera"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_5EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_5EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76327), CharInfo.OctoTable_QuestID[76327]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76328), CharInfo.OctoTable_QuestID[76328]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(78646), CharInfo.OctoTable_QuestID[78646]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76329), CharInfo.OctoTable_QuestID[76329]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76330), CharInfo.OctoTable_QuestID[76330]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76334), CharInfo.OctoTable_QuestID[76334]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76332), CharInfo.OctoTable_QuestID[76332]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76331), CharInfo.OctoTable_QuestID[76331]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76335), CharInfo.OctoTable_QuestID[76335]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76333), CharInfo.OctoTable_QuestID[76333]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76336), CharInfo.OctoTable_QuestID[76336]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76337), CharInfo.OctoTable_QuestID[76337]}
+								tooltip[#tooltip+1] = {"37. "..E.Octo_Func.func_questName(76327), CharInfo.OctoTable_QuestID[76327]}
+								tooltip[#tooltip+1] = {"38. "..E.Octo_Func.func_questName(76328), CharInfo.OctoTable_QuestID[76328]}
+								tooltip[#tooltip+1] = {"39. "..E.Octo_Func.func_questName(78646), CharInfo.OctoTable_QuestID[78646]}
+								tooltip[#tooltip+1] = {"40. "..E.Octo_Func.func_questName(76329), CharInfo.OctoTable_QuestID[76329]}
+								tooltip[#tooltip+1] = {"41. "..E.Octo_Func.func_questName(76330), CharInfo.OctoTable_QuestID[76330]}
+								tooltip[#tooltip+1] = {"42. "..E.Octo_Func.func_questName(76334), CharInfo.OctoTable_QuestID[76334]}
+								tooltip[#tooltip+1] = {"43. "..E.Octo_Func.func_questName(76332), CharInfo.OctoTable_QuestID[76332]}
+								tooltip[#tooltip+1] = {"44. "..E.Octo_Func.func_questName(76331), CharInfo.OctoTable_QuestID[76331]}
+								tooltip[#tooltip+1] = {"45. "..E.Octo_Func.func_questName(76335), CharInfo.OctoTable_QuestID[76335]}
+								tooltip[#tooltip+1] = {"46. "..E.Octo_Func.func_questName(76333), CharInfo.OctoTable_QuestID[76333]}
+								tooltip[#tooltip+1] = {"47. "..E.Octo_Func.func_questName(76336), CharInfo.OctoTable_QuestID[76336]}
+								tooltip[#tooltip+1] = {"48. "..E.Octo_Func.func_questName(76337), CharInfo.OctoTable_QuestID[76337]}
 							end
-
-
-
-
 							if CharInfo.Octopussy_DF_Once_6EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
 								tooltip[#tooltip+1] = {" ", " "}
 							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 6", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_6EmeraldDreamStorylines_count}
-
+							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 6: "..L["A Dream of Fields and Fire"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_6EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_6EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76384), CharInfo.OctoTable_QuestID[76384]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76416), CharInfo.OctoTable_QuestID[76416]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76386), CharInfo.OctoTable_QuestID[76386]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76385), CharInfo.OctoTable_QuestID[76385]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76436), CharInfo.OctoTable_QuestID[76436]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76387), CharInfo.OctoTable_QuestID[76387]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76388), CharInfo.OctoTable_QuestID[76388]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76389), CharInfo.OctoTable_QuestID[76389]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76398), CharInfo.OctoTable_QuestID[76398]}
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76401), CharInfo.OctoTable_QuestID[76401]}
+								tooltip[#tooltip+1] = {"49. "..E.Octo_Func.func_questName(76384), CharInfo.OctoTable_QuestID[76384]}
+								tooltip[#tooltip+1] = {"50. "..E.Octo_Func.func_questName(76416), CharInfo.OctoTable_QuestID[76416]}
+								tooltip[#tooltip+1] = {"51. "..E.Octo_Func.func_questName(76386), CharInfo.OctoTable_QuestID[76386]}
+								tooltip[#tooltip+1] = {"52. "..E.Octo_Func.func_questName(76385), CharInfo.OctoTable_QuestID[76385]}
+								tooltip[#tooltip+1] = {"53. "..E.Octo_Func.func_questName(76436), CharInfo.OctoTable_QuestID[76436]}
+								tooltip[#tooltip+1] = {"54. "..E.Octo_Func.func_questName(76387), CharInfo.OctoTable_QuestID[76387]}
+								tooltip[#tooltip+1] = {"55. "..E.Octo_Func.func_questName(76388), CharInfo.OctoTable_QuestID[76388]}
+								tooltip[#tooltip+1] = {"56. "..E.Octo_Func.func_questName(76389), CharInfo.OctoTable_QuestID[76389]}
+								tooltip[#tooltip+1] = {"57. "..E.Octo_Func.func_questName(76398), CharInfo.OctoTable_QuestID[76398]}
+								tooltip[#tooltip+1] = {"58. "..E.Octo_Func.func_questName(76401), CharInfo.OctoTable_QuestID[76401]}
 							end
-
-
 							if CharInfo.Octopussy_DF_Once_7EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
 								tooltip[#tooltip+1] = {" ", " "}
 							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 7", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_7EmeraldDreamStorylines_count}
-
+							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 7: "..L["New Beginnings"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_7EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_7EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76402), CharInfo.OctoTable_QuestID[76402]}
+								tooltip[#tooltip+1] = {"59. "..E.Octo_Func.func_questName(76402), CharInfo.OctoTable_QuestID[76402]}
 							end
-
-
 					end
 					return vivodCent, vivodLeft
 			end)
 		end
-
-
-
-
-
-
-
-
 		if Octo_ToDo_DB_Vars.config.Flightstones == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -5981,7 +5944,6 @@ function O_otrisovka_FIRST()
 					tooltip[#tooltip+1] = {L["Shaping the Dreamsurge"], CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count}
 					tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..L["Storyline"].."|r".." ("..L["Tyr's Fall"]..")", CharInfo.Octopussy_DF_Once_TyrsFall_count}
 					tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..L["Storyline"].."|r".." ("..L["Reforging the Tyr's Guard"]..")", CharInfo.Octopussy_DF_Once_ReforgingtheTyrsGuard_count}
-					tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..L["Storyline"].."|r".." ("..L["The Coalition of Flames"]..")", CharInfo.Octopussy_DF_Once_TheCoalitionofFlames_count}
 					tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..L["Storyline"].."|r".." ("..L["Seeing Red"]..")", CharInfo.Octopussy_DF_Once_SeeingRed_count}
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.1.5".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
@@ -6147,8 +6109,6 @@ function O_otrisovka_FIRST()
 					end
 				end
 				if CharInfo.UnitLevel >= 70 then
-
-
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {" 10.2.0", ""}
 					if CharInfo.ItemsInBag[206960] >= 1 then
@@ -6166,9 +6126,6 @@ function O_otrisovka_FIRST()
 					else
 						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(208396)..E.Octo_Globals.Gray_Color..E.Octo_Func.func_itemName_NOCOLOR(208396).."|r", E.Octo_Globals.Gray_Color..CharInfo.ItemsInBag[208396].."|r"}
 					end
-
-
-
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {" 10.1.0", ""}
 					if CharInfo.ItemsInBag[204440] >= 1 then
@@ -6206,8 +6163,6 @@ function O_otrisovka_FIRST()
 					else
 						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204985)..E.Octo_Globals.Gray_Color..E.Octo_Func.func_itemName_NOCOLOR(204985).."|r", E.Octo_Globals.Gray_Color..CharInfo.ItemsInBag[204985].."|r"}
 					end
-
-
 					tooltip[#tooltip+1] = {" ", " "}
 					if CharInfo.ItemsInBag[199197] >= 1 then
 						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(199197)..E.Octo_Func.func_itemName(199197), CharInfo.ItemsInBag[199197]}
@@ -6229,12 +6184,6 @@ function O_otrisovka_FIRST()
 					else
 						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(190456)..E.Octo_Globals.Gray_Color..E.Octo_Func.func_itemName_NOCOLOR(190456).."|r", E.Octo_Globals.Gray_Color..CharInfo.ItemsInBag[190456].."|r"}
 					end
-
-
-
-
-
-
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {" PVP", ""}
 					if CharInfo.ItemsInBag[204186] >= 1 then

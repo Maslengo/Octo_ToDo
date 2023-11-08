@@ -111,7 +111,6 @@ if L then
 	L["Waist"] = true
 	L["Legs"] = true
 	L["Feet"] = true
-	L["The Coalition of Flames"] = true
 	L["Only Current Realm"] = true
 	L["Player level"] = true
 	L["Player MAX level"] = true
@@ -148,6 +147,18 @@ if L then
 	L["Flightstones"] = true
 	L["Rares"] = true
 	L["Treasures"] = true
+
+
+	L["The Coalition of Flames"] = true
+	L["Enter the Dream"] = true
+	L["Druids of the Flame"] = true
+	L["Ice and Fire"] = true
+	L["Eye of Ysera"] = true
+	L["A Dream of Fields and Fire"] = true
+	L["New Beginnings"] = true
+
+
+
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -254,7 +265,6 @@ if L then
 	L["Waist"] = "Пояс"
 	L["Legs"] = "Ноги"
 	L["Feet"] = "Ступни"
-	L["The Coalition of Flames"] = "Союз пламени"
 	L["InDev"] = "|cffFF0000В разработке|r"
 	L["Only Current Realm"] = "Только текущий сервер"
 	L["Player level"] = "Мин. уровень"
@@ -290,4 +300,24 @@ if L then
 	L["Flightstones"] = "Драконьи камни"
 	L["Rares"] = "Рарки"
 	L["Treasures"] = "Сундуки"
+
+
+
+	L["The Coalition of Flames"] = "Союз пламени"
+	L["Enter the Dream"] = "Погружение в сон"
+	L["Druids of the Flame"] = "Друиды пламени"
+	L["Ice and Fire"] = "Лед и огонь"
+	L["Eye of Ysera"] = "Око Изеры"
+	L["A Dream of Fields and Fire"] = "Сон о полях в огне"
+	L["New Beginnings"] = "Новое начало"
+
+
+
+
+
+
+
+
+
+
 end

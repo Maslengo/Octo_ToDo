@@ -1333,16 +1333,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 13
 	},
 	{
-		name_save = "TheCoalitionofFlames",
-		name_quest = "TheCoalitionofFlames",
-		reset = "Once",
-		expansion = "DF",
-		place = "",
-		desc = "",
-		questID = {76982, 75918, 75919, 75920, 75921, 75922, 75923},
-		max = 7
-	},
-	{
 		name_save = "DarkmoonFaire",
 		name_quest = "DarkmoonFaire",
 		reset = "Daily",
@@ -1719,6 +1709,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "EmeraldDream",
 		desc = "ALL",
 		questID = {
+			76982,
             75918,
             75919,
             75920,
@@ -1778,7 +1769,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
             76401,
             76402,
 		},
-		max = 58
+		max = 59
 	},
 
 
@@ -1786,13 +1777,14 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 
 
 	{
-		name_save = "Storylines", -- The Coalition of Flames
+		name_save = "Storylines", -- The Coalition of Flames -- L["The Coalition of Flames"]
 		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "1",
 		questID = {
+			76982,
 			75918,
 			75919,
 			75920,
@@ -1800,7 +1792,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 			75922,
 			75923,
 		},
-		max = 6
+		max = 7
 	},
 	{
 		name_save = "Storylines", --
