@@ -31,7 +31,33 @@ E.Octo_Table.OctoTable_QuestID = {
 77859,
 77856,
 
+            78550, --Treasures Unwaking Echo 1
+            78551, --Treasures Unwaking Echo 2
+            78547, --Treasures Unwaking Echo 3
+            78552, --Treasures Unwaking Echo 4
+            78005, --Treasures Supply Crate Quest
+            77950, --Treasures Crystalline Glowblossom
+            78033, --Treasures Magical Bloom
+            78095, --Treasures Reliquary of Ursol
+            77855, -- ? Treasures Reliquary of Ashamane
+            77858, --Treasures Hidden Moonkin Stash
+            78120, --Treasures Pineshrew Cache
+            78006, --Treasures Odd Burl
+            78367, --Treasures Reliquary of Aviana
+            78368, --Treasures Reliquary of Goldrinn
 
+
+
+
+            78359, --
+            78360, --
+            78361, --
+            78107, --
+            78831, --
+            78833, --
+            78834, --
+            78835, --
+            78911, --
 
 
 

@@ -147,6 +147,7 @@ if L then
 	L["Crests"] = true
 	L["Flightstones"] = true
 	L["Rares"] = true
+	L["Treasures"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -288,4 +289,5 @@ if L then
 	L["Crests"] = "Гребни"
 	L["Flightstones"] = "Драконьи камни"
 	L["Rares"] = "Рарки"
+	L["Treasures"] = "Сундуки"
 end

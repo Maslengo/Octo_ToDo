@@ -31,14 +31,31 @@ local function TEST_FUNC(self)
 					inspectScantipUSABLE:SetHyperlink(link)
 					if inspectScantipUSABLE:NumLines() > 0 then
 						for i = 1, inspectScantipUSABLE:NumLines() do
-							local text = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetText()
 							local r, g, b, a = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetTextColor()
-							local QWE = func_coloredText(_G["OctoToDoScanningTooltipUSABLETextLeft"..i])
-							if text and text ~= "" and QWE ~= nil then
-								if QWE:find("^|cffFF2020") or QWE:find("^|cffFF0000") then
+
+							local TEXTLEFT = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetText()
+							local QWE_LEFT = func_coloredText(_G["OctoToDoScanningTooltipUSABLETextLeft"..i])
+
+
+							local TEXTRIGHT = _G["OctoToDoScanningTooltipUSABLETextRight"..i]:GetText()
+							local QWE_RIGHT = func_coloredText(_G["OctoToDoScanningTooltipUSABLETextRight"..i])
+
+
+
+
+							if TEXTLEFT and TEXTLEFT ~= "" and QWE_LEFT ~= nil then
+								if QWE_LEFT:find("^|cffFF2020") or QWE_LEFT:find("^|cffFF0000") then
 									count = count + 1
 								end
 							end
+							if TEXTRIGHT and TEXTRIGHT ~= "" and QWE_RIGHT ~= nil then
+								if QWE_RIGHT:find("^|cffFF2020") or QWE_RIGHT:find("^|cffFF0000") then
+									count = count + 1
+								end
+							end
+
+
+
 						end
 					end
 					inspectScantipUSABLE:ClearLines()
@@ -46,6 +63,7 @@ local function TEST_FUNC(self)
 			end
 		end
 	end
+	-- print (self, count)
 	return count
 end
 --ItemsUsable

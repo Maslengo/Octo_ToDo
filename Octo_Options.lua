@@ -254,7 +254,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 6, POS_CENTER, "EmeraldDream_DreamWardens", new..L["Dream Wardens"]..E.Octo_Globals.Gray_Color.." ("..REPUTATION..")|r")
 		Create_CheckButton(MAIN_scrollChild, self, 7, POS_CENTER, "EmeraldDream_Dreamseeds", new..L["Dreamseeds"])
 		Create_CheckButton(MAIN_scrollChild, self, 8, POS_CENTER, "EmeraldDream_Crests", new..L["Crests"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
-		Create_CheckButton(MAIN_scrollChild, self, 9, POS_CENTER, "EmeraldDream_Rares", new..L["Rares"])
+		Create_CheckButton(MAIN_scrollChild, self, 9, POS_CENTER, "EmeraldDream_Rares", new..L["Rares"]..", "..L["Treasures"])
 		Create_CheckButton(MAIN_scrollChild, self, 10, POS_CENTER, "Flightstones", L["Flightstones"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
 
 
