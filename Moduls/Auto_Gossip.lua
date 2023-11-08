@@ -149,6 +149,13 @@ tinsert(E.Octo_Globals.modules, function()
 											v.name:find("Сайаад") or
 											v.name:find("Терон Кровожад") or
 											v.name:find("Командир") or
+
+											-- v.name:find("Совух") or
+											-- v.name:find("Кажется, неплохо") or
+											-- v.name:find("Сон") or
+											-- v.name:find("Судьба") or
+											-- v.name:find("Фрейя") or
+
 											-- v.name:find("Тирай") or
 											-- v.name:find("Он'ир") or
 											-- v.name:find("Нокхуд") or

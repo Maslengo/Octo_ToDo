@@ -117,10 +117,6 @@ do
 	for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Other) do
 		E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
-
-
-
-
 	for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Mount) do
 		E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
@@ -4457,7 +4453,7 @@ function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-		if Octo_ToDo_DB_Vars.config.Superbloom == true then
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4489,7 +4485,7 @@ function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-		if Octo_ToDo_DB_Vars.config.DreamWardens == true then
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4500,7 +4496,7 @@ function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-		if Octo_ToDo_DB_Vars.config.Dreamseeds == true then
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4528,17 +4524,6 @@ function O_otrisovka_FIRST()
 					end
 					return vivodCent, vivodLeft
 			end)
-		end
-		if Octo_ToDo_DB_Vars.config.EmeraldDewdrop == true then
-			-- tinsert(OctoTable_func_otrisovka_FIRST,
-			-- 	function(CharInfo, tooltip, CL, BG)
-			-- 		local vivodCent, vivodLeft = "", ""
-			-- 		vivodLeft = E.Octo_Func.func_currencyicon(2777)..E.Octo_Func.func_currencyName(2777)
-			-- 		if CharInfo.CurrencyID_Total[2777] ~= "" and CharInfo.CurrencyID_Total[2777] ~= 0 then
-			-- 			vivodCent = CharInfo.CurrencyID_Total[2777]
-			-- 		end
-			-- 		return vivodCent, vivodLeft
-			-- end)
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4548,35 +4533,18 @@ function O_otrisovka_FIRST()
 					end
 					return vivodCent, vivodLeft
 			end)
-			-- tinsert(OctoTable_func_otrisovka_FIRST,
-			-- 	function(CharInfo, tooltip, CL, BG)
-			-- 		local vivodCent, vivodLeft = "", ""
-			-- 		vivodLeft = E.Octo_Func.func_currencyicon(2651)..E.Octo_Func.func_currencyName(2651)
-			-- 		if CharInfo.CurrencyID_Total[2651] ~= 0 then
-			-- 			vivodCent = CharInfo.CurrencyID_Total[2651]
-			-- 		end
-			-- 		return vivodCent, vivodLeft
-			-- end)
-			-- tinsert(OctoTable_func_otrisovka_FIRST,
-			-- 	function(CharInfo, tooltip, CL, BG)
-			-- 		local vivodCent, vivodLeft = "", ""
-			-- 		vivodLeft = E.Octo_Func.func_currencyicon(2652)..E.Octo_Func.func_currencyName(2652)
-			-- 		if CharInfo.CurrencyID_Total[2652] ~= 0 then
-			-- 			vivodCent = CharInfo.CurrencyID_Total[2652]
-			-- 		end
-			-- 		return vivodCent, vivodLeft
-			-- end)
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_currencyicon(2777)..E.Octo_Func.func_currencyName(2777)
+					if CharInfo.CurrencyID_Total[2777] ~= "" and CharInfo.CurrencyID_Total[2777] ~= 0 then
+						vivodCent = CharInfo.CurrencyID_Total[2777]
+					end
+					return vivodCent, vivodLeft
+			end)
 		end
 		-- CREST
-		if Octo_ToDo_DB_Vars.config.Crests == true then
-
-
-
-
-
-
-
-
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Crests == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4610,6 +4578,44 @@ function O_otrisovka_FIRST()
 					vivodLeft = E.Octo_Func.func_currencyicon(2709)..E.Octo_Func.func_currencyName(2709)
 					if CharInfo.CurrencyID_Total[2709] ~= "" and CharInfo.CurrencyID_Total[2709] ~= 0 then
 						vivodCent = CharInfo.CurrencyID_Total[2709]
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Rares == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Globals.Daily..L["Rares"]
+					if CharInfo.Octopussy_DF_Daily_EmeraldDreamRares_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Daily_EmeraldDreamRares_count ~= "0/27" then
+						vivodCent = CharInfo.Octopussy_DF_Daily_EmeraldDreamRares_count
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209911), CharInfo.OctoTable_QuestID[77990]} -- Апостол 209911
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210559), CharInfo.OctoTable_QuestID[78039]} -- Бальбоан 210559
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210050), CharInfo.OctoTable_QuestID[77942]} -- Большой скат – краснополос 210050
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210075), CharInfo.OctoTable_QuestID[77944]} -- Генри Духохвост 210075
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209936), CharInfo.OctoTable_QuestID[77982]} -- Жадный Джесси 209936
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210046), CharInfo.OctoTable_QuestID[78211]} -- Зоркий Циан 210046
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209620), CharInfo.OctoTable_QuestID[77864]} -- Игнит Клейменный Пламенем 209620
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209919), CharInfo.OctoTable_QuestID[77989]} -- Исака 209919
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209909), CharInfo.OctoTable_QuestID[77862]} -- Капризный краб 209909
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209898), CharInfo.OctoTable_QuestID[77867]} -- Крушитель рифов Морууд 209898
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210047), CharInfo.OctoTable_QuestID[78212]} -- Лунатик Ори 210047
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210051), CharInfo.OctoTable_QuestID[78213]} -- Матриарх Кива 210051
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210070), CharInfo.OctoTable_QuestID[77940]} -- Моза Темношкурый 210070
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210045), CharInfo.OctoTable_QuestID[78210]} -- Морагх Ленивец 210045
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209113), CharInfo.OctoTable_QuestID[77570]} -- Нуоберон 209113
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209929), CharInfo.OctoTable_QuestID[77878]} -- Посланник Зимы 209929
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209912), CharInfo.OctoTable_QuestID[77859]} -- Последний вздох Рашагет 209912
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210508), CharInfo.OctoTable_QuestID[78214]} -- Прожорливый Миканджи 210508
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210111), CharInfo.OctoTable_QuestID[78263]} -- Разрастающийся плеточник 210111
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210064), CharInfo.OctoTable_QuestID[77943]} -- Раскаленный Свинцешип 210064
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(210161), CharInfo.OctoTable_QuestID[77890]} -- Ристар Бешеный 210161
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209915), CharInfo.OctoTable_QuestID[77856]} -- Слияние снов 209915
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209902), CharInfo.OctoTable_QuestID[77994]} -- Талтоней Шепот Пепла 209902
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(208658), CharInfo.OctoTable_QuestID[77941]} -- Ученица Плавильщицы 208658
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209893), CharInfo.OctoTable_QuestID[78015]} -- Фистия Огнемеченная 209893
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209913), CharInfo.OctoTable_QuestID[77846]} -- Фруктень 209913
+							tooltip[#tooltip+1] = {E.Octo_Func.func_npcName(209365), CharInfo.OctoTable_QuestID[77863]} -- Щепкобег 209365
 					end
 					return vivodCent, vivodLeft
 			end)
@@ -4715,7 +4721,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(514016).."Cataclysm"
+						vivodLeft = E.Octo_Func.func_texturefromIcon(514016)..E.Octo_Globals.Weekly.."Cataclysm"
 						if CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count
 						end
@@ -4725,7 +4731,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..E.Octo_Globals.Weekly..DUNGEONS
 						if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
 						end
@@ -4735,7 +4741,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(514016)..L["Firelands"]
+						vivodLeft = E.Octo_Func.func_texturefromIcon(514016)..E.Octo_Globals.Weekly..L["Firelands"]
 						if CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_Cataclysm_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_Cataclysm_count
 						end
@@ -4757,7 +4763,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(514016).."Burning Crusade"
+						vivodLeft = E.Octo_Func.func_texturefromIcon(514016)..E.Octo_Globals.Weekly.."Burning Crusade"
 						if CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count
 						end
@@ -4767,7 +4773,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..E.Octo_Globals.Weekly..DUNGEONS
 						if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
 						end
@@ -4777,7 +4783,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(237385)..L["Black Temple"]
+						vivodLeft = E.Octo_Func.func_texturefromIcon(237385)..E.Octo_Globals.Weekly..L["Black Temple"]
 						if CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_BurningCrusade_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_BurningCrusade_count
 						end
@@ -4799,7 +4805,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1379226).."Legion"
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1379226)..E.Octo_Globals.Weekly.."Legion"
 						if CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count
 						end
@@ -4809,7 +4815,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..E.Octo_Globals.Weekly..DUNGEONS
 						if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
 						end
@@ -4831,7 +4837,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1416740).."Mists of Pandaria"
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1416740)..E.Octo_Globals.Weekly.."Mists of Pandaria"
 						if CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count
 						end
@@ -4841,7 +4847,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..E.Octo_Globals.Weekly..DUNGEONS
 						if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
 						end
@@ -4863,7 +4869,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(466283).."Wrath of the Lich King" -- 630787 ебало лича
+						vivodLeft = E.Octo_Func.func_texturefromIcon(466283)..E.Octo_Globals.Weekly.."Wrath of the Lich King" -- 630787 ебало лича
 						if CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count
 						end
@@ -4873,7 +4879,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..E.Octo_Globals.Weekly..DUNGEONS
 						if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
 						end
@@ -4883,7 +4889,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(237445)..L["Ulduar"]
+						vivodLeft = E.Octo_Func.func_texturefromIcon(237445)..E.Octo_Globals.Weekly..L["Ulduar"]
 						if CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_WrathoftheLichKing_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_RAIDS_WrathoftheLichKing_count
 						end
@@ -4905,7 +4911,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(133594).."Warlords of Draenor" -- 630787 ебало лича
+						vivodLeft = E.Octo_Func.func_texturefromIcon(133594)..E.Octo_Globals.Weekly.."Warlords of Draenor"
 						if CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count
 						end
@@ -4915,7 +4921,7 @@ function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..E.Octo_Globals.Weekly..DUNGEONS
 						if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
 						end
@@ -4933,17 +4939,11 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 1063
-
-
-
-
-
-
 			if Octo_ToDo_DB_Other.Holiday.Active[1352] then -- Подземелья Dragonfly
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS.." Dragonfly"
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..E.Octo_Globals.Weekly..DUNGEONS.." Dragonfly"
 						if CharInfo.Octopussy_DF_Weekly_EmissaryofWar_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Weekly_EmissaryofWar_count
 						end
@@ -4984,16 +4984,16 @@ function O_otrisovka_FIRST()
 						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
 				end)
-				tinsert(OctoTable_func_otrisovka_FIRST,
-					function(CharInfo, tooltip, CL, BG)
-						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(134481)..E.Octo_Func.func_currencyName(515)
-						if CharInfo.CurrencyID[515] ~= 0 then
-							vivodCent = CharInfo.CurrencyID[515]
-						end
-						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
-						return vivodCent, vivodLeft
-				end)
+				-- tinsert(OctoTable_func_otrisovka_FIRST,
+				-- 	function(CharInfo, tooltip, CL, BG)
+				-- 		local vivodCent, vivodLeft = "", ""
+				-- 		vivodLeft = E.Octo_Func.func_texturefromIcon(134481)..E.Octo_Func.func_currencyName(515)
+				-- 		if CharInfo.CurrencyID[515] ~= 0 then
+				-- 			vivodCent = CharInfo.CurrencyID[515]
+				-- 		end
+				-- 		BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+				-- 		return vivodCent, vivodLeft
+				-- end)
 			end -- for 479
 			if Octo_ToDo_DB_Other.Holiday.Active[599] then -- Бонус за битвы питомцев
 				tinsert(OctoTable_func_otrisovka_FIRST,
@@ -5784,6 +5784,18 @@ function O_otrisovka_FIRST()
 					tooltip[#tooltip+1] = {L["Aiding the Accord"], CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count}
 					tooltip[#tooltip+1] = {L["Keys of Loyalty"], CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count}
 					tooltip[#tooltip+1] = {L["PvP"], CharInfo.Octopussy_DF_Weekly_PVP_count}
+					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.2.0".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] ={Timer_DF_Flower()..L["Superbloom"], CharInfo.Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count}
+					tooltip[#tooltip+1] ={E.Octo_Globals.Weekly..E.Octo_Func.func_questName(78444), CharInfo.Octopussy_DF_Weekly_EmeraldDreamAWorthyAllyDreamWardens_count}
+					tooltip[#tooltip+1] ={E.Octo_Globals.Daily..E.Octo_Func.func_questName(78821), CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count}
+					tooltip[#tooltip+1] ={E.Octo_Globals.Daily..L["Rares"], CharInfo.Octopussy_DF_Daily_EmeraldDreamRares_count}
+
+
+
+
+
+
 					-- tooltip[#tooltip+1] = {L["PLAYER_DIFFICULTY_TIMEWALKER"].." (500)", CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count}
 					-- tooltip[#tooltip+1] = {L["PLAYER_DIFFICULTY_TIMEWALKER"].." (5 dungeons)", CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count}
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
@@ -7142,11 +7154,11 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.AidingtheAccord == nil then Octo_ToDo_DB_Vars.config.AidingtheAccord = false end
 		if Octo_ToDo_DB_Vars.config.CommunityFeast == nil then Octo_ToDo_DB_Vars.config.CommunityFeast = false end
 		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire == nil then Octo_ToDo_DB_Vars.config.ResearchersUnderFire = false end
-		if Octo_ToDo_DB_Vars.config.Superbloom == nil then Octo_ToDo_DB_Vars.config.Superbloom = true end
-		if Octo_ToDo_DB_Vars.config.DreamWardens == nil then Octo_ToDo_DB_Vars.config.DreamWardens = true end
-		if Octo_ToDo_DB_Vars.config.Dreamseeds == nil then Octo_ToDo_DB_Vars.config.Dreamseeds = false end
-		if Octo_ToDo_DB_Vars.config.EmeraldDewdrop == nil then Octo_ToDo_DB_Vars.config.EmeraldDewdrop = false end
-		if Octo_ToDo_DB_Vars.config.Crests == nil then Octo_ToDo_DB_Vars.config.Crests = false end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom = true end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens = true end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds = true end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Crests == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Crests = true end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Rares == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Rares = true end
 		if Octo_ToDo_DB_Vars.config.Flightstones == nil then Octo_ToDo_DB_Vars.config.Flightstones = true end
 		if Octo_ToDo_DB_Vars.config.TimeRift == nil then Octo_ToDo_DB_Vars.config.TimeRift = false end
 		if Octo_ToDo_DB_Vars.config.Dreamsurges == nil then Octo_ToDo_DB_Vars.config.Dreamsurges = false end

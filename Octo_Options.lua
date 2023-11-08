@@ -248,12 +248,14 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 2, POS_CENTER, "AidingtheAccord", L["Aiding the Accord"])
 		Create_CheckButton(MAIN_scrollChild, self, 3, POS_CENTER, "CommunityFeast", L["Community Feast"])
 		Create_CheckButton(MAIN_scrollChild, self, 4, POS_CENTER, "ResearchersUnderFire", L["Researchers Under Fire"]..E.Octo_Globals.Gray_Color.." (10.1.0)|r")
-		Create_CheckButton(MAIN_scrollChild, self, 5, POS_CENTER, "Superbloom", new..L["Superbloom"])
-		Create_CheckButton(MAIN_scrollChild, self, 6, POS_CENTER, "DreamWardens", new..L["Dream Wardens"]..E.Octo_Globals.Gray_Color.." ("..REPUTATION..")|r")
-		Create_CheckButton(MAIN_scrollChild, self, 7, POS_CENTER, "Dreamseeds", new..L["Dreamseeds"])
-		Create_CheckButton(MAIN_scrollChild, self, 8, POS_CENTER, "EmeraldDewdrop", new..L["Emerald Dewdrop"])
-		Create_CheckButton(MAIN_scrollChild, self, 9, POS_CENTER, "Crests", new..L["Crests"])
-		Create_CheckButton(MAIN_scrollChild, self, 10, POS_CENTER, "Flightstones", L["Flightstones"])
+
+		-- EmeraldDream_
+		Create_CheckButton(MAIN_scrollChild, self, 5, POS_CENTER, "EmeraldDream_Superbloom", new..L["Superbloom"])
+		Create_CheckButton(MAIN_scrollChild, self, 6, POS_CENTER, "EmeraldDream_DreamWardens", new..L["Dream Wardens"]..E.Octo_Globals.Gray_Color.." ("..REPUTATION..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 7, POS_CENTER, "EmeraldDream_Dreamseeds", new..L["Dreamseeds"])
+		Create_CheckButton(MAIN_scrollChild, self, 8, POS_CENTER, "EmeraldDream_Crests", new..L["Crests"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 9, POS_CENTER, "EmeraldDream_Rares", new..L["Rares"])
+		Create_CheckButton(MAIN_scrollChild, self, 10, POS_CENTER, "Flightstones", L["Flightstones"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
 
 
 

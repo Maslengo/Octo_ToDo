@@ -2,6 +2,11 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.Octo_Func = {}
+-- local inspectScantipFUNC = nil
+-- if not inspectScantipFUNC then
+	inspectScantipFUNC = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFUNC", nil, "GameTooltipTemplate")
+	inspectScantipFUNC:SetOwner(UIParent, "ANCHOR_NONE")
+-- end
 ----------------------------------------------------------------
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
@@ -510,6 +515,20 @@ function E.Octo_Func.func_GetMapName(self)
 end
 local func_GetMapName = E.Octo_Func.func_GetMapName
 ----------------------------------------------------------------
+function E.Octo_Func.func_npcName(self)
+	if not self then return E.Octo_Globals.NONE end
+	if self then
+		inspectScantipFUNC:SetHyperlink("unit:Creature-0-0-0-0-"..self)
+		if inspectScantipFUNC:NumLines() > 0 then
+			local name = _G["OctoToDoScanningTooltipFUNCTextLeft1"]:GetText()
+			-- print (name, self)
+			return name
+		end
+		inspectScantipFUNC:ClearLines()
+	end
+	return ""
+end
+local func_npcName = E.Octo_Func.func_npcName
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

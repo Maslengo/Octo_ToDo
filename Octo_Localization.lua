@@ -144,9 +144,9 @@ if L then
 	L["Superbloom"] = true
 	L["Dreamseeds"] = true
 	L["Dream Wardens"] = true
-	L["Emerald Dewdrop"] = true
 	L["Crests"] = true
 	L["Flightstones"] = true
+	L["Rares"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -285,7 +285,7 @@ if L then
 	L["Superbloom"] = "Цветочный бум"
 	L["Dreamseeds"] = "Семена"
 	L["Dream Wardens"] = "Стражи Сна"
-	L["Emerald Dewdrop"] = "Изумрудная росинка"
 	L["Crests"] = "Гребни"
 	L["Flightstones"] = "Драконьи камни"
+	L["Rares"] = "Рарки"
 end
