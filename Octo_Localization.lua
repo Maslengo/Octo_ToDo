@@ -283,9 +283,9 @@ if L then
 	L["Ulduar"] = "Ульдуар"
 	L["Paragon"] = "Парагон"
 	L["Superbloom"] = "Цветочный бум"
-	L["Dreamseeds"] = "Dreamseeds"
-	L["Dream Wardens"] = "Dream Wardens"
-	L["Emerald Dewdrop"] = "Emerald Dewdrop"
-	L["Crests"] = "Crests"
+	L["Dreamseeds"] = "Семена"
+	L["Dream Wardens"] = "Стражи Сна"
+	L["Emerald Dewdrop"] = "Изумрудная росинка"
+	L["Crests"] = "Гребни"
 	L["Flightstones"] = "Драконьи камни"
 end

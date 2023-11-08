@@ -25,6 +25,7 @@ local function TEST_FUNC(self)
 				local itemID = containerInfo.itemID
 				if itemID and itemID == self then
 					local link = containerInfo.hyperlink
+					-- print (itemID, link)
 					-- local _, link = GetItemInfo(itemID)
 					inspectScantipUSABLE:ClearLines()
 					inspectScantipUSABLE:SetHyperlink(link)
@@ -118,7 +119,7 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 			function ItemsUsableFrame_OnEvent(self, event)
 				-- if (event == "ITEM_COUNT_CHANGED" or event == "ITEM_COUNT_UPDATE" or event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED" or event == "PLAYER_ENTERING_WORLD") and not InCombatLockdown() --[[and isGroup == false]] then
-				if (event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED") and not InCombatLockdown() --[[and isGroup == false]] then
+				if (--[[event == "PLAYER_REGEN_ENABLED" or ]]event == "BAG_UPDATE_DELAYED") and not InCombatLockdown() --[[and isGroup == false]] then
 					C_Timer.After(0, function()
 						ItemsUsableFrame()
 					end)

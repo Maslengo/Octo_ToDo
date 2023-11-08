@@ -5,6 +5,11 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --Hide_ObjectivesInInstance
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance then
+			local className, classFilename, classId = UnitClass("PLAYER")
+			local classColor = C_ClassColor.GetClassColor(classFilename)
+			local r, g, b = classColor:GetRGB()
+			local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
+			local classColorHexCurrent = E.Octo_Func.func_rgb2hex(r, g, b)
 			function Hide_ObjectivesInInstanceOnLoad()
 				local EventFrame = nil
 				if not EventFrame then
@@ -144,9 +149,12 @@ if E.Octo_Globals.isElvUI == true or E.Octo_Globals.isElvUI == false then
 		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
 		t:SetAllPoints(Octo_ToDo_Objective)
 		t:SetColorTexture(0, 0, 0, 0.6)
-		local vivod = TRACKER_HEADER_QUESTS
+		local vivod = classColorHexCurrent..TRACKER_HEADER_QUESTS.."|r"
 		Octo_ToDo_Objective:SetScript("OnEvent", function(self)
-			TRACKER_HEADER_QUESTS = vivod.." "..E.Octo_Func.func_Gradient(Current_numQuests(), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+			-- TRACKER_HEADER_QUESTS = vivod.." "..E.Octo_Func.func_Gradient(Current_numQuests(), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+			TRACKER_HEADER_QUESTS = vivod.." "..Current_numQuests()
+
+
 		end)
 		-- ObjectiveTrackerFrame.NineSlice.MEME = ObjectiveTrackerFrame.NineSlice:CreateTexture(nil, "ARTWORK")
 		-- ObjectiveTrackerFrame.NineSlice.MEME:SetPoint("TOPLEFT", 0, 0)

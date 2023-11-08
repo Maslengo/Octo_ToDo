@@ -238,12 +238,12 @@ function E.Octo_Func.SecondsToClock(self)
 		days = floor(mod(self, 31536000) / 86400)
 		hours = floor(mod(self, 86400) / 3600)
 		mins = floor(mod(self, 3600) / 60)
-		return years..L["y. "]..days..L["d. "]--..hours..L["h. "]..mins..L["m. "]
+		return years..L["y. "]..days..L["d. "]..hours..L["h. "]..mins..L["m. "]
 	elseif self >= 86400 then
 		days = floor(self / 86400)
 		hours = floor(mod(self, 86400) / 3600)
 		mins = floor(mod(self, 3600) / 60)
-		return days..L["d. "]--..hours..L["h. "]..mins..L["m. "]
+		return days..L["d. "]..hours..L["h. "]..mins..L["m. "]
 	elseif self >= 3600 then
 		hours = string.format("%01.f", math.floor(self/3600))
 		mins = string.format("%02.f", math.floor(self/60 - (hours*60)))

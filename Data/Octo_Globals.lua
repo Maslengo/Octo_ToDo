@@ -175,3 +175,6 @@ E.Octo_Globals.Venthyr_b_Color = 0.40
 -- local INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED = INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED
 E.Octo_Globals.NONE = E.Octo_Globals.Gray_Color.."None|r"
 E.Octo_Globals.DONE = E.Octo_Globals.Green_Color.."Done|r"
+E.Octo_Globals.Daily = E.Octo_Globals.Yellow_Color.."D|r "
+E.Octo_Globals.Weekly = E.Octo_Globals.Blue_Color.."W|r "
+E.Octo_Globals.Once = E.Octo_Globals.Orange_Color.."O|r "

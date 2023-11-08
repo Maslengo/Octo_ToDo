@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v67.3(10.2.0)(05.11.2023)
+## Version: v67.4(10.2.0)(08.11.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
 ## SavedVariables: Octo_ToDo_DB_Other Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Artifact Octo_ToDo_DB_LegionArtifacts
 
