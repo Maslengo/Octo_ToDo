@@ -4667,7 +4667,7 @@ function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					vivodLeft = E.Octo_Globals.Once..L["Storyline"]
-					if CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "0/59" then
+					if CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "0/58" then
 						vivodCent = CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count
 
 
@@ -4675,7 +4675,6 @@ function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 1", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_1EmeraldDreamStorylines_count}
 
 							if CharInfo.Octopussy_DF_Once_1EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(76982), CharInfo.OctoTable_QuestID[76982]}
 								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(75918), CharInfo.OctoTable_QuestID[75918]}
 								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(75919), CharInfo.OctoTable_QuestID[75919]}
 								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(75920), CharInfo.OctoTable_QuestID[75920]}

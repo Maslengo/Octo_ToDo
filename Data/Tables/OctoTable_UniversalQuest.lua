@@ -1719,7 +1719,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "EmeraldDream",
 		desc = "ALL",
 		questID = {
-            76982,
             75918,
             75919,
             75920,
@@ -1779,7 +1778,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
             76401,
             76402,
 		},
-		max = 59
+		max = 58
 	},
 
 
@@ -1794,7 +1793,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "EmeraldDream",
 		desc = "1",
 		questID = {
-			76982,
 			75918,
 			75919,
 			75920,
@@ -1802,7 +1800,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 			75922,
 			75923,
 		},
-		max = 7
+		max = 6
 	},
 	{
 		name_save = "Storylines", --
