@@ -40,7 +40,7 @@ E.Octo_Table.OctoTable_itemID_ItemsUsable_Other =
 210652,
 210777,
 210785,
-210776,
+--210776,
 
 208738,
 211372,

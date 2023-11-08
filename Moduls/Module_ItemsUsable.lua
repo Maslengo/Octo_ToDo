@@ -164,13 +164,13 @@ tinsert(E.Octo_Globals.modules, function()
 						ItemsUsable_Frame_TEXTCOUNT:SetText(GetItemCount(itemID, true, true, true))
 					else
 						for itemID, count in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable) do
-							if (GetItemCount(itemID) >= count and TEST_FUNC(itemID) == 0) or (GetItemCount(208396) >= 2 and quantity >= 250 and TEST_FUNC(208396) == 0) then
+							if (GetItemCount(itemID) >= count and TEST_FUNC(itemID) == 0) --[[or (GetItemCount(208396) >= 2 and quantity >= 250 and TEST_FUNC(208396) == 0)]] then
 								if itemID == 32502 then -- https://ru.wowhead.com/quest=11020
 									itemID = 32503
 								end
-								if GetItemCount(208396) >= 2 then
-									itemID = 208396
-								end
+								--if GetItemCount(208396) >= 2 then
+								--	itemID = 208396
+								--end
 
 
 								ItemsUsable_Frame:Show()

@@ -255,23 +255,24 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 7, POS_CENTER, "EmeraldDream_Dreamseeds", new..L["Dreamseeds"])
 		Create_CheckButton(MAIN_scrollChild, self, 8, POS_CENTER, "EmeraldDream_Crests", new..L["Crests"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
 		Create_CheckButton(MAIN_scrollChild, self, 9, POS_CENTER, "EmeraldDream_Rares", new..L["Rares"]..", "..L["Treasures"])
-		Create_CheckButton(MAIN_scrollChild, self, 10, POS_CENTER, "Flightstones", L["Flightstones"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 10, POS_CENTER, "EmeraldDream_Storyline", new..L["Storyline"])
+		Create_CheckButton(MAIN_scrollChild, self, 11, POS_CENTER, "Flightstones", L["Flightstones"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
 
 
 
-		Create_CheckButton(MAIN_scrollChild, self, 11, POS_CENTER, "TimeRift", L["TimeRift"]..E.Octo_Globals.Gray_Color.." (10.1.5)|r", E.Octo_Globals.Purple_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 12, POS_CENTER, "Dreamsurges", L["Dreamsurges"]..E.Octo_Globals.Gray_Color.." (10.1.7)|r", E.Octo_Globals.Green_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 13, POS_CENTER, "Event", EVENTS_LABEL, E.Octo_Globals.Yellow_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 14, POS_CENTER, "Holiday", CALENDAR_FILTER_HOLIDAYS, E.Octo_Globals.Orange_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 15, POS_CENTER, "Dungeons", DUNGEONS)
-		Create_CheckButton(MAIN_scrollChild, self, 16, POS_CENTER, "Currency", CURRENCY)
-		Create_CheckButton(MAIN_scrollChild, self, 17, POS_CENTER, "Reputations", REPUTATION)
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_CENTER, "Quests", QUESTS_LABEL)
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_CENTER, "Items", ITEMS)
-		Create_CheckButton(MAIN_scrollChild, self, 20, POS_CENTER, "Professions", TRADE_SKILLS)
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_CENTER, "Gold", BONUS_ROLL_REWARD_MONEY) -- WORLD_QUEST_REWARD_FILTERS_GOLD
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_CENTER, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_CENTER, "LastUpdate", "Last Update")
+		Create_CheckButton(MAIN_scrollChild, self, 12, POS_CENTER, "TimeRift", L["TimeRift"]..E.Octo_Globals.Gray_Color.." (10.1.5)|r", E.Octo_Globals.Purple_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 13, POS_CENTER, "Dreamsurges", L["Dreamsurges"]..E.Octo_Globals.Gray_Color.." (10.1.7)|r", E.Octo_Globals.Green_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 14, POS_CENTER, "Event", EVENTS_LABEL, E.Octo_Globals.Yellow_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 15, POS_CENTER, "Holiday", CALENDAR_FILTER_HOLIDAYS, E.Octo_Globals.Orange_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 16, POS_CENTER, "Dungeons", DUNGEONS)
+		Create_CheckButton(MAIN_scrollChild, self, 17, POS_CENTER, "Currency", CURRENCY)
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_CENTER, "Reputations", REPUTATION)
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_CENTER, "Quests", QUESTS_LABEL)
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_CENTER, "Items", ITEMS)
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_CENTER, "Professions", TRADE_SKILLS)
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_CENTER, "Gold", BONUS_ROLL_REWARD_MONEY) -- WORLD_QUEST_REWARD_FILTERS_GOLD
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_CENTER, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_CENTER, "LastUpdate", "Last Update")
 
 		number = 1
 		btn_right1 = lsfdd:CreateStretchButtonOriginal(MAIN_scrollChild, 140, 22)

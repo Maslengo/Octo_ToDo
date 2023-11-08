@@ -1634,8 +1634,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
 	{
 		name_save = "AWorthyAllyDreamWardens",
 		name_quest = "AWorthyAllyDreamWardens",
@@ -1666,7 +1664,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		questID = {78319},
 		max = 1
 	},
-
 	{
 		name_save = "Rares",
 		name_quest = "Rares",
@@ -1682,7 +1679,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 27
 	},
-
 	{
 		name_save = "Treasures",
 		name_quest = "Treasures",
@@ -1691,39 +1687,230 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "EmeraldDream",
 		desc = "",
 		questID = {
-			78550,
-			78551,
-			78547,
-			78552,
-			78005,
-			77950,
-			78033,
-			78095,
-			77858,
-			78120,
-			78006,
-			78367,
-			78368,
-			77855,
-			77857,
-			77860,
-			77872,
-			78359,
-			78360,
-			78361,
-			78107,
-			78831,
-			78833,
-			78834,
-			78835,
-			78911,
+			77872, 77950, 78005, 78107, 78359, 77858, 78120, 78006,
+			78360, 78361, 78550, 78551, 78547, 78552, 78033, 78095,
+			78367, 78368, 77855, 77857, 77860, 78831, 78833, 78834,
+			78835, 78911,
 		},
-		max = 26
+		max = 23
+	},
+
+
+	{
+		name_save = "Storylines", -- The Coalition of Flames
+		name_quest = "Storylines",
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "ALL",
+		questID = {
+            76982,
+            75918,
+            75919,
+            75920,
+            75921,
+            75922,
+            75923,
+            76317,
+            76318,
+            76319,
+            76320,
+            76321,
+            76322,
+            77818,
+            76323,
+            76324,
+            76325,
+            76326,
+            77283,
+            77436,
+            76433,
+            76434,
+            76435,
+            76437,
+            76441,
+            76442,
+            76443,
+            76403,
+            76342,
+            76343,
+            76344,
+            76345,
+            76532,
+            76348,
+            76347,
+            77178,
+            76327,
+            76328,
+            78646,
+            76329,
+            76330,
+            76334,
+            76332,
+            76331,
+            76335,
+            76333,
+            76336,
+            76337,
+            76384,
+            76416,
+            76386,
+            76385,
+            76436,
+            76387,
+            76388,
+            76389,
+            76398,
+            76401,
+            76402,
+		},
+		max = 59
 	},
 
 
 
 
+
+	{
+		name_save = "Storylines", -- The Coalition of Flames
+		name_quest = "Storylines",
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "1",
+		questID = {
+			76982,
+			75918,
+			75919,
+			75920,
+			75921,
+			75922,
+			75923,
+		},
+		max = 7
+	},
+	{
+		name_save = "Storylines", --
+		name_quest = "Storylines",
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "2",
+		questID = {
+			76317,
+			76318,
+			76319,
+			76320,
+			76321,
+			76322,
+			77818,
+			76323,
+			76324,
+			76325,
+			76326,
+			77283,
+		},
+		max = 12
+	},
+	{
+		name_save = "Storylines", --
+		name_quest = "Storylines",
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "3",
+		questID = {
+			77436,
+			76433,
+			76434,
+			76435,
+			76437,
+			76441,
+			76442,
+			76443,
+		},
+		max = 8
+	},
+	{
+		name_save = "Storylines", --
+		name_quest = "Storylines",
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "4",
+		questID = {
+			76403,
+			76342,
+			76343,
+			76344,
+			76345,
+			76532,
+			76348,
+			76347,
+			77178,
+		},
+		max = 9
+	},
+	{
+		name_save = "Storylines", -- Eye of Ysera -- https://www.wowhead.com/storyline/eye-of-ysera-5460
+		name_quest = "Storylines",
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "5",
+		questID = {
+			76327,
+			76328,
+			78646,
+			76329,
+			76330,
+			76334,
+			76332,
+			76331,
+			76335,
+			76333,
+			76336,
+			76337,
+		},
+		max = 12
+	},
+
+
+
+	{
+		name_save = "Storylines",
+		name_quest = "Storylines",
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "6",
+		questID = {
+			76384,
+			76416,
+			76386,
+			76385,
+            76436,
+            76387,
+            76388,
+			76389,
+			76398,
+			76401,
+
+		},
+		max = 10
+	},
+	{
+		name_save = "Storylines",
+		name_quest = "Storylines",
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "7",
+		questID = {
+			76402,
+		},
+		max = 1
+	},
 
 
 
