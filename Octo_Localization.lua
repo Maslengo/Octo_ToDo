@@ -148,6 +148,7 @@ if L then
 	L["Rares"] = true
 	L["Treasures"] = true
 
+	L["Emerald Dream"] = true
 
 	L["The Coalition of Flames"] = true
 	L["Enter the Dream"] = true
@@ -302,6 +303,7 @@ if L then
 	L["Treasures"] = "Сундуки"
 
 
+	L["Emerald Dream"] = "Изумрудный Сон"
 
 	L["The Coalition of Flames"] = "Союз пламени"
 	L["Enter the Dream"] = "Погружение в сон"

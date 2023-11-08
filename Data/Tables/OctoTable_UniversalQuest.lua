@@ -1699,8 +1699,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 19
 	},
-
-
 	{
 		name_save = "Storylines", -- The Coalition of Flames
 		name_quest = "Storylines",
@@ -1771,11 +1769,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 59
 	},
-
-
-
-
-
 	{
 		name_save = "Storylines", -- The Coalition of Flames -- L["The Coalition of Flames"]
 		name_quest = "Storylines",
@@ -1879,9 +1872,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 12
 	},
-
-
-
 	{
 		name_save = "Storylines",
 		name_quest = "Storylines",
@@ -1900,7 +1890,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 			76389,
 			76398,
 			76401,
-
 		},
 		max = 10
 	},
@@ -1916,8 +1905,4 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
-
 }
