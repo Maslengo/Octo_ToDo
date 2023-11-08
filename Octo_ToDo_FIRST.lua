@@ -4625,7 +4625,7 @@ function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					vivodLeft = E.Octo_Globals.Once..L["Treasures"]
-					if CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count ~= "0/27" then
+					if CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count ~= "0/26" then
 						vivodCent = CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count
 
 							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 1", CharInfo.OctoTable_QuestID[78550]} --Treasures Unwaking Echo 1
