@@ -4623,36 +4623,39 @@ function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					vivodLeft = E.Octo_Globals.Once..L["Treasures"]
-					if CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count ~= "0/23" then
+					if CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count ~= "0/19" then
 						vivodCent = CharInfo.Octopussy_DF_Once_EmeraldDreamTreasures_count
-							tooltip[#tooltip+1] = {"1. Бродячее сокровище мелкохвата", CharInfo.OctoTable_QuestID[77872]} -- ? Treasures Reliquary of Ashamane
-							tooltip[#tooltip+1] = {"2. Кристаллический яркоцвет", CharInfo.OctoTable_QuestID[77950]} --Treasures Crystalline Glowblossom
-							tooltip[#tooltip+1] = {"3. Бродячее сокровище мелкохвата", CharInfo.OctoTable_QuestID[78005]} --Treasures Supply Crate Quest
-							tooltip[#tooltip+1] = {"4. Реликварий Урсола", CharInfo.OctoTable_QuestID[78107]} --
-							tooltip[#tooltip+1] = {"5. Реликварий Пеплошкурой", CharInfo.OctoTable_QuestID[78359]} --
-							tooltip[#tooltip+1] = {"6. Тайник совухов", CharInfo.OctoTable_QuestID[77858]} --Treasures Hidden Moonkin Stash
-							tooltip[#tooltip+1] = {"7. Тайник землехвойки", CharInfo.OctoTable_QuestID[78120]} --Treasures Pineshrew Cache
-							tooltip[#tooltip+1] = {"8. Странный нарост", CharInfo.OctoTable_QuestID[78006]} --Treasures Odd Burl
-							tooltip[#tooltip+1] = {"9. Реликварий Авианы", CharInfo.OctoTable_QuestID[78360]} --
-							tooltip[#tooltip+1] = {"10. Реликварий Голдринна", CharInfo.OctoTable_QuestID[78361]} --
+							tooltip[#tooltip+1] = {"1. Бродячее сокровище мелкохвата", CharInfo.OctoTable_QuestID[77872]}
+							tooltip[#tooltip+1] = {"2. Кристаллический яркоцвет", CharInfo.OctoTable_QuestID[77950]}
+							tooltip[#tooltip+1] = {"3. Бродячее сокровище мелкохвата", CharInfo.OctoTable_QuestID[78005]}
+							tooltip[#tooltip+1] = {"4. Реликварий Урсола", CharInfo.OctoTable_QuestID[78107]}
+							tooltip[#tooltip+1] = {"5. Реликварий Пеплошкурой", CharInfo.OctoTable_QuestID[78359]}
+							tooltip[#tooltip+1] = {"6. Тайник совухов", CharInfo.OctoTable_QuestID[77858]}
+							tooltip[#tooltip+1] = {"7. Тайник землехвойки", CharInfo.OctoTable_QuestID[78120]}
+							tooltip[#tooltip+1] = {"8. Странный нарост", CharInfo.OctoTable_QuestID[78006]}
+							tooltip[#tooltip+1] = {"9. Реликварий Авианы", CharInfo.OctoTable_QuestID[78360]}
+							tooltip[#tooltip+1] = {"10. Реликварий Голдринна", CharInfo.OctoTable_QuestID[78361]}
 							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 1", CharInfo.OctoTable_QuestID[78550]} --Treasures Unwaking Echo 1
-							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 2", CharInfo.OctoTable_QuestID[78551]} --Treasures Unwaking Echo 2
-							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 3", CharInfo.OctoTable_QuestID[78547]} --Treasures Unwaking Echo 3
-							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 4", CharInfo.OctoTable_QuestID[78552]} --Treasures Unwaking Echo 4
-							tooltip[#tooltip+1] = {"Treasures Magical Bloom", CharInfo.OctoTable_QuestID[78033]} --Treasures Magical Bloom
-							tooltip[#tooltip+1] = {"Treasures Reliquary of Ursol", CharInfo.OctoTable_QuestID[78095]} --Treasures Reliquary of Ursol
-							tooltip[#tooltip+1] = {"Treasures Reliquary of Aviana", CharInfo.OctoTable_QuestID[78367]} --Treasures Reliquary of Aviana
-							tooltip[#tooltip+1] = {"Treasures Reliquary of Goldrinn", CharInfo.OctoTable_QuestID[78368]} --Treasures Reliquary of Goldrinn
+							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 1", CharInfo.OctoTable_QuestID[78550]}
+							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 2", CharInfo.OctoTable_QuestID[78551]}
+							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 3", CharInfo.OctoTable_QuestID[78547]}
+							tooltip[#tooltip+1] = {"Treasures Unwaking Echo 4", CharInfo.OctoTable_QuestID[78552]}
+
+							-- tooltip[#tooltip+1] = {"Treasures Magical Bloom", CharInfo.OctoTable_QuestID[78033]}
+							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Ursol", CharInfo.OctoTable_QuestID[78095]}
+							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Aviana", CharInfo.OctoTable_QuestID[78367]}
+							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Goldrinn", CharInfo.OctoTable_QuestID[78368]}
+
+
 							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Ashamane", CharInfo.OctoTable_QuestID[77855]} -- ? Treasures Reliquary of Ashamane
 							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Ashamane", CharInfo.OctoTable_QuestID[77857]} -- ? Treasures Reliquary of Ashamane
 							-- tooltip[#tooltip+1] = {"Treasures Reliquary of Ashamane", CharInfo.OctoTable_QuestID[77860]} -- ? Treasures Reliquary of Ashamane
 							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {"The Legend of Elun'Ahir", CharInfo.OctoTable_QuestID[78831]} --
-							tooltip[#tooltip+1] = {"Ashwood Research Binder", CharInfo.OctoTable_QuestID[78911]} --
-							tooltip[#tooltip+1] = {"On the Nature of the Dream", CharInfo.OctoTable_QuestID[78833]} --
-							tooltip[#tooltip+1] = {"Self-Baking Herb Based Cookies", CharInfo.OctoTable_QuestID[78834]} --
-							tooltip[#tooltip+1] = {"The Tragedy of Erinethria", CharInfo.OctoTable_QuestID[78835]} --
+							tooltip[#tooltip+1] = {"The Legend of Elun'Ahir", CharInfo.OctoTable_QuestID[78831]}
+							tooltip[#tooltip+1] = {"Ashwood Research Binder", CharInfo.OctoTable_QuestID[78911]}
+							tooltip[#tooltip+1] = {"On the Nature of the Dream", CharInfo.OctoTable_QuestID[78833]}
+							tooltip[#tooltip+1] = {"Self-Baking Herb Based Cookies", CharInfo.OctoTable_QuestID[78834]}
+							tooltip[#tooltip+1] = {"The Tragedy of Erinethria", CharInfo.OctoTable_QuestID[78835]}
 					end
 					return vivodCent, vivodLeft
 			end)
@@ -7355,7 +7358,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Crests == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Crests = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Rares == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Rares = true end
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline = true end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline = false end
 		if Octo_ToDo_DB_Vars.config.Flightstones == nil then Octo_ToDo_DB_Vars.config.Flightstones = true end
 		if Octo_ToDo_DB_Vars.config.TimeRift == nil then Octo_ToDo_DB_Vars.config.TimeRift = false end
 		if Octo_ToDo_DB_Vars.config.Dreamsurges == nil then Octo_ToDo_DB_Vars.config.Dreamsurges = false end
