@@ -26,6 +26,9 @@ tinsert(E.Octo_Globals.modules, function()
 						local UnitID = "TARGET"
 						local guid = UnitGUID(UnitID)
 						local First_Option = {
+							[210718] = true,
+							[207779] = true,
+
 							[168432] = true,
 							[149626] = true,
 							[167298] = true,
@@ -72,7 +75,7 @@ tinsert(E.Octo_Globals.modules, function()
 						}
 						local Second_Option = {
 							[201398] = true,
-							[56591] = true,  -- DONE Вошебный посох
+							[56591] = true, -- DONE Вошебный посох
 						}
 						local Third_Option = {
 							[56585] = true, -- DONE ХИЛ
@@ -145,6 +148,7 @@ tinsert(E.Octo_Globals.modules, function()
 											v.name:find("К'ареш") or
 											v.name:find("Сайаад") or
 											v.name:find("Терон Кровожад") or
+											v.name:find("Командир") or
 											-- v.name:find("Тирай") or
 											-- v.name:find("Он'ир") or
 											-- v.name:find("Нокхуд") or

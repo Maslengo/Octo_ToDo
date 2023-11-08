@@ -60,8 +60,8 @@ tinsert(E.Octo_Globals.modules, function()
 			local function ItemsUsable_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
 				GameTooltip:ClearLines()
-				-- GameTooltip:AddLine(E.Octo_Func.func_itemName(self.itemid))
-				local itemLink = select(2, GetItemInfo(self.itemid))
+				-- GameTooltip:AddLine(E.Octo_Func.func_itemName(self.itemID))
+				local itemLink = select(2, GetItemInfo(self.itemID))
 				GameTooltip:SetHyperlink(itemLink)
 				GameTooltip:Show()
 			end
@@ -130,6 +130,8 @@ tinsert(E.Octo_Globals.modules, function()
 				end
 			end
 			function ItemsUsableFrame()
+				local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(2245)
+				local quantity = currencyInfo.quantity or 0
 				if not InCombatLockdown() and ItemsUsable_Frame then
 					local itemID = 191251
 					if (GetItemCount(191251) >= 30 and GetItemCount(193201) >= 3) then
@@ -139,29 +141,31 @@ tinsert(E.Octo_Globals.modules, function()
 						local itemQuality = (select(3, GetItemInfo(itemID)) or 0)
 						local r, g, b = GetItemQualityColor(itemQuality)
 						ItemsUsable_Frame:SetBackdropBorderColor(r, g, b, 1)
-						ItemsUsable_Frame.itemid = itemID
+						ItemsUsable_Frame.itemID = itemID
 						ItemsUsable_Frame_TEXTNAME:SetText(E.Octo_Func.func_itemName(itemID))
 						ItemsUsable_Frame_TEXTCOUNT:SetText(GetItemCount(itemID, true, true, true))
 					else
-						for itemid, count in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable) do
-							if GetItemCount(itemid) >= count and TEST_FUNC(itemid) == 0 then
-								if itemid == 32502 then -- https://ru.wowhead.com/quest=11020
-									itemid = 32503
+						for itemID, count in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable) do
+							if (GetItemCount(itemID) >= count and TEST_FUNC(itemID) == 0) or (GetItemCount(208396) >= 2 and quantity >= 250 and TEST_FUNC(208396) == 0) then
+								if itemID == 32502 then -- https://ru.wowhead.com/quest=11020
+									itemID = 32503
 								end
-								-- if itemid == 191160 then -- https://ru.wowhead.com/quest=66020
-								-- 	itemid = 191160
-								-- end
+								if GetItemCount(208396) >= 2 then
+									itemID = 208396
+								end
+
+
 								ItemsUsable_Frame:Show()
-								ItemsUsable_Frame:SetAttribute("macrotext", "/use item:"..itemid)
-								ItemsUsable_Frame.icon:SetTexture(select(10, GetItemInfo(itemid)) or 413587)
-								local itemQuality = (select(3, GetItemInfo(itemid)) or 0)
+								ItemsUsable_Frame:SetAttribute("macrotext", "/use item:"..itemID)
+								ItemsUsable_Frame.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
+								local itemQuality = (select(3, GetItemInfo(itemID)) or 0)
 								local r, g, b = GetItemQualityColor(itemQuality)
 								ItemsUsable_Frame:SetBackdropBorderColor(r, g, b, 1)
-								ItemsUsable_Frame.itemid = itemid
-								ItemsUsable_Frame_TEXTNAME:SetText(E.Octo_Func.func_itemName(itemid))
-								ItemsUsable_Frame_TEXTCOUNT:SetText(GetItemCount(itemid, true, true, true))
+								ItemsUsable_Frame.itemID = itemID
+								ItemsUsable_Frame_TEXTNAME:SetText(E.Octo_Func.func_itemName(itemID))
+								ItemsUsable_Frame_TEXTCOUNT:SetText(GetItemCount(itemID, true, true, true))
 								break
-							elseif GetItemCount(itemid) <= (count-1) or (GetItemCount(191251) < 30 and GetItemCount(193201) < 3) and ItemsUsable_Frame:IsShown() then
+							elseif GetItemCount(itemID) <= (count-1) or (GetItemCount(191251) < 30 and GetItemCount(193201) < 3) and ItemsUsable_Frame:IsShown() then
 								ItemsUsable_Frame:Hide()
 								ItemsUsable_Frame.icon:SetTexture(413587)
 								ItemsUsable_Frame_TEXTNAME:SetText("")
@@ -171,7 +175,13 @@ tinsert(E.Octo_Globals.modules, function()
 						--
 					end
 				end
-			end
+			end -- ItemsUsableFrame
+
+
+
+
+
+
 			E.ItemsUsable_Frame = ItemsUsable_Frame
 			E.ItemsUsableFrame_OnLoad = ItemsUsableFrame_OnLoad
 			E.ItemsUsableFrame = ItemsUsableFrame

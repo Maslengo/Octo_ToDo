@@ -86,6 +86,12 @@ tinsert(E.Octo_Globals.modules, function()
 				SetCVar("lastRenownForMajorFaction2503", 25)
 				SetCVar("lastRenownForMajorFaction2511", 30)
 				SetCVar("lastRenownForMajorFaction2510", 30)
+				SetCVar("lastRenownForMajorFaction2574", 20)
+
+
+
+
+
 				SetCVar("mapFade", 0) -- прозрачность карты в движении
 				SetCVar("NamePlateClassificationScale", 1) -- 1.25
 				SetCVar("nameplateGlobalScale", 1)

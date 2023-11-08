@@ -114,18 +114,22 @@ do
 	for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Cosmetic) do
 		E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
-	-- for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Mount) do
-	-- 	E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
-	-- end
 	for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Other) do
 		E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
-	-- for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Toys) do
-	-- 	E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
-	-- end
-	-- for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Pets) do
-	-- 	E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
-	-- end
+
+
+
+
+	for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Mount) do
+		E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
+	end
+	for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Toys) do
+		E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
+	end
+	for _, itemID in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable_Pets) do
+		E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
+	end
 end
 local OctoTable_func_otrisovka_FIRST = {
 }
@@ -1383,15 +1387,15 @@ function Collect_ALL_ItemsInBag()
 				-- 	E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
 				-- end
 				-- Mounts
-				if itemType == MISCELLANEOUS and itemSubType == MOUNTS and itemID ~= 37011 then
-					-- ChatFrame1:AddMessage("tinsert: "..MISCELLANEOUS..MOUNTS..hyperlink)
-					E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
-				end
-				-- Pets
-				if itemType == MISCELLANEOUS and itemSubType == "Питомцы" or itemSubType == "Pets" then
-					-- ChatFrame1:AddMessage("tinsert: "..MISCELLANEOUS.."Питомцы"..hyperlink)
-					E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
-				end
+				-- if itemType == MISCELLANEOUS and itemSubType == MOUNTS and itemID ~= 37011 then
+				-- 	-- ChatFrame1:AddMessage("tinsert: "..MISCELLANEOUS..MOUNTS..hyperlink)
+				-- 	E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
+				-- end
+				-- -- Pets
+				-- if itemType == MISCELLANEOUS and itemSubType == "Питомцы" or itemSubType == "Pets" then
+				-- 	-- ChatFrame1:AddMessage("tinsert: "..MISCELLANEOUS.."Питомцы"..hyperlink)
+				-- 	E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
+				-- end
 			end
 		end
 	end
@@ -4526,6 +4530,15 @@ function O_otrisovka_FIRST()
 			end)
 		end
 		if Octo_ToDo_DB_Vars.config.EmeraldDewdrop == true then
+			-- tinsert(OctoTable_func_otrisovka_FIRST,
+			-- 	function(CharInfo, tooltip, CL, BG)
+			-- 		local vivodCent, vivodLeft = "", ""
+			-- 		vivodLeft = E.Octo_Func.func_currencyicon(2777)..E.Octo_Func.func_currencyName(2777)
+			-- 		if CharInfo.CurrencyID_Total[2777] ~= "" and CharInfo.CurrencyID_Total[2777] ~= 0 then
+			-- 			vivodCent = CharInfo.CurrencyID_Total[2777]
+			-- 		end
+			-- 		return vivodCent, vivodLeft
+			-- end)
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4535,27 +4548,35 @@ function O_otrisovka_FIRST()
 					end
 					return vivodCent, vivodLeft
 			end)
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2651)..E.Octo_Func.func_currencyName(2651)
-					if CharInfo.CurrencyID_Total[2651] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2651]
-					end
-					return vivodCent, vivodLeft
-			end)
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2652)..E.Octo_Func.func_currencyName(2652)
-					if CharInfo.CurrencyID_Total[2652] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2652]
-					end
-					return vivodCent, vivodLeft
-			end)
+			-- tinsert(OctoTable_func_otrisovka_FIRST,
+			-- 	function(CharInfo, tooltip, CL, BG)
+			-- 		local vivodCent, vivodLeft = "", ""
+			-- 		vivodLeft = E.Octo_Func.func_currencyicon(2651)..E.Octo_Func.func_currencyName(2651)
+			-- 		if CharInfo.CurrencyID_Total[2651] ~= 0 then
+			-- 			vivodCent = CharInfo.CurrencyID_Total[2651]
+			-- 		end
+			-- 		return vivodCent, vivodLeft
+			-- end)
+			-- tinsert(OctoTable_func_otrisovka_FIRST,
+			-- 	function(CharInfo, tooltip, CL, BG)
+			-- 		local vivodCent, vivodLeft = "", ""
+			-- 		vivodLeft = E.Octo_Func.func_currencyicon(2652)..E.Octo_Func.func_currencyName(2652)
+			-- 		if CharInfo.CurrencyID_Total[2652] ~= 0 then
+			-- 			vivodCent = CharInfo.CurrencyID_Total[2652]
+			-- 		end
+			-- 		return vivodCent, vivodLeft
+			-- end)
 		end
 		-- CREST
 		if Octo_ToDo_DB_Vars.config.Crests == true then
+
+
+
+
+
+
+
+
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4880,6 +4901,44 @@ function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 616
+			if Octo_ToDo_DB_Other.Holiday.Active[1063] then -- Путешествие во времени по подземельям (Warlords of Draenor)
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(133594).."Warlords of Draenor" -- 630787 ебало лича
+						if CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count ~= E.Octo_Globals.NONE then
+							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk_500CURRENCY_count
+						end
+						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(1542856)..DUNGEONS
+						if CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count ~= E.Octo_Globals.NONE then
+							vivodCent = CharInfo.Octopussy_DF_Weekly_Timewalk5DUNGEONS_count
+						end
+						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(463446)..E.Octo_Func.func_currencyName(1166)
+						if CharInfo.CurrencyID[1166] ~= 0 then
+							vivodCent = CharInfo.CurrencyID[1166]
+						end
+						BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+			end -- for 1063
+
+
+
+
+
+
 			if Octo_ToDo_DB_Other.Holiday.Active[1352] then -- Подземелья Dragonfly
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
