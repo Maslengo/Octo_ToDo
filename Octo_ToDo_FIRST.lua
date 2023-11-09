@@ -264,12 +264,8 @@ local function checkCharInfo(self)
 			end
 		end
 	end
-	for k, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
-		for q, w in pairs(v) do
-			self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] = self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] or E.Octo_Globals.NONE
+	for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] or E.Octo_Globals.NONE
-			self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] = self["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] or E.Octo_Globals.NONE
-		end
 	end
 	self.LFGInstance = self.LFGInstance or {}
 	self.professions = self.professions or {}
@@ -412,11 +408,11 @@ local function checkCharInfo(self)
 				self.GreatVault[i].type = RAIDS
 			end
 		end
-		for k, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
+		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
-				self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_name"] = E.Octo_Globals.NONE
-				self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_count"] = E.Octo_Globals.NONE
-				self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_questID"] = E.Octo_Globals.NONE
+				if w == "Weekly" then
+					self["Octopussy_"..v.expansion.."_Weekly_"..v.desc..v.place..v.name_save.."_count"] = E.Octo_Globals.NONE
+				end
 			end
 		end
 	end
@@ -426,11 +422,11 @@ local function checkCharInfo(self)
 		Octo_ToDo_DB_Other.Holiday.Active = {}
 		Octo_ToDo_DB_Vars.config.AnotherAddonsCasual = false
 		Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = false
-		for k, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
+		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
-				self["Octopussy_"..v.expansion.."_Daily_"..v.desc..v.place..v.name_save.."_name"] = E.Octo_Globals.NONE
-				self["Octopussy_"..v.expansion.."_Daily_"..v.desc..v.place..v.name_save.."_count"] = E.Octo_Globals.NONE
-				self["Octopussy_"..v.expansion.."_Daily_"..v.desc..v.place..v.name_save.."_questID"] = E.Octo_Globals.NONE
+				if w == "Daily" then
+					self["Octopussy_"..v.expansion.."_Daily_"..v.desc..v.place..v.name_save.."_count"] = E.Octo_Globals.NONE
+				end
 			end
 		end
 		self.LFGInstance = {}
@@ -468,11 +464,11 @@ local function checkCharInfo(self)
 		self.tmstp_Month = E.Octo_Func.tmstpDayReset(30)
 		self.needResetMonth = true
 		-- self.ItemsInBag[23247] = 0
-		for k, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
+		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
-				self["Octopussy_"..v.expansion.."_Month_"..v.desc..v.place..v.name_save.."_name"] = E.Octo_Globals.NONE
-				self["Octopussy_"..v.expansion.."_Month_"..v.desc..v.place..v.name_save.."_count"] = E.Octo_Globals.NONE
-				self["Octopussy_"..v.expansion.."_Month_"..v.desc..v.place..v.name_save.."_questID"] = E.Octo_Globals.NONE
+				if w == "Month" then
+					self["Octopussy_"..v.expansion.."_Month_"..v.desc..v.place..v.name_save.."_count"] = E.Octo_Globals.NONE
+				end
 			end
 		end
 	end
@@ -1581,30 +1577,26 @@ function Collect_ALL_UNIVERSALQuestUpdate()
 	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DB_Levels[curGUID]
-	local IsOnQuest = false
-	for k, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
-		for q, w in pairs(v) do
+	-- local IsOnQuest = false
+	for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
+		for _, w in pairs(v) do
 			local count = 0
 			local vivod = ""
-			for z, x in pairs(v.questID) do
-				IsOnQuest = C_QuestLog.IsOnQuest(x)
+			for _, questID in pairs(v.questID) do
+				-- IsOnQuest = C_QuestLog.IsOnQuest(x)
 				if v.max > 1 then
-					if C_QuestLog.IsQuestFlaggedCompleted(x) == true then
+					if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
 						count = count + 1
 					end
 					vivod = count
 				else
-					local IsComplete = E.Octo_Func.CheckCompletedByQuestID(x)
+					local IsComplete = E.Octo_Func.CheckCompletedByQuestID(questID)
 					if IsComplete ~= E.Octo_Globals.NONE then
 						vivod = IsComplete
 					end
 				end
-				if IsOnQuest == true then
-					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_questID"] = x or E.Octo_Globals.NONE
-				end
 			end
 			if collect and not InCombatLockdown() then
-				collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_name"] = v.name_quest or E.Octo_Globals.NONE
 				if v.max == 1 then
 					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = vivod
 				elseif v.max > 1 then
@@ -2816,24 +2808,13 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_Legion_Daily_InvasionQuests_questID ~= E.Octo_Globals.NONE then
-					vivodCent = CharInfo.Octopussy_Legion_Daily_InvasionQuests_count
-					vivodLeft = Timer_Legion_Invasion()..E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Daily_InvasionQuests_questID)
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Daily_InvasionQuests_questID)}
-				else
 					vivodLeft = (Timer_Legion_Invasion().."Timer_Legion_Invasion")
-				end
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_Legion_Weekly_WBALL_questID ~= E.Octo_Globals.NONE then
-					vivodLeft = WorldBoss_Icon.."WB: "..E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Weekly_WBALL_questID)
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Weekly_WBALL_questID)}
-				else
 					vivodLeft = WorldBoss_Icon.."WB"
-				end
 				if CharInfo.Octopussy_Legion_Weekly_WBALL_count ~= E.Octo_Globals.NONE then
 					vivodCent = CharInfo.Octopussy_Legion_Weekly_WBALL_count
 				end
@@ -2842,12 +2823,7 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_Legion_Once_BrokenShoreArmiesofLegionfall_questID ~= E.Octo_Globals.NONE then
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Once_BrokenShoreArmiesofLegionfall_questID)}
-					vivodLeft = E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Once_BrokenShoreArmiesofLegionfall_questID)
-				else
-					vivodLeft = ("Broken Shore - Armies of Legionfall")
-				end
+					vivodLeft = "Broken Shore - Armies of Legionfall"
 				if CharInfo.Octopussy_Legion_Once_BrokenShoreArmiesofLegionfall_count ~= E.Octo_Globals.NONE then
 					vivodCent = CharInfo.Octopussy_Legion_Once_BrokenShoreArmiesofLegionfall_count
 				end
@@ -2859,12 +2835,7 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_Legion_Once_BrokenShoreExcavations_questID ~= E.Octo_Globals.NONE then
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Once_BrokenShoreExcavations_questID)}
-					vivodLeft = E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Once_BrokenShoreExcavations_questID)
-				else
-					vivodLeft = ("Broken Shore - Excavations")
-				end
+					vivodLeft = "Broken Shore - Excavations"
 				if CharInfo.Octopussy_Legion_Once_BrokenShoreExcavations_count ~= E.Octo_Globals.NONE then
 					vivodCent = CharInfo.Octopussy_Legion_Once_BrokenShoreExcavations_count
 				end
@@ -2876,12 +2847,7 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_Legion_Once_ArgusToArgus_questID ~= E.Octo_Globals.NONE then
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Once_ArgusToArgus_questID)}
-					vivodLeft = E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Once_ArgusToArgus_questID)
-				else
-					vivodLeft = ("Broken Shore - ToArgus")
-				end
+					vivodLeft = "Broken Shore - ToArgus"
 				if CharInfo.Octopussy_Legion_Once_ArgusToArgus_count ~= E.Octo_Globals.NONE then
 					vivodCent = CharInfo.Octopussy_Legion_Once_ArgusToArgus_count
 				end
@@ -2893,12 +2859,7 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_Legion_Once_BalanceofPower_questID ~= E.Octo_Globals.NONE then
-					vivodLeft = E.Octo_Func.func_questName(43533)..": "..E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Once_BalanceofPower_questID)
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_Legion_Once_BalanceofPower_questID)}
-				else
-					vivodLeft = E.Octo_Func.func_questName(43533)
-				end
+				vivodLeft = E.Octo_Func.func_questName(43533)
 				if CharInfo.Octopussy_Legion_Once_BalanceofPower_count ~= E.Octo_Globals.NONE then
 					vivodCent = CharInfo.Octopussy_Legion_Once_BalanceofPower_count
 				end
@@ -3642,7 +3603,6 @@ function O_otrisovka_FIRST()
 						vivodCent = specName
 						for number, sourceID in pairs(specTable) do
 							if number == 1 or number == 2 or number == 3 or number == 4 then
-								-- print (className, specName, number, sourceID)
 								tooltip[#tooltip+1] = {number, sourceID}
 							end
 						end
@@ -3659,20 +3619,12 @@ function O_otrisovka_FIRST()
 				if CharInfo.Octopussy_BfA_Daily_InvasionQuests_count ~= E.Octo_Globals.NONE then
 					vivodCent = CharInfo.Octopussy_BfA_Daily_InvasionQuests_count
 				end
-				if CharInfo.Octopussy_BfA_Daily_InvasionQuests_questID ~= E.Octo_Globals.NONE then
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Daily_InvasionQuests_questID)}
-				end
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_questID ~= E.Octo_Globals.NONE then
-					vivodLeft = Timer_BfA_Assault()..E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_questID)
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_questID)}
-				else
-					vivodLeft = (Timer_BfA_Assault().."Timer_BfA_Assault (N'zoth)")
-				end
+				vivodLeft = Timer_BfA_Assault().."Timer_BfA_Assault (N'zoth)"
 				if CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count ~= E.Octo_Globals.NONE then
 					vivodCent = CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count
 				end
@@ -3711,12 +3663,7 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_WBALL_questID ~= E.Octo_Globals.NONE then
-					vivodLeft = WorldBoss_Icon.."WB: "..E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Weekly_WBALL_questID)
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Weekly_WBALL_questID)}
-				else
-					vivodLeft = WorldBoss_Icon.."WB"
-				end
+				vivodLeft = WorldBoss_Icon.."WB"
 				if CharInfo.Octopussy_BfA_Weekly_WBALL_count ~= E.Octo_Globals.NONE then
 					vivodCent = E.Octo_Func.Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WBALL_count)
 				end
@@ -3725,12 +3672,7 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_WBNazjatar_questID ~= E.Octo_Globals.NONE then
-					vivodLeft = WorldBoss_Icon.."WB: "..E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Weekly_WBNazjatar_questID)
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Weekly_WBNazjatar_questID)}
-				else
-					vivodLeft = WorldBoss_Icon.."WB: Nazjatar"
-				end
+				vivodLeft = WorldBoss_Icon.."WB: Nazjatar"
 				if CharInfo.Octopussy_BfA_Weekly_WBNazjatar_count ~= E.Octo_Globals.NONE then
 					vivodCent = E.Octo_Func.Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WBNazjatar_count)
 				end
@@ -3748,12 +3690,7 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Weekly_WBDarkshore_questID ~= E.Octo_Globals.NONE then
-					vivodLeft = WorldBoss_Icon.."WB: "..E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Weekly_WBDarkshore_questID)
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Weekly_WBDarkshore_questID)}
-				else
-					vivodLeft = WorldBoss_Icon.."WB: PVP"
-				end
+				vivodLeft = WorldBoss_Icon.."WB: PVP"
 				if CharInfo.Octopussy_BfA_Weekly_WBDarkshore_count ~= E.Octo_Globals.NONE then
 					vivodCent = E.Octo_Func.Empty_Zero(CharInfo.Octopussy_BfA_Weekly_WBDarkshore_count)
 				end
@@ -3762,12 +3699,7 @@ function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_BfA_Daily_DarkshoreRares_questID ~= E.Octo_Globals.NONE then
-					vivodLeft = Rares_Icon.."Rares: "..E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Daily_DarkshoreRares_questID)
-					tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_BfA_Daily_DarkshoreRares_questID)}
-				else
-					vivodLeft = Rares_Icon.."Rares: Darkshore"
-				end
+				vivodLeft = Rares_Icon.."Rares: Darkshore"
 				if CharInfo.Octopussy_BfA_Daily_DarkshoreRares_count ~= E.Octo_Globals.NONE then
 					vivodCent = E.Octo_Func.Empty_Zero(CharInfo.Octopussy_BfA_Daily_DarkshoreRares_count)
 				end
@@ -4403,11 +4335,8 @@ function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					vivodLeft = E.Octo_Func.func_texturefromIcon(1603189)..L["Aiding the Accord"]
-					if CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count ~= E.Octo_Globals.NONE then
+					if CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count ~= "" and CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count
-						if CharInfo.Octopussy_DF_Weekly_AidingtheAccord_questID ~= E.Octo_Globals.NONE then
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(CharInfo.Octopussy_DF_Weekly_AidingtheAccord_questID), CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count}
-						end
 					end
 					return vivodCent, vivodLeft
 			end)
@@ -4763,6 +4692,57 @@ function O_otrisovka_FIRST()
 								tooltip[#tooltip+1] = {"59. "..E.Octo_Func.func_questName(76402), CharInfo.OctoTable_QuestID[76402]}
 							end
 					end
+					return vivodCent, vivodLeft
+			end)
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local count = 0
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTroubleattheTree_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamASleepySearch_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTheDryadGarden_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTheQonzuQuery_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamSkyMothersIre_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamACalltoAid_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamMemoryoftheDreamer_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamADragoninHand_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if count == 9 then
+						vivodCent = E.Octo_Globals.DONE
+					else
+						vivodCent = count.."/9"
+						if count == 0 then
+							vivodCent = ""
+						end
+					end
+					tooltip[#tooltip+1] = {"A Passed Torch"..E.Octo_Globals.Blue_Color.." 500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count}
+					tooltip[#tooltip+1] = {"Trouble at the Tree"..E.Octo_Globals.Blue_Color.." 250|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTroubleattheTree_count}
+					tooltip[#tooltip+1] = {"A Sleepy Search"..E.Octo_Globals.Blue_Color.." 500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamASleepySearch_count}
+					tooltip[#tooltip+1] = {"The Dryad Garden"..E.Octo_Globals.Blue_Color.." 750|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTheDryadGarden_count}
+					tooltip[#tooltip+1] = {"The Qonzu Query"..E.Octo_Globals.Blue_Color.." 900-1200|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTheQonzuQuery_count}
+					tooltip[#tooltip+1] = {"Sky Mothers Ire"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamSkyMothersIre_count}
+					tooltip[#tooltip+1] = {"A Call to Aid"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamACalltoAid_count}
+					tooltip[#tooltip+1] = {"Memory of the Dreamer"..E.Octo_Globals.Blue_Color.." 1500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamMemoryoftheDreamer_count}
+					tooltip[#tooltip+1] = {"A Dragon in Hand"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamADragoninHand_count}
+					vivodLeft = E.Octo_Globals.Once.."Side quests"
 					return vivodCent, vivodLeft
 			end)
 		end

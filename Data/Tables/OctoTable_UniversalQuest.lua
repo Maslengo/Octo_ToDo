@@ -4,7 +4,6 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 E.Octo_Table.OctoTable_UniversalQuest = {
 	{
 		name_save = "ALL",
-		name_quest = "ALL",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -14,7 +13,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ZaqaliElders",
-		name_quest = "ZaqaliElders",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "ZaralekCavern",
@@ -24,7 +22,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ALL",
-		name_quest = "ALL",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "",
@@ -34,7 +31,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Antros",
-		name_quest = "Antros",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "ZM",
@@ -44,7 +40,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Morgeth",
-		name_quest = "Morgeth",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Maw",
@@ -54,7 +49,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ALL",
-		name_quest = "ALL",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
@@ -64,7 +58,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Nazjatar",
-		name_quest = "Nazjatar",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
@@ -74,7 +67,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Darkshore",
-		name_quest = "Darkshore",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
@@ -84,7 +76,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Assault",
-		name_quest = "Assault",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
@@ -94,7 +85,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ALL",
-		name_quest = "ALL",
 		reset = "Weekly",
 		expansion = "Legion",
 		place = "",
@@ -107,7 +97,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ShapingFate",
-		name_quest = "ShapingFate",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Korthia",
@@ -117,7 +106,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ReplenishtheReservoir",
-		name_quest = "ReplenishtheReservoir",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "",
@@ -127,7 +115,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Torghast",
-		name_quest = "Torghast",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Maw",
@@ -137,7 +124,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "CovenantAssault",
-		name_quest = "CovenantAssault",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Maw",
@@ -147,7 +133,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ContainingtheHelsworn",
-		name_quest = "ContainingtheHelsworn",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Maw",
@@ -157,7 +142,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ReturnLostSouls",
-		name_quest = "ReturnLostSouls",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "",
@@ -170,7 +154,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TradingFavors",
-		name_quest = "TradingFavors",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "",
@@ -183,7 +166,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TheWorldAwaits",
-		name_quest = "TheWorldAwaits",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -193,7 +175,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TheArenaCalls",
-		name_quest = "TheArenaCalls",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -203,7 +184,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "EmissaryofWar",
-		name_quest = "EmissaryofWar",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -213,7 +193,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ACalltoBattle",
-		name_quest = "ACalltoBattle",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -223,7 +202,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "SomethingDifferent",
-		name_quest = "SomethingDifferent",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -233,7 +211,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "PVP",
-		name_quest = "PVP",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -246,7 +223,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "StolenKorthianSupplies",
-		name_quest = "StolenKorthianSupplies",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Korthia",
@@ -256,7 +232,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "LostResearch",
-		name_quest = "LostResearch",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Korthia",
@@ -266,7 +241,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "KorthianAnimaVessel",
-		name_quest = "KorthianAnimaVessel",
 		reset = "Daily",
 		expansion = "SL",
 		place = "Korthia",
@@ -276,7 +250,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "StolenAnimaVessel",
-		name_quest = "StolenAnimaVessel",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Korthia",
@@ -286,7 +259,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "RiftboundCache",
-		name_quest = "RiftboundCache",
 		reset = "Daily",
 		expansion = "SL",
 		place = "Korthia",
@@ -296,7 +268,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ZovaalsVault",
-		name_quest = "ZovaalsVault",
 		reset = "Daily",
 		expansion = "SL",
 		place = "Korthia",
@@ -306,7 +277,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "SpectralBoundChest",
-		name_quest = "SpectralBoundChest",
 		reset = "Daily",
 		expansion = "SL",
 		place = "Korthia",
@@ -316,7 +286,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "HelswornChest",
-		name_quest = "HelswornChest",
 		reset = "Daily",
 		expansion = "SL",
 		place = "Maw",
@@ -326,7 +295,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Mobs",
-		name_quest = "Mobs",
 		reset = "Daily",
 		expansion = "SL",
 		place = "Korthia",
@@ -339,7 +307,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "RelicGorger",
-		name_quest = "RelicGorger",
 		reset = "Daily",
 		expansion = "SL",
 		place = "Korthia",
@@ -349,7 +316,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Collection",
-		name_quest = "Collection",
 		reset = "Daily",
 		expansion = "SL",
 		place = "Korthia",
@@ -362,7 +328,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Quest",
-		name_quest = "Quest",
 		reset = "Daily",
 		expansion = "SL",
 		place = "Maw",
@@ -375,7 +340,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Rares",
-		name_quest = "Rares",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "Korthia",
@@ -389,7 +353,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ResearchReportRelicExaminationTechniques",
-		name_quest = "ResearchReportRelicExaminationTechniques",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -399,7 +362,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "VaultAnimaTracker",
-		name_quest = "VaultAnimaTracker",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -409,7 +371,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ResearchReportAllSeeingCrystal",
-		name_quest = "ResearchReportAllSeeingCrystal",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -419,7 +380,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TreatiseRecognizingStygiaanditsUses",
-		name_quest = "TreatiseRecognizingStygiaanditsUses",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -429,7 +389,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TreatiseBondsofStygiainMortals",
-		name_quest = "TreatiseBondsofStygiainMortals",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -439,7 +398,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ResearchReportAncientShrines",
-		name_quest = "ResearchReportAncientShrines",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -449,7 +407,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TreatiseTheStudyofAnimaandHarnessingEveryDrop",
-		name_quest = "TreatiseTheStudyofAnimaandHarnessingEveryDrop",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -459,7 +416,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TreatiseRelicsAboundintheShadowlands",
-		name_quest = "TreatiseRelicsAboundintheShadowlands",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -469,7 +425,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ResearchReportAdaptiveAlloys",
-		name_quest = "ResearchReportAdaptiveAlloys",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -479,7 +434,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ResearchReportFirstAlloys",
-		name_quest = "ResearchReportFirstAlloys",
 		reset = "Once",
 		expansion = "SL",
 		place = "Korthia",
@@ -489,7 +443,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Events",
-		name_quest = "Events",
 		reset = "Daily",
 		expansion = "DF",
 		place = "ZaralekCavern",
@@ -502,7 +455,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Rares",
-		name_quest = "Rares",
 		reset = "Daily",
 		expansion = "DF",
 		place = "ZaralekCavern",
@@ -516,7 +468,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "AWorthyAllyLoammNiffen",
-		name_quest = "AWorthyAllyLoammNiffen",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "ZaralekCavern",
@@ -526,7 +477,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Sniffenseeking",
-		name_quest = "Sniffenseeking",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "ZaralekCavern",
@@ -539,7 +489,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "SniffenseekingItems",
-		name_quest = "SniffenseekingItems",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "ZaralekCavern",
@@ -552,7 +501,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Storylines",
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "ZaralekCavern",
@@ -571,7 +519,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Storylines",
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "DawnoftheInfinites",
@@ -581,7 +528,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Rares",
-		name_quest = "Rares",
 		reset = "Daily",
 		expansion = "DF",
 		place = "TheForbiddenReach",
@@ -595,7 +541,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "CommunityFeast",
-		name_quest = "CommunityFeast",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -605,7 +550,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "DragonbaneKeep",
-		name_quest = "DragonbaneKeep",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -615,7 +559,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TheGrandHunt",
-		name_quest = "TheGrandHunt",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -625,7 +568,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "StormsFury",
-		name_quest = "StormsFury",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -635,7 +577,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "KeysofLoyalty",
-		name_quest = "KeysofLoyalty",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -645,7 +586,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "StormBoundChest",
-		name_quest = "StormBoundChest",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -655,7 +595,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ResearchersUnderFire",
-		name_quest = "ResearchersUnderFire",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -665,7 +604,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "FyrakkAssaults",
-		name_quest = "FyrakkAssaults",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -675,7 +613,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "DiscipleofFyrakk",
-		name_quest = "DiscipleofFyrakk",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -685,7 +622,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Timewalk_500CURRENCY",
-		name_quest = "Timewalk_500CURRENCY",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -695,7 +631,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Timewalk_RAIDS_Cataclysm",
-		name_quest = "Timewalk_RAIDS_Cataclysm",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -705,7 +640,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Timewalk_RAIDS_BurningCrusade",
-		name_quest = "Timewalk_RAIDS_BurningCrusade",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -715,7 +649,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Timewalk_RAIDS_WrathoftheLichKing",
-		name_quest = "Timewalk_RAIDS_WrathoftheLichKing",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -725,7 +658,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Timewalk5DUNGEONS",
-		name_quest = "Timewalk5DUNGEONS",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -735,7 +667,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "AidingtheAccord",
-		name_quest = "AidingtheAccord",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -760,7 +691,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "FightingisItsOwnReward",
-		name_quest = "FightingisItsOwnReward",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -770,7 +700,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Shadowmourne",
-		name_quest = "Shadowmourne",
 		reset = "Once",
 		expansion = "WotLK",
 		place = "",
@@ -782,7 +711,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Warlock_GreenFire",
-		name_quest = "Warlock_GreenFire",
 		reset = "Once",
 		expansion = "MoP",
 		place = "",
@@ -792,7 +720,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Warlock_SomeWickedThings",
-		name_quest = "Warlock_SomeWickedThings",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -805,7 +732,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "PatternsWithinPatterns",
-		name_quest = "PatternsWithinPatterns",
 		reset = "Weekly",
 		expansion = "SL",
 		place = "ZM",
@@ -815,7 +741,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Rares",
-		name_quest = "Rares",
 		reset = "Daily",
 		expansion = "SL",
 		place = "ZM",
@@ -830,7 +755,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "RaresDuneDominance",
-		name_quest = "RaresDuneDominance",
 		reset = "Daily",
 		expansion = "SL",
 		place = "ZM",
@@ -840,7 +764,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "worldQuests",
-		name_quest = "worldQuests",
 		reset = "Daily",
 		expansion = "SL",
 		place = "ZM",
@@ -855,7 +778,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TREASURES",
-		name_quest = "TREASURES",
 		reset = "Daily",
 		expansion = "SL",
 		place = "ZM",
@@ -869,7 +791,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "GetLockStatus",
-		name_quest = "GetLockStatus",
 		reset = "Daily",
 		expansion = "SL",
 		place = "ZM",
@@ -879,7 +800,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "UndulatingFoliage",
-		name_quest = "UndulatingFoliage",
 		reset = "Once",
 		expansion = "SL",
 		place = "ZM",
@@ -889,7 +809,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "CatchingUp",
-		name_quest = "CatchingUp",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -899,7 +818,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "PryingEyeDiscovery",
-		name_quest = "PryingEyeDiscovery",
 		reset = "Daily",
 		expansion = "SL",
 		place = "ZM",
@@ -909,7 +827,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "PUZZLECACHES",
-		name_quest = "PUZZLECACHES",
 		reset = "Daily",
 		expansion = "SL",
 		place = "ZM",
@@ -922,7 +839,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Concordance",
-		name_quest = "Concordance",
 		reset = "Once",
 		expansion = "SL",
 		place = "ZM",
@@ -935,7 +851,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "coinsQuests",
-		name_quest = "coinsQuests",
 		reset = "Weekly",
 		expansion = "WoD",
 		place = "",
@@ -948,7 +863,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "coinsQuests",
-		name_quest = "coinsQuests",
 		reset = "Weekly",
 		expansion = "Legion",
 		place = "",
@@ -960,7 +874,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "coinsQuests",
-		name_quest = "coinsQuests",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
@@ -970,7 +883,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "miniVision",
-		name_quest = "miniVision",
 		reset = "Daily",
 		expansion = "BfA",
 		place = "",
@@ -980,7 +892,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "AssaultTheBlackEmpire",
-		name_quest = "AssaultTheBlackEmpire",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
@@ -990,7 +901,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Warfront1",
-		name_quest = "Warfront1",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
@@ -1000,7 +910,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Warfront2",
-		name_quest = "Warfront2",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
@@ -1010,7 +919,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "WarfrontHC",
-		name_quest = "WarfrontHC",
 		reset = "Weekly",
 		expansion = "BfA",
 		place = "",
@@ -1020,7 +928,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "BalanceofPower",
-		name_quest = "BalanceofPower",
 		reset = "Once",
 		expansion = "Legion",
 		place = "",
@@ -1035,7 +942,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "InvasionQuests",
-		name_quest = "InvasionQuests",
 		reset = "Daily",
 		expansion = "BfA",
 		place = "",
@@ -1048,7 +954,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "InvasionQuests",
-		name_quest = "InvasionQuests",
 		reset = "Daily",
 		expansion = "Legion",
 		place = "",
@@ -1058,7 +963,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ArmiesofLegionfall",
-		name_quest = "ArmiesofLegionfall",
 		reset = "Once",
 		expansion = "Legion",
 		place = "BrokenShore",
@@ -1071,7 +975,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "AberrustheShadowedCrucibleSarkareth",
-		name_quest = "AberrustheShadowedCrucibleSarkareth",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1081,7 +984,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "VaultoftheIncarnatesFuryoftheStormEater",
-		name_quest = "VaultoftheIncarnatesFuryoftheStormEater",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1091,7 +993,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Excavations",
-		name_quest = "Excavations",
 		reset = "Once",
 		expansion = "Legion",
 		place = "BrokenShore",
@@ -1101,7 +1002,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ToArgus",
-		name_quest = "ToArgus",
 		reset = "Once",
 		expansion = "Legion",
 		place = "Argus",
@@ -1123,7 +1023,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "blingtron",
-		name_quest = "blingtron",
 		reset = "Daily",
 		expansion = "",
 		place = "",
@@ -1133,7 +1032,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TimeRift",
-		name_quest = "TimeRift",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -1143,7 +1041,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "DreamsurgeInvestigation",
-		name_quest = "DreamsurgeInvestigation",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1153,7 +1050,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ShapingtheDreamsurge",
-		name_quest = "ShapingtheDreamsurge",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -1163,7 +1059,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "WhenTimeNeedsMending",
-		name_quest = "WhenTimeNeedsMending",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "",
@@ -1173,7 +1068,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Rares",
-		name_quest = "Rares",
 		reset = "Daily",
 		expansion = "BfA",
 		place = "Darkshore",
@@ -1190,7 +1084,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "SummerFestival",
-		name_quest = "SummerFestival",
 		reset = "Month",
 		expansion = "DF",
 		place = "",
@@ -1228,7 +1121,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TheEasternKingdomsCupBegins",
-		name_quest = "TheEasternKingdomsCupBegins",
 		reset = "Month",
 		expansion = "DF",
 		place = "",
@@ -1238,7 +1130,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Brewfest",
-		name_quest = "Brewfest",
 		reset = "Month",
 		expansion = "DF",
 		place = "",
@@ -1251,7 +1142,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Brewfest_BarrelingDown",
-		name_quest = "Brewfest_BarrelingDown",
 		reset = "Daily",
 		expansion = "DF",
 		place = "",
@@ -1261,7 +1151,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Brewfest_BubblingBrews",
-		name_quest = "Brewfest_BubblingBrews",
 		reset = "Daily",
 		expansion = "DF",
 		place = "",
@@ -1271,7 +1160,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Brewfest_DirebrewsDireBrew",
-		name_quest = "Brewfest_DirebrewsDireBrew",
 		reset = "Month",
 		expansion = "DF",
 		place = "",
@@ -1281,7 +1169,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TemporalAcquisitionsSpecialist",
-		name_quest = "TemporalAcquisitionsSpecialist",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1294,7 +1181,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TheVeiledOssuary",
-		name_quest = "TheVeiledOssuary",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1311,7 +1197,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TyrsFall",
-		name_quest = "TyrsFall",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1321,7 +1206,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ReforgingtheTyrsGuard",
-		name_quest = "ReforgingtheTyrsGuard",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1334,7 +1218,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "DarkmoonFaire",
-		name_quest = "DarkmoonFaire",
 		reset = "Daily",
 		expansion = "DF",
 		place = "",
@@ -1346,7 +1229,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "WarcraftRumble",
-		name_quest = "WarcraftRumble",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1360,7 +1242,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "SeeingRed",
-		name_quest = "SeeingRed",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1370,7 +1251,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Garrison1",
-		name_quest = "Garrison1",
 		reset = "Once",
 		expansion = "Draenor",
 		place = "",
@@ -1380,7 +1260,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Garrison2",
-		name_quest = "Garrison2",
 		reset = "Once",
 		expansion = "Draenor",
 		place = "",
@@ -1390,7 +1269,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Garrison3",
-		name_quest = "Garrison3",
 		reset = "Once",
 		expansion = "Draenor",
 		place = "",
@@ -1400,7 +1278,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "WorgenHeritageArmor",
-		name_quest = "WorgenHeritageArmor",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1410,7 +1287,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ForsakenHeritageArmor",
-		name_quest = "ForsakenHeritageArmor",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1423,7 +1299,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "GoblinHeritageArmor",
-		name_quest = "GoblinHeritageArmor",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1436,7 +1311,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "NightElfHeritageArmor",
-		name_quest = "NightElfHeritageArmor",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1449,7 +1323,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "HumanHeritageArmor",
-		name_quest = "HumanHeritageArmor",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1462,7 +1335,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "DwarvenHeritageArmor",
-		name_quest = "DwarvenHeritageArmor",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1475,7 +1347,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "OrcHeritageArmor",
-		name_quest = "OrcHeritageArmor",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1488,7 +1359,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "BloodElfHeritageArmor",
-		name_quest = "BloodElfHeritageArmor",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1500,7 +1370,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "GnomeHeritageArmor",
-		name_quest = "GnomeHeritageArmor",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1513,7 +1382,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "DarkIronDwarfHeritageArmorAllied",
-		name_quest = "DarkIronDwarfHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1523,7 +1391,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ZandalariTrollHeritageArmorAllied",
-		name_quest = "ZandalariTrollHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1533,7 +1400,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "VulperaHeritageArmorAllied",
-		name_quest = "VulperaHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1543,7 +1409,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "LightforgedDraeneiHeritageArmorAllied",
-		name_quest = "LightforgedDraeneiHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1553,7 +1418,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "NightborneHeritageArmorAllied",
-		name_quest = "NightborneHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1563,7 +1427,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "VoidElfHeritageArmorAllied",
-		name_quest = "VoidElfHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1573,7 +1436,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "MechagnomeHeritageArmorAllied",
-		name_quest = "MechagnomeHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1583,7 +1445,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "KulTiranHeritageArmorAllied",
-		name_quest = "KulTiranHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1593,7 +1454,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "MagharOrcHeritageArmorAllied",
-		name_quest = "MagharOrcHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1603,7 +1463,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "HighmountainTaurenHeritageArmorAllied",
-		name_quest = "HighmountainTaurenHeritageArmorAllied",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1613,7 +1472,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "DayoftheDead",
-		name_quest = "DayoftheDead",
 		reset = "Once",
 		expansion = "DF",
 		place = "",
@@ -1626,7 +1484,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "AWorthyAllyDreamWardens",
-		name_quest = "AWorthyAllyDreamWardens",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "EmeraldDream",
@@ -1636,7 +1493,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "BloomingDreamseeds",
-		name_quest = "BloomingDreamseeds",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "EmeraldDream",
@@ -1646,7 +1502,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "TheSuperbloom", -- Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count
-		name_quest = "TheSuperbloom",
 		reset = "Weekly",
 		expansion = "DF",
 		place = "EmeraldDream",
@@ -1656,253 +1511,200 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "Rares",
-		name_quest = "Rares",
 		reset = "Daily",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "",
 		questID = {
-			77942, 77867, 77862, 77878, 78015, 77846, 77982, 77944,
-			77864, 77989, 78211, 78213, 77941, 77943, 78210, 77940,
-			77570, 77890, 78212, 77863, 78263, 77994, 77990, 78214,
-			78039, 77859, 77856,
+			77942, 77867, 77862, 77878, 78015, 77846, 77982, 77944, 77864,
+			77989, 78211, 78213, 77941, 77943, 78210, 77940, 77570, 77890,
+			78212, 77863, 78263, 77994, 77990, 78214, 78039, 77859, 77856
 		},
 		max = 27
 	},
 	{
 		name_save = "Treasures",
-		name_quest = "Treasures",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "",
 		questID = {
-			77872,
-			77950,
-			78005,
-			78107,
-			78359,
-			77858,
-			78120,
-			78006,
-			78360,
-			78361,
-			78550,
-			78551,
-			78547,
-			78552,
-			78831,
-			78911,
-			78833,
-			78834,
-			78835,
+			77872, 77950, 78005, 78107, 78359, 77858, 78120, 78006, 78360,
+			78361, 78550, 78551, 78547, 78552, 78831, 78911, 78833, 78834, 78835
 		},
 		max = 19
 	},
 	{
 		name_save = "Storylines", -- The Coalition of Flames
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "ALL",
 		questID = {
-			76982,
-            75918,
-            75919,
-            75920,
-            75921,
-            75922,
-            75923,
-            76317,
-            76318,
-            76319,
-            76320,
-            76321,
-            76322,
-            77818,
-            76323,
-            76324,
-            76325,
-            76326,
-            77283,
-            77436,
-            76433,
-            76434,
-            76435,
-            76437,
-            76441,
-            76442,
-            76443,
-            76403,
-            76342,
-            76343,
-            76344,
-            76345,
-            76532,
-            76348,
-            76347,
-            77178,
-            76327,
-            76328,
-            78646,
-            76329,
-            76330,
-            76334,
-            76332,
-            76331,
-            76335,
-            76333,
-            76336,
-            76337,
-            76384,
-            76416,
-            76386,
-            76385,
-            76436,
-            76387,
-            76388,
-            76389,
-            76398,
-            76401,
-            76402,
+			76982, 75918, 75919, 75920, 75921, 75922, 75923, 76317, 76318,
+			76319, 76320, 76321, 76322, 77818, 76323, 76324, 76325, 76326,
+			77283, 77436, 76433, 76434, 76435, 76437, 76441, 76442, 76443,
+			76403, 76342, 76343, 76344, 76345, 76532, 76348, 76347, 77178,
+			76327, 76328, 78646, 76329, 76330, 76334, 76332, 76331, 76335,
+			76333, 76336, 76337, 76384, 76416, 76386, 76385, 76436, 76387,
+			76388, 76389, 76398, 76401, 76402
 		},
 		max = 59
 	},
 	{
 		name_save = "Storylines", -- The Coalition of Flames -- L["The Coalition of Flames"]
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "1",
-		questID = {
-			76982,
-			75918,
-			75919,
-			75920,
-			75921,
-			75922,
-			75923,
-		},
+		questID = {76982, 75918, 75919, 75920, 75921, 75922, 75923},
 		max = 7
 	},
 	{
 		name_save = "Storylines", --
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "2",
 		questID = {
-			76317,
-			76318,
-			76319,
-			76320,
-			76321,
-			76322,
-			77818,
-			76323,
-			76324,
-			76325,
-			76326,
-			77283,
+			76317, 76318, 76319, 76320, 76321, 76322, 77818, 76323, 76324,
+			76325, 76326, 77283
 		},
 		max = 12
 	},
 	{
 		name_save = "Storylines", --
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "3",
-		questID = {
-			77436,
-			76433,
-			76434,
-			76435,
-			76437,
-			76441,
-			76442,
-			76443,
-		},
+		questID = {77436, 76433, 76434, 76435, 76437, 76441, 76442, 76443},
 		max = 8
 	},
 	{
 		name_save = "Storylines", --
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "4",
 		questID = {
-			76403,
-			76342,
-			76343,
-			76344,
-			76345,
-			76532,
-			76348,
-			76347,
-			77178,
+			76403, 76342, 76343, 76344, 76345, 76532, 76348, 76347, 77178
 		},
 		max = 9
 	},
 	{
 		name_save = "Storylines", -- Eye of Ysera -- https://www.wowhead.com/storyline/eye-of-ysera-5460
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "5",
 		questID = {
-			76327,
-			76328,
-			78646,
-			76329,
-			76330,
-			76334,
-			76332,
-			76331,
-			76335,
-			76333,
-			76336,
-			76337,
+			76327, 76328, 78646, 76329, 76330, 76334, 76332, 76331, 76335,
+			76333, 76336, 76337
 		},
 		max = 12
 	},
 	{
 		name_save = "Storylines",
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "6",
 		questID = {
-			76384,
-			76416,
-			76386,
-			76385,
-            76436,
-            76387,
-            76388,
-			76389,
-			76398,
-			76401,
+			76384, 76416, 76386, 76385, 76436, 76387, 76388, 76389, 76398, 76401
 		},
 		max = 10
 	},
 	{
 		name_save = "Storylines",
-		name_quest = "Storylines",
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "7",
-		questID = {
-			76402,
-		},
+		questID = {76402},
 		max = 1
 	},
+	{
+		name_save = "APassedTorch", -- 500 Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "Sidequests",
+		questID = {77948, 77978},
+		max = 2
+	},
+	{
+		name_save = "TroubleattheTree", -- 250 Octopussy_DF_Once_SidequestsEmeraldDreamTroubleattheTree_count
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "Sidequests",
+		questID = {77316, 77317, 77318},
+		max = 3
+	},
+	{
+		name_save = "ASleepySearch", -- 500 Octopussy_DF_Once_SidequestsEmeraldDreamASleepySearch_count
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "Sidequests",
+		questID = {77896, 77911, 77922, 77955, 77958},
+		max = 5
+	},
+	{
+		name_save = "TheDryadGarden", -- 750 Octopussy_DF_Once_SidequestsEmeraldDreamTheDryadGarden_count
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "Sidequests",
+		questID = {76566, 76568, 76567, 76569, 76570, 76571, 77802},
+		max = 7
+	},
+	{
+		name_save = "TheQonzuQuery", -- 900-1200 Octopussy_DF_Once_SidequestsEmeraldDreamTheQonzuQuery_count
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "Sidequests",
+		questID = {78065, 78163, 78064, 78162, 78066},
+		max = 5
+	},
+	{
+		name_save = "SkyMothersIre", -- 1000 Octopussy_DF_Once_SidequestsEmeraldDreamSkyMothersIre_count
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "Sidequests",
+		questID = {78041, 78042, 78043, 77788, 78045, 78044, 78046},
+		max = 1
+	},
+	{
+		name_save = "ACalltoAid", -- 1000 Octopussy_DF_Once_SidequestsEmeraldDreamACalltoAid_count
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "Sidequests",
+		questID = {77662, 77739, 77664, 77665, 77673, 77674, 77675},
+		max = 7
+	},
+	{
+		name_save = "MemoryoftheDreamer", -- 1500 Octopussy_DF_Once_SidequestsEmeraldDreamMemoryoftheDreamer_count
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "Sidequests",
+		questID = {77310, 77311, 77312, 77313, 77314, 77315},
+		max = 6
+	},
+	{
+		name_save = "ADragoninHand", -- 1000 Octopussy_DF_Once_SidequestsEmeraldDreamADragoninHand_count
+		reset = "Once",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "Sidequests",
+		questID = {
+			76460, 76460, 76460, 76460, 76460, 76460, 76460, 76460, 76460
+		},
+		max = 1
+	}
 }
