@@ -516,17 +516,18 @@ end
 local func_GetMapName = E.Octo_Func.func_GetMapName
 ----------------------------------------------------------------
 function E.Octo_Func.func_npcName(self)
+	local name = "|cffFF0000error|r"
 	if not self then return E.Octo_Globals.NONE end
 	if self then
 		inspectScantipFUNC:SetHyperlink("unit:Creature-0-0-0-0-"..self)
 		if inspectScantipFUNC:NumLines() > 0 then
-			local name = _G["OctoToDoScanningTooltipFUNCTextLeft1"]:GetText()
+			name = _G["OctoToDoScanningTooltipFUNCTextLeft1"]:GetText()
 			-- print (name, self)
 			return name
 		end
 		inspectScantipFUNC:ClearLines()
 	end
-	return ""
+	return name
 end
 local func_npcName = E.Octo_Func.func_npcName
 ----------------------------------------------------------------
