@@ -98,7 +98,8 @@ tinsert(E.Octo_Globals.modules, function()
 							end
 							-- print ("QWE")
 							for i, v in pairs(info) do
-								if v.icon == 132053 then
+								-- if v.icon == 132053 then
+								if v.icon then
 									-- print (i, E.Octo_Func.func_texturefromIcon(v.icon)..v.name) -- 132053
 									if #info == 1 then
 										-- print ("#info = 1")

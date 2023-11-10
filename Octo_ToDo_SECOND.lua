@@ -43,14 +43,14 @@ local Money_Icon = E.Octo_Func.func_texturefromIcon(133784, 12)--"|T133784:12:12
 local MailBox_Icon = "|T1506457:12:12:::64:64:4:64:4:64|t"
 local classColor = C_ClassColor.GetClassColor(classFilename)
 local r, g, b = classColor:GetRGB()
-local fontObject9 = CreateFont("OctoFont9")
-fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 9, "OUTLINE")
-local fontObject10 = CreateFont("OctoFont10")
-fontObject10:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 10, "OUTLINE")
-local fontObject11 = CreateFont("OctoFont11")
-fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
-local fontObject12 = CreateFont("OctoFont12")
-fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
+-- local fontObject9 = CreateFont("OctoFont9")
+-- fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 9, "OUTLINE")
+-- local fontObject10 = CreateFont("OctoFont10")
+-- fontObject10:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 10, "OUTLINE")
+-- local fontObject11 = CreateFont("OctoFont11")
+-- fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
+-- local fontObject12 = CreateFont("OctoFont12")
+-- fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 -- local E.Octo_Globals.NONE = E.Octo_Globals.Gray_Color.."None|r"
@@ -100,7 +100,7 @@ local function Central_Frame_Mouse_OnLeave(self)
 	parent:GetScript("OnLeave")(parent)
 	GameTooltip:Hide()
 end
-function Octo_ToDo_SECOND_OnLoad()
+local function Octo_ToDo_SECOND_OnLoad()
 	if not Octo_ToDo_SECOND_Frame_EventFrame then
 		Octo_ToDo_SECOND_Frame_EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
 	end
@@ -112,7 +112,7 @@ function Octo_ToDo_SECOND_OnLoad()
 			Octo_ToDo_SECOND_OnEvent(...)
 	end)
 end
-function O_otrisovka_SECOND()
+local function O_otrisovka_SECOND()
 	tinsert(OctoTable_func_otrisovka_SECOND,
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
@@ -160,7 +160,7 @@ function O_otrisovka_SECOND()
 		end
 	end
 end
-function Octo_ToDo_SECOND_CreateAltFrame()
+local function Octo_ToDo_SECOND_CreateAltFrame()
 	if not Octo_ToDo_SECOND_Frame_Main_Frame then
 		-- Octo_ToDo_SECOND_Frame_Main_Frame = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID().."Octo_ToDo_SECOND_Frame_Main_FrameПИЗДА", UIParent, "BackdropTemplate")
 		Octo_ToDo_SECOND_Frame_Main_Frame = CreateFrame("BUTTON", "Octo_ToDo_SECOND_Frame_Main_FramePIZDA", UIParent, "BackdropTemplate")

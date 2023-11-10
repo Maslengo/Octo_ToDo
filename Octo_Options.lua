@@ -13,14 +13,14 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	whileDead = 1,
 	OnAccept = function() ReloadUI() end,
 }
-local fontObject9 = CreateFont("OctoFont9")
-fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 9, "OUTLINE")
-local fontObject10 = CreateFont("OctoFont10")
-fontObject10:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 10, "OUTLINE")
-local fontObject11 = CreateFont("OctoFont11")
-fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
-local fontObject12 = CreateFont("OctoFont12")
-fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
+-- local fontObject9 = CreateFont("OctoFont9")
+-- fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 9, "OUTLINE")
+-- local fontObject10 = CreateFont("OctoFont10")
+-- fontObject10:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 10, "OUTLINE")
+-- local fontObject11 = CreateFont("OctoFont11")
+-- fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
+-- local fontObject12 = CreateFont("OctoFont12")
+-- fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
 local indent = 26
 local POS_LEFT = 6
 local POS_RIGHT = 474
@@ -93,6 +93,7 @@ local function Create_CheckButton(scroll, self, number, pos, config, text, color
 		end)
 		self[number..pos..config].text:SetJustifyV("MIDDLE")
 		self[number..pos..config].text:SetJustifyH("LEFT")
+		-- self[number..pos..config].text:SetFontObject(OctoFont10)
 		self[number..pos..config].text:SetText(color..text..FONT_COLOR_CODE_CLOSE)
 	end
 end

@@ -52,14 +52,21 @@ local Money_Icon = E.Octo_Func.func_texturefromIcon(133784, 12)-- "|T133784:12:1
 -- local MailBox_Icon = "|T".."Interface/AddOns/Octo_ToDo/Media/ElvUI/Mail0.tga"..":12:12:::64:64:4:64:4:64|t"
 -- local MailBox_Icon = "|T1506457:12:12:::64:64:4:64:4:64|t"
 local MailBox_Icon = E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga")
+
+
+
+local font = "01 Octo"
+
+
+
 local fontObject9 = CreateFont("OctoFont9")
-fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 9, "OUTLINE")
+fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 9, "OUTLINE")
 local fontObject10 = CreateFont("OctoFont10")
-fontObject10:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 10, "OUTLINE")
+fontObject10:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 10, "OUTLINE")
 local fontObject11 = CreateFont("OctoFont11")
-fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
+fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 11, "OUTLINE")
 local fontObject12 = CreateFont("OctoFont12")
-fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
+fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 12, "OUTLINE")
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local TotalTransAnima = 0
@@ -748,7 +755,7 @@ local function CreateFrameUsableSpells(spellID, Texture, Xpos, Ypos, r, g, b)
 	Button:GetScript("OnEvent")(Button, "PLAYER_REGEN_DISABLED" or "PLAYER_REGEN_ENABLED" or "SPELLS_CHANGED" or "SPELL_UPDATE_COOLDOWN")
 	return Button
 end
-function Collect_ALL_PlayerInfo()
+local function Collect_ALL_PlayerInfo()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_PlayerInfo()".."|r")
 	end
@@ -782,7 +789,7 @@ function Collect_ALL_PlayerInfo()
 		collect.classColorHex = E.Octo_Func.func_rgb2hex(classColor.r, classColor.g, classColor.b)
 	end
 end
-function Collect_Player_Level()
+local function Collect_Player_Level()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_Player_Level()".."|r")
 	end
@@ -816,7 +823,7 @@ local function Collect_Played(totalTime, currentLevelTime)
 		collect.realLevelTime = currentLevelTime
 	end
 end
-function Collect_WarMode()
+local function Collect_WarMode()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_WarMode()".."|r")
 	end
@@ -833,7 +840,7 @@ function Collect_WarMode()
 		-- end
 	end
 end
-function Collect_ALL_Mail()
+local function Collect_ALL_Mail()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_Mail()".."|r")
 	end
@@ -844,7 +851,7 @@ function Collect_ALL_Mail()
 		collect.hasMail = hasMail
 	end
 end
-function Collect_BfA_Azerite()
+local function Collect_BfA_Azerite()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_BfA_Azerite()".."|r")
 	end
@@ -862,7 +869,7 @@ function Collect_BfA_Azerite()
 		end
 	end
 end
-function Collect_BfA_Cloaklvl()
+local function Collect_BfA_Cloaklvl()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_BfA_Cloaklvl()".."|r")
 	end
@@ -915,7 +922,7 @@ end
 -- 	local _, _, _, quantity2, reqQuantity2 = GetAchievementCriteriaInfo(11153, 1)
 -- 	local _, _, _, quantity3, reqQuantity3 = GetAchievementCriteriaInfo(11154, 1)
 -- end
-function Collect_ALL_LoginTime()
+local function Collect_ALL_LoginTime()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_LoginTime()".."|r")
 	end
@@ -929,7 +936,7 @@ function Collect_ALL_LoginTime()
 	collect.needResetDaily = false
 	collect.needResetMonth = false
 end
-function Collect_SL_CovenantAnima()
+local function Collect_SL_CovenantAnima()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_SL_CovenantAnima()".."|r")
 	end
@@ -963,7 +970,7 @@ function Collect_SL_CovenantAnima()
 	end
 	collect.curCovID = curCovID
 end
-function Collect_ALL_PVPRaitings()
+local function Collect_ALL_PVPRaitings()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_PVPRaitings()".."|r")
 	end
@@ -999,7 +1006,7 @@ function Collect_ALL_PVPRaitings()
 	Octo_ToDo_DB_Levels[curGUID].PVP.seasonBestRBG = seasonBestRBG
 	Octo_ToDo_DB_Levels[curGUID].PVP.winrateRBG = winrateRBG
 end
-function Collect_All_Professions()
+local function Collect_All_Professions()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Professions()".."|r")
 	end
@@ -1173,7 +1180,7 @@ function Collect_All_Professions()
 	end
 	return
 end
-function Collect_ALL_GreatVault()
+local function Collect_ALL_GreatVault()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_GreatVault".."|r")
 	end
@@ -1245,7 +1252,7 @@ local function func_coloredText(fontstring)
 	local r, g, b, a = fontstring:GetTextColor()
 	return E.Octo_Func.func_rgb2hex(r, g, b, a)..text.."|r"
 end
-function Collect_All_Currency()
+local function Collect_All_Currency()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Currency()".."|r")
 	end
@@ -1274,7 +1281,7 @@ function Collect_All_Currency()
 		end
 	end
 end
-function Collect_ALL_ItemsInBag()
+local function Collect_ALL_ItemsInBag()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_ItemsInBag()".."|r")
 	end
@@ -1406,7 +1413,7 @@ function Collect_ALL_ItemsInBag()
 	end
 	--
 end
-function Collect_ALL_Locations()
+local function Collect_ALL_Locations()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_Locations()".."|r")
 	end
@@ -1422,7 +1429,7 @@ function Collect_ALL_Locations()
 		end
 	end
 end
-function Collect_All_Reputations()
+local function Collect_All_Reputations()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Reputations()".."|r")
 	end
@@ -1435,7 +1442,7 @@ function Collect_All_Reputations()
 		end
 	end
 end
-function Collect_All_Quests()
+local function Collect_All_Quests()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Quests()".."|r")
 	end
@@ -1453,7 +1460,7 @@ function Collect_All_Quests()
 		collect.maxNumQuestsCanAccept = maxNumQuestsCanAccept
 	end
 end
-function Collect_BfA_Island()
+local function Collect_BfA_Island()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_BfA_Island()".."|r")
 	end
@@ -1466,7 +1473,7 @@ function Collect_BfA_Island()
 		end
 	end
 end
-function Collect_BfA_QuestsBounties()
+local function Collect_BfA_QuestsBounties()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_BfA_QuestsBounties()".."|r")
 	end
@@ -1557,7 +1564,7 @@ function Collect_BfA_QuestsBounties()
 		end
 	end
 end
-function Collect_ALL_ItemLevel()
+local function Collect_ALL_ItemLevel()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_ItemLevel()".."|r")
 	end
@@ -1570,7 +1577,7 @@ function Collect_ALL_ItemLevel()
 		collect.avgItemLevelPvp = math.floor(avgItemLevelPvp)
 	end
 end
-function Collect_ALL_UNIVERSALQuestUpdate()
+local function Collect_ALL_UNIVERSALQuestUpdate()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_UNIVERSALQuestUpdate()".."|r")
 	end
@@ -1610,7 +1617,7 @@ function Collect_ALL_UNIVERSALQuestUpdate()
 		end
 	end
 end
-function Collect_ALL_MoneyUpdate()
+local function Collect_ALL_MoneyUpdate()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_MoneyUpdate()".."|r")
 	end
@@ -1621,7 +1628,7 @@ function Collect_ALL_MoneyUpdate()
 	-- 	collect.Money = Money
 	-- end
 end
-function Collect_ALL_MoneyOnLogin()
+local function Collect_ALL_MoneyOnLogin()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_MoneyOnLogin()".."|r")
 	end
@@ -1632,7 +1639,7 @@ function Collect_ALL_MoneyOnLogin()
 		collect.MoneyOnLogin = Money
 	end
 end
-function Collect_All_Legion_Transmoge()
+local function Collect_All_Legion_Transmoge()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Legion_Transmoge()".."|r")
 	end
@@ -1709,7 +1716,7 @@ function Collect_All_Legion_Transmoge()
 		end
 	end
 end
-function Collect_All_Legion_TransmogeNEW()
+local function Collect_All_Legion_TransmogeNEW()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Legion_TransmogeNEW()".."|r")
 	end
@@ -1757,7 +1764,7 @@ local function function_restoreBackup()
 	-- 	CalendarEventPickerFrame:RegisterEvent("CALENDAR_UPDATE_EVENT_LIST")
 	-- end
 end
-function Collect_All_Holiday()
+local function Collect_All_Holiday()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Holiday()".."|r")
 	end
@@ -1837,7 +1844,7 @@ local function IsInArray(arr, subj)
 		end
 	end
 end
-function Collect_All_journalInstance()
+local function Collect_All_journalInstance()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_journalInstance()".."|r")
 	end
@@ -1951,7 +1958,7 @@ function Collect_All_journalInstance()
 		end
 	end
 end
-function Collect_All_Quest_Tooltip()
+local function Collect_All_Quest_Tooltip()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Quest_Tooltip".."|r")
 	end
@@ -1961,7 +1968,7 @@ function Collect_All_Quest_Tooltip()
 	--
 	collect.DreamsurgeInvestigation = E.Octo_Func.All_objectives(qwid)
 end
-function Timer_Legion_Invasion()
+local function Timer_Legion_Invasion()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Legion_Invasion".."|r")
 	end
@@ -1976,7 +1983,7 @@ function Timer_Legion_Invasion()
 	end
 	return Timer_Legion_Invasion
 end
-function Timer_BfA_Invasion()
+local function Timer_BfA_Invasion()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_BfA_Invasion".."|r")
 	end
@@ -1991,7 +1998,7 @@ function Timer_BfA_Invasion()
 	end
 	return Timer_BfA_Invasion
 end
-function Timer_BfA_Assault()
+local function Timer_BfA_Assault()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_BfA_Assault".."|r")
 	end
@@ -2006,7 +2013,7 @@ function Timer_BfA_Assault()
 	end
 	return Timer_BfA_Assault
 end
-function Timer_DF_ToDragonbaneKeep()
+local function Timer_DF_ToDragonbaneKeep()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_ToDragonbaneKeep".."|r")
 	end
@@ -2021,7 +2028,7 @@ function Timer_DF_ToDragonbaneKeep()
 	end
 	return Timer_DF_ToDragonbaneKeep
 end
-function Timer_DF_GrandHunts()
+local function Timer_DF_GrandHunts()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_GrandHunts".."|r")
 	end
@@ -2036,7 +2043,7 @@ function Timer_DF_GrandHunts()
 	end
 	return Timer_DF_GrandHunts
 end
-function Timer_DF_CommunityFeast()
+local function Timer_DF_CommunityFeast()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_CommunityFeast".."|r")
 	end
@@ -2051,7 +2058,7 @@ function Timer_DF_CommunityFeast()
 	end
 	return Timer_DF_CommunityFeast
 end
-function Timer_DF_PrimalStorms()
+local function Timer_DF_PrimalStorms()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_PrimalStorms".."|r")
 	end
@@ -2066,7 +2073,7 @@ function Timer_DF_PrimalStorms()
 	end
 	return Timer_DF_PrimalStorms
 end
-function Timer_DF_ResearchersUnderFire()
+local function Timer_DF_ResearchersUnderFire()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_ResearchersUnderFire".."|r")
 	end
@@ -2081,7 +2088,7 @@ function Timer_DF_ResearchersUnderFire()
 	end
 	return Timer_DF_ResearchersUnderFire
 end
-function Timer_DF_TimeRift()
+local function Timer_DF_TimeRift()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_TimeRift".."|r")
 	end
@@ -2096,7 +2103,7 @@ function Timer_DF_TimeRift()
 	end
 	return Timer_DF_TimeRift
 end
-function Timer_DF_Dreamsurges()
+local function Timer_DF_Dreamsurges()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_Dreamsurges".."|r")
 	end
@@ -2111,7 +2118,7 @@ function Timer_DF_Dreamsurges()
 	end
 	return Timer_DF_Dreamsurges
 end
-function Timer_SL_Maw_Assault()
+local function Timer_SL_Maw_Assault()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_SL_Maw_Assault".."|r")
 	end
@@ -2126,7 +2133,7 @@ function Timer_SL_Maw_Assault()
 	end
 	return Timer_SL_Maw_Assault
 end
-function Timer_Daily_Reset()
+local function Timer_Daily_Reset()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Daily_Reset".."|r")
 	end
@@ -2145,7 +2152,7 @@ function Timer_Daily_Reset()
 		return " "
 	end
 end
-function Timer_Treasure_Goblin()
+local function Timer_Treasure_Goblin()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Treasure_Goblin".."|r")
 	end
@@ -2183,7 +2190,7 @@ function Timer_ElementalStorm()
 		return " "
 	end
 end
-function Timer_DF_Flower()
+local function Timer_DF_Flower()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_Flower".."|r")
 	end
@@ -2202,7 +2209,7 @@ function Timer_DF_Flower()
 		return " "
 	end
 end
-function Octo_ToDo_FIRST_OnLoad()
+local function Octo_ToDo_FIRST_OnLoad()
 	if not Octo_ToDo_FIRST_Frame_EventFrame then
 		Octo_ToDo_FIRST_Frame_EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
 	end
@@ -2281,7 +2288,7 @@ function Octo_ToDo_FIRST_OnLoad()
 	-- Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TIME_PLAYED_MSG", Collect_Played)
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TIME_PLAYED_MSG", Collect_Played)
 end
-function O_otrisovka_FIRST()
+local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."O_otrisovka_FIRST".."|r")
 	end
@@ -4480,6 +4487,13 @@ function O_otrisovka_FIRST()
 					vivodLeft = E.Octo_Func.func_currencyicon(2706)..E.Octo_Func.func_currencyName(2706)
 					if CharInfo.CurrencyID_Total[2706] ~= "" and CharInfo.CurrencyID_Total[2706] ~= 0 then
 						vivodCent = CharInfo.CurrencyID_Total[2706]
+						local a, b = strsplit("/", vivodCent)
+						if tonumber(a) == 0 then
+							if b then
+								vivodCent = E.Octo_Func.Empty_Zero(a)
+							end
+							vivodCent = vivodCent
+						end
 					end
 					return vivodCent, vivodLeft
 			end)
@@ -4489,6 +4503,13 @@ function O_otrisovka_FIRST()
 					vivodLeft = E.Octo_Func.func_currencyicon(2707)..E.Octo_Func.func_currencyName(2707)
 					if CharInfo.CurrencyID_Total[2707] ~= "" and CharInfo.CurrencyID_Total[2707] ~= 0 then
 						vivodCent = CharInfo.CurrencyID_Total[2707]
+						local a, b = strsplit("/", vivodCent)
+						if tonumber(a) == 0 then
+							if b then
+								vivodCent = E.Octo_Func.Empty_Zero(a)
+							end
+							vivodCent = vivodCent
+						end
 					end
 					return vivodCent, vivodLeft
 			end)
@@ -4498,6 +4519,13 @@ function O_otrisovka_FIRST()
 					vivodLeft = E.Octo_Func.func_currencyicon(2708)..E.Octo_Func.func_currencyName(2708)
 					if CharInfo.CurrencyID_Total[2708] ~= "" and CharInfo.CurrencyID_Total[2708] ~= 0 then
 						vivodCent = CharInfo.CurrencyID_Total[2708]
+						local a, b = strsplit("/", vivodCent)
+						if tonumber(a) == 0 then
+							if b then
+								vivodCent = E.Octo_Func.Empty_Zero(a)
+							end
+							vivodCent = vivodCent
+						end
 					end
 					return vivodCent, vivodLeft
 			end)
@@ -4507,9 +4535,17 @@ function O_otrisovka_FIRST()
 					vivodLeft = E.Octo_Func.func_currencyicon(2709)..E.Octo_Func.func_currencyName(2709)
 					if CharInfo.CurrencyID_Total[2709] ~= "" and CharInfo.CurrencyID_Total[2709] ~= 0 then
 						vivodCent = CharInfo.CurrencyID_Total[2709]
+						local a, b = strsplit("/", vivodCent)
+						if tonumber(a) == 0 then
+							if b then
+								vivodCent = E.Octo_Func.Empty_Zero(a)
+							end
+							vivodCent = vivodCent
+						end
 					end
 					return vivodCent, vivodLeft
 			end)
+
 		end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Rares == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -6357,7 +6393,7 @@ local function TotalTimeAllServer70OnShow()
 	return classColorHexCurrent..(E.Octo_Func.SecondsToClock(TotalTimeAllServer70)).."|r"
 	--return E.Octo_Func.func_Gradient(E.Octo_Func.SecondsToClock(TotalTimeAllServer), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
 end
-function Octo_ToDo_FIRST_CreateAltFrame()
+local function Octo_ToDo_FIRST_CreateAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Octo_ToDo_FIRST_CreateAltFrame".."|r")
 	end
@@ -7217,7 +7253,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID] = CreateFrame("BUTTON", "Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]"..i, Octo_ToDo_FIRST_Frame_Char_Frame, "BackDropTemplate")
 		end
 		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetSize(16, 10)
-		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetPoint("TOP", Octo_ToDo_FIRST_Frame_Char_Frame, "BOTTOM", 0, -4)
+		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetPoint("TOP", Octo_ToDo_FIRST_Frame_Char_Frame, "BOTTOM", 0, 10)
 		Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton[curCharGUID]:SetBackdrop({
 		edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 		edgeSize = 1,
@@ -7576,16 +7612,16 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	-- 	if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	-- end
 	if event == "PLAYER_XP_UPDATE" then
--- PLAYER_ENTERING_WORLD,
--- QUEST_LOG_UPDATE,
--- UNIT_QUEST_LOG_CHANGED,
--- PLAYER_XP_UPDATE,
--- PLAYER_LEVEL_UP,
--- UPDATE_EXHAUSTION,
--- UPDATE_EXPANSION_LEVEL,
--- TIME_PLAYED_MSG,
--- ENABLE_XP_GAIN,
--- DISABLE_XP_GAIN
+	-- PLAYER_ENTERING_WORLD,
+	-- QUEST_LOG_UPDATE,
+	-- UNIT_QUEST_LOG_CHANGED,
+	-- PLAYER_XP_UPDATE,
+	-- PLAYER_LEVEL_UP,
+	-- UPDATE_EXHAUSTION,
+	-- UPDATE_EXPANSION_LEVEL,
+	-- TIME_PLAYED_MSG,
+	-- ENABLE_XP_GAIN,
+	-- DISABLE_XP_GAIN
 		Collect_Player_Level()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end

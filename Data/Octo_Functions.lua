@@ -117,6 +117,7 @@ end
 local CompactNumberFormat = E.Octo_Func.CompactNumberFormat
 ----------------------------------------------------------------
 function E.Octo_Func.func_texturefromIcon(self, size)
+	-- return ""
 	if not size then
 		size = 14
 	end
@@ -214,7 +215,7 @@ function E.Octo_Func.func_currencyicon(self)
 	else
 		iconFileID = 134400
 	end
-	return "|T"..iconFileID..":16:16:::64:64:4:60:4:60|t"
+	return E.Octo_Func.func_texturefromIcon(iconFileID)
 end
 local func_currencyicon = E.Octo_Func.func_currencyicon
 ----------------------------------------------------------------
@@ -266,7 +267,7 @@ end
 local SecondsToClock = E.Octo_Func.SecondsToClock
 ----------------------------------------------------------------
 function E.Octo_Func.Empty_Zero(self)
-	if self == 0 then
+	if tonumber(self) == 0 then
 		return ""
 	end
 	return self
@@ -522,7 +523,6 @@ function E.Octo_Func.func_npcName(self)
 		inspectScantipFUNC:SetHyperlink("unit:Creature-0-0-0-0-"..self)
 		if inspectScantipFUNC:NumLines() > 0 then
 			name = _G["OctoToDoScanningTooltipFUNCTextLeft1"]:GetText()
-			-- print (name, self)
 			return name
 		end
 		inspectScantipFUNC:ClearLines()
