@@ -117,14 +117,18 @@ end
 local CompactNumberFormat = E.Octo_Func.CompactNumberFormat
 ----------------------------------------------------------------
 function E.Octo_Func.func_texturefromIcon(self, size)
-	-- return ""
-	if not size then
-		size = 14
+	local show = true -- TYT
+	if show == true then
+		if not size then
+			size = 14
+		end
+		if not self or self == 0 then
+			self = 134400
+		end
+		return "|T"..self..":"..size..":"..size..":::64:64:4:60:4:60|t"
+	else
+		return ""
 	end
-	if not self or self == 0 then
-		self = 134400
-	end
-	return "|T"..self..":"..size..":"..size..":::64:64:4:60:4:60|t"
 end
 local func_texturefromIcon = E.Octo_Func.func_texturefromIcon
 ----------------------------------------------------------------
@@ -531,6 +535,19 @@ function E.Octo_Func.func_npcName(self)
 end
 local func_npcName = E.Octo_Func.func_npcName
 ----------------------------------------------------------------
+function E.Octo_Func.RIO_Color(self)
+	local hexColor = E.Octo_Globals.Gray_Color
+	if not self or self == 0 then return hexColor end
+
+
+	for _, v in pairs(E.Octo_Table.OctoTable_RIO_COLORS) do
+		if self <= v.score then
+			hexColor = E.Octo_Func.func_rgb2hex(v.color[1],v.color[2],v.color[3])
+		end
+	end
+	return hexColor
+end
+local RIO_Color = E.Octo_Func.RIO_Color
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

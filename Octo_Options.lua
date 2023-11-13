@@ -21,7 +21,7 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 -- fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
 -- local fontObject12 = CreateFont("OctoFont12")
 -- fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
-local indent = 26
+local indent = 20
 local POS_LEFT = 6
 local POS_RIGHT = 474
 local POS_CENTER = POS_RIGHT/2
@@ -234,52 +234,80 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 6, POS_LEFT, "CinematicCanceler", L["CinematicCanceler"])
 		Create_CheckButton(MAIN_scrollChild, self, 7, POS_LEFT, "AutoTurnQuests", L["Auto Turn Quests"])
 		Create_CheckButton(MAIN_scrollChild, self, 8, POS_LEFT, "ClearChat", L["ClearChat"])
-		Create_CheckButton(MAIN_scrollChild, self, 9, POS_LEFT, "TalkingHeadFrame", L["TalkingHeadFrame"])
-		Create_CheckButton(MAIN_scrollChild, self, 10, POS_LEFT, "HideZoneText", L["HideZoneText"])
-		Create_CheckButton(MAIN_scrollChild, self, 11, POS_LEFT, "Covenant", L["HideCovenant"])
-		Create_CheckButton(MAIN_scrollChild, self, 12, POS_LEFT, "RaidBossEmoteFrame", L["RaidBossEmoteFrame"])
-		Create_CheckButton(MAIN_scrollChild, self, 13, POS_LEFT, "BossBanner", L["BossBanner"])
-		Create_CheckButton(MAIN_scrollChild, self, 14, POS_LEFT, "HideErrorMessages", L["HideErrorMessages"])
-		Create_CheckButton(MAIN_scrollChild, self, 15, POS_LEFT, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
-		Create_CheckButton(MAIN_scrollChild, self, 16, POS_LEFT, "Auto_Screenshot", L["Auto_Screenshot"])
-		Create_CheckButton(MAIN_scrollChild, self, 17, POS_LEFT, "ItemsUsable", "ItemsUsable")
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, "ItemsDelete", "ItemsDelete")
-
-		Create_CheckButton(MAIN_scrollChild, self, 1, POS_CENTER, "MythicKeystone", L["Mythic Keystone"], E.Octo_Globals.Purple_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 2, POS_CENTER, "AidingtheAccord", L["Aiding the Accord"])
-		Create_CheckButton(MAIN_scrollChild, self, 3, POS_CENTER, "CommunityFeast", L["Community Feast"])
-		Create_CheckButton(MAIN_scrollChild, self, 4, POS_CENTER, "ResearchersUnderFire", L["Researchers Under Fire"]..E.Octo_Globals.Gray_Color.." (10.1.0)|r")
-
-		-- EmeraldDream_
-		Create_CheckButton(MAIN_scrollChild, self, 5, POS_CENTER, "EmeraldDream_Superbloom", new..L["Superbloom"])
-		Create_CheckButton(MAIN_scrollChild, self, 6, POS_CENTER, "EmeraldDream_DreamWardens", new..L["Dream Wardens"]..E.Octo_Globals.Gray_Color.." ("..REPUTATION..")|r")
-		Create_CheckButton(MAIN_scrollChild, self, 7, POS_CENTER, "EmeraldDream_Dreamseeds", new..L["Dreamseeds"])
-		Create_CheckButton(MAIN_scrollChild, self, 8, POS_CENTER, "EmeraldDream_Crests", new..L["Crests"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
-		Create_CheckButton(MAIN_scrollChild, self, 9, POS_CENTER, "EmeraldDream_Rares", new..L["Rares"]..", "..L["Treasures"])
-		Create_CheckButton(MAIN_scrollChild, self, 10, POS_CENTER, "EmeraldDream_Storyline", new..L["Storyline"])
-		Create_CheckButton(MAIN_scrollChild, self, 11, POS_CENTER, "Flightstones", L["Flightstones"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 9, POS_LEFT, "Auto_Screenshot", L["Auto_Screenshot"])
 
 
 
-		Create_CheckButton(MAIN_scrollChild, self, 12, POS_CENTER, "TimeRift", L["TimeRift"]..E.Octo_Globals.Gray_Color.." (10.1.5)|r", E.Octo_Globals.Purple_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 13, POS_CENTER, "Dreamsurges", L["Dreamsurges"]..E.Octo_Globals.Gray_Color.." (10.1.7)|r", E.Octo_Globals.Green_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 14, POS_CENTER, "Event", EVENTS_LABEL, E.Octo_Globals.Yellow_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 15, POS_CENTER, "Holiday", CALENDAR_FILTER_HOLIDAYS, E.Octo_Globals.Orange_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 16, POS_CENTER, "Dungeons", DUNGEONS)
-		Create_CheckButton(MAIN_scrollChild, self, 17, POS_CENTER, "Currency", CURRENCY)
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_CENTER, "Reputations", REPUTATION)
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_CENTER, "Quests", QUESTS_LABEL)
-		Create_CheckButton(MAIN_scrollChild, self, 20, POS_CENTER, "Items", ITEMS)
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_CENTER, "Professions", TRADE_SKILLS)
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_CENTER, "Gold", BONUS_ROLL_REWARD_MONEY) -- WORLD_QUEST_REWARD_FILTERS_GOLD
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_CENTER, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
-		Create_CheckButton(MAIN_scrollChild, self, 24, POS_CENTER, "LastUpdate", "Last Update")
+
+
+
+		Create_CheckButton(MAIN_scrollChild, self, 10, POS_LEFT, "Hide_AzeriteEmpoweredItemUI", L["Hide: Azerite Animations"])
+		Create_CheckButton(MAIN_scrollChild, self, 11, POS_LEFT, "Hide_Boss_Banner", L["Hide: Boss Banner"])
+		Create_CheckButton(MAIN_scrollChild, self, 12, POS_LEFT, "Hide_Covenant", L["Hide: Covenant"])
+		Create_CheckButton(MAIN_scrollChild, self, 13, POS_LEFT, "Hide_Error_Messages", L["Hide: Error Messages"])
+		Create_CheckButton(MAIN_scrollChild, self, 14, POS_LEFT, "Hide_ObjectivesInInstance", L["Hide: Objectives In Instance"])
+		Create_CheckButton(MAIN_scrollChild, self, 15, POS_LEFT, "Hide_Raid_Boss_Emote_Frame", L["Hide: RaidBossEmoteFrame"])
+		Create_CheckButton(MAIN_scrollChild, self, 16, POS_LEFT, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
+		Create_CheckButton(MAIN_scrollChild, self, 17, POS_LEFT, "Hide_Zone_Text", L["Hide: Zone Text"])
+
+
+
+
+
+
+
+
+
+
+
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_LEFT, "ItemsUsable", "ItemsUsable")
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_LEFT, "ItemsDelete", "ItemsDelete")
+
+		Create_CheckButton(MAIN_scrollChild, self, 1, POS_CENTER, "MP_MythicKeystone", L["Mythic Keystone"], E.Octo_Globals.Purple_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 2, POS_CENTER, "MP_WeeklyBest", "Weekly Best", E.Octo_Globals.Purple_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 3, POS_CENTER, "MP_Score", DUNGEON_SCORE, E.Octo_Globals.Purple_Color)
+
+
+
+
+
+
+		Create_CheckButton(MAIN_scrollChild, self, 4, POS_CENTER, "AidingtheAccord", E.Octo_Globals.Weekly..L["Aiding the Accord"])
+		Create_CheckButton(MAIN_scrollChild, self, 5, POS_CENTER, "CommunityFeast", E.Octo_Globals.Weekly..L["Community Feast"])
+		Create_CheckButton(MAIN_scrollChild, self, 6, POS_CENTER, "ResearchersUnderFire", E.Octo_Globals.Weekly..L["Researchers Under Fire"]..E.Octo_Globals.Gray_Color.." (10.1.0)|r")
+
+		Create_CheckButton(MAIN_scrollChild, self, 8, POS_CENTER, "EmeraldDream_Superbloom", E.Octo_Globals.Weekly..L["Superbloom"])
+		Create_CheckButton(MAIN_scrollChild, self, 9, POS_CENTER, "EmeraldDream_DreamWardens", E.Octo_Globals.Weekly..L["Dream Wardens"]..E.Octo_Globals.Gray_Color.." ("..REPUTATION..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 10, POS_CENTER, "EmeraldDream_Dreamseeds", E.Octo_Globals.Weekly..L["Dreamseeds"])
+		Create_CheckButton(MAIN_scrollChild, self, 11, POS_CENTER, "EmeraldDream_Crests", E.Octo_Globals.Weekly..L["Crests"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 12, POS_CENTER, "EmeraldDream_Sparks", E.Octo_Globals.Weekly..L["Sparks"]..E.Octo_Globals.Gray_Color.." ("..ITEMS..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 13, POS_CENTER, "Flightstones", L["Flightstones"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 14, POS_CENTER, "EmeraldDream_Rares", E.Octo_Globals.Daily..L["Rares"]..", "..L["Treasures"]..E.Octo_Globals.Gray_Color.." ("..QUESTS_LABEL..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 15, POS_CENTER, "EmeraldDream_Storyline", E.Octo_Globals.Once..L["Storyline"]..E.Octo_Globals.Gray_Color.." ("..QUESTS_LABEL..")|r")
+
+		Create_CheckButton(MAIN_scrollChild, self, 17, POS_CENTER, "TimeRift", E.Octo_Globals.Weekly..L["TimeRift"]..E.Octo_Globals.Gray_Color.." (10.1.5)|r", E.Octo_Globals.Purple_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_CENTER, "Dreamsurges", E.Octo_Globals.Weekly..L["Dreamsurges"]..E.Octo_Globals.Gray_Color.." (10.1.7)|r", E.Octo_Globals.Green_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_CENTER, "Event", EVENTS_LABEL, E.Octo_Globals.Yellow_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_CENTER, "Holiday", CALENDAR_FILTER_HOLIDAYS, E.Octo_Globals.Orange_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_CENTER, "Dungeons", DUNGEONS)
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_CENTER, "Currency", CURRENCY)
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_CENTER, "Reputations", REPUTATION)
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_CENTER, "Quests", QUESTS_LABEL)
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_CENTER, "Items", ITEMS)
+		Create_CheckButton(MAIN_scrollChild, self, 26, POS_CENTER, "Professions", TRADE_SKILLS)
+		Create_CheckButton(MAIN_scrollChild, self, 27, POS_CENTER, "Gold", BONUS_ROLL_REWARD_MONEY) -- WORLD_QUEST_REWARD_FILTERS_GOLD
+		Create_CheckButton(MAIN_scrollChild, self, 28, POS_CENTER, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
+		Create_CheckButton(MAIN_scrollChild, self, 29, POS_CENTER, "LastUpdate", "Last Update")
 
 		number = 1
 		btn_right1 = lsfdd:CreateStretchButtonOriginal(MAIN_scrollChild, 140, 22)
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
 		btn_right1:SetText(E.Octo_Table.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow])
 		btn_right1:ddSetDisplayMode(GlobalAddonName)
+		btn_right1:SetScript("OnClick", function(self)
+			self:ddToggle(1, nil, self, self:GetWidth(), self:GetHeight())
+		end)
 		local function selectFunctionExpansion(menuButton)
 			Octo_ToDo_DB_Vars.config.ExpansionToShow = menuButton.value
 			btn_right1:SetText(E.Octo_Table.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow])
@@ -309,6 +337,9 @@ MAIN_Config:SetScript("OnShow", function(self)
 		btn_right2:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
 		btn_right2:SetText(E.Octo_Table.wowhead_prefix_Table[Octo_ToDo_DB_Vars.config.prefix])
 		btn_right2:ddSetDisplayMode(GlobalAddonName)
+		btn_right2:SetScript("OnClick", function(self)
+			self:ddToggle(1, nil, self, self:GetWidth(), self:GetHeight())
+		end)
 		local function selectFunctionprefix(menuButton)
 			Octo_ToDo_DB_Vars.config.prefix = menuButton.value
 			btn_right2:SetText(E.Octo_Table.wowhead_prefix_Table[Octo_ToDo_DB_Vars.config.prefix])
@@ -332,20 +363,20 @@ MAIN_Config:SetScript("OnShow", function(self)
 					end
 				end
 		end)
-		Create_Slider(MAIN_scrollChild, self, 3, POS_RIGHT, "LevelToShow", L["Player level"], E.Octo_Globals.Green_Color, 1, 70)
-		Create_Slider(MAIN_scrollChild, self, 4, POS_RIGHT, "LevelToShowMAX", L["Player MAX level"], E.Octo_Globals.Green_Color, 1, 70)
-		Create_Slider(MAIN_scrollChild, self, 5, POS_RIGHT, "itemLevelToShow", L["Item level: "], E.Octo_Globals.Green_Color, 1, 560)
-		Create_Slider(MAIN_scrollChild, self, 6, POS_RIGHT, "curWidth", L["Width: "], E.Octo_Globals.Green_Color, 60, 160)
-		Create_Slider(MAIN_scrollChild, self, 7, POS_RIGHT, "curWidthTitle", L["curWidthTitle: "], E.Octo_Globals.Green_Color, 100, 400)
-		Create_Slider(MAIN_scrollChild, self, 8, POS_RIGHT, "curWidthTitleAchievement", "curWidthTitleAchievement", E.Octo_Globals.Green_Color, 100, 400)
-		Create_Slider(MAIN_scrollChild, self, 9, POS_RIGHT, "curHeight", "Высота строк: ", E.Octo_Globals.Green_Color, 10, 30)
-		Create_Slider(MAIN_scrollChild, self, 10, POS_RIGHT, "Addon_Height", "Количество строк: /20", E.Octo_Globals.Green_Color, 200, 1200)
-		Create_CheckButton(MAIN_scrollChild, self, 11, POS_RIGHT, "ShowOnlyCurrentRealm", L["Only Current Realm"])
-		Create_CheckButton(MAIN_scrollChild, self, 12, POS_RIGHT, "Achievements", E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
-		Create_CheckButton(MAIN_scrollChild, self, 15, POS_RIGHT, "ShowTotalMoney", "Всего денег")
-		Create_CheckButton(MAIN_scrollChild, self, 16, POS_RIGHT, "ShowTimeAll", "Общее время игры")
+		Create_Slider(MAIN_scrollChild, self, 4, POS_RIGHT, "LevelToShow", L["Player level"], E.Octo_Globals.Green_Color, 1, 70)
+		Create_Slider(MAIN_scrollChild, self, 5.5, POS_RIGHT, "LevelToShowMAX", L["Player MAX level"], E.Octo_Globals.Green_Color, 1, 70)
+		Create_Slider(MAIN_scrollChild, self, 7, POS_RIGHT, "itemLevelToShow", L["Item level: "], E.Octo_Globals.Green_Color, 1, 560)
+		Create_Slider(MAIN_scrollChild, self, 8.5, POS_RIGHT, "curWidthCentral", L["Width: "], E.Octo_Globals.Green_Color, 60, 160)
+		Create_Slider(MAIN_scrollChild, self, 10, POS_RIGHT, "curWidthTitle", L["curWidthTitle: "], E.Octo_Globals.Green_Color, 100, 400)
+		Create_Slider(MAIN_scrollChild, self, 11.5, POS_RIGHT, "curWidthTitleAchievement", "curWidthTitleAchievement", E.Octo_Globals.Green_Color, 100, 400)
+		Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "curHeight", "Высота строк: ", E.Octo_Globals.Green_Color, 10, 30)
+		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк: /20", E.Octo_Globals.Green_Color, 200, 1200)
+		Create_CheckButton(MAIN_scrollChild, self, 17, POS_RIGHT, "ShowOnlyCurrentRealm", L["Only Current Realm"])
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, "Achievements", E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
+		Create_CheckButton(MAIN_scrollChild, self, 27, POS_RIGHT, "ShowTotalMoney", "Всего денег")
+		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, "ShowTimeAll", "Общее время игры")
 		-- Create_EditBox(MAIN_scrollChild, self, 22, POS_RIGHT, "security")
-		Create_SimpleButton(MAIN_scrollChild, self, 23, POS_RIGHT, "ReloadUI", "ReloadUI")
+		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "ReloadUI", "ReloadUI")
 
 
 
@@ -398,7 +429,6 @@ FIRST_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(FIRST_scrollChild, self, 17, POS_CENTER, "Octo_debug_BUTTONS_SECOND", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 22).."BUTTONS 2", E.Octo_Globals.Addon_Left_Color)
 		Create_Slider(FIRST_scrollChild, self, 18, POS_CENTER, "glowType", "glowType", E.Octo_Globals.Green_Color, 1, 3)
 		Create_Slider(FIRST_scrollChild, self, 19, POS_CENTER, "glowColor", "glowColor", E.Octo_Globals.Green_Color, 1, 3)
-		Create_CheckButton(FIRST_scrollChild, self, 20, POS_CENTER, "Hide_ObjectivesInInstance", "Hide_ObjectivesInInstance")
 		Create_CheckButton(FIRST_scrollChild, self, 21, POS_CENTER, "ChallengesKeystoneFrame", "ChallengesKeystoneFrame")
 
 

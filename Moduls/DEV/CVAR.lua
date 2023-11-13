@@ -19,6 +19,7 @@ tinsert(E.Octo_Globals.modules, function()
 				SetCVar("Sound_EnablePingSounds", 0) -- Enable Ping Sounds
 				SetCVar("Sound_PingVolume", 0) -- Ping Volume (0.0 to 1.0)
 				----
+				SetCVar("raidFramesDisplayPowerBars", 1)
 				SetCVar("raidFramesDisplayOnlyHealerPowerBars", 1)
 				SetCVar("LowLatencyMode", 2) -- 0=None, 1=BuiltIn, 2=Reflex
 				SetCVar("SoftTargetEnemy", 1) -- 1 ВЫКЛ, 3 ВКЛ
@@ -39,7 +40,6 @@ tinsert(E.Octo_Globals.modules, function()
 				SetCVar("raidFramesDisplayDebuffs", 1)
 				SetCVar("raidFramesDisplayIncomingHeals", 1)
 				SetCVar("raidFramesDisplayOnlyDispellableDebuffs", 1)
-				SetCVar("raidFramesDisplayPowerBars", 0)
 				SetCVar("AutoPushSpellToActionBar", 0) -- Выставление спеллов на бар
 				SetCVar("AllowDangerousScripts", 1)
 				SetCVar("alwaysShowActionBars", 1)

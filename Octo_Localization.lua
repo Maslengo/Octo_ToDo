@@ -70,12 +70,7 @@ if L then
 	L["AutoGossip"] = true
 	L["CinematicCanceler"] = true
 	L["ClearChat"] = true
-	L["TalkingHeadFrame"] = true
-	L["HideZoneText"] = true
 	L["Covenant"] = true
-	L["RaidBossEmoteFrame"] = true
-	L["BossBanner"] = true
-	L["HideErrorMessages"] = true
 	L["UIErrorsFramePosition"] = true
 	L["Functions"] = true
 	L["Modules"] = true
@@ -120,7 +115,6 @@ if L then
 	L["Auto Turn Quests"] = true
 	L["Aiding the Accord"] = true
 	L["InDev"] = true
-	L["HideCovenant"] = true
 	L["Total"] = true
 	L["Consumables"] = true
 	L["Parts"] = true
@@ -144,12 +138,11 @@ if L then
 	L["Dreamseeds"] = true
 	L["Dream Wardens"] = true
 	L["Crests"] = true
+	L["Sparks"] = true
 	L["Flightstones"] = true
 	L["Rares"] = true
 	L["Treasures"] = true
-
 	L["Emerald Dream"] = true
-
 	L["The Coalition of Flames"] = true
 	L["Enter the Dream"] = true
 	L["Druids of the Flame"] = true
@@ -157,9 +150,15 @@ if L then
 	L["Eye of Ysera"] = true
 	L["A Dream of Fields and Fire"] = true
 	L["New Beginnings"] = true
-
-
-
+	L["Characters"] = true
+	L["Hide: Azerite Animations"] = true
+	L["Hide: Boss Banner"] = true
+	L["Hide: Covenant"] = true
+	L["Hide: Error Messages"] = true
+	L["Hide: Objectives In Instance"] = true
+	L["Hide: RaidBossEmoteFrame"] = true
+	L["Hide: TalkingHeadFrame"] = true
+	L["Hide: Zone Text"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -225,12 +224,6 @@ if L then
 	L["AutoGossip"] = "Авторазговор с НПЦ"
 	L["CinematicCanceler"] = "Автопропуск видео"
 	L["ClearChat"] = "Чистка чата при заходе в игру"
-	L["TalkingHeadFrame"] = "Скрытие говорящей головы"
-	L["HideZoneText"] = "Скрытие текста зон"
-	L["HideCovenant"] = "Скрытие смены ковенанта"
-	L["RaidBossEmoteFrame"] = "Скрытие эмоций босса"
-	L["BossBanner"] = "Скрытие баннера босса"
-	L["HideErrorMessages"] = "Скрытие красного текста ошибок"
 	L["UIErrorsFramePosition"] = "Смена позиции фрейма ошибок/квестов"
 	L["Functions"] = "Функции"
 	L["Modules"] = "Модули"
@@ -298,13 +291,11 @@ if L then
 	L["Dreamseeds"] = "Семена"
 	L["Dream Wardens"] = "Стражи Сна"
 	L["Crests"] = "Гребни"
+	L["Sparks"] = "Искры"
 	L["Flightstones"] = "Драконьи камни"
 	L["Rares"] = "Рарки"
 	L["Treasures"] = "Сундуки"
-
-
 	L["Emerald Dream"] = "Изумрудный Сон"
-
 	L["The Coalition of Flames"] = "Союз пламени"
 	L["Enter the Dream"] = "Погружение в сон"
 	L["Druids of the Flame"] = "Друиды пламени"
@@ -312,14 +303,13 @@ if L then
 	L["Eye of Ysera"] = "Око Изеры"
 	L["A Dream of Fields and Fire"] = "Сон о полях в огне"
 	L["New Beginnings"] = "Новое начало"
-
-
-
-
-
-
-
-
-
-
+	L["Characters"] = "Персонажи"
+	L["Hide: Azerite Animations"] = "Скрытие анимации Азерита"
+	L["Hide: Boss Banner"] = "Скрытие баннера босса"
+	L["Hide: Covenant"] = "Скрытие ковенанта"
+	L["Hide: Error Messages"] = "Скрытие текста ошибок"
+	L["Hide: Objectives In Instance"] = "Скрытие заданий в подземельях"
+	L["Hide: RaidBossEmoteFrame"] = "Скрытие эмоций босса"
+	L["Hide: TalkingHeadFrame"] = "Скрытие говорящей головы"
+	L["Hide: Zone Text"] = "Скрытие текста зон"
 end

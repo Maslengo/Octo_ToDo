@@ -48,7 +48,7 @@ local regionalWeeklyStart = 1668981600
 local edgeFile = "Interface\\Buttons\\WHITE8X8"
 local bgFile = "Interface\\Buttons\\WHITE8X8"
 local AddonTexture_THIRD = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_THIRD.tga"
-local SHIRINA = E.Octo_Globals.curWidth
+local SHIRINA = E.Octo_Globals.curWidthCentral
 local OctoTable_func_otrisovka_THIRD = {}
 
 

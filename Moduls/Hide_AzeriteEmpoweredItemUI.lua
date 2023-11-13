@@ -1,0 +1,77 @@
+local GlobalAddonName, E = ...
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+----------------------------------------------------------------
+----------------------------------------------------------------
+tinsert(E.Octo_Globals.modules, function()
+		if Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI then
+			local delay = 0.7
+			local function Octo_ToDo_Azerite_OnLoad()
+				if not Octo_ToDo_Azerite_EventFrame then
+					Octo_ToDo_Azerite_EventFrame = CreateFrame("Frame")
+					Octo_ToDo_Azerite_EventFrame:Hide()
+				end
+				if Octo_ToDo_Azerite_EventFrame then
+					Octo_ToDo_Azerite_EventFrame:RegisterEvent("AZERITE_EMPOWERED_ITEM_LOOTED")
+					Octo_ToDo_Azerite_EventFrame:RegisterEvent("AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED")
+					Octo_ToDo_Azerite_EventFrame:SetScript("OnEvent", function(...)
+							Octo_ToDo_Azerite_OnEvent(...)
+					end)
+				end
+			end
+			local function func_hook()
+				hooksecurefunc(AzeriteEmpoweredItemUI, "OnItemSet", function(self)
+						local itemLocation = self.azeriteItemDataSource:GetItemLocation()
+						if self:IsAnyTierRevealing() then
+							C_Timer.After(delay, function()
+									OpenAzeriteEmpoweredItemUIFromItemLocation(itemLocation)
+							end)
+						end
+				end)
+			end
+			if not IsAddOnLoaded("Blizzard_AzeriteUI") then
+				LoadAddOn("Blizzard_AzeriteUI")
+			else
+				func_hook()
+			end
+			if not (IsAddOnLoaded("Blizzard_AzeriteUI")) then
+				UIParentLoadAddOn("Blizzard_AzeriteUI")
+			else
+				func_hook()
+			end
+			function Octo_ToDo_Azerite_OnEvent(self, event, ...)
+				if event == "AZERITE_EMPOWERED_ITEM_LOOTED" and not InCombatLockdown() then
+					local item = ...
+					local itemId = GetItemInfoFromHyperlink(item)
+					local bag
+					local slot
+					C_Timer.After(delay, function()
+							for i = 0, NUM_BAG_SLOTS do
+								for j = 1, GetContainerNumSlots(i) do
+									local id = GetContainerItemID(i, j)
+									if id and id == itemId then
+										slot = j
+										bag = i
+									end
+								end
+							end
+							if slot then
+								local location = ItemLocation:CreateFromBagAndSlot(bag, slot)
+								local skipReveal = location and C_AzeriteEmpoweredItem.HasBeenViewed(location)
+								if skipReveal then
+									C_AzeriteEmpoweredItem.SetHasBeenViewed(location)
+								end
+							end
+					end)
+				end
+				if event == "AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED" and not InCombatLockdown() then
+					local itemLocation = ...
+					local r = IsAddOnLoaded("Blizzard_AzeriteRespecUI") and AzeriteRespecFrame
+					local after_respec = true
+					if after_respec or (not after_respec and ((r and not r:IsShown()) or not r)) then
+						OpenAzeriteEmpoweredItemUIFromItemLocation(itemLocation)
+					end
+				end
+			end
+			Octo_ToDo_Azerite_OnLoad()
+		end
+end)

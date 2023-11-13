@@ -1706,5 +1706,68 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 			76460, 76460, 76460, 76460, 76460, 76460, 76460, 76460, 76460
 		},
 		max = 1
-	}
+	},
+
+
+
+
+
+	{
+		name_save = "DreamsUnified",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "",
+		questID = {
+			78381,
+		},
+		max = 1
+	},
+
+
+
+	{
+		name_save = "Seeds",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "",
+		questID = {
+
+-- 77229
+-- 77291
+-- 77354
+-- 77350
+-- 77353
+
+			77350,
+			77353,
+			77354, -- 1000
+
+
+
+
+
+
+			-- 77291, -- Secret of azeroth
+			-- 77351, -- хз
+			-- 77352, -- хз
+
+			-- 78787,
+			-- 77271,
+			-- 78975,
+			-- 77385, у пала да (у вара нет)
+			-- 77229, -- ТОЧНО ПЕРВЫЙ (у приста не воркает)
+		},
+		max = 5
+	},
+
+
+
+
+
+
+
+
 }
+

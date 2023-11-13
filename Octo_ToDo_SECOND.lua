@@ -388,7 +388,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 					local CF = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID().."CF"..i, Octo_ToDo_SECOND_Frame_Char_Frame)
 					Octo_ToDo_SECOND_Frame_Char_Frame["CenterLines"..i] = CF
 					CF.index = i
-					CF:SetSize(E.Octo_Globals.curWidth, E.Octo_Globals.curHeight)
+					CF:SetSize(E.Octo_Globals.curWidthCentral, E.Octo_Globals.curHeight)
 					CF:SetPoint("TOP", Octo_ToDo_SECOND_Frame_Char_Frame, "TOP", 0, -E.Octo_Globals.curHeight*(i-1))
 					CF:SetScript("OnEnter", Central_Frame_Mouse_OnEnter)
 					CF:SetScript("OnLeave", Central_Frame_Mouse_OnLeave)
@@ -417,7 +417,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 			else
 				Octo_ToDo_SECOND_Frame_Char_Frame = Octo_ToDo_SECOND_Frame_Main_Frame[curCharGUID]
 			end
-			Octo_ToDo_SECOND_Frame_Char_Frame:SetSize(E.Octo_Globals.curWidth, E.Octo_Globals.curHeight)
+			Octo_ToDo_SECOND_Frame_Char_Frame:SetSize(E.Octo_Globals.curWidthCentral, E.Octo_Globals.curHeight)
 			if #Octo_ToDo_SECOND_Frame_Main_Frame.AllCharFrames == 0 then
 				Octo_ToDo_SECOND_Frame_Char_Frame:SetPoint("TOPRIGHT", 0, 0)
 			else
@@ -442,7 +442,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 					TEXTCENT.tooltip = nil
 				end
 			end
-			local curAltFrameWidth = #Octo_ToDo_SECOND_Frame_Main_Frame.AllCharFrames * E.Octo_Globals.curWidth/2
+			local curAltFrameWidth = #Octo_ToDo_SECOND_Frame_Main_Frame.AllCharFrames * E.Octo_Globals.curWidthCentral/2
 			local width = curAltFrameWidth*2+E.Octo_Globals.curWidthTitleAchievement
 			local height = E.Octo_Globals.curHeight*(#OctoTable_func_otrisovka_SECOND)
 			Octo_ToDo_SECOND_Frame_Main_Frame.scrollChild:SetSize(width, height)
