@@ -32,17 +32,10 @@ local function TEST_FUNC(self)
 					if inspectScantipUSABLE:NumLines() > 0 then
 						for i = 1, inspectScantipUSABLE:NumLines() do
 							local r, g, b, a = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetTextColor()
-
 							local TEXTLEFT = _G["OctoToDoScanningTooltipUSABLETextLeft"..i]:GetText()
 							local QWE_LEFT = func_coloredText(_G["OctoToDoScanningTooltipUSABLETextLeft"..i])
-
-
 							local TEXTRIGHT = _G["OctoToDoScanningTooltipUSABLETextRight"..i]:GetText()
 							local QWE_RIGHT = func_coloredText(_G["OctoToDoScanningTooltipUSABLETextRight"..i])
-
-
-
-
 							if TEXTLEFT and TEXTLEFT ~= "" and QWE_LEFT ~= nil then
 								if QWE_LEFT:find("^|cffFF2020") or QWE_LEFT:find("^|cffFF0000") then
 									count = count + 1
@@ -53,9 +46,6 @@ local function TEST_FUNC(self)
 									count = count + 1
 								end
 							end
-
-
-
 						end
 					end
 					inspectScantipUSABLE:ClearLines()
@@ -171,8 +161,6 @@ tinsert(E.Octo_Globals.modules, function()
 								--if GetItemCount(208396) >= 2 then
 								--	itemID = 208396
 								--end
-
-
 								ItemsUsable_Frame:Show()
 								ItemsUsable_Frame:SetAttribute("macrotext", "/use item:"..itemID)
 								ItemsUsable_Frame.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
@@ -194,12 +182,6 @@ tinsert(E.Octo_Globals.modules, function()
 					end
 				end
 			end -- ItemsUsableFrame
-
-
-
-
-
-
 			E.ItemsUsable_Frame = ItemsUsable_Frame
 			E.ItemsUsableFrame_OnLoad = ItemsUsableFrame_OnLoad
 			E.ItemsUsableFrame = ItemsUsableFrame

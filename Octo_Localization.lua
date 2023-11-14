@@ -159,6 +159,8 @@ if L then
 	L["Hide: RaidBossEmoteFrame"] = true
 	L["Hide: TalkingHeadFrame"] = true
 	L["Hide: Zone Text"] = true
+	L["Catalyst Charges"] = true
+	L["Sparks of Life"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -312,4 +314,6 @@ if L then
 	L["Hide: RaidBossEmoteFrame"] = "Скрытие эмоций босса"
 	L["Hide: TalkingHeadFrame"] = "Скрытие говорящей головы"
 	L["Hide: Zone Text"] = "Скрытие текста зон"
+	L["Catalyst Charges"] = "Заряды Катализатора"
+	L["Sparks of Life"] = "Искры жизни"
 end

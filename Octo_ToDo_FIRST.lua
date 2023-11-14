@@ -133,13 +133,9 @@ local function TryToOffMajor(majorFactionID, newRenownLevel, oldRenownLevel)
 	-- MAJOR_FACTION_RENOWN_LEVEL_CHANGED
 	local majorFactionID, newRenownLevel, oldRenownLevel = majorFactionID, newRenownLevel, oldRenownLevel
 	print (majorFactionID, newRenownLevel, oldRenownLevel)
-
-
-
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TryToOffMajor".."|r")
 	end
-
 	if MajorFactionRenownToast then
 		MajorFactionRenownToast:UnregisterAllEvents()
 		MajorFactionRenownToast:Hide()
@@ -161,16 +157,7 @@ local function TryToOffMajor(majorFactionID, newRenownLevel, oldRenownLevel)
 	-- else
 	-- 	print ("Cannot Hide MajorFactionsRenownToastMixin")
 	-- end
-
-
-
 	MajorFactionsRenownToastMixin:StopBanner()
-
-
-
-
-
-
 end
 local OctoTable_func_otrisovka_FIRST = {
 }
@@ -4537,105 +4524,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-		-- CREST
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_Crests == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2706)..E.Octo_Func.func_currencyName(2706)
-					if CharInfo.CurrencyID_Total[2706] ~= "" and CharInfo.CurrencyID_Total[2706] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2706]
-						local a, b = strsplit("/", vivodCent)
-						if tonumber(a) == 0 then
-							if b then
-								vivodCent = E.Octo_Func.Empty_Zero(a)
-							end
-							vivodCent = vivodCent
-						end
-					end
-					return vivodCent, vivodLeft
-			end)
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2707)..E.Octo_Func.func_currencyName(2707)
-					if CharInfo.CurrencyID_Total[2707] ~= "" and CharInfo.CurrencyID_Total[2707] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2707]
-						local a, b = strsplit("/", vivodCent)
-						if tonumber(a) == 0 then
-							if b then
-								vivodCent = E.Octo_Func.Empty_Zero(a)
-							end
-							vivodCent = vivodCent
-						end
-					end
-					return vivodCent, vivodLeft
-			end)
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2708)..E.Octo_Func.func_currencyName(2708)
-					if CharInfo.CurrencyID_Total[2708] ~= "" and CharInfo.CurrencyID_Total[2708] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2708]
-						local a, b = strsplit("/", vivodCent)
-						if tonumber(a) == 0 then
-							if b then
-								vivodCent = E.Octo_Func.Empty_Zero(a)
-							end
-							vivodCent = vivodCent
-						end
-					end
-					return vivodCent, vivodLeft
-			end)
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2709)..E.Octo_Func.func_currencyName(2709)
-					if CharInfo.CurrencyID_Total[2709] ~= "" and CharInfo.CurrencyID_Total[2709] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2709]
-						local a, b = strsplit("/", vivodCent)
-						if tonumber(a) == 0 then
-							if b then
-								vivodCent = E.Octo_Func.Empty_Zero(a)
-							end
-							vivodCent = vivodCent
-						end
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		-- Sparks
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_Sparks == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_itemTexture(208396)..E.Octo_Globals.WOW_Artifact_Color .. E.Octo_Func.func_itemName_NOCOLOR(208396).."|r"
-					if CharInfo.ItemsInBag[208396] ~= 0 then
-						vivodCent = E.Octo_Globals.WOW_Artifact_Color .. CharInfo.ItemsInBag[208396].."|r"
-					end
-					return vivodCent, vivodLeft
-			end)
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_itemTexture(206959)..E.Octo_Globals.WOW_Artifact_Color .. E.Octo_Func.func_itemName_NOCOLOR(206959).."|r"
-					if CharInfo.ItemsInBag[206959] ~= 0 then
-						vivodCent = E.Octo_Globals.WOW_Artifact_Color .. CharInfo.ItemsInBag[206959].."|r"
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.Flightstones == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					if CharInfo.CurrencyID[2245] ~= 0 then
-						vivodCent = E.Octo_Globals.Blue_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2245]).."|r"
-					end
-					vivodLeft = E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245)
-					return vivodCent, vivodLeft
-			end)
-		end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Rares == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4870,12 +4758,220 @@ local function O_otrisovka_FIRST()
 					vivodLeft = E.Octo_Globals.Once.."Side quests"
 					return vivodCent, vivodLeft
 			end)
+			-- tinsert(OctoTable_func_otrisovka_FIRST, -- Искры жизни
+				-- function(CharInfo, tooltip, CL, BG)
+					-- local vivodCent, vivodLeft = "", ""
+					-- vivodLeft = E.Octo_Globals.Weekly..L["Sparks of Life"]
+					-- if CharInfo.Octopussy_DF_Weekly_SparksofLife_count ~= E.Octo_Globals.NONE then
+						-- vivodCent = CharInfo.Octopussy_DF_Weekly_SparksofLife_count
+					-- end
+					-- return vivodCent, vivodLeft
+			-- end)
+		end
+		if Octo_ToDo_DB_Vars.config.CatalystCharges == true then
+			tinsert(OctoTable_func_otrisovka_FIRST, -- season2 2533
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					if CharInfo.CurrencyID[2796] ~= 0 then
+						vivodCent = E.Octo_Globals.Blue_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2796]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(2796)..E.Octo_Func.func_currencyName(2796)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.Flightstones == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					if CharInfo.CurrencyID[2245] ~= 0 then
+						vivodCent = E.Octo_Globals.Blue_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2245]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245)
+					return vivodCent, vivodLeft
+			end)
+		end
+		-- CREST
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Crests == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_currencyicon(2706)..E.Octo_Func.func_currencyName(2706)
+					if CharInfo.CurrencyID_Total[2706] ~= "" and CharInfo.CurrencyID_Total[2706] ~= 0 then
+						vivodCent = CharInfo.CurrencyID_Total[2706]
+						local a, b = strsplit("/", vivodCent)
+						if tonumber(a) == 0 then
+							if b then
+								vivodCent = E.Octo_Func.Empty_Zero(a)
+							end
+							vivodCent = vivodCent
+						end
+					end
+					return vivodCent, vivodLeft
+			end)
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_currencyicon(2707)..E.Octo_Func.func_currencyName(2707)
+					if CharInfo.CurrencyID_Total[2707] ~= "" and CharInfo.CurrencyID_Total[2707] ~= 0 then
+						vivodCent = CharInfo.CurrencyID_Total[2707]
+						local a, b = strsplit("/", vivodCent)
+						if tonumber(a) == 0 then
+							if b then
+								vivodCent = E.Octo_Func.Empty_Zero(a)
+							end
+							vivodCent = vivodCent
+						end
+					end
+					return vivodCent, vivodLeft
+			end)
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_currencyicon(2708)..E.Octo_Func.func_currencyName(2708)
+					if CharInfo.CurrencyID_Total[2708] ~= "" and CharInfo.CurrencyID_Total[2708] ~= 0 then
+						vivodCent = CharInfo.CurrencyID_Total[2708]
+						local a, b = strsplit("/", vivodCent)
+						if tonumber(a) == 0 then
+							if b then
+								vivodCent = E.Octo_Func.Empty_Zero(a)
+							end
+							vivodCent = vivodCent
+						end
+					end
+					return vivodCent, vivodLeft
+			end)
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_currencyicon(2709)..E.Octo_Func.func_currencyName(2709)
+					if CharInfo.CurrencyID_Total[2709] ~= "" and CharInfo.CurrencyID_Total[2709] ~= 0 then
+						vivodCent = CharInfo.CurrencyID_Total[2709]
+						local a, b = strsplit("/", vivodCent)
+						if tonumber(a) == 0 then
+							if b then
+								vivodCent = E.Octo_Func.Empty_Zero(a)
+							end
+							vivodCent = vivodCent
+						end
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
+		-- CREST
+		-- if Octo_ToDo_DB_Vars.config.EmeraldDream_Crests == true then
+		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 		function(CharInfo, tooltip, CL, BG)
+		-- 			local vivodCent, vivodLeft = "", ""
+		-- 			vivodLeft = L["Crests"]
+		-- 			if CharInfo.CurrencyID_Total[2706] ~= "" and CharInfo.CurrencyID_Total[2706] ~= 0 then
+		-- 				vivodCent = CharInfo.CurrencyID_Total[2706]
+		-- 				local a, b = strsplit("/", vivodCent)
+		-- 				if tonumber(a) == 0 then
+		-- 					if b then
+		-- 						vivodCent = E.Octo_Func.Empty_Zero(a)
+		-- 					end
+		-- 					vivodCent = vivodCent
+		-- 				end
+		-- 			end
+		-- 			return vivodCent, vivodLeft
+		-- 	end)
+		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 		function(CharInfo, tooltip, CL, BG)
+		-- 			local vivodCent, vivodLeft = "", ""
+		-- 			vivodLeft = E.Octo_Func.func_currencyicon(2707)..E.Octo_Func.func_currencyName(2707)
+		-- 			if CharInfo.CurrencyID_Total[2707] ~= "" and CharInfo.CurrencyID_Total[2707] ~= 0 then
+		-- 				vivodCent = CharInfo.CurrencyID_Total[2707]
+		-- 				local a, b = strsplit("/", vivodCent)
+		-- 				if tonumber(a) == 0 then
+		-- 					if b then
+		-- 						vivodCent = E.Octo_Func.Empty_Zero(a)
+		-- 					end
+		-- 					vivodCent = vivodCent
+		-- 				end
+		-- 			end
+		-- 			return vivodCent, vivodLeft
+		-- 	end)
+		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 		function(CharInfo, tooltip, CL, BG)
+		-- 			local vivodCent, vivodLeft = "", ""
+		-- 			vivodLeft = E.Octo_Func.func_currencyicon(2708)..E.Octo_Func.func_currencyName(2708)
+		-- 			if CharInfo.CurrencyID_Total[2708] ~= "" and CharInfo.CurrencyID_Total[2708] ~= 0 then
+		-- 				vivodCent = CharInfo.CurrencyID_Total[2708]
+		-- 				local a, b = strsplit("/", vivodCent)
+		-- 				if tonumber(a) == 0 then
+		-- 					if b then
+		-- 						vivodCent = E.Octo_Func.Empty_Zero(a)
+		-- 					end
+		-- 					vivodCent = vivodCent
+		-- 				end
+		-- 			end
+		-- 			return vivodCent, vivodLeft
+		-- 	end)
+		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 		function(CharInfo, tooltip, CL, BG)
+		-- 			local vivodCent, vivodLeft = "", ""
+		-- 			vivodLeft = E.Octo_Func.func_currencyicon(2709)..E.Octo_Func.func_currencyName(2709)
+		-- 			if CharInfo.CurrencyID_Total[2709] ~= "" and CharInfo.CurrencyID_Total[2709] ~= 0 then
+		-- 				vivodCent = CharInfo.CurrencyID_Total[2709]
+		-- 				local a, b = strsplit("/", vivodCent)
+		-- 				if tonumber(a) == 0 then
+		-- 					if b then
+		-- 						vivodCent = E.Octo_Func.Empty_Zero(a)
+		-- 					end
+		-- 					vivodCent = vivodCent
+		-- 				end
+		-- 			end
+		-- 			return vivodCent, vivodLeft
+		-- 	end)
+		-- end
+		-- Sparks
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Sparks == true then
+			-- tinsert(OctoTable_func_otrisovka_FIRST,
+			-- 	function(CharInfo, tooltip, CL, BG)
+			-- 		local vivodCent, vivodLeft = "", ""
+			-- 		vivodLeft = E.Octo_Func.func_itemTexture(208396)..E.Octo_Globals.WOW_Artifact_Color .. E.Octo_Func.func_itemName_NOCOLOR(208396).."|r"
+			-- 		if CharInfo.ItemsInBag[208396] ~= 0 then
+			-- 			vivodCent = E.Octo_Globals.WOW_Artifact_Color .. CharInfo.ItemsInBag[208396].."|r"
+			-- 		end
+			-- 		return vivodCent, vivodLeft
+			-- end)
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(206959)..E.Octo_Globals.WOW_Artifact_Color .. E.Octo_Func.func_itemName_NOCOLOR(206959).."|r"
+					if CharInfo.ItemsInBag[206959] ~= 0 then
+						vivodCent = E.Octo_Globals.WOW_Artifact_Color .. CharInfo.ItemsInBag[206959].."|r"
+					end
+					if CharInfo.ItemsInBag[208396] ~= 0 then
+						vivodCent = vivodCent..E.Octo_Globals.WOW_Epic_Color .. "*".."|r"
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(208396)..E.Octo_Func.func_itemName(208396), CharInfo.ItemsInBag[208396]}
+					end
+					return vivodCent, vivodLeft
+			end)
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(206960)..E.Octo_Globals.WOW_Artifact_Color .. E.Octo_Func.func_itemName_NOCOLOR(206960).."|r"
+					if CharInfo.ItemsInBag[206960] ~= 0 then
+						vivodCent = E.Octo_Globals.WOW_Artifact_Color .. CharInfo.ItemsInBag[206960].."|r"
+					end
+					return vivodCent, vivodLeft
+			end)
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(206961)..E.Octo_Globals.WOW_Artifact_Color .. E.Octo_Func.func_itemName_NOCOLOR(206961).."|r"
+					if CharInfo.ItemsInBag[206961] ~= 0 then
+						vivodCent = E.Octo_Globals.WOW_Artifact_Color .. CharInfo.ItemsInBag[206961].."|r"
+					end
+					return vivodCent, vivodLeft
+			end)
 		end
 		if Octo_ToDo_DB_Vars.config.TimeRift == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = (E.Octo_Func.func_texturefromIcon(628677)..Timer_DF_TimeRift()..L["TimeRift"])
+					vivodLeft = E.Octo_Globals.Weekly..(E.Octo_Func.func_texturefromIcon(628677)..Timer_DF_TimeRift()..L["TimeRift"])
 					if CharInfo.Octopussy_DF_Weekly_TimeRift_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_DF_Weekly_TimeRift_count
 					end
@@ -4885,9 +4981,12 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(207030)
+					vivodLeft = E.Octo_Func.func_texturefromIcon(2026009)..E.Octo_Func.func_itemName(209856)
+					if CharInfo.ItemsInBag[209856] ~= 0 then
+						vivodCent = vivodCent..E.Octo_Globals.WOW_Epic_Color..CharInfo.ItemsInBag[209856].."|r"
+					end
 					if CharInfo.ItemsInBag[207030] ~= 0 then
-						vivodCent = E.Octo_Globals.WOW_Epic_Color..CharInfo.ItemsInBag[207030].."|r"
+						vivodCent = vivodCent..E.Octo_Globals.Gray_Color.." +"..CharInfo.ItemsInBag[207030].."(old)|r"
 					end
 					BG:SetColorTexture(.64, .21, .93, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
@@ -4924,7 +5023,7 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = (E.Octo_Func.func_texturefromIcon(134206)..Timer_DF_Dreamsurges()..L["Dreamsurges"])
+					vivodLeft = E.Octo_Globals.Weekly..(E.Octo_Func.func_texturefromIcon(134206)..Timer_DF_Dreamsurges()..L["Dreamsurges"])
 					if CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count
 					end
@@ -4937,9 +5036,12 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_texturefromIcon(4643985)..E.Octo_Globals.WOW_Epic_Color..L["Dreamsurge Chrysalis"].."|r"
+					vivodLeft = E.Octo_Func.func_texturefromIcon(4643985)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_itemName_NOCOLOR(210254).."|r" -- L["Dreamsurge Chrysalis"] OLD
+					if CharInfo.ItemsInBag[210254] ~= 0 then
+						vivodCent = vivodCent..E.Octo_Globals.WOW_Epic_Color..CharInfo.ItemsInBag[210254].."|r"
+					end
 					if CharInfo.ItemsInBag[208153] ~= 0 then
-						vivodCent = E.Octo_Globals.WOW_Epic_Color..CharInfo.ItemsInBag[208153].."|r"
+						vivodCent = vivodCent..E.Octo_Globals.Gray_Color.." +"..CharInfo.ItemsInBag[208153].."(old)|r"
 					end
 					BG:SetColorTexture(.31, 1, .47, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
@@ -5416,9 +5518,10 @@ local function O_otrisovka_FIRST()
 				end
 				if #tooltip ~= 0 then
 					-- vivodCent = E.Octo_Globals.Yellow_Color.."КД|r"
-					vivodCent = E.Octo_Globals.Gray_Color..RAID_INFORMATION.."|r"
+					-- vivodCent = E.Octo_Globals.Gray_Color..RAID_INFORMATION.."|r"
+					vivodCent = E.Octo_Globals.Gray_Color..DUNGEONS.."|r"
 				end
-				vivodLeft = "Dungeons"
+				-- vivodLeft = "Dungeons"
 				return vivodCent, vivodLeft
 		end)
 	end
@@ -7538,7 +7641,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.AidingtheAccord == nil then Octo_ToDo_DB_Vars.config.AidingtheAccord = false end
 		if Octo_ToDo_DB_Vars.config.CommunityFeast == nil then Octo_ToDo_DB_Vars.config.CommunityFeast = false end
 		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire == nil then Octo_ToDo_DB_Vars.config.ResearchersUnderFire = false end
-
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens = true end -- REPUTATION
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds = false end
@@ -7547,6 +7649,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Rares == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Rares = false end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline = false end
 		if Octo_ToDo_DB_Vars.config.Flightstones == nil then Octo_ToDo_DB_Vars.config.Flightstones = true end
+		if Octo_ToDo_DB_Vars.config.CatalystCharges == nil then Octo_ToDo_DB_Vars.config.CatalystCharges = true end
 		if Octo_ToDo_DB_Vars.config.TimeRift == nil then Octo_ToDo_DB_Vars.config.TimeRift = false end
 		if Octo_ToDo_DB_Vars.config.Dreamsurges == nil then Octo_ToDo_DB_Vars.config.Dreamsurges = false end
 		if Octo_ToDo_DB_Vars.config.Event == nil then Octo_ToDo_DB_Vars.config.Event = true end

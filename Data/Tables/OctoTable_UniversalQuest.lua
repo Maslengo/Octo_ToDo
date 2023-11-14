@@ -217,7 +217,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		desc = "",
 		questID = {
 			47148, 71026, 72169, 72167, 72166, 72168, 72171, 72170, 72646,
-			74871, 72648, 72647, 72649
+			74871, 72648, 72647, 72649, 78097, 72649, 75305,
 		},
 		max = 3
 	},
@@ -1707,11 +1707,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
-
-
 	{
 		name_save = "DreamsUnified",
 		reset = "Weekly",
@@ -1723,9 +1718,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
 	{
 		name_save = "Seeds",
 		reset = "Weekly",
@@ -1733,26 +1725,17 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "EmeraldDream",
 		desc = "",
 		questID = {
-
--- 77229
--- 77291
--- 77354
--- 77350
--- 77353
-
+			-- 77229
+			-- 77291
+			-- 77354
+			-- 77350
+			-- 77353
 			77350,
 			77353,
 			77354, -- 1000
-
-
-
-
-
-
 			-- 77291, -- Secret of azeroth
 			-- 77351, -- хз
 			-- 77352, -- хз
-
 			-- 78787,
 			-- 77271,
 			-- 78975,
@@ -1763,11 +1746,24 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 
 
+	{
+		name_save = "SparksofLife",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			78097, --sparks-of-life-emerald-dream
+			72649, --sparks-of-life-thaldraszus
+			72648, --sparks-of-life-the-azure-span
+			75305, --sparks-of-life-zaralek-cavern
+			72647, --sparks-of-life-ohnahran-plains
+			72646, --sparks-of-life-the-waking-shores
+			74871, --sparks-of-life-the-forbidden-reach
 
-
-
-
+		},
+		max = 1
+	},
 
 
 }
-

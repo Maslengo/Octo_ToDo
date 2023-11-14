@@ -27,14 +27,6 @@ tinsert(E.Octo_Globals.modules, function()
 					-- SubZoneTextString:UnregisterAllEvents()
 					SubZoneTextString:Hide()
 			end)
-
-
-
-
-
-
-
-
 			-- EventToastManagerFrame:HookScript("OnShow", function(self, ...)
 			-- EventToastManagerFrame:UnregisterAllEvents()
 			-- EventToastManagerFrame:Hide()

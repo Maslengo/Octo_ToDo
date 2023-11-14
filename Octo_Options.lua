@@ -21,7 +21,7 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 -- fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
 -- local fontObject12 = CreateFont("OctoFont12")
 -- fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
-local indent = 20
+local indent = 19.5
 local POS_LEFT = 6
 local POS_RIGHT = 474
 local POS_CENTER = POS_RIGHT/2
@@ -97,7 +97,6 @@ local function Create_CheckButton(scroll, self, number, pos, config, text, color
 		self[number..pos..config].text:SetText(color..text..FONT_COLOR_CODE_CLOSE)
 	end
 end
-
 local function Create_SimpleButton(scroll, self, number, pos, config, text, color)
 	if not color then
 		color = "|cffFFFFFF"
@@ -123,7 +122,6 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 		-- self[number..pos..config].text:SetText(color..text..FONT_COLOR_CODE_CLOSE)
 	end
 end
-
 local function Create_EditBox(scroll, self, number, pos, config)
 	if not color then
 		color = "|cffFFFFFF"
@@ -134,20 +132,16 @@ local function Create_EditBox(scroll, self, number, pos, config)
 		self[number..pos]:SetSize(indent*6, 20)
 		self[number..pos]:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
 		self[number..pos]:SetBackdropBorderColor(0, 0, 0, 1)
-
 		local editBox = CreateFrame("EditBox", nil, self[number..pos])
 		editBox:SetAllPoints(self[number..pos])
 		editBox:SetFontObject(fontObject12)
 		editBox:SetMultiLine(false)
 		editBox:SetAutoFocus(false)
-
 		editBox:SetText(Octo_ToDo_DB_Vars.config[config])
 		editBox:SetJustifyV("MIDDLE")
 		editBox:SetJustifyH("CENTER")
-
 		editBox:SetScript("OnEscapePressed", editBox.ClearFocus)
 		editBox:SetScript("OnEnterPressed", editBox.ClearFocus)
-
 		-- editBox:SetScript("OnCursorChanged", function()
 		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
 		-- end)
@@ -172,19 +166,12 @@ local function Create_EditBox(scroll, self, number, pos, config)
 		-- editBox:SetScript("OnEditFocusGained", function()
 		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
 		-- end)
-
-
-
-
 		editBox:SetScript("OnTextChanged", function()
 			Octo_ToDo_DB_Vars.config[config] = editBox:GetText()  -- 000AD0FD (0AE9B27E RETAIL)
 			-- print (Octo_ToDo_DB_Vars.config[config], editBox:GetText())
 		end)
 	end
 end
-
-
-
 local function Create_Frame_Color(scroll, self, number, pos, text, color)
 	if not color then
 		color = "|cffFFFFFF"
@@ -235,12 +222,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 7, POS_LEFT, "AutoTurnQuests", L["Auto Turn Quests"])
 		Create_CheckButton(MAIN_scrollChild, self, 8, POS_LEFT, "ClearChat", L["ClearChat"])
 		Create_CheckButton(MAIN_scrollChild, self, 9, POS_LEFT, "Auto_Screenshot", L["Auto_Screenshot"])
-
-
-
-
-
-
 		Create_CheckButton(MAIN_scrollChild, self, 10, POS_LEFT, "Hide_AzeriteEmpoweredItemUI", L["Hide: Azerite Animations"])
 		Create_CheckButton(MAIN_scrollChild, self, 11, POS_LEFT, "Hide_Boss_Banner", L["Hide: Boss Banner"])
 		Create_CheckButton(MAIN_scrollChild, self, 12, POS_LEFT, "Hide_Covenant", L["Hide: Covenant"])
@@ -249,57 +230,40 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 15, POS_LEFT, "Hide_Raid_Boss_Emote_Frame", L["Hide: RaidBossEmoteFrame"])
 		Create_CheckButton(MAIN_scrollChild, self, 16, POS_LEFT, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
 		Create_CheckButton(MAIN_scrollChild, self, 17, POS_LEFT, "Hide_Zone_Text", L["Hide: Zone Text"])
-
-
-
-
-
-
-
-
-
-
-
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
 		Create_CheckButton(MAIN_scrollChild, self, 19, POS_LEFT, "ItemsUsable", "ItemsUsable")
 		Create_CheckButton(MAIN_scrollChild, self, 20, POS_LEFT, "ItemsDelete", "ItemsDelete")
-
 		Create_CheckButton(MAIN_scrollChild, self, 1, POS_CENTER, "MP_MythicKeystone", L["Mythic Keystone"], E.Octo_Globals.Purple_Color)
 		Create_CheckButton(MAIN_scrollChild, self, 2, POS_CENTER, "MP_WeeklyBest", "Weekly Best", E.Octo_Globals.Purple_Color)
 		Create_CheckButton(MAIN_scrollChild, self, 3, POS_CENTER, "MP_Score", DUNGEON_SCORE, E.Octo_Globals.Purple_Color)
-
-
-
-
-
-
 		Create_CheckButton(MAIN_scrollChild, self, 4, POS_CENTER, "AidingtheAccord", E.Octo_Globals.Weekly..L["Aiding the Accord"])
 		Create_CheckButton(MAIN_scrollChild, self, 5, POS_CENTER, "CommunityFeast", E.Octo_Globals.Weekly..L["Community Feast"])
 		Create_CheckButton(MAIN_scrollChild, self, 6, POS_CENTER, "ResearchersUnderFire", E.Octo_Globals.Weekly..L["Researchers Under Fire"]..E.Octo_Globals.Gray_Color.." (10.1.0)|r")
-
 		Create_CheckButton(MAIN_scrollChild, self, 8, POS_CENTER, "EmeraldDream_Superbloom", E.Octo_Globals.Weekly..L["Superbloom"])
 		Create_CheckButton(MAIN_scrollChild, self, 9, POS_CENTER, "EmeraldDream_DreamWardens", E.Octo_Globals.Weekly..L["Dream Wardens"]..E.Octo_Globals.Gray_Color.." ("..REPUTATION..")|r")
 		Create_CheckButton(MAIN_scrollChild, self, 10, POS_CENTER, "EmeraldDream_Dreamseeds", E.Octo_Globals.Weekly..L["Dreamseeds"])
-		Create_CheckButton(MAIN_scrollChild, self, 11, POS_CENTER, "EmeraldDream_Crests", E.Octo_Globals.Weekly..L["Crests"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
-		Create_CheckButton(MAIN_scrollChild, self, 12, POS_CENTER, "EmeraldDream_Sparks", E.Octo_Globals.Weekly..L["Sparks"]..E.Octo_Globals.Gray_Color.." ("..ITEMS..")|r")
-		Create_CheckButton(MAIN_scrollChild, self, 13, POS_CENTER, "Flightstones", L["Flightstones"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
-		Create_CheckButton(MAIN_scrollChild, self, 14, POS_CENTER, "EmeraldDream_Rares", E.Octo_Globals.Daily..L["Rares"]..", "..L["Treasures"]..E.Octo_Globals.Gray_Color.." ("..QUESTS_LABEL..")|r")
-		Create_CheckButton(MAIN_scrollChild, self, 15, POS_CENTER, "EmeraldDream_Storyline", E.Octo_Globals.Once..L["Storyline"]..E.Octo_Globals.Gray_Color.." ("..QUESTS_LABEL..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 11, POS_CENTER, "EmeraldDream_Rares", E.Octo_Globals.Daily..L["Rares"]..", "..L["Treasures"]..E.Octo_Globals.Gray_Color.." ("..QUESTS_LABEL..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 12, POS_CENTER, "EmeraldDream_Storyline", E.Octo_Globals.Once..L["Storyline"]..E.Octo_Globals.Gray_Color.." ("..QUESTS_LABEL..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 13, POS_CENTER, "CatalystCharges", L["Catalyst Charges"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 14, POS_CENTER, "Flightstones", L["Flightstones"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 15, POS_CENTER, "EmeraldDream_Crests", L["Crests"]..E.Octo_Globals.Gray_Color.." ("..CURRENCY..")|r")
+		Create_CheckButton(MAIN_scrollChild, self, 16, POS_CENTER, "EmeraldDream_Sparks", L["Sparks"].." + "..L["Crests"]..E.Octo_Globals.Gray_Color.." ("..ITEMS..")|r")
 
-		Create_CheckButton(MAIN_scrollChild, self, 17, POS_CENTER, "TimeRift", E.Octo_Globals.Weekly..L["TimeRift"]..E.Octo_Globals.Gray_Color.." (10.1.5)|r", E.Octo_Globals.Purple_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_CENTER, "Dreamsurges", E.Octo_Globals.Weekly..L["Dreamsurges"]..E.Octo_Globals.Gray_Color.." (10.1.7)|r", E.Octo_Globals.Green_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_CENTER, "Event", EVENTS_LABEL, E.Octo_Globals.Yellow_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 20, POS_CENTER, "Holiday", CALENDAR_FILTER_HOLIDAYS, E.Octo_Globals.Orange_Color)
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_CENTER, "Dungeons", DUNGEONS)
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_CENTER, "Currency", CURRENCY)
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_CENTER, "Reputations", REPUTATION)
-		Create_CheckButton(MAIN_scrollChild, self, 24, POS_CENTER, "Quests", QUESTS_LABEL)
-		Create_CheckButton(MAIN_scrollChild, self, 25, POS_CENTER, "Items", ITEMS)
-		Create_CheckButton(MAIN_scrollChild, self, 26, POS_CENTER, "Professions", TRADE_SKILLS)
-		Create_CheckButton(MAIN_scrollChild, self, 27, POS_CENTER, "Gold", BONUS_ROLL_REWARD_MONEY) -- WORLD_QUEST_REWARD_FILTERS_GOLD
-		Create_CheckButton(MAIN_scrollChild, self, 28, POS_CENTER, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
-		Create_CheckButton(MAIN_scrollChild, self, 29, POS_CENTER, "LastUpdate", "Last Update")
 
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_CENTER, "TimeRift", E.Octo_Globals.Weekly..L["TimeRift"]..E.Octo_Globals.Gray_Color.." (10.1.5)|r", E.Octo_Globals.Purple_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_CENTER, "Dreamsurges", E.Octo_Globals.Weekly..L["Dreamsurges"]..E.Octo_Globals.Gray_Color.." (10.1.7)|r", E.Octo_Globals.Green_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_CENTER, "Event", EVENTS_LABEL, E.Octo_Globals.Yellow_Color)
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_CENTER, "Holiday", CALENDAR_FILTER_HOLIDAYS, E.Octo_Globals.Orange_Color)
+
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_CENTER, "Dungeons", E.Octo_Globals.LightGray_Color..DUNGEONS.."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_CENTER, "Currency", E.Octo_Globals.LightGray_Color..CURRENCY.."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_CENTER, "Reputations", E.Octo_Globals.LightGray_Color..REPUTATION.."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_CENTER, "Quests", E.Octo_Globals.LightGray_Color..QUESTS_LABEL.."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 26, POS_CENTER, "Items", E.Octo_Globals.LightGray_Color..ITEMS.."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 27, POS_CENTER, "Professions", TRADE_SKILLS)
+		Create_CheckButton(MAIN_scrollChild, self, 28, POS_CENTER, "Gold", BONUS_ROLL_REWARD_MONEY) -- WORLD_QUEST_REWARD_FILTERS_GOLD
+		Create_CheckButton(MAIN_scrollChild, self, 29, POS_CENTER, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
+		Create_CheckButton(MAIN_scrollChild, self, 30, POS_CENTER, "LastUpdate", "Last Update")
 		number = 1
 		btn_right1 = lsfdd:CreateStretchButtonOriginal(MAIN_scrollChild, 140, 22)
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
@@ -377,13 +341,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, "ShowTimeAll", "Общее время игры")
 		-- Create_EditBox(MAIN_scrollChild, self, 22, POS_RIGHT, "security")
 		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "ReloadUI", "ReloadUI")
-
-
-
-
-
-
-
 end)
 local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, AddonTitle)
 category.ID = AddonTitle
@@ -430,8 +387,6 @@ FIRST_Config:SetScript("OnShow", function(self)
 		Create_Slider(FIRST_scrollChild, self, 18, POS_CENTER, "glowType", "glowType", E.Octo_Globals.Green_Color, 1, 3)
 		Create_Slider(FIRST_scrollChild, self, 19, POS_CENTER, "glowColor", "glowColor", E.Octo_Globals.Green_Color, 1, 3)
 		Create_CheckButton(FIRST_scrollChild, self, 21, POS_CENTER, "ChallengesKeystoneFrame", "ChallengesKeystoneFrame")
-
-
 		Create_CheckButton(FIRST_scrollChild, self, 1, POS_RIGHT, "FieldOfView", "FieldOfView")
 		Create_Slider(FIRST_scrollChild, self, 2, POS_RIGHT, "FoV_top", "FieldOfView: FoV_top", E.Octo_Globals.Green_Color, 0, 200, func_FieldOfView)
 		Create_Slider(FIRST_scrollChild, self, 3, POS_RIGHT, "FoV_bottom", "FieldOfView: FoV_bottom", E.Octo_Globals.Green_Color, 0, 200, func_FieldOfView)

@@ -66,7 +66,6 @@ E.Octo_Table.OctoTable_KeystoneAbbr = {
 	-- {mapChallengeModeID = 456, abbreviation = "TotT"}, -- Throne of the Tides (Cataclysm)
 	-- {mapChallengeModeID = 463, abbreviation = "DotI:Galakrond's Fall"}, -- Dawn of the Infinites: Galakrond's Fall
 	-- {mapChallengeModeID = 464, abbreviation = "DotI:Murozond's Rise"} -- Dawn of the Infinites: Murozond's Rise
-
 	{mapChallengeModeID = 199, abbreviation = "BRH"}, -- "BRH"}, -- Black Rook Hold
 	{mapChallengeModeID = 244, abbreviation = "AD"}, -- "AD"}, -- Atal'Dazar
 	{mapChallengeModeID = 463, abbreviation = "FALL"}, -- "DotI:Galakrond's Fall"}, -- Dawn of the Infinites: Galakrond's Fall
@@ -74,5 +73,5 @@ E.Octo_Table.OctoTable_KeystoneAbbr = {
 	{mapChallengeModeID = 198, abbreviation = "DHT"}, -- "DHT"}, -- Darkheart Thicket
 	{mapChallengeModeID = 168, abbreviation = "EB"}, -- "TE"}, -- The Everbloom
 	{mapChallengeModeID = 456, abbreviation = "TOTT"}, -- "TotT"}, -- Throne of the Tides (Cataclysm)
-	{mapChallengeModeID = 248, abbreviation = "WM"}, -- "WM"}, -- Waycrest Manor
+	{mapChallengeModeID = 248, abbreviation = "WM"} -- "WM"}, -- Waycrest Manor
 }

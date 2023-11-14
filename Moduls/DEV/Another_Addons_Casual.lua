@@ -23,5 +23,8 @@ tinsert(E.Octo_Globals.modules, function()
 		-- E.Octo_Func.func_Octo_LoadAddOn("ParagonReputation")
 		-- E.Octo_Func.func_Octo_LoadAddOn("SavedInstances")
 		-- E.Octo_Func.func_Octo_LoadAddOn("TalentTreeTweaks")
+		E.Octo_Func.func_Octo_LoadAddOn("Scrap")
+		E.Octo_Func.func_Octo_LoadAddOn("Scrap_Config")
+		E.Octo_Func.func_Octo_LoadAddOn("Scrap_Merchant")
 	end
 end)

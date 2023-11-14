@@ -50,8 +50,6 @@ local bgFile = "Interface\\Buttons\\WHITE8X8"
 local AddonTexture_THIRD = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_THIRD.tga"
 local SHIRINA = E.Octo_Globals.curWidthCentral
 local OctoTable_func_otrisovka_THIRD = {}
-
-
 function Octo_ToDo_THIRD_OnLoad()
 	if not Octo_ToDo_THIRD_Frame_EventFrame then
 		Octo_ToDo_THIRD_Frame_EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
@@ -62,8 +60,6 @@ function Octo_ToDo_THIRD_OnLoad()
 			Octo_ToDo_THIRD_OnEvent(...)
 	end)
 end
-
-
 function O_otrisovka_THIRD()
 	tinsert(OctoTable_func_otrisovka_THIRD,
 		function(CharInfo, tooltip, CL, BG)
@@ -172,8 +168,6 @@ do
 	ObjectPool_FontString_THIRD:OnLoad(ObjectPool_FontString_THIRD_creationFunc, ObjectPool_FontString_THIRD_resetterFunc)
 	ObjectPool_FontString_THIRD:SetResetDisallowedIfNew(true)
 end
-
-
 local function AltFrame_Update_Lines()
 	----------------------------------------------------------------
 	-- РЕЛИЗЫ
@@ -196,8 +190,6 @@ local function AltFrame_Update_Lines()
 	-- Octo_ToDo_THIRD_AddDataToAltFrame()
 	----------------------------------------------------------------
 end
-
-
 function Octo_ToDo_THIRD_CreateAltFrame()
 	if not Octo_ToDo_THIRD_Frame_Main_Frame then
 		Octo_ToDo_THIRD_Frame_Main_Frame = CreateFrame("BUTTON", "Octo_ToDo_THIRD_Frame_Main_FramePIZDA", UIParent, "BackdropTemplate")
@@ -404,8 +396,6 @@ do
 	ObjectPool_CENTERLINES_BACKGROUND_THIRD:OnLoad(ObjectPool_CENTERLINES_BACKGROUND_THIRD_creationFunc, ObjectPool_CENTERLINES_BACKGROUND_THIRD_resetterFunc)
 	ObjectPool_CENTERLINES_BACKGROUND_THIRD:SetResetDisallowedIfNew(true)
 end
-
-
 local function CreateCentralLines(Main_Frame, curCharGUID)
 	Octo_ToDo_THIRD_Frame_Main_Frame[curCharGUID] = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID().."Octo_ToDo_THIRD_Frame_Main_Frame[curCharGUID]", Octo_ToDo_THIRD_Frame_Main_Frame.scrollChild, "BackdropTemplate")
 	Octo_ToDo_THIRD_Frame_Char_Frame = Octo_ToDo_THIRD_Frame_Main_Frame[curCharGUID]
@@ -428,8 +418,6 @@ local function CreateCentralLines(Main_Frame, curCharGUID)
 		Octo_ToDo_THIRD_Frame_Char_Frame["CenterLines"..index.."BG"]:SetAllPoints(Octo_ToDo_THIRD_Frame_Char_Frame["CenterLines"..index])
 	end
 end
-
-
 function Octo_ToDo_THIRD_AddDataToAltFrame()
 	print ("Octo_ToDo_THIRD_AddDataToAltFrame")
 	local curGUID = UnitGUID("PLAYER")
@@ -462,10 +450,6 @@ function Octo_ToDo_THIRD_AddDataToAltFrame()
 	-- РЕЛИЗЫ
 	ObjectPool_CENTERLINES_THIRD:ReleaseAll()
 	ObjectPool_CENTERLINES_BACKGROUND_THIRD:ReleaseAll()
-
-
-
-
 	for i, CharInfo in pairs(sorted) do
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			local curCharGUID = CharInfo.GUID
@@ -512,8 +496,6 @@ function Octo_ToDo_THIRD_AddDataToAltFrame()
 			Octo_ToDo_THIRD_Frame_Main_Frame:SetSize(width, height)
 	end
 end
-
-
 function Octo_ToDo_THIRD_OnEvent(self, event, ...)
 	if event == "VARIABLES_LOADED" and not InCombatLockdown() then
 		SHOWADDON_THIRD = Octo_ToDo_DB_Vars.config.THIRD

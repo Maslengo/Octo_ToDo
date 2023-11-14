@@ -7,7 +7,6 @@ if not inspectScantipUSABLE then
 end
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDo_DB_Vars.config.ItemsDelete then
-
 			local function ItemsDelete_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
 				GameTooltip:ClearLines()
@@ -15,7 +14,6 @@ tinsert(E.Octo_Globals.modules, function()
 				GameTooltip:SetHyperlink(itemLink)
 				GameTooltip:Show()
 			end
-
 			local function ItemsDelete_Frame_OnLeave(self)
 				GameTooltip:ClearLines()
 				GameTooltip:Hide()
@@ -51,7 +49,6 @@ tinsert(E.Octo_Globals.modules, function()
 			ItemsDelete_Frame.icon = ItemsDelete_UIF_texture
 			ItemsDelete_UIF_texture:SetAllPoints(ItemsDelete_Frame)
 			ItemsDelete_UIF_texture:SetTexture(413587)
-
 			function ItemsDeleteFrame_OnLoad()
 				if not EventFrame_ItemsDelete then
 					EventFrame_ItemsDelete = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent)
@@ -67,7 +64,6 @@ tinsert(E.Octo_Globals.modules, function()
 					EventFrame_ItemsDelete:SetScript("OnEvent", ItemsDeleteFrame_OnEvent)
 				end
 			end
-
 			function ItemsDeleteFrame_OnEvent(self, event)
 				if (event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED" or event == "DELETE_ITEM_CONFIRM") and not InCombatLockdown() then
 					C_Timer.After(0, function()
@@ -79,7 +75,6 @@ tinsert(E.Octo_Globals.modules, function()
 					end
 				end
 			end
-
 			function ItemsDeleteFrame()
 				if not InCombatLockdown() and ItemsDelete_Frame then
 					for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
@@ -119,12 +114,9 @@ tinsert(E.Octo_Globals.modules, function()
 					end
 				end
 			end
-
 			E.ItemsDelete_Frame = ItemsDelete_Frame
 			E.ItemsDeleteFrame_OnLoad = ItemsDeleteFrame_OnLoad
 			E.ItemsDeleteFrame = ItemsDeleteFrame
 			ItemsDeleteFrame_OnLoad()
 		end
 end)
-
-
