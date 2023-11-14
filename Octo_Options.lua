@@ -265,13 +265,14 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 29, POS_CENTER, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
 		Create_CheckButton(MAIN_scrollChild, self, 30, POS_CENTER, "LastUpdate", "Last Update")
 		number = 1
-		btn_right1 = lsfdd:CreateStretchButtonOriginal(MAIN_scrollChild, 140, 22)
+		btn_right1 = lsfdd:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
 		btn_right1:SetText(E.Octo_Table.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow])
 		btn_right1:ddSetDisplayMode(GlobalAddonName)
-		btn_right1:SetScript("OnClick", function(self)
-			self:ddToggle(1, nil, self, self:GetWidth(), self:GetHeight())
-		end)
+		-- btn_right1:ddSetOpenMenuUp(true) -- NEW
+		-- btn_right1:SetScript("OnClick", function(self)
+		-- 	self:ddToggle(1, nil, self, self:GetWidth()+1, self:GetHeight())
+		-- end)
 		local function selectFunctionExpansion(menuButton)
 			Octo_ToDo_DB_Vars.config.ExpansionToShow = menuButton.value
 			btn_right1:SetText(E.Octo_Table.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow])
@@ -297,13 +298,14 @@ MAIN_Config:SetScript("OnShow", function(self)
 				end
 		end)
 		number = 2
-		btn_right2 = lsfdd:CreateStretchButtonOriginal(MAIN_scrollChild, 140, 22)
+		btn_right2 = lsfdd:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
 		btn_right2:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
 		btn_right2:SetText(E.Octo_Table.wowhead_prefix_Table[Octo_ToDo_DB_Vars.config.prefix])
 		btn_right2:ddSetDisplayMode(GlobalAddonName)
-		btn_right2:SetScript("OnClick", function(self)
-			self:ddToggle(1, nil, self, self:GetWidth(), self:GetHeight())
-		end)
+		-- btn_right2:ddSetOpenMenuUp(true) -- NEW
+		-- btn_right2:SetScript("OnClick", function(self)
+		-- 	self:ddToggle(1, nil, self, self:GetWidth()+1, self:GetHeight())
+		-- end)
 		local function selectFunctionprefix(menuButton)
 			Octo_ToDo_DB_Vars.config.prefix = menuButton.value
 			btn_right2:SetText(E.Octo_Table.wowhead_prefix_Table[Octo_ToDo_DB_Vars.config.prefix])
