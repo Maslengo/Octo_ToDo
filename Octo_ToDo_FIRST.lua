@@ -129,6 +129,49 @@ do
 		E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
 end
+local function TryToOffMajor(majorFactionID, newRenownLevel, oldRenownLevel)
+	-- MAJOR_FACTION_RENOWN_LEVEL_CHANGED
+	local majorFactionID, newRenownLevel, oldRenownLevel = majorFactionID, newRenownLevel, oldRenownLevel
+	print (majorFactionID, newRenownLevel, oldRenownLevel)
+
+
+
+	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TryToOffMajor".."|r")
+	end
+
+	if MajorFactionRenownToast then
+		MajorFactionRenownToast:UnregisterAllEvents()
+		MajorFactionRenownToast:Hide()
+		print ("true MajorFactionRenownToast")
+	else
+		print ("Cannot Hide MajorFactionRenownToast")
+	end
+	if MajorFactionRenownFrame then
+		MajorFactionRenownFrame:UnregisterAllEvents()
+		MajorFactionRenownFrame:Hide()
+		print ("true MajorFactionRenownFrame")
+	else
+		print ("Cannot Hide MajorFactionRenownFrame")
+	end
+	-- if MajorFactionsRenownToastMixin then
+	-- 	MajorFactionsRenownToastMixin:UnregisterAllEvents()
+	-- 	MajorFactionsRenownToastMixin:Hide()
+	-- 	print ("true MajorFactionsRenownToastMixin")
+	-- else
+	-- 	print ("Cannot Hide MajorFactionsRenownToastMixin")
+	-- end
+
+
+
+	MajorFactionsRenownToastMixin:StopBanner()
+
+
+
+
+
+
+end
 local OctoTable_func_otrisovka_FIRST = {
 }
 local function Central_Frame_Mouse_OnEnter(self)
@@ -2273,6 +2316,7 @@ local function Octo_ToDo_FIRST_OnLoad()
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("VARIABLES_LOADED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_XP_UPDATE")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TIME_PLAYED_MSG")
+	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("MAJOR_FACTION_RENOWN_LEVEL_CHANGED")
 	Octo_ToDo_FIRST_Frame_EventFrame:SetScript("OnEvent", function(...)
 			Octo_ToDo_FIRST_OnEvent(...)
 	end)
@@ -7764,10 +7808,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_Player_Level()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
-	if event == "TIME_PLAYED_MSG" then
-		Collect_Played(...)
-		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
-	end
 	if (event == "COVENANT_CHOSEN" or event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED") and not InCombatLockdown() then
 		C_Timer.After(1, function()
 				Collect_SL_CovenantAnima()
@@ -7887,6 +7927,14 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 				if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 		end)
 	end
+	if event == "TIME_PLAYED_MSG" then
+		Collect_Played(...)
+		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+	end
+	-- if event == "MAJOR_FACTION_RENOWN_LEVEL_CHANGED" then
+	-- 	TryToOffMajor(...)
+	-- 	if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+	-- end
 end
 Octo_ToDo_FIRST_OnLoad()
 SLASH_Octo1, SLASH_Octo2 = "/Octo", "/OctoDF"
