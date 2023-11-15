@@ -21,6 +21,15 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
+		name_save = "HibernationHeroes",
+		reset = "Weekly",
+		expansion = "DF",
+		place = "EmeraldDream",
+		desc = "WB",
+		questID = {76367},
+		max = 1
+	},
+	{
 		name_save = "ALL",
 		reset = "Weekly",
 		expansion = "SL",
@@ -1709,7 +1718,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "DreamsUnified",
-		reset = "Weekly",
+		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "",

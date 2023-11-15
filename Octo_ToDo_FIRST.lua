@@ -31,6 +31,7 @@ local Octo_ToDo_FIRST_Frame_Options_Button = nil
 local Octo_ToDo_FIRST_Frame_MarkOfHonor_Button = nil
 local Octo_ToDo_FIRST_Frame_QuestFeast_Button = nil
 local Octo_ToDo_FIRST_Frame_Consumable_Button = nil
+local Octo_ToDo_FIRST_Frame_MAPIDICONS_Button = nil
 local Octo_ToDo_FIRST_Frame_AbandonAllQuests_Button = nil
 -- local Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton = nil
 --
@@ -841,6 +842,28 @@ local function Collect_ALL_PlayerInfo()
 		collect.raceID = raceID
 		collect.classColorHex = E.Octo_Func.func_rgb2hex(classColor.r, classColor.g, classColor.b)
 	end
+
+
+
+
+	for k, v in pairs(E.Octo_Table.OctoTable_KeystoneAbbr) do
+		local name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(v.mapChallengeModeID)
+		Octo_ToDo_DB_Other.KeystoneAbbr = Octo_ToDo_DB_Other.KeystoneAbbr or {}
+		if name and texture then
+			Octo_ToDo_DB_Other.KeystoneAbbr[name] = Octo_ToDo_DB_Other.KeystoneAbbr[name] or texture
+		end
+	end
+
+
+
+
+
+
+
+
+
+
+
 end
 local function Collect_Player_Level()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -1469,6 +1492,14 @@ local function Collect_ALL_ItemsInBag()
 		collect.totalSlots = totalSlots
 		collect.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
 	end
+
+
+
+
+
+
+
+
 end
 local function Collect_ALL_Locations()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -4439,9 +4470,9 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Globals.Weekly..E.Octo_Globals.WOW_Artifact_Color.."spark |r"..E.Octo_Func.func_questName(78381)
-					if CharInfo.Octopussy_DF_Weekly_EmeraldDreamDreamsUnified_count ~= E.Octo_Globals.NONE then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamDreamsUnified_count
+					vivodLeft = E.Octo_Globals.Once..E.Octo_Globals.WOW_Artifact_Color.."spark |r"..E.Octo_Func.func_questName(78381)
+					if CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count
 					end
 					return vivodCent, vivodLeft
 			end)
@@ -4464,7 +4495,19 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == true then
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_WB == true then -- WORLD BOSS
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_texturefromIcon("BlizzardInterfaceArt\\Interface\\Calendar\\Holidays\\Calendar_WeekendWorldQuestStart")..E.Octo_Func.func_questName(76367)
+					-- vivodLeft = WorldBoss_Icon..E.Octo_Func.func_questName(76367)
+					if CharInfo.Octopussy_DF_Weekly_WBEmeraldDreamHibernationHeroes_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_DF_Weekly_WBEmeraldDreamHibernationHeroes_count
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == true then -- REPUTATION
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4475,6 +4518,15 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
+
+
+
+
+
+
+
+
+
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4766,12 +4818,23 @@ local function O_otrisovka_FIRST()
 					-- return vivodCent, vivodLeft
 			-- end)
 		end
+
+
+
+
+
+
+
+
+
+
+
 		if Octo_ToDo_DB_Vars.config.CatalystCharges == true then
 			tinsert(OctoTable_func_otrisovka_FIRST, -- season2 2533
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					if CharInfo.CurrencyID[2796] ~= 0 then
-						vivodCent = E.Octo_Globals.Blue_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2796]).."|r"
+						vivodCent = E.Octo_Globals.Orange_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2796]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(2796)..E.Octo_Func.func_currencyName(2796)
 					return vivodCent, vivodLeft
@@ -7022,6 +7085,55 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			t:SetAllPoints(Octo_ToDo_FIRST_Frame_Consumable_Button)
 		end
 		--
+		if not Octo_ToDo_FIRST_Frame_MAPIDICONS_Button then
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 24, -180)
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetBackdrop({
+				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+				edgeSize = 1
+			})
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetBackdropBorderColor(0, .44, .98, 1)
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetScript("OnEnter", function(self)
+					local i = 0
+					self:SetBackdropBorderColor(1, 0, 0, 1)
+					self.icon:SetVertexColor(1, 0, 0, 1)
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+					GameTooltip:ClearLines()
+					GameTooltip:AddDoubleLine(" ", " ")
+					for k, v in pairs(E.Octo_Table.OctoTable_KeystoneAbbr) do
+						local name, _, _, icon = C_ChallengeMode.GetMapUIInfo(v.mapChallengeModeID)
+						if name and icon then
+							i = i + 1
+							GameTooltip:AddDoubleLine(name.." "..E.Octo_Globals.LightGray_Color..v.mapChallengeModeID.."|r", icon)
+						end
+					end
+					if i == 0 then
+						GameTooltip:AddLine("No Data")
+					end
+					GameTooltip:AddDoubleLine(" ", " ")
+					GameTooltip:Show()
+			end)
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetScript("OnLeave", function(self)
+					self:SetBackdropBorderColor(0, .44, .98, 1)
+					self.icon:SetVertexColor(1, 1, 1, 1)
+					GameTooltip:ClearLines()
+					GameTooltip:Hide()
+			end)
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetScript("OnMouseDown", function(self)
+					self:SetBackdropBorderColor(1, 0, 0, .5)
+					self.icon:SetVertexColor(1, 0, 0, .5)
+			end)
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetScript("OnClick", function()
+					Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
+			end)
+			local t = Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:CreateTexture(nil, "BACKGROUND")
+			Octo_ToDo_FIRST_Frame_MAPIDICONS_Button.icon = t
+			t:SetTexture(133784)
+			-- t:SetVertexColor(1, 1, 1, 1)
+			t:SetAllPoints(Octo_ToDo_FIRST_Frame_MAPIDICONS_Button)
+		end
+		--
 	end
 	local function CurrentNumQuests()
 		local numQuests = select(2, C_QuestLog.GetNumQuestLogEntries())
@@ -7661,6 +7773,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire == nil then Octo_ToDo_DB_Vars.config.ResearchersUnderFire = false end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens = true end -- REPUTATION
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_WB == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_WB = false end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds = false end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Crests == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Crests = false end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Sparks == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Sparks = false end
