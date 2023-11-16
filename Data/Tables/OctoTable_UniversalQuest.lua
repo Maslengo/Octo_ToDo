@@ -1556,9 +1556,10 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 			76403, 76342, 76343, 76344, 76345, 76532, 76348, 76347, 77178,
 			76327, 76328, 78646, 76329, 76330, 76334, 76332, 76331, 76335,
 			76333, 76336, 76337, 76384, 76416, 76386, 76385, 76436, 76387,
-			76388, 76389, 76398, 76401, 76402
+			76388, 76389, 76398, 76401, 76402,
+			77780, 76276, 77329, 77200, 77201, 76280, 76281, 77781, 76282, 76283
 		},
-		max = 59
+		max = 69
 	},
 	{
 		name_save = "Storylines", -- The Coalition of Flames -- L["The Coalition of Flames"]
@@ -1620,19 +1621,35 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "EmeraldDream",
 		desc = "6",
 		questID = {
-			76384, 76416, 76386, 76385, 76436, 76387, 76388, 76389, 76398, 76401
+			76384, 76416, 76386, 76385, 76436, 76387, 76388, 76389, 76398, 76401, 76402
 		},
-		max = 10
+		max = 11
 	},
 	{
-		name_save = "Storylines",
+		name_save = "Storylines", -- New Beginnings
 		reset = "Once",
 		expansion = "DF",
 		place = "EmeraldDream",
 		desc = "7",
-		questID = {76402},
-		max = 1
+		questID = {
+			77780, 76276, 77329, 77200, 77201, 76280, 76281, 77781, 76282, 76283
+		},
+		max = 10
 	},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	{
 		name_save = "APassedTorch", -- 500 Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count
 		reset = "Once",
@@ -1773,6 +1790,33 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
+
+
+	{
+		name_save = "DoomwalkinHasComeKnockin", -- Octopussy__Weekly_19yearsDoomwalkinHasComeKnockin_count
+		reset = "Weekly",
+		expansion = "",
+		place = "",
+		desc = "19years",
+		questID = {
+			60215,
+		},
+		max = 1
+	},
+
+	{
+		name_save = "SoldierofTime", -- Octopussy__Weekly_19yearsSoldierofTime_count
+		reset = "Weekly",
+		expansion = "",
+		place = "",
+		desc = "19years",
+		questID = {
+			57300,
+		},
+		max = 1
+	},
+
+
 
 
 }

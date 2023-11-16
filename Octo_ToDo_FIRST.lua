@@ -4499,8 +4499,8 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_texturefromIcon("BlizzardInterfaceArt\\Interface\\Calendar\\Holidays\\Calendar_WeekendWorldQuestStart")..E.Octo_Func.func_questName(76367)
-					-- vivodLeft = WorldBoss_Icon..E.Octo_Func.func_questName(76367)
+					-- vivodLeft = E.Octo_Func.func_texturefromIcon("BlizzardInterfaceArt\\Interface\\Calendar\\Holidays\\Calendar_WeekendWorldQuestStart")..E.Octo_Func.func_questName(76367)
+					vivodLeft = WorldBoss_Icon..E.Octo_Func.func_questName(76367)
 					if CharInfo.Octopussy_DF_Weekly_WBEmeraldDreamHibernationHeroes_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_DF_Weekly_WBEmeraldDreamHibernationHeroes_count
 					end
@@ -4654,7 +4654,7 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					vivodLeft = E.Octo_Globals.Once..L["Storyline"]
-					if CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "0/59" and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "1/59" then
+					if CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "0/69" and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "1/69" then
 						vivodCent = CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count
 							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 1: "..L["The Coalition of Flames"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_1EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_1EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
@@ -4746,13 +4746,23 @@ local function O_otrisovka_FIRST()
 								tooltip[#tooltip+1] = {"56. "..E.Octo_Func.func_questName(76389), CharInfo.OctoTable_QuestID[76389]}
 								tooltip[#tooltip+1] = {"57. "..E.Octo_Func.func_questName(76398), CharInfo.OctoTable_QuestID[76398]}
 								tooltip[#tooltip+1] = {"58. "..E.Octo_Func.func_questName(76401), CharInfo.OctoTable_QuestID[76401]}
+								tooltip[#tooltip+1] = {"59. "..E.Octo_Func.func_questName(76402), CharInfo.OctoTable_QuestID[76402]}
 							end
 							if CharInfo.Octopussy_DF_Once_7EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
 								tooltip[#tooltip+1] = {" ", " "}
 							end
 							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 7: "..L["New Beginnings"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_7EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_7EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
-								tooltip[#tooltip+1] = {"59. "..E.Octo_Func.func_questName(76402), CharInfo.OctoTable_QuestID[76402]}
+								tooltip[#tooltip+1] = {"60. "..E.Octo_Func.func_questName(77780), CharInfo.OctoTable_QuestID[77780]}
+								tooltip[#tooltip+1] = {"61. "..E.Octo_Func.func_questName(76276), CharInfo.OctoTable_QuestID[76276]}
+								tooltip[#tooltip+1] = {"62. "..E.Octo_Func.func_questName(77329), CharInfo.OctoTable_QuestID[77329]}
+								tooltip[#tooltip+1] = {"63. "..E.Octo_Func.func_questName(77200), CharInfo.OctoTable_QuestID[77200]}
+								tooltip[#tooltip+1] = {"64. "..E.Octo_Func.func_questName(77201), CharInfo.OctoTable_QuestID[77201]}
+								tooltip[#tooltip+1] = {"65. "..E.Octo_Func.func_questName(76280), CharInfo.OctoTable_QuestID[76280]}
+								tooltip[#tooltip+1] = {"66. "..E.Octo_Func.func_questName(76281), CharInfo.OctoTable_QuestID[76281]}
+								tooltip[#tooltip+1] = {"67. "..E.Octo_Func.func_questName(77781), CharInfo.OctoTable_QuestID[77781]}
+								tooltip[#tooltip+1] = {"68. "..E.Octo_Func.func_questName(76282), CharInfo.OctoTable_QuestID[76282]}
+								tooltip[#tooltip+1] = {"69. "..E.Octo_Func.func_questName(76283), CharInfo.OctoTable_QuestID[76283]}
 							end
 					end
 					return vivodCent, vivodLeft
@@ -4782,16 +4792,16 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamMemoryoftheDreamer_count == E.Octo_Globals.DONE then
 						count = count + 1
 					end
-					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count == E.Octo_Globals.DONE then
-						count = count + 1
-					end
 					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamADragoninHand_count == E.Octo_Globals.DONE then
 						count = count + 1
 					end
-					if count == 7 then
+					if CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count == E.Octo_Globals.DONE then
+						count = count + 1
+					end
+					if count == 9 then
 						vivodCent = E.Octo_Globals.DONE
 					else
-						vivodCent = count.."/7"
+						vivodCent = count.."/9"
 						if count == 0 then
 							vivodCent = ""
 						end
@@ -4803,8 +4813,8 @@ local function O_otrisovka_FIRST()
 					tooltip[#tooltip+1] = {"Sky Mothers Ire"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamSkyMothersIre_count}
 					tooltip[#tooltip+1] = {"A Call to Aid"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamACalltoAid_count}
 					tooltip[#tooltip+1] = {"Memory of the Dreamer"..E.Octo_Globals.Blue_Color.." 1500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamMemoryoftheDreamer_count}
-					tooltip[#tooltip+1] = {"A Passed Torch"..E.Octo_Globals.Blue_Color.." 500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count}
 					tooltip[#tooltip+1] = {"A Dragon in Hand"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamADragoninHand_count}
+					tooltip[#tooltip+1] = {"A Passed Torch"..E.Octo_Globals.Blue_Color.." 500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count}
 					vivodLeft = E.Octo_Globals.Once.."Side quests"
 					return vivodCent, vivodLeft
 			end)
@@ -5484,6 +5494,28 @@ local function O_otrisovka_FIRST()
 						vivodLeft = E.Octo_Func.func_texturefromIcon(307568)..E.Octo_Globals.Once..Octo_ToDo_DB_Other.Holiday.Collect[409]
 						if CharInfo.Octopussy_DF_Once_DayoftheDead_count ~= E.Octo_Globals.NONE then
 							vivodCent = CharInfo.Octopussy_DF_Once_DayoftheDead_count
+						end
+						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+			end -- for 409
+			if Octo_ToDo_DB_Other.Holiday.Active[1397] then -- 19 годовщина вов
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(136235)..E.Octo_Globals.Weekly..E.Octo_Func.func_questName(60215)
+						if CharInfo.Octopussy__Weekly_19yearsDoomwalkinHasComeKnockin_count ~= E.Octo_Globals.NONE then
+							vivodCent = CharInfo.Octopussy__Weekly_19yearsDoomwalkinHasComeKnockin_count
+						end
+						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(136235)..E.Octo_Globals.Weekly..E.Octo_Func.func_questName(57300)
+						if CharInfo.Octopussy__Weekly_19yearsSoldierofTime_count ~= E.Octo_Globals.NONE then
+							vivodCent = CharInfo.Octopussy__Weekly_19yearsSoldierofTime_count
 						end
 						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
