@@ -4654,8 +4654,9 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					vivodLeft = E.Octo_Globals.Once..L["Storyline"]
-					if CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "0/69" and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "1/69" then
+					if CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "0/68" and CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= "1/68" then
 						vivodCent = CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count
+						if CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
 							tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("Chapter 1: "..L["The Coalition of Flames"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), CharInfo.Octopussy_DF_Once_1EmeraldDreamStorylines_count}
 							if CharInfo.Octopussy_DF_Once_1EmeraldDreamStorylines_count ~= E.Octo_Globals.DONE then
 								tooltip[#tooltip+1] = {"1. "..E.Octo_Func.func_questName(76982), CharInfo.OctoTable_QuestID[76982]}
@@ -4757,13 +4758,14 @@ local function O_otrisovka_FIRST()
 								tooltip[#tooltip+1] = {"61. "..E.Octo_Func.func_questName(76276), CharInfo.OctoTable_QuestID[76276]}
 								tooltip[#tooltip+1] = {"62. "..E.Octo_Func.func_questName(77329), CharInfo.OctoTable_QuestID[77329]}
 								tooltip[#tooltip+1] = {"63. "..E.Octo_Func.func_questName(77200), CharInfo.OctoTable_QuestID[77200]}
-								tooltip[#tooltip+1] = {"64. "..E.Octo_Func.func_questName(77201), CharInfo.OctoTable_QuestID[77201]}
-								tooltip[#tooltip+1] = {"65. "..E.Octo_Func.func_questName(76280), CharInfo.OctoTable_QuestID[76280]}
-								tooltip[#tooltip+1] = {"66. "..E.Octo_Func.func_questName(76281), CharInfo.OctoTable_QuestID[76281]}
-								tooltip[#tooltip+1] = {"67. "..E.Octo_Func.func_questName(77781), CharInfo.OctoTable_QuestID[77781]}
-								tooltip[#tooltip+1] = {"68. "..E.Octo_Func.func_questName(76282), CharInfo.OctoTable_QuestID[76282]}
-								tooltip[#tooltip+1] = {"69. "..E.Octo_Func.func_questName(76283), CharInfo.OctoTable_QuestID[76283]}
+								-- tooltip[#tooltip+1] = {"64. "..E.Octo_Func.func_questName(77201), CharInfo.OctoTable_QuestID[77201]}
+								tooltip[#tooltip+1] = {"64. "..E.Octo_Func.func_questName(76280), CharInfo.OctoTable_QuestID[76280]}
+								tooltip[#tooltip+1] = {"65. "..E.Octo_Func.func_questName(76281), CharInfo.OctoTable_QuestID[76281]}
+								tooltip[#tooltip+1] = {"66. "..E.Octo_Func.func_questName(77781), CharInfo.OctoTable_QuestID[77781]}
+								tooltip[#tooltip+1] = {"67. "..E.Octo_Func.func_questName(76282), CharInfo.OctoTable_QuestID[76282]}
+								tooltip[#tooltip+1] = {"68. "..E.Octo_Func.func_questName(76283), CharInfo.OctoTable_QuestID[76283]}
 							end
+						end
 					end
 					return vivodCent, vivodLeft
 			end)
@@ -4806,15 +4808,17 @@ local function O_otrisovka_FIRST()
 							vivodCent = ""
 						end
 					end
-					tooltip[#tooltip+1] = {"Trouble at the Tree"..E.Octo_Globals.Blue_Color.." 250|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTroubleattheTree_count}
-					tooltip[#tooltip+1] = {"A Sleepy Search"..E.Octo_Globals.Blue_Color.." 500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamASleepySearch_count}
-					tooltip[#tooltip+1] = {"The Dryad Garden"..E.Octo_Globals.Blue_Color.." 750|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTheDryadGarden_count}
-					tooltip[#tooltip+1] = {"The Qonzu Query"..E.Octo_Globals.Blue_Color.." 900-1200|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTheQonzuQuery_count}
-					tooltip[#tooltip+1] = {"Sky Mothers Ire"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamSkyMothersIre_count}
-					tooltip[#tooltip+1] = {"A Call to Aid"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamACalltoAid_count}
-					tooltip[#tooltip+1] = {"Memory of the Dreamer"..E.Octo_Globals.Blue_Color.." 1500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamMemoryoftheDreamer_count}
-					tooltip[#tooltip+1] = {"A Dragon in Hand"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamADragoninHand_count}
-					tooltip[#tooltip+1] = {"A Passed Torch"..E.Octo_Globals.Blue_Color.." 500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count}
+					if vivodCent ~= E.Octo_Globals.DONE then
+						tooltip[#tooltip+1] = {"Trouble at the Tree"..E.Octo_Globals.Blue_Color.." 250|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTroubleattheTree_count}
+						tooltip[#tooltip+1] = {"A Sleepy Search"..E.Octo_Globals.Blue_Color.." 500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamASleepySearch_count}
+						tooltip[#tooltip+1] = {"The Dryad Garden"..E.Octo_Globals.Blue_Color.." 750|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTheDryadGarden_count}
+						tooltip[#tooltip+1] = {"The Qonzu Query"..E.Octo_Globals.Blue_Color.." 900-1200|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamTheQonzuQuery_count}
+						tooltip[#tooltip+1] = {"Sky Mothers Ire"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamSkyMothersIre_count}
+						tooltip[#tooltip+1] = {"A Call to Aid"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamACalltoAid_count}
+						tooltip[#tooltip+1] = {"Memory of the Dreamer"..E.Octo_Globals.Blue_Color.." 1500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamMemoryoftheDreamer_count}
+						tooltip[#tooltip+1] = {"A Dragon in Hand"..E.Octo_Globals.Blue_Color.." 1000|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamADragoninHand_count}
+						tooltip[#tooltip+1] = {"A Passed Torch"..E.Octo_Globals.Blue_Color.." 500|r", CharInfo.Octopussy_DF_Once_SidequestsEmeraldDreamAPassedTorch_count}
+					end
 					vivodLeft = E.Octo_Globals.Once.."Side quests"
 					return vivodCent, vivodLeft
 			end)

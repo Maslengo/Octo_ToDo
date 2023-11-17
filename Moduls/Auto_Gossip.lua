@@ -72,6 +72,9 @@ tinsert(E.Octo_Globals.modules, function()
 							[199198] = true,
 							[56592] = true, -- DONE ДАГЕРА
 							[188246] = true,
+
+
+							[206941] = true,
 						}
 						local Second_Option = {
 							[201398] = true,

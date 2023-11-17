@@ -3,6 +3,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.Octo_Table.OctoTable_itemID_ItemsUsable =
 	{
+		[201437] = 5,
 		[31373] = 5,
 		[169491] = 3,
 		[174756] = 6,
