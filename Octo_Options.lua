@@ -21,7 +21,7 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 -- fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
 -- local fontObject12 = CreateFont("OctoFont12")
 -- fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
-local indent = 19.5
+local indent = 19
 local POS_LEFT = 6
 local POS_RIGHT = 474
 local POS_CENTER = POS_RIGHT/2
@@ -122,56 +122,82 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 		-- self[number..pos..config].text:SetText(color..text..FONT_COLOR_CODE_CLOSE)
 	end
 end
+-- local function Create_EditBox(scroll, self, number, pos, config)
+-- 	if not color then
+-- 		color = "|cffFFFFFF"
+-- 	end
+-- 	if not self[number..pos] then
+-- 		self[number..pos] = CreateFrame("Button", nil, scroll, "SecureActionButtonTemplate, BackDropTemplate")
+-- 		self[number..pos]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos, -indent*(number-1))
+-- 		self[number..pos]:SetSize(indent*6, 20)
+-- 		self[number..pos]:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+-- 		self[number..pos]:SetBackdropBorderColor(0, 0, 0, 1)
+-- 		local editBox = CreateFrame("EditBox", nil, self[number..pos])
+-- 		editBox:SetAllPoints(self[number..pos])
+-- 		editBox:SetFontObject(OctoFont12)
+-- 		editBox:SetMultiLine(false)
+-- 		editBox:SetAutoFocus(false)
+-- 		editBox:SetText(Octo_ToDo_DB_Vars.config[config])
+-- 		editBox:SetJustifyV("MIDDLE")
+-- 		editBox:SetJustifyH("CENTER")
+-- 		editBox:SetScript("OnEscapePressed", editBox.ClearFocus)
+-- 		editBox:SetScript("OnEnterPressed", editBox.ClearFocus)
+-- 		editBox:SetScript("OnTextChanged", function()
+-- 			Octo_ToDo_DB_Vars.config[config] = editBox:GetText()  -- 000AD0FD (0AE9B27E RETAIL)
+-- 		end)
+-- 	end
+-- end
+
+local editBoxBackdrop = {
+	bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+	edgeFile = "Interface\\ChatFrame\\ChatFrameBackground",
+	tile = true, edgeSize = 1, tileSize = 5,
+}
 local function Create_EditBox(scroll, self, number, pos, config)
 	if not color then
 		color = "|cffFFFFFF"
 	end
+	-- for i=0, 0xffff do
+	-- 	print (i)
+	-- end
 	if not self[number..pos] then
 		self[number..pos] = CreateFrame("Button", nil, scroll, "SecureActionButtonTemplate, BackDropTemplate")
 		self[number..pos]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos, -indent*(number-1))
 		self[number..pos]:SetSize(indent*6, 20)
-		self[number..pos]:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+		-- self[number..pos]:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
+		self[number..pos]:SetBackdrop(editBoxBackdrop)
 		self[number..pos]:SetBackdropBorderColor(0, 0, 0, 1)
-		local editBox = CreateFrame("EditBox", nil, self[number..pos])
-		editBox:SetAllPoints(self[number..pos])
-		editBox:SetFontObject(fontObject12)
-		editBox:SetMultiLine(false)
+		self[number..pos]:SetBackdropColor(0, 0, 0, 0.5)
+		self[number..pos]:SetBackdropBorderColor(0.3, 0.3, 0.30, 0.80)
+		local editBox = CreateFrame("EditBox", "EditBox"..number..pos, self[number..pos])
 		editBox:SetAutoFocus(false)
+		editBox:SetFontObject(OctoFont12)
+		editBox:SetJustifyH("CENTER")
+		editBox:EnableMouse(true)
+
+		editBox:SetAllPoints(self[number..pos])
+		editBox:SetMultiLine(false)
 		editBox:SetText(Octo_ToDo_DB_Vars.config[config])
 		editBox:SetJustifyV("MIDDLE")
-		editBox:SetJustifyH("CENTER")
 		editBox:SetScript("OnEscapePressed", editBox.ClearFocus)
 		editBox:SetScript("OnEnterPressed", editBox.ClearFocus)
-		-- editBox:SetScript("OnCursorChanged", function()
-		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
-		-- end)
-		-- editBox:SetScript("OnEditFocusLost", function()
-		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
-		-- end)
-		-- editBox:SetScript("OnEnter", function()
-		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
-		-- end)
-		-- editBox:SetScript("OnLeave", function()
-		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
-		-- end)
-		-- editBox:SetScript("OnMouseDown", function()
-		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
-		-- end)
-		-- editBox:SetScript("OnReceiveDrag", function()
-		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
-		-- end)
-		-- editBox:SetScript("OnTextSet", function()
-		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
-		-- end)
-		-- editBox:SetScript("OnEditFocusGained", function()
-		-- 	if Octo_ToDo_DB_Vars.config[config] == "" then Octo_ToDo_DB_Vars.config[config] = E.Octo_Globals.NONE end
-		-- end)
 		editBox:SetScript("OnTextChanged", function()
 			Octo_ToDo_DB_Vars.config[config] = editBox:GetText()  -- 000AD0FD (0AE9B27E RETAIL)
-			-- print (Octo_ToDo_DB_Vars.config[config], editBox:GetText())
 		end)
 	end
 end
+
+
+
+
+
+
+
+
+
+
+
+
 local function Create_Frame_Color(scroll, self, number, pos, text, color)
 	if not color then
 		color = "|cffFFFFFF"
@@ -342,7 +368,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, "Achievements", E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
 		Create_CheckButton(MAIN_scrollChild, self, 27, POS_RIGHT, "ShowTotalMoney", "Всего денег")
 		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, "ShowTimeAll", "Общее время игры")
-		-- Create_EditBox(MAIN_scrollChild, self, 22, POS_RIGHT, "security")
+		Create_EditBox(MAIN_scrollChild, self, 30, POS_RIGHT, "security")
 		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "ReloadUI", "ReloadUI")
 end)
 local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, AddonTitle)

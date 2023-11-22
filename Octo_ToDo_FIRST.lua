@@ -83,6 +83,16 @@ local Meta_Table_true = {__index = function() return true end}
 local Meta_Table_DONE = {__index = function() return E.Octo_Globals.DONE end}
 local Meta_Table_NONE = {__index = function() return E.Octo_Globals.NONE end}
 local Meta_Table_Empty = {__index = function() return "" end}
+
+local function Hide_Frames()
+	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Hide_Frames".."|r")
+	end
+	if WeeklyRewardExpirationWarningDialog and WeeklyRewardExpirationWarningDialog:IsShown() then
+		ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Hide: WeeklyRewardExpirationWarningDialog", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+		WeeklyRewardExpirationWarningDialog:Hide()
+	end
+end
 local function ConcatAtStart()
 	E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.FirstAid)
 	E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.Blacksmithing)
@@ -657,6 +667,7 @@ local function CreateFrameUsableItems(itemID, Texture, count, Xpos, Ypos, r, g, 
 	return Button
 end
 --
+
 local function CreateFrameUsableSpells_OnEnter(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."CreateFrameUsableSpells_OnEnter".."|r")
@@ -853,15 +864,6 @@ local function Collect_ALL_PlayerInfo()
 			Octo_ToDo_DB_Other.KeystoneAbbr[name] = Octo_ToDo_DB_Other.KeystoneAbbr[name] or texture
 		end
 	end
-
-
-
-
-
-
-
-
-
 
 
 end
@@ -1494,7 +1496,78 @@ local function Collect_ALL_ItemsInBag()
 	end
 
 
+function Collect_ALL_EncounterAndZoneLists()
+	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_EncounterAndZoneLists()".."|r")
+	end
+	-- local curGUID = UnitGUID("PLAYER")
+	-- local collect = Octo_ToDo_DB_Levels[curGUID]
+	--
+	Octo_ToDo_DB_Other = Octo_ToDo_DB_Other or {}
+	Octo_ToDo_DB_Other.EncounterAndZoneLists = Octo_ToDo_DB_Other.EncounterAndZoneLists or {}
+	local encounter_list = ""
+	local zoneId_list = ""
 
+	local currTier = EJ_GetCurrentTier()
+	if encounter_list ~= "" then
+		return
+	end
+	for tier = 1, EJ_GetNumTiers() do
+		Octo_ToDo_DB_Other.EncounterAndZoneLists[tier] = Octo_ToDo_DB_Other.EncounterAndZoneLists[tier] or {}
+		EJ_SelectTier(tier)
+		local tierName = EJ_GetTierInfo(tier)
+		for _, inRaid in ipairs({false, true}) do
+			local instance_index = 1
+			local instance_id = EJ_GetInstanceByIndex(instance_index, inRaid)
+			local title = ("%s %s"):format(tierName , inRaid and "Рейды" or "Подземелья")
+			local zones = ""
+			while instance_id do
+				EJ_SelectInstance(instance_id)
+				local instance_name, _, _, _, _, _, dungeonAreaMapID = EJ_GetInstanceInfo(instance_id)
+				Octo_ToDo_DB_Other.EncounterAndZoneLists[tier][instance_name] = Octo_ToDo_DB_Other.EncounterAndZoneLists[tier][instance_name] or {}
+				Octo_ToDo_DB_Other.EncounterAndZoneLists[tier][instance_name].dungeonAreaMapID = dungeonAreaMapID
+				-- print (instance_name)
+				local ej_index = 1
+				local boss, _, _, _, _, _, encounter_id = EJ_GetEncounterInfoByIndex(ej_index, instance_id)
+				-- zone ids
+				if dungeonAreaMapID and dungeonAreaMapID ~= 0 then
+					local mapGroupId = C_Map.GetMapGroupID(dungeonAreaMapID)
+					if mapGroupId then -- If there's a group id, only list that one
+						zones = ("%s%s: g%d\n"):format(zones, instance_name, mapGroupId)
+					else
+						zones = ("%s%s: %d\n"):format(zones, instance_name, dungeonAreaMapID)
+					end
+					Octo_ToDo_DB_Other.EncounterAndZoneLists[tier][instance_name].zones = zones
+				end
+				-- Encounter ids
+				if inRaid then
+					while boss do
+						if encounter_id then
+							if instance_name then
+								encounter_list = ("%s|cffffd200%s|r\n"):format(encounter_list, instance_name)
+								instance_name = nil -- Only add it once per section
+							end
+							encounter_list = ("%s%s: %d\n"):format(encounter_list, boss, encounter_id)
+						end
+						ej_index = ej_index + 1
+						boss, _, _, _, _, _, encounter_id = EJ_GetEncounterInfoByIndex(ej_index, instance_id)
+					end
+					encounter_list = encounter_list .. "\n"
+				end
+				instance_index = instance_index + 1
+				instance_id = EJ_GetInstanceByIndex(instance_index, inRaid)
+			end
+			if zones ~= "" then
+				zoneId_list = ("%s|cffffd200%s|r\n"):format(zoneId_list, title)
+				zoneId_list = zoneId_list .. zones.. "\n"
+			end
+		end
+	end
+	EJ_SelectTier(currTier) -- restore previously selected tier
+	encounter_list = encounter_list:sub(1, -3) .. "\n\n" .. "Можно указать несколько значений, разделенных запятыми."
+	-- print (encounter_list)
+
+end
 
 
 
@@ -2045,6 +2118,7 @@ local function Collect_All_Quest_Tooltip()
 	--
 	collect.DreamsurgeInvestigation = E.Octo_Func.All_objectives(qwid)
 end
+
 local function Timer_Legion_Invasion()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Legion_Invasion".."|r")
@@ -4974,6 +5048,15 @@ local function O_otrisovka_FIRST()
 					end
 					return vivodCent, vivodLeft
 			end)
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(210944)..E.Octo_Globals.WOW_Epic_Color .. E.Octo_Func.func_itemName_NOCOLOR(210944).."|r"
+					if CharInfo.ItemsInBag[210944] ~= 0 then
+						vivodCent = E.Octo_Globals.WOW_Artifact_Color .. CharInfo.ItemsInBag[210944].."|r"
+					end
+					return vivodCent, vivodLeft
+			end)
 		end
 		if Octo_ToDo_DB_Vars.config.TimeRift == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -6370,6 +6453,20 @@ local function O_otrisovka_FIRST()
 					else
 						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206960)..E.Octo_Globals.Gray_Color..E.Octo_Func.func_itemName_NOCOLOR(206960).."|r", E.Octo_Globals.Gray_Color..CharInfo.ItemsInBag[206960].."|r"}
 					end
+					if CharInfo.ItemsInBag[206961] >= 1 then
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206961)..E.Octo_Func.func_itemName(206961), CharInfo.ItemsInBag[206961]}
+					else
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206961)..E.Octo_Globals.Gray_Color..E.Octo_Func.func_itemName_NOCOLOR(206961).."|r", E.Octo_Globals.Gray_Color..CharInfo.ItemsInBag[206961].."|r"}
+					end
+					if CharInfo.ItemsInBag[210944] >= 1 then
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(210944)..E.Octo_Func.func_itemName(210944), CharInfo.ItemsInBag[210944]}
+					else
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(210944)..E.Octo_Globals.Gray_Color..E.Octo_Func.func_itemName_NOCOLOR(210944).."|r", E.Octo_Globals.Gray_Color..CharInfo.ItemsInBag[210944].."|r"}
+					end
+
+
+
+
 					if CharInfo.ItemsInBag[206959] >= 1 then
 						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206959)..E.Octo_Func.func_itemName(206959), CharInfo.ItemsInBag[206959]}
 					else
@@ -7472,9 +7569,6 @@ end
 			CreateFrameUsableItems(110560, 1041860, 1, Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
 			CreateFrameUsableItems(6948, 134414, 1, Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 			CreateFrameUsableItems(140192, 1444943, 1, Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-			CreateFrameUsableItems(208066, 656680, 1, Xpos*11+Ypos*1, Ypos*12, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-			CreateFrameUsableItems(208067, 656679, 1, Xpos*12+Ypos*1, Ypos*13, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-			CreateFrameUsableItems(208047, 656681, 1, Xpos*13+Ypos*1, Ypos*14, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 			if classFilename == "DRUID" then
 				CreateFrameUsableSpells(193753, select(3, GetSpellInfo(193753)), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Сноходец
 			end
@@ -7495,9 +7589,6 @@ end
 			CreateFrameUsableItems(110560, 1041860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
 			CreateFrameUsableItems(6948, 134414, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 			CreateFrameUsableItems(140192, 1444943, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-			CreateFrameUsableItems(208066, 656680, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-			CreateFrameUsableItems(208067, 656679, 1, Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-			CreateFrameUsableItems(208047, 656681, 1, Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 			if classFilename == "DRUID" then
 				CreateFrameUsableSpells(193753, select(3, GetSpellInfo(193753)), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Сноходец
 			end
@@ -7535,20 +7626,25 @@ end
 			for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF) do
 				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*7, (Ypos*k), 0, .43, .86)
 			end
+			for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF_S3) do
+				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
+			end
+
+
 			if classFilename == "MAGE" and Faction == "Horde" then
 				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Horde) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
 				end
 				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Horde) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
 				end
 			end
 			if classFilename == "MAGE" and Faction == "Alliance" then
 				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Alliance) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
 				end
 				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
 				end
 			end
 			-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
@@ -7629,10 +7725,10 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	sort(sorted, function(a, b)
 			if a and b then
 				return
-				a.curServer < b.curServer or a.curServer == b.curServer
-				and
-				a.UnitLevel < b.UnitLevel or a.UnitLevel == b.UnitLevel
-				and
+				-- a.curServer < b.curServer or a.curServer == b.curServer
+				-- and
+				-- a.UnitLevel < b.UnitLevel or a.UnitLevel == b.UnitLevel
+				-- and
 				a.avgItemLevel < b.avgItemLevel or a.avgItemLevel == b.avgItemLevel
 				and
 				b.Name < a.Name
@@ -7966,7 +8062,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 							Collect_All_journalInstance()
 							Collect_Player_Level()
 							Collect_WarMode()
+							-- Collect_ALL_EncounterAndZoneLists()
 							Octo_ToDo_FIRST_AddDataToAltFrame()
+							Hide_Frames()
 						end
 					else
 						if Octo_ToDo_FIRST_Frame_Main_FramePIZDA and Octo_ToDo_FIRST_Frame_Main_FramePIZDA:IsShown() then
@@ -8011,16 +8109,16 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		-- local security_count = 0
-		-- for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-		-- 	local a, b, c = strsplit("-", curCharGUID)
-		-- 	if tostring(c) == tostring(Octo_ToDo_DB_Vars.config.security) then
-		-- 		security_count = security_count + 1
-		-- 	end
-		-- end
-		-- if security_count == 0 then
-		-- 	return
-		-- end
+		local security_count = 0
+		for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+			local a, b, c = strsplit("-", curCharGUID)
+			if tostring(c) == tostring(Octo_ToDo_DB_Vars.config.security) then
+				security_count = security_count + 1
+			end
+		end
+		if security_count == 0 then
+			return
+		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
@@ -8054,6 +8152,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		RequestTimePlayed()
 		Octo_ToDo_FIRST_CreateAltFrame()
 		Octo_ToDo_FIRST_AddDataToAltFrame()
+		Hide_Frames()
 		C_Timer.After(5, function()
 				if Octo_ToDo_DB_Vars.config.AnotherAddonsRAID then
 					Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = false
