@@ -27,6 +27,9 @@ local Octo_ToDo_SECOND_Frame_Char_FrameDeleteButton = nil
 ----------------------------------------------------------------
 local className, classFilename, classId = UnitClass("PLAYER")
 local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
+local classColor = C_ClassColor.GetClassColor(classFilename)
+local r, g, b = classColor:GetRGB()
+local classColorHexCurrent = E.Octo_Func.func_rgb2hex(r, g, b)
 local Horde_Icon = E.Octo_Func.func_texturefromIcon(132485)--"|T132485:16:16:::64:64:4:60:4:60|t"
 local Alliance_Icon = E.Octo_Func.func_texturefromIcon(132486)--"|T132486:16:16:::64:64:4:60:4:60|t"
 local Kyrian_Icon = E.Octo_Func.func_texturefromIcon(3257748)--"|T3257748:16:16:::64:64:4:60:4:60|t"
@@ -40,9 +43,7 @@ local Token_Icon = E.Octo_Func.func_texturefromIcon(1120721)--"|T1120721:16:16::
 local Money_Icon = E.Octo_Func.func_texturefromIcon(133784, 12)--"|T133784:12:12:::64:64:4:64:4:64|t"
 -- local MailBox_Icon = "|T1418621:12:12:::64:64:4:64:4:64|t"
 -- local MailBox_Icon = "|T".."Interface/AddOns/Octo_ToDo/Media/ElvUI/Mail0.tga"..":12:12:::64:64:4:64:4:64|t"
-local MailBox_Icon = "|T1506457:12:12:::64:64:4:64:4:64|t"
-local classColor = C_ClassColor.GetClassColor(classFilename)
-local r, g, b = classColor:GetRGB()
+local MailBox_Icon = E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga")
 -- local fontObject9 = CreateFont("OctoFont9")
 -- fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 9, "OUTLINE")
 -- local fontObject10 = CreateFont("OctoFont10")
@@ -258,22 +259,124 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		end)
 	end
 	--
-	if not dd then
-		local dd = lsfdd:CreateStretchButtonOriginal(Octo_ToDo_SECOND_Frame_Main_Frame, 160, 22) -- lsfdd:CreateButton
-		dd:SetPoint("BOTTOMLEFT", Octo_ToDo_SECOND_Frame_Main_Frame, "TOPLEFT", 0, 2)
-		-- dd:ddSetSelectedValue(Octo_ToDo_DB_Vars.config.AchievementToShow)
+	-- if not dd_SECOND then
+	-- 	local dd_SECOND = lsfdd:CreateStretchButtonOriginal(Octo_ToDo_SECOND_Frame_Main_Frame, 160, 20) -- lsfdd:CreateButton
+	-- 	dd_SECOND:SetPoint("BOTTOMLEFT", Octo_ToDo_SECOND_Frame_Main_Frame, "TOPLEFT", 0, 2)
+	-- 	-- dd_SECOND:ddSetSelectedValue(Octo_ToDo_DB_Vars.config.AchievementToShow)
+	-- 	local function selectFunctionAchievementToShow(menuButton)
+	-- 		-- dd_SECOND:ddSetSelectedValue(menuButton.value)
+	-- 		Octo_ToDo_DB_Vars.config.AchievementToShow = menuButton.value
+	-- 		StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	-- 	end
+	-- 	-- dd_SECOND:SetText(OPTIONS)
+	-- 	dd_SECOND:SetText(ACHIEVEMENT_TITLE.." "..E.Octo_Globals.Green_Color..GetTotalAchievementPoints(false).."|r")
+	-- 	dd_SECOND:ddSetDisplayMode(GlobalAddonName)
+
+	-- 	dd_SECOND:ddSetOpenMenuUp(true)  -- NEW
+	-- 	dd_SECOND:ddSetNoGlobalMouseEvent(true)  -- NEW
+	-- 	dd_SECOND:ddHideWhenButtonHidden()  -- NEW
+	-- 	dd_SECOND:SetScript("OnClick", function(self)
+	-- 		self:ddToggle(1, nil, self, self:GetWidth(), self:GetHeight())
+	-- 	end)
+	-- 	dd_SECOND:ddSetInitFunc(function(self, level, value)
+	-- 			local info = {}
+	-- 			local categories = GetCategoryList()
+	-- 			local categoryID
+	-- 			local name, parentCategoryID, total, completed
+	-- 			-- if level == 1 then
+	-- 			-- 	info.notCheckable = true
+	-- 			-- 	info.text = ACHIEVEMENT_TITLE.." "..E.Octo_Globals.Green_Color..GetTotalAchievementPoints(false).."|r"
+	-- 			-- 	self:ddAddButton(info, level)
+	-- 			-- 	self:ddAddSeparator(level)
+	-- 			-- end
+	-- 			for i = 1, #categories do
+	-- 				categoryID = categories[i]
+	-- 				name, parentCategoryID = GetCategoryInfo(categoryID)
+	-- 				total, completed = GetCategoryNumAchievements(categoryID, true)
+	-- 				local vivod =  " ("..completed.."/"..total..")"
+	-- 				if total == completed then
+	-- 					vivod = " "..E.Octo_Globals.DONE
+	-- 				else
+	-- 					if completed == 0 then
+	-- 						vivod = E.Octo_Globals.Red_Color..vivod.."|r"
+	-- 					else
+	-- 						vivod = E.Octo_Globals.Yellow_Color..vivod.."|r"
+	-- 					end
+	-- 				end
+	-- 				if parentCategoryID == value or parentCategoryID == -1 and not value then
+	-- 					info.fontObject = OctoFont11
+	-- 					info.hasArrow = parentCategoryID == -1 and categoryID ~= 92
+	-- 					info.keepShownOnClick = true
+	-- 					info.notCheckable = false
+	-- 					info.text = name ..vivod --.. E.Octo_Globals.Gray_Color.." id:"..categoryID.."|r"
+	-- 					info.value = categoryID
+	-- 					info.checked = Octo_ToDo_DB_Vars.config.AchievementToShow == categoryID
+	-- 					info.func = selectFunctionAchievementToShow
+	-- 					self:ddAddButton(info, level)
+	-- 				end
+	-- 			end
+	-- 			if level == 1 then
+	-- 				self:ddAddSeparator(level)
+	-- 				info.fontObject = OctoFont11
+	-- 				info.keepShownOnClick = true
+	-- 				info.notCheckable = false
+	-- 				info.isNotRadio = true
+	-- 				info.text = "Показывать завершенные"
+	-- 				info.hasArrow = nil
+	-- 				info.checked = Octo_ToDo_DB_Vars.config.AchievementShowCompleted
+	-- 				info.func = function(_,_,_, checked)
+	-- 					Octo_ToDo_DB_Vars.config.AchievementShowCompleted = checked
+	-- 					StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+	-- 				end
+	-- 				self:ddAddButton(info, level)
+	-- 			end
+	-- 	end)
+	-- end
+
+
+	if not dd_SECOND then
+		-- local dd_SECOND = lsfdd:CreateStretchButton(Octo_ToDo_SECOND_Frame_Main_Frame, 160, 22) -- CreateStretchButtonOriginal
+		local dd_SECOND = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_SECOND_Frame_Main_Frame, "SecureActionButtonTemplate, BackDropTemplate")
+		local multiply = (1/3)*2
+		dd_SECOND:SetSize(E.Octo_Globals.curWidthTitleAchievement*multiply, E.Octo_Globals.curHeight*multiply)
+		dd_SECOND:SetBackdrop({
+			bgFile = bgFile,
+			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+			edgeSize = 1
+		})
+		dd_SECOND:SetBackdropColor(E.Octo_Globals.bgCr, E.Octo_Globals.bgCg, E.Octo_Globals.bgCb, E.Octo_Globals.bgCa)
+		dd_SECOND:SetBackdropBorderColor(0, 0, 0, 1) -- бордер
+		dd_SECOND.ExpandArrow = dd_SECOND:CreateTexture(nil, "ARTWORK")
+		dd_SECOND.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
+		dd_SECOND.ExpandArrow:SetSize(16*multiply, 16*multiply)
+		dd_SECOND.ExpandArrow:SetPoint("RIGHT", -4, 0)
+		dd_SECOND.text = dd_SECOND:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		dd_SECOND.text:SetAllPoints()
+		dd_SECOND.text:SetFontObject(OctoFont11)
+		dd_SECOND.text:SetJustifyV("MIDDLE")
+		dd_SECOND.text:SetJustifyH("CENTER")
+		dd_SECOND.text:SetTextColor(1, 1, 1, 1)
+		dd_SECOND.text:SetText(classColorHexCurrent..ACHIEVEMENT_TITLE.."|r".." "..E.Octo_Globals.Green_Color..GetTotalAchievementPoints(false).."|r")
+		-- dd_SECOND.text:SetText(classColorHexCurrent..L["Characters"].."|r")
+		lsfdd:SetMixin(dd_SECOND)
+		dd_SECOND:SetPoint("BOTTOMLEFT", Octo_ToDo_SECOND_Frame_Main_Frame, "TOPLEFT", 0, 1)
+		dd_SECOND:ddSetDisplayMode(GlobalAddonName)
+		dd_SECOND:ddSetOpenMenuUp(true)  -- NEW
+		dd_SECOND:ddSetNoGlobalMouseEvent(true)  -- NEW
+		dd_SECOND:ddHideWhenButtonHidden()  -- NEW
+		dd_SECOND:RegisterForClicks("LeftButtonUp")
+		dd_SECOND:SetScript("OnClick", function(self)
+				self:ddToggle(1, nil, self, self:GetWidth()+1, -self:GetHeight())
+		end)
+
 		local function selectFunctionAchievementToShow(menuButton)
-			-- dd:ddSetSelectedValue(menuButton.value)
+			-- dd_SECOND:ddSetSelectedValue(menuButton.value)
 			Octo_ToDo_DB_Vars.config.AchievementToShow = menuButton.value
 			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
-		-- dd:SetText(OPTIONS)
-		dd:SetText(ACHIEVEMENT_TITLE.." "..E.Octo_Globals.Green_Color..GetTotalAchievementPoints(false).."|r")
-		dd:ddSetDisplayMode(GlobalAddonName)
-		dd:SetScript("OnClick", function(self)
-			self:ddToggle(1, nil, self, self:GetWidth(), self:GetHeight())
-		end)
-		dd:ddSetInitFunc(function(self, level, value)
+
+
+		dd_SECOND:ddSetInitFunc(function(self, level, value)
 				local info = {}
 				local categories = GetCategoryList()
 				local categoryID
@@ -327,6 +430,9 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 				end
 		end)
 	end
+
+
+
 	----------------------------------------------------------------
 	local function FrameLine_OnEnter(self)
 		self.BG:SetColorTexture(r, g, b, E.Octo_Globals.BGALPHA*2)

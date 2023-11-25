@@ -1819,6 +1819,38 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 
 
+	{
+		name_save = "PilgrimsBounty", -- Pilgrim's Bounty Octopussy__Daily_PilgrimsBounty_count
+		reset = "Daily",
+		expansion = "",
+		place = "",
+		desc = "Alliance",
+		questID = {
+			-- Ally
+			14048, -- Слишком мало индеек
+			14054, -- Проще пареной тыквы
+			14053, -- У нас опять кончился соус?
+			14051, -- Не забыть про запеканку!
+			14055, -- Батат – значит, батат!
+		},
+		max = 5
+	},
 
+	{
+		name_save = "PilgrimsBounty", -- Pilgrim's Bounty Octopussy__Daily_PilgrimsBounty_count
+		reset = "Daily",
+		expansion = "",
+		place = "",
+		desc = "Horde",
+		questID = {
+			-- Horde
+			14061, -- Слишком мало индеек
+			14060, -- Проще пареной тыквы
+			14059, -- У нас опять кончился соус?
+			14062, -- Не забыть про запеканку!
+			14058, -- Батат – значит, батат!
+		},
+		max = 5
+	},
 
 }

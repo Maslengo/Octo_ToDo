@@ -24,7 +24,9 @@ function func_FieldOfView()
 				if Octo_ToDo_DB_Vars.config.FoV_right == nil then Octo_ToDo_DB_Vars.config.FoV_right = 0 end
 			end
 			if event == "PLAYER_LOGIN" and not InCombatLockdown() then
-				FieldOfView_function()
+				C_Timer.After(0, function()
+					FieldOfView_function()
+				end)
 			end
 		end
 		local function create_ChatFrame1_background()
@@ -47,11 +49,12 @@ function func_FieldOfView()
 			local scale = 1.4 --E.Octo_Globals.scale
 			if Octo_ToDo_DB_Vars.config.FoV_top and Octo_ToDo_DB_Vars.config.FoV_bottom and Octo_ToDo_DB_Vars.config.FoV_left and Octo_ToDo_DB_Vars.config.FoV_right then
 				create_ChatFrame1_background()
+				-- print (Octo_ToDo_DB_Vars.config.FoV_top, Octo_ToDo_DB_Vars.config.FoV_bottom, Octo_ToDo_DB_Vars.config.FoV_left, Octo_ToDo_DB_Vars.config.FoV_right)
 				change_worldframe_setpoints(Octo_ToDo_DB_Vars.config.FoV_top, Octo_ToDo_DB_Vars.config.FoV_bottom, Octo_ToDo_DB_Vars.config.FoV_left, Octo_ToDo_DB_Vars.config.FoV_right, scale)
 			end
 		end
 		FieldOfView_OnLoad()
-		FieldOfView_function()
+		-- FieldOfView_function()
 	end
 end
 tinsert(E.Octo_Globals.modules, func_FieldOfView)
