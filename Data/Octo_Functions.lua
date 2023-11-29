@@ -550,29 +550,11 @@ end
 local RIO_Color = E.Octo_Func.RIO_Color
 ----------------------------------------------------------------
 function E.Octo_Func.encryption(self)
-	self = utf8reverse(self)
+	local self = utf8reverse(tostring(self))
 	local text = strsplit("-", self)
 	local vivod = ""
-	for k, v in ipairs(E.Octo_Table.OctoTable_Alphabet) do
-		vivod = text:gsub(v, "")
-	end
-	-- print (vivod)
+	vivod = utf8lower(text:gsub("0", ""):gsub("1", ""):gsub("2", ""):gsub("3", ""):gsub("4", ""):gsub("5", ""):gsub("6", ""):gsub("7", ""):gsub("8", ""):gsub("9", ""))
 	return vivod
-
-
-
-	-- local text = strsplit("-", utf8reverse(c))
-	-- local vivod = utf8reverse(utf8lower(self:gsub("0", ""):gsub("1", ""):gsub("2", ""):gsub("3", ""):gsub("4", ""):gsub("5", ""):gsub("6", ""):gsub("7", ""):gsub("8", ""):gsub("9", ""):gsub("-", ""):gsub("Player", "")))
-	-- local vivod = ""
-	-- for k, v in ipairs (E.Octo_Table.OctoTable_Alphabet) do
-	-- 	vivod = text:gsub(v, "")
-	-- end
-
-
-	-- print (vivod)
-
-
-	-- return vivod
 end
 local encryption = E.Octo_Func.encryption
 ----------------------------------------------------------------
