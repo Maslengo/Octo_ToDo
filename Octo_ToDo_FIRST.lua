@@ -2410,11 +2410,11 @@ local function O_otrisovka_FIRST()
 			end
 			if CharInfo.hasMail then
 				BG:SetColorTexture(1, 1, 1, E.Octo_Globals.BGALPHA)
-				vivodCent = vivodCent..MailBox_Icon..vivodCent
+				vivodCent = vivodCent..MailBox_Icon
 			end
 			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= 70 then
 				CL:SetFontObject(OctoFont10)
-				vivodCent = vivodCent..CharInfo.UnitLevel.." "..vivodCent
+				vivodCent = vivodCent.." "..CharInfo.UnitLevel
 			end
 			if Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm == false then
 				CL:SetFontObject(OctoFont9)
@@ -2430,9 +2430,9 @@ local function O_otrisovka_FIRST()
 				--tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", CharInfo.WarMode and E.Octo_Globals.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or ""}
 				if CharInfo.guildRankIndex ~= 0 then
 					tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", "<"..E.Octo_Globals.Green_Color..CharInfo.guildName.."|r"..">".." ["..E.Octo_Globals.Green_Color..CharInfo.guildRankName.."|r".."]"}
-					vivodCent = vivodCent..E.Octo_Globals.Green_Color.."*".."|r"
 				else
 					tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", CharInfo.WarMode and E.Octo_Globals.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or ""}
+					vivodCent = vivodCent..E.Octo_Globals.Green_Color.."-".."|r"
 				end
 				if CharInfo.WarMode and CharInfo.WarMode ~= false then
 					tooltip[#tooltip+1] = {CharInfo.WarMode and E.Octo_Globals.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or "", ""}
@@ -6274,7 +6274,7 @@ local function O_otrisovka_FIRST()
 						tooltip[#tooltip+1] = {E.Octo_Func.func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
 						if #tooltip > 0 then
 							tooltip[#tooltip+1] = {" ", " "}
-							vivodCent = E.Octo_Func.func_Gradient(vivodCent, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+							vivodCent = E.Octo_Func.func_Gradient(QUESTS_LABEL, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
 						end
 					end
 				end
