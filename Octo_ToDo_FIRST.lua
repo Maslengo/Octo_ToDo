@@ -6543,6 +6543,24 @@ local function O_otrisovka_FIRST()
 				if CharInfo.UnitLevel >= 70 then
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {" 10.2.0", ""}
+
+
+
+					if CharInfo.ItemsInBag[204710] >= 1 then
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204710)..E.Octo_Func.func_itemName(204710), CharInfo.ItemsInBag[204710]}
+					else
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204710)..E.Octo_Globals.Gray_Color..E.Octo_Func.func_itemName_NOCOLOR(204710).."|r", E.Octo_Globals.Gray_Color..CharInfo.ItemsInBag[204710].."|r"}
+					end
+					if CharInfo.ItemsInBag[204463] >= 1 then
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204463)..E.Octo_Func.func_itemName(204463), CharInfo.ItemsInBag[204463]}
+					else
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(204463)..E.Octo_Globals.Gray_Color..E.Octo_Func.func_itemName_NOCOLOR(204463).."|r", E.Octo_Globals.Gray_Color..CharInfo.ItemsInBag[204463].."|r"}
+					end
+
+
+					tooltip[#tooltip+1] = {" ", " "}
+
+
 					if CharInfo.ItemsInBag[206960] >= 1 then
 						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(206960)..E.Octo_Func.func_itemName(206960), CharInfo.ItemsInBag[206960]}
 					else

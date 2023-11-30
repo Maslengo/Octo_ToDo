@@ -61,7 +61,11 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 				return text
 			end,
 			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
-				return color..value.."|r"
+				if config == "Addon_Height" then
+					return color..math.ceil(value/20).."|r"
+				else
+					return color..value.."|r"
+				end
 			end,
 		}
 		self[number..pos..config]:Init(Octo_ToDo_DB_Vars.config[config], minValue, maxValue, steps, formatters)
@@ -365,7 +369,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 			Create_Slider(MAIN_scrollChild, self, 10, POS_RIGHT, "curWidthTitle", L["curWidthTitle: "], E.Octo_Globals.Green_Color, 100, 400)
 			Create_Slider(MAIN_scrollChild, self, 11.5, POS_RIGHT, "curWidthTitleAchievement", "curWidthTitleAchievement", E.Octo_Globals.Green_Color, 100, 400)
 			Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "curHeight", "Высота строк: ", E.Octo_Globals.Green_Color, 10, 30)
-			Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк: /20", E.Octo_Globals.Green_Color, 200, 1200)
+			Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк: ", E.Octo_Globals.Green_Color, 200, 1200)
 			Create_CheckButton(MAIN_scrollChild, self, 17, POS_RIGHT, "ShowOnlyCurrentRealm", L["Only Current Realm"])
 			Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, "Achievements", E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
 			Create_CheckButton(MAIN_scrollChild, self, 27, POS_RIGHT, "ShowTotalMoney", "Всего денег")
