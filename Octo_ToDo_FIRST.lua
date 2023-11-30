@@ -335,6 +335,7 @@ local function checkCharInfo(self)
 	self.curCovID = self.curCovID or 0
 	self.CurrencyID = self.CurrencyID or {}
 	self.CurrencyID_Total = self.CurrencyID_Total or {}
+	self.CurrencyID_totalEarned = self.CurrencyID_totalEarned or {}
 	self.curServer = self.curServer or "HZ"
 	self.azeriteLVL = self.azeriteLVL or 0
 	self.azeriteEXP = self.azeriteEXP or 0
@@ -1356,8 +1357,15 @@ local function Collect_All_Currency()
 		if data then
 			local quantity = data.quantity
 			local maxQuantity = data.maxQuantity
+			local totalEarned = data.totalEarned
 			if collect and not InCombatLockdown() then
-				collect.CurrencyID[v] = quantity
+				if quantity then
+					collect.CurrencyID[v] = quantity
+				end
+				if totalEarned then
+					collect.CurrencyID_totalEarned[v] = totalEarned
+				end
+
 				if maxQuantity ~= 0 then
 					if quantity ~= maxQuantity then
 						collect.CurrencyID_Total[v] = quantity.."/"..maxQuantity
@@ -1367,10 +1375,12 @@ local function Collect_All_Currency()
 				else
 					collect.CurrencyID_Total[v] = quantity
 				end
+
 			end
 		else
 			collect.CurrencyID[v] = 0
 			collect.CurrencyID_Total[v] = 0
+			collect.CurrencyID_totalEarned[v] = 0
 		end
 	end
 end
@@ -1495,7 +1505,6 @@ local function Collect_ALL_ItemsInBag()
 				end
 				Octo_ToDo_DB_Other.Items.Consumable[124640] = true
 				Octo_ToDo_DB_Other.Items.Consumable[6657] = true
-
 			end
 		end
 	end
@@ -2481,7 +2490,6 @@ local function O_otrisovka_FIRST()
 			vivodLeft = Timer_Daily_Reset()
 			return vivodCent, vivodLeft
 	end)
-
 	-- tinsert(OctoTable_func_otrisovka_FIRST,
 	-- 	function(CharInfo, tooltip, CL, BG)
 	-- 		local vivodCent, vivodLeft = "", ""
@@ -4925,7 +4933,8 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2706
-					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)
+					local color = E.Octo_Globals.WOW_Uncommon_Color
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
 					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
 						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
 						vivodCent = E.Octo_Func.Empty_Zero(a)
@@ -4933,8 +4942,13 @@ local function O_otrisovka_FIRST()
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
+						local totalEarned = data.totalEarned
 						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
 							vivodCent = vivodCent.."/"..maxQuantity
+						end
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {" ", color.."LFR, M+2/+5".."|r"}
+							tooltip[#tooltip+1] = {string.format(CURRENCY_SEASON_TOTAL_MAXIMUM, "", color..CharInfo.CurrencyID_totalEarned[currencyID], maxQuantity.."|r")}
 						end
 					end
 					return vivodCent, vivodLeft
@@ -4943,7 +4957,8 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2707
-					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)
+					local color = E.Octo_Globals.WOW_Rare_Color
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
 					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
 						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
 						vivodCent = E.Octo_Func.Empty_Zero(a)
@@ -4951,8 +4966,13 @@ local function O_otrisovka_FIRST()
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
+						local totalEarned = data.totalEarned
 						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
 							vivodCent = vivodCent.."/"..maxQuantity
+						end
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {" ", color.."Normal, M+6/+10".."|r"}
+							tooltip[#tooltip+1] = {string.format(CURRENCY_SEASON_TOTAL_MAXIMUM, "", color..CharInfo.CurrencyID_totalEarned[currencyID], maxQuantity.."|r")}
 						end
 					end
 					return vivodCent, vivodLeft
@@ -4961,7 +4981,8 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2708
-					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)
+					local color = E.Octo_Globals.WOW_Epic_Color
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
 					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
 						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
 						vivodCent = E.Octo_Func.Empty_Zero(a)
@@ -4969,8 +4990,13 @@ local function O_otrisovka_FIRST()
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
+						local totalEarned = data.totalEarned
 						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
 							vivodCent = vivodCent.."/"..maxQuantity
+						end
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {" ", color.."Heroic, M+11/+15".."|r"}
+							tooltip[#tooltip+1] = {string.format(CURRENCY_SEASON_TOTAL_MAXIMUM, "", color..CharInfo.CurrencyID_totalEarned[currencyID], maxQuantity.."|r")}
 						end
 					end
 					return vivodCent, vivodLeft
@@ -4979,7 +5005,8 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2709
-					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)
+					local color = E.Octo_Globals.WOW_Legendary_Color
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
 					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
 						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
 						vivodCent = E.Octo_Func.Empty_Zero(a)
@@ -4987,8 +5014,13 @@ local function O_otrisovka_FIRST()
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
+						local totalEarned = data.totalEarned
 						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
 							vivodCent = vivodCent.."/"..maxQuantity
+						end
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {" ", color.."Mythic, M+16".."|r"}
+							tooltip[#tooltip+1] = {string.format(CURRENCY_SEASON_TOTAL_MAXIMUM, "", color..CharInfo.CurrencyID_totalEarned[currencyID], maxQuantity.."|r")}
 						end
 					end
 					return vivodCent, vivodLeft

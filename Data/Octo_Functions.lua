@@ -212,6 +212,22 @@ function E.Octo_Func.func_currencyName(self)
 end
 local func_currencyName = E.Octo_Func.func_currencyName
 ----------------------------------------------------------------
+function E.Octo_Func.func_currencyName_NOCOLOR(self)
+	local info = C_CurrencyInfo.GetCurrencyInfo(self)
+	if info then
+		local name = info.name
+		-- local iconFileID = info.iconFileID
+		-- local quality = info.quality
+		-- local r, g, b = GetItemQualityColor(quality)
+		-- local color = CreateColor(r, g, b, 1)
+		-- local currencyName = color:WrapTextInColorCode(name)
+		return name
+	else
+		return E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+	end
+end
+local func_currencyName_NOCOLOR = E.Octo_Func.func_currencyName_NOCOLOR
+----------------------------------------------------------------
 function E.Octo_Func.func_currencyicon(self)
 	local info = C_CurrencyInfo.GetCurrencyInfo(self)
 	if info then
