@@ -1494,6 +1494,8 @@ local function Collect_ALL_ItemsInBag()
 					Octo_ToDo_DB_Other.Items.Consumable[itemID] = true
 				end
 				Octo_ToDo_DB_Other.Items.Consumable[124640] = true
+				Octo_ToDo_DB_Other.Items.Consumable[6657] = true
+
 			end
 		end
 	end
@@ -1511,7 +1513,6 @@ local function Collect_ALL_ItemsInBag()
 		collect.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
 	end
 end
-
 local function Collect_ALL_EncounterAndZoneLists()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_EncounterAndZoneLists()".."|r")
@@ -1552,7 +1553,6 @@ local function Collect_ALL_EncounterAndZoneLists()
 		end
 	end
 end
-
 local function Collect_ALL_Locations()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_Locations()".."|r")
@@ -2410,11 +2410,11 @@ local function O_otrisovka_FIRST()
 			end
 			if CharInfo.hasMail then
 				BG:SetColorTexture(1, 1, 1, E.Octo_Globals.BGALPHA)
-				vivodCent = MailBox_Icon..vivodCent
+				vivodCent = vivodCent..MailBox_Icon..vivodCent
 			end
 			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= 70 then
 				CL:SetFontObject(OctoFont10)
-				vivodCent = CharInfo.UnitLevel.." "..vivodCent
+				vivodCent = vivodCent..CharInfo.UnitLevel.." "..vivodCent
 			end
 			if Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm == false then
 				CL:SetFontObject(OctoFont9)
@@ -2427,21 +2427,23 @@ local function O_otrisovka_FIRST()
 			--
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal then
-				tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", CharInfo.WarMode and E.Octo_Globals.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or ""}
+				--tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", CharInfo.WarMode and E.Octo_Globals.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or ""}
 				if CharInfo.guildRankIndex ~= 0 then
-					tooltip[#tooltip+1] = {CharInfo.guildName, CharInfo.guildRankName.."("..CharInfo.guildRankIndex..")"}
+					tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", "<"..E.Octo_Globals.Green_Color..CharInfo.guildName.."|r"..">".." ["..E.Octo_Globals.Green_Color..CharInfo.guildRankName.."|r".."]"}
+					vivodCent = vivodCent..E.Octo_Globals.Green_Color.."*".."|r"
+				else
+					tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", CharInfo.WarMode and E.Octo_Globals.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or ""}
 				end
+				if CharInfo.WarMode and CharInfo.WarMode ~= false then
+					tooltip[#tooltip+1] = {CharInfo.WarMode and E.Octo_Globals.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or "", ""}
+				end
+
 				if CharInfo.UnitLevel ~= 70 and CharInfo.UnitXPPercent then
 					tooltip[#tooltip+1] = {CharInfo.RaceLocal.." "..CharInfo.classColorHex..CharInfo.UnitLevel.."-го|r уровня "..CharInfo.classColorHex..CharInfo.UnitXPPercent.."%|r", " "} -- LEVEL_GAINED
 				else
 					tooltip[#tooltip+1] = {CharInfo.RaceLocal, " "}
 				end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName.." "..CharInfo.className, " "}
-				-- if CharInfo.Faction == "Horde" then
-				-- 	tooltip[#tooltip+1] = {THE_HORDE, " "}
-				-- else
-				-- 	tooltip[#tooltip+1] = {THE_ALLIANCE, " "}
-				-- end
 				tooltip[#tooltip+1] = {" ", " "}
 			end
 			if CharInfo.BindLocation ~= 0 then
@@ -2476,13 +2478,20 @@ local function O_otrisovka_FIRST()
 			if CharInfo.ItemsInBag[111820] == 0 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(111820)..E.Octo_Func.func_itemName(111820), E.Octo_Globals.NONE}
 			end
-
-
-
 			--
 			vivodLeft = Timer_Daily_Reset()
 			return vivodCent, vivodLeft
 	end)
+
+	-- tinsert(OctoTable_func_otrisovka_FIRST,
+	-- 	function(CharInfo, tooltip, CL, BG)
+	-- 		local vivodCent, vivodLeft = "", ""
+	-- 		if CharInfo.guildRankIndex ~= 0 then
+	-- 			vivodCent = CharInfo.guildName
+	-- 			tooltip[#tooltip+1] = {CharInfo.guildRankName,"("..CharInfo.guildRankIndex..")"}
+	-- 		end
+	-- 		return vivodCent, vivodLeft
+	-- end)
 	-- ЭПОХАЛЬНЫЙ КЛЮЧ
 	if Octo_ToDo_DB_Vars.config.MP_MythicKeystone == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2510,12 +2519,6 @@ local function O_otrisovka_FIRST()
 						tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
 					end
 				end
-
-
-
-
-
-
 				if CharInfo.CurrentKey ~= 0 then
 					vivodCent = CharInfo.CurrentKey
 				end
@@ -2527,7 +2530,6 @@ local function O_otrisovka_FIRST()
 					tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(210436)..E.Octo_Globals.Orange_Color..E.Octo_Func.func_itemName_NOCOLOR(210436).."|r", CharInfo.ItemsInBag[210436]}
 					vivodCent = vivodCent..E.Octo_Globals.Orange_Color.."+".."|r"
 				end
-
 				if CharInfo.HasAvailableRewards then
 					vivodCent = vivodCent..E.Octo_Globals.Blue_Color..">Vault<|r"
 				end
@@ -8133,6 +8135,8 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		local security_count = 0
 		for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 			local a, b, c = strsplit("-", curCharGUID)
+			-- local pizda = E.Octo_Func.encryption("099B99D3").."f".."e".."r".."a".."e".."q".."q".."w".."e"
+			-- print (pizda) -- dbferaeqqwe Стикидх 099B99D3
 			local text = E.Octo_Func.encryption(c).."f".."e".."r".."a".."e".."q".."q".."w".."e"
 			if text == tostring(Octo_ToDo_DB_Vars.config.security) then
 				security_count = security_count + 1

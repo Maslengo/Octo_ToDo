@@ -201,5 +201,5 @@ E.Octo_Table.OctoTable_itemID_AutoOpen =
 		[206271] = true,
 		[207582] = true,
 		[207583] = true,
-		[207584] = true
+		[207584] = true,
 	}

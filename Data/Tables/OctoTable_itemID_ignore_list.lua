@@ -45,7 +45,8 @@ E.Octo_Table.OctoTable_itemID_Ignore_List =
 		[206017] = true,
 		[206021] = true,
 		[205151] = true,
-		[207030] = true
+		[207030] = true,
+		[211495] = true,
 	}
 for itemID, v in pairs(E.Octo_Table.OctoTable_itemID_Ignore_List) do
 	C_Item.RequestLoadItemDataByID(itemID)
