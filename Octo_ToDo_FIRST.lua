@@ -2437,7 +2437,6 @@ local function O_otrisovka_FIRST()
 				if CharInfo.WarMode and CharInfo.WarMode ~= false then
 					tooltip[#tooltip+1] = {CharInfo.WarMode and E.Octo_Globals.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or "", ""}
 				end
-
 				if CharInfo.UnitLevel ~= 70 and CharInfo.UnitXPPercent then
 					tooltip[#tooltip+1] = {CharInfo.RaceLocal.." "..CharInfo.classColorHex..CharInfo.UnitLevel.."-го|r уровня "..CharInfo.classColorHex..CharInfo.UnitXPPercent.."%|r", " "} -- LEVEL_GAINED
 				else
@@ -4925,15 +4924,17 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2706)..E.Octo_Func.func_currencyName(2706)
-					if CharInfo.CurrencyID_Total[2706] ~= "" and CharInfo.CurrencyID_Total[2706] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2706]
-						local a, b = strsplit("/", vivodCent)
-						if tonumber(a) == 0 then
-							if b then
-								vivodCent = E.Octo_Func.Empty_Zero(a)
-							end
-							vivodCent = vivodCent
+					local currencyID = 2706
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)
+					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
+						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
+						vivodCent = E.Octo_Func.Empty_Zero(a)
+					end
+					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+					if data then
+						local maxQuantity = data.maxQuantity
+						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
+							vivodCent = vivodCent.."/"..maxQuantity
 						end
 					end
 					return vivodCent, vivodLeft
@@ -4941,15 +4942,17 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2707)..E.Octo_Func.func_currencyName(2707)
-					if CharInfo.CurrencyID_Total[2707] ~= "" and CharInfo.CurrencyID_Total[2707] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2707]
-						local a, b = strsplit("/", vivodCent)
-						if tonumber(a) == 0 then
-							if b then
-								vivodCent = E.Octo_Func.Empty_Zero(a)
-							end
-							vivodCent = vivodCent
+					local currencyID = 2707
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)
+					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
+						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
+						vivodCent = E.Octo_Func.Empty_Zero(a)
+					end
+					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+					if data then
+						local maxQuantity = data.maxQuantity
+						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
+							vivodCent = vivodCent.."/"..maxQuantity
 						end
 					end
 					return vivodCent, vivodLeft
@@ -4957,15 +4960,17 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2708)..E.Octo_Func.func_currencyName(2708)
-					if CharInfo.CurrencyID_Total[2708] ~= "" and CharInfo.CurrencyID_Total[2708] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2708]
-						local a, b = strsplit("/", vivodCent)
-						if tonumber(a) == 0 then
-							if b then
-								vivodCent = E.Octo_Func.Empty_Zero(a)
-							end
-							vivodCent = vivodCent
+					local currencyID = 2708
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)
+					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
+						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
+						vivodCent = E.Octo_Func.Empty_Zero(a)
+					end
+					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+					if data then
+						local maxQuantity = data.maxQuantity
+						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
+							vivodCent = vivodCent.."/"..maxQuantity
 						end
 					end
 					return vivodCent, vivodLeft
@@ -4973,15 +4978,17 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2709)..E.Octo_Func.func_currencyName(2709)
-					if CharInfo.CurrencyID_Total[2709] ~= "" and CharInfo.CurrencyID_Total[2709] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2709]
-						local a, b = strsplit("/", vivodCent)
-						if tonumber(a) == 0 then
-							if b then
-								vivodCent = E.Octo_Func.Empty_Zero(a)
-							end
-							vivodCent = vivodCent
+					local currencyID = 2709
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)
+					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
+						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
+						vivodCent = E.Octo_Func.Empty_Zero(a)
+					end
+					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+					if data then
+						local maxQuantity = data.maxQuantity
+						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
+							vivodCent = vivodCent.."/"..maxQuantity
 						end
 					end
 					return vivodCent, vivodLeft
