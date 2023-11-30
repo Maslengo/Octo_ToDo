@@ -4933,94 +4933,109 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2706
+					local text = "LFR, M+2/+5"
 					local color = E.Octo_Globals.WOW_Uncommon_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
-					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
-						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
-						vivodCent = E.Octo_Func.Empty_Zero(a)
-					end
+					tooltip[#tooltip+1] = {" ", color..text.."|r"}
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
 						local totalEarned = data.totalEarned
-						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
-							vivodCent = vivodCent.."/"..maxQuantity
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
+							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						else
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							tooltip[#tooltip+1] = {" ", color.."LFR, M+2/+5".."|r"}
-							tooltip[#tooltip+1] = {string.format(CURRENCY_SEASON_TOTAL_MAXIMUM, "", color..CharInfo.CurrencyID_totalEarned[currencyID], maxQuantity.."|r")}
+							vivodCent = color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"
 						end
 					end
 					return vivodCent, vivodLeft
 			end)
+
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2707
+					local text = "Normal, M+6/+10"
 					local color = E.Octo_Globals.WOW_Rare_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
-					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
-						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
-						vivodCent = E.Octo_Func.Empty_Zero(a)
-					end
+					tooltip[#tooltip+1] = {" ", color..text.."|r"}
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
 						local totalEarned = data.totalEarned
-						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
-							vivodCent = vivodCent.."/"..maxQuantity
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
+							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						else
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							tooltip[#tooltip+1] = {" ", color.."Normal, M+6/+10".."|r"}
-							tooltip[#tooltip+1] = {string.format(CURRENCY_SEASON_TOTAL_MAXIMUM, "", color..CharInfo.CurrencyID_totalEarned[currencyID], maxQuantity.."|r")}
+							vivodCent = color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"
 						end
 					end
 					return vivodCent, vivodLeft
 			end)
+
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2708
+					local text = "Heroic, M+11/+15"
 					local color = E.Octo_Globals.WOW_Epic_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
-					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
-						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
-						vivodCent = E.Octo_Func.Empty_Zero(a)
-					end
+					tooltip[#tooltip+1] = {" ", color..text.."|r"}
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
 						local totalEarned = data.totalEarned
-						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
-							vivodCent = vivodCent.."/"..maxQuantity
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
+							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						else
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							tooltip[#tooltip+1] = {" ", color.."Heroic, M+11/+15".."|r"}
-							tooltip[#tooltip+1] = {string.format(CURRENCY_SEASON_TOTAL_MAXIMUM, "", color..CharInfo.CurrencyID_totalEarned[currencyID], maxQuantity.."|r")}
+							vivodCent = color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"
 						end
 					end
 					return vivodCent, vivodLeft
 			end)
+
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2709
+					local text = "Mythic, M+16"
 					local color = E.Octo_Globals.WOW_Legendary_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
-					if CharInfo.CurrencyID_Total[currencyID] ~= "" and CharInfo.CurrencyID_Total[currencyID] ~= 0 then
-						local a, b = strsplit("/", CharInfo.CurrencyID_Total[currencyID])
-						vivodCent = E.Octo_Func.Empty_Zero(a)
-					end
+					tooltip[#tooltip+1] = {" ", color..text.."|r"}
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
 						local totalEarned = data.totalEarned
-						if tonumber(vivodCent) ~= 0 and vivodCent ~= "" then
-							vivodCent = vivodCent.."/"..maxQuantity
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
+							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						else
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							tooltip[#tooltip+1] = {" ", color.."Mythic, M+16".."|r"}
-							tooltip[#tooltip+1] = {string.format(CURRENCY_SEASON_TOTAL_MAXIMUM, "", color..CharInfo.CurrencyID_totalEarned[currencyID], maxQuantity.."|r")}
+							vivodCent = color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"
 						end
 					end
 					return vivodCent, vivodLeft

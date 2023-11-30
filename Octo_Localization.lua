@@ -161,6 +161,8 @@ if L then
 	L["Hide: Zone Text"] = true
 	L["Catalyst Charges"] = true
 	L["Sparks of Life"] = true
+	L["Season Maximum"] = true
+	L["Can Earned"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -316,4 +318,6 @@ if L then
 	L["Hide: Zone Text"] = "Скрытие текста зон"
 	L["Catalyst Charges"] = "Заряды Катализатора"
 	L["Sparks of Life"] = "Искры жизни"
+	L["Season Maximum"] = "Максимум за сезон"
+	L["Can Earned"] = "Можно получить"
 end
