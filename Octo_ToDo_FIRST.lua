@@ -1,4 +1,4 @@
-local GlobalAddonName, E =...
+local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
 local AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
@@ -1442,7 +1442,7 @@ local function Collect_ALL_ItemsInBag()
 					collect.CurrentKeyFULL = C_ChallengeMode.GetMapUIInfo(dungeonID) -- COLLECT название ключа CurrentKeyFULL
 					for k, v in ipairs(E.Octo_Table.OctoTable_KeystoneAbbr) do
 						if v.mapChallengeModeID == tonumber(dungeonID) then
-							collect.CurrentKey = E.Octo_Globals.Purple_Color..lvl.." "..v.abbreviation.."|r"
+							collect.CurrentKey = lvl.." "..v.abbreviation
 						end
 					end
 				end
@@ -2506,7 +2506,8 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.Purple_Color..L["Mythic Keystone"].."|r"
 				if CharInfo.CurrentKeyFULL ~= 0 then
-					tooltip[#tooltip+1] = {E.Octo_Globals.Purple_Color..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyFULL.."|r", ""}
+					tooltip[#tooltip+1] = {E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyFULL.."|r", ""}
+					tooltip[#tooltip+1] = {" ", " "}
 				end
 				-- if CharInfo.RIO_Score_S3 ~= 0 then
 				-- 	tooltip[#tooltip+1] = {DUNGEON_SCORE, E.Octo_Globals.Orange_Color..CharInfo.RIO_Score_S3.."|r"}
@@ -2521,13 +2522,35 @@ local function O_otrisovka_FIRST()
 					CharInfo.GreatVault[i].progress = CharInfo.GreatVault[i].progress or 0
 					CharInfo.GreatVault[i].threshold = CharInfo.GreatVault[i].threshold or 0
 					if CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
-						tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Globals.Purple_Color..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
+						tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
 					elseif CharInfo.GreatVault[i].progress ~= 0 then
 						tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
 					end
 				end
+
+				if (Octo_ToDo_DB_Vars.config.MP_WeeklyBest == false or Octo_ToDo_DB_Vars.config.MP_Score == false) and CharInfo.RIO_Score_S3 ~= 0 and CharInfo.CurrentKeyFULL ~= 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+
+				if Octo_ToDo_DB_Vars.config.MP_WeeklyBest == false and CharInfo.RIO_Score_S3 ~= 0 then
+					tooltip[#tooltip+1] = {"Weekly Best", E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..E.Octo_Func.Empty_Zero(CharInfo.RIO_weeklyBest).."|r"}
+				end
+				if Octo_ToDo_DB_Vars.config.MP_Score == false and CharInfo.RIO_Score_S3 ~= 0  then
+					tooltip[#tooltip+1] = {DUNGEON_SCORE, E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..E.Octo_Func.Empty_Zero(CharInfo.RIO_Score_S3).."|r"}
+				end
+
+
+
+
+
+
+
 				if CharInfo.CurrentKey ~= 0 then
-					vivodCent = CharInfo.CurrentKey
+					-- vivodCent = E.Octo_Globals.Purple_Color..CharInfo.CurrentKey.."|r"
+					vivodCent = E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..CharInfo.CurrentKey.."|r"
+				end
+				if CharInfo.ItemsInBag[208821] ~= 0 or CharInfo.ItemsInBag[210436] ~= 0 then
+					tooltip[#tooltip+1] = {" ", " "}
 				end
 				if CharInfo.ItemsInBag[208821] ~= 0 then
 					tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(208821)..E.Octo_Globals.LightGray_Color..E.Octo_Func.func_itemName_NOCOLOR(208821).."|r", CharInfo.ItemsInBag[208821]}
@@ -4910,7 +4933,8 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					if CharInfo.CurrencyID[2796] ~= 0 then
-						vivodCent = E.Octo_Globals.Orange_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2796]).."|r"
+						-- vivodCent = E.Octo_Globals.Orange_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2796]).."|r"
+						vivodCent = E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2796])
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(2796)..E.Octo_Func.func_currencyName(2796)
 					return vivodCent, vivodLeft
@@ -4920,8 +4944,9 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
 					if CharInfo.CurrencyID[2245] ~= 0 then
-						vivodCent = E.Octo_Globals.Blue_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2245]).."|r"
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2245]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245)
 					return vivodCent, vivodLeft
@@ -4951,7 +4976,7 @@ local function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = color..CharInfo.CurrencyID[currencyID].."/"..maxQuantity.."|r"
+							vivodCent = CharInfo.CurrencyID[currencyID].."/"..maxQuantity
 						end
 					end
 					return vivodCent, vivodLeft
@@ -4979,7 +5004,7 @@ local function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = color..CharInfo.CurrencyID[currencyID].."/"..maxQuantity.."|r"
+							vivodCent = CharInfo.CurrencyID[currencyID].."/"..maxQuantity
 						end
 					end
 					return vivodCent, vivodLeft
@@ -5007,7 +5032,7 @@ local function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = color..CharInfo.CurrencyID[currencyID].."/"..maxQuantity.."|r"
+							vivodCent = CharInfo.CurrencyID[currencyID].."/"..maxQuantity
 						end
 					end
 					return vivodCent, vivodLeft
@@ -5035,7 +5060,7 @@ local function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = color..CharInfo.CurrencyID[currencyID].."/"..maxQuantity.."|r"
+							vivodCent = CharInfo.CurrencyID[currencyID].."/"..maxQuantity
 						end
 					end
 					return vivodCent, vivodLeft
@@ -6686,7 +6711,8 @@ local function O_otrisovka_FIRST()
 						tooltip[#tooltip+1] = {"received: ", E.Octo_Globals.Green_Color..E.Octo_Func.CompactNumberFormat((CharInfo.Money - CharInfo.MoneyOnLogin)/10000).."|r "..Money_Icon}
 					end
 				end
-				return E.Octo_Globals.Yellow_Color..vivodCent.."|r", vivodLeft
+				-- return E.Octo_Globals.Yellow_Color..vivodCent.."|r", vivodLeft
+				return vivodCent, vivodLeft
 		end)
 	end
 	-- Уровень предметов
