@@ -4950,8 +4950,8 @@ local function O_otrisovka_FIRST()
 						else
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
-						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"
+						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							vivodCent = color..CharInfo.CurrencyID[currencyID].."/"..maxQuantity.."|r"
 						end
 					end
 					return vivodCent, vivodLeft
@@ -4978,8 +4978,8 @@ local function O_otrisovka_FIRST()
 						else
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
-						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"
+						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							vivodCent = color..CharInfo.CurrencyID[currencyID].."/"..maxQuantity.."|r"
 						end
 					end
 					return vivodCent, vivodLeft
@@ -5006,8 +5006,8 @@ local function O_otrisovka_FIRST()
 						else
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
-						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"
+						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							vivodCent = color..CharInfo.CurrencyID[currencyID].."/"..maxQuantity.."|r"
 						end
 					end
 					return vivodCent, vivodLeft
@@ -5034,8 +5034,8 @@ local function O_otrisovka_FIRST()
 						else
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
-						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"
+						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							vivodCent = color..CharInfo.CurrencyID[currencyID].."/"..maxQuantity.."|r"
 						end
 					end
 					return vivodCent, vivodLeft
@@ -5721,11 +5721,31 @@ local function O_otrisovka_FIRST()
 				if Octo_ToDo_DB_Vars.config.ExpansionToShow == 10 then
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Dragonflight".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					-- tooltip[#tooltip+1] = {" ", E.Octo_Func.func_Gradient("»".."Впадлу доделывать".."«", E.Octo_Globals.Yellow_Color, E.Octo_Globals.Red_Color)}
 					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2796)..E.Octo_Func.func_currencyName(2796), CharInfo.CurrencyID_Total[2796]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2706)..E.Octo_Func.func_currencyName(2706), CharInfo.CurrencyID_Total[2706]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2707)..E.Octo_Func.func_currencyName(2707), CharInfo.CurrencyID_Total[2707]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2708)..E.Octo_Func.func_currencyName(2708), CharInfo.CurrencyID_Total[2708]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2709)..E.Octo_Func.func_currencyName(2709), CharInfo.CurrencyID_Total[2709]}
+					local data2706 = C_CurrencyInfo.GetCurrencyInfo(2706)
+					if data2706 then
+						local maxQuantity = data2706.maxQuantity
+						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2706)..E.Octo_Globals.WOW_Uncommon_Color..E.Octo_Func.func_currencyName_NOCOLOR(2706).."|r", CharInfo.CurrencyID[2706].."/"..maxQuantity}
+					end
+					local data2707 = C_CurrencyInfo.GetCurrencyInfo(2707)
+					if data2707 then
+						local maxQuantity = data2707.maxQuantity
+						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2707)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2707).."|r", CharInfo.CurrencyID[2707].."/"..maxQuantity}
+					end
+					local data2708 = C_CurrencyInfo.GetCurrencyInfo(2708)
+					if data2708 then
+						local maxQuantity = data2708.maxQuantity
+						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2708)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2708).."|r", CharInfo.CurrencyID[2708].."/"..maxQuantity}
+					end
+					local data2709 = C_CurrencyInfo.GetCurrencyInfo(2709)
+					if data2709 then
+						local maxQuantity = data2709.maxQuantity
+						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2709)..E.Octo_Globals.WOW_Legendary_Color..E.Octo_Func.func_currencyName_NOCOLOR(2709).."|r", CharInfo.CurrencyID[2709].."/"..maxQuantity}
+					end
+
+
+
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245), CharInfo.CurrencyID_Total[2245]}
 					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2594)..E.Octo_Func.func_currencyName(2594), CharInfo.CurrencyID_Total[2594]}
