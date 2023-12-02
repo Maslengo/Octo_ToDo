@@ -4,6 +4,8 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --ChallengesKeystoneFrame
 tinsert(E.Octo_Globals.modules, function()
+
+				if E.Octo_Func.Octo_IsRetail() == true then
 		if Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame then
 			function ChallengesKeystoneFrameOnLoad()
 				local EventFrame = nil
@@ -11,6 +13,7 @@ tinsert(E.Octo_Globals.modules, function()
 					EventFrame = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID())
 					EventFrame:Hide()
 				end
+				
 				EventFrame:RegisterEvent("CHALLENGE_MODE_KEYSTONE_RECEPTABLE_OPEN")
 				EventFrame:RegisterEvent("READY_CHECK")
 				-- event CHALLENGE_MODE_KEYSTONE_SLOTTED
@@ -151,5 +154,6 @@ tinsert(E.Octo_Globals.modules, function()
 				end -- for event
 			end
 			ChallengesKeystoneFrameOnLoad()
+		end
 		end
 end)

@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+				if E.Octo_Func.Octo_IsRetail() == true then
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI then
 			local delay = 0.7
@@ -75,3 +76,4 @@ tinsert(E.Octo_Globals.modules, function()
 			Octo_ToDo_Azerite_OnLoad()
 		end
 end)
+end

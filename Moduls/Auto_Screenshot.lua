@@ -12,7 +12,9 @@ tinsert(E.Octo_Globals.modules,  function()
 				EventFrame:RegisterEvent("PLAYER_LEVEL_UP")
 				EventFrame:RegisterEvent("ACHIEVEMENT_EARNED")
 				EventFrame:RegisterEvent("SHOW_LOOT_TOAST_LEGENDARY_LOOTED")
-				EventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+				if E.Octo_Func.Octo_IsRetail() == true then
+					EventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+				end
 				EventFrame:RegisterEvent("NEW_MOUNT_ADDED")
 				EventFrame:RegisterEvent("NEW_PET_ADDED")
 				EventFrame:RegisterEvent("NEW_TOY_ADDED")

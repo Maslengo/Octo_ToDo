@@ -27,8 +27,9 @@ local Octo_ToDo_SECOND_Frame_Char_FrameDeleteButton = nil
 ----------------------------------------------------------------
 local className, classFilename, classId = UnitClass("PLAYER")
 local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
-local classColor = C_ClassColor.GetClassColor(classFilename)
-local r, g, b = classColor:GetRGB()
+local classColor = E.Octo_Func.GetClassColor(classFilename)
+-- local r, g, b = classColor:GetRGB()
+local r, g, b = GetClassColor(classFilename)
 local classColorHexCurrent = E.Octo_Func.func_rgb2hex(r, g, b)
 local Horde_Icon = E.Octo_Func.func_texturefromIcon(132485)--"|T132485:16:16:::64:64:4:60:4:60|t"
 local Alliance_Icon = E.Octo_Func.func_texturefromIcon(132486)--"|T132486:16:16:::64:64:4:60:4:60|t"

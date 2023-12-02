@@ -84,9 +84,8 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 	end
 end
 local function Create_CheckButton(scroll, self, number, pos, config, text, color)
-	if not color then
-		color = "|cffFFFFFF"
-	end
+	if not text then text = "no text" end
+	if not color then color = "|cffFFFFFF" end
 	if not self[number..pos..config] then
 		self[number..pos..config] = CreateFrame("CheckButton", nil, scroll, "InterfaceOptionsCheckButtonTemplate")
 		self[number..pos..config]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos, -indent*(number-1))
@@ -95,10 +94,18 @@ local function Create_CheckButton(scroll, self, number, pos, config, text, color
 				Octo_ToDo_DB_Vars.config[config] = btn:GetChecked()
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end)
-		self[number..pos..config].text:SetJustifyV("MIDDLE")
-		self[number..pos..config].text:SetJustifyH("LEFT")
-		-- self[number..pos..config].text:SetFontObject(OctoFont10)
-		self[number..pos..config].text:SetText(color..text..FONT_COLOR_CODE_CLOSE)
+		-- self[number..pos..config].text:SetJustifyV("MIDDLE")
+		-- self[number..pos..config].text:SetJustifyH("LEFT")
+		-- -- self[number..pos..config].text:SetFontObject(OctoFont10)
+		-- self[number..pos..config].text:SetText(color..text..FONT_COLOR_CODE_CLOSE)
+
+		local text2 = self[number..pos..config]:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		text2:SetPoint("LEFT", self[number..pos..config], "RIGHT")
+		text2:SetFontObject(OctoFont11)
+		text2:SetJustifyV("MIDDLE")
+		text2:SetJustifyH("LEFT")
+		text2:SetTextColor(1, 1, 1, 1)
+		text2:SetText(color..text..FONT_COLOR_CODE_CLOSE)
 	end
 end
 local function Create_SimpleButton(scroll, self, number, pos, config, text, color)

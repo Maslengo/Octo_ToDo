@@ -1,6 +1,8 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
+
+				if E.Octo_Func.Octo_IsRetail() == true then
 local inspectScantipUSABLE = nil
 if not inspectScantipUSABLE then
 	inspectScantipUSABLE = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUSABLE", nil, "GameTooltipTemplate")
@@ -188,3 +190,4 @@ tinsert(E.Octo_Globals.modules, function()
 			ItemsUsableFrame_OnLoad()
 		end
 end)
+end

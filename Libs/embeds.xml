@@ -8,5 +8,4 @@
 	<Include file="libs\LibDBIcon-1.0\lib.xml"/>
 	<Script file="libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua"/>
 	<Include file="libs\LibCustomGlow-1.0\LibCustomGlow-1.0.xml"/>
-	<Include file="LibTalentTree-1.0\LibTalentTree-1.0.xml"/>
 </UI>

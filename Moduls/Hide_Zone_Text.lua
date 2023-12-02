@@ -4,6 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --HideZoneText
 tinsert(E.Octo_Globals.modules, function()
+				if E.Octo_Func.Octo_IsRetail() == true then
 		if Octo_ToDo_DB_Vars.config.Hide_Zone_Text then
 			ZoneTextFrame:SetScript("OnShow", ZoneTextFrame.Hide);
 			SubZoneTextFrame:SetScript("OnShow", SubZoneTextFrame.Hide);
@@ -58,4 +59,5 @@ tinsert(E.Octo_Globals.modules, function()
 			-- MajorFactionRenownToast.ToastBG:Show()
 			-- MajorFactionRenownToast.RewardDescription:Show()
 		end
+	end
 end)

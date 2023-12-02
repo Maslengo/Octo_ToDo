@@ -421,12 +421,14 @@ local function HookTooltip(tooltip)
 		function(tooltip, hyperlink)
 			tooltipStates[tooltip].hyperlink = hyperlink
 	end)
+	if E.Octo_Func.Octo_IsRetail() == true then
 	hooksecurefunc(tooltip, "SetRecipeReagentItem",
 		function(tooltip, recipeId, reagentIndex)
 			if C_TradeSkillUI.GetRecipeReagentItemLink then
 				tooltipStates[tooltip].hyperlink = C_TradeSkillUI.GetRecipeReagentItemLink(recipeId, reagentIndex)
 			end
 	end)
+end
 	hooksecurefunc(tooltip, "SetUnitAura",
 		function(tooltip, unit, index, filter)
 			tooltipStates[tooltip].aura = select(10, UnitAura(unit, index, filter))

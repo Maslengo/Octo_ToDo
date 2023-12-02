@@ -6,6 +6,7 @@ if not inspectScantipUSABLE then
 	inspectScantipUSABLE:SetOwner(UIParent, "ANCHOR_NONE")
 end
 tinsert(E.Octo_Globals.modules, function()
+				if E.Octo_Func.Octo_IsRetail() == true then
 		if Octo_ToDo_DB_Vars.config.ItemsDelete then
 			local function ItemsDelete_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
@@ -118,5 +119,5 @@ tinsert(E.Octo_Globals.modules, function()
 			E.ItemsDeleteFrame_OnLoad = ItemsDeleteFrame_OnLoad
 			E.ItemsDeleteFrame = ItemsDeleteFrame
 			ItemsDeleteFrame_OnLoad()
-		end
+		end end
 end)

@@ -14,6 +14,39 @@ _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
+function E.Octo_Func.Octo_IsClassic()
+	local build = 1
+	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
+	if build == WOW_currentBuild then
+		return true
+	else
+		return false
+	end
+end
+----------------------------------------------------------------
+
+function E.Octo_Func.Octo_IsWrathClassic()
+	local build = 3
+	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
+	if build == WOW_currentBuild then
+		return true
+	else
+		return false
+	end
+end
+
+----------------------------------------------------------------
+function E.Octo_Func.Octo_IsRetail()
+	local build = 10
+	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
+	if build == WOW_currentBuild then
+		return true
+	else
+		return false
+	end
+end
+
+----------------------------------------------------------------
 function E.Octo_Func.func_hex2rgb(self)
 	self = self:gsub("|cff", "")
 	return tonumber("0x"..self:sub(1, 2)), tonumber("0x"..self:sub(3, 4)), tonumber("0x"..self:sub(5, 6))
@@ -21,7 +54,10 @@ end
 local func_hex2rgb = E.Octo_Func.func_hex2rgb
 ----------------------------------------------------------------
 function E.Octo_Func.func_rgb2hex(r, g, b, a)
-	local r, g, b, a = r, g, b, a
+	local r = r or 1
+	local g = g or 1
+	local b = b or 1
+	local a = a or 1
 	if not a then
 		a = 1
 	end
@@ -133,12 +169,16 @@ end
 local func_texturefromIcon = E.Octo_Func.func_texturefromIcon
 ----------------------------------------------------------------
 function E.Octo_Func.func_questName(self)
-	local title = C_QuestLog.GetTitleForQuestID(self)
-	if title then
-		return title
-	else
-		return E.Octo_Globals.Red_Color.."notitle".."|r"
+	local title = "notitle"
+	if E.Octo_Func.Octo_IsRetail() == true then
+		title = C_QuestLog.GetTitleForQuestID(self)
+		if title then
+			return title
+		else
+			return E.Octo_Globals.Red_Color.."notitle".."|r"
+		end
 	end
+	return title
 end
 local func_questName = E.Octo_Func.func_questName
 ----------------------------------------------------------------
@@ -159,17 +199,21 @@ local func_reputationName = E.Octo_Func.func_reputationName
 ----------------------------------------------------------------
 function E.Octo_Func.func_itemName_NOCOLOR(itemID)
 	local itemName_NOCOLOR = "itemName_NOCOLOR"
-	if C_Item.DoesItemExistByID(itemID) then
-		local item = Item:CreateFromItemID(itemID)
-		if item:IsItemDataCached() then
-			itemName_NOCOLOR = item:GetItemName()
-			-- print ("|cff00FF00Cached|r"..itemName_NOCOLOR)
-		else
-			item:ContinueOnItemLoad(function()
-					itemName_NOCOLOR = item:GetItemName()
-					-- print ("|cffFF0000Not Cached|r"..itemName_NOCOLOR)
-			end)
+	if E.Octo_Func.Octo_IsRetail() == true then
+		if C_Item.DoesItemExistByID(itemID) then
+			local item = Item:CreateFromItemID(itemID)
+			if item:IsItemDataCached() then
+				itemName_NOCOLOR = item:GetItemName()
+				-- print ("|cff00FF00Cached|r"..itemName_NOCOLOR)
+			else
+				item:ContinueOnItemLoad(function()
+						itemName_NOCOLOR = item:GetItemName()
+						-- print ("|cffFF0000Not Cached|r"..itemName_NOCOLOR)
+				end)
+			end
+			return itemName_NOCOLOR
 		end
+	else
 		return itemName_NOCOLOR
 	end
 end
@@ -301,39 +345,41 @@ end
 local tmstpDayReset = E.Octo_Func.tmstpDayReset
 ----------------------------------------------------------------
 function E.Octo_Func.All_objectives(self)
-	local Octopussy = ""
-	local objectives = C_QuestLog.GetQuestObjectives(self)
-	local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(self, 1, false)
-	if objectives == nil then
-		return ""
-	end
-	if objectiveType == "progressbar" then
-		return "|cffFF0000"..GetQuestProgressBarPercent(self).."%|r"
-	end
-	if objectives then
-		if objectives[5] then
-			Octopussy = Octopussy..(objectives[5].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[5].text.."|r\n"
-			Octopussy = Octopussy..(objectives[4].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[4].text.."|r\n"
-			Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
-			Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
-			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
-		elseif objectives[4] then
-			Octopussy = Octopussy..(objectives[4].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[4].text.."|r\n"
-			Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
-			Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
-			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
-		elseif objectives[3] then
-			Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
-			Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
-			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
-		elseif objectives[2] then
-			Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
-			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
-		elseif objectives[1] then
-			Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+	if E.Octo_Func.Octo_IsRetail() == true then
+		local Octopussy = ""
+		local objectives = C_QuestLog.GetQuestObjectives(self)
+		local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(self, 1, false)
+		if objectives == nil then
+			return ""
 		end
+		if objectiveType == "progressbar" then
+			return "|cffFF0000"..GetQuestProgressBarPercent(self).."%|r"
+		end
+		if objectives then
+			if objectives[5] then
+				Octopussy = Octopussy..(objectives[5].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[5].text.."|r\n"
+				Octopussy = Octopussy..(objectives[4].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[4].text.."|r\n"
+				Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
+				Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
+				Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+			elseif objectives[4] then
+				Octopussy = Octopussy..(objectives[4].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[4].text.."|r\n"
+				Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
+				Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
+				Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+			elseif objectives[3] then
+				Octopussy = Octopussy..(objectives[3].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[3].text.."|r\n"
+				Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
+				Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+			elseif objectives[2] then
+				Octopussy = Octopussy..(objectives[2].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[2].text.."|r\n"
+				Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+			elseif objectives[1] then
+				Octopussy = Octopussy..(objectives[1].finished and E.Octo_Globals.Gray_Color or E.Octo_Globals.White_Color) ..objectives[1].text.."|r\n"
+			end
+		end
+		return Octopussy
 	end
-	return Octopussy
 end
 local All_objectives = E.Octo_Func.All_objectives
 ----------------------------------------------------------------
@@ -346,6 +392,7 @@ end
 local func_Octo_LoadAddOn = E.Octo_Func.func_Octo_LoadAddOn
 ----------------------------------------------------------------
 function E.Octo_Func.CheckCompletedByQuestID(self)
+	if E.Octo_Func.Octo_IsRetail() == true then
 	local vivod
 	local TEST = ""
 	if C_QuestLog.IsQuestFlaggedCompleted(self) == true then
@@ -376,6 +423,7 @@ function E.Octo_Func.CheckCompletedByQuestID(self)
 		end
 	end
 	return vivod
+end
 end
 local CheckCompletedByQuestID = E.Octo_Func.CheckCompletedByQuestID
 ----------------------------------------------------------------
@@ -574,6 +622,13 @@ function E.Octo_Func.encryption(self)
 end
 local encryption = E.Octo_Func.encryption
 ----------------------------------------------------------------
+function E.Octo_Func.GetClassColor(self) -- C_ClassColor.GetClassColor(classFilename)
+  local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[self]
+  if color then
+	return color.colorStr:gsub("^ff", "")
+  end
+  return "ffffff"
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

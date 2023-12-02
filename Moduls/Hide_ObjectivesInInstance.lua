@@ -4,6 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --Hide_ObjectivesInInstance
 tinsert(E.Octo_Globals.modules, function()
+				if E.Octo_Func.Octo_IsRetail() == true then
 		if Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance then
 			local className, classFilename, classId = UnitClass("PLAYER")
 			local classColor = C_ClassColor.GetClassColor(classFilename)
@@ -173,4 +174,5 @@ if E.Octo_Globals.isElvUI == true or E.Octo_Globals.isElvUI == false then
 		end
 		end
 	end
+end
 end)

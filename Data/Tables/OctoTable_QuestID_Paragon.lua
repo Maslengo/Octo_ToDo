@@ -40,4 +40,5 @@ E.Octo_Table.OctoTable_QuestID_Paragon =
 		66511, -- Iskaara Tuskarr https://www.wowhead.com/item=204379/brimming-iskaaran-supply-pack https://www.wowhead.com/item=199473/overflowing-iskaaran-supply-pack
 		71023, -- Valdrakken Accord https://www.wowhead.com/item=204381/brimming-valdrakken-accord-supply-pack https://www.wowhead.com/item=199475/overflowing-valdrakken-accord-supply-pack
 		75290, -- Loamm Niffen https://www.wowhead.com/item=204712/brimming-loamm-niffen-supply-satchel
+		76425, -- Renowned with the Dream Wardens https://www.wowhead.com/quest=76425/renowned-with-the-dream-wardens
 	}
