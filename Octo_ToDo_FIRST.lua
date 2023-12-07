@@ -5007,7 +5007,7 @@ local function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = CharInfo.CurrencyID[currencyID].."/"..maxQuantity
+							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
 					return vivodCent, vivodLeft
@@ -5034,7 +5034,7 @@ local function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = CharInfo.CurrencyID[currencyID].."/"..maxQuantity
+							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
 					return vivodCent, vivodLeft
@@ -5061,7 +5061,7 @@ local function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = CharInfo.CurrencyID[currencyID].."/"..maxQuantity
+							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
 					return vivodCent, vivodLeft
@@ -5088,7 +5088,7 @@ local function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
 						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = CharInfo.CurrencyID[currencyID].."/"..maxQuantity
+							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
 					return vivodCent, vivodLeft
