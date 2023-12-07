@@ -2062,8 +2062,8 @@ local function Collect_All_journalInstance()
 					collect.journalInstance[instanceId][instanceDifficulty] = collect.journalInstance[instanceId][instanceDifficulty] or {}
 					if locked then
 						--
-						for k, v in ipairs(E.Octo_Table.OctoTable_journalInstanceID) do
-							if instanceId == v then
+						-- for k, v in ipairs(E.Octo_Table.OctoTable_journalInstanceID) do
+						-- 	if instanceId == v then
 								local _, _, lastBossDefeated = GetSavedInstanceEncounterInfo(i, instancesLastBoss[i] or totalBosses)
 								if defeatedBosses == 0 and lastBossDefeated then
 									lastBossDefeated = false
@@ -2107,8 +2107,8 @@ local function Collect_All_journalInstance()
 								collect.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
 								collect.journalInstance[instanceId][instanceDifficulty].Time = E.Octo_Func.SecondsToClock(instanceReset-ServerTime)
 								-- collect.journalInstance[instanceId][instanceDifficulty].link = GetSavedInstanceChatLink(i)
-							end
-						end
+						-- 	end
+						-- end
 					end
 				end
 				--
@@ -5738,7 +5738,7 @@ local function O_otrisovka_FIRST()
 			end -- for 404
 		end
 	end
-	-- Рейды тест Инсты
+	-- Рейды тест Инсты Подземелья
 	if Octo_ToDo_DB_Vars.config.Dungeons == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
@@ -5746,17 +5746,38 @@ local function O_otrisovka_FIRST()
 				-- if Octo_ToDo_DB_Vars.config.ExpansionToShow == 10 then
 				-- end
 				local ServerTime = GetServerTime()
-				for _, v in pairs(E.Octo_Table.OctoTable_journalInstanceID) do
-					if CharInfo.journalInstance[v] ~= nil then
-						for _, w in pairs(E.Octo_Table.OctoTable_instanceDifficulty) do
-							if CharInfo.journalInstance[v][w] ~= nil then
-								if CharInfo.journalInstance[v][w].vivod ~= nil and CharInfo.journalInstance[v][w].Time ~= nil then
-									tooltip[#tooltip+1] = {CharInfo.journalInstance[v][w].instanceName.."("..CharInfo.journalInstance[v][w].difficultyName..") "..E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(CharInfo.journalInstance[v][w].instanceReset-ServerTime).."|r", CharInfo.journalInstance[v][w].vivod}
-								end
+				-- for _, v in pairs(E.Octo_Table.OctoTable_journalInstanceID) do
+				-- 	if CharInfo.journalInstance[v] ~= nil then
+				-- 		for _, w in pairs(E.Octo_Table.OctoTable_instanceDifficulty) do
+				-- 			if CharInfo.journalInstance[v][w] ~= nil then
+				-- 				if CharInfo.journalInstance[v][w].vivod ~= nil and CharInfo.journalInstance[v][w].Time ~= nil then
+				-- 					tooltip[#tooltip+1] = {CharInfo.journalInstance[v][w].instanceName.."("..CharInfo.journalInstance[v][w].difficultyName..") "..E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(CharInfo.journalInstance[v][w].instanceReset-ServerTime).."|r", CharInfo.journalInstance[v][w].vivod}
+				-- 				end
+				-- 			end
+				-- 		end
+				-- 	end
+				-- end
+
+				if CharInfo.Name == "Октопл" then
+					for instanceID, v in pairs(CharInfo.journalInstance) do
+						for difficultyID, w in pairs (v) do
+							if w.vivod ~= nil then
+								-- print (instanceID, difficultyID, w.instanceName, w.vivod)
+								tooltip[#tooltip+1] = {w.instanceName.."("..w.difficultyName..") "..E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(w.instanceReset-ServerTime).."|r", w.vivod}
 							end
 						end
 					end
 				end
+
+
+
+
+
+
+
+
+
+
 				if #tooltip ~= 0 then
 					-- vivodCent = E.Octo_Globals.Yellow_Color.."КД|r"
 					-- vivodCent = E.Octo_Globals.Gray_Color..RAID_INFORMATION.."|r"
