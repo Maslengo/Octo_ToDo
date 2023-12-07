@@ -5758,16 +5758,18 @@ local function O_otrisovka_FIRST()
 				-- 	end
 				-- end
 
-				if CharInfo.Name == "Октопл" then
+				-- if CharInfo.Name == "Октопл" then
 					for instanceID, v in pairs(CharInfo.journalInstance) do
-						for difficultyID, w in pairs (v) do
-							if w.vivod ~= nil then
-								-- print (instanceID, difficultyID, w.instanceName, w.vivod)
-								tooltip[#tooltip+1] = {w.instanceName.."("..w.difficultyName..") "..E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(w.instanceReset-ServerTime).."|r", w.vivod}
+						if v then
+							for difficultyID, w in pairs (v) do
+								if w.vivod ~= nil then
+									-- print (instanceID, difficultyID, w.instanceName, w.vivod)
+									tooltip[#tooltip+1] = {w.instanceName.."("..w.difficultyName..") "..E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(w.instanceReset-ServerTime).."|r", w.vivod}
+								end
 							end
 						end
 					end
-				end
+				-- end
 
 
 
