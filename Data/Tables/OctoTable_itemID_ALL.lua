@@ -1,8 +1,9 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local ltl = LibStub("LibThingsLoad-1.0")
 --------------------------------------------------------------------------------
 E.Octo_Table.OctoTable_itemID_ALL = {
-	210871, 210780, 204463, 204710, 6657, 210436, 208821, 44812, 204463, 210944, 210049,
+	210494, 210871, 210780, 204463, 204710, 6657, 210436, 208821, 44812, 204463, 210944, 210049,
 	210737, 208649, 210346, 208619, 210041, 206960, 211376, 211495, 208396,
 	206959, 199836, 199837, 199838, 199839, 188957, 187634, 187636, 187633,
 	189146, 189145, 189147, 189148, 189149, 189151, 189152, 189153, 189154,
@@ -79,6 +80,14 @@ E.Octo_Table.OctoTable_itemID_ALL = {
 	209856, -- NEW Dilated Time Pod Капсула растянутого времени
 	207030 -- OLD Dilated Time Capsule Капсула растянутого времени
 }
-for i = 1, #E.Octo_Table.OctoTable_itemID_ALL do
-	C_Item.RequestLoadItemDataByID(E.Octo_Table.OctoTable_itemID_ALL[i])
-end
+
+
+local promise = ltl:Items(E.Octo_Table.OctoTable_itemID_ALL)
+
+promise:FailWithChecked(function(promise, id, loadType)
+
+end)
+
+-- for i = 1, #E.Octo_Table.OctoTable_itemID_ALL do
+-- 	C_Item.RequestLoadItemDataByID(E.Octo_Table.OctoTable_itemID_ALL[i])
+-- end

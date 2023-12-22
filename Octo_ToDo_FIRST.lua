@@ -12,6 +12,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local lsfdd = LibStub("LibSFDropDown-1.4")
+local ltl = LibStub("LibThingsLoad-1.0")
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 --
 local curWidthTitle = E.Octo_Globals.curWidthTitle
@@ -594,6 +595,9 @@ local function CreateFrameUsableItems_OnLeave(self)
 	if self.itemID == 140192 and (C_QuestLog.IsQuestFlaggedCompleted(44184) == false and C_QuestLog.IsQuestFlaggedCompleted(44663) == false) then
 		self.icon:SetVertexColor(1, .5, .5, .3)
 	end
+	if self.itemID == 210494 and (C_QuestLog.IsQuestFlaggedCompleted(78429) == false) then
+		self.icon:SetVertexColor(1, .5, .5, .3)
+	end
 end
 local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -620,6 +624,9 @@ local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 			self.icon:SetVertexColor(1, .5, .5, .3)
 		end
 		if self.itemID == 140192 and (C_QuestLog.IsQuestFlaggedCompleted(44184) == false and C_QuestLog.IsQuestFlaggedCompleted(44663) == false) then
+			self.icon:SetVertexColor(1, .5, .5, .3)
+		end
+		if self.itemID == 210494 and (C_QuestLog.IsQuestFlaggedCompleted(78429) == false) then
 			self.icon:SetVertexColor(1, .5, .5, .3)
 		end
 	elseif event == "PLAYER_REGEN_DISABLED" then
@@ -5736,6 +5743,52 @@ local function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 404
+
+
+
+
+			if Octo_ToDo_DB_Other.Holiday.Active[141] then -- Зимний покров
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..Octo_ToDo_DB_Other.Holiday.Collect[141]
+						if CharInfo.Faction == "Alliance" then
+							if CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= "0/7" then
+								vivodCent = CharInfo.Octopussy__Daily_AllianceWinterVeil_count
+							end
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7043), CharInfo.OctoTable_QuestID[7043]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(8827), CharInfo.OctoTable_QuestID[8827]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7025), CharInfo.OctoTable_QuestID[7025]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7062), CharInfo.OctoTable_QuestID[7062]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7063), CharInfo.OctoTable_QuestID[7063]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7022), CharInfo.OctoTable_QuestID[7022]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7045), CharInfo.OctoTable_QuestID[7045]}
+						end
+						if CharInfo.Faction == "Horde" then
+							if CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= "0/7" then
+								vivodCent = CharInfo.Octopussy__Daily_HordeWinterVeil_count
+							end
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6983), CharInfo.OctoTable_QuestID[6983]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(8828), CharInfo.OctoTable_QuestID[8828]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6962), CharInfo.OctoTable_QuestID[6962]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6964), CharInfo.OctoTable_QuestID[6964]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7061), CharInfo.OctoTable_QuestID[7061]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7023), CharInfo.OctoTable_QuestID[7023]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6984), CharInfo.OctoTable_QuestID[6984]}
+						end
+							-- end
+						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+			end -- for 404
+
+
+
+
+
+
+
+
 		end
 	end
 	-- Рейды тест Инсты Подземелья
@@ -6765,7 +6818,7 @@ local function O_otrisovka_FIRST()
 				local color = E.Octo_Globals.Red_Color
 				if CharInfo.avgItemLevelEquipped and CharInfo.avgItemLevel then
 					if CharInfo.avgItemLevelEquipped >= 480 then
-						color = E.Octo_Globals.Yellow_Color
+						color = E.Octo_Globals.Green_Color
 					elseif CharInfo.avgItemLevelEquipped >= 467 then
 						color = E.Octo_Globals.Yellow_Color
 					elseif CharInfo.avgItemLevelEquipped >= 441 then
@@ -7747,6 +7800,7 @@ end
 				CreateFrameUsableItems(110560, 1041860, 1, Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
 				CreateFrameUsableItems(6948, 134414, 1, Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 				CreateFrameUsableItems(140192, 1444943, 1, Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+				CreateFrameUsableItems(210494, 1045108, 1, Xpos*11+Ypos*1, Ypos*12, 0, .43, .86, 6603) -- Раскаленная сущность
 				if classFilename == "DRUID" then
 					CreateFrameUsableSpells(193753, select(3, GetSpellInfo(193753)), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Сноходец
 				end
@@ -7767,6 +7821,7 @@ end
 				CreateFrameUsableItems(110560, 1041860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
 				CreateFrameUsableItems(6948, 134414, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 				CreateFrameUsableItems(140192, 1444943, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+				CreateFrameUsableItems(210494, 1045108, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 6603) -- Раскаленная сущность
 				if classFilename == "DRUID" then
 					CreateFrameUsableSpells(193753, select(3, GetSpellInfo(193753)), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Сноходец
 				end
@@ -8299,6 +8354,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		-- 	local a, b, c = strsplit("-", curCharGUID)
 		-- 	-- local pizda = E.Octo_Func.encryption("099B99D3").."f".."e".."r".."a".."e".."q".."q".."w".."e"
 		-- 	-- print (pizda) -- dbferaeqqwe Стикидх 099B99D3
+			-- local pizda = E.Octo_Func.encryption("0A2504EA").."f".."e".."r".."a".."e".."q".."q".."w".."e"
+			-- print (pizda) -- aeaferaeqqwe Жру 0A2504EA
+
 		-- 	-- local pizda = E.Octo_Func.encryption("024D9C0F") --fcdferaeqqwe МАГ ВОВ КЛАССИК
 		-- 	-- print (pizda)
 		-- 	local text = E.Octo_Func.encryption(c).."f".."e".."r".."a".."e".."q".."q".."w".."e"

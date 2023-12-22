@@ -1852,5 +1852,61 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 5
 	},
+	----------------------------------------------------------------
+	{
+		name_save = "WinterVeil", -- Winter Veil Quests Octopussy__Daily_AllianceYoureaMeanOne_count
+		reset = "Daily",
+		expansion = "",
+		place = "",
+		desc = "Alliance",
+		questID = {
+			-- Alliance
+			7043, -- youre-a-mean-one
+			8827, -- winters-presents
+			7025, -- treats-for-greatfather-winter
+			7062, -- the-reason-for-the-season
+			7063, -- the-feast-of-winter-veil
+			7022, -- greatfather-winter-is-here
+			7045, -- a-smokywood-pastures-thank-you
+		},
+		max = 7
+	},
+	{
+		name_save = "WinterVeil", -- Winter Veil Quests Octopussy__Daily_HordeYoureaMeanOne_count
+		reset = "Daily",
+		expansion = "",
+		place = "",
+		desc = "Horde",
+		questID = {
+			-- Horde
+			6983, -- youre-a-mean-one
+			8828, -- winters-presents
+			6962, -- treats-for-great-father-winter
+			6964, -- the-reason-for-the-season
+			7061, -- the-feast-of-winter-veil
+			7023, -- greatfather-winter-is-here
+			6984, -- a-smokywood-pastures-thank-you
+		},
+		max = 7
+	},
+	----------------------------------------------------------------
+	-- You're a Mean One...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
