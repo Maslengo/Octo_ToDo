@@ -29,15 +29,15 @@ function func_FieldOfView()
 				end)
 			end
 		end
-		local function create_ChatFrame1_background()
-			if LeftChatPanel and Octo_ToDo_DB_Vars.config.FoV_bottom >= 60 then
-				local t = LeftChatPanel:CreateTexture(nil, "BACKGROUND")
-				t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\background\\Square_White.tga")
-				t:SetAllPoints()
-				LeftChatPanel.bg = t
-				LeftChatPanel.bg:SetColorTexture(0, 0, 0, 1)
-			end
-		end
+		-- local function create_ChatFrame1_background()
+		-- 	if LeftChatPanel and Octo_ToDo_DB_Vars.config.FoV_bottom >= 60 then
+		-- 		local t = LeftChatPanel:CreateTexture(nil, "BACKGROUND")
+		-- 		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\background\\Square_White.tga")
+		-- 		t:SetAllPoints()
+		-- 		LeftChatPanel.bg = t
+		-- 		LeftChatPanel.bg:SetColorTexture(0, 0, 0, 1)
+		-- 	end
+		-- end
 		local function change_worldframe_setpoints(TOP, BOTTOM, LEFT, RIGHT, scale)
 			WorldFrame:ClearAllPoints()
 			WorldFrame:SetPoint("LEFT", (LEFT/scale), 0)
@@ -46,15 +46,15 @@ function func_FieldOfView()
 			WorldFrame:SetPoint("BOTTOM", 0, (BOTTOM/scale))
 		end
 		function FieldOfView_function()
-			local scale = 1.4 --E.Octo_Globals.scale
+			local scale = GetPhysicalScreenSize()/WorldFrame:GetWidth() -- 1.4
 			if Octo_ToDo_DB_Vars.config.FoV_top and Octo_ToDo_DB_Vars.config.FoV_bottom and Octo_ToDo_DB_Vars.config.FoV_left and Octo_ToDo_DB_Vars.config.FoV_right then
-				create_ChatFrame1_background()
+				-- create_ChatFrame1_background()
 				-- print (Octo_ToDo_DB_Vars.config.FoV_top, Octo_ToDo_DB_Vars.config.FoV_bottom, Octo_ToDo_DB_Vars.config.FoV_left, Octo_ToDo_DB_Vars.config.FoV_right)
 				change_worldframe_setpoints(Octo_ToDo_DB_Vars.config.FoV_top, Octo_ToDo_DB_Vars.config.FoV_bottom, Octo_ToDo_DB_Vars.config.FoV_left, Octo_ToDo_DB_Vars.config.FoV_right, scale)
 			end
 		end
 		FieldOfView_OnLoad()
-		-- FieldOfView_function()
+		FieldOfView_function()
 	end
 end
 tinsert(E.Octo_Globals.modules, func_FieldOfView)

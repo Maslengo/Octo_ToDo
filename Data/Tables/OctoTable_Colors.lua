@@ -15,6 +15,8 @@ E.Octo_Table.OctoTable_Colors = {
 	{name = "Class_DemonHunter_Color", hex = "A330C9"},
 	{name = "Class_DeathKnight_Color", hex = "C41E3A"},
 	{name = "Class_Evoker_Color", hex = "33937F"},
+	{name = " ", hex = "000000"},
+
 	{name = "Classic_Color", hex = "68CCEF"},
 	{name = "TheBurningCrusade_Color", hex = "4FFF79"},
 	{name = "WrathoftheLichKing_Color", hex = "00A3FF"},
@@ -25,6 +27,8 @@ E.Octo_Table.OctoTable_Colors = {
 	{name = "BattleforAzeroth_Color", hex = "6464FF"},
 	{name = "Shadowlands_Color", hex = "C9C3AA"},
 	{name = "Dragonflight_Color", hex = "E8E379"},
+	{name = " ", hex = "000000"},
+
 	{name = "WOW_Poor_Color", hex = "9D9D9D"},
 	{name = "WOW_Common_Color", hex = "FFFFFF"},
 	{name = "WOW_Uncommon_Color", hex = "1EFF00"},
@@ -61,5 +65,5 @@ E.Octo_Table.OctoTable_Colors = {
 	{name = "Skyblue_Color", hex = "87CDEB"},
 	{name = "Steelblue_Color", hex = "4682B3"},
 	{name = "Slategray_Color", hex = "708090"},
-	{name = "Brown_Color", hex = "964B00"}
+	{name = "Brown_Color", hex = "964B00"},
 }

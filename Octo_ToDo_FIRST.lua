@@ -2151,6 +2151,13 @@ local function Collect_All_Quest_Tooltip()
 	--
 	collect.DreamsurgeInvestigation = E.Octo_Func.All_objectives(qwid)
 end
+local function TEST_GROUP_ROSTER()
+	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TEST_GROUP_ROSTER".."|r")
+	end
+
+
+end
 local function Timer_Legion_Invasion()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Legion_Invasion".."|r")
@@ -2441,6 +2448,7 @@ local function Octo_ToDo_FIRST_OnLoad()
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("VARIABLES_LOADED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_XP_UPDATE")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TIME_PLAYED_MSG")
+	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 	Octo_ToDo_FIRST_Frame_EventFrame:SetScript("OnEvent", function(...)
 			Octo_ToDo_FIRST_OnEvent(...)
 	end)
@@ -8085,6 +8093,90 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	Octo_ToDo_FIRST_Frame_Main_Frame:SetSize(width, height) -- ТУТ БЫЛА ЗАЛУПА
 end
 end
+
+local function main_frame_toggle()
+	-- local promise = ltl:Items(E.Octo_Table.OctoTable_itemID_ALL)
+
+	-- promise:FailWithChecked(function(promise, id, loadType)
+
+	-- end)
+	local button = ldbi:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
+
+	if not Octo_ToDo_FIRST_Frame_Main_Frame.promise then
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise = ltl:Items(E.Octo_Table.OctoTable_itemID_ALL)
+		-- Octo_ToDo_FIRST_Frame_Main_Frame.promise:FailWithChecked(print)
+
+
+
+
+
+
+		-- local t = {}
+		-- for itemID, v in pairs(E.Octo_Table.OctoTable_itemID_Ignore_List) do
+		-- 	tinsert(t, itemID)
+		-- end
+
+		-- Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItems(t)
+		-- Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItems(E.Octo_Table.OctoTable_itemID_ItemsDelete)
+
+
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID_Paragon)
+
+
+	end
+
+
+
+	if Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then
+		Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
+	else
+		button:Disable()
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:Then(function()
+			button:Enable()
+			Octo_ToDo_FIRST_Frame_Main_Frame:Show()
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			Collect_ALL_PlayerInfo()
+			Collect_All_Currency()
+			Collect_ALL_GreatVault()
+			Collect_ALL_ItemLevel()
+			Collect_ALL_ItemsInBag()
+			Collect_ALL_Locations()
+			Collect_ALL_LoginTime()
+			Collect_ALL_Mail()
+			-- Collect_ALL_MoneyOnLogin()
+			Collect_ALL_MoneyUpdate()
+			Collect_All_Professions()
+			Collect_ALL_PVPRaitings()
+			Collect_All_Quests()
+			Collect_All_Quest_Tooltip()
+			Collect_All_Reputations()
+			Collect_All_Legion_Transmoge()
+			-- Collect_All_Legion_TransmogeNEW()
+			Collect_ALL_UNIVERSALQuestUpdate()
+			Collect_BfA_Azerite()
+			Collect_BfA_Cloaklvl()
+			Collect_BfA_Island()
+			Collect_BfA_QuestsBounties()
+			Collect_SL_CovenantAnima()
+			Collect_All_journalInstance()
+			Collect_Player_Level()
+			Collect_WarMode()
+			-- Collect_ALL_EncounterAndZoneLists()
+			Octo_ToDo_FIRST_AddDataToAltFrame()
+			Hide_Frames()
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+		end)
+	end
+
+
+
+end
+
 function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	if (event == "VARIABLES_LOADED") and not InCombatLockdown() then
 		if Octo_ToDo_DB_Other == nil then Octo_ToDo_DB_Other = {} end
@@ -8273,36 +8365,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 								if Octo_ToDo_THIRD_Frame_Main_FramePIZDA and Octo_ToDo_THIRD_Frame_Main_FramePIZDA:IsShown() then
 									Octo_ToDo_THIRD_Frame_Main_FramePIZDA:Hide()
 								end
-								Octo_ToDo_FIRST_Frame_Main_Frame:SetShown(not Octo_ToDo_FIRST_Frame_Main_Frame:IsShown())
-								Collect_ALL_PlayerInfo()
-								Collect_All_Currency()
-								Collect_ALL_GreatVault()
-								Collect_ALL_ItemLevel()
-								Collect_ALL_ItemsInBag()
-								Collect_ALL_Locations()
-								Collect_ALL_LoginTime()
-								Collect_ALL_Mail()
-								-- Collect_ALL_MoneyOnLogin()
-								Collect_ALL_MoneyUpdate()
-								Collect_All_Professions()
-								Collect_ALL_PVPRaitings()
-								Collect_All_Quests()
-								Collect_All_Quest_Tooltip()
-								Collect_All_Reputations()
-								Collect_All_Legion_Transmoge()
-								-- Collect_All_Legion_TransmogeNEW()
-								Collect_ALL_UNIVERSALQuestUpdate()
-								Collect_BfA_Azerite()
-								Collect_BfA_Cloaklvl()
-								Collect_BfA_Island()
-								Collect_BfA_QuestsBounties()
-								Collect_SL_CovenantAnima()
-								Collect_All_journalInstance()
-								Collect_Player_Level()
-								Collect_WarMode()
-								-- Collect_ALL_EncounterAndZoneLists()
-								Octo_ToDo_FIRST_AddDataToAltFrame()
-								Hide_Frames()
+								-- Octo_ToDo_FIRST_Frame_Main_Frame:SetShown(not Octo_ToDo_FIRST_Frame_Main_Frame:IsShown())
+								main_frame_toggle()
+
 								-- DEV_GUID()
 							end
 						else
@@ -8555,6 +8620,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_Played(...)
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
+	if event == "GROUP_ROSTER_UPDATE" then
+		TEST_GROUP_ROSTER()
+	end
 	-- if event == "MAJOR_FACTION_RENOWN_LEVEL_CHANGED" then
 	-- 	TryToOffMajor(...)
 	-- 	if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
@@ -8573,7 +8641,11 @@ function SlashCmdList.Octo(msg, editBox)
 		if Octo_ToDo_SECOND_Frame_Main_FramePIZDA and Octo_ToDo_SECOND_Frame_Main_FramePIZDA:IsShown() then
 			Octo_ToDo_SECOND_Frame_Main_FramePIZDA:Hide()
 		end
-		Octo_ToDo_FIRST_Frame_Main_Frame:SetShown(not Octo_ToDo_FIRST_Frame_Main_Frame:IsShown())
+
+		main_frame_toggle()
+
+
+		-- Octo_ToDo_FIRST_Frame_Main_Frame:SetShown(not Octo_ToDo_FIRST_Frame_Main_Frame:IsShown())
 		Octo_ToDo_FIRST_AddDataToAltFrame()
 	end
 end

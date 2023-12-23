@@ -81,6 +81,9 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 					end
 				end
 		end)
+
+
+
 	end
 end
 local function Create_CheckButton(scroll, self, number, pos, config, text, color)
