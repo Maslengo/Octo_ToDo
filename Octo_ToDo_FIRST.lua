@@ -492,8 +492,8 @@ local function checkCharInfo(self)
 		Octo_ToDo_DB_Vars.config.AnotherAddonsCasual = false
 		Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG = false
 		Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = false
-		Octo_ToDo_DB_Vars.config.ItemsUsable = false
-		Octo_ToDo_DB_Vars.config.ItemsDelete = false
+		-- Octo_ToDo_DB_Vars.config.ItemsUsable = false
+		-- Octo_ToDo_DB_Vars.config.ItemsDelete = false
 		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
 				if w == "Daily" then
@@ -2395,25 +2395,25 @@ local function Timer_DF_Flower()
 end
 
 
-local function Timer_WinterVeil()
-	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_WinterVeil".."|r")
-	end
-	local TIMER = 1703511222 --1703510540 --
-	local interval = (5)*60 -- каждые 5 минут
-	local duration = (1)*60 -- идёт 1 минуту
-	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	if (nextEventIn/60/60) < 24 then
-		local Timer_WinterVeil = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
-		if nextEventIn > (interval - duration) then
-			nextEventIn = nextEventIn - (interval - duration)
-			Timer_WinterVeil = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
-		end
-		return Timer_WinterVeil
-	else
-		return " "
-	end
-end
+-- local function Timer_WinterVeil()
+-- 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+-- 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_WinterVeil".."|r")
+-- 	end
+-- 	local TIMER = 1703511222 --1703510540 --
+-- 	local interval = (5)*60 -- каждые 5 минут
+-- 	local duration = (1)*60 -- идёт 1 минуту
+-- 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
+-- 	if (nextEventIn/60/60) < 24 then
+-- 		local Timer_WinterVeil = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+-- 		if nextEventIn > (interval - duration) then
+-- 			nextEventIn = nextEventIn - (interval - duration)
+-- 			Timer_WinterVeil = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+-- 		end
+-- 		return Timer_WinterVeil
+-- 	else
+-- 		return " "
+-- 	end
+-- end
 
 
 
@@ -5775,7 +5775,7 @@ local function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..Octo_ToDo_DB_Other.Holiday.Collect[141]
+						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..L["Gifts"]
 						if CharInfo.Faction == "Alliance" then
 							if CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= "0/6" then
 								vivodCent = CharInfo.Octopussy__Daily_AllianceWinterVeil_count
@@ -5806,7 +5806,7 @@ local function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..Timer_WinterVeil()..E.Octo_Func.func_questName(7043)
+						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..E.Octo_Func.func_questName(7043) -- ..Timer_WinterVeil()
 						if CharInfo.Faction == "Alliance" then
 							if CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= "0/1" then
 								vivodCent = CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count
@@ -8145,13 +8145,7 @@ local function main_frame_toggle()
 	local button = ldbi:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
 	if not Octo_ToDo_FIRST_Frame_Main_Frame.promise then
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise = ltl:Items(E.Octo_Table.OctoTable_itemID_ALL)
-		-- Octo_ToDo_FIRST_Frame_Main_Frame.promise:FailWithChecked(print)
-		-- local t = {}
-		-- for itemID, v in pairs(E.Octo_Table.OctoTable_itemID_Ignore_List) do
-		-- 	tinsert(t, itemID)
-		-- end
-		-- Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItems(t)
-		-- Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItems(E.Octo_Table.OctoTable_itemID_ItemsDelete)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItemsByKey(E.Octo_Table.OctoTable_itemID_Ignore_List)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID_Paragon)
 	end

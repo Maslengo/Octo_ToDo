@@ -272,6 +272,10 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 16, POS_LEFT, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
 		Create_CheckButton(MAIN_scrollChild, self, 17, POS_LEFT, "Hide_Zone_Text", L["Hide: Zone Text"])
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
+		Create_CheckButton(MAIN_scrollChild, self, 30, POS_LEFT, "ItemsUsable", "ItemsUsable")
+		Create_CheckButton(MAIN_scrollChild, self, 31, POS_LEFT, "ItemsDelete", "ItemsDelete")
+
+
 		Create_CheckButton(MAIN_scrollChild, self, 1, POS_CENTER, "MP_MythicKeystone", L["Mythic Keystone"], E.Octo_Globals.Purple_Color)
 		Create_CheckButton(MAIN_scrollChild, self, 2, POS_CENTER, "MP_WeeklyBest", "Weekly Best", E.Octo_Globals.Purple_Color)
 		Create_CheckButton(MAIN_scrollChild, self, 3, POS_CENTER, "MP_Score", DUNGEON_SCORE, E.Octo_Globals.Purple_Color)
@@ -433,8 +437,13 @@ FIRST_Config:SetScript("OnShow", function(self)
 		Create_Slider(FIRST_scrollChild, self, 19, POS_CENTER, "glowType", "glowType", E.Octo_Globals.Green_Color, 1, 3)
 		Create_Slider(FIRST_scrollChild, self, 20, POS_CENTER, "glowColor", "glowColor", E.Octo_Globals.Green_Color, 1, 3)
 		Create_CheckButton(FIRST_scrollChild, self, 22, POS_CENTER, "ChallengesKeystoneFrame", "ChallengesKeystoneFrame")
-		Create_CheckButton(FIRST_scrollChild, self, 23, POS_CENTER, "ItemsUsable", "ItemsUsable")
-		Create_CheckButton(FIRST_scrollChild, self, 24, POS_CENTER, "ItemsDelete", "ItemsDelete")
+
+
+
+
+
+
+
 
 		Create_CheckButton(FIRST_scrollChild, self, 1, POS_RIGHT, "FieldOfView", "FieldOfView")
 		Create_Slider(FIRST_scrollChild, self, 3, POS_RIGHT, "FoV_top", "FieldOfView: FoV_top", E.Octo_Globals.Green_Color, 0, 300, func_FieldOfView)

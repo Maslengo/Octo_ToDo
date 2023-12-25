@@ -179,8 +179,38 @@ E.Octo_Globals.DONE = E.Octo_Globals.Green_Color.."Done|r"
 -- E.Octo_Globals.Weekly = E.Octo_Globals.Blue_Color.."W|r "
 -- E.Octo_Globals.Once = E.Octo_Globals.Orange_Color.."O|r "
 -- E.Octo_Globals.Daily = "|TInterface\\OptionsFrame\\UI-OptionsFrame-NewFeatureIcon:0|t"
-E.Octo_Globals.Daily = "|TInterface\\GossipFrame\\AvailableLegendaryQuestIcon:0|t"
-E.Octo_Globals.Weekly = "|TInterface\\GossipFrame\\DailyQuestIcon:0|t"
-E.Octo_Globals.Once = "|TInterface\\GossipFrame\\AvailableQuestIcon:0|t"
+
+
+
+-- E.Octo_Globals.Daily = "|TInterface\\GossipFrame\\AvailableLegendaryQuestIcon:0|t"
+-- E.Octo_Globals.Weekly = "|TInterface\\GossipFrame\\DailyQuestIcon:0|t"
+-- E.Octo_Globals.Once = "|TInterface\\GossipFrame\\AvailableQuestIcon:0|t"
+
+
+local function texturefromIcon(self, size)
+	local show = true -- TYT
+	if show == true then
+		if not size then
+			size = 14
+		end
+		if not self or self == 0 then
+			self = 134400
+		end
+		return "|T"..self..":"..size..":"..size..":::64:64:4:60:4:60|t"
+	else
+		return ""
+	end
+end
+
+
+
+E.Octo_Globals.Daily = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\GossipFrame\\tga\\DailyQuestIcon.tga")
+-- E.Octo_Globals.Daily = texturefromIcon("Interface\\GossipFrame\\AvailableLegendaryQuestIcon")
+
+E.Octo_Globals.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\GossipFrame\\tga\\WeeklyQuestIcon.tga")
+-- E.Octo_Globals.Weekly = texturefromIcon("Interface\\GossipFrame\\DailyQuestIcon")
+
+E.Octo_Globals.Once = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\GossipFrame\\tga\\AvailableQuestIcon.tga")
+-- E.Octo_Globals.Once = texturefromIcon("Interface\\GossipFrame\\AvailableQuestIcon")
 
 -- console -> export "art"

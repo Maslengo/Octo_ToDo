@@ -163,6 +163,8 @@ if L then
 	L["Sparks of Life"] = true
 	L["Season Maximum"] = true
 	L["Can Earned"] = true
+	L["Gift"] = true
+	L["Gifts"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -320,4 +322,6 @@ if L then
 	L["Sparks of Life"] = "Искры жизни"
 	L["Season Maximum"] = "Максимум за сезон"
 	L["Can Earned"] = "Можно получить"
+	L["Gift"] = "Подарок"
+	L["Gifts"] = "Подарки"
 end

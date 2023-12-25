@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-local ltl = LibStub("LibThingsLoad-1.0")
 --------------------------------------------------------------------------------
 E.Octo_Table.OctoTable_itemID_Ignore_List = {
 	[49888] = true,
@@ -48,13 +47,3 @@ E.Octo_Table.OctoTable_itemID_Ignore_List = {
 	[207030] = true,
 	[211495] = true,
 }
-
--- local promise = ltl:Items(E.Octo_Table.OctoTable_itemID_Ignore_List)
-
--- promise:FailWithChecked(function(promise, id, loadType)
-
--- end)
-
-for itemID, v in pairs(E.Octo_Table.OctoTable_itemID_Ignore_List) do
-	C_Item.RequestLoadItemDataByID(itemID)
-end
