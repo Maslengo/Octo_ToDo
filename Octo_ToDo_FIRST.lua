@@ -5751,11 +5751,9 @@ local function O_otrisovka_FIRST()
 						local vivodCent, vivodLeft = "", ""
 						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..Octo_ToDo_DB_Other.Holiday.Collect[141]
 						if CharInfo.Faction == "Alliance" then
-							if CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= "0/7" then
+							if CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= "0/6" then
 								vivodCent = CharInfo.Octopussy__Daily_AllianceWinterVeil_count
 							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7043), CharInfo.OctoTable_QuestID[7043]}
-							tooltip[#tooltip+1] = {" ", " "}
 							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8744), CharInfo.OctoTable_QuestID[8744]}
 							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8768), CharInfo.OctoTable_QuestID[8768]}
 							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8769), CharInfo.OctoTable_QuestID[8769]}
@@ -5764,11 +5762,9 @@ local function O_otrisovka_FIRST()
 							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78504), CharInfo.OctoTable_QuestID[78504]}
 						end
 						if CharInfo.Faction == "Horde" then
-							if CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= "0/7" then
+							if CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= "0/6" then
 								vivodCent = CharInfo.Octopussy__Daily_HordeWinterVeil_count
 							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6983), CharInfo.OctoTable_QuestID[6983]}
-							tooltip[#tooltip+1] = {" ", " "}
 							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8768), CharInfo.OctoTable_QuestID[8768]}
 							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8744), CharInfo.OctoTable_QuestID[8744]}
 							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78504), CharInfo.OctoTable_QuestID[78504]}
@@ -5780,6 +5776,59 @@ local function O_otrisovka_FIRST()
 						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
 				end)
+
+
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..E.Octo_Func.func_questName(7043)
+						if CharInfo.Faction == "Alliance" then
+							if CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= "0/1" then
+								vivodCent = CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count
+							end
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7043), CharInfo.OctoTable_QuestID[7043]}
+						end
+						if CharInfo.Faction == "Horde" then
+							if CharInfo.Octopussy__Daily_HordeWinterVeil_YoureaMeanOne_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_HordeWinterVeil_YoureaMeanOne_count ~= "0/1" then
+								vivodCent = CharInfo.Octopussy__Daily_HordeWinterVeil_YoureaMeanOne_count
+							end
+							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6983), CharInfo.OctoTable_QuestID[6983]}
+						end
+							-- end
+						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Once..E.Octo_Func.func_questName(7045)
+						if CharInfo.Faction == "Alliance" then
+							if CharInfo.Octopussy__Once_AllianceWinterVeil_ASmokywoodPasturesThankYou_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Once_AllianceWinterVeil_ASmokywoodPasturesThankYou_count ~= "0/7" then
+								vivodCent = CharInfo.Octopussy__Once_AllianceWinterVeil_ASmokywoodPasturesThankYou_count
+							end
+						end
+						if CharInfo.Faction == "Horde" then
+							if CharInfo.Octopussy__Once_HordeWinterVeil_ASmokywoodPasturesThankYou_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Once_HordeWinterVeil_ASmokywoodPasturesThankYou_count ~= "0/7" then
+								vivodCent = CharInfo.Octopussy__Once_HordeWinterVeil_ASmokywoodPasturesThankYou_count
+							end
+						end
+							-- end
+						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+
+
+
+
+
+
+
+
+
+
+
+
 			end -- for 141
 		end
 	end

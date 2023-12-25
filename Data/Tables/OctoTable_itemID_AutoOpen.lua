@@ -3,6 +3,13 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.Octo_Table.OctoTable_itemID_AutoOpen =
 	{
+		[149504] = true,
+		[17726] = true,
+
+
+
+
+
 		[209871] = true,
 		[210657] = true,
 		[210992] = true,
@@ -68,7 +75,6 @@ E.Octo_Table.OctoTable_itemID_AutoOpen =
 		[7973] = true,
 		[15874] = true,
 		[17685] = true,
-		[17726] = true,
 		[17727] = true,
 		[20393] = true,
 		[21191] = true,

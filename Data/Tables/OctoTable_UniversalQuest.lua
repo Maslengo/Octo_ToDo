@@ -1860,9 +1860,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "Alliance",
 		questID = {
-			-- Alliance
-			7043, -- прохладное-чувство-юмора
-
 			8744,
 			8768,
 			8769,
@@ -1870,7 +1867,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 			78131,
 			78504,
 		},
-		max = 7
+		max = 6
 	},
 	{
 		name_save = "WinterVeil", -- Winter Veil Quests Octopussy__Daily_HordeYoureaMeanOne_count
@@ -1879,9 +1876,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "Horde",
 		questID = {
-			-- Horde
-			6983, -- прохладное-чувство-юмора
-
 			8768,
 			8744,
 			78504,
@@ -1889,10 +1883,58 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 			78131,
 			8803,
 		},
-		max = 7
+		max = 6
 	},
 
+	{
+		name_save = "WinterVeil_YoureaMeanOne",
+		reset = "Daily",
+		expansion = "",
+		place = "",
+		desc = "Alliance",
+		questID = {
+			-- Alliance
+			7043,
+		},
+		max = 1
+	},
+	{
+		name_save = "WinterVeil_YoureaMeanOne",
+		reset = "Daily",
+		expansion = "",
+		place = "",
+		desc = "Horde",
+		questID = {
+			-- Horde
+			6983,
+		},
+		max = 1
+	},
 
+	{
+		name_save = "WinterVeil_ASmokywoodPasturesThankYou",
+		reset = "Once",
+		expansion = "",
+		place = "",
+		desc = "Alliance",
+		questID = {
+			-- Alliance
+			7045,
+		},
+		max = 1
+	},
+	{
+		name_save = "WinterVeil_ASmokywoodPasturesThankYou",
+		reset = "Once",
+		expansion = "",
+		place = "",
+		desc = "Horde",
+		questID = {
+			-- Horde
+			6984,
+		},
+		max = 1
+	},
 
 
 
