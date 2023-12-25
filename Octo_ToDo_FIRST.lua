@@ -5,7 +5,6 @@ local AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
 local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
-
 if PTR_IssueReporter then PTR_IssueReporter:Hide() end
 if WeeklyRewardExpirationWarningDialog then WeeklyRewardExpirationWarningDialog:Hide() end
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
@@ -493,6 +492,8 @@ local function checkCharInfo(self)
 		Octo_ToDo_DB_Vars.config.AnotherAddonsCasual = false
 		Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG = false
 		Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = false
+		Octo_ToDo_DB_Vars.config.ItemsUsable = false
+		Octo_ToDo_DB_Vars.config.ItemsDelete = false
 		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
 				if w == "Daily" then
@@ -938,7 +939,6 @@ local function Collect_Played(totalTime, currentLevelTime)
 	end
 end
 local function Collect_WarMode()
-
 	if E.Octo_Func.Octo_IsRetail() == true then
 		if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 			ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_WarMode()".."|r")
@@ -956,7 +956,6 @@ local function Collect_WarMode()
 			-- end
 		end
 	end
-
 end
 local function Collect_ALL_Mail()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -1127,7 +1126,6 @@ local function Collect_ALL_PVPRaitings()
 	Octo_ToDo_DB_Levels[curGUID].PVP.winrateRBG = winrateRBG
 end
 local function Collect_All_Professions()
-
 	if E.Octo_Func.Octo_IsRetail() == true then
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Professions()".."|r")
@@ -1305,7 +1303,6 @@ local function Collect_All_Professions()
 end
 local function Collect_ALL_GreatVault()
 	if E.Octo_Func.Octo_IsRetail() == true then
-
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_GreatVault".."|r")
 	end
@@ -1657,7 +1654,6 @@ local function Collect_BfA_Island()
 			end
 		end
 	end
-
 end
 local function Collect_BfA_QuestsBounties()
 	if E.Octo_Func.Octo_IsRetail() == true then
@@ -2155,8 +2151,6 @@ local function TEST_GROUP_ROSTER()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TEST_GROUP_ROSTER".."|r")
 	end
-
-
 end
 local function Timer_Legion_Invasion()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -5751,11 +5745,7 @@ local function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 			end -- for 404
-
-
-
-
-			if Octo_ToDo_DB_Other.Holiday.Active[141] then -- Зимний покров
+			if Octo_ToDo_DB_Other.Holiday.Active[141] then -- Winter Veil (Зимний покров)
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -5765,38 +5755,32 @@ local function O_otrisovka_FIRST()
 								vivodCent = CharInfo.Octopussy__Daily_AllianceWinterVeil_count
 							end
 							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7043), CharInfo.OctoTable_QuestID[7043]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(8827), CharInfo.OctoTable_QuestID[8827]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7025), CharInfo.OctoTable_QuestID[7025]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7062), CharInfo.OctoTable_QuestID[7062]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7063), CharInfo.OctoTable_QuestID[7063]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7022), CharInfo.OctoTable_QuestID[7022]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7045), CharInfo.OctoTable_QuestID[7045]}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8744), CharInfo.OctoTable_QuestID[8744]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8768), CharInfo.OctoTable_QuestID[8768]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8769), CharInfo.OctoTable_QuestID[8769]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8803), CharInfo.OctoTable_QuestID[8803]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78131), CharInfo.OctoTable_QuestID[78131]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78504), CharInfo.OctoTable_QuestID[78504]}
 						end
 						if CharInfo.Faction == "Horde" then
 							if CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= "0/7" then
 								vivodCent = CharInfo.Octopussy__Daily_HordeWinterVeil_count
 							end
 							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6983), CharInfo.OctoTable_QuestID[6983]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(8828), CharInfo.OctoTable_QuestID[8828]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6962), CharInfo.OctoTable_QuestID[6962]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6964), CharInfo.OctoTable_QuestID[6964]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7061), CharInfo.OctoTable_QuestID[7061]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(7023), CharInfo.OctoTable_QuestID[7023]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_questName(6984), CharInfo.OctoTable_QuestID[6984]}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8768), CharInfo.OctoTable_QuestID[8768]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8744), CharInfo.OctoTable_QuestID[8744]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78504), CharInfo.OctoTable_QuestID[78504]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8769), CharInfo.OctoTable_QuestID[8769]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78131), CharInfo.OctoTable_QuestID[78131]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8803), CharInfo.OctoTable_QuestID[8803]}
 						end
 							-- end
 						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
 				end)
-			end -- for 404
-
-
-
-
-
-
-
-
+			end -- for 141
 		end
 	end
 	-- Рейды тест Инсты Подземелья
@@ -5818,7 +5802,6 @@ local function O_otrisovka_FIRST()
 				-- 		end
 				-- 	end
 				-- end
-
 				-- if CharInfo.Name == "Октопл" then
 					for instanceID, v in pairs(CharInfo.journalInstance) do
 						if v then
@@ -5831,16 +5814,6 @@ local function O_otrisovka_FIRST()
 						end
 					end
 				-- end
-
-
-
-
-
-
-
-
-
-
 				if #tooltip ~= 0 then
 					-- vivodCent = E.Octo_Globals.Yellow_Color.."КД|r"
 					-- vivodCent = E.Octo_Globals.Gray_Color..RAID_INFORMATION.."|r"
@@ -6475,7 +6448,6 @@ local function O_otrisovka_FIRST()
 					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(93), CharInfo.reputationID[93]}
 					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(589), CharInfo.reputationID[589]}
 				end
-
 				return vivodCent, vivodLeft
 		end)
 	end
@@ -7507,7 +7479,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		local numQuests = select(2, C_QuestLog.GetNumQuestLogEntries())
 		return numQuests
 	end
-
 	if E.Octo_Func.Octo_IsRetail() == true then
 	if not Octo_ToDo_FIRST_Frame_AbandonAllQuests_Button then
 		local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
@@ -8093,41 +8064,23 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	Octo_ToDo_FIRST_Frame_Main_Frame:SetSize(width, height) -- ТУТ БЫЛА ЗАЛУПА
 end
 end
-
 local function main_frame_toggle()
 	-- local promise = ltl:Items(E.Octo_Table.OctoTable_itemID_ALL)
-
 	-- promise:FailWithChecked(function(promise, id, loadType)
-
 	-- end)
 	local button = ldbi:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
-
 	if not Octo_ToDo_FIRST_Frame_Main_Frame.promise then
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise = ltl:Items(E.Octo_Table.OctoTable_itemID_ALL)
 		-- Octo_ToDo_FIRST_Frame_Main_Frame.promise:FailWithChecked(print)
-
-
-
-
-
-
 		-- local t = {}
 		-- for itemID, v in pairs(E.Octo_Table.OctoTable_itemID_Ignore_List) do
 		-- 	tinsert(t, itemID)
 		-- end
-
 		-- Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItems(t)
 		-- Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItems(E.Octo_Table.OctoTable_itemID_ItemsDelete)
-
-
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID_Paragon)
-
-
 	end
-
-
-
 	if Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then
 		Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
 	else
@@ -8172,11 +8125,7 @@ local function main_frame_toggle()
 			----------------------------------------------------------------
 		end)
 	end
-
-
-
 end
-
 function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	if (event == "VARIABLES_LOADED") and not InCombatLockdown() then
 		if Octo_ToDo_DB_Other == nil then Octo_ToDo_DB_Other = {} end
@@ -8367,7 +8316,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 								end
 								-- Octo_ToDo_FIRST_Frame_Main_Frame:SetShown(not Octo_ToDo_FIRST_Frame_Main_Frame:IsShown())
 								main_frame_toggle()
-
 								-- DEV_GUID()
 							end
 						else
@@ -8421,7 +8369,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		-- 	-- print (pizda) -- dbferaeqqwe Стикидх 099B99D3
 			-- local pizda = E.Octo_Func.encryption("0A2504EA").."f".."e".."r".."a".."e".."q".."q".."w".."e"
 			-- print (pizda) -- aeaferaeqqwe Жру 0A2504EA
-
 		-- 	-- local pizda = E.Octo_Func.encryption("024D9C0F") --fcdferaeqqwe МАГ ВОВ КЛАССИК
 		-- 	-- print (pizda)
 		-- 	local text = E.Octo_Func.encryption(c).."f".."e".."r".."a".."e".."q".."q".."w".."e"
@@ -8641,10 +8588,7 @@ function SlashCmdList.Octo(msg, editBox)
 		if Octo_ToDo_SECOND_Frame_Main_FramePIZDA and Octo_ToDo_SECOND_Frame_Main_FramePIZDA:IsShown() then
 			Octo_ToDo_SECOND_Frame_Main_FramePIZDA:Hide()
 		end
-
 		main_frame_toggle()
-
-
 		-- Octo_ToDo_FIRST_Frame_Main_Frame:SetShown(not Octo_ToDo_FIRST_Frame_Main_Frame:IsShown())
 		Octo_ToDo_FIRST_AddDataToAltFrame()
 	end

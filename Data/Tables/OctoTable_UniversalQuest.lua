@@ -1861,13 +1861,14 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		desc = "Alliance",
 		questID = {
 			-- Alliance
-			7043, -- youre-a-mean-one
-			8827, -- winters-presents
-			7025, -- treats-for-greatfather-winter
-			7062, -- the-reason-for-the-season
-			7063, -- the-feast-of-winter-veil
-			7022, -- greatfather-winter-is-here
-			7045, -- a-smokywood-pastures-thank-you
+			7043, -- прохладное-чувство-юмора
+
+			8744,
+			8768,
+			8769,
+			8803,
+			78131,
+			78504,
 		},
 		max = 7
 	},
@@ -1879,16 +1880,22 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		desc = "Horde",
 		questID = {
 			-- Horde
-			6983, -- youre-a-mean-one
-			8828, -- winters-presents
-			6962, -- treats-for-great-father-winter
-			6964, -- the-reason-for-the-season
-			7061, -- the-feast-of-winter-veil
-			7023, -- greatfather-winter-is-here
-			6984, -- a-smokywood-pastures-thank-you
+			6983, -- прохладное-чувство-юмора
+
+			8768,
+			8744,
+			78504,
+			8769,
+			78131,
+			8803,
 		},
 		max = 7
 	},
+
+
+
+
+
 	----------------------------------------------------------------
 	-- You're a Mean One...
 
