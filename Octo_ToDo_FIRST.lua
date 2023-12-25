@@ -2393,6 +2393,31 @@ local function Timer_DF_Flower()
 		return " "
 	end
 end
+
+
+local function Timer_WinterVeil()
+	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_WinterVeil".."|r")
+	end
+	local TIMER = 1703511222 --1703510540 --
+	local interval = (5)*60 -- каждые 5 минут
+	local duration = (1)*60 -- идёт 1 минуту
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
+	if (nextEventIn/60/60) < 24 then
+		local Timer_WinterVeil = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		if nextEventIn > (interval - duration) then
+			nextEventIn = nextEventIn - (interval - duration)
+			Timer_WinterVeil = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		end
+		return Timer_WinterVeil
+	else
+		return " "
+	end
+end
+
+
+
+
 local function Octo_ToDo_FIRST_OnLoad()
 	if not Octo_ToDo_FIRST_Frame_EventFrame then
 		Octo_ToDo_FIRST_Frame_EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
@@ -5746,6 +5771,7 @@ local function O_otrisovka_FIRST()
 				end)
 			end -- for 404
 			if Octo_ToDo_DB_Other.Holiday.Active[141] then -- Winter Veil (Зимний покров)
+
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -5777,11 +5803,10 @@ local function O_otrisovka_FIRST()
 						return vivodCent, vivodLeft
 				end)
 
-
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..E.Octo_Func.func_questName(7043)
+						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..Timer_WinterVeil()..E.Octo_Func.func_questName(7043)
 						if CharInfo.Faction == "Alliance" then
 							if CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= "0/1" then
 								vivodCent = CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count

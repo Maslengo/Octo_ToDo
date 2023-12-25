@@ -299,33 +299,36 @@ end
 local func_spellName = E.Octo_Func.func_spellName
 ----------------------------------------------------------------
 function E.Octo_Func.SecondsToClock(self)
-	local years, days, hours, mins, secs = "", "", "", "", ""
+	-- local years, days, hours, mins, secs = "", "", "", "", ""
+	local years, days, hours, mins, secs = 0, 0, 0, 0, 0
 	local self = tonumber(self)
-	if self <= 0 or self == nil then
+	if self <= 0 or self == nil then --
 		return "0:00"
-	elseif self >= (86400*365) then
+	elseif self >= (86400*365) then -- год
 		years = floor(self / (86400*365))
 		days = floor(mod(self, 31536000) / 86400)
 		hours = floor(mod(self, 86400) / 3600)
 		mins = floor(mod(self, 3600) / 60)
 		return years..L["y. "]..days..L["d. "]..hours..L["h. "]..mins..L["m. "]
-	elseif self >= 86400 then
+	elseif self >= 86400 then -- 24ч
 		days = floor(self / 86400)
 		hours = floor(mod(self, 86400) / 3600)
 		mins = floor(mod(self, 3600) / 60)
 		return days..L["d. "]..hours..L["h. "]..mins..L["m. "]
-	elseif self >= 3600 then
+	elseif self >= 3600 then -- 1 час
 		hours = string.format("%01.f", math.floor(self/3600))
 		mins = string.format("%02.f", math.floor(self/60 - (hours*60)))
 		return hours..L["h. "]..mins..L["m. "]
-	elseif self >= 600 then
+	elseif self >= 600 then -- 10 минут
 		hours = string.format("%01.f", math.floor(self/3600))
 		mins = string.format("%02.f", math.floor(self/60 - (hours*60)))
 		return mins..L["m. "]
-	else
+	elseif self >= 60 then -- минута
 		hours = string.format("%01.f", math.floor(self/3600))
 		mins = string.format("%01.f", math.floor(self/60 - (hours*60)))
 		return mins..L["m. "]
+	else
+		return self..L["s. "]
 	end
 end
 local SecondsToClock = E.Octo_Func.SecondsToClock
