@@ -12,13 +12,14 @@ _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local lsfdd = LibStub("LibSFDropDown-1.4")
 local ltl = LibStub("LibThingsLoad-1.0")
+local LibTranslit = LibStub("LibTranslit-1.0")
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 --
 local curWidthTitle = E.Octo_Globals.curWidthTitle
 E.Octo_Func.func_Octo_LoadAddOn("!BugGrabber")
 E.Octo_Func.func_Octo_LoadAddOn("BugSack")
--- E.Octo_Func.func_Octo_LoadAddOn("Rarity")
--- E.Octo_Func.func_Octo_LoadAddOn("Rarity_Options")
+E.Octo_Func.func_Octo_LoadAddOn("Rarity")
+E.Octo_Func.func_Octo_LoadAddOn("Rarity_Options")
 E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
 -- FRAMES
 local Button = nil
@@ -35,11 +36,9 @@ local Octo_ToDo_FIRST_Frame_QuestFeast_Button = nil
 local Octo_ToDo_FIRST_Frame_Consumable_Button = nil
 local Octo_ToDo_FIRST_Frame_MAPIDICONS_Button = nil
 local Octo_ToDo_FIRST_Frame_AbandonAllQuests_Button = nil
--- local Octo_ToDo_FIRST_Frame_Char_FrameDeleteButton = nil
 --
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = E.Octo_Func.GetClassColor(classFilename)
--- local r, g, b = classColor:GetRGB()
 local r, g, b = GetClassColor(classFilename)
 local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
 local classColorHexCurrent = E.Octo_Func.func_rgb2hex(r, g, b)
@@ -2485,6 +2484,7 @@ local function O_otrisovka_FIRST()
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
 			CL:SetFontObject(OctoFont12)
+			-- vivodCent = CharInfo.classColorHex..LibTranslit:Transliterate(CharInfo.Name).."|r"
 			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
 			if CharInfo.Faction == "Horde" then
 				BG:SetColorTexture(.5, 0, 0, E.Octo_Globals.BGALPHA*2)
@@ -5775,37 +5775,6 @@ local function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..L["Gifts"]
-						if CharInfo.Faction == "Alliance" then
-							if CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_count ~= "0/6" then
-								vivodCent = CharInfo.Octopussy__Daily_AllianceWinterVeil_count
-							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8744), CharInfo.OctoTable_QuestID[8744]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8768), CharInfo.OctoTable_QuestID[8768]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8769), CharInfo.OctoTable_QuestID[8769]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8803), CharInfo.OctoTable_QuestID[8803]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78131), CharInfo.OctoTable_QuestID[78131]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78504), CharInfo.OctoTable_QuestID[78504]}
-						end
-						if CharInfo.Faction == "Horde" then
-							if CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_HordeWinterVeil_count ~= "0/6" then
-								vivodCent = CharInfo.Octopussy__Daily_HordeWinterVeil_count
-							end
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8768), CharInfo.OctoTable_QuestID[8768]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8744), CharInfo.OctoTable_QuestID[8744]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78504), CharInfo.OctoTable_QuestID[78504]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8769), CharInfo.OctoTable_QuestID[8769]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78131), CharInfo.OctoTable_QuestID[78131]}
-							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8803), CharInfo.OctoTable_QuestID[8803]}
-						end
-							-- end
-						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
-						return vivodCent, vivodLeft
-				end)
-
-				tinsert(OctoTable_func_otrisovka_FIRST,
-					function(CharInfo, tooltip, CL, BG)
-						local vivodCent, vivodLeft = "", ""
 						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..E.Octo_Func.func_questName(7043) -- ..Timer_WinterVeil()
 						if CharInfo.Faction == "Alliance" then
 							if CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= "0/1" then
@@ -5837,6 +5806,37 @@ local function O_otrisovka_FIRST()
 							if CharInfo.Octopussy__Once_HordeWinterVeil_ASmokywoodPasturesThankYou_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Once_HordeWinterVeil_ASmokywoodPasturesThankYou_count ~= "0/7" then
 								vivodCent = CharInfo.Octopussy__Once_HordeWinterVeil_ASmokywoodPasturesThankYou_count
 							end
+						end
+							-- end
+						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
+						return vivodCent, vivodLeft
+				end)
+
+				tinsert(OctoTable_func_otrisovka_FIRST,
+					function(CharInfo, tooltip, CL, BG)
+						local vivodCent, vivodLeft = "", ""
+						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Once..L["Gifts"]
+						if CharInfo.Faction == "Alliance" then
+							if CharInfo.Octopussy__Once_AllianceWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Once_AllianceWinterVeil_count ~= "0/6" then
+								vivodCent = CharInfo.Octopussy__Once_AllianceWinterVeil_count
+							end
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8744), CharInfo.OctoTable_QuestID[8744]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8768), CharInfo.OctoTable_QuestID[8768]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8769), CharInfo.OctoTable_QuestID[8769]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8803), CharInfo.OctoTable_QuestID[8803]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78131), CharInfo.OctoTable_QuestID[78131]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78504), CharInfo.OctoTable_QuestID[78504]}
+						end
+						if CharInfo.Faction == "Horde" then
+							if CharInfo.Octopussy__Once_HordeWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Once_HordeWinterVeil_count ~= "0/6" then
+								vivodCent = CharInfo.Octopussy__Once_HordeWinterVeil_count
+							end
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8768), CharInfo.OctoTable_QuestID[8768]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8744), CharInfo.OctoTable_QuestID[8744]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78504), CharInfo.OctoTable_QuestID[78504]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8769), CharInfo.OctoTable_QuestID[8769]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(78131), CharInfo.OctoTable_QuestID[78131]}
+							tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(8803), CharInfo.OctoTable_QuestID[8803]}
 						end
 							-- end
 						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
@@ -8148,6 +8148,27 @@ local function main_frame_toggle()
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItemsByKey(E.Octo_Table.OctoTable_itemID_Ignore_List)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID_Paragon)
+
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_MoP)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_WoD)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Legion)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_BfA)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_SL)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_DF)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_DF_S3)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Mage_Solo_Horde)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Mage_Group_Horde)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Mage_Solo_Alliance)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance)
+
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_DRUID)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_DEATHKNIGHT)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_SHAMAN)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_MONK)
+
+
+
+
 	end
 	if Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then
 		Octo_ToDo_FIRST_Frame_Main_Frame:Hide()

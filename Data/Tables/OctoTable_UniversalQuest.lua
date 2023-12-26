@@ -1855,7 +1855,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	----------------------------------------------------------------
 	{
 		name_save = "WinterVeil", -- Winter Veil Quests Octopussy__Daily_AllianceYoureaMeanOne_count
-		reset = "Daily",
+		reset = "Once",
 		expansion = "",
 		place = "",
 		desc = "Alliance",
@@ -1871,7 +1871,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "WinterVeil", -- Winter Veil Quests Octopussy__Daily_HordeYoureaMeanOne_count
-		reset = "Daily",
+		reset = "Once",
 		expansion = "",
 		place = "",
 		desc = "Horde",
