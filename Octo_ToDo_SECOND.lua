@@ -272,7 +272,6 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	-- 	-- dd_SECOND:SetText(OPTIONS)
 	-- 	dd_SECOND:SetText(ACHIEVEMENT_TITLE.." "..E.Octo_Globals.Green_Color..GetTotalAchievementPoints(false).."|r")
 	-- 	dd_SECOND:ddSetDisplayMode(GlobalAddonName)
-
 	-- 	dd_SECOND:ddSetOpenMenuUp(true)  -- NEW
 	-- 	dd_SECOND:ddSetNoGlobalMouseEvent(true)  -- NEW
 	-- 	dd_SECOND:ddHideWhenButtonHidden()  -- NEW
@@ -333,8 +332,6 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	-- 			end
 	-- 	end)
 	-- end
-
-
 	if not dd_SECOND then
 		-- local dd_SECOND = lsfdd:CreateStretchButton(Octo_ToDo_SECOND_Frame_Main_Frame, 160, 22) -- CreateStretchButtonOriginal
 		local dd_SECOND = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_SECOND_Frame_Main_Frame, "SecureActionButtonTemplate, BackDropTemplate")
@@ -369,14 +366,11 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		dd_SECOND:SetScript("OnClick", function(self)
 				self:ddToggle(1, nil, self, self:GetWidth()+1, -self:GetHeight())
 		end)
-
 		local function selectFunctionAchievementToShow(menuButton)
 			-- dd_SECOND:ddSetSelectedValue(menuButton.value)
 			Octo_ToDo_DB_Vars.config.AchievementToShow = menuButton.value
 			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
-
-
 		dd_SECOND:ddSetInitFunc(function(self, level, value)
 				local info = {}
 				local categories = GetCategoryList()
@@ -431,9 +425,6 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 				end
 		end)
 	end
-
-
-
 	----------------------------------------------------------------
 	local function FrameLine_OnEnter(self)
 		self.BG:SetColorTexture(r, g, b, E.Octo_Globals.BGALPHA*2)

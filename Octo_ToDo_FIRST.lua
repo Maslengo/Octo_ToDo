@@ -2392,8 +2392,6 @@ local function Timer_DF_Flower()
 		return " "
 	end
 end
-
-
 -- local function Timer_WinterVeil()
 -- 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 -- 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_WinterVeil".."|r")
@@ -2413,10 +2411,6 @@ end
 -- 		return " "
 -- 	end
 -- end
-
-
-
-
 local function Octo_ToDo_FIRST_OnLoad()
 	if not Octo_ToDo_FIRST_Frame_EventFrame then
 		Octo_ToDo_FIRST_Frame_EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
@@ -5771,7 +5765,6 @@ local function O_otrisovka_FIRST()
 				end)
 			end -- for 404
 			if Octo_ToDo_DB_Other.Holiday.Active[141] then -- Winter Veil (Зимний покров)
-
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -5792,7 +5785,6 @@ local function O_otrisovka_FIRST()
 						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
 				end)
-
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -5811,7 +5803,6 @@ local function O_otrisovka_FIRST()
 						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
 				end)
-
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
@@ -5842,18 +5833,6 @@ local function O_otrisovka_FIRST()
 						BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
 						return vivodCent, vivodLeft
 				end)
-
-
-
-
-
-
-
-
-
-
-
-
 			end -- for 141
 		end
 	end
@@ -8144,20 +8123,9 @@ local function main_frame_toggle()
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItemsByKey(E.Octo_Table.OctoTable_itemID_Ignore_List)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID_Paragon)
-
-
-
-
-
-
-
-
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpellsByKey(E.Octo_Table.Octo_ProfessionsskillLine)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpellsByKey(E.Octo_Table.Octo_ProfessionsskillLine_Other)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Octo_ProfessionsSkillLinedb)
-
-
-
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_MoP)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_WoD)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Legion)
@@ -8169,15 +8137,10 @@ local function main_frame_toggle()
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Mage_Group_Horde)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Mage_Solo_Alliance)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance)
-
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_DRUID)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_DEATHKNIGHT)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_SHAMAN)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_MONK)
-
-
-
-
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.FirstAid)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Blacksmithing)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Leatherworking)
@@ -8193,10 +8156,6 @@ local function main_frame_toggle()
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Jewelcrafting)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Inscription)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Archeology)
-
-
-
-
 	end
 	if Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then
 		Octo_ToDo_FIRST_Frame_Main_Frame:Hide()

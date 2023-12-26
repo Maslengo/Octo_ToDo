@@ -119,7 +119,3 @@ E.Octo_Table.OctoTable_LFGDungeons = {
 	-- [2086] = "Случайное подземелье Shadowlands",
 	-- [262] = "Случайное подземелье Lich King (героич.)",
 }
-
-
-
-
