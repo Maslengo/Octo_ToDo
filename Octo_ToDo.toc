@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v68.8(10.2.0)(26.12.2023)
+## Version: v68.9(10.2.0)(26.12.2023)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
 ## SavedVariables: Octo_ToDo_DB_Other Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Artifact Octo_ToDo_DB_LegionArtifacts
 
@@ -12,44 +12,25 @@ Octo_Localization.lua
 
 Data\Octo_Globals.lua
 
-Data\Tables\1.lua
-Data\Tables\OctoTable_Alphabet.lua
-Data\Tables\OctoTable_ArtifactData.lua
-Data\Tables\OctoTable_bytetoB64.lua
-Data\Tables\OctoTable_bytetoB64_Color.lua
-Data\Tables\OctoTable_Colors.lua
-Data\Tables\OctoTable_currencyID_ALL.lua
-Data\Tables\OctoTable_Expansions_Table.lua
-Data\Tables\OctoTable_instanceDifficulty.lua
-Data\Tables\OctoTable_itemID_ALL.lua
-Data\Tables\OctoTable_itemID_AutoOpen.lua
-Data\Tables\OctoTable_itemID_Cataloged_Research.lua
-Data\Tables\OctoTable_itemID_ignore_list.lua
-Data\Tables\OctoTable_itemID_ItemsDelete.lua
-Data\Tables\OctoTable_itemID_ItemsUsable.lua
-Data\ItemsUsable\OctoTable_itemID_ItemsUsable_Cosmetic.lua
-Data\ItemsUsable\OctoTable_itemID_ItemsUsable_Mount.lua
-Data\ItemsUsable\OctoTable_itemID_ItemsUsable_Other.lua
-Data\ItemsUsable\OctoTable_itemID_ItemsUsable_Toys.lua
-Data\ItemsUsable\OctoTable_itemID_ItemsUsable_Pets.lua
+Data\1.lua
+Data\OctoTable_Alphabet.lua
+Data\OctoTable_ArtifactData.lua
+Data\OctoTable_byteto.lua
+Data\OctoTable_Colors.lua
+Data\OctoTable_Currencies.lua
+Data\OctoTable_Expansions_Table.lua
+Data\OctoTable_Instances.lua
+Data\OctoTable_Items.lua
 
-Data\Tables\OctoTable_journalInstanceID.lua
-Data\Tables\OctoTable_KeystoneAbbr.lua
-Data\Tables\OctoTable_LegionArtifacts.lua
-Data\Tables\OctoTable_LFGDungeons.lua
-Data\Tables\OctoTable_Portals.lua
-Data\Tables\OctoTable_Professions.lua
-Data\Tables\OctoTable_QuestID.lua
-Data\Tables\OctoTable_QuestID_Paragon.lua
-Data\Tables\OctoTable_Race.lua
-Data\Tables\OctoTable_reputation_ALL.lua
-Data\Tables\OctoTable_RIO_COLORS.lua
-Data\Tables\OctoTable_UniversalQuest.lua
-Data\Tables\wowhead_prefix_Table.lua
+Data\OctoTable_LegionArtifacts.lua
+Data\OctoTable_QuestID.lua
+Data\OctoTable_Race.lua
+Data\OctoTable_reputation_ALL.lua
+Data\OctoTable_UniversalQuest.lua
+Data\wowhead_prefix_Table.lua
 
 Data\Octo_Functions.lua
-Data\Octo_ProfessionsSpells.lua
-Data\OctoTable_BG.lua
+Data\OctoTable_Spells.lua
 
 Moduls\DEV\Another_Addons_Casual.lua
 Moduls\DEV\Another_Addons_DUNG.lua

@@ -2,11 +2,11 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.Octo_Func = {}
--- local inspectScantipFUNC = nil
--- if not inspectScantipFUNC then
+local inspectScantipFUNC = nil
+if not inspectScantipFUNC then
 	inspectScantipFUNC = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFUNC", nil, "GameTooltipTemplate")
 	inspectScantipFUNC:SetOwner(UIParent, "ANCHOR_NONE")
--- end
+end
 ----------------------------------------------------------------
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")

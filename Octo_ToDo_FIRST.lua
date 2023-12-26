@@ -8089,11 +8089,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 				CL:SetTextColor(1, 1, 1, 1)
 				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"] = Octo_ToDo_FIRST_Frame_Char_Frame:CreateTexture(nil, "BACKGROUND")
 				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetAllPoints(Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i])
-				-- if E.Octo_Table.OctoTable_BG[i] then
-					Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, 0)
-				-- else
-				-- 	Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, .1) -- НОВЫЙ БЕКГРАУНД
-				-- end
+				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, 0)
 				CF.CL = CL
 			end
 		else
@@ -8149,6 +8145,19 @@ local function main_frame_toggle()
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddQuests(E.Octo_Table.OctoTable_QuestID_Paragon)
 
+
+
+
+
+
+
+
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpellsByKey(E.Octo_Table.Octo_ProfessionsskillLine)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpellsByKey(E.Octo_Table.Octo_ProfessionsskillLine_Other)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Octo_ProfessionsSkillLinedb)
+
+
+
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_MoP)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_WoD)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Legion)
@@ -8165,6 +8174,25 @@ local function main_frame_toggle()
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_DEATHKNIGHT)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_SHAMAN)
 		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_MONK)
+
+
+
+
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.FirstAid)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Blacksmithing)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Leatherworking)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Alchemy)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Herbalism)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Cooking)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Mining)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Tailoring)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Engineering)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Enchanting)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Fishing)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Skinning)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Jewelcrafting)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Inscription)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddSpells(E.Octo_Table.Archeology)
 
 
 
