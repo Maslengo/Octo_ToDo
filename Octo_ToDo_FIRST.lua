@@ -59,6 +59,7 @@ local Money_Icon = E.Octo_Func.func_texturefromIcon(133784, 12)-- "|T133784:12:1
 -- local MailBox_Icon = "|T1418621:12:12:::64:64:4:64:4:64|t"
 -- local MailBox_Icon = "|T".."Interface/AddOns/Octo_ToDo/Media/ElvUI/Mail0.tga"..":12:12:::64:64:4:64:4:64|t"
 -- local MailBox_Icon = "|T1506457:12:12:::64:64:4:64:4:64|t"
+local Main_Frame_Position = -157
 local MailBox_Icon = E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga")
 local font = "01 Octo"
 local fontObject9 = CreateFont("OctoFont9")
@@ -491,8 +492,8 @@ local function checkCharInfo(self)
 		Octo_ToDo_DB_Vars.config.AnotherAddonsCasual = false
 		Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG = false
 		Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = false
-		-- Octo_ToDo_DB_Vars.config.ItemsUsable = false
-		-- Octo_ToDo_DB_Vars.config.ItemsDelete = false
+		Octo_ToDo_DB_Vars.config.ItemsUsable = false
+		Octo_ToDo_DB_Vars.config.ItemsDelete = false
 		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
 				if w == "Daily" then
@@ -2595,15 +2596,6 @@ local function O_otrisovka_FIRST()
 						tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
 					end
 				end
-				if (Octo_ToDo_DB_Vars.config.MP_WeeklyBest == false or Octo_ToDo_DB_Vars.config.MP_Score == false) and CharInfo.RIO_Score_S3 ~= 0 and CharInfo.CurrentKeyFULL ~= 0 then
-					tooltip[#tooltip+1] = {" ", " "}
-				end
-				if Octo_ToDo_DB_Vars.config.MP_WeeklyBest == false and CharInfo.RIO_Score_S3 ~= 0 then
-					tooltip[#tooltip+1] = {"Weekly Best", E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..E.Octo_Func.Empty_Zero(CharInfo.RIO_weeklyBest).."|r"}
-				end
-				if Octo_ToDo_DB_Vars.config.MP_Score == false and CharInfo.RIO_Score_S3 ~= 0  then
-					tooltip[#tooltip+1] = {DUNGEON_SCORE, E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..E.Octo_Func.Empty_Zero(CharInfo.RIO_Score_S3).."|r"}
-				end
 				if CharInfo.CurrentKey ~= 0 then
 					-- vivodCent = E.Octo_Globals.Purple_Color..CharInfo.CurrentKey.."|r"
 					vivodCent = E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..CharInfo.CurrentKey.."|r"
@@ -2621,28 +2613,6 @@ local function O_otrisovka_FIRST()
 				end
 				if CharInfo.HasAvailableRewards then
 					vivodCent = vivodCent..E.Octo_Globals.Blue_Color..">Vault<|r"
-				end
-				return vivodCent, vivodLeft
-		end)
-	end
-	if Octo_ToDo_DB_Vars.config.MP_WeeklyBest == true then
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				vivodLeft = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.Purple_Color.."Weekly Best".."|r"
-				if CharInfo.RIO_Score_S3 and CharInfo.RIO_Score_S3 ~= 0 and CharInfo.RIO_weeklyBest and CharInfo.RIO_weeklyBest ~= 0 then
-					vivodCent = E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..CharInfo.RIO_weeklyBest.."|r"
-				end
-				return vivodCent, vivodLeft
-		end)
-	end
-	if Octo_ToDo_DB_Vars.config.MP_Score == true and E.Octo_Func.Octo_IsRetail() == true then
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				vivodLeft = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.Purple_Color..DUNGEON_SCORE.."|r"
-				if CharInfo.RIO_Score_S3 and CharInfo.RIO_Score_S3 ~= 0 then
-					vivodCent = E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..CharInfo.RIO_Score_S3.."|r"
 				end
 				return vivodCent, vivodLeft
 		end)
@@ -5768,7 +5738,7 @@ local function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Daily..E.Octo_Func.func_questName(7043) -- ..Timer_WinterVeil()
+						vivodLeft = E.Octo_Globals.Daily..E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(7043) -- ..Timer_WinterVeil()
 						if CharInfo.Faction == "Alliance" then
 							if CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count ~= "0/1" then
 								vivodCent = CharInfo.Octopussy__Daily_AllianceWinterVeil_YoureaMeanOne_count
@@ -5788,7 +5758,7 @@ local function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Once..E.Octo_Func.func_questName(7045)
+						vivodLeft = E.Octo_Globals.Once..E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Func.func_questName(7045)
 						if CharInfo.Faction == "Alliance" then
 							if CharInfo.Octopussy__Once_AllianceWinterVeil_ASmokywoodPasturesThankYou_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Once_AllianceWinterVeil_ASmokywoodPasturesThankYou_count ~= "0/7" then
 								vivodCent = CharInfo.Octopussy__Once_AllianceWinterVeil_ASmokywoodPasturesThankYou_count
@@ -5806,7 +5776,7 @@ local function O_otrisovka_FIRST()
 				tinsert(OctoTable_func_otrisovka_FIRST,
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_texturefromIcon(133202)..E.Octo_Globals.Once..L["Gifts"]
+						vivodLeft = E.Octo_Globals.Once..E.Octo_Func.func_texturefromIcon(133202)..L["Gifts"]
 						if CharInfo.Faction == "Alliance" then
 							if CharInfo.Octopussy__Once_AllianceWinterVeil_count ~= E.Octo_Globals.NONE and CharInfo.Octopussy__Once_AllianceWinterVeil_count ~= "0/6" then
 								vivodCent = CharInfo.Octopussy__Once_AllianceWinterVeil_count
@@ -6994,7 +6964,8 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	Octo_ToDo_FIRST_Frame_Main_Frame:SetClampedToScreen(false)
 	Octo_ToDo_FIRST_Frame_Main_Frame:SetFrameStrata("HIGH")
-	Octo_ToDo_FIRST_Frame_Main_Frame:SetPoint("TOP", 0, -257*E.Octo_Globals.scale)
+	-- Octo_ToDo_FIRST_Frame_Main_Frame:SetPoint("TOP", 0, Main_Frame_Position*E.Octo_Globals.scale)
+	Octo_ToDo_FIRST_Frame_Main_Frame:SetPoint("CENTER")
 	Octo_ToDo_FIRST_Frame_Main_Frame:SetBackdrop({
 			bgFile = bgFile,
 			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -8250,8 +8221,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.ItemsDelete == nil then Octo_ToDo_DB_Vars.config.ItemsDelete = false end
 		if Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame == nil then Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame = false end
 		if Octo_ToDo_DB_Vars.config.MP_MythicKeystone == nil then Octo_ToDo_DB_Vars.config.MP_MythicKeystone = true end
-		if Octo_ToDo_DB_Vars.config.MP_WeeklyBest == nil then Octo_ToDo_DB_Vars.config.MP_WeeklyBest = false end
-		if Octo_ToDo_DB_Vars.config.MP_Score == nil then Octo_ToDo_DB_Vars.config.MP_Score = false end
 		if Octo_ToDo_DB_Vars.config.AidingtheAccord == nil then Octo_ToDo_DB_Vars.config.AidingtheAccord = false end
 		if Octo_ToDo_DB_Vars.config.CommunityFeast == nil then Octo_ToDo_DB_Vars.config.CommunityFeast = false end
 		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire == nil then Octo_ToDo_DB_Vars.config.ResearchersUnderFire = false end

@@ -230,7 +230,7 @@ if L then
 	L["AutoGossip"] = "Авторазговор с НПЦ"
 	L["CinematicCanceler"] = "Автопропуск видео"
 	L["ClearChat"] = "Чистка чата при заходе в игру"
-	L["UIErrorsFramePosition"] = "Смена позиции фрейма ошибок/квестов"
+	L["UIErrorsFramePosition"] = "Смена позиции фрейма ошибок"
 	L["Functions"] = "Функции"
 	L["Modules"] = "Модули"
 	L["DisplaySettings"] = "Настройки отображения"

@@ -204,13 +204,14 @@ end
 
 
 
-E.Octo_Globals.Daily = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\GossipFrame\\tga\\DailyQuestIcon.tga")
+E.Octo_Globals.Once = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Once.tga")
+-- E.Octo_Globals.Once = texturefromIcon("Interface\\GossipFrame\\AvailableQuestIcon")
+
+E.Octo_Globals.Daily = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Daily.tga")
 -- E.Octo_Globals.Daily = texturefromIcon("Interface\\GossipFrame\\AvailableLegendaryQuestIcon")
 
-E.Octo_Globals.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\GossipFrame\\tga\\WeeklyQuestIcon.tga")
+E.Octo_Globals.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Weekly.tga")
 -- E.Octo_Globals.Weekly = texturefromIcon("Interface\\GossipFrame\\DailyQuestIcon")
 
-E.Octo_Globals.Once = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\GossipFrame\\tga\\AvailableQuestIcon.tga")
--- E.Octo_Globals.Once = texturefromIcon("Interface\\GossipFrame\\AvailableQuestIcon")
 
 -- console -> export "art"
