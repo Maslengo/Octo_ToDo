@@ -23,6 +23,7 @@ E.Octo_Globals.curWidthTitle = 200*E.Octo_Globals.scale
 E.Octo_Globals.ilvlToShow = 400
 E.Octo_Globals.Addon_Height = 400
 E.Octo_Globals.BGALPHA = .1
+E.Octo_Globals.Main_Frame_Position = -157
 E.Octo_Globals.regions = {
 	[1] = "us",
 	[2] = "kr",
@@ -215,3 +216,4 @@ E.Octo_Globals.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName..
 
 
 -- console -> export "art"
+

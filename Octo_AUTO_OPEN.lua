@@ -19,8 +19,8 @@ local function OpenableScan()
 				if E.Octo_Table.OctoTable_itemID_AutoOpen[itemID] and itemLink and not isLocked then
 					if iconFileID and itemLink and not InCombatLockdown() then
 						C_Timer.After(1, function()
-							C_Container.UseContainerItem(bag, numSlots)
-							print (E.Octo_Func.func_Gradient("Auto Open Item ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), E.Octo_Func.func_texturefromIcon(iconFileID)..itemLink)
+								C_Container.UseContainerItem(bag, numSlots)
+								print (E.Octo_Func.func_Gradient("Auto Open Item ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), E.Octo_Func.func_texturefromIcon(iconFileID)..itemLink)
 						end)
 					end
 				end
@@ -47,3 +47,4 @@ Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 				end
 		end)
 end)
+

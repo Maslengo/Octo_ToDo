@@ -1471,4 +1471,3 @@ E.Octo_Table.OctoTable_RIO_COLORS = {
 		}
 	},
 }
-

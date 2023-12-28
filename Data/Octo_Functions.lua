@@ -396,37 +396,37 @@ local func_Octo_LoadAddOn = E.Octo_Func.func_Octo_LoadAddOn
 ----------------------------------------------------------------
 function E.Octo_Func.CheckCompletedByQuestID(self)
 	if E.Octo_Func.Octo_IsRetail() == true then
-	local vivod
-	local TEST = ""
-	if C_QuestLog.IsQuestFlaggedCompleted(self) == true then
-		vivod = (E.Octo_Globals.DONE)
-	elseif C_QuestLog.IsComplete(self) == true then
-		vivod = E.Octo_Globals.Purple_Color..">>СДАЙ<<|r"
-	elseif C_QuestLog.IsQuestFlaggedCompleted(self) == false and C_QuestLog.IsOnQuest(self) == false then
-		vivod = (E.Octo_Globals.NONE)
-	elseif C_QuestLog.IsOnQuest(self) == true --[[and C_QuestLog.IsComplete(self) == false ]]then
-		local objectives = C_QuestLog.GetQuestObjectives(self)
-		if objectives == nil then
-			return ""
-		end
-		for i = 1, #objectives do
-			if objectives[i] then
-				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(self, i, false)
-				if objectiveType == "progressbar" then
-					TEST = E.Octo_Globals.Red_Color..GetQuestProgressBarPercent(self).."%|r"
-				else
-					if finished then
-						TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
+		local vivod
+		local TEST = ""
+		if C_QuestLog.IsQuestFlaggedCompleted(self) == true then
+			vivod = (E.Octo_Globals.DONE)
+		elseif C_QuestLog.IsComplete(self) == true then
+			vivod = E.Octo_Globals.Purple_Color..">>СДАЙ<<|r"
+		elseif C_QuestLog.IsQuestFlaggedCompleted(self) == false and C_QuestLog.IsOnQuest(self) == false then
+			vivod = (E.Octo_Globals.NONE)
+		elseif C_QuestLog.IsOnQuest(self) == true --[[and C_QuestLog.IsComplete(self) == false ]]then
+			local objectives = C_QuestLog.GetQuestObjectives(self)
+			if objectives == nil then
+				return ""
+			end
+			for i = 1, #objectives do
+				if objectives[i] then
+					local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(self, i, false)
+					if objectiveType == "progressbar" then
+						TEST = E.Octo_Globals.Red_Color..GetQuestProgressBarPercent(self).."%|r"
 					else
-						TEST = E.Octo_Globals.Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
+						if finished then
+							TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
+						else
+							TEST = E.Octo_Globals.Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
+						end
 					end
 				end
+				vivod = vivod and vivod.."»"..TEST or TEST
 			end
-			vivod = vivod and vivod.."»"..TEST or TEST
 		end
+		return vivod
 	end
-	return vivod
-end
 end
 local CheckCompletedByQuestID = E.Octo_Func.CheckCompletedByQuestID
 ----------------------------------------------------------------
@@ -626,11 +626,11 @@ end
 local encryption = E.Octo_Func.encryption
 ----------------------------------------------------------------
 function E.Octo_Func.GetClassColor(self) -- C_ClassColor.GetClassColor(classFilename)
-  local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[self]
-  if color then
-	return color.colorStr:gsub("^ff", "")
-  end
-  return "ffffff"
+	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[self]
+	if color then
+		return color.colorStr:gsub("^ff", "")
+	end
+	return "ffffff"
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -647,3 +647,4 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+

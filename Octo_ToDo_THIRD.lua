@@ -216,7 +216,8 @@ function Octo_ToDo_THIRD_CreateAltFrame()
 	Octo_ToDo_THIRD_Frame_Main_Frame.ScrollBar = ScrollBar
 	Octo_ToDo_THIRD_Frame_Main_Frame:SetClampedToScreen(false)
 	Octo_ToDo_THIRD_Frame_Main_Frame:SetFrameStrata("HIGH")
-	Octo_ToDo_THIRD_Frame_Main_Frame:SetPoint("TOP", 0, -257*E.Octo_Globals.scale)
+	-- Octo_ToDo_THIRD_Frame_Main_Frame:SetPoint("TOP", 0, E.Octo_Globals.Main_Frame_Position*E.Octo_Globals.scale)
+	Octo_ToDo_THIRD_Frame_Main_Frame:SetPoint("CENTER")
 	Octo_ToDo_THIRD_Frame_Main_Frame:SetBackdrop({
 			bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",

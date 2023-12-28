@@ -3424,3 +3424,4 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 1
 	},
 }
+
