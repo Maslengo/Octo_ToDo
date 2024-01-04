@@ -96,6 +96,13 @@ local function Hide_Frames()
 		ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Hide: WeeklyRewardExpirationWarningDialog", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
 		WeeklyRewardExpirationWarningDialog:Hide()
 	end
+	-- PlayerFrame.PlayerFrameContainer.FrameTexture:Hide()
+	-- PlayerFrame.PlayerFrameContainer.PlayerPortrait:Hide()
+	-- PlayerFrame.PlayerFrameContainer.PlayerPortraitMask:Hide()
+	-- if PaladinPowerBarFrame and PaladinPowerBarFrame:IsShown() then
+	-- 	ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Hide: PaladinPowerBarFrame", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+	-- 	PaladinPowerBarFrame:Hide()
+	-- end
 end
 local function DEV_GUID()
 	local curGUID = UnitGUID("PLAYER")
@@ -1628,13 +1635,13 @@ local function Collect_All_Quests()
 		end
 		local curGUID = UnitGUID("PLAYER")
 		local collect = Octo_ToDo_DB_Levels[curGUID]
-			local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
+		local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
 		local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
 		for k, v in ipairs(E.Octo_Table.OctoTable_QuestID) do
 			local questID = E.Octo_Func.CheckCompletedByQuestID(v)
 			collect.OctoTable_QuestID[v] = questID or 0
 		end
-		if collect and not InCombatLockdown() then
+		if collect then
 			collect.numShownEntries = numShownEntries or 0
 			collect.numQuests = numQuests or 0
 			collect.maxNumQuestsCanAccept = maxNumQuestsCanAccept or 0
@@ -2600,6 +2607,15 @@ local function O_otrisovka_FIRST()
 		end)
 	end
 	if Octo_ToDo_DB_Vars.config.ExpansionToShow == 3 then
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = E.Octo_Func.func_itemTexture(52019)..E.Octo_Func.func_itemName(52019)
+				if CharInfo.ItemsInBag[52019] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[52019]
+				end
+				return vivodCent, vivodLeft
+		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -7809,6 +7825,8 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 					return
 					-- a.curServer < b.curServer or a.curServer == b.curServer
 					-- and
+					-- a.Faction < b.Faction or a.Faction == b.Faction
+					-- and
 					a.UnitLevel < b.UnitLevel or a.UnitLevel == b.UnitLevel
 					and
 					a.avgItemLevel < b.avgItemLevel or a.avgItemLevel == b.avgItemLevel
@@ -8357,7 +8375,8 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		end)
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
-	if (event == "QUEST_LOG_UPDATE") then
+	if (event == "QUEST_ACCEPTED" or event == "QUEST_COMPLETE" or event == "QUEST_FINISHED" or event == "QUEST_LOG_UPDATE" or event == "QUEST_REMOVED" or event == "QUEST_TURNED_IN") then
+		-- print ("|cff00FF55".."Collect_All_Quests()".."|r"..event)
 		Collect_All_Quests()
 		Collect_All_Quest_Tooltip()
 		Collect_BfA_QuestsBounties()
