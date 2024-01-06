@@ -184,6 +184,7 @@ LSM:Register("font", "|cFF00A3FF18|r |cffFF4C4FRobotoBlack|r", [[Interface\Addon
 LSM:Register("font", "|cFF00A3FF19|r |cffFF4C4FRobotoCondensedBold|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\font\19 RobotoCondensedBold.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("font", "|cFF00A3FF20|r |cffFF4C4FMontserrat-Bold|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\font\20 Montserrat-Bold.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 LSM:Register("font", "|cFF00A3FF21|r |cffFF4C4FBitcrusherCdRg-Bold|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\font\21 BitcrusherCdRg-Bold.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
+LSM:Register("font", "|cFF00A3FF22|r |cffFF4C4FFortniteBattlefest|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\font\22 FortniteBattlefest.TTF]], LSM.LOCALE_BIT_ruRU+LSM.LOCALE_BIT_western)
 --[[BORDER
  ]]
 --Interface\Addons\]]..GlobalAddonName..[[\Media\border\

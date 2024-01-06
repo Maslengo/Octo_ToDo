@@ -1795,7 +1795,7 @@ local function Collect_ALL_UNIVERSALQuestUpdate()
 					end
 				end
 			end
-			if collect and not InCombatLockdown() then
+			if collect then
 				if v.max == 1 then
 					collect["Octopussy_"..v.expansion.."_"..v.reset.."_"..v.desc..v.place..v.name_save.."_count"] = vivod
 				elseif v.max > 1 then
@@ -2460,6 +2460,7 @@ local function Octo_ToDo_FIRST_OnLoad()
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_REMOVED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_TURNED_IN")
+	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_LOOT_RECEIVED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("READY_CHECK")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("SPELLS_CHANGED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TOYS_UPDATED")
@@ -8375,13 +8376,15 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		end)
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
-	if (event == "QUEST_ACCEPTED" or event == "QUEST_COMPLETE" or event == "QUEST_FINISHED" or event == "QUEST_LOG_UPDATE" or event == "QUEST_REMOVED" or event == "QUEST_TURNED_IN") then
-		-- print ("|cff00FF55".."Collect_All_Quests()".."|r"..event)
-		Collect_All_Quests()
-		Collect_All_Quest_Tooltip()
-		Collect_BfA_QuestsBounties()
-		Collect_ALL_UNIVERSALQuestUpdate()
-		Collect_BfA_Island()
+	if (event == "QUEST_ACCEPTED" or event == "QUEST_COMPLETE" or event == "QUEST_FINISHED" or event == "QUEST_LOG_UPDATE" or event == "QUEST_REMOVED" or event == "QUEST_TURNED_IN" or event == "QUEST_LOOT_RECEIVED") then
+		-- print ("|cff00FF55".."Collect_All_Quests()".."|r "..event)
+		C_Timer.After(1, function()
+			Collect_All_Quests()
+			Collect_All_Quest_Tooltip()
+			Collect_BfA_QuestsBounties()
+			Collect_ALL_UNIVERSALQuestUpdate()
+			Collect_BfA_Island()
+		end)
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_MONEY") and not InCombatLockdown() then
