@@ -21,6 +21,7 @@ E.Octo_Func.func_Octo_LoadAddOn("BugSack")
 E.Octo_Func.func_Octo_LoadAddOn("Rarity")
 E.Octo_Func.func_Octo_LoadAddOn("Rarity_Options")
 E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
+
 -- FRAMES
 local Button = nil
 local CF = nil
