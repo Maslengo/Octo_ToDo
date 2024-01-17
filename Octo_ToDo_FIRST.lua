@@ -6354,6 +6354,16 @@ local function O_otrisovka_FIRST()
 					tooltip[#tooltip+1] = {L["Keys of Loyalty"], CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count}
 					tooltip[#tooltip+1] = {L["PvP"], CharInfo.Octopussy_DF_Weekly_PVP_count}
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.2.5".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..L["Storyline"].."|r".." ("..L["The Gilneas Reclamation"]..")", CharInfo.Octopussy__Once_HordeTheGilneasReclamation_count}
+
+
+
+
+
+
+
+					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."10.2.0".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 					tooltip[#tooltip+1] ={Timer_DF_Flower()..L["Superbloom"], CharInfo.Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count}
 					tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..L["Storyline"].."|r".." ("..L["Emerald Dream"]..")", CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count}

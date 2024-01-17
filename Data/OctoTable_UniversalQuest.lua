@@ -3423,5 +3423,36 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
+
+
+
+	{
+		name_save = "TheGilneasReclamation",
+		reset = "Once",
+		expansion = "",
+		place = "",
+		desc = "Horde",
+		questID = {
+			78178,
+			78180,
+			78181,
+			78182,
+			78183,
+			78184,
+			78185,
+			78186,
+			78187,
+			78188,
+			78189,
+			78597,
+			79137,
+		},
+		max = 13
+	},
+
+
+
+
+
 }
 

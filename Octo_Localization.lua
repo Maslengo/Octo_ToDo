@@ -165,6 +165,7 @@ if L then
 	L["Can Earned"] = true
 	L["Gift"] = true
 	L["Gifts"] = true
+	L["The Gilneas Reclamation"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -324,4 +325,8 @@ if L then
 	L["Can Earned"] = "Можно получить"
 	L["Gift"] = "Подарок"
 	L["Gifts"] = "Подарки"
+
+	L["The Gilneas Reclamation"] = "Возвращение Гилнеаса"
+
+
 end

@@ -25,7 +25,7 @@ if E.Octo_Func.Octo_IsRetail() == true then
 				local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 				if containerInfo then
 					local itemID = containerInfo.itemID
-					local promise = ltl:Items(self)
+					local promise = ltl:Items(itemID)
 					if itemID and itemID == self then
 						local link = containerInfo.hyperlink
 						-- print (itemID, link)
@@ -124,7 +124,7 @@ if E.Octo_Func.Octo_IsRetail() == true then
 						EventFrame_ItemsUsable:RegisterEvent("BAG_UPDATE_DELAYED")
 						EventFrame_ItemsUsable:RegisterEvent("PLAYER_REGEN_ENABLED")
 						EventFrame_ItemsUsable:RegisterEvent("PLAYER_REGEN_DISABLED")
-						EventFrame_ItemsUsable:RegisterEvent("PLAYER_ENTERING_WORLD")
+						-- EventFrame_ItemsUsable:RegisterEvent("PLAYER_ENTERING_WORLD")
 						EventFrame_ItemsUsable:SetScript("OnEvent", ItemsUsableFrame_OnEvent)
 					end
 				end

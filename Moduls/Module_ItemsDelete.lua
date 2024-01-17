@@ -6,8 +6,9 @@ if not inspectScantipUSABLE then
 	inspectScantipUSABLE:SetOwner(UIParent, "ANCHOR_NONE")
 end
 tinsert(E.Octo_Globals.modules, function()
-				if E.Octo_Func.Octo_IsRetail() == true then
+		if E.Octo_Func.Octo_IsRetail() == true then
 		if Octo_ToDo_DB_Vars.config.ItemsDelete then
+		local ltl = LibStub("LibThingsLoad-1.0")
 			local function ItemsDelete_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
 				GameTooltip:ClearLines()
@@ -60,7 +61,7 @@ tinsert(E.Octo_Globals.modules, function()
 					EventFrame_ItemsDelete:RegisterEvent("BAG_UPDATE_DELAYED")
 					EventFrame_ItemsDelete:RegisterEvent("PLAYER_REGEN_ENABLED")
 					EventFrame_ItemsDelete:RegisterEvent("PLAYER_REGEN_DISABLED")
-					EventFrame_ItemsDelete:RegisterEvent("PLAYER_ENTERING_WORLD")
+					-- EventFrame_ItemsDelete:RegisterEvent("PLAYER_ENTERING_WORLD")
 					EventFrame_ItemsDelete:RegisterEvent("DELETE_ITEM_CONFIRM")
 					EventFrame_ItemsDelete:SetScript("OnEvent", ItemsDeleteFrame_OnEvent)
 				end
@@ -85,6 +86,7 @@ tinsert(E.Octo_Globals.modules, function()
 								local _, _, itemQuality = GetItemInfo(CurrentItemLink)
 								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 								local itemID = containerInfo.itemID
+								local promise = ltl:Items(itemID)
 								----------------------------------------------------------------
 								for i = 1, #E.Octo_Table.OctoTable_itemID_ItemsDelete do
 									if E.Octo_Table.OctoTable_itemID_ItemsDelete[i] == itemID then
