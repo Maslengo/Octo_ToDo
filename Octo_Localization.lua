@@ -166,6 +166,9 @@ if L then
 	L["Gift"] = true
 	L["Gifts"] = true
 	L["The Gilneas Reclamation"] = true
+	L["The Big Dig"] = true
+	L["Azerothian Archives"] = true
+	L["Daily Reset"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -327,6 +330,9 @@ if L then
 	L["Gifts"] = "Подарки"
 
 	L["The Gilneas Reclamation"] = "Возвращение Гилнеаса"
+	L["The Big Dig"] = "Большие раскопки"
+	L["Azerothian Archives"] = "Азеротские архивы"
+	L["Daily Reset"] = "Ежедневный сброс"
 
 
 end

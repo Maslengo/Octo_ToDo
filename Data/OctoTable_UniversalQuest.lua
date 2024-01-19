@@ -3427,11 +3427,11 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 
 
 	{
-		name_save = "TheGilneasReclamation",
+		name_save = "Storylines",
 		reset = "Once",
-		expansion = "",
-		place = "",
-		desc = "Horde",
+		expansion = "DF",
+		place = "TheGilneasReclamation",
+		desc = "",
 		questID = {
 			78178,
 			78180,
@@ -3449,6 +3449,43 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 13
 	},
+
+
+
+	{
+		name_save = "TheBigDig", -- Octopussy_DF_Weekly_TheBigDig_count -- config DragonscaleExpedition https://www.wowhead.com/ru/quest=77325/to-the-archives#english-comments
+		reset = "Weekly",
+		expansion = "DF",
+		place = "",
+		desc = "",
+		questID = {
+			79226,
+		},
+		max = 1
+	},
+
+
+
+	{
+		name_save = "Storylines", -- Octopussy_DF_Weekly_TheBigDig_count -- config DragonscaleExpedition https://www.wowhead.com/ru/quest=77325/to-the-archives#english-comments
+		reset = "Once",
+		expansion = "DF",
+		place = "AzerothianArchives",
+		desc = "",
+		questID = {
+			77325, 77267, 78762, 77268, 77231, 77166, 77176, 77433,
+			75493, 75518, 75603, 77434, 75729, 75867, 75868, 77327,
+			76217, 76241, 76242, 77328, 79223, 77486, 76026, 76032,
+			75604, 77487, 77100, 77151, 77154, 77483, 76448, 76557,
+			77415, 77484, 76564, 76576, 77425, 79231, 77331,
+		},
+		max = 39
+	},
+
+
+
+
+
 
 
 

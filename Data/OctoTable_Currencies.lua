@@ -2,6 +2,8 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.Octo_Table.OctoTable_currencyID_ALL = {
+	2657,
+	2819,
 	2777,
 	2706,
 	2707,
@@ -652,6 +654,8 @@ E.Octo_Table.OctoTable_currency_Shadowlands = {
 	1816,
 }
 E.Octo_Table.OctoTable_currency_Dragonflight = {
+	2657,
+	2819,
 	2796,
 	2533,
 	2245,
