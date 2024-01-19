@@ -7143,55 +7143,55 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				end
 		end)
 	end
-	if Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_FIRST == true then
 		--
-		if not Octo_ToDo_FIRST_Frame_Options_Button then
-			Octo_ToDo_FIRST_Frame_Options_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
-			Octo_ToDo_FIRST_Frame_Options_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_Options_Button:SetPoint("BOTTOMRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*1, 1)
-			Octo_ToDo_FIRST_Frame_Options_Button:SetBackdrop({
-					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-					edgeSize = 1
-			})
-			Octo_ToDo_FIRST_Frame_Options_Button:SetBackdropBorderColor(1, 0, 0, 0)
-			Octo_ToDo_FIRST_Frame_Options_Button:SetScript("OnEnter", function(self)
-					-- self:SetBackdropBorderColor(1, 0, 0, 1)
-					self.icon:SetVertexColor(1, 0, 0, 1)
-					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-					GameTooltip:AddLine(classColorHexCurrent..OPTIONS.."|r")
-					GameTooltip:Show()
-			end)
-			Octo_ToDo_FIRST_Frame_Options_Button:SetScript("OnLeave", function(self)
-					-- self:SetBackdropBorderColor(1, 0, 0, 0)
-					self.icon:SetVertexColor(1, 1, 1, 1)
-					GameTooltip:Hide()
-			end)
-			Octo_ToDo_FIRST_Frame_Options_Button:SetScript("OnMouseDown", function(self)
-					-- self:SetBackdropBorderColor(1, 0, 0, .5)
-					self.icon:SetVertexColor(1, 0, 0, .5)
-			end)
-			Octo_ToDo_FIRST_Frame_Options_Button:SetScript("OnClick", function()
-					-- if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then
-					-- Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
-					-- end
-					if Octo_ToDo_FIRST_Frame_Main_FramePIZDA and Octo_ToDo_FIRST_Frame_Main_FramePIZDA:IsShown() then
-						Octo_ToDo_FIRST_Frame_Main_FramePIZDA:Hide()
-					end
-					if Octo_ToDo_SECOND_Frame_Main_FramePIZDA and Octo_ToDo_SECOND_Frame_Main_FramePIZDA:IsShown() then
-						Octo_ToDo_SECOND_Frame_Main_FramePIZDA:Hide()
-					end
-					if SettingsPanel:IsVisible() and self:IsVisible() then
-						HideUIPanel(SettingsPanel)
-					else
-						Settings.OpenToCategory(AddonTitle, true)
-					end
-			end)
-			local t = Octo_ToDo_FIRST_Frame_Options_Button:CreateTexture(nil, "BACKGROUND")
-			Octo_ToDo_FIRST_Frame_Options_Button.icon = t
-			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\AddonTexture_FIRST.tga")
-			-- t:SetVertexColor(1, 1, 1, 1)
-			t:SetAllPoints(Octo_ToDo_FIRST_Frame_Options_Button)
-		end
+	if not Octo_ToDo_FIRST_Frame_Options_Button then
+		Octo_ToDo_FIRST_Frame_Options_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
+		Octo_ToDo_FIRST_Frame_Options_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+		Octo_ToDo_FIRST_Frame_Options_Button:SetPoint("BOTTOMRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*1, 1)
+		Octo_ToDo_FIRST_Frame_Options_Button:SetBackdrop({
+				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+				edgeSize = 1
+		})
+		Octo_ToDo_FIRST_Frame_Options_Button:SetBackdropBorderColor(1, 0, 0, 0)
+		Octo_ToDo_FIRST_Frame_Options_Button:SetScript("OnEnter", function(self)
+				-- self:SetBackdropBorderColor(1, 0, 0, 1)
+				self.icon:SetVertexColor(1, 0, 0, 1)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+				GameTooltip:AddLine(classColorHexCurrent..OPTIONS.."|r")
+				GameTooltip:Show()
+		end)
+		Octo_ToDo_FIRST_Frame_Options_Button:SetScript("OnLeave", function(self)
+				-- self:SetBackdropBorderColor(1, 0, 0, 0)
+				self.icon:SetVertexColor(1, 1, 1, 1)
+				GameTooltip:Hide()
+		end)
+		Octo_ToDo_FIRST_Frame_Options_Button:SetScript("OnMouseDown", function(self)
+				-- self:SetBackdropBorderColor(1, 0, 0, .5)
+				self.icon:SetVertexColor(1, 0, 0, .5)
+		end)
+		Octo_ToDo_FIRST_Frame_Options_Button:SetScript("OnClick", function()
+				-- if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then
+				-- Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
+				-- end
+				if Octo_ToDo_FIRST_Frame_Main_FramePIZDA and Octo_ToDo_FIRST_Frame_Main_FramePIZDA:IsShown() then
+					Octo_ToDo_FIRST_Frame_Main_FramePIZDA:Hide()
+				end
+				if Octo_ToDo_SECOND_Frame_Main_FramePIZDA and Octo_ToDo_SECOND_Frame_Main_FramePIZDA:IsShown() then
+					Octo_ToDo_SECOND_Frame_Main_FramePIZDA:Hide()
+				end
+				if SettingsPanel:IsVisible() and self:IsVisible() then
+					HideUIPanel(SettingsPanel)
+				else
+					Settings.OpenToCategory(AddonTitle, true)
+				end
+		end)
+		local t = Octo_ToDo_FIRST_Frame_Options_Button:CreateTexture(nil, "BACKGROUND")
+		Octo_ToDo_FIRST_Frame_Options_Button.icon = t
+		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\AddonTexture_FIRST.tga")
+		-- t:SetVertexColor(1, 1, 1, 1)
+		t:SetAllPoints(Octo_ToDo_FIRST_Frame_Options_Button)
+	end
+	if Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_FIRST == true then
 		--
 		if not Octo_ToDo_FIRST_Frame_MarkOfHonor_Button then
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
