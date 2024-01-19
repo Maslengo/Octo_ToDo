@@ -88,22 +88,29 @@ local Meta_Table_true = {__index = function() return true end}
 local Meta_Table_DONE = {__index = function() return E.Octo_Globals.DONE end}
 local Meta_Table_NONE = {__index = function() return E.Octo_Globals.NONE end}
 local Meta_Table_Empty = {__index = function() return "" end}
-local function Hide_Frames()
+
+local function Hide_trash_frames()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Hide_Frames".."|r")
+		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Hide_trash_frames".."|r")
 	end
-	if WeeklyRewardExpirationWarningDialog and WeeklyRewardExpirationWarningDialog:IsShown() then
-		ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Hide: WeeklyRewardExpirationWarningDialog", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
-		WeeklyRewardExpirationWarningDialog:Hide()
+
+	local TrashFrames_table = {
+		{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
+		{name = "SplashFrame", frame = SplashFrame},
+		{name = "MajorFactionsRenownToast", frame = MajorFactionsRenownToast},
+		-- TEST
+		-- {name = "PlayerFrameBottomManagedFramesContainer", frame = PlayerFrameBottomManagedFramesContainer},
+	}
+
+	for _, v in pairs(TrashFrames_table) do
+		if v.frame and v.frame:IsShown() then
+			ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Hide trash frames: ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..v.name)
+			v.frame:Hide()
+			v.frame:UnregisterAllEvents()
+		end
 	end
-	-- PlayerFrame.PlayerFrameContainer.FrameTexture:Hide()
-	-- PlayerFrame.PlayerFrameContainer.PlayerPortrait:Hide()
-	-- PlayerFrame.PlayerFrameContainer.PlayerPortraitMask:Hide()
-	-- if PaladinPowerBarFrame and PaladinPowerBarFrame:IsShown() then
-	-- 	ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Hide: PaladinPowerBarFrame", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
-	-- 	PaladinPowerBarFrame:Hide()
-	-- end
 end
+
 local function DEV_GUID()
 	local curGUID = UnitGUID("PLAYER")
 	local strGUID = tostringall(strsplit("-", utf8lower(utf8reverse(curGUID))))
@@ -8163,7 +8170,7 @@ local function main_frame_toggle()
 				Collect_WarMode()
 				-- Collect_ALL_EncounterAndZoneLists()
 				Octo_ToDo_FIRST_AddDataToAltFrame()
-				Hide_Frames()
+				Hide_trash_frames()
 				----------------------------------------------------------------
 				----------------------------------------------------------------
 				----------------------------------------------------------------
@@ -8463,7 +8470,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		RequestTimePlayed()
 		Octo_ToDo_FIRST_CreateAltFrame()
 		Octo_ToDo_FIRST_AddDataToAltFrame()
-		Hide_Frames()
+		Hide_trash_frames()
 		C_Timer.After(5, function()
 				if Octo_ToDo_DB_Vars.config.AnotherAddonsRAID then
 					Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = false
@@ -8510,6 +8517,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 			Collect_ALL_UNIVERSALQuestUpdate()
 			Collect_BfA_Island()
 		end)
+		Hide_trash_frames()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_MONEY") and not InCombatLockdown() then
@@ -8518,6 +8526,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	end
 	if (event == "CURRENCY_DISPLAY_UPDATE") and not InCombatLockdown() then
 		Collect_All_Currency()
+		Hide_trash_frames()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_EQUIPMENT_CHANGED") and not InCombatLockdown() then
@@ -8543,6 +8552,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_BfA_Azerite()
 		Collect_BfA_Cloaklvl()
 		Collect_All_journalInstance()
+		Hide_trash_frames()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "ZONE_CHANGED_NEW_AREA" or event == "ITEM_COUNT_CHANGED" or event == "MAIL_SEND_SUCCESS") and not InCombatLockdown() then

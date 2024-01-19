@@ -21,6 +21,15 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 -- fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
 -- local fontObject12 = CreateFont("OctoFont12")
 -- fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
+local className, classFilename, classId = UnitClass("PLAYER")
+local classColor = E.Octo_Func.GetClassColor(classFilename)
+local r, g, b = GetClassColor(classFilename)
+local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
+local classColorHexCurrent = E.Octo_Func.func_rgb2hex(r, g, b)
+if classFilename == "SHAMAN" then
+	classcolor = "0070de"
+end
+----
 local indent = 19
 local POS_LEFT = 6
 local POS_RIGHT = 474
@@ -258,8 +267,8 @@ MAIN_Config:SetScript("OnShow", function(self)
 			Create_CheckButton(MAIN_scrollChild, self, 2, POS_CENTER, "AidingtheAccord", E.Octo_Globals.Weekly..L["Aiding the Accord"])
 			Create_CheckButton(MAIN_scrollChild, self, 3, POS_CENTER, "CommunityFeast", E.Octo_Globals.Weekly..L["Community Feast"])
 			Create_CheckButton(MAIN_scrollChild, self, 4, POS_CENTER, "ResearchersUnderFire", E.Octo_Globals.Weekly..L["Researchers Under Fire"]..E.Octo_Globals.Gray_Color.." (10.1.0)|r")
-			Create_CheckButton(MAIN_scrollChild, self, 5.5, POS_CENTER, "TheBigDig", E.Octo_Globals.Weekly..E.Octo_Func.func_texturefromIcon(134435)..L["The Big Dig"]..E.Octo_Globals.Gray_Color.." (10.2.5)|r")
-			Create_CheckButton(MAIN_scrollChild, self, 6.5, POS_CENTER+(indent), "TheBigDig_REPUTATION", E.Octo_Func.func_reputationName(2615)..E.Octo_Globals.Gray_Color.." ("..REPUTATION..")|r")
+			Create_CheckButton(MAIN_scrollChild, self, 5.5, POS_CENTER, "TheBigDig", E.Octo_Globals.Weekly..E.Octo_Func.func_texturefromIcon(134435)..L["The Big Dig"]..classColorHexCurrent.." (10.2.5)|r")
+			Create_CheckButton(MAIN_scrollChild, self, 6.5, POS_CENTER+(indent), "TheBigDig_REPUTATION", E.Octo_Func.func_reputationName(2615)..classColorHexCurrent.." ("..REPUTATION..")|r")
 			Create_CheckButton(MAIN_scrollChild, self, 8, POS_CENTER, "EmeraldDream_Superbloom", E.Octo_Globals.Weekly..L["Superbloom"])
 			Create_CheckButton(MAIN_scrollChild, self, 9, POS_CENTER, "EmeraldDream_WB", E.Octo_Globals.Weekly..L["World Boss"])
 			Create_CheckButton(MAIN_scrollChild, self, 10, POS_CENTER, "EmeraldDream_DreamWardens", L["Dream Wardens"]..E.Octo_Globals.Gray_Color.." ("..REPUTATION..")|r")
