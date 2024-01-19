@@ -4553,7 +4553,7 @@ local function O_otrisovka_FIRST()
 					function(CharInfo, tooltip, CL, BG)
 						local vivodCent, vivodLeft = "", ""
 						vivodLeft = E.Octo_Func.func_reputationName(2615)
-						if CharInfo.reputationID[2615] ~= "" and CharInfo.reputationID[2615] ~= 0 and CharInfo.reputationID[2615] ~= E.Octo_Globals.DONE then
+						if CharInfo.reputationID[2615] ~= "" and CharInfo.reputationID[2615] ~= 0 and CharInfo.reputationID[2615] ~= E.Octo_Globals.DONE and CharInfo.reputationID[2615] ~= "|cffFFF3710/10500 (1/5)|r" then
 							vivodCent = CharInfo.reputationID[2615]
 						end
 						-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2615), CharInfo.reputationID[2615]}
