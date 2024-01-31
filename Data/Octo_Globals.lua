@@ -236,5 +236,5 @@ E.Octo_Globals.Daily = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."
 E.Octo_Globals.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Weekly.tga")
 -- E.Octo_Globals.Weekly = texturefromIcon("Interface\\GossipFrame\\DailyQuestIcon")
 -- E.Octo_Globals.DailyReset = E.Octo_Globals.Class_DeathKnight_Color.." ".."Daily Reset".."|r"
-E.Octo_Globals.DailyReset = func_Gradient(" >>Daily Reset<< ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+E.Octo_Globals.DailyReset = func_Gradient(" >>Daily Reset<< ", E.Octo_Globals.Class_DeathKnight_Color, E.Octo_Globals.Class_DemonHunter_Color)
 -- console -> export "art"

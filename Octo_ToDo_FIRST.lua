@@ -538,10 +538,10 @@ local function checkCharInfo(self)
 			print (E.Octo_Globals.DailyReset.."LootFrame".." = |cffFF0000false|r")
 			Octo_ToDo_DB_Vars.config.LootFrame = false
 		end
-		if Octo_ToDo_DB_Vars.config.PortalsNEW ~= false then
-			print (E.Octo_Globals.DailyReset.."PortalsNEW".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.PortalsNEW = false
-		end
+		-- if Octo_ToDo_DB_Vars.config.PortalsNEW ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."PortalsNEW".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.PortalsNEW = false
+		-- end
 		if Octo_ToDo_DB_Vars.config.THIRD ~= false then
 			print (E.Octo_Globals.DailyReset.."THIRD".." = |cffFF0000false|r")
 			Octo_ToDo_DB_Vars.config.THIRD = false
