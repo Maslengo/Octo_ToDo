@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local lsfdd = LibStub("LibSFDropDown-1.4")
+local lsfdd = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
 local menuBackdrop = {
 	bgFile = "Interface/ChatFrame/ChatFrameBackground",

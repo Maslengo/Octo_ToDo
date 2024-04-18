@@ -2,9 +2,7 @@
 ## Title: LibThingsLoad
 ## Author: sfmict
 ## Notes: Library for load quests, items and spells
-## Version: @project-version@
+## Version: r9
 ## OptionalDeps: LibStub
-#@no-lib-strip@
 libs\LibStub\LibStub.lua
-#@end-no-lib-strip@
 LibThingsLoad.xml

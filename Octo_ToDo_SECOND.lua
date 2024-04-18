@@ -8,7 +8,7 @@ if PTR_IssueReporter then PTR_IssueReporter:Hide() end
 if WeeklyRewardExpirationWarningDialog then WeeklyRewardExpirationWarningDialog:Hide() end
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-local lsfdd = LibStub("LibSFDropDown-1.4")
+local lsfdd = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
 local SHOWADDON_SECOND = false
 ----------------------------------------------------------------

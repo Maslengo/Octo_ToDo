@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
-local lsfdd = LibStub("LibSFDropDown-1.4")
+local lsfdd = LibStub("LibSFDropDown-1.5")
 local number, pizza, config, text, minValue, maxValue, steps, formatters
 local new = E.Octo_Globals.Blue_Color.."NEW: |r"
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
