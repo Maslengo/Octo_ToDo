@@ -96,8 +96,6 @@ LSM:Register("sound", "|cFF00A5FFO_05_Teleport|r", [[Interface\Addons\]]..Global
 LSM:Register("sound", "|cFF00A6FFO_06_Bokudan|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Other\Bokudan.ogg]])
 LSM:Register("sound", "|cFF00A6FFO_06_Dark Souls - You died|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Other\.Dark Souls - You diedogg]])
 LSM:Register("sound", "|cFF00A6FFO_06_Ding|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Other\.Dingogg]])
-LSM:Register("sound", "|cFF00A6FFO_06_Discord1|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Other\Discord1.ogg]])
-LSM:Register("sound", "|cFF00A6FFO_06_Discord2|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Other\Discord2.ogg]])
 LSM:Register("sound", "|cFF00A6FFO_06_EAR RAPE Skullsound|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Other\EAR RAPE Skullsound.ogg]])
 LSM:Register("sound", "|cFF00A6FFO_06_Error|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Other\Error.ogg]])
 LSM:Register("sound", "|cFF00A6FFO_06_Failsafe|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Other\Failsafe.ogg]])
