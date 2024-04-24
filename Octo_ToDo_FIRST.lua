@@ -502,90 +502,90 @@ local function checkCharInfo(self)
 		self.tmstp_Daily = E.Octo_Func.tmstpDayReset(1)
 		self.needResetDaily = true
 		Octo_ToDo_DB_Other.Holiday.Active = {}
-		if Octo_ToDo_DB_Vars.config.StaticPopup1Button1 ~= false then
-			print (E.Octo_Globals.DailyReset.."StaticPopup1Button1".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.StaticPopup1Button1 = false
-		end
-		if Octo_ToDo_DB_Vars.config.AnotherAddonsCasual ~= false then
-			print (E.Octo_Globals.DailyReset.."AnotherAddonsCasual".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.AnotherAddonsCasual = false
-		end
-		if Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG ~= false then
-			print (E.Octo_Globals.DailyReset.."AnotherAddonsDUNG".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG = false
-		end
-		if Octo_ToDo_DB_Vars.config.AnotherAddonsRAID ~= false then
-			print (E.Octo_Globals.DailyReset.."AnotherAddonsRAID".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = false
-		end
-		if Octo_ToDo_DB_Vars.config.CVar ~= false then
-			print (E.Octo_Globals.DailyReset.."CVar".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.CVar = false
-		end
-		if Octo_ToDo_DB_Vars.config.SORTING ~= false then
-			print (E.Octo_Globals.DailyReset.."SORTING".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.SORTING = false
-		end
-		if Octo_ToDo_DB_Vars.config.SellFrame ~= false then
-			print (E.Octo_Globals.DailyReset.."SellFrame".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.SellFrame = false
-		end
-		if Octo_ToDo_DB_Vars.config.GlobalFadePersist ~= false then
-			print (E.Octo_Globals.DailyReset.."GlobalFadePersist".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.GlobalFadePersist = false
-		end
-		if Octo_ToDo_DB_Vars.config.LootFrame ~= false then
-			print (E.Octo_Globals.DailyReset.."LootFrame".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.LootFrame = false
-		end
-		-- if Octo_ToDo_DB_Vars.config.PortalsNEW ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."PortalsNEW".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.PortalsNEW = false
+		-- if Octo_ToDo_DB_Vars.config.StaticPopup1Button1 ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."StaticPopup1Button1".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.StaticPopup1Button1 = false
 		-- end
-		if Octo_ToDo_DB_Vars.config.THIRD ~= false then
-			print (E.Octo_Globals.DailyReset.."THIRD".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.THIRD = false
-		end
-		if Octo_ToDo_DB_Vars.config.TalentTreeTweaks ~= false then
-			print (E.Octo_Globals.DailyReset.."TalentTreeTweaks".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.TalentTreeTweaks = false
-		end
-		if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST ~= false then
-			print (E.Octo_Globals.DailyReset.."Octo_debug_Function_FIRST".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST = false
-		end
-		if Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST ~= false then
-			print (E.Octo_Globals.DailyReset.."Octo_debug_Event_FIRST".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST = false
-		end
-		if Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_FIRST ~= false then
-			print (E.Octo_Globals.DailyReset.."Octo_debug_BUTTONS_FIRST".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_FIRST = false
-		end
-		if Octo_ToDo_DB_Vars.config.Octo_debug_Function_SECOND ~= false then
-			print (E.Octo_Globals.DailyReset.."Octo_debug_Function_SECOND".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.Octo_debug_Function_SECOND = false
-		end
-		if Octo_ToDo_DB_Vars.config.Octo_debug_Event_SECOND ~= false then
-			print (E.Octo_Globals.DailyReset.."Octo_debug_Event_SECOND".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.Octo_debug_Event_SECOND = false
-		end
-		if Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_SECOND ~= false then
-			print (E.Octo_Globals.DailyReset.."Octo_debug_BUTTONS_SECOND".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_SECOND = false
-		end
-		if Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame ~= false then
-			print (E.Octo_Globals.DailyReset.."ChallengesKeystoneFrame".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame = false
-		end
-		if Octo_ToDo_DB_Vars.config.ItemsUsable ~= false then
-			print (E.Octo_Globals.DailyReset.."ItemsUsable".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.ItemsUsable = false
-		end
-		if Octo_ToDo_DB_Vars.config.ItemsDelete ~= false then
-			print (E.Octo_Globals.DailyReset.."ItemsDelete".." = |cffFF0000false|r")
-			Octo_ToDo_DB_Vars.config.ItemsDelete = false
-		end
+		-- if Octo_ToDo_DB_Vars.config.AnotherAddonsCasual ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."AnotherAddonsCasual".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.AnotherAddonsCasual = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."AnotherAddonsDUNG".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.AnotherAddonsRAID ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."AnotherAddonsRAID".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.CVar ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."CVar".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.CVar = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.SORTING ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."SORTING".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.SORTING = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.SellFrame ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."SellFrame".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.SellFrame = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.GlobalFadePersist ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."GlobalFadePersist".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.GlobalFadePersist = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.LootFrame ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."LootFrame".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.LootFrame = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.PortalsButtons ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."PortalsButtons".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.PortalsButtons = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.THIRD ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."THIRD".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.THIRD = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.TalentTreeTweaks ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."TalentTreeTweaks".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.TalentTreeTweaks = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_Function_FIRST".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_Event_FIRST".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_FIRST ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_BUTTONS_FIRST".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_FIRST = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_SECOND ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_Function_SECOND".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_Function_SECOND = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.Octo_debug_Event_SECOND ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_Event_SECOND".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_Event_SECOND = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_SECOND ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_BUTTONS_SECOND".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_SECOND = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."ChallengesKeystoneFrame".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.ItemsUsable ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."ItemsUsable".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.ItemsUsable = false
+		-- end
+		-- if Octo_ToDo_DB_Vars.config.ItemsDelete ~= false then
+		-- 	print (E.Octo_Globals.DailyReset.."ItemsDelete".." = |cffFF0000false|r")
+		-- 	Octo_ToDo_DB_Vars.config.ItemsDelete = false
+		-- end
 		-- Octo_ToDo_DB_Vars.config.ItemsUsable = false
 		-- Octo_ToDo_DB_Vars.config.ItemsDelete = false
 		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
@@ -2561,7 +2561,6 @@ local function Octo_ToDo_FIRST_OnLoad()
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_FINISHED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_REMOVED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_TURNED_IN")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("READY_CHECK")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("SPELLS_CHANGED")
 	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TOYS_UPDATED")
@@ -5269,7 +5268,7 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end -- for 628
-		if Octo_ToDo_DB_Other.Holiday.Active[622] then -- Путешествие во времени по подземельям (Burning Crusade)
+		if (Octo_ToDo_DB_Other.Holiday.Active[622] or Octo_ToDo_DB_Other.Holiday.Active[559]) then -- Путешествие во времени по подземельям (Burning Crusade)
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -7773,7 +7772,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	--
 	if E.Octo_Func.Octo_IsRetail() == true then
-		if Octo_ToDo_DB_Vars.config.PortalsNEW == true then
+		if Octo_ToDo_DB_Vars.config.PortalsButtons == true then
 			local Xpos = 0
 			local Ypos = -21
 			local prof1, prof2 = GetProfessions()
@@ -8267,7 +8266,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.ShowTimeAll == nil then Octo_ToDo_DB_Vars.config.ShowTimeAll = true end
 		if Octo_ToDo_DB_Vars.config.ShowTime70 == nil then Octo_ToDo_DB_Vars.config.ShowTime70 = true end
 		if Octo_ToDo_DB_Vars.config.ResetAllChars == nil then Octo_ToDo_DB_Vars.config.ResetAllChars = true end
-		if Octo_ToDo_DB_Vars.config.PortalsNEW == nil then Octo_ToDo_DB_Vars.config.PortalsNEW = false end
+		if Octo_ToDo_DB_Vars.config.PortalsButtons == nil then Octo_ToDo_DB_Vars.config.PortalsButtons = false end
 		if Octo_ToDo_DB_Vars.config.Achievements == nil then Octo_ToDo_DB_Vars.config.Achievements = false end
 		if Octo_ToDo_DB_Vars.config.THIRD == nil then Octo_ToDo_DB_Vars.config.THIRD = false end
 		if Octo_ToDo_DB_Vars.config.curHeight == nil then Octo_ToDo_DB_Vars.config.curHeight = 20 end
