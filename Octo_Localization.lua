@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 local AL3 = LibStub("AceLocale-3.0")
 local debug = false
@@ -48,7 +48,6 @@ if L then
 	L["Zereth Mortis"] = true
 	L["Bodyguards"] = true
 	L["Storyline"] = true
-	L["No Reagent Bag"] = true
 	L["Mythic Keystone"] = true
 	L["Disciple of Fyrakk"] = true
 	L["Fighting is Its Own Reward"] = true
@@ -215,7 +214,6 @@ if L then
 	L["Zereth Mortis"] = "Зерет Мортис"
 	L["Bodyguards"] = "Телохранители"
 	L["Storyline"] = "Сюжетная линия"
-	L["No Reagent Bag"] = "Нет сумки реагентов"
 	L["Mythic Keystone"] = "Эпохальный ключ"
 	L["Disciple of Fyrakk"] = "Ученик Фиракка"
 	L["Fighting is Its Own Reward"] = "Славный бой – это уже награда"

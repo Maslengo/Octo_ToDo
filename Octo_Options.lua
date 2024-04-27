@@ -1,8 +1,8 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
-local lsfdd = LibStub("LibSFDropDown-1.5")
+local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local number, pizza, config, text, minValue, maxValue, steps, formatters
 local new = E.Octo_Globals.Blue_Color.."NEW: |r"
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
@@ -52,7 +52,7 @@ MAIN_Config:SetScript("OnMouseWheel", function(self, ...)
 end)
 MAIN_TITLE = MAIN_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 MAIN_TITLE:SetPoint("TOPLEFT", 4, 30)
-MAIN_TITLE:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+MAIN_TITLE:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
 MAIN_TITLE:SetTextColor(.5, .5, .5, 1)
 local function Create_Slider(scroll, self, number, pos, config, text, color, minValue, maxValue, Octo_Callback_func)
 	if not color then
@@ -294,7 +294,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 			Create_CheckButton(MAIN_scrollChild, self, 30, POS_CENTER, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
 			Create_CheckButton(MAIN_scrollChild, self, 31, POS_CENTER, "LastUpdate", "Last Update")
 			number = 1
-			btn_right1 = lsfdd:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
+			btn_right1 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
 			btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
 			btn_right1:SetText(E.Octo_Table.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow])
 			btn_right1:ddSetDisplayMode(GlobalAddonName)
@@ -327,7 +327,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 					end
 			end)
 			number = 2
-			btn_right2 = lsfdd:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
+			btn_right2 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
 			btn_right2:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
 			btn_right2:SetText(E.Octo_Table.wowhead_prefix_Table[Octo_ToDo_DB_Vars.config.prefix])
 			btn_right2:ddSetDisplayMode(GlobalAddonName)
@@ -359,7 +359,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 					end
 			end)
 			Create_Slider(MAIN_scrollChild, self, 4, POS_RIGHT, "LevelToShow", L["Player level"], E.Octo_Globals.Green_Color, 1, 70)
-			Create_Slider(MAIN_scrollChild, self, 5.5, POS_RIGHT, "LevelToShowMAX", L["Player MAX level"], E.Octo_Globals.Green_Color, 1, 70)
+			Create_Slider(MAIN_scrollChild, self, 5.5, POS_RIGHT, "LevelToShowMAX", L["Player MAX level"], E.Octo_Globals.Green_Color, 1, 120)
 			Create_Slider(MAIN_scrollChild, self, 7, POS_RIGHT, "itemLevelToShow", L["Item level: "], E.Octo_Globals.Green_Color, 0, 560)
 			Create_Slider(MAIN_scrollChild, self, 8.5, POS_RIGHT, "curWidthCentral", L["Width: "], E.Octo_Globals.Green_Color, 60, 160)
 			Create_Slider(MAIN_scrollChild, self, 10, POS_RIGHT, "curWidthTitle", L["curWidthTitle: "], E.Octo_Globals.Green_Color, 100, 400)
@@ -400,7 +400,7 @@ FIRST_Config:SetScript("OnMouseWheel", function(self, ...)
 end)
 TITLE_FIRST = FIRST_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 TITLE_FIRST:SetPoint("TOPLEFT", 4, 30)
-TITLE_FIRST:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+TITLE_FIRST:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
 TITLE_FIRST:SetTextColor(.5, .5, .5, 1)
 FIRST_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)

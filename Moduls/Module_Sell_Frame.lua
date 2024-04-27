@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 local ltl = LibStub("LibThingsLoad-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------

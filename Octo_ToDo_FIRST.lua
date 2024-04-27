@@ -1,26 +1,66 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
-local AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
-local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonNotes = GetAddOnMetadata(GlobalAddonName, "Notes")
+local AddonAuthor = GetAddOnMetadata(GlobalAddonName, "Author")
+local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
 local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
 local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
 if PTR_IssueReporter then PTR_IssueReporter:Hide() end
 if WeeklyRewardExpirationWarningDialog then WeeklyRewardExpirationWarningDialog:Hide() end
-local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
+
 _G["OctoTODO"] = OctoTODO
-local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-local lsfdd = LibStub("LibSFDropDown-1.5")
-local ltl = LibStub("LibThingsLoad-1.0")
+
+local LibStub = LibStub
+-- for k, v in pairs (LibStub) do
+-- 	-- print (k, v)
+-- 	if k == "libs" then
+-- 		for e, _ in pairs (v) do
+-- 			print (e)f
+-- 		end
+-- 	end
+-- end
+local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO") -- Старое
+local AceLocale = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
+
+local LibDataBroker = LibStub("LibDataBroker-1.1")
+local LibDBIcon = LibStub("LibDBIcon-1.0")
+local CallbackHandler = LibStub("CallbackHandler-1.0")
+local LibCustomGlow = LibStub("LibCustomGlow-1.0")
+local LibSFDropDown = LibStub("LibSFDropDown-1.5")
+local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibTranslit = LibStub("LibTranslit-1.0")
-local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local UTF8 = LibStub("UTF8-1.1")
+
+
+
+local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
+-- local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+local utf8charbytes = E.Octo_Func.utf8charbytes
+local utf8len = E.Octo_Func.utf8len
+local utf8sub = E.Octo_Func.utf8sub
+local utf8replace = E.Octo_Func.utf8replace
+local utf8upper = E.Octo_Func.utf8upper
+local utf8lower = E.Octo_Func.utf8lower
+local utf8reverse = E.Octo_Func.utf8reverse
+local currentMaxLevel = 60
+if WOW_currentBuild == 1 then currentMaxLevel = 60 end --CLASSIC
+if WOW_currentBuild == 2 then currentMaxLevel = 70 end --TBC
+if WOW_currentBuild == 3 then currentMaxLevel = 80 end --WOTLK
+if WOW_currentBuild == 4 then currentMaxLevel = 85 end --CATA
+if WOW_currentBuild == 5 then currentMaxLevel = 90 end --PANDA
+if WOW_currentBuild == 6 then currentMaxLevel = 100 end --DRAENOR
+if WOW_currentBuild == 7 then currentMaxLevel = 110 end --legion
+if WOW_currentBuild == 8 then currentMaxLevel = 120 end --BFA
+if WOW_currentBuild == 9 then currentMaxLevel = 60 end --SL
+if WOW_currentBuild == 10 then currentMaxLevel = 70 end --RETAIL
 --
 local curWidthTitle = E.Octo_Globals.curWidthTitle
 E.Octo_Func.func_Octo_LoadAddOn("!BugGrabber")
 E.Octo_Func.func_Octo_LoadAddOn("BugSack")
-E.Octo_Func.func_Octo_LoadAddOn("Rarity")
-E.Octo_Func.func_Octo_LoadAddOn("Rarity_Options")
-E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
+-- E.Octo_Func.func_Octo_LoadAddOn("Rarity")
+-- E.Octo_Func.func_Octo_LoadAddOn("Rarity_Options")
+-- E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
 -- FRAMES
 local Button = nil
 local CF = nil
@@ -89,18 +129,22 @@ local Meta_Table_DONE = {__index = function() return E.Octo_Globals.DONE end}
 local Meta_Table_NONE = {__index = function() return E.Octo_Globals.NONE end}
 local Meta_Table_Empty = {__index = function() return "" end}
 
+
+local TrashFrames_table = {
+	{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
+	{name = "SplashFrame", frame = SplashFrame},
+	{name = "MajorFactionsRenownToast", frame = MajorFactionsRenownToast},
+	-- TEST
+	-- {name = "PlayerFrameBottomManagedFramesContainer", frame = PlayerFrameBottomManagedFramesContainer},
+}
+
+
 local function Hide_trash_frames()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Hide_trash_frames".."|r")
 	end
 
-	local TrashFrames_table = {
-		{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
-		{name = "SplashFrame", frame = SplashFrame},
-		{name = "MajorFactionsRenownToast", frame = MajorFactionsRenownToast},
-		-- TEST
-		-- {name = "PlayerFrameBottomManagedFramesContainer", frame = PlayerFrameBottomManagedFramesContainer},
-	}
+
 
 	for _, v in pairs(TrashFrames_table) do
 		if v.frame and v.frame:IsShown() then
@@ -502,92 +546,6 @@ local function checkCharInfo(self)
 		self.tmstp_Daily = E.Octo_Func.tmstpDayReset(1)
 		self.needResetDaily = true
 		Octo_ToDo_DB_Other.Holiday.Active = {}
-		-- if Octo_ToDo_DB_Vars.config.StaticPopup1Button1 ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."StaticPopup1Button1".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.StaticPopup1Button1 = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.AnotherAddonsCasual ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."AnotherAddonsCasual".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.AnotherAddonsCasual = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."AnotherAddonsDUNG".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.AnotherAddonsRAID ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."AnotherAddonsRAID".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.CVar ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."CVar".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.CVar = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.SORTING ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."SORTING".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.SORTING = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.SellFrame ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."SellFrame".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.SellFrame = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.GlobalFadePersist ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."GlobalFadePersist".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.GlobalFadePersist = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.LootFrame ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."LootFrame".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.LootFrame = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.PortalsButtons ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."PortalsButtons".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.PortalsButtons = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.THIRD ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."THIRD".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.THIRD = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.TalentTreeTweaks ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."TalentTreeTweaks".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.TalentTreeTweaks = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_Function_FIRST".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_Event_FIRST".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_FIRST ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_BUTTONS_FIRST".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_FIRST = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_SECOND ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_Function_SECOND".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_Function_SECOND = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.Octo_debug_Event_SECOND ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_Event_SECOND".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_Event_SECOND = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_SECOND ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."Octo_debug_BUTTONS_SECOND".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_SECOND = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."ChallengesKeystoneFrame".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.ItemsUsable ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."ItemsUsable".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.ItemsUsable = false
-		-- end
-		-- if Octo_ToDo_DB_Vars.config.ItemsDelete ~= false then
-		-- 	print (E.Octo_Globals.DailyReset.."ItemsDelete".." = |cffFF0000false|r")
-		-- 	Octo_ToDo_DB_Vars.config.ItemsDelete = false
-		-- end
-		-- Octo_ToDo_DB_Vars.config.ItemsUsable = false
-		-- Octo_ToDo_DB_Vars.config.ItemsDelete = false
 		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
 				if w == "Daily" then
@@ -1137,7 +1095,6 @@ local function Collect_ALL_LoginTime()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_LoginTime()".."|r")
 	end
-	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DB_Levels[curGUID]
 	collect.loginDate = date("%d.%m.%Y %H:%M:%S")
@@ -1152,7 +1109,6 @@ local function Collect_SL_CovenantAnima()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_SL_CovenantAnima()".."|r")
 	end
-	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DB_Levels[curGUID]
 	local CovenantNames = {
@@ -1187,7 +1143,6 @@ local function Collect_ALL_PVPRaitings()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_PVPRaitings()".."|r")
 	end
-	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DB_Levels[curGUID]
 	if not IsAddOnLoaded("Blizzard_PVPUI") then
@@ -1224,7 +1179,6 @@ local function Collect_All_Professions()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_All_Professions()".."|r")
 	end
-	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DB_Levels[curGUID]
 	if collect then
@@ -1513,7 +1467,6 @@ local function Collect_ALL_ItemsInBag()
 		local curGUID = UnitGUID("PLAYER")
 		local collect = Octo_ToDo_DB_Levels[curGUID]
 		--
-		local PlayerReagentnumSlots = C_Container.GetContainerNumSlots(BACKPACK_CONTAINER+NUM_BAG_SLOTS+1)
 		local usedSlots = 0
 		local totalSlots = 0
 		local Possible_Anima = 0
@@ -1638,7 +1591,6 @@ local function Collect_ALL_ItemsInBag()
 			end
 			collect.Possible_Anima = Possible_Anima
 			collect.Possible_CatalogedResearch = Possible_CatalogedResearch
-			collect.PlayerReagentnumSlots = PlayerReagentnumSlots
 			collect.usedSlots = usedSlots
 			collect.totalSlots = totalSlots
 			collect.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
@@ -1859,7 +1811,6 @@ local function Collect_ALL_UNIVERSALQuestUpdate()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_UNIVERSALQuestUpdate()".."|r")
 	end
-	local UnitLevel = UnitLevel("PLAYER")
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DB_Levels[curGUID]
 	-- local IsOnQuest = false
@@ -2599,7 +2550,7 @@ local function O_otrisovka_FIRST()
 				BG:SetColorTexture(1, 1, 1, E.Octo_Globals.BGALPHA)
 				vivodCent = vivodCent..MailBox_Icon
 			end
-			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= 70 then
+			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= currentMaxLevel then
 				CL:SetFontObject(OctoFont10)
 				vivodCent = vivodCent.." "..CharInfo.UnitLevel
 			end
@@ -2624,12 +2575,16 @@ local function O_otrisovka_FIRST()
 				if CharInfo.WarMode and CharInfo.WarMode ~= false then
 					tooltip[#tooltip+1] = {CharInfo.WarMode and E.Octo_Globals.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or "", ""}
 				end
-				if CharInfo.UnitLevel ~= 70 and CharInfo.UnitXPPercent then
+				if CharInfo.UnitLevel ~= currentMaxLevel and CharInfo.UnitXPPercent then
 					tooltip[#tooltip+1] = {CharInfo.RaceLocal.." "..CharInfo.classColorHex..CharInfo.UnitLevel.."-го|r уровня "..CharInfo.classColorHex..CharInfo.UnitXPPercent.."%|r", " "} -- LEVEL_GAINED
 				else
 					tooltip[#tooltip+1] = {CharInfo.RaceLocal, " "}
 				end
-				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName.." "..CharInfo.className, " "}
+				if CharInfo.specName ~= 0 or CharInfo.specName ~= 0 then
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName.." "..CharInfo.className, " "}
+				-- else
+				-- 	tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.className.."|r", ""}
+				end
 				tooltip[#tooltip+1] = {" ", " "}
 			end
 			if CharInfo.BindLocation ~= 0 then
@@ -2647,22 +2602,11 @@ local function O_otrisovka_FIRST()
 			if CharInfo.maxNumQuestsCanAccept ~= 0 then
 				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(236664)..QUESTS_LABEL, CharInfo.classColorHex..(CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept).."|r"}
 			end
-			if CharInfo.PlayerReagentnumSlots == 0 then
-				tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(4549254)..E.Octo_Globals.Red_Color..L["No Reagent Bag"].."|r", " "}
-			end
+
 			if CharInfo.realTotalTime ~= 0 and CharInfo.realLevelTime ~= 0 then
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.classColorHex..(E.Octo_Func.SecondsToClock(CharInfo.realTotalTime)).."|r")}
 				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.classColorHex..(E.Octo_Func.SecondsToClock(CharInfo.realLevelTime)).."|r")}
-			end
-			if CharInfo.ItemsInBag[188152] == 0 or CharInfo.ItemsInBag[111820] == 0 then
-				tooltip[#tooltip+1] = {" ", " "}
-			end
-			if CharInfo.ItemsInBag[188152] == 0 then
-				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(188152)..E.Octo_Func.func_itemName(188152), E.Octo_Globals.NONE}
-			end
-			if CharInfo.ItemsInBag[111820] == 0 then
-				tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(111820)..E.Octo_Func.func_itemName(111820), E.Octo_Globals.NONE}
 			end
 			--
 			vivodLeft = Timer_Daily_Reset()
@@ -6637,7 +6581,7 @@ local function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_DF_Once_CatchingUp_count ~= E.Octo_Globals.DONE and CharInfo.UnitLevel >= 70 then
+				if CharInfo.Octopussy_DF_Once_CatchingUp_count ~= E.Octo_Globals.DONE and CharInfo.UnitLevel >= currentMaxLevel then
 					tooltip[#tooltip+1] = {E.Octo_Globals.Red_Color.."Нужно сделать квест: |r"..CharInfo.Octopussy_DF_Once_CatchingUp_name.." /way 60, 72", CharInfo.Octopussy_DF_Once_CatchingUp_count}
 				end
 				for k, v in pairs(E.Octo_Table.Octo_ProfessionsskillLine) do
@@ -6645,7 +6589,7 @@ local function O_otrisovka_FIRST()
 						if CharInfo.professions[k].icon and CharInfo.professions[k].name and CharInfo.professions[k].skillLevel and CharInfo.professions[k].maxSkillLevel then
 							tooltip[#tooltip+1] = {E.Octo_Func.Empty_Zero(E.Octo_Func.func_texturefromIcon(CharInfo.professions[k].icon))..E.Octo_Globals.Orange_Color..E.Octo_Func.Empty_Zero(CharInfo.professions[k].name).."|r "..CharInfo.professions[k].skillLevel.."/"..CharInfo.professions[k].maxSkillLevel}
 						end
-						if CharInfo.UnitLevel >= 70 then
+						if CharInfo.UnitLevel >= currentMaxLevel then
 							tooltip[#tooltip+1] = {"Сундуки", CharInfo.professions[k].chest.chest_count.."/"..CharInfo.professions[k].chest.questReq}
 							tooltip[#tooltip+1] = {"Лут", CharInfo.professions[k].drops.drops_count.."/"..CharInfo.professions[k].drops.questReq}
 							tooltip[#tooltip+1] = {"Квест", CharInfo.professions[k].profQuest.profQuest_count.."/"..CharInfo.professions[k].profQuest.questReq}
@@ -6665,7 +6609,7 @@ local function O_otrisovka_FIRST()
 						end
 					end
 				end
-				if CharInfo.UnitLevel >= 70 then
+				if CharInfo.UnitLevel >= currentMaxLevel then
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {" 10.2.0", ""}
 					if CharInfo.ItemsInBag[204710] >= 1 then
@@ -6862,7 +6806,6 @@ local function TotalMoneyCurServerOnShow()
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TotalMoneyCurServerOnShow".."|r")
 	end
 	local curGUID = UnitGUID("PLAYER")
-	local UnitLevel = UnitLevel("PLAYER")
 	local TotalMoneyCurServer = 0
 	for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 		if curServer == CharInfo.curServer and CharInfo.Money ~= 0 then
@@ -6876,7 +6819,6 @@ local function TotalMoneyAllServerOnShow()
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TotalMoneyAllServerOnShow".."|r")
 	end
 	local curGUID = UnitGUID("PLAYER")
-	local UnitLevel = UnitLevel("PLAYER")
 	local TotalMoneyAllServer = 0
 	for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 		TotalMoneyAllServer = TotalMoneyAllServer + CharInfo.Money
@@ -6913,7 +6855,7 @@ local function TotalTimeAllServer70OnShow()
 	end
 	local TotalTimeAllServer70 = 0
 	for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-		if CharInfo.UnitLevel == 70 then
+		if CharInfo.UnitLevel == currentMaxLevel then
 			TotalTimeAllServer70 = TotalTimeAllServer70 + CharInfo.realLevelTime
 		end
 	end
@@ -7566,7 +7508,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	--
 	-- if not dd then
-	-- local dd = lsfdd:CreateStretchButtonOriginal(Octo_ToDo_FIRST_Frame_Main_Frame, 160, 22)
+	-- local dd = LibSFDropDown:CreateStretchButtonOriginal(Octo_ToDo_FIRST_Frame_Main_Frame, 160, 22)
 	-- dd:SetPoint("BOTTOMLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPLEFT", 0, 2)
 	-- local function selectFunctionExpansion(menuButton)
 	-- Octo_ToDo_DB_Vars.config.ExpansionToShow = menuButton.value
@@ -7605,7 +7547,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	-- end)
 	-- end
 	if not dd_FIRST then
-		-- local dd_FIRST = lsfdd:CreateStretchButton(Octo_ToDo_FIRST_Frame_Main_Frame, 160, 22) -- CreateStretchButtonOriginal
+		-- local dd_FIRST = LibSFDropDown:CreateStretchButton(Octo_ToDo_FIRST_Frame_Main_Frame, 160, 22) -- CreateStretchButtonOriginal
 		local dd_FIRST = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "SecureActionButtonTemplate, BackDropTemplate")
 		local multiply = (1/3)*2
 		dd_FIRST:SetSize(E.Octo_Globals.curWidthTitle*multiply, E.Octo_Globals.curHeight*multiply)
@@ -7627,7 +7569,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		dd_FIRST.text:SetJustifyH("CENTER")
 		dd_FIRST.text:SetTextColor(1, 1, 1, 1)
 		dd_FIRST.text:SetText(classColorHexCurrent..L["Characters"].."|r")
-		lsfdd:SetMixin(dd_FIRST)
+		LibSFDropDown:SetMixin(dd_FIRST)
 		dd_FIRST:SetPoint("BOTTOMLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPLEFT", 0, 1)
 		dd_FIRST:ddSetDisplayMode(GlobalAddonName)
 		dd_FIRST:ddSetOpenMenuUp(true) -- NEW
@@ -7737,7 +7679,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				-- end
 				-- end
 				-- number = 1
-				-- btn_right1 = lsfdd:CreateStretchButtonOriginal(MAIN_scrollChild, 140, 22)
+				-- btn_right1 = LibSFDropDown:CreateStretchButtonOriginal(MAIN_scrollChild, 140, 22)
 				-- btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
 				-- btn_right1:SetText(E.Octo_Table.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow])
 				-- btn_right1:ddSetDisplayMode(GlobalAddonName)
@@ -7921,7 +7863,6 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Octo_ToDo_FIRST_AddDataToAltFrame".."|r")
 		end
 		local curGUID = UnitGUID("PLAYER")
-		local UnitLevel = UnitLevel("PLAYER")
 		local ShowOnlyCurrentRealm = Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm
 		local LevelToShow = Octo_ToDo_DB_Vars.config.LevelToShow
 		local LevelToShowMAX = Octo_ToDo_DB_Vars.config.LevelToShowMAX
@@ -8084,13 +8025,13 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	end
 end
 local function main_frame_toggle()
-	-- local promise = ltl:Items(E.Octo_Table.OctoTable_itemID_ALL)
+	-- local promise = LibThingsLoad:Items(E.Octo_Table.OctoTable_itemID_ALL)
 	-- promise:FailWithChecked(function(promise, id, loadType)
 	-- end)
 	--
-	local button = ldbi:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
+	local button = LibDBIcon:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
 	if not Octo_ToDo_FIRST_Frame_Main_Frame.promise then
-		Octo_ToDo_FIRST_Frame_Main_Frame.promise = ltl:Items(E.Octo_Table.OctoTable_Empty)
+		Octo_ToDo_FIRST_Frame_Main_Frame.promise = LibThingsLoad:Items(E.Octo_Table.OctoTable_Empty)
 		if E.Octo_Func.Octo_IsRetail() == true then
 			Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItems(E.Octo_Table.OctoTable_itemID_ALL)
 			Octo_ToDo_FIRST_Frame_Main_Frame.promise:AddItemsByKey(E.Octo_Table.OctoTable_itemID_Ignore_List)
@@ -8347,7 +8288,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		end
 		if Octo_ToDo_DB_Vars.config.security ~= "" then
 			local MinimapName = GlobalAddonName.."Octo_ToDo_FIRST_Minimap"
-			local ldb_icon = ldb:NewDataObject(MinimapName, {
+			local ldb_icon = LibDataBroker:NewDataObject(MinimapName, {
 					type = "data source",
 					text = MinimapName,
 					icon = AddonTexture_FIRST,
@@ -8400,8 +8341,8 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 			Octo_ToDo_DB_Vars.minimap_FIRST = Octo_ToDo_DB_Vars.minimap_FIRST or {}
 			Octo_ToDo_DB_Vars.minimap_FIRST.minimapPos = Octo_ToDo_DB_Vars.minimap_FIRST.minimapPos or 244
 			Octo_ToDo_DB_Vars.config.AddonVersion = tonumber(AddonVersion)
-			ldbi:Register(MinimapName, ldb_icon, Octo_ToDo_DB_Vars.minimap_FIRST)
-			ldbi:Show(MinimapName)
+			LibDBIcon:Register(MinimapName, ldb_icon, Octo_ToDo_DB_Vars.minimap_FIRST)
+			LibDBIcon:Show(MinimapName)
 		end
 	end
 	if (event == "PLAYER_LOGIN") and not InCombatLockdown() then

@@ -450,4 +450,3 @@ eventHookFrame:SetScript("OnEvent",
 			HookTooltip(ItemRefTooltip)
 		end
 end)
-

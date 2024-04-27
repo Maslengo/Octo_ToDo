@@ -1,4 +1,7 @@
-﻿utf8_lc_uc = {
+﻿local GlobalAddonName, E = ...
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+----------------------------------------------------------------
+E.Octo_Globals.utf8_lc_uc = {
 	["a"] = "A",
 	["b"] = "B",
 	["c"] = "C",
@@ -931,7 +934,8 @@
 	["𐑎"] = "𐐦",
 	["𐑏"] = "𐐧",
 }
-utf8_uc_lc = {
+
+E.Octo_Globals.utf8_uc_lc = {
 	["A"] = "a",
 	["B"] = "b",
 	["C"] = "c",

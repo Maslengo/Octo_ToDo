@@ -1,5 +1,5 @@
 local GlobalAddonName,  E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName,  "Title")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName,  "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 --Auto_Screenshot
 tinsert(E.Octo_Globals.modules,  function()

@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 local Enable_Module = true
 	if E.Octo_Globals.isElvUI == true and Enable_Module == true then

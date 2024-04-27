@@ -1,14 +1,14 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
-local AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
-local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonNotes = GetAddOnMetadata(GlobalAddonName, "Notes")
+local AddonAuthor = GetAddOnMetadata(GlobalAddonName, "Author")
+local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
 local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
 if PTR_IssueReporter then PTR_IssueReporter:Hide() end
 if WeeklyRewardExpirationWarningDialog then WeeklyRewardExpirationWarningDialog:Hide() end
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-local lsfdd = LibStub("LibSFDropDown-1.5")
+local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
 local SHOWADDON_SECOND = false
 ----------------------------------------------------------------
@@ -68,7 +68,7 @@ local AddonTexture_SECOND = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Ad
 -- 	edgeFile = "Interface/ChatFrame/ChatFrameBackground",
 -- 	tile = true, edgeSize = 1 * E.Octo_Globals.scale, tileSize = 5 * E.Octo_Globals.scale,
 -- }
--- lsfdd:CreateMenuStyle(GlobalAddonName, function(parent)
+-- LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 -- 	local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
 -- 	f:SetBackdrop(menuBackdrop)
 -- 	f:SetBackdropColor(.06, .06, .1, .9)
@@ -262,7 +262,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	end
 	--
 	-- if not dd_SECOND then
-	-- 	local dd_SECOND = lsfdd:CreateStretchButtonOriginal(Octo_ToDo_SECOND_Frame_Main_Frame, 160, 20) -- lsfdd:CreateButton
+	-- 	local dd_SECOND = LibSFDropDown:CreateStretchButtonOriginal(Octo_ToDo_SECOND_Frame_Main_Frame, 160, 20) -- LibSFDropDown:CreateButton
 	-- 	dd_SECOND:SetPoint("BOTTOMLEFT", Octo_ToDo_SECOND_Frame_Main_Frame, "TOPLEFT", 0, 2)
 	-- 	-- dd_SECOND:ddSetSelectedValue(Octo_ToDo_DB_Vars.config.AchievementToShow)
 	-- 	local function selectFunctionAchievementToShow(menuButton)
@@ -334,7 +334,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	-- 	end)
 	-- end
 	if not dd_SECOND then
-		-- local dd_SECOND = lsfdd:CreateStretchButton(Octo_ToDo_SECOND_Frame_Main_Frame, 160, 22) -- CreateStretchButtonOriginal
+		-- local dd_SECOND = LibSFDropDown:CreateStretchButton(Octo_ToDo_SECOND_Frame_Main_Frame, 160, 22) -- CreateStretchButtonOriginal
 		local dd_SECOND = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_SECOND_Frame_Main_Frame, "SecureActionButtonTemplate, BackDropTemplate")
 		local multiply = (1/3)*2
 		dd_SECOND:SetSize(E.Octo_Globals.curWidthTitleAchievement*multiply, E.Octo_Globals.curHeight*multiply)
@@ -357,7 +357,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		dd_SECOND.text:SetTextColor(1, 1, 1, 1)
 		dd_SECOND.text:SetText(classColorHexCurrent..ACHIEVEMENT_TITLE.."|r".." "..E.Octo_Globals.Green_Color..GetTotalAchievementPoints(false).."|r")
 		-- dd_SECOND.text:SetText(classColorHexCurrent..L["Characters"].."|r")
-		lsfdd:SetMixin(dd_SECOND)
+		LibSFDropDown:SetMixin(dd_SECOND)
 		dd_SECOND:SetPoint("BOTTOMLEFT", Octo_ToDo_SECOND_Frame_Main_Frame, "TOPLEFT", 0, 1)
 		dd_SECOND:ddSetDisplayMode(GlobalAddonName)
 		dd_SECOND:ddSetOpenMenuUp(true)  -- NEW

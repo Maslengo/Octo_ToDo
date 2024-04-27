@@ -1,12 +1,12 @@
 local GlobalAddonName, E =...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
-local AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
-local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonNotes = GetAddOnMetadata(GlobalAddonName, "Notes")
+local AddonAuthor = GetAddOnMetadata(GlobalAddonName, "Author")
+local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
 local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-local lsfdd = LibStub("LibSFDropDown-1.5")
+local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local SHOWADDON_THIRD = false
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local Button = nil
@@ -273,7 +273,7 @@ function Octo_ToDo_THIRD_CreateAltFrame()
 		end)
 	end
 	if not dd then
-		local dd = lsfdd:CreateStretchButtonOriginal(Octo_ToDo_THIRD_Frame_Main_Frame, 160, 22)
+		local dd = LibSFDropDown:CreateStretchButtonOriginal(Octo_ToDo_THIRD_Frame_Main_Frame, 160, 22)
 		dd:SetPoint("BOTTOMLEFT", Octo_ToDo_THIRD_Frame_Main_Frame, "TOPLEFT", 0, 2)
 		local function selectFunctionAchievementToShow(menuButton)
 			Octo_ToDo_DB_Vars.config.AchievementToShow = menuButton.value

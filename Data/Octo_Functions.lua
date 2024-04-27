@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
-E.Octo_Func = {}
+
 local inspectScantipFUNC = nil
 if not inspectScantipFUNC then
 	inspectScantipFUNC = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFUNC", nil, "GameTooltipTemplate")
@@ -12,7 +12,14 @@ local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+-- local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+local utf8charbytes = E.Octo_Func.utf8charbytes
+local utf8len = E.Octo_Func.utf8len
+local utf8sub = E.Octo_Func.utf8sub
+local utf8replace = E.Octo_Func.utf8replace
+local utf8upper = E.Octo_Func.utf8upper
+local utf8lower = E.Octo_Func.utf8lower
+local utf8reverse = E.Octo_Func.utf8reverse
 ----------------------------------------------------------------
 function E.Octo_Func.Octo_IsClassic()
 	local build = 1

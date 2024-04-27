@@ -46,4 +46,3 @@ StaticPopupDialogs["WowheadQuickLinkUrl"] = {
 	hideOnEscape = true,
 	preferredIndex = 3
 }
-

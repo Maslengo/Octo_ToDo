@@ -2,17 +2,38 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v71.3(10.2.7)(24.04.2024)
+## Version: v71.4(10.2.6)(27.04.2024)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
 ## SavedVariables: Octo_ToDo_DB_Other Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Artifact Octo_ToDo_DB_LegionArtifacts
 
-libs\embeds.xml
+
+
+libs\LibStub\LibStub.lua
+
+libs\AceLocale-3.0\lib.xml
+libs\CallbackHandler-1.0\lib.xml
+libs\LibDataBroker-1.1\lib.xml
+libs\LibCustomGlow-1.0\lib.xml
+libs\LibDBIcon-1.0\lib.xml
+libs\UTF8\lib.xml
+libs\LibSharedMedia-3.0\lib.xml
+libs\LibTranslit\lib.xml
+
+libs\LibThingsLoad\LibThingsLoad.xml
+libs\LibSFDropDown\LibSFDropDown.xml
+
+
+
+
 
 Octo_Localization.lua
 
+Data\1.lua
+Data\Octo_utf8.lua
+Data\Octo_utf8data.lua
+
 Data\Octo_Globals.lua
 
-Data\1.lua
 Data\OctoTable_Alphabet.lua
 Data\OctoTable_ArtifactData.lua
 Data\OctoTable_byteto.lua

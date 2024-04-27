@@ -1,11 +1,22 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
-local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
+-- local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+
+
+local utf8charbytes = E.Octo_Func.utf8charbytes
+local utf8len = E.Octo_Func.utf8len
+local utf8sub = E.Octo_Func.utf8sub
+local utf8replace = E.Octo_Func.utf8replace
+local utf8upper = E.Octo_Func.utf8upper
+local utf8lower = E.Octo_Func.utf8lower
+local utf8reverse = E.Octo_Func.utf8reverse
+
+
 ----------------------------------------------------------------
 local function texturefromIcon(self, size)
 	local show = true -- TYT
@@ -26,29 +37,8 @@ local function func_hex2rgb(self)
 	self = self:gsub("|cff", "")
 	return tonumber("0x"..self:sub(1, 2)), tonumber("0x"..self:sub(3, 4)), tonumber("0x"..self:sub(5, 6))
 end
-----------------------------------------------------------------
-local function func_Gradient(text, firstColor, secondColor)
-	local vivod = ""
-	local maslengo = ""
-	local total = utf8len(text)-1
-	local r1, g1, b1 = func_hex2rgb(firstColor)
-	local r2, g2, b2 = func_hex2rgb(secondColor)
-	local rdelta, gdelta, bdelta = (r2-r1)/total, (g2-g1)/total, (b2-b1)/total
-	local r3 = r1
-	local g3 = g1
-	local b3 = b1
-	for i = 1, total do
-		maslengo = maslengo..("|cff%02x%02x%02x%s|r"):format(math.floor(r3+.5), math.floor(g3+.5), math.floor(b3+.5), utf8sub(text, i, i))
-		r3 = r3 + rdelta
-		g3 = g3 + gdelta
-		b3 = b3 + bdelta
-	end
-	vivod = maslengo..secondColor..utf8sub(text, utf8len(text)).."|r"
-	return vivod
-end
 --------------------------------------------------------------------------------
-E.Octo_Globals = {}
-E.Octo_Globals.modules = {}
+
 E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/%s=%s"
 E.Octo_Globals.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
 E.Octo_Globals.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
@@ -235,6 +225,4 @@ E.Octo_Globals.Daily = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."
 -- E.Octo_Globals.Daily = texturefromIcon("Interface\\GossipFrame\\AvailableLegendaryQuestIcon")
 E.Octo_Globals.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Weekly.tga")
 -- E.Octo_Globals.Weekly = texturefromIcon("Interface\\GossipFrame\\DailyQuestIcon")
--- E.Octo_Globals.DailyReset = E.Octo_Globals.Class_DeathKnight_Color.." ".."Daily Reset".."|r"
-E.Octo_Globals.DailyReset = func_Gradient(" >>Daily Reset<< ", E.Octo_Globals.Class_DeathKnight_Color, E.Octo_Globals.Class_DemonHunter_Color)
 -- console -> export "art"

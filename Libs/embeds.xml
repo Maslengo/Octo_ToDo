@@ -1,6 +1,6 @@
 <UI>
 
-    <Script file="libs\LibStub\LibStub.lua"/>
+	<Script file="libs\LibStub\LibStub.lua"/>
 	<Include file="libs\UTF8\UTF8.xml"/>
 	<Include file="libs\LibSFDropDown\LibSFDropDown.xml"/>
 	<Include file="libs\AceLocale-3.0\AceLocale-3.0.xml"/>
@@ -10,6 +10,6 @@
 	<Script file="libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua"/>
 	<Include file="libs\LibCustomGlow-1.0\LibCustomGlow-1.0.xml"/>
 	<Include file="libs\LibThingsLoad\LibThingsLoad.xml"/>
-    <Include file="libs\LibTranslit-1.0\LibTranslit-1.0.xml"/>
+	<Include file="libs\LibTranslit-1.0\LibTranslit-1.0.xml"/>
 
 </UI>
