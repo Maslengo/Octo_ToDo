@@ -7999,15 +7999,17 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			for i = 1, #OctoTable_func_otrisovka_FIRST do
 				local TEXTLEFT = Octo_ToDo_FIRST_Frame_Main_Frame["TextLeft"..i]
 				local TEXTCENT = Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i]
-				local BG = Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]
-				TEXTCENT.tooltip = {}
-				local vivodCent = " "
-				local vivodLeft = " "
-				vivodCent, vivodLeft = OctoTable_func_otrisovka_FIRST[i](CharInfo, TEXTCENT.tooltip, TEXTCENT.CL, BG)
-				TEXTLEFT:SetText(vivodLeft or "leftText")
-				TEXTCENT.CL:SetText(vivodCent or "centText")
-				if #TEXTCENT.tooltip == 0 or #TEXTCENT.tooltip[1] == 0 then
-					TEXTCENT.tooltip = nil
+				if TEXTLEFT and TEXTCENT then
+					local BG = Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]
+					TEXTCENT.tooltip = {}
+					local vivodCent = " "
+					local vivodLeft = " "
+					vivodCent, vivodLeft = OctoTable_func_otrisovka_FIRST[i](CharInfo, TEXTCENT.tooltip, TEXTCENT.CL, BG)
+					TEXTLEFT:SetText(vivodLeft or "leftText")
+					TEXTCENT.CL:SetText(vivodCent or "centText")
+					if #TEXTCENT.tooltip == 0 or #TEXTCENT.tooltip[1] == 0 then
+						TEXTCENT.tooltip = nil
+					end
 				end
 			end
 		end
