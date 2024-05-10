@@ -168,6 +168,7 @@ if L then
 	L["The Big Dig"] = true
 	L["Azerothian Archives"] = true
 	L["Daily Reset"] = true
+	L["Blooming Dreamseeds"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -223,6 +224,7 @@ if L then
 	L["Weekend Event"] = "Событие выходного дня"
 	L["PLAYER_DIFFICULTY_TIMEWALKER"] = PLAYER_DIFFICULTY_TIMEWALKER
 	L["A Worthy Ally: Loamm Niffen"] = "Достойный союзник: лоаммские ниффы"
+	L["Blooming Dreamseeds"] = "Цветение во сне"
 	L["Sniffenseeking"] = "Нюхорысканье"
 	L["Sniffenseeking (items)"] = "Нюхорысканье ("..ITEMS..")"
 	L["AutoSellGrey"] = "Автопродажа серого хлама"

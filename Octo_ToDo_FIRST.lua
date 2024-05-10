@@ -4541,15 +4541,8 @@ local function O_otrisovka_FIRST()
 					end
 					return vivodCent, vivodLeft
 			end)
-			-- tinsert(OctoTable_func_otrisovka_FIRST,
-			-- 	function(CharInfo, tooltip, CL, BG)
-			-- 		local vivodCent, vivodLeft = "", ""
-			-- 		vivodLeft = E.Octo_Globals.Weekly..E.Octo_Globals.WOW_Artifact_Color.."Seeds |r"
-			-- 		if CharInfo.Octopussy_DF_Weekly_EmeraldDreamSeeds_count ~= E.Octo_Globals.NONE then
-			-- 			vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamSeeds_count
-			-- 		end
-			-- 		return vivodCent, vivodLeft
-			-- end)
+		end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom_Weekly == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -8197,8 +8190,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire_Weekly == nil then Octo_ToDo_DB_Vars.config.ResearchersUnderFire_Weekly = false end
 		-- if Octo_ToDo_DB_Vars.config.TheBigDig == nil then Octo_ToDo_DB_Vars.config.TheBigDig = true end
 		-- if Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION == nil then Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION = true end
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom = true end
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens = true end -- REPUTATION
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom = false end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom_Weekly == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom_Weekly = false end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens = false end -- REPUTATION
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_WB == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_WB = false end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds = false end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Crests == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Crests = false end
