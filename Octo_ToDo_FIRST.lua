@@ -4400,15 +4400,17 @@ local function O_otrisovka_FIRST()
 						-- vivodCent = E.Octo_Globals.Purple_Color..CharInfo.CurrentKey.."|r"
 						vivodCent = E.Octo_Func.RIO_Color(CharInfo.RIO_Score_S3)..CharInfo.CurrentKey.."|r"
 					end
-					if CharInfo.ItemsInBag[208821] ~= 0 or CharInfo.ItemsInBag[210436] ~= 0 then
+					-- 217409 за что покупается
+					-- 218114 ДЫРОКОЛ
+					if CharInfo.ItemsInBag[217409] ~= 0 or CharInfo.ItemsInBag[218114] ~= 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
-					if CharInfo.ItemsInBag[208821] ~= 0 then
-						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(208821)..E.Octo_Globals.LightGray_Color..E.Octo_Func.func_itemName_NOCOLOR(208821).."|r", CharInfo.ItemsInBag[208821]}
+					if CharInfo.ItemsInBag[217409] ~= 0 then
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(217409)..E.Octo_Globals.LightGray_Color..E.Octo_Func.func_itemName_NOCOLOR(217409).."|r", CharInfo.ItemsInBag[217409]}
 						vivodCent = vivodCent..E.Octo_Globals.LightGray_Color.."+".."|r"
 					end
-					if CharInfo.ItemsInBag[210436] ~= 0 then --Дырокол
-						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(210436)..E.Octo_Globals.Orange_Color..E.Octo_Func.func_itemName_NOCOLOR(210436).."|r", CharInfo.ItemsInBag[210436]}
+					if CharInfo.ItemsInBag[218114] ~= 0 then --Дырокол
+						tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(218114)..E.Octo_Globals.Orange_Color..E.Octo_Func.func_itemName_NOCOLOR(218114).."|r", CharInfo.ItemsInBag[218114]}
 						vivodCent = vivodCent..E.Octo_Globals.Orange_Color.."+".."|r"
 					end
 					if CharInfo.HasAvailableRewards then
@@ -4871,15 +4873,6 @@ local function O_otrisovka_FIRST()
 					vivodLeft = E.Octo_Globals.Once.."Side quests"
 					return vivodCent, vivodLeft
 			end)
-			-- tinsert(OctoTable_func_otrisovka_FIRST, -- Искры жизни
-				-- function(CharInfo, tooltip, CL, BG)
-					-- local vivodCent, vivodLeft = "", ""
-					-- vivodLeft = E.Octo_Globals.Weekly..L["Sparks of Life"]
-					-- if CharInfo.Octopussy_DF_Weekly_SparksofLife_count ~= E.Octo_Globals.NONE then
-						-- vivodCent = CharInfo.Octopussy_DF_Weekly_SparksofLife_count
-					-- end
-					-- return vivodCent, vivodLeft
-			-- end)
 		end
 		if Octo_ToDo_DB_Vars.config.CatalystCharges == true then
 			tinsert(OctoTable_func_otrisovka_FIRST, -- season2 2533
