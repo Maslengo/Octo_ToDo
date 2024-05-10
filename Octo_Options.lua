@@ -267,7 +267,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 			Create_CheckButton(MAIN_scrollChild, self, 2, POS_CENTER, "AidingtheAccord", E.Octo_Globals.Weekly..L["Aiding the Accord"])
 			Create_CheckButton(MAIN_scrollChild, self, 3, POS_CENTER, "CommunityFeast", E.Octo_Globals.Weekly..L["Community Feast"])
 			Create_CheckButton(MAIN_scrollChild, self, 4, POS_CENTER, "ResearchersUnderFire", E.Octo_Globals.Weekly..L["Researchers Under Fire"]..E.Octo_Globals.Gray_Color.." (10.1.0)|r")
-			Create_CheckButton(MAIN_scrollChild, self, 4, POS_CENTER, "ResearchersUnderFire_Weekly", E.Octo_Globals.Weekly..L["Researchers Under Fire"].." (Weekly)"..E.Octo_Globals.Gray_Color.." (10.1.0)|r")
+			Create_CheckButton(MAIN_scrollChild, self, 5, POS_CENTER, "ResearchersUnderFire_Weekly", E.Octo_Globals.Weekly..L["Researchers Under Fire"].." (Weekly)"..E.Octo_Globals.Gray_Color.." (10.1.0)|r")
 
 
 
