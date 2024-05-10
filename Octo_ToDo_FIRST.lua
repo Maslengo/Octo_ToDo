@@ -4523,6 +4523,17 @@ local function O_otrisovka_FIRST()
 					end
 					return vivodCent, vivodLeft
 			end)
+		end
+		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom_Weekly == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Globals.Weekly..E.Octo_Func.func_questName(78821)
+					if CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count
+					end
+					return vivodCent, vivodLeft
+			end)
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4538,17 +4549,6 @@ local function O_otrisovka_FIRST()
 					vivodLeft = E.Octo_Globals.Once..E.Octo_Globals.WOW_Artifact_Color.."spark |r"..E.Octo_Func.func_questName(78381)
 					if CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom_Weekly == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Globals.Weekly..E.Octo_Func.func_questName(78821)
-					if CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count ~= E.Octo_Globals.NONE then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count
 					end
 					return vivodCent, vivodLeft
 			end)
