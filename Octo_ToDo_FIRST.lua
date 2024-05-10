@@ -648,9 +648,6 @@ local function CreateFrameUsableItems_OnLeave(self)
 	if self.itemID == 140192 and (C_QuestLog.IsQuestFlaggedCompleted(44184) == false and C_QuestLog.IsQuestFlaggedCompleted(44663) == false) then
 		self.icon:SetVertexColor(1, .5, .5, .3)
 	end
-	if self.itemID == 210494 and (C_QuestLog.IsQuestFlaggedCompleted(78429) == false) then
-		self.icon:SetVertexColor(1, .5, .5, .3)
-	end
 end
 local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -677,9 +674,6 @@ local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 			self.icon:SetVertexColor(1, .5, .5, .3)
 		end
 		if self.itemID == 140192 and (C_QuestLog.IsQuestFlaggedCompleted(44184) == false and C_QuestLog.IsQuestFlaggedCompleted(44663) == false) then
-			self.icon:SetVertexColor(1, .5, .5, .3)
-		end
-		if self.itemID == 210494 and (C_QuestLog.IsQuestFlaggedCompleted(78429) == false) then
 			self.icon:SetVertexColor(1, .5, .5, .3)
 		end
 	elseif event == "PLAYER_REGEN_DISABLED" then
@@ -4894,11 +4888,12 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST, -- season2 2533
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					if CharInfo.CurrencyID[2796] ~= 0 then
-						-- vivodCent = E.Octo_Globals.Orange_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2796]).."|r"
-						vivodCent = E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2796])
+					-- СТАРЫЙ if CharInfo.CurrencyID[2796] ~= 0 then
+					if CharInfo.CurrencyID[2912] ~= 0 then
+						-- vivodCent = E.Octo_Globals.Orange_Color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2912]).."|r"
+						vivodCent = E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2912])
 					end
-					vivodLeft = E.Octo_Func.func_currencyicon(2796)..E.Octo_Func.func_currencyName(2796)
+					vivodLeft = E.Octo_Func.func_currencyicon(2912)..E.Octo_Func.func_currencyName(2912)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4920,7 +4915,7 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2806--2706
-					local text = "LFR, M+2/+5"
+					local text = "LFR, Heroic dung"
 					local color = E.Octo_Globals.WOW_Uncommon_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
 					tooltip[#tooltip+1] = {" ", color..text.."|r"}
@@ -4947,7 +4942,7 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2807--2707
-					local text = "Normal, M+6/+10"
+					local text = "Normal, M+0"
 					local color = E.Octo_Globals.WOW_Rare_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
 					tooltip[#tooltip+1] = {" ", color..text.."|r"}
@@ -4974,7 +4969,7 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2809--2708
-					local text = "Heroic, M+11/+15"
+					local text = "Heroic, M+2/+5"
 					local color = E.Octo_Globals.WOW_Epic_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
 					tooltip[#tooltip+1] = {" ", color..text.."|r"}
@@ -5001,7 +4996,7 @@ local function O_otrisovka_FIRST()
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
 					local currencyID = 2812--2709
-					local text = "Mythic, M+16"
+					local text = "Mythic, M+6"
 					local color = E.Octo_Globals.WOW_Legendary_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
 					tooltip[#tooltip+1] = {" ", color..text.."|r"}
@@ -5167,6 +5162,18 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
+
+
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_texturefromIcon(213089)..E.Octo_Func.func_itemName(213089)
+					if CharInfo.ItemsInBag[213089] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[213089]
+					end
+					return vivodCent, vivodLeft
+			end)
+
 	end
 	-- События
 	if Octo_ToDo_DB_Vars.config.Event == true then
@@ -5791,7 +5798,7 @@ local function O_otrisovka_FIRST()
 					-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2819)..E.Octo_Func.func_currencyName(2819), CharInfo.CurrencyID_Total[2819]} -- HIDDEN CURRENCY
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					-- tooltip[#tooltip+1] = {" ", E.Octo_Func.func_Gradient("»".."Впадлу доделывать".."«", E.Octo_Globals.Yellow_Color, E.Octo_Globals.Red_Color)}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2796)..E.Octo_Func.func_currencyName(2796), CharInfo.CurrencyID_Total[2796]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2912)..E.Octo_Func.func_currencyName(2912), CharInfo.CurrencyID_Total[2912]}
 					local data2706 = C_CurrencyInfo.GetCurrencyInfo(2706)
 					if data2706 then
 						local maxQuantity = data2706.maxQuantity
@@ -6790,13 +6797,26 @@ local function O_otrisovka_FIRST()
 				vivodLeft = "Last Update"
 				if CharInfo.loginDay ~= 0 and CharInfo.loginDay ~= 0 then
 					CL:SetFontObject(OctoFont10)
-					vivodCent = CharInfo.loginHour.."\n"..CharInfo.loginDay
+					vivodCent = CharInfo.loginDay
 					if CharInfo.needResetWeekly == true then
 						vivodCent = E.Octo_Globals.Gray_Color..vivodCent.."|r"
 					elseif CharInfo.needResetDaily == true then
 						vivodCent = E.Octo_Globals.Red_Color..vivodCent.."|r"
 					end
+					tooltip[#tooltip+1] = {CharInfo.loginHour}
 				end
+
+
+
+
+
+
+
+
+
+
+
+
 				return vivodCent, vivodLeft
 		end)
 	end
@@ -7742,7 +7762,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				CreateFrameUsableItems(110560, 1041860, 1, Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
 				CreateFrameUsableItems(6948, 134414, 1, Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 				CreateFrameUsableItems(140192, 1444943, 1, Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-				CreateFrameUsableItems(210494, 1045108, 1, Xpos*11+Ypos*1, Ypos*12, 0, .43, .86, 6603) -- Раскаленная сущность
 				if classFilename == "DRUID" then
 					CreateFrameUsableSpells(193753, select(3, GetSpellInfo(193753)), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Сноходец
 				end
@@ -7763,7 +7782,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				CreateFrameUsableItems(110560, 1041860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
 				CreateFrameUsableItems(6948, 134414, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603) -- Камень возвращения в Даларан
 				CreateFrameUsableItems(140192, 1444943, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-				CreateFrameUsableItems(210494, 1045108, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 6603) -- Раскаленная сущность
 				if classFilename == "DRUID" then
 					CreateFrameUsableSpells(193753, select(3, GetSpellInfo(193753)), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Сноходец
 				end

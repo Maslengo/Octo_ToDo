@@ -573,6 +573,7 @@ E.Octo_Table.OctoTable_currencyID_ALL = {
 	2809,
 	2812,
 
+	2912, -- Каталист
 
 
 
