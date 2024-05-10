@@ -4919,7 +4919,7 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					local currencyID = 2706
+					local currencyID = 2806--2706
 					local text = "LFR, M+2/+5"
 					local color = E.Octo_Globals.WOW_Uncommon_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
@@ -4946,7 +4946,7 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					local currencyID = 2707
+					local currencyID = 2807--2707
 					local text = "Normal, M+6/+10"
 					local color = E.Octo_Globals.WOW_Rare_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
@@ -4973,7 +4973,7 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					local currencyID = 2708
+					local currencyID = 2809--2708
 					local text = "Heroic, M+11/+15"
 					local color = E.Octo_Globals.WOW_Epic_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
@@ -5000,7 +5000,7 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					local currencyID = 2709
+					local currencyID = 2812--2709
 					local text = "Mythic, M+16"
 					local color = E.Octo_Globals.WOW_Legendary_Color
 					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"

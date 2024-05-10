@@ -566,6 +566,16 @@ E.Octo_Table.OctoTable_currencyID_ALL = {
 	2420,
 	2588,
 	2594,
+
+
+	2806,
+	2807,
+	2809,
+	2812,
+
+
+
+
 }
 E.Octo_Table.OctoTable_currency_Classic = {
 }
