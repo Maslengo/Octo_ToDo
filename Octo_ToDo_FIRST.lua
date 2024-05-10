@@ -2311,21 +2311,21 @@ local function Timer_DF_ResearchersUnderFire()
 	end
 	return Timer_DF_ResearchersUnderFire
 end
-local function Timer_DF_TheBigDig()
-	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_TheBigDig".."|r")
-	end
-	local TIMER = 1683804640
-	local interval = (1*60)*60 -- каждый час
-	local duration = (10*60) -- 10 минут
-	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_DF_TheBigDig = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
-	if nextEventIn > (interval - duration) then
-		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_TheBigDig = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
-	end
-	return Timer_DF_TheBigDig
-end
+-- local function Timer_DF_TheBigDig()
+-- 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+-- 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_TheBigDig".."|r")
+-- 	end
+-- 	local TIMER = 1683804640
+-- 	local interval = (1*60)*60 -- каждый час
+-- 	local duration = (10*60) -- 10 минут
+-- 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
+-- 	local Timer_DF_TheBigDig = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+-- 	if nextEventIn > (interval - duration) then
+-- 		nextEventIn = nextEventIn - (interval - duration)
+-- 		Timer_DF_TheBigDig = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+-- 	end
+-- 	return Timer_DF_TheBigDig
+-- end
 local function Timer_DF_TimeRift()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_TimeRift".."|r")
@@ -4460,6 +4460,9 @@ local function O_otrisovka_FIRST()
 					end
 					return vivodCent, vivodLeft
 			end)
+		end
+		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire_Weekly == true then
+
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
@@ -4469,43 +4472,44 @@ local function O_otrisovka_FIRST()
 					end
 					return vivodCent, vivodLeft
 			end)
+
 		end
-		if Octo_ToDo_DB_Vars.config.TheBigDig == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Globals.Weekly..E.Octo_Func.func_texturefromIcon(134435)..Timer_DF_TheBigDig()..L["The Big Dig"]
-					if CharInfo.Octopussy_DF_Weekly_TheBigDig_count ~= E.Octo_Globals.NONE then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_TheBigDig_count
-					end
-					tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..L["Storyline"].."|r".." ("..L["Azerothian Archives"]..")", CharInfo.Octopussy_DF_Once_AzerothianArchivesStorylines_count}
-					BG:SetColorTexture(196/255, 30/255, 58/255, E.Octo_Globals.BGALPHA)
-					return vivodCent, vivodLeft
-			end)
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_currencyicon(2657)..E.Octo_Func.func_currencyName(2657)
-					if CharInfo.CurrencyID_Total[2657] ~= "" and CharInfo.CurrencyID_Total[2657] ~= 0 then
-						vivodCent = CharInfo.CurrencyID_Total[2657]
-					end
-					BG:SetColorTexture(196/255, 30/255, 58/255, E.Octo_Globals.BGALPHA)
-					return vivodCent, vivodLeft
-			end)
-			if Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION == true then
-				tinsert(OctoTable_func_otrisovka_FIRST,
-					function(CharInfo, tooltip, CL, BG)
-						local vivodCent, vivodLeft = "", ""
-						vivodLeft = E.Octo_Func.func_reputationName(2615)
-						if CharInfo.reputationID[2615] ~= "" and CharInfo.reputationID[2615] ~= 0 and CharInfo.reputationID[2615] ~= E.Octo_Globals.DONE and CharInfo.reputationID[2615] ~= "|cffFFF3710/10500 (1/5)|r" then
-							vivodCent = CharInfo.reputationID[2615]
-						end
-						-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2615), CharInfo.reputationID[2615]}
-						BG:SetColorTexture(196/255, 30/255, 58/255, E.Octo_Globals.BGALPHA)
-						return vivodCent, vivodLeft
-				end)
-			end
-		end
+		-- if Octo_ToDo_DB_Vars.config.TheBigDig == true then
+		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 		function(CharInfo, tooltip, CL, BG)
+		-- 			local vivodCent, vivodLeft = "", ""
+		-- 			vivodLeft = E.Octo_Globals.Weekly..E.Octo_Func.func_texturefromIcon(134435)..Timer_DF_TheBigDig()..L["The Big Dig"]
+		-- 			if CharInfo.Octopussy_DF_Weekly_TheBigDig_count ~= E.Octo_Globals.NONE then
+		-- 				vivodCent = CharInfo.Octopussy_DF_Weekly_TheBigDig_count
+		-- 			end
+		-- 			tooltip[#tooltip+1] = {E.Octo_Globals.Yellow_Color..L["Storyline"].."|r".." ("..L["Azerothian Archives"]..")", CharInfo.Octopussy_DF_Once_AzerothianArchivesStorylines_count}
+		-- 			BG:SetColorTexture(196/255, 30/255, 58/255, E.Octo_Globals.BGALPHA)
+		-- 			return vivodCent, vivodLeft
+		-- 	end)
+		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 		function(CharInfo, tooltip, CL, BG)
+		-- 			local vivodCent, vivodLeft = "", ""
+		-- 			vivodLeft = E.Octo_Func.func_currencyicon(2657)..E.Octo_Func.func_currencyName(2657)
+		-- 			if CharInfo.CurrencyID_Total[2657] ~= "" and CharInfo.CurrencyID_Total[2657] ~= 0 then
+		-- 				vivodCent = CharInfo.CurrencyID_Total[2657]
+		-- 			end
+		-- 			BG:SetColorTexture(196/255, 30/255, 58/255, E.Octo_Globals.BGALPHA)
+		-- 			return vivodCent, vivodLeft
+		-- 	end)
+		-- 	if Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION == true then
+		-- 		tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 			function(CharInfo, tooltip, CL, BG)
+		-- 				local vivodCent, vivodLeft = "", ""
+		-- 				vivodLeft = E.Octo_Func.func_reputationName(2615)
+		-- 				if CharInfo.reputationID[2615] ~= "" and CharInfo.reputationID[2615] ~= 0 and CharInfo.reputationID[2615] ~= E.Octo_Globals.DONE and CharInfo.reputationID[2615] ~= "|cffFFF3710/10500 (1/5)|r" then
+		-- 					vivodCent = CharInfo.reputationID[2615]
+		-- 				end
+		-- 				-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2615), CharInfo.reputationID[2615]}
+		-- 				BG:SetColorTexture(196/255, 30/255, 58/255, E.Octo_Globals.BGALPHA)
+		-- 				return vivodCent, vivodLeft
+		-- 		end)
+		-- 	end
+		-- end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -8190,8 +8194,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.AidingtheAccord == nil then Octo_ToDo_DB_Vars.config.AidingtheAccord = false end
 		if Octo_ToDo_DB_Vars.config.CommunityFeast == nil then Octo_ToDo_DB_Vars.config.CommunityFeast = false end
 		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire == nil then Octo_ToDo_DB_Vars.config.ResearchersUnderFire = false end
-		if Octo_ToDo_DB_Vars.config.TheBigDig == nil then Octo_ToDo_DB_Vars.config.TheBigDig = true end
-		if Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION == nil then Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION = true end
+		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire_Weekly == nil then Octo_ToDo_DB_Vars.config.ResearchersUnderFire_Weekly = false end
+		-- if Octo_ToDo_DB_Vars.config.TheBigDig == nil then Octo_ToDo_DB_Vars.config.TheBigDig = true end
+		-- if Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION == nil then Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens = true end -- REPUTATION
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_WB == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_WB = false end
