@@ -23,7 +23,6 @@ local Enable_Module = true
 		local enabled = E.db.Octo_ElvUI_DEV.HideObjectiveTracker
 		if enabled then
 			ObjectiveTrackerFrame:Hide()
-
 			else
 			--print("ObjectiveTrackerFrame |cff4FFF79ВИДНЫ|r")
 			-- ObjectiveTrackerFrame:Show()
@@ -102,13 +101,11 @@ local Enable_Module = true
 		end
 	----------------------------------------------------------------------------------------------------------------------------------
 	----------------------------------------------------------------------------------------------------------------------------------
-
 		local enabled = E.db.Octo_ElvUI_DEV.RaidBossEmoteFrame
 		if enabled then
 		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_EMOTE")
 		RaidBossEmoteFrame:UnregisterEvent("RAID_BOSS_WHISPER")
 		RaidBossEmoteFrame:UnregisterEvent("CLEAR_BOSS_EMOTES")
-
 		RaidBossEmoteFrame:UnregisterAllEvents()
 		RaidBossEmoteFrame:Hide()
 		RaidBossEmoteFrameSlot1:Hide()
@@ -126,7 +123,6 @@ local Enable_Module = true
 		-- RaidBossEmoteFrame:RegisterEvent("RAID_BOSS_EMOTE")
 		-- RaidBossEmoteFrame:RegisterEvent("RAID_BOSS_WHISPER")
 		-- RaidBossEmoteFrame:RegisterEvent("CLEAR_BOSS_EMOTES")
-
 		-- RaidBossEmoteFrame:RegisterAllEvents()
 		-- RaidBossEmoteFrame:Show()
 		-- RaidBossEmoteFrameSlot1:Show()
@@ -140,9 +136,7 @@ local Enable_Module = true
 		-- ObjectiveTrackerBonusBannerFrame.BonusLabel:Show()
 		-- ObjectiveTrackerBonusBannerFrame.Title:Show()
 		-- ObjectiveTrackerBonusBannerFrame.TitleFlash:Show()
-
 		end
-
 	----------------------------------------------------------------------------------------------------------------------------------
 	----------------------------------------------------------------------------------------------------------------------------------
 		local enabled = E.db.Octo_ElvUI_DEV.CinematicCanceler

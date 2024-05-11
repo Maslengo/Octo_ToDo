@@ -30,7 +30,7 @@ if L then
 	L["Necrolord"] = true
 	L["Night Fae"] = true
 	L["Other"] = true
-	L["Researchers Under Fire"] = true
+	-- L["Researchers Under Fire"] = true
 	L["RESET"] = RESET
 	L["Siege on Dragonbane Keep"] = true
 	L["The Forbidden Reach"] = true
@@ -56,7 +56,7 @@ if L then
 	L["PvP"] = true
 	L["Weekend Event"] = true
 	L["PLAYER_DIFFICULTY_TIMEWALKER"] = PLAYER_DIFFICULTY_TIMEWALKER
-	L["A Worthy Ally: Loamm Niffen"] = true
+	-- L["A Worthy Ally: Loamm Niffen"] = true
 	L["Sniffenseeking"] = true
 	L["Sniffenseeking (items)"] = true
 	L["Warmode"] = PVP_LABEL_WAR_MODE
@@ -89,7 +89,7 @@ if L then
 	L["The Veiled Ossuary"] = true
 	L["Dilated Time Capsule"] = true
 	L["Dreamsurge Chrysalis"] = true
-	L["Dreamsurge Coalescence"] = true
+	-- L["Dreamsurge Coalescence"] = true
 	L["Charred Elemental Remains"] = true
 	L["Encapsulated Destiny"] = true
 	L["Dreamsurge Investigation"] = true
@@ -133,9 +133,9 @@ if L then
 	L["Seeing Red"] = true
 	L["Ulduar"] = true
 	L["Paragon"] = true
-	L["Superbloom"] = true
+	-- L["Superbloom"] = true
 	L["Dreamseeds"] = true
-	L["Dream Wardens"] = true
+	-- L["Dream Wardens"] = true
 	L["Crests"] = true
 	L["Sparks"] = true
 	L["Flightstones"] = true
@@ -168,7 +168,8 @@ if L then
 	L["The Big Dig"] = true
 	L["Azerothian Archives"] = true
 	L["Daily Reset"] = true
-	L["Blooming Dreamseeds"] = true
+	-- L["Blooming Dreamseeds"] = true
+	L["Was online"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -197,7 +198,7 @@ if L then
 	L["Necrolord"] = "Некролорды"
 	L["Night Fae"] = "Ночной народец"
 	L["Other"] = "Другое"
-	L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
+	-- L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
 	L["RESET"] = "Сброс всех данных аддона"
 	L["Siege on Dragonbane Keep"] = "Осада Драконьей Погибели"
 	L["The Forbidden Reach"] = "Запретный край" -- "Запретный край (10.0.7)"
@@ -223,8 +224,8 @@ if L then
 	L["PvP"] = "PvP"
 	L["Weekend Event"] = "Событие выходного дня"
 	L["PLAYER_DIFFICULTY_TIMEWALKER"] = PLAYER_DIFFICULTY_TIMEWALKER
-	L["A Worthy Ally: Loamm Niffen"] = "Достойный союзник: лоаммские ниффы"
-	L["Blooming Dreamseeds"] = "Цветение во сне"
+	-- L["A Worthy Ally: Loamm Niffen"] = "Достойный союзник: лоаммские ниффы"
+	-- L["Blooming Dreamseeds"] = "Цветение во сне"
 	L["Sniffenseeking"] = "Нюхорысканье"
 	L["Sniffenseeking (items)"] = "Нюхорысканье ("..ITEMS..")"
 	L["AutoSellGrey"] = "Автопродажа серого хлама"
@@ -253,7 +254,7 @@ if L then
 	L["The Veiled Ossuary"] = "Тайный склеп"
 	L["Dilated Time Capsule"] = "Капсула растянутого времени"
 	L["Dreamsurge Chrysalis"] = "Хризалида Дикого Сна"
-	L["Dreamsurge Coalescence"] = "Слияние Прилива Снов"
+	-- L["Dreamsurge Coalescence"] = "Слияние Прилива Снов"
 	L["Charred Elemental Remains"] = "Обугленные останки элементалей"
 	L["Encapsulated Destiny"] = "Инкапсулированная судьба"
 	L["Dreamsurge Investigation"] = "Исследование Прилива Снов"
@@ -297,9 +298,9 @@ if L then
 	L["Seeing Red"] = "Ярость или стыд?"
 	L["Ulduar"] = "Ульдуар"
 	L["Paragon"] = "Парагон"
-	L["Superbloom"] = "Цветочный бум"
+	-- L["Superbloom"] = "Цветочный бум"
 	L["Dreamseeds"] = "Семена"
-	L["Dream Wardens"] = "Стражи Сна"
+	-- L["Dream Wardens"] = "Стражи Сна"
 	L["Crests"] = "Гребни"
 	L["Sparks"] = "Искры"
 	L["Flightstones"] = "Драконьи камни"
@@ -328,11 +329,9 @@ if L then
 	L["Can Earned"] = "Можно получить"
 	L["Gift"] = "Подарок"
 	L["Gifts"] = "Подарки"
-
 	L["The Gilneas Reclamation"] = "Возвращение Гилнеаса"
 	L["The Big Dig"] = "Большие раскопки"
 	L["Azerothian Archives"] = "Азеротские архивы"
 	L["Daily Reset"] = "Ежедневный сброс"
-
-
+	L["Was online"] = "Был в сети"
 end

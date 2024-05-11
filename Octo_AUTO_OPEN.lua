@@ -47,4 +47,3 @@ Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 				end
 		end)
 end)
-

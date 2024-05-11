@@ -81,4 +81,3 @@ tinsert(E.Octo_Globals.modules, function()
 			Octo_AutoTurnInFrame_EventFrame:SetScript("OnEvent", OnEvent) -- for function
 		end
 end)
-

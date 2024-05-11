@@ -577,6 +577,11 @@ E.Octo_Table.OctoTable_currencyID_ALL = {
 
 
 
+
+	2778, -- Bronze
+
+
+
 }
 E.Octo_Table.OctoTable_currency_Classic = {
 }

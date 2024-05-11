@@ -28,7 +28,6 @@ tinsert(E.Octo_Globals.modules, function()
 						local First_Option = {
 							[210718] = true,
 							[207779] = true,
-
 							[168432] = true,
 							[149626] = true,
 							[167298] = true,
@@ -72,8 +71,6 @@ tinsert(E.Octo_Globals.modules, function()
 							[199198] = true,
 							[56592] = true, -- DONE ДАГЕРА
 							[188246] = true,
-
-
 							[206941] = true,
 						}
 						local Second_Option = {
@@ -153,13 +150,11 @@ tinsert(E.Octo_Globals.modules, function()
 											v.name:find("Сайаад") or
 											v.name:find("Терон Кровожад") or
 											v.name:find("Командир") or
-
 											-- v.name:find("Совух") or
 											-- v.name:find("Кажется, неплохо") or
 											-- v.name:find("Сон") or
 											-- v.name:find("Судьба") or
 											-- v.name:find("Фрейя") or
-
 											-- v.name:find("Тирай") or
 											-- v.name:find("Он'ир") or
 											-- v.name:find("Нокхуд") or

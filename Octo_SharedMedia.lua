@@ -51,13 +51,8 @@ LibSharedMedia:Register("sound", "|cFF00A4FFO_04_ny che - full|r", [[Interface\A
 LibSharedMedia:Register("sound", "|cFF00A4FFO_04_ny che - narod|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_ny che - narod.ogg]])
 LibSharedMedia:Register("sound", "|cFF00A4FFO_04_O_kurwa|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_O_kurwa.ogg]])
 LibSharedMedia:Register("sound", "|cFF00A4FFO_04_Ou_eee|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Ou_eee.ogg]])
-
-
-
 LibSharedMedia:Register("sound", "|cFF00A4FFO_04_Raspishy_Full|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Raspishy_Full.ogg]])
 LibSharedMedia:Register("sound", "|cFF00A4FFO_04_Raspishy_Short|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Raspishy_Short.ogg]])
-
-
 LibSharedMedia:Register("sound", "|cFF00A4FFO_04_Risitaskekw|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Risitaskekw.ogg]])
 LibSharedMedia:Register("sound", "|cFF00A4FFO_04_Savage_fap|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_Savage_fap.ogg]])
 LibSharedMedia:Register("sound", "|cFF00A4FFO_04_The_rap_battle_parody_oh|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Memes\O_The_rap_battle_parody_oh.ogg]])
@@ -217,4 +212,3 @@ LibSharedMedia:Register("statusbar", "|cFF00A3FFO_23|r", [[Interface\Addons\]]..
 --Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI
 LibSharedMedia:Register("statusbar", "|cFF8e7cc3Atrocity|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI\Atrocity.tga]], LibSharedMedia.LOCALE_BIT_ruRU+LibSharedMedia.LOCALE_BIT_western)
 LibSharedMedia:Register("statusbar", "|cFF8e7cc3Kait|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI\Kait.tga]], LibSharedMedia.LOCALE_BIT_ruRU+LibSharedMedia.LOCALE_BIT_western)
-

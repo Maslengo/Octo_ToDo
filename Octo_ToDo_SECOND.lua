@@ -119,7 +119,7 @@ local function O_otrisovka_SECOND()
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
 			CL:SetFontObject(OctoFont12)
-			vivodLeft = Timer_ElementalStorm().. "Elemental Storm"
+			vivodLeft = E.Octo_Timer.ElementalStorm().. "Elemental Storm"
 			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
 			if CharInfo.Faction == "Horde" then
 				BG:SetColorTexture(.5, 0, 0, E.Octo_Globals.BGALPHA*2)
