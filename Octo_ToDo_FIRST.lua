@@ -2028,7 +2028,8 @@ local function Collect_All_Holiday()
 			local endTime_weekday = endTime.weekday
 			local endTime_hour = endTime.hour
 			local endTime_minute = endTime.minute
-			if sequenceType ~= "END" then
+			-- print (id, title, sequenceType, endTime_monthDay, endTime_month, endTime_year)
+			-- if sequenceType ~= "END" then
 				if collect.Active[id] == nil then
 					collect.Active[id] = {}
 				end
@@ -2038,7 +2039,7 @@ local function Collect_All_Holiday()
 				collect.Active[id].vivod = E.Octo_Globals.Yellow_Color..title.."|r до: "..endTime_monthDay.."/"..endTime_month.."/"..endTime_year
 				collect.Active[id].startTime = startTime_monthDay.."/"..startTime_month.."/"..startTime_year
 				collect.Active[id].endTime = endTime_monthDay.."/"..endTime_month.."/"..endTime_year
-			end
+			-- end
 		end
 	end
 	function_restoreBackup()
@@ -4140,52 +4141,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-		-- Старинный бронзовый слиток
-		if Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_itemTexture(213089)..E.Octo_Func.func_itemName(213089)
-					if CharInfo.ItemsInBag[213089] ~= 0 then
-						vivodCent = CharInfo.ItemsInBag[213089]
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		-- Искра пробуждения
-		if Octo_ToDo_DB_Vars.config.SparkofAwakening == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_itemTexture(211516)..E.Octo_Func.func_itemName(211516)
-					if CharInfo.ItemsInBag[211516] ~= 0 then
-						vivodCent = CharInfo.ItemsInBag[211516]
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		-- Расщепленная искра пробуждения
-		if Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_itemTexture(211515)..E.Octo_Func.func_itemName(211515)
-					if CharInfo.ItemsInBag[211515] ~= 0 then
-						vivodCent = CharInfo.ItemsInBag[211515]
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-
-
-
-
-
-
-
-
-
-
 		-- Помощь союзу
 		if Octo_ToDo_DB_Vars.config.AidingtheAccord == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -4808,6 +4763,7 @@ local function O_otrisovka_FIRST()
 		-- 			return vivodCent, vivodLeft
 		-- 	end)
 		-- end
+		-- КАТАЛИСТ
 		if Octo_ToDo_DB_Vars.config.CatalystCharges == true then
 			tinsert(OctoTable_func_otrisovka_FIRST, -- season2 2533
 				function(CharInfo, tooltip, CL, BG)
@@ -4821,6 +4777,7 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
+		-- Драконьи камни
 		if Octo_ToDo_DB_Vars.config.Flightstones == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4830,6 +4787,42 @@ local function O_otrisovka_FIRST()
 						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2245]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245)
+					return vivodCent, vivodLeft
+			end)
+		end
+		-- Старинный бронзовый слиток
+		if Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(213089)..E.Octo_Func.func_itemName(213089)
+					if CharInfo.ItemsInBag[213089] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[213089]
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
+		-- Искра пробуждения
+		if Octo_ToDo_DB_Vars.config.SparkofAwakening == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(211516)..E.Octo_Func.func_itemName(211516)
+					if CharInfo.ItemsInBag[211516] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[211516]
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
+		-- Расщепленная искра пробуждения
+		if Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(211515)..E.Octo_Func.func_itemName(211515)
+					if CharInfo.ItemsInBag[211515] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[211515]
+					end
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -6367,7 +6360,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				if CharInfo.Octopussy_DF_Once_CatchingUp_count ~= E.Octo_Globals.DONE and CharInfo.UnitLevel >= currentMaxLevel then
-					tooltip[#tooltip+1] = {E.Octo_Globals.Red_Color.."Нужно сделать квест: |r"..CharInfo.Octopussy_DF_Once_CatchingUp_name.." /way 60, 72", CharInfo.Octopussy_DF_Once_CatchingUp_count}
+					tooltip[#tooltip+1] = {E.Octo_Globals.Red_Color.."Нужно сделать квест: |r"..E.Octo_Func.func_questName(69979).." /way 60, 72", CharInfo.Octopussy_DF_Once_CatchingUp_count}
 				end
 				for k, v in pairs(E.Octo_Table.Octo_ProfessionsskillLine) do
 					if CharInfo.professions[k] then
@@ -6853,7 +6846,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		Octo_ToDo_FIRST_Frame_Close_Button:SetBackdropBorderColor(1, 0, 0, 0)
 		Octo_ToDo_FIRST_Frame_Close_Button:SetScript("OnEnter", function(self)
 				-- self:SetBackdropBorderColor(1, 0, 0, 1)
-				self.icon:SetVertexColor(1, 0, 0, 1)
+				self.icon:SetVertexColor(r, g, b, 1)
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 				GameTooltip:ClearLines()
 				GameTooltip:AddLine(classColorHexCurrent..CLOSE.."|r")
@@ -6898,7 +6891,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		Octo_ToDo_FIRST_Frame_Options_Button:SetBackdropBorderColor(1, 0, 0, 0)
 		Octo_ToDo_FIRST_Frame_Options_Button:SetScript("OnEnter", function(self)
 				-- self:SetBackdropBorderColor(1, 0, 0, 1)
-				self.icon:SetVertexColor(1, 0, 0, 1)
+				self.icon:SetVertexColor(r, g, b, 1)
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 				GameTooltip:AddLine(classColorHexCurrent..OPTIONS.."|r")
 				GameTooltip:Show()
@@ -6935,20 +6928,19 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		t:SetAllPoints(Octo_ToDo_FIRST_Frame_Options_Button)
 	end
 	if Octo_ToDo_DB_Vars.config.Octo_debug_BUTTONS_FIRST == true then
-		--
 		if not Octo_ToDo_FIRST_Frame_MarkOfHonor_Button then
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 24, -60)
+			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, 0)
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
 			})
-			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetBackdropBorderColor(0, .44, .98, 1)
+			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetBackdropBorderColor(r, g, b, 0)
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetScript("OnEnter", function(self)
 					local i = 0
-					self:SetBackdropBorderColor(1, 0, 0, 1)
-					self.icon:SetVertexColor(1, 0, 0, 1)
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, 1)
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 					GameTooltip:ClearLines()
 					GameTooltip:AddDoubleLine(" ", " ")
@@ -7009,38 +7001,36 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					GameTooltip:Show()
 			end)
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetScript("OnLeave", function(self)
-					self:SetBackdropBorderColor(0, .44, .98, 1)
+					self:SetBackdropBorderColor(r, g, b, 0)
 					self.icon:SetVertexColor(1, 1, 1, 1)
 					GameTooltip:ClearLines()
 					GameTooltip:Hide()
 			end)
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetScript("OnMouseDown", function(self)
-					self:SetBackdropBorderColor(1, 0, 0, .5)
-					self.icon:SetVertexColor(1, 0, 0, .5)
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, .5)
 			end)
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetScript("OnClick", function()
 					Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
 			end)
 			local t = Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:CreateTexture(nil, "BACKGROUND")
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button.icon = t
-			t:SetTexture(133784)
-			-- t:SetVertexColor(1, 1, 1, 1)
+			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow1.tga") --133784
 			t:SetAllPoints(Octo_ToDo_FIRST_Frame_MarkOfHonor_Button)
 		end
-		--
 		if not Octo_ToDo_FIRST_Frame_QuestFeast_Button then
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 24, -90)
+			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, -30)
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
 			})
-			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetBackdropBorderColor(.64, .21, .93, 1)
+			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetBackdropBorderColor(r, g, b, 0)
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetScript("OnEnter", function(self)
 					local i = 0
-					self:SetBackdropBorderColor(1, 0, 0, 1)
-					self.icon:SetVertexColor(1, 0, 0, 1)
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, 1)
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 					GameTooltip:ClearLines()
 					GameTooltip:AddDoubleLine(" ", " ")
@@ -7061,42 +7051,39 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					GameTooltip:Show()
 			end)
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetScript("OnLeave", function(self)
-					self:SetBackdropBorderColor(0, .44, .98, 1)
+					self:SetBackdropBorderColor(r, g, b, 0)
 					self.icon:SetVertexColor(1, 1, 1, 1)
 					GameTooltip:ClearLines()
 					GameTooltip:Hide()
 			end)
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetScript("OnMouseDown", function(self)
-					self:SetBackdropBorderColor(1, 0, 0, .5)
-					self.icon:SetVertexColor(1, 0, 0, .5)
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, .5)
 			end)
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetScript("OnClick", function()
 					Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
 			end)
 			local t = Octo_ToDo_FIRST_Frame_QuestFeast_Button:CreateTexture(nil, "BACKGROUND")
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button.icon = t
-			t:SetTexture(629056)
-			-- t:SetVertexColor(1, 1, 1, 1)
+			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow2.tga") --629056
 			t:SetAllPoints(Octo_ToDo_FIRST_Frame_QuestFeast_Button)
 		end
-		--
 		if not Octo_ToDo_FIRST_Frame_Events_Button then
 			Octo_ToDo_FIRST_Frame_Events_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 			Octo_ToDo_FIRST_Frame_Events_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_Events_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 24, -120)
+			Octo_ToDo_FIRST_Frame_Events_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, -60)
 			Octo_ToDo_FIRST_Frame_Events_Button:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
 			})
-			Octo_ToDo_FIRST_Frame_Events_Button:SetBackdropBorderColor(0, 0, 0, 1)
+			Octo_ToDo_FIRST_Frame_Events_Button:SetBackdropBorderColor(r, g, b, 0)
 			Octo_ToDo_FIRST_Frame_Events_Button:SetScript("OnEnter", function(self)
 					local countLines = 0
-					self:SetBackdropBorderColor(0, 0, 0, 1)
-					self.icon:SetVertexColor(1, 0, 0, 1)
+					self:SetBackdropBorderColor(0, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, 1)
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 					GameTooltip:ClearLines()
 					GameTooltip:AddDoubleLine(" ", " ")
-					-- local currentDay = date("%d.%m.%Y")
 					local classFilename = UnitClassBase("PLAYER")
 					GameTooltip:AddDoubleLine(classColorHexCurrent..(L["Current Date"]).."|r", classColorHexCurrent..(date("%d/%m/%Y").."|r"))
 					GameTooltip:AddDoubleLine(" ", " ")
@@ -7110,38 +7097,36 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					GameTooltip:Show()
 			end)
 			Octo_ToDo_FIRST_Frame_Events_Button:SetScript("OnLeave", function(self)
-					self:SetBackdropBorderColor(0, 0, 0, 1)
+					self:SetBackdropBorderColor(r, g, b, 0)
 					self.icon:SetVertexColor(1, 1, 1, 1)
 					GameTooltip:ClearLines()
 					GameTooltip:Hide()
 			end)
 			Octo_ToDo_FIRST_Frame_Events_Button:SetScript("OnMouseDown", function(self)
-					self:SetBackdropBorderColor(1, 0, 0, .5)
-					self.icon:SetVertexColor(1, 0, 0, .5)
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, .5)
 			end)
 			Octo_ToDo_FIRST_Frame_Events_Button:SetScript("OnClick", function()
 					Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
 			end)
 			local t = Octo_ToDo_FIRST_Frame_Events_Button:CreateTexture(nil, "BACKGROUND")
 			Octo_ToDo_FIRST_Frame_Events_Button.icon = t
-			t:SetTexture(237579) -- 298591)
-			-- t:SetVertexColor(1, 1, 1, 1)
+			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga") --237579
 			t:SetAllPoints(Octo_ToDo_FIRST_Frame_Events_Button)
 		end
-		--
 		if not Octo_ToDo_FIRST_Frame_Consumable_Button then
 			Octo_ToDo_FIRST_Frame_Consumable_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 			Octo_ToDo_FIRST_Frame_Consumable_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_Consumable_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 24, -150)
+			Octo_ToDo_FIRST_Frame_Consumable_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, -90)
 			Octo_ToDo_FIRST_Frame_Consumable_Button:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
 			})
-			Octo_ToDo_FIRST_Frame_Consumable_Button:SetBackdropBorderColor(0, .44, .98, 1)
+			Octo_ToDo_FIRST_Frame_Consumable_Button:SetBackdropBorderColor(r, g, b, 0)
 			Octo_ToDo_FIRST_Frame_Consumable_Button:SetScript("OnEnter", function(self)
 					local i = 0
-					self:SetBackdropBorderColor(1, 0, 0, 1)
-					self.icon:SetVertexColor(1, 0, 0, 1)
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, 1)
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 					GameTooltip:ClearLines()
 					GameTooltip:AddDoubleLine(" ", " ")
@@ -7162,39 +7147,37 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					GameTooltip:Show()
 			end)
 			Octo_ToDo_FIRST_Frame_Consumable_Button:SetScript("OnLeave", function(self)
-					self:SetBackdropBorderColor(0, .44, .98, 1)
+					self:SetBackdropBorderColor(r, g, b, 0)
 					self.icon:SetVertexColor(1, 1, 1, 1)
 					GameTooltip:ClearLines()
 					GameTooltip:Hide()
 			end)
 			Octo_ToDo_FIRST_Frame_Consumable_Button:SetScript("OnMouseDown", function(self)
-					self:SetBackdropBorderColor(1, 0, 0, .5)
-					self.icon:SetVertexColor(1, 0, 0, .5)
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, .5)
 			end)
 			Octo_ToDo_FIRST_Frame_Consumable_Button:SetScript("OnClick", function()
 					Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
 			end)
 			local t = Octo_ToDo_FIRST_Frame_Consumable_Button:CreateTexture(nil, "BACKGROUND")
 			Octo_ToDo_FIRST_Frame_Consumable_Button.icon = t
-			t:SetTexture(133784)
-			-- t:SetVertexColor(1, 1, 1, 1)
+			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga") --967532
 			t:SetAllPoints(Octo_ToDo_FIRST_Frame_Consumable_Button)
 		end
-		--
 		if E.Octo_Func.Octo_IsRetail() == true then
 			if not Octo_ToDo_FIRST_Frame_MAPIDICONS_Button then
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 24, -180)
+				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, -120)
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetBackdrop({
 						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 						edgeSize = 1
 				})
-				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetBackdropBorderColor(0, .44, .98, 1)
+				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetBackdropBorderColor(r, g, b, 0)
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetScript("OnEnter", function(self)
 						local i = 0
-						self:SetBackdropBorderColor(1, 0, 0, 1)
-						self.icon:SetVertexColor(1, 0, 0, 1)
+						self:SetBackdropBorderColor(1, 0, 0, 0)
+						self.icon:SetVertexColor(r, g, b, 1)
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 						GameTooltip:ClearLines()
 						GameTooltip:AddDoubleLine(" ", " ")
@@ -7212,26 +7195,24 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						GameTooltip:Show()
 				end)
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetScript("OnLeave", function(self)
-						self:SetBackdropBorderColor(0, .44, .98, 1)
+						self:SetBackdropBorderColor(r, g, b, 0)
 						self.icon:SetVertexColor(1, 1, 1, 1)
 						GameTooltip:ClearLines()
 						GameTooltip:Hide()
 				end)
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetScript("OnMouseDown", function(self)
-						self:SetBackdropBorderColor(1, 0, 0, .5)
-						self.icon:SetVertexColor(1, 0, 0, .5)
+						self:SetBackdropBorderColor(1, 0, 0, 0)
+						self.icon:SetVertexColor(r, g, b, .5)
 				end)
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetScript("OnClick", function()
 						Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
 				end)
 				local t = Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:CreateTexture(nil, "BACKGROUND")
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button.icon = t
-				t:SetTexture(133784)
-				-- t:SetVertexColor(1, 1, 1, 1)
+				t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow5.tga") --4352494
 				t:SetAllPoints(Octo_ToDo_FIRST_Frame_MAPIDICONS_Button)
 			end
 		end
-		--
 	end
 	local function CurrentNumQuests()
 		local numQuests = select(2, C_QuestLog.GetNumQuestLogEntries())
@@ -7275,7 +7256,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			Octo_ToDo_FIRST_Frame_AbandonAllQuests_Button:SetBackdropBorderColor(1, 0, 0, 0)
 			Octo_ToDo_FIRST_Frame_AbandonAllQuests_Button:SetScript("OnEnter", function(self)
 					-- self:SetBackdropBorderColor(1, 0, 0, 1)
-					self.icon:SetVertexColor(1, 0, 0, 1)
+					self.icon:SetVertexColor(r, g, b, 1)
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, -30)
 					GameTooltip:ClearLines()
 					GameTooltip:AddLine(classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..CurrentNumQuests()..")")

@@ -313,25 +313,16 @@ MAIN_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
 		ConfigTable = {
 			{
-				text = ITEMS,
-				button = false,
-			},
-			{
 				config = "MP_MythicKeystone",
 				text = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.WOW_Epic_Color..L["Mythic Keystone"].."|r",
 			},
-			{
-				config = "AntiqueBronzeBullion",
-				text = E.Octo_Func.func_itemTexture(213089)..E.Octo_Func.func_itemName(213089),
-			},
-			{
-				config = "SparkofAwakening",
-				text = E.Octo_Func.func_itemTexture(211516)..E.Octo_Func.func_itemName(211516),
-			},
-			{
-				config = "SplinteredSparkofAwakening",
-				text = E.Octo_Func.func_itemTexture(211515)..E.Octo_Func.func_itemName(211515),
-			},
+
+
+
+
+
+
+
 			{
 				text = QUESTS_LABEL,
 				button = false,
@@ -441,6 +432,13 @@ MAIN_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_itemTexture(207026)..E.Octo_Globals.WOW_Common_Color..E.Octo_Func.func_itemName_NOCOLOR(207026),
 				r = .31, g = 1, b = .47,
 			},
+
+
+
+
+
+
+
 			{
 				button = false,
 				text = CURRENCY,
@@ -455,6 +453,32 @@ MAIN_Config:SetScript("OnShow", function(self)
 				config = "Flightstones",
 				text = E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245),
 			},
+
+
+
+			{
+				text = ITEMS,
+				button = false,
+			},
+			{
+				otstyp = indent,
+				config = "AntiqueBronzeBullion",
+				text = E.Octo_Func.func_itemTexture(213089)..E.Octo_Func.func_itemName(213089),
+			},
+			{
+				otstyp = indent,
+				config = "SparkofAwakening",
+				text = E.Octo_Func.func_itemTexture(211516)..E.Octo_Func.func_itemName(211516),
+			},
+			{
+				otstyp = indent,
+				config = "SplinteredSparkofAwakening",
+				text = E.Octo_Func.func_itemTexture(211515)..E.Octo_Func.func_itemName(211515),
+			},
+
+
+
+
 			{
 				button = false,
 				text = L["Crests"],
@@ -676,10 +700,24 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "curHeight", "Высота строк: ", E.Octo_Globals.Green_Color, 10, 30)
 		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк: ", E.Octo_Globals.Green_Color, 200, 1000)
 		Create_CheckButton(MAIN_scrollChild, self, 17, POS_RIGHT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, 0, "Achievements", E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"].." "..L["InDev"])
-		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "ItemsUsable", "ItemsUsable".." "..L["InDev"])
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "ItemsDelete", "ItemsDelete".." "..L["InDev"])
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"].." "..L["InDev"])
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Доп кнопки", r, g, b, .2)
+
+
+
+
+
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "Achievements", E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
+
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "ItemsUsable", "ItemsUsable".." "..L["InDev"])
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "ItemsDelete", "ItemsDelete".." "..L["InDev"])
+
+
+
+
+
+
+
 		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, 0, "ShowTotalMoney", "Всего денег")
 		Create_CheckButton(MAIN_scrollChild, self, 29, POS_RIGHT, 0, "ShowTimeAll", "Общее время игры")
 		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "ReloadUI", "ReloadUI")
