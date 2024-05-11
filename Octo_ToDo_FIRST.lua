@@ -122,16 +122,13 @@ local Meta_Table_true = {__index = function() return true end}
 local Meta_Table_DONE = {__index = function() return E.Octo_Globals.DONE end}
 local Meta_Table_NONE = {__index = function() return E.Octo_Globals.NONE end}
 local Meta_Table_Empty = {__index = function() return "" end}
-
 local TrashFrames_table = {
 	{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
 	{name = "SplashFrame", frame = SplashFrame},
 	{name = "MajorFactionsRenownToast", frame = MajorFactionsRenownToast},
-
 	-- TEST
 	-- {name = "PlayerFrameBottomManagedFramesContainer", frame = PlayerFrameBottomManagedFramesContainer},
 }
-
  -- SHOW_SUBSCRIPTION_INTERSTITIAL
 -- C_Timer.After(0, function()
 -- 	if SubscriptionInterstitialFrame then
@@ -139,15 +136,10 @@ local TrashFrames_table = {
 -- 		ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Hide trash frames: ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).."SubscriptionInterstitialFrame")
 -- 	end
 -- end)
-
-
-
 local function Hide_trash_frames()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Hide_trash_frames".."|r")
 	end
-
-
 	for _, v in pairs(TrashFrames_table) do
 		if v.frame and v.frame:IsShown() then
 			ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Hide trash frames: ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..v.name)
@@ -156,12 +148,6 @@ local function Hide_trash_frames()
 		end
 	end
 end
-
-
-
-
-
-
 local function DEV_GUID()
 	local curGUID = UnitGUID("PLAYER")
 	local strGUID = tostringall(strsplit("-", utf8lower(utf8reverse(curGUID))))
@@ -2198,7 +2184,6 @@ local function TEST_GROUP_ROSTER()
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TEST_GROUP_ROSTER".."|r")
 	end
 end
-
 local function Octo_ToDo_FIRST_OnLoad()
 	if not Octo_ToDo_FIRST_Frame_EventFrame then
 		Octo_ToDo_FIRST_Frame_EventFrame = CreateFrame("FRAME", AddonTitle..E.Octo_Func.GenerateUniqueID())
@@ -4155,18 +4140,52 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
+		-- Старинный бронзовый слиток
 		if Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Func.func_texturefromIcon(213089)..E.Octo_Func.func_itemName(213089)
+					vivodLeft = E.Octo_Func.func_itemTexture(213089)..E.Octo_Func.func_itemName(213089)
 					if CharInfo.ItemsInBag[213089] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[213089]
 					end
 					return vivodCent, vivodLeft
 			end)
 		end
+		-- Искра пробуждения
+		if Octo_ToDo_DB_Vars.config.SparkofAwakening == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(211516)..E.Octo_Func.func_itemName(211516)
+					if CharInfo.ItemsInBag[211516] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[211516]
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
+		-- Расщепленная искра пробуждения
+		if Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(211515)..E.Octo_Func.func_itemName(211515)
+					if CharInfo.ItemsInBag[211515] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[211515]
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
+
+
+
+
+
+
+
+
+
+
 		-- Помощь союзу
 		if Octo_ToDo_DB_Vars.config.AidingtheAccord == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -4288,7 +4307,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
 		if Octo_ToDo_DB_Vars.config.EmeraldDreamAWorthyAllyDreamWardens == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4301,7 +4319,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
 		if Octo_ToDo_DB_Vars.config.EmeraldDreamDreamsUnified == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4676,7 +4693,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
 		if Octo_ToDo_DB_Vars.config.EncapsulatedDestiny == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4689,7 +4705,6 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 			end)
 		end
-
 		if Octo_ToDo_DB_Vars.config.ParacausalFlakes == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4709,9 +4724,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
-
-
 		-- ПРИЛИВ СНОВ
 		if Octo_ToDo_DB_Vars.config.Dreamsurges == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -4728,7 +4740,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
 		if Octo_ToDo_DB_Vars.config.DreamsurgeCocoon == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4744,7 +4755,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
 		if Octo_ToDo_DB_Vars.config.DreamsurgeCoalescence == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4757,8 +4767,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
-
 		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
 		-- 		function(CharInfo, tooltip, CL, BG)
 		-- 			local vivodCent, vivodLeft = "", ""
@@ -4826,7 +4834,6 @@ local function O_otrisovka_FIRST()
 			end)
 		end
 		-- CREST
-
 		if Octo_ToDo_DB_Vars.config.Crests_Mythic == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4943,14 +4950,6 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-
-
-
-
-
-
-
-
 	end
 	-- События
 	if Octo_ToDo_DB_Vars.config.Event == true then
@@ -5576,25 +5575,25 @@ local function O_otrisovka_FIRST()
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					-- tooltip[#tooltip+1] = {" ", E.Octo_Func.func_Gradient("»".."Впадлу доделывать".."«", E.Octo_Globals.Yellow_Color, E.Octo_Globals.Red_Color)}
 					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2912)..E.Octo_Func.func_currencyName(2912), CharInfo.CurrencyID_Total[2912]}
-					local data2706 = C_CurrencyInfo.GetCurrencyInfo(2706)
-					if data2706 then
-						local maxQuantity = data2706.maxQuantity
-						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2706)..E.Octo_Globals.WOW_Uncommon_Color..E.Octo_Func.func_currencyName_NOCOLOR(2706).."|r", CharInfo.CurrencyID[2706].."/"..maxQuantity}
+					local data2812 = C_CurrencyInfo.GetCurrencyInfo(2812)
+					if data2812 then
+						local maxQuantity = data2812.maxQuantity
+						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2812)..E.Octo_Globals.WOW_Legendary_Color..E.Octo_Func.func_currencyName_NOCOLOR(2812).."|r", CharInfo.CurrencyID[2812].."/"..maxQuantity}
 					end
-					local data2707 = C_CurrencyInfo.GetCurrencyInfo(2707)
-					if data2707 then
-						local maxQuantity = data2707.maxQuantity
-						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2707)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2707).."|r", CharInfo.CurrencyID[2707].."/"..maxQuantity}
+					local data2809 = C_CurrencyInfo.GetCurrencyInfo(2809)
+					if data2809 then
+						local maxQuantity = data2809.maxQuantity
+						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2809)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2809).."|r", CharInfo.CurrencyID[2809].."/"..maxQuantity}
 					end
-					local data2708 = C_CurrencyInfo.GetCurrencyInfo(2708)
-					if data2708 then
-						local maxQuantity = data2708.maxQuantity
-						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2708)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2708).."|r", CharInfo.CurrencyID[2708].."/"..maxQuantity}
+					local data2807 = C_CurrencyInfo.GetCurrencyInfo(2807)
+					if data2807 then
+						local maxQuantity = data2807.maxQuantity
+						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2807)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2807).."|r", CharInfo.CurrencyID[2807].."/"..maxQuantity}
 					end
-					local data2709 = C_CurrencyInfo.GetCurrencyInfo(2709)
-					if data2709 then
-						local maxQuantity = data2709.maxQuantity
-						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2709)..E.Octo_Globals.WOW_Legendary_Color..E.Octo_Func.func_currencyName_NOCOLOR(2709).."|r", CharInfo.CurrencyID[2709].."/"..maxQuantity}
+					local data2806 = C_CurrencyInfo.GetCurrencyInfo(2806)
+					if data2806 then
+						local maxQuantity = data2806.maxQuantity
+						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2806)..E.Octo_Globals.WOW_Uncommon_Color..E.Octo_Func.func_currencyName_NOCOLOR(2806).."|r", CharInfo.CurrencyID[2806].."/"..maxQuantity}
 					end
 					if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245), CharInfo.CurrencyID_Total[2245]}
@@ -7817,7 +7816,6 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			Octo_ToDo_FIRST_Frame_Main_Frame.ScrollBar:Hide()
 		end
 		Octo_ToDo_FIRST_Frame_Main_Frame:SetSize(width, height) -- ТУТ БЫЛА ЗАЛУПА
-
 end
 local function main_frame_toggle()
 	-- local promise = LibThingsLoad:Items(E.Octo_Table.OctoTable_itemID_ALL)
@@ -7990,6 +7988,8 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.DreamsurgeCocoon == nil then Octo_ToDo_DB_Vars.config.DreamsurgeCocoon = false end
 		if Octo_ToDo_DB_Vars.config.DreamsurgeCoalescence == nil then Octo_ToDo_DB_Vars.config.DreamsurgeCoalescence = false end
 		if Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion == nil then Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion = false end
+		if Octo_ToDo_DB_Vars.config.SparkofAwakening == nil then Octo_ToDo_DB_Vars.config.SparkofAwakening = false end
+		if Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening == nil then Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening = false end
 		if Octo_ToDo_DB_Vars.config.Event == nil then Octo_ToDo_DB_Vars.config.Event = true end
 		if Octo_ToDo_DB_Vars.config.Holiday == nil then Octo_ToDo_DB_Vars.config.Holiday = false end
 		if Octo_ToDo_DB_Vars.config.Dungeons == nil then Octo_ToDo_DB_Vars.config.Dungeons = false end
@@ -8148,7 +8148,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 			Octo_ToDo_DB_Vars.config.AddonVersion = tonumber(AddonVersion)
 			LibDBIcon:Register(MinimapName, ldb_icon, Octo_ToDo_DB_Vars.minimap_FIRST)
 			LibDBIcon:Show(MinimapName)
-
 	end
 	if (event == "PLAYER_LOGIN") and not InCombatLockdown() then
 		C_WowTokenPublic.UpdateMarketPrice()

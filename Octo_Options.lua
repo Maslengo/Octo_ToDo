@@ -317,14 +317,20 @@ MAIN_Config:SetScript("OnShow", function(self)
 				button = false,
 			},
 			{
-				-- otstyp = indent,
 				config = "MP_MythicKeystone",
 				text = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.WOW_Epic_Color..L["Mythic Keystone"].."|r",
 			},
 			{
-				-- otstyp = indent,
 				config = "AntiqueBronzeBullion",
-				text = E.Octo_Func.func_texturefromIcon(213089)..E.Octo_Func.func_itemName(213089),
+				text = E.Octo_Func.func_itemTexture(213089)..E.Octo_Func.func_itemName(213089),
+			},
+			{
+				config = "SparkofAwakening",
+				text = E.Octo_Func.func_itemTexture(211516)..E.Octo_Func.func_itemName(211516),
+			},
+			{
+				config = "SplinteredSparkofAwakening",
+				text = E.Octo_Func.func_itemTexture(211515)..E.Octo_Func.func_itemName(211515),
 			},
 			{
 				text = QUESTS_LABEL,
