@@ -6931,7 +6931,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		if not Octo_ToDo_FIRST_Frame_MarkOfHonor_Button then
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, 0)
+			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", E.Octo_Globals.curHeight, (-E.Octo_Globals.curHeight)*0)
 			Octo_ToDo_FIRST_Frame_MarkOfHonor_Button:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
@@ -7021,7 +7021,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		if not Octo_ToDo_FIRST_Frame_QuestFeast_Button then
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, -30)
+			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", E.Octo_Globals.curHeight, (-E.Octo_Globals.curHeight)*2)
 			Octo_ToDo_FIRST_Frame_QuestFeast_Button:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
@@ -7071,7 +7071,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		if not Octo_ToDo_FIRST_Frame_Events_Button then
 			Octo_ToDo_FIRST_Frame_Events_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 			Octo_ToDo_FIRST_Frame_Events_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_Events_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, -60)
+			Octo_ToDo_FIRST_Frame_Events_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", E.Octo_Globals.curHeight, (-E.Octo_Globals.curHeight)*4)
 			Octo_ToDo_FIRST_Frame_Events_Button:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
@@ -7117,7 +7117,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		if not Octo_ToDo_FIRST_Frame_Consumable_Button then
 			Octo_ToDo_FIRST_Frame_Consumable_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 			Octo_ToDo_FIRST_Frame_Consumable_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-			Octo_ToDo_FIRST_Frame_Consumable_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, -90)
+			Octo_ToDo_FIRST_Frame_Consumable_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", E.Octo_Globals.curHeight, (-E.Octo_Globals.curHeight)*6)
 			Octo_ToDo_FIRST_Frame_Consumable_Button:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
@@ -7168,7 +7168,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			if not Octo_ToDo_FIRST_Frame_MAPIDICONS_Button then
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", 20, -120)
+				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetPoint("TOPLEFT", Octo_ToDo_FIRST_Frame_Main_Frame, "TOPRIGHT", E.Octo_Globals.curHeight, (-E.Octo_Globals.curHeight)*8)
 				Octo_ToDo_FIRST_Frame_MAPIDICONS_Button:SetBackdrop({
 						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 						edgeSize = 1
