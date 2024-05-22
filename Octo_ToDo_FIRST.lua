@@ -5733,6 +5733,9 @@ local function O_otrisovka_FIRST()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2588)..E.Octo_Func.func_currencyName(2588), CharInfo.CurrencyID_Total[2588]}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1379)..E.Octo_Func.func_currencyName(1379), CharInfo.CurrencyID_Total[1379]}
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(515)..E.Octo_Func.func_currencyName(515), CharInfo.CurrencyID_Total[515]}
+				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2778)..E.Octo_Func.func_currencyName(2778), CharInfo.CurrencyID_Total[2778]} -- Бронза
+
+
 				if Octo_ToDo_DB_Vars.config.ExpansionToShow == 5 then
 					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(402)..E.Octo_Func.func_currencyName(402), CharInfo.CurrencyID_Total[402]}
 				end
