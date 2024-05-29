@@ -677,8 +677,13 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 17, POS_CENTER, 0, "Hide_Zone_Text", L["Hide: Zone Text"])
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_CENTER, 0, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
 -- local function Create_CheckButton(scroll, self, number, pos, otstyp, config, text, r, g, b, a, button)
-		Create_FontString(MAIN_scrollChild, self, 23, POS_CENTER, PlayerName, r, g, b, "CENTER")
-		Create_Model(MAIN_scrollChild, self, 22, POS_CENTER, 70619) -- 55907
+
+		-- CREATE MODEL
+		-- Create_FontString(MAIN_scrollChild, self, 23, POS_CENTER, PlayerName, r, g, b, "CENTER")
+		-- Create_Model(MAIN_scrollChild, self, 22, POS_CENTER, 70619) -- 55907
+
+
+
 		number = 1
 		btn_right1 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
