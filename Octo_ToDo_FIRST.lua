@@ -6730,7 +6730,7 @@ local function TotalMoneyAllServerOnShow()
 	for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 		TotalMoneyAllServer = TotalMoneyAllServer + CharInfo.Money
 	end
-	if AccountMoney == 0 then
+	if AccountMoney <= 9999 then
 		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer)/10000).."|r"..Money_Icon
 	else
 		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer+AccountMoney)/10000).."|r"..Money_Icon..E.Octo_Globals.LightGray_Color.." "..BANK.." (".. E.Octo_Func.CompactNumberFormat(AccountMoney/10000) .. ")".."|r"
