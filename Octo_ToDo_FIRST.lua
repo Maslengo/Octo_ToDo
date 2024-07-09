@@ -1864,7 +1864,13 @@ local function Collect_ALL_MoneyUpdate()
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_MoneyUpdate()".."|r")
 	end
 	-- local curGUID = UnitGUID("PLAYER")
-	Octo_ToDo_DB_Levels[UnitGUID("PLAYER")].Money = GetMoney()
+	Octo_ToDo_DB_Levels[UnitGUID("PLAYER")].Money = GetMoney() or 0
+	Octo_ToDo_DB_Other.AccountMoney = C_Bank.FetchDepositedMoney(2)
+
+	-- C_Bank.DepositMoney(2, 100)
+
+
+
 	-- local Money = GetMoney()
 	-- if collect and not InCombatLockdown() then
 	-- 	collect.Money = Money
@@ -5012,28 +5018,28 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-		for _, currencyID in ipairs(E.Octo_Table.OctoTable_currency_PlayervsPlayer) do
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Globals.LightGray_Color.."PVP|r"..E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)..E.Octo_Globals.LightGray_Color.." id:"..currencyID.."|r"
-					if CharInfo.CurrencyID[currencyID] ~= 0 then
-						vivodCent = CharInfo.CurrencyID[currencyID]
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		for _, currencyID in ipairs(E.Octo_Table.OctoTable_currency_Miscellaneous) do
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Globals.LightGray_Color.."Misc|r"..E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)..E.Octo_Globals.LightGray_Color.." id:"..currencyID.."|r"
-					if CharInfo.CurrencyID[currencyID] ~= 0 then
-						vivodCent = CharInfo.CurrencyID[currencyID]
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
+		-- for _, currencyID in ipairs(E.Octo_Table.OctoTable_currency_PlayervsPlayer) do
+		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 		function(CharInfo, tooltip, CL, BG)
+		-- 			local vivodCent, vivodLeft = "", ""
+		-- 			vivodLeft = E.Octo_Globals.LightGray_Color.."PVP|r"..E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)..E.Octo_Globals.LightGray_Color.." id:"..currencyID.."|r"
+		-- 			if CharInfo.CurrencyID[currencyID] ~= 0 then
+		-- 				vivodCent = CharInfo.CurrencyID[currencyID]
+		-- 			end
+		-- 			return vivodCent, vivodLeft
+		-- 	end)
+		-- end
+		-- for _, currencyID in ipairs(E.Octo_Table.OctoTable_currency_Miscellaneous) do
+		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 		function(CharInfo, tooltip, CL, BG)
+		-- 			local vivodCent, vivodLeft = "", ""
+		-- 			vivodLeft = E.Octo_Globals.LightGray_Color.."Misc|r"..E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)..E.Octo_Globals.LightGray_Color.." id:"..currencyID.."|r"
+		-- 			if CharInfo.CurrencyID[currencyID] ~= 0 then
+		-- 				vivodCent = CharInfo.CurrencyID[currencyID]
+		-- 			end
+		-- 			return vivodCent, vivodLeft
+		-- 	end)
+		-- end
 		-- for number, itemID in ipairs(E.Octo_Table.OctoTable_itemID_ALL) do
 		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
 		-- 		function(CharInfo, tooltip, CL, BG)
@@ -6719,10 +6725,17 @@ local function TotalMoneyAllServerOnShow()
 	end
 	local curGUID = UnitGUID("PLAYER")
 	local TotalMoneyAllServer = 0
+	local vivod = ""
+	local AccountMoney = Octo_ToDo_DB_Other.AccountMoney or 0
 	for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 		TotalMoneyAllServer = TotalMoneyAllServer + CharInfo.Money
 	end
-	return classColorHexCurrent..E.Octo_Func.CompactNumberFormat(TotalMoneyAllServer/10000).."|r"..Money_Icon
+	if AccountMoney == 0 then
+		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer)/10000).."|r"..Money_Icon
+	else
+		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer+AccountMoney)/10000).."|r"..Money_Icon..E.Octo_Globals.LightGray_Color.." "..BANK.." (".. E.Octo_Func.CompactNumberFormat(AccountMoney/10000) .. ")".."|r"
+	end
+	return vivod
 end
 local function Token_PriceOnShow()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -6737,6 +6750,22 @@ local function Token_PriceOnShow()
 	end
 	return vivod
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 local function TotalTimeAllServerOnShow()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TotalTimeAllServerOnShow".."|r")
@@ -6899,6 +6928,18 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					end)
 			end)
 		end
+
+
+
+
+
+
+
+
+
+
+
+
 		--
 	end
 	if Octo_ToDo_DB_Vars.config.ShowTimeAll then
@@ -8009,6 +8050,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Other.CVar == nil then Octo_ToDo_DB_Other.CVar = {} end
 		if Octo_ToDo_DB_Other.Items == nil then Octo_ToDo_DB_Other.Items = {} end
 		if Octo_ToDo_DB_Other.Items.Consumable == nil then Octo_ToDo_DB_Other.Items.Consumable = {} end
+		if Octo_ToDo_DB_Other.AccountMoney == nil then Octo_ToDo_DB_Other.AccountMoney = 0 end
 		-- if Octo_ToDo_DB_Other.items == nil then Octo_ToDo_DB_Other.items = {} end
 		if Octo_ToDo_DB_Other.LFGInstance == nil then Octo_ToDo_DB_Other.LFGInstance = {} end
 		if Octo_ToDo_DB_Other.Holiday == nil then Octo_ToDo_DB_Other.Holiday = {} end
