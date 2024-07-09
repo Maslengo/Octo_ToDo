@@ -7,6 +7,8 @@ Octo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
 Octo_AUTO_OPEN:RegisterEvent("LOOT_READY")
 Octo_AUTO_OPEN:RegisterEvent("PLAYER_STARTED_MOVING")
 local isDead = UnitIsDead("PLAYER")
+
+
 local function OpenableScan()
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		for numSlots = C_Container.GetContainerNumSlots(bag),1,-1 do
@@ -28,6 +30,8 @@ local function OpenableScan()
 		end
 	end
 end
+
+
 local openableScanQueued = false
 Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 		C_Timer.After(0.1, function()

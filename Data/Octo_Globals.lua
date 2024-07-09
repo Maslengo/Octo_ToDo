@@ -39,7 +39,7 @@ local function func_hex2rgb(self)
 end
 --------------------------------------------------------------------------------
 
-E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/%s=%s"
+E.Octo_Globals.baseWowheadUrl = "https://wowhead.com/%s%s=%s"
 E.Octo_Globals.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
 E.Octo_Globals.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
 E.Octo_Globals.baseArmoryUrl = "https://worldofwarcraft.com/%s/character/%s/%s"
@@ -58,7 +58,7 @@ E.Octo_Globals.curHeight = 20*E.Octo_Globals.scale
 E.Octo_Globals.curWidthTitle = 200*E.Octo_Globals.scale
 E.Octo_Globals.ilvlToShow = 400
 E.Octo_Globals.Addon_Height = 400
-E.Octo_Globals.BGALPHA = .05
+E.Octo_Globals.BGALPHA = .1
 E.Octo_Globals.Main_Frame_Position = -157
 E.Octo_Globals.regions = {
 	[1] = "us",
@@ -85,46 +85,6 @@ E.Octo_Globals.multiplier = 2 - E.Octo_Globals.slider_scale
 ----------------------------------------------------------------
 --COLORS--------------------------------------------------------
 ----------------------------------------------------------------
--- E.Octo_Globals.Addon_Left_Color = "|cffD177FF"
--- E.Octo_Globals.Addon_Right_Color = "|cff63A4E0"
--- E.Octo_Globals.Blue_Color = "|cff00A3FF"
--- E.Octo_Globals.Cyan_Color = "|cff00CCFF"
--- E.Octo_Globals.LightGray_Color = "|cff909090"
--- E.Octo_Globals.Gray_Color = "|cff404040"
--- E.Octo_Globals.DarkGray_Color = "|cff202020"
--- E.Octo_Globals.Green_Color = "|cff4FFF79"
--- E.Octo_Globals.Orange_Color = "|cffFF661A"
--- E.Octo_Globals.Purple_Color = "|cffAF61FF"
--- E.Octo_Globals.Pink_Color = "|cffFFC0CB"
--- E.Octo_Globals.Brown_Color = "|cff964B00"
--- E.Octo_Globals.Red_Color = "|cffFF4C4F"
--- E.Octo_Globals.Rift_Color = "|cffBF9EFF"
--- E.Octo_Globals.White_Color = "|cffFFF7D7"
--- E.Octo_Globals.Black_Color = "|cff000000"
--- E.Octo_Globals.Yellow_Color = "|cffFFF371"
--- E.Octo_Globals.Kyrian_Color = "|cff6FA8DC"
--- E.Octo_Globals.Necrolord_Color = "|cff93C47D"
--- E.Octo_Globals.NightFae_Color = "|cffB4A7D6"
--- E.Octo_Globals.Venthyr_Color = "|cffEA9999"
--- E.Octo_Globals.WOW_Poor_Color = "|cff9D9D9D"
--- E.Octo_Globals.WOW_Common_Color = "|cffFFFFFF"
--- E.Octo_Globals.WOW_Uncommon_Color = "|cff1EFF00"
--- E.Octo_Globals.WOW_Rare_Color = "|cff0070DD"
--- E.Octo_Globals.WOW_Epic_Color = "|cffA335EE"
--- E.Octo_Globals.WOW_Legendary_Color = "|cffFF8000"
--- E.Octo_Globals.WOW_Artifact_Color = "|cffD9CC80"
--- E.Octo_Globals.WOW_Heirloom_Color = "|cff00CCFF"
--- E.Octo_Globals.WOW_WoWToken_Color = "|cff00CCFF"
--- E.Octo_Globals.Classic_Color = "|cff68CCEF"
--- E.Octo_Globals.TheBurningCrusade_Color = "|cff4FFF79"
--- E.Octo_Globals.WrathoftheLichKing_Color = "|cff00A3FF"
--- E.Octo_Globals.Cataclysm_Color = "|cffFFB300"
--- E.Octo_Globals.MistsofPandaria_Color = "|cff00FFBA"
--- E.Octo_Globals.WarlordsofDraenor_Color = "|cffC86400"
--- E.Octo_Globals.Legion_Color = "|cff1EFF00"
--- E.Octo_Globals.BattleforAzeroth_Color = "|cff6464FF"
--- E.Octo_Globals.Shadowlands_Color = "|cffC9C3AA"
--- E.Octo_Globals.Dragonflight_Color = "|cffE8E379"
 ----------------------------------------------------------------
 E.Octo_Globals.Class_Warrior_Color = "|cffC69B6D"
 E.Octo_Globals.Class_Paladin_Color = "|cffF48CBA"
@@ -149,6 +109,7 @@ E.Octo_Globals.Legion_Color = "|cff1EFF00"
 E.Octo_Globals.BattleforAzeroth_Color = "|cff6464FF"
 E.Octo_Globals.Shadowlands_Color = "|cffC9C3AA"
 E.Octo_Globals.Dragonflight_Color = "|cffE8E379"
+E.Octo_Globals.TheWarWithin_Color = "|cffB59377"
 E.Octo_Globals.WOW_Poor_Color = "|cff9D9D9D"
 E.Octo_Globals.WOW_Common_Color = "|cffFFFFFF"
 E.Octo_Globals.WOW_Uncommon_Color = "|cff1EFF00"

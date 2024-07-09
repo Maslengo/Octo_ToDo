@@ -95,6 +95,10 @@ E.Octo_Table.OctoTable_Colors = {
 		hex = "E8E379"
 	},
 	{
+		name = "TheWarWithin_Color",
+		hex = "B59377"
+	},
+	{
 		name = "WOW_Poor_Color",
 		hex = "9D9D9D"
 	},

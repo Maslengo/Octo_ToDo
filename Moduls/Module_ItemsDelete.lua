@@ -32,7 +32,7 @@ tinsert(E.Octo_Globals.modules, function()
 			ItemsDelete_Frame:HookScript("OnEnter", ItemsDelete_Frame_OnEnter)
 			ItemsDelete_Frame:HookScript("OnLeave", ItemsDelete_Frame_OnLeave)
 			ItemsDelete_Frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-			ItemsDelete_Frame:SetAttribute("type", "macro")
+			-- ItemsDelete_Frame:SetAttribute("type", "macro")
 			if not ItemsDelete_Frame_TEXTNAME then
 				ItemsDelete_Frame_TEXTNAME = ItemsDelete_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			end

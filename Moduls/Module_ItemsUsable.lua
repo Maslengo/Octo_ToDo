@@ -92,7 +92,7 @@ if E.Octo_Func.Octo_IsRetail() == true then
 				ItemsUsable_Frame:HookScript("OnEnter", ItemsUsable_Frame_OnEnter)
 				ItemsUsable_Frame:HookScript("OnLeave", ItemsUsable_Frame_OnLeave)
 				ItemsUsable_Frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-				ItemsUsable_Frame:SetAttribute("type", "macro")
+				ItemsUsable_Frame:SetAttribute("type", "item")
 				if not ItemsUsable_Frame_TEXTNAME then
 					ItemsUsable_Frame_TEXTNAME = ItemsUsable_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 				end
@@ -147,7 +147,7 @@ if E.Octo_Func.Octo_IsRetail() == true then
 						local itemID = 191251
 						if (GetItemCount(191251) >= 30 and GetItemCount(193201) >= 3) then
 							ItemsUsable_Frame:Show()
-							ItemsUsable_Frame:SetAttribute("macrotext", "/use item:"..itemID)
+							ItemsUsable_Frame:SetAttribute("item", "item:"..itemID)
 							ItemsUsable_Frame.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
 							local itemQuality = (select(3, GetItemInfo(itemID)) or 0)
 							local r, g, b = GetItemQualityColor(itemQuality)
@@ -165,7 +165,7 @@ if E.Octo_Func.Octo_IsRetail() == true then
 									--	itemID = 208396
 									--end
 									ItemsUsable_Frame:Show()
-									ItemsUsable_Frame:SetAttribute("macrotext", "/use item:"..itemID)
+									ItemsUsable_Frame:SetAttribute("item", "item:"..itemID)
 									ItemsUsable_Frame.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
 									local itemQuality = (select(3, GetItemInfo(itemID)) or 0)
 									local r, g, b = GetItemQualityColor(itemQuality)

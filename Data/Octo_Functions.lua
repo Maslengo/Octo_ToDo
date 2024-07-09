@@ -12,6 +12,7 @@ local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
+local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 -- local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local utf8charbytes = E.Octo_Func.utf8charbytes
 local utf8len = E.Octo_Func.utf8len
@@ -44,7 +45,7 @@ end
 
 ----------------------------------------------------------------
 function E.Octo_Func.Octo_IsRetail()
-	local build = 10
+	local build = 11
 	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
 	if build == WOW_currentBuild then
 		return true
@@ -190,39 +191,31 @@ end
 local func_questName = E.Octo_Func.func_questName
 ----------------------------------------------------------------
 function E.Octo_Func.func_reputationName(self)
-	local name = GetFactionInfoByID(self)
-	if not name then
+
+	local repInfo = C_Reputation.GetFactionDataByID(self)
+	local name
+
+	if repInfo then
+		name = repInfo.name
+	else
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
 		name = reputationInfo.name or E.Octo_Globals.Red_Color.."NONAME".."|r"
 	end
+
 	local color = "|cffFFFFFF"
 	local r = "|r"
 	if self == 1168 then
 		color = "|cff909090"
 	end
 	return color..name..r
+
+
 end
 local func_reputationName = E.Octo_Func.func_reputationName
 ----------------------------------------------------------------
 function E.Octo_Func.func_itemName_NOCOLOR(itemID)
-	local itemName_NOCOLOR = "itemName_NOCOLOR"
-	if E.Octo_Func.Octo_IsRetail() == true then
-		if C_Item.DoesItemExistByID(itemID) then
-			local item = Item:CreateFromItemID(itemID)
-			if item:IsItemDataCached() then
-				itemName_NOCOLOR = item:GetItemName()
-				-- print ("|cff00FF00Cached|r"..itemName_NOCOLOR)
-			else
-				item:ContinueOnItemLoad(function()
-						itemName_NOCOLOR = item:GetItemName()
-						-- print ("|cffFF0000Not Cached|r"..itemName_NOCOLOR)
-				end)
-			end
-			return itemName_NOCOLOR
-		end
-	else
-		return itemName_NOCOLOR
-	end
+	local itemName_NOCOLOR = LibThingsLoad:GetItemName(itemID) or "itemName_NOCOLOR"
+	return itemName_NOCOLOR
 end
 local func_itemName_NOCOLOR = E.Octo_Func.func_itemName_NOCOLOR
 ----------------------------------------------------------------
