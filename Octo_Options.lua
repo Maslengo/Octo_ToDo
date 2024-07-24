@@ -11,9 +11,6 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	button2 = NO,
 	hideOnEscape = 1,
 	whileDead = 1,
-
-
-
 	OnAccept = function() ReloadUI() end,
 }
 -- local fontObject9 = CreateFont("OctoFont9")
@@ -35,9 +32,6 @@ if classFilename == "SHAMAN" then
 end
 ----
 local MAIN_Config = CreateFrame("ScrollFrame", GlobalAddonName.."MAIN_Config")
-
-
-
 MAIN_Config:SetScript("OnEnter", function(self, ...)
 		E.Octo_Timer.Legion_Invasion()
 		E.Octo_Timer.BfA_Invasion()
@@ -65,9 +59,6 @@ MAIN_Config:SetAllPoints()
 MAIN_scrollChild:SetSize(1, 1)
 ScrollUtil.InitScrollFrameWithScrollBar(MAIN_Config, MAIN_ScrollBar)
 local MAIN_OnMouseWheel = MAIN_Config:GetScript("OnMouseWheel")
-
-
-
 MAIN_Config:SetScript("OnMouseWheel", function(self, ...)
 		if MAIN_ScrollBar:IsShown() then
 			MAIN_OnMouseWheel(self, ...)
@@ -76,17 +67,13 @@ end)
 local POS_LEFT = 1
 local POS_RIGHT = MAIN_Config:GetSize()/4
 local indent = 19
+local height = 232 -- Высота
+local width = 34 -- Ширина
+local row = 30
 MAIN_TITLE = MAIN_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 MAIN_TITLE:SetPoint("TOPLEFT", 4, 30)
 MAIN_TITLE:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
 MAIN_TITLE:SetTextColor(.5, .5, .5, 1)
--- do
---     local mountID = 804
---     local name, spellID, icon, isActive, isUsable, sourceType, isFavorite, isFactionSpecific, faction, shouldHideOnChar, isCollected, mountID = C_MountJournal.GetMountInfoByID(mountID)
---     print (name, spellID, icon, isActive, isUsable, sourceType, isFavorite, isFactionSpecific, faction, shouldHideOnChar, isCollected, mountID)
---     local creatureDisplayInfoID, description, source, isSelfMount, mountTypeID, uiModelSceneID, animID, spellVisualKitID, disablePlayerMountPreview = C_MountJournal.GetMountInfoExtraByID(mountID)
---     print (creatureDisplayInfoID, description, source, isSelfMount, mountTypeID, uiModelSceneID, animID, spellVisualKitID, disablePlayerMountPreview)
--- end
 local Rat_Table = {
 	{id = 1, SoundFile = "Kurwa ratatui", time = 9,},
 	{id = 2, SoundFile = "Ya Perdole", time = 7,},
@@ -95,9 +82,6 @@ local Rat_Table = {
 	{id = 5, SoundFile = "Chipi chipi - Bobr kurwa", time = 57,},
 	{id = 6, SoundFile = "Mюсли - Kurwa Bober", time = 147,},
 }
-
-
-
 local function Create_Model(scroll, self, number, pos, model)
 	local ModelFrame = self.model
 	local count = 0
@@ -111,9 +95,6 @@ local function Create_Model(scroll, self, number, pos, model)
 	-- ModelFrame_Button:Hide()
 	ModelFrame_Button:SetAllPoints(ModelFrame)
 	ModelFrame_Button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-
-
-
 	ModelFrame_Button:SetScript("OnClick", function(self)
 			count = count + 1
 			if count > #Rat_Table then
@@ -125,51 +106,21 @@ local function Create_Model(scroll, self, number, pos, model)
 					PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\rat\\"..Rat_Table[count].SoundFile..".ogg", "Master")
 				end
 			end
-			-- local RandomNumber = math.random(#Rat_Table)
-			-- for i = 1, #Rat_Table do
-			--     local XYI = Rat_Table[i].id
-			--     if XYI == RandomNumber then
-			--         print (RandomNumber.."/"..(#Rat_Table),Rat_Table[i].SoundFile)
-			--         PlaySoundFile(Rat_Table[i].SoundFile, "Master")
-			--     end
-			-- end
 	end)
-	-- local BG = CreateFrame("Frame", nil, scroll, "BackdropTemplate")
-	-- BG:SetBackdrop({
-	--         bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-	--         edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-	--         edgeSize = 1,
-	-- })
-	-- BG:SetBackdropColor(r, g, b, a)
-	-- BG:SetBackdropBorderColor(0, 0, 0, 0)
-	-- BG:SetAllPoints(ModelFrame)
-	-- BG:SetFrameStrata("BACKGROUND")
-	-- BG:SetSize(POS_RIGHT-1, indent)
 end
-
-
-
 local function Create_Slider(scroll, self, number, pos, config, text, color, minValue, maxValue, Octo_Callback_func)
 	if not color then
 		color = "|cffFFFFFF"
 	end
 	if not self[number..pos..config] then
-		-- slider_scale 0.8
-		-- multiplier 2 - E.Octo_Globals.slider_scale
 		steps = maxValue-minValue
 		self[number..pos..config] = CreateFrame("Slider", nil, scroll, "MinimalSliderWithSteppersTemplate")
 		self[number..pos..config]:SetScale(E.Octo_Globals.slider_scale)
 		self[number..pos..config]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos*E.Octo_Globals.multiplier+11, (-indent*(number-1)*E.Octo_Globals.multiplier)-E.Octo_Globals.multiplier*number)
 		formatters = {
-
-
-
 			[MinimalSliderWithSteppersMixin.Label.Top] = function(value)
 				return text
 			end,
-
-
-
 			[MinimalSliderWithSteppersMixin.Label.Right] = function(value)
 				if config == "Addon_Height" then
 					return color..math.ceil(value/20).."|r"
@@ -180,9 +131,6 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 		}
 		self[number..pos..config]:Init(Octo_ToDo_DB_Vars.config[config], minValue, maxValue, steps, formatters)
 		self[number..pos..config]:SetWidth(200)
-
-
-
 		self[number..pos..config]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
 				Octo_ToDo_DB_Vars.config[config] = value
 				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
@@ -196,9 +144,6 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 		end)
 	end
 end
-
-
-
 local function Create_CheckButton(scroll, self, number, pos, otstyp, config, text, r, g, b, a, button)
 	if r == nil then r = E.Octo_Globals.bgCr end
 	if g == nil then g = E.Octo_Globals.bgCg end
@@ -247,9 +192,6 @@ local function Create_CheckButton(scroll, self, number, pos, otstyp, config, tex
 		text2:SetText("|cffFFFFFF"..text..FONT_COLOR_CODE_CLOSE)
 	end
 end
-
-
-
 local function Create_FontString(scroll, self, number, pos, text, r, g, b, alignment)
 	if text == nil then text = "no text" end
 	if color == nil then color = "|cffFFFFFF" end
@@ -260,13 +202,6 @@ local function Create_FontString(scroll, self, number, pos, text, r, g, b, align
 	if not self[number..pos] then
 		self[number..pos] = CreateFrame("Frame", nil, scroll, "BackdropTemplate")
 		f = self[number..pos]
-		-- f:SetBackdrop({
-		-- bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-		-- edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-		-- edgeSize = 1,
-		-- })
-		-- f:SetBackdropColor(r/255, g/255, b/255, 0)
-		-- f:SetBackdropBorderColor(0, 0, 0, 1)
 		f:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos+4, -indent*(number-1)-2)
 		f:SetFrameStrata("BACKGROUND")
 		f:SetSize(POS_RIGHT, indent)
@@ -280,9 +215,6 @@ local function Create_FontString(scroll, self, number, pos, text, r, g, b, align
 		text_str:SetText(text)
 	end
 end
-
-
-
 local function Create_SimpleButton(scroll, self, number, pos, config, text, color)
 	if not color then
 		color = "|cffFFFFFF"
@@ -294,9 +226,6 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 		self[number..pos..config]:RegisterForClicks("LeftButtonDown", "RightButtonDown")
 		self[number..pos..config]:SetSize(indent*6, indent)
 		self[number..pos..config]:SetText(text)
-
-
-
 		self[number..pos..config]:SetScript("OnClick", function(btn)
 				-- Octo_ToDo_DB_Vars.config[config] = btn:GetChecked()
 				if config == "ResetAllChars" then
@@ -306,50 +235,13 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 					ReloadUI()
 				end
 		end)
-		-- self[number..pos..config].text:SetJustifyV("MIDDLE")
-		-- self[number..pos..config].text:SetJustifyH("LEFT")
-		-- self[number..pos..config].text:SetText(color..text..FONT_COLOR_CODE_CLOSE)
 	end
 end
-
-
-
--- local function Create_EditBox(scroll, self, number, pos, config)
--- if not color then
--- color = "|cffFFFFFF"
--- end
--- if not self[number..pos] then
--- self[number..pos] = CreateFrame("Button", nil, scroll, "SecureActionButtonTemplate, BackDropTemplate")
--- self[number..pos]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos, -indent*(number-1))
--- self[number..pos]:SetSize(indent*6, 20)
--- self[number..pos]:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
--- self[number..pos]:SetBackdropBorderColor(0, 0, 0, 1)
--- local editBox = CreateFrame("EditBox", nil, self[number..pos])
--- editBox:SetAllPoints(self[number..pos])
--- editBox:SetFontObject(OctoFont12)
--- editBox:SetMultiLine(false)
--- editBox:SetAutoFocus(false)
--- editBox:SetText(Octo_ToDo_DB_Vars.config[config])
--- editBox:SetJustifyV("MIDDLE")
--- editBox:SetJustifyH("CENTER")
--- editBox:SetScript("OnEscapePressed", editBox.ClearFocus)
--- editBox:SetScript("OnEnterPressed", editBox.ClearFocus)
-
-
-
--- editBox:SetScript("OnTextChanged", function()
--- Octo_ToDo_DB_Vars.config[config] = editBox:GetText() -- 000AD0FD (0AE9B27E RETAIL)
--- end)
--- end
--- end
 local editBoxBackdrop = {
 	bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
 	edgeFile = "Interface\\ChatFrame\\ChatFrameBackground",
 	tile = true, edgeSize = 1, tileSize = 5,
 }
-
-
-
 local function Create_EditBox(scroll, self, number, pos, config)
 	if not color then
 		color = "|cffFFFFFF"
@@ -377,17 +269,11 @@ local function Create_EditBox(scroll, self, number, pos, config)
 		editBox:SetJustifyV("MIDDLE")
 		editBox:SetScript("OnEscapePressed", editBox.ClearFocus)
 		editBox:SetScript("OnEnterPressed", editBox.ClearFocus)
-
-
-
 		editBox:SetScript("OnTextChanged", function()
 				Octo_ToDo_DB_Vars.config[config] = editBox:GetText() -- 000AD0FD (0AE9B27E RETAIL)
 		end)
 	end
 end
-
-
-
 local function Create_Frame_Color(scroll, self, number, pos, text, color)
 	if not color then
 		color = "|cffFFFFFF"
@@ -406,14 +292,6 @@ local function Create_Frame_Color(scroll, self, number, pos, text, color)
 		f:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos, -indent*(number-1))
 		f:SetFrameStrata("BACKGROUND")
 		f:SetSize(POS_RIGHT-indent*4, indent)
-		-- f.BG = f:CreateTexture()
-		-- f.BG:SetAllPoints(f)
-		-- f.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-		-- f.BG:SetVertexColor(E.Octo_Func.func_hex2rgb(color))
-		-- f.texture = f:CreateTexture()
-		-- f.texture:SetAllPoints()
-		-- f.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
-		-- f.texture:SetColorTexture(r/255, g/255, b/255)
 		local text_str = self[number..pos]:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		text_str:SetAllPoints()
 		text_str:SetFontObject(OctoFont11)
@@ -429,6 +307,34 @@ local function Create_Frame_Color(scroll, self, number, pos, text, color)
 end
 
 
+
+-- local function Create_Colored_Frames(anchor, self, number, text, color, height, width)
+-- 	if color == nil then color = "|cffFFFFFF" end
+-- 	if self[number] == nil then
+-- 		local r, g, b = E.Octo_Func.func_hex2rgb(color)
+-- 		self[number] = CreateFrame("Frame", nil, anchor, "BackdropTemplate")
+-- 		frame = self[number]
+-- 		if startHiding == true then frame:Hide() end
+
+-- 		number = number - 1
+-- 		local x = number % row*(width-1)
+-- 		local y = -math.floor(number / row)*(height-1)
+
+-- 		frame:SetPoint("TOPLEFT", anchor, "BOTTOMRIGHT", x, y)
+-- 		frame:SetFrameStrata("HIGH")
+-- 		frame:SetSize(width, height)
+
+-- 		frame.BG = frame:CreateTexture()
+-- 		frame.BG:SetTexture(texture_BG)
+-- 		frame.BG:SetAllPoints(frame)
+-- 		frame.BG:SetVertexColor(1, 1, 1, 1)
+
+-- 		frame.FG = frame:CreateTexture()
+-- 		frame.FG:SetTexture(texture_FG)
+-- 		frame.FG:SetAllPoints(frame)
+-- 		frame.FG:SetVertexColor(r/255, g/255, b/255, 1)
+-- 	end
+-- end
 
 MAIN_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
@@ -455,24 +361,11 @@ MAIN_Config:SetScript("OnShow", function(self)
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
 		btn_right1:SetText(E.Octo_Table.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow])
 		btn_right1:ddSetDisplayMode(GlobalAddonName)
-		-- btn_right1:ddSetOpenMenuUp(true) -- NEW
-
-
-
-		-- btn_right1:SetScript("OnClick", function(self)
-		-- self:ddToggle(1, nil, self, self:GetWidth()+1, self:GetHeight())
-		-- end)
-
-
-
 		local function selectFunctionExpansion(menuButton)
 			Octo_ToDo_DB_Vars.config.ExpansionToShow = menuButton.value
 			btn_right1:SetText(E.Octo_Table.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow])
 			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
-
-
-
 		btn_right1:ddSetInitFunc(function(self, level, value)
 				local info = {}
 				info.fontObject = OctoFont10
@@ -487,9 +380,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 						info.text = v
 						info.value = k
 						info.checked = Octo_ToDo_DB_Vars.config.ExpansionToShow == k
-
-
-
 						info.func = selectFunctionExpansion
 						self:ddAddButton(info, level)
 					end
@@ -500,23 +390,10 @@ MAIN_Config:SetScript("OnShow", function(self)
 		btn_right2:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
 		btn_right2:SetText(E.Octo_Table.wowhead_prefix_Table[Octo_ToDo_DB_Vars.config.prefix])
 		btn_right2:ddSetDisplayMode(GlobalAddonName)
-		-- btn_right2:ddSetOpenMenuUp(true) -- NEW
-
-
-
-		-- btn_right2:SetScript("OnClick", function(self)
-		-- self:ddToggle(1, nil, self, self:GetWidth()+1, self:GetHeight())
-		-- end)
-
-
-
 		local function selectFunctionprefix(menuButton)
 			Octo_ToDo_DB_Vars.config.prefix = menuButton.value
 			btn_right2:SetText(E.Octo_Table.wowhead_prefix_Table[Octo_ToDo_DB_Vars.config.prefix])
 		end
-
-
-
 		btn_right2:ddSetInitFunc(function(self, level, value)
 				local info = {}
 				info.fontObject = OctoFont10
@@ -531,9 +408,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 						info.text = v
 						info.value = k
 						info.checked = Octo_ToDo_DB_Vars.config.prefix == k
-
-
-
 						info.func = selectFunctionprefix
 						self:ddAddButton(info, level)
 					end
@@ -550,7 +424,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 17, POS_RIGHT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"].." "..L["InDev"])
 		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Доп кнопки", r, g, b, .2)
-		-- Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "Achievements", E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 20).." "..WHITE_FONT_COLOR_CODE..ACHIEVEMENTS..FONT_COLOR_CODE_CLOSE)
 		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "ItemsUsable", "ItemsUsable".." "..L["InDev"])
 		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "ItemsDelete", "ItemsDelete".." "..L["InDev"])
 		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, 0, "ShowTotalMoney", "Всего денег")
@@ -574,9 +447,6 @@ FIRST_Config:SetAllPoints()
 FIRST_scrollChild:SetSize(1, 1)
 ScrollUtil.InitScrollFrameWithScrollBar(FIRST_Config, FIRST_ScrollBar)
 local FIRST_OnMouseWheel = FIRST_Config:GetScript("OnMouseWheel")
-
-
-
 FIRST_Config:SetScript("OnMouseWheel", function(self, ...)
 		if FIRST_ScrollBar:IsShown() then
 			FIRST_OnMouseWheel(self, ...)
@@ -586,9 +456,6 @@ TITLE_FIRST = FIRST_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSm
 TITLE_FIRST:SetPoint("TOPLEFT", 4, 30)
 TITLE_FIRST:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
 TITLE_FIRST:SetTextColor(.5, .5, .5, 1)
-
-
-
 FIRST_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
 		----------------------------------------------------------------
@@ -844,8 +711,6 @@ Settings.RegisterAddOnCategory(subcategory)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -860,9 +725,6 @@ SECOND_Config:SetAllPoints()
 SECOND_scrollChild:SetSize(1, 1)
 ScrollUtil.InitScrollFrameWithScrollBar(SECOND_Config, SECOND_ScrollBar)
 local SECOND_OnMouseWheel = SECOND_Config:GetScript("OnMouseWheel")
-
-
-
 SECOND_Config:SetScript("OnMouseWheel", function(self, ...)
 		if SECOND_ScrollBar:IsShown() then
 			SECOND_OnMouseWheel(self, ...)
@@ -872,9 +734,6 @@ TITLE_SECOND = SECOND_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlight
 TITLE_SECOND:SetPoint("TOPLEFT", 4, 30)
 TITLE_SECOND:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
 TITLE_SECOND:SetTextColor(.5, .5, .5, 1)
-
-
-
 SECOND_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
 		----------------------------------------------------------------
@@ -888,68 +747,18 @@ SECOND_Config:SetScript("OnShow", function(self)
 				text = QUESTS_LABEL,
 				button = false,
 			},
-
 			{
 				button = false,
 				text = CURRENCY,
 			},
-			-- {
-			-- 	otstyp = indent,
-			-- 	config = "CatalystCharges",
-			-- 	text = E.Octo_Func.func_currencyicon(2912)..E.Octo_Func.func_currencyName(2912),
-			-- },
-			-- {
-			-- 	otstyp = indent,
-			-- 	config = "Flightstones",
-			-- 	text = E.Octo_Func.func_currencyicon(2245)..E.Octo_Func.func_currencyName(2245),
-			-- },
 			{
 				text = ITEMS,
 				button = false,
 			},
-			-- {
-			-- 	otstyp = indent,
-			-- 	config = "AntiqueBronzeBullion",
-			-- 	text = E.Octo_Func.func_itemTexture(213089)..E.Octo_Func.func_itemName(213089),
-			-- },
-			-- {
-			-- 	otstyp = indent,
-			-- 	config = "SparkofAwakening",
-			-- 	text = E.Octo_Func.func_itemTexture(211516)..E.Octo_Func.func_itemName(211516),
-			-- },
-			-- {
-			-- 	otstyp = indent,
-			-- 	config = "SplinteredSparkofAwakening",
-			-- 	text = E.Octo_Func.func_itemTexture(211515)..E.Octo_Func.func_itemName(211515),
-			-- },
 			{
 				button = false,
 				text = L["Crests"],
 			},
-			-- {
-			-- 	otstyp = indent,
-			-- 	config = "Crests_Mythic",
-			-- 	text = E.Octo_Func.func_currencyicon(2812)..E.Octo_Globals.WOW_Legendary_Color..E.Octo_Func.func_currencyName_NOCOLOR(2812).."|r"
-			-- },
-			-- {
-			-- 	otstyp = indent,
-			-- 	config = "Crests_Heroic",
-			-- 	text = E.Octo_Func.func_currencyicon(2809)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2809).."|r"
-			-- },
-			-- {
-			-- 	otstyp = indent,
-			-- 	config = "Crests_Normal",
-			-- 	text = E.Octo_Func.func_currencyicon(2807)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2807).."|r"
-			-- },
-			-- {
-			-- 	otstyp = indent,
-			-- 	config = "Crests_LFR",
-			-- 	text = E.Octo_Func.func_currencyicon(2806)..E.Octo_Globals.WOW_Uncommon_Color..E.Octo_Func.func_currencyName_NOCOLOR(2806).."|r"
-			-- },
-
-
-
-
 		}
 		for i = 1, #ConfigTable_TWW_LEFT do
 			if ConfigTable_TWW_LEFT[i].otstyp == nil then ConfigTable_TWW_LEFT[i].otstyp = 0 end
@@ -1034,32 +843,6 @@ Settings.RegisterAddOnCategory(subcategory)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 local Octo_DEV_Config = CreateFrame("ScrollFrame", GlobalAddonName.."Octo_DEV_Config")
 Octo_DEV_Config:Hide()
 local Octo_DEV_ScrollBar = CreateFrame("EventFrame", nil, Octo_DEV_Config, "MinimalScrollBar")
@@ -1071,9 +854,6 @@ Octo_DEV_Config:SetAllPoints()
 Octo_DEV_scrollChild:SetSize(1, 1)
 ScrollUtil.InitScrollFrameWithScrollBar(Octo_DEV_Config, Octo_DEV_ScrollBar)
 local Octo_DEV_OnMouseWheel = Octo_DEV_Config:GetScript("OnMouseWheel")
-
-
-
 Octo_DEV_Config:SetScript("OnMouseWheel", function(self, ...)
 		if Octo_DEV_ScrollBar:IsShown() then
 			Octo_DEV_OnMouseWheel(self, ...)
@@ -1083,9 +863,6 @@ TITLE_Octo_DEV = Octo_DEV_Config:CreateFontString(nil, "ARTWORK", "GameFontHighl
 TITLE_Octo_DEV:SetPoint("TOPLEFT", 4, 30)
 TITLE_Octo_DEV:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
 TITLE_Octo_DEV:SetTextColor(.5, .5, .5, 1)
-
-
-
 Octo_DEV_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
 		----------------------------------------------------------------
@@ -1116,8 +893,8 @@ Octo_DEV_Config:SetScript("OnShow", function(self)
 		Create_Slider(Octo_DEV_scrollChild, self, 23, POS_RIGHT, "FoV_right", "FieldOfView: FoV_right", E.Octo_Globals.Green_Color, 0, 300, func_FieldOfView)
 		Create_SimpleButton(Octo_DEV_scrollChild, self, 25, POS_RIGHT, "ResetAllChars", "Reset All Chars")
 		Create_SimpleButton(Octo_DEV_scrollChild, self, 26, POS_RIGHT, "ReloadUI", "Reload UI")
-		for k, v in ipairs(E.Octo_Table.OctoTable_Colors) do
-			Create_Frame_Color(Octo_DEV_scrollChild, self, k, POS_LEFT, v.name, v.hex)
+		for number, v in ipairs(E.Octo_Table.OctoTable_Colors) do
+			Create_Frame_Color(Octo_DEV_scrollChild, self, number, POS_LEFT, v.name, v.hex)
 		end
 		----------------------------------------------------------------
 end)
@@ -1127,5 +904,36 @@ Settings.RegisterAddOnCategory(subcategory)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
+-- local Octo_Minecraft_Config = CreateFrame("ScrollFrame", GlobalAddonName.."Octo_Minecraft_Config")
+-- Octo_Minecraft_Config:Hide()
+-- local Octo_Minecraft_ScrollBar = CreateFrame("EventFrame", nil, Octo_Minecraft_Config, "MinimalScrollBar")
+-- Octo_Minecraft_ScrollBar:SetPoint("TOPLEFT", Octo_Minecraft_Config, "TOPRIGHT", 6, 0)
+-- Octo_Minecraft_ScrollBar:SetPoint("BOTTOMLEFT", Octo_Minecraft_Config, "BOTTOMRIGHT", 6, 0)
+-- local Octo_Minecraft_scrollChild = CreateFrame("Frame", nil, Octo_Minecraft_Config)
+-- Octo_Minecraft_Config:SetScrollChild(Octo_Minecraft_scrollChild)
+-- Octo_Minecraft_Config:SetAllPoints()
+-- Octo_Minecraft_scrollChild:SetSize(1, 1)
+-- ScrollUtil.InitScrollFrameWithScrollBar(Octo_Minecraft_Config, Octo_Minecraft_ScrollBar)
+-- local Octo_Minecraft_OnMouseWheel = Octo_Minecraft_Config:GetScript("OnMouseWheel")
+-- Octo_Minecraft_Config:SetScript("OnMouseWheel", function(self, ...)
+-- 		if Octo_Minecraft_ScrollBar:IsShown() then
+-- 			Octo_Minecraft_OnMouseWheel(self, ...)
+-- 		end
+-- end)
+-- TITLE_Octo_Minecraft = Octo_Minecraft_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+-- TITLE_Octo_Minecraft:SetPoint("TOPLEFT", 4, 30)
+-- TITLE_Octo_Minecraft:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
+-- TITLE_Octo_Minecraft:SetTextColor(.5, .5, .5, 1)
+-- Octo_Minecraft_Config:SetScript("OnShow", function(self)
+-- 		self:SetScript("OnShow", nil)
+-- 		----------------------------------------------------------------
+-- 		----------------------------НАСТРОЙКИ---------------------------
+-- 		for number, v in ipairs(E.Octo_Table.OctoTable_Colors) do
+-- 			Create_Colored_Frames(Octo_Minecraft_scrollChild, self, number, v.name, v.hex, height, width)
+-- 		end
+-- 		----------------------------------------------------------------
+-- end)
+-- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, Octo_Minecraft_Config, E.Octo_Globals.Blue_Color.."Octo_Minecraft_Config".."|r") --Dragonflight
+-- subcategory.ID = "Octo_Minecraft_Config"
+-- Settings.RegisterAddOnCategory(subcategory)
 

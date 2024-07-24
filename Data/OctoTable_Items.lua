@@ -83,6 +83,7 @@ E.Octo_Table.OctoTable_itemID_ALL = {
 
 
 E.Octo_Table.OctoTable_itemID_AutoOpen = {
+	[151060] = true,
 	[213185] = true,
 	[213186] = true,
 	[213190] = true,

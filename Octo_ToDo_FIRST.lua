@@ -1515,7 +1515,7 @@ local function Collect_ALL_ItemsInBag()
 						end
 					end
 					inspectScantipFIRST:ClearLines()
-					if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") then
+					if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
 						-- if hyperlink:find("Каражан") then
 						-- hyperlink = hyperlink:gsub("^[^:]+: ", "Кара: ")
 						-- elseif hyperlink:find("Мехагон") then
