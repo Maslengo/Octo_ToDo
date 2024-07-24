@@ -13,6 +13,11 @@ tinsert(E.Octo_Globals.modules, function()
 	if Octo_ToDo_DB_Vars.config.CVar then
 		if not InCombatLockdown() then
 			C_Timer.After(1, function()
+				-- 11.0
+
+				SetCVar("bankAutoDepositReagents", 1)
+
+
 				SetCVar("enablePings", 0) -- Enables ping system.
 				SetCVar("pingMode", 0) -- Determines which mode is used to use the ping system.
 				SetCVar("showPingsInChat", 0) -- Enables ping details being shown in chat.

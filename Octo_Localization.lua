@@ -30,6 +30,7 @@ if L then
 	L["Necrolord"] = true
 	L["Night Fae"] = true
 	L["Other"] = true
+	L["General"] = true
 	-- L["Researchers Under Fire"] = true
 	L["RESET"] = RESET
 	L["Siege on Dragonbane Keep"] = true
@@ -170,6 +171,7 @@ if L then
 	L["Daily Reset"] = true
 	-- L["Blooming Dreamseeds"] = true
 	L["Was online"] = true
+	-- L["Warbanding Together"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -198,6 +200,7 @@ if L then
 	L["Necrolord"] = "Некролорды"
 	L["Night Fae"] = "Ночной народец"
 	L["Other"] = "Другое"
+	L["General"] = "Общие"
 	-- L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
 	L["RESET"] = "Сброс всех данных аддона"
 	L["Siege on Dragonbane Keep"] = "Осада Драконьей Погибели"
@@ -334,4 +337,5 @@ if L then
 	L["Azerothian Archives"] = "Азеротские архивы"
 	L["Daily Reset"] = "Ежедневный сброс"
 	L["Was online"] = "Был в сети"
+	-- L["Warbanding Together"] = "Всё ради удобства"
 end

@@ -25,16 +25,16 @@ Frame_CommunityFeast:SetBackdrop({
 		edgeSize = 1,
 })
 Frame_CommunityFeast:SetBackdropBorderColor(0, 0, 0, 1)
-Frame_CommunityFeast:SetPoint("TOP",0,-220)
+Frame_CommunityFeast:SetPoint("TOP", 0, -220)
 Frame_CommunityFeast:SetFrameStrata("BACKGROUND")
 Frame_CommunityFeast:SetSize(Width, Height)
 Frame_CommunityFeast.BG = Frame_CommunityFeast:CreateTexture()
 Frame_CommunityFeast.BG:SetAllPoints(Frame_CommunityFeast)
 Frame_CommunityFeast.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-Frame_CommunityFeast.BG:SetVertexColor(0,0,0,.5)
+Frame_CommunityFeast.BG:SetVertexColor(0, 0, 0, .5)
 Frame_CommunityFeast.texture = Frame_CommunityFeast:CreateTexture()
 Frame_CommunityFeast.texture:SetSize(Width, Height)
-Frame_CommunityFeast.texture:SetVertexColor(1,0,0,1)
+Frame_CommunityFeast.texture:SetVertexColor(1, 0, 0, 1)
 Frame_CommunityFeast.texture:SetPoint("LEFT", Frame_CommunityFeast, "LEFT")
 Frame_CommunityFeast.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
 local function OnEvent(self, event, ...)
@@ -46,7 +46,7 @@ local function OnEvent(self, event, ...)
 			Frame_CommunityFeast.texture:SetWidth(.1)
 		elseif objectives[1].numFulfilled == objectives[1].numRequired then
 			Frame_CommunityFeast.texture:SetWidth((Width/objectives[1].numRequired)*objectives[1].numFulfilled)
-			Frame_CommunityFeast.texture:SetVertexColor(0,1,0,1)
+			Frame_CommunityFeast.texture:SetVertexColor(0, 1, 0, 1)
 		elseif objectives[1].numFulfilled >= 1 then
 			Frame_CommunityFeast.texture:SetWidth((Width/objectives[1].numRequired)*objectives[1].numFulfilled)
 		end

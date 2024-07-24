@@ -3490,6 +3490,40 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 
 
 
+	-- {
+	-- 	name_save = "WarbandingTogether",
+	-- 	reset = "Once",
+	-- 	expansion = "TWW",
+	-- 	place = "",
+	-- 	desc = "",
+	-- 	questID = {
+	-- 		83492,
+	-- 		83493,
+	-- 		83494,
+	-- 		83495,
+	-- 		83496,
+	-- 	},
+	-- 	max = 5
+	-- },
+
+
+
+	{
+		name_save = "RadiantEchoes",
+		reset = "Once",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			82539, --Radiant Echoes
+			82540, --Memories of Adventures Past
+		},
+		max = 1
+	},
+
+
+
+
 
 
 

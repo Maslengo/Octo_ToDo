@@ -5,20 +5,23 @@ local strategies = {
 	wowheadTradingPostActivity = {},
 	armory = {}
 }
+
 local tooltipStates = {}
 local output_preffix = ""
+
 local function check_WTF()
-	if Octo_ToDo_DB_Vars.config.prefix == 1 then output_preffix = "ru." -- Русский"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 2 then output_preffix = "de." -- Deutsch"
+	if Octo_ToDo_DB_Vars.config.prefix == 1 then output_preffix = "ru/" -- Русский"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 2 then output_preffix = "de/" -- Deutsch"
 	elseif Octo_ToDo_DB_Vars.config.prefix == 3 then output_preffix = "" -- English"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 4 then output_preffix = "es." -- Español"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 5 then output_preffix = "fr." -- Français"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 6 then output_preffix = "it." -- Italiano"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 7 then output_preffix = "pt." -- Português Brasileiro
-	elseif Octo_ToDo_DB_Vars.config.prefix == 8 then output_preffix = "ko." -- 한국어"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 9 then output_preffix = "cn." -- 简体中文"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 4 then output_preffix = "es/" -- Español"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 5 then output_preffix = "fr/" -- Français"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 6 then output_preffix = "it/" -- Italiano"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 7 then output_preffix = "pt/" -- Português Brasileiro
+	elseif Octo_ToDo_DB_Vars.config.prefix == 8 then output_preffix = "ko/" -- 한국어"
+	elseif Octo_ToDo_DB_Vars.config.prefix == 9 then output_preffix = "cn/" -- 简体中文"
 	end
 end
+
 function E.Octo_Globals.strategies.GetWowheadUrl(dataSources)
 	check_WTF()
 	for _, strategy in pairs(strategies.wowhead) do
@@ -35,6 +38,7 @@ function E.Octo_Globals.strategies.GetWowheadUrl(dataSources)
 		end
 	end
 end
+
 function E.Octo_Globals.strategies.GetWowheadAzEsUrl(dataSources)
 	check_WTF()
 	for _, strategy in pairs(strategies.wowheadAzEs) do
@@ -45,6 +49,7 @@ function E.Octo_Globals.strategies.GetWowheadAzEsUrl(dataSources)
 		end
 	end
 end
+
 function E.Octo_Globals.strategies.GetWowheadTradingPostActivityUrl(dataSources)
 	check_WTF()
 	for _, strategy in pairs(strategies.wowheadTradingPostActivity) do
@@ -55,6 +60,7 @@ function E.Octo_Globals.strategies.GetWowheadTradingPostActivityUrl(dataSources)
 		end
 	end
 end
+
 function E.Octo_Globals.strategies.GetArmoryUrl(dataSources)
 	for _, strategy in pairs(strategies.armory) do
 		local _, locale, realm, name = strategy(dataSources)
@@ -102,6 +108,7 @@ function E.Octo_Globals.strategies.GetArmoryUrl(dataSources)
 		end
 	end
 end
+
 function E.Octo_Globals.altStrategies.GetRaiderIoUrl(dataSources)
 	for _, strategy in pairs(strategies.armory) do
 		local region, _, realm, name = strategy(dataSources)
@@ -142,6 +149,7 @@ function E.Octo_Globals.altStrategies.GetRaiderIoUrl(dataSources)
 		end
 	end
 end
+
 local function GetFromNameAndRealm(name, realm)
 	if not realm or realm == '' then
 		realm = GetRealmName()
@@ -163,6 +171,7 @@ local function GetFromNameAndRealm(name, realm)
 	locale = locale:sub(1, 2) .. "-" .. locale:sub(3)
 	return E.Octo_Globals.regions[region], locale, realm, name
 end
+
 function strategies.armory.GetArmoryFromTooltip(data)
 	if not data.tooltip then
 		return
@@ -173,6 +182,7 @@ function strategies.armory.GetArmoryFromTooltip(data)
 	end
 	return GetFromNameAndRealm(UnitFullName(unit))
 end
+
 function strategies.armory.GetArmoryFromLfgLeader(data)
 	if not data.focus.resultID then
 		return
@@ -180,6 +190,7 @@ function strategies.armory.GetArmoryFromLfgLeader(data)
 	local leader = C_LFGList.GetSearchResultInfo(data.focus.resultID).leaderName
 	return GetFromNameAndRealm(strsplit("-", leader))
 end
+
 function strategies.armory.GetArmoryFromLfgApplicant(data)
 	if not data.focus.memberIdx or not data.focus:GetParent() or not data.focus:GetParent().applicantID then
 		return
@@ -187,6 +198,7 @@ function strategies.armory.GetArmoryFromLfgApplicant(data)
 	local applicant = select(1, C_LFGList.GetApplicantMemberInfo(data.focus:GetParent().applicantID, data.focus.memberIdx))
 	return GetFromNameAndRealm(strsplit("-", applicant))
 end
+
 local function GetFromLink(link)
 	if not link then
 		return
@@ -197,6 +209,7 @@ local function GetFromLink(link)
 	end
 	return id, type
 end
+
 function strategies.wowhead.GetHyperlinkFromTooltip()
 	for _, tooltip in pairs(tooltipStates) do
 		if tooltip.hyperlink then
@@ -204,6 +217,7 @@ function strategies.wowhead.GetHyperlinkFromTooltip()
 		end
 	end
 end
+
 function strategies.wowhead.GetAuraFromTooltip()
 	for _, tooltip in pairs(tooltipStates) do
 		if tooltip.aura then
@@ -211,6 +225,7 @@ function strategies.wowhead.GetAuraFromTooltip()
 		end
 	end
 end
+
 function strategies.wowhead.GetItemFromTooltip(data)
 	if not data.tooltip then
 		return
@@ -218,12 +233,14 @@ function strategies.wowhead.GetItemFromTooltip(data)
 	local _, link = data.tooltip:GetItem()
 	return GetFromLink(link)
 end
+
 function strategies.wowhead.GetSpellFromTooltip(data)
 	if not data.tooltip then
 		return
 	end
 	return select(2, data.tooltip:GetSpell()), "spell"
 end
+
 function strategies.wowhead.GetMountOrToyFromTooltip(data)
 	if not data.tooltip then
 		return
@@ -239,24 +256,28 @@ function strategies.wowhead.GetMountOrToyFromTooltip(data)
 		return tooltipData.id, "item"
 	end
 end
+
 function strategies.wowhead.GetAchievementFromFocus(data)
 	if not data.focus.id or not data.focus.DateCompleted then
 		return
 	end
 	return data.focus.id, "achievement"
 end
+
 function strategies.wowhead.GetKrowisAchievementFromFocus(data)
 	if not data.focus.Achievement or not data.focus.Achievement.Id then
 		return
 	end
 	return data.focus.Achievement.Id, "achievement"
 end
+
 function strategies.wowhead.GetQuestFromFocus(data)
 	if not data.focus.questID then
 		return
 	end
 	return data.focus.questID, "quest"
 end
+
 function strategies.wowhead.GetTrackerFromFocus(data)
 	if (data.focus.id and not data.focus.module) or not data.focus:GetParent() then
 		return
@@ -271,6 +292,7 @@ function strategies.wowhead.GetTrackerFromFocus(data)
 	end
 	return id, "quest"
 end
+
 function strategies.wowhead.GetNpcFromTooltip(data)
 	if not data.tooltip then
 		return
@@ -281,18 +303,21 @@ function strategies.wowhead.GetNpcFromTooltip(data)
 	end
 	return select(6, strsplit("-", UnitGUID(unit))), "npc"
 end
+
 function strategies.wowhead.GetMountFromFocus(data)
 	if not data.focus.spellID then
 		return
 	end
 	return data.focus.spellID, "spell"
 end
+
 function strategies.wowhead.GetLearntMountFromFocus(data)
 	if not data.focus.mountID then
 		return
 	end
 	return select(2, C_MountJournal.GetMountInfoByID(data.focus.mountID)), "spell"
 end
+
 function strategies.wowhead.GetBattlePetFromFocus(data)
 	if not data.focus.petID and (not data.focus:GetParent() or not data.focus:GetParent().petID) then
 		return
@@ -306,12 +331,14 @@ function strategies.wowhead.GetBattlePetFromFocus(data)
 	end
 	return id, "npc"
 end
+
 function strategies.wowhead.GetBattlePetFromFloatingTooltip(data)
 	if not data.focus.speciesID then
 		return
 	end
 	return select(4, C_PetJournal.GetPetInfoBySpeciesID(data.focus.speciesID)), "npc"
 end
+
 function strategies.wowhead.GetBattlePetFromAuctionHouse(data)
 	if not data.focus.itemKey and (not data.focus.GetRowData or not data.focus:GetRowData().itemKey) then
 		return
@@ -319,12 +346,14 @@ function strategies.wowhead.GetBattlePetFromAuctionHouse(data)
 	local itemKey = data.focus.itemKey or data.focus:GetRowData().itemKey
 	return select(4, C_PetJournal.GetPetInfoBySpeciesID(itemKey.battlePetSpeciesID)), "npc"
 end
+
 function strategies.wowhead.GetToyCollectionItemFromFocus(data)
 	if not data.focus.itemID then
 		return
 	end
 	return data.focus.itemID, "item"
 end
+
 function strategies.wowhead.GetTransmogCollectionItemFromFocus(data)
 	if not data.focus.visualInfo or not WardrobeCollectionFrame.tooltipSourceIndex then
 		return
@@ -333,6 +362,7 @@ function strategies.wowhead.GetTransmogCollectionItemFromFocus(data)
 	local selectedStyle = WardrobeCollectionFrame.tooltipSourceIndex
 	return CollectionWardrobeUtil.GetSortedAppearanceSources(selectedAppearance)[selectedStyle].itemID, "item"
 end
+
 function strategies.wowhead.GetTransmogSetItemFromFocus(data)
 	if not data.focus.sourceID or not WardrobeCollectionFrame.tooltipSourceIndex then
 		return
@@ -343,18 +373,21 @@ function strategies.wowhead.GetTransmogSetItemFromFocus(data)
 	CollectionWardrobeUtil.SortSources(appearanceSources, appearanceID, data.focus.sourceID)
 	return appearanceSources[selectedStyle].itemID, "item"
 end
+
 function strategies.wowhead.GetRecipeFromFocus(data)
 	if not data.focus.tradeSkillInfo then
 		return
 	end
 	return data.focus.tradeSkillInfo.recipeID, "spell"
 end
+
 function strategies.wowhead.GetFactionFromFocus(data)
 	if not data.focus.index or not data.focus.standingText then
 		return
 	end
 	return select(14, GetFactionInfo(data.focus.index)), "faction"
 end
+
 function strategies.wowhead.GetCurrencyInTabFromFocus(data)
 	if data.focus.isUnused == nil and (not data.focus:GetParent() or data.focus:GetParent().isUnused == nil) then
 		return
@@ -363,18 +396,21 @@ function strategies.wowhead.GetCurrencyInTabFromFocus(data)
 	local link = C_CurrencyInfo.GetCurrencyListLink(index)
 	return GetFromLink(link)
 end
+
 function strategies.wowhead.GetCurrencyInVendorFromFocus(data)
 	if not data.focus.itemLink then
 		return
 	end
 	return GetFromLink(data.focus.itemLink)
 end
+
 function strategies.wowhead.GetCurrencyInVendorBottomFromFocus(data)
 	if not data.focus.currencyID then
 		return
 	end
 	return data.focus.currencyID, "currency"
 end
+
 function strategies.wowhead.GetConduitFromTree(data)
 	if not data.focus.GetConduitID or data.focus:GetConduitID() == 0 then
 		return
@@ -383,24 +419,28 @@ function strategies.wowhead.GetConduitFromTree(data)
 	local conduitData = C_Soulbinds.GetConduitCollectionData(conduitID)
 	return conduitData.conduitItemID, "item"
 end
+
 function strategies.wowhead.GetConduitFromList(data)
 	if not data.focus.conduitData then
 		return
 	end
 	return data.focus.conduitData.conduitItemID, "item"
 end
+
 function strategies.wowheadAzEs.GetAzEsFromNeckList(data)
 	if not data.focus.essenceID then
 		return
 	end
 	return data.focus.essenceID
 end
+
 function strategies.wowheadAzEs.GetAzEsFromNeckSlot(data)
 	if not data.focus.milestoneID then
 		return
 	end
 	return C_AzeriteEssence.GetMilestoneEssence(data.focus.milestoneID)
 end
+
 function strategies.wowheadAzEs.GetAzEsHyperlinkFromTooltip()
 	for _, tooltip in pairs(tooltipStates) do
 		if tooltip.hyperlink then
@@ -411,20 +451,24 @@ function strategies.wowheadAzEs.GetAzEsHyperlinkFromTooltip()
 		end
 	end
 end
+
 function strategies.wowheadTradingPostActivity.GetTradingPostActivity(data)
 	if not (data.focus.activityName and data.focus.requirementsList) then
 		return
 	end
 	return data.focus.id
 end
+
 local function HookTooltip(tooltip)
 	tooltipStates[tooltip] = {}
 	hooksecurefunc(tooltip, "SetHyperlink",
+
 		function(tooltip, hyperlink)
 			tooltipStates[tooltip].hyperlink = hyperlink
 	end)
 	if E.Octo_Func.Octo_IsRetail() == true then
 		hooksecurefunc(tooltip, "SetRecipeReagentItem",
+
 			function(tooltip, recipeId, reagentIndex)
 				if C_TradeSkillUI.GetRecipeReagentItemLink then
 					tooltipStates[tooltip].hyperlink = C_TradeSkillUI.GetRecipeReagentItemLink(recipeId, reagentIndex)
@@ -432,10 +476,12 @@ local function HookTooltip(tooltip)
 		end)
 	end
 	hooksecurefunc(tooltip, "SetUnitAura",
+
 		function(tooltip, unit, index, filter)
 			tooltipStates[tooltip].aura = select(10, UnitAura(unit, index, filter))
 	end)
 	tooltip:HookScript("OnTooltipCleared",
+
 		function(tooltip)
 			tooltipStates[tooltip] = {}
 	end)
@@ -444,6 +490,7 @@ local eventHookFrame = CreateFrame("Frame")
 eventHookFrame:Hide()
 eventHookFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 eventHookFrame:SetScript("OnEvent",
+
 	function(self, event, arg1)
 		if event == "PLAYER_ENTERING_WORLD" then
 			HookTooltip(GameTooltip)
