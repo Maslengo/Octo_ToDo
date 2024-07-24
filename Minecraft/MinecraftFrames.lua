@@ -15,7 +15,9 @@ EmptyFrame.FG:SetTexture(texture_FG)
 -- local width = 34 -- Ширина
 local height = 1190/2 -- Высота
 local width = 68/2 -- Ширина
-local row = 45
+local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
+local row = PhysicalScreenWidth / width
+
 ----------------------------------------------------------------
 if EventFrame == nil then
 	EventFrame = CreateFrame("Frame")
@@ -69,12 +71,12 @@ local function Create_Colored_Frames(anchor, self, number, text, color, height, 
 		frame:SetFrameStrata("HIGH")
 		frame:SetSize(width, height)
 
-		frame.BG = frame:CreateTexture()
+		frame.BG = frame:CreateTexture(nil, "BACKGROUND", nil, -8)
 		frame.BG:SetTexture(texture_BG)
 		frame.BG:SetAllPoints(frame)
 		frame.BG:SetVertexColor(1, 1, 1, 1)
 
-		frame.FG = frame:CreateTexture()
+		frame.FG = frame:CreateTexture(nil, "BACKGROUND", nil, -7)
 		frame.FG:SetTexture(texture_FG)
 		frame.FG:SetAllPoints(frame)
 		frame.FG:SetVertexColor(r/255, g/255, b/255, 1)
@@ -83,9 +85,12 @@ local function Create_Colored_Frames(anchor, self, number, text, color, height, 
 end
 
 local function OnEvent(self, event, ...)
-	Create_AnchorFrame()
-	AnchorFrame:Show()
-	for number, v in ipairs(E.Octo_Table.OctoTable_Colors) do
+
+	if Octo_ToDo_DB_Vars.config.Minecraft == true then
+		Create_AnchorFrame()
+		AnchorFrame:Show()
+	end
+	for number, v in ipairs(E.Octo_Table.OctoTable_MinecraftColors) do
 		Create_Colored_Frames(AnchorFrame, self, number, v.name, v.hex, height, width)
 	end
 end

@@ -83,6 +83,7 @@ E.Octo_Table.OctoTable_itemID_ALL = {
 
 
 E.Octo_Table.OctoTable_itemID_AutoOpen = {
+	[223908] = true,
 	[151060] = true,
 	[213185] = true,
 	[213186] = true,
@@ -793,6 +794,7 @@ E.Octo_Table.OctoTable_itemID_ItemsUsable_Mount = {
 }
 
 E.Octo_Table.OctoTable_itemID_ItemsUsable_Other = {
+	226145,
 	213389, 213208,
 	210917, 210770, 210923, 210756, 210762, 210768, 128649, 118572, 210498,
 	209037, 210871, 210780, 206271, 210421, 211416, 209036, 44834, 210790,

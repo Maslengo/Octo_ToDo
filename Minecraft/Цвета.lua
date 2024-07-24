@@ -1,6 +1,5 @@
-	Инструмент для подбора цветов и генерации цветовых схем
-	https://colorscheme.ru/color-names.html
-
+	-- Инструмент для подбора цветов и генерации цветовых схем
+	-- https://colorscheme.ru/color-names.html
 	{name = "Белый", hex = "ffffff"},
 	{name = "Дымчато-белый", hex = "f5f5f5"},
 	{name = "Синяя Элис", hex = "f0f8ff"},

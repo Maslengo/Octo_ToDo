@@ -893,6 +893,8 @@ Octo_DEV_Config:SetScript("OnShow", function(self)
 		Create_Slider(Octo_DEV_scrollChild, self, 23, POS_RIGHT, "FoV_right", "FieldOfView: FoV_right", E.Octo_Globals.Green_Color, 0, 300, func_FieldOfView)
 		Create_SimpleButton(Octo_DEV_scrollChild, self, 25, POS_RIGHT, "ResetAllChars", "Reset All Chars")
 		Create_SimpleButton(Octo_DEV_scrollChild, self, 26, POS_RIGHT, "ReloadUI", "Reload UI")
+
+		Create_CheckButton(Octo_DEV_scrollChild, self, 27, POS_RIGHT, 0, "Minecraft", "Minecraft")
 		for number, v in ipairs(E.Octo_Table.OctoTable_Colors) do
 			Create_Frame_Color(Octo_DEV_scrollChild, self, number, POS_LEFT, v.name, v.hex)
 		end
