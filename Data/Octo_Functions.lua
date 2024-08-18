@@ -388,7 +388,7 @@ local All_objectives = E.Octo_Func.All_objectives
 ----------------------------------------------------------------
 function E.Octo_Func.func_Octo_LoadAddOn(GlobalAddonName)
 	if select(5, C_AddOns.GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
-		EnableAddOn(GlobalAddonName)
+		C_AddOns.EnableAddOn(GlobalAddonName)
 		C_AddOns.LoadAddOn(GlobalAddonName)
 	end
 end
