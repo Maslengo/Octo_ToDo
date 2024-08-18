@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 
 local inspectScantipFUNC = nil
@@ -387,9 +387,9 @@ end
 local All_objectives = E.Octo_Func.All_objectives
 ----------------------------------------------------------------
 function E.Octo_Func.func_Octo_LoadAddOn(GlobalAddonName)
-	if select(5, GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
+	if select(5, C_AddOns.GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
 		EnableAddOn(GlobalAddonName)
-		LoadAddOn(GlobalAddonName)
+		C_AddOns.LoadAddOn(GlobalAddonName)
 	end
 end
 local func_Octo_LoadAddOn = E.Octo_Func.func_Octo_LoadAddOn

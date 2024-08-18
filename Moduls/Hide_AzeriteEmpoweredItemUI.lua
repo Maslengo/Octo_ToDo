@@ -1,5 +1,5 @@
 -- local GlobalAddonName, E = ...
--- local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+-- local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 -- ----------------------------------------------------------------
 -- ----------------------------------------------------------------
 -- 				if E.Octo_Func.Octo_IsRetail() == true then
@@ -29,12 +29,12 @@
 -- 						end
 -- 				end)
 -- 			end
--- 			if not IsAddOnLoaded("Blizzard_AzeriteUI") then
+-- 			if not C_AddOns.IsAddOnLoaded("Blizzard_AzeriteUI") then
 -- 				LoadAddOn("Blizzard_AzeriteUI")
 -- 			else
 -- 				func_hook()
 -- 			end
--- 			if not (IsAddOnLoaded("Blizzard_AzeriteUI")) then
+-- 			if not (C_AddOns.IsAddOnLoaded("Blizzard_AzeriteUI")) then
 -- 				UIParentLoadAddOn("Blizzard_AzeriteUI")
 -- 			else
 -- 				func_hook()
@@ -66,7 +66,7 @@
 -- 				end
 -- 				if event == "AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED" and not InCombatLockdown() then
 -- 					local itemLocation = ...
--- 					local r = IsAddOnLoaded("Blizzard_AzeriteRespecUI") and AzeriteRespecFrame
+-- 					local r = C_AddOns.IsAddOnLoaded("Blizzard_AzeriteRespecUI") and AzeriteRespecFrame
 -- 					local after_respec = true
 -- 					if after_respec or (not after_respec and ((r and not r:IsShown()) or not r)) then
 -- 						OpenAzeriteEmpoweredItemUIFromItemLocation(itemLocation)

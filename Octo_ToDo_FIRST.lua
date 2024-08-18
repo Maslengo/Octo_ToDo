@@ -1,8 +1,8 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonNotes = GetAddOnMetadata(GlobalAddonName, "Notes")
-local AddonAuthor = GetAddOnMetadata(GlobalAddonName, "Author")
-local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
+local AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
+local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
 local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
 if PTR_IssueReporter then PTR_IssueReporter:Hide() end
@@ -344,11 +344,13 @@ local function CheckReputationByRepID(self)
 			end
 		-- /dump C_MajorFactions.GetMajorFactionData(2507)
 		elseif C_Reputation.IsMajorFaction(self) then
-			local data = C_MajorFactions.GetMajorFactionData(self)
-			local currentValue = data.renownReputationEarned
-			local totalValue = data.renownLevelThreshold
-			local standing = data.renownLevel
-			vivod = (currentValue).."/"..(totalValue)..E.Octo_Globals.Green_Color.."("..(standing)..")|r"
+			local data = C_MajorFactions.GetMajorFactionData(self) or 0
+			if data ~= 0 then
+				local currentValue = data.renownReputationEarned
+				local totalValue = data.renownLevelThreshold
+				local standing = data.renownLevel
+				vivod = (currentValue).."/"..(totalValue)..E.Octo_Globals.Green_Color.."("..(standing)..")|r"
+			end
 			-- if standing == 0 then vivod = 0 end -- ТУТ ПОФИКСИТЬ
 		elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
 			local friendshipFactionID = reputationInfo.friendshipFactionID or 0
@@ -1153,8 +1155,8 @@ local function Collect_ALL_PVPRaitings()
 	end
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DB_Levels[curGUID]
-	if not IsAddOnLoaded("Blizzard_PVPUI") then
-		LoadAddOn("Blizzard_PVPUI")
+	if not C_AddOns.IsAddOnLoaded("Blizzard_PVPUI") then
+		C_AddOns.LoadAddOn("Blizzard_PVPUI")
 		return
 	end
 	local rating2v2, seasonBest2v2, weeklyBest2v2, seasonPlayed2v2, seasonWon2v2, weeklyPlayed2v2, weeklyWon2v2, cap2v2 = GetPersonalRatedInfo(1)
@@ -2023,8 +2025,8 @@ local function Collect_All_Holiday()
 	function_setBackup()
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DB_Other.Holiday
-	if not IsAddOnLoaded("Blizzard_Calendar") then
-		LoadAddOn("Blizzard_Calendar")
+	if not C_AddOns.IsAddOnLoaded("Blizzard_Calendar") then
+		C_AddOns.LoadAddOn("Blizzard_Calendar")
 		ShowUIPanel(CalendarFrame, true)
 		HideUIPanel(CalendarFrame)
 		-- Calendar_Toggle()
@@ -5878,6 +5880,35 @@ local function O_otrisovka_FIRST()
 						end
 					end
 				end
+
+
+
+
+
+				if Octo_ToDo_DB_Vars.config.ExpansionToShow == 11 then
+					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."The War Within".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2594), CharInfo.reputationID[2594]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2590), CharInfo.reputationID[2590]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2570), CharInfo.reputationID[2570]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2600), CharInfo.reputationID[2600]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2601), CharInfo.reputationID[2601]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2640), CharInfo.reputationID[2640]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2612), CharInfo.reputationID[2612]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2645), CharInfo.reputationID[2645]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2605), CharInfo.reputationID[2605]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2607), CharInfo.reputationID[2607]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2649), CharInfo.reputationID[2649]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2644), CharInfo.reputationID[2644]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2579), CharInfo.reputationID[2579]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2611), CharInfo.reputationID[2611]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2596), CharInfo.reputationID[2596]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2613), CharInfo.reputationID[2613]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2648), CharInfo.reputationID[2648]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2647), CharInfo.reputationID[2647]}
+
+
+				end
+
 				if Octo_ToDo_DB_Vars.config.ExpansionToShow == 10 then
 					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."Dragonflight".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2574), CharInfo.reputationID[2574]} -- Стражи Сна

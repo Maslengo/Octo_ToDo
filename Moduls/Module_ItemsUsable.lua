@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 if E.Octo_Func.Octo_IsRetail() == true then
 	local ltl = LibStub("LibThingsLoad-1.0")
@@ -98,13 +98,13 @@ if E.Octo_Func.Octo_IsRetail() == true then
 				end
 				ItemsUsable_Frame_TEXTNAME:SetPoint("TOPLEFT", ItemsUsable_Frame, "TOPRIGHT")
 				ItemsUsable_Frame_TEXTNAME:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 22, "OUTLINE")
-				ItemsUsable_Frame_TEXTNAME:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
+				ItemsUsable_Frame_TEXTNAME:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 				if not ItemsUsable_Frame_TEXTCOUNT then
 					ItemsUsable_Frame_TEXTCOUNT = ItemsUsable_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 				end
 				ItemsUsable_Frame_TEXTCOUNT:SetPoint("LEFT", ItemsUsable_Frame, "RIGHT")
 				ItemsUsable_Frame_TEXTCOUNT:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 22, "OUTLINE")
-				ItemsUsable_Frame_TEXTCOUNT:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
+				ItemsUsable_Frame_TEXTCOUNT:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 				if not ItemsUsable_UIF_texture then
 					ItemsUsable_UIF_texture = ItemsUsable_Frame:CreateTexture(nil, "BACKGROUND")
 				end

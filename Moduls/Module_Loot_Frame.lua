@@ -1,5 +1,5 @@
 -- local GlobalAddonName, E = ...
--- local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+-- local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 -- ----------------------------------------------------------------------------------------------------------------------------------
 -- ----------------------------------------------------------------------------------------------------------------------------------
 -- --LootFrame
@@ -44,7 +44,7 @@
 -- 				function(_, button)
 -- 					GroupLootHistoryFrame:SetShown(not GroupLootHistoryFrame:IsShown())
 -- 			end)
--- 			--if select(5, GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" then
+-- 			--if select(5, C_AddOns.GetAddOnInfo("RCLootCouncil")) ~= "DISABLED" then
 -- 			--------------------------------------------------------------------------------
 -- 			if not Octo_Frame_RCLootCouncil then
 -- 				Octo_Frame_RCLootCouncil = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")

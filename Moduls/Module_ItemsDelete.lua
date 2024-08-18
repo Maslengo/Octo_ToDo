@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local inspectScantipUSABLE = nil
 if not inspectScantipUSABLE then
 	inspectScantipUSABLE = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUSABLE", nil, "GameTooltipTemplate")
@@ -38,13 +38,13 @@ tinsert(E.Octo_Globals.modules, function()
 			end
 			ItemsDelete_Frame_TEXTNAME:SetPoint("TOPLEFT", ItemsDelete_Frame, "TOPRIGHT")
 			ItemsDelete_Frame_TEXTNAME:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 22, "OUTLINE")
-			ItemsDelete_Frame_TEXTNAME:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
+			ItemsDelete_Frame_TEXTNAME:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 			if not ItemsDelete_Frame_TEXTCOUNT then
 				ItemsDelete_Frame_TEXTCOUNT = ItemsDelete_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			end
 			ItemsDelete_Frame_TEXTCOUNT:SetPoint("LEFT", ItemsDelete_Frame, "RIGHT")
 			ItemsDelete_Frame_TEXTCOUNT:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 22, "OUTLINE")
-			ItemsDelete_Frame_TEXTCOUNT:SetText(GetAddOnMetadata(GlobalAddonName, "Version"))
+			ItemsDelete_Frame_TEXTCOUNT:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 			if not ItemsDelete_UIF_texture then
 				ItemsDelete_UIF_texture = ItemsDelete_Frame:CreateTexture(nil, "BACKGROUND")
 			end

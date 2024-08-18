@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
@@ -67,14 +67,14 @@ E.Octo_Globals.regions = {
 	[4] = "tw",
 	[5] = "cn"
 }
--- E.Octo_Globals.isElvUI = IsAddOnLoaded("ElvUI")
-local _, _, _, isElvUI = GetAddOnInfo("ElvUI")
+-- E.Octo_Globals.isElvUI = C_AddOns.IsAddOnLoaded("ElvUI")
+local _, _, _, isElvUI = C_AddOns.GetAddOnInfo("ElvUI")
 E.Octo_Globals.isElvUI = isElvUI
-local _, _, _, isRCLootCouncil = GetAddOnInfo("RCLootCouncil")
+local _, _, _, isRCLootCouncil = C_AddOns.GetAddOnInfo("RCLootCouncil")
 E.Octo_Globals.isRCLootCouncil = isRCLootCouncil
-local _, _, _, isWeakAuras = GetAddOnInfo("WeakAuras")
+local _, _, _, isWeakAuras = C_AddOns.GetAddOnInfo("WeakAuras")
 E.Octo_Globals.isWeakAuras = isWeakAuras
-local _, _, _, isTomTom = GetAddOnInfo("TomTom")
+local _, _, _, isTomTom = C_AddOns.GetAddOnInfo("TomTom")
 E.Octo_Globals.isTomTom = isTomTom
 E.Octo_Globals.bgCr = 14/255
 E.Octo_Globals.bgCg = 14/255

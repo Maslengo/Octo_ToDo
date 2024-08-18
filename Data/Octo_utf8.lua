@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 function E.Octo_Func.utf8charbytes(s, i)
 	i = i or 1

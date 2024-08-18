@@ -1,13 +1,13 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
 function func_TalentTreeTweaks()
 	if Octo_ToDo_DB_Vars.config.TalentTreeTweaks then
 		if Octo_ToDo_DB_Vars.config.TalentTreeTweaks_Alpha then
-			-- if not IsAddOnLoaded("TalentTreeViewer") then
+			-- if not C_AddOns.IsAddOnLoaded("TalentTreeViewer") then
 			-- 	LoadAddOn("TalentTreeViewer")
 			-- end
-			if not IsAddOnLoaded("Blizzard_ClassTalentUI") then
+			if not C_AddOns.IsAddOnLoaded("Blizzard_ClassTalentUI") then
 				LoadAddOn("Blizzard_ClassTalentUI")
 			end
 			local function TrySetAlpha(frame, value)

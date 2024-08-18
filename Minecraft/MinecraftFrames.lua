@@ -1,10 +1,10 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
 local EventFrame = nil
 local AnchorFrame = nil
-local texture_FG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\minecraft.tga"
-local texture_BG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\minecraft BG.tga"
+local texture_FG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\minecraft.tga"
+local texture_BG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\minecraft BG.tga"
 local startHiding = true
 local EmptyFrame = CreateFrame("BUTTON", GlobalAddonName..E.Octo_Func.GenerateUniqueID(), UIParent)
 EmptyFrame.FG = EmptyFrame:CreateTexture()
@@ -13,8 +13,8 @@ EmptyFrame.FG:SetTexture(texture_FG)
 
 -- local height = 232 -- Высота
 -- local width = 34 -- Ширина
-local height = 1190/2 -- Высота
-local width = 68/2 -- Ширина
+local height = 1190/1 -- Высота
+local width = 68/1 -- Ширина
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local row = PhysicalScreenWidth / width
 
@@ -71,12 +71,12 @@ local function Create_Colored_Frames(anchor, self, number, text, color, height, 
 		frame:SetFrameStrata("HIGH")
 		frame:SetSize(width, height)
 
-		frame.BG = frame:CreateTexture(nil, "BACKGROUND", nil, -8)
+		frame.BG = frame:CreateTexture(nil, "BACKGROUND", nil, -7)
 		frame.BG:SetTexture(texture_BG)
 		frame.BG:SetAllPoints(frame)
 		frame.BG:SetVertexColor(1, 1, 1, 1)
 
-		frame.FG = frame:CreateTexture(nil, "BACKGROUND", nil, -7)
+		frame.FG = frame:CreateTexture(nil, "BACKGROUND", nil, -8)
 		frame.FG:SetTexture(texture_FG)
 		frame.FG:SetAllPoints(frame)
 		frame.FG:SetVertexColor(r/255, g/255, b/255, 1)

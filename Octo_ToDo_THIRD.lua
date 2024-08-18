@@ -1,8 +1,8 @@
 -- local GlobalAddonName, E =...
--- local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
--- local AddonNotes = GetAddOnMetadata(GlobalAddonName, "Notes")
--- local AddonAuthor = GetAddOnMetadata(GlobalAddonName, "Author")
--- local AddonVersion = GetAddOnMetadata(GlobalAddonName, "Version")
+-- local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+-- local AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
+-- local AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
+-- local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 -- local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
 -- local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -- local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")

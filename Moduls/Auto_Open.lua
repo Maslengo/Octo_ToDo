@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local AddonTitle = GetAddOnMetadata(GlobalAddonName, "Title")
+local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 local Octo_AUTO_OPEN = CreateFrame("Frame", AddonTitle)
 Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")
