@@ -180,6 +180,7 @@ if L then
 	L["Weekly Azj-Kahet"] = true
 	L["Weekly Hallowfall"] = true
 	L["Weekly the Isle of Dorn"] = true
+	L["Beledar Cycle"] = true
 
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
@@ -353,4 +354,5 @@ if L then
 	L["Weekly Azj-Kahet"] = "Еженедельный Азж-Кахет"
 	L["Weekly Hallowfall"] = "Еженедельно Хэллоуфолл"
 	L["Weekly the Isle of Dorn"] = "Еженедельно Остров Дорн"
+	L["Beledar Cycle"] = "Беледарский цикл"
 end

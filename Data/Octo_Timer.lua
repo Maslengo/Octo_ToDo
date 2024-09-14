@@ -260,21 +260,24 @@ function E.Octo_Timer.DF_Flower()
 end
 
 
-function E.Octo_Timer.TWW_Beledarr()
+function E.Octo_Timer.TWW_BeledarCycle()
 --questid = 83240
 --icon 1355358 or 608954
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_TWW_Beledarr".."|r")
 	end
-	local TIMER = 1698494405
-	local interval = 3600
-	local duration = 600
+	-- local TIMER = 1698494405
+	local TIMER = 1726311612
+	--драк 30 мин
+	--лайт час 10
+	local interval = (180)*60 -- каждые 3 час
+	local duration = (30)*60 -- 30 минут
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	if (nextEventIn/60/60) < 24 then
-		local Timer_TWW_Beledarr = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		local Timer_TWW_Beledarr = E.Octo_Globals.Yellow_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
 		if nextEventIn > (interval - duration) then
 			nextEventIn = nextEventIn - (interval - duration)
-			Timer_TWW_Beledarr = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+			Timer_TWW_Beledarr = E.Octo_Globals.Purple_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
 		end
 		return Timer_TWW_Beledarr
 	else

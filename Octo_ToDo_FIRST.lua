@@ -764,7 +764,7 @@ local function CreateFrameUsableSpells_OnEnter(self)
 	end
 	self.icon:SetVertexColor(1, 1, 1, 1)
 	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT", 0, 0)
-	-- local startTime, duration = GetSpellCooldown(self.spellID)
+	-- local startTime, duration = C_Spell.GetSpellCooldown(self.spellID)
 	local isKnown = IsSpellKnown(self.spellID)
 	if isKnown == true then
 		self.icon:SetVertexColor(1, 1, 1, 1)
@@ -793,7 +793,7 @@ local function CreateFrameUsableSpells_OnLeave(self)
 	GameTooltip:Hide()
 	self:SetBackdropBorderColor(0, 0, 0, 1)
 	--
-	-- local startTime, duration = GetSpellCooldown(self.spellID)
+	-- local startTime, duration = C_Spell.GetSpellCooldown(self.spellID)
 	-- if startTime ~= nil and startTime ~= 0 then
 	-- GameTooltip:ClearLines()
 	-- GameTooltip:Hide()
@@ -812,7 +812,7 @@ local function CreateFrameUsableSpells_OnEvent(self, event)
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."CreateFrameUsableSpells_OnEvent".."|r")
 	end
 	if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
-		local startTime, duration = GetSpellCooldown(self.spellID)
+		local startTime, duration = C_Spell.GetSpellCooldown(self.spellID)
 		local isKnown = IsSpellKnown(self.spellID)
 		if isKnown == true then
 			self.icon:SetVertexColor(1, 1, 1, 1)
@@ -4931,7 +4931,7 @@ local function O_otrisovka_FIRST()
 		end
 	end
 	if Octo_ToDo_DB_Vars.config.ExpansionToShow == 11 then -- The War Within
-		-- ЭПОХАЛЬНЫЙ КЛЮЧ
+		-- ЭПОХАЛЬНЫЙ КЛЮЧ TWW
 		if Octo_ToDo_DB_Vars.config.MP_MythicKeystone == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -4982,16 +4982,187 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
+		-- КВЕСТЫ TWW
+		if Octo_ToDo_DB_Vars.config.BeledarCycle == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = L["Beledar Cycle"].." "..E.Octo_Timer.TWW_BeledarCycle()
+					if CharInfo.OctoTable_QuestID[83240] ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.OctoTable_QuestID[83240]
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
 
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				vivodLeft = "Beledarr Timer "..E.Octo_Timer.TWW_Beledarr()
-				if CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count ~= E.Octo_Globals.NONE then
-					vivodCent = CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count
-				end
-				return vivodCent, vivodLeft
-		end)
+		if Octo_ToDo_DB_Vars.config.World_Boss_S1 == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = WorldBoss_Icon..L["World Boss"]
+					if CharInfo.Octopussy_TWW_Weekly_WBWorld_Boss_S1_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_WBWorld_Boss_S1_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_DQ_S1 == true then
+			-- Octopussy_TWW_Weekly_Weekly_DQ_S1_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = L["Weekly Dungeon Quest"]
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_DQ_S1_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_DQ_S1_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_Delve_S1 == true then
+			-- Octopussy_TWW_Weekly_Weekly_Delve_S1_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_questName(83366)
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_Delve_S1_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_Delve_S1_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_Caches_S1 == true then
+			-- Octopussy_TWW_Weekly_Weekly_WQ_Caches_S1_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = L["Weekly World Quest caches x2"]
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_Caches_S1_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_Caches_S1_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_Soul == true then
+			-- Octopussy_TWW_Weekly_Weekly_WQ_S1_Soul_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_questName(82452)
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Soul_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Soul_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_Crafting == true then
+			-- Octopussy_TWW_Weekly_Weekly_WQ_S1_Crafting_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = L["Weekly Crafting Quests"]
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Crafting_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Crafting_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_Fishing == true then
+			-- Octopussy_TWW_Weekly_Weekly_WQ_S1_Fishing_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = "Fishing" -- E.Octo_Func.func_questName(82778)
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Fishing_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Fishing_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zKahet == true then
+			-- Octopussy_TWW_Weekly_Weekly_WQ_S1_zKahet_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = L["Weekly Azj-Kahet"]
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zKahet_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zKahet_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zHallow == true then
+			-- Octopussy_TWW_Weekly_Weekly_WQ_S1_zHallow_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = L["Weekly Hallowfall"]
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zHallow_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zHallow_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_Sniffer == true then
+			-- Octopussy_TWW_Weekly_Weekly_WQ_S1_Sniffer_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_questName(82946)
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Sniffer_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Sniffer_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zRing == true then
+			-- Octopussy_TWW_Weekly_Weekly_WQ_S1_zRing_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_questName(83333)
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zRing_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zRing_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zDorn == true then
+			-- Octopussy_TWW_Weekly_Weekly_WQ_S1_zDorn_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = L["Weekly the Isle of Dorn"]
+					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zDorn_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zDorn_count
+					end
+					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
 
 
 
@@ -7091,6 +7262,8 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		-- Octo_ToDo_FIRST_Frame_Main_Frame = CreateFrame("BUTTON", AddonTitle..E.Octo_Func.GenerateUniqueID().."Octo_ToDo_FIRST_Frame_Main_FrameПИЗДА", UIParent, "BackdropTemplate")
 		Octo_ToDo_FIRST_Frame_Main_Frame = CreateFrame("BUTTON", "Octo_ToDo_FIRST_Frame_Main_FramePIZDA", UIParent, "BackdropTemplate")
 		Octo_ToDo_FIRST_Frame_Main_Frame:Hide()
+		Octo_ToDo_DB_Vars.config.FrameScale = Octo_ToDo_DB_Vars.config.FrameScale or 1
+		Octo_ToDo_FIRST_Frame_Main_Frame:SetScale(Octo_ToDo_DB_Vars.config.FrameScale)
 		--
 		--
 		--
@@ -7935,113 +8108,113 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	--
 	if E.Octo_Func.Octo_IsRetail() == true then
-		-- if Octo_ToDo_DB_Vars.config.PortalsButtons == true then
-		-- 	local Xpos = 0
-		-- 	local Ypos = -21
-		-- 	local prof1, prof2 = GetProfessions()
-		-- 	local prof1 = prof1 and select(7, GetProfessionInfo(prof1))
-		-- 	local prof2 = prof2 and select(7, GetProfessionInfo(prof2))
-		-- 	local className, classFilename, classId = UnitClass("PLAYER")
-		-- 	local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
-		-- 	local Faction = UnitFactionGroup("PLAYER")
-		-- 	if prof1 == 202 or prof2 == 202 then
-		-- 		-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
-		-- 		CreateFrameUsableItems(198156, 4548860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254) -- Генератор червоточин: Драконьи острова
-		-- 		CreateFrameUsableItems(172924, 3610528, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542) -- Генератор червоточин: Темные Земли
-		-- 		if Faction == "Horde" then
-		-- 			CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 265807) -- Генератор червоточин: Зандалар
-		-- 			CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 265807) -- Генератор червоточин: Кул-Тирас
-		-- 		else
-		-- 			CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 264492) -- Генератор червоточин: Зандалар
-		-- 			CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 264492) -- Генератор червоточин: Кул-Тирас
-		-- 		end
-		-- 		CreateFrameUsableItems(151652, 237560, 1, Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 264490) -- Генератор червоточин: Аргус -- 264491
-		-- 		CreateFrameUsableItems(112059, 892831, 1, Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 264487) -- Центрифуга червоточины
-		-- 		CreateFrameUsableItems(87215, 651094, 1, Xpos*6+Ypos*1, Ypos*7, 0, .43, .86, 264485) -- Генератор червоточин: Пандария
-		-- 		CreateFrameUsableItems(48933, 135778, 1, Xpos*7+Ypos*1, Ypos*8, 0, .43, .86, 264481) -- Генератор червоточин: Нордскол
-		-- 		-- ЕСТЬ ИНЖА
-		-- 		CreateFrameUsableItems(110560, 1041860, 1, Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
-		-- 		CreateFrameUsableItems(6948, 134414, 1, Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-		-- 		CreateFrameUsableItems(140192, 1444943, 1, Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-		-- 		if classFilename == "DRUID" then
-		-- 			CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Сноходец
-		-- 		end
-		-- 		if classFilename == "DEATHKNIGHT" then
-		-- 			CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Врата смерти
-		-- 		end
-		-- 		if classFilename == "SHAMAN" then
-		-- 			CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Астральное возвращение
-		-- 		end
-		-- 		if classFilename == "MONK" then
-		-- 			CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Духовное путешествие
-		-- 		end
-		-- 		if RaceEnglish == "DarkIronDwarf" then
-		-- 			CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Буровая установка
-		-- 		end
-		-- 	else
-		-- 		-- НЕТ ИНЖИ
-		-- 		CreateFrameUsableItems(110560, 1041860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
-		-- 		CreateFrameUsableItems(6948, 134414, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-		-- 		CreateFrameUsableItems(140192, 1444943, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-		-- 		if classFilename == "DRUID" then
-		-- 			CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Сноходец
-		-- 		end
-		-- 		if classFilename == "DEATHKNIGHT" then
-		-- 			CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Врата смерти
-		-- 		end
-		-- 		if classFilename == "SHAMAN" then
-		-- 			CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Астральное возвращение
-		-- 		end
-		-- 		if classFilename == "MONK" then
-		-- 			CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Духовное путешествие
-		-- 		end
-		-- 		if RaceEnglish == "DarkIronDwarf" then
-		-- 			CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Буровая установка
-		-- 		end
-		-- 	end
-		-- 	local UnitLevel = UnitLevel("PLAYER")
-		-- 	if UnitLevel >= 20 then
-		-- 		-- (spellID, Texture, Xpos, Ypos, r, g, b)
-		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_MoP) do
-		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
-		-- 		end
-		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_WoD) do
-		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*3, (Ypos*k), 0, .43, .86)
-		-- 		end
-		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_Legion) do
-		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*4, (Ypos*k), 0, .43, .86)
-		-- 		end
-		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_BfA) do
-		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*5, (Ypos*k), 0, .43, .86)
-		-- 		end
-		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_SL) do
-		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*6, (Ypos*k), 0, .43, .86)
-		-- 		end
-		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF) do
-		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*7, (Ypos*k), 0, .43, .86)
-		-- 		end
-		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF_S3) do
-		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
-		-- 		end
-		-- 		if classFilename == "MAGE" and Faction == "Horde" then
-		-- 			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Horde) do
-		-- 				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
-		-- 			end
-		-- 			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Horde) do
-		-- 				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
-		-- 			end
-		-- 		end
-		-- 		if classFilename == "MAGE" and Faction == "Alliance" then
-		-- 			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Alliance) do
-		-- 				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
-		-- 			end
-		-- 			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance) do
-		-- 				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
-		-- 			end
-		-- 		end
-		-- 		-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
-		-- 	end
-		-- end
+		if Octo_ToDo_DB_Vars.config.PortalsButtons == true then
+			local Xpos = 0
+			local Ypos = -21
+			local prof1, prof2 = GetProfessions()
+			local prof1 = prof1 and select(7, GetProfessionInfo(prof1))
+			local prof2 = prof2 and select(7, GetProfessionInfo(prof2))
+			local className, classFilename, classId = UnitClass("PLAYER")
+			local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
+			local Faction = UnitFactionGroup("PLAYER")
+			if prof1 == 202 or prof2 == 202 then
+				-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
+				CreateFrameUsableItems(198156, 4548860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254) -- Генератор червоточин: Драконьи острова
+				CreateFrameUsableItems(172924, 3610528, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542) -- Генератор червоточин: Темные Земли
+				if Faction == "Horde" then
+					CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 265807) -- Генератор червоточин: Зандалар
+					CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 265807) -- Генератор червоточин: Кул-Тирас
+				else
+					CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 264492) -- Генератор червоточин: Зандалар
+					CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 264492) -- Генератор червоточин: Кул-Тирас
+				end
+				CreateFrameUsableItems(151652, 237560, 1, Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 264490) -- Генератор червоточин: Аргус -- 264491
+				CreateFrameUsableItems(112059, 892831, 1, Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 264487) -- Центрифуга червоточины
+				CreateFrameUsableItems(87215, 651094, 1, Xpos*6+Ypos*1, Ypos*7, 0, .43, .86, 264485) -- Генератор червоточин: Пандария
+				CreateFrameUsableItems(48933, 135778, 1, Xpos*7+Ypos*1, Ypos*8, 0, .43, .86, 264481) -- Генератор червоточин: Нордскол
+				-- ЕСТЬ ИНЖА
+				CreateFrameUsableItems(110560, 1041860, 1, Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
+				CreateFrameUsableItems(6948, 134414, 1, Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+				CreateFrameUsableItems(140192, 1444943, 1, Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+				if classFilename == "DRUID" then
+					CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Сноходец
+				end
+				if classFilename == "DEATHKNIGHT" then
+					CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Врата смерти
+				end
+				if classFilename == "SHAMAN" then
+					CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Астральное возвращение
+				end
+				if classFilename == "MONK" then
+					CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Духовное путешествие
+				end
+				if RaceEnglish == "DarkIronDwarf" then
+					CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Буровая установка
+				end
+			else
+				-- НЕТ ИНЖИ
+				CreateFrameUsableItems(110560, 1041860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
+				CreateFrameUsableItems(6948, 134414, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+				CreateFrameUsableItems(140192, 1444943, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+				if classFilename == "DRUID" then
+					CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Сноходец
+				end
+				if classFilename == "DEATHKNIGHT" then
+					CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Врата смерти
+				end
+				if classFilename == "SHAMAN" then
+					CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Астральное возвращение
+				end
+				if classFilename == "MONK" then
+					CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Духовное путешествие
+				end
+				if RaceEnglish == "DarkIronDwarf" then
+					CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Буровая установка
+				end
+			end
+			local UnitLevel = UnitLevel("PLAYER")
+			if UnitLevel >= 20 then
+				-- (spellID, Texture, Xpos, Ypos, r, g, b)
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_MoP) do
+					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
+				end
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_WoD) do
+					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*3, (Ypos*k), 0, .43, .86)
+				end
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Legion) do
+					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*4, (Ypos*k), 0, .43, .86)
+				end
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_BfA) do
+					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*5, (Ypos*k), 0, .43, .86)
+				end
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_SL) do
+					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*6, (Ypos*k), 0, .43, .86)
+				end
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF) do
+					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*7, (Ypos*k), 0, .43, .86)
+				end
+				for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF_S3) do
+					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
+				end
+				if classFilename == "MAGE" and Faction == "Horde" then
+					for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Horde) do
+						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+					end
+					for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Horde) do
+						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
+					end
+				end
+				if classFilename == "MAGE" and Faction == "Alliance" then
+					for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Alliance) do
+						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+					end
+					for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance) do
+						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
+					end
+				end
+				-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
+			end
+		end
 	end
 	local function FrameLine_OnEnter(self)
 		self.BG:SetColorTexture(r, g, b, E.Octo_Globals.BGALPHA*2)
@@ -8431,8 +8604,20 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.TheGeneral == nil then Octo_ToDo_DB_Vars.TheGeneral = false end
 		if Octo_ToDo_DB_Vars.config.BrannBronzebeard == nil then Octo_ToDo_DB_Vars.BrannBronzebeard = false end
 
-
-
+		if Octo_ToDo_DB_Vars.config.BeledarCycle == nil then Octo_ToDo_DB_Vars.BeledarCycle = false end
+		if Octo_ToDo_DB_Vars.config.World_Boss_S1 == nil then Octo_ToDo_DB_Vars.World_Boss_S1 = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_DQ_S1 == nil then Octo_ToDo_DB_Vars.Weekly_DQ_S1 = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_Delve_S1 == nil then Octo_ToDo_DB_Vars.Weekly_Delve_S1 = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_Caches_S1 == nil then Octo_ToDo_DB_Vars.Weekly_WQ_Caches_S1 = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_Soul == nil then Octo_ToDo_DB_Vars.Weekly_WQ_S1_Soul = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_Crafting == nil then Octo_ToDo_DB_Vars.Weekly_WQ_S1_Crafting = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_Fishing == nil then Octo_ToDo_DB_Vars.Weekly_WQ_S1_Fishing = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zKahet == nil then Octo_ToDo_DB_Vars.Weekly_WQ_S1_zKahet = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zHallow == nil then Octo_ToDo_DB_Vars.Weekly_WQ_S1_zHallow = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_Sniffer == nil then Octo_ToDo_DB_Vars.Weekly_WQ_S1_Sniffer = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zRing == nil then Octo_ToDo_DB_Vars.Weekly_WQ_S1_zRing = false end
+		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zDorn == nil then Octo_ToDo_DB_Vars.Weekly_WQ_S1_zDorn = false end
+		if Octo_ToDo_DB_Vars.config.FrameScale == nil then Octo_ToDo_DB_Vars.FrameScale = 1 end
 
 
 

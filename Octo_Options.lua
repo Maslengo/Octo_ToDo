@@ -108,12 +108,12 @@ local function Create_Model(scroll, self, number, pos, model)
 			end
 	end)
 end
-local function Create_Slider(scroll, self, number, pos, config, text, color, minValue, maxValue, Octo_Callback_func)
+local function Create_Slider(scroll, self, number, pos, config, text, color, minValue, maxValue, step, Octo_Callback_func)
 	if not color then
 		color = "|cffFFFFFF"
 	end
 	if not self[number..pos..config] then
-		steps = maxValue-minValue
+		steps = (maxValue-minValue)/(step or 1)
 		self[number..pos..config] = CreateFrame("Slider", nil, scroll, "MinimalSliderWithSteppersTemplate")
 		self[number..pos..config]:SetScale(E.Octo_Globals.slider_scale)
 		self[number..pos..config]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos*E.Octo_Globals.multiplier+11, (-indent*(number-1)*E.Octo_Globals.multiplier)-E.Octo_Globals.multiplier*number)
@@ -132,14 +132,17 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 		self[number..pos..config]:Init(Octo_ToDo_DB_Vars.config[config], minValue, maxValue, steps, formatters)
 		self[number..pos..config]:SetWidth(200)
 		self[number..pos..config]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
-				Octo_ToDo_DB_Vars.config[config] = value
-				StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+				Octo_ToDo_DB_Vars.config[config] = math.floor(value * 10 + 0.5)/10
+				self[number..pos..config].RightText:SetText(color..Octo_ToDo_DB_Vars.config[config].."|r")
 				if Octo_Callback_func then
-					for i, func in ipairs(E.Octo_Globals.modules) do
-						if func == Octo_Callback_func then
-							func()
-						end
-					end
+					Octo_Callback_func()
+					-- for i, func in ipairs(E.Octo_Globals.modules) do
+					-- 	if func == Octo_Callback_func then
+					-- 		func()
+					-- 	end
+					-- end
+				else
+					StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 				end
 		end)
 	end
@@ -421,9 +424,12 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_Slider(MAIN_scrollChild, self, 11.5, POS_RIGHT, "curWidthTitleAchievement", "curWidthTitleAchievement", E.Octo_Globals.Green_Color, 100, 400)
 		Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "curHeight", "Высота строк: ", E.Octo_Globals.Green_Color, 10, 30)
 		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк: ", E.Octo_Globals.Green_Color, 200, 1000)
-		Create_CheckButton(MAIN_scrollChild, self, 17, POS_RIGHT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
-		-- Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"].." "..L["InDev"])
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Доп кнопки", r, g, b, .2)
+		Create_Slider(MAIN_scrollChild, self, 16, POS_RIGHT, "FrameScale", "Addon Scale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
+			Octo_ToDo_FIRST_Frame_Main_FramePIZDA:SetScale(Octo_ToDo_DB_Vars.config.FrameScale)
+		end)
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"].." "..L["InDev"])
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Доп кнопки", r, g, b, .2)
 		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "ItemsUsable", "ItemsUsable".." "..L["InDev"])
 		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "ItemsDelete", "ItemsDelete".." "..L["InDev"])
 		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, 0, "ShowTotalMoney", "Всего денег")
@@ -748,6 +754,11 @@ SECOND_Config:SetScript("OnShow", function(self)
 				button = false,
 			},
 
+{
+	otstyp = indent,
+	config = "BeledarCycle",
+	text = L["Beledar Cycle"].." "..E.Octo_Timer.TWW_BeledarCycle(),
+},
 {
 	otstyp = indent,
 	config = "World_Boss_S1",
