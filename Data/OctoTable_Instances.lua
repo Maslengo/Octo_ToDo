@@ -93,7 +93,18 @@ E.Octo_Table.OctoTable_KeystoneAbbr = {
 	{mapChallengeModeID = 198, abbreviation = "DHT"}, -- "DHT"}, -- Darkheart Thicket
 	{mapChallengeModeID = 168, abbreviation = "EB"}, -- "TE"}, -- The Everbloom
 	{mapChallengeModeID = 456, abbreviation = "TOTT"}, -- "TotT"}, -- Throne of the Tides (Cataclysm)
-	{mapChallengeModeID = 248, abbreviation = "WM"} -- "WM"}, -- Waycrest Manor
+	{mapChallengeModeID = 248, abbreviation = "WM"}, -- "WM"}, -- Waycrest Manor
+
+	{mapChallengeModeID = 501, abbreviation = "SV"}, -- The Stonevault
+	{mapChallengeModeID = 502, abbreviation = "COT"}, -- City of Threads
+	{mapChallengeModeID = 503, abbreviation = "ARAK"}, --Ara-Kara, city of echoes
+	{mapChallengeModeID = 505, abbreviation = "DAWN"}, -- The Dawnbreaker
+	{mapChallengeModeID = 507, abbreviation = "GB"}, -- Grim Batol
+
+
+
+
+
 }
 E.Octo_Table.OctoTable_LFGDungeons = {
 	-- [1045] = "Случайное подземелье Легиона",

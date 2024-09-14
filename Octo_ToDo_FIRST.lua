@@ -7935,113 +7935,113 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	--
 	if E.Octo_Func.Octo_IsRetail() == true then
-		if Octo_ToDo_DB_Vars.config.PortalsButtons == true then
-			local Xpos = 0
-			local Ypos = -21
-			local prof1, prof2 = GetProfessions()
-			local prof1 = prof1 and select(7, GetProfessionInfo(prof1))
-			local prof2 = prof2 and select(7, GetProfessionInfo(prof2))
-			local className, classFilename, classId = UnitClass("PLAYER")
-			local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
-			local Faction = UnitFactionGroup("PLAYER")
-			if prof1 == 202 or prof2 == 202 then
-				-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
-				CreateFrameUsableItems(198156, 4548860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254) -- Генератор червоточин: Драконьи острова
-				CreateFrameUsableItems(172924, 3610528, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542) -- Генератор червоточин: Темные Земли
-				if Faction == "Horde" then
-					CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 265807) -- Генератор червоточин: Зандалар
-					CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 265807) -- Генератор червоточин: Кул-Тирас
-				else
-					CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 264492) -- Генератор червоточин: Зандалар
-					CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 264492) -- Генератор червоточин: Кул-Тирас
-				end
-				CreateFrameUsableItems(151652, 237560, 1, Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 264490) -- Генератор червоточин: Аргус -- 264491
-				CreateFrameUsableItems(112059, 892831, 1, Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 264487) -- Центрифуга червоточины
-				CreateFrameUsableItems(87215, 651094, 1, Xpos*6+Ypos*1, Ypos*7, 0, .43, .86, 264485) -- Генератор червоточин: Пандария
-				CreateFrameUsableItems(48933, 135778, 1, Xpos*7+Ypos*1, Ypos*8, 0, .43, .86, 264481) -- Генератор червоточин: Нордскол
-				-- ЕСТЬ ИНЖА
-				CreateFrameUsableItems(110560, 1041860, 1, Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
-				CreateFrameUsableItems(6948, 134414, 1, Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-				CreateFrameUsableItems(140192, 1444943, 1, Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-				if classFilename == "DRUID" then
-					CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Сноходец
-				end
-				if classFilename == "DEATHKNIGHT" then
-					CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Врата смерти
-				end
-				if classFilename == "SHAMAN" then
-					CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Астральное возвращение
-				end
-				if classFilename == "MONK" then
-					CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Духовное путешествие
-				end
-				if RaceEnglish == "DarkIronDwarf" then
-					CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Буровая установка
-				end
-			else
-				-- НЕТ ИНЖИ
-				CreateFrameUsableItems(110560, 1041860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
-				CreateFrameUsableItems(6948, 134414, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-				CreateFrameUsableItems(140192, 1444943, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603) -- Камень возвращения в Даларан
-				if classFilename == "DRUID" then
-					CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Сноходец
-				end
-				if classFilename == "DEATHKNIGHT" then
-					CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Врата смерти
-				end
-				if classFilename == "SHAMAN" then
-					CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Астральное возвращение
-				end
-				if classFilename == "MONK" then
-					CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Духовное путешествие
-				end
-				if RaceEnglish == "DarkIronDwarf" then
-					CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Буровая установка
-				end
-			end
-			local UnitLevel = UnitLevel("PLAYER")
-			if UnitLevel >= 20 then
-				-- (spellID, Texture, Xpos, Ypos, r, g, b)
-				for k, v in pairs(E.Octo_Table.OctoTable_Portals_MoP) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
-				end
-				for k, v in pairs(E.Octo_Table.OctoTable_Portals_WoD) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*3, (Ypos*k), 0, .43, .86)
-				end
-				for k, v in pairs(E.Octo_Table.OctoTable_Portals_Legion) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*4, (Ypos*k), 0, .43, .86)
-				end
-				for k, v in pairs(E.Octo_Table.OctoTable_Portals_BfA) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*5, (Ypos*k), 0, .43, .86)
-				end
-				for k, v in pairs(E.Octo_Table.OctoTable_Portals_SL) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*6, (Ypos*k), 0, .43, .86)
-				end
-				for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*7, (Ypos*k), 0, .43, .86)
-				end
-				for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF_S3) do
-					CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
-				end
-				if classFilename == "MAGE" and Faction == "Horde" then
-					for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Horde) do
-						CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
-					end
-					for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Horde) do
-						CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
-					end
-				end
-				if classFilename == "MAGE" and Faction == "Alliance" then
-					for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Alliance) do
-						CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
-					end
-					for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance) do
-						CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
-					end
-				end
-				-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
-			end
-		end
+		-- if Octo_ToDo_DB_Vars.config.PortalsButtons == true then
+		-- 	local Xpos = 0
+		-- 	local Ypos = -21
+		-- 	local prof1, prof2 = GetProfessions()
+		-- 	local prof1 = prof1 and select(7, GetProfessionInfo(prof1))
+		-- 	local prof2 = prof2 and select(7, GetProfessionInfo(prof2))
+		-- 	local className, classFilename, classId = UnitClass("PLAYER")
+		-- 	local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
+		-- 	local Faction = UnitFactionGroup("PLAYER")
+		-- 	if prof1 == 202 or prof2 == 202 then
+		-- 		-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
+		-- 		CreateFrameUsableItems(198156, 4548860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254) -- Генератор червоточин: Драконьи острова
+		-- 		CreateFrameUsableItems(172924, 3610528, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542) -- Генератор червоточин: Темные Земли
+		-- 		if Faction == "Horde" then
+		-- 			CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 265807) -- Генератор червоточин: Зандалар
+		-- 			CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 265807) -- Генератор червоточин: Кул-Тирас
+		-- 		else
+		-- 			CreateFrameUsableItems(168808, 2000840, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 264492) -- Генератор червоточин: Зандалар
+		-- 			CreateFrameUsableItems(168807, 2000841, 1, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 264492) -- Генератор червоточин: Кул-Тирас
+		-- 		end
+		-- 		CreateFrameUsableItems(151652, 237560, 1, Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 264490) -- Генератор червоточин: Аргус -- 264491
+		-- 		CreateFrameUsableItems(112059, 892831, 1, Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 264487) -- Центрифуга червоточины
+		-- 		CreateFrameUsableItems(87215, 651094, 1, Xpos*6+Ypos*1, Ypos*7, 0, .43, .86, 264485) -- Генератор червоточин: Пандария
+		-- 		CreateFrameUsableItems(48933, 135778, 1, Xpos*7+Ypos*1, Ypos*8, 0, .43, .86, 264481) -- Генератор червоточин: Нордскол
+		-- 		-- ЕСТЬ ИНЖА
+		-- 		CreateFrameUsableItems(110560, 1041860, 1, Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
+		-- 		CreateFrameUsableItems(6948, 134414, 1, Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+		-- 		CreateFrameUsableItems(140192, 1444943, 1, Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+		-- 		if classFilename == "DRUID" then
+		-- 			CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Сноходец
+		-- 		end
+		-- 		if classFilename == "DEATHKNIGHT" then
+		-- 			CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Врата смерти
+		-- 		end
+		-- 		if classFilename == "SHAMAN" then
+		-- 			CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Астральное возвращение
+		-- 		end
+		-- 		if classFilename == "MONK" then
+		-- 			CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Духовное путешествие
+		-- 		end
+		-- 		if RaceEnglish == "DarkIronDwarf" then
+		-- 			CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Буровая установка
+		-- 		end
+		-- 	else
+		-- 		-- НЕТ ИНЖИ
+		-- 		CreateFrameUsableItems(110560, 1041860, 1, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603) -- Камень возвращения в гарнизон
+		-- 		CreateFrameUsableItems(6948, 134414, 1, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+		-- 		CreateFrameUsableItems(140192, 1444943, 1, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603) -- Камень возвращения в Даларан
+		-- 		if classFilename == "DRUID" then
+		-- 			CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Сноходец
+		-- 		end
+		-- 		if classFilename == "DEATHKNIGHT" then
+		-- 			CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Врата смерти
+		-- 		end
+		-- 		if classFilename == "SHAMAN" then
+		-- 			CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Астральное возвращение
+		-- 		end
+		-- 		if classFilename == "MONK" then
+		-- 			CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Духовное путешествие
+		-- 		end
+		-- 		if RaceEnglish == "DarkIronDwarf" then
+		-- 			CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Буровая установка
+		-- 		end
+		-- 	end
+		-- 	local UnitLevel = UnitLevel("PLAYER")
+		-- 	if UnitLevel >= 20 then
+		-- 		-- (spellID, Texture, Xpos, Ypos, r, g, b)
+		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_MoP) do
+		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
+		-- 		end
+		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_WoD) do
+		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*3, (Ypos*k), 0, .43, .86)
+		-- 		end
+		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_Legion) do
+		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*4, (Ypos*k), 0, .43, .86)
+		-- 		end
+		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_BfA) do
+		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*5, (Ypos*k), 0, .43, .86)
+		-- 		end
+		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_SL) do
+		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*6, (Ypos*k), 0, .43, .86)
+		-- 		end
+		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF) do
+		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*7, (Ypos*k), 0, .43, .86)
+		-- 		end
+		-- 		for k, v in pairs(E.Octo_Table.OctoTable_Portals_DF_S3) do
+		-- 			CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
+		-- 		end
+		-- 		if classFilename == "MAGE" and Faction == "Horde" then
+		-- 			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Horde) do
+		-- 				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+		-- 			end
+		-- 			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Horde) do
+		-- 				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
+		-- 			end
+		-- 		end
+		-- 		if classFilename == "MAGE" and Faction == "Alliance" then
+		-- 			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Solo_Alliance) do
+		-- 				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+		-- 			end
+		-- 			for k, v in pairs(E.Octo_Table.OctoTable_Portals_Mage_Group_Alliance) do
+		-- 				CreateFrameUsableSpells(v, select(3, GetSpellInfo(v)), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
+		-- 			end
+		-- 		end
+		-- 		-- (itemID, Texture, count, Xpos, Ypos, r, g, b, spellID)
+		-- 	end
+		-- end
 	end
 	local function FrameLine_OnEnter(self)
 		self.BG:SetColorTexture(r, g, b, E.Octo_Globals.BGALPHA*2)
