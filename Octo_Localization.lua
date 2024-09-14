@@ -172,6 +172,15 @@ if L then
 	-- L["Blooming Dreamseeds"] = true
 	L["Was online"] = true
 	-- L["Warbanding Together"] = true
+
+
+	L["Weekly Dungeon Quest"] = true
+	L["Weekly World Quest caches x2"] = true
+	L["Weekly Crafting Quests"] = true
+	L["Weekly Azj-Kahet"] = true
+	L["Weekly Hallowfall"] = true
+	L["Weekly the Isle of Dorn"] = true
+
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -338,4 +347,10 @@ if L then
 	L["Daily Reset"] = "Ежедневный сброс"
 	L["Was online"] = "Был в сети"
 	-- L["Warbanding Together"] = "Всё ради удобства"
+	L["Weekly Dungeon Quest"] = "Еженедельное задание подземелья"
+	L["Weekly World Quest caches x2"] = "Еженедельные сундуки мировых заданий x2"
+	L["Weekly Crafting Quests"] = "Еженедельные квесты на ремесло"
+	L["Weekly Azj-Kahet"] = "Еженедельный Азж-Кахет"
+	L["Weekly Hallowfall"] = "Еженедельно Хэллоуфолл"
+	L["Weekly the Isle of Dorn"] = "Еженедельно Остров Дорн"
 end

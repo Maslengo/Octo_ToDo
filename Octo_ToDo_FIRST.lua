@@ -4995,46 +4995,289 @@ local function O_otrisovka_FIRST()
 
 
 
-
-
-		-- tinsert(OctoTable_func_otrisovka_FIRST,
-		-- 	function(CharInfo, tooltip, CL, BG)
-		-- 		local vivodCent, vivodLeft = "", ""
-		-- 		vivodLeft = E.Octo_Func.func_texturefromIcon(4914670)..E.Octo_Globals.Once..L["Warbanding Together"]
-		-- 		if CharInfo.Octopussy_TWW_Once_WarbandingTogether_count ~= E.Octo_Globals.NONE then
-		-- 			vivodCent = CharInfo.Octopussy_TWW_Once_WarbandingTogether_count
-		-- 		end
-		-- 		BG:SetColorTexture(1, .4, .1, E.Octo_Globals.BGALPHA)
-		-- 		return vivodCent, vivodLeft
-		-- end)
-
-
-
-
-
-
-		for _, currencyID in ipairs(E.Octo_Table.OctoTable_currency_Virtual) do
+		-- ВАЛЮТА TWW
+		if Octo_ToDo_DB_Vars.config.RestoredCofferKey == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Globals.LightGray_Color.."Virtual|r"..E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)..E.Octo_Globals.LightGray_Color.." id:"..currencyID.."|r"
-					if CharInfo.CurrencyID[currencyID] ~= 0 then
-						vivodCent = CharInfo.CurrencyID[currencyID]
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[3028] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3028]).."|r"
 					end
+					vivodLeft = E.Octo_Func.func_currencyicon(3028)..E.Octo_Func.func_currencyName(3028)
 					return vivodCent, vivodLeft
 			end)
 		end
-		for _, currencyID in ipairs(E.Octo_Table.OctoTable_currency_TheWarWithin) do
+		if Octo_ToDo_DB_Vars.config.NerubarFinery == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = E.Octo_Globals.LightGray_Color.."TWW|r"..E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)..E.Octo_Globals.LightGray_Color.." id:"..currencyID.."|r"
-					if CharInfo.CurrencyID[currencyID] ~= 0 then
-						vivodCent = CharInfo.CurrencyID[currencyID]
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[3093] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3093]).."|r"
 					end
+					vivodLeft = E.Octo_Func.func_currencyicon(3093)..E.Octo_Func.func_currencyName(3093)
 					return vivodCent, vivodLeft
 			end)
 		end
+		if Octo_ToDo_DB_Vars.config.GildedHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[2917] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2917]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(2917)..E.Octo_Func.func_currencyName(2917)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.RunedHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[2916] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2916]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(2916)..E.Octo_Func.func_currencyName(2916)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.CarvedHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[2915] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2915]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(2915)..E.Octo_Func.func_currencyName(2915)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[2914] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2914]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(2914)..E.Octo_Func.func_currencyName(2914)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.Undercoin == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[2803] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2803]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(2803)..E.Octo_Func.func_currencyName(2803)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.Valorstones == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[3008] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3008]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(3008)..E.Octo_Func.func_currencyName(3008)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.MereldarDerbyMark == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[3055] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3055]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(3055)..E.Octo_Func.func_currencyName(3055)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.ResidualMemories == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[3089] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3089]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(3089)..E.Octo_Func.func_currencyName(3089)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.Kej == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[3056] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3056]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(3056)..E.Octo_Func.func_currencyName(3056)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.ResonanceCrystals == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
+					if CharInfo.CurrencyID[2815] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2815]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(2815)..E.Octo_Func.func_currencyName(2815)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		-- РЕПУТАЦИЯ TWW
+
+		if Octo_ToDo_DB_Vars.config.TheAssemblyoftheDeeps == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"
+					if CharInfo.reputationID[2594] ~= 0 then
+						vivodCent = CharInfo.reputationID[2594]
+					end
+					vivodLeft = E.Octo_Func.func_texturefromIcon(5891367)..E.Octo_Func.func_reputationName(2594)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.CouncilofDornogal == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"
+					if CharInfo.reputationID[2590] ~= 0 then
+						vivodCent = CharInfo.reputationID[2590]
+					end
+					vivodLeft = E.Octo_Func.func_texturefromIcon(5891369)..E.Octo_Func.func_reputationName(2590)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+
+
+		if Octo_ToDo_DB_Vars.config.HallowfallArathi == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"
+					if CharInfo.reputationID[2570] ~= 0 then
+						vivodCent = CharInfo.reputationID[2570]
+					end
+					vivodLeft = E.Octo_Func.func_texturefromIcon(5891368)..E.Octo_Func.func_reputationName(2570)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+
+
+		if Octo_ToDo_DB_Vars.config.TheSeveredThreads == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"
+					if CharInfo.reputationID[2600] ~= 0 then
+						vivodCent = CharInfo.reputationID[2600]
+					end
+					vivodLeft = E.Octo_Func.func_texturefromIcon(5891370)..E.Octo_Func.func_reputationName(2600)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.TheWeaver == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"
+					if CharInfo.reputationID[2601] ~= 0 then
+						vivodCent = CharInfo.reputationID[2601]
+					end
+					vivodLeft = E.Octo_Func.func_texturefromIcon(5862764)..E.Octo_Func.func_reputationName(2601)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.TheVizier == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"
+					if CharInfo.reputationID[2607] ~= 0 then
+						vivodCent = CharInfo.reputationID[2607]
+					end
+					vivodLeft = E.Octo_Func.func_texturefromIcon(5862763)..E.Octo_Func.func_reputationName(2607)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.TheGeneral == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"
+					if CharInfo.reputationID[2605] ~= 0 then
+						vivodCent = CharInfo.reputationID[2605]
+					end
+					vivodLeft = E.Octo_Func.func_texturefromIcon(5862762)..E.Octo_Func.func_reputationName(2605)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+		if Octo_ToDo_DB_Vars.config.BrannBronzebeard == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"
+					if CharInfo.reputationID[2640] ~= 0 then
+						vivodCent = CharInfo.reputationID[2640]
+					end
+					vivodLeft = E.Octo_Func.func_texturefromIcon(5453546)..E.Octo_Func.func_reputationName(2640)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+
+
+		-- for _, currencyID in ipairs(E.Octo_Table.OctoTable_currency_TheWarWithin) do
+		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 		function(CharInfo, tooltip, CL, BG)
+		-- 			local vivodCent, vivodLeft = "", ""
+		-- 			vivodLeft = E.Octo_Globals.LightGray_Color.."TWW|r"..E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID)..E.Octo_Globals.LightGray_Color.." id:"..currencyID.."|r"
+		-- 			if CharInfo.CurrencyID[currencyID] ~= 0 then
+		-- 				vivodCent = CharInfo.CurrencyID[currencyID]
+		-- 			end
+		-- 			return vivodCent, vivodLeft
+		-- 	end)
+		-- end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		-- for _, currencyID in ipairs(E.Octo_Table.OctoTable_currency_PlayervsPlayer) do
 		-- 	tinsert(OctoTable_func_otrisovka_FIRST,
 		-- 		function(CharInfo, tooltip, CL, BG)
@@ -8060,7 +8303,7 @@ local function main_frame_toggle()
 				----------------------------------------------------------------
 				Collect_ALL_PlayerInfo()
 				Collect_All_Currency()
-				Collect_ALL_GreatVault()
+				-- Collect_ALL_GreatVault()
 				Collect_ALL_ItemLevel()
 				Collect_ALL_ItemsInBag()
 				Collect_ALL_Locations()
@@ -8165,6 +8408,39 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline = false end
 		if Octo_ToDo_DB_Vars.config.Flightstones == nil then Octo_ToDo_DB_Vars.config.Flightstones = true end
 		if Octo_ToDo_DB_Vars.config.CatalystCharges == nil then Octo_ToDo_DB_Vars.config.CatalystCharges = true end
+
+		if Octo_ToDo_DB_Vars.config.RestoredCofferKey == nil then Octo_ToDo_DB_Vars.RestoredCofferKey = false end
+		if Octo_ToDo_DB_Vars.config.NerubarFinery == nil then Octo_ToDo_DB_Vars.NerubarFinery = false end
+		if Octo_ToDo_DB_Vars.config.GildedHarbingerCrest == nil then Octo_ToDo_DB_Vars.GildedHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.RunedHarbingerCrest == nil then Octo_ToDo_DB_Vars.RunedHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.CarvedHarbingerCrest == nil then Octo_ToDo_DB_Vars.CarvedHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest == nil then Octo_ToDo_DB_Vars.WeatheredHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.Undercoin == nil then Octo_ToDo_DB_Vars.Undercoin = false end
+		if Octo_ToDo_DB_Vars.config.Valorstones == nil then Octo_ToDo_DB_Vars.Valorstones = false end
+		if Octo_ToDo_DB_Vars.config.MereldarDerbyMark == nil then Octo_ToDo_DB_Vars.MereldarDerbyMark = false end
+		if Octo_ToDo_DB_Vars.config.ResidualMemories == nil then Octo_ToDo_DB_Vars.ResidualMemories = false end
+		if Octo_ToDo_DB_Vars.config.Kej == nil then Octo_ToDo_DB_Vars.Kej = false end
+		if Octo_ToDo_DB_Vars.config.ResonanceCrystals == nil then Octo_ToDo_DB_Vars.ResonanceCrystals = false end
+
+		if Octo_ToDo_DB_Vars.config.TheAssemblyoftheDeeps == nil then Octo_ToDo_DB_Vars.TheAssemblyoftheDeeps = false end
+		if Octo_ToDo_DB_Vars.config.CouncilofDornogal == nil then Octo_ToDo_DB_Vars.CouncilofDornogal = false end
+		if Octo_ToDo_DB_Vars.config.HallowfallArathi == nil then Octo_ToDo_DB_Vars.HallowfallArathi = false end
+		if Octo_ToDo_DB_Vars.config.TheSeveredThreads == nil then Octo_ToDo_DB_Vars.TheSeveredThreads = false end
+		if Octo_ToDo_DB_Vars.config.TheWeaver == nil then Octo_ToDo_DB_Vars.TheWeaver = false end
+		if Octo_ToDo_DB_Vars.config.TheVizier == nil then Octo_ToDo_DB_Vars.TheVizier = false end
+		if Octo_ToDo_DB_Vars.config.TheGeneral == nil then Octo_ToDo_DB_Vars.TheGeneral = false end
+		if Octo_ToDo_DB_Vars.config.BrannBronzebeard == nil then Octo_ToDo_DB_Vars.BrannBronzebeard = false end
+
+
+
+
+
+
+
+
+
+
+
 		if Octo_ToDo_DB_Vars.config.TimeRift == nil then Octo_ToDo_DB_Vars.config.TimeRift = false end
 		if Octo_ToDo_DB_Vars.config.DilatedTimePod == nil then Octo_ToDo_DB_Vars.config.DilatedTimePod = false end
 		if Octo_ToDo_DB_Vars.config.EncapsulatedDestiny == nil then Octo_ToDo_DB_Vars.config.EncapsulatedDestiny = false end
@@ -8369,7 +8645,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		----------------------------------------------------------------
 		Collect_ALL_PlayerInfo()
 		Collect_All_Currency()
-		Collect_ALL_GreatVault()
+		-- Collect_ALL_GreatVault()
 		Collect_All_Holiday()
 		Collect_ALL_ItemLevel()
 		Collect_ALL_ItemsInBag()
@@ -8482,7 +8758,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_LEAVING_WORLD") and not InCombatLockdown() then
-		Collect_ALL_GreatVault()
+		-- Collect_ALL_GreatVault()
 		Collect_ALL_LoginTime()
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end

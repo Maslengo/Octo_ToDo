@@ -3540,7 +3540,8 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 
 
-
+-- Еженедельное задание подземелья
+-- Weekly Dungeon Quest
 	{
 		name_save = "Weekly_DQ_S1",
 		reset = "Weekly",
@@ -3557,7 +3558,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 1
 	},
 
-
+--83366
 	{
 		name_save = "Weekly_Delve_S1",
 		reset = "Weekly",
@@ -3572,8 +3573,10 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 
 
 
+-- Еженедельные сундуки мировых заданий x2
+-- Weekly World Quest caches x2
 	{
-		name_save = "Weekly_WQ_Caches_S1",
+		name_save = "Weekly_WQ_Caches_S1", --
 		reset = "Weekly",
 		expansion = "TWW",
 		place = "",
@@ -3588,7 +3591,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 1
 	},
 
-
+--82452
 	{
 		name_save = "Weekly_WQ_S1_Soul",
 		reset = "Weekly",
@@ -3608,7 +3611,8 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 
 
 
-
+--Weekly Crafting Quests
+--Еженедельные квесты на ремесло
 	{
 		name_save = "Weekly_WQ_S1_Crafting",
 		reset = "Weekly",
@@ -3622,10 +3626,10 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 			84130, --Jewelcrafting
 			84131, --Leatherworking
 			84132, --Tailoring
-			84133,  --Alchemy
-			84084,   -- enchanting
-			84085,   -- enchanting
-			84086,   -- enchanting
+			84133, --Alchemy
+			84084, -- enchanting
+			84085, -- enchanting
+			84086, -- enchanting
 			82965, --Herbalism
 			82958, --Herbalism
 			82916, --Herbalism
@@ -3648,7 +3652,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 
 
 
-
+-- 83532
 	{
 		name_save = "Weekly_WQ_S1_Fishing",
 		reset = "Weekly",
@@ -3665,7 +3669,8 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 1
 	},
 
-
+-- Weekly Azj-Kahet
+-- Еженедельный Азж-Кахет
 	{
 		name_save = "Weekly_WQ_S1_zKahet",
 		reset = "Weekly",
@@ -3684,8 +3689,8 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 
 
 
-
-
+-- Weekly Hallowfall
+-- Еженедельно Хэллоуфолл
 	{
 		name_save = "Weekly_WQ_S1_zHallow",
 		reset = "Weekly",
@@ -3700,7 +3705,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 
 
-
+--82946
 	{
 		name_save = "Weekly_WQ_S1_Sniffer",
 		reset = "Weekly",
@@ -3713,7 +3718,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 1
 	},
 
-
+--83333
 	{
 		name_save = "Weekly_WQ_S1_zRing",
 		reset = "Weekly",
@@ -3727,7 +3732,8 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 
 
-
+-- Weekly the Isle of Dorn
+-- Еженедельно Остров Дорн
 	{
 		name_save = "Weekly_WQ_S1_zDorn",
 		reset = "Weekly",

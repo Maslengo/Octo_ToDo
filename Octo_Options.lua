@@ -739,26 +739,237 @@ SECOND_Config:SetScript("OnShow", function(self)
 		----------------------------------------------------------------
 		----------------------------НАСТРОЙКИ---------------------------
 		ConfigTable_TWW_LEFT = {
-			{
-				config = "MP_MythicKeystone",
-				text = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.WOW_Epic_Color..L["Mythic Keystone"].."|r",
-			},
+{
+	config = "MP_MythicKeystone",
+	text = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.WOW_Epic_Color..L["Mythic Keystone"].."|r",
+},
 			{
 				text = QUESTS_LABEL,
 				button = false,
 			},
+
+{
+	otstyp = indent,
+	config = "World_Boss_S1",
+	text = L["World Boss"],
+},
+
+{
+	otstyp = indent,
+	config = "Weekly_DQ_S1",
+	text = L["Weekly Dungeon Quest"],
+},
+{
+	otstyp = indent,
+	config = "Weekly_Delve_S1",
+	text = E.Octo_Func.func_questName(83366),
+},
+{
+	otstyp = indent,
+	config = "Weekly_WQ_Caches_S1",
+	text = L["Weekly World Quest caches x2"],
+},
+{
+	otstyp = indent,
+	config = "Weekly_WQ_S1_Soul",
+	text = E.Octo_Func.func_questName(82452),
+},
+{
+	otstyp = indent,
+	config = "Weekly_WQ_S1_Crafting",
+	text = L["Weekly Crafting Quests"],
+},
+{
+	otstyp = indent,
+	config = "Weekly_WQ_S1_Fishing",
+	text = E.Octo_Func.func_questName(82778),
+},
+{
+	otstyp = indent,
+	config = "Weekly_WQ_S1_zKahet",
+	text = L["Weekly Azj-Kahet"],
+},
+{
+	otstyp = indent,
+	config = "Weekly_WQ_S1_zHallow",
+	text = L["Weekly Hallowfall"],
+},
+{
+	otstyp = indent,
+	config = "Weekly_WQ_S1_Sniffer",
+	text = E.Octo_Func.func_questName(82946),
+},
+{
+	otstyp = indent,
+	config = "Weekly_WQ_S1_zRing",
+	text = E.Octo_Func.func_questName(83333),
+},
+{
+	otstyp = indent,
+	config = "Weekly_WQ_S1_zDorn",
+	text = L["Weekly the Isle of Dorn"],
+},
+
+
+
+
+
+
+
+
+
 			{
 				button = false,
 				text = CURRENCY,
 			},
+{
+	otstyp = indent,
+	config = "RestoredCofferKey",
+	text = E.Octo_Func.func_currencyicon(3028)..E.Octo_Func.func_currencyName(3028),
+},
+{
+	otstyp = indent,
+	config = "NerubarFinery",
+	text = E.Octo_Func.func_currencyicon(3093)..E.Octo_Func.func_currencyName(3093),
+},
+{
+	otstyp = indent,
+	config = "GildedHarbingerCrest",
+	text = E.Octo_Func.func_currencyicon(2917)..E.Octo_Func.func_currencyName(2917),
+},
+
+{
+	otstyp = indent,
+	config = "RunedHarbingerCrest",
+	text = E.Octo_Func.func_currencyicon(2916)..E.Octo_Func.func_currencyName(2916),
+},
+
+{
+	otstyp = indent,
+	config = "CarvedHarbingerCrest",
+	text = E.Octo_Func.func_currencyicon(2915)..E.Octo_Func.func_currencyName(2915),
+},
+
+{
+	otstyp = indent,
+	config = "WeatheredHarbingerCrest",
+	text = E.Octo_Func.func_currencyicon(2914)..E.Octo_Func.func_currencyName(2914),
+},
+
+{
+	otstyp = indent,
+	config = "Undercoin",
+	text = E.Octo_Func.func_currencyicon(2803)..E.Octo_Func.func_currencyName(2803),
+},
+{
+	otstyp = indent,
+	config = "Valorstones",
+	text = E.Octo_Func.func_currencyicon(3008)..E.Octo_Func.func_currencyName(3008),
+},
+{
+	otstyp = indent,
+	config = "MereldarDerbyMark",
+	text = E.Octo_Func.func_currencyicon(3055)..E.Octo_Func.func_currencyName(3055),
+},
+{
+	otstyp = indent,
+	config = "ResidualMemories",
+	text = E.Octo_Func.func_currencyicon(3089)..E.Octo_Func.func_currencyName(3089),
+},
+{
+	otstyp = indent,
+	config = "Kej",
+	text = E.Octo_Func.func_currencyicon(3056)..E.Octo_Func.func_currencyName(3056),
+},
+{
+	otstyp = indent,
+	config = "ResonanceCrystals",
+	text = E.Octo_Func.func_currencyicon(2815)..E.Octo_Func.func_currencyName(2815),
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			{
 				text = ITEMS,
 				button = false,
 			},
 			{
 				button = false,
-				text = L["Crests"],
+				text = REPUTATION,
 			},
+
+
+
+
+
+
+
+{
+	otstyp = indent,
+	config = "TheAssemblyoftheDeeps",
+	text = E.Octo_Func.func_texturefromIcon(5891367)..E.Octo_Func.func_reputationName(2594),
+},
+{
+	otstyp = indent,
+	config = "CouncilofDornogal",
+	text = E.Octo_Func.func_texturefromIcon(5891369)..E.Octo_Func.func_reputationName(2590),
+},
+{
+	otstyp = indent,
+	config = "HallowfallArathi",
+	text = E.Octo_Func.func_texturefromIcon(5891368)..E.Octo_Func.func_reputationName(2570),
+},
+{
+	otstyp = indent,
+	config = "TheSeveredThreads",
+	text = E.Octo_Func.func_texturefromIcon(5891370)..E.Octo_Func.func_reputationName(2600),
+},
+{
+	otstyp = indent,
+	config = "TheWeaver",
+	text = E.Octo_Func.func_texturefromIcon(5862764)..E.Octo_Func.func_reputationName(2601),
+},
+{
+	otstyp = indent,
+	config = "TheVizier",
+	text = E.Octo_Func.func_texturefromIcon(5862763)..E.Octo_Func.func_reputationName(2607),
+},
+{
+	otstyp = indent,
+	config = "TheGeneral",
+	text = E.Octo_Func.func_texturefromIcon(5862762)..E.Octo_Func.func_reputationName(2605),
+},
+{
+	otstyp = indent,
+	config = "BrannBronzebeard",
+	text = E.Octo_Func.func_texturefromIcon(5453546)..E.Octo_Func.func_reputationName(2640),
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		}
 		for i = 1, #ConfigTable_TWW_LEFT do
 			if ConfigTable_TWW_LEFT[i].otstyp == nil then ConfigTable_TWW_LEFT[i].otstyp = 0 end
