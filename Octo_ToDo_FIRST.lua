@@ -4982,6 +4982,21 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
+
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = "Beledarr Timer "..E.Octo_Timer.TWW_Beledarr()
+				if CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count ~= E.Octo_Globals.NONE then
+					vivodCent = CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count
+				end
+				return vivodCent, vivodLeft
+		end)
+
+
+
+
+
 		-- tinsert(OctoTable_func_otrisovka_FIRST,
 		-- 	function(CharInfo, tooltip, CL, BG)
 		-- 		local vivodCent, vivodLeft = "", ""
@@ -5887,19 +5902,23 @@ local function O_otrisovka_FIRST()
 
 				if Octo_ToDo_DB_Vars.config.ExpansionToShow == 11 then
 					tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."The War Within".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2594), CharInfo.reputationID[2594]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2590), CharInfo.reputationID[2590]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2570), CharInfo.reputationID[2570]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2600), CharInfo.reputationID[2600]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2601), CharInfo.reputationID[2601]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2640), CharInfo.reputationID[2640]}
-					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2612), CharInfo.reputationID[2612]}
-					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2645), CharInfo.reputationID[2645]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2605), CharInfo.reputationID[2605]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2607), CharInfo.reputationID[2607]}
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5891367)..E.Octo_Func.func_reputationName(2594), CharInfo.reputationID[2594]} -- ассамблея-глубин
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5891369)..E.Octo_Func.func_reputationName(2590), CharInfo.reputationID[2590]} -- совет-дорногала
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5891368)..E.Octo_Func.func_reputationName(2570), CharInfo.reputationID[2570]} -- арати-тайносводья
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5891370)..E.Octo_Func.func_reputationName(2600), CharInfo.reputationID[2600]} -- отрезанные-нити
+
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5862764)..E.Octo_Func.func_reputationName(2601), CharInfo.reputationID[2601]} -- прядильщица
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5862763)..E.Octo_Func.func_reputationName(2607), CharInfo.reputationID[2607]} -- визирь
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5862762)..E.Octo_Func.func_reputationName(2605), CharInfo.reputationID[2605]} -- генерал
+
+					tooltip[#tooltip+1] = {E.Octo_Func.func_texturefromIcon(5453546)..E.Octo_Func.func_reputationName(2640), CharInfo.reputationID[2640]} -- бранн-бронзобород
+
+
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2579), CharInfo.reputationID[2579]}
 					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2649), CharInfo.reputationID[2649]}
 					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2644), CharInfo.reputationID[2644]}
-					tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2579), CharInfo.reputationID[2579]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2612), CharInfo.reputationID[2612]}
+					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2645), CharInfo.reputationID[2645]}
 					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2611), CharInfo.reputationID[2611]}
 					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2596), CharInfo.reputationID[2596]}
 					-- tooltip[#tooltip+1] = {E.Octo_Func.func_reputationName(2613), CharInfo.reputationID[2613]}

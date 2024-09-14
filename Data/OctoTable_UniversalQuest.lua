@@ -3525,6 +3525,226 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 
 
 
+ ---------- TWW
+
+	{
+		name_save = "World_Boss_S1",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "WB",
+		questID = {
+			82653,
+		},
+		max = 1
+	},
+
+
+
+	{
+		name_save = "Weekly_DQ_S1",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = { --81606,83443
+			83443,
+			83457,
+			83458,
+			83459,
+			83460,
+		},
+		max = 1
+	},
+
+
+	{
+		name_save = "Weekly_Delve_S1",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			83366,
+		},
+		max = 1
+	},
+
+
+
+	{
+		name_save = "Weekly_WQ_Caches_S1",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = { --83280 (1st) 83281 (2nd)
+			83280,
+			83281,
+			82582,
+			88738,
+			88739,
+		},
+		max = 1
+	},
+
+
+	{
+		name_save = "Weekly_WQ_S1_Soul",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			82452,
+			82482,
+			82485,
+			82511,
+			82678,
+			82708,
+		},
+		max = 1
+	},
+
+
+
+
+	{
+		name_save = "Weekly_WQ_S1_Crafting",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			84127, --Blacksmithing
+			84128, --Engineering
+			84129, --Inscription
+			84130, --Jewelcrafting
+			84131, --Leatherworking
+			84132, --Tailoring
+			84133,  --Alchemy
+			84084,   -- enchanting
+			84085,   -- enchanting
+			84086,   -- enchanting
+			82965, --Herbalism
+			82958, --Herbalism
+			82916, --Herbalism
+			82962, --Herbalism
+			82970, --Herbalism
+			83105, --Mining
+			83106, --Mining
+			83104, --Mining
+			83103, --Mining
+			83102, --Mining
+			83098, --Skinning
+			82993, --Skinning
+			82992, --Skinning
+			83100, --Skinning
+			83097, --Skinning
+	},
+	max = 2
+	},
+
+
+
+
+
+	{
+		name_save = "Weekly_WQ_S1_Fishing",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			82778,
+			83529,
+			83530,
+			83531,
+			83532,
+		},
+		max = 1
+	},
+
+
+	{
+		name_save = "Weekly_WQ_S1_zKahet",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			80670,
+			80671,
+			80672,
+			84737,
+			84736,
+		},
+		max = 1
+	},
+
+
+
+
+
+	{
+		name_save = "Weekly_WQ_S1_zHallow",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			76586,
+			82050,
+		},
+		max = 1
+	},
+
+
+
+	{
+		name_save = "Weekly_WQ_S1_Sniffer",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			82946,
+		},
+		max = 1
+	},
+
+
+	{
+		name_save = "Weekly_WQ_S1_zRing",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			83333,
+		},
+		max = 1
+	},
+
+
+
+	{
+		name_save = "Weekly_WQ_S1_zDorn",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			83240,
+			82291, -- test using WQ
+		},
+		max = 1
+	},
+
+
+
+
+
 
 
 

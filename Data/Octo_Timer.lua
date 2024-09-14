@@ -258,3 +258,29 @@ function E.Octo_Timer.DF_Flower()
 		return " "
 	end
 end
+
+
+function E.Octo_Timer.TWW_Beledarr()
+--questid = 83240
+--icon 1355358 or 608954
+	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_TWW_Beledarr".."|r")
+	end
+	local TIMER = 1698494405
+	local interval = 3600
+	local duration = 600
+	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
+	if (nextEventIn/60/60) < 24 then
+		local Timer_TWW_Beledarr = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		if nextEventIn > (interval - duration) then
+			nextEventIn = nextEventIn - (interval - duration)
+			Timer_TWW_Beledarr = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		end
+		return Timer_TWW_Beledarr
+	else
+		return " "
+	end
+end
+
+
+
