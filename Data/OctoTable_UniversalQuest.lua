@@ -3748,12 +3748,57 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 
 
+-- Major Keyflames
+-- Основные огни
+	{
+		name_save = "MajorKeyflames",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			79471, -- Key Flame A
+			79470, -- Key Flame B
+			79469, -- Key Flame C
+			79380, -- Key Flame D
+			79329, -- Key Flame E
+			78657, -- Key Flame F
+			78590, -- Key Flame G
+			76338, -- Key Flame H
+		},
+		max = 8
+	},
 
 
-
-
-
-
+-- Minor Keyflames
+-- Второстепенные огни
+	{
+		name_save = "MinorKeyflames",
+		reset = "Weekly",
+		expansion = "TWW",
+		place = "",
+		desc = "",
+		questID = {
+			76600,
+			79158,
+			76733, -- Lesser Keyflame 1
+			79216,
+			79173, -- Lesser Keyflame 2
+			76997,
+			81574, -- Lesser Keyflame 3
+			78972,
+			78915, -- Lesser Keyflame 4
+			78933,
+			76394, -- Lesser Keyflame 5
+			78656,
+			79346, -- Lesser Keyflame 6
+			81632,
+			76169, -- Lesser Keyflame 7
+			80004,
+			80562, -- Lesser Keyflame 8
+		},
+		max = 8
+	},
 
 }
 

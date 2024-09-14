@@ -625,6 +625,12 @@ local function CreateFrameUsableItems_OnShow(self)
 	else
 		self.icon:SetVertexColor(1, .5, .5, .3)
 	end
+	if self.itemID == 110560 and (C_QuestLog.IsQuestFlaggedCompleted(34378) == false and C_QuestLog.IsQuestFlaggedCompleted(34586) == false) then
+		self.icon:SetVertexColor(1, .5, .5, .3)
+	end
+	if self.itemID == 140192 and (C_QuestLog.IsQuestFlaggedCompleted(44184) == false and C_QuestLog.IsQuestFlaggedCompleted(44663) == false) then
+		self.icon:SetVertexColor(1, .5, .5, .3)
+	end
 	-- self.icon:SetVertexColor(1, 1, 1, 1)
 	-- self:SetBackdropBorderColor(r, g, b, 1)
 end
@@ -4987,7 +4993,7 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = "", ""
-					vivodLeft = L["Beledar Cycle"].." "..E.Octo_Timer.TWW_BeledarCycle()
+					vivodLeft = L["Light/Dark Cycle"].." "..E.Octo_Timer.TWW_BeledarCycle()
 					if CharInfo.OctoTable_QuestID[83240] ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.OctoTable_QuestID[83240]
 					end
@@ -5165,6 +5171,38 @@ local function O_otrisovka_FIRST()
 
 
 
+		if Octo_ToDo_DB_Vars.config.MajorKeyflames == true then
+			-- Octopussy_TWW_Weekly_MajorKeyflames_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_texturefromIcon(132863) .. L["Major Keyflames"]
+					if CharInfo.Octopussy_TWW_Weekly_MajorKeyflames_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_MajorKeyflames_count
+					end
+					BG:SetColorTexture(1, 0, .28, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.MinorKeyflames == true then
+			-- Octopussy_TWW_Weekly_MinorKeyflames_count
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_texturefromIcon(135619) .. L["Minor Keyflames"]
+					if CharInfo.Octopussy_TWW_Weekly_MinorKeyflames_count ~= E.Octo_Globals.NONE then
+						vivodCent = CharInfo.Octopussy_TWW_Weekly_MinorKeyflames_count
+					end
+					BG:SetColorTexture(1, 0, .28, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+
+
+
 
 		-- ВАЛЮТА TWW
 		if Octo_ToDo_DB_Vars.config.RestoredCofferKey == true then
@@ -5311,6 +5349,193 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
+
+		-- ПРЕДМЕТЫ TWW
+
+		if Octo_ToDo_DB_Vars.config.CofferKeyShard == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(229899)..E.Octo_Func.func_itemName(229899)
+					if CharInfo.ItemsInBag[229899] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[229899]
+					end
+					return vivodCent, vivodLeft
+			end)
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.OddGlobofWax == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(212493)..E.Octo_Func.func_itemName(212493)
+					if CharInfo.ItemsInBag[212493] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[212493]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.NascentWeatheredHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(220788)..E.Octo_Func.func_itemName(220788)
+					if CharInfo.ItemsInBag[220788] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[220788]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.EnchantedWeatheredHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(224069)..E.Octo_Func.func_itemName(224069)
+					if CharInfo.ItemsInBag[224069] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[224069]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.NascentRunedHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(220790)..E.Octo_Func.func_itemName(220790)
+					if CharInfo.ItemsInBag[220790] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[220790]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.EnchantedRunedHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(224072)..E.Octo_Func.func_itemName(224072)
+					if CharInfo.ItemsInBag[224072] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[224072]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.NascentGildedHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(220789)..E.Octo_Func.func_itemName(220789)
+					if CharInfo.ItemsInBag[220789] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[220789]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.EnchantedGildedHarbingerCrest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(224073)..E.Octo_Func.func_itemName(224073)
+					if CharInfo.ItemsInBag[224073] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[224073]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.SparkofOmens == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(211296)..E.Octo_Func.func_itemName(211296)
+					if CharInfo.ItemsInBag[211296] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[211296]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.FracturedSparkofOmens == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(211297)..E.Octo_Func.func_itemName(211297)
+					if CharInfo.ItemsInBag[211297] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[211297]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.RadiantRemnant == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(206350)..E.Octo_Func.func_itemName(206350)
+					if CharInfo.ItemsInBag[206350] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[206350]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.Conquest == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(1602)..E.Octo_Func.func_itemName(1602)
+					if CharInfo.ItemsInBag[1602] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[1602]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.RadiantEcho == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					vivodLeft = E.Octo_Func.func_itemTexture(220520)..E.Octo_Func.func_itemName(220520)
+					if CharInfo.ItemsInBag[220520] ~= 0 then
+						vivodCent = CharInfo.ItemsInBag[220520]
+					end
+					return vivodCent, vivodLeft
+			end)
+
+		end
+
+
+
+
+
 
 		-- РЕПУТАЦИЯ TWW
 
@@ -8620,6 +8845,25 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.FrameScale == nil then Octo_ToDo_DB_Vars.FrameScale = 1 end
 
 
+
+
+		if Octo_ToDo_DB_Vars.config.MajorKeyflames == nil then Octo_ToDo_DB_Vars.MajorKeyflames = false end
+		if Octo_ToDo_DB_Vars.config.MinorKeyflames == nil then Octo_ToDo_DB_Vars.MinorKeyflames = false end
+
+
+		if Octo_ToDo_DB_Vars.config.CofferKeyShard == nil then Octo_ToDo_DB_Vars.CofferKeyShard = false end
+		if Octo_ToDo_DB_Vars.config.OddGlobofWax == nil then Octo_ToDo_DB_Vars.OddGlobofWax = false end
+		if Octo_ToDo_DB_Vars.config.NascentWeatheredHarbingerCrest == nil then Octo_ToDo_DB_Vars.NascentWeatheredHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.EnchantedWeatheredHarbingerCrest == nil then Octo_ToDo_DB_Vars.EnchantedWeatheredHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.NascentRunedHarbingerCrest == nil then Octo_ToDo_DB_Vars.NascentRunedHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.EnchantedRunedHarbingerCrest == nil then Octo_ToDo_DB_Vars.EnchantedRunedHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.NascentGildedHarbingerCrest == nil then Octo_ToDo_DB_Vars.NascentGildedHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.EnchantedGildedHarbingerCrest == nil then Octo_ToDo_DB_Vars.EnchantedGildedHarbingerCrest = false end
+		if Octo_ToDo_DB_Vars.config.SparkofOmens == nil then Octo_ToDo_DB_Vars.SparkofOmens = false end
+		if Octo_ToDo_DB_Vars.config.FracturedSparkofOmens == nil then Octo_ToDo_DB_Vars.FracturedSparkofOmens = false end
+		if Octo_ToDo_DB_Vars.config.RadiantRemnant == nil then Octo_ToDo_DB_Vars.RadiantRemnant = false end
+		if Octo_ToDo_DB_Vars.config.Conquest == nil then Octo_ToDo_DB_Vars.Conquest = false end
+		if Octo_ToDo_DB_Vars.config.RadiantEcho == nil then Octo_ToDo_DB_Vars.RadiantEcho = false end
 
 
 
