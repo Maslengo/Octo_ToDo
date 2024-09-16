@@ -6,7 +6,7 @@ if not inspectScantipUSABLE then
 	inspectScantipUSABLE:SetOwner(UIParent, "ANCHOR_NONE")
 end
 tinsert(E.Octo_Globals.modules, function()
-		if E.Octo_Func.Octo_IsRetail() == true then
+		if IsRetail() == true then
 		if Octo_ToDo_DB_Vars.config.ItemsDelete then
 		local ltl = LibStub("LibThingsLoad-1.0")
 			local function ItemsDelete_Frame_OnEnter(self)

@@ -151,11 +151,9 @@ if L then
 	L["A Dream of Fields and Fire"] = true
 	L["New Beginnings"] = true
 	L["Characters"] = true
-	L["Hide: Azerite Animations"] = true
 	L["Hide: Boss Banner"] = true
 	L["Hide: Covenant"] = true
 	L["Hide: Error Messages"] = true
-	L["Hide: Objectives In Instance"] = true
 	L["Hide: RaidBossEmoteFrame"] = true
 	L["Hide: TalkingHeadFrame"] = true
 	L["Hide: Zone Text"] = true
@@ -330,11 +328,9 @@ if L then
 	L["A Dream of Fields and Fire"] = "Сон о полях в огне"
 	L["New Beginnings"] = "Новое начало"
 	L["Characters"] = "Персонажи"
-	L["Hide: Azerite Animations"] = "Скрытие анимации Азерита"
 	L["Hide: Boss Banner"] = "Скрытие баннера босса"
 	L["Hide: Covenant"] = "Скрытие ковенанта"
 	L["Hide: Error Messages"] = "Скрытие текста ошибок"
-	L["Hide: Objectives In Instance"] = "Скрытие заданий в подземельях"
 	L["Hide: RaidBossEmoteFrame"] = "Скрытие эмоций босса"
 	L["Hide: TalkingHeadFrame"] = "Скрытие говорящей головы"
 	L["Hide: Zone Text"] = "Скрытие текста зон"

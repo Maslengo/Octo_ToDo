@@ -13,14 +13,6 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	whileDead = 1,
 	OnAccept = function() ReloadUI() end,
 }
--- local fontObject9 = CreateFont("OctoFont9")
--- fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 9, "OUTLINE")
--- local fontObject10 = CreateFont("OctoFont10")
--- fontObject10:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 10, "OUTLINE")
--- local fontObject11 = CreateFont("OctoFont11")
--- fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 11, "OUTLINE")
--- local fontObject12 = CreateFont("OctoFont12")
--- fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 12, "OUTLINE")
 local PlayerName = UnitName("PLAYER")
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = E.Octo_Func.GetClassColor(classFilename)
@@ -113,7 +105,7 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 		color = "|cffFFFFFF"
 	end
 	if not self[number..pos..config] then
-		steps = (maxValue-minValue)/(step or 1) or maxValue-minValue
+		steps = (maxValue-minValue)/(step or 1)
 		self[number..pos..config] = CreateFrame("Slider", nil, scroll, "MinimalSliderWithSteppersTemplate")
 		self[number..pos..config]:SetScale(E.Octo_Globals.slider_scale)
 		self[number..pos..config]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos*E.Octo_Globals.multiplier+11, (-indent*(number-1)*E.Octo_Globals.multiplier)-E.Octo_Globals.multiplier*number)
@@ -133,7 +125,7 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 		self[number..pos..config]:SetWidth(200)
 		self[number..pos..config]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
 				Octo_ToDo_DB_Vars.config[config] = math.floor(value * 10 + 0.5)/10
-				self[number..pos..config].RightText:SetText(color..Octo_ToDo_DB_Vars.config[config].."|r")
+				self[number..pos..config].RightText:SetText(E.Octo_Globals.Blue_Color..Octo_ToDo_DB_Vars.config[config].."|r")
 				if Octo_Callback_func then
 					Octo_Callback_func()
 					-- for i, func in ipairs(E.Octo_Globals.modules) do
@@ -342,15 +334,12 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 7, POS_LEFT, 0, "AutoTurnQuests", L["Auto Turn Quests"])
 		Create_CheckButton(MAIN_scrollChild, self, 8, POS_LEFT, 0, "ClearChat", L["ClearChat"])
 		Create_CheckButton(MAIN_scrollChild, self, 9, POS_LEFT, 0, "Auto_Screenshot", L["Auto_Screenshot"])
-		Create_CheckButton(MAIN_scrollChild, self, 10, POS_LEFT, 0, "Hide_AzeriteEmpoweredItemUI", E.Octo_Globals.Gray_Color..L["Hide: Azerite Animations"].."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 11, POS_LEFT, 0, "Hide_Boss_Banner", L["Hide: Boss Banner"])
-		Create_CheckButton(MAIN_scrollChild, self, 12, POS_LEFT, 0, "Hide_Covenant", L["Hide: Covenant"])
-		Create_CheckButton(MAIN_scrollChild, self, 13, POS_LEFT, 0, "Hide_Error_Messages", L["Hide: Error Messages"])
-		Create_CheckButton(MAIN_scrollChild, self, 14, POS_LEFT, 0, "Hide_ObjectivesInInstance", L["Hide: Objectives In Instance"])
-		Create_CheckButton(MAIN_scrollChild, self, 15, POS_LEFT, 0, "Hide_Raid_Boss_Emote_Frame", E.Octo_Globals.Gray_Color..L["Hide: RaidBossEmoteFrame"].."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 16, POS_LEFT, 0, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
-		Create_CheckButton(MAIN_scrollChild, self, 17, POS_LEFT, 0, "Hide_Zone_Text", L["Hide: Zone Text"])
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, 0, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
+		Create_CheckButton(MAIN_scrollChild, self, 10, POS_LEFT, 0, "Hide_Boss_Banner", L["Hide: Boss Banner"])
+		Create_CheckButton(MAIN_scrollChild, self, 11, POS_LEFT, 0, "Hide_Covenant", L["Hide: Covenant"])
+		Create_CheckButton(MAIN_scrollChild, self, 12, POS_LEFT, 0, "Hide_Error_Messages", L["Hide: Error Messages"])
+		Create_CheckButton(MAIN_scrollChild, self, 13, POS_LEFT, 0, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
+		Create_CheckButton(MAIN_scrollChild, self, 14, POS_LEFT, 0, "Hide_Zone_Text", L["Hide: Zone Text"])
+		Create_CheckButton(MAIN_scrollChild, self, 15, POS_LEFT, 0, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
 		number = 1
 		btn_right1 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
@@ -415,15 +404,27 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_Slider(MAIN_scrollChild, self, 10, POS_RIGHT, "curWidthTitle", L["curWidthTitle: "], E.Octo_Globals.Green_Color, 100, 400)
 		Create_Slider(MAIN_scrollChild, self, 11.5, POS_RIGHT, "curWidthTitleAchievement", "curWidthTitleAchievement", E.Octo_Globals.Green_Color, 100, 400)
 		Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "curHeight", "Высота строк: ", E.Octo_Globals.Green_Color, 10, 30)
-		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк: ", E.Octo_Globals.Green_Color, 200, 1000)
+		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк /20px: ", E.Octo_Globals.Green_Color, 200, 1000)
+
+		-- Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк /20px: ", E.Octo_Globals.Green_Color, 200, 1000, 1, function()
+		-- 	print (Octo_ToDo_DB_Vars.config.Addon_Height, value)
+		-- 		Octo_ToDo_DB_Vars.config.Addon_Height = value НАОБОРОТ
+		-- end)
+
+
 		Create_Slider(MAIN_scrollChild, self, 16, POS_RIGHT, "FrameScale", "Addon Scale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
-				Octo_ToDo_FIRST_Frame_Main_FramePIZDA:SetScale(Octo_ToDo_DB_Vars.config.FrameScale)
+				Octo_ToDo_FIRST_Frame_Main_FramePIZDA:SetScale(Octo_ToDo_DB_Vars.config.FrameScale or 1)
 		end)
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"].." "..L["InDev"])
-		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Доп кнопки", r, g, b, .2)
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "ItemsUsable", "ItemsUsable".." "..L["InDev"])
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "ItemsDelete", "ItemsDelete".." "..L["InDev"])
+		Create_Slider(MAIN_scrollChild, self, 17.5, POS_RIGHT, "GameMenuFrameScale", "GameMenuFrameScale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
+				GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
+		end)
+
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"])
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, indent, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Доп кнопки", r, g, b, .2)
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "ItemsUsable", "ItemsUsable".." "..L["InDev"])
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "ItemsDelete", "ItemsDelete".." "..L["InDev"])
 		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, 0, "ShowTotalMoney", "Всего денег")
 		Create_CheckButton(MAIN_scrollChild, self, 29, POS_RIGHT, 0, "ShowTimeAll", "Общее время игры")
 		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "ReloadUI", "ReloadUI")
@@ -937,10 +938,6 @@ SECOND_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_itemTexture(206350)..E.Octo_Func.func_itemName(206350),
 			},
 			{
-				config = "Conquest",
-				text = E.Octo_Func.func_itemTexture(1602)..E.Octo_Func.func_itemName(1602),
-			},
-			{
 				config = "RadiantEcho",
 				text = E.Octo_Func.func_itemTexture(220520)..E.Octo_Func.func_itemName(220520),
 			},
@@ -1105,29 +1102,22 @@ Octo_DEV_Config:SetScript("OnShow", function(self)
 		----------------------------------------------------------------
 		----------------------------НАСТРОЙКИ---------------------------
 		Create_CheckButton(Octo_DEV_scrollChild, self, 1, POS_RIGHT, 0, "StaticPopup1Button1", "StaticPopup1Button1")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 2, POS_RIGHT, 0, "AnotherAddonsCasual", "Another Addons (Casual)")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 3, POS_RIGHT, 0, "AnotherAddonsDUNG", "AnotherAddons (M+)")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 4, POS_RIGHT, 0, "AnotherAddonsRAID", "Another Addons (Raid)")
 		Create_CheckButton(Octo_DEV_scrollChild, self, 5, POS_RIGHT, 0, "CVar", "CVar")
 		Create_CheckButton(Octo_DEV_scrollChild, self, 6, POS_RIGHT, 0, "SORTING", "Auto Sorting")
 		Create_CheckButton(Octo_DEV_scrollChild, self, 7, POS_RIGHT, 0, "SellFrame", "Sell Frame")
 		Create_CheckButton(Octo_DEV_scrollChild, self, 8, POS_RIGHT, 0, "GlobalFadePersist", "Global Fade Persist")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 9, POS_RIGHT, 0, "LootFrame", E.Octo_Globals.Gray_Color.."Loot Frame".."|r")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 10, POS_RIGHT, 0, "THIRD", E.Octo_Func.func_texturefromIcon("Interface/Addons/"..GlobalAddonName.."/Media/AddonTexture_THIRD.tga", 20)..E.Octo_Globals.Gray_Color.."THIRD".."|r")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 11, POS_RIGHT, 0, "TalentTreeTweaks", "TalentTreeTweaks")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 12, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Function 1", 0, .65, 1, 1)
-		Create_CheckButton(Octo_DEV_scrollChild, self, 13, POS_RIGHT, 0, "Octo_debug_Event_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Event 1", .31, 1, .47, 1)
-		Create_CheckButton(Octo_DEV_scrollChild, self, 14, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."BUTTONS 1", .69, .38, 1, 1)
+		Create_CheckButton(Octo_DEV_scrollChild, self, 11, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Function 1", 0, .65, 1, 1)
+		Create_CheckButton(Octo_DEV_scrollChild, self, 12, POS_RIGHT, 0, "Octo_debug_Event_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Event 1", .31, 1, .47, 1)
+		Create_CheckButton(Octo_DEV_scrollChild, self, 13, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."BUTTONS 1", .69, .38, 1, 1)
 		-- Create_CheckButton(Octo_DEV_scrollChild, self, 15, POS_RIGHT, 0, "Octo_debug_Function_SECOND", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 22).."Function 2", 0, .65, 1, 1)
 		-- Create_CheckButton(Octo_DEV_scrollChild, self, 16, POS_RIGHT, 0, "Octo_debug_Event_SECOND", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 22).."Event 2", .31, 1, .47, 1)
 		-- Create_CheckButton(Octo_DEV_scrollChild, self, 17, POS_RIGHT, 0, "Octo_debug_BUTTONS_SECOND", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 22).."BUTTONS 2", .69, .38, 1, 1)
-		Create_CheckButton(Octo_DEV_scrollChild, self, 15, POS_RIGHT, 0, "ChallengesKeystoneFrame", "Challenges Keystone Frame")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 16, POS_RIGHT, 0, "FieldOfView", "Field Of View")
+
 		-- local function Create_CheckButton(scroll, self, number, pos, otstyp, config, text, r, g, b, a, button)
-		Create_Slider(Octo_DEV_scrollChild, self, 17, POS_RIGHT, "FoV_top", "FieldOfView: FoV_top", E.Octo_Globals.Green_Color, 0, 300, func_FieldOfView)
-		Create_Slider(Octo_DEV_scrollChild, self, 19, POS_RIGHT, "FoV_bottom", "FieldOfView: FoV_bottom", E.Octo_Globals.Green_Color, 0, 300, func_FieldOfView)
-		Create_Slider(Octo_DEV_scrollChild, self, 21, POS_RIGHT, "FoV_left", "FieldOfView: FoV_left", E.Octo_Globals.Green_Color, 0, 300, func_FieldOfView)
-		Create_Slider(Octo_DEV_scrollChild, self, 23, POS_RIGHT, "FoV_right", "FieldOfView: FoV_right", E.Octo_Globals.Green_Color, 0, 300, func_FieldOfView)
+
+
+
+
 		Create_SimpleButton(Octo_DEV_scrollChild, self, 25, POS_RIGHT, "ResetAllChars", "Reset All Chars")
 		Create_SimpleButton(Octo_DEV_scrollChild, self, 26, POS_RIGHT, "ReloadUI", "Reload UI")
 		Create_CheckButton(Octo_DEV_scrollChild, self, 27, POS_RIGHT, 0, "Minecraft", "Minecraft")

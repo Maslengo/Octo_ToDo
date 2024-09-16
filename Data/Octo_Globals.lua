@@ -7,6 +7,9 @@ local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDB
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 -- local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 
+function IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
+function IsClassic() return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC end
+function IsCata() return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC end
 
 local utf8charbytes = E.Octo_Func.utf8charbytes
 local utf8len = E.Octo_Func.utf8len
@@ -38,8 +41,15 @@ local function func_hex2rgb(self)
 	return tonumber("0x"..self:sub(1, 2)), tonumber("0x"..self:sub(3, 4)), tonumber("0x"..self:sub(5, 6))
 end
 --------------------------------------------------------------------------------
-
-E.Octo_Globals.baseWowheadUrl = "https://wowhead.com/%s%s=%s"
+if IsRetail() then
+	E.Octo_Globals.baseWowheadUrl = "https://wowhead.com/%s%s=%s"
+end
+if IsClassic() then
+	E.Octo_Globals.baseWowheadUrl = "https://wowhead.com/classic/%s=%s%s"
+end
+if IsCata() then
+	E.Octo_Globals.baseWowheadUrl = "https://wowhead.com/cata/%s=%s%s"
+end
 E.Octo_Globals.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
 E.Octo_Globals.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
 E.Octo_Globals.baseArmoryUrl = "https://worldofwarcraft.com/%s/character/%s/%s"

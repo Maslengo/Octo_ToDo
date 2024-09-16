@@ -1,4 +1,17 @@
 local GlobalAddonName, E = ...
+-- if IsRetail() then
+--     E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/%s=%s%s"
+-- end
+-- if IsClassic() then
+--     E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/classic/%s=%s%s"
+-- end
+-- if IsCata() then
+--     E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/cata/%s=%s%s"
+-- end
+-- E.Octo_Globals.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
+-- E.Octo_Globals.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
+-- E.Octo_Globals.baseArmoryUrl = "https://worldofwarcraft.com/%s/character/%s/%s"
+-- E.Octo_Globals.baseRaiderIoUrl = "https://raider.io/characters/%s/%s/%s"
 local popupText = "%s Link\nCTRL-C to copy"
 
 local function ShowUrlPopup(header, url)
@@ -42,11 +55,10 @@ StaticPopupDialogs["WowheadQuickLinkUrl"] = {
 		local function HidePopup(self) self:GetParent():Hide() end
 		self.editBox:SetScript("OnEscapePressed", HidePopup)
 		self.editBox:SetScript("OnEnterPressed", HidePopup)
-
 		self.editBox:SetScript("OnKeyUp", function(self, key)
-				if IsControlKeyDown() and key == "C" then
-					HidePopup(self)
-				end
+			if IsControlKeyDown() and key == "C" then
+				HidePopup(self)
+			end
 		end)
 		self.editBox:SetMaxLetters(0)
 		self.editBox:SetText(data)

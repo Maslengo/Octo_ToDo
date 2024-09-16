@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
-if E.Octo_Func.Octo_IsRetail() == true then
+if IsRetail() == true then
 	local ltl = LibStub("LibThingsLoad-1.0")
 	local inspectScantipUSABLE = nil
 	if not inspectScantipUSABLE then

@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v74.3(11.0.5)(14.09.2024)
+## Version: v74.4(11.0.5)(16.09.2024)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
 ## SavedVariables: Octo_ToDo_DB_Other Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Artifact Octo_ToDo_DB_LegionArtifacts
 
@@ -53,9 +53,6 @@ Data\OctoTable_Spells.lua
 Minecraft\MinecraftFrames.lua
 Minecraft\MinecraftColors.lua
 
-Moduls\DEV\Another_Addons_Casual.lua
-Moduls\DEV\Another_Addons_DUNG.lua
-Moduls\DEV\Another_Addons_RAID.lua
 Moduls\DEV\Auto_Sorting.lua
 Moduls\DEV\CVAR.lua
 Moduls\DEV\StaticPopup1Button1.lua
@@ -69,29 +66,20 @@ Moduls\Auto_Repair.lua
 Moduls\Auto_Screenshot.lua
 Moduls\Auto_Sell_Grey.lua
 Moduls\Auto_Turn_Quests.lua
-Moduls\ChallengesKeystoneFrame.lua
-Moduls\Module_FieldOfView.lua
-Moduls\Hide_AzeriteEmpoweredItemUI.lua
 Moduls\Hide_Boss_Banner.lua
 Moduls\Hide_Covenant.lua
 Moduls\Hide_Error_Messages.lua
-Moduls\Hide_ObjectivesInInstance.lua
-Moduls\Hide_Raid_Boss_Emote_Frame.lua
 Moduls\Hide_Talking_Head_Frame.lua
 Moduls\Hide_Zone_Text.lua
 Moduls\Module_Global_Fade_Persist.lua
 Moduls\Module_Sell_Frame.lua
 Moduls\Module_ItemsDelete.lua
 Moduls\Module_ItemsUsable.lua
-Moduls\Module_TalentTreeTweaks.lua
 Moduls\Module_UIErrorsFramePosition.lua
 
 Octo_ToDo_CreateMenuStyle.lua
 Octo_ToDo_FIRST.lua
-Octo_ToDo_CommunityFeast.lua
 Octo_ToDo_WowheadQuickLink.lua
 Octo_ToDo_WowheadQuickLinkStrategies.lua
 Octo_Options.lua
 Octo_SharedMedia.lua
-
-Octo_ElvUI_DEV.lua

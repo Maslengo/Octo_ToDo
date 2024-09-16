@@ -4,7 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- TalkingHeadFrame
 tinsert(E.Octo_Globals.modules, function()
-				if E.Octo_Func.Octo_IsRetail() == true then
+				if IsRetail() == true then
 		if Octo_ToDo_DB_Vars.config.Hide_Talking_Head_Frame then
 			hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
 					self:Hide()

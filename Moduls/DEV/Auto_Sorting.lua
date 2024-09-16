@@ -4,7 +4,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- AutoSorting
 tinsert(E.Octo_Globals.modules, function()
-				if E.Octo_Func.Octo_IsRetail() == true then
+				if IsRetail() == true then
 	if Octo_ToDo_DB_Vars.config.SORTING then
 		if E.Octo_Globals.isElvUI == true and not InCombatLockdown() then
 			C_Timer.After(1, function()

@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
-
 local inspectScantipFUNC = nil
 if not inspectScantipFUNC then
 	inspectScantipFUNC = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFUNC", nil, "GameTooltipTemplate")
@@ -22,38 +21,35 @@ local utf8upper = E.Octo_Func.utf8upper
 local utf8lower = E.Octo_Func.utf8lower
 local utf8reverse = E.Octo_Func.utf8reverse
 ----------------------------------------------------------------
-function E.Octo_Func.Octo_IsClassic()
-	local build = 1
-	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
-	if build == WOW_currentBuild then
-		return true
-	else
-		return false
-	end
-end
-----------------------------------------------------------------
-
-function E.Octo_Func.Octo_IsWrathClassic()
-	local build = 3
-	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
-	if build == WOW_currentBuild then
-		return true
-	else
-		return false
-	end
-end
-
-----------------------------------------------------------------
-function E.Octo_Func.Octo_IsRetail()
-	local build = 11
-	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
-	if build == WOW_currentBuild then
-		return true
-	else
-		return false
-	end
-end
-
+-- function E.Octo_Func.Octo_IsClassic()
+-- 	local build = 1
+-- 	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
+-- 	if build == WOW_currentBuild then
+-- 		return true
+-- 	else
+-- 		return false
+-- 	end
+-- end
+-- --------------------------------------------------------------
+-- function E.Octo_Func.Octo_IsWrathClassic()
+-- 	local build = 3
+-- 	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
+-- 	if build == WOW_currentBuild then
+-- 		return true
+-- 	else
+-- 		return false
+-- 	end
+-- end
+-- --------------------------------------------------------------
+-- function E.Octo_Func.Octo_IsRetail()
+-- 	local build = 11
+-- 	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
+-- 	if build == WOW_currentBuild then
+-- 		return true
+-- 	else
+-- 		return false
+-- 	end
+-- end
 ----------------------------------------------------------------
 function E.Octo_Func.func_hex2rgb(self)
 	self = self:gsub("|cff", "")
@@ -178,7 +174,7 @@ local func_texturefromIcon = E.Octo_Func.func_texturefromIcon
 ----------------------------------------------------------------
 function E.Octo_Func.func_questName(self)
 	local title = "notitle"
-	if E.Octo_Func.Octo_IsRetail() == true then
+	if IsRetail() == true then
 		title = C_QuestLog.GetTitleForQuestID(self)
 		if title then
 			return title
@@ -191,25 +187,20 @@ end
 local func_questName = E.Octo_Func.func_questName
 ----------------------------------------------------------------
 function E.Octo_Func.func_reputationName(self)
-
 	local repInfo = C_Reputation.GetFactionDataByID(self)
 	local name
-
 	if repInfo then
 		name = repInfo.name
 	else
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
 		name = reputationInfo.name or E.Octo_Globals.Red_Color.."NONAME".."|r"
 	end
-
 	local color = "|cffFFFFFF"
 	local r = "|r"
 	if self == 1168 then
 		color = "|cff909090"
 	end
 	return color..name..r
-
-
 end
 local func_reputationName = E.Octo_Func.func_reputationName
 ----------------------------------------------------------------
@@ -348,7 +339,7 @@ end
 local tmstpDayReset = E.Octo_Func.tmstpDayReset
 ----------------------------------------------------------------
 function E.Octo_Func.All_objectives(self)
-	if E.Octo_Func.Octo_IsRetail() == true then
+	if IsRetail() == true then
 		local Octopussy = ""
 		local objectives = C_QuestLog.GetQuestObjectives(self)
 		local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(self, 1, false)
@@ -395,7 +386,7 @@ end
 local func_Octo_LoadAddOn = E.Octo_Func.func_Octo_LoadAddOn
 ----------------------------------------------------------------
 function E.Octo_Func.CheckCompletedByQuestID(self)
-	if E.Octo_Func.Octo_IsRetail() == true then
+	if IsRetail() == true then
 		local vivod
 		local TEST = ""
 		if C_QuestLog.IsQuestFlaggedCompleted(self) == true then
@@ -605,8 +596,6 @@ local func_npcName = E.Octo_Func.func_npcName
 function E.Octo_Func.RIO_Color(self)
 	local hexColor = E.Octo_Globals.Gray_Color
 	if not self or self == 0 then return hexColor end
-
-
 	for _, v in pairs(E.Octo_Table.OctoTable_RIO_COLORS) do
 		if self <= v.score then
 			hexColor = E.Octo_Func.func_rgb2hex(v.color[1],v.color[2],v.color[3])
@@ -647,4 +636,5 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+
 
