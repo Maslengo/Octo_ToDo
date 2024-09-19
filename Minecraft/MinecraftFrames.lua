@@ -13,8 +13,8 @@ EmptyFrame.FG:SetTexture(texture_FG)
 
 -- local height = 232 -- Высота
 -- local width = 34 -- Ширина
-local height = 1190/1 -- Высота
-local width = 68/1 -- Ширина
+local height = 1190/2 -- Высота
+local width = 68/2 -- Ширина
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local row = PhysicalScreenWidth / width
 
@@ -85,13 +85,15 @@ local function Create_Colored_Frames(anchor, self, number, text, color, height, 
 end
 
 local function OnEvent(self, event, ...)
-
 	if Octo_ToDo_DB_Vars.config.Minecraft == true then
 		Create_AnchorFrame()
 		AnchorFrame:Show()
-	end
-	for number, v in ipairs(E.Octo_Table.OctoTable_MinecraftColors) do
-		Create_Colored_Frames(AnchorFrame, self, number, v.name, v.hex, height, width)
+		-- for number, v in ipairs(E.Octo_Table.OctoTable_Colors) do
+		for number, v in ipairs(E.Octo_Table.OctoTable_MinecraftColors) do
+			print ("|cff"..v.hex..number.." "..v.name.."|r", v.hex)
+			Create_Colored_Frames(AnchorFrame, self, number, v.name, v.hex, height, width)
+		end
 	end
 end
+
 EventFrame:SetScript("OnEvent", OnEvent)
