@@ -493,7 +493,6 @@ local function checkCharInfo(self)
 		self.GreatVault[i] = self.GreatVault[i] or {}
 		self.GreatVault[i].progress = self.GreatVault[i].progress or 0
 		self.GreatVault[i].threshold = self.GreatVault[i].threshold or 0
-		self.GreatVault[i].hyperlink = self.GreatVault[i].hyperlink or {}
 		self.GreatVault[i].hyperlink_STRING = self.GreatVault[i].hyperlink_STRING or 0
 		-- for k = 1, 3 do
 		-- 	self.GreatVault[i].hyperlink[k] = self.GreatVault[i].hyperlink[k] or 0
@@ -514,10 +513,20 @@ local function checkCharInfo(self)
 	setmetatable(self.OctoTable_QuestID, Meta_Table_NONE)
 	setmetatable(self.reputationID, Meta_Table_0)
 	setmetatable(self.Shadowland, Meta_Table_0)
-	-- if (self.tmstp_Weekly or 0) < GetServerTime() and (self.GreatVault[1].hyperlink_STRING ~= 0 or self.GreatVault[2].hyperlink_STRING ~= 0 or self.GreatVault[3].hyperlink_STRING ~= 0) then
-	-- 	self.HasAvailableRewards = true
-	-- 	self.GreatVault = {}
-	-- end
+
+
+	if (self.tmstp_Weekly or 0) < GetServerTime() then
+		for i = 1, #self.GreatVault do
+			if self.GreatVault[i] and self.GreatVault[i].hyperlink_STRING ~= 0 then
+				self.HasAvailableRewards = true
+				self.GreatVault = {}
+				break
+			end
+		end
+	end
+
+
+
 	if (self.tmstp_Weekly or 0) < GetServerTime() and self.Octopussy_DF_Weekly_CommunityFeast_count == E.Octo_Globals.DONE then
 		self.Octopussy_DF_Weekly_CommunityFeast_count = E.Octo_Globals.NONE
 	end
@@ -530,23 +539,14 @@ local function checkCharInfo(self)
 		self.journalInstance = {}
 		self.RIO_weeklyBest = 0
 		self.GreatVault = {}
-		-- for i = 1, 3 do
-			-- self.GreatVault[i] = {}
-			-- self.GreatVault[i].progress = 0
-			-- self.GreatVault[i].threshold = 0
-			-- self.GreatVault[i].hyperlink = {}
-			-- self.GreatVault[i].hyperlink_STRING = 0
-			-- for k = 1, 3 do
-			-- 	self.GreatVault[i].hyperlink[k] = 0
-			-- end
-			-- if i == 1 then
-			-- 	self.GreatVault[i].type = MYTHIC_DUNGEONS
-			-- elseif i == 2 then
-			-- 	self.GreatVault[i].type = CALENDAR_TYPE_PVP
-			-- elseif i == 3 then
-			-- 	self.GreatVault[i].type = RAIDS
-			-- end
-		-- end
+		for i = 1, #self.GreatVault do
+			if self.GreatVault[i] then
+				self.GreatVault[i] = {}
+				self.GreatVault[i].progress = 0
+				self.GreatVault[i].threshold = 0
+				self.GreatVault[i].hyperlink_STRING = 0
+			end
+		end
 		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
 				if w == "Weekly" then
@@ -1303,7 +1303,8 @@ local function Collect_ALL_GreatVault()
 						-- if type == 3 then collect.GreatVault[type].type = RAIDS end
 						--
 						hyperlink_STRING = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
-						if hyperlink_STRING ~= "" then
+						print (hyperlink_STRING)
+						if hyperlink_STRING then
 							test = test and test..", "..hyperlink_STRING or hyperlink_STRING
 							if test ~= nil then
 								collect.GreatVault[tip].hyperlink_STRING = test
@@ -4848,15 +4849,17 @@ local function O_otrisovka_FIRST()
 					-- 	tooltip[#tooltip+1] = {"Weekly Best", E.Octo_Globals.Orange_Color..CharInfo.RIO_weeklyBest.."|r"}
 					-- 	if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					-- end
-					for i = 1, 3 do
-						CharInfo.GreatVault[i] = CharInfo.GreatVault[i] or {}
-						CharInfo.GreatVault[i].hyperlink_STRING = CharInfo.GreatVault[i].hyperlink_STRING or 0
-						CharInfo.GreatVault[i].progress = CharInfo.GreatVault[i].progress or 0
-						CharInfo.GreatVault[i].threshold = CharInfo.GreatVault[i].threshold or 0
-						if CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
-							tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Func.RIO_Color(CharInfo.RIO_Score_TWW)..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
-						elseif CharInfo.GreatVault[i].progress ~= 0 then
-							tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
+					for i = 1, #CharInfo.GreatVault do
+						if CharInfo.GreatVault[i] then
+							CharInfo.GreatVault[i] = CharInfo.GreatVault[i] or {}
+							CharInfo.GreatVault[i].hyperlink_STRING = CharInfo.GreatVault[i].hyperlink_STRING or 0
+							CharInfo.GreatVault[i].progress = CharInfo.GreatVault[i].progress or 0
+							CharInfo.GreatVault[i].threshold = CharInfo.GreatVault[i].threshold or 0
+							if CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
+								tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.Octo_Func.RIO_Color(CharInfo.RIO_Score_TWW)..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
+							elseif CharInfo.GreatVault[i].progress ~= 0 then
+								tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
+							end
 						end
 					end
 					if CharInfo.CurrentKey ~= 0 then
