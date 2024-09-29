@@ -3535,6 +3535,9 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		desc = "WB",
 		questID = {
 			82653,
+			81653,
+			81624,
+			81630,
 		},
 		max = 1
 	},
@@ -3549,11 +3552,13 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = { --81606,83443
-			83443,
-			83457,
-			83458,
-			83459,
-			83460,
+            83443,
+            83457,
+            83458,
+            83459,
+            83460,
+            83465,
+            83469,
 		},
 		max = 1
 	},
@@ -3566,7 +3571,19 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			83366,
+            83366,
+            39020,
+            83363,
+            39033,
+            40792,
+            39042,
+            39021,
+            39034,
+            39040,
+            39041,
+            44174,
+            64970,
+            83345,
 		},
 		max = 1
 	},
@@ -3582,11 +3599,12 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = { --83280 (1st) 83281 (2nd)
-			83280,
-			83281,
-			82582,
-			88738,
-			88739,
+            83280,
+            83281,
+            82582,
+            88738,
+            88739,
+            81691,
 		},
 		max = 1
 	},
@@ -3599,12 +3617,55 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			82452,
-			82482,
-			82485,
-			82511,
-			82678,
-			82708,
+            80592,
+            80670,
+            80671,
+            80672,
+            --824##
+            82449,
+            82452,
+            82453,
+            82476,
+            82482,
+            82483,
+            82485,
+            82486,
+            82487,
+            82488,
+            82489,
+            82490,
+            82491,
+            82492,
+            82495,
+            82496,
+            82497,
+            82498,
+            82499,
+            --825##
+            82500,
+            82501,
+            82502,
+            82503,
+            82504,
+            82505,
+            82506,
+            82507,
+            82509,
+            82508,
+            82510,
+            82511,
+            82512,
+            82516,
+            --826##
+            82678,
+            82679,
+            --827##
+            82706,
+            82709,
+            82711,
+            82712,
+            --83###
+            83457,
 		},
 		max = 1
 	},
@@ -3620,31 +3681,31 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			84127, --Blacksmithing
-			84128, --Engineering
-			84129, --Inscription
-			84130, --Jewelcrafting
-			84131, --Leatherworking
-			84132, --Tailoring
-			84133, --Alchemy
-			84084, -- enchanting
-			84085, -- enchanting
-			84086, -- enchanting
-			82965, --Herbalism
-			82958, --Herbalism
-			82916, --Herbalism
-			82962, --Herbalism
-			82970, --Herbalism
-			83105, --Mining
-			83106, --Mining
-			83104, --Mining
-			83103, --Mining
-			83102, --Mining
-			83098, --Skinning
-			82993, --Skinning
-			82992, --Skinning
-			83100, --Skinning
-			83097, --Skinning
+            84127,
+            84128,
+            84129,
+            84130,
+            84131,
+            84132,
+            84133,
+            84084,
+            84085,
+            84086,
+            82965,
+            82958,
+            82916,
+            82962,
+            82970,
+            83105,
+            83106,
+            83104,
+            83103,
+            83102,
+            83098,
+            82993,
+            82992,
+            83100,
+            83097,
 	},
 	max = 2
 	},
@@ -3678,11 +3739,9 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			80670,
-			80671,
-			80672,
-			84737,
-			84736,
+            80670,
+            80671,
+            80672,
 		},
 		max = 1
 	},
@@ -3699,7 +3758,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		desc = "",
 		questID = {
 			76586,
-			82050,
 		},
 		max = 1
 	},
@@ -3757,14 +3815,14 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			79471, -- Key Flame A
-			79470, -- Key Flame B
-			79469, -- Key Flame C
-			79380, -- Key Flame D
-			79329, -- Key Flame E
-			78657, -- Key Flame F
-			78590, -- Key Flame G
-			76338, -- Key Flame H
+            79471,
+            79470,
+            79469,
+            79380,
+            79329,
+            78657,
+            78590,
+            76338,
 		},
 		max = 8
 	},
@@ -3779,23 +3837,23 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		place = "",
 		desc = "",
 		questID = {
-			76600,
-			79158,
-			76733, -- Lesser Keyflame 1
-			79216,
-			79173, -- Lesser Keyflame 2
-			76997,
-			81574, -- Lesser Keyflame 3
-			78972,
-			78915, -- Lesser Keyflame 4
-			78933,
-			76394, -- Lesser Keyflame 5
-			78656,
-			79346, -- Lesser Keyflame 6
-			81632,
-			76169, -- Lesser Keyflame 7
-			80004,
-			80562, -- Lesser Keyflame 8
+            76600,
+            79158,
+            76733,
+            79216,
+            79173,
+            76997,
+            81574,
+            78972,
+            78915,
+            78933,
+            76394,
+            78656,
+            79346,
+            81632,
+            76169,
+            80004,
+            80562,
 		},
 		max = 8
 	},
