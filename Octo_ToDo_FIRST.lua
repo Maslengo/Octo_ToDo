@@ -1288,16 +1288,16 @@ local function Collect_ALL_GreatVault()
 				if activityInfo then
 					local tip = activityInfo.type
 					if collect then
-						print (name, tip)
+						-- print (name, tip)
 						collect.GreatVault[tip] = collect.GreatVault[tip] or {}
 						collect.GreatVault[tip].type = activity_name -- НАЗВАНИЕ (СКРЫТОЕ)
 						collect.GreatVault[tip].progress = activityInfo.progress -- ТЕКУЩИЙ ПРОГРЕСС
 						collect.GreatVault[tip].threshold = activityInfo.threshold -- СКОЛЬКО ВСЕГО НУЖНО
 						local hyperlink = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
-						print (hyperlink)
-						if hyperlink then
-							collect.GreatVault[tip].hyperlink[k] = hyperlink
-						end
+						-- print (hyperlink)
+						-- if hyperlink then
+						-- 	collect.GreatVault[tip].hyperlink[k] = hyperlink
+						-- end
 						-- if type == 1 then collect.GreatVault[type].type = MYTHIC_DUNGEONS end
 						-- if type == 2 then collect.GreatVault[type].type = CALENDAR_TYPE_PVP end
 						-- if type == 3 then collect.GreatVault[type].type = RAIDS end
