@@ -10,7 +10,7 @@ if WeeklyRewardExpirationWarningDialog then WeeklyRewardExpirationWarningDialog:
 _G["OctoTODO"] = OctoTODO
 local LibStub = LibStub
 -- for k, v in pairs (LibStub) do
--- 	-- print (k, v)
+--
 -- 	if k == "libs" then
 -- 		for e, _ in pairs (v) do
 -- 			print (e)f
@@ -152,9 +152,9 @@ local function DEV_GUID()
 	local strGUID = tostringall(strsplit("-", utf8lower(utf8reverse(curGUID))))
 	local vivod = E.Octo_Func.encryption(curGUID)
 	-- for k, v in pairs(Octo_ToDo_DB_Levels) do
-	-- print (E.Octo_Func.encryption(k))
+
 	-- end
-	-- print (curGUID, vivod)
+
 end
 local function ConcatAtStart()
 	E.Octo_Func.TableConcat(E.Octo_Table.ALL_Professions, E.Octo_Table.FirstAid)
@@ -206,7 +206,7 @@ local function ConcatAtStart()
 		E.Octo_Table.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
 	for itemID, v in pairs(Octo_ToDo_DB_Other.Items.Consumable) do
-		-- print ("tinsert", itemID, #E.Octo_Table.OctoTable_itemID_ALL)
+
 		tinsert(E.Octo_Table.OctoTable_itemID_ALL, itemID)
 	end
 end
@@ -233,9 +233,9 @@ local function TryToOffMajor(majorFactionID, newRenownLevel, oldRenownLevel)
 	-- if MajorFactionsRenownToastMixin then
 	-- MajorFactionsRenownToastMixin:UnregisterAllEvents()
 	-- MajorFactionsRenownToastMixin:Hide()
-	-- print ("true MajorFactionsRenownToastMixin")
+
 	-- else
-	-- print ("Cannot Hide MajorFactionsRenownToastMixin")
+
 	-- end
 	MajorFactionsRenownToastMixin:StopBanner()
 end
@@ -489,21 +489,12 @@ local function checkCharInfo(self)
 	self.RIO_Score_TWW = self.RIO_Score_TWW or 0
 	self.RIO_weeklyBest = self.RIO_weeklyBest or 0
 	self.GreatVault = self.GreatVault or {}
-	for i = 1, 3 do
+	for name, i in next, Enum.WeeklyRewardChestThresholdType do
 		self.GreatVault[i] = self.GreatVault[i] or {}
 		self.GreatVault[i].progress = self.GreatVault[i].progress or 0
 		self.GreatVault[i].threshold = self.GreatVault[i].threshold or 0
 		self.GreatVault[i].hyperlink_STRING = self.GreatVault[i].hyperlink_STRING or 0
-		-- for k = 1, 3 do
-		-- 	self.GreatVault[i].hyperlink[k] = self.GreatVault[i].hyperlink[k] or 0
-		-- end
-		-- if i == 1 then
-		-- 	self.GreatVault[i].type = self.GreatVault[i].type or MYTHIC_DUNGEONS
-		-- elseif i == 2 then
-		-- 	self.GreatVault[i].type = self.GreatVault[i].type or CALENDAR_TYPE_PVP
-		-- elseif i == 3 then
-		-- 	self.GreatVault[i].type = self.GreatVault[i].type or RAIDS
-		-- end
+		self.GreatVault[i].type = self.GreatVault[i].type or ""
 	end
 	setmetatable(self, Meta_Table_0)
 	setmetatable(self.CurrencyID_Total, Meta_Table_0)
@@ -1281,20 +1272,19 @@ local function Collect_ALL_GreatVault()
 			local hyperlink_STRING = ""
 			local activities = C_WeeklyRewards.GetActivities(i)
 			local activity_name = name_activities[i]
-			-- print (activity_name, name, i)
+
 
 			for k = 1, #activities do
 				local activityInfo = activities[k]
 				if activityInfo then
 					local tip = activityInfo.type
-					if collect then
-						-- print (name, tip)
+					if collect and tip ~= nil then
 						collect.GreatVault[tip] = collect.GreatVault[tip] or {}
 						collect.GreatVault[tip].type = activity_name -- НАЗВАНИЕ (СКРЫТОЕ)
 						collect.GreatVault[tip].progress = activityInfo.progress -- ТЕКУЩИЙ ПРОГРЕСС
 						collect.GreatVault[tip].threshold = activityInfo.threshold -- СКОЛЬКО ВСЕГО НУЖНО
 						local hyperlink = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
-						-- print (hyperlink)
+
 						-- if hyperlink then
 						-- 	collect.GreatVault[tip].hyperlink[k] = hyperlink
 						-- end
@@ -1303,7 +1293,7 @@ local function Collect_ALL_GreatVault()
 						-- if type == 3 then collect.GreatVault[type].type = RAIDS end
 						--
 						hyperlink_STRING = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
-						print (hyperlink_STRING)
+
 						if hyperlink_STRING then
 							test = test and test..", "..hyperlink_STRING or hyperlink_STRING
 							if test ~= nil then
@@ -1963,7 +1953,7 @@ local function Collect_All_Holiday()
 			local endTime_weekday = endTime.weekday
 			local endTime_hour = endTime.hour
 			local endTime_minute = endTime.minute
-			-- print (id, title, sequenceType, endTime_monthDay, endTime_month, endTime_year)
+
 			-- if sequenceType ~= "END" then
 				if collect.Active[id] == nil then
 					collect.Active[id] = {}
@@ -4849,8 +4839,17 @@ local function O_otrisovka_FIRST()
 					-- 	tooltip[#tooltip+1] = {"Weekly Best", E.Octo_Globals.Orange_Color..CharInfo.RIO_weeklyBest.."|r"}
 					-- 	if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 					-- end
-					for i = 1, #CharInfo.GreatVault do
-						if CharInfo.GreatVault[i] then
+					local Enum_Activities_table = {}
+
+					for name, i in next, Enum.WeeklyRewardChestThresholdType do
+						Enum_Activities_table[#Enum_Activities_table+1] = i
+					end
+
+					sort(Enum_Activities_table)
+
+					for j = 1, #Enum_Activities_table do
+						local i = Enum_Activities_table[j]
+						if CharInfo.GreatVault[i] and CharInfo.GreatVault[i].type ~= "" then
 							CharInfo.GreatVault[i] = CharInfo.GreatVault[i] or {}
 							CharInfo.GreatVault[i].hyperlink_STRING = CharInfo.GreatVault[i].hyperlink_STRING or 0
 							CharInfo.GreatVault[i].progress = CharInfo.GreatVault[i].progress or 0
@@ -4862,6 +4861,7 @@ local function O_otrisovka_FIRST()
 							end
 						end
 					end
+
 					if CharInfo.CurrentKey ~= 0 then
 						-- vivodCent = E.Octo_Globals.Purple_Color..CharInfo.CurrentKey.."|r"
 						vivodCent = E.Octo_Func.RIO_Color(CharInfo.RIO_Score_TWW)..CharInfo.CurrentKey.."|r"
@@ -6093,7 +6093,7 @@ local function O_otrisovka_FIRST()
 						if v then
 							for difficultyID, w in pairs (v) do
 								if w.vivod ~= nil then
-									-- print (instanceID, difficultyID, w.instanceName, w.vivod)
+
 									tooltip[#tooltip+1] = {w.instanceName.."("..w.difficultyName..") "..E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(w.instanceReset-ServerTime).."|r", w.vivod}
 								end
 							end
@@ -8422,7 +8422,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		-- for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 		-- 	local a, b, c = strsplit("-", curCharGUID)
 		-- 	-- local pizda = E.Octo_Func.encryption("099B99D3").."f".."e".."r".."a".."e".."q".."q".."w".."e"
-		-- 	-- print (pizda) -- dbferaeqqwe Стикидх 099B99D3
+		--
 		-- 	-- local pizda = E.Octo_Func.encryption("0A2504EA").."f".."e".."r".."a".."e".."q".."q".."w".."e"
 		-- 	-- local pizda = E.Octo_Func.encryption("0208580C").."f".."e".."r".."a".."e".."q".."q".."w".."e" -- CLASSIK Окто
 		-- 	-- local pizda = E.Octo_Func.encryption("032C6085").."f".."e".."r".."a".."e".."q".."q".."w".."e" -- WOTLK Октопусси
@@ -8430,7 +8430,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		-- 		print (pizda) -- aeaferaeqqwe Жру 0A2504EA
 		-- 	end
 		-- 	-- local pizda = E.Octo_Func.encryption("024D9C0F") --fcdferaeqqwe МАГ ВОВ КЛАССИК
-		-- 	-- print (pizda)
+		--
 		-- 	local text = E.Octo_Func.encryption(c).."f".."e".."r".."a".."e".."q".."q".."w".."e"
 		-- 	if text == tostring(Octo_ToDo_DB_Vars.config.security) then
 		-- 		security_count = security_count + 1
@@ -8518,7 +8518,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "QUEST_ACCEPTED" or event == "QUEST_COMPLETE" or event == "QUEST_FINISHED" or event == "QUEST_LOG_UPDATE" or event == "QUEST_REMOVED" or event == "QUEST_TURNED_IN" or event == "QUEST_LOOT_RECEIVED") then
-		-- print ("|cff00FF55".."Collect_All_Quests()".."|r "..event)
+
 		C_Timer.After(1, function()
 			Collect_All_Quests()
 			Collect_All_Quest_Tooltip()
