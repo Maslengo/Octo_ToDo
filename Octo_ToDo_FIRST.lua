@@ -1230,7 +1230,7 @@ local function Collect_ALL_GreatVault()
 		end
 		local curGUID = UnitGUID("PLAYER")
 		local collect = Octo_ToDo_DB_Levels[curGUID]
-		collect.GreatVault = {}
+		-- collect.GreatVault = {}
 		--
 		local mapChallengeModeIDs = C_ChallengeMode.GetMapTable()
 		C_MythicPlus.RequestRewards()
@@ -1244,7 +1244,31 @@ local function Collect_ALL_GreatVault()
 		end
 		collect.RIO_Score_TWW = C_ChallengeMode.GetOverallDungeonScore("PLAYER")
 		collect.RIO_weeklyBest = currentWeekBestLevel
+		collect.GreatVault = {}
 		--
+
+		local name_activities = setmetatable({
+			[0] = "None",
+			[1] = DUNGEONS,
+			[2] = "PvP",
+			[3] = RAIDS,
+			[4] = "AlsoReceive",
+			[5] = "Concession",
+			[6] = WORLD,
+		}, {__index = function(self, k)
+				for name, i in pairs(Enum.WeeklyRewardChestThresholdType) do
+					if i == k then
+						self[k] = name
+						break
+					end
+				end
+				return self[k]
+			end
+		})
+
+
+
+
 		for name, i in pairs(Enum.WeeklyRewardChestThresholdType) do
 			-- None = 0
 			-- Activities = 1 (ДАНЖИ) -- DUNGEONS
@@ -1257,23 +1281,17 @@ local function Collect_ALL_GreatVault()
 			local test
 			local hyperlink_STRING = ""
 			local activities = C_WeeklyRewards.GetActivities(i)
-			local type_local = ""
-			if i == 0 then type_local = "None"
-			elseif i == 1 then type_local = DUNGEONS
-			elseif i == 2 then type_local = "RankedPvP"
-			elseif i == 3 then type_local = RAIDS
-			elseif i == 4 then type_local = "AlsoReceive"
-			elseif i == 5 then type_local = "Concession"
-			elseif i == 6 then type_local = WORLD
-			end
-			for k = 1, 3 do
+			local activity_name = name_activities[i]
+			-- print (activity_name, name, i)
+
+			for k = 1, #activities do
 				local activityInfo = activities[k]
 				if activityInfo then
 					local type = activityInfo.type
-					print (type_local, type, " "..name)
-					if collect and type ~= 0 and type ~= nil then
+					if collect then
+						-- print (name, type)
 						collect.GreatVault[type] = collect.GreatVault[type] or {}
-						collect.GreatVault[type].type = name -- НАЗВАНИЕ (СКРЫТОЕ)
+						collect.GreatVault[type].type = activity_name -- НАЗВАНИЕ (СКРЫТОЕ)
 						collect.GreatVault[type].progress = activityInfo.progress -- ТЕКУЩИЙ ПРОГРЕСС
 						collect.GreatVault[type].threshold = activityInfo.threshold -- СКОЛЬКО ВСЕГО НУЖНО
 						local hyperlink = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
@@ -1295,6 +1313,23 @@ local function Collect_ALL_GreatVault()
 				end
 			end
 		end
+
+
+		-- local activities = C_WeeklyRewards.GetActivities()
+		-- for i, activityInfo in ipairs(activities) do
+
+		-- 	print (i, activityInfo.type, Enum.WeeklyRewardChestThresholdType[activityInfo.type])
+		-- 	-- if activityInfo.type == Enum.WeeklyRewardChestThresholdType.World then
+		-- 	-- 	self.showWorldRow = true;
+		-- 	-- 	break;
+		-- 	-- end
+		-- end
+
+
+
+
+
+
 	end
 end
 
