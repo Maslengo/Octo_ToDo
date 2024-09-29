@@ -489,23 +489,23 @@ local function checkCharInfo(self)
 	self.RIO_Score_TWW = self.RIO_Score_TWW or 0
 	self.RIO_weeklyBest = self.RIO_weeklyBest or 0
 	self.GreatVault = self.GreatVault or {}
-	for i = 1, 3 do
-		self.GreatVault[i] = self.GreatVault[i] or {}
-		self.GreatVault[i].progress = self.GreatVault[i].progress or 0
-		self.GreatVault[i].threshold = self.GreatVault[i].threshold or 0
-		self.GreatVault[i].hyperlink = self.GreatVault[i].hyperlink or {}
-		self.GreatVault[i].hyperlink_STRING = self.GreatVault[i].hyperlink_STRING or 0
-		for k = 1, 3 do
-			self.GreatVault[i].hyperlink[k] = self.GreatVault[i].hyperlink[k] or 0
-		end
-		if i == 1 then
-			self.GreatVault[i].type = self.GreatVault[i].type or MYTHIC_DUNGEONS
-		elseif i == 2 then
-			self.GreatVault[i].type = self.GreatVault[i].type or CALENDAR_TYPE_PVP
-		elseif i == 3 then
-			self.GreatVault[i].type = self.GreatVault[i].type or RAIDS
-		end
-	end
+	-- for i = 1, 3 do
+	-- 	self.GreatVault[i] = self.GreatVault[i] or {}
+	-- 	self.GreatVault[i].progress = self.GreatVault[i].progress or 0
+	-- 	self.GreatVault[i].threshold = self.GreatVault[i].threshold or 0
+	-- 	self.GreatVault[i].hyperlink = self.GreatVault[i].hyperlink or {}
+	-- 	self.GreatVault[i].hyperlink_STRING = self.GreatVault[i].hyperlink_STRING or 0
+	-- 	for k = 1, 3 do
+	-- 		self.GreatVault[i].hyperlink[k] = self.GreatVault[i].hyperlink[k] or 0
+	-- 	end
+	-- 	if i == 1 then
+	-- 		self.GreatVault[i].type = self.GreatVault[i].type or MYTHIC_DUNGEONS
+	-- 	elseif i == 2 then
+	-- 		self.GreatVault[i].type = self.GreatVault[i].type or CALENDAR_TYPE_PVP
+	-- 	elseif i == 3 then
+	-- 		self.GreatVault[i].type = self.GreatVault[i].type or RAIDS
+	-- 	end
+	-- end
 	setmetatable(self, Meta_Table_0)
 	setmetatable(self.CurrencyID_Total, Meta_Table_0)
 	setmetatable(self.CurrencyID, Meta_Table_0)
@@ -514,10 +514,10 @@ local function checkCharInfo(self)
 	setmetatable(self.OctoTable_QuestID, Meta_Table_NONE)
 	setmetatable(self.reputationID, Meta_Table_0)
 	setmetatable(self.Shadowland, Meta_Table_0)
-	if (self.tmstp_Weekly or 0) < GetServerTime() and (self.GreatVault[1].hyperlink_STRING ~= 0 or self.GreatVault[2].hyperlink_STRING ~= 0 or self.GreatVault[3].hyperlink_STRING ~= 0) then
-		self.HasAvailableRewards = true
-		self.GreatVault = {}
-	end
+	-- if (self.tmstp_Weekly or 0) < GetServerTime() and (self.GreatVault[1].hyperlink_STRING ~= 0 or self.GreatVault[2].hyperlink_STRING ~= 0 or self.GreatVault[3].hyperlink_STRING ~= 0) then
+	-- 	self.HasAvailableRewards = true
+	-- 	self.GreatVault = {}
+	-- end
 	if (self.tmstp_Weekly or 0) < GetServerTime() and self.Octopussy_DF_Weekly_CommunityFeast_count == E.Octo_Globals.DONE then
 		self.Octopussy_DF_Weekly_CommunityFeast_count = E.Octo_Globals.NONE
 	end
@@ -530,15 +530,15 @@ local function checkCharInfo(self)
 		self.journalInstance = {}
 		self.RIO_weeklyBest = 0
 		self.GreatVault = {}
-		for i = 1, 3 do
-			self.GreatVault[i] = {}
-			self.GreatVault[i].progress = 0
-			self.GreatVault[i].threshold = 0
-			self.GreatVault[i].hyperlink = {}
-			self.GreatVault[i].hyperlink_STRING = 0
-			for k = 1, 3 do
-				self.GreatVault[i].hyperlink[k] = 0
-			end
+		-- for i = 1, 3 do
+			-- self.GreatVault[i] = {}
+			-- self.GreatVault[i].progress = 0
+			-- self.GreatVault[i].threshold = 0
+			-- self.GreatVault[i].hyperlink = {}
+			-- self.GreatVault[i].hyperlink_STRING = 0
+			-- for k = 1, 3 do
+			-- 	self.GreatVault[i].hyperlink[k] = 0
+			-- end
 			-- if i == 1 then
 			-- 	self.GreatVault[i].type = MYTHIC_DUNGEONS
 			-- elseif i == 2 then
@@ -546,7 +546,7 @@ local function checkCharInfo(self)
 			-- elseif i == 3 then
 			-- 	self.GreatVault[i].type = RAIDS
 			-- end
-		end
+		-- end
 		for _, v in pairs(E.Octo_Table.OctoTable_UniversalQuest) do
 			for q, w in pairs(v) do
 				if w == "Weekly" then
@@ -1230,6 +1230,7 @@ local function Collect_ALL_GreatVault()
 		end
 		local curGUID = UnitGUID("PLAYER")
 		local collect = Octo_ToDo_DB_Levels[curGUID]
+		collect.GreatVault = {}
 		--
 		local mapChallengeModeIDs = C_ChallengeMode.GetMapTable()
 		C_MythicPlus.RequestRewards()
@@ -1246,25 +1247,35 @@ local function Collect_ALL_GreatVault()
 		--
 		for name, i in pairs(Enum.WeeklyRewardChestThresholdType) do
 			-- None = 0
-			-- Activities = 1
+			-- Activities = 1 (ДАНЖИ) -- DUNGEONS
 			-- RankedPvP = 2
-			-- Raid = 3
+			-- Raid = 3 -- RAIDS
 			-- AlsoReceive = 4
 			-- Concession = 5
-			-- World = 6
+			-- World = 6 (DELVE)  -- WORLD
 
 			local test
 			local hyperlink_STRING = ""
 			local activities = C_WeeklyRewards.GetActivities(i)
+			local type_local = ""
+			if i == 0 then type_local = "None"
+			elseif i == 1 then type_local = DUNGEONS
+			elseif i == 2 then type_local = "RankedPvP"
+			elseif i == 3 then type_local = RAIDS
+			elseif i == 4 then type_local = "AlsoReceive"
+			elseif i == 5 then type_local = "Concession"
+			elseif i == 6 then type_local = WORLD
+			end
 			for k = 1, 3 do
 				local activityInfo = activities[k]
 				if activityInfo then
 					local type = activityInfo.type
+					print (type_local, type, " "..name)
 					if collect and type ~= 0 and type ~= nil then
 						collect.GreatVault[type] = collect.GreatVault[type] or {}
-						collect.GreatVault[type].type = name
-						collect.GreatVault[type].progress = activityInfo.progress
-						collect.GreatVault[type].threshold = activityInfo.threshold
+						collect.GreatVault[type].type = name -- НАЗВАНИЕ (СКРЫТОЕ)
+						collect.GreatVault[type].progress = activityInfo.progress -- ТЕКУЩИЙ ПРОГРЕСС
+						collect.GreatVault[type].threshold = activityInfo.threshold -- СКОЛЬКО ВСЕГО НУЖНО
 						local hyperlink = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						if hyperlink then
 							collect.GreatVault[type].hyperlink[k] = hyperlink
