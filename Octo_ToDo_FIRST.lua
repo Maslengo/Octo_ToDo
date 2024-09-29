@@ -1244,8 +1244,7 @@ local function Collect_ALL_GreatVault()
 		end
 		collect.RIO_Score_TWW = C_ChallengeMode.GetOverallDungeonScore("PLAYER")
 		collect.RIO_weeklyBest = currentWeekBestLevel
-		collect.GreatVault = {}
-		--
+		-- collect.GreatVault = {}
 
 		local name_activities = setmetatable({
 			[0] = "None",
@@ -1287,16 +1286,16 @@ local function Collect_ALL_GreatVault()
 			for k = 1, #activities do
 				local activityInfo = activities[k]
 				if activityInfo then
-					local type = activityInfo.type
+					local tip = activityInfo.type
 					if collect then
-						-- print (name, type)
-						collect.GreatVault[type] = collect.GreatVault[type] or {}
-						collect.GreatVault[type].type = activity_name -- НАЗВАНИЕ (СКРЫТОЕ)
-						collect.GreatVault[type].progress = activityInfo.progress -- ТЕКУЩИЙ ПРОГРЕСС
-						collect.GreatVault[type].threshold = activityInfo.threshold -- СКОЛЬКО ВСЕГО НУЖНО
+						print (name, tip)
+						collect.GreatVault[tip] = collect.GreatVault[tip] or {}
+						collect.GreatVault[tip].type = activity_name -- НАЗВАНИЕ (СКРЫТОЕ)
+						collect.GreatVault[tip].progress = activityInfo.progress -- ТЕКУЩИЙ ПРОГРЕСС
+						collect.GreatVault[tip].threshold = activityInfo.threshold -- СКОЛЬКО ВСЕГО НУЖНО
 						local hyperlink = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						if hyperlink then
-							collect.GreatVault[type].hyperlink[k] = hyperlink
+							collect.GreatVault[tip].hyperlink[k] = hyperlink
 						end
 						-- if type == 1 then collect.GreatVault[type].type = MYTHIC_DUNGEONS end
 						-- if type == 2 then collect.GreatVault[type].type = CALENDAR_TYPE_PVP end
