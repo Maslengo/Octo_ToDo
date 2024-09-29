@@ -36,10 +36,10 @@ local utf8replace = E.Octo_Func.utf8replace
 local utf8upper = E.Octo_Func.utf8upper
 local utf8lower = E.Octo_Func.utf8lower
 local utf8reverse = E.Octo_Func.utf8reverse
-local currentMaxLevel = 60
-local ItemLevelGreen = 525
-local ItemLevelOrange = 500
-local ItemLevelRed = 480
+local currentMaxLevel = 80
+local ItemLevelGreen = 625
+local ItemLevelOrange = 610
+local ItemLevelRed = 580
 if WOW_currentBuild == 1 then currentMaxLevel = 60 end --CLASSIC
 if WOW_currentBuild == 2 then currentMaxLevel = 70 end --TBC
 if WOW_currentBuild == 3 then currentMaxLevel = 80 end --WOTLK
@@ -49,7 +49,8 @@ if WOW_currentBuild == 6 then currentMaxLevel = 100 end --DRAENOR
 if WOW_currentBuild == 7 then currentMaxLevel = 110 end --legion
 if WOW_currentBuild == 8 then currentMaxLevel = 120 end --BFA
 if WOW_currentBuild == 9 then currentMaxLevel = 60 end --SL
-if WOW_currentBuild == 10 then currentMaxLevel = 70 end --RETAIL
+if WOW_currentBuild == 10 then currentMaxLevel = 70 end --DF
+if WOW_currentBuild == 11 then currentMaxLevel = 80 end --TWW
 --
 local curWidthTitle = E.Octo_Globals.curWidthTitle
 E.Octo_Func.func_Octo_LoadAddOn("!BugGrabber")
