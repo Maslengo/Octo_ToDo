@@ -489,23 +489,23 @@ local function checkCharInfo(self)
 	self.RIO_Score_TWW = self.RIO_Score_TWW or 0
 	self.RIO_weeklyBest = self.RIO_weeklyBest or 0
 	self.GreatVault = self.GreatVault or {}
-	-- for i = 1, 3 do
-	-- 	self.GreatVault[i] = self.GreatVault[i] or {}
-	-- 	self.GreatVault[i].progress = self.GreatVault[i].progress or 0
-	-- 	self.GreatVault[i].threshold = self.GreatVault[i].threshold or 0
-	-- 	self.GreatVault[i].hyperlink = self.GreatVault[i].hyperlink or {}
-	-- 	self.GreatVault[i].hyperlink_STRING = self.GreatVault[i].hyperlink_STRING or 0
-	-- 	for k = 1, 3 do
-	-- 		self.GreatVault[i].hyperlink[k] = self.GreatVault[i].hyperlink[k] or 0
-	-- 	end
-	-- 	if i == 1 then
-	-- 		self.GreatVault[i].type = self.GreatVault[i].type or MYTHIC_DUNGEONS
-	-- 	elseif i == 2 then
-	-- 		self.GreatVault[i].type = self.GreatVault[i].type or CALENDAR_TYPE_PVP
-	-- 	elseif i == 3 then
-	-- 		self.GreatVault[i].type = self.GreatVault[i].type or RAIDS
-	-- 	end
-	-- end
+	for i = 1, 3 do
+		self.GreatVault[i] = self.GreatVault[i] or {}
+		self.GreatVault[i].progress = self.GreatVault[i].progress or 0
+		self.GreatVault[i].threshold = self.GreatVault[i].threshold or 0
+		self.GreatVault[i].hyperlink = self.GreatVault[i].hyperlink or {}
+		self.GreatVault[i].hyperlink_STRING = self.GreatVault[i].hyperlink_STRING or 0
+		-- for k = 1, 3 do
+		-- 	self.GreatVault[i].hyperlink[k] = self.GreatVault[i].hyperlink[k] or 0
+		-- end
+		-- if i == 1 then
+		-- 	self.GreatVault[i].type = self.GreatVault[i].type or MYTHIC_DUNGEONS
+		-- elseif i == 2 then
+		-- 	self.GreatVault[i].type = self.GreatVault[i].type or CALENDAR_TYPE_PVP
+		-- elseif i == 3 then
+		-- 	self.GreatVault[i].type = self.GreatVault[i].type or RAIDS
+		-- end
+	end
 	setmetatable(self, Meta_Table_0)
 	setmetatable(self.CurrencyID_Total, Meta_Table_0)
 	setmetatable(self.CurrencyID, Meta_Table_0)
@@ -1294,6 +1294,7 @@ local function Collect_ALL_GreatVault()
 						collect.GreatVault[tip].progress = activityInfo.progress -- ТЕКУЩИЙ ПРОГРЕСС
 						collect.GreatVault[tip].threshold = activityInfo.threshold -- СКОЛЬКО ВСЕГО НУЖНО
 						local hyperlink = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+						print (hyperlink)
 						if hyperlink then
 							collect.GreatVault[tip].hyperlink[k] = hyperlink
 						end
@@ -1305,7 +1306,7 @@ local function Collect_ALL_GreatVault()
 						if hyperlink_STRING ~= "" then
 							test = test and test..", "..hyperlink_STRING or hyperlink_STRING
 							if test ~= nil then
-								collect.GreatVault[type].hyperlink_STRING = test
+								collect.GreatVault[tip].hyperlink_STRING = test
 							end
 						end
 					end
