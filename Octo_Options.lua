@@ -402,9 +402,8 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_Slider(MAIN_scrollChild, self, 7, POS_RIGHT, "itemLevelToShow", L["Item level: "], E.Octo_Globals.Green_Color, 0, 560)
 		Create_Slider(MAIN_scrollChild, self, 8.5, POS_RIGHT, "curWidthCentral", L["Width: "], E.Octo_Globals.Green_Color, 60, 160)
 		Create_Slider(MAIN_scrollChild, self, 10, POS_RIGHT, "curWidthTitle", L["curWidthTitle: "], E.Octo_Globals.Green_Color, 100, 400)
-		Create_Slider(MAIN_scrollChild, self, 11.5, POS_RIGHT, "curWidthTitleAchievement", "curWidthTitleAchievement", E.Octo_Globals.Green_Color, 100, 400)
-		Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "curHeight", "Высота строк: ", E.Octo_Globals.Green_Color, 10, 30)
-		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк /20px: ", E.Octo_Globals.Green_Color, 200, 1000)
+		Create_Slider(MAIN_scrollChild, self, 11.5, POS_RIGHT, "curHeight", "Высота строк: ", E.Octo_Globals.Green_Color, 10, 30)
+		Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "Addon_Height", "Количество строк /20px: ", E.Octo_Globals.Green_Color, 200, 1000)
 
 		-- Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк /20px: ", E.Octo_Globals.Green_Color, 200, 1000, 1, function()
 		-- 	print (Octo_ToDo_DB_Vars.config.Addon_Height, value)
@@ -412,10 +411,10 @@ MAIN_Config:SetScript("OnShow", function(self)
 		-- end)
 
 
-		Create_Slider(MAIN_scrollChild, self, 16, POS_RIGHT, "FrameScale", "Addon Scale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
+		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "FrameScale", "Addon Scale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
 				Octo_ToDo_FIRST_Frame_Main_FramePIZDA:SetScale(Octo_ToDo_DB_Vars.config.FrameScale or 1)
 		end)
-		Create_Slider(MAIN_scrollChild, self, 17.5, POS_RIGHT, "GameMenuFrameScale", "GameMenuFrameScale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
+		Create_Slider(MAIN_scrollChild, self, 16, POS_RIGHT, "GameMenuFrameScale", "GameMenuFrameScale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
 				GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
 		end)
 
@@ -750,79 +749,93 @@ SECOND_Config:SetScript("OnShow", function(self)
 				-- otstyp = indent,
 				config = "BeledarCycle",
 				text = L["Light/Dark Cycle"].." "..E.Octo_Timer.TWW_BeledarCycle(),
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "World_Boss_S1",
 				text = L["World Boss"],
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_DQ_S1",
 				text = L["Weekly Dungeon Quest"],
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_Delve_S1",
 				text = E.Octo_Func.func_questName(83366),
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_WQ_Caches_S1",
 				text = L["Weekly World Quest caches x2"],
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_WQ_S1_Soul",
 				text = E.Octo_Func.func_questName(82452),
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_WQ_S1_Crafting",
 				text = L["Weekly Crafting Quests"],
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_WQ_S1_Fishing",
-				text = "Fishing" -- E.Octo_Func.func_questName(82778),
+				text = "Fishing", -- E.Octo_Func.func_questName(82778),
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_WQ_S1_zKahet",
 				text = L["Weekly Azj-Kahet"],
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_WQ_S1_zHallow",
 				text = L["Weekly Hallowfall"],
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_WQ_S1_Sniffer",
 				text = E.Octo_Func.func_questName(82946),
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_WQ_S1_zRing",
 				text = E.Octo_Func.func_questName(83333),
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Weekly_WQ_S1_zDorn",
 				text = L["Weekly the Isle of Dorn"],
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "MajorKeyflames",
 				text = E.Octo_Func.func_texturefromIcon(132863) .. L["Major Keyflames"],
-				r = 1, g = 0, b = .28,
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "MinorKeyflames",
 				text = E.Octo_Func.func_texturefromIcon(135619) .. L["Minor Keyflames"],
-				r = 1, g = 0, b = .28,
+				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
+
 			{
 				button = false,
 				text = CURRENCY,
@@ -831,62 +844,93 @@ SECOND_Config:SetScript("OnShow", function(self)
 				-- otstyp = indent,
 				config = "RestoredCofferKey",
 				text = E.Octo_Func.func_currencyicon(3028)..E.Octo_Func.func_currencyName(3028),
+				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "NerubarFinery",
 				text = E.Octo_Func.func_currencyicon(3093)..E.Octo_Func.func_currencyName(3093),
+				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
-			{
-				-- otstyp = indent,
-				config = "GildedHarbingerCrest",
-				text = E.Octo_Func.func_currencyicon(2917)..E.Octo_Func.func_currencyName(2917),
-			},
-			{
-				-- otstyp = indent,
-				config = "RunedHarbingerCrest",
-				text = E.Octo_Func.func_currencyicon(2916)..E.Octo_Func.func_currencyName(2916),
-			},
-			{
-				-- otstyp = indent,
-				config = "CarvedHarbingerCrest",
-				text = E.Octo_Func.func_currencyicon(2915)..E.Octo_Func.func_currencyName(2915),
-			},
-			{
-				-- otstyp = indent,
-				config = "WeatheredHarbingerCrest",
-				text = E.Octo_Func.func_currencyicon(2914)..E.Octo_Func.func_currencyName(2914),
-			},
+
+
+
+
+
 			{
 				-- otstyp = indent,
 				config = "Undercoin",
 				text = E.Octo_Func.func_currencyicon(2803)..E.Octo_Func.func_currencyName(2803),
+				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Valorstones",
 				text = E.Octo_Func.func_currencyicon(3008)..E.Octo_Func.func_currencyName(3008),
+				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "MereldarDerbyMark",
 				text = E.Octo_Func.func_currencyicon(3055)..E.Octo_Func.func_currencyName(3055),
+				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "ResidualMemories",
 				text = E.Octo_Func.func_currencyicon(3089)..E.Octo_Func.func_currencyName(3089),
+				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "Kej",
 				text = E.Octo_Func.func_currencyicon(3056)..E.Octo_Func.func_currencyName(3056),
+				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "ResonanceCrystals",
 				text = E.Octo_Func.func_currencyicon(2815)..E.Octo_Func.func_currencyName(2815),
+				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
+
+
+			{
+				button = false,
+				text = L["Crests"],
+			},
+			{
+				-- otstyp = indent,
+				config = "GildedHarbingerCrest",
+				text = E.Octo_Func.func_currencyicon(2917)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2917).."|r",
+				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
+			},
+			{
+				-- otstyp = indent,
+				config = "RunedHarbingerCrest",
+				text = E.Octo_Func.func_currencyicon(2916)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2916).."|r",
+				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
+			},
+			{
+				-- otstyp = indent,
+				config = "CarvedHarbingerCrest",
+				text = E.Octo_Func.func_currencyicon(2915)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2915).."|r",
+				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
+			},
+			{
+				-- otstyp = indent,
+				config = "WeatheredHarbingerCrest",
+				text = E.Octo_Func.func_currencyicon(2914)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2914).."|r",
+				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
+			},
+
+
+
+
+
+
+
+
 			{
 				text = ITEMS,
 				button = false,
@@ -896,52 +940,63 @@ SECOND_Config:SetScript("OnShow", function(self)
 			{
 				config = "CofferKeyShard",
 				text = E.Octo_Func.func_itemTexture(229899)..E.Octo_Func.func_itemName(229899),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "OddGlobofWax",
 				text = E.Octo_Func.func_itemTexture(212493)..E.Octo_Func.func_itemName(212493),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "NascentWeatheredHarbingerCrest",
 				text = E.Octo_Func.func_itemTexture(220788)..E.Octo_Func.func_itemName(220788),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "EnchantedWeatheredHarbingerCrest",
 				text = E.Octo_Func.func_itemTexture(224069)..E.Octo_Func.func_itemName(224069),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "NascentRunedHarbingerCrest",
 				text = E.Octo_Func.func_itemTexture(220790)..E.Octo_Func.func_itemName(220790),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "EnchantedRunedHarbingerCrest",
 				text = E.Octo_Func.func_itemTexture(224072)..E.Octo_Func.func_itemName(224072),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "NascentGildedHarbingerCrest",
 				text = E.Octo_Func.func_itemTexture(220789)..E.Octo_Func.func_itemName(220789),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "EnchantedGildedHarbingerCrest",
 				text = E.Octo_Func.func_itemTexture(224073)..E.Octo_Func.func_itemName(224073),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "SparkofOmens",
 				text = E.Octo_Func.func_itemTexture(211296)..E.Octo_Func.func_itemName(211296),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "FracturedSparkofOmens",
 				text = E.Octo_Func.func_itemTexture(211297)..E.Octo_Func.func_itemName(211297),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "RadiantRemnant",
 				text = E.Octo_Func.func_itemTexture(206350)..E.Octo_Func.func_itemName(206350),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
 			{
 				config = "RadiantEcho",
 				text = E.Octo_Func.func_itemTexture(220520)..E.Octo_Func.func_itemName(220520),
+				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
-
 
 
 
@@ -957,41 +1012,49 @@ SECOND_Config:SetScript("OnShow", function(self)
 				-- otstyp = indent,
 				config = "TheAssemblyoftheDeeps",
 				text = E.Octo_Func.func_texturefromIcon(5891367)..E.Octo_Func.func_reputationName(2594),
+				r = E.Octo_Globals.REP_Color_r, g = E.Octo_Globals.REP_Color_g, b = E.Octo_Globals.REP_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "CouncilofDornogal",
 				text = E.Octo_Func.func_texturefromIcon(5891369)..E.Octo_Func.func_reputationName(2590),
+				r = E.Octo_Globals.REP_Color_r, g = E.Octo_Globals.REP_Color_g, b = E.Octo_Globals.REP_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "HallowfallArathi",
 				text = E.Octo_Func.func_texturefromIcon(5891368)..E.Octo_Func.func_reputationName(2570),
+				r = E.Octo_Globals.REP_Color_r, g = E.Octo_Globals.REP_Color_g, b = E.Octo_Globals.REP_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "TheSeveredThreads",
 				text = E.Octo_Func.func_texturefromIcon(5891370)..E.Octo_Func.func_reputationName(2600),
+				r = E.Octo_Globals.REP_Color_r, g = E.Octo_Globals.REP_Color_g, b = E.Octo_Globals.REP_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "TheWeaver",
 				text = E.Octo_Func.func_texturefromIcon(5862764)..E.Octo_Func.func_reputationName(2601),
+				r = E.Octo_Globals.REP_Color_r, g = E.Octo_Globals.REP_Color_g, b = E.Octo_Globals.REP_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "TheVizier",
 				text = E.Octo_Func.func_texturefromIcon(5862763)..E.Octo_Func.func_reputationName(2607),
+				r = E.Octo_Globals.REP_Color_r, g = E.Octo_Globals.REP_Color_g, b = E.Octo_Globals.REP_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "TheGeneral",
 				text = E.Octo_Func.func_texturefromIcon(5862762)..E.Octo_Func.func_reputationName(2605),
+				r = E.Octo_Globals.REP_Color_r, g = E.Octo_Globals.REP_Color_g, b = E.Octo_Globals.REP_Color_b,
 			},
 			{
 				-- otstyp = indent,
 				config = "BrannBronzebeard",
 				text = E.Octo_Func.func_texturefromIcon(5453546)..E.Octo_Func.func_reputationName(2640),
+				r = E.Octo_Globals.REP_Color_r, g = E.Octo_Globals.REP_Color_g, b = E.Octo_Globals.REP_Color_b,
 			},
 		}
 		for i = 1, #ConfigTable_TWW_LEFT do
@@ -1102,25 +1165,16 @@ Octo_DEV_Config:SetScript("OnShow", function(self)
 		----------------------------------------------------------------
 		----------------------------НАСТРОЙКИ---------------------------
 		Create_CheckButton(Octo_DEV_scrollChild, self, 1, POS_RIGHT, 0, "StaticPopup1Button1", "StaticPopup1Button1")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 5, POS_RIGHT, 0, "CVar", "CVar")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 6, POS_RIGHT, 0, "SORTING", "Auto Sorting")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 7, POS_RIGHT, 0, "SellFrame", "Sell Frame")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 8, POS_RIGHT, 0, "GlobalFadePersist", "Global Fade Persist")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 11, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Function 1", 0, .65, 1, 1)
-		Create_CheckButton(Octo_DEV_scrollChild, self, 12, POS_RIGHT, 0, "Octo_debug_Event_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Event 1", .31, 1, .47, 1)
-		Create_CheckButton(Octo_DEV_scrollChild, self, 13, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."BUTTONS 1", .69, .38, 1, 1)
-		-- Create_CheckButton(Octo_DEV_scrollChild, self, 15, POS_RIGHT, 0, "Octo_debug_Function_SECOND", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 22).."Function 2", 0, .65, 1, 1)
-		-- Create_CheckButton(Octo_DEV_scrollChild, self, 16, POS_RIGHT, 0, "Octo_debug_Event_SECOND", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 22).."Event 2", .31, 1, .47, 1)
-		-- Create_CheckButton(Octo_DEV_scrollChild, self, 17, POS_RIGHT, 0, "Octo_debug_BUTTONS_SECOND", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_SECOND.tga", 22).."BUTTONS 2", .69, .38, 1, 1)
-
-		-- local function Create_CheckButton(scroll, self, number, pos, otstyp, config, text, r, g, b, a, button)
+		Create_CheckButton(Octo_DEV_scrollChild, self, 2, POS_RIGHT, 0, "CVar", "CVar")
+		Create_CheckButton(Octo_DEV_scrollChild, self, 3, POS_RIGHT, 0, "Minecraft", "Minecraft")
+		Create_CheckButton(Octo_DEV_scrollChild, self, 4, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Function 1", 0, .65, 1, E.Octo_Globals.BGALPHA)
+		Create_CheckButton(Octo_DEV_scrollChild, self, 5, POS_RIGHT, 0, "Octo_debug_Event_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Event 1", .31, 1, .47, E.Octo_Globals.BGALPHA)
+		Create_CheckButton(Octo_DEV_scrollChild, self, 6, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."BUTTONS 1", .69, .38, 1, E.Octo_Globals.BGALPHA)
 
 
 
-
-		Create_SimpleButton(Octo_DEV_scrollChild, self, 25, POS_RIGHT, "ResetAllChars", "Reset All Chars")
+		Create_SimpleButton(Octo_DEV_scrollChild, self, 22, POS_RIGHT, "ResetAllChars", "Reset All Chars")
 		Create_SimpleButton(Octo_DEV_scrollChild, self, 26, POS_RIGHT, "ReloadUI", "Reload UI")
-		Create_CheckButton(Octo_DEV_scrollChild, self, 27, POS_RIGHT, 0, "Minecraft", "Minecraft")
 		for number, v in ipairs(E.Octo_Table.OctoTable_Colors) do
 			Create_Frame_Color(Octo_DEV_scrollChild, self, number, POS_LEFT, v.name, v.hex)
 		end
@@ -1129,6 +1183,8 @@ end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, Octo_DEV_Config, E.Octo_Globals.DarkGray_Color.."Octo_DEV_Config".."|r") --Dragonflight
 subcategory.ID = L["InDev"].."Octo_DEV_Config"
 Settings.RegisterAddOnCategory(subcategory)
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

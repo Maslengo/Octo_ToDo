@@ -1086,16 +1086,6 @@ local function Collect_BfA_Cloaklvl()
 		collect.cloak_res = 0
 	end
 end
--- function Collect_Legion_Artifact()
--- 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
--- 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_Legion_Artifact()".."|r")
--- 	end
--- 	local curGUID = UnitGUID("PLAYER")
--- 	local collect = Octo_ToDo_DB_Levels[curGUID]
--- 	local _, _, _, quantity1, reqQuantity1 = GetAchievementCriteriaInfo(11152, 1)
--- 	local _, _, _, quantity2, reqQuantity2 = GetAchievementCriteriaInfo(11153, 1)
--- 	local _, _, _, quantity3, reqQuantity3 = GetAchievementCriteriaInfo(11154, 1)
--- end
 local function Collect_ALL_LoginTime()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Collect_ALL_LoginTime()".."|r")
@@ -1847,10 +1837,8 @@ local function Collect_All_Legion_Transmoge()
 							if E.Octo_Globals.UNLOCK_DATA[data.unlock] then
 								local unlock = E.Octo_Globals.UNLOCK_DATA[data.unlock].unlock
 								local unlockOCto = E.Octo_Globals.UNLOCK_DATA[data.unlock].unlockOCto
-								-- local unlockAchievementID = E.Octo_Globals.UNLOCK_DATA[data.unlock].AchievementID
 								collect_Artifact.unlock = unlock
 								collect_Artifact.unlockOCto = unlockOCto
-								-- collect_Artifact.unlockAchievementID = unlockAchievementID
 							end
 						end
 					end
@@ -4731,6 +4719,7 @@ local function O_otrisovka_FIRST()
 							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
+					BG:SetColorTexture(E.Octo_Globals.CREST_Color_r, E.Octo_Globals.CREST_Color_g, E.Octo_Globals.CREST_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4760,6 +4749,7 @@ local function O_otrisovka_FIRST()
 							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
+					BG:SetColorTexture(E.Octo_Globals.CREST_Color_r, E.Octo_Globals.CREST_Color_g, E.Octo_Globals.CREST_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4789,6 +4779,7 @@ local function O_otrisovka_FIRST()
 							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
+					BG:SetColorTexture(E.Octo_Globals.CREST_Color_r, E.Octo_Globals.CREST_Color_g, E.Octo_Globals.CREST_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4818,6 +4809,7 @@ local function O_otrisovka_FIRST()
 							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
+					BG:SetColorTexture(E.Octo_Globals.CREST_Color_r, E.Octo_Globals.CREST_Color_g, E.Octo_Globals.CREST_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4862,6 +4854,11 @@ local function O_otrisovka_FIRST()
 							end
 						end
 					end
+					if CharInfo.RIO_Score_TWW ~= 0 then
+						tooltip[#tooltip+1] = {" ", " "}
+						tooltip[#tooltip+1] = {"RIO Score:", E.Octo_Func.RIO_Color(CharInfo.RIO_Score_TWW)..CharInfo.RIO_Score_TWW.."|r"}
+						tooltip[#tooltip+1] = {"Weekly Best:", E.Octo_Func.RIO_Color(CharInfo.RIO_Score_TWW)..CharInfo.RIO_weeklyBest.."|r"}
+					end
 
 					if CharInfo.CurrentKey ~= 0 then
 						-- vivodCent = E.Octo_Globals.Purple_Color..CharInfo.CurrentKey.."|r"
@@ -4895,6 +4892,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.OctoTable_QuestID[83240] ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.OctoTable_QuestID[83240]
 					end
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4906,7 +4904,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_WBWorld_Boss_S1_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_WBWorld_Boss_S1_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4919,7 +4917,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_DQ_S1_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_DQ_S1_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4932,7 +4930,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_Delve_S1_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_Delve_S1_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4945,7 +4943,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_Caches_S1_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_Caches_S1_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4958,7 +4956,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Soul_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Soul_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4971,7 +4969,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Crafting_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Crafting_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4984,7 +4982,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Fishing_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Fishing_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -4997,7 +4995,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zKahet_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zKahet_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5010,7 +5008,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zHallow_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zHallow_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5023,7 +5021,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Sniffer_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_Sniffer_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5036,7 +5034,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zRing_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zRing_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5049,7 +5047,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zDorn_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_Weekly_WQ_S1_zDorn_count
 					end
-					-- BG:SetColorTexture(1, .95, .44, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5062,7 +5060,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_MajorKeyflames_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_MajorKeyflames_count
 					end
-					BG:SetColorTexture(1, 0, .28, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5075,10 +5073,12 @@ local function O_otrisovka_FIRST()
 					if CharInfo.Octopussy_TWW_Weekly_MinorKeyflames_count ~= E.Octo_Globals.NONE then
 						vivodCent = CharInfo.Octopussy_TWW_Weekly_MinorKeyflames_count
 					end
-					BG:SetColorTexture(1, 0, .28, E.Octo_Globals.BGALPHA)
+					BG:SetColorTexture(E.Octo_Globals.QW_Color_r, E.Octo_Globals.QW_Color_g, E.Octo_Globals.QW_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
+
+
 		-- ВАЛЮТА TWW
 		if Octo_ToDo_DB_Vars.config.RestoredCofferKey == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -5089,6 +5089,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3028]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(3028)..E.Octo_Func.func_currencyName(3028)
+					BG:SetColorTexture(E.Octo_Globals.CURR_Color_r, E.Octo_Globals.CURR_Color_g, E.Octo_Globals.CURR_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5101,54 +5102,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3093]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(3093)..E.Octo_Func.func_currencyName(3093)
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.GildedHarbingerCrest == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
-					if CharInfo.CurrencyID[2917] ~= 0 then
-						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2917]).."|r"
-					end
-					vivodLeft = E.Octo_Func.func_currencyicon(2917)..E.Octo_Func.func_currencyName(2917)
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.RunedHarbingerCrest == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
-					if CharInfo.CurrencyID[2916] ~= 0 then
-						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2916]).."|r"
-					end
-					vivodLeft = E.Octo_Func.func_currencyicon(2916)..E.Octo_Func.func_currencyName(2916)
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.CarvedHarbingerCrest == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
-					if CharInfo.CurrencyID[2915] ~= 0 then
-						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2915]).."|r"
-					end
-					vivodLeft = E.Octo_Func.func_currencyicon(2915)..E.Octo_Func.func_currencyName(2915)
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
-					local color = "|cffFFFFFF"--local color = E.Octo_Globals.Blue_Color
-					if CharInfo.CurrencyID[2914] ~= 0 then
-						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2914]).."|r"
-					end
-					vivodLeft = E.Octo_Func.func_currencyicon(2914)..E.Octo_Func.func_currencyName(2914)
+					BG:SetColorTexture(E.Octo_Globals.CURR_Color_r, E.Octo_Globals.CURR_Color_g, E.Octo_Globals.CURR_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5161,6 +5115,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2803]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(2803)..E.Octo_Func.func_currencyName(2803)
+					BG:SetColorTexture(E.Octo_Globals.CURR_Color_r, E.Octo_Globals.CURR_Color_g, E.Octo_Globals.CURR_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5173,6 +5128,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3008]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(3008)..E.Octo_Func.func_currencyName(3008)
+					BG:SetColorTexture(E.Octo_Globals.CURR_Color_r, E.Octo_Globals.CURR_Color_g, E.Octo_Globals.CURR_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5185,6 +5141,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3055]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(3055)..E.Octo_Func.func_currencyName(3055)
+					BG:SetColorTexture(E.Octo_Globals.CURR_Color_r, E.Octo_Globals.CURR_Color_g, E.Octo_Globals.CURR_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5197,6 +5154,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3089]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(3089)..E.Octo_Func.func_currencyName(3089)
+					BG:SetColorTexture(E.Octo_Globals.CURR_Color_r, E.Octo_Globals.CURR_Color_g, E.Octo_Globals.CURR_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5209,6 +5167,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3056]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(3056)..E.Octo_Func.func_currencyName(3056)
+					BG:SetColorTexture(E.Octo_Globals.CURR_Color_r, E.Octo_Globals.CURR_Color_g, E.Octo_Globals.CURR_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5221,9 +5180,124 @@ local function O_otrisovka_FIRST()
 						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[2815]).."|r"
 					end
 					vivodLeft = E.Octo_Func.func_currencyicon(2815)..E.Octo_Func.func_currencyName(2815)
+					BG:SetColorTexture(E.Octo_Globals.CURR_Color_r, E.Octo_Globals.CURR_Color_g, E.Octo_Globals.CURR_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
+
+
+		-- CRESTS TWW
+		if Octo_ToDo_DB_Vars.config.GildedHarbingerCrest == true then -- 2917
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local currencyID = 2917
+					local color = E.Octo_Globals.WOW_Epic_Color
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
+					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+					if data then
+						local maxQuantity = data.maxQuantity
+						local totalEarned = data.totalEarned
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
+							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						else
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
+						end
+						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
+						end
+					end
+					BG:SetColorTexture(E.Octo_Globals.CREST_Color_r, E.Octo_Globals.CREST_Color_g, E.Octo_Globals.CREST_Color_b, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.RunedHarbingerCrest == true then -- 2916
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local currencyID = 2916
+					local color = E.Octo_Globals.WOW_Epic_Color
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
+					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+					if data then
+						local maxQuantity = data.maxQuantity
+						local totalEarned = data.totalEarned
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
+							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						else
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
+						end
+						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
+						end
+					end
+					BG:SetColorTexture(E.Octo_Globals.CREST_Color_r, E.Octo_Globals.CREST_Color_g, E.Octo_Globals.CREST_Color_b, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.CarvedHarbingerCrest == true then -- 2915
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local currencyID = 2915
+					local color = E.Octo_Globals.WOW_Rare_Color
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
+					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+					if data then
+						local maxQuantity = data.maxQuantity
+						local totalEarned = data.totalEarned
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
+							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						else
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
+						end
+						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
+						end
+					end
+					BG:SetColorTexture(E.Octo_Globals.CREST_Color_r, E.Octo_Globals.CREST_Color_g, E.Octo_Globals.CREST_Color_b, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+		if Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest == true then -- 2914
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local currencyID = 2914
+					local color = E.Octo_Globals.WOW_Rare_Color
+					vivodLeft = E.Octo_Func.func_currencyicon(currencyID)..color..E.Octo_Func.func_currencyName_NOCOLOR(currencyID).."|r"
+					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+					if data then
+						local maxQuantity = data.maxQuantity
+						local totalEarned = data.totalEarned
+						if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
+							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+							tooltip[#tooltip+1] = {" ", " "}
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						else
+							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
+						end
+						if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
+							vivodCent = CharInfo.CurrencyID[currencyID]..E.Octo_Globals.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
+						end
+					end
+					BG:SetColorTexture(E.Octo_Globals.CREST_Color_r, E.Octo_Globals.CREST_Color_g, E.Octo_Globals.CREST_Color_b, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
+
+
+
 		-- ПРЕДМЕТЫ TWW
 		if Octo_ToDo_DB_Vars.config.CofferKeyShard == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -5233,6 +5307,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[229899] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[229899]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5244,6 +5319,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[212493] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[212493]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5255,6 +5331,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[220788] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[220788]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5266,6 +5343,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[224069] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[224069]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5277,6 +5355,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[220790] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[220790]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5288,6 +5367,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[224072] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[224072]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5299,6 +5379,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[220789] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[220789]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5310,6 +5391,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[224073] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[224073]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5321,6 +5403,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[211296] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[211296]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5332,6 +5415,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[211297] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[211297]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5343,6 +5427,7 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[206350] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[206350]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5354,9 +5439,11 @@ local function O_otrisovka_FIRST()
 					if CharInfo.ItemsInBag[220520] ~= 0 then
 						vivodCent = CharInfo.ItemsInBag[220520]
 					end
+					BG:SetColorTexture(E.Octo_Globals.ITEM_Color_r, E.Octo_Globals.ITEM_Color_g, E.Octo_Globals.ITEM_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
+
 		-- РЕПУТАЦИЯ TWW
 		if Octo_ToDo_DB_Vars.config.TheAssemblyoftheDeeps == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -5367,6 +5454,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = CharInfo.reputationID[2594]
 					end
 					vivodLeft = E.Octo_Func.func_texturefromIcon(5891367)..E.Octo_Func.func_reputationName(2594)
+					BG:SetColorTexture(E.Octo_Globals.REP_Color_r, E.Octo_Globals.REP_Color_g, E.Octo_Globals.REP_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5379,6 +5467,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = CharInfo.reputationID[2590]
 					end
 					vivodLeft = E.Octo_Func.func_texturefromIcon(5891369)..E.Octo_Func.func_reputationName(2590)
+					BG:SetColorTexture(E.Octo_Globals.REP_Color_r, E.Octo_Globals.REP_Color_g, E.Octo_Globals.REP_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5391,6 +5480,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = CharInfo.reputationID[2570]
 					end
 					vivodLeft = E.Octo_Func.func_texturefromIcon(5891368)..E.Octo_Func.func_reputationName(2570)
+					BG:SetColorTexture(E.Octo_Globals.REP_Color_r, E.Octo_Globals.REP_Color_g, E.Octo_Globals.REP_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5403,6 +5493,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = CharInfo.reputationID[2600]
 					end
 					vivodLeft = E.Octo_Func.func_texturefromIcon(5891370)..E.Octo_Func.func_reputationName(2600)
+					BG:SetColorTexture(E.Octo_Globals.REP_Color_r, E.Octo_Globals.REP_Color_g, E.Octo_Globals.REP_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5415,6 +5506,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = CharInfo.reputationID[2601]
 					end
 					vivodLeft = E.Octo_Func.func_texturefromIcon(5862764)..E.Octo_Func.func_reputationName(2601)
+					BG:SetColorTexture(E.Octo_Globals.REP_Color_r, E.Octo_Globals.REP_Color_g, E.Octo_Globals.REP_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5427,6 +5519,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = CharInfo.reputationID[2607]
 					end
 					vivodLeft = E.Octo_Func.func_texturefromIcon(5862763)..E.Octo_Func.func_reputationName(2607)
+					BG:SetColorTexture(E.Octo_Globals.REP_Color_r, E.Octo_Globals.REP_Color_g, E.Octo_Globals.REP_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5439,6 +5532,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = CharInfo.reputationID[2605]
 					end
 					vivodLeft = E.Octo_Func.func_texturefromIcon(5862762)..E.Octo_Func.func_reputationName(2605)
+					BG:SetColorTexture(E.Octo_Globals.REP_Color_r, E.Octo_Globals.REP_Color_g, E.Octo_Globals.REP_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -5451,6 +5545,7 @@ local function O_otrisovka_FIRST()
 						vivodCent = CharInfo.reputationID[2640]
 					end
 					vivodLeft = E.Octo_Func.func_texturefromIcon(5453546)..E.Octo_Func.func_reputationName(2640)
+					BG:SetColorTexture(E.Octo_Globals.REP_Color_r, E.Octo_Globals.REP_Color_g, E.Octo_Globals.REP_Color_b, E.Octo_Globals.BGALPHA)
 					return vivodCent, vivodLeft
 			end)
 		end
@@ -6944,9 +7039,6 @@ local function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				if CharInfo.Octopussy_DF_Once_CatchingUp_count ~= E.Octo_Globals.DONE and CharInfo.UnitLevel >= currentMaxLevel then
-					tooltip[#tooltip+1] = {E.Octo_Globals.Red_Color.."Нужно сделать квест: |r"..E.Octo_Func.func_questName(69979).." /way 60, 72", CharInfo.Octopussy_DF_Once_CatchingUp_count}
-				end
 				for k, v in pairs(E.Octo_Table.Octo_ProfessionsskillLine) do
 					if CharInfo.professions[k] then
 						if CharInfo.professions[k].icon and CharInfo.professions[k].name and CharInfo.professions[k].skillLevel and CharInfo.professions[k].maxSkillLevel then
@@ -7282,24 +7374,24 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					text:SetText(string.format(TIME_PLAYED_TOTAL, TotalTimeAllServerOnShow()))
 			end)
 		end
-		if Octo_ToDo_DB_Vars.config.ShowTime70 then
-			if not Octo_Frame_TotalTimeAllServer70 then
-				Octo_Frame_TotalTimeAllServer70 = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
-				Octo_Frame_TotalTimeAllServer70:SetSize(400, E.Octo_Globals.curHeight)
-				Octo_Frame_TotalTimeAllServer70:EnableMouse(false)
-				Octo_Frame_TotalTimeAllServer70:SetPoint("TOPRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMRIGHT", -4, -22)
-				Octo_Frame_TotalTimeAllServer70:SetBackdrop({
+		if Octo_ToDo_DB_Vars.config.ShowTimeMMAXLEVEL then
+			if not Octo_Frame_TotalTimeAllServerMAXLEVEL then
+				Octo_Frame_TotalTimeAllServerMAXLEVEL = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), Octo_ToDo_FIRST_Frame_Main_Frame, "BackDropTemplate")
+				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetSize(400, E.Octo_Globals.curHeight)
+				Octo_Frame_TotalTimeAllServerMAXLEVEL:EnableMouse(false)
+				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetPoint("TOPRIGHT", Octo_ToDo_FIRST_Frame_Main_Frame, "BOTTOMRIGHT", -4, -22)
+				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetBackdrop({
 						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 						edgeSize = 1
 				})
-				Octo_Frame_TotalTimeAllServer70:SetBackdropBorderColor(1, 0, 0, 0)
-				local text = Octo_Frame_TotalTimeAllServer70:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetBackdropBorderColor(1, 0, 0, 0)
+				local text = Octo_Frame_TotalTimeAllServerMAXLEVEL:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 				text:SetAllPoints()
 				text:SetFontObject(OctoFont11)
 				text:SetJustifyV("MIDDLE")
 				text:SetJustifyH("RIGHT")
 				text:SetTextColor(1, 1, 1, 1)
-				Octo_Frame_TotalTimeAllServer70:HookScript("OnShow", function(self)
+				Octo_Frame_TotalTimeAllServerMAXLEVEL:HookScript("OnShow", function(self)
 						text:SetText(string.format("%s", TotalTimeAllServer70OnShow()))
 				end)
 			end
@@ -7591,7 +7683,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		dd_FIRST:SetScript("OnClick", function(self)
 				self:ddToggle(1, nil, self, self:GetWidth()+1, -self:GetHeight())
 		end)
-		local function selectFunctionAchievementToShow(menuButton, _, _, checked)
+		local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 			Octo_ToDo_DB_Levels[menuButton.value].isShownPLAYER = checked
 		end
 		local function func_remove_GUID(menuButton)
@@ -7660,7 +7752,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						end
 						info.text = vivod
 						info.value = GUID
-						info.func = selectFunctionAchievementToShow
+						info.func = selectFunctionisShownPLAYER
 						info.checked = Octo_ToDo_DB_Levels[GUID].isShownPLAYER
 						info.remove = func_remove_GUID
 						self:ddAddButton(info, level)
@@ -8170,7 +8262,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Artifact == nil then Octo_ToDo_DB_Artifact = {} end
 		if Octo_ToDo_DB_Other == nil then Octo_ToDo_DB_Other = {} end
 		if Octo_ToDo_DB_Vars.config.CVar == nil then Octo_ToDo_DB_Vars.config.CVar = false end
-		if Octo_ToDo_DB_Vars.config.SORTING == nil then Octo_ToDo_DB_Vars.config.SORTING = false end
 		if Octo_ToDo_DB_Vars.config.StaticPopup1Button1 == nil then Octo_ToDo_DB_Vars.config.StaticPopup1Button1 = false end
 		if Octo_ToDo_DB_Vars.config.Minecraft == nil then Octo_ToDo_DB_Vars.config.Minecraft = false end
 		if Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm == nil then Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm = false end
@@ -8287,17 +8378,15 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.Gold == nil then Octo_ToDo_DB_Vars.config.Gold = true end
 		if Octo_ToDo_DB_Vars.config.ItemLevel == nil then Octo_ToDo_DB_Vars.config.ItemLevel = true end
 		if Octo_ToDo_DB_Vars.config.LastUpdate == nil then Octo_ToDo_DB_Vars.config.LastUpdate = false end
-		if Octo_ToDo_DB_Vars.config.SellFrame == nil then Octo_ToDo_DB_Vars.config.SellFrame = false end
-		if Octo_ToDo_DB_Vars.config.GlobalFadePersist == nil then Octo_ToDo_DB_Vars.config.GlobalFadePersist = false end
 		if Octo_ToDo_DB_Vars.config.LevelToShow == nil then Octo_ToDo_DB_Vars.config.LevelToShow = 60 end
-		if Octo_ToDo_DB_Vars.config.LevelToShowMAX == nil then Octo_ToDo_DB_Vars.config.LevelToShowMAX = 70 end
+		if Octo_ToDo_DB_Vars.config.LevelToShowMAX == nil then Octo_ToDo_DB_Vars.config.LevelToShowMAX = 120 end
 		if Octo_ToDo_DB_Vars.config.itemLevelToShow == nil then Octo_ToDo_DB_Vars.config.itemLevelToShow = 1 end
 		if Octo_ToDo_DB_Vars.config.ExpansionToShow == nil then Octo_ToDo_DB_Vars.config.ExpansionToShow = tonumber(GetBuildInfo():match("(.-)%.")) or 1 end
 		if Octo_ToDo_DB_Vars.config.AchievementToShow == nil then Octo_ToDo_DB_Vars.config.AchievementToShow = 92 end
 		if Octo_ToDo_DB_Vars.config.AchievementShowCompleted == nil then Octo_ToDo_DB_Vars.config.AchievementShowCompleted = true end
 		if Octo_ToDo_DB_Vars.config.ShowTotalMoney == nil then Octo_ToDo_DB_Vars.config.ShowTotalMoney = true end
 		if Octo_ToDo_DB_Vars.config.ShowTimeAll == nil then Octo_ToDo_DB_Vars.config.ShowTimeAll = true end
-		if Octo_ToDo_DB_Vars.config.ShowTime70 == nil then Octo_ToDo_DB_Vars.config.ShowTime70 = true end
+		if Octo_ToDo_DB_Vars.config.ShowTimeMMAXLEVEL == nil then Octo_ToDo_DB_Vars.config.ShowTimeMMAXLEVEL = true end
 		if Octo_ToDo_DB_Vars.config.ResetAllChars == nil then Octo_ToDo_DB_Vars.config.ResetAllChars = true end
 		if Octo_ToDo_DB_Vars.config.PortalsButtons == nil then Octo_ToDo_DB_Vars.config.PortalsButtons = false end
 		if Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent == nil then Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = false end
@@ -8310,8 +8399,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.curWidthCentral ~= nil then E.Octo_Globals.curWidthCentral = Octo_ToDo_DB_Vars.config.curWidthCentral end
 		if Octo_ToDo_DB_Vars.config.curWidthTitle == nil then Octo_ToDo_DB_Vars.config.curWidthTitle = 200 end
 		if Octo_ToDo_DB_Vars.config.curWidthTitle ~= nil then E.Octo_Globals.curWidthTitle = Octo_ToDo_DB_Vars.config.curWidthTitle end
-		if Octo_ToDo_DB_Vars.config.curWidthTitleAchievement == nil then Octo_ToDo_DB_Vars.config.curWidthTitleAchievement = 300 end
-		if Octo_ToDo_DB_Vars.config.curWidthTitleAchievement ~= nil then E.Octo_Globals.curWidthTitleAchievement = Octo_ToDo_DB_Vars.config.curWidthTitleAchievement end
 		if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == nil then Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST = false end
 		if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST ~= nil then E.Octo_Globals.Octo_debug_Function_FIRST = Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST end
 		if Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST == nil then Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST = false end

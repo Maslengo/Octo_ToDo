@@ -69,6 +69,35 @@ E.Octo_Globals.curWidthTitle = 200*E.Octo_Globals.scale
 E.Octo_Globals.ilvlToShow = 400
 E.Octo_Globals.Addon_Height = 400
 E.Octo_Globals.BGALPHA = .1
+
+
+
+E.Octo_Globals.QW_Color_r = .3 -- 1
+E.Octo_Globals.QW_Color_g = .1 -- .7
+E.Octo_Globals.QW_Color_b = 0 -- 0
+
+E.Octo_Globals.CURR_Color_r = 0 -- 0.79
+E.Octo_Globals.CURR_Color_g = 0 -- 0.76
+E.Octo_Globals.CURR_Color_b = .3 -- 0.67
+
+E.Octo_Globals.CREST_Color_r = 0 -- 0
+E.Octo_Globals.CREST_Color_g = .3 -- 0
+E.Octo_Globals.CREST_Color_b = .3 -- 1
+
+
+E.Octo_Globals.ITEM_Color_r = 0 -- 0
+E.Octo_Globals.ITEM_Color_g = .3 -- 1
+E.Octo_Globals.ITEM_Color_b = 0 -- 1
+
+
+E.Octo_Globals.REP_Color_r = .3 -- 0
+E.Octo_Globals.REP_Color_g = .3 -- 1
+E.Octo_Globals.REP_Color_b = 0 -- 1
+
+
+
+
+
 E.Octo_Globals.Main_Frame_Position = -157
 E.Octo_Globals.regions = {
 	[1] = "us",

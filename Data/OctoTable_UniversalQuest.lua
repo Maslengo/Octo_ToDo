@@ -1351,22 +1351,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "CatchingUp",
-		reset = "Once",
-		expansion = "DF",
-		place = "",
-		desc = "",
-		questID = {
-			67100,
-			67137,
-			67295,
-			67564,
-			69946,
-			69979
-		},
-		max = 6
-	},
-	{
 		name_save = "PryingEyeDiscovery",
 		reset = "Daily",
 		expansion = "SL",
