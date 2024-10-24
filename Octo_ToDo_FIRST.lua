@@ -6387,17 +6387,30 @@ local function O_otrisovka_FIRST()
 				end
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»"..L["Other"].."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2032)..E.Octo_Func.func_currencyName(2032), E.Octo_Func.func_currencyquantity(2032)} -- все персы
-				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2588)..E.Octo_Func.func_currencyName(2588), CharInfo.CurrencyID_Total[2588]}
-				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1379)..E.Octo_Func.func_currencyName(1379), CharInfo.CurrencyID_Total[1379]}
-				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(515)..E.Octo_Func.func_currencyName(515), CharInfo.CurrencyID_Total[515]}
-				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2778)..E.Octo_Func.func_currencyName(2778), CharInfo.CurrencyID_Total[2778]} -- Бронза
-				if Octo_ToDo_DB_Vars.config.ExpansionToShow == 5 then
-					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(402)..E.Octo_Func.func_currencyName(402), CharInfo.CurrencyID_Total[402]}
+
+
+
+				for k, currencyID in pairs (E.Octo_Table.OctoTable_currency_Miscellaneous) do
+					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID), CharInfo.CurrencyID_Total[currencyID]}
+
+
+
 				end
-				if Octo_ToDo_DB_Vars.config.ExpansionToShow == 3 then
-					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(81)..E.Octo_Func.func_currencyName(81), CharInfo.CurrencyID_Total[81]}
-				end
+
+
+
+
+				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2032)..E.Octo_Func.func_currencyName(2032), E.Octo_Func.func_currencyquantity(2032)} -- все персы
+				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2588)..E.Octo_Func.func_currencyName(2588), CharInfo.CurrencyID_Total[2588]}
+				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1379)..E.Octo_Func.func_currencyName(1379), CharInfo.CurrencyID_Total[1379]}
+				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(515)..E.Octo_Func.func_currencyName(515), CharInfo.CurrencyID_Total[515]}
+				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2778)..E.Octo_Func.func_currencyName(2778), CharInfo.CurrencyID_Total[2778]} -- Бронза
+				-- if Octo_ToDo_DB_Vars.config.ExpansionToShow == 5 then
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(402)..E.Octo_Func.func_currencyName(402), CharInfo.CurrencyID_Total[402]}
+				-- end
+				-- if Octo_ToDo_DB_Vars.config.ExpansionToShow == 3 then
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(81)..E.Octo_Func.func_currencyName(81), CharInfo.CurrencyID_Total[81]}
+				-- end
 				if #tooltip ~= 0 then
 					vivodCent = E.Octo_Globals.Gray_Color..CURRENCY.."|r"
 				end

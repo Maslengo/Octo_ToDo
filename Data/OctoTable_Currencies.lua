@@ -218,6 +218,9 @@ E.Octo_Table.OctoTable_currency_DungeonandRaid = {
 	1166,
 }
 E.Octo_Table.OctoTable_currency_Miscellaneous = {
+
+	3100,
+	2778,
 	2032,
 	81,
 	515,
