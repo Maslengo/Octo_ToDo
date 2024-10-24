@@ -832,6 +832,7 @@ local function CreateFrameUsableSpells_OnMouseDown(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."CreateFrameUsableSpells_OnMouseDown".."|r")
 	end
+	print (self.spellID)
 	local isKnown = IsSpellKnown(self.spellID)
 	if isKnown == true then
 		self.icon:SetVertexColor(1, 1, 1, 1)
@@ -6379,25 +6380,28 @@ local function O_otrisovka_FIRST()
 				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1166)..E.Octo_Func.func_currencyName(1166), CharInfo.CurrencyID_Total[1166]}
 				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
 				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»".."PvP".."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
-				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1602)..E.Octo_Func.func_currencyName(1602), CharInfo.CurrencyID_Total[1602]}
-				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1792)..E.Octo_Func.func_currencyName(1792), CharInfo.CurrencyID_Total[1792]}
-				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2123)..E.Octo_Func.func_currencyName(2123), CharInfo.CurrencyID_Total[2123]}
-				if Octo_ToDo_DB_Vars.config.ExpansionToShow == 4 then
-					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(391)..E.Octo_Func.func_currencyName(391), CharInfo.CurrencyID_Total[391]}
-				end
-				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
-				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»"..L["Other"].."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
 
-
-
-				for k, currencyID in pairs (E.Octo_Table.OctoTable_currency_Miscellaneous) do
+				for k, currencyID in pairs(E.Octo_Table.OctoTable_currency_PlayervsPlayer) do
 					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID), CharInfo.CurrencyID_Total[currencyID]}
 				end
 
 
 
 
-				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2032)..E.Octo_Func.func_currencyName(2032), E.Octo_Func.func_currencyquantity(2032)} -- все персы
+				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1602)..E.Octo_Func.func_currencyName(1602), CharInfo.CurrencyID_Total[1602]}
+				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1792)..E.Octo_Func.func_currencyName(1792), CharInfo.CurrencyID_Total[1792]}
+				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2123)..E.Octo_Func.func_currencyName(2123), CharInfo.CurrencyID_Total[2123]}
+				-- if Octo_ToDo_DB_Vars.config.ExpansionToShow == 4 then
+				-- 	tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(391)..E.Octo_Func.func_currencyName(391), CharInfo.CurrencyID_Total[391]}
+				-- end
+				if #tooltip > 0 then tooltip[#tooltip+1] = {" ", " "} end
+				tooltip[#tooltip+1] = {E.Octo_Func.func_Gradient("»"..L["Other"].."«", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), " "}
+
+				tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2032)..E.Octo_Func.func_currencyName(2032), E.Octo_Func.func_currencyquantity(2032)} -- все персы
+				for k, currencyID in pairs(E.Octo_Table.OctoTable_currency_Miscellaneous) do
+					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID), CharInfo.CurrencyID_Total[currencyID]}
+				end
+
 				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(2588)..E.Octo_Func.func_currencyName(2588), CharInfo.CurrencyID_Total[2588]}
 				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(1379)..E.Octo_Func.func_currencyName(1379), CharInfo.CurrencyID_Total[1379]}
 				-- tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(515)..E.Octo_Func.func_currencyName(515), CharInfo.CurrencyID_Total[515]}
@@ -7869,7 +7873,7 @@ if IsRetail() == true then
 				CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Духовное путешествие
 			end
 			if RaceEnglish == "DarkIronDwarf" then
-				CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86) -- Буровая установка
+				CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*12+Ypos*1, Ypos*13, 0, .43, .86) -- Буровая установка
 			end
 		else
 			-- НЕТ ИНЖИ
@@ -7889,7 +7893,7 @@ if IsRetail() == true then
 				CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Духовное путешествие
 			end
 			if RaceEnglish == "DarkIronDwarf" then
-				CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86) -- Буровая установка
+				CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*4+Ypos*1, Ypos*5, 0, .43, .86) -- Буровая установка
 			end
 		end
 		local UnitLevel = UnitLevel("PLAYER")

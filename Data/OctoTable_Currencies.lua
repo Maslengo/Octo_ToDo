@@ -221,7 +221,7 @@ E.Octo_Table.OctoTable_currency_Miscellaneous = {
 
 	3100,
 	2778,
-	2032,
+	-- 2032,
 	81,
 	515,
 	402,
