@@ -6392,9 +6392,6 @@ local function O_otrisovka_FIRST()
 
 				for k, currencyID in pairs (E.Octo_Table.OctoTable_currency_Miscellaneous) do
 					tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID), CharInfo.CurrencyID_Total[currencyID]}
-
-
-
 				end
 
 

@@ -93,6 +93,12 @@ E.Octo_Table.OctoTable_itemID_ALL = {
 	206350,
 	1602,
 	220520,
+
+	231510, --LFR
+	232365, --NORM
+	232366, --HEROIC
+
+
 }
 
 
