@@ -26,6 +26,8 @@ tinsert(E.Octo_Globals.modules, function()
 						local UnitID = "TARGET"
 						local guid = UnitGUID(UnitID)
 						local First_Option = {
+							[110034] = true, -- 20 годовщина
+
 							[210718] = true,
 							[207779] = true,
 							[168432] = true,

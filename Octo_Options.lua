@@ -412,11 +412,25 @@ MAIN_Config:SetScript("OnShow", function(self)
 
 
 		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "FrameScale", "Addon Scale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
-				Octo_ToDo_FIRST_Frame_Main_FramePIZDA:SetScale(Octo_ToDo_DB_Vars.config.FrameScale or 1)
+				if Octo_ToDo_FIRST_Frame_Main_FramePIZDA then
+					Octo_ToDo_FIRST_Frame_Main_FramePIZDA:SetScale(Octo_ToDo_DB_Vars.config.FrameScale or 1)
+				end
 		end)
 		Create_Slider(MAIN_scrollChild, self, 16, POS_RIGHT, "GameMenuFrameScale", "GameMenuFrameScale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
-				GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
+				if GameMenuFrame then
+					GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
+				end
 		end)
+		-- Create_Slider(MAIN_scrollChild, self, 17.5, POS_RIGHT, "PlayerSpellsFrameScale", "PlayerSpellsFrameScale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
+		-- 		if not PlayerSpellsFrame then
+		-- 			local talentAddonName = 'Blizzard_PlayerSpells'
+		-- 			C_AddOns.LoadAddOn(talentAddonName);
+		-- 			print ("LoadAddOn")
+		-- 		else
+		-- 			PlayerSpellsFrame:SetScale(Octo_ToDo_DB_Vars.config.PlayerSpellsFrameScale or 1)
+		-- 			print (Octo_ToDo_DB_Vars.config.PlayerSpellsFrameScale)
+		-- 		end
+		-- end)
 
 		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"])
 		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, indent, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")

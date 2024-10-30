@@ -8356,7 +8356,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zRing == nil then Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zRing = false end
 		if Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zDorn == nil then Octo_ToDo_DB_Vars.config.Weekly_WQ_S1_zDorn = false end
 		if Octo_ToDo_DB_Vars.config.FrameScale == nil then Octo_ToDo_DB_Vars.config.FrameScale = 1 end
-		if Octo_ToDo_DB_Vars.config.GameMenuFrameScale == nil then Octo_ToDo_DB_Vars.config.GameMenuFrameScale = 0.7 end
+		if Octo_ToDo_DB_Vars.config.GameMenuFrameScale == nil then Octo_ToDo_DB_Vars.config.GameMenuFrameScale = 1 end
+		if Octo_ToDo_DB_Vars.config.PlayerSpellsFrameScale == nil then Octo_ToDo_DB_Vars.config.PlayerSpellsFrameScale = 1 end
+		print (Octo_ToDo_DB_Vars.config.PlayerSpellsFrameScale)
 		if Octo_ToDo_DB_Vars.config.MajorKeyflames == nil then Octo_ToDo_DB_Vars.config.MajorKeyflames = false end
 		if Octo_ToDo_DB_Vars.config.MinorKeyflames == nil then Octo_ToDo_DB_Vars.config.MinorKeyflames = false end
 		if Octo_ToDo_DB_Vars.config.CofferKeyShard == nil then Octo_ToDo_DB_Vars.config.CofferKeyShard = false end
@@ -8665,6 +8667,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_All_journalInstance()
 		Hide_trash_frames()
 		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
+		if PlayerSpellsFrame then
+			PlayerSpellsFrame:SetScale(Octo_ToDo_DB_Vars.config.PlayerSpellsFrameScale or 1)
+		end
 		if Octo_ToDo_FIRST_Frame_Main_Frame and Octo_ToDo_FIRST_Frame_Main_Frame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED") and not InCombatLockdown() then

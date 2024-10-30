@@ -142,8 +142,6 @@ E.Octo_Table.OctoTable_currency_Dragonflight = {
 	-- 2122,
 	-- 2118,
 	-- 2003,
-
-
 	2003,
 	2011,
 	2045,
