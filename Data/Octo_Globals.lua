@@ -6,11 +6,9 @@ _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 -- local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
-
 function IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function IsClassic() return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC end
 function IsCata() return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC end
-
 local utf8charbytes = E.Octo_Func.utf8charbytes
 local utf8len = E.Octo_Func.utf8len
 local utf8sub = E.Octo_Func.utf8sub
@@ -18,8 +16,6 @@ local utf8replace = E.Octo_Func.utf8replace
 local utf8upper = E.Octo_Func.utf8upper
 local utf8lower = E.Octo_Func.utf8lower
 local utf8reverse = E.Octo_Func.utf8reverse
-
-
 ----------------------------------------------------------------
 local function texturefromIcon(self, size)
 	local show = true -- TYT
@@ -69,35 +65,21 @@ E.Octo_Globals.curWidthTitle = 200*E.Octo_Globals.scale
 E.Octo_Globals.ilvlToShow = 400
 E.Octo_Globals.Addon_Height = 400
 E.Octo_Globals.BGALPHA = .1
-
-
-
 E.Octo_Globals.QW_Color_r = .3 -- 1
 E.Octo_Globals.QW_Color_g = .1 -- .7
 E.Octo_Globals.QW_Color_b = 0 -- 0
-
 E.Octo_Globals.CURR_Color_r = 0 -- 0.79
 E.Octo_Globals.CURR_Color_g = 0 -- 0.76
 E.Octo_Globals.CURR_Color_b = .3 -- 0.67
-
 E.Octo_Globals.CREST_Color_r = 0 -- 0
 E.Octo_Globals.CREST_Color_g = .3 -- 0
 E.Octo_Globals.CREST_Color_b = .3 -- 1
-
-
 E.Octo_Globals.ITEM_Color_r = 0 -- 0
 E.Octo_Globals.ITEM_Color_g = .3 -- 1
 E.Octo_Globals.ITEM_Color_b = 0 -- 1
-
-
 E.Octo_Globals.REP_Color_r = .3 -- 0
 E.Octo_Globals.REP_Color_g = .3 -- 1
 E.Octo_Globals.REP_Color_b = 0 -- 1
-
-
-
-
-
 E.Octo_Globals.Main_Frame_Position = -157
 E.Octo_Globals.regions = {
 	[1] = "us",

@@ -230,8 +230,6 @@ E.Octo_Table.OctoTable_Colors = {
 	-- {name = "whitesmoke", hex = "F5F5F5"},
 	-- {name = "yellow", hex = "FFFF00"},
 	-- {name = "yellowgreen", hex = "9ACD32"},
-
-
 }
 E.Octo_Table.OctoTable_RIO_COLORS = {
 	{["score"] = 10000, ["color"] = {1, 0.5, 0, }},

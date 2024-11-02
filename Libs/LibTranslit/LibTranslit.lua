@@ -108,4 +108,3 @@ function lib:Transliterate(str, mark)
 	end
 	return tstr..(mark_word and mark..tword or tword)
 end
-

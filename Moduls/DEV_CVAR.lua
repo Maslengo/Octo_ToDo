@@ -14,10 +14,7 @@ tinsert(E.Octo_Globals.modules, function()
 		if not InCombatLockdown() then
 			C_Timer.After(1, function()
 				-- 11.0
-
 				SetCVar("bankAutoDepositReagents", 1)
-
-
 				SetCVar("enablePings", 0) -- Enables ping system.
 				SetCVar("pingMode", 0) -- Determines which mode is used to use the ping system.
 				SetCVar("showPingsInChat", 0) -- Enables ping details being shown in chat.
@@ -92,11 +89,6 @@ tinsert(E.Octo_Globals.modules, function()
 				SetCVar("lastRenownForMajorFaction2511", 30)
 				SetCVar("lastRenownForMajorFaction2510", 30)
 				SetCVar("lastRenownForMajorFaction2574", 20)
-
-
-
-
-
 				SetCVar("mapFade", 0) -- прозрачность карты в движении
 				SetCVar("NamePlateClassificationScale", 1) -- 1.25
 				SetCVar("nameplateGlobalScale", 1)

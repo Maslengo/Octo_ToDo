@@ -29,8 +29,8 @@ E.Octo_Table.OctoTable_currencyID_ALL = {
 	2533, 2588, 2590, 2591, 2592, 2594, 2645, 2649, 2650, 2651, 2652,
 	2653, 2655, 2657, 2706, 2707, 2708, 2709, 2710, 2715, 2716, 2717,
 	2718, 2774, 2777, 2780, 2784, 2785, 2786, 2787, 2788, 2789, 2790,
-	2791, 2792, 2793, 2794, 2795, 2796, 2797, 2799, 2800, 2805, 2806,
-	2807, 2808, 2809, 2810, 2811, 2812, 2813, 2814, 2819, 2822, 2853,
+	2791, 2792, 2793, 2794, 2795, 2796, 2797, 2799, 2800, 2805,
+	2808, 2810, 2811, 2813, 2814, 2819, 2822, 2853,
 	2854, 2855, 2856, 2857, 2858, 2859, 2860, 2861, 2862, 2863, 2864,
 	2865, 2866, 2867, 2868, 2869, 2870, 2871, 2872, 2873, 2874, 2875,
 	2876, 2878, 2897, 2898, 2899, 2900, 2901, 2902, 2903, 2904, 2906,
@@ -43,8 +43,6 @@ E.Octo_Table.OctoTable_currencyID_ALL = {
 	3078, 3079, 3080, 3081, 3082, 3083, 3084, 3085, 3086, 3087, 3088,
 	3094, 3099, 2803, 2815, 2839, 2914, 2915, 2916, 2917, 3008, 3028,
 	3055, 3056, 3089, 3093,
-
-
 }
 E.Octo_Table.OctoTable_currency_Classic = {
 }
@@ -160,12 +158,7 @@ E.Octo_Table.OctoTable_currency_Dragonflight = {
 	2651,
 	2657,
 	2777,
-	2806,
-	2807,
-	2809,
-	2812,
 }
-
 E.Octo_Table.OctoTable_currency_TheWarWithin = {
 	3028, -- Restored Coffer Key
 	3093, -- Nerub-ar Finery
@@ -173,23 +166,14 @@ E.Octo_Table.OctoTable_currency_TheWarWithin = {
 	2916, -- Runed Harbinger Crest
 	2915, -- Carved Harbinger Crest
 	2914, -- Weathered Harbinger Crest
-
 	2803, -- Undercoin
 	-- 2839, -- [DNT] Awakening Currency
 	3008, -- Valorstones
 	3055, -- Mereldar Derby Mark
 	3089, -- Residual Memories
-
-
-
 	3056, -- Kej
 	2815, -- Resonance Crystals
 }
-
-
-
-
-
 E.Octo_Table.OctoTable_currency_Archaeology = {
 	393,
 	401,
@@ -216,7 +200,6 @@ E.Octo_Table.OctoTable_currency_DungeonandRaid = {
 	1166,
 }
 E.Octo_Table.OctoTable_currency_Miscellaneous = {
-
 	3100,
 	2778,
 	-- 2032,
@@ -243,8 +226,6 @@ E.Octo_Table.OctoTable_currency_Virtual = {
 	2230,
 	2822,
 }
-
-
 E.Octo_Table.OctoTable_currency_Hidden = {
 	2912,
 	2533,
@@ -553,4 +534,3 @@ E.Octo_Table.OctoTable_currency_Hidden = {
 	3069,
 	3085,
 }
-

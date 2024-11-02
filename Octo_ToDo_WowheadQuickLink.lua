@@ -13,11 +13,9 @@ local GlobalAddonName, E = ...
 -- E.Octo_Globals.baseArmoryUrl = "https://worldofwarcraft.com/%s/character/%s/%s"
 -- E.Octo_Globals.baseRaiderIoUrl = "https://raider.io/characters/%s/%s/%s"
 local popupText = "%s Link\nCTRL-C to copy"
-
 local function ShowUrlPopup(header, url)
 	StaticPopup_Show("WowheadQuickLinkUrl", header, _, url)
 end
-
 local function CreateUrl(dataSources, strategies)
 	for _, strategy in pairs(strategies) do
 		local header, url = strategy(dataSources)
@@ -27,27 +25,22 @@ local function CreateUrl(dataSources, strategies)
 		end
 	end
 end
-
 local GetMouseFocus = GetMouseFocus
 if not GetMouseFocus then
 	local GetMouseFoci = GetMouseFoci
 	GetMouseFocus = function() return GetMouseFoci()[1] end
 end
-
 local function GetDataSources()
 	local focus = GetMouseFocus()
 	local tooltip = GameTooltip
 	return {focus = focus, tooltip = tooltip}
 end
-
 function RunWowheadQuickLink()
 	CreateUrl(GetDataSources(), E.Octo_Globals.strategies)
 end
-
 function RunAlternativeQuickLink()
 	CreateUrl(GetDataSources(), E.Octo_Globals.altStrategies)
 end
-
 StaticPopupDialogs["WowheadQuickLinkUrl"] = {
 	text = popupText,
 	button1 = "Close",

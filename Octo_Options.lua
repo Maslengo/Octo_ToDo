@@ -404,13 +404,10 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_Slider(MAIN_scrollChild, self, 10, POS_RIGHT, "curWidthTitle", L["curWidthTitle: "], E.Octo_Globals.Green_Color, 100, 400)
 		Create_Slider(MAIN_scrollChild, self, 11.5, POS_RIGHT, "curHeight", "Высота строк: ", E.Octo_Globals.Green_Color, 10, 30)
 		Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "Addon_Height", "Количество строк /20px: ", E.Octo_Globals.Green_Color, 200, 1000)
-
 		-- Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "Addon_Height", "Количество строк /20px: ", E.Octo_Globals.Green_Color, 200, 1000, 1, function()
 		-- 	print (Octo_ToDo_DB_Vars.config.Addon_Height, value)
 		-- 		Octo_ToDo_DB_Vars.config.Addon_Height = value НАОБОРОТ
 		-- end)
-
-
 		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "FrameScale", "Addon Scale: ", E.Octo_Globals.Green_Color, 0.5, 2.5, 0.1, function()
 				if Octo_ToDo_FIRST_Frame_Main_FramePIZDA then
 					Octo_ToDo_FIRST_Frame_Main_FramePIZDA:SetScale(Octo_ToDo_DB_Vars.config.FrameScale or 1)
@@ -431,7 +428,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 		-- 			print (Octo_ToDo_DB_Vars.config.PlayerSpellsFrameScale)
 		-- 		end
 		-- end)
-
 		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"])
 		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, indent, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")
 		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
@@ -614,31 +610,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 				otstyp = indent,
 				config = "SplinteredSparkofAwakening",
 				text = E.Octo_Func.func_itemTexture(211515)..E.Octo_Func.func_itemName(211515),
-			},
-			{
-				button = false,
-				text = L["Crests"],
-			},
-			{
-				otstyp = indent,
-				config = "Crests_Mythic",
-				text = E.Octo_Func.func_currencyicon(2812)..E.Octo_Globals.WOW_Legendary_Color..E.Octo_Func.func_currencyName_NOCOLOR(2812).."|r"
-			},
-			{
-				otstyp = indent,
-				config = "Crests_Heroic",
-				text = E.Octo_Func.func_currencyicon(2809)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2809).."|r"
-			},
-			{
-				otstyp = indent,
-				config = "Crests_Normal",
-				text = E.Octo_Func.func_currencyicon(2807)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2807).."|r"
-			},
-			{
-				otstyp = indent,
-				config = "Crests_LFR",
-				text = E.Octo_Func.func_currencyicon(2806)..E.Octo_Globals.WOW_Uncommon_Color..E.Octo_Func.func_currencyName_NOCOLOR(2806).."|r"
-			},
+			}
 		}
 		for i = 1, #ConfigTable_DF_LEFT do
 			if ConfigTable_DF_LEFT[i].otstyp == nil then ConfigTable_DF_LEFT[i].otstyp = 0 end
@@ -656,16 +628,6 @@ FIRST_Config:SetScript("OnShow", function(self)
 			{
 				button = false,
 				text = L["General"],
-			},
-			{
-				config = "Event",
-				text = EVENTS_LABEL,
-				r = 1, g = .95, b = .44,
-			},
-			{
-				config = "Holiday",
-				text = CALENDAR_FILTER_HOLIDAYS,
-				r = 1, g = .4, b = .1,
 			},
 			{
 				config = "Dungeons",
@@ -849,7 +811,6 @@ SECOND_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_texturefromIcon(135619) .. L["Minor Keyflames"],
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
-
 			{
 				button = false,
 				text = CURRENCY,
@@ -866,11 +827,6 @@ SECOND_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_currencyicon(3093)..E.Octo_Func.func_currencyName(3093),
 				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
-
-
-
-
-
 			{
 				-- otstyp = indent,
 				config = "Undercoin",
@@ -907,8 +863,6 @@ SECOND_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_currencyicon(2815)..E.Octo_Func.func_currencyName(2815),
 				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
-
-
 			{
 				button = false,
 				text = L["Crests"],
@@ -937,20 +891,10 @@ SECOND_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_currencyicon(2914)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2914).."|r",
 				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
 			},
-
-
-
-
-
-
-
-
 			{
 				text = ITEMS,
 				button = false,
 			},
-
-
 			{
 				config = "CofferKeyShard",
 				text = E.Octo_Func.func_itemTexture(229899)..E.Octo_Func.func_itemName(229899),
@@ -1011,13 +955,6 @@ SECOND_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_itemTexture(220520)..E.Octo_Func.func_itemName(220520),
 				r = E.Octo_Globals.ITEM_Color_r, g = E.Octo_Globals.ITEM_Color_g, b = E.Octo_Globals.ITEM_Color_b,
 			},
-
-
-
-
-
-
-
 			{
 				button = false,
 				text = REPUTATION,
@@ -1087,16 +1024,6 @@ SECOND_Config:SetScript("OnShow", function(self)
 			{
 				button = false,
 				text = L["General"],
-			},
-			{
-				config = "Event",
-				text = EVENTS_LABEL,
-				r = 1, g = .95, b = .44,
-			},
-			{
-				config = "Holiday",
-				text = CALENDAR_FILTER_HOLIDAYS,
-				r = 1, g = .4, b = .1,
 			},
 			{
 				config = "Dungeons",
@@ -1184,9 +1111,6 @@ Octo_DEV_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(Octo_DEV_scrollChild, self, 4, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Function 1", 0, .65, 1, E.Octo_Globals.BGALPHA)
 		Create_CheckButton(Octo_DEV_scrollChild, self, 5, POS_RIGHT, 0, "Octo_debug_Event_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Event 1", .31, 1, .47, E.Octo_Globals.BGALPHA)
 		Create_CheckButton(Octo_DEV_scrollChild, self, 6, POS_RIGHT, 0, "Octo_debug_BUTTONS_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."BUTTONS 1", .69, .38, 1, E.Octo_Globals.BGALPHA)
-
-
-
 		Create_SimpleButton(Octo_DEV_scrollChild, self, 22, POS_RIGHT, "ResetAllChars", "Reset All Chars")
 		Create_SimpleButton(Octo_DEV_scrollChild, self, 26, POS_RIGHT, "ReloadUI", "Reload UI")
 		for number, v in ipairs(E.Octo_Table.OctoTable_Colors) do
@@ -1197,8 +1121,6 @@ end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, Octo_DEV_Config, E.Octo_Globals.DarkGray_Color.."Octo_DEV_Config".."|r") --Dragonflight
 subcategory.ID = L["InDev"].."Octo_DEV_Config"
 Settings.RegisterAddOnCategory(subcategory)
-
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1234,5 +1156,3 @@ Settings.RegisterAddOnCategory(subcategory)
 -- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, Octo_Minecraft_Config, E.Octo_Globals.Blue_Color.."Octo_Minecraft_Config".."|r") --Dragonflight
 -- subcategory.ID = "Octo_Minecraft_Config"
 -- Settings.RegisterAddOnCategory(subcategory)
-
-

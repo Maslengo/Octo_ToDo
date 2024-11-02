@@ -90,19 +90,16 @@ E.Octo_Table.OctoTable_KeystoneAbbr = {
 	{mapChallengeModeID = 168, abbreviation = "EB", portal = 159901,}, -- "TE"}, -- The Everbloom
 	{mapChallengeModeID = 456, abbreviation = "TOTT", portal = 424142,}, -- "TotT"}, -- Throne of the Tides (Cataclysm)
 	{mapChallengeModeID = 248, abbreviation = "WM", portal = 424167,}, -- "WM"}, -- Waycrest Manor
-
 	{mapChallengeModeID = 501, abbreviation = "SV", portal = 445269,}, -- The Stonevault
 	{mapChallengeModeID = 502, abbreviation = "COT", portal = 445416,}, -- City of Threads
 	{mapChallengeModeID = 503, abbreviation = "ARAK", portal = 445417,}, --Ara-Kara, city of echoes
 	{mapChallengeModeID = 505, abbreviation = "DAWN", portal = 445414,}, -- The Dawnbreaker
 	{mapChallengeModeID = 507, abbreviation = "GB", portal = 445424,}, -- Grim Batol
-
 	{mapChallengeModeID = 499, abbreviation = "PotSF", portal = 445444,}, -- Priory of the Sacred Flame
 	{mapChallengeModeID = 500, abbreviation = "TR", portal = 445443,}, -- The Rookery
 	{mapChallengeModeID = 504, abbreviation = "DC", portal = 445441,}, -- Darkflame Cleft
 	{mapChallengeModeID = 506, abbreviation = "CM", portal = 445440,}, -- Cinderbrew Maedery
 -- AATDH - raid
-
 }
 E.Octo_Table.OctoTable_LFGDungeons = {
 	-- [1045] = "Случайное подземелье Легиона",
@@ -128,4 +125,3 @@ E.Octo_Table.OctoTable_LFGDungeons = {
 	-- [2086] = "Случайное подземелье Shadowlands",
 	-- [262] = "Случайное подземелье Lich King (героич.)",
 }
-

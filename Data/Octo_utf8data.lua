@@ -934,7 +934,6 @@ E.Octo_Globals.utf8_lc_uc = {
 	["𐑎"] = "𐐦",
 	["𐑏"] = "𐐧",
 }
-
 E.Octo_Globals.utf8_uc_lc = {
 	["A"] = "a",
 	["B"] = "b",

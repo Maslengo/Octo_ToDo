@@ -170,8 +170,6 @@ if L then
 	-- L["Blooming Dreamseeds"] = true
 	L["Was online"] = true
 	-- L["Warbanding Together"] = true
-
-
 	L["Weekly Dungeon Quest"] = true
 	L["Weekly World Quest caches x2"] = true
 	L["Weekly Crafting Quests"] = true
@@ -181,7 +179,6 @@ if L then
 	L["Light/Dark Cycle"] = true
 	L["Major Keyflames"] = true
 	L["Minor Keyflames"] = true
-
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then

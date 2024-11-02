@@ -574,4 +574,3 @@ eventHookFrame:SetScript("OnEvent", function(self, event, arg1)
 		end
 	end
 )
-

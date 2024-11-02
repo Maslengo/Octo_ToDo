@@ -208,5 +208,3 @@ E.Octo_Globals.OctoTable_LegionArtifacts =
 		}
 	}
 }
-
-

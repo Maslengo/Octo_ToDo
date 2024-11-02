@@ -3411,9 +3411,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
 	{
 		name_save = "Storylines",
 		reset = "Once",
@@ -3437,9 +3434,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 13
 	},
-
-
-
 	{
 		name_save = "TheBigDig", -- Octopussy_DF_Weekly_TheBigDig_count -- config DragonscaleExpedition https://www.wowhead.com/ru/quest=77325/to-the-archives#english-comments
 		reset = "Weekly",
@@ -3451,9 +3445,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
 	{
 		name_save = "Storylines", -- Octopussy_DF_Weekly_TheBigDig_count -- config DragonscaleExpedition https://www.wowhead.com/ru/quest=77325/to-the-archives#english-comments
 		reset = "Once",
@@ -3469,11 +3460,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 39
 	},
-
-
-
-
-
 	-- {
 	-- 	name_save = "WarbandingTogether",
 	-- 	reset = "Once",
@@ -3489,9 +3475,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	-- 	},
 	-- 	max = 5
 	-- },
-
-
-
 	{
 		name_save = "RadiantEchoes",
 		reset = "Once",
@@ -3504,13 +3487,7 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
-
-
  ---------- TWW
-
 	{
 		name_save = "World_Boss_S1",
 		reset = "Weekly",
@@ -3525,8 +3502,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
 -- Еженедельное задание подземелья
 -- Weekly Dungeon Quest
 	{
@@ -3546,7 +3521,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
 --83366
 	{
 		name_save = "Weekly_Delve_S1",
@@ -3571,9 +3545,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
 -- Еженедельные сундуки мировых заданий x2
 -- Weekly World Quest caches x2
 	{
@@ -3592,7 +3563,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
 --82452
 	{
 		name_save = "Weekly_WQ_S1_Soul",
@@ -3653,9 +3623,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
 --Weekly Crafting Quests
 --Еженедельные квесты на ремесло
 	{
@@ -3693,10 +3660,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 	},
 	max = 2
 	},
-
-
-
-
 -- 83532
 	{
 		name_save = "Weekly_WQ_S1_Fishing",
@@ -3713,7 +3676,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
 -- Weekly Azj-Kahet
 -- Еженедельный Азж-Кахет
 	{
@@ -3729,9 +3691,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
 -- Weekly Hallowfall
 -- Еженедельно Хэллоуфолл
 	{
@@ -3745,8 +3704,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
 --82946
 	{
 		name_save = "Weekly_WQ_S1_Sniffer",
@@ -3759,7 +3716,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
 --83333
 	{
 		name_save = "Weekly_WQ_S1_zRing",
@@ -3772,8 +3728,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
 -- Weekly the Isle of Dorn
 -- Еженедельно Остров Дорн
 	{
@@ -3788,8 +3742,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
 -- Major Keyflames
 -- Основные огни
 	{
@@ -3810,8 +3762,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 8
 	},
-
-
 -- Minor Keyflames
 -- Второстепенные огни
 	{
@@ -3841,6 +3791,4 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 8
 	},
-
 }
-
