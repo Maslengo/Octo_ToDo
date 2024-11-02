@@ -4134,6 +4134,19 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
+		if Octo_ToDo_DB_Vars.config.BronzeCelebrationToken == true then
+			tinsert(OctoTable_func_otrisovka_FIRST,
+				function(CharInfo, tooltip, CL, BG)
+					local vivodCent, vivodLeft = "", ""
+					local color = "|cffFFFFFF"
+					if CharInfo.CurrencyID[3100] ~= 0 then
+						vivodCent = color..E.Octo_Func.Empty_Zero(CharInfo.CurrencyID_Total[3100]).."|r"
+					end
+					vivodLeft = E.Octo_Func.func_currencyicon(3100)..E.Octo_Func.func_currencyName(3100)
+					BG:SetColorTexture(E.Octo_Globals.CURR_Color_r, E.Octo_Globals.CURR_Color_g, E.Octo_Globals.CURR_Color_b, E.Octo_Globals.BGALPHA)
+					return vivodCent, vivodLeft
+			end)
+		end
 		if Octo_ToDo_DB_Vars.config.GildedHarbingerCrest == true then
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
@@ -6277,6 +6290,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.ResidualMemories == nil then Octo_ToDo_DB_Vars.config.ResidualMemories = false end
 		if Octo_ToDo_DB_Vars.config.Kej == nil then Octo_ToDo_DB_Vars.config.Kej = false end
 		if Octo_ToDo_DB_Vars.config.ResonanceCrystals == nil then Octo_ToDo_DB_Vars.config.ResonanceCrystals = false end
+		if Octo_ToDo_DB_Vars.config.BronzeCelebrationToken == nil then Octo_ToDo_DB_Vars.config.BronzeCelebrationToken = false end
 		if Octo_ToDo_DB_Vars.config.TheAssemblyoftheDeeps == nil then Octo_ToDo_DB_Vars.config.TheAssemblyoftheDeeps = false end
 		if Octo_ToDo_DB_Vars.config.CouncilofDornogal == nil then Octo_ToDo_DB_Vars.config.CouncilofDornogal = false end
 		if Octo_ToDo_DB_Vars.config.HallowfallArathi == nil then Octo_ToDo_DB_Vars.config.HallowfallArathi = false end
@@ -6619,27 +6633,44 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	end
 end
 Octo_ToDo_FIRST_OnLoad()
-SLASH_Octo1, SLASH_Octo2 = "/Octo", "/OctoTWW"
-function SlashCmdList.Octo(msg, editBox)
+
+
+SLASH_Octo1, SLASH_Octo2, SLASH_Octo3, SLASH_Octo4 = "/Octo", "/OctoTWW", "/octo", "/o"
+function SlashCmdList.Octo(msg)
 	debugprofilestart()
-	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."SlashCmdList.Octo".."|r")
-	end
 	if not InCombatLockdown() then
 		main_frame_toggle()
 		Octo_ToDo_FIRST_AddDataToAltFrame()
 	end
-	print(debugprofilestop())
+	print("debug timer: "..E.Octo_Func.func_Gradient(tostringall(debugprofilestop()), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).." ms.")
 end
+
+-- EDITBOX
+local editFrame, editBox
+if select(4, GetBuildInfo()) > 20000 then
+	editFrame = CreateFrame("FRAME", GlobalAddonName.."EditFrame", UIParent, "MyAddonEditFrameTemplate")
+	editFrame:ClearAllPoints()
+	editFrame:SetPoint("TOPLEFT", (UIParent:GetWidth() - editFrame:GetWidth()) / 2, -100)
+	editBox = editFrame.editFrame
+end
+
 SLASH_GSEARCH1 = "/gsearch"
 SlashCmdList.GSEARCH = function(msg)
-	print("SEARCH:", msg)
+	print(E.Octo_Func.func_Gradient("GSEARCH: ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), msg)
+	local str = ""
+	local list = {}
 	for i, n in pairs(_G) do
 		if type(n) == "string" and n:find(msg) then
-			print(i, n)
+			str = str..E.Octo_Func.func_Gradient(i, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).. " - "..  n .."\n"
 		end
+			-- /gsearch PvP
 	end
+
+	editBox:SetText(str)
+	editFrame:Show()
 end
+
+
 SlashCmdList["RELOAD"] = ReloadUI
 SLASH_RELOAD1 = "/rl"
 

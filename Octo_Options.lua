@@ -864,6 +864,17 @@ SECOND_Config:SetScript("OnShow", function(self)
 				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
 			},
 			{
+				-- otstyp = indent,
+				config = "BronzeCelebrationToken",
+				text = E.Octo_Func.func_currencyicon(3100)..E.Octo_Func.func_currencyName(3100),
+				r = E.Octo_Globals.CURR_Color_r, g = E.Octo_Globals.CURR_Color_g, b = E.Octo_Globals.CURR_Color_b,
+			},
+
+
+
+
+
+			{
 				button = false,
 				text = L["Crests"],
 			},

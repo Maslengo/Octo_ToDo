@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 
 -- EDITBOX
-local editFrame, editbox
+local editFrame, editBox
 if select(4, GetBuildInfo()) > 20000 then
 	editFrame = CreateFrame("FRAME", GlobalAddonName.."EditFrame", UIParent, "MyAddonEditFrameTemplate")
 	editFrame:ClearAllPoints()
@@ -220,22 +220,41 @@ end
 
 
 -- отделил
-SLASH_OCTOLIST1 = "/octolist"
-SlashCmdList.OCTOLIST = function(msg)
-	local str = ""
-	local list = {}
-	local promise = LibThingsLoad:Quests(E.Octo_Table.OctoTable_QuestID_Paragon):ThenForAllWithCached(function(_, ids)
-			tinsert(list, ids)
+SLASH_OCTOLISTIT1 = "/octolistIT"
+SlashCmdList.OCTOLISTIT = function(msg1)
+	local str1 = ""
+	local list1 = {}
+	local promise1 = LibThingsLoad:Items(E.Octo_Table.OctoTable_itemID_ItemsUsable_Toys):ThenForAllWithCached(function(_, ids1)
+			tinsert(list1, ids1)
 	end)
-	promise:Then(function()
-			sort(list)
-			for k, id in ipairs(list) do
-				str = str..id..", -- "..E.Octo_Func.func_questName(id).."\n"
+	promise1:Then(function()
+			sort(list1)
+			for _, id1 in ipairs(list1) do
+				str1 = str1..id1..", -- "..E.Octo_Func.func_itemName(id1).."\n"
 			end
-			fprint("begin /octolist")
-			editBox:SetText(str)
+			fprint("begin /octolistIT")
+			editBox:SetText(str1)
 			editFrame:Show()
-			fprint("end /octolist")
+			fprint("end /octolistIT")
 	end)
 end
 
+SLASH_OCTOLISTQW1 = "/octolistQW"
+SlashCmdList.OCTOLISTQW = function(msg2)
+	local str2 = ""
+	local list2 = {}
+	local promise2 = LibThingsLoad:Quests(E.Octo_Table.OctoTable_QuestID):ThenForAllWithCached(function(_, ids2)
+			tinsert(list2, ids2)
+	end)
+	promise2:Then(function()
+			sort(list2)
+			for _, id2 in ipairs(list2) do
+				str2 = str2..id2..", -- "..E.Octo_Func.func_questName(id2).."\n"
+			end
+			-- fpde(str2)
+			fprint("begin /octolistQW")
+			editBox:SetText(str2)
+			editFrame:Show()
+			fprint("end /octolistQW")
+	end)
+end
