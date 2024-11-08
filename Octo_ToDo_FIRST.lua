@@ -41,6 +41,7 @@ E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
 E.Octo_Func.func_Octo_LoadAddOn("HidingBar")
 E.Octo_Func.func_Octo_LoadAddOn("HidingBar_Options")
 E.Octo_Func.func_Octo_LoadAddOn("QuestsChanged")
+E.Octo_Func.func_Octo_LoadAddOn("TalentTreeTweaks")
 
 local Button = nil
 local CF = nil
@@ -213,18 +214,15 @@ local function checkCharInfo(self)
 	self.classFilename = self.classFilename or 0
 	self.classId = self.classId or 0
 	self.classColor = self.classColor or {r = 0.5, g = 0.5, b = 0.5}
-	self.curCovID = self.curCovID or 0
 	self.CurrencyID = self.CurrencyID or {}
 	self.CurrencyID_Total = self.CurrencyID_Total or {}
 	self.CurrencyID_totalEarned = self.CurrencyID_totalEarned or {}
 	self.curServer = self.curServer or "HZ"
-	self.azeriteLVL = self.azeriteLVL or 0
-	self.azeriteEXP = self.azeriteEXP or 0
 	self.guildName = self.guildName or ""
 	self.guildRankName = self.guildRankName or ""
 	self.guildRankIndex = self.guildRankIndex or 0
 	self.curServerShort = self.curServerShort or 0
-	self.Faction = self.Faction or 0
+	self.Faction = self.Faction or "Horde"
 	self.ItemsInBag = self.ItemsInBag or {}
 	self.maxNumQuestsCanAccept = self.maxNumQuestsCanAccept or 0
 	self.Name = self.Name or 0
@@ -241,16 +239,14 @@ local function checkCharInfo(self)
 	self.loginDate = self.loginDate or 0
 	self.loginDay = self.loginDay or 0
 	self.loginHour = self.loginHour or 0
-	self.PVP = self.PVP or {}
 	self.OctoTable_QuestID = self.OctoTable_QuestID or {}
 	self.reputationID = self.reputationID or {}
-	self.Shadowland = self.Shadowland or {}
 	self.UnitLevel = self.UnitLevel or 0
 	self.Money = self.Money or 0
 	self.MoneyOnLogin = self.MoneyOnLogin or 0
 	self.BindLocation = self.BindLocation or 0
 	self.CurrentLocation = self.CurrentLocation or 0
-	if self.WarMode == nil then self.WarMode = false end
+	self.WarMode = self.WarMode or false
 	if self.needResetDaily == nil then self.needResetDaily = false end
 	if self.needResetWeekly == nil then self.needResetWeekly = false end
 	if self.needResetMonth == nil then self.needResetMonth = false end
@@ -259,7 +255,7 @@ local function checkCharInfo(self)
 	if self.isShownPLAYER == nil then self.isShownPLAYER = true end
 	self.MoneyOnLogin = self.Money
 	self.RIO_Score_TWW_S1 = self.RIO_Score_TWW_S1 or 0
-	self.RIO_weeklyBest = self.RIO_weeklyBest or 0
+	self.RIO_weeklyBest_TWW_S1 = self.RIO_weeklyBest_TWW_S1 or 0
 	self.GreatVault = self.GreatVault or {}
 	for name, i in next, Enum.WeeklyRewardChestThresholdType do
 		self.GreatVault[i] = self.GreatVault[i] or {}
@@ -272,10 +268,8 @@ local function checkCharInfo(self)
 	setmetatable(self.CurrencyID_Total, Meta_Table_0)
 	setmetatable(self.CurrencyID, Meta_Table_0)
 	setmetatable(self.ItemsInBag, Meta_Table_0)
-	setmetatable(self.PVP, Meta_Table_0)
 	setmetatable(self.OctoTable_QuestID, Meta_Table_NONE)
 	setmetatable(self.reputationID, Meta_Table_0)
-	setmetatable(self.Shadowland, Meta_Table_0)
 	if (self.tmstp_Weekly or 0) < GetServerTime() then
 		for i = 1, #self.GreatVault do
 			if self.GreatVault[i] and self.GreatVault[i].hyperlink_STRING ~= 0 then
@@ -295,7 +289,7 @@ local function checkCharInfo(self)
 		self.CurrentKeyFULL = 0
 		self.CurrentKeyLevel = 0
 		self.journalInstance = {}
-		self.RIO_weeklyBest = 0
+		self.RIO_weeklyBest_TWW_S1 = 0
 		self.GreatVault = {}
 		for i = 1, #self.GreatVault do
 			if self.GreatVault[i] then
@@ -797,7 +791,7 @@ local function Collect_ALL_GreatVault()
 		end
 	end
 	collect.RIO_Score_TWW_S1 = C_ChallengeMode.GetOverallDungeonScore("PLAYER")
-	collect.RIO_weeklyBest = currentWeekBestLevel
+	collect.RIO_weeklyBest_TWW_S1 = currentWeekBestLevel
 	local name_activities = setmetatable({
 			[0] = "None",
 			[1] = DUNGEONS,
@@ -1032,9 +1026,11 @@ local function Collect_All_Quests()
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
 	local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
-	for k, questID in ipairs(E.Octo_Table.OctoTable_QuestID) do
+	for k, questID in pairs(E.Octo_Table.OctoTable_QuestID) do
 		local vivod = E.Octo_Func.CheckCompletedByQuestID(questID)
-		collect.OctoTable_QuestID[questID] = vivod or 0
+		-- if vivod ~= E.Octo_Globals.NONE then
+			collect.OctoTable_QuestID[questID] = vivod
+		-- end
 	end
 	if collect then
 		collect.numShownEntries = numShownEntries or 0
@@ -1376,7 +1372,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.RIO_Score_TWW_S1 ~= 0 then
 					tooltip[#tooltip+1] = {" ", " "}
 					tooltip[#tooltip+1] = {"RIO Score:", E.Octo_Func.RIO_Color(CharInfo.RIO_Score_TWW_S1)..CharInfo.RIO_Score_TWW_S1.."|r"}
-					tooltip[#tooltip+1] = {"Weekly Best:", E.Octo_Func.RIO_Color(CharInfo.RIO_Score_TWW_S1)..CharInfo.RIO_weeklyBest.."|r"}
+					tooltip[#tooltip+1] = {"Weekly Best:", E.Octo_Func.RIO_Color(CharInfo.RIO_Score_TWW_S1)..CharInfo.RIO_weeklyBest_TWW_S1.."|r"}
 				end
 				if CharInfo.CurrentKey ~= 0 then
 					vivodCent = E.Octo_Func.RIO_Color(CharInfo.RIO_Score_TWW_S1)..CharInfo.CurrentKey.."|r"
@@ -2510,7 +2506,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 -- https://wowhead.com/ru/item=150743 -- ally surv
 -- https://wowhead.com/ru/item=150745 -- Horde
 -- https://wowhead.com/ru/item=150744 -- Horde
-		if UnitLevel <= 20 then
+		if UnitLevel < 20 then
 			CreateFrameUsableItems(187875, 237385, Xpos*-11+Ypos*1, Ypos*-11, 0, .43, .86)
 			CreateFrameUsableItems(187896, 237382, Xpos*-10+Ypos*1, Ypos*-10, 0, .43, .86)
 			CreateFrameUsableItems(187897, 237388, Xpos*-9+Ypos*1, Ypos*-9, 0, .43, .86)
@@ -2870,7 +2866,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.CinematicCanceler == nil then Octo_ToDo_DB_Vars.config.CinematicCanceler = false end
 		if Octo_ToDo_DB_Vars.config.AutoTurnQuests == nil then Octo_ToDo_DB_Vars.config.AutoTurnQuests = true end
 		if Octo_ToDo_DB_Vars.config.ClearChat == nil then Octo_ToDo_DB_Vars.config.ClearChat = false end
-		if Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI == nil then Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI = true end
 		if Octo_ToDo_DB_Vars.config.Hide_Boss_Banner == nil then Octo_ToDo_DB_Vars.config.Hide_Boss_Banner = true end
 		if Octo_ToDo_DB_Vars.config.Hide_Covenant == nil then Octo_ToDo_DB_Vars.config.Hide_Covenant = true end
 		if Octo_ToDo_DB_Vars.config.Hide_Error_Messages == nil then Octo_ToDo_DB_Vars.config.Hide_Error_Messages = true end

@@ -463,6 +463,10 @@ FIRST_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
 		ConfigTable_DF_LEFT = {
 			{
+				text = ITEMS,
+				button = false,
+			},
+			{
 				config = "MP_MythicKeystone",
 				text = E.Octo_Func.func_texturefromIcon(4352494)..E.Octo_Globals.WOW_Epic_Color..L["Mythic Keystone"].."|r",
 			},
