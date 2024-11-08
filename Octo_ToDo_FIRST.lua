@@ -443,7 +443,7 @@ local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spel
 	Button.g = g
 	Button.b = b
 	Button.count = 1
-	Button.spellID = spellID
+	Button.spellID = spellID or 431280
 	Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
 	Button:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame, "TOPLEFT", Xpos, Ypos+1)
 	Button:SetBackdrop({
@@ -1888,7 +1888,7 @@ local function TotalMoneyAllServerOnShow()
 	if AccountMoney <= 9999 then
 		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer)/10000).."|r"..Money_Icon
 	else
-		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer+AccountMoney)/10000).."|r"..Money_Icon..E.Octo_Globals.LightGray_Color.." "..BANK.." (".. E.Octo_Func.CompactNumberFormat(AccountMoney/10000) .. ")".."|r"
+		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer+AccountMoney)/10000).."|r"..Money_Icon..E.Octo_Globals.LightGray_Color.." "..REPUTATION_SORT_TYPE_ACCOUNT.." (".. E.Octo_Func.CompactNumberFormat(AccountMoney/10000) .. ")".."|r"
 	end
 	return vivod
 end
@@ -3136,7 +3136,6 @@ SlashCmdList.GSEARCH = function(msg)
 	local list = {}
 	for i, n in pairs(_G) do
 		if type(n) == "string" and n:find(msg) then
-			-- str = str .. " - ".. n .."\n"
 			str = str..E.Octo_Func.func_Gradient(i, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).. " - ".. n .."\n"
 		end
 	end
@@ -3145,5 +3144,3 @@ SlashCmdList.GSEARCH = function(msg)
 end
 SlashCmdList["RELOAD"] = ReloadUI
 SLASH_RELOAD1 = "/rl"
-
--- /gsearch Путешествие
