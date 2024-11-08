@@ -18,8 +18,6 @@ local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibTranslit = LibStub("LibTranslit-1.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
--- local UTF8 = LibStub("UTF8-1.1")
--- print (UTF8)
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local currentMaxLevel = 80
@@ -144,16 +142,16 @@ local function TryToOffMajor(majorFactionID, newRenownLevel, oldRenownLevel)
 	if MajorFactionRenownToast then
 		MajorFactionRenownToast:UnregisterAllEvents()
 		MajorFactionRenownToast:Hide()
-		print ("true MajorFactionRenownToast")
+		ChatFrame1:AddMessage ("true MajorFactionRenownToast")
 	else
-		print ("Cannot Hide MajorFactionRenownToast")
+		ChatFrame1:AddMessage ("Cannot Hide MajorFactionRenownToast")
 	end
 	if MajorFactionRenownFrame then
 		MajorFactionRenownFrame:UnregisterAllEvents()
 		MajorFactionRenownFrame:Hide()
-		print ("true MajorFactionRenownFrame")
+		ChatFrame1:AddMessage ("true MajorFactionRenownFrame")
 	else
-		print ("Cannot Hide MajorFactionRenownFrame")
+		ChatFrame1:AddMessage ("Cannot Hide MajorFactionRenownFrame")
 	end
 	MajorFactionsRenownToastMixin:StopBanner()
 end
@@ -1073,15 +1071,15 @@ local function Collect_All_Quests()
 	end
 	local curGUID = UnitGUID("PLAYER")
 	local collect = Octo_ToDo_DB_Players[curGUID]
-	local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
+	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
 	local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
-	for k, v in ipairs(E.Octo_Table.OctoTable_QuestID) do
-		local questID = E.Octo_Func.CheckCompletedByQuestID(v)
-		collect.OctoTable_QuestID[v] = questID or 0
+	for k, questID in ipairs(E.Octo_Table.OctoTable_QuestID) do
+		local vivod = E.Octo_Func.CheckCompletedByQuestID(questID)
+		collect.OctoTable_QuestID[questID] = vivod or 0
 	end
 	if collect then
 		collect.numShownEntries = numShownEntries or 0
-		collect.numQuests = numQuests or 0
+		collect.numQuests = E.Octo_Func.CurrentNumQuests()
 		collect.maxNumQuestsCanAccept = maxNumQuestsCanAccept or 0
 	end
 end
@@ -1753,16 +1751,36 @@ local function O_otrisovka_FIRST()
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.Octo_Globals.BGALPHA)
 				return vivodCent, vivodLeft
 		end)
+		-- tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft = "", ""
+		-- 		vivodLeft = E.Octo_Func.func_currencyicon(1166)..E.Octo_Func.func_questName(83274) or E.Octo_Func.func_questName(85947)
+		-- 		if CharInfo.Octopussy__Weekly_TimewalkAnOriginalPathThroughTime_count ~= E.Octo_Globals.NONE then
+		-- 			vivodCent = CharInfo.Octopussy__Weekly_TimewalkAnOriginalPathThroughTime_count
+		-- 		end
+		-- 		BG:SetColorTexture(70/255, 130/255, 179/255, E.Octo_Globals.BGALPHA)
+		-- 		return vivodCent, vivodLeft
+		-- end)
+
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				vivodLeft = E.Octo_Func.func_currencyicon(1166)..E.Octo_Func.func_questName(83274) or E.Octo_Func.func_questName(85947)
-				if CharInfo.Octopussy__Weekly_TimewalkAnOriginalPathThroughTime_count ~= E.Octo_Globals.NONE then
-					vivodCent = CharInfo.Octopussy__Weekly_TimewalkAnOriginalPathThroughTime_count
+				vivodLeft = E.Octo_Func.func_currencyicon(1166)..E.Octo_Func.func_questName(57300)
+				if CharInfo.Octopussy__Weekly_TimewalkSoldierofTime_count ~= E.Octo_Globals.NONE then
+					vivodCent = CharInfo.Octopussy__Weekly_TimewalkSoldierofTime_count
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.Octo_Globals.BGALPHA)
 				return vivodCent, vivodLeft
 		end)
+
+
+
+
+
+
+
+
+
 	end
 	-- ПОДЗЕМЕЛЬЯ
 	-- for dungeonID, v in pairs(E.Octo_Table.OctoTable_LFGDungeons) do
@@ -2307,30 +2325,28 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		t:SetAllPoints(OctoToDo_OptionsButton)
 	end
 	----------------------------------------------------------------
-	local function CurrentNumQuests()
-		local numQuests = select(2, C_QuestLog.GetNumQuestLogEntries()) or 0
-		return numQuests
-	end
-	local function AbandonQuests()
-		local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
 
+	local function AbandonQuests()
+		local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
+		local numQuests = E.Octo_Func.CurrentNumQuests()
 		for i = 1, numShownEntries do
 			if numQuests ~= 0 then
-				local questInfo = C_QuestLog.GetInfo(i)
-				if questInfo then
-					if (not questInfo.isHeader and not questInfo.isHidden) then
-						ChatFrame1:AddMessage(E.Octo_Func.func_Gradient(L["Abandon: "], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..questInfo.title)
-						C_QuestLog.SetSelectedQuest(questInfo.questID)
-						C_QuestLog.SetAbandonQuest()
-						C_QuestLog.AbandonQuest()
-					end
+				local info = C_QuestLog.GetInfo(i)
+				if info then
+						if (not info.isHeader and not info.isHidden) then
+							ChatFrame1:AddMessage(E.Octo_Func.func_Gradient(L["Abandon: "], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Func.func_questName(info.questID))
+							C_QuestLog.SetSelectedQuest(info.questID)
+							C_QuestLog.SetAbandonQuest()
+							C_QuestLog.AbandonQuest()
+						end
 				end
 			end
 		end
-		ChatFrame1:AddMessage(E.Octo_Globals.DONE)
+		ChatFrame1:AddMessage(E.Octo_Func.func_Gradient(L["Total"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).." "..E.Octo_Globals.Green_Color..numQuests.."|r")
 	end
 
 	if not OctoToDo_AbandonButton then
+		local numQuests = E.Octo_Func.CurrentNumQuests()
 		StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
 			text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n"..classColorHexCurrent.."Отменить все задания?|r",
 			button1 = YES,
@@ -2350,24 +2366,32 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		})
 		OctoToDo_AbandonButton:SetBackdropBorderColor(1, 0, 0, 0)
 		OctoToDo_AbandonButton:SetScript("OnEnter", function(self)
+				numQuests = E.Octo_Func.CurrentNumQuests()
 				self.icon:SetVertexColor(r, g, b, 1)
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 0, -30)
 				GameTooltip:ClearLines()
-				if CurrentNumQuests() > 0 then
-					GameTooltip:AddLine(classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..CurrentNumQuests()..")")
+				if numQuests > 0 then
+					GameTooltip:AddLine(classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..E.Octo_Func.CurrentNumQuests()..")")
 					GameTooltip:AddLine(" ")
-				else
-					GameTooltip:AddLine("Нет квестов", r, g, b)
+				end
+				if numQuests == 0 then
+					GameTooltip:AddLine(L["No quests"], r, g, b)
 				end
 
-				local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
+				local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
 				local list = {}
 				for i = 1, numShownEntries do
 					if numQuests ~= 0 then
 						local info = C_QuestLog.GetInfo(i) -- questLogIndex
 						if info then
-							if (not info.isHeader and not info.isHidden) then
-								tinsert(list, info.questID)
+							if info.questID ~= 0 then
+								if (not info.isHeader and not info.isHidden) then
+									-- print (info.questID, E.Octo_Globals.Green_Color..E.Octo_Func.func_questName(info.questID).."|r")
+									tinsert(list, info.questID)
+								else
+									-- print (info.questID, E.Octo_Globals.Red_Color..E.Octo_Func.func_questName(info.questID).."|r")
+
+								end
 							end
 						end
 					end
@@ -2388,7 +2412,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				self.icon:SetVertexColor(1, 0, 0, .5)
 		end)
 		OctoToDo_AbandonButton:SetScript("OnClick", function()
-				if CurrentNumQuests() > 0 then
+				if numQuests > 0 then
 					StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
 				end
 		end)
@@ -2904,24 +2928,24 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config == nil then Octo_ToDo_DB_Vars.config = {} end
 		if Octo_ToDo_DB_Vars.config.CVar == nil then Octo_ToDo_DB_Vars.config.CVar = false end
 		if Octo_ToDo_DB_Vars.config.Minecraft == nil then Octo_ToDo_DB_Vars.config.Minecraft = false end
-		if Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm == nil then Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm = false end
-		if Octo_ToDo_DB_Vars.config.AutoSellGrey == nil then Octo_ToDo_DB_Vars.config.AutoSellGrey = false end
-		if Octo_ToDo_DB_Vars.config.AutoRepair == nil then Octo_ToDo_DB_Vars.config.AutoRepair = false end
-		if Octo_ToDo_DB_Vars.config.InputDelete == nil then Octo_ToDo_DB_Vars.config.InputDelete = false end
-		if Octo_ToDo_DB_Vars.config.AutoOpen == nil then Octo_ToDo_DB_Vars.config.AutoOpen = false end
-		if Octo_ToDo_DB_Vars.config.AutoGossip == nil then Octo_ToDo_DB_Vars.config.AutoGossip = false end
+		if Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm == nil then Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm = true end
+		if Octo_ToDo_DB_Vars.config.AutoSellGrey == nil then Octo_ToDo_DB_Vars.config.AutoSellGrey = true end
+		if Octo_ToDo_DB_Vars.config.AutoRepair == nil then Octo_ToDo_DB_Vars.config.AutoRepair = true end
+		if Octo_ToDo_DB_Vars.config.InputDelete == nil then Octo_ToDo_DB_Vars.config.InputDelete = true end
+		if Octo_ToDo_DB_Vars.config.AutoOpen == nil then Octo_ToDo_DB_Vars.config.AutoOpen = true end
+		if Octo_ToDo_DB_Vars.config.AutoGossip == nil then Octo_ToDo_DB_Vars.config.AutoGossip = true end
 		if Octo_ToDo_DB_Vars.config.CinematicCanceler == nil then Octo_ToDo_DB_Vars.config.CinematicCanceler = false end
-		if Octo_ToDo_DB_Vars.config.AutoTurnQuests == nil then Octo_ToDo_DB_Vars.config.AutoTurnQuests = false end
+		if Octo_ToDo_DB_Vars.config.AutoTurnQuests == nil then Octo_ToDo_DB_Vars.config.AutoTurnQuests = true end
 		if Octo_ToDo_DB_Vars.config.ClearChat == nil then Octo_ToDo_DB_Vars.config.ClearChat = false end
-		if Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI == nil then Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI = false end
-		if Octo_ToDo_DB_Vars.config.Hide_Boss_Banner == nil then Octo_ToDo_DB_Vars.config.Hide_Boss_Banner = false end
-		if Octo_ToDo_DB_Vars.config.Hide_Covenant == nil then Octo_ToDo_DB_Vars.config.Hide_Covenant = false end
-		if Octo_ToDo_DB_Vars.config.Hide_Error_Messages == nil then Octo_ToDo_DB_Vars.config.Hide_Error_Messages = false end
-		if Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance == nil then Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance = false end
-		if Octo_ToDo_DB_Vars.config.Hide_Raid_Boss_Emote_Frame == nil then Octo_ToDo_DB_Vars.config.Hide_Raid_Boss_Emote_Frame = false end
-		if Octo_ToDo_DB_Vars.config.Hide_Talking_Head_Frame == nil then Octo_ToDo_DB_Vars.config.Hide_Talking_Head_Frame = false end
-		if Octo_ToDo_DB_Vars.config.Hide_Zone_Text == nil then Octo_ToDo_DB_Vars.config.Hide_Zone_Text = false end
-		if Octo_ToDo_DB_Vars.config.UIErrorsFramePosition == nil then Octo_ToDo_DB_Vars.config.UIErrorsFramePosition = false end
+		if Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI == nil then Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI = true end
+		if Octo_ToDo_DB_Vars.config.Hide_Boss_Banner == nil then Octo_ToDo_DB_Vars.config.Hide_Boss_Banner = true end
+		if Octo_ToDo_DB_Vars.config.Hide_Covenant == nil then Octo_ToDo_DB_Vars.config.Hide_Covenant = true end
+		if Octo_ToDo_DB_Vars.config.Hide_Error_Messages == nil then Octo_ToDo_DB_Vars.config.Hide_Error_Messages = true end
+		if Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance == nil then Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance = true end
+		if Octo_ToDo_DB_Vars.config.Hide_Raid_Boss_Emote_Frame == nil then Octo_ToDo_DB_Vars.config.Hide_Raid_Boss_Emote_Frame = true end
+		if Octo_ToDo_DB_Vars.config.Hide_Talking_Head_Frame == nil then Octo_ToDo_DB_Vars.config.Hide_Talking_Head_Frame = true end
+		if Octo_ToDo_DB_Vars.config.Hide_Zone_Text == nil then Octo_ToDo_DB_Vars.config.Hide_Zone_Text = true end
+		if Octo_ToDo_DB_Vars.config.UIErrorsFramePosition == nil then Octo_ToDo_DB_Vars.config.UIErrorsFramePosition = true end
 		if Octo_ToDo_DB_Vars.config.Auto_Screenshot == nil then Octo_ToDo_DB_Vars.config.Auto_Screenshot = false end
 		if Octo_ToDo_DB_Vars.config.MP_MythicKeystone == nil then Octo_ToDo_DB_Vars.config.MP_MythicKeystone = true end
 		if Octo_ToDo_DB_Vars.config.GildedHarbingerCrest == nil then Octo_ToDo_DB_Vars.config.GildedHarbingerCrest = false end
@@ -2952,12 +2976,12 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion == nil then Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion = false end
 		if Octo_ToDo_DB_Vars.config.SparkofAwakening == nil then Octo_ToDo_DB_Vars.config.SparkofAwakening = false end
 		if Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening == nil then Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening = false end
-		if Octo_ToDo_DB_Vars.config.Dungeons == nil then Octo_ToDo_DB_Vars.config.Dungeons = false end
+		if Octo_ToDo_DB_Vars.config.Dungeons == nil then Octo_ToDo_DB_Vars.config.Dungeons = true end
 		if Octo_ToDo_DB_Vars.config.Timewalk == nil then Octo_ToDo_DB_Vars.config.Timewalk = false end
-		if Octo_ToDo_DB_Vars.config.Currency == nil then Octo_ToDo_DB_Vars.config.Currency = false end
-		if Octo_ToDo_DB_Vars.config.Reputations == nil then Octo_ToDo_DB_Vars.config.Reputations = false end
-		if Octo_ToDo_DB_Vars.config.Items == nil then Octo_ToDo_DB_Vars.config.Items = false end
-		if Octo_ToDo_DB_Vars.config.Professions == nil then Octo_ToDo_DB_Vars.config.Professions = false end
+		if Octo_ToDo_DB_Vars.config.Currency == nil then Octo_ToDo_DB_Vars.config.Currency = true end
+		if Octo_ToDo_DB_Vars.config.Reputations == nil then Octo_ToDo_DB_Vars.config.Reputations = true end
+		if Octo_ToDo_DB_Vars.config.Items == nil then Octo_ToDo_DB_Vars.config.Items = true end
+		if Octo_ToDo_DB_Vars.config.Professions == nil then Octo_ToDo_DB_Vars.config.Professions = true end
 		if Octo_ToDo_DB_Vars.config.Gold == nil then Octo_ToDo_DB_Vars.config.Gold = true end
 		if Octo_ToDo_DB_Vars.config.ItemLevel == nil then Octo_ToDo_DB_Vars.config.ItemLevel = true end
 		if Octo_ToDo_DB_Vars.config.LastUpdate == nil then Octo_ToDo_DB_Vars.config.LastUpdate = false end
@@ -2965,26 +2989,22 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.LevelToShowMAX == nil then Octo_ToDo_DB_Vars.config.LevelToShowMAX = 120 end
 		if Octo_ToDo_DB_Vars.config.itemLevelToShow == nil then Octo_ToDo_DB_Vars.config.itemLevelToShow = 1 end
 		if Octo_ToDo_DB_Vars.config.AchievementToShow == nil then Octo_ToDo_DB_Vars.config.AchievementToShow = 92 end
-		if Octo_ToDo_DB_Vars.config.AchievementShowCompleted == nil then Octo_ToDo_DB_Vars.config.AchievementShowCompleted = true end
 		if Octo_ToDo_DB_Vars.config.ShowTotalMoney == nil then Octo_ToDo_DB_Vars.config.ShowTotalMoney = true end
 		if Octo_ToDo_DB_Vars.config.ShowTimeAll == nil then Octo_ToDo_DB_Vars.config.ShowTimeAll = true end
 		if Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL == nil then Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL = true end
 		if Octo_ToDo_DB_Vars.config.ResetAllChars == nil then Octo_ToDo_DB_Vars.config.ResetAllChars = false end
-		if Octo_ToDo_DB_Vars.config.PortalsButtons == nil then Octo_ToDo_DB_Vars.config.PortalsButtons = false end
-		if Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent == nil then Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = false end
-		if Octo_ToDo_DB_Vars.config.Achievements == nil then Octo_ToDo_DB_Vars.config.Achievements = false end
+		if Octo_ToDo_DB_Vars.config.PortalsButtons == nil then Octo_ToDo_DB_Vars.config.PortalsButtons = true end
+		if Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent == nil then Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = true end
 		if Octo_ToDo_DB_Vars.config.curHeight == nil then Octo_ToDo_DB_Vars.config.curHeight = 20 end
 		if Octo_ToDo_DB_Vars.config.curHeight ~= nil then E.Octo_Globals.curHeight = Octo_ToDo_DB_Vars.config.curHeight end
 		if Octo_ToDo_DB_Vars.config.Addon_Height == nil then Octo_ToDo_DB_Vars.config.Addon_Height = 600 end
 		if Octo_ToDo_DB_Vars.config.Addon_Height ~= nil then E.Octo_Globals.Addon_Height = Octo_ToDo_DB_Vars.config.Addon_Height end
-		if Octo_ToDo_DB_Vars.config.curWidthCentral == nil then Octo_ToDo_DB_Vars.config.curWidthCentral = 96 end
+		if Octo_ToDo_DB_Vars.config.curWidthCentral == nil then Octo_ToDo_DB_Vars.config.curWidthCentral = 110 end
 		if Octo_ToDo_DB_Vars.config.curWidthCentral ~= nil then E.Octo_Globals.curWidthCentral = Octo_ToDo_DB_Vars.config.curWidthCentral end
 		if Octo_ToDo_DB_Vars.config.curWidthTitle == nil then Octo_ToDo_DB_Vars.config.curWidthTitle = 200 end
 		if Octo_ToDo_DB_Vars.config.curWidthTitle ~= nil then E.Octo_Globals.curWidthTitle = Octo_ToDo_DB_Vars.config.curWidthTitle end
 		if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == nil then Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST = false end
 		if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST ~= nil then E.Octo_Globals.Octo_debug_Function_FIRST = Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST end
-		if Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST == nil then Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST = false end
-		if Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST ~= nil then E.Octo_Globals.Octo_debug_Event_FIRST = Octo_ToDo_DB_Vars.config.Octo_debug_Event_FIRST end
 		if Octo_ToDo_DB_Vars.config.prefix == nil then Octo_ToDo_DB_Vars.config.prefix = 1 end
 		ConcatAtStart()
 		O_otrisovka_FIRST()
@@ -3192,7 +3212,7 @@ function SlashCmdList.Octo(msg)
 		main_frame_toggle()
 		Octo_ToDo_FIRST_AddDataToAltFrame()
 	end
-	print("debug timer: "..E.Octo_Func.func_Gradient(tostringall(debugprofilestop()), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).." ms.")
+	ChatFrame1:AddMessage ("debug timer: "..E.Octo_Func.func_Gradient(tostringall(debugprofilestop()), E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).." ms.")
 end
 local editFrame, editBox
 if select(4, GetBuildInfo()) > 20000 then
@@ -3203,7 +3223,7 @@ if select(4, GetBuildInfo()) > 20000 then
 end
 SLASH_GSEARCH1 = "/gsearch"
 SlashCmdList.GSEARCH = function(msg)
-	print(E.Octo_Func.func_Gradient("GSEARCH: ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), msg)
+	ChatFrame1:AddMessage (E.Octo_Func.func_Gradient("GSEARCH: ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), msg)
 	local str = ""
 	local list = {}
 	for i, n in pairs(_G) do

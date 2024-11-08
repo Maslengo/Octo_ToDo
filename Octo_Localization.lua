@@ -168,6 +168,7 @@ if L then
 	L["Minor Keyflames"] = true
 	L["Turn on"] = true
 	L["Turn off"] = true
+	L["No quests"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -330,4 +331,5 @@ if L then
 	L["Minor Keyflames"] = "Второстепенные огни"
 	L["Turn on"] = "Включить"
 	L["Turn off"] = "Выключить"
+	L["No quests"] = "Нет квестов"
 end

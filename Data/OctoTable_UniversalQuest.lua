@@ -52,15 +52,26 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
+	-- {
+	-- 	name_save = "TimewalkAnOriginalPathThroughTime",
+	-- 	reset = "Weekly",
+	-- 	expansion = "",
+	-- 	place = "",
+	-- 	desc = "",
+	-- 	questID = {
+	-- 		85947, -- Первозданный путь сквозь время
+	-- 		83274, -- Первозданный путь сквозь время
+	-- 	},
+	-- 	max = 1
+	-- },
 	{
-		name_save = "TimewalkAnOriginalPathThroughTime",
+		name_save = "TimewalkSoldierofTime",
 		reset = "Weekly",
 		expansion = "",
 		place = "",
 		desc = "",
 		questID = {
-			85947, -- Первозданный путь сквозь время
-			83274, -- Первозданный путь сквозь время
+			57300,
 		},
 		max = 1
 	},

@@ -11,20 +11,14 @@ if select(4, GetBuildInfo()) > 20000 then
 	-- editFrame:EnableMouse(true)
 	-- editFrame:HookScript("OnMouseDown", function(self) self:Hide() end)
 	-- editFrame:HookScript("OnMouseUp", function(self) self:Hide() end)
-
-
-		-- editFrame:SetScript("OnKeyDown", function(self, key)
-		-- 		if key == GetBindingKey("TOGGLEGAMEMENU") then
-		-- 			self:GetParent():Hide()
-		-- 			self:SetPropagateKeyboardInput(false)
-		-- 		else
-		-- 			self:SetPropagateKeyboardInput(true)
-		-- 		end
-		-- end)
-
-
-
-
+	-- editFrame:SetScript("OnKeyDown", function(self, key)
+	--         if key == GetBindingKey("TOGGLEGAMEMENU") then
+	--             self:GetParent():Hide()
+	--             self:SetPropagateKeyboardInput(false)
+	--         else
+	--             self:SetPropagateKeyboardInput(true)
+	--         end
+	-- end)
 	-- editFrame:RegisterForClicks("RightButtonUp")
 	-- editFrame:SetScript("OnClick", function(self) self:Hide() end)
 	editBox = editFrame.editFrame
@@ -152,11 +146,11 @@ SlashCmdList.MOUNTSLIST = function(full)
 	full = full == "1"
 	local tbl, types, currentTier, t, c, w = {}, {}, tonumber(GetBuildInfo():match("(.-)%.")), {}, 0, {}
 	-- for k, v in pairs(MountsJournal.mountsDB) do
-	-- 	c = c + 1
-	-- 	tbl[k] = v
+	--     c = c + 1
+	--     tbl[k] = v
 	-- end
 	-- for k in pairs(MountsJournalFrame.mountTypes) do
-	-- 	types[k] = 0
+	--     types[k] = 0
 	-- end
 	local i, j, str = 0, 0, ""
 	local mountsIDs = C_MountJournal.GetMountIDs()
@@ -238,20 +232,20 @@ SlashCmdList.OCTOLISTQW = function(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise2 = LibThingsLoad:Quests(E.Octo_Table.OctoTable_QuestID_Paragon):ThenForAllWithCached(function(_, ids)
-		tinsert(list1, ids)
+	local promise2 = LibThingsLoad:Quests(E.Octo_Table.OctoTable_QuestID):ThenForAllWithCached(function(_, ids1)
+			tinsert(list1, ids1)
 	end)
 	sort(list1, E.Octo_Func.reverse_order)
-	local promise2 = LibThingsLoad:Quests(E.Octo_Table.OctoTable_QuestID_Paragon):FailWithChecked(function(_, ids)
-			tinsert(list2, ids)
+	local promise2 = LibThingsLoad:Quests(E.Octo_Table.OctoTable_QuestID):FailWithChecked(function(_, ids2)
+			tinsert(list2, ids2)
 	end)
 	sort(list2, E.Octo_Func.reverse_order)
 	promise2:Then(function()
-			for _, ids in pairs(list1) do
-				str = str..ids..", -- "..E.Octo_Func.func_questName(ids).."\n"
+			for _, id1 in pairs(list1) do
+				str = str..id1..", -- "..E.Octo_Func.func_questName(id1).."\n"
 			end
-			for _, ids in pairs(list2) do
-				str = str..ids..", -- "..E.Octo_Func.func_questName(ids).."\n"
+			for _, id2 in pairs(list2) do
+				str = str..id2..", -- "..E.Octo_Func.func_questName(id2).."\n"
 			end
 			fprint("begin /OCTOLISTQW")
 			editBox:SetText(str)
@@ -287,7 +281,6 @@ SlashCmdList.OCTOLISTCUR = function(msg)
 		end
 		i = i + 1
 	end
-
 	editBox:SetText(str3)
 	editFrame:Show()
 end
@@ -296,7 +289,6 @@ SLASH_OCTOLISTREP1 = "/OCTOLISTREP"
 SlashCmdList.OCTOLISTREP = function(msg)
 	local str4 = ""
 	local listSize, i = C_Reputation.GetNumFactions(), 1
-
 	-- C_Reputation.CollapseAllFactionHeaders() -- закрыть
 	C_Reputation.ExpandAllFactionHeaders() -- открыть
 	while listSize >= i do
@@ -304,7 +296,6 @@ SlashCmdList.OCTOLISTREP = function(msg)
 		str4 = str4 .. i ..") ".. factionData.name ..E.Octo_Globals.LightGray_Color.." ("..factionData.factionID.. ")|r\n"
 		i = i + 1
 	end
-
 	editBox:SetText(str4)
 	editFrame:Show()
 end
@@ -317,14 +308,11 @@ SlashCmdList.OCTOLISTMOUNT = function(msg)
 	sort(mountsIDs, E.Octo_Func.reverse_order)
 	for _, id in pairs(mountsIDs) do
 		local name, spellID, icon,_,_,_,_, isFactionSpecific, faction = C_MountJournal.GetMountInfoByID(id)
-
-
 		if isFactionSpecific then name = name.." ("..(faction == 0 and FACTION_HORDE or FACTION_ALLIANCE).. ")"  end
-
-
 		str5 = str5 .."[".. id .."] = true, -- "..spellID.." "..E.Octo_Func.func_texturefromIcon(icon)..name.."\n"
 		i = i + 1
 	end
 	editBox:SetText(str5)
 	editFrame:Show()
 end
+

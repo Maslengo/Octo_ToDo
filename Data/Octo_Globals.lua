@@ -202,7 +202,10 @@ E.Octo_Globals.DONE = E.Octo_Globals.Green_Color.."Done|r"
 -- E.Octo_Globals.Once = "|TInterface\\GossipFrame\\AvailableQuestIcon:0|t"
 E.Octo_Globals.Once = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Once.tga")
 -- E.Octo_Globals.Once = texturefromIcon("Interface\\GossipFrame\\AvailableQuestIcon")
-E.Octo_Globals.Daily = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Daily.tga")
+-- E.Octo_Globals.Daily = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Daily.tga")
+
+
+E.Octo_Globals.Daily = "|A:Recurringavailablequesticon:14:14:0:0|a"
 -- E.Octo_Globals.Daily = texturefromIcon("Interface\\GossipFrame\\AvailableLegendaryQuestIcon")
 E.Octo_Globals.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Weekly.tga")
 -- E.Octo_Globals.Weekly = texturefromIcon("Interface\\GossipFrame\\DailyQuestIcon")

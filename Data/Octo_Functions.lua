@@ -175,11 +175,11 @@ function E.Octo_Func.func_questName(questID, useLargeIcon)
 	end
 end
 local func_questName = E.Octo_Func.func_questName
-	----------------------------------------------------------------
+----------------------------------------------------------------
 -- function E.Octo_Func.func_questName_Decorate(questID)
--- 	local useLargeIcon = true
--- 	local title = C_QuestLog.GetTitleForQuestID(questID) or "NO TITLE"
--- 	return QuestUtils_DecorateQuestText(questID, title, true), true
+--     local useLargeIcon = true
+--     local title = C_QuestLog.GetTitleForQuestID(questID) or "NO TITLE"
+--     return QuestUtils_DecorateQuestText(questID, title, true), true
 -- end
 -- local func_questName_Decorate = E.Octo_Func.func_questName_Decorate
 ----------------------------------------------------------------
@@ -385,39 +385,37 @@ function E.Octo_Func.func_Octo_LoadAddOn(GlobalAddonName)
 end
 local func_Octo_LoadAddOn = E.Octo_Func.func_Octo_LoadAddOn
 ----------------------------------------------------------------
-function E.Octo_Func.CheckCompletedByQuestID(self)
-	if IsRetail() == true then
-		local vivod
-		local TEST = ""
-		if C_QuestLog.IsQuestFlaggedCompleted(self) == true then
-			vivod = (E.Octo_Globals.DONE)
-		elseif C_QuestLog.IsComplete(self) == true then
-			vivod = E.Octo_Globals.Purple_Color..">>СДАЙ<<|r"
-		elseif C_QuestLog.IsQuestFlaggedCompleted(self) == false and C_QuestLog.IsOnQuest(self) == false then
-			vivod = (E.Octo_Globals.NONE)
-		elseif C_QuestLog.IsOnQuest(self) == true --[[and C_QuestLog.IsComplete(self) == false ]]then
-			local objectives = C_QuestLog.GetQuestObjectives(self)
-			if objectives == nil then
-				return ""
-			end
-			for i = 1, #objectives do
-				if objectives[i] then
-					local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(self, i, false)
-					if objectiveType == "progressbar" then
-						TEST = E.Octo_Globals.Red_Color..GetQuestProgressBarPercent(self).."%|r"
+function E.Octo_Func.CheckCompletedByQuestID(questID)
+	local vivod
+	local TEST = ""
+	if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
+		vivod = (E.Octo_Globals.DONE)
+	elseif C_QuestLog.IsComplete(questID) == true then
+		vivod = E.Octo_Globals.Purple_Color..">>СДАЙ<<|r"
+	elseif C_QuestLog.IsQuestFlaggedCompleted(questID) == false and C_QuestLog.IsOnQuest(questID) == false then
+		vivod = (E.Octo_Globals.NONE)
+	elseif C_QuestLog.IsOnQuest(questID) == true --[[and C_QuestLog.IsComplete(questID) == false ]]then
+		local objectives = C_QuestLog.GetQuestObjectives(questID)
+		if objectives == nil then
+			return ""
+		end
+		for i = 1, #objectives do
+			if objectives[i] then
+				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(questID, i, false)
+				if objectiveType == "progressbar" then
+					TEST = E.Octo_Globals.Red_Color..GetQuestProgressBarPercent(questID).."%|r"
+				else
+					if finished then
+						TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
 					else
-						if finished then
-							TEST = E.Octo_Globals.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
-						else
-							TEST = E.Octo_Globals.Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
-						end
+						TEST = E.Octo_Globals.Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
 					end
 				end
-				vivod = vivod and vivod.."»"..TEST or TEST
 			end
+			vivod = vivod and vivod.."»"..TEST or TEST
 		end
-		return vivod
 	end
+	return vivod
 end
 local CheckCompletedByQuestID = E.Octo_Func.CheckCompletedByQuestID
 ----------------------------------------------------------------
@@ -726,6 +724,24 @@ function E.Octo_Func.CheckReputationByRepID(self)
 end
 local CheckReputationByRepID = E.Octo_Func.CheckReputationByRepID
 ----------------------------------------------------------------
+function E.Octo_Func.CurrentNumQuests()
+	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
+	local numQuests = 0
+	for i = 1, numShownEntries do
+		local info = C_QuestLog.GetInfo(i) -- questLogIndex
+		if info then
+			if info.questID ~= 0 then
+				if (not info.isHeader and not info.isHidden) then
+					numQuests = numQuests + 1
+				else
+					numQuests = numQuests
+				end
+			end
+		end
+	end
+	return numQuests
+end
+local CurrentNumQuests = E.Octo_Func.CurrentNumQuests
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
