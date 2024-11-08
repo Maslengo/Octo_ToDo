@@ -96,7 +96,6 @@ function E.Octo_Func.func_Gradient(text, firstColor, secondColor)
 		b3 = b3 + bdelta
 	end
 	vivod = maslengo..secondColor..utf8sub(text, utf8len(text)).."|r"
-	print (vivod)
 	return vivod
 end
 local Gradient = E.Octo_Func.func_Gradient
