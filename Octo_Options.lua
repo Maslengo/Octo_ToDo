@@ -551,7 +551,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 			Create_CheckButton(FIRST_scrollChild, self, i, POS_LEFT, ConfigTable_DF_LEFT[i].otstyp, ConfigTable_DF_LEFT[i].config, ConfigTable_DF_LEFT[i].text, ConfigTable_DF_LEFT[i].r, ConfigTable_DF_LEFT[i].g, ConfigTable_DF_LEFT[i].b, ConfigTable_DF_LEFT[i].a, ConfigTable_DF_LEFT[i].button)
 		end
 end)
-local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIRST_Config, MISCELLANEOUS) -- QUESTS_LABEL
+local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIRST_Config, OTHER) -- QUESTS_LABEL
 subcategory.ID = L["InDev"].."FIRST_Config"
 Settings.RegisterAddOnCategory(subcategory)
 

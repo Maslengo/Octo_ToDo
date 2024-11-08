@@ -40,6 +40,8 @@ E.Octo_Func.func_Octo_LoadAddOn("BugSack")
 E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
 E.Octo_Func.func_Octo_LoadAddOn("HidingBar")
 E.Octo_Func.func_Octo_LoadAddOn("HidingBar_Options")
+E.Octo_Func.func_Octo_LoadAddOn("QuestsChanged")
+
 local Button = nil
 local CF = nil
 local Octo_ToDo_FIRST_Frame_Char_Frame = nil
@@ -343,7 +345,7 @@ end
 local function CreateFrameUsableItems_OnShow(self)
 	local hasToy = PlayerHasToy(self.itemID)
 	local hasItem = GetItemCount(self.itemID, true, true, true) >= self.count
-	-- local isKnown = IsSpellKnown(self.spellID)
+	local isKnown = IsSpellKnown(self.spellID)
 	if isKnown == true and (hasToy == true or hasItem == true) then
 		self.icon:SetVertexColor(1, 1, 1, 1)
 	else
@@ -370,7 +372,7 @@ end
 local function CreateFrameUsableItems_OnLeave(self)
 	local hasToy = PlayerHasToy(self.itemID)
 	local hasItem = GetItemCount(self.itemID, true, true, true) >= self.count
-	-- local isKnown = IsSpellKnown(self.spellID)
+	local isKnown = IsSpellKnown(self.spellID)
 	GameTooltip:ClearLines()
 	GameTooltip:Hide()
 	self:SetBackdropBorderColor(0, 0, 0, 1)
@@ -394,7 +396,7 @@ local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 		local startTime, duration = C_Container.GetItemCooldown(self.itemID)
 		local hasToy = PlayerHasToy(self.itemID)
 		local hasItem = GetItemCount(self.itemID, true, true, true) >= self.count
-		-- local isKnown = IsSpellKnown(self.spellID)
+		local isKnown = IsSpellKnown(self.spellID)
 		if isKnown == true and (hasToy == true or hasItem == true) then
 			self.icon:SetVertexColor(1, 1, 1, 1)
 		else
@@ -428,7 +430,7 @@ local function CreateFrameUsableItems_OnMouseUp(self)
 	end
 	self.icon:SetVertexColor(1, 1, 1, 1)
 end
-local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b)
+local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spellID)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."CreateFrameUsableItems".."|r")
 	end
@@ -441,6 +443,7 @@ local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b)
 	Button.g = g
 	Button.b = b
 	Button.count = 1
+	Button.spellID = spellID
 	Button:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
 	Button:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame, "TOPLEFT", Xpos, Ypos+1)
 	Button:SetBackdrop({
