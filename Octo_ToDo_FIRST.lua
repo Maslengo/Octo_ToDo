@@ -38,6 +38,8 @@ local curWidthTitle = E.Octo_Globals.curWidthTitle
 E.Octo_Func.func_Octo_LoadAddOn("!BugGrabber")
 E.Octo_Func.func_Octo_LoadAddOn("BugSack")
 E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
+E.Octo_Func.func_Octo_LoadAddOn("HidingBar")
+E.Octo_Func.func_Octo_LoadAddOn("HidingBar_Options")
 local Button = nil
 local CF = nil
 local Octo_ToDo_FIRST_Frame_Char_Frame = nil
@@ -1657,9 +1659,9 @@ local function O_otrisovka_FIRST()
 				end
 				for dungeonID, v in pairs(E.Octo_Table.OctoTable_LFGDungeons) do
 					if Octo_ToDo_DB_Other.LFGInstance[dungeonID] then
-						-- if CharInfo.LFGInstance[dungeonID].donetoday ~= E.Octo_Globals.NONE then
+						if CharInfo.LFGInstance[dungeonID].donetoday ~= E.Octo_Globals.NONE then
 							tooltip[#tooltip+1] = {CharInfo.LFGInstance[dungeonID].D_name, CharInfo.LFGInstance[dungeonID].donetoday}
-						-- end
+						end
 					end
 				end
 				if #tooltip ~= 0 then
@@ -1920,7 +1922,11 @@ local function TotalTimeAllServer80OnShow()
 			TotalTimeAllServer70 = TotalTimeAllServer70 + CharInfo.realLevelTime
 		end
 	end
-	return classColorHexCurrent..(E.Octo_Func.SecondsToClock(TotalTimeAllServer70)).."|r"
+	if TotalTimeAllServer70 ~= 0 then
+		return classColorHexCurrent..(E.Octo_Func.SecondsToClock(TotalTimeAllServer70)).."|r"
+	else
+		return ""
+	end
 end
 local function Octo_ToDo_FIRST_CreateAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -2288,7 +2294,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						GameTooltip:AddDoubleLine(E.Octo_Func.func_texturefromIcon(texture) .. name.." "..E.Octo_Globals.Gray_Color.." id:"..dungeonID.."|r",  E.Octo_Globals.Gray_Color.."texture:|r"..E.Octo_Globals.Green_Color..texture.."|r "..E.Octo_Globals.Gray_Color.."time:|r"..E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(timeLimit).."|r", 1, 1, 1, 1, 1, 1)
 				end
 				if i == 0 then
-					GameTooltip:AddLine("No Data")
+					GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
 					OctoToDo_MplusButton:Hide()
 				end
 				GameTooltip:AddDoubleLine(" ", " ")
@@ -2339,8 +2345,8 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					end
 				end
 				if i == 0 then
-					GameTooltip:AddLine("No Data")
-					OctoToDo_ItemsButton:Hide()
+					GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
+					-- OctoToDo_ItemsButton:Hide()
 				end
 				GameTooltip:AddDoubleLine(" ", " ")
 				GameTooltip:Show()
@@ -2909,7 +2915,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL == nil then Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL = true end
 		if Octo_ToDo_DB_Vars.config.ResetAllChars == nil then Octo_ToDo_DB_Vars.config.ResetAllChars = false end
 		if Octo_ToDo_DB_Vars.config.PortalsButtons == nil then Octo_ToDo_DB_Vars.config.PortalsButtons = true end
-		if Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent == nil then Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = false end
+		if Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent == nil then Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = true end
 		if Octo_ToDo_DB_Vars.config.curHeight == nil then Octo_ToDo_DB_Vars.config.curHeight = 20 end
 		if Octo_ToDo_DB_Vars.config.curHeight ~= nil then E.Octo_Globals.curHeight = Octo_ToDo_DB_Vars.config.curHeight end
 		if Octo_ToDo_DB_Vars.config.Addon_Height == nil then Octo_ToDo_DB_Vars.config.Addon_Height = 600 end
