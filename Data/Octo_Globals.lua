@@ -15,6 +15,11 @@ local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, stri
 function IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function IsClassic() return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC end
 function IsCata() return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC end
+E.Octo_Globals.AddonTexture_FIRST = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_FIRST.tga"
+E.Octo_Globals.AddonTexture_SECOND = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_SECOND.tga"
+E.Octo_Globals.AddonTexture_THIRD = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_THIRD.tga"
+E.Octo_Globals.MinecraftTexture = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\MinecraftTexture.tga"
+E.Octo_Globals.currentMaxLevel = 80
 ----------------------------------------------------------------
 local function texturefromIcon(self, size)
 	local show = true -- TYT

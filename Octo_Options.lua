@@ -38,6 +38,7 @@ MAIN_ScrollBar:HookScript("OnShow", function(self, ...)
 		if not MAIN_ScrollBar.promise then
 			MAIN_ScrollBar.promise = LibThingsLoad:Items(E.Octo_Table.OctoTable_Empty)
 			MAIN_ScrollBar.promise:AddItems(E.Octo_Table.OctoTable_itemID_ALL)
+			MAIN_ScrollBar.promise:AddItems(E.Octo_Table.OctoTable_itemID_Config)
 			MAIN_ScrollBar.promise:AddSpells(E.Octo_Table.OctoTable_Portals_MoP)
 			MAIN_ScrollBar.promise:AddSpells(E.Octo_Table.OctoTable_Portals_WoD)
 			MAIN_ScrollBar.promise:AddSpells(E.Octo_Table.OctoTable_Portals_Legion)
@@ -410,24 +411,26 @@ MAIN_Config:SetScript("OnShow", function(self)
 				end
 		end)
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, 0, "PortalsButtons", E.Octo_Func.func_texturefromIcon(3610528, 20)..L["Portals"])
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_LEFT, indent, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")
-		Create_CheckButton(MAIN_scrollChild, self, 20, POS_LEFT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_LEFT, 0, "ShowTotalMoney", "Всего денег")
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 0, "ShowTimeAll", "Общее время игры")
-		Create_CheckButton(MAIN_scrollChild, self, 24, POS_LEFT, indent, "ShowTimeMAXLEVEL", "Общее время игры на МАКСИМАЛЬНОМ уровне")
-		Create_CheckButton(MAIN_scrollChild, self, 26, POS_LEFT, 0, "Dungeons", "КД инстов")
-		Create_CheckButton(MAIN_scrollChild, self, 27, POS_LEFT, 0, "Professions", TRADE_SKILLS)
-		Create_CheckButton(MAIN_scrollChild, self, 28, POS_LEFT, 0, "Gold", BONUS_ROLL_REWARD_MONEY)
-		Create_CheckButton(MAIN_scrollChild, self, 29, POS_LEFT, 0, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
-		Create_CheckButton(MAIN_scrollChild, self, 30, POS_LEFT, 0, "LastUpdate", L["Was online"])
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "CVar", "CVar")
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "Minecraft", "Minecraft")
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.Octo_Func.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/AddonTexture_FIRST.tga", 22).."Function 1", 0, .65, 1, E.Octo_Globals.BGALPHA)
-		Create_SimpleButton(MAIN_scrollChild, self, 26, POS_RIGHT, "ReloadUI", "Reload UI")
-		Create_SimpleButton(MAIN_scrollChild, self, 28, POS_RIGHT, "Octo_ToDo_DB_Config", "Config")
-		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "Octo_ToDo_DB_Other", "Other")
-		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT, "Octo_ToDo_DB_Players", "Players")
-		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "Octo_ToDo_DB_Vars", "Vars")
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, 150, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_LEFT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_LEFT, 0, "ShowTotalMoney", "Всего денег")
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_LEFT, 0, "ShowTimeAll", "Общее время игры")
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_LEFT, 150, "ShowTimeMAXLEVEL", E.Octo_Globals.currentMaxLevel.." "..LEVEL)
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_LEFT, 0, "Dungeons", "КД инстов")
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 0, "Professions", TRADE_SKILLS)
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_LEFT, 0, "Gold", BONUS_ROLL_REWARD_MONEY)
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_LEFT, 0, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
+		Create_CheckButton(MAIN_scrollChild, self, 26, POS_LEFT, 0, "LastUpdate", L["Was online"])
+
+
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "CVar", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_THIRD, indent).."CVar")
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "Minecraft", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_SECOND, indent).."Minecraft")
+		Create_CheckButton(MAIN_scrollChild, self, 26, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_FIRST, indent).."Debug")
+		Create_SimpleButton(MAIN_scrollChild, self, 27, POS_RIGHT, "ReloadUI", E.Octo_Globals.White_Color.."Reload UI".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 28, POS_RIGHT, "Octo_ToDo_DB_Config", E.Octo_Globals.White_Color.."Config".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "Octo_ToDo_DB_Other", E.Octo_Globals.White_Color.."Other".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT, "Octo_ToDo_DB_Players", E.Octo_Globals.White_Color.."Players".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "Octo_ToDo_DB_Vars", E.Octo_Globals.White_Color.."Vars".."|r")
 end)
 local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, AddonTitle)
 category.ID = AddonTitle
@@ -469,53 +472,18 @@ FIRST_Config:SetScript("OnShow", function(self)
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
-				config = "World_Boss_S1",
+				config = "TWW_WorldBoss_Weekly",
 				text = L["World Boss"],
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
-				config = "Weekly_DQ_S1",
+				config = "TWW_DungeonQuest_Weekly",
 				text = L["Weekly Dungeon Quest"],
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
-				config = "Weekly_Delve_S1",
+				config = "TWW_Delve_Weekly",
 				text = "Bonus Event Holiday Quests",
-				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
-			},
-			{
-				config = "Weekly_WQ_Caches_S1",
-				text = L["Weekly World Quest caches x2"],
-				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
-			},
-			{
-				config = "Weekly_WQ_S1_Crafting",
-				text = L["Weekly Crafting Quests"],
-				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
-			},
-			{
-				config = "Weekly_WQ_S1_zKahet",
-				text = L["Weekly Azj-Kahet"],
-				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
-			},
-			{
-				config = "Weekly_WQ_S1_zHallow",
-				text = L["Weekly Hallowfall"],
-				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
-			},
-			{
-				config = "Weekly_WQ_S1_Sniffer",
-				text = E.Octo_Func.func_questName(82946),
-				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
-			},
-			{
-				config = "Weekly_WQ_S1_zRing",
-				text = E.Octo_Func.func_questName(83333),
-				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
-			},
-			{
-				config = "Weekly_WQ_S1_zDorn",
-				text = L["Weekly the Isle of Dorn"],
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
@@ -533,6 +501,38 @@ FIRST_Config:SetScript("OnShow", function(self)
 				text = "Timewalk",
 				r = 70/255, g = 130/255, b = 179/255,
 			},
+
+
+			{
+				text = L["Crests"],
+				button = false,
+			},
+			{
+				config = "GildedHarbingerCrest",
+				text = E.Octo_Func.func_currencyicon(2917)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2917).."|r",
+				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
+			},
+			{
+				config = "RunedHarbingerCrest",
+				text = E.Octo_Func.func_currencyicon(2916)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2916).."|r",
+				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
+			},
+			{
+				config = "CarvedHarbingerCrest",
+				text = E.Octo_Func.func_currencyicon(2915)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2915).."|r",
+				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
+			},
+			{
+				config = "WeatheredHarbingerCrest",
+				text = E.Octo_Func.func_currencyicon(2914)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2914).."|r",
+				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
+			},
+
+
+
+
+
+
 		}
 		for i = 1, #ConfigTable_DF_LEFT do
 			if ConfigTable_DF_LEFT[i].otstyp == nil then ConfigTable_DF_LEFT[i].otstyp = 0 end
@@ -546,9 +546,11 @@ FIRST_Config:SetScript("OnShow", function(self)
 			Create_CheckButton(FIRST_scrollChild, self, i, POS_LEFT, ConfigTable_DF_LEFT[i].otstyp, ConfigTable_DF_LEFT[i].config, ConfigTable_DF_LEFT[i].text, ConfigTable_DF_LEFT[i].r, ConfigTable_DF_LEFT[i].g, ConfigTable_DF_LEFT[i].b, ConfigTable_DF_LEFT[i].a, ConfigTable_DF_LEFT[i].button)
 		end
 end)
-local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIRST_Config, QUESTS_LABEL)
+local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIRST_Config, MISCELLANEOUS) -- QUESTS_LABEL
 subcategory.ID = L["InDev"].."FIRST_Config"
 Settings.RegisterAddOnCategory(subcategory)
+
+----
 local SECOND_Config = CreateFrame("ScrollFrame", GlobalAddonName.."SECOND_Config")
 SECOND_Config:Hide()
 local SECOND_ScrollBar = CreateFrame("EventFrame", nil, SECOND_Config, "MinimalScrollBar")
@@ -692,7 +694,7 @@ FOURTH_Config:SetScript("OnShow", function(self)
 			tinsert(list, itemID)
 		end
 		sort(list, E.Octo_Func.reverse_order)
-		for _, id in pairs(E.Octo_Table.OctoTable_itemID_ALL) do
+		for _, id in pairs(E.Octo_Table.OctoTable_itemID_Config) do
 			for k, itemID in pairs(list) do
 				if id == itemID then
 					tinsert(ConfigTable_FOURTH_LEFT,

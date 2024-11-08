@@ -205,30 +205,34 @@ SlashCmdList.MOUNTSLIST = function(full)
 end
 ------------------------------
 -- отделил
-SLASH_OCTOLISTIT1 = "/OCTOLISTIT"
-SlashCmdList.OCTOLISTIT = function(msg)
-	local str1 = ""
+SLASH_OCTOLISTITEMS1 = "/OCTOLISTITEMS"
+SlashCmdList.OCTOLISTITEMS = function(msg)
+	local str = ""
 	local list1 = {}
+	local list2 = {}
 	local promise1 = LibThingsLoad:Items(E.Octo_Table.OctoTable_itemID_ALL):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
-	local promise1 = LibThingsLoad:Items(E.Octo_Table.OctoTable_itemID_ALL):FailWithChecked(function(_, ids1)
-			tinsert(list1, ids1)
+	local promise1 = LibThingsLoad:Items(E.Octo_Table.OctoTable_itemID_ALL):FailWithChecked(function(_, ids2)
+			tinsert(list2, ids2)
 	end)
 	promise1:Then(function()
 			sort(list1, E.Octo_Func.reverse_order)
 			for _, id1 in pairs(list1) do
-				str1 = str1..id1..", -- "..E.Octo_Func.func_itemTexture(id1)..E.Octo_Func.func_itemName(id1).."\n"
+				str = str..id1..", -- "..E.Octo_Func.func_itemTexture(id1)..E.Octo_Func.func_itemName(id1).."\n"
 			end
-			fprint("begin /OCTOLISTIT")
-			editBox:SetText(str1)
+			for _, id2 in pairs(list2) do
+				str = str..id2..", -- "..E.Octo_Func.func_itemTexture(id2)..E.Octo_Func.func_itemName(id2).."\n"
+			end
+			fprint("begin /OCTOLISTITEMS")
+			editBox:SetText(str)
 			editFrame:Show()
-			fprint("end /OCTOLISTIT")
+			fprint("end /OCTOLISTITEMS")
 	end)
 end
 ------------------------------
-SLASH_OCTOLISTQW1 = "/OCTOLISTQW"
-SlashCmdList.OCTOLISTQW = function(msg)
+SLASH_OCTOLISTQUESTS1 = "/OCTOLISTQUESTS"
+SlashCmdList.OCTOLISTQUESTS = function(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
@@ -247,15 +251,15 @@ SlashCmdList.OCTOLISTQW = function(msg)
 			for _, id2 in pairs(list2) do
 				str = str..id2..", -- "..E.Octo_Func.func_questName(id2).."\n"
 			end
-			fprint("begin /OCTOLISTQW")
+			fprint("begin /OCTOLISTQUESTS")
 			editBox:SetText(str)
 			editFrame:Show()
-			fprint("end /OCTOLISTQW")
+			fprint("end /OCTOLISTQUESTS")
 	end)
 end
 ------------------------------
-SLASH_OCTOLISTCUR1 = "/OCTOLISTCUR"
-SlashCmdList.OCTOLISTCUR = function(msg)
+SLASH_OCTOLISTCURRENCIES1 = "/OCTOLISTCURRENCIES"
+SlashCmdList.OCTOLISTCURRENCIES = function(msg)
 	local str3 = ""
 	local headerName = ""
 	local Collapsed = {}
@@ -281,8 +285,10 @@ SlashCmdList.OCTOLISTCUR = function(msg)
 		end
 		i = i + 1
 	end
+			fprint("begin /OCTOLISTCURRENCIES")
 	editBox:SetText(str3)
 	editFrame:Show()
+			fprint("end /OCTOLISTCURRENCIES")
 end
 ------------------------------
 SLASH_OCTOLISTREP1 = "/OCTOLISTREP"
