@@ -20,7 +20,6 @@ local LibTranslit = LibStub("LibTranslit-1.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
-
 local ItemLevelGreen = 625
 local ItemLevelOrange = 610
 local ItemLevelRed = 580
@@ -49,6 +48,7 @@ local OctoToDo_CloseButton = nil
 local OctoToDo_OptionsButton = nil
 local OctoToDo_AbandonButton = nil
 local OctoToDo_MplusButton = nil
+local OctoToDo_ItemsButton = nil
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = E.Octo_Func.GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
@@ -498,7 +498,6 @@ local function CreateFrameUsableSpells_OnLeave(self)
 	GameTooltip:Hide()
 	self:SetBackdropBorderColor(0, 0, 0, 1)
 end
-
 local function CreateFrameUsableSpells_OnShow(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."CreateFrameUsableSpells_OnEvent".."|r")
@@ -521,11 +520,6 @@ local function CreateFrameUsableSpells_OnShow(self)
 		self:Show()
 	end
 end
-
-
-
-
-
 local function CreateFrameUsableSpells_OnEvent(self, event)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."CreateFrameUsableSpells_OnEvent".."|r")
@@ -1621,24 +1615,16 @@ local function O_otrisovka_FIRST()
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.Octo_Globals.BGALPHA)
 				return vivodCent, vivodLeft
 		end)
-
-
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				vivodLeft = E.Octo_Func.func_currencyicon(1166)..E.Octo_Func.func_questName(57300)
+				vivodLeft = E.Octo_Func.func_currencyicon(1166)..E.Octo_Func.func_questName(43323)
 				if CharInfo.Octopussy_Timewalk_ATimetoReflect_Weekly ~= E.Octo_Globals.NONE then
 					vivodCent = CharInfo.Octopussy_Timewalk_ATimetoReflect_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.Octo_Globals.BGALPHA)
 				return vivodCent, vivodLeft
 		end)
-
-
-
-
-
-
 	end
 	-- ПОДЗЕМЕЛЬЯ
 	-- for dungeonID, v in pairs(E.Octo_Table.OctoTable_LFGDungeons) do
@@ -2183,7 +2169,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		t:SetAllPoints(OctoToDo_OptionsButton)
 	end
 	----------------------------------------------------------------
-
 	local function AbandonQuests()
 		local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
 		local numQuests = E.Octo_Func.CurrentNumQuests()
@@ -2202,7 +2187,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 		ChatFrame1:AddMessage(E.Octo_Func.func_Gradient(L["Total"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).." "..E.Octo_Globals.Green_Color..numQuests.."|r")
 	end
-
 	if not OctoToDo_AbandonButton then
 		local numQuests = E.Octo_Func.CurrentNumQuests()
 		StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
@@ -2235,7 +2219,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				if numQuests == 0 then
 					GameTooltip:AddLine(L["No quests"], r, g, b)
 				end
-
 				local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
 				local list = {}
 				for i = 1, numShownEntries do
@@ -2248,14 +2231,12 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 									tinsert(list, info.questID)
 								else
 									-- print (info.questID, E.Octo_Globals.Red_Color..E.Octo_Func.func_questName(info.questID).."|r")
-
 								end
 							end
 						end
 					end
 				end
 				sort(list, E.Octo_Func.reverse_order)
-
 				for k, questID in pairs(list) do
 					GameTooltip:AddDoubleLine(E.Octo_Func.func_questName(questID)..E.Octo_Globals.Gray_Color.." id:"..questID.."|r",E.Octo_Func.CheckCompletedByQuestID(questID) , 1, 1, 1, 1, 1, 1)
 				end
@@ -2325,13 +2306,11 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end)
 		OctoToDo_MplusButton:SetScript("OnClick", function()
 				-- OctoToDo_MainFrame:Hide()
-
-
-					fpde(GameTooltip)
+					fpde(Octo_ToDo_DB_mapChallengeModeID)
 		end)
 		local t = OctoToDo_MplusButton:CreateTexture(nil, "BACKGROUND")
 		OctoToDo_MplusButton.icon = t
-		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow5.tga")
+		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga")
 		t:SetAllPoints(OctoToDo_MplusButton)
 	end
 	----------------------------------------------------------------
@@ -2351,17 +2330,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
 				GameTooltip:ClearLines()
 				GameTooltip:AddDoubleLine(" ", " ")
-				-- local list = {}
-				-- for itemID, v in pairs(E.Octo_Table.OctoTable_itemID_Config) do
-				-- 	tinsert(list, itemID)
-				-- end
-				-- sort(list, E.Octo_Func.reverse_order)
-				-- for count, itemID in pairs(list) do
-				-- 		i = i + 1
-				-- 		GameTooltip:AddDoubleLine()
-				-- end
 				for _, itemID in pairs (E.Octo_Table.OctoTable_itemID_Config) do
-
 					for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Players) do
 						if CharInfo.ItemsInBag[itemID] ~= 0 then
 							i = i + 1
@@ -2369,10 +2338,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						end
 					end
 				end
-
-
-
-
 				if i == 0 then
 					GameTooltip:AddLine("No Data")
 					OctoToDo_ItemsButton:Hide()
@@ -2392,17 +2357,19 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end)
 		OctoToDo_ItemsButton:SetScript("OnClick", function()
 				-- OctoToDo_MainFrame:Hide()
-
-
-					fpde(GameTooltip)
+				local curGUID = UnitGUID("PLAYER")
+				for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Players) do
+					if curCharGUID == curGUID then
+						fpde(CharInfo)
+					end
+				end
 		end)
 		local t = OctoToDo_ItemsButton:CreateTexture(nil, "BACKGROUND")
 		OctoToDo_ItemsButton.icon = t
-		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow5.tga")
+		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow21.tga")
 		t:SetAllPoints(OctoToDo_ItemsButton)
 	end
 	----------------------------------------------------------------
-
 	if not dd_FIRST then
 		local dd_FIRST = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoToDo_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 		local multiply = (1/3)*2
@@ -2522,9 +2489,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
 		local Faction = UnitFactionGroup("PLAYER")
 		local UnitLevel = UnitLevel("PLAYER")
-
-
-
 -- https://wowhead.com/ru/item=187896
 -- https://wowhead.com/ru/item=187897
 -- https://wowhead.com/ru/item=187869
@@ -2558,7 +2522,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			end
 			CreateFrameUsableSpells(431280, C_Spell.GetSpellInfo(431280).iconID, Xpos*-1+Ypos*1, Ypos*-1, 0, .43, .86)
 		end
-
 		if prof1 == 202 or prof2 == 202 then
 			CreateFrameUsableItems(198156, 4548860, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254)
 			CreateFrameUsableItems(172924, 3610528, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542)
@@ -2908,22 +2871,17 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.Hide_Zone_Text == nil then Octo_ToDo_DB_Vars.config.Hide_Zone_Text = true end
 		if Octo_ToDo_DB_Vars.config.UIErrorsFramePosition == nil then Octo_ToDo_DB_Vars.config.UIErrorsFramePosition = true end
 		if Octo_ToDo_DB_Vars.config.Auto_Screenshot == nil then Octo_ToDo_DB_Vars.config.Auto_Screenshot = false end
-
-
 		if Octo_ToDo_DB_Vars.config.MP_MythicKeystone == nil then Octo_ToDo_DB_Vars.config.MP_MythicKeystone = true end
-
 		if Octo_ToDo_DB_Vars.config.GildedHarbingerCrest == nil then Octo_ToDo_DB_Vars.config.GildedHarbingerCrest = true end
 		if Octo_ToDo_DB_Vars.config.RunedHarbingerCrest == nil then Octo_ToDo_DB_Vars.config.RunedHarbingerCrest = true end
 		if Octo_ToDo_DB_Vars.config.CarvedHarbingerCrest == nil then Octo_ToDo_DB_Vars.config.CarvedHarbingerCrest = true end
 		if Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest == nil then Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest = true end
-
 		if Octo_ToDo_DB_Vars.config.BeledarCycle == nil then Octo_ToDo_DB_Vars.config.BeledarCycle = false end
 		if Octo_ToDo_DB_Vars.config.TWW_WorldBoss_Weekly == nil then Octo_ToDo_DB_Vars.config.TWW_WorldBoss_Weekly = true end
 		if Octo_ToDo_DB_Vars.config.TWW_DungeonQuest_Weekly == nil then Octo_ToDo_DB_Vars.config.TWW_DungeonQuest_Weekly = true end
 		if Octo_ToDo_DB_Vars.config.TWW_Delve_Weekly == nil then Octo_ToDo_DB_Vars.config.TWW_Delve_Weekly = true end
 		if Octo_ToDo_DB_Vars.config.MajorKeyflames == nil then Octo_ToDo_DB_Vars.config.MajorKeyflames = false end
 		if Octo_ToDo_DB_Vars.config.MinorKeyflames == nil then Octo_ToDo_DB_Vars.config.MinorKeyflames = false end
-
 		if Octo_ToDo_DB_Vars.config.FrameScale == nil then Octo_ToDo_DB_Vars.config.FrameScale = 1 end
 		if Octo_ToDo_DB_Vars.config.GameMenuFrameScale == nil then Octo_ToDo_DB_Vars.config.GameMenuFrameScale = .8 end
 		if Octo_ToDo_DB_Vars.config.TimeRift == nil then Octo_ToDo_DB_Vars.config.TimeRift = false end
@@ -3164,11 +3122,12 @@ if select(4, GetBuildInfo()) > 20000 then
 end
 SLASH_GSEARCH1 = "/gsearch"
 SlashCmdList.GSEARCH = function(msg)
-	ChatFrame1:AddMessage (E.Octo_Func.func_Gradient("GSEARCH: ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), msg)
+	ChatFrame1:AddMessage (E.Octo_Func.func_Gradient("GSEARCH: ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color) .. msg)
 	local str = ""
 	local list = {}
 	for i, n in pairs(_G) do
 		if type(n) == "string" and n:find(msg) then
+			-- str = str .. " - ".. n .."\n"
 			str = str..E.Octo_Func.func_Gradient(i, E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).. " - ".. n .."\n"
 		end
 	end
@@ -3177,3 +3136,5 @@ SlashCmdList.GSEARCH = function(msg)
 end
 SlashCmdList["RELOAD"] = ReloadUI
 SLASH_RELOAD1 = "/rl"
+
+-- /gsearch Путешествие

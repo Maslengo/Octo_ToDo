@@ -22,6 +22,8 @@ local classColor = E.Octo_Func.GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
 local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
 local classColorHexCurrent = E.Octo_Func.func_rgb2hex(r, g, b)
+local SliderWidth = 256
+local ButtonWidth = 128
 if classFilename == "SHAMAN" then
 	classcolor = "0070de"
 end
@@ -109,7 +111,7 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 			end,
 		}
 		self[number..pos..config]:Init(Octo_ToDo_DB_Vars.config[config], minValue, maxValue, steps, formatters)
-		self[number..pos..config]:SetWidth(200)
+		self[number..pos..config]:SetWidth(SliderWidth)
 		self[number..pos..config]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
 				Octo_ToDo_DB_Vars.config[config] = math.floor(value * 10 + 0.5)/10
 				self[number..pos..config].RightText:SetText(E.Octo_Globals.Blue_Color..Octo_ToDo_DB_Vars.config[config].."|r")
@@ -127,6 +129,7 @@ local function Create_CheckButton(scroll, self, number, pos, otstyp, config, tex
 	if b == nil then b = E.Octo_Globals.bgCb end
 	if config == nil then config = 0 end
 	if (a == nil or a == false or a == 0) then a = E.Octo_Globals.BGALPHA end
+	-- if (a == nil or a == false or a == 0) then a = 0 end
 	if button == nil then button = true end
 	if not text then text = "no text" end
 	if not self[number..pos..config] then
@@ -176,6 +179,7 @@ local function Create_CheckButtonNEW(scroll, self, number, pos, otstyp, config, 
 	if b == nil then b = E.Octo_Globals.bgCb end
 	if config == nil then config = 0 end
 	if (a == nil or a == false or a == 0) then a = E.Octo_Globals.BGALPHA end
+	-- if (a == nil or a == false or a == 0) then a = 0 end
 	if button == nil then button = true end
 	if not text then text = "no text" end
 	if not self[number..pos..tostring(config)] then
@@ -247,8 +251,8 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 		self[number..pos..config] = CreateFrame("Button", nil, scroll, "UIPanelButtonTemplate")
 		self[number..pos..config]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos, -indent*(number-1))
 		self[number..pos..config]:RegisterForClicks("LeftButtonDown", "RightButtonDown")
-		self[number..pos..config]:SetSize(indent*6, indent)
-		self[number..pos..config]:SetText(text)
+		self[number..pos..config]:SetSize(ButtonWidth, indent)
+		self[number..pos..config]:SetText(color..text.."|r")
 		self[number..pos..config]:SetScript("OnClick", function(btn)
 				if config == "Octo_ToDo_DB_Config" then
 					Octo_ToDo_DB_Config = {}
@@ -278,8 +282,8 @@ local function Create_SimpleButton_DATABASE(scroll, self, number, pos, text, Tru
 		self[number..pos] = CreateFrame("Button", nil, scroll, "UIPanelButtonTemplate")
 		self[number..pos]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos, -indent*(number-1))
 		self[number..pos]:RegisterForClicks("LeftButtonDown", "RightButtonDown")
-		self[number..pos]:SetSize(indent*6, indent)
-		self[number..pos]:SetText(text)
+		self[number..pos]:SetSize(ButtonWidth, indent)
+		self[number..pos]:SetText(color..text.."|r")
 		self[number..pos]:SetScript("OnClick", function(btn)
 				for ID, v in pairs(DATABASE) do
 					DATABASE[ID] = TrueOrFalse
@@ -498,7 +502,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "Timewalk",
-				text = "Timewalk",
+				text = PLAYER_DIFFICULTY_TIMEWALKER,
 				r = 70/255, g = 130/255, b = 179/255,
 			},
 
@@ -507,6 +511,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 				text = L["Crests"],
 				button = false,
 			},
+
 			{
 				config = "GildedHarbingerCrest",
 				text = E.Octo_Func.func_currencyicon(2917)..E.Octo_Globals.WOW_Epic_Color..E.Octo_Func.func_currencyName_NOCOLOR(2917).."|r",
