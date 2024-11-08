@@ -1888,8 +1888,8 @@ local function TotalMoneyAllServerOnShow()
 	if AccountMoney <= 9999 then
 		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer)/10000).."|r"..Money_Icon
 	else
-		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer+AccountMoney)/10000).."|r"..Money_Icon..E.Octo_Globals.LightGray_Color.." "..REPUTATION_SORT_TYPE_ACCOUNT.." (".. E.Octo_Func.CompactNumberFormat(AccountMoney/10000) .. ")".."|r"
-	end
+		vivod = classColorHexCurrent..E.Octo_Func.CompactNumberFormat((TotalMoneyAllServer+AccountMoney)/10000).."|r"..Money_Icon..E.Octo_Globals.LightGray_Color.." "..ACCOUNT_BANK_PANEL_TITLE.." (".. E.Octo_Func.CompactNumberFormat(AccountMoney/10000) .. ")".."|r"
+	end -- REPUTATION_SORT_TYPE_ACCOUNT
 	return vivod
 end
 local function Token_PriceOnShow()
