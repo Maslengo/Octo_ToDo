@@ -1,6 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 -- SetCVar("nameplateShowOnlyNames", 1)
 -- SetCVar("nameplateShowFriends", 1)
@@ -8,12 +6,14 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 -- SetCVar("nameplateShowOnlyNames", 0) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
 -- SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
 -- SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
--- CVAR
+-- DEV_CVAR
 tinsert(E.Octo_Globals.modules, function()
 	if Octo_ToDo_DB_Vars.config.CVar then
 		if not InCombatLockdown() then
 			C_Timer.After(1, function()
 				-- 11.0
+				SetCVar("CursorFreelookStartDelta", 0.001)
+				SetCVar("minimapTrackingShowAll", 1)
 				SetCVar("bankAutoDepositReagents", 1)
 				SetCVar("enablePings", 0) -- Enables ping system.
 				SetCVar("pingMode", 0) -- Determines which mode is used to use the ping system.
@@ -216,20 +216,4 @@ tinsert(E.Octo_Globals.modules, function()
 			end)
 		end
 	end
-	-- local font, height, flags = aura_env.region.text:GetFont()
-	-- local sr, sg, sb, sa = aura_env.region.text:GetShadowColor()
-	-- local sx, sy = aura_env.region.text:GetShadowOffset()
-	-- local function SetFont(obj, optSize)
-	--     obj:SetFont(font, optSize, flags)
-	--     -- obj:SetTextColor(1, 0, 0, 1)
-	--     obj:SetShadowColor(sr, sg, sb, sa)
-	--     obj:SetShadowOffset(sx, sy)
-	-- end
-	-- local function ModifyCVars()
-	--     SetCVar("nameplateShowOnlyNames", 1)
-	--     SetCVar("nameplateShowFriends", 1)
-	--     SetCVar("nameplateVerticalScale", 1)
-	-- end
-	-- ModifyCVars()
-	-- SetFont(SystemFont_NamePlateFixed, height)
 end)

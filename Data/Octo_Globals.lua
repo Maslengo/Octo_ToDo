@@ -1,21 +1,20 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
+E.Octo_Table = {}
+E.Octo_Table.OctoTable_Empty = {}
+E.Octo_Func = {}
+E.Octo_Globals = {}
+E.Octo_Globals.modules = {}
+E.Octo_Timer = {}
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
--- local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 function IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function IsClassic() return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC end
 function IsCata() return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC end
-local utf8charbytes = E.Octo_Func.utf8charbytes
-local utf8len = E.Octo_Func.utf8len
-local utf8sub = E.Octo_Func.utf8sub
-local utf8replace = E.Octo_Func.utf8replace
-local utf8upper = E.Octo_Func.utf8upper
-local utf8lower = E.Octo_Func.utf8lower
-local utf8reverse = E.Octo_Func.utf8reverse
 ----------------------------------------------------------------
 local function texturefromIcon(self, size)
 	local show = true -- TYT

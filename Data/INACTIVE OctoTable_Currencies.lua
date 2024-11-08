@@ -42,7 +42,57 @@ E.Octo_Table.OctoTable_currencyID_ALL = {
 	3067, 3068, 3069, 3070, 3071, 3072, 3073, 3074, 3075, 3076, 3077,
 	3078, 3079, 3080, 3081, 3082, 3083, 3084, 3085, 3086, 3087, 3088,
 	3094, 3099, 2803, 2815, 2839, 2914, 2915, 2916, 2917, 3008, 3028,
-	3055, 3056, 3089, 3093, 3100
+	3055, 3056, 3089, 3093, 3100,
+	2009,
+	1906,
+	1828,
+	1979,
+	1931,
+	2245,
+	2245,
+	3028,
+	3028,
+	3093,
+	3093,
+	2803,
+	2803,
+	3008,
+	3008,
+	3055,
+	3055,
+	3089,
+	3089,
+	3056,
+	3056,
+	2815,
+	2815,
+	3100,
+	3100,
+	1166,
+	1166,
+	2657,
+	2912,
+	2245,
+	2594,
+	2122,
+	2118,
+	2003,
+	2009,
+	1906,
+	1828,
+	1977,
+	1813,
+	1979,
+	1904,
+	1819,
+	1931,
+	1767,
+	1885,
+	1820,
+	1816,
+	1166,
+	2594,
+	2594,
 }
 E.Octo_Table.OctoTable_currency_Classic = {
 }
@@ -160,19 +210,18 @@ E.Octo_Table.OctoTable_currency_Dragonflight = {
 	2777,
 }
 E.Octo_Table.OctoTable_currency_TheWarWithin = {
-	3028, -- Restored Coffer Key
-	3093, -- Nerub-ar Finery
-	2917, -- Gilded Harbinger Crest
-	2916, -- Runed Harbinger Crest
-	2915, -- Carved Harbinger Crest
-	2914, -- Weathered Harbinger Crest
-	2803, -- Undercoin
-	-- 2839, -- [DNT] Awakening Currency
-	3008, -- Valorstones
-	3055, -- Mereldar Derby Mark
-	3089, -- Residual Memories
-	3056, -- Kej
-	2815, -- Resonance Crystals
+	3028,
+	3093,
+	2917,
+	2916,
+	2915,
+	2914,
+	2803,
+	3008,
+	3055,
+	3089,
+	3056,
+	2815,
 }
 E.Octo_Table.OctoTable_currency_Archaeology = {
 	393,

@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
--- HideErrorMessages
+-- Hide_Error_Messages
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDo_DB_Vars.config.Hide_Error_Messages then
 			local OrigErrHandler = UIErrorsFrame:GetScript("OnEvent")

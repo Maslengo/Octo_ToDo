@@ -1,23 +1,16 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
-local ignore_npc = {
-	[208831] = true,
-}
+-- Auto_Gossip
 local targetNPCID = nil
-----------------------------------------------------------------------------------------------------------------------------------
---AUTO GOSSIP
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDo_DB_Vars.config.AutoGossip then
 			if not Octo_AUTO_GOSSIP then
-				Octo_AUTO_GOSSIP = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID())
+				Octo_AUTO_GOSSIP = CreateFrame("Frame", GlobalAddonName.."Auto_Gossip"..E.Octo_Func.GenerateUniqueID())
 				Octo_AUTO_GOSSIP:Hide()
 			end
 			Octo_AUTO_GOSSIP:RegisterEvent("GOSSIP_SHOW")
-			Octo_AUTO_GOSSIP:HookScript("OnEvent", function(self, event, ...) -- SetScript
-					-- print ("START 1", event)
+			Octo_AUTO_GOSSIP:HookScript("OnEvent", function(self, event, ...)
 					if Octo_ToDo_DB_Vars.config.AutoGossip and event == "GOSSIP_SHOW" then
-						-- print ("START 2")
 						local numQuests1 = C_GossipInfo.GetNumActiveQuests()
 						local numQuests2 = C_GossipInfo.GetNumAvailableQuests()
 						if numQuests1 > 0 or numQuests2 > 0 then
@@ -72,40 +65,33 @@ tinsert(E.Octo_Globals.modules, function()
 							[200171] = true,
 							[200170] = true,
 							[199198] = true,
-							[56592] = true, -- DONE ДАГЕРА
+							[56592] = true,
 							[188246] = true,
 							[206941] = true,
 						}
 						local Second_Option = {
 							[201398] = true,
-							[56591] = true, -- DONE Вошебный посох
+							[56591] = true,
 						}
 						local Third_Option = {
-							[56585] = true, -- DONE ХИЛ
+							[56585] = true,
 							[191156] = true,
 							[188601] = true,
 						}
 						local Fourth_Option = {
-							[54959] = true, -- DONE ЩИТ
+							[54959] = true,
 						}
-						-- if guid and UnitGUID(UnitID):match("%a+") ~= "Player" and not IsShiftKeyDown() then
 						if not IsShiftKeyDown() then
 							local info = C_GossipInfo.GetOptions()
-							-- print (info)
 							if guid and UnitGUID(UnitID):match("%a+") ~= "Player" and not IsShiftKeyDown() then
 								targetNPCID = tonumber(UnitGUID(UnitID):match("-(%d+)-%x+$"), 10)
 									if tonumber(targetNPCID) == 208831 then
-										-- print ("ignore_npc")
 										return
 									end
 							end
-							-- print ("QWE")
 							for i, v in pairs(info) do
-								-- if v.icon == 132053 then
 								if v.icon then
-									-- print (i, E.Octo_Func.func_texturefromIcon(v.icon)..v.name) -- 132053
 									if #info == 1 then
-										-- print ("#info = 1")
 										C_GossipInfo.SelectOption(v.gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 										ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
@@ -128,8 +114,8 @@ tinsert(E.Octo_Globals.modules, function()
 											v.name:find("У меня потерялся ключ") or
 											v.name:find("Эти цветы - от Киригосы") or
 											v.name:find("Напасть") or
-											v.name:find("Телепорт к Ночному Шпилю") or -- Элисанда
-											v.name:find("Телепорт к Купели Ночи") or -- Гул'дан
+											v.name:find("Телепорт к Ночному Шпилю") or
+											v.name:find("Телепорт к Купели Ночи") or
 											v.name:find("cff0000FF") or
 											v.name:find("Мур'далаки") or
 											v.name:find("Гнусное отродье элекка") or
@@ -153,41 +139,26 @@ tinsert(E.Octo_Globals.modules, function()
 											v.name:find("Сайаад") or
 											v.name:find("Терон Кровожад") or
 											v.name:find("Командир") or
-											-- v.name:find("Совух") or
-											-- v.name:find("Кажется, неплохо") or
-											-- v.name:find("Сон") or
-											-- v.name:find("Судьба") or
-											-- v.name:find("Фрейя") or
-											-- v.name:find("Тирай") or
-											-- v.name:find("Он'ир") or
-											-- v.name:find("Нокхуд") or
-											-- v.name:find("Шикаар") or
 											v.name:find("Холия Солнечный щит.")
 										then
-											-- print ("0")
 											C_GossipInfo.SelectOption(v.gossipOptionID)
 											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 											ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 										else
 											if guid then
-												-- print (First_Option[targetNPCID])
 												if First_Option[targetNPCID] and i == 1 then
-													-- print ("1")
 													C_GossipInfo.SelectOption(v.gossipOptionID)
 													StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 												elseif Second_Option[targetNPCID] and i == 2 then
-													-- print ("2")
 													C_GossipInfo.SelectOption(v.gossipOptionID)
 													StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 												elseif Third_Option[targetNPCID] and i == 3 then
-													-- print ("3")
 													C_GossipInfo.SelectOption(v.gossipOptionID)
 													StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)
 												elseif Fourth_Option[targetNPCID] and i == 4 then
-													-- print ("4")
 													C_GossipInfo.SelectOption(v.gossipOptionID)
 													StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(v.icon)..v.name)

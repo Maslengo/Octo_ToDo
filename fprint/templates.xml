@@ -29,7 +29,7 @@
 					edgeFile = "Interface/DialogFrame/UI-DialogBox-Border",
 					tile = true,
 					tileSize = 32,
-					edgeSize = 32,
+					edgeSize = 1,
 					insets = {left = 11, right = 12, top = 12, bottom = 11},
 				})
 				local scrollBox = self.editFrame:GetScrollBox()

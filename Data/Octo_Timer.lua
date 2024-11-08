@@ -5,18 +5,11 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
--- local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
-local utf8charbytes = E.Octo_Func.utf8charbytes
-local utf8len = E.Octo_Func.utf8len
-local utf8sub = E.Octo_Func.utf8sub
-local utf8replace = E.Octo_Func.utf8replace
-local utf8upper = E.Octo_Func.utf8upper
-local utf8lower = E.Octo_Func.utf8lower
-local utf8reverse = E.Octo_Func.utf8reverse
+local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 function E.Octo_Timer.Legion_Invasion()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Legion_Invasion".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Legion_Invasion".."|r")
 	-- end
 	local TIMER = (1547586000-10800)
 	local interval = 66600
@@ -31,7 +24,7 @@ function E.Octo_Timer.Legion_Invasion()
 end
 function E.Octo_Timer.BfA_Invasion()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_BfA_Invasion".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_BfA_Invasion".."|r")
 	-- end
 	local TIMER = (1547586000+3600)
 	local interval = 68400
@@ -46,7 +39,7 @@ function E.Octo_Timer.BfA_Invasion()
 end
 function E.Octo_Timer.BfA_Assault()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_BfA_Assault".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_BfA_Assault".."|r")
 	-- end
 	local TIMER = (1547586000+3600+3600+3600+3600+3600+3600+3600)
 	local interval = 86400
@@ -61,7 +54,7 @@ function E.Octo_Timer.BfA_Assault()
 end
 function E.Octo_Timer.DF_ToDragonbaneKeep()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_ToDragonbaneKeep".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_ToDragonbaneKeep".."|r")
 	-- end
 	local TIMER = 1670342460
 	local interval = 7200
@@ -76,7 +69,7 @@ function E.Octo_Timer.DF_ToDragonbaneKeep()
 end
 function E.Octo_Timer.DF_GrandHunts()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_GrandHunts".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_GrandHunts".."|r")
 	-- end
 	local TIMER = 1671307200
 	local interval = 7200
@@ -91,7 +84,7 @@ function E.Octo_Timer.DF_GrandHunts()
 end
 function E.Octo_Timer.DF_CommunityFeast()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_CommunityFeast".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_CommunityFeast".."|r")
 	-- end
 	local TIMER = 1677168000
 	local interval = 5400
@@ -106,7 +99,7 @@ function E.Octo_Timer.DF_CommunityFeast()
 end
 function E.Octo_Timer.DF_PrimalStorms()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_PrimalStorms".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_PrimalStorms".."|r")
 	-- end
 	local TIMER = 1683804640
 	local interval = 18000
@@ -121,7 +114,7 @@ function E.Octo_Timer.DF_PrimalStorms()
 end
 function E.Octo_Timer.DF_ResearchersUnderFire()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_ResearchersUnderFire".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_ResearchersUnderFire".."|r")
 	-- end
 	local TIMER = 1683804640
 	local interval = 3600
@@ -136,7 +129,7 @@ function E.Octo_Timer.DF_ResearchersUnderFire()
 end
 function E.Octo_Timer.DF_TimeRift()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_TimeRift".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_TimeRift".."|r")
 	-- end
 	local TIMER = 1689159620 -- начало в 16:00
 	local interval = (1*60)*60 -- каждый час
@@ -151,7 +144,7 @@ function E.Octo_Timer.DF_TimeRift()
 end
 function E.Octo_Timer.DF_Dreamsurges()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_Dreamsurges".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_Dreamsurges".."|r")
 	-- end
 	local TIMER = 1689159620 -- начало в 16:00
 	local interval = 30*60 -- каждые пол часа
@@ -166,7 +159,7 @@ function E.Octo_Timer.DF_Dreamsurges()
 end
 function E.Octo_Timer.SL_Maw_Assault()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_SL_Maw_Assault".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_SL_Maw_Assault".."|r")
 	-- end
 	local TIMER = 3780
 	local interval = 7200
@@ -181,7 +174,7 @@ function E.Octo_Timer.SL_Maw_Assault()
 end
 function E.Octo_Timer.Daily_Reset()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Daily_Reset".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Daily_Reset".."|r")
 	-- end
 	local TIMER = 1687579264
 	local interval = 86400
@@ -200,7 +193,7 @@ function E.Octo_Timer.Daily_Reset()
 end
 function E.Octo_Timer.Treasure_Goblin()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Treasure_Goblin".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Treasure_Goblin".."|r")
 	-- end
 	local TIMER = 1685001600
 	local interval = 1800
@@ -219,7 +212,7 @@ function E.Octo_Timer.Treasure_Goblin()
 end
 function E.Octo_Timer.ElementalStorm()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_ElementalStorm".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_ElementalStorm".."|r")
 	-- end
 	local TIMER = 1689166820
 	local interval = (3*60)*60 -- 3 часа
@@ -238,7 +231,7 @@ function E.Octo_Timer.ElementalStorm()
 end
 function E.Octo_Timer.DF_Flower()
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_Flower".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_Flower".."|r")
 	-- end
 	local TIMER = 1689166820
 	local interval = (60)*60 -- каждый час
@@ -256,10 +249,10 @@ function E.Octo_Timer.DF_Flower()
 	end
 end
 function E.Octo_Timer.TWW_BeledarCycle()
---questid = 83240
---icon 1355358 or 608954
+	--questid = 83240
+	--icon 1355358 or 608954
 	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	-- 	ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_TWW_Beledarr".."|r")
+	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_TWW_Beledarr".."|r")
 	-- end
 	-- local TIMER = 1698494405
 	local TIMER = 1726311612
@@ -279,3 +272,4 @@ function E.Octo_Timer.TWW_BeledarCycle()
 		return " "
 	end
 end
+

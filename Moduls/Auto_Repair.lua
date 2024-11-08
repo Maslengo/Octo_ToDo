@@ -1,8 +1,7 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------------------------------------------------------------------------
---AutoRepair
+-- Auto_Repair
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDo_DB_Vars.config.AutoRepair then
 			local function OnEvent(self, event)
@@ -17,13 +16,10 @@ tinsert(E.Octo_Globals.modules, function()
 						else
 							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_ENG.ogg", "Master")
 						end
-						-- If merchant can repair and there is something to repair
 					else if (canRepair and repairAllCost > 0) then
 							costTextureString = GetCoinTextureString(repairAllCost)
-							-- Use Guild Bank
 							guildRepairedItems = false
 							if (IsInGuild() and CanGuildBankRepair()) then
-								-- Checks if guild has enough money
 								local amount = GetGuildBankWithdrawMoney()
 								local guildBankMoney = GetGuildBankMoney()
 								amount = amount == -1 and guildBankMoney or min(amount, guildBankMoney)
@@ -32,7 +28,6 @@ tinsert(E.Octo_Globals.modules, function()
 									guildRepairedItems = true
 								end
 							end
-							-- Use own funds
 							if (repairAllCost <= money and not guildRepairedItems) then
 								RepairAllItems(false)
 							end

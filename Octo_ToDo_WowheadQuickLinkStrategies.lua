@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
--- E.Octo_Globals.strategies = {}
--- E.Octo_Globals.altStrategies = {}
+----------------------------------------------------------------------------------------------------------------------------------
+-- Octo_ToDo_WowheadQuickLinkStrategies
 local strategies = {
 	wowhead = {},
 	wowheadAzEs = {},

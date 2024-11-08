@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------
+-- Octo_SharedMedia
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 --Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Anime
 LibSharedMedia:Register("sound", "|cFF00A1FFO_01_ayaya|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Anime\ayaya.ogg]])

@@ -1,8 +1,6 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------
--- TalkingHeadFrame
+-- Hide_Talking_Head_Frame
 tinsert(E.Octo_Globals.modules, function()
 				if IsRetail() == true then
 		if Octo_ToDo_DB_Vars.config.Hide_Talking_Head_Frame then

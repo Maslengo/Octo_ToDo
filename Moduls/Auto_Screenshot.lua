@@ -1,13 +1,12 @@
-local GlobalAddonName,  E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName,  "Title")
+local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
---Auto_Screenshot
+-- Auto_Screenshot
 tinsert(E.Octo_Globals.modules,  function()
 		if Octo_ToDo_DB_Vars.config.Auto_Screenshot then
 			local EventFrame = nil
 			local function Octo_OnLoad()
 				if not EventFrame then
-					EventFrame = CreateFrame("FRAME",  AddonTitle..E.Octo_Func.GenerateUniqueID())
+					EventFrame = CreateFrame("FRAME",  GlobalAddonName.."Auto_Screenshot"..E.Octo_Func.GenerateUniqueID())
 				end
 				EventFrame:RegisterEvent("PLAYER_LEVEL_UP")
 				EventFrame:RegisterEvent("ACHIEVEMENT_EARNED")

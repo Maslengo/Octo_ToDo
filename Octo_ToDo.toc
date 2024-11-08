@@ -1,10 +1,10 @@
-## Interface: 110005
+## Interface: 110007
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v76.3(11.0.5)(03.11.2024)
+## Version: v76.4(11.0.5)(08.11.2024)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
-## SavedVariables: Octo_ToDo_DB_Other Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Artifact Octo_ToDo_DB_LegionArtifacts
+## SavedVariables: Octo_ToDo_DB_mapChallengeModeID Octo_ToDo_DB_Players_LIST Octo_ToDo_DB_Config Octo_ToDo_DB_Other Octo_ToDo_DB_Players Octo_ToDo_DB_Vars
 
 
 
@@ -29,26 +29,16 @@ fprint\fprint.lua
 
 Octo_Localization.lua
 
-Data\1.lua
-Data\Octo_utf8.lua
-Data\Octo_utf8data.lua
-
 Data\Octo_Globals.lua
 Data\Octo_Timer.lua
 
-Data\OctoTable_Alphabet.lua
-Data\OctoTable_ArtifactData.lua
 Data\OctoTable_byteto.lua
 Data\OctoTable_Colors.lua
-Data\OctoTable_Currencies.lua
 Data\OctoTable_Expansions_Table.lua
 Data\OctoTable_Instances.lua
 Data\OctoTable_Items.lua
 
-Data\OctoTable_LegionArtifacts.lua
 Data\OctoTable_QuestID.lua
-Data\OctoTable_Race.lua
-Data\OctoTable_reputation_ALL.lua
 Data\OctoTable_UniversalQuest.lua
 Data\wowhead_prefix_Table.lua
 
@@ -64,7 +54,6 @@ Minecraft\MinecraftFrames.lua
 Minecraft\MinecraftColors.lua
 
 Moduls\DEV_CVAR.lua
-Moduls\DEV_StaticPopup1Button1.lua
 
 Moduls\Auto_Chat_Clearing.lua
 Moduls\Auto_Cinematic_Canceler.lua
@@ -80,8 +69,6 @@ Moduls\Hide_Covenant.lua
 Moduls\Hide_Error_Messages.lua
 Moduls\Hide_Talking_Head_Frame.lua
 Moduls\Hide_Zone_Text.lua
-Moduls\Module_ItemsDelete.lua
-Moduls\Module_ItemsUsable.lua
 Moduls\Module_UIErrorsFramePosition.lua
 
 Octo_ToDo_CreateMenuStyle.lua

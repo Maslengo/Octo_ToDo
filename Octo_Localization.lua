@@ -7,11 +7,8 @@ local L = AL3:NewLocale("OctoTODO", "enUS", true, debug)
 if L then
 	L["Abandon All Quests"] = true
 	L["Abandon: "] = true
-	L["Bags"] = true
-	L["Bank"] = true
 	L["Battle Pet"] = true
 	L["Bind Location"] = true
-	L["Class quests"] = true
 	L["Coins"] = true
 	L["Community Feast"] = true
 	L["Current Location"] = true
@@ -26,7 +23,6 @@ if L then
 	L["Kyrian"] = true
 	L["Last Update"] = true
 	L["Level"] = true
-	L["Maw"] = true
 	L["Necrolord"] = true
 	L["Night Fae"] = true
 	L["Other"] = true
@@ -48,7 +44,6 @@ if L then
 	L["Zaralek Cavern"] = true
 	L["Zereth Mortis"] = true
 	L["Bodyguards"] = true
-	L["Storyline"] = true
 	L["Mythic Keystone"] = true
 	L["Disciple of Fyrakk"] = true
 	L["Fighting is Its Own Reward"] = true
@@ -78,9 +73,6 @@ if L then
 	L["TimeRift"] = true
 	L["Dreamsurges"] = true
 	L["Storm-Bound Chest"] = true
-	L["Shadowmourne"] = true
-	L["Green Fire"] = true
-	L["Some Wicked Things"] = true
 	L["Temporal Acquisitions Specialist"] = true
 	L["y. "] = true
 	L["d. "] = true
@@ -116,11 +108,7 @@ if L then
 	L["Aiding the Accord"] = true
 	L["InDev"] = true
 	L["Total"] = true
-	L["Consumables"] = true
-	L["Parts"] = true
 	L["Elemental"] = true
-	L["Optional Reagents"] = true
-	L["Trade Goods"] = true
 	L["Auto_Screenshot"] = true
 	L["When Time Needs Mending"] = true
 	L["Current Date"] = true
@@ -129,8 +117,7 @@ if L then
 	L["Firelands"] = true
 	L["Black Temple"] = true
 	L["Dawn of the Infinites"] = true
-	L["Race quests"] = true
-	L["Allied Races Quests"] = true
+
 	L["Seeing Red"] = true
 	L["Ulduar"] = true
 	L["Paragon"] = true
@@ -179,16 +166,15 @@ if L then
 	L["Light/Dark Cycle"] = true
 	L["Major Keyflames"] = true
 	L["Minor Keyflames"] = true
+	L["Turn on"] = true
+	L["Turn off"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
 	L["Abandon All Quests"] = "Отменить все задания"
-	L["Abandon"] = "Отменено: "
-	L["Bags"] = "Сумки"
-	L["Bank"] = "Банк"
+	L["Abandon: "] = "Отменено: "
 	L["Battle Pet"] = "Боевой питомец"
 	L["Bind Location"] = "Место привязки"
-	L["Class quests"] = "Классовые задания"
 	L["Coins"] = "Монетки"
 	L["Community Feast"] = "Большое пиршество"
 	L["Current Location"] = "Текущее местоположение"
@@ -203,7 +189,6 @@ if L then
 	L["Kyrian"] = "Кирии"
 	L["Last Update"] = "Последнее Обновление"
 	L["Level"] = "Уровень"
-	L["Maw"] = "Утроба"
 	L["Necrolord"] = "Некролорды"
 	L["Night Fae"] = "Ночной народец"
 	L["Other"] = "Другое"
@@ -225,7 +210,6 @@ if L then
 	L["Zaralek Cavern"] = "Пещера Заралек" -- "Пещера Заралек (10.1.0)"
 	L["Zereth Mortis"] = "Зерет Мортис"
 	L["Bodyguards"] = "Телохранители"
-	L["Storyline"] = "Сюжетная линия"
 	L["Mythic Keystone"] = "Эпохальный ключ"
 	L["Disciple of Fyrakk"] = "Ученик Фиракка"
 	L["Fighting is Its Own Reward"] = "Славный бой – это уже награда"
@@ -252,9 +236,6 @@ if L then
 	L["TimeRift"] = "Портал времени"
 	L["Dreamsurges"] = "Прилив Снов"
 	L["Storm-Bound Chest"] = "Запечатанный бурей сундук"
-	L["Shadowmourne"] = "Темная Скорбь"
-	L["Green Fire"] = "Зелёный Огонь"
-	L["Some Wicked Things"] = "Некоторые неприятные вещи (10.1.5)"
 	L["Temporal Acquisitions Specialist"] = "Темпоральный специалист по снабжению"
 	L["y. "] = "г. "
 	L["d. "] = "д. "
@@ -290,11 +271,7 @@ if L then
 	L["Auto Turn Quests"] = "Автопринятие заданий"
 	L["Aiding the Accord"] = "Помощь союзу"
 	L["Total"] = "Всего"
-	L["Consumables"] = "Расходуемые предметы"
-	L["Parts"] = "Детали"
 	L["Elemental"] = "Стихии"
-	L["Optional Reagents"] = "Дополнительные реагенты"
-	L["Trade Goods"] = "Хозяйственные товары"
 	L["Auto_Screenshot"] = "Автоскриншот"
 	L["When Time Needs Mending"] = "Исцелить само время"
 	L["Current Date"] = "Текущая дата"
@@ -303,8 +280,7 @@ if L then
 	L["Firelands"] = "Огненные Просторы"
 	L["Dawn of the Infinites"] = "Рассвет Бесконечности"
 	L["Black Temple"] = "Чёрный Храм"
-	L["Race quests"] = "Рассовые задания"
-	L["Allied Races Quests"] = "Задания: Союзные расы"
+
 	L["Seeing Red"] = "Ярость или стыд?"
 	L["Ulduar"] = "Ульдуар"
 	L["Paragon"] = "Парагон"
@@ -352,4 +328,6 @@ if L then
 	L["Light/Dark Cycle"] = "Лайт/Дарк цикл"
 	L["Major Keyflames"] = "Основные огни"
 	L["Minor Keyflames"] = "Второстепенные огни"
+	L["Turn on"] = "Включить"
+	L["Turn off"] = "Выключить"
 end

@@ -1,17 +1,6 @@
 local GlobalAddonName, E = ...
--- if IsRetail() then
---     E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/%s=%s%s"
--- end
--- if IsClassic() then
---     E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/classic/%s=%s%s"
--- end
--- if IsCata() then
---     E.Octo_Globals.baseWowheadUrl = "https://%swowhead.com/cata/%s=%s%s"
--- end
--- E.Octo_Globals.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
--- E.Octo_Globals.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
--- E.Octo_Globals.baseArmoryUrl = "https://worldofwarcraft.com/%s/character/%s/%s"
--- E.Octo_Globals.baseRaiderIoUrl = "https://raider.io/characters/%s/%s/%s"
+----------------------------------------------------------------------------------------------------------------------------------
+-- Octo_ToDo_WowheadQuickLink
 local popupText = "%s Link\nCTRL-C to copy"
 local function ShowUrlPopup(header, url)
 	StaticPopup_Show("WowheadQuickLinkUrl", header, _, url)

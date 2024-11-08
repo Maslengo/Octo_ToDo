@@ -12,43 +12,36 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
--- local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
-local utf8charbytes = E.Octo_Func.utf8charbytes
-local utf8len = E.Octo_Func.utf8len
-local utf8sub = E.Octo_Func.utf8sub
-local utf8replace = E.Octo_Func.utf8replace
-local utf8upper = E.Octo_Func.utf8upper
-local utf8lower = E.Octo_Func.utf8lower
-local utf8reverse = E.Octo_Func.utf8reverse
+local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 -- function E.Octo_Func.Octo_IsClassic()
--- 	local build = 1
--- 	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
--- 	if build == WOW_currentBuild then
--- 		return true
--- 	else
--- 		return false
--- 	end
+--     local build = 1
+--     local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
+--     if build == WOW_currentBuild then
+--         return true
+--     else
+--         return false
+--     end
 -- end
 -- --------------------------------------------------------------
 -- function E.Octo_Func.Octo_IsWrathClassic()
--- 	local build = 3
--- 	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
--- 	if build == WOW_currentBuild then
--- 		return true
--- 	else
--- 		return false
--- 	end
+--     local build = 3
+--     local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
+--     if build == WOW_currentBuild then
+--         return true
+--     else
+--         return false
+--     end
 -- end
 -- --------------------------------------------------------------
 -- function E.Octo_Func.Octo_IsRetail()
--- 	local build = 11
--- 	local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
--- 	if build == WOW_currentBuild then
--- 		return true
--- 	else
--- 		return false
--- 	end
+--     local build = 11
+--     local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
+--     if build == WOW_currentBuild then
+--         return true
+--     else
+--         return false
+--     end
 -- end
 ----------------------------------------------------------------
 function E.Octo_Func.func_hex2rgb(self)
@@ -172,19 +165,23 @@ function E.Octo_Func.func_texturefromIcon(self, size)
 end
 local func_texturefromIcon = E.Octo_Func.func_texturefromIcon
 ----------------------------------------------------------------
-function E.Octo_Func.func_questName(self)
-	local title = "notitle"
-	if IsRetail() == true then
-		title = C_QuestLog.GetTitleForQuestID(self)
-		if title then
-			return title
-		else
-			return E.Octo_Globals.Red_Color.."notitle".."|r"
-		end
+function E.Octo_Func.func_questName(questID, useLargeIcon)
+	local useLargeIcon = useLargeIcon or true
+	local title = C_QuestLog.GetTitleForQuestID(questID)
+	if title then
+		return QuestUtils_DecorateQuestText(questID, title, useLargeIcon), true
+	else
+		return E.Octo_Globals.Red_Color.."notitle".."|r"
 	end
-	return title
 end
 local func_questName = E.Octo_Func.func_questName
+	----------------------------------------------------------------
+-- function E.Octo_Func.func_questName_Decorate(questID)
+-- 	local useLargeIcon = true
+-- 	local title = C_QuestLog.GetTitleForQuestID(questID) or "NO TITLE"
+-- 	return QuestUtils_DecorateQuestText(questID, title, true), true
+-- end
+-- local func_questName_Decorate = E.Octo_Func.func_questName_Decorate
 ----------------------------------------------------------------
 function E.Octo_Func.func_reputationName(self)
 	local repInfo = C_Reputation.GetFactionDataByID(self)
@@ -193,14 +190,15 @@ function E.Octo_Func.func_reputationName(self)
 		name = repInfo.name
 	else
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
-		name = reputationInfo.name or E.Octo_Globals.Red_Color.."NONAME".."|r"
+		name = reputationInfo.name or E.Octo_Globals.Red_Color.."id "..self.."|r"
 	end
 	local color = "|cffFFFFFF"
 	local r = "|r"
 	if self == 1168 then
 		color = "|cff909090"
 	end
-	return color..name..r
+	-- return color..name..r
+	return name
 end
 local func_reputationName = E.Octo_Func.func_reputationName
 ----------------------------------------------------------------
@@ -380,7 +378,7 @@ local All_objectives = E.Octo_Func.All_objectives
 function E.Octo_Func.func_Octo_LoadAddOn(GlobalAddonName)
 	local loaded, reason = C_AddOns.LoadAddOn(GlobalAddonName)
 	if not loaded and reason == "DISABLED" then
-	-- if select(5, C_AddOns.GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
+		-- if select(5, C_AddOns.GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
 		C_AddOns.EnableAddOn(GlobalAddonName)
 		C_AddOns.LoadAddOn(GlobalAddonName)
 	end
@@ -623,9 +621,110 @@ function E.Octo_Func.GetClassColor(self) -- C_ClassColor.GetClassColor(classFile
 	end
 	return "ffffff"
 end
+local GetClassColor = E.Octo_Func.GetClassColor
 ----------------------------------------------------------------
+function E.Octo_Func.reverse_order(a, b)
+	return b < a
+end
+local reverse_order = E.Octo_Func.reverse_order
 ----------------------------------------------------------------
-----------------------------------------------------------------
+function E.Octo_Func.CheckReputationByRepID(self)
+	local color = E.Octo_Globals.White_Color
+	local r = "|r"
+	local standingTEXT = ""
+	local vivod = ""
+	local repInfo = C_Reputation.GetFactionDataByID(self)
+	local name
+	local barMin
+	local barMax
+	local barValue
+	local standingID
+	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
+		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."CheckReputationByRepID".."|r")
+	end
+	if repInfo then
+		name = repInfo.name
+		barMin = repInfo.currentReactionThreshold
+		barMax = repInfo.nextReactionThreshold
+		barValue = repInfo.currentStanding
+		standingID = repInfo.reaction
+		if standingID == 1 then
+			color = E.Octo_Globals.Red_Color
+			standingTEXT = " ("..FACTION_STANDING_LABEL1..")"
+		elseif standingID == 2 then
+			color = E.Octo_Globals.Red_Color
+			standingTEXT = " ("..FACTION_STANDING_LABEL2..")"
+		elseif standingID == 3 then
+			color = E.Octo_Globals.Orange_Color
+			standingTEXT = " ("..FACTION_STANDING_LABEL3..")"
+		elseif standingID == 4 then
+			color = E.Octo_Globals.Yellow_Color
+			standingTEXT = " ("..FACTION_STANDING_LABEL4..")"
+		elseif standingID == 5 then
+			color = E.Octo_Globals.Yellow_Color
+			standingTEXT = " ("..FACTION_STANDING_LABEL5..")"
+		elseif standingID == 6 then
+			color = E.Octo_Globals.Green_Color
+			standingTEXT = " ("..FACTION_STANDING_LABEL6..")"
+		elseif standingID == 7 then
+			color = E.Octo_Globals.Green_Color
+			standingTEXT = " ("..FACTION_STANDING_LABEL7..")"
+		elseif standingID == 8 then
+			color = E.Octo_Globals.Green_Color
+			standingTEXT = " ("..FACTION_STANDING_LABEL8..")"
+		elseif standingID == 9 then
+			color = E.Octo_Globals.Green_Color
+			standingTEXT = " ("..FACTION_STANDING_LABEL9..")"
+		end
+	end
+	local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
+	if C_Reputation.IsFactionParagon(self) then
+		local currentValue = C_Reputation.GetFactionParagonInfo(self) or 0
+		local threshold = 1
+		local _, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(self)
+		if threshold then
+			local value = currentValue % threshold
+			vivod = E.Octo_Globals.Blue_Color..(value).."/"..(threshold)..r
+			if hasRewardPending then
+				vivod = E.Octo_Func.CheckCompletedByQuestID(rewardQuestID)
+			end
+		end
+	elseif C_Reputation.IsMajorFaction(self) then
+		local data = C_MajorFactions.GetMajorFactionData(self) or 0
+		if data ~= 0 then
+			local currentValue = data.renownReputationEarned
+			local totalValue = data.renownLevelThreshold
+			local standing = data.renownLevel
+			vivod = (currentValue).."/"..(totalValue)..E.Octo_Globals.Green_Color.."("..(standing)..")|r"
+		end
+	elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
+		local friendshipFactionID = reputationInfo.friendshipFactionID or 0
+		local reactionThreshold = reputationInfo.reactionThreshold or 0
+		local nextThreshold = reputationInfo.nextThreshold or 0
+		local standing = reputationInfo.standing or 0
+		local name = reputationInfo.name
+		local currentValue = standing-reactionThreshold
+		local totalValue = nextThreshold-reactionThreshold
+		local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
+		local currentLevel, maxLevel
+		if rankInfo then
+			currentLevel = rankInfo.currentLevel or 0
+			maxLevel = rankInfo.maxLevel or 0
+		end
+		standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
+		vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
+		if currentLevel == maxLevel then vivod = E.Octo_Globals.Green_Color.."Done|r" end
+	else
+		if barValue then
+			local currentValue = barValue-barMin
+			local totalValue = barMax-barMin
+			vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
+			if currentValue == totalValue or nextThreshold == 0 then vivod = E.Octo_Globals.Green_Color.."Done|r" end
+		end
+	end
+	return vivod
+end
+local CheckReputationByRepID = E.Octo_Func.CheckReputationByRepID
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------------------------------------------------------------------------
---AutoSellGrey
+-- Auto_Sell_Grey
 tinsert(E.Octo_Globals.modules, function()
 		if Octo_ToDo_DB_Vars.config.AutoSellGrey then
 			local function OnEvent(self, event)
@@ -30,24 +29,3 @@ tinsert(E.Octo_Globals.modules, function()
 			AutoSellGreyFrame:RegisterEvent("MERCHANT_SHOW")
 		end
 end)
--- Consumable 0 Consumable Enum.ItemConsumableSubclass
--- Container 1 Container
--- Weapon 2 Weapon Enum.ItemWeaponSubclass
--- Gem 3 Gem Enum.ItemGemSubclass
--- Armor 4 Armor Enum.ItemArmorSubclass
--- Reagent 5 Reagent Enum.ItemReagentSubclass Obsolete
--- Projectile 6 Projectile Obsolete
--- Tradegoods 7 Tradeskill
--- ItemEnhancement 8 Item Enhancement
--- Recipe 9 Recipe Enum.ItemRecipeSubclass
--- CurrencyTokenObsolete 10 Money(OBSOLETE)
--- Quiver 11 Quiver Obsolete
--- Questitem 12 Quest
--- Key 13 Key
--- PermanentObsolete 14 Permanent(OBSOLETE)
--- Miscellaneous 15 Miscellaneous Enum.ItemMiscellaneousSubclass
--- Glyph 16 Glyph
--- Battlepet 17 Battle Pets Enum.BattlePetTypes
--- WoWToken 18 WoW Token
--- Profession 19 Profession Enum.ItemProfessionSubclass Added in 10.0.0
-----------------------------------------------------------------------------------------------------------------------------------

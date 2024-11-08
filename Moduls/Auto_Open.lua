@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
---------------------------------------------------------------------------------
-local Octo_AUTO_OPEN = CreateFrame("Frame", AddonTitle)
+----------------------------------------------------------------------------------------------------------------------------------
+-- Auto_Open
+local Octo_AUTO_OPEN = CreateFrame("Frame", GlobalAddonName.."Auto_Open"..E.Octo_Func.GenerateUniqueID())
 Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")
 Octo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
 Octo_AUTO_OPEN:RegisterEvent("LOOT_READY")
@@ -16,12 +16,14 @@ local function OpenableScan()
 				local isLocked = containerInfo.isLocked
 				local iconFileID = containerInfo.iconFileID
 				local name, itemLink = GetItemInfo(itemID)
-				if E.Octo_Table.OctoTable_itemID_AutoOpen[itemID] and itemLink and not isLocked then
-					if iconFileID and itemLink and not InCombatLockdown() then
-						C_Timer.After(1, function()
-								C_Container.UseContainerItem(bag, numSlots)
-								print (E.Octo_Func.func_Gradient("Auto Open Item ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), E.Octo_Func.func_texturefromIcon(iconFileID)..itemLink)
-						end)
+				for _, ids in pairs(E.Octo_Table.OctoTable_itemID_AutoOpen) do
+					if ids == itemID and itemLink and not isLocked then
+						if iconFileID and itemLink and not InCombatLockdown() then
+							C_Timer.After(1, function()
+									C_Container.UseContainerItem(bag, numSlots)
+									print (E.Octo_Func.func_Gradient("Auto Open Item ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), E.Octo_Func.func_texturefromIcon(iconFileID)..itemLink)
+							end)
+						end
 					end
 				end
 			end
