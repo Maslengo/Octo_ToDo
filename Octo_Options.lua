@@ -151,7 +151,7 @@ local function Create_CheckButton(scroll, self, number, pos, otstyp, config, tex
 			CheckButton:SetPoint("LEFT", BG, "LEFT", otstyp, 0)
 			CheckButton:SetChecked(Octo_ToDo_DB_Vars.config[config])
 			CheckButton:SetScript("OnClick", function(btn)
-					print (config, text)
+					print (text, tostring(btn:GetChecked()) == "true" and "|cff00FF00true|r" or "|cffFF0000false|r")
 					Octo_ToDo_DB_Vars.config[config] = btn:GetChecked()
 					StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 			end)
@@ -174,6 +174,9 @@ local function Create_CheckButton(scroll, self, number, pos, otstyp, config, tex
 	end
 end
 local function Create_CheckButtonNEW(scroll, self, number, pos, otstyp, config, text, r, g, b, a, button, DATABASE)
+	local TEST = ""
+
+	-- Octo_ToDo_DB_Config.ItemDB
 	if r == nil then r = E.Octo_Globals.bgCr end
 	if g == nil then g = E.Octo_Globals.bgCg end
 	if b == nil then b = E.Octo_Globals.bgCb end
@@ -202,7 +205,17 @@ local function Create_CheckButtonNEW(scroll, self, number, pos, otstyp, config, 
 			CheckButton:SetChecked(DATABASE[config])
 			CheckButton:SetScript("OnClick", function(btn)
 					DATABASE[config] = btn:GetChecked()
-					print (config, DATABASE[config])
+						if DATABASE == Octo_ToDo_DB_Config.ReputationDB then
+							print (E.Octo_Func.func_reputationName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
+						end
+						if DATABASE == Octo_ToDo_DB_Config.ItemDB then
+							print (E.Octo_Func.func_itemName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
+						end
+						if DATABASE == Octo_ToDo_DB_Config.CurrencyDB then
+							print (E.Octo_Func.func_currencyicon(config)..E.Octo_Func.func_currencyName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
+						end
+
+
 			end)
 		end
 		local text2 = BG:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")

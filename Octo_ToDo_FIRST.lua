@@ -127,6 +127,7 @@ end
 local function ConcatAtStart()
 	E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_QuestID, E.Octo_Table.OctoTable_QuestID_Paragon)
 	E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Config)
+	-- E.Octo_Func.TableConcat(Octo_ToDo_DB_Config.ReputationDB, E.Octo_Table.OctoTable_reputation_ALL)
 	-- E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_currencyID_ALL, E.Octo_Table.OctoTable_currency_Classic)
 	-- E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_currencyID_ALL, E.Octo_Table.OctoTable_currency_TheBurningCrusade)
 	-- E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_currencyID_ALL, E.Octo_Table.OctoTable_currency_WrathoftheLichKing)
@@ -969,12 +970,15 @@ local function Collect_All_Reputations()
 		while listSize >= i do
 			local factionData = C_Reputation.GetFactionDataByIndex(i)
 			local reputationID = factionData.factionID
-			local isHeader = factionData.isHeader
-			if reputationID and isHeader == false then
+			local description = factionData.description or ""
+			if reputationID and description ~= "" then
 				Octo_ToDo_DB_Config.ReputationDB[reputationID] = Octo_ToDo_DB_Config.ReputationDB[reputationID] or false
 			end
 			i = i + 1
 		end
+		-- for repID, v in pairs(E.Octo_Table.OctoTable_reputation_ALL) do
+		-- 	tinsert(Octo_ToDo_DB_Config.ReputationDB[repID], true)
+		-- end
 		for reputationID, v in pairs(Octo_ToDo_DB_Config.ReputationDB) do
 			local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
 			if isAccountWide == false then
@@ -2935,7 +2939,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	if (event == "VARIABLES_LOADED") and not InCombatLockdown() then
 		if Octo_ToDo_DB_Other == nil then Octo_ToDo_DB_Other = {} end
 		if Octo_ToDo_DB_Other.CVar == nil then Octo_ToDo_DB_Other.CVar = {} end
-		if Octo_ToDo_DB_Other.Items == nil then Octo_ToDo_DB_Other.Items = {} end
 		if Octo_ToDo_DB_Other.AccountMoney == nil then Octo_ToDo_DB_Other.AccountMoney = 0 end
 		if Octo_ToDo_DB_Other.LFGInstance == nil then Octo_ToDo_DB_Other.LFGInstance = {} end
 		if Octo_ToDo_DB_mapChallengeModeID == nil then Octo_ToDo_DB_mapChallengeModeID = {} end
