@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v77.5(11.0.5)(09.11.2024)
+## Version: v77.6(11.0.5)(10.11.2024)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
 ## SavedVariables: Octo_ToDo_DB_Players_LIST Octo_ToDo_DB_Config Octo_ToDo_DB_Other Octo_ToDo_DB_Players Octo_ToDo_DB_Vars Octo_ToDo_DB_mapChallengeModeID
 
@@ -37,7 +37,7 @@ Data\OctoTable_Colors.lua
 Data\OctoTable_Expansions_Table.lua
 Data\OctoTable_Instances.lua
 Data\OctoTable_Items.lua
-
+Data\OctoTable_Movies.lua
 Data\OctoTable_QuestID.lua
 Data\OctoTable_UniversalQuest.lua
 Data\wowhead_prefix_Table.lua
@@ -55,10 +55,11 @@ Minecraft\MinecraftColors.lua
 
 Moduls\DEV_CVAR.lua
 
-Moduls\Auto_Chat_Clearing.lua
-Moduls\Auto_Cinematic_Canceler.lua
+Moduls\Auto_ChatClearing.lua
+Moduls\Auto_CinematicCanceler.lua
+Moduls\Auto_CinematicFastSkip.lua
 Moduls\Auto_Gossip.lua
-Moduls\Auto_Input_Delete.lua
+Moduls\Auto_InputDelete.lua
 Moduls\Auto_Open.lua
 Moduls\Auto_Repair.lua
 Moduls\Auto_Screenshot.lua

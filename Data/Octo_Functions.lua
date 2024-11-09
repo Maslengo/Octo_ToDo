@@ -195,14 +195,8 @@ function E.Octo_Func.func_reputationName(self)
 		name = repInfo.name
 	else
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
-		name = reputationInfo.name or E.Octo_Globals.Red_Color.."id "..self.."|r"
+		name = reputationInfo.name or "no name"--E.Octo_Globals.Red_Color.."id "..self.."|r"
 	end
-	local color = "|cffFFFFFF"
-	local r = "|r"
-	if self == 1168 then
-		color = "|cff909090"
-	end
-	-- return color..name..r
 	return AWide..name
 end
 local func_reputationName = E.Octo_Func.func_reputationName
@@ -420,7 +414,7 @@ function E.Octo_Func.CheckCompletedByQuestID(questID)
 	if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
 		vivod = (E.Octo_Globals.DONE)
 	elseif C_QuestLog.IsComplete(questID) == true then
-		vivod = E.Octo_Globals.Purple_Color..">>СДАЙ<<|r"
+		vivod = E.Octo_Globals.Purple_Color..L[">>DONE<<"].."|r"
 	elseif C_QuestLog.IsQuestFlaggedCompleted(questID) == false and C_QuestLog.IsOnQuest(questID) == false then
 		vivod = (E.Octo_Globals.NONE)
 	elseif C_QuestLog.IsOnQuest(questID) == true --[[and C_QuestLog.IsComplete(questID) == false ]]then

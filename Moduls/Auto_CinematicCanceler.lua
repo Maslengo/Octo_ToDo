@@ -1,0 +1,33 @@
+local GlobalAddonName, E = ...
+----------------------------------------------------------------------------------------------------------------------------------
+-- Auto_CinematicCanceler
+tinsert(E.Octo_Globals.modules, function()
+		if Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler then
+			CinematicFrame:HookScript("OnShow", function(self, ...)
+					if IsModifierKeyDown() then
+						return
+					end
+					if CinematicFrame:IsShown() and CinematicFrame.closeDialog and CinematicFrameCloseDialogConfirmButton then
+						-- CinematicFrame_CancelCinematic()
+						CinematicFrameCloseDialog:Hide()
+						CinematicFrameCloseDialogConfirmButton:Click()
+						ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Cinematic canceled", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+					end
+			end)
+			MovieFrame:HookScript("OnShow", function(self, ...)
+					if IsModifierKeyDown() then
+						return
+					end
+					if MovieFrame:IsShown() and MovieFrame.CloseDialog and MovieFrame.CloseDialog.ConfirmButton then
+						--     -- GameMovieFinished()
+						--     -- https://warcraft.wiki.gg/wiki/API_CinematicFinished
+						--     for i = 1, #Enum.CinematicType do
+						--         CinematicFinished(i)
+						--         return true
+						--     end
+						MovieFrame.CloseDialog.ConfirmButton:Click()
+						ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Movie canceled", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+					end
+			end)
+		end
+end)

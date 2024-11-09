@@ -276,6 +276,26 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 		end)
 	end
 end
+
+local function Create_SimpleButton_Movies(scroll, self, number, pos, config, text, color)
+	if not color then color = "|cffFFFFFF" end
+	if not self[number..pos..config] then
+		self[number..pos..config] = CreateFrame("Button", nil, scroll, "UIPanelButtonTemplate")
+		self[number..pos..config]:SetPoint("TOPLEFT", scroll, "BOTTOMLEFT", pos, -indent*(number-1))
+		self[number..pos..config]:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+		self[number..pos..config]:SetSize(ButtonWidth*3, indent)
+		self[number..pos..config]:SetText(color..text.."|r")
+		-- self[number..pos..config].text:SetJustifyV("MIDDLE")
+		-- self[number..pos..config].text:SetJustifyH("LEFT")
+		self[number..pos..config]:SetScript("OnClick", function(btn)
+			MovieFrame_PlayMovie(MovieFrame, config)
+		end)
+	end
+end
+
+
+
+
 local function Create_SimpleButton_DATABASE(scroll, self, number, pos, text, TrueOrFalse, DATABASE, Callback_func)
 	if not color then color = "|cffFFFFFF" end
 	if not self[number..pos] then
@@ -358,17 +378,18 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 2, POS_LEFT, 0, "AutoRepair", L["AutoRepair"])
 		Create_CheckButton(MAIN_scrollChild, self, 3, POS_LEFT, 0, "InputDelete", L["InputDelete"])
 		Create_CheckButton(MAIN_scrollChild, self, 4, POS_LEFT, 0, "AutoOpen", L["AutoOpen"])
-		Create_CheckButton(MAIN_scrollChild, self, 5, POS_LEFT, 0, "AutoGossip", L["AutoGossip"])
-		Create_CheckButton(MAIN_scrollChild, self, 6, POS_LEFT, 0, "CinematicCanceler", L["CinematicCanceler"])
-		Create_CheckButton(MAIN_scrollChild, self, 7, POS_LEFT, 0, "AutoTurnQuests", L["Auto Turn Quests"])
-		Create_CheckButton(MAIN_scrollChild, self, 8, POS_LEFT, 0, "ClearChat", L["ClearChat"])
-		Create_CheckButton(MAIN_scrollChild, self, 9, POS_LEFT, 0, "Auto_Screenshot", L["Auto_Screenshot"])
-		Create_CheckButton(MAIN_scrollChild, self, 10, POS_LEFT, 0, "Hide_Boss_Banner", L["Hide: Boss Banner"])
-		Create_CheckButton(MAIN_scrollChild, self, 11, POS_LEFT, 0, "Hide_Covenant", L["Hide: Covenant"])
-		Create_CheckButton(MAIN_scrollChild, self, 12, POS_LEFT, 0, "Hide_Error_Messages", L["Hide: Error Messages"])
-		Create_CheckButton(MAIN_scrollChild, self, 13, POS_LEFT, 0, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
-		Create_CheckButton(MAIN_scrollChild, self, 14, POS_LEFT, 0, "Hide_Zone_Text", L["Hide: Zone Text"])
-		Create_CheckButton(MAIN_scrollChild, self, 15, POS_LEFT, 0, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
+		Create_CheckButton(MAIN_scrollChild, self, 5, POS_LEFT, 0, "Auto_Gossip", L["AutoGossip"])
+		Create_CheckButton(MAIN_scrollChild, self, 6, POS_LEFT, 0, "Auto_CinematicCanceler", E.Octo_Globals.Green_Color..L["CinematicCanceler"].."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 7, POS_LEFT, 0, "Auto_CinematicFastSkip", E.Octo_Globals.Green_Color.."Fast Cinematic Skip (ESC/Space/Enter)".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 8, POS_LEFT, 0, "AutoTurnQuests", L["Auto Turn Quests"])
+		Create_CheckButton(MAIN_scrollChild, self, 9, POS_LEFT, 0, "Auto_ChatClearing", L["ClearChat"])
+		Create_CheckButton(MAIN_scrollChild, self, 10, POS_LEFT, 0, "Auto_Screenshot", L["Auto_Screenshot"])
+		Create_CheckButton(MAIN_scrollChild, self, 11, POS_LEFT, 0, "Hide_Boss_Banner", L["Hide: Boss Banner"])
+		Create_CheckButton(MAIN_scrollChild, self, 12, POS_LEFT, 0, "Hide_Covenant", L["Hide: Covenant"])
+		Create_CheckButton(MAIN_scrollChild, self, 13, POS_LEFT, 0, "Hide_Error_Messages", L["Hide: Error Messages"])
+		Create_CheckButton(MAIN_scrollChild, self, 14, POS_LEFT, 0, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
+		Create_CheckButton(MAIN_scrollChild, self, 15, POS_LEFT, 0, "Hide_Zone_Text", L["Hide: Zone Text"])
+		Create_CheckButton(MAIN_scrollChild, self, 16, POS_LEFT, 0, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
 		number = 1
 		btn_right2 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, 22)
 		btn_right2:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
@@ -536,6 +557,11 @@ FIRST_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_currencyicon(2914)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(2914).."|r",
 				r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
 			},
+			-- {
+			-- 	config = "WeatheredHarbingerCrest",
+			-- 	text = E.Octo_Func.func_currencyicon(3023)..E.Octo_Globals.WOW_Rare_Color..E.Octo_Func.func_currencyName_NOCOLOR(3023).."|r",
+			-- 	r = E.Octo_Globals.CREST_Color_r, g = E.Octo_Globals.CREST_Color_g, b = E.Octo_Globals.CREST_Color_b,
+			-- },
 
 
 
@@ -735,3 +761,63 @@ end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FOURTH_Config, ITEMS)
 subcategory.ID = L["InDev"].."FOURTH_Config"
 Settings.RegisterAddOnCategory(subcategory)
+
+
+--------
+-- local FIFTH_Config = CreateFrame("ScrollFrame", GlobalAddonName.."FIFTH_Config")
+-- FIFTH_Config:Hide()
+-- local FIFTH_ScrollBar = CreateFrame("EventFrame", nil, FIFTH_Config, "MinimalScrollBar")
+-- FIFTH_ScrollBar:SetPoint("TOPLEFT", FIFTH_Config, "TOPRIGHT", 6, 0)
+-- FIFTH_ScrollBar:SetPoint("BOTTOMLEFT", FIFTH_Config, "BOTTOMRIGHT", 6, 0)
+-- local FIFTH_scrollChild = CreateFrame("Frame", nil, FIFTH_Config)
+-- FIFTH_Config:SetScrollChild(FIFTH_scrollChild)
+-- FIFTH_Config:SetAllPoints()
+-- FIFTH_scrollChild:SetSize(1, 1)
+-- ScrollUtil.InitScrollFrameWithScrollBar(FIFTH_Config, FIFTH_ScrollBar)
+-- local FIFTH_OnMouseWheel = FIFTH_Config:GetScript("OnMouseWheel")
+-- FIFTH_Config:SetScript("OnMouseWheel", function(self, ...)
+-- 		if FIFTH_ScrollBar:IsShown() then
+-- 			FIFTH_OnMouseWheel(self, ...)
+-- 		end
+-- end)
+-- TITLE_FIFTH = FIFTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+-- TITLE_FIFTH:SetPoint("TOPLEFT", 4, 30)
+-- TITLE_FIFTH:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+-- TITLE_FIFTH:SetTextColor(.5, .5, .5, 1)
+-- FIFTH_Config:SetScript("OnShow", function(self)
+-- 		self:SetScript("OnShow", nil)
+-- 		ConfigTable_FIFTH_LEFT = {
+-- 		}
+-- 		for Expansion, tbl in pairs(E.Octo_Table.Movies) do
+-- 			for number, v in pairs (tbl) do
+-- 				-- print (Expansion, number, v.name, v.id)
+-- 				for _, s in ipairs (E.Octo_Table.OctoTable_Expansions_Table2) do
+-- 					if Expansion == s then
+-- 						tinsert(ConfigTable_FIFTH_LEFT,
+-- 										{
+-- 											otstyp = 0,
+-- 											config = v.id,
+-- 											text = "|cffFF00FF"..Expansion.."|r "..v.name .. E.Octo_Globals.Green_Color.." ("..v.id..")|r",
+-- 										}
+-- 									)
+-- 					end
+-- 				end
+-- 			end
+-- 		end
+
+-- 		for i = 1, #ConfigTable_FIFTH_LEFT do
+-- 			if ConfigTable_FIFTH_LEFT[i].otstyp == nil then ConfigTable_FIFTH_LEFT[i].otstyp = 0 end
+-- 			if ConfigTable_FIFTH_LEFT[i].config == nil then ConfigTable_FIFTH_LEFT[i].config = 0 end
+-- 			if ConfigTable_FIFTH_LEFT[i].text == nil then ConfigTable_FIFTH_LEFT[i].text = "" end
+-- 			if ConfigTable_FIFTH_LEFT[i].color == nil then ConfigTable_FIFTH_LEFT[i].color = "|cffFFFFFF" end
+-- 			if ConfigTable_FIFTH_LEFT[i].r == nil then ConfigTable_FIFTH_LEFT[i].r = 0 end
+-- 			if ConfigTable_FIFTH_LEFT[i].g == nil then ConfigTable_FIFTH_LEFT[i].g = 0 end
+-- 			if ConfigTable_FIFTH_LEFT[i].b == nil then ConfigTable_FIFTH_LEFT[i].b = 0 end
+-- 			if ConfigTable_FIFTH_LEFT[i].a == nil then ConfigTable_FIFTH_LEFT[i].a = 0 end
+-- 			if ConfigTable_FIFTH_LEFT[i].button == nil then ConfigTable_FIFTH_LEFT[i].button = true end
+-- 			Create_SimpleButton_Movies(FIFTH_scrollChild, self, i, POS_LEFT, ConfigTable_FIFTH_LEFT[i].config, ConfigTable_FIFTH_LEFT[i].text, ConfigTable_FIFTH_LEFT[i].color)
+-- 		end
+-- end)
+-- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIFTH_Config, E.Octo_Globals.Gray_Color..CINEMATICS.."|r")
+-- subcategory.ID = L["InDev"].."FIFTH_Config"
+-- Settings.RegisterAddOnCategory(subcategory)

@@ -40,9 +40,10 @@ E.Octo_Func.func_Octo_LoadAddOn("BugSack")
 E.Octo_Func.func_Octo_LoadAddOn("MountsJournal")
 E.Octo_Func.func_Octo_LoadAddOn("HidingBar")
 E.Octo_Func.func_Octo_LoadAddOn("HidingBar_Options")
-E.Octo_Func.func_Octo_LoadAddOn("QuestsChanged")
-E.Octo_Func.func_Octo_LoadAddOn("TalentTreeTweaks")
-E.Octo_Func.func_Octo_LoadAddOn("SpeedyAutoLoot")
+-- E.Octo_Func.func_Octo_LoadAddOn("QuestsChanged")
+-- E.Octo_Func.func_Octo_LoadAddOn("TalentTreeTweaks")
+-- E.Octo_Func.func_Octo_LoadAddOn("SpeedyAutoLoot")
+-- E.Octo_Func.func_Octo_LoadAddOn("Plater")
 
 local Button = nil
 local CF = nil
@@ -1776,6 +1777,7 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
+	-- РЕПУТАЦИЯ
 	if Octo_ToDo_DB_Vars.config.Reputations == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
@@ -1798,7 +1800,7 @@ local function O_otrisovka_FIRST()
 				sort(list, E.Octo_Func.reverse_order)
 				local j = 1
 				for i, reputationID in ipairs(list) do
-					if Octo_ToDo_DB_Config.ReputationDB[reputationID] == true and CharInfo.reputationID[reputationID] ~= 0 and CharInfo.reputationID[reputationID] ~= "" then
+					if Octo_ToDo_DB_Config.ReputationDB[reputationID] == true and CharInfo.reputationID[reputationID] ~= 0 and CharInfo.reputationID[reputationID] ~= "" and E.Octo_Func.func_reputationName(reputationID) ~= "no name" then
 						local color = j%2 == 0 and "|cffBBBBBB" or E.Octo_Globals.White_Color
 						tooltip[#tooltip+1] = {color..E.Octo_Func.func_reputationName(reputationID).."|r"..E.Octo_Globals.Gray_Color.." id:"..(reputationID).."|r", CharInfo.reputationID[reputationID]}
 						j = j + 1
@@ -2938,6 +2940,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Other.LFGInstance == nil then Octo_ToDo_DB_Other.LFGInstance = {} end
 		if Octo_ToDo_DB_mapChallengeModeID == nil then Octo_ToDo_DB_mapChallengeModeID = {} end
 		if Octo_ToDo_DB_Players_LIST == nil then Octo_ToDo_DB_Players_LIST = {} end
+		if Octo_ToDo_Movies == nil then Octo_ToDo_Movies = {} end
 		if Octo_ToDo_DB_Config == nil then Octo_ToDo_DB_Config = {} end
 		if Octo_ToDo_DB_Config.CurrencyDB == nil then Octo_ToDo_DB_Config.CurrencyDB = {} end
 		if Octo_ToDo_DB_Config.ReputationDB == nil then Octo_ToDo_DB_Config.ReputationDB = {} end
@@ -2950,12 +2953,13 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm == nil then Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm = true end
 		if Octo_ToDo_DB_Vars.config.AutoSellGrey == nil then Octo_ToDo_DB_Vars.config.AutoSellGrey = true end
 		if Octo_ToDo_DB_Vars.config.AutoRepair == nil then Octo_ToDo_DB_Vars.config.AutoRepair = true end
-		if Octo_ToDo_DB_Vars.config.InputDelete == nil then Octo_ToDo_DB_Vars.config.InputDelete = true end
+		if Octo_ToDo_DB_Vars.config.Auto_InputDelete == nil then Octo_ToDo_DB_Vars.config.Auto_InputDelete = true end
 		if Octo_ToDo_DB_Vars.config.AutoOpen == nil then Octo_ToDo_DB_Vars.config.AutoOpen = true end
-		if Octo_ToDo_DB_Vars.config.AutoGossip == nil then Octo_ToDo_DB_Vars.config.AutoGossip = true end
-		if Octo_ToDo_DB_Vars.config.CinematicCanceler == nil then Octo_ToDo_DB_Vars.config.CinematicCanceler = false end
+		if Octo_ToDo_DB_Vars.config.Auto_Gossip == nil then Octo_ToDo_DB_Vars.config.Auto_Gossip = true end
+		if Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler == nil then Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler = false end
+		if Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip == nil then Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip = false end
 		if Octo_ToDo_DB_Vars.config.AutoTurnQuests == nil then Octo_ToDo_DB_Vars.config.AutoTurnQuests = true end
-		if Octo_ToDo_DB_Vars.config.ClearChat == nil then Octo_ToDo_DB_Vars.config.ClearChat = false end
+		if Octo_ToDo_DB_Vars.config.Auto_ChatClearing == nil then Octo_ToDo_DB_Vars.config.Auto_ChatClearing = false end
 		if Octo_ToDo_DB_Vars.config.Hide_Boss_Banner == nil then Octo_ToDo_DB_Vars.config.Hide_Boss_Banner = true end
 		if Octo_ToDo_DB_Vars.config.Hide_Covenant == nil then Octo_ToDo_DB_Vars.config.Hide_Covenant = true end
 		if Octo_ToDo_DB_Vars.config.Hide_Error_Messages == nil then Octo_ToDo_DB_Vars.config.Hide_Error_Messages = true end
@@ -3229,3 +3233,5 @@ SlashCmdList.GSEARCH = function(msg)
 end
 SlashCmdList["RELOAD"] = ReloadUI
 SLASH_RELOAD1 = "/rl"
+
+-- fpde(E.Octo_Table.Movies)
