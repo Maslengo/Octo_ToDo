@@ -666,10 +666,15 @@ function E.Octo_Func.CheckReputationByRepID(self)
 	local barMax
 	local barValue
 	local standingID
+	local isHeader
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."CheckReputationByRepID".."|r")
 	end
 	if repInfo then
+		isHeader = repInfo.isHeader
+		if isHeader == true then
+			print ("isHeader".. self)
+		end
 		name = repInfo.name
 		barMin = repInfo.currentReactionThreshold
 		barMax = repInfo.nextReactionThreshold
