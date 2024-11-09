@@ -640,6 +640,7 @@ THIRD_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
 		ConfigTable_THIRD_LEFT = {
 		}
+		-- isAccountWide = C_Reputation.IsAccountWideReputation(factionID)
 		local list = {}
 		for reputationID, v in pairs(Octo_ToDo_DB_Config.ReputationDB) do
 			if C_Reputation.GetFactionDataByID(reputationID) then

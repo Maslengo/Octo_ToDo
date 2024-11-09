@@ -42,6 +42,7 @@ E.Octo_Func.func_Octo_LoadAddOn("HidingBar")
 E.Octo_Func.func_Octo_LoadAddOn("HidingBar_Options")
 E.Octo_Func.func_Octo_LoadAddOn("QuestsChanged")
 E.Octo_Func.func_Octo_LoadAddOn("TalentTreeTweaks")
+E.Octo_Func.func_Octo_LoadAddOn("SpeedyAutoLoot")
 
 local Button = nil
 local CF = nil
@@ -920,6 +921,8 @@ local function Collect_All_Reputations()
 			collect.reputationID[reputationID] = rep or 0
 		end
 	end
+	-- isAccountWide = C_Reputation.IsAccountWideReputation(factionID)
+
 end
 local function Collect_ALL_ItemsInBag()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -1684,7 +1687,7 @@ local function O_otrisovka_FIRST()
 				sort(list, E.Octo_Func.reverse_order)
 				for k, CurrencyID in pairs(list) do
 					if Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true and CharInfo.CurrencyID[CurrencyID] ~= 0 then
-						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(CurrencyID)..E.Octo_Func.func_currencyName(CurrencyID), CharInfo.CurrencyID_Total[CurrencyID]}
+						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(CurrencyID)..E.Octo_Func.func_currencyName(CurrencyID)..E.Octo_Globals.Gray_Color.." id:"..CurrencyID.."|r", CharInfo.CurrencyID_Total[CurrencyID]}
 						-- else
 						--     tooltip[#tooltip+1] = {E.Octo_Globals.Gray_Color..E.Octo_Func.func_currencyicon(CurrencyID)..E.Octo_Func.func_currencyName_NOCOLOR(CurrencyID).."|r", E.Octo_Globals.Gray_Color..CharInfo.CurrencyID_Total[CurrencyID].."|r"}
 					end

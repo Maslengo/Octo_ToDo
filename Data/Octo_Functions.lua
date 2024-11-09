@@ -184,6 +184,11 @@ local func_questName = E.Octo_Func.func_questName
 -- local func_questName_Decorate = E.Octo_Func.func_questName_Decorate
 ----------------------------------------------------------------
 function E.Octo_Func.func_reputationName(self)
+	local AWide = ""
+	local isAccountWide = C_Reputation.IsAccountWideReputation(self) or false
+	if isAccountWide == true then
+		AWide = E.Octo_Globals.AccountWide
+	end
 	local repInfo = C_Reputation.GetFactionDataByID(self)
 	local name
 	if repInfo then
@@ -198,7 +203,7 @@ function E.Octo_Func.func_reputationName(self)
 		color = "|cff909090"
 	end
 	-- return color..name..r
-	return name
+	return AWide..name
 end
 local func_reputationName = E.Octo_Func.func_reputationName
 ----------------------------------------------------------------
@@ -230,6 +235,17 @@ end
 local func_itemTexture = E.Octo_Func.func_itemTexture
 ----------------------------------------------------------------
 function E.Octo_Func.func_currencyName(self)
+	local AWide = ""
+	local ATrans = ""
+	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(self) or false
+	if isAccountTransferableCurrency == true then
+		AWide = E.Octo_Globals.AccountTransferable
+	end
+	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(self) or false
+	if isAccountWideCurrency == true then
+		AWide = E.Octo_Globals.AccountWide
+	end
+	local vivod = ""
 	local info = C_CurrencyInfo.GetCurrencyInfo(self)
 	if info then
 		local name = info.name
@@ -238,14 +254,26 @@ function E.Octo_Func.func_currencyName(self)
 		local r, g, b = GetItemQualityColor(quality)
 		local color = CreateColor(r, g, b, 1)
 		local currencyName = color:WrapTextInColorCode(name)
-		return currencyName
+		vivod = ATrans..AWide..currencyName
 	else
-		return E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+		vivod = ATrans..AWide..E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
+	return vivod
 end
 local func_currencyName = E.Octo_Func.func_currencyName
 ----------------------------------------------------------------
 function E.Octo_Func.func_currencyName_NOCOLOR(self)
+	local AWide = ""
+	local ATrans = ""
+	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(self) or false
+	if isAccountTransferableCurrency == true then
+		AWide = E.Octo_Globals.AccountTransferable
+	end
+	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(self) or false
+	if isAccountWideCurrency == true then
+		AWide = E.Octo_Globals.AccountWide
+	end
+	local vivod = ""
 	local info = C_CurrencyInfo.GetCurrencyInfo(self)
 	if info then
 		local name = info.name
@@ -254,10 +282,11 @@ function E.Octo_Func.func_currencyName_NOCOLOR(self)
 		-- local r, g, b = GetItemQualityColor(quality)
 		-- local color = CreateColor(r, g, b, 1)
 		-- local currencyName = color:WrapTextInColorCode(name)
-		return name
+		vivod = ATrans..AWide..name
 	else
-		return E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+		vivod = ATrans..AWide..E.Octo_Globals.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
+	return vivod
 end
 local func_currencyName_NOCOLOR = E.Octo_Func.func_currencyName_NOCOLOR
 ----------------------------------------------------------------

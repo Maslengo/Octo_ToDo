@@ -215,3 +215,6 @@ E.Octo_Globals.Daily = "|A:Recurringavailablequesticon:14:14:0:0|a"
 E.Octo_Globals.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Weekly.tga")
 -- E.Octo_Globals.Weekly = texturefromIcon("Interface\\GossipFrame\\DailyQuestIcon")
 -- console -> export "art"
+
+E.Octo_Globals.AccountWide = E.Octo_Globals.Blue_Color.."(A)".."|r"
+E.Octo_Globals.AccountTransferable = E.Octo_Globals.Red_Color.."(T)".."|r"
