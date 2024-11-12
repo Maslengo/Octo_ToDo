@@ -538,11 +538,11 @@ FIRST_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_texturefromIcon(135619) .. L["Minor Keyflames"],
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
-			{
-				config = "Timewalk",
-				text = PLAYER_DIFFICULTY_TIMEWALKER,
-				r = 70/255, g = 130/255, b = 179/255,
-			},
+			-- {
+			-- 	config = "Timewalk",
+			-- 	text = PLAYER_DIFFICULTY_TIMEWALKER,
+			-- 	r = 70/255, g = 130/255, b = 179/255,
+			-- },
 
 
 			{
@@ -656,6 +656,16 @@ end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, SECOND_Config, CURRENCY)
 subcategory.ID = L["InDev"].."SECOND_Config"
 Settings.RegisterAddOnCategory(subcategory)
+
+
+
+
+
+
+
+
+
+
 local THIRD_Config = CreateFrame("ScrollFrame", GlobalAddonName.."THIRD_Config")
 THIRD_Config:Hide()
 local THIRD_ScrollBar = CreateFrame("EventFrame", nil, THIRD_Config, "MinimalScrollBar")
@@ -716,6 +726,17 @@ end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, THIRD_Config, REPUTATION)
 subcategory.ID = L["InDev"].."THIRD_Config"
 Settings.RegisterAddOnCategory(subcategory)
+
+
+
+
+
+
+
+
+
+
+
 local FOURTH_Config = CreateFrame("ScrollFrame", GlobalAddonName.."FOURTH_Config")
 FOURTH_Config:Hide()
 local FOURTH_ScrollBar = CreateFrame("EventFrame", nil, FOURTH_Config, "MinimalScrollBar")
@@ -770,13 +791,80 @@ FOURTH_Config:SetScript("OnShow", function(self)
 			Create_CheckButtonNEW(FOURTH_scrollChild, self, i, POS_LEFT, ConfigTable_FOURTH_LEFT[i].otstyp, ConfigTable_FOURTH_LEFT[i].config, ConfigTable_FOURTH_LEFT[i].text, ConfigTable_FOURTH_LEFT[i].r, ConfigTable_FOURTH_LEFT[i].g, ConfigTable_FOURTH_LEFT[i].b, ConfigTable_FOURTH_LEFT[i].a, ConfigTable_FOURTH_LEFT[i].button, Octo_ToDo_DB_Config.ItemDB)
 		end
 		Create_CheckButton(FOURTH_scrollChild, self, 1, POS_RIGHT, 0, "Items", ITEMS)
-		Create_CheckButtonNEW(FOURTH_scrollChild, self, 1, POS_RIGHT+100, 0, "Itemsа", "ItemsShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
+		Create_CheckButtonNEW(FOURTH_scrollChild, self, 1, POS_RIGHT+100, 0, "ItemsShowAllways", "ItemsShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
 		Create_SimpleButton_DATABASE(FOURTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.ItemDB)
 		Create_SimpleButton_DATABASE(FOURTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.ItemDB)
 end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FOURTH_Config, ITEMS)
 subcategory.ID = L["InDev"].."FOURTH_Config"
 Settings.RegisterAddOnCategory(subcategory)
+
+
+
+
+
+local FIFTH_Config = CreateFrame("ScrollFrame", GlobalAddonName.."FIFTH_Config")
+FIFTH_Config:Hide()
+local FIFTH_ScrollBar = CreateFrame("EventFrame", nil, FIFTH_Config, "MinimalScrollBar")
+FIFTH_ScrollBar:SetPoint("TOPLEFT", FIFTH_Config, "TOPRIGHT", 6, 0)
+FIFTH_ScrollBar:SetPoint("BOTTOMLEFT", FIFTH_Config, "BOTTOMRIGHT", 6, 0)
+local FIFTH_scrollChild = CreateFrame("Frame", nil, FIFTH_Config)
+FIFTH_Config:SetScrollChild(FIFTH_scrollChild)
+FIFTH_Config:SetAllPoints()
+FIFTH_scrollChild:SetSize(1, 1)
+ScrollUtil.InitScrollFrameWithScrollBar(FIFTH_Config, FIFTH_ScrollBar)
+local FIFTH_OnMouseWheel = FIFTH_Config:GetScript("OnMouseWheel")
+FIFTH_Config:SetScript("OnMouseWheel", function(self, ...)
+		if FIFTH_ScrollBar:IsShown() then
+			FIFTH_OnMouseWheel(self, ...)
+		end
+end)
+TITLE_FIFTH = FIFTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+TITLE_FIFTH:SetPoint("TOPLEFT", 4, 30)
+TITLE_FIFTH:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+TITLE_FIFTH:SetTextColor(.5, .5, .5, 1)
+FIFTH_Config:SetScript("OnShow", function(self)
+		self:SetScript("OnShow", nil)
+		ConfigTable_FIFTH_LEFT = {
+		}
+		local list = {}
+		for QuestID, v in pairs(Octo_ToDo_DB_Config.QuestsDB) do
+			tinsert(list, QuestID)
+		end
+		sort(list, E.Octo_Func.reverse_order)
+			for k, QuestID in pairs(list) do
+
+					tinsert(ConfigTable_FIFTH_LEFT,
+						{
+							otstyp = 0,
+							config = QuestID,
+							text = E.Octo_Globals.LightGray_Color..tostringall(QuestID).."|r "..E.Octo_Func.func_questName(QuestID),
+						}
+					)
+			end
+		for i = 1, #ConfigTable_FIFTH_LEFT do
+			if ConfigTable_FIFTH_LEFT[i].otstyp == nil then ConfigTable_FIFTH_LEFT[i].otstyp = 0 end
+			if ConfigTable_FIFTH_LEFT[i].config == nil then ConfigTable_FIFTH_LEFT[i].config = 0 end
+			if ConfigTable_FIFTH_LEFT[i].text == nil then ConfigTable_FIFTH_LEFT[i].text = "" end
+			if ConfigTable_FIFTH_LEFT[i].r == nil then ConfigTable_FIFTH_LEFT[i].r = 0 end
+			if ConfigTable_FIFTH_LEFT[i].g == nil then ConfigTable_FIFTH_LEFT[i].g = 0 end
+			if ConfigTable_FIFTH_LEFT[i].b == nil then ConfigTable_FIFTH_LEFT[i].b = 0 end
+			if ConfigTable_FIFTH_LEFT[i].a == nil then ConfigTable_FIFTH_LEFT[i].a = 0 end
+			if ConfigTable_FIFTH_LEFT[i].button == nil then ConfigTable_FIFTH_LEFT[i].button = true end
+			Create_CheckButtonNEW(FIFTH_scrollChild, self, i, POS_LEFT, ConfigTable_FIFTH_LEFT[i].otstyp, ConfigTable_FIFTH_LEFT[i].config, ConfigTable_FIFTH_LEFT[i].text, ConfigTable_FIFTH_LEFT[i].r, ConfigTable_FIFTH_LEFT[i].g, ConfigTable_FIFTH_LEFT[i].b, ConfigTable_FIFTH_LEFT[i].a, ConfigTable_FIFTH_LEFT[i].button, Octo_ToDo_DB_Config.QuestsDB)
+		end
+		Create_CheckButton(FIFTH_scrollChild, self, 1, POS_RIGHT, 0, "Quests", QUESTS_LABEL)
+		Create_CheckButtonNEW(FIFTH_scrollChild, self, 1, POS_RIGHT+100, 0, "QuestsShowAllways", "QuestsShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
+		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.QuestsDB)
+		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.QuestsDB)
+end)
+local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIFTH_Config, QUESTS_LABEL)
+subcategory.ID = L["InDev"].."FIFTH_Config"
+Settings.RegisterAddOnCategory(subcategory)
+
+
+
+
 
 
 --------

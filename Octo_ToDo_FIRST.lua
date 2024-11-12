@@ -128,6 +128,14 @@ local function ConcatAtStart()
 	E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_QuestID, E.Octo_Table.OctoTable_QuestID_Paragon)
 	-- E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_ALL, E.Octo_Table.OctoTable_itemID_Config)
 	E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_itemID_Config, E.Octo_Table.OctoTable_itemID_ALL)
+
+	for _, v in pairs(E.Octo_Table.OctoTable_QuestID) do
+		Octo_ToDo_DB_Config.QuestsDB[v] = Octo_ToDo_DB_Config.QuestsDB[v] or false
+	end
+
+
+
+
 	-- E.Octo_Func.TableConcat(Octo_ToDo_DB_Config.ReputationDB, E.Octo_Table.OctoTable_reputation_ALL)
 	-- E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_currencyID_ALL, E.Octo_Table.OctoTable_currency_Classic)
 	-- E.Octo_Func.TableConcat(E.Octo_Table.OctoTable_currencyID_ALL, E.Octo_Table.OctoTable_currency_TheBurningCrusade)
@@ -1112,6 +1120,8 @@ local function Collect_All_Quests()
 		collect.numQuests = E.Octo_Func.CurrentNumQuests()
 		collect.maxNumQuestsCanAccept = maxNumQuestsCanAccept or 0
 	end
+
+
 end
 
 local function Collect_ALL_ItemLevel()
@@ -1826,6 +1836,7 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
+	-- ПРЕДМЕТЫ
 	if Octo_ToDo_DB_Vars.config.Items == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
@@ -1862,6 +1873,57 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
+
+	-- ЗАДАНИЯ
+	if Octo_ToDo_DB_Vars.config.Quests == true then
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				local list = {}
+				for QuestID, v in pairs(Octo_ToDo_DB_Config.QuestsDB) do
+					tinsert(list, QuestID)
+				end
+				sort(list, E.Octo_Func.reverse_order)
+					for k, QuestID in pairs(list) do
+							if Octo_ToDo_DB_Vars.config.QuestsShowAllways == false and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" and CharInfo.OctoTable_QuestID[QuestID] ~= E.Octo_Globals.NONE then
+								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(QuestID)..E.Octo_Func.func_itemName(QuestID), CharInfo.OctoTable_QuestID[QuestID]}
+							elseif Octo_ToDo_DB_Vars.config.QuestsShowAllways == true and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true then
+								if CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" then
+									tooltip[#tooltip+1] = {E.Octo_Func.func_questName(QuestID), CharInfo.OctoTable_QuestID[QuestID]}
+								else
+									tooltip[#tooltip+1] = {E.Octo_Globals.Gray_Color..E.Octo_Func.func_questName(QuestID).."|r", E.Octo_Globals.Gray_Color..CharInfo.OctoTable_QuestID[QuestID].."|r"}
+								end
+
+							end
+								-- else
+								--     tooltip[#tooltip+1] = {E.Octo_Globals.Gray_Color..E.Octo_Func.func_questName(QuestID)..E.Octo_Func.func_itemName_NOCOLOR (QuestID).."|r", E.Octo_Globals.Gray_Color.. CharInfo.OctoTable_QuestID[QuestID] .."|r"}
+					end
+				if #tooltip ~= 0 then
+					vivodCent = E.Octo_Globals.Gray_Color..QUESTS_LABEL.."|r"
+				else
+					vivodCent = ""
+				end
+				vivodLeft = QUESTS_LABEL
+				return vivodCent, vivodLeft
+		end)
+	end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	if Octo_ToDo_DB_Vars.config.Professions == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
@@ -2962,6 +3024,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Config.CurrencyDB == nil then Octo_ToDo_DB_Config.CurrencyDB = {} end
 		if Octo_ToDo_DB_Config.ReputationDB == nil then Octo_ToDo_DB_Config.ReputationDB = {} end
 		if Octo_ToDo_DB_Config.ItemDB == nil then Octo_ToDo_DB_Config.ItemDB = {} end
+		if Octo_ToDo_DB_Config.QuestsDB == nil then Octo_ToDo_DB_Config.QuestsDB = {} end
 		if Octo_ToDo_DB_Players == nil then Octo_ToDo_DB_Players = {} end
 		if Octo_ToDo_DB_Vars == nil then Octo_ToDo_DB_Vars = {} end
 		if Octo_ToDo_DB_Vars.config == nil then Octo_ToDo_DB_Vars.config = {} end
@@ -3008,9 +3071,18 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening == nil then Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening = false end
 		if Octo_ToDo_DB_Vars.config.Dungeons == nil then Octo_ToDo_DB_Vars.config.Dungeons = true end
 		if Octo_ToDo_DB_Vars.config.Timewalk == nil then Octo_ToDo_DB_Vars.config.Timewalk = false end
+
+
+
+
 		if Octo_ToDo_DB_Vars.config.Currency == nil then Octo_ToDo_DB_Vars.config.Currency = true end
 		if Octo_ToDo_DB_Vars.config.Reputations == nil then Octo_ToDo_DB_Vars.config.Reputations = true end
 		if Octo_ToDo_DB_Vars.config.Items == nil then Octo_ToDo_DB_Vars.config.Items = true end
+		if Octo_ToDo_DB_Vars.config.Quests == nil then Octo_ToDo_DB_Vars.config.Quests = true end
+
+
+
+
 		if Octo_ToDo_DB_Vars.config.Professions == nil then Octo_ToDo_DB_Vars.config.Professions = true end
 		if Octo_ToDo_DB_Vars.config.Gold == nil then Octo_ToDo_DB_Vars.config.Gold = true end
 		if Octo_ToDo_DB_Vars.config.ItemLevel == nil then Octo_ToDo_DB_Vars.config.ItemLevel = true end
@@ -3039,6 +3111,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.CurrencyShowAllways == nil then Octo_ToDo_DB_Vars.config.CurrencyShowAllways = true end
 		if Octo_ToDo_DB_Vars.config.ReputationsShowAllways == nil then Octo_ToDo_DB_Vars.config.ReputationsShowAllways = true end
 		if Octo_ToDo_DB_Vars.config.ItemsShowAllways == nil then Octo_ToDo_DB_Vars.config.ItemsShowAllways = true end
+		if Octo_ToDo_DB_Vars.config.QuestsShowAllways == nil then Octo_ToDo_DB_Vars.config.QuestsShowAllways = true end
+
+
 		ConcatAtStart()
 		O_otrisovka_FIRST()
 		for i, func in ipairs(E.Octo_Globals.modules) do
