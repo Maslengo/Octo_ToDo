@@ -1767,9 +1767,9 @@ local function O_otrisovka_FIRST()
 				end
 				sort(list, E.Octo_Func.reverse_order)
 				for k, CurrencyID in pairs(list) do
-					if Octo_ToDo_DB_Vars.config.CurrencyShowAll == false and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true and CharInfo.CurrencyID[CurrencyID] ~= 0 then
+					if Octo_ToDo_DB_Vars.config.CurrencyShowAllways == false and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true and CharInfo.CurrencyID[CurrencyID] ~= 0 then
 						tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(CurrencyID)..E.Octo_Func.func_currencyName(CurrencyID)..E.Octo_Globals.Gray_Color.." id:"..CurrencyID.."|r", CharInfo.CurrencyID_Total[CurrencyID]}
-					elseif Octo_ToDo_DB_Vars.config.CurrencyShowAll == true and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true then
+					elseif Octo_ToDo_DB_Vars.config.CurrencyShowAllways == true and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true then
 						if CharInfo.CurrencyID[CurrencyID] ~= 0 then
 							tooltip[#tooltip+1] = {E.Octo_Func.func_currencyicon(CurrencyID)..E.Octo_Func.func_currencyName(CurrencyID)..E.Octo_Globals.Gray_Color.." id:"..CurrencyID.."|r", CharInfo.CurrencyID_Total[CurrencyID]}
 						else
@@ -1838,9 +1838,9 @@ local function O_otrisovka_FIRST()
 				for _, id in pairs(E.Octo_Table.OctoTable_itemID_Config) do
 					for k, itemID in pairs(list) do
 						if id == itemID then
-							if Octo_ToDo_DB_Vars.config.ItemsShowAll == false and Octo_ToDo_DB_Config.ItemDB[itemID] == true and CharInfo.ItemsInBag[itemID] ~= 0 and CharInfo.ItemsInBag[itemID] ~= "" then
+							if Octo_ToDo_DB_Vars.config.ItemsShowAllways == false and Octo_ToDo_DB_Config.ItemDB[itemID] == true and CharInfo.ItemsInBag[itemID] ~= 0 and CharInfo.ItemsInBag[itemID] ~= "" then
 								tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(itemID)..E.Octo_Func.func_itemName(itemID), CharInfo.ItemsInBag[itemID]}
-							elseif Octo_ToDo_DB_Vars.config.ItemsShowAll == true and Octo_ToDo_DB_Config.ItemDB[itemID] == true then
+							elseif Octo_ToDo_DB_Vars.config.ItemsShowAllways == true and Octo_ToDo_DB_Config.ItemDB[itemID] == true then
 								if CharInfo.ItemsInBag[itemID] ~= 0 and CharInfo.ItemsInBag[itemID] ~= "" then
 									tooltip[#tooltip+1] = {E.Octo_Func.func_itemTexture(itemID)..E.Octo_Func.func_itemName(itemID), CharInfo.ItemsInBag[itemID]}
 								else
@@ -3036,9 +3036,9 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == nil then Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST = false end
 		if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST ~= nil then E.Octo_Globals.Octo_debug_Function_FIRST = Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST end
 		if Octo_ToDo_DB_Vars.config.prefix == nil then Octo_ToDo_DB_Vars.config.prefix = 1 end
-		if Octo_ToDo_DB_Vars.config.CurrencyShowAll == nil then Octo_ToDo_DB_Vars.config.CurrencyShowAll = false end
-		if Octo_ToDo_DB_Vars.config.ReputationsShowAll == nil then Octo_ToDo_DB_Vars.config.ReputationsShowAll = false end
-		if Octo_ToDo_DB_Vars.config.ItemsShowAll == nil then Octo_ToDo_DB_Vars.config.ItemsShowAll = false end
+		if Octo_ToDo_DB_Vars.config.CurrencyShowAllways == nil then Octo_ToDo_DB_Vars.config.CurrencyShowAllways = true end
+		if Octo_ToDo_DB_Vars.config.ReputationsShowAllways == nil then Octo_ToDo_DB_Vars.config.ReputationsShowAllways = true end
+		if Octo_ToDo_DB_Vars.config.ItemsShowAllways == nil then Octo_ToDo_DB_Vars.config.ItemsShowAllways = true end
 		ConcatAtStart()
 		O_otrisovka_FIRST()
 		for i, func in ipairs(E.Octo_Globals.modules) do
