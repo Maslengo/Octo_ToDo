@@ -1886,17 +1886,14 @@ local function O_otrisovka_FIRST()
 				sort(list, E.Octo_Func.reverse_order)
 					for k, QuestID in pairs(list) do
 							if Octo_ToDo_DB_Vars.config.QuestsShowAllways == false and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" and CharInfo.OctoTable_QuestID[QuestID] ~= E.Octo_Globals.NONE then
-								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(QuestID)..E.Octo_Func.func_itemName(QuestID), CharInfo.OctoTable_QuestID[QuestID]}
+								tooltip[#tooltip+1] = {E.Octo_Func.func_questName(QuestID)..E.Octo_Globals.Gray_Color.." id:"..QuestID.."|r", CharInfo.OctoTable_QuestID[QuestID]}
 							elseif Octo_ToDo_DB_Vars.config.QuestsShowAllways == true and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true then
 								if CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" then
-									tooltip[#tooltip+1] = {E.Octo_Func.func_questName(QuestID), CharInfo.OctoTable_QuestID[QuestID]}
+									tooltip[#tooltip+1] = {E.Octo_Func.func_questName(QuestID)..E.Octo_Globals.Gray_Color.." id:"..QuestID.."|r", CharInfo.OctoTable_QuestID[QuestID]}
 								else
-									tooltip[#tooltip+1] = {E.Octo_Globals.Gray_Color..E.Octo_Func.func_questName(QuestID).."|r", E.Octo_Globals.Gray_Color..CharInfo.OctoTable_QuestID[QuestID].."|r"}
+									tooltip[#tooltip+1] = {E.Octo_Globals.Gray_Color..E.Octo_Func.func_questName(QuestID).." id:"..QuestID.."|r", E.Octo_Globals.Gray_Color..CharInfo.OctoTable_QuestID[QuestID].."|r"}
 								end
-
 							end
-								-- else
-								--     tooltip[#tooltip+1] = {E.Octo_Globals.Gray_Color..E.Octo_Func.func_questName(QuestID)..E.Octo_Func.func_itemName_NOCOLOR (QuestID).."|r", E.Octo_Globals.Gray_Color.. CharInfo.OctoTable_QuestID[QuestID] .."|r"}
 					end
 				if #tooltip ~= 0 then
 					vivodCent = E.Octo_Globals.Gray_Color..QUESTS_LABEL.."|r"
