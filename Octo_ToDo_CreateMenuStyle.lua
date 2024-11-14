@@ -7,6 +7,7 @@ local menuBackdrop = {
 	edgeFile = "Interface/ChatFrame/ChatFrameBackground",
 	tile = true, edgeSize = 1 * E.Octo_Globals.scale, tileSize = 5 * E.Octo_Globals.scale,
 }
+
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 	local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
 	f:SetBackdrop(menuBackdrop)

@@ -2,8 +2,8 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v78.1(11.0.5)(12.11.2024)
-## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_FIRST
+## Version: v78.2(11.0.5)(14.11.2024)
+## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_1
 ## SavedVariables: Octo_ToDo_DB_Players_LIST Octo_ToDo_DB_Config Octo_ToDo_DB_Other Octo_ToDo_DB_Players Octo_ToDo_DB_Vars Octo_ToDo_DB_mapChallengeModeID
 
 
@@ -29,26 +29,27 @@ fprint\fprint.lua
 
 Octo_Localization.lua
 
-Data\Octo_Globals.lua
-Data\Octo_Timer.lua
+Tables\Octo_Globals.lua
+Tables\Octo_Timer.lua
 
-Data\OctoTable_byteto.lua
-Data\OctoTable_Colors.lua
-Data\OctoTable_Expansions_Table.lua
-Data\OctoTable_Instances.lua
-Data\OctoTable_Items.lua
-Data\OctoTable_Movies.lua
-Data\OctoTable_QuestID.lua
-Data\OctoTable_UniversalQuest.lua
-Data\wowhead_prefix_Table.lua
+Tables\OctoTable_byteto.lua
+Tables\OctoTable_Colors.lua
+Tables\OctoTable_Expansions_Table.lua
+Tables\OctoTable_Instances.lua
+Tables\OctoTable_Items.lua
+Tables\OctoTable_Movies.lua
+Tables\OctoTable_QuestID.lua
+Tables\OctoTable_UniversalQuest.lua
+Tables\wowhead_prefix_Table.lua
+Tables\OctoTable_Gossip.lua
 
-Data\Octo_Functions.lua
-
-
-
+Tables\Octo_Functions.lua
 
 
-Data\OctoTable_Spells.lua
+
+
+
+Tables\OctoTable_Spells.lua
 
 Minecraft\MinecraftFrames.lua
 Minecraft\MinecraftColors.lua

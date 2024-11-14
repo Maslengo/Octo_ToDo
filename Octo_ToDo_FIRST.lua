@@ -2333,7 +2333,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end)
 		local t = OctoToDo_OptionsButton:CreateTexture(nil, "BACKGROUND")
 		OctoToDo_OptionsButton.icon = t
-		t:SetTexture(E.Octo_Globals.AddonTexture_FIRST)
+		t:SetTexture(E.Octo_Globals.AddonTexture_1)
 		t:SetAllPoints(OctoToDo_OptionsButton)
 	end
 	----------------------------------------------------------------
@@ -2356,189 +2356,192 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 		ChatFrame1:AddMessage(E.Octo_Func.func_Gradient(L["Total"], E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color).." "..E.Octo_Globals.Green_Color..numQuests.."|r")
 	end
-	if not OctoToDo_AbandonButton then
-		local numQuests = E.Octo_Func.CurrentNumQuests()
-		StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
-			text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n"..classColorHexCurrent.."Отменить все задания?|r",
-			button1 = YES,
-			button2 = NO,
-			hideOnEscape = 1,
-			whileDead = 1,
-			OnAccept = function()
-				C_Timer.After(1, AbandonQuests)
-			end,
-		}
-		OctoToDo_AbandonButton = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
-		OctoToDo_AbandonButton:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoToDo_AbandonButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*2, 1)
-		OctoToDo_AbandonButton:SetBackdrop({
-				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-				edgeSize = 1
-		})
-		OctoToDo_AbandonButton:SetBackdropBorderColor(1, 0, 0, 0)
-		OctoToDo_AbandonButton:SetScript("OnEnter", function(self)
-				numQuests = E.Octo_Func.CurrentNumQuests()
-				self.icon:SetVertexColor(r, g, b, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
-				GameTooltip:ClearLines()
-				if numQuests > 0 then
-					GameTooltip:AddLine(classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..E.Octo_Func.CurrentNumQuests()..")")
-					GameTooltip:AddLine(" ")
-				end
-				if numQuests == 0 then
-					GameTooltip:AddLine(L["No quests"], r, g, b)
-				end
-				local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
-				local list = {}
-				for i = 1, numShownEntries do
-					if numQuests ~= 0 then
-						local info = C_QuestLog.GetInfo(i) -- questLogIndex
-						if info then
-							if info.questID ~= 0 then
-								if (not info.isHeader and not info.isHidden) then
-									-- print (info.questID, E.Octo_Globals.Green_Color..E.Octo_Func.func_questName(info.questID).."|r")
-									tinsert(list, info.questID)
-								else
-									-- print (info.questID, E.Octo_Globals.Red_Color..E.Octo_Func.func_questName(info.questID).."|r")
+	if Octo_ToDo_DB_Vars.config.AdditionalButtons == true then
+		if not OctoToDo_AbandonButton then
+			local numQuests = E.Octo_Func.CurrentNumQuests()
+			StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
+				text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n"..classColorHexCurrent.."Отменить все задания?|r",
+				button1 = YES,
+				button2 = NO,
+				hideOnEscape = 1,
+				whileDead = 1,
+				OnAccept = function()
+					C_Timer.After(1, AbandonQuests)
+				end,
+			}
+			OctoToDo_AbandonButton = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
+			OctoToDo_AbandonButton:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+			OctoToDo_AbandonButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*2, 1)
+			OctoToDo_AbandonButton:SetBackdrop({
+					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+					edgeSize = 1
+			})
+			OctoToDo_AbandonButton:SetBackdropBorderColor(1, 0, 0, 0)
+			OctoToDo_AbandonButton:SetScript("OnEnter", function(self)
+					numQuests = E.Octo_Func.CurrentNumQuests()
+					self.icon:SetVertexColor(r, g, b, 1)
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
+					GameTooltip:ClearLines()
+					if numQuests > 0 then
+						GameTooltip:AddLine(classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..E.Octo_Func.CurrentNumQuests()..")")
+						GameTooltip:AddLine(" ")
+					end
+					if numQuests == 0 then
+						GameTooltip:AddLine(L["No quests"], r, g, b)
+					end
+					local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
+					local list = {}
+					for i = 1, numShownEntries do
+						if numQuests ~= 0 then
+							local info = C_QuestLog.GetInfo(i) -- questLogIndex
+							if info then
+								if info.questID ~= 0 then
+									if (not info.isHeader and not info.isHidden) then
+										-- print (info.questID, E.Octo_Globals.Green_Color..E.Octo_Func.func_questName(info.questID).."|r")
+										tinsert(list, info.questID)
+									else
+										-- print (info.questID, E.Octo_Globals.Red_Color..E.Octo_Func.func_questName(info.questID).."|r")
+									end
 								end
 							end
 						end
 					end
-				end
-				sort(list, E.Octo_Func.reverse_order)
-				for k, questID in pairs(list) do
-					GameTooltip:AddDoubleLine(E.Octo_Func.func_questName(questID)..E.Octo_Globals.Gray_Color.." id:"..questID.."|r",E.Octo_Func.CheckCompletedByQuestID(questID) , 1, 1, 1, 1, 1, 1)
-				end
-				GameTooltip:Show()
-		end)
-		OctoToDo_AbandonButton:SetScript("OnLeave", function(self)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		OctoToDo_AbandonButton:SetScript("OnMouseDown", function(self)
-				self.icon:SetVertexColor(1, 0, 0, .5)
-		end)
-		OctoToDo_AbandonButton:SetScript("OnClick", function()
-				if numQuests > 0 then
-					StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
-				end
-		end)
-		local t = OctoToDo_AbandonButton:CreateTexture(nil, "BACKGROUND")
-		OctoToDo_AbandonButton.icon = t
-		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga")
-		t:SetAllPoints(OctoToDo_AbandonButton)
-	end
-	----------------------------------------------------------------
-	if not OctoToDo_MplusButton then
-		OctoToDo_MplusButton = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
-		OctoToDo_MplusButton:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoToDo_MplusButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*3, 1)
-		OctoToDo_MplusButton:SetBackdrop({
-				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-				edgeSize = 1
-		})
-		OctoToDo_MplusButton:SetBackdropBorderColor(r, g, b, 0)
-		OctoToDo_MplusButton:SetScript("OnEnter", function(self)
-				local i = 0
-				self:SetBackdropBorderColor(1, 0, 0, 0)
-				self.icon:SetVertexColor(r, g, b, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
-				GameTooltip:ClearLines()
-				GameTooltip:AddDoubleLine(" ", " ")
-				local list = {}
-				for dungeonID, v in pairs(Octo_ToDo_DB_mapChallengeModeID) do
-					tinsert(list, dungeonID)
-				end
-				sort(list, E.Octo_Func.reverse_order)
-				for count, dungeonID in pairs(list) do
-					local name, _, timeLimit, texture = C_ChallengeMode.GetMapUIInfo(dungeonID)
-						i = i + 1
-						GameTooltip:AddDoubleLine(E.Octo_Func.func_texturefromIcon(texture) .. name.." "..E.Octo_Globals.Gray_Color.." id:"..dungeonID.."|r",  E.Octo_Globals.Gray_Color.."texture:|r"..E.Octo_Globals.Green_Color..texture.."|r "..E.Octo_Globals.Gray_Color.."time:|r"..E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(timeLimit).."|r", 1, 1, 1, 1, 1, 1)
-				end
-				if i == 0 then
-					GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
-					OctoToDo_MplusButton:Hide()
-				end
-				GameTooltip:AddDoubleLine(" ", " ")
-				GameTooltip:Show()
-		end)
-		OctoToDo_MplusButton:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(r, g, b, 0)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		OctoToDo_MplusButton:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, 0)
-				self.icon:SetVertexColor(r, g, b, .5)
-		end)
-		OctoToDo_MplusButton:SetScript("OnClick", function()
-				-- OctoToDo_MainFrame:Hide()
-					fpde(Octo_ToDo_DB_mapChallengeModeID)
-		end)
-		local t = OctoToDo_MplusButton:CreateTexture(nil, "BACKGROUND")
-		OctoToDo_MplusButton.icon = t
-		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga")
-		t:SetAllPoints(OctoToDo_MplusButton)
-	end
-	----------------------------------------------------------------
-	if not OctoToDo_ItemsButton then
-		OctoToDo_ItemsButton = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
-		OctoToDo_ItemsButton:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
-		OctoToDo_ItemsButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*4, 1)
-		OctoToDo_ItemsButton:SetBackdrop({
-				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-				edgeSize = 1
-		})
-		OctoToDo_ItemsButton:SetBackdropBorderColor(r, g, b, 0)
-		OctoToDo_ItemsButton:SetScript("OnEnter", function(self)
-				local i = 0
-				self:SetBackdropBorderColor(1, 0, 0, 0)
-				self.icon:SetVertexColor(r, g, b, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
-				GameTooltip:ClearLines()
-				GameTooltip:AddDoubleLine(" ", " ")
-				for _, itemID in pairs (E.Octo_Table.OctoTable_itemID_Config) do
-					for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Players) do
-						if CharInfo.ItemsInBag[itemID] ~= 0 then
+					sort(list, E.Octo_Func.reverse_order)
+					for k, questID in pairs(list) do
+						GameTooltip:AddDoubleLine(E.Octo_Func.func_questName(questID)..E.Octo_Globals.Gray_Color.." id:"..questID.."|r",E.Octo_Func.CheckCompletedByQuestID(questID) , 1, 1, 1, 1, 1, 1)
+					end
+					GameTooltip:Show()
+			end)
+			OctoToDo_AbandonButton:SetScript("OnLeave", function(self)
+					self.icon:SetVertexColor(1, 1, 1, 1)
+					GameTooltip:ClearLines()
+					GameTooltip:Hide()
+			end)
+			OctoToDo_AbandonButton:SetScript("OnMouseDown", function(self)
+					self.icon:SetVertexColor(1, 0, 0, .5)
+			end)
+			OctoToDo_AbandonButton:SetScript("OnClick", function()
+					if numQuests > 0 then
+						StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
+					end
+			end)
+			local t = OctoToDo_AbandonButton:CreateTexture(nil, "BACKGROUND")
+			OctoToDo_AbandonButton.icon = t
+			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga")
+			t:SetAllPoints(OctoToDo_AbandonButton)
+		end
+		----------------------------------------------------------------
+		if not OctoToDo_MplusButton then
+			OctoToDo_MplusButton = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
+			OctoToDo_MplusButton:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+			OctoToDo_MplusButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*3, 1)
+			OctoToDo_MplusButton:SetBackdrop({
+					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+					edgeSize = 1
+			})
+			OctoToDo_MplusButton:SetBackdropBorderColor(r, g, b, 0)
+			OctoToDo_MplusButton:SetScript("OnEnter", function(self)
+					local i = 0
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, 1)
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
+					GameTooltip:ClearLines()
+					GameTooltip:AddDoubleLine(" ", " ")
+					local list = {}
+					for dungeonID, v in pairs(Octo_ToDo_DB_mapChallengeModeID) do
+						tinsert(list, dungeonID)
+					end
+					sort(list, E.Octo_Func.reverse_order)
+					for count, dungeonID in pairs(list) do
+						local name, _, timeLimit, texture = C_ChallengeMode.GetMapUIInfo(dungeonID)
 							i = i + 1
-							GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(itemID)..E.Octo_Func.func_itemName(itemID), CharInfo.ItemsInBag[itemID].."  "..CharInfo.classColorHex..CharInfo.Name.."|r")
+							GameTooltip:AddDoubleLine(E.Octo_Func.func_texturefromIcon(texture) .. name.." "..E.Octo_Globals.Gray_Color.." id:"..dungeonID.."|r",  E.Octo_Globals.Gray_Color.."texture:|r"..E.Octo_Globals.Green_Color..texture.."|r "..E.Octo_Globals.Gray_Color.."time:|r"..E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(timeLimit).."|r", 1, 1, 1, 1, 1, 1)
+					end
+					if i == 0 then
+						GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
+						OctoToDo_MplusButton:Hide()
+					end
+					GameTooltip:AddDoubleLine(" ", " ")
+					GameTooltip:Show()
+			end)
+			OctoToDo_MplusButton:SetScript("OnLeave", function(self)
+					self:SetBackdropBorderColor(r, g, b, 0)
+					self.icon:SetVertexColor(1, 1, 1, 1)
+					GameTooltip:ClearLines()
+					GameTooltip:Hide()
+			end)
+			OctoToDo_MplusButton:SetScript("OnMouseDown", function(self)
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, .5)
+			end)
+			OctoToDo_MplusButton:SetScript("OnClick", function()
+					-- OctoToDo_MainFrame:Hide()
+						fpde(Octo_ToDo_DB_mapChallengeModeID)
+			end)
+			local t = OctoToDo_MplusButton:CreateTexture(nil, "BACKGROUND")
+			OctoToDo_MplusButton.icon = t
+			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga")
+			t:SetAllPoints(OctoToDo_MplusButton)
+		end
+		----------------------------------------------------------------
+		if not OctoToDo_ItemsButton then
+			OctoToDo_ItemsButton = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
+			OctoToDo_ItemsButton:SetSize(E.Octo_Globals.curHeight, E.Octo_Globals.curHeight)
+			OctoToDo_ItemsButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.Octo_Globals.curHeight)*4, 1)
+			OctoToDo_ItemsButton:SetBackdrop({
+					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+					edgeSize = 1
+			})
+			OctoToDo_ItemsButton:SetBackdropBorderColor(r, g, b, 0)
+			OctoToDo_ItemsButton:SetScript("OnEnter", function(self)
+					local i = 0
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, 1)
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
+					GameTooltip:ClearLines()
+					GameTooltip:AddDoubleLine(" ", " ")
+					for _, itemID in pairs (E.Octo_Table.OctoTable_itemID_Config) do
+						for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Players) do
+							if CharInfo.ItemsInBag[itemID] ~= 0 then
+								i = i + 1
+								GameTooltip:AddDoubleLine(E.Octo_Func.func_itemTexture(itemID)..E.Octo_Func.func_itemName(itemID)..E.Octo_Globals.Gray_Color.." id:"..itemID.."|r", CharInfo.ItemsInBag[itemID].."  "..CharInfo.classColorHex..CharInfo.Name.."|r")
+							end
 						end
 					end
-				end
-				if i == 0 then
-					GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
-					-- OctoToDo_ItemsButton:Hide()
-				end
-				GameTooltip:AddDoubleLine(" ", " ")
-				GameTooltip:Show()
-		end)
-		OctoToDo_ItemsButton:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(r, g, b, 0)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		OctoToDo_ItemsButton:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, 0)
-				self.icon:SetVertexColor(r, g, b, .5)
-		end)
-		OctoToDo_ItemsButton:SetScript("OnClick", function()
-				-- OctoToDo_MainFrame:Hide()
-				local curGUID = UnitGUID("PLAYER")
-				for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Players) do
-					if curCharGUID == curGUID then
-						fpde(CharInfo)
+					if i == 0 then
+						GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
+						-- OctoToDo_ItemsButton:Hide()
 					end
-				end
-		end)
-		local t = OctoToDo_ItemsButton:CreateTexture(nil, "BACKGROUND")
-		OctoToDo_ItemsButton.icon = t
-		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow21.tga")
-		t:SetAllPoints(OctoToDo_ItemsButton)
+					GameTooltip:AddDoubleLine(" ", " ")
+					GameTooltip:Show()
+			end)
+			OctoToDo_ItemsButton:SetScript("OnLeave", function(self)
+					self:SetBackdropBorderColor(r, g, b, 0)
+					self.icon:SetVertexColor(1, 1, 1, 1)
+					GameTooltip:ClearLines()
+					GameTooltip:Hide()
+			end)
+			OctoToDo_ItemsButton:SetScript("OnMouseDown", function(self)
+					self:SetBackdropBorderColor(1, 0, 0, 0)
+					self.icon:SetVertexColor(r, g, b, .5)
+			end)
+			OctoToDo_ItemsButton:SetScript("OnClick", function()
+					-- OctoToDo_MainFrame:Hide()
+					local curGUID = UnitGUID("PLAYER")
+					for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Players) do
+						if curCharGUID == curGUID then
+							fpde(CharInfo)
+						end
+					end
+			end)
+			local t = OctoToDo_ItemsButton:CreateTexture(nil, "BACKGROUND")
+			OctoToDo_ItemsButton.icon = t
+			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow21.tga")
+			t:SetAllPoints(OctoToDo_ItemsButton)
+		end
+		----------------------------------------------------------------
 	end
-	----------------------------------------------------------------
+
 	if not dd_FIRST then
 		local dd_FIRST = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), OctoToDo_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 		local multiply = (1/3)*2
@@ -3080,6 +3083,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 
 
 
+		if Octo_ToDo_DB_Vars.config.AdditionalButtons == nil then Octo_ToDo_DB_Vars.config.AdditionalButtons = false end
 		if Octo_ToDo_DB_Vars.config.Professions == nil then Octo_ToDo_DB_Vars.config.Professions = true end
 		if Octo_ToDo_DB_Vars.config.Gold == nil then Octo_ToDo_DB_Vars.config.Gold = true end
 		if Octo_ToDo_DB_Vars.config.ItemLevel == nil then Octo_ToDo_DB_Vars.config.ItemLevel = true end
@@ -3120,7 +3124,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		local ldb_icon = LibDataBroker:NewDataObject(MinimapName, {
 				type = "data source",
 				text = MinimapName,
-				icon = E.Octo_Globals.AddonTexture_FIRST,
+				icon = E.Octo_Globals.AddonTexture_1,
 				OnClick = function(_, button)
 					if button == "LeftButton" then
 						if not InCombatLockdown() then

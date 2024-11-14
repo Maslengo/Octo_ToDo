@@ -166,6 +166,7 @@ if L then
 	L["Turn off"] = true
 	L["No quests"] = true
 	L[">>DONE<<"] = true
+	L["Additional Buttons"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -326,4 +327,5 @@ if L then
 	L["Turn off"] = "Выключить"
 	L["No quests"] = "Нет квестов"
 	L[">>DONE<<"] = ">>СДАЙ<<"
+	L["Additional Buttons"] = "Дополнительные кнопки"
 end
