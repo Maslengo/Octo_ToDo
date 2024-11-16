@@ -5,21 +5,25 @@ local EventFrame = nil
 local AnchorFrame = nil
 local texture_FG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\minecraft.tga"
 local texture_BG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\minecraft BG.tga"
+-- local texture_FG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\ALL.tga"
+-- local texture_BG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\ALL BG.tga"
 local startHiding = true
 local EmptyFrame = CreateFrame("BUTTON", GlobalAddonName..E.Octo_Func.GenerateUniqueID(), UIParent)
 EmptyFrame.FG = EmptyFrame:CreateTexture()
 EmptyFrame.FG:SetPoint("CENTER")
 EmptyFrame.FG:SetTexture(texture_FG)
--- local height = 232 -- Высота
--- local width = 34 -- Ширина
 local height = 1190/2 -- Высота
 local width = 68/2 -- Ширина
+-- local height = 256/3 -- Высота
+-- local width = 64/3 -- Ширина
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local row = PhysicalScreenWidth / width
 ----------------------------------------------------------------
 if EventFrame == nil then
 	EventFrame = CreateFrame("Frame")
 	EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	EventFrame:RegisterEvent("PLAYER_STARTED_MOVING")
+	EventFrame:RegisterEvent("PLAYER_STOPPED_MOVING")
 end
 ----------------------------------------------------------------
 local function Create_AnchorFrame()
@@ -42,10 +46,9 @@ local function Create_AnchorFrame()
 	AnchorFrame:SetScript("OnDragStop", function() AnchorFrame:StopMovingOrSizing() end)
 	AnchorFrame:RegisterForClicks("RightButtonUp")
 	AnchorFrame:SetScript("OnClick", function(self)
-		for i, v in ipairs({self:GetChildren()}) do
-			v:SetShown(not v:IsShown())
-			-- print (i, v)
-		end
+			for i, v in ipairs({self:GetChildren()}) do
+				v:SetShown(not v:IsShown())
+			end
 	end)
 end
 ----------------------------------------------------------------
@@ -74,12 +77,25 @@ local function Create_Colored_Frames(anchor, self, number, text, color, height, 
 end
 local function OnEvent(self, event, ...)
 	if Octo_ToDo_DB_Vars.config.Minecraft == true then
-		Create_AnchorFrame()
-		AnchorFrame:Show()
-		-- for number, v in ipairs(E.Octo_Table.OctoTable_Colors) do
-		for number, v in ipairs(E.Octo_Table.OctoTable_MinecraftColors) do
-			print ("|cff"..v.hex..number.." "..v.name.."|r", v.hex)
-			Create_Colored_Frames(AnchorFrame, self, number, v.name, v.hex, height, width)
+		if event == "PLAYER_ENTERING_WORLD" then
+			Create_AnchorFrame()
+			AnchorFrame:Show()
+			for number, v in ipairs(E.Octo_Table.OctoTable_MinecraftColors) do
+				print ("|cff"..v.hex..number.." "..v.name.."|r", v.hex)
+				Create_Colored_Frames(AnchorFrame, self, number, v.name, v.hex, height, width)
+			end
+			print (
+				E.Octo_Func.func_Gradient(HUD_EDIT_MODE_SETTING_CHAT_FRAME_HEIGHT..": ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color..height.."|r",
+				E.Octo_Func.func_Gradient(HUD_EDIT_MODE_SETTING_CHAT_FRAME_WIDTH..": ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color..width.."|r"
+			)
+		end
+		if event == "PLAYER_STARTED_MOVING" or event == "PLAYER_STOPPED_MOVING" then
+			for i, v in ipairs({AnchorFrame:GetChildren()}) do
+				-- v:SetShown(not v:IsShown())
+				if v:IsShown() then
+					v:Hide()
+				end
+			end
 		end
 	end
 end
