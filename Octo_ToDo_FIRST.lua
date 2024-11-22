@@ -2961,6 +2961,7 @@ local function main_frame_toggle()
 	local button = LibDBIcon:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
 	if not OctoToDo_MainFrame.promise then
 		OctoToDo_MainFrame.promise = LibThingsLoad:Items(E.Octo_Table.OctoTable_Empty)
+		OctoToDo_MainFrame.promise:AddItemsByKey(E.Octo_Table.OctoTable_itemID_Ignore_List)
 		OctoToDo_MainFrame.promise:AddItems(E.Octo_Table.OctoTable_itemID_ALL)
 		OctoToDo_MainFrame.promise:AddItems(E.Octo_Table.OctoTable_itemID_Config)
 		OctoToDo_MainFrame.promise:AddSpells(E.Octo_Table.OctoTable_Portals_MoP)

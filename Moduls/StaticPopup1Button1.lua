@@ -12,6 +12,7 @@ tinsert(E.Octo_Globals.modules, function()
 		end
 
 		local function Octo_OnEvent(self, event, ...)
+			print (event)
 				C_Timer.After(0, function()
 					accept()
 				end)
@@ -26,6 +27,7 @@ tinsert(E.Octo_Globals.modules, function()
 			EventFrame_SPB:RegisterEvent("EQUIP_BIND_REFUNDABLE_CONFIRM")
 			EventFrame_SPB:RegisterEvent("VOID_DEPOSIT_WARNING")
 			EventFrame_SPB:RegisterEvent("USE_NO_REFUND_CONFIRM")
+			EventFrame_SPB:RegisterEvent("EQUIP_BIND_TRADEABLE_CONFIRM")
 			-- EventFrame_SPB:RegisterEvent("CONVERT_TO_BIND_TO_ACCOUNT_CONFIRM") --sequre
 			-- EventFrame_SPB:RegisterEvent("SPELL_CONFIRMATION_PROMPT") --block
 		end

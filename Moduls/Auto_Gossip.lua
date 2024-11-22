@@ -91,8 +91,8 @@ tinsert(E.Octo_Globals.modules, function()
 						-- if numQuests1 > 0 or numQuests2 > 0 then
 						-- 	return
 						-- end
-						local GetActiveQuests = C_GossipInfo.GetActiveQuests() or 0
-						if not IsShiftKeyDown() and GetActiveQuests == 0 then
+						local GetActiveQuests = C_GossipInfo.GetActiveQuests()
+						print (GetActiveQuests)
 							local info = C_GossipInfo.GetOptions()
 
 							for i, v in pairs(info) do
