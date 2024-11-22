@@ -56,8 +56,8 @@ E.Octo_Table.OctoTable_KeystoneAbbr = {
 	{mapChallengeModeID = 250, abbreviation = "ToS", portal = 000000,}, -- Temple of Sethraliss
 	{mapChallengeModeID = 251, abbreviation = "UNDR", portal = 410074,}, -- The Underrot
 	{mapChallengeModeID = 252, abbreviation = "SotS", portal = 000000,}, -- Shrine of the Storm
-	{mapChallengeModeID = 353, abbreviation = "SoB", portal = 445418, f = "Alliance"}, -- Siege of Boralus
-	{mapChallengeModeID = 353, abbreviation = "SoB", portal = 464256, f = "Horde"}, -- Siege of Boralus
+	{mapChallengeModeID = 353, abbreviation = "SIEGE", portal = 445418, f = "Alliance"}, -- Siege of Boralus
+	{mapChallengeModeID = 353, abbreviation = "SIEGE", portal = 464256, f = "Horde"}, -- Siege of Boralus
 	{mapChallengeModeID = 369, abbreviation = "OMJ", portal = 373274,}, -- Operation: Mechagon - Junkyard
 	{mapChallengeModeID = 370, abbreviation = "OMW", portal = 373274,}, -- Operation: Mechagon - Workshop
 	{mapChallengeModeID = 375, abbreviation = "MoTS", portal = 354464,}, -- Mists of Tirna Scithe

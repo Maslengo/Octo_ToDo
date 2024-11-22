@@ -91,31 +91,21 @@ tinsert(E.Octo_Globals.modules, function()
 						-- if numQuests1 > 0 or numQuests2 > 0 then
 						-- 	return
 						-- end
-						if not IsShiftKeyDown() then
+						local GetActiveQuests = C_GossipInfo.GetActiveQuests() or 0
+						if not IsShiftKeyDown() and GetActiveQuests == 0 then
 							local info = C_GossipInfo.GetOptions()
+
 							for i, v in pairs(info) do
 								local gossipOptionID = v.gossipOptionID
 								local name = v.name
 								local icon = v.icon
-								local rewards = v.rewards
-								local status = v.status
-								local spellID = v.spellID
-								local flags = v.flags
-								local overrideIconID = v.overrideIconID
-								local selectOptionWhenOnlyOption = v.selectOptionWhenOnlyOption
-								local orderIndex = v.orderIndex
-									-- print (
-									-- 	orderIndex,
-									-- 	E.Octo_Func.func_texturefromIcon(icon),
-									-- 	E.Octo_Globals.Green_Color..gossipOptionID.."|r",
-									-- 	E.Octo_Globals.Green_Color..name.."|r",
-									-- 	rewards,
-									-- 	status,
-									-- 	spellID,
-									-- 	flags,
-									-- 	overrideIconID,
-									-- 	selectOptionWhenOnlyOption
-									-- 	)
+								-- local rewards = v.rewards
+								-- local status = v.status
+								-- local spellID = v.spellID
+								-- local flags = v.flags
+								-- local overrideIconID = v.overrideIconID
+								-- local selectOptionWhenOnlyOption = v.selectOptionWhenOnlyOption
+								-- local orderIndex = v.orderIndex
 								if icon then
 
 										-- for z, x in pairs (E.Octo_Table.OctoTable_Gossip) do
@@ -135,7 +125,8 @@ tinsert(E.Octo_Globals.modules, function()
 									if #info == 1 then
 										C_GossipInfo.SelectOption(gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										ChatFrame1:AddMessage(targetNPCID.. E.Octo_Func.func_Gradient(" Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..v.name)
+										ChatFrame1:AddMessage(targetNPCID.. E.Octo_Func.func_Gradient(" Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..name)
+
 									else
 
 										-- else
@@ -143,19 +134,19 @@ tinsert(E.Octo_Globals.modules, function()
 												if First_Option[targetNPCID] and i == 1 then
 													C_GossipInfo.SelectOption(gossipOptionID)
 													StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..v.name)
+													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..name)
 												elseif Second_Option[targetNPCID] and i == 2 then
 													C_GossipInfo.SelectOption(gossipOptionID)
 													StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..v.name)
+													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..name)
 												elseif Third_Option[targetNPCID] and i == 3 then
 													C_GossipInfo.SelectOption(gossipOptionID)
 													StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..v.name)
+													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..name)
 												elseif Fourth_Option[targetNPCID] and i == 4 then
 													C_GossipInfo.SelectOption(gossipOptionID)
 													StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..v.name)
+													ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Auto Gossip Select", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color.." ("..i..")|r "..E.Octo_Func.func_texturefromIcon(icon)..name)
 												end
 											end
 										end
