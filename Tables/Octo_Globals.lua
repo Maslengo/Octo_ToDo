@@ -19,6 +19,7 @@ E.Octo_Globals.AddonTexture_1 = "Interface\\Addons\\"..GlobalAddonName.."\\Media
 E.Octo_Globals.AddonTexture_2 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_2.tga"
 E.Octo_Globals.AddonTexture_3 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_3.tga"
 E.Octo_Globals.AddonTexture_4 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_4.tga"
+E.Octo_Globals.AddonTexture_5 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_5.tga"
 E.Octo_Globals.currentMaxLevel = 80
 ----------------------------------------------------------------
 local function texturefromIcon(self, size)

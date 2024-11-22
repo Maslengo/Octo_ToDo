@@ -461,6 +461,8 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 26, POS_LEFT, 0, "LastUpdate", L["Was online"])
 
 
+
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "StaticPopup1Button1", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_5, indent)..E.Octo_Globals.Gray_Color.."StaticPopup1Button1".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "AdditionalButtons", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_4, indent)..E.Octo_Globals.Gray_Color..L["Additional Buttons"].."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "CVar", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_3, indent)..E.Octo_Globals.Gray_Color.."CVar".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "Minecraft", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_2, indent)..E.Octo_Globals.Gray_Color.."Minecraft".."|r")
