@@ -1,12 +1,13 @@
 <UI>
-	<Script file="libs\LibStub\LibStub.lua"/>
-	<Include file="libs\UTF8\UTF8.xml"/>
-	<Include file="libs\LibSFDropDown\LibSFDropDown.xml"/>
-	<Include file="libs\AceLocale-3.0\AceLocale-3.0.xml"/>
-	<Include file="libs\CallbackHandler-1.0\CallbackHandler-1.0.xml"/>
-	<Script file="libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
-	<Include file="libs\LibDBIcon-1.0\lib.xml"/>
-	<Script file="libs\LibSharedMedia-3.0\LibSharedMedia-3.0.lua"/>
-	<Include file="libs\LibThingsLoad\LibThingsLoad.xml"/>
-	<Include file="libs\LibTranslit-1.0\LibTranslit-1.0.xml"/>
+	<Script file="LibStub\LibStub.lua"/>
+	<Include file="UTF8\lib.xml"/>
+	<Include file="LibSFDropDown\LibSFDropDown.xml"/>
+	<Include file="AceLocale-3.0\lib.xml"/>
+	<Include file="CallbackHandler-1.0\lib.xml"/>
+	<Include file="LibDataBroker-1.1\lib.xml"/>
+	<Include file="LibDBIcon-1.0\lib.xml"/>
+	<Include file="LibQTip-1.0\lib.xml"/>
+	<Include file="LibSharedMedia-3.0\lib.xml"/>
+	<Include file="LibThingsLoad\LibThingsLoad.xml"/>
+	<Include file="LibTranslit\lib.xml"/>
 </UI>
