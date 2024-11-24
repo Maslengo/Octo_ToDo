@@ -3,6 +3,31 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
 local AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
+
+local _G = _G
+local gsub, tinsert, next, type, wipe = gsub, tinsert, next, type, wipe
+local tostring, tonumber, strfind, strmatch = tostring, tonumber, strfind, strmatch
+
+local CreateFrame = CreateFrame
+local GetBuildInfo = GetBuildInfo
+local GetLocale = GetLocale
+local GetTime = GetTime
+local ReloadUI = ReloadUI
+local UIParent = UIParent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 local buildVersion, _, _, interfaceVersion = GetBuildInfo()
 local currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 if PTR_IssueReporter then PTR_IssueReporter:Hide() end
@@ -47,15 +72,15 @@ E.func_Octo_LoadAddOn("HidingBar_Options")
 -- E.func_Octo_LoadAddOn("Plater")
 local Button = nil
 local CF = nil
-local Octo_ToDo_FIRST_Frame_Char_Frame = nil
-local Octo_ToDo_FIRST_Frame_EventFrame = nil
-local inspectScantipFIRST = nil
-local OctoToDo_MainFrame = nil
-local OctoToDo_CloseButton = nil
-local OctoToDo_OptionsButton = nil
-local OctoToDo_AbandonButton = nil
-local OctoToDo_MplusButton = nil
-local OctoToDo_ItemsButton = nil
+local OctoToDo_FIRST_CharFrame = nil
+local OctoToDo_FIRST_EventFrame = nil
+local OctpToDo_FIRST_inspectScantip = nil
+local OctoToDo_FIRST_MainFrame = nil
+local OctoToDo_FIRST_CloseButton = nil
+local OctoToDo_FIRST_OptionsButton = nil
+local OctoToDo_FIRST_AbandonButton = nil
+local OctoToDo_FIRST_MplusButton = nil
+local OctoToDo_FIRST_ItemsButton = nil
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = E.func_GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
@@ -174,7 +199,7 @@ end
 local OctoTable_func_otrisovka_FIRST = {
 }
 local function Central_Frame_Mouse_OnEnter(self)
-	local parent = OctoToDo_MainFrame["FrameLine"..self.index]
+	local parent = OctoToDo_FIRST_MainFrame["FrameLine"..self.index]
 	parent:GetScript("OnEnter")(parent)
 	if not self.tooltip then
 		return
@@ -190,7 +215,7 @@ local function Central_Frame_Mouse_OnEnter(self)
 	GameTooltip:Show()
 end
 local function Central_Frame_Mouse_OnLeave(self)
-	local parent = OctoToDo_MainFrame["FrameLine"..self.index]
+	local parent = OctoToDo_FIRST_MainFrame["FrameLine"..self.index]
 	parent:GetScript("OnLeave")(parent)
 	GameTooltip:Hide()
 end
@@ -440,8 +465,8 @@ local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 		self:ClearAllPoints()
 		self:Hide()
 	else
-		self:SetParent(OctoToDo_MainFrame)
-		self:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
+		self:SetParent(OctoToDo_FIRST_MainFrame)
+		self:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
 		self:Show()
 	end
 end
@@ -461,7 +486,7 @@ local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spel
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableItems".."|r")
 	end
-	local Button = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+	local Button = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.itemID = itemID
 	Button.Texture = Texture
 	Button.Ypos = Ypos
@@ -472,7 +497,7 @@ local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spel
 	Button.count = 1
 	Button.spellID = spellID or 431280
 	Button:SetSize(E.curHeight, E.curHeight)
-	Button:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame, "TOPLEFT", Xpos, Ypos+1)
+	Button:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", Xpos, Ypos+1)
 	Button:SetBackdrop({
 			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1
@@ -547,8 +572,8 @@ local function CreateFrameUsableSpells_OnShow(self)
 		self:ClearAllPoints()
 		self:Hide()
 	else
-		self:SetParent(OctoToDo_MainFrame)
-		self:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
+		self:SetParent(OctoToDo_FIRST_MainFrame)
+		self:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
 		self:Show()
 	end
 end
@@ -569,8 +594,8 @@ local function CreateFrameUsableSpells_OnEvent(self, event)
 		self:ClearAllPoints()
 		self:Hide()
 	else
-		self:SetParent(OctoToDo_MainFrame)
-		self:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
+		self:SetParent(OctoToDo_FIRST_MainFrame)
+		self:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
 		self:Show()
 	end
 end
@@ -600,7 +625,7 @@ local function CreateFrameUsableSpells(spellID, Texture, Xpos, Ypos, r, g, b)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells".."|r")
 	end
-	local Button = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+	local Button = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.spellID = spellID
 	Button.Texture = Texture
 	Button.Ypos = Ypos
@@ -610,7 +635,7 @@ local function CreateFrameUsableSpells(spellID, Texture, Xpos, Ypos, r, g, b)
 	Button.b = b
 	Button.spellID = spellID
 	Button:SetSize(E.curHeight, E.curHeight)
-	Button:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame, "TOPLEFT", Xpos, Ypos+1)
+	Button:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", Xpos, Ypos+1)
 	Button:SetBackdrop({
 			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1
@@ -639,11 +664,11 @@ local function Octo_ToDoDeleteChar(curGUID)
 		ChatFrame1:AddMessage(E.Blue_Color.."Octo_ToDoDeleteChar".."|r")
 	end
 	Octo_ToDo_DB_Players[curGUID] = nil
-	for X, Y in pairs(OctoToDo_MainFrame.AllCharFrames) do
-		if Y == OctoToDo_MainFrame[curGUID] then
-			OctoToDo_MainFrame.AllCharFrames[X].parent = nil
-			OctoToDo_MainFrame.AllCharFrames[X]:Hide()
-			OctoToDo_MainFrame.AllCharFrames[X] = nil
+	for X, Y in pairs(OctoToDo_FIRST_MainFrame.AllCharFrames) do
+		if Y == OctoToDo_FIRST_MainFrame[curGUID] then
+			OctoToDo_FIRST_MainFrame.AllCharFrames[X].parent = nil
+			OctoToDo_FIRST_MainFrame.AllCharFrames[X]:Hide()
+			OctoToDo_FIRST_MainFrame.AllCharFrames[X] = nil
 		end
 	end
 	Octo_ToDo_FIRST_AddDataToAltFrame()
@@ -1024,10 +1049,10 @@ local function Collect_ALL_ItemsInBag()
 				local hyperlink = containerInfo.hyperlink
 				local itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, sellPrice, classID, subclassID, bindType, expacID, setID, isCraftingReagent = GetItemInfo(hyperlink)
 				if Octo_ToDo_DB_Vars.config.ItemsUsable then
-					inspectScantipFIRST:ClearLines()
-					inspectScantipFIRST:SetHyperlink(hyperlink)
-					if inspectScantipFIRST:NumLines() > 0 then
-						for i = 1, inspectScantipFIRST:NumLines() do
+					OctpToDo_FIRST_inspectScantip:ClearLines()
+					OctpToDo_FIRST_inspectScantip:SetHyperlink(hyperlink)
+					if OctpToDo_FIRST_inspectScantip:NumLines() > 0 then
+						for i = 1, OctpToDo_FIRST_inspectScantip:NumLines() do
 							local text = _G["OctoToDoScanningTooltipFIRSTTextLeft"..i]:GetText()
 							local r, g, b, a = _G["OctoToDoScanningTooltipFIRSTTextLeft"..i]:GetTextColor()
 							local QWE = func_coloredText(_G["OctoToDoScanningTooltipFIRSTTextLeft"..i])
@@ -1047,7 +1072,7 @@ local function Collect_ALL_ItemsInBag()
 							end
 						end
 					end
-					inspectScantipFIRST:ClearLines()
+					OctpToDo_FIRST_inspectScantip:ClearLines()
 					if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
 						local dungeonID = select(3, strsplit(":", hyperlink))
 						local lvl = select(4, strsplit(":", hyperlink))
@@ -1392,54 +1417,54 @@ local function TEST_GROUP_ROSTER()
 	end
 end
 local function Octo_ToDo_FIRST_OnLoad()
-	if not Octo_ToDo_FIRST_Frame_EventFrame then
-		Octo_ToDo_FIRST_Frame_EventFrame = CreateFrame("FRAME", AddonTitle..E.func_GenerateUniqueID())
+	if not OctoToDo_FIRST_EventFrame then
+		OctoToDo_FIRST_EventFrame = CreateFrame("FRAME", AddonTitle..E.func_GenerateUniqueID())
 	end
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("CHAT_MSG_BN_WHISPER_INFORM")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("CHAT_MSG_BN_WHISPER")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("CHAT_MSG_SKILL")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("CHAT_MSG_SYSTEM")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("CHAT_MSG_WHISPER_INFORM")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("CHAT_MSG_WHISPER")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("ITEM_COUNT_CHANGED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("MAJOR_FACTION_RENOWN_LEVEL_CHANGED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("MAJOR_FACTION_UNLOCKED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_LOOT_RECEIVED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("ENCOUNTER_END")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("HEARTHSTONE_BOUND")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("MAIL_INBOX_UPDATE")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("MAIL_SEND_SUCCESS")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("MAIL_SHOW")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_LOGIN")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_MONEY")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("ACCOUNT_MONEY")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_ACCEPTED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_COMPLETE")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_FINISHED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("QUEST_REMOVED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("READY_CHECK")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("SPELLS_CHANGED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TOYS_UPDATED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TRAINER_UPDATE")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("UPDATE_PENDING_MAIL")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("VARIABLES_LOADED")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("PLAYER_XP_UPDATE")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("TIME_PLAYED_MSG")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-	Octo_ToDo_FIRST_Frame_EventFrame:RegisterEvent("SHOW_SUBSCRIPTION_INTERSTITIAL")
-	Octo_ToDo_FIRST_Frame_EventFrame:SetScript("OnEvent", function(...)
+	OctoToDo_FIRST_EventFrame:RegisterEvent("CHAT_MSG_BN_WHISPER_INFORM")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("CHAT_MSG_BN_WHISPER")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("CHAT_MSG_SKILL")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("CHAT_MSG_SYSTEM")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("CHAT_MSG_WHISPER_INFORM")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("CHAT_MSG_WHISPER")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("ITEM_COUNT_CHANGED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("MAJOR_FACTION_RENOWN_LEVEL_CHANGED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("MAJOR_FACTION_UNLOCKED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("QUEST_LOOT_RECEIVED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("ENCOUNTER_END")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("HEARTHSTONE_BOUND")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("MAIL_INBOX_UPDATE")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("MAIL_SEND_SUCCESS")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("MAIL_SHOW")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("PLAYER_LEAVING_WORLD")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("PLAYER_LOGIN")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("PLAYER_MONEY")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("ACCOUNT_MONEY")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("QUEST_ACCEPTED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("QUEST_COMPLETE")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("QUEST_FINISHED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("QUEST_REMOVED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("READY_CHECK")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("SPELLS_CHANGED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("TOYS_UPDATED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("TRAINER_UPDATE")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("UPDATE_PENDING_MAIL")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("VARIABLES_LOADED")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("PLAYER_XP_UPDATE")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("TIME_PLAYED_MSG")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+	OctoToDo_FIRST_EventFrame:RegisterEvent("SHOW_SUBSCRIPTION_INTERSTITIAL")
+	OctoToDo_FIRST_EventFrame:SetScript("OnEvent", function(...)
 			Octo_ToDo_FIRST_OnEvent(...)
 	end)
-	if not inspectScantipFIRST then
-		inspectScantipFIRST = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFIRST", nil, "GameTooltipTemplate")
-		inspectScantipFIRST:SetOwner(UIParent, "ANCHOR_NONE")
+	if not OctpToDo_FIRST_inspectScantip then
+		OctpToDo_FIRST_inspectScantip = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFIRST", nil, "GameTooltipTemplate")
+		OctpToDo_FIRST_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
 local function O_otrisovka_FIRST()
@@ -2195,12 +2220,12 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Octo_ToDo_FIRST_CreateAltFrame".."|r")
 	end
-	if not OctoToDo_MainFrame then
-		OctoToDo_MainFrame = CreateFrame("BUTTON", "OctoToDo_MainFramePIZDA", UIParent, "BackdropTemplate")
-		OctoToDo_MainFrame:Hide()
+	if not OctoToDo_FIRST_MainFrame then
+		OctoToDo_FIRST_MainFrame = CreateFrame("BUTTON", "OctoToDo_FIRST_MainFramePIZDA", UIParent, "BackdropTemplate")
+		OctoToDo_FIRST_MainFrame:Hide()
 		Octo_ToDo_DB_Vars.config.FrameScale = Octo_ToDo_DB_Vars.config.FrameScale or 1
-		OctoToDo_MainFrame:SetScale(Octo_ToDo_DB_Vars.config.FrameScale)
-		local ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame"..E.func_GenerateUniqueID(), OctoToDo_MainFrame)
+		OctoToDo_FIRST_MainFrame:SetScale(Octo_ToDo_DB_Vars.config.FrameScale)
+		local ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame"..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame)
 		local ScrollBar = CreateFrame("EventFrame", nil, ScrollFrame, "MinimalScrollBar")
 		ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 6, 0)
 		ScrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 6, 0)
@@ -2216,36 +2241,36 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					OnMouseWheel(self, ...)
 				end
 		end)
-		OctoToDo_MainFrame.scrollChild = scrollChild
-		OctoToDo_MainFrame.ScrollBar = ScrollBar
+		OctoToDo_FIRST_MainFrame.scrollChild = scrollChild
+		OctoToDo_FIRST_MainFrame.ScrollBar = ScrollBar
 	end
-	OctoToDo_MainFrame:SetClampedToScreen(false)
-	OctoToDo_MainFrame:SetFrameStrata("HIGH")
-	OctoToDo_MainFrame:SetPoint("CENTER")
-	OctoToDo_MainFrame:SetBackdrop({
+	OctoToDo_FIRST_MainFrame:SetClampedToScreen(false)
+	OctoToDo_FIRST_MainFrame:SetFrameStrata("HIGH")
+	OctoToDo_FIRST_MainFrame:SetPoint("CENTER")
+	OctoToDo_FIRST_MainFrame:SetBackdrop({
 			bgFile = bgFile,
 			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
-	OctoToDo_MainFrame:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
-	OctoToDo_MainFrame:SetBackdropBorderColor(0, 0, 0, 1)
-	OctoToDo_MainFrame:SetScript("OnShow", function()
+	OctoToDo_FIRST_MainFrame:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+	OctoToDo_FIRST_MainFrame:SetBackdropBorderColor(0, 0, 0, 1)
+	OctoToDo_FIRST_MainFrame:SetScript("OnShow", function()
 			Octo_ToDo_FIRST_AddDataToAltFrame()
 	end)
-	OctoToDo_MainFrame:EnableMouse(true)
-	OctoToDo_MainFrame:SetMovable(true)
-	OctoToDo_MainFrame:RegisterForDrag("LeftButton")
-	OctoToDo_MainFrame:SetScript("OnDragStart", OctoToDo_MainFrame.StartMoving)
-	OctoToDo_MainFrame:SetScript("OnDragStop", function() OctoToDo_MainFrame:StopMovingOrSizing() end)
-	OctoToDo_MainFrame:RegisterForClicks("RightButtonUp")
-	OctoToDo_MainFrame:SetScript("OnClick", function(self) self:Hide() end)
-	OctoToDo_MainFrame:SetHeight(50)
+	OctoToDo_FIRST_MainFrame:EnableMouse(true)
+	OctoToDo_FIRST_MainFrame:SetMovable(true)
+	OctoToDo_FIRST_MainFrame:RegisterForDrag("LeftButton")
+	OctoToDo_FIRST_MainFrame:SetScript("OnDragStart", OctoToDo_FIRST_MainFrame.StartMoving)
+	OctoToDo_FIRST_MainFrame:SetScript("OnDragStop", function() OctoToDo_FIRST_MainFrame:StopMovingOrSizing() end)
+	OctoToDo_FIRST_MainFrame:RegisterForClicks("RightButtonUp")
+	OctoToDo_FIRST_MainFrame:SetScript("OnClick", function(self) self:Hide() end)
+	OctoToDo_FIRST_MainFrame:SetHeight(50)
 	if Octo_ToDo_DB_Vars.config.ShowTotalMoney then
 		if not Octo_Frame_TotalMoneyCurServer then
-			Octo_Frame_TotalMoneyCurServer = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
+			Octo_Frame_TotalMoneyCurServer = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			Octo_Frame_TotalMoneyCurServer:SetSize(400, E.curHeight)
 			Octo_Frame_TotalMoneyCurServer:EnableMouse(false)
-			Octo_Frame_TotalMoneyCurServer:SetPoint("TOPLEFT", OctoToDo_MainFrame, "BOTTOMLEFT", 4, -2)
+			Octo_Frame_TotalMoneyCurServer:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame, "BOTTOMLEFT", 4, -2)
 			Octo_Frame_TotalMoneyCurServer:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
@@ -2264,10 +2289,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 		if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
 			if not Octo_Frame_TotalMoneyAllServer then
-				Octo_Frame_TotalMoneyAllServer = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
+				Octo_Frame_TotalMoneyAllServer = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 				Octo_Frame_TotalMoneyAllServer:SetSize(400, E.curHeight)
 				Octo_Frame_TotalMoneyAllServer:EnableMouse(false)
-				Octo_Frame_TotalMoneyAllServer:SetPoint("TOPLEFT", OctoToDo_MainFrame, "BOTTOMLEFT", 4, -22)
+				Octo_Frame_TotalMoneyAllServer:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame, "BOTTOMLEFT", 4, -22)
 				Octo_Frame_TotalMoneyAllServer:SetBackdrop({
 						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 						edgeSize = 1
@@ -2286,13 +2311,13 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			end
 		end
 		if not Octo_Frame_Token_Price then
-			Octo_Frame_Token_Price = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
+			Octo_Frame_Token_Price = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			Octo_Frame_Token_Price:SetSize(400, E.curHeight)
 			Octo_Frame_Token_Price:EnableMouse(false)
 			if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
-				Octo_Frame_Token_Price:SetPoint("TOPLEFT", OctoToDo_MainFrame, "BOTTOMLEFT", 4, -44)
+				Octo_Frame_Token_Price:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame, "BOTTOMLEFT", 4, -44)
 			else
-				Octo_Frame_Token_Price:SetPoint("TOPLEFT", OctoToDo_MainFrame, "BOTTOMLEFT", 4, -22)
+				Octo_Frame_Token_Price:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame, "BOTTOMLEFT", 4, -22)
 			end
 			Octo_Frame_Token_Price:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
@@ -2316,10 +2341,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	if Octo_ToDo_DB_Vars.config.ShowTimeAll == true then
 		if not Octo_Frame_TotalTimeAllServer then
-			Octo_Frame_TotalTimeAllServer = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
+			Octo_Frame_TotalTimeAllServer = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			Octo_Frame_TotalTimeAllServer:SetSize(400, E.curHeight)
 			Octo_Frame_TotalTimeAllServer:EnableMouse(false)
-			Octo_Frame_TotalTimeAllServer:SetPoint("TOPRIGHT", OctoToDo_MainFrame, "BOTTOMRIGHT", -4, -2)
+			Octo_Frame_TotalTimeAllServer:SetPoint("TOPRIGHT", OctoToDo_FIRST_MainFrame, "BOTTOMRIGHT", -4, -2)
 			Octo_Frame_TotalTimeAllServer:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
@@ -2337,10 +2362,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 		if Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL == true then
 			if not Octo_Frame_TotalTimeAllServerMAXLEVEL then
-				Octo_Frame_TotalTimeAllServerMAXLEVEL = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
+				Octo_Frame_TotalTimeAllServerMAXLEVEL = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetSize(400, E.curHeight)
 				Octo_Frame_TotalTimeAllServerMAXLEVEL:EnableMouse(false)
-				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetPoint("TOPRIGHT", OctoToDo_MainFrame, "BOTTOMRIGHT", -4, -22)
+				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetPoint("TOPRIGHT", OctoToDo_FIRST_MainFrame, "BOTTOMRIGHT", -4, -22)
 				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetBackdrop({
 						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 						edgeSize = 1
@@ -2359,38 +2384,38 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 	end
 	----------------------------------------------------------------
-	if not OctoToDo_CloseButton then
-		OctoToDo_CloseButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
-		OctoToDo_CloseButton:SetSize(E.curHeight, E.curHeight)
-		OctoToDo_CloseButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.curHeight)*0, 1)
-		OctoToDo_CloseButton:SetBackdrop({
+	if not OctoToDo_FIRST_CloseButton then
+		OctoToDo_FIRST_CloseButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+		OctoToDo_FIRST_CloseButton:SetSize(E.curHeight, E.curHeight)
+		OctoToDo_FIRST_CloseButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*0, 1)
+		OctoToDo_FIRST_CloseButton:SetBackdrop({
 				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 				edgeSize = 1
 		})
-		OctoToDo_CloseButton:SetBackdropBorderColor(1, 0, 0, 0)
-		OctoToDo_CloseButton:SetScript("OnEnter", function(self)
+		OctoToDo_FIRST_CloseButton:SetBackdropBorderColor(1, 0, 0, 0)
+		OctoToDo_FIRST_CloseButton:SetScript("OnEnter", function(self)
 				self.icon:SetVertexColor(r, g, b, 1)
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
 				GameTooltip:ClearLines()
 				GameTooltip:AddLine(classColorHexCurrent..CLOSE.."|r")
 				GameTooltip:Show()
 		end)
-		OctoToDo_CloseButton:SetScript("OnLeave", function(self)
+		OctoToDo_FIRST_CloseButton:SetScript("OnLeave", function(self)
 				self.icon:SetVertexColor(1, 1, 1, 1)
 				GameTooltip:ClearLines()
 				GameTooltip:Hide()
 		end)
-		OctoToDo_CloseButton:SetScript("OnMouseDown", function(self)
+		OctoToDo_FIRST_CloseButton:SetScript("OnMouseDown", function(self)
 				self.icon:SetVertexColor(1, 0, 0, .5)
 		end)
-		OctoToDo_CloseButton:SetScript("OnClick", function()
-				OctoToDo_MainFrame:Hide()
+		OctoToDo_FIRST_CloseButton:SetScript("OnClick", function()
+				OctoToDo_FIRST_MainFrame:Hide()
 		end)
-		local t = OctoToDo_CloseButton:CreateTexture(nil, "BACKGROUND")
-		OctoToDo_CloseButton.icon = t
+		local t = OctoToDo_FIRST_CloseButton:CreateTexture(nil, "BACKGROUND")
+		OctoToDo_FIRST_CloseButton.icon = t
 		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga")
-		t:SetAllPoints(OctoToDo_CloseButton)
-		OctoToDo_CloseButton:SetScript("OnKeyDown", function(self, key)
+		t:SetAllPoints(OctoToDo_FIRST_CloseButton)
+		OctoToDo_FIRST_CloseButton:SetScript("OnKeyDown", function(self, key)
 				if key == GetBindingKey("TOGGLEGAMEMENU") then
 					self:GetParent():Hide()
 					self:SetPropagateKeyboardInput(false)
@@ -2400,31 +2425,31 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end)
 	end
 	----------------------------------------------------------------
-	if not OctoToDo_OptionsButton then
-		OctoToDo_OptionsButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
-		OctoToDo_OptionsButton:SetSize(E.curHeight, E.curHeight)
-		OctoToDo_OptionsButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.curHeight)*1, 1)
-		OctoToDo_OptionsButton:SetBackdrop({
+	if not OctoToDo_FIRST_OptionsButton then
+		OctoToDo_FIRST_OptionsButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+		OctoToDo_FIRST_OptionsButton:SetSize(E.curHeight, E.curHeight)
+		OctoToDo_FIRST_OptionsButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*1, 1)
+		OctoToDo_FIRST_OptionsButton:SetBackdrop({
 				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 				edgeSize = 1
 		})
-		OctoToDo_OptionsButton:SetBackdropBorderColor(1, 0, 0, 0)
-		OctoToDo_OptionsButton:SetScript("OnEnter", function(self)
+		OctoToDo_FIRST_OptionsButton:SetBackdropBorderColor(1, 0, 0, 0)
+		OctoToDo_FIRST_OptionsButton:SetScript("OnEnter", function(self)
 				self.icon:SetVertexColor(r, g, b, 1)
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
 				GameTooltip:AddLine(classColorHexCurrent..OPTIONS.."|r")
 				GameTooltip:Show()
 		end)
-		OctoToDo_OptionsButton:SetScript("OnLeave", function(self)
+		OctoToDo_FIRST_OptionsButton:SetScript("OnLeave", function(self)
 				self.icon:SetVertexColor(1, 1, 1, 1)
 				GameTooltip:Hide()
 		end)
-		OctoToDo_OptionsButton:SetScript("OnMouseDown", function(self)
+		OctoToDo_FIRST_OptionsButton:SetScript("OnMouseDown", function(self)
 				self.icon:SetVertexColor(1, 0, 0, .5)
 		end)
-		OctoToDo_OptionsButton:SetScript("OnClick", function()
-				if OctoToDo_MainFramePIZDA and OctoToDo_MainFramePIZDA:IsShown() then
-					OctoToDo_MainFramePIZDA:Hide()
+		OctoToDo_FIRST_OptionsButton:SetScript("OnClick", function()
+				if OctoToDo_FIRST_MainFramePIZDA and OctoToDo_FIRST_MainFramePIZDA:IsShown() then
+					OctoToDo_FIRST_MainFramePIZDA:Hide()
 				end
 				if SettingsPanel:IsVisible() and self:IsVisible() then
 					HideUIPanel(SettingsPanel)
@@ -2432,10 +2457,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					Settings.OpenToCategory(AddonTitle, true)
 				end
 		end)
-		local t = OctoToDo_OptionsButton:CreateTexture(nil, "BACKGROUND")
-		OctoToDo_OptionsButton.icon = t
+		local t = OctoToDo_FIRST_OptionsButton:CreateTexture(nil, "BACKGROUND")
+		OctoToDo_FIRST_OptionsButton.icon = t
 		t:SetTexture(E.AddonTexture_1)
-		t:SetAllPoints(OctoToDo_OptionsButton)
+		t:SetAllPoints(OctoToDo_FIRST_OptionsButton)
 	end
 	----------------------------------------------------------------
 	local function AbandonQuests()
@@ -2457,7 +2482,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		ChatFrame1:AddMessage(E.func_Gradient(L["Total"], E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Green_Color..numQuests.."|r")
 	end
 	if Octo_ToDo_DB_Vars.config.AdditionalButtons == true then
-		if not OctoToDo_AbandonButton then
+		if not OctoToDo_FIRST_AbandonButton then
 			local numQuests = E.func_CurrentNumQuests()
 			StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
 				text = E.Red_Color.."!!! ACHTUNG !!!|r\n"..classColorHexCurrent.."Отменить все задания?|r",
@@ -2469,15 +2494,15 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					C_Timer.After(1, AbandonQuests)
 				end,
 			}
-			OctoToDo_AbandonButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
-			OctoToDo_AbandonButton:SetSize(E.curHeight, E.curHeight)
-			OctoToDo_AbandonButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.curHeight)*2, 1)
-			OctoToDo_AbandonButton:SetBackdrop({
+			OctoToDo_FIRST_AbandonButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_AbandonButton:SetSize(E.curHeight, E.curHeight)
+			OctoToDo_FIRST_AbandonButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*2, 1)
+			OctoToDo_FIRST_AbandonButton:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
 			})
-			OctoToDo_AbandonButton:SetBackdropBorderColor(1, 0, 0, 0)
-			OctoToDo_AbandonButton:SetScript("OnEnter", function(self)
+			OctoToDo_FIRST_AbandonButton:SetBackdropBorderColor(1, 0, 0, 0)
+			OctoToDo_FIRST_AbandonButton:SetScript("OnEnter", function(self)
 					numQuests = E.func_CurrentNumQuests()
 					self.icon:SetVertexColor(r, g, b, 1)
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
@@ -2512,35 +2537,35 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					end
 					GameTooltip:Show()
 			end)
-			OctoToDo_AbandonButton:SetScript("OnLeave", function(self)
+			OctoToDo_FIRST_AbandonButton:SetScript("OnLeave", function(self)
 					self.icon:SetVertexColor(1, 1, 1, 1)
 					GameTooltip:ClearLines()
 					GameTooltip:Hide()
 			end)
-			OctoToDo_AbandonButton:SetScript("OnMouseDown", function(self)
+			OctoToDo_FIRST_AbandonButton:SetScript("OnMouseDown", function(self)
 					self.icon:SetVertexColor(1, 0, 0, .5)
 			end)
-			OctoToDo_AbandonButton:SetScript("OnClick", function()
+			OctoToDo_FIRST_AbandonButton:SetScript("OnClick", function()
 					if numQuests > 0 then
 						StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
 					end
 			end)
-			local t = OctoToDo_AbandonButton:CreateTexture(nil, "BACKGROUND")
-			OctoToDo_AbandonButton.icon = t
+			local t = OctoToDo_FIRST_AbandonButton:CreateTexture(nil, "BACKGROUND")
+			OctoToDo_FIRST_AbandonButton.icon = t
 			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga")
-			t:SetAllPoints(OctoToDo_AbandonButton)
+			t:SetAllPoints(OctoToDo_FIRST_AbandonButton)
 		end
 		----------------------------------------------------------------
-		if not OctoToDo_MplusButton then
-			OctoToDo_MplusButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
-			OctoToDo_MplusButton:SetSize(E.curHeight, E.curHeight)
-			OctoToDo_MplusButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.curHeight)*3, 1)
-			OctoToDo_MplusButton:SetBackdrop({
+		if not OctoToDo_FIRST_MplusButton then
+			OctoToDo_FIRST_MplusButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_MplusButton:SetSize(E.curHeight, E.curHeight)
+			OctoToDo_FIRST_MplusButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*3, 1)
+			OctoToDo_FIRST_MplusButton:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
 			})
-			OctoToDo_MplusButton:SetBackdropBorderColor(r, g, b, 0)
-			OctoToDo_MplusButton:SetScript("OnEnter", function(self)
+			OctoToDo_FIRST_MplusButton:SetBackdropBorderColor(r, g, b, 0)
+			OctoToDo_FIRST_MplusButton:SetScript("OnEnter", function(self)
 					local i = 0
 					self:SetBackdropBorderColor(1, 0, 0, 0)
 					self.icon:SetVertexColor(r, g, b, 1)
@@ -2559,41 +2584,41 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					end
 					if i == 0 then
 						GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
-						OctoToDo_MplusButton:Hide()
+						OctoToDo_FIRST_MplusButton:Hide()
 					end
 					GameTooltip:AddDoubleLine(" ", " ")
 					GameTooltip:Show()
 			end)
-			OctoToDo_MplusButton:SetScript("OnLeave", function(self)
+			OctoToDo_FIRST_MplusButton:SetScript("OnLeave", function(self)
 					self:SetBackdropBorderColor(r, g, b, 0)
 					self.icon:SetVertexColor(1, 1, 1, 1)
 					GameTooltip:ClearLines()
 					GameTooltip:Hide()
 			end)
-			OctoToDo_MplusButton:SetScript("OnMouseDown", function(self)
+			OctoToDo_FIRST_MplusButton:SetScript("OnMouseDown", function(self)
 					self:SetBackdropBorderColor(1, 0, 0, 0)
 					self.icon:SetVertexColor(r, g, b, .5)
 			end)
-			OctoToDo_MplusButton:SetScript("OnClick", function()
-					-- OctoToDo_MainFrame:Hide()
+			OctoToDo_FIRST_MplusButton:SetScript("OnClick", function()
+					-- OctoToDo_FIRST_MainFrame:Hide()
 					fpde(Octo_ToDo_DB_Other.mapChallengeModeID)
 			end)
-			local t = OctoToDo_MplusButton:CreateTexture(nil, "BACKGROUND")
-			OctoToDo_MplusButton.icon = t
+			local t = OctoToDo_FIRST_MplusButton:CreateTexture(nil, "BACKGROUND")
+			OctoToDo_FIRST_MplusButton.icon = t
 			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga")
-			t:SetAllPoints(OctoToDo_MplusButton)
+			t:SetAllPoints(OctoToDo_FIRST_MplusButton)
 		end
 		----------------------------------------------------------------
-		if not OctoToDo_ItemsButton then
-			OctoToDo_ItemsButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "BackDropTemplate")
-			OctoToDo_ItemsButton:SetSize(E.curHeight, E.curHeight)
-			OctoToDo_ItemsButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.curHeight)*4, 1)
-			OctoToDo_ItemsButton:SetBackdrop({
+		if not OctoToDo_FIRST_ItemsButton then
+			OctoToDo_FIRST_ItemsButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_ItemsButton:SetSize(E.curHeight, E.curHeight)
+			OctoToDo_FIRST_ItemsButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*4, 1)
+			OctoToDo_FIRST_ItemsButton:SetBackdrop({
 					edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 					edgeSize = 1
 			})
-			OctoToDo_ItemsButton:SetBackdropBorderColor(r, g, b, 0)
-			OctoToDo_ItemsButton:SetScript("OnEnter", function(self)
+			OctoToDo_FIRST_ItemsButton:SetBackdropBorderColor(r, g, b, 0)
+			OctoToDo_FIRST_ItemsButton:SetScript("OnEnter", function(self)
 					local i = 0
 					self:SetBackdropBorderColor(1, 0, 0, 0)
 					self.icon:SetVertexColor(r, g, b, 1)
@@ -2610,23 +2635,23 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					end
 					if i == 0 then
 						GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
-						-- OctoToDo_ItemsButton:Hide()
+						-- OctoToDo_FIRST_ItemsButton:Hide()
 					end
 					GameTooltip:AddDoubleLine(" ", " ")
 					GameTooltip:Show()
 			end)
-			OctoToDo_ItemsButton:SetScript("OnLeave", function(self)
+			OctoToDo_FIRST_ItemsButton:SetScript("OnLeave", function(self)
 					self:SetBackdropBorderColor(r, g, b, 0)
 					self.icon:SetVertexColor(1, 1, 1, 1)
 					GameTooltip:ClearLines()
 					GameTooltip:Hide()
 			end)
-			OctoToDo_ItemsButton:SetScript("OnMouseDown", function(self)
+			OctoToDo_FIRST_ItemsButton:SetScript("OnMouseDown", function(self)
 					self:SetBackdropBorderColor(1, 0, 0, 0)
 					self.icon:SetVertexColor(r, g, b, .5)
 			end)
-			OctoToDo_ItemsButton:SetScript("OnClick", function()
-					-- OctoToDo_MainFrame:Hide()
+			OctoToDo_FIRST_ItemsButton:SetScript("OnClick", function()
+					-- OctoToDo_FIRST_MainFrame:Hide()
 					local curGUID = UnitGUID("PLAYER")
 					for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Players) do
 						if curCharGUID == curGUID then
@@ -2634,15 +2659,15 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						end
 					end
 			end)
-			local t = OctoToDo_ItemsButton:CreateTexture(nil, "BACKGROUND")
-			OctoToDo_ItemsButton.icon = t
+			local t = OctoToDo_FIRST_ItemsButton:CreateTexture(nil, "BACKGROUND")
+			OctoToDo_FIRST_ItemsButton.icon = t
 			t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow21.tga")
-			t:SetAllPoints(OctoToDo_ItemsButton)
+			t:SetAllPoints(OctoToDo_FIRST_ItemsButton)
 		end
 		----------------------------------------------------------------
 	end
 	if not dd_FIRST then
-		local dd_FIRST = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+		local dd_FIRST = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 		local multiply = (1/3)*2
 		dd_FIRST:SetSize(E.curWidthTitle*multiply, E.curHeight*multiply)
 		dd_FIRST:SetBackdrop({
@@ -2664,7 +2689,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		dd_FIRST.text:SetTextColor(1, 1, 1, 1)
 		dd_FIRST.text:SetText(classColorHexCurrent..L["Characters"].."|r")
 		LibSFDropDown:SetMixin(dd_FIRST)
-		dd_FIRST:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame, "TOPLEFT", 0, 1)
+		dd_FIRST:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", 0, 1)
 		dd_FIRST:ddSetDisplayMode(GlobalAddonName)
 		dd_FIRST:ddSetOpenMenuUp(true)
 		dd_FIRST:ddSetNoGlobalMouseEvent(true)
@@ -2942,10 +2967,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	for i = 1, #OctoTable_func_otrisovka_FIRST do
 		local fname, f
 		fname = "FrameLine"..i
-		OctoToDo_MainFrame[fname] = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID().."FrameLine"..i, OctoToDo_MainFrame.scrollChild, "BackdropTemplate")
-		f = OctoToDo_MainFrame[fname]
+		OctoToDo_FIRST_MainFrame[fname] = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID().."FrameLine"..i, OctoToDo_FIRST_MainFrame.scrollChild, "BackdropTemplate")
+		f = OctoToDo_FIRST_MainFrame[fname]
 		f:SetHeight(E.curHeight)
-		f:SetPoint("TOPLEFT", OctoToDo_MainFrame.scrollChild, "TOPLEFT", 0, -E.curHeight*(i-1))
+		f:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame.scrollChild, "TOPLEFT", 0, -E.curHeight*(i-1))
 		f:SetPoint("RIGHT")
 		f:SetScript("OnEnter", FrameLine_OnEnter)
 		f:SetScript("OnLeave", FrameLine_OnLeave)
@@ -2954,17 +2979,17 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		f.BG:SetHeight(E.curHeight)
 		f.BG:SetAllPoints()
 		fname = "TextLeft"..i
-		OctoToDo_MainFrame[fname] = OctoToDo_MainFrame.scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		f = OctoToDo_MainFrame[fname]
+		OctoToDo_FIRST_MainFrame[fname] = OctoToDo_FIRST_MainFrame.scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		f = OctoToDo_FIRST_MainFrame[fname]
 		f:SetSize(E.curWidthTitle, E.curHeight)
-		f:SetPoint("TOPLEFT", OctoToDo_MainFrame.scrollChild, "TOPLEFT", 6, -E.curHeight*(i-1))
+		f:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame.scrollChild, "TOPLEFT", 6, -E.curHeight*(i-1))
 		f:SetFontObject(OctoFont11)
 		f:SetJustifyV("MIDDLE")
 		f:SetJustifyH("LEFT")
 		f:SetTextColor(1, 1, 1, 1)
 	end
 	Octo_ToDo_FIRST_AddDataToAltFrame()
-	OctoToDo_MainFrame:Hide()
+	OctoToDo_FIRST_MainFrame:Hide()
 end
 function Octo_ToDo_FIRST_AddDataToAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -2975,7 +3000,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	local LevelToShow = Octo_ToDo_DB_Vars.config.LevelToShow
 	local LevelToShowMAX = Octo_ToDo_DB_Vars.config.LevelToShowMAX
 	local itemLevelToShow = Octo_ToDo_DB_Vars.config.itemLevelToShow
-	OctoToDo_MainFrame.AllCharFrames = {}
+	OctoToDo_FIRST_MainFrame.AllCharFrames = {}
 	local sorted = {}
 	for curCharGUID, CharInfo in pairs(Octo_ToDo_DB_Players) do
 		if ((ShowOnlyCurrentRealm == true and (CharInfo.curServer == curServer))
@@ -3002,25 +3027,25 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 				b.Name < a.Name
 			end
 	end)
-	for i, CharInfo in pairs(sorted) do
+	for GUID, CharInfo in pairs(sorted) do
 		local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 		local curCharGUID = CharInfo.GUID
-		if not OctoToDo_MainFrame[curCharGUID] then
-			OctoToDo_MainFrame[curCharGUID] = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID().."OctoToDo_MainFrame[curCharGUID]", OctoToDo_MainFrame.scrollChild, "BackdropTemplate")
-			Octo_ToDo_FIRST_Frame_Char_Frame = OctoToDo_MainFrame[curCharGUID]
-			Octo_ToDo_FIRST_Frame_Char_Frame:SetPoint("BOTTOM", 0, 0)
-			Octo_ToDo_FIRST_Frame_Char_Frame.BG = Octo_ToDo_FIRST_Frame_Char_Frame:CreateTexture(nil, "BACKGROUND")
-			Octo_ToDo_FIRST_Frame_Char_Frame.BG:Hide()
-			Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetPoint("TOPLEFT", 0, -E.curHeight)
-			Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetPoint("BOTTOMRIGHT", 0, 0)
-			Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetColorTexture(r, g, b, 1)
+		if not OctoToDo_FIRST_MainFrame[curCharGUID] then
+			OctoToDo_FIRST_MainFrame[curCharGUID] = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID().."OctoToDo_FIRST_MainFrame[curCharGUID]", OctoToDo_FIRST_MainFrame.scrollChild, "BackdropTemplate")
+			OctoToDo_FIRST_CharFrame = OctoToDo_FIRST_MainFrame[curCharGUID]
+			OctoToDo_FIRST_CharFrame:SetPoint("BOTTOM", 0, 0)
+			OctoToDo_FIRST_CharFrame.BG = OctoToDo_FIRST_CharFrame:CreateTexture(nil, "BACKGROUND")
+			OctoToDo_FIRST_CharFrame.BG:Hide()
+			OctoToDo_FIRST_CharFrame.BG:SetPoint("TOPLEFT", 0, -E.curHeight)
+			OctoToDo_FIRST_CharFrame.BG:SetPoint("BOTTOMRIGHT", 0, 0)
+			OctoToDo_FIRST_CharFrame.BG:SetColorTexture(r, g, b, 1)
 			for i = 1, #OctoTable_func_otrisovka_FIRST do
 				CharInfo.GUID = curCharGUID
-				local CF = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID().."CF"..i, Octo_ToDo_FIRST_Frame_Char_Frame)
-				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i] = CF
+				local CF = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID().."CF"..i, OctoToDo_FIRST_CharFrame)
+				OctoToDo_FIRST_CharFrame["CenterLines"..i] = CF
 				CF.index = i
 				CF:SetSize(E.curWidthCentral, E.curHeight)
-				CF:SetPoint("TOP", Octo_ToDo_FIRST_Frame_Char_Frame, "TOP", 0, -E.curHeight*(i-1))
+				CF:SetPoint("TOP", OctoToDo_FIRST_CharFrame, "TOP", 0, -E.curHeight*(i-1))
 				CF:SetScript("OnEnter", Central_Frame_Mouse_OnEnter)
 				CF:SetScript("OnLeave", Central_Frame_Mouse_OnLeave)
 				CF:SetMouseClickEnabled(false)
@@ -3030,30 +3055,31 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 				CL:SetJustifyV("MIDDLE")
 				CL:SetJustifyH("CENTER")
 				CL:SetTextColor(1, 1, 1, 1)
-				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"] = Octo_ToDo_FIRST_Frame_Char_Frame:CreateTexture(nil, "BACKGROUND")
-				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetAllPoints(Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i])
-				Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, 0)
+				OctoToDo_FIRST_CharFrame["CenterLines"..i.."BG"] = OctoToDo_FIRST_CharFrame:CreateTexture(nil, "BACKGROUND")
+				OctoToDo_FIRST_CharFrame["CenterLines"..i.."BG"]:SetAllPoints(OctoToDo_FIRST_CharFrame["CenterLines"..i])
+				OctoToDo_FIRST_CharFrame["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, 0)
 				CF.CL = CL
 			end
 		else
-			Octo_ToDo_FIRST_Frame_Char_Frame = OctoToDo_MainFrame[curCharGUID]
+			OctoToDo_FIRST_CharFrame = OctoToDo_FIRST_MainFrame[curCharGUID]
 		end
-		Octo_ToDo_FIRST_Frame_Char_Frame:SetSize(E.curWidthCentral, E.curHeight)
-		if #OctoToDo_MainFrame.AllCharFrames == 0 then
-			Octo_ToDo_FIRST_Frame_Char_Frame:SetPoint("TOPRIGHT", 0, 0)
+		OctoToDo_FIRST_CharFrame:SetSize(E.curWidthCentral, E.curHeight)
+		-- print (#OctoToDo_FIRST_MainFrame.AllCharFrames)
+		if #OctoToDo_FIRST_MainFrame.AllCharFrames == 0 then
+			OctoToDo_FIRST_CharFrame:SetPoint("TOPRIGHT", 0, 0)
 		else
-			Octo_ToDo_FIRST_Frame_Char_Frame:SetPoint("TOPRIGHT", OctoToDo_MainFrame.AllCharFrames[#OctoToDo_MainFrame.AllCharFrames], "TOPLEFT", 0, 0)
+			OctoToDo_FIRST_CharFrame:SetPoint("TOPRIGHT", OctoToDo_FIRST_MainFrame.AllCharFrames[#OctoToDo_FIRST_MainFrame.AllCharFrames], "TOPLEFT", 0, 0)
 		end
-		OctoToDo_MainFrame.AllCharFrames[#OctoToDo_MainFrame.AllCharFrames + 1] = Octo_ToDo_FIRST_Frame_Char_Frame
+		OctoToDo_FIRST_MainFrame.AllCharFrames[#OctoToDo_FIRST_MainFrame.AllCharFrames + 1] = OctoToDo_FIRST_CharFrame
 		if curGUID == curCharGUID then
-			Octo_ToDo_FIRST_Frame_Char_Frame.BG:Show()
-			Octo_ToDo_FIRST_Frame_Char_Frame.BG:SetAlpha(E.BGALPHA*2)
+			OctoToDo_FIRST_CharFrame.BG:Show()
+			OctoToDo_FIRST_CharFrame.BG:SetAlpha(E.BGALPHA*2)
 		end
 		for i = 1, #OctoTable_func_otrisovka_FIRST do
-			local TEXTLEFT = OctoToDo_MainFrame["TextLeft"..i]
-			local TEXTCENT = Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i]
+			local TEXTLEFT = OctoToDo_FIRST_MainFrame["TextLeft"..i]
+			local TEXTCENT = OctoToDo_FIRST_CharFrame["CenterLines"..i]
 			if TEXTLEFT and TEXTCENT then
-				local BG = Octo_ToDo_FIRST_Frame_Char_Frame["CenterLines"..i.."BG"]
+				local BG = OctoToDo_FIRST_CharFrame["CenterLines"..i.."BG"]
 				TEXTCENT.tooltip = {}
 				local vivodCent = " "
 				local vivodLeft = " "
@@ -3066,62 +3092,62 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			end
 		end
 	end
-	local curAltFrameWidth = #OctoToDo_MainFrame.AllCharFrames * E.curWidthCentral/2
+	local curAltFrameWidth = #OctoToDo_FIRST_MainFrame.AllCharFrames * E.curWidthCentral/2
 	local width = curAltFrameWidth*2+E.curWidthTitle
 	local height = E.curHeight*(#OctoTable_func_otrisovka_FIRST)
-	OctoToDo_MainFrame.scrollChild:SetSize(width, height)
+	OctoToDo_FIRST_MainFrame.scrollChild:SetSize(width, height)
 	if height > E.Addon_Height then
 		height = E.Addon_Height
-		OctoToDo_MainFrame.ScrollBar:Show()
+		OctoToDo_FIRST_MainFrame.ScrollBar:Show()
 	else
-		OctoToDo_MainFrame.ScrollBar:Hide()
+		OctoToDo_FIRST_MainFrame.ScrollBar:Hide()
 	end
-	OctoToDo_MainFrame:SetSize(width, height)
+	OctoToDo_FIRST_MainFrame:SetSize(width, height)
 end
 local function main_frame_toggle()
 	local button = LibDBIcon:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
-	if not OctoToDo_MainFrame.promise then
-		OctoToDo_MainFrame.promise = LibThingsLoad:Items(E.OctoTable_Empty)
-		OctoToDo_MainFrame.promise:AddItemsByKey(E.OctoTable_itemID_Ignore_List)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_Config)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_ALL)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_AutoOpen)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_Ignore_List)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsDelete)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Cosmetic)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Mount)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Other)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Pets)
-		OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Toys)
-		-- OctoToDo_MainFrame.promise:AddItems(E.OctoTable_itemID_Cataloged_Research)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_MoP)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_WoD)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_Legion)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_BfA)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_SL)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_DF)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_DF_S3)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_TWW_S1_Horde)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_TWW_S1_Alliance)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_Mage_Solo_Horde)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_Mage_Group_Horde)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_Mage_Solo_Alliance)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_Mage_Group_Alliance)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_DRUID)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_DEATHKNIGHT)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_SHAMAN)
-		OctoToDo_MainFrame.promise:AddSpells(E.OctoTable_Portals_MONK)
-		OctoToDo_MainFrame.promise:AddQuests(E.OctoTable_QuestID)
-		OctoToDo_MainFrame.promise:AddQuests(E.OctoTable_QuestID_Paragon)
+	if not OctoToDo_FIRST_MainFrame.promise then
+		OctoToDo_FIRST_MainFrame.promise = LibThingsLoad:Items(E.OctoTable_Empty)
+		OctoToDo_FIRST_MainFrame.promise:AddItemsByKey(E.OctoTable_itemID_Ignore_List)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Config)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ALL)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_AutoOpen)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Ignore_List)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsDelete)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Cosmetic)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Mount)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Other)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Pets)
+		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Toys)
+		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Cataloged_Research)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_MoP)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_WoD)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_Legion)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_BfA)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_SL)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_DF)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_DF_S3)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_TWW_S1_Horde)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_TWW_S1_Alliance)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_Mage_Solo_Horde)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_Mage_Group_Horde)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_Mage_Solo_Alliance)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_Mage_Group_Alliance)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_DRUID)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_DEATHKNIGHT)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_SHAMAN)
+		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_MONK)
+		OctoToDo_FIRST_MainFrame.promise:AddQuests(E.OctoTable_QuestID)
+		OctoToDo_FIRST_MainFrame.promise:AddQuests(E.OctoTable_QuestID_Paragon)
 	end
-	if OctoToDo_MainFrame:IsShown() then
-		OctoToDo_MainFrame:Hide()
+	if OctoToDo_FIRST_MainFrame:IsShown() then
+		OctoToDo_FIRST_MainFrame:Hide()
 	else
 		button:Disable()
-		OctoToDo_MainFrame.promise:Then(function()
+		OctoToDo_FIRST_MainFrame.promise:Then(function()
 				button:Enable()
-				OctoToDo_MainFrame:Show()
+				OctoToDo_FIRST_MainFrame:Show()
 				Collect_ALL_PlayerInfo()
 				Collect_All_Currency()
 				Collect_ALL_GreatVault()
@@ -3159,6 +3185,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars == nil then Octo_ToDo_DB_Vars = {} end
 		if Octo_ToDo_DB_Vars.config == nil then Octo_ToDo_DB_Vars.config = {} end
 		if Octo_ToDo_DB_Vars.config.CVar == nil then Octo_ToDo_DB_Vars.config.CVar = false end
+		if Octo_ToDo_DB_Vars.config.Achievements == nil then Octo_ToDo_DB_Vars.config.Achievements = false end
 		if Octo_ToDo_DB_Vars.config.Minecraft == nil then Octo_ToDo_DB_Vars.config.Minecraft = false end
 		if Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm == nil then Octo_ToDo_DB_Vars.config.ShowOnlyCurrentRealm = true end
 		if Octo_ToDo_DB_Vars.config.AutoSellGrey == nil then Octo_ToDo_DB_Vars.config.AutoSellGrey = true end
@@ -3251,14 +3278,17 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 				OnClick = function(_, button)
 					if button == "LeftButton" then
 						if not InCombatLockdown() then
-							for i = 1, #E.OctoTable_itemID_ALL do
-								C_Item.RequestLoadItemDataByID(E.OctoTable_itemID_ALL[i])
-							end
 							main_frame_toggle()
 						end
+						if OctoToDo_SECOND_MainFramePIZDA and OctoToDo_SECOND_MainFramePIZDA:IsShown() then
+							OctoToDo_SECOND_MainFramePIZDA:Hide()
+						end
 					else
-						if OctoToDo_MainFramePIZDA and OctoToDo_MainFramePIZDA:IsShown() then
-							OctoToDo_MainFramePIZDA:Hide()
+						if OctoToDo_FIRST_MainFramePIZDA and OctoToDo_FIRST_MainFramePIZDA:IsShown() then
+							OctoToDo_FIRST_MainFramePIZDA:Hide()
+						end
+						if OctoToDo_SECOND_MainFramePIZDA and OctoToDo_SECOND_MainFramePIZDA:IsShown() then
+							OctoToDo_SECOND_MainFramePIZDA:Hide()
 						end
 						if SettingsPanel:IsVisible() and self:IsVisible() then
 							HideUIPanel(SettingsPanel)
@@ -3325,11 +3355,11 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	end
 	if (event == "CHAT_MSG_SKILL" or event == "CHAT_MSG_SYSTEM") and not InCombatLockdown() then
 		Collect_All_Professions()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if event == "PLAYER_XP_UPDATE" then
 		Collect_Player_Level()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "QUEST_ACCEPTED" or event == "QUEST_COMPLETE" or event == "QUEST_FINISHED" or event == "QUEST_LOG_UPDATE" or event == "QUEST_REMOVED" or event == "QUEST_TURNED_IN" or event == "QUEST_LOOT_RECEIVED") then
 		C_Timer.After(1, function()
@@ -3337,25 +3367,25 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 				Collect_ALL_UNIVERSALQuestUpdate()
 		end)
 		Hide_trash_frames()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_MONEY" or event == "ACCOUNT_MONEY") and not InCombatLockdown() then
 		Collect_ALL_MoneyUpdate()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "CURRENCY_DISPLAY_UPDATE") and not InCombatLockdown() then
 		Collect_All_Currency()
 		Hide_trash_frames()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_EQUIPMENT_CHANGED") and not InCombatLockdown() then
 		Collect_ALL_ItemLevel()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_LEAVING_WORLD") and not InCombatLockdown() then
 		Collect_ALL_GreatVault()
 		Collect_ALL_LoginTime()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_ENTERING_WORLD") and not InCombatLockdown() then
 		Collect_ALL_LoginTime()
@@ -3364,7 +3394,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_All_journalInstance()
 		Hide_trash_frames()
 		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or .8)
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED") and not InCombatLockdown() then
 		Collect_ALL_ItemsInBag()
@@ -3376,27 +3406,27 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		C_Timer.After(2, function()
 				if not InCombatLockdown() then
 					Collect_ALL_ItemsInBag()
-					if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+					if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 				end
 		end)
 	end
 	if (event == "HEARTHSTONE_BOUND" or event == "ZONE_CHANGED_NEW_AREA") and not InCombatLockdown() then
 		Collect_ALL_Locations()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "SPELLS_CHANGED") and not InCombatLockdown() then
 		C_Timer.After(2, function()
 				Collect_WarMode()
 		end)
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if (event == "PLAYER_ENTERING_WORLD" or event == "MAIL_INBOX_UPDATE" or event == "MAIL_SHOW" or event == "UPDATE_PENDING_MAIL") and not InCombatLockdown() then
 		Collect_ALL_Mail()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if event == "PLAYER_REGEN_DISABLED" or InCombatLockdown() then
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then
-			OctoToDo_MainFrame:Hide()
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then
+			OctoToDo_FIRST_MainFrame:Hide()
 		end
 	end
 	if (event == "CHAT_MSG_WHISPER" or event == "CHAT_MSG_WHISPER_INFORM" or event == "CHAT_MSG_BN_WHISPER" or event == "CHAT_MSG_BN_WHISPER_INFORM") and not InCombatLockdown() then
@@ -3408,13 +3438,13 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	if event == "ENCOUNTER_END" then
 		C_Timer.After(1, function()
 				Collect_All_journalInstance()
-				if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+				if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 		end)
 	end
 	if event == "TIME_PLAYED_MSG" then
 		Collect_Played(...)
 		Collect_ALL_mapChallengeModeID()
-		if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
 	end
 	if event == "GROUP_ROSTER_UPDATE" then
 		TEST_GROUP_ROSTER()

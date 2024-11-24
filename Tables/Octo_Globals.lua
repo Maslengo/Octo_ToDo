@@ -64,6 +64,7 @@ E.curWidthCentral = 96*E.scale
 E.curHeight = 20*E.scale
 --E.curWidthTitle = E.curWidthCentral*2
 E.curWidthTitle = 200*E.scale
+E.curWidthTitleAchievement = E.curWidthTitle
 E.ilvlToShow = 400
 E.Addon_Height = 400
 E.BGALPHA = .1
