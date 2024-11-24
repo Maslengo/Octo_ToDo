@@ -7,18 +7,18 @@ if not inspectScantipUSABLE then
 	inspectScantipUSABLE = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUSABLE", nil, "GameTooltipTemplate")
 	inspectScantipUSABLE:SetOwner(UIParent, "ANCHOR_NONE")
 end
-tinsert(E.Octo_Globals.modules, function()
+tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.ItemsUsable then
 			local function func_coloredText(fontstring)
 				if not fontstring then return nil end
 				local text = fontstring:GetText()
 				if not text then return nil end
 				local r, g, b, a = fontstring:GetTextColor()
-				return E.Octo_Func.func_rgb2hex(r, g, b, a)..text.."|r"
+				return E.func_rgb2hex(r, g, b, a)..text.."|r"
 			end
 			local function TEST_FUNC(self)
 				if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-					ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."TEST_FUNC()".."|r")
+					ChatFrame1:AddMessage(E.Blue_Color.."TEST_FUNC()".."|r")
 				end
 				local count = 0
 				for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
@@ -60,7 +60,7 @@ tinsert(E.Octo_Globals.modules, function()
 			local function ItemsUsable_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
 				GameTooltip:ClearLines()
-				-- GameTooltip:AddLine(E.Octo_Func.func_itemName(self.itemID))
+				-- GameTooltip:AddLine(E.func_itemName(self.itemID))
 				local itemLink = select(2, GetItemInfo(self.itemID))
 				GameTooltip:SetHyperlink(itemLink)
 				GameTooltip:Show()
@@ -70,11 +70,11 @@ tinsert(E.Octo_Globals.modules, function()
 				GameTooltip:Hide()
 			end
 			if not ItemsUsable_Frame then
-				ItemsUsable_Frame = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
+				ItemsUsable_Frame = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 				ItemsUsable_Frame:Hide()
 			end
 			ItemsUsable_Frame:Hide()
-			ItemsUsable_Frame:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
+			ItemsUsable_Frame:SetSize(64*E.scale, 64*E.scale)
 			ItemsUsable_Frame:SetPoint("TOPLEFT", 0, 0)
 			ItemsUsable_Frame:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 4})
 			ItemsUsable_Frame:SetBackdropBorderColor(1, 1, 1, 1)
@@ -97,7 +97,7 @@ tinsert(E.Octo_Globals.modules, function()
 			ItemsUsable_UIF_texture:SetTexture(413587)
 			function ItemsUsableFrame_OnLoad()
 				if not EventFrame_ItemsUsable then
-					EventFrame_ItemsUsable = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent)
+					EventFrame_ItemsUsable = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID(), UIParent)
 					EventFrame_ItemsUsable:Hide()
 				end
 				if not InCombatLockdown() then
@@ -127,7 +127,7 @@ tinsert(E.Octo_Globals.modules, function()
 				local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(2245)
 				local quantity = currencyInfo.quantity or 0
 				if not InCombatLockdown() and ItemsUsable_Frame then
-					for itemID, count in pairs(E.Octo_Table.OctoTable_itemID_ItemsUsable) do
+					for itemID, count in pairs(E.OctoTable_itemID_ItemsUsable) do
 						if (GetItemCount(itemID) >= count and TEST_FUNC(itemID) == 0) then
 							ItemsUsable_Frame:Show()
 							ItemsUsable_Frame:SetAttribute("macrotext", "/use item:"..itemID)
@@ -136,7 +136,7 @@ tinsert(E.Octo_Globals.modules, function()
 							local r, g, b = GetItemQualityColor(itemQuality)
 							ItemsUsable_Frame:SetBackdropBorderColor(r, g, b, 1)
 							ItemsUsable_Frame.itemID = itemID
-							ItemsUsable_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Octo_Func.func_itemName(itemID))
+							ItemsUsable_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
 
 							break
 						elseif GetItemCount(itemID) <= (count-1) and ItemsUsable_Frame:IsShown() then

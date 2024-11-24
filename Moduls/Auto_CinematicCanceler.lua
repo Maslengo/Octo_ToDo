@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_CinematicCanceler
-tinsert(E.Octo_Globals.modules, function()
+tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler then
 			CinematicFrame:HookScript("OnShow", function(self, ...)
 					if IsModifierKeyDown() then
@@ -11,7 +11,7 @@ tinsert(E.Octo_Globals.modules, function()
 						-- CinematicFrame_CancelCinematic()
 						CinematicFrameCloseDialog:Hide()
 						CinematicFrameCloseDialogConfirmButton:Click()
-						ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Cinematic canceled", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+						ChatFrame1:AddMessage(E.func_Gradient("Cinematic canceled", E.Addon_Left_Color, E.Addon_Right_Color))
 					end
 			end)
 			MovieFrame:HookScript("OnShow", function(self, ...)
@@ -26,7 +26,7 @@ tinsert(E.Octo_Globals.modules, function()
 						--         return true
 						--     end
 						MovieFrame.CloseDialog.ConfirmButton:Click()
-						ChatFrame1:AddMessage(E.Octo_Func.func_Gradient("Movie canceled", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color))
+						ChatFrame1:AddMessage(E.func_Gradient("Movie canceled", E.Addon_Left_Color, E.Addon_Right_Color))
 					end
 			end)
 		end

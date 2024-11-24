@@ -173,7 +173,7 @@ end
 -- FPRINT
 local LOCAL_FPrintHandler = function(...)
 	local function sendMessage(frame, indent, msg, allChildren)
-		local indentStr = E.Octo_Func.func_Gradient(GlobalAddonName..": ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)
+		local indentStr = E.func_Gradient(GlobalAddonName..": ", E.Addon_Left_Color, E.Addon_Right_Color)
 		for i = 1, indent do
 			indentStr = indentStr.."    "
 		end
@@ -192,7 +192,7 @@ local LOCAL_FPrintHandler = function(...)
 			end
 		end
 	end
-	local message = strjoin(" ", E.Octo_Func.func_Gradient(GlobalAddonName..": ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color), tostringall(...))
+	local message = strjoin(" ", E.func_Gradient(GlobalAddonName..": ", E.Addon_Left_Color, E.Addon_Right_Color), tostringall(...))
 	local mFrame = DEFAULT_CHAT_FRAME
 	local i = 1
 	repeat
@@ -278,7 +278,7 @@ SlashCmdList.MOUNTSLIST = function(full)
 	-- end
 	local i, j, str = 0, 0, ""
 	local mountsIDs = C_MountJournal.GetMountIDs()
-	sort(mountsIDs, E.Octo_Func.reverse_order)
+	sort(mountsIDs, E.func_Reverse_order)
 	for _, id in ipairs(mountsIDs) do
 		local mountType = select(5, C_MountJournal.GetMountInfoExtraByID(id))
 		if types[mountType] == nil then
@@ -298,7 +298,7 @@ SlashCmdList.MOUNTSLIST = function(full)
 			tinsert(t, {id, v[1], v[2], v[3], spellID, name})
 		elseif not tbl[id] then
 			j = j + 1
-			str = strjoin(str ~= "" and "\n" or "", str, ("[%s] = true, -- %s %s %s"):format(id, E.Octo_Func.func_texturefromIcon(icon), spellID, name))
+			str = strjoin(str ~= "" and "\n" or "", str, ("[%s] = true, -- %s %s %s"):format(id, E.func_texturefromIcon(icon), spellID, name))
 		end
 		i = i + 1
 		w[id] = true
@@ -334,19 +334,19 @@ SlashCmdList.OCTOLISTITEMS = function(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise1 = LibThingsLoad:Items(E.Octo_Table.OctoTable_itemID_ALL):ThenForAllWithCached(function(_, ids1)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Cosmetic):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
-	local promise1 = LibThingsLoad:Items(E.Octo_Table.OctoTable_itemID_ALL):FailWithChecked(function(_, ids2)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Cosmetic):FailWithChecked(function(_, ids2)
 			tinsert(list2, ids2)
 	end)
 	promise1:Then(function()
-			sort(list1, E.Octo_Func.reverse_order)
+			sort(list1, E.func_Reverse_order)
 			for _, id1 in pairs(list1) do
-				str = str..id1..", -- "..E.Octo_Func.func_itemTexture(id1)..E.Octo_Func.func_itemName(id1).."\n"
+				str = str..id1..", -- "..E.func_itemTexture(id1)..E.func_itemName(id1).."\n"
 			end
 			for _, id2 in pairs(list2) do
-				str = str..id2..", -- "..E.Octo_Func.func_itemTexture(id2)..E.Octo_Func.func_itemName(id2).."\n"
+				str = str..id2..", -- "..E.func_itemTexture(id2)..E.func_itemName(id2).."\n"
 			end
 			fprint("begin /OCTOLISTITEMS")
 			editBox:SetText(str)
@@ -360,20 +360,20 @@ SlashCmdList.OCTOLISTQUESTS = function(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise2 = LibThingsLoad:Quests(E.Octo_Table.OctoTable_QuestID):ThenForAllWithCached(function(_, ids1)
+	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
-	sort(list1, E.Octo_Func.reverse_order)
-	local promise2 = LibThingsLoad:Quests(E.Octo_Table.OctoTable_QuestID):FailWithChecked(function(_, ids2)
+	sort(list1, E.func_Reverse_order)
+	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID):FailWithChecked(function(_, ids2)
 			tinsert(list2, ids2)
 	end)
-	sort(list2, E.Octo_Func.reverse_order)
+	sort(list2, E.func_Reverse_order)
 	promise2:Then(function()
 			for _, id1 in pairs(list1) do
-				str = str..id1..", -- "..E.Octo_Func.func_questName(id1).."\n"
+				str = str..id1..", -- "..E.func_questName(id1).."\n"
 			end
 			for _, id2 in pairs(list2) do
-				str = str..id2..", -- "..E.Octo_Func.func_questName(id2).."\n"
+				str = str..id2..", -- "..E.func_questName(id2).."\n"
 			end
 			fprint("begin /OCTOLISTQUESTS")
 			editBox:SetText(str)
@@ -404,7 +404,7 @@ SlashCmdList.OCTOLISTCURRENCIES = function(msg)
 			local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 			local quantity = currencyInfo.quantity
 			if currencyID then
-				str3 = str3 ..tostringall(currencyID) .. " - ".. E.Octo_Func.func_currencyicon(currencyID)..E.Octo_Func.func_currencyName(currencyID) .." ("..quantity..")".. "\n"
+				str3 = str3 ..tostringall(currencyID) .. " - ".. E.func_currencyicon(currencyID)..E.func_currencyName(currencyID) .." ("..quantity..")".. "\n"
 			end
 		end
 		i = i + 1
@@ -423,7 +423,7 @@ SlashCmdList.OCTOLISTREP = function(msg)
 	C_Reputation.ExpandAllFactionHeaders() -- открыть
 	while listSize >= i do
 		local factionData = C_Reputation.GetFactionDataByIndex(i)
-		str4 = str4 .. i ..") ".. factionData.name ..E.Octo_Globals.LightGray_Color.." ("..factionData.factionID.. ")|r\n"
+		str4 = str4 .. i ..") ".. factionData.name ..E.LightGray_Color.." ("..factionData.factionID.. ")|r\n"
 		i = i + 1
 	end
 	editBox:SetText(str4)
@@ -434,15 +434,17 @@ SLASH_OCTOLISTMOUNT1 = "/OCTOLISTMOUNT"
 SlashCmdList.OCTOLISTMOUNT = function(msg)
 	local str5, list5, i = "", {}, 1
 	local mountsIDs = C_MountJournal.GetMountIDs()
-	-- sort(mountsIDs, E.Octo_Func.reverse_order)
-	sort(mountsIDs, E.Octo_Func.reverse_order)
+	-- sort(mountsIDs, E.func_Reverse_order)
+	sort(mountsIDs, E.func_Reverse_order)
 	for _, id in pairs(mountsIDs) do
 		local name, spellID, icon,_,_,_,_, isFactionSpecific, faction = C_MountJournal.GetMountInfoByID(id)
 		if isFactionSpecific then name = name.." ("..(faction == 0 and FACTION_HORDE or FACTION_ALLIANCE).. ")"  end
-		str5 = str5 .."[".. id .."] = true, -- "..spellID.." "..E.Octo_Func.func_texturefromIcon(icon)..name.."\n"
+		str5 = str5 .."[".. id .."] = true, -- "..spellID.." "..E.func_texturefromIcon(icon)..name.."\n"
 		i = i + 1
 	end
 	editBox:SetText(str5)
 	editFrame:Show()
 end
+
+
 

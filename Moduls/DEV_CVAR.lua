@@ -7,7 +7,7 @@ local GlobalAddonName, E = ...
 -- SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
 -- SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
 -- DEV_CVAR
-tinsert(E.Octo_Globals.modules, function()
+tinsert(E.Modules, function()
 	if Octo_ToDo_DB_Vars.config.CVar then
 		if not InCombatLockdown() then
 			C_Timer.After(1, function()
@@ -186,7 +186,7 @@ tinsert(E.Octo_Globals.modules, function()
 				-- C_NamePlate.SetNamePlateFriendlySize(0.1, 0.1) --короткий ХП бар 50 100
 			end)
 		end
-		if E.Octo_Globals.isWeakAuras == false then
+		if E.isWeakAuras == false then
 			C_Timer.After(1, function()
 				SetCVar("spellActivationOverlayOpacity", 1) -- интерфейс - бой - предупреждения
 				SetCVar("floatingCombatTextCombatDamage", 1) -- ТУТ

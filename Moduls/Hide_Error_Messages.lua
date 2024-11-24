@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Hide_Error_Messages
-tinsert(E.Octo_Globals.modules, function()
+tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.Hide_Error_Messages then
 			local OrigErrHandler = UIErrorsFrame:GetScript("OnEvent")
 			UIErrorsFrame:SetScript("OnEvent", function(self, event, id, err, ...)

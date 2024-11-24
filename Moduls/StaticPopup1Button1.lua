@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- StaticPopup1Button1
-tinsert(E.Octo_Globals.modules, function()
+tinsert(E.Modules, function()
 	if Octo_ToDo_DB_Vars.config.StaticPopup1Button1 then
 		----------------------------------------------------------------------------------------------------------------------------------
 		----------------------------------------------------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ tinsert(E.Octo_Globals.modules, function()
 
 		function Octo_OnLoad()
 			if not EventFrame_SPB then
-				EventFrame_SPB = CreateFrame("FRAME", E.Octo_Func.GenerateUniqueID())
+				EventFrame_SPB = CreateFrame("FRAME", E.func_GenerateUniqueID())
 			end
 			EventFrame_SPB:RegisterEvent("EQUIP_BIND_CONFIRM")
 			EventFrame_SPB:RegisterEvent("EQUIP_BIND_REFUNDABLE_CONFIRM")

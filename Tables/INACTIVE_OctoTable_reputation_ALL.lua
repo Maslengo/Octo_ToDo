@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
--- E.Octo_Table.OctoTable_reputation_ALL = {
+-- E.OctoTable_reputation_ALL = {
 -- 	21, 47, 54, 59, 67, 68, 69, 70, 72, 76, 81, 87, 92, 93, 169, 270, 349, 369,
 -- 	469, 470, 509, 510, 529, 530, 576, 577, 589, 609, 729, 730, 749, 809, 889,
 -- 	890, 891, 892, 909, 910, 911, 922, 930, 932, 933, 934, 935, 936, 941, 942,
@@ -50,7 +50,7 @@ local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 
 
 
-E.Octo_Table.OctoTable_reputation_ALL = {
+E.OctoTable_reputation_ALL = {
 [21] = true,
 [47] = true,
 [54] = true,

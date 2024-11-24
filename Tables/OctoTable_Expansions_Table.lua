@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
-E.Octo_Table.OctoTable_Expansions_Table = {
+E.OctoTable_Expansions_Table = {
 	"|cff68ccefClassic" .. FONT_COLOR_CODE_CLOSE,
 	"|cff4fff79The Burning Crusade" .. FONT_COLOR_CODE_CLOSE,
 	"|cff00a3ffWrath of the Lich King" .. FONT_COLOR_CODE_CLOSE,
@@ -18,7 +18,7 @@ E.Octo_Table.OctoTable_Expansions_Table = {
 }
 
 
-E.Octo_Table.OctoTable_Expansions_Table2 = {
+E.OctoTable_Expansions_Table2 = {
 	EXPANSION_NAME0,
 	EXPANSION_NAME1,
 	EXPANSION_NAME2,

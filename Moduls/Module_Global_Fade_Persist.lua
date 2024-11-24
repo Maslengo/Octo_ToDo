@@ -1,10 +1,10 @@
 -- local GlobalAddonName, E = ...
 -- ----------------------------------------------------------------------------------------------------------------------------------
 -- -- Module_Global_Fade_Persist
--- tinsert(E.Octo_Globals.modules, function()
+-- tinsert(E.Modules, function()
 -- 		if Octo_ToDo_DB_Vars.config.GlobalFadePersist then
 -- 			C_Timer.After(1, function()
--- 					if E.Octo_Globals.isElvUI == true then
+-- 					if E.isElvUI == true then
 -- 						local E, L, V, P, G = unpack(ElvUI)
 -- 						local GFP = E:NewModule('ElvUI_GlobalFadePersist', 'AceHook-3.0', 'AceEvent-3.0')
 -- 						local EP = LibStub("LibElvUIPlugin-1.0")

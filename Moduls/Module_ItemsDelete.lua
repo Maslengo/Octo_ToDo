@@ -5,7 +5,7 @@ if not inspectScantipUSABLE then
 	inspectScantipUSABLE = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUSABLE", nil, "GameTooltipTemplate")
 	inspectScantipUSABLE:SetOwner(UIParent, "ANCHOR_NONE")
 end
-tinsert(E.Octo_Globals.modules, function()
+tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.ItemsDelete then
 			local ltl = LibStub("LibThingsLoad-1.0")
 			local function ItemsDelete_Frame_OnEnter(self)
@@ -20,11 +20,11 @@ tinsert(E.Octo_Globals.modules, function()
 				GameTooltip:Hide()
 			end
 			if not ItemsDelete_Frame then
-				ItemsDelete_Frame = CreateFrame("Button", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
+				ItemsDelete_Frame = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 				ItemsDelete_Frame:Hide()
 			end
 			ItemsDelete_Frame:Hide()
-			ItemsDelete_Frame:SetSize(64*E.Octo_Globals.scale, 64*E.Octo_Globals.scale)
+			ItemsDelete_Frame:SetSize(64*E.scale, 64*E.scale)
 			ItemsDelete_Frame:SetPoint("TOPLEFT", 0, -64)
 			ItemsDelete_Frame:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 4})
 			ItemsDelete_Frame:SetBackdropBorderColor(1, 1, 1, 1)
@@ -48,7 +48,7 @@ tinsert(E.Octo_Globals.modules, function()
 			ItemsDelete_UIF_texture:SetTexture(413587)
 			function ItemsDeleteFrame_OnLoad()
 				if not EventFrame_ItemsDelete then
-					EventFrame_ItemsDelete = CreateFrame("Frame", AddonTitle..E.Octo_Func.GenerateUniqueID(), UIParent)
+					EventFrame_ItemsDelete = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID(), UIParent)
 					EventFrame_ItemsDelete:Hide()
 				end
 				if not InCombatLockdown() then
@@ -83,15 +83,15 @@ tinsert(E.Octo_Globals.modules, function()
 								local itemID = containerInfo.itemID
 								local promise = ltl:Items(itemID)
 								----------------------------------------------------------------
-								for i = 1, #E.Octo_Table.OctoTable_itemID_ItemsDelete do
-									if E.Octo_Table.OctoTable_itemID_ItemsDelete[i] == itemID then
+								for i = 1, #E.OctoTable_itemID_ItemsDelete do
+									if E.OctoTable_itemID_ItemsDelete[i] == itemID then
 										ItemsDelete_Frame:Show()
 										ItemsDelete_Frame.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
 										local itemQuality = (select(3, GetItemInfo(itemID)) or 0)
 										local r, g, b = GetItemQualityColor(itemQuality)
 										ItemsDelete_Frame:SetBackdropBorderColor(r, g, b, 1)
 										ItemsDelete_Frame.itemID = itemID
-										ItemsDelete_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Octo_Func.func_itemName(itemID))
+										ItemsDelete_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
 
 										ItemsDelete_Frame:SetScript("OnClick", function()
 												C_Container.PickupContainerItem(bag, slot)

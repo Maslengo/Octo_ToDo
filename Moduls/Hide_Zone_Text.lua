@@ -1,8 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Hide_Zone_Text
-tinsert(E.Octo_Globals.modules, function()
-				if IsRetail() == true then
+tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.Hide_Zone_Text then
 			ZoneTextFrame:SetScript("OnShow", ZoneTextFrame.Hide);
 			SubZoneTextFrame:SetScript("OnShow", SubZoneTextFrame.Hide);
@@ -35,5 +34,4 @@ tinsert(E.Octo_Globals.modules, function()
 					end
 			end)
 		end
-	end
 end)

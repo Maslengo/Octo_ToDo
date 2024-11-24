@@ -1,12 +1,12 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Turn_Quests
-tinsert(E.Octo_Globals.modules, function()
+tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.AutoTurnQuests then
 			local Octo_AutoTurnInFrame_EventFrame = nil
 			function Octo_AutoTurnInOnLoad()
 				if not Octo_AutoTurnInFrame_EventFrame then
-					Octo_AutoTurnInFrame_EventFrame = CreateFrame("FRAME", GlobalAddonName.."Auto_Turn_Quests"..E.Octo_Func.GenerateUniqueID())
+					Octo_AutoTurnInFrame_EventFrame = CreateFrame("FRAME", GlobalAddonName.."Auto_Turn_Quests"..E.func_GenerateUniqueID())
 				end
 				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_DETAIL")
 				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_COMPLETE")

@@ -1,275 +1,219 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
-----------------------------------------------------------------
-function E.Octo_Timer.Legion_Invasion()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Legion_Invasion".."|r")
-	-- end
+function E.Timers.Legion_Invasion()
 	local TIMER = (1547586000-10800)
 	local interval = 66600
 	local duration = 21600
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_Legion_Invasion = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_Legion_Invasion = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_Legion_Invasion = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_Legion_Invasion = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_Legion_Invasion
 end
-function E.Octo_Timer.BfA_Invasion()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_BfA_Invasion".."|r")
-	-- end
+function E.Timers.BfA_Invasion()
 	local TIMER = (1547586000+3600)
 	local interval = 68400
 	local duration = 25200
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_BfA_Invasion = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_BfA_Invasion = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_BfA_Invasion = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_BfA_Invasion = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_BfA_Invasion
 end
-function E.Octo_Timer.BfA_Assault()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_BfA_Assault".."|r")
-	-- end
+function E.Timers.BfA_Assault()
 	local TIMER = (1547586000+3600+3600+3600+3600+3600+3600+3600)
 	local interval = 86400
 	local duration = 86400
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_BfA_Assault = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_BfA_Assault = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_BfA_Assault = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_BfA_Assault = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_BfA_Assault
 end
-function E.Octo_Timer.DF_ToDragonbaneKeep()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_ToDragonbaneKeep".."|r")
-	-- end
+function E.Timers.DF_ToDragonbaneKeep()
 	local TIMER = 1670342460
 	local interval = 7200
 	local duration = 900
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_DF_ToDragonbaneKeep = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_DF_ToDragonbaneKeep = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_ToDragonbaneKeep = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_DF_ToDragonbaneKeep = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_DF_ToDragonbaneKeep
 end
-function E.Octo_Timer.DF_GrandHunts()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_GrandHunts".."|r")
-	-- end
+function E.Timers.DF_GrandHunts()
 	local TIMER = 1671307200
 	local interval = 7200
 	local duration = 7199
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_DF_GrandHunts = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_DF_GrandHunts = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_GrandHunts = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_DF_GrandHunts = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_DF_GrandHunts
 end
-function E.Octo_Timer.DF_CommunityFeast()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_CommunityFeast".."|r")
-	-- end
+function E.Timers.DF_CommunityFeast()
 	local TIMER = 1677168000
 	local interval = 5400
 	local duration = 900
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_DF_CommunityFeast = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_DF_CommunityFeast = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_CommunityFeast = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_DF_CommunityFeast = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_DF_CommunityFeast
 end
-function E.Octo_Timer.DF_PrimalStorms()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_PrimalStorms".."|r")
-	-- end
+function E.Timers.DF_PrimalStorms()
 	local TIMER = 1683804640
 	local interval = 18000
 	local duration = 7200
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_DF_PrimalStorms = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_DF_PrimalStorms = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_PrimalStorms = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_DF_PrimalStorms = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_DF_PrimalStorms
 end
-function E.Octo_Timer.DF_ResearchersUnderFire()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_ResearchersUnderFire".."|r")
-	-- end
+function E.Timers.DF_ResearchersUnderFire()
 	local TIMER = 1683804640
 	local interval = 3600
 	local duration = 1500
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_DF_ResearchersUnderFire = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_DF_ResearchersUnderFire = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_ResearchersUnderFire = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_DF_ResearchersUnderFire = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_DF_ResearchersUnderFire
 end
-function E.Octo_Timer.DF_TimeRift()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_TimeRift".."|r")
-	-- end
-	local TIMER = 1689159620 -- начало в 16:00
-	local interval = (1*60)*60 -- каждый час
-	local duration = (10*60) -- 10 минут
+function E.Timers.DF_TimeRift()
+	local TIMER = 1689159620
+	local interval = (1*60)*60
+	local duration = (10*60)
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_DF_TimeRift = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_DF_TimeRift = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_TimeRift = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_DF_TimeRift = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_DF_TimeRift
 end
-function E.Octo_Timer.DF_Dreamsurges()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_Dreamsurges".."|r")
-	-- end
-	local TIMER = 1689159620 -- начало в 16:00
-	local interval = 30*60 -- каждые пол часа
-	local duration = 5*60 -- 5 минут
+function E.Timers.DF_Dreamsurges()
+	local TIMER = 1689159620
+	local interval = 30*60
+	local duration = 5*60
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_DF_Dreamsurges = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_DF_Dreamsurges = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_DF_Dreamsurges = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_DF_Dreamsurges = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_DF_Dreamsurges
 end
-function E.Octo_Timer.SL_Maw_Assault()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_SL_Maw_Assault".."|r")
-	-- end
+function E.Timers.SL_Maw_Assault()
 	local TIMER = 3780
 	local interval = 7200
 	local duration = 900
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
-	local Timer_SL_Maw_Assault = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+	local Timer_SL_Maw_Assault = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		Timer_SL_Maw_Assault = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		Timer_SL_Maw_Assault = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return Timer_SL_Maw_Assault
 end
-function E.Octo_Timer.Daily_Reset()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Daily_Reset".."|r")
-	-- end
+function E.Timers.Daily_Reset()
 	local TIMER = 1687579264
 	local interval = 86400
 	local duration = 1
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	if (nextEventIn/60/60) < 24 then
-		local Timer_Daily_Reset = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		local Timer_Daily_Reset = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		if nextEventIn > (interval - duration) then
 			nextEventIn = nextEventIn - (interval - duration)
-			Timer_Daily_Reset = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+			Timer_Daily_Reset = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		end
-		return Timer_Daily_Reset..E.Octo_Globals.Gray_Color.."Daily Reset|r"
+		return Timer_Daily_Reset..E.Gray_Color.."Daily Reset|r"
 	else
 		return ""
 	end
 end
-function E.Octo_Timer.Treasure_Goblin()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_Treasure_Goblin".."|r")
-	-- end
+function E.Timers.Treasure_Goblin()
 	local TIMER = 1685001600
 	local interval = 1800
 	local duration = 300
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	if (nextEventIn/60/60) < 24 then
-		local Timer_Treasure_Goblin = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		local Timer_Treasure_Goblin = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		if nextEventIn > (interval - duration) then
 			nextEventIn = nextEventIn - (interval - duration)
-			Timer_Treasure_Goblin = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+			Timer_Treasure_Goblin = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		end
 		return Timer_Treasure_Goblin
 	else
 		return ""
 	end
 end
-function E.Octo_Timer.ElementalStorm()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_ElementalStorm".."|r")
-	-- end
+function E.Timers.ElementalStorm()
 	local TIMER = 1689166820
-	local interval = (3*60)*60 -- 3 часа
-	local duration = (2*60)*60 -- 2 часа
+	local interval = (3*60)*60
+	local duration = (2*60)*60
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	if (nextEventIn/60/60) < 24 then
-		local Timer_ElementalStorm = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		local Timer_ElementalStorm = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		if nextEventIn > (interval - duration) then
 			nextEventIn = nextEventIn - (interval - duration)
-			Timer_ElementalStorm = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+			Timer_ElementalStorm = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		end
 		return Timer_ElementalStorm
 	else
 		return ""
 	end
 end
-function E.Octo_Timer.DF_Flower()
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_DF_Flower".."|r")
-	-- end
+function E.Timers.DF_Flower()
 	local TIMER = 1689166820
-	local interval = (60)*60 -- каждый час
-	local duration = (20)*60 -- 20 минут
+	local interval = (60)*60
+	local duration = (20)*60
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	if (nextEventIn/60/60) < 24 then
-		local Timer_DF_Flower = E.Octo_Globals.Red_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		local Timer_DF_Flower = E.Red_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		if nextEventIn > (interval - duration) then
 			nextEventIn = nextEventIn - (interval - duration)
-			Timer_DF_Flower = E.Octo_Globals.Green_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+			Timer_DF_Flower = E.Green_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		end
 		return Timer_DF_Flower
 	else
 		return ""
 	end
 end
-function E.Octo_Timer.TWW_BeledarCycle()
-	--questid = 83240
-	--icon 1355358 or 608954
-	-- if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-	--     ChatFrame1:AddMessage(E.Octo_Globals.Blue_Color.."Timer_TWW_Beledarr".."|r")
-	-- end
-	-- local TIMER = 1698494405
+function E.Timers.TWW_BeledarCycle()
 	local TIMER = 1726311612
-	--драк 30 мин
-	--лайт час 10
-	local interval = (180)*60 -- каждые 3 час
-	local duration = (30)*60 -- 30 минут
+	local interval = (180)*60
+	local duration = (30)*60
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - TIMER, interval)
 	if (nextEventIn/60/60) < 24 then
-		local Timer_TWW_Beledarr = E.Octo_Globals.Yellow_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+		local Timer_TWW_Beledarr = E.Yellow_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		if nextEventIn > (interval - duration) then
 			nextEventIn = nextEventIn - (interval - duration)
-			Timer_TWW_Beledarr = E.Octo_Globals.Purple_Color..E.Octo_Func.SecondsToClock(nextEventIn).."|r "
+			Timer_TWW_Beledarr = E.Purple_Color..E.func_SecondsToClock(nextEventIn).."|r "
 		end
 		return Timer_TWW_Beledarr
 	else
 		return ""
 	end
 end
-

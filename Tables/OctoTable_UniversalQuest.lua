@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-E.Octo_Table.OctoTable_UniversalQuest = {
+E.OctoTable_UniversalQuest = {
 	{
 		name_save = "500Currency",
 		reset = "Weekly",
@@ -83,9 +83,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
 	{
 		name_save = "NoCrateLeftBehind", -- Octopussy_Timewalk_NoCrateLeftBehind_Weekly
 		reset = "Weekly",
@@ -105,10 +102,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
-
-
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -134,7 +127,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-
 	{
 		name_save = "DungeonQuest", -- Octopussy_TWW_DungeonQuest_Weekly
 		reset = "Weekly",
@@ -225,10 +217,8 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 8
 	},
-
-
 	{
-		name_save = "Worldsoul",
+		name_save = "Worldsoul", -- Octopussy_TWW_Worldsoul_Weekly
 		reset = "Weekly",
 		desc = "TWW",
 		questID = {
@@ -276,14 +266,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 			82285, -- Worldsoul Memory: A Wounded Soul
 			82449, -- The Call of the Worldsoul
 		},
-		max = 1
+		max = 43
 	},
-
-
-
-
-
-
-
-
 }

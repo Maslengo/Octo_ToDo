@@ -8,7 +8,7 @@ local texture_BG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\minecra
 -- local texture_FG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\ALL.tga"
 -- local texture_BG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\ALL BG.tga"
 local startHiding = true
-local EmptyFrame = CreateFrame("BUTTON", GlobalAddonName..E.Octo_Func.GenerateUniqueID(), UIParent)
+local EmptyFrame = CreateFrame("BUTTON", GlobalAddonName..E.func_GenerateUniqueID(), UIParent)
 EmptyFrame.FG = EmptyFrame:CreateTexture()
 EmptyFrame.FG:SetPoint("CENTER")
 EmptyFrame.FG:SetTexture(texture_FG)
@@ -28,7 +28,7 @@ end
 ----------------------------------------------------------------
 local function Create_AnchorFrame()
 	if AnchorFrame == nil then
-		AnchorFrame = CreateFrame("BUTTON", GlobalAddonName..E.Octo_Func.GenerateUniqueID(), UIParent)
+		AnchorFrame = CreateFrame("BUTTON", GlobalAddonName..E.func_GenerateUniqueID(), UIParent)
 	end
 	AnchorFrame:Hide()
 	AnchorFrame:SetPoint("TOPLEFT", 0, 0)
@@ -55,7 +55,7 @@ end
 local function Create_Colored_Frames(anchor, self, number, text, color, height, width)
 	if color == nil then color = "|cffFFFFFF" end
 	if self[number] == nil then
-		local r, g, b = E.Octo_Func.func_hex2rgb(color)
+		local r, g, b = E.func_hex2rgb(color)
 		self[number] = CreateFrame("Frame", nil, anchor, "BackdropTemplate")
 		frame = self[number]
 		if startHiding == true then frame:Hide() end
@@ -80,13 +80,13 @@ local function OnEvent(self, event, ...)
 		if event == "PLAYER_ENTERING_WORLD" then
 			Create_AnchorFrame()
 			AnchorFrame:Show()
-			for number, v in ipairs(E.Octo_Table.OctoTable_MinecraftColors) do
+			for number, v in ipairs(E.OctoTable_MinecraftColors) do
 				print ("|cff"..v.hex..number.." "..v.name.."|r", v.hex)
 				Create_Colored_Frames(AnchorFrame, self, number, v.name, v.hex, height, width)
 			end
 			print (
-				E.Octo_Func.func_Gradient(HUD_EDIT_MODE_SETTING_CHAT_FRAME_HEIGHT..": ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color..height.."|r",
-				E.Octo_Func.func_Gradient(HUD_EDIT_MODE_SETTING_CHAT_FRAME_WIDTH..": ", E.Octo_Globals.Addon_Left_Color, E.Octo_Globals.Addon_Right_Color)..E.Octo_Globals.Green_Color..width.."|r"
+				E.func_Gradient(HUD_EDIT_MODE_SETTING_CHAT_FRAME_HEIGHT..": ", E.Addon_Left_Color, E.Addon_Right_Color)..E.Green_Color..height.."|r",
+				E.func_Gradient(HUD_EDIT_MODE_SETTING_CHAT_FRAME_WIDTH..": ", E.Addon_Left_Color, E.Addon_Right_Color)..E.Green_Color..width.."|r"
 			)
 		end
 		if event == "PLAYER_STARTED_MOVING" or event == "PLAYER_STOPPED_MOVING" then
@@ -100,3 +100,4 @@ local function OnEvent(self, event, ...)
 	end
 end
 EventFrame:SetScript("OnEvent", OnEvent)
+

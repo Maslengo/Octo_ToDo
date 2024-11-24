@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 
-E.Octo_Table.OctoTable_QuestID_Paragon = {
+E.OctoTable_QuestID_Paragon = {
 	83740, -- Дурная слава у визиря
 	83739, -- Дурная слава у генерала
 	83738, -- Дурная слава у Прядильщицы
@@ -50,7 +50,7 @@ E.Octo_Table.OctoTable_QuestID_Paragon = {
 	46743, -- Припасы из Крутогорья
 }
 
-E.Octo_Table.OctoTable_QuestID = {
+E.OctoTable_QuestID = {
 	-- 85947, -- |A:Recurringavailablequesticon:14:14:0:0|a Первозданное путешествие во времени
 	-- 84446, -- Известность в Каз Алгаре
 	-- 84365, -- |A:importantavailablequesticon:14:14:0:0|a Загадки на горизонте
