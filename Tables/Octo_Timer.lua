@@ -188,7 +188,7 @@ function E.Octo_Timer.Daily_Reset()
 		end
 		return Timer_Daily_Reset..E.Octo_Globals.Gray_Color.."Daily Reset|r"
 	else
-		return " "
+		return ""
 	end
 end
 function E.Octo_Timer.Treasure_Goblin()
@@ -207,7 +207,7 @@ function E.Octo_Timer.Treasure_Goblin()
 		end
 		return Timer_Treasure_Goblin
 	else
-		return " "
+		return ""
 	end
 end
 function E.Octo_Timer.ElementalStorm()
@@ -226,7 +226,7 @@ function E.Octo_Timer.ElementalStorm()
 		end
 		return Timer_ElementalStorm
 	else
-		return " "
+		return ""
 	end
 end
 function E.Octo_Timer.DF_Flower()
@@ -245,7 +245,7 @@ function E.Octo_Timer.DF_Flower()
 		end
 		return Timer_DF_Flower
 	else
-		return " "
+		return ""
 	end
 end
 function E.Octo_Timer.TWW_BeledarCycle()
@@ -269,7 +269,7 @@ function E.Octo_Timer.TWW_BeledarCycle()
 		end
 		return Timer_TWW_Beledarr
 	else
-		return " "
+		return ""
 	end
 end
 

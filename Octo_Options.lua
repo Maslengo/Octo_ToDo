@@ -8,6 +8,7 @@ local LibTranslit = LibStub("LibTranslit-1.0")
 local CallbackHandler = LibStub("CallbackHandler-1.0")
 local number, pizza, config, text, minValue, maxValue, steps, formatters
 local new = E.Octo_Globals.Blue_Color.."NEW: |r"
+local WorldBoss_Icon = E.Octo_Func.func_texturefromIcon(3528312)
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	text = E.Octo_Globals.Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
 	button1 = YES,
@@ -286,6 +287,14 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 				if config == "ReloadUI" then
 					ReloadUI()
 				end
+				if config == "DELETEALL" then
+					Octo_ToDo_DB_Config = {}
+					Octo_ToDo_DB_Players = {}
+					Octo_ToDo_DB_Vars = {}
+					Octo_ToDo_DB_Players_LIST = {}
+					Octo_ToDo_DB_Other = {}
+					ReloadUI()
+				end
 		end)
 	end
 end
@@ -461,13 +470,18 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 26, POS_LEFT, 0, "LastUpdate", L["Was online"])
 
 
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "ItemsUsable", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_1, indent)..E.Octo_Globals.Gray_Color.."ItemsUsable".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "ItemsDelete", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_1, indent)..E.Octo_Globals.Gray_Color.."ItemsDelete".."|r")
 
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "StaticPopup1Button1", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_5, indent)..E.Octo_Globals.Gray_Color.."StaticPopup1Button1".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "AdditionalButtons", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_4, indent)..E.Octo_Globals.Gray_Color..L["Additional Buttons"].."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "CVar", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_3, indent)..E.Octo_Globals.Gray_Color.."CVar".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "Minecraft", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_2, indent)..E.Octo_Globals.Gray_Color.."Minecraft".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 26, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_1, indent)..E.Octo_Globals.Gray_Color.."Debug".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 27, POS_RIGHT, "ReloadUI", E.Octo_Globals.Gray_Color.."Reload UI".."|r")
+
+
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "StaticPopup1Button1", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_5, indent)..E.Octo_Globals.Gray_Color.."StaticPopup1Button1".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "AdditionalButtons", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_4, indent)..E.Octo_Globals.Gray_Color..L["Additional Buttons"].."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "CVar", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_3, indent)..E.Octo_Globals.Gray_Color.."CVar".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "Minecraft", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_2, indent)..E.Octo_Globals.Gray_Color.."Minecraft".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.Octo_Func.func_texturefromIcon(E.Octo_Globals.AddonTexture_1, indent)..E.Octo_Globals.Gray_Color.."Debug".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 26, POS_RIGHT, "ReloadUI", E.Octo_Globals.Gray_Color.."Reload UI".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 27, POS_RIGHT, "DELETEALL", E.Octo_Globals.Yellow_Color.."DELETEALL".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 28, POS_RIGHT, "Octo_ToDo_DB_Config", E.Octo_Globals.Gray_Color.."Config".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "Octo_ToDo_DB_Other", E.Octo_Globals.Gray_Color.."Other".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT, "Octo_ToDo_DB_Players", E.Octo_Globals.Gray_Color.."Players".."|r")
@@ -513,12 +527,12 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "BeledarCycle",
-				text = L["Light/Dark Cycle"].." "..E.Octo_Timer.TWW_BeledarCycle(),
+				text = E.Octo_Timer.TWW_BeledarCycle() .. E.Octo_Func.func_questName(83240),
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
 				config = "TWW_WorldBoss_Weekly",
-				text = L["World Boss"],
+				text = WorldBoss_Icon..L["World Boss"],
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
@@ -528,7 +542,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "TWW_Delve_Weekly",
-				text = "Bonus Event Holiday Quests",
+				text = "TWW_Delve_Weekly",
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
 			{
@@ -541,11 +555,11 @@ FIRST_Config:SetScript("OnShow", function(self)
 				text = E.Octo_Func.func_texturefromIcon(135619) .. L["Minor Keyflames"],
 				r = E.Octo_Globals.QW_Color_r, g = E.Octo_Globals.QW_Color_g, b = E.Octo_Globals.QW_Color_b,
 			},
-			-- {
-			-- 	config = "Timewalk",
-			-- 	text = PLAYER_DIFFICULTY_TIMEWALKER,
-			-- 	r = 70/255, g = 130/255, b = 179/255,
-			-- },
+			{
+				config = "Timewalk",
+				text = PLAYER_DIFFICULTY_TIMEWALKER,
+				r = 70/255, g = 130/255, b = 179/255,
+			},
 
 
 			{
@@ -806,71 +820,6 @@ Settings.RegisterAddOnCategory(subcategory)
 
 
 
-local FIFTH_Config = CreateFrame("ScrollFrame", GlobalAddonName.."FIFTH_Config")
-FIFTH_Config:Hide()
-local FIFTH_ScrollBar = CreateFrame("EventFrame", nil, FIFTH_Config, "MinimalScrollBar")
-FIFTH_ScrollBar:SetPoint("TOPLEFT", FIFTH_Config, "TOPRIGHT", 6, 0)
-FIFTH_ScrollBar:SetPoint("BOTTOMLEFT", FIFTH_Config, "BOTTOMRIGHT", 6, 0)
-local FIFTH_scrollChild = CreateFrame("Frame", nil, FIFTH_Config)
-FIFTH_Config:SetScrollChild(FIFTH_scrollChild)
-FIFTH_Config:SetAllPoints()
-FIFTH_scrollChild:SetSize(1, 1)
-ScrollUtil.InitScrollFrameWithScrollBar(FIFTH_Config, FIFTH_ScrollBar)
-local FIFTH_OnMouseWheel = FIFTH_Config:GetScript("OnMouseWheel")
-FIFTH_Config:SetScript("OnMouseWheel", function(self, ...)
-		if FIFTH_ScrollBar:IsShown() then
-			FIFTH_OnMouseWheel(self, ...)
-		end
-end)
-TITLE_FIFTH = FIFTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-TITLE_FIFTH:SetPoint("TOPLEFT", 4, 30)
-TITLE_FIFTH:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
-TITLE_FIFTH:SetTextColor(.5, .5, .5, 1)
-FIFTH_Config:SetScript("OnShow", function(self)
-		self:SetScript("OnShow", nil)
-		ConfigTable_FIFTH_LEFT = {
-		}
-		local list = {}
-		for QuestID, v in pairs(Octo_ToDo_DB_Config.QuestsDB) do
-			tinsert(list, QuestID)
-		end
-		sort(list, E.Octo_Func.reverse_order)
-			for k, QuestID in pairs(list) do
-
-					tinsert(ConfigTable_FIFTH_LEFT,
-						{
-							otstyp = 0,
-							config = QuestID,
-							text = E.Octo_Globals.LightGray_Color..tostringall(QuestID).."|r "..E.Octo_Func.func_questName(QuestID),
-						}
-					)
-			end
-		for i = 1, #ConfigTable_FIFTH_LEFT do
-			if ConfigTable_FIFTH_LEFT[i].otstyp == nil then ConfigTable_FIFTH_LEFT[i].otstyp = 0 end
-			if ConfigTable_FIFTH_LEFT[i].config == nil then ConfigTable_FIFTH_LEFT[i].config = 0 end
-			if ConfigTable_FIFTH_LEFT[i].text == nil then ConfigTable_FIFTH_LEFT[i].text = "" end
-			if ConfigTable_FIFTH_LEFT[i].r == nil then ConfigTable_FIFTH_LEFT[i].r = 0 end
-			if ConfigTable_FIFTH_LEFT[i].g == nil then ConfigTable_FIFTH_LEFT[i].g = 0 end
-			if ConfigTable_FIFTH_LEFT[i].b == nil then ConfigTable_FIFTH_LEFT[i].b = 0 end
-			if ConfigTable_FIFTH_LEFT[i].a == nil then ConfigTable_FIFTH_LEFT[i].a = 0 end
-			if ConfigTable_FIFTH_LEFT[i].button == nil then ConfigTable_FIFTH_LEFT[i].button = true end
-			Create_CheckButtonNEW(FIFTH_scrollChild, self, i, POS_LEFT, ConfigTable_FIFTH_LEFT[i].otstyp, ConfigTable_FIFTH_LEFT[i].config, ConfigTable_FIFTH_LEFT[i].text, ConfigTable_FIFTH_LEFT[i].r, ConfigTable_FIFTH_LEFT[i].g, ConfigTable_FIFTH_LEFT[i].b, ConfigTable_FIFTH_LEFT[i].a, ConfigTable_FIFTH_LEFT[i].button, Octo_ToDo_DB_Config.QuestsDB)
-		end
-		Create_CheckButton(FIFTH_scrollChild, self, 1, POS_RIGHT, 0, "Quests", QUESTS_LABEL)
-		Create_CheckButtonNEW(FIFTH_scrollChild, self, 1, POS_RIGHT+100, 0, "QuestsShowAllways", "QuestsShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
-		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.QuestsDB)
-		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.QuestsDB)
-end)
-local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIFTH_Config, QUESTS_LABEL)
-subcategory.ID = L["InDev"].."FIFTH_Config"
-Settings.RegisterAddOnCategory(subcategory)
-
-
-
-
-
-
---------
 -- local FIFTH_Config = CreateFrame("ScrollFrame", GlobalAddonName.."FIFTH_Config")
 -- FIFTH_Config:Hide()
 -- local FIFTH_ScrollBar = CreateFrame("EventFrame", nil, FIFTH_Config, "MinimalScrollBar")
@@ -895,36 +844,40 @@ Settings.RegisterAddOnCategory(subcategory)
 -- 		self:SetScript("OnShow", nil)
 -- 		ConfigTable_FIFTH_LEFT = {
 -- 		}
--- 		for Expansion, tbl in pairs(E.Octo_Table.Movies) do
--- 			for number, v in pairs (tbl) do
--- 				-- print (Expansion, number, v.name, v.id)
--- 				for _, s in ipairs (E.Octo_Table.OctoTable_Expansions_Table2) do
--- 					if Expansion == s then
--- 						tinsert(ConfigTable_FIFTH_LEFT,
--- 										{
--- 											otstyp = 0,
--- 											config = v.id,
--- 											text = "|cffFF00FF"..Expansion.."|r "..v.name .. E.Octo_Globals.Green_Color.." ("..v.id..")|r",
--- 										}
--- 									)
--- 					end
--- 				end
--- 			end
+-- 		local list = {}
+-- 		for QuestID, v in pairs(Octo_ToDo_DB_Config.QuestsDB) do
+-- 			tinsert(list, QuestID)
 -- 		end
+-- 		sort(list, E.Octo_Func.reverse_order)
+-- 			for k, QuestID in pairs(list) do
 
+-- 					tinsert(ConfigTable_FIFTH_LEFT,
+-- 						{
+-- 							otstyp = 0,
+-- 							config = QuestID,
+-- 							text = E.Octo_Globals.LightGray_Color..tostringall(QuestID).."|r "..E.Octo_Func.func_questName(QuestID),
+-- 						}
+-- 					)
+-- 			end
 -- 		for i = 1, #ConfigTable_FIFTH_LEFT do
 -- 			if ConfigTable_FIFTH_LEFT[i].otstyp == nil then ConfigTable_FIFTH_LEFT[i].otstyp = 0 end
 -- 			if ConfigTable_FIFTH_LEFT[i].config == nil then ConfigTable_FIFTH_LEFT[i].config = 0 end
 -- 			if ConfigTable_FIFTH_LEFT[i].text == nil then ConfigTable_FIFTH_LEFT[i].text = "" end
--- 			if ConfigTable_FIFTH_LEFT[i].color == nil then ConfigTable_FIFTH_LEFT[i].color = "|cffFFFFFF" end
 -- 			if ConfigTable_FIFTH_LEFT[i].r == nil then ConfigTable_FIFTH_LEFT[i].r = 0 end
 -- 			if ConfigTable_FIFTH_LEFT[i].g == nil then ConfigTable_FIFTH_LEFT[i].g = 0 end
 -- 			if ConfigTable_FIFTH_LEFT[i].b == nil then ConfigTable_FIFTH_LEFT[i].b = 0 end
 -- 			if ConfigTable_FIFTH_LEFT[i].a == nil then ConfigTable_FIFTH_LEFT[i].a = 0 end
 -- 			if ConfigTable_FIFTH_LEFT[i].button == nil then ConfigTable_FIFTH_LEFT[i].button = true end
--- 			Create_SimpleButton_Movies(FIFTH_scrollChild, self, i, POS_LEFT, ConfigTable_FIFTH_LEFT[i].config, ConfigTable_FIFTH_LEFT[i].text, ConfigTable_FIFTH_LEFT[i].color)
+-- 			Create_CheckButtonNEW(FIFTH_scrollChild, self, i, POS_LEFT, ConfigTable_FIFTH_LEFT[i].otstyp, ConfigTable_FIFTH_LEFT[i].config, ConfigTable_FIFTH_LEFT[i].text, ConfigTable_FIFTH_LEFT[i].r, ConfigTable_FIFTH_LEFT[i].g, ConfigTable_FIFTH_LEFT[i].b, ConfigTable_FIFTH_LEFT[i].a, ConfigTable_FIFTH_LEFT[i].button, Octo_ToDo_DB_Config.QuestsDB)
 -- 		end
+-- 		Create_CheckButton(FIFTH_scrollChild, self, 1, POS_RIGHT, 0, "Quests", QUESTS_LABEL)
+-- 		Create_CheckButtonNEW(FIFTH_scrollChild, self, 1, POS_RIGHT+100, 0, "QuestsShowAllways", "QuestsShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
+-- 		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.QuestsDB)
+-- 		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.QuestsDB)
 -- end)
--- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIFTH_Config, E.Octo_Globals.Gray_Color..CINEMATICS.."|r")
+-- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIFTH_Config, QUESTS_LABEL)
 -- subcategory.ID = L["InDev"].."FIFTH_Config"
 -- Settings.RegisterAddOnCategory(subcategory)
+
+
+

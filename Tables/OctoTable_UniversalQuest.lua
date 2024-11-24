@@ -47,15 +47,6 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "SoldierofTime",
-		reset = "Weekly",
-		desc = "Timewalk",
-		questID = {
-			57300,
-		},
-		max = 1
-	},
-	{
 		name_save = "ATimetoReflect",
 		reset = "Weekly",
 		desc = "Timewalk",
@@ -65,6 +56,59 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
+	{
+		name_save = "CelebrateGoodFun", -- Octopussy_Timewalk_CelebrateGoodFun_Weekly
+		reset = "Weekly",
+		desc = "Timewalk",
+		questID = {
+			84616,
+		},
+		max = 1
+	},
+	{
+		name_save = "ChromiesCodex", -- Octopussy_Timewalk_ChromiesCodex_Weekly
+		reset = "Weekly",
+		desc = "Timewalk",
+		questID = {
+			82783,
+		},
+		max = 1
+	},
+	{
+		name_save = "SoldierofTime", -- Octopussy_Timewalk_SoldierofTime_Weekly
+		reset = "Weekly",
+		desc = "Timewalk",
+		questID = {
+			57300,
+		},
+		max = 1
+	},
+
+
+
+	{
+		name_save = "NoCrateLeftBehind", -- Octopussy_Timewalk_NoCrateLeftBehind_Weekly
+		reset = "Weekly",
+		desc = "Timewalk",
+		questID = {
+			83794,
+			85574,
+			84624,
+			84470,
+			83931,
+			84426,
+			84767,
+			85523,
+			84773,
+			84625,
+			84909,
+		},
+		max = 1
+	},
+
+
+
+
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -81,6 +125,16 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
+	{
+		name_save = "TheTheaterTroupe", -- Octopussy_TWW_TheTheaterTroupe_Weekly
+		reset = "Weekly",
+		desc = "TWW",
+		questID = {
+			83240,
+		},
+		max = 1
+	},
+
 	{
 		name_save = "DungeonQuest", -- Octopussy_TWW_DungeonQuest_Weekly
 		reset = "Weekly",
@@ -171,4 +225,65 @@ E.Octo_Table.OctoTable_UniversalQuest = {
 		},
 		max = 8
 	},
+
+
+	{
+		name_save = "Worldsoul",
+		reset = "Weekly",
+		desc = "TWW",
+		questID = {
+			82452, -- Worldsoul: World Quests
+			82512, -- Worldsoul: World Boss
+			82487, -- Worldsoul: The Stonevault
+			82497, -- Worldsoul: The Stonevault
+			82505, -- Worldsoul: The Stonevault
+			82508, -- Worldsoul: The Rookery
+			82486, -- Worldsoul: The Rookery
+			82500, -- Worldsoul: The Rookery
+			82489, -- Worldsoul: The Dawnbreaker
+			82493, -- Worldsoul: The Dawnbreaker
+			82501, -- Worldsoul: The Dawnbreaker
+			82483, -- Worldsoul: Spreading the Light
+			82482, -- Worldsoul: Snuffling
+			82490, -- Worldsoul: Priory of the Sacred Flame
+			82499, -- Worldsoul: Priory of the Sacred Flame
+			82507, -- Worldsoul: Priory of the Sacred Flame
+			82659, -- Worldsoul: Nerub-ar Palace
+			82509, -- Worldsoul: Nerub-ar Palace
+			82510, -- Worldsoul: Nerub-ar Palace
+			82516, -- Worldsoul: Forging a Pact
+			82453, -- Worldsoul: Encore!
+			82488, -- Worldsoul: Darkflame Cleft
+			82506, -- Worldsoul: Darkflame Cleft
+			82498, -- Worldsoul: Darkflame Cleft
+			82492, -- Worldsoul: City of Threads
+			82496, -- Worldsoul: City of Threads
+			82504, -- Worldsoul: City of Threads
+			82485, -- Worldsoul: Cinderbrew Meadery
+			82495, -- Worldsoul: Cinderbrew Meadery
+			82503, -- Worldsoul: Cinderbrew Meadery
+			82511, -- Worldsoul: Awakening Machine
+			82491, -- Worldsoul: Ara-Kara, City of Echoes
+			82494, -- Worldsoul: Ara-Kara, City of Echoes
+			82502, -- Worldsoul: Ara-Kara, City of Echoes
+			81985, -- Worldsoul Memory: The Worldcarvers
+			82164, -- Worldsoul Memory: Reign of the Old Gods
+			82260, -- Worldsoul Memory: Primal Predators
+			82286, -- Worldsoul Memory: Old Gods Forsaken
+			82263, -- Worldsoul Memory: Elemental Fury
+			82207, -- Worldsoul Memory: Descendant of Distant Waters
+			82321, -- Worldsoul Memory: Ancient Explorers
+			82285, -- Worldsoul Memory: A Wounded Soul
+			82449, -- The Call of the Worldsoul
+		},
+		max = 1
+	},
+
+
+
+
+
+
+
+
 }

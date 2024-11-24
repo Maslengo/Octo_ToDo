@@ -1,5 +1,7 @@
 <UI>
+	<Script file="IndentationLib\IndentationLib.lua"/>
 	<Script file="LibStub\LibStub.lua"/>
+	<Script file="LibRealmInfo\LibRealmInfo.lua"/>
 	<Include file="UTF8\lib.xml"/>
 	<Include file="LibSFDropDown\LibSFDropDown.xml"/>
 	<Include file="AceLocale-3.0\lib.xml"/>

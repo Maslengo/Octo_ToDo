@@ -167,6 +167,7 @@ if L then
 	L["No quests"] = true
 	L[">>DONE<<"] = true
 	L["Additional Buttons"] = true
+	L["Bags"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -220,7 +221,7 @@ if L then
 	-- L["A Worthy Ally: Loamm Niffen"] = "Достойный союзник: лоаммские ниффы"
 	-- L["Blooming Dreamseeds"] = "Цветение во сне"
 	L["Sniffenseeking"] = "Нюхорысканье"
-	L["Sniffenseeking (items)"] = "Нюхорысканье ("..ITEMS..")"
+	L["Sniffenseeking (items)"] = "Нюхорысканье (" .. ITEMS .. ")"
 	L["AutoSellGrey"] = "Автопродажа серого хлама"
 	L["AutoRepair"] = "Автопочинка"
 	L["InputDelete"] = "Автозаполнение 'УДАЛИТЬ'"
@@ -328,4 +329,5 @@ if L then
 	L["No quests"] = "Нет квестов"
 	L[">>DONE<<"] = ">>СДАЙ<<"
 	L["Additional Buttons"] = "Дополнительные кнопки"
+	L["Bags"] = "Сумки"
 end

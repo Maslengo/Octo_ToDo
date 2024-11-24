@@ -12,7 +12,7 @@ E.Octo_Table.OctoTable_Expansions_Table = {
 	"|cff6464ffBattle for Azeroth" .. FONT_COLOR_CODE_CLOSE,
 	"|cffc9c3aaShadowlands" .. FONT_COLOR_CODE_CLOSE,
 	"|cffe8e379Dragonflight" .. FONT_COLOR_CODE_CLOSE,
-	"|cffB59377The War Within" .. FONT_COLOR_CODE_CLOSE,
+	"|cffB59377The War Within" .. FONT_COLOR_CODE_CLOSE, --- Сокрытая война
 	-- "Midnight",
 	-- "The Last Titan",
 }

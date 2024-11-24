@@ -1469,9 +1469,9 @@ function DropDownButtonMixin:ddToggle(level, value, anchorFrame, xOffset, yOffse
 	else
 		local point, relativePoint, y
 		if anchorFrame.hasArrowUp then
-			point, relativePoint, y = "BOTTOMLEFT", "BOTTOMRIGHT", -14
+			point, relativePoint, y = "BOTTOMLEFT", "BOTTOMRIGHT", -15
 		else
-			point, relativePoint, y = "TOPLEFT", "TOPRIGHT", 14
+			point, relativePoint, y = "TOPLEFT", "TOPRIGHT", 15
 		end
 		if GetScreenWidth() - anchorFrame:GetRight() - 2 < menu.width then
 			point, relativePoint = relativePoint, point
@@ -2023,7 +2023,7 @@ end
 do
 	local function OnClick(self)
 		PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
-		self:ddToggle(1, nil, self, self:GetWidth() - 13, (self:GetHeight() / 2 + 2) * (self:ddIsOpenMenuUp() and -1 or 1))
+		self:ddToggle(1, nil, self, self:GetWidth() - 13, (self:GetHeight() / 2 + 2) * (self:ddIsOpenMenuUp() and 0 or 1))
 	end
 
 

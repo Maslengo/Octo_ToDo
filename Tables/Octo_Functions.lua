@@ -14,36 +14,6 @@ local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDB
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
--- function E.Octo_Func.Octo_IsClassic()
---     local build = 1
---     local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
---     if build == WOW_currentBuild then
---         return true
---     else
---         return false
---     end
--- end
--- --------------------------------------------------------------
--- function E.Octo_Func.Octo_IsWrathClassic()
---     local build = 3
---     local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
---     if build == WOW_currentBuild then
---         return true
---     else
---         return false
---     end
--- end
--- --------------------------------------------------------------
--- function E.Octo_Func.Octo_IsRetail()
---     local build = 11
---     local WOW_currentBuild = tonumber(GetBuildInfo():match("(.-)%."))
---     if build == WOW_currentBuild then
---         return true
---     else
---         return false
---     end
--- end
-----------------------------------------------------------------
 function E.Octo_Func.func_hex2rgb(self)
 	self = self:gsub("|cff", "")
 	return tonumber("0x"..self:sub(1, 2)), tonumber("0x"..self:sub(3, 4)), tonumber("0x"..self:sub(5, 6))
