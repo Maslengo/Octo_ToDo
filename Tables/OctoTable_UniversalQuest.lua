@@ -100,7 +100,26 @@ E.OctoTable_UniversalQuest = {
 			84625,
 			84909,
 		},
-		max = 1
+		max = 11
+	},
+	{
+		name_save = "CrateInsuranceAgent", -- Octopussy_Timewalk_CrateInsuranceAgent_Weekly
+		reset = "Weekly",
+		desc = "Timewalk",
+		questID = {
+			85523,
+			84773,
+			84625,
+			84470,
+			83931,
+			85574,
+			84909,
+			84767,
+			84624,
+			84426,
+			83794,
+		},
+		max = 11
 	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -269,3 +288,4 @@ E.OctoTable_UniversalQuest = {
 		max = 43
 	},
 }
+
