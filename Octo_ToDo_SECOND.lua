@@ -85,7 +85,7 @@ local function O_otrisovka_SECOND()
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = "", ""
 			CL:SetFontObject(OctoFont12)
-			vivodLeft = E.Timers.ElementalStorm().. "Elemental Storm"
+			vivodLeft = classColorHexCurrent..ACHIEVEMENT_TITLE.."|r".." "..E.Green_Color..GetTotalAchievementPoints(false).."|r"
 			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
 			if CharInfo.Faction == "Horde" then
 				BG:SetColorTexture(.5, 0, 0, E.BGALPHA*2)
@@ -229,7 +229,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		dd_SECOND.text:SetJustifyV("MIDDLE")
 		dd_SECOND.text:SetJustifyH("CENTER")
 		dd_SECOND.text:SetTextColor(1, 1, 1, 1)
-		dd_SECOND.text:SetText(classColorHexCurrent..ACHIEVEMENT_TITLE.."|r".." "..E.Green_Color..GetTotalAchievementPoints(false).."|r")
+		dd_SECOND.text:SetText(ACHIEVEMENT_BUTTON)
 		LibSFDropDown:SetMixin(dd_SECOND)
 		dd_SECOND:SetPoint("BOTTOMLEFT", OctoToDo_SECOND_MainFrame, "TOPLEFT", 0, 1)
 		dd_SECOND:ddSetDisplayMode(GlobalAddonName)

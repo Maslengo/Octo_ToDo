@@ -360,11 +360,11 @@ SlashCmdList.OCTOLISTQUESTS = function(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID):ThenForAllWithCached(function(_, ids1)
+	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestIDTEST):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
 	sort(list1, E.func_Reverse_order)
-	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID):FailWithChecked(function(_, ids2)
+	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestIDTEST):FailWithChecked(function(_, ids2)
 			tinsert(list2, ids2)
 	end)
 	sort(list2, E.func_Reverse_order)

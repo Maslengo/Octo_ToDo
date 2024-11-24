@@ -102,25 +102,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 11
 	},
-	{
-		name_save = "CrateInsuranceAgent", -- Octopussy_Timewalk_CrateInsuranceAgent_Weekly
-		reset = "Weekly",
-		desc = "Timewalk",
-		questID = {
-			85523,
-			84773,
-			84625,
-			84470,
-			83931,
-			85574,
-			84909,
-			84767,
-			84624,
-			84426,
-			83794,
-		},
-		max = 11
-	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -241,51 +222,52 @@ E.OctoTable_UniversalQuest = {
 		reset = "Weekly",
 		desc = "TWW",
 		questID = {
-			82452, -- Worldsoul: World Quests
-			82512, -- Worldsoul: World Boss
-			82487, -- Worldsoul: The Stonevault
-			82497, -- Worldsoul: The Stonevault
-			82505, -- Worldsoul: The Stonevault
-			82508, -- Worldsoul: The Rookery
-			82486, -- Worldsoul: The Rookery
-			82500, -- Worldsoul: The Rookery
-			82489, -- Worldsoul: The Dawnbreaker
-			82493, -- Worldsoul: The Dawnbreaker
-			82501, -- Worldsoul: The Dawnbreaker
-			82483, -- Worldsoul: Spreading the Light
-			82482, -- Worldsoul: Snuffling
-			82490, -- Worldsoul: Priory of the Sacred Flame
-			82499, -- Worldsoul: Priory of the Sacred Flame
-			82507, -- Worldsoul: Priory of the Sacred Flame
-			82659, -- Worldsoul: Nerub-ar Palace
-			82509, -- Worldsoul: Nerub-ar Palace
-			82510, -- Worldsoul: Nerub-ar Palace
-			82516, -- Worldsoul: Forging a Pact
-			82453, -- Worldsoul: Encore!
-			82488, -- Worldsoul: Darkflame Cleft
-			82506, -- Worldsoul: Darkflame Cleft
-			82498, -- Worldsoul: Darkflame Cleft
-			82492, -- Worldsoul: City of Threads
-			82496, -- Worldsoul: City of Threads
-			82504, -- Worldsoul: City of Threads
-			82485, -- Worldsoul: Cinderbrew Meadery
-			82495, -- Worldsoul: Cinderbrew Meadery
-			82503, -- Worldsoul: Cinderbrew Meadery
-			82511, -- Worldsoul: Awakening Machine
-			82491, -- Worldsoul: Ara-Kara, City of Echoes
-			82494, -- Worldsoul: Ara-Kara, City of Echoes
-			82502, -- Worldsoul: Ara-Kara, City of Echoes
-			81985, -- Worldsoul Memory: The Worldcarvers
-			82164, -- Worldsoul Memory: Reign of the Old Gods
-			82260, -- Worldsoul Memory: Primal Predators
-			82286, -- Worldsoul Memory: Old Gods Forsaken
-			82263, -- Worldsoul Memory: Elemental Fury
-			82207, -- Worldsoul Memory: Descendant of Distant Waters
-			82321, -- Worldsoul Memory: Ancient Explorers
-			82285, -- Worldsoul Memory: A Wounded Soul
-			82449, -- The Call of the Worldsoul
+				82659, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Неруб'арский дворец
+				82516, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: заключение пакта
+				82512, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: босс вне подземелья
+				82511, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Машина пробуждения
+				82510, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Неруб'арский дворец
+				82509, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Неруб'арский дворец
+				82508, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Гнездовье
+				82507, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: приорат Священного Пламени
+				82506, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: расселина Темного Пламени
+				82505, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Каменный Свод
+				82504, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Город Нитей
+				82503, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Искроварня
+				82502, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Ара-Кара, Город Отголосков
+				82501, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: "Сияющий Рассвет"
+				82500, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Гнездовье
+				82499, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: приорат Священного Пламени
+				82498, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: расселина Темного Пламени
+				82497, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Каменный Свод
+				82496, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Город Нитей
+				82495, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Искроварня
+				82494, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Ара-Кара, Город Отголосков
+				82493, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: "Сияющий Рассвет"
+				82492, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Город Нитей
+				82491, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Ара-Кара, Город Отголосков
+				82490, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: приорат Священного Пламени
+				82489, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: "Сияющий Рассвет"
+				82488, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: расселина Темного Пламени
+				82487, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Каменный Свод
+				82486, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Гнездовье
+				82485, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Искроварня
+				82483, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: благодать Света
+				82482, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: разнюхивание
+				82453, -- |A:Wrapperavailablequesticon:14:14:0:0|a Воспоминание души мира: на бис!
+				82452, -- |A:Wrapperavailablequesticon:14:14:0:0|a Воспоминание души мира: локальные задания
+				-- 82449, -- |A:Wrapperavailablequesticon:14:14:0:0|a Зов души мира
+				82321, -- Воспоминание души мира: древние исследователи
+				82286, -- Воспоминание души мира: отвергнутые Древние боги
+				82285, -- Воспоминание души мира: раненая душа
+				82263, -- Воспоминание души мира: неистовство стихий
+				82260, -- Воспоминание души мира: первобытные охотники
+				82207, -- Воспоминание души мира: наследник дальних морей
+				82164, -- Воспоминание души мира: правление Древних богов
+				81985, -- Воспоминание души мира: великие резчики
+
 		},
-		max = 43
+		max = 42
 	},
 }
 
