@@ -83,25 +83,25 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-	{
-		name_save = "NoCrateLeftBehind", -- Octopussy_Timewalk_NoCrateLeftBehind_Weekly
-		reset = "Weekly",
-		desc = "Timewalk",
-		questID = {
-			83794,
-			85574,
-			84624,
-			84470,
-			83931,
-			84426,
-			84767,
-			85523,
-			84773,
-			84625,
-			84909,
-		},
-		max = 11
-	},
+	-- {
+	-- 	name_save = "NoCrateLeftBehind", -- Octopussy_Timewalk_NoCrateLeftBehind_Weekly
+	-- 	reset = "Weekly",
+	-- 	desc = "Timewalk",
+	-- 	questID = {
+	-- 		83794,
+	-- 		85574,
+	-- 		84624,
+	-- 		84470,
+	-- 		83931,
+	-- 		84426,
+	-- 		84767,
+	-- 		85523,
+	-- 		84773,
+	-- 		84625,
+	-- 		84909,
+	-- 	},
+	-- 	max = 11
+	-- },
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------

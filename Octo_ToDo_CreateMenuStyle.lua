@@ -10,6 +10,8 @@ local menuBackdrop = {
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 	local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
 	f:SetBackdrop(menuBackdrop)
+	f:SetPoint("TOPLEFT", 8, -2)
+	f:SetPoint("BOTTOMRIGHT", -8, 2)
 	f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 	f:SetBackdropBorderColor(0, 0, 0, 1)
 	return f

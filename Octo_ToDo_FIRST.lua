@@ -1860,83 +1860,6 @@ function O_otrisovka_FIRST()
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
 				return vivodCent, vivodLeft
 		end)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				vivodLeft = E.func_currencyicon(3100).."Ни один ящик не пропадет"
-				if CharInfo.Octopussy_Timewalk_NoCrateLeftBehind_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Timewalk_NoCrateLeftBehind_Weekly
-				end
-				tooltip[#tooltip+1] = {E.func_questName(85574)..E.Gray_Color.." id:85574|r", CharInfo.OctoTable_QuestID[85574]}
-				tooltip[#tooltip+1] = {E.func_questName(85523)..E.Gray_Color.." id:85523|r", CharInfo.OctoTable_QuestID[85523]}
-				tooltip[#tooltip+1] = {E.func_questName(84909)..E.Gray_Color.." id:84909|r", CharInfo.OctoTable_QuestID[84909]}
-				tooltip[#tooltip+1] = {E.func_questName(84773)..E.Gray_Color.." id:84773|r", CharInfo.OctoTable_QuestID[84773]}
-				tooltip[#tooltip+1] = {E.func_questName(84767)..E.Gray_Color.." id:84767|r", CharInfo.OctoTable_QuestID[84767]}
-				tooltip[#tooltip+1] = {E.func_questName(84625)..E.Gray_Color.." id:84625|r", CharInfo.OctoTable_QuestID[84625]}
-				tooltip[#tooltip+1] = {E.func_questName(84624)..E.Gray_Color.." id:84624|r", CharInfo.OctoTable_QuestID[84624]}
-				tooltip[#tooltip+1] = {E.func_questName(84470)..E.Gray_Color.." id:84470|r", CharInfo.OctoTable_QuestID[84470]}
-				tooltip[#tooltip+1] = {E.func_questName(84426)..E.Gray_Color.." id:84426|r", CharInfo.OctoTable_QuestID[84426]}
-				tooltip[#tooltip+1] = {E.func_questName(83931)..E.Gray_Color.." id:83931|r", CharInfo.OctoTable_QuestID[83931]}
-				tooltip[#tooltip+1] = {E.func_questName(83794)..E.Gray_Color.." id:83794|r", CharInfo.OctoTable_QuestID[83794]}
-				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
-				return vivodCent, vivodLeft
-		end)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
-				vivodLeft = E.func_currencyicon(3100).."World soul"
-				if CharInfo.Octopussy_TWW_Worldsoul_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_TWW_Worldsoul_Weekly
-				end
-
-
-
-
-					tooltip[#tooltip+1] = {E.func_questName(82659)..E.Gray_Color.." id:82659|r", CharInfo.OctoTable_QuestID[82659]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Неруб'арский дворец
-					tooltip[#tooltip+1] = {E.func_questName(82516)..E.Gray_Color.." id:82516|r", CharInfo.OctoTable_QuestID[82516]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: заключение пакта
-					tooltip[#tooltip+1] = {E.func_questName(82512)..E.Gray_Color.." id:82512|r", CharInfo.OctoTable_QuestID[82512]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: босс вне подземелья
-					tooltip[#tooltip+1] = {E.func_questName(82511)..E.Gray_Color.." id:82511|r", CharInfo.OctoTable_QuestID[82511]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Машина пробуждения
-					tooltip[#tooltip+1] = {E.func_questName(82510)..E.Gray_Color.." id:82510|r", CharInfo.OctoTable_QuestID[82510]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Неруб'арский дворец
-					tooltip[#tooltip+1] = {E.func_questName(82509)..E.Gray_Color.." id:82509|r", CharInfo.OctoTable_QuestID[82509]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Неруб'арский дворец
-					tooltip[#tooltip+1] = {E.func_questName(82508)..E.Gray_Color.." id:82508|r", CharInfo.OctoTable_QuestID[82508]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Гнездовье
-					tooltip[#tooltip+1] = {E.func_questName(82507)..E.Gray_Color.." id:82507|r", CharInfo.OctoTable_QuestID[82507]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: приорат Священного Пламени
-					tooltip[#tooltip+1] = {E.func_questName(82506)..E.Gray_Color.." id:82506|r", CharInfo.OctoTable_QuestID[82506]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: расселина Темного Пламени
-					tooltip[#tooltip+1] = {E.func_questName(82505)..E.Gray_Color.." id:82505|r", CharInfo.OctoTable_QuestID[82505]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Каменный Свод
-					tooltip[#tooltip+1] = {E.func_questName(82504)..E.Gray_Color.." id:82504|r", CharInfo.OctoTable_QuestID[82504]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Город Нитей
-					tooltip[#tooltip+1] = {E.func_questName(82503)..E.Gray_Color.." id:82503|r", CharInfo.OctoTable_QuestID[82503]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Искроварня
-					tooltip[#tooltip+1] = {E.func_questName(82502)..E.Gray_Color.." id:82502|r", CharInfo.OctoTable_QuestID[82502]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Ара-Кара, Город Отголосков
-					tooltip[#tooltip+1] = {E.func_questName(82501)..E.Gray_Color.." id:82501|r", CharInfo.OctoTable_QuestID[82501]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: "Сияющий Рассвет"
-					tooltip[#tooltip+1] = {E.func_questName(82500)..E.Gray_Color.." id:82500|r", CharInfo.OctoTable_QuestID[82500]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Гнездовье
-					tooltip[#tooltip+1] = {E.func_questName(82499)..E.Gray_Color.." id:82499|r", CharInfo.OctoTable_QuestID[82499]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: приорат Священного Пламени
-					tooltip[#tooltip+1] = {E.func_questName(82498)..E.Gray_Color.." id:82498|r", CharInfo.OctoTable_QuestID[82498]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: расселина Темного Пламени
-					tooltip[#tooltip+1] = {E.func_questName(82497)..E.Gray_Color.." id:82497|r", CharInfo.OctoTable_QuestID[82497]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Каменный Свод
-					tooltip[#tooltip+1] = {E.func_questName(82496)..E.Gray_Color.." id:82496|r", CharInfo.OctoTable_QuestID[82496]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Город Нитей
-					tooltip[#tooltip+1] = {E.func_questName(82495)..E.Gray_Color.." id:82495|r", CharInfo.OctoTable_QuestID[82495]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Искроварня
-					tooltip[#tooltip+1] = {E.func_questName(82494)..E.Gray_Color.." id:82494|r", CharInfo.OctoTable_QuestID[82494]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Ара-Кара, Город Отголосков
-					tooltip[#tooltip+1] = {E.func_questName(82493)..E.Gray_Color.." id:82493|r", CharInfo.OctoTable_QuestID[82493]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: "Сияющий Рассвет"
-					tooltip[#tooltip+1] = {E.func_questName(82492)..E.Gray_Color.." id:82492|r", CharInfo.OctoTable_QuestID[82492]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Город Нитей
-					tooltip[#tooltip+1] = {E.func_questName(82491)..E.Gray_Color.." id:82491|r", CharInfo.OctoTable_QuestID[82491]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Ара-Кара, Город Отголосков
-					tooltip[#tooltip+1] = {E.func_questName(82490)..E.Gray_Color.." id:82490|r", CharInfo.OctoTable_QuestID[82490]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: приорат Священного Пламени
-					tooltip[#tooltip+1] = {E.func_questName(82489)..E.Gray_Color.." id:82489|r", CharInfo.OctoTable_QuestID[82489]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: "Сияющий Рассвет"
-					tooltip[#tooltip+1] = {E.func_questName(82488)..E.Gray_Color.." id:82488|r", CharInfo.OctoTable_QuestID[82488]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: расселина Темного Пламени
-					tooltip[#tooltip+1] = {E.func_questName(82487)..E.Gray_Color.." id:82487|r", CharInfo.OctoTable_QuestID[82487]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Каменный Свод
-					tooltip[#tooltip+1] = {E.func_questName(82486)..E.Gray_Color.." id:82486|r", CharInfo.OctoTable_QuestID[82486]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Гнездовье
-					tooltip[#tooltip+1] = {E.func_questName(82485)..E.Gray_Color.." id:82485|r", CharInfo.OctoTable_QuestID[82485]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Искроварня
-					tooltip[#tooltip+1] = {E.func_questName(82483)..E.Gray_Color.." id:82483|r", CharInfo.OctoTable_QuestID[82483]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: благодать Света
-					tooltip[#tooltip+1] = {E.func_questName(82482)..E.Gray_Color.." id:82482|r", CharInfo.OctoTable_QuestID[82482]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: разнюхивание
-					tooltip[#tooltip+1] = {E.func_questName(82453)..E.Gray_Color.." id:82453|r", CharInfo.OctoTable_QuestID[82453]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Воспоминание души мира: на бис!
-					tooltip[#tooltip+1] = {E.func_questName(82452)..E.Gray_Color.." id:82452|r", CharInfo.OctoTable_QuestID[82452]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Воспоминание души мира: локальные задания
-					-- tooltip[#tooltip+1] = {E.func_questName(82449)..E.Gray_Color.." id:82449|r", CharInfo.OctoTable_QuestID[82449]} -- |A:Wrapperavailablequesticon:14:14:0:0|a Зов души мира
-					tooltip[#tooltip+1] = {E.func_questName(82321)..E.Gray_Color.." id:82321|r", CharInfo.OctoTable_QuestID[82321]} -- Воспоминание души мира: древние исследователи
-					tooltip[#tooltip+1] = {E.func_questName(82286)..E.Gray_Color.." id:82286|r", CharInfo.OctoTable_QuestID[82286]} -- Воспоминание души мира: отвергнутые Древние боги
-					tooltip[#tooltip+1] = {E.func_questName(82285)..E.Gray_Color.." id:82285|r", CharInfo.OctoTable_QuestID[82285]} -- Воспоминание души мира: раненая душа
-					tooltip[#tooltip+1] = {E.func_questName(82263)..E.Gray_Color.." id:82263|r", CharInfo.OctoTable_QuestID[82263]} -- Воспоминание души мира: неистовство стихий
-					tooltip[#tooltip+1] = {E.func_questName(82260)..E.Gray_Color.." id:82260|r", CharInfo.OctoTable_QuestID[82260]} -- Воспоминание души мира: первобытные охотники
-					tooltip[#tooltip+1] = {E.func_questName(82207)..E.Gray_Color.." id:82207|r", CharInfo.OctoTable_QuestID[82207]} -- Воспоминание души мира: наследник дальних морей
-					tooltip[#tooltip+1] = {E.func_questName(82164)..E.Gray_Color.." id:82164|r", CharInfo.OctoTable_QuestID[82164]} -- Воспоминание души мира: правление Древних богов
-					tooltip[#tooltip+1] = {E.func_questName(81985)..E.Gray_Color.." id:81985|r", CharInfo.OctoTable_QuestID[81985]} -- Воспоминание души мира: великие резчики
-				return vivodCent, vivodLeft
-		end)
 	end
 	-- ПОДЗЕМЕЛЬЯ
 	if Octo_ToDo_DB_Vars.config.Dungeons == true then
@@ -2745,7 +2668,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		dd_FIRST:ddHideWhenButtonHidden()
 		dd_FIRST:RegisterForClicks("LeftButtonUp")
 		dd_FIRST:SetScript("OnClick", function(self)
-				self:ddToggle(1, nil, self, self:GetWidth()+1, -self:GetHeight())
+				self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 		end)
 		local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 			Octo_ToDo_DB_Players[menuButton.value].isShownPLAYER = checked

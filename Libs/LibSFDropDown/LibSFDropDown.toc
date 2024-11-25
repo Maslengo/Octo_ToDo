@@ -1,0 +1,8 @@
+## Interface: 110005, 40401, 40400, 11504
+## Title: LibSFDropDown
+## Author: sfmict
+## Notes: Dropdown menu library
+## Version: r33
+## OptionalDeps: LibStub
+libs\LibStub\LibStub.lua
+LibSFDropDown.xml
