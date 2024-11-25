@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v79.5(11.0.5)(25.11.2024)
+## Version: v79.6(11.0.5)(26.11.2024)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_1
 ## SavedVariables: Octo_ToDo_DB_Config Octo_ToDo_DB_Players Octo_ToDo_DB_Vars Octo_ToDo_DB_Other
 
@@ -29,6 +29,7 @@ Tables\OctoTable_Instances.lua
 Tables\OctoTable_Items.lua
 Tables\OctoTable_Movies.lua
 Tables\OctoTable_QuestID.lua
+Tables\OctoTable_reputation_ALL.lua
 Tables\OctoTable_UniversalQuest.lua
 Tables\wowhead_prefix_Table.lua
 Tables\OctoTable_Gossip.lua
@@ -61,6 +62,7 @@ Moduls\Hide_Covenant.lua
 Moduls\Hide_Error_Messages.lua
 Moduls\Hide_Talking_Head_Frame.lua
 Moduls\Hide_Zone_Text.lua
+Moduls\Module_FieldOfView.lua
 Moduls\Module_Global_Fade_Persist.lua
 Moduls\Module_ItemsDelete.lua
 Moduls\Module_ItemsUsable.lua

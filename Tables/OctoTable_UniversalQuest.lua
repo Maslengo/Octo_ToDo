@@ -6,15 +6,15 @@ E.OctoTable_UniversalQuest = {
 		reset = "Weekly",
 		desc = "Timewalk",
 		questID = {
-			83285, -- Древний свиток
-			64710, -- Шепчущий кристалл пламени Скверны
-			55499, -- Мерцающий кристалл
-			55498, -- Мерцающий кристалл
-			45563, -- Затуманенная монета
-			40787, -- Тлеющий уголек
-			40786, -- Тлеющий уголек
-			40173, -- Нестабильная призма
-			40168, -- Бурлящий фиал
+			83285,
+			64710,
+			55499,
+			55498,
+			45563,
+			40787,
+			40786,
+			40173,
+			40168,
 		},
 		max = 1
 	},
@@ -23,10 +23,10 @@ E.OctoTable_UniversalQuest = {
 		reset = "Weekly",
 		desc = "Timewalk",
 		questID = {
-			82817, -- Обнаружен источник помех: глубины Черной горы
-			57637, -- Обнаружен источник помех: Огненные Просторы
-			50316, -- Обнаружен источник помех: Ульдуар
-			47523, -- Обнаружен источник помех: Черный храм
+			82817,
+			57637,
+			50316,
+			47523,
 		},
 		max = 1
 	},
@@ -35,11 +35,11 @@ E.OctoTable_UniversalQuest = {
 		reset = "Weekly",
 		desc = "Timewalk",
 		questID = {
-			85948, -- Пылающий путь сквозь время
-			85947, -- Первозданный путь сквозь время
-			83365, -- Замерзший путь сквозь время
-			83363, -- Пылающий путь сквозь время
-			83274, -- Первозданный путь сквозь время
+			85948,
+			85947,
+			83365,
+			83363,
+			83274,
 			40792,
 			39021,
 			39020,
@@ -57,7 +57,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "CelebrateGoodFun", -- Octopussy_Timewalk_CelebrateGoodFun_Weekly
+		name_save = "CelebrateGoodFun",
 		reset = "Weekly",
 		desc = "Timewalk",
 		questID = {
@@ -66,7 +66,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "ChromiesCodex", -- Octopussy_Timewalk_ChromiesCodex_Weekly
+		name_save = "ChromiesCodex",
 		reset = "Weekly",
 		desc = "Timewalk",
 		questID = {
@@ -75,7 +75,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "SoldierofTime", -- Octopussy_Timewalk_SoldierofTime_Weekly
+		name_save = "SoldierofTime",
 		reset = "Weekly",
 		desc = "Timewalk",
 		questID = {
@@ -83,29 +83,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
-	-- {
-	-- 	name_save = "NoCrateLeftBehind", -- Octopussy_Timewalk_NoCrateLeftBehind_Weekly
-	-- 	reset = "Weekly",
-	-- 	desc = "Timewalk",
-	-- 	questID = {
-	-- 		83794,
-	-- 		85574,
-	-- 		84624,
-	-- 		84470,
-	-- 		83931,
-	-- 		84426,
-	-- 		84767,
-	-- 		85523,
-	-- 		84773,
-	-- 		84625,
-	-- 		84909,
-	-- 	},
-	-- 	max = 11
-	-- },
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
 	{
 		name_save = "WorldBoss",
 		reset = "Weekly",
@@ -119,7 +96,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "TheTheaterTroupe", -- Octopussy_TWW_TheTheaterTroupe_Weekly
+		name_save = "TheTheaterTroupe",
 		reset = "Weekly",
 		desc = "TWW",
 		questID = {
@@ -128,7 +105,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "DungeonQuest", -- Octopussy_TWW_DungeonQuest_Weekly
+		name_save = "DungeonQuest",
 		reset = "Weekly",
 		desc = "TWW",
 		questID = {
@@ -143,7 +120,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "Delve", -- Octopussy_TWW_Delve_Weekly
+		name_save = "Delve",
 		reset = "Weekly",
 		desc = "TWW",
 		questID = {
@@ -177,7 +154,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "MajorKeyflames", -- Octopussy_TWW_MajorKeyflames_Weekly
+		name_save = "MajorKeyflames",
 		reset = "Weekly",
 		desc = "TWW",
 		questID = {
@@ -193,7 +170,7 @@ E.OctoTable_UniversalQuest = {
 		max = 8
 	},
 	{
-		name_save = "MinorKeyflames", -- Octopussy_TWW_MinorKeyflames_Weekly
+		name_save = "MinorKeyflames",
 		reset = "Weekly",
 		desc = "TWW",
 		questID = {
@@ -218,56 +195,90 @@ E.OctoTable_UniversalQuest = {
 		max = 8
 	},
 	{
-		name_save = "Worldsoul", -- Octopussy_TWW_Worldsoul_Weekly
+		name_save = "Worldsoul",
 		reset = "Weekly",
 		desc = "TWW",
 		questID = {
-				82659, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Неруб'арский дворец
-				82516, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: заключение пакта
-				82512, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: босс вне подземелья
-				82511, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Машина пробуждения
-				82510, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Неруб'арский дворец
-				82509, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Неруб'арский дворец
-				82508, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Гнездовье
-				82507, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: приорат Священного Пламени
-				82506, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: расселина Темного Пламени
-				82505, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Каменный Свод
-				82504, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Город Нитей
-				82503, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Искроварня
-				82502, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Ара-Кара, Город Отголосков
-				82501, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: "Сияющий Рассвет"
-				82500, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Гнездовье
-				82499, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: приорат Священного Пламени
-				82498, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: расселина Темного Пламени
-				82497, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Каменный Свод
-				82496, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Город Нитей
-				82495, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Искроварня
-				82494, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Ара-Кара, Город Отголосков
-				82493, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: "Сияющий Рассвет"
-				82492, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Город Нитей
-				82491, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Ара-Кара, Город Отголосков
-				82490, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: приорат Священного Пламени
-				82489, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: "Сияющий Рассвет"
-				82488, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: расселина Темного Пламени
-				82487, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Каменный Свод
-				82486, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Гнездовье
-				82485, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: Искроварня
-				82483, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: благодать Света
-				82482, -- |A:Wrapperavailablequesticon:14:14:0:0|a Душа мира: разнюхивание
-				82453, -- |A:Wrapperavailablequesticon:14:14:0:0|a Воспоминание души мира: на бис!
-				82452, -- |A:Wrapperavailablequesticon:14:14:0:0|a Воспоминание души мира: локальные задания
-				-- 82449, -- |A:Wrapperavailablequesticon:14:14:0:0|a Зов души мира
-				82321, -- Воспоминание души мира: древние исследователи
-				82286, -- Воспоминание души мира: отвергнутые Древние боги
-				82285, -- Воспоминание души мира: раненая душа
-				82263, -- Воспоминание души мира: неистовство стихий
-				82260, -- Воспоминание души мира: первобытные охотники
-				82207, -- Воспоминание души мира: наследник дальних морей
-				82164, -- Воспоминание души мира: правление Древних богов
-				81985, -- Воспоминание души мира: великие резчики
-
+			82659,
+			82516,
+			82512,
+			82511,
+			82510,
+			82509,
+			82508,
+			82507,
+			82506,
+			82505,
+			82504,
+			82503,
+			82502,
+			82501,
+			82500,
+			82499,
+			82498,
+			82497,
+			82496,
+			82495,
+			82494,
+			82493,
+			82492,
+			82491,
+			82490,
+			82489,
+			82488,
+			82487,
+			82486,
+			82485,
+			82483,
+			82482,
+			82453,
+			82452,
+			82321,
+			82286,
+			82285,
+			82263,
+			82260,
+			82207,
+			82164,
+			81985,
 		},
 		max = 42
 	},
+	{
+		name_save = "ISavedthePartyandAllIGotWereTheseLousyHats",
+		reset = "Once",
+		desc = "Timewalk",
+		questID = {
+			84143,
+			84144,
+			84419,
+			84393,
+			84363,
+			84521,
+			84868,
+			84236,
+			84237,
+			84278,
+			84296,
+			84334,
+			84336,
+			84563,
+			85024,
+			84588,
+			85025,
+			84755,
+			85042,
+			84756,
+			85043,
+			85047,
+			85060,
+			85208,
+			85195,
+			85475,
+			85476,
+			85502,
+			85503,
+		},
+		max = 29
+	},
 }
-

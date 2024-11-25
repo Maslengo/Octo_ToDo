@@ -76,3 +76,19 @@ end
 function MDT.GetFramePool(template)
 	return framePools[template]
 end
+
+
+-- ПОЧИНКА
+-- PLAYER_DEAD, UPDATE_INVENTORY_DURABILITY
+function()
+	local invSlotId, current, maximum;
+	for invSlotId = 1, 18 do
+		current, maximum = GetInventoryItemDurability(invSlotId)
+		if current and maximum then
+			if (current/maximum) <= 0.3 then
+				return true
+			end
+		end
+	end
+	return false
+end

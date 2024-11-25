@@ -449,6 +449,11 @@ MAIN_Config:SetScript("OnShow", function(self)
 					GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
 				end
 		end)
+
+
+
+
+
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, 0, "PortalsButtons", E.func_texturefromIcon(3610528, 20)..L["Portals"])
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, 150, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")
 		Create_CheckButton(MAIN_scrollChild, self, 19, POS_LEFT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
@@ -470,12 +475,45 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "CVar", E.func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."CVar".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "Minecraft", E.func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."Minecraft".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Debug".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 26, POS_RIGHT, "ReloadUI", E.Gray_Color.."Reload UI".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 26, POS_RIGHT, "ReloadUI", E.Blue_Color.."Reload UI".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 27, POS_RIGHT, "DELETEALL", E.Yellow_Color.."DELETEALL".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 28, POS_RIGHT, "Octo_ToDo_DB_Config", E.Gray_Color.."Config".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "Octo_ToDo_DB_Other", E.Gray_Color.."Other".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT, "Octo_ToDo_DB_Players", E.Gray_Color.."Players".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "Octo_ToDo_DB_Vars", E.Gray_Color.."Vars".."|r")
+
+
+
+		Create_CheckButton(MAIN_scrollChild, self, 32, POS_RIGHT, 0, "FieldOfView", "FieldOfView")
+
+
+		Create_Slider(MAIN_scrollChild, self, 33.5, POS_RIGHT, "FoV_top", "FoV_top: ", E.Green_Color, 0.5, 2.5, 0.1, function()
+				-- if GameMenuFrame then
+				-- 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_top or 1)
+				-- end
+		end)
+
+
+		Create_Slider(MAIN_scrollChild, self, 35, POS_RIGHT, "FoV_bottom", "FoV_bottom: ", E.Green_Color, 0.5, 2.5, 0.1, function()
+				-- if GameMenuFrame then
+				-- 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_bottom or 1)
+				-- end
+		end)
+
+
+		Create_Slider(MAIN_scrollChild, self, 36.5, POS_RIGHT, "FoV_left", "FoV_left: ", E.Green_Color, 0.5, 2.5, 0.1, function()
+				-- if GameMenuFrame then
+				-- 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_left or 1)
+				-- end
+		end)
+
+
+		Create_Slider(MAIN_scrollChild, self, 38, POS_RIGHT, "FoV_right", "FoV_right: ", E.Green_Color, 0.5, 2.5, 0.1, function()
+				-- if GameMenuFrame then
+				-- 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_right or 1)
+				-- end
+		end)
+
 end)
 local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, AddonTitle)
 category.ID = AddonTitle

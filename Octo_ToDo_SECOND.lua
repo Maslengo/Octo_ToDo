@@ -49,6 +49,26 @@ local edgeFile = "Interface\\Buttons\\WHITE8X8"
 local bgFile = "Interface\\Buttons\\WHITE8X8"
 local OctoTable_func_otrisovka_SECOND = {
 }
+
+
+local function Central_Frame_Mouse_OnClick(self)
+	local parent = OctoToDo_SECOND_MainFrame["FrameLine"..self.index]
+	parent:GetScript("OnClick")(parent)
+	if not self.tooltip then
+		return
+	end
+	fpde(self)
+	-- GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, 0)
+	-- GameTooltip:AddLine(" ")
+	-- for _, v in pairs(self.tooltip) do
+	-- 	if v[2] ~= "0/0" then
+	-- 		GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
+	-- 	end
+	-- end
+	-- GameTooltip:AddLine(" ")
+	-- GameTooltip:Show()
+end
+
 local function Central_Frame_Mouse_OnEnter(self)
 	local parent = OctoToDo_SECOND_MainFrame["FrameLine"..self.index]
 	parent:GetScript("OnEnter")(parent)
@@ -354,6 +374,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 					CF.index = i
 					CF:SetSize(E.curWidthCentral, E.curHeight)
 					CF:SetPoint("TOP", OctoToDo_SECOND_CharFrame, "TOP", 0, -E.curHeight*(i-1))
+					-- CF:SetScript("OnClick", Central_Frame_Mouse_OnClick)
 					CF:SetScript("OnEnter", Central_Frame_Mouse_OnEnter)
 					CF:SetScript("OnLeave", Central_Frame_Mouse_OnLeave)
 					CF:SetMouseClickEnabled(false)

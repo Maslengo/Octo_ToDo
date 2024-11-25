@@ -160,7 +160,8 @@ function E.func_reputationName(self)
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
 		name = reputationInfo.name or "no name"--E.Red_Color.."id "..self.."|r"
 	end
-	return AWide..name
+	-- return AWide..name
+	return name
 end
 local func_reputationName = E.func_reputationName
 ----------------------------------------------------------------

@@ -149,8 +149,8 @@ local function dumpEdit(indent, msg, tables)
 		k = (type(k) == "number" and "["..k.."]" or type(k) == "string" and '["'..k..'"]' or tostringall(k)).." ="
 		if type(v) == "table" and not tables[v] then
 			tables[v] = true
-			str = ("%s%s%s { -- %s\n"):format(str, indentStr, k, tostringall(v))
-			-- str = ("%s%s%s {\n"):format(str, indentStr, k)
+			-- str = ("%s%s%s { -- %s\n"):format(str, indentStr, k, tostringall(v)) -- ТАБЛИЦА
+			str = ("%s%s%s {\n"):format(str, indentStr, k) -- БЕЗ ТАБЛИЦЫ
 			str = str..dumpEdit(indent + 1, v, tables)
 			str = ("%s%s},\n"):format(str, indentStr)
 		else
@@ -418,15 +418,35 @@ end
 SLASH_OCTOLISTREP1 = "/OCTOLISTREP"
 SlashCmdList.OCTOLISTREP = function(msg)
 	local str4 = ""
-	local listSize, i = C_Reputation.GetNumFactions(), 1
+	local str5 = ""
+	local vivod = ""
+	--[[local listSize, i = C_Reputation.GetNumFactions(), 1
 	-- C_Reputation.CollapseAllFactionHeaders() -- закрыть
 	C_Reputation.ExpandAllFactionHeaders() -- открыть
 	while listSize >= i do
 		local factionData = C_Reputation.GetFactionDataByIndex(i)
 		str4 = str4 .. i ..") ".. factionData.name ..E.LightGray_Color.." ("..factionData.factionID.. ")|r\n"
 		i = i + 1
+	end]]
+	local list = {}
+
+	for _, factionID in next, E.OctoTable_reputation_ALL do
+		tinsert(list, factionID)
 	end
-	editBox:SetText(str4)
+	sort(list, E.func_Reverse_order)
+
+	for _, factionID in next, list do
+		if E.func_reputationName(factionID) ~= "no name" then
+			str4 = str4..factionID..", --" ..E.func_reputationName(factionID).. "\n"
+		else
+			str5 = str5..factionID..", --" ..E.func_reputationName(factionID).. "\n"
+		end
+	end
+
+	vivod = str4..str5
+
+
+	editBox:SetText(vivod)
 	editFrame:Show()
 end
 ------------------------------
