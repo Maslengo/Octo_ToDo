@@ -1457,7 +1457,7 @@ local function Octo_ToDo_FIRST_OnLoad()
 		OctpToDo_FIRST_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
-local function O_otrisovka_FIRST()
+function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."O_otrisovka_FIRST".."|r")
 	end
@@ -1573,6 +1573,17 @@ local function O_otrisovka_FIRST()
 					end
 				else
 					vivodCent = CharInfo.Chromie_inChromieTime and E.Red_Color..CharInfo.Chromie_name.."|r" or ""
+
+
+					-- if CharInfo.Chromie_inChromieTime == true then
+					-- 	vivodCent = E.Red_Color..CharInfo.Chromie_name.."|r"
+					-- else
+					-- 	vivodCent = "ЙЦУЙЦУЙЦУ"
+					-- end
+
+
+
+
 					tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and E.Green_Color.."true|r" or E.Gray_Color.."false|r"}
 					tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID}
 					tooltip[#tooltip+1] = {"Chromie_name", CharInfo.Chromie_name}
@@ -2253,6 +2264,7 @@ local function TotalTimeAllServer80OnShow()
 		return ""
 	end
 end
+
 local function Octo_ToDo_FIRST_CreateAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Octo_ToDo_FIRST_CreateAltFrame".."|r")
@@ -2826,7 +2838,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						info.keepShownOnClick = true
 						info.isNotRadio = true
 						local vivod = Octo_ToDo_DB_Players[GUID].classColorHex..Octo_ToDo_DB_Players[GUID].Name.."|r"
-						if Octo_ToDo_DB_Players[GUID].UnitLevel ~= 70 then
+						if Octo_ToDo_DB_Players[GUID].UnitLevel ~= E.currentMaxLevel then
 							vivod = vivod.." "..Octo_ToDo_DB_Players[GUID].UnitLevel
 						end
 						info.text = vivod
@@ -2834,6 +2846,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						info.func = selectFunctionisShownPLAYER
 						info.checked = Octo_ToDo_DB_Players[GUID].isShownPLAYER
 						info.remove = func_remove_GUID
+						info.removeDoNotHide = true
 						self:ddAddButton(info, level)
 					end
 				end
@@ -3025,32 +3038,74 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		f:SetJustifyH("LEFT")
 		f:SetTextColor(1, 1, 1, 1)
 	end
-	Octo_ToDo_FIRST_AddDataToAltFrame()
+	--[[Octo_ToDo_FIRST_AddDataToAltFrame()]]
 	OctoToDo_FIRST_MainFrame:Hide()
 end
 
 
 
 
--- -- POOLS
--- local FRM_Pool
+-- POOLS
+----------------------------------------------------------------
+local function resetPoolFunc(pool, f)
+	f:Hide()
+	f:ClearAllPoints()
+end
+local function resetPoolFunc_BG(pool, f)
+	f:Hide()
+	f.BG:Hide()
+	f:ClearAllPoints()
+end
+----------------------------------------------------------------
+local CharFrame_Pool
+local function CharFrame_PoolOnHide(f)
+	CharFrame_Pool:Release(f)
+end
 
--- local function resetPoolFunc(pool, f)
--- 	f:Hide()
--- 	f:ClearAllPoints()
--- 	local parent = f:GetParent()
--- 	if parent then parent.optionValue = nil end
--- end
--- local function FRM_PoolOnHide(f)
--- 	FRM_Pool:Release(f)
--- end
--- local function initFRM_PoolFunc(f)
--- 	f:Hide()
--- 	f:SetScript("OnHide", FRM_PoolOnHide)
--- end
--- FRM_Pool = CreateFramePool("Frame", nil, "BackdropTemplate", resetPoolFunc, false, initFRM_PoolFunc)
+
+local function initCharFrame_PoolFunc(f)
+	f.BG = f:CreateTexture(nil, "BACKGROUND")
+	f.BG:Hide()
+	f.BG:SetPoint("TOPLEFT", 0, -E.curHeight)
+	f.BG:SetPoint("BOTTOMRIGHT", 0, 0)
+	f.BG:SetColorTexture(r, g, b, 1)
+	for i = 1, #OctoTable_func_otrisovka_FIRST do
+		f["CenterLines"..i.."BG"] = f:CreateTexture(nil, "BACKGROUND")
+		f["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, 0)
+	end
+
+	f:Hide()
+	f:SetScript("OnHide", CharFrame_PoolOnHide)
+end
+
+CharFrame_Pool = CreateFramePool("Frame", nil, "BackdropTemplate", resetPoolFunc_BG, false, initCharFrame_PoolFunc)
 
 
+----------------------------------------------------------------
+local CentralFrame_Pool
+local function CentralFrame_PoolOnHide(f)
+	CentralFrame_Pool:Release(f)
+end
+local function initCentralFrame_PoolFunc(f)
+	f:SetSize(E.curWidthCentral, E.curHeight)
+	f:SetScript("OnEnter", Central_Frame_Mouse_OnEnter)
+	f:SetScript("OnLeave", Central_Frame_Mouse_OnLeave)
+	f:SetMouseClickEnabled(false)
+
+
+	f.CL = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	f.CL:SetAllPoints()
+	f.CL:SetFontObject(OctoFont11)
+	f.CL:SetJustifyV("MIDDLE")
+	f.CL:SetJustifyH("CENTER")
+	f.CL:SetTextColor(1, 1, 1, 1)
+
+	f:Hide()
+	f:SetScript("OnHide", CentralFrame_PoolOnHide)
+end
+
+CentralFrame_Pool = CreateFramePool("Frame", nil, "BackdropTemplate", resetPoolFunc, false, initCentralFrame_PoolFunc)
+----------------------------------------------------------------
 
 
 
@@ -3091,45 +3146,25 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			end
 	end)
 
-
 	for GUID, CharInfo in pairs(sorted) do
 		local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 		local curCharGUID = CharInfo.GUID
-		if not OctoToDo_FIRST_MainFrame[curCharGUID] then
-			OctoToDo_FIRST_MainFrame[curCharGUID] = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID().."OctoToDo_FIRST_MainFrame[curCharGUID]", OctoToDo_FIRST_MainFrame.scrollChild, "BackdropTemplate")
-			OctoToDo_FIRST_CharFrame = OctoToDo_FIRST_MainFrame[curCharGUID]
-			OctoToDo_FIRST_CharFrame:SetPoint("BOTTOM", 0, 0)
-			OctoToDo_FIRST_CharFrame.BG = OctoToDo_FIRST_CharFrame:CreateTexture(nil, "BACKGROUND")
-			OctoToDo_FIRST_CharFrame.BG:Hide()
-			OctoToDo_FIRST_CharFrame.BG:SetPoint("TOPLEFT", 0, -E.curHeight)
-			OctoToDo_FIRST_CharFrame.BG:SetPoint("BOTTOMRIGHT", 0, 0)
-			OctoToDo_FIRST_CharFrame.BG:SetColorTexture(r, g, b, 1)
-			for i = 1, #OctoTable_func_otrisovka_FIRST do
-				CharInfo.GUID = curCharGUID
-				local CF = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID().."CF"..i, OctoToDo_FIRST_CharFrame)
-				OctoToDo_FIRST_CharFrame["CenterLines"..i] = CF
-				CF.index = i
-				CF:SetSize(E.curWidthCentral, E.curHeight)
-				CF:SetPoint("TOP", OctoToDo_FIRST_CharFrame, "TOP", 0, -E.curHeight*(i-1))
-				CF:SetScript("OnEnter", Central_Frame_Mouse_OnEnter)
-				CF:SetScript("OnLeave", Central_Frame_Mouse_OnLeave)
-				CF:SetMouseClickEnabled(false)
-				local CL = CF:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-				CL:SetAllPoints()
-				CL:SetFontObject(OctoFont11)
-				CL:SetJustifyV("MIDDLE")
-				CL:SetJustifyH("CENTER")
-				CL:SetTextColor(1, 1, 1, 1)
-				OctoToDo_FIRST_CharFrame["CenterLines"..i.."BG"] = OctoToDo_FIRST_CharFrame:CreateTexture(nil, "BACKGROUND")
-				OctoToDo_FIRST_CharFrame["CenterLines"..i.."BG"]:SetAllPoints(OctoToDo_FIRST_CharFrame["CenterLines"..i])
-				OctoToDo_FIRST_CharFrame["CenterLines"..i.."BG"]:SetColorTexture(0, 0, 0, 0)
-				CF.CL = CL
-			end
-		else
-			OctoToDo_FIRST_CharFrame = OctoToDo_FIRST_MainFrame[curCharGUID]
+		OctoToDo_FIRST_MainFrame[curCharGUID] = CharFrame_Pool:Acquire()
+		OctoToDo_FIRST_CharFrame = OctoToDo_FIRST_MainFrame[curCharGUID]
+		OctoToDo_FIRST_CharFrame:SetParent(OctoToDo_FIRST_MainFrame.scrollChild)
+		OctoToDo_FIRST_CharFrame:Show()
+		OctoToDo_FIRST_CharFrame:SetPoint("BOTTOM", 0, 0)
+		for i = 1, #OctoTable_func_otrisovka_FIRST do
+			CharInfo.GUID = curCharGUID
+			local CF = CentralFrame_Pool:Acquire()
+			CF:Show()
+			CF:SetParent(OctoToDo_FIRST_CharFrame)
+			OctoToDo_FIRST_CharFrame["CenterLines"..i] = CF
+			OctoToDo_FIRST_CharFrame["CenterLines"..i.."BG"]:SetAllPoints(OctoToDo_FIRST_CharFrame["CenterLines"..i])
+			CF.index = i
+			CF:SetPoint("TOP", OctoToDo_FIRST_CharFrame, "TOP", 0, -E.curHeight*(i-1))
 		end
 		OctoToDo_FIRST_CharFrame:SetSize(E.curWidthCentral, E.curHeight)
-		-- print (#OctoToDo_FIRST_MainFrame.AllCharFrames)
 		if #OctoToDo_FIRST_MainFrame.AllCharFrames == 0 then
 			OctoToDo_FIRST_CharFrame:SetPoint("TOPRIGHT", 0, 0)
 		else
@@ -3140,6 +3175,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			OctoToDo_FIRST_CharFrame.BG:Show()
 			OctoToDo_FIRST_CharFrame.BG:SetAlpha(E.BGALPHA*2)
 		end
+
 		for i = 1, #OctoTable_func_otrisovka_FIRST do
 			local TEXTLEFT = OctoToDo_FIRST_MainFrame["TextLeft"..i]
 			local TEXTCENT = OctoToDo_FIRST_CharFrame["CenterLines"..i]
@@ -3156,6 +3192,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 				end
 			end
 		end
+
 	end
 	local curAltFrameWidth = #OctoToDo_FIRST_MainFrame.AllCharFrames * E.curWidthCentral/2
 	local width = curAltFrameWidth*2+E.curWidthTitle
@@ -3229,7 +3266,6 @@ local function main_frame_toggle()
 				Collect_All_journalInstance()
 				Collect_Player_Level()
 				Collect_WarMode()
-				Octo_ToDo_FIRST_AddDataToAltFrame()
 				Hide_trash_frames()
 		end)
 	end
@@ -3403,7 +3439,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_WarMode()
 		RequestTimePlayed()
 		Octo_ToDo_FIRST_CreateAltFrame()
-		Octo_ToDo_FIRST_AddDataToAltFrame()
+		--[[Octo_ToDo_FIRST_AddDataToAltFrame()]]
 		Hide_trash_frames()
 	end
 	if (event == "SHOW_SUBSCRIPTION_INTERSTITIAL") then
@@ -3420,11 +3456,11 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	end
 	if (event == "CHAT_MSG_SKILL" or event == "CHAT_MSG_SYSTEM") and not InCombatLockdown() then
 		Collect_All_Professions()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if event == "PLAYER_XP_UPDATE" then
 		Collect_Player_Level()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if (event == "QUEST_ACCEPTED" or event == "QUEST_COMPLETE" or event == "QUEST_FINISHED" or event == "QUEST_LOG_UPDATE" or event == "QUEST_REMOVED" or event == "QUEST_TURNED_IN" or event == "QUEST_LOOT_RECEIVED") then
 		C_Timer.After(1, function()
@@ -3432,25 +3468,25 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 				Collect_ALL_UNIVERSALQuestUpdate()
 		end)
 		Hide_trash_frames()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if (event == "PLAYER_MONEY" or event == "ACCOUNT_MONEY") and not InCombatLockdown() then
 		Collect_ALL_MoneyUpdate()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if (event == "CURRENCY_DISPLAY_UPDATE") and not InCombatLockdown() then
 		Collect_All_Currency()
 		Hide_trash_frames()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if (event == "PLAYER_EQUIPMENT_CHANGED") and not InCombatLockdown() then
 		Collect_ALL_ItemLevel()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if (event == "PLAYER_LEAVING_WORLD") and not InCombatLockdown() then
 		Collect_ALL_GreatVault()
 		Collect_ALL_LoginTime()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if (event == "PLAYER_ENTERING_WORLD") and not InCombatLockdown() then
 		Collect_ALL_LoginTime()
@@ -3459,7 +3495,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Collect_All_journalInstance()
 		Hide_trash_frames()
 		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or .8)
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if (event == "PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED") and not InCombatLockdown() then
 		Collect_ALL_ItemsInBag()
@@ -3471,23 +3507,23 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		C_Timer.After(2, function()
 				if not InCombatLockdown() then
 					Collect_ALL_ItemsInBag()
-					if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+					if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 				end
 		end)
 	end
 	if (event == "HEARTHSTONE_BOUND" or event == "ZONE_CHANGED_NEW_AREA") and not InCombatLockdown() then
 		Collect_ALL_Locations()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if (event == "SPELLS_CHANGED") and not InCombatLockdown() then
 		C_Timer.After(2, function()
 				Collect_WarMode()
 		end)
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if (event == "PLAYER_ENTERING_WORLD" or event == "MAIL_INBOX_UPDATE" or event == "MAIL_SHOW" or event == "UPDATE_PENDING_MAIL") and not InCombatLockdown() then
 		Collect_ALL_Mail()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if event == "PLAYER_REGEN_DISABLED" or InCombatLockdown() then
 		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then
@@ -3503,13 +3539,13 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	if event == "ENCOUNTER_END" then
 		C_Timer.After(1, function()
 				Collect_All_journalInstance()
-				if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+				if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 		end)
 	end
 	if event == "TIME_PLAYED_MSG" then
 		Collect_Played(...)
 		Collect_ALL_mapChallengeModeID()
-		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then Octo_ToDo_FIRST_AddDataToAltFrame() end
+		if OctoToDo_FIRST_MainFrame and OctoToDo_FIRST_MainFrame:IsShown() then --[[Octo_ToDo_FIRST_AddDataToAltFrame()]] end
 	end
 	if event == "GROUP_ROSTER_UPDATE" then
 		TEST_GROUP_ROSTER()
@@ -3521,7 +3557,7 @@ function SlashCmdList.Octo(msg)
 	debugprofilestart()
 	if not InCombatLockdown() then
 		main_frame_toggle()
-		Octo_ToDo_FIRST_AddDataToAltFrame()
+		--[[Octo_ToDo_FIRST_AddDataToAltFrame()]]
 	end
 	ChatFrame1:AddMessage ("debug timer: "..E.func_Gradient(tostringall(debugprofilestop()), E.Addon_Left_Color, E.Addon_Right_Color).." ms.")
 end
