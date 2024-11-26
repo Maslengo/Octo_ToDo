@@ -30,7 +30,7 @@ local function check_WTF()
 end
 function E.strategies.GetWowheadUrl(dataSources)
 	check_WTF()
-	for _, strategy in pairs(strategies.wowhead) do
+	for _, strategy in next, (strategies.wowhead) do
 		local id, type = strategy(dataSources)
 		if id and type then
 			local typeStr
@@ -46,7 +46,7 @@ function E.strategies.GetWowheadUrl(dataSources)
 end
 function E.strategies.GetWowheadAzEsUrl(dataSources)
 	check_WTF()
-	for _, strategy in pairs(strategies.wowheadAzEs) do
+	for _, strategy in next, (strategies.wowheadAzEs) do
 		local id = strategy(dataSources)
 		if id then
 			return "Wowhead Azerite Essence",
@@ -56,7 +56,7 @@ function E.strategies.GetWowheadAzEsUrl(dataSources)
 end
 function E.strategies.GetWowheadTradingPostActivityUrl(dataSources)
 	check_WTF()
-	for _, strategy in pairs(strategies.wowheadTradingPostActivity) do
+	for _, strategy in next, (strategies.wowheadTradingPostActivity) do
 		local id = strategy(dataSources)
 		if id then
 			return "Wowhead Trading Post Activity",
@@ -66,36 +66,36 @@ function E.strategies.GetWowheadTradingPostActivityUrl(dataSources)
 end
 function E.strategies.GetArmoryUrl(dataSources)
 	if IsRetail() then
-		for _, strategy in pairs(strategies.armory) do
+		for _, strategy in next, (strategies.armory) do
 			local _, locale, realm, name = strategy(dataSources)
 			if locale and realm and name then
-			if realm == "Гордунни" then realm = "Gordunni"
-			elseif realm == "Король-лич" then realm = "Lich-King"
-			elseif realm == "СвежевательДуш" then realm = "Soulflayer"
-			elseif realm == "СтражСмерти" then realm = "Deathguard"
-			elseif realm == "Подземье" then realm = "Deepholm"
-			elseif realm == "Седогрив" then realm = "Greymane"
-			elseif realm == "Галакронд" then realm = "Galakrond"
-			elseif realm == "Ревущий-фьорд" then realm = "Howling-Fjord"
-			elseif realm == "Ревущийфьорд" then realm = "Howling-Fjord"
-			elseif realm == "Разувий" then realm = "Razuvious"
-			elseif realm == "ТкачСмерти" then realm = "Deathweaver"
-			elseif realm == "Дракономор" then realm = "Fordragon"
-			elseif realm == "Борейскаятундра" then realm = "Borean-Tundra"
-			elseif realm == "Азурегос" then realm = "Azuregos"
-			elseif realm == "Ясеневыйлес" then realm = "Ashenvale"
-			elseif realm == "ПиратскаяБухта" then realm = "Booty-Bay"
-			elseif realm == "ВечнаяПесня" then realm = "Eversong"
-			elseif realm == "Термоштепсель" then realm = "Thermaplugg"
-			elseif realm == "Гром" then realm = "Grom"
-			elseif realm == "Голдринн" then realm = "Goldrinn"
-			elseif realm == "ЧерныйШрам" then realm = "Blackscar"
-			elseif realm == "Хроми" then realm = "Chromie"
-			elseif realm == "Пламегор" then realm = "Flamegor"
-			elseif realm == "Змейталак" then realm = "Wyrmthalak"
-			elseif realm == "Рок-Делар" then realm = "Rhok'delar"
-			elseif realm == "ВестникРока" then realm = "Harbinger-of-Doom"
-			end
+				if realm == "Гордунни" then realm = "Gordunni"
+				elseif realm == "Король-лич" then realm = "Lich-King"
+				elseif realm == "СвежевательДуш" then realm = "Soulflayer"
+				elseif realm == "СтражСмерти" then realm = "Deathguard"
+				elseif realm == "Подземье" then realm = "Deepholm"
+				elseif realm == "Седогрив" then realm = "Greymane"
+				elseif realm == "Галакронд" then realm = "Galakrond"
+				elseif realm == "Ревущий-фьорд" then realm = "Howling-Fjord"
+				elseif realm == "Ревущийфьорд" then realm = "Howling-Fjord"
+				elseif realm == "Разувий" then realm = "Razuvious"
+				elseif realm == "ТкачСмерти" then realm = "Deathweaver"
+				elseif realm == "Дракономор" then realm = "Fordragon"
+				elseif realm == "Борейскаятундра" then realm = "Borean-Tundra"
+				elseif realm == "Азурегос" then realm = "Azuregos"
+				elseif realm == "Ясеневыйлес" then realm = "Ashenvale"
+				elseif realm == "ПиратскаяБухта" then realm = "Booty-Bay"
+				elseif realm == "ВечнаяПесня" then realm = "Eversong"
+				elseif realm == "Термоштепсель" then realm = "Thermaplugg"
+				elseif realm == "Гром" then realm = "Grom"
+				elseif realm == "Голдринн" then realm = "Goldrinn"
+				elseif realm == "ЧерныйШрам" then realm = "Blackscar"
+				elseif realm == "Хроми" then realm = "Chromie"
+				elseif realm == "Пламегор" then realm = "Flamegor"
+				elseif realm == "Змейталак" then realm = "Wyrmthalak"
+				elseif realm == "Рок-Делар" then realm = "Rhok'delar"
+				elseif realm == "ВестникРока" then realm = "Harbinger-of-Doom"
+				end
 				return "Armory", string.format(E.baseArmoryUrl, locale, realm, name)
 			end
 		end
@@ -103,36 +103,36 @@ function E.strategies.GetArmoryUrl(dataSources)
 end
 function E.altStrategies.GetRaiderIoUrl(dataSources)
 	if IsRetail() then
-		for _, strategy in pairs(strategies.armory) do
+		for _, strategy in next, (strategies.armory) do
 			local region, _, realm, name = strategy(dataSources)
 			if region and realm and name then
-			if realm == "Гордунни" then realm = "Gordunni"
-			elseif realm == "Король-лич" then realm = "Lich-King"
-			elseif realm == "СвежевательДуш" then realm = "Soulflayer"
-			elseif realm == "СтражСмерти" then realm = "Deathguard"
-			elseif realm == "Подземье" then realm = "Deepholm"
-			elseif realm == "Седогрив" then realm = "Greymane"
-			elseif realm == "Галакронд" then realm = "Galakrond"
-			elseif realm == "Ревущий-фьорд" then realm = "Howling-Fjord"
-			elseif realm == "Ревущийфьорд" then realm = "Howling-Fjord"
-			elseif realm == "Разувий" then realm = "Razuvious"
-			elseif realm == "ТкачСмерти" then realm = "Deathweaver"
-			elseif realm == "Дракономор" then realm = "Fordragon"
-			elseif realm == "Борейскаятундра" then realm = "Borean-Tundra"
-			elseif realm == "Азурегос" then realm = "Azuregos"
-			elseif realm == "Ясеневыйлес" then realm = "Ashenvale"
-			elseif realm == "ПиратскаяБухта" then realm = "Booty-Bay"
-			elseif realm == "ВечнаяПесня" then realm = "Eversong"
-			elseif realm == "Термоштепсель" then realm = "Thermaplugg"
-			elseif realm == "Гром" then realm = "Grom"
-			elseif realm == "Голдринн" then realm = "Goldrinn"
-			elseif realm == "ЧерныйШрам" then realm = "Blackscar"
-			elseif realm == "Хроми" then realm = "Chromie"
-			elseif realm == "Пламегор" then realm = "Flamegor"
-			elseif realm == "Змейталак" then realm = "Wyrmthalak"
-			elseif realm == "Рок-Делар" then realm = "Rhok'delar"
-			elseif realm == "ВестникРока" then realm = "Harbinger-of-Doom"
-			end
+				if realm == "Гордунни" then realm = "Gordunni"
+				elseif realm == "Король-лич" then realm = "Lich-King"
+				elseif realm == "СвежевательДуш" then realm = "Soulflayer"
+				elseif realm == "СтражСмерти" then realm = "Deathguard"
+				elseif realm == "Подземье" then realm = "Deepholm"
+				elseif realm == "Седогрив" then realm = "Greymane"
+				elseif realm == "Галакронд" then realm = "Galakrond"
+				elseif realm == "Ревущий-фьорд" then realm = "Howling-Fjord"
+				elseif realm == "Ревущийфьорд" then realm = "Howling-Fjord"
+				elseif realm == "Разувий" then realm = "Razuvious"
+				elseif realm == "ТкачСмерти" then realm = "Deathweaver"
+				elseif realm == "Дракономор" then realm = "Fordragon"
+				elseif realm == "Борейскаятундра" then realm = "Borean-Tundra"
+				elseif realm == "Азурегос" then realm = "Azuregos"
+				elseif realm == "Ясеневыйлес" then realm = "Ashenvale"
+				elseif realm == "ПиратскаяБухта" then realm = "Booty-Bay"
+				elseif realm == "ВечнаяПесня" then realm = "Eversong"
+				elseif realm == "Термоштепсель" then realm = "Thermaplugg"
+				elseif realm == "Гром" then realm = "Grom"
+				elseif realm == "Голдринн" then realm = "Goldrinn"
+				elseif realm == "ЧерныйШрам" then realm = "Blackscar"
+				elseif realm == "Хроми" then realm = "Chromie"
+				elseif realm == "Пламегор" then realm = "Flamegor"
+				elseif realm == "Змейталак" then realm = "Wyrmthalak"
+				elseif realm == "Рок-Делар" then realm = "Rhok'delar"
+				elseif realm == "ВестникРока" then realm = "Harbinger-of-Doom"
+				end
 				return "Raider.IO", string.format(E.baseRaiderIoUrl, region, realm, name)
 			end
 		end
@@ -197,14 +197,14 @@ local function GetFromLink(link)
 	return id, type
 end
 function strategies.wowhead.GetHyperlinkFromTooltip()
-	for _, tooltip in pairs(tooltipStates) do
+	for _, tooltip in next, (tooltipStates) do
 		if tooltip.hyperlink then
 			return GetFromLink(tooltip.hyperlink)
 		end
 	end
 end
 function strategies.wowhead.GetAuraFromTooltip()
-	for _, tooltip in pairs(tooltipStates) do
+	for _, tooltip in next, (tooltipStates) do
 		if tooltip.aura then
 			return tooltip.aura, "spell"
 		end
@@ -508,7 +508,7 @@ function strategies.wowheadAzEs.GetAzEsFromNeckSlot(data)
 	return C_AzeriteEssence.GetMilestoneEssence(data.focus.milestoneID)
 end
 function strategies.wowheadAzEs.GetAzEsHyperlinkFromTooltip()
-	for _, tooltip in pairs(tooltipStates) do
+	for _, tooltip in next, (tooltipStates) do
 		if tooltip.hyperlink then
 			local id, type = GetFromLink(tooltip.hyperlink)
 			if id and not type then

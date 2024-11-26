@@ -7,7 +7,7 @@ local ignoreNPCID = {
 	[208831] = true,
 }
 local function govno_function(name)
-	for _, v in pairs(E.OctoTable_Gossip) do
+	for _, v in next, (E.OctoTable_Gossip) do
 		if name:find(v) then
 			return true
 		end
@@ -38,7 +38,7 @@ tinsert(E.Modules, function()
 						end
 						if not IsShiftKeyDown() and guid then
 							local info = C_GossipInfo.GetOptions()
-							for i, v in pairs(info) do
+							for i, v in next, (info) do
 								local gossipOptionID = v.gossipOptionID
 								local name = v.name
 								local icon = v.icon
@@ -55,9 +55,7 @@ tinsert(E.Modules, function()
 									ChatFrame1:AddMessage(targetNPCID.. E.func_Gradient(" Auto Gossip Select", E.Addon_Left_Color, E.Addon_Right_Color)..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
 								else
 									if govno_function(v.name) then
-										-- for z, x in pairs(E.OctoTable_Gossip) do
-										-- if v.name:find(z) then
-										print ("|cffFF0000"..z.."|r", gossipOptionID)
+										print ("|cffFF0000"..i.."|r", gossipOptionID)
 										C_GossipInfo.SelectOption(gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 										ChatFrame1:AddMessage(E.func_Gradient("Auto Gossip Select", E.Addon_Left_Color, E.Addon_Right_Color)..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..v.name)
@@ -80,7 +78,6 @@ tinsert(E.Modules, function()
 											ChatFrame1:AddMessage(E.func_Gradient("Auto Gossip Select", E.Addon_Left_Color, E.Addon_Right_Color)..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
 										end
 									end
-									-- end
 								end
 							end
 						end

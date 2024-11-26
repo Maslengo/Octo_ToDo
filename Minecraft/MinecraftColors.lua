@@ -1044,4 +1044,3 @@ E.OctoTable_MinecraftColors = {
 	-- {name = "Розово-лавандовый", hex = "fff0f5"},
 	-- {name = "Белоснежный", hex = "fffafa"},
 }
-

@@ -19,20 +19,10 @@ https://www.wowhead.com/ru/achievement=40979 Ни один ящик не про�
 https://www.wowhead.com/ru/achievement=41013 Улучшенное облачение
 https://www.wowhead.com/ru/achievement=41033 Классный стилист
 /fprint {Octo_ToDo_DB_Vars, Octo_ToDo_DB_Other}
-
-
-
-
-
 https://www.wowhead.com/achievement=40870/azeroths-greatest-detective
-
-
 local AddonName, MDT = ...
-
 local framePools = {}
-
 local nop = function() end
-
 -- we should probably use our own templates for these, but this is a quick fix
 local overrides = {
 	["MapLinkPinTemplate"] = {
@@ -42,7 +32,6 @@ local overrides = {
 		["GetSuperTrackData"] = nop,
 	}
 }
-
 function MDT.CreateFramePool(frametype, parent, template)
 	local pool = {
 		active = {},
@@ -53,7 +42,7 @@ function MDT.CreateFramePool(frametype, parent, template)
 				frame = CreateFrame(frametype, nil, parent, template)
 				local override = overrides[template]
 				if override then
-					for k, v in pairs(override) do
+					for k, v in next, (override) do
 						frame[k] = v
 					end
 				end
@@ -72,12 +61,9 @@ function MDT.CreateFramePool(frametype, parent, template)
 	framePools[template] = pool
 	return pool
 end
-
 function MDT.GetFramePool(template)
 	return framePools[template]
 end
-
-
 -- ПОЧИНКА
 -- PLAYER_DEAD, UPDATE_INVENTORY_DURABILITY
 function()

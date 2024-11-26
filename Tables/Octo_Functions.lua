@@ -119,19 +119,17 @@ function E.func_CompactNumberFormat(self)
 end
 local func_CompactNumberFormat = E.func_CompactNumberFormat
 ----------------------------------------------------------------
-function E.func_texturefromIcon(self, size)
-	local show = true -- TYT
-	if show == true then
-		if not size then
-			size = 14
-		end
-		if not self or self == 0 then
-			self = 134400
-		end
-		return "|T"..self..":"..size..":"..size..":::64:64:4:60:4:60|t"
+function E.func_texturefromIcon(iconID, iconSize, isShown)
+	if isShown == nil then isShown = true end
+	if iconSize == nil then iconSize = 14 end
+	if iconID == nil then iconID = 134400 end
+	local vivod
+	if isShown == true then
+		vivod = "|T".. iconID ..":"..iconSize..":"..iconSize..":::64:64:4:60:4:60|t"
 	else
-		return ""
+		vivod = ""
 	end
+	return vivod
 end
 local func_texturefromIcon = E.func_texturefromIcon
 ----------------------------------------------------------------
@@ -150,7 +148,7 @@ function E.func_reputationName(self)
 	local AWide = ""
 	local isAccountWide = C_Reputation.IsAccountWideReputation(self) or false
 	if isAccountWide == true then
-		AWide = E.AccountWide
+		AWide = E.Icon_AccountWide
 	end
 	local repInfo = C_Reputation.GetFactionDataByID(self)
 	local name
@@ -160,8 +158,8 @@ function E.func_reputationName(self)
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
 		name = reputationInfo.name or "no name"--E.Red_Color.."id "..self.."|r"
 	end
-	-- return AWide..name
-	return name
+	return AWide..name
+	-- return name
 end
 local func_reputationName = E.func_reputationName
 ----------------------------------------------------------------
@@ -197,11 +195,11 @@ function E.func_currencyName(self)
 	local ATrans = ""
 	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(self) or false
 	if isAccountTransferableCurrency == true then
-		AWide = E.AccountTransferable
+		AWide = E.Icon_AccountTransferable
 	end
 	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(self) or false
 	if isAccountWideCurrency == true then
-		AWide = E.AccountWide
+		AWide = E.Icon_AccountWide
 	end
 	local vivod = ""
 	local info = C_CurrencyInfo.GetCurrencyInfo(self)
@@ -225,11 +223,11 @@ function E.func_currencyName_NOCOLOR(self)
 	local ATrans = ""
 	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(self) or false
 	if isAccountTransferableCurrency == true then
-		AWide = E.AccountTransferable
+		AWide = E.Icon_AccountTransferable
 	end
 	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(self) or false
 	if isAccountWideCurrency == true then
-		AWide = E.AccountWide
+		AWide = E.Icon_AccountWide
 	end
 	local vivod = ""
 	local info = C_CurrencyInfo.GetCurrencyInfo(self)
@@ -269,10 +267,16 @@ end
 local func_currencyquantity = E.func_currencyquantity
 ----------------------------------------------------------------
 function E.func_spellName(self)
-	local name = GetSpellInfo(self)
+	local name = C_Spell.GetSpellInfo(self).name
 	return name
 end
 local func_spellName = E.func_spellName
+----------------------------------------------------------------
+function E.func_spellIcon(self)
+	local iconID = E.func_texturefromIcon(C_Spell.GetSpellInfo(self).iconID)
+	return iconID
+end
+local func_spellIcon = E.func_spellIcon
 ----------------------------------------------------------------
 function E.func_SecondsToClock(self)
 	-- local years, days, hours, mins, secs = "", "", "", "", ""
@@ -419,7 +423,7 @@ end
 local func_OnlyLastWord = E.func_OnlyLastWord
 ----------------------------------------------------------------
 function E.func_InList(k, t, p)
-	for _, v in pairs(t) do
+	for _, v in next, (t) do
 		if (p and v[p]==k) or (not p and v==k) then
 			return true
 		end
@@ -579,7 +583,7 @@ local func_npcName = E.func_npcName
 function E.func_RIO_Color(self)
 	local hexColor = E.Gray_Color
 	if not self or self == 0 then return hexColor end
-	for _, v in pairs(E.OctoTable_RIO_COLORS) do
+	for _, v in next, (E.OctoTable_RIO_COLORS) do
 		if self <= v.score then
 			hexColor = E.func_rgb2hex(v.color[1],v.color[2],v.color[3])
 		end
@@ -725,6 +729,3 @@ function E.func_CurrentNumQuests()
 end
 local func_CurrentNumQuests = E.func_CurrentNumQuests
 ----------------------------------------------------------------
-
-
-

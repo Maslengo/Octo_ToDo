@@ -16,7 +16,7 @@ local function OpenableScan()
 				local isLocked = containerInfo.isLocked
 				local iconFileID = containerInfo.iconFileID
 				local name, itemLink = GetItemInfo(itemID)
-				for _, ids in pairs(E.OctoTable_itemID_AutoOpen) do
+				for _, ids in next, (E.OctoTable_itemID_AutoOpen) do
 					if ids == itemID and itemLink and not isLocked then
 						if iconFileID and itemLink and not InCombatLockdown() then
 							C_Timer.After(1, function()
@@ -35,7 +35,7 @@ Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 		C_Timer.After(0.1, function()
 				if Octo_ToDo_DB_Vars.config.AutoOpen then
 					if event == "BAG_UPDATE_DELAYED" then
-						if not InCombatLockdown() and isDead == false  then
+						if not InCombatLockdown() and isDead == false then
 							OpenableScan()
 						else
 							openableScanQueued = true

@@ -98,7 +98,8 @@ if L then
 	L["Waist"] = true
 	L["Legs"] = true
 	L["Feet"] = true
-	L["Only Current Realm"] = true
+	L["Only Current Server"] = true
+	L["Only Current BattleTag"] = true
 	L["Player level"] = true
 	L["Player MAX level"] = true
 	L["Item level: "] = true -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
@@ -117,7 +118,6 @@ if L then
 	L["Firelands"] = true
 	L["Black Temple"] = true
 	L["Dawn of the Infinites"] = true
-
 	L["Seeing Red"] = true
 	L["Ulduar"] = true
 	L["Paragon"] = true
@@ -158,7 +158,6 @@ if L then
 	L["Was online"] = true
 	-- L["Warbanding Together"] = true
 	L["Weekly Dungeon Quest"] = true
-
 	L["Light/Dark Cycle"] = true
 	L["Major Keyflames"] = true
 	L["Minor Keyflames"] = true
@@ -262,7 +261,8 @@ if L then
 	L["Legs"] = "Ноги"
 	L["Feet"] = "Ступни"
 	L["InDev"] = "|cffFF0000В разработке|r"
-	L["Only Current Realm"] = "Только текущий сервер"
+	L["Only Current Server"] = "Только текущий сервер"
+	L["Only Current BattleTag"] = "Только текущий BattleTag"
 	L["Player level"] = "Мин. уровень"
 	L["Player MAX level"] = "Макс. уровень"
 	L["Item level: "] = "Уровень предметов: " -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
@@ -280,7 +280,6 @@ if L then
 	L["Firelands"] = "Огненные Просторы"
 	L["Dawn of the Infinites"] = "Рассвет Бесконечности"
 	L["Black Temple"] = "Чёрный Храм"
-
 	L["Seeing Red"] = "Ярость или стыд?"
 	L["Ulduar"] = "Ульдуар"
 	L["Paragon"] = "Парагон"
@@ -320,7 +319,6 @@ if L then
 	L["Was online"] = "Был в сети"
 	-- L["Warbanding Together"] = "Всё ради удобства"
 	L["Weekly Dungeon Quest"] = "Еженедельное задание подземелья"
-
 	L["Light/Dark Cycle"] = "Лайт/Дарк цикл"
 	L["Major Keyflames"] = "Основные огни"
 	L["Minor Keyflames"] = "Второстепенные огни"

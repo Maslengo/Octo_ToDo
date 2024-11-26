@@ -18,10 +18,10 @@ end
 --------------------------------------------------------------------------
 -- CallbackHandler:New
 --
---   target            - target object to embed public APIs in
---   RegisterName      - name of the callback registration API, default "RegisterCallback"
---   UnregisterName    - name of the callback unregistration API, default "UnregisterCallback"
---   UnregisterAllName - name of the API to unregister all callbacks, default "UnregisterAllCallbacks". false == don't publish this API.
+-- target - target object to embed public APIs in
+-- RegisterName - name of the callback registration API, default "RegisterCallback"
+-- UnregisterName - name of the callback unregistration API, default "UnregisterCallback"
+-- UnregisterAllName - name of the API to unregister all callbacks, default "UnregisterAllCallbacks". false == don't publish this API.
 function CallbackHandler.New(_self, target, RegisterName, UnregisterName, UnregisterAllName)
 	RegisterName = RegisterName or "RegisterCallback"
 	UnregisterName = UnregisterName or "UnregisterCallback"
@@ -42,9 +42,9 @@ function CallbackHandler.New(_self, target, RegisterName, UnregisterName, Unregi
 		registry.recurse = oldrecurse
 		if registry.insertQueue and oldrecurse==0 then
 			-- Something in one of our callbacks wanted to register more callbacks; they got queued
-			for event,callbacks in pairs(registry.insertQueue) do
+			for event,callbacks in next, (registry.insertQueue) do
 				local first = not rawget(events, event) or not next(events[event])	-- test for empty before. not test for one member after. that one member may have been overwritten.
-				for object,func in pairs(callbacks) do
+				for object,func in next, (callbacks) do
 					events[event][object] = func
 					-- fire OnUsed callback?
 					if first and registry.OnUsed then
@@ -57,9 +57,9 @@ function CallbackHandler.New(_self, target, RegisterName, UnregisterName, Unregi
 		end
 	end
 	-- Registration of a callback, handles:
-	--   self["method"], leads to self["method"](self, ...)
-	--   self with function ref, leads to functionref(...)
-	--   "addonId" (instead of self) with function ref, leads to functionref(...)
+	-- self["method"], leads to self["method"](self, ...)
+	-- self with function ref, leads to functionref(...)
+	-- "addonId" (instead of self) with function ref, leads to functionref(...)
 	-- all with an optional arg, which, if present, gets passed as first argument (after self if present)
 	target[RegisterName] = function(self, eventname, method, ... --[[actually just a single arg]])
 		if type(eventname) ~= "string" then
@@ -144,13 +144,13 @@ function CallbackHandler.New(_self, target, RegisterName, UnregisterName, Unregi
 			for i=1,select("#",...) do
 				local self = select(i,...)
 				if registry.insertQueue then
-					for eventname, callbacks in pairs(registry.insertQueue) do
+					for eventname, callbacks in next, (registry.insertQueue) do
 						if callbacks[self] then
 							callbacks[self] = nil
 						end
 					end
 				end
-				for eventname, callbacks in pairs(events) do
+				for eventname, callbacks in next, (events) do
 					if callbacks[self] then
 						callbacks[self] = nil
 						-- Fire OnUnused callback?

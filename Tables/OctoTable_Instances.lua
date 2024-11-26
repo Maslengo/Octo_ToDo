@@ -139,4 +139,3 @@ E.OctoTable_LFGDungeons = {
 	-- [1453] = "Случайное подземелье, путеш. во времени (Mists of Pandaria)",
 	-- [2539] = "Случайное подземелье (Mists of Pandaria, героич.)",
 }
-

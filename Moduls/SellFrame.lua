@@ -144,7 +144,7 @@ tinsert(E.Modules, function()
 						GameTooltip:AddLine("itemQuality < фиолет")
 						GameTooltip:AddLine(" ")
 						GameTooltip:AddLine("E.OctoTable_itemID_Ignore_List: ")
-						for k, v in pairs(E.OctoTable_itemID_Ignore_List) do
+						for k, v in next, (E.OctoTable_itemID_Ignore_List) do
 							if GetItemInfo(k) then
 								GameTooltip:AddDoubleLine(E.func_itemTexture(k)..E.func_itemName(k), k)
 							end
@@ -217,41 +217,27 @@ tinsert(E.Modules, function()
 					-- SetQAButtonGameTooltip(OctoFrame_SellOtherFiolet, "itemQuality = фиолет")
 				end
 				OctoFrame_SellOtherFiolet:SetScript("OnEnter", function(self)
-
-
-
-
 					if not OctoFrame_SellOtherFiolet.promise then -- тут начало создать
 						local t = {}
-						for itemID, v in pairs(E.OctoTable_itemID_Ignore_List) do
+						for itemID, v in next, (E.OctoTable_itemID_Ignore_List) do
 							tinsert(t, itemID)
 						end
 						OctoFrame_SellOtherFiolet.promise = ltl:Items(t)
 						OctoFrame_SellOtherFiolet.promise:FailWithChecked(print)
 					end
-
-					OctoFrame_SellOtherFiolet.promise:Then(function()  -- тут промис с зеном
+					OctoFrame_SellOtherFiolet.promise:Then(function() -- тут промис с зеном
 						GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 						GameTooltip:ClearLines()
 						GameTooltip:AddLine("itemQuality = фиолет")
 						GameTooltip:AddLine(" ")
 						GameTooltip:AddLine("E.OctoTable_itemID_Ignore_List: ")
-						for k, v in pairs(E.OctoTable_itemID_Ignore_List) do
+						for k, v in next, (E.OctoTable_itemID_Ignore_List) do
 							if GetItemInfo(k) then
 								GameTooltip:AddDoubleLine(E.func_itemTexture(k)..E.func_itemName(k), k)
 							end
 						end
 						GameTooltip:Show()
-
-
-
-
-
-
 					end)	-- тут конец промиса
-
-
-
 				end)
 				OctoFrame_SellOtherFiolet:SetScript("OnLeave", function(self)
 					GameTooltip:ClearLines()

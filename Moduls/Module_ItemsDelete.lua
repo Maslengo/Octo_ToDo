@@ -38,8 +38,6 @@ tinsert(E.Modules, function()
 			ItemsDelete_Frame_TEXTNAME:SetPoint("LEFT", ItemsDelete_Frame, "RIGHT")
 			ItemsDelete_Frame_TEXTNAME:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 22, "OUTLINE")
 			ItemsDelete_Frame_TEXTNAME:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
-
-
 			if not ItemsDelete_UIF_texture then
 				ItemsDelete_UIF_texture = ItemsDelete_Frame:CreateTexture(nil, "BACKGROUND")
 			end
@@ -92,7 +90,6 @@ tinsert(E.Modules, function()
 										ItemsDelete_Frame:SetBackdropBorderColor(r, g, b, 1)
 										ItemsDelete_Frame.itemID = itemID
 										ItemsDelete_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
-
 										ItemsDelete_Frame:SetScript("OnClick", function()
 												C_Container.PickupContainerItem(bag, slot)
 												DeleteCursorItem()
@@ -100,10 +97,10 @@ tinsert(E.Modules, function()
 										end)
 										return
 										-- elseif GetItemCount(itemID) == 0 and ItemsDelete_Frame:IsShown() then
-										--     ItemsDelete_Frame:Hide()
-										--     ItemsDelete_Frame.icon:SetTexture(413587)
-										--     ItemsDelete_Frame_TEXTNAME:SetText("")
-										--     ItemsDelete_Frame_TEXTCOUNT:SetText("")
+										-- ItemsDelete_Frame:Hide()
+										-- ItemsDelete_Frame.icon:SetTexture(413587)
+										-- ItemsDelete_Frame_TEXTNAME:SetText("")
+										-- ItemsDelete_Frame_TEXTCOUNT:SetText("")
 									end
 								end
 								----------------------------------------------------------------
@@ -118,5 +115,3 @@ tinsert(E.Modules, function()
 			ItemsDeleteFrame_OnLoad()
 		end
 end)
-
-

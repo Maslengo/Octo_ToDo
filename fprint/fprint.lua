@@ -46,7 +46,6 @@ local editor_themes = {
 		["String"] = "|cff829D61", -- Зелен
 	},
 }
-
 local colorScheme = {
 	[IndentationLib.tokens.TOKEN_SPECIAL] = editor_themes["Sublime"]["Special"],
 	[IndentationLib.tokens.TOKEN_KEYWORD] = editor_themes["Sublime"]["Keyword"],
@@ -128,24 +127,23 @@ if select(4, GetBuildInfo()) > 20000 then
 	-- editFrame:HookScript("OnMouseDown", function(self) self:Hide() end)
 	-- editFrame:HookScript("OnMouseUp", function(self) self:Hide() end)
 	-- editFrame:SetScript("OnKeyDown", function(self, key)
-	--            if key == GetBindingKey("TOGGLEGAMEMENU") then
-	--                 self:GetParent():Hide()
-	--                 self:SetPropagateKeyboardInput(false)
-	--            else
-	--                 self:SetPropagateKeyboardInput(true)
-	--            end
+	-- if key == GetBindingKey("TOGGLEGAMEMENU") then
+	-- self:GetParent():Hide()
+	-- self:SetPropagateKeyboardInput(false)
+	-- else
+	-- self:SetPropagateKeyboardInput(true)
+	-- end
 	-- end)
 	-- editFrame:RegisterForClicks("RightButtonUp")
 	-- editFrame:SetScript("OnClick", function(self) self:Hide() end)
 	editBox = editFrame.editFrame
 end
-
 local function dumpEdit(indent, msg, tables)
 	local str, indentStr, tables = "", "", tables or {}
 	for i = 1, indent do
-		indentStr = indentStr.."    "
+		indentStr = indentStr.." "
 	end
-	for k, v in next, msg do
+	for k, v in next, (msg) do
 		k = (type(k) == "number" and "["..k.."]" or type(k) == "string" and '["'..k..'"]' or tostringall(k)).." ="
 		if type(v) == "table" and not tables[v] then
 			tables[v] = true
@@ -162,28 +160,26 @@ local function dumpEdit(indent, msg, tables)
 		IndentationLib.enable(editBox:GetEditBox(), colorScheme, 4)
 		-- editor.editBox:SetText(editor.editBox:GetText().."\n")
 		editBox:SetText(str)
-
 		IndentationLib.indentEditbox(editBox:GetEditBox())
 		editFrame:Show()
 	else
 		return str
 	end
 end
-
 -- FPRINT
 local LOCAL_FPrintHandler = function(...)
 	local function sendMessage(frame, indent, msg, allChildren)
 		local indentStr = E.func_Gradient(GlobalAddonName..": ", E.Addon_Left_Color, E.Addon_Right_Color)
 		for i = 1, indent do
-			indentStr = indentStr.."    "
+			indentStr = indentStr.." "
 		end
-		for k, v in pairs(msg) do
+		for k, v in next, (msg) do
 			k = "["..tostringall(k).."] ="
 			if type(v) == "table" then
 				if allChildren or indent + 1 == 1 then
 					frame:AddMessage(strjoin(" ", indentStr, k, "table: {"))
 					sendMessage(frame, indent + 1, v, allChildren)
-					frame:AddMessage(strjoin(" ", indentStr, "    }"))
+					frame:AddMessage(strjoin(" ", indentStr, " }"))
 				else
 					frame:AddMessage(strjoin(" ", indentStr, k, "table"))
 				end
@@ -208,7 +204,7 @@ local LOCAL_FPrintHandler = function(...)
 	if first == "dump" or first == "dump1" then
 		local msg = {}
 		for i = 2, select("#", ...) do
-			local  n = select(i, ...)
+			local n = select(i, ...)
 			tinsert(msg, n)
 		end
 		sendMessage(mFrame, 0, msg, first ~= "dump1")
@@ -216,7 +212,7 @@ local LOCAL_FPrintHandler = function(...)
 	if first == dumpe then
 		local msg = {}
 		for i = 2, select("#", ...) do
-			local  n = select(i, ...)
+			local n = select(i, ...)
 			tinsert(msg, n)
 		end
 		dumpEdit(0, msg)
@@ -235,7 +231,6 @@ dumpe = "dumpe"
 function fprint(...)
 	securecall(pcall, fprint_inner, ...)
 end
-
 function fpd(...) fprint(dump, ...) end
 function fpd1(...) fprint(dump1, ...) end
 function fpde(...) fprint(dumpe, ...) end
@@ -269,12 +264,12 @@ SlashCmdList.MOUNTSLIST = function(full)
 	fprint("begin /mountslist")
 	full = full == "1"
 	local tbl, types, currentTier, t, c, w = {}, {}, tonumber(GetBuildInfo():match("(.-)%.")), {}, 0, {}
-	-- for k, v in pairs(MountsJournal.mountsDB) do
-	--      c = c + 1
-	--      tbl[k] = v
+	-- for k, v in next, (MountsJournal.mountsDB) do
+	-- c = c + 1
+	-- tbl[k] = v
 	-- end
-	-- for k in pairs(MountsJournalFrame.mountTypes) do
-	--      types[k] = 0
+	-- for k in next, (MountsJournalFrame.mountTypes) do
+	-- types[k] = 0
 	-- end
 	local i, j, str = 0, 0, ""
 	local mountsIDs = C_MountJournal.GetMountIDs()
@@ -288,7 +283,7 @@ SlashCmdList.MOUNTSLIST = function(full)
 			types[mountType] = types[mountType] + 1
 		end
 		local name, spellID, icon, _,_,_,_, isFactionSpecific, faction = C_MountJournal.GetMountInfoByID(id)
-		if isFactionSpecific then name = name.." ("..(faction == 0 and FACTION_HORDE or FACTION_ALLIANCE).. ")"  end
+		if isFactionSpecific then name = name.." ("..(faction == 0 and FACTION_HORDE or FACTION_ALLIANCE).. ")" end
 		if full then
 			local v = tbl[id]
 			if not v then
@@ -303,7 +298,7 @@ SlashCmdList.MOUNTSLIST = function(full)
 		i = i + 1
 		w[id] = true
 	end
-	for k, v in pairs(types) do
+	for k, v in next, (types) do
 		if v == 0 then
 			fprint(("No mounts with type: %d"):format(k))
 		end
@@ -315,7 +310,7 @@ SlashCmdList.MOUNTSLIST = function(full)
 			str = strjoin(str ~= "" and "\n" or "", str, ("[%s] = {%s, %s, %s}, -- %s %s"):format(m[1], m[2], ids, m[4], m[5], m[6]))
 		end
 	end
-	for id in pairs(tbl) do
+	for id in next, (tbl) do
 		if not w[id] then
 			fprint("wtf", id)
 		end
@@ -334,18 +329,18 @@ SlashCmdList.OCTOLISTITEMS = function(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Cosmetic):ThenForAllWithCached(function(_, ids1)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Toys):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Cosmetic):FailWithChecked(function(_, ids2)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Toys):FailWithChecked(function(_, ids2)
 			tinsert(list2, ids2)
 	end)
 	promise1:Then(function()
 			sort(list1, E.func_Reverse_order)
-			for _, id1 in pairs(list1) do
+			for _, id1 in next, (list1) do
 				str = str..id1..", -- "..E.func_itemTexture(id1)..E.func_itemName(id1).."\n"
 			end
-			for _, id2 in pairs(list2) do
+			for _, id2 in next, (list2) do
 				str = str..id2..", -- "..E.func_itemTexture(id2)..E.func_itemName(id2).."\n"
 			end
 			fprint("begin /OCTOLISTITEMS")
@@ -369,10 +364,10 @@ SlashCmdList.OCTOLISTQUESTS = function(msg)
 	end)
 	sort(list2, E.func_Reverse_order)
 	promise2:Then(function()
-			for _, id1 in pairs(list1) do
+			for _, id1 in next, (list1) do
 				str = str..id1..", -- "..E.func_questName(id1).."\n"
 			end
-			for _, id2 in pairs(list2) do
+			for _, id2 in next, (list2) do
 				str = str..id2..", -- "..E.func_questName(id2).."\n"
 			end
 			fprint("begin /OCTOLISTQUESTS")
@@ -399,7 +394,7 @@ SlashCmdList.OCTOLISTCURRENCIES = function(msg)
 			headerName = C_CurrencyInfo.GetCurrencyListInfo(i)
 			str3 = str3 .."|cff606060 ---> ".. headerName.name .. "|r\n"
 		elseif info.name then
-			local currencyLink =  C_CurrencyInfo.GetCurrencyListLink(i)
+			local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
 			local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
 			local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 			local quantity = currencyInfo.quantity
@@ -429,23 +424,18 @@ SlashCmdList.OCTOLISTREP = function(msg)
 		i = i + 1
 	end]]
 	local list = {}
-
-	for _, factionID in next, E.OctoTable_reputation_ALL do
+	for _, factionID in next, (E.OctoTable_reputation_ALL) do
 		tinsert(list, factionID)
 	end
 	sort(list, E.func_Reverse_order)
-
-	for _, factionID in next, list do
+	for _, factionID in next, (list) do
 		if E.func_reputationName(factionID) ~= "no name" then
 			str4 = str4..factionID..", --" ..E.func_reputationName(factionID).. "\n"
 		else
 			str5 = str5..factionID..", --" ..E.func_reputationName(factionID).. "\n"
 		end
 	end
-
 	vivod = str4..str5
-
-
 	editBox:SetText(vivod)
 	editFrame:Show()
 end
@@ -456,15 +446,12 @@ SlashCmdList.OCTOLISTMOUNT = function(msg)
 	local mountsIDs = C_MountJournal.GetMountIDs()
 	-- sort(mountsIDs, E.func_Reverse_order)
 	sort(mountsIDs, E.func_Reverse_order)
-	for _, id in pairs(mountsIDs) do
+	for _, id in next, (mountsIDs) do
 		local name, spellID, icon,_,_,_,_, isFactionSpecific, faction = C_MountJournal.GetMountInfoByID(id)
-		if isFactionSpecific then name = name.." ("..(faction == 0 and FACTION_HORDE or FACTION_ALLIANCE).. ")"  end
+		if isFactionSpecific then name = name.." ("..(faction == 0 and FACTION_HORDE or FACTION_ALLIANCE).. ")" end
 		str5 = str5 .."[".. id .."] = true, -- "..spellID.." "..E.func_texturefromIcon(icon)..name.."\n"
 		i = i + 1
 	end
 	editBox:SetText(str5)
 	editFrame:Show()
 end
-
-
-

@@ -68,22 +68,22 @@ E.curWidthTitleAchievement = E.curWidthTitle
 E.ilvlToShow = 400
 E.Addon_Height = 400
 E.BGALPHA = .1
-E.QW_Color_r = .3 -- 1
-E.QW_Color_g = .1 -- .7
-E.QW_Color_b = 0 -- 0
-E.CURR_Color_r = 0 -- 0.79
-E.CURR_Color_g = 0 -- 0.76
-E.CURR_Color_b = .3 -- 0.67
-E.CREST_Color_r = 0 -- 0
-E.CREST_Color_g = .3 -- 0
-E.CREST_Color_b = .3 -- 1
-E.ITEM_Color_r = 0 -- 0
-E.ITEM_Color_g = .3 -- 1
-E.ITEM_Color_b = 0 -- 1
-E.REP_Color_r = .3 -- 0
-E.REP_Color_g = .3 -- 1
-E.REP_Color_b = 0 -- 1
-E.Main_Frame_Position = -157
+E.Color_Quest_r = .3 -- 1
+E.Color_Quest_g = .1 -- .7
+E.Color_Quest_b = 0 -- 0
+E.Color_Currency_r = 0 -- 0.79
+E.Color_Currency_g = 0 -- 0.76
+E.Color_Currency_b = .3 -- 0.67
+E.Color_Crest_r = 0 -- 0
+E.Color_Crest_g = .3 -- 0
+E.Color_Crest_b = .3 -- 1
+E.Color_Item_r = 0 -- 0
+E.Color_Item_g = .3 -- 1
+E.Color_Item_b = 0 -- 1
+E.Color_Reputation_r = .3 -- 0
+E.Color_Reputation_g = .3 -- 1
+E.Color_Reputation_b = 0 -- 1
+E.MainFrame_Position = -157
 E.regions = {
 	[1] = "us",
 	[2] = "kr",
@@ -207,13 +207,37 @@ E.DONE = E.Green_Color.."Done|r"
 E.Once = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Once.tga")
 -- E.Once = texturefromIcon("Interface\\GossipFrame\\AvailableQuestIcon")
 -- E.Daily = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Daily.tga")
-
-
 E.Daily = "|A:Recurringavailablequesticon:14:14:0:0|a"
 -- E.Daily = texturefromIcon("Interface\\GossipFrame\\AvailableLegendaryQuestIcon")
 E.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Weekly.tga")
 -- E.Weekly = texturefromIcon("Interface\\GossipFrame\\DailyQuestIcon")
 -- console -> export "art"
-
-E.AccountWide = E.Blue_Color.."(A)".."|r"
-E.AccountTransferable = E.Red_Color.."(T)".."|r"
+function func_texturefromIcon(iconID, iconSize, isShown)
+	if isShown == nil then isShown = true end
+	if iconSize == nil then iconSize = 14 end
+	if iconID == nil then iconID = 134400 end
+	local vivod
+	if isShown == true then
+		vivod = "|T".. iconID ..":"..iconSize..":"..iconSize..":::64:64:4:60:4:60|t"
+	else
+		vivod = ""
+	end
+	return vivod
+end
+E.Icon_Alliance = func_texturefromIcon(255140) -- 132486
+E.Icon_Horde = func_texturefromIcon(255142) -- 132485
+E.Icon_Unknown = func_texturefromIcon(134400)
+E.Icon_Kyrian = func_texturefromIcon(3257748)
+E.Icon_Necrolord = func_texturefromIcon(3257749)
+E.Icon_NightFae = func_texturefromIcon(3257750)
+E.Icon_Venthyr = func_texturefromIcon(3257751)
+E.Icon_WorldBoss = func_texturefromIcon(3528312)
+E.Icon_Rares = func_texturefromIcon(135903)
+E.Icon_Token = func_texturefromIcon(1120721)
+E.Icon_Money = func_texturefromIcon(133784, 14)
+E.Icon_MailBox = func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga")
+E.Icon_Warband = func_texturefromIcon(6124644)
+-- E.AccountWide = E.Blue_Color.."(A)".."|r"
+E.Icon_AccountWide = E.Icon_Token
+-- E.AccountTransferable = E.Red_Color.."(T)".."|r"
+E.Icon_AccountTransferable = E.Icon_Warband

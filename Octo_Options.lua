@@ -8,7 +8,6 @@ local LibTranslit = LibStub("LibTranslit-1.0")
 local CallbackHandler = LibStub("CallbackHandler-1.0")
 local number, pizza, config, text, minValue, maxValue, steps, formatters
 local new = E.Blue_Color.."NEW: |r"
-local WorldBoss_Icon = E.func_texturefromIcon(3528312)
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	text = E.Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
 	button1 = YES,
@@ -205,15 +204,15 @@ local function Create_CheckButtonNEW(scroll, self, number, pos, otstyp, config, 
 			CheckButton:SetChecked(DATABASE[config])
 			CheckButton:SetScript("OnClick", function(btn)
 					DATABASE[config] = btn:GetChecked()
-						if DATABASE == Octo_ToDo_DB_Config.ReputationDB then
-							print (E.func_reputationName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
-						end
-						if DATABASE == Octo_ToDo_DB_Config.ItemDB then
-							print (E.func_itemName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
-						end
-						if DATABASE == Octo_ToDo_DB_Config.CurrencyDB then
-							print (E.func_currencyicon(config)..E.func_currencyName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
-						end
+					if DATABASE == Octo_ToDo_DB_Config.ReputationDB then
+						print (E.func_reputationName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
+					end
+					if DATABASE == Octo_ToDo_DB_Config.ItemDB then
+						print (E.func_itemName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
+					end
+					if DATABASE == Octo_ToDo_DB_Config.CurrencyDB then
+						print (E.func_currencyicon(config)..E.func_currencyName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
+					end
 			end)
 		end
 		local text2 = BG:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -306,7 +305,7 @@ local function Create_SimpleButton_Movies(scroll, self, number, pos, config, tex
 		-- self[number..pos..config].text:SetJustifyV("MIDDLE")
 		-- self[number..pos..config].text:SetJustifyH("LEFT")
 		self[number..pos..config]:SetScript("OnClick", function(btn)
-			MovieFrame_PlayMovie(MovieFrame, config)
+				MovieFrame_PlayMovie(MovieFrame, config)
 		end)
 	end
 end
@@ -319,7 +318,7 @@ local function Create_SimpleButton_DATABASE(scroll, self, number, pos, text, Tru
 		self[number..pos]:SetSize(ButtonWidth, indent)
 		self[number..pos]:SetText(color..text.."|r")
 		self[number..pos]:SetScript("OnClick", function(btn)
-				for ID, v in pairs(DATABASE) do
+				for ID, v in next, (DATABASE) do
 					DATABASE[ID] = TrueOrFalse
 				end
 				RefreshCheckboxes(self, TrueOrFalse)
@@ -401,9 +400,11 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 11, POS_LEFT, 0, "Hide_Boss_Banner", L["Hide: Boss Banner"])
 		Create_CheckButton(MAIN_scrollChild, self, 12, POS_LEFT, 0, "Hide_Covenant", L["Hide: Covenant"])
 		Create_CheckButton(MAIN_scrollChild, self, 13, POS_LEFT, 0, "Hide_Error_Messages", L["Hide: Error Messages"])
-		Create_CheckButton(MAIN_scrollChild, self, 14, POS_LEFT, 0, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
-		Create_CheckButton(MAIN_scrollChild, self, 15, POS_LEFT, 0, "Hide_Zone_Text", L["Hide: Zone Text"])
-		Create_CheckButton(MAIN_scrollChild, self, 16, POS_LEFT, 0, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
+		Create_CheckButton(MAIN_scrollChild, self, 14, POS_LEFT, 0, "Hide_RaidWarningFrame", "Hide_RaidWarningFrame")
+		Create_CheckButton(MAIN_scrollChild, self, 15, POS_LEFT, 0, "Hide_OrderHallCommandBar", "Hide_OrderHallCommandBar")
+		Create_CheckButton(MAIN_scrollChild, self, 16, POS_LEFT, 0, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
+		Create_CheckButton(MAIN_scrollChild, self, 17, POS_LEFT, 0, "Hide_Zone_Text", L["Hide: Zone Text"])
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, 0, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
 		number = 1
 		btn_right2 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, 22)
 		btn_right2:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
@@ -449,24 +450,17 @@ MAIN_Config:SetScript("OnShow", function(self)
 					GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
 				end
 		end)
-
-
-
-
-
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, 0, "PortalsButtons", E.func_texturefromIcon(3610528, 20)..L["Portals"])
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, 150, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_LEFT, 0, "ShowOnlyCurrentRealm", L["Only Current Realm"])
-		Create_CheckButton(MAIN_scrollChild, self, 20, POS_LEFT, 0, "ShowTotalMoney", "Всего денег")
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_LEFT, 0, "ShowTimeAll", "Общее время игры")
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_LEFT, 150, "ShowTimeMAXLEVEL", E.currentMaxLevel.." "..LEVEL)
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_LEFT, 0, "Dungeons", "КД инстов")
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 0, "Professions", TRADE_SKILLS)
-		Create_CheckButton(MAIN_scrollChild, self, 24, POS_LEFT, 0, "Gold", BONUS_ROLL_REWARD_MONEY)
-		Create_CheckButton(MAIN_scrollChild, self, 25, POS_LEFT, 0, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
-		Create_CheckButton(MAIN_scrollChild, self, 26, POS_LEFT, 0, "LastUpdate", L["Was online"])
-
-
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 0, "PortalsButtons", E.func_texturefromIcon(3610528, 20)..L["Portals"])
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 150, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_LEFT, 0, "ShowOnlyCurrentServer", L["Only Current Server"])
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_LEFT, 0, "ShowTotalMoney", "Всего денег")
+		Create_CheckButton(MAIN_scrollChild, self, 26, POS_LEFT, 0, "ShowTimeAll", "Общее время игры")
+		Create_CheckButton(MAIN_scrollChild, self, 26, POS_LEFT, 150, "ShowTimeMAXLEVEL", E.currentMaxLevel.." "..LEVEL)
+		Create_CheckButton(MAIN_scrollChild, self, 27, POS_LEFT, 0, "Dungeons", "КД инстов")
+		Create_CheckButton(MAIN_scrollChild, self, 28, POS_LEFT, 0, "Professions", TRADE_SKILLS)
+		Create_CheckButton(MAIN_scrollChild, self, 29, POS_LEFT, 0, "Gold", BONUS_ROLL_REWARD_MONEY)
+		Create_CheckButton(MAIN_scrollChild, self, 30, POS_LEFT, 0, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
+		Create_CheckButton(MAIN_scrollChild, self, 31, POS_LEFT, 0, "LastUpdate", L["Was online"])
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, 0, "Achievements", E.func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."Achievements".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "ItemsUsable", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsUsable".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "ItemsDelete", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsDelete".."|r")
@@ -481,39 +475,27 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "Octo_ToDo_DB_Other", E.Gray_Color.."Other".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT, "Octo_ToDo_DB_Players", E.Gray_Color.."Players".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "Octo_ToDo_DB_Vars", E.Gray_Color.."Vars".."|r")
-
-
-
 		Create_CheckButton(MAIN_scrollChild, self, 32, POS_RIGHT, 0, "FieldOfView", "FieldOfView")
-
-
 		Create_Slider(MAIN_scrollChild, self, 33.5, POS_RIGHT, "FoV_top", "FoV_top: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				-- if GameMenuFrame then
-				-- 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_top or 1)
+				-- GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_top or 1)
 				-- end
 		end)
-
-
 		Create_Slider(MAIN_scrollChild, self, 35, POS_RIGHT, "FoV_bottom", "FoV_bottom: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				-- if GameMenuFrame then
-				-- 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_bottom or 1)
+				-- GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_bottom or 1)
 				-- end
 		end)
-
-
 		Create_Slider(MAIN_scrollChild, self, 36.5, POS_RIGHT, "FoV_left", "FoV_left: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				-- if GameMenuFrame then
-				-- 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_left or 1)
+				-- GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_left or 1)
 				-- end
 		end)
-
-
 		Create_Slider(MAIN_scrollChild, self, 38, POS_RIGHT, "FoV_right", "FoV_right: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				-- if GameMenuFrame then
-				-- 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_right or 1)
+				-- GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.FoV_right or 1)
 				-- end
 		end)
-
 end)
 local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, AddonTitle)
 category.ID = AddonTitle
@@ -556,32 +538,32 @@ FIRST_Config:SetScript("OnShow", function(self)
 			{
 				config = "BeledarCycle",
 				text = E.Timers.TWW_BeledarCycle() .. E.func_questName(83240),
-				r = E.QW_Color_r, g = E.QW_Color_g, b = E.QW_Color_b,
+				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
 				config = "TWW_WorldBoss_Weekly",
-				text = WorldBoss_Icon..L["World Boss"],
-				r = E.QW_Color_r, g = E.QW_Color_g, b = E.QW_Color_b,
+				text = E.Icon_WorldBoss..L["World Boss"],
+				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
 				config = "TWW_DungeonQuest_Weekly",
 				text = L["Weekly Dungeon Quest"],
-				r = E.QW_Color_r, g = E.QW_Color_g, b = E.QW_Color_b,
+				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
 				config = "TWW_Delve_Weekly",
 				text = "TWW_Delve_Weekly",
-				r = E.QW_Color_r, g = E.QW_Color_g, b = E.QW_Color_b,
+				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
 				config = "MajorKeyflames",
 				text = E.func_texturefromIcon(132863) .. L["Major Keyflames"],
-				r = E.QW_Color_r, g = E.QW_Color_g, b = E.QW_Color_b,
+				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
 				config = "MinorKeyflames",
 				text = E.func_texturefromIcon(135619) .. L["Minor Keyflames"],
-				r = E.QW_Color_r, g = E.QW_Color_g, b = E.QW_Color_b,
+				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
 				config = "Timewalk",
@@ -595,27 +577,27 @@ FIRST_Config:SetScript("OnShow", function(self)
 			{
 				config = "GildedHarbingerCrest",
 				text = E.func_currencyicon(2917)..E.WOW_Epic_Color..E.func_currencyName_NOCOLOR(2917).."|r",
-				r = E.CREST_Color_r, g = E.CREST_Color_g, b = E.CREST_Color_b,
+				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "RunedHarbingerCrest",
 				text = E.func_currencyicon(2916)..E.WOW_Epic_Color..E.func_currencyName_NOCOLOR(2916).."|r",
-				r = E.CREST_Color_r, g = E.CREST_Color_g, b = E.CREST_Color_b,
+				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "CarvedHarbingerCrest",
 				text = E.func_currencyicon(2915)..E.WOW_Rare_Color..E.func_currencyName_NOCOLOR(2915).."|r",
-				r = E.CREST_Color_r, g = E.CREST_Color_g, b = E.CREST_Color_b,
+				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "WeatheredHarbingerCrest",
 				text = E.func_currencyicon(2914)..E.WOW_Rare_Color..E.func_currencyName_NOCOLOR(2914).."|r",
-				r = E.CREST_Color_r, g = E.CREST_Color_g, b = E.CREST_Color_b,
+				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			-- {
-			-- 	config = "WeatheredHarbingerCrest",
-			-- 	text = E.func_currencyicon(3023)..E.WOW_Rare_Color..E.func_currencyName_NOCOLOR(3023).."|r",
-			-- 	r = E.CREST_Color_r, g = E.CREST_Color_g, b = E.CREST_Color_b,
+			-- config = "WeatheredHarbingerCrest",
+			-- text = E.func_currencyicon(3023)..E.WOW_Rare_Color..E.func_currencyName_NOCOLOR(3023).."|r",
+			-- r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			-- },
 		}
 		for i = 1, #ConfigTable_DF_LEFT do
@@ -659,11 +641,11 @@ SECOND_Config:SetScript("OnShow", function(self)
 		ConfigTable_SECOND_LEFT = {
 		}
 		local list = {}
-		for CurrencyID, v in pairs(Octo_ToDo_DB_Config.CurrencyDB) do
+		for CurrencyID, v in next, (Octo_ToDo_DB_Config.CurrencyDB) do
 			tinsert(list, CurrencyID)
 		end
 		sort(list, E.func_Reverse_order)
-		for k, CurrencyID in pairs(list) do
+		for k, CurrencyID in next, (list) do
 			tinsert(ConfigTable_SECOND_LEFT,
 				{
 					otstyp = 0,
@@ -717,13 +699,13 @@ THIRD_Config:SetScript("OnShow", function(self)
 		}
 		-- isAccountWide = C_Reputation.IsAccountWideReputation(factionID)
 		local list = {}
-		for reputationID, v in pairs(Octo_ToDo_DB_Config.ReputationDB) do
+		for reputationID, v in next, (Octo_ToDo_DB_Config.ReputationDB) do
 			if C_Reputation.GetFactionDataByID(reputationID) then
 				tinsert(list, reputationID)
 			end
 		end
 		sort(list, E.func_Reverse_order)
-		for k, reputationID in pairs(list) do
+		for k, reputationID in next, (list) do
 			tinsert(ConfigTable_THIRD_LEFT,
 				{
 					otstyp = 0,
@@ -776,12 +758,12 @@ FOURTH_Config:SetScript("OnShow", function(self)
 		ConfigTable_FOURTH_LEFT = {
 		}
 		local list = {}
-		for itemID, v in pairs(Octo_ToDo_DB_Config.ItemDB) do
+		for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
 			tinsert(list, itemID)
 		end
 		sort(list, E.func_Reverse_order)
-		for _, id in pairs(E.OctoTable_itemID_Config) do
-			for k, itemID in pairs(list) do
+		for _, id in next, (E.OctoTable_itemID_Config) do
+			for k, itemID in next, (list) do
 				if id == itemID then
 					tinsert(ConfigTable_FOURTH_LEFT,
 						{
@@ -824,47 +806,47 @@ Settings.RegisterAddOnCategory(subcategory)
 -- ScrollUtil.InitScrollFrameWithScrollBar(FIFTH_Config, FIFTH_ScrollBar)
 -- local FIFTH_OnMouseWheel = FIFTH_Config:GetScript("OnMouseWheel")
 -- FIFTH_Config:SetScript("OnMouseWheel", function(self, ...)
--- 		if FIFTH_ScrollBar:IsShown() then
--- 			FIFTH_OnMouseWheel(self, ...)
--- 		end
+-- if FIFTH_ScrollBar:IsShown() then
+-- FIFTH_OnMouseWheel(self, ...)
+-- end
 -- end)
 -- TITLE_FIFTH = FIFTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 -- TITLE_FIFTH:SetPoint("TOPLEFT", 4, 30)
 -- TITLE_FIFTH:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 -- TITLE_FIFTH:SetTextColor(.5, .5, .5, 1)
 -- FIFTH_Config:SetScript("OnShow", function(self)
--- 		self:SetScript("OnShow", nil)
--- 		ConfigTable_FIFTH_LEFT = {
--- 		}
--- 		local list = {}
--- 		for QuestID, v in pairs(Octo_ToDo_DB_Config.QuestsDB) do
--- 			tinsert(list, QuestID)
--- 		end
--- 		sort(list, E.func_Reverse_order)
--- 			for k, QuestID in pairs(list) do
--- 					tinsert(ConfigTable_FIFTH_LEFT,
--- 						{
--- 							otstyp = 0,
--- 							config = QuestID,
--- 							text = E.LightGray_Color..tostringall(QuestID).."|r "..E.func_questName(QuestID),
--- 						}
--- 					)
--- 			end
--- 		for i = 1, #ConfigTable_FIFTH_LEFT do
--- 			if ConfigTable_FIFTH_LEFT[i].otstyp == nil then ConfigTable_FIFTH_LEFT[i].otstyp = 0 end
--- 			if ConfigTable_FIFTH_LEFT[i].config == nil then ConfigTable_FIFTH_LEFT[i].config = 0 end
--- 			if ConfigTable_FIFTH_LEFT[i].text == nil then ConfigTable_FIFTH_LEFT[i].text = "" end
--- 			if ConfigTable_FIFTH_LEFT[i].r == nil then ConfigTable_FIFTH_LEFT[i].r = 0 end
--- 			if ConfigTable_FIFTH_LEFT[i].g == nil then ConfigTable_FIFTH_LEFT[i].g = 0 end
--- 			if ConfigTable_FIFTH_LEFT[i].b == nil then ConfigTable_FIFTH_LEFT[i].b = 0 end
--- 			if ConfigTable_FIFTH_LEFT[i].a == nil then ConfigTable_FIFTH_LEFT[i].a = 0 end
--- 			if ConfigTable_FIFTH_LEFT[i].button == nil then ConfigTable_FIFTH_LEFT[i].button = true end
--- 			Create_CheckButtonNEW(FIFTH_scrollChild, self, i, POS_LEFT, ConfigTable_FIFTH_LEFT[i].otstyp, ConfigTable_FIFTH_LEFT[i].config, ConfigTable_FIFTH_LEFT[i].text, ConfigTable_FIFTH_LEFT[i].r, ConfigTable_FIFTH_LEFT[i].g, ConfigTable_FIFTH_LEFT[i].b, ConfigTable_FIFTH_LEFT[i].a, ConfigTable_FIFTH_LEFT[i].button, Octo_ToDo_DB_Config.QuestsDB)
--- 		end
--- 		Create_CheckButton(FIFTH_scrollChild, self, 1, POS_RIGHT, 0, "Quests", QUESTS_LABEL)
--- 		Create_CheckButtonNEW(FIFTH_scrollChild, self, 1, POS_RIGHT+100, 0, "QuestsShowAllways", "QuestsShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
--- 		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.QuestsDB)
--- 		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.QuestsDB)
+-- self:SetScript("OnShow", nil)
+-- ConfigTable_FIFTH_LEFT = {
+-- }
+-- local list = {}
+-- for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
+-- tinsert(list, QuestID)
+-- end
+-- sort(list, E.func_Reverse_order)
+-- for k, QuestID in next, (list) do
+-- tinsert(ConfigTable_FIFTH_LEFT,
+-- {
+-- otstyp = 0,
+-- config = QuestID,
+-- text = E.LightGray_Color..tostringall(QuestID).."|r "..E.func_questName(QuestID),
+-- }
+-- )
+-- end
+-- for i = 1, #ConfigTable_FIFTH_LEFT do
+-- if ConfigTable_FIFTH_LEFT[i].otstyp == nil then ConfigTable_FIFTH_LEFT[i].otstyp = 0 end
+-- if ConfigTable_FIFTH_LEFT[i].config == nil then ConfigTable_FIFTH_LEFT[i].config = 0 end
+-- if ConfigTable_FIFTH_LEFT[i].text == nil then ConfigTable_FIFTH_LEFT[i].text = "" end
+-- if ConfigTable_FIFTH_LEFT[i].r == nil then ConfigTable_FIFTH_LEFT[i].r = 0 end
+-- if ConfigTable_FIFTH_LEFT[i].g == nil then ConfigTable_FIFTH_LEFT[i].g = 0 end
+-- if ConfigTable_FIFTH_LEFT[i].b == nil then ConfigTable_FIFTH_LEFT[i].b = 0 end
+-- if ConfigTable_FIFTH_LEFT[i].a == nil then ConfigTable_FIFTH_LEFT[i].a = 0 end
+-- if ConfigTable_FIFTH_LEFT[i].button == nil then ConfigTable_FIFTH_LEFT[i].button = true end
+-- Create_CheckButtonNEW(FIFTH_scrollChild, self, i, POS_LEFT, ConfigTable_FIFTH_LEFT[i].otstyp, ConfigTable_FIFTH_LEFT[i].config, ConfigTable_FIFTH_LEFT[i].text, ConfigTable_FIFTH_LEFT[i].r, ConfigTable_FIFTH_LEFT[i].g, ConfigTable_FIFTH_LEFT[i].b, ConfigTable_FIFTH_LEFT[i].a, ConfigTable_FIFTH_LEFT[i].button, Octo_ToDo_DB_Config.QuestsDB)
+-- end
+-- Create_CheckButton(FIFTH_scrollChild, self, 1, POS_RIGHT, 0, "Quests", QUESTS_LABEL)
+-- Create_CheckButtonNEW(FIFTH_scrollChild, self, 1, POS_RIGHT+100, 0, "QuestsShowAllways", "QuestsShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
+-- Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.QuestsDB)
+-- Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.QuestsDB)
 -- end)
 -- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIFTH_Config, QUESTS_LABEL)
 -- subcategory.ID = L["InDev"].."FIFTH_Config"

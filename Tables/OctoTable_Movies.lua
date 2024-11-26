@@ -168,8 +168,6 @@ E.Movies = {
 		{name = "Confronting Xal'atath", id = 1019}
 	}
 }
-
 -- /run MovieFrame_PlayMovie(MovieFrame, 1019)
 -- /run MovieFrame_PlayMovie(MovieFrame, 1020)
 -- /run MovieFrame_PlayMovie(MovieFrame, 960)
-

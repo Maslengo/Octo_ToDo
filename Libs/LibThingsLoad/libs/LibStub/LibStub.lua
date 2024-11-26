@@ -4,11 +4,13 @@
 -- Credits: Kaelten, Cladhaire, ckknight, Mikk, Ammo, Nevcairiel, joshborke
 local LIBSTUB_MAJOR, LIBSTUB_MINOR = "LibStub", 2  -- NEVER MAKE THIS AN SVN REVISION! IT NEEDS TO BE USABLE IN ALL REPOS!
 local LibStub = _G[LIBSTUB_MAJOR]
+
 -- Check to see is this version of the stub is obsolete
 if not LibStub or LibStub.minor < LIBSTUB_MINOR then
 	LibStub = LibStub or {libs = {}, minors = {} }
 	_G[LIBSTUB_MAJOR] = LibStub
 	LibStub.minor = LIBSTUB_MINOR
+	
 	-- LibStub:NewLibrary(major, minor)
 	-- major (string) - the major version of the library
 	-- minor (string or number ) - the minor version of the library
@@ -24,6 +26,7 @@ if not LibStub or LibStub.minor < LIBSTUB_MINOR then
 		self.minors[major], self.libs[major] = minor, self.libs[major] or {}
 		return self.libs[major], oldminor
 	end
+	
 	-- LibStub:GetLibrary(major, [silent])
 	-- major (string) - the major version of the library
 	-- silent (boolean) - if true, library is optional, silently return nil if its not found
@@ -43,5 +46,6 @@ if not LibStub or LibStub.minor < LIBSTUB_MINOR then
 	function LibStub:IterateLibraries() 
 		return pairs(self.libs) 
 	end
+	
 	setmetatable(LibStub, { __call = LibStub.GetLibrary })
 end

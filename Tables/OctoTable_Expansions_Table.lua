@@ -16,8 +16,6 @@ E.OctoTable_Expansions_Table = {
 	-- "Midnight",
 	-- "The Last Titan",
 }
-
-
 E.OctoTable_Expansions_Table2 = {
 	EXPANSION_NAME0,
 	EXPANSION_NAME1,
@@ -32,4 +30,3 @@ E.OctoTable_Expansions_Table2 = {
 	EXPANSION_NAME10,
 	EXPANSION_NAME11,
 }
-

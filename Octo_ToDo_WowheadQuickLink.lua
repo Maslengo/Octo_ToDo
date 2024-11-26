@@ -6,7 +6,7 @@ local function ShowUrlPopup(header, url)
 	StaticPopup_Show("WowheadQuickLinkUrl", header, _, url)
 end
 local function CreateUrl(dataSources, strategies)
-	for _, strategy in pairs(strategies) do
+	for _, strategy in next, (strategies) do
 		local header, url = strategy(dataSources)
 		if header and url then
 			ShowUrlPopup(header, url)
@@ -38,9 +38,9 @@ StaticPopupDialogs["WowheadQuickLinkUrl"] = {
 		self.editBox:SetScript("OnEscapePressed", HidePopup)
 		self.editBox:SetScript("OnEnterPressed", HidePopup)
 		self.editBox:SetScript("OnKeyUp", function(self, key)
-			if IsControlKeyDown() and key == "C" then
-				HidePopup(self)
-			end
+				if IsControlKeyDown() and key == "C" then
+					HidePopup(self)
+				end
 		end)
 		self.editBox:SetMaxLetters(0)
 		self.editBox:SetText(data)

@@ -10,6 +10,5 @@
 ## X-Date: 2023-03-29T21:01:29Z
 ## X-License: Ace3 BSD-like license
 ## X-Website: http://www.wowace.com/addons/libqtip-1-0/
-
 LibStub\LibStub.lua
 lib.xml

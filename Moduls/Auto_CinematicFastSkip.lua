@@ -27,7 +27,4 @@ tinsert(E.Modules, function()
 			end)
 end
 end)
-
-
-
 -- /dump GameMovieFinished()

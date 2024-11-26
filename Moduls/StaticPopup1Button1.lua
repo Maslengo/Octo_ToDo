@@ -6,19 +6,15 @@ tinsert(E.Modules, function()
 		----------------------------------------------------------------------------------------------------------------------------------
 		----------------------------------------------------------------------------------------------------------------------------------
 		local EventFrame_SPB = nil
-
 		local function accept()
 			if StaticPopup1Button1 then StaticPopup1Button1:Click() end
 		end
-
 		local function Octo_OnEvent(self, event, ...)
 			print (event)
 				C_Timer.After(0, function()
 					accept()
 				end)
 		end
-
-
 		function Octo_OnLoad()
 			if not EventFrame_SPB then
 				EventFrame_SPB = CreateFrame("FRAME", E.func_GenerateUniqueID())
@@ -32,9 +28,8 @@ tinsert(E.Modules, function()
 			-- EventFrame_SPB:RegisterEvent("SPELL_CONFIRMATION_PROMPT") --block
 		end
 		Octo_OnLoad()
-
 		do
-			EventFrame_SPB:HookScript("OnEvent",  Octo_OnEvent)
+			EventFrame_SPB:HookScript("OnEvent", Octo_OnEvent)
 		end
 		-- /run local function accept() StaticPopup1Button1:Click() end
 		-- StaticPopupDialogs["BID_AUCTION"].OnShow=accept

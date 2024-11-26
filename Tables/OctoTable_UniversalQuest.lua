@@ -6,15 +6,15 @@ E.OctoTable_UniversalQuest = {
 		reset = "Weekly",
 		desc = "Timewalk",
 		questID = {
-			83285,
-			64710,
-			55499,
-			55498,
-			45563,
-			40787,
-			40786,
-			40173,
-			40168,
+			83285, -- |A:Recurringavailablequesticon:14:14:0:0|a Древний свиток
+			64710, -- |A:Recurringavailablequesticon:14:14:0:0|a Шепчущий кристалл пламени Скверны
+			55499, -- |A:Recurringavailablequesticon:14:14:0:0|a Мерцающий кристалл
+			55498, -- |A:Recurringavailablequesticon:14:14:0:0|a Мерцающий кристалл
+			45563, -- |A:Recurringavailablequesticon:14:14:0:0|a Затуманенная монета
+			40787, -- |A:Recurringavailablequesticon:14:14:0:0|a Тлеющий уголек
+			40786, -- |A:Recurringavailablequesticon:14:14:0:0|a Тлеющий уголек
+			40173, -- |A:Recurringavailablequesticon:14:14:0:0|a Нестабильная призма
+			40168, -- |A:Recurringavailablequesticon:14:14:0:0|a Бурлящий фиал
 		},
 		max = 1
 	},

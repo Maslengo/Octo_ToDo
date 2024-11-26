@@ -2,7 +2,7 @@
 ## Title: LibSFDropDown
 ## Author: sfmict
 ## Notes: Dropdown menu library
-## Version: r33
+## Version: r34
 ## OptionalDeps: LibStub
 libs\LibStub\LibStub.lua
 LibSFDropDown.xml

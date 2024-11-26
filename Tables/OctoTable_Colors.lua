@@ -156,4 +156,3 @@ E.OctoTable_RIO_COLORS = {
 	{["score"] = 225, ["color"] = {0.98, 1, 0.97}},
 	{["score"] = 200, ["color"] = {1, 1, 1}}
 }
-

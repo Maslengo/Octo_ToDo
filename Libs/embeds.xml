@@ -2,6 +2,8 @@
 	<Script file="IndentationLib\IndentationLib.lua"/>
 	<Script file="LibStub\LibStub.lua"/>
 	<Script file="LibRealmInfo\LibRealmInfo.lua"/>
+	<Script file="LibColors-1.0\LibColors-1.0.lua"/>
+	<Script file="HizurosSharedTools\HizurosSharedTools.lua"/>
 	<Include file="UTF8\lib.xml"/>
 	<Include file="LibSFDropDown\LibSFDropDown.xml"/>
 	<Include file="AceLocale-3.0\lib.xml"/>

@@ -17,9 +17,8 @@ local CF = nil
 local OctoToDo_SECOND_MainFrame = nil
 local OctoToDo_SECOND_CharFrame = nil
 local Octo_ToDo_SECOND_Frame_EventFrame = nil
-local inspectScantip = nil
 local Octo_ToDo_SECOND_Frame_UPGRADERANKS_Frame = nil
-local Octo_ToDo_SECOND_Frame_Close_Button = nil
+local OctoToDo_SECOND_CloseButton = nil
 local Octo_ToDo_SECOND_Frame_MarkOfHonor_Button = nil
 local Octo_ToDo_SECOND_Frame_QuestFeast_Button = nil
 local Octo_ToDo_SECOND_Frame_AbandonAllQuests_Button = nil
@@ -29,18 +28,6 @@ local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
 local classColor = E.func_GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
 local classColorHexCurrent = E.func_rgb2hex(r, g, b)
-local Horde_Icon = E.func_texturefromIcon(132485)
-local Alliance_Icon = E.func_texturefromIcon(132486)
-local Kyrian_Icon = E.func_texturefromIcon(3257748)
-local Necrolord_Icon = E.func_texturefromIcon(3257749)
-local NightFae_Icon = E.func_texturefromIcon(3257750)
-local Venthyr_Icon = E.func_texturefromIcon(3257751)
-local WorldBoss_Icon = E.func_texturefromIcon(3528312)
-local Rares_Icon = E.func_texturefromIcon(135903)
-local Unknown_Icon = E.func_texturefromIcon(134400)
-local Token_Icon = E.func_texturefromIcon(1120721)
-local Money_Icon = E.func_texturefromIcon(133784, 12)
-local MailBox_Icon = E.func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga")
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
@@ -49,8 +36,6 @@ local edgeFile = "Interface\\Buttons\\WHITE8X8"
 local bgFile = "Interface\\Buttons\\WHITE8X8"
 local OctoTable_func_otrisovka_SECOND = {
 }
-
-
 local function Central_Frame_Mouse_OnClick(self)
 	local parent = OctoToDo_SECOND_MainFrame["FrameLine"..self.index]
 	parent:GetScript("OnClick")(parent)
@@ -60,15 +45,14 @@ local function Central_Frame_Mouse_OnClick(self)
 	fpde(self)
 	-- GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, 0)
 	-- GameTooltip:AddLine(" ")
-	-- for _, v in pairs(self.tooltip) do
-	-- 	if v[2] ~= "0/0" then
-	-- 		GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
-	-- 	end
+	-- for _, v in next, (self.tooltip) do
+	-- if v[2] ~= "0/0" then
+	-- GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
+	-- end
 	-- end
 	-- GameTooltip:AddLine(" ")
 	-- GameTooltip:Show()
 end
-
 local function Central_Frame_Mouse_OnEnter(self)
 	local parent = OctoToDo_SECOND_MainFrame["FrameLine"..self.index]
 	parent:GetScript("OnEnter")(parent)
@@ -77,7 +61,7 @@ local function Central_Frame_Mouse_OnEnter(self)
 	end
 	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, 0)
 	GameTooltip:AddLine(" ")
-	for _, v in pairs(self.tooltip) do
+	for _, v in next, (self.tooltip) do
 		if v[2] ~= "0/0" then
 			GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
 		end
@@ -114,7 +98,7 @@ local function O_otrisovka_SECOND()
 			end
 			if CharInfo.hasMail then
 				BG:SetColorTexture(1, 1, 1, E.BGALPHA)
-				vivodCent = MailBox_Icon..vivodCent
+				vivodCent = E.Icon_MailBox..vivodCent
 			end
 			return vivodCent.."|r", vivodLeft
 	end)
@@ -191,35 +175,39 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	OctoToDo_SECOND_MainFrame:SetScript("OnDragStop", function() OctoToDo_SECOND_MainFrame:StopMovingOrSizing() end)
 	OctoToDo_SECOND_MainFrame:RegisterForClicks("RightButtonUp")
 	OctoToDo_SECOND_MainFrame:SetScript("OnClick", function(self) self:Hide() end)
-	if not Octo_ToDo_SECOND_Frame_Close_Button then
-		Octo_ToDo_SECOND_Frame_Close_Button = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "BackDropTemplate")
-		Octo_ToDo_SECOND_Frame_Close_Button:SetSize(E.curHeight, E.curHeight)
-		Octo_ToDo_SECOND_Frame_Close_Button:SetPoint("BOTTOMRIGHT", OctoToDo_SECOND_MainFrame, "TOPRIGHT", E.curHeight, 1)
-		Octo_ToDo_SECOND_Frame_Close_Button:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 1})
-		Octo_ToDo_SECOND_Frame_Close_Button:SetBackdropBorderColor(1, 0, 0, 0)
-		Octo_ToDo_SECOND_Frame_Close_Button:SetScript("OnEnter", function(self)
-				self.icon:SetVertexColor(1, 0, 0, 1)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+	----------------------------------------------------------------
+	if not OctoToDo_SECOND_CloseButton then
+		OctoToDo_SECOND_CloseButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "BackDropTemplate")
+		OctoToDo_SECOND_CloseButton:SetSize(E.curHeight, E.curHeight)
+		OctoToDo_SECOND_CloseButton:SetPoint("BOTTOMRIGHT", OctoToDo_SECOND_MainFrame, "TOPRIGHT", (-E.curHeight)*0, 1)
+		OctoToDo_SECOND_CloseButton:SetBackdrop({
+				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+				edgeSize = 1
+		})
+		OctoToDo_SECOND_CloseButton:SetBackdropBorderColor(1, 0, 0, 0)
+		OctoToDo_SECOND_CloseButton:SetScript("OnEnter", function(self)
+				self.icon:SetVertexColor(r, g, b, 1)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
 				GameTooltip:ClearLines()
-				GameTooltip:AddLine(CLOSE)
+				GameTooltip:AddLine(classColorHexCurrent..CLOSE.."|r")
 				GameTooltip:Show()
 		end)
-		Octo_ToDo_SECOND_Frame_Close_Button:SetScript("OnLeave", function(self)
+		OctoToDo_SECOND_CloseButton:SetScript("OnLeave", function(self)
 				self.icon:SetVertexColor(1, 1, 1, 1)
 				GameTooltip:ClearLines()
 				GameTooltip:Hide()
 		end)
-		Octo_ToDo_SECOND_Frame_Close_Button:SetScript("OnMouseDown", function(self)
+		OctoToDo_SECOND_CloseButton:SetScript("OnMouseDown", function(self)
 				self.icon:SetVertexColor(1, 0, 0, .5)
 		end)
-		Octo_ToDo_SECOND_Frame_Close_Button:SetScript("OnClick", function()
+		OctoToDo_SECOND_CloseButton:SetScript("OnClick", function()
 				OctoToDo_SECOND_MainFrame:Hide()
 		end)
-		local t = Octo_ToDo_SECOND_Frame_Close_Button:CreateTexture(nil, "BACKGROUND")
-		Octo_ToDo_SECOND_Frame_Close_Button.icon = t
+		local t = OctoToDo_SECOND_CloseButton:CreateTexture(nil, "BACKGROUND")
+		OctoToDo_SECOND_CloseButton.icon = t
 		t:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga")
-		t:SetAllPoints(Octo_ToDo_SECOND_Frame_Close_Button)
-		Octo_ToDo_SECOND_Frame_Close_Button:SetScript("OnKeyDown", function(self, key)
+		t:SetAllPoints(OctoToDo_SECOND_CloseButton)
+		OctoToDo_SECOND_CloseButton:SetScript("OnKeyDown", function(self, key)
 				if key == GetBindingKey("TOGGLEGAMEMENU") then
 					self:GetParent():Hide()
 					self:SetPropagateKeyboardInput(false)
@@ -228,6 +216,45 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 				end
 		end)
 	end
+	----------------------------------------------------------------
+	if not OctoToDo_SECOND_OptionsButton then
+		OctoToDo_SECOND_OptionsButton = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "BackDropTemplate")
+		OctoToDo_SECOND_OptionsButton:SetSize(E.curHeight, E.curHeight)
+		OctoToDo_SECOND_OptionsButton:SetPoint("BOTTOMRIGHT", OctoToDo_SECOND_MainFrame, "TOPRIGHT", (-E.curHeight)*1, 1)
+		OctoToDo_SECOND_OptionsButton:SetBackdrop({
+				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+				edgeSize = 1
+		})
+		OctoToDo_SECOND_OptionsButton:SetBackdropBorderColor(1, 0, 0, 0)
+		OctoToDo_SECOND_OptionsButton:SetScript("OnEnter", function(self)
+				self.icon:SetVertexColor(r, g, b, 1)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10) -- 20, -30
+				GameTooltip:AddLine(classColorHexCurrent..OPTIONS.."|r")
+				GameTooltip:Show()
+		end)
+		OctoToDo_SECOND_OptionsButton:SetScript("OnLeave", function(self)
+				self.icon:SetVertexColor(1, 1, 1, 1)
+				GameTooltip:Hide()
+		end)
+		OctoToDo_SECOND_OptionsButton:SetScript("OnMouseDown", function(self)
+				self.icon:SetVertexColor(1, 0, 0, .5)
+		end)
+		OctoToDo_SECOND_OptionsButton:SetScript("OnClick", function()
+				if OctoToDo_SECOND_MainFramePIZDA and OctoToDo_SECOND_MainFramePIZDA:IsShown() then
+					OctoToDo_SECOND_MainFramePIZDA:Hide()
+				end
+				if SettingsPanel:IsVisible() and self:IsVisible() then
+					HideUIPanel(SettingsPanel)
+				else
+					Settings.OpenToCategory(AddonTitle, true)
+				end
+		end)
+		local t = OctoToDo_SECOND_OptionsButton:CreateTexture(nil, "BACKGROUND")
+		OctoToDo_SECOND_OptionsButton.icon = t
+		t:SetTexture(E.AddonTexture_1)
+		t:SetAllPoints(OctoToDo_SECOND_OptionsButton)
+	end
+	----------------------------------------------------------------
 	if not dd_SECOND then
 		local dd_SECOND = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 		local multiply = (1/3)*2
@@ -273,7 +300,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 					categoryID = categories[i]
 					name, parentCategoryID = GetCategoryInfo(categoryID)
 					total, completed = GetCategoryNumAchievements(categoryID, true)
-					local vivod =  " ("..completed.."/"..total..")"
+					local vivod = " ("..completed.."/"..total..")"
 					if total == completed then
 						vivod = " "..E.DONE
 					else
@@ -354,7 +381,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 	local LevelToShowMAX = Octo_ToDo_DB_Vars.config.LevelToShowMAX
 	local itemLevelToShow = Octo_ToDo_DB_Vars.config.itemLevelToShow
 	OctoToDo_SECOND_MainFrame.AllCharFrames = {}
-	for GUID, CharInfo in pairs(Octo_ToDo_DB_Players) do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Players) do
 		if GUID == curGUID then
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			local curCharGUID = CharInfo.GUID

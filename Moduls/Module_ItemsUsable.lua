@@ -88,7 +88,6 @@ tinsert(E.Modules, function()
 			ItemsUsable_Frame_TEXTNAME:SetPoint("LEFT", ItemsUsable_Frame, "RIGHT")
 			ItemsUsable_Frame_TEXTNAME:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 22, "OUTLINE")
 			ItemsUsable_Frame_TEXTNAME:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
-
 			if not ItemsUsable_UIF_texture then
 				ItemsUsable_UIF_texture = ItemsUsable_Frame:CreateTexture(nil, "BACKGROUND")
 			end
@@ -127,7 +126,7 @@ tinsert(E.Modules, function()
 				local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(2245)
 				local quantity = currencyInfo.quantity or 0
 				if not InCombatLockdown() and ItemsUsable_Frame then
-					for itemID, count in pairs(E.OctoTable_itemID_ItemsUsable) do
+					for itemID, count in next, (E.OctoTable_itemID_ItemsUsable) do
 						if (GetItemCount(itemID) >= count and TEST_FUNC(itemID) == 0) then
 							ItemsUsable_Frame:Show()
 							ItemsUsable_Frame:SetAttribute("macrotext", "/use item:"..itemID)
@@ -137,7 +136,6 @@ tinsert(E.Modules, function()
 							ItemsUsable_Frame:SetBackdropBorderColor(r, g, b, 1)
 							ItemsUsable_Frame.itemID = itemID
 							ItemsUsable_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
-
 							break
 						elseif GetItemCount(itemID) <= (count-1) and ItemsUsable_Frame:IsShown() then
 							ItemsUsable_Frame:Hide()
@@ -150,4 +148,3 @@ tinsert(E.Modules, function()
 			ItemsUsableFrame_OnLoad()
 		end
 end)
-

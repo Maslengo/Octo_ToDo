@@ -7,49 +7,38 @@
 	https://wow.curseforge.com/projects/librealminfo
 	https://www.wowinterface.com/downloads/info22987-LibRealmInfo
 ----------------------------------------------------------------------]]
-
 local MAJOR, MINOR = "LibRealmInfo", 13
 assert(LibStub, MAJOR.." requires LibStub")
 local lib, oldminor = LibStub:NewLibrary(MAJOR, MINOR)
 if not lib then return end
-
 local standalone = (...) == MAJOR
 local realmData, connectionData
 local Unpack
-
 local function debug(...)
 	if standalone then
 		print("|cffff7f7f["..MAJOR.."]|r", ...)
 	end
 end
-
 local function shallowCopy(t)
 	if not t then return end
-
 	local n = {}
-	for k, v in next, t do
+	for k, v in next, (t) do
 		n[k] = v
 	end
 	return n
 end
-
 local function getNameForAPI(name)
 	return name and (name:gsub("[%s%-]", "")) or nil
 end
-
 ------------------------------------------------------------------------
-
 local currentRegion
-
 function lib:GetCurrentRegion()
 	if currentRegion then
 		return currentRegion
 	end
-
 	if Unpack then
 		Unpack()
 	end
-
 	local guid = UnitGUID("player")
 	if guid then
 		local server = tonumber(strmatch(guid, "^Player%-(%d+)"))
@@ -59,14 +48,10 @@ function lib:GetCurrentRegion()
 			return currentRegion
 		end
 	end
-
 	debug("GetCurrentRegion: could not identify region based on player GUID", guid)
 end
-
 ------------------------------------------------------------------------
-
 local validRegions = { US = true, EU = true, CN = true, KR = true, TW = true }
-
 function lib:GetRealmInfo(name, region)
 	debug("GetRealmInfo", name, region)
 	local isString = type(name) == "string"
@@ -77,45 +62,34 @@ function lib:GetRealmInfo(name, region)
 		return self:GetRealmInfoByID(name)
 	end
 	assert(isString and strlen(name) > 0, "Usage: GetRealmInfo(name[, region])")
-
 	if not region or not validRegions[region] then
 		region = self:GetCurrentRegion()
 	end
-
 	if Unpack then
 		Unpack()
 	end
-
-	for id, realm in pairs(realmData) do
+	for id, realm in next, (realmData) do
 		if realm.region == region and (realm.nameForAPI == name or realm.name == name or realm.englishNameForAPI == name or realm.englishName == name) then
 			return id, realm.name, realm.nameForAPI, realm.rules, realm.locale, nil, realm.region, realm.timezone, shallowCopy(realm.connections), realm.englishName, realm.englishNameForAPI
 		end
 	end
-
 	debug("No info found for realm", name, "in region", region)
 end
-
 ------------------------------------------------------------------------
-
 function lib:GetRealmInfoByID(id)
 	debug("GetRealmInfoByID", id)
 	id = tonumber(id)
 	assert(id, "Usage: GetRealmInfoByID(id)")
-
 	if Unpack then
 		Unpack()
 	end
-
 	local realm = realmData[id]
 	if realm and realm.name then
 		return realm.id, realm.name, realm.nameForAPI, realm.rules, realm.locale, nil, realm.region, realm.timezone, shallowCopy(realm.connections), realm.englishName, realm.englishNameForAPI
 	end
-
 	debug("No info found for realm ID", name)
 end
-
 ------------------------------------------------------------------------
-
 function lib:GetRealmInfoByGUID(guid)
 	assert(type(guid) == "string", "Usage: GetRealmInfoByGUID(guid)")
 	if not strmatch(guid, "^Player%-") then
@@ -127,9 +101,7 @@ function lib:GetRealmInfoByGUID(guid)
 	end
 	return self:GetRealmInfo(realm)
 end
-
 ------------------------------------------------------------------------
-
 function lib:GetRealmInfoByUnit(unit)
 	assert(type(unit) == "string", "Usage: GetRealmInfoByUnit(unit)")
 	local guid = UnitGUID(unit)
@@ -138,24 +110,19 @@ function lib:GetRealmInfoByUnit(unit)
 	end
 	return self:GetRealmInfoByGUID(guid)
 end
-
 ------------------------------------------------------------------------
-
 function Unpack()
 	debug("Unpacking data...")
-
-	for id, info in pairs(realmData) do
+	for id, info in next, (realmData) do
 		-- Aegwynn,PvE,enUS,US,CST
 		-- Nathrezim,PvE,deDE,EU
 		-- Азурегос,PvE,ruRU,EU,Azuregos
 		local name, rules, locale, region, timezone = strsplit(",", info)
-
 		local englishName
 		if region ~= "US" then
 			englishName = timezone
 			timezone = nil
 		end
-
 		realmData[id] = {
 			id = id,
 			name = name,
@@ -168,12 +135,10 @@ function Unpack()
 			englishNameForAPI = getNameForAPI(englishName), -- only for realms with non-Latin names
 		}
 	end
-
 	for i = 1, #connectionData do
 		local connectedRealms = { strsplit(",", connectionData[i]) }
 		local connectionID = tonumber(table.remove(connectedRealms, 1))
 		local region = table.remove(connectedRealms, 1)
-
 		if not realmData[connectionID] then
 			-- nameless server used to host connected realms
 			table.insert(connectedRealms, connectionID)
@@ -182,20 +147,18 @@ function Unpack()
 				connections = connectedRealms
 			}
 		end
-
 		for j = 1, #connectedRealms do
 			local realmID = tonumber(connectedRealms[j])
 			connectedRealms[j] = realmID
 			realmData[realmID].connections = connectedRealms
 		end
 	end
-
 	-- Partial workaround for missing Chinese connected realm data:
 	local autoCompleteRealms = GetAutoCompleteRealms()
 	if #autoCompleteRealms > 0 then
 		local autoCompleteIDs = {}
-		for _, name in pairs(autoCompleteRealms) do
-			for realmID, realm in pairs(realmData) do
+		for _, name in next, (autoCompleteRealms) do
+			for realmID, realm in next, (realmData) do
 				if realm.nameForAPI == name then
 					table.insert(autoCompleteIDs, realmID)
 					break
@@ -203,7 +166,7 @@ function Unpack()
 			end
 		end
 		if #autoCompleteIDs == #autoCompleteRealms then
-			for _, realmID in pairs(autoCompleteIDs) do
+			for _, realmID in next, (autoCompleteIDs) do
 				local realm = realmData[realmID]
 				if realm and not realm.connections then
 					realm.connections = autoCompleteIDs
@@ -213,16 +176,12 @@ function Unpack()
 			debug("Failed to match names from GetAutoCompleteRealms!")
 		end
 	end
-
 	connectionData = nil
 	Unpack = nil
 	collectgarbage()
-
 	debug("Done unpacking data.")
 end
-
 ------------------------------------------------------------------------
-
 realmData = {
 	[1]="Lightbringer,PvE,enUS,US,PST",
 	[2]="Cenarius,PvE,enUS,US,PST",
@@ -1124,7 +1083,6 @@ realmData = {
 	[2137]="冬拥湖,PvE,zhCN,CN",
 	-- }}
 }
-
 connectionData = {
 	"4,US,4,1355",
 	"5,US,5",
@@ -1387,12 +1345,8 @@ connectionData = {
 	"3728,US,3736,3737",
 	"3729,US,3738",
 }
-
 ------------------------------------------------------------------------
-
 if standalone then
 	LRI_RealmData = realmData
 	LRI_ConnectionData = connectionData
 end
-
-

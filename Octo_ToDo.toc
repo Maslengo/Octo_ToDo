@@ -2,28 +2,19 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v79.6(11.0.5)(26.11.2024)
+## Version: v79.7(11.0.5)(27.11.2024)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_1
 ## SavedVariables: Octo_ToDo_DB_Config Octo_ToDo_DB_Players Octo_ToDo_DB_Vars Octo_ToDo_DB_Other
-
-
-
 Libs\embeds.xml
-
-
-
 fprint\templates.xml
 fprint\fprint.lua
-
-
 Octo_Localization.lua
-
 Tables\Octo_Globals.lua
 Tables\Octo_Timer.lua
-
 Tables\OctoTable_byteto.lua
 Tables\OctoTable_Colors.lua
 Tables\OctoTable_Currencies.lua
+Tables\OctoTable_Events.lua
 Tables\OctoTable_Expansions_Table.lua
 Tables\OctoTable_Instances.lua
 Tables\OctoTable_Items.lua
@@ -33,20 +24,11 @@ Tables\OctoTable_reputation_ALL.lua
 Tables\OctoTable_UniversalQuest.lua
 Tables\wowhead_prefix_Table.lua
 Tables\OctoTable_Gossip.lua
-
 Tables\Octo_Functions.lua
-
-
-
-
-
 Tables\OctoTable_Spells.lua
-
 Minecraft\MinecraftFrames.lua
 Minecraft\MinecraftColors.lua
-
 Moduls\DEV_CVAR.lua
-
 Moduls\Auto_ChatClearing.lua
 Moduls\Auto_CinematicCanceler.lua
 Moduls\Auto_CinematicFastSkip.lua
@@ -60,6 +42,8 @@ Moduls\Auto_Turn_Quests.lua
 Moduls\Hide_Boss_Banner.lua
 Moduls\Hide_Covenant.lua
 Moduls\Hide_Error_Messages.lua
+Moduls\Hide_OrderHallCommandBar.lua
+Moduls\Hide_RaidWarningFrame.lua
 Moduls\Hide_Talking_Head_Frame.lua
 Moduls\Hide_Zone_Text.lua
 Moduls\Module_FieldOfView.lua
@@ -69,7 +53,6 @@ Moduls\Module_ItemsUsable.lua
 Moduls\Module_UIErrorsFramePosition.lua
 Moduls\SellFrame.lua
 Moduls\StaticPopup1Button1.lua
-
 Octo_ToDo_CreateMenuStyle.lua
 Octo_ToDo_FIRST.lua
 Octo_ToDo_SECOND.lua

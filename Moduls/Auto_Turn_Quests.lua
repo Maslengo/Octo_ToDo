@@ -54,7 +54,7 @@ tinsert(E.Modules, function()
 				elseif event == "GOSSIP_SHOW" then
 					if not IsShiftKeyDown() then
 						if C_GossipInfo.GetActiveQuests() ~= 0 then
-							for _, info in pairs(C_GossipInfo.GetActiveQuests()) do
+							for _, info in next, (C_GossipInfo.GetActiveQuests()) do
 								if info.isComplete and
 								not C_QuestLog.IsWorldQuest(info.questID) then
 									C_GossipInfo.SelectActiveQuest(info.questID)
@@ -62,7 +62,7 @@ tinsert(E.Modules, function()
 							end
 						end
 						if C_GossipInfo.GetAvailableQuests() ~= 0 then
-							for _, info in pairs(C_GossipInfo.GetAvailableQuests()) do
+							for _, info in next, (C_GossipInfo.GetAvailableQuests()) do
 								if info.isTrivial and info.repeatable then
 									return
 								else

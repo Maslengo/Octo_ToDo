@@ -19,12 +19,12 @@ tinsert(E.Modules, function()
 						return
 					end
 					if MovieFrame:IsShown() and MovieFrame.CloseDialog and MovieFrame.CloseDialog.ConfirmButton then
-						--     -- GameMovieFinished()
-						--     -- https://warcraft.wiki.gg/wiki/API_CinematicFinished
-						--     for i = 1, #Enum.CinematicType do
-						--         CinematicFinished(i)
-						--         return true
-						--     end
+						-- -- GameMovieFinished()
+						-- -- https://warcraft.wiki.gg/wiki/API_CinematicFinished
+						-- for i = 1, #Enum.CinematicType do
+						-- CinematicFinished(i)
+						-- return true
+						-- end
 						MovieFrame.CloseDialog.ConfirmButton:Click()
 						ChatFrame1:AddMessage(E.func_Gradient("Movie canceled", E.Addon_Left_Color, E.Addon_Right_Color))
 					end
