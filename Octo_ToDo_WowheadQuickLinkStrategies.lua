@@ -1,5 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
+
 -- Octo_ToDo_WowheadQuickLinkStrategies
 local strategies = {
 	wowhead = {},
@@ -69,32 +70,10 @@ function E.strategies.GetArmoryUrl(dataSources)
 		for _, strategy in next, (strategies.armory) do
 			local _, locale, realm, name = strategy(dataSources)
 			if locale and realm and name then
-				if realm == "Гордунни" then realm = "Gordunni"
-				elseif realm == "Король-лич" then realm = "Lich-King"
-				elseif realm == "СвежевательДуш" then realm = "Soulflayer"
-				elseif realm == "СтражСмерти" then realm = "Deathguard"
-				elseif realm == "Подземье" then realm = "Deepholm"
-				elseif realm == "Седогрив" then realm = "Greymane"
-				elseif realm == "Галакронд" then realm = "Galakrond"
-				elseif realm == "Ревущий-фьорд" then realm = "Howling-Fjord"
-				elseif realm == "Ревущийфьорд" then realm = "Howling-Fjord"
-				elseif realm == "Разувий" then realm = "Razuvious"
-				elseif realm == "ТкачСмерти" then realm = "Deathweaver"
-				elseif realm == "Дракономор" then realm = "Fordragon"
-				elseif realm == "Борейскаятундра" then realm = "Borean-Tundra"
-				elseif realm == "Азурегос" then realm = "Azuregos"
-				elseif realm == "Ясеневыйлес" then realm = "Ashenvale"
-				elseif realm == "ПиратскаяБухта" then realm = "Booty-Bay"
-				elseif realm == "ВечнаяПесня" then realm = "Eversong"
-				elseif realm == "Термоштепсель" then realm = "Thermaplugg"
-				elseif realm == "Гром" then realm = "Grom"
-				elseif realm == "Голдринн" then realm = "Goldrinn"
-				elseif realm == "ЧерныйШрам" then realm = "Blackscar"
-				elseif realm == "Хроми" then realm = "Chromie"
-				elseif realm == "Пламегор" then realm = "Flamegor"
-				elseif realm == "Змейталак" then realm = "Wyrmthalak"
-				elseif realm == "Рок-Делар" then realm = "Rhok'delar"
-				elseif realm == "ВестникРока" then realm = "Harbinger-of-Doom"
+				local LRI_name = select(2, LibStub("LibRealmInfo"):GetRealmInfo(realm))
+				local LRI_englishName = select(10, LibStub("LibRealmInfo"):GetRealmInfo(realm))
+				if realm == LRI_name then
+					realm = LRI_englishName
 				end
 				return "Armory", string.format(E.baseArmoryUrl, locale, realm, name)
 			end
@@ -106,32 +85,10 @@ function E.altStrategies.GetRaiderIoUrl(dataSources)
 		for _, strategy in next, (strategies.armory) do
 			local region, _, realm, name = strategy(dataSources)
 			if region and realm and name then
-				if realm == "Гордунни" then realm = "Gordunni"
-				elseif realm == "Король-лич" then realm = "Lich-King"
-				elseif realm == "СвежевательДуш" then realm = "Soulflayer"
-				elseif realm == "СтражСмерти" then realm = "Deathguard"
-				elseif realm == "Подземье" then realm = "Deepholm"
-				elseif realm == "Седогрив" then realm = "Greymane"
-				elseif realm == "Галакронд" then realm = "Galakrond"
-				elseif realm == "Ревущий-фьорд" then realm = "Howling-Fjord"
-				elseif realm == "Ревущийфьорд" then realm = "Howling-Fjord"
-				elseif realm == "Разувий" then realm = "Razuvious"
-				elseif realm == "ТкачСмерти" then realm = "Deathweaver"
-				elseif realm == "Дракономор" then realm = "Fordragon"
-				elseif realm == "Борейскаятундра" then realm = "Borean-Tundra"
-				elseif realm == "Азурегос" then realm = "Azuregos"
-				elseif realm == "Ясеневыйлес" then realm = "Ashenvale"
-				elseif realm == "ПиратскаяБухта" then realm = "Booty-Bay"
-				elseif realm == "ВечнаяПесня" then realm = "Eversong"
-				elseif realm == "Термоштепсель" then realm = "Thermaplugg"
-				elseif realm == "Гром" then realm = "Grom"
-				elseif realm == "Голдринн" then realm = "Goldrinn"
-				elseif realm == "ЧерныйШрам" then realm = "Blackscar"
-				elseif realm == "Хроми" then realm = "Chromie"
-				elseif realm == "Пламегор" then realm = "Flamegor"
-				elseif realm == "Змейталак" then realm = "Wyrmthalak"
-				elseif realm == "Рок-Делар" then realm = "Rhok'delar"
-				elseif realm == "ВестникРока" then realm = "Harbinger-of-Doom"
+				local LRI_name = select(2, LibStub("LibRealmInfo"):GetRealmInfo(realm))
+				local LRI_englishName = select(10, LibStub("LibRealmInfo"):GetRealmInfo(realm))
+				if realm == LRI_name then
+					realm = LRI_englishName
 				end
 				return "Raider.IO", string.format(E.baseRaiderIoUrl, region, realm, name)
 			end
@@ -142,14 +99,14 @@ local function GetFromNameAndRealm(name, realm)
 	if not realm or realm == '' then
 		realm = GetRealmName()
 	end
-	if realm:find("'") then
-		realm = realm:gsub("'", ""):lower()
-	end
-	realm = realm:gsub(" ", "-")
-	local index = realm:find("%a%u")
-	if index then
-		realm = realm:sub(1, index) .. "-" .. realm:sub(index + 1)
-	end
+	-- if realm:find("'") then
+	-- 	realm = realm:gsub("'", ""):lower()
+	-- end
+	-- realm = realm:gsub(" ", "-")
+	-- local index = realm:find("%a%u")
+	-- if index then
+	-- 	realm = realm:sub(1, index) .. "-" .. realm:sub(index + 1)
+	-- end
 	local region = GetCurrentRegion()
 	local locale = GetLocale()
 	local isEu = region == 3
@@ -157,7 +114,7 @@ local function GetFromNameAndRealm(name, realm)
 		locale = "enGB"
 	end
 	locale = locale:sub(1, 2) .. "-" .. locale:sub(3)
-	return regions[region], locale, realm, name
+	return regions[region], locale, GetRealmName(), name
 end
 function strategies.armory.GetArmoryFromTooltip(data)
 	if not data.tooltip then

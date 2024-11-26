@@ -61,6 +61,7 @@ E.OctoTable_Events = {
 	"BN_DISCONNECTED",
 
 
+	"CHAT_MSG_CURRENCY",
 
 
 }
