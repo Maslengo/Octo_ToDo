@@ -119,6 +119,18 @@ function E.func_CompactNumberFormat(self)
 end
 local func_CompactNumberFormat = E.func_CompactNumberFormat
 ----------------------------------------------------------------
+function E.func_CompactNumberSimple(self)
+	if not self then
+		self = 0
+	end
+	if self == 0 then
+		return 0
+	else
+		return math.floor(self+.5)
+	end
+end
+local func_CompactNumberSimple = E.func_CompactNumberSimple
+----------------------------------------------------------------
 function E.func_texturefromIcon(iconID, iconSize, isShown)
 	if isShown == nil then isShown = true end
 	if iconSize == nil then iconSize = 14 end
@@ -189,6 +201,20 @@ function E.func_itemTexture(self)
 	return E.func_texturefromIcon(itemTexture)
 end
 local func_itemTexture = E.func_itemTexture
+----------------------------------------------------------------
+function E.func_GetItemCooldown(self)
+	local start, duration = C_Item.GetItemCooldown(self)
+	-- local start = C_Item.GetItemCooldown(self).startTimeSeconds or 0
+	-- local duration = C_Item.GetItemCooldown(self).durationSeconds or 0
+	-- local start = C_Container.GetItemCooldown(self).startTime or 0
+	-- local duration = C_Container.GetItemCooldown(self).duration or 0
+	local vivod = 0
+	if start > 0 and duration > 0 then
+		vivod = (start + duration - GetTime())
+	end
+	return E.func_CompactNumberSimple(vivod)
+end
+local func_GetItemCooldown = E.func_GetItemCooldown
 ----------------------------------------------------------------
 function E.func_currencyName(self)
 	local AWide = ""
@@ -279,20 +305,15 @@ end
 local func_GetSpellIcon = E.func_GetSpellIcon
 ----------------------------------------------------------------
 function E.func_GetSpellCooldown(self)
-	local spellCooldownInfo = C_Spell.GetSpellCooldown(self)
-	-- local startTime = spellCooldownInfo.startTime
-	-- local duration = spellCooldownInfo.duration
-
-	local startTime = C_Spell.GetSpellCooldown(self).startTime
+	local start = C_Spell.GetSpellCooldown(self).startTime
 	local duration = C_Spell.GetSpellCooldown(self).duration
 	local vivod = 0
-	if startTime > 0 and duration > 0 then -- ВРЕМЯ ДО КД
-		vivod = (startTime + duration - GetTime())
+	if start > 0 and duration > 0 then
+		vivod = (start + duration - GetTime())
 	end
-
-	return vivod
+	return E.func_CompactNumberSimple(vivod)
 end
-local func_spellCD = E.func_spellCD
+local func_GetSpellCooldown = E.func_GetSpellCooldown
 ----------------------------------------------------------------
 function E.func_SecondsToClock(self)
 	-- local years, days, hours, mins, secs = "", "", "", "", ""
@@ -744,4 +765,35 @@ function E.func_CurrentNumQuests()
 	return numQuests
 end
 local func_CurrentNumQuests = E.func_CurrentNumQuests
+----------------------------------------------------------------
+function E.func_RemoveDuplicates(table1)
+	if type(table1) ~= "table" then
+		print (E.Red_Color.."ERROR: |r"..table1..E.Red_Color.." not a table|r")
+		table1 = {}
+	end
+	local table2 = {}
+	local i = 1
+	while table1[i] do
+		local value = table1[i]
+		if table2[value] then
+			tremove(table1, i)
+		else
+			i = i + 1
+		end
+		table2[value] = true
+	end
+end
+local func_RemoveDuplicates = E.func_RemoveDuplicates
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 ----------------------------------------------------------------

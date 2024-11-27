@@ -117,8 +117,8 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 				self[number..pos..config].RightText:SetText(E.Blue_Color..Octo_ToDo_DB_Vars.config[config].."|r")
 				if Callback_func then
 					Callback_func()
-				else
-					StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+				-- else
+				-- 	StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 				end
 		end)
 	end
@@ -153,7 +153,7 @@ local function Create_CheckButton(scroll, self, number, pos, otstyp, config, tex
 			CheckButton:SetScript("OnClick", function(btn)
 					print (text, tostring(btn:GetChecked()) == "true" and "|cff00FF00true|r" or "|cffFF0000false|r")
 					Octo_ToDo_DB_Vars.config[config] = btn:GetChecked()
-					StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+					-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 			end)
 		end
 		local text2 = BG:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -467,10 +467,13 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "StaticPopup1Button1", E.func_texturefromIcon(E.AddonTexture_5, indent)..E.Gray_Color.."StaticPopup1Button1".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "AdditionalButtons", E.func_texturefromIcon(E.AddonTexture_4, indent)..E.Gray_Color..L["Additional Buttons"].."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "CVar", E.func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."CVar".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "Minecraft", E.func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."Minecraft".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Debug".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 26, POS_RIGHT, "ReloadUI", E.Blue_Color.."Reload UI".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 27, POS_RIGHT, "DELETEALL", E.Yellow_Color.."DELETEALL".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "SellFrame", E.func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SellFrame".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "Minecraft", E.func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."Minecraft".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 26, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Debug".."|r")
+
+
+		Create_SimpleButton(MAIN_scrollChild, self, 27, POS_RIGHT, "ReloadUI", E.Blue_Color.."Reload UI".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 27, POS_RIGHT+150, "DELETEALL", E.Yellow_Color.."DELETEALL".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 28, POS_RIGHT, "Octo_ToDo_DB_Config", E.Gray_Color.."Config".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "Octo_ToDo_DB_Other", E.Gray_Color.."Other".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT, "Octo_ToDo_DB_Players", E.Gray_Color.."Players".."|r")

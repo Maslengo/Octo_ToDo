@@ -1,4 +1,30 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
-E.OctoTable_currencyID_Hidden = {2813, 3023}
+E.OctoTable_currencyID_Hidden = {
+	2813,
+	3023,
+
+
+	401,
+	393,
+	385,
+	400,
+	1174,
+	398,
+	829,
+	384,
+	677,
+	1535,
+	1172,
+	1173,
+	754,
+	394,
+	399,
+	676,
+	828,
+	397,
+	1534,
+	821,
+}
+

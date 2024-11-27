@@ -1,8 +1,8 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
--- Auto_InputDelete
+-- InputDelete
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.Auto_InputDelete then
+		if Octo_ToDo_DB_Vars.config.InputDelete then
 			local TypeDeleteLine = gsub(DELETE_GOOD_ITEM, "[\r\n]", "@")
 			local void, TypeDeleteLine = strsplit("@", TypeDeleteLine, 2)
 			if not easyDelFrame then
