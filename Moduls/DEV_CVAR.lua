@@ -11,6 +11,20 @@ tinsert(E.Modules, function()
 	if Octo_ToDo_DB_Vars.config.CVar then
 		if not InCombatLockdown() then
 			C_Timer.After(1, function()
+				SetCVar("overrideScreenFlash", 1)
+				SetCVar("CameraReduceUnexpectedMovement", 0)
+				SetCVar("ShakeStrengthUI", 0)
+
+				SetCVar("motionSicknessLandscapeDarkening", 0)
+				SetCVar("motionSicknessFocalCircle", 0)
+
+				SetCVar("DisableAdvancedFlyingFullScreenEffects", 1)
+				SetCVar("DisableAdvancedFlyingVelocityVFX", 0)
+
+				SetCVar("enableMultiActionBars", 63)
+				-- SetCVar("enableMultiActionBars", 127)
+
+				SetCVar("countdownForCooldowns", 0)
 				-- 11.0
 				SetCVar("CursorFreelookStartDelta", 0.001)
 				SetCVar("minimapTrackingShowAll", 1)

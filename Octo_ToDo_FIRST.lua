@@ -70,11 +70,11 @@ E.func_Octo_LoadAddOn("MountsJournal")
 E.func_Octo_LoadAddOn("HidingBar")
 E.func_Octo_LoadAddOn("HidingBar_Options")
 E.func_Octo_LoadAddOn("SpeedyAutoLoot")
--- E.func_Octo_LoadAddOn("QuestsChanged")
+E.func_Octo_LoadAddOn("QuestsChanged")
 E.func_Octo_LoadAddOn("TalentTreeTweaks")
--- E.func_Octo_LoadAddOn("Plater")
--- E.func_Octo_LoadAddOn("MySlot")
--- E.func_Octo_LoadAddOn("TomTom")
+E.func_Octo_LoadAddOn("Plater")
+E.func_Octo_LoadAddOn("MySlot")
+E.func_Octo_LoadAddOn("TomTom")
 E.func_Octo_LoadAddOn("Pawn")
 -- E.func_Octo_LoadAddOn("AdvancedInterfaceOptions")
 local Button = nil
@@ -154,7 +154,9 @@ local function DEV_GUID()
 end
 local function ConcatAtStart()
 	E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
+	E.func_TableConcat(E.OctoTable_itemID_Config, E.OctoTable_itemID_Artifacts)
 	E.func_TableConcat(E.OctoTable_itemID_Config, E.OctoTable_itemID_ALL)
+
 	for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Cosmetic) do
 		E.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
@@ -173,6 +175,9 @@ local function ConcatAtStart()
 	for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_ArmorTokens) do
 		E.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
+
+
+
 	for _, currencyID in next, (E.OctoTable_currencyID_Hidden) do
 		Octo_ToDo_DB_Config.CurrencyDB[currencyID] = Octo_ToDo_DB_Config.CurrencyDB[currencyID] or false
 	end
@@ -565,7 +570,13 @@ local function CreateFrameUsableSpells_OnEnter(self)
 	if link then
 		GameTooltip:ClearLines()
 		-- GameTooltip:SetHyperlink(link)
-		GameTooltip:AddLine(E.func_spellIcon(self.spellID).." "..E.func_spellName(self.spellID))
+		if E.func_GetSpellCooldown(self.spellID) ~= 0 then
+			GameTooltip:AddDoubleLine(E.func_texturefromIcon(E.func_GetSpellIcon(self.spellID)).." "..E.White_Color..E.func_GetSpellName(self.spellID).."|r", E.Red_Color..E.func_SecondsToClock(E.func_GetSpellCooldown(self.spellID)).."|r")
+		else
+			GameTooltip:AddLine(E.func_texturefromIcon(E.func_GetSpellIcon(self.spellID)).." "..E.White_Color..E.func_GetSpellName(self.spellID).."|r")
+		end
+
+
 		GameTooltip:Show()
 	end
 end
@@ -2748,10 +2759,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				self:SetAlpha(1)
 		end)
 		dd_FIRST:SetScript("OnLeave", function(self)
-				self:SetAlpha(.3)
+				self:SetAlpha(.5)
 		end)
 		dd_FIRST:SetScript("OnShow", function(self)
-				self:SetAlpha(.3)
+				self:SetAlpha(.5)
 		end)
 		local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 			Octo_ToDo_DB_Players[menuButton.value].isShownPLAYER = checked
@@ -2788,7 +2799,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 									vivod = E.Gray_Color..vivod.."|r"
 								end
 							end
-							info.text = classColorHexCurrent..vivod.."|r"
+							info.text = E.White_Color..vivod.."|r"
 							-- info.text = BattleTag == 0 and "QWE" or BattleTag
 							info.value = Bnets
 							self:ddAddButton(info, level)
@@ -2854,7 +2865,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 								vivod = E.Gray_Color..vivod.."|r"
 							end
 						end
-						info.text = classColorHexCurrent..vivod.."|r"
+						info.text = E.White_Color..vivod.."|r"
 						info.value = v
 						self:ddAddButton(info, level)
 					end
@@ -2882,7 +2893,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						if Octo_ToDo_DB_Players[GUID].UnitLevel ~= E.currentMaxLevel then
 							vivod = vivod.." "..E.Yellow_Color..Octo_ToDo_DB_Players[GUID].UnitLevel.."|r"
 						end
-						info.text = classColorHexCurrent..vivod.."|r"
+						info.text = E.White_Color..vivod.."|r"
 						info.value = GUID
 						info.func = selectFunctionisShownPLAYER
 						info.checked = Octo_ToDo_DB_Players[GUID].isShownPLAYER
@@ -2935,6 +2946,8 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				CreateFrameUsableItems(150743, 237388, Xpos*-2+Ypos*1, Ypos*-2, 0, .43, .86) -- ally Kalimd
 			end
 			CreateFrameUsableSpells(431280, C_Spell.GetSpellInfo(431280).iconID, Xpos*-1+Ypos*1, Ypos*-1, 0, .43, .86)
+		else
+			CreateFrameUsableSpells(460905, C_Spell.GetSpellInfo(460905).iconID, Xpos*-1+Ypos*1, Ypos*-1, 0, .43, .86)
 		end
 		if prof1 == 202 or prof2 == 202 then
 			CreateFrameUsableItems(198156, 4548860, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254)

@@ -266,17 +266,33 @@ function E.func_currencyquantity(self)
 end
 local func_currencyquantity = E.func_currencyquantity
 ----------------------------------------------------------------
-function E.func_spellName(self)
+function E.func_GetSpellName(self)
 	local name = C_Spell.GetSpellInfo(self).name
 	return name
 end
-local func_spellName = E.func_spellName
+local func_GetSpellName = E.func_GetSpellName
 ----------------------------------------------------------------
-function E.func_spellIcon(self)
-	local iconID = E.func_texturefromIcon(C_Spell.GetSpellInfo(self).iconID)
+function E.func_GetSpellIcon(self)
+	local iconID = C_Spell.GetSpellInfo(self).iconID
 	return iconID
 end
-local func_spellIcon = E.func_spellIcon
+local func_GetSpellIcon = E.func_GetSpellIcon
+----------------------------------------------------------------
+function E.func_GetSpellCooldown(self)
+	local spellCooldownInfo = C_Spell.GetSpellCooldown(self)
+	-- local startTime = spellCooldownInfo.startTime
+	-- local duration = spellCooldownInfo.duration
+
+	local startTime = C_Spell.GetSpellCooldown(self).startTime
+	local duration = C_Spell.GetSpellCooldown(self).duration
+	local vivod = 0
+	if startTime > 0 and duration > 0 then -- ВРЕМЯ ДО КД
+		vivod = (startTime + duration - GetTime())
+	end
+
+	return vivod
+end
+local func_spellCD = E.func_spellCD
 ----------------------------------------------------------------
 function E.func_SecondsToClock(self)
 	-- local years, days, hours, mins, secs = "", "", "", "", ""

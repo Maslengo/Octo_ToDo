@@ -35,6 +35,7 @@ E.OctoTable_UniversalQuest = {
 		reset = "Weekly",
 		desc = "Timewalk",
 		questID = {
+			85949,
 			85948,
 			85947,
 			83365,
