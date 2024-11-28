@@ -39,20 +39,6 @@ E.OctoTable_UniversalQuest = {
 		max = 29
 	},
 	{
-		name_save = "Timewalk5DUNGEONS",
-		reset = "Weekly",
-		desc = "DF",
-		questID = {
-			72727,
-			72810,
-			72719,
-			72725,
-			72726,
-			72724,
-		},
-		max = 1
-	},
-	{
 		name_save = "500Currency",
 		reset = "Weekly",
 		desc = "Timewalk",
@@ -103,6 +89,14 @@ E.OctoTable_UniversalQuest = {
 			40792,
 			39021,
 			39020,
+
+			72719,
+			72724,
+			72725,
+			72726,
+			72727,
+			72810,
+
 		},
 		max = 1
 	},
@@ -1266,7 +1260,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Warlock_GreenFire",
 		reset = "Once",
-		desc = "MoP",
+		desc = "Pandaria",
 		questID = {
 			32295,
 			32307,
@@ -1523,7 +1517,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "coinsQuests",
 		reset = "Weekly",
-		desc = "WoD",
+		desc = "Draenor",
 		questID = {
 			36058,
 			36055,
@@ -2228,7 +2222,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Brewfest",
 		reset = "Month",
-		desc = "ALL",
+		desc = "Holiday",
 		questID = {
 			77155,
 			77152,
@@ -2248,7 +2242,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Brewfest_BarrelingDown",
 		reset = "Daily",
-		desc = "ALL",
+		desc = "Holiday",
 		questID = {
 			77208,
 		},
@@ -2257,7 +2251,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Brewfest_BubblingBrews",
 		reset = "Daily",
-		desc = "ALL",
+		desc = "Holiday",
 		questID = {
 			76591,
 		},
@@ -2266,7 +2260,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Brewfest_DirebrewsDireBrew",
 		reset = "Month",
-		desc = "ALL",
+		desc = "Holiday",
 		questID = {
 			12491,
 			12492,
@@ -2412,7 +2406,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WarcraftRumble",
 		reset = "Once",
-		desc = "DF",
+		desc = "Holiday",
 		questID = {
 			73182,
 			75039,
@@ -2485,7 +2479,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WorgenHeritageArmor",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			54976,
 			54977,
@@ -2501,7 +2495,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ForsakenHeritageArmor",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			76530,
 			72854,
@@ -2524,7 +2518,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "GoblinHeritageArmor",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			57043,
 			57045,
@@ -2545,7 +2539,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "NightElfHeritageArmor",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			75890,
 			75891,
@@ -2565,7 +2559,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "HumanHeritageArmor",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			75265,
 			72644,
@@ -2590,7 +2584,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DwarvenHeritageArmor",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			53838,
 			53835,
@@ -2609,7 +2603,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "OrcHeritageArmor",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			73703,
 			72462,
@@ -2632,7 +2626,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "BloodElfHeritageArmor",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			53791,
 			53734,
@@ -2650,7 +2644,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "GnomeHeritageArmor",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			54402,
 			54576,
@@ -2669,7 +2663,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DarkIronDwarfHeritageArmorAllied",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			51483,
 		},
@@ -2677,7 +2671,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "ZandalariTrollHeritageArmorAllied",
-		reset = "Once",
+		reset = "ALL",
 		desc = "DF",
 		questID = {
 			53721,
@@ -2687,7 +2681,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "VulperaHeritageArmorAllied",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			58435,
 		},
@@ -2696,7 +2690,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "LightforgedDraeneiHeritageArmorAllied",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			49782,
 		},
@@ -2705,7 +2699,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "NightborneHeritageArmorAllied",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			49784,
 		},
@@ -2714,7 +2708,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "VoidElfHeritageArmorAllied",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			49928,
 		},
@@ -2723,7 +2717,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "MechagnomeHeritageArmorAllied",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			58436,
 		},
@@ -2732,7 +2726,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KulTiranHeritageArmorAllied",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			53722,
 		},
@@ -2741,7 +2735,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "MagharOrcHeritageArmorAllied",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			51484,
 		},
@@ -2750,7 +2744,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "HighmountainTaurenHeritageArmorAllied",
 		reset = "Once",
-		desc = "DF",
+		desc = "ALL",
 		questID = {
 			49783,
 		},
@@ -2759,7 +2753,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DayoftheDead",
 		reset = "Once",
-		desc = "DF",
+		desc = "Holiday",
 		questID = {
 			13952,
 			14175,
@@ -3227,9 +3221,9 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "PilgrimsBounty",
+		name_save = "PilgrimsBountyAlliance",
 		reset = "Daily",
-		desc = "Alliance",
+		desc = "Holiday",
 		questID = {
 			14048,
 			14054,
@@ -3240,9 +3234,9 @@ E.OctoTable_UniversalQuest = {
 		max = 5
 	},
 	{
-		name_save = "PilgrimsBounty",
+		name_save = "PilgrimsBountyHorde",
 		reset = "Daily",
-		desc = "Horde",
+		desc = "Holiday",
 		questID = {
 			14061,
 			14060,
@@ -3253,9 +3247,9 @@ E.OctoTable_UniversalQuest = {
 		max = 5
 	},
 	{
-		name_save = "WinterVeil",
+		name_save = "WinterVeilAlliance",
 		reset = "Once",
-		desc = "Alliance",
+		desc = "Holiday",
 		questID = {
 			8744,
 			8768,
@@ -3267,9 +3261,9 @@ E.OctoTable_UniversalQuest = {
 		max = 6
 	},
 	{
-		name_save = "WinterVeil",
+		name_save = "WinterVeilHorde",
 		reset = "Once",
-		desc = "Horde",
+		desc = "Holiday",
 		questID = {
 			8768,
 			8744,
@@ -3281,36 +3275,36 @@ E.OctoTable_UniversalQuest = {
 		max = 6
 	},
 	{
-		name_save = "WinterVeil_YoureaMeanOne",
+		name_save = "WinterVeil_YoureaMeanOneAlliance",
 		reset = "Daily",
-		desc = "Alliance",
+		desc = "Holiday",
 		questID = {
 			7043,
 		},
 		max = 1
 	},
 	{
-		name_save = "WinterVeil_YoureaMeanOne",
+		name_save = "WinterVeil_YoureaMeanOneHorde",
 		reset = "Daily",
-		desc = "Horde",
+		desc = "Holiday",
 		questID = {
 			6983,
 		},
 		max = 1
 	},
 	{
-		name_save = "WinterVeil_ASmokywoodPasturesThankYou",
+		name_save = "WinterVeil_ASmokywoodPasturesThankYouAlliance",
 		reset = "Once",
-		desc = "Alliance",
+		desc = "Holiday",
 		questID = {
 			7045,
 		},
 		max = 1
 	},
 	{
-		name_save = "WinterVeil_ASmokywoodPasturesThankYou",
+		name_save = "WinterVeil_ASmokywoodPasturesThankYouHorde",
 		reset = "Once",
-		desc = "Horde",
+		desc = "Holiday",
 		questID = {
 			6984,
 		},

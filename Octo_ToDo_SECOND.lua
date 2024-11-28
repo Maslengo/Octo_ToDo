@@ -114,7 +114,7 @@ local function O_otrisovka_SECOND()
 							function(CharInfo, tooltip, CL, BG)
 								local vivodCent, vivodLeft = "", ""
 								vivodLeft = E.func_texturefromIcon(icon)..name
-								tooltip[#tooltip+1] = {" ", E.Yellow_Color.." "..points.."|r".." "..E.Gray_Color.." id: "..AchievementID.."|r"}
+								tooltip[#tooltip+1] = {E.func_texturefromIcon(icon)..E.Yellow_Color..points.."|r".." "..E.Gray_Color.." id:"..AchievementID.."|r", " "}
 								vivodCent = E.func_achievementvivod(AchievementID)
 								local numCriteria = GetAchievementNumCriteria(AchievementID)
 								if numCriteria ~= 1 then

@@ -1,11 +1,5 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
---------------------------------------------------------------------------------
-local inspectScantipFUNC = nil
-if not inspectScantipFUNC then
-	inspectScantipFUNC = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFUNC", nil, "GameTooltipTemplate")
-	inspectScantipFUNC:SetOwner(UIParent, "ANCHOR_NONE")
-end
 ----------------------------------------------------------------
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
@@ -18,7 +12,6 @@ function E.func_hex2rgb(self)
 	self = self:gsub("|cff", "")
 	return tonumber("0x"..self:sub(1, 2)), tonumber("0x"..self:sub(3, 4)), tonumber("0x"..self:sub(5, 6))
 end
-local func_hex2rgb = E.func_hex2rgb
 ----------------------------------------------------------------
 function E.func_rgb2hex(r, g, b, a)
 	local r = r or 1
@@ -30,7 +23,6 @@ function E.func_rgb2hex(r, g, b, a)
 	end
 	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
-local func_rgb2hex = E.func_rgb2hex
 ----------------------------------------------------------------
 function E.func_rgb2hexDEV(r, g, b, a)
 	local r, g, b, a = r, g, b, a
@@ -39,19 +31,14 @@ function E.func_rgb2hexDEV(r, g, b, a)
 	end
 	return "c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
-local func_rgb2hexDEV = E.func_rgb2hexDEV
 ----------------------------------------------------------------
 function E.func_percent(percent, maxvalue)
-	if tonumber(percent) and tonumber(maxvalue) then
-		return (maxvalue*percent)/100
-	end
-	return false
+	return (maxvalue*percent)/100
 end
-local func_percent = E.func_percent
 ----------------------------------------------------------------
 function E.func_Gradient(text, firstColor, secondColor)
 	local vivod = ""
-	local maslengo = ""
+	local str = ""
 	local total = utf8len(text)-1
 	local r1, g1, b1 = E.func_hex2rgb(firstColor)
 	local r2, g2, b2 = E.func_hex2rgb(secondColor)
@@ -60,15 +47,14 @@ function E.func_Gradient(text, firstColor, secondColor)
 	local g3 = g1
 	local b3 = b1
 	for i = 1, total do
-		maslengo = maslengo..("|cff%02x%02x%02x%s|r"):format(math.floor(r3+.5), math.floor(g3+.5), math.floor(b3+.5), utf8sub(text, i, i))
+		str = str..("|cff%02x%02x%02x%s|r"):format(math.floor(r3+.5), math.floor(g3+.5), math.floor(b3+.5), utf8sub(text, i, i))
 		r3 = r3 + rdelta
 		g3 = g3 + gdelta
 		b3 = b3 + bdelta
 	end
-	vivod = maslengo..secondColor..utf8sub(text, utf8len(text)).."|r"
+	vivod = str..secondColor..utf8sub(text, utf8len(text)).."|r"
 	return vivod
 end
-local func_Gradient = E.func_Gradient
 ----------------------------------------------------------------
 function E.func_GenerateUniqueID()
 	local s = {}
@@ -77,7 +63,6 @@ function E.func_GenerateUniqueID()
 	end
 	return table.concat(s)
 end
-local func_GenerateUniqueID = E.func_GenerateUniqueID
 ----------------------------------------------------------------
 function E.func_GenerateUnique_Color()
 	local s = {}
@@ -86,7 +71,6 @@ function E.func_GenerateUnique_Color()
 	end
 	return table.concat(s)
 end
-local func_GenerateUnique_Color = E.func_GenerateUnique_Color
 ----------------------------------------------------------------
 function E.func_TableConcat(table1, table2)
 	for i=1, #table2 do
@@ -94,14 +78,12 @@ function E.func_TableConcat(table1, table2)
 	end
 	return table1
 end
-local func_TableConcat = E.func_TableConcat
 ----------------------------------------------------------------
 function E.func_PlaySoundFile_whisper(self)
 	if self then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\"..self..".ogg", "Master")
 	end
 end
-local func_PlaySoundFile_whisper = E.func_PlaySoundFile_whisper
 ----------------------------------------------------------------
 function E.func_CompactNumberFormat(self)
 	if not self then
@@ -117,7 +99,6 @@ function E.func_CompactNumberFormat(self)
 		return (math.floor(self/100000)/10).."m"
 	end
 end
-local func_CompactNumberFormat = E.func_CompactNumberFormat
 ----------------------------------------------------------------
 function E.func_CompactNumberSimple(self)
 	if not self then
@@ -129,7 +110,6 @@ function E.func_CompactNumberSimple(self)
 		return math.floor(self+.5)
 	end
 end
-local func_CompactNumberSimple = E.func_CompactNumberSimple
 ----------------------------------------------------------------
 function E.func_texturefromIcon(iconID, iconSize, isShown)
 	if isShown == nil then isShown = true end
@@ -143,7 +123,6 @@ function E.func_texturefromIcon(iconID, iconSize, isShown)
 	end
 	return vivod
 end
-local func_texturefromIcon = E.func_texturefromIcon
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
 	local useLargeIcon = useLargeIcon or true
@@ -154,7 +133,6 @@ function E.func_questName(questID, useLargeIcon)
 		return E.Red_Color.."notitle".."|r"
 	end
 end
-local func_questName = E.func_questName
 ----------------------------------------------------------------
 function E.func_reputationName(self)
 	local AWide = ""
@@ -173,16 +151,14 @@ function E.func_reputationName(self)
 	return AWide..name
 	-- return name
 end
-local func_reputationName = E.func_reputationName
 ----------------------------------------------------------------
 function E.func_itemName_NOCOLOR(itemID)
 	local itemName_NOCOLOR = LibThingsLoad:GetItemName(itemID) or "itemName_NOCOLOR"
 	return itemName_NOCOLOR
 end
-local func_itemName_NOCOLOR = E.func_itemName_NOCOLOR
 ----------------------------------------------------------------
 function E.func_itemName(itemID)
-	local itemName = func_itemName_NOCOLOR(itemID) or "itemName"
+	local itemName = E.func_itemName_NOCOLOR(itemID) or "itemName"
 	local itemQuality = select(3, GetItemInfo(itemID))
 	if itemQuality then
 		-- local r, g, b = ITEM_QUALITY_COLORS[itemQuality].color
@@ -194,13 +170,11 @@ function E.func_itemName(itemID)
 	end
 	return itemName or E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 end
-local func_itemName = E.func_itemName
 ----------------------------------------------------------------
 function E.func_itemTexture(self)
 	local itemTexture = select(10, GetItemInfo(self)) or 134400
 	return E.func_texturefromIcon(itemTexture)
 end
-local func_itemTexture = E.func_itemTexture
 ----------------------------------------------------------------
 function E.func_GetItemCooldown(self)
 	local start, duration = C_Item.GetItemCooldown(self)
@@ -214,7 +188,6 @@ function E.func_GetItemCooldown(self)
 	end
 	return E.func_CompactNumberSimple(vivod)
 end
-local func_GetItemCooldown = E.func_GetItemCooldown
 ----------------------------------------------------------------
 function E.func_currencyName(self)
 	local AWide = ""
@@ -242,7 +215,6 @@ function E.func_currencyName(self)
 	end
 	return vivod
 end
-local func_currencyName = E.func_currencyName
 ----------------------------------------------------------------
 function E.func_currencyName_NOCOLOR(self)
 	local AWide = ""
@@ -270,7 +242,6 @@ function E.func_currencyName_NOCOLOR(self)
 	end
 	return vivod
 end
-local func_currencyName_NOCOLOR = E.func_currencyName_NOCOLOR
 ----------------------------------------------------------------
 function E.func_currencyicon(self)
 	local info = C_CurrencyInfo.GetCurrencyInfo(self)
@@ -281,7 +252,6 @@ function E.func_currencyicon(self)
 	end
 	return E.func_texturefromIcon(iconFileID)
 end
-local func_currencyicon = E.func_currencyicon
 ----------------------------------------------------------------
 function E.func_currencyquantity(self)
 	local info = C_CurrencyInfo.GetCurrencyInfo(self)
@@ -290,19 +260,16 @@ function E.func_currencyquantity(self)
 	end
 	return quantity
 end
-local func_currencyquantity = E.func_currencyquantity
 ----------------------------------------------------------------
 function E.func_GetSpellName(self)
 	local name = C_Spell.GetSpellInfo(self).name
 	return name
 end
-local func_GetSpellName = E.func_GetSpellName
 ----------------------------------------------------------------
 function E.func_GetSpellIcon(self)
 	local iconID = C_Spell.GetSpellInfo(self).iconID
 	return iconID
 end
-local func_GetSpellIcon = E.func_GetSpellIcon
 ----------------------------------------------------------------
 function E.func_GetSpellCooldown(self)
 	local start = C_Spell.GetSpellCooldown(self).startTime
@@ -313,7 +280,6 @@ function E.func_GetSpellCooldown(self)
 	end
 	return E.func_CompactNumberSimple(vivod)
 end
-local func_GetSpellCooldown = E.func_GetSpellCooldown
 ----------------------------------------------------------------
 function E.func_SecondsToClock(self)
 	-- local years, days, hours, mins, secs = "", "", "", "", ""
@@ -348,7 +314,6 @@ function E.func_SecondsToClock(self)
 		return self..L["s. "]
 	end
 end
-local func_SecondsToClock = E.func_SecondsToClock
 ----------------------------------------------------------------
 function E.func_EmptyZero(self)
 	if tonumber(self) == 0 then
@@ -356,13 +321,11 @@ function E.func_EmptyZero(self)
 	end
 	return self
 end
-local func_EmptyZero = E.func_EmptyZero
 ----------------------------------------------------------------
 function E.func_tmstpDayReset(self)
 	local self = self or 1
 	return (math.ceil((tonumber(GetServerTime()) - E.thursdayReset)/(E.daytime*self))*E.daytime*self)+E.thursdayReset
 end
-local func_tmstpDayReset = E.func_tmstpDayReset
 ----------------------------------------------------------------
 function E.func_All_objectives(self)
 	local str = ""
@@ -399,7 +362,6 @@ function E.func_All_objectives(self)
 	end
 	return str
 end
-local func_All_objectives = E.func_All_objectives
 ----------------------------------------------------------------
 function E.func_Octo_LoadAddOn(GlobalAddonName)
 	local loaded, reason = C_AddOns.LoadAddOn(GlobalAddonName)
@@ -409,7 +371,6 @@ function E.func_Octo_LoadAddOn(GlobalAddonName)
 		C_AddOns.LoadAddOn(GlobalAddonName)
 	end
 end
-local func_Octo_LoadAddOn = E.func_Octo_LoadAddOn
 ----------------------------------------------------------------
 function E.func_CheckCompletedByQuestID(questID)
 	local vivod
@@ -443,21 +404,18 @@ function E.func_CheckCompletedByQuestID(questID)
 	end
 	return vivod
 end
-local func_CheckCompletedByQuestID = E.func_CheckCompletedByQuestID
 ----------------------------------------------------------------
 function E.func_OnlyFirstWord(self)
 	self = tostring(self)
 	local a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z = strsplit(" ", self)
 	return a or b or c or d or e or f or g or h or i or j or k or l or m or n or o or p or q or r or s or t or u or v or w or x or y or z
 end
-local func_OnlyFirstWord = E.func_OnlyFirstWord
 ----------------------------------------------------------------
 function E.func_OnlyLastWord(self)
 	self = tostring(self)
 	local a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z = strsplit(" ", self)
 	return z or y or x or w or v or u or t or s or r or q or p or i or n or m or l or k or j or i or h or g or f or e or d or c or b or a
 end
-local func_OnlyLastWord = E.func_OnlyLastWord
 ----------------------------------------------------------------
 function E.func_InList(k, t, p)
 	for _, v in next, (t) do
@@ -466,12 +424,10 @@ function E.func_InList(k, t, p)
 		end
 	end
 end
-local func_InList = E.func_InList
 ----------------------------------------------------------------
 function E.func_achievementID(self)
 	return E.Yellow_Color.." (id: "..self..")".."|r"
 end
-local func_achievementID = E.func_achievementID
 ----------------------------------------------------------------
 function E.func_achievementComplete(self)
 	if not self then
@@ -480,19 +436,16 @@ function E.func_achievementComplete(self)
 	local completed = select(4, GetAchievementInfo(self))
 	return completed
 end
-local func_achievementComplete = E.func_achievementComplete
 ----------------------------------------------------------------
 function E.func_achievementName(self)
 	local Name = select(2, GetAchievementInfo(self))
 	return Name..E.func_achievementID(self)
 end
-local func_achievementName = E.func_achievementName
 ----------------------------------------------------------------
 function E.func_achievementIcon(self)
 	local Icon = select(10, GetAchievementInfo(self))
 	return E.func_texturefromIcon(Icon)
 end
-local func_achievementIcon = E.func_achievementIcon
 ----------------------------------------------------------------
 function E.func_achievementvivod(self)
 	local vivod = ""
@@ -528,7 +481,6 @@ function E.func_achievementvivod(self)
 	end
 	return vivod
 end
-local func_achievementvivod = E.func_achievementvivod
 ----------------------------------------------------------------
 function E.func_achievementcriteriaString(self, i)
 	i = i or 1
@@ -550,7 +502,6 @@ function E.func_achievementcriteriaString(self, i)
 	end
 	return vivod
 end
-local func_achievementcriteriaString = E.func_achievementcriteriaString
 ----------------------------------------------------------------
 function E.func_achievementquantity(self, i)
 	i = i or 1
@@ -572,13 +523,11 @@ function E.func_achievementquantity(self, i)
 	end
 	return vivod
 end
-local func_achievementquantity = E.func_achievementquantity
 ----------------------------------------------------------------
 function E.func_achievementdescription(self)
 	local description = select(8, GetAchievementInfo(self))
 	return description
 end
-local func_achievementdescription = E.func_achievementdescription
 ----------------------------------------------------------------
 function E.func_CurServerShort(self)
 	local text = (self):gsub("-", " "):gsub("'", " ")
@@ -590,7 +539,6 @@ function E.func_CurServerShort(self)
 	end
 	return self
 end
-local func_CurServerShort = E.func_CurServerShort
 ----------------------------------------------------------------
 function E.func_GetMapName(self)
 	if not self then return end
@@ -600,9 +548,13 @@ function E.func_GetMapName(self)
 		return tostring(name)
 	end
 end
-local func_GetMapName = E.func_GetMapName
 ----------------------------------------------------------------
 function E.func_npcName(self)
+	local inspectScantipFUNC = nil
+	if not inspectScantipFUNC then
+		inspectScantipFUNC = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFUNC", nil, "GameTooltipTemplate")
+		inspectScantipFUNC:SetOwner(UIParent, "ANCHOR_NONE")
+	end
 	local name = "|cffFF0000error|r"
 	if not self then return E.NONE end
 	if self then
@@ -615,7 +567,6 @@ function E.func_npcName(self)
 	end
 	return name
 end
-local func_npcName = E.func_npcName
 ----------------------------------------------------------------
 function E.func_RIO_Color(self)
 	local hexColor = E.Gray_Color
@@ -627,7 +578,6 @@ function E.func_RIO_Color(self)
 	end
 	return hexColor
 end
-local func_RIO_Color = E.func_RIO_Color
 ----------------------------------------------------------------
 function E.func_encryption(self)
 	local self = utf8reverse(tostring(self))
@@ -636,7 +586,6 @@ function E.func_encryption(self)
 	vivod = utf8lower(text:gsub("0", ""):gsub("1", ""):gsub("2", ""):gsub("3", ""):gsub("4", ""):gsub("5", ""):gsub("6", ""):gsub("7", ""):gsub("8", ""):gsub("9", ""))
 	return vivod
 end
-local func_encryption = E.func_encryption
 ----------------------------------------------------------------
 function E.func_GetClassColor(self) -- C_ClassColor.GetClassColor(classFilename)
 	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[self]
@@ -645,12 +594,10 @@ function E.func_GetClassColor(self) -- C_ClassColor.GetClassColor(classFilename)
 	end
 	return "ffffff"
 end
-local func_GetClassColor = E.func_GetClassColor
 ----------------------------------------------------------------
 function E.func_Reverse_order(a, b)
 	return b < a
 end
-local func_Reverse_order = E.func_Reverse_order
 ----------------------------------------------------------------
 function E.func_CheckReputationByRepID(self)
 	local color = E.White_Color
@@ -745,7 +692,6 @@ function E.func_CheckReputationByRepID(self)
 	end
 	return vivod
 end
-local func_CheckReputationByRepID = E.func_CheckReputationByRepID
 ----------------------------------------------------------------
 function E.func_CurrentNumQuests()
 	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
@@ -764,7 +710,6 @@ function E.func_CurrentNumQuests()
 	end
 	return numQuests
 end
-local func_CurrentNumQuests = E.func_CurrentNumQuests
 ----------------------------------------------------------------
 function E.func_RemoveDuplicates(table1)
 	if type(table1) ~= "table" then
@@ -783,7 +728,6 @@ function E.func_RemoveDuplicates(table1)
 		table2[value] = true
 	end
 end
-local func_RemoveDuplicates = E.func_RemoveDuplicates
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

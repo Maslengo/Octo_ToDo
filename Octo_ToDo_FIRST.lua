@@ -15,6 +15,7 @@ local LibDBIcon = LibStub("LibDBIcon-1.0")
 local CallbackHandler = LibStub("CallbackHandler-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
+local LibOctopussy = LibStub("LibOctopussy-1.0")
 local LibTranslit = LibStub("LibTranslit-1.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibQTip = LibStub('LibQTip-1.0')
@@ -48,6 +49,8 @@ local BattleTag = select(2, BNGetInfo()) or "Trial Account" -- RAF_TRIAL_RECRUIT
 local BTAG = tostringall(strsplit("#", BattleTag))
 local GameVersion = GetCurrentRegion() == 72 and "PTR" or "Retail"
 local BattleTagLocal = BTAG.." ("..GameVersion..")"
+
+print (LibOctopussy:GetItemName(65977))
 
 local function TryToLoadBattleTag()
 	if not BNFeaturesEnabledAndConnected() then
@@ -142,6 +145,7 @@ local TrashFrames_table = {
 	{name = "EventToastManagerFrame", frame = EventToastManagerFrame},
 	{name = "PTR_IssueReporter", frame = PTR_IssueReporter},
 	{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
+	{name = "RaidBossEmoteFrame", frame = RaidBossEmoteFrame},
 	-- {name = "TalkingHeadFrame", frame = TalkingHeadFrame},
 	-- {name = "PVPArenaTextString", frame = PVPArenaTextString},
 	-- {name = "ZoneTextString", frame = ZoneTextString},
@@ -269,9 +273,6 @@ local function checkCharInfo(self)
 	-- self.ItemsInBag = nil
 	-- self.GreatVault = nil
 	-- self.professions = nil
-	-- self.CurrencyID = nil
-	-- self.CurrencyID_Total = nil
-	-- self.CurrencyID_totalEarned = nil
 	-- self.reputationID = nil
 	-- self.PVP =nil
 	-- self.journalInstance = nil
@@ -279,18 +280,57 @@ local function checkCharInfo(self)
 	-- self.curCovID = nil
 	-- self.islandBfA = nil
 	-- УДАЛЕНЕИЕ:
-	for _, v in next, (E.OctoTable_UniversalQuest) do
-		self["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = self["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] or E.NONE
-	end
+	self.MASLENGO = self.MASLENGO or {}
+
+	self.UniversalQuest = nil
+	self.MASLENGO.UniversalQuest = self.MASLENGO.UniversalQuest or {}
+
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- 404 строка метатаблица
+	self.reputationID = self.MASLENGO.reputationID
+	----------------
+	self.reputationID = nil
+	----------------
+	self.MASLENGO.reputationID = self.MASLENGO.reputationID or {}
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	self.CurrencyID = self.MASLENGO.CurrencyID or {}
+	self.CurrencyID_Total = self.MASLENGO.CurrencyID_Total or {}
+	self.CurrencyID_totalEarned = self.MASLENGO.CurrencyID_totalEarned or {}
+	----------------
+	self.CurrencyID = nil
+	self.CurrencyID_Total = nil
+	self.CurrencyID_totalEarned = nil
+	----------------
+	self.MASLENGO.CurrencyID = self.MASLENGO.CurrencyID or {}
+	self.MASLENGO.CurrencyID_Total = self.MASLENGO.CurrencyID_Total or {}
+	self.MASLENGO.CurrencyID_totalEarned = self.MASLENGO.CurrencyID_totalEarned or {}
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+
 	self.LFGInstance = self.LFGInstance or {}
 	self.professions = self.professions or {}
-	self.CurrencyID = self.CurrencyID or {}
-	self.CurrencyID_Total = self.CurrencyID_Total or {}
-	self.CurrencyID_totalEarned = self.CurrencyID_totalEarned or {}
+
+
+
 	self.ItemsInBag = self.ItemsInBag or {}
 	self.OctoTable_QuestID = self.OctoTable_QuestID or {}
-	self.reputationID = self.reputationID or {}
 	self.GreatVault = self.GreatVault or {}
+
+
+
+
+
+
+
+	for _, v in next, (E.OctoTable_UniversalQuest) do
+		self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] or E.NONE
+	end
+
 	self.avgItemLevel = self.avgItemLevel or 0
 	self.avgItemLevelEquipped = self.avgItemLevelEquipped or 0
 	self.avgItemLevelPvp = self.avgItemLevelPvp or 0
@@ -376,11 +416,12 @@ local function checkCharInfo(self)
 		self.GreatVault[i].type = self.GreatVault[i].type or ""
 	end
 	setmetatable(self, Meta_Table_0)
-	setmetatable(self.CurrencyID_Total, Meta_Table_0)
-	setmetatable(self.CurrencyID, Meta_Table_0)
+	setmetatable(self.MASLENGO.CurrencyID, Meta_Table_0)
+	setmetatable(self.MASLENGO.CurrencyID_Total, Meta_Table_0)
+	setmetatable(self.MASLENGO.CurrencyID_totalEarned, Meta_Table_0)
 	setmetatable(self.ItemsInBag, Meta_Table_0)
 	setmetatable(self.OctoTable_QuestID, Meta_Table_NONE)
-	setmetatable(self.reputationID, Meta_Table_0)
+	setmetatable(self.MASLENGO.reputationID, Meta_Table_0)
 	if (self.tmstp_Weekly or 0) < GetServerTime() then
 		for i = 1, #self.GreatVault do
 			if self.GreatVault[i] and self.GreatVault[i].hyperlink_STRING ~= 0 then
@@ -390,7 +431,7 @@ local function checkCharInfo(self)
 			end
 		end
 	end
-	if (self.tmstp_Weekly or 0) < GetServerTime() and self.Octopussy_DF_Weekly_CommunityFeast_count == E.DONE then
+	if (self.tmstp_Weekly or 0) < GetServerTime() and self.MASLENGO.UniversalQuest.Octopussy_DF_Weekly_CommunityFeast_count == E.DONE then
 		self.Octopussy_DF_Weekly_CommunityFeast_count = E.NONE
 	end
 	if (self.tmstp_Weekly or 0) < GetServerTime() then
@@ -413,7 +454,7 @@ local function checkCharInfo(self)
 		for _, v in next, (E.OctoTable_UniversalQuest) do
 			for q, w in next, (v) do
 				if w == "Weekly" then
-					self["Octopussy_"..v.desc.."_"..v.name_save.."_".."Weekly"] = E.NONE
+					self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Weekly"] = E.NONE
 				end
 			end
 		end
@@ -424,7 +465,7 @@ local function checkCharInfo(self)
 		for _, v in next, (E.OctoTable_UniversalQuest) do
 			for q, w in next, (v) do
 				if w == "Daily" then
-					self["Octopussy_"..v.desc.."_"..v.name_save.."_".."Daily"] = E.NONE
+					self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Daily"] = E.NONE
 				end
 			end
 		end
@@ -441,7 +482,7 @@ local function checkCharInfo(self)
 		for _, v in next, (E.OctoTable_UniversalQuest) do
 			for q, w in next, (v) do
 				if w == "Month" then
-					self["Octopussy_"..v.desc.."_"..v.name_save.."_".."Month"] = E.NONE
+					self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Month"] = E.NONE
 				end
 			end
 		end
@@ -1114,51 +1155,53 @@ local function Collect_All_Currency()
 			local maxQuantity = data.maxQuantity
 			local totalEarned = data.totalEarned
 			if isAccountWideCurrency == false then
-				if collect and not InCombatLockdown() then
+				if collect.MASLENGO and not InCombatLockdown() then
 					if quantity then
-						collect.CurrencyID[CurrencyID] = quantity
+						collect.MASLENGO.CurrencyID[CurrencyID] = quantity
 					end
 					if totalEarned then
-						collect.CurrencyID_totalEarned[CurrencyID] = totalEarned
+						collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
 					end
 					if maxQuantity ~= 0 then
 						if quantity ~= maxQuantity then
-							collect.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+							collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
 						else
-							collect.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+							collect.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
 						end
 					else
-						collect.CurrencyID_Total[CurrencyID] = quantity
+						collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
 					end
 				end
 			else
 				for GUID, tbl in next, (Octo_ToDo_DB_Players) do
 					if tbl and not InCombatLockdown() then
 						if quantity then
-							tbl.CurrencyID[CurrencyID] = quantity
+							tbl.MASLENGO.CurrencyID[CurrencyID] = quantity
 						end
 						if totalEarned then
-							tbl.CurrencyID_totalEarned[CurrencyID] = totalEarned
+							tbl.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
 						end
 						if maxQuantity ~= 0 then
 							if quantity ~= maxQuantity then
-								tbl.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+								tbl.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
 							else
-								tbl.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+								tbl.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
 							end
 						else
-							tbl.CurrencyID_Total[CurrencyID] = quantity
+							tbl.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
 						end
 					end
 				end
 			end
 		else
-			collect.CurrencyID[CurrencyID] = 0
-			collect.CurrencyID_Total[CurrencyID] = 0
-			collect.CurrencyID_totalEarned[CurrencyID] = 0
+			collect.MASLENGO.CurrencyID[CurrencyID] = 0
+			collect.MASLENGO.CurrencyID_Total[CurrencyID] = 0
+			collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = 0
 		end
 	end
 end
+
+
 
 local function Collect_All_Reputations()
 	-- /run C_Reputation.SetWatchedFactionByIndex(13)
@@ -1181,10 +1224,10 @@ local function Collect_All_Reputations()
 		for reputationID, v in next, (Octo_ToDo_DB_Config.ReputationDB) do
 			local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
 			if isAccountWide == false then
-				collect.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
+				collect.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
 			else
 				for GUID, tbl in next, (Octo_ToDo_DB_Players) do
-					tbl.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
+					tbl.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
 				end
 			end
 		end
@@ -1424,6 +1467,7 @@ local function Collect_ALL_UNIVERSALQuestUpdate()
 		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_UNIVERSALQuestUpdate()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
+	collect.MASLENGO.UniversalQuest = collect.MASLENGO.UniversalQuest or {}
 	for _, v in next, (E.OctoTable_UniversalQuest) do
 		for _, w in next, (v) do
 			local count = 0
@@ -1443,12 +1487,12 @@ local function Collect_ALL_UNIVERSALQuestUpdate()
 			end
 			if collect then
 				if v.max == 1 then
-					collect["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod
+					collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod
 				elseif v.max > 1 then
 					if vivod == v.max and v.max > 1 then
-						collect["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = E.DONE
+						collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = E.DONE
 					else
-						collect["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod.."/"..v.max
+						collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod.."/"..v.max
 					end
 				end
 			end
@@ -1756,8 +1800,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.Timers.TWW_BeledarCycle() .. E.func_questName(83240)
-				if CharInfo.Octopussy_TWW_TheTheaterTroupe_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_TWW_TheTheaterTroupe_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_TheTheaterTroupe_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_TheTheaterTroupe_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1769,8 +1813,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.Icon_WorldBoss..L["World Boss"]
-				if CharInfo.Octopussy_TWW_WorldBoss_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_TWW_WorldBoss_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_WorldBoss_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_WorldBoss_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1782,8 +1826,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = L["Weekly Dungeon Quest"]
-				if CharInfo.Octopussy_TWW_DungeonQuest_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_TWW_DungeonQuest_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_DungeonQuest_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_DungeonQuest_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1795,8 +1839,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = "TWW_Delve_Weekly"
-				if CharInfo.Octopussy_TWW_Delve_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_TWW_Delve_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_Delve_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_Delve_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1809,8 +1853,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_texturefromIcon(132863) .. L["Major Keyflames"]
-				if CharInfo.Octopussy_TWW_MajorKeyflames_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_TWW_MajorKeyflames_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1822,8 +1866,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_texturefromIcon(135619) .. L["Minor Keyflames"]
-				if CharInfo.Octopussy_TWW_MinorKeyflames_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_TWW_MinorKeyflames_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1841,16 +1885,16 @@ local function O_otrisovka_FIRST()
 				if data then
 					local maxQuantity = data.maxQuantity
 					local totalEarned = data.totalEarned
-					if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-						tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
-						tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+					if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
+						tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
 						tooltip[#tooltip+1] = {" ", " "}
-						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
 					else
 						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 					end
-					if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-						vivodCent = CharInfo.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
+					if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
 					end
 				end
 				BG:SetColorTexture(E.Color_Crest_r, E.Color_Crest_g, E.Color_Crest_b, E.BGALPHA)
@@ -1869,16 +1913,16 @@ local function O_otrisovka_FIRST()
 				if data then
 					local maxQuantity = data.maxQuantity
 					local totalEarned = data.totalEarned
-					if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-						tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
-						tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+					if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
+						tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
 						tooltip[#tooltip+1] = {" ", " "}
-						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
 					else
 						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 					end
-					if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-						vivodCent = CharInfo.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
+					if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
 					end
 				end
 				BG:SetColorTexture(E.Color_Crest_r, E.Color_Crest_g, E.Color_Crest_b, E.BGALPHA)
@@ -1897,16 +1941,16 @@ local function O_otrisovka_FIRST()
 				if data then
 					local maxQuantity = data.maxQuantity
 					local totalEarned = data.totalEarned
-					if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-						tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
-						tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+					if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
+						tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
 						tooltip[#tooltip+1] = {" ", " "}
-						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
 					else
 						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 					end
-					if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-						vivodCent = CharInfo.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
+					if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
 					end
 				end
 				BG:SetColorTexture(E.Color_Crest_r, E.Color_Crest_g, E.Color_Crest_b, E.BGALPHA)
@@ -1925,16 +1969,16 @@ local function O_otrisovka_FIRST()
 				if data then
 					local maxQuantity = data.maxQuantity
 					local totalEarned = data.totalEarned
-					if CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-						tooltip[#tooltip+1] = {TOTAL, color..CharInfo.CurrencyID[currencyID].."|r"}
-						tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
+					if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
+						tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
 						tooltip[#tooltip+1] = {" ", " "}
-						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID].."|r"}
+						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
 					else
 						tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 					end
-					if CharInfo.CurrencyID[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] and CharInfo.CurrencyID_totalEarned[currencyID] ~= 0 then
-						vivodCent = CharInfo.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.CurrencyID_totalEarned[currencyID]..")|r"
+					if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
 					end
 				end
 				BG:SetColorTexture(E.Color_Crest_r, E.Color_Crest_g, E.Color_Crest_b, E.BGALPHA)
@@ -1947,8 +1991,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_currencyicon(1166)..DUNGEONS
-				if CharInfo.Octopussy_Timewalk_Dungeons_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Timewalk_Dungeons_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1957,8 +2001,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_currencyicon(1166).."500 "..E.func_currencyName(1166)
-				if CharInfo.Octopussy_Timewalk_500Currency_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Timewalk_500Currency_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1967,8 +2011,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_currencyicon(1166)..RAIDS
-				if CharInfo.Octopussy_Timewalk_Raid_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Timewalk_Raid_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1977,8 +2021,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_currencyicon(1166)..E.func_questName(43323)
-				if CharInfo.Octopussy_Timewalk_ATimetoReflect_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Timewalk_ATimetoReflect_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1987,8 +2031,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_currencyicon(3100)..E.func_questName(84616)
-				if CharInfo.Octopussy_Timewalk_CelebrateGoodFun_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Timewalk_CelebrateGoodFun_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -1997,8 +2041,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_currencyicon(3100)..E.func_questName(82783)
-				if CharInfo.Octopussy_Timewalk_ChromiesCodex_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Timewalk_ChromiesCodex_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -2007,8 +2051,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_currencyicon(3100)..E.func_texturefromIcon(1322720)..E.func_questName(57300)
-				if CharInfo.Octopussy_Timewalk_SoldierofTime_Weekly ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Timewalk_SoldierofTime_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
 				return vivodCent, vivodLeft
@@ -2017,8 +2061,8 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.func_texturefromIcon(5213776).."Я спас вечеринку, а получил только эти нелепые шапки"
-				if CharInfo.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once
 				end
 				tooltip[#tooltip+1] = {E.func_questName(84143)..E.Gray_Color.." id:84143|r", CharInfo.OctoTable_QuestID[84143]}
 				tooltip[#tooltip+1] = {E.func_questName(84144)..E.Gray_Color.." id:84144|r", CharInfo.OctoTable_QuestID[84144]}
@@ -2065,8 +2109,8 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft = "", ""
 				vivodLeft = E.Blue_Color.."ALL|r"
 				for _, v in next, (E.OctoTable_UniversalQuest) do
-					if CharInfo["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
-						tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
+					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
+						tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
 					end
 				end
 				if #tooltip ~= 0 then
@@ -2091,7 +2135,7 @@ local function O_otrisovka_FIRST()
 					local vivodCent, vivodLeft = "", ""
 					for _, v in next, (E.OctoTable_UniversalQuest) do
 						if v.desc == value then
-							tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
+							tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
 								vivodLeft = i
 								vivodCent = value
 						end
@@ -2147,13 +2191,13 @@ local function O_otrisovka_FIRST()
 				end
 				sort(list, E.func_Reverse_order)
 				for k, CurrencyID in next, (list) do
-					if Octo_ToDo_DB_Vars.config.CurrencyShowAllways == false and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true and CharInfo.CurrencyID[CurrencyID] ~= 0 then
-						tooltip[#tooltip+1] = {E.func_currencyicon(CurrencyID)..E.func_currencyName(CurrencyID)..E.Gray_Color.." id:"..CurrencyID.."|r", CharInfo.CurrencyID_Total[CurrencyID]}
+					if Octo_ToDo_DB_Vars.config.CurrencyShowAllways == false and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
+						tooltip[#tooltip+1] = {E.func_currencyicon(CurrencyID)..E.func_currencyName(CurrencyID)..E.Gray_Color.." id:"..CurrencyID.."|r", CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
 					elseif Octo_ToDo_DB_Vars.config.CurrencyShowAllways == true and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true then
-						if CharInfo.CurrencyID[CurrencyID] ~= 0 then
-							tooltip[#tooltip+1] = {E.func_currencyicon(CurrencyID)..E.func_currencyName(CurrencyID)..E.Gray_Color.." id:"..CurrencyID.."|r", CharInfo.CurrencyID_Total[CurrencyID]}
+						if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
+							tooltip[#tooltip+1] = {E.func_currencyicon(CurrencyID)..E.func_currencyName(CurrencyID)..E.Gray_Color.." id:"..CurrencyID.."|r", CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
 						else
-							tooltip[#tooltip+1] = {E.func_currencyicon(CurrencyID)..E.Gray_Color..E.func_currencyName_NOCOLOR(CurrencyID).." id:"..CurrencyID.."|r", E.Gray_Color..CharInfo.CurrencyID_Total[CurrencyID].."|r"}
+							tooltip[#tooltip+1] = {E.func_currencyicon(CurrencyID)..E.Gray_Color..E.func_currencyName_NOCOLOR(CurrencyID).." id:"..CurrencyID.."|r", E.Gray_Color..CharInfo.MASLENGO.CurrencyID_Total[CurrencyID].."|r"}
 						end
 					end
 				end
@@ -2189,9 +2233,9 @@ local function O_otrisovka_FIRST()
 				sort(list, E.func_Reverse_order)
 				local j = 1
 				for i, reputationID in next, (list) do
-					if Octo_ToDo_DB_Config.ReputationDB[reputationID] == true and CharInfo.reputationID[reputationID] ~= 0 and CharInfo.reputationID[reputationID] ~= "" and E.func_reputationName(reputationID) ~= "no name" then
+					if Octo_ToDo_DB_Config.ReputationDB[reputationID] == true and CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" and E.func_reputationName(reputationID) ~= "no name" then
 						local color = j%2 == 0 and "|cffBBBBBB" or E.White_Color
-						tooltip[#tooltip+1] = {color..E.func_reputationName(reputationID).."|r"..E.Gray_Color.." id:"..(reputationID).."|r", CharInfo.reputationID[reputationID]}
+						tooltip[#tooltip+1] = {color..E.func_reputationName(reputationID).."|r"..E.Gray_Color.." id:"..(reputationID).."|r", CharInfo.MASLENGO.reputationID[reputationID]}
 						j = j + 1
 					end
 				end
@@ -2317,7 +2361,7 @@ local function O_otrisovka_FIRST()
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
-				vivodLeft = "Item Level"
+				vivodLeft = STAT_AVERAGE_ITEM_LEVEL
 				local color = E.Red_Color
 				if CharInfo.avgItemLevelEquipped and CharInfo.avgItemLevel then
 					if CharInfo.avgItemLevelEquipped >= ItemLevelGreen then
@@ -2341,7 +2385,7 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
-	if Octo_ToDo_DB_Vars.config.LastUpdate == true then
+	if Octo_ToDo_DB_Vars.config.WasOnline == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = "", ""
@@ -3595,7 +3639,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.Professions == nil then Octo_ToDo_DB_Vars.config.Professions = true end
 		if Octo_ToDo_DB_Vars.config.Gold == nil then Octo_ToDo_DB_Vars.config.Gold = true end
 		if Octo_ToDo_DB_Vars.config.ItemLevel == nil then Octo_ToDo_DB_Vars.config.ItemLevel = true end
-		if Octo_ToDo_DB_Vars.config.LastUpdate == nil then Octo_ToDo_DB_Vars.config.LastUpdate = false end
+		if Octo_ToDo_DB_Vars.config.WasOnline == nil then Octo_ToDo_DB_Vars.config.WasOnline = true end
 		if Octo_ToDo_DB_Vars.config.LevelToShow == nil then Octo_ToDo_DB_Vars.config.LevelToShow = 1 end
 		if Octo_ToDo_DB_Vars.config.LevelToShowMAX == nil then Octo_ToDo_DB_Vars.config.LevelToShowMAX = 120 end
 		if Octo_ToDo_DB_Vars.config.itemLevelToShow == nil then Octo_ToDo_DB_Vars.config.itemLevelToShow = 1 end
@@ -3829,3 +3873,4 @@ end
 SlashCmdList["RELOAD"] = ReloadUI
 SLASH_RELOAD1 = "/rl"
 -- fpde(E.Movies)
+

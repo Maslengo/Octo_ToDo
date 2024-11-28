@@ -182,7 +182,6 @@ E.OctoTable_itemID_Ignore_List = {
 	[204682] = true,
 	[204985] = true,
 	[205151] = true,
-	[205188] = true,
 	[205982] = true,
 	[206009] = true,
 	[206010] = true,

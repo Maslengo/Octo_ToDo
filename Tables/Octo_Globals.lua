@@ -241,3 +241,4 @@ E.Icon_Warband = func_texturefromIcon(6124644)
 E.Icon_AccountWide = E.Icon_Token
 -- E.AccountTransferable = E.Red_Color.."(T)".."|r"
 E.Icon_AccountTransferable = E.Icon_Warband
+E.Icon_Achievement = func_texturefromIcon(236544)

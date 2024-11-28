@@ -1,0 +1,8 @@
+## Interface: 110005, 40401, 11504
+## Title: LibOctopussy
+## Notes: Library for myself
+## Author: Octo
+## Version: v1.0
+## OptionalDeps: LibStub
+libs\LibStub\LibStub.lua
+LibOctopussy.xml
