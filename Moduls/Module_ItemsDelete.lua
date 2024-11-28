@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local LibOctopussy = LibStub("LibOctopussy-1.0")
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local inspectScantipUSABLE = nil
 if not inspectScantipUSABLE then
@@ -20,7 +21,7 @@ tinsert(E.Modules, function()
 				GameTooltip:Hide()
 			end
 			if not ItemsDelete_Frame then
-				ItemsDelete_Frame = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
+				ItemsDelete_Frame = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 				ItemsDelete_Frame:Hide()
 			end
 			ItemsDelete_Frame:Hide()
@@ -46,7 +47,7 @@ tinsert(E.Modules, function()
 			ItemsDelete_UIF_texture:SetTexture(413587)
 			function ItemsDeleteFrame_OnLoad()
 				if not EventFrame_ItemsDelete then
-					EventFrame_ItemsDelete = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID(), UIParent)
+					EventFrame_ItemsDelete = CreateFrame("Frame", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent)
 					EventFrame_ItemsDelete:Hide()
 				end
 				if not InCombatLockdown() then
@@ -89,7 +90,7 @@ tinsert(E.Modules, function()
 										local r, g, b = GetItemQualityColor(itemQuality)
 										ItemsDelete_Frame:SetBackdropBorderColor(r, g, b, 1)
 										ItemsDelete_Frame.itemID = itemID
-										ItemsDelete_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
+										ItemsDelete_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..LibOctopussy:func_itemName(itemID))
 										ItemsDelete_Frame:SetScript("OnClick", function()
 												C_Container.PickupContainerItem(bag, slot)
 												DeleteCursorItem()

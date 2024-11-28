@@ -1,5 +1,6 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
+local LibOctopussy = LibStub("LibOctopussy-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Repair
 tinsert(E.Modules, function()
@@ -10,7 +11,7 @@ tinsert(E.Modules, function()
 					local money = GetMoney()
 					local locale = GetLocale()
 					if canRepair and repairAllCost > money then
-						ChatFrame1:AddMessage(E.func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..GetCoinTextureString((repairAllCost-money)))
+						ChatFrame1:AddMessage(LibOctopussy:func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..GetCoinTextureString((repairAllCost-money)))
 						if locale == "ruRU" then
 							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg", "Master")
 						else

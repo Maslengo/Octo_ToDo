@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local LibOctopussy = LibStub("LibOctopussy-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- StaticPopup1Button1
 tinsert(E.Modules, function()
@@ -18,7 +19,7 @@ tinsert(E.Modules, function()
 			end
 			function Octo_OnLoad()
 				if not EventFrame_SPB then
-					EventFrame_SPB = CreateFrame("FRAME", E.func_GenerateUniqueID())
+					EventFrame_SPB = CreateFrame("FRAME", LibOctopussy:func_GenerateUniqueID())
 				end
 				EventFrame_SPB:RegisterEvent("EQUIP_BIND_CONFIRM")
 				EventFrame_SPB:RegisterEvent("EQUIP_BIND_REFUNDABLE_CONFIRM")

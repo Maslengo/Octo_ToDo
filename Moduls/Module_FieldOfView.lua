@@ -1,12 +1,13 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local LibOctopussy = LibStub("LibOctopussy-1.0")
 ----------------------------------------------------------------
 local FieldOfView_EventFrame = nil
 function func_FieldOfView()
 	if Octo_ToDo_DB_Vars.config.FieldOfView == true then
 		function FieldOfView_OnLoad()
 			if not FieldOfView_EventFrame then
-				FieldOfView_EventFrame = CreateFrame("FRAME", AddonTitle..E.func_GenerateUniqueID())
+				FieldOfView_EventFrame = CreateFrame("FRAME", AddonTitle..LibOctopussy:func_GenerateUniqueID())
 				FieldOfView_EventFrame:Hide()
 				FieldOfView_EventFrame:RegisterEvent("VARIABLES_LOADED")
 				FieldOfView_EventFrame:RegisterEvent("PLAYER_LOGIN")

@@ -1,6 +1,7 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local ltl = LibStub("LibThingsLoad-1.0")
+local LibOctopussy = LibStub("LibOctopussy-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --SellFrame
@@ -20,7 +21,7 @@ tinsert(E.Modules, function()
 			local ilvlStr = avgItemLevelEquipped or 0
 			function Octo_Trade_OnLoad()
 				if not OctoFrame_Events then
-					OctoFrame_Events = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID())
+					OctoFrame_Events = CreateFrame("Frame", AddonTitle..LibOctopussy:func_GenerateUniqueID())
 					OctoFrame_Events:Hide()
 				end
 				OctoFrame_Events:RegisterEvent("Trade_SHOW")
@@ -48,7 +49,7 @@ tinsert(E.Modules, function()
 				----------------------------------------------------------------------------------------------------------------------------------
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_SellALLGRAY then
-					OctoFrame_SellALLGRAY = CreateFrame("BUTTON", AddonTitle..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellALLGRAY = CreateFrame("BUTTON", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellALLGRAY:Hide()
 					SetQAButtonGameTooltip(OctoFrame_SellALLGRAY, "Gray items")
 				end
@@ -91,7 +92,7 @@ tinsert(E.Modules, function()
 				OctoFrame_SellALLGRAY:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_SellConsumable then
-					OctoFrame_SellConsumable = CreateFrame("BUTTON", AddonTitle..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellConsumable = CreateFrame("BUTTON", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellConsumable:Hide()
 					SetQAButtonGameTooltip(OctoFrame_SellConsumable, "Consumable")
 				end
@@ -134,7 +135,7 @@ tinsert(E.Modules, function()
 				OctoFrame_SellConsumable:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_SellOther then
-					OctoFrame_SellOther = CreateFrame("BUTTON", AddonTitle..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellOther = CreateFrame("BUTTON", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellOther:Hide()
 					-- SetQAButtonGameTooltip(OctoFrame_SellOther, "itemQuality < фиолет")
 				end
@@ -146,7 +147,7 @@ tinsert(E.Modules, function()
 						GameTooltip:AddLine("E.OctoTable_itemID_Ignore_List: ")
 						for k, v in next, (E.OctoTable_itemID_Ignore_List) do
 							if GetItemInfo(k) then
-								GameTooltip:AddDoubleLine(E.func_itemTexture(k)..E.func_itemName(k), k)
+								GameTooltip:AddDoubleLine(LibOctopussy:func_itemTexture(k)..LibOctopussy:func_itemName(k), k)
 							end
 						end
 						GameTooltip:Show()
@@ -212,7 +213,7 @@ tinsert(E.Modules, function()
 				OctoFrame_SellOther:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_SellOtherFiolet then
-					OctoFrame_SellOtherFiolet = CreateFrame("BUTTON", AddonTitle..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellOtherFiolet = CreateFrame("BUTTON", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellOtherFiolet:Hide()
 					-- SetQAButtonGameTooltip(OctoFrame_SellOtherFiolet, "itemQuality = фиолет")
 				end
@@ -233,7 +234,7 @@ tinsert(E.Modules, function()
 						GameTooltip:AddLine("E.OctoTable_itemID_Ignore_List: ")
 						for k, v in next, (E.OctoTable_itemID_Ignore_List) do
 							if GetItemInfo(k) then
-								GameTooltip:AddDoubleLine(E.func_itemTexture(k)..E.func_itemName(k), k)
+								GameTooltip:AddDoubleLine(LibOctopussy:func_itemTexture(k)..LibOctopussy:func_itemName(k), k)
 							end
 						end
 						GameTooltip:Show()
@@ -300,7 +301,7 @@ tinsert(E.Modules, function()
 				OctoFrame_SellOtherFiolet:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_SellAll then
-					OctoFrame_SellAll = CreateFrame("BUTTON", AddonTitle..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_SellAll = CreateFrame("BUTTON", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_SellAll:Hide()
 					SetQAButtonGameTooltip(OctoFrame_SellAll, "Sell All")
 				end
@@ -344,7 +345,7 @@ tinsert(E.Modules, function()
 			end
 			local function MASLENGO_BANK()
 				if not OctoFrame_FROMBANK then
-					OctoFrame_FROMBANK = CreateFrame("BUTTON", AddonTitle..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_FROMBANK = CreateFrame("BUTTON", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_FROMBANK:Hide()
 				end
 				OctoFrame_FROMBANK:SetSize(size*E.scale, size*E.scale)
@@ -384,7 +385,7 @@ tinsert(E.Modules, function()
 				OctoFrame_FROMBANK:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 				if not OctoFrame_TOBANK then
-					OctoFrame_TOBANK = CreateFrame("BUTTON", AddonTitle..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
+					OctoFrame_TOBANK = CreateFrame("BUTTON", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "BackdropTemplate")
 					OctoFrame_TOBANK:Hide()
 				end
 				OctoFrame_TOBANK:SetSize(size*E.scale, size*E.scale)

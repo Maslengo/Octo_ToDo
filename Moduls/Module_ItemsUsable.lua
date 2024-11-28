@@ -1,5 +1,6 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+local LibOctopussy = LibStub("LibOctopussy-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 local ltl = LibStub("LibThingsLoad-1.0")
 local inspectScantipUSABLE = nil
@@ -14,7 +15,7 @@ tinsert(E.Modules, function()
 				local text = fontstring:GetText()
 				if not text then return nil end
 				local r, g, b, a = fontstring:GetTextColor()
-				return E.func_rgb2hex(r, g, b, a)..text.."|r"
+				return LibOctopussy:func_rgb2hex(r, g, b, a)..text.."|r"
 			end
 			local function TEST_FUNC(self)
 				if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -60,7 +61,7 @@ tinsert(E.Modules, function()
 			local function ItemsUsable_Frame_OnEnter(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
 				GameTooltip:ClearLines()
-				-- GameTooltip:AddLine(E.func_itemName(self.itemID))
+				-- GameTooltip:AddLine(LibOctopussy:func_itemName(self.itemID))
 				local itemLink = select(2, GetItemInfo(self.itemID))
 				GameTooltip:SetHyperlink(itemLink)
 				GameTooltip:Show()
@@ -70,7 +71,7 @@ tinsert(E.Modules, function()
 				GameTooltip:Hide()
 			end
 			if not ItemsUsable_Frame then
-				ItemsUsable_Frame = CreateFrame("Button", AddonTitle..E.func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
+				ItemsUsable_Frame = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 				ItemsUsable_Frame:Hide()
 			end
 			ItemsUsable_Frame:Hide()
@@ -96,7 +97,7 @@ tinsert(E.Modules, function()
 			ItemsUsable_UIF_texture:SetTexture(413587)
 			function ItemsUsableFrame_OnLoad()
 				if not EventFrame_ItemsUsable then
-					EventFrame_ItemsUsable = CreateFrame("Frame", AddonTitle..E.func_GenerateUniqueID(), UIParent)
+					EventFrame_ItemsUsable = CreateFrame("Frame", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent)
 					EventFrame_ItemsUsable:Hide()
 				end
 				if not InCombatLockdown() then
@@ -135,7 +136,7 @@ tinsert(E.Modules, function()
 							local r, g, b = GetItemQualityColor(itemQuality)
 							ItemsUsable_Frame:SetBackdropBorderColor(r, g, b, 1)
 							ItemsUsable_Frame.itemID = itemID
-							ItemsUsable_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
+							ItemsUsable_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..LibOctopussy:func_itemName(itemID))
 							break
 						elseif GetItemCount(itemID) <= (count-1) and ItemsUsable_Frame:IsShown() then
 							ItemsUsable_Frame:Hide()

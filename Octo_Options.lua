@@ -1,11 +1,15 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
+local function func_Reverse_order(a, b)
+	return b < a
+end
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibTranslit = LibStub("LibTranslit-1.0")
 local CallbackHandler = LibStub("CallbackHandler-1.0")
+local LibOctopussy = LibStub("LibOctopussy-1.0")
 local number, pizza, config, text, minValue, maxValue, steps, formatters
 local new = E.Blue_Color.."NEW: |r"
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
@@ -18,10 +22,10 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 }
 local PlayerName = UnitName("PLAYER")
 local className, classFilename, classId = UnitClass("PLAYER")
-local classColor = E.func_GetClassColor(classFilename)
+local classColor = LibOctopussy:func_GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
 local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
-local classColorHexCurrent = E.func_rgb2hex(r, g, b)
+local classColorHexCurrent = LibOctopussy:func_rgb2hex(r, g, b)
 local SliderWidth = 256
 local ButtonWidth = 128
 if classFilename == "SHAMAN" then
@@ -205,13 +209,13 @@ local function Create_CheckButtonNEW(scroll, self, number, pos, otstyp, config, 
 			CheckButton:SetScript("OnClick", function(btn)
 					DATABASE[config] = btn:GetChecked()
 					if DATABASE == Octo_ToDo_DB_Config.ReputationDB then
-						print (E.func_reputationName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
+						print (LibOctopussy:func_reputationName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
 					end
 					if DATABASE == Octo_ToDo_DB_Config.ItemDB then
-						print (E.func_itemName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
+						print (LibOctopussy:func_itemName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
 					end
 					if DATABASE == Octo_ToDo_DB_Config.CurrencyDB then
-						print (E.func_currencyicon(config)..E.func_currencyName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
+						print (LibOctopussy:func_currencyicon(config)..LibOctopussy:func_currencyName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
 					end
 			end)
 		end
@@ -359,7 +363,7 @@ end
 local function Create_Frame_Color(scroll, self, number, pos, text, color)
 	if not color then color = "|cffFFFFFF" end
 	if not self[number..pos] then
-		local r, g, b = E.func_hex2rgb(color)
+		local r, g, b = LibOctopussy:func_hex2rgb(color)
 		self[number..pos] = CreateFrame("Frame", nil, scroll, "BackdropTemplate")
 		f = self[number..pos]
 		f:SetBackdrop({
@@ -450,7 +454,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 					GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
 				end
 		end)
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 0, "PortalsButtons", E.func_texturefromIcon(3610528, 20)..L["Portals"])
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 0, "PortalsButtons", LibOctopussy:func_texturefromIcon(3610528, 20)..L["Portals"])
 		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 150, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")
 		Create_CheckButton(MAIN_scrollChild, self, 24, POS_LEFT, 0, "ShowOnlyCurrentServer", L["Only Current Server"])
 		Create_CheckButton(MAIN_scrollChild, self, 25, POS_LEFT, 0, "ShowTotalMoney", "Всего денег")
@@ -461,15 +465,15 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 29, POS_LEFT, 0, "Gold", BONUS_ROLL_REWARD_MONEY)
 		Create_CheckButton(MAIN_scrollChild, self, 30, POS_LEFT, 0, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
 		Create_CheckButton(MAIN_scrollChild, self, 31, POS_LEFT, 0, "WasOnline", L["Was online"])
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, 0, "Achievements", E.func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."Achievements".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "ItemsUsable", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsUsable".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "ItemsDelete", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsDelete".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "StaticPopup1Button1", E.func_texturefromIcon(E.AddonTexture_5, indent)..E.Gray_Color.."StaticPopup1Button1".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "AdditionalButtons", E.func_texturefromIcon(E.AddonTexture_4, indent)..E.Gray_Color..L["Additional Buttons"].."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "CVar", E.func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."CVar".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "SellFrame", E.func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SellFrame".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "Minecraft", E.func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."Minecraft".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 26, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Debug".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, 0, "Achievements", LibOctopussy:func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."Achievements".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "ItemsUsable", LibOctopussy:func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsUsable".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "ItemsDelete", LibOctopussy:func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsDelete".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "StaticPopup1Button1", LibOctopussy:func_texturefromIcon(E.AddonTexture_5, indent)..E.Gray_Color.."StaticPopup1Button1".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "AdditionalButtons", LibOctopussy:func_texturefromIcon(E.AddonTexture_4, indent)..E.Gray_Color..L["Additional Buttons"].."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "CVar", LibOctopussy:func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."CVar".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "SellFrame", LibOctopussy:func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SellFrame".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "Minecraft", LibOctopussy:func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."Minecraft".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 26, POS_RIGHT, 0, "Octo_debug_Function_FIRST", LibOctopussy:func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Debug".."|r")
 
 
 		Create_SimpleButton(MAIN_scrollChild, self, 27, POS_RIGHT, "ReloadUI", E.Blue_Color.."Reload UI".."|r")
@@ -532,7 +536,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "MP_MythicKeystone",
-				text = E.func_texturefromIcon(4352494)..E.WOW_Epic_Color..L["Mythic Keystone"].."|r",
+				text = LibOctopussy:func_texturefromIcon(4352494)..E.WOW_Epic_Color..L["Mythic Keystone"].."|r",
 			},
 			{
 				text = QUESTS_LABEL,
@@ -540,7 +544,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "BeledarCycle",
-				text = E.Timers.TWW_BeledarCycle() .. E.func_questName(83240),
+				text = E.Timers.TWW_BeledarCycle() .. LibOctopussy:func_questName(83240),
 				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
@@ -560,12 +564,12 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "MajorKeyflames",
-				text = E.func_texturefromIcon(132863) .. L["Major Keyflames"],
+				text = LibOctopussy:func_texturefromIcon(132863) .. L["Major Keyflames"],
 				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
 				config = "MinorKeyflames",
-				text = E.func_texturefromIcon(135619) .. L["Minor Keyflames"],
+				text = LibOctopussy:func_texturefromIcon(135619) .. L["Minor Keyflames"],
 				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
@@ -579,27 +583,27 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "GildedHarbingerCrest",
-				text = E.func_currencyicon(2917)..E.WOW_Epic_Color..E.func_currencyName_NOCOLOR(2917).."|r",
+				text = LibOctopussy:func_currencyicon(2917)..E.WOW_Epic_Color..LibOctopussy:func_currencyName_NOCOLOR(2917).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "RunedHarbingerCrest",
-				text = E.func_currencyicon(2916)..E.WOW_Epic_Color..E.func_currencyName_NOCOLOR(2916).."|r",
+				text = LibOctopussy:func_currencyicon(2916)..E.WOW_Epic_Color..LibOctopussy:func_currencyName_NOCOLOR(2916).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "CarvedHarbingerCrest",
-				text = E.func_currencyicon(2915)..E.WOW_Rare_Color..E.func_currencyName_NOCOLOR(2915).."|r",
+				text = LibOctopussy:func_currencyicon(2915)..E.WOW_Rare_Color..LibOctopussy:func_currencyName_NOCOLOR(2915).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "WeatheredHarbingerCrest",
-				text = E.func_currencyicon(2914)..E.WOW_Rare_Color..E.func_currencyName_NOCOLOR(2914).."|r",
+				text = LibOctopussy:func_currencyicon(2914)..E.WOW_Rare_Color..LibOctopussy:func_currencyName_NOCOLOR(2914).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			-- {
 			-- config = "WeatheredHarbingerCrest",
-			-- text = E.func_currencyicon(3023)..E.WOW_Rare_Color..E.func_currencyName_NOCOLOR(3023).."|r",
+			-- text = LibOctopussy:func_currencyicon(3023)..E.WOW_Rare_Color..LibOctopussy:func_currencyName_NOCOLOR(3023).."|r",
 			-- r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			-- },
 		}
@@ -647,13 +651,13 @@ SECOND_Config:SetScript("OnShow", function(self)
 		for CurrencyID, v in next, (Octo_ToDo_DB_Config.CurrencyDB) do
 			tinsert(list, CurrencyID)
 		end
-		sort(list, E.func_Reverse_order)
+		sort(list, func_Reverse_order)
 		for k, CurrencyID in next, (list) do
 			tinsert(ConfigTable_SECOND_LEFT,
 				{
 					otstyp = 0,
 					config = CurrencyID,
-					text = E.LightGray_Color..tostringall(CurrencyID).."|r "..E.func_currencyicon(CurrencyID)..E.func_currencyName(CurrencyID),
+					text = E.LightGray_Color..tostringall(CurrencyID).."|r "..LibOctopussy:func_currencyicon(CurrencyID)..LibOctopussy:func_currencyName(CurrencyID),
 				}
 			)
 		end
@@ -707,13 +711,13 @@ THIRD_Config:SetScript("OnShow", function(self)
 				tinsert(list, reputationID)
 			end
 		end
-		sort(list, E.func_Reverse_order)
+		sort(list, func_Reverse_order)
 		for k, reputationID in next, (list) do
 			tinsert(ConfigTable_THIRD_LEFT,
 				{
 					otstyp = 0,
 					config = reputationID,
-					text = E.LightGray_Color..tostringall(reputationID).."|r "..E.func_reputationName(reputationID),
+					text = E.LightGray_Color..tostringall(reputationID).."|r "..LibOctopussy:func_reputationName(reputationID),
 				}
 			)
 		end
@@ -764,7 +768,7 @@ FOURTH_Config:SetScript("OnShow", function(self)
 		for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
 			tinsert(list, itemID)
 		end
-		sort(list, E.func_Reverse_order)
+		sort(list, func_Reverse_order)
 		for _, id in next, (E.OctoTable_itemID_Config) do
 			for k, itemID in next, (list) do
 				if id == itemID then
@@ -772,7 +776,7 @@ FOURTH_Config:SetScript("OnShow", function(self)
 						{
 							otstyp = 0,
 							config = itemID,
-							text = E.LightGray_Color..tostringall(itemID).."|r "..E.func_itemTexture(itemID)..E.func_itemName(itemID),
+							text = E.LightGray_Color..tostringall(itemID).."|r "..LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID),
 						}
 					)
 				end
@@ -825,13 +829,13 @@ Settings.RegisterAddOnCategory(subcategory)
 -- for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
 -- tinsert(list, QuestID)
 -- end
--- sort(list, E.func_Reverse_order)
+-- sort(list, func_Reverse_order)
 -- for k, QuestID in next, (list) do
 -- tinsert(ConfigTable_FIFTH_LEFT,
 -- {
 -- otstyp = 0,
 -- config = QuestID,
--- text = E.LightGray_Color..tostringall(QuestID).."|r "..E.func_questName(QuestID),
+-- text = E.LightGray_Color..tostringall(QuestID).."|r "..LibOctopussy:func_questName(QuestID),
 -- }
 -- )
 -- end
