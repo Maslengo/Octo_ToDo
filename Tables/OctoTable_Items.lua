@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.OctoTable_itemID_Config = {}
 E.OctoTable_itemID_ALL = {

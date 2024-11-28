@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.wowhead_prefix_Table = {
 	"Русский", -- "ru.",

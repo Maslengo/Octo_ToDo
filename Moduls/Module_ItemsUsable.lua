@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local LibOctopussy = LibStub("LibOctopussy-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 local ltl = LibStub("LibThingsLoad-1.0")
@@ -71,7 +70,7 @@ tinsert(E.Modules, function()
 				GameTooltip:Hide()
 			end
 			if not ItemsUsable_Frame then
-				ItemsUsable_Frame = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
+				ItemsUsable_Frame = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 				ItemsUsable_Frame:Hide()
 			end
 			ItemsUsable_Frame:Hide()
@@ -97,7 +96,7 @@ tinsert(E.Modules, function()
 			ItemsUsable_UIF_texture:SetTexture(413587)
 			function ItemsUsableFrame_OnLoad()
 				if not EventFrame_ItemsUsable then
-					EventFrame_ItemsUsable = CreateFrame("Frame", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent)
+					EventFrame_ItemsUsable = CreateFrame("Frame", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent)
 					EventFrame_ItemsUsable:Hide()
 				end
 				if not InCombatLockdown() then

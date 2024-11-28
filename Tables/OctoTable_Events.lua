@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
 E.OctoTable_Events = {
 	"CHAT_MSG_BN_WHISPER_INFORM",

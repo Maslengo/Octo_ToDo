@@ -56,7 +56,6 @@ tinsert(E.Modules, function()
 									ChatFrame1:AddMessage(targetNPCID.. LibOctopussy:func_Gradient(" Auto Gossip Select", E.Addon_Left_Color, E.Addon_Right_Color)..E.Green_Color.." ("..i..")|r "..LibOctopussy:func_texturefromIcon(icon)..name)
 								else
 									if govno_function(v.name) then
-										print ("|cffFF0000"..i.."|r", gossipOptionID)
 										C_GossipInfo.SelectOption(gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 										ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Auto Gossip Select", E.Addon_Left_Color, E.Addon_Right_Color)..E.Green_Color.." ("..i..")|r "..LibOctopussy:func_texturefromIcon(icon)..v.name)

@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.OctoTable_Race = {
 	{raceID = 24, RaceEnglish = "Pandaren", faction = "Neutral"},

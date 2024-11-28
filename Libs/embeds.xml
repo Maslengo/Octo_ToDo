@@ -2,7 +2,7 @@
 	<Script file="LibStub\LibStub.lua"/>
 	<Script file="LibRealmInfo\LibRealmInfo.lua"/>
 	<Script file="LibColors-1.0\LibColors-1.0.lua"/>
-	<Script file="HizurosSharedTools\HizurosSharedTools.lua"/>
+	<!-- <Script file="HizurosSharedTools\HizurosSharedTools.lua"/> -->
 	<Script file="IndentationLib\IndentationLib.lua"/>
 	<Include file="UTF8\lib.xml"/>
 	<Include file="LibSFDropDown\LibSFDropDown.xml"/>
@@ -10,9 +10,7 @@
 	<Include file="CallbackHandler-1.0\lib.xml"/>
 	<Include file="LibDataBroker-1.1\lib.xml"/>
 	<Include file="LibDBIcon-1.0\lib.xml"/>
-	<Include file="LibQTip-1.0\lib.xml"/>
 	<Include file="LibSharedMedia-3.0\lib.xml"/>
 	<Include file="LibThingsLoad\LibThingsLoad.xml"/>
-	<Include file="LibTranslit\lib.xml"/>
 	<Include file="LibOctopussy\LibOctopussy.xml"/>
 </UI>

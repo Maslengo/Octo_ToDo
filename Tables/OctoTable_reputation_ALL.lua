@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.OctoTable_reputation_ALL = {
 	2640, 2615, 2607, 2605, 2601, 2600, 2594, 2593, 2590, 2574, 2570, 2569,

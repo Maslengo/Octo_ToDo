@@ -1,13 +1,10 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local function func_Reverse_order(a, b)
 	return b < a
 end
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
-local LibTranslit = LibStub("LibTranslit-1.0")
 local CallbackHandler = LibStub("CallbackHandler-1.0")
 local LibOctopussy = LibStub("LibOctopussy-1.0")
 local number, pizza, config, text, minValue, maxValue, steps, formatters
@@ -84,7 +81,7 @@ local POS_RIGHT = MAIN_Config:GetSize()/3.5
 local indent = 19
 MAIN_TITLE = MAIN_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 MAIN_TITLE:SetPoint("TOPLEFT", 4, 30)
-MAIN_TITLE:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+MAIN_TITLE:SetText(E.AddonVersion)
 MAIN_TITLE:SetTextColor(.5, .5, .5, 1)
 local function RefreshCheckboxes(self, TrueOrFalse)
 	local i = 1
@@ -155,7 +152,6 @@ local function Create_CheckButton(scroll, self, number, pos, otstyp, config, tex
 			CheckButton:SetPoint("LEFT", BG, "LEFT", otstyp, 0)
 			CheckButton:SetChecked(Octo_ToDo_DB_Vars.config[config])
 			CheckButton:SetScript("OnClick", function(btn)
-					print (text, tostring(btn:GetChecked()) == "true" and "|cff00FF00true|r" or "|cffFF0000false|r")
 					Octo_ToDo_DB_Vars.config[config] = btn:GetChecked()
 					-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 			end)
@@ -208,15 +204,6 @@ local function Create_CheckButtonNEW(scroll, self, number, pos, otstyp, config, 
 			CheckButton:SetChecked(DATABASE[config])
 			CheckButton:SetScript("OnClick", function(btn)
 					DATABASE[config] = btn:GetChecked()
-					if DATABASE == Octo_ToDo_DB_Config.ReputationDB then
-						print (LibOctopussy:func_reputationName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
-					end
-					if DATABASE == Octo_ToDo_DB_Config.ItemDB then
-						print (LibOctopussy:func_itemName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
-					end
-					if DATABASE == Octo_ToDo_DB_Config.CurrencyDB then
-						print (LibOctopussy:func_currencyicon(config)..LibOctopussy:func_currencyName(config), DATABASE[config] == true and "|cff00FF00true|r" or "|cffFF0000false|r")
-					end
 			end)
 		end
 		local text2 = BG:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -504,8 +491,8 @@ MAIN_Config:SetScript("OnShow", function(self)
 				-- end
 		end)
 end)
-local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, AddonTitle)
-category.ID = AddonTitle
+local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, E.AddonTitle)
+category.ID = E.AddonTitle
 Settings.RegisterAddOnCategory(category)
 local FIRST_Config = CreateFrame("ScrollFrame", GlobalAddonName.."FIRST_Config")
 FIRST_Config:Hide()
@@ -525,7 +512,7 @@ FIRST_Config:SetScript("OnMouseWheel", function(self, ...)
 end)
 TITLE_FIRST = FIRST_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 TITLE_FIRST:SetPoint("TOPLEFT", 4, 30)
-TITLE_FIRST:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+TITLE_FIRST:SetText(E.AddonVersion)
 TITLE_FIRST:SetTextColor(.5, .5, .5, 1)
 FIRST_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
@@ -641,7 +628,7 @@ SECOND_Config:SetScript("OnMouseWheel", function(self, ...)
 end)
 TITLE_SECOND = SECOND_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 TITLE_SECOND:SetPoint("TOPLEFT", 4, 30)
-TITLE_SECOND:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+TITLE_SECOND:SetText(E.AddonVersion)
 TITLE_SECOND:SetTextColor(.5, .5, .5, 1)
 SECOND_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
@@ -698,7 +685,7 @@ THIRD_Config:SetScript("OnMouseWheel", function(self, ...)
 end)
 TITLE_THIRD = THIRD_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 TITLE_THIRD:SetPoint("TOPLEFT", 4, 30)
-TITLE_THIRD:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+TITLE_THIRD:SetText(E.AddonVersion)
 TITLE_THIRD:SetTextColor(.5, .5, .5, 1)
 THIRD_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
@@ -758,7 +745,7 @@ FOURTH_Config:SetScript("OnMouseWheel", function(self, ...)
 end)
 TITLE_FOURTH = FOURTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 TITLE_FOURTH:SetPoint("TOPLEFT", 4, 30)
-TITLE_FOURTH:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+TITLE_FOURTH:SetText(E.AddonVersion)
 TITLE_FOURTH:SetTextColor(.5, .5, .5, 1)
 FOURTH_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
@@ -819,7 +806,7 @@ Settings.RegisterAddOnCategory(subcategory)
 -- end)
 -- TITLE_FIFTH = FIFTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 -- TITLE_FIFTH:SetPoint("TOPLEFT", 4, 30)
--- TITLE_FIFTH:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+-- TITLE_FIFTH:SetText(E.AddonVersion)
 -- TITLE_FIFTH:SetTextColor(.5, .5, .5, 1)
 -- FIFTH_Config:SetScript("OnShow", function(self)
 -- self:SetScript("OnShow", nil)

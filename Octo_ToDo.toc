@@ -1,8 +1,8 @@
-## Interface: 110005, 40401, 11504
+## Interface: 110007, 110005, 40401, 11504
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v78.3(11.0.5)(28.11.2024)
+## Version: v78.4(11.0.5)(29.11.2024)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_1
 ## SavedVariables: Octo_ToDo_DB_Config Octo_ToDo_DB_Players Octo_ToDo_DB_Vars Octo_ToDo_DB_Other
 

@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 --------------------------------------------------------------------------------
 E.OctoTable_Expansions_Table = {
 	"|cff68ccefClassic" .. FONT_COLOR_CODE_CLOSE,

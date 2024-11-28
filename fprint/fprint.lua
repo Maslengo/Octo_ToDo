@@ -261,7 +261,7 @@ local function tToStr(t)
 end
 SLASH_MOUNTSLIST1 = "/mountslist"
 SlashCmdList.MOUNTSLIST = function(full)
-	if C_AddOns.IsAddOnLoaded("Blizzard_Collections") then
+	if LibOctopussy:IsAddOnLoaded("Blizzard_Collections") then
 		fprint("|cffff0000NEED RELOAD|r")
 		-- return
 	end

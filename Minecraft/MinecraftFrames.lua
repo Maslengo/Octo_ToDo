@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
 local LibOctopussy = LibStub("LibOctopussy-1.0")
 local EventFrame = nil
@@ -82,13 +81,8 @@ local function OnEvent(self, event, ...)
 			Create_AnchorFrame()
 			AnchorFrame:Show()
 			for number, v in ipairs(E.OctoTable_MinecraftColors) do
-				print ("|cff"..v.hex..number.." "..v.name.."|r", v.hex)
 				Create_Colored_Frames(AnchorFrame, self, number, v.name, v.hex, height, width)
 			end
-			print (
-				LibOctopussy:func_Gradient(HUD_EDIT_MODE_SETTING_CHAT_FRAME_HEIGHT..": ", E.Addon_Left_Color, E.Addon_Right_Color)..E.Green_Color..height.."|r",
-				LibOctopussy:func_Gradient(HUD_EDIT_MODE_SETTING_CHAT_FRAME_WIDTH..": ", E.Addon_Left_Color, E.Addon_Right_Color)..E.Green_Color..width.."|r"
-			)
 		end
 		if event == "PLAYER_STARTED_MOVING" or event == "PLAYER_STOPPED_MOVING" then
 			for i, v in ipairs({AnchorFrame:GetChildren()}) do

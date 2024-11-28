@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
 ЧЕРВОТОЧИНЫ ={
 	{id = 198156, type = "item", }

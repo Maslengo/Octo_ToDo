@@ -6,17 +6,35 @@ local MAJOR_VERSION, MINOR_VERSION = "LibThingsLoad-1.0", 11
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
 
+local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
 
-local type, next, xpcall, setmetatable, CallErrorHandler, C_Item, C_Spell = type, next, xpcall, setmetatable, CallErrorHandler, C_Item, C_Spell
-local DoesItemExistByID, IsItemDataCachedByID, ITEM_QUALITY_COLORS = C_Item.DoesItemExistByID, C_Item.IsItemDataCachedByID, ITEM_QUALITY_COLORS
+ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
+-- ITEMS
+local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
+local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
 local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
 local GetItemInfoInstant = GetItemInfoInstant or C_Item.GetItemInfoInstant
-local DoesSpellExist, IsSpellDataCached = C_Spell.DoesSpellExist, C_Spell.IsSpellDataCached
+local RequestLoadItemDataByID = RequestLoadItemDataByID or C_Item.RequestLoadItemDataByID
+local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
+local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
+local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
+local GetItemMaxStackSizeByID = GetItemMaxStackSizeByID or C_Item.GetItemMaxStackSizeByID
+local GetItemInventoryTypeByID = GetItemInventoryTypeByID or C_Item.GetItemInventoryTypeByID
+--SPELLS
+local DoesSpellExist = DoesSpellExist or C_Spell.DoesSpellExist
+local IsSpellDataCached = IsSpellDataCached or C_Spell.IsSpellDataCached
 local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
 local GetSpellLink = GetSpellLink or C_Spell.GetSpellLink
 local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
 local GetSpellDescription = GetSpellDescription or C_Spell.GetSpellDescription
+local RequestLoadSpellData = RequestLoadSpellData or C_Spell.RequestLoadSpellData
+local GetSpellInfo = GetSpellInfo or C_Spell.GetSpellInfo
+local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
+local GetSpellName = GetSpellName or C_Spell.GetSpellName
+
+
+
 
 
 if not lib._listener then
@@ -29,8 +47,8 @@ if not lib._listener then
 		spell = "spell",
 	}
 	lib._listener.accessors = {
-		[lib._listener.types.item] = C_Item.RequestLoadItemDataByID,
-		[lib._listener.types.spell] = C_Spell.RequestLoadSpellData,
+		[lib._listener.types.item] = RequestLoadItemDataByID,
+		[lib._listener.types.spell] = RequestLoadSpellData,
 	}
 	lib._listener[lib._listener.types.item] = {}
 	lib._listener[lib._listener.types.spell] = {}
@@ -367,12 +385,12 @@ end
 
 
 function lib:GetItemIcon(itemID)
-	return C_Item.GetItemIconByID(itemID)
+	return GetItemIconByID(itemID)
 end
 
 
 function lib:GetItemName(itemID)
-	return C_Item.GetItemNameByID(itemID)
+	return GetItemNameByID(itemID)
 end
 
 
@@ -383,7 +401,7 @@ end
 
 
 function lib:GetItemQuality(itemID)
-	return C_Item.GetItemQualityByID(itemID)
+	return GetItemQualityByID(itemID)
 end
 
 
@@ -403,7 +421,7 @@ end
 
 
 function lib:GetItemMaxStackSize(itemID)
-	return C_Item.GetItemMaxStackSizeByID(itemID)
+	return GetItemMaxStackSizeByID(itemID)
 end
 
 
@@ -414,7 +432,7 @@ end
 
 
 function lib:GetItemInventoryType(itemID)
-	return C_Item.GetItemInventoryTypeByID(itemID)
+	return GetItemInventoryTypeByID(itemID)
 end
 
 
@@ -430,9 +448,9 @@ end
 
 
 -- SPELL UTILS
-if C_Spell.GetSpellInfo then
+if GetSpellInfo then
 	function lib:GetSpellInfo(spellID)
-		return C_Spell.GetSpellInfo(spellID)
+		return GetSpellInfo(spellID)
 	end
 else
 	local GetSpellinfo = GetSpellinfo
@@ -451,9 +469,9 @@ else
 end
 
 
-if C_Spell.GetSpellCooldown then
+if GetSpellCooldown then
 	function lib:GetSpellCooldown(spellID)
-		return C_Spell.GetSpellCooldown(spellID)
+		return GetSpellCooldown(spellID)
 	end
 else
 	local GetSpellCooldown = GetSpellCooldown
@@ -469,9 +487,9 @@ else
 end
 
 
-if C_Spell.GetSpellName then
+if GetSpellName then
 	function lib:GetSpellName(spellID)
-		return C_Spell.GetSpellName(spellID)
+		return GetSpellName(spellID)
 	end
 else
 	function lib:GetSpellName(spellID)

@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local LibOctopussy = LibStub("LibOctopussy-1.0")
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 local inspectScantipUSABLE = nil
 if not inspectScantipUSABLE then
 	inspectScantipUSABLE = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUSABLE", nil, "GameTooltipTemplate")
@@ -21,7 +20,7 @@ tinsert(E.Modules, function()
 				GameTooltip:Hide()
 			end
 			if not ItemsDelete_Frame then
-				ItemsDelete_Frame = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
+				ItemsDelete_Frame = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 				ItemsDelete_Frame:Hide()
 			end
 			ItemsDelete_Frame:Hide()
@@ -47,7 +46,7 @@ tinsert(E.Modules, function()
 			ItemsDelete_UIF_texture:SetTexture(413587)
 			function ItemsDeleteFrame_OnLoad()
 				if not EventFrame_ItemsDelete then
-					EventFrame_ItemsDelete = CreateFrame("Frame", AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent)
+					EventFrame_ItemsDelete = CreateFrame("Frame", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent)
 					EventFrame_ItemsDelete:Hide()
 				end
 				if not InCombatLockdown() then

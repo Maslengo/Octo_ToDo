@@ -156,8 +156,9 @@ menuStyles.menuBackdrop = function(parent)
 	return CreateFrame("FRAME", nil, parent, "TooltipBackdropTemplate")
 end
 
+local GetAtlasInfo = GetAtlasInfo or C_Texture.GetAtlasInfo
 if oldminor < 9 then
-	if C_Texture.GetAtlasInfo("common-dropdown-bg") then
+	if GetAtlasInfo("common-dropdown-bg") then
 		menuStyles.modernMenu = function(parent)
 			local f = CreateFrame("FRAME", nil, parent)
 			f.bg = f:CreateTexture(nil, "BACKGROUND")

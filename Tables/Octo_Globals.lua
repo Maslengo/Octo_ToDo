@@ -1,6 +1,12 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+print (GlobalAddonName)
+local LibOctopussy = LibStub("LibOctopussy-1.0")
+E.AddonTitle = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Title")
+E.AddonNotes = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Notes")
+E.AddonAuthor = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Author")
+E.AddonVersion = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Version")
 ----------------------------------------------------------------
+print (E.AddonVersion)
 E.OctoTable_Empty = {}
 E.Modules = {}
 E.Timers = {}
@@ -9,9 +15,44 @@ _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
-function IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
-function IsClassic() return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC end
-function IsCata() return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC end
+
+WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE or 1 -- RETAIL
+WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC or 2 -- CLASSIC
+WOW_PROJECT_BURNING_CRUSADE_CLASSIC = WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5 -- BURNING CRUSADE
+WOW_PROJECT_WRATH_CLASSIC = WOW_PROJECT_WRATH_CLASSIC or 11 -- WRATH OF THE LICH KING
+WOW_PROJECT_CATACLYSM_CLASSIC = WOW_PROJECT_CATACLYSM_CLASSIC or 14 -- CATACLYSM
+WOW_PROJECT_ID = WOW_PROJECT_ID or WOW_PROJECT_MAINLINE
+
+
+function IsRetail()
+	return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+end
+
+function IsClassic()
+	return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+end
+
+function IsBC()
+	return WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+end
+
+function IsWRATH()
+	return WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
+end
+
+function IsCata()
+	return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
+end
+
+print (
+	"IsRetail:"..tostringall(IsRetail()),
+	"IsClassic:"..tostringall(IsClassic()),
+	"IsBC:"..tostringall(IsBC()),
+	"IsWRATH:"..tostringall(IsWRATH()),
+	"IsCata:"..tostringall(IsCata())
+
+	)
+
 E.AddonTexture_1 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_1.tga"
 E.AddonTexture_2 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_2.tga"
 E.AddonTexture_3 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_3.tga"
@@ -91,14 +132,14 @@ E.regions = {
 	[4] = "tw",
 	[5] = "cn"
 }
--- E.isElvUI = C_AddOns.IsAddOnLoaded("ElvUI")
-local _, _, _, isElvUI = C_AddOns.GetAddOnInfo("ElvUI")
+-- E.isElvUI = IsAddOnLoaded("ElvUI")
+local _, _, _, isElvUI = LibOctopussy:GetAddOnInfo("ElvUI")
 E.isElvUI = isElvUI
-local _, _, _, isRCLootCouncil = C_AddOns.GetAddOnInfo("RCLootCouncil")
+local _, _, _, isRCLootCouncil = LibOctopussy:GetAddOnInfo("RCLootCouncil")
 E.isRCLootCouncil = isRCLootCouncil
-local _, _, _, isWeakAuras = C_AddOns.GetAddOnInfo("WeakAuras")
+local _, _, _, isWeakAuras = LibOctopussy:GetAddOnInfo("WeakAuras")
 E.isWeakAuras = isWeakAuras
-local _, _, _, isTomTom = C_AddOns.GetAddOnInfo("TomTom")
+local _, _, _, isTomTom = LibOctopussy:GetAddOnInfo("TomTom")
 E.isTomTom = isTomTom
 E.bgCr = 14/255
 E.bgCg = 14/255
@@ -195,8 +236,6 @@ E.Venthyr_b_Color = 0.40
 -- local GRAYFONT = GRAY_FONT_COLOR_CODE
 -- local GRAY_COLOR = { 0.5, 0.5, 0.5, 1 }
 -- local INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED = INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED
-E.NONE = E.Gray_Color.."None|r"
-E.DONE = E.Green_Color.."Done|r"
 -- E.Daily = E.Yellow_Color.."D|r "
 -- E.Weekly = E.Blue_Color.."W|r "
 -- E.Once = E.Orange_Color.."O|r "
@@ -233,12 +272,10 @@ E.Icon_NightFae = func_texturefromIcon(3257750)
 E.Icon_Venthyr = func_texturefromIcon(3257751)
 E.Icon_WorldBoss = func_texturefromIcon(3528312)
 E.Icon_Rares = func_texturefromIcon(135903)
-E.Icon_Token = func_texturefromIcon(1120721)
 E.Icon_Money = func_texturefromIcon(133784, 14)
 E.Icon_MailBox = func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga")
-E.Icon_Warband = func_texturefromIcon(6124644)
--- E.AccountWide = E.Blue_Color.."(A)".."|r"
-E.Icon_AccountWide = E.Icon_Token
--- E.AccountTransferable = E.Red_Color.."(T)".."|r"
-E.Icon_AccountTransferable = E.Icon_Warband
+E.AccountWide = E.Blue_Color.."(A)".."|r"
+-- E.Icon_AccountWide = func_texturefromIcon(1120721)
+E.AccountTransferable = E.Red_Color.."(T)".."|r"
+-- E.Icon_AccountTransferable = func_texturefromIcon(6124644)
 E.Icon_Achievement = func_texturefromIcon(236544)

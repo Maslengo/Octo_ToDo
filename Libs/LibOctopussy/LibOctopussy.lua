@@ -2,16 +2,39 @@ local GlobalAddonName = ...
 local MAJOR_VERSION, MINOR_VERSION = "LibOctopussy-1.0", 1
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
-local type, next, xpcall, setmetatable, CallErrorHandler, C_Item, C_Spell = type, next, xpcall, setmetatable, CallErrorHandler, C_Item, C_Spell
-local DoesItemExistByID, IsItemDataCachedByID, ITEM_QUALITY_COLORS = C_Item.DoesItemExistByID, C_Item.IsItemDataCachedByID, ITEM_QUALITY_COLORS
+local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
+
+ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
+-- ITEMS
+local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
+local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
 local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
 local GetItemInfoInstant = GetItemInfoInstant or C_Item.GetItemInfoInstant
-local DoesSpellExist, IsSpellDataCached = C_Spell.DoesSpellExist, C_Spell.IsSpellDataCached
+local RequestLoadItemDataByID = RequestLoadItemDataByID or C_Item.RequestLoadItemDataByID
+local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
+local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
+local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
+local GetItemMaxStackSizeByID = GetItemMaxStackSizeByID or C_Item.GetItemMaxStackSizeByID
+local GetItemInventoryTypeByID = GetItemInventoryTypeByID or C_Item.GetItemInventoryTypeByID
+--SPELLS
+local DoesSpellExist = DoesSpellExist or C_Spell.DoesSpellExist
+local IsSpellDataCached = IsSpellDataCached or C_Spell.IsSpellDataCached
 local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
 local GetSpellLink = GetSpellLink or C_Spell.GetSpellLink
 local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
 local GetSpellDescription = GetSpellDescription or C_Spell.GetSpellDescription
+local RequestLoadSpellData = RequestLoadSpellData or C_Spell.RequestLoadSpellData
+local GetSpellInfo = GetSpellInfo or C_Spell.GetSpellInfo
+local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
+local GetSpellName = GetSpellName or C_Spell.GetSpellName
+
+
+
+
+
+
+
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local Red_Color = "|cffFF4C4F"
 local Gray_Color = "|cff505050"
@@ -21,9 +44,6 @@ local Yellow_Color = "|cffFFF371"
 local Green_Color = "|cff4FFF79"
 local Orange_Color = "|cffFF661A"
 local Blue_Color = "|cff00A3FF"
-local E_NONE = Gray_Color.."None|r"
-local E_DONE = Green_Color.."Done|r"
-
 local Region = GetLocale()
 
 
@@ -368,6 +388,22 @@ function lib:IsSpellDataCached(spellID)
 	return IsSpellDataCached(spellID)
 end
 ----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+function lib:NONE()
+	return Gray_Color.."None|r"
+end
+
+function lib:DONE()
+	return Green_Color.."Done|r"
+end
 ----------------------------------------------------------------
 function lib:func_hex2rgb(self)
 	self = self:gsub("|cff", "")
@@ -724,24 +760,15 @@ function lib:func_All_objectives(self)
 	return str
 end
 ----------------------------------------------------------------
-function lib:func_Octo_LoadAddOn(GlobalAddonName)
-	local loaded, reason = C_AddOns.LoadAddOn(GlobalAddonName)
-	if not loaded and reason == "DISABLED" then
-		-- if select(5, C_AddOns.GetAddOnInfo(GlobalAddonName)) == "DISABLED" then
-		C_AddOns.EnableAddOn(GlobalAddonName)
-		C_AddOns.LoadAddOn(GlobalAddonName)
-	end
-end
-----------------------------------------------------------------
 function lib:func_CheckCompletedByQuestID(questID)
 	local vivod
 	local TEST = ""
 	if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
-		vivod = (E_DONE)
+		vivod = (lib:DONE())
 	elseif C_QuestLog.IsComplete(questID) == true then
 		vivod = Purple_Color..">>Complete<<".."|r"
 	elseif C_QuestLog.IsQuestFlaggedCompleted(questID) == false and C_QuestLog.IsOnQuest(questID) == false then
-		vivod = (E_NONE)
+		vivod = (lib:NONE())
 	elseif C_QuestLog.IsOnQuest(questID) == true --[[and C_QuestLog.IsComplete(questID) == false ]]then
 		local objectives = C_QuestLog.GetQuestObjectives(questID)
 		if objectives == nil then
@@ -814,7 +841,7 @@ function lib:func_achievementvivod(self)
 	local wasEarnedByMe = select(13, GetAchievementInfo(self))
 	local earnedBy = select(14, GetAchievementInfo(self))
 	if completed == true then
-		vivod = E_DONE
+		vivod = lib:DONE()
 	else
 		local numCriteria = GetAchievementNumCriteria(self)
 		if numCriteria ~= 0 then
@@ -914,7 +941,7 @@ function lib:func_npcName(self)
 		inspectScantipFUNC:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 	local name = "|cffFF0000error|r"
-	if not self then return E_NONE end
+	if not self then return lib:NONE() end
 	if self then
 		inspectScantipFUNC:SetHyperlink("unit:Creature-0-0-0-0-"..self)
 		if inspectScantipFUNC:NumLines() > 0 then
@@ -1071,7 +1098,6 @@ end
 ----------------------------------------------------------------
 function lib:func_RemoveDuplicates(table1)
 	if type(table1) ~= "table" then
-		print (Red_Color.."ERROR: |r"..table1..Red_Color.." not a table|r")
 		table1 = {}
 	end
 	local table2 = {}
@@ -1087,6 +1113,9 @@ function lib:func_RemoveDuplicates(table1)
 	end
 end
 ----------------------------------------------------------------
+function lib:ReloadUI()
+	return ReloadUI
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1098,8 +1127,61 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+function lib:GetAddOnMetadata(name, variable)
+	local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
+	return GetAddOnMetadata(name, variable)
+end
 ----------------------------------------------------------------
+function lib:GetAddOnInfo(name)
+	local GetAddOnInfo = GetAddOnInfo or C_AddOns.GetAddOnInfo
+	return GetAddOnInfo(name)
+end
 ----------------------------------------------------------------
+function lib:EnableAddOn(name, character)
+	local EnableAddOn = EnableAddOn or C_AddOns.EnableAddOn
+	return EnableAddOn(name, character)
+end
+----------------------------------------------------------------
+function lib:DisableAddOn(name, character)
+	local DisableAddOn = DisableAddOn or C_AddOns.DisableAddOn
+	return DisableAddOn(name, character)
+end
+----------------------------------------------------------------
+function lib:LoadAddOn(name)
+	local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
+	return LoadAddOn(name)
+end
+----------------------------------------------------------------
+function lib:IsAddOnLoaded(name)
+	local IsAddOnLoaded = IsAddOnLoaded or C_AddOns.IsAddOnLoaded
+	return IsAddOnLoaded(name)
+end
+----------------------------------------------------------------
+function lib:func_Octo_LoadAddOn(GlobalAddonName)
+	local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
+	local loaded, reason = LoadAddOn(GlobalAddonName)
+	if not loaded and reason == "DISABLED" then
+		lib:EnableAddOn(GlobalAddonName)
+		lib:LoadAddOn(GlobalAddonName)
+	end
+end
+----------------------------------------------------------------
+-- C_AddOns.DoesAddOnExist(name)
+-- C_AddOns.GetAddOnDependencies(name)
+-- C_AddOns.GetAddOnOptionalDependencies(name)
+-- C_AddOns.GetNumAddOns()
+-- C_AddOns.GetScriptsDisallowedForBeta()
+-- C_AddOns.IsAddOnLoaded(name)
+-- C_AddOns.IsAddOnLoadOnDemand(name)
+-- C_AddOns.IsAddonVersionCheckEnabled()
+-- C_AddOns.ResetAddOns()
+-- C_AddOns.ResetDisabledAddOns()
+-- C_AddOns.SaveAddOns()
+-- C_AddOns.SetAddonVersionCheck(enabled)
+-- C_AddOns.DisableAllAddOns([character])
+-- C_AddOns.EnableAllAddOns([character])
+-- C_AddOns.GetAddOnEnableState(name [, character])
+-- C_AddOns.IsAddOnLoadable(name [, character [, demandLoaded]])
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

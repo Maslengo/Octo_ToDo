@@ -1,13 +1,7 @@
 local GlobalAddonName, E = ...
-local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-local AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
-local AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
-local AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 local function func_Reverse_order(a, b)
 	return b < a
 end
-
-
 local _G = _G
 _G["OctoTODO"] = OctoTODO
 local LibStub = LibStub
@@ -19,9 +13,7 @@ local CallbackHandler = LibStub("CallbackHandler-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibOctopussy = LibStub("LibOctopussy-1.0")
-local LibTranslit = LibStub("LibTranslit-1.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-local LibQTip = LibStub('LibQTip-1.0')
 local strbyte, strlen, strsub = string.byte, string.len, string.sub
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local gsub, tinsert, next, type, wipe = gsub, tinsert, next, type, wipe
@@ -30,7 +22,6 @@ local CreateFrame = CreateFrame
 local GetBuildInfo = GetBuildInfo
 local GetLocale = GetLocale
 local GetTime = GetTime
-local ReloadUI = ReloadUI
 local UIParent = UIParent
 
 local buildVersion, buildNumber, buildDate, interfaceVersion = GetBuildInfo()  -- Mainline
@@ -130,8 +121,8 @@ local Meta_Table_0 = {__index = function() return 0 end}
 local Meta_Table_1 = {__index = function() return 1 end}
 local Meta_Table_false = {__index = function() return false end}
 local Meta_Table_true = {__index = function() return true end}
-local Meta_Table_DONE = {__index = function() return E.DONE end}
-local Meta_Table_NONE = {__index = function() return E.NONE end}
+local Meta_Table_DONE = {__index = function() return LibOctopussy:DONE() end}
+local Meta_Table_NONE = {__index = function() return LibOctopussy:NONE() end}
 local Meta_Table_Empty = {__index = function() return "" end}
 local OctoTable_func_otrisovka_FIRST = {}
 local TrashFrames_table = {
@@ -267,7 +258,7 @@ local function checkCharInfo(self)
 			end
 		end
 	end
-	-- УДАЛЕНЕИЕ:
+	-- УДАЛЕНИЕ:
 	-- Octo_ToDo_DB_Other = nil
 	-- self.LFGInstance = nil
 	-- self.OctoTable_QuestID = nil
@@ -280,7 +271,7 @@ local function checkCharInfo(self)
 	-- self.buildInfo = nil
 	-- self.curCovID = nil
 	-- self.islandBfA = nil
-	-- УДАЛЕНЕИЕ:
+	-- УДАЛЕНИЕ:
 	self.MASLENGO = self.MASLENGO or {}
 
 	self.UniversalQuest = nil
@@ -290,21 +281,21 @@ local function checkCharInfo(self)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	-- 404 строка метатаблица
-	self.reputationID = self.MASLENGO.reputationID
-	----------------
-	self.reputationID = nil
+	-- self.reputationID = self.MASLENGO.reputationID
+	-- ----------------
+	-- self.reputationID = nil
 	----------------
 	self.MASLENGO.reputationID = self.MASLENGO.reputationID or {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	self.CurrencyID = self.MASLENGO.CurrencyID or {}
-	self.CurrencyID_Total = self.MASLENGO.CurrencyID_Total or {}
-	self.CurrencyID_totalEarned = self.MASLENGO.CurrencyID_totalEarned or {}
-	----------------
-	self.CurrencyID = nil
-	self.CurrencyID_Total = nil
-	self.CurrencyID_totalEarned = nil
+	-- self.CurrencyID = self.MASLENGO.CurrencyID or {}
+	-- self.CurrencyID_Total = self.MASLENGO.CurrencyID_Total or {}
+	-- self.CurrencyID_totalEarned = self.MASLENGO.CurrencyID_totalEarned or {}
+	-- ----------------
+	-- self.CurrencyID = nil
+	-- self.CurrencyID_Total = nil
+	-- self.CurrencyID_totalEarned = nil
 	----------------
 	self.MASLENGO.CurrencyID = self.MASLENGO.CurrencyID or {}
 	self.MASLENGO.CurrencyID_Total = self.MASLENGO.CurrencyID_Total or {}
@@ -329,7 +320,7 @@ local function checkCharInfo(self)
 
 
 	for _, v in next, (E.OctoTable_UniversalQuest) do
-		self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] or E.NONE
+		self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] or LibOctopussy:NONE()
 	end
 
 	self.avgItemLevel = self.avgItemLevel or 0
@@ -432,8 +423,8 @@ local function checkCharInfo(self)
 			end
 		end
 	end
-	if (self.tmstp_Weekly or 0) < GetServerTime() and self.MASLENGO.UniversalQuest.Octopussy_DF_Weekly_CommunityFeast_count == E.DONE then
-		self.Octopussy_DF_Weekly_CommunityFeast_count = E.NONE
+	if (self.tmstp_Weekly or 0) < GetServerTime() and self.MASLENGO.UniversalQuest.Octopussy_DF_Weekly_CommunityFeast_count == LibOctopussy:DONE() then
+		self.Octopussy_DF_Weekly_CommunityFeast_count = LibOctopussy:NONE()
 	end
 	if (self.tmstp_Weekly or 0) < GetServerTime() then
 		self.tmstp_Weekly = LibOctopussy:func_tmstpDayReset(7)
@@ -455,7 +446,7 @@ local function checkCharInfo(self)
 		for _, v in next, (E.OctoTable_UniversalQuest) do
 			for q, w in next, (v) do
 				if w == "Weekly" then
-					self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Weekly"] = E.NONE
+					self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Weekly"] = LibOctopussy:NONE()
 				end
 			end
 		end
@@ -466,7 +457,7 @@ local function checkCharInfo(self)
 		for _, v in next, (E.OctoTable_UniversalQuest) do
 			for q, w in next, (v) do
 				if w == "Daily" then
-					self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Daily"] = E.NONE
+					self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Daily"] = LibOctopussy:NONE()
 				end
 			end
 		end
@@ -475,7 +466,7 @@ local function checkCharInfo(self)
 	for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
 		self.LFGInstance[dungeonID] = self.LFGInstance[dungeonID] or {}
 		self.LFGInstance[dungeonID].D_name = self.LFGInstance[dungeonID].D_name or name
-		self.LFGInstance[dungeonID].donetoday = self.LFGInstance[dungeonID].donetoday or E.NONE
+		self.LFGInstance[dungeonID].donetoday = self.LFGInstance[dungeonID].donetoday or LibOctopussy:NONE()
 	end
 	if (self.tmstp_Month or 0) < GetServerTime() then
 		self.tmstp_Month = LibOctopussy:func_tmstpDayReset(30)
@@ -483,7 +474,7 @@ local function checkCharInfo(self)
 		for _, v in next, (E.OctoTable_UniversalQuest) do
 			for q, w in next, (v) do
 				if w == "Month" then
-					self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Month"] = E.NONE
+					self.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Month"] = LibOctopussy:NONE()
 				end
 			end
 		end
@@ -527,7 +518,7 @@ local function CreateFrameUsableItems_OnEnter(self)
 			GameTooltip:AddLine(LibOctopussy:func_itemTexture(self.itemID).." "..E.White_Color..LibOctopussy:func_itemName(self.itemID).."|r")
 		end
 		if self.itemID == 6948 then
-			GameTooltip:AddLine(E.White_Color..GetBindLocation() or E.NONE.."|r")
+			GameTooltip:AddLine(E.White_Color..GetBindLocation() or LibOctopussy:NONE().."|r")
 		end
 		GameTooltip:Show()
 	end
@@ -615,7 +606,7 @@ local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spel
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableItems".."|r")
 	end
-	local Button = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+	local Button = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.itemID = itemID
 	Button.Texture = Texture
 	Button.Ypos = Ypos
@@ -784,7 +775,7 @@ local function CreateFrameUsableSpells(spellID, Texture, Xpos, Ypos, r, g, b)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells".."|r")
 	end
-	local Button = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+	local Button = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.spellID = spellID
 	Button.Texture = Texture
 	Button.Ypos = Ypos
@@ -866,7 +857,7 @@ local function Collect_ALL_PlayerInfo()
 		collect.Chromie_inChromieTime = C_PlayerInfo.IsPlayerInChromieTime()
 		collect.Chromie_canEnter = C_PlayerInfo.CanPlayerEnterChromieTime()
 		collect.Chromie_UnitChromieTimeID = UnitChromieTimeID("player")
-		collect.Chromie_name = E.NONE
+		collect.Chromie_name = LibOctopussy:NONE()
 		collect.GameLimitedMode_IsActive = GameLimitedMode_IsActive
 		for i = 1, #expansionOptions do
 			if expansionOptions[i].id == UnitChromieTimeID("player") then
@@ -1107,17 +1098,6 @@ local function Collect_ALL_GreatVault()
 	end
 end
 
-local function Collect_All_Currency_TEST(...)
-	-- 	local CURRENCY_TRANSFER_TOGGLE_BUTTON_EVENTS = {
-	-- 	"CURRENCY_DISPLAY_UPDATE",
-	-- 	"CURRENCY_TRANSFER_FAILED",
-	-- 	"ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED",
-	-- };
-	-- https://wowpedia.fandom.com/wiki/CHAT_MSG_CURRENCY -- ПОФИКСИТЬ
-	-- local text, playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons = ...
-	-- print (LibOctopussy:func_Gradient(tostringall(playerName, languageName, channelName, playerName2, specialFlags, zoneChannelID, channelIndex, channelBaseName, languageID, lineID, guid, bnSenderID, isMobile, isSubtitle, hideSenderInLetterbox, supressRaidIcons), E.Addon_Left_Color, E.Addon_Right_Color))
-end
-
 local function Collect_All_Currency()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Currency()".."|r")
@@ -1252,7 +1232,7 @@ local function Collect_ALL_ItemsInBag()
 	local totalSlots = 0
 	-- local Possible_Anima = 0
 	-- local Possible_CatalogedResearch = 0
-	local Abbr_En_Name = E.NONE
+	local Abbr_En_Name = LibOctopussy:NONE()
 	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		local numSlots = C_Container.GetContainerNumSlots(bag)
 		totalSlots = totalSlots + numSlots
@@ -1439,7 +1419,7 @@ local function Collect_All_Quests()
 	local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
 	for k, questID in next, (E.OctoTable_QuestID) do
 		local vivod = LibOctopussy:func_CheckCompletedByQuestID(questID)
-		-- if vivod ~= E.NONE then
+		-- if vivod ~= LibOctopussy:NONE() then
 		collect.OctoTable_QuestID[questID] = vivod
 		-- end
 	end
@@ -1481,7 +1461,7 @@ local function Collect_ALL_UNIVERSALQuestUpdate()
 					vivod = count
 				else
 					local IsComplete = LibOctopussy:func_CheckCompletedByQuestID(questID)
-					if IsComplete ~= E.NONE then
+					if IsComplete ~= LibOctopussy:NONE() then
 						vivod = IsComplete
 					end
 				end
@@ -1491,7 +1471,7 @@ local function Collect_ALL_UNIVERSALQuestUpdate()
 					collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod
 				elseif v.max > 1 then
 					if vivod == v.max and v.max > 1 then
-						collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = E.DONE
+						collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = LibOctopussy:DONE()
 					else
 						collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod.."/"..v.max
 					end
@@ -1616,9 +1596,9 @@ local function Collect_All_journalInstance()
 				collect.LFGInstance[dungeonID] = collect.LFGInstance[dungeonID] or {}
 				collect.LFGInstance[dungeonID].D_name = D_name
 				if donetoday == true then
-					collect.LFGInstance[dungeonID].donetoday = E.DONE
+					collect.LFGInstance[dungeonID].donetoday = LibOctopussy:DONE()
 				else
-					collect.LFGInstance[dungeonID].donetoday = E.NONE
+					collect.LFGInstance[dungeonID].donetoday = LibOctopussy:NONE()
 				end
 			end
 		end
@@ -1627,7 +1607,7 @@ end
 
 local function Octo_ToDo_FIRST_OnLoad()
 	if not OctoToDo_FIRST_EventFrame then
-		OctoToDo_FIRST_EventFrame = CreateFrame("FRAME", AddonTitle..LibOctopussy:func_GenerateUniqueID())
+		OctoToDo_FIRST_EventFrame = CreateFrame("FRAME", E.AddonTitle..LibOctopussy:func_GenerateUniqueID())
 	end
 	for _, event in next, (E.OctoTable_Events) do
 		OctoToDo_FIRST_EventFrame:RegisterEvent(event)
@@ -1801,7 +1781,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = E.Timers.TWW_BeledarCycle() .. LibOctopussy:func_questName(83240)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_TheTheaterTroupe_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_TheTheaterTroupe_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_TheTheaterTroupe_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
@@ -1814,7 +1794,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = E.Icon_WorldBoss..L["World Boss"]
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_WorldBoss_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_WorldBoss_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_WorldBoss_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
@@ -1827,7 +1807,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = L["Weekly Dungeon Quest"]
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_DungeonQuest_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_DungeonQuest_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_DungeonQuest_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
@@ -1840,7 +1820,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = "TWW_Delve_Weekly"
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_Delve_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_Delve_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_Delve_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
@@ -1854,7 +1834,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_texturefromIcon(132863) .. L["Major Keyflames"]
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
@@ -1867,7 +1847,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_texturefromIcon(135619) .. L["Minor Keyflames"]
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly
 				end
 				BG:SetColorTexture(E.Color_Quest_r, E.Color_Quest_g, E.Color_Quest_b, E.BGALPHA)
@@ -1992,7 +1972,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(1166)..DUNGEONS
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
@@ -2002,7 +1982,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(1166).."500 "..LibOctopussy:func_currencyName(1166)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
@@ -2012,7 +1992,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(1166)..RAIDS
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
@@ -2022,7 +2002,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(1166)..LibOctopussy:func_questName(43323)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
@@ -2032,7 +2012,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_questName(84616)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
@@ -2042,7 +2022,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_questName(82783)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
@@ -2052,7 +2032,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_texturefromIcon(1322720)..LibOctopussy:func_questName(57300)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly
 				end
 				BG:SetColorTexture(70/255, 130/255, 179/255, E.BGALPHA)
@@ -2062,7 +2042,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_texturefromIcon(5213776).."Я спас вечеринку, а получил только эти нелепые шапки"
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once ~= E.NONE then
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once
 				end
 				tooltip[#tooltip+1] = {LibOctopussy:func_questName(84143)..E.Gray_Color.." id:84143|r", CharInfo.OctoTable_QuestID[84143]}
@@ -2110,7 +2090,7 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = E.Blue_Color.."ALL|r"
 				for _, v in next, (E.OctoTable_UniversalQuest) do
-					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
+					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == LibOctopussy:DONE() then
 						tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
 					end
 				end
@@ -2168,7 +2148,7 @@ local function O_otrisovka_FIRST()
 					end
 				end
 				for dungeonID, v in next, (E.OctoTable_LFGDungeons) do
-					if CharInfo.LFGInstance[dungeonID].donetoday ~= E.NONE then
+					if CharInfo.LFGInstance[dungeonID].donetoday ~= LibOctopussy:NONE() then
 						tooltip[#tooltip+1] = {CharInfo.LFGInstance[dungeonID].D_name, CharInfo.LFGInstance[dungeonID].donetoday}
 					end
 				end
@@ -2218,7 +2198,7 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft = " ", " "
 				vivodCent = E.Gray_Color..REPUTATION.."|r"
 				for _, questID in next, (E.OctoTable_QuestID_Paragon) do
-					if CharInfo.OctoTable_QuestID[questID] ~= (E.NONE or E.DONE) then
+					if CharInfo.OctoTable_QuestID[questID] ~= (LibOctopussy:NONE() or LibOctopussy:DONE()) then
 						tooltip[#tooltip+1] = {LibOctopussy:func_Gradient("»"..L["Paragon"].."«", E.Addon_Left_Color, E.Addon_Right_Color), " "}
 						tooltip[#tooltip+1] = {LibOctopussy:func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
 						if #tooltip > 0 then
@@ -2296,7 +2276,7 @@ local function O_otrisovka_FIRST()
 	-- end
 	-- sort(list, func_Reverse_order)
 	-- for k, QuestID in next, (list) do
-	-- if Octo_ToDo_DB_Vars.config.QuestsShowAllways == false and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" and CharInfo.OctoTable_QuestID[QuestID] ~= E.NONE then
+	-- if Octo_ToDo_DB_Vars.config.QuestsShowAllways == false and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" and CharInfo.OctoTable_QuestID[QuestID] ~= LibOctopussy:NONE() then
 	-- tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color.." id:"..QuestID.."|r", CharInfo.OctoTable_QuestID[QuestID]}
 	-- elseif Octo_ToDo_DB_Vars.config.QuestsShowAllways == true and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true then
 	-- if CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" then
@@ -2539,7 +2519,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	OctoToDo_FIRST_MainFrame:SetHeight(50)
 	if Octo_ToDo_DB_Vars.config.ShowTotalMoney then
 		if not Octo_Frame_TotalMoneyCurServer then
-			Octo_Frame_TotalMoneyCurServer = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			Octo_Frame_TotalMoneyCurServer = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			Octo_Frame_TotalMoneyCurServer:SetSize(400, E.curHeight)
 			Octo_Frame_TotalMoneyCurServer:EnableMouse(false)
 			Octo_Frame_TotalMoneyCurServer:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame, "BOTTOMLEFT", 4, -2)
@@ -2561,7 +2541,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 		if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
 			if not Octo_Frame_TotalMoneyAllServer then
-				Octo_Frame_TotalMoneyAllServer = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+				Octo_Frame_TotalMoneyAllServer = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 				Octo_Frame_TotalMoneyAllServer:SetSize(400, E.curHeight)
 				Octo_Frame_TotalMoneyAllServer:EnableMouse(false)
 				Octo_Frame_TotalMoneyAllServer:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame, "BOTTOMLEFT", 4, -22)
@@ -2583,7 +2563,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			end
 		end
 		if not Octo_Frame_Token_Price then
-			Octo_Frame_Token_Price = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			Octo_Frame_Token_Price = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			Octo_Frame_Token_Price:SetSize(400, E.curHeight)
 			Octo_Frame_Token_Price:EnableMouse(false)
 			if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
@@ -2613,7 +2593,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	if Octo_ToDo_DB_Vars.config.ShowTimeAll == true then
 		if not Octo_Frame_TotalTimeAllServer then
-			Octo_Frame_TotalTimeAllServer = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			Octo_Frame_TotalTimeAllServer = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			Octo_Frame_TotalTimeAllServer:SetSize(400, E.curHeight)
 			Octo_Frame_TotalTimeAllServer:EnableMouse(false)
 			Octo_Frame_TotalTimeAllServer:SetPoint("TOPRIGHT", OctoToDo_FIRST_MainFrame, "BOTTOMRIGHT", -4, -2)
@@ -2634,7 +2614,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 		if Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL == true then
 			if not Octo_Frame_TotalTimeAllServerMAXLEVEL then
-				Octo_Frame_TotalTimeAllServerMAXLEVEL = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+				Octo_Frame_TotalTimeAllServerMAXLEVEL = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetSize(400, E.curHeight)
 				Octo_Frame_TotalTimeAllServerMAXLEVEL:EnableMouse(false)
 				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetPoint("TOPRIGHT", OctoToDo_FIRST_MainFrame, "BOTTOMRIGHT", -4, -22)
@@ -2657,7 +2637,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	----------------------------------------------------------------
 	if not OctoToDo_FIRST_CloseButton then
-		OctoToDo_FIRST_CloseButton = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+		OctoToDo_FIRST_CloseButton = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 		OctoToDo_FIRST_CloseButton:SetSize(E.curHeight, E.curHeight)
 		OctoToDo_FIRST_CloseButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*0, 1)
 		OctoToDo_FIRST_CloseButton:SetBackdrop({
@@ -2698,7 +2678,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	----------------------------------------------------------------
 	if not OctoToDo_FIRST_OptionsButton then
-		OctoToDo_FIRST_OptionsButton = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+		OctoToDo_FIRST_OptionsButton = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 		OctoToDo_FIRST_OptionsButton:SetSize(E.curHeight, E.curHeight)
 		OctoToDo_FIRST_OptionsButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*1, 1)
 		OctoToDo_FIRST_OptionsButton:SetBackdrop({
@@ -2726,7 +2706,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				if SettingsPanel:IsVisible() and self:IsVisible() then
 					HideUIPanel(SettingsPanel)
 				else
-					Settings.OpenToCategory(AddonTitle, true)
+					Settings.OpenToCategory(E.AddonTitle, true)
 				end
 		end)
 		local t = OctoToDo_FIRST_OptionsButton:CreateTexture(nil, "BACKGROUND")
@@ -2768,7 +2748,7 @@ local function AbandonQuests()
 					C_Timer.After(1, AbandonQuests)
 				end,
 			}
-			OctoToDo_FIRST_AbandonButton = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_AbandonButton = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_AbandonButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_AbandonButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*2, 1)
 			OctoToDo_FIRST_AbandonButton:SetBackdrop({
@@ -2829,7 +2809,7 @@ local function AbandonQuests()
 		end
 		----------------------------------------------------------------
 		if not OctoToDo_FIRST_MplusButton then
-			OctoToDo_FIRST_MplusButton = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_MplusButton = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_MplusButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_MplusButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*3, 1)
 			OctoToDo_FIRST_MplusButton:SetBackdrop({
@@ -2887,7 +2867,7 @@ local function AbandonQuests()
 		end
 		----------------------------------------------------------------
 		if not OctoToDo_FIRST_ItemsButton then
-			OctoToDo_FIRST_ItemsButton = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_ItemsButton = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_ItemsButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_ItemsButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*4, 1)
 			OctoToDo_FIRST_ItemsButton:SetBackdrop({
@@ -2943,7 +2923,7 @@ local function AbandonQuests()
 		----------------------------------------------------------------
 	end
 	if not dd_FIRST then
-		local dd_FIRST = CreateFrame("Button", AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+		local dd_FIRST = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 		local multiply = (1/3)*2
 		dd_FIRST:SetSize(E.curWidthTitle*multiply, E.curHeight*multiply)
 		dd_FIRST:SetBackdrop({
@@ -3306,7 +3286,7 @@ local function FrameLine_OnLeave(self)
 	for i = 1, #OctoTable_func_otrisovka_FIRST do
 		local fname, f
 		fname = "FrameLine"..i
-		OctoToDo_FIRST_MainFrame[fname] = CreateFrame("Frame", AddonTitle..LibOctopussy:func_GenerateUniqueID().."FrameLine"..i, OctoToDo_FIRST_MainFrame.scrollChild, "BackdropTemplate")
+		OctoToDo_FIRST_MainFrame[fname] = CreateFrame("Frame", E.AddonTitle..LibOctopussy:func_GenerateUniqueID().."FrameLine"..i, OctoToDo_FIRST_MainFrame.scrollChild, "BackdropTemplate")
 		f = OctoToDo_FIRST_MainFrame[fname]
 		f:SetHeight(E.curHeight)
 		f:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame.scrollChild, "TOPLEFT", 0, -E.curHeight*(i-1))
@@ -3705,7 +3685,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 						if SettingsPanel:IsVisible() and self:IsVisible() then
 							HideUIPanel(SettingsPanel)
 						else
-							Settings.OpenToCategory(AddonTitle, true)
+							Settings.OpenToCategory(E.AddonTitle, true)
 						end
 					end
 				end,
@@ -3720,7 +3700,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		})
 		Octo_ToDo_DB_Vars.minimap_FIRST = Octo_ToDo_DB_Vars.minimap_FIRST or {}
 		Octo_ToDo_DB_Vars.minimap_FIRST.minimapPos = Octo_ToDo_DB_Vars.minimap_FIRST.minimapPos or 244
-		Octo_ToDo_DB_Vars.config.AddonVersion = tonumber(AddonVersion)
+		Octo_ToDo_DB_Vars.config.AddonVersion = tonumber(E.AddonVersion)
 		LibDBIcon:Register(MinimapName, ldb_icon, Octo_ToDo_DB_Vars.minimap_FIRST)
 		LibDBIcon:Show(MinimapName)
 	end
@@ -3851,9 +3831,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	if event == "TIME_PLAYED_MSG" then
 		Collect_Played(...)
 	end
-	if event == "CHAT_MSG_CURRENCY" then
-		Collect_All_Currency_TEST(...)
-	end
 end
 Octo_ToDo_FIRST_OnLoad()
 SLASH_Octo1, SLASH_Octo2, SLASH_Octo3, SLASH_Octo4 = "/Octo", "/OctoTWW", "/octo", "/o"
@@ -3884,6 +3861,6 @@ SlashCmdList.GSEARCH = function(msg)
 	editBox:SetText(str)
 	editFrame:Show()
 end
-SlashCmdList["RELOAD"] = ReloadUI
+SlashCmdList["RELOAD"] = LibOctopussy:ReloadUI()
 SLASH_RELOAD1 = "/rl"
 -- fpde(E.Movies)
