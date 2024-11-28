@@ -164,7 +164,6 @@ if L then
 	L["Turn on"] = true
 	L["Turn off"] = true
 	L["No quests"] = true
-	L[">>DONE<<"] = true
 	L["Additional Buttons"] = true
 	L["Bags"] = true
 end
@@ -325,7 +324,6 @@ if L then
 	L["Turn on"] = "Включить"
 	L["Turn off"] = "Выключить"
 	L["No quests"] = "Нет квестов"
-	L[">>DONE<<"] = ">>СДАЙ<<"
 	L["Additional Buttons"] = "Дополнительные кнопки"
 	L["Bags"] = "Сумки"
 end

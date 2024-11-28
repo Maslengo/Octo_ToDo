@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
 ----------------------------------------------------------------
-E.Octo_PortalsAll = {
+ЧЕРВОТОЧИНЫ ={
 	{id = 198156, type = "item", }
 	{id = 172924, type = "item", }
 	{id = 168808, type = "item", horde+ally} -- 265807ордынское 64492култираское

@@ -739,7 +739,7 @@ function lib:func_CheckCompletedByQuestID(questID)
 	if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
 		vivod = (E_DONE)
 	elseif C_QuestLog.IsComplete(questID) == true then
-		vivod = Purple_Color..">>DONE<<".."|r"
+		vivod = Purple_Color..">>Complete<<".."|r"
 	elseif C_QuestLog.IsQuestFlaggedCompleted(questID) == false and C_QuestLog.IsOnQuest(questID) == false then
 		vivod = (E_NONE)
 	elseif C_QuestLog.IsOnQuest(questID) == true --[[and C_QuestLog.IsComplete(questID) == false ]]then
@@ -811,6 +811,8 @@ end
 function lib:func_achievementvivod(self)
 	local vivod = ""
 	local completed = select(4, GetAchievementInfo(self))
+	local wasEarnedByMe = select(13, GetAchievementInfo(self))
+	local earnedBy = select(14, GetAchievementInfo(self))
 	if completed == true then
 		vivod = E_DONE
 	else
@@ -883,11 +885,6 @@ function lib:func_achievementquantity(self, i)
 		vivod = vivod..color.."0/1PIZDA".."|r"
 	end
 	return vivod
-end
-----------------------------------------------------------------
-function lib:func_achievementdescription(self)
-	local description = select(8, GetAchievementInfo(self))
-	return description
 end
 ----------------------------------------------------------------
 function lib:func_CurServerShort(self)

@@ -53,8 +53,6 @@ local BTAG = tostringall(strsplit("#", BattleTag))
 local GameVersion = GetCurrentRegion() == 72 and "PTR" or "Retail"
 local BattleTagLocal = BTAG.." ("..GameVersion..")"
 
-print (LibOctopussy:GetItemName(65977))
-
 local function TryToLoadBattleTag()
 	if not BNFeaturesEnabledAndConnected() then
 		return false
@@ -1651,7 +1649,7 @@ local function O_otrisovka_FIRST()
 	-- ник персонажа
 	tinsert(OctoTable_func_otrisovka_FIRST,
 		function(CharInfo, tooltip, CL, BG)
-			local vivodCent, vivodLeft = "", ""
+			local vivodCent, vivodLeft = " ", " "
 			CL:SetFontObject(OctoFont12)
 			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
 			if CharInfo.Faction == "Horde" then
@@ -1752,7 +1750,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.MP_MythicKeystone == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_texturefromIcon(4352494)..E.WOW_Epic_Color..L["Mythic Keystone"].."|r"
 				if CharInfo.UnitLevel == E.currentMaxLevel then
 					if CharInfo.CurrentKeyFULL ~= 0 then
@@ -1801,7 +1799,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.BeledarCycle == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = E.Timers.TWW_BeledarCycle() .. LibOctopussy:func_questName(83240)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_TheTheaterTroupe_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_TheTheaterTroupe_Weekly
@@ -1814,7 +1812,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.TWW_WorldBoss_Weekly == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = E.Icon_WorldBoss..L["World Boss"]
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_WorldBoss_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_WorldBoss_Weekly
@@ -1827,7 +1825,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.TWW_DungeonQuest_Weekly == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = L["Weekly Dungeon Quest"]
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_DungeonQuest_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_DungeonQuest_Weekly
@@ -1840,7 +1838,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.TWW_Delve_Weekly == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = "TWW_Delve_Weekly"
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_Delve_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_Delve_Weekly
@@ -1854,7 +1852,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.MajorKeyflames == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_texturefromIcon(132863) .. L["Major Keyflames"]
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly
@@ -1867,7 +1865,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.MinorKeyflames == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_texturefromIcon(135619) .. L["Minor Keyflames"]
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly
@@ -1880,7 +1878,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.GildedHarbingerCrest == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				local currencyID = 2917
 				local color = E.WOW_Epic_Color
 				vivodLeft = LibOctopussy:func_currencyicon(currencyID)..color..LibOctopussy:func_currencyName_NOCOLOR(currencyID).."|r"
@@ -1908,7 +1906,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.RunedHarbingerCrest == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				local currencyID = 2916
 				local color = E.WOW_Epic_Color
 				vivodLeft = LibOctopussy:func_currencyicon(currencyID)..color..LibOctopussy:func_currencyName_NOCOLOR(currencyID).."|r"
@@ -1936,7 +1934,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.CarvedHarbingerCrest == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				local currencyID = 2915
 				local color = E.WOW_Rare_Color
 				vivodLeft = LibOctopussy:func_currencyicon(currencyID)..color..LibOctopussy:func_currencyName_NOCOLOR(currencyID).."|r"
@@ -1964,7 +1962,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				local currencyID = 2914
 				local color = E.WOW_Rare_Color
 				vivodLeft = LibOctopussy:func_currencyicon(currencyID)..color..LibOctopussy:func_currencyName_NOCOLOR(currencyID).."|r"
@@ -1992,7 +1990,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Timewalk == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(1166)..DUNGEONS
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly
@@ -2002,7 +2000,7 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(1166).."500 "..LibOctopussy:func_currencyName(1166)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly
@@ -2012,7 +2010,7 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(1166)..RAIDS
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly
@@ -2022,7 +2020,7 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(1166)..LibOctopussy:func_questName(43323)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly
@@ -2032,7 +2030,7 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_questName(84616)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly
@@ -2042,7 +2040,7 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_questName(82783)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly
@@ -2052,7 +2050,7 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_texturefromIcon(1322720)..LibOctopussy:func_questName(57300)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly
@@ -2062,7 +2060,7 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = LibOctopussy:func_texturefromIcon(5213776).."Я спас вечеринку, а получил только эти нелепые шапки"
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once
@@ -2109,7 +2107,7 @@ local function O_otrisovka_FIRST()
 
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = E.Blue_Color.."ALL|r"
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
@@ -2135,7 +2133,7 @@ local function O_otrisovka_FIRST()
 		for i, value in next, (list) do
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft = "", ""
+					local vivodCent, vivodLeft = " ", " "
 					for _, v in next, (E.OctoTable_UniversalQuest) do
 						if v.desc == value then
 							tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
@@ -2158,7 +2156,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Dungeons == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				local ServerTime = GetServerTime()
 				for instanceID, v in next, (CharInfo.journalInstance) do
 					if v then
@@ -2187,7 +2185,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Currency == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				local list = {}
 				for CurrencyID, v in next, (Octo_ToDo_DB_Config.CurrencyDB) do
 					tinsert(list, CurrencyID)
@@ -2217,7 +2215,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Reputations == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodCent = E.Gray_Color..REPUTATION.."|r"
 				for _, questID in next, (E.OctoTable_QuestID_Paragon) do
 					if CharInfo.OctoTable_QuestID[questID] ~= (E.NONE or E.DONE) then
@@ -2255,7 +2253,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Items == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				local list = {}
 				for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
 					tinsert(list, itemID)
@@ -2265,12 +2263,12 @@ local function O_otrisovka_FIRST()
 					for k, itemID in next, (list) do
 						if id == itemID then
 							if Octo_ToDo_DB_Vars.config.ItemsShowAllways == false and Octo_ToDo_DB_Config.ItemDB[itemID] == true and CharInfo.ItemsInBag[itemID] ~= 0 and CharInfo.ItemsInBag[itemID] ~= "" then
-								tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID), CharInfo.ItemsInBag[itemID]}
+								tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID)..E.Gray_Color.." id:"..(itemID).."|r", CharInfo.ItemsInBag[itemID]}
 							elseif Octo_ToDo_DB_Vars.config.ItemsShowAllways == true and Octo_ToDo_DB_Config.ItemDB[itemID] == true then
 								if CharInfo.ItemsInBag[itemID] ~= 0 and CharInfo.ItemsInBag[itemID] ~= "" then
-									tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID), CharInfo.ItemsInBag[itemID]}
+									tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID)..E.Gray_Color.." id:"..(itemID).."|r", CharInfo.ItemsInBag[itemID]}
 								else
-									tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(itemID)..E.Gray_Color..LibOctopussy:func_itemName_NOCOLOR(itemID).."|r", E.Gray_Color..CharInfo.ItemsInBag[itemID].."|r"}
+									tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(itemID)..E.Gray_Color..LibOctopussy:func_itemName_NOCOLOR(itemID).."|r"..E.Gray_Color.." id:"..(itemID).."|r", E.Gray_Color..CharInfo.ItemsInBag[itemID].."|r"}
 								end
 							end
 							-- else
@@ -2291,7 +2289,7 @@ local function O_otrisovka_FIRST()
 	-- if Octo_ToDo_DB_Vars.config.Quests == true then
 	-- tinsert(OctoTable_func_otrisovka_FIRST,
 	-- function(CharInfo, tooltip, CL, BG)
-	-- local vivodCent, vivodLeft = "", ""
+	-- local vivodCent, vivodLeft = " ", " "
 	-- local list = {}
 	-- for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
 	-- tinsert(list, QuestID)
@@ -2320,7 +2318,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Professions == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				for k, v in next, (E.Octo_ProfessionsskillLine) do
 					if CharInfo.professions[k] then
 						if CharInfo.professions[k].icon and CharInfo.professions[k].name and CharInfo.professions[k].skillLevel and CharInfo.professions[k].maxSkillLevel then
@@ -2344,7 +2342,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Gold == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				if CharInfo.Money then
 					vivodCent = LibOctopussy:func_CompactNumberFormat(CharInfo.Money/10000)..E.Icon_Money
 				end
@@ -2363,7 +2361,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.ItemLevel == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				vivodLeft = STAT_AVERAGE_ITEM_LEVEL
 				local color = E.Red_Color
 				if CharInfo.avgItemLevelEquipped and CharInfo.avgItemLevel then
@@ -2391,7 +2389,7 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.WasOnline == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft = "", ""
+				local vivodCent, vivodLeft = " ", " "
 				local color = "|cffFFFFFF"
 				vivodLeft = "Last Update"
 				if CharInfo.loginHour ~= 0 and CharInfo.loginDay ~= 0 then
@@ -2409,6 +2407,12 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
+
+
+
+
+
+
 end
 
 local function TotalMoneyCurServerOnShow()
@@ -3147,136 +3151,143 @@ local function AbandonQuests()
 		-- https://wowhead.com/ru/item=150743 -- ally surv
 		-- https://wowhead.com/ru/item=150745 -- Horde
 		-- https://wowhead.com/ru/item=150744 -- Horde
-		if UnitLevel < 20 then
-			CreateFrameUsableItems(187875, 237385, Xpos*-12+Ypos*12, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187896, 237382, Xpos*-11+Ypos*11, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187897, 237388, Xpos*-10+Ypos*10, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187869, 237383, Xpos*-9+Ypos*9, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187895, 237384, Xpos*-8+Ypos*8, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187899, 237386, Xpos*-7+Ypos*7, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187900, 1064187, Xpos*-6+Ypos*6, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187898, 237387, Xpos*-5+Ypos*5, Ypos*-1, 0, .43, .86)
+		if UnitLevel >= 20 then
+
+
+
+			CreateFrameUsableItems(128807, LibOctopussy:GetItemIcon(128807), Xpos*-15+Ypos*15, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(200707, LibOctopussy:GetItemIcon(200707), Xpos*-14+Ypos*14, Ypos*-1, 0, .43, .86)
+
+			CreateFrameUsableItems(187339, LibOctopussy:GetItemIcon(187339), Xpos*-13+Ypos*13, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187875, LibOctopussy:GetItemIcon(187875), Xpos*-12+Ypos*12, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187896, LibOctopussy:GetItemIcon(187896), Xpos*-11+Ypos*11, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187897, LibOctopussy:GetItemIcon(187897), Xpos*-10+Ypos*10, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187869, LibOctopussy:GetItemIcon(187869), Xpos*-9+Ypos*9, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187895, LibOctopussy:GetItemIcon(187895), Xpos*-8+Ypos*8, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187899, LibOctopussy:GetItemIcon(187899), Xpos*-7+Ypos*7, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187900, LibOctopussy:GetItemIcon(187900), Xpos*-6+Ypos*6, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187898, LibOctopussy:GetItemIcon(187898), Xpos*-5+Ypos*5, Ypos*-1, 0, .43, .86)
 			if Faction == "Horde" then
-				CreateFrameUsableItems(150745, 237388, Xpos*-4+Ypos*4, Ypos*-1, 0, .43, .86) -- Horde East
+				CreateFrameUsableItems(150745, LibOctopussy:GetItemIcon(150745), Xpos*-4+Ypos*4, Ypos*-1, 0, .43, .86) -- Horde East
 			else
-				CreateFrameUsableItems(150746, 237388, Xpos*-4+Ypos*4, Ypos*-1, 0, .43, .86) -- ally East
+				CreateFrameUsableItems(150746, LibOctopussy:GetItemIcon(150746), Xpos*-4+Ypos*4, Ypos*-1, 0, .43, .86) -- ally East
 			end
 			if Faction == "Horde" then
-				CreateFrameUsableItems(150744, 237388, Xpos*-3+Ypos*3, Ypos*-1, 0, .43, .86) -- Horde Kalimd
+				CreateFrameUsableItems(150744, LibOctopussy:GetItemIcon(150744), Xpos*-3+Ypos*3, Ypos*-1, 0, .43, .86) -- Horde Kalimd
 			else
-				CreateFrameUsableItems(150743, 237388, Xpos*-3+Ypos*3, Ypos*-1, 0, .43, .86) -- ally Kalimd
+				CreateFrameUsableItems(150743, LibOctopussy:GetItemIcon(150743), Xpos*-3+Ypos*3, Ypos*-1, 0, .43, .86) -- ally Kalimd
 			end
 		end
-		CreateFrameUsableSpells(431280, C_Spell.GetSpellInfo(431280).iconID, Xpos*-1+Ypos*1, Ypos*-1, 0, .43, .86)
-		CreateFrameUsableSpells(460905, C_Spell.GetSpellInfo(460905).iconID, Xpos*-2+Ypos*2, Ypos*-1, 0, .43, .86)
+		CreateFrameUsableSpells(431280, LibOctopussy:func_GetSpellIcon(431280), Xpos*-1+Ypos*1, Ypos*-1, 0, .43, .86)
+		CreateFrameUsableSpells(460905, LibOctopussy:func_GetSpellIcon(460905), Xpos*-2+Ypos*2, Ypos*-1, 0, .43, .86)
 		if prof1 == 202 or prof2 == 202 then
-			CreateFrameUsableItems(198156, 4548860, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254)
-			CreateFrameUsableItems(172924, 3610528, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542)
+			CreateFrameUsableItems(198156, LibOctopussy:GetItemIcon(198156), Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254)
+			CreateFrameUsableItems(172924, LibOctopussy:GetItemIcon(172924), Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542)
 			if Faction == "Horde" then
-				CreateFrameUsableItems(168808, 2000840, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 265807)
-				CreateFrameUsableItems(168807, 2000841, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 265807)
+				CreateFrameUsableItems(168808, LibOctopussy:GetItemIcon(168808), Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 265807)
+				CreateFrameUsableItems(168807, LibOctopussy:GetItemIcon(168807), Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 265807)
 			else
-				CreateFrameUsableItems(168808, 2000840, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 264492)
-				CreateFrameUsableItems(168807, 2000841, Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 264492)
+				CreateFrameUsableItems(168808, LibOctopussy:GetItemIcon(168808), Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 264492)
+				CreateFrameUsableItems(168807, LibOctopussy:GetItemIcon(168807), Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 264492)
 			end
-			CreateFrameUsableItems(151652, 237560, Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 264490)
-			CreateFrameUsableItems(112059, 892831, Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 264487)
-			CreateFrameUsableItems(87215, 651094, Xpos*6+Ypos*1, Ypos*7, 0, .43, .86, 264485)
-			CreateFrameUsableItems(48933, 135778, Xpos*7+Ypos*1, Ypos*8, 0, .43, .86, 264481)
-			CreateFrameUsableItems(110560, 1041860, Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603)
-			CreateFrameUsableItems(6948, 134414, Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603)
-			CreateFrameUsableItems(140192, 1444943, Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603)
+			CreateFrameUsableItems(151652, LibOctopussy:GetItemIcon(151652), Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 264490)
+			CreateFrameUsableItems(112059, LibOctopussy:GetItemIcon(112059), Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 264487)
+			CreateFrameUsableItems(87215, LibOctopussy:GetItemIcon(87215), Xpos*6+Ypos*1, Ypos*7, 0, .43, .86, 264485)
+			CreateFrameUsableItems(48933, LibOctopussy:GetItemIcon(48933), Xpos*7+Ypos*1, Ypos*8, 0, .43, .86, 264481)
+			CreateFrameUsableItems(110560, LibOctopussy:GetItemIcon(110560), Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603)
+			CreateFrameUsableItems(6948, LibOctopussy:GetItemIcon(6948), Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603)
+			CreateFrameUsableItems(140192, LibOctopussy:GetItemIcon(140192), Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603)
 			if classFilename == "DRUID" then
-				CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
+				CreateFrameUsableSpells(193753, LibOctopussy:func_GetSpellIcon(193753), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
 			end
 			if classFilename == "DEATHKNIGHT" then
-				CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
+				CreateFrameUsableSpells(50977, LibOctopussy:func_GetSpellIcon(50977), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
 			end
 			if classFilename == "SHAMAN" then
-				CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
+				CreateFrameUsableSpells(556, LibOctopussy:func_GetSpellIcon(556), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
 			end
 			if classFilename == "MONK" then
-				CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
+				CreateFrameUsableSpells(126892, LibOctopussy:func_GetSpellIcon(126892), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
 			end
 			if RaceEnglish == "DarkIronDwarf" then
-				CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*12+Ypos*1, Ypos*13, 0, .43, .86)
+				CreateFrameUsableSpells(265225, LibOctopussy:func_GetSpellIcon(265225), Xpos*12+Ypos*1, Ypos*13, 0, .43, .86)
 			end
 		else
-			CreateFrameUsableItems(110560, 1041860, Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603)
-			CreateFrameUsableItems(6948, 134414, Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603)
-			CreateFrameUsableItems(140192, 1444943, Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603)
+			CreateFrameUsableItems(110560, LibOctopussy:GetItemIcon(110560), Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603)
+			CreateFrameUsableItems(6948, LibOctopussy:GetItemIcon(6948), Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603)
+			CreateFrameUsableItems(140192, LibOctopussy:GetItemIcon(140192), Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603)
 			if classFilename == "DRUID" then
-				CreateFrameUsableSpells(193753, C_Spell.GetSpellInfo(193753).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
+				CreateFrameUsableSpells(193753, LibOctopussy:func_GetSpellIcon(193753), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
 			end
 			if classFilename == "DEATHKNIGHT" then
-				CreateFrameUsableSpells(50977, C_Spell.GetSpellInfo(50977).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
+				CreateFrameUsableSpells(50977, LibOctopussy:func_GetSpellIcon(50977), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
 			end
 			if classFilename == "SHAMAN" then
-				CreateFrameUsableSpells(556, C_Spell.GetSpellInfo(556).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
+				CreateFrameUsableSpells(556, LibOctopussy:func_GetSpellIcon(556), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
 			end
 			if classFilename == "MONK" then
-				CreateFrameUsableSpells(126892, C_Spell.GetSpellInfo(126892).iconID, Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
+				CreateFrameUsableSpells(126892, LibOctopussy:func_GetSpellIcon(126892), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
 			end
 			if RaceEnglish == "DarkIronDwarf" then
-				CreateFrameUsableSpells(265225, C_Spell.GetSpellInfo(265225).iconID, Xpos*4+Ypos*1, Ypos*5, 0, .43, .86)
+				CreateFrameUsableSpells(265225, LibOctopussy:func_GetSpellIcon(265225), Xpos*4+Ypos*1, Ypos*5, 0, .43, .86)
 			end
 		end
 		if UnitLevel >= 20 then
 			if Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent == false then
 				for k, v in next, (E.OctoTable_Portals_MoP) do
-					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
 				end
 				for k, v in next, (E.OctoTable_Portals_WoD) do
-					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*3, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*3, (Ypos*k), 0, .43, .86)
 				end
 				for k, v in next, (E.OctoTable_Portals_Legion) do
-					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*4, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*4, (Ypos*k), 0, .43, .86)
 				end
 				for k, v in next, (E.OctoTable_Portals_BfA) do
-					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*5, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*5, (Ypos*k), 0, .43, .86)
 				end
 				for k, v in next, (E.OctoTable_Portals_SL) do
-					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*6, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*6, (Ypos*k), 0, .43, .86)
 				end
 				for k, v in next, (E.OctoTable_Portals_DF) do
-					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*7, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*7, (Ypos*k), 0, .43, .86)
 				end
 				for k, v in next, (E.OctoTable_Portals_DF_S3) do
-					CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
+					CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*8, (Ypos*k), 0, .43, .86)
 				end
 				if Faction == "Horde" then
 					for k, v in next, (E.OctoTable_Portals_TWW_S1_Horde) do
-						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
 					end
 				else
 					for k, v in next, (E.OctoTable_Portals_TWW_S1_Alliance) do
-						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
 					end
 				end
 				if classFilename == "MAGE" and Faction == "Horde" then
 					for k, v in next, (E.OctoTable_Portals_Mage_Solo_Horde) do
-						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
 					end
 					for k, v in next, (E.OctoTable_Portals_Mage_Group_Horde) do
-						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*11, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*11, (Ypos*k), 0, .43, .86)
 					end
 				end
 				if classFilename == "MAGE" and Faction == "Alliance" then
 					for k, v in next, (E.OctoTable_Portals_Mage_Solo_Alliance) do
-						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
 					end
 					for k, v in next, (E.OctoTable_Portals_Mage_Group_Alliance) do
-						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*11, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*11, (Ypos*k), 0, .43, .86)
 					end
 				end
 			else
 				if Faction == "Horde" then
 					for k, v in next, (E.OctoTable_Portals_TWW_S1_Horde) do
-						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
 					end
 				else
 					for k, v in next, (E.OctoTable_Portals_TWW_S1_Alliance) do
-						CreateFrameUsableSpells(v, C_Spell.GetSpellInfo(v).iconID, Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
 					end
 				end
 			end
@@ -3876,4 +3887,3 @@ end
 SlashCmdList["RELOAD"] = ReloadUI
 SLASH_RELOAD1 = "/rl"
 -- fpde(E.Movies)
-

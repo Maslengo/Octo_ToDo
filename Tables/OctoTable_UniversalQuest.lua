@@ -814,15 +814,6 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "KorthiaITEMResearchReportAllSeeingCrystal",
-		reset = "Once",
-		desc = "SL",
-		questID = {
-			64339,
-		},
-		max = 1
-	},
-	{
 		name_save = "KorthiaITEMTreatiseRecognizingStygiaanditsUses",
 		reset = "Once",
 		desc = "SL",
@@ -837,15 +828,6 @@ E.OctoTable_UniversalQuest = {
 		desc = "SL",
 		questID = {
 			64828,
-		},
-		max = 1
-	},
-	{
-		name_save = "KorthiaITEMResearchReportAncientShrines",
-		reset = "Once",
-		desc = "SL",
-		questID = {
-			64348,
 		},
 		max = 1
 	},
@@ -2402,35 +2384,6 @@ E.OctoTable_UniversalQuest = {
 			64783,
 		},
 		max = 9
-	},
-	{
-		name_save = "WarcraftRumble",
-		reset = "Once",
-		desc = "Holiday",
-		questID = {
-			73182,
-			75039,
-			74850,
-			74851,
-			75036,
-			73928,
-			75040,
-			73936,
-			75041,
-			75037,
-			74852,
-			74843,
-			75038,
-			73180,
-			74849,
-			74287,
-			74845,
-			74848,
-			73952,
-			74286,
-			74844,
-		},
-		max = 21
 	},
 	{
 		name_save = "SeeingRed",

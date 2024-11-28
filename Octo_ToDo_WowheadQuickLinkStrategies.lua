@@ -1,5 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
+local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+local strbyte, strlen, strsub = string.byte, string.len, string.sub
 
 -- Octo_ToDo_WowheadQuickLinkStrategies
 local strategies = {
@@ -73,9 +75,9 @@ function E.strategies.GetArmoryUrl(dataSources)
 				local LRI_name = select(2, LibStub("LibRealmInfo"):GetRealmInfo(realm))
 				local LRI_englishName = select(10, LibStub("LibRealmInfo"):GetRealmInfo(realm))
 				if realm == LRI_name then
-					realm = LRI_englishName
+					realm = LRI_englishName:gsub(" ", "-")
 				end
-				return "Armory", string.format(E.baseArmoryUrl, locale, realm, name)
+				return "Armory", string.format(E.baseArmoryUrl, locale:utf8lower(), realm, name)
 			end
 		end
 	end
@@ -88,8 +90,9 @@ function E.altStrategies.GetRaiderIoUrl(dataSources)
 				local LRI_name = select(2, LibStub("LibRealmInfo"):GetRealmInfo(realm))
 				local LRI_englishName = select(10, LibStub("LibRealmInfo"):GetRealmInfo(realm))
 				if realm == LRI_name then
-					realm = LRI_englishName
+					realm = LRI_englishName:gsub(" ", "-")
 				end
+
 				return "Raider.IO", string.format(E.baseRaiderIoUrl, region, realm, name)
 			end
 		end

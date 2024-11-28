@@ -86,45 +86,72 @@ local function Octo_ToDo_SECOND_OnLoad()
 	end)
 end
 local function O_otrisovka_SECOND()
+	print (E.Red_Color.. "O_otrisovka_SECOND|r")
 	tinsert(OctoTable_func_otrisovka_SECOND,
 		function(CharInfo, tooltip, CL, BG)
-			local vivodCent, vivodLeft = "", ""
+			local vivodCent, vivodLeft = " ", " "
 			CL:SetFontObject(OctoFont12)
 			vivodLeft = classColorHexCurrent..ACHIEVEMENT_TITLE.."|r".." "..E.Green_Color..GetTotalAchievementPoints(false).."|r"
-			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
-			if CharInfo.Faction == "Horde" then
-				BG:SetColorTexture(.5, 0, 0, E.BGALPHA*2)
-			else
-				BG:SetColorTexture(0, 0, .5, E.BGALPHA*2)
-			end
-			if CharInfo.hasMail then
-				BG:SetColorTexture(1, 1, 1, E.BGALPHA)
-				vivodCent = E.Icon_MailBox..vivodCent
-			end
-			return vivodCent.."|r", vivodLeft
+			-- vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
+			-- if CharInfo.Faction == "Horde" then
+			-- 	BG:SetColorTexture(.5, 0, 0, E.BGALPHA*2)
+			-- else
+			-- 	BG:SetColorTexture(0, 0, .5, E.BGALPHA*2)
+			-- end
+			-- if CharInfo.hasMail then
+			-- 	BG:SetColorTexture(1, 1, 1, E.BGALPHA)
+			-- 	vivodCent = E.Icon_MailBox..vivodCent
+			-- end
+			return vivodCent, vivodLeft
 	end)
 	if Octo_ToDo_DB_Vars.config.AchievementToShow ~= 0 then
 		local categoryID = Octo_ToDo_DB_Vars.config.AchievementToShow
 		local total = GetCategoryNumAchievements(categoryID, true)
 		if total then
 			for i = 1, total do
-				local AchievementID, name, points, completedAchi, _, _, _, _, _, icon = GetAchievementInfo(categoryID, i)
+				local AchievementID, name, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
 				if AchievementID then
 					if completedAchi == false or (completedAchi == Octo_ToDo_DB_Vars.config.AchievementShowCompleted) then
 						tinsert(OctoTable_func_otrisovka_SECOND,
 							function(CharInfo, tooltip, CL, BG)
-								local vivodCent, vivodLeft = "", ""
-								vivodLeft = LibOctopussy:func_texturefromIcon(icon)..name
-								tooltip[#tooltip+1] = {LibOctopussy:func_texturefromIcon(icon)..E.Yellow_Color..points.."|r".." "..E.Gray_Color.." id:"..AchievementID.."|r", " "}
+								local vivodCent, vivodLeft = " ", " "
+								vivodLeft = LibOctopussy:func_texturefromIcon(icon)
+
+									if rewardText ~= nil and rewardText and rewardText ~= "" and rewardText ~= " " then
+										vivodLeft = vivodLeft..E.Blue_Color.."*|r"
+									end
+
+									if name then
+										vivodLeft = vivodLeft .. name
+									end
+
+									if points ~= 0 then
+										tooltip[#tooltip+1] = {E.Yellow_Color..points.."|r".." "..E.Gray_Color.." id:"..AchievementID.."|r", " "}
+									else
+										tooltip[#tooltip+1] = {E.Gray_Color.." id:"..AchievementID.."|r", " "}
+									end
 								vivodCent = LibOctopussy:func_achievementvivod(AchievementID)
 								local numCriteria = GetAchievementNumCriteria(AchievementID)
+								-- local AchievementNumRewards = GetAchievementNumRewards(AchievementID)
+								-- print (AchievementNumRewards)
+								-- if AchievementNumRewards then
+								-- 	local AchievementReward = GetAchievementReward(AchievementID, AchievementNumRewards)
+								-- 	print (AchievementReward)
+								-- end
+
 								if numCriteria ~= 1 then
-									tooltip[#tooltip+1] = {LibOctopussy:func_achievementdescription(AchievementID), " "}
+									tooltip[#tooltip+1] = {description}
+								end
+								if rewardText and rewardText ~= "" and rewardText ~= " " then
+									tooltip[#tooltip+1] = {E.Blue_Color..rewardText.."|r"}
+								end
+								if numCriteria >= 1 then
 									tooltip[#tooltip+1] = {" ", " "}
+									for i = 1, numCriteria do
+										tooltip[#tooltip+1] = {LibOctopussy:func_achievementcriteriaString(AchievementID, i), LibOctopussy:func_achievementquantity(AchievementID, i)}
+									end
 								end
-								for i = 1, numCriteria do
-									tooltip[#tooltip+1] = {LibOctopussy:func_achievementcriteriaString(AchievementID, i), LibOctopussy:func_achievementquantity(AchievementID, i)}
-								end
+
 								return vivodCent, vivodLeft
 						end)
 					end
@@ -132,6 +159,7 @@ local function O_otrisovka_SECOND()
 			end
 		end
 	end
+
 end
 local function Octo_ToDo_SECOND_CreateAltFrame()
 	if not OctoToDo_SECOND_MainFrame then
@@ -394,7 +422,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 				OctoToDo_SECOND_CharFrame.BG:Hide()
 				OctoToDo_SECOND_CharFrame.BG:SetPoint("TOPLEFT", 0, -E.curHeight)
 				OctoToDo_SECOND_CharFrame.BG:SetPoint("BOTTOMRIGHT", 0, 0)
-				OctoToDo_SECOND_CharFrame.BG:SetColorTexture(r, g, b, 1)
+				OctoToDo_SECOND_CharFrame.BG:SetColorTexture(r, g, b, 0) -- ЦВЕТ ФОНА
 				for i = 1, #OctoTable_func_otrisovka_SECOND do
 					CharInfo.GUID = curCharGUID
 					local CF = CreateFrame("Frame", AddonTitle..LibOctopussy:func_GenerateUniqueID().."CF"..i, OctoToDo_SECOND_CharFrame)

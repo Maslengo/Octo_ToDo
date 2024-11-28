@@ -50,7 +50,7 @@ if IsCata() then
 end
 E.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
 E.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
-E.baseArmoryUrl = "https://worldofwarcraft.com/%s/character/%s/%s"
+E.baseArmoryUrl = "https://worldofwarcraft.blizzard.com/%s/character/%s/%s"
 E.baseRaiderIoUrl = "https://raider.io/characters/%s/%s/%s"
 E.strategies = {}
 E.altStrategies = {}
