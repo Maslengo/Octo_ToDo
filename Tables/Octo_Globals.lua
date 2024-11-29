@@ -319,9 +319,11 @@ E.Icon_Empty = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 
 -- C_Covenants.GetCovenantIDs()
 -- КОВЕНАНТ
+-- Enum.CovenantType
+-- C_Covenants.GetCovenantData(1).name
 E.OctoTable_Covenant = {
 	[1] = {
-		name = "Kyrian",
+		name = C_Covenants.GetCovenantData(1).name, -- "Kyrian",
 		icon = 3641395,
 		color = "|cff6FA8DC",
 		r = 0.44,
@@ -329,7 +331,7 @@ E.OctoTable_Covenant = {
 		b = 0.86,
 	},
 	[2] = {
-		name = "Venthyr",
+		name = C_Covenants.GetCovenantData(2).name, -- "Venthyr",
 		icon = 3641397,
 		color = "|cffEA9999",
 		r = 0.88,
@@ -337,7 +339,7 @@ E.OctoTable_Covenant = {
 		b = 0.40,
 	},
 	[3] = {
-		name = "NightFae",
+		name = C_Covenants.GetCovenantData(3).name, -- "NightFae",
 		icon = 3641394,
 		color = "|cffB4A7D6",
 		r = 0.56,
@@ -345,7 +347,7 @@ E.OctoTable_Covenant = {
 		b = 0.76,
 	},
 	[4] = {
-		name = "Necrolord",
+		name = C_Covenants.GetCovenantData(4).name, -- "Necrolord",
 		icon = 3641396,
 		color = "|cff93C47D",
 		r = 0.58,

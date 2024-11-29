@@ -1792,11 +1792,13 @@ local function O_otrisovka_FIRST()
 			tinsert(OctoTable_func_otrisovka_FIRST,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft = " ", " "
-					vivodLeft = LibOctopussy:func_texturefromIcon(E.OctoTable_Covenant[i].icon)..E.OctoTable_Covenant[i].name
+					vivodLeft = LibOctopussy:func_texturefromIcon(E.OctoTable_Covenant[i].icon)..E.OctoTable_Covenant[i].color..E.OctoTable_Covenant[i].name.."|r"
 					if k == 1 then
+						CL:SetFontObject(OctoFont12)
 						vivodCent = CharInfo.Shadowland[i][k]
 						vivodLeft = vivodLeft
 					else
+						CL:SetFontObject(OctoFont9)
 						vivodLeft = vivodLeft..LibOctopussy:func_currencyicon(1813)
 						vivodCent = CharInfo.Shadowland[i][k]
 					end
@@ -1807,7 +1809,7 @@ local function O_otrisovka_FIRST()
 					if i == CharInfo.Shadowland.curCovID then
 						BG:SetColorTexture(E.OctoTable_Covenant[i].r, E.OctoTable_Covenant[i].g, E.OctoTable_Covenant[i].b, E.BGALPHA)
 					else
-						BG:SetColorTexture(0,0,0,0)
+						BG:SetColorTexture(0, 0, 0, 0)
 					end
 					return vivodCent, vivodLeft
 			end)
