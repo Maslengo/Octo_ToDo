@@ -1,12 +1,10 @@
 local GlobalAddonName, E = ...
-print (GlobalAddonName)
 local LibOctopussy = LibStub("LibOctopussy-1.0")
 E.AddonTitle = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Title")
 E.AddonNotes = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Notes")
 E.AddonAuthor = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Author")
 E.AddonVersion = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Version")
 ----------------------------------------------------------------
-print (E.AddonVersion)
 E.OctoTable_Empty = {}
 E.Modules = {}
 E.Timers = {}
@@ -15,43 +13,78 @@ _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+-- WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE or 1 -- RETAIL
+-- WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC or 2 -- CLASSIC
+-- WOW_PROJECT_BURNING_CRUSADE_CLASSIC = WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5 -- BURNING CRUSADE
+-- WOW_PROJECT_WRATH_CLASSIC = WOW_PROJECT_WRATH_CLASSIC or 11 -- WRATH OF THE LICH KING
+-- WOW_PROJECT_CATACLYSM_CLASSIC = WOW_PROJECT_CATACLYSM_CLASSIC or 14 -- CATACLYSM
+-- WOW_PROJECT_ID = WOW_PROJECT_ID or WOW_PROJECT_MAINLINE
+-- function IsRetail()
+-- 	return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+-- end
+-- function IsClassic()
+-- 	return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+-- end
+-- function IsBC()
+-- 	return WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+-- end
+-- function IsWRATH()
+-- 	return WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
+-- end
+-- function IsCata()
+-- 	return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
+-- end
 
-WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE or 1 -- RETAIL
-WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC or 2 -- CLASSIC
-WOW_PROJECT_BURNING_CRUSADE_CLASSIC = WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5 -- BURNING CRUSADE
-WOW_PROJECT_WRATH_CLASSIC = WOW_PROJECT_WRATH_CLASSIC or 11 -- WRATH OF THE LICH KING
-WOW_PROJECT_CATACLYSM_CLASSIC = WOW_PROJECT_CATACLYSM_CLASSIC or 14 -- CATACLYSM
-WOW_PROJECT_ID = WOW_PROJECT_ID or WOW_PROJECT_MAINLINE
+local _, _, _, interfaceVersion = GetBuildInfo() -- Mainline
 
+function IsClassic()
+	if interfaceVersion > 10000 and interfaceVersion < 20000 then return true else return false end
+end
+
+function IsBC()
+	if interfaceVersion > 20000 and interfaceVersion < 30000 then return true else return false end
+end
+
+function IsWOTLK()
+	if interfaceVersion > 30000 and interfaceVersion < 40000 then return true else return false end
+end
+
+function IsCataclysm()
+	if interfaceVersion > 40000 and interfaceVersion < 50000 then return true else return false end
+end
+
+function IsMOP()
+	if interfaceVersion > 50000 and interfaceVersion < 60000 then return true else return false end
+end
+
+function IsWOD()
+	if interfaceVersion > 60000 and interfaceVersion < 70000 then return true else return false end
+end
+
+function IsLegion()
+	if interfaceVersion > 70000 and interfaceVersion < 80000 then return true else return false end
+end
+
+function IsBFA()
+	if interfaceVersion > 80000 and interfaceVersion < 90000 then return true else return false end
+end
+
+function IsShadowlands()
+	if interfaceVersion > 90000 and interfaceVersion < 100000 then return true else return false end
+end
+
+function IsDragonflight()
+	if interfaceVersion > 100000 and interfaceVersion < 110000 then return true else return false end
+end
+
+function IsTWW()
+	if interfaceVersion > 110000 and interfaceVersion < 120000 then return true else return false end
+end
 
 function IsRetail()
 	return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 end
 
-function IsClassic()
-	return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-end
-
-function IsBC()
-	return WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
-end
-
-function IsWRATH()
-	return WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
-end
-
-function IsCata()
-	return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
-end
-
-print (
-	"IsRetail:"..tostringall(IsRetail()),
-	"IsClassic:"..tostringall(IsClassic()),
-	"IsBC:"..tostringall(IsBC()),
-	"IsWRATH:"..tostringall(IsWRATH()),
-	"IsCata:"..tostringall(IsCata())
-
-	)
 
 E.AddonTexture_1 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_1.tga"
 E.AddonTexture_2 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_2.tga"
@@ -80,13 +113,13 @@ local function func_hex2rgb(self)
 	return tonumber("0x"..self:sub(1, 2)), tonumber("0x"..self:sub(3, 4)), tonumber("0x"..self:sub(5, 6))
 end
 --------------------------------------------------------------------------------
-if IsRetail() then
+if IsRetail() == true then
 	E.baseWowheadUrl = "https://wowhead.com/%s%s=%s"
 end
-if IsClassic() then
+if IsClassic() == true then
 	E.baseWowheadUrl = "https://wowhead.com/classic/%s=%s%s"
 end
-if IsCata() then
+if IsCataclysm() == true then
 	E.baseWowheadUrl = "https://wowhead.com/cata/%s=%s%s"
 end
 E.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
@@ -266,10 +299,10 @@ end
 E.Icon_Alliance = func_texturefromIcon(255140) -- 132486
 E.Icon_Horde = func_texturefromIcon(255142) -- 132485
 E.Icon_Unknown = func_texturefromIcon(134400)
-E.Icon_Kyrian = func_texturefromIcon(3257748)
-E.Icon_Necrolord = func_texturefromIcon(3257749)
-E.Icon_NightFae = func_texturefromIcon(3257750)
-E.Icon_Venthyr = func_texturefromIcon(3257751)
+E.Icon_Kyrian = func_texturefromIcon(3641395)
+E.Icon_Necrolord = func_texturefromIcon(3641396)
+E.Icon_NightFae = func_texturefromIcon(3641394)
+E.Icon_Venthyr = func_texturefromIcon(3641397)
 E.Icon_WorldBoss = func_texturefromIcon(3528312)
 E.Icon_Rares = func_texturefromIcon(135903)
 E.Icon_Money = func_texturefromIcon(133784, 14)
@@ -279,3 +312,48 @@ E.AccountWide = E.Blue_Color.."(A)".."|r"
 E.AccountTransferable = E.Red_Color.."(T)".."|r"
 -- E.Icon_AccountTransferable = func_texturefromIcon(6124644)
 E.Icon_Achievement = func_texturefromIcon(236544)
+
+E.Icon_Empty = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
+
+
+
+-- C_Covenants.GetCovenantIDs()
+-- КОВЕНАНТ
+E.OctoTable_Covenant = {
+	[1] = {
+		name = "Kyrian",
+		icon = 3641395,
+		color = "|cff6FA8DC",
+		r = 0.44,
+		g = 0.66,
+		b = 0.86,
+	},
+	[2] = {
+		name = "Venthyr",
+		icon = 3641397,
+		color = "|cffEA9999",
+		r = 0.88,
+		g = 0.40,
+		b = 0.40,
+	},
+	[3] = {
+		name = "NightFae",
+		icon = 3641394,
+		color = "|cffB4A7D6",
+		r = 0.56,
+		g = 0.49,
+		b = 0.76,
+	},
+	[4] = {
+		name = "Necrolord",
+		icon = 3641396,
+		color = "|cff93C47D",
+		r = 0.58,
+		g = 0.77,
+		b = 0.49,
+	},
+
+
+}
+
+

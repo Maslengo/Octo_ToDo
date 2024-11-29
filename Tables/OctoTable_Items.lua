@@ -154,6 +154,7 @@ E.OctoTable_itemID_AutoOpen = {
 	17685, 15874, 7973
 }
 E.OctoTable_itemID_Ignore_List = {
+	[173523] = true,
 	[224837] = true,
 	[34008] = true,
 	[49040] = true,
@@ -679,6 +680,7 @@ E.OctoTable_itemID_ItemsUsable_Mount = {
 	223504, 223506, 223574, 224148, 224413, 224416, 192794, 203226
 }
 E.OctoTable_itemID_ItemsUsable_Other = {
+	172020,
 	--https://wowhead.com/ru/npc=98690
 	232317, 232316, 232315, 232314, 232313, 232291, 232028, 232027, 232063,
 	231999, 232000, 232008, 232019, 232010, 232020, 232025, 232004, 232003,

@@ -67,10 +67,10 @@ E.OctoTable_UniversalQuest = {
 		reset = "Weekly",
 		desc = "Timewalk",
 		questID = {
-			57637, -- CATA
-			50316, -- WOTLK
-			47523, -- BC
-			82817, -- Classic,
+			57637,
+			50316,
+			47523,
+			82817,
 		},
 		max = 1
 	},
@@ -139,7 +139,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WorldBoss",
 		reset = "Weekly",
-		desc = "TWW",
+		desc = "TheWarWithin",
 		questID = {
 			82653,
 			81653,
@@ -151,7 +151,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TheTheaterTroupe",
 		reset = "Weekly",
-		desc = "TWW",
+		desc = "TheWarWithin",
 		questID = {
 			83240,
 		},
@@ -160,7 +160,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DungeonQuest",
 		reset = "Weekly",
-		desc = "TWW",
+		desc = "TheWarWithin",
 		questID = {
 			83443,
 			83457,
@@ -175,7 +175,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Delve",
 		reset = "Weekly",
-		desc = "TWW",
+		desc = "TheWarWithin",
 		questID = {
 			39020,
 			39033,
@@ -209,7 +209,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "MajorKeyflames",
 		reset = "Weekly",
-		desc = "TWW",
+		desc = "TheWarWithin",
 		questID = {
 			79471,
 			79470,
@@ -225,7 +225,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "MinorKeyflames",
 		reset = "Weekly",
-		desc = "TWW",
+		desc = "TheWarWithin",
 		questID = {
 			76600,
 			79158,
@@ -250,7 +250,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Worldsoul",
 		reset = "Weekly",
-		desc = "TWW",
+		desc = "TheWarWithin",
 		questID = {
 			82659,
 			82516,
@@ -316,7 +316,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBALL",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			69927,
 			69928,
@@ -328,7 +328,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBZaqaliElders",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		-- place = "ZaralekCavern",
 		questID = {
 			74892,
@@ -338,7 +338,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBHibernationHeroes",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		-- place = "EmeraldDream_",
 		questID = {
 			76367,
@@ -348,7 +348,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBALL",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			61813,
 			61814,
@@ -360,7 +360,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBAntrosZM",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65143,
 		},
@@ -369,7 +369,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBMorgethMaw",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64531,
 		},
@@ -378,7 +378,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBALL",
 		reset = "Weekly",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			52157,
 			52163,
@@ -392,7 +392,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBNazjatar",
 		reset = "Weekly",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			56056,
 			56057,
@@ -402,7 +402,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBDarkshore",
 		reset = "Weekly",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			54896,
 			52847,
@@ -412,7 +412,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBAssault",
 		reset = "Weekly",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			55466,
 			58705,
@@ -441,7 +441,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaShapingFate",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			63949,
 		},
@@ -450,7 +450,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ReplenishtheReservoir",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			61981,
 			61982,
@@ -462,7 +462,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "MawTorghast",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64347,
 		},
@@ -471,7 +471,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "MawCovenantAssault",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			63822,
 			63823,
@@ -483,7 +483,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "MawContainingtheHelsworn",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64273,
 		},
@@ -492,7 +492,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ReturnLostSouls",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			62858,
 			62859,
@@ -512,7 +512,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TradingFavors",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			60242,
 			60243,
@@ -536,7 +536,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TheWorldAwaits",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			72728,
 		},
@@ -545,7 +545,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TheArenaCalls",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			72720,
 		},
@@ -554,7 +554,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmissaryofWar",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			72722,
 		},
@@ -563,7 +563,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ACalltoBattle",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			72723,
 		},
@@ -572,7 +572,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "SomethingDifferent",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			47148,
 		},
@@ -581,7 +581,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "PVP",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			47148,
 			71026,
@@ -605,7 +605,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaStolenKorthianSupplies",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64522,
 		},
@@ -614,7 +614,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaLostResearch",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65266,
 		},
@@ -623,7 +623,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaKorthianAnimaVessel",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64575,
 		},
@@ -632,7 +632,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaRIFTStolenAnimaVessel",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64265,
 			64269,
@@ -643,7 +643,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaRIFTRiftboundCache",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64470,
 			64471,
@@ -655,7 +655,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaRIFTZovaalsVault",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64283,
 		},
@@ -664,7 +664,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaRIFTSpectralBoundChest",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64247,
 		},
@@ -673,7 +673,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "MawHelswornChest",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64256,
 		},
@@ -682,7 +682,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaMobs",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64341,
 			64342,
@@ -705,7 +705,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaRelicGorger",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64433,
 			64434,
@@ -717,7 +717,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaCollection",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64351,
 			64354,
@@ -743,7 +743,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "MawQuest",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			60646,
 			60762,
@@ -762,7 +762,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaRares",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64457,
 			64338,
@@ -797,7 +797,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaITEMResearchReportRelicExaminationTechniques",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64367,
 		},
@@ -806,7 +806,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaITEMVaultAnimaTracker",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64061,
 		},
@@ -815,7 +815,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaITEMTreatiseRecognizingStygiaanditsUses",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64307,
 		},
@@ -824,7 +824,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaITEMTreatiseBondsofStygiainMortals",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64828,
 		},
@@ -833,7 +833,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64027,
 		},
@@ -842,7 +842,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaITEMTreatiseRelicsAboundintheShadowlands",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64366,
 		},
@@ -851,7 +851,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaITEMResearchReportAdaptiveAlloys",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64300,
 		},
@@ -860,7 +860,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KorthiaITEMResearchReportFirstAlloys",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64303,
 		},
@@ -869,7 +869,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZaralekCavernEvents",
 		reset = "Daily",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75612,
 			75471,
@@ -895,7 +895,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZaralekCavernRares",
 		reset = "Daily",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75271,
 			75285,
@@ -928,7 +928,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75665,
 		},
@@ -937,7 +937,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZaralekCavernSniffenseeking",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75459,
 			76027,
@@ -962,7 +962,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZaralekCavernSniffenseekingItems",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75771,
 			75772,
@@ -982,7 +982,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZaralekCavernStorylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			72977,
 			72978,
@@ -1057,7 +1057,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DawnoftheInfinitesStorylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76140,
 			76142,
@@ -1073,7 +1073,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TheForbiddenReachRares",
 		reset = "Daily",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			74331,
 			74347,
@@ -1106,7 +1106,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "CommunityFeast",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			70893,
 		},
@@ -1115,7 +1115,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DragonbaneKeep",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			70866,
 		},
@@ -1124,7 +1124,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TheGrandHunt",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			70906,
 		},
@@ -1133,7 +1133,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "StormsFury",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			73162,
 		},
@@ -1142,7 +1142,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "KeysofLoyalty",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			66133,
 		},
@@ -1151,7 +1151,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "StormBoundChest",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			74567,
 		},
@@ -1160,7 +1160,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ResearchersUnderFire",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75630,
 			75629,
@@ -1172,7 +1172,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "FyrakkAssaults",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			74501,
 			75280,
@@ -1182,7 +1182,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DiscipleofFyrakk",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75467,
 		},
@@ -1191,7 +1191,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "AidingtheAccord",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			70750,
 			72068,
@@ -1215,7 +1215,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "FightingisItsOwnReward",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76122,
 		},
@@ -1241,7 +1241,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Warlock_GreenFire",
 		reset = "Once",
-		desc = "Pandaria",
+		desc = "MistsofPandaria",
 		questID = {
 			32295,
 			32307,
@@ -1256,7 +1256,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Warlock_SomeWickedThings",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75538,
 			75539,
@@ -1276,7 +1276,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMPatternsWithinPatterns",
 		reset = "Weekly",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			66042,
 		},
@@ -1285,7 +1285,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMRares",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65557,
 			65547,
@@ -1325,7 +1325,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMRaresDuneDominance",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65585,
 			65586,
@@ -1336,7 +1336,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMworldQuests",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			64960,
 			64974,
@@ -1374,7 +1374,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMTREASURES",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65520,
 			65573,
@@ -1408,7 +1408,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMGetLockStatus",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65589,
 			65590,
@@ -1420,7 +1420,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMUndulatingFoliage",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65572,
 		},
@@ -1429,7 +1429,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "CatchingUp",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			67100,
 			67137,
@@ -1443,7 +1443,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMPryingEyeDiscovery",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65184,
 			65501,
@@ -1454,7 +1454,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMPUZZLECACHES",
 		reset = "Daily",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65094,
 			65323,
@@ -1478,7 +1478,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZMConcordance",
 		reset = "Once",
-		desc = "SL",
+		desc = "Shadowlands",
 		questID = {
 			65179,
 			65213,
@@ -1498,7 +1498,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "coinsQuests",
 		reset = "Weekly",
-		desc = "Draenor",
+		desc = "WarlordsofDraenor",
 		questID = {
 			36058,
 			36055,
@@ -1537,7 +1537,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "coinsQuests",
 		reset = "Weekly",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			52835,
 			52834,
@@ -1551,7 +1551,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "miniVision",
 		reset = "Daily",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			58168,
 			58155,
@@ -1564,7 +1564,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "AssaultTheBlackEmpire",
 		reset = "Weekly",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			56064,
 			57728,
@@ -1576,7 +1576,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Warfront1",
 		reset = "Weekly",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			53416,
 			53414,
@@ -1586,7 +1586,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Warfront2",
 		reset = "Weekly",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			53955,
 			53992,
@@ -1596,7 +1596,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WarfrontHC",
 		reset = "Weekly",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			56137,
 			56136,
@@ -1651,7 +1651,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "InvasionQuests",
 		reset = "Daily",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			54134,
 			54136,
@@ -1708,7 +1708,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "AberrustheShadowedCrucibleSarkareth",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75694,
 		},
@@ -1717,7 +1717,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "VaultoftheIncarnatesFuryoftheStormEater",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			66847,
 		},
@@ -1853,7 +1853,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TimeRift",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77836,
 		},
@@ -1862,7 +1862,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DreamsurgeInvestigation",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77414,
 		},
@@ -1871,7 +1871,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ShapingtheDreamsurge",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77251,
 		},
@@ -1880,7 +1880,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WhenTimeNeedsMending",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77236,
 		},
@@ -1889,7 +1889,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DarkshoreRares",
 		reset = "Daily",
-		desc = "BfA",
+		desc = "BattleforAzeroth",
 		questID = {
 			54695,
 			54696,
@@ -1947,7 +1947,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "SummerFestival",
 		reset = "Month",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			9324,
 			9325,
@@ -2194,7 +2194,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TheEasternKingdomsCupBegins",
 		reset = "Month",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77839,
 		},
@@ -2251,7 +2251,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TemporalAcquisitionsSpecialist",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76406,
 			76547,
@@ -2273,7 +2273,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TheVeiledOssuary",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			72900,
 			72921,
@@ -2335,7 +2335,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TyrsFall",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			72440,
 			72441,
@@ -2349,7 +2349,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ReforgingtheTyrsGuard",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			75632,
 			75633,
@@ -2370,7 +2370,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "DarkmoonFaire",
 		reset = "Daily",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			37911,
 			29438,
@@ -2387,7 +2387,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "SeeingRed",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77408,
 			77409,
@@ -2402,7 +2402,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Garrison1",
 		reset = "Once",
-		desc = "Draenor",
+		desc = "WarlordsofDraenor",
 		questID = {
 			34378,
 			34586,
@@ -2412,7 +2412,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Garrison2",
 		reset = "Once",
-		desc = "Draenor",
+		desc = "WarlordsofDraenor",
 		questID = {
 			36567,
 			36592,
@@ -2422,7 +2422,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "Garrison3",
 		reset = "Once",
-		desc = "Draenor",
+		desc = "WarlordsofDraenor",
 		questID = {
 			36614,
 		},
@@ -2624,7 +2624,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "ZandalariTrollHeritageArmorAllied",
 		reset = "ALL",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			53721,
 		},
@@ -2728,7 +2728,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_AWorthyAllyDreamWardens",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			78444,
 		},
@@ -2737,7 +2737,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_BloomingDreamseeds",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			78821,
 		},
@@ -2746,7 +2746,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_TheSuperbloom",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			78319,
 		},
@@ -2755,7 +2755,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Rares",
 		reset = "Daily",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77942,
 			77867,
@@ -2790,7 +2790,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Treasures",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77872,
 			77950,
@@ -2817,7 +2817,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_ALL_Storylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76982,
 			75918,
@@ -2893,7 +2893,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_1Storylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76982,
 			75918,
@@ -2908,7 +2908,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_2Storylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76317,
 			76318,
@@ -2928,7 +2928,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_3Storylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77436,
 			76433,
@@ -2944,7 +2944,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_4Storylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76403,
 			76342,
@@ -2961,7 +2961,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_5Storylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76327,
 			76328,
@@ -2981,7 +2981,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_6Storylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76384,
 			76416,
@@ -3000,7 +3000,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_7Storylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77780,
 			76276,
@@ -3017,7 +3017,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Sidequests_APassedTorch",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77948,
 			77978,
@@ -3027,7 +3027,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Sidequests_TroubleattheTree",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77316,
 			77317,
@@ -3038,7 +3038,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Sidequests_ASleepySearch",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77896,
 			77911,
@@ -3051,7 +3051,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Sidequests_TheDryadGarden",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76566,
 			76568,
@@ -3066,7 +3066,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Sidequests_TheQonzuQuery",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			78065,
 			78163,
@@ -3079,7 +3079,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Sidequests_SkyMothersIre",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			78041,
 			78042,
@@ -3094,7 +3094,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Sidequests_ACalltoAid",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77662,
 			77739,
@@ -3109,7 +3109,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Sidequests_MemoryoftheDreamer",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77310,
 			77311,
@@ -3123,7 +3123,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Sidequests_ADragoninHand",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			76460,
 			76460,
@@ -3140,7 +3140,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_DreamsUnified",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			78381,
 		},
@@ -3149,7 +3149,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "EmeraldDream_Seeds",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			77350,
 			77353,
@@ -3160,7 +3160,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "SparksofLife",
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			78097,
 			72649,
@@ -3265,7 +3265,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TheGilneasReclamation_Storylines",
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 
 		questID = {
 			78178,
@@ -3287,7 +3287,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "TheBigDig", -- Octopussy_DF_Weekly_TheBigDig_count -- config DragonscaleExpedition https://www.wowhead.com/ru/quest=77325/to-the-archives#english-comments
 		reset = "Weekly",
-		desc = "DF",
+		desc = "Dragonflight",
 		questID = {
 			79226,
 		},
@@ -3296,7 +3296,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "AzerothianArchives_Storylines", -- Octopussy_DF_Weekly_TheBigDig_count -- config DragonscaleExpedition https://www.wowhead.com/ru/quest=77325/to-the-archives#english-comments
 		reset = "Once",
-		desc = "DF",
+		desc = "Dragonflight",
 
 		questID = {
 			77325, 77267, 78762, 77268, 77231, 77166, 77176, 77433,

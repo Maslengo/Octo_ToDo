@@ -194,7 +194,7 @@ function strategies.wowhead.GetSpellFromTooltip(data)
 	return select(2, data.tooltip:GetSpell()), "spell"
 end
 function strategies.wowhead.GetMountOrToyFromTooltip(data)
-	if not (IsRetail() or IsCata()) or not data.tooltip.GetTooltipData then
+	if not (IsRetail() or IsCataclysm()) or not data.tooltip.GetTooltipData then
 		return
 	end
 	tooltipData = data.tooltip:GetTooltipData()
@@ -227,7 +227,7 @@ function strategies.wowhead.GetQuestFromFocus(data)
 	return data.focus.questID, "quest"
 end
 function strategies.wowhead.GetFromCataWatchTitleFocus(data)
-	if not (IsCata() and data.focus.index and data.focus.type) then
+	if not (IsCataclysm() and data.focus.index and data.focus.type) then
 		return
 	end
 	if data.focus.type == "QUEST" then
@@ -253,13 +253,13 @@ function strategies.wowhead.GetQuestFromClassicLogTitleFocus(data)
 	return questID, "quest"
 end
 function strategies.wowhead.GetQuestFromQuestieTracker(data)
-	if not ((IsClassic() or IsCata()) and data.focus.Quest) then
+	if not ((IsClassic() or IsCataclysm()) and data.focus.Quest) then
 		return
 	end
 	return data.focus.Quest.Id, "quest"
 end
 function strategies.wowhead.GetQuestFromQuestieFrame(data)
-	if not ((IsClassic() or IsCata()) and CheckFrameName("QuestieFrame%d+", data)) then
+	if not ((IsClassic() or IsCataclysm()) and CheckFrameName("QuestieFrame%d+", data)) then
 		return
 	end
 	if data.focus.data.QuestData then
@@ -361,7 +361,7 @@ function strategies.wowhead.GetBattlePetFromAuctionHouse(data)
 	return select(4, C_PetJournal.GetPetInfoBySpeciesID(itemKey.battlePetSpeciesID)), "npc"
 end
 function strategies.wowhead.GetItemFromAuctionHouseClassic(data)
-	if not (IsClassic() or IsCata()) or (not data.focus.itemIndex and (not data.focus:GetParent() or not data.focus:GetParent().itemIndex)) then
+	if not (IsClassic() or IsCataclysm()) or (not data.focus.itemIndex and (not data.focus:GetParent() or not data.focus:GetParent().itemIndex)) then
 		return
 	end
 	local index = data.focus.itemIndex or data.focus:GetParent().itemIndex
