@@ -184,14 +184,12 @@ local function DEV_GUID()
 	local vivod = LibOctopussy:func_encryption(curGUID)
 end
 local function ConcatAtStart()
-	print ("CONCAT")
 	-- В КАКУЮ ИЗ КАКОЙ
 	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
 	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_Quest_Bastion)
 	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_Quest_Maldraxus)
 	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_Quest_Ardenweald)
 	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_Quest_Revendreth)
-	LibOctopussy:func_TableConcat(E.OctoTable_itemID_ALL, E.OctoTable_itemID_Artifacts)
 
 
 
@@ -222,6 +220,9 @@ local function ConcatAtStart()
 	end
 	for _, currencyID in next, (E.OctoTable_currencyID_Hidden) do
 		Octo_ToDo_DB_Config.CurrencyDB[currencyID] = Octo_ToDo_DB_Config.CurrencyDB[currencyID] or false
+	end
+	for _, reputationID in next, (E.OctoTable_reputationID_Hidden) do
+		Octo_ToDo_DB_Config.ReputationDB[reputationID] = Octo_ToDo_DB_Config.ReputationDB[reputationID] or false
 	end
 end
 local function TryToOffMajor(majorFactionID, newRenownLevel, oldRenownLevel)
@@ -404,8 +405,8 @@ local function checkCharInfo(self)
 	self.UnitXPPercent = self.UnitXPPercent or 0
 	self.realTotalTime = self.realTotalTime or 0
 	self.realLevelTime = self.realLevelTime or 0
-	-- self.Possible_Anima = self.Possible_Anima or 0
-	-- self.Possible_CatalogedResearch = self.Possible_CatalogedResearch or 0
+	self.Possible_Anima = self.Possible_Anima or 0
+	self.Possible_CatalogedResearch = self.Possible_CatalogedResearch or 0
 	self.numShownEntries = self.numShownEntries or 0
 	self.loginDate = self.loginDate or 0
 	self.loginDay = self.loginDay or 0
@@ -1228,6 +1229,7 @@ local function Collect_All_Reputations()
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	if collect and not InCombatLockdown() then
+		Octo_ToDo_DB_Config.ReputationDB[2463] = true
 		local listSize, i = C_Reputation.GetNumFactions(), 1
 		C_Reputation.ExpandAllFactionHeaders()
 		while listSize >= i do
@@ -1265,8 +1267,8 @@ local function Collect_ALL_ItemsInBag()
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local usedSlots = 0
 	local totalSlots = 0
-	-- local Possible_Anima = 0
-	-- local Possible_CatalogedResearch = 0
+	local Possible_Anima = 0
+	local Possible_CatalogedResearch = 0
 	local Abbr_En_Name = LibOctopussy:NONE()
 	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		local numSlots = C_Container.GetContainerNumSlots(bag)
@@ -1319,28 +1321,28 @@ local function Collect_ALL_ItemsInBag()
 						end
 					end
 				end
-				-- Cataloged Research
-				-- for k, v in next, (E.OctoTable_itemID_Cataloged_Research) do
-				-- if itemID == v.itemiD then
-				-- Possible_CatalogedResearch = Possible_CatalogedResearch + v.count
-				-- end
-				-- end
-				-- Possible Anima
-				-- local isAnima = C_Item.IsAnimaItemByID(itemID)
-				-- if stackCount and isAnima and itemID ~= nil then
-				-- if (quality == 2) and (itemID ~= 183727) then
-				-- Possible_Anima = Possible_Anima + (5 * stackCount)
-				-- end
-				-- if quality == 3 then
-				-- Possible_Anima = Possible_Anima + (35 * stackCount)
-				-- end
-				-- if quality == 4 then
-				-- Possible_Anima = Possible_Anima + (250 * stackCount)
-				-- end
-				-- if itemID == 183727 then
-				-- Possible_Anima = Possible_Anima + (3 * stackCount)
-				-- end
-				-- end
+				--Cataloged Research
+				for k, v in next, (E.OctoTable_itemID_Cataloged_Research) do
+				    if itemID == v.itemiD then
+				        Possible_CatalogedResearch = Possible_CatalogedResearch + v.count
+				    end
+				end
+				--Possible Anima
+				local isAnima = C_Item.IsAnimaItemByID(itemID)
+				if stackCount and isAnima and itemID ~= nil then
+				    if (quality == 2) and (itemID ~= 183727) then
+				        Possible_Anima = Possible_Anima + (5 * stackCount)
+				    end
+				    if quality == 3 then
+				        Possible_Anima = Possible_Anima + (35 * stackCount)
+				    end
+				    if quality == 4 then
+				        Possible_Anima = Possible_Anima + (250 * stackCount)
+				    end
+				    if itemID == 183727 then
+				        Possible_Anima = Possible_Anima + (3 * stackCount)
+				    end
+				end
 				-- Разное MISCELLANEOUS
 				-- Другое OTHER
 				-- Транспорт MOUNTS
@@ -1381,8 +1383,8 @@ local function Collect_ALL_ItemsInBag()
 			local count = GetItemCount(itemID, true, true, true)
 			collect.ItemsInBag[itemID] = count
 		end
-		-- collect.Possible_Anima = Possible_Anima
-		-- collect.Possible_CatalogedResearch = Possible_CatalogedResearch
+		collect.Possible_Anima = Possible_Anima
+		collect.Possible_CatalogedResearch = Possible_CatalogedResearch
 		collect.usedSlots = usedSlots
 		collect.totalSlots = totalSlots
 		collect.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
@@ -3367,6 +3369,9 @@ local function O_otrisovka_FIRST()
 						vivodCent = E.OctoTable_Covenant[i].color..vivodCent.."|r"
 						if i == CharInfo.Shadowland.curCovID then
 							BG:SetColorTexture(E.OctoTable_Covenant[i].r, E.OctoTable_Covenant[i].g, E.OctoTable_Covenant[i].b, E.BGALPHA*2)
+							if CharInfo.Possible_Anima ~= 0 and k == 2 then
+								vivodCent = vivodCent .. E.Blue_Color.." +"..CharInfo.Possible_Anima.."|r"
+							end
 						else
 							BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 						end
@@ -5470,8 +5475,8 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Reputations == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 
 				vivodCent = E.Gray_Color..REPUTATION.."|r"
 				for _, questID in next, (E.OctoTable_QuestID_Paragon) do
@@ -5491,7 +5496,7 @@ local function O_otrisovka_FIRST()
 				sort(list, func_Reverse_order)
 				local j = 1
 				for i, reputationID in next, (list) do
-					if Octo_ToDo_DB_Config.ReputationDB[reputationID] == true and CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" and LibOctopussy:func_reputationName(reputationID) ~= "no name" then
+					if Octo_ToDo_DB_Config.ReputationDB[reputationID] == true and CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" and LibOctopussy:func_reputationName(reputationID) ~= SEARCH_LOADING_TEXT then
 						local color = j%2 == 0 and "|cffBBBBBB" or E.White_Color
 						tooltip[#tooltip+1] = {color..LibOctopussy:func_reputationName(reputationID).."|r"..E.Gray_Color.." id:"..(reputationID).."|r", CharInfo.MASLENGO.reputationID[reputationID]}
 						j = j + 1
@@ -6753,11 +6758,10 @@ function main_frame_toggle()
 	end
 	local button = LibDBIcon:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
 	if not OctoToDo_FIRST_MainFrame.promise then
-		print ("PROMIS")
+		-- print ("PROMISE")
 		OctoToDo_FIRST_MainFrame.promise = LibThingsLoad:Items(E.OctoTable_Empty)
 		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Config)
 		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ALL)
-		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Artifacts)
 		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_AutoOpen)
 		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Ignore_List)
 		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsDelete)

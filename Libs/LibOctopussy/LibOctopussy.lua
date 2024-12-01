@@ -3,7 +3,7 @@ local MAJOR_VERSION, MINOR_VERSION = "LibOctopussy-1.0", 1
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
 local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
-local ShowIDS = true
+local ShowIDS = false
 ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 -- ITEMS
 local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID

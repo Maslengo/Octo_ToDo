@@ -40,8 +40,18 @@ MAIN_ScrollBar:HookScript("OnShow", function(self, ...)
 		E.Timers.Daily_Reset()
 		if not MAIN_ScrollBar.promise then
 			MAIN_ScrollBar.promise = LibThingsLoad:Items(E.OctoTable_Empty)
-			MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_ALL)
 			MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_Config)
+			MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_ALL)
+			MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_AutoOpen)
+			MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_Ignore_List)
+			MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_ItemsDelete)
+			-- MAIN_ScrollBar.promise:AddItemsByKey(E.OctoTable_itemID_ItemsUsable)
+			-- MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Cosmetic)
+			-- MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Mount)
+			-- MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Other)
+			-- MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Pets)
+			-- MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Toys)
+			-- MAIN_ScrollBar.promise:AddItems(E.OctoTable_itemID_ItemsUsable_ArmorTokens)
 			MAIN_ScrollBar.promise:AddSpells(E.OctoTable_Portals_MoP)
 			MAIN_ScrollBar.promise:AddSpells(E.OctoTable_Portals_WoD)
 			MAIN_ScrollBar.promise:AddSpells(E.OctoTable_Portals_Legion)
@@ -696,7 +706,7 @@ SECOND_Config:SetScript("OnShow", function(self)
 				{
 					otstyp = 0,
 					config = CurrencyID,
-					text = E.LightGray_Color..tostringall(CurrencyID).."|r "..LibOctopussy:func_currencyicon(CurrencyID)..LibOctopussy:func_currencyName(CurrencyID),
+					text = LibOctopussy:func_currencyicon(CurrencyID)..LibOctopussy:func_currencyName(CurrencyID),
 				}
 			)
 		end
@@ -747,12 +757,11 @@ THIRD_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
 		ConfigTable_THIRD_LEFT = {
 		}
-		-- isAccountWide = C_Reputation.IsAccountWideReputation(factionID)
 		local list = {}
 		for reputationID, v in next, (Octo_ToDo_DB_Config.ReputationDB) do
-			if C_Reputation.GetFactionDataByID(reputationID) then
+			-- if C_Reputation.GetFactionDataByID(reputationID) then
 				tinsert(list, reputationID)
-			end
+			-- end
 		end
 		sort(list, func_Reverse_order)
 		for k, reputationID in next, (list) do
@@ -760,7 +769,7 @@ THIRD_Config:SetScript("OnShow", function(self)
 				{
 					otstyp = 0,
 					config = reputationID,
-					text = E.LightGray_Color..tostringall(reputationID).."|r "..LibOctopussy:func_reputationName(reputationID),
+					text = LibOctopussy:func_reputationName(reputationID),
 				}
 			)
 		end
@@ -823,7 +832,7 @@ FOURTH_Config:SetScript("OnShow", function(self)
 						{
 							otstyp = 0,
 							config = itemID,
-							text = E.LightGray_Color..tostringall(itemID).."|r "..LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID),
+							text = LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID),
 						}
 					)
 				end
@@ -887,7 +896,7 @@ FIFTH_Config:SetScript("OnShow", function(self)
 				{
 					otstyp = 0,
 					config = QuestID,
-					text = E.LightGray_Color..tostringall(QuestID).."|r "..LibOctopussy:func_questName(QuestID),
+					text = LibOctopussy:func_questName(QuestID),
 				}
 			)
 		end

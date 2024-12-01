@@ -1,6 +1,10 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
+E.OctoTable_reputationID_Hidden = {
+	2463,
+}
 E.OctoTable_reputation_ALL = {
+
 	2640, 2615, 2607, 2605, 2601, 2600, 2594, 2593, 2590, 2574, 2570, 2569,
 	2568, 2564, 2553, 2550, 2544, 2526, 2524, 2523, 2518, 2517, 2511, 2510,
 	2507, 2506, 2503, 2478, 2472, 2470, 2469, 2465, 2464, 2463, 2462, 2461,
@@ -69,8 +73,7 @@ E.OctoTable_reputation_panda = {
 
 
 
-E.OctoTable_FACTIONTABLE =
-{
+E.OctoTable_FACTIONTABLE = {
 	[1072] = {icon = 0, name = "[DNT] AC Major Faction Child Renown Test", faction = "-", other = "Кентавры Маруук",},
 	[2159] = {icon = 2024072, name = "7-й легион", faction = "-", other = "Battle for Azeroth",},
 	-- [2384] = {icon = 0, name = "7-й легион (идеал)", faction = "-", other = "Battle for Azeroth",},
