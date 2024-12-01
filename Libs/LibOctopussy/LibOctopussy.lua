@@ -1259,7 +1259,7 @@ function lib:IsInArray(arr, subj)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function lib:Empty_Zero(self)
+function lib:func_EmptyZero(self)
 	if tonumber(self) == 0 then
 		return Red_Color.."NEEDDELETE|r"
 	end

@@ -4146,6 +4146,17 @@ E.OctoTable_UniversalQuest = {
 		max = 2
 	},
 
+	{
+		name_save = "Storyline_ChoosingYourCovenant", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ChoosingYourCovenant_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57876,
+			57877,
+			57878,
+		},
+		max = 3
+	},
 
 
 }

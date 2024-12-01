@@ -48,6 +48,9 @@ E.OctoTable_QuestID_Paragon = {
 	46743, -- Припасы из Крутогорья
 }
 E.OctoTable_QuestID = {
+				57876,
+			57877,
+			57878,
 	24545,
 	24743,
 	24547,
