@@ -91,7 +91,7 @@ E.AddonTexture_2 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTextur
 E.AddonTexture_3 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_3.tga"
 E.AddonTexture_4 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_4.tga"
 E.AddonTexture_5 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_5.tga"
-E.currentMaxLevel = 80
+E.currentMaxLevel = GetMaxLevelForLatestExpansion()
 ----------------------------------------------------------------
 local function texturefromIcon(self, size)
 	local show = true -- TYT
@@ -269,20 +269,18 @@ E.Venthyr_b_Color = 0.40
 -- local GRAYFONT = GRAY_FONT_COLOR_CODE
 -- local GRAY_COLOR = { 0.5, 0.5, 0.5, 1 }
 -- local INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED = INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED
--- E.Daily = E.Yellow_Color.."D|r "
--- E.Weekly = E.Blue_Color.."W|r "
--- E.Once = E.Orange_Color.."O|r "
--- E.Daily = "|TInterface\\OptionsFrame\\UI-OptionsFrame-NewFeatureIcon:0|t"
--- E.Daily = "|TInterface\\GossipFrame\\AvailableLegendaryQuestIcon:0|t"
--- E.Weekly = "|TInterface\\GossipFrame\\DailyQuestIcon:0|t"
--- E.Once = "|TInterface\\GossipFrame\\AvailableQuestIcon:0|t"
-E.Once = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Once.tga")
--- E.Once = texturefromIcon("Interface\\GossipFrame\\AvailableQuestIcon")
--- E.Daily = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Daily.tga")
-E.Daily = "|A:Recurringavailablequesticon:14:14:0:0|a"
--- E.Daily = texturefromIcon("Interface\\GossipFrame\\AvailableLegendaryQuestIcon")
-E.Weekly = texturefromIcon("Interface\\Addons\\"..GlobalAddonName.."\\Media\\QuestIcon_Weekly.tga")
--- E.Weekly = texturefromIcon("Interface\\GossipFrame\\DailyQuestIcon")
+
+
+
+
+
+
+
+
+
+
+
+
 -- console -> export "art"
 function func_texturefromIcon(iconID, iconSize, isShown)
 	if isShown == nil then isShown = true end

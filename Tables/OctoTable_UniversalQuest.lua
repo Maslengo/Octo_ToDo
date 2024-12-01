@@ -1,43 +1,6 @@
 local GlobalAddonName, E = ...
 E.OctoTable_UniversalQuest = {
 	{
-		name_save = "ISavedthePartyandAllIGotWereTheseLousyHats",
-		reset = "Once",
-		desc = "Timewalk",
-		questID = {
-			84143,
-			84144,
-			84419,
-			84393,
-			84363,
-			84521,
-			84868,
-			84236,
-			84237,
-			84278,
-			84296,
-			84334,
-			84336,
-			84563,
-			85024,
-			84588,
-			85025,
-			84755,
-			85042,
-			84756,
-			85043,
-			85047,
-			85060,
-			85208,
-			85195,
-			85475,
-			85476,
-			85502,
-			85503,
-		},
-		max = 29
-	},
-	{
 		name_save = "500Currency",
 		reset = "Weekly",
 		desc = "Timewalk",
@@ -88,14 +51,12 @@ E.OctoTable_UniversalQuest = {
 			40792,
 			39021,
 			39020,
-
 			72719,
 			72724,
 			72725,
 			72726,
 			72727,
 			72810,
-
 		},
 		max = 1
 	},
@@ -3266,7 +3227,6 @@ E.OctoTable_UniversalQuest = {
 		name_save = "TheGilneasReclamation_Storylines",
 		reset = "Once",
 		desc = "Dragonflight",
-
 		questID = {
 			78178,
 			78180,
@@ -3284,27 +3244,908 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 13
 	},
-	{
-		name_save = "TheBigDig", -- Octopussy_DF_Weekly_TheBigDig_count -- config DragonscaleExpedition https://www.wowhead.com/ru/quest=77325/to-the-archives#english-comments
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			79226,
-		},
-		max = 1
-	},
-	{
-		name_save = "AzerothianArchives_Storylines", -- Octopussy_DF_Weekly_TheBigDig_count -- config DragonscaleExpedition https://www.wowhead.com/ru/quest=77325/to-the-archives#english-comments
-		reset = "Once",
-		desc = "Dragonflight",
 
+
+
+
+
+
+
+
+
+
+	{
+		name_save = "Storyline_BASTION_TOTAL", -- CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TOTAL_Once
+		reset = "Once",
+		desc = "Shadowlands",
 		questID = {
-			77325, 77267, 78762, 77268, 77231, 77166, 77176, 77433,
-			75493, 75518, 75603, 77434, 75729, 75867, 75868, 77327,
-			76217, 76241, 76242, 77328, 79223, 77486, 76026, 76032,
-			75604, 77487, 77100, 77151, 77154, 77483, 76448, 76557,
-			77415, 77484, 76564, 76576, 77425, 79231, 77331,
+			59773,
+			59774,
+			57102,
+			57584,
+			60735,
+			57261,
+			57676,
+			57677,
+			57709,
+			57710,
+			57711,
+			57263,
+			57267,
+			57265,
+			59920,
+			57713,
+			57908,
+			57909,
+			57288,
+			57714,
+			57291,
+			57266,
+			57715,
+			60217,
+			60218,
+			60219,
+			60220,
+			60221,
+			60222,
+			60223,
+			60224,
+			60225,
+			60226,
+			60229,
+			58174,
+			57270,
+			57977,
+			57264,
+			57716,
+			57717,
+			57037,
+			59147,
+			57719,
+			60292,
+			57446,
+			57269,
+			57447,
+			58976,
+			58771,
+			58799,
+			58800,
+			58977,
+			58978,
+			58979,
+			58980,
+			58843,
+			60180,
+			60013,
+			59196,
+			59197,
+			59198,
+			59199,
+			59200,
+			59426,
+			60005,
+			60006,
+			60007,
+			60008,
+			60009,
+			60052,
+			60053,
+			60054,
+			60055,
+			61096,
+			61107,
+			57386,
+			57390,
+			60020,
+			60021,
+			57425,
+			57511,
+			57512,
+			60179,
+			60181,
+			57515,
 		},
-		max = 39
+
+		max = 85
 	},
+
+
+
+	{
+		name_save = "Storyline_BASTION_ASoulbindInNeed", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_ASoulbindInNeed_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			59773,
+			59774,
+			57102,
+			57584,
+			60735,
+			57261,
+			57676,
+			57677,
+		},
+		max = 8
+	},
+
+	{
+		name_save = "Storyline_BASTION_TheAspirantsCrucible", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TheAspirantsCrucible_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57709,
+			57710,
+			57711,
+			57263,
+			57267,
+			57265,
+			59920,
+			57713,
+			57908,
+			57909,
+			57288,
+			57714,
+			57291,
+			57266,
+			57715,
+			60217,
+			60218,
+			60219,
+			60220,
+			60221,
+			60222,
+			60223,
+			60224,
+			60225,
+			60226,
+			60229,
+			58174,
+		},
+		max = 27
+	},
+	{
+		name_save = "Storyline_BASTION_TheTempleofPurity", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TheTempleofPurity_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57270,
+			57977,
+			57264,
+			57716,
+			57717,
+			57037,
+			59147,
+			57719,
+			60292,
+			57446,
+			57269,
+			57447,
+		},
+		max = 12
+	},
+	{
+		name_save = "Storyline_BASTION_ChasingaMemory", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_ChasingaMemory_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			58976,
+			58771,
+			58799,
+			58800,
+			58977,
+			58978,
+			58979,
+			58980,
+			58843,
+			60180,
+			60013,
+		},
+		max = 11
+	},
+	{
+		name_save = "Storyline_BASTION_BytheArchonsWill", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_BytheArchonsWill_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			59196,
+			59197,
+			59198,
+			59199,
+			59200,
+			59426,
+		},
+		max = 6
+	},
+	{
+		name_save = "Storyline_BASTION_TheTempleofCourage", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TheTempleofCourage_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			60005,
+			60006,
+			60007,
+			60008,
+			60009,
+			60052,
+			60053,
+			60054,
+			60055,
+		},
+		max = 9
+	},
+	{
+		name_save = "Storyline_BASTION_ChampionofPain", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_ChampionofPain_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			61096,
+			61107,
+			57386,
+			57390,
+			60020,
+			60021,
+			57425,
+			57511,
+			57512,
+			60179,
+			60181,
+			57515,
+		},
+		max = 12
+	},
+
+
+
+
+
+
+	{
+		name_save = "Storyline_MALDRAXUS_TOTAL", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TOTAL_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			61096,
+			61107,
+			57386,
+			57390,
+			60020,
+			60021,
+			57425,
+			57511,
+			57512,
+			60179,
+			60181,
+			57515,
+			57514,
+			57516,
+			58351,
+			58617,
+			60451,
+			58616,
+			58618,
+			58726,
+			60428,
+			60453,
+			60461,
+			60886,
+			58751,
+			59171,
+			58821,
+			59172,
+			59210,
+			59185,
+			59188,
+			59190,
+			59025,
+			59009,
+			57912,
+			57976,
+			60557,
+			58268,
+			57979,
+			59616,
+			57983,
+			57984,
+			57985,
+			57986,
+			57987,
+			57982,
+			57993,
+			57994,
+			60733,
+			59130,
+			58011,
+			58016,
+			58027,
+			58031,
+			58036,
+			58045,
+			59223,
+			60831,
+			59231,
+			59202,
+			59874,
+			59897,
+			60972,
+			59960,
+			59959,
+			59962,
+			59966,
+			59973,
+			61190,
+			62654,
+			59974,
+			59011,
+			60737,
+			59206,
+			61715,
+			61716,
+		},
+
+		max = 76
+	},
+
+
+
+
+
+	{
+		name_save = "Storyline_MALDRAXUS_ChampionofPain", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_ChampionofPain_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			61096,
+			61107,
+			57386,
+			57390,
+			60020,
+			60021,
+			57425,
+			57511,
+			57512,
+			60179,
+			60181,
+			57515,
+		},
+
+		max = 12
+	},
+
+	{
+		name_save = "Storyline_MALDRAXUS_HouseoftheChosen", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_HouseoftheChosen_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57514,
+			57516,
+			58351,
+			58617,
+			60451,
+			58616,
+			58618,
+			58726,
+			60428,
+			60453,
+			60461,
+			60886,
+		},
+
+		max = 12
+	},
+
+
+	{
+		name_save = "Storyline_MALDRAXUS_MatronofSpies", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_MatronofSpies_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			58751,
+			59171,
+			58821,
+			59172,
+			59210,
+			59185,
+			59188,
+			59190,
+			59025,
+			59009,
+		},
+
+		max = 10
+	},
+
+
+	{
+		name_save = "Storyline_MALDRAXUS_HouseofConstructs", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_HouseofConstructs_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57912,
+			57976,
+			60557,
+			58268,
+			57979,
+			59616,
+			57983,
+			57984,
+			57985,
+			57986,
+			57987,
+			57982,
+			57993,
+			57994,
+			60733,
+		},
+
+		max = 15
+	},
+
+
+	{
+		name_save = "Storyline_MALDRAXUS_HouseofPlagues", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_HouseofPlagues_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			59130,
+			58011,
+			58016,
+			58027,
+			58031,
+			58036,
+			58045,
+			59223,
+			60831,
+			59231,
+		},
+
+		max = 10
+	},
+
+
+	{
+		name_save = "Storyline_MALDRAXUS_RitualfortheDamned", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_RitualfortheDamned_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			59202,
+			59874,
+			59897,
+			60972,
+			59960,
+			59959,
+			59962,
+			59966,
+			59973,
+			61190,
+			62654,
+			59974,
+		},
+
+		max = 12
+	},
+
+
+	{
+		name_save = "Storyline_MALDRAXUS_TheEmptyThrone", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TheEmptyThrone_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			59011,
+			60737,
+			59206,
+			61715,
+			61716,
+		},
+
+		max = 5
+	},
+
+
+
+
+
+
+
+
+	{
+		name_save = "Storyline_ARDENWEAL_DTOTAL", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_DTOTAL_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			60338,
+			60763,
+			60341,
+			60778,
+			60857,
+			60859,
+			57787,
+			57816,
+			57947,
+			60567,
+			60563,
+			60575,
+			60577,
+			60594,
+			57948,
+			57949,
+			57950,
+			57951,
+			60600,
+			60624,
+			60637,
+			60638,
+			60639,
+			60647,
+			60648,
+			60671,
+			60709,
+			60724,
+			60519,
+			60521,
+			60628,
+			60629,
+			60630,
+			60631,
+			60632,
+			60522,
+			60520,
+			60738,
+			60764,
+			60839,
+			60856,
+			60881,
+			60901,
+			60905,
+			58473,
+			58480,
+			58484,
+			58483,
+			58486,
+			58488,
+			58524,
+			60572,
+			58589,
+			58591,
+			58592,
+			58590,
+			60578,
+			58593,
+			58714,
+			58719,
+			58720,
+			60621,
+			58869,
+			60661,
+			58721,
+			58723,
+			58724,
+		},
+		max = 67
+	},
+
+
+	{
+		name_save = "Storyline_ARDENWEAL_WelcometoArdenweald", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_WelcometoArdenweald_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			60338,
+			60763,
+			60341,
+			60778,
+			60857,
+			60859,
+			57787,
+		},
+		max = 7
+	},
+	{
+		name_save = "Storyline_ARDENWEAL_AidingTirnaVaal", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_AidingTirnaVaal_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57816,
+			57947,
+			60567,
+			60563,
+			60575,
+			60577,
+			60594,
+			57948,
+			57949,
+			57950,
+			57951,
+		},
+		max = 11
+	},
+	{
+		name_save = "Storyline_ARDENWEAL_WaningGrove", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_WaningGrove_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			60600,
+			60624,
+			60637,
+			60638,
+			60639,
+			60647,
+			60648,
+			60671,
+			60709,
+			60724,
+			60519,
+		},
+		max = 11
+	},
+	{
+		name_save = "Storyline_ARDENWEAL_GlitterfallHeights", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_GlitterfallHeights_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			60521,
+			60628,
+			60629,
+			60630,
+			60631,
+			60632,
+			60522,
+			60520,
+		},
+		max = 8
+	},
+	{
+		name_save = "Storyline_ARDENWEAL_ThisIstheWay", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_ThisIstheWay_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			60738,
+			60764,
+			60839,
+			60856,
+			60881,
+			60901,
+			60905,
+		},
+		max = 7
+	},
+	{
+		name_save = "Storyline_ARDENWEAL_TheFallenTree", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_TheFallenTree_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			58473,
+			58480,
+			58484,
+			58483,
+			58486,
+			58488,
+			58524,
+		},
+		max = 7
+	},
+	{
+		name_save = "Storyline_ARDENWEAL_VisionsoftheDreamer", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_VisionsoftheDreamer_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			60572,
+			58589,
+			58591,
+			58592,
+			58590,
+			60578,
+			58593,
+		},
+		max = 7
+	},
+	{
+		name_save = "Storyline_ARDENWEAL_AwakentheDreamer", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_AwakentheDreamer_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			58714,
+			58719,
+			58720,
+			60621,
+			58869,
+			60661,
+			58721,
+			58723,
+			58724,
+		},
+		max = 9
+	},
+
+
+
+	{
+		name_save = "Storyline_REVENDRETH_TOTAL", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TOTAL_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57025,
+			57026,
+			57007,
+			56829,
+			57381,
+			56942,
+			56955,
+			58433,
+			56978,
+			57174,
+			58654,
+			57178,
+			57179,
+			57161,
+			57173,
+			58931,
+			58932,
+			59021,
+			57175,
+			59023,
+			57176,
+			57180,
+			57182,
+			59232,
+			57098,
+			58916,
+			58941,
+			59014,
+			57131,
+			57136,
+			57164,
+			60506,
+			57159,
+			60313,
+			57189,
+			59209,
+			57190,
+			59256,
+			57240,
+			57380,
+			57405,
+			57426,
+			57427,
+			57428,
+			57442,
+			57460,
+			57461,
+			60566,
+			57724,
+			59327,
+			57689,
+			57690,
+			57691,
+			57693,
+			57694,
+			58086,
+			59644,
+		},
+		max = 57
+	},
+
+
+
+	{
+		name_save = "Storyline_REVENDRETH_WelcometoRevendreth", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_WelcometoRevendreth_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57025,
+			57026,
+			57007,
+			56829,
+			57381,
+			56942,
+			56955,
+			58433,
+			56978,
+		},
+		max = 9
+	},
+
+	{
+		name_save = "Storyline_REVENDRETH_TheMaster", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheMaster_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57174,
+			58654,
+			57178,
+			57179,
+		},
+		max = 4
+	},
+
+	{
+		name_save = "Storyline_REVENDRETH_TheAccuser", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheAccuser_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57161,
+			57173,
+			58931,
+			58932,
+			59021,
+			57175,
+			59023,
+			57176,
+			57180,
+			57182,
+			59232,
+		},
+		max = 11
+	},
+
+	{
+		name_save = "Storyline_REVENDRETH_ThePenitentHunt", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_ThePenitentHunt_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57098,
+			58916,
+			58941,
+			59014,
+			57131,
+			57136,
+			57164,
+			60506,
+			57159,
+			60313,
+			57189,
+			59209,
+			57190,
+			59256,
+		},
+		max = 14
+	},
+
+	{
+		name_save = "Storyline_REVENDRETH_TheMadDuke", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheMadDuke_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			57240,
+			57380,
+			57405,
+			57426,
+			57427,
+			57428,
+			57442,
+			57460,
+			57461,
+			60566,
+			57724,
+		},
+		max = 11
+	},
+
+	{
+		name_save = "Storyline_REVENDRETH_PrinceRenathal", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_PrinceRenathal_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			59327,
+			57689,
+			57690,
+			57691,
+			57693,
+			57694,
+		},
+		max = 6
+	},
+
+	{
+		name_save = "Storyline_REVENDRETH_TheMasterofLies", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheMasterofLies_Once
+		reset = "Once",
+		desc = "Shadowlands",
+		questID = {
+			58086,
+			59644,
+		},
+		max = 2
+	},
+
+
+
 }

@@ -2,9 +2,9 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v78.7(11.0.5)(30.11.2024)
+## Version: v78.8(11.0.5)(01.12.2024) NEED DELETE
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_1
-## SavedVariables: OctoPlayer Octo_ToDo_DB_Config Octo_ToDo_DB_Players Octo_ToDo_DB_Vars Octo_ToDo_DB_Other
+## SavedVariables: OctoPlayer Octo_ToDo_DB_Config Octo_ToDo_DB_Players Octo_ToDo_DB_Vars Octo_ToDo_DB_Other Octo_ToDo_DB_Artifact Octo_Achi_MAIN Octo_ToDo_DB_Players_LIST Octo_ToDo_Movies
 
 Libs\embeds.xml
 fprint\templates.xml
@@ -14,11 +14,15 @@ Octo_Localization.lua
 Tables\ArtTexturePaths\ArtTextureID.lua
 Tables\Octo_Globals.lua
 Tables\Octo_Timer.lua
+
+Tables\OctoTable_ArtifactData.lua
 Tables\OctoTable_Currencies.lua
 Tables\OctoTable_Events.lua
 Tables\OctoTable_Expansions_Table.lua
 Tables\OctoTable_Instances.lua
 Tables\OctoTable_Items.lua
+Tables\OctoTable_LegionArtifacts.lua
+Tables\OctoTable_Race.lua
 Tables\OctoTable_Movies.lua
 Tables\OctoTable_QuestID.lua
 Tables\OctoTable_reputation_ALL.lua

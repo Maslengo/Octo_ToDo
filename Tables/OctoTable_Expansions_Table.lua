@@ -1,20 +1,29 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
 E.OctoTable_Expansions_Table = {
-	"|cff68ccefClassic" .. FONT_COLOR_CODE_CLOSE,
-	"|cff4fff79The Burning Crusade" .. FONT_COLOR_CODE_CLOSE,
-	"|cff00a3ffWrath of the Lich King" .. FONT_COLOR_CODE_CLOSE,
-	"|cffffb300Cataclysm" .. FONT_COLOR_CODE_CLOSE,
-	"|cff00ffbaMists of Pandaria" .. FONT_COLOR_CODE_CLOSE,
-	"|cffc86400Warlords of Draenor" .. FONT_COLOR_CODE_CLOSE,
-	"|cff1eff00Legion" .. FONT_COLOR_CODE_CLOSE,
-	"|cff6464ffBattle for Azeroth" .. FONT_COLOR_CODE_CLOSE,
-	"|cffc9c3aaShadowlands" .. FONT_COLOR_CODE_CLOSE,
-	"|cffe8e379Dragonflight" .. FONT_COLOR_CODE_CLOSE,
-	"|cffB59377The War Within" .. FONT_COLOR_CODE_CLOSE, --- Сокрытая война
+	{color = "|cff68ccef", name = "Classic", icon = 254094,},
+	{color = "|cff4fff79", name = "The Burning Crusade", icon = 236415,},
+	{color = "|cff00a3ff", name = "Wrath of the Lich King", icon = 341221,},
+	{color = "|cffffb300", name = "Cataclysm", icon = 574788,},
+	{color = "|cff00ffba", name = "Mists of Pandaria", icon = 896622,},
+	{color = "|cffc86400", name = "Warlords of Draenor", icon = 1113431,},
+	{color = "|cff1eff00", name = "Legion", icon = 1711335,},
+	{color = "|cff6464ff", name = "Battle for Azeroth", icon = 3194610,},
+	{color = "|cffc9c3aa", name = "Shadowlands", icon = 4254080,},
+	{color = "|cffe8e379", name = "Dragonflight", icon = 5342925,},
+	{color = "|cffB59377", name = "The War Within", icon = 5779391,},
+	{color = "|cffff0047", name = "TEST", icon = 123123,},
 	-- "Midnight",
 	-- "The Last Titan",
 }
+
+
+-- E.OctoTable_Expansions_Table = {
+-- 	icon = ЙЦУЙЦУ, name = "classic", color = "cff68ccef"
+
+-- }
+
+
 E.OctoTable_Expansions_Table2 = {
 	EXPANSION_NAME0, -- "World of Warcraft",
 	EXPANSION_NAME1, -- "The Burning Crusade",

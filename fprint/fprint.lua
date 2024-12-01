@@ -333,10 +333,10 @@ SlashCmdList.OCTOLISTITEMS = function(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Toys):ThenForAllWithCached(function(_, ids1)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ALL):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Toys):FailWithChecked(function(_, ids2)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ALL):FailWithChecked(function(_, ids2)
 			tinsert(list2, ids2)
 	end)
 	promise1:Then(function()

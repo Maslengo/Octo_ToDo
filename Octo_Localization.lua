@@ -26,7 +26,7 @@ if L then
 	L["Night Fae"] = true
 	L["Other"] = true
 	L["General"] = true
-	-- L["Researchers Under Fire"] = true
+	L["Researchers Under Fire"] = true
 	L["RESET"] = RESET
 	L["Siege on Dragonbane Keep"] = true
 	L["The Forbidden Reach"] = true
@@ -51,7 +51,7 @@ if L then
 	L["PvP"] = true
 	L["Weekend Event"] = true
 	L["PLAYER_DIFFICULTY_TIMEWALKER"] = PLAYER_DIFFICULTY_TIMEWALKER
-	-- L["A Worthy Ally: Loamm Niffen"] = true
+	L["A Worthy Ally: Loamm Niffen"] = true
 	L["Sniffenseeking"] = true
 	L["Sniffenseeking (items)"] = true
 	L["Warmode"] = PVP_LABEL_WAR_MODE
@@ -81,7 +81,7 @@ if L then
 	L["The Veiled Ossuary"] = true
 	L["Dilated Time Capsule"] = true
 	L["Dreamsurge Chrysalis"] = true
-	-- L["Dreamsurge Coalescence"] = true
+	L["Dreamsurge Coalescence"] = true
 	L["Charred Elemental Remains"] = true
 	L["Encapsulated Destiny"] = true
 	L["Dreamsurge Investigation"] = true
@@ -165,6 +165,22 @@ if L then
 	L["No quests"] = true
 	L["Additional Buttons"] = true
 	L["Bags"] = true
+	L["Bank"] = true
+	L["Class quests"] = true
+	L["Maw"] = true
+	L["Storyline"] = true
+	L["Shadowmourne"] = true
+	L["Green Fire"] = true
+	L["Some Wicked Things"] = true
+	L["Only Current Realm"] = true
+	L["Consumables"] = true
+	L["Parts"] = true
+	L["Optional Reagents"] = true
+	L["Trade Goods"] = true
+	L["Race quests"] = true
+	L["Allied Races Quests"] = true
+	L["Hide: Azerite Animations"] = true
+	L["Hide: Objectives In Instance"] = true
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
@@ -190,7 +206,7 @@ if L then
 	L["Night Fae"] = "Ночной народец"
 	L["Other"] = "Другое"
 	L["General"] = "Общие"
-	-- L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
+	L["Researchers Under Fire"] = "Исследователли под огнем" --func_questName(74905)
 	L["RESET"] = "Сброс всех данных аддона"
 	L["Siege on Dragonbane Keep"] = "Осада Драконьей Погибели"
 	L["The Forbidden Reach"] = "Запретный край" -- "Запретный край (10.0.7)"
@@ -215,7 +231,7 @@ if L then
 	L["PvP"] = "PvP"
 	L["Weekend Event"] = "Событие выходного дня"
 	L["PLAYER_DIFFICULTY_TIMEWALKER"] = PLAYER_DIFFICULTY_TIMEWALKER
-	-- L["A Worthy Ally: Loamm Niffen"] = "Достойный союзник: лоаммские ниффы"
+	L["A Worthy Ally: Loamm Niffen"] = "Достойный союзник: лоаммские ниффы"
 	-- L["Blooming Dreamseeds"] = "Цветение во сне"
 	L["Sniffenseeking"] = "Нюхорысканье"
 	L["Sniffenseeking (items)"] = "Нюхорысканье (" .. ITEMS .. ")"
@@ -242,7 +258,7 @@ if L then
 	L["The Veiled Ossuary"] = "Тайный склеп"
 	L["Dilated Time Capsule"] = "Капсула растянутого времени"
 	L["Dreamsurge Chrysalis"] = "Хризалида Дикого Сна"
-	-- L["Dreamsurge Coalescence"] = "Слияние Прилива Снов"
+	L["Dreamsurge Coalescence"] = "Слияние Прилива Снов"
 	L["Charred Elemental Remains"] = "Обугленные останки элементалей"
 	L["Encapsulated Destiny"] = "Инкапсулированная судьба"
 	L["Dreamsurge Investigation"] = "Исследование Прилива Снов"
@@ -325,4 +341,22 @@ if L then
 	L["No quests"] = "Нет квестов"
 	L["Additional Buttons"] = "Дополнительные кнопки"
 	L["Bags"] = "Сумки"
+	L["Abandon"] = "Отменено: "
+	L["Bank"] = "Банк"
+	L["Class quests"] = "Классовые задания"
+	L["Maw"] = "Утроба"
+	L["Storyline"] = "Сюжетная линия"
+	L["Sniffenseeking (items)"] = "Нюхорысканье ("..ITEMS..")"
+	L["Shadowmourne"] = "Темная Скорбь"
+	L["Green Fire"] = "Зелёный Огонь"
+	L["Some Wicked Things"] = "Некоторые неприятные вещи (10.1.5)"
+	L["Only Current Realm"] = "Только текущий сервер"
+	L["Consumables"] = "Расходуемые предметы"
+	L["Parts"] = "Детали"
+	L["Optional Reagents"] = "Дополнительные реагенты"
+	L["Trade Goods"] = "Хозяйственные товары"
+	L["Race quests"] = "Рассовые задания"
+	L["Allied Races Quests"] = "Задания: Союзные расы"
+	L["Hide: Azerite Animations"] = "Скрытие анимации Азерита"
+	L["Hide: Objectives In Instance"] = "Скрытие заданий в подземельях"
 end
