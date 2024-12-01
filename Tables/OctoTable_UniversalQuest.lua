@@ -3748,7 +3748,7 @@ E.OctoTable_UniversalQuest = {
 
 
 	{
-		name_save = "Storyline_ARDENWEAL_DTOTAL", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_DTOTAL_Once
+		name_save = "Storyline_ARDENWEALD_TOTAL", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TOTAL_Once
 		reset = "Once",
 		desc = "Shadowlands",
 		questID = {
@@ -3825,7 +3825,7 @@ E.OctoTable_UniversalQuest = {
 
 
 	{
-		name_save = "Storyline_ARDENWEAL_WelcometoArdenweald", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_WelcometoArdenweald_Once
+		name_save = "Storyline_ARDENWEALD_WelcometoArdenweald", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_WelcometoArdenweald_Once
 		reset = "Once",
 		desc = "Shadowlands",
 		questID = {
@@ -3840,7 +3840,7 @@ E.OctoTable_UniversalQuest = {
 		max = 7
 	},
 	{
-		name_save = "Storyline_ARDENWEAL_AidingTirnaVaal", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_AidingTirnaVaal_Once
+		name_save = "Storyline_ARDENWEALD_AidingTirnaVaal", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_AidingTirnaVaal_Once
 		reset = "Once",
 		desc = "Shadowlands",
 		questID = {
@@ -3859,7 +3859,7 @@ E.OctoTable_UniversalQuest = {
 		max = 11
 	},
 	{
-		name_save = "Storyline_ARDENWEAL_WaningGrove", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_WaningGrove_Once
+		name_save = "Storyline_ARDENWEALD_WaningGrove", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_WaningGrove_Once
 		reset = "Once",
 		desc = "Shadowlands",
 		questID = {
@@ -3878,7 +3878,7 @@ E.OctoTable_UniversalQuest = {
 		max = 11
 	},
 	{
-		name_save = "Storyline_ARDENWEAL_GlitterfallHeights", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_GlitterfallHeights_Once
+		name_save = "Storyline_ARDENWEALD_GlitterfallHeights", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_GlitterfallHeights_Once
 		reset = "Once",
 		desc = "Shadowlands",
 		questID = {
@@ -3894,7 +3894,7 @@ E.OctoTable_UniversalQuest = {
 		max = 8
 	},
 	{
-		name_save = "Storyline_ARDENWEAL_ThisIstheWay", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_ThisIstheWay_Once
+		name_save = "Storyline_ARDENWEALD_ThisIstheWay", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_ThisIstheWay_Once
 		reset = "Once",
 		desc = "Shadowlands",
 		questID = {
@@ -3909,7 +3909,7 @@ E.OctoTable_UniversalQuest = {
 		max = 7
 	},
 	{
-		name_save = "Storyline_ARDENWEAL_TheFallenTree", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_TheFallenTree_Once
+		name_save = "Storyline_ARDENWEALD_TheFallenTree", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TheFallenTree_Once
 		reset = "Once",
 		desc = "Shadowlands",
 		questID = {
@@ -3924,7 +3924,7 @@ E.OctoTable_UniversalQuest = {
 		max = 7
 	},
 	{
-		name_save = "Storyline_ARDENWEAL_VisionsoftheDreamer", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_VisionsoftheDreamer_Once
+		name_save = "Storyline_ARDENWEALD_VisionsoftheDreamer", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_VisionsoftheDreamer_Once
 		reset = "Once",
 		desc = "Shadowlands",
 		questID = {
@@ -3939,7 +3939,7 @@ E.OctoTable_UniversalQuest = {
 		max = 7
 	},
 	{
-		name_save = "Storyline_ARDENWEAL_AwakentheDreamer", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEAL_AwakentheDreamer_Once
+		name_save = "Storyline_ARDENWEALD_AwakentheDreamer", --CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_AwakentheDreamer_Once
 		reset = "Once",
 		desc = "Shadowlands",
 		questID = {

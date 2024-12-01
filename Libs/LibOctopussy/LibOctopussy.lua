@@ -388,6 +388,14 @@ function lib:IsSpellDataCached(spellID)
 	return IsSpellDataCached(spellID)
 end
 ----------------------------------------------------------------
+
+
+
+
+
+
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -568,7 +576,18 @@ function lib:func_reputationName(self)
 		name = repInfo.name
 	else
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
-		name = reputationInfo.name or "no name"--Red_Color.."id "..self.."|r"
+		name = reputationInfo.name or SEARCH_LOADING_TEXT--Red_Color.."id "..self.."|r"
+
+-- RELOADUI - Перезагрузка
+-- LFG_LIST_LOADING - Идет загрузка...
+-- SEARCH_LOADING_TEXT - Идет загрузка...
+-- MAINMENUBAR_DOWNLOAD_PERCENT_LABEL - Загрузка: завершено %d %%
+-- GXAPI_TOOLTIP_FAILED_SELECTED - Выбранный графический API.
+-- Загрузка не удалась. Следующая попытка после перезапуска.
+
+
+
+
 	end
 
 	vivod = AWide..name
@@ -580,7 +599,7 @@ function lib:func_reputationName(self)
 end
 ----------------------------------------------------------------
 function lib:func_itemName_NOCOLOR(self)
-	local vivod = C_Item.GetItemNameByID(self) or "itemName_NOCOLOR"
+	local vivod = C_Item.GetItemNameByID(self) or SEARCH_LOADING_TEXT
 	if ShowIDS == true then
 		vivod = vivod..Gray_Color.." id:"..self.."|r"
 	end
@@ -588,7 +607,7 @@ function lib:func_itemName_NOCOLOR(self)
 end
 ----------------------------------------------------------------
 function lib:func_itemName(self)
-	local itemName = C_Item.GetItemNameByID(self) or "itemName"
+	local itemName = C_Item.GetItemNameByID(self) or SEARCH_LOADING_TEXT
 	local itemQuality = select(3, GetItemInfo(self))
 	local itemNameColored
 	local vivod
@@ -1028,7 +1047,7 @@ function lib:func_GetClassColor(self) -- C_ClassColor.GetClassColor(classFilenam
 	return "ffffff"
 end
 ----------------------------------------------------------------
-function lib:func_Reverse_order(a, b)
+function lib.func_Reverse_order(a, b)
 	return b < a
 end
 ----------------------------------------------------------------
@@ -1286,19 +1305,19 @@ end
 
 
 ----------------------------------------------------------------
-function lib:func_ProfessionName(skillLine)
+function lib:func_ProfessionName(self)
 	local vivod = ""
-	local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
+	local name = C_TradeSkillUI.GetTradeSkillDisplayName(self)
 	vivod = name
 	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..skillLine.."|r"
+		vivod = vivod..Gray_Color.." id:"..self.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_ProfessionIcon(skillLine)
+function lib:func_ProfessionIcon(self)
 	local vivod = ""
-	local icon = C_TradeSkillUI.GetTradeSkillTexture(skillLine)
+	local icon = C_TradeSkillUI.GetTradeSkillTexture(self)
 	vivod = lib:func_texturefromIcon(icon)
 	return vivod
 end
@@ -1317,7 +1336,22 @@ function lib:func_ProfessionMaxSkillLevel(self)
 	return vivod
 end
 ----------------------------------------------------------------
+function lib:START()
+	local timer = debugprofilestart()
+	-- local vivod = self:func_Gradient("DEBUG TIMER START", "|cffD177FF", "|cff63A4E0")
+	-- return ChatFrame1:AddMessage(vivod)
+	return timer
+end
 ----------------------------------------------------------------
+function lib:STOP()
+	-- local timer = self:func_SecondsToClock(debugprofilestop()/1000)
+	local timer = self:func_CompactNumberSimple(debugprofilestop())
+	local vivod = self:func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")
+	vivod = vivod..timer
+	return ChatFrame1:AddMessage(vivod.. "|cff63A4E0 ms.|r" )
+end
+----------------------------------------------------------------
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -6,11 +6,8 @@ local LibOctopussy = LibStub("LibOctopussy-1.0")
 --SellFrame
 tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.SellFrame then
-			local function func_Reverse_order(a, b)
-				return b < a
-			end
-			sort(E.OctoTable_itemID_Ignore_List)
-			-- fpde(E.OctoTable_itemID_Ignore_List)
+
+			sort(E.OctoTable_itemID_Ignore_List, LibOctopussy.func_Reverse_order)
 
 			local ignorelist = {}
 			for k, itemID in pairs(E.OctoTable_itemID_Ignore_List) do
@@ -149,14 +146,20 @@ tinsert(E.Modules, function()
 					-- SetQAButtonGameTooltip(OctoFrame_SellOther, "itemQuality < фиолет")
 				end
 				OctoFrame_SellOther:SetScript("OnEnter", function(self)
-						GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-						GameTooltip:ClearLines()
-						GameTooltip:AddLine("itemQuality < фиолет")
-						GameTooltip:AddLine(" ")
-						for itemID, v in next, (ignorelist) do
-							GameTooltip:AddLine(LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID))
+						if not OctoFrame_SellOther.promise then
+							OctoFrame_SellOther.promise = ltl:Items(E.OctoTable_itemID_Ignore_List)
+							OctoFrame_SellOther.promise:FailWithChecked(print)
 						end
-						GameTooltip:Show()
+						OctoFrame_SellOther.promise:Then(function()
+							GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+							GameTooltip:ClearLines()
+							GameTooltip:AddLine("itemQuality < фиолет")
+							GameTooltip:AddLine(" ")
+							for index, itemID in next, (E.OctoTable_itemID_Ignore_List) do
+								GameTooltip:AddLine(LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID))
+							end
+							GameTooltip:Show()
+					end)
 				end)
 				OctoFrame_SellOther:SetScript("OnLeave", function(self)
 						GameTooltip:ClearLines()
@@ -224,24 +227,20 @@ tinsert(E.Modules, function()
 					-- SetQAButtonGameTooltip(OctoFrame_SellOtherFiolet, "itemQuality = фиолет")
 				end
 				OctoFrame_SellOtherFiolet:SetScript("OnEnter", function(self)
-						if not OctoFrame_SellOtherFiolet.promise then -- тут начало создать
-							-- local t = {}
-							-- for itemID, v in next, (ignorelist) do
-							-- 	tinsert(t, itemID)
-							-- end
+						if not OctoFrame_SellOtherFiolet.promise then
 							OctoFrame_SellOtherFiolet.promise = ltl:Items(E.OctoTable_itemID_Ignore_List)
 							OctoFrame_SellOtherFiolet.promise:FailWithChecked(print)
 						end
-						OctoFrame_SellOtherFiolet.promise:Then(function() -- тут промис с зеном
+						OctoFrame_SellOtherFiolet.promise:Then(function()
 								GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
 								GameTooltip:ClearLines()
 								GameTooltip:AddLine("itemQuality = фиолет")
 								GameTooltip:AddLine(" ")
-								for itemID, v in next, (ignorelist) do
+								for index, itemID in next, (E.OctoTable_itemID_Ignore_List) do
 									GameTooltip:AddLine(LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID))
 								end
 								GameTooltip:Show()
-						end)    -- тут конец промиса
+						end)
 				end)
 				OctoFrame_SellOtherFiolet:SetScript("OnLeave", function(self)
 						GameTooltip:ClearLines()

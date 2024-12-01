@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
-E.OctoTable_OctoTable_Race = {
+E.OctoTable_Race = {
 	{raceID = 24, RaceEnglish = "Pandaren", faction = "Neutral"},
 	{raceID = 2, RaceEnglish = "Orc", faction = "Horde"},
 	{raceID = 5, RaceEnglish = "Scourge", faction = "Horde"},

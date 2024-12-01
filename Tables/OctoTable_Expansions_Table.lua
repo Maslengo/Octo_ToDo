@@ -1,18 +1,18 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
 E.OctoTable_Expansions_Table = {
-	{color = "|cff68ccef", name = "Classic", icon = 254094,},
-	{color = "|cff4fff79", name = "The Burning Crusade", icon = 236415,},
-	{color = "|cff00a3ff", name = "Wrath of the Lich King", icon = 341221,},
-	{color = "|cffffb300", name = "Cataclysm", icon = 574788,},
-	{color = "|cff00ffba", name = "Mists of Pandaria", icon = 896622,},
-	{color = "|cffc86400", name = "Warlords of Draenor", icon = 1113431,},
-	{color = "|cff1eff00", name = "Legion", icon = 1711335,},
-	{color = "|cff6464ff", name = "Battle for Azeroth", icon = 3194610,},
-	{color = "|cffc9c3aa", name = "Shadowlands", icon = 4254080,},
-	{color = "|cffe8e379", name = "Dragonflight", icon = 5342925,},
-	{color = "|cffB59377", name = "The War Within", icon = 5779391,},
-	{color = "|cffff0047", name = "TEST", icon = 123123,},
+	{color = "|cff68ccef", name = "Classic", icon = 254094,}, -- 1
+	{color = "|cff4fff79", name = "The Burning Crusade", icon = 236415,}, -- 2
+	{color = "|cff00a3ff", name = "Wrath of the Lich King", icon = 341221,}, -- 3
+	{color = "|cffffb300", name = "Cataclysm", icon = 574788,}, -- 4
+	{color = "|cff00ffba", name = "Mists of Pandaria", icon = 896622,}, -- 5
+	{color = "|cffc86400", name = "Warlords of Draenor", icon = 1113431,}, -- 6
+	{color = "|cff1eff00", name = "Legion", icon = 1711335,}, -- 7
+	{color = "|cff6464ff", name = "Battle for Azeroth", icon = 3194610,}, -- 8
+	{color = "|cffc9c3aa", name = "Shadowlands", icon = 4254080,}, -- 9
+	{color = "|cffe8e379", name = "Dragonflight", icon = 5342925,}, -- 10
+	{color = "|cffB59377", name = "The War Within", icon = 5779391,}, -- 11
+	{color = "|cffff0047", name = "TEST", icon = 123123,}, -- 12
 	-- "Midnight",
 	-- "The Last Titan",
 }
