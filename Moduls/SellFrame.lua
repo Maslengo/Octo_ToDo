@@ -10,7 +10,7 @@ tinsert(E.Modules, function()
 				return b < a
 			end
 			sort(E.OctoTable_itemID_Ignore_List)
-			fpde(E.OctoTable_itemID_Ignore_List)
+			-- fpde(E.OctoTable_itemID_Ignore_List)
 
 			local ignorelist = {}
 			for k, itemID in pairs(E.OctoTable_itemID_Ignore_List) do

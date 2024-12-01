@@ -1297,7 +1297,6 @@ function lib:func_ProfessionName(skillLine)
 end
 ----------------------------------------------------------------
 function lib:func_ProfessionIcon(skillLine)
-	-- if self == 0 then return 0 end
 	local vivod = ""
 	local icon = C_TradeSkillUI.GetTradeSkillTexture(skillLine)
 	vivod = lib:func_texturefromIcon(icon)
@@ -1305,19 +1304,15 @@ function lib:func_ProfessionIcon(skillLine)
 end
 ----------------------------------------------------------------
 function lib:func_ProfessionSkillLevel(self)
-	-- if self == 0 then return 0 end
 	local vivod = ""
 	local skillLevel = select(3, GetProfessionInfo(self))
-	-- local name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier, specializationIndex, specializationOffset = GetProfessionInfo(self)
 	vivod = skillLevel
 	return vivod
 end
 ----------------------------------------------------------------
 function lib:func_ProfessionMaxSkillLevel(self)
-	-- if self == 0 then return 0 end
 	local vivod = ""
 	local maxSkillLevel = select(4, GetProfessionInfo(self))
-	-- local name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier, specializationIndex, specializationOffset = GetProfessionInfo(self)
 	vivod = maxSkillLevel
 	return vivod
 end

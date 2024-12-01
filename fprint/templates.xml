@@ -1,5 +1,5 @@
 <Ui>
-	<Frame name="MyAddonEditFrameTemplate" movable="true" enableMouse="true" inherits="DialogBoxFrame" hidden="true" virtual="true">
+	<Frame name="MyAddonEditFrameTemplate" movable="true" resizable="true" enableMouse="true" inherits="DialogBoxFrame" hidden="true" virtual="true">
 		<Size x="700" y="800"/>
 		<Frames>
 			<EventFrame parentKey="scrollBar" inherits="WowTrimScrollBar">
@@ -21,15 +21,34 @@
 					</Layer>
 				</Layers>
 			</Frame>
+			<Button parentKey="resize">
+				<Size x="16" y="16"/>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+				</Anchors>
+				<NormalTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up"/>
+				<HighlightTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
+				<PushedTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
+			<Scripts>
+				<OnDragStart>
+					local parent = self:GetParent()
+					parent:StartSizing("BOTTOMRIGHT", true)
+				</OnDragStart>
+				<OnDragStop>
+					self:GetParent():StopMovingOrSizing()
+				</OnDragStop>
+			</Scripts>
+			</Button>
 		</Frames>
 		<Scripts>
 			<OnLoad>
+				self.resize:RegisterForDrag("LeftButton")
 				self:SetBackdrop({
 					bgFile = "Interface/DialogFrame/UI-DialogBox-Background",
 					edgeFile = "Interface/DialogFrame/UI-DialogBox-Border",
 					tile = true,
 					tileSize = 32,
-					edgeSize = 1,
+					edgeSize = 32,
 					insets = {left = 11, right = 12, top = 12, bottom = 11},
 				})
 				local scrollBox = self.editFrame:GetScrollBox()
