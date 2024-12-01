@@ -186,7 +186,17 @@ end
 local function ConcatAtStart()
 	-- В КАКУЮ ИЗ КАКОЙ
 	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
+	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_Quest_Bastion)
+	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_Quest_Maldraxus)
+	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_Quest_Ardenweald)
+	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_Quest_Revendreth)
 	LibOctopussy:func_TableConcat(E.OctoTable_itemID_ALL, E.OctoTable_itemID_Artifacts)
+
+
+
+
+
+
 	for _, itemID in next, (E.OctoTable_itemID_ALL) do
 		Octo_ToDo_DB_Config.ItemDB[itemID] = Octo_ToDo_DB_Config.ItemDB[itemID] or false
 	end
@@ -2865,90 +2875,105 @@ local function O_otrisovka_FIRST()
 -- E.OctoTable_Quest_Ardenweald 14164
 -- E.OctoTable_Quest_Revendreth 13878
 		tinsert(OctoTable_func_otrisovka_FIRST,
-		    function(CharInfo, tooltip, CL, BG)
-		        local vivodCent, vivodLeft = "", ""
-		        vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(14281))..E.OctoTable_Covenant[1].color..LibOctopussy:func_achievementName(14281).."|r"
-		        if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TOTAL_Once ~= LibOctopussy:NONE() then
-		            vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TOTAL_Once
-		        end
-		        if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TOTAL_Once ~= LibOctopussy:DONE() then
-		            for k, questID in next, (E.OctoTable_Quest_Bastion) do
-		                tooltip[#tooltip+1]={"ASoulbindInNeed", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_ASoulbindInNeed_Once}
-		                tooltip[#tooltip+1]={"TheAspirantsCrucible", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TheAspirantsCrucible_Once}
-		                tooltip[#tooltip+1]={"TheTempleofPurity", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TheTempleofPurity_Once}
-		                tooltip[#tooltip+1]={"ChasingaMemory", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_ChasingaMemory_Once}
-		                tooltip[#tooltip+1]={"BytheArchonsWill", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_BytheArchonsWill_Once}
-		                tooltip[#tooltip+1]={"TheTempleofCourage", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TheTempleofCourage_Once}
-		                tooltip[#tooltip+1]={"ChampionofPain", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_ChampionofPain_Once}
-		                tooltip[#tooltip+1] = {E.Gray_Color..k..") |r"..LibOctopussy:func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
-		            end
-		        end
-		        return vivodCent, vivodLeft
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(14281))..E.OctoTable_Covenant[1].color..LibOctopussy:func_achievementName(14281).."|r"
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TOTAL_Once ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TOTAL_Once
+				end
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TOTAL_Once ~= LibOctopussy:DONE() then
+
+					tooltip[#tooltip+1] = {"ASoulbindInNeed", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_ASoulbindInNeed_Once}
+					tooltip[#tooltip+1] = {"TheAspirantsCrucible", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TheAspirantsCrucible_Once}
+					tooltip[#tooltip+1] = {"TheTempleofPurity", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TheTempleofPurity_Once}
+					tooltip[#tooltip+1] = {"ChasingaMemory", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_ChasingaMemory_Once}
+					tooltip[#tooltip+1] = {"BytheArchonsWill", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_BytheArchonsWill_Once}
+					tooltip[#tooltip+1] = {"TheTempleofCourage", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TheTempleofCourage_Once}
+					tooltip[#tooltip+1] = {"ChampionofPain", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_ChampionofPain_Once}
+					tooltip[#tooltip+1] = {" ", " "}
+					for k, questID in next, (E.OctoTable_Quest_Bastion) do
+						if CharInfo.OctoTable_QuestID[questID] ~= LibOctopussy:DONE() then
+							tooltip[#tooltip+1] = {E.Gray_Color..k..") |r"..LibOctopussy:func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
+						end
+					end
+				end
+				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
-		    function(CharInfo, tooltip, CL, BG)
-		        local vivodCent, vivodLeft = "", ""
-		        vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(14206))..E.OctoTable_Covenant[4].color..LibOctopussy:func_achievementName(14206).."|r"
-		        if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TOTAL_Once ~= LibOctopussy:NONE() then
-		            vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TOTAL_Once
-		        end
-		        if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TOTAL_Once ~= LibOctopussy:DONE() then
-		            for k, questID in next, (E.OctoTable_Quest_Maldraxus) do
-		                tooltip[#tooltip+1]={"ChampionofPain", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_ChampionofPain_Once}
-		                tooltip[#tooltip+1]={"HouseoftheChosen", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_HouseoftheChosen_Once}
-		                tooltip[#tooltip+1]={"MatronofSpies", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_MatronofSpies_Once}
-		                tooltip[#tooltip+1]={"HouseofConstructs", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_HouseofConstructs_Once}
-		                tooltip[#tooltip+1]={"HouseofPlagues", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_HouseofPlagues_Once}
-		                tooltip[#tooltip+1]={"RitualfortheDamned", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_RitualfortheDamned_Once}
-		                tooltip[#tooltip+1]={"TheEmptyThrone", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TheEmptyThrone_Once}
-		                tooltip[#tooltip+1] = {E.Gray_Color..k..") |r"..LibOctopussy:func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
-		            end
-		        end
-		        return vivodCent, vivodLeft
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(14206))..E.OctoTable_Covenant[4].color..LibOctopussy:func_achievementName(14206).."|r"
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TOTAL_Once ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TOTAL_Once
+				end
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TOTAL_Once ~= LibOctopussy:DONE() then
+					tooltip[#tooltip+1] = {"ChampionofPain", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_ChampionofPain_Once}
+					tooltip[#tooltip+1] = {"HouseoftheChosen", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_HouseoftheChosen_Once}
+					tooltip[#tooltip+1] = {"MatronofSpies", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_MatronofSpies_Once}
+					tooltip[#tooltip+1] = {"HouseofConstructs", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_HouseofConstructs_Once}
+					tooltip[#tooltip+1] = {"HouseofPlagues", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_HouseofPlagues_Once}
+					tooltip[#tooltip+1] = {"RitualfortheDamned", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_RitualfortheDamned_Once}
+					tooltip[#tooltip+1] = {"TheEmptyThrone", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TheEmptyThrone_Once}
+					tooltip[#tooltip+1] = {" ", " "}
+					for k, questID in next, (E.OctoTable_Quest_Maldraxus) do
+						if CharInfo.OctoTable_QuestID[questID] ~= LibOctopussy:DONE() then
+							tooltip[#tooltip+1] = {E.Gray_Color..k..") |r"..LibOctopussy:func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
+						end
+					end
+				end
+				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
-		    function(CharInfo, tooltip, CL, BG)
-		        local vivodCent, vivodLeft = "", ""
-		        vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(14164))..E.OctoTable_Covenant[3].color..LibOctopussy:func_achievementName(14164).."|r"
-		        if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TOTAL_Once ~= LibOctopussy:NONE() then
-		            vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TOTAL_Once
-		        end
-		        if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TOTAL_Once ~= LibOctopussy:DONE() then
-		            for k, questID in next, (E.OctoTable_Quest_Ardenweald) do
-		                tooltip[#tooltip+1]={"WelcometoArdenweald", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_WelcometoArdenweald_Once}
-		                tooltip[#tooltip+1]={"AidingTirnaVaal", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_AidingTirnaVaal_Once}
-		                tooltip[#tooltip+1]={"WaningGrove", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_WaningGrove_Once}
-		                tooltip[#tooltip+1]={"GlitterfallHeights", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_GlitterfallHeights_Once}
-		                tooltip[#tooltip+1]={"ThisIstheWay", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_ThisIstheWay_Once}
-		                tooltip[#tooltip+1]={"TheFallenTree", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TheFallenTree_Once}
-		                tooltip[#tooltip+1]={"VisionsoftheDreamer", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_VisionsoftheDreamer_Once}
-		                tooltip[#tooltip+1]={"AwakentheDreamer", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_AwakentheDreamer_Once}
-		                tooltip[#tooltip+1] = {E.Gray_Color..k..") |r"..LibOctopussy:func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
-		            end
-		        end
-		        return vivodCent, vivodLeft
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(14164))..E.OctoTable_Covenant[3].color..LibOctopussy:func_achievementName(14164).."|r"
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TOTAL_Once ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TOTAL_Once
+				end
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TOTAL_Once ~= LibOctopussy:DONE() then
+					tooltip[#tooltip+1] = {"WelcometoArdenweald", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_WelcometoArdenweald_Once}
+					tooltip[#tooltip+1] = {"AidingTirnaVaal", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_AidingTirnaVaal_Once}
+					tooltip[#tooltip+1] = {"WaningGrove", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_WaningGrove_Once}
+					tooltip[#tooltip+1] = {"GlitterfallHeights", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_GlitterfallHeights_Once}
+					tooltip[#tooltip+1] = {"ThisIstheWay", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_ThisIstheWay_Once}
+					tooltip[#tooltip+1] = {"TheFallenTree", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TheFallenTree_Once}
+					tooltip[#tooltip+1] = {"VisionsoftheDreamer", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_VisionsoftheDreamer_Once}
+					tooltip[#tooltip+1] = {"AwakentheDreamer", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_AwakentheDreamer_Once}
+					tooltip[#tooltip+1] = {" ", " "}
+					for k, questID in next, (E.OctoTable_Quest_Ardenweald) do
+						if CharInfo.OctoTable_QuestID[questID] ~= LibOctopussy:DONE() then
+							tooltip[#tooltip+1] = {E.Gray_Color..k..") |r"..LibOctopussy:func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
+						end
+					end
+				end
+				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
-		    function(CharInfo, tooltip, CL, BG)
-		        local vivodCent, vivodLeft = "", ""
-		        vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(13878))..E.OctoTable_Covenant[2].color..LibOctopussy:func_achievementName(13878).."|r"
-		        if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TOTAL_Once ~= LibOctopussy:NONE() then
-		            vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TOTAL_Once
-		        end
-		        if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TOTAL_Once ~= LibOctopussy:DONE() then
-		            for k, questID in next, (E.OctoTable_Quest_Revendreth) do
-		                tooltip[#tooltip+1]={"WelcometoRevendreth", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_WelcometoRevendreth_Once}
-		                tooltip[#tooltip+1]={"TheMaster", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheMaster_Once}
-		                tooltip[#tooltip+1]={"TheAccuser", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheAccuser_Once}
-		                tooltip[#tooltip+1]={"ThePenitentHunt", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_ThePenitentHunt_Once}
-		                tooltip[#tooltip+1]={"TheMadDuke", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheMadDuke_Once}
-		                tooltip[#tooltip+1]={"PrinceRenathal", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_PrinceRenathal_Once}
-		                tooltip[#tooltip+1]={"TheMasterofLies", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheMasterofLies_Once}
-		                tooltip[#tooltip+1] = {E.Gray_Color..k..") |r"..LibOctopussy:func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
-		            end
-		        end
-		        return vivodCent, vivodLeft
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft = "", ""
+				vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(13878))..E.OctoTable_Covenant[2].color..LibOctopussy:func_achievementName(13878).."|r"
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TOTAL_Once ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TOTAL_Once
+				end
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TOTAL_Once ~= LibOctopussy:DONE() then
+					tooltip[#tooltip+1] = {"WelcometoRevendreth", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_WelcometoRevendreth_Once}
+					tooltip[#tooltip+1] = {"TheMaster", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheMaster_Once}
+					tooltip[#tooltip+1] = {"TheAccuser", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheAccuser_Once}
+					tooltip[#tooltip+1] = {"ThePenitentHunt", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_ThePenitentHunt_Once}
+					tooltip[#tooltip+1] = {"TheMadDuke", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheMadDuke_Once}
+					tooltip[#tooltip+1] = {"PrinceRenathal", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_PrinceRenathal_Once}
+					tooltip[#tooltip+1] = {"TheMasterofLies", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TheMasterofLies_Once}
+					tooltip[#tooltip+1] = {" ", " "}
+					for k, questID in next, (E.OctoTable_Quest_Revendreth) do
+						if CharInfo.OctoTable_QuestID[questID] ~= LibOctopussy:DONE() then
+							tooltip[#tooltip+1] = {E.Gray_Color..k..") |r"..LibOctopussy:func_questName(questID), CharInfo.OctoTable_QuestID[questID]}
+						end
+					end
+				end
+				return vivodCent, vivodLeft
 		end)
+
+
 
 
 	end
