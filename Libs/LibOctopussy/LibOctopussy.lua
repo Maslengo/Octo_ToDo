@@ -3,7 +3,7 @@ local MAJOR_VERSION, MINOR_VERSION = "LibOctopussy-1.0", 1
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
 local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
-local ShowIDS = false
+local ShowIDS = true
 ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 -- ITEMS
 local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
@@ -461,6 +461,8 @@ function lib:func_percent(percent, maxvalue)
 end
 ----------------------------------------------------------------
 function lib:func_Gradient(text, firstColor, secondColor)
+	if not firstColor then firstColor = "|cffD177FF" end
+	if not secondColor then secondColor = "|cff63A4E0" end
 	local vivod = ""
 	local str = ""
 	local total = utf8len(text)-1

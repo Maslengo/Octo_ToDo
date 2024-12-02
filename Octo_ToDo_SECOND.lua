@@ -357,11 +357,14 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		end)
 	end
 	local function FrameLine_OnEnter(self)
-		self.BG:SetColorTexture(r, g, b, E.BGALPHA*2)
-		OctoToDo_SECOND_MainFrame:SetAlpha(1)
+		self.animation:SetFromAlpha(0)
+		self.animation:SetToAlpha(1)
+		self.group:Restart()
 	end
 	local function FrameLine_OnLeave(self)
-		self.BG:SetColorTexture(0, 0, 0, 0)
+		self.animation:SetFromAlpha(1)
+		self.animation:SetToAlpha(0)
+		self.group:Restart()
 	end
 	for i = 1, #OctoTable_func_otrisovka_SECOND do
 		local fname, f
@@ -377,6 +380,14 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		f.BG = f:CreateTexture(nil, "BACKGROUND")
 		f.BG:SetHeight(E.curHeight)
 		f.BG:SetAllPoints()
+		f.BG:SetColorTexture(r, g, b, E.BGALPHA*2)
+		f.BG:SetAlpha(0)
+		f.group = f:CreateAnimationGroup()
+		f.group:SetToFinalAlpha(true)
+		f.animation = f.group:CreateAnimation("Alpha")
+		f.animation:SetSmoothing("IN_OUT")
+		f.animation:SetDuration(.5)
+		f.animation:SetTarget(f.BG)
 		fname = "TextLeft"..i
 		OctoToDo_SECOND_MainFrame[fname] = OctoToDo_SECOND_MainFrame.scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		f = OctoToDo_SECOND_MainFrame[fname]
