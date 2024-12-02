@@ -89,65 +89,64 @@ local function O_otrisovka_SECOND()
 			vivodLeft = classColorHexCurrent..ACHIEVEMENT_TITLE.."|r".." "..E.Green_Color..GetTotalAchievementPoints(false).."|r"
 			-- vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
 			-- if CharInfo.Faction == "Horde" then
-			-- 	BG:SetColorTexture(.5, 0, 0, E.BGALPHA*2)
+			--     BG:SetColorTexture(.5, 0, 0, E.BGALPHA*2)
 			-- else
-			-- 	BG:SetColorTexture(0, 0, .5, E.BGALPHA*2)
+			--     BG:SetColorTexture(0, 0, .5, E.BGALPHA*2)
 			-- end
 			-- if CharInfo.hasMail then
-			-- 	BG:SetColorTexture(1, 1, 1, E.BGALPHA)
-			-- 	vivodCent = E.Icon_MailBox..vivodCent
+			--     BG:SetColorTexture(1, 1, 1, E.BGALPHA)
+			--     vivodCent = E.Icon_MailBox..vivodCent
 			-- end
 			return vivodCent, vivodLeft
 	end)
-	if Octo_ToDo_DB_Vars.config.AchievementToShow ~= 0 then
-		local categoryID = Octo_ToDo_DB_Vars.config.AchievementToShow
-		local total = GetCategoryNumAchievements(categoryID, true)
-		if total then
-			for i = 1, total do
-				local AchievementID, name, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
-				if AchievementID then
-					if completedAchi == false or (completedAchi == Octo_ToDo_DB_Vars.config.AchievementShowCompleted) then
-						tinsert(OctoTable_func_otrisovka_SECOND,
-							function(CharInfo, tooltip, CL, BG)
-								local vivodCent, vivodLeft = " ", " "
-								vivodLeft = LibOctopussy:func_texturefromIcon(icon)
-
-									if rewardText ~= nil and rewardText and rewardText ~= "" and rewardText ~= " " then
-										vivodLeft = vivodLeft..E.Blue_Color.."*|r"
-									end
-
-									if name then
-										vivodLeft = vivodLeft .. name
-									end
-
-									if points ~= 0 then
-										tooltip[#tooltip+1] = {E.Yellow_Color..points.."|r".." "..E.Gray_Color.." id:"..AchievementID.."|r", " "}
-									else
-										tooltip[#tooltip+1] = {E.Gray_Color.." id:"..AchievementID.."|r", " "}
-									end
-								vivodCent = LibOctopussy:func_achievementvivod(AchievementID)
-								local numCriteria = GetAchievementNumCriteria(AchievementID)
-								if numCriteria ~= 1 then
-									tooltip[#tooltip+1] = {description}
-								end
-								if rewardText and rewardText ~= "" and rewardText ~= " " then
-									tooltip[#tooltip+1] = {E.Blue_Color..rewardText.."|r"}
-								end
-								if numCriteria >= 1 then
-									tooltip[#tooltip+1] = {" ", " "}
-									for i = 1, numCriteria do
-										tooltip[#tooltip+1] = {LibOctopussy:func_achievementcriteriaString(AchievementID, i), LibOctopussy:func_achievementquantity(AchievementID, i)}
-									end
-								end
-
-								return vivodCent, vivodLeft
-						end)
+	if Octo_ToDo_DB_Vars.config.AchievementToShow ~= nil then
+		for categoryID, v in next, (Octo_ToDo_DB_Vars.config.AchievementToShow) do
+			if v ~= false then
+				local total = GetCategoryNumAchievements(categoryID, true)
+				if total then
+					for i = 1, total do
+						local AchievementID, name, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
+						if AchievementID then
+							if completedAchi == false or (completedAchi == Octo_ToDo_DB_Vars.config.AchievementShowCompleted) then
+								tinsert(OctoTable_func_otrisovka_SECOND,
+									function(CharInfo, tooltip, CL, BG)
+										local vivodCent, vivodLeft = " ", " "
+										vivodLeft = LibOctopussy:func_texturefromIcon(icon)
+										if rewardText ~= nil and rewardText and rewardText ~= "" and rewardText ~= " " then
+											vivodLeft = vivodLeft..E.Blue_Color.."*|r"
+										end
+										if name then
+											vivodLeft = vivodLeft .. name
+										end
+										if points ~= 0 then
+											tooltip[#tooltip+1] = {E.Yellow_Color..points.."|r".." "..E.Gray_Color.." id:"..AchievementID.."|r", " "}
+										else
+											tooltip[#tooltip+1] = {E.Gray_Color.." id:"..AchievementID.."|r", " "}
+										end
+										vivodCent = LibOctopussy:func_achievementvivod(AchievementID)
+										local numCriteria = GetAchievementNumCriteria(AchievementID)
+										if numCriteria ~= 1 then
+											tooltip[#tooltip+1] = {description}
+										end
+										if rewardText and rewardText ~= "" and rewardText ~= " " then
+											tooltip[#tooltip+1] = {E.Blue_Color..rewardText.."|r"}
+										end
+										if numCriteria >= 1 then
+											tooltip[#tooltip+1] = {" ", " "}
+											for i = 1, numCriteria do
+												tooltip[#tooltip+1] = {LibOctopussy:func_achievementcriteriaString(AchievementID, i), LibOctopussy:func_achievementquantity(AchievementID, i)}
+											end
+										end
+										BG:SetColorTexture(1, 0, 1, E.BGALPHA/2)
+										return vivodCent, vivodLeft
+								end)
+							end
+						end
 					end
 				end
 			end
 		end
 	end
-
 end
 local function Octo_ToDo_SECOND_CreateAltFrame()
 	if not OctoToDo_SECOND_MainFrame then
@@ -278,7 +277,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		dd_SECOND:SetSize(E.curWidthTitle*multiply, E.curHeight*multiply)
 		dd_SECOND:SetBackdrop({
 				bgFile = bgFile,
-				edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+				edgeFile = edgeFile,
 				edgeSize = 1
 		})
 		dd_SECOND:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
@@ -302,21 +301,39 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		dd_SECOND:ddHideWhenButtonHidden()
 		dd_SECOND:RegisterForClicks("LeftButtonUp")
 		dd_SECOND:SetScript("OnClick", function(self)
-				self:ddToggle(1, nil, self, self:GetWidth()+1, -self:GetHeight())
+				self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 		end)
-		local function selectFunctionAchievementToShow(menuButton)
-			Octo_ToDo_DB_Vars.config.AchievementToShow = menuButton.value
-			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
+
+
+		local function selectFunctionAchievementToShow(menuButton, _, arg2, checked)
+			Octo_ToDo_DB_Vars.config.AchievementToShow[menuButton.value] = checked or nil
+			if arg2 == 2 then
+				dd_SECOND:ddRefresh(arg2-1)
+			end
 		end
+
+		local function TEST_FUNC(menuButton, arg1)
+			local categories = GetCategoryList()
+			local cID = menuButton.value
+			for i = 1, #categories do
+				local categoryID = categories[i]
+				local _, parentCategoryID = GetCategoryInfo(categoryID)
+				if arg1 and cID == parentCategoryID and Octo_ToDo_DB_Vars.config.AchievementToShow[categoryID] == true then
+					return LibOctopussy:func_Gradient(arg1.name)..arg1.vivod
+				end
+			end
+			return arg1.name..arg1.vivod
+		end
+
 		dd_SECOND:ddSetInitFunc(function(self, level, value)
-				local info = {}
+				local info, list = {}, {}
 				local categories = GetCategoryList()
-				local categoryID
-				local name, parentCategoryID, total, completed
+
 				for i = 1, #categories do
-					categoryID = categories[i]
-					name, parentCategoryID = GetCategoryInfo(categoryID)
-					total, completed = GetCategoryNumAchievements(categoryID, true)
+					local info = {}
+					local categoryID = categories[i]
+					local name, parentCategoryID = GetCategoryInfo(categoryID)
+					local total, completed = GetCategoryNumAchievements(categoryID, true)
 					local vivod = " ("..completed.."/"..total..")"
 					if total == completed then
 						vivod = " "..LibOctopussy:DONE()
@@ -328,19 +345,34 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 						end
 					end
 					if parentCategoryID == value or parentCategoryID == -1 and not value then
+						----------------------------------------------------------------
 						info.fontObject = OctoFont11
 						info.hasArrow = parentCategoryID == -1 and categoryID ~= 92
 						info.keepShownOnClick = true
 						info.notCheckable = false
-						info.text = name ..vivod
+						info.isNotRadio = true
+						if parentCategoryID == -1 then
+							info.text = TEST_FUNC
+						else
+							info.text = name..vivod
+						end
+						info.arg1 = {name = name, vivod = vivod}
+						info.arg2 = level
 						info.value = categoryID
-						info.checked = Octo_ToDo_DB_Vars.config.AchievementToShow == categoryID
+						info.checked = Octo_ToDo_DB_Vars.config.AchievementToShow[categoryID]
 						info.func = selectFunctionAchievementToShow
-						self:ddAddButton(info, level)
+						tinsert(list, info)
+						-- self:ddAddButton(info, level)
+						----------------------------------------------------------------
 					end
 				end
+
+				self:ddAddButton({list = list, listMaxSize = 12}, level)
+
 				if level == 1 then
+					----------------------------------------------------------------
 					self:ddAddSeparator(level)
+					----------------------------------------------------------------
 					info.fontObject = OctoFont11
 					info.keepShownOnClick = true
 					info.notCheckable = false
@@ -354,8 +386,12 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 					end
 					self:ddAddButton(info, level)
 				end
+				----------------------------------------------------------------
 		end)
 	end
+
+
+
 	local function FrameLine_OnEnter(self)
 		self.animation:SetFromAlpha(0)
 		self.animation:SetToAlpha(1)

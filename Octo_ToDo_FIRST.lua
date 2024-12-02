@@ -26,7 +26,7 @@ local UIParent = UIParent
 local buildVersion, buildNumber, buildDate, interfaceVersion = GetBuildInfo() -- Mainline
 local currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 local IsPublicBuild = IsPublicBuild()
-local expansionQWEQWE = 1
+local expansionQWEQWE = 13
 -- local IsTestBuild = IsTestBuild()
 local isTestBuild = GetCurrentRegion() == 72 -- PTR/beta
 local isBeta = interfaceVersion >= 120000
@@ -1601,24 +1601,6 @@ local function Collect_All_journalInstance()
 		end
 	end
 end
--- local function TEST_FUNC()
--- 	-- local accountInfo = C_BattleNet.GetAccountInfoByGUID(curGUID)
--- 	local accountInfo = C_BattleNet.GetFriendAccountInfo(1)
--- 	local lastOnlineTime = accountInfo.lastOnlineTime
--- 	local accountName = accountInfo.accountName
--- 	local curTime = GetTime()
--- 	local ServerTime = GetServerTime()
--- 	local testTime = time()
--- 	local WasOnline = testTime-lastOnlineTime
--- 	local vivodMath = time()-lastOnlineTime
--- 	local vivod = lastOnlineTime
--- 	print ("vivod: "..vivod)
--- 	print ("GetLastOnline: "..LibOctopussy:FriendsFrame_GetLastOnline(vivod))
--- 	print ("accountName: "..accountName)
--- 	print ("SecondsToClock: "..LibOctopussy:func_SecondsToClock(vivod))
--- 	print ("vivodMath: "..LibOctopussy:func_SecondsToClock(vivodMath))
--- 	print ("vivodMath: "..vivodMath)
--- end
 local function OLD_Collect_All_Holiday()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Holiday()".."|r")
@@ -4268,7 +4250,7 @@ local function O_otrisovka_FIRST()
 	end
 	-- TEST
 	if Octo_ToDo_DB_Vars.config.ExpansionToShow == 12 then
-		local expansionQWEQWE = 12
+		local expansionQWEQWE = 13
 		----DEBUGPIZDA
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
@@ -5900,17 +5882,8 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		dd_FIRST:RegisterForClicks("LeftButtonUp")
 		dd_FIRST:SetScript("OnClick", function(self)
 				self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
-				self:SetAlpha(1)
 		end)
-		dd_FIRST:SetScript("OnEnter", function(self)
-				self:SetAlpha(1)
-		end)
-		dd_FIRST:SetScript("OnLeave", function(self)
-				self:SetAlpha(.5)
-		end)
-		dd_FIRST:SetScript("OnShow", function(self)
-				self:SetAlpha(.5)
-		end)
+
 		local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 			Octo_ToDo_DB_Players[menuButton.value].isShownPLAYER = checked
 		end
@@ -5919,8 +5892,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			Octo_ToDo_DB_Players[menuButton.value] = nil
 		end
 		dd_FIRST:ddSetInitFunc(function(self, level, value)
-				self:SetAlpha(.3)
-				local info = {}
+				local info, list = {}, {}
 				local count = 0
 				local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer
 				local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.config.ShowOnlyCurrentBattleTag
@@ -5934,10 +5906,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						end
 						BnetList[CharInfo.BattleTagLocal] = true
 					end
-					-- ПОФИКСИТЬ
 					sort(Octo_ToDo_BatlleNets)
 					if count > 1 then
 						for i, Bnets in ipairs(Octo_ToDo_BatlleNets) do
+							local info = {}
 							info.fontObject = OctoFont11
 							info.hasArrow = true
 							info.keepShownOnClick = true
@@ -5952,15 +5924,16 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 								end
 							end
 							info.text = vivod
-							-- info.text = BattleTagLocal == 0 and "QWE" or BattleTagLocal
 							info.value = Bnets
-							self:ddAddButton(info, level)
+							-- self:ddAddButton(info, level)
+							tinsert(list, info)
 						end
 					else
 						local curCharGUID, CharInfo = next(Octo_ToDo_DB_Players)
 						value = CharInfo.BattleTagLocal
 					end
 				end
+				self:ddAddButton({list = list, listMaxSize = 10}, level)
 				if type(value) == "string" then
 					local Octo_ToDo_DB_Players_LIST = {}
 					for curCharGUID, CharInfo in next, (Octo_ToDo_DB_Players) do
@@ -5971,6 +5944,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						end
 					end
 					for Server, v in next, (Octo_ToDo_DB_Players_LIST) do
+						local info = {}
 						info.fontObject = OctoFont11
 						info.hasArrow = true
 						info.keepShownOnClick = true
@@ -5985,9 +5959,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						end
 						info.text = vivod
 						info.value = v
-						self:ddAddButton(info, level)
+						tinsert(list, info)
+						-- self:ddAddButton(info, level)
 					end
-					-- elseif level == 3 or continue and level == 2 then
+					self:ddAddButton({list = list, listMaxSize = 10}, level)
 				elseif type(value) == "table" then
 					local players_list = {}
 					for GUID, names in next, (value) do
@@ -6005,6 +5980,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 							end
 					end)
 					for _, GUID in next, (players_list) do
+						local info = {}
 						info.keepShownOnClick = true
 						info.isNotRadio = true
 						local vivod = Octo_ToDo_DB_Players[GUID].classColorHex..Octo_ToDo_DB_Players[GUID].Name.."|r"
@@ -6017,8 +5993,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						info.checked = Octo_ToDo_DB_Players[GUID].isShownPLAYER
 						info.remove = func_remove_GUID
 						info.removeDoNotHide = true
-						self:ddAddButton(info, level)
+						tinsert(list, info)
+						-- self:ddAddButton(info, level)
 					end
+					self:ddAddButton({list = list, listMaxSize = 12}, level)
 				end
 				if level == 1 then
 					----------------------------------------------------------------
@@ -6429,27 +6407,36 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	end
 	OctoToDo_FIRST_MainFrame:SetSize(width, height)
 end
+
+
+function TEST_FUNC()
+	local testFrame = nil
+	if not testFrame then
+		testFrame = CreateFrame("FRAME")
+		if not testFrame.promise then
+			testFrame.promise = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
+			testFrame.promise:Then(function()
+				print ("TEST_FUNC")
+		end)
+		end
+	end
+end
+
+
+
+
 function main_frame_toggle()
-	-- TEST_FUNC()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."main_frame_toggle".."|r")
 	end
 	local button = LibDBIcon:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
 	if not OctoToDo_FIRST_MainFrame.promise then
-		-- print ("PROMISE")
-		OctoToDo_FIRST_MainFrame.promise = LibThingsLoad:Items(E.OctoTable_Empty)
-		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Config)
+		OctoToDo_FIRST_MainFrame.promise = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
 		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ALL)
-		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_AutoOpen)
-		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Ignore_List)
-		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsDelete)
-		-- OctoToDo_FIRST_MainFrame.promise:AddItemsByKey(E.OctoTable_itemID_ItemsUsable)
-		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Cosmetic)
-		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Mount)
-		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Other)
-		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Pets)
-		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_Toys)
-		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsUsable_ArmorTokens)
+		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Config)
+		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_AutoOpen)
+		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_Ignore_List)
+		-- OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ItemsDelete)
 		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_MoP)
 		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_WoD)
 		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_Legion)
@@ -6474,7 +6461,20 @@ function main_frame_toggle()
 		OctoToDo_FIRST_MainFrame:Hide()
 	else
 		button:Disable()
+		OctoToDo_FIRST_MainFrame.promise:AddItems(124124)
+		OctoToDo_FIRST_MainFrame.promise:ThenForAll(function(_, id)
+
+			-- if id == 124124 then
+			-- 	print ("ZXCZXCZXC")
+			-- end
+		end)
+
 		OctoToDo_FIRST_MainFrame.promise:Then(function()
+				-- for index, itemID in ipairs(E.OctoTable_itemID_ALL) do
+				-- 	if itemID == 124124 then
+				-- 		print (index, itemID, LibThingsLoad:IsItemDataCached(itemID), C_Item.IsItemDataCachedByID(itemID), OctoToDo_FIRST_MainFrame.promise:IsItemCached(itemID))
+				-- 	end
+				-- end
 				-- LibOctopussy:START()
 				button:Enable()
 				Collect_ALL_PlayerInfo()
@@ -6559,7 +6559,22 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.curWidthTitleAchievement ~= nil then E.curWidthTitleAchievement = Octo_ToDo_DB_Vars.config.curWidthTitleAchievement end
 		if Octo_ToDo_DB_Vars.config.Achievements == nil then Octo_ToDo_DB_Vars.config.Achievements = true end
 		if Octo_ToDo_DB_Vars.config.AchievementShowCompleted == nil then Octo_ToDo_DB_Vars.config.AchievementShowCompleted = true end
-		if Octo_ToDo_DB_Vars.config.AchievementToShow == nil then Octo_ToDo_DB_Vars.config.AchievementToShow = 92 end
+
+
+
+
+		-- if Octo_ToDo_DB_Vars.config.AchievementToShow == nil then Octo_ToDo_DB_Vars.config.AchievementToShow = 92 end
+
+		-- Octo_ToDo_DB_Vars.config.AchievementToShow = nil
+		if Octo_ToDo_DB_Vars.config.AchievementToShow == nil then Octo_ToDo_DB_Vars.config.AchievementToShow = {} end
+		-- if Octo_ToDo_DB_Vars.config.AchievementToShow[92] == nil then Octo_ToDo_DB_Vars.config.AchievementToShow[92] = true end
+
+
+
+
+
+
+
 		if Octo_ToDo_DB_Vars.config.AdditionalButtons == nil then Octo_ToDo_DB_Vars.config.AdditionalButtons = true end
 		if Octo_ToDo_DB_Vars.config.AidingtheAccord == nil then Octo_ToDo_DB_Vars.config.AidingtheAccord = true end
 		if Octo_ToDo_DB_Vars.config.AnotherAddonsCasual == nil then Octo_ToDo_DB_Vars.config.AnotherAddonsCasual = true end
@@ -6722,6 +6737,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 					end
 				end,
 				OnEnter = function(self)
+					TEST_FUNC()
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
 					GameTooltip_SetTitle(GameTooltip, LibOctopussy:func_Gradient(GlobalAddonName).."|n".."ПКМ - Настройки")
 					GameTooltip:Show()

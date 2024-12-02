@@ -2,39 +2,21 @@
 ---------------------------------------------------------------
 -- LibThingsLoad - Library for load quests, items and spells --
 ---------------------------------------------------------------
-local MAJOR_VERSION, MINOR_VERSION = "LibThingsLoad-1.0", 11
+local MAJOR_VERSION, MINOR_VERSION = "LibThingsLoad-1.0", 12
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
 
-local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
 
-ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
--- ITEMS
-local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
-local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
+local type, next, xpcall, setmetatable, CallErrorHandler, C_Item, C_Spell = type, next, xpcall, setmetatable, CallErrorHandler, C_Item, C_Spell
+local DoesItemExistByID, IsItemDataCachedByID, ITEM_QUALITY_COLORS = C_Item.DoesItemExistByID, C_Item.IsItemDataCachedByID, ITEM_QUALITY_COLORS
 local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
 local GetItemInfoInstant = GetItemInfoInstant or C_Item.GetItemInfoInstant
-local RequestLoadItemDataByID = RequestLoadItemDataByID or C_Item.RequestLoadItemDataByID
-local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
-local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
-local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
-local GetItemMaxStackSizeByID = GetItemMaxStackSizeByID or C_Item.GetItemMaxStackSizeByID
-local GetItemInventoryTypeByID = GetItemInventoryTypeByID or C_Item.GetItemInventoryTypeByID
---SPELLS
-local DoesSpellExist = DoesSpellExist or C_Spell.DoesSpellExist
-local IsSpellDataCached = IsSpellDataCached or C_Spell.IsSpellDataCached
+local DoesSpellExist, IsSpellDataCached = C_Spell.DoesSpellExist, C_Spell.IsSpellDataCached
 local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
 local GetSpellLink = GetSpellLink or C_Spell.GetSpellLink
 local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
 local GetSpellDescription = GetSpellDescription or C_Spell.GetSpellDescription
-local RequestLoadSpellData = RequestLoadSpellData or C_Spell.RequestLoadSpellData
-local GetSpellInfo = GetSpellInfo or C_Spell.GetSpellInfo
-local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
-local GetSpellName = GetSpellName or C_Spell.GetSpellName
-
-
-
 
 
 if not lib._listener then
@@ -47,8 +29,8 @@ if not lib._listener then
 		spell = "spell",
 	}
 	lib._listener.accessors = {
-		[lib._listener.types.item] = RequestLoadItemDataByID,
-		[lib._listener.types.spell] = RequestLoadSpellData,
+		[lib._listener.types.item] = C_Item.RequestLoadItemDataByID,
+		[lib._listener.types.spell] = C_Spell.RequestLoadSpellData,
 	}
 	lib._listener[lib._listener.types.item] = {}
 	lib._listener[lib._listener.types.spell] = {}
@@ -125,7 +107,7 @@ function listener:loadID(loadType, id, p)
 end
 
 
-function listener:fill(loadType, p, doesExist, isCached, t, ...)
+function listener:fill(loadType, p, doesExist, t, ...)
 	if type(t) == "number" then t = {t, ...} end
 
 	if type(t) == "table" then
@@ -141,13 +123,8 @@ function listener:fill(loadType, p, doesExist, isCached, t, ...)
 
 				if pt[id] == nil then
 					if doesExist(id) then
-						if isCached(id) then
-							pt[id] = true
-							pt.count = pt.count + 1
-						else
-							pt[id] = -1
-							self:loadID(loadType, id, p)
-						end
+						pt[id] = -1
+						self:loadID(loadType, id, p)
 					else
 						pt[id] = false
 						pt.count = pt.count + 1
@@ -172,7 +149,7 @@ function listener:fill(loadType, p, doesExist, isCached, t, ...)
 end
 
 
-function listener:fillByKey(loadType, p, doesExist, isCached, t)
+function listener:fillByKey(loadType, p, doesExist, t)
 	if type(t) == "table" then
 		local pt = p[loadType] or {}
 		p[loadType] = pt
@@ -184,13 +161,8 @@ function listener:fillByKey(loadType, p, doesExist, isCached, t)
 			for id in next, t do
 				if pt[id] == nil then
 					if doesExist(id) then
-						if isCached(id) then
-							pt[id] = true
-							pt.count = pt.count + 1
-						else
-							pt[id] = -1
-							self:loadID(loadType, id, p)
-						end
+						pt[id] = -1
+						self:loadID(loadType, id, p)
 					else
 						pt[id] = false
 						pt.count = pt.count + 1
@@ -266,38 +238,38 @@ end
 
 
 function methods:AddItems(...)
-	listener:fill(listener.types.item, self, DoesItemExistByID, IsItemDataCachedByID, ...)
+	listener:fill(listener.types.item, self, DoesItemExistByID, ...)
 	return self
 end
 
 
 function methods:AddItemsByKey(t)
-	listener:fillByKey(listener.types.item, self, DoesItemExistByID, IsItemDataCachedByID, t)
+	listener:fillByKey(listener.types.item, self, DoesItemExistByID, t)
 	return self
 end
 
 
 function methods:AddSpells(...)
-	listener:fill(listener.types.spell, self, DoesSpellExist, IsSpellDataCached, ...)
+	listener:fill(listener.types.spell, self, DoesSpellExist, ...)
 	return self
 end
 
 
 function methods:AddSpellsByKey(t)
-	listener:fillByKey(listener.types.spell, self, DoesSpellExist, IsSpellDataCached, t)
+	listener:fillByKey(listener.types.spell, self, DoesSpellExist, t)
 	return self
 end
 
 
 if listener.types.quest then
 	function methods:AddQuests(...)
-		listener:fill(listener.types.quest, self, nil, nil, ...)
+		listener:fill(listener.types.quest, self, nil, ...)
 		return self
 	end
 
 
 	function methods:AddQuestsByKey(t)
-		listener:fillByKey(listener.types.quest, self, nil, nil, t)
+		listener:fillByKey(listener.types.quest, self, nil, t)
 		return self
 	end
 end
@@ -385,12 +357,12 @@ end
 
 
 function lib:GetItemIcon(itemID)
-	return GetItemIconByID(itemID)
+	return C_Item.GetItemIconByID(itemID)
 end
 
 
 function lib:GetItemName(itemID)
-	return GetItemNameByID(itemID)
+	return C_Item.GetItemNameByID(itemID)
 end
 
 
@@ -401,7 +373,7 @@ end
 
 
 function lib:GetItemQuality(itemID)
-	return GetItemQualityByID(itemID)
+	return C_Item.GetItemQualityByID(itemID)
 end
 
 
@@ -421,7 +393,7 @@ end
 
 
 function lib:GetItemMaxStackSize(itemID)
-	return GetItemMaxStackSizeByID(itemID)
+	return C_Item.GetItemMaxStackSizeByID(itemID)
 end
 
 
@@ -432,7 +404,7 @@ end
 
 
 function lib:GetItemInventoryType(itemID)
-	return GetItemInventoryTypeByID(itemID)
+	return C_Item.GetItemInventoryTypeByID(itemID)
 end
 
 
@@ -448,9 +420,9 @@ end
 
 
 -- SPELL UTILS
-if GetSpellInfo then
+if C_Spell.GetSpellInfo then
 	function lib:GetSpellInfo(spellID)
-		return GetSpellInfo(spellID)
+		return C_Spell.GetSpellInfo(spellID)
 	end
 else
 	local GetSpellinfo = GetSpellinfo
@@ -469,9 +441,9 @@ else
 end
 
 
-if GetSpellCooldown then
+if C_Spell.GetSpellCooldown then
 	function lib:GetSpellCooldown(spellID)
-		return GetSpellCooldown(spellID)
+		return C_Spell.GetSpellCooldown(spellID)
 	end
 else
 	local GetSpellCooldown = GetSpellCooldown
@@ -487,9 +459,9 @@ else
 end
 
 
-if GetSpellName then
+if C_Spell.GetSpellName then
 	function lib:GetSpellName(spellID)
-		return GetSpellName(spellID)
+		return C_Spell.GetSpellName(spellID)
 	end
 else
 	function lib:GetSpellName(spellID)

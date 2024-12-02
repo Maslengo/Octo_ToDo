@@ -13,6 +13,7 @@ E.OctoTable_Expansions_Table = {
 	{color = "|cffe8e379", name = "Dragonflight", icon = 5342925,}, -- 10
 	{color = "|cffB59377", name = "The War Within", icon = 5779391,}, -- 11
 	{color = "|cffff0047", name = "TEST", icon = 123123,}, -- 12
+	{color = "|cff000000", name = "BLACK", icon = 123123,}, -- 13
 	-- "Midnight",
 	-- "The Last Titan",
 }

@@ -3,7 +3,7 @@ local MAJOR_VERSION, MINOR_VERSION = "LibOctopussy-1.0", 1
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
 local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
-local ShowIDS = true
+local ShowIDS = false
 ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 -- ITEMS
 local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
@@ -562,15 +562,13 @@ function lib:func_itemName_NOCOLOR(itemID)
 end
 ----------------------------------------------------------------
 function lib:func_itemName(itemID)
-	local itemName = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
+	local itemName = C_Item.GetItemNameByID(itemID) or Red_Color..SEARCH_LOADING_TEXT.."|r" -- RETRIEVING_ITEM_INFO
 	local itemQuality = select(3, GetItemInfo(itemID))
-	local itemNameColored
 	local vivod
 	if itemQuality then
-		itemNameColored = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
-		vivod = itemNameColored or Red_Color..RETRIEVING_ITEM_INFO.."|r"
+		vivod = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
 	else
-		vivod = itemName or Red_Color..RETRIEVING_ITEM_INFO.."|r"
+		vivod = itemName
 	end
 	if ShowIDS == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." itemID:"..itemID.."|r"
@@ -578,9 +576,10 @@ function lib:func_itemName(itemID)
 	return vivod
 end
 ----------------------------------------------------------------
+local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
 function lib:func_itemTexture(itemID)
-	local itemTexture = select(10, GetItemInfo(itemID)) or 134400
-	return self:func_texturefromIcon(itemTexture)
+	local icon = GetItemIconByID(itemID) or 134400
+	return self:func_texturefromIcon(icon)
 end
 ----------------------------------------------------------------
 function lib:func_GetItemCooldown(itemID)
