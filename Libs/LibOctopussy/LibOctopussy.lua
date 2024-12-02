@@ -28,13 +28,6 @@ local RequestLoadSpellData = RequestLoadSpellData or C_Spell.RequestLoadSpellDat
 local GetSpellInfo = GetSpellInfo or C_Spell.GetSpellInfo
 local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
 local GetSpellName = GetSpellName or C_Spell.GetSpellName
-
-
-
-
-
-
-
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local Red_Color = "|cffFF4C4F"
 local Gray_Color = "|cff505050"
@@ -45,26 +38,18 @@ local Green_Color = "|cff4FFF79"
 local Orange_Color = "|cffFF661A"
 local Blue_Color = "|cff00A3FF"
 local Region = GetLocale()
-
-
-
-
 local localYEAR = "y. "
 local localDAY = "d. "
 local localHOUR = "h. "
 local localMINUTE = "m. "
 local localSECOND = "s. "
 if Region == "ruRU" then
-
 	localYEAR = "г. "
 	localDAY = "д. "
 	localHOUR = "ч. "
 	localMINUTE = "м. "
 	localSECOND = "с. "
 end
-
-
-
 local function func_texturefromIcon(iconID, iconSize, isShown)
 	if isShown == nil then isShown = true end
 	if iconSize == nil then iconSize = 14 end
@@ -77,12 +62,10 @@ local function func_texturefromIcon(iconID, iconSize, isShown)
 	end
 	return vivod
 end
-
 local E_Icon_AccountWide = func_texturefromIcon(1120721)
 local E_Icon_AccountTransferable = func_texturefromIcon(6124644)
 local E_thursdayReset = (1514358000-10800)
 local E_daytime = 86400
-
 ----------------------------------------------------------------
 local OctoTable_bytetoB64 = {
 	[0] =
@@ -256,7 +239,6 @@ local OctoTable_RIO_COLORS = {
 	{["score"] = 225, ["color"] = {0.98, 1, 0.97}},
 	{["score"] = 200, ["color"] = {1, 1, 1}}
 }
-
 -- ITEM UTILS
 ----------------------------------------------------------------
 function lib:GetItemInfo(itemID)
@@ -388,14 +370,6 @@ function lib:IsSpellDataCached(spellID)
 	return IsSpellDataCached(spellID)
 end
 ----------------------------------------------------------------
-
-
-
-
-
-
-
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -404,28 +378,21 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
 function lib:NONE()
 	-- return Gray_Color.."None".."|r"
 	return Gray_Color..NONE.."|r"
 end
 ----------------------------------------------------------------
-
 function lib:DONE()
 	-- return Green_Color.."Done".."|r"
 	return Green_Color..DONE.."|r"
 end
 ----------------------------------------------------------------
-
 function lib:COMPLETE()
 	-- return Purple_Color..">>".."Complete".."<<".."|r"
 	-- return Purple_Color..">"..COMPLETE.."<".."|r"
 	return Purple_Color..">"..QUEST_WATCH_QUEST_READY.."<".."|r"
-
 end
-
-
-
 ----------------------------------------------------------------
 function lib:func_hex2rgb(hex)
 	hex = hex:gsub("|cff", "")
@@ -563,7 +530,6 @@ function lib:func_questName(questID, useLargeIcon)
 		vivod = vivod..Gray_Color.." questID:"..questID.."|r"
 	end
 	return vivod
-
 end
 ----------------------------------------------------------------
 function lib:func_reputationName(reputationID)
@@ -654,11 +620,9 @@ function lib:func_currencyName(currencyID)
 	else
 		vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
-
 	if ShowIDS == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." currencyID:"..currencyID.."|r"
 	end
-
 	return vivod
 end
 ----------------------------------------------------------------
@@ -712,7 +676,6 @@ end
 ----------------------------------------------------------------
 function lib:func_GetSpellName(spellID)
 	local vivod = C_Spell.GetSpellInfo(spellID).name
-
 	if ShowIDS == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." spellID:"..spellID.."|r"
 	end
@@ -879,7 +842,6 @@ function lib:func_achievementName(achievementID)
 	if ShowIDS == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." achievementID:"..achievementID.."|r"
 	end
-
 	return vivod
 end
 ----------------------------------------------------------------
@@ -1277,22 +1239,17 @@ function lib:func_EventName(eventID)
 	local monthDay = currentCalendarTime.monthDay -- The current day of the month [1-31]
 	local month = 0 -- currentCalendarTime.month -- The current month [1-12]
 	local numEvents = C_Calendar.GetNumDayEvents(month, monthDay)
-
 	for i = 1, numEvents do
 		local eID = C_Calendar.GetDayEvent(month, monthDay, i).eventID
 		if eID == eventID then
 			vivod = C_Calendar.GetDayEvent(month, monthDay, i).title
 		end
 	end
-
 	if ShowIDS == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." eventID:"..eventID.."|r"
 	end
 	return vivod
-
 end
-
-
 ----------------------------------------------------------------
 function lib:func_ProfessionName(skillLine)
 	local vivod = ""
@@ -1334,7 +1291,7 @@ function lib:STOP()
 	local timer = self:func_CompactNumberSimple(debugprofilestop())
 	local vivod = self:func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")
 	vivod = vivod..timer
-	return ChatFrame1:AddMessage(vivod.. "|cff63A4E0 ms.|r" )
+	return ChatFrame1:AddMessage(vivod.. "|cff63A4E0 ms.|r")
 end
 ----------------------------------------------------------------
 function lib:func_dungeonName(dungeonID)
@@ -1361,7 +1318,37 @@ function lib:func_dungeonIcon(dungeonID)
 	end
 end
 ----------------------------------------------------------------
+
+
+
+
+function lib:FriendsFrame_GetLastOnlineText(time)
+	if not time then
+		return FRIENDS_LIST_OFFLINE
+	else
+		return string.format(BNET_LAST_ONLINE_TIME, self:FriendsFrame_GetLastOnline(time))
+	end
+end
 ----------------------------------------------------------------
+function lib:FriendsFrame_GetLastOnline(timeDifference, isAbsolute)
+	if (not isAbsolute) then
+		timeDifference = time() - timeDifference
+	end
+	if (timeDifference < SECONDS_PER_MIN) then
+		return LASTONLINE_SECS
+	elseif (timeDifference >= SECONDS_PER_MIN and timeDifference < SECONDS_PER_HOUR) then
+		return format(LASTONLINE_MINUTES, floor(timeDifference / SECONDS_PER_MIN))
+	elseif (timeDifference >= SECONDS_PER_HOUR and timeDifference < SECONDS_PER_DAY) then
+		return format(LASTONLINE_HOURS, floor(timeDifference / SECONDS_PER_HOUR))
+	elseif (timeDifference >= SECONDS_PER_DAY and timeDifference < SECONDS_PER_MONTH) then
+		return format(LASTONLINE_DAYS, floor(timeDifference / SECONDS_PER_DAY))
+	elseif (timeDifference >= SECONDS_PER_MONTH and timeDifference < SECONDS_PER_YEAR) then
+		return format(LASTONLINE_MONTHS, floor(timeDifference / SECONDS_PER_MONTH))
+	else
+		return format(LASTONLINE_YEARS, floor(timeDifference / SECONDS_PER_YEAR))
+	end
+end
+-- /dump C_BattleNet.GetFriendAccountInfo(1)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

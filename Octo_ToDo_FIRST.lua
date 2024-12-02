@@ -55,17 +55,17 @@ local ItemLevelGreen = 625
 local ItemLevelOrange = 610
 local ItemLevelRed = 580
 local GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
-if currentTier == 1 then E.currentMaxLevel = 60 end
-if currentTier == 2 then E.currentMaxLevel = 70 end
-if currentTier == 3 then E.currentMaxLevel = 80 end
-if currentTier == 4 then E.currentMaxLevel = 85 end
-if currentTier == 5 then E.currentMaxLevel = 90 end
-if currentTier == 6 then E.currentMaxLevel = 100 end
-if currentTier == 7 then E.currentMaxLevel = 110 end
-if currentTier == 8 then E.currentMaxLevel = 120 end
-if currentTier == 9 then E.currentMaxLevel = 60 end
-if currentTier == 10 then E.currentMaxLevel = 70 end
-if currentTier == 11 then E.currentMaxLevel = 80 end
+-- if currentTier == 1 then E.currentMaxLevel = 60 end
+-- if currentTier == 2 then E.currentMaxLevel = 70 end
+-- if currentTier == 3 then E.currentMaxLevel = 80 end
+-- if currentTier == 4 then E.currentMaxLevel = 85 end
+-- if currentTier == 5 then E.currentMaxLevel = 90 end
+-- if currentTier == 6 then E.currentMaxLevel = 100 end
+-- if currentTier == 7 then E.currentMaxLevel = 110 end
+-- if currentTier == 8 then E.currentMaxLevel = 120 end
+-- if currentTier == 9 then E.currentMaxLevel = 60 end
+-- if currentTier == 10 then E.currentMaxLevel = 70 end
+-- if currentTier == 11 then E.currentMaxLevel = 80 end
 local curWidthTitle = E.curWidthTitle
 LibOctopussy:func_LoadAddOn("!BugGrabber")
 LibOctopussy:func_LoadAddOn("BugSack")
@@ -318,6 +318,16 @@ local function checkCharInfo(self)
 			self.Shadowland[i][k] = self.Shadowland[i][k] or 0
 		end
 	end
+	self.PVP = self.PVP or {}
+	self.PVP.rating2v2 = self.PVP.rating2v2 or 0
+	self.PVP.seasonBest2v2 = self.PVP.seasonBest2v2 or 0
+	self.PVP.winrate2v2 = self.PVP.winrate2v2 or 0
+	self.PVP.rating3v3 = self.PVP.rating3v3 or 0
+	self.PVP.seasonBest3v3 = self.PVP.seasonBest3v3 or 0
+	self.PVP.winrate3v3 = self.PVP.winrate3v3 or 0
+	self.PVP.ratingRBG = self.PVP.ratingRBG or 0
+	self.PVP.seasonBestRBG = self.PVP.seasonBestRBG or 0
+	self.PVP.winrateRBG = self.PVP.winrateRBG or 0
 	self.avgItemLevel = self.avgItemLevel or 0
 	self.avgItemLevelEquipped = self.avgItemLevelEquipped or 0
 	self.avgItemLevelPvp = self.avgItemLevelPvp or 0
@@ -375,9 +385,10 @@ local function checkCharInfo(self)
 	self.Possible_Anima = self.Possible_Anima or 0
 	self.Possible_CatalogedResearch = self.Possible_CatalogedResearch or 0
 	self.numShownEntries = self.numShownEntries or 0
-	self.loginDate = self.loginDate or 0
-	self.loginDay = self.loginDay or 0
-	self.loginHour = self.loginHour or 0
+	self.loginDate = self.loginDate or date("%d.%m.%Y %H:%M:%S")
+	self.loginDay = self.loginDay or date("%d.%m.%Y")
+	self.loginHour = self.loginHour or date("%H:%M")
+	self.time = self.time or time()
 	self.UnitLevel = self.UnitLevel or 0
 	self.Money = self.Money or 0
 	self.totalSlots = self.totalSlots or 0
@@ -1025,6 +1036,7 @@ local function Collect_ALL_LoginTime()
 	collect.needResetWeekly = false
 	collect.needResetDaily = false
 	collect.needResetMonth = false
+	collect.time = time()
 end
 local function Collect_All_Professions()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -1589,6 +1601,24 @@ local function Collect_All_journalInstance()
 		end
 	end
 end
+-- local function TEST_FUNC()
+-- 	-- local accountInfo = C_BattleNet.GetAccountInfoByGUID(curGUID)
+-- 	local accountInfo = C_BattleNet.GetFriendAccountInfo(1)
+-- 	local lastOnlineTime = accountInfo.lastOnlineTime
+-- 	local accountName = accountInfo.accountName
+-- 	local curTime = GetTime()
+-- 	local ServerTime = GetServerTime()
+-- 	local testTime = time()
+-- 	local WasOnline = testTime-lastOnlineTime
+-- 	local vivodMath = time()-lastOnlineTime
+-- 	local vivod = lastOnlineTime
+-- 	print ("vivod: "..vivod)
+-- 	print ("GetLastOnline: "..LibOctopussy:FriendsFrame_GetLastOnline(vivod))
+-- 	print ("accountName: "..accountName)
+-- 	print ("SecondsToClock: "..LibOctopussy:func_SecondsToClock(vivod))
+-- 	print ("vivodMath: "..LibOctopussy:func_SecondsToClock(vivodMath))
+-- 	print ("vivodMath: "..vivodMath)
+-- end
 local function OLD_Collect_All_Holiday()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Holiday()".."|r")
@@ -1677,9 +1707,9 @@ local function OLD_Collect_BfA_Cloaklvl()
 			end
 		end
 		if itemLink and itemLink:find("item:169223:") then
-			inspectScantipFIRST:SetInventoryItem("player", 15)
-			if inspectScantipFIRST:NumLines() > 0 then
-				for j = 2, inspectScantipFIRST:NumLines() do
+			OctpToDo_FIRST_inspectScantip:SetInventoryItem("player", 15)
+			if OctpToDo_FIRST_inspectScantip:NumLines() > 0 then
+				for j = 2, OctpToDo_FIRST_inspectScantip:NumLines() do
 					local text = _G["OctoToDoScanningTooltipFIRSTTextLeft"..j]:GetText()
 					if text and text ~= "" then
 						local res = text:gsub("[, ]", ""):gsub("(%d+)[ ]+(%d+)", "%1%2"):match("%+(%d+) ?"..(ITEM_MOD_CORRUPTION_RESISTANCE or "Corruption resistance").."$")
@@ -1692,7 +1722,7 @@ local function OLD_Collect_BfA_Cloaklvl()
 					end
 				end
 			end
-			inspectScantipFIRST:ClearLines()
+			OctpToDo_FIRST_inspectScantip:ClearLines()
 		end
 	else
 		collect.cloak_lvl = 0
@@ -1723,15 +1753,15 @@ local function OLD_Collect_ALL_PVPRaitings()
 	if seasonWonRBG ~= 0 and seasonPlayedRBG ~= 0 then
 		winrateRBG = math.floor(seasonWonRBG / seasonPlayedRBG * 100).."%"
 	end
-	Octo_ToDo_DB_Players[curGUID].PVP.rating2v2 = rating2v2
-	Octo_ToDo_DB_Players[curGUID].PVP.seasonBest2v2 = seasonBest2v2
-	Octo_ToDo_DB_Players[curGUID].PVP.winrate2v2 = winrate2v2
-	Octo_ToDo_DB_Players[curGUID].PVP.rating3v3 = rating3v3
-	Octo_ToDo_DB_Players[curGUID].PVP.seasonBest3v3 = seasonBest3v3
-	Octo_ToDo_DB_Players[curGUID].PVP.winrate3v3 = winrate3v3
-	Octo_ToDo_DB_Players[curGUID].PVP.ratingRBG = ratingRBG
-	Octo_ToDo_DB_Players[curGUID].PVP.seasonBestRBG = seasonBestRBG
-	Octo_ToDo_DB_Players[curGUID].PVP.winrateRBG = winrateRBG
+	collect.PVP.rating2v2 = rating2v2
+	collect.PVP.seasonBest2v2 = seasonBest2v2
+	collect.PVP.winrate2v2 = winrate2v2
+	collect.PVP.rating3v3 = rating3v3
+	collect.PVP.seasonBest3v3 = seasonBest3v3
+	collect.PVP.winrate3v3 = winrate3v3
+	collect.PVP.ratingRBG = ratingRBG
+	collect.PVP.seasonBestRBG = seasonBestRBG
+	collect.PVP.winrateRBG = winrateRBG
 end
 local function OLD_Collect_All_Legion_Transmoge()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -1953,7 +1983,7 @@ local function O_otrisovka_FIRST()
 		function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 			BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-			CL:SetFontObject(OctoFont12)
+			-- CL:SetFontObject(OctoFont12)
 			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
 			if CharInfo.Faction == "Horde" then
 				BG:SetColorTexture(.5, 0, 0, E.BGALPHA*2)
@@ -1961,11 +1991,11 @@ local function O_otrisovka_FIRST()
 				BG:SetColorTexture(0, 0, .5, E.BGALPHA*2)
 			end
 			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerCanEarnExperience == true then
-				CL:SetFontObject(OctoFont10)
+				-- CL:SetFontObject(OctoFont10)
 				vivodCent = vivodCent.." "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
 			end
 			if Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer == false then
-				CL:SetFontObject(OctoFont9)
+				-- CL:SetFontObject(OctoFont9)
 				vivodCent = vivodCent.."|n"..CharInfo.curServer
 			end
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
@@ -1975,7 +2005,7 @@ local function O_otrisovka_FIRST()
 				else
 					tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", CharInfo.WarMode and E.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or ""}
 				end
-				if CharInfo.WarMode and CharInfo.WarMode ~= false then
+				if CharInfo.WarMode == true then
 					tooltip[#tooltip+1] = {CharInfo.WarMode and E.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or "", ""}
 				end
 				if CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.UnitXPPercent then
@@ -5056,34 +5086,34 @@ local function O_otrisovka_FIRST()
 	end
 	-- ЗАДАНИЯ СТАРОЕ
 	if Octo_ToDo_DB_Vars.config.Quests == true then
-	    tinsert(OctoTable_func_otrisovka_FIRST,
-	        function(CharInfo, tooltip, CL, BG)
-	            local vivo, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-	            BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-	            local list = {}
-	            for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
-	                tinsert(list, QuestID)
-	            end
-	            sort(list, func_Reverse_order)
-	            for k, QuestID in next, (list) do
-	                if Octo_ToDo_DB_Vars.config.QuestsShowAllways == false and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" and CharInfo.OctoTable_QuestID[QuestID] ~= LibOctopussy:NONE() then
-	                    tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color, CharInfo.OctoTable_QuestID[QuestID]}
-	                elseif Octo_ToDo_DB_Vars.config.QuestsShowAllways == true and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true then
-	                    if CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" then
-	                        tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color, CharInfo.OctoTable_QuestID[QuestID]}
-	                    else
-	                        tooltip[#tooltip+1] = {E.Gray_Color..LibOctopussy:func_questName(QuestID), E.Gray_Color..CharInfo.OctoTable_QuestID[QuestID].."|r"}
-	                    end
-	                end
-	            end
-	            if #tooltip ~= 0 then
-	                vivodCent = E.Gray_Color..QUESTS_LABEL.."|r"
-	            else
-	                vivodCent = ""
-	            end
-	            vivodLeft = QUESTS_LABEL.."OLD"
-	            return vivodCent, vivodLeft
-	    end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivo, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local list = {}
+				for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
+					tinsert(list, QuestID)
+				end
+				sort(list, func_Reverse_order)
+				for k, QuestID in next, (list) do
+					if Octo_ToDo_DB_Vars.config.QuestsShowAllways == false and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" and CharInfo.OctoTable_QuestID[QuestID] ~= LibOctopussy:NONE() then
+						tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color, CharInfo.OctoTable_QuestID[QuestID]}
+					elseif Octo_ToDo_DB_Vars.config.QuestsShowAllways == true and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true then
+						if CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" then
+							tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color, CharInfo.OctoTable_QuestID[QuestID]}
+						else
+							tooltip[#tooltip+1] = {E.Gray_Color..LibOctopussy:func_questName(QuestID), E.Gray_Color..CharInfo.OctoTable_QuestID[QuestID].."|r"}
+						end
+					end
+				end
+				if #tooltip ~= 0 then
+					vivodCent = E.Gray_Color..QUESTS_LABEL.."|r"
+				else
+					vivodCent = ""
+				end
+				vivodLeft = QUESTS_LABEL.."OLD"
+				return vivodCent, vivodLeft
+		end)
 	end
 	-- ПОДЗЕМЕЛЬЯ
 	if Octo_ToDo_DB_Vars.config.Dungeons == true then
@@ -5296,18 +5326,22 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				local color = "|cffFFFFFF"
-				vivodLeft = "Last Update"
-				if CharInfo.loginHour ~= 0 and CharInfo.loginDay ~= 0 then
-					if CharInfo.needResetWeekly == true then
-						color = E.Gray_Color
-					elseif CharInfo.needResetDaily == true then
-						color = E.Red_Color
+				vivodLeft = L["Was online"]
+				if CharInfo.loginHour and CharInfo.loginDay then
+					if CharInfo.Name == UnitName("Player") then
+						vivodCent = E.Green_Color..FRIENDS_LIST_ONLINE.."|r"
+					else
+						if CharInfo.needResetWeekly == true then
+							color = E.Gray_Color
+						elseif CharInfo.needResetDaily == true then
+							color = E.Red_Color
+						end
+						vivodCent = color..LibOctopussy:FriendsFrame_GetLastOnline(CharInfo.time).."|r"
+						tooltip[#tooltip+1] = {color..LibOctopussy:FriendsFrame_GetLastOnlineText(CharInfo.time).."|r"}
+						tooltip[#tooltip+1] = {" ", " "}
+						tooltip[#tooltip+1] = {" ", color..CharInfo.loginDay.."|r"}
+						tooltip[#tooltip+1] = {" ", color..CharInfo.loginHour.."|r"}
 					end
-					vivodCent = color..CharInfo.loginDay.."|r"
-					tooltip[#tooltip+1] = {L["Was online"].."|r", " "}
-					tooltip[#tooltip+1] = {" ", " "}
-					tooltip[#tooltip+1] = {"Время:".."|r", color..CharInfo.loginHour.."|r"}
-					tooltip[#tooltip+1] = {"Дата:".."|r", color..CharInfo.loginDay.."|r"}
 				end
 				return vivodCent, vivodLeft
 		end)
@@ -6396,6 +6430,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 	OctoToDo_FIRST_MainFrame:SetSize(width, height)
 end
 function main_frame_toggle()
+	-- TEST_FUNC()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."main_frame_toggle".."|r")
 	end
@@ -6440,7 +6475,7 @@ function main_frame_toggle()
 	else
 		button:Disable()
 		OctoToDo_FIRST_MainFrame.promise:Then(function()
-				LibOctopussy:START()
+				-- LibOctopussy:START()
 				button:Enable()
 				Collect_ALL_PlayerInfo()
 				Collect_All_Currency()
@@ -6469,7 +6504,7 @@ function main_frame_toggle()
 				Hide_trash_frames()
 				OctoToDo_FIRST_MainFrame:Show()
 				Octo_ToDo_FIRST_AddDataToAltFrame()
-				LibOctopussy:STOP()
+				-- LibOctopussy:STOP()
 		end)
 	end
 end
@@ -6885,7 +6920,7 @@ if interfaceVersion > 20000 then
 	editFrame:SetPoint("TOPLEFT", (UIParent:GetWidth() - editFrame:GetWidth()) / 2, -100)
 	editBox = editFrame.editFrame
 end
-SLASH_GSEARCH1 = "/gsearch"
+SLASH_GSEARCH1, SLASH_GSEARCH2 = "/gsearch", "/gs"
 SlashCmdList.GSEARCH = function(msg)
 	ChatFrame1:AddMessage (LibOctopussy:func_Gradient("GSEARCH: ") .. msg)
 	local str = ""
