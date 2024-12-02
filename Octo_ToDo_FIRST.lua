@@ -5337,7 +5337,7 @@ local function O_otrisovka_FIRST()
 							color = E.Red_Color
 						end
 						vivodCent = color..LibOctopussy:FriendsFrame_GetLastOnline(CharInfo.time).."|r"
-						tooltip[#tooltip+1] = {color..LibOctopussy:FriendsFrame_GetLastOnlineText(CharInfo.time).."|r"}
+						tooltip[#tooltip+1] = {color..LibOctopussy:FriendsFrame_GetLastOnlineText(CharInfo.time, CharInfo.classColorHex).."|r"}
 						tooltip[#tooltip+1] = {" ", " "}
 						tooltip[#tooltip+1] = {" ", color..CharInfo.loginDay.."|r"}
 						tooltip[#tooltip+1] = {" ", color..CharInfo.loginHour.."|r"}

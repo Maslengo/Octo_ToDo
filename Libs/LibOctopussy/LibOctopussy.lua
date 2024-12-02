@@ -1322,11 +1322,11 @@ end
 
 
 
-function lib:FriendsFrame_GetLastOnlineText(time)
+function lib:FriendsFrame_GetLastOnlineText(time, color)
 	if not time then
 		return FRIENDS_LIST_OFFLINE
 	else
-		return string.format(BNET_LAST_ONLINE_TIME, self:FriendsFrame_GetLastOnline(time))
+		return string.format(BNET_LAST_ONLINE_TIME, color..self:FriendsFrame_GetLastOnline(time).."|r")
 	end
 end
 ----------------------------------------------------------------
