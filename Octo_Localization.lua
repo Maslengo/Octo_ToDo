@@ -13,9 +13,9 @@ if L then
 	L["Current Location"] = true
 	L["Expire on"] = true
 	L["Fyrakk Asssaults"] = true
-	L["Garrison 1 Level"] = true
-	L["Garrison 2 Level"] = true
-	L["Garrison 3 Level"] = true
+
+
+
 	L["Grand Hunt"] = true
 	L["Keys of Loyalty"] = true
 	L["Korthia"] = true
@@ -193,9 +193,9 @@ if L then
 	L["Current Location"] = "Текущее местоположение"
 	L["Expire on"] = "Истекает"
 	L["Fyrakk Asssaults"] = "Налет Фиракка (Локалка)"
-	L["Garrison 1 Level"] = "Гарнизон 1 уровня"
-	L["Garrison 2 Level"] = "Гарнизон 2 уровня"
-	L["Garrison 3 Level"] = "Гарнизон 3 уровня"
+
+
+
 	L["Grand Hunt"] = "Великая охота"
 	L["Keys of Loyalty"] = "Ключи преданности"
 	L["Korthia"] = "Кортия"

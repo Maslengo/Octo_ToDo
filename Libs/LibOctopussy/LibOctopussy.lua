@@ -427,14 +427,14 @@ end
 
 
 ----------------------------------------------------------------
-function lib:func_hex2rgb(self)
-	self = self:gsub("|cff", "")
-	return tonumber("0x"..self:sub(1, 2)), tonumber("0x"..self:sub(3, 4)), tonumber("0x"..self:sub(5, 6))
+function lib:func_hex2rgb(hex)
+	hex = hex:gsub("|cff", "")
+	return tonumber("0x"..hex:sub(1, 2)), tonumber("0x"..hex:sub(3, 4)), tonumber("0x"..hex:sub(5, 6))
 end
 ----------------------------------------------------------------
-function lib:func_hex2rgbNUMBER(self)
-	self = self:gsub("|cff", "")
-	return tonumber("0x"..self:sub(1, 2))/255, tonumber("0x"..self:sub(3, 4))/255, tonumber("0x"..self:sub(5, 6))/255
+function lib:func_hex2rgbNUMBER(hex)
+	hex = hex:gsub("|cff", "")
+	return tonumber("0x"..hex:sub(1, 2))/255, tonumber("0x"..hex:sub(3, 4))/255, tonumber("0x"..hex:sub(5, 6))/255
 end
 ----------------------------------------------------------------
 function lib:func_rgb2hex(r, g, b, a)
@@ -505,112 +505,99 @@ function lib:func_TableConcat(table1, table2)
 	return table1
 end
 ----------------------------------------------------------------
-function lib:func_PlaySoundFile_whisper(self)
-	if self then
-		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\"..self..".ogg", "Master")
+function lib:func_PlaySoundFile_whisper(fileName)
+	if fileName then
+		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\"..fileName..".ogg", "Master")
 	end
 end
 ----------------------------------------------------------------
-function lib:func_CompactNumberFormat(self)
-	if not self then
-		self = 0
+function lib:func_CompactNumberFormat(number)
+	if not number then
+		number = 0
 	end
-	if self == 0 then
+	if number == 0 then
 		return 0
-	elseif self < 1000 then
-		return (math.floor((self+0.5)-0.5)/10)*10
-	elseif self < 1000000 then
-		return (math.floor(self/100)/10).."k"
+	elseif number < 1000 then
+		return (math.floor((number+0.5)-0.5)/10)*10
+	elseif number < 1000000 then
+		return (math.floor(number/100)/10).."k"
 	else
-		return (math.floor(self/100000)/10).."m"
+		return (math.floor(number/100000)/10).."m"
 	end
 end
 ----------------------------------------------------------------
-function lib:func_CompactNumberSimple(self)
-	if not self then
-		self = 0
+function lib:func_CompactNumberSimple(number)
+	if not number then
+		number = 0
 	end
-	if self == 0 then
+	if number == 0 then
 		return 0
 	else
-		return math.floor(self+.5)
+		return math.floor(number+.5)
 	end
 end
 ----------------------------------------------------------------
-function lib:func_texturefromIcon(self, iconSize, isShown)
+function lib:func_texturefromIcon(icon, iconSize, isShown)
 	if isShown == nil then isShown = true end
 	if iconSize == nil then iconSize = 14 end
-	if self == nil then self = 134400 end
+	if icon == nil then icon = 134400 end
 	local vivod
 	if isShown == true then
-		vivod = "|T".. self ..":"..iconSize..":"..iconSize..":::64:64:4:60:4:60|t"
+		vivod = "|T".. icon ..":"..iconSize..":"..iconSize..":::64:64:4:60:4:60|t"
 	else
 		vivod = ""
 	end
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_questName(self, useLargeIcon)
+function lib:func_questName(questID, useLargeIcon)
 	local vivod
 	local useLargeIcon = useLargeIcon or true
-	local title = C_QuestLog.GetTitleForQuestID(self)
+	local title = C_QuestLog.GetTitleForQuestID(questID)
 	if title then
-		vivod = QuestUtils_DecorateQuestText(self, title, useLargeIcon), true
+		vivod = QuestUtils_DecorateQuestText(questID, title, useLargeIcon), true
 	else
 		vivod = Red_Color.."notitle".."|r"
 	end
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." questID:"..questID.."|r"
 	end
 	return vivod
 
 end
 ----------------------------------------------------------------
-function lib:func_reputationName(self)
+function lib:func_reputationName(reputationID)
 	local AWide = ""
-	local isAccountWide = C_Reputation.IsAccountWideReputation(self) or false
+	local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
 	if isAccountWide == true then
 		AWide = E_Icon_AccountWide
 	end
-	local repInfo = C_Reputation.GetFactionDataByID(self)
+	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
 	local name
 	if repInfo then
 		name = repInfo.name
 	else
-		local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
-		name = reputationInfo.name or SEARCH_LOADING_TEXT--Red_Color.."id "..self.."|r"
-
--- RELOADUI - Перезагрузка
--- LFG_LIST_LOADING - Идет загрузка...
--- SEARCH_LOADING_TEXT - Идет загрузка...
--- MAINMENUBAR_DOWNLOAD_PERCENT_LABEL - Загрузка: завершено %d %%
--- GXAPI_TOOLTIP_FAILED_SELECTED - Выбранный графический API.
--- Загрузка не удалась. Следующая попытка после перезапуска.
-
-
-
-
+		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+		name = reputationInfo.name or SEARCH_LOADING_TEXT
 	end
-
 	vivod = AWide..name
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
-	end
-	return vivod
-	-- return name
-end
-----------------------------------------------------------------
-function lib:func_itemName_NOCOLOR(self)
-	local vivod = C_Item.GetItemNameByID(self) or SEARCH_LOADING_TEXT
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." reputationID:"..reputationID.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_itemName(self)
-	local itemName = C_Item.GetItemNameByID(self) or SEARCH_LOADING_TEXT
-	local itemQuality = select(3, GetItemInfo(self))
+function lib:func_itemName_NOCOLOR(itemID)
+	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." itemID:"..itemID.."|r"
+	end
+	return vivod
+end
+----------------------------------------------------------------
+function lib:func_itemName(itemID)
+	local itemName = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
+	local itemQuality = select(3, GetItemInfo(itemID))
 	local itemNameColored
 	local vivod
 	if itemQuality then
@@ -619,43 +606,43 @@ function lib:func_itemName(self)
 	else
 		vivod = itemName or Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." itemID:"..itemID.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_itemTexture(self)
-	local itemTexture = select(10, GetItemInfo(self)) or 134400
-	return lib:func_texturefromIcon(itemTexture)
+function lib:func_itemTexture(itemID)
+	local itemTexture = select(10, GetItemInfo(itemID)) or 134400
+	return self:func_texturefromIcon(itemTexture)
 end
 ----------------------------------------------------------------
-function lib:func_GetItemCooldown(self)
-	local start, duration = C_Item.GetItemCooldown(self)
-	-- local start = C_Item.GetItemCooldown(self).startTimeSeconds or 0
-	-- local duration = C_Item.GetItemCooldown(self).durationSeconds or 0
-	-- local start = C_Container.GetItemCooldown(self).startTime or 0
-	-- local duration = C_Container.GetItemCooldown(self).duration or 0
+function lib:func_GetItemCooldown(itemID)
+	local start, duration = C_Item.GetItemCooldown(itemID)
+	-- local start = C_Item.GetItemCooldown(itemID).startTimeSeconds or 0
+	-- local duration = C_Item.GetItemCooldown(itemID).durationSeconds or 0
+	-- local start = C_Container.GetItemCooldown(itemID).startTime or 0
+	-- local duration = C_Container.GetItemCooldown(itemID).duration or 0
 	local vivod = 0
 	if start > 0 and duration > 0 then
 		vivod = (start + duration - GetTime())
 	end
-	return lib:func_CompactNumberSimple(vivod)
+	return self:func_CompactNumberSimple(vivod)
 end
 ----------------------------------------------------------------
-function lib:func_currencyName(self)
+function lib:func_currencyName(currencyID)
 	local vivod
 	local AWide = ""
 	local ATrans = ""
-	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(self) or false
+	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) or false
 	if isAccountTransferableCurrency == true then
 		AWide = E_Icon_AccountTransferable
 	end
-	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(self) or false
+	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID) or false
 	if isAccountWideCurrency == true then
 		AWide = E_Icon_AccountWide
 	end
-	local info = C_CurrencyInfo.GetCurrencyInfo(self)
+	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 	if info then
 		local name = info.name
 		local iconFileID = info.iconFileID
@@ -668,26 +655,26 @@ function lib:func_currencyName(self)
 		vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
 
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." currencyID:"..currencyID.."|r"
 	end
 
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_currencyName_NOCOLOR(self)
+function lib:func_currencyName_NOCOLOR(currencyID)
 	local vivod
 	local AWide = ""
 	local ATrans = ""
-	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(self) or false
+	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) or false
 	if isAccountTransferableCurrency == true then
 		AWide = E_Icon_AccountTransferable
 	end
-	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(self) or false
+	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID) or false
 	if isAccountWideCurrency == true then
 		AWide = E_Icon_AccountWide
 	end
-	local info = C_CurrencyInfo.GetCurrencyInfo(self)
+	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 	if info then
 		local name = info.name
 		-- local iconFileID = info.iconFileID
@@ -699,102 +686,102 @@ function lib:func_currencyName_NOCOLOR(self)
 	else
 		vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." currencyID:"..currencyID.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_currencyicon(self)
-	local info = C_CurrencyInfo.GetCurrencyInfo(self)
+function lib:func_currencyicon(currencyID)
+	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 	if info then
 		iconFileID = info.iconFileID
 	else
 		iconFileID = 134400
 	end
-	return lib:func_texturefromIcon(iconFileID)
+	return self:func_texturefromIcon(iconFileID)
 end
 ----------------------------------------------------------------
-function lib:func_currencyquantity(self)
-	local info = C_CurrencyInfo.GetCurrencyInfo(self)
+function lib:func_currencyquantity(currencyID)
+	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 	if info then
 		quantity = info.quantity or 0
 	end
 	return quantity
 end
 ----------------------------------------------------------------
-function lib:func_GetSpellName(self)
-	local vivod = C_Spell.GetSpellInfo(self).name
+function lib:func_GetSpellName(spellID)
+	local vivod = C_Spell.GetSpellInfo(spellID).name
 
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." spellID:"..spellID.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_GetSpellIcon(self)
-	local iconID = C_Spell.GetSpellInfo(self).iconID
+function lib:func_GetSpellIcon(spellID)
+	local iconID = C_Spell.GetSpellInfo(spellID).iconID
 	return iconID
 end
 ----------------------------------------------------------------
-function lib:func_GetSpellCooldown(self)
-	local start = C_Spell.GetSpellCooldown(self).startTime
-	local duration = C_Spell.GetSpellCooldown(self).duration
+function lib:func_GetSpellCooldown(spellID)
+	local start = C_Spell.GetSpellCooldown(spellID).startTime
+	local duration = C_Spell.GetSpellCooldown(spellID).duration
 	local vivod = 0
 	if start > 0 and duration > 0 then
 		vivod = (start + duration - GetTime())
 	end
-	return lib:func_CompactNumberSimple(vivod)
+	return self:func_CompactNumberSimple(vivod)
 end
 ----------------------------------------------------------------
-function lib:func_SecondsToClock(self)
+function lib:func_SecondsToClock(time)
 	-- local years, days, hours, mins, secs = "", "", "", "", ""
 	local years, days, hours, mins, secs = 0, 0, 0, 0, 0
-	local self = tonumber(self)
-	if self <= 0 or self == nil then --
+	local time = tonumber(time)
+	if time <= 0 or time == nil then --
 		return "0:00"
-	elseif self >= (86400*365) then -- год
-		years = floor(self / (86400*365))
-		days = floor(mod(self, 31536000) / 86400)
-		hours = floor(mod(self, 86400) / 3600)
-		mins = floor(mod(self, 3600) / 60)
+	elseif time >= (86400*365) then -- год
+		years = floor(time / (86400*365))
+		days = floor(mod(time, 31536000) / 86400)
+		hours = floor(mod(time, 86400) / 3600)
+		mins = floor(mod(time, 3600) / 60)
 		return years..localYEAR..days..localDAY..hours..localHOUR..mins..localMINUTE
-	elseif self >= 86400 then -- 24ч
-		days = floor(self / 86400)
-		hours = floor(mod(self, 86400) / 3600)
-		mins = floor(mod(self, 3600) / 60)
+	elseif time >= 86400 then -- 24ч
+		days = floor(time / 86400)
+		hours = floor(mod(time, 86400) / 3600)
+		mins = floor(mod(time, 3600) / 60)
 		return days..localDAY..hours..localHOUR..mins..localMINUTE
-	elseif self >= 3600 then -- 1 час
-		hours = string.format("%01.f", math.floor(self/3600))
-		mins = string.format("%02.f", math.floor(self/60 - (hours*60)))
+	elseif time >= 3600 then -- 1 час
+		hours = string.format("%01.f", math.floor(time/3600))
+		mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
 		return hours..localHOUR..mins..localMINUTE
-	elseif self >= 600 then -- 10 минут
-		hours = string.format("%01.f", math.floor(self/3600))
-		mins = string.format("%02.f", math.floor(self/60 - (hours*60)))
+	elseif time >= 600 then -- 10 минут
+		hours = string.format("%01.f", math.floor(time/3600))
+		mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
 		return mins..localMINUTE
-	elseif self >= 60 then -- минута
-		hours = string.format("%01.f", math.floor(self/3600))
-		mins = string.format("%01.f", math.floor(self/60 - (hours*60)))
+	elseif time >= 60 then -- минута
+		hours = string.format("%01.f", math.floor(time/3600))
+		mins = string.format("%01.f", math.floor(time/60 - (hours*60)))
 		return mins..localMINUTE
 	else
-		return self..localSECOND
+		return time..localSECOND
 	end
 end
 ----------------------------------------------------------------
-function lib:func_tmstpDayReset(self)
-	local self = self or 1
-	return (math.ceil((tonumber(GetServerTime()) - E_thursdayReset)/(E_daytime*self))*E_daytime*self)+E_thursdayReset
+function lib:func_tmstpDayReset(time)
+	local time = time or 1
+	return (math.ceil((tonumber(GetServerTime()) - E_thursdayReset)/(E_daytime*time))*E_daytime*time)+E_thursdayReset
 end
 ----------------------------------------------------------------
-function lib:func_All_objectives(self)
+function lib:func_All_objectives(questID)
 	local str = ""
-	local objectives = C_QuestLog.GetQuestObjectives(self)
-	local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(self, 1, false)
+	local objectives = C_QuestLog.GetQuestObjectives(questID)
+	local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(questID, 1, false)
 	if objectives == nil then
 		return ""
 	end
 	if objectiveType == "progressbar" then
-		return "|cffFF0000"..GetQuestProgressBarPercent(self).."%|r"
+		return "|cffFF0000"..GetQuestProgressBarPercent(questID).."%|r"
 	end
 	if objectives then
 		if objectives[5] then
@@ -826,11 +813,11 @@ function lib:func_CheckCompletedByQuestID(questID)
 	local vivod
 	local TEST = ""
 	if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
-		vivod = lib:DONE()
+		vivod = self:DONE()
 	elseif C_QuestLog.IsComplete(questID) == true then
-		vivod = lib:COMPLETE()
+		vivod = self:COMPLETE()
 	elseif C_QuestLog.IsQuestFlaggedCompleted(questID) == false and C_QuestLog.IsOnQuest(questID) == false then
-		vivod = lib:NONE()
+		vivod = self:NONE()
 	elseif C_QuestLog.IsOnQuest(questID) == true --[[and C_QuestLog.IsComplete(questID) == false ]]then
 		local objectives = C_QuestLog.GetQuestObjectives(questID)
 		if objectives == nil then
@@ -855,15 +842,15 @@ function lib:func_CheckCompletedByQuestID(questID)
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_OnlyFirstWord(self)
-	self = tostring(self)
-	local a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z = strsplit(" ", self)
+function lib:func_OnlyFirstWord(text)
+	local text = tostring(text)
+	local a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z = strsplit(" ", text)
 	return a or b or c or d or e or f or g or h or i or j or k or l or m or n or o or p or q or r or s or t or u or v or w or x or y or z
 end
 ----------------------------------------------------------------
-function lib:func_OnlyLastWord(self)
-	self = tostring(self)
-	local a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z = strsplit(" ", self)
+function lib:func_OnlyLastWord(text)
+	local text = tostring(text)
+	local a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z = strsplit(" ", text)
 	return z or y or x or w or v or u or t or s or r or q or p or i or n or m or l or k or j or i or h or g or f or e or d or c or b or a
 end
 ----------------------------------------------------------------
@@ -875,45 +862,45 @@ function lib:func_InList(k, t, p)
 	end
 end
 ----------------------------------------------------------------
-function lib:func_achievementID(self)
-	return Yellow_Color.." (id: "..self..")".."|r"
+function lib:func_achievementID(achievementID)
+	return Yellow_Color.." (id: "..achievementID..")".."|r"
 end
 ----------------------------------------------------------------
-function lib:func_achievementComplete(self)
-	if not self then
+function lib:func_achievementComplete(achievementID)
+	if not achievementID then
 		return false
 	end
-	local completed = select(4, GetAchievementInfo(self))
+	local completed = select(4, GetAchievementInfo(achievementID))
 	return completed
 end
 ----------------------------------------------------------------
-function lib:func_achievementName(self)
-	local vivod = select(2, GetAchievementInfo(self))
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+function lib:func_achievementName(achievementID)
+	local vivod = select(2, GetAchievementInfo(achievementID))
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." achievementID:"..achievementID.."|r"
 	end
 
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_achievementIcon(self)
-	local Icon = select(10, GetAchievementInfo(self))
-	return Icon -- lib:func_texturefromIcon(Icon)
+function lib:func_achievementIcon(achievementID)
+	local Icon = select(10, GetAchievementInfo(achievementID))
+	return Icon
 end
 ----------------------------------------------------------------
-function lib:func_achievementvivod(self)
+function lib:func_achievementvivod(achievementID)
 	local vivod = ""
-	local completed = select(4, GetAchievementInfo(self))
-	local wasEarnedByMe = select(13, GetAchievementInfo(self))
-	local earnedBy = select(14, GetAchievementInfo(self))
+	local completed = select(4, GetAchievementInfo(achievementID))
+	local wasEarnedByMe = select(13, GetAchievementInfo(achievementID))
+	local earnedBy = select(14, GetAchievementInfo(achievementID))
 	if completed == true then
-		vivod = lib:DONE()
+		vivod = self:DONE()
 	else
-		local numCriteria = GetAchievementNumCriteria(self)
+		local numCriteria = GetAchievementNumCriteria(achievementID)
 		if numCriteria ~= 0 then
 			local count = 0
 			for i = 1, numCriteria do
-				local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(self, i, false)
+				local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, i, false)
 				if numCriteria == 1 then
 					if quantity == 0 then
 						vivod = Red_Color..quantity.." / "..reqQuantity.."|r"
@@ -938,13 +925,13 @@ function lib:func_achievementvivod(self)
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_achievementcriteriaString(self, i)
+function lib:func_achievementcriteriaString(achievementID, i)
 	i = i or 1
 	local vivod = ""
-	local completed = select(4, GetAchievementInfo(self))
-	local description = select(8, GetAchievementInfo(self))
-	local numCriteria = GetAchievementNumCriteria(self)
-	local criteriaString, _, completedCrit, quantity = GetAchievementCriteriaInfo(self, i, false)
+	local completed = select(4, GetAchievementInfo(achievementID))
+	local description = select(8, GetAchievementInfo(achievementID))
+	local numCriteria = GetAchievementNumCriteria(achievementID)
+	local criteriaString, _, completedCrit, quantity = GetAchievementCriteriaInfo(achievementID, i, false)
 	local color = White_Color
 	if completedCrit == true then
 		color = Green_Color
@@ -959,13 +946,13 @@ function lib:func_achievementcriteriaString(self, i)
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_achievementquantity(self, i)
+function lib:func_achievementquantity(achievementID, i)
 	i = i or 1
 	local vivod = ""
-	local completed = select(4, GetAchievementInfo(self))
-	local description = select(8, GetAchievementInfo(self))
-	local numCriteria = GetAchievementNumCriteria(self)
-	local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(self, i, false)
+	local completed = select(4, GetAchievementInfo(achievementID))
+	local description = select(8, GetAchievementInfo(achievementID))
+	local numCriteria = GetAchievementNumCriteria(achievementID)
+	local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, i, false)
 	local color = White_Color
 	if completedCrit == true then
 		color = Green_Color
@@ -980,69 +967,71 @@ function lib:func_achievementquantity(self, i)
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_CurServerShort(self)
-	local text = (self):gsub("-", " "):gsub("'", " ")
+function lib:func_CurServerShort(text)
+	local text = (text):gsub("-", " "):gsub("'", " ")
 	local a, b = strsplit(" ", text)
 	if b then
-		self = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
+		text = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
 	else
-		self = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
+		text = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
 	end
-	return self
+	return text
 end
 ----------------------------------------------------------------
-function lib:func_GetMapName(self)
-	if not self then return end
-	local info = C_Map.GetMapInfo(self)
+function lib:func_GetMapName(mapID)
+	if not mapID then return end
+	local info = C_Map.GetMapInfo(mapID)
 	if info then
 		local name = info.name
 		return tostring(name)
 	end
 end
 ----------------------------------------------------------------
-function lib:func_npcName(self)
+function lib:func_npcName(npcName)
 	local inspectScantipFUNC = nil
 	if not inspectScantipFUNC then
 		inspectScantipFUNC = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFUNC", nil, "GameTooltipTemplate")
 		inspectScantipFUNC:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 	local vivod = "|cffFF0000error|r"
-	if not self then return lib:NONE() end
-	if self then
-		inspectScantipFUNC:SetHyperlink("unit:Creature-0-0-0-0-"..self)
+	if not npcName then return self:NONE() end
+	if npcName then
+		inspectScantipFUNC:SetHyperlink("unit:Creature-0-0-0-0-"..npcName)
 		if inspectScantipFUNC:NumLines() > 0 then
 			vivod = _G["OctoToDoScanningTooltipFUNCTextLeft1"]:GetText()
 			return vivod
 		end
 		inspectScantipFUNC:ClearLines()
 	end
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." npcName:"..npcName.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_RIOColor(self)
+function lib:func_RIOColor(RIOscore)
 	local hexColor = Gray_Color
-	if not self or self == 0 then return hexColor end
+	if not RIOscore or RIOscore == 0 then
+		return hexColor
+	end
 	for _, v in next, (OctoTable_RIO_COLORS) do
-		if self <= v.score then
-			hexColor = lib:func_rgb2hex(v.color[1],v.color[2],v.color[3])
+		if RIOscore <= v.score then
+			hexColor = self:func_rgb2hex(v.color[1],v.color[2],v.color[3])
 		end
 	end
 	return hexColor
 end
 ----------------------------------------------------------------
-function lib:func_encryption(self)
-	local self = utf8reverse(tostring(self))
-	local text = strsplit("-", self)
+function lib:func_encryption(text)
+	local text = utf8reverse(tostring(text))
+	local text = strsplit("-", text)
 	local vivod = ""
 	vivod = utf8lower(text:gsub("0", ""):gsub("1", ""):gsub("2", ""):gsub("3", ""):gsub("4", ""):gsub("5", ""):gsub("6", ""):gsub("7", ""):gsub("8", ""):gsub("9", ""))
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_GetClassColor(self) -- C_ClassColor.GetClassColor(classFilename)
-	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[self]
+function lib:func_GetClassColor(className) -- C_ClassColor.GetClassColor(classFilename)
+	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[className]
 	if color then
 		return color.colorStr:gsub("^ff", "")
 	end
@@ -1053,12 +1042,12 @@ function lib.func_Reverse_order(a, b)
 	return b < a
 end
 ----------------------------------------------------------------
-function lib:func_CheckReputationByRepID(self)
+function lib:func_CheckReputationByRepID(reputationID)
 	local color = White_Color
 	local r = "|r"
 	local standingTEXT = ""
 	local vivod = ""
-	local repInfo = C_Reputation.GetFactionDataByID(self)
+	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
 	local name
 	local barMin
 	local barMax
@@ -1099,11 +1088,11 @@ function lib:func_CheckReputationByRepID(self)
 			standingTEXT = " ("..FACTION_STANDING_LABEL9..")"
 		end
 	end
-	local reputationInfo = C_GossipInfo.GetFriendshipReputation(self or 0)
-	if C_Reputation.IsFactionParagon(self) then
-		local currentValue = C_Reputation.GetFactionParagonInfo(self) or 0
+	local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+	if C_Reputation.IsFactionParagon(reputationID) then
+		local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0
 		local threshold = 1
-		local _, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(self)
+		local _, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(reputationID)
 		if threshold then
 			local value = currentValue % threshold
 			vivod = Blue_Color..(value).."/"..(threshold)..r
@@ -1111,8 +1100,8 @@ function lib:func_CheckReputationByRepID(self)
 				vivod = lib:func_CheckCompletedByQuestID(rewardQuestID)
 			end
 		end
-	elseif C_Reputation.IsMajorFaction(self) then
-		local data = C_MajorFactions.GetMajorFactionData(self) or 0
+	elseif C_Reputation.IsMajorFaction(reputationID) then
+		local data = C_MajorFactions.GetMajorFactionData(reputationID) or 0
 		if data ~= 0 then
 			local currentValue = data.renownReputationEarned
 			local totalValue = data.renownLevelThreshold
@@ -1226,12 +1215,12 @@ function lib:IsAddOnLoaded(name)
 	return IsAddOnLoaded(name)
 end
 ----------------------------------------------------------------
-function lib:func_Octo_LoadAddOn(GlobalAddonName)
+function lib:func_LoadAddOn(AddonName)
 	local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
-	local loaded, reason = LoadAddOn(GlobalAddonName)
+	local loaded, reason = LoadAddOn(AddonName)
 	if not loaded and reason == "DISABLED" then
-		lib:EnableAddOn(GlobalAddonName)
-		lib:LoadAddOn(GlobalAddonName)
+		self:EnableAddOn(AddonName)
+		self:LoadAddOn(AddonName)
 	end
 end
 ----------------------------------------------------------------
@@ -1261,11 +1250,11 @@ function lib:IsInArray(arr, subj)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function lib:func_EmptyZero(self)
-	if tonumber(self) == 0 then
+function lib:func_EmptyZero(value)
+	if tonumber(value) == 0 then
 		return Red_Color.."NEEDDELETE|r"
 	end
-	return self
+	return value
 end
 ----------------------------------------------------------------
 -- https://warcraft.wiki.gg/wiki/API_GetAccountExpansionLevel
@@ -1277,11 +1266,10 @@ function lib:func_CurrentExpansion()
 	end
 end
 ----------------------------------------------------------------
-function lib:func_EventName(self)
-	local vivod = ""
-
-	if not lib:IsAddOnLoaded("Blizzard_Calendar") then
-		lib:func_Octo_LoadAddOn("Blizzard_Calendar")
+function lib:func_EventName(eventID)
+	local vivod
+	if not self:IsAddOnLoaded("Blizzard_Calendar") then
+		self:func_LoadAddOn("Blizzard_Calendar")
 		ShowUIPanel(CalendarFrame, true)
 		HideUIPanel(CalendarFrame)
 	end
@@ -1291,15 +1279,14 @@ function lib:func_EventName(self)
 	local numEvents = C_Calendar.GetNumDayEvents(month, monthDay)
 
 	for i = 1, numEvents do
-		local event = C_Calendar.GetDayEvent(month, monthDay, i)
-		local eventID = event.eventID
-		if eventID == self then
-			vivod = event.title
+		local eID = C_Calendar.GetDayEvent(month, monthDay, i).eventID
+		if eID == eventID then
+			vivod = C_Calendar.GetDayEvent(month, monthDay, i).title
 		end
 	end
 
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." eventID:"..eventID.."|r"
 	end
 	return vivod
 
@@ -1307,56 +1294,72 @@ end
 
 
 ----------------------------------------------------------------
-function lib:func_ProfessionName(self)
+function lib:func_ProfessionName(skillLine)
 	local vivod = ""
-	local name = C_TradeSkillUI.GetTradeSkillDisplayName(self)
+	local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
 	vivod = name
-	if ShowIDS == true then
-		vivod = vivod..Gray_Color.." id:"..self.."|r"
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." skillLine:"..skillLine.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_ProfessionIcon(self)
+function lib:func_ProfessionIcon(skillLine)
 	local vivod = ""
-	local icon = C_TradeSkillUI.GetTradeSkillTexture(self)
+	local icon = C_TradeSkillUI.GetTradeSkillTexture(skillLine)
 	vivod = lib:func_texturefromIcon(icon)
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_ProfessionSkillLevel(self)
+function lib:func_ProfessionSkillLevel(skillLine)
 	local vivod = ""
-	local skillLevel = select(3, GetProfessionInfo(self))
+	local skillLevel = select(3, GetProfessionInfo(skillLine))
 	vivod = skillLevel
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_ProfessionMaxSkillLevel(self)
+function lib:func_ProfessionMaxSkillLevel(skillLine)
 	local vivod = ""
-	local maxSkillLevel = select(4, GetProfessionInfo(self))
+	local maxSkillLevel = select(4, GetProfessionInfo(skillLine))
 	vivod = maxSkillLevel
 	return vivod
 end
 ----------------------------------------------------------------
 function lib:START()
 	local timer = debugprofilestart()
-	-- local vivod = self:func_Gradient("DEBUG TIMER START", "|cffD177FF", "|cff63A4E0")
-	-- return ChatFrame1:AddMessage(vivod)
 	return timer
 end
 ----------------------------------------------------------------
 function lib:STOP()
-	-- local timer = self:func_SecondsToClock(debugprofilestop()/1000)
 	local timer = self:func_CompactNumberSimple(debugprofilestop())
 	local vivod = self:func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")
 	vivod = vivod..timer
 	return ChatFrame1:AddMessage(vivod.. "|cff63A4E0 ms.|r" )
 end
 ----------------------------------------------------------------
-
+function lib:func_dungeonName(dungeonID)
+	if dungeonID then
+		local vivod = C_ChallengeMode.GetMapUIInfo(dungeonID)
+		if ShowIDS == true and vivod ~= nil then
+			vivod = vivod .. Gray_Color.." id:"..dungeonID.."|r"
+		end
+		return vivod
+	end
+end
 ----------------------------------------------------------------
+function lib:func_dungeontimeLimit(dungeonID)
+	if dungeonID then
+		local timeLimit = select(3, C_ChallengeMode.GetMapUIInfo(dungeonID))
+		return timeLimit
+	end
+end
 ----------------------------------------------------------------
-----------------------------------------------------------------
+function lib:func_dungeonIcon(dungeonID)
+	if dungeonID then
+		local texture = select(4, C_ChallengeMode.GetMapUIInfo(dungeonID))
+		return texture
+	end
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
