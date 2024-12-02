@@ -91,6 +91,7 @@ local OctoToDo_FIRST_OptionsButton = nil
 local OctoToDo_FIRST_AbandonButton = nil
 local OctoToDo_FIRST_MplusButton = nil
 local OctoToDo_FIRST_ItemsButton = nil
+local OctoTable_func_otrisovka_FIRST = nil
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = LibOctopussy:func_GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
@@ -127,7 +128,6 @@ local Meta_Table_true = {__index = function() return true end}
 local Meta_Table_DONE = {__index = function() return LibOctopussy:DONE() end}
 local Meta_Table_NONE = {__index = function() return LibOctopussy:NONE() end}
 local Meta_Table_Empty = {__index = function() return "" end}
-local OctoTable_func_otrisovka_FIRST = {}
 local TrashFrames_table = {
 	{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
 	{name = "SplashFrame", frame = SplashFrame},
@@ -143,29 +143,6 @@ local TrashFrames_table = {
 	{name = "RaidBossEmoteFrame", frame = RaidBossEmoteFrame},
 	{name = "ZoneAbilityFrame.Style", frame = ZoneAbilityFrame.Style},
 	{name = "ExtraActionButton1.style", frame = ExtraActionButton1.style},
-	-- -- PLAYER
-	-- {name = "PlayerFrame.PlayerFrameContainer.PlayerPortrait", frame = PlayerFrame.PlayerFrameContainer.PlayerPortrait},
-	-- {name = "PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual", frame = PlayerFrame.PlayerFrameContent.PlayerFrameContentContextual},
-	-- {name = "PlayerFrame.PlayerFrameContainer.VehicleFrameTexture", frame = PlayerFrame.PlayerFrameContainer.VehicleFrameTexture},
-	-- -- PET
-	-- {name = "PetFrameTexture", frame = PetFrameTexture},
-	-- {name = "PetPortrait", frame = PetPortrait},
-	-- {name = "PetFrameManaBar", frame = PetFrameManaBar},
-	-- -- TARGET
-	-- {name = "TargetFrame.TargetFrameContainer.Portrait", frame = TargetFrame.TargetFrameContainer.Portrait},
-	-- {name = "TargetFrame.TargetFrameContainer.BossPortraitFrameTexture", frame = TargetFrame.TargetFrameContainer.BossPortraitFrameTexture},
-	-- {name = "TargetFrame.TargetFrameContainer.FrameTexture", frame = TargetFrame.TargetFrameContainer.FrameTexture},
-	-- {name = "TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor", frame = TargetFrame.TargetFrameContent.TargetFrameContentMain.ReputationColor},
-	-- /run PlayerFrame.PlayerFrameContainer.VehicleFrameTexture:Hide()
-	-- /run PlayerFrame.PlayerFrameContainer.PlayerPortraitMask:Hide()
-	-- /run ExtraActionButton1:Hide()
-	-- /run ExtraActionButton1.style:Hide()
-	-- /run ExtraActionButton1.IconMask:Hide()
-	-- {name = "TalkingHeadFrame", frame = TalkingHeadFrame},
-	-- {name = "PVPArenaTextString", frame = PVPArenaTextString},
-	-- {name = "ZoneTextString", frame = ZoneTextString},
-	-- {name = "SubZoneTextString", frame = SubZoneTextString},
-	-- {name = "PaladinPowerBarFrame", frame = PaladinPowerBarFrame},
 }
 local function Hide_trash_frames()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
@@ -921,8 +898,8 @@ local function Collect_ALL_PlayerInfo()
 		collect.IsRestrictedAccount = IsRestrictedAccount
 		collect.IsTrialAccount = IsTrialAccount
 		collect.IsVeteranTrialAccount = IsVeteranTrialAccount
-	-- collect.NoPlayTime = NoPlayTime
-	-- collect.PartialPlayTime = PartialPlayTime
+		-- collect.NoPlayTime = NoPlayTime
+		-- collect.PartialPlayTime = PartialPlayTime
 	end
 end
 -- КОВЕНАНТ
@@ -1317,25 +1294,25 @@ local function Collect_ALL_ItemsInBag()
 				end
 				--Cataloged Research
 				for k, v in next, (E.OctoTable_itemID_Cataloged_Research) do
-				    if itemID == v.itemiD then
-				        Possible_CatalogedResearch = Possible_CatalogedResearch + v.count
-				    end
+					if itemID == v.itemiD then
+						Possible_CatalogedResearch = Possible_CatalogedResearch + v.count
+					end
 				end
 				--Possible Anima
 				local isAnima = C_Item.IsAnimaItemByID(itemID)
 				if stackCount and isAnima and itemID ~= nil then
-				    if (quality == 2) and (itemID ~= 183727) then
-				        Possible_Anima = Possible_Anima + (5 * stackCount)
-				    end
-				    if quality == 3 then
-				        Possible_Anima = Possible_Anima + (35 * stackCount)
-				    end
-				    if quality == 4 then
-				        Possible_Anima = Possible_Anima + (250 * stackCount)
-				    end
-				    if itemID == 183727 then
-				        Possible_Anima = Possible_Anima + (3 * stackCount)
-				    end
+					if (quality == 2) and (itemID ~= 183727) then
+						Possible_Anima = Possible_Anima + (5 * stackCount)
+					end
+					if quality == 3 then
+						Possible_Anima = Possible_Anima + (35 * stackCount)
+					end
+					if quality == 4 then
+						Possible_Anima = Possible_Anima + (250 * stackCount)
+					end
+					if itemID == 183727 then
+						Possible_Anima = Possible_Anima + (3 * stackCount)
+					end
 				end
 				-- Разное MISCELLANEOUS
 				-- Другое OTHER
@@ -1649,8 +1626,8 @@ local function O_otrisovka_FIRST()
 	-- НИК ПЕРСОНАЖА
 	tinsert(OctoTable_func_otrisovka_FIRST,
 		function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+			local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+			BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 			CL:SetFontObject(OctoFont12)
 			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
 			if CharInfo.Faction == "Horde" then
@@ -1744,13 +1721,16 @@ local function O_otrisovka_FIRST()
 			vivodLeft = E.Timers.Daily_Reset()
 			return vivodCent, vivodLeft
 	end)
+	-- Classic
+	if Octo_ToDo_DB_Vars.config.ExpansionToShow == 1 then
+	end
 	-- The Burning Crusade
 	if Octo_ToDo_DB_Vars.config.ExpansionToShow == 2 then
 		expansionQWEQWE = 2
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(23572)..LibOctopussy:func_itemName(23572)
 				if CharInfo.ItemsInBag[23572] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[23572]
@@ -1759,8 +1739,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(30183)..LibOctopussy:func_itemName(30183)
 				if CharInfo.ItemsInBag[30183] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[30183]
@@ -1769,8 +1749,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(32428)..LibOctopussy:func_itemName(32428)
 				if CharInfo.ItemsInBag[32428] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[32428]
@@ -1779,8 +1759,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(34664)..LibOctopussy:func_itemName(34664)
 				if CharInfo.ItemsInBag[34664] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[34664]
@@ -1793,8 +1773,8 @@ local function O_otrisovka_FIRST()
 		expansionQWEQWE = 3
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(52019)..LibOctopussy:func_itemName(52019)
 				if CharInfo.ItemsInBag[52019] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[52019]
@@ -1803,8 +1783,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(43102)..LibOctopussy:func_itemName(43102)
 				if CharInfo.ItemsInBag[43102] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[43102]
@@ -1813,8 +1793,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(45087)..LibOctopussy:func_itemName(45087)
 				if CharInfo.ItemsInBag[45087] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[45087]
@@ -1823,8 +1803,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(47556)..LibOctopussy:func_itemName(47556)
 				if CharInfo.ItemsInBag[47556] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[47556]
@@ -1833,8 +1813,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(49908)..LibOctopussy:func_itemName(49908)
 				if CharInfo.ItemsInBag[49908] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[49908]
@@ -1843,16 +1823,16 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_reputationName(1156)
 				vivodCent = CharInfo.MASLENGO.reputationID[1156]
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(24545)
 				vivodCent = CharInfo.OctoTable_QuestID[24545]
 				if C_QuestLog.IsOnQuest(24545) then
@@ -1862,8 +1842,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(24743)
 				vivodCent = CharInfo.OctoTable_QuestID[24743]
 				if C_QuestLog.IsOnQuest(24743) then
@@ -1873,8 +1853,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(24547)
 				vivodCent = CharInfo.OctoTable_QuestID[24547]
 				if C_QuestLog.IsOnQuest(24547) then
@@ -1884,8 +1864,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(24749)
 				vivodCent = CharInfo.OctoTable_QuestID[24749]
 				if C_QuestLog.IsOnQuest(24749) then
@@ -1895,8 +1875,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(24756)
 				vivodCent = CharInfo.OctoTable_QuestID[24756]
 				if C_QuestLog.IsOnQuest(24756) then
@@ -1906,8 +1886,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(24757)
 				vivodCent = CharInfo.OctoTable_QuestID[24757]
 				if C_QuestLog.IsOnQuest(24757) then
@@ -1917,8 +1897,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(24548)
 				vivodCent = CharInfo.OctoTable_QuestID[24548]
 				if C_QuestLog.IsOnQuest(24548) then
@@ -1928,8 +1908,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(24549)
 				vivodCent = CharInfo.OctoTable_QuestID[24549]
 				if C_QuestLog.IsOnQuest(24549) then
@@ -1939,8 +1919,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(24748)
 				vivodCent = CharInfo.OctoTable_QuestID[24748]
 				if C_QuestLog.IsOnQuest(24748) then
@@ -1950,8 +1930,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(49888)..LibOctopussy:func_itemName(49888)
 				if CharInfo.ItemsInBag[49888] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[49888]
@@ -1960,8 +1940,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(49623)..LibOctopussy:func_itemName(49623)
 				if CharInfo.ItemsInBag[49623] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[49623]
@@ -1974,8 +1954,8 @@ local function O_otrisovka_FIRST()
 		expansionQWEQWE = 4
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(52078)..LibOctopussy:func_itemName(52078)
 				if CharInfo.ItemsInBag[52078] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[52078]
@@ -1984,8 +1964,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(69237)..LibOctopussy:func_itemName(69237)
 				if CharInfo.ItemsInBag[69237] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[69237]
@@ -1994,8 +1974,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_itemTexture(71998)..LibOctopussy:func_itemName(71998)
 				if CharInfo.ItemsInBag[71998] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[71998]
@@ -2008,16 +1988,16 @@ local function O_otrisovka_FIRST()
 		expansionQWEQWE = 5
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[697]
 				vivodLeft = LibOctopussy:func_currencyicon(697)..E.Blue_Color.."("..L["Coins"]..") |r"..LibOctopussy:func_currencyName(697)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[776]
 				vivodLeft = LibOctopussy:func_currencyicon(776)..E.Blue_Color.."("..L["Coins"]..") |r"..LibOctopussy:func_currencyName(776)
 				return vivodCent, vivodLeft
@@ -2028,48 +2008,48 @@ local function O_otrisovka_FIRST()
 		expansionQWEQWE = 6
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1129].."(+"..CharInfo.Octopussy_WoD_Weekly_coinsQuests_count..")"
 				vivodLeft = LibOctopussy:func_currencyicon(1129)..E.Blue_Color.."("..L["Coins"]..") |r"..LibOctopussy:func_currencyName(1129)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[994]
 				vivodLeft = LibOctopussy:func_currencyicon(994)..E.Blue_Color.."("..L["Coins"]..") |r"..LibOctopussy:func_currencyName(994)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[823]
 				vivodLeft = LibOctopussy:func_currencyicon(823)..LibOctopussy:func_currencyName(823)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1101]
 				vivodLeft = LibOctopussy:func_currencyicon(1101)..LibOctopussy:func_currencyName(1101)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[824]
 				vivodLeft = LibOctopussy:func_currencyicon(824)..LibOctopussy:func_currencyName(824)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_Draenor_Once_Garrison1_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_Draenor_Once_Garrison1_count
 				end
@@ -2078,8 +2058,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_Draenor_Once_Garrison2_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_Draenor_Once_Garrison2_count
 				end
@@ -2088,8 +2068,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				CL:SetFontObject(OctoFont1)
 				if CharInfo.UnitLevel > 40 then
 					if CharInfo.MASLENGO.CurrencyID[824] < 2000 then
@@ -2114,8 +2094,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.OctoTable_QuestID[38242] ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.OctoTable_QuestID[38242]
 				end
@@ -2127,8 +2107,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.OctoTable_QuestID[39246] ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.OctoTable_QuestID[39246]
 				end
@@ -2141,15 +2121,15 @@ local function O_otrisovka_FIRST()
 		expansionQWEQWE = 7
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = (E.Timers.Legion_Invasion().."Timer_Legion_Invasion")
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = E.Icon_WorldBoss.."WB"
 				if CharInfo.Octopussy_Legion_Weekly_WBALL_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_Legion_Weekly_WBALL_count
@@ -2158,8 +2138,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = "Broken Shore - Armies of Legionfall"
 				if CharInfo.Octopussy_Legion_Once_BrokenShoreArmiesofLegionfall_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_Legion_Once_BrokenShoreArmiesofLegionfall_count
@@ -2171,8 +2151,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = "Broken Shore - Excavations"
 				if CharInfo.Octopussy_Legion_Once_BrokenShoreExcavations_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_Legion_Once_BrokenShoreExcavations_count
@@ -2184,8 +2164,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = "Broken Shore - ToArgus"
 				if CharInfo.Octopussy_Legion_Once_ArgusToArgus_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_Legion_Once_ArgusToArgus_count
@@ -2194,8 +2174,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_questName(43533)
 				if CharInfo.Octopussy_Legion_Once_BalanceofPower_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_Legion_Once_BalanceofPower_count
@@ -2207,8 +2187,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.MASLENGO.CurrencyID[1273] then
 					vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1273].."(+"..CharInfo.Octopussy_Legion_Weekly_coinsQuests_count..")"
 				end
@@ -2217,8 +2197,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.MASLENGO.CurrencyID[1508] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1508]
 				end
@@ -2227,48 +2207,48 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1342]
 				vivodLeft = LibOctopussy:func_currencyicon(1342)..LibOctopussy:func_currencyName(1342)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1220]
 				vivodLeft = LibOctopussy:func_currencyicon(1220)..LibOctopussy:func_currencyName(1220)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1226]
 				vivodLeft = LibOctopussy:func_currencyicon(1226)..LibOctopussy:func_currencyName(1226)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1533]
 				vivodLeft = LibOctopussy:func_currencyicon(1533)..LibOctopussy:func_currencyName(1533)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1155]
 				vivodLeft = LibOctopussy:func_currencyicon(1155)..LibOctopussy:func_currencyName(1155)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.ItemsInBag[124124] ~= 0 then
 					vivodCent = CharInfo.ItemsInBag[124124]
 				end
@@ -2277,8 +2257,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.bounty_Legion1 ~= 0 and CharInfo.bounty_Legion1_questID ~= 0 then
 					vivodCent = CharInfo.bounty_Legion1_icon..CharInfo.bounty_Legion1
 					tooltip[#tooltip+1] = {LibOctopussy:func_questName(CharInfo.bounty_Legion1_questID)}
@@ -2289,8 +2269,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.bounty_Legion2 ~= 0 and CharInfo.bounty_Legion2_questID ~= 0 then
 					vivodCent = CharInfo.bounty_Legion2_icon..CharInfo.bounty_Legion2
 					tooltip[#tooltip+1] = {LibOctopussy:func_questName(CharInfo.bounty_Legion2_questID)}
@@ -2301,8 +2281,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.bounty_Legion3 ~= 0 and CharInfo.bounty_Legion3_questID ~= 0 then
 					vivodCent = CharInfo.bounty_Legion3_icon..CharInfo.bounty_Legion3
 					tooltip[#tooltip+1] = {LibOctopussy:func_questName(CharInfo.bounty_Legion3_questID)}
@@ -2313,8 +2293,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				local QWE = Octo_ToDo_DB_Artifact
 				if CharInfo.classFilename == "WARRIOR" then
 					tooltip[#tooltip+1] = {L["InDev"], " "}
@@ -2464,8 +2444,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				local QWE = Octo_ToDo_DB_Artifact
 				if CharInfo.classFilename == "WARRIOR" then
 					tooltip[#tooltip+1] = {L["InDev"], " "}
@@ -2615,8 +2595,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				local QWE = Octo_ToDo_DB_Artifact
 				if CharInfo.classFilename == "WARRIOR" then
 					tooltip[#tooltip+1] = {L["InDev"], " "}
@@ -2766,8 +2746,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				local QWE = Octo_ToDo_DB_Artifact
 				if CharInfo.classFilename == "WARRIOR" then
 					tooltip[#tooltip+1] = {L["InDev"], " "}
@@ -2917,8 +2897,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				for className, classTable in pairs(E.OctoTable_LegionArtifacts) do
 					for specName, specTable in pairs(classTable) do
 						vivodLeft = className
@@ -2938,8 +2918,8 @@ local function O_otrisovka_FIRST()
 		expansionQWEQWE = 8
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = (E.Timers.BfA_Invasion().."Timer_BfA_Invasion (PVP)")
 				if CharInfo.Octopussy_BfA_Daily_InvasionQuests_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_BfA_Daily_InvasionQuests_count
@@ -2948,8 +2928,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = E.Timers.BfA_Assault().."Timer_BfA_Assault (N'zoth)"
 				if CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count
@@ -2979,92 +2959,92 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_BfA_Daily_miniVision_count ~= LibOctopussy:NONE() then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.Octopussy_BfA_Daily_miniVision_count)
+					vivodCent = CharInfo.Octopussy_BfA_Daily_miniVision_count
 				end
 				vivodLeft = E.Purple_Color.."Mini Vision".."|r"
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = E.Icon_WorldBoss.."WB"
 				if CharInfo.Octopussy_BfA_Weekly_WBALL_count ~= LibOctopussy:NONE() then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.Octopussy_BfA_Weekly_WBALL_count)
+					vivodCent = CharInfo.Octopussy_BfA_Weekly_WBALL_count
 				end
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = E.Icon_WorldBoss.."WB: Nazjatar"
 				if CharInfo.Octopussy_BfA_Weekly_WBNazjatar_count ~= LibOctopussy:NONE() then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.Octopussy_BfA_Weekly_WBNazjatar_count)
+					vivodCent = CharInfo.Octopussy_BfA_Weekly_WBNazjatar_count
 				end
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_BfA_Weekly_WBAssault_count ~= LibOctopussy:NONE() then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.Octopussy_BfA_Weekly_WBAssault_count)
+					vivodCent = CharInfo.Octopussy_BfA_Weekly_WBAssault_count
 				end
 				vivodLeft = E.Icon_WorldBoss.."World Boss: Assault"
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = E.Icon_WorldBoss.."WB: PVP"
 				if CharInfo.Octopussy_BfA_Weekly_WBDarkshore_count ~= LibOctopussy:NONE() then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.Octopussy_BfA_Weekly_WBDarkshore_count)
+					vivodCent = CharInfo.Octopussy_BfA_Weekly_WBDarkshore_count
 				end
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = E.Icon_Rares.."Rares: Darkshore"
 				if CharInfo.Octopussy_BfA_Daily_DarkshoreRares_count ~= LibOctopussy:NONE() then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.Octopussy_BfA_Daily_DarkshoreRares_count)
+					vivodCent = CharInfo.Octopussy_BfA_Daily_DarkshoreRares_count
 				end
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1560]
 				vivodLeft = LibOctopussy:func_currencyicon(1560)..LibOctopussy:func_currencyName(1560)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1721]
 				vivodLeft = LibOctopussy:func_currencyicon(1721)..LibOctopussy:func_currencyName(1721)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1803]
 				vivodLeft = LibOctopussy:func_currencyicon(1803)..LibOctopussy:func_currencyName(1803)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1755]
 				if CharInfo.ItemsInBag[173363] ~= 0 then
 					vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[173363]..LibOctopussy:func_itemTexture(173363)
@@ -3074,48 +3054,47 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1719]
 				vivodLeft = LibOctopussy:func_currencyicon(1719)..LibOctopussy:func_currencyName(1719)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1710]
 				vivodLeft = LibOctopussy:func_currencyicon(1710)..LibOctopussy:func_currencyName(1710)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1716]
 				vivodLeft = LibOctopussy:func_currencyicon(1716)..LibOctopussy:func_currencyName(1716)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1718]
 				vivodLeft = LibOctopussy:func_currencyicon(1718)..LibOctopussy:func_currencyName(1718)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.ItemsInBag[158075] == 0 then
 					vivodCent = E.Red_Color.."no neck|r"
-				end
-				if CharInfo.ItemsInBag[158075] ~= 0 then
+				else
 					vivodCent = E.Orange_Color.."neeed to equip|r"
 					if CharInfo.azeriteLVL ~= 0 then
 						CL:SetFontObject(OctoFont10)
-						vivodCent = LibOctopussy:func_EmptyZero(E.Green_Color..CharInfo.azeriteLVL.."|r").."|n"..E.Gray_Color..CharInfo.azeriteEXP.."|r"
+						vivodCent = E.Green_Color..CharInfo.azeriteLVL.."|r".."|n"..E.Gray_Color..CharInfo.azeriteEXP.."|r"
 					end
 				end
 				vivodLeft = LibOctopussy:func_itemTexture(158075)..LibOctopussy:func_itemName(158075)
@@ -3123,8 +3102,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.ItemsInBag[169223] == 0 then
 					vivodCent = E.Red_Color.."no cloak|r"
 				end
@@ -3146,10 +3125,10 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.islandBfA then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.islandBfA)
+					vivodCent = CharInfo.islandBfA
 				end
 				vivodLeft = "Collect_BfA_Island"
 				local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
@@ -3160,38 +3139,38 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_BfA_Weekly_Warfront1_count ~= LibOctopussy:NONE() then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.Octopussy_BfA_Weekly_Warfront1_count)
+					vivodCent = CharInfo.Octopussy_BfA_Weekly_Warfront1_count
 				end
 				vivodLeft = "Warfront: Stromgarde"
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_BfA_Weekly_Warfront2_count ~= LibOctopussy:NONE() then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.Octopussy_BfA_Weekly_Warfront2_count)
+					vivodCent = CharInfo.Octopussy_BfA_Weekly_Warfront2_count
 				end
 				vivodLeft = "Warfront: Darkshore"
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count ~= LibOctopussy:NONE() then
-					vivodCent = LibOctopussy:func_EmptyZero(CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count)
+					vivodCent = CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count
 				end
 				vivodLeft = "Warfront: Heroic"
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.bounty_BfA1 ~= 0 and CharInfo.bounty_BfA1_questID ~= 0 then
 					vivodCent = CharInfo.bounty_BfA1_icon..CharInfo.bounty_BfA1
 					tooltip[#tooltip+1] = {LibOctopussy:func_questName(CharInfo.bounty_BfA1_questID)}
@@ -3202,8 +3181,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.bounty_BfA2 ~= 0 and CharInfo.bounty_BfA2_questID ~= 0 then
 					vivodCent = CharInfo.bounty_BfA2_icon..CharInfo.bounty_BfA2
 					tooltip[#tooltip+1] = {LibOctopussy:func_questName(CharInfo.bounty_BfA2_questID)}
@@ -3214,8 +3193,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.bounty_BfA3 ~= 0 and CharInfo.bounty_BfA3_questID ~= 0 then
 					vivodCent = CharInfo.bounty_BfA3_icon..CharInfo.bounty_BfA3
 					tooltip[#tooltip+1] = {LibOctopussy:func_questName(CharInfo.bounty_BfA3_questID)}
@@ -3226,8 +3205,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.ItemsInBag[166846] ~= 0 or CharInfo.ItemsInBag[169610] ~= 0 or CharInfo.ItemsInBag[166970] ~= 0 or CharInfo.ItemsInBag[168327] ~= 0 or CharInfo.ItemsInBag[168832] ~= 0 or CharInfo.ItemsInBag[166971] ~= 0 or CharInfo.ItemsInBag[168946] ~= 0 or CharInfo.ItemsInBag[168215] ~= 0 or CharInfo.ItemsInBag[168216] ~= 0 or CharInfo.ItemsInBag[168217] ~= 0 then
 					tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(166846)..LibOctopussy:func_itemName(166846), CharInfo.ItemsInBag[166846]}
 					tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(169610)..LibOctopussy:func_itemName(169610), CharInfo.ItemsInBag[169610]}
@@ -3279,8 +3258,8 @@ local function O_otrisovka_FIRST()
 		end
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = "Maw: Covenant Assault "..E.Timers.SL_Maw_Assault()
 				if CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count
@@ -3289,50 +3268,51 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					if CharInfo.MASLENGO.CurrencyID[2009] ~= 0 then
-						vivodCent = CharInfo.MASLENGO.CurrencyID[2009]
-					end
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				if CharInfo.MASLENGO.CurrencyID[2009] ~= 0 then
+					vivodCent = CharInfo.MASLENGO.CurrencyID[2009]
+				end
 				vivodLeft = LibOctopussy:func_currencyicon(2009)..LibOctopussy:func_currencyName(2009)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					if CharInfo.MASLENGO.CurrencyID[1906] ~= 0 then
-						vivodCent = CharInfo.MASLENGO.CurrencyID[1906]
-					end
-
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				if CharInfo.MASLENGO.CurrencyID[1906] ~= 0 then
+					vivodCent = CharInfo.MASLENGO.CurrencyID[1906]
+				end
 				vivodLeft = LibOctopussy:func_currencyicon(1906)..LibOctopussy:func_currencyName(1906)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					if CharInfo.MASLENGO.CurrencyID[1828] ~= 0 then
-				vivodCent = CharInfo.MASLENGO.CurrencyID[1828]
-			end
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				if CharInfo.MASLENGO.CurrencyID[1828] ~= 0 then
+					vivodCent = CharInfo.MASLENGO.CurrencyID[1828]
+				end
 				vivodLeft = LibOctopussy:func_currencyicon(1828)..LibOctopussy:func_currencyName(1828)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					if CharInfo.MASLENGO.CurrencyID[1979] ~= 0 then
-				vivodCent = CharInfo.MASLENGO.CurrencyID[1979]
-			end
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				if CharInfo.MASLENGO.CurrencyID[1979] ~= 0 then
+					vivodCent = CharInfo.MASLENGO.CurrencyID[1979]
+				end
 				vivodLeft = LibOctopussy:func_currencyicon(1979)..LibOctopussy:func_currencyName(1979)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodCent = LibOctopussy:func_EmptyZero(CharInfo.MASLENGO.CurrencyID[1931])
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				if CharInfo.MASLENGO.CurrencyID[1931] ~= 0 then
+					vivodCent = CharInfo.MASLENGO.CurrencyID[1931]
+				end
 				vivodLeft = LibOctopussy:func_currencyicon(1931)..LibOctopussy:func_currencyName(1931)
 				if CharInfo.Possible_CatalogedResearch ~= 0 then
 					vivodCent = vivodCent..E.Purple_Color.." +"..CharInfo.Possible_CatalogedResearch.."|r"
@@ -3341,8 +3321,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count
 				end
@@ -3351,8 +3331,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count
 				end
@@ -3361,8 +3341,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_SL_Weekly_WBALL_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_SL_Weekly_WBALL_count
 				end
@@ -3371,8 +3351,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_SL_Weekly_WBZMAntros_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_SL_Weekly_WBZMAntros_count
 				end
@@ -3381,8 +3361,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count
 				end
@@ -3391,8 +3371,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count
 				end
@@ -3401,40 +3381,40 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = "Кузня творения"
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(188957)..LibOctopussy:func_itemName(188957), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[188957])}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(188957)..LibOctopussy:func_itemName(188957), CharInfo.ItemsInBag[188957]}
 				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(187634)..LibOctopussy:func_itemName(187634), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[187634])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(187636)..LibOctopussy:func_itemName(187636), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[187636])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(187633)..LibOctopussy:func_itemName(187633), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[187633])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189146)..LibOctopussy:func_itemName(189146), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189146])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189145)..LibOctopussy:func_itemName(189145), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189145])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189147)..LibOctopussy:func_itemName(189147), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189147])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189148)..LibOctopussy:func_itemName(189148), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189148])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189149)..LibOctopussy:func_itemName(189149), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189149])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189151)..LibOctopussy:func_itemName(189151), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189151])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189152)..LibOctopussy:func_itemName(189152), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189152])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189153)..LibOctopussy:func_itemName(189153), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189153])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189154)..LibOctopussy:func_itemName(189154), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189154])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189155)..LibOctopussy:func_itemName(189155), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189155])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189156)..LibOctopussy:func_itemName(189156), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189156])}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(187634)..LibOctopussy:func_itemName(187634), CharInfo.ItemsInBag[187634]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(187636)..LibOctopussy:func_itemName(187636), CharInfo.ItemsInBag[187636]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(187633)..LibOctopussy:func_itemName(187633), CharInfo.ItemsInBag[187633]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189146)..LibOctopussy:func_itemName(189146), CharInfo.ItemsInBag[189146]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189145)..LibOctopussy:func_itemName(189145), CharInfo.ItemsInBag[189145]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189147)..LibOctopussy:func_itemName(189147), CharInfo.ItemsInBag[189147]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189148)..LibOctopussy:func_itemName(189148), CharInfo.ItemsInBag[189148]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189149)..LibOctopussy:func_itemName(189149), CharInfo.ItemsInBag[189149]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189151)..LibOctopussy:func_itemName(189151), CharInfo.ItemsInBag[189151]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189152)..LibOctopussy:func_itemName(189152), CharInfo.ItemsInBag[189152]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189153)..LibOctopussy:func_itemName(189153), CharInfo.ItemsInBag[189153]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189154)..LibOctopussy:func_itemName(189154), CharInfo.ItemsInBag[189154]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189155)..LibOctopussy:func_itemName(189155), CharInfo.ItemsInBag[189155]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189156)..LibOctopussy:func_itemName(189156), CharInfo.ItemsInBag[189156]}
 				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189157)..LibOctopussy:func_itemName(189157), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189157])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189158)..LibOctopussy:func_itemName(189158), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189158])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189159)..LibOctopussy:func_itemName(189159), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189159])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189160)..LibOctopussy:func_itemName(189160), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189160])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189161)..LibOctopussy:func_itemName(189161), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189161])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189162)..LibOctopussy:func_itemName(189162), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189162])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189163)..LibOctopussy:func_itemName(189163), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189163])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189164)..LibOctopussy:func_itemName(189164), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189164])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189165)..LibOctopussy:func_itemName(189165), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189165])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189166)..LibOctopussy:func_itemName(189166), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189166])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189167)..LibOctopussy:func_itemName(189167), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189167])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189168)..LibOctopussy:func_itemName(189168), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189168])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189169)..LibOctopussy:func_itemName(189169), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189169])}
-				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189170)..LibOctopussy:func_itemName(189170), LibOctopussy:func_EmptyZero(CharInfo.ItemsInBag[189170])}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189157)..LibOctopussy:func_itemName(189157), CharInfo.ItemsInBag[189157]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189158)..LibOctopussy:func_itemName(189158), CharInfo.ItemsInBag[189158]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189159)..LibOctopussy:func_itemName(189159), CharInfo.ItemsInBag[189159]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189160)..LibOctopussy:func_itemName(189160), CharInfo.ItemsInBag[189160]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189161)..LibOctopussy:func_itemName(189161), CharInfo.ItemsInBag[189161]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189162)..LibOctopussy:func_itemName(189162), CharInfo.ItemsInBag[189162]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189163)..LibOctopussy:func_itemName(189163), CharInfo.ItemsInBag[189163]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189164)..LibOctopussy:func_itemName(189164), CharInfo.ItemsInBag[189164]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189165)..LibOctopussy:func_itemName(189165), CharInfo.ItemsInBag[189165]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189166)..LibOctopussy:func_itemName(189166), CharInfo.ItemsInBag[189166]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189167)..LibOctopussy:func_itemName(189167), CharInfo.ItemsInBag[189167]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189168)..LibOctopussy:func_itemName(189168), CharInfo.ItemsInBag[189168]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189169)..LibOctopussy:func_itemName(189169), CharInfo.ItemsInBag[189169]}
+				tooltip[#tooltip+1] = {LibOctopussy:func_itemTexture(189170)..LibOctopussy:func_itemName(189170), CharInfo.ItemsInBag[189170]}
 				local count = 0
 				if CharInfo.ItemsInBag[188957] >= 1 then count = count + 1 end
 				if CharInfo.ItemsInBag[187634] >= 1 then count = count + 1 end
@@ -3468,14 +3448,14 @@ local function O_otrisovka_FIRST()
 				vivodCent = count.."/".."29"
 				return vivodCent, vivodLeft
 		end)
--- E.OctoTable_Quest_Bastion 14281
--- E.OctoTable_Quest_Maldraxus 14206
--- E.OctoTable_Quest_Ardenweald 14164
--- E.OctoTable_Quest_Revendreth 13878
+		-- E.OctoTable_Quest_Bastion 14281
+		-- E.OctoTable_Quest_Maldraxus 14206
+		-- E.OctoTable_Quest_Ardenweald 14164
+		-- E.OctoTable_Quest_Revendreth 13878
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(14281))..E.OctoTable_Covenant[1].color..LibOctopussy:func_achievementName(14281).."|r"
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TOTAL_Once ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_BASTION_TOTAL_Once
@@ -3499,8 +3479,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(14206))..E.OctoTable_Covenant[4].color..LibOctopussy:func_achievementName(14206).."|r"
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TOTAL_Once ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_MALDRAXUS_TOTAL_Once
@@ -3524,8 +3504,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(14164))..E.OctoTable_Covenant[3].color..LibOctopussy:func_achievementName(14164).."|r"
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TOTAL_Once ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ARDENWEALD_TOTAL_Once
@@ -3550,8 +3530,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_texturefromIcon(LibOctopussy:func_achievementIcon(13878))..E.OctoTable_Covenant[2].color..LibOctopussy:func_achievementName(13878).."|r"
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TOTAL_Once ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_REVENDRETH_TOTAL_Once
@@ -3575,8 +3555,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = "Choosing Your Covenant"
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ChoosingYourCovenant_Once ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_Storyline_ChoosingYourCovenant_Once
@@ -3604,386 +3584,205 @@ local function O_otrisovka_FIRST()
 					return vivodCent, vivodLeft
 			end)
 		end
-		if Octo_ToDo_DB_Vars.config.CommunityFeast == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_texturefromIcon(629056)..E.Timers.DF_CommunityFeast()..L["Community Feast"]
-					if CharInfo.Octopussy_DF_Weekly_CommunityFeast_count ~= LibOctopussy:NONE() then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_CommunityFeast_count
-					end
-					if CharInfo.ItemsInBag[200652] ~= 0 then
-						vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200652]..LibOctopussy:func_itemTexture(200652)
-					end
-					if CharInfo.ItemsInBag[200095] ~= 0 then
-						vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200095]..LibOctopussy:func_itemTexture(200095)
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_texturefromIcon(236469)..E.Timers.DF_ResearchersUnderFire()..LibOctopussy:func_questName(74906)
-					if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= LibOctopussy:NONE() and CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= "0/4" then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
-						tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_EPIC, CharInfo.OctoTable_QuestID[75630]}
-						tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_RARE, CharInfo.OctoTable_QuestID[75629]}
-						tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_UNCOMMON, CharInfo.OctoTable_QuestID[75628]}
-						tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_COMMON, CharInfo.OctoTable_QuestID[75627]}
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire_Weekly == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_questName(75665)
-					if CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count ~= LibOctopussy:NONE() then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_texturefromIcon(134206)..E.Timers.DF_Flower()..LibOctopussy:func_questName(78319)
-					if CharInfo.Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count ~= LibOctopussy:NONE() then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.EmeraldDreamBloomingDreamseeds == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_questName(78821)
-					if CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count ~= LibOctopussy:NONE() then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.EmeraldDreamAWorthyAllyDreamWardens == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_questName(78444)
-					if CharInfo.Octopussy_DF_Weekly_EmeraldDreamAWorthyAllyDreamWardens_count ~= LibOctopussy:NONE() then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamAWorthyAllyDreamWardens_count
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.EmeraldDreamDreamsUnified == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_questName(78381)
-					if CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count ~= LibOctopussy:NONE() then
-						vivodCent = CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_reputationName(2574)
-					if CharInfo.MASLENGO.reputationID[2574] ~= "" and CharInfo.MASLENGO.reputationID[2574] ~= 0 and CharInfo.MASLENGO.reputationID[2574] ~= LibOctopussy:DONE() then
-						vivodCent = CharInfo.MASLENGO.reputationID[2574]
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.TimeRift == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = (LibOctopussy:func_texturefromIcon(628677)..E.Timers.DF_TimeRift()..L["TimeRift"])
-					if CharInfo.Octopussy_DF_Weekly_TimeRift_count ~= LibOctopussy:NONE() then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_TimeRift_count
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.DilatedTimePod == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_itemTexture(209856)..LibOctopussy:func_itemName(209856)
-					if CharInfo.ItemsInBag[209856] ~= 0 then
-						vivodCent = vivodCent..E.WOW_Epic_Color..CharInfo.ItemsInBag[209856].."|r"
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.EncapsulatedDestiny == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_itemTexture(207002)..LibOctopussy:func_itemName(207002)
-					if CharInfo.ItemsInBag[207002] ~= 0 then
-						vivodCent = E.WOW_Rare_Color..CharInfo.ItemsInBag[207002].."|r"
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.ParacausalFlakes == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					if CharInfo.MASLENGO.CurrencyID[2594] ~= 0 then
-						vivodCent = CharInfo.MASLENGO.CurrencyID[2594]
-					end
-					if CharInfo.ItemsInBag[208945] ~= 0 then
-						vivodCent = vivodCent..E.WOW_WoWToken_Color.." +"..CharInfo.ItemsInBag[208945].."|r"..LibOctopussy:func_itemTexture(208945)
-					end
-					vivodLeft = LibOctopussy:func_currencyicon(2594)..LibOctopussy:func_currencyName(2594)
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.Dreamsurges == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = (LibOctopussy:func_texturefromIcon(134206)..E.Timers.DF_Dreamsurges()..L["Dreamsurges"])
-					if CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count ~= LibOctopussy:NONE() then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count
-					end
-					if CharInfo.ItemsInBag[209419] ~= 0 then
-						tooltip[#tooltip+1] = {LibOctopussy:func_texturefromIcon(1044087)..E.WOW_Rare_Color..L["Charred Elemental Remains"].."|r", CharInfo.ItemsInBag[209419]}
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.DreamsurgeCocoon == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_itemTexture(210254)..E.WOW_Epic_Color..LibOctopussy:func_itemName_NOCOLOR(210254).."|r"
-					if CharInfo.ItemsInBag[210254] ~= 0 then
-						vivodCent = vivodCent..E.WOW_Epic_Color..CharInfo.ItemsInBag[210254].."|r"
-					end
-					if CharInfo.ItemsInBag[208153] ~= 0 then
-						vivodCent = vivodCent..E.Gray_Color.." +"..CharInfo.ItemsInBag[208153].."(old)|r"
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.DreamsurgeCoalescence == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_itemTexture(207026)..E.WOW_Common_Color..LibOctopussy:func_itemName_NOCOLOR(207026).."|r"
-					if CharInfo.ItemsInBag[207026] ~= 0 then
-						vivodCent = E.WOW_Common_Color..CharInfo.ItemsInBag[207026].."|r"
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.CatalystCharges == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					if CharInfo.MASLENGO.CurrencyID[2912] ~= 0 then
-						vivodCent = LibOctopussy:func_EmptyZero(CharInfo.MASLENGO.CurrencyID_Total[2912])
-					end
-					vivodLeft = LibOctopussy:func_currencyicon(2912)..LibOctopussy:func_currencyName(2912)
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.Flightstones == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					local color = "|cffFFFFFF"
-					if CharInfo.MASLENGO.CurrencyID[2245] ~= 0 then
-						vivodCent = color..LibOctopussy:func_EmptyZero(CharInfo.MASLENGO.CurrencyID_Total[2245]).."|r"
-					end
-					vivodLeft = LibOctopussy:func_currencyicon(2245)..LibOctopussy:func_currencyName(2245)
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_itemTexture(213089)..LibOctopussy:func_itemName(213089)
-					if CharInfo.ItemsInBag[213089] ~= 0 then
-						vivodCent = CharInfo.ItemsInBag[213089]
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.SparkofAwakening == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_itemTexture(211516)..LibOctopussy:func_itemName(211516)
-					if CharInfo.ItemsInBag[211516] ~= 0 then
-						vivodCent = CharInfo.ItemsInBag[211516]
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					vivodLeft = LibOctopussy:func_itemTexture(211515)..LibOctopussy:func_itemName(211515)
-					if CharInfo.ItemsInBag[211515] ~= 0 then
-						vivodCent = CharInfo.ItemsInBag[211515]
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.Crests_Mythic == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					local currencyID = 2812
-					local text = "Mythic, M+6"
-					local color = E.WOW_Legendary_Color
-					vivodLeft = LibOctopussy:func_currencyicon(currencyID)..color..LibOctopussy:func_currencyName_NOCOLOR(currencyID).."|r"
-					tooltip[#tooltip+1] = {" ", color..text.."|r"}
-					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-					if data then
-						local maxQuantity = data.maxQuantity
-						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
-							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
-						else
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
-						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
-						end
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.Crests_Heroic == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					local currencyID = 2809
-					local text = "Heroic, M+2/+5"
-					local color = E.WOW_Epic_Color
-					vivodLeft = LibOctopussy:func_currencyicon(currencyID)..color..LibOctopussy:func_currencyName_NOCOLOR(currencyID).."|r"
-					tooltip[#tooltip+1] = {" ", color..text.."|r"}
-					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-					if data then
-						local maxQuantity = data.maxQuantity
-						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
-							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
-						else
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
-						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
-						end
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.Crests_Normal == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					local currencyID = 2807
-					local text = "Normal, M+0"
-					local color = E.WOW_Rare_Color
-					vivodLeft = LibOctopussy:func_currencyicon(currencyID)..color..LibOctopussy:func_currencyName_NOCOLOR(currencyID).."|r"
-					tooltip[#tooltip+1] = {" ", color..text.."|r"}
-					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-					if data then
-						local maxQuantity = data.maxQuantity
-						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
-							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
-						else
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
-						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
-						end
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
-		if Octo_ToDo_DB_Vars.config.Crests_LFR == true then
-			tinsert(OctoTable_func_otrisovka_FIRST,
-				function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					local currencyID = 2806
-					local text = "LFR, Heroic dung"
-					local color = E.WOW_Uncommon_Color
-					vivodLeft = LibOctopussy:func_currencyicon(currencyID)..color..LibOctopussy:func_currencyName_NOCOLOR(currencyID).."|r"
-					tooltip[#tooltip+1] = {" ", color..text.."|r"}
-					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-					if data then
-						local maxQuantity = data.maxQuantity
-						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
-							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
-						else
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
-						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
-							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
-						end
-					end
-					return vivodCent, vivodLeft
-			end)
-		end
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_texturefromIcon(629056)..E.Timers.DF_CommunityFeast()..L["Community Feast"]
+				if CharInfo.Octopussy_DF_Weekly_CommunityFeast_count ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_CommunityFeast_count
+				end
+				if CharInfo.ItemsInBag[200652] ~= 0 then
+					vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200652]..LibOctopussy:func_itemTexture(200652)
+				end
+				if CharInfo.ItemsInBag[200095] ~= 0 then
+					vivodCent = vivodCent.." +"..CharInfo.ItemsInBag[200095]..LibOctopussy:func_itemTexture(200095)
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_texturefromIcon(236469)..E.Timers.DF_ResearchersUnderFire()..LibOctopussy:func_questName(74906)
+				if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= LibOctopussy:NONE() and CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= "0/4" then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
+					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_EPIC, CharInfo.OctoTable_QuestID[75630]}
+					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_RARE, CharInfo.OctoTable_QuestID[75629]}
+					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_UNCOMMON, CharInfo.OctoTable_QuestID[75628]}
+					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_COMMON, CharInfo.OctoTable_QuestID[75627]}
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_questName(75665)
+				if CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_texturefromIcon(134206)..E.Timers.DF_Flower()..LibOctopussy:func_questName(78319)
+				if CharInfo.Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_questName(78821)
+				if CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_questName(78444)
+				if CharInfo.Octopussy_DF_Weekly_EmeraldDreamAWorthyAllyDreamWardens_count ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamAWorthyAllyDreamWardens_count
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_questName(78381)
+				if CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = (LibOctopussy:func_texturefromIcon(628677)..E.Timers.DF_TimeRift()..L["TimeRift"])
+				if CharInfo.Octopussy_DF_Weekly_TimeRift_count ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_TimeRift_count
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_itemTexture(209856)..LibOctopussy:func_itemName(209856)
+				if CharInfo.ItemsInBag[209856] ~= 0 then
+					vivodCent = vivodCent..E.WOW_Epic_Color..CharInfo.ItemsInBag[209856].."|r"
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_itemTexture(207002)..LibOctopussy:func_itemName(207002)
+				if CharInfo.ItemsInBag[207002] ~= 0 then
+					vivodCent = E.WOW_Rare_Color..CharInfo.ItemsInBag[207002].."|r"
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				if CharInfo.MASLENGO.CurrencyID[2594] ~= 0 then
+					vivodCent = CharInfo.MASLENGO.CurrencyID[2594]
+				end
+				if CharInfo.ItemsInBag[208945] ~= 0 then
+					vivodCent = vivodCent..E.WOW_WoWToken_Color.." +"..CharInfo.ItemsInBag[208945].."|r"..LibOctopussy:func_itemTexture(208945)
+				end
+				vivodLeft = LibOctopussy:func_currencyicon(2594)..LibOctopussy:func_currencyName(2594)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = (LibOctopussy:func_texturefromIcon(134206)..E.Timers.DF_Dreamsurges()..L["Dreamsurges"])
+				if CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count ~= LibOctopussy:NONE() then
+					vivodCent = CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count
+				end
+				if CharInfo.ItemsInBag[209419] ~= 0 then
+					tooltip[#tooltip+1] = {LibOctopussy:func_texturefromIcon(1044087)..E.WOW_Rare_Color..L["Charred Elemental Remains"].."|r", CharInfo.ItemsInBag[209419]}
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_itemTexture(210254)..E.WOW_Epic_Color..LibOctopussy:func_itemName_NOCOLOR(210254).."|r"
+				if CharInfo.ItemsInBag[210254] ~= 0 then
+					vivodCent = vivodCent..E.WOW_Epic_Color..CharInfo.ItemsInBag[210254].."|r"
+				end
+				if CharInfo.ItemsInBag[208153] ~= 0 then
+					vivodCent = vivodCent..E.Gray_Color.." +"..CharInfo.ItemsInBag[208153].."(old)|r"
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_itemTexture(207026)..E.WOW_Common_Color..LibOctopussy:func_itemName_NOCOLOR(207026).."|r"
+				if CharInfo.ItemsInBag[207026] ~= 0 then
+					vivodCent = E.WOW_Common_Color..CharInfo.ItemsInBag[207026].."|r"
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				if CharInfo.MASLENGO.CurrencyID[2245] ~= 0 then
+					vivodCent = CharInfo.MASLENGO.CurrencyID[2245]
+				end
+				vivodLeft = LibOctopussy:func_currencyicon(2245)..LibOctopussy:func_currencyName(2245)
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_itemTexture(213089)..LibOctopussy:func_itemName(213089)
+				if CharInfo.ItemsInBag[213089] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[213089]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_itemTexture(211516)..LibOctopussy:func_itemName(211516)
+				if CharInfo.ItemsInBag[211516] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[211516]
+				end
+				return vivodCent, vivodLeft
+		end)
+		tinsert(OctoTable_func_otrisovka_FIRST,
+			function(CharInfo, tooltip, CL, BG)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				vivodLeft = LibOctopussy:func_itemTexture(211515)..LibOctopussy:func_itemName(211515)
+				if CharInfo.ItemsInBag[211515] ~= 0 then
+					vivodCent = CharInfo.ItemsInBag[211515]
+				end
+				return vivodCent, vivodLeft
+		end)
 	end
 	-- The War Within
 	if Octo_ToDo_DB_Vars.config.ExpansionToShow == 11 then
@@ -4236,8 +4035,8 @@ local function O_otrisovka_FIRST()
 		----DEBUGPIZDA
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = E.Blue_Color.."ALL|r"
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == LibOctopussy:DONE() then
@@ -4263,8 +4062,8 @@ local function O_otrisovka_FIRST()
 					for _, v in next, (E.OctoTable_UniversalQuest) do
 						if v.desc == value then
 							tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
-								vivodLeft = i
-								vivodCent = value
+							vivodLeft = i
+							vivodCent = value
 						end
 					end
 					return vivodCent, vivodLeft
@@ -4276,8 +4075,8 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Timewalk == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_currencyicon(1166)..DUNGEONS
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly
@@ -4286,8 +4085,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_currencyicon(1166).."500 "..LibOctopussy:func_currencyName(1166)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly
@@ -4296,8 +4095,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_currencyicon(1166)..RAIDS
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly
@@ -4306,8 +4105,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_currencyicon(1166)..LibOctopussy:func_questName(43323)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly
@@ -4316,8 +4115,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_questName(84616)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly
@@ -4326,8 +4125,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_questName(82783)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly
@@ -4336,8 +4135,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_texturefromIcon(1322720)..LibOctopussy:func_questName(57300)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly
@@ -4346,8 +4145,8 @@ local function O_otrisovka_FIRST()
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_texturefromIcon(5213776).."Я спас вечеринку, а получил только эти нелепые шапки"
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once ~= LibOctopussy:NONE() then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ISavedthePartyandAllIGotWereTheseLousyHats_Once
@@ -4413,6 +4212,7 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
+	-- ИВЕНТЫ
 	if Octo_ToDo_DB_Vars.config.Event == true then
 		if Octo_ToDo_DB_Other.Holiday.Active[628] then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -4703,6 +4503,7 @@ local function O_otrisovka_FIRST()
 			end)
 		end
 	end
+	-- ПРАЗДНИКИ
 	if Octo_ToDo_DB_Vars.config.Holiday == true then
 		if Octo_ToDo_DB_Other.Holiday.Active[341] then
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -4966,11 +4767,12 @@ local function O_otrisovka_FIRST()
 			end)
 		end
 	end
+	-- ЗАДАНИЯ
 	if Octo_ToDo_DB_Vars.config.Quests == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = E.Gray_Color..QUESTS_LABEL.."|r"
 				if Octo_ToDo_DB_Vars.config.ExpansionToShow == 10 then
 					tooltip[#tooltip+1] = {LibOctopussy:func_Gradient("»".."Dragonflight".."«"), " "}
@@ -5112,12 +4914,43 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
+	-- ЗАДАНИЯ СТАРОЕ
+	if Octo_ToDo_DB_Vars.config.Quests == true then
+	    tinsert(OctoTable_func_otrisovka_FIRST,
+	        function(CharInfo, tooltip, CL, BG)
+	            local vivo, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+	            BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+	            local list = {}
+	            for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
+	                tinsert(list, QuestID)
+	            end
+	            sort(list, func_Reverse_order)
+	            for k, QuestID in next, (list) do
+	                if Octo_ToDo_DB_Vars.config.QuestsShowAllways == false and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" and CharInfo.OctoTable_QuestID[QuestID] ~= LibOctopussy:NONE() then
+	                    tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color.." id:"..QuestID.."|r", CharInfo.OctoTable_QuestID[QuestID]}
+	                elseif Octo_ToDo_DB_Vars.config.QuestsShowAllways == true and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true then
+	                    if CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" then
+	                        tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color.." id:"..QuestID.."|r", CharInfo.OctoTable_QuestID[QuestID]}
+	                    else
+	                        tooltip[#tooltip+1] = {E.Gray_Color..LibOctopussy:func_questName(QuestID).." id:"..QuestID.."|r", E.Gray_Color..CharInfo.OctoTable_QuestID[QuestID].."|r"}
+	                    end
+	                end
+	            end
+	            if #tooltip ~= 0 then
+	                vivodCent = E.Gray_Color..QUESTS_LABEL.."|r"
+	            else
+	                vivodCent = ""
+	            end
+	            vivodLeft = QUESTS_LABEL.."OLD"
+	            return vivodCent, vivodLeft
+	    end)
+	end
 	-- ПОДЗЕМЕЛЬЯ
 	if Octo_ToDo_DB_Vars.config.Dungeons == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				local ServerTime = GetServerTime()
 				for instanceID, v in next, (CharInfo.journalInstance) do
 					if v then
@@ -5146,8 +4979,8 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Currency == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				local list = {}
 				for CurrencyID, v in next, (Octo_ToDo_DB_Config.CurrencyDB) do
 					tinsert(list, CurrencyID)
@@ -5216,8 +5049,8 @@ local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Items == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				local list = {}
 				for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
 					tinsert(list, itemID)
@@ -5245,48 +5078,18 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
-	-- -- ЗАДАНИЯ
-	-- if Octo_ToDo_DB_Vars.config.Quests == true then
-	-- tinsert(OctoTable_func_otrisovka_FIRST,
-	-- function(CharInfo, tooltip, CL, BG)
-	-- 					local vivo, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-	--				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-	-- local list = {}
-	-- for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
-	-- tinsert(list, QuestID)
-	-- end
-	-- sort(list, func_Reverse_order)
-	-- for k, QuestID in next, (list) do
-	-- if Octo_ToDo_DB_Vars.config.QuestsShowAllways == false and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" and CharInfo.OctoTable_QuestID[QuestID] ~= LibOctopussy:NONE() then
-	-- tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color.." id:"..QuestID.."|r", CharInfo.OctoTable_QuestID[QuestID]}
-	-- elseif Octo_ToDo_DB_Vars.config.QuestsShowAllways == true and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true then
-	-- if CharInfo.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.OctoTable_QuestID[QuestID] ~= "" then
-	-- tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color.." id:"..QuestID.."|r", CharInfo.OctoTable_QuestID[QuestID]}
-	-- else
-	-- tooltip[#tooltip+1] = {E.Gray_Color..LibOctopussy:func_questName(QuestID).." id:"..QuestID.."|r", E.Gray_Color..CharInfo.OctoTable_QuestID[QuestID].."|r"}
-	-- end
-	-- end
-	-- end
-	-- if #tooltip ~= 0 then
-	-- vivodCent = E.Gray_Color..QUESTS_LABEL.."|r"
-	-- else
-	-- vivodCent = ""
-	-- end
-	-- vivodLeft = QUESTS_LABEL
-	-- return vivodCent, vivodLeft
-	-- end)
-	-- end
+	-- ПРОФЕССИИ
 	if Octo_ToDo_DB_Vars.config.Professions == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-					if CharInfo.MASLENGO.professions[1].skillLine ~= 0 then
-						vivodCent = vivodCent..LibOctopussy:func_ProfessionIcon(CharInfo.MASLENGO.professions[1].skillLine)
-						if CharInfo.MASLENGO.professions[2].skillLine ~= 0 then
-							vivodCent = vivodCent.." "..LibOctopussy:func_ProfessionIcon(CharInfo.MASLENGO.professions[2].skillLine)
-						end
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				if CharInfo.MASLENGO.professions[1].skillLine ~= 0 then
+					vivodCent = vivodCent..LibOctopussy:func_ProfessionIcon(CharInfo.MASLENGO.professions[1].skillLine)
+					if CharInfo.MASLENGO.professions[2].skillLine ~= 0 then
+						vivodCent = vivodCent.." "..LibOctopussy:func_ProfessionIcon(CharInfo.MASLENGO.professions[2].skillLine)
 					end
+				end
 				for i = 1, 5 do
 					if CharInfo.MASLENGO.professions[i].skillLine ~= 0 then
 						tooltip[#tooltip+1] = {LibOctopussy:func_ProfessionIcon(CharInfo.MASLENGO.professions[i].skillLine)..LibOctopussy:func_ProfessionName(CharInfo.MASLENGO.professions[i].skillLine), CharInfo.MASLENGO.professions[i].skillLevel.."/"..CharInfo.MASLENGO.professions[i].maxSkillLevel}
@@ -5295,11 +5098,12 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
+	-- ЗОЛОТО
 	if Octo_ToDo_DB_Vars.config.Gold == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				if CharInfo.Money then
 					vivodCent = LibOctopussy:func_CompactNumberFormat(CharInfo.Money/10000)..E.Icon_Money
 				end
@@ -5315,11 +5119,12 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
+	-- УРОВЕНЬ ПРЕДМЕТОВ
 	if Octo_ToDo_DB_Vars.config.ItemLevel == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = STAT_AVERAGE_ITEM_LEVEL
 				local color = E.Red_Color
 				if CharInfo.avgItemLevelEquipped and CharInfo.avgItemLevel then
@@ -5344,11 +5149,12 @@ local function O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 		end)
 	end
+	-- БЫЛ В СЕТИ
 	if Octo_ToDo_DB_Vars.config.WasOnline == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
-					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				local color = "|cffFFFFFF"
 				vivodLeft = "Last Update"
 				if CharInfo.loginHour ~= 0 and CharInfo.loginDay ~= 0 then
@@ -5480,8 +5286,8 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	OctoToDo_FIRST_MainFrame:SetScript("OnDragStop", function() OctoToDo_FIRST_MainFrame:StopMovingOrSizing() end)
 	OctoToDo_FIRST_MainFrame:RegisterForClicks("RightButtonUp")
 	-- OctoToDo_FIRST_MainFrame:SetScript("OnShow", function()
-	-- 	print(E.Red_Color.."frame OnShow".."|r")
-	-- 	end)
+	--     print(E.Red_Color.."frame OnShow".."|r")
+	--     end)
 	OctoToDo_FIRST_MainFrame:SetScript("OnClick", function(self) self:Hide() end)
 	OctoToDo_FIRST_MainFrame:SetHeight(50)
 	if Octo_ToDo_DB_Vars.config.ShowTotalMoney then
@@ -5937,7 +5743,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			Octo_ToDo_DB_Players[menuButton.value] = nil
 		end
 		dd_FIRST:ddSetInitFunc(function(self, level, value)
-			self:SetAlpha(.3)
+				self:SetAlpha(.3)
 				local info = {}
 				local count = 0
 				local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer
@@ -6575,7 +6381,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.AnotherAddonsCasual == nil then Octo_ToDo_DB_Vars.config.AnotherAddonsCasual = true end
 		if Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG == nil then Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG = true end
 		if Octo_ToDo_DB_Vars.config.AnotherAddonsRAID == nil then Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = true end
-		if Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion == nil then Octo_ToDo_DB_Vars.config.AntiqueBronzeBullion = true end
 		if Octo_ToDo_DB_Vars.config.Auto_ChatClearing == nil then Octo_ToDo_DB_Vars.config.Auto_ChatClearing = false end
 		if Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler == nil then Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler = true end
 		if Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip == nil then Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip = true end
@@ -6588,37 +6393,20 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.AutoTurnQuests == nil then Octo_ToDo_DB_Vars.config.AutoTurnQuests = true end
 		if Octo_ToDo_DB_Vars.config.BeledarCycle == nil then Octo_ToDo_DB_Vars.config.BeledarCycle = true end
 		if Octo_ToDo_DB_Vars.config.CarvedHarbingerCrest == nil then Octo_ToDo_DB_Vars.config.CarvedHarbingerCrest = true end
-		if Octo_ToDo_DB_Vars.config.CatalystCharges == nil then Octo_ToDo_DB_Vars.config.CatalystCharges = true end
 		if Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame == nil then Octo_ToDo_DB_Vars.config.ChallengesKeystoneFrame = true end
 		if Octo_ToDo_DB_Vars.config.CinematicCanceler == nil then Octo_ToDo_DB_Vars.config.CinematicCanceler = true end
-		if Octo_ToDo_DB_Vars.config.CommunityFeast == nil then Octo_ToDo_DB_Vars.config.CommunityFeast = true end
-		if Octo_ToDo_DB_Vars.config.Crests_Heroic == nil then Octo_ToDo_DB_Vars.config.Crests_Heroic = true end
-		if Octo_ToDo_DB_Vars.config.Crests_LFR == nil then Octo_ToDo_DB_Vars.config.Crests_LFR = true end
-		if Octo_ToDo_DB_Vars.config.Crests_Mythic == nil then Octo_ToDo_DB_Vars.config.Crests_Mythic = true end
-		if Octo_ToDo_DB_Vars.config.Crests_Normal == nil then Octo_ToDo_DB_Vars.config.Crests_Normal = true end
 		if Octo_ToDo_DB_Vars.config.Currency == nil then Octo_ToDo_DB_Vars.config.Currency = true end
 		if Octo_ToDo_DB_Vars.config.CurrencyShowAllways == nil then Octo_ToDo_DB_Vars.config.CurrencyShowAllways = false end
 		if Octo_ToDo_DB_Vars.config.CVar == nil then Octo_ToDo_DB_Vars.config.CVar = true end
-		if Octo_ToDo_DB_Vars.config.DilatedTimePod == nil then Octo_ToDo_DB_Vars.config.DilatedTimePod = true end
-		if Octo_ToDo_DB_Vars.config.DreamsurgeCoalescence == nil then Octo_ToDo_DB_Vars.config.DreamsurgeCoalescence = true end
-		if Octo_ToDo_DB_Vars.config.DreamsurgeCocoon == nil then Octo_ToDo_DB_Vars.config.DreamsurgeCocoon = true end
-		if Octo_ToDo_DB_Vars.config.Dreamsurges == nil then Octo_ToDo_DB_Vars.config.Dreamsurges = true end
 		if Octo_ToDo_DB_Vars.config.Dungeons == nil then Octo_ToDo_DB_Vars.config.Dungeons = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Dreamseeds = true end
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_DreamWardens = true end -- REPUTATION
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Rares == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Rares = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Sparks == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Sparks = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Storyline = true end
-		if Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_Superbloom = true end
 		if Octo_ToDo_DB_Vars.config.EmeraldDream_WB == nil then Octo_ToDo_DB_Vars.config.EmeraldDream_WB = true end
-		if Octo_ToDo_DB_Vars.config.EmeraldDreamAWorthyAllyDreamWardens == nil then Octo_ToDo_DB_Vars.config.EmeraldDreamAWorthyAllyDreamWardens = true end
-		if Octo_ToDo_DB_Vars.config.EmeraldDreamBloomingDreamseeds == nil then Octo_ToDo_DB_Vars.config.EmeraldDreamBloomingDreamseeds = true end
-		if Octo_ToDo_DB_Vars.config.EmeraldDreamDreamsUnified == nil then Octo_ToDo_DB_Vars.config.EmeraldDreamDreamsUnified = true end
-		if Octo_ToDo_DB_Vars.config.EncapsulatedDestiny == nil then Octo_ToDo_DB_Vars.config.EncapsulatedDestiny = true end
 		if Octo_ToDo_DB_Vars.config.Event == nil then Octo_ToDo_DB_Vars.config.Event = true end
 		if Octo_ToDo_DB_Vars.config.ExpansionToShow == nil then Octo_ToDo_DB_Vars.config.ExpansionToShow = LibOctopussy:func_CurrentExpansion() end
 		if Octo_ToDo_DB_Vars.config.FieldOfView == nil then Octo_ToDo_DB_Vars.config.FieldOfView = false end
-		if Octo_ToDo_DB_Vars.config.Flightstones == nil then Octo_ToDo_DB_Vars.config.Flightstones = true end
 		if Octo_ToDo_DB_Vars.config.FoV_bottom == nil then Octo_ToDo_DB_Vars.config.FoV_bottom = 0 end
 		if Octo_ToDo_DB_Vars.config.FoV_left == nil then Octo_ToDo_DB_Vars.config.FoV_left = 0 end
 		if Octo_ToDo_DB_Vars.config.FoV_right == nil then Octo_ToDo_DB_Vars.config.FoV_right = 0 end
@@ -6658,7 +6446,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.Minecraft == nil then Octo_ToDo_DB_Vars.config.Minecraft = false end
 		if Octo_ToDo_DB_Vars.config.MinorKeyflames == nil then Octo_ToDo_DB_Vars.config.MinorKeyflames = true end
 		if Octo_ToDo_DB_Vars.config.MP_MythicKeystone == nil then Octo_ToDo_DB_Vars.config.MP_MythicKeystone = true end
-		if Octo_ToDo_DB_Vars.config.ParacausalFlakes == nil then Octo_ToDo_DB_Vars.config.ParacausalFlakes = true end
 		if Octo_ToDo_DB_Vars.config.PortalsButtons == nil then Octo_ToDo_DB_Vars.config.PortalsButtons = true end
 		if Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent == nil then Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = false end
 		if Octo_ToDo_DB_Vars.config.prefix == nil then Octo_ToDo_DB_Vars.config.prefix = 1 end
@@ -6666,8 +6453,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.QuestsShowAllways == nil then Octo_ToDo_DB_Vars.config.QuestsShowAllways = false end
 		if Octo_ToDo_DB_Vars.config.Reputations == nil then Octo_ToDo_DB_Vars.config.Reputations = true end
 		if Octo_ToDo_DB_Vars.config.ReputationsShowAllways == nil then Octo_ToDo_DB_Vars.config.ReputationsShowAllways = false end
-		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire == nil then Octo_ToDo_DB_Vars.config.ResearchersUnderFire = true end
-		if Octo_ToDo_DB_Vars.config.ResearchersUnderFire_Weekly == nil then Octo_ToDo_DB_Vars.config.ResearchersUnderFire_Weekly = true end
 		if Octo_ToDo_DB_Vars.config.ResetAllChars == nil then Octo_ToDo_DB_Vars.config.ResetAllChars = true end
 		if Octo_ToDo_DB_Vars.config.RunedHarbingerCrest == nil then Octo_ToDo_DB_Vars.config.RunedHarbingerCrest = true end
 		if Octo_ToDo_DB_Vars.config.ShowIDS == nil then Octo_ToDo_DB_Vars.config.ShowIDS = true end
@@ -6680,8 +6465,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL == nil then Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL = true end
 		if Octo_ToDo_DB_Vars.config.ShowTotalMoney == nil then Octo_ToDo_DB_Vars.config.ShowTotalMoney = true end
 		if Octo_ToDo_DB_Vars.config.SORTING == nil then Octo_ToDo_DB_Vars.config.SORTING = true end
-		if Octo_ToDo_DB_Vars.config.SparkofAwakening == nil then Octo_ToDo_DB_Vars.config.SparkofAwakening = true end
-		if Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening == nil then Octo_ToDo_DB_Vars.config.SplinteredSparkofAwakening = true end
 		if Octo_ToDo_DB_Vars.config.StaticPopup1Button1 == nil then Octo_ToDo_DB_Vars.config.StaticPopup1Button1 = true end
 		if Octo_ToDo_DB_Vars.config.TalentTreeTweaks == nil then Octo_ToDo_DB_Vars.config.TalentTreeTweaks = true end
 		if Octo_ToDo_DB_Vars.config.TalentTreeTweaks_Alpha == nil then Octo_ToDo_DB_Vars.config.TalentTreeTweaks_Alpha = 1 end
@@ -6689,7 +6472,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.TheBigDig == nil then Octo_ToDo_DB_Vars.config.TheBigDig = true end
 		if Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION == nil then Octo_ToDo_DB_Vars.config.TheBigDig_REPUTATION = true end
 		if Octo_ToDo_DB_Vars.config.THIRD == nil then Octo_ToDo_DB_Vars.config.THIRD = true end
-		if Octo_ToDo_DB_Vars.config.TimeRift == nil then Octo_ToDo_DB_Vars.config.TimeRift = true end
 		if Octo_ToDo_DB_Vars.config.Timewalk == nil then Octo_ToDo_DB_Vars.config.Timewalk = true end
 		if Octo_ToDo_DB_Vars.config.TWW_Delve_Weekly == nil then Octo_ToDo_DB_Vars.config.TWW_Delve_Weekly = true end
 		if Octo_ToDo_DB_Vars.config.TWW_DungeonQuest_Weekly == nil then Octo_ToDo_DB_Vars.config.TWW_DungeonQuest_Weekly = true end
