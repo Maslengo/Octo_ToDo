@@ -518,28 +518,27 @@ function lib:func_texturefromIcon(icon, iconSize, isShown)
 end
 ----------------------------------------------------------------
 function lib:func_questName(questID, useLargeIcon)
-	local AWide = ""
-	local vivod
+	local vivod = ""
 	local useLargeIcon = useLargeIcon or true
 	local isAccountQuest = C_QuestLog.IsAccountQuest(questID)
 	local isCompletedOnAccount = C_QuestLog.IsQuestFlaggedCompletedOnAccount(questID)
 
 	local title = C_QuestLog.GetTitleForQuestID(questID)
 	if title then
-		vivod = QuestUtils_DecorateQuestText(questID, title, useLargeIcon), true
+		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon), true
 	else
-		vivod = Red_Color.."hidden?".."|r"
+		vivod = vivod..Red_Color.."hidden?".."|r"
 	end
 	if isAccountQuest then
-		AWide = E_Icon_AccountWide
+		vivod = E_Icon_AccountWide.."|cffFFFF00"..vivod.."|r"
 	end
 	if isCompletedOnAccount then
-		vivod = "|cff808080"..vivod.."|r"
+		vivod = E_Icon_AccountWide.."|cff9fc5e8"..vivod.."|r"
 	end
 	if ShowIDS == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..questID.."|r"
 	end
-	return AWide..vivod
+	return vivod
 end
 ----------------------------------------------------------------
 function lib:func_reputationName(reputationID)

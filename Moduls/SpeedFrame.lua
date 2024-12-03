@@ -11,15 +11,15 @@ tinsert(E.Modules, function()
 			if not SpeedFrame then
 				SpeedFrame = CreateFrame("Frame", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), UIParent, "BackdropTemplate")
 				f = SpeedFrame
-				f:SetPoint("CENTER", 200, -420)
+				f:SetPoint("CENTER", 210, -420)
 				f:SetSize(80, 32)
-				f:SetBackdrop({
-						bgFile = E.bgFile,
-						edgeFile = E.edgeFile,
-						edgeSize = 1
-				})
-				f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa/4)
-				f:SetBackdropBorderColor(0, 0, 0, 1/4)
+				-- f:SetBackdrop({
+				-- 		bgFile = E.bgFile,
+				-- 		edgeFile = E.edgeFile,
+				-- 		edgeSize = 1,
+				-- })
+				-- f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa/4)
+				-- f:SetBackdropBorderColor(0, 0, 0, 1/4)
 				f:SetClampedToScreen(false)
 				f:SetFrameStrata("HIGH")
 				f:EnableMouse(true)
@@ -27,13 +27,7 @@ tinsert(E.Modules, function()
 				f:RegisterForDrag("LeftButton")
 				f:SetScript("OnDragStart", f.StartMoving)
 				f:SetScript("OnDragStop", function() f:StopMovingOrSizing() end)
-				-- f.BG = f:CreateTexture(nil, "BACKGROUND")
-				-- f.BG:SetHeight(E.curHeight)
-				-- f.BG:SetAllPoints()
-				-- f.BG:SetColorTexture(0, 0, 0)
-				-- f.BG:SetAlpha(0)
-				-- LibCustomGlow.ButtonGlow_Start(f, {1,1,1,1}, 1)
-				LibCustomGlow.ButtonGlow_Start(f, {1,0,.34,1}, .1)
+				-- LibCustomGlow.ButtonGlow_Start(f, {1,0,.34,1}, .1)
 
 				f.text_glide = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 				f.text_glide:SetPoint("CENTER", 0, 7)
@@ -59,7 +53,11 @@ tinsert(E.Modules, function()
 							f.text_glide:SetText("")
 							f.text_movespeed:SetPoint("CENTER", 0, 0)
 						end
-						f.text_movespeed:SetText(LibOctopussy:func_CompactNumberSimple(movespeed))
+						if movespeed ~= 0 then
+							f.text_movespeed:SetText(LibOctopussy:func_CompactNumberSimple(movespeed))
+						else
+							f.text_movespeed:SetText("")
+						end
 				end)
 			end
 

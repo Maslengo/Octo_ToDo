@@ -64,3 +64,8 @@ E.OctoTable_Portals_DRUID = {193753}
 E.OctoTable_Portals_DEATHKNIGHT = {50977}
 E.OctoTable_Portals_SHAMAN = {556}
 E.OctoTable_Portals_MONK = {126892}
+
+E.OctoTable_Spells_Other = {
+	436854,
+	-- 72286,
+}

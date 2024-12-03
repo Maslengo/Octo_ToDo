@@ -1908,7 +1908,7 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "SummerFestival",
 		reset = "Month",
-		desc = "Dragonflight",
+		desc = "Holiday",
 		questID = {
 			9324,
 			9325,
@@ -2151,15 +2151,6 @@ E.OctoTable_UniversalQuest = {
 			75650,
 		},
 		max = 131
-	},
-	{
-		name_save = "TheEasternKingdomsCupBegins",
-		reset = "Month",
-		desc = "Dragonflight",
-		questID = {
-			77839,
-		},
-		max = 1
 	},
 	{
 		name_save = "Brewfest",

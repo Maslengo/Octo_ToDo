@@ -107,12 +107,14 @@ LibOctopussy:func_LoadAddOn("MountsJournal")
 LibOctopussy:func_LoadAddOn("HidingBar")
 LibOctopussy:func_LoadAddOn("HidingBar_Options")
 LibOctopussy:func_LoadAddOn("SpeedyAutoLoot")
-LibOctopussy:func_LoadAddOn("QuestsChanged")
+-- LibOctopussy:func_LoadAddOn("QuestsChanged")
 LibOctopussy:func_LoadAddOn("TalentTreeTweaks")
 LibOctopussy:func_LoadAddOn("Plater")
+LibOctopussy:func_LoadAddOn("MacroManager")
+LibOctopussy:func_LoadAddOn("MacroManagerData")
 -- LibOctopussy:func_LoadAddOn("MySlot")
-LibOctopussy:func_LoadAddOn("TomTom")
-LibOctopussy:func_LoadAddOn("Pawn")
+-- LibOctopussy:func_LoadAddOn("TomTom")
+-- LibOctopussy:func_LoadAddOn("Pawn")
 -- LibOctopussy:func_LoadAddOn("AdvancedInterfaceOptions")
 local Button = nil
 local CF = nil
@@ -196,8 +198,10 @@ local function DEV_GUID()
 	local vivod = LibOctopussy:func_encryption(curGUID)
 end
 local function ConcatAtStart()
-	-- В КАКУЮ ИЗ КАКОЙ
+	-- В КАКУЮ ИЗ КАКОЙ ПОФИКСИТЬ
 	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
+
+
 	for _, itemID in next, (E.OctoTable_itemID_ALL) do
 		Octo_ToDo_DB_Config.ItemDB[itemID] = Octo_ToDo_DB_Config.ItemDB[itemID] or false
 	end
@@ -226,6 +230,11 @@ local function ConcatAtStart()
 	for _, reputationID in next, (E.OctoTable_reputationID_Hidden) do
 		Octo_ToDo_DB_Config.ReputationDB[reputationID] = Octo_ToDo_DB_Config.ReputationDB[reputationID] or false
 	end
+
+	for _, questID in next, (E.OctoTable_QuestID) do
+		Octo_ToDo_DB_Config.QuestsDB[questID] = Octo_ToDo_DB_Config.QuestsDB[questID] or false
+	end
+
 end
 local function TryToOffMajor(majorFactionID, newRenownLevel, oldRenownLevel)
 	local majorFactionID, newRenownLevel, oldRenownLevel = majorFactionID, newRenownLevel, oldRenownLevel
@@ -1301,6 +1310,8 @@ local function Collect_All_Currency()
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	Octo_ToDo_DB_Config = Octo_ToDo_DB_Config or {}
+	collect = collect or {}
+	collect.MASLENGO = collect.MASLENGO or {}
 	-- local GetCurrencyListSize = C_CurrencyInfo.GetCurrencyListSize
 	-- local GetCurrencyIDFromLink = C_CurrencyInfo.GetCurrencyIDFromLink
 	-- local ExpandCurrencyList = C_CurrencyInfo.ExpandCurrencyList
@@ -1642,7 +1653,7 @@ local function Collect_All_Quests()
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
 	local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
-	for k, questID in next, (E.OctoTable_QuestID) do
+	for questID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
 		local vivod = LibOctopussy:func_CheckCompletedByQuestID(questID)
 		-- if vivod ~= E.NONE then
 		collect.MASLENGO.OctoTable_QuestID[questID] = vivod
@@ -5251,7 +5262,7 @@ local function O_otrisovka_FIRST()
 			end)
 		end
 	end
-	-- ЗАДАНИЯ
+	-- ЗАДАНИЯ СТАРОЕ
 	if Octo_ToDo_DB_Vars.config.Quests == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
@@ -5395,10 +5406,11 @@ local function O_otrisovka_FIRST()
 				else
 					vivodCent = ""
 				end
+				vivodLeft = QUESTS_LABEL.." OLD"
 				return vivodCent, vivodLeft
 		end)
 	end
-	-- ЗАДАНИЯ СТАРОЕ
+	-- ЗАДАНИЯ НОВОЕ
 	if Octo_ToDo_DB_Vars.config.Quests == true then
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
@@ -5425,7 +5437,7 @@ local function O_otrisovka_FIRST()
 				else
 					vivodCent = ""
 				end
-				vivodLeft = QUESTS_LABEL.."OLD"
+				vivodLeft = QUESTS_LABEL.." NEW"
 				return vivodCent, vivodLeft
 		end)
 	end
@@ -5711,7 +5723,9 @@ local function TotalTimeAllServerOnShow()
 	end
 	local TotalTimeAllServer = 0
 	for curCharGUID, CharInfo in next, (Octo_ToDo_DB_Players) do
-		TotalTimeAllServer = TotalTimeAllServer + CharInfo.realTotalTime
+		if CharInfo.realTotalTime ~= 0 and CharInfo.BattleTagLocal == BattleTagLocal then
+			TotalTimeAllServer = TotalTimeAllServer + CharInfo.realTotalTime
+		end
 	end
 	return classColorHexCurrent..(LibOctopussy:func_SecondsToClock(TotalTimeAllServer)).."|r"
 end
@@ -5722,7 +5736,9 @@ local function TotalTimeAllServer80OnShow()
 	local TotalTimeAllServer70 = 0
 	for curCharGUID, CharInfo in next, (Octo_ToDo_DB_Players) do
 		if CharInfo.UnitLevel == E.currentMaxLevel then
-			TotalTimeAllServer70 = TotalTimeAllServer70 + CharInfo.realLevelTime
+			if CharInfo.realLevelTime ~= 0 and CharInfo.BattleTagLocal == BattleTagLocal then
+				TotalTimeAllServer70 = TotalTimeAllServer70 + CharInfo.realLevelTime
+			end
 		end
 	end
 	if TotalTimeAllServer70 ~= 0 then
@@ -5731,6 +5747,23 @@ local function TotalTimeAllServer80OnShow()
 		return ""
 	end
 end
+
+
+
+
+	-- function MainFrame_OnShow(self)
+	-- 	self.animation:SetFromAlpha(0)
+	-- 	self.animation:SetToAlpha(1)
+	-- 	self.group:Restart()
+	-- end
+	-- function MainFrame_OnHide(self)
+	-- 	self.animation:SetFromAlpha(1)
+	-- 	self.animation:SetToAlpha(0)
+	-- 	self.group:Restart()
+	-- end
+
+
+
 local function Octo_ToDo_FIRST_CreateAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Octo_ToDo_FIRST_CreateAltFrame".."|r")
@@ -5759,7 +5792,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	OctoToDo_FIRST_MainFrame.ScrollBar = ScrollBar
 	OctoToDo_FIRST_MainFrame:SetClampedToScreen(false)
 	OctoToDo_FIRST_MainFrame:SetFrameStrata("HIGH")
-	OctoToDo_FIRST_MainFrame:SetPoint("CENTER")
+	OctoToDo_FIRST_MainFrame:SetPoint("TOP", 0, -(WorldFrame:GetWidth()/8))
 	OctoToDo_FIRST_MainFrame:SetBackdrop({
 			bgFile = E.bgFile,
 			edgeFile = E.edgeFile,
@@ -5775,6 +5808,21 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	OctoToDo_FIRST_MainFrame:RegisterForClicks("RightButtonUp")
 	OctoToDo_FIRST_MainFrame:SetScript("OnClick", function(self) self:Hide() end)
 	OctoToDo_FIRST_MainFrame:SetHeight(50)
+
+	-- OctoToDo_FIRST_MainFrame:SetAlpha(0)
+	-- OctoToDo_FIRST_MainFrame:SetScript("OnShow", MainFrame_OnShow)
+	-- OctoToDo_FIRST_MainFrame:SetScript("OnHide", MainFrame_OnHide)
+	-- OctoToDo_FIRST_MainFrame.group = OctoToDo_FIRST_MainFrame:CreateAnimationGroup()
+	-- OctoToDo_FIRST_MainFrame.group:SetToFinalAlpha(true)
+	-- OctoToDo_FIRST_MainFrame.animation = OctoToDo_FIRST_MainFrame.group:CreateAnimation("Alpha")
+	-- OctoToDo_FIRST_MainFrame.animation:SetSmoothing("NONE")
+	-- OctoToDo_FIRST_MainFrame.animation:SetDuration(.5)
+	-- OctoToDo_FIRST_MainFrame.animation:SetTarget(OctoToDo_FIRST_MainFrame)
+
+
+
+
+
 	if Octo_ToDo_DB_Vars.config.ShowTotalMoney then
 		if not Octo_Frame_TotalMoneyCurServer then
 			Octo_Frame_TotalMoneyCurServer = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
@@ -6612,6 +6660,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end)
 	end
 	if Octo_ToDo_DB_Vars.config.PortalsButtons == true then
+		-- 423335 инжа КАЛА альянс
 		local Xpos = 0
 		local Ypos = -21
 		local prof1, prof2 = GetProfessions()
@@ -6742,22 +6791,30 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
 					end
 				end
+
+				for k, v in next, (E.OctoTable_Spells_Other) do
+					CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
+				end
 				if classFilename == "MAGE" and Faction == "Horde" then
 					for k, v in next, (E.OctoTable_Portals_Mage_Solo_Horde) do
-						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*11, (Ypos*k), 0, .43, .86)
 					end
 					for k, v in next, (E.OctoTable_Portals_Mage_Group_Horde) do
-						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*11, (Ypos*k), 0, .43, .86)
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*12, (Ypos*k), 0, .43, .86)
 					end
 				end
 				if classFilename == "MAGE" and Faction == "Alliance" then
 					for k, v in next, (E.OctoTable_Portals_Mage_Solo_Alliance) do
-						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
-					end
-					for k, v in next, (E.OctoTable_Portals_Mage_Group_Alliance) do
 						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*11, (Ypos*k), 0, .43, .86)
 					end
+					for k, v in next, (E.OctoTable_Portals_Mage_Group_Alliance) do
+						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*12, (Ypos*k), 0, .43, .86)
+					end
 				end
+
+
+
+
 			else
 				if Faction == "Horde" then
 					for k, v in next, (E.OctoTable_Portals_TWW_S1_Horde) do
@@ -7009,7 +7066,6 @@ function TEST_FUNC()
 			testFrame.promise:AddSpells(E.OctoTable_Portals_SHAMAN)
 			testFrame.promise:AddSpells(E.OctoTable_Portals_MONK)
 			testFrame.promise:AddQuests(E.OctoTable_QuestID)
-			testFrame.promise:AddQuests(E.OctoTable_QuestID_Paragon)
 			testFrame.promise:AddQuests(E.OctoTable_QuestID_Promise)
 		end
 	end
@@ -7044,7 +7100,6 @@ function main_frame_toggle()
 		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_SHAMAN)
 		OctoToDo_FIRST_MainFrame.promise:AddSpells(E.OctoTable_Portals_MONK)
 		OctoToDo_FIRST_MainFrame.promise:AddQuests(E.OctoTable_QuestID)
-		OctoToDo_FIRST_MainFrame.promise:AddQuests(E.OctoTable_QuestID_Paragon)
 		OctoToDo_FIRST_MainFrame.promise:AddQuests(E.OctoTable_QuestID_Promise)
 	end
 	if OctoToDo_FIRST_MainFrame:IsShown() then
@@ -7183,6 +7238,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.glowColor == nil then Octo_ToDo_DB_Vars.config.glowColor = 1 end
 		if Octo_ToDo_DB_Vars.config.glowType == nil then Octo_ToDo_DB_Vars.config.glowType = 1 end
 		if Octo_ToDo_DB_Vars.config.Gold == nil then Octo_ToDo_DB_Vars.config.Gold = true end
+		if Octo_ToDo_DB_Vars.config.Professions == nil then Octo_ToDo_DB_Vars.config.Professions = true end
 		if Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI == nil then Octo_ToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI = true end
 		if Octo_ToDo_DB_Vars.config.Hide_Boss_Banner == nil then Octo_ToDo_DB_Vars.config.Hide_Boss_Banner = true end
 		if Octo_ToDo_DB_Vars.config.Hide_Covenant == nil then Octo_ToDo_DB_Vars.config.Hide_Covenant = true end
@@ -7204,7 +7260,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Vars.config.LastUpdate == nil then Octo_ToDo_DB_Vars.config.LastUpdate = true end
 		if Octo_ToDo_DB_Vars.config.LevelToShow == nil then Octo_ToDo_DB_Vars.config.LevelToShow = 1 end
 		if Octo_ToDo_DB_Vars.config.LevelToShowMAX == nil then Octo_ToDo_DB_Vars.config.LevelToShowMAX = E.currentMaxLevel end
-		if Octo_ToDo_DB_Vars.config.LevelToShowMAX > E.currentMaxLevel then Octo_ToDo_DB_Vars.config.LevelToShowMAX = E.currentMaxLevel end
+		-- if Octo_ToDo_DB_Vars.config.LevelToShowMAX > E.currentMaxLevel then Octo_ToDo_DB_Vars.config.LevelToShowMAX = E.currentMaxLevel end
 		if Octo_ToDo_DB_Vars.config.LootFrame == nil then Octo_ToDo_DB_Vars.config.LootFrame = true end
 		if Octo_ToDo_DB_Vars.config.MajorKeyflames == nil then Octo_ToDo_DB_Vars.config.MajorKeyflames = true end
 		if Octo_ToDo_DB_Vars.config.Minecraft == nil then Octo_ToDo_DB_Vars.config.Minecraft = false end
