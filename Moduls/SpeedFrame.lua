@@ -1,5 +1,7 @@
 local GlobalAddonName, E = ...
+local LibStub = LibStub
 local LibOctopussy = LibStub("LibOctopussy-1.0")
+local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
 --SpeedFrame
@@ -30,6 +32,8 @@ tinsert(E.Modules, function()
 				-- f.BG:SetAllPoints()
 				-- f.BG:SetColorTexture(0, 0, 0)
 				-- f.BG:SetAlpha(0)
+				-- LibCustomGlow.ButtonGlow_Start(f, {1,1,1,1}, 1)
+				LibCustomGlow.ButtonGlow_Start(f, {1,0,.34,1}, .1)
 
 				f.text_glide = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 				f.text_glide:SetPoint("CENTER", 0, 7)

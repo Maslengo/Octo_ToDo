@@ -14,6 +14,10 @@ local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDB
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 
+E.DONE = LibOctopussy:DONE()
+E.NONE = LibOctopussy:NONE()
+
+
 -- local edgeFile = "Interface\\Buttons\\WHITE8X8"
 -- local bgFile = "Interface\\Buttons\\WHITE8X8"
 E.edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"

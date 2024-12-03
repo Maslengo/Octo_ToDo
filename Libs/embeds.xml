@@ -13,4 +13,6 @@
 	<Include file="LibSharedMedia-3.0\lib.xml"/>
 	<Include file="LibThingsLoad\LibThingsLoad.xml"/>
 	<Include file="LibOctopussy\LibOctopussy.xml"/>
+	<Include file="LibCustomGlow-1.0\LibCustomGlow-1.0.xml"/>
+
 </UI>

@@ -31,4 +31,5 @@ E.OctoTable_QuestID = {
 }
 E.OctoTable_QuestID_Promise = {
 	13668,
+	11563,
 }
