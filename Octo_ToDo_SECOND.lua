@@ -8,7 +8,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
-local SHOWADDON_SECOND = false
+local SHOWADDON_SECOND = true
 local Button = nil
 local CF = nil
 local OctoToDo_SECOND_MainFrame = nil
@@ -75,8 +75,11 @@ local function Octo_ToDo_SECOND_OnLoad()
 	if not Octo_ToDo_SECOND_Frame_EventFrame then
 		Octo_ToDo_SECOND_Frame_EventFrame = CreateFrame("FRAME", E.AddonTitle..LibOctopussy:func_GenerateUniqueID())
 	end
-	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("VARIABLES_LOADED")
-	Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent("PLAYER_LOGIN")
+
+
+	for _, event in next, (E.OctoTable_Events) do
+		Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent(event)
+	end
 	Octo_ToDo_SECOND_Frame_EventFrame:SetScript("OnEvent", function(...)
 			Octo_ToDo_SECOND_OnEvent(...)
 	end)
@@ -101,6 +104,8 @@ local function O_otrisovka_SECOND()
 	end)
 	if Octo_ToDo_DB_Vars.config.AchievementToShow ~= nil then
 		for categoryID, v in next, (Octo_ToDo_DB_Vars.config.AchievementToShow) do
+			local ACHr, ACHg, ACHb = LibOctopussy:func_hex2rgbNUMBER(LibOctopussy:func_GenerateUniqueColor()),LibOctopussy:func_hex2rgbNUMBER(LibOctopussy:func_GenerateUniqueColor()),LibOctopussy:func_hex2rgbNUMBER(LibOctopussy:func_GenerateUniqueColor())
+
 			if v ~= false then
 				local total = GetCategoryNumAchievements(categoryID, true)
 				if total then
@@ -137,7 +142,7 @@ local function O_otrisovka_SECOND()
 												tooltip[#tooltip+1] = {LibOctopussy:func_achievementcriteriaString(AchievementID, i), LibOctopussy:func_achievementquantity(AchievementID, i)}
 											end
 										end
-										BG:SetColorTexture(1, 0, 1, E.BGALPHA/2)
+										BG:SetColorTexture(ACHr, ACHg, ACHb, E.BGALPHA*2)
 										return vivodCent, vivodLeft
 								end)
 							end
@@ -367,7 +372,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 					end
 				end
 
-				self:ddAddButton({list = list, listMaxSize = 12}, level)
+				self:ddAddButton({list = list, listMaxSize = 20}, level)
 
 				if level == 1 then
 					----------------------------------------------------------------
@@ -422,7 +427,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		f.group:SetToFinalAlpha(true)
 		f.animation = f.group:CreateAnimation("Alpha")
 		f.animation:SetSmoothing("IN_OUT")
-		f.animation:SetDuration(.5)
+		f.animation:SetDuration(E.AnimationDuration)
 		f.animation:SetTarget(f.BG)
 		fname = "TextLeft"..i
 		OctoToDo_SECOND_MainFrame[fname] = OctoToDo_SECOND_MainFrame.scrollChild:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -590,11 +595,10 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 		LibDBIcon:Register(MinimapName, ldb_icon, Octo_ToDo_DB_Vars.minimap_SECOND)
 		LibDBIcon:Show(MinimapName)
 	end
-	if event == "PLAYER_STARTED_MOVING" and not InCombatLockdown() then
-		if OctoToDo_SECOND_MainFrame and OctoToDo_SECOND_MainFrame:IsShown() then OctoToDo_SECOND_MainFrame:SetAlpha(E.BGALPHA*5) end
-	end
-	if event == "PLAYER_STOPPED_MOVING" then
-		if OctoToDo_SECOND_MainFrame then OctoToDo_SECOND_MainFrame:SetAlpha(1) end
+	if event == "PLAYER_REGEN_DISABLED" or InCombatLockdown() then
+		if OctoToDo_SECOND_MainFrame and OctoToDo_SECOND_MainFrame:IsShown() then
+			OctoToDo_SECOND_MainFrame:Hide()
+		end
 	end
 	if event == "PLAYER_LOGIN" and not InCombatLockdown() and SHOWADDON_SECOND == true then
 		C_Timer.After(2, function()

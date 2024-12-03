@@ -29,4 +29,6 @@ E.OctoTable_QuestID = {
 	-- 82449,
 	82321, 82286, 82285, 82263, 82260, 82207, 82164, 81985,
 }
-E.OctoTable_QuestIDTEST = {}
+E.OctoTable_QuestID_Promise = {
+	13668,
+}

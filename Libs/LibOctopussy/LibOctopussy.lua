@@ -3,7 +3,7 @@ local MAJOR_VERSION, MINOR_VERSION = "LibOctopussy-1.0", 1
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
 local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
-local ShowIDS = false
+local ShowIDS = true
 ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 -- ITEMS
 local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
@@ -576,7 +576,6 @@ function lib:func_itemName(itemID)
 	return vivod
 end
 ----------------------------------------------------------------
-local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
 function lib:func_itemTexture(itemID)
 	local icon = GetItemIconByID(itemID) or 134400
 	return self:func_texturefromIcon(icon)
@@ -1317,10 +1316,6 @@ function lib:func_dungeonIcon(dungeonID)
 	end
 end
 ----------------------------------------------------------------
-
-
-
-
 function lib:FriendsFrame_GetLastOnlineText(time, color)
 	if not time then
 		return FRIENDS_LIST_OFFLINE
@@ -1349,7 +1344,160 @@ function lib:FriendsFrame_GetLastOnline(timeDifference, isAbsolute)
 end
 -- /dump C_BattleNet.GetFriendAccountInfo(1)
 ----------------------------------------------------------------
-----------------------------------------------------------------
+function lib:SPEED()
+	--	/dump C_Spell.IsSpellUsable(436854) 5142726
+	-- https://wowhead.com/ru/spell=436854
+	local OCTO_ISDRAGONFLY = false
+	print (IsMounted() , DragonridingUtil.IsDragonridingUnlocked() , IsFlying("Player") , IsOutdoors() , IsFlyableArea())
+	if IsMounted() and DragonridingUtil.IsDragonridingUnlocked() and IsFlying("Player") and IsOutdoors() and IsFlyableArea() then
+		---- Parameters ----
+		local mountEvents = {
+			["PLAYER_MOUNT_DISPLAY_CHANGED"] = true,
+			["MOUNT_JOURNAL_USABILITY_CHANGED"] = true,
+			["LEARNED_SPELL_IN_TAB"] = true,
+		}
+		local DynamicFlightModeSpellID = C_MountJournal.GetDynamicFlightModeSpellID() -- 436854
+		-- C_MountJournal.PickupDynamicFlightMode()
+		local ascentSpell = 372610
+		local thrillBuff = 377234
+		local thrillSpeed = 60
+		local maxSamples = 5
+		local ascentDuration = 3.5
+		local ascentBoostMax = 35
+		local pollRate = 1 / 10
+		local updatePeriod = 1 / 10
+		local speedTextFormat, speedTextFactor = "%.0f%%", 100 / 7
+		---- Variables ----
+		local active = false
+		local updateHandle = nil
+		local ascentStart = 0
+		local lastX, lastY, lastT = 0, 0, 0
+		local samples = 0
+		local skipped = false
+		local smoothSpeed, smoothGSpeed, lastSpeed = 0, 0, 0
+		---- Localized functions ----
+		-- local ScanEvents = WeakAuras.ScanEvents
+		local GetTime = GetTime
+		local After = C_Timer.After
+		local GetBestMapForUnit = C_Map.GetBestMapForUnit
+		local GetPlayerMapPosition = C_Map.GetPlayerMapPosition
+		local GetMapWorldSize = C_Map.GetMapWorldSize
+
+
+		-- Detect dragonriding start/end
+		if mountEvents[event] then
+			if IsMounted() then
+				for _, mountId in ipairs(C_MountJournal.GetCollectedDragonridingMounts()) do
+					if select(4, C_MountJournal.GetMountInfoByID(mountId)) then
+						OCTO_ISDRAGONFLY = true
+					end
+				end
+			end
+		end
+		-- Detect ascent boost
+		if event == "UNIT_SPELLCAST_SUCCEEDED" then
+			if spellId == ascentSpell then
+				ascentStart = GetTime()
+			end
+			return false
+		end
+		local time = GetTime()
+		-- Delta time
+		local dt = time - lastT
+		if dt < updatePeriod then
+			-- Rate limit speed updates!
+			return false
+		end
+		lastT = time
+		-- Compute accurate speed if possible
+		local instanced = true
+		local speed, groundSpeed = 0, 0
+		local map = GetBestMapForUnit("player")
+		if map then
+			local position = GetPlayerMapPosition(map, "player")
+			if position then
+				instanced = false
+				-- Delta position
+				local x, y = position.x, position.y
+				local w, h = GetMapWorldSize(map)
+				x = x * w
+				y = y * h
+				local dx = x - lastX
+				local dy = y - lastY
+				lastX = x
+				lastY = y
+				-- Compute horizontal speed and adjust for pitch
+				groundSpeed = math.sqrt(dx * dx + dy * dy) / dt
+				if groundSpeed > 0 then
+					local cosTheta = math.cos(math.abs(0))
+					if cosTheta > 0 then
+						speed = groundSpeed / cosTheta
+					end
+				end
+			end
+		end
+		-- Ignore obviously invalid speeds that occur when jumping zones
+		if speed > 150 then
+			return false
+		end
+		-- If speed can't be detected, reduce exp-avg window size
+		if speed == 0 then
+			samples = math.min(1, samples)
+		end
+		local thrill = C_UnitAuras.GetPlayerAuraBySpellID(thrillBuff)
+		-- Override with ascent boost
+		if thrill and time < ascentStart + ascentDuration then
+			local progress = (time - ascentStart) / ascentDuration
+			local boost = thrillSpeed + (1 - progress) * ascentBoostMax
+			if speed < boost then
+				speed = boost
+				samples = 0
+				skipped = true
+			end
+		end
+		-- Override speed based on Thrill buff
+		if speed < thrillSpeed and thrill then
+			speed = thrillSpeed
+		end
+		if speed > thrillSpeed and not thrill then
+			speed = thrillSpeed
+			samples = 0
+			skipped = true
+		end
+		-- Skip sampling on large apparent speed changes
+		if math.abs(speed - smoothSpeed) > 100 then
+			if skipped then
+				samples = 0
+			else
+				skipped = true
+				return false
+			end
+		end
+		skipped = false
+		-- Compute smooth speed
+		samples = math.min(maxSamples, samples + 1)
+		local lastWeight = (samples - 1) / samples
+		local newWeight = 1 / samples
+		smoothSpeed = smoothSpeed * lastWeight + speed * newWeight
+		smoothGSpeed = smoothGSpeed * lastWeight + groundSpeed * newWeight
+		lastSpeed = smoothSpeed
+		local speed = (true or instanced) and smoothSpeed or smoothGSpeed
+		vivod = speed < 1 and 0 or string.format(speedTextFormat, speed * speedTextFactor)
+		return vivod
+	else
+
+
+		local base = 100/BASE_MOVEMENT_SPEED
+		local cur = GetUnitSpeed("PLAYER")
+		local vivod = base*cur
+		-- return string.format("%.0f", vivod)
+		return self:func_CompactNumberFormat(vivod)
+	end
+end
+
+
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

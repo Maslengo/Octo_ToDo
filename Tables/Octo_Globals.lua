@@ -13,6 +13,13 @@ _G["OctoTODO"] = OctoTODO
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+
+-- local edgeFile = "Interface\\Buttons\\WHITE8X8"
+-- local bgFile = "Interface\\Buttons\\WHITE8X8"
+E.edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
+E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
+-- NIGHT_FAE_BLUE_COLOR
+
 -- WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE or 1 -- RETAIL
 -- WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC or 2 -- CLASSIC
 -- WOW_PROJECT_BURNING_CRUSADE_CLASSIC = WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5 -- BURNING CRUSADE
@@ -158,6 +165,7 @@ E.Color_Reputation_r = .3 -- 0
 E.Color_Reputation_g = .3 -- 1
 E.Color_Reputation_b = 0 -- 1
 E.MainFrame_Position = -157
+E.AnimationDuration = .1
 E.regions = {
 	[1] = "us",
 	[2] = "kr",
