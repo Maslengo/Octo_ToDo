@@ -537,7 +537,7 @@ function lib:func_questName(questID, useLargeIcon)
 		vivod = "|cff808080"..vivod.."|r"
 	end
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." questID:"..questID.."|r"
+		vivod = vivod..Gray_Color.." id:"..questID.."|r"
 	end
 	return AWide..vivod
 end
@@ -558,7 +558,7 @@ function lib:func_reputationName(reputationID)
 	end
 	vivod = AWide..name
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." reputationID:"..reputationID.."|r"
+		vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
 	end
 	return vivod
 end
@@ -566,7 +566,7 @@ end
 function lib:func_itemName_NOCOLOR(itemID)
 	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." itemID:"..itemID.."|r"
+		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
 	end
 	return vivod
 end
@@ -581,7 +581,7 @@ function lib:func_itemName(itemID)
 		vivod = itemName
 	end
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." itemID:"..itemID.."|r"
+		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
 	end
 	return vivod
 end
@@ -629,7 +629,7 @@ function lib:func_currencyName(currencyID)
 		vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." currencyID:"..currencyID.."|r"
+		vivod = vivod..Gray_Color.." id:"..currencyID.."|r"
 	end
 	return vivod
 end
@@ -659,7 +659,7 @@ function lib:func_currencyName_NOCOLOR(currencyID)
 		vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." currencyID:"..currencyID.."|r"
+		vivod = vivod..Gray_Color.." id:"..currencyID.."|r"
 	end
 	return vivod
 end
@@ -685,7 +685,7 @@ end
 function lib:func_GetSpellName(spellID)
 	local vivod = C_Spell.GetSpellInfo(spellID).name
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." spellID:"..spellID.."|r"
+		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
 	end
 	return vivod
 end
@@ -850,7 +850,7 @@ end
 function lib:func_achievementName(achievementID)
 	local vivod = select(2, GetAchievementInfo(achievementID))
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." achievementID:"..achievementID.."|r"
+		vivod = vivod..Gray_Color.." id:"..achievementID.."|r"
 	end
 	return vivod
 end
@@ -976,7 +976,7 @@ function lib:func_npcName(npcName)
 		inspectScantipFUNC:ClearLines()
 	end
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." npcName:"..npcName.."|r"
+		vivod = vivod..Gray_Color.." id:"..npcName.."|r"
 	end
 	return vivod
 end
@@ -1256,7 +1256,7 @@ function lib:func_EventName(eventID)
 		end
 	end
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." eventID:"..eventID.."|r"
+		vivod = vivod..Gray_Color.." id:"..eventID.."|r"
 	end
 	return vivod
 end
@@ -1266,7 +1266,7 @@ function lib:func_ProfessionName(skillLine)
 	local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
 	vivod = name
 	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." skillLine:"..skillLine.."|r"
+		vivod = vivod..Gray_Color.." id:"..skillLine.."|r"
 	end
 	return vivod
 end
