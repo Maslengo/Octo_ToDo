@@ -112,6 +112,10 @@ LibOctopussy:func_LoadAddOn("TalentTreeTweaks")
 LibOctopussy:func_LoadAddOn("Plater")
 LibOctopussy:func_LoadAddOn("MacroManager")
 LibOctopussy:func_LoadAddOn("MacroManagerData")
+LibOctopussy:func_LoadAddOn("SilverDragon")
+LibOctopussy:func_LoadAddOn("SilverDragon_History")
+LibOctopussy:func_LoadAddOn("SilverDragon_Overlay")
+LibOctopussy:func_LoadAddOn("SilverDragon_RangeExtender")
 -- LibOctopussy:func_LoadAddOn("MySlot")
 -- LibOctopussy:func_LoadAddOn("TomTom")
 -- LibOctopussy:func_LoadAddOn("Pawn")
@@ -179,6 +183,7 @@ local TrashFrames_table = {
 	{name = "RaidBossEmoteFrame", frame = RaidBossEmoteFrame},
 	{name = "ZoneAbilityFrame.Style", frame = ZoneAbilityFrame.Style},
 	{name = "ExtraActionButton1.style", frame = ExtraActionButton1.style},
+	{name = "UIWidgetTopCenterContainerFrame", frame = UIWidgetTopCenterContainerFrame},
 	-- {name = "SubscriptionInterstitialFrame", frame = SubscriptionInterstitialFrame},
 }
 local function Hide_trash_frames()
@@ -6729,6 +6734,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			end
 			if classFilename == "DEATHKNIGHT" then
 				CreateFrameUsableSpells(50977, LibOctopussy:func_GetSpellIcon(50977), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
+				CreateFrameUsableSpells(53428, LibOctopussy:func_GetSpellIcon(53428), Xpos*13+Ypos*1, Ypos*13, 0, .43, .86)
 			end
 			if classFilename == "SHAMAN" then
 				CreateFrameUsableSpells(556, LibOctopussy:func_GetSpellIcon(556), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
@@ -6748,6 +6754,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			end
 			if classFilename == "DEATHKNIGHT" then
 				CreateFrameUsableSpells(50977, LibOctopussy:func_GetSpellIcon(50977), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
+				CreateFrameUsableSpells(53428, LibOctopussy:func_GetSpellIcon(53428), Xpos*5+Ypos*1, Ypos*5, 0, .43, .86)
 			end
 			if classFilename == "SHAMAN" then
 				CreateFrameUsableSpells(556, LibOctopussy:func_GetSpellIcon(556), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)

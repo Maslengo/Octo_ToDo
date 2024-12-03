@@ -61,7 +61,7 @@ E.OctoTable_Portals_Mage_Group_Alliance =
 	176246, 224871, 281400, 344597, 395289, 446534
 }
 E.OctoTable_Portals_DRUID = {193753}
-E.OctoTable_Portals_DEATHKNIGHT = {50977}
+E.OctoTable_Portals_DEATHKNIGHT = {50977, 53428}
 E.OctoTable_Portals_SHAMAN = {556}
 E.OctoTable_Portals_MONK = {126892}
 
