@@ -1,7 +1,4 @@
 local GlobalAddonName, E = ...
-local function func_Reverse_order(a, b)
-	return b < a
-end
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
@@ -181,6 +178,7 @@ local function Create_CheckButton(scroll, self, number, pos, otstyp, config, tex
 end
 local function Create_CheckButtonNEW(scroll, self, number, pos, otstyp, config, text, r, g, b, a, button, DATABASE)
 	local TEST = ""
+	if type(config) == "string" then button = false end
 	-- Octo_ToDo_DB_Config.ItemDB
 	if r == nil then r = E.bgCr end
 	if g == nil then g = E.bgCg end
@@ -698,7 +696,7 @@ SECOND_Config:SetScript("OnShow", function(self)
 		for CurrencyID, v in next, (Octo_ToDo_DB_Config.CurrencyDB) do
 			tinsert(list, CurrencyID)
 		end
-		sort(list, func_Reverse_order)
+		sort(list, LibOctopussy.func_Reverse_order)
 		for k, CurrencyID in next, (list) do
 			tinsert(ConfigTable_SECOND_LEFT,
 				{
@@ -761,7 +759,7 @@ THIRD_Config:SetScript("OnShow", function(self)
 				tinsert(list, reputationID)
 			-- end
 		end
-		sort(list, func_Reverse_order)
+		sort(list, LibOctopussy.func_Reverse_order)
 		for k, reputationID in next, (list) do
 			tinsert(ConfigTable_THIRD_LEFT,
 				{
@@ -822,7 +820,7 @@ FOURTH_Config:SetScript("OnShow", function(self)
 		for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
 			tinsert(list, itemID)
 		end
-		sort(list, func_Reverse_order)
+		sort(list, LibOctopussy.func_Reverse_order)
 		for _, id in next, (E.OctoTable_itemID_Config) do
 			for k, itemID in next, (list) do
 				if id == itemID then
@@ -888,7 +886,7 @@ FIFTH_Config:SetScript("OnShow", function(self)
 		for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
 			tinsert(list, QuestID)
 		end
-		sort(list, func_Reverse_order)
+		sort(list, LibOctopussy.func_Reverse_order)
 		for k, QuestID in next, (list) do
 			tinsert(ConfigTable_FIFTH_LEFT,
 				{
@@ -924,3 +922,125 @@ Settings.RegisterAddOnCategory(subcategory)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+local SIXTH_Config = CreateFrame("ScrollFrame", GlobalAddonName.."SIXTH_Config")
+SIXTH_Config:Hide()
+local SIXTH_ScrollBar = CreateFrame("EventFrame", nil, SIXTH_Config, "MinimalScrollBar")
+SIXTH_ScrollBar:SetPoint("TOPLEFT", SIXTH_Config, "TOPRIGHT", 6, 0)
+SIXTH_ScrollBar:SetPoint("BOTTOMLEFT", SIXTH_Config, "BOTTOMRIGHT", 6, 0)
+local SIXTH_scrollChild = CreateFrame("Frame", nil, SIXTH_Config)
+SIXTH_Config:SetScrollChild(SIXTH_scrollChild)
+SIXTH_Config:SetAllPoints()
+SIXTH_scrollChild:SetSize(1, 1)
+ScrollUtil.InitScrollFrameWithScrollBar(SIXTH_Config, SIXTH_ScrollBar)
+local SIXTH_OnMouseWheel = SIXTH_Config:GetScript("OnMouseWheel")
+SIXTH_Config:SetScript("OnMouseWheel", function(self, ...)
+		if SIXTH_ScrollBar:IsShown() then
+			SIXTH_OnMouseWheel(self, ...)
+		end
+end)
+TITLE_SIXTH = SIXTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+TITLE_SIXTH:SetPoint("TOPLEFT", 4, 30)
+TITLE_SIXTH:SetText(E.AddonVersion)
+TITLE_SIXTH:SetTextColor(.5, .5, .5, 1)
+SIXTH_Config:SetScript("OnShow", function(self)
+		self:SetScript("OnShow", nil)
+		ConfigTable_SIXTH_LEFT = {
+		}
+
+
+		for CurrencyID, v in next, (OCTO_DB_currencies_sort) do
+			tinsert(ConfigTable_SIXTH_LEFT,
+				{
+					otstyp = 0,
+					config = CurrencyID,
+					text = OCTO_DB_currencies[CurrencyID],
+					qwe = v,
+				}
+			)
+		end
+		for i = 1, #ConfigTable_SIXTH_LEFT do
+			if ConfigTable_SIXTH_LEFT[i].otstyp == nil then ConfigTable_SIXTH_LEFT[i].otstyp = 0 end
+			if ConfigTable_SIXTH_LEFT[i].config == nil then ConfigTable_SIXTH_LEFT[i].config = 0 end
+			if ConfigTable_SIXTH_LEFT[i].text == nil then ConfigTable_SIXTH_LEFT[i].text = "" end
+			if ConfigTable_SIXTH_LEFT[i].r == nil then ConfigTable_SIXTH_LEFT[i].r = 0 end
+			if ConfigTable_SIXTH_LEFT[i].g == nil then ConfigTable_SIXTH_LEFT[i].g = 0 end
+			if ConfigTable_SIXTH_LEFT[i].b == nil then ConfigTable_SIXTH_LEFT[i].b = 0 end
+			if ConfigTable_SIXTH_LEFT[i].a == nil then ConfigTable_SIXTH_LEFT[i].a = 0 end
+			if ConfigTable_SIXTH_LEFT[i].button == nil then ConfigTable_SIXTH_LEFT[i].button = true end
+			Create_CheckButtonNEW(SIXTH_scrollChild, self, ConfigTable_SIXTH_LEFT[i].qwe, POS_LEFT, ConfigTable_SIXTH_LEFT[i].otstyp, ConfigTable_SIXTH_LEFT[i].config, ConfigTable_SIXTH_LEFT[i].text, ConfigTable_SIXTH_LEFT[i].r, ConfigTable_SIXTH_LEFT[i].g, ConfigTable_SIXTH_LEFT[i].b, ConfigTable_SIXTH_LEFT[i].a, ConfigTable_SIXTH_LEFT[i].button, Octo_ToDo_DB_Config.CurrencyDB)
+		end
+		Create_CheckButton(SIXTH_scrollChild, self, 1, POS_RIGHT, 0, "Currency", CURRENCY)
+		Create_CheckButtonNEW(SIXTH_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
+		Create_SimpleButton_DATABASE(SIXTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.CurrencyDB)
+		Create_SimpleButton_DATABASE(SIXTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.CurrencyDB)
+end)
+local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, SIXTH_Config, CURRENCY)
+subcategory.ID = L["InDev"].."SIXTH_Config"
+Settings.RegisterAddOnCategory(subcategory)
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+local SEVENTH_Config = CreateFrame("ScrollFrame", GlobalAddonName.."SEVENTH_Config")
+SEVENTH_Config:Hide()
+local SEVENTH_ScrollBar = CreateFrame("EventFrame", nil, SEVENTH_Config, "MinimalScrollBar")
+SEVENTH_ScrollBar:SetPoint("TOPLEFT", SEVENTH_Config, "TOPRIGHT", 6, 0)
+SEVENTH_ScrollBar:SetPoint("BOTTOMLEFT", SEVENTH_Config, "BOTTOMRIGHT", 6, 0)
+local SEVENTH_scrollChild = CreateFrame("Frame", nil, SEVENTH_Config)
+SEVENTH_Config:SetScrollChild(SEVENTH_scrollChild)
+SEVENTH_Config:SetAllPoints()
+SEVENTH_scrollChild:SetSize(1, 1)
+ScrollUtil.InitScrollFrameWithScrollBar(SEVENTH_Config, SEVENTH_ScrollBar)
+local SEVENTH_OnMouseWheel = SEVENTH_Config:GetScript("OnMouseWheel")
+SEVENTH_Config:SetScript("OnMouseWheel", function(self, ...)
+		if SEVENTH_ScrollBar:IsShown() then
+			SEVENTH_OnMouseWheel(self, ...)
+		end
+end)
+TITLE_SEVENTH = SEVENTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+TITLE_SEVENTH:SetPoint("TOPLEFT", 4, 30)
+TITLE_SEVENTH:SetText(E.AddonVersion)
+TITLE_SEVENTH:SetTextColor(.5, .5, .5, 1)
+SEVENTH_Config:SetScript("OnShow", function(self)
+		self:SetScript("OnShow", nil)
+		ConfigTable_SEVENTH_LEFT = {
+		}
+
+
+		for reputationID, v in next, (OCTO_DB_reputations_sort) do
+			tinsert(ConfigTable_SEVENTH_LEFT,
+				{
+					otstyp = 0,
+					config = reputationID,
+					text = OCTO_DB_reputations[reputationID],
+					qwe = v,
+				}
+			)
+		end
+		for i = 1, #ConfigTable_SEVENTH_LEFT do
+			if ConfigTable_SEVENTH_LEFT[i].otstyp == nil then ConfigTable_SEVENTH_LEFT[i].otstyp = 0 end
+			if ConfigTable_SEVENTH_LEFT[i].config == nil then ConfigTable_SEVENTH_LEFT[i].config = 0 end
+			if ConfigTable_SEVENTH_LEFT[i].text == nil then ConfigTable_SEVENTH_LEFT[i].text = "" end
+			if ConfigTable_SEVENTH_LEFT[i].r == nil then ConfigTable_SEVENTH_LEFT[i].r = 0 end
+			if ConfigTable_SEVENTH_LEFT[i].g == nil then ConfigTable_SEVENTH_LEFT[i].g = 0 end
+			if ConfigTable_SEVENTH_LEFT[i].b == nil then ConfigTable_SEVENTH_LEFT[i].b = 0 end
+			if ConfigTable_SEVENTH_LEFT[i].a == nil then ConfigTable_SEVENTH_LEFT[i].a = 0 end
+			if ConfigTable_SEVENTH_LEFT[i].button == nil then ConfigTable_SEVENTH_LEFT[i].button = true end
+			Create_CheckButtonNEW(SEVENTH_scrollChild, self, ConfigTable_SEVENTH_LEFT[i].qwe, POS_LEFT, ConfigTable_SEVENTH_LEFT[i].otstyp, ConfigTable_SEVENTH_LEFT[i].config, ConfigTable_SEVENTH_LEFT[i].text, ConfigTable_SEVENTH_LEFT[i].r, ConfigTable_SEVENTH_LEFT[i].g, ConfigTable_SEVENTH_LEFT[i].b, ConfigTable_SEVENTH_LEFT[i].a, ConfigTable_SEVENTH_LEFT[i].button, Octo_ToDo_DB_Config.ReputationDB)
+		end
+		Create_CheckButton(SEVENTH_scrollChild, self, 1, POS_RIGHT, 0, "Currency", CURRENCY)
+		Create_CheckButtonNEW(SEVENTH_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
+		Create_SimpleButton_DATABASE(SEVENTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.ReputationDB)
+		Create_SimpleButton_DATABASE(SEVENTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.ReputationDB)
+end)
+local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, SEVENTH_Config, REPUTATION)
+subcategory.ID = L["InDev"].."SEVENTH_Config"
+Settings.RegisterAddOnCategory(subcategory)

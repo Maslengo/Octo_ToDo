@@ -23,8 +23,15 @@ tinsert(E.Modules, function()
 
 				SetCVar("enableMultiActionBars", 63)
 				-- SetCVar("enableMultiActionBars", 127)
-
-				SetCVar("countdownForCooldowns", 0)
+				if E.isElvUI then
+					SetCVar("countdownForCooldowns", 0)
+					SetCVar("StatusText", 0)
+					SetCVar("StatusTextDisplay", "NONE") -- NONE
+				else
+					SetCVar("countdownForCooldowns", 1)
+					SetCVar("StatusText", 1)
+					SetCVar("StatusTextDisplay", "BOTH") -- BOTH
+				end
 				-- 11.0
 				SetCVar("CursorFreelookStartDelta", 0.001)
 				SetCVar("minimapTrackingShowAll", 1)
@@ -148,8 +155,6 @@ tinsert(E.Modules, function()
 				SetCVar("Sound_MaxCacheSizeInBytes", 134217728) -- 67108864)
 				SetCVar("Sound_NumChannels", 64)
 				SetCVar("spellqueuewindow", 140)
-				SetCVar("StatusText", 0)
-				SetCVar("StatusTextDisplay", "NONE") -- NONE
 				SetCVar("timeMgrUseLocalTime", 1) -- локал время
 				SetCVar("useUiScale", 1)
 				SetCVar("uiScale", 0.7111111111111111)

@@ -419,14 +419,6 @@ SlashCmdList.OCTOLISTREP = function(msg)
 	local str4 = ""
 	local str5 = ""
 	local vivod = ""
-	--[[local listSize, i = C_Reputation.GetNumFactions(), 1
--- C_Reputation.CollapseAllFactionHeaders() -- закрыть
-C_Reputation.ExpandAllFactionHeaders() -- открыть
-while listSize >= i do
-local factionData = C_Reputation.GetFactionDataByIndex(i)
-str4 = str4 .. i ..") ".. factionData.name ..E.LightGray_Color.." ("..factionData.factionID.. ")|r\n"
-i = i + 1
-end]]
 	local list = {}
 	for _, factionID in next, (E.OctoTable_reputation_ALL) do
 		tinsert(list, factionID)

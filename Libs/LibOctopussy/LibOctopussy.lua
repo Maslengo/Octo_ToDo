@@ -553,7 +553,7 @@ function lib:func_reputationName(reputationID)
 		name = repInfo.name
 	else
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
-		name = reputationInfo.name or SEARCH_LOADING_TEXT
+		name = reputationInfo.name or Red_Color..SEARCH_LOADING_TEXT.."|r"
 	end
 	vivod = AWide..name
 	if ShowIDS == true and vivod ~= nil then
@@ -604,33 +604,37 @@ function lib:func_GetItemCooldown(itemID)
 end
 ----------------------------------------------------------------
 function lib:func_currencyName(currencyID)
-	local vivod
-	local AWide = ""
-	local ATrans = ""
-	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) or false
-	if isAccountTransferableCurrency == true then
-		AWide = E_Icon_AccountTransferable
-	end
-	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID) or false
-	if isAccountWideCurrency == true then
-		AWide = E_Icon_AccountWide
-	end
-	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-	if info then
-		local name = info.name
-		local iconFileID = info.iconFileID
-		local quality = info.quality
-		local r, g, b = GetItemQualityColor(quality)
-		local color = CreateColor(r, g, b, 1)
-		local currencyName = color:WrapTextInColorCode(name)
-		vivod = ATrans..AWide..currencyName
+	if currencyID then
+		local vivod
+		local AWide = ""
+		local ATrans = ""
+		local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) or false
+		if isAccountTransferableCurrency == true then
+			AWide = E_Icon_AccountTransferable
+		end
+		local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID) or false
+		if isAccountWideCurrency == true then
+			AWide = E_Icon_AccountWide
+		end
+		local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+		if info then
+			local name = info.name
+			local iconFileID = info.iconFileID
+			local quality = info.quality
+			local r, g, b = GetItemQualityColor(quality)
+			local color = CreateColor(r, g, b, 1)
+			local currencyName = color:WrapTextInColorCode(name)
+			vivod = ATrans..AWide..currencyName
+		else
+			vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
+		end
+		if ShowIDS == true and vivod ~= nil then
+			vivod = vivod..Gray_Color.." id:"..currencyID.."|r"
+		end
+		return vivod
 	else
-		vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
+		return "currencyID = NIL"
 	end
-	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..currencyID.."|r"
-	end
-	return vivod
 end
 ----------------------------------------------------------------
 function lib:func_currencyName_NOCOLOR(currencyID)
@@ -1074,7 +1078,7 @@ function lib:func_CheckReputationByRepID(reputationID)
 	elseif C_Reputation.IsMajorFaction(reputationID) then
 		local data = C_MajorFactions.GetMajorFactionData(reputationID) or 0
 		if data ~= 0 then
-			local currentValue = data.renownReputationEarned
+			local currentValue = data.renownReputationEarned%data.renownLevelThreshold
 			local totalValue = data.renownLevelThreshold
 			local standing = data.renownLevel
 			vivod = (currentValue).."/"..(totalValue)..Green_Color.."("..(standing)..")|r"

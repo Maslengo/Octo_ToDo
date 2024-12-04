@@ -1,40 +1,4 @@
--- SPELL_FAILED_AFFECTING_COMBAT
--- NIGHT_FAE_BLUE_COLOR
--- Interface/AddOns/Todoloo/Images/questlog-questtypeicon-disabled
--- questlog-questtypeicon-daily
--- questlog-questtypeicon-weekly
-
--- Quest Tags
--- QUEST_TAG_ATLAS = {
--- 	["COMPLETED"] = "questlog-questtypeicon-quest",
--- 	["COMPLETED_LEGENDARY"] = "questlog-questtypeicon-legendaryturnin",
--- 	["DAILY"] = "questlog-questtypeicon-daily",
--- 	["WEEKLY"] = "questlog-questtypeicon-weekly",
--- 	["FAILED"] = "questlog-questtypeicon-questfailed",
--- 	["STORY"] = "questlog-questtypeicon-story",
--- 	["ALLIANCE"] = "questlog-questtypeicon-alliance",
--- 	["HORDE"] = "questlog-questtypeicon-horde",
--- 	["EXPIRING_SOON"] = "questlog-questtypeicon-expiringsoon",
--- 	["EXPIRING"] = "questlog-questtypeicon-expiring",
--- 	[Enum.QuestTag.Dungeon] = "questlog-questtypeicon-dungeon",
--- 	[Enum.QuestTag.Scenario] = "questlog-questtypeicon-scenario",
--- 	[Enum.QuestTag.Group] = "questlog-questtypeicon-group",
--- 	[Enum.QuestTag.PvP] = "questlog-questtypeicon-pvp",
--- 	[Enum.QuestTag.Heroic] = "questlog-questtypeicon-heroic",
--- 	-- same texture for all raids
--- 	[Enum.QuestTag.Raid] = "questlog-questtypeicon-raid",
--- 	[Enum.QuestTag.Raid10] = "questlog-questtypeicon-raid",
--- 	[Enum.QuestTag.Raid25] = "questlog-questtypeicon-raid",
--- 	[Enum.QuestTag.Delve] = "questlog-questtypeicon-delves",
--- };
-
-
-
-
 local GlobalAddonName, E = ...
-local function func_Reverse_order(a, b)
-	return b < a
-end
 local _G = _G
 _G["OctoTODO"] = OctoTODO
 local LibStub = LibStub
@@ -48,14 +12,12 @@ local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibOctopussy = LibStub("LibOctopussy-1.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
-local strbyte, strlen, strsub = string.byte, string.len, string.sub
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local gsub, tinsert, next, type, wipe = gsub, tinsert, next, type, wipe
-local tostring, tonumber, strfind, strmatch = tostring, tonumber, strfind, strmatch
+local ipairs, pairs, sort = ipairs, pairs, sort
+local next, format, type = next, format, type
+local tostring, tonumber, strfind, strmatch, strsplit = tostring, tonumber, strfind, strmatch, strsplit
 local CreateFrame = CreateFrame
-local GetBuildInfo = GetBuildInfo
-local GetLocale = GetLocale
-local GetTime = GetTime
 local UIParent = UIParent
 local buildVersion, buildNumber, buildDate, interfaceVersion = GetBuildInfo() -- Mainline
 local currentTier = tonumber(GetBuildInfo():match("(.-)%."))
@@ -76,19 +38,13 @@ local BTAG = tostringall(strsplit("#", BattleTag))
 local GameVersion = GetCurrentRegion() == 72 and "PTR" or "Retail"
 -- ПОФИКСИТЬ
 local BattleTagLocal = BTAG.." ("..GameVersion..")"
-local function TryToLoadBattleTag()
-	if not BNFeaturesEnabledAndConnected() then
-		return false
-	end
-	BattleTag = select(2, BNGetInfo()) or "Trial Account"
-	BattleTagLocal = BTAG.." ("..GameVersion..")"
-	return true
-end
 local curGUID = UnitGUID("PLAYER")
 local ItemLevelGreen = 625
 local ItemLevelOrange = 610
 local ItemLevelRed = 580
 local GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
+local MISCELLANEOUS = MISCELLANEOUS
+local expansion = _G['EXPANSION_NAME'..GetExpansionLevel()]
 -- if currentTier == 1 then E.currentMaxLevel = 60 end
 -- if currentTier == 2 then E.currentMaxLevel = 70 end
 -- if currentTier == 3 then E.currentMaxLevel = 80 end
@@ -117,8 +73,8 @@ LibOctopussy:func_LoadAddOn("SilverDragon_History")
 LibOctopussy:func_LoadAddOn("SilverDragon_Overlay")
 LibOctopussy:func_LoadAddOn("SilverDragon_RangeExtender")
 -- LibOctopussy:func_LoadAddOn("MySlot")
--- LibOctopussy:func_LoadAddOn("TomTom")
--- LibOctopussy:func_LoadAddOn("Pawn")
+LibOctopussy:func_LoadAddOn("TomTom")
+LibOctopussy:func_LoadAddOn("Pawn")
 -- LibOctopussy:func_LoadAddOn("AdvancedInterfaceOptions")
 local Button = nil
 local CF = nil
@@ -184,6 +140,7 @@ local TrashFrames_table = {
 	{name = "ZoneAbilityFrame.Style", frame = ZoneAbilityFrame.Style},
 	{name = "ExtraActionButton1.style", frame = ExtraActionButton1.style},
 	{name = "UIWidgetTopCenterContainerFrame", frame = UIWidgetTopCenterContainerFrame},
+	{name = "PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator", frame = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator},
 	-- {name = "SubscriptionInterstitialFrame", frame = SubscriptionInterstitialFrame},
 }
 local function Hide_trash_frames()
@@ -192,7 +149,7 @@ local function Hide_trash_frames()
 	end
 	for _, v in next, (TrashFrames_table) do
 		if v.frame and v.frame:IsShown() then
-			--ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Hide trash frames: ")..v.name)
+			ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Hide trash frames: ")..v.name)
 			v.frame:Hide()
 			-- v.frame:UnregisterAllEvents()
 		end
@@ -205,8 +162,6 @@ end
 local function ConcatAtStart()
 	-- В КАКУЮ ИЗ КАКОЙ ПОФИКСИТЬ
 	LibOctopussy:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
-
-
 	for _, itemID in next, (E.OctoTable_itemID_ALL) do
 		Octo_ToDo_DB_Config.ItemDB[itemID] = Octo_ToDo_DB_Config.ItemDB[itemID] or false
 	end
@@ -235,11 +190,9 @@ local function ConcatAtStart()
 	for _, reputationID in next, (E.OctoTable_reputationID_Hidden) do
 		Octo_ToDo_DB_Config.ReputationDB[reputationID] = Octo_ToDo_DB_Config.ReputationDB[reputationID] or false
 	end
-
 	for _, questID in next, (E.OctoTable_QuestID) do
 		Octo_ToDo_DB_Config.QuestsDB[questID] = Octo_ToDo_DB_Config.QuestsDB[questID] or false
 	end
-
 end
 local function TryToOffMajor(majorFactionID, newRenownLevel, oldRenownLevel)
 	local majorFactionID, newRenownLevel, oldRenownLevel = majorFactionID, newRenownLevel, oldRenownLevel
@@ -337,15 +290,9 @@ local function checkCharInfo(self, GUID)
 	-- self.CurrencyID_Total = nil
 	-- self.CurrencyID_totalEarned = nil
 	----------------
-
-
-
-
-
 	self.MASLENGO = self.MASLENGO or {}
 	self.UniversalQuest = nil
 	self.MASLENGO.UniversalQuest = self.MASLENGO.UniversalQuest or {}
-
 	self.MASLENGO.CurrencyID = self.MASLENGO.CurrencyID or {}
 	self.MASLENGO.CurrencyID_Total = self.MASLENGO.CurrencyID_Total or {}
 	self.MASLENGO.CurrencyID_totalEarned = self.MASLENGO.CurrencyID_totalEarned or {}
@@ -354,7 +301,6 @@ local function checkCharInfo(self, GUID)
 	self.MASLENGO.professions = self.MASLENGO.professions or {}
 	self.MASLENGO.reputationID = self.MASLENGO.reputationID or {}
 	self.MASLENGO.OctoTable_QuestID = self.MASLENGO.OctoTable_QuestID or {}
-
 	if self.CurrencyID ~= nil then
 		self.MASLENGO.CurrencyID = self.CurrencyID
 	end
@@ -379,8 +325,6 @@ local function checkCharInfo(self, GUID)
 	if self.time == nil and self.tmstp_Daily ~= nil then
 		self.time = self.tmstp_Daily
 	end
-
-
 	for i = 1, 5 do
 		self.MASLENGO.professions[i] = self.MASLENGO.professions[i] or {}
 		self.MASLENGO.professions[i].skillLine = self.MASLENGO.professions[i].skillLine or 0
@@ -503,19 +447,10 @@ local function checkCharInfo(self, GUID)
 		self.GreatVault[i].hyperlink_STRING = self.GreatVault[i].hyperlink_STRING or 0
 		self.GreatVault[i].type = self.GreatVault[i].type or ""
 	end
-
-
-
 	if type(self.MASLENGO.CurrencyID) == "number" then self.MASLENGO.CurrencyID = {} end
 	if type(self.MASLENGO.CurrencyID_Total) == "number" then self.MASLENGO.CurrencyID_Total = {} end
 	if type(self.MASLENGO.CurrencyID_totalEarned) == "number" then self.MASLENGO.CurrencyID_totalEarned = {} end
 	if type(self.MASLENGO.ItemsInBag) == "number" then self.MASLENGO.ItemsInBag = {} end
-
-
-
-
-
-
 	setmetatable(self, Meta_Table_0)
 	setmetatable(self.MASLENGO.OctoTable_QuestID, Meta_Table_NONE)
 	setmetatable(self.MASLENGO.CurrencyID, Meta_Table_0)
@@ -1229,12 +1164,9 @@ local function Collect_All_Currency_TEST()
 		-- CurrencyTransferMenu:GetRequestedCurrencyTransferAmount()
 		-- local CurrencyTransferMenu = CurrencyTransferSystemMixin:GetCurrencyTransferMenu();
 		-- local sourceCharacterData = CurrencyTransferSystemMixin:GetCurrencyTransferMenu():GetSourceCharacterData()
-
 		-- /dump (CurrencyTransferSystemMixin:GetCurrencyTransferMenu())
 		-- local currencyID = CurrencyTransferSystemMixin:GetCurrencyTransferMenu():GetCurrencyID()
-
 		-- /dump C_CurrencyInfo.RequestCurrencyFromAccountCharacter("Player-1615-0B228060", 1166, 0)
-
 		-- Hook the Confirm button to get the sourceGUID BEFORE the transfer occurs.
 		print("1")
 		local sourceGUID
@@ -1249,13 +1181,10 @@ local function Collect_All_Currency_TEST()
 		if sourceGUID then
 			print (sourceGUID)
 		end
-
 		local sourceCharacterData = CurrencyTransferMenu:GetSourceCharacterData()
 		if sourceCharacterData then
 			print (sourceCharacterData.characterGUID, CurrencyTransferMenu:GetCurrencyID(), CurrencyTransferMenu:GetRequestedCurrencyTransferAmount())
-
 			-- fpde(C_CurrencyInfo.RequestCurrencyFromAccountCharacter(sourceCharacterData.characterGUID, CurrencyTransferMenu:GetCurrencyID(), CurrencyTransferMenu:GetRequestedCurrencyTransferAmount()))
-
 			local characterName = sourceCharacterData.characterName
 			local quantity = sourceCharacterData.quantity
 			local characterGUID = sourceCharacterData.characterGUID
@@ -1300,13 +1229,112 @@ local function Collect_All_Currency_TEST()
 		end
 	end
 end
-
-
-
-
-
-
-
+local function Collect_All_Currency_TEST2()
+	---@type table<number, string>
+	OCTO_DB_currencies = {}
+	---@type table<number, number>
+	OCTO_DB_currencies_sort = {}
+	---@type table<string, boolean>
+	OCTO_DB_currencies_headers = {}
+	OCTO_DB_currencies_test = nil
+	----------------------------------------------------------------
+	-- ОТКРЫТЬ
+	----------------------------------------------------------------
+	local expanded = {}
+	for index = C_CurrencyInfo.GetCurrencyListSize(), 1, -1 do
+		local info = C_CurrencyInfo.GetCurrencyListInfo(index)
+		if info.isHeader and not info.isHeaderExpanded then
+			ExpandCurrencyList(index, true)
+			expanded[info.name] = true
+		end
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	for index = 1, C_CurrencyInfo.GetCurrencyListSize() do
+		local link = C_CurrencyInfo.GetCurrencyListLink(index)
+		local info = C_CurrencyInfo.GetCurrencyListInfo(index)
+		if link then
+			local currencyID = C_CurrencyInfo.GetCurrencyIDFromLink(link)
+			local icon = info.iconFileID or "Interface\\Icons\\INV_Misc_QuestionMark" --iconFileID not available on first login
+			OCTO_DB_currencies[currencyID] = "|T" .. icon .. ":0|t" .. info.name
+			OCTO_DB_currencies_sort[currencyID] = index
+		elseif info.isHeader then
+			OCTO_DB_currencies[info.name] = info.name
+			OCTO_DB_currencies_sort[info.name] = index
+			OCTO_DB_currencies_headers[info.name] = true
+		end
+	end
+	----------------------------------------------------------------
+	-- ЗАКРЫТЬ
+	----------------------------------------------------------------
+	for index = C_CurrencyInfo.GetCurrencyListSize(), 1, -1 do
+		local info = C_CurrencyInfo.GetCurrencyListInfo(index)
+		if info.isHeader and expanded[info.name] then
+			ExpandCurrencyList(index, false)
+		end
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+end
+local function Collect_All_Reputations_TEST2()
+	---@type table<number, string>
+	OCTO_DB_reputations = {}
+	---@type table<number, number>
+	OCTO_DB_reputations_sort = {}
+	---@type table<string, boolean>
+	OCTO_DB_reputations_headers = {}
+	OCTO_DB_reputations_test = nil
+	----------------------------------------------------------------
+	-- ОТКРЫТЬ C_Reputation.ExpandAllFactionHeaders()
+	----------------------------------------------------------------
+	-- Dynamic expansion of all collapsed headers
+	local collapsed = {}
+	local index = 1
+	while index <= C_Reputation.GetNumFactions() do
+		local factionData = C_Reputation.GetFactionDataByIndex(index)
+		if factionData and factionData.isHeader and factionData.isCollapsed then
+			C_Reputation.ExpandFactionHeader(index)
+			collapsed[factionData.name] = true
+		end
+		index = index + 1
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- Process all faction data
+	for i = 1, C_Reputation.GetNumFactions() do
+		local factionData = C_Reputation.GetFactionDataByIndex(i)
+		if factionData then
+			if factionData.currentStanding > 0 or not factionData.isHeader then
+				local factionID = factionData.factionID
+				if factionID then
+					OCTO_DB_reputations[factionID] = factionData.name
+					OCTO_DB_reputations_sort[factionID] = i
+				end
+			else
+				local name = factionData.name
+				OCTO_DB_reputations[name] = name
+				OCTO_DB_reputations_sort[name] = i
+				OCTO_DB_reputations_headers[name] = true
+			end
+		end
+	end
+	----------------------------------------------------------------
+	-- ЗАКРЫТЬ
+	----------------------------------------------------------------
+	-- Collapse headers back to their original state
+	for i = C_Reputation.GetNumFactions(), 1, -1 do
+		local factionData = C_Reputation.GetFactionDataByIndex(i)
+		if factionData and collapsed[factionData.name] then
+			C_Reputation.CollapseFactionHeader(i)
+		end
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+end
 
 
 local function Collect_All_Currency()
@@ -1354,18 +1382,12 @@ local function Collect_All_Currency()
 			local totalEarned = data.totalEarned
 			if isAccountWideCurrency == false then
 				if collect.MASLENGO and not InCombatLockdown() then
-
-
 					if type(collect.MASLENGO.CurrencyID) == "number" then collect.MASLENGO.CurrencyID = {} end
 					collect.MASLENGO.CurrencyID = collect.MASLENGO.CurrencyID or {}
-
 					if type(collect.MASLENGO.CurrencyID_totalEarned) == "number" then collect.MASLENGO.CurrencyID_totalEarned = {} end
 					collect.MASLENGO.CurrencyID_totalEarned = collect.MASLENGO.CurrencyID_totalEarned or {}
-
 					if type(collect.MASLENGO.CurrencyID_Total) == "number" then collect.MASLENGO.CurrencyID_Total = {} end
 					collect.MASLENGO.CurrencyID_Total = collect.MASLENGO.CurrencyID_Total or {}
-
-
 					if quantity then
 						collect.MASLENGO.CurrencyID[CurrencyID] = quantity
 					end
@@ -1389,19 +1411,12 @@ local function Collect_All_Currency()
 					tbl.MASLENGO.CurrencyID_totalEarned = tbl.MASLENGO.CurrencyID_totalEarned or {}
 					tbl.MASLENGO.CurrencyID_Total = tbl.MASLENGO.CurrencyID_Total or {}
 					if tbl and not InCombatLockdown() then
-
-
 						if type(tbl.MASLENGO.CurrencyID) == "number" then tbl.MASLENGO.CurrencyID = {} end
 						tbl.MASLENGO.CurrencyID = tbl.MASLENGO.CurrencyID or {}
-
 						if type(tbl.MASLENGO.CurrencyID_totalEarned) == "number" then tbl.MASLENGO.CurrencyID_totalEarned = {} end
 						tbl.MASLENGO.CurrencyID_totalEarned = tbl.MASLENGO.CurrencyID_totalEarned or {}
-
 						if type(tbl.MASLENGO.CurrencyID_Total) == "number" then tbl.MASLENGO.CurrencyID_Total = {} end
 						tbl.MASLENGO.CurrencyID_Total = tbl.MASLENGO.CurrencyID_Total or {}
-
-
-
 						if quantity then
 							tbl.MASLENGO.CurrencyID[CurrencyID] = quantity
 						end
@@ -1434,7 +1449,6 @@ local function Collect_All_Reputations()
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	if collect and not InCombatLockdown() then
-		Octo_ToDo_DB_Config.ReputationDB[2463] = true
 		local listSize, i = C_Reputation.GetNumFactions(), 1
 		C_Reputation.ExpandAllFactionHeaders()
 		while listSize >= i do
@@ -5425,7 +5439,7 @@ local function O_otrisovka_FIRST()
 				for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
 					tinsert(list, QuestID)
 				end
-				sort(list, func_Reverse_order)
+				sort(list, LibOctopussy.func_Reverse_order)
 				for k, QuestID in next, (list) do
 					if Octo_ToDo_DB_Vars.config.QuestsShowAllways == false and Octo_ToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= "" and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= E.NONE then
 						tooltip[#tooltip+1] = {LibOctopussy:func_questName(QuestID)..E.Gray_Color, CharInfo.MASLENGO.OctoTable_QuestID[QuestID]}
@@ -5486,7 +5500,7 @@ local function O_otrisovka_FIRST()
 				for CurrencyID, v in next, (Octo_ToDo_DB_Config.CurrencyDB) do
 					tinsert(list, CurrencyID)
 				end
-				sort(list, func_Reverse_order)
+				sort(list, LibOctopussy.func_Reverse_order)
 				for k, CurrencyID in next, (list) do
 					if Octo_ToDo_DB_Vars.config.CurrencyShowAllways == false and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
 						tooltip[#tooltip+1] = {LibOctopussy:func_currencyicon(CurrencyID)..LibOctopussy:func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
@@ -5528,7 +5542,7 @@ local function O_otrisovka_FIRST()
 				for reputationID, v in next, (Octo_ToDo_DB_Config.ReputationDB) do
 					tinsert(list, reputationID)
 				end
-				sort(list, func_Reverse_order)
+				sort(list, LibOctopussy.func_Reverse_order)
 				local j = 1
 				for i, reputationID in next, (list) do
 					if Octo_ToDo_DB_Config.ReputationDB[reputationID] == true and CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" and LibOctopussy:func_reputationName(reputationID) ~= SEARCH_LOADING_TEXT then
@@ -5556,7 +5570,7 @@ local function O_otrisovka_FIRST()
 				for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
 					tinsert(list, itemID)
 				end
-				sort(list, func_Reverse_order)
+				sort(list, LibOctopussy.func_Reverse_order)
 				for k, itemID in next, (list) do
 					if Octo_ToDo_DB_Config.ItemDB[itemID] == true then
 						if Octo_ToDo_DB_Vars.config.ItemsShowAllways == false and Octo_ToDo_DB_Config.ItemDB[itemID] == true and CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
@@ -5752,10 +5766,6 @@ local function TotalTimeAllServer80OnShow()
 		return ""
 	end
 end
-
-
-
-
 	-- function MainFrame_OnShow(self)
 	-- 	self.animation:SetFromAlpha(0)
 	-- 	self.animation:SetToAlpha(1)
@@ -5766,9 +5776,6 @@ end
 	-- 	self.animation:SetToAlpha(0)
 	-- 	self.group:Restart()
 	-- end
-
-
-
 local function Octo_ToDo_FIRST_CreateAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Octo_ToDo_FIRST_CreateAltFrame".."|r")
@@ -5808,12 +5815,18 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	OctoToDo_FIRST_MainFrame:EnableMouse(true)
 	OctoToDo_FIRST_MainFrame:SetMovable(true)
 	OctoToDo_FIRST_MainFrame:RegisterForDrag("LeftButton")
-	OctoToDo_FIRST_MainFrame:SetScript("OnDragStart", OctoToDo_FIRST_MainFrame.StartMoving)
-	OctoToDo_FIRST_MainFrame:SetScript("OnDragStop", function() OctoToDo_FIRST_MainFrame:StopMovingOrSizing() end)
+	-- OctoToDo_FIRST_MainFrame:SetScript("OnDragStart", OctoToDo_FIRST_MainFrame.StartMoving)
+	OctoToDo_FIRST_MainFrame:SetScript("OnDragStart", function()
+		OctoToDo_FIRST_MainFrame:SetAlpha(.5)
+		OctoToDo_FIRST_MainFrame:StartMoving()
+	end)
+	OctoToDo_FIRST_MainFrame:SetScript("OnDragStop", function()
+		OctoToDo_FIRST_MainFrame:SetAlpha(1)
+		OctoToDo_FIRST_MainFrame:StopMovingOrSizing()
+	end)
 	OctoToDo_FIRST_MainFrame:RegisterForClicks("RightButtonUp")
 	OctoToDo_FIRST_MainFrame:SetScript("OnClick", function(self) self:Hide() end)
 	OctoToDo_FIRST_MainFrame:SetHeight(50)
-
 	-- OctoToDo_FIRST_MainFrame:SetAlpha(0)
 	-- OctoToDo_FIRST_MainFrame:SetScript("OnShow", MainFrame_OnShow)
 	-- OctoToDo_FIRST_MainFrame:SetScript("OnHide", MainFrame_OnHide)
@@ -5823,11 +5836,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	-- OctoToDo_FIRST_MainFrame.animation:SetSmoothing("NONE")
 	-- OctoToDo_FIRST_MainFrame.animation:SetDuration(.5)
 	-- OctoToDo_FIRST_MainFrame.animation:SetTarget(OctoToDo_FIRST_MainFrame)
-
-
-
-
-
 	if Octo_ToDo_DB_Vars.config.ShowTotalMoney then
 		if not Octo_Frame_TotalMoneyCurServer then
 			Octo_Frame_TotalMoneyCurServer = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
@@ -6092,7 +6100,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 							end
 						end
 					end
-					sort(list, func_Reverse_order)
+					sort(list, LibOctopussy.func_Reverse_order)
 					for k, questID in next, (list) do
 						GameTooltip:AddDoubleLine(LibOctopussy:func_questName(questID),LibOctopussy:func_CheckCompletedByQuestID(questID) , 1, 1, 1, 1, 1, 1)
 					end
@@ -6140,7 +6148,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 							tinsert(list, dungeonID)
 						end
 					end
-					sort(list, func_Reverse_order)
+					sort(list, LibOctopussy.func_Reverse_order)
 					for count, dungeonID in next, (list) do
 						local name = LibOctopussy:func_dungeonName(dungeonID)
 						local timeLimit = LibOctopussy:func_dungeontimeLimit(dungeonID)
@@ -6798,7 +6806,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*9, (Ypos*k), 0, .43, .86)
 					end
 				end
-
 				for k, v in next, (E.OctoTable_Spells_Other) do
 					CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*10, (Ypos*k), 0, .43, .86)
 				end
@@ -6818,10 +6825,6 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						CreateFrameUsableSpells(v, LibOctopussy:func_GetSpellIcon(v), Xpos*(k-1)+Ypos*12, (Ypos*k), 0, .43, .86)
 					end
 				end
-
-
-
-
 			else
 				if Faction == "Horde" then
 					for k, v in next, (E.OctoTable_Portals_TWW_S1_Horde) do
@@ -7119,6 +7122,8 @@ function main_frame_toggle()
 				Collect_ALL_PlayerInfo()
 				Collect_All_Currency()
 				Collect_All_Currency_TEST()
+				Collect_All_Currency_TEST2()
+				Collect_All_Reputations_TEST2()
 				Collect_ALL_GreatVault()
 				Collect_ALL_ItemLevel()
 				Collect_ALL_ItemsInBag()
@@ -7392,6 +7397,8 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		end
 		Collect_ALL_PlayerInfo()
 		Collect_All_Currency()
+		Collect_All_Currency_TEST2()
+		Collect_All_Reputations_TEST2()
 		Collect_ALL_GreatVault()
 		Collect_ALL_ItemLevel()
 		Collect_ALL_ItemsInBag()
@@ -7419,23 +7426,17 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		Octo_ToDo_FIRST_CreateAltFrame()
 		Hide_trash_frames()
 	end
-
-
-
-	if (event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_REGEN_DISABLED" or event == "CURRENCY_DISPLAY_UPDATE" or event == "CHAT_MSG_SYSTEM" or event == "CURRENCY_TRANSFER_LOG_UPDATE" or event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW") and not InCombatLockdown() then
-		Collect_All_Currency_TEST()
-	end
-
-
-
-
+	-- if (event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_REGEN_DISABLED" or event == "CURRENCY_DISPLAY_UPDATE" or event == "CHAT_MSG_SYSTEM" or event == "CURRENCY_TRANSFER_LOG_UPDATE" or event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW") and not InCombatLockdown() then
+	-- 	Collect_All_Currency_TEST()
+	-- 	Collect_All_Currency_TEST2()
+	-- end
 	if (event == "PLAYER_TARGET_CHANGED") then
 		Hide_trash_frames()
 	end
 	if (event == "SHOW_SUBSCRIPTION_INTERSTITIAL") then
 		if SubscriptionInterstitialFrame then
 			SubscriptionInterstitialFrame:SetScript("OnEvent", nil)
-			-- ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Hide trash frames: ").."SubscriptionInterstitialFrame")
+			ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Hide trash frames: ").."SubscriptionInterstitialFrame")
 		end
 	end
 	if (event == "MAJOR_FACTION_RENOWN_LEVEL_CHANGED" or event == "MAJOR_FACTION_UNLOCKED") then
@@ -7464,6 +7465,7 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 	end
 	if (event == "CURRENCY_DISPLAY_UPDATE") and not InCombatLockdown() then
 		Collect_All_Currency()
+		Collect_All_Currency_TEST2()
 		Hide_trash_frames()
 	end
 	if (event == "PLAYER_EQUIPMENT_CHANGED") and not InCombatLockdown() then
@@ -7504,9 +7506,6 @@ function Octo_ToDo_FIRST_OnEvent(self, event, ...)
 		-- OLD_Collect_All_Legion_Transmoge()
 		-- -- OLD_Collect_All_Legion_TransmogeNEW()
 		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or .8)
-	end
-	if (event == "PLAYER_ENTERING_WORLD" or event == "BN_FRIEND_LIST_SIZE_CHANGED" or event == "BN_FRIEND_INFO_CHANGED" or event == "BN_FRIEND_INVITE_LIST_INITIALIZED" or event == "BN_FRIEND_INVITE_ADDED" or event == "BN_FRIEND_INVITE_REMOVED" or event == "BN_CUSTOM_MESSAGE_CHANGED" or event == "BN_CUSTOM_MESSAGE_LOADED" or event == "BN_BLOCK_LIST_UPDATED" or event == "BN_CONNECTED" or event == "BN_DISCONNECTED" or event == "BN_INFO_CHANGED" or event == "BN_REQUEST_FOF_SUCCEEDED" or event == "BN_DISCONNECTED") then
-		TryToLoadBattleTag()
 	end
 	if (event == "PLAYER_ENTERING_WORLD" or event == "COVENANT_CHOSEN" or event == "COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED") and not InCombatLockdown() then
 		Collect_All_Covenant()
