@@ -15,7 +15,7 @@ if L then
 	L["Fyrakk Asssaults"] = true
 
 
-
+	L["AutoSellGrey"] = true
 	L["Grand Hunt"] = true
 	L["Keys of Loyalty"] = true
 	L["Korthia"] = true
@@ -57,7 +57,6 @@ if L then
 	L["Warmode"] = PVP_LABEL_WAR_MODE
 	L["OFF"] = LOC_OPTION_OFF
 	L["ON"] = PVP_WAR_MODE_ENABLED
-	L["AutoSellGrey"] = true
 	L["AutoRepair"] = true
 	L["InputDelete"] = true
 	L["AutoOpen"] = true
@@ -235,7 +234,6 @@ if L then
 	-- L["Blooming Dreamseeds"] = "Цветение во сне"
 	L["Sniffenseeking"] = "Нюхорысканье"
 	L["Sniffenseeking (items)"] = "Нюхорысканье (" .. ITEMS .. ")"
-	L["AutoSellGrey"] = "Автопродажа серого хлама"
 	L["AutoRepair"] = "Автопочинка"
 	L["InputDelete"] = "Автозаполнение 'УДАЛИТЬ'"
 	L["AutoOpen"] = "Автооткрытие предметов"
@@ -359,4 +357,5 @@ if L then
 	L["Allied Races Quests"] = "Задания: Союзные расы"
 	L["Hide: Azerite Animations"] = "Скрытие анимации Азерита"
 	L["Hide: Objectives In Instance"] = "Скрытие заданий в подземельях"
+	L["AutoSellGrey"] = "Автопродажа серого хлама"
 end

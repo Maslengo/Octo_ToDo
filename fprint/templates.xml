@@ -1,6 +1,6 @@
 <Ui>
-	<Frame name="MyAddonEditFrameTemplate" movable="true" resizable="true" enableMouse="true" inherits="DialogBoxFrame" hidden="true" virtual="true">
-		<Size x="700" y="800"/>
+	<Frame name="MyAddonEditFrameTemplate" movable="true" resizable="true" dontSavePosition="true" enableMouse="true" inherits="DialogBoxFrame" hidden="true" virtual="true">
+		<Size x="700" y="400"/>
 		<Frames>
 			<EventFrame parentKey="scrollBar" inherits="WowTrimScrollBar">
 				<Anchors>

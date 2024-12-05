@@ -10,7 +10,7 @@ local GlobalAddonName, E = ...
 tinsert(E.Modules, function()
 	if Octo_ToDo_DB_Vars.config.CVar then
 		if not InCombatLockdown() then
-			C_Timer.After(1, function()
+			C_Timer.After(.1, function()
 				SetCVar("overrideScreenFlash", 1)
 				SetCVar("CameraReduceUnexpectedMovement", 0)
 				SetCVar("ShakeStrengthUI", 0)

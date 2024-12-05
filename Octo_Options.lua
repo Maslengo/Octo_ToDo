@@ -62,9 +62,6 @@ MAIN_ScrollBar:HookScript("OnShow", function(self, ...)
 			MAIN_ScrollBar.promise:AddQuests(E.OctoTable_QuestID)
 			MAIN_ScrollBar.promise:AddQuests(E.OctoTable_QuestID_Paragon)
 		end
-		-- MAIN_ScrollBar.promise:Then(function()
-		-- 		print ("MAIN_ScrollBar")
-		-- end)
 end)
 MAIN_ScrollBar:SetPoint("TOPLEFT", MAIN_Config, "TOPRIGHT", 6, 0)
 MAIN_ScrollBar:SetPoint("BOTTOMLEFT", MAIN_Config, "BOTTOMRIGHT", 6, 0)
@@ -279,14 +276,23 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 					ReloadUI()
 				end
 				if config == "DELETEALL" then
+					profileKeys = {}
 					OctoPlayer = {}
-					Octo_ToDo_DB_Artifact = {}
-					Octo_Achi_MAIN = {}
-					Octo_ToDo_DB_Config = {}
-					Octo_ToDo_DB_Players = {}
-					Octo_ToDo_DB_Vars = {}
-					Octo_ToDo_DB_Players_LIST = {}
-					Octo_ToDo_DB_Other = {}
+					Octo_ToDo_DB_Config  = {}
+					Octo_ToDo_DB_Players  = {}
+					Octo_ToDo_DB_Vars  = {}
+					Octo_ToDo_DB_Other  = {}
+					Octo_Achi_MAIN  = {}
+					Octo_ToDo_DB_Players_LIST  = {}
+					Octo_ToDo_Movies  = {}
+					Octo_ToDo_DB_Artifact  = {}
+					Octo_ToDo_DB_LegionArtifacts  = {}
+					OCTO_DB_currencies  = {}
+					OCTO_DB_currencies_sort  = {}
+					OCTO_DB_currencies_headers  = {}
+					OCTO_DB_currencies_test  = {}
+					OCTO_DB_reputations  = {}
+					OCTO_DB_reputations_test = {}
 					ReloadUI()
 				end
 		end)
@@ -403,8 +409,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 16, POS_LEFT, 0, "Hide_Talking_Head_Frame", L["Hide: TalkingHeadFrame"])
 		Create_CheckButton(MAIN_scrollChild, self, 17, POS_LEFT, 0, "Hide_Zone_Text", L["Hide: Zone Text"])
 		Create_CheckButton(MAIN_scrollChild, self, 18, POS_LEFT, 0, "UIErrorsFramePosition", L["UIErrorsFramePosition"])
-
-
 		number = 1
 		btn_right1 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
@@ -439,11 +443,6 @@ MAIN_Config:SetScript("OnShow", function(self)
 					end
 				end
 		end)
-
-
-
-
-
 		number = 2
 		btn_right2 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, 22)
 		btn_right2:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
@@ -508,17 +507,16 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "AdditionalButtons", LibOctopussy:func_texturefromIcon(E.AddonTexture_4, indent)..E.Gray_Color..L["Additional Buttons"].."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "CVar", LibOctopussy:func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."CVar".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "SellFrame", LibOctopussy:func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SellFrame".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "SpeedFrame", LibOctopussy:func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SpeedFrame".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "SpeedFrame.Shown", LibOctopussy:func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SpeedFrame.Shown".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 26, POS_RIGHT, 0, "Minecraft", LibOctopussy:func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."Minecraft".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 27, POS_RIGHT, 0, "Octo_debug_Function_FIRST", LibOctopussy:func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Debug".."|r")
-
-
-		Create_SimpleButton(MAIN_scrollChild, self, 28, POS_RIGHT, "ReloadUI", E.Blue_Color.."Reload UI".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 28, POS_RIGHT+150, "DELETEALL", E.Yellow_Color.."DELETEALL".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 29, POS_RIGHT, "Octo_ToDo_DB_Config", E.Gray_Color.."Config".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT, "Octo_ToDo_DB_Other", E.Gray_Color.."Other".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "Octo_ToDo_DB_Players", E.Gray_Color.."Players".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 32, POS_RIGHT, "Octo_ToDo_DB_Vars", E.Gray_Color.."Vars".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, 0, "Hide_ObjectivesInInstance", LibOctopussy:func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Hide_ObjectivesInInstance".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT, "ReloadUI", E.Blue_Color.."Reload UI".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT+150, "DELETEALL", E.Yellow_Color.."DELETEALL".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "Octo_ToDo_DB_Config", E.Gray_Color.."Config".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 32, POS_RIGHT, "Octo_ToDo_DB_Other", E.Gray_Color.."Other".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 33, POS_RIGHT, "Octo_ToDo_DB_Players", E.Gray_Color.."Players".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 34, POS_RIGHT, "Octo_ToDo_DB_Vars", E.Gray_Color.."Vars".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 42, POS_RIGHT, 0, "FieldOfView", "FieldOfView")
 		Create_Slider(MAIN_scrollChild, self, 43.5, POS_RIGHT, "FoV_top", "FoV_top: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				-- if GameMenuFrame then
@@ -541,8 +539,8 @@ MAIN_Config:SetScript("OnShow", function(self)
 				-- end
 		end)
 end)
-local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, E.AddonTitle)
-category.ID = E.AddonTitle
+local category, layout = Settings.RegisterCanvasLayoutCategory(MAIN_Config, E.AddonTitle.." OLD")
+category.ID = E.AddonTitle.." OLD"
 Settings.RegisterAddOnCategory(category)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -756,7 +754,7 @@ THIRD_Config:SetScript("OnShow", function(self)
 		local list = {}
 		for reputationID, v in next, (Octo_ToDo_DB_Config.ReputationDB) do
 			-- if C_Reputation.GetFactionDataByID(reputationID) then
-				tinsert(list, reputationID)
+			tinsert(list, reputationID)
 			-- end
 		end
 		sort(list, LibOctopussy.func_Reverse_order)
@@ -853,7 +851,6 @@ end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FOURTH_Config, ITEMS)
 subcategory.ID = L["InDev"].."FOURTH_Config"
 Settings.RegisterAddOnCategory(subcategory)
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -915,9 +912,6 @@ end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, FIFTH_Config, QUESTS_LABEL)
 subcategory.ID = L["InDev"].."FIFTH_Config"
 Settings.RegisterAddOnCategory(subcategory)
-
-
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -950,8 +944,6 @@ SIXTH_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
 		ConfigTable_SIXTH_LEFT = {
 		}
-
-
 		for CurrencyID, v in next, (OCTO_DB_currencies_sort) do
 			tinsert(ConfigTable_SIXTH_LEFT,
 				{
@@ -1013,17 +1005,33 @@ SEVENTH_Config:SetScript("OnShow", function(self)
 		self:SetScript("OnShow", nil)
 		ConfigTable_SEVENTH_LEFT = {
 		}
-
-
-		for reputationID, v in next, (OCTO_DB_reputations_sort) do
+		local v = 0
+		for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
+			v = v + 1
+			local r, g, b = LibOctopussy:func_hex2rgbNUMBER(E.Red_Color)
 			tinsert(ConfigTable_SEVENTH_LEFT,
 				{
 					otstyp = 0,
-					config = reputationID,
-					text = OCTO_DB_reputations[reputationID],
+					config = 0,
+					text = "     "..OCTO_DB_reputations[reputationHEADER],
+					-- text = E.spacer..LibOctopussy:func_Gradient(LibOctopussy:func_reputationNameSIMPLE(reputationHEADER)),
 					qwe = v,
-				}
-			)
+					r = r, g = g, b = b,
+					button = false,
+			})
+			for reputationID, config in next, (tbl) do
+				v = v + 1
+				tinsert(ConfigTable_SEVENTH_LEFT,
+					{
+						otstyp = 0,
+						config = reputationID,
+						text = OCTO_DB_reputations[reputationID],
+						-- text = LibOctopussy:func_reputationName(reputationID),
+						qwe = v,
+						button = true,
+					}
+				)
+			end
 		end
 		for i = 1, #ConfigTable_SEVENTH_LEFT do
 			if ConfigTable_SEVENTH_LEFT[i].otstyp == nil then ConfigTable_SEVENTH_LEFT[i].otstyp = 0 end
@@ -1044,3 +1052,4 @@ end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, SEVENTH_Config, REPUTATION)
 subcategory.ID = L["InDev"].."SEVENTH_Config"
 Settings.RegisterAddOnCategory(subcategory)
+

@@ -16,8 +16,11 @@ local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, stri
 
 E.DONE = LibOctopussy:DONE()
 E.NONE = LibOctopussy:NONE()
-
-
+E.spacer = "    "
+-------------------------------------------------------------------------
+-- Constants
+E.THIRD_WIDTH = 1.25
+E.HALF_WIDTH = 1.88 -- 1.5
 -- local edgeFile = "Interface\\Buttons\\WHITE8X8"
 -- local bgFile = "Interface\\Buttons\\WHITE8X8"
 E.edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
@@ -145,6 +148,7 @@ E.daytime = 86400
 -- E.currTime = tonumber(GetServerTime())
 E.curExpansionMaxLevel = 70
 E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
+print (E.scale)
 E.curWidthCentral = 96*E.scale
 E.curHeight = 20*E.scale
 --E.curWidthTitle = E.curWidthCentral*2
@@ -169,7 +173,7 @@ E.Color_Reputation_r = .3 -- 0
 E.Color_Reputation_g = .3 -- 1
 E.Color_Reputation_b = 0 -- 1
 E.MainFrame_Position = -157
-E.AnimationDuration = .1
+E.AnimationDuration = .2
 E.regions = {
 	[1] = "us",
 	[2] = "kr",

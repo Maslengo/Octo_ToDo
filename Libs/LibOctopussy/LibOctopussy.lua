@@ -18,16 +18,12 @@ local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
 local GetItemMaxStackSizeByID = GetItemMaxStackSizeByID or C_Item.GetItemMaxStackSizeByID
 local GetItemInventoryTypeByID = GetItemInventoryTypeByID or C_Item.GetItemInventoryTypeByID
 --SPELLS
-local DoesSpellExist = DoesSpellExist or C_Spell.DoesSpellExist
-local IsSpellDataCached = IsSpellDataCached or C_Spell.IsSpellDataCached
 local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
-local GetSpellLink = GetSpellLink or C_Spell.GetSpellLink
 local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
-local GetSpellDescription = GetSpellDescription or C_Spell.GetSpellDescription
-local RequestLoadSpellData = RequestLoadSpellData or C_Spell.RequestLoadSpellData
-local GetSpellInfo = GetSpellInfo or C_Spell.GetSpellInfo
 local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
 local GetSpellName = GetSpellName or C_Spell.GetSpellName
+
+
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local Red_Color = "|cffFF4C4F"
 local Gray_Color = "|cff505050"
@@ -296,80 +292,53 @@ function lib:IsItemDataCached(itemID)
 	return IsItemDataCachedByID(itemID)
 end
 ----------------------------------------------------------------
--- SPELL UTILS
-if C_Spell.GetSpellInfo then
-	function lib:GetSpellInfo(spellID)
-		return C_Spell.GetSpellInfo(spellID)
+-- SPELLS
+----------------------------------------------------------------
+function lib:func_GetSpellSubtext(spellID)
+	local vivod = GetSpellSubtext(spellID)
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
 	end
-else
-	local GetSpellinfo = GetSpellinfo
-	function lib:GetSpellInfo(spellID)
-		local name, _, icon, castTime, minRange, maxRange, spellID, originalIcon = GetSpellInfo(spellID)
-		return {
-			name = name,
-			iconID = icon,
-			originalIconID = originalIcon,
-			castTime = castTime,
-			minRange = minRange,
-			maxRange = maxRange,
-			spellID = spellID,
-		}
-	end
+	return vivod
 end
 ----------------------------------------------------------------
-if C_Spell.GetSpellCooldown then
-	function lib:GetSpellCooldown(spellID)
-		return C_Spell.GetSpellCooldown(spellID)
-	end
-else
-	local GetSpellCooldown = GetSpellCooldown
-	function lib:GetSpellCooldown(spellID)
-		local start, duration, enabled, modRate = GetSpellCooldown(spellID)
-		return {
-			startTime = start,
-			duration = duration,
-			isEnabled = enabled == 0,
-			modRate = modRate,
-		}
-	end
-end
-----------------------------------------------------------------
-if C_Spell.GetSpellName then
-	function lib:GetSpellName(spellID)
-		return C_Spell.GetSpellName(spellID)
-	end
-else
-	function lib:GetSpellName(spellID)
-		return self:GetSpellInfo(spellID).name
-	end
-end
-----------------------------------------------------------------
-function lib:GetSpellSubtext(spellID)
-	return GetSpellSubtext(spellID)
-end
-----------------------------------------------------------------м
-function lib:GetSpellFullName(spellID)
+function lib:func_GetSpellNameFull(spellID)
 	local name = self:GetSpellName(spellID)
 	local subText = self:GetSpellSubtext(spellID)
-	return subText and #subText > 0 and name.."("..subText..")" or name
+	local vivod =  subText and #subText > 0 and name.."("..subText..")" or name
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
+	end
+	return vivod
 end
 ----------------------------------------------------------------
-function lib:GetSpellLink(...)
-	return GetSpellLink(...)
-end
-----------------------------------------------------------------
-function lib:GetSpellTexture(spellID)
-	return GetSpellTexture(spellID)
-end
-----------------------------------------------------------------
-function lib:GetSpellDescription(spellID)
+function lib:func_GetSpellDescription(spellID)
 	return GetSpellDescription(spellID)
 end
 ----------------------------------------------------------------
-function lib:IsSpellDataCached(spellID)
-	return IsSpellDataCached(spellID)
+
+function lib:func_GetSpellName(spellID)
+	local vivod = GetSpellName(spellID)
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
+	end
+	return vivod
 end
 ----------------------------------------------------------------
+function lib:func_GetSpellIcon(spellID)
+	local iconID = GetSpellTexture(spellID)
+	return iconID
+end
+----------------------------------------------------------------
+function lib:func_GetSpellCooldown(spellID)
+	local start = GetSpellCooldown(spellID).startTime
+	local duration = GetSpellCooldown(spellID).duration
+	local vivod = 0
+	if start > 0 and duration > 0 then
+		vivod = (start + duration - GetTime())
+	end
+	return self:func_CompactNumberSimple(vivod)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -379,13 +348,13 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function lib:NONE()
-	-- return Gray_Color.."None".."|r"
-	return Gray_Color..NONE.."|r"
+	return Gray_Color.."None".."|r"
+	-- return Gray_Color..NONE.."|r"
 end
 ----------------------------------------------------------------
 function lib:DONE()
-	-- return Green_Color.."Done".."|r"
-	return Green_Color..DONE.."|r"
+	return Green_Color.."Done".."|r"
+	-- return Green_Color..DONE.."|r"
 end
 ----------------------------------------------------------------
 function lib:COMPLETE()
@@ -542,22 +511,54 @@ function lib:func_questName(questID, useLargeIcon)
 end
 ----------------------------------------------------------------
 function lib:func_reputationName(reputationID)
-	local AWide = ""
-	local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-	if isAccountWide == true then
-		AWide = E_Icon_AccountWide
-	end
-	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-	local name
-	if repInfo then
-		name = repInfo.name
+	local vivod = ""
+	if reputationID and type(reputationID) == "number" then
+		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+		if isAccountWide == true then
+			vivod = E_Icon_AccountWide..vivod
+		end
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+		local name
+		if repInfo then
+			name = repInfo.name
+		else
+			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+			name = reputationInfo.name or Red_Color..SEARCH_LOADING_TEXT.."|r"
+		end
+		vivod = vivod..name
+		if ShowIDS == true and vivod ~= nil then
+			vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
+		end
+		vivod = vivod
 	else
-		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
-		name = reputationInfo.name or Red_Color..SEARCH_LOADING_TEXT.."|r"
+		vivod = reputationID
 	end
-	vivod = AWide..name
-	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
+	return vivod
+end
+
+----------------------------------------------------------------
+function lib:func_reputationNameSIMPLE(reputationID)
+	local vivod = ""
+	if reputationID and type(reputationID) == "number" then
+		-- local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+		-- if isAccountWide == true then
+		-- 	vivod = E_Icon_AccountWide..vivod
+		-- end
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+		local name
+		if repInfo then
+			name = repInfo.name
+		else
+			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+			name = reputationInfo.name or Red_Color..SEARCH_LOADING_TEXT.."|r"
+		end
+		vivod = vivod..name
+		-- if ShowIDS == true and vivod ~= nil then
+		-- 	vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
+		-- end
+		vivod = vivod
+	else
+		vivod = reputationID
 	end
 	return vivod
 end
@@ -685,28 +686,6 @@ function lib:func_currencyquantity(currencyID)
 	return quantity
 end
 ----------------------------------------------------------------
-function lib:func_GetSpellName(spellID)
-	local vivod = C_Spell.GetSpellInfo(spellID).name
-	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
-	end
-	return vivod
-end
-----------------------------------------------------------------
-function lib:func_GetSpellIcon(spellID)
-	local iconID = C_Spell.GetSpellInfo(spellID).iconID
-	return iconID
-end
-----------------------------------------------------------------
-function lib:func_GetSpellCooldown(spellID)
-	local start = C_Spell.GetSpellCooldown(spellID).startTime
-	local duration = C_Spell.GetSpellCooldown(spellID).duration
-	local vivod = 0
-	if start > 0 and duration > 0 then
-		vivod = (start + duration - GetTime())
-	end
-	return self:func_CompactNumberSimple(vivod)
-end
 ----------------------------------------------------------------
 function lib:func_SecondsToClock(time)
 	-- local years, days, hours, mins, secs = "", "", "", "", ""
@@ -1018,95 +997,100 @@ function lib.func_Reverse_order(a, b)
 end
 ----------------------------------------------------------------
 function lib:func_CheckReputationByRepID(reputationID)
-	local color = White_Color
-	local r = "|r"
-	local standingTEXT = ""
+
 	local vivod = ""
-	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-	local name
-	local barMin
-	local barMax
-	local barValue
-	local standingID
-	if repInfo then
-		name = repInfo.name
-		barMin = repInfo.currentReactionThreshold
-		barMax = repInfo.nextReactionThreshold
-		barValue = repInfo.currentStanding
-		standingID = repInfo.reaction
-		if standingID == 1 then
-			color = Red_Color
-			standingTEXT = " ("..FACTION_STANDING_LABEL1..")"
-		elseif standingID == 2 then
-			color = Red_Color
-			standingTEXT = " ("..FACTION_STANDING_LABEL2..")"
-		elseif standingID == 3 then
-			color = Orange_Color
-			standingTEXT = " ("..FACTION_STANDING_LABEL3..")"
-		elseif standingID == 4 then
-			color = Yellow_Color
-			standingTEXT = " ("..FACTION_STANDING_LABEL4..")"
-		elseif standingID == 5 then
-			color = Yellow_Color
-			standingTEXT = " ("..FACTION_STANDING_LABEL5..")"
-		elseif standingID == 6 then
-			color = Green_Color
-			standingTEXT = " ("..FACTION_STANDING_LABEL6..")"
-		elseif standingID == 7 then
-			color = Green_Color
-			standingTEXT = " ("..FACTION_STANDING_LABEL7..")"
-		elseif standingID == 8 then
-			color = Green_Color
-			standingTEXT = " ("..FACTION_STANDING_LABEL8..")"
-		elseif standingID == 9 then
-			color = Green_Color
-			standingTEXT = " ("..FACTION_STANDING_LABEL9..")"
-		end
-	end
-	local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
-	if C_Reputation.IsFactionParagon(reputationID) then
-		local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0
-		local threshold = 1
-		local _, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(reputationID)
-		if threshold then
-			local value = currentValue % threshold
-			vivod = Blue_Color..(value).."/"..(threshold)..r
-			if hasRewardPending then
-				vivod = lib:func_CheckCompletedByQuestID(rewardQuestID)
+	if reputationID then
+		local color = White_Color
+		local r = "|r"
+		local standingTEXT = ""
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+		local name
+		local barMin
+		local barMax
+		local barValue
+		local standingID
+		if repInfo then
+			name = repInfo.name
+			barMin = repInfo.currentReactionThreshold
+			barMax = repInfo.nextReactionThreshold
+			barValue = repInfo.currentStanding
+			standingID = repInfo.reaction
+			if standingID == 1 then
+				color = Red_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL1..")"
+			elseif standingID == 2 then
+				color = Red_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL2..")"
+			elseif standingID == 3 then
+				color = Orange_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL3..")"
+			elseif standingID == 4 then
+				color = Yellow_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL4..")"
+			elseif standingID == 5 then
+				color = Yellow_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL5..")"
+			elseif standingID == 6 then
+				color = Green_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL6..")"
+			elseif standingID == 7 then
+				color = Green_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL7..")"
+			elseif standingID == 8 then
+				color = Green_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL8..")"
+			elseif standingID == 9 then
+				color = Green_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL9..")"
 			end
 		end
-	elseif C_Reputation.IsMajorFaction(reputationID) then
-		local data = C_MajorFactions.GetMajorFactionData(reputationID) or 0
-		if data ~= 0 then
-			local currentValue = data.renownReputationEarned%data.renownLevelThreshold
-			local totalValue = data.renownLevelThreshold
-			local standing = data.renownLevel
-			vivod = (currentValue).."/"..(totalValue)..Green_Color.."("..(standing)..")|r"
-		end
-	elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
-		local friendshipFactionID = reputationInfo.friendshipFactionID or 0
-		local reactionThreshold = reputationInfo.reactionThreshold or 0
-		local nextThreshold = reputationInfo.nextThreshold or 0
-		local standing = reputationInfo.standing or 0
-		local name = reputationInfo.name
-		local currentValue = standing-reactionThreshold
-		local totalValue = nextThreshold-reactionThreshold
-		local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
-		local currentLevel, maxLevel
-		if rankInfo then
-			currentLevel = rankInfo.currentLevel or 0
-			maxLevel = rankInfo.maxLevel or 0
-		end
-		standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
-		vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
-		if currentLevel == maxLevel then vivod = Green_Color.."Done|r" end
-	else
-		if barValue then
-			local currentValue = barValue-barMin
-			local totalValue = barMax-barMin
+		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+		if C_Reputation.IsFactionParagon(reputationID) then
+			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0
+			local threshold = 1
+			local _, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(reputationID)
+			if threshold then
+				local value = currentValue % threshold
+				vivod = Blue_Color..(value).."/"..(threshold)..r
+				if hasRewardPending then
+					vivod = lib:func_CheckCompletedByQuestID(rewardQuestID)
+				end
+			end
+		elseif C_Reputation.IsMajorFaction(reputationID) then
+			local data = C_MajorFactions.GetMajorFactionData(reputationID) or 0
+			if data ~= 0 then
+				local currentValue = data.renownReputationEarned%data.renownLevelThreshold
+				local totalValue = data.renownLevelThreshold
+				local standing = data.renownLevel
+				vivod = (currentValue).."/"..(totalValue)..Green_Color.."("..(standing)..")|r"
+			end
+		elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
+			local friendshipFactionID = reputationInfo.friendshipFactionID or 0
+			local reactionThreshold = reputationInfo.reactionThreshold or 0
+			local nextThreshold = reputationInfo.nextThreshold or 0
+			local standing = reputationInfo.standing or 0
+			local name = reputationInfo.name
+			local currentValue = standing-reactionThreshold
+			local totalValue = nextThreshold-reactionThreshold
+			local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
+			local currentLevel, maxLevel
+			if rankInfo then
+				currentLevel = rankInfo.currentLevel or 0
+				maxLevel = rankInfo.maxLevel or 0
+			end
+			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
 			vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
-			if currentValue == totalValue or nextThreshold == 0 then vivod = Green_Color.."Done|r" end
+			if currentLevel == maxLevel then vivod = Green_Color.."Done|r" end
+		else
+			if barValue then
+				local currentValue = barValue-barMin
+				local totalValue = barMax-barMin
+				vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
+				if currentValue == totalValue or nextThreshold == 0 then vivod = Green_Color.."Done|r" end
+			end
 		end
+	else
+		vivod = "ERROR NO ID"
 	end
 	return vivod
 end
@@ -1359,9 +1343,17 @@ function lib:FriendsFrame_GetLastOnline(timeDifference, isAbsolute)
 end
 -- /dump C_BattleNet.GetFriendAccountInfo(1)
 ----------------------------------------------------------------
-
-
-
+function lib:MergeTable(a, b) -- Non-destructively merges table b into table a
+	for k, v in pairs(b) do
+		if a[k] == nil or type(a[k]) ~= type(b[k]) then
+			a[k] = v
+			print("replacing key", k, v)
+		elseif type(v) == "table" then
+			a[k] = MergeTable(a[k], b[k])
+		end
+	end
+	return a
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

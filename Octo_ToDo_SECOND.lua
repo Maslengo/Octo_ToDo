@@ -75,8 +75,6 @@ local function Octo_ToDo_SECOND_OnLoad()
 	if not Octo_ToDo_SECOND_Frame_EventFrame then
 		Octo_ToDo_SECOND_Frame_EventFrame = CreateFrame("FRAME", E.AddonTitle..LibOctopussy:func_GenerateUniqueID())
 	end
-
-
 	for _, event in next, (E.OctoTable_Events) do
 		Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent(event)
 	end
@@ -85,8 +83,7 @@ local function Octo_ToDo_SECOND_OnLoad()
 	end)
 end
 local function O_otrisovka_SECOND()
-	tinsert(OctoTable_func_otrisovka_SECOND,
-		function(CharInfo, tooltip, CL, BG)
+	tinsert(OctoTable_func_otrisovka_SECOND, function(CharInfo, tooltip, CL, BG)
 			local vivodCent, vivodLeft = " ", " "
 			CL:SetFontObject(OctoFont12)
 			vivodLeft = classColorHexCurrent..ACHIEVEMENT_TITLE.."|r".." "..E.Green_Color..GetTotalAchievementPoints(false).."|r"
@@ -105,7 +102,6 @@ local function O_otrisovka_SECOND()
 	if Octo_ToDo_DB_Vars.config.AchievementToShow ~= nil then
 		for categoryID, v in next, (Octo_ToDo_DB_Vars.config.AchievementToShow) do
 			local ACHr, ACHg, ACHb = LibOctopussy:func_hex2rgbNUMBER(LibOctopussy:func_GenerateUniqueColor()),LibOctopussy:func_hex2rgbNUMBER(LibOctopussy:func_GenerateUniqueColor()),LibOctopussy:func_hex2rgbNUMBER(LibOctopussy:func_GenerateUniqueColor())
-
 			if v ~= false then
 				local total = GetCategoryNumAchievements(categoryID, true)
 				if total then
@@ -113,8 +109,7 @@ local function O_otrisovka_SECOND()
 						local AchievementID, name, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
 						if AchievementID then
 							if completedAchi == false or (completedAchi == Octo_ToDo_DB_Vars.config.AchievementShowCompleted) then
-								tinsert(OctoTable_func_otrisovka_SECOND,
-									function(CharInfo, tooltip, CL, BG)
+								tinsert(OctoTable_func_otrisovka_SECOND, function(CharInfo, tooltip, CL, BG)
 										local vivodCent, vivodLeft = " ", " "
 										vivodLeft = LibOctopussy:func_texturefromIcon(icon)
 										if rewardText ~= nil and rewardText and rewardText ~= "" and rewardText ~= " " then
@@ -192,8 +187,14 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	OctoToDo_SECOND_MainFrame:EnableMouse(true)
 	OctoToDo_SECOND_MainFrame:SetMovable(true)
 	OctoToDo_SECOND_MainFrame:RegisterForDrag("LeftButton")
-	OctoToDo_SECOND_MainFrame:SetScript("OnDragStart", OctoToDo_SECOND_MainFrame.StartMoving)
-	OctoToDo_SECOND_MainFrame:SetScript("OnDragStop", function() OctoToDo_SECOND_MainFrame:StopMovingOrSizing() end)
+	OctoToDo_SECOND_MainFrame:SetScript("OnDragStart", function()
+			OctoToDo_SECOND_MainFrame:SetAlpha(E.bgCa/2)
+			OctoToDo_SECOND_MainFrame:StartMoving()
+	end)
+	OctoToDo_SECOND_MainFrame:SetScript("OnDragStop", function()
+			OctoToDo_SECOND_MainFrame:SetAlpha(1)
+			OctoToDo_SECOND_MainFrame:StopMovingOrSizing()
+	end)
 	OctoToDo_SECOND_MainFrame:RegisterForClicks("RightButtonUp")
 	OctoToDo_SECOND_MainFrame:SetScript("OnClick", function(self) self:Hide() end)
 	----------------------------------------------------------------
@@ -308,15 +309,12 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		dd_SECOND:SetScript("OnClick", function(self)
 				self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 		end)
-
-
 		local function selectFunctionAchievementToShow(menuButton, _, arg2, checked)
 			Octo_ToDo_DB_Vars.config.AchievementToShow[menuButton.value] = checked or nil
 			if arg2 == 2 then
 				dd_SECOND:ddRefresh(arg2-1)
 			end
 		end
-
 		local function TEST_FUNC(menuButton, arg1)
 			local categories = GetCategoryList()
 			local cID = menuButton.value
@@ -329,11 +327,9 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 			end
 			return arg1.name..arg1.vivod
 		end
-
 		dd_SECOND:ddSetInitFunc(function(self, level, value)
 				local info, list = {}, {}
 				local categories = GetCategoryList()
-
 				for i = 1, #categories do
 					local info = {}
 					local categoryID = categories[i]
@@ -371,9 +367,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 						----------------------------------------------------------------
 					end
 				end
-
 				self:ddAddButton({list = list, listMaxSize = 20}, level)
-
 				if level == 1 then
 					----------------------------------------------------------------
 					self:ddAddSeparator(level)
@@ -394,9 +388,6 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 				----------------------------------------------------------------
 		end)
 	end
-
-
-
 	local function FrameLine_OnEnter(self)
 		self.animation:SetFromAlpha(0)
 		self.animation:SetToAlpha(1)
@@ -609,3 +600,4 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 	end
 end
 Octo_ToDo_SECOND_OnLoad()
+

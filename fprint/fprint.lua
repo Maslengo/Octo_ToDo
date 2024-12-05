@@ -50,6 +50,8 @@ local editor_themes = {
 		["String"] = "|cff829D61", -- Зелен
 	},
 }
+
+
 local colorScheme = {
 	[IndentationLib.tokens.TOKEN_SPECIAL] = editor_themes["Sublime"]["Special"],
 	[IndentationLib.tokens.TOKEN_KEYWORD] = editor_themes["Sublime"]["Keyword"],
@@ -122,22 +124,27 @@ local colorScheme = {
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local IndentationLib = IndentationLib
 -- EDITBOX
+
+-- /dump Octo_ToDoEditFrame:GetPoint()
+
 local editFrame, editBox
 if select(4, GetBuildInfo()) > 20000 then
 	editFrame = CreateFrame("FRAME", GlobalAddonName.."EditFrame", UIParent, "MyAddonEditFrameTemplate")
 	editFrame:ClearAllPoints()
-	editFrame:SetPoint("TOPLEFT", (UIParent:GetWidth() - editFrame:GetWidth()) / 2, -100)
+	-- editFrame:SetPoint("TOP", -300, -(UIParent:GetHeight()/6))
+	-- editFrame:SetPoint("TOPLEFT", nil, "TOPLEFT", 20, -20)
+	editFrame:SetPoint("TOPLEFT", 20, -20)
 	-- editFrame:EnableMouse(true)
 	-- editFrame:HookScript("OnMouseDown", function(self) self:Hide() end)
 	-- editFrame:HookScript("OnMouseUp", function(self) self:Hide() end)
-	-- editFrame:SetScript("OnKeyDown", function(self, key)
-	-- if key == GetBindingKey("TOGGLEGAMEMENU") then
-	-- self:GetParent():Hide()
-	-- self:SetPropagateKeyboardInput(false)
-	-- else
-	-- self:SetPropagateKeyboardInput(true)
-	-- end
-	-- end)
+	editFrame:SetScript("OnKeyDown", function(self, key)
+		if key == GetBindingKey("TOGGLEGAMEMENU") then
+			self:Hide()
+			self:SetPropagateKeyboardInput(false)
+		else
+			self:SetPropagateKeyboardInput(true)
+		end
+	end)
 	-- editFrame:RegisterForClicks("RightButtonUp")
 	-- editFrame:SetScript("OnClick", function(self) self:Hide() end)
 	editBox = editFrame.editFrame
@@ -425,10 +432,10 @@ SlashCmdList.OCTOLISTREP = function(msg)
 	end
 	sort(list, func_Reverse_order)
 	for _, factionID in next, (list) do
-		if LibOctopussy:func_reputationName(factionID) ~= "no name" then
-			str4 = str4..factionID..", --" ..LibOctopussy:func_reputationName(factionID).. "\n"
+		if LibOctopussy.func_reputationName(factionID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
+			str4 = str4..factionID..", --" ..LibOctopussy:func_reputationName(factionID).. LibOctopussy:func_CheckReputationByRepID(factionID).."\n"
 		else
-			str5 = str5..factionID..", --" ..LibOctopussy:func_reputationName(factionID).. "\n"
+			str5 = str5..factionID..", --" ..LibOctopussy:func_reputationName(factionID).. LibOctopussy:func_CheckReputationByRepID(factionID).."\n"
 		end
 	end
 	vivod = str4..str5
