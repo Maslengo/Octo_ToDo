@@ -38,7 +38,8 @@ function E:Init() -- Runs after our saved variables are loaded and cvars have be
 	-- LibOctopussy:MergeTable(OctoSaved, DefaultSettings) -- Repair database if keys are missing
 	--Register our options with the Blizzard Addon Options panel
 	AceConfigRegistry:RegisterOptionsTable("CreateGeneralOptions", E:CreateGeneralOptions())
-	AceConfigRegistry:RegisterOptionsTable("CreateDevelopmentOptions", E:CreateDevelopmentOptions())
+	AceConfigRegistry:RegisterOptionsTable("Developing", E:Developing())
+	AceConfigRegistry:RegisterOptionsTable("LoadAddons", E:LoadAddons())
 	-- AceConfigRegistry:RegisterOptionsTable("Octo_Chat", E:CreateChatOptions())
 	-- AceConfigRegistry:RegisterOptionsTable("Octo_Combat", E:CreateCombatOptions())
 	-- AceConfigRegistry:RegisterOptionsTable("Octo_FloatingCombatText", E:CreateFloatingCombatTextOptions())
@@ -46,7 +47,8 @@ function E:Init() -- Runs after our saved variables are loaded and cvars have be
 	-- AceConfigRegistry:RegisterOptionsTable("Octo_Nameplate", E:CreateNameplateOptions())
 	-- AceConfigRegistry:RegisterOptionsTable("Octo_cVar", E:CreateCVarOptions())
 	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", E.AddonTitle)
-	AceConfigDialog:AddToBlizOptions("CreateDevelopmentOptions", "Developing", E.AddonTitle)
+	AceConfigDialog:AddToBlizOptions("Developing", "Developing", E.AddonTitle)
+	AceConfigDialog:AddToBlizOptions("LoadAddons", "LoadAddons", E.AddonTitle)
 	-- AceConfigDialog:AddToBlizOptions("Octo_Chat", "Chat", "Octo")
 	-- AceConfigDialog:AddToBlizOptions("Octo_Combat", "Combat", "Octo")
 	-- AceConfigDialog:AddToBlizOptions("Octo_FloatingCombatText", "Floating Combat Text", "Octo")

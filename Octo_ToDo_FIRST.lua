@@ -59,9 +59,9 @@ local expansion = _G['EXPANSION_NAME'..GetExpansionLevel()]
 -- if currentTier == 10 then E.currentMaxLevel = 70 end
 -- if currentTier == 11 then E.currentMaxLevel = 80 end
 local curWidthTitle = E.curWidthTitle
-LibOctopussy:func_LoadAddOn("Octo_ToDoTrashCan")
-LibOctopussy:func_LoadAddOn("!BugGrabber")
-LibOctopussy:func_LoadAddOn("BugSack")
+-- LibOctopussy:func_LoadAddOn("Octo_ToDoTrashCan")
+-- LibOctopussy:func_LoadAddOn("!BugGrabber")
+-- LibOctopussy:func_LoadAddOn("BugSack")
 -- LibOctopussy:func_LoadAddOn("MountsJournal")
 -- LibOctopussy:func_LoadAddOn("HidingBar")
 -- LibOctopussy:func_LoadAddOn("HidingBar_Options")
@@ -726,24 +726,14 @@ local function CreateFrameUsableSpells_OnLeave(self)
 end
 local function CreateFrameUsableSpells_OnShow(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnEvent".."|r")
+		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnShow".."|r")
 	end
-	if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
-		local startTime, duration = C_Spell.GetSpellCooldown(self.spellID)
-		local isKnown = IsSpellKnown(self.spellID)
-		if isKnown == true then
-			self.icon:SetVertexColor(1, 1, 1, 1)
-		else
-			self.icon:SetVertexColor(1, .5, .5, .3)
-		end
-	elseif event == "PLAYER_REGEN_DISABLED" then
-		self:SetParent(UIParent)
-		self:ClearAllPoints()
-		self:Hide()
+	local startTime, duration = C_Spell.GetSpellCooldown(self.spellID)
+	local isKnown = IsSpellKnown(self.spellID)
+	if isKnown == true then
+		self.icon:SetVertexColor(1, 1, 1, 1)
 	else
-		self:SetParent(OctoToDo_FIRST_MainFrame)
-		self:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
-		self:Show()
+		self.icon:SetVertexColor(1, .5, .5, .3)
 	end
 	if LibOctopussy:func_GetSpellCooldown(self.spellID) ~= 0 then
 		self.icon:SetVertexColor(1, .34, .44, 1)
@@ -816,8 +806,15 @@ local function CreateFrameUsableSpells(spellID, Texture, Xpos, Ypos, r, g, b)
 			edgeSize = 1
 	})
 	Button:SetBackdropBorderColor(0, 0, 0, 1)
-	Button:RegisterEvent("PLAYER_REGEN_DISABLED")
-	Button:RegisterEvent("PLAYER_REGEN_ENABLED")
+
+	Button:RegisterEvent"PLAYER_REGEN_ENABLED"
+	Button:RegisterEvent"PLAYER_REGEN_DISABLED"
+	Button:RegisterEvent"TOYS_UPDATED"
+	Button:RegisterEvent"SPELLS_CHANGED"
+	Button:RegisterEvent"SPELL_UPDATE_CHARGES"
+	Button:RegisterEvent"SPELL_UPDATE_COOLDOWN"
+	Button:RegisterEvent"TRAINER_UPDATE"
+
 	Button:HookScript("OnShow", CreateFrameUsableSpells_OnShow)
 	Button:HookScript("OnEvent", CreateFrameUsableSpells_OnEvent)
 	Button:HookScript("OnEnter", CreateFrameUsableSpells_OnEnter)
@@ -7080,6 +7077,8 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 		if Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG == nil then Octo_ToDo_DB_Vars.config.AnotherAddonsDUNG = true end
 		if Octo_ToDo_DB_Vars.config.AnotherAddonsRAID == nil then Octo_ToDo_DB_Vars.config.AnotherAddonsRAID = true end
 		if Octo_ToDo_DB_Vars.config.Auto_ChatClearing == nil then Octo_ToDo_DB_Vars.config.Auto_ChatClearing = false end
+		if Octo_ToDo_DB_Vars.config.Load == nil then Octo_ToDo_DB_Vars.config.Load = {} end
+		if Octo_ToDo_DB_Vars.config.LoadAddons == nil then Octo_ToDo_DB_Vars.config.LoadAddons = true end
 		if Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler == nil then Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler = true end
 		if Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip == nil then Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip = true end
 		if Octo_ToDo_DB_Vars.config.Auto_Gossip == nil then Octo_ToDo_DB_Vars.config.Auto_Gossip = true end
@@ -7184,6 +7183,12 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 		if Octo_ToDo_DB_Vars.config.WasOnline == nil then Octo_ToDo_DB_Vars.config.WasOnline = true end
 		if Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest == nil then Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest = true end
 		-- КОНЕЦ
+		for addname, value in pairs(Octo_ToDo_DB_Vars.config.Load) do
+			if value == true then
+				LibOctopussy:func_LoadAddOn(addname)
+			end
+		end
+
 		for classFilename, v in pairs(E.OctoTable_CLASS_ARTIFACT_DATA) do
 			for itemID in pairs(E.OctoTable_CLASS_ARTIFACT_DATA[classFilename]) do
 				local artifactData = E.OctoTable_CLASS_ARTIFACT_DATA[classFilename][itemID]
@@ -7256,6 +7261,11 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 		Octo_ToDo_DB_Vars.config.AddonVersion = tonumber(E.AddonVersion)
 		LibDBIcon:Register(MinimapName, ldb_icon, Octo_ToDo_DB_Vars.minimap_FIRST)
 		LibDBIcon:Show(MinimapName)
+
+
+
+
+
 	end
 end
 ----------------------------------------------------------------

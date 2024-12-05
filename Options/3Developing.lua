@@ -3,22 +3,21 @@ local LibOctopussy = LibStub("LibOctopussy-1.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
-function E:CreateDevelopmentOptions()
-	local DevelopmentOptions = {
+function E:Developing()
+	local Developing = {
 		type = "group",
 		childGroups = "tree",
 		name = E.AddonTitle,
 		args = {
 			-------------------------------------------------
-			instructions = {
+			instructions3 = {
 				type = "description",
 				name = "These options allow you to toggle various options.",
 				fontSize = "medium",
 				order = 1,
 			},
 			-------------------------------------------------
-
-			ReloadHeader = {
+			ReloadHeader3 = {
 				type = "header",
 				name = "",
 				order = 2,
@@ -62,7 +61,7 @@ function E:CreateDevelopmentOptions()
 			},
 			-------------------------------------------------
 
-			ReloadHeader = {
+			ReloadHeader3second = {
 				type = "header",
 				name = "",
 				order = 5,
@@ -123,6 +122,6 @@ function E:CreateDevelopmentOptions()
 			-------------------------------------------------
 		},
 	}
-	return DevelopmentOptions
+	return Developing
 end
 
