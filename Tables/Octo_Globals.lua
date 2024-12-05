@@ -97,6 +97,8 @@ E.AddonTexture_3 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTextur
 E.AddonTexture_4 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_4.tga"
 E.AddonTexture_5 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_5.tga"
 E.currentMaxLevel = GetMaxLevelForLatestExpansion()
+
+-- GetMaxLevelForExpansionLevel(GetExpansionLevel())
 ----------------------------------------------------------------
 local function texturefromIcon(self, size)
 	local show = true -- TYT

@@ -14,6 +14,8 @@ local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibOctopussy = LibStub("LibOctopussy-1.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
+
+
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local gsub, tinsert, next, type, wipe = gsub, tinsert, next, type, wipe
 local ipairs, pairs, sort = ipairs, pairs, sort
@@ -25,12 +27,8 @@ local buildVersion, buildNumber, buildDate, interfaceVersion = GetBuildInfo() --
 local currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 local IsPublicBuild = IsPublicBuild()
 local expansionQWEQWE = 13
--- local IsTestBuild = IsTestBuild()
--- local isTestBuild = GetCurrentRegion() == 72 -- PTR/beta
 local isBeta = interfaceVersion >= 120000
 local GetRestrictedAccountData_rLevel = select(1, GetRestrictedAccountData()) or 20
-local GetRestrictedAccountData_rMoney = select(2, GetRestrictedAccountData()) or 10000000
-local GetRestrictedAccountData_profCap = select(3, GetRestrictedAccountData()) or 0
 local IsAccountSecured = IsAccountSecured() or false
 local IsRestrictedAccount = IsRestrictedAccount() or false
 local IsTrialAccount = IsTrialAccount() or false
@@ -47,18 +45,6 @@ local ItemLevelRed = 580
 local GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
 local MISCELLANEOUS = MISCELLANEOUS
 local expansion = _G['EXPANSION_NAME'..GetExpansionLevel()]
--- if currentTier == 1 then E.currentMaxLevel = 60 end
--- if currentTier == 2 then E.currentMaxLevel = 70 end
--- if currentTier == 3 then E.currentMaxLevel = 80 end
--- if currentTier == 4 then E.currentMaxLevel = 85 end
--- if currentTier == 5 then E.currentMaxLevel = 90 end
--- if currentTier == 6 then E.currentMaxLevel = 100 end
--- if currentTier == 7 then E.currentMaxLevel = 110 end
--- if currentTier == 8 then E.currentMaxLevel = 120 end
--- if currentTier == 9 then E.currentMaxLevel = 60 end
--- if currentTier == 10 then E.currentMaxLevel = 70 end
--- if currentTier == 11 then E.currentMaxLevel = 80 end
-local curWidthTitle = E.curWidthTitle
 
 LibOctopussy:func_LoadAddOn("Octo_ToDoTrashCan")
 LibOctopussy:func_LoadAddOn("!BugGrabber")
@@ -80,21 +66,6 @@ LibOctopussy:func_LoadAddOn("Pawn")
 LibOctopussy:func_LoadAddOn("MySlot")
 LibOctopussy:func_LoadAddOn("QuestsChanged")
 LibOctopussy:func_LoadAddOn("AdvancedInterfaceOptions")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- Octo_ToDo_FIRST_OnLoad
 local Button = nil
 local CF = nil
@@ -114,9 +85,8 @@ local OctoTable_func_otrisovka_FIRST = nil
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = LibOctopussy:func_GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
-local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
 local classColorHexCurrent = LibOctopussy:func_rgb2hex(r, g, b)
-if classFilename == "SHAMAN" then classcolor = "0070de" end
+if classFilename == "SHAMAN" then classColor = "0070de" end
 
 
 local font = "01 Octo"
@@ -137,9 +107,6 @@ fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..
 
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
-local normalizedRealm = GetNormalizedRealmName()
-local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
-local regionalWeeklyStart = 1668981600
 local Meta_Table_0 = {__index = function() return 0 end}
 local Meta_Table_1 = {__index = function() return 1 end}
 local Meta_Table_false = {__index = function() return false end}
@@ -244,9 +211,9 @@ local function checkCharInfo(self, GUID)
 	-- /dump GetPlayerInfoByGUID("Player-1615-0B55FBC0")
 	if self.journalInstance == nil then self.journalInstance = {} end
 	local ServerTime = GetServerTime()
-	for instanceID, v in next, (self.journalInstance) do
+	for instanceID, tbl in next, (self.journalInstance) do
 		if instanceID then
-			for difficultyID, w in next, (v) do
+			for difficultyID, w in next, (tbl) do
 				for e, r in next, (w) do
 					if e == "instanceReset" then
 						if ServerTime >= r then
@@ -369,7 +336,6 @@ local function checkCharInfo(self, GUID)
 	self.classId = self.classId or 1
 	self.classColor = self.classColor or {r = 0.5, g = 0.5, b = 0.5}
 	self.curServer = self.curServer or curServer
-	self.normalizedRealm = self.normalizedRealm or "normalizedRealm"
 	self.guildName = self.guildName or ""
 	self.guildRankName = self.guildRankName or ""
 	self.guildRankIndex = self.guildRankIndex or 0
@@ -2230,7 +2196,7 @@ local function O_otrisovka_FIRST()
 				CL:SetFontObject(OctoFont9)
 				vivodCent = vivodCent.."|n"..CharInfo.curServer
 			end
-			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+			local classColor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal then
 				if CharInfo.guildRankIndex ~= 0 then
 					tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", "<"..E.Green_Color..CharInfo.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.guildRankName.."|r".."]"}
@@ -6843,7 +6809,7 @@ function Octo_ToDo_FIRST_AddDataToAltFrame()
 			end
 	end)
 	for GUID, CharInfo in next, (sorted) do
-		local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
+		local classColor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 		local curCharGUID = CharInfo.GUID
 		OctoToDo_FIRST_MainFrame[curCharGUID] = CharFrame_Pool:Acquire()
 		OctoToDo_FIRST_CharFrame = OctoToDo_FIRST_MainFrame[curCharGUID]

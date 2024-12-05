@@ -1,11 +1,9 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
-local LibThingsLoad = LibStub("LibThingsLoad-1.0")
-local CallbackHandler = LibStub("CallbackHandler-1.0")
+local LibThingsLoad = LibStub("LibThingsLoad-1.0") 
 local LibOctopussy = LibStub("LibOctopussy-1.0")
-local number, pizza, config, text, minValue, maxValue, steps, formatters
-local new = E.Blue_Color.."NEW: |r"
+local number, steps, formatters 
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	text = E.Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
 	button1 = YES,
@@ -13,18 +11,11 @@ StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
 	hideOnEscape = 1,
 	whileDead = 1,
 	OnAccept = function() ReloadUI() end,
-}
-local PlayerName = UnitName("PLAYER")
-local className, classFilename, classId = UnitClass("PLAYER")
-local classColor = LibOctopussy:func_GetClassColor(classFilename)
+} 
+local className, classFilename = UnitClass("PLAYER") 
 local r, g, b = GetClassColor(classFilename)
-local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
-local classColorHexCurrent = LibOctopussy:func_rgb2hex(r, g, b)
-local SliderWidth = 256
-local ButtonWidth = 128
-if classFilename == "SHAMAN" then
-	classcolor = "0070de"
-end
+local SliderWidth = 256       
+local ButtonWidth = 128 
 local MAIN_Config = CreateFrame("ScrollFrame", GlobalAddonName.."MAIN_Config")
 MAIN_Config:SetScript("OnEnter", function(self, ...)
 		E.Timers.TWW_BeledarCycle()
