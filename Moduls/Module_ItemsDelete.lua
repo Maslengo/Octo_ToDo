@@ -36,7 +36,7 @@ tinsert(E.Modules, function()
 				ItemsDelete_Frame_TEXTNAME = ItemsDelete_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			end
 			ItemsDelete_Frame_TEXTNAME:SetPoint("LEFT", ItemsDelete_Frame, "RIGHT")
-			ItemsDelete_Frame_TEXTNAME:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 22, "OUTLINE")
+			ItemsDelete_Frame_TEXTNAME:SetFont(E.OctoFont, 22, "OUTLINE")
 			ItemsDelete_Frame_TEXTNAME:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 			if not ItemsDelete_UIF_texture then
 				ItemsDelete_UIF_texture = ItemsDelete_Frame:CreateTexture(nil, "BACKGROUND")

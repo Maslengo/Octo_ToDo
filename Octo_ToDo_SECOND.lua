@@ -9,6 +9,7 @@ local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local SHOWADDON_SECOND = true
 local Button = nil
 local CF = nil
+local dd_SECOND = nil
 local OctoToDo_SECOND_MainFrame = nil
 local OctoToDo_SECOND_CharFrame = nil
 local Octo_ToDo_SECOND_Frame_EventFrame = nil

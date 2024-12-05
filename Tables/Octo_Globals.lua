@@ -40,58 +40,57 @@ E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga
 -- function IsCata()
 -- 	return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
 -- end
-
+E.OctoFont = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
+local font = SystemFont_Outline_Small
+E.fontObject9 = CreateFont("OctoFont9")
+E.fontObject9:CopyFontObject(font)
+E.fontObject9:SetFont(E.OctoFont, 9, "OUTLINE")
+E.fontObject10 = CreateFont("OctoFont10")
+E.fontObject10:CopyFontObject(font)
+E.fontObject10:SetFont(E.OctoFont, 10, "OUTLINE")
+E.fontObject11 = CreateFont("OctoFont11")
+E.fontObject11:CopyFontObject(font)
+E.fontObject11:SetFont(E.OctoFont, 11, "OUTLINE")
+E.fontObject12 = CreateFont("OctoFont12")
+E.fontObject12:CopyFontObject(font)
+E.fontObject12:SetFont(E.OctoFont, 12, "OUTLINE")
 local _, _, _, interfaceVersion = GetBuildInfo() -- Mainline
-
 function IsClassic()
 	if interfaceVersion > 10000 and interfaceVersion < 20000 then return true else return false end
 end
-
 function IsBC()
 	if interfaceVersion > 20000 and interfaceVersion < 30000 then return true else return false end
 end
-
 function IsWOTLK()
 	if interfaceVersion > 30000 and interfaceVersion < 40000 then return true else return false end
 end
-
 function IsCataclysm()
 	if interfaceVersion > 40000 and interfaceVersion < 50000 then return true else return false end
 end
-
 function IsMOP()
 	if interfaceVersion > 50000 and interfaceVersion < 60000 then return true else return false end
 end
-
 function IsWOD()
 	if interfaceVersion > 60000 and interfaceVersion < 70000 then return true else return false end
 end
-
 function IsLegion()
 	if interfaceVersion > 70000 and interfaceVersion < 80000 then return true else return false end
 end
-
 function IsBFA()
 	if interfaceVersion > 80000 and interfaceVersion < 90000 then return true else return false end
 end
-
 function IsShadowlands()
 	if interfaceVersion > 90000 and interfaceVersion < 100000 then return true else return false end
 end
-
 function IsDragonflight()
 	if interfaceVersion > 100000 and interfaceVersion < 110000 then return true else return false end
 end
-
 function IsTWW()
 	if interfaceVersion > 110000 and interfaceVersion < 120000 then return true else return false end
 end
-
 function IsRetail()
 	return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 end
-
-
 E.AddonTexture_1 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_1.tga"
 E.AddonTexture_2 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_2.tga"
 E.AddonTexture_3 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_3.tga"
@@ -276,20 +275,8 @@ E.Venthyr_b_Color = 0.40
 -- local GRAYFONT = GRAY_FONT_COLOR_CODE
 -- local GRAY_COLOR = { 0.5, 0.5, 0.5, 1 }
 -- local INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED = INSTANCE_SAVED, TRANSFER_ABORT_TOO_MANY_INSTANCES, NO_RAID_INSTANCES_SAVED
-
-
-
-
-
-
-
-
-
-
-
-
 -- console -> export "art"
-function func_texturefromIcon(iconID, iconSize, isShown)
+local function func_texturefromIcon(iconID, iconSize, isShown)
 	if isShown == nil then isShown = true end
 	if iconSize == nil then iconSize = 14 end
 	if iconID == nil then iconID = 134400 end
@@ -317,11 +304,7 @@ E.Icon_AccountWide = func_texturefromIcon(1120721)
 E.AccountTransferable = E.Red_Color.."(T)".."|r"
 E.Icon_AccountTransferable = func_texturefromIcon(6124644)
 E.Icon_Achievement = func_texturefromIcon(236544)
-
 E.Icon_Empty = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
-
-
-
 -- C_Covenants.GetCovenantIDs()
 -- КОВЕНАНТ
 -- Enum.CovenantType
@@ -359,10 +342,7 @@ E.OctoTable_Covenant = {
 		g = 0.77,
 		b = 0.49,
 	},
-
-
 }
-
 local ShowIDS = true
 function E:func_reputationName(reputationID)
 	local vivod = ""

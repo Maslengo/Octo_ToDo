@@ -117,6 +117,8 @@ local r, g, b = GetClassColor(classFilename)
 local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
 local classColorHexCurrent = LibOctopussy:func_rgb2hex(r, g, b)
 if classFilename == "SHAMAN" then classcolor = "0070de" end
+
+
 local font = "01 Octo"
 local font2 = SystemFont_Outline_Small
 local fontObject9 = CreateFont("OctoFont9")
@@ -131,6 +133,8 @@ fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..
 local fontObject12 = CreateFont("OctoFont12")
 fontObject12:CopyFontObject(font2)
 fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 12, "OUTLINE")
+
+
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local normalizedRealm = GetNormalizedRealmName()
@@ -7324,30 +7328,6 @@ function Octo_EventFrame:PLAYER_ENTERING_WORLD()
 		Collect_All_Covenant()
 		Collect_WarMode()
 		Collect_ALL_Mail()
-
-
-	-- for i = 1, 50 do
-	-- 	if _G["ChatFrame" .. i] then
-	-- 		FCF_SetChatWindowFontSize(self, _G["ChatFrame" .. i], 11)
-	-- 	end
-	-- end
-		-- for i = 1, 50 do
-		-- 	if _G["ChatFrame" .. i] then
-		-- 		FCF_SetChatWindowFontSize(self, _G["ChatFrame" .. i], 18)
-		-- 	end
-		-- end
-		-- hooksecurefunc("FCF_SetChatWindowFontSize", function(self, chatFrame, fontSize)
-
-		-- 		if not chatFrame then
-		-- 			chatFrame = FCF_GetCurrentChatFrame()
-		-- 		end
-		-- 		local fontFile, unused, fontFlags = chatFrame:GetFont()
-		-- 		chatFrame:SetFont(fontFile, fontSize, fontFlags)
-		-- 		print (fontSize)
-		-- end)
-
-
-
 
 
 

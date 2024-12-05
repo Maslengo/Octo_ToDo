@@ -86,7 +86,7 @@ tinsert(E.Modules, function()
 				ItemsUsable_Frame_TEXTNAME = ItemsUsable_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			end
 			ItemsUsable_Frame_TEXTNAME:SetPoint("LEFT", ItemsUsable_Frame, "RIGHT")
-			ItemsUsable_Frame_TEXTNAME:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF", 22, "OUTLINE")
+			ItemsUsable_Frame_TEXTNAME:SetFont(E.OctoFont, 22, "OUTLINE")
 			ItemsUsable_Frame_TEXTNAME:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
 			if not ItemsUsable_UIF_texture then
 				ItemsUsable_UIF_texture = ItemsUsable_Frame:CreateTexture(nil, "BACKGROUND")

@@ -1,8 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
-local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
-local strbyte, strlen, strsub = string.byte, string.len, string.sub
-
+local utf8lower = string.utf8lower
 -- Octo_ToDo_WowheadQuickLinkStrategies
 local strategies = {
 	wowhead = {},
@@ -92,14 +90,13 @@ function E.altStrategies.GetRaiderIoUrl(dataSources)
 				if realm == LRI_name then
 					realm = LRI_englishName:gsub(" ", "-")
 				end
-
 				return "Raider.IO", string.format(E.baseRaiderIoUrl, region, realm, name)
 			end
 		end
 	end
 end
 local function GetFromNameAndRealm(name, realm)
-	if not realm or realm == '' then
+	if not realm or realm == "" then
 		realm = GetRealmName()
 	end
 	-- if realm:find("'") then
@@ -134,7 +131,7 @@ function strategies.armory.GetArmoryFromLfgLeader(data)
 		return
 	end
 	local leader = C_LFGList.GetSearchResultInfo(data.focus.resultID).leaderName
-	return GetFromNameAndRealm(strsplit("-", leader))
+	return GetFromNameAndRealm(strsplit("-", tostring(leader)))
 end
 function strategies.armory.GetArmoryFromLfgApplicant(data)
 	if not data.focus.memberIdx or not data.focus:GetParent() or not data.focus:GetParent().applicantID then
@@ -193,21 +190,6 @@ function strategies.wowhead.GetSpellFromTooltip(data)
 	end
 	return select(2, data.tooltip:GetSpell()), "spell"
 end
-function strategies.wowhead.GetMountOrToyFromTooltip(data)
-	if not (IsRetail() or IsCataclysm()) or not data.tooltip.GetTooltipData then
-		return
-	end
-	tooltipData = data.tooltip:GetTooltipData()
-	if not tooltipData then
-		return
-	end
-	if tooltipData.type == Enum.TooltipDataType.Mount and tooltipData.id then
-		return select(2, C_MountJournal.GetMountInfoByID(tooltipData.id)), "spell"
-	end
-	if tooltipData.type == Enum.TooltipDataType.Toy and tooltipData.id then
-		return tooltipData.id, "item"
-	end
-end
 function strategies.wowhead.GetAchievementFromFocus(data)
 	if not data.focus.id or not (data.focus.DateCompleted or data.focus.dateCompleted) then
 		return
@@ -225,62 +207,6 @@ function strategies.wowhead.GetQuestFromFocus(data)
 		return
 	end
 	return data.focus.questID, "quest"
-end
-function strategies.wowhead.GetFromCataWatchTitleFocus(data)
-	if not (IsCataclysm() and data.focus.index and data.focus.type) then
-		return
-	end
-	if data.focus.type == "QUEST" then
-		local logIndex = GetQuestIndexForWatch(data.focus.index)
-		local questID = select(8, GetQuestLogTitle(logIndex))
-		if questID == 0 then
-			return
-		end
-		return questID, "quest"
-	elseif data.focus.type == "ACHIEVEMENT" then
-		return data.focus.index, "achievement"
-	end
-end
-function strategies.wowhead.GetQuestFromClassicLogTitleFocus(data)
-	if not (IsClassic() and CheckFrameName("QuestLogTitle%d+", data) and not data.focus.isHeader) then
-		return
-	end
-	local questIndex = data.focus:GetID()
-	local _, _, _, _, _, _, _, questID = GetQuestLogTitle(questIndex)
-	if questID == 0 then
-		return
-	end
-	return questID, "quest"
-end
-function strategies.wowhead.GetQuestFromQuestieTracker(data)
-	if not ((IsClassic() or IsCataclysm()) and data.focus.Quest) then
-		return
-	end
-	return data.focus.Quest.Id, "quest"
-end
-function strategies.wowhead.GetQuestFromQuestieFrame(data)
-	if not ((IsClassic() or IsCataclysm()) and CheckFrameName("QuestieFrame%d+", data)) then
-		return
-	end
-	if data.focus.data.QuestData then
-		return data.focus.data.QuestData.Id, "quest"
-	end
-	if data.focus.data.npcData then
-		return data.focus.data.npcData.id, "npc"
-	end
-end
-function strategies.wowhead.GetRuneEnchantmentFromRuneFocus(data)
-	if not (IsClassic() and CheckFrameName("EngravingFrameScrollFrameButton%d+", data)) then
-		return
-	end
-	local abilityID = data.focus.skillLineAbilityID
-	for _, category in ipairs(C_Engraving.GetRuneCategories(true, true)) do
-		for _, rune in ipairs(C_Engraving.GetRunesForCategory(category, true)) do
-			if rune.skillLineAbilityID == abilityID and #rune.learnedAbilitySpellIDs > 0 then
-				return rune.learnedAbilitySpellIDs[1], "spell"
-			end
-		end
-	end
 end
 function strategies.wowhead.GetTrackerFromFocus(data)
 	local parent = data.focus:GetParent()
@@ -320,7 +246,7 @@ function strategies.wowhead.GetNpcFromTooltip(data)
 	if not unit then
 		return
 	end
-	return select(6, strsplit("-", UnitGUID(unit))), "npc"
+	return select(6, strsplit("-", tostring(UnitGUID(unit)))), "npc"
 end
 function strategies.wowhead.GetMountFromFocus(data)
 	if not data.focus.spellID then
@@ -360,19 +286,6 @@ function strategies.wowhead.GetBattlePetFromAuctionHouse(data)
 	local itemKey = data.focus.itemKey or data.focus:GetRowData().itemKey
 	return select(4, C_PetJournal.GetPetInfoBySpeciesID(itemKey.battlePetSpeciesID)), "npc"
 end
-function strategies.wowhead.GetItemFromAuctionHouseClassic(data)
-	if not (IsClassic() or IsCataclysm()) or (not data.focus.itemIndex and (not data.focus:GetParent() or not data.focus:GetParent().itemIndex)) then
-		return
-	end
-	local index = data.focus.itemIndex or data.focus:GetParent().itemIndex
-	local link = GetAuctionItemLink("list", index)
-	local id, type = GetFromLink(link)
-	if type == "battlepet" then
-		id = select(4, C_PetJournal.GetPetInfoBySpeciesID(id))
-		type = "npc"
-	end
-	return id, type
-end
 function strategies.wowhead.GetToyCollectionItemFromFocus(data)
 	if not data.focus.itemID then
 		return
@@ -391,9 +304,9 @@ function strategies.wowhead.GetTransmogSetItemFromFocus(data)
 	if not data.focus.sourceID or not WardrobeCollectionFrame.tooltipSourceIndex then
 		return
 	end
-	local selectedAppearance = C_TransmogCollection.GetAppearanceInfoBySource(data.focus.sourceID).appearanceID
+	local appearanceID = C_TransmogCollection.GetAppearanceInfoBySource(data.focus.sourceID).appearanceID
 	local selectedStyle = WardrobeCollectionFrame.tooltipSourceIndex
-	local appearanceSources = C_TransmogCollection.GetAppearanceSources(selectedAppearance)
+	local appearanceSources = C_TransmogCollection.GetAppearanceSources(appearanceID)
 	CollectionWardrobeUtil.SortSources(appearanceSources, appearanceID, data.focus.sourceID)
 	return appearanceSources[selectedStyle].itemID, "item"
 end
@@ -413,7 +326,7 @@ function strategies.wowhead.GetClassicCataFactionFromFocus(data)
 	if IsRetail() or not data.focus.index or not data.focus.standingText then
 		return
 	end
-	return select(14, GetFactionInfo(data.focus.index)), "faction"
+	return C_Reputation.GetFactionDataByID(data.focus.index).name, "faction"
 end
 function strategies.wowhead.GetRetailCurrencyInTabFromFocus(data)
 	if not IsRetail() or not data.focus.elementData or not data.focus.elementData.currencyID then
@@ -446,8 +359,8 @@ function strategies.wowhead.GetConduitFromTree(data)
 		return
 	end
 	local conduitID = data.focus:GetConduitID()
-	local conduitData = C_Soulbinds.GetConduitCollectionData(conduitID)
-	return conduitData.conduitItemID, "item"
+	local conduitItemID = C_Soulbinds.GetConduitCollectionData(conduitID).conduitItemID
+	return conduitItemID, "item"
 end
 function strategies.wowhead.GetConduitFromList(data)
 	if not data.focus.conduitData then
