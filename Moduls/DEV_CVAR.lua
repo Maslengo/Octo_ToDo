@@ -141,7 +141,7 @@ tinsert(E.Modules, function()
 				SetCVar("nameplateShowEnemyMinions", 0)
 				SetCVar("nameplateShowEnemyPets", 0)
 				SetCVar("nameplateShowEnemyTotems", 1)
-				SetCVar("nameplateShowSelf", 0) --- PIZDA
+				SetCVar("nameplateShowSelf", 0) --- PIZZA
 				SetCVar("nameplateTargetBehindMaxDistance", 30)
 				SetCVar("profanityFilter", 0) -- выключает фильтр нецензурной речи
 				SetCVar("ScriptErrors", 0)

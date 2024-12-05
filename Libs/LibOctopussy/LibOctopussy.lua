@@ -916,7 +916,7 @@ function lib:func_achievementquantity(achievementID, i)
 	if quantity then
 		vivod = vivod..color..quantity.." / "..reqQuantity.."|r"
 	else
-		vivod = vivod..color.."0/1PIZDA".."|r"
+		vivod = vivod..color.."0/1PIZZA".."|r"
 	end
 	return vivod
 end

@@ -1,7 +1,5 @@
 local GlobalAddonName, E = ...
 local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
-if PTR_IssueReporter then PTR_IssueReporter:Hide() end
-if WeeklyRewardExpirationWarningDialog then WeeklyRewardExpirationWarningDialog:Hide() end
 local LibOctopussy = LibStub("LibOctopussy-1.0")
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
@@ -40,15 +38,6 @@ local function Central_Frame_Mouse_OnClick(self)
 		return
 	end
 	fpde(self)
-	-- GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 0, 0)
-	-- GameTooltip:AddLine(" ")
-	-- for _, v in next, (self.tooltip) do
-	-- if v[2] ~= "0/0" then
-	-- GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
-	-- end
-	-- end
-	-- GameTooltip:AddLine(" ")
-	-- GameTooltip:Show()
 end
 local function Central_Frame_Mouse_OnEnter(self)
 	local parent = OctoToDo_SECOND_MainFrame["FrameLine"..self.index]
@@ -150,7 +139,7 @@ local function O_otrisovka_SECOND()
 end
 local function Octo_ToDo_SECOND_CreateAltFrame()
 	if not OctoToDo_SECOND_MainFrame then
-		OctoToDo_SECOND_MainFrame = CreateFrame("BUTTON", "OctoToDo_SECOND_MainFramePIZDA", UIParent, "BackdropTemplate")
+		OctoToDo_SECOND_MainFrame = CreateFrame("BUTTON", "OctoToDo_SECOND_MainFramePIZZA", UIParent, "BackdropTemplate")
 		OctoToDo_SECOND_MainFrame:Hide()
 	end
 	local ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame"..LibOctopussy:func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame)
@@ -262,8 +251,8 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 				self.icon:SetVertexColor(1, 0, 0, .5)
 		end)
 		OctoToDo_SECOND_OptionsButton:SetScript("OnClick", function()
-				if OctoToDo_SECOND_MainFramePIZDA and OctoToDo_SECOND_MainFramePIZDA:IsShown() then
-					OctoToDo_SECOND_MainFramePIZDA:Hide()
+				if OctoToDo_SECOND_MainFramePIZZA and OctoToDo_SECOND_MainFramePIZZA:IsShown() then
+					OctoToDo_SECOND_MainFramePIZZA:Hide()
 				end
 				if SettingsPanel:IsVisible() and self:IsVisible() then
 					HideUIPanel(SettingsPanel)
@@ -554,15 +543,15 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 						if not InCombatLockdown() then
 							main_frame_toggle()
 						end
-						if OctoToDo_FIRST_MainFramePIZDA and OctoToDo_FIRST_MainFramePIZDA:IsShown() then
-							OctoToDo_FIRST_MainFramePIZDA:Hide()
+						if OctoToDo_FIRST_MainFramePIZZA and OctoToDo_FIRST_MainFramePIZZA:IsShown() then
+							OctoToDo_FIRST_MainFramePIZZA:Hide()
 						end
 					else
-						if OctoToDo_FIRST_MainFramePIZDA and OctoToDo_FIRST_MainFramePIZDA:IsShown() then
-							OctoToDo_FIRST_MainFramePIZDA:Hide()
+						if OctoToDo_FIRST_MainFramePIZZA and OctoToDo_FIRST_MainFramePIZZA:IsShown() then
+							OctoToDo_FIRST_MainFramePIZZA:Hide()
 						end
-						if OctoToDo_SECOND_MainFramePIZDA and OctoToDo_SECOND_MainFramePIZDA:IsShown() then
-							OctoToDo_SECOND_MainFramePIZDA:Hide()
+						if OctoToDo_SECOND_MainFramePIZZA and OctoToDo_SECOND_MainFramePIZZA:IsShown() then
+							OctoToDo_SECOND_MainFramePIZZA:Hide()
 						end
 						if SettingsPanel:IsVisible() and self:IsVisible() then
 							HideUIPanel(SettingsPanel)

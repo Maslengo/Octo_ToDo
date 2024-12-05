@@ -479,8 +479,8 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_Slider(MAIN_scrollChild, self, 11.5, POS_RIGHT, "curHeight", "Высота строк: ", E.Green_Color, 10, 30)
 		Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "Addon_Height", "Количество строк /20px: ", E.Green_Color, 200, 1000)
 		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "FrameScale", "Addon Scale: ", E.Green_Color, 0.5, 2.5, 0.1, function()
-				if OctoToDo_FIRST_MainFramePIZDA then
-					OctoToDo_FIRST_MainFramePIZDA:SetScale(Octo_ToDo_DB_Vars.config.FrameScale or 1)
+				if OctoToDo_FIRST_MainFramePIZZA then
+					OctoToDo_FIRST_MainFramePIZZA:SetScale(Octo_ToDo_DB_Vars.config.FrameScale or 1)
 				end
 		end)
 		Create_Slider(MAIN_scrollChild, self, 16, POS_RIGHT, "GameMenuFrameScale", "GameMenuFrameScale: ", E.Green_Color, 0.5, 2.5, 0.1, function()

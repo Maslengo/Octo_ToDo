@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local LibStub = LibStub
 local LibOctopussy = LibStub("LibOctopussy-1.0")
 E.AddonTitle = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Title")
 E.AddonNotes = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Notes")
@@ -8,12 +9,6 @@ E.AddonVersion = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Version")
 E.OctoTable_Empty = {}
 E.Modules = {}
 E.Timers = {}
-local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
-_G["OctoTODO"] = OctoTODO
-local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
-local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
-local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
-
 E.DONE = LibOctopussy:DONE()
 E.NONE = LibOctopussy:NONE()
 E.spacer = "    "
@@ -21,12 +16,9 @@ E.spacer = "    "
 -- Constants
 E.THIRD_WIDTH = 1.25
 E.HALF_WIDTH = 1.88 -- 1.5
--- local edgeFile = "Interface\\Buttons\\WHITE8X8"
--- local bgFile = "Interface\\Buttons\\WHITE8X8"
 E.edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
 E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
 -- NIGHT_FAE_BLUE_COLOR
-
 -- WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE or 1 -- RETAIL
 -- WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC or 2 -- CLASSIC
 -- WOW_PROJECT_BURNING_CRUSADE_CLASSIC = WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5 -- BURNING CRUSADE
@@ -148,7 +140,6 @@ E.daytime = 86400
 -- E.currTime = tonumber(GetServerTime())
 E.curExpansionMaxLevel = 70
 E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
-print (E.scale)
 E.curWidthCentral = 96*E.scale
 E.curHeight = 20*E.scale
 --E.curWidthTitle = E.curWidthCentral*2
