@@ -763,7 +763,7 @@ THIRD_Config:SetScript("OnShow", function(self)
 				{
 					otstyp = 0,
 					config = reputationID,
-					text = E.OctoTable_FACTIONTABLE[reputationID].faction..E:func_reputationName(reputationID),
+					text = E:func_reputationName(reputationID),
 				}
 			)
 		end
@@ -1013,7 +1013,7 @@ SEVENTH_Config:SetScript("OnShow", function(self)
 				{
 					otstyp = 0,
 					config = 0,
-					text = "    "..E.OctoTable_FACTIONTABLE[reputationHEADER].faction..E:func_reputationName(reputationHEADER),
+					text = "    "..E:func_reputationName(reputationHEADER),
 					-- text = OCTO_DB_reputations[reputationHEADER],
 					qwe = v,
 					r = r, g = g, b = b,
@@ -1025,7 +1025,7 @@ SEVENTH_Config:SetScript("OnShow", function(self)
 					{
 						otstyp = 0,
 						config = reputationID,
-						text = E.OctoTable_FACTIONTABLE[reputationID].faction..E:func_reputationName(reputationID),
+						text = E:func_reputationName(reputationID),
 						-- text = E:func_reputationName(reputationID),
 						qwe = v,
 						button = true,

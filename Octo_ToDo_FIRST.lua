@@ -4547,8 +4547,8 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", LibOctopussy:func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodLeft = LibOctopussy:func_currencyicon(3100)..LibOctopussy:func_questName(84616)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Weekly
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Daily ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Daily
 				end
 				return vivodCent, vivodLeft
 		end)
@@ -5302,6 +5302,9 @@ local function O_otrisovka_FIRST()
 					vivodCent = E.Gray_Color..QUESTS_LABEL.."|r"
 				else
 					vivodCent = ""
+				end
+				if CharInfo.maxNumQuestsCanAccept ~= 0 then
+					vivodCent = CharInfo.classColorHex..(CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept).."|r"
 				end
 				vivodLeft = QUESTS_LABEL.." NEW"
 				return vivodCent, vivodLeft

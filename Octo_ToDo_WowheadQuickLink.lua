@@ -14,10 +14,8 @@ local function CreateUrl(dataSources, strategies)
 		end
 	end
 end
-local GetMouseFocus = GetMouseFocus
-if not GetMouseFocus then
-	local GetMouseFoci = GetMouseFoci
-	GetMouseFocus = function() return GetMouseFoci()[1] end
+local function GetMouseFocus()
+	return GetMouseFoci()[1]
 end
 local function GetDataSources()
 	local focus = GetMouseFocus()

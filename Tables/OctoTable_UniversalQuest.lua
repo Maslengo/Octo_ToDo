@@ -72,7 +72,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		name_save = "CelebrateGoodFun",
-		reset = "Weekly",
+		reset = "Daily",
 		desc = "Timewalk",
 		questID = {
 			84616,

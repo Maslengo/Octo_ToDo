@@ -388,5 +388,5 @@ function E:func_reputationName(reputationID)
 	else
 		vivod = reputationID
 	end
-	return vivod
+	return E.OctoTable_FACTIONTABLE[reputationID].faction..vivod
 end

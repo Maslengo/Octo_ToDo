@@ -6,3 +6,16 @@ SpeedFrame: позиция фрейма, кнопка ресета
 ачивки фрейм юзабл
 ножницы на окне и у клавы
 экспаншн мерджануть в списке
+
+
+
+
+/dump UnitCreatureType("Target") -- животное \ нежить
+/dump UnitClass("Target")
+/dump UnitClassBase("Target")
+/dump UnitClassification("Target")
+/dump UnitGUID("Target")
+/dump UnitIsBossMob("Target")
+/dump ("Target")
+/dump ("Target")
+/dump ("Target")
