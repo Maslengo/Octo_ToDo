@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 E.OctoTable_Events = {
 	"ADDON_LOADED",
-	-- "VARIABLES_LOADED",
+	"VARIABLES_LOADED", -- ДЛЯ СИВАРОВ
 	"PLAYER_LOGIN",
 	"PLAYER_ENTERING_WORLD",
 	"PLAYER_DEAD",

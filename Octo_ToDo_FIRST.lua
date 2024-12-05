@@ -7259,9 +7259,21 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 	end
 end
 ----------------------------------------------------------------
+function Octo_EventFrame:VARIABLES_LOADED()
+	if not InCombatLockdown() then
+		self:UnregisterEvent("VARIABLES_LOADED")
+		self.VARIABLES_LOADED = nil
+		--------------------------------
+		if Octo_ToDo_DB_Vars.config.CVar then
+			C_Timer.After(.1, function()
+				E:LoadCVars()
+			end)
+		end
+	end
+end
+----------------------------------------------------------------
 function Octo_EventFrame:PLAYER_ENTERING_WORLD()
 	if not InCombatLockdown() then
-		print ("QWE")
 		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		self.PLAYER_ENTERING_WORLD = nil
 		--------------------------------
@@ -7283,7 +7295,6 @@ end
 ----------------------------------------------------------------
 function Octo_EventFrame:PLAYER_LOGIN()
 	if not InCombatLockdown() then
-		print ("QWE")
 		self:UnregisterEvent("PLAYER_LOGIN")
 		self.PLAYER_LOGIN = nil
 		--------------------------------
