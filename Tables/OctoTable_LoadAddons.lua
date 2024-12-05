@@ -21,4 +21,8 @@ E.OctoTable_LoadAddons = {
 	"MySlot",
 	"QuestsChanged",
 	"AdvancedInterfaceOptions",
+	"TESTADDON1",
+	"TESTADDON2",
+	"TESTADDON3",
+	"TESTADDON4",
 }

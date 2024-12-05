@@ -8,7 +8,7 @@ local GlobalAddonName, E = ...
 -- SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
 -- DEV_CVAR
 function E:LoadCVars()
-	print (E.Green_Color.."Load CVars|r")
+	-- print (E.Green_Color.."Load CVars|r")
 	SetCVar("overrideScreenFlash", 1)
 	SetCVar("CameraReduceUnexpectedMovement", 0)
 	SetCVar("ShakeStrengthUI", 0)

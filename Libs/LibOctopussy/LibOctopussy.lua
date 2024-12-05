@@ -510,31 +510,7 @@ function lib:func_questName(questID, useLargeIcon)
 	return vivod
 end
 ----------------------------------------------------------------
-function lib:func_reputationName(reputationID)
-	local vivod = ""
-	if reputationID and type(reputationID) == "number" then
-		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-		if isAccountWide == true then
-			vivod = E_Icon_AccountWide..vivod
-		end
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-		local name
-		if repInfo then
-			name = repInfo.name
-		else
-			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
-			name = reputationInfo.name or Red_Color..SEARCH_LOADING_TEXT.."|r"
-		end
-		vivod = vivod..name
-		if ShowIDS == true and vivod ~= nil then
-			vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
-		end
-		vivod = vivod
-	else
-		vivod = reputationID
-	end
-	return vivod
-end
+
 
 ----------------------------------------------------------------
 function lib:func_reputationNameSIMPLE(reputationID)

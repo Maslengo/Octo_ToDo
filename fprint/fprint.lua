@@ -433,9 +433,9 @@ SlashCmdList.OCTOLISTREP = function(msg)
 	sort(list, func_Reverse_order)
 	for _, factionID in next, (list) do
 		if LibOctopussy.func_reputationName(factionID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
-			str4 = str4..factionID..", --" ..LibOctopussy:func_reputationName(factionID).. LibOctopussy:func_CheckReputationByRepID(factionID).."\n"
+			str4 = str4..factionID..", --" ..E:func_reputationName(factionID).. LibOctopussy:func_CheckReputationByRepID(factionID).."\n"
 		else
-			str5 = str5..factionID..", --" ..LibOctopussy:func_reputationName(factionID).. LibOctopussy:func_CheckReputationByRepID(factionID).."\n"
+			str5 = str5..factionID..", --" ..E:func_reputationName(factionID).. LibOctopussy:func_CheckReputationByRepID(factionID).."\n"
 		end
 	end
 	vivod = str4..str5

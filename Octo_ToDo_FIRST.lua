@@ -59,26 +59,27 @@ local expansion = _G['EXPANSION_NAME'..GetExpansionLevel()]
 -- if currentTier == 10 then E.currentMaxLevel = 70 end
 -- if currentTier == 11 then E.currentMaxLevel = 80 end
 local curWidthTitle = E.curWidthTitle
--- LibOctopussy:func_LoadAddOn("Octo_ToDoTrashCan")
--- LibOctopussy:func_LoadAddOn("!BugGrabber")
--- LibOctopussy:func_LoadAddOn("BugSack")
--- LibOctopussy:func_LoadAddOn("MountsJournal")
--- LibOctopussy:func_LoadAddOn("HidingBar")
--- LibOctopussy:func_LoadAddOn("HidingBar_Options")
--- LibOctopussy:func_LoadAddOn("SpeedyAutoLoot")
--- LibOctopussy:func_LoadAddOn("TalentTreeTweaks")
--- LibOctopussy:func_LoadAddOn("Plater")
--- LibOctopussy:func_LoadAddOn("MacroManager")
--- LibOctopussy:func_LoadAddOn("MacroManagerData")
--- LibOctopussy:func_LoadAddOn("SilverDragon")
--- LibOctopussy:func_LoadAddOn("SilverDragon_History")
--- LibOctopussy:func_LoadAddOn("SilverDragon_Overlay")
--- LibOctopussy:func_LoadAddOn("SilverDragon_RangeExtender")
--- LibOctopussy:func_LoadAddOn("TomTom")
--- LibOctopussy:func_LoadAddOn("Pawn")
--- LibOctopussy:func_LoadAddOn("MySlot")
--- LibOctopussy:func_LoadAddOn("QuestsChanged")
--- LibOctopussy:func_LoadAddOn("AdvancedInterfaceOptions")
+
+LibOctopussy:func_LoadAddOn("Octo_ToDoTrashCan")
+LibOctopussy:func_LoadAddOn("!BugGrabber")
+LibOctopussy:func_LoadAddOn("BugSack")
+LibOctopussy:func_LoadAddOn("MountsJournal")
+LibOctopussy:func_LoadAddOn("HidingBar")
+LibOctopussy:func_LoadAddOn("HidingBar_Options")
+LibOctopussy:func_LoadAddOn("SpeedyAutoLoot")
+LibOctopussy:func_LoadAddOn("TalentTreeTweaks")
+LibOctopussy:func_LoadAddOn("Plater")
+LibOctopussy:func_LoadAddOn("MacroManager")
+LibOctopussy:func_LoadAddOn("MacroManagerData")
+LibOctopussy:func_LoadAddOn("SilverDragon")
+LibOctopussy:func_LoadAddOn("SilverDragon_History")
+LibOctopussy:func_LoadAddOn("SilverDragon_Overlay")
+LibOctopussy:func_LoadAddOn("SilverDragon_RangeExtender")
+LibOctopussy:func_LoadAddOn("TomTom")
+LibOctopussy:func_LoadAddOn("Pawn")
+LibOctopussy:func_LoadAddOn("MySlot")
+LibOctopussy:func_LoadAddOn("QuestsChanged")
+LibOctopussy:func_LoadAddOn("AdvancedInterfaceOptions")
 
 
 
@@ -596,30 +597,32 @@ local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableItems_OnEvent".."|r"..event)
 	end
-	if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
-		local startTime, duration = C_Container.GetItemCooldown(self.itemID)
-		local hasToy = PlayerHasToy(self.itemID)
-		local hasItem = GetItemCount(self.itemID, true, true, true) >= self.count
-		local isKnown = IsSpellKnown(self.spellID)
-		if isKnown == true and (hasToy == true or hasItem == true) then
-			self.icon:SetVertexColor(1, 1, 1, 1)
+	if OctoToDo_FIRST_MainFramePIZZA:IsShown() then
+		if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
+			local startTime, duration = C_Container.GetItemCooldown(self.itemID)
+			local hasToy = PlayerHasToy(self.itemID)
+			local hasItem = GetItemCount(self.itemID, true, true, true) >= self.count
+			local isKnown = IsSpellKnown(self.spellID)
+			if isKnown == true and (hasToy == true or hasItem == true) then
+				self.icon:SetVertexColor(1, 1, 1, 1)
+			else
+				self.icon:SetVertexColor(1, .5, .5, .3)
+			end
+			if self.itemID == 110560 and (C_QuestLog.IsQuestFlaggedCompleted(34378) == false and C_QuestLog.IsQuestFlaggedCompleted(34586) == false) then
+				self.icon:SetVertexColor(1, .5, .5, .3)
+			end
+			if self.itemID == 140192 and (C_QuestLog.IsQuestFlaggedCompleted(44184) == false and C_QuestLog.IsQuestFlaggedCompleted(44663) == false) then
+				self.icon:SetVertexColor(1, .5, .5, .3)
+			end
+		elseif event == "PLAYER_REGEN_DISABLED" then
+			self:SetParent(UIParent)
+			self:ClearAllPoints()
+			self:Hide()
 		else
-			self.icon:SetVertexColor(1, .5, .5, .3)
+			self:SetParent(OctoToDo_FIRST_MainFrame)
+			self:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
+			self:Show()
 		end
-		if self.itemID == 110560 and (C_QuestLog.IsQuestFlaggedCompleted(34378) == false and C_QuestLog.IsQuestFlaggedCompleted(34586) == false) then
-			self.icon:SetVertexColor(1, .5, .5, .3)
-		end
-		if self.itemID == 140192 and (C_QuestLog.IsQuestFlaggedCompleted(44184) == false and C_QuestLog.IsQuestFlaggedCompleted(44663) == false) then
-			self.icon:SetVertexColor(1, .5, .5, .3)
-		end
-	elseif event == "PLAYER_REGEN_DISABLED" then
-		self:SetParent(UIParent)
-		self:ClearAllPoints()
-		self:Hide()
-	else
-		self:SetParent(OctoToDo_FIRST_MainFrame)
-		self:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
-		self:Show()
 	end
 end
 local function CreateFrameUsableItems_OnMouseDown(self)
@@ -746,22 +749,24 @@ local function CreateFrameUsableSpells_OnEvent(self, event)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnEvent".."|r")
 	end
-	if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
-		local startTime, duration = C_Spell.GetSpellCooldown(self.spellID)
-		local isKnown = IsSpellKnown(self.spellID)
-		if isKnown == true then
-			self.icon:SetVertexColor(1, 1, 1, 1)
+	if OctoToDo_FIRST_MainFramePIZZA:IsShown() then
+		if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
+			local startTime, duration = C_Spell.GetSpellCooldown(self.spellID)
+			local isKnown = IsSpellKnown(self.spellID)
+			if isKnown == true then
+				self.icon:SetVertexColor(1, 1, 1, 1)
+			else
+				self.icon:SetVertexColor(1, .5, .5, .3)
+			end
+		elseif event == "PLAYER_REGEN_DISABLED" then
+			self:SetParent(UIParent)
+			self:ClearAllPoints()
+			self:Hide()
 		else
-			self.icon:SetVertexColor(1, .5, .5, .3)
+			self:SetParent(OctoToDo_FIRST_MainFrame)
+			self:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
+			self:Show()
 		end
-	elseif event == "PLAYER_REGEN_DISABLED" then
-		self:SetParent(UIParent)
-		self:ClearAllPoints()
-		self:Hide()
-	else
-		self:SetParent(OctoToDo_FIRST_MainFrame)
-		self:SetPoint("BOTTOMLEFT", OctoToDo_FIRST_MainFrame, "TOPLEFT", self.Xpos, self.Ypos+1)
-		self:Show()
 	end
 end
 local function CreateFrameUsableSpells_OnMouseDown(self)
@@ -5387,9 +5392,9 @@ local function O_otrisovka_FIRST()
 				sort(list, LibOctopussy.func_Reverse_order)
 				local j = 1
 				for i, reputationID in next, (list) do
-					if Octo_ToDo_DB_Config.ReputationDB[reputationID] == true and CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" and LibOctopussy:func_reputationName(reputationID) ~= SEARCH_LOADING_TEXT then
+					if Octo_ToDo_DB_Config.ReputationDB[reputationID] == true and CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" and E:func_reputationName(reputationID) ~= SEARCH_LOADING_TEXT then
 						local color = j%2 == 0 and "|cffBBBBBB" or E.White_Color
-						tooltip[#tooltip+1] = {color..LibOctopussy:func_reputationName(reputationID).."|r", CharInfo.MASLENGO.reputationID[reputationID]}
+						tooltip[#tooltip+1] = {color..E:func_reputationName(reputationID).."|r", CharInfo.MASLENGO.reputationID[reputationID]}
 						j = j + 1
 					end
 				end
@@ -7012,7 +7017,6 @@ Octo_EventFrame:SetScript("OnEvent", function(self, event, ...) self[event](self
 ----------------------------------------------------------------
 function Octo_EventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
-		print ("ADDON_LOADED")
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 		--------------------------------
@@ -7183,9 +7187,20 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 		if Octo_ToDo_DB_Vars.config.WasOnline == nil then Octo_ToDo_DB_Vars.config.WasOnline = true end
 		if Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest == nil then Octo_ToDo_DB_Vars.config.WeatheredHarbingerCrest = true end
 		-- КОНЕЦ
-		for addname, value in pairs(Octo_ToDo_DB_Vars.config.Load) do
-			if value == true then
-				LibOctopussy:func_LoadAddOn(addname)
+
+		for index, addonName in ipairs(E.OctoTable_LoadAddons) do
+			Octo_ToDo_DB_Vars.config.Load[addonName] = Octo_ToDo_DB_Vars.config.Load[addonName] or false
+			if not C_AddOns.DoesAddOnExist(addonName) then
+				Octo_ToDo_DB_Vars.config.Load[addonName] = false
+			end
+		end
+
+
+		if Octo_ToDo_DB_Vars.config.LoadAddons == true then
+			for addname, value in pairs(Octo_ToDo_DB_Vars.config.Load) do
+				if value == true then
+					LibOctopussy:func_LoadAddOn(addname)
+				end
 			end
 		end
 
@@ -7281,6 +7296,15 @@ function Octo_EventFrame:VARIABLES_LOADED()
 		end
 	end
 end
+
+
+
+
+
+
+
+
+
 ----------------------------------------------------------------
 function Octo_EventFrame:PLAYER_ENTERING_WORLD()
 	if not InCombatLockdown() then
@@ -7297,6 +7321,34 @@ function Octo_EventFrame:PLAYER_ENTERING_WORLD()
 		Collect_All_Covenant()
 		Collect_WarMode()
 		Collect_ALL_Mail()
+
+
+	-- for i = 1, 50 do
+	-- 	if _G["ChatFrame" .. i] then
+	-- 		FCF_SetChatWindowFontSize(self, _G["ChatFrame" .. i], 11)
+	-- 	end
+	-- end
+		-- for i = 1, 50 do
+		-- 	if _G["ChatFrame" .. i] then
+		-- 		FCF_SetChatWindowFontSize(self, _G["ChatFrame" .. i], 18)
+		-- 	end
+		-- end
+		-- hooksecurefunc("FCF_SetChatWindowFontSize", function(self, chatFrame, fontSize)
+
+		-- 		if not chatFrame then
+		-- 			chatFrame = FCF_GetCurrentChatFrame()
+		-- 		end
+		-- 		local fontFile, unused, fontFlags = chatFrame:GetFont()
+		-- 		chatFrame:SetFont(fontFile, fontSize, fontFlags)
+		-- 		print (fontSize)
+		-- end)
+
+
+
+
+
+
+
 		-- OLD_Collect_All_Legion_Transmoge()
 		-- -- OLD_Collect_All_Legion_TransmogeNEW()
 		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)

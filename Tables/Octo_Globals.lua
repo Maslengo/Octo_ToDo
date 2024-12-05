@@ -313,9 +313,9 @@ E.Icon_Rares = func_texturefromIcon(135903)
 E.Icon_Money = func_texturefromIcon(133784, 14)
 E.Icon_MailBox = func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga")
 E.AccountWide = E.Blue_Color.."(A)".."|r"
--- E.Icon_AccountWide = func_texturefromIcon(1120721)
+E.Icon_AccountWide = func_texturefromIcon(1120721)
 E.AccountTransferable = E.Red_Color.."(T)".."|r"
--- E.Icon_AccountTransferable = func_texturefromIcon(6124644)
+E.Icon_AccountTransferable = func_texturefromIcon(6124644)
 E.Icon_Achievement = func_texturefromIcon(236544)
 
 E.Icon_Empty = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
@@ -363,4 +363,30 @@ E.OctoTable_Covenant = {
 
 }
 
-
+local ShowIDS = true
+function E:func_reputationName(reputationID)
+	local vivod = ""
+	if reputationID and type(reputationID) == "number" then
+		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+		if isAccountWide == true then
+			vivod = E.Icon_AccountWide..vivod
+		end
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+		local name
+		if repInfo then
+			name = repInfo.name
+		else
+			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+			-- name = reputationInfo.name or E.Blue_Color..SEARCH_LOADING_TEXT.."|r"
+			name = reputationInfo.name or E.OctoTable_FACTIONTABLE[reputationID].name
+		end
+		vivod = vivod..name
+		if ShowIDS == true and vivod ~= nil then
+			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
+		end
+		vivod = vivod
+	else
+		vivod = reputationID
+	end
+	return vivod
+end

@@ -763,7 +763,7 @@ THIRD_Config:SetScript("OnShow", function(self)
 				{
 					otstyp = 0,
 					config = reputationID,
-					text = LibOctopussy:func_reputationName(reputationID),
+					text = E.OctoTable_FACTIONTABLE[reputationID].faction..E:func_reputationName(reputationID),
 				}
 			)
 		end
@@ -1008,13 +1008,13 @@ SEVENTH_Config:SetScript("OnShow", function(self)
 		local v = 0
 		for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
 			v = v + 1
-			local r, g, b = LibOctopussy:func_hex2rgbNUMBER(E.Red_Color)
+			local r, g, b = LibOctopussy:func_hex2rgbNUMBER(E.Skyblue_Color)
 			tinsert(ConfigTable_SEVENTH_LEFT,
 				{
 					otstyp = 0,
 					config = 0,
-					text = "     "..OCTO_DB_reputations[reputationHEADER],
-					-- text = E.spacer..LibOctopussy:func_Gradient(LibOctopussy:func_reputationNameSIMPLE(reputationHEADER)),
+					text = "    "..E.OctoTable_FACTIONTABLE[reputationHEADER].faction..E:func_reputationName(reputationHEADER),
+					-- text = OCTO_DB_reputations[reputationHEADER],
 					qwe = v,
 					r = r, g = g, b = b,
 					button = false,
@@ -1025,8 +1025,8 @@ SEVENTH_Config:SetScript("OnShow", function(self)
 					{
 						otstyp = 0,
 						config = reputationID,
-						text = OCTO_DB_reputations[reputationID],
-						-- text = LibOctopussy:func_reputationName(reputationID),
+						text = E.OctoTable_FACTIONTABLE[reputationID].faction..E:func_reputationName(reputationID),
+						-- text = E:func_reputationName(reputationID),
 						qwe = v,
 						button = true,
 					}
