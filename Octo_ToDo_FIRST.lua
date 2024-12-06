@@ -9,6 +9,8 @@ local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
+----------------------------------------------------------------
+local Octo_EventFrame = CreateFrame("FRAME", "Octo_EventFrame")
 
 
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
@@ -1697,7 +1699,7 @@ local function function_restoreBackup()
 		CalendarEventPickerFrame:RegisterEvent("CALENDAR_UPDATE_EVENT_LIST")
 	end
 end
-local function OLD_Collect_All_Holiday()
+local function Collect_All_Holiday()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Holiday()".."|r")
 	end
@@ -1747,7 +1749,7 @@ local function OLD_Collect_All_Holiday()
 	end
 	-- function_restoreBackup()
 end
-local function OLD_Collect_BfA_Azerite()
+local function Collect_BfA_Azerite()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_BfA_Azerite()".."|r")
 	end
@@ -1764,7 +1766,7 @@ local function OLD_Collect_BfA_Azerite()
 		end
 	end
 end
-local function OLD_Collect_BfA_Cloaklvl()
+local function Collect_BfA_Cloaklvl()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_BfA_Cloaklvl()".."|r")
 	end
@@ -1806,7 +1808,7 @@ local function OLD_Collect_BfA_Cloaklvl()
 		collect.cloak_res = 0
 	end
 end
-local function TRASH_Collect_All_Legion_Transmoge()
+local function Collect_All_Legion_Transmoge()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Legion_Transmoge()".."|r")
 	end
@@ -1878,7 +1880,7 @@ local function TRASH_Collect_All_Legion_Transmoge()
 		end
 	end
 end
-local function TRASH_Collect_All_Legion_TransmogeNEW()
+local function Collect_All_Legion_TransmogeNEW()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Legion_TransmogeNEW()".."|r")
 	end
@@ -1899,7 +1901,7 @@ local function TRASH_Collect_All_Legion_TransmogeNEW()
 		end
 	end
 end
-local function OLD_Collect_BfA_QuestsBounties()
+local function Collect_BfA_QuestsBounties()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_BfA_QuestsBounties()".."|r")
 	end
@@ -1989,7 +1991,7 @@ local function OLD_Collect_BfA_QuestsBounties()
 		end
 	end
 end
-local function OLD_Collect_BfA_Island()
+local function Collect_BfA_Island()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_BfA_Island()".."|r")
 	end
@@ -6812,13 +6814,13 @@ function main_frame_toggle()
 				Collect_All_journalInstance()
 				Collect_Player_Level()
 				Collect_WarMode()
-				OLD_Collect_All_Holiday()
-				OLD_Collect_BfA_Azerite()
-				OLD_Collect_BfA_Cloaklvl()
-				TRASH_Collect_All_Legion_Transmoge()
-				TRASH_Collect_All_Legion_TransmogeNEW()
-				OLD_Collect_BfA_QuestsBounties()
-				OLD_Collect_BfA_Island()
+				Collect_All_Holiday()
+				Collect_BfA_Azerite()
+				Collect_BfA_Cloaklvl()
+				Collect_All_Legion_Transmoge()
+				Collect_All_Legion_TransmogeNEW()
+				Collect_BfA_QuestsBounties()
+				Collect_BfA_Island()
 				MustBeHiddenFrames()
 				OctoToDo_FIRST_MainFrame:Show()
 				Octo_ToDo_FIRST_AddDataToAltFrame()
@@ -6833,8 +6835,6 @@ end
 
 
 
-----------------------------------------------------------------
-local Octo_EventFrame = CreateFrame("FRAME", "Octo_EventFrame")
 for index, event in ipairs(E.OctoTable_Events) do
 	Octo_EventFrame:RegisterEvent(event)
 end
@@ -7150,13 +7150,13 @@ function Octo_EventFrame:PLAYER_LOGIN()
 		Collect_All_journalInstance()
 		Collect_Player_Level()
 		Collect_WarMode()
-		OLD_Collect_All_Holiday()
-		OLD_Collect_BfA_Azerite()
-		OLD_Collect_BfA_Cloaklvl()
-		TRASH_Collect_All_Legion_Transmoge()
-		TRASH_Collect_All_Legion_TransmogeNEW()
-		OLD_Collect_BfA_QuestsBounties()
-		OLD_Collect_BfA_Island()
+		Collect_All_Holiday()
+		Collect_BfA_Azerite()
+		Collect_BfA_Cloaklvl()
+		Collect_All_Legion_Transmoge()
+		Collect_All_Legion_TransmogeNEW()
+		Collect_BfA_QuestsBounties()
+		Collect_BfA_Island()
 		RequestTimePlayed()
 		Octo_ToDo_FIRST_CreateAltFrame()
 		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
@@ -7194,8 +7194,8 @@ function Octo_EventFrame:QUEST_ACCEPTED()
 		C_Timer.After(1, function()
 				Collect_All_Quests()
 				Collect_ALL_UNIVERSALQuestUpdate()
-				OLD_Collect_BfA_Island()
-				OLD_Collect_BfA_QuestsBounties()
+				Collect_BfA_Island()
+				Collect_BfA_QuestsBounties()
 		end)
 	end
 end
@@ -7206,8 +7206,8 @@ function Octo_EventFrame:QUEST_COMPLETE()
 		C_Timer.After(1, function()
 				Collect_All_Quests()
 				Collect_ALL_UNIVERSALQuestUpdate()
-				OLD_Collect_BfA_Island()
-				OLD_Collect_BfA_QuestsBounties()
+				Collect_BfA_Island()
+				Collect_BfA_QuestsBounties()
 		end)
 	end
 end
@@ -7218,8 +7218,8 @@ function Octo_EventFrame:QUEST_FINISHED()
 		C_Timer.After(1, function()
 				Collect_All_Quests()
 				Collect_ALL_UNIVERSALQuestUpdate()
-				OLD_Collect_BfA_Island()
-				OLD_Collect_BfA_QuestsBounties()
+				Collect_BfA_Island()
+				Collect_BfA_QuestsBounties()
 		end)
 	end
 end
@@ -7230,8 +7230,8 @@ function Octo_EventFrame:QUEST_LOG_UPDATE()
 		C_Timer.After(1, function()
 				Collect_All_Quests()
 				Collect_ALL_UNIVERSALQuestUpdate()
-				OLD_Collect_BfA_Island()
-				OLD_Collect_BfA_QuestsBounties()
+				Collect_BfA_Island()
+				Collect_BfA_QuestsBounties()
 		end)
 	end
 end
@@ -7242,8 +7242,8 @@ function Octo_EventFrame:QUEST_REMOVED()
 		C_Timer.After(1, function()
 				Collect_All_Quests()
 				Collect_ALL_UNIVERSALQuestUpdate()
-				OLD_Collect_BfA_Island()
-				OLD_Collect_BfA_QuestsBounties()
+				Collect_BfA_Island()
+				Collect_BfA_QuestsBounties()
 		end)
 	end
 end
@@ -7254,8 +7254,8 @@ function Octo_EventFrame:QUEST_TURNED_IN()
 		C_Timer.After(1, function()
 				Collect_All_Quests()
 				Collect_ALL_UNIVERSALQuestUpdate()
-				OLD_Collect_BfA_Island()
-				OLD_Collect_BfA_QuestsBounties()
+				Collect_BfA_Island()
+				Collect_BfA_QuestsBounties()
 		end)
 	end
 end
@@ -7266,8 +7266,8 @@ function Octo_EventFrame:QUEST_LOOT_RECEIVED()
 		C_Timer.After(1, function()
 				Collect_All_Quests()
 				Collect_ALL_UNIVERSALQuestUpdate()
-				OLD_Collect_BfA_Island()
-				OLD_Collect_BfA_QuestsBounties()
+				Collect_BfA_Island()
+				Collect_BfA_QuestsBounties()
 		end)
 	end
 end
@@ -7314,8 +7314,8 @@ end
 function Octo_EventFrame:AZERITE_ITEM_EXPERIENCE_CHANGED()
 	if not InCombatLockdown() then
 		--------------------------------
-		OLD_Collect_BfA_Azerite()
-		OLD_Collect_BfA_Cloaklvl()
+		Collect_BfA_Azerite()
+		Collect_BfA_Cloaklvl()
 	end
 end
 

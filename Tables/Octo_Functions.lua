@@ -460,7 +460,7 @@ function E.func_questName(questID, useLargeIcon)
 
 	local title = C_QuestLog.GetTitleForQuestID(questID)
 	if title then
-		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon), true
+		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon)
 	else
 		vivod = vivod..Red_Color.."hidden?".."|r"
 	end

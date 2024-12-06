@@ -5614,275 +5614,236 @@ E.OctoTable_UNLOCK_DATA = {
 	-- 2
 	[37718] = {
 		["unlock"] = "Recover one of the Pillars of Creation.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании + Солп созидания|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании + Солп созидания|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- 3
 	[37719] = {
 		["unlock"] = "Recover Light's Heart and bring it to the safety of your Order Hall.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании + Найдите Сердце Света|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании + Найдите Сердце Света|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- 4
 	[37720] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- 1
 	-- Паладин ХОЛИ
 	[88093] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- Паладин ПРОТ
 	[88092] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- Паладин РЕТ
 	[88084] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- Друид сова
 	[88089] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- Друид КОт
 	[38419] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- Друид медведь
 	[37270] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- друид дерево
 	[88086] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- вар армс
 	[42302] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- вар фури
 	[88095] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- вар прот
 	[88083] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- шаман элем
 	[88100] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- шаман энх
 	[88098] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- шаман рест
 	[88099] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- рога ликвидация
 	[88103] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- рога головорез
 	[88101] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- рога скрытность
 	[88102] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ХАНТ бм
 	[88111] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ХАНТ мм
 	[88110] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ХАНТ сурв
 	[88112] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ВАРЛОК колдовство
 	[88108] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ВАРЛОК демон
 	[88109] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ВАРЛОК разрушение
 	[88107] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- МОНК хмелевар
 	[88115] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- МОНК ткачтуманов
 	[88113] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- МОНК ДД
 	[88114] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- МАГ тайная
 	[88082] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- МАГ огонь
 	[88096] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- МАГ лёд
 	[88097] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ДК кровь
 	[88090] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ДК лёд
 	[88085] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ДК нечестивый
 	[88091] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ДХ истребление
 	[88117] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ДХ месть
 	[88116] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ПРИСТ ДЦ
 	[88105] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ПРИСТ ХОЛИ
 	[88104] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- ПРИСТ ШП
 	[88106] = {
 		["unlock"] = "Complete the first major campaign effort with your order.",
-		["unlockOCto"] = E.Gray_Color ..
-		"Первый этап кампании|r",
+		["unlockOCto"] = E.Gray_Color .. "Первый этап кампании|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -5890,26 +5851,22 @@ E.OctoTable_UNLOCK_DATA = {
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[37724] = {
 		["unlock"] = "Complete the achievement, 'This Side Up.'",
-		["unlockOCto"] = E.Cyan_Color ..
-		"Кампания класса..Этой стороной вверх|r",
+		["unlockOCto"] = E.Cyan_Color .. "Кампания класса..Этой стороной вверх|r",
 		["AchievementID"] = {10602, 0, 0, 0}
 	},
 	[37721] = {
 		["unlock"] = "Complete the class hall campaign.",
-		["unlockOCto"] = E.Cyan_Color ..
-		"Кампания класса|r",
+		["unlockOCto"] = E.Cyan_Color .. "Кампания класса|r",
 		["AchievementID"] = {10746, 0, 0, 0}
 	},
 	[37722] = {
 		["unlock"] = "Complete the class hall campaign.",
-		["unlockOCto"] = E.Cyan_Color ..
-		"Кампания класса|r",
+		["unlockOCto"] = E.Cyan_Color .. "Кампания класса|r",
 		["AchievementID"] = {10746, 0, 0, 0}
 	},
 	[37723] = {
 		["unlock"] = "Complete the class hall campaign.",
-		["unlockOCto"] = E.Cyan_Color ..
-		"Кампания класса|r",
+		["unlockOCto"] = E.Cyan_Color .. "Кампания класса|r",
 		["AchievementID"] = {10746, 0, 0, 0}
 	},
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -5945,20 +5902,17 @@ E.OctoTable_UNLOCK_DATA = {
 	},
 	[37731] = {
 		["unlock"] = "Complete the achievement, 'Unleashed Monstrosities.'\nComplete the quest line, 'Balance of Power.'",
-		["unlockOCto"] = E.Purple_Color ..
-		"Освобожденные чудовища + Баланс сил|r",
+		["unlockOCto"] = E.Purple_Color .. "Освобожденные чудовища + Баланс сил|r",
 		["AchievementID"] = {11160, 10459, 0, 0}
 	},
 	[37732] = {
 		["unlock"] = "Complete a Mythic Mode Dungeon using a level 15 keystone.\nComplete the quest line, 'Balance of Power.'",
-		["unlockOCto"] = E.Purple_Color ..
-		"M+ 15 + Баланс сил|r",
+		["unlockOCto"] = E.Purple_Color .. "M+ 15 + Баланс сил|r",
 		["AchievementID"] = {11162, 10459, 0, 0}
 	},
 	[37733] = {
 		["unlock"] = "Complete the achievement, 'Glory of the Legion Hero.'\nComplete the quest line, 'Balance of Power.'",
-		["unlockOCto"] = E.Purple_Color ..
-		"Слава герою Legion + Баланс сил|r",
+		["unlockOCto"] = E.Purple_Color .. "Слава герою Legion + Баланс сил|r",
 		["AchievementID"] = {10459, 0, 0, 0}
 	},
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -5966,436 +5920,364 @@ E.OctoTable_UNLOCK_DATA = {
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[44681] = {
 		["unlock"] = "Complete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44697] = {
 		["unlock"] = "Complete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44682] = {
 		["unlock"] = "Complete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44698] = {
 		["unlock"] = "Complete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза Черной Ладьи MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза Черной Ладьи MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44694] = {
 		["unlock"] = "Complete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза Черной Ладьи MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза Черной Ладьи MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44684] = {
 		["unlock"] = "Complete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44176] = {
 		["unlock"] = "Complete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44680] = {
 		["unlock"] = "Complete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44685] = {
 		["unlock"] = "Complete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44699] = {
 		["unlock"] = "Complete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44687] = {
 		["unlock"] = "Complete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44540] = {
 		["unlock"] = "Complete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44683] = {
 		["unlock"] = "Complete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза Черной Ладьи MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза Черной Ладьи MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44688] = {
 		["unlock"] = "Complete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44695] = {
 		["unlock"] = "Complete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44158] = {
 		["unlock"] = "Complete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44166] = {
 		["unlock"] = "Complete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44700] = {
 		["unlock"] = "Complete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44686] = {
 		["unlock"] = "Complete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза Черной Ладьи MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза Черной Ладьи MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44541] = {
 		["unlock"] = "Complete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44696] = {
 		["unlock"] = "Complete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза Черной Ладьи MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза Черной Ладьи MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44689] = {
 		["unlock"] = "Complete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44701] = {
 		["unlock"] = "Complete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44178] = {
 		["unlock"] = "Complete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44542] = {
 		["unlock"] = "Complete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44691] = {
 		["unlock"] = "Complete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44703] = {
 		["unlock"] = "Complete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44693] = {
 		["unlock"] = "Complete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44678] = {
 		["unlock"] = "Complete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44702] = {
 		["unlock"] = "Complete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44177] = {
 		["unlock"] = "Complete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44690] = {
 		["unlock"] = "Complete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44679] = {
 		["unlock"] = "Complete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44692] = {
 		["unlock"] = "Complete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44162] = {
 		["unlock"] = "Complete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	[44704] = {
 		["unlock"] = "Complete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем MageTower|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем MageTower|r",
 		["AchievementID"] = {0, 0, 0, 0}
 	},
 	-- KJ HERO
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[52482] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + KJ HERO|r",
 		["AchievementID"] = {11660, 0, 0, 0}
 	},
 	[52546] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52554] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52562] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52507] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52563] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52481] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52492] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52491] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52556] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52490] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52485] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52493] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52494] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52549] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52557] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52462] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52479] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52550] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52558] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52478] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52487] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52495] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52497] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52551] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52559] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52480] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52496] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden using this challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52552] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52560] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52508] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + KJ HERO|r",
 		["AchievementID"] = {11658, 0, 0, 0}
 	},
 	[52489] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	[52461] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52509] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52553] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + KJ HERO|r",
 		["AchievementID"] = {11659, 0, 0, 0}
 	},
 	[52561] = {
 		["unlock"] = "Defeat Heroic Kil'jaeden after unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + KJ HERO|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + KJ HERO|r",
 		["AchievementID"] = {11657, 0, 0, 0}
 	},
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -6403,218 +6285,182 @@ E.OctoTable_UNLOCK_DATA = {
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[52618] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52626] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52634] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52642] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52619] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, Испытание: Возвращение верховного лорда + .'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52627] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52635] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52643] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52593] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52620] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52628] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52636] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52644] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52621] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52629] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52637] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52645] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52622] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52630] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Highlord's Return.",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52638] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52646] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52591] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52615] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52623] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Black Rook Threat.",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 RBG|r",
 		["AchievementID"] = {11664, 0, 0, 0}
 	},
 	[52631] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52639] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52647] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52592] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52616] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52624] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52632] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52640] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52617] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	[52625] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 RBG|r",
 		["AchievementID"] = {11662, 0, 0, 0}
 	},
 	[52633] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance.\nComplete the quest line, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 RBG|r",
 		["AchievementID"] = {11661, 0, 0, 0}
 	},
 	[52641] = {
 		["unlock"] = "Win 10 rated battlegrounds after unlocking a challenge artifact appearance. \nComplete the quest line, 'The Black Rook Threat.",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 RBG|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 RBG|r",
 		["AchievementID"] = {11663, 0, 0, 0}
 	},
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -6622,218 +6468,182 @@ E.OctoTable_UNLOCK_DATA = {
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 	[52649] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52657] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52665] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52673] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52681] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52650] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52658] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52666] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52674] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52682] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52651] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52659] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Xylem Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Ксилем + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Ксилем + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52667] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52675] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52683] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52652] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52660] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52679] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52668] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52676] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52653] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52661] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52669] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52677] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52654] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'Imp Mother Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: мать бесов + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: мать бесов + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52662] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52670] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52678] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52655] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52663] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52671] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'Twins Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: близнецы + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: близнецы + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	[52648] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Highlord's Return.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Возвращение верховного лорда + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Возвращение верховного лорда + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52656] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 dung|r",
 		["AchievementID"] = {11668, 0, 0, 0}
 	},
 	[52664] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'The Black Rook Threat.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Угроза Черной Ладьи + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Угроза Черной Ладьи + 10 dung|r",
 		["AchievementID"] = {11666, 0, 0, 0}
 	},
 	[52672] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest, 'God-Queen Challenge.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: королева-богиня + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: королева-богиня + 10 dung|r",
 		["AchievementID"] = {11665, 0, 0, 0}
 	},
 	[52680] = {
 		["unlock"] = "Complete 10 different Legion dungeons after unlocking a challenge appearance.\nComplete the quest line, 'The Fel Worm Menace.'",
-		["unlockOCto"] = E.Blue_Color ..
-		"Испытание: Угроза червей Скверны + 10 dung|r",
+		["unlockOCto"] = E.Blue_Color .. "Испытание: Угроза червей Скверны + 10 dung|r",
 		["AchievementID"] = {11667, 0, 0, 0}
 	},
 	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -6851,8 +6661,7 @@ E.OctoTable_UNLOCK_DATA = {
 	},
 	[39786] = {
 		["unlock"] = "Kill 1, 000 enemy players after unlocking a hidden artifact appearance.",
-		["unlockOCto"] = E.Red_Color ..
-		"Hidden Artifact 1000 PvP|r",
+		["unlockOCto"] = E.Red_Color .. "Hidden Artifact 1000 PvP|r",
 		["AchievementID"] = {11154, 0, 0, 0}
 	},
 	-- Паладин ХОЛИ
@@ -7072,4 +6881,6 @@ E.OctoTable_UNLOCK_DATA = {
 		["AchievementID"] = {0, 0, 0, 0}
 	}
 }
+
+
 
