@@ -13,14 +13,16 @@ function E.Init()
 	AceConfigRegistry:RegisterOptionsTable("CreateGeneralOptions", E.CreateGeneralOptions())
 	AceConfigRegistry:RegisterOptionsTable("Currencies", E.Currencies())
 	AceConfigRegistry:RegisterOptionsTable("Reputations", E.Reputations())
+	AceConfigRegistry:RegisterOptionsTable("Items", E.Items())
 	AceConfigRegistry:RegisterOptionsTable("LoadAddons", E.LoadAddons())
 	AceConfigRegistry:RegisterOptionsTable("Developing", E.Developing())
 	----------------------------------------------------------------
-	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", GlobalAddonName)
-	AceConfigDialog:AddToBlizOptions("Currencies", CURRENCY, GlobalAddonName)
-	AceConfigDialog:AddToBlizOptions("Reputations", REPUTATION, GlobalAddonName)
-	AceConfigDialog:AddToBlizOptions("LoadAddons", ADDONS, GlobalAddonName)
-	AceConfigDialog:AddToBlizOptions("Developing", "Developing", GlobalAddonName)
+	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", E.AddonTitle)
+	AceConfigDialog:AddToBlizOptions("Currencies", CURRENCY, E.AddonTitle)
+	AceConfigDialog:AddToBlizOptions("Reputations", REPUTATION, E.AddonTitle)
+	AceConfigDialog:AddToBlizOptions("Items", ITEMS, E.AddonTitle)
+	AceConfigDialog:AddToBlizOptions("LoadAddons", ADDONS, E.AddonTitle)
+	AceConfigDialog:AddToBlizOptions("Developing", "Developing", E.AddonTitle)
 	----------------------------------------------------------------
 end
 

@@ -10,13 +10,6 @@ function E.LoadAddons()
 		name = ADDONS,
 		args = {
 			-------------------------------------------------
-			LoadAddonsinstructions = {
-				type = "description",
-				name = "These options allow you to toggle various options.",
-				fontSize = "medium",
-				order = 1,
-			},
-			-------------------------------------------------
 			ReloadHeader4 = {
 				type = "header",
 				name = "",
@@ -37,15 +30,6 @@ function E.LoadAddons()
 				order = 3,
 			},
 			-------------------------------------------------
-			Reload4 = {
-				type = "execute",
-				name = RELOADUI,
-				func = function()
-					return ReloadUI()
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 4,
-			},
 			-------------------------------------------------
 			ReloadHeader4second = {
 				type = "header",
@@ -71,7 +55,7 @@ function E.LoadAddons()
 			if C_AddOns.DoesAddOnExist(addonName) then
 				local title = select(2, C_AddOns.GetAddOnInfo(addonName)) or " "
 				local notes = select(3, C_AddOns.GetAddOnInfo(addonName)) or " "
-				E.MergeTable(LoadAddons.args, {
+				E.func_TableMerge(LoadAddons.args, {
 						["addonNameQWE"..index] = {
 							type = "toggle",
 							name = title,
@@ -87,7 +71,7 @@ function E.LoadAddons()
 						},
 				})
 			else
-				E.MergeTable(LoadAddons.args, {
+				E.func_TableMerge(LoadAddons.args, {
 						["addonNameQWE"..index] = {
 							type = "toggle",
 							name = E.Gray_Color..addonName.."|r",
@@ -105,7 +89,7 @@ function E.LoadAddons()
 			end
 		end
 	end
-	E.MergeTable(LoadAddons.args, {
+	E.func_TableMerge(LoadAddons.args, {
 			["ReloadHeader4second322"..1] = {
 				type = "header",
 				name = "",

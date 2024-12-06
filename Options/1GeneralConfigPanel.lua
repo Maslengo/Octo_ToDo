@@ -2,81 +2,18 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
-local continue = true
-local index = 0
+local wipe = false
 function E.CreateGeneralOptions()
 	local generalOptions = {
 		type = "group",
 		childGroups = "tree",
-		name = GlobalAddonName,
+		name = E.AddonTitle,
 		args = {
-			-------------------------------------------------
-			instructions2 = {
-				type = "description",
-				name = "These options allow you to toggle various options.",
-				fontSize = "medium",
-				order = 1,
-			},
 			-------------------------------------------------
 			MainHeader = {
 				type = "header",
 				name = "",
 				order = 2,
-			},
-			-------------------------------------------------
-			ExpansionToShow = {
-				type = "select",
-				name = "ExpansionToShow",
-				desc = "",
-				values = {
-					[1] = E.func_texturefromIcon(254094).."|cff68ccef".._G["EXPANSION_NAME"..(1 - 1)].."|r",
-					[2] = _G["EXPANSION_NAME"..(2 - 1)],
-					[3] = _G["EXPANSION_NAME"..(3 - 1)],
-					[4] = _G["EXPANSION_NAME"..(4 - 1)],
-					[5] = _G["EXPANSION_NAME"..(5 - 1)],
-					[6] = _G["EXPANSION_NAME"..(6 - 1)],
-					[7] = _G["EXPANSION_NAME"..(7 - 1)],
-					[8] = _G["EXPANSION_NAME"..(8 - 1)],
-					[9] = _G["EXPANSION_NAME"..(9 - 1)],
-					[10] = _G["EXPANSION_NAME"..(10 - 1)],
-					[11] = _G["EXPANSION_NAME"..(11 - 1)],
-					[12] = "TEST",
-				},
-				sorting = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
-				get = function()
-					return Octo_ToDo_DB_Vars.config.ExpansionToShow
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ExpansionToShow = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 3,
-			},
-			-------------------------------------------------
-			prefix = {
-				type = "select",
-				name = "prefix",
-				desc = "",
-				values = {
-					[1] = "Русский", -- "ru.",
-					[2] = "Deutsch", -- "de.",
-					[3] = "English", -- "",
-					[4] = "Español", -- "es.",
-					[5] = "Français", -- "fr.",
-					[6] = "Italiano", -- "it.",
-					[7] = "Português Brasileiro", -- "pt.",
-					[8] = "Korean", -- "한국어", --"ko.",
-					[9] = "Chinese", -- "简体中文", --"cn.",
-				},
-				sorting = {1, 2, 3, 4, 5, 6, 7, 8, 9},
-				get = function()
-					return Octo_ToDo_DB_Vars.config.prefix
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.prefix = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 4,
 			},
 			-------------------------------------------------
 			-------------------------------------------------
@@ -156,34 +93,6 @@ function E.CreateGeneralOptions()
 				order = 12,
 			},
 			-------------------------------------------------
-			Auto_CinematicCanceler = {
-				type = "toggle",
-				name = E.Green_Color..L["CinematicCanceler"].."|r",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 13,
-			},
-			-------------------------------------------------
-			Auto_CinematicFastSkip = {
-				type = "toggle",
-				name = E.Green_Color.."Fast Cinematic Skip (ESC/Space/Enter)".."|r",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 14,
-			},
-			-------------------------------------------------
 			AutoTurnQuests = {
 				type = "toggle",
 				name = L["Auto Turn Quests"],
@@ -195,7 +104,7 @@ function E.CreateGeneralOptions()
 					Octo_ToDo_DB_Vars.config.AutoTurnQuests = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 15,
+				order = 13,
 			},
 			-------------------------------------------------
 			Auto_ChatClearing = {
@@ -209,7 +118,7 @@ function E.CreateGeneralOptions()
 					Octo_ToDo_DB_Vars.config.Auto_ChatClearing = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 16,
+				order = 14,
 			},
 			-------------------------------------------------
 			Auto_Screenshot = {
@@ -221,6 +130,34 @@ function E.CreateGeneralOptions()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.config.Auto_Screenshot = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 15,
+			},
+			-------------------------------------------------
+			Auto_CinematicCanceler = {
+				type = "toggle",
+				name = E.Green_Color..L["CinematicCanceler"].."|r",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 16,
+			},
+			-------------------------------------------------
+			Auto_CinematicFastSkip = {
+				type = "toggle",
+				name = E.Green_Color.."Fast Cinematic Skip (ESC/Space/Enter)".."|r",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 17,
@@ -503,239 +440,277 @@ function E.CreateGeneralOptions()
 				order = 36,
 			},
 			-------------------------------------------------
-			-- generalHeader = {
-			--     type = "header",
-			--     name = "General Options",
-			--     order = 10,
-			-- },
-			-- UnitNamePlayerPVPTitle = {
-			--     type = "toggle",
-			--     name = UNIT_NAME_PLAYER_TITLE,
-			--     desc = OPTION_TOOLTIP_UNIT_NAME_PLAYER_TITLE,
-			--     get = function()
-			--         return C_CVar.GetCVarBool("UnitNamePlayerPVPTitle")
-			--     end,
-			--     set = function(_, value)
-			--         self:SetCVar("UnitNamePlayerPVPTitle", value)
-			--     end,
-			--     width = "full",
-			--     order = 11,
-			-- },
-			-- UnitNamePlayerGuild = {
-			--     type = "toggle",
-			--     name = UNIT_NAME_GUILD,
-			--     desc = OPTION_TOOLTIP_UNIT_NAME_GUILD,
-			--     get = function()
-			--         return C_CVar.GetCVarBool("UnitNamePlayerGuild")
-			--     end,
-			--     set = function(_, value)
-			--         self:SetCVar("UnitNamePlayerGuild", value)
-			--     end,
-			--     width = "full",
-			--     order = 12,
-			-- },
-			-- UnitNameGuildTitle = {
-			--     type = "toggle",
-			--     name = UNIT_NAME_GUILD_TITLE,
-			--     desc = OPTION_TOOLTIP_UNIT_NAME_GUILD_TITLE,
-			--     get = function()
-			--         return C_CVar.GetCVarBool("UnitNameGuildTitle")
-			--     end,
-			--     set = function(_, value)
-			--         self:SetCVar("UnitNameGuildTitle", value)
-			--     end,
-			--     width = "full",
-			--     order = 13,
-			-- },
-			-- mapFade = {
-			--     type = "toggle",
-			--     name = MAP_FADE_TEXT,
-			--     desc = OPTION_TOOLTIP_MAP_FADE,
-			--     get = function()
-			--         return C_CVar.GetCVarBool("mapFade")
-			--     end,
-			--     set = function(_, value)
-			--         self:SetCVar("mapFade", value)
-			--     end,
-			--     hidden = function()
-			--         return self.IsClassicEra() or self.IsClassic()
-			--     end,
-			--     width = "full",
-			--     order = 14,
-			-- },
-			-- secureAbilityToggle = {
-			--     type = "toggle",
-			--     name = SECURE_ABILITY_TOGGLE,
-			--     desc = OPTION_TOOLTIP_SECURE_ABILITY_TOGGLE,
-			--     get = function()
-			--         return C_CVar.GetCVarBool("secureAbilityToggle")
-			--     end,
-			--     set = function(_, value)
-			--         self:SetCVar("secureAbilityToggle", value)
-			--     end,
-			--     width = "full",
-			--     order = 15,
-			-- },
-			-- scriptErrors = {
-			--     type = "toggle",
-			--     name = SHOW_LUA_ERRORS,
-			--     desc = OPTION_TOOLTIP_SHOW_LUA_ERRORS,
-			--     get = function()
-			--         return C_CVar.GetCVarBool("scriptErrors")
-			--     end,
-			--     set = function(_, value)
-			--         self:SetCVar("scriptErrors", value)
-			--     end,
-			--     width = "full",
-			--     order = 16,
-			-- },
-			-- noBuffDebuffFilterOnTarget = {
-			--     type = "toggle",
-			--     name = "No Debuff Filter on Target",
-			--     desc = "Do not filter buffs or debuffs at all on targets",
-			--     get = function()
-			--         return C_CVar.GetCVarBool("noBuffDebuffFilterOnTarget")
-			--     end,
-			--     set = function(_, value)
-			--         self:SetCVar("noBuffDebuffFilterOnTarget", value)
-			--     end,
-			--     width = "full",
-			--     order = 17,
-			-- },
-			-- reverseCleanupBags = {
-			--     type = "toggle",
-			--     name = REVERSE_CLEAN_UP_BAGS_TEXT,
-			--     desc = OPTION_TOOLTIP_REVERSE_CLEAN_UP_BAGS,
-			--     get = function()
-			--         if C_Container and C_Container.GetSortBagsRightToLeft then
-			--             return C_Container.GetSortBagsRightToLeft()
-			--         elseif GetInsertItemsRightToLeft then
-			--             return GetInsertItemsRightToLeft()
-			--         end
-			--     end,
-			--     set = function(_, value)
-			--         -- This is a dirty hack for SetSortBagsRightToLeft not instantly updating the bags
-			--         -- Force a refresh of the UI after a set amount of time to make the checkbox reflect the new value
-			--         C_Timer.After(0.5, function()
-			--                 LibStub("AceConfigRegistry-3.0"):NotifyChange("AdvancedInterfaceOptions")
-			--         end)
-			--         if C_Container and C_Container.SetSortBagsRightToLeft then
-			--             C_Container.SetSortBagsRightToLeft(value)
-			--         elseif SetSortBagsRightToLeft then
-			--             SetSortBagsRightToLeft(value)
-			--         end
-			--     end,
-			--     hidden = function()
-			--         return self.IsClassicEra() or self.IsClassic()
-			--     end,
-			--     width = "full",
-			--     order = 18,
-			-- },
-			-- lootLeftmostBag = {
-			--     type = "toggle",
-			--     name = REVERSE_NEW_LOOT_TEXT,
-			--     desc = OPTION_TOOLTIP_REVERSE_NEW_LOOT,
-			--     get = function()
-			--         if C_Container and C_Container.GetInsertItemsLeftToRight then
-			--             return C_Container.GetInsertItemsLeftToRight()
-			--         elseif GetInsertItemsLeftToRight then
-			--             GetInsertItemsLeftToRight()
-			--         end
-			--     end,
-			--     set = function(_, value)
-			--         -- This is a dirty hack for SetInsertItemsLeftToRight not instantly updating the bags
-			--         -- Force a refresh of the UI after a set amount of time to make the checkbox reflect the new value
-			--         C_Timer.After(0.5, function()
-			--                 LibStub("AceConfigRegistry-3.0"):NotifyChange("AdvancedInterfaceOptions")
-			--         end)
-			--         if C_Container and C_Container.SetInsertItemsLeftToRight then
-			--             return C_Container.SetInsertItemsLeftToRight(value)
-			--         elseif SetInsertItemsLeftToRight then
-			--             SetInsertItemsLeftToRight(value)
-			--         end
-			--     end,
-			--     hidden = function()
-			--         return self.IsClassicEra() or self.IsClassic()
-			--     end,
-			--     width = "full",
-			--     order = 19,
-			-- },
-			-- enableWoWMouse = {
-			--     type = "toggle",
-			--     name = WOW_MOUSE,
-			--     desc = OPTION_TOOLTIP_WOW_MOUSE,
-			--     get = function()
-			--         -- NOTE: Currently broken, see https://github.com/Stanzilla/AdvancedInterfaceOptions/issues/83
-			--         ---@diagnostic disable-next-line: param-type-mismatch
-			--         return C_CVar.GetCVarBool("enableWoWMouse")
-			--     end,
-			--     set = function(_, value)
-			--         self:SetCVar("enableWoWMouse", value)
-			--     end,
-			--     width = "full",
-			--     order = 20,
-			-- },
-			-- -------------------------------------------------
-			-- cameraHeader = {
-			--     type = "header",
-			--     name = "",
-			--     order = 30,
-			-- },
-			-- trackQuestSorting = {
-			--     type = "select",
-			--     name = "Select quest sorting mode:",
-			--     desc = "Select how quests are sorted in the quest log.",
-			--     values = {
-			--         ["top"] = "Top",
-			--         ["proximity"] = "Proximity",
-			--     },
-			--     sorting = {
-			--         "top",
-			--         "proximity",
-			--     },
-			--     get = function()
-			--         return C_CVar.GetCVar("trackQuestSorting")
-			--     end,
-			--     set = function(_, value)
-			--         self:SetCVar("trackQuestSorting", value)
-			--     end,
-			--     width = E.FULL_WIDTH/4,
-			--     order = 31,
-			-- },
-			-- -------------------------------------------------
-			-- dataHeader = {
-			--     type = "header",
-			--     name = "",
-			--     order = 40,
-			-- },
-			-- backupSettings = {
-			--     type = "execute",
-			--     name = "Backup Settings",
-			--     func = function()
-			--         StaticPopup_Show("AIO_BACKUP_SETTINGS")
-			--     end,
-			--     width = E.FULL_WIDTH/4,
-			--     order = 41,
-			-- },
-			-- restoreSettings = {
-			--     type = "execute",
-			--     name = "Restore Settings",
-			--     func = function()
-			--         StaticPopup_Show("AIO_RESTORE_SETTINGS")
-			--     end,
-			--     width = E.FULL_WIDTH/4,
-			--     order = 43,
-			-- },
-			-- resetSettings = {
-			--     type = "execute",
-			--     name = "Reset Settings",
-			--     func = function()
-			--         StaticPopup_Show("AIO_RESET_EVERYTHING")
-			--     end,
-			--     width = E.FULL_WIDTH/4,
-			--     order = 43,
-			-- },
+			MainHeader24 = {
+				type = "header",
+				name = OTHER,
+				order = 37,
+			},
+			-------------------------------------------------
+			PortalsButtons = {
+				type = "toggle",
+				name = E.func_texturefromIcon(3610528, 20)..L["Portals"],
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.PortalsButtons
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.PortalsButtons = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 38,
+			},
+			-------------------------------------------------
+			PortalsButtonsOnlyCurrent = {
+				type = "toggle",
+				name = E.func_texturefromIcon(3610528).."PortalsButtonsOnlyCurrent",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 39,
+			},
+			-------------------------------------------------
+			ShowOnlyCurrentServer = {
+				type = "toggle",
+				name = L["Only Current Server"],
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 40,
+			},
+			-------------------------------------------------
+			ShowOnlyCurrentBattleTag = {
+				type = "toggle",
+				name = L["Only Current BattleTag"],
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.ShowOnlyCurrentBattleTag
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.ShowOnlyCurrentBattleTag = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 41,
+			},
+			-------------------------------------------------
+			ShowTotalMoney = {
+				type = "toggle",
+				name = "Всего денег",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.ShowTotalMoney
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.ShowTotalMoney = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 42,
+			},
+			-------------------------------------------------
+			ShowTimeAll = {
+				type = "toggle",
+				name = "Общее время игры",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.ShowTimeAll
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.ShowTimeAll = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 43,
+			},
+			-------------------------------------------------
+			ShowTimeMAXLEVEL = {
+				type = "toggle",
+				name = E.currentMaxLevel.." "..LEVEL,
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 44,
+			},
+			-------------------------------------------------
+			Dungeons = {
+				type = "toggle",
+				name = "КД инстов",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.Dungeons
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.Dungeons = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 45,
+			},
+			-------------------------------------------------
+			Professions = {
+				type = "toggle",
+				name = TRADE_SKILLS,
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.Professions
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.Professions = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 46,
+			},
+			-------------------------------------------------
+			Gold = {
+				type = "toggle",
+				name = BONUS_ROLL_REWARD_MONEY,
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.Gold
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.Gold = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 47,
+			},
+			-------------------------------------------------
+			ItemLevel = {
+				type = "toggle",
+				name = STAT_AVERAGE_ITEM_LEVEL,
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.ItemLevel
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.ItemLevel = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 48,
+			},
+			-------------------------------------------------
+			WasOnline = {
+				type = "toggle",
+				name = L["Was online"],
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.WasOnline
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.WasOnline = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 49,
+			},
+			-------------------------------------------------
+			["ExpansionToShow"] = {
+				type = "select",
+				name = "ExpansionToShow",
+				values = {},
+				sorting = {},
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.ExpansionToShow
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.ExpansionToShow = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 3,
+			},
+			-------------------------------------------------
+			["prefix"] = {
+				type = "select",
+				name = "prefix",
+				values = {},
+				sorting = {},
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.prefix
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.prefix = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 4,
+			},
+			-------------------------------------------------
 		},
 	}
+	if wipe == false then
+		wipe = true
+		-------------------------------------------------
+		for index, v in ipairs(E.OctoTable_Expansions_Table) do
+			generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r",
+			E.func_TableConcat(generalOptions.args.ExpansionToShow.sorting, {index})
+		end
+		-------------------------------------------------
+		for index, name in ipairs(E.wowhead_prefix_Table) do
+			generalOptions.args.prefix.values[index] = name
+			E.func_TableConcat(generalOptions.args.prefix.sorting, {index})
+		end
+		-------------------------------------------------
+	end
+	-------------------------------------------------
+	-- for index, v in next, (E.OctoTable_Expansions_Table) do
+	--     print (index, v.icon, v.name)
+	--     E.func_TableMerge(generalOptions.args, {
+	--             ["ExpansionToShow"] = {
+	--                 type = "select",
+	--                 name = "ExpansionToShow",
+	--                 desc = "",
+	--                 values = {
+	--                     [index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r",
+	--                 },
+	--                 sorting = {index},
+	--                 get = function()
+	--                     return Octo_ToDo_DB_Vars.config.ExpansionToShow
+	--                 end,
+	--                 set = function(_, value)
+	--                     Octo_ToDo_DB_Vars.config.ExpansionToShow = value
+	--                 end,
+	--                 width = E.FULL_WIDTH/4,
+	--                 order = 3,
+	--             },
+	--     })
+	-- end
+	-------------------------------------------------
+	-- prefix = {
+	--     type = "select",
+	--     name = "prefix",
+	--     desc = "",
+	--     values = {
+	--         [1] = "Русский", -- "ru.",
+	--         [2] = "Deutsch", -- "de.",
+	--         [3] = "English", -- "",
+	--         [4] = "Español", -- "es.",
+	--         [5] = "Français", -- "fr.",
+	--         [6] = "Italiano", -- "it.",
+	--         [7] = "Português Brasileiro", -- "pt.",
+	--         [8] = "Korean", -- "한국어", --"ko.",
+	--         [9] = "Chinese", -- "简体中文", --"cn.",
+	--     },
+	--     sorting = {1, 2, 3, 4, 5, 6, 7, 8, 9},
+	--     get = function()
+	--         return Octo_ToDo_DB_Vars.config.prefix
+	--     end,
+	--     set = function(_, value)
+	--         Octo_ToDo_DB_Vars.config.prefix = value
+	--     end,
+	--     width = E.FULL_WIDTH/4,
+	--     order = 4,
+	-- },
 	return generalOptions
 end
+

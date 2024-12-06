@@ -17,7 +17,7 @@ tinsert(E.Modules, function()
 			end
 			local function TEST_FUNC(self)
 				if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-					ChatFrame1:AddMessage(E.Blue_Color.."TEST_FUNC()".."|r")
+					DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."TEST_FUNC()".."|r")
 				end
 				local count = 0
 				for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do

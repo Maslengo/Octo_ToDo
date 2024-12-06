@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
-local ShowIDS = false
+local ShowIDS = true
 -- ITEMS
 local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
 local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
@@ -407,13 +407,6 @@ function E.func_GenerateUniqueColor()
 	return table.concat(s)
 end
 ----------------------------------------------------------------
-function E.func_TableConcat(table1, table2)
-	for i=1, #table2 do
-		table1[#table1+1] = table2[i]
-	end
-	return table1
-end
-----------------------------------------------------------------
 function E.func_PlaySoundFile_whisper(fileName)
 	if fileName then
 		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\"..fileName..".ogg", "Master")
@@ -496,7 +489,7 @@ function E.func_reputationName(reputationID)
 			name = repInfo.name
 		else
 			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
- 			-- name = reputationInfo.name or E.Blue_Color..SEARCH_LOADING_TEXT.."|r"
+			-- name = reputationInfo.name or E.Blue_Color..SEARCH_LOADING_TEXT.."|r"
 			name = reputationInfo.name or E.OctoTable_FACTIONTABLE[reputationID].name
 		end
 		vivod = vivod..name
@@ -1087,23 +1080,6 @@ function E.func_CurrentNumQuests()
 	return numQuests
 end
 ----------------------------------------------------------------
-function E.func_RemoveDuplicates(table1)
-	if type(table1) ~= "table" then
-		table1 = {}
-	end
-	local table2 = {}
-	local i = 1
-	while table1[i] do
-		local value = table1[i]
-		if table2[value] then
-			tremove(table1, i)
-		else
-			i = i + 1
-		end
-		table2[value] = true
-	end
-end
-----------------------------------------------------------------
 function E.ReloadUI()
 	return ReloadUI
 end
@@ -1262,7 +1238,7 @@ function E.STOP()
 	local timer = E.func_CompactNumberSimple(debugprofilestop())
 	local vivod = E.func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")
 	vivod = vivod..timer
-	return ChatFrame1:AddMessage(vivod.. "|cff63A4E0 ms.|r")
+	return DEFAULT_CHAT_FRAME:AddMessage(vivod.. "|cff63A4E0 ms.|r")
 end
 ----------------------------------------------------------------
 function E.func_dungeonName(dungeonID)
@@ -1315,20 +1291,55 @@ function E.FriendsFrame_GetLastOnline(timeDifference, isAbsolute)
 		return format(LASTONLINE_YEARS, floor(timeDifference / SECONDS_PER_YEAR))
 	end
 end
--- /dump C_BattleNet.GetFriendAccountInfo(1)
 ----------------------------------------------------------------
-function E.MergeTable(a, b) -- Non-destructively merges table b into table a
-	for k, v in pairs(b) do
-		if a[k] == nil or type(a[k]) ~= type(b[k]) then
-			a[k] = v
+function E.func_TableMerge(table1, table2)
+	for k, v in pairs(table2) do
+		if table1[k] == nil or type(table1[k]) ~= type(table2[k]) then
+			table1[k] = v
 			-- print("replacing key", k, v)
 		elseif type(v) == "table" then
-			a[k] = MergeTable(a[k], b[k])
+			table1[k] = MergeTable(table1[k], table2[k])
 		end
 	end
-	return a
+	return table1
 end
 ----------------------------------------------------------------
+function E.func_TableConcat(table1, table2)
+	for i = 1, #table2 do
+		table1[#table1+1] = table2[i]
+	end
+	return table1
+end
+----------------------------------------------------------------
+function E.func_TableRemoveDuplicates(table1)
+	if type(table1) ~= "table" then
+		table1 = {}
+	end
+	local table2 = {}
+	local i = 1
+	while table1[i] do
+		local value = table1[i]
+		if table2[value] then
+			tremove(table1, i)
+		else
+			i = i + 1
+		end
+		table2[value] = true
+	end
+end
+----------------------------------------------------------------
+function E.func_SetScriptAfter(frame, event, method, ids, func)
+	frame:SetScript(event, function(frame)
+		frame:SetScript(event, nil)
+		if frame.Disable then frame:Disable() end
+		if type(ids) == "function" then ids = ids() end
+		self[method](self, ids):Then(function()
+			func(frame)
+			frame:SetScript(event, func)
+			if frame.Enable then frame:Enable() end
+		end)
+	end)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

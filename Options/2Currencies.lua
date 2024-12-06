@@ -10,13 +10,6 @@ function E.Currencies()
 		name = CURRENCY,
 		args = {
 			-------------------------------------------------
-			Currenciesinstructions = {
-				type = "description",
-				name = "These options allow you to toggle various options.",
-				fontSize = "medium",
-				order = 1,
-			},
-			-------------------------------------------------
 			ReloadHeader4 = {
 				type = "header",
 				name = "",
@@ -33,13 +26,13 @@ function E.Currencies()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.config.Currency = value
 				end,
-				width = E.FULL_WIDTH/2, -- 1.8,
+				width = E.FULL_WIDTH/4, -- 1.8,
 				order = 3,
 			},
 			-------------------------------------------------
 			CurrencyShowAllways = {
 				type = "toggle",
-				name = ALWAYS_SHOW_MULTIBARS_TEXT,
+				name = BATTLEFIELD_MINIMAP_SHOW_ALWAYS,
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.config.CurrencyShowAllways
@@ -47,8 +40,38 @@ function E.Currencies()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.config.CurrencyShowAllways = value
 				end,
-				width = E.FULL_WIDTH/2, -- 1.8,
+				width = E.FULL_WIDTH/4, -- 1.8,
 				order = 4,
+			},
+			-------------------------------------------------
+			CurrencyALLTURNON = {
+				type = "execute",
+				name = ENABLE_ALL_ADDONS,
+				func = function()
+					for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
+						for CurrencyID, config in next, (tbl) do
+							OCTO_DB_currencies_test[currencyHEADER][CurrencyID] = true
+						end
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 5,
+			},
+			-------------------------------------------------
+			CurrencyALLTURNOFF = {
+				type = "execute",
+				name = "Выключить все",
+				func = function()
+					for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
+						for CurrencyID, config in next, (tbl) do
+							OCTO_DB_currencies_test[currencyHEADER][CurrencyID] = false
+						end
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 6,
 			},
 			-------------------------------------------------
 		},
@@ -59,7 +82,7 @@ function E.Currencies()
 		if OCTO_DB_currencies_test then
 			for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
 				index = index + 1
-				E.MergeTable(Currencies.args, {
+				E.func_TableMerge(Currencies.args, {
 						["addonNameHEADER57"..index] = {
 							type = "header",
 							name = currencyHEADER,
@@ -68,7 +91,7 @@ function E.Currencies()
 				})
 				for CurrencyID, config in next, (tbl) do
 					index = index + 1
-					E.MergeTable(Currencies.args, {
+					E.func_TableMerge(Currencies.args, {
 							["addonNameQWE7"..index] = {
 								type = "toggle",
 								name = E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID),
@@ -87,7 +110,7 @@ function E.Currencies()
 			end
 		end
 	end
-	E.MergeTable(Currencies.args, {
+	E.func_TableMerge(Currencies.args, {
 			["ReloadHeader4second322"..1] = {
 				type = "header",
 				name = "",

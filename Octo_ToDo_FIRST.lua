@@ -132,11 +132,11 @@ local MustBeHiddenFrames_table = {
 }
 local function MustBeHiddenFrames()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."MustBeHiddenFrames".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."MustBeHiddenFrames".."|r")
 	end
 	for _, v in next, (MustBeHiddenFrames_table) do
 		if v.frame and v.frame:IsShown() then
-			-- ChatFrame1:AddMessage(E.func_Gradient("Hide trash frames: ")..v.name)
+			-- DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide trash frames: ")..v.name)
 			v.frame:Hide()
 			-- v.frame:UnregisterAllEvents()
 		end
@@ -204,7 +204,7 @@ local function Central_Frame_Mouse_OnLeave(self)
 end
 local function checkCharInfo(self, GUID)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."checkCharInfo".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."checkCharInfo".."|r")
 	end
 	local localizedClass, englishClass, localizedRace, englishRace, sex, name, realmName = GetPlayerInfoByGUID(GUID)
 	-- /dump GetPlayerInfoByGUID("Player-1615-0B55FBC0")
@@ -561,7 +561,7 @@ local function CreateFrameUsableItems_OnLeave(self)
 end
 local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableItems_OnEvent".."|r"..event)
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableItems_OnEvent".."|r"..event)
 	end
 	if OctoToDo_FIRST_MainFramePIZZA:IsShown() then
 		if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
@@ -593,19 +593,19 @@ local function CreateFrameUsableItems_OnEvent(self, event, arg1, ...)
 end
 local function CreateFrameUsableItems_OnMouseDown(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableItems_OnMouseDown".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableItems_OnMouseDown".."|r")
 	end
 	self.icon:SetVertexColor(1, 1, 1, E.BGALPHA)
 end
 local function CreateFrameUsableItems_OnMouseUp(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableItems_OnMouseUp".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableItems_OnMouseUp".."|r")
 	end
 	self.icon:SetVertexColor(1, 1, 1, 1)
 end
 local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spellID)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableItems".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableItems".."|r")
 	end
 	local Button = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.itemID = itemID
@@ -644,7 +644,7 @@ local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spel
 end
 local function CreateFrameUsableSpells_OnEnter(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnEnter".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnEnter".."|r")
 	end
 	self.icon:SetVertexColor(1, 1, 1, 1)
 	GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT", 0, 0)
@@ -675,7 +675,7 @@ local function CreateFrameUsableSpells_OnEnter(self)
 end
 local function CreateFrameUsableSpells_OnLeave(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnLeave".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnLeave".."|r")
 	end
 	local isKnown = IsSpellKnown(self.spellID)
 	if isKnown == true then
@@ -695,7 +695,7 @@ local function CreateFrameUsableSpells_OnLeave(self)
 end
 local function CreateFrameUsableSpells_OnShow(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnShow".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnShow".."|r")
 	end
 	local startTime, duration = C_Spell.GetSpellCooldown(self.spellID)
 	local isKnown = IsSpellKnown(self.spellID)
@@ -713,7 +713,7 @@ local function CreateFrameUsableSpells_OnShow(self)
 end
 local function CreateFrameUsableSpells_OnEvent(self, event)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnEvent".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnEvent".."|r")
 	end
 	if OctoToDo_FIRST_MainFramePIZZA:IsShown() then
 		if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
@@ -737,7 +737,7 @@ local function CreateFrameUsableSpells_OnEvent(self, event)
 end
 local function CreateFrameUsableSpells_OnMouseDown(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnMouseDown".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnMouseDown".."|r")
 	end
 	local isKnown = IsSpellKnown(self.spellID)
 	if isKnown == true then
@@ -748,7 +748,7 @@ local function CreateFrameUsableSpells_OnMouseDown(self)
 end
 local function CreateFrameUsableSpells_OnMouseUp(self)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnMouseUp".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableSpells_OnMouseUp".."|r")
 	end
 	local isKnown = IsSpellKnown(self.spellID)
 	if isKnown == true then
@@ -759,7 +759,7 @@ local function CreateFrameUsableSpells_OnMouseUp(self)
 end
 local function CreateFrameUsableSpells(spellID, Texture, Xpos, Ypos, r, g, b)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."CreateFrameUsableSpells".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."CreateFrameUsableSpells".."|r")
 	end
 	local Button = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.spellID = spellID
@@ -804,7 +804,7 @@ local function CreateFrameUsableSpells(spellID, Texture, Xpos, Ypos, r, g, b)
 end
 local function Octo_ToDoDeleteChar(curGUID)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Octo_ToDoDeleteChar".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Octo_ToDoDeleteChar".."|r")
 	end
 	Octo_ToDo_DB_Players[curGUID] = nil
 	for X, Y in next, (OctoToDo_FIRST_MainFrame.AllCharFrames) do
@@ -847,7 +847,7 @@ local function Collect_ALL_PlayerInfo()
 	Octo_ToDoTrashCan.profileKeys = Octo_ToDoTrashCan.profileKeys or {}
 	Octo_ToDoTrashCan.profileKeys[curCharName.." - ".. curServer] = Octo_ToDoTrashCan.profileKeys[curCharName.." - ".. curServer] or "OctoUI"
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_PlayerInfo()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_PlayerInfo()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local curServerShort = E.func_CurServerShort(curServer)
@@ -920,7 +920,7 @@ end
 -- КОВЕНАНТ
 local function Collect_All_Covenant()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Covenant()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Covenant()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local curCovID = C_Covenants.GetActiveCovenantID() or 0
@@ -939,7 +939,7 @@ local function Collect_All_Covenant()
 end
 local function Collect_All_PlayerDurability()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Durability()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Durability()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local totalDurability = 100
@@ -972,7 +972,7 @@ local function Collect_All_PlayerDurability()
 end
 local function Collect_Player_Level()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_Player_Level()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_Player_Level()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local UnitLevel = UnitLevel("PLAYER") or 0
@@ -1005,7 +1005,7 @@ local function Collect_Player_Level()
 end
 local function Collect_Played(totalTime, currentLevelTime)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_Played()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_Played()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	if collect then
@@ -1015,7 +1015,7 @@ local function Collect_Played(totalTime, currentLevelTime)
 end
 local function Collect_WarMode()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_WarMode()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_WarMode()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local WarMode = C_PvP.IsWarModeDesired()
@@ -1025,7 +1025,7 @@ local function Collect_WarMode()
 end
 local function Collect_ALL_Mail()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_Mail()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_Mail()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local hasMail = HasNewMail()
@@ -1035,7 +1035,7 @@ local function Collect_ALL_Mail()
 end
 local function Collect_ALL_LoginTime()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_LoginTime()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_LoginTime()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	collect.loginDate = date("%d.%m.%Y %H:%M:%S")
@@ -1048,7 +1048,7 @@ local function Collect_ALL_LoginTime()
 end
 local function Collect_All_Professions()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Professions()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Professions()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	if collect then
@@ -1065,7 +1065,7 @@ local function Collect_All_Professions()
 end
 local function Collect_ALL_GreatVault()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_GreatVault".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_GreatVault".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local mapChallengeModeIDs = C_ChallengeMode.GetMapTable()
@@ -1217,7 +1217,7 @@ local function Collect_All_Reputations_TEST2()
 end
 local function Collect_All_Currency()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Currency()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Currency()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	Octo_ToDo_DB_Config = Octo_ToDo_DB_Config or {}
@@ -1323,7 +1323,7 @@ end
 local function Collect_All_Reputations()
 	-- /run C_Reputation.SetWatchedFactionByIndex(13)
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Reputations()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Reputations()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	if collect and not InCombatLockdown() then
@@ -1361,7 +1361,7 @@ local function func_coloredText(fontstring)
 end
 local function Collect_ALL_ItemsInBag()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_ItemsInBag()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_ItemsInBag()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local usedSlots = 0
@@ -1463,7 +1463,7 @@ local function Collect_ALL_ItemsInBag()
 end
 local function Collect_ALL_EncounterAndZoneLists()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_EncounterAndZoneLists()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_EncounterAndZoneLists()".."|r")
 	end
 	local clear = false
 	if clear == true then
@@ -1502,7 +1502,7 @@ local function Collect_ALL_EncounterAndZoneLists()
 end
 local function Collect_ALL_Locations()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_Locations()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_Locations()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local mapID = C_Map.GetBestMapForUnit("player")
@@ -1517,7 +1517,7 @@ local function Collect_ALL_Locations()
 end
 local function Collect_All_Quests()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Quests()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Quests()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
@@ -1534,7 +1534,7 @@ local function Collect_All_Quests()
 end
 local function Collect_ALL_ItemLevel()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_ItemLevel()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_ItemLevel()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvp = GetAverageItemLevel()
@@ -1546,7 +1546,7 @@ local function Collect_ALL_ItemLevel()
 end
 local function Collect_ALL_UNIVERSALQuestUpdate()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_UNIVERSALQuestUpdate()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_UNIVERSALQuestUpdate()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	collect.MASLENGO.UniversalQuest = collect.MASLENGO.UniversalQuest or {}
@@ -1583,14 +1583,14 @@ local function Collect_ALL_UNIVERSALQuestUpdate()
 end
 local function Collect_ALL_MoneyUpdate()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_MoneyUpdate()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_MoneyUpdate()".."|r")
 	end
 	Octo_ToDo_DB_Players[UnitGUID("PLAYER")].Money = GetMoney() or 0
 	Octo_ToDo_DB_Other.AccountMoney[BattleTagLocal] = C_Bank.FetchDepositedMoney(2)
 end
 local function Collect_ALL_MoneyOnLogin()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_MoneyOnLogin()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_ALL_MoneyOnLogin()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local Money = GetMoney()
@@ -1600,7 +1600,7 @@ local function Collect_ALL_MoneyOnLogin()
 end
 local function Collect_All_journalInstance()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_journalInstance()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_journalInstance()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	if not InCombatLockdown() then
@@ -1724,7 +1724,7 @@ local function function_restoreBackup()
 end
 local function OLD_Collect_All_Holiday()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Holiday()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Holiday()".."|r")
 	end
 	-- function_setBackup()
 	local collect = Octo_ToDo_DB_Other.Holiday
@@ -1774,7 +1774,7 @@ local function OLD_Collect_All_Holiday()
 end
 local function OLD_Collect_BfA_Azerite()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_BfA_Azerite()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_BfA_Azerite()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem()
@@ -1791,7 +1791,7 @@ local function OLD_Collect_BfA_Azerite()
 end
 local function OLD_Collect_BfA_Cloaklvl()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_BfA_Cloaklvl()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_BfA_Cloaklvl()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local hasItem = GetItemCount(169223, true, true, true)
@@ -1833,7 +1833,7 @@ local function OLD_Collect_BfA_Cloaklvl()
 end
 local function TRASH_Collect_All_Legion_Transmoge()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Legion_Transmoge()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Legion_Transmoge()".."|r")
 	end
 	local _, playerClass, classID = UnitClass("player")
 	for classFilename, v in pairs(E.OctoTable_CLASS_ARTIFACT_DATA) do
@@ -1905,7 +1905,7 @@ local function TRASH_Collect_All_Legion_Transmoge()
 end
 local function TRASH_Collect_All_Legion_TransmogeNEW()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Legion_TransmogeNEW()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_All_Legion_TransmogeNEW()".."|r")
 	end
 	Octo_ToDoTrashCan.Octo_ToDo_DB_LegionArtifacts = Octo_ToDoTrashCan.Octo_ToDo_DB_LegionArtifacts or {}
 	for className, classTable in pairs(E.OctoTable_LegionArtifacts) do
@@ -1926,7 +1926,7 @@ local function TRASH_Collect_All_Legion_TransmogeNEW()
 end
 local function OLD_Collect_BfA_QuestsBounties()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_BfA_QuestsBounties()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_BfA_QuestsBounties()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	collect["bounty_Legion1"] = 0
@@ -2016,7 +2016,7 @@ local function OLD_Collect_BfA_QuestsBounties()
 end
 local function OLD_Collect_BfA_Island()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_BfA_Island()".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Collect_BfA_Island()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
 	local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
@@ -2034,7 +2034,7 @@ local function Octo_ToDo_FIRST_OnLoad()
 end
 local function O_otrisovka_FIRST()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."O_otrisovka_FIRST".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."O_otrisovka_FIRST".."|r")
 	end
 	OctoTable_func_otrisovka_FIRST = {}
 	-- НИК ПЕРСОНАЖА
@@ -4310,7 +4310,7 @@ local function O_otrisovka_FIRST()
 		for _, v in next, (E.OctoTable_UniversalQuest) do
 			tinsert(list, v.desc)
 		end
-		E.func_RemoveDuplicates(list)
+		E.func_TableRemoveDuplicates(list)
 		sort(list)
 		for i, value in next, (list) do
 			tinsert(OctoTable_func_otrisovka_FIRST,
@@ -5393,7 +5393,7 @@ local function O_otrisovka_FIRST()
 end
 local function TotalMoneyCurServerOnShow()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."TotalMoneyCurServerOnShow".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."TotalMoneyCurServerOnShow".."|r")
 	end
 	local TotalMoneyCurServer = 0
 	for curCharGUID, CharInfo in next, (Octo_ToDo_DB_Players) do
@@ -5405,7 +5405,7 @@ local function TotalMoneyCurServerOnShow()
 end
 local function TotalMoneyAllServerOnShow()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."TotalMoneyAllServerOnShow".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."TotalMoneyAllServerOnShow".."|r")
 	end
 	local TotalMoneyAllServer = 0
 	local vivod = ""
@@ -5424,7 +5424,7 @@ local function TotalMoneyAllServerOnShow()
 end
 local function Token_PriceOnShow()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Token_PriceOnShow".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Token_PriceOnShow".."|r")
 	end
 	local vivod = ""
 	local TokenPrice = C_WowTokenPublic.GetCurrentMarketPrice()
@@ -5437,7 +5437,7 @@ local function Token_PriceOnShow()
 end
 local function TotalTimeAllServerOnShow()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."TotalTimeAllServerOnShow".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."TotalTimeAllServerOnShow".."|r")
 	end
 	local TotalTimeAllServer = 0
 	for curCharGUID, CharInfo in next, (Octo_ToDo_DB_Players) do
@@ -5449,7 +5449,7 @@ local function TotalTimeAllServerOnShow()
 end
 local function TotalTimeAllServer80OnShow()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."TotalTimeAllServer80OnShow".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."TotalTimeAllServer80OnShow".."|r")
 	end
 	local TotalTimeAllServer70 = 0
 	for curCharGUID, CharInfo in next, (Octo_ToDo_DB_Players) do
@@ -5477,7 +5477,7 @@ end
 -- end
 local function Octo_ToDo_FIRST_CreateAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Octo_ToDo_FIRST_CreateAltFrame".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Octo_ToDo_FIRST_CreateAltFrame".."|r")
 	end
 	OctoToDo_FIRST_MainFrame = CreateFrame("BUTTON", "OctoToDo_FIRST_MainFramePIZZA", UIParent, "BackdropTemplate")
 	OctoToDo_FIRST_MainFrame:Hide()
@@ -5741,7 +5741,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				local info = C_QuestLog.GetInfo(i)
 				if info then
 					if (not info.isHeader and not info.isHidden) then
-						ChatFrame1:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
+						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
 						C_QuestLog.SetSelectedQuest(info.questID)
 						C_QuestLog.SetAbandonQuest()
 						C_QuestLog.AbandonQuest()
@@ -5749,7 +5749,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				end
 			end
 		end
-		ChatFrame1:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
 	end
 	if Octo_ToDo_DB_Vars.config.AdditionalButtons == true then
 		if not OctoToDo_FIRST_AbandonButton then
@@ -6634,7 +6634,7 @@ CentralFrame_Pool = CreateFramePool("Frame", nil, "BackdropTemplate", resetPoolF
 ----------------------------------------------------------------
 function Octo_ToDo_FIRST_AddDataToAltFrame()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Octo_ToDo_FIRST_AddDataToAltFrame".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."Octo_ToDo_FIRST_AddDataToAltFrame".."|r")
 	end
 	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer
 	local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.config.ShowOnlyCurrentBattleTag
@@ -6782,7 +6782,7 @@ function TEST_FUNC()
 end
 function main_frame_toggle()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."main_frame_toggle".."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.Blue_Color.."main_frame_toggle".."|r")
 	end
 	local button = LibDBIcon:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
 	if not OctoToDo_FIRST_MainFrame.promise then
@@ -7194,7 +7194,7 @@ function Octo_EventFrame:SHOW_SUBSCRIPTION_INTERSTITIAL()
 		--------------------------------
 		if SubscriptionInterstitialFrame then
 			SubscriptionInterstitialFrame:SetScript("OnEvent", nil)
-			ChatFrame1:AddMessage(E.func_Gradient("Hide trash frames: ").."SubscriptionInterstitialFrame")
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide trash frames: ").."SubscriptionInterstitialFrame")
 		end
 	end
 end
@@ -7548,7 +7548,7 @@ end
 local editFrame, editBox = _G[GlobalAddonName.."EditFrame"], _G[GlobalAddonName.."EditFrame"].editFrame
 SLASH_GSEARCH1, SLASH_GSEARCH2 = "/gsearch", "/gs"
 SlashCmdList.GSEARCH = function(msg)
-	ChatFrame1:AddMessage (E.func_Gradient("GSEARCH: ") .. msg)
+	DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("GSEARCH: ") .. msg)
 	local str = ""
 	local list = {}
 	for i, n in next, (_G) do

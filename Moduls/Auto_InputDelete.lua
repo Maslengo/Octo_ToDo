@@ -1,14 +1,14 @@
 local GlobalAddonName, E = ...
+local LibStub = LibStub
+local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- InputDelete
 tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.InputDelete then
 			local TypeDeleteLine = gsub(DELETE_GOOD_ITEM, "[\r\n]", "@")
 			local void, TypeDeleteLine = strsplit("@", TypeDeleteLine, 2)
-			if not easyDelFrame then
-				easyDelFrame = CreateFrame("FRAME")
-				easyDelFrame:Hide()
-			end
+			local easyDelFrame = CreateFrame("FRAME")
+			easyDelFrame:Hide()
 			easyDelFrame:RegisterEvent("DELETE_ITEM_CONFIRM")
 			easyDelFrame:SetScript("OnEvent", function()
 					local i = 1

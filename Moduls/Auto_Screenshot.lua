@@ -26,44 +26,44 @@ tinsert(E.Modules, function()
 				local levelUpDelay = .1
 				local CurrentTime = date("%m/%d/%y %H:%M:%S")
 				if event == "SHOW_LOOT_TOAST_LEGENDARY_LOOTED" then
-					ChatFrame1:AddMessage (E.func_Gradient("Received a legendary item: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
+					DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Received a legendary item: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
 					C_Timer.After(generalDelay, function()
 							Screenshot()
 					end)
 				elseif event == "ACHIEVEMENT_EARNED" then
-					ChatFrame1:AddMessage (E.func_Gradient("Earned an achievement: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
+					DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Earned an achievement: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
 					C_Timer.After(generalDelay, function()
 							Screenshot()
 					end)
 				elseif event == "PLAYER_LEVEL_UP" then
-					ChatFrame1:AddMessage (E.func_Gradient("Leveled up: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
+					DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Leveled up: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
 					C_Timer.After(generalDelay, function()
 							Screenshot()
 					end)
 				elseif event == "CHALLENGE_MODE_COMPLETED" then
-					ChatFrame1:AddMessage (E.func_Gradient("Completed M+: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
+					DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Completed M+: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
 					C_Timer.After(generalDelay, function()
 							Screenshot()
 					end)
 				elseif (event == "NEW_MOUNT_ADDED" or event == "NEW_PET_ADDED" or event == "NEW_TOY_ADDED") then
 					if event == "NEW_MOUNT_ADDED" then
-						ChatFrame1:AddMessage (E.func_Gradient(CurrentTime, E.Addon_Left_Color, E.Addon_Right_Color))
+						DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient(CurrentTime, E.Addon_Left_Color, E.Addon_Right_Color))
 						C_Timer.After(generalDelay, function()
 								Screenshot()
 						end)
 					elseif event == "NEW_PET_ADDED" then
-						ChatFrame1:AddMessage (E.func_Gradient(CurrentTime, E.Addon_Left_Color, E.Addon_Right_Color))
+						DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient(CurrentTime, E.Addon_Left_Color, E.Addon_Right_Color))
 						C_Timer.After(generalDelay, function()
 								Screenshot()
 						end)
 					elseif event == "NEW_TOY_ADDED" then
-						ChatFrame1:AddMessage (E.func_Gradient(CurrentTime, E.Addon_Left_Color, E.Addon_Right_Color))
+						DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient(CurrentTime, E.Addon_Left_Color, E.Addon_Right_Color))
 						C_Timer.After(generalDelay, function()
 								Screenshot()
 						end)
 					end
 				elseif event == "TRADE_ACCEPT_UPDATE" then
-					ChatFrame1:AddMessage (E.func_Gradient("Completed M+: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
+					DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Completed M+: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
 					C_Timer.After(generalDelay, function()
 							Screenshot()
 					end)

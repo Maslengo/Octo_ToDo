@@ -11,7 +11,7 @@ tinsert(E.Modules, function()
 						-- CinematicFrame_CancelCinematic()
 						CinematicFrameCloseDialog:Hide()
 						CinematicFrameCloseDialogConfirmButton:Click()
-						ChatFrame1:AddMessage(E.func_Gradient("Cinematic canceled", E.Addon_Left_Color, E.Addon_Right_Color))
+						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Cinematic canceled", E.Addon_Left_Color, E.Addon_Right_Color))
 					end
 			end)
 			MovieFrame:HookScript("OnShow", function(self, ...)
@@ -26,7 +26,7 @@ tinsert(E.Modules, function()
 						-- return true
 						-- end
 						MovieFrame.CloseDialog.ConfirmButton:Click()
-						ChatFrame1:AddMessage(E.func_Gradient("Movie canceled", E.Addon_Left_Color, E.Addon_Right_Color))
+						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Movie canceled", E.Addon_Left_Color, E.Addon_Right_Color))
 					end
 			end)
 		end

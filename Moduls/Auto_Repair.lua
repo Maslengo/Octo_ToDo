@@ -6,19 +6,19 @@ tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.AutoRepair then
 			local function OnEvent(self, event)
 				if (CanMerchantRepair()) then
-					repairAllCost, canRepair = GetRepairAllCost()
+					local repairAllCost, canRepair = GetRepairAllCost()
 					local money = GetMoney()
 					local locale = GetLocale()
 					if canRepair and repairAllCost > money then
-						ChatFrame1:AddMessage(E.func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..GetCoinTextureString((repairAllCost-money)))
+						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..GetCoinTextureString((repairAllCost-money)))
 						if locale == "ruRU" then
 							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg", "Master")
 						else
 							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_ENG.ogg", "Master")
 						end
 					else if (canRepair and repairAllCost > 0) then
-							costTextureString = GetCoinTextureString(repairAllCost)
-							guildRepairedItems = false
+							local costTextureString = GetCoinTextureString(repairAllCost)
+							local guildRepairedItems = false
 							if (IsInGuild() and CanGuildBankRepair()) then
 								local amount = GetGuildBankWithdrawMoney()
 								local guildBankMoney = GetGuildBankMoney()
