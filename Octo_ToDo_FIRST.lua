@@ -60,9 +60,9 @@ E.func_LoadAddOn("SilverDragon_Overlay")
 E.func_LoadAddOn("SilverDragon_RangeExtender")
 E.func_LoadAddOn("TomTom")
 E.func_LoadAddOn("Pawn")
--- E.func_LoadAddOn("MySlot")
--- E.func_LoadAddOn("QuestsChanged")
--- E.func_LoadAddOn("AdvancedInterfaceOptions")
+E.func_LoadAddOn("MySlot")
+E.func_LoadAddOn("QuestsChanged")
+E.func_LoadAddOn("AdvancedInterfaceOptions")
 -- Octo_ToDo_FIRST_OnLoad
 local OctoToDo_FIRST_CharFrame = nil
 local OctpToDo_FIRST_inspectScantip = nil
@@ -173,6 +173,11 @@ local function ConcatAtStart()
 	for _, reputationID in next, (E.OctoTable_reputationID_Hidden) do
 		Octo_ToDo_DB_Config.ReputationDB[reputationID] = Octo_ToDo_DB_Config.ReputationDB[reputationID] or false
 	end
+	for _, reputationID in next, (E.OctoTable_reputation_ALL) do
+		Octo_ToDo_DB_Config.ReputationDB[reputationID] = Octo_ToDo_DB_Config.ReputationDB[reputationID] or false
+	end
+
+
 	for _, questID in next, (E.OctoTable_QuestID) do
 		Octo_ToDo_DB_Config.QuestsDB[questID] = Octo_ToDo_DB_Config.QuestsDB[questID] or false
 	end
@@ -1131,6 +1136,7 @@ local function Collect_All_Currency_TEST2()
 end
 local function Collect_All_Reputations_TEST2()
 	OCTO_DB_reputations_test = OCTO_DB_reputations_test or {}
+	Octo_ToDoTrashCan.Reputations = Octo_ToDoTrashCan.Reputations or {}
 	----------------------------------------------------------------
 	-- ОТКРЫТЬ C_Reputation.ExpandAllFactionHeaders()
 	----------------------------------------------------------------
@@ -1149,6 +1155,7 @@ local function Collect_All_Reputations_TEST2()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	local tblHeader
+	local tblHeader2
 	for index = 1, C_Reputation.GetNumFactions() do
 		local factionData = C_Reputation.GetFactionDataByIndex(index)
 		if factionData then
@@ -1159,8 +1166,13 @@ local function Collect_All_Reputations_TEST2()
 			if factionData.isHeader and currentStanding == 0 then
 				OCTO_DB_reputations_test[reputationID] = OCTO_DB_reputations_test[reputationID] or {}
 				tblHeader = OCTO_DB_reputations_test[reputationID]
+
+				Octo_ToDoTrashCan.Reputations[reputationID] = Octo_ToDoTrashCan.Reputations[reputationID] or {}
+				tblHeader2 = Octo_ToDoTrashCan.Reputations[reputationID]
 			else
 				tblHeader[reputationID] = tblHeader[reputationID] or false
+
+				tblHeader2[reputationID] = tblHeader2[reputationID] or false
 			end
 		end
 	end
@@ -6841,6 +6853,7 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 		if Octo_ToDo_DB_Other == nil then Octo_ToDo_DB_Other = {} end
 		if Octo_ToDoTrashCan.Octo_ToDo_DB_Artifact == nil then Octo_ToDoTrashCan.Octo_ToDo_DB_Artifact = {} end
 		if Octo_ToDoTrashCan.Octo_ToDo_DB_LegionArtifacts == nil then Octo_ToDoTrashCan.Octo_ToDo_DB_LegionArtifacts = {} end
+		if Octo_ToDoTrashCan.Reputations == nil then Octo_ToDoTrashCan.ReputationDB = {} end
 		if Octo_ToDo_DB_Config.CurrencyDB == nil then Octo_ToDo_DB_Config.CurrencyDB = {} end
 		if Octo_ToDo_DB_Config.ItemDB == nil then Octo_ToDo_DB_Config.ItemDB = {} end
 		if Octo_ToDo_DB_Config.QuestsDB == nil then Octo_ToDo_DB_Config.QuestsDB = {} end

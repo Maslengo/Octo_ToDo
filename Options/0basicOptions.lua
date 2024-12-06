@@ -21,8 +21,8 @@ function E.Init()
 	AceConfigDialog:AddToBlizOptions("Currencies", CURRENCY, E.AddonTitle)
 	AceConfigDialog:AddToBlizOptions("Reputations", REPUTATION, E.AddonTitle)
 	AceConfigDialog:AddToBlizOptions("Items", ITEMS, E.AddonTitle)
-	AceConfigDialog:AddToBlizOptions("LoadAddons", ADDONS, E.AddonTitle)
-	AceConfigDialog:AddToBlizOptions("Developing", "Developing", E.AddonTitle)
+	AceConfigDialog:AddToBlizOptions("LoadAddons", E.Skyblue_Color..ADDONS.."|r", E.AddonTitle)
+	AceConfigDialog:AddToBlizOptions("Developing", E.Green_Color.."Developing".."|r", E.AddonTitle)
 	----------------------------------------------------------------
 end
 

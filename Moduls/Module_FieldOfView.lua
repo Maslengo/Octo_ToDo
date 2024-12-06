@@ -3,7 +3,9 @@ local GlobalAddonName, E = ...
 local FieldOfView_EventFrame = nil
 function func_FieldOfView()
 	if Octo_ToDo_DB_Vars.config.FieldOfView == true then
+		print ("QWE")
 		function FieldOfView_OnLoad()
+			print ("FieldOfView_OnLoad")
 			if not FieldOfView_EventFrame then
 				FieldOfView_EventFrame = CreateFrame("FRAME", E.AddonTitle..E.func_GenerateUniqueID())
 				FieldOfView_EventFrame:Hide()
@@ -15,6 +17,7 @@ function func_FieldOfView()
 			end
 		end
 		function FieldOfView_OnEvent(self, event, ...)
+			print ("FieldOfView_OnEvent")
 			if event == "VARIABLES_LOADED" and not InCombatLockdown() then
 				Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
 				Octo_ToDo_DB_Vars.config = Octo_ToDo_DB_Vars.config or {}
@@ -30,6 +33,7 @@ function func_FieldOfView()
 			end
 		end
 		local function change_worldframe_setpoints(TOP, BOTTOM, LEFT, RIGHT, scale)
+			print ("change_worldframe_setpoints")
 			WorldFrame:ClearAllPoints()
 			WorldFrame:SetPoint("LEFT", (LEFT/scale), 0)
 			WorldFrame:SetPoint("RIGHT", -(RIGHT/scale), 0)
@@ -37,6 +41,7 @@ function func_FieldOfView()
 			WorldFrame:SetPoint("BOTTOM", 0, (BOTTOM/scale))
 		end
 		function FieldOfView_function()
+			print ("FieldOfView_function")
 			local scale = GetPhysicalScreenSize()/WorldFrame:GetWidth() -- 1.4
 			if Octo_ToDo_DB_Vars.config.FoV_top and Octo_ToDo_DB_Vars.config.FoV_bottom and Octo_ToDo_DB_Vars.config.FoV_left and Octo_ToDo_DB_Vars.config.FoV_right then
 				change_worldframe_setpoints(Octo_ToDo_DB_Vars.config.FoV_top, Octo_ToDo_DB_Vars.config.FoV_bottom, Octo_ToDo_DB_Vars.config.FoV_left, Octo_ToDo_DB_Vars.config.FoV_right, scale)

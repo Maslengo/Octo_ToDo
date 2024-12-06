@@ -251,7 +251,6 @@ E.Skyblue_Color = "|cff87CDEB"
 E.Steelblue_Color = "|cff4682B3"
 E.Slategray_Color = "|cff708090"
 E.Brown_Color = "|cff964B00"
-E.AccountWide_Color = "|cff9fc5e8"
 ----------------------------------------------------------------
 E.Kyrian_r_Color = 0.44
 E.Kyrian_g_Color = 0.66
