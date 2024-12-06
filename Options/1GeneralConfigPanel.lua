@@ -1,11 +1,10 @@
-local GlobalAddonName, E = ...
-local LibOctopussy = LibStub("LibOctopussy-1.0")
+local GlobalAddonName, E = ... 
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
 local continue = true
 local index = 0
-function E:CreateGeneralOptions()
+function E.CreateGeneralOptions()
 	local generalOptions = {
 		type = "group",
 		childGroups = "tree",
@@ -310,7 +309,7 @@ function E:CreateGeneralOptions()
 				name = "ExpansionToShow",
 				desc = "",
 				values = {
-					[1] = LibOctopussy:func_texturefromIcon(254094).."|cff68ccef".._G["EXPANSION_NAME"..(1 - 1)].."|r",
+					[1] = E.func_texturefromIcon(254094).."|cff68ccef".._G["EXPANSION_NAME"..(1 - 1)].."|r",
 					[2] = _G["EXPANSION_NAME"..(2 - 1)],
 					[3] = _G["EXPANSION_NAME"..(3 - 1)],
 					[4] = _G["EXPANSION_NAME"..(4 - 1)],

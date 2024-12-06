@@ -7,7 +7,7 @@ local GlobalAddonName, E = ...
 -- SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
 -- SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
 -- DEV_CVAR
-function E:LoadCVars()
+function E.LoadCVars()
 	-- print (E.Green_Color.."Load CVars|r")
 	SetCVar("overrideScreenFlash", 1)
 	SetCVar("CameraReduceUnexpectedMovement", 0)

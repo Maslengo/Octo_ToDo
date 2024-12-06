@@ -1,5 +1,4 @@
-local GlobalAddonName, E = ...
-local LibOctopussy = LibStub("LibOctopussy-1.0")
+local GlobalAddonName, E = ... 
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Gossip
 local targetNPCID = nil
@@ -18,7 +17,7 @@ end
 tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.Auto_Gossip then
 			if not Octo_AUTO_GOSSIP then
-				Octo_AUTO_GOSSIP = CreateFrame("Frame", GlobalAddonName.."Auto_Gossip"..LibOctopussy:func_GenerateUniqueID())
+				Octo_AUTO_GOSSIP = CreateFrame("Frame", GlobalAddonName.."Auto_Gossip"..E.func_GenerateUniqueID())
 				Octo_AUTO_GOSSIP:Hide()
 			end
 			Octo_AUTO_GOSSIP:RegisterEvent("GOSSIP_SHOW")
@@ -53,29 +52,29 @@ tinsert(E.Modules, function()
 								if #info == 1 then
 									C_GossipInfo.SelectOption(gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..LibOctopussy:func_texturefromIcon(icon)..name)
+									ChatFrame1:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
 								else
 									if govno_function(v.name) then
 										C_GossipInfo.SelectOption(gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..LibOctopussy:func_texturefromIcon(icon)..v.name)
+										ChatFrame1:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..v.name)
 									else
 										if E.First_Option[targetNPCID] and i == 1 then
 											C_GossipInfo.SelectOption(gossipOptionID)
 											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-											ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..LibOctopussy:func_texturefromIcon(icon)..name)
+											ChatFrame1:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
 										elseif E.Second_Option[targetNPCID] and i == 2 then
 											C_GossipInfo.SelectOption(gossipOptionID)
 											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-											ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..LibOctopussy:func_texturefromIcon(icon)..name)
+											ChatFrame1:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
 										elseif E.Third_Option[targetNPCID] and i == 3 then
 											C_GossipInfo.SelectOption(gossipOptionID)
 											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-											ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..LibOctopussy:func_texturefromIcon(icon)..name)
+											ChatFrame1:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
 										elseif E.Fourth_Option[targetNPCID] and i == 4 then
 											C_GossipInfo.SelectOption(gossipOptionID)
 											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-											ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..LibOctopussy:func_texturefromIcon(icon)..name)
+											ChatFrame1:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
 										end
 									end
 								end

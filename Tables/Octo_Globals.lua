@@ -1,16 +1,12 @@
 local GlobalAddonName, E = ...
-local LibStub = LibStub
-local LibOctopussy = LibStub("LibOctopussy-1.0")
-E.AddonTitle = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Title")
-E.AddonNotes = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Notes")
-E.AddonAuthor = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Author")
-E.AddonVersion = LibOctopussy:GetAddOnMetadata(GlobalAddonName, "Version")
+E.AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
+E.AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
+E.AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
+E.AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 ----------------------------------------------------------------
 E.OctoTable_Empty = {}
 E.Modules = {}
 E.Timers = {}
-E.DONE = LibOctopussy:DONE()
-E.NONE = LibOctopussy:NONE()
 E.spacer = "    "
 -------------------------------------------------------------------------
 -- Constants
@@ -174,13 +170,13 @@ E.regions = {
 	[5] = "cn"
 }
 -- E.isElvUI = IsAddOnLoaded("ElvUI")
-local _, _, _, isElvUI = LibOctopussy:GetAddOnInfo("ElvUI")
+local _, _, _, isElvUI = C_AddOns.GetAddOnInfo("ElvUI")
 E.isElvUI = isElvUI
-local _, _, _, isRCLootCouncil = LibOctopussy:GetAddOnInfo("RCLootCouncil")
+local _, _, _, isRCLootCouncil = C_AddOns.GetAddOnInfo("RCLootCouncil")
 E.isRCLootCouncil = isRCLootCouncil
-local _, _, _, isWeakAuras = LibOctopussy:GetAddOnInfo("WeakAuras")
+local _, _, _, isWeakAuras = C_AddOns.GetAddOnInfo("WeakAuras")
 E.isWeakAuras = isWeakAuras
-local _, _, _, isTomTom = LibOctopussy:GetAddOnInfo("TomTom")
+local _, _, _, isTomTom = C_AddOns.GetAddOnInfo("TomTom")
 E.isTomTom = isTomTom
 E.bgCr = 14/255
 E.bgCg = 14/255
@@ -267,6 +263,9 @@ E.Venthyr_r_Color = 0.88
 E.Venthyr_g_Color = 0.40
 E.Venthyr_b_Color = 0.40
 ----------------------------------------------------------------
+E.DONE = E.Green_Color.."Done".."|r"
+E.NONE = E.Gray_Color.."None".."|r"
+----------------------------------------------------------------
 -- local RAID_CLASS_COLORS = RAID_CLASS_COLORS
 -- local FONTEND = FONT_COLOR_CODE_CLOSE
 -- local GOLDFONT = NORMAL_FONT_COLOR_CODE
@@ -345,30 +344,3 @@ E.OctoTable_Covenant = {
 		b = 0.49,
 	},
 }
-local ShowIDS = true
-function E:func_reputationName(reputationID)
-	local vivod = ""
-	if reputationID and type(reputationID) == "number" then
-		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-		if isAccountWide == true then
-			vivod = E.Icon_AccountWide..vivod
-		end
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-		local name
-		if repInfo then
-			name = repInfo.name
-		else
-			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
-			-- name = reputationInfo.name or E.Blue_Color..SEARCH_LOADING_TEXT.."|r"
-			name = reputationInfo.name or E.OctoTable_FACTIONTABLE[reputationID].name
-		end
-		vivod = vivod..name
-		if ShowIDS == true and vivod ~= nil then
-			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
-		end
-		vivod = vivod
-	else
-		vivod = reputationID
-	end
-	return E.OctoTable_FACTIONTABLE[reputationID].faction..vivod
-end

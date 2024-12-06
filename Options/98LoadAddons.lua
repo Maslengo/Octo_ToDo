@@ -1,17 +1,16 @@
 local GlobalAddonName, E = ...
-local LibOctopussy = LibStub("LibOctopussy-1.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
 local continue = true
-function E:LoadAddons()
+function E.LoadAddons()
 	local LoadAddons = {
 		type = "group",
 		childGroups = "tree",
-		name = E.AddonTitle,
+		name = ADDONS,
 		args = {
 			-------------------------------------------------
-			instructions4 = {
+			LoadAddonsinstructions = {
 				type = "description",
 				name = "These options allow you to toggle various options.",
 				fontSize = "medium",
@@ -57,22 +56,22 @@ function E:LoadAddons()
 		},
 	}
 	-- for index = 1, C_AddOns.GetNumAddOns() do
-	-- 	local name = C_AddOns.GetAddOnInfo(index)
-	-- 	local title = select(2, C_AddOns.GetAddOnInfo(name)) or " "
-	-- 	local notes = select(3, C_AddOns.GetAddOnInfo(name)) or " "
-	-- 	print (index, name, title, notes)
+	--     local name = C_AddOns.GetAddOnInfo(index)
+	--     local title = select(2, C_AddOns.GetAddOnInfo(name)) or " "
+	--     local notes = select(3, C_AddOns.GetAddOnInfo(name)) or " "
+	--     print (index, name, title, notes)
 	-- end
 	if continue == true then
 		continue = false
 		for index, addonName in ipairs(E.OctoTable_LoadAddons) do
-		-- for index = 1, C_AddOns.GetNumAddOns() do
-		-- local addonName = C_AddOns.GetAddOnInfo(index)
-		-- -- local title = select(2, C_AddOns.GetAddOnInfo(addonName)) or " "
-		-- -- local notes = select(3, C_AddOns.GetAddOnInfo(addonName)) or " "
+			-- for index = 1, C_AddOns.GetNumAddOns() do
+			-- local addonName = C_AddOns.GetAddOnInfo(index)
+			-- -- local title = select(2, C_AddOns.GetAddOnInfo(addonName)) or " "
+			-- -- local notes = select(3, C_AddOns.GetAddOnInfo(addonName)) or " "
 			if C_AddOns.DoesAddOnExist(addonName) then
 				local title = select(2, C_AddOns.GetAddOnInfo(addonName)) or " "
 				local notes = select(3, C_AddOns.GetAddOnInfo(addonName)) or " "
-				LibOctopussy:MergeTable(LoadAddons.args, {
+				E.MergeTable(LoadAddons.args, {
 						["addonNameQWE"..index] = {
 							type = "toggle",
 							name = title,
@@ -88,7 +87,7 @@ function E:LoadAddons()
 						},
 				})
 			else
-				LibOctopussy:MergeTable(LoadAddons.args, {
+				E.MergeTable(LoadAddons.args, {
 						["addonNameQWE"..index] = {
 							type = "toggle",
 							name = E.Gray_Color..addonName.."|r",
@@ -106,12 +105,13 @@ function E:LoadAddons()
 			end
 		end
 	end
-				LibOctopussy:MergeTable(LoadAddons.args, {
-							["ReloadHeader4second322"..1] = {
-								type = "header",
-								name = "",
-								order = 322 + 1,
-							},
-					})
+	E.MergeTable(LoadAddons.args, {
+			["ReloadHeader4second322"..1] = {
+				type = "header",
+				name = "",
+				order = 322 + 1,
+			},
+	})
 	return LoadAddons
 end
+

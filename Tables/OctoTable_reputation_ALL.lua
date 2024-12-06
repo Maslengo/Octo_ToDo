@@ -249,7 +249,7 @@ E.OctoTable_FACTIONTABLE = {
 	[530] = {icon = "NONE", name = "Племя Черного Копья", faction = E.Icon_Horde, other = "Орда",},
 	[68] = {icon = "NONE", name = "Подгород", faction = E.Icon_Horde, other = "Орда",},
 	[2452] = {icon = "NONE", name = "Полемарх Адрест", faction = "", other = "Пепельный двор",},
-	[1859] = {icon = "NONE", name = "Помраченные", faction = E.Icon_Horde, other = "Legion",},
+	[1859] = {icon = "NONE", name = "Помраченные", faction = "", other = "Legion",}, -- E.Icon_Horde
 	[2089] = {icon = "NONE", name = "Помраченные (идеал)", faction = "", other = "Legion",},
 	[2469] = {icon = "NONE", name = "Понимание фракталов", faction = "", other = "Темные Земли",},
 	[2371] = {icon = "NONE", name = "Потасовочная \"У Бизмо\"", faction = "", other = "Силы Альянса",},

@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
-local LibOctopussy = LibStub("LibOctopussy-1.0")
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
@@ -21,9 +20,9 @@ local Octo_ToDo_SECOND_Frame_AbandonAllQuests_Button = nil
 local OctoToDo_SECOND_MainFrameDeleteButton = nil
 local className, classFilename, classId = UnitClass("PLAYER")
 local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
-local classColor = LibOctopussy:func_GetClassColor(classFilename)
+local classColor = E.func_GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
-local classColorHexCurrent = LibOctopussy:func_rgb2hex(r, g, b)
+local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
@@ -63,7 +62,7 @@ local function Central_Frame_Mouse_OnLeave(self)
 end
 local function Octo_ToDo_SECOND_OnLoad()
 	if not Octo_ToDo_SECOND_Frame_EventFrame then
-		Octo_ToDo_SECOND_Frame_EventFrame = CreateFrame("FRAME", E.AddonTitle..LibOctopussy:func_GenerateUniqueID())
+		Octo_ToDo_SECOND_Frame_EventFrame = CreateFrame("FRAME", E.AddonTitle..E.func_GenerateUniqueID())
 	end
 	for _, event in next, (E.OctoTable_Events) do
 		Octo_ToDo_SECOND_Frame_EventFrame:RegisterEvent(event)
@@ -91,7 +90,7 @@ local function O_otrisovka_SECOND()
 	end)
 	if Octo_ToDo_DB_Vars.config.AchievementToShow ~= nil then
 		for categoryID, v in next, (Octo_ToDo_DB_Vars.config.AchievementToShow) do
-			local ACHr, ACHg, ACHb = LibOctopussy:func_hex2rgbNUMBER(LibOctopussy:func_GenerateUniqueColor()),LibOctopussy:func_hex2rgbNUMBER(LibOctopussy:func_GenerateUniqueColor()),LibOctopussy:func_hex2rgbNUMBER(LibOctopussy:func_GenerateUniqueColor())
+			local ACHr, ACHg, ACHb = E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor()),E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor()),E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor())
 			if v ~= false then
 				local total = GetCategoryNumAchievements(categoryID, true)
 				if total then
@@ -101,7 +100,7 @@ local function O_otrisovka_SECOND()
 							if completedAchi == false or (completedAchi == Octo_ToDo_DB_Vars.config.AchievementShowCompleted) then
 								tinsert(OctoTable_func_otrisovka_SECOND, function(CharInfo, tooltip, CL, BG)
 										local vivodCent, vivodLeft = " ", " "
-										vivodLeft = LibOctopussy:func_texturefromIcon(icon)
+										vivodLeft = E.func_texturefromIcon(icon)
 										if rewardText ~= nil and rewardText and rewardText ~= "" and rewardText ~= " " then
 											vivodLeft = vivodLeft..E.Blue_Color.."*|r"
 										end
@@ -113,7 +112,7 @@ local function O_otrisovka_SECOND()
 										else
 											tooltip[#tooltip+1] = {E.Gray_Color.." id:"..AchievementID.."|r", " "}
 										end
-										vivodCent = LibOctopussy:func_achievementvivod(AchievementID)
+										vivodCent = E.func_achievementvivod(AchievementID)
 										local numCriteria = GetAchievementNumCriteria(AchievementID)
 										if numCriteria ~= 1 then
 											tooltip[#tooltip+1] = {description}
@@ -124,7 +123,7 @@ local function O_otrisovka_SECOND()
 										if numCriteria >= 1 then
 											tooltip[#tooltip+1] = {" ", " "}
 											for i = 1, numCriteria do
-												tooltip[#tooltip+1] = {LibOctopussy:func_achievementcriteriaString(AchievementID, i), LibOctopussy:func_achievementquantity(AchievementID, i)}
+												tooltip[#tooltip+1] = {E.func_achievementcriteriaString(AchievementID, i), E.func_achievementquantity(AchievementID, i)}
 											end
 										end
 										BG:SetColorTexture(ACHr, ACHg, ACHb, E.BGALPHA*2)
@@ -143,7 +142,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 		OctoToDo_SECOND_MainFrame = CreateFrame("BUTTON", "OctoToDo_SECOND_MainFramePIZZA", UIParent, "BackdropTemplate")
 		OctoToDo_SECOND_MainFrame:Hide()
 	end
-	local ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame"..LibOctopussy:func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame)
+	local ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame"..E.func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame)
 	local ScrollBar = CreateFrame("EventFrame", nil, ScrollFrame, "MinimalScrollBar")
 	ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 6, 0)
 	ScrollBar:SetPoint("BOTTOMLEFT", ScrollFrame, "BOTTOMRIGHT", 6, 0)
@@ -189,7 +188,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	OctoToDo_SECOND_MainFrame:SetScript("OnClick", function(self) self:Hide() end)
 	----------------------------------------------------------------
 	if not OctoToDo_SECOND_CloseButton then
-		OctoToDo_SECOND_CloseButton = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "BackDropTemplate")
+		OctoToDo_SECOND_CloseButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "BackDropTemplate")
 		OctoToDo_SECOND_CloseButton:SetSize(E.curHeight, E.curHeight)
 		OctoToDo_SECOND_CloseButton:SetPoint("BOTTOMRIGHT", OctoToDo_SECOND_MainFrame, "TOPRIGHT", (-E.curHeight)*0, 1)
 		OctoToDo_SECOND_CloseButton:SetBackdrop({
@@ -230,7 +229,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	end
 	----------------------------------------------------------------
 	if not OctoToDo_SECOND_OptionsButton then
-		OctoToDo_SECOND_OptionsButton = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "BackDropTemplate")
+		OctoToDo_SECOND_OptionsButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "BackDropTemplate")
 		OctoToDo_SECOND_OptionsButton:SetSize(E.curHeight, E.curHeight)
 		OctoToDo_SECOND_OptionsButton:SetPoint("BOTTOMRIGHT", OctoToDo_SECOND_MainFrame, "TOPRIGHT", (-E.curHeight)*1, 1)
 		OctoToDo_SECOND_OptionsButton:SetBackdrop({
@@ -268,7 +267,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	end
 	----------------------------------------------------------------
 	if not dd_SECOND then
-		local dd_SECOND = CreateFrame("Button", E.AddonTitle..LibOctopussy:func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+		local dd_SECOND = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_SECOND_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 		local multiply = (1/3)*2
 		dd_SECOND:SetSize(E.curWidthTitle*multiply, E.curHeight*multiply)
 		dd_SECOND:SetBackdrop({
@@ -312,7 +311,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 				local categoryID = categories[i]
 				local _, parentCategoryID = GetCategoryInfo(categoryID)
 				if arg1 and cID == parentCategoryID and Octo_ToDo_DB_Vars.config.AchievementToShow[categoryID] == true then
-					return LibOctopussy:func_Gradient(arg1.name)..arg1.vivod
+					return E.func_Gradient(arg1.name)..arg1.vivod
 				end
 			end
 			return arg1.name..arg1.vivod
@@ -327,7 +326,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 					local total, completed = GetCategoryNumAchievements(categoryID, true)
 					local vivod = " ("..completed.."/"..total..")"
 					if total == completed then
-						vivod = " "..LibOctopussy:DONE()
+						vivod = " "..E.DONE
 					else
 						if completed == 0 then
 							vivod = E.Red_Color..vivod.."|r"
@@ -391,7 +390,7 @@ local function Octo_ToDo_SECOND_CreateAltFrame()
 	for i = 1, #OctoTable_func_otrisovka_SECOND do
 		local fname, f
 		fname = "FrameLine"..i
-		OctoToDo_SECOND_MainFrame[fname] = CreateFrame("Frame", E.AddonTitle..LibOctopussy:func_GenerateUniqueID().."FrameLine"..i, OctoToDo_SECOND_MainFrame.scrollChild, "BackdropTemplate")
+		OctoToDo_SECOND_MainFrame[fname] = CreateFrame("Frame", E.AddonTitle..E.func_GenerateUniqueID().."FrameLine"..i, OctoToDo_SECOND_MainFrame.scrollChild, "BackdropTemplate")
 		f = OctoToDo_SECOND_MainFrame[fname]
 		f:SetHeight(E.curHeight)
 		f:SetPoint("TOPLEFT", OctoToDo_SECOND_MainFrame.scrollChild, "TOPLEFT", 0, -E.curHeight*(i-1))
@@ -436,7 +435,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			local curCharGUID = CharInfo.GUID
 			if not OctoToDo_SECOND_MainFrame[curCharGUID] then
-				OctoToDo_SECOND_MainFrame[curCharGUID] = CreateFrame("Frame", E.AddonTitle..LibOctopussy:func_GenerateUniqueID().."OctoToDo_SECOND_MainFrame[curCharGUID]", OctoToDo_SECOND_MainFrame.scrollChild, "BackdropTemplate")
+				OctoToDo_SECOND_MainFrame[curCharGUID] = CreateFrame("Frame", E.AddonTitle..E.func_GenerateUniqueID().."OctoToDo_SECOND_MainFrame[curCharGUID]", OctoToDo_SECOND_MainFrame.scrollChild, "BackdropTemplate")
 				OctoToDo_SECOND_CharFrame = OctoToDo_SECOND_MainFrame[curCharGUID]
 				OctoToDo_SECOND_CharFrame:SetPoint("BOTTOM", 0, 0)
 				OctoToDo_SECOND_CharFrame.BG = OctoToDo_SECOND_CharFrame:CreateTexture(nil, "BACKGROUND")
@@ -446,7 +445,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 				OctoToDo_SECOND_CharFrame.BG:SetColorTexture(r, g, b, 0) -- ЦВЕТ ФОНА
 				for i = 1, #OctoTable_func_otrisovka_SECOND do
 					CharInfo.GUID = curCharGUID
-					local CF = CreateFrame("Frame", E.AddonTitle..LibOctopussy:func_GenerateUniqueID().."CF"..i, OctoToDo_SECOND_CharFrame)
+					local CF = CreateFrame("Frame", E.AddonTitle..E.func_GenerateUniqueID().."CF"..i, OctoToDo_SECOND_CharFrame)
 					OctoToDo_SECOND_CharFrame["CenterLines"..i] = CF
 					CF.index = i
 					CF:SetSize(E.curWidthCentral, E.curHeight)
@@ -522,7 +521,6 @@ end
 function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 	if event == "VARIABLES_LOADED" and not InCombatLockdown() then
 		if Octo_ToDo_DB_Other == nil then Octo_ToDo_DB_Other = {} end
-		if Octo_Achi_MAIN == nil then Octo_Achi_MAIN = {} end
 		if Octo_ToDo_DB_Players == nil then Octo_ToDo_DB_Players = {} end
 		if Octo_ToDo_DB_Vars == nil then Octo_ToDo_DB_Vars = {} end
 		if Octo_ToDo_DB_Vars.config == nil then Octo_ToDo_DB_Vars.config = {} end
@@ -563,7 +561,7 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 				end,
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-					GameTooltip_SetTitle(GameTooltip, LibOctopussy:func_Gradient(GlobalAddonName.." Achievements", E.Green_Color, E.Addon_Right_Color).."|n".."ПКМ - Настройки")
+					GameTooltip_SetTitle(GameTooltip, E.func_Gradient(GlobalAddonName.." Achievements", E.Green_Color, E.Addon_Right_Color).."|n".."ПКМ - Настройки")
 					GameTooltip:Show()
 				end,
 				OnLeave = function()

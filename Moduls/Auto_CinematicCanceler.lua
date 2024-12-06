@@ -1,5 +1,4 @@
-local GlobalAddonName, E = ...
-local LibOctopussy = LibStub("LibOctopussy-1.0")
+local GlobalAddonName, E = ... 
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_CinematicCanceler
 tinsert(E.Modules, function()
@@ -12,7 +11,7 @@ tinsert(E.Modules, function()
 						-- CinematicFrame_CancelCinematic()
 						CinematicFrameCloseDialog:Hide()
 						CinematicFrameCloseDialogConfirmButton:Click()
-						ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Cinematic canceled", E.Addon_Left_Color, E.Addon_Right_Color))
+						ChatFrame1:AddMessage(E.func_Gradient("Cinematic canceled", E.Addon_Left_Color, E.Addon_Right_Color))
 					end
 			end)
 			MovieFrame:HookScript("OnShow", function(self, ...)
@@ -27,7 +26,7 @@ tinsert(E.Modules, function()
 						-- return true
 						-- end
 						MovieFrame.CloseDialog.ConfirmButton:Click()
-						ChatFrame1:AddMessage(LibOctopussy:func_Gradient("Movie canceled", E.Addon_Left_Color, E.Addon_Right_Color))
+						ChatFrame1:AddMessage(E.func_Gradient("Movie canceled", E.Addon_Left_Color, E.Addon_Right_Color))
 					end
 			end)
 		end

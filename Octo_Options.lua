@@ -2,10 +2,9 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0") 
-local LibOctopussy = LibStub("LibOctopussy-1.0")
 local number, steps, formatters 
 StaticPopupDialogs[GlobalAddonName.."GET_RELOAD"] = {
-	text = E.Red_Color.."!!! ACHTUNG !!!|r\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
+	text = "!!! ACHTUNG !!!\n".."Для применения изменений необходимо перезагрузить интерфейс. Сделать это сейчас?",
 	button1 = YES,
 	button2 = NO,
 	hideOnEscape = 1,
@@ -273,16 +272,10 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 					Octo_ToDo_DB_Players  = {}
 					Octo_ToDo_DB_Vars  = {}
 					Octo_ToDo_DB_Other  = {}
-					Octo_Achi_MAIN  = {}
 					Octo_ToDo_DB_Players_LIST  = {}
 					Octo_ToDo_Movies  = {}
-					Octo_ToDo_DB_Artifact  = {}
 					Octo_ToDo_DB_LegionArtifacts  = {}
-					OCTO_DB_currencies  = {}
-					OCTO_DB_currencies_sort  = {}
-					OCTO_DB_currencies_headers  = {}
 					OCTO_DB_currencies_test  = {}
-					OCTO_DB_reputations  = {}
 					OCTO_DB_reputations_test = {}
 					ReloadUI()
 				end
@@ -354,7 +347,7 @@ end
 local function Create_Frame_Color(scroll, self, number, pos, text, color)
 	if not color then color = "|cffFFFFFF" end
 	if not self[number..pos] then
-		local r, g, b = LibOctopussy:func_hex2rgb(color)
+		local r, g, b = E.func_hex2rgb(color)
 		self[number..pos] = CreateFrame("Frame", nil, scroll, "BackdropTemplate")
 		f = self[number..pos]
 		f:SetBackdrop({
@@ -403,7 +396,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		number = 1
 		btn_right1 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, 22) -- CreateStretchButtonOriginal
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
-		btn_right1:SetText(LibOctopussy:func_texturefromIcon(E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].icon)..E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].color..E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].name.."|r")
+		btn_right1:SetText(E.func_texturefromIcon(E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].icon)..E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].color..E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].name.."|r")
 		btn_right1:ddSetDisplayMode(GlobalAddonName)
 		-- btn_right1:ddSetOpenMenuUp(true) -- NEW
 		-- btn_right1:SetScript("OnClick", function(self)
@@ -411,7 +404,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		-- end)
 		local function selectFunctionExpansion(menuButton)
 			Octo_ToDo_DB_Vars.config.ExpansionToShow = menuButton.value
-			btn_right1:SetText(LibOctopussy:func_texturefromIcon(E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].icon)..E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].color..E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].name.."|r")
+			btn_right1:SetText(E.func_texturefromIcon(E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].icon)..E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].color..E.OctoTable_Expansions_Table[Octo_ToDo_DB_Vars.config.ExpansionToShow].name.."|r")
 			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
 		btn_right1:ddSetInitFunc(function(self, level, value)
@@ -479,7 +472,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 					GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.config.GameMenuFrameScale or 1)
 				end
 		end)
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 0, "PortalsButtons", LibOctopussy:func_texturefromIcon(3610528, 20)..L["Portals"])
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 0, "PortalsButtons", E.func_texturefromIcon(3610528, 20)..L["Portals"])
 		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 150, "PortalsButtonsOnlyCurrent", "Only current M+ Portals")
 		Create_CheckButton(MAIN_scrollChild, self, 24, POS_LEFT, 0, "ShowOnlyCurrentServer", L["Only Current Server"])
 		Create_CheckButton(MAIN_scrollChild, self, 24, POS_LEFT, 150, "ShowOnlyCurrentBattleTag", L["Only Current BattleTag"])
@@ -491,17 +484,17 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 29, POS_LEFT, 0, "Gold", BONUS_ROLL_REWARD_MONEY)
 		Create_CheckButton(MAIN_scrollChild, self, 30, POS_LEFT, 0, "ItemLevel", STAT_AVERAGE_ITEM_LEVEL)
 		Create_CheckButton(MAIN_scrollChild, self, 31, POS_LEFT, 0, "WasOnline", L["Was online"])
-		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, 0, "Achievements", LibOctopussy:func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."Achievements".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "ItemsUsable", LibOctopussy:func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsUsable".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "ItemsDelete", LibOctopussy:func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsDelete".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "StaticPopup1Button1", LibOctopussy:func_texturefromIcon(E.AddonTexture_5, indent)..E.Gray_Color.."StaticPopup1Button1".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "AdditionalButtons", LibOctopussy:func_texturefromIcon(E.AddonTexture_4, indent)..E.Gray_Color..L["Additional Buttons"].."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "CVar", LibOctopussy:func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."CVar".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "SellFrame", LibOctopussy:func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SellFrame".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "SpeedFrame.Shown", LibOctopussy:func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SpeedFrame.Shown".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 26, POS_RIGHT, 0, "Minecraft", LibOctopussy:func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."Minecraft".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 27, POS_RIGHT, 0, "Octo_debug_Function_FIRST", LibOctopussy:func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Debug".."|r")
-		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, 0, "Hide_ObjectivesInInstance", LibOctopussy:func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Hide_ObjectivesInInstance".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 18, POS_RIGHT, 0, "Achievements", E.func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."Achievements".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 19, POS_RIGHT, 0, "ItemsUsable", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsUsable".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 20, POS_RIGHT, 0, "ItemsDelete", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."ItemsDelete".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 21, POS_RIGHT, 0, "StaticPopup1Button1", E.func_texturefromIcon(E.AddonTexture_5, indent)..E.Gray_Color.."StaticPopup1Button1".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 22, POS_RIGHT, 0, "AdditionalButtons", E.func_texturefromIcon(E.AddonTexture_4, indent)..E.Gray_Color..L["Additional Buttons"].."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 23, POS_RIGHT, 0, "CVar", E.func_texturefromIcon(E.AddonTexture_3, indent)..E.Gray_Color.."CVar".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 24, POS_RIGHT, 0, "SellFrame", E.func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SellFrame".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 25, POS_RIGHT, 0, "SpeedFrame.Shown", E.func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."SpeedFrame.Shown".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 26, POS_RIGHT, 0, "Minecraft", E.func_texturefromIcon(E.AddonTexture_2, indent)..E.Gray_Color.."Minecraft".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 27, POS_RIGHT, 0, "Octo_debug_Function_FIRST", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Debug".."|r")
+		Create_CheckButton(MAIN_scrollChild, self, 28, POS_RIGHT, 0, "Hide_ObjectivesInInstance", E.func_texturefromIcon(E.AddonTexture_1, indent)..E.Gray_Color.."Hide_ObjectivesInInstance".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT, "ReloadUI", E.Blue_Color.."Reload UI".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT+150, "DELETEALL", E.Yellow_Color.."DELETEALL".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "Octo_ToDo_DB_Config", E.Gray_Color.."Config".."|r")
@@ -566,7 +559,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "MP_MythicKeystone",
-				text = LibOctopussy:func_texturefromIcon(4352494)..E.WOW_Epic_Color..L["Mythic Keystone"].."|r",
+				text = E.func_texturefromIcon(4352494)..E.WOW_Epic_Color..L["Mythic Keystone"].."|r",
 			},
 			{
 				text = QUESTS_LABEL,
@@ -574,7 +567,7 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "BeledarCycle",
-				text = E.Timers.TWW_BeledarCycle() .. LibOctopussy:func_questName(83240),
+				text = E.Timers.TWW_BeledarCycle() .. E.func_questName(83240),
 				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
@@ -594,12 +587,12 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "MajorKeyflames",
-				text = LibOctopussy:func_texturefromIcon(132863) .. L["Major Keyflames"],
+				text = E.func_texturefromIcon(132863) .. L["Major Keyflames"],
 				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
 				config = "MinorKeyflames",
-				text = LibOctopussy:func_texturefromIcon(135619) .. L["Minor Keyflames"],
+				text = E.func_texturefromIcon(135619) .. L["Minor Keyflames"],
 				r = E.Color_Quest_r, g = E.Color_Quest_g, b = E.Color_Quest_b,
 			},
 			{
@@ -613,27 +606,27 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "GildedHarbingerCrest",
-				text = LibOctopussy:func_currencyicon(2917)..E.WOW_Epic_Color..LibOctopussy:func_currencyName_NOCOLOR(2917).."|r",
+				text = E.func_currencyicon(2917)..E.WOW_Epic_Color..E.func_currencyName(2917).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "RunedHarbingerCrest",
-				text = LibOctopussy:func_currencyicon(2916)..E.WOW_Epic_Color..LibOctopussy:func_currencyName_NOCOLOR(2916).."|r",
+				text = E.func_currencyicon(2916)..E.WOW_Epic_Color..E.func_currencyName(2916).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "CarvedHarbingerCrest",
-				text = LibOctopussy:func_currencyicon(2915)..E.WOW_Rare_Color..LibOctopussy:func_currencyName_NOCOLOR(2915).."|r",
+				text = E.func_currencyicon(2915)..E.WOW_Rare_Color..E.func_currencyName(2915).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "WeatheredHarbingerCrest",
-				text = LibOctopussy:func_currencyicon(2914)..E.WOW_Rare_Color..LibOctopussy:func_currencyName_NOCOLOR(2914).."|r",
+				text = E.func_currencyicon(2914)..E.WOW_Rare_Color..E.func_currencyName(2914).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			-- {
 			-- config = "WeatheredHarbingerCrest",
-			-- text = LibOctopussy:func_currencyicon(3023)..E.WOW_Rare_Color..LibOctopussy:func_currencyName_NOCOLOR(3023).."|r",
+			-- text = E.func_currencyicon(3023)..E.WOW_Rare_Color..E.func_currencyName(3023).."|r",
 			-- r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			-- },
 		}
@@ -685,13 +678,13 @@ SECOND_Config:SetScript("OnShow", function(self)
 		for CurrencyID, v in next, (Octo_ToDo_DB_Config.CurrencyDB) do
 			tinsert(list, CurrencyID)
 		end
-		sort(list, LibOctopussy.func_Reverse_order)
+		sort(list, E.func_Reverse_order)
 		for k, CurrencyID in next, (list) do
 			tinsert(ConfigTable_SECOND_LEFT,
 				{
 					otstyp = 0,
 					config = CurrencyID,
-					text = LibOctopussy:func_currencyicon(CurrencyID)..LibOctopussy:func_currencyName(CurrencyID),
+					text = E.func_currencyicon(CurrencyID)..E.func_currencyName(CurrencyID),
 				}
 			)
 		end
@@ -748,13 +741,13 @@ THIRD_Config:SetScript("OnShow", function(self)
 			tinsert(list, reputationID)
 			-- end
 		end
-		sort(list, LibOctopussy.func_Reverse_order)
+		sort(list, E.func_Reverse_order)
 		for k, reputationID in next, (list) do
 			tinsert(ConfigTable_THIRD_LEFT,
 				{
 					otstyp = 0,
 					config = reputationID,
-					text = E:func_reputationName(reputationID),
+					text = E.func_reputationName(reputationID),
 				}
 			)
 		end
@@ -809,7 +802,7 @@ FOURTH_Config:SetScript("OnShow", function(self)
 		for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
 			tinsert(list, itemID)
 		end
-		sort(list, LibOctopussy.func_Reverse_order)
+		sort(list, E.func_Reverse_order)
 		for _, id in next, (E.OctoTable_itemID_Config) do
 			for k, itemID in next, (list) do
 				if id == itemID then
@@ -817,7 +810,7 @@ FOURTH_Config:SetScript("OnShow", function(self)
 						{
 							otstyp = 0,
 							config = itemID,
-							text = LibOctopussy:func_itemTexture(itemID)..LibOctopussy:func_itemName(itemID),
+							text = E.func_itemTexture(itemID)..E.func_itemName(itemID),
 						}
 					)
 				end
@@ -874,13 +867,13 @@ FIFTH_Config:SetScript("OnShow", function(self)
 		for QuestID, v in next, (Octo_ToDo_DB_Config.QuestsDB) do
 			tinsert(list, QuestID)
 		end
-		sort(list, LibOctopussy.func_Reverse_order)
+		sort(list, E.func_Reverse_order)
 		for k, QuestID in next, (list) do
 			tinsert(ConfigTable_FIFTH_LEFT,
 				{
 					otstyp = 0,
 					config = QuestID,
-					text = LibOctopussy:func_questName(QuestID),
+					text = E.func_questName(QuestID),
 				}
 			)
 		end
@@ -911,59 +904,59 @@ Settings.RegisterAddOnCategory(subcategory)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local SIXTH_Config = CreateFrame("ScrollFrame", GlobalAddonName.."SIXTH_Config")
-SIXTH_Config:Hide()
-local SIXTH_ScrollBar = CreateFrame("EventFrame", nil, SIXTH_Config, "MinimalScrollBar")
-SIXTH_ScrollBar:SetPoint("TOPLEFT", SIXTH_Config, "TOPRIGHT", 6, 0)
-SIXTH_ScrollBar:SetPoint("BOTTOMLEFT", SIXTH_Config, "BOTTOMRIGHT", 6, 0)
-local SIXTH_scrollChild = CreateFrame("Frame", nil, SIXTH_Config)
-SIXTH_Config:SetScrollChild(SIXTH_scrollChild)
-SIXTH_Config:SetAllPoints()
-SIXTH_scrollChild:SetSize(1, 1)
-ScrollUtil.InitScrollFrameWithScrollBar(SIXTH_Config, SIXTH_ScrollBar)
-local SIXTH_OnMouseWheel = SIXTH_Config:GetScript("OnMouseWheel")
-SIXTH_Config:SetScript("OnMouseWheel", function(self, ...)
-		if SIXTH_ScrollBar:IsShown() then
-			SIXTH_OnMouseWheel(self, ...)
-		end
-end)
-TITLE_SIXTH = SIXTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-TITLE_SIXTH:SetPoint("TOPLEFT", 4, 30)
-TITLE_SIXTH:SetText(E.AddonVersion)
-TITLE_SIXTH:SetTextColor(.5, .5, .5, 1)
-SIXTH_Config:SetScript("OnShow", function(self)
-		self:SetScript("OnShow", nil)
-		ConfigTable_SIXTH_LEFT = {
-		}
-		for CurrencyID, v in next, (OCTO_DB_currencies_sort) do
-			tinsert(ConfigTable_SIXTH_LEFT,
-				{
-					otstyp = 0,
-					config = CurrencyID,
-					text = OCTO_DB_currencies[CurrencyID],
-					qwe = v,
-				}
-			)
-		end
-		for i = 1, #ConfigTable_SIXTH_LEFT do
-			if ConfigTable_SIXTH_LEFT[i].otstyp == nil then ConfigTable_SIXTH_LEFT[i].otstyp = 0 end
-			if ConfigTable_SIXTH_LEFT[i].config == nil then ConfigTable_SIXTH_LEFT[i].config = 0 end
-			if ConfigTable_SIXTH_LEFT[i].text == nil then ConfigTable_SIXTH_LEFT[i].text = "" end
-			if ConfigTable_SIXTH_LEFT[i].r == nil then ConfigTable_SIXTH_LEFT[i].r = 0 end
-			if ConfigTable_SIXTH_LEFT[i].g == nil then ConfigTable_SIXTH_LEFT[i].g = 0 end
-			if ConfigTable_SIXTH_LEFT[i].b == nil then ConfigTable_SIXTH_LEFT[i].b = 0 end
-			if ConfigTable_SIXTH_LEFT[i].a == nil then ConfigTable_SIXTH_LEFT[i].a = 0 end
-			if ConfigTable_SIXTH_LEFT[i].button == nil then ConfigTable_SIXTH_LEFT[i].button = true end
-			Create_CheckButtonNEW(SIXTH_scrollChild, self, ConfigTable_SIXTH_LEFT[i].qwe, POS_LEFT, ConfigTable_SIXTH_LEFT[i].otstyp, ConfigTable_SIXTH_LEFT[i].config, ConfigTable_SIXTH_LEFT[i].text, ConfigTable_SIXTH_LEFT[i].r, ConfigTable_SIXTH_LEFT[i].g, ConfigTable_SIXTH_LEFT[i].b, ConfigTable_SIXTH_LEFT[i].a, ConfigTable_SIXTH_LEFT[i].button, Octo_ToDo_DB_Config.CurrencyDB)
-		end
-		Create_CheckButton(SIXTH_scrollChild, self, 1, POS_RIGHT, 0, "Currency", CURRENCY)
-		Create_CheckButtonNEW(SIXTH_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
-		Create_SimpleButton_DATABASE(SIXTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.CurrencyDB)
-		Create_SimpleButton_DATABASE(SIXTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.CurrencyDB)
-end)
-local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, SIXTH_Config, CURRENCY)
-subcategory.ID = L["InDev"].."SIXTH_Config"
-Settings.RegisterAddOnCategory(subcategory)
+-- local SIXTH_Config = CreateFrame("ScrollFrame", GlobalAddonName.."SIXTH_Config")
+-- SIXTH_Config:Hide()
+-- local SIXTH_ScrollBar = CreateFrame("EventFrame", nil, SIXTH_Config, "MinimalScrollBar")
+-- SIXTH_ScrollBar:SetPoint("TOPLEFT", SIXTH_Config, "TOPRIGHT", 6, 0)
+-- SIXTH_ScrollBar:SetPoint("BOTTOMLEFT", SIXTH_Config, "BOTTOMRIGHT", 6, 0)
+-- local SIXTH_scrollChild = CreateFrame("Frame", nil, SIXTH_Config)
+-- SIXTH_Config:SetScrollChild(SIXTH_scrollChild)
+-- SIXTH_Config:SetAllPoints()
+-- SIXTH_scrollChild:SetSize(1, 1)
+-- ScrollUtil.InitScrollFrameWithScrollBar(SIXTH_Config, SIXTH_ScrollBar)
+-- local SIXTH_OnMouseWheel = SIXTH_Config:GetScript("OnMouseWheel")
+-- SIXTH_Config:SetScript("OnMouseWheel", function(self, ...)
+-- 		if SIXTH_ScrollBar:IsShown() then
+-- 			SIXTH_OnMouseWheel(self, ...)
+-- 		end
+-- end)
+-- TITLE_SIXTH = SIXTH_Config:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+-- TITLE_SIXTH:SetPoint("TOPLEFT", 4, 30)
+-- TITLE_SIXTH:SetText(E.AddonVersion)
+-- TITLE_SIXTH:SetTextColor(.5, .5, .5, 1)
+-- SIXTH_Config:SetScript("OnShow", function(self)
+-- 		self:SetScript("OnShow", nil)
+-- 		ConfigTable_SIXTH_LEFT = {
+-- 		}
+-- 		for CurrencyID, v in next, (OCTO_DB_currencies_sort) do
+-- 			tinsert(ConfigTable_SIXTH_LEFT,
+-- 				{
+-- 					otstyp = 0,
+-- 					config = CurrencyID,
+-- 					text = OCTO_DB_currencies[CurrencyID],
+-- 					qwe = v,
+-- 				}
+-- 			)
+-- 		end
+-- 		for i = 1, #ConfigTable_SIXTH_LEFT do
+-- 			if ConfigTable_SIXTH_LEFT[i].otstyp == nil then ConfigTable_SIXTH_LEFT[i].otstyp = 0 end
+-- 			if ConfigTable_SIXTH_LEFT[i].config == nil then ConfigTable_SIXTH_LEFT[i].config = 0 end
+-- 			if ConfigTable_SIXTH_LEFT[i].text == nil then ConfigTable_SIXTH_LEFT[i].text = "" end
+-- 			if ConfigTable_SIXTH_LEFT[i].r == nil then ConfigTable_SIXTH_LEFT[i].r = 0 end
+-- 			if ConfigTable_SIXTH_LEFT[i].g == nil then ConfigTable_SIXTH_LEFT[i].g = 0 end
+-- 			if ConfigTable_SIXTH_LEFT[i].b == nil then ConfigTable_SIXTH_LEFT[i].b = 0 end
+-- 			if ConfigTable_SIXTH_LEFT[i].a == nil then ConfigTable_SIXTH_LEFT[i].a = 0 end
+-- 			if ConfigTable_SIXTH_LEFT[i].button == nil then ConfigTable_SIXTH_LEFT[i].button = true end
+-- 			Create_CheckButtonNEW(SIXTH_scrollChild, self, ConfigTable_SIXTH_LEFT[i].qwe, POS_LEFT, ConfigTable_SIXTH_LEFT[i].otstyp, ConfigTable_SIXTH_LEFT[i].config, ConfigTable_SIXTH_LEFT[i].text, ConfigTable_SIXTH_LEFT[i].r, ConfigTable_SIXTH_LEFT[i].g, ConfigTable_SIXTH_LEFT[i].b, ConfigTable_SIXTH_LEFT[i].a, ConfigTable_SIXTH_LEFT[i].button, Octo_ToDo_DB_Config.CurrencyDB)
+-- 		end
+-- 		Create_CheckButton(SIXTH_scrollChild, self, 1, POS_RIGHT, 0, "Currency", CURRENCY)
+-- 		Create_CheckButtonNEW(SIXTH_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, Octo_ToDo_DB_Vars.config)
+-- 		Create_SimpleButton_DATABASE(SIXTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, Octo_ToDo_DB_Config.CurrencyDB)
+-- 		Create_SimpleButton_DATABASE(SIXTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, Octo_ToDo_DB_Config.CurrencyDB)
+-- end)
+-- local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, SIXTH_Config, CURRENCY)
+-- subcategory.ID = L["InDev"].."SIXTH_Config"
+-- Settings.RegisterAddOnCategory(subcategory)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -999,25 +992,25 @@ SEVENTH_Config:SetScript("OnShow", function(self)
 		local v = 0
 		for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
 			v = v + 1
-			local r, g, b = LibOctopussy:func_hex2rgbNUMBER(E.Skyblue_Color)
+			local r, g, b = E.func_hex2rgbNUMBER(E.Skyblue_Color)
 			tinsert(ConfigTable_SEVENTH_LEFT,
 				{
 					otstyp = 0,
 					config = 0,
-					text = "    "..E:func_reputationName(reputationHEADER),
-					-- text = OCTO_DB_reputations[reputationHEADER],
+					text = "    "..E.func_reputationName(reputationHEADER),
 					qwe = v,
 					r = r, g = g, b = b,
 					button = false,
 			})
+
+
 			for reputationID, config in next, (tbl) do
 				v = v + 1
 				tinsert(ConfigTable_SEVENTH_LEFT,
 					{
 						otstyp = 0,
 						config = reputationID,
-						text = E:func_reputationName(reputationID),
-						-- text = E:func_reputationName(reputationID),
+						text = E.func_reputationName(reputationID),
 						qwe = v,
 						button = true,
 					}

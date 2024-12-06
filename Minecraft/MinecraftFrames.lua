@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
-----------------------------------------------------------------
-local LibOctopussy = LibStub("LibOctopussy-1.0")
+---------------------------------------------------------------- 
 local EventFrame = nil
 local AnchorFrame = nil
 local texture_FG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\minecraft.tga"
@@ -8,7 +7,7 @@ local texture_BG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\minecra
 -- local texture_FG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\ALL.tga"
 -- local texture_BG = "Interface\\Addons\\"..GlobalAddonName.."\\Minecraft\\ALL BG.tga"
 local startHiding = true
-local EmptyFrame = CreateFrame("BUTTON", GlobalAddonName..LibOctopussy:func_GenerateUniqueID(), UIParent)
+local EmptyFrame = CreateFrame("BUTTON", GlobalAddonName..E.func_GenerateUniqueID(), UIParent)
 EmptyFrame.FG = EmptyFrame:CreateTexture()
 EmptyFrame.FG:SetPoint("CENTER")
 EmptyFrame.FG:SetTexture(texture_FG)
@@ -28,7 +27,7 @@ end
 ----------------------------------------------------------------
 local function Create_AnchorFrame()
 	if AnchorFrame == nil then
-		AnchorFrame = CreateFrame("BUTTON", GlobalAddonName..LibOctopussy:func_GenerateUniqueID(), UIParent)
+		AnchorFrame = CreateFrame("BUTTON", GlobalAddonName..E.func_GenerateUniqueID(), UIParent)
 	end
 	AnchorFrame:Hide()
 	AnchorFrame:SetPoint("TOPLEFT", 0, 0)
@@ -55,7 +54,7 @@ end
 local function Create_Colored_Frames(anchor, self, number, text, color, height, width)
 	if color == nil then color = "|cffFFFFFF" end
 	if self[number] == nil then
-		local r, g, b = LibOctopussy:func_hex2rgb(color)
+		local r, g, b = E.func_hex2rgb(color)
 		self[number] = CreateFrame("Frame", nil, anchor, "BackdropTemplate")
 		frame = self[number]
 		if startHiding == true then frame:Hide() end

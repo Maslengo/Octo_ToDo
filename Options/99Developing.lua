@@ -1,16 +1,15 @@
 local GlobalAddonName, E = ...
-local LibOctopussy = LibStub("LibOctopussy-1.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
-function E:Developing()
+function E.Developing()
 	local Developing = {
 		type = "group",
 		childGroups = "tree",
-		name = E.AddonTitle,
+		name = "Developing",
 		args = {
 			-------------------------------------------------
-			instructions3 = {
+			Developinginstructions = {
 				type = "description",
 				name = "These options allow you to toggle various options.",
 				fontSize = "medium",
@@ -43,7 +42,6 @@ function E:Developing()
 					Octo_ToDo_DB_Players  = {}
 					Octo_ToDo_DB_Vars  = {}
 					Octo_ToDo_DB_Other  = {}
-					Octo_Achi_MAIN  = {}
 					Octo_ToDo_DB_Players_LIST  = {}
 					Octo_ToDo_Movies  = {}
 					Octo_ToDo_DB_Artifact  = {}

@@ -1,8 +1,7 @@
-local GlobalAddonName, E = ...
-local LibOctopussy = LibStub("LibOctopussy-1.0")
+local GlobalAddonName, E = ... 
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Open
-local Octo_AUTO_OPEN = CreateFrame("Frame", GlobalAddonName.."Auto_Open"..LibOctopussy:func_GenerateUniqueID())
+local Octo_AUTO_OPEN = CreateFrame("Frame", GlobalAddonName.."Auto_Open"..E.func_GenerateUniqueID())
 Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")
 Octo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
 Octo_AUTO_OPEN:RegisterEvent("LOOT_READY")
@@ -22,7 +21,7 @@ local function OpenableScan()
 						if iconFileID and itemLink and not InCombatLockdown() then
 							C_Timer.After(1, function()
 									C_Container.UseContainerItem(bag, numSlots)
-									print (LibOctopussy:func_Gradient("Auto Open Item ", E.Addon_Left_Color, E.Addon_Right_Color), LibOctopussy:func_texturefromIcon(iconFileID)..itemLink)
+									print (E.func_Gradient("Auto Open Item ", E.Addon_Left_Color, E.Addon_Right_Color), E.func_texturefromIcon(iconFileID)..itemLink)
 							end)
 						end
 					end

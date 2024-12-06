@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
-local LibStub = LibStub
-local LibOctopussy = LibStub("LibOctopussy-1.0")
+local LibStub = LibStub 
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -38,8 +37,8 @@ tinsert(E.Modules, function()
 						local point, _, relativePoint, xOfs, yOfs = f:GetPoint()
 						vars.point = point
 						vars.relativePoint = relativePoint
-						vars.xOfs = LibOctopussy:func_CompactNumberSimple(xOfs)
-						vars.yOfs = LibOctopussy:func_CompactNumberSimple(yOfs)
+						vars.xOfs = E.func_CompactNumberSimple(xOfs)
+						vars.yOfs = E.func_CompactNumberSimple(yOfs)
 						LibCustomGlow.ButtonGlow_Stop(f)
 				end)
 				f.text_glide = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -59,14 +58,14 @@ tinsert(E.Modules, function()
 						local base = isGliding and forwardSpeed or GetUnitSpeed("PLAYER")
 						local movespeed = base/BASE_MOVEMENT_SPEED*100
 						if forwardSpeed > 1 then
-							f.text_glide:SetText("glide: ".. LibOctopussy:func_CompactNumberSimple(forwardSpeed))
+							f.text_glide:SetText("glide: ".. E.func_CompactNumberSimple(forwardSpeed))
 							f.text_movespeed:SetPoint("CENTER", 0, -7)
 						else
 							f.text_glide:SetText("")
 							f.text_movespeed:SetPoint("CENTER", 0, 0)
 						end
 						if movespeed ~= 0 then
-							f.text_movespeed:SetText(LibOctopussy:func_CompactNumberSimple(movespeed))
+							f.text_movespeed:SetText(E.func_CompactNumberSimple(movespeed))
 						else
 							f.text_movespeed:SetText("")
 						end

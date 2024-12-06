@@ -1,5 +1,4 @@
-local GlobalAddonName, E = ...
-local LibOctopussy = LibStub("LibOctopussy-1.0")
+local GlobalAddonName, E = ... 
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Turn_Quests
 tinsert(E.Modules, function()
@@ -7,7 +6,7 @@ tinsert(E.Modules, function()
 			local Octo_AutoTurnInFrame_EventFrame = nil
 			function Octo_AutoTurnInOnLoad()
 				if not Octo_AutoTurnInFrame_EventFrame then
-					Octo_AutoTurnInFrame_EventFrame = CreateFrame("FRAME", GlobalAddonName.."Auto_Turn_Quests"..LibOctopussy:func_GenerateUniqueID())
+					Octo_AutoTurnInFrame_EventFrame = CreateFrame("FRAME", GlobalAddonName.."Auto_Turn_Quests"..E.func_GenerateUniqueID())
 				end
 				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_DETAIL")
 				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_COMPLETE")

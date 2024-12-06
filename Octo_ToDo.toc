@@ -2,9 +2,9 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o|r |cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v81.5(11.0.5)(06.12.2024)
+## Version: v81.6(11.0.5)(06.12.2024)
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_1
-## SavedVariables: profileKeys OctoPlayer Octo_ToDo_DB_Config Octo_ToDo_DB_Players Octo_ToDo_DB_Vars Octo_ToDo_DB_Other Octo_Achi_MAIN Octo_ToDo_DB_Players_LIST Octo_ToDo_Movies Octo_ToDo_DB_Artifact Octo_ToDo_DB_LegionArtifacts OCTO_DB_currencies OCTO_DB_currencies_sort OCTO_DB_currencies_headers OCTO_DB_currencies_test OCTO_DB_reputations OCTO_DB_reputations_test
+## SavedVariables: profileKeys Octo_ToDo_DB_Config Octo_ToDo_DB_Players Octo_ToDo_DB_Vars Octo_ToDo_DB_Other Octo_ToDo_DB_Players_LIST OCTO_DB_currencies_test OCTO_DB_reputations_test
 
 Libs\embeds.xml
 fprint\templates.xml
@@ -32,8 +32,9 @@ Tables\OctoTable_reputation_ALL.lua
 Tables\OctoTable_UniversalQuest.lua
 Tables\wowhead_prefix_Table.lua
 Tables\OctoTable_Gossip.lua
-Tables\Octo_Functions.lua
 Tables\OctoTable_Spells.lua
+
+Tables\Octo_Functions.lua
 
 Minecraft\MinecraftFrames.lua
 Minecraft\MinecraftColors.lua
@@ -60,7 +61,6 @@ Moduls\Hide_RaidWarningFrame.lua
 Moduls\Hide_Talking_Head_Frame.lua
 Moduls\Hide_Zone_Text.lua
 Moduls\Module_FieldOfView.lua
-Moduls\Module_Global_Fade_Persist.lua
 Moduls\Module_ItemsDelete.lua
 Moduls\Module_ItemsUsable.lua
 Moduls\Module_UIErrorsFramePosition.lua
@@ -78,7 +78,11 @@ Octo_SharedMedia.lua
 
 Octo_Options.lua
 
-Options\1basicOptions.lua
-Options\2GeneralConfigPanel.lua
-Options\3Developing.lua
-Options\4LoadAddons.lua
+Options\0basicOptions.lua
+
+Options\1GeneralConfigPanel.lua
+Options\2Reputations.lua
+Options\3Currencies.lua
+
+Options\98LoadAddons.lua
+Options\99Developing.lua

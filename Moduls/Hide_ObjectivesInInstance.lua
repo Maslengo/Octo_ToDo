@@ -1,5 +1,4 @@
-local GlobalAddonName, E = ...
-local LibOctopussy = LibStub("LibOctopussy-1.0")
+local GlobalAddonName, E = ... 
 ----------------------------------------------------------------------------------------------------------------------------------
 --Hide_ObjectivesInInstance
 tinsert(E.Modules, function()
@@ -8,7 +7,7 @@ tinsert(E.Modules, function()
 			-- local classColor = C_ClassColor.GetClassColor(classFilename)
 			-- local r, g, b = classColor:GetRGB()
 			-- local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
-			-- local classColorHexCurrent = LibOctopussy:func_rgb2hex(r, g, b)
+			-- local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 			-- function Hide_ObjectivesInInstanceOnLoad()
 			-- 	local EventFrame = nil
 			-- 	if not EventFrame then

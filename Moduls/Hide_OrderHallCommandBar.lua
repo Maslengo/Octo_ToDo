@@ -1,5 +1,4 @@
-local GlobalAddonName, E = ...
-local LibOctopussy = LibStub("LibOctopussy-1.0")
+local GlobalAddonName, E = ... 
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Hide_OrderHallCommandBar
 
@@ -11,7 +10,7 @@ tinsert(E.Modules, function()
 				_G.OrderHallCommandBar:SetScript("OnShow", _G.OrderHallCommandBar.Hide)
 				_G.OrderHallCommandBar:Hide()
 				UIParent:UnregisterEvent("UNIT_AURA") --Only used for OrderHall Bar
-				ChatFrame1:AddMessage(LibOctopussy:func_Gradient("OrderHallCommandBar Hide", E.Addon_Left_Color, E.Addon_Right_Color))
+				ChatFrame1:AddMessage(E.func_Gradient("OrderHallCommandBar Hide", E.Addon_Left_Color, E.Addon_Right_Color))
 		end
 
 		if _G.OrderHallCommandBar then
