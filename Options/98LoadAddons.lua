@@ -33,17 +33,17 @@ function E.LoadAddons()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.config.LoadAddons = value
 				end,
-				width = E.HALF_WIDTH, -- "full",
+				width = E.FULL_WIDTH/2, -- "full",
 				order = 3,
 			},
 			-------------------------------------------------
 			Reload4 = {
 				type = "execute",
-				name = E.White_Color.."Reload UI".."|r",
+				name = RELOADUI,
 				func = function()
 					return ReloadUI()
 				end,
-				width = E.HALF_WIDTH,
+				width = E.FULL_WIDTH/2,
 				order = 4,
 			},
 			-------------------------------------------------
@@ -82,7 +82,7 @@ function E.LoadAddons()
 							set = function(_, value)
 								Octo_ToDo_DB_Vars.config.Load[addonName] = value
 							end,
-							width = E.HALF_WIDTH,
+							width = E.FULL_WIDTH/2,
 							order = 6 + index,
 						},
 				})
@@ -98,7 +98,7 @@ function E.LoadAddons()
 							set = function(_, value)
 								Octo_ToDo_DB_Vars.config.Load[addonName] = false
 							end,
-							width = E.HALF_WIDTH,
+							width = E.FULL_WIDTH/2,
 							order = 999 + index,
 						},
 				})

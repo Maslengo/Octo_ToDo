@@ -606,27 +606,27 @@ FIRST_Config:SetScript("OnShow", function(self)
 			},
 			{
 				config = "GildedHarbingerCrest",
-				text = E.func_currencyicon(2917)..E.WOW_Epic_Color..E.func_currencyName(2917).."|r",
+				text = E.func_currencyIcon(2917)..E.WOW_Epic_Color..E.func_currencyName(2917).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "RunedHarbingerCrest",
-				text = E.func_currencyicon(2916)..E.WOW_Epic_Color..E.func_currencyName(2916).."|r",
+				text = E.func_currencyIcon(2916)..E.WOW_Epic_Color..E.func_currencyName(2916).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "CarvedHarbingerCrest",
-				text = E.func_currencyicon(2915)..E.WOW_Rare_Color..E.func_currencyName(2915).."|r",
+				text = E.func_currencyIcon(2915)..E.WOW_Rare_Color..E.func_currencyName(2915).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			{
 				config = "WeatheredHarbingerCrest",
-				text = E.func_currencyicon(2914)..E.WOW_Rare_Color..E.func_currencyName(2914).."|r",
+				text = E.func_currencyIcon(2914)..E.WOW_Rare_Color..E.func_currencyName(2914).."|r",
 				r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			},
 			-- {
 			-- config = "WeatheredHarbingerCrest",
-			-- text = E.func_currencyicon(3023)..E.WOW_Rare_Color..E.func_currencyName(3023).."|r",
+			-- text = E.func_currencyIcon(3023)..E.WOW_Rare_Color..E.func_currencyName(3023).."|r",
 			-- r = E.Color_Crest_r, g = E.Color_Crest_g, b = E.Color_Crest_b,
 			-- },
 		}
@@ -684,7 +684,7 @@ SECOND_Config:SetScript("OnShow", function(self)
 				{
 					otstyp = 0,
 					config = CurrencyID,
-					text = E.func_currencyicon(CurrencyID)..E.func_currencyName(CurrencyID),
+					text = E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID),
 				}
 			)
 		end

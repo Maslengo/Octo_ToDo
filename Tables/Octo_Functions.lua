@@ -642,7 +642,7 @@ function E.func_currencyName_NOCOLOR(currencyID)
 	return vivod
 end
 ----------------------------------------------------------------
-function E.func_currencyicon(currencyID)
+function E.func_currencyIcon(currencyID)
 	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 	if info then
 		iconFileID = info.iconFileID

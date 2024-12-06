@@ -409,7 +409,7 @@ SlashCmdList.OCTOLISTCURRENCIES = function(msg)
 			local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 			local quantity = currencyInfo.quantity
 			if currencyID then
-				str3 = str3 ..tostringall(currencyID) .. " - ".. E.func_currencyicon(currencyID)..E.func_currencyName(currencyID) .." ("..quantity..")".. "\n"
+				str3 = str3 ..tostringall(currencyID) .. " - ".. E.func_currencyIcon(currencyID)..E.func_currencyName(currencyID) .." ("..quantity..")".. "\n"
 			end
 		end
 		i = i + 1

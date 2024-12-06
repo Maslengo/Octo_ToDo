@@ -24,37 +24,28 @@ function E.Developing()
 			-------------------------------------------------
 			Reload = {
 				type = "execute",
-				name = E.White_Color.."Reload UI".."|r",
+				name = RELOADUI,
 				func = function()
 					return ReloadUI()
 				end,
-				width = E.HALF_WIDTH,
+				width = E.FULL_WIDTH/2,
 				order = 3,
 			},
 			-------------------------------------------------
 			DELETEALL = {
 				type = "execute",
-				name = E.Yellow_Color.."DELETEALL".."|r",
+				name = DELETE.." "..ALL,
 				func = function()
 					profileKeys = {}
-					OctoPlayer = {}
-					Octo_ToDo_DB_Config  = {}
-					Octo_ToDo_DB_Players  = {}
-					Octo_ToDo_DB_Vars  = {}
-					Octo_ToDo_DB_Other  = {}
-					Octo_ToDo_DB_Players_LIST  = {}
-					Octo_ToDo_Movies  = {}
-					Octo_ToDo_DB_Artifact  = {}
-					Octo_ToDo_DB_LegionArtifacts  = {}
-					OCTO_DB_currencies  = {}
-					OCTO_DB_currencies_sort  = {}
-					OCTO_DB_currencies_headers  = {}
-					OCTO_DB_currencies_test  = {}
-					OCTO_DB_reputations  = {}
+					Octo_ToDo_DB_Config = {}
+					Octo_ToDo_DB_Players = {}
+					Octo_ToDo_DB_Vars = {}
+					Octo_ToDo_DB_Other = {}
+					OCTO_DB_currencies_test = {}
 					OCTO_DB_reputations_test = {}
 					return ReloadUI()
 				end,
-				width = E.HALF_WIDTH,
+				width = E.FULL_WIDTH/2,
 				order = 4,
 			},
 			-------------------------------------------------
@@ -67,46 +58,57 @@ function E.Developing()
 			-------------------------------------------------
 			Octo_ToDo_DB_Config = {
 				type = "execute",
-				name = "Octo_ToDo_DB_Config",
+				name = "Config",
 				func = function()
 					Octo_ToDo_DB_Config  = {}
 					return
 				end,
-				width = E.THIRD_WIDTH,
-				order = 6,
-			},
-			-------------------------------------------------
-			Octo_ToDo_DB_Other = {
-				type = "execute",
-				name = "Octo_ToDo_DB_Other",
-				func = function()
-					Octo_ToDo_DB_Other  = {}
-					return
-				end,
-				width = E.THIRD_WIDTH,
+				width = E.FULL_WIDTH/4,
 				order = 7,
 			},
 			-------------------------------------------------
 			Octo_ToDo_DB_Players = {
 				type = "execute",
-				name = "Octo_ToDo_DB_Players",
+				name = "Players",
 				func = function()
 					Octo_ToDo_DB_Players  = {}
 					return
 				end,
-				width = E.THIRD_WIDTH,
+				width = E.FULL_WIDTH/4,
 				order = 8,
 			},
 			-------------------------------------------------
 			Octo_ToDo_DB_Vars = {
 				type = "execute",
-				name = "Octo_ToDo_DB_Vars",
+				name = "Vars",
 				func = function()
 					Octo_ToDo_DB_Vars  = {}
 					return
 				end,
-				width = E.THIRD_WIDTH,
+				width = E.FULL_WIDTH/4,
 				order = 9,
+			},
+			-------------------------------------------------
+			OCTO_DB_currencies_test = {
+				type = "execute",
+				name = "currencies",
+				func = function()
+					OCTO_DB_currencies_test  = {}
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 10,
+			},
+			-------------------------------------------------
+			OCTO_DB_reputations_test = {
+				type = "execute",
+				name = "reputations",
+				func = function()
+					OCTO_DB_reputations_test  = {}
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 11,
 			},
 			-------------------------------------------------
 			-------------------------------------------------

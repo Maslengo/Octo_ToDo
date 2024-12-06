@@ -10,8 +10,10 @@ E.Timers = {}
 E.spacer = "    "
 -------------------------------------------------------------------------
 -- Constants
+E.CHETVERT = 0.93
 E.THIRD_WIDTH = 1.25
 E.HALF_WIDTH = 1.88 -- 1.5
+E.FULL_WIDTH = 3.60
 E.edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
 E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
 -- NIGHT_FAE_BLUE_COLOR
@@ -249,6 +251,7 @@ E.Skyblue_Color = "|cff87CDEB"
 E.Steelblue_Color = "|cff4682B3"
 E.Slategray_Color = "|cff708090"
 E.Brown_Color = "|cff964B00"
+E.AccountWide_Color = "|cff9fc5e8"
 ----------------------------------------------------------------
 E.Kyrian_r_Color = 0.44
 E.Kyrian_g_Color = 0.66
@@ -300,10 +303,15 @@ E.Icon_WorldBoss = func_texturefromIcon(3528312)
 E.Icon_Rares = func_texturefromIcon(135903)
 E.Icon_Money = func_texturefromIcon(133784, 14)
 E.Icon_MailBox = func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga")
+
+
 E.AccountWide = E.Blue_Color.."(A)".."|r"
-E.Icon_AccountWide = func_texturefromIcon(1120721)
 E.AccountTransferable = E.Red_Color.."(T)".."|r"
-E.Icon_AccountTransferable = func_texturefromIcon(6124644)
+
+E.Icon_AccountWide = E.Blue_Color.."(A)".."|r" -- func_texturefromIcon(1120721)
+E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r" -- func_texturefromIcon(6124644)
+
+
 E.Icon_Achievement = func_texturefromIcon(236544)
 E.Icon_Empty = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 -- C_Covenants.GetCovenantIDs()

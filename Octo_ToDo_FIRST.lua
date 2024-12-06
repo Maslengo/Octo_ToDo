@@ -48,7 +48,7 @@ local expansion = _G['EXPANSION_NAME'..GetExpansionLevel()]
 E.func_LoadAddOn("Octo_ToDoTrashCan")
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")
--- E.func_LoadAddOn("MountsJournal")
+E.func_LoadAddOn("MountsJournal")
 -- E.func_LoadAddOn("HidingBar")
 -- E.func_LoadAddOn("HidingBar_Options")
 -- E.func_LoadAddOn("SpeedyAutoLoot")
@@ -269,24 +269,30 @@ local function checkCharInfo(self, GUID)
 	self.MASLENGO.OctoTable_QuestID = self.MASLENGO.OctoTable_QuestID or {}
 	if self.CurrencyID ~= nil then
 		self.MASLENGO.CurrencyID = self.CurrencyID
+		self.CurrencyID = nil
 	end
 	if self.CurrencyID_Total ~= nil then
 		self.MASLENGO.CurrencyID_Total = self.CurrencyID_Total
+		self.CurrencyID_Total = nil
 	end
 	if self.CurrencyID_totalEarned ~= nil then
 		self.MASLENGO.CurrencyID_totalEarned = self.CurrencyID_totalEarned
+		self.CurrencyID_totalEarned = nil
 	end
 	if self.ItemsInBag ~= nil then
 		self.MASLENGO.ItemsInBag = self.ItemsInBag
+		self.ItemsInBag = nil
 	end
 	-- if self.professions ~= nil then
 	--     self.MASLENGO.professions = self.professions
 	-- end
 	if self.reputationID ~= nil then
 		self.MASLENGO.reputationID = self.reputationID
+		self.reputationID = nil
 	end
 	if self.OctoTable_QuestID ~= nil then
 		self.MASLENGO.OctoTable_QuestID = self.OctoTable_QuestID
+		self.OctoTable_QuestID = nil
 	end
 	if self.time == nil and self.tmstp_Daily ~= nil then
 		self.time = self.tmstp_Daily
@@ -318,15 +324,6 @@ local function checkCharInfo(self, GUID)
 		end
 	end
 	self.PVP = self.PVP or {}
-	self.PVP.rating2v2 = self.PVP.rating2v2 or 0
-	self.PVP.seasonBest2v2 = self.PVP.seasonBest2v2 or 0
-	self.PVP.winrate2v2 = self.PVP.winrate2v2 or 0
-	self.PVP.rating3v3 = self.PVP.rating3v3 or 0
-	self.PVP.seasonBest3v3 = self.PVP.seasonBest3v3 or 0
-	self.PVP.winrate3v3 = self.PVP.winrate3v3 or 0
-	self.PVP.ratingRBG = self.PVP.ratingRBG or 0
-	self.PVP.seasonBestRBG = self.PVP.seasonBestRBG or 0
-	self.PVP.winrateRBG = self.PVP.winrateRBG or 0
 	self.avgItemLevel = self.avgItemLevel or 1
 	self.avgItemLevelEquipped = self.avgItemLevelEquipped or 1
 	self.avgItemLevelPvp = self.avgItemLevelPvp or 1
@@ -846,8 +843,9 @@ local function TestSpec()
 	end
 end
 local function Collect_ALL_PlayerInfo()
-	profileKeys = profileKeys or {}
-	profileKeys[curCharName.." - ".. curServer] = profileKeys[curCharName.." - ".. curServer] or "OctoUI"
+	Octo_ToDoTrashCan = Octo_ToDoTrashCan or {}
+	Octo_ToDoTrashCan.profileKeys = Octo_ToDoTrashCan.profileKeys or {}
+	Octo_ToDoTrashCan.profileKeys[curCharName.." - ".. curServer] = Octo_ToDoTrashCan.profileKeys[curCharName.." - ".. curServer] or "OctoUI"
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_PlayerInfo()".."|r")
 	end
@@ -1148,7 +1146,6 @@ local function Collect_All_Currency_TEST2()
 		local link = C_CurrencyInfo.GetCurrencyListLink(index)
 		local info = C_CurrencyInfo.GetCurrencyListInfo(index)
 		if info.isHeader then
-			print (info.name)
 			OCTO_DB_currencies_test[info.name] = OCTO_DB_currencies_test[info.name] or {}
 			tblHeader = OCTO_DB_currencies_test[info.name]
 		elseif link then
@@ -1219,7 +1216,7 @@ local function Collect_All_Reputations_TEST2()
 	----------------------------------------------------------------
 end
 local function Collect_All_Currency()
-	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == false then
+	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Currency()".."|r")
 	end
 	local collect = Octo_ToDo_DB_Players[curGUID]
@@ -1834,41 +1831,7 @@ local function OLD_Collect_BfA_Cloaklvl()
 		collect.cloak_res = 0
 	end
 end
-local function OLD_Collect_ALL_PVPRaitings()
-	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
-		ChatFrame1:AddMessage(E.Blue_Color.."Collect_ALL_PVPRaitings()".."|r")
-	end
-	local collect = Octo_ToDo_DB_Players[curGUID]
-	if not E.IsAddOnLoaded("Blizzard_PVPUI") then
-		E.LoadAddOn("Blizzard_PVPUI")
-		return
-	end
-	local rating2v2, seasonBest2v2, weeklyBest2v2, seasonPlayed2v2, seasonWon2v2, weeklyPlayed2v2, weeklyWon2v2, cap2v2 = GetPersonalRatedInfo(1)
-	local rating3v3, seasonBest3v3, weeklyBest3v3, seasonPlayed3v3, seasonWon3v3, weeklyPlayed3v3, weeklyWon3v3, cap3v3 = GetPersonalRatedInfo(2)
-	local ratingRBG, seasonBestRBG, weeklyBestRBG, seasonPlayedRBG, seasonWonRBG, weeklyPlayedRBG, weeklyWonRBG, capRBG = GetPersonalRatedInfo(4)
-	local winrate2v2 = 0
-	if seasonWon2v2 ~= 0 and seasonPlayed2v2 ~= 0 then
-		winrate2v2 = math.floor(seasonWon2v2 / seasonPlayed2v2 * 100).."%"
-	end
-	local winrate3v3 = 0
-	if seasonWon3v3 ~= 0 and seasonPlayed3v3 ~= 0 then
-		winrate3v3 = math.floor(seasonWon3v3 / seasonPlayed3v3 * 100).."%"
-	end
-	local winrateRBG = 0
-	if seasonWonRBG ~= 0 and seasonPlayedRBG ~= 0 then
-		winrateRBG = math.floor(seasonWonRBG / seasonPlayedRBG * 100).."%"
-	end
-	collect.PVP.rating2v2 = rating2v2
-	collect.PVP.seasonBest2v2 = seasonBest2v2
-	collect.PVP.winrate2v2 = winrate2v2
-	collect.PVP.rating3v3 = rating3v3
-	collect.PVP.seasonBest3v3 = seasonBest3v3
-	collect.PVP.winrate3v3 = winrate3v3
-	collect.PVP.ratingRBG = ratingRBG
-	collect.PVP.seasonBestRBG = seasonBestRBG
-	collect.PVP.winrateRBG = winrateRBG
-end
-local function OLD_Collect_All_Legion_Transmoge()
+local function TRASH_Collect_All_Legion_Transmoge()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Legion_Transmoge()".."|r")
 	end
@@ -1940,7 +1903,7 @@ local function OLD_Collect_All_Legion_Transmoge()
 		end
 	end
 end
-local function OLD_Collect_All_Legion_TransmogeNEW()
+local function TRASH_Collect_All_Legion_TransmogeNEW()
 	if Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST == true then
 		ChatFrame1:AddMessage(E.Blue_Color.."Collect_All_Legion_TransmogeNEW()".."|r")
 	end
@@ -2407,7 +2370,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[697] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[697]
 				end
-				vivodLeft = E.func_currencyicon(697)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(697)
+				vivodLeft = E.func_currencyIcon(697)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(697)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2417,7 +2380,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[776] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[776]
 				end
-				vivodLeft = E.func_currencyicon(776)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(776)
+				vivodLeft = E.func_currencyIcon(776)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(776)
 				return vivodCent, vivodLeft
 		end)
 	end
@@ -2431,7 +2394,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1129] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1129]
 				end
-				vivodLeft = E.func_currencyicon(1129)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1129)
+				vivodLeft = E.func_currencyIcon(1129)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1129)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2441,7 +2404,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[994] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[994]
 				end
-				vivodLeft = E.func_currencyicon(994)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(994)
+				vivodLeft = E.func_currencyIcon(994)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(994)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2451,7 +2414,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[823] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[823]
 				end
-				vivodLeft = E.func_currencyicon(823)..E.func_currencyName(823)
+				vivodLeft = E.func_currencyIcon(823)..E.func_currencyName(823)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2461,7 +2424,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1101] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1101]
 				end
-				vivodLeft = E.func_currencyicon(1101)..E.func_currencyName(1101)
+				vivodLeft = E.func_currencyIcon(1101)..E.func_currencyName(1101)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2471,7 +2434,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[824] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[824]
 				end
-				vivodLeft = E.func_currencyicon(824)..E.func_currencyName(824)
+				vivodLeft = E.func_currencyIcon(824)..E.func_currencyName(824)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2593,7 +2556,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1273] then
 					vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1273]
 				end
-				vivodLeft = E.func_currencyicon(1273)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1273)
+				vivodLeft = E.func_currencyIcon(1273)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1273)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2603,7 +2566,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1508] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1508]
 				end
-				vivodLeft = E.func_currencyicon(1508)..E.func_currencyName(1508)
+				vivodLeft = E.func_currencyIcon(1508)..E.func_currencyName(1508)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2611,7 +2574,7 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1342]
-				vivodLeft = E.func_currencyicon(1342)..E.func_currencyName(1342)
+				vivodLeft = E.func_currencyIcon(1342)..E.func_currencyName(1342)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2619,7 +2582,7 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1220]
-				vivodLeft = E.func_currencyicon(1220)..E.func_currencyName(1220)
+				vivodLeft = E.func_currencyIcon(1220)..E.func_currencyName(1220)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2627,7 +2590,7 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1226]
-				vivodLeft = E.func_currencyicon(1226)..E.func_currencyName(1226)
+				vivodLeft = E.func_currencyIcon(1226)..E.func_currencyName(1226)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2635,7 +2598,7 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1533]
-				vivodLeft = E.func_currencyicon(1533)..E.func_currencyName(1533)
+				vivodLeft = E.func_currencyIcon(1533)..E.func_currencyName(1533)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -2643,7 +2606,7 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1155]
-				vivodLeft = E.func_currencyicon(1155)..E.func_currencyName(1155)
+				vivodLeft = E.func_currencyIcon(1155)..E.func_currencyName(1155)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3425,7 +3388,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1560] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1560]
 				end
-				vivodLeft = E.func_currencyicon(1560)..E.func_currencyName(1560)
+				vivodLeft = E.func_currencyIcon(1560)..E.func_currencyName(1560)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3435,7 +3398,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1721] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1721]
 				end
-				vivodLeft = E.func_currencyicon(1721)..E.func_currencyName(1721)
+				vivodLeft = E.func_currencyIcon(1721)..E.func_currencyName(1721)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3445,7 +3408,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1803] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1803]
 				end
-				vivodLeft = E.func_currencyicon(1803)..E.func_currencyName(1803)
+				vivodLeft = E.func_currencyIcon(1803)..E.func_currencyName(1803)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3458,7 +3421,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.ItemsInBag[173363] ~= 0 then
 					vivodCent = vivodCent.." +"..CharInfo.MASLENGO.ItemsInBag[173363]..E.func_itemTexture(173363)
 				end
-				vivodLeft = E.func_currencyicon(1755)..E.func_currencyName(1755)
+				vivodLeft = E.func_currencyIcon(1755)..E.func_currencyName(1755)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3468,7 +3431,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1719] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1719]
 				end
-				vivodLeft = E.func_currencyicon(1719)..E.func_currencyName(1719)
+				vivodLeft = E.func_currencyIcon(1719)..E.func_currencyName(1719)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3478,7 +3441,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1710] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1710]
 				end
-				vivodLeft = E.func_currencyicon(1710)..E.func_currencyName(1710)
+				vivodLeft = E.func_currencyIcon(1710)..E.func_currencyName(1710)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3488,7 +3451,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1716] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1716]
 				end
-				vivodLeft = E.func_currencyicon(1716)..E.func_currencyName(1716)
+				vivodLeft = E.func_currencyIcon(1716)..E.func_currencyName(1716)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3496,7 +3459,7 @@ local function O_otrisovka_FIRST()
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1718]
-				vivodLeft = E.func_currencyicon(1718)..E.func_currencyName(1718)
+				vivodLeft = E.func_currencyIcon(1718)..E.func_currencyName(1718)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3652,7 +3615,7 @@ local function O_otrisovka_FIRST()
 							vivodCent = CharInfo.CovenantAndAnima[i][k]
 							vivodLeft = vivodLeft
 						else
-							vivodLeft = vivodLeft..E.func_currencyicon(1813)
+							vivodLeft = vivodLeft..E.func_currencyIcon(1813)
 							vivodCent = CharInfo.CovenantAndAnima[i][k]
 						end
 						if CharInfo.CovenantAndAnima[i][k] == 0 then
@@ -3688,7 +3651,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[2009] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[2009]
 				end
-				vivodLeft = E.func_currencyicon(2009)..E.func_currencyName(2009)
+				vivodLeft = E.func_currencyIcon(2009)..E.func_currencyName(2009)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3698,7 +3661,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1906] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1906]
 				end
-				vivodLeft = E.func_currencyicon(1906)..E.func_currencyName(1906)
+				vivodLeft = E.func_currencyIcon(1906)..E.func_currencyName(1906)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3708,7 +3671,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1828] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1828]
 				end
-				vivodLeft = E.func_currencyicon(1828)..E.func_currencyName(1828)
+				vivodLeft = E.func_currencyIcon(1828)..E.func_currencyName(1828)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3718,7 +3681,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1979] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1979]
 				end
-				vivodLeft = E.func_currencyicon(1979)..E.func_currencyName(1979)
+				vivodLeft = E.func_currencyIcon(1979)..E.func_currencyName(1979)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3728,7 +3691,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[1931] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1931]
 				end
-				vivodLeft = E.func_currencyicon(1931)..E.func_currencyName(1931)
+				vivodLeft = E.func_currencyIcon(1931)..E.func_currencyName(1931)
 				if CharInfo.Possible_CatalogedResearch ~= 0 then
 					vivodCent = vivodCent..E.Purple_Color.." +"..CharInfo.Possible_CatalogedResearch.."|r"
 				end
@@ -3791,7 +3754,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count ~= E.NONE then
 					vivodCent = CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count
 				end
-				vivodLeft = E.func_currencyicon(1813)..E.func_questName(61981)
+				vivodLeft = E.func_currencyIcon(1813)..E.func_questName(61981)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -3999,7 +3962,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.ItemsInBag[208945] ~= 0 then
 					vivodCent = vivodCent..E.WOW_WoWToken_Color.." +"..CharInfo.MASLENGO.ItemsInBag[208945].."|r"..E.func_itemTexture(208945)
 				end
-				vivodLeft = E.func_currencyicon(2594)..E.func_currencyName(2594)
+				vivodLeft = E.func_currencyIcon(2594)..E.func_currencyName(2594)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -4045,7 +4008,7 @@ local function O_otrisovka_FIRST()
 				if CharInfo.MASLENGO.CurrencyID[2245] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[2245]
 				end
-				vivodLeft = E.func_currencyicon(2245)..E.func_currencyName(2245)
+				vivodLeft = E.func_currencyIcon(2245)..E.func_currencyName(2245)
 				return vivodCent, vivodLeft
 		end)
 		tinsert(OctoTable_func_otrisovka_FIRST,
@@ -4219,7 +4182,7 @@ local function O_otrisovka_FIRST()
 					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 					local currencyID = 2917
 					local color = E.WOW_Epic_Color
-					vivodLeft = E.func_currencyicon(currencyID)..color..E.func_currencyName(currencyID).."|r"
+					vivodLeft = E.func_currencyIcon(currencyID)..color..E.func_currencyName(currencyID).."|r"
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
@@ -4247,7 +4210,7 @@ local function O_otrisovka_FIRST()
 					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 					local currencyID = 2916
 					local color = E.WOW_Epic_Color
-					vivodLeft = E.func_currencyicon(currencyID)..color..E.func_currencyName(currencyID).."|r"
+					vivodLeft = E.func_currencyIcon(currencyID)..color..E.func_currencyName(currencyID).."|r"
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
@@ -4275,7 +4238,7 @@ local function O_otrisovka_FIRST()
 					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 					local currencyID = 2915
 					local color = E.WOW_Rare_Color
-					vivodLeft = E.func_currencyicon(currencyID)..color..E.func_currencyName(currencyID).."|r"
+					vivodLeft = E.func_currencyIcon(currencyID)..color..E.func_currencyName(currencyID).."|r"
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
@@ -4303,7 +4266,7 @@ local function O_otrisovka_FIRST()
 					BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 					local currencyID = 2914
 					local color = E.WOW_Rare_Color
-					vivodLeft = E.func_currencyicon(currencyID)..color..E.func_currencyName(currencyID).."|r"
+					vivodLeft = E.func_currencyIcon(currencyID)..color..E.func_currencyName(currencyID).."|r"
 					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 					if data then
 						local maxQuantity = data.maxQuantity
@@ -4373,7 +4336,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_currencyicon(1166)..DUNGEONS
+				vivodLeft = E.func_currencyIcon(1166)..DUNGEONS
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly
 				end
@@ -4383,7 +4346,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_currencyicon(1166).."500 "..E.func_currencyName(1166)
+				vivodLeft = E.func_currencyIcon(1166).."500 "..E.func_currencyName(1166)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly
 				end
@@ -4393,7 +4356,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_currencyicon(1166)..RAIDS
+				vivodLeft = E.func_currencyIcon(1166)..RAIDS
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly
 				end
@@ -4403,7 +4366,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_currencyicon(1166)..E.func_questName(43323)
+				vivodLeft = E.func_currencyIcon(1166)..E.func_questName(43323)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly
 				end
@@ -4413,7 +4376,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_currencyicon(3100)..E.func_questName(84616)
+				vivodLeft = E.func_currencyIcon(3100)..E.func_questName(84616)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Daily ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Daily
 				end
@@ -4423,7 +4386,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_currencyicon(3100)..E.func_questName(82783)
+				vivodLeft = E.func_currencyIcon(3100)..E.func_questName(82783)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly
 				end
@@ -4433,7 +4396,7 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_currencyicon(3100)..E.func_texturefromIcon(1322720)..E.func_questName(57300)
+				vivodLeft = E.func_currencyIcon(3100)..E.func_texturefromIcon(1322720)..E.func_questName(57300)
 				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly ~= E.NONE then
 					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_SoldierofTime_Weekly
 				end
@@ -5213,22 +5176,35 @@ local function O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				local list = {}
-				for CurrencyID, v in next, (Octo_ToDo_DB_Config.CurrencyDB) do
-					tinsert(list, CurrencyID)
-				end
-				sort(list, E.func_Reverse_order)
-				for k, CurrencyID in next, (list) do
-					if Octo_ToDo_DB_Vars.config.CurrencyShowAllways == false and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
-						tooltip[#tooltip+1] = {E.func_currencyicon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
-					elseif Octo_ToDo_DB_Vars.config.CurrencyShowAllways == true and Octo_ToDo_DB_Config.CurrencyDB[CurrencyID] == true then
-						if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
-							tooltip[#tooltip+1] = {E.func_currencyicon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
-						else
-							tooltip[#tooltip+1] = {E.func_currencyicon(CurrencyID)..E.Gray_Color..E.func_currencyName_NOCOLOR(CurrencyID), E.Gray_Color..CharInfo.MASLENGO.CurrencyID_Total[CurrencyID].."|r"}
+
+
+
+				for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
+					for CurrencyID, config in next, (tbl) do
+
+
+
+
+						if Octo_ToDo_DB_Vars.config.CurrencyShowAllways == false and config == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
+							tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
+						elseif Octo_ToDo_DB_Vars.config.CurrencyShowAllways == true and config == true then
+							if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
+								tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
+							else
+								tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.Gray_Color..E.func_currencyName_NOCOLOR(CurrencyID), E.Gray_Color..CharInfo.MASLENGO.CurrencyID_Total[CurrencyID].."|r"}
+							end
 						end
+
+
+
 					end
 				end
+
+
+
+
+
+
 				if #tooltip ~= 0 then
 					vivodCent = E.Gray_Color..CURRENCY.."|r"
 				else
@@ -6291,15 +6267,15 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				end
 				self:ddAddButton({list = list, listMaxSize = 20}, level)
 				if type(value) == "string" then
-					local Octo_ToDo_DB_Players_LIST = {}
+					local tbl_Players = {}
 					for curCharGUID, CharInfo in next, (Octo_ToDo_DB_Players) do
 						if CharInfo.BattleTagLocal == value or not value then
-							Octo_ToDo_DB_Players_LIST[CharInfo.curServer] = Octo_ToDo_DB_Players_LIST[CharInfo.curServer] or {}
-							Octo_ToDo_DB_Players_LIST[CharInfo.curServer][curCharGUID] = Octo_ToDo_DB_Players_LIST[CharInfo.curServer][curCharGUID] or {}
-							Octo_ToDo_DB_Players_LIST[CharInfo.curServer][curCharGUID] = CharInfo.classColorHex..CharInfo.Name.."|r".." "..CharInfo.UnitLevel
+							tbl_Players[CharInfo.curServer] = tbl_Players[CharInfo.curServer] or {}
+							tbl_Players[CharInfo.curServer][curCharGUID] = tbl_Players[CharInfo.curServer][curCharGUID] or {}
+							tbl_Players[CharInfo.curServer][curCharGUID] = CharInfo.classColorHex..CharInfo.Name.."|r".." "..CharInfo.UnitLevel
 						end
 					end
-					for Server, v in next, (Octo_ToDo_DB_Players_LIST) do
+					for Server, v in next, (tbl_Players) do
 						local info = {}
 						info.fontObject = OctoFont11
 						info.hasArrow = true
@@ -6864,9 +6840,8 @@ function main_frame_toggle()
 				OLD_Collect_All_Holiday()
 				OLD_Collect_BfA_Azerite()
 				OLD_Collect_BfA_Cloaklvl()
-				OLD_Collect_ALL_PVPRaitings()
-				OLD_Collect_All_Legion_Transmoge()
-				OLD_Collect_All_Legion_TransmogeNEW()
+				TRASH_Collect_All_Legion_Transmoge()
+				TRASH_Collect_All_Legion_TransmogeNEW()
 				OLD_Collect_BfA_QuestsBounties()
 				OLD_Collect_BfA_Island()
 				MustBeHiddenFrames()
@@ -6898,14 +6873,12 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 		-- НАЧАЛО
 		if Octo_ToDoTrashCan == nil then Octo_ToDoTrashCan = {} end
 		if Octo_ToDoTrashCan.CLASSES == nil then Octo_ToDoTrashCan.CLASSES = {} end
-		if profileKeys == nil then profileKeys = {} end
 		if Octo_ToDo_DB_Config == nil then Octo_ToDo_DB_Config = {} end
 		if Octo_ToDo_DB_Players == nil then Octo_ToDo_DB_Players = {} end
 		if Octo_ToDo_DB_Vars == nil then Octo_ToDo_DB_Vars = {} end
 		if Octo_ToDo_DB_Other == nil then Octo_ToDo_DB_Other = {} end
 		if Octo_ToDoTrashCan.Octo_ToDo_DB_Artifact == nil then Octo_ToDoTrashCan.Octo_ToDo_DB_Artifact = {} end
 		if Octo_ToDoTrashCan.Octo_ToDo_DB_LegionArtifacts == nil then Octo_ToDoTrashCan.Octo_ToDo_DB_LegionArtifacts = {} end
-		if Octo_ToDo_DB_Players_LIST == nil then Octo_ToDo_DB_Players_LIST = {} end
 		if Octo_ToDo_DB_Config.CurrencyDB == nil then Octo_ToDo_DB_Config.CurrencyDB = {} end
 		if Octo_ToDo_DB_Config.ItemDB == nil then Octo_ToDo_DB_Config.ItemDB = {} end
 		if Octo_ToDo_DB_Config.QuestsDB == nil then Octo_ToDo_DB_Config.QuestsDB = {} end
@@ -7205,9 +7178,8 @@ function Octo_EventFrame:PLAYER_LOGIN()
 		OLD_Collect_All_Holiday()
 		OLD_Collect_BfA_Azerite()
 		OLD_Collect_BfA_Cloaklvl()
-		OLD_Collect_ALL_PVPRaitings()
-		OLD_Collect_All_Legion_Transmoge()
-		OLD_Collect_All_Legion_TransmogeNEW()
+		TRASH_Collect_All_Legion_Transmoge()
+		TRASH_Collect_All_Legion_TransmogeNEW()
 		OLD_Collect_BfA_QuestsBounties()
 		OLD_Collect_BfA_Island()
 		RequestTimePlayed()

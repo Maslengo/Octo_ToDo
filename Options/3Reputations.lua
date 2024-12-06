@@ -3,14 +3,14 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
 local wipe = false
-function E.Currencies()
-	local Currencies = {
+function E.Reputations()
+	local Reputations = {
 		type = "group",
 		childGroups = "tree",
-		name = CURRENCY,
+		name = REPUTATION,
 		args = {
 			-------------------------------------------------
-			Currenciesinstructions = {
+			Reputationsinstructions = {
 				type = "description",
 				name = "These options allow you to toggle various options.",
 				fontSize = "medium",
@@ -20,21 +20,21 @@ function E.Currencies()
 			ReloadHeader4 = {
 				type = "header",
 				name = "",
-				order = 1,
+				order = 2,
 			},
 			-------------------------------------------------
-			Currencies = {
+			Reputations = {
 				type = "toggle",
-				name = "Force Load Addons",
+				name = REPUTATION,
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Currency
+					return Octo_ToDo_DB_Vars.config.Reputations
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Currency = value
+					Octo_ToDo_DB_Vars.config.Reputations = value
 				end,
-				width = E.HALF_WIDTH,
-				order = 2,
+				width = 1.8,
+				order = 3,
 			},
 			-------------------------------------------------
 		},
@@ -42,30 +42,30 @@ function E.Currencies()
 	if wipe == false then
 		wipe = true
 		local index = 0
-		if OCTO_DB_currencies_test then
-			for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
+		if OCTO_DB_reputations_test then
+			for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
 				index = index + 1
-				E.MergeTable(Currencies.args, {
-						["addonNameHEADER57"..index] = {
+				E.MergeTable(Reputations.args, {
+						["addonNameHEADER5"..index] = {
 							type = "header",
-							name = currencyHEADER,
+							name = E.func_reputationName(reputationHEADER),
 							order = 123 + index,
 						},
 				})
-				for currencyID, config in next, (tbl) do
+				for reputationID, config in next, (tbl) do
 					index = index + 1
-					E.MergeTable(Currencies.args, {
-							["addonNameQWE7"..index] = {
+					E.MergeTable(Reputations.args, {
+							["addonNameQWE6"..index] = {
 								type = "toggle",
-								name = E.func_currencyName(currencyID),
+								name = E.func_reputationName(reputationID),
 								desc = "",
 								get = function()
-									return OCTO_DB_currencies_test[currencyHEADER][currencyID]
+									return OCTO_DB_reputations_test[reputationHEADER][reputationID]
 								end,
 								set = function(_, value)
-									OCTO_DB_currencies_test[currencyHEADER][currencyID] = value
+									OCTO_DB_reputations_test[reputationHEADER][reputationID] = value
 								end,
-								width = .9,
+								width = E.FULL_WIDTH/4, --.9,
 								order = 123 + index,
 							},
 					})
@@ -73,12 +73,12 @@ function E.Currencies()
 			end
 		end
 	end
-	E.MergeTable(Currencies.args, {
+	E.MergeTable(Reputations.args, {
 			["ReloadHeader4second322"..1] = {
 				type = "header",
 				name = "",
 				order = 322 + 1,
 			},
 	})
-	return Currencies
+	return Reputations
 end
