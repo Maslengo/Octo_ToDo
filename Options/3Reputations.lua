@@ -81,14 +81,14 @@ function E.Reputations()
 							["addonNameQWE6"..index] = {
 								type = "toggle",
 								name = E.func_reputationName(reputationID),
-								desc = "",
+								desc = "\n".."id: |r"..E.Green_Color..tostring(reputationID).."|r",
 								get = function()
 									return OCTO_DB_reputations_test[reputationHEADER][reputationID]
 								end,
 								set = function(_, value)
 									OCTO_DB_reputations_test[reputationHEADER][reputationID] = value
 								end,
-								width = E.FULL_WIDTH/4, --.9,
+								width = E.FULL_WIDTH/2, --.9,
 								order = 123 + index,
 							},
 					})

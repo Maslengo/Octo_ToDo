@@ -47,6 +47,12 @@ function E.Currencies()
 			CurrencyALLTURNON = {
 				type = "execute",
 				name = ENABLE_ALL_ADDONS,
+
+				-- image = "Interface\\Transmogrify\\Transmogrify",
+				-- imageCoords = {0, 0, 0, 0},
+				-- imageWidth = 22,
+				-- imageHeight = 22,
+
 				func = function()
 					for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
 						for CurrencyID, config in next, (tbl) do
@@ -94,15 +100,16 @@ function E.Currencies()
 					E.func_TableMerge(Currencies.args, {
 							["addonNameQWE7"..index] = {
 								type = "toggle",
-								name = E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID),
-								desc = "",
+								icon = 123123,
+								name = E.func_currencyIcon(CurrencyID).." "..E.func_currencyName(CurrencyID),
+								desc = "\n".."id: |r"..E.Green_Color..tostring(CurrencyID).."|r",
 								get = function()
 									return OCTO_DB_currencies_test[currencyHEADER][CurrencyID]
 								end,
 								set = function(_, value)
 									OCTO_DB_currencies_test[currencyHEADER][CurrencyID] = value
 								end,
-								width = E.FULL_WIDTH/4,
+								width = E.FULL_WIDTH/2,
 								order = 123 + index,
 							},
 					})

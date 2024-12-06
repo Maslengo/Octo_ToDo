@@ -17,28 +17,28 @@ function E.Developing()
 			-------------------------------------------------
 			Reload = {
 				type = "execute",
-				name = RELOADUI,
+				name = E.Green_Color..RELOADUI.."|r",
 				func = function()
 					return ReloadUI()
 				end,
-				width = E.FULL_WIDTH/5,
+				width = E.FULL_WIDTH/3,
 				order = 3,
 			},
 			-------------------------------------------------
 			DELETEALL = {
 				type = "execute",
-				name = DELETE.." "..ALL,
+				name = E.Green_Color..DELETE.." "..ALL.."|r",
 				func = function()
 					profileKeys = {}
 					Octo_ToDo_DB_Config = {}
-					Octo_ToDo_DB_Players = {}
-					Octo_ToDo_DB_Vars = {}
+					Octo_ToDo_DB_Levels = {}
 					Octo_ToDo_DB_Other = {}
+					Octo_ToDo_DB_Vars = {}
 					OCTO_DB_currencies_test = {}
 					OCTO_DB_reputations_test = {}
 					return ReloadUI()
 				end,
-				width = E.FULL_WIDTH/5,
+				width = E.FULL_WIDTH/3,
 				order = 4,
 			},
 			-------------------------------------------------
@@ -55,30 +55,41 @@ function E.Developing()
 					Octo_ToDo_DB_Config  = {}
 					return
 				end,
-				width = E.FULL_WIDTH/5,
+				width = E.FULL_WIDTH/3,
 				order = 7,
 			},
 			-------------------------------------------------
-			Octo_ToDo_DB_Players = {
+			Octo_ToDo_DB_Levels = {
 				type = "execute",
 				name = "Players",
 				func = function()
-					Octo_ToDo_DB_Players  = {}
+					Octo_ToDo_DB_Levels  = {}
 					return
 				end,
-				width = E.FULL_WIDTH/5,
+				width = E.FULL_WIDTH/3,
 				order = 8,
+			},
+			-------------------------------------------------
+			Octo_ToDo_DB_Other = {
+				type = "execute",
+				name = "Other",
+				func = function()
+					Octo_ToDo_DB_Other  = {}
+					return
+				end,
+				width = E.FULL_WIDTH/3,
+				order = 9,
 			},
 			-------------------------------------------------
 			Octo_ToDo_DB_Vars = {
 				type = "execute",
-				name = "Vars",
+				name = E.Green_Color.."Vars".."|r",
 				func = function()
 					Octo_ToDo_DB_Vars  = {}
-					return
+					return ReloadUI()
 				end,
-				width = E.FULL_WIDTH/5,
-				order = 9,
+				width = E.FULL_WIDTH/3,
+				order = 10,
 			},
 			-------------------------------------------------
 			OCTO_DB_currencies_test = {
@@ -88,8 +99,8 @@ function E.Developing()
 					OCTO_DB_currencies_test  = {}
 					return
 				end,
-				width = E.FULL_WIDTH/5,
-				order = 10,
+				width = E.FULL_WIDTH/3,
+				order = 11,
 			},
 			-------------------------------------------------
 			OCTO_DB_reputations_test = {
@@ -99,14 +110,14 @@ function E.Developing()
 					OCTO_DB_reputations_test  = {}
 					return
 				end,
-				width = E.FULL_WIDTH/5,
-				order = 11,
+				width = E.FULL_WIDTH/3,
+				order = 12,
 			},
 			-------------------------------------------------
-			ReloadHeader3second2 = {
+			ReloadHeader3second224 = {
 				type = "header",
 				name = "",
-				order = 12,
+				order = 13,
 			},
 			-------------------------------------------------
 			Achievements = {
@@ -120,7 +131,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.Achievements = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 13,
+				order = 14,
 			},
 			-------------------------------------------------
 			ItemsUsable = {
@@ -134,7 +145,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.ItemsUsable = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 14,
+				order = 15,
 			},
 			-------------------------------------------------
 			ItemsDelete = {
@@ -148,7 +159,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.ItemsDelete = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 15,
+				order = 16,
 			},
 			-------------------------------------------------
 			StaticPopup1Button1 = {
@@ -162,7 +173,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.StaticPopup1Button1 = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 16,
+				order = 17,
 			},
 			-------------------------------------------------
 			AdditionalButtons = {
@@ -176,7 +187,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.AdditionalButtons = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 17,
+				order = 18,
 			},
 			-------------------------------------------------
 			CVar = {
@@ -190,7 +201,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.CVar = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 18,
+				order = 19,
 			},
 			-------------------------------------------------
 			SpeedFrameShown = {
@@ -204,7 +215,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.SpeedFrame.Shown = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 19,
+				order = 20,
 			},
 			-------------------------------------------------
 			Minecraft = {
@@ -218,7 +229,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.Minecraft = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 20,
+				order = 21,
 			},
 			-------------------------------------------------
 			Octo_debug_Function_FIRST = {
@@ -232,7 +243,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 21,
+				order = 22,
 			},
 			-------------------------------------------------
 			Hide_ObjectivesInInstance = {
@@ -246,13 +257,13 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 22,
+				order = 23,
 			},
 			-------------------------------------------------
 			ReloadHeader3second2 = {
 				type = "header",
 				name = "",
-				order = 23,
+				order = 24,
 			},
 			-------------------------------------------------
 			FoV_top = {
@@ -286,7 +297,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.FoV_bottom = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 27,
+				order = 26,
 			},
 			-------------------------------------------------
 			FoV_left = {
@@ -303,7 +314,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.FoV_left = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 28,
+				order = 27,
 			},
 			-------------------------------------------------
 			FoV_right = {
@@ -320,7 +331,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.FoV_right = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 29,
+				order = 28,
 			},
 			-------------------------------------------------
 			FieldOfView = {
@@ -334,13 +345,13 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.FieldOfView = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 30,
+				order = 29,
 			},
 			-------------------------------------------------
 			ReloadHeader3second22 = {
 				type = "header",
 				name = "",
-				order = 31,
+				order = 30,
 			},
 			-------------------------------------------------
 

@@ -29,6 +29,7 @@ function E.Items()
 				width = E.FULL_WIDTH/4,
 				order = 3,
 			},
+			-------------------------------------------------
 			ItemsShowAllways = {
 				type = "toggle",
 				name = BATTLEFIELD_MINIMAP_SHOW_ALWAYS,
@@ -42,13 +43,6 @@ function E.Items()
 				width = E.FULL_WIDTH/4,
 				order = 4,
 			},
-
-
-
-
-
-
-
 			-------------------------------------------------
 			ItemsALLTURNON = {
 				type = "execute",
@@ -76,7 +70,6 @@ function E.Items()
 				order = 6,
 			},
 			-------------------------------------------------
-			-------------------------------------------------
 			ReloadHeader453 = {
 				type = "header",
 				name = "",
@@ -93,14 +86,14 @@ function E.Items()
 							["addonNameQWE65"..index] = {
 								type = "toggle",
 								name = E.func_itemTexture(itemID)..E.func_itemName(itemID),
-								desc = "",
+								desc = "\n".."id: |r"..E.Green_Color..tostring(itemID).."|r",
 								get = function()
 									return Octo_ToDo_DB_Config.ItemDB[itemID]
 								end,
 								set = function(_, value)
 									Octo_ToDo_DB_Config.ItemDB[itemID] = value
 								end,
-								width = E.FULL_WIDTH/4, --.9,
+								width = E.FULL_WIDTH/2,
 								order = 123 + index,
 							},
 					})

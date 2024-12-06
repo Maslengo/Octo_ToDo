@@ -430,7 +430,7 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 	local LevelToShowMAX = Octo_ToDo_DB_Vars.config.LevelToShowMAX
 	local itemLevelToShow = Octo_ToDo_DB_Vars.config.itemLevelToShow
 	OctoToDo_SECOND_MainFrame.AllCharFrames = {}
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Players) do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if GUID == curGUID then
 			local classcolor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			local curCharGUID = CharInfo.GUID
@@ -521,7 +521,7 @@ end
 function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 	if event == "VARIABLES_LOADED" and not InCombatLockdown() then
 		if Octo_ToDo_DB_Other == nil then Octo_ToDo_DB_Other = {} end
-		if Octo_ToDo_DB_Players == nil then Octo_ToDo_DB_Players = {} end
+		if Octo_ToDo_DB_Levels == nil then Octo_ToDo_DB_Levels = {} end
 		if Octo_ToDo_DB_Vars == nil then Octo_ToDo_DB_Vars = {} end
 		if Octo_ToDo_DB_Vars.config == nil then Octo_ToDo_DB_Vars.config = {} end
 		if Octo_ToDo_DB_Artifact == nil then Octo_ToDo_DB_Artifact = {} end

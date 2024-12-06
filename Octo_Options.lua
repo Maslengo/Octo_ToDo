@@ -254,8 +254,8 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 					Octo_ToDo_DB_Other = {}
 					ReloadUI()
 				end
-				if config == "Octo_ToDo_DB_Players" then
-					Octo_ToDo_DB_Players = {}
+				if config == "Octo_ToDo_DB_Levels" then
+					Octo_ToDo_DB_Levels = {}
 					ReloadUI()
 				end
 				if config == "Octo_ToDo_DB_Vars" then
@@ -269,10 +269,10 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 					profileKeys = {}
 					OctoPlayer = {}
 					Octo_ToDo_DB_Config  = {}
-					Octo_ToDo_DB_Players  = {}
+					Octo_ToDo_DB_Levels  = {}
 					Octo_ToDo_DB_Vars  = {}
 					Octo_ToDo_DB_Other  = {}
-					Octo_ToDo_DB_Players_LIST  = {}
+					Octo_ToDo_DB_Levels_LIST  = {}
 					Octo_ToDo_Movies  = {}
 					Octo_ToDo_DB_LegionArtifacts  = {}
 					OCTO_DB_currencies_test  = {}
@@ -499,7 +499,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_SimpleButton(MAIN_scrollChild, self, 30, POS_RIGHT+150, "DELETEALL", E.Yellow_Color.."DELETEALL".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 31, POS_RIGHT, "Octo_ToDo_DB_Config", E.Gray_Color.."Config".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 32, POS_RIGHT, "Octo_ToDo_DB_Other", E.Gray_Color.."Other".."|r")
-		Create_SimpleButton(MAIN_scrollChild, self, 33, POS_RIGHT, "Octo_ToDo_DB_Players", E.Gray_Color.."Players".."|r")
+		Create_SimpleButton(MAIN_scrollChild, self, 33, POS_RIGHT, "Octo_ToDo_DB_Levels", E.Gray_Color.."Players".."|r")
 		Create_SimpleButton(MAIN_scrollChild, self, 34, POS_RIGHT, "Octo_ToDo_DB_Vars", E.Gray_Color.."Vars".."|r")
 		Create_CheckButton(MAIN_scrollChild, self, 42, POS_RIGHT, 0, "FieldOfView", "FieldOfView")
 		Create_Slider(MAIN_scrollChild, self, 43.5, POS_RIGHT, "FoV_top", "FoV_top: ", E.Green_Color, 0.5, 2.5, 0.1, function()

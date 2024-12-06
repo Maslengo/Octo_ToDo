@@ -292,7 +292,7 @@ function E.CreateGeneralOptions()
 				name = L["Player level"],
 				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
 				min = 1,
-				max = E.currentMaxLevel,
+				max = 80,
 				step = 1,
 				get = function()
 					return Octo_ToDo_DB_Vars.config.LevelToShow
@@ -309,7 +309,7 @@ function E.CreateGeneralOptions()
 				name = L["Player MAX level"],
 				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
 				min = 1,
-				max = E.currentMaxLevel*2,
+				max = 80*2,
 				step = 1,
 				get = function()
 					return Octo_ToDo_DB_Vars.config.LevelToShowMAX
@@ -532,7 +532,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			ShowTimeMAXLEVEL = {
 				type = "toggle",
-				name = E.currentMaxLevel.." "..LEVEL,
+				name = "80 "..LEVEL,
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL
