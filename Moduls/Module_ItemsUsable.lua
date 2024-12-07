@@ -125,6 +125,7 @@ tinsert(E.Modules, function()
 				local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(2245)
 				local quantity = currencyInfo.quantity or 0
 				if not InCombatLockdown() and ItemsUsable_Frame then
+					E.START()
 					for itemID, count in next, (E.OctoTable_itemID_ItemsUsable) do
 						if (GetItemCount(itemID) >= count and TEST_FUNC(itemID) == 0) then
 							ItemsUsable_Frame:Show()
@@ -142,6 +143,7 @@ tinsert(E.Modules, function()
 							ItemsUsable_Frame_TEXTNAME:SetText("")
 						end
 					end
+					E:STOP()
 				end
 			end
 			ItemsUsableFrame_OnLoad()

@@ -39,7 +39,8 @@ E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga
 -- 	return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
 -- end
 E.OctoFont = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
-local font = SystemFont_Outline_Small
+-- local font = SystemFont_Outline_Small
+local font = GameFontHighlightSmallLeft
 E.fontObject9 = CreateFont("OctoFont9")
 E.fontObject9:CopyFontObject(font)
 E.fontObject9:SetFont(E.OctoFont, 9, "OUTLINE")
@@ -52,6 +53,31 @@ E.fontObject11:SetFont(E.OctoFont, 11, "OUTLINE")
 E.fontObject12 = CreateFont("OctoFont12")
 E.fontObject12:CopyFontObject(font)
 E.fontObject12:SetFont(E.OctoFont, 12, "OUTLINE")
+
+
+-- local font = "01 Octo"
+-- local font2 = SystemFont_Outline_Small
+-- local fontObject9 = CreateFont("OctoFont9")
+-- fontObject9:CopyFontObject(font2)
+-- fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 9, "OUTLINE")
+-- local fontObject10 = CreateFont("OctoFont10")
+-- fontObject10:CopyFontObject(font2)
+-- fontObject10:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 10, "OUTLINE")
+-- local fontObject11 = CreateFont("OctoFont11")
+-- fontObject11:CopyFontObject(font2)
+-- fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 11, "OUTLINE")
+-- local fontObject12 = CreateFont("OctoFont12")
+-- fontObject12:CopyFontObject(font2)
+-- fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 12, "OUTLINE")
+
+
+
+
+
+
+
+
+
 local _, _, _, interfaceVersion = GetBuildInfo() -- Mainline
 function IsClassic()
 	if interfaceVersion > 10000 and interfaceVersion < 20000 then return true else return false end

@@ -69,20 +69,6 @@ local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 if classFilename == "SHAMAN" then
 	classColor = "0070de"
 end
-local font = "01 Octo"
-local font2 = SystemFont_Outline_Small
-local fontObject9 = CreateFont("OctoFont9")
-fontObject9:CopyFontObject(font2)
-fontObject9:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 9, "OUTLINE")
-local fontObject10 = CreateFont("OctoFont10")
-fontObject10:CopyFontObject(font2)
-fontObject10:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 10, "OUTLINE")
-local fontObject11 = CreateFont("OctoFont11")
-fontObject11:CopyFontObject(font2)
-fontObject11:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 11, "OUTLINE")
-local fontObject12 = CreateFont("OctoFont12")
-fontObject12:CopyFontObject(font2)
-fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 12, "OUTLINE")
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 local Meta_Table_0 = {__index = function()
@@ -5584,6 +5570,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					)
 					for _, GUID in next, (players_list) do
 						local info = {}
+						info.fontObject = OctoFont11
 						info.keepShownOnClick = true
 						info.isNotRadio = true
 						local vivod = Octo_ToDo_DB_Levels[GUID].classColorHex..Octo_ToDo_DB_Levels[GUID].Name.."|r"
@@ -5596,7 +5583,10 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						info.checked = Octo_ToDo_DB_Levels[GUID].isShownPLAYER
 						info.remove = func_remove_GUID
 						info.removeDoNotHide = true
+						info.icon = Octo_ToDo_DB_Levels[GUID].specIcon
+						info.iconInfo = {tSizeX = 16, tSizeY = 16}
 						tinsert(list, info)
+
 					end
 					self:ddAddButton({list = list, listMaxSize = 20}, level)
 				end

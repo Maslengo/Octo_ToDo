@@ -265,10 +265,24 @@ function E.Developing()
 				order = 33,
 			},
 			-------------------------------------------------
+			SellFrame = {
+				type = "toggle",
+				name = "SellFrame",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.config.SellFrame
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.config.SellFrame = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 34,
+			},
+			-------------------------------------------------
 			ReloadHeader3second2 = {
 				type = "header",
 				name = "FOV",
-				order = 34,
+				order = 35,
 			},
 			-------------------------------------------------
 			FieldOfView = {
@@ -282,7 +296,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.FieldOfView = value
 				end,
 				width = E.FULL_WIDTH,
-				order = 35,
+				order = 36,
 			},
 			-------------------------------------------------
 			FoV_top = {
@@ -299,7 +313,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.FoV_top = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 36,
+				order = 37,
 			},
 			-------------------------------------------------
 			FoV_bottom = {
@@ -316,7 +330,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.FoV_bottom = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 37,
+				order = 38,
 			},
 			-------------------------------------------------
 			FoV_left = {
@@ -333,7 +347,7 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.FoV_left = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 38,
+				order = 39,
 			},
 			-------------------------------------------------
 			FoV_right = {
@@ -350,13 +364,13 @@ function E.Developing()
 					Octo_ToDo_DB_Vars.config.FoV_right = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 39,
+				order = 40,
 			},
 			-------------------------------------------------
 			ReloadHeader3second22 = {
 				type = "header",
 				name = "",
-				order = 40,
+				order = 41,
 			},
 			-------------------------------------------------
 

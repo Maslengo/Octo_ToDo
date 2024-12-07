@@ -5,7 +5,6 @@ local ltl = LibStub("LibThingsLoad-1.0")
 --SellFrame
 tinsert(E.Modules, function()
 		if Octo_ToDo_DB_Vars.config.SellFrame then
-
 			sort(E.OctoTable_itemID_Ignore_List, E.func_Reverse_order)
 
 			local ignorelist = {}

@@ -1,7 +1,8 @@
 local GlobalAddonName, E = ...
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
-----------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------
 -- Octo_ToDo_CreateMenuStyle
+-- menuBackdrop = modernMenu
 local menuBackdrop = {
 	bgFile = "Interface/ChatFrame/ChatFrameBackground",
 	edgeFile = "Interface/ChatFrame/ChatFrameBackground",
