@@ -1,44 +1,22 @@
 local GlobalAddonName, E = ...
-local GBI_version, GBI_build, GBI_date, GBI_tocversion, GBI_localizedVersion, GBI_buildType = GetBuildInfo()
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local SHOWADDON_SECOND = true
-local Button = nil
-local CF = nil
 local dd_SECOND = nil
 local OctoToDo_SECOND_MainFrame = nil
 local OctoToDo_SECOND_CharFrame = nil
 local Octo_ToDo_SECOND_Frame_EventFrame = nil
-local Octo_ToDo_SECOND_Frame_UPGRADERANKS_Frame = nil
 local OctoToDo_SECOND_CloseButton = nil
-local Octo_ToDo_SECOND_Frame_MarkOfHonor_Button = nil
-local Octo_ToDo_SECOND_Frame_QuestFeast_Button = nil
-local Octo_ToDo_SECOND_Frame_AbandonAllQuests_Button = nil
-local OctoToDo_SECOND_MainFrameDeleteButton = nil
-local className, classFilename, classId = UnitClass("PLAYER")
-local englishFaction, localizedFaction = UnitFactionGroup("PLAYER")
-local classColor = E.func_GetClassColor(classFilename)
+local _, classFilename = UnitClass("PLAYER")
 local r, g, b = GetClassColor(classFilename)
 local classColorHexCurrent = E.func_rgb2hex(r, g, b)
-local curCharName, _ = UnitFullName("PLAYER")
-local curServer = GetRealmName()
-local isPlayerMaxLevel = GetMaxLevelForExpansionLevel(GetExpansionLevel())
-local regionalWeeklyStart = 1668981600
 local edgeFile = "Interface\\Buttons\\WHITE8X8"
 local bgFile = "Interface\\Buttons\\WHITE8X8"
 local OctoTable_func_otrisovka_SECOND = {
 }
-local function Central_Frame_Mouse_OnClick(self)
-	local parent = OctoToDo_SECOND_MainFrame["FrameLine"..self.index]
-	parent:GetScript("OnClick")(parent)
-	if not self.tooltip then
-		return
-	end
-	fpde(self)
-end
 local function Central_Frame_Mouse_OnEnter(self)
 	local parent = OctoToDo_SECOND_MainFrame["FrameLine"..self.index]
 	parent:GetScript("OnEnter")(parent)
@@ -76,16 +54,6 @@ local function O_otrisovka_SECOND()
 			local vivodCent, vivodLeft = " ", " "
 			CL:SetFontObject(OctoFont12)
 			vivodLeft = classColorHexCurrent..ACHIEVEMENT_TITLE.."|r".." "..E.Green_Color..GetTotalAchievementPoints(false).."|r"
-			-- vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
-			-- if CharInfo.Faction == "Horde" then
-			--     BG:SetColorTexture(.5, 0, 0, E.BGALPHA*2)
-			-- else
-			--     BG:SetColorTexture(0, 0, .5, E.BGALPHA*2)
-			-- end
-			-- if CharInfo.hasMail then
-			--     BG:SetColorTexture(1, 1, 1, E.BGALPHA)
-			--     vivodCent = E.Icon_MailBox..vivodCent
-			-- end
 			return vivodCent, vivodLeft
 	end)
 	if Octo_ToDo_DB_Vars.config.AchievementToShow ~= nil then
@@ -450,7 +418,6 @@ function Octo_ToDo_SECOND_AddDataToAltFrame()
 					CF.index = i
 					CF:SetSize(E.curWidthCentral, E.curHeight)
 					CF:SetPoint("TOP", OctoToDo_SECOND_CharFrame, "TOP", 0, -E.curHeight*(i-1))
-					-- CF:SetScript("OnClick", Central_Frame_Mouse_OnClick)
 					CF:SetScript("OnEnter", Central_Frame_Mouse_OnEnter)
 					CF:SetScript("OnLeave", Central_Frame_Mouse_OnLeave)
 					CF:SetMouseClickEnabled(false)
@@ -524,9 +491,6 @@ function Octo_ToDo_SECOND_OnEvent(self, event, ...)
 		if Octo_ToDo_DB_Levels == nil then Octo_ToDo_DB_Levels = {} end
 		if Octo_ToDo_DB_Vars == nil then Octo_ToDo_DB_Vars = {} end
 		if Octo_ToDo_DB_Vars.config == nil then Octo_ToDo_DB_Vars.config = {} end
-		if Octo_ToDo_DB_Artifact == nil then Octo_ToDo_DB_Artifact = {} end
-		if Octo_ToDo_DB_Other == nil then Octo_ToDo_DB_Other = {} end
-		if Octo_ToDoTransmog == nil then Octo_ToDoTransmog = {} end
 		SHOWADDON_SECOND = Octo_ToDo_DB_Vars.config.Achievements
 		if SHOWADDON_SECOND == false then
 			Octo_ToDo_SECOND_Frame_EventFrame:UnregisterAllEvents()

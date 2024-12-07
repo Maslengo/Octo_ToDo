@@ -266,15 +266,10 @@ local function Create_SimpleButton(scroll, self, number, pos, config, text, colo
 					ReloadUI()
 				end
 				if config == "DELETEALL" then
-					profileKeys = {}
-					OctoPlayer = {}
 					Octo_ToDo_DB_Config  = {}
 					Octo_ToDo_DB_Levels  = {}
 					Octo_ToDo_DB_Vars  = {}
 					Octo_ToDo_DB_Other  = {}
-					Octo_ToDo_DB_Levels_LIST  = {}
-					Octo_ToDo_Movies  = {}
-					Octo_ToDo_DB_LegionArtifacts  = {}
 					OCTO_DB_currencies_test  = {}
 					OCTO_DB_reputations_test = {}
 					ReloadUI()

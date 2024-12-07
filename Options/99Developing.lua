@@ -29,7 +29,6 @@ function E.Developing()
 				type = "execute",
 				name = E.Green_Color..DELETE.." "..ALL.."|r",
 				func = function()
-					profileKeys = {}
 					Octo_ToDo_DB_Config = {}
 					Octo_ToDo_DB_Levels = {}
 					Octo_ToDo_DB_Other = {}
