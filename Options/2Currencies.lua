@@ -100,8 +100,7 @@ function E.Currencies()
 					E.func_TableMerge(Currencies.args, {
 							["addonNameQWE7"..index] = {
 								type = "toggle",
-								icon = 123123,
-								name = E.func_currencyIcon(CurrencyID).." "..E.func_currencyName(CurrencyID),
+								name = E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID),
 								desc = "\n".."id: |r"..E.Green_Color..tostring(CurrencyID).."|r",
 								get = function()
 									return OCTO_DB_currencies_test[currencyHEADER][CurrencyID]

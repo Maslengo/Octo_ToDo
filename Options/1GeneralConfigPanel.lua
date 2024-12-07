@@ -617,8 +617,7 @@ function E.CreateGeneralOptions()
 			["ExpansionToShow"] = {
 				type = "select",
 				name = "ExpansionToShow",
-				values = {},
-				sorting = {},
+				values = {}, 
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.config.ExpansionToShow
@@ -633,8 +632,7 @@ function E.CreateGeneralOptions()
 			["prefix"] = {
 				type = "select",
 				name = "prefix",
-				values = {},
-				sorting = {},
+				values = {}, 
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.config.prefix
@@ -652,13 +650,11 @@ function E.CreateGeneralOptions()
 		wipe = true
 		-------------------------------------------------
 		for index, v in ipairs(E.OctoTable_Expansions_Table) do
-			generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r",
-			E.func_TableConcat(generalOptions.args.ExpansionToShow.sorting, {index})
+			generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r" 
 		end
 		-------------------------------------------------
 		for index, name in ipairs(E.wowhead_prefix_Table) do
-			generalOptions.args.prefix.values[index] = name
-			E.func_TableConcat(generalOptions.args.prefix.sorting, {index})
+			generalOptions.args.prefix.values[index] = name 
 		end
 		-------------------------------------------------
 	end

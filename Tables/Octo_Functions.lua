@@ -449,7 +449,7 @@ function E.func_texturefromIcon(icon, iconSize, isShown)
 	else
 		vivod = ""
 	end
-	return vivod
+	return vivod.." "
 end
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
@@ -1341,6 +1341,17 @@ function E.func_SetScriptAfter(frame, event, method, ids, func)
 	end)
 end
 ----------------------------------------------------------------
+function E.func_coloredText(fontstring)
+	if not fontstring then
+		return nil
+	end
+	local text = fontstring:GetText()
+	if not text then
+		return nil
+	end
+	local r, g, b, a = fontstring:GetTextColor()
+	return E.func_rgb2hex(r, g, b, a)..text.."|r"
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
