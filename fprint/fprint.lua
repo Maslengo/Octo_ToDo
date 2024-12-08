@@ -162,7 +162,10 @@ local function dumpEdit(indent, msg, tables)
 			str = str..dumpEdit(indent + 1, v, tables)
 			str = ("%s%s},\n"):format(str, indentStr)
 		else
-			v = type(v) == "string" and '"'..v:gsub("[\"\\]", "\\%1")..'"' or tostringall(v)
+			-- v = type(v) == "string" and '"'..v:gsub("[\"\\]", "\\%1")..'"' or tostringall(v)
+			-- str = ("%s%s%s %s,\n"):format(str, indentStr, k, v)
+			local vtype = type(v)
+			v = vtype == "string" and '"'..v:gsub("[\"\\]", "\\%1")..'"' or vtype == "number" and v or '"'..tostringall(v)..'"'
 			str = ("%s%s%s %s,\n"):format(str, indentStr, k, v)
 		end
 	end

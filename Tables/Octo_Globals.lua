@@ -39,8 +39,8 @@ E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga
 -- 	return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
 -- end
 E.OctoFont = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
--- local font = SystemFont_Outline_Small
-local font = GameFontHighlightSmallLeft
+local font = SystemFont_Outline_Small
+-- local font = GameFontHighlightSmallLeft
 E.fontObject9 = CreateFont("OctoFont9")
 E.fontObject9:CopyFontObject(font)
 E.fontObject9:SetFont(E.OctoFont, 9, "OUTLINE")
@@ -53,6 +53,9 @@ E.fontObject11:SetFont(E.OctoFont, 11, "OUTLINE")
 E.fontObject12 = CreateFont("OctoFont12")
 E.fontObject12:CopyFontObject(font)
 E.fontObject12:SetFont(E.OctoFont, 12, "OUTLINE")
+E.fontObject22 = CreateFont("OctoFont22")
+E.fontObject22:CopyFontObject(font)
+E.fontObject22:SetFont(E.OctoFont, 22, "OUTLINE")
 
 
 -- local font = "01 Octo"
@@ -277,6 +280,9 @@ E.Skyblue_Color = "|cff87CDEB"
 E.Steelblue_Color = "|cff4682B3"
 E.Slategray_Color = "|cff708090"
 E.Brown_Color = "|cff964B00"
+
+
+E.Event_Color = "|cff4682B3"
 ----------------------------------------------------------------
 E.Kyrian_r_Color = 0.44
 E.Kyrian_g_Color = 0.66

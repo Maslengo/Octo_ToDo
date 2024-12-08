@@ -9,6 +9,7 @@ local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local Octo_EventFrame = CreateFrame("FRAME", "Octo_EventFrame")
+Octo_EventFrame:Hide()
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local buildVersion, buildNumber, buildDate, interfaceVersion = GetBuildInfo()
 local currentTier = tonumber(GetBuildInfo():match("(.-)%."))
@@ -110,7 +111,7 @@ local MustBeHiddenFrames_table = {
 	{name = "EventToastManagerFrame", frame = EventToastManagerFrame},
 	{name = "PTR_IssueReporter", frame = PTR_IssueReporter},
 	{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
-	{name = "RaidBossEmoteFrame", frame = RaidBossEmoteFrame},
+	-- {name = "RaidBossEmoteFrame", frame = RaidBossEmoteFrame},
 	{name = "ZoneAbilityFrame.Style", frame = ZoneAbilityFrame.Style},
 	{name = "ExtraActionButton1.style", frame = ExtraActionButton1.style},
 	{name = "UIWidgetTopCenterContainerFrame", frame = UIWidgetTopCenterContainerFrame},
@@ -1180,6 +1181,7 @@ function Octo_EventFrame:Collect_ALL_ItemsInBag()
 	local Possible_Anima = 0
 	local Possible_CatalogedResearch = 0
 	local Abbr_En_Name = E.NONE
+	-- local REAGENT_BANK = REAGENT_BANK
 	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		local numSlots = C_Container.GetContainerNumSlots(bag)
 		totalSlots = totalSlots + numSlots
@@ -1918,61 +1920,61 @@ function Octo_EventFrame:O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 			end
 		)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(1358))..E.func_achievementName(1358).." "..E.func_achievementvivod(1358)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_BoreanTundra_Once ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_BoreanTundra_Once
-				end
-				return vivodCent, vivodLeft
-			end
-		)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(1359))..E.func_achievementName(1359).." "..E.func_achievementvivod(1359)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_Dragonblight_Once ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_Dragonblight_Once
-				end
-				return vivodCent, vivodLeft
-			end
-		)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(1357))..E.func_achievementName(1357).." "..E.func_achievementvivod(1357)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_GrizzlyHills_Once ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_GrizzlyHills_Once
-				end
-				return vivodCent, vivodLeft
-			end
-		)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(1356))..E.func_achievementName(1356).." "..E.func_achievementvivod(1356)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_HowlingFjord_Once ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_HowlingFjord_Once
-				end
-				return vivodCent, vivodLeft
-			end
-		)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(40))..E.func_achievementName(40).." "..E.func_achievementvivod(40)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_Icecrown_Once ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_Icecrown_Once
-				end
-				return vivodCent, vivodLeft
-			end
-		)
+		-- tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+		-- 		BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+		-- 		vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(1358))..E.func_achievementName(1358).." "..E.func_achievementvivod(1358)
+		-- 		if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_BoreanTundra_Once ~= E.NONE then
+		-- 			vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_BoreanTundra_Once
+		-- 		end
+		-- 		return vivodCent, vivodLeft
+		-- 	end
+		-- )
+		-- tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+		-- 		BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+		-- 		vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(1359))..E.func_achievementName(1359).." "..E.func_achievementvivod(1359)
+		-- 		if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_Dragonblight_Once ~= E.NONE then
+		-- 			vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_Dragonblight_Once
+		-- 		end
+		-- 		return vivodCent, vivodLeft
+		-- 	end
+		-- )
+		-- tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+		-- 		BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+		-- 		vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(1357))..E.func_achievementName(1357).." "..E.func_achievementvivod(1357)
+		-- 		if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_GrizzlyHills_Once ~= E.NONE then
+		-- 			vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_GrizzlyHills_Once
+		-- 		end
+		-- 		return vivodCent, vivodLeft
+		-- 	end
+		-- )
+		-- tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+		-- 		BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+		-- 		vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(1356))..E.func_achievementName(1356).." "..E.func_achievementvivod(1356)
+		-- 		if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_HowlingFjord_Once ~= E.NONE then
+		-- 			vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_HowlingFjord_Once
+		-- 		end
+		-- 		return vivodCent, vivodLeft
+		-- 	end
+		-- )
+		-- tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+		-- 		BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+		-- 		vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(40))..E.func_achievementName(40).." "..E.func_achievementvivod(40)
+		-- 		if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_Icecrown_Once ~= E.NONE then
+		-- 			vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_Icecrown_Once
+		-- 		end
+		-- 		return vivodCent, vivodLeft
+		-- 	end
+		-- )
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -1984,28 +1986,28 @@ function Octo_EventFrame:O_otrisovka_FIRST()
 				return vivodCent, vivodLeft
 			end
 		)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(38))..E.func_achievementName(38).." "..E.func_achievementvivod(38)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_TheStormPeaks_Once ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_TheStormPeaks_Once
-				end
-				return vivodCent, vivodLeft
-			end
-		)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(36))..E.func_achievementName(36).." "..E.func_achievementvivod(36)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_ZulDrak_Once ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_ZulDrak_Once
-				end
-				return vivodCent, vivodLeft
-			end
-		)
+		-- tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+		-- 		BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+		-- 		vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(38))..E.func_achievementName(38).." "..E.func_achievementvivod(38)
+		-- 		if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_TheStormPeaks_Once ~= E.NONE then
+		-- 			vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_TheStormPeaks_Once
+		-- 		end
+		-- 		return vivodCent, vivodLeft
+		-- 	end
+		-- )
+		-- tinsert(OctoTable_func_otrisovka_FIRST,
+		-- 	function(CharInfo, tooltip, CL, BG)
+		-- 		local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
+		-- 		BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
+		-- 		vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(36))..E.func_achievementName(36).." "..E.func_achievementvivod(36)
+		-- 		if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_ZulDrak_Once ~= E.NONE then
+		-- 			vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_ZulDrak_Once
+		-- 		end
+		-- 		return vivodCent, vivodLeft
+		-- 	end
+		-- )
 		tinsert(OctoTable_func_otrisovka_FIRST,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -5641,47 +5643,47 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		local Faction = UnitFactionGroup("PLAYER")
 		local UnitLevel = UnitLevel("PLAYER")
 		if UnitLevel >= 20 then
-			CreateFrameUsableItems(128807, E.GetItemIcon(128807), Xpos*-15+Ypos*15, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(200707, E.GetItemIcon(200707), Xpos*-14+Ypos*14, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187339, E.GetItemIcon(187339), Xpos*-13+Ypos*13, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187875, E.GetItemIcon(187875), Xpos*-12+Ypos*12, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187896, E.GetItemIcon(187896), Xpos*-11+Ypos*11, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187897, E.GetItemIcon(187897), Xpos*-10+Ypos*10, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187869, E.GetItemIcon(187869), Xpos*-9+Ypos*9, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187895, E.GetItemIcon(187895), Xpos*-8+Ypos*8, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187899, E.GetItemIcon(187899), Xpos*-7+Ypos*7, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187900, E.GetItemIcon(187900), Xpos*-6+Ypos*6, Ypos*-1, 0, .43, .86)
-			CreateFrameUsableItems(187898, E.GetItemIcon(187898), Xpos*-5+Ypos*5, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(128807, E.func_GetItemIcon(128807), Xpos*-15+Ypos*15, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(200707, E.func_GetItemIcon(200707), Xpos*-14+Ypos*14, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187339, E.func_GetItemIcon(187339), Xpos*-13+Ypos*13, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187875, E.func_GetItemIcon(187875), Xpos*-12+Ypos*12, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187896, E.func_GetItemIcon(187896), Xpos*-11+Ypos*11, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187897, E.func_GetItemIcon(187897), Xpos*-10+Ypos*10, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187869, E.func_GetItemIcon(187869), Xpos*-9+Ypos*9, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187895, E.func_GetItemIcon(187895), Xpos*-8+Ypos*8, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187899, E.func_GetItemIcon(187899), Xpos*-7+Ypos*7, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187900, E.func_GetItemIcon(187900), Xpos*-6+Ypos*6, Ypos*-1, 0, .43, .86)
+			CreateFrameUsableItems(187898, E.func_GetItemIcon(187898), Xpos*-5+Ypos*5, Ypos*-1, 0, .43, .86)
 			if Faction == "Horde" then
-				CreateFrameUsableItems(150745, E.GetItemIcon(150745), Xpos*-4+Ypos*4, Ypos*-1, 0, .43, .86)
+				CreateFrameUsableItems(150745, E.func_GetItemIcon(150745), Xpos*-4+Ypos*4, Ypos*-1, 0, .43, .86)
 			else
-				CreateFrameUsableItems(150746, E.GetItemIcon(150746), Xpos*-4+Ypos*4, Ypos*-1, 0, .43, .86)
+				CreateFrameUsableItems(150746, E.func_GetItemIcon(150746), Xpos*-4+Ypos*4, Ypos*-1, 0, .43, .86)
 			end
 			if Faction == "Horde" then
-				CreateFrameUsableItems(150744, E.GetItemIcon(150744), Xpos*-3+Ypos*3, Ypos*-1, 0, .43, .86)
+				CreateFrameUsableItems(150744, E.func_GetItemIcon(150744), Xpos*-3+Ypos*3, Ypos*-1, 0, .43, .86)
 			else
-				CreateFrameUsableItems(150743, E.GetItemIcon(150743), Xpos*-3+Ypos*3, Ypos*-1, 0, .43, .86)
+				CreateFrameUsableItems(150743, E.func_GetItemIcon(150743), Xpos*-3+Ypos*3, Ypos*-1, 0, .43, .86)
 			end
 		end
 		CreateFrameUsableSpells(431280, E.func_GetSpellIcon(431280), Xpos*-1+Ypos*1, Ypos*-1, 0, .43, .86)
 		CreateFrameUsableSpells(460905, E.func_GetSpellIcon(460905), Xpos*-2+Ypos*2, Ypos*-1, 0, .43, .86)
 		if prof1 == 202 or prof2 == 202 then
-			CreateFrameUsableItems(198156, E.GetItemIcon(198156), Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254)
-			CreateFrameUsableItems(172924, E.GetItemIcon(172924), Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542)
+			CreateFrameUsableItems(198156, E.func_GetItemIcon(198156), Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 366254)
+			CreateFrameUsableItems(172924, E.func_GetItemIcon(172924), Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 310542)
 			if Faction == "Horde" then
-				CreateFrameUsableItems(168808, E.GetItemIcon(168808), Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 265807)
-				CreateFrameUsableItems(168807, E.GetItemIcon(168807), Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 265807)
+				CreateFrameUsableItems(168808, E.func_GetItemIcon(168808), Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 265807)
+				CreateFrameUsableItems(168807, E.func_GetItemIcon(168807), Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 265807)
 			else
-				CreateFrameUsableItems(168808, E.GetItemIcon(168808), Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 264492)
-				CreateFrameUsableItems(168807, E.GetItemIcon(168807), Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 264492)
+				CreateFrameUsableItems(168808, E.func_GetItemIcon(168808), Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 264492)
+				CreateFrameUsableItems(168807, E.func_GetItemIcon(168807), Xpos*3+Ypos*1, Ypos*4, 0, .43, .86, 264492)
 			end
-			CreateFrameUsableItems(151652, E.GetItemIcon(151652), Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 264490)
-			CreateFrameUsableItems(112059, E.GetItemIcon(112059), Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 264487)
-			CreateFrameUsableItems(87215, E.GetItemIcon(87215), Xpos*6+Ypos*1, Ypos*7, 0, .43, .86, 264485)
-			CreateFrameUsableItems(48933, E.GetItemIcon(48933), Xpos*7+Ypos*1, Ypos*8, 0, .43, .86, 264481)
-			CreateFrameUsableItems(110560, E.GetItemIcon(110560), Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603)
-			CreateFrameUsableItems(6948, E.GetItemIcon(6948), Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603)
-			CreateFrameUsableItems(140192, E.GetItemIcon(140192), Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603)
+			CreateFrameUsableItems(151652, E.func_GetItemIcon(151652), Xpos*4+Ypos*1, Ypos*5, 0, .43, .86, 264490)
+			CreateFrameUsableItems(112059, E.func_GetItemIcon(112059), Xpos*5+Ypos*1, Ypos*6, 0, .43, .86, 264487)
+			CreateFrameUsableItems(87215, E.func_GetItemIcon(87215), Xpos*6+Ypos*1, Ypos*7, 0, .43, .86, 264485)
+			CreateFrameUsableItems(48933, E.func_GetItemIcon(48933), Xpos*7+Ypos*1, Ypos*8, 0, .43, .86, 264481)
+			CreateFrameUsableItems(110560, E.func_GetItemIcon(110560), Xpos*8+Ypos*1, Ypos*9, 0, .43, .86, 6603)
+			CreateFrameUsableItems(6948, E.func_GetItemIcon(6948), Xpos*9+Ypos*1, Ypos*10, 0, .43, .86, 6603)
+			CreateFrameUsableItems(140192, E.func_GetItemIcon(140192), Xpos*10+Ypos*1, Ypos*11, 0, .43, .86, 6603)
 			if classFilename == "DRUID" then
 				CreateFrameUsableSpells(193753, E.func_GetSpellIcon(193753), Xpos*12+Ypos*1, Ypos*12, 0, .43, .86)
 			end
@@ -5699,9 +5701,9 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				CreateFrameUsableSpells(265225, E.func_GetSpellIcon(265225), Xpos*12+Ypos*1, Ypos*13, 0, .43, .86)
 			end
 		else
-			CreateFrameUsableItems(110560, E.GetItemIcon(110560), Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603)
-			CreateFrameUsableItems(6948, E.GetItemIcon(6948), Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603)
-			CreateFrameUsableItems(140192, E.GetItemIcon(140192), Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603)
+			CreateFrameUsableItems(110560, E.func_GetItemIcon(110560), Xpos*0+Ypos*1, Ypos*1, 0, .43, .86, 6603)
+			CreateFrameUsableItems(6948, E.func_GetItemIcon(6948), Xpos*1+Ypos*1, Ypos*2, 0, .43, .86, 6603)
+			CreateFrameUsableItems(140192, E.func_GetItemIcon(140192), Xpos*2+Ypos*1, Ypos*3, 0, .43, .86, 6603)
 			if classFilename == "DRUID" then
 				CreateFrameUsableSpells(193753, E.func_GetSpellIcon(193753), Xpos*4+Ypos*1, Ypos*4, 0, .43, .86)
 			end
@@ -6045,9 +6047,7 @@ end
 for index, event in ipairs(E.OctoTable_Events) do
 	Octo_EventFrame:RegisterEvent(event)
 end
-Octo_EventFrame:SetScript("OnEvent", function(self, event, ...) self[event](self, ...)
-	end
-)
+Octo_EventFrame:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
 function Octo_EventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")

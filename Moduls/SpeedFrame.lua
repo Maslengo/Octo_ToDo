@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local LibStub = LibStub 
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------------------------
@@ -10,64 +9,64 @@ tinsert(E.Modules, function()
 			local SpeedFrame = nil
 			if not SpeedFrame then
 				SpeedFrame = CreateFrame("Frame", "SpeedFrame", UIParent, "BackdropTemplate")
-				f = SpeedFrame
-				f:SetPoint(vars.point, nil, vars.relativePoint, vars.xOfs, vars.yOfs)
-				f:SetSize(80, 32)
-				-- f:SetBackdrop({
+				local f = SpeedFrame
+				SpeedFrame:SetPoint(vars.point, nil, vars.relativePoint, vars.xOfs, vars.yOfs)
+				SpeedFrame:SetSize(80, 32)
+				-- SpeedFrame:SetBackdrop({
 				-- bgFile = E.bgFile,
 				-- edgeFile = E.edgeFile,
 				-- edgeSize = 1,
 				-- })
-				-- f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa/4)
-				-- f:SetBackdropBorderColor(0, 0, 0, 1/4)
-				f:SetClampedToScreen(false)
-				f:SetFrameStrata("HIGH")
-				f:EnableMouse(true)
-				f:SetMovable(true)
-				f:RegisterForDrag("LeftButton")
-				f:SetScript("OnDragStart", function()
-						-- f:SetAlpha(E.bgCa/2)
-						f:StartMoving()
-						LibCustomGlow.ButtonGlow_Start(f, {.31, 1, .47, 1}, .1)
+				-- SpeedFrame:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa/4)
+				-- SpeedFrame:SetBackdropBorderColor(0, 0, 0, 1/4)
+				SpeedFrame:SetClampedToScreen(false)
+				SpeedFrame:SetFrameStrata("HIGH")
+				SpeedFrame:EnableMouse(true)
+				SpeedFrame:SetMovable(true)
+				SpeedFrame:RegisterForDrag("LeftButton")
+				SpeedFrame:SetScript("OnDragStart", function()
+						-- SpeedFrame:SetAlpha(E.bgCa/2)
+						SpeedFrame:StartMoving()
+						LibCustomGlow.ButtonGlow_Start(SpeedFrame, {.31, 1, .47, 1}, .1)
 				end)
 				local relativePoint
-				f:SetScript("OnDragStop", function()
-						-- f:SetAlpha(1)
-						f:StopMovingOrSizing()
-						local point, _, relativePoint, xOfs, yOfs = f:GetPoint()
+				SpeedFrame:SetScript("OnDragStop", function()
+						-- SpeedFrame:SetAlpha(1)
+						SpeedFrame:StopMovingOrSizing()
+						local point, _, relativePoint, xOfs, yOfs = SpeedFrame:GetPoint()
 						vars.point = point
 						vars.relativePoint = relativePoint
 						vars.xOfs = E.func_CompactNumberSimple(xOfs)
 						vars.yOfs = E.func_CompactNumberSimple(yOfs)
-						LibCustomGlow.ButtonGlow_Stop(f)
+						LibCustomGlow.ButtonGlow_Stop(SpeedFrame)
 				end)
-				f.text_glide = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-				f.text_glide:SetPoint("CENTER", 0, 7)
-				f.text_glide:SetFontObject(OctoFont11)
-				f.text_glide:SetJustifyV("MIDDLE")
-				f.text_glide:SetJustifyH("CENTER")
-				f.text_glide:SetTextColor(0, .65, 1, 1)
-				f.text_movespeed = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-				f.text_movespeed:SetPoint("CENTER", 0, -7)
-				f.text_movespeed:SetFontObject(OctoFont12)
-				f.text_movespeed:SetJustifyV("MIDDLE")
-				f.text_movespeed:SetJustifyH("CENTER")
-				f.text_movespeed:SetTextColor(.31, 1, .47, 1)
+				SpeedFrame.text_glide = SpeedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+				SpeedFrame.text_glide:SetPoint("CENTER", 0, 7)
+				SpeedFrame.text_glide:SetFontObject(OctoFont11)
+				SpeedFrame.text_glide:SetJustifyV("MIDDLE")
+				SpeedFrame.text_glide:SetJustifyH("CENTER")
+				SpeedFrame.text_glide:SetTextColor(0, .65, 1, 1)
+				SpeedFrame.text_movespeed = SpeedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+				SpeedFrame.text_movespeed:SetPoint("CENTER", 0, -7)
+				SpeedFrame.text_movespeed:SetFontObject(OctoFont12)
+				SpeedFrame.text_movespeed:SetJustifyV("MIDDLE")
+				SpeedFrame.text_movespeed:SetJustifyH("CENTER")
+				SpeedFrame.text_movespeed:SetTextColor(.31, 1, .47, 1)
 				C_Timer.NewTicker(.1, function()
 						local isGliding, canGlide, forwardSpeed = C_PlayerInfo.GetGlidingInfo()
 						local base = isGliding and forwardSpeed or GetUnitSpeed("PLAYER")
 						local movespeed = base/BASE_MOVEMENT_SPEED*100
 						if forwardSpeed > 1 then
-							f.text_glide:SetText("glide: ".. E.func_CompactNumberSimple(forwardSpeed))
-							f.text_movespeed:SetPoint("CENTER", 0, -7)
+							SpeedFrame.text_glide:SetText("glide: ".. E.func_CompactNumberSimple(forwardSpeed))
+							SpeedFrame.text_movespeed:SetPoint("CENTER", 0, -7)
 						else
-							f.text_glide:SetText("")
-							f.text_movespeed:SetPoint("CENTER", 0, 0)
+							SpeedFrame.text_glide:SetText("")
+							SpeedFrame.text_movespeed:SetPoint("CENTER", 0, 0)
 						end
 						if movespeed ~= 0 then
-							f.text_movespeed:SetText(E.func_CompactNumberSimple(movespeed))
+							SpeedFrame.text_movespeed:SetText(E.func_CompactNumberSimple(movespeed))
 						else
-							f.text_movespeed:SetText("")
+							SpeedFrame.text_movespeed:SetText("")
 						end
 				end)
 			end

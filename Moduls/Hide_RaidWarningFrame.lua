@@ -9,5 +9,14 @@ tinsert(E.Modules, function()
 			RaidWarningFrame:UnregisterAllEvents()
 			RaidWarningFrame:Hide()
 		end)
+		RaidBossEmoteFrame:HookScript("OnShow", function(self, ...)
+			-- RaidBossEmoteFrame:UnregisterEvent("ENCOUNTER_LOOT_RECEIVED")
+			-- RaidBossEmoteFrame:UnregisterEvent("BOSS_KILL")
+			print ("RaidBossEmoteFrame HIDE")
+			RaidBossEmoteFrame:UnregisterAllEvents()
+			RaidBossEmoteFrame:Hide()
+		end)
+
+
 	end
 end)

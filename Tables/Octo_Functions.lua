@@ -218,59 +218,101 @@ local OctoTable_RIO_COLORS = {
 }
 -- ITEM UTILS
 ----------------------------------------------------------------
-function E.GetItemInfo(itemID)
+function E.func_GetItemInfo(itemID)
 	return GetItemInfo(itemID)
 end
 ----------------------------------------------------------------
-function E.GetItemIcon(itemID)
+function E.func_GetItemIcon(itemID)
 	return C_Item.GetItemIconByID(itemID)
 end
 ----------------------------------------------------------------
-function E.GetItemName(itemID)
+function E.func_GetItemName(itemID)
 	return C_Item.GetItemNameByID(itemID)
 end
 ----------------------------------------------------------------
-function E.GetItemLink(itemID)
-	local _, link = E.GetItemInfo(itemID)
+function E.func_GetItemLink(itemID)
+	local _, link = E.func_GetItemInfo(itemID)
 	return link
 end
 ----------------------------------------------------------------
-function E.GetItemQuality(itemID)
+function E.func_GetItemQuality(itemID)
 	return C_Item.GetItemQualityByID(itemID)
 end
 ----------------------------------------------------------------
-function E.GetItemQualityColor(itemID)
-	return ITEM_QUALITY_COLORS[E.GetItemQuality(itemID)]
+function E.func_GetItemQualityColor(itemID)
+	return ITEM_QUALITY_COLORS[E.func_GetItemQuality(itemID)]
 end
 ----------------------------------------------------------------
-function E.GetItemQualityColorRGB(itemID)
-	return E.GetItemQualityColor(itemID).color:GetRGB()
+function E.func_GetItemQualityColorRGB(itemID)
+	return E.func_GetItemQualityColor(itemID).color:GetRGB()
 end
 ----------------------------------------------------------------
-function E.GetItemCurrentLevel(itemID)
+function E.func_GetItemCurrentLevel(itemID)
 	return GetDetailedItemLevelInfo(itemID)
 end
 ----------------------------------------------------------------
-function E.GetItemMaxStackSize(itemID)
+function E.func_GetItemMaxStackSize(itemID)
 	return C_Item.GetItemMaxStackSizeByID(itemID)
 end
 ----------------------------------------------------------------
-function E.IsItemStackable(itemID)
-	local maxStackSize = E.GetItemMaxStackSize(itemID)
+function E.func_IsItemStackable(itemID)
+	local maxStackSize = E.func_GetItemMaxStackSize(itemID)
 	return maxStackSize and maxStackSize > 1
 end
 ----------------------------------------------------------------
-function E.GetItemInventoryType(itemID)
+function E.func_GetItemInventoryType(itemID)
 	return C_Item.GetItemInventoryTypeByID(itemID)
 end
 ----------------------------------------------------------------
-function E.GetItemInventoryTypeName(itemID)
+function E.func_GetItemInventoryTypeName(itemID)
 	local _,_,_, itemEquipLoc = GetItemInfoInstant(itemID)
 	return itemEquipLoc
 end
 ----------------------------------------------------------------
-function E.IsItemDataCached(itemID)
+function E.func_IsItemDataCached(itemID)
 	return IsItemDataCachedByID(itemID)
+end
+
+----------------------------------------------------------------
+function E.func_itemName_NOCOLOR(itemID)
+	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
+	end
+	return vivod
+end
+----------------------------------------------------------------
+function E.func_itemName(itemID)
+	local itemName = C_Item.GetItemNameByID(itemID) or Red_Color..SEARCH_LOADING_TEXT.."|r" -- RETRIEVING_ITEM_INFO
+	local itemQuality = select(3, GetItemInfo(itemID))
+	local vivod
+	if itemQuality then
+		vivod = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
+	else
+		vivod = itemName
+	end
+	if ShowIDS == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
+	end
+	return vivod
+end
+----------------------------------------------------------------
+function E.func_itemTexture(itemID)
+	local icon = GetItemIconByID(itemID) or 134400
+	return E.func_texturefromIcon(icon)
+end
+----------------------------------------------------------------
+function E.func_GetItemCooldown(itemID)
+	local start, duration = C_Item.GetItemCooldown(itemID)
+	-- local start = C_Item.GetItemCooldown(itemID).startTimeSeconds or 0
+	-- local duration = C_Item.GetItemCooldown(itemID).durationSeconds or 0
+	-- local start = C_Container.GetItemCooldown(itemID).startTime or 0
+	-- local duration = C_Container.GetItemCooldown(itemID).duration or 0
+	local vivod = 0
+	if start > 0 and duration > 0 then
+		vivod = (start + duration - GetTime())
+	end
+	return E.func_CompactNumberSimple(vivod)
 end
 ----------------------------------------------------------------
 -- SPELLS
@@ -528,47 +570,6 @@ function E.func_reputationNameSIMPLE(reputationID)
 		vivod = reputationID
 	end
 	return vivod
-end
-----------------------------------------------------------------
-function E.func_itemName_NOCOLOR(itemID)
-	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
-	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
-	end
-	return vivod
-end
-----------------------------------------------------------------
-function E.func_itemName(itemID)
-	local itemName = C_Item.GetItemNameByID(itemID) or Red_Color..SEARCH_LOADING_TEXT.."|r" -- RETRIEVING_ITEM_INFO
-	local itemQuality = select(3, GetItemInfo(itemID))
-	local vivod
-	if itemQuality then
-		vivod = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
-	else
-		vivod = itemName
-	end
-	if ShowIDS == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
-	end
-	return vivod
-end
-----------------------------------------------------------------
-function E.func_itemTexture(itemID)
-	local icon = GetItemIconByID(itemID) or 134400
-	return E.func_texturefromIcon(icon)
-end
-----------------------------------------------------------------
-function E.func_GetItemCooldown(itemID)
-	local start, duration = C_Item.GetItemCooldown(itemID)
-	-- local start = C_Item.GetItemCooldown(itemID).startTimeSeconds or 0
-	-- local duration = C_Item.GetItemCooldown(itemID).durationSeconds or 0
-	-- local start = C_Container.GetItemCooldown(itemID).startTime or 0
-	-- local duration = C_Container.GetItemCooldown(itemID).duration or 0
-	local vivod = 0
-	if start > 0 and duration > 0 then
-		vivod = (start + duration - GetTime())
-	end
-	return E.func_CompactNumberSimple(vivod)
 end
 ----------------------------------------------------------------
 function E.func_currencyName(currencyID)
