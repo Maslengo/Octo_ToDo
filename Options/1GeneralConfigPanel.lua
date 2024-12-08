@@ -2,12 +2,12 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
-local wipe = false
+-- local wipe = false
 function E.CreateGeneralOptions()
 	local generalOptions = {
 		type = "group",
 		childGroups = "tree",
-		name = E.AddonTitle,
+		name = E.AddonTitle.." "..E.Gray_Color..E.AddonVersion .. "|r",
 		args = {
 			-------------------------------------------------
 			MainHeader = {
@@ -646,8 +646,8 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 		},
 	}
-	if wipe == false then
-		wipe = true
+	-- if wipe == false then
+		-- wipe = true
 		-------------------------------------------------
 		for index, v in ipairs(E.OctoTable_Expansions_Table) do
 			generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r" 
@@ -657,56 +657,10 @@ function E.CreateGeneralOptions()
 			generalOptions.args.prefix.values[index] = name 
 		end
 		-------------------------------------------------
-	end
-	-------------------------------------------------
-	-- for index, v in next, (E.OctoTable_Expansions_Table) do
-	--     print (index, v.icon, v.name)
-	--     E.func_TableMerge(generalOptions.args, {
-	--             ["ExpansionToShow"] = {
-	--                 type = "select",
-	--                 name = "ExpansionToShow",
-	--                 desc = "",
-	--                 values = {
-	--                     [index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r",
-	--                 },
-	--                 sorting = {index},
-	--                 get = function()
-	--                     return Octo_ToDo_DB_Vars.config.ExpansionToShow
-	--                 end,
-	--                 set = function(_, value)
-	--                     Octo_ToDo_DB_Vars.config.ExpansionToShow = value
-	--                 end,
-	--                 width = E.FULL_WIDTH/4,
-	--                 order = 3,
-	--             },
-	--     })
 	-- end
 	-------------------------------------------------
-	-- prefix = {
-	--     type = "select",
-	--     name = "prefix",
-	--     desc = "",
-	--     values = {
-	--         [1] = "Русский", -- "ru.",
-	--         [2] = "Deutsch", -- "de.",
-	--         [3] = "English", -- "",
-	--         [4] = "Español", -- "es.",
-	--         [5] = "Français", -- "fr.",
-	--         [6] = "Italiano", -- "it.",
-	--         [7] = "Português Brasileiro", -- "pt.",
-	--         [8] = "Korean", -- "한국어", --"ko.",
-	--         [9] = "Chinese", -- "简体中文", --"cn.",
-	--     },
-	--     sorting = {1, 2, 3, 4, 5, 6, 7, 8, 9},
-	--     get = function()
-	--         return Octo_ToDo_DB_Vars.config.prefix
-	--     end,
-	--     set = function(_, value)
-	--         Octo_ToDo_DB_Vars.config.prefix = value
-	--     end,
-	--     width = E.FULL_WIDTH/4,
-	--     order = 4,
-	-- },
+
+
+
 	return generalOptions
 end
-

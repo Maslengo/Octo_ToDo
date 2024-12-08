@@ -23,5 +23,3 @@ function E.Init()
 	AceConfigDialog:AddToBlizOptions("Developing", E.Green_Color.."Developing".."|r", E.AddonTitle)
 	----------------------------------------------------------------
 end
-
-

@@ -166,7 +166,6 @@ end
 local function Create_CheckButtonNEW(scroll, self, number, pos, otstyp, config, text, r, g, b, a, button, DATABASE)
 	local TEST = ""
 	if type(config) == "string" then button = false end
-	-- Octo_ToDo_DB_Config.ItemDB
 	if r == nil then r = E.bgCr end
 	if g == nil then g = E.bgCg end
 	if b == nil then b = E.bgCb end

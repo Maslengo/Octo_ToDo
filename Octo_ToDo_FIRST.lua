@@ -127,9 +127,6 @@ end
 
 function Octo_EventFrame:ConcatAtStart()
 	E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
-	for _, itemID in next, (E.OctoTable_itemID_ALL) do
-		Octo_ToDo_DB_Config.ItemDB[itemID] = Octo_ToDo_DB_Config.ItemDB[itemID] or false
-	end
 	E.func_TableConcat(E.OctoTable_itemID_Config, E.OctoTable_itemID_ALL)
 	for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Cosmetic) do
 		E.OctoTable_itemID_ItemsUsable[itemID] = 1
@@ -1239,7 +1236,6 @@ function Octo_EventFrame:Collect_ALL_ItemsInBag()
 		end
 	end
 	Octo_ToDo_DB_Config = Octo_ToDo_DB_Config or {}
-	Octo_ToDo_DB_Config.ItemDB = Octo_ToDo_DB_Config.ItemDB or {}
 	if collect and not InCombatLockdown() then
 		collect.MASLENGO = collect.MASLENGO or {}
 		collect.MASLENGO.ItemsInBag = collect.MASLENGO.ItemsInBag or {}
@@ -1906,17 +1902,6 @@ function Octo_EventFrame:O_otrisovka_FIRST()
 				vivodLeft = E.func_itemTexture(49908)..E.func_itemName(49908)
 				if CharInfo.MASLENGO.ItemsInBag[49908] ~= 0 then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[49908]
-				end
-				return vivodCent, vivodLeft
-			end
-		)
-		tinsert(OctoTable_func_otrisovka_FIRST,
-			function(CharInfo, tooltip, CL, BG)
-				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
-				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA*3)
-				vivodLeft = E.func_texturefromIcon(E.func_achievementIcon(39))..E.func_achievementName(39).." "..E.func_achievementvivod(39)
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_SholazarBasin_Once ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_SholazarBasin_Once
 				end
 				return vivodCent, vivodLeft
 			end
@@ -4416,24 +4401,21 @@ function Octo_EventFrame:O_otrisovka_FIRST()
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
-				local list = {}
-				for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
-					tinsert(list, itemID)
-				end
-				sort(list, E.func_Reverse_order)
-				for k, itemID in next, (list) do
-					if Octo_ToDo_DB_Config.ItemDB[itemID] == true then
-						if Octo_ToDo_DB_Vars.config.ItemsShowAllways == false and Octo_ToDo_DB_Config.ItemDB[itemID] == true and CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
+
+
+				for index, itemID in ipairs(E.OctoTable_itemID_ALL) do
+					if Octo_ToDo_DB_Vars.config.ItemsShowAllways == false  and CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
+						tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
+					elseif Octo_ToDo_DB_Vars.config.ItemsShowAllways == true then
+						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
 							tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
-						elseif Octo_ToDo_DB_Vars.config.ItemsShowAllways == true and Octo_ToDo_DB_Config.ItemDB[itemID] == true then
-							if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
-								tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
-							else
-								tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.Gray_Color..E.func_itemName_NOCOLOR(itemID).."|r", E.Gray_Color..CharInfo.MASLENGO.ItemsInBag[itemID].."|r"}
-							end
+						else
+							tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.Gray_Color..E.func_itemName_NOCOLOR(itemID).."|r", E.Gray_Color..CharInfo.MASLENGO.ItemsInBag[itemID].."|r"}
 						end
 					end
 				end
+
+
 				if #tooltip ~= 0 then
 					vivodCent = E.Gray_Color..ITEMS.."|r"
 				else
@@ -5978,9 +5960,6 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 		end
 		if Octo_ToDo_DB_Config.CurrencyDB == nil then
 			Octo_ToDo_DB_Config.CurrencyDB = {}
-		end
-		if Octo_ToDo_DB_Config.ItemDB == nil then
-			Octo_ToDo_DB_Config.ItemDB = {}
 		end
 		if Octo_ToDo_DB_Config.QuestsDB == nil then
 			Octo_ToDo_DB_Config.QuestsDB = {}

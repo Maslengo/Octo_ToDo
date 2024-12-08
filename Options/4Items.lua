@@ -44,32 +44,6 @@ function E.Items()
 				order = 4,
 			},
 			-------------------------------------------------
-			ItemsALLTURNON = {
-				type = "execute",
-				name = ENABLE_ALL_ADDONS,
-				func = function()
-					for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
-						Octo_ToDo_DB_Config.ItemDB[itemID] = true
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 5,
-			},
-			-------------------------------------------------
-			ItemsALLTURNOFF = {
-				type = "execute",
-				name = "Выключить все",
-				func = function()
-					for itemID, v in next, (Octo_ToDo_DB_Config.ItemDB) do
-						Octo_ToDo_DB_Config.ItemDB[itemID] = false
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 6,
-			},
-			-------------------------------------------------
 			ReloadHeader453 = {
 				type = "header",
 				name = "",
