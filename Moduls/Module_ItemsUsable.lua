@@ -31,8 +31,12 @@ function EventFrame:ADDON_LOADED(addonName)
 		ClickableFrame:HookScript("OnEnter", function()
 				GameTooltip:SetOwner(ClickableFrame, "ANCHOR_BOTTOMRIGHT", 20, -20) -- ANCHOR_CURSOR
 				GameTooltip:ClearLines()
-				local itemLink = select(2, GetItemInfo(ClickableFrame.itemID))
-				GameTooltip:SetHyperlink(itemLink)
+				if ClickableFrame.itemID then
+					local itemLink = select(2, GetItemInfo(ClickableFrame.itemID))
+					GameTooltip:SetHyperlink(itemLink)
+				else
+					GameTooltip:SetText(E.Black_Color.."ClickableFrame".."|r")
+				end
 				GameTooltip:Show()
 				-- LibCustomGlow.ButtonGlow_Start(ClickableFrame, {.31, 1, .47, 1}, .1)
 				LibCustomGlow.AutoCastGlow_Start(
@@ -66,7 +70,7 @@ end
 
 function EventFrame:func_cycle()
 	if not InCombatLockdown() then
-		-- print ("EventFrame:func_cycle()")
+		print ("EventFrame:func_cycle()")
 		for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 			for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
 				local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
@@ -81,54 +85,54 @@ function EventFrame:func_cycle()
 end
 
 function EventFrame:PLAYER_REGEN_ENABLED()
-	-- print (E.Green_Color.."PLAYER_REGEN_ENABLED".."|r")
+	print (E.Green_Color.."PLAYER_REGEN_ENABLED".."|r")
 	self:func_cycle()
 end
 
 function EventFrame:PLAYER_REGEN_DISABLED()
-	-- print (E.Red_Color.."PLAYER_REGEN_DISABLED".."|r")
+	print (E.Red_Color.."PLAYER_REGEN_DISABLED".."|r")
 	-- if ClickableFrame:IsShown() then
 	--     ClickableFrame:Hide()
 	-- end
 end
 
 function EventFrame:BAG_NEW_ITEMS_UPDATED()
-	-- print (E.Green_Color.."BAG_NEW_ITEMS_UPDATED".."|r")
+	print (E.Green_Color.."BAG_NEW_ITEMS_UPDATED".."|r")
 	self:func_cycle()
 end
 
 function EventFrame:ITEM_DATA_LOAD_RESULT(itemID)
 	if E.OctoTable_itemID_ItemsUsable[itemID] then
-		-- print (E.Event_Color.."ITEM_DATA_LOAD_RESULT".."|r", itemID, E.func_itemTexture(itemID)..E.func_itemName(itemID))
+		print (E.Event_Color.."ITEM_DATA_LOAD_RESULT".."|r", itemID, E.func_itemTexture(itemID)..E.func_itemName(itemID))
 		self:ItemsUsableFrame(itemID)
 	end
 end
 
 function EventFrame:ITEM_COUNT_CHANGED(itemID)
 	if E.OctoTable_itemID_ItemsUsable[itemID] then
-		-- print (E.Event_Color.."ITEM_COUNT_CHANGED".."|r", itemID, E.func_itemTexture(itemID)..E.func_itemName(itemID))
+		print (E.Event_Color.."ITEM_COUNT_CHANGED".."|r", itemID, E.func_itemTexture(itemID)..E.func_itemName(itemID))
 		self:ItemsUsableFrame(itemID)
 	end
 end
 
 function EventFrame:ITEM_PUSH(_, itemID)
 	if E.OctoTable_itemID_ItemsUsable[itemID] then
-		-- print (E.Event_Color.."ITEM_PUSH".."|r", itemID, E.func_itemTexture(itemID)..E.func_itemName(itemID))
+		print (E.Event_Color.."ITEM_PUSH".."|r", itemID, E.func_itemTexture(itemID)..E.func_itemName(itemID))
 		self:ItemsUsableFrame(itemID)
 	end
 end
 
 function EventFrame:TEST_FUNC(itemLink)
 	local count = 0
-	-- print (count)
+	print (count)
 	-- local data = C_TooltipInfo.GetItemByID(itemLink)
 	-- if data.lines then
 	-- 	for i = 1, #data.lines do
-	-- 		-- print (data.lines[i].leftText)
+	-- 		print (data.lines[i].leftText)
 	-- 		local leftColor = data.lines[i].leftColor
 	-- 		if leftColor and leftColor.r >= 0.9 and leftColor.g <= 0.13 and leftColor.b <= 0.13 then
 	-- 			count = count + 1
-	-- 			-- print ("ТЕКСТ НАШЁЛСЯ", leftColor.r, leftColor.g, leftColor.b, count)
+	-- 			print ("ТЕКСТ НАШЁЛСЯ", leftColor.r, leftColor.g, leftColor.b, count)
 	-- 		end
 	-- 	end
 	-- end
@@ -143,12 +147,12 @@ function EventFrame:TEST_FUNC(itemLink)
 			local QWE_RIGHT = E.func_coloredText(_G["OctoToDoScanningTooltipUSABLETextRight"..i])
 			if TEXTLEFT and TEXTLEFT ~= "" and QWE_LEFT ~= nil then
 				if QWE_LEFT:find("^|cffFF2020") or QWE_LEFT:find("^|cffFF0000") then
-					-- print ("ТЕКСТ НАШЁЛСЯ", QWE_LEFT)
+					print ("ТЕКСТ НАШЁЛСЯ", QWE_LEFT)
 					count = count + 1
 				end
 			end
 			if TEXTRIGHT and TEXTRIGHT ~= "" and QWE_RIGHT ~= nil then
-				-- print (TEXTRIGHT)
+				print (TEXTRIGHT)
 				if QWE_RIGHT:find("^|cffFF2020") or QWE_RIGHT:find("^|cffFF0000") then
 					count = count + 1
 				end
@@ -178,7 +182,7 @@ function EventFrame:ItemsUsableFrame(itemID)
 		end
 	end
 	if stop == false and ClickableFrame:GetAlpha() == 1 then
-		-- print (E.func_itemTexture(itemID)..E.func_itemName(itemID), E.Red_Color.."HIDE|r")
+		print (E.func_itemTexture(itemID)..E.func_itemName(itemID), E.Red_Color.."HIDE|r")
 		ClickableFrame:SetAlpha(.1)
 		ClickableFrame.icon:SetTexture(413587)
 		ClickableFrame.text:SetText("")

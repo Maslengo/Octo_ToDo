@@ -5487,9 +5487,9 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 					info.checked = Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer
 					info.func = function(_, _, _, checked)
 						Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer = checked
-						self:main_frame_toggle()
+						Octo_EventFrame:main_frame_toggle()
 						C_Timer.After(.1, function()
-								self:main_frame_toggle()
+								Octo_EventFrame:main_frame_toggle()
 							end
 						)
 					end
@@ -5504,9 +5504,9 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 						info.checked = Octo_ToDo_DB_Vars.config.ShowOnlyCurrentBattleTag
 						info.func = function(_, _, _, checked)
 							Octo_ToDo_DB_Vars.config.ShowOnlyCurrentBattleTag = checked
-							self:main_frame_toggle()
+							Octo_EventFrame:main_frame_toggle()
 							C_Timer.After(.1, function()
-									self:main_frame_toggle()
+									Octo_EventFrame:main_frame_toggle()
 								end
 							)
 						end
@@ -6400,7 +6400,7 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 				OnClick = function(_, button)
 					if button == "LeftButton" then
 						if not InCombatLockdown() then
-							self:main_frame_toggle()
+							Octo_EventFrame:main_frame_toggle()
 						end
 						if OctoToDo_SECOND_MainFramePIZZA and OctoToDo_SECOND_MainFramePIZZA:IsShown() then
 							OctoToDo_SECOND_MainFramePIZZA:Hide()
@@ -6805,7 +6805,7 @@ end
 SLASH_Octo1, SLASH_Octo2, SLASH_Octo3, SLASH_Octo4 = "/Octo", "/OctoTWW", "/octo", "/o"
 function SlashCmdList.Octo(msg)
 	if not InCombatLockdown() then
-		self:main_frame_toggle()
+		Octo_EventFrame:main_frame_toggle()
 	end
 end
 local editFrame, editBox = _G[GlobalAddonName.."EditFrame"], _G[GlobalAddonName.."EditFrame"].editFrame
