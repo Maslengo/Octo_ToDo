@@ -14,14 +14,12 @@ function E.Init()
 	AceConfigRegistry:RegisterOptionsTable("Currencies", E.Currencies())
 	AceConfigRegistry:RegisterOptionsTable("Reputations", E.Reputations())
 	AceConfigRegistry:RegisterOptionsTable("Items", E.Items())
-	AceConfigRegistry:RegisterOptionsTable("LoadAddons", E.LoadAddons())
 	AceConfigRegistry:RegisterOptionsTable("Developing", E.Developing())
 	----------------------------------------------------------------
 	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", E.AddonTitle)
 	AceConfigDialog:AddToBlizOptions("Currencies", CURRENCY, E.AddonTitle)
 	AceConfigDialog:AddToBlizOptions("Reputations", REPUTATION, E.AddonTitle)
 	AceConfigDialog:AddToBlizOptions("Items", ITEMS, E.AddonTitle)
-	AceConfigDialog:AddToBlizOptions("LoadAddons", E.Skyblue_Color..ADDONS.."|r", E.AddonTitle)
 	AceConfigDialog:AddToBlizOptions("Developing", E.Green_Color.."Developing".."|r", E.AddonTitle)
 	----------------------------------------------------------------
 end
