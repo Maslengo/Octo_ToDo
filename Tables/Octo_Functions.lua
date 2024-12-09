@@ -385,7 +385,7 @@ end
 ----------------------------------------------------------------
 function E.func_hex2rgbNUMBER(hex)
 	hex = hex:gsub("|cff", "")
-	return tonumber("0x"..hex:sub(1, 2))/255, tonumber("0x"..hex:sub(3, 4))/255, tonumber("0x"..hex:sub(5, 6))/255
+	return tonumber("0x"..hex:sub(1, 2))/255, tonumber("0x"..hex:sub(3, 4))/255, tonumber("0x"..hex:sub(5, 6))/255, 1
 end
 ----------------------------------------------------------------
 function E.func_rgb2hex(r, g, b, a)

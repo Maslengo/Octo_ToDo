@@ -1,116 +1,89 @@
-local GlobalAddonName, E = ... 
-local inspectScantipUSABLE = nil
-if not inspectScantipUSABLE then
-	inspectScantipUSABLE = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUSABLE", nil, "GameTooltipTemplate")
-	inspectScantipUSABLE:SetOwner(UIParent, "ANCHOR_NONE")
-end
-tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.ItemsDelete then
-			local ltl = LibStub("LibThingsLoad-1.0")
-			local function ItemsDelete_Frame_OnEnter(self)
-				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, -20)
+local GlobalAddonName, E = ...
+local LibThingsLoad = LibStub("LibThingsLoad-1.0")
+local LibCustomGlow = LibStub("LibCustomGlow-1.0")
+----------------------------------------------------------------------------------------------------------------------------------
+local EventFrame_ItemsDelete = CreateFrame("Frame")
+EventFrame_ItemsDelete:Hide()
+EventFrame_ItemsDelete:RegisterEvent("ADDON_LOADED")
+EventFrame_ItemsDelete:RegisterEvent("BAG_UPDATE_DELAYED")
+EventFrame_ItemsDelete:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
+
+function EventFrame_ItemsDelete:ADDON_LOADED(addonName)
+	if addonName == GlobalAddonName then
+		self:UnregisterEvent("ADDON_LOADED")
+		self.ADDON_LOADED = nil
+		local Clickable_ItemsDelete = CreateFrame("Button", "Clickable_ItemsDelete", UIParent, "SecureActionButtonTemplate, BackDropTemplate")
+		Clickable_ItemsDelete:Hide()
+		Clickable_ItemsDelete:SetSize(64*E.scale, 64*E.scale)
+		Clickable_ItemsDelete:SetPoint("TOPLEFT", 0, -128*E.scale)
+		Clickable_ItemsDelete:SetBackdrop({edgeFile = E.edgeFile, edgeSize = 1})
+		Clickable_ItemsDelete:SetBackdropBorderColor(1, 0, 0, 1)
+		Clickable_ItemsDelete:HookScript("OnEnter", function()
+				GameTooltip:SetOwner(Clickable_ItemsDelete, "ANCHOR_BOTTOMRIGHT", 20, -20) -- ANCHOR_CURSOR
 				GameTooltip:ClearLines()
-				local itemLink = select(2, GetItemInfo(self.itemID))
-				GameTooltip:SetHyperlink(itemLink)
+				if Clickable_ItemsDelete.itemID then
+					local itemLink = select(2, GetItemInfo(Clickable_ItemsDelete.itemID))
+					GameTooltip:SetHyperlink(itemLink)
+				else
+					GameTooltip:SetText(E.Black_Color.."Clickable_ItemsDelete".."|r")
+				end
 				GameTooltip:Show()
-			end
-			local function ItemsDelete_Frame_OnLeave(self)
+				-- LibCustomGlow.ButtonGlow_Start(Clickable_ItemsDelete, {.31, 1, .47, 1}, .1)
+				LibCustomGlow.AutoCastGlow_Start(
+					Clickable_ItemsDelete,     -- `frame` - target frame to set glowing;
+					{1, 0, 0, 1},     -- `color` - {r,g,b,a}, color of particles and opacity, from 0 to 1. Default value is {0.95, 0.95, 0.32, 1};
+					4,                     -- `N` - number of particle groups. Each group contains 4 particles. Default value is 4;
+					0.125,                 -- `frequency` - frequency, set to negative to inverse direction of rotation. Default value is 0.125;
+					1,                     -- `scale` - scale of particles;
+					nil,                 -- `xOffset`,`yOffset`
+					1                     -- `key` - key of glow, allows for multiple glows on one frame;
+				)
+		end)
+		Clickable_ItemsDelete:HookScript("OnLeave", function()
 				GameTooltip:ClearLines()
 				GameTooltip:Hide()
-			end
-			if not ItemsDelete_Frame then
-				ItemsDelete_Frame = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), UIParent, "SecureActionButtonTemplate, BackDropTemplate")
-				ItemsDelete_Frame:Hide()
-			end
-			ItemsDelete_Frame:Hide()
-			ItemsDelete_Frame:SetSize(64*E.scale, 64*E.scale)
-			ItemsDelete_Frame:SetPoint("TOPLEFT", 0, -64)
-			ItemsDelete_Frame:SetBackdrop({ edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga", edgeSize = 4})
-			ItemsDelete_Frame:SetBackdropBorderColor(1, 1, 1, 1)
-			ItemsDelete_Frame:HookScript("OnEnter", ItemsDelete_Frame_OnEnter)
-			ItemsDelete_Frame:HookScript("OnLeave", ItemsDelete_Frame_OnLeave)
-			ItemsDelete_Frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-			ItemsDelete_Frame:SetAttribute("type", "macro")
-			if not ItemsDelete_Frame_TEXTNAME then
-				ItemsDelete_Frame_TEXTNAME = ItemsDelete_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			end
-			ItemsDelete_Frame_TEXTNAME:SetPoint("LEFT", ItemsDelete_Frame, "RIGHT")
-			ItemsDelete_Frame_TEXTNAME:SetFont(E.OctoFont, 22, "OUTLINE")
-			ItemsDelete_Frame_TEXTNAME:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
-			if not ItemsDelete_UIF_texture then
-				ItemsDelete_UIF_texture = ItemsDelete_Frame:CreateTexture(nil, "BACKGROUND")
-			end
-			ItemsDelete_Frame.icon = ItemsDelete_UIF_texture
-			ItemsDelete_UIF_texture:SetAllPoints(ItemsDelete_Frame)
-			ItemsDelete_UIF_texture:SetTexture(413587)
-			function ItemsDeleteFrame_OnLoad()
-				if not EventFrame_ItemsDelete then
-					EventFrame_ItemsDelete = CreateFrame("Frame", E.AddonTitle..E.func_GenerateUniqueID(), UIParent)
-					EventFrame_ItemsDelete:Hide()
-				end
-				if not InCombatLockdown() then
-					EventFrame_ItemsDelete:Hide()
-					EventFrame_ItemsDelete:RegisterEvent("BAG_UPDATE_DELAYED")
-					EventFrame_ItemsDelete:RegisterEvent("PLAYER_REGEN_ENABLED")
-					EventFrame_ItemsDelete:RegisterEvent("PLAYER_REGEN_DISABLED")
-					-- EventFrame_ItemsDelete:RegisterEvent("PLAYER_ENTERING_WORLD")
-					EventFrame_ItemsDelete:RegisterEvent("DELETE_ITEM_CONFIRM")
-					EventFrame_ItemsDelete:SetScript("OnEvent", ItemsDeleteFrame_OnEvent)
-				end
-			end
-			function ItemsDeleteFrame_OnEvent(self, event)
-				if (event == "PLAYER_REGEN_ENABLED" or event == "BAG_UPDATE_DELAYED" or event == "DELETE_ITEM_CONFIRM") and not InCombatLockdown() then
-					C_Timer.After(0, function()
-							ItemsDeleteFrame()
+				-- LibCustomGlow.ButtonGlow_Stop(Clickable_ItemsDelete)
+				LibCustomGlow.AutoCastGlow_Stop(Clickable_ItemsDelete)
+		end)
+		Clickable_ItemsDelete:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+		Clickable_ItemsDelete:SetAttribute("type", "macro")
+		Clickable_ItemsDelete.text = Clickable_ItemsDelete:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		Clickable_ItemsDelete.text:SetPoint("LEFT", Clickable_ItemsDelete, "RIGHT")
+		Clickable_ItemsDelete.text:SetFontObject(OctoFont22)
+		-- Clickable_ItemsDelete.text:SetFont(E.OctoFont, 22, "OUTLINE")
+		Clickable_ItemsDelete.text:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+		Clickable_ItemsDelete.icon = Clickable_ItemsDelete:CreateTexture(nil, "BACKGROUND")
+		Clickable_ItemsDelete.icon:SetAllPoints(Clickable_ItemsDelete)
+		Clickable_ItemsDelete.icon:SetTexture(413587)
+	end
+end
+
+function EventFrame_ItemsDelete:BAG_UPDATE_DELAYED()
+	self:ItemsDeleteFrame()
+end
+
+function EventFrame_ItemsDelete:ItemsDeleteFrame()
+	Clickable_ItemsDelete:Hide()
+	Clickable_ItemsDelete.icon:SetTexture(413587)
+	Clickable_ItemsDelete.text:SetText("")
+	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
+			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
+			if containerInfo then
+				local itemID = containerInfo.itemID
+				if E.OctoTable_itemID_ItemsDelete[itemID] then
+					Clickable_ItemsDelete:Show()
+					Clickable_ItemsDelete:SetScript("OnClick", function()
+							C_Container.PickupContainerItem(bag, slot)
+							DeleteCursorItem()
+							Clickable_ItemsDelete:Hide()
 					end)
-				elseif event == "PLAYER_REGEN_DISABLED" then
-					if ItemsDelete_Frame:IsShown() then
-						ItemsDelete_Frame:Hide()
-					end
+					Clickable_ItemsDelete.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
+					Clickable_ItemsDelete.itemID = itemID
+					Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_itemName_NOCOLOR(itemID).."|r")
+					break
 				end
 			end
-			function ItemsDeleteFrame()
-				if not InCombatLockdown() and ItemsDelete_Frame then
-					for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-						for slot = 1, C_Container.GetContainerNumSlots(bag) do
-							CurrentItemLink = C_Container.GetContainerItemLink(bag, slot)
-							if CurrentItemLink then
-								local _, _, itemQuality = GetItemInfo(CurrentItemLink)
-								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-								local itemID = containerInfo.itemID
-								local promise = ltl:Items(itemID)
-								----------------------------------------------------------------
-								for i = 1, #E.OctoTable_itemID_ItemsDelete do
-									if E.OctoTable_itemID_ItemsDelete[i] == itemID then
-										ItemsDelete_Frame:Show()
-										ItemsDelete_Frame.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
-										local itemQuality = (select(3, GetItemInfo(itemID)) or 0)
-										local r, g, b = GetItemQualityColor(itemQuality)
-										ItemsDelete_Frame:SetBackdropBorderColor(r, g, b, 1)
-										ItemsDelete_Frame.itemID = itemID
-										ItemsDelete_Frame_TEXTNAME:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
-										ItemsDelete_Frame:SetScript("OnClick", function()
-												C_Container.PickupContainerItem(bag, slot)
-												DeleteCursorItem()
-												ItemsDelete_Frame:Hide()
-										end)
-										return
-										-- elseif GetItemCount(itemID) == 0 and ItemsDelete_Frame:IsShown() then
-										-- ItemsDelete_Frame:Hide()
-										-- ItemsDelete_Frame.icon:SetTexture(413587)
-										-- ItemsDelete_Frame_TEXTNAME:SetText("")
-										-- ItemsDelete_Frame_TEXTCOUNT:SetText("")
-									end
-								end
-								----------------------------------------------------------------
-							end
-						end
-					end
-				end
-			end
-			E.ItemsDelete_Frame = ItemsDelete_Frame
-			E.ItemsDeleteFrame_OnLoad = ItemsDeleteFrame_OnLoad
-			E.ItemsDeleteFrame = ItemsDeleteFrame
-			ItemsDeleteFrame_OnLoad()
 		end
-end)
+	end
+end
