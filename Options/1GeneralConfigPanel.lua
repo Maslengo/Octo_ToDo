@@ -7,7 +7,7 @@ function E.CreateGeneralOptions()
 	local generalOptions = {
 		type = "group",
 		childGroups = "tree",
-		name = E.AddonTitle.." "..E.Gray_Color..E.AddonVersion .. "|r",
+		name = E.func_AddonTitle(GlobalAddonName).." "..E.Gray_Color..E.func_AddonVersion(GlobalAddonName) .. "|r",
 		args = {
 			-------------------------------------------------
 			MainHeader = {

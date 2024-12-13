@@ -7,7 +7,7 @@ function func_FieldOfView()
 		function FieldOfView_OnLoad()
 			print ("FieldOfView_OnLoad")
 			if not FieldOfView_EventFrame then
-				FieldOfView_EventFrame = CreateFrame("FRAME", E.AddonTitle..E.func_GenerateUniqueID())
+				FieldOfView_EventFrame = CreateFrame("FRAME", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID())
 				FieldOfView_EventFrame:Hide()
 				FieldOfView_EventFrame:RegisterEvent("VARIABLES_LOADED")
 				FieldOfView_EventFrame:RegisterEvent("PLAYER_LOGIN")

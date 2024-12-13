@@ -1,8 +1,4 @@
 local GlobalAddonName, E = ...
-E.AddonTitle = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Title")
-E.AddonNotes = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Notes")
-E.AddonAuthor = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Author")
-E.AddonVersion = C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version")
 ----------------------------------------------------------------
 E.OctoTable_Empty = {}
 E.Modules = {}

@@ -1,16 +1,16 @@
 local GlobalAddonName, E = ...
+local Octo_EventFrame = CreateFrame("FRAME")
+Octo_EventFrame:Hide()
+----------------------------------------------------------------
 Octo_ToDO_E = E
-local _G = _G
-_G["OctoTODO"] = OctoTODO
-local LibStub = LibStub
+-- _G["OctoTODO"] = OctoTODO
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
-local Octo_EventFrame = CreateFrame("FRAME", "Octo_EventFrame")
-Octo_EventFrame:Hide()
-local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+
+
 local buildVersion, buildNumber, buildDate, interfaceVersion = GetBuildInfo()
 local currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 local IsPublicBuild = IsPublicBuild()
@@ -30,7 +30,11 @@ local ItemLevelGreen = 625
 local ItemLevelOrange = 610
 local ItemLevelRed = 580
 local GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
+
+E.func_LoadAddOn("Octo_ToDoAchievements")
+E.func_LoadAddOn("Octo_ToDoReputations")
 E.func_LoadAddOn("Octo_ToDoTrashCan")
+
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")
 E.func_LoadAddOn("MountsJournal")
@@ -46,10 +50,10 @@ E.func_LoadAddOn("SilverDragon_History")
 E.func_LoadAddOn("SilverDragon_Overlay")
 E.func_LoadAddOn("SilverDragon_RangeExtender")
 E.func_LoadAddOn("TomTom")
-E.func_LoadAddOn("Pawn")
-E.func_LoadAddOn("MySlot")
-E.func_LoadAddOn("QuestsChanged")
-E.func_LoadAddOn("AdvancedInterfaceOptions")
+-- E.func_LoadAddOn("Pawn")
+-- E.func_LoadAddOn("MySlot")
+-- E.func_LoadAddOn("QuestsChanged")
+-- E.func_LoadAddOn("AdvancedInterfaceOptions")
 local OctoToDo_FIRST_CharFrame = nil
 local OctoToDo_FIRST_MainFrame = nil
 local OctoToDo_FIRST_CloseButton = nil
@@ -552,7 +556,7 @@ local function CreateFrameUsableItems_OnMouseUp(frame)
 	frame.icon:SetVertexColor(1, 1, 1, 1)
 end
 local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spellID)
-	local Button = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+	local Button = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.itemID = itemID
 	Button.Texture = Texture
 	Button.Ypos = Ypos
@@ -682,7 +686,7 @@ local function CreateFrameUsableSpells_OnMouseUp(frame)
 	end
 end
 local function CreateFrameUsableSpells(spellID, Texture, Xpos, Ypos, r, g, b)
-	local Button = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+	local Button = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.spellID = spellID
 	Button.Texture = Texture
 	Button.Ypos = Ypos
@@ -4638,7 +4642,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	OctoToDo_FIRST_MainFrame:SetHeight(50)
 	if Octo_ToDo_DB_Vars.config.ShowTotalMoney then
 		if not Octo_Frame_TotalMoneyCurServer then
-			Octo_Frame_TotalMoneyCurServer = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			Octo_Frame_TotalMoneyCurServer = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			Octo_Frame_TotalMoneyCurServer:SetSize(400, E.curHeight)
 			Octo_Frame_TotalMoneyCurServer:EnableMouse(false)
 			Octo_Frame_TotalMoneyCurServer:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame, "BOTTOMLEFT", 4, -2)
@@ -4661,7 +4665,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 		if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
 			if not Octo_Frame_TotalMoneyAllServer then
-				Octo_Frame_TotalMoneyAllServer = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+				Octo_Frame_TotalMoneyAllServer = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 				Octo_Frame_TotalMoneyAllServer:SetSize(400, E.curHeight)
 				Octo_Frame_TotalMoneyAllServer:EnableMouse(false)
 				Octo_Frame_TotalMoneyAllServer:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame, "BOTTOMLEFT", 4, -22)
@@ -4684,7 +4688,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			end
 		end
 		if not Octo_Frame_Token_Price then
-			Octo_Frame_Token_Price = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			Octo_Frame_Token_Price = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			Octo_Frame_Token_Price:SetSize(400, E.curHeight)
 			Octo_Frame_Token_Price:EnableMouse(false)
 			if TotalMoneyAllServerOnShow() ~= TotalMoneyCurServerOnShow() then
@@ -4716,7 +4720,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	end
 	if Octo_ToDo_DB_Vars.config.ShowTimeAll == true then
 		if not Octo_Frame_TotalTimeAllServer then
-			Octo_Frame_TotalTimeAllServer = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			Octo_Frame_TotalTimeAllServer = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			Octo_Frame_TotalTimeAllServer:SetSize(400, E.curHeight)
 			Octo_Frame_TotalTimeAllServer:EnableMouse(false)
 			Octo_Frame_TotalTimeAllServer:SetPoint("TOPRIGHT", OctoToDo_FIRST_MainFrame, "BOTTOMRIGHT", -4, -2)
@@ -4738,7 +4742,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 		if Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL == true then
 			if not Octo_Frame_TotalTimeAllServerMAXLEVEL then
-				Octo_Frame_TotalTimeAllServerMAXLEVEL = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+				Octo_Frame_TotalTimeAllServerMAXLEVEL = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetSize(400, E.curHeight)
 				Octo_Frame_TotalTimeAllServerMAXLEVEL:EnableMouse(false)
 				Octo_Frame_TotalTimeAllServerMAXLEVEL:SetPoint("TOPRIGHT", OctoToDo_FIRST_MainFrame, "BOTTOMRIGHT", -4, -22)
@@ -4761,7 +4765,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 	end
 	if not OctoToDo_FIRST_CloseButton then
-		OctoToDo_FIRST_CloseButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+		OctoToDo_FIRST_CloseButton = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 		OctoToDo_FIRST_CloseButton:SetSize(E.curHeight, E.curHeight)
 		OctoToDo_FIRST_CloseButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*0, 1)
 		OctoToDo_FIRST_CloseButton:SetBackdrop({
@@ -4806,7 +4810,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		)
 	end
 	if not OctoToDo_FIRST_OptionsButton then
-		OctoToDo_FIRST_OptionsButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+		OctoToDo_FIRST_OptionsButton = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 		OctoToDo_FIRST_OptionsButton:SetSize(E.curHeight, E.curHeight)
 		OctoToDo_FIRST_OptionsButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*1, 1)
 		OctoToDo_FIRST_OptionsButton:SetBackdrop({
@@ -4837,7 +4841,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				if SettingsPanel:IsVisible() and self:IsVisible() then
 					HideUIPanel(SettingsPanel)
 				else
-					Settings.OpenToCategory(E.AddonTitle, true)
+					Settings.OpenToCategory(E.func_AddonTitle(GlobalAddonName), true)
 				end
 			end
 		)
@@ -4875,10 +4879,9 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 				whileDead = 1,
 				OnAccept = function()
 					C_Timer.After(1, AbandonQuests)
-				end
-				,
+				end,
 			}
-			OctoToDo_FIRST_AbandonButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_AbandonButton = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_AbandonButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_AbandonButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*2, 1)
 			OctoToDo_FIRST_AbandonButton:SetBackdrop({
@@ -4942,7 +4945,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			t:SetAllPoints(OctoToDo_FIRST_AbandonButton)
 		end
 		if not OctoToDo_FIRST_MplusButton then
-			OctoToDo_FIRST_MplusButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_MplusButton = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_MplusButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_MplusButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*3, 1)
 			OctoToDo_FIRST_MplusButton:SetBackdrop({
@@ -5004,7 +5007,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			t:SetAllPoints(OctoToDo_FIRST_MplusButton)
 		end
 		if not OctoToDo_FIRST_ItemsButton then
-			OctoToDo_FIRST_ItemsButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_ItemsButton = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_ItemsButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_ItemsButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*4, 1)
 			OctoToDo_FIRST_ItemsButton:SetBackdrop({
@@ -5060,7 +5063,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			t:SetAllPoints(OctoToDo_FIRST_ItemsButton)
 		end
 		if not OctoToDo_FIRST_MarkOfHonorButton then
-			OctoToDo_FIRST_MarkOfHonorButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_MarkOfHonorButton = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_MarkOfHonorButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_MarkOfHonorButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*5, 1)
 			OctoToDo_FIRST_MarkOfHonorButton:SetBackdrop({
@@ -5154,7 +5157,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			t:SetAllPoints(OctoToDo_FIRST_MarkOfHonorButton)
 		end
 		if not OctoToDo_FIRST_QuestFeastButton then
-			OctoToDo_FIRST_QuestFeastButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_QuestFeastButton = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_QuestFeastButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_QuestFeastButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*6, 1)
 			OctoToDo_FIRST_QuestFeastButton:SetBackdrop({
@@ -5208,7 +5211,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			t:SetAllPoints(OctoToDo_FIRST_QuestFeastButton)
 		end
 		if not OctoToDo_FIRST_EventsButton then
-			OctoToDo_FIRST_EventsButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_EventsButton = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_EventsButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_EventsButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*7, 1)
 			OctoToDo_FIRST_EventsButton:SetBackdrop({
@@ -5263,7 +5266,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 			t:SetAllPoints(OctoToDo_FIRST_EventsButton)
 		end
 		if not OctoToDo_FIRST_ConsumableButton then
-			OctoToDo_FIRST_ConsumableButton = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
+			OctoToDo_FIRST_ConsumableButton = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "BackDropTemplate")
 			OctoToDo_FIRST_ConsumableButton:SetSize(E.curHeight, E.curHeight)
 			OctoToDo_FIRST_ConsumableButton:SetPoint("BOTTOMRIGHT", OctoToDo_FIRST_MainFrame, "TOPRIGHT", (-E.curHeight)*8, 1)
 			OctoToDo_FIRST_ConsumableButton:SetBackdrop({
@@ -5318,7 +5321,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 		end
 	end
 	if not dd_FIRST then
-		local dd_FIRST = CreateFrame("Button", E.AddonTitle..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+		local dd_FIRST = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_FIRST_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 		local multiply = (1/3)*2
 		dd_FIRST:SetSize(E.curWidthTitle*multiply, E.curHeight*multiply)
 		dd_FIRST:SetBackdrop({
@@ -5682,7 +5685,7 @@ local function Octo_ToDo_FIRST_CreateAltFrame()
 	for i = 1, #OctoTable_func_otrisovka_FIRST do
 		local fname, f
 		fname = "FrameLine"..i
-		OctoToDo_FIRST_MainFrame[fname] = CreateFrame("Frame", E.AddonTitle..E.func_GenerateUniqueID().."FrameLine"..i, OctoToDo_FIRST_MainFrame.scrollChild, "BackdropTemplate")
+		OctoToDo_FIRST_MainFrame[fname] = CreateFrame("Frame", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID().."FrameLine"..i, OctoToDo_FIRST_MainFrame.scrollChild, "BackdropTemplate")
 		f = OctoToDo_FIRST_MainFrame[fname]
 		f:SetHeight(E.curHeight)
 		f:SetPoint("TOPLEFT", OctoToDo_FIRST_MainFrame.scrollChild, "TOPLEFT", 0, -E.curHeight*(i-1))
@@ -5823,13 +5826,13 @@ function Octo_EventFrame:Octo_ToDo_FIRST_AddDataToAltFrame()
 		OctoToDo_FIRST_CharFrame:SetPoint("BOTTOM", 0, 0)
 		for i = 1, #OctoTable_func_otrisovka_FIRST do
 			CharInfo.GUID = curCharGUID
-			local CF = CentralFrame_Pool:Acquire()
-			CF:Show()
-			CF:SetParent(OctoToDo_FIRST_CharFrame)
-			OctoToDo_FIRST_CharFrame["CenterLines"..i] = CF
+			local CentralFrame = CentralFrame_Pool:Acquire()
+			CentralFrame:Show()
+			CentralFrame:SetParent(OctoToDo_FIRST_CharFrame)
+			OctoToDo_FIRST_CharFrame["CenterLines"..i] = CentralFrame
 			OctoToDo_FIRST_CharFrame["CenterLines"..i.."BG"]:SetAllPoints(OctoToDo_FIRST_CharFrame["CenterLines"..i])
-			CF.index = i
-			CF:SetPoint("TOP", OctoToDo_FIRST_CharFrame, "TOP", 0, -E.curHeight*(i-1))
+			CentralFrame.index = i
+			CentralFrame:SetPoint("TOP", OctoToDo_FIRST_CharFrame, "TOP", 0, -E.curHeight*(i-1))
 		end
 		OctoToDo_FIRST_CharFrame:SetSize(E.curWidthCentral, E.curHeight)
 		if #OctoToDo_FIRST_MainFrame.AllCharFrames == 0 then
@@ -5874,7 +5877,11 @@ function Octo_EventFrame:Octo_ToDo_FIRST_AddDataToAltFrame()
 end
 
 function Octo_EventFrame:main_frame_toggle()
-	local button = LibDBIcon:GetMinimapButton(GlobalAddonName.."Octo_ToDo_FIRST_Minimap")
+	local button = LibDBIcon:GetMinimapButton(E.func_AddonTitle(GlobalAddonName))
+	if SettingsPanel:IsVisible() then
+		HideUIPanel(SettingsPanel)
+	end
+
 	if not OctoToDo_FIRST_MainFrame.promise then
 		OctoToDo_FIRST_MainFrame.promise = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
 		OctoToDo_FIRST_MainFrame.promise:AddItems(E.OctoTable_itemID_ALL)
@@ -5898,6 +5905,9 @@ function Octo_EventFrame:main_frame_toggle()
 		OctoToDo_FIRST_MainFrame.promise:AddQuests(E.OctoTable_QuestID)
 		OctoToDo_FIRST_MainFrame.promise:AddQuests(E.OctoTable_QuestID_Promise)
 	end
+
+
+
 	if OctoToDo_FIRST_MainFrame:IsShown() then
 		OctoToDo_FIRST_MainFrame:Hide()
 	else
@@ -5930,6 +5940,7 @@ function Octo_EventFrame:main_frame_toggle()
 		)
 	end
 end
+
 for _, event in ipairs(E.OctoTable_Events) do Octo_EventFrame:RegisterEvent(event) end
 Octo_EventFrame:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
 
@@ -6057,21 +6068,7 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 		if Octo_ToDo_DB_Vars.config.curWidthTitle ~= nil then
 			E.curWidthTitle = Octo_ToDo_DB_Vars.config.curWidthTitle
 		end
-		if Octo_ToDo_DB_Vars.config.curWidthTitleAchievement == nil then
-			Octo_ToDo_DB_Vars.config.curWidthTitleAchievement = 300
-		end
-		if Octo_ToDo_DB_Vars.config.curWidthTitleAchievement ~= nil then
-			E.curWidthTitleAchievement = Octo_ToDo_DB_Vars.config.curWidthTitleAchievement
-		end
-		if Octo_ToDo_DB_Vars.config.Achievements == nil then
-			Octo_ToDo_DB_Vars.config.Achievements = true
-		end
-		if Octo_ToDo_DB_Vars.config.AchievementShowCompleted == nil then
-			Octo_ToDo_DB_Vars.config.AchievementShowCompleted = true
-		end
-		if Octo_ToDo_DB_Vars.config.AchievementToShow == nil then
-			Octo_ToDo_DB_Vars.config.AchievementToShow = {[92] = true}
-		end
+
 		if Octo_ToDo_DB_Vars.config.AdditionalButtons == nil then
 			Octo_ToDo_DB_Vars.config.AdditionalButtons = true
 		end
@@ -6392,48 +6389,36 @@ function Octo_EventFrame:ADDON_LOADED(addonName)
 		for i, func in next, (E.Modules) do
 			func()
 		end
-		local MinimapName = GlobalAddonName.."Octo_ToDo_FIRST_Minimap"
+		local MinimapName = E.func_AddonTitle(GlobalAddonName)
 		local ldb_icon = LibDataBroker:NewDataObject(MinimapName, {
 				type = "data source",
 				text = MinimapName,
-				icon = E.AddonTexture_1,
+				icon = E.func_AddonIconTexture(GlobalAddonName),
 				OnClick = function(_, button)
 					if button == "LeftButton" then
 						if not InCombatLockdown() then
 							Octo_EventFrame:main_frame_toggle()
 						end
-						if OctoToDo_SECOND_MainFramePIZZA and OctoToDo_SECOND_MainFramePIZZA:IsShown() then
-							OctoToDo_SECOND_MainFramePIZZA:Hide()
-						end
 					else
-						if OctoToDo_FIRST_MainFramePIZZA and OctoToDo_FIRST_MainFramePIZZA:IsShown() then
-							OctoToDo_FIRST_MainFramePIZZA:Hide()
-						end
-						if OctoToDo_SECOND_MainFramePIZZA and OctoToDo_SECOND_MainFramePIZZA:IsShown() then
-							OctoToDo_SECOND_MainFramePIZZA:Hide()
-						end
 						if SettingsPanel:IsVisible() and self:IsVisible() then
 							HideUIPanel(SettingsPanel)
 						else
-							Settings.OpenToCategory(E.AddonTitle, true)
+							Settings.OpenToCategory(E.func_AddonTitle(GlobalAddonName), true)
 						end
 					end
-				end
-				,
+				end,
 				OnEnter = function(self)
 					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-					GameTooltip_SetTitle(GameTooltip, E.func_Gradient(GlobalAddonName).."|n".."ПКМ - Настройки")
+					GameTooltip_SetTitle(GameTooltip, E.func_AddonTitle(GlobalAddonName).."|n".."ПКМ - Настройки")
 					GameTooltip:Show()
-				end
-				,
+				end,
 				OnLeave = function()
 					GameTooltip:Hide()
-				end
-				,
+				end,
 		})
 		Octo_ToDo_DB_Vars.minimap_FIRST = Octo_ToDo_DB_Vars.minimap_FIRST or {}
 		Octo_ToDo_DB_Vars.minimap_FIRST.minimapPos = Octo_ToDo_DB_Vars.minimap_FIRST.minimapPos or 244
-		Octo_ToDo_DB_Vars.config.AddonVersion = tonumber(E.AddonVersion)
+		Octo_ToDo_DB_Vars.config.AddonVersion = tonumber(E.func_AddonVersion(GlobalAddonName))
 		LibDBIcon:Register(MinimapName, ldb_icon, Octo_ToDo_DB_Vars.minimap_FIRST)
 		LibDBIcon:Show(MinimapName)
 		E.ADDON_LOADED(GlobalAddonName)
@@ -6444,12 +6429,14 @@ function Octo_EventFrame:VARIABLES_LOADED()
 	if not InCombatLockdown() then
 		self:UnregisterEvent("VARIABLES_LOADED")
 		self.VARIABLES_LOADED = nil
+		----------------------------------------------------------------
 		if Octo_ToDo_DB_Vars.config.CVar then
 			C_Timer.After(.1, function()
 					E.LoadCVars()
 				end
 			)
 		end
+		----------------------------------------------------------------
 	end
 end
 

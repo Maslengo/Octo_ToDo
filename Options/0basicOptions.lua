@@ -16,10 +16,10 @@ function E.Init()
 	AceConfigRegistry:RegisterOptionsTable("Items", E.Items())
 	AceConfigRegistry:RegisterOptionsTable("Developing", E.Developing())
 	----------------------------------------------------------------
-	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", E.AddonTitle)
-	AceConfigDialog:AddToBlizOptions("Currencies", CURRENCY, E.AddonTitle)
-	AceConfigDialog:AddToBlizOptions("Reputations", REPUTATION, E.AddonTitle)
-	AceConfigDialog:AddToBlizOptions("Items", ITEMS, E.AddonTitle)
-	AceConfigDialog:AddToBlizOptions("Developing", E.Green_Color.."Developing".."|r", E.AddonTitle)
+	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", E.func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("Currencies", CURRENCY, E.func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("Reputations", REPUTATION, E.func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("Items", ITEMS, E.func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("Developing", E.Green_Color.."Developing".."|r", E.func_AddonTitle(GlobalAddonName))
 	----------------------------------------------------------------
 end

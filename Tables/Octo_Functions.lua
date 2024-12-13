@@ -1134,6 +1134,42 @@ function E.func_LoadAddOn(AddonName)
 	end
 end
 ----------------------------------------------------------------
+function E.func_AddonTitle(AddonName)
+	local AddonTitle = C_AddOns.GetAddOnMetadata(AddonName, "Title")
+	return AddonTitle
+end
+----------------------------------------------------------------
+function E.func_AddonNotes(AddonName)
+	local AddonNotes = C_AddOns.GetAddOnMetadata(AddonName, "Notes")
+	return AddonNotes
+end
+----------------------------------------------------------------
+function E.func_AddonAuthor(AddonName)
+	local AddonAuthor = C_AddOns.GetAddOnMetadata(AddonName, "Author")
+	return AddonAuthor
+end
+----------------------------------------------------------------
+function E.func_AddonVersion(AddonName)
+	local AddonVersion = C_AddOns.GetAddOnMetadata(AddonName, "Version")
+	return AddonVersion
+end
+----------------------------------------------------------------
+function E.func_AddonIconTexture(AddonName)
+	local AddonIconTexture = C_AddOns.GetAddOnMetadata(AddonName, "IconTexture")
+	return AddonIconTexture
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 -- C_AddOns.DoesAddOnExist(name)
 -- C_AddOns.GetAddOnDependencies(name)
 -- C_AddOns.GetAddOnOptionalDependencies(name)
