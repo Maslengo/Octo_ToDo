@@ -131,7 +131,7 @@ local IndentationLib = IndentationLib
 local editFrame = CreateFrame("FRAME", "editFrame", UIParent, "MyAddonEditFrameTemplate")
 editFrame:ClearAllPoints()
 editFrame:SetPoint("CENTER")
-editFrame:SetScale(1.5)
+-- editFrame:SetScale(1.5)
 editFrame:SetScript("OnKeyDown", function(self, key)
 		if key == GetBindingKey("TOGGLEGAMEMENU") then
 			self:Hide()
