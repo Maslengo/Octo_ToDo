@@ -1,11 +1,11 @@
 local GlobalAddonName, E = ... 
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Open
-local Octo_AUTO_OPEN = CreateFrame("Frame", GlobalAddonName.."Auto_Open"..E.func_GenerateUniqueID())
-Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")
-Octo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
-Octo_AUTO_OPEN:RegisterEvent("LOOT_READY")
-Octo_AUTO_OPEN:RegisterEvent("PLAYER_STARTED_MOVING")
+local OctoToDo_AUTO_OPEN = CreateFrame("Frame", GlobalAddonName.."Auto_Open"..E.func_GenerateUniqueID())
+OctoToDo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")
+OctoToDo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
+OctoToDo_AUTO_OPEN:RegisterEvent("LOOT_READY")
+OctoToDo_AUTO_OPEN:RegisterEvent("PLAYER_STARTED_MOVING")
 local isDead = UnitIsDead("PLAYER")
 local function OpenableScan()
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
@@ -31,9 +31,9 @@ local function OpenableScan()
 	end
 end
 local openableScanQueued = false
-Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
+OctoToDo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 		C_Timer.After(0.1, function()
-				if Octo_ToDo_DB_Vars.config.AutoOpen then
+				if OctoToDo_DB_Vars.config.AutoOpen then
 					if event == "BAG_UPDATE_DELAYED" then
 						if not InCombatLockdown() and isDead == false then
 							OpenableScan()

@@ -4,7 +4,7 @@ local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 --SpeedFrame
 tinsert(E.Modules, function()
-		local vars = Octo_ToDo_DB_Vars.config.SpeedFrame
+		local vars = OctoToDo_DB_Vars.config.SpeedFrame
 		if vars.Shown then
 			local SpeedFrame = nil
 			if not SpeedFrame then

@@ -3,12 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
-function E.ADDON_LOADED(E_name)
-	if E_name == GlobalAddonName then
-		E.Init()
-	end
-end
-function E.Init()
+function E:InitOptions()
 	----------------------------------------------------------------
 	AceConfigRegistry:RegisterOptionsTable("CreateGeneralOptions", E.CreateGeneralOptions())
 	AceConfigRegistry:RegisterOptionsTable("Currencies", E.Currencies())

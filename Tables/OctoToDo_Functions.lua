@@ -19,8 +19,6 @@ local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
 local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
 local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
 local GetSpellName = GetSpellName or C_Spell.GetSpellName
-
-
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local Red_Color = "|cffFF4C4F"
 local Gray_Color = "|cff505050"
@@ -272,7 +270,6 @@ end
 function E.func_IsItemDataCached(itemID)
 	return IsItemDataCachedByID(itemID)
 end
-
 ----------------------------------------------------------------
 function E.func_itemName_NOCOLOR(itemID)
 	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
@@ -339,7 +336,6 @@ function E.func_GetSpellDescription(spellID)
 	return GetSpellDescription(spellID)
 end
 ----------------------------------------------------------------
-
 function E.func_GetSpellName(spellID)
 	local vivod = GetSpellName(spellID)
 	if ShowIDS == true and vivod ~= nil then
@@ -499,7 +495,6 @@ function E.func_questName(questID, useLargeIcon)
 	local useLargeIcon = useLargeIcon or true
 	local isAccountQuest = C_QuestLog.IsAccountQuest(questID)
 	local isCompletedOnAccount = C_QuestLog.IsQuestFlaggedCompletedOnAccount(questID)
-
 	local title = C_QuestLog.GetTitleForQuestID(questID)
 	if title then
 		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon)
@@ -542,9 +537,7 @@ function E.func_reputationName(reputationID)
 	else
 		return "reputationID"
 	end
-
 end
-
 ----------------------------------------------------------------
 function E.func_reputationNameSIMPLE(reputationID)
 	local vivod = ""
@@ -745,7 +738,6 @@ function E.func_CheckCompletedByQuestID(questID)
 		if objectives == nil then
 			return ""
 		end
-
 		for i = 1, #objectives do
 			if objectives[i] then
 				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(questID, i, false)
@@ -965,7 +957,6 @@ function E.func_Reverse_order(a, b)
 end
 ----------------------------------------------------------------
 function E.func_CheckReputationByRepID(reputationID)
-
 	local vivod = ""
 	if reputationID then
 		local color = White_Color
@@ -1160,16 +1151,6 @@ function E.func_AddonIconTexture(AddonName)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
 -- C_AddOns.DoesAddOnExist(name)
 -- C_AddOns.GetAddOnDependencies(name)
 -- C_AddOns.GetAddOnOptionalDependencies(name)
@@ -1390,6 +1371,50 @@ function E.func_coloredText(fontstring)
 	return E.func_rgb2hex(r, g, b, a)..text.."|r"
 end
 ----------------------------------------------------------------
+function E:func_SetBackdrop(frame)
+	local _, classFilename = UnitClass("PLAYER")
+	local r, g, b = GetClassColor(classFilename)
+	frame:SetBackdrop({
+			bgFile = E.bgFile,
+			edgeFile = E.edgeFile,
+			edgeSize = 1,
+			insets = {left = 1, right = 1, top = 1, bottom = 1},
+	})
+	frame:HookScript("OnShow", function(self)
+			self:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+			self:SetBackdropBorderColor(0, 0, 0, 1)
+	end)
+	frame:HookScript("OnEnter", function(self)
+			self:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+			self:SetBackdropBorderColor(r, g, b, 1)
+	end)
+	frame:HookScript("OnLeave", function(self)
+			self:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+			self:SetBackdropBorderColor(0, 0, 0, 1)
+	end)
+	if frame.icon then
+		frame.icon:SetAllPoints(frame)
+		frame:HookScript("OnShow", function(self)
+				self.icon:SetVertexColor(1, 1, 1, 1)
+		end)
+		frame:HookScript("OnEnter", function(self)
+				self.icon:SetVertexColor(r, g, b, 1)
+		end)
+		frame:HookScript("OnLeave", function(self)
+				self.icon:SetVertexColor(1, 1, 1, 1)
+				GameTooltip:ClearLines()
+				GameTooltip:Hide()
+		end)
+		frame:HookScript("OnMouseDown", function(self)
+				self.icon:SetVertexColor(1, 0, 0, .5)
+				self:SetBackdropBorderColor(1, 0, 0, 1)
+		end)
+		frame:HookScript("OnMouseUp", function(self)
+				self.icon:SetVertexColor(r, g, b, 1)
+				self:SetBackdropBorderColor(r, g, b, 1)
+		end)
+	end
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

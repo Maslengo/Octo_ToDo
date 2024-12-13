@@ -2,19 +2,19 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Turn_Quests
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.AutoTurnQuests then
-			local Octo_AutoTurnInFrame_EventFrame = nil
-			function Octo_AutoTurnInOnLoad()
-				if not Octo_AutoTurnInFrame_EventFrame then
-					Octo_AutoTurnInFrame_EventFrame = CreateFrame("FRAME", GlobalAddonName.."Auto_Turn_Quests"..E.func_GenerateUniqueID())
+		if OctoToDo_DB_Vars.config.AutoTurnQuests then
+			local OctoToDo_AutoTurnInFrame_EventFrame = nil
+			function OctoToDo_AutoTurnInOnLoad()
+				if not OctoToDo_AutoTurnInFrame_EventFrame then
+					OctoToDo_AutoTurnInFrame_EventFrame = CreateFrame("FRAME", GlobalAddonName.."Auto_Turn_Quests"..E.func_GenerateUniqueID())
 				end
-				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_DETAIL")
-				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_COMPLETE")
-				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_GREETING")
-				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("GOSSIP_SHOW")
-				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_PROGRESS")
-				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
-				Octo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_ACCEPTED")
+				OctoToDo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_DETAIL")
+				OctoToDo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_COMPLETE")
+				OctoToDo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_GREETING")
+				OctoToDo_AutoTurnInFrame_EventFrame:RegisterEvent("GOSSIP_SHOW")
+				OctoToDo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_PROGRESS")
+				OctoToDo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_LOG_UPDATE")
+				OctoToDo_AutoTurnInFrame_EventFrame:RegisterEvent("QUEST_ACCEPTED")
 			end
 			local function OnEvent(self, event, ...)
 				if event == "QUEST_DETAIL" then
@@ -75,7 +75,7 @@ tinsert(E.Modules, function()
 					if not IsShiftKeyDown() then CompleteQuest() end
 				end
 			end
-			Octo_AutoTurnInOnLoad()
-			Octo_AutoTurnInFrame_EventFrame:SetScript("OnEvent", OnEvent)
+			OctoToDo_AutoTurnInOnLoad()
+			OctoToDo_AutoTurnInFrame_EventFrame:SetScript("OnEvent", OnEvent)
 		end
 end)

@@ -29,10 +29,10 @@ function E.Developing()
 				type = "execute",
 				name = E.Green_Color..DELETE.." "..ALL.."|r",
 				func = function()
-					Octo_ToDo_DB_Config = {}
-					Octo_ToDo_DB_Levels = {}
-					Octo_ToDo_DB_Other = {}
-					Octo_ToDo_DB_Vars = {}
+					OctoToDo_DB_Config = {}
+					OctoToDo_DB_Levels = {}
+					OctoToDo_DB_Other = {}
+					OctoToDo_DB_Vars = {}
 					OCTO_DB_currencies_test = {}
 					OCTO_DB_reputations_test = {}
 					return ReloadUI()
@@ -47,44 +47,44 @@ function E.Developing()
 				order = 5,
 			},
 			-------------------------------------------------
-			Octo_ToDo_DB_Config = {
+			OctoToDo_DB_Config = {
 				type = "execute",
 				name = "Config",
 				func = function()
-					Octo_ToDo_DB_Config  = {}
+					OctoToDo_DB_Config  = {}
 					return
 				end,
 				width = E.FULL_WIDTH/3,
 				order = 7,
 			},
 			-------------------------------------------------
-			Octo_ToDo_DB_Levels = {
+			OctoToDo_DB_Levels = {
 				type = "execute",
 				name = "Players",
 				func = function()
-					Octo_ToDo_DB_Levels  = {}
+					OctoToDo_DB_Levels  = {}
 					return
 				end,
 				width = E.FULL_WIDTH/3,
 				order = 8,
 			},
 			-------------------------------------------------
-			Octo_ToDo_DB_Other = {
+			OctoToDo_DB_Other = {
 				type = "execute",
 				name = "Other",
 				func = function()
-					Octo_ToDo_DB_Other  = {}
+					OctoToDo_DB_Other  = {}
 					return
 				end,
 				width = E.FULL_WIDTH/3,
 				order = 9,
 			},
 			-------------------------------------------------
-			Octo_ToDo_DB_Vars = {
+			OctoToDo_DB_Vars = {
 				type = "execute",
 				name = E.Green_Color.."Vars".."|r",
 				func = function()
-					Octo_ToDo_DB_Vars  = {}
+					OctoToDo_DB_Vars  = {}
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/3,
@@ -119,20 +119,6 @@ function E.Developing()
 				order = 13,
 			},
 			-------------------------------------------------
-			Achievements = {
-				type = "toggle",
-				name = E.func_texturefromIcon(E.AddonTexture_2).."Achievements",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.config.Achievements
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Achievements = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 14,
-			},
-			-------------------------------------------------
 			ReloadHeader3second22154 = {
 				type = "header",
 				name = OTHER,
@@ -144,10 +130,10 @@ function E.Developing()
 				name = "ItemsUsable",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.ItemsUsable
+					return OctoToDo_DB_Vars.config.ItemsUsable
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ItemsUsable = value
+					OctoToDo_DB_Vars.config.ItemsUsable = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 25,
@@ -158,10 +144,10 @@ function E.Developing()
 				name = "ItemsDelete",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.ItemsDelete
+					return OctoToDo_DB_Vars.config.ItemsDelete
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ItemsDelete = value
+					OctoToDo_DB_Vars.config.ItemsDelete = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 26,
@@ -172,27 +158,13 @@ function E.Developing()
 				name = "StaticPopup1Button1",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.StaticPopup1Button1
+					return OctoToDo_DB_Vars.config.StaticPopup1Button1
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.StaticPopup1Button1 = value
+					OctoToDo_DB_Vars.config.StaticPopup1Button1 = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 27,
-			},
-			-------------------------------------------------
-			AdditionalButtons = {
-				type = "toggle",
-				name = "AdditionalButtons",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.config.AdditionalButtons
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.AdditionalButtons = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 28,
 			},
 			-------------------------------------------------
 			CVar = {
@@ -200,10 +172,10 @@ function E.Developing()
 				name = "CVar",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.CVar
+					return OctoToDo_DB_Vars.config.CVar
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.CVar = value
+					OctoToDo_DB_Vars.config.CVar = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 29,
@@ -214,38 +186,24 @@ function E.Developing()
 				name = "SpeedFrame.Shown",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.SpeedFrame.Shown
+					return OctoToDo_DB_Vars.config.SpeedFrame.Shown
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.SpeedFrame.Shown = value
+					OctoToDo_DB_Vars.config.SpeedFrame.Shown = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 30,
 			},
 			-------------------------------------------------
-			Minecraft = {
+			OctoToDo_debug_Function_FIRST = {
 				type = "toggle",
-				name = "Minecraft",
+				name = "OctoToDo_debug_Function_FIRST",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Minecraft
+					return OctoToDo_DB_Vars.config.OctoToDo_debug_Function_FIRST
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Minecraft = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 31,
-			},
-			-------------------------------------------------
-			Octo_debug_Function_FIRST = {
-				type = "toggle",
-				name = "Octo_debug_Function_FIRST",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Octo_debug_Function_FIRST = value
+					OctoToDo_DB_Vars.config.OctoToDo_debug_Function_FIRST = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 32,
@@ -256,10 +214,10 @@ function E.Developing()
 				name = "Hide_ObjectivesInInstance",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance
+					return OctoToDo_DB_Vars.config.Hide_ObjectivesInInstance
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Hide_ObjectivesInInstance = value
+					OctoToDo_DB_Vars.config.Hide_ObjectivesInInstance = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 33,
@@ -270,10 +228,10 @@ function E.Developing()
 				name = "SellFrame",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.SellFrame
+					return OctoToDo_DB_Vars.config.SellFrame
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.SellFrame = value
+					OctoToDo_DB_Vars.config.SellFrame = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 34,
@@ -290,10 +248,10 @@ function E.Developing()
 				name = "FieldOfView",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.FieldOfView
+					return OctoToDo_DB_Vars.config.FieldOfView
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.FieldOfView = value
+					OctoToDo_DB_Vars.config.FieldOfView = value
 				end,
 				width = E.FULL_WIDTH,
 				order = 36,
@@ -307,10 +265,10 @@ function E.Developing()
 				max = 2.5,
 				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.FoV_top
+					return OctoToDo_DB_Vars.config.FoV_top
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.FoV_top = value
+					OctoToDo_DB_Vars.config.FoV_top = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 37,
@@ -324,10 +282,10 @@ function E.Developing()
 				max = 2.5,
 				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.FoV_bottom
+					return OctoToDo_DB_Vars.config.FoV_bottom
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.FoV_bottom = value
+					OctoToDo_DB_Vars.config.FoV_bottom = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 38,
@@ -341,10 +299,10 @@ function E.Developing()
 				max = 2.5,
 				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.FoV_left
+					return OctoToDo_DB_Vars.config.FoV_left
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.FoV_left = value
+					OctoToDo_DB_Vars.config.FoV_left = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 39,
@@ -358,10 +316,10 @@ function E.Developing()
 				max = 2.5,
 				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.FoV_right
+					return OctoToDo_DB_Vars.config.FoV_right
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.FoV_right = value
+					OctoToDo_DB_Vars.config.FoV_right = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 40,
@@ -395,12 +353,12 @@ function E.Developing()
 			--     type = "color",
 			--     name = "Good color",
 			--     desc = "The color to be displayed when you are moving in the direction of the active waypoint",
-			--     arg = Octo_ToDo_DB_Config.colorstart,
+			--     arg = OctoToDo_DB_Config.colorstart,
 			-- get = function()
-			--     return Octo_ToDo_DB_Config.colorstart
+			--     return OctoToDo_DB_Config.colorstart
 			-- end,
 			-- set = function(_, value)
-			--     Octo_ToDo_DB_Config.colorstart = value
+			--     OctoToDo_DB_Config.colorstart = value
 			-- end,
 			--     hasAlpha = false,
 			-- },
@@ -419,3 +377,4 @@ function E.Developing()
 	}
 	return Developing
 end
+

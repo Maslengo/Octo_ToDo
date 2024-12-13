@@ -2,17 +2,17 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v83.2(11.0.5)(13.12.2024)
-## IconTexture: Interface\AddOns\Octo_ToDo\Media\AddonTexture_1
-## SavedVariables: Octo_ToDo_DB_Config Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other OCTO_DB_currencies_test OCTO_DB_reputations_test
+## Version: v83.3(11.0.5)(13.12.2024)
+## IconTexture: Interface\AddOns\OctoToDo\Media\AddonTexture_1
+## SavedVariables: OctoToDo_DB_Config OctoToDo_DB_Levels OctoToDo_DB_Vars OctoToDo_DB_Other OCTO_DB_currencies_test OCTO_DB_reputations_test
 
 Libs\embeds.xml
 fprint\templates.xml
 fprint\fprint.lua
 
-Octo_Localization.lua
-Tables\Octo_Globals.lua
-Tables\Octo_Timer.lua
+OctoToDo_Localization.lua
+Tables\OctoToDo_Globals.lua
+Tables\OctoToDo_Functions.lua
 
 Tables\OctoTable_CLASSES.lua
 Tables\OctoTable_Colors.lua
@@ -26,15 +26,13 @@ Tables\OctoTable_Movies.lua
 Tables\OctoTable_QuestID.lua
 Tables\OctoTable_reputation_ALL.lua
 Tables\OctoTable_UniversalQuest.lua
-Tables\wowhead_prefix_Table.lua
+Tables\OctoTable_Prefixes.lua
 Tables\OctoTable_Gossip.lua
 Tables\OctoTable_Spells.lua
+Tables\OctoToDo_Timer.lua
 
-Tables\Octo_Functions.lua
-
-Minecraft\MinecraftFrames.lua
-Minecraft\MinecraftColors.lua
-Minecraft\MinecraftColors2.lua
+Tables\OctoToDo_WowheadQuickLink.lua
+Tables\OctoToDo_WowheadQuickLinkStrategies.lua
 
 Moduls\Calendar.lua
 Moduls\DEV_CVAR.lua
@@ -64,11 +62,10 @@ Moduls\SellFrame.lua
 Moduls\SpeedFrame.lua
 Moduls\StaticPopup1Button1.lua
 
-Octo_ToDo_CreateMenuStyle.lua
-Octo_ToDo.lua
-Octo_ToDo_WowheadQuickLink.lua
-Octo_ToDo_WowheadQuickLinkStrategies.lua
-Octo_SharedMedia.lua
+INACTIVE\OctoToDo_Options.lua
+
+OctoToDo.lua
+OctoToDo_SharedMedia.lua
 
 Options\0basicOptions.lua
 

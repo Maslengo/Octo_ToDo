@@ -4,7 +4,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- InputDelete
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.InputDelete then
+		if OctoToDo_DB_Vars.config.InputDelete then
 			local TypeDeleteLine = gsub(DELETE_GOOD_ITEM, "[\r\n]", "@")
 			local void, TypeDeleteLine = strsplit("@", TypeDeleteLine, 2)
 			local easyDelFrame = CreateFrame("FRAME")

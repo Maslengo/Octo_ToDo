@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
--- Octo_SharedMedia
+-- OctoToDo_SharedMedia
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 --Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Anime
 LibSharedMedia:Register("sound", "|cFF00A1FFO_01_ayaya|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\sound\Anime\ayaya.ogg]])
@@ -211,4 +211,3 @@ LibSharedMedia:Register("statusbar", "|cFF00A3FFO_23|r", [[Interface\Addons\]]..
 --Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI
 LibSharedMedia:Register("statusbar", "|cFF8e7cc3Atrocity|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI\Atrocity.tga]], LibSharedMedia.LOCALE_BIT_ruRU+LibSharedMedia.LOCALE_BIT_western)
 LibSharedMedia:Register("statusbar", "|cFF8e7cc3Kait|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI\Kait.tga]], LibSharedMedia.LOCALE_BIT_ruRU+LibSharedMedia.LOCALE_BIT_western)
-LibSharedMedia:Register("statusbar", "|cFF8e7cc3Kait|r", [[Interface\Addons\]]..GlobalAddonName..[[\Media\statusbar\AtrocityUI\minecraft.tga]], LibSharedMedia.LOCALE_BIT_ruRU+LibSharedMedia.LOCALE_BIT_western)

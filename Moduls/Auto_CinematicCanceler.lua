@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_CinematicCanceler
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler then
+		if OctoToDo_DB_Vars.config.Auto_CinematicCanceler then
 			CinematicFrame:HookScript("OnShow", function(self, ...)
 					if IsModifierKeyDown() then
 						return

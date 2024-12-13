@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ---------------------------------------------------------------- 
-E.Movies = {
+E.OctoTable_Movies = {
 	[EXPANSION_NAME0] = {
 		{name = "Ten Years of Warcraft", id = 1},
 		{name = "World of Warcraft", id = 2}

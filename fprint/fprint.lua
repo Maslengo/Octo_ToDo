@@ -1,4 +1,4 @@
--- /fprint {Octo_ToDo_DB_Config, Octo_ToDo_DB_Other}
+-- /fprint {OctoToDo_DB_Config, OctoToDo_DB_Other}
 local GlobalAddonName, E = ...
 local function func_Reverse_order(a, b)
 	return b < a
@@ -122,32 +122,31 @@ local colorScheme = {
 -- fprint
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local IndentationLib = IndentationLib
--- EDITBOX
 
--- /dump Octo_ToDoEditFrame:GetPoint()
+-- /dump OctoToDoEditFrame:GetPoint()
 
-local editFrame, editBox
-if select(4, GetBuildInfo()) > 20000 then
-	editFrame = CreateFrame("FRAME", GlobalAddonName.."EditFrame", UIParent, "MyAddonEditFrameTemplate")
-	editFrame:ClearAllPoints()
-	-- editFrame:SetPoint("TOP", -300, -(UIParent:GetHeight()/6))
-	-- editFrame:SetPoint("TOPLEFT", nil, "TOPLEFT", 20, -20)
-	editFrame:SetPoint("TOPLEFT", 20, -20)
-	-- editFrame:EnableMouse(true)
-	-- editFrame:HookScript("OnMouseDown", function(self) self:Hide() end)
-	-- editFrame:HookScript("OnMouseUp", function(self) self:Hide() end)
-	editFrame:SetScript("OnKeyDown", function(self, key)
+----------------------------------------------------------------
+-- editFrame
+----------------------------------------------------------------
+local editFrame = CreateFrame("FRAME", "editFrame", UIParent, "MyAddonEditFrameTemplate")
+editFrame:ClearAllPoints()
+editFrame:SetPoint("CENTER")
+editFrame:SetScale(1.5)
+editFrame:SetScript("OnKeyDown", function(self, key)
 		if key == GetBindingKey("TOGGLEGAMEMENU") then
 			self:Hide()
 			self:SetPropagateKeyboardInput(false)
 		else
 			self:SetPropagateKeyboardInput(true)
 		end
-	end)
-	-- editFrame:RegisterForClicks("RightButtonUp")
-	-- editFrame:SetScript("OnClick", function(self) self:Hide() end)
-	editBox = editFrame.editFrame
-end
+end)
+local editBox = editFrame.editFrame
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
+
 local function dumpEdit(indent, msg, tables)
 	local str, indentStr, tables = "", "", tables or {}
 	for i = 1, indent do
@@ -182,7 +181,7 @@ end
 -- FPRINT
 local LOCAL_FPrintHandler = function(...)
 	local function sendMessage(frame, indent, msg, allChildren)
-		local indentStr = E.func_Gradient(GlobalAddonName..": ", E.Addon_Left_Color, E.Addon_Right_Color)
+		local indentStr = E.func_Gradient(GlobalAddonName..": ")
 		for i = 1, indent do
 			indentStr = indentStr.." "
 		end
@@ -201,7 +200,7 @@ local LOCAL_FPrintHandler = function(...)
 			end
 		end
 	end
-	local message = strjoin(" ", E.func_Gradient(GlobalAddonName..": ", E.Addon_Left_Color, E.Addon_Right_Color), tostringall(...))
+	local message = strjoin(" ", E.func_Gradient(GlobalAddonName..": "), tostringall(...))
 	local mFrame = DEFAULT_CHAT_FRAME
 	local i = 1
 	repeat
@@ -460,3 +459,4 @@ SlashCmdList.OCTOLISTMOUNT = function(msg)
 	editBox:SetText(str5)
 	editFrame:Show()
 end
+

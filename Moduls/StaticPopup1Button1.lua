@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- StaticPopup1Button1
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.StaticPopup1Button1 then
+		if OctoToDo_DB_Vars.config.StaticPopup1Button1 then
 			----------------------------------------------------------------------------------------------------------------------------------
 			----------------------------------------------------------------------------------------------------------------------------------
 			local EventFrame_SPB = nil
@@ -11,12 +11,12 @@ tinsert(E.Modules, function()
 					StaticPopup1Button1:Click()
 				end
 			end
-			local function Octo_OnEvent(self, event, ...)
+			local function OctoToDo_OnEvent(self, event, ...)
 				C_Timer.After(0, function()
 						accept()
 				end)
 			end
-			function Octo_OnLoad()
+			function OctoToDo_OnLoad()
 				if not EventFrame_SPB then
 					EventFrame_SPB = CreateFrame("FRAME", E.func_GenerateUniqueID())
 				end
@@ -32,9 +32,9 @@ tinsert(E.Modules, function()
 				-- EventFrame_SPB:RegisterEvent("CONVERT_TO_BIND_TO_ACCOUNT_CONFIRM") --sequre
 				-- EventFrame_SPB:RegisterEvent("SPELL_CONFIRMATION_PROMPT") --block
 			end
-			Octo_OnLoad()
+			OctoToDo_OnLoad()
 			do
-				EventFrame_SPB:HookScript("OnEvent", Octo_OnEvent)
+				EventFrame_SPB:HookScript("OnEvent", OctoToDo_OnEvent)
 			end
 			-- /run local function accept() StaticPopup1Button1:Click() end
 			-- StaticPopupDialogs["BID_AUCTION"].OnShow=accept

@@ -21,10 +21,10 @@ function E.Currencies()
 				name = CURRENCY,
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Currency
+					return OctoToDo_DB_Vars.config.Currency
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Currency = value
+					OctoToDo_DB_Vars.config.Currency = value
 				end,
 				width = E.FULL_WIDTH/4, -- 1.8,
 				order = 3,
@@ -35,10 +35,10 @@ function E.Currencies()
 				name = BATTLEFIELD_MINIMAP_SHOW_ALWAYS,
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.CurrencyShowAllways
+					return OctoToDo_DB_Vars.config.CurrencyShowAllways
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.CurrencyShowAllways = value
+					OctoToDo_DB_Vars.config.CurrencyShowAllways = value
 				end,
 				width = E.FULL_WIDTH/4, -- 1.8,
 				order = 4,
@@ -125,3 +125,4 @@ function E.Currencies()
 	})
 	return Currencies
 end
+

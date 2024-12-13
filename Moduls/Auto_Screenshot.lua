@@ -2,9 +2,9 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Screenshot
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.Auto_Screenshot then
+		if OctoToDo_DB_Vars.config.Auto_Screenshot then
 			local EventFrame = nil
-			local function Octo_OnLoad()
+			local function OctoToDo_OnLoad()
 				if not EventFrame then
 					EventFrame = CreateFrame("FRAME", GlobalAddonName.."Auto_Screenshot"..E.func_GenerateUniqueID())
 				end
@@ -19,7 +19,7 @@ tinsert(E.Modules, function()
 				EventFrame:RegisterEvent("NEW_TOY_ADDED")
 				EventFrame:RegisterEvent("TRADE_ACCEPT_UPDATE")
 			end
-			local function Octo_OnEvent(self, event, ...)
+			local function OctoToDo_OnEvent(self, event, ...)
 				local generalDelay = .1
 				local achievementDelay = .1
 				local legendaryDelay = .1
@@ -69,7 +69,7 @@ tinsert(E.Modules, function()
 					end)
 				end
 			end
-			Octo_OnLoad()
-			EventFrame:SetScript("OnEvent", Octo_OnEvent)
+			OctoToDo_OnLoad()
+			EventFrame:SetScript("OnEvent", OctoToDo_OnEvent)
 		end
 end)

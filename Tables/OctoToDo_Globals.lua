@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
 E.OctoTable_Empty = {}
 E.Modules = {}
@@ -168,7 +169,6 @@ E.curWidthCentral = 96*E.scale
 E.curHeight = 20*E.scale
 --E.curWidthTitle = E.curWidthCentral*2
 E.curWidthTitle = 200*E.scale
-E.curWidthTitleAchievement = E.curWidthTitle
 E.ilvlToShow = 400
 E.Addon_Height = 400
 E.BGALPHA = .1
@@ -205,10 +205,10 @@ local _, _, _, isWeakAuras = C_AddOns.GetAddOnInfo("WeakAuras")
 E.isWeakAuras = isWeakAuras
 local _, _, _, isTomTom = C_AddOns.GetAddOnInfo("TomTom")
 E.isTomTom = isTomTom
-E.bgCr = 14/255
-E.bgCg = 14/255
-E.bgCb = 14/255
-E.bgCa = 0.8
+E.bgCr = .08 -- 14/255
+E.bgCg = .08 -- 14/255
+E.bgCb = .08 -- 14/255
+E.bgCa = .8
 E.slider_scale = 0.8
 E.multiplier = 2 - E.slider_scale
 ----------------------------------------------------------------
@@ -339,7 +339,6 @@ E.Icon_AccountWide = E.Blue_Color.."(A)".."|r" -- func_texturefromIcon(1120721)
 E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r" -- func_texturefromIcon(6124644)
 
 
-E.Icon_Achievement = func_texturefromIcon(236544)
 E.Icon_Empty = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 -- C_Covenants.GetCovenantIDs()
 -- КОВЕНАНТ
@@ -379,3 +378,22 @@ E.OctoTable_Covenant = {
 		b = 0.49,
 	},
 }
+----------------------------------------------------------------
+E.menuBackdrop = {
+	bgFile = E.bgFile, -- "Interface/ChatFrame/ChatFrameBackground",
+	edgeFile = E.edgeFile, -- "InterfE.edgeFile, -- ace/ChatFrame/ChatFrameBackground",
+	edgeSize = 1,
+	-- tile = true,
+	-- tileSize = 5 * E.scale,
+}
+
+
+LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
+	local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+	f:SetBackdrop(E.menuBackdrop)
+	f:SetPoint("TOPLEFT", 8, -2)
+	f:SetPoint("BOTTOMRIGHT", -8, 2)
+	f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+	f:SetBackdropBorderColor(0, 0, 0, 1)
+	return f
+end)

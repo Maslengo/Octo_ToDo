@@ -15,14 +15,14 @@ local function govno_function(name)
 	return false
 end
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.Auto_Gossip then
-			if not Octo_AUTO_GOSSIP then
-				Octo_AUTO_GOSSIP = CreateFrame("Frame", GlobalAddonName.."Auto_Gossip"..E.func_GenerateUniqueID())
-				Octo_AUTO_GOSSIP:Hide()
+		if OctoToDo_DB_Vars.config.Auto_Gossip then
+			if not OctoToDo_AUTO_GOSSIP then
+				OctoToDo_AUTO_GOSSIP = CreateFrame("Frame", GlobalAddonName.."Auto_Gossip"..E.func_GenerateUniqueID())
+				OctoToDo_AUTO_GOSSIP:Hide()
 			end
-			Octo_AUTO_GOSSIP:RegisterEvent("GOSSIP_SHOW")
-			Octo_AUTO_GOSSIP:HookScript("OnEvent", function(self, event, ...)
-					if Octo_ToDo_DB_Vars.config.Auto_Gossip and event == "GOSSIP_SHOW" then
+			OctoToDo_AUTO_GOSSIP:RegisterEvent("GOSSIP_SHOW")
+			OctoToDo_AUTO_GOSSIP:HookScript("OnEvent", function(self, event, ...)
+					if OctoToDo_DB_Vars.config.Auto_Gossip and event == "GOSSIP_SHOW" then
 						local UnitID = "TARGET"
 						local guid = UnitGUID(UnitID)
 						if guid and UnitGUID(UnitID):match("%a+") ~= "Player" and not IsShiftKeyDown() then

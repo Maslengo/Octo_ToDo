@@ -28,10 +28,10 @@ function E.CreateGeneralOptions()
 				name = L["AutoSellGrey"], -- "AUTO "..SELL_ALL_JUNK_ITEMS_EXCLUDE_HEADER, --
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.AutoSellGrey
+					return OctoToDo_DB_Vars.config.AutoSellGrey
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.AutoSellGrey = value
+					OctoToDo_DB_Vars.config.AutoSellGrey = value
 				end,
 				width = E.FULL_WIDTH/2, -- "full",
 				order = 8,
@@ -42,10 +42,10 @@ function E.CreateGeneralOptions()
 				name = L["AutoRepair"], -- "AUTO "..REPAIR_ALL_ITEMS, --
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.AutoRepair
+					return OctoToDo_DB_Vars.config.AutoRepair
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.AutoRepair = value
+					OctoToDo_DB_Vars.config.AutoRepair = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 9,
@@ -56,10 +56,10 @@ function E.CreateGeneralOptions()
 				name = L["InputDelete"], -- "AUTO "..DELETE, --
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.InputDelete
+					return OctoToDo_DB_Vars.config.InputDelete
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.InputDelete = value
+					OctoToDo_DB_Vars.config.InputDelete = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 10,
@@ -70,10 +70,10 @@ function E.CreateGeneralOptions()
 				name = L["AutoOpen"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.AutoOpen
+					return OctoToDo_DB_Vars.config.AutoOpen
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.AutoOpen = value
+					OctoToDo_DB_Vars.config.AutoOpen = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 11,
@@ -84,10 +84,10 @@ function E.CreateGeneralOptions()
 				name = L["AutoGossip"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Auto_Gossip
+					return OctoToDo_DB_Vars.config.Auto_Gossip
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Auto_Gossip = value
+					OctoToDo_DB_Vars.config.Auto_Gossip = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 12,
@@ -98,10 +98,10 @@ function E.CreateGeneralOptions()
 				name = L["Auto Turn Quests"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.AutoTurnQuests
+					return OctoToDo_DB_Vars.config.AutoTurnQuests
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.AutoTurnQuests = value
+					OctoToDo_DB_Vars.config.AutoTurnQuests = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 13,
@@ -112,10 +112,10 @@ function E.CreateGeneralOptions()
 				name = L["ClearChat"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Auto_ChatClearing
+					return OctoToDo_DB_Vars.config.Auto_ChatClearing
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Auto_ChatClearing = value
+					OctoToDo_DB_Vars.config.Auto_ChatClearing = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 14,
@@ -126,10 +126,10 @@ function E.CreateGeneralOptions()
 				name = L["Auto_Screenshot"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Auto_Screenshot
+					return OctoToDo_DB_Vars.config.Auto_Screenshot
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Auto_Screenshot = value
+					OctoToDo_DB_Vars.config.Auto_Screenshot = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 15,
@@ -140,10 +140,10 @@ function E.CreateGeneralOptions()
 				name = E.Green_Color..L["CinematicCanceler"].."|r",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler
+					return OctoToDo_DB_Vars.config.Auto_CinematicCanceler
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Auto_CinematicCanceler = value
+					OctoToDo_DB_Vars.config.Auto_CinematicCanceler = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 16,
@@ -154,10 +154,10 @@ function E.CreateGeneralOptions()
 				name = E.Green_Color.."Fast Cinematic Skip (ESC/Space/Enter)".."|r",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip
+					return OctoToDo_DB_Vars.config.Auto_CinematicFastSkip
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip = value
+					OctoToDo_DB_Vars.config.Auto_CinematicFastSkip = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 17,
@@ -174,10 +174,10 @@ function E.CreateGeneralOptions()
 				name = L["Hide: Boss Banner"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Hide_Boss_Banner
+					return OctoToDo_DB_Vars.config.Hide_Boss_Banner
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Hide_Boss_Banner = value
+					OctoToDo_DB_Vars.config.Hide_Boss_Banner = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 19,
@@ -188,10 +188,10 @@ function E.CreateGeneralOptions()
 				name = L["Hide: Covenant"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Hide_Covenant
+					return OctoToDo_DB_Vars.config.Hide_Covenant
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Hide_Covenant = value
+					OctoToDo_DB_Vars.config.Hide_Covenant = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 20,
@@ -202,10 +202,10 @@ function E.CreateGeneralOptions()
 				name = L["Hide: Error Messages"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Hide_Error_Messages
+					return OctoToDo_DB_Vars.config.Hide_Error_Messages
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Hide_Error_Messages = value
+					OctoToDo_DB_Vars.config.Hide_Error_Messages = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 21,
@@ -216,10 +216,10 @@ function E.CreateGeneralOptions()
 				name = "Hide_RaidWarningFrame",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Hide_RaidWarningFrame
+					return OctoToDo_DB_Vars.config.Hide_RaidWarningFrame
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Hide_RaidWarningFrame = value
+					OctoToDo_DB_Vars.config.Hide_RaidWarningFrame = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 22,
@@ -230,10 +230,10 @@ function E.CreateGeneralOptions()
 				name = "Hide_OrderHallCommandBar",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Hide_OrderHallCommandBar
+					return OctoToDo_DB_Vars.config.Hide_OrderHallCommandBar
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Hide_OrderHallCommandBar = value
+					OctoToDo_DB_Vars.config.Hide_OrderHallCommandBar = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 23,
@@ -244,10 +244,10 @@ function E.CreateGeneralOptions()
 				name = L["Hide: TalkingHeadFrame"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Hide_Talking_Head_Frame
+					return OctoToDo_DB_Vars.config.Hide_Talking_Head_Frame
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Hide_Talking_Head_Frame = value
+					OctoToDo_DB_Vars.config.Hide_Talking_Head_Frame = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 24,
@@ -258,10 +258,10 @@ function E.CreateGeneralOptions()
 				name = L["Hide: Zone Text"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Hide_Zone_Text
+					return OctoToDo_DB_Vars.config.Hide_Zone_Text
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Hide_Zone_Text = value
+					OctoToDo_DB_Vars.config.Hide_Zone_Text = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 25,
@@ -272,10 +272,10 @@ function E.CreateGeneralOptions()
 				name = L["UIErrorsFramePosition"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.UIErrorsFramePosition
+					return OctoToDo_DB_Vars.config.UIErrorsFramePosition
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.UIErrorsFramePosition = value
+					OctoToDo_DB_Vars.config.UIErrorsFramePosition = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 26,
@@ -295,10 +295,10 @@ function E.CreateGeneralOptions()
 				max = 80,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.LevelToShow
+					return OctoToDo_DB_Vars.config.LevelToShow
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.LevelToShow = value
+					OctoToDo_DB_Vars.config.LevelToShow = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 28,
@@ -312,10 +312,10 @@ function E.CreateGeneralOptions()
 				max = 80*2,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.LevelToShowMAX
+					return OctoToDo_DB_Vars.config.LevelToShowMAX
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.LevelToShowMAX = value
+					OctoToDo_DB_Vars.config.LevelToShowMAX = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 29,
@@ -329,10 +329,10 @@ function E.CreateGeneralOptions()
 				max = 560,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.itemLevelToShow
+					return OctoToDo_DB_Vars.config.itemLevelToShow
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.itemLevelToShow = value
+					OctoToDo_DB_Vars.config.itemLevelToShow = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 30,
@@ -346,10 +346,10 @@ function E.CreateGeneralOptions()
 				max = 160,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.curWidthCentral
+					return OctoToDo_DB_Vars.config.curWidthCentral
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.curWidthCentral = value
+					OctoToDo_DB_Vars.config.curWidthCentral = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 31,
@@ -359,14 +359,14 @@ function E.CreateGeneralOptions()
 				type = "range",
 				name = L["curWidthTitle: "],
 				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
-				min = 100,
-				max = 400,
+				min = 200,
+				max = 500,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.curWidthTitle
+					return OctoToDo_DB_Vars.config.curWidthTitle
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.curWidthTitle = value
+					OctoToDo_DB_Vars.config.curWidthTitle = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 32,
@@ -380,10 +380,10 @@ function E.CreateGeneralOptions()
 				max = 30,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.curHeight
+					return OctoToDo_DB_Vars.config.curHeight
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.curHeight = value
+					OctoToDo_DB_Vars.config.curHeight = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 33,
@@ -397,10 +397,10 @@ function E.CreateGeneralOptions()
 				max = 1000,
 				step = 20,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Addon_Height
+					return OctoToDo_DB_Vars.config.Addon_Height
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Addon_Height = value
+					OctoToDo_DB_Vars.config.Addon_Height = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 34,
@@ -414,10 +414,10 @@ function E.CreateGeneralOptions()
 				max = 2.5,
 				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.FrameScale
+					return OctoToDo_DB_Vars.config.FrameScale
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.FrameScale = value
+					OctoToDo_DB_Vars.config.FrameScale = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 35,
@@ -431,10 +431,10 @@ function E.CreateGeneralOptions()
 				max = 2.5,
 				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.config.GameMenuFrameScale
+					return OctoToDo_DB_Vars.config.GameMenuFrameScale
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.GameMenuFrameScale = value
+					OctoToDo_DB_Vars.config.GameMenuFrameScale = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 36,
@@ -451,10 +451,10 @@ function E.CreateGeneralOptions()
 				name = E.func_texturefromIcon(3610528, 20)..L["Portals"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.PortalsButtons
+					return OctoToDo_DB_Vars.config.PortalsButtons
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.PortalsButtons = value
+					OctoToDo_DB_Vars.config.PortalsButtons = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 38,
@@ -465,10 +465,10 @@ function E.CreateGeneralOptions()
 				name = E.func_texturefromIcon(3610528).."PortalsButtonsOnlyCurrent",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent
+					return OctoToDo_DB_Vars.config.PortalsButtonsOnlyCurrent
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = value
+					OctoToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 39,
@@ -479,10 +479,10 @@ function E.CreateGeneralOptions()
 				name = L["Only Current Server"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer
+					return OctoToDo_DB_Vars.config.ShowOnlyCurrentServer
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ShowOnlyCurrentServer = value
+					OctoToDo_DB_Vars.config.ShowOnlyCurrentServer = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 40,
@@ -493,55 +493,13 @@ function E.CreateGeneralOptions()
 				name = L["Only Current BattleTag"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.ShowOnlyCurrentBattleTag
+					return OctoToDo_DB_Vars.config.ShowOnlyCurrentBattleTag
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ShowOnlyCurrentBattleTag = value
+					OctoToDo_DB_Vars.config.ShowOnlyCurrentBattleTag = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 41,
-			},
-			-------------------------------------------------
-			ShowTotalMoney = {
-				type = "toggle",
-				name = "Всего денег",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.config.ShowTotalMoney
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ShowTotalMoney = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 42,
-			},
-			-------------------------------------------------
-			ShowTimeAll = {
-				type = "toggle",
-				name = "Общее время игры",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.config.ShowTimeAll
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ShowTimeAll = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 43,
-			},
-			-------------------------------------------------
-			ShowTimeMAXLEVEL = {
-				type = "toggle",
-				name = "80 "..LEVEL,
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ShowTimeMAXLEVEL = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 44,
 			},
 			-------------------------------------------------
 			Dungeons = {
@@ -549,10 +507,10 @@ function E.CreateGeneralOptions()
 				name = "КД инстов",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Dungeons
+					return OctoToDo_DB_Vars.config.Dungeons
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Dungeons = value
+					OctoToDo_DB_Vars.config.Dungeons = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 45,
@@ -563,10 +521,10 @@ function E.CreateGeneralOptions()
 				name = TRADE_SKILLS,
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Professions
+					return OctoToDo_DB_Vars.config.Professions
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Professions = value
+					OctoToDo_DB_Vars.config.Professions = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 46,
@@ -577,10 +535,10 @@ function E.CreateGeneralOptions()
 				name = BONUS_ROLL_REWARD_MONEY,
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.Gold
+					return OctoToDo_DB_Vars.config.Gold
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.Gold = value
+					OctoToDo_DB_Vars.config.Gold = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 47,
@@ -591,10 +549,10 @@ function E.CreateGeneralOptions()
 				name = STAT_AVERAGE_ITEM_LEVEL,
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.ItemLevel
+					return OctoToDo_DB_Vars.config.ItemLevel
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ItemLevel = value
+					OctoToDo_DB_Vars.config.ItemLevel = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 48,
@@ -605,10 +563,10 @@ function E.CreateGeneralOptions()
 				name = L["Was online"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.WasOnline
+					return OctoToDo_DB_Vars.config.WasOnline
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.WasOnline = value
+					OctoToDo_DB_Vars.config.WasOnline = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 49,
@@ -617,13 +575,13 @@ function E.CreateGeneralOptions()
 			["ExpansionToShow"] = {
 				type = "select",
 				name = "ExpansionToShow",
-				values = {}, 
+				values = {},
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.ExpansionToShow
+					return OctoToDo_DB_Vars.config.ExpansionToShow
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.ExpansionToShow = value
+					OctoToDo_DB_Vars.config.ExpansionToShow = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 3,
@@ -632,13 +590,13 @@ function E.CreateGeneralOptions()
 			["prefix"] = {
 				type = "select",
 				name = "prefix",
-				values = {}, 
+				values = {},
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.config.prefix
+					return OctoToDo_DB_Vars.config.prefix
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.config.prefix = value
+					OctoToDo_DB_Vars.config.prefix = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 4,
@@ -647,16 +605,16 @@ function E.CreateGeneralOptions()
 		},
 	}
 	-- if wipe == false then
-		-- wipe = true
-		-------------------------------------------------
-		for index, v in ipairs(E.OctoTable_Expansions_Table) do
-			generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r" 
-		end
-		-------------------------------------------------
-		for index, name in ipairs(E.wowhead_prefix_Table) do
-			generalOptions.args.prefix.values[index] = name 
-		end
-		-------------------------------------------------
+	-- wipe = true
+	-------------------------------------------------
+	for index, v in ipairs(E.OctoTable_Expansions_Table) do
+		generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r"
+	end
+	-------------------------------------------------
+	for index, name in ipairs(E.OctoTable_Prefixes) do
+		generalOptions.args.prefix.values[index] = name
+	end
+	-------------------------------------------------
 	-- end
 	-------------------------------------------------
 
@@ -664,3 +622,4 @@ function E.CreateGeneralOptions()
 
 	return generalOptions
 end
+

@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Sell_Grey
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.AutoSellGrey then
+		if OctoToDo_DB_Vars.config.AutoSellGrey then
 			local function OnEvent(self, event)
 				totalPrice = 0
 				--for myBags = 0, 4 do

@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 local utf8lower = string.utf8lower
--- Octo_ToDo_WowheadQuickLinkStrategies
+-- OctoToDo_WowheadQuickLinkStrategies
 local strategies = {
 	wowhead = {},
 	wowheadAzEs = {},
@@ -18,15 +18,15 @@ local regions = {
 }
 local output_preffix = ""
 local function check_WTF()
-	if Octo_ToDo_DB_Vars.config.prefix == 1 then output_preffix = "ru/" -- Русский"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 2 then output_preffix = "de/" -- Deutsch"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 3 then output_preffix = "" -- English"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 4 then output_preffix = "es/" -- Español"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 5 then output_preffix = "fr/" -- Français"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 6 then output_preffix = "it/" -- Italiano"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 7 then output_preffix = "pt/" -- Português Brasileiro
-	elseif Octo_ToDo_DB_Vars.config.prefix == 8 then output_preffix = "ko/" -- 한국어"
-	elseif Octo_ToDo_DB_Vars.config.prefix == 9 then output_preffix = "cn/" -- 简体中文"
+	if OctoToDo_DB_Vars.config.prefix == 1 then output_preffix = "ru/" -- Русский"
+	elseif OctoToDo_DB_Vars.config.prefix == 2 then output_preffix = "de/" -- Deutsch"
+	elseif OctoToDo_DB_Vars.config.prefix == 3 then output_preffix = "" -- English"
+	elseif OctoToDo_DB_Vars.config.prefix == 4 then output_preffix = "es/" -- Español"
+	elseif OctoToDo_DB_Vars.config.prefix == 5 then output_preffix = "fr/" -- Français"
+	elseif OctoToDo_DB_Vars.config.prefix == 6 then output_preffix = "it/" -- Italiano"
+	elseif OctoToDo_DB_Vars.config.prefix == 7 then output_preffix = "pt/" -- Português Brasileiro
+	elseif OctoToDo_DB_Vars.config.prefix == 8 then output_preffix = "ko/" -- 한국어"
+	elseif OctoToDo_DB_Vars.config.prefix == 9 then output_preffix = "cn/" -- 简体中文"
 	end
 end
 function E.strategies.GetWowheadUrl(dataSources)

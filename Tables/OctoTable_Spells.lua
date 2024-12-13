@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-E.Octo_ProfessionsskillLine = {
+E.OctoToDo_ProfessionsskillLine = {
 	[164] = true,
 	[165] = true,
 	[171] = true,
@@ -13,7 +13,7 @@ E.Octo_ProfessionsskillLine = {
 	[755] = true,
 	[773] = true
 }
-E.Octo_ProfessionsskillLine_Other = {
+E.OctoToDo_ProfessionsskillLine_Other = {
 	[129] = true,
 	[185] = true,
 	[356] = true,

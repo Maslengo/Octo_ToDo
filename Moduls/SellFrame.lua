@@ -4,7 +4,7 @@ local ltl = LibStub("LibThingsLoad-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 --SellFrame
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.SellFrame then
+		if OctoToDo_DB_Vars.config.SellFrame then
 			sort(E.OctoTable_itemID_Ignore_List, E.func_Reverse_order)
 
 			local ignorelist = {}
@@ -23,7 +23,7 @@ tinsert(E.Modules, function()
 			local OctoFrame_TOBANK = nil
 			local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
 			local ilvlStr = avgItemLevelEquipped or 0
-			function Octo_Trade_OnLoad()
+			function OctoToDo_Trade_OnLoad()
 				if not OctoFrame_Events then
 					OctoFrame_Events = CreateFrame("Frame", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID())
 					OctoFrame_Events:Hide()
@@ -36,7 +36,7 @@ tinsert(E.Modules, function()
 				OctoFrame_Events:RegisterEvent("BANKFRAME_CLOSED")
 				OctoFrame_Events:RegisterEvent("PLAYER_STARTED_MOVING")
 				OctoFrame_Events:RegisterEvent("MAIL_SHOW")
-				OctoFrame_Events:SetScript("OnEvent", Octo_Trade_OnEvent)
+				OctoFrame_Events:SetScript("OnEvent", OctoToDo_Trade_OnEvent)
 			end
 			function MASLENGO_Trade()
 				local function SetQAButtonGameTooltip(button, text)
@@ -418,7 +418,7 @@ tinsert(E.Modules, function()
 				OctoFrame_TOBANK:Show()
 				----------------------------------------------------------------------------------------------------------------------------------
 			end
-			function Octo_Trade_OnEvent(self, event, ...)
+			function OctoToDo_Trade_OnEvent(self, event, ...)
 				if event == "MERCHANT_SHOW" and not InCombatLockdown() then
 					MASLENGO_Trade()
 				elseif event == "Trade_SHOW" and not InCombatLockdown() then
@@ -452,7 +452,7 @@ tinsert(E.Modules, function()
 					MASLENGO_Trade()
 				end
 			end
-			Octo_Trade_OnLoad()
+			OctoToDo_Trade_OnLoad()
 		end
 end)
 

@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Cinematic_Canceler
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.Auto_CinematicFastSkip then
+		if OctoToDo_DB_Vars.config.Auto_CinematicFastSkip then
 			-- Allow space bar, escape key and enter key to cancel cinematic without confirmation
 			CinematicFrame:HookScript("OnKeyDown", function(self, key)
 				if key == "ESCAPE" then

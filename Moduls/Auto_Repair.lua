@@ -3,7 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Repair
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.config.AutoRepair then
+		if OctoToDo_DB_Vars.config.AutoRepair then
 			local function OnEvent(self, event)
 				if (CanMerchantRepair()) then
 					local repairAllCost, canRepair = GetRepairAllCost()

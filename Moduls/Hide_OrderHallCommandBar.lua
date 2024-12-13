@@ -3,7 +3,7 @@ local GlobalAddonName, E = ...
 -- Hide_OrderHallCommandBar
 
 tinsert(E.Modules, function()
-	if Octo_ToDo_DB_Vars.config.Hide_OrderHallCommandBar then
+	if OctoToDo_DB_Vars.config.Hide_OrderHallCommandBar then
 
 		local function HandleCommandBar()
 				_G.OrderHallCommandBar:UnregisterAllEvents()
@@ -41,7 +41,7 @@ end)
 
 
 -- tinsert(E.Modules, function()
--- 	if Octo_ToDo_DB_Vars.config.Hide_OrderHallCommandBar then
+-- 	if OctoToDo_DB_Vars.config.Hide_OrderHallCommandBar then
 -- 		-- _G.OrderHallCommandBar:HookScript("OnShow", function(self, ...)
 -- 		-- 	_G.OrderHallCommandBar:UnregisterAllEvents()
 -- 		-- 	_G.OrderHallCommandBar:Hide()

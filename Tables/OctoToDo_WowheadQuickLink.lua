@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
--- Octo_ToDo_WowheadQuickLink
+-- OctoToDo_WowheadQuickLink
 local popupText = "%s Link\nCTRL-C to copy"
 local function ShowUrlPopup(header, url)
 	StaticPopup_Show("WowheadQuickLinkUrl", header, _, url)

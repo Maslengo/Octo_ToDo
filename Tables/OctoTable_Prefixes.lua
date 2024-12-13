@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
-E.wowhead_prefix_Table = {
+E.OctoTable_Prefixes = {
 	"Русский", -- "ru.",
 	"Deutsch", -- "de.",
 	"English", -- "",
