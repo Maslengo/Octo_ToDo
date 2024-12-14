@@ -28,29 +28,29 @@ local ItemLevelGreen = 625
 local ItemLevelOrange = 610
 local ItemLevelRed = 580
 local GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
-E.func_LoadAddOn("OctoToDo_Achievements")
+-- E.func_LoadAddOn("OctoToDo_Achievements")
 E.func_LoadAddOn("OctoToDo_Minecraft")
-E.func_LoadAddOn("OctoToDo_Reputations")
-E.func_LoadAddOn("OctoToDo_TrashCan")
+-- E.func_LoadAddOn("OctoToDo_Reputations")
+-- E.func_LoadAddOn("OctoToDo_TrashCan")
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")
 E.func_LoadAddOn("MountsJournal")
 E.func_LoadAddOn("HidingBar")
 E.func_LoadAddOn("HidingBar_Options")
-E.func_LoadAddOn("SpeedyAutoLoot")
-E.func_LoadAddOn("TalentTreeTweaks")
-E.func_LoadAddOn("Plater")
-E.func_LoadAddOn("MacroManager")
-E.func_LoadAddOn("MacroManagerData")
-E.func_LoadAddOn("SilverDragon")
-E.func_LoadAddOn("SilverDragon_History")
-E.func_LoadAddOn("SilverDragon_Overlay")
-E.func_LoadAddOn("SilverDragon_RangeExtender")
-E.func_LoadAddOn("TomTom")
-E.func_LoadAddOn("Pawn")
-E.func_LoadAddOn("MySlot")
-E.func_LoadAddOn("QuestsChanged")
-E.func_LoadAddOn("AdvancedInterfaceOptions")
+-- E.func_LoadAddOn("SpeedyAutoLoot")
+-- E.func_LoadAddOn("TalentTreeTweaks")
+-- E.func_LoadAddOn("Plater")
+-- E.func_LoadAddOn("MacroManager")
+-- E.func_LoadAddOn("MacroManagerData")
+-- E.func_LoadAddOn("SilverDragon")
+-- E.func_LoadAddOn("SilverDragon_History")
+-- E.func_LoadAddOn("SilverDragon_Overlay")
+-- E.func_LoadAddOn("SilverDragon_RangeExtender")
+-- E.func_LoadAddOn("TomTom")
+-- E.func_LoadAddOn("Pawn")
+-- E.func_LoadAddOn("MySlot")
+-- E.func_LoadAddOn("QuestsChanged")
+-- E.func_LoadAddOn("AdvancedInterfaceOptions")
 local OctoToDo_CharFrame = nil
 local OctoToDo_MainFrame = nil
 local OctoToDo_CloseButton = nil
@@ -5678,11 +5678,12 @@ function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 			E.curHeight = OctoToDo_DB_Vars.config.curHeight
 		end
 		if OctoToDo_DB_Vars.config.curWidthTitle == nil then
-			OctoToDo_DB_Vars.config.curWidthTitle = 200
+			OctoToDo_DB_Vars.config.curWidthTitle = 200*E.scale
 		end
 		if OctoToDo_DB_Vars.config.curWidthTitle ~= nil then
 			E.curWidthTitle = OctoToDo_DB_Vars.config.curWidthTitle
 		end
+
 		if OctoToDo_DB_Vars.config.AidingtheAccord == nil then
 			OctoToDo_DB_Vars.config.AidingtheAccord = true
 		end

@@ -1371,45 +1371,57 @@ function E.func_coloredText(fontstring)
 	return E.func_rgb2hex(r, g, b, a)..text.."|r"
 end
 ----------------------------------------------------------------
-function E:func_SetBackdrop(frame)
+function E:func_SetBackdrop(frame, hexcolor, alpha)
 	local _, classFilename = UnitClass("PLAYER")
 	local r, g, b = GetClassColor(classFilename)
+
+	local bgCr, bgCg, bgCb, bgCa = E.bgCr, E.bgCg, E.bgCb, E.bgCa
+	-- local bgCr, bgCg, bgCb, bgCa = 0, 0, 0, 0
+	if hexcolor then
+		bgCr, bgCg, bgCb, bgCa = self.func_hex2rgbNUMBER(hexcolor)
+	end
+	if alpha then
+		bgCa = alpha
+	end
 	frame:SetBackdrop({
 			bgFile = E.bgFile,
 			edgeFile = E.edgeFile,
 			edgeSize = 1,
 			insets = {left = 1, right = 1, top = 1, bottom = 1},
 	})
-	frame:HookScript("OnShow", function(self)
-			self:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
-			self:SetBackdropBorderColor(0, 0, 0, 1)
-	end)
-	frame:HookScript("OnEnter", function(self)
-			self:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+	frame:SetBackdropBorderColor(0, 0, 0, 1)
+
+	-- frame:SetScript("OnShow", function(self)
+	-- 		self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+	-- 		self:SetBackdropBorderColor(0, 0, 0, 1)
+	-- end)
+	frame:SetScript("OnEnter", function(self)
+			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 			self:SetBackdropBorderColor(r, g, b, 1)
 	end)
-	frame:HookScript("OnLeave", function(self)
-			self:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+	frame:SetScript("OnLeave", function(self)
+			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 			self:SetBackdropBorderColor(0, 0, 0, 1)
 	end)
 	if frame.icon then
 		frame.icon:SetAllPoints(frame)
-		frame:HookScript("OnShow", function(self)
+		frame:SetScript("OnShow", function(self)
 				self.icon:SetVertexColor(1, 1, 1, 1)
 		end)
-		frame:HookScript("OnEnter", function(self)
+		frame:SetScript("OnEnter", function(self)
 				self.icon:SetVertexColor(r, g, b, 1)
 		end)
-		frame:HookScript("OnLeave", function(self)
+		frame:SetScript("OnLeave", function(self)
 				self.icon:SetVertexColor(1, 1, 1, 1)
 				GameTooltip:ClearLines()
 				GameTooltip:Hide()
 		end)
-		frame:HookScript("OnMouseDown", function(self)
+		frame:SetScript("OnMouseDown", function(self)
 				self.icon:SetVertexColor(1, 0, 0, .5)
 				self:SetBackdropBorderColor(1, 0, 0, 1)
 		end)
-		frame:HookScript("OnMouseUp", function(self)
+		frame:SetScript("OnMouseUp", function(self)
 				self.icon:SetVertexColor(r, g, b, 1)
 				self:SetBackdropBorderColor(r, g, b, 1)
 		end)
