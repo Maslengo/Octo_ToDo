@@ -28,33 +28,31 @@ local ItemLevelGreen = 625
 local ItemLevelOrange = 610
 local ItemLevelRed = 580
 local GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
--- E.func_LoadAddOn("OctoToDo_Achievements")
+E.func_LoadAddOn("OctoToDo_Achievements")
 E.func_LoadAddOn("OctoToDo_Minecraft")
--- E.func_LoadAddOn("OctoToDo_Reputations")
--- E.func_LoadAddOn("OctoToDo_TrashCan")
+E.func_LoadAddOn("OctoToDo_Reputations")
+E.func_LoadAddOn("OctoToDo_TrashCan")
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")
 E.func_LoadAddOn("MountsJournal")
 E.func_LoadAddOn("HidingBar")
 E.func_LoadAddOn("HidingBar_Options")
--- E.func_LoadAddOn("SpeedyAutoLoot")
--- E.func_LoadAddOn("TalentTreeTweaks")
--- E.func_LoadAddOn("Plater")
--- E.func_LoadAddOn("MacroManager")
--- E.func_LoadAddOn("MacroManagerData")
--- E.func_LoadAddOn("SilverDragon")
--- E.func_LoadAddOn("SilverDragon_History")
--- E.func_LoadAddOn("SilverDragon_Overlay")
--- E.func_LoadAddOn("SilverDragon_RangeExtender")
--- E.func_LoadAddOn("TomTom")
--- E.func_LoadAddOn("Pawn")
--- E.func_LoadAddOn("MySlot")
--- E.func_LoadAddOn("QuestsChanged")
--- E.func_LoadAddOn("AdvancedInterfaceOptions")
+E.func_LoadAddOn("SpeedyAutoLoot")
+E.func_LoadAddOn("TalentTreeTweaks")
+E.func_LoadAddOn("Plater")
+E.func_LoadAddOn("MacroManager")
+E.func_LoadAddOn("MacroManagerData")
+E.func_LoadAddOn("SilverDragon")
+E.func_LoadAddOn("SilverDragon_History")
+E.func_LoadAddOn("SilverDragon_Overlay")
+E.func_LoadAddOn("SilverDragon_RangeExtender")
+E.func_LoadAddOn("TomTom")
+E.func_LoadAddOn("Pawn")
+E.func_LoadAddOn("MySlot")
+E.func_LoadAddOn("QuestsChanged")
+E.func_LoadAddOn("AdvancedInterfaceOptions")
 local OctoToDo_CharFrame = nil
 local OctoToDo_MainFrame = nil
-local OctoToDo_CloseButton = nil
-local OctoToDo_OptionsButton = nil
 local OctoToDo_AbandonButton = nil
 local OctoToDo_MplusButton = nil
 local OctoToDo_ItemsButton = nil
@@ -4647,59 +4645,7 @@ local function OctoToDo_CreateAltFrame()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- OctoToDo_CloseButton
-	----------------------------------------------------------------
-	local OctoToDo_CloseButton = CreateFrame("Button", "OctoToDo_CloseButton", OctoToDo_MainFrame, "BackDropTemplate")
-	OctoToDo_CloseButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_CloseButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", 0, 0)
-	OctoToDo_CloseButton:HookScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			GameTooltip:AddLine(classColorHexCurrent..CLOSE.."|r")
-			GameTooltip:Show()
-	end)
-	OctoToDo_CloseButton:HookScript("OnClick", function()
-			OctoToDo_MainFrame:Hide()
-	end)
-	OctoToDo_CloseButton:HookScript("OnKeyDown", function(self, key)
-			if key == GetBindingKey("TOGGLEGAMEMENU") then
-				self:GetParent():Hide()
-				self:SetPropagateKeyboardInput(false)
-			else
-				self:SetPropagateKeyboardInput(true)
-			end
-	end)
-	OctoToDo_CloseButton.icon = OctoToDo_CloseButton:CreateTexture(nil, "BACKGROUND")
-	OctoToDo_CloseButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga")
-	E:func_SetBackdrop(OctoToDo_CloseButton)
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- OctoToDo_OptionsButton
-	----------------------------------------------------------------
-	local OctoToDo_OptionsButton = CreateFrame("Button", "OctoToDo_OptionsButton", OctoToDo_MainFrame, "BackDropTemplate")
-	OctoToDo_OptionsButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_OptionsButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame, "TOPRIGHT", (-E.curHeight)*1, 0)
-	OctoToDo_OptionsButton:HookScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:AddLine(classColorHexCurrent..OPTIONS.."|r")
-			GameTooltip:Show()
-	end)
-	OctoToDo_OptionsButton:HookScript("OnClick", function()
-			if OctoToDo_MainFramePIZZA and OctoToDo_MainFramePIZZA:IsShown() then
-				OctoToDo_MainFramePIZZA:Hide()
-			end
-			if SettingsPanel:IsVisible() and self:IsVisible() then
-				HideUIPanel(SettingsPanel)
-			else
-				Settings.OpenToCategory(E.func_AddonTitle(GlobalAddonName), true)
-			end
-	end)
-	OctoToDo_OptionsButton.icon = OctoToDo_OptionsButton:CreateTexture(nil, "BACKGROUND")
-	OctoToDo_OptionsButton.icon:SetTexture(E.AddonTexture_1)
-	E:func_SetBackdrop(OctoToDo_OptionsButton)
+
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -6073,6 +6019,7 @@ function OctoToDo_EventFrame:PLAYER_LOGIN()
 		OctoToDo_CreateAltFrame()
 		GameMenuFrame:SetScale(OctoToDo_DB_Vars.config.GameMenuFrameScale or 1)
 		self:MustBeHiddenFrames()
+		E:func_CreateCloseButton(OctoToDo_MainFrame)
 
 		if not PlayerSpellsFrame then
 			E.func_LoadAddOn("Blizzard_PlayerSpells")
@@ -6097,11 +6044,6 @@ function OctoToDo_EventFrame:PLAYER_LOGIN()
 			--	self:Hide()
 			-- end)
 		end
-
-
-
-
-
 	end
 end
 

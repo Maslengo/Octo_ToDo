@@ -405,9 +405,6 @@ end
 
 
 
-
-
-
 OctoToDo_EventFrame:RegisterEvent("ADDON_LOADED")
 OctoToDo_EventFrame:RegisterEvent("PLAYER_LOGIN")
 OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -417,6 +414,8 @@ function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		----------------------------------------------------------------
+
 		----------------------------------------------------------------
 		if OctoToDo_Achievements == nil then
 			OctoToDo_Achievements = {}
@@ -485,6 +484,7 @@ function OctoToDo_EventFrame:PLAYER_LOGIN()
 		self:O_otrisovka_SECOND()
 		self:OctoToDo_SECOND_CreateAltFrame()
 		self:OctoToDo_SECOND_AddDataToAltFrame()
+		E:func_CreateCloseButton(OctoToDo_SECOND_MainFrame)
 		----------------------------------------------------------------
 	end
 end

@@ -3,6 +3,80 @@ local GlobalAddonName, ns = ...
 	-- Инструмент для подбора цветов и генерации цветовых схем
 	-- https://colorscheme.ru/color-names.html
 ns.OctoTable_MinecraftColors2 = {
+
+
+	{name = "8DA4B4", hex = "8DA4B4"},
+	{name = "FF5402", hex = "FF5402"},
+	{name = "D7B558", hex = "D7B558"},
+	{name = "828282", hex = "828282"},
+	{name = "FFFFFF", hex = "FFFFFF"},
+	{name = "C67A7A", hex = "C67A7A"},
+	{name = "7DC3C3", hex = "7DC3C3"},
+	{name = "89B789", hex = "89B789"},
+	{name = "BC75BD", hex = "BC75BD"},
+	{name = "3D7DFF", hex = "3D7DFF"},
+	{name = "80BB80", hex = "80BB80"},
+	{name = "61486F", hex = "61486F"},
+	{name = "FFF447", hex = "FFF447"},
+	{name = "E2A3DC", hex = "E2A3DC"},
+	{name = "000000", hex = "000000"},
+
+
+
+
+
+
+
+
+
+
+
+
+
+	{name = "ULV", hex = "FFFFFF"}, --
+	{name = "LV", hex = "FFFFFF"}, --
+	{name = "MV", hex = "C41E3A"}, -- DeathKnight
+	{name = "HV", hex = "FF7C0A"}, -- Druid
+	{name = "EV", hex = "FFFFFF"}, --
+	{name = "IV", hex = "FFF468"}, -- Rogue
+	{name = "LUV", hex = "AAD372"}, -- Hunter
+	{name = "ZPM", hex = "3FC7EB"}, -- Mage
+	{name = "UV", hex = "0070DD"}, -- Shaman
+	{name = "UHV", hex = "F48CBA"}, -- Paladin
+	{name = "UEV", hex = "33937F"}, -- Evoker
+	{name = "UIV", hex = "C69B6D"}, -- Warrior
+	{name = "UMV", hex = "A330C9"}, -- DemonHunter
+	{name = "UXV", hex = "E25107"}, --Orange
+	{name = "MAX", hex = "D0D0D0"}, --White
+
+
+
+	{name = "warrior", hex = "C69B6D"}, --warrior
+	{name = "paladin", hex = "F48CBA"}, --paladin
+	{name = "hunter", hex = "AAD372"}, --hunter
+	{name = "rogue", hex = "FFF468"}, --rogue
+	{name = "priest", hex = "FFFFFF"}, --priest
+	{name = "shaman", hex = "0070DD"}, --shaman
+	{name = "mage", hex = "3FC7EB"}, --mage
+	{name = "warlock", hex = "8788EE"}, --warlock
+	{name = "monk", hex = "00FF98"}, --monk
+	{name = "druid", hex = "FF7C0A"}, --druid
+	{name = "demon hunter", hex = "A330C9"}, --demon hunter
+	{name = "death knight", hex = "C41E3A"}, --death knight
+	{name = "evoker", hex = "33937F"}, --evoker
+
+
+
+
+
+
+
+
+
+
+
+
+
 	{name = "Белый", hex = "ffffff"},
 	{name = "Дымчато-белый", hex = "f5f5f5"},
 	{name = "Синяя Элис", hex = "f0f8ff"},

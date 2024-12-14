@@ -544,7 +544,7 @@ function E.func_reputationNameSIMPLE(reputationID)
 	if reputationID and type(reputationID) == "number" then
 		-- local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
 		-- if isAccountWide == true then
-		-- 	vivod = E.Icon_AccountWide..vivod
+		--     vivod = E.Icon_AccountWide..vivod
 		-- end
 		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
 		local name
@@ -556,7 +556,7 @@ function E.func_reputationNameSIMPLE(reputationID)
 		end
 		vivod = vivod..name
 		-- if ShowIDS == true and vivod ~= nil then
-		-- 	vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
+		--     vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
 		-- end
 		vivod = vivod
 	else
@@ -688,39 +688,39 @@ function E.func_tmstpDayReset(time)
 end
 ----------------------------------------------------------------
 -- function E.func_All_objectives(questID)
--- 	local str = ""
--- 	local objectives = C_QuestLog.GetQuestObjectives(questID)
--- 	local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(questID, 1, false)
--- 	if objectives == nil then
--- 		return ""
--- 	end
--- 	if objectiveType == "progressbar" then
--- 		return "|cffFF0000"..GetQuestProgressBarPercent(questID).."%|r"
--- 	end
--- 	if objectives then
--- 		if objectives[5] then
--- 			str = str..(objectives[5].finished and Gray_Color or White_Color) ..objectives[5].text.."|r\n"
--- 			str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
--- 			str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
--- 			str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
--- 			str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- 		elseif objectives[4] then
--- 			str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
--- 			str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
--- 			str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
--- 			str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- 		elseif objectives[3] then
--- 			str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
--- 			str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
--- 			str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- 		elseif objectives[2] then
--- 			str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
--- 			str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- 		elseif objectives[1] then
--- 			str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- 		end
--- 	end
--- 	return str
+--     local str = ""
+--     local objectives = C_QuestLog.GetQuestObjectives(questID)
+--     local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(questID, 1, false)
+--     if objectives == nil then
+--         return ""
+--     end
+--     if objectiveType == "progressbar" then
+--         return "|cffFF0000"..GetQuestProgressBarPercent(questID).."%|r"
+--     end
+--     if objectives then
+--         if objectives[5] then
+--             str = str..(objectives[5].finished and Gray_Color or White_Color) ..objectives[5].text.."|r\n"
+--             str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
+--             str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
+--             str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
+--             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+--         elseif objectives[4] then
+--             str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
+--             str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
+--             str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
+--             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+--         elseif objectives[3] then
+--             str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
+--             str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
+--             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+--         elseif objectives[2] then
+--             str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
+--             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+--         elseif objectives[1] then
+--             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+--         end
+--     end
+--     return str
 -- end
 ----------------------------------------------------------------
 function E.func_CheckCompletedByQuestID(questID)
@@ -1348,14 +1348,14 @@ end
 ----------------------------------------------------------------
 function E.func_SetScriptAfter(frame, event, method, ids, func)
 	frame:SetScript(event, function(frame)
-		frame:SetScript(event, nil)
-		if frame.Disable then frame:Disable() end
-		if type(ids) == "function" then ids = ids() end
-		self[method](self, ids):Then(function()
-			func(frame)
-			frame:SetScript(event, func)
-			if frame.Enable then frame:Enable() end
-		end)
+			frame:SetScript(event, nil)
+			if frame.Disable then frame:Disable() end
+			if type(ids) == "function" then ids = ids() end
+			self[method](self, ids):Then(function()
+					func(frame)
+					frame:SetScript(event, func)
+					if frame.Enable then frame:Enable() end
+			end)
 	end)
 end
 ----------------------------------------------------------------
@@ -1374,7 +1374,6 @@ end
 function E:func_SetBackdrop(frame, hexcolor, alpha)
 	local _, classFilename = UnitClass("PLAYER")
 	local r, g, b = GetClassColor(classFilename)
-
 	local bgCr, bgCg, bgCb, bgCa = E.bgCr, E.bgCg, E.bgCb, E.bgCa
 	-- local bgCr, bgCg, bgCb, bgCa = 0, 0, 0, 0
 	if hexcolor then
@@ -1391,10 +1390,9 @@ function E:func_SetBackdrop(frame, hexcolor, alpha)
 	})
 	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 	frame:SetBackdropBorderColor(0, 0, 0, 1)
-
 	-- frame:SetScript("OnShow", function(self)
-	-- 		self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	-- 		self:SetBackdropBorderColor(0, 0, 0, 1)
+	--         self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+	--         self:SetBackdropBorderColor(0, 0, 0, 1)
 	-- end)
 	frame:SetScript("OnEnter", function(self)
 			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
@@ -1428,6 +1426,54 @@ function E:func_SetBackdrop(frame, hexcolor, alpha)
 	end
 end
 ----------------------------------------------------------------
+function E:func_CreateCloseButton(frame)
+	-- OctoToDo_CloseButton
+	local OctoToDo_CloseButton = CreateFrame("Button", "OctoToDo_CloseButton", frame, "BackDropTemplate")
+	OctoToDo_CloseButton:SetSize(E.curHeight, E.curHeight)
+	OctoToDo_CloseButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 0)
+	OctoToDo_CloseButton:HookScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			GameTooltip:AddLine(classColorHexCurrent..CLOSE.."|r")
+			GameTooltip:Show()
+	end)
+	OctoToDo_CloseButton:HookScript("OnClick", function()
+			frame:Hide()
+	end)
+	OctoToDo_CloseButton:HookScript("OnKeyDown", function(self, key)
+			if key == GetBindingKey("TOGGLEGAMEMENU") then
+				self:GetParent():Hide()
+				self:SetPropagateKeyboardInput(false)
+			else
+				self:SetPropagateKeyboardInput(true)
+			end
+	end)
+	OctoToDo_CloseButton.icon = OctoToDo_CloseButton:CreateTexture(nil, "BACKGROUND")
+	OctoToDo_CloseButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga")
+	E:func_SetBackdrop(OctoToDo_CloseButton)
+	-- OctoToDo_OptionsButton
+	local OctoToDo_OptionsButton = CreateFrame("Button", "OctoToDo_OptionsButton", frame, "BackDropTemplate")
+	OctoToDo_OptionsButton:SetSize(E.curHeight, E.curHeight)
+	OctoToDo_OptionsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*1, 0)
+	OctoToDo_OptionsButton:HookScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:AddLine(classColorHexCurrent..OPTIONS.."|r")
+			GameTooltip:Show()
+	end)
+	OctoToDo_OptionsButton:HookScript("OnClick", function()
+			if OctoToDo_MainFramePIZZA and OctoToDo_MainFramePIZZA:IsShown() then
+				OctoToDo_MainFramePIZZA:Hide()
+			end
+			if SettingsPanel:IsVisible() and self:IsVisible() then
+				HideUIPanel(SettingsPanel)
+			else
+				Settings.OpenToCategory(E.func_AddonTitle(GlobalAddonName), true)
+			end
+	end)
+	OctoToDo_OptionsButton.icon = OctoToDo_OptionsButton:CreateTexture(nil, "BACKGROUND")
+	OctoToDo_OptionsButton.icon:SetTexture(E.AddonTexture_1)
+	E:func_SetBackdrop(OctoToDo_OptionsButton)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1450,3 +1496,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+
+
+
