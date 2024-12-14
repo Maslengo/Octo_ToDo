@@ -1,5 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
+local LibStub = LibStub
+local LibDataBroker = LibStub("LibDataBroker-1.1")
+local LibDBIcon = LibStub("LibDBIcon-1.0")
+----------------------------------------------------------------
 local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
 local ShowIDS = false
 -- ITEMS
@@ -1461,8 +1465,9 @@ function E:func_CreateCloseButton(frame)
 			GameTooltip:Show()
 	end)
 	OctoToDo_OptionsButton:HookScript("OnClick", function()
-			if OctoToDo_MainFramePIZZA and OctoToDo_MainFramePIZZA:IsShown() then
-				OctoToDo_MainFramePIZZA:Hide()
+			-- frame:SetShown(not frame:IsShown())
+			if frame and frame:IsShown() then
+				frame:Hide()
 			end
 			if SettingsPanel:IsVisible() and self:IsVisible() then
 				HideUIPanel(SettingsPanel)
@@ -1475,6 +1480,39 @@ function E:func_CreateCloseButton(frame)
 	E:func_SetBackdrop(OctoToDo_OptionsButton)
 end
 ----------------------------------------------------------------
+function E:func_CreateMinimapButton(addonName, vars, frame)
+	print (frame)
+	local MinimapName = E.func_AddonTitle(addonName)
+	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, {
+			type = "data source",
+			text = MinimapName,
+			icon = E.func_AddonIconTexture(addonName),
+			OnClick = function(_, button)
+				if button == "LeftButton" then
+					if not InCombatLockdown() then
+						frame:SetShown(not frame:IsShown())
+					end
+				end
+			end,
+			OnEnter = function(self)
+				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
+				GameTooltip_SetTitle(GameTooltip, E.func_AddonTitle(addonName))
+				GameTooltip:Show()
+			end,
+			OnLeave = function()
+				GameTooltip:Hide()
+			end,
+	})
+	vars.minimap = vars.minimap or {}
+	vars.minimap.minimapPos = vars.minimap.minimapPos or 244
+	LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
+	LibDBIcon:Show(MinimapName)
+end
+
+
+
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

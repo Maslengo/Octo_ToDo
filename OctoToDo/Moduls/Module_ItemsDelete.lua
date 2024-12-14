@@ -2,16 +2,45 @@ local GlobalAddonName, E = ...
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
-local EventFrame_ItemsDelete = CreateFrame("Frame")
-EventFrame_ItemsDelete:Hide()
-EventFrame_ItemsDelete:RegisterEvent("ADDON_LOADED")
-EventFrame_ItemsDelete:RegisterEvent("BAG_UPDATE_DELAYED")
-EventFrame_ItemsDelete:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
+local OctoToDo_EventFrame = CreateFrame("Frame")
+OctoToDo_EventFrame:Hide()
+OctoToDo_EventFrame:RegisterEvent("ADDON_LOADED")
+OctoToDo_EventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
+OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 
-function EventFrame_ItemsDelete:ADDON_LOADED(addonName)
+function OctoToDo_EventFrame:ItemsDeleteFrame()
+	Clickable_ItemsDelete:Hide()
+	Clickable_ItemsDelete.icon:SetTexture(413587)
+	Clickable_ItemsDelete.text:SetText("")
+	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
+			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
+			if containerInfo then
+				local itemID = containerInfo.itemID
+				if E.OctoTable_itemID_ItemsDelete[itemID] then
+					Clickable_ItemsDelete:Show()
+					Clickable_ItemsDelete:SetScript("OnClick", function()
+							C_Container.PickupContainerItem(bag, slot)
+							DeleteCursorItem()
+							Clickable_ItemsDelete:Hide()
+					end)
+					Clickable_ItemsDelete.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
+					Clickable_ItemsDelete.itemID = itemID
+					Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_itemName_NOCOLOR(itemID).."|r")
+					break
+				end
+			end
+		end
+	end
+end
+
+OctoToDo_EventFrame:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
+
+function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		----------------------------------------------------------------
 		local Clickable_ItemsDelete = CreateFrame("Button", "Clickable_ItemsDelete", UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 		Clickable_ItemsDelete:Hide()
 		Clickable_ItemsDelete:SetSize(64*E.scale, 64*E.scale)
@@ -55,35 +84,24 @@ function EventFrame_ItemsDelete:ADDON_LOADED(addonName)
 		Clickable_ItemsDelete.icon = Clickable_ItemsDelete:CreateTexture(nil, "BACKGROUND")
 		Clickable_ItemsDelete.icon:SetAllPoints(Clickable_ItemsDelete)
 		Clickable_ItemsDelete.icon:SetTexture(413587)
+		----------------------------------------------------------------
 	end
 end
 
-function EventFrame_ItemsDelete:BAG_UPDATE_DELAYED()
-	self:ItemsDeleteFrame()
+
+
+function OctoToDo_EventFrame:BAG_UPDATE_DELAYED()
+	----------------------------------------------------------------
+	if not InCombatLockdown() then
+		self:ItemsDeleteFrame()
+	end
+	----------------------------------------------------------------
 end
 
-function EventFrame_ItemsDelete:ItemsDeleteFrame()
-	Clickable_ItemsDelete:Hide()
-	Clickable_ItemsDelete.icon:SetTexture(413587)
-	Clickable_ItemsDelete.text:SetText("")
-	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
-			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-			if containerInfo then
-				local itemID = containerInfo.itemID
-				if E.OctoTable_itemID_ItemsDelete[itemID] then
-					Clickable_ItemsDelete:Show()
-					Clickable_ItemsDelete:SetScript("OnClick", function()
-							C_Container.PickupContainerItem(bag, slot)
-							DeleteCursorItem()
-							Clickable_ItemsDelete:Hide()
-					end)
-					Clickable_ItemsDelete.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
-					Clickable_ItemsDelete.itemID = itemID
-					Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_itemName_NOCOLOR(itemID).."|r")
-					break
-				end
-			end
-		end
+function OctoToDo_EventFrame:PLAYER_REGEN_DISABLED()
+	----------------------------------------------------------------
+	if Clickable_ItemsDelete and Clickable_ItemsDelete:IsShown() then
+		Clickable_ItemsDelete:Hide()
 	end
+	----------------------------------------------------------------
 end

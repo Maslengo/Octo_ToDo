@@ -2,18 +2,76 @@ local GlobalAddonName, E = ...
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
-local EventFrame_ItemsUsable = CreateFrame("Frame")
-EventFrame_ItemsUsable:Hide()
-EventFrame_ItemsUsable:RegisterEvent("ADDON_LOADED")
-EventFrame_ItemsUsable:RegisterEvent("BAG_UPDATE_DELAYED")
-EventFrame_ItemsUsable:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
-local inspectScantipUsable = nil
-if not inspectScantipUsable then
-	inspectScantipUsable = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUsable", nil, "GameTooltipTemplate")
-	inspectScantipUsable:SetOwner(UIParent, "ANCHOR_NONE")
+local OctoToDo_EventFrame = CreateFrame("Frame")
+OctoToDo_EventFrame:Hide()
+OctoToDo_EventFrame:RegisterEvent("ADDON_LOADED")
+OctoToDo_EventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
+OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+local inspectScantipUsable = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUsable", nil, "GameTooltipTemplate")
+inspectScantipUsable:SetOwner(UIParent, "ANCHOR_NONE")
+
+
+function OctoToDo_EventFrame:TEST_FUNC(itemLink)
+	local count = 0
+	inspectScantipUsable:ClearLines()
+	inspectScantipUsable:SetHyperlink(itemLink)
+	if inspectScantipUsable:NumLines() > 0 then
+		for i = 1, inspectScantipUsable:NumLines() do
+			local r, g, b, a = _G["OctoToDoScanningTooltipUsableTextLeft"..i]:GetTextColor()
+			local TEXTLEFT = _G["OctoToDoScanningTooltipUsableTextLeft"..i]:GetText()
+			local QWE_LEFT = E.func_coloredText(_G["OctoToDoScanningTooltipUsableTextLeft"..i])
+			local TEXTRIGHT = _G["OctoToDoScanningTooltipUsableTextRight"..i]:GetText()
+			local QWE_RIGHT = E.func_coloredText(_G["OctoToDoScanningTooltipUsableTextRight"..i])
+			if TEXTLEFT and TEXTLEFT ~= "" and QWE_LEFT ~= nil then
+				if QWE_LEFT:find("^|cffFF2020") or QWE_LEFT:find("^|cffFF0000") then
+					count = count + 1
+				end
+			end
+			if TEXTRIGHT and TEXTRIGHT ~= "" and QWE_RIGHT ~= nil then
+				if QWE_RIGHT:find("^|cffFF2020") or QWE_RIGHT:find("^|cffFF0000") then
+					count = count + 1
+				end
+			end
+		end
+	end
+	inspectScantipUsable:ClearLines()
+	return count
 end
 
-function EventFrame_ItemsUsable:ADDON_LOADED(addonName)
+function OctoToDo_EventFrame:ItemsUsableFrame()
+	Clickable_ItemsUsable:Hide()
+	Clickable_ItemsUsable.icon:SetTexture(413587)
+	Clickable_ItemsUsable.text:SetText("")
+	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
+			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
+			if containerInfo then
+				local itemID = containerInfo.itemID
+				if E.OctoTable_itemID_ItemsUsable[itemID] and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= E.OctoTable_itemID_ItemsUsable[itemID] then
+					if self:TEST_FUNC(E.func_GetItemLink(itemID)) == 0 then
+						Clickable_ItemsUsable:Show()
+						if not InCombatLockdown() then
+							Clickable_ItemsUsable:SetAttribute("macrotext", "/use item:"..itemID)
+						end
+						Clickable_ItemsUsable.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
+						local RGB = E.func_GetItemQualityColor(itemID)
+						if RGB then
+							local r, g, b = RGB.r, RGB.g, RGB.b
+							Clickable_ItemsUsable:SetBackdropBorderColor(r, g, b, 1)
+						end
+						Clickable_ItemsUsable.itemID = itemID
+						Clickable_ItemsUsable.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
+						break
+					end
+				end
+			end
+		end
+	end
+end
+
+OctoToDo_EventFrame:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
+
+function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
@@ -63,64 +121,12 @@ function EventFrame_ItemsUsable:ADDON_LOADED(addonName)
 	end
 end
 
-function EventFrame_ItemsUsable:BAG_UPDATE_DELAYED()
+function OctoToDo_EventFrame:BAG_UPDATE_DELAYED()
 	self:ItemsUsableFrame()
 end
 
-function EventFrame_ItemsUsable:TEST_FUNC(itemLink)
-	local count = 0
-	inspectScantipUsable:ClearLines()
-	inspectScantipUsable:SetHyperlink(itemLink)
-	if inspectScantipUsable:NumLines() > 0 then
-		for i = 1, inspectScantipUsable:NumLines() do
-			local r, g, b, a = _G["OctoToDoScanningTooltipUsableTextLeft"..i]:GetTextColor()
-			local TEXTLEFT = _G["OctoToDoScanningTooltipUsableTextLeft"..i]:GetText()
-			local QWE_LEFT = E.func_coloredText(_G["OctoToDoScanningTooltipUsableTextLeft"..i])
-			local TEXTRIGHT = _G["OctoToDoScanningTooltipUsableTextRight"..i]:GetText()
-			local QWE_RIGHT = E.func_coloredText(_G["OctoToDoScanningTooltipUsableTextRight"..i])
-			if TEXTLEFT and TEXTLEFT ~= "" and QWE_LEFT ~= nil then
-				if QWE_LEFT:find("^|cffFF2020") or QWE_LEFT:find("^|cffFF0000") then
-					count = count + 1
-				end
-			end
-			if TEXTRIGHT and TEXTRIGHT ~= "" and QWE_RIGHT ~= nil then
-				if QWE_RIGHT:find("^|cffFF2020") or QWE_RIGHT:find("^|cffFF0000") then
-					count = count + 1
-				end
-			end
-		end
-	end
-	inspectScantipUsable:ClearLines()
-	return count
-end
-
-function EventFrame_ItemsUsable:ItemsUsableFrame()
-	Clickable_ItemsUsable:Hide()
-	Clickable_ItemsUsable.icon:SetTexture(413587)
-	Clickable_ItemsUsable.text:SetText("")
-	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
-			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-			if containerInfo then
-				local itemID = containerInfo.itemID
-				if E.OctoTable_itemID_ItemsUsable[itemID] and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= E.OctoTable_itemID_ItemsUsable[itemID] then
-					if self:TEST_FUNC(E.func_GetItemLink(itemID)) == 0 then
-						Clickable_ItemsUsable:Show()
-						if not InCombatLockdown() then
-							Clickable_ItemsUsable:SetAttribute("macrotext", "/use item:"..itemID)
-						end
-						Clickable_ItemsUsable.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
-						local RGB = E.func_GetItemQualityColor(itemID)
-						if RGB then
-							local r, g, b = RGB.r, RGB.g, RGB.b
-							Clickable_ItemsUsable:SetBackdropBorderColor(r, g, b, 1)
-						end
-						Clickable_ItemsUsable.itemID = itemID
-						Clickable_ItemsUsable.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
-						break
-					end
-				end
-			end
-		end
+function OctoToDo_EventFrame:PLAYER_REGEN_DISABLED()
+	if Clickable_ItemsUsable and Clickable_ItemsUsable:IsShown() then
+		Clickable_ItemsUsable:Hide()
 	end
 end

@@ -9,18 +9,16 @@ local LibDBIcon = LibStub("LibDBIcon-1.0")
 local OctoToDo_EventFrame = CreateFrame("FRAME")
 OctoToDo_EventFrame:Hide()
 OctoToDo_EventFrame:RegisterEvent("ADDON_LOADED")
-OctoToDo_EventFrame:RegisterEvent("PLAYER_LOGIN")
 OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-
 ----------------------------------------------------------------
 -- local texture_FG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft.tga"
 -- local texture_BG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft BG.tga"
-local MinecraftHeight = 68 -- Высота
-local MinecraftRightFrameSize = 1190 -- Ширина
-local MinecraftLeftFrameSize = 140
+local AddonHeight = 68 -- Высота
+local AddonRightFrameWeight = 1190 -- Ширина
+local AddonLeftFrameWeight = 240
 local MinecraftTable = ns.OctoTable_MinecraftColors2
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
-local row = math.floor((math.floor(PhysicalScreenHeight / MinecraftHeight))*.7)
+local row = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
 -- print (row, math.floor(row))
 local MainFrameNumLines = #MinecraftTable or row
 if MainFrameNumLines > row then
@@ -30,13 +28,14 @@ local texture = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft ALL.
 -- local texture_FG = texture:SetTexCoord(0, 0, .5, 0)
 -- local texture_BG =  texture:SetTexCoord(0, 0, 0, .5)
 ----------------------------------------------------------------
+
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function DropDownMenuSearchButton_OnAcquired(owner, frame, data, new)
 	if new then
 		-- E:func_SetBackdrop(frame)
 		frame.left = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
 		frame.left:SetPropagateMouseClicks(true)
-		frame.left:SetSize(MinecraftLeftFrameSize, MinecraftHeight)
+		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
 		-- frame.left:SetSize(142, 34)
 		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.left.text = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -47,7 +46,7 @@ local function DropDownMenuSearchButton_OnAcquired(owner, frame, data, new)
 		frame.left.text:SetTextColor(1, 1, 1, 1)
 		frame.right = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
 		frame.right:SetPropagateMouseClicks(true)
-		frame.right:SetSize(MinecraftRightFrameSize, MinecraftHeight)
+		frame.right:SetSize(AddonRightFrameWeight, AddonHeight)
 		frame.right:SetPoint("TOPRIGHT", frame, "TOPRIGHT")
 		frame.right.FG = frame.right:CreateTexture(nil, "BACKGROUND", nil, 0)
 		frame.right.FG:SetTexture(texture)
@@ -66,6 +65,7 @@ local function DropDownMenuSearchButton_OnAcquired(owner, frame, data, new)
 		frame.right.text:SetTextColor(1, 1, 1, 1)
 	end
 end
+
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
 	frame.left.text:SetText(data.name)
@@ -74,9 +74,10 @@ local function OctoToDo_Frame_init(frame, data)
 	E:func_SetBackdrop(frame.left)
 	E:func_SetBackdrop(frame.right, nil, 0)
 end
+
 function OctoToDo_EventFrame:OctoToDo_THIRD_CreateMainFrame()
 	local OctoToDo_MainFrame = CreateFrame("BUTTON", "OctoToDo_MainFrame", UIParent, "BackdropTemplate")
-	OctoToDo_MainFrame:SetSize(MinecraftRightFrameSize+MinecraftLeftFrameSize, MinecraftHeight*MainFrameNumLines)
+	OctoToDo_MainFrame:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame:Hide()
 	-- OctoToDo_MainFrame.ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame", OctoToDo_MainFrame)
 	OctoToDo_MainFrame.ScrollBox = CreateFrame("FRAME", nil, OctoToDo_MainFrame, "WowScrollBoxList")
@@ -88,7 +89,7 @@ function OctoToDo_EventFrame:OctoToDo_THIRD_CreateMainFrame()
 	OctoToDo_MainFrame.ScrollBar:SetPoint("TOPLEFT", OctoToDo_MainFrame.ScrollBox, "TOPRIGHT", 6, 0)
 	OctoToDo_MainFrame.ScrollBar:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame.ScrollBox, "BOTTOMRIGHT", 6, 0)
 	OctoToDo_MainFrame.view = CreateScrollBoxListLinearView()
-	OctoToDo_MainFrame.view:SetElementExtent(MinecraftHeight)
+	OctoToDo_MainFrame.view:SetElementExtent(AddonHeight)
 	OctoToDo_MainFrame.view:SetElementInitializer("BackdropTemplate", OctoToDo_Frame_init)
 	OctoToDo_MainFrame.view:RegisterCallback(OctoToDo_MainFrame.view.Event.OnAcquiredFrame, DropDownMenuSearchButton_OnAcquired, OctoToDo_MainFrame)
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame.ScrollBox, OctoToDo_MainFrame.ScrollBar, OctoToDo_MainFrame.view)
@@ -116,6 +117,7 @@ function OctoToDo_EventFrame:OctoToDo_THIRD_CreateMainFrame()
 	----------------------------------------------------------------
 	self:func_DataProvider()
 end
+
 function OctoToDo_EventFrame:func_DataProvider()
 	local DataProvider = CreateDataProvider()
 	for index, tbl in ipairs(MinecraftTable) do
@@ -125,6 +127,7 @@ function OctoToDo_EventFrame:func_DataProvider()
 end
 ----------------------------------------------------------------
 OctoToDo_EventFrame:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
+
 function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
@@ -134,47 +137,14 @@ function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		OctoToDo_Minecraft = OctoToDo_Minecraft or {}
 		----------------------------------------------------------------
-		local MinimapName = E.func_AddonTitle(GlobalAddonName)
-		local ldb_icon = LibDataBroker:NewDataObject(MinimapName, {
-				type = "data source",
-				text = MinimapName,
-				icon = E.func_AddonIconTexture(GlobalAddonName),
-				OnClick = function(_, button)
-					if button == "LeftButton" then
-						if not InCombatLockdown() then
-							OctoToDo_MainFrame:SetShown(not OctoToDo_MainFrame:IsShown())
-						end
-					end
-				end,
-				OnEnter = function(self)
-					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-					GameTooltip_SetTitle(GameTooltip, E.func_AddonTitle(GlobalAddonName))
-					GameTooltip:Show()
-				end,
-				OnLeave = function()
-					GameTooltip:Hide()
-				end,
-		})
-		OctoToDo_Minecraft.minimap = OctoToDo_Minecraft.minimap or {}
-		OctoToDo_Minecraft.minimap.minimapPos = OctoToDo_Minecraft.minimap.minimapPos or 244
-		LibDBIcon:Register(MinimapName, ldb_icon, OctoToDo_Minecraft.minimap)
-		LibDBIcon:Show(MinimapName)
-		----------------------------------------------------------------
-	end
-end
-
-
-
-function OctoToDo_EventFrame:PLAYER_LOGIN()
-	if not InCombatLockdown() then
-		self:UnregisterEvent("PLAYER_LOGIN")
-		self.PLAYER_LOGIN = nil
-		----------------------------------------------------------------
 		self:OctoToDo_THIRD_CreateMainFrame()
 		E:func_CreateCloseButton(OctoToDo_MainFrame)
 		----------------------------------------------------------------
+		E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_Minecraft, OctoToDo_MainFrame)
+		----------------------------------------------------------------
 	end
 end
+
 
 function OctoToDo_EventFrame:PLAYER_REGEN_DISABLED()
 	if OctoToDo_MainFrame and OctoToDo_MainFrame:IsShown() then

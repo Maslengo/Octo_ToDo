@@ -156,6 +156,7 @@ function OctoToDo_EventFrame:ConcatAtStart()
 		OctoToDo_DB_Config.QuestsDB[questID] = OctoToDo_DB_Config.QuestsDB[questID] or false
 	end
 end
+
 local function Central_Frame_Mouse_OnEnter(frame)
 	local parent = OctoToDo_MainFrame["FrameLine"..frame.index]
 	parent:GetScript("OnEnter")(parent)
@@ -172,6 +173,7 @@ local function Central_Frame_Mouse_OnEnter(frame)
 	GameTooltip:AddLine(" ")
 	GameTooltip:Show()
 end
+
 local function Central_Frame_Mouse_OnLeave(frame)
 	local parent = OctoToDo_MainFrame["FrameLine"..frame.index]
 	parent:GetScript("OnLeave")(parent)
@@ -442,6 +444,7 @@ function OctoToDo_EventFrame:checkCharInfo()
 		end
 	end
 end
+
 local function CreateFrameUsableItems_OnShow(frame)
 	local hasToy = PlayerHasToy(frame.itemID)
 	local hasItem = GetItemCount(frame.itemID, true, true, true) >= frame.count
@@ -464,6 +467,7 @@ local function CreateFrameUsableItems_OnShow(frame)
 		frame:SetBackdropBorderColor(0, 0, 0, 1)
 	end
 end
+
 local function CreateFrameUsableItems_OnEnter(frame)
 	frame.icon:SetVertexColor(1, 1, 1, 1)
 	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMLEFT", 0, 0)
@@ -488,6 +492,7 @@ local function CreateFrameUsableItems_OnEnter(frame)
 		frame:SetBackdropBorderColor(0, 0, 0, 1)
 	end
 end
+
 local function CreateFrameUsableItems_OnLeave(frame)
 	local hasToy = PlayerHasToy(frame.itemID)
 	local hasItem = GetItemCount(frame.itemID, true, true, true) >= frame.count
@@ -513,6 +518,7 @@ local function CreateFrameUsableItems_OnLeave(frame)
 		frame:SetBackdropBorderColor(0, 0, 0, 1)
 	end
 end
+
 local function CreateFrameUsableItems_OnEvent(frame, event, arg1, ...)
 	if OctoToDo_MainFramePIZZA:IsShown() then
 		if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
@@ -541,12 +547,15 @@ local function CreateFrameUsableItems_OnEvent(frame, event, arg1, ...)
 		end
 	end
 end
+
 local function CreateFrameUsableItems_OnMouseDown(frame)
 	frame.icon:SetVertexColor(1, 1, 1, E.BGALPHA)
 end
+
 local function CreateFrameUsableItems_OnMouseUp(frame)
 	frame.icon:SetVertexColor(1, 1, 1, 1)
 end
+
 local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spellID)
 	local Button = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.itemID = itemID
@@ -583,6 +592,7 @@ local function CreateFrameUsableItems(itemID, Texture, Xpos, Ypos, r, g, b, spel
 	Button:GetScript("OnEvent")(Button, "PLAYER_REGEN_DISABLED" or "PLAYER_REGEN_ENABLED" or "SPELLS_CHANGED" or "SPELL_UPDATE_COOLDOWN")
 	return Button
 end
+
 local function CreateFrameUsableSpells_OnEnter(frame)
 	frame.icon:SetVertexColor(1, 1, 1, 1)
 	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMLEFT", 0, 0)
@@ -610,6 +620,7 @@ local function CreateFrameUsableSpells_OnEnter(frame)
 		frame:SetBackdropBorderColor(0, 0, 0, 1)
 	end
 end
+
 local function CreateFrameUsableSpells_OnLeave(frame)
 	local isKnown = IsSpellKnown(frame.spellID)
 	if isKnown == true then
@@ -627,6 +638,7 @@ local function CreateFrameUsableSpells_OnLeave(frame)
 		frame:SetBackdropBorderColor(0, 0, 0, 1)
 	end
 end
+
 local function CreateFrameUsableSpells_OnShow(frame)
 	local isKnown = IsSpellKnown(frame.spellID)
 	if isKnown == true then
@@ -641,6 +653,7 @@ local function CreateFrameUsableSpells_OnShow(frame)
 		frame:SetBackdropBorderColor(0, 0, 0, 1)
 	end
 end
+
 local function CreateFrameUsableSpells_OnEvent(frame, event)
 	if OctoToDo_MainFramePIZZA:IsShown() then
 		if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
@@ -661,6 +674,7 @@ local function CreateFrameUsableSpells_OnEvent(frame, event)
 		end
 	end
 end
+
 local function CreateFrameUsableSpells_OnMouseDown(frame)
 	local isKnown = IsSpellKnown(frame.spellID)
 	if isKnown == true then
@@ -669,6 +683,7 @@ local function CreateFrameUsableSpells_OnMouseDown(frame)
 		frame.icon:SetVertexColor(1, .5, .5, .3)
 	end
 end
+
 local function CreateFrameUsableSpells_OnMouseUp(frame)
 	local isKnown = IsSpellKnown(frame.spellID)
 	if isKnown == true then
@@ -677,6 +692,7 @@ local function CreateFrameUsableSpells_OnMouseUp(frame)
 		frame.icon:SetVertexColor(1, .5, .5, .3)
 	end
 end
+
 local function CreateFrameUsableSpells(spellID, Texture, Xpos, Ypos, r, g, b)
 	local Button = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_MainFrame, "SecureActionButtonTemplate, BackDropTemplate")
 	Button.spellID = spellID
@@ -4425,6 +4441,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 		)
 	end
 end
+
 local function TotalMoneyCurServerOnShow()
 	local TotalMoneyCurServer = 0
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
@@ -4434,6 +4451,7 @@ local function TotalMoneyCurServerOnShow()
 	end
 	return classColorHexCurrent..E.func_CompactNumberFormat(TotalMoneyCurServer/10000).."|r"..E.Icon_Money
 end
+
 local function TotalMoneyAllServerOnShow()
 	local TotalMoneyAllServer = 0
 	local vivod = ""
@@ -4450,6 +4468,7 @@ local function TotalMoneyAllServerOnShow()
 	end
 	return vivod
 end
+
 local function Token_PriceOnShow()
 	local vivod = ""
 	local TokenPrice = C_WowTokenPublic.GetCurrentMarketPrice()
@@ -4460,6 +4479,7 @@ local function Token_PriceOnShow()
 	end
 	return vivod
 end
+
 local function TotalTimeAllServerOnShow()
 	local TotalTimeAllServer = 0
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
@@ -4469,6 +4489,7 @@ local function TotalTimeAllServerOnShow()
 	end
 	return classColorHexCurrent..(E.func_SecondsToClock(TotalTimeAllServer)).."|r"
 end
+
 local function TotalTimeAllServer80OnShow()
 	local TotalTimeAllServer70 = 0
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
@@ -4484,6 +4505,7 @@ local function TotalTimeAllServer80OnShow()
 		return ""
 	end
 end
+
 local function OctoToDo_CreateAltFrame()
 	OctoToDo_MainFrame = CreateFrame("BUTTON", "OctoToDo_MainFramePIZZA", UIParent, "BackdropTemplate")
 	OctoToDo_MainFrame:Hide()
@@ -4649,6 +4671,7 @@ local function OctoToDo_CreateAltFrame()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
+
 	local function AbandonQuests()
 		local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
 		local numQuests = E.func_CurrentNumQuests()
@@ -4923,9 +4946,11 @@ local function OctoToDo_CreateAltFrame()
 				self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 			end
 		)
+
 		local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 			OctoToDo_DB_Levels[menuButton.value].isShownPLAYER = checked
 		end
+
 		local function OctoToDoDeleteChar(curGUID)
 			OctoToDo_DB_Levels[curGUID] = nil
 			for X, Y in next, (OctoToDo_MainFrame.AllCharFrames) do
@@ -4936,6 +4961,7 @@ local function OctoToDo_CreateAltFrame()
 				end
 			end
 		end
+
 		local function func_remove_GUID(menuButton)
 			OctoToDoDeleteChar(menuButton.value)
 			OctoToDo_DB_Levels[menuButton.value] = nil
@@ -5243,11 +5269,13 @@ local function OctoToDo_CreateAltFrame()
 			end
 		end
 	end
+
 	local function FrameLine_OnEnter(self)
 		self.animation:SetFromAlpha(0)
 		self.animation:SetToAlpha(1)
 		self.group:Restart()
 	end
+
 	local function FrameLine_OnLeave(self)
 		self.animation:SetFromAlpha(1)
 		self.animation:SetToAlpha(0)
@@ -5287,19 +5315,23 @@ local function OctoToDo_CreateAltFrame()
 	end
 	OctoToDo_MainFrame:Hide()
 end
+
 local function resetPoolFunc(pool, f)
 	f:Hide()
 	f:ClearAllPoints()
 end
+
 local function resetPoolFunc_BG(pool, f)
 	f:Hide()
 	f.BG:Hide()
 	f:ClearAllPoints()
 end
 local CharFrame_Pool
+
 local function CharFrame_PoolOnHide(f)
 	CharFrame_Pool:Release(f)
 end
+
 local function initCharFrame_PoolFunc(f)
 	f.BG = f:CreateTexture(nil, "BACKGROUND")
 	f.BG:Hide()
@@ -5315,9 +5347,11 @@ local function initCharFrame_PoolFunc(f)
 end
 CharFrame_Pool = CreateFramePool("Frame", nil, "BackdropTemplate", resetPoolFunc_BG, false, initCharFrame_PoolFunc)
 local CentralFrame_Pool
+
 local function CentralFrame_PoolOnHide(f)
 	CentralFrame_Pool:Release(f)
 end
+
 local function initCentralFrame_PoolFunc(f)
 	f:SetSize(E.curWidthCentral, E.curHeight)
 	f:SetScript("OnEnter", Central_Frame_Mouse_OnEnter)
@@ -5498,7 +5532,8 @@ function OctoToDo_EventFrame:main_frame_toggle()
 				OctoToDo_EventFrame:Collect_BfA_QuestsBounties()
 				OctoToDo_EventFrame:Collect_BfA_Island()
 				OctoToDo_EventFrame:MustBeHiddenFrames()
-				OctoToDo_MainFrame:Show()
+				-- OctoToDo_MainFrame:Show()
+				OctoToDo_MainFrame:SetShown(not OctoToDo_MainFrame:IsShown())
 				OctoToDo_EventFrame:OctoToDo_AddDataToAltFrame()
 			end
 		)
