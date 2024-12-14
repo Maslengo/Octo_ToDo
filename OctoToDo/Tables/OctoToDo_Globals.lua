@@ -53,8 +53,6 @@ E.fontObject12:SetFont(E.OctoFont, 12, "OUTLINE")
 E.fontObject22 = CreateFont("OctoFont22")
 E.fontObject22:CopyFontObject(font)
 E.fontObject22:SetFont(E.OctoFont, 22, "OUTLINE")
-
-
 -- local font = "01 Octo"
 -- local font2 = SystemFont_Outline_Small
 -- local fontObject9 = CreateFont("OctoFont9")
@@ -69,15 +67,6 @@ E.fontObject22:SetFont(E.OctoFont, 22, "OUTLINE")
 -- local fontObject12 = CreateFont("OctoFont12")
 -- fontObject12:CopyFontObject(font2)
 -- fontObject12:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\"..font..".TTF", 12, "OUTLINE")
-
-
-
-
-
-
-
-
-
 local _, _, _, interfaceVersion = GetBuildInfo() -- Mainline
 function IsClassic()
 	if interfaceVersion > 10000 and interfaceVersion < 20000 then return true else return false end
@@ -276,8 +265,6 @@ E.Skyblue_Color = "|cff87CDEB"
 E.Steelblue_Color = "|cff4682B3"
 E.Slategray_Color = "|cff708090"
 E.Brown_Color = "|cff964B00"
-
-
 E.Event_Color = "|cff4682B3"
 ----------------------------------------------------------------
 E.Kyrian_r_Color = 0.44
@@ -330,15 +317,10 @@ E.Icon_WorldBoss = func_texturefromIcon(3528312)
 E.Icon_Rares = func_texturefromIcon(135903)
 E.Icon_Money = func_texturefromIcon(133784, 14)
 E.Icon_MailBox = func_texturefromIcon("Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga")
-
-
 E.AccountWide = E.Blue_Color.."(A)".."|r"
 E.AccountTransferable = E.Red_Color.."(T)".."|r"
-
 E.Icon_AccountWide = E.Blue_Color.."(A)".."|r" -- func_texturefromIcon(1120721)
 E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r" -- func_texturefromIcon(6124644)
-
-
 E.Icon_Empty = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 -- C_Covenants.GetCovenantIDs()
 -- КОВЕНАНТ
@@ -380,20 +362,7 @@ E.OctoTable_Covenant = {
 }
 ----------------------------------------------------------------
 E.menuBackdrop = {
-	bgFile = E.bgFile, -- "Interface/ChatFrame/ChatFrameBackground",
-	edgeFile = E.edgeFile, -- "InterfE.edgeFile, -- ace/ChatFrame/ChatFrameBackground",
+	bgFile = E.bgFile,
+	edgeFile = E.edgeFile,
 	edgeSize = 1,
-	-- tile = true,
-	-- tileSize = 5 * E.scale,
 }
-
-
-LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
-	local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
-	f:SetBackdrop(E.menuBackdrop)
-	f:SetPoint("TOPLEFT", 8, -2)
-	f:SetPoint("BOTTOMRIGHT", -8, 2)
-	f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
-	f:SetBackdropBorderColor(0, 0, 0, 1)
-	return f
-end)

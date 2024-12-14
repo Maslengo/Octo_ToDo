@@ -1430,7 +1430,7 @@ function E:func_SetBackdrop(frame, hexcolor, alpha)
 	end
 end
 ----------------------------------------------------------------
-function E:func_CreateCloseButton(frame)
+function E:func_CreateUtilsButton(frame)
 	-- OctoToDo_CloseButton
 	local OctoToDo_CloseButton = CreateFrame("Button", "OctoToDo_CloseButton", frame, "BackDropTemplate")
 	OctoToDo_CloseButton:SetSize(E.curHeight, E.curHeight)
@@ -1480,20 +1480,13 @@ function E:func_CreateCloseButton(frame)
 	E:func_SetBackdrop(OctoToDo_OptionsButton)
 end
 ----------------------------------------------------------------
-function E:func_CreateMinimapButton(addonName, vars, frame)
-	print (frame)
-	local MinimapName = E.func_AddonTitle(addonName)
-	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, {
+function E:func_CreateMinimapButton(addonName, vars, frame, func)
+
+	local info = {
 			type = "data source",
 			text = MinimapName,
 			icon = E.func_AddonIconTexture(addonName),
-			OnClick = function(_, button)
-				if button == "LeftButton" then
-					if not InCombatLockdown() then
-						frame:SetShown(not frame:IsShown())
-					end
-				end
-			end,
+
 			OnEnter = function(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
 				GameTooltip_SetTitle(GameTooltip, E.func_AddonTitle(addonName))
@@ -1502,9 +1495,24 @@ function E:func_CreateMinimapButton(addonName, vars, frame)
 			OnLeave = function()
 				GameTooltip:Hide()
 			end,
-	})
-	vars.minimap = vars.minimap or {}
-	vars.minimap.minimapPos = vars.minimap.minimapPos or 244
+	}
+
+	if func then
+		info.OnClick = func
+	else
+		info.OnClick = function(_, button)
+			if button == "LeftButton" then
+				if not InCombatLockdown() then
+					frame:SetShown(not frame:IsShown())
+				end
+			end
+		end
+	end
+	local MinimapName = E.func_AddonTitle(addonName)
+	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
+
+
+	if vars.minimapPos == nil then vars.minimapPos = 244 end
 	LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
 	LibDBIcon:Show(MinimapName)
 end

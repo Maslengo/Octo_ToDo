@@ -7,27 +7,30 @@ OctoToDo_EventFrame:Hide()
 OctoToDo_EventFrame:RegisterEvent("ADDON_LOADED")
 OctoToDo_EventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
 OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 
 function OctoToDo_EventFrame:ItemsDeleteFrame()
-	Clickable_ItemsDelete:Hide()
-	Clickable_ItemsDelete.icon:SetTexture(413587)
-	Clickable_ItemsDelete.text:SetText("")
-	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-		for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
-			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-			if containerInfo then
-				local itemID = containerInfo.itemID
-				if E.OctoTable_itemID_ItemsDelete[itemID] then
-					Clickable_ItemsDelete:Show()
-					Clickable_ItemsDelete:SetScript("OnClick", function()
-							C_Container.PickupContainerItem(bag, slot)
-							DeleteCursorItem()
-							Clickable_ItemsDelete:Hide()
-					end)
-					Clickable_ItemsDelete.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
-					Clickable_ItemsDelete.itemID = itemID
-					Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_itemName_NOCOLOR(itemID).."|r")
-					break
+	if not InCombatLockdown() then
+		Clickable_ItemsDelete:Hide()
+		Clickable_ItemsDelete.icon:SetTexture(413587)
+		Clickable_ItemsDelete.text:SetText("")
+		for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+			for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
+				local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
+				if containerInfo then
+					local itemID = containerInfo.itemID
+					if E.OctoTable_itemID_ItemsDelete[itemID] then
+						Clickable_ItemsDelete:Show()
+						Clickable_ItemsDelete:SetScript("OnClick", function()
+								C_Container.PickupContainerItem(bag, slot)
+								DeleteCursorItem()
+								Clickable_ItemsDelete:Hide()
+						end)
+						Clickable_ItemsDelete.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
+						Clickable_ItemsDelete.itemID = itemID
+						Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_itemName_NOCOLOR(itemID).."|r")
+						break
+					end
 				end
 			end
 		end
@@ -105,3 +108,10 @@ function OctoToDo_EventFrame:PLAYER_REGEN_DISABLED()
 	end
 	----------------------------------------------------------------
 end
+
+function OctoToDo_EventFrame:PLAYER_REGEN_ENABLED()
+	----------------------------------------------------------------
+	self:ItemsDeleteFrame()
+	----------------------------------------------------------------
+end
+

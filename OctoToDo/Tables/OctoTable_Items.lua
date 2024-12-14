@@ -226,7 +226,7 @@ E.OctoTable_itemID_AutoOpen = {
 	20393, 17727, 17726, 17685, 15874, 7973,
 }
 E.OctoTable_itemID_Ignore_List = {
-	226055, -- однорук
+	226057, -- однорук
 	35857, -- щит
 	226060, -- двурук
 	134111,  -- СКРЫТЫЙ ПЛЫЩ
@@ -238,6 +238,7 @@ E.OctoTable_itemID_Ignore_List = {
 	206015, 206016, 206017, 206021, 207030, 208153, 208485, 211495, 8529,
 }
 E.OctoTable_itemID_ItemsDelete = {
+	[43518] = true, -- СТАРЫЕ БУЛКИ МАГА
 	[194969] = true,
 	[197741] = true,
 	[197745] = true,
@@ -829,6 +830,7 @@ E.OctoTable_itemID_ItemsUsable_Mount = {
 	223504, 223506, 223574, 224148, 224413, 224416, 192794, 203226,
 }
 E.OctoTable_itemID_ItemsUsable_Other = {
+	43518, -- СТАРЫЕ БУЛКИ МАГА
 	74838, -- TEST
 	38380,
 	39158,
