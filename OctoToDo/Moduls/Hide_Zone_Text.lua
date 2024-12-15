@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Hide_Zone_Text
 tinsert(E.Modules, function()
-		if OctoToDo_DB_Vars.config.Hide_Zone_Text then
+		if OctoToDo_DB_Vars.Hide_Zone_Text then
 			ZoneTextFrame:SetScript("OnShow", ZoneTextFrame.Hide);
 			SubZoneTextFrame:SetScript("OnShow", SubZoneTextFrame.Hide);
 			PVPArenaTextString:HookScript("OnShow", function(self, ...)

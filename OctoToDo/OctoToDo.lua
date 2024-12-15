@@ -63,13 +63,6 @@ E.func_LoadAddOn("QuestsChanged")
 E.func_LoadAddOn("AdvancedInterfaceOptions")
 local OctoToDo_CharFrame = nil
 local OctoToDo_MainFrame_OCTOMAIN = nil
-local OctoToDo_AbandonButton = nil
-local OctoToDo_MplusButton = nil
-local OctoToDo_ItemsButton = nil
-local OctoToDo_MarkOfHonorButton = nil
-local OctoToDo_QuestFeastButton = nil
-local OctoToDo_EventsButton = nil
-local OctoToDo_ConsumableButton = nil
 local OctoTable_func_otrisovka = nil
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = E.func_GetClassColor(classFilename)
@@ -218,6 +211,7 @@ function OctoToDo_EventFrame:checkCharInfo()
 			CharInfo.MASLENGO.professions = CharInfo.MASLENGO.professions or {}
 			CharInfo.MASLENGO.reputationID = CharInfo.MASLENGO.reputationID or {}
 			CharInfo.MASLENGO.OctoTable_QuestID = CharInfo.MASLENGO.OctoTable_QuestID or {}
+			CharInfo.MASLENGO.Quests = CharInfo.MASLENGO.Quests or {}
 			if CharInfo.CurrencyID ~= nil then
 				CharInfo.MASLENGO.CurrencyID = CharInfo.CurrencyID
 				CharInfo.CurrencyID = nil
@@ -431,6 +425,7 @@ function OctoToDo_EventFrame:checkCharInfo()
 						end
 					end
 				end
+				OctoToDo_DB_Other.Active = {}
 				CharInfo.LFGInstance = {}
 			end
 			for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
@@ -524,7 +519,7 @@ local function CreateFrameUsableItems_OnLeave(frame)
 	end
 end
 local function CreateFrameUsableItems_OnEvent(frame, event, arg1, ...)
-	if OctoToDo_MainFrame_OCTOMAINPIZZA:IsShown() then
+	if OctoToDo_MainFrame_OCTOMAIN:IsShown() then
 		if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
 			local hasToy = PlayerHasToy(frame.itemID)
 			local hasItem = GetItemCount(frame.itemID, true, true, true) >= frame.count
@@ -652,7 +647,7 @@ local function CreateFrameUsableSpells_OnShow(frame)
 	end
 end
 local function CreateFrameUsableSpells_OnEvent(frame, event)
-	if OctoToDo_MainFrame_OCTOMAINPIZZA:IsShown() then
+	if OctoToDo_MainFrame_OCTOMAIN:IsShown() then
 		if (event == "TOYS_UPDATED" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" or event == "SPELLS_CHANGED" or event == "SPELL_UPDATE_CHARGES" or event == "SPELL_UPDATE_COOLDOWN" or event == "TRAINER_UPDATE") and not InCombatLockdown() then
 			local isKnown = IsSpellKnown(frame.spellID)
 			if isKnown == true then
@@ -1301,6 +1296,24 @@ function OctoToDo_EventFrame:Collect_All_Quests()
 		collect.numQuests = E.func_CurrentNumQuests()
 		collect.maxNumQuestsCanAccept = maxNumQuestsCanAccept or 0
 	end
+	-- local tblHeader
+	-- collect.MASLENGO.Quests = {}
+	-- for i = 1, numShownEntries do
+	-- 	if E.func_CurrentNumQuests() ~= 0 then
+	-- 		local info = C_QuestLog.GetInfo(i)
+	-- 		if info then
+	-- 			print (info.questID, info.title)
+	-- 			if info.isHeader then
+	-- 				collect.MASLENGO.Quests[info.title] = collect.MASLENGO.Quests[info.title] or {}
+	-- 				tblHeader = collect.MASLENGO.Quests[info.title]
+	-- 			else
+	-- 				tblHeader[info.title] = tblHeader[info.title] or E.func_CheckCompletedByQuestID(info.questID)
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
+
+	-- fpde(collect.MASLENGO.Quests)
 end
 function OctoToDo_EventFrame:Collect_ALL_ItemLevel()
 	local collect = OctoToDo_DB_Levels[curGUID]
@@ -1519,7 +1532,6 @@ function OctoToDo_EventFrame:Collect_All_Holiday()
 	local month = 0
 	local year = currentCalendarTime.year
 	local numEvents = C_Calendar.GetNumDayEvents(month, monthDay)
-	collect.Active = {}
 	for i = 1, numEvents do
 		local event = C_Calendar.GetDayEvent(month, monthDay, i)
 		local id = event.eventID
@@ -1536,7 +1548,6 @@ function OctoToDo_EventFrame:Collect_All_Holiday()
 			if collect.Active[id] == nil then
 				collect.Active[id] = {}
 			end
-			-- collect.Active[id].id = id
 			collect.Active[id].title = E.func_EventName(id)
 			collect.Active[id].startTime = startTime_monthDay.."/"..startTime_month.."/"..startTime_year
 			collect.Active[id].endTime = endTime_monthDay.."/"..endTime_month.."/"..endTime_year
@@ -1691,7 +1702,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 				CL:SetFontObject(OctoFont11)
 				vivodCent = vivodCent.." "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
 			end
-			if OctoToDo_DB_Vars.config.ShowOnlyCurrentServer == false then
+			if OctoToDo_DB_Vars.ShowOnlyCurrentServer == false then
 				CL:SetFontObject(OctoFont9)
 				vivodCent = vivodCent.."|n"..CharInfo.curServer
 			end
@@ -1770,10 +1781,10 @@ function OctoToDo_EventFrame:O_otrisovka()
 			vivodLeft = E.Timers.Daily_Reset()
 			return vivodCent, vivodLeft
 		end)
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 1 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 1 then
 		local expansionQWEQWE = 1
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 2 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 2 then
 		local expansionQWEQWE = 2
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1820,7 +1831,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 3 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 3 then
 		local expansionQWEQWE = 3
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1878,7 +1889,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 4 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 4 then
 		local expansionQWEQWE = 4
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1914,7 +1925,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 5 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 5 then
 		local expansionQWEQWE = 5
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -1939,7 +1950,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 6 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 6 then
 		local expansionQWEQWE = 6
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -2042,7 +2053,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 7 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 7 then
 		local expansionQWEQWE = 7
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -2234,7 +2245,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 8 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 8 then
 		local expansionQWEQWE = 8
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -2585,7 +2596,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 9 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 9 then
 		local expansionQWEQWE = 9
 		for k = 1, 2 do
 			for i = 1, 4 do
@@ -2881,9 +2892,9 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 10 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 10 then
 		local expansionQWEQWE = 10
-		if OctoToDo_DB_Vars.config.AidingtheAccord == true then
+		if OctoToDo_DB_Vars.AidingtheAccord == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3113,9 +3124,9 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 11 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 11 then
 		local expansionQWEQWE = 11
-		if OctoToDo_DB_Vars.config.MP_MythicKeystone == true then
+		if OctoToDo_DB_Vars.MP_MythicKeystone == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3163,7 +3174,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.BeledarCycle == true then
+		if OctoToDo_DB_Vars.BeledarCycle == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3175,7 +3186,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.TWW_WorldBoss_Weekly == true then
+		if OctoToDo_DB_Vars.TWW_WorldBoss_Weekly == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3187,7 +3198,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.TWW_DungeonQuest_Weekly == true then
+		if OctoToDo_DB_Vars.TWW_DungeonQuest_Weekly == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3199,7 +3210,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.TWW_Delve_Weekly == true then
+		if OctoToDo_DB_Vars.TWW_Delve_Weekly == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3211,7 +3222,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.MajorKeyflames == true then
+		if OctoToDo_DB_Vars.MajorKeyflames == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3223,7 +3234,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.MinorKeyflames == true then
+		if OctoToDo_DB_Vars.MinorKeyflames == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3235,7 +3246,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.GildedHarbingerCrest == true then
+		if OctoToDo_DB_Vars.GildedHarbingerCrest == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3262,7 +3273,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.RunedHarbingerCrest == true then
+		if OctoToDo_DB_Vars.RunedHarbingerCrest == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3289,7 +3300,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.CarvedHarbingerCrest == true then
+		if OctoToDo_DB_Vars.CarvedHarbingerCrest == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3316,7 +3327,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					return vivodCent, vivodLeft
 				end)
 		end
-		if OctoToDo_DB_Vars.config.WeatheredHarbingerCrest == true then
+		if OctoToDo_DB_Vars.WeatheredHarbingerCrest == true then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
 					local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3344,7 +3355,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 				end)
 		end
 	end
-	if OctoToDo_DB_Vars.config.ExpansionToShow == 12 then
+	if OctoToDo_DB_Vars.ExpansionToShow == 12 then
 		local expansionQWEQWE = 12
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
@@ -3385,7 +3396,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 		end
 	end
 	local expansionQWEQWE = 13
-	if OctoToDo_DB_Vars.config.Timewalk == true then
+	if OctoToDo_DB_Vars.Timewalk == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -3464,7 +3475,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.Event == true then
+	if OctoToDo_DB_Vars.Event == true then
 		if OctoToDo_DB_Other.Holiday.Active[628] then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
@@ -3754,7 +3765,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 				end)
 		end
 	end
-	if OctoToDo_DB_Vars.config.Holiday == true then
+	if OctoToDo_DB_Vars.Holiday == true then
 		if OctoToDo_DB_Other.Holiday.Active[341] then
 			tinsert(OctoTable_func_otrisovka,
 				function(CharInfo, tooltip, CL, BG)
@@ -4017,13 +4028,13 @@ function OctoToDo_EventFrame:O_otrisovka()
 				end)
 		end
 	end
-	if OctoToDo_DB_Vars.config.Quests == true then
+	if OctoToDo_DB_Vars.Quests == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				vivodCent = E.Gray_Color..QUESTS_LABEL.."|r"
-				if OctoToDo_DB_Vars.config.ExpansionToShow == 10 then
+				if OctoToDo_DB_Vars.ExpansionToShow == 10 then
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."Dragonflight".."«"), " "}
 					tooltip[#tooltip+1] = {E.Icon_WorldBoss..L["World Boss"], CharInfo.Octopussy_DF_Weekly_WBALL_count}
 					tooltip[#tooltip+1] = {E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"], CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count}
@@ -4100,7 +4111,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."10.1.7".."«"), " "}
 					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["Seeing Red"]..")", CharInfo.Octopussy_DF_Once_SeeingRed_count}
 				end
-				if OctoToDo_DB_Vars.config.ExpansionToShow == 9 then
+				if OctoToDo_DB_Vars.ExpansionToShow == 9 then
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
@@ -4195,7 +4206,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.Quests == true then
+	if OctoToDo_DB_Vars.Quests == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivo, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -4206,9 +4217,9 @@ function OctoToDo_EventFrame:O_otrisovka()
 				end
 				sort(list, E.func_Reverse_order)
 				for k, QuestID in next, (list) do
-					if OctoToDo_DB_Vars.config.QuestsShowAllways == false and OctoToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= "" and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= E.NONE then
+					if OctoToDo_DB_Vars.QuestsShowAllways == false and OctoToDo_DB_Config.QuestsDB[QuestID] == true and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= "" and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= E.NONE then
 						tooltip[#tooltip+1] = {E.func_questName(QuestID)..E.Gray_Color, CharInfo.MASLENGO.OctoTable_QuestID[QuestID]}
-					elseif OctoToDo_DB_Vars.config.QuestsShowAllways == true and OctoToDo_DB_Config.QuestsDB[QuestID] == true then
+					elseif OctoToDo_DB_Vars.QuestsShowAllways == true and OctoToDo_DB_Config.QuestsDB[QuestID] == true then
 						if CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= 0 and CharInfo.MASLENGO.OctoTable_QuestID[QuestID] ~= "" then
 							tooltip[#tooltip+1] = {E.func_questName(QuestID)..E.Gray_Color, CharInfo.MASLENGO.OctoTable_QuestID[QuestID]}
 						else
@@ -4229,7 +4240,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.Dungeons == true then
+	if OctoToDo_DB_Vars.Dungeons == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -4259,16 +4270,16 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.Currency == true then
+	if OctoToDo_DB_Vars.Currency == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
 					for CurrencyID, config in next, (tbl) do
-						if OctoToDo_DB_Vars.config.CurrencyShowAllways == false and config == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
+						if OctoToDo_DB_Vars.CurrencyShowAllways == false and config == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
 							tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
-						elseif OctoToDo_DB_Vars.config.CurrencyShowAllways == true and config == true then
+						elseif OctoToDo_DB_Vars.CurrencyShowAllways == true and config == true then
 							if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
 								tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
 							else
@@ -4287,7 +4298,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.Reputations == true then
+	if OctoToDo_DB_Vars.Reputations == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -4310,15 +4321,15 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.Items == true then
+	if OctoToDo_DB_Vars.Items == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
 				BG:SetColorTexture(bgQWEr, bgQWEg, bgQWEb, E.BGALPHA/2)
 				for index, itemID in ipairs(E.OctoTable_itemID_ALL) do
-					if OctoToDo_DB_Vars.config.ItemsShowAllways == false  and CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
+					if OctoToDo_DB_Vars.ItemsShowAllways == false  and CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
 						tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
-					elseif OctoToDo_DB_Vars.config.ItemsShowAllways == true then
+					elseif OctoToDo_DB_Vars.ItemsShowAllways == true then
 						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
 							tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
 						else
@@ -4336,7 +4347,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.Professions == true then
+	if OctoToDo_DB_Vars.Professions == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -4356,7 +4367,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.Gold == true then
+	if OctoToDo_DB_Vars.Gold == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -4377,7 +4388,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.ItemLevel == true then
+	if OctoToDo_DB_Vars.ItemLevel == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -4407,7 +4418,7 @@ function OctoToDo_EventFrame:O_otrisovka()
 			end
 		)
 	end
-	if OctoToDo_DB_Vars.config.WasOnline == true then
+	if OctoToDo_DB_Vars.WasOnline == true then
 		tinsert(OctoTable_func_otrisovka,
 			function(CharInfo, tooltip, CL, BG)
 				local vivodCent, vivodLeft, bgQWEr, bgQWEg, bgQWEb = "", "", E.func_hex2rgbNUMBER(E.OctoTable_Expansions_Table[expansionQWEQWE].color)
@@ -4495,10 +4506,10 @@ local function TotalTimeAllServer80OnShow()
 	end
 end
 local function OctoToDo_CreateAltFrame()
-	OctoToDo_MainFrame_OCTOMAIN = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOMAINPIZZA", UIParent, "BackdropTemplate")
+	OctoToDo_MainFrame_OCTOMAIN = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOMAIN", UIParent, "BackdropTemplate")
 	OctoToDo_MainFrame_OCTOMAIN:Hide()
-	OctoToDo_DB_Vars.config.FrameScale = OctoToDo_DB_Vars.config.FrameScale or 1
-	OctoToDo_MainFrame_OCTOMAIN:SetScale(OctoToDo_DB_Vars.config.FrameScale)
+	OctoToDo_DB_Vars.FrameScale = OctoToDo_DB_Vars.FrameScale or 1
+	OctoToDo_MainFrame_OCTOMAIN:SetScale(OctoToDo_DB_Vars.FrameScale)
 	local ScrollFrame = CreateFrame("ScrollFrame", "ScrollFrame", OctoToDo_MainFrame_OCTOMAIN)
 	local ScrollBar = CreateFrame("EventFrame", "ScrollBar", ScrollFrame, "MinimalScrollBar")
 	ScrollBar:SetPoint("TOPLEFT", ScrollFrame, "TOPRIGHT", 6, 0)
@@ -4618,7 +4629,7 @@ local function OctoToDo_CreateAltFrame()
 	----------------------------------------------------------------
 	-- OctoToDo_Frame_TotalTimeAllServerLOWLEVEL
 	----------------------------------------------------------------
-	local OctoToDo_Frame_TotalTimeAllServerLOWLEVEL = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_MainFrame_OCTOMAIN, "BackDropTemplate")
+	local OctoToDo_Frame_TotalTimeAllServerLOWLEVEL = CreateFrame("Button", "OctoToDo_Frame_TotalTimeAllServerLOWLEVEL", OctoToDo_MainFrame_OCTOMAIN, "BackDropTemplate")
 	OctoToDo_Frame_TotalTimeAllServerLOWLEVEL:SetSize(E.curWidthTitle+E.curWidthCentral, E.curHeight)
 	OctoToDo_Frame_TotalTimeAllServerLOWLEVEL:EnableMouse(false)
 	OctoToDo_Frame_TotalTimeAllServerLOWLEVEL:SetPoint("TOPRIGHT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMRIGHT", 0, 0)
@@ -4638,7 +4649,7 @@ local function OctoToDo_CreateAltFrame()
 	----------------------------------------------------------------
 	-- OctoToDo_Frame_TotalTimeAllServerMAXLEVEL
 	----------------------------------------------------------------
-	local OctoToDo_Frame_TotalTimeAllServerMAXLEVEL = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), OctoToDo_MainFrame_OCTOMAIN, "BackDropTemplate")
+	local OctoToDo_Frame_TotalTimeAllServerMAXLEVEL = CreateFrame("Button", "OctoToDo_Frame_TotalTimeAllServerMAXLEVEL", OctoToDo_MainFrame_OCTOMAIN, "BackDropTemplate")
 	OctoToDo_Frame_TotalTimeAllServerMAXLEVEL:SetSize(E.curWidthTitle+E.curWidthCentral, E.curHeight)
 	OctoToDo_Frame_TotalTimeAllServerMAXLEVEL:EnableMouse(false)
 	OctoToDo_Frame_TotalTimeAllServerMAXLEVEL:SetPoint("TOPRIGHT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMRIGHT", 0, -E.curHeight)
@@ -4658,218 +4669,7 @@ local function OctoToDo_CreateAltFrame()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	local function AbandonQuests()
-		local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
-		local numQuests = E.func_CurrentNumQuests()
-		for i = 1, numShownEntries do
-			if numQuests ~= 0 then
-				local info = C_QuestLog.GetInfo(i)
-				if info then
-					if (not info.isHeader and not info.isHidden) then
-						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
-						C_QuestLog.SetSelectedQuest(info.questID)
-						C_QuestLog.SetAbandonQuest()
-						C_QuestLog.AbandonQuest()
-					end
-				end
-			end
-		end
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
-	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- OctoToDo_AbandonButton
-	----------------------------------------------------------------
-	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
-		text = E.Red_Color.."!!! ACHTUNG !!!|r\n"..classColorHexCurrent.."Отменить все задания?|r",
-		button1 = YES,
-		button2 = NO,
-		hideOnEscape = 1,
-		whileDead = 1,
-		OnAccept = function()
-			C_Timer.After(1, AbandonQuests)
-		end,
-	}
-	local OctoToDo_AbandonButton = CreateFrame("Button", "OctoToDo_AbandonButton", OctoToDo_MainFrame_OCTOMAIN)
-	OctoToDo_AbandonButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_AbandonButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame_OCTOMAIN, "TOPRIGHT", (-E.curHeight)*2, 0)
-	OctoToDo_AbandonButton:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			if E.func_CurrentNumQuests() > 0 then
-				GameTooltip:AddLine(classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..E.func_CurrentNumQuests()..")")
-				GameTooltip:AddLine(" ")
-			else
-				GameTooltip:AddLine(L["No quests"], r, g, b)
-			end
-			local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
-			local list = {}
-			for i = 1, numShownEntries do
-				if E.func_CurrentNumQuests() ~= 0 then
-					local info = C_QuestLog.GetInfo(i)
-					if info then
-						if info.questID ~= 0 then
-							if (not info.isHeader and not info.isHidden) then
-								tinsert(list, info.questID)
-							else
-							end
-						end
-					end
-				end
-			end
-			sort(list, E.func_Reverse_order)
-			for k, questID in next, (list) do
-				GameTooltip:AddDoubleLine(E.func_questName(questID),E.func_CheckCompletedByQuestID(questID) , 1, 1, 1, 1, 1, 1)
-			end
-			GameTooltip:Show()
-	end)
-	OctoToDo_AbandonButton:SetScript("OnClick", function()
-			if E.func_CurrentNumQuests() > 0 then
-				StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
-			end
-	end)
-	OctoToDo_AbandonButton.icon = OctoToDo_AbandonButton:CreateTexture(nil, "BACKGROUND")
-	OctoToDo_AbandonButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga")
-	OctoToDo_AbandonButton.icon:SetAllPoints()
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- OctoToDo_MplusButton
-	----------------------------------------------------------------
-	local OctoToDo_MplusButton = CreateFrame("Button", "OctoToDo_MplusButton", OctoToDo_MainFrame_OCTOMAIN)
-	OctoToDo_MplusButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_MplusButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame_OCTOMAIN, "TOPRIGHT", (-E.curHeight)*3, 0)
-	local list = {}
-	OctoToDo_MplusButton:SetScript("OnEnter", function(self)
-			local i = 0
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			GameTooltip:AddDoubleLine(" ", " ")
-			list = {}
-			for dungeonID = 1, 1000 do
-				local name = E.func_dungeonName(dungeonID)
-				if name then
-					tinsert(list, dungeonID)
-				end
-			end
-			sort(list, E.func_Reverse_order)
-			for count, dungeonID in next, (list) do
-				local name = E.func_dungeonName(dungeonID)
-				local timeLimit = E.func_dungeontimeLimit(dungeonID)
-				local icon = E.func_dungeonIcon(dungeonID)
-				i = i + 1
-				local vivod_LEFT = E.func_texturefromIcon(icon) .. name
-				local vivod_RIGHT = E.Gray_Color.."icon:|r"..E.Green_Color..icon.."|r "..E.Gray_Color.."time:|r"..E.Green_Color..E.func_SecondsToClock(timeLimit).."|r"
-				GameTooltip:AddDoubleLine(vivod_LEFT, vivod_RIGHT, 1, 1, 1, 1, 1, 1)
-			end
-			if i == 0 then
-				GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
-				OctoToDo_MplusButton:Hide()
-			end
-			GameTooltip:AddDoubleLine(" ", " ")
-			GameTooltip:Show()
-	end)
-	OctoToDo_MplusButton:SetScript("OnLeave", function(self)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	OctoToDo_MplusButton:SetScript("OnClick", function()
-			OctoToDo_EventFrame:main_frame_toggle()
-			fpde(list)
-	end)
-	OctoToDo_MplusButton.icon = OctoToDo_MplusButton:CreateTexture(nil, "BACKGROUND")
-	OctoToDo_MplusButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga")
-	OctoToDo_MplusButton.icon:SetAllPoints()
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- OctoToDo_ItemsButton
-	----------------------------------------------------------------
-	local OctoToDo_ItemsButton = CreateFrame("Button", "OctoToDo_ItemsButton", OctoToDo_MainFrame_OCTOMAIN)
-	OctoToDo_ItemsButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_ItemsButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame_OCTOMAIN, "TOPRIGHT", (-E.curHeight)*4, 0)
-	OctoToDo_ItemsButton:SetScript("OnEnter", function(self)
-			local i = 0
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			GameTooltip:AddDoubleLine(" ", " ")
-			for _, itemID in next, (E.OctoTable_itemID_Config) do
-				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
-					if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 then
-						i = i + 1
-						GameTooltip:AddDoubleLine(E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID].." "..CharInfo.classColorHex..CharInfo.Name.."|r "..CharInfo.curServerShort)
-					end
-				end
-			end
-			if i == 0 then
-				GameTooltip:AddLine(classColorHexCurrent.."No Data".."|r")
-			end
-			GameTooltip:AddDoubleLine(" ", " ")
-			GameTooltip:Show()
-	end)
-	OctoToDo_ItemsButton:SetScript("OnClick", function()
-			OctoToDo_EventFrame:main_frame_toggle()
-			for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
-				if curCharGUID == curGUID then
-					fpde(CharInfo)
-				end
-			end
-	end)
-	OctoToDo_ItemsButton.icon = OctoToDo_ItemsButton:CreateTexture(nil, "BACKGROUND")
-	OctoToDo_ItemsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow21.tga")
-	OctoToDo_ItemsButton.icon:SetAllPoints()
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- OctoToDo_EventsButton
-	----------------------------------------------------------------
-	-- local OctoToDo_EventsButton = CreateFrame("Button", "OctoToDo_EventsButton", OctoToDo_MainFrame_OCTOMAIN, "BackDropTemplate")
-	local OctoToDo_EventsButton = CreateFrame("Button", "OctoToDo_EventsButton", OctoToDo_MainFrame_OCTOMAIN)
-	OctoToDo_EventsButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_EventsButton:SetPoint("BOTTOMRIGHT", OctoToDo_MainFrame_OCTOMAIN, "TOPRIGHT", (-E.curHeight)*5, 0)
 
-	OctoToDo_EventsButton:SetScript("OnEnter", function(self)
-			if not E.IsAddOnLoaded("Blizzard_Calendar") then
-				E.LoadAddOn("Blizzard_Calendar")
-				ShowUIPanel(CalendarFrame, true)
-				HideUIPanel(CalendarFrame)
-			else
-				ShowUIPanel(CalendarFrame, true)
-				HideUIPanel(CalendarFrame)
-			end
-			local countLines = 0
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			GameTooltip:AddDoubleLine(" ", " ")
-			local classFilename = UnitClassBase("PLAYER")
-			GameTooltip:AddDoubleLine(classColorHexCurrent..(L["Current Date"]).."|r", classColorHexCurrent..(date("%d/%m/%Y").."|r"))
-			GameTooltip:AddDoubleLine(" ", " ")
-			for eventID, v in pairs(OctoToDo_DB_Other.Holiday.Active) do
-				GameTooltip:AddDoubleLine(E.func_EventName(eventID), OctoToDo_DB_Other.Holiday.Active[eventID].startTime.." - "..OctoToDo_DB_Other.Holiday.Active[eventID].endTime)
-			end
-			if i == 0 then
-				GameTooltip:AddLine("No Data")
-			end
-			GameTooltip:AddDoubleLine(" ", " ")
-			GameTooltip:Show()
-	end)
-	OctoToDo_EventsButton:SetScript("OnLeave", function(self)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	OctoToDo_EventsButton:SetScript("OnClick", function()
-			OctoToDo_EventFrame:main_frame_toggle()
-			fpde(OctoToDo_DB_Other.Holiday.Active)
-	end)
-	OctoToDo_EventsButton.icon = OctoToDo_EventsButton:CreateTexture(nil, "BACKGROUND")
-	OctoToDo_EventsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga")
-	OctoToDo_EventsButton.icon:SetAllPoints()
-	-- E:func_SetBackdrop(OctoToDo_EventsButton)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -4928,8 +4728,8 @@ local function OctoToDo_CreateAltFrame()
 		dd:ddSetInitFunc(function(self, level, value)
 				local info, list = {}, {}
 				local count = 0
-				local ShowOnlyCurrentServer = OctoToDo_DB_Vars.config.ShowOnlyCurrentServer
-				local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.config.ShowOnlyCurrentBattleTag
+				local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
+				local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
 				if level == 1 then
 					local BnetList = {}
 					local OctoToDo_BatlleNets = {}
@@ -5041,9 +4841,9 @@ local function OctoToDo_CreateAltFrame()
 					info.isNotRadio = true
 					info.text = L["Only Current Server"]
 					info.hasArrow = nil
-					info.checked = OctoToDo_DB_Vars.config.ShowOnlyCurrentServer
+					info.checked = OctoToDo_DB_Vars.ShowOnlyCurrentServer
 					info.func = function(_, _, _, checked)
-						OctoToDo_DB_Vars.config.ShowOnlyCurrentServer = checked
+						OctoToDo_DB_Vars.ShowOnlyCurrentServer = checked
 						OctoToDo_EventFrame:main_frame_toggle()
 						C_Timer.After(.1, function()
 								OctoToDo_EventFrame:main_frame_toggle()
@@ -5058,9 +4858,9 @@ local function OctoToDo_CreateAltFrame()
 						info.isNotRadio = true
 						info.text = L["Only Current BattleTag"]
 						info.hasArrow = nil
-						info.checked = OctoToDo_DB_Vars.config.ShowOnlyCurrentBattleTag
+						info.checked = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
 						info.func = function(_, _, _, checked)
-							OctoToDo_DB_Vars.config.ShowOnlyCurrentBattleTag = checked
+							OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag = checked
 							OctoToDo_EventFrame:main_frame_toggle()
 							C_Timer.After(.1, function()
 									OctoToDo_EventFrame:main_frame_toggle()
@@ -5074,7 +4874,7 @@ local function OctoToDo_CreateAltFrame()
 		)
 		dd:ddSetMenuButtonHeight(16)
 	end
-	if OctoToDo_DB_Vars.config.PortalsButtons == true then
+	if OctoToDo_DB_Vars.PortalsButtons == true then
 		local Xpos = 0
 		local Ypos = -21
 		local prof1, prof2 = GetProfessions()
@@ -5164,7 +4964,7 @@ local function OctoToDo_CreateAltFrame()
 			end
 		end
 		if UnitLevel >= 20 then
-			if OctoToDo_DB_Vars.config.PortalsButtonsOnlyCurrent == false then
+			if OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent == false then
 				for k, v in next, (E.OctoTable_Portals_MoP) do
 					CreateFrameUsableSpells(v, E.func_GetSpellIcon(v), Xpos*(k-1)+Ypos*2, (Ypos*k), 0, .43, .86)
 				end
@@ -5318,11 +5118,11 @@ local function initCentralFrame_PoolFunc(f)
 end
 CentralFrame_Pool = CreateFramePool("Frame", nil, "BackdropTemplate", resetPoolFunc, false, initCentralFrame_PoolFunc)
 function OctoToDo_EventFrame:OctoToDo_AddDataToAltFrame()
-	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.config.ShowOnlyCurrentServer
-	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.config.ShowOnlyCurrentBattleTag
-	local LevelToShow = OctoToDo_DB_Vars.config.LevelToShow
-	local LevelToShowMAX = OctoToDo_DB_Vars.config.LevelToShowMAX
-	local itemLevelToShow = OctoToDo_DB_Vars.config.itemLevelToShow
+	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
+	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
+	local LevelToShow = OctoToDo_DB_Vars.LevelToShow
+	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
+	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
 	OctoToDo_MainFrame_OCTOMAIN.AllCharFrames = {}
 	local sorted = {}
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
@@ -5497,462 +5297,145 @@ function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 		self.ADDON_LOADED = nil
 		OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoToDoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
-		if OctoToDo_TrashCan == nil then
-			OctoToDo_TrashCan = {}
-		end
-		if OctoToDo_DB_Config == nil then
-			OctoToDo_DB_Config = {}
-		end
-		if OctoToDo_DB_Levels == nil then
-			OctoToDo_DB_Levels = {}
-		end
-		if OctoToDo_DB_Vars == nil then
-			OctoToDo_DB_Vars = {}
-		end
-		if OctoToDo_DB_Other == nil then
-			OctoToDo_DB_Other = {}
-		end
-		if OctoToDo_TrashCan.Reputations == nil then
-			OctoToDo_TrashCan.Reputations = {}
-		end
-		if OctoToDo_DB_Config.CurrencyDB == nil then
-			OctoToDo_DB_Config.CurrencyDB = {}
-		end
-		if OctoToDo_DB_Config.QuestsDB == nil then
-			OctoToDo_DB_Config.QuestsDB = {}
-		end
-		if OctoToDo_DB_Config.ReputationDB == nil then
-			OctoToDo_DB_Config.ReputationDB = {}
-		end
-		if OctoToDo_DB_Other.AccountMoney == nil then
-			OctoToDo_DB_Other.AccountMoney = {}
-		end
-		if OctoToDo_DB_Other.AccountMoney[BattleTagLocal] == nil then
-			OctoToDo_DB_Other.AccountMoney[BattleTagLocal] = 0
-		end
-		if OctoToDo_DB_Other.CVar == nil then
-			OctoToDo_DB_Other.CVar = {}
-		end
-		if OctoToDo_DB_Other.Holiday == nil then
-			OctoToDo_DB_Other.Holiday = {}
-		end
-		if OctoToDo_DB_Other.Holiday.Active == nil then
-			OctoToDo_DB_Other.Holiday.Active = {}
-		end
-		if OctoToDo_DB_Other.Holiday.Collect == nil then
-			OctoToDo_DB_Other.Holiday.Collect = {}
-		end
-		if OctoToDo_DB_Other.Items == nil then
-			OctoToDo_DB_Other.Items = {}
-		end
-		if OctoToDo_DB_Other.Items.Consumable == nil then
-			OctoToDo_DB_Other.Items.Consumable = {}
-		end
-		if OctoToDo_DB_Other.LFGInstance == nil then
-			OctoToDo_DB_Other.LFGInstance = {}
-		end
-		if OctoToDo_DB_Vars.config == nil then
-			OctoToDo_DB_Vars.config = {}
-		end
-		if OctoToDo_DB_Vars.config.curWidthCentral == nil then
-			OctoToDo_DB_Vars.config.curWidthCentral = 90
-		end
-		if OctoToDo_DB_Vars.config.curWidthCentral ~= nil then
-			E.curWidthCentral = OctoToDo_DB_Vars.config.curWidthCentral
-		end
-		if OctoToDo_DB_Vars.config.Addon_Height == nil then
-			OctoToDo_DB_Vars.config.Addon_Height = 600
-		end
-		if OctoToDo_DB_Vars.config.Addon_Height ~= nil then
-			E.Addon_Height = OctoToDo_DB_Vars.config.Addon_Height
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_BUTTONS == nil then
-			OctoToDo_DB_Vars.config.OctoToDo_debug_BUTTONS = true
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_BUTTONS ~= nil then
-			E.OctoToDo_debug_BUTTONS = OctoToDo_DB_Vars.config.OctoToDo_debug_BUTTONS
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_BUTTONS_SECOND == nil then
-			OctoToDo_DB_Vars.config.OctoToDo_debug_BUTTONS_SECOND = true
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_BUTTONS_SECOND ~= nil then
-			E.OctoToDo_debug_BUTTONS_SECOND = OctoToDo_DB_Vars.config.OctoToDo_debug_BUTTONS_SECOND
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_Event == nil then
-			OctoToDo_DB_Vars.config.OctoToDo_debug_Event = true
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_Event ~= nil then
-			E.OctoToDo_debug_Event = OctoToDo_DB_Vars.config.OctoToDo_debug_Event
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_Event_SECOND == nil then
-			OctoToDo_DB_Vars.config.OctoToDo_debug_Event_SECOND = true
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_Event_SECOND ~= nil then
-			E.OctoToDo_debug_Event_SECOND = OctoToDo_DB_Vars.config.OctoToDo_debug_Event_SECOND
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_Function == nil then
-			OctoToDo_DB_Vars.config.OctoToDo_debug_Function = false
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_Function ~= nil then
-			E.OctoToDo_debug_Function = OctoToDo_DB_Vars.config.OctoToDo_debug_Function
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_Function_SECOND == nil then
-			OctoToDo_DB_Vars.config.OctoToDo_debug_Function_SECOND = false
-		end
-		if OctoToDo_DB_Vars.config.OctoToDo_debug_Function_SECOND ~= nil then
-			E.OctoToDo_debug_Function_SECOND = OctoToDo_DB_Vars.config.OctoToDo_debug_Function_SECOND
-		end
-		if OctoToDo_DB_Vars.config.curHeight == nil then
-			OctoToDo_DB_Vars.config.curHeight = 20
-		end
-		if OctoToDo_DB_Vars.config.curHeight ~= nil then
-			E.curHeight = OctoToDo_DB_Vars.config.curHeight
-		end
-		if OctoToDo_DB_Vars.config.curWidthTitle == nil then
-			OctoToDo_DB_Vars.config.curWidthTitle = 200*E.scale
-		end
-		if OctoToDo_DB_Vars.config.curWidthTitle ~= nil then
-			E.curWidthTitle = OctoToDo_DB_Vars.config.curWidthTitle
-		end
-		if OctoToDo_DB_Vars.config.AidingtheAccord == nil then
-			OctoToDo_DB_Vars.config.AidingtheAccord = true
-		end
-		if OctoToDo_DB_Vars.config.AnotherAddonsCasual == nil then
-			OctoToDo_DB_Vars.config.AnotherAddonsCasual = true
-		end
-		if OctoToDo_DB_Vars.config.AnotherAddonsDUNG == nil then
-			OctoToDo_DB_Vars.config.AnotherAddonsDUNG = true
-		end
-		if OctoToDo_DB_Vars.config.AnotherAddonsRAID == nil then
-			OctoToDo_DB_Vars.config.AnotherAddonsRAID = true
-		end
-		if OctoToDo_DB_Vars.config.Auto_ChatClearing == nil then
-			OctoToDo_DB_Vars.config.Auto_ChatClearing = false
-		end
-		if OctoToDo_DB_Vars.config.Load == nil then
-			OctoToDo_DB_Vars.config.Load = {}
-		end
-		if OctoToDo_DB_Vars.config.Auto_CinematicCanceler == nil then
-			OctoToDo_DB_Vars.config.Auto_CinematicCanceler = true
-		end
-		if OctoToDo_DB_Vars.config.Auto_CinematicFastSkip == nil then
-			OctoToDo_DB_Vars.config.Auto_CinematicFastSkip = true
-		end
-		if OctoToDo_DB_Vars.config.Auto_Gossip == nil then
-			OctoToDo_DB_Vars.config.Auto_Gossip = true
-		end
-		if OctoToDo_DB_Vars.config.Auto_Screenshot == nil then
-			OctoToDo_DB_Vars.config.Auto_Screenshot = true
-		end
-		if OctoToDo_DB_Vars.config.AutoGossip == nil then
-			OctoToDo_DB_Vars.config.AutoGossip = true
-		end
-		if OctoToDo_DB_Vars.config.AutoOpen == nil then
-			OctoToDo_DB_Vars.config.AutoOpen = true
-		end
-		if OctoToDo_DB_Vars.config.AutoRepair == nil then
-			OctoToDo_DB_Vars.config.AutoRepair = true
-		end
-		if OctoToDo_DB_Vars.config.AutoSellGrey == nil then
-			OctoToDo_DB_Vars.config.AutoSellGrey = true
-		end
-		if OctoToDo_DB_Vars.config.AutoTurnQuests == nil then
-			OctoToDo_DB_Vars.config.AutoTurnQuests = true
-		end
-		if OctoToDo_DB_Vars.config.BeledarCycle == nil then
-			OctoToDo_DB_Vars.config.BeledarCycle = true
-		end
-		if OctoToDo_DB_Vars.config.CarvedHarbingerCrest == nil then
-			OctoToDo_DB_Vars.config.CarvedHarbingerCrest = true
-		end
-		if OctoToDo_DB_Vars.config.ChallengesKeystoneFrame == nil then
-			OctoToDo_DB_Vars.config.ChallengesKeystoneFrame = true
-		end
-		if OctoToDo_DB_Vars.config.CinematicCanceler == nil then
-			OctoToDo_DB_Vars.config.CinematicCanceler = true
-		end
-		if OctoToDo_DB_Vars.config.Currency == nil then
-			OctoToDo_DB_Vars.config.Currency = true
-		end
-		if OctoToDo_DB_Vars.config.CurrencyShowAllways == nil then
-			OctoToDo_DB_Vars.config.CurrencyShowAllways = false
-		end
-		if OctoToDo_DB_Vars.config.CVar == nil then
-			OctoToDo_DB_Vars.config.CVar = true
-		end
-		if OctoToDo_DB_Vars.config.Dungeons == nil then
-			OctoToDo_DB_Vars.config.Dungeons = true
-		end
-		if OctoToDo_DB_Vars.config.EmeraldDream_Dreamseeds == nil then
-			OctoToDo_DB_Vars.config.EmeraldDream_Dreamseeds = true
-		end
-		if OctoToDo_DB_Vars.config.EmeraldDream_Rares == nil then
-			OctoToDo_DB_Vars.config.EmeraldDream_Rares = true
-		end
-		if OctoToDo_DB_Vars.config.EmeraldDream_Sparks == nil then
-			OctoToDo_DB_Vars.config.EmeraldDream_Sparks = true
-		end
-		if OctoToDo_DB_Vars.config.EmeraldDream_Storyline == nil then
-			OctoToDo_DB_Vars.config.EmeraldDream_Storyline = true
-		end
-		if OctoToDo_DB_Vars.config.EmeraldDream_WB == nil then
-			OctoToDo_DB_Vars.config.EmeraldDream_WB = true
-		end
-		if OctoToDo_DB_Vars.config.Event == nil then
-			OctoToDo_DB_Vars.config.Event = true
-		end
-		if OctoToDo_DB_Vars.config.ExpansionToShow == nil then
-			OctoToDo_DB_Vars.config.ExpansionToShow = E.func_CurrentExpansion()
-		end
-		if OctoToDo_DB_Vars.config.FieldOfView == nil then
-			OctoToDo_DB_Vars.config.FieldOfView = false
-		end
-		if OctoToDo_DB_Vars.config.FoV_bottom == nil then
-			OctoToDo_DB_Vars.config.FoV_bottom = 0
-		end
-		if OctoToDo_DB_Vars.config.FoV_left == nil then
-			OctoToDo_DB_Vars.config.FoV_left = 0
-		end
-		if OctoToDo_DB_Vars.config.FoV_right == nil then
-			OctoToDo_DB_Vars.config.FoV_right = 0
-		end
-		if OctoToDo_DB_Vars.config.FoV_top == nil then
-			OctoToDo_DB_Vars.config.FoV_top = 0
-		end
-		if OctoToDo_DB_Vars.config.FrameScale == nil then
-			OctoToDo_DB_Vars.config.FrameScale = 1
-		end
-		if OctoToDo_DB_Vars.config.GameMenuFrameScale == nil then
-			OctoToDo_DB_Vars.config.GameMenuFrameScale = .8
-		end
-		if OctoToDo_DB_Vars.config.GildedHarbingerCrest == nil then
-			OctoToDo_DB_Vars.config.GildedHarbingerCrest = true
-		end
-		if OctoToDo_DB_Vars.config.GlobalFadePersist == nil then
-			OctoToDo_DB_Vars.config.GlobalFadePersist = true
-		end
-		if OctoToDo_DB_Vars.config.glowColor == nil then
-			OctoToDo_DB_Vars.config.glowColor = 1
-		end
-		if OctoToDo_DB_Vars.config.glowType == nil then
-			OctoToDo_DB_Vars.config.glowType = 1
-		end
-		if OctoToDo_DB_Vars.config.Gold == nil then
-			OctoToDo_DB_Vars.config.Gold = true
-		end
-		if OctoToDo_DB_Vars.config.Professions == nil then
-			OctoToDo_DB_Vars.config.Professions = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI == nil then
-			OctoToDo_DB_Vars.config.Hide_AzeriteEmpoweredItemUI = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_Boss_Banner == nil then
-			OctoToDo_DB_Vars.config.Hide_Boss_Banner = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_Covenant == nil then
-			OctoToDo_DB_Vars.config.Hide_Covenant = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_Error_Messages == nil then
-			OctoToDo_DB_Vars.config.Hide_Error_Messages = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_ObjectivesInInstance == nil then
-			OctoToDo_DB_Vars.config.Hide_ObjectivesInInstance = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_OrderHallCommandBar == nil then
-			OctoToDo_DB_Vars.config.Hide_OrderHallCommandBar = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_Raid_Boss_Emote_Frame == nil then
-			OctoToDo_DB_Vars.config.Hide_Raid_Boss_Emote_Frame = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_RaidWarningFrame == nil then
-			OctoToDo_DB_Vars.config.Hide_RaidWarningFrame = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_Talking_Head_Frame == nil then
-			OctoToDo_DB_Vars.config.Hide_Talking_Head_Frame = true
-		end
-		if OctoToDo_DB_Vars.config.Hide_Zone_Text == nil then
-			OctoToDo_DB_Vars.config.Hide_Zone_Text = true
-		end
-		if OctoToDo_DB_Vars.config.Holiday == nil then
-			OctoToDo_DB_Vars.config.Holiday = true
-		end
-		if OctoToDo_DB_Vars.config.InputDelete == nil then
-			OctoToDo_DB_Vars.config.InputDelete = true
-		end
-		if OctoToDo_DB_Vars.config.ItemLevel == nil then
-			OctoToDo_DB_Vars.config.ItemLevel = true
-		end
-		if OctoToDo_DB_Vars.config.itemLevelToShow == nil then
-			OctoToDo_DB_Vars.config.itemLevelToShow = 1
-		end
-		if OctoToDo_DB_Vars.config.Items == nil then
-			OctoToDo_DB_Vars.config.Items = true
-		end
-		if OctoToDo_DB_Vars.config.ItemsDelete == nil then
-			OctoToDo_DB_Vars.config.ItemsDelete = false
-		end
-		if OctoToDo_DB_Vars.config.ItemsShowAllways == nil then
-			OctoToDo_DB_Vars.config.ItemsShowAllways = false
-		end
-		if OctoToDo_DB_Vars.config.ItemsUsable == nil then
-			OctoToDo_DB_Vars.config.ItemsUsable = false
-		end
-		if OctoToDo_DB_Vars.config.LastUpdate == nil then
-			OctoToDo_DB_Vars.config.LastUpdate = true
-		end
-		if OctoToDo_DB_Vars.config.LevelToShow == nil then
-			OctoToDo_DB_Vars.config.LevelToShow = 1
-		end
-		if OctoToDo_DB_Vars.config.LevelToShowMAX == nil then
-			OctoToDo_DB_Vars.config.LevelToShowMAX = E.currentMaxLevel
-		end
-		if OctoToDo_DB_Vars.config.LootFrame == nil then
-			OctoToDo_DB_Vars.config.LootFrame = true
-		end
-		if OctoToDo_DB_Vars.config.MajorKeyflames == nil then
-			OctoToDo_DB_Vars.config.MajorKeyflames = true
-		end
-		if OctoToDo_DB_Vars.config.MinorKeyflames == nil then
-			OctoToDo_DB_Vars.config.MinorKeyflames = true
-		end
-		if OctoToDo_DB_Vars.config.MP_MythicKeystone == nil then
-			OctoToDo_DB_Vars.config.MP_MythicKeystone = true
-		end
-		if OctoToDo_DB_Vars.config.PortalsButtons == nil then
-			OctoToDo_DB_Vars.config.PortalsButtons = true
-		end
-		if OctoToDo_DB_Vars.config.PortalsButtonsOnlyCurrent == nil then
-			OctoToDo_DB_Vars.config.PortalsButtonsOnlyCurrent = false
-		end
-		if OctoToDo_DB_Vars.config.prefix == nil then
-			OctoToDo_DB_Vars.config.prefix = 1
-		end
-		if OctoToDo_DB_Vars.config.Quests == nil then
-			OctoToDo_DB_Vars.config.Quests = true
-		end
-		if OctoToDo_DB_Vars.config.QuestsShowAllways == nil then
-			OctoToDo_DB_Vars.config.QuestsShowAllways = false
-		end
-		if OctoToDo_DB_Vars.config.Reputations == nil then
-			OctoToDo_DB_Vars.config.Reputations = true
-		end
-		if OctoToDo_DB_Vars.config.ReputationsShowAllways == nil then
-			OctoToDo_DB_Vars.config.ReputationsShowAllways = false
-		end
-		if OctoToDo_DB_Vars.config.ResetAllChars == nil then
-			OctoToDo_DB_Vars.config.ResetAllChars = true
-		end
-		if OctoToDo_DB_Vars.config.RunedHarbingerCrest == nil then
-			OctoToDo_DB_Vars.config.RunedHarbingerCrest = true
-		end
-		if OctoToDo_DB_Vars.config.ShowIDS == nil then
-			OctoToDo_DB_Vars.config.ShowIDS = true
-		end
-		if OctoToDo_DB_Vars.config.SpeedFrame == nil then
-			OctoToDo_DB_Vars.config.SpeedFrame = {}
-		end
-		if OctoToDo_DB_Vars.config.SpeedFrame.Shown == nil then
-			OctoToDo_DB_Vars.config.SpeedFrame.Shown = true
-		end
-		if OctoToDo_DB_Vars.config.SpeedFrame.point == nil then
-			OctoToDo_DB_Vars.config.SpeedFrame.point = "BOTTOM"
-		end
-		if OctoToDo_DB_Vars.config.SpeedFrame.relativePoint == nil then
-			OctoToDo_DB_Vars.config.SpeedFrame.relativePoint = "BOTTOM"
-		end
-		if OctoToDo_DB_Vars.config.SpeedFrame.xOfs == nil then
-			OctoToDo_DB_Vars.config.SpeedFrame.xOfs = 129
-		end
-		if OctoToDo_DB_Vars.config.SpeedFrame.yOfs == nil then
-			OctoToDo_DB_Vars.config.SpeedFrame.yOfs = 67
-		end
-		if OctoToDo_DB_Vars.config.ShowOnlyCurrentBattleTag == nil then
-			OctoToDo_DB_Vars.config.ShowOnlyCurrentBattleTag = false
-		end
-		if OctoToDo_DB_Vars.config.ShowOnlyCurrentRealm == nil then
-			OctoToDo_DB_Vars.config.ShowOnlyCurrentRealm = true
-		end
-		if OctoToDo_DB_Vars.config.ShowOnlyCurrentServer == nil then
-			OctoToDo_DB_Vars.config.ShowOnlyCurrentServer = true
-		end
-		if OctoToDo_DB_Vars.config.ShowTime70 == nil then
-			OctoToDo_DB_Vars.config.ShowTime70 = true
-		end
-		if OctoToDo_DB_Vars.config.SORTING == nil then
-			OctoToDo_DB_Vars.config.SORTING = true
-		end
-		if OctoToDo_DB_Vars.config.StaticPopup1Button1 == nil then
-			OctoToDo_DB_Vars.config.StaticPopup1Button1 = true
-		end
-		if OctoToDo_DB_Vars.config.TalentTreeTweaks == nil then
-			OctoToDo_DB_Vars.config.TalentTreeTweaks = true
-		end
-		if OctoToDo_DB_Vars.config.TalentTreeTweaks_Alpha == nil then
-			OctoToDo_DB_Vars.config.TalentTreeTweaks_Alpha = 1
-		end
-		if OctoToDo_DB_Vars.config.TalentTreeTweaks_Scale == nil then
-			OctoToDo_DB_Vars.config.TalentTreeTweaks_Scale = 1
-		end
-		if OctoToDo_DB_Vars.config.Timewalk == nil then
-			OctoToDo_DB_Vars.config.Timewalk = true
-		end
-		if OctoToDo_DB_Vars.config.TWW_Delve_Weekly == nil then
-			OctoToDo_DB_Vars.config.TWW_Delve_Weekly = true
-		end
-		if OctoToDo_DB_Vars.config.TWW_DungeonQuest_Weekly == nil then
-			OctoToDo_DB_Vars.config.TWW_DungeonQuest_Weekly = true
-		end
-		if OctoToDo_DB_Vars.config.TWW_WorldBoss_Weekly == nil then
-			OctoToDo_DB_Vars.config.TWW_WorldBoss_Weekly = true
-		end
-		if OctoToDo_DB_Vars.config.UIErrorsFramePosition == nil then
-			OctoToDo_DB_Vars.config.UIErrorsFramePosition = true
-		end
-		if OctoToDo_DB_Vars.config.WasOnline == nil then
-			OctoToDo_DB_Vars.config.WasOnline = true
-		end
-		if OctoToDo_DB_Vars.config.WeatheredHarbingerCrest == nil then
-			OctoToDo_DB_Vars.config.WeatheredHarbingerCrest = true
-		end
+		if OctoToDo_TrashCan == nil then OctoToDo_TrashCan = {} end
+		if OctoToDo_DB_Config == nil then OctoToDo_DB_Config = {} end
+		if OctoToDo_DB_Levels == nil then OctoToDo_DB_Levels = {} end
+		if OctoToDo_DB_Other == nil then OctoToDo_DB_Other = {} end
+		if OctoToDo_TrashCan.Reputations == nil then OctoToDo_TrashCan.Reputations = {} end
+		if OctoToDo_DB_Config.CurrencyDB == nil then OctoToDo_DB_Config.CurrencyDB = {} end
+		if OctoToDo_DB_Config.QuestsDB == nil then OctoToDo_DB_Config.QuestsDB = {} end
+		if OctoToDo_DB_Config.ReputationDB == nil then OctoToDo_DB_Config.ReputationDB = {} end
+		if OctoToDo_DB_Other.AccountMoney == nil then OctoToDo_DB_Other.AccountMoney = {} end
+		if OctoToDo_DB_Other.AccountMoney[BattleTagLocal] == nil then OctoToDo_DB_Other.AccountMoney[BattleTagLocal] = 0 end
+		if OctoToDo_DB_Other.CVar == nil then OctoToDo_DB_Other.CVar = {} end
+		if OctoToDo_DB_Other.Holiday == nil then OctoToDo_DB_Other.Holiday = {} end
+		if OctoToDo_DB_Other.Holiday.Active == nil then OctoToDo_DB_Other.Holiday.Active = {} end
+		if OctoToDo_DB_Other.Holiday.Collect == nil then OctoToDo_DB_Other.Holiday.Collect = {} end
+		if OctoToDo_DB_Other.Items == nil then OctoToDo_DB_Other.Items = {} end
+		if OctoToDo_DB_Other.Items.Consumable == nil then OctoToDo_DB_Other.Items.Consumable = {} end
+		if OctoToDo_DB_Other.LFGInstance == nil then OctoToDo_DB_Other.LFGInstance = {} end
+		if OctoToDo_DB_Vars == nil then OctoToDo_DB_Vars = {} end
+		if OctoToDo_DB_Vars.curWidthCentral == nil then OctoToDo_DB_Vars.curWidthCentral = 90 end
+		if OctoToDo_DB_Vars.curWidthCentral ~= nil then E.curWidthCentral = OctoToDo_DB_Vars.curWidthCentral end
+		if OctoToDo_DB_Vars.Addon_Height == nil then OctoToDo_DB_Vars.Addon_Height = 600 end
+		if OctoToDo_DB_Vars.Addon_Height ~= nil then E.Addon_Height = OctoToDo_DB_Vars.Addon_Height end
+		if OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS == nil then OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS = true end
+		if OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS ~= nil then E.OctoToDo_debug_BUTTONS = OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS end
+		if OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS_SECOND == nil then OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS_SECOND = true end
+		if OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS_SECOND ~= nil then E.OctoToDo_debug_BUTTONS_SECOND = OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS_SECOND end
+		if OctoToDo_DB_Vars.OctoToDo_debug_Event == nil then OctoToDo_DB_Vars.OctoToDo_debug_Event = true end
+		if OctoToDo_DB_Vars.OctoToDo_debug_Event ~= nil then E.OctoToDo_debug_Event = OctoToDo_DB_Vars.OctoToDo_debug_Event end
+		if OctoToDo_DB_Vars.OctoToDo_debug_Event_SECOND == nil then OctoToDo_DB_Vars.OctoToDo_debug_Event_SECOND = true end
+		if OctoToDo_DB_Vars.OctoToDo_debug_Event_SECOND ~= nil then E.OctoToDo_debug_Event_SECOND = OctoToDo_DB_Vars.OctoToDo_debug_Event_SECOND end
+		if OctoToDo_DB_Vars.OctoToDo_debug_Function == nil then OctoToDo_DB_Vars.OctoToDo_debug_Function = false end
+		if OctoToDo_DB_Vars.OctoToDo_debug_Function ~= nil then E.OctoToDo_debug_Function = OctoToDo_DB_Vars.OctoToDo_debug_Function end
+		if OctoToDo_DB_Vars.OctoToDo_debug_Function_SECOND == nil then OctoToDo_DB_Vars.OctoToDo_debug_Function_SECOND = false end
+		if OctoToDo_DB_Vars.OctoToDo_debug_Function_SECOND ~= nil then E.OctoToDo_debug_Function_SECOND = OctoToDo_DB_Vars.OctoToDo_debug_Function_SECOND end
+		if OctoToDo_DB_Vars.curHeight == nil then OctoToDo_DB_Vars.curHeight = 20 end
+		if OctoToDo_DB_Vars.curHeight ~= nil then E.curHeight = OctoToDo_DB_Vars.curHeight end
+		if OctoToDo_DB_Vars.curWidthTitle == nil then OctoToDo_DB_Vars.curWidthTitle = 200 end
+		if OctoToDo_DB_Vars.curWidthTitle ~= nil then E.curWidthTitle = OctoToDo_DB_Vars.curWidthTitle end
+		if OctoToDo_DB_Vars.AidingtheAccord == nil then OctoToDo_DB_Vars.AidingtheAccord = true end
+		if OctoToDo_DB_Vars.AnotherAddonsCasual == nil then OctoToDo_DB_Vars.AnotherAddonsCasual = true end
+		if OctoToDo_DB_Vars.AnotherAddonsDUNG == nil then OctoToDo_DB_Vars.AnotherAddonsDUNG = true end
+		if OctoToDo_DB_Vars.AnotherAddonsRAID == nil then OctoToDo_DB_Vars.AnotherAddonsRAID = true end
+		if OctoToDo_DB_Vars.Auto_ChatClearing == nil then OctoToDo_DB_Vars.Auto_ChatClearing = false end
+		if OctoToDo_DB_Vars.Auto_CinematicCanceler == nil then OctoToDo_DB_Vars.Auto_CinematicCanceler = true end
+		if OctoToDo_DB_Vars.Auto_CinematicFastSkip == nil then OctoToDo_DB_Vars.Auto_CinematicFastSkip = true end
+		if OctoToDo_DB_Vars.Auto_Gossip == nil then OctoToDo_DB_Vars.Auto_Gossip = true end
+		if OctoToDo_DB_Vars.Auto_Screenshot == nil then OctoToDo_DB_Vars.Auto_Screenshot = true end
+		if OctoToDo_DB_Vars.AutoGossip == nil then OctoToDo_DB_Vars.AutoGossip = true end
+		if OctoToDo_DB_Vars.AutoOpen == nil then OctoToDo_DB_Vars.AutoOpen = true end
+		if OctoToDo_DB_Vars.AutoRepair == nil then OctoToDo_DB_Vars.AutoRepair = true end
+		if OctoToDo_DB_Vars.AutoSellGrey == nil then OctoToDo_DB_Vars.AutoSellGrey = true end
+		if OctoToDo_DB_Vars.AutoTurnQuests == nil then OctoToDo_DB_Vars.AutoTurnQuests = true end
+		if OctoToDo_DB_Vars.BeledarCycle == nil then OctoToDo_DB_Vars.BeledarCycle = true end
+		if OctoToDo_DB_Vars.CarvedHarbingerCrest == nil then OctoToDo_DB_Vars.CarvedHarbingerCrest = true end
+		if OctoToDo_DB_Vars.ChallengesKeystoneFrame == nil then OctoToDo_DB_Vars.ChallengesKeystoneFrame = true end
+		if OctoToDo_DB_Vars.CinematicCanceler == nil then OctoToDo_DB_Vars.CinematicCanceler = true end
+		if OctoToDo_DB_Vars.Currency == nil then OctoToDo_DB_Vars.Currency = true end
+		if OctoToDo_DB_Vars.CurrencyShowAllways == nil then OctoToDo_DB_Vars.CurrencyShowAllways = false end
+		if OctoToDo_DB_Vars.CVar == nil then OctoToDo_DB_Vars.CVar = true end
+		if OctoToDo_DB_Vars.Dungeons == nil then OctoToDo_DB_Vars.Dungeons = true end
+		if OctoToDo_DB_Vars.EmeraldDream_Dreamseeds == nil then OctoToDo_DB_Vars.EmeraldDream_Dreamseeds = true end
+		if OctoToDo_DB_Vars.EmeraldDream_Rares == nil then OctoToDo_DB_Vars.EmeraldDream_Rares = true end
+		if OctoToDo_DB_Vars.EmeraldDream_Sparks == nil then OctoToDo_DB_Vars.EmeraldDream_Sparks = true end
+		if OctoToDo_DB_Vars.EmeraldDream_Storyline == nil then OctoToDo_DB_Vars.EmeraldDream_Storyline = true end
+		if OctoToDo_DB_Vars.EmeraldDream_WB == nil then OctoToDo_DB_Vars.EmeraldDream_WB = true end
+		if OctoToDo_DB_Vars.Event == nil then OctoToDo_DB_Vars.Event = true end
+		if OctoToDo_DB_Vars.ExpansionToShow == nil then OctoToDo_DB_Vars.ExpansionToShow = E.func_CurrentExpansion() end
+		if OctoToDo_DB_Vars.FieldOfView == nil then OctoToDo_DB_Vars.FieldOfView = false end
+		if OctoToDo_DB_Vars.FoV_bottom == nil then OctoToDo_DB_Vars.FoV_bottom = 0 end
+		if OctoToDo_DB_Vars.FoV_left == nil then OctoToDo_DB_Vars.FoV_left = 0 end
+		if OctoToDo_DB_Vars.FoV_right == nil then OctoToDo_DB_Vars.FoV_right = 0 end
+		if OctoToDo_DB_Vars.FoV_top == nil then OctoToDo_DB_Vars.FoV_top = 0 end
+		if OctoToDo_DB_Vars.FrameScale == nil then OctoToDo_DB_Vars.FrameScale = 1 end
+		if OctoToDo_DB_Vars.GameMenuFrameScale == nil then OctoToDo_DB_Vars.GameMenuFrameScale = .8 end
+		if OctoToDo_DB_Vars.GildedHarbingerCrest == nil then OctoToDo_DB_Vars.GildedHarbingerCrest = true end
+		if OctoToDo_DB_Vars.Gold == nil then OctoToDo_DB_Vars.Gold = true end
+		if OctoToDo_DB_Vars.Professions == nil then OctoToDo_DB_Vars.Professions = true end
+		if OctoToDo_DB_Vars.Hide_AzeriteEmpoweredItemUI == nil then OctoToDo_DB_Vars.Hide_AzeriteEmpoweredItemUI = true end
+		if OctoToDo_DB_Vars.Hide_Boss_Banner == nil then OctoToDo_DB_Vars.Hide_Boss_Banner = true end
+		if OctoToDo_DB_Vars.Hide_Covenant == nil then OctoToDo_DB_Vars.Hide_Covenant = true end
+		if OctoToDo_DB_Vars.Hide_Error_Messages == nil then OctoToDo_DB_Vars.Hide_Error_Messages = true end
+		if OctoToDo_DB_Vars.Hide_ObjectivesInInstance == nil then OctoToDo_DB_Vars.Hide_ObjectivesInInstance = true end
+		if OctoToDo_DB_Vars.Hide_OrderHallCommandBar == nil then OctoToDo_DB_Vars.Hide_OrderHallCommandBar = true end
+		if OctoToDo_DB_Vars.Hide_Raid_Boss_Emote_Frame == nil then OctoToDo_DB_Vars.Hide_Raid_Boss_Emote_Frame = true end
+		if OctoToDo_DB_Vars.Hide_RaidWarningFrame == nil then OctoToDo_DB_Vars.Hide_RaidWarningFrame = true end
+		if OctoToDo_DB_Vars.Hide_Talking_Head_Frame == nil then OctoToDo_DB_Vars.Hide_Talking_Head_Frame = true end
+		if OctoToDo_DB_Vars.Hide_Zone_Text == nil then OctoToDo_DB_Vars.Hide_Zone_Text = true end
+		if OctoToDo_DB_Vars.Holiday == nil then OctoToDo_DB_Vars.Holiday = true end
+		if OctoToDo_DB_Vars.InputDelete == nil then OctoToDo_DB_Vars.InputDelete = true end
+		if OctoToDo_DB_Vars.ItemLevel == nil then OctoToDo_DB_Vars.ItemLevel = true end
+		if OctoToDo_DB_Vars.itemLevelToShow == nil then OctoToDo_DB_Vars.itemLevelToShow = 1 end
+		if OctoToDo_DB_Vars.Items == nil then OctoToDo_DB_Vars.Items = true end
+		if OctoToDo_DB_Vars.ItemsDelete == nil then OctoToDo_DB_Vars.ItemsDelete = false end
+		if OctoToDo_DB_Vars.ItemsShowAllways == nil then OctoToDo_DB_Vars.ItemsShowAllways = false end
+		if OctoToDo_DB_Vars.ItemsUsable == nil then OctoToDo_DB_Vars.ItemsUsable = false end
+		if OctoToDo_DB_Vars.LastUpdate == nil then OctoToDo_DB_Vars.LastUpdate = true end
+		if OctoToDo_DB_Vars.LevelToShow == nil then OctoToDo_DB_Vars.LevelToShow = 1 end
+		if OctoToDo_DB_Vars.LevelToShowMAX == nil then OctoToDo_DB_Vars.LevelToShowMAX = E.currentMaxLevel end
+		if OctoToDo_DB_Vars.LootFrame == nil then OctoToDo_DB_Vars.LootFrame = true end
+		if OctoToDo_DB_Vars.MajorKeyflames == nil then OctoToDo_DB_Vars.MajorKeyflames = true end
+		if OctoToDo_DB_Vars.MinorKeyflames == nil then OctoToDo_DB_Vars.MinorKeyflames = true end
+		if OctoToDo_DB_Vars.MP_MythicKeystone == nil then OctoToDo_DB_Vars.MP_MythicKeystone = true end
+		if OctoToDo_DB_Vars.PortalsButtons == nil then OctoToDo_DB_Vars.PortalsButtons = true end
+		if OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent == nil then OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent = false end
+		if OctoToDo_DB_Vars.prefix == nil then OctoToDo_DB_Vars.prefix = 1 end
+		if OctoToDo_DB_Vars.Quests == nil then OctoToDo_DB_Vars.Quests = true end
+		if OctoToDo_DB_Vars.QuestsShowAllways == nil then OctoToDo_DB_Vars.QuestsShowAllways = false end
+		if OctoToDo_DB_Vars.Reputations == nil then OctoToDo_DB_Vars.Reputations = true end
+		if OctoToDo_DB_Vars.ReputationsShowAllways == nil then OctoToDo_DB_Vars.ReputationsShowAllways = false end
+		if OctoToDo_DB_Vars.ResetAllChars == nil then OctoToDo_DB_Vars.ResetAllChars = true end
+		if OctoToDo_DB_Vars.RunedHarbingerCrest == nil then OctoToDo_DB_Vars.RunedHarbingerCrest = true end
+		if OctoToDo_DB_Vars.ShowIDS == nil then OctoToDo_DB_Vars.ShowIDS = true end
+		if OctoToDo_DB_Vars.SpeedFrame == nil then OctoToDo_DB_Vars.SpeedFrame = {} end
+		if OctoToDo_DB_Vars.SpeedFrame.Shown == nil then OctoToDo_DB_Vars.SpeedFrame.Shown = true end
+		if OctoToDo_DB_Vars.SpeedFrame.point == nil then OctoToDo_DB_Vars.SpeedFrame.point = "BOTTOM" end
+		if OctoToDo_DB_Vars.SpeedFrame.relativePoint == nil then OctoToDo_DB_Vars.SpeedFrame.relativePoint = "BOTTOM" end
+		if OctoToDo_DB_Vars.SpeedFrame.xOfs == nil then OctoToDo_DB_Vars.SpeedFrame.xOfs = 129 end
+		if OctoToDo_DB_Vars.SpeedFrame.yOfs == nil then OctoToDo_DB_Vars.SpeedFrame.yOfs = 67 end
+		if OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag == nil then OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag = false end
+		if OctoToDo_DB_Vars.ShowOnlyCurrentRealm == nil then OctoToDo_DB_Vars.ShowOnlyCurrentRealm = true end
+		if OctoToDo_DB_Vars.ShowOnlyCurrentServer == nil then OctoToDo_DB_Vars.ShowOnlyCurrentServer = true end
+		if OctoToDo_DB_Vars.ShowTime70 == nil then OctoToDo_DB_Vars.ShowTime70 = true end
+		if OctoToDo_DB_Vars.SORTING == nil then OctoToDo_DB_Vars.SORTING = true end
+		if OctoToDo_DB_Vars.StaticPopup1Button1 == nil then OctoToDo_DB_Vars.StaticPopup1Button1 = true end
+		if OctoToDo_DB_Vars.TalentTreeTweaks == nil then OctoToDo_DB_Vars.TalentTreeTweaks = true end
+		if OctoToDo_DB_Vars.TalentTreeTweaks_Alpha == nil then OctoToDo_DB_Vars.TalentTreeTweaks_Alpha = 1 end
+		if OctoToDo_DB_Vars.TalentTreeTweaks_Scale == nil then OctoToDo_DB_Vars.TalentTreeTweaks_Scale = 1 end
+		if OctoToDo_DB_Vars.Timewalk == nil then OctoToDo_DB_Vars.Timewalk = true end
+		if OctoToDo_DB_Vars.TWW_Delve_Weekly == nil then OctoToDo_DB_Vars.TWW_Delve_Weekly = true end
+		if OctoToDo_DB_Vars.TWW_DungeonQuest_Weekly == nil then OctoToDo_DB_Vars.TWW_DungeonQuest_Weekly = true end
+		if OctoToDo_DB_Vars.TWW_WorldBoss_Weekly == nil then OctoToDo_DB_Vars.TWW_WorldBoss_Weekly = true end
+		if OctoToDo_DB_Vars.UIErrorsFramePosition == nil then OctoToDo_DB_Vars.UIErrorsFramePosition = true end
+		if OctoToDo_DB_Vars.WasOnline == nil then OctoToDo_DB_Vars.WasOnline = true end
+		if OctoToDo_DB_Vars.WeatheredHarbingerCrest == nil then OctoToDo_DB_Vars.WeatheredHarbingerCrest = true end
 		self:ConcatAtStart()
 		self:O_otrisovka()
 		for i, func in next, (E.Modules) do
 			func()
 		end
-		-- local MinimapName = E.func_AddonTitle(GlobalAddonName)
-		-- local ldb_icon = LibDataBroker:NewDataObject(MinimapName, {
-		-- 		type = "data source",
-		-- 		text = MinimapName,
-		-- 		icon = E.func_AddonIconTexture(GlobalAddonName),
-		-- 		OnClick = function(_, button)
-		-- 			if button == "LeftButton" then
-		-- 				if not InCombatLockdown() then
-		-- 					OctoToDo_EventFrame:main_frame_toggle()
-		-- 				end
-		-- 			else
-		-- 				if SettingsPanel:IsVisible() and self:IsVisible() then
-		-- 					HideUIPanel(SettingsPanel)
-		-- 				else
-		-- 					Settings.OpenToCategory(E.func_AddonTitle(GlobalAddonName), true)
-		-- 				end
-		-- 			end
-		-- 		end,
-		-- 		OnEnter = function(self)
-		-- 			GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-		-- 			GameTooltip_SetTitle(GameTooltip, E.func_AddonTitle(GlobalAddonName).."|n".."ПКМ - Настройки")
-		-- 			GameTooltip:Show()
-		-- 		end,
-		-- 		OnLeave = function()
-		-- 			GameTooltip:Hide()
-		-- 		end,
-		-- })
-		-- OctoToDo_DB_Vars.minimap = OctoToDo_DB_Vars.minimap or {}
-		-- OctoToDo_DB_Vars.minimap.minimapPos = OctoToDo_DB_Vars.minimap.minimapPos or 244
-		-- LibDBIcon:Register(MinimapName, ldb_icon, OctoToDo_DB_Vars.minimap)
-		-- LibDBIcon:Show(MinimapName)
-
-
-		-- E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN)
 		E:InitOptions()
 	end
 end
@@ -5961,7 +5444,7 @@ function OctoToDo_EventFrame:VARIABLES_LOADED()
 		self:UnregisterEvent("VARIABLES_LOADED")
 		self.VARIABLES_LOADED = nil
 		----------------------------------------------------------------
-		if OctoToDo_DB_Vars.config.CVar and not InCombatLockdown() then
+		if OctoToDo_DB_Vars.CVar and not InCombatLockdown() then
 			C_Timer.After(.1, function()
 					E.LoadCVars()
 				end)
@@ -6019,7 +5502,7 @@ function OctoToDo_EventFrame:PLAYER_LOGIN()
 
 
 
-		GameMenuFrame:SetScale(OctoToDo_DB_Vars.config.GameMenuFrameScale or 1)
+		GameMenuFrame:SetScale(OctoToDo_DB_Vars.GameMenuFrameScale or 1)
 		self:MustBeHiddenFrames()
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN)
 		if not PlayerSpellsFrame then

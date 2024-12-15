@@ -21,10 +21,10 @@ function E.Reputations()
 				name = REPUTATION,
 				desc = "",
 				get = function()
-					return OctoToDo_DB_Vars.config.Reputations
+					return OctoToDo_DB_Vars.Reputations
 				end,
 				set = function(_, value)
-					OctoToDo_DB_Vars.config.Reputations = value
+					OctoToDo_DB_Vars.Reputations = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 3,

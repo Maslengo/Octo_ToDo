@@ -101,11 +101,11 @@ local function Create_Slider(scroll, self, number, pos, config, text, color, min
 				end
 			end,
 		}
-		self[number..pos..config]:Init(OctoToDo_DB_Vars.config[config], minValue, maxValue, steps, formatters)
+		self[number..pos..config]:Init(OctoToDo_DB_Vars[config], minValue, maxValue, steps, formatters)
 		self[number..pos..config]:SetWidth(SliderWidth)
 		self[number..pos..config]:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
-				OctoToDo_DB_Vars.config[config] = math.floor(value * 10 + 0.5)/10
-				self[number..pos..config].RightText:SetText(E.Blue_Color..OctoToDo_DB_Vars.config[config].."|r")
+				OctoToDo_DB_Vars[config] = math.floor(value * 10 + 0.5)/10
+				self[number..pos..config].RightText:SetText(E.Blue_Color..OctoToDo_DB_Vars[config].."|r")
 				if Callback_func then
 					Callback_func()
 					-- else
@@ -140,9 +140,9 @@ local function Create_CheckButton(scroll, self, number, pos, otstyp, config, tex
 			local CheckButton = self[number..pos..config]
 			CheckButton = CreateFrame("CheckButton", nil, scroll, "InterfaceOptionsCheckButtonTemplate")
 			CheckButton:SetPoint("LEFT", BG, "LEFT", otstyp, 0)
-			CheckButton:SetChecked(OctoToDo_DB_Vars.config[config])
+			CheckButton:SetChecked(OctoToDo_DB_Vars[config])
 			CheckButton:SetScript("OnClick", function(btn)
-					OctoToDo_DB_Vars.config[config] = btn:GetChecked()
+					OctoToDo_DB_Vars[config] = btn:GetChecked()
 					-- StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 			end)
 		end
@@ -329,12 +329,12 @@ local function Create_EditBox(scroll, self, number, pos, config)
 		editBox:EnableMouse(true)
 		editBox:SetAllPoints(self[number..pos])
 		editBox:SetMultiLine(false)
-		editBox:SetText(OctoToDo_DB_Vars.config[config])
+		editBox:SetText(OctoToDo_DB_Vars[config])
 		editBox:SetJustifyV("MIDDLE")
 		editBox:SetScript("OnEscapePressed", editBox.ClearFocus)
 		editBox:SetScript("OnEnterPressed", editBox.ClearFocus)
 		editBox:SetScript("OnTextChanged", function()
-				OctoToDo_DB_Vars.config[config] = editBox:GetText()
+				OctoToDo_DB_Vars[config] = editBox:GetText()
 		end)
 	end
 end
@@ -390,15 +390,15 @@ MAIN_Config:SetScript("OnShow", function(self)
 		number = 1
 		btn_right1 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, indent) -- CreateStretchButtonOriginal
 		btn_right1:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
-		btn_right1:SetText(E.func_texturefromIcon(E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.config.ExpansionToShow].icon)..E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.config.ExpansionToShow].color..E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.config.ExpansionToShow].name.."|r")
+		btn_right1:SetText(E.func_texturefromIcon(E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.ExpansionToShow].icon)..E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.ExpansionToShow].color..E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.ExpansionToShow].name.."|r")
 		btn_right1:ddSetDisplayMode(GlobalAddonName)
 		-- btn_right1:ddSetOpenMenuUp(true) -- NEW
 		-- btn_right1:SetScript("OnClick", function(self)
 		-- self:ddToggle(1, nil, self, self:GetWidth()+1, self:GetHeight())
 		-- end)
 		local function selectFunctionExpansion(menuButton)
-			OctoToDo_DB_Vars.config.ExpansionToShow = menuButton.value
-			btn_right1:SetText(E.func_texturefromIcon(E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.config.ExpansionToShow].icon)..E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.config.ExpansionToShow].color..E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.config.ExpansionToShow].name.."|r")
+			OctoToDo_DB_Vars.ExpansionToShow = menuButton.value
+			btn_right1:SetText(E.func_texturefromIcon(E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.ExpansionToShow].icon)..E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.ExpansionToShow].color..E.OctoTable_Expansions_Table[OctoToDo_DB_Vars.ExpansionToShow].name.."|r")
 			StaticPopup_Show(GlobalAddonName.."GET_RELOAD")
 		end
 		btn_right1:ddSetInitFunc(function(self, level, value)
@@ -415,7 +415,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 						info.text = v.color..v.name.."|r"
 						info.value = k
 						info.icon = v.icon
-						info.checked = OctoToDo_DB_Vars.config.ExpansionToShow == k
+						info.checked = OctoToDo_DB_Vars.ExpansionToShow == k
 						info.func = selectFunctionExpansion
 						self:ddAddButton(info, level)
 					end
@@ -425,11 +425,11 @@ MAIN_Config:SetScript("OnShow", function(self)
 		number = 2
 		btn_right2 = LibSFDropDown:CreateStretchButton(MAIN_scrollChild, 140, indent)
 		btn_right2:SetPoint("TOPLEFT", MAIN_scrollChild, "BOTTOMLEFT", POS_RIGHT, -indent*(number-1))
-		btn_right2:SetText(E.OctoTable_Prefixes[OctoToDo_DB_Vars.config.prefix])
+		btn_right2:SetText(E.OctoTable_Prefixes[OctoToDo_DB_Vars.prefix])
 		btn_right2:ddSetDisplayMode(GlobalAddonName)
 		local function selectFunctionprefix(menuButton)
-			OctoToDo_DB_Vars.config.prefix = menuButton.value
-			btn_right2:SetText(E.OctoTable_Prefixes[OctoToDo_DB_Vars.config.prefix])
+			OctoToDo_DB_Vars.prefix = menuButton.value
+			btn_right2:SetText(E.OctoTable_Prefixes[OctoToDo_DB_Vars.prefix])
 		end
 		btn_right2:ddSetInitFunc(function(self, level, value)
 				local info = {}
@@ -444,7 +444,7 @@ MAIN_Config:SetScript("OnShow", function(self)
 						info.notCheckable = false
 						info.text = v
 						info.value = k
-						info.checked = OctoToDo_DB_Vars.config.prefix == k
+						info.checked = OctoToDo_DB_Vars.prefix == k
 						info.func = selectFunctionprefix
 						self:ddAddButton(info, level)
 					end
@@ -461,12 +461,12 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_Slider(MAIN_scrollChild, self, 13, POS_RIGHT, "Addon_Height", "Количество строк /20px: ", E.Green_Color, 200, 1000)
 		Create_Slider(MAIN_scrollChild, self, 14.5, POS_RIGHT, "FrameScale", "Addon Scale: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				if OctoToDo_FIRST_MainFramePIZZA then
-					OctoToDo_FIRST_MainFramePIZZA:SetScale(OctoToDo_DB_Vars.config.FrameScale or 1)
+					OctoToDo_FIRST_MainFramePIZZA:SetScale(OctoToDo_DB_Vars.FrameScale or 1)
 				end
 		end)
 		Create_Slider(MAIN_scrollChild, self, 16, POS_RIGHT, "GameMenuFrameScale", "GameMenuFrameScale: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				if GameMenuFrame then
-					GameMenuFrame:SetScale(OctoToDo_DB_Vars.config.GameMenuFrameScale or 1)
+					GameMenuFrame:SetScale(OctoToDo_DB_Vars.GameMenuFrameScale or 1)
 				end
 		end)
 		Create_CheckButton(MAIN_scrollChild, self, 23, POS_LEFT, 0, "PortalsButtons", E.func_texturefromIcon(3610528, 20)..L["Portals"])
@@ -498,22 +498,22 @@ MAIN_Config:SetScript("OnShow", function(self)
 		Create_CheckButton(MAIN_scrollChild, self, 42, POS_RIGHT, 0, "FieldOfView", "FieldOfView")
 		Create_Slider(MAIN_scrollChild, self, 43.5, POS_RIGHT, "FoV_top", "FoV_top: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				-- if GameMenuFrame then
-				-- GameMenuFrame:SetScale(OctoToDo_DB_Vars.config.FoV_top or 1)
+				-- GameMenuFrame:SetScale(OctoToDo_DB_Vars.FoV_top or 1)
 				-- end
 		end)
 		Create_Slider(MAIN_scrollChild, self, 45, POS_RIGHT, "FoV_bottom", "FoV_bottom: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				-- if GameMenuFrame then
-				-- GameMenuFrame:SetScale(OctoToDo_DB_Vars.config.FoV_bottom or 1)
+				-- GameMenuFrame:SetScale(OctoToDo_DB_Vars.FoV_bottom or 1)
 				-- end
 		end)
 		Create_Slider(MAIN_scrollChild, self, 46.5, POS_RIGHT, "FoV_left", "FoV_left: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				-- if GameMenuFrame then
-				-- GameMenuFrame:SetScale(OctoToDo_DB_Vars.config.FoV_left or 1)
+				-- GameMenuFrame:SetScale(OctoToDo_DB_Vars.FoV_left or 1)
 				-- end
 		end)
 		Create_Slider(MAIN_scrollChild, self, 48, POS_RIGHT, "FoV_right", "FoV_right: ", E.Green_Color, 0.5, 2.5, 0.1, function()
 				-- if GameMenuFrame then
-				-- GameMenuFrame:SetScale(OctoToDo_DB_Vars.config.FoV_right or 1)
+				-- GameMenuFrame:SetScale(OctoToDo_DB_Vars.FoV_right or 1)
 				-- end
 		end)
 end)
@@ -694,7 +694,7 @@ SECOND_Config:SetScript("OnShow", function(self)
 			Create_CheckButtonNEW(SECOND_scrollChild, self, i, POS_LEFT, ConfigTable_SECOND_LEFT[i].otstyp, ConfigTable_SECOND_LEFT[i].config, ConfigTable_SECOND_LEFT[i].text, ConfigTable_SECOND_LEFT[i].r, ConfigTable_SECOND_LEFT[i].g, ConfigTable_SECOND_LEFT[i].b, ConfigTable_SECOND_LEFT[i].a, ConfigTable_SECOND_LEFT[i].button, OctoToDo_DB_Config.CurrencyDB)
 		end
 		Create_CheckButton(SECOND_scrollChild, self, 1, POS_RIGHT, 0, "Currency", CURRENCY)
-		Create_CheckButtonNEW(SECOND_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, OctoToDo_DB_Vars.config)
+		Create_CheckButtonNEW(SECOND_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, OctoToDo_DB_Vars)
 		Create_SimpleButton_DATABASE(SECOND_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, OctoToDo_DB_Config.CurrencyDB)
 		Create_SimpleButton_DATABASE(SECOND_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, OctoToDo_DB_Config.CurrencyDB)
 end)
@@ -757,7 +757,7 @@ THIRD_Config:SetScript("OnShow", function(self)
 			Create_CheckButtonNEW(THIRD_scrollChild, self, i, POS_LEFT, ConfigTable_THIRD_LEFT[i].otstyp, ConfigTable_THIRD_LEFT[i].config, ConfigTable_THIRD_LEFT[i].text, ConfigTable_THIRD_LEFT[i].r, ConfigTable_THIRD_LEFT[i].g, ConfigTable_THIRD_LEFT[i].b, ConfigTable_THIRD_LEFT[i].a, ConfigTable_THIRD_LEFT[i].button, OctoToDo_DB_Config.ReputationDB)
 		end
 		Create_CheckButton(THIRD_scrollChild, self, 1, POS_RIGHT, 0, "Reputations", REPUTATION)
-		-- Create_CheckButtonNEW(THIRD_scrollChild, self, 1, POS_RIGHT+100, 0, "ReputationsShowAllways", "ReputationsShowAllways", r, g, b, a, true, OctoToDo_DB_Vars.config)
+		-- Create_CheckButtonNEW(THIRD_scrollChild, self, 1, POS_RIGHT+100, 0, "ReputationsShowAllways", "ReputationsShowAllways", r, g, b, a, true, OctoToDo_DB_Vars)
 		Create_SimpleButton_DATABASE(THIRD_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, OctoToDo_DB_Config.ReputationDB)
 		Create_SimpleButton_DATABASE(THIRD_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, OctoToDo_DB_Config.ReputationDB)
 end)
@@ -822,7 +822,7 @@ FOURTH_Config:SetScript("OnShow", function(self)
 			Create_CheckButtonNEW(FOURTH_scrollChild, self, i, POS_LEFT, ConfigTable_FOURTH_LEFT[i].otstyp, ConfigTable_FOURTH_LEFT[i].config, ConfigTable_FOURTH_LEFT[i].text, ConfigTable_FOURTH_LEFT[i].r, ConfigTable_FOURTH_LEFT[i].g, ConfigTable_FOURTH_LEFT[i].b, ConfigTable_FOURTH_LEFT[i].a, ConfigTable_FOURTH_LEFT[i].button, OctoToDo_DB_Config.ItemDB)
 		end
 		Create_CheckButton(FOURTH_scrollChild, self, 1, POS_RIGHT, 0, "Items", ITEMS)
-		Create_CheckButtonNEW(FOURTH_scrollChild, self, 1, POS_RIGHT+100, 0, "ItemsShowAllways", "ItemsShowAllways", r, g, b, a, true, OctoToDo_DB_Vars.config)
+		Create_CheckButtonNEW(FOURTH_scrollChild, self, 1, POS_RIGHT+100, 0, "ItemsShowAllways", "ItemsShowAllways", r, g, b, a, true, OctoToDo_DB_Vars)
 		Create_SimpleButton_DATABASE(FOURTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, OctoToDo_DB_Config.ItemDB)
 		Create_SimpleButton_DATABASE(FOURTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, OctoToDo_DB_Config.ItemDB)
 end)
@@ -883,7 +883,7 @@ FIFTH_Config:SetScript("OnShow", function(self)
 			Create_CheckButtonNEW(FIFTH_scrollChild, self, i, POS_LEFT, ConfigTable_FIFTH_LEFT[i].otstyp, ConfigTable_FIFTH_LEFT[i].config, ConfigTable_FIFTH_LEFT[i].text, ConfigTable_FIFTH_LEFT[i].r, ConfigTable_FIFTH_LEFT[i].g, ConfigTable_FIFTH_LEFT[i].b, ConfigTable_FIFTH_LEFT[i].a, ConfigTable_FIFTH_LEFT[i].button, OctoToDo_DB_Config.QuestsDB)
 		end
 		Create_CheckButton(FIFTH_scrollChild, self, 1, POS_RIGHT, 0, "Quests", QUESTS_LABEL)
-		Create_CheckButtonNEW(FIFTH_scrollChild, self, 1, POS_RIGHT+100, 0, "QuestsShowAllways", "QuestsShowAllways", r, g, b, a, true, OctoToDo_DB_Vars.config)
+		Create_CheckButtonNEW(FIFTH_scrollChild, self, 1, POS_RIGHT+100, 0, "QuestsShowAllways", "QuestsShowAllways", r, g, b, a, true, OctoToDo_DB_Vars)
 		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, OctoToDo_DB_Config.QuestsDB)
 		Create_SimpleButton_DATABASE(FIFTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, OctoToDo_DB_Config.QuestsDB)
 end)
@@ -944,7 +944,7 @@ Settings.RegisterAddOnCategory(subcategory)
 -- 			Create_CheckButtonNEW(SIXTH_scrollChild, self, ConfigTable_SIXTH_LEFT[i].qwe, POS_LEFT, ConfigTable_SIXTH_LEFT[i].otstyp, ConfigTable_SIXTH_LEFT[i].config, ConfigTable_SIXTH_LEFT[i].text, ConfigTable_SIXTH_LEFT[i].r, ConfigTable_SIXTH_LEFT[i].g, ConfigTable_SIXTH_LEFT[i].b, ConfigTable_SIXTH_LEFT[i].a, ConfigTable_SIXTH_LEFT[i].button, OctoToDo_DB_Config.CurrencyDB)
 -- 		end
 -- 		Create_CheckButton(SIXTH_scrollChild, self, 1, POS_RIGHT, 0, "Currency", CURRENCY)
--- 		Create_CheckButtonNEW(SIXTH_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, OctoToDo_DB_Vars.config)
+-- 		Create_CheckButtonNEW(SIXTH_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, OctoToDo_DB_Vars)
 -- 		Create_SimpleButton_DATABASE(SIXTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, OctoToDo_DB_Config.CurrencyDB)
 -- 		Create_SimpleButton_DATABASE(SIXTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, OctoToDo_DB_Config.CurrencyDB)
 -- end)
@@ -1023,7 +1023,7 @@ SEVENTH_Config:SetScript("OnShow", function(self)
 			Create_CheckButtonNEW(SEVENTH_scrollChild, self, ConfigTable_SEVENTH_LEFT[i].qwe, POS_LEFT, ConfigTable_SEVENTH_LEFT[i].otstyp, ConfigTable_SEVENTH_LEFT[i].config, ConfigTable_SEVENTH_LEFT[i].text, ConfigTable_SEVENTH_LEFT[i].r, ConfigTable_SEVENTH_LEFT[i].g, ConfigTable_SEVENTH_LEFT[i].b, ConfigTable_SEVENTH_LEFT[i].a, ConfigTable_SEVENTH_LEFT[i].button, OctoToDo_DB_Config.ReputationDB)
 		end
 		Create_CheckButton(SEVENTH_scrollChild, self, 1, POS_RIGHT, 0, "Currency", CURRENCY)
-		Create_CheckButtonNEW(SEVENTH_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, OctoToDo_DB_Vars.config)
+		Create_CheckButtonNEW(SEVENTH_scrollChild, self, 1, POS_RIGHT+100, 0, "CurrencyShowAllways", "CurrencyShowAllways", r, g, b, a, true, OctoToDo_DB_Vars)
 		Create_SimpleButton_DATABASE(SEVENTH_scrollChild, self, 3, POS_RIGHT, L["Turn on"], true, OctoToDo_DB_Config.ReputationDB)
 		Create_SimpleButton_DATABASE(SEVENTH_scrollChild, self, 4, POS_RIGHT, L["Turn off"], false, OctoToDo_DB_Config.ReputationDB)
 end)

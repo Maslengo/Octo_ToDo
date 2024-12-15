@@ -33,7 +33,7 @@ end
 local openableScanQueued = false
 OctoToDo_AUTO_OPEN:SetScript("OnEvent", function(self, event, ...)
 		C_Timer.After(0.1, function()
-				if OctoToDo_DB_Vars.config.AutoOpen then
+				if OctoToDo_DB_Vars.AutoOpen then
 					if event == "BAG_UPDATE_DELAYED" then
 						if not InCombatLockdown() and isDead == false then
 							OpenableScan()

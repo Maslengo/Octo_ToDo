@@ -1,6 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local LibStub = LibStub
+local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
@@ -1431,20 +1432,22 @@ function E:func_SetBackdrop(frame, hexcolor, alpha)
 end
 ----------------------------------------------------------------
 function E:func_CreateUtilsButton(frame)
+	----------------------------------------------------------------
 	-- OctoToDo_CloseButton
-	local OctoToDo_CloseButton = CreateFrame("Button", "OctoToDo_CloseButton", frame, "BackDropTemplate")
+	----------------------------------------------------------------
+	local OctoToDo_CloseButton = CreateFrame("Button", "OctoToDo_CloseButton", frame)
 	OctoToDo_CloseButton:SetSize(E.curHeight, E.curHeight)
 	OctoToDo_CloseButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 0)
-	OctoToDo_CloseButton:HookScript("OnEnter", function(self)
+	OctoToDo_CloseButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
-			GameTooltip:AddLine(classColorHexCurrent..CLOSE.."|r")
+			GameTooltip:AddLine(E.WOW_Artifact_Color..CLOSE.."|r")
 			GameTooltip:Show()
 	end)
-	OctoToDo_CloseButton:HookScript("OnClick", function()
+	OctoToDo_CloseButton:SetScript("OnClick", function()
 			frame:Hide()
 	end)
-	OctoToDo_CloseButton:HookScript("OnKeyDown", function(self, key)
+	OctoToDo_CloseButton:SetScript("OnKeyDown", function(self, key)
 			if key == GetBindingKey("TOGGLEGAMEMENU") then
 				self:GetParent():Hide()
 				self:SetPropagateKeyboardInput(false)
@@ -1452,19 +1455,25 @@ function E:func_CreateUtilsButton(frame)
 				self:SetPropagateKeyboardInput(true)
 			end
 	end)
+	OctoToDo_CloseButton:SetScript("OnLeave", function(self)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
 	OctoToDo_CloseButton.icon = OctoToDo_CloseButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_CloseButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga")
-	E:func_SetBackdrop(OctoToDo_CloseButton)
+	OctoToDo_CloseButton.icon:SetAllPoints()
+	----------------------------------------------------------------
 	-- OctoToDo_OptionsButton
-	local OctoToDo_OptionsButton = CreateFrame("Button", "OctoToDo_OptionsButton", frame, "BackDropTemplate")
+	----------------------------------------------------------------
+	local OctoToDo_OptionsButton = CreateFrame("Button", "OctoToDo_OptionsButton", frame)
 	OctoToDo_OptionsButton:SetSize(E.curHeight, E.curHeight)
 	OctoToDo_OptionsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*1, 0)
-	OctoToDo_OptionsButton:HookScript("OnEnter", function(self)
+	OctoToDo_OptionsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:AddLine(classColorHexCurrent..OPTIONS.."|r")
+			GameTooltip:AddLine(E.WOW_Artifact_Color..OPTIONS.."|r")
 			GameTooltip:Show()
 	end)
-	OctoToDo_OptionsButton:HookScript("OnClick", function()
+	OctoToDo_OptionsButton:SetScript("OnClick", function()
 			-- frame:SetShown(not frame:IsShown())
 			if frame and frame:IsShown() then
 				frame:Hide()
@@ -1475,18 +1484,232 @@ function E:func_CreateUtilsButton(frame)
 				Settings.OpenToCategory(E.func_AddonTitle(GlobalAddonName), true)
 			end
 	end)
+	OctoToDo_OptionsButton:SetScript("OnLeave", function(self)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
 	OctoToDo_OptionsButton.icon = OctoToDo_OptionsButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_OptionsButton.icon:SetTexture(E.AddonTexture_1)
-	E:func_SetBackdrop(OctoToDo_OptionsButton)
+	OctoToDo_OptionsButton.icon:SetAllPoints()
+	----------------------------------------------------------------
+	-- OctoToDo_AbandonButton
+	----------------------------------------------------------------
+	local function AbandonQuests()
+		local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
+		local numQuests = E.func_CurrentNumQuests()
+		for i = 1, numShownEntries do
+			if numQuests ~= 0 then
+				local info = C_QuestLog.GetInfo(i)
+				if info then
+					if (not info.isHeader and not info.isHidden) then
+						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
+						C_QuestLog.SetSelectedQuest(info.questID)
+						C_QuestLog.SetAbandonQuest()
+						C_QuestLog.AbandonQuest()
+					end
+				end
+			end
+		end
+		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
+	end
+	----------------------------------------------------------------
+	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
+		text = E.Red_Color.."!!! ACHTUNG !!!|r\n"..E.WOW_Artifact_Color.."Отменить все задания?|r",
+		button1 = YES,
+		button2 = NO,
+		hideOnEscape = 1,
+		whileDead = 1,
+		OnAccept = function()
+			C_Timer.After(1, AbandonQuests)
+		end,
+	}
+	local OctoToDo_AbandonButton = CreateFrame("Button", "OctoToDo_AbandonButton", frame)
+	OctoToDo_AbandonButton:SetSize(E.curHeight, E.curHeight)
+	OctoToDo_AbandonButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*2, 0)
+	OctoToDo_AbandonButton:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			if E.func_CurrentNumQuests() > 0 then
+				GameTooltip:AddLine(E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..E.func_CurrentNumQuests()..")")
+				GameTooltip:AddLine(" ")
+			else
+				GameTooltip:AddLine(L["No quests"], r, g, b)
+			end
+			local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
+			local list = {}
+			for i = 1, numShownEntries do
+				if E.func_CurrentNumQuests() ~= 0 then
+					local info = C_QuestLog.GetInfo(i)
+					if info then
+						if info.questID ~= 0 then
+							if (not info.isHeader and not info.isHidden) then
+								tinsert(list, info.questID)
+							else
+							end
+						end
+					end
+				end
+			end
+			sort(list, E.func_Reverse_order)
+			for k, questID in next, (list) do
+				GameTooltip:AddDoubleLine(E.func_questName(questID),E.func_CheckCompletedByQuestID(questID) , 1, 1, 1, 1, 1, 1)
+			end
+			GameTooltip:Show()
+	end)
+	OctoToDo_AbandonButton:SetScript("OnLeave", function(self)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	OctoToDo_AbandonButton:SetScript("OnClick", function()
+			if E.func_CurrentNumQuests() > 0 then
+				StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
+			end
+	end)
+	OctoToDo_AbandonButton.icon = OctoToDo_AbandonButton:CreateTexture(nil, "BACKGROUND")
+	OctoToDo_AbandonButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga")
+	OctoToDo_AbandonButton.icon:SetAllPoints()
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- OctoToDo_MplusButton
+	----------------------------------------------------------------
+	local OctoToDo_MplusButton = CreateFrame("Button", "OctoToDo_MplusButton", frame)
+	OctoToDo_MplusButton:SetSize(E.curHeight, E.curHeight)
+	OctoToDo_MplusButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*3, 0)
+	local list = {}
+	OctoToDo_MplusButton:SetScript("OnEnter", function(self)
+			local i = 0
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			GameTooltip:AddLine(E.WOW_Artifact_Color.."OctoToDo_MplusButton".."|r")
+			GameTooltip:AddDoubleLine(" ", " ")
+			list = {}
+			for dungeonID = 1, 1000 do
+				local name = E.func_dungeonName(dungeonID)
+				if name then
+					tinsert(list, dungeonID)
+				end
+			end
+			sort(list, E.func_Reverse_order)
+			for count, dungeonID in next, (list) do
+				local name = E.func_dungeonName(dungeonID)
+				local timeLimit = E.func_dungeontimeLimit(dungeonID)
+				local icon = E.func_dungeonIcon(dungeonID)
+				i = i + 1
+				local vivod_LEFT = E.func_texturefromIcon(icon) .. name
+				local vivod_RIGHT = E.Gray_Color.."icon:|r"..E.Green_Color..icon.."|r "..E.Gray_Color.."time:|r"..E.Green_Color..E.func_SecondsToClock(timeLimit).."|r"
+				GameTooltip:AddDoubleLine(vivod_LEFT, vivod_RIGHT, 1, 1, 1, 1, 1, 1)
+			end
+			if i == 0 then
+				GameTooltip:AddLine(E.WOW_Artifact_Color.."No Data".."|r")
+				OctoToDo_MplusButton:Hide()
+			end
+			GameTooltip:AddDoubleLine(" ", " ")
+			GameTooltip:Show()
+	end)
+	OctoToDo_MplusButton:SetScript("OnLeave", function(self)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	OctoToDo_MplusButton:SetScript("OnClick", function()
+			frame:Hide()
+			fpde(list)
+	end)
+	OctoToDo_MplusButton.icon = OctoToDo_MplusButton:CreateTexture(nil, "BACKGROUND")
+	OctoToDo_MplusButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga")
+	OctoToDo_MplusButton.icon:SetAllPoints()
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- OctoToDo_ItemsButton
+	----------------------------------------------------------------
+	local OctoToDo_ItemsButton = CreateFrame("Button", "OctoToDo_ItemsButton", frame)
+	OctoToDo_ItemsButton:SetSize(E.curHeight, E.curHeight)
+	OctoToDo_ItemsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*4, 0)
+	OctoToDo_ItemsButton:SetScript("OnEnter", function(self)
+			local i = 0
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			GameTooltip:AddLine(E.WOW_Artifact_Color.."OctoToDo_ItemsButton".."|r")
+			GameTooltip:AddDoubleLine(" ", " ")
+			for _, itemID in next, (E.OctoTable_itemID_Config) do
+				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+					if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 then
+						i = i + 1
+						GameTooltip:AddDoubleLine(E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID].." "..CharInfo.classColorHex..CharInfo.Name.."|r "..CharInfo.curServerShort)
+					end
+				end
+			end
+			if i == 0 then
+				GameTooltip:AddLine(E.WOW_Artifact_Color.."No Data".."|r")
+			end
+			GameTooltip:AddDoubleLine(" ", " ")
+			GameTooltip:Show()
+	end)
+	OctoToDo_ItemsButton:SetScript("OnLeave", function(self)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	OctoToDo_ItemsButton:SetScript("OnClick", function()
+			local curGUID = UnitGUID("PLAYER")
+			frame:Hide()
+			for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+				if curCharGUID == curGUID then
+					fpde(CharInfo)
+				end
+			end
+	end)
+	OctoToDo_ItemsButton.icon = OctoToDo_ItemsButton:CreateTexture(nil, "BACKGROUND")
+	OctoToDo_ItemsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow21.tga")
+	OctoToDo_ItemsButton.icon:SetAllPoints()
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- OctoToDo_EventsButton
+	----------------------------------------------------------------
+	-- local OctoToDo_EventsButton = CreateFrame("Button", "OctoToDo_EventsButton", frame, "BackDropTemplate")
+	local OctoToDo_EventsButton = CreateFrame("Button", "OctoToDo_EventsButton", frame)
+	OctoToDo_EventsButton:SetSize(E.curHeight, E.curHeight)
+	OctoToDo_EventsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*5, 0)
+	OctoToDo_EventsButton:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(date("%d/%m/%Y").."|r"))
+			GameTooltip:AddDoubleLine(" ", " ")
+			local count = 0
+			for eventID, v in pairs(OctoToDo_DB_Other.Holiday.Active) do
+				count = count + 1
+				GameTooltip:AddDoubleLine(OctoToDo_DB_Other.Holiday.Active[eventID].title, OctoToDo_DB_Other.Holiday.Active[eventID].startTime.." - "..OctoToDo_DB_Other.Holiday.Active[eventID].endTime)
+			end
+			print (count)
+			if count == 0 then
+				GameTooltip:AddLine("No Data")
+			end
+			GameTooltip:AddDoubleLine(" ", " ")
+			GameTooltip:Show()
+	end)
+	OctoToDo_EventsButton:SetScript("OnLeave", function(self)
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
+	end)
+	OctoToDo_EventsButton:SetScript("OnClick", function()
+			frame:Hide()
+			fpde(OctoToDo_DB_Other.Holiday.Active)
+	end)
+	OctoToDo_EventsButton.icon = OctoToDo_EventsButton:CreateTexture(nil, "BACKGROUND")
+	OctoToDo_EventsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga")
+	OctoToDo_EventsButton.icon:SetAllPoints()
+	-- E:func_SetBackdrop(OctoToDo_EventsButton)
 end
 ----------------------------------------------------------------
 function E:func_CreateMinimapButton(addonName, vars, frame, func)
-
 	local info = {
 			type = "data source",
 			text = MinimapName,
 			icon = E.func_AddonIconTexture(addonName),
-
 			OnEnter = function(self)
 				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
 				GameTooltip_SetTitle(GameTooltip, E.func_AddonTitle(addonName))
@@ -1496,7 +1719,6 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 				GameTooltip:Hide()
 			end,
 	}
-
 	if func then
 		info.OnClick = func
 	else
@@ -1510,17 +1732,10 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 	end
 	local MinimapName = E.func_AddonTitle(addonName)
 	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
-
-
 	if vars.minimapPos == nil then vars.minimapPos = 244 end
 	LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
 	LibDBIcon:Show(MinimapName)
 end
-
-
-
-
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1542,6 +1757,45 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
-
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

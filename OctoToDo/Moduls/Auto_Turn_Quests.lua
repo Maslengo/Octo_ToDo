@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Turn_Quests
 tinsert(E.Modules, function()
-		if OctoToDo_DB_Vars.config.AutoTurnQuests then
+		if OctoToDo_DB_Vars.AutoTurnQuests then
 			local OctoToDo_AutoTurnInFrame_EventFrame = nil
 			function OctoToDo_AutoTurnInOnLoad()
 				if not OctoToDo_AutoTurnInFrame_EventFrame then

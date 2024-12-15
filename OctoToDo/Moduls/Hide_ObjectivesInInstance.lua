@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 --Hide_ObjectivesInInstance
 tinsert(E.Modules, function()
-		if OctoToDo_DB_Vars.config.Hide_ObjectivesInInstance then
+		if OctoToDo_DB_Vars.Hide_ObjectivesInInstance then
 			-- local className, classFilename, classId = UnitClass("PLAYER")
 			-- local classColor = C_ClassColor.GetClassColor(classFilename)
 			-- local r, g, b = classColor:GetRGB()

@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local FieldOfView_EventFrame = nil
 function func_FieldOfView()
-	if OctoToDo_DB_Vars.config.FieldOfView == true then
+	if OctoToDo_DB_Vars.FieldOfView == true then
 		print ("QWE")
 		function FieldOfView_OnLoad()
 			print ("FieldOfView_OnLoad")
@@ -20,11 +20,11 @@ function func_FieldOfView()
 			print ("FieldOfView_OnEvent")
 			if event == "VARIABLES_LOADED" and not InCombatLockdown() then
 				OctoToDo_DB_Vars = OctoToDo_DB_Vars or {}
-				OctoToDo_DB_Vars.config = OctoToDo_DB_Vars.config or {}
-				if OctoToDo_DB_Vars.config.FoV_top == nil then OctoToDo_DB_Vars.config.FoV_top = 0 end
-				if OctoToDo_DB_Vars.config.FoV_bottom == nil then OctoToDo_DB_Vars.config.FoV_bottom = 0 end
-				if OctoToDo_DB_Vars.config.FoV_left == nil then OctoToDo_DB_Vars.config.FoV_left = 0 end
-				if OctoToDo_DB_Vars.config.FoV_right == nil then OctoToDo_DB_Vars.config.FoV_right = 0 end
+				OctoToDo_DB_Vars = OctoToDo_DB_Vars or {}
+				if OctoToDo_DB_Vars.FoV_top == nil then OctoToDo_DB_Vars.FoV_top = 0 end
+				if OctoToDo_DB_Vars.FoV_bottom == nil then OctoToDo_DB_Vars.FoV_bottom = 0 end
+				if OctoToDo_DB_Vars.FoV_left == nil then OctoToDo_DB_Vars.FoV_left = 0 end
+				if OctoToDo_DB_Vars.FoV_right == nil then OctoToDo_DB_Vars.FoV_right = 0 end
 			end
 			if event == "PLAYER_LOGIN" and not InCombatLockdown() then
 				C_Timer.After(0, function()
@@ -43,8 +43,8 @@ function func_FieldOfView()
 		function FieldOfView_function()
 			print ("FieldOfView_function")
 			local scale = GetPhysicalScreenSize()/WorldFrame:GetWidth() -- 1.4
-			if OctoToDo_DB_Vars.config.FoV_top and OctoToDo_DB_Vars.config.FoV_bottom and OctoToDo_DB_Vars.config.FoV_left and OctoToDo_DB_Vars.config.FoV_right then
-				change_worldframe_setpoints(OctoToDo_DB_Vars.config.FoV_top, OctoToDo_DB_Vars.config.FoV_bottom, OctoToDo_DB_Vars.config.FoV_left, OctoToDo_DB_Vars.config.FoV_right, scale)
+			if OctoToDo_DB_Vars.FoV_top and OctoToDo_DB_Vars.FoV_bottom and OctoToDo_DB_Vars.FoV_left and OctoToDo_DB_Vars.FoV_right then
+				change_worldframe_setpoints(OctoToDo_DB_Vars.FoV_top, OctoToDo_DB_Vars.FoV_bottom, OctoToDo_DB_Vars.FoV_left, OctoToDo_DB_Vars.FoV_right, scale)
 			end
 		end
 		FieldOfView_OnLoad()

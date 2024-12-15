@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------------------------------------------------------------------------
 -- Auto_Screenshot
 tinsert(E.Modules, function()
-		if OctoToDo_DB_Vars.config.Auto_Screenshot then
+		if OctoToDo_DB_Vars.Auto_Screenshot then
 			local EventFrame = nil
 			local function OctoToDo_OnLoad()
 				if not EventFrame then

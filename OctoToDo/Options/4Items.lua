@@ -21,10 +21,10 @@ function E.Items()
 				name = ITEMS,
 				desc = "",
 				get = function()
-					return OctoToDo_DB_Vars.config.Items
+					return OctoToDo_DB_Vars.Items
 				end,
 				set = function(_, value)
-					OctoToDo_DB_Vars.config.Items = value
+					OctoToDo_DB_Vars.Items = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 3,
@@ -35,10 +35,10 @@ function E.Items()
 				name = BATTLEFIELD_MINIMAP_SHOW_ALWAYS,
 				desc = "",
 				get = function()
-					return OctoToDo_DB_Vars.config.ItemsShowAllways
+					return OctoToDo_DB_Vars.ItemsShowAllways
 				end,
 				set = function(_, value)
-					OctoToDo_DB_Vars.config.ItemsShowAllways = value
+					OctoToDo_DB_Vars.ItemsShowAllways = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 4,
