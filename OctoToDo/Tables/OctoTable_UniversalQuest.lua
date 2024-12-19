@@ -1367,18 +1367,6 @@ E.OctoTable_UniversalQuest = {
 		max = 36
 	},
 	{
-		name_save = "ZMGetLockStatus",
-		reset = "Daily",
-		desc = "Shadowlands",
-		questID = {
-			65589,
-			65590,
-			65591,
-			65592,
-		},
-		max = 4
-	},
-	{
 		name_save = "ZMUndulatingFoliage",
 		reset = "Once",
 		desc = "Shadowlands",

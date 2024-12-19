@@ -16,19 +16,19 @@ OctoToDo_EventFrame_Achievements:Hide()
 OctoToDo_EventFrame_Achievements:RegisterEvent("ADDON_LOADED")
 OctoToDo_EventFrame_Achievements:RegisterEvent("PLAYER_REGEN_DISABLED")
 ----------------------------------------------------------------
-local AddonHeight = 20 -- Высота
+local AddonHeight = 18 -- Высота
 local AddonRightFrameWeight = 240/2 -- Ширина
 local AddonLeftFrameWeight = 240
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
-local row = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
--- дефолт 20
+local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
+-- дефолт 30
 local MainFrameNumLines = 30
-if MainFrameNumLines > row then
-	MainFrameNumLines = row
+if MainFrameNumLines > NumberOfLines then
+	MainFrameNumLines = NumberOfLines
 end
 ----------------------------------------------------------------
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
-local function DropDownMenuSearchButton_OnAcquired(owner, frame, data, new)
+local function OnAcquired(owner, frame, data, new)
 	if new then
 		frame.left = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
 		frame.left:SetPropagateMouseClicks(true)
@@ -40,7 +40,6 @@ local function DropDownMenuSearchButton_OnAcquired(owner, frame, data, new)
 		frame.left.text:SetJustifyV("MIDDLE")
 		frame.left.text:SetJustifyH("CENTER")
 		frame.left.text:SetTextColor(1, 1, 1, 1)
-
 		frame.right = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
 		frame.right:SetPropagateMouseClicks(true)
 		frame.right:SetSize(AddonRightFrameWeight, AddonHeight)
@@ -61,8 +60,7 @@ local function OctoToDo_Frame_init(frame, data)
 	E:func_SetBackdrop(frame.left, nil, 0)
 	E:func_SetBackdrop(frame.right, hexcolor, E.bgCa/2)
 end
-
-function OctoToDo_EventFrame_Achievements:OctoToDo_THIRD_CreateMainFrame()
+function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
 	local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
 	OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_Achievements:Hide()
@@ -76,7 +74,7 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_THIRD_CreateMainFrame()
 	OctoToDo_MainFrame_Achievements.view = CreateScrollBoxListLinearView()
 	OctoToDo_MainFrame_Achievements.view:SetElementExtent(AddonHeight)
 	OctoToDo_MainFrame_Achievements.view:SetElementInitializer("BackdropTemplate", OctoToDo_Frame_init)
-	OctoToDo_MainFrame_Achievements.view:RegisterCallback(OctoToDo_MainFrame_Achievements.view.Event.OnAcquiredFrame, DropDownMenuSearchButton_OnAcquired, OctoToDo_MainFrame_Achievements)
+	OctoToDo_MainFrame_Achievements.view:RegisterCallback(OctoToDo_MainFrame_Achievements.view.Event.OnAcquiredFrame, OnAcquired, OctoToDo_MainFrame_Achievements)
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar, OctoToDo_MainFrame_Achievements.view)
 	-- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar)
@@ -104,17 +102,11 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_THIRD_CreateMainFrame()
 	----------------------------------------------------------------
 	self:func_DataProvider()
 end
-
-
-
-
-
-
 function OctoToDo_EventFrame_Achievements:func_DataProvider()
 	local DataProvider = CreateDataProvider()
 	local count = 0
 	for categoryID, v in next, (OctoToDo_Achievements.AchievementToShow) do
-		local ACHr, ACHg, ACHb = E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor()),E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor()),E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor())
+		local ACHr, ACHg, ACHb = E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor()), E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor()), E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor())
 		local total = GetCategoryNumAchievements(categoryID, true)
 		if total then
 			for i = 1, total do
@@ -134,7 +126,6 @@ function OctoToDo_EventFrame_Achievements:func_DataProvider()
 			end
 		end
 	end
-
 	if count > 0 and count < MainFrameNumLines then
 		OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*count)
 	elseif count == 0 then
@@ -142,27 +133,17 @@ function OctoToDo_EventFrame_Achievements:func_DataProvider()
 	end
 	-- local curHeight = count * AddonHeight
 	-- curHeight = min(max(curHeight, AddonHeight), AddonHeight*MainFrameNumLines)
-
 	-- OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, curHeight)
-
-
-
 	OctoToDo_MainFrame_Achievements.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
-
-
-
-
-
-
-function OctoToDo_EventFrame_Achievements:func_CreateDDframe()
+function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 	local dd_SECOND = CreateFrame("Button", "dd_SECOND", OctoToDo_MainFrame_Achievements, "SecureActionButtonTemplate, BackDropTemplate")
 	local multiply = 2/3
 	dd_SECOND:SetSize(AddonLeftFrameWeight/2, AddonHeight)
 	-- dd_SECOND:SetBackdrop({
-	--         bgFile = E.bgFile,
-	--         edgeFile = E.edgeFile,
-	--         edgeSize = 1
+	--     bgFile = E.bgFile,
+	--     edgeFile = E.edgeFile,
+	--     edgeSize = 1
 	-- })
 	-- dd_SECOND:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 	-- dd_SECOND:SetBackdropBorderColor(0, 0, 0, 1)
@@ -242,11 +223,6 @@ function OctoToDo_EventFrame_Achievements:func_CreateDDframe()
 					info.value = categoryID
 					info.checked = OctoToDo_Achievements.AchievementToShow[categoryID]
 					info.func = selectFunctionAchievementToShow
-
-
-
-
-
 					tinsert(list, info)
 					-- self:ddAddButton(info, level)
 					----------------------------------------------------------------
@@ -264,7 +240,7 @@ function OctoToDo_EventFrame_Achievements:func_CreateDDframe()
 				info.text = "Показывать завершенные"
 				info.hasArrow = nil
 				info.checked = OctoToDo_Achievements.AchievementShowCompleted
-				info.func = function(_,_,_, checked)
+				info.func = function(_, _, _, checked)
 					OctoToDo_Achievements.AchievementShowCompleted = checked
 					OctoToDo_EventFrame_Achievements:func_DataProvider()
 				end
@@ -276,7 +252,6 @@ function OctoToDo_EventFrame_Achievements:func_CreateDDframe()
 end
 ----------------------------------------------------------------
 OctoToDo_EventFrame_Achievements:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
-
 function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
@@ -286,15 +261,15 @@ function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 		if OctoToDo_Achievements.AchievementShowCompleted == nil then OctoToDo_Achievements.AchievementShowCompleted = true end
 		if OctoToDo_Achievements.AchievementToShow == nil then OctoToDo_Achievements.AchievementToShow = {[92] = true} end
 		----------------------------------------------------------------
-		self:OctoToDo_THIRD_CreateMainFrame()
-		self:func_CreateDDframe()
+		self:OctoToDo_Create_MainFrame_Achievements()
+		E:func_ResetFramePoint(OctoToDo_MainFrame_Achievements)
+		self:func_Create_DDframe_Achievements()
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_Achievements)
 		E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_Achievements, OctoToDo_MainFrame_Achievements)
 		----------------------------------------------------------------
 	end
 end
-
 function OctoToDo_EventFrame_Achievements:PLAYER_REGEN_DISABLED()
 	if OctoToDo_MainFrame_Achievements and OctoToDo_MainFrame_Achievements:IsShown() then
 		OctoToDo_MainFrame_Achievements:Hide()

@@ -2,13 +2,13 @@ local GlobalAddonName, ns = ...
 local E = OctoToDo_ToDO_E
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
-	local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
-	f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-	f:SetPoint("TOPLEFT", 8, -2)
-	f:SetPoint("BOTTOMRIGHT", -8, 2)
-	f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
-	f:SetBackdropBorderColor(0, 0, 0, 1)
-	return f
+		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
+		f:SetPoint("TOPLEFT", 8, -2)
+		f:SetPoint("BOTTOMRIGHT", -8, 2)
+		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+		f:SetBackdropBorderColor(0, 0, 0, 1)
+		return f
 end)
 ----------------------------------------------------------------
 local OctoToDo_EventFrame_Minecraft = CreateFrame("FRAME")
@@ -21,19 +21,19 @@ local AddonRightFrameWeight = 1190/2 -- Ширина
 local AddonLeftFrameWeight = 240
 local MinecraftTable = ns.OctoTable_MinecraftColors2
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
-local row = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
--- дефолт 20
+local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
+-- дефолт 15
 local MainFrameNumLines = 15
 if MainFrameNumLines > #MinecraftTable then
 	MainFrameNumLines = #MinecraftTable
 end
-if MainFrameNumLines > row then
-	MainFrameNumLines = row
+if MainFrameNumLines > NumberOfLines then
+	MainFrameNumLines = NumberOfLines
 end
 local texture = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft ALL.tga"
 ----------------------------------------------------------------
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
-local function DropDownMenuSearchButton_OnAcquired(owner, frame, data, new)
+local function OnAcquired(owner, frame, data, new)
 	if new then
 		frame.left = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
 		frame.left:SetPropagateMouseClicks(true)
@@ -74,7 +74,7 @@ local function OctoToDo_Frame_init(frame, data)
 	E:func_SetBackdrop(frame.left)
 	E:func_SetBackdrop(frame.right)
 end
-function OctoToDo_EventFrame_Minecraft:OctoToDo_THIRD_CreateMainFrame()
+function OctoToDo_EventFrame_Minecraft:OctoToDo_Create_MainFrame_Minecraft()
 	local OctoToDo_MainFrame_Minecraft = CreateFrame("BUTTON", "OctoToDo_MainFrame_Minecraft", UIParent, "BackdropTemplate")
 	OctoToDo_MainFrame_Minecraft:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_Minecraft:Hide()
@@ -88,7 +88,7 @@ function OctoToDo_EventFrame_Minecraft:OctoToDo_THIRD_CreateMainFrame()
 	OctoToDo_MainFrame_Minecraft.view = CreateScrollBoxListLinearView()
 	OctoToDo_MainFrame_Minecraft.view:SetElementExtent(AddonHeight)
 	OctoToDo_MainFrame_Minecraft.view:SetElementInitializer("BackdropTemplate", OctoToDo_Frame_init)
-	OctoToDo_MainFrame_Minecraft.view:RegisterCallback(OctoToDo_MainFrame_Minecraft.view.Event.OnAcquiredFrame, DropDownMenuSearchButton_OnAcquired, OctoToDo_MainFrame_Minecraft)
+	OctoToDo_MainFrame_Minecraft.view:RegisterCallback(OctoToDo_MainFrame_Minecraft.view.Event.OnAcquiredFrame, OnAcquired, OctoToDo_MainFrame_Minecraft)
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_Minecraft.ScrollBox, OctoToDo_MainFrame_Minecraft.ScrollBar, OctoToDo_MainFrame_Minecraft.view)
 	-- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_Minecraft.ScrollBox, OctoToDo_MainFrame_Minecraft.ScrollBar)
@@ -132,7 +132,10 @@ function OctoToDo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		OctoToDo_Minecraft = OctoToDo_Minecraft or {}
 		----------------------------------------------------------------
-		self:OctoToDo_THIRD_CreateMainFrame()
+		self:OctoToDo_Create_MainFrame_Minecraft()
+		E:func_ResetFramePoint(OctoToDo_MainFrame_Minecraft)
+		-- OctoToDo_MainFrame_Minecraft:ClearAllPoints()
+		-- OctoToDo_MainFrame_Minecraft:SetPoint("CENTER", UIParent)
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_Minecraft)
 		----------------------------------------------------------------
 		E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_Minecraft, OctoToDo_MainFrame_Minecraft)
@@ -144,3 +147,4 @@ function OctoToDo_EventFrame_Minecraft:PLAYER_REGEN_DISABLED()
 		OctoToDo_MainFrame_Minecraft:Hide()
 	end
 end
+

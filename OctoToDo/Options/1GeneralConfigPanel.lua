@@ -572,20 +572,20 @@ function E.CreateGeneralOptions()
 				order = 49,
 			},
 			-------------------------------------------------
-			["ExpansionToShow"] = {
-				type = "select",
-				name = "ExpansionToShow",
-				values = {},
-				desc = "",
-				get = function()
-					return OctoToDo_DB_Vars.ExpansionToShow
-				end,
-				set = function(_, value)
-					OctoToDo_DB_Vars.ExpansionToShow = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 3,
-			},
+			-- ["ExpansionToShow"] = {
+			-- 	type = "select",
+			-- 	name = "ExpansionToShow",
+			-- 	values = {},
+			-- 	desc = "",
+			-- 	get = function()
+			-- 		return OctoToDo_DB_Vars.ExpansionToShow
+			-- 	end,
+			-- 	set = function(_, value)
+			-- 		OctoToDo_DB_Vars.ExpansionToShow = value
+			-- 	end,
+			-- 	width = E.FULL_WIDTH/4,
+			-- 	order = 3,
+			-- },
 			-------------------------------------------------
 			["prefix"] = {
 				type = "select",
@@ -607,9 +607,9 @@ function E.CreateGeneralOptions()
 	-- if wipe == false then
 	-- wipe = true
 	-------------------------------------------------
-	for index, v in ipairs(E.OctoTable_Expansions_Table) do
-		generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r"
-	end
+	-- for index, v in ipairs(E.OctoTable_Expansions_Table) do
+	-- 	generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r"
+	-- end
 	-------------------------------------------------
 	for index, name in ipairs(E.OctoTable_Prefixes) do
 		generalOptions.args.prefix.values[index] = name

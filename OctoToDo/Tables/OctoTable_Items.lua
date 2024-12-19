@@ -831,7 +831,6 @@ E.OctoTable_itemID_ItemsUsable_Mount = {
 }
 E.OctoTable_itemID_ItemsUsable_Other = {
 	43518, -- СТАРЫЕ БУЛКИ МАГА
-	74838, -- TEST
 	38380,
 	39158,
 	39314,

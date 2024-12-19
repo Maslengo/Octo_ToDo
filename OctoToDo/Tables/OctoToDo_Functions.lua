@@ -6,7 +6,7 @@ local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
 local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
-local ShowIDS = false
+local ShowIDS = true
 -- ITEMS
 local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
 local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
@@ -1376,7 +1376,7 @@ function E.func_coloredText(fontstring)
 	return E.func_rgb2hex(r, g, b, a)..text.."|r"
 end
 ----------------------------------------------------------------
-function E:func_SetBackdrop(frame, hexcolor, alpha)
+function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, BackdropBorderAlpha)
 	local _, classFilename = UnitClass("PLAYER")
 	local r, g, b = GetClassColor(classFilename)
 	local bgCr, bgCg, bgCb, bgCa = E.bgCr, E.bgCg, E.bgCb, E.bgCa
@@ -1384,9 +1384,14 @@ function E:func_SetBackdrop(frame, hexcolor, alpha)
 	if hexcolor then
 		bgCr, bgCg, bgCb, bgCa = self.func_hex2rgbNUMBER(hexcolor)
 	end
-	if alpha then
-		bgCa = alpha
+	if BackdropAlpha then
+		bgCa = BackdropAlpha
 	end
+	local bbalpha = 1
+	if BackdropBorderAlpha then
+		bbalpha = BackdropBorderAlpha
+	end
+
 	frame:SetBackdrop({
 			bgFile = E.bgFile,
 			edgeFile = E.edgeFile,
@@ -1394,10 +1399,10 @@ function E:func_SetBackdrop(frame, hexcolor, alpha)
 			insets = {left = 1, right = 1, top = 1, bottom = 1},
 	})
 	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	frame:SetBackdropBorderColor(0, 0, 0, 1)
+	frame:SetBackdropBorderColor(0, 0, 0, bbalpha)
 	-- frame:SetScript("OnShow", function(self)
 	--         self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	--         self:SetBackdropBorderColor(0, 0, 0, 1)
+	--         self:SetBackdropBorderColor(0, 0, 0, bbalpha)
 	-- end)
 	frame:SetScript("OnEnter", function(self)
 			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
@@ -1405,7 +1410,7 @@ function E:func_SetBackdrop(frame, hexcolor, alpha)
 	end)
 	frame:SetScript("OnLeave", function(self)
 			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-			self:SetBackdropBorderColor(0, 0, 0, 1)
+			self:SetBackdropBorderColor(0, 0, 0, bbalpha)
 	end)
 	if frame.icon then
 		frame.icon:SetAllPoints(frame)
@@ -1422,11 +1427,11 @@ function E:func_SetBackdrop(frame, hexcolor, alpha)
 		end)
 		frame:SetScript("OnMouseDown", function(self)
 				self.icon:SetVertexColor(1, 0, 0, .5)
-				self:SetBackdropBorderColor(1, 0, 0, 1)
+				self:SetBackdropBorderColor(1, 0, 0, bbalpha)
 		end)
 		frame:SetScript("OnMouseUp", function(self)
 				self.icon:SetVertexColor(r, g, b, 1)
-				self:SetBackdropBorderColor(r, g, b, 1)
+				self:SetBackdropBorderColor(r, g, b, bbalpha)
 		end)
 	end
 end
@@ -1684,7 +1689,6 @@ function E:func_CreateUtilsButton(frame)
 				count = count + 1
 				GameTooltip:AddDoubleLine(OctoToDo_DB_Other.Holiday.Active[eventID].title, OctoToDo_DB_Other.Holiday.Active[eventID].startTime.." - "..OctoToDo_DB_Other.Holiday.Active[eventID].endTime)
 			end
-			print (count)
 			if count == 0 then
 				GameTooltip:AddLine("No Data")
 			end
@@ -1726,6 +1730,8 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 			if button == "LeftButton" then
 				if not InCombatLockdown() then
 					frame:SetShown(not frame:IsShown())
+					-- frame:ClearAllPoints()
+					-- frame:SetPoint("CENTER", UIParent)
 				end
 			end
 		end
@@ -1737,6 +1743,11 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 	LibDBIcon:Show(MinimapName)
 end
 ----------------------------------------------------------------
+function E:func_ResetFramePoint(frame)
+	print ("func_ResetFramePoint", tostringall(frame))
+	frame:ClearAllPoints()
+	frame:SetPoint("CENTER", UIParent)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
