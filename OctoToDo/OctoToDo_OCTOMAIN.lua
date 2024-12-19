@@ -445,7 +445,7 @@ end
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
 		------------------------------------------------
-		frame.left = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+		frame.left = CreateFrame("FRAME", "frame.left", frame, "BackdropTemplate")
 		frame.left:SetPropagateMouseClicks(true)
 		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
@@ -457,7 +457,7 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.left.text:SetTextColor(1, 1, 1, 1)
 		------------------------------------------------
 		for NumPlayers = 1, func_NumPlayers() do
-			frame[NumPlayers] = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+			frame[NumPlayers] = CreateFrame("FRAME", "frame"..NumPlayers, frame, "BackdropTemplate")
 			frame[NumPlayers]:SetPropagateMouseClicks(true)
 			frame[NumPlayers]:SetSize(AddonRightFrameWeight, AddonHeight)
 			frame[NumPlayers]:SetPoint("TOPLEFT", frame.left, "TOPLEFT", (AddonLeftFrameWeight-AddonRightFrameWeight)+(AddonRightFrameWeight*NumPlayers), 0)
@@ -473,11 +473,9 @@ local function func_OnAcquired(owner, frame, data, new)
 end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
-	frame.left.text:SetText(data.lefttext)
-	E:func_SetBackdrop(frame.left) --, data.hexcolor, .1, 1)
-	for NumPlayers = 1, func_NumPlayers() do
-		frame[NumPlayers].text:SetText(data.righttext)
-		E:func_SetBackdrop(frame[NumPlayers]) -- , data.hexcolor, .1, 1)
+	frame.left.text:SetText(data[1])
+	for NumPlayers = 2, #data do
+		frame[NumPlayers].text:SetText(data[NumPlayers])
 	end
 	-- E:func_SetBackdrop(frame.left, nil, 0, 0)
 	-- E:func_SetBackdrop(frame[NumPlayers], nil, 0, 0)
@@ -486,17 +484,19 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	local OctoToDo_MainFrame_OCTOMAIN = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOMAIN", UIParent, "BackdropTemplate")
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN:Hide()
-	OctoToDo_MainFrame_OCTOMAIN.ScrollBox = CreateFrame("FRAME", nil, OctoToDo_MainFrame_OCTOMAIN, "WowScrollBoxList")
+	OctoToDo_MainFrame_OCTOMAIN.ScrollBox = CreateFrame("FRAME", "ScrollBox", OctoToDo_MainFrame_OCTOMAIN, "WowScrollBoxList")
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetAllPoints()
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetPropagateMouseClicks(true)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
-	OctoToDo_MainFrame_OCTOMAIN.ScrollBar = CreateFrame("EventFrame", nil, OctoToDo_MainFrame_OCTOMAIN, "MinimalScrollBar")
+	-- OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetHorizontal(true)
+	OctoToDo_MainFrame_OCTOMAIN.ScrollBar = CreateFrame("EventFrame", "ScrollBar", OctoToDo_MainFrame_OCTOMAIN, "MinimalScrollBar")
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBar:SetPoint("TOPLEFT", OctoToDo_MainFrame_OCTOMAIN.ScrollBox, "TOPRIGHT", 6, 0)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBar:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_OCTOMAIN.ScrollBox, "BOTTOMRIGHT", 6, 0)
 	OctoToDo_MainFrame_OCTOMAIN.view = CreateScrollBoxListLinearView()
 	OctoToDo_MainFrame_OCTOMAIN.view:SetElementExtent(AddonHeight)
 	OctoToDo_MainFrame_OCTOMAIN.view:SetElementInitializer("BackdropTemplate", OctoToDo_Frame_init)
 	OctoToDo_MainFrame_OCTOMAIN.view:RegisterCallback(OctoToDo_MainFrame_OCTOMAIN.view.Event.OnAcquiredFrame, func_OnAcquired, OctoToDo_MainFrame_OCTOMAIN)
+	-- OctoToDo_MainFrame_OCTOMAIN.view:SetHorizontal(true)
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_OCTOMAIN.ScrollBox, OctoToDo_MainFrame_OCTOMAIN.ScrollBar, OctoToDo_MainFrame_OCTOMAIN.view)
 	-- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_OCTOMAIN.ScrollBox, OctoToDo_MainFrame_OCTOMAIN.ScrollBar)
@@ -525,8 +525,6 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	self:func_DataProvider()
 end
 function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
-	local DataProvider = CreateDataProvider()
-	-- local count = 0
 	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
 	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
 	local LevelToShow = OctoToDo_DB_Vars.LevelToShow
@@ -579,211 +577,40 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	end)
 
 
+	local OctoTable_func_otrisovka = {}
 
 
-
-	for GUID, CharInfo in next, (sorted) do
-		-- count = count + 1
-		-- if curCharGUID == curGUID then
-		------------------------------------------------
-		DataProvider:Insert({
-				lefttext = E.Timers.Daily_Reset(),
-				righttext = CharInfo.classColorHex..CharInfo.Name.."|r",
-		})
-		-- Classic
-		if OctoToDo_DB_Vars.ExpansionToShow[1] == true then
+	for index, CharInfo in ipairs(sorted) do
+		local count = 1
+		-----------
+		-- 1 СТРОКА
+		-----------
+		OctoTable_func_otrisovka[count] = OctoTable_func_otrisovka[count] or {}
+		if index == 1 then
+			local lefttext = E.Timers.Daily_Reset()
+			tinsert(OctoTable_func_otrisovka[count], lefttext)
 		end
-		-- The Burning Crusade
-		if OctoToDo_DB_Vars.ExpansionToShow[2] == true then
-			-- DataProvider:Insert({
-			--         lefttext = E.func_itemTexture(23572)..E.func_itemName(23572),
-			--         righttext = CharInfo.MASLENGO.ItemsInBag[23572],
-			--         hexcolor = E.OctoTable_Expansions_Table[2].color,
-			-- })
-			-- DataProvider:Insert({
-			--         lefttext = E.func_itemTexture(30183)..E.func_itemName(30183),
-			--         righttext = CharInfo.MASLENGO.ItemsInBag[30183],
-			--         hexcolor = E.OctoTable_Expansions_Table[2].color,
-			-- })
-			-- DataProvider:Insert({
-			--         lefttext = E.func_itemTexture(32428)..E.func_itemName(32428),
-			--         righttext = CharInfo.MASLENGO.ItemsInBag[32428],
-			--         hexcolor = E.OctoTable_Expansions_Table[2].color,
-			-- })
-			-- DataProvider:Insert({
-			--         lefttext = E.func_itemTexture(34664)..E.func_itemName(34664),
-			--         righttext = CharInfo.MASLENGO.ItemsInBag[34664],
-			--         hexcolor = E.OctoTable_Expansions_Table[2].color,
-			-- })
-
-			DataProvider:Insert(
-				{
-					lefttext = E.func_itemTexture(23572)..E.func_itemName(23572),
-					righttext = CharInfo.MASLENGO.ItemsInBag[23572],
-					hexcolor = E.OctoTable_Expansions_Table[2].color,
-				},
-				{
-					lefttext = E.func_itemTexture(30183)..E.func_itemName(30183),
-					righttext = CharInfo.MASLENGO.ItemsInBag[30183],
-					hexcolor = E.OctoTable_Expansions_Table[2].color,
-				},
-
-				{
-					lefttext = E.func_itemTexture(32428)..E.func_itemName(32428),
-					righttext = CharInfo.MASLENGO.ItemsInBag[32428],
-					hexcolor = E.OctoTable_Expansions_Table[2].color,
-				},
-				{
-					lefttext = E.func_itemTexture(34664)..E.func_itemName(34664),
-					righttext = CharInfo.MASLENGO.ItemsInBag[34664],
-					hexcolor = E.OctoTable_Expansions_Table[2].color,
-				}
-			)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		local righttext = CharInfo.classColorHex..CharInfo.Name.."|r"
+		tinsert(OctoTable_func_otrisovka[count], righttext)
+		count = count + 1
+		-----------
+		-- 2 СТРОКА
+		-----------
+		OctoTable_func_otrisovka[count] = OctoTable_func_otrisovka[count] or {}
+		if index == 1 then
+			local lefttext = E.func_itemTexture(122284)..E.func_itemName(122284)
+			tinsert(OctoTable_func_otrisovka[count], lefttext)
 		end
-		-- Wrath of the Lich King
-		if OctoToDo_DB_Vars.ExpansionToShow[3] == true then
-			DataProvider:Insert({
-					lefttext = E.func_itemTexture(52019)..E.func_itemName(52019),
-					righttext = CharInfo.MASLENGO.ItemsInBag[52019],
-					hexcolor = E.OctoTable_Expansions_Table[3].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_itemTexture(45087)..E.func_itemName(45087),
-					righttext = CharInfo.MASLENGO.ItemsInBag[45087],
-					hexcolor = E.OctoTable_Expansions_Table[3].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_itemTexture(47556)..E.func_itemName(47556),
-					righttext = CharInfo.MASLENGO.ItemsInBag[47556],
-					hexcolor = E.OctoTable_Expansions_Table[3].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_itemTexture(49908)..E.func_itemName(49908),
-					righttext = CharInfo.MASLENGO.ItemsInBag[49908],
-					hexcolor = E.OctoTable_Expansions_Table[3].color,
-			})
-		end
-		-- Cataclysm
-		if OctoToDo_DB_Vars.ExpansionToShow[4] == true then
-			DataProvider:Insert({
-					lefttext = E.func_itemTexture(52078)..E.func_itemName(52078),
-					righttext = CharInfo.MASLENGO.ItemsInBag[52078],
-					hexcolor = E.OctoTable_Expansions_Table[4].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_itemTexture(69237)..E.func_itemName(69237),
-					righttext = CharInfo.MASLENGO.ItemsInBag[69237],
-					hexcolor = E.OctoTable_Expansions_Table[4].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_itemTexture(71998)..E.func_itemName(71998),
-					righttext = CharInfo.MASLENGO.ItemsInBag[71998],
-					hexcolor = E.OctoTable_Expansions_Table[4].color,
-			})
-		end
-		-- Mists of Pandaria
-		if OctoToDo_DB_Vars.ExpansionToShow[5] == true then
-			DataProvider:Insert({
-					lefttext = E.func_currencyIcon(697)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(697),
-					righttext = CharInfo.MASLENGO.CurrencyID[697],
-					hexcolor = E.OctoTable_Expansions_Table[5].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_currencyIcon(776)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(776),
-					righttext = CharInfo.MASLENGO.CurrencyID[776],
-					hexcolor = E.OctoTable_Expansions_Table[5].color,
-			})
-		end
-		-- Warlords of Draenor
-		if OctoToDo_DB_Vars.ExpansionToShow[6] == true then
-			DataProvider:Insert({
-					lefttext = E.func_currencyIcon(1129)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1129),
-					righttext = CharInfo.MASLENGO.CurrencyID[1129],
-					hexcolor = E.OctoTable_Expansions_Table[6].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_currencyIcon(994)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(994),
-					righttext = CharInfo.MASLENGO.CurrencyID[994],
-					hexcolor = E.OctoTable_Expansions_Table[6].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_currencyIcon(823)..E.func_currencyName(823),
-					righttext = CharInfo.MASLENGO.CurrencyID[823],
-					hexcolor = E.OctoTable_Expansions_Table[6].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_currencyIcon(1101)..E.func_currencyName(1101),
-					righttext = CharInfo.MASLENGO.CurrencyID[1101],
-					hexcolor = E.OctoTable_Expansions_Table[6].color,
-			})
-			DataProvider:Insert({
-					lefttext = E.func_currencyIcon(824)..E.func_currencyName(824),
-					righttext = CharInfo.MASLENGO.CurrencyID[824],
-					hexcolor = E.OctoTable_Expansions_Table[6].color,
-			})
-			if CharInfo.Faction == "Alliance" then
-				DataProvider:Insert({
-						lefttext = GARRISON_LOCATION_TOOLTIP,
-						righttext = CharInfo.MASLENGO.UniversalQuest.Octopussy_WarlordsofDraenor_Garrison_Horde_Once,
-						hexcolor = E.OctoTable_Expansions_Table[6].color,
-				})
-			else
-				DataProvider:Insert({
-						lefttext = GARRISON_LOCATION_TOOLTIP,
-						righttext = CharInfo.MASLENGO.UniversalQuest.Octopussy_WarlordsofDraenor_Garrison_Horde_Once,
-						hexcolor = E.OctoTable_Expansions_Table[6].color,
-				})
-			end
-			-- DataProvider:Insert({
-			--         lefttext = ЙЦУЙЦУ,
-			--         righttext = ЙЦУЙЦУ,
-			-- })
-		end
-		-- Legion
-		if OctoToDo_DB_Vars.ExpansionToShow[7] == true then
-		end
-		-- Battle for Azeroth
-		if OctoToDo_DB_Vars.ExpansionToShow[8] == true then
-		end
-		-- Shadowlands
-		if OctoToDo_DB_Vars.ExpansionToShow[9] == true then
-		end
-		-- Dragonflight
-		if OctoToDo_DB_Vars.ExpansionToShow[10] == true then
-		end
-		-- The War Within
-		if OctoToDo_DB_Vars.ExpansionToShow[11] == true then
-		end
-		-- TEST
-		if OctoToDo_DB_Vars.ExpansionToShow[12] == true then
-		end
-		-- BLACK
-		if OctoToDo_DB_Vars.ExpansionToShow[13] == true then
-		end
-		------------------------------------------------
-		-- end
+		local righttext = CharInfo.MASLENGO.ItemsInBag[122284]
+		tinsert(OctoTable_func_otrisovka[count], righttext)
+		count = count + 1
+		--------------------------------
 	end
+	fpde(OctoTable_func_otrisovka)
 
 
-	-- if count > 0 and count < MainFrameNumLines then
-	--     OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*count)
-	-- elseif count == 0 then
-	--     OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*1)
-	-- end
+
+	local DataProvider = CreateDataProvider(OctoTable_func_otrisovka)
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
