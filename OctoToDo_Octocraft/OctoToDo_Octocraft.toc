@@ -1,0 +1,16 @@
+## Interface: 110007, 110005
+## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r Octocraft
+## Notes: |cff959595Slash command: /Octo|r
+## Author: Octo
+## Version: v1
+## IconTexture: Interface\AddOns\OctoToDo\Media\AddonTexture_4
+## SavedVariables: OctoToDo_Octocraft
+## Dependencies: OctoToDo
+
+
+
+Tables\OctoTable_OctocraftColors.lua
+Tables\OctoTable_OctocraftColors2.lua
+Tables\OctoTable_OctocraftColors3HEARTS.lua
+Tables\OctoTable_OctocraftGregTechCircuits.lua
+OctoToDo_Octocraft.lua

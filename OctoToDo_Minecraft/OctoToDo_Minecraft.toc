@@ -9,6 +9,7 @@
 
 
 
-Tables\MinecraftColors.lua
-Tables\MinecraftColors2.lua
+Tables\OctoTable_MinecraftColors.lua
+Tables\OctoTable_MinecraftColors2.lua
+Tables\OctoTable_MinecraftColors3HEARTS.lua
 OctoToDo_Minecraft.lua

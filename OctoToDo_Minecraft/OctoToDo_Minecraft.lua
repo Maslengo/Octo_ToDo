@@ -16,68 +16,77 @@ OctoToDo_EventFrame_Minecraft:Hide()
 OctoToDo_EventFrame_Minecraft:RegisterEvent("ADDON_LOADED")
 OctoToDo_EventFrame_Minecraft:RegisterEvent("PLAYER_REGEN_DISABLED")
 ----------------------------------------------------------------
-local AddonHeight = 68/2 -- Высота
-local AddonRightFrameWeight = 1190/2 -- Ширина
-local AddonLeftFrameWeight = 240
-local MinecraftTable = ns.OctoTable_MinecraftColors2
+local AddonHeight = 68 -- Высота 27    --
+local AddonRightFrameWeight = 1190 -- Ширина 54    --
+local MinecraftTable = ns.OctoTable_MinecraftColors
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
 -- дефолт 15
-local MainFrameNumLines = 15
+local row = 1 -- 11
+local MainFrameNumLines = math.ceil(#MinecraftTable/row)
 if MainFrameNumLines > #MinecraftTable then
 	MainFrameNumLines = #MinecraftTable
 end
 if MainFrameNumLines > NumberOfLines then
 	MainFrameNumLines = NumberOfLines
 end
-local texture = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft ALL.tga"
+
+
+
+
+
+
+local MINECRAFTtextureFG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft FG.tga"
+local MINECRAFTtextureBG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft BG.tga"
+local MINECRAFTtextureALL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft ALL.tga"
+local MINECRAFTtextureULV = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Tiers\\1 ULV.tga"
+-- frame.cent.FG:SetTexCoord(0, 1, 0, 0.5)
+-- frame.cent.BG:SetTexCoord(0, 1, 0.5, 1)
 ----------------------------------------------------------------
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function OnAcquired(owner, frame, data, new)
 	if new then
-		frame.left = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
-		frame.left:SetPropagateMouseClicks(true)
-		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
-		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.left.text = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.left.text:SetAllPoints()
-		frame.left.text:SetFontObject(OctoFont11)
-		frame.left.text:SetJustifyV("MIDDLE")
-		frame.left.text:SetJustifyH("CENTER")
-		frame.left.text:SetTextColor(1, 1, 1, 1)
-		frame.right = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
-		frame.right:SetPropagateMouseClicks(true)
-		frame.right:SetSize(AddonRightFrameWeight, AddonHeight)
-		frame.right:SetPoint("TOPRIGHT", frame, "TOPRIGHT")
-		frame.right.FG = frame.right:CreateTexture(nil, "BACKGROUND", nil, 2)
-		frame.right.FG:SetTexture(texture)
-		--left, right, top, bottom
-		frame.right.FG:SetTexCoord(0, 1, 0, 0.5)
-		frame.right.FG:SetAllPoints(frame.right)
-		frame.right.BG = frame.right:CreateTexture(nil, "BACKGROUND", nil, 3)
-		frame.right.BG:SetTexture(texture)
-		frame.right.BG:SetTexCoord(0, 1, 0.5, 1)
-		frame.right.BG:SetAllPoints(frame.right)
-		frame.right.text = frame.right:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.right.text:SetAllPoints()
-		frame.right.text:SetFontObject(OctoFont11)
-		frame.right.text:SetJustifyV("MIDDLE")
-		frame.right.text:SetJustifyH("CENTER")
-		frame.right.text:SetTextColor(1, 1, 1, 1)
+		frame:SetSize(AddonRightFrameWeight, AddonHeight)
+		frame.cent = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+		frame.cent:SetPropagateMouseClicks(true)
+		frame.cent:SetSize(AddonRightFrameWeight, AddonHeight)
+		frame.cent:SetPoint("TOPLEFT", frame, "TOPLEFT")
+		frame.cent.FG = frame.cent:CreateTexture(nil, "BACKGROUND", nil, 2)
+		frame.cent.FG:SetTexture(MINECRAFTtextureFG)
+		frame.cent.FG:SetAllPoints(frame.cent)
+		frame.cent.BG = frame.cent:CreateTexture(nil, "BACKGROUND", nil, 3)
+		frame.cent.BG:SetTexture(MINECRAFTtextureBG)
+		frame.cent.BG:SetAllPoints(frame.cent)
+		frame.cent.BGtier = frame.cent:CreateTexture(nil, "BACKGROUND", nil, 4)
+		frame.cent.BGtier:SetTexture(MINECRAFTtextureULV)
+		frame.cent.BGtier:SetSize(AddonHeight, AddonHeight)
+		frame.cent.BGtier:SetPoint("TOPLEFT", frame, "TOPLEFT")
+
+
+
+		frame.cent.text = frame.cent:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		frame.cent.text:SetAllPoints()
+		frame.cent.text:SetFontObject(OctoFont11)
+		frame.cent.text:SetJustifyV("MIDDLE")
+		frame.cent.text:SetJustifyH("CENTER")
+		frame.cent.text:SetTextColor(1, 1, 1, 1)
 	end
 end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
-	frame.left.text:SetText(data.name)
 	local r, g, b, a = E.func_hex2rgbNUMBER(data.hex)
-	frame.right.FG:SetVertexColor(r, g, b, 1)
-	E:func_SetBackdrop(frame.left)
-	E:func_SetBackdrop(frame.right)
+	frame.cent.FG:SetVertexColor(r, g, b, 1)
+	local hexcolor = nil
+	local BackdropAlpha = 0
+	local BackdropBorderAlpha = .5
+	E:func_SetBackdrop(frame.cent, hexcolor, BackdropAlpha, BackdropBorderAlpha)
 end
 function OctoToDo_EventFrame_Minecraft:OctoToDo_Create_MainFrame_Minecraft()
 	local OctoToDo_MainFrame_Minecraft = CreateFrame("BUTTON", "OctoToDo_MainFrame_Minecraft", UIParent, "BackdropTemplate")
-	OctoToDo_MainFrame_Minecraft:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
+	OctoToDo_MainFrame_Minecraft:SetSize(AddonRightFrameWeight*row, AddonHeight*MainFrameNumLines)
+	OctoToDo_MainFrame_Minecraft:SetPoint("TOPLEFT", 100, -100)
 	OctoToDo_MainFrame_Minecraft:Hide()
+	OctoToDo_MainFrame_Minecraft:SetDontSavePosition(true)
 	OctoToDo_MainFrame_Minecraft.ScrollBox = CreateFrame("FRAME", nil, OctoToDo_MainFrame_Minecraft, "WowScrollBoxList")
 	OctoToDo_MainFrame_Minecraft.ScrollBox:SetAllPoints()
 	OctoToDo_MainFrame_Minecraft.ScrollBox:SetPropagateMouseClicks(true)
@@ -85,7 +94,9 @@ function OctoToDo_EventFrame_Minecraft:OctoToDo_Create_MainFrame_Minecraft()
 	OctoToDo_MainFrame_Minecraft.ScrollBar = CreateFrame("EventFrame", nil, OctoToDo_MainFrame_Minecraft, "MinimalScrollBar")
 	OctoToDo_MainFrame_Minecraft.ScrollBar:SetPoint("TOPLEFT", OctoToDo_MainFrame_Minecraft.ScrollBox, "TOPRIGHT", 6, 0)
 	OctoToDo_MainFrame_Minecraft.ScrollBar:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_Minecraft.ScrollBox, "BOTTOMRIGHT", 6, 0)
-	OctoToDo_MainFrame_Minecraft.view = CreateScrollBoxListLinearView()
+	-- OctoToDo_MainFrame_Minecraft.view = CreateScrollBoxListLinearView()
+	-- return CreateAndInitFromMixin(ScrollBoxListGridViewMixin, stride or 1, top or 0, bottom or 0, left or 0, right or 0, horizontalSpacing or 0, verticalSpacing or 0);
+	OctoToDo_MainFrame_Minecraft.view = CreateScrollBoxListGridView(row, 0, 0, 0, 0, 0, 0)
 	OctoToDo_MainFrame_Minecraft.view:SetElementExtent(AddonHeight)
 	OctoToDo_MainFrame_Minecraft.view:SetElementInitializer("BackdropTemplate", OctoToDo_Frame_init)
 	OctoToDo_MainFrame_Minecraft.view:RegisterCallback(OctoToDo_MainFrame_Minecraft.view.Event.OnAcquiredFrame, OnAcquired, OctoToDo_MainFrame_Minecraft)
@@ -96,10 +107,8 @@ function OctoToDo_EventFrame_Minecraft:OctoToDo_Create_MainFrame_Minecraft()
 	OctoToDo_MainFrame_Minecraft:SetFrameStrata("HIGH")
 	OctoToDo_MainFrame_Minecraft:SetPoint("CENTER")
 	OctoToDo_MainFrame_Minecraft:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-	OctoToDo_MainFrame_Minecraft:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
-	OctoToDo_MainFrame_Minecraft:SetBackdropBorderColor(0, 0, 0, 1)
-	-- OctoToDo_MainFrame_Minecraft:SetBackdropColor(0, 0, 0, 0)
-	-- OctoToDo_MainFrame_Minecraft:SetBackdropBorderColor(0, 0, 0, 0)
+	OctoToDo_MainFrame_Minecraft:SetBackdropColor(29/255, 42/255, 76/255, 1)
+	OctoToDo_MainFrame_Minecraft:SetBackdropBorderColor(0, 0, 0, 0)
 	OctoToDo_MainFrame_Minecraft:EnableMouse(true)
 	OctoToDo_MainFrame_Minecraft:SetMovable(true)
 	OctoToDo_MainFrame_Minecraft:RegisterForDrag("LeftButton")
@@ -133,7 +142,6 @@ function OctoToDo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 		OctoToDo_Minecraft = OctoToDo_Minecraft or {}
 		----------------------------------------------------------------
 		self:OctoToDo_Create_MainFrame_Minecraft()
-		E:func_ResetFramePoint(OctoToDo_MainFrame_Minecraft)
 		-- OctoToDo_MainFrame_Minecraft:ClearAllPoints()
 		-- OctoToDo_MainFrame_Minecraft:SetPoint("CENTER", UIParent)
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_Minecraft)
@@ -142,9 +150,9 @@ function OctoToDo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 	end
 end
+
 function OctoToDo_EventFrame_Minecraft:PLAYER_REGEN_DISABLED()
 	if OctoToDo_MainFrame_Minecraft and OctoToDo_MainFrame_Minecraft:IsShown() then
 		OctoToDo_MainFrame_Minecraft:Hide()
 	end
 end
-

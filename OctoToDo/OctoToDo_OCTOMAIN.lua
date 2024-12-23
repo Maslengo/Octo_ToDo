@@ -441,6 +441,25 @@ local function func_NumPlayers()
 	end
 	return #sorted or 1
 end
+
+
+
+local function OnENTERTTOOLTIP(f)
+	if not f.tooltip then
+		return
+	end
+	GameTooltip:SetOwner(f, "ANCHOR_BOTTOMRIGHT", 0, 0)
+	GameTooltip:AddLine(" ")
+	for _, v in next, (f.tooltip) do
+		if v[2] ~= "0/0" then
+			GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
+		end
+	end
+	GameTooltip:AddLine(" ")
+	GameTooltip:Show()
+end
+
+
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
@@ -456,34 +475,67 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.left.text:SetJustifyH("LEFT")
 		frame.left.text:SetTextColor(1, 1, 1, 1)
 		------------------------------------------------
-		for NumPlayers = 1, func_NumPlayers() do
-			frame[NumPlayers] = CreateFrame("FRAME", "frame"..NumPlayers, frame, "BackdropTemplate")
-			frame[NumPlayers]:SetPropagateMouseClicks(true)
-			frame[NumPlayers]:SetSize(AddonRightFrameWeight, AddonHeight)
-			frame[NumPlayers]:SetPoint("TOPLEFT", frame.left, "TOPLEFT", (AddonLeftFrameWeight-AddonRightFrameWeight)+(AddonRightFrameWeight*NumPlayers), 0)
-			frame[NumPlayers].text = frame[NumPlayers]:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			frame[NumPlayers].text:SetAllPoints()
-			frame[NumPlayers].text:SetFontObject(OctoFont11)
-			frame[NumPlayers].text:SetJustifyV("MIDDLE")
-			frame[NumPlayers].text:SetJustifyH("CENTER")
-			frame[NumPlayers].text:SetTextColor(1, 1, 1, 1)
-		end
+
+		frame.cent  = setmetatable({}, {
+				__index = function(self, key)
+					local f = CreateFrame("FRAME", "frame"..key, frame, "BackdropTemplate")
+					f:SetPropagateMouseClicks(true)
+					f:SetSize(AddonRightFrameWeight, AddonHeight)
+					f:SetPoint("TOPLEFT", frame.left, "TOPLEFT", (AddonLeftFrameWeight-AddonRightFrameWeight)+(AddonRightFrameWeight*key), 0)
+					f.text = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+					f.text:SetAllPoints()
+					f.text:SetFontObject(OctoFont11)
+					f.text:SetJustifyV("MIDDLE")
+					f.text:SetJustifyH("CENTER")
+					f.text:SetTextColor(1, 1, 1, 1)
+					f:SetScript("OnEnter", OnENTERTTOOLTIP)
+					f:SetScript("OnLeave", GameTooltip_Hide)
+
+					f:SetScript("OnHide", f.Hide)
+					self[key] = f
+					return f
+		end})
+
+
+
+
+
+
+
+		-- for NumPlayers = 1, func_NumPlayers() do
+		--     frame[NumPlayers] = CreateFrame("FRAME", "frame"..NumPlayers, frame, "BackdropTemplate")
+		--     frame[NumPlayers]:SetPropagateMouseClicks(true)
+		--     frame[NumPlayers]:SetSize(AddonRightFrameWeight, AddonHeight)
+		--     frame[NumPlayers]:SetPoint("TOPLEFT", frame.left, "TOPLEFT", (AddonLeftFrameWeight-AddonRightFrameWeight)+(AddonRightFrameWeight*NumPlayers), 0)
+		--     frame[NumPlayers].text = frame[NumPlayers]:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		--     frame[NumPlayers].text:SetAllPoints()
+		--     frame[NumPlayers].text:SetFontObject(OctoFont11)
+		--     frame[NumPlayers].text:SetJustifyV("MIDDLE")
+		--     frame[NumPlayers].text:SetJustifyH("CENTER")
+		--     frame[NumPlayers].text:SetTextColor(1, 1, 1, 1)
+		-- end
 		------------------------------------------------
 	end
 end
+
+
+
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
-	frame.left.text:SetText(data[1])
-	for NumPlayers = 2, #data do
-		frame[NumPlayers].text:SetText(data[NumPlayers])
+	frame.left.text:SetText(data.left)
+
+	for NumPlayers = 1, #data do
+		frame.cent[NumPlayers].text:SetText(data[NumPlayers][1])
+		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
+		frame.cent[NumPlayers]:Show()
 	end
-	-- E:func_SetBackdrop(frame.left, nil, 0, 0)
-	-- E:func_SetBackdrop(frame[NumPlayers], nil, 0, 0)
 end
+
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	local OctoToDo_MainFrame_OCTOMAIN = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOMAIN", UIParent, "BackdropTemplate")
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN:Hide()
+	OctoToDo_MainFrame_OCTOMAIN:SetDontSavePosition(true)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox = CreateFrame("FRAME", "ScrollBox", OctoToDo_MainFrame_OCTOMAIN, "WowScrollBoxList")
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetAllPoints()
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetPropagateMouseClicks(true)
@@ -524,6 +576,36 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	----------------------------------------------------------------
 	self:func_DataProvider()
 end
+
+
+
+-- В отдельный файл
+function OctoToDo_EventFrame_OCTOMAIN:O_otrisovka()
+	local OctoTable_func_otrisovkaCENT = {}
+	local OctoTable_func_otrisovkaLEFT = {}
+
+	tinsert(OctoTable_func_otrisovkaCENT,
+		function(CharInfo)
+			local vivodCent = " "
+			local tooltip = {}
+			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r".. CharInfo.UnitLevel
+			tooltip[#tooltip+1] = {" "}
+			if CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.UnitXPPercent then
+				tooltip[#tooltip+1] = {CharInfo.RaceLocal.." "..CharInfo.classColorHex..CharInfo.UnitLevel.."-го|r уровня "..CharInfo.classColorHex..CharInfo.UnitXPPercent.."%|r", " "}
+			else
+				tooltip[#tooltip+1] = {CharInfo.RaceLocal, " "}
+			end
+			return vivodCent, tooltip
+	end)
+	tinsert(OctoTable_func_otrisovkaLEFT,
+		function(CharInfo)
+			local vivodLeft = E.Timers.Daily_Reset()
+			return vivodLeft
+	end)
+
+	return OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT
+end
+
 function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
 	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
@@ -565,7 +647,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 			end
 		end
 	end
-	sort(sorted, function(a, b)
+	sort(sorted, function(b, a)
 			if a and b then
 				return
 				a.UnitLevel < b.UnitLevel or a.UnitLevel == b.UnitLevel
@@ -577,40 +659,19 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	end)
 
 
-	local OctoTable_func_otrisovka = {}
-
-
-	for index, CharInfo in ipairs(sorted) do
-		local count = 1
-		-----------
-		-- 1 СТРОКА
-		-----------
-		OctoTable_func_otrisovka[count] = OctoTable_func_otrisovka[count] or {}
-		if index == 1 then
-			local lefttext = E.Timers.Daily_Reset()
-			tinsert(OctoTable_func_otrisovka[count], lefttext)
+	local OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT = self:O_otrisovka()
+	local CENT = {}
+	for i, func in ipairs(OctoTable_func_otrisovkaCENT) do
+		CENT[i] = CENT[i] or {}
+		CENT[i].left = OctoTable_func_otrisovkaLEFT[i]()
+		for index, CharInfo in ipairs(sorted) do
+			CENT[i][index] = {func(CharInfo)}
 		end
-		local righttext = CharInfo.classColorHex..CharInfo.Name.."|r"
-		tinsert(OctoTable_func_otrisovka[count], righttext)
-		count = count + 1
-		-----------
-		-- 2 СТРОКА
-		-----------
-		OctoTable_func_otrisovka[count] = OctoTable_func_otrisovka[count] or {}
-		if index == 1 then
-			local lefttext = E.func_itemTexture(122284)..E.func_itemName(122284)
-			tinsert(OctoTable_func_otrisovka[count], lefttext)
-		end
-		local righttext = CharInfo.MASLENGO.ItemsInBag[122284]
-		tinsert(OctoTable_func_otrisovka[count], righttext)
-		count = count + 1
-		--------------------------------
 	end
-	fpde(OctoTable_func_otrisovka)
 
+	-- fpde(CENT)
 
-
-	local DataProvider = CreateDataProvider(OctoTable_func_otrisovka)
+	local DataProvider = CreateDataProvider(CENT)
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end

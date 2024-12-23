@@ -52,7 +52,7 @@ E.fontObject12:CopyFontObject(font)
 E.fontObject12:SetFont(E.OctoFont, 12, "OUTLINE")
 E.fontObject22 = CreateFont("OctoFont22")
 E.fontObject22:CopyFontObject(font)
-E.fontObject22:SetFont(E.OctoFont, 22, "OUTLINE")
+E.fontObject22:SetFont("Interface\\Addons\\"..GlobalAddonName.."\\Media\\font\\02 Octo-Bold.TTF", 20, "OUTLINE")
 -- local font = "01 Octo"
 -- local font2 = SystemFont_Outline_Small
 -- local fontObject9 = CreateFont("OctoFont9")

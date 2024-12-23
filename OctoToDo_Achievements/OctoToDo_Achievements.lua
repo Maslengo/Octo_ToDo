@@ -64,6 +64,7 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
 	OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_Achievements:Hide()
+	OctoToDo_MainFrame_Achievements:SetDontSavePosition(true)
 	OctoToDo_MainFrame_Achievements.ScrollBox = CreateFrame("FRAME", nil, OctoToDo_MainFrame_Achievements, "WowScrollBoxList")
 	OctoToDo_MainFrame_Achievements.ScrollBox:SetAllPoints()
 	OctoToDo_MainFrame_Achievements.ScrollBox:SetPropagateMouseClicks(true)
@@ -128,6 +129,8 @@ function OctoToDo_EventFrame_Achievements:func_DataProvider()
 	end
 	if count > 0 and count < MainFrameNumLines then
 		OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*count)
+	elseif count > MainFrameNumLines then
+		OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
 	elseif count == 0 then
 		OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*1)
 	end
