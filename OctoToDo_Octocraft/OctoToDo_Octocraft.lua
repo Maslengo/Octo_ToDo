@@ -1,29 +1,15 @@
 local GlobalAddonName, ns = ...
 local E = OctoToDo_ToDO_E
-local LibSFDropDown = LibStub("LibSFDropDown-1.5")
-LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
-		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
-		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-		f:SetPoint("TOPLEFT", 8, -2)
-		f:SetPoint("BOTTOMRIGHT", -8, 2)
-		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
-		f:SetBackdropBorderColor(0, 0, 0, 1)
-		return f
-end)
 ----------------------------------------------------------------
 local OctoToDo_EventFrame_Octocraft = CreateFrame("FRAME")
 OctoToDo_EventFrame_Octocraft:Hide()
 OctoToDo_EventFrame_Octocraft:RegisterEvent("ADDON_LOADED")
 OctoToDo_EventFrame_Octocraft:RegisterEvent("PLAYER_REGEN_DISABLED")
 ----------------------------------------------------------------
-local AddonHeight = 68 -- Высота 27    --
+local AddonHeight = 68
 local numIcons = 5
-local AddonRightFrameWeight =  398 -- Ширина 54    -- AddonHeight * numIcons --
+local AddonRightFrameWeight =  AddonHeight*numIcons
 local OctocraftTable = ns.OctoTable_OctocraftGregTechCircuits
-local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
-local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
-local OctocrafttextureBG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octocraft BG.tga"
-local OctocrafttextureALL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octocraft ALL.tga"
 -- frame.cent.FG:SetTexCoord(0, 1, 0, 0.5)
 -- frame.cent.BG:SetTexCoord(0, 1, 0.5, 1)
 ----------------------------------------------------------------
@@ -39,19 +25,21 @@ function OctoToDo_EventFrame_Octocraft:createBGframe(frame, index, color, text, 
 		if type[i] then
 			frame.cent.FG = frame.cent:CreateTexture(nil, "BACKGROUND", nil, 2)
 			frame.cent.FG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\Circuits\\FG "..type[i]..".tga")
+			frame.cent.FG:SetSize(AddonHeight, AddonHeight)
 			frame.cent.FG:SetPoint("TOPLEFT", frame, "TOPLEFT", -AddonHeight+AddonHeight*i, AddonHeight-(AddonHeight*index))
 			frame.cent.FG:SetVertexColor(r, g, b, 1)
 
 			frame.cent.BG = frame.cent:CreateTexture(nil, "BACKGROUND", nil, 3)
 			frame.cent.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\Circuits\\BG "..type[i]..".tga")
+			frame.cent.BG:SetSize(AddonHeight, AddonHeight)
 			frame.cent.BG:SetPoint("TOPLEFT", frame, "TOPLEFT", -AddonHeight+AddonHeight*i, AddonHeight-(AddonHeight*index))
 			frame.cent.BG:SetVertexColor(1, 1, 1, 1)
 
 			frame.cent.TEXT = frame.cent:CreateTexture(nil, "BACKGROUND", nil, 4)
 			frame.cent.TEXT:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\Tiers\\"..text[i]..".tga")
+			frame.cent.TEXT:SetSize(AddonHeight, AddonHeight)
 			frame.cent.TEXT:SetPoint("TOPLEFT", frame, "TOPLEFT", -AddonHeight+AddonHeight*i, AddonHeight-(AddonHeight*index))
 			frame.cent.TEXT:SetVertexColor(1, 1, 1, 1)
-
 
 			-- frame.cent.text = frame.cent:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			-- frame.cent.text:SetPoint("TOPLEFT", frame, "TOPLEFT", -AddonHeight+AddonHeight*i, AddonHeight-(AddonHeight*index))
@@ -64,9 +52,9 @@ function OctoToDo_EventFrame_Octocraft:createBGframe(frame, index, color, text, 
 	end
 end
 
-
 function OctoToDo_EventFrame_Octocraft:OctoToDo_Create_MainFrame_Octocraft()
 	local OctoToDo_MainFrame_Octocraft = CreateFrame("BUTTON", "OctoToDo_MainFrame_Octocraft", UIParent, "BackdropTemplate")
+	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_Octocraft)
 	OctoToDo_MainFrame_Octocraft:SetSize(AddonHeight*numIcons, AddonHeight*12)
 	OctoToDo_MainFrame_Octocraft:SetPoint("TOPLEFT", 100, -100)
 	OctoToDo_MainFrame_Octocraft:Hide()
@@ -114,7 +102,7 @@ function OctoToDo_EventFrame_Octocraft:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 	end
 end
-
+----------------------------------------------------------------
 function OctoToDo_EventFrame_Octocraft:PLAYER_REGEN_DISABLED()
 	if OctoToDo_MainFrame_Octocraft and OctoToDo_MainFrame_Octocraft:IsShown() then
 		OctoToDo_MainFrame_Octocraft:Hide()

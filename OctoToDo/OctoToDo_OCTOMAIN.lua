@@ -34,9 +34,6 @@ local BTAG = tostringall(strsplit("#", BattleTag))
 local GameVersion = GetCurrentRegion() == 72 and "PTR" or "Retail"
 local BattleTagLocal = BTAG.." ("..GameVersion..")"
 local curGUID = UnitGUID("PLAYER")
-local ItemLevelGreen = 625
-local ItemLevelOrange = 610
-local ItemLevelRed = 580
 local GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = E.func_GetClassColor(classFilename)
@@ -441,11 +438,10 @@ local function func_NumPlayers()
 	end
 	return #sorted or 1
 end
-
-
-
 local function OnENTERTTOOLTIP(f)
 	if not f.tooltip then
+		return
+	elseif #f.tooltip == 0 then
 		return
 	end
 	GameTooltip:SetOwner(f, "ANCHOR_BOTTOMRIGHT", 0, 0)
@@ -458,8 +454,6 @@ local function OnENTERTTOOLTIP(f)
 	GameTooltip:AddLine(" ")
 	GameTooltip:Show()
 end
-
-
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
@@ -475,7 +469,6 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.left.text:SetJustifyH("LEFT")
 		frame.left.text:SetTextColor(1, 1, 1, 1)
 		------------------------------------------------
-
 		frame.cent  = setmetatable({}, {
 				__index = function(self, key)
 					local f = CreateFrame("FRAME", "frame"..key, frame, "BackdropTemplate")
@@ -490,18 +483,10 @@ local function func_OnAcquired(owner, frame, data, new)
 					f.text:SetTextColor(1, 1, 1, 1)
 					f:SetScript("OnEnter", OnENTERTTOOLTIP)
 					f:SetScript("OnLeave", GameTooltip_Hide)
-
 					f:SetScript("OnHide", f.Hide)
 					self[key] = f
 					return f
 		end})
-
-
-
-
-
-
-
 		-- for NumPlayers = 1, func_NumPlayers() do
 		--     frame[NumPlayers] = CreateFrame("FRAME", "frame"..NumPlayers, frame, "BackdropTemplate")
 		--     frame[NumPlayers]:SetPropagateMouseClicks(true)
@@ -517,22 +502,18 @@ local function func_OnAcquired(owner, frame, data, new)
 		------------------------------------------------
 	end
 end
-
-
-
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
 	frame.left.text:SetText(data.left)
-
 	for NumPlayers = 1, #data do
 		frame.cent[NumPlayers].text:SetText(data[NumPlayers][1])
 		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
 		frame.cent[NumPlayers]:Show()
 	end
 end
-
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	local OctoToDo_MainFrame_OCTOMAIN = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOMAIN", UIParent, "BackdropTemplate")
+	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_OCTOMAIN)
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN:Hide()
 	OctoToDo_MainFrame_OCTOMAIN:SetDontSavePosition(true)
@@ -576,36 +557,6 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	----------------------------------------------------------------
 	self:func_DataProvider()
 end
-
-
-
--- В отдельный файл
-function OctoToDo_EventFrame_OCTOMAIN:O_otrisovka()
-	local OctoTable_func_otrisovkaCENT = {}
-	local OctoTable_func_otrisovkaLEFT = {}
-
-	tinsert(OctoTable_func_otrisovkaCENT,
-		function(CharInfo)
-			local vivodCent = " "
-			local tooltip = {}
-			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r".. CharInfo.UnitLevel
-			tooltip[#tooltip+1] = {" "}
-			if CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.UnitXPPercent then
-				tooltip[#tooltip+1] = {CharInfo.RaceLocal.." "..CharInfo.classColorHex..CharInfo.UnitLevel.."-го|r уровня "..CharInfo.classColorHex..CharInfo.UnitXPPercent.."%|r", " "}
-			else
-				tooltip[#tooltip+1] = {CharInfo.RaceLocal, " "}
-			end
-			return vivodCent, tooltip
-	end)
-	tinsert(OctoTable_func_otrisovkaLEFT,
-		function(CharInfo)
-			local vivodLeft = E.Timers.Daily_Reset()
-			return vivodLeft
-	end)
-
-	return OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT
-end
-
 function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
 	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
@@ -657,9 +608,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 				b.Name < a.Name
 			end
 	end)
-
-
-	local OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT = self:O_otrisovka()
+	local OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT = E:O_otrisovka()
 	local CENT = {}
 	for i, func in ipairs(OctoTable_func_otrisovkaCENT) do
 		CENT[i] = CENT[i] or {}
@@ -668,9 +617,12 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 			CENT[i][index] = {func(CharInfo)}
 		end
 	end
-
 	-- fpde(CENT)
-
+	local newcount = #OctoTable_func_otrisovkaCENT
+	if MainFrameNumLines > newcount then
+		MainFrameNumLines = newcount
+	end
+	if MainFrameNumLines < 1 then MainFrameNumLines = 1 end
 	local DataProvider = CreateDataProvider(CENT)
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
@@ -850,8 +802,6 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 	DD_OCTOMAIN:ddSetOpenMenuUp(true)
 	DD_OCTOMAIN:ddSetMenuButtonHeight(16)
 end
-
-
 function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 	local DD2_OCTOMAIN = CreateFrame("Button", "DD2_OCTOMAIN", OctoToDo_MainFrame_OCTOMAIN, "SecureActionButtonTemplate, BackDropTemplate")
 	DD2_OCTOMAIN:SetSize(AddonLeftFrameWeight/2, AddonHeight)
@@ -876,7 +826,6 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 	DD2_OCTOMAIN:SetScript("OnClick", function(self)
 			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 	end)
-
 	local function selectFunctionExpansion(menuButton, _, _, checked)
 		OctoToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
 		DD2_OCTOMAIN:SetText("EXP")
@@ -924,12 +873,6 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 			end
 			self:ddAddButton(info, level)
 			--------------------------------------------------
-
-
-
-
-
-
 	end)
 	DD2_OCTOMAIN:ddSetOpenMenuUp(true)
 	DD2_OCTOMAIN:ddSetMenuButtonHeight(16)
@@ -1012,10 +955,7 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Vars.EmeraldDream_Storyline == nil then OctoToDo_DB_Vars.EmeraldDream_Storyline = true end
 		if OctoToDo_DB_Vars.EmeraldDream_WB == nil then OctoToDo_DB_Vars.EmeraldDream_WB = true end
 		if OctoToDo_DB_Vars.Event == nil then OctoToDo_DB_Vars.Event = true end
-
 		if OctoToDo_DB_Vars.ExpansionToShow == nil then OctoToDo_DB_Vars.ExpansionToShow = {[1] = true} end
-
-
 		if OctoToDo_DB_Vars.FieldOfView == nil then OctoToDo_DB_Vars.FieldOfView = false end
 		if OctoToDo_DB_Vars.FoV_bottom == nil then OctoToDo_DB_Vars.FoV_bottom = 0 end
 		if OctoToDo_DB_Vars.FoV_left == nil then OctoToDo_DB_Vars.FoV_left = 0 end
@@ -1041,7 +981,6 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Vars.ItemLevel == nil then OctoToDo_DB_Vars.ItemLevel = true end
 		if OctoToDo_DB_Vars.itemLevelToShow == nil then OctoToDo_DB_Vars.itemLevelToShow = 1 end
 		if OctoToDo_DB_Vars.Items == nil then OctoToDo_DB_Vars.Items = true end
-		if OctoToDo_DB_Vars.ItemsDelete == nil then OctoToDo_DB_Vars.ItemsDelete = false end
 		if OctoToDo_DB_Vars.ItemsShowAllways == nil then OctoToDo_DB_Vars.ItemsShowAllways = false end
 		if OctoToDo_DB_Vars.ItemsUsable == nil then OctoToDo_DB_Vars.ItemsUsable = false end
 		if OctoToDo_DB_Vars.LastUpdate == nil then OctoToDo_DB_Vars.LastUpdate = true end
@@ -1090,12 +1029,11 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		E:InitOptions()
 		----------------------------------------------------------------
 		self:OctoToDo_Create_MainFrame_OCTOMAIN()
-		E:func_ResetFramePoint(OctoToDo_MainFrame_OCTOMAIN)
 		self:func_Create_DD_OCTOMAIN()
 		self:func_Create_DD2_OCTOMAIN()
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN)
-		E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN)
+		E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function() OctoToDo_EventFrame_OCTOMAIN:func_DataProvider() end)
 	end
 end
 function OctoToDo_EventFrame_OCTOMAIN:VARIABLES_LOADED()
@@ -1194,10 +1132,3 @@ SlashCmdList.FRAMESTK = function(msg)
 	local showHidden, showRegions, showAnchors = (msg == "true"), true, true
 	FrameStackTooltip_Toggle(showHidden, showRegions, showAnchors)
 end
-
-
-
-
-
-
-

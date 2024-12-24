@@ -331,7 +331,6 @@ function E.Developing()
 				order = 41,
 			},
 			-------------------------------------------------
-
 			-- color = {
 			--     type = "group",
 			--     name = "Arrow colors",

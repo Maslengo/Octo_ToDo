@@ -62,6 +62,7 @@ local function OctoToDo_Frame_init(frame, data)
 end
 function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
 	local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
+	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_Achievements)
 	OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_Achievements:Hide()
 	OctoToDo_MainFrame_Achievements:SetDontSavePosition(true)
@@ -265,7 +266,6 @@ function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 		if OctoToDo_Achievements.AchievementToShow == nil then OctoToDo_Achievements.AchievementToShow = {[92] = true} end
 		----------------------------------------------------------------
 		self:OctoToDo_Create_MainFrame_Achievements()
-		E:func_ResetFramePoint(OctoToDo_MainFrame_Achievements)
 		self:func_Create_DDframe_Achievements()
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_Achievements)

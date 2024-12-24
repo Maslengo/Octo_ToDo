@@ -83,6 +83,7 @@ local function OctoToDo_Frame_init(frame, data)
 end
 function OctoToDo_EventFrame_Minecraft:OctoToDo_Create_MainFrame_Minecraft()
 	local OctoToDo_MainFrame_Minecraft = CreateFrame("BUTTON", "OctoToDo_MainFrame_Minecraft", UIParent, "BackdropTemplate")
+	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_Minecraft)
 	OctoToDo_MainFrame_Minecraft:SetSize(AddonRightFrameWeight*row, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_Minecraft:SetPoint("TOPLEFT", 100, -100)
 	OctoToDo_MainFrame_Minecraft:Hide()

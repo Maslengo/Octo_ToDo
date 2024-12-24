@@ -366,3 +366,5 @@ E.menuBackdrop = {
 	edgeFile = E.edgeFile,
 	edgeSize = 1,
 }
+
+E.OctoTable_Frames = {}

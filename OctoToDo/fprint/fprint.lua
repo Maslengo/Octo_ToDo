@@ -459,4 +459,3 @@ SlashCmdList.OCTOLISTMOUNT = function(msg)
 	editBox:SetText(str5)
 	editFrame:Show()
 end
-

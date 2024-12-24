@@ -6,7 +6,7 @@ local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
 local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
-local ShowIDS = true
+local ShowIDS = false
 -- ITEMS
 local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
 local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
@@ -1711,31 +1711,44 @@ end
 ----------------------------------------------------------------
 function E:func_CreateMinimapButton(addonName, vars, frame, func)
 	local info = {
-			type = "data source",
-			text = MinimapName,
-			icon = E.func_AddonIconTexture(addonName),
-			OnEnter = function(self)
-				GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-				GameTooltip_SetTitle(GameTooltip, E.func_AddonTitle(addonName))
-				GameTooltip:Show()
-			end,
-			OnLeave = function()
-				GameTooltip:Hide()
-			end,
+		type = "data source",
+		text = MinimapName,
+		icon = E.func_AddonIconTexture(addonName),
+		OnEnter = function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
+			GameTooltip_SetTitle(GameTooltip, E.func_AddonTitle(addonName))
+			GameTooltip:Show()
+		end,
+		OnLeave = function()
+			GameTooltip:Hide()
+		end,
 	}
-	if func then
-		info.OnClick = func
-	else
-		info.OnClick = function(_, button)
-			if button == "LeftButton" then
-				if not InCombatLockdown() then
-					frame:SetShown(not frame:IsShown())
-					-- frame:ClearAllPoints()
-					-- frame:SetPoint("CENTER", UIParent)
+	info.OnClick = function(_, button)
+		if button == "LeftButton" then
+			if not InCombatLockdown() then
+				if func then
+					func()
 				end
+				for index, frames in ipairs(E.OctoTable_Frames) do
+					if frame ~= frames and frames:IsShown() then
+						frames:Hide()
+					end
+				end
+				frame:SetShown(not frame:IsShown())
 			end
 		end
 	end
+	-- if func then
+	--     info.OnClick = func
+	-- else
+	--     info.OnClick = function(_, button)
+	--         if button == "LeftButton" then
+	--             if not InCombatLockdown() then
+	--                 frame:SetShown(not frame:IsShown())
+	--             end
+	--         end
+	--     end
+	-- end
 	local MinimapName = E.func_AddonTitle(addonName)
 	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
 	if vars.minimapPos == nil then vars.minimapPos = 244 end
@@ -1743,11 +1756,6 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 	LibDBIcon:Show(MinimapName)
 end
 ----------------------------------------------------------------
-function E:func_ResetFramePoint(frame)
-	print ("func_ResetFramePoint", tostringall(frame))
-	frame:ClearAllPoints()
-	frame:SetPoint("CENTER", UIParent)
-end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1810,3 +1818,4 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+
