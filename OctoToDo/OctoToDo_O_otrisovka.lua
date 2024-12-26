@@ -19,7 +19,7 @@ function E:O_otrisovka()
 				vivodCent = vivodCent.." "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
 			end
 			if OctoToDo_DB_Vars.ShowOnlyCurrentServer == false then
-				vivodCent = vivodCent.."|n"..CharInfo.curServer
+				vivodCent = vivodCent.."+"..CharInfo.curServerShort
 			end
 			local classColor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal then
@@ -922,7 +922,7 @@ function E:O_otrisovka()
 				else
 					vivodCent = E.Orange_Color.."neeed to equip|r"
 					if CharInfo.azeriteLVL ~= 0 then
-						vivodCent = E.Green_Color..CharInfo.azeriteLVL.."|r".."|n"..E.Gray_Color..CharInfo.azeriteEXP.."|r"
+						vivodCent = E.Green_Color..CharInfo.azeriteLVL.."|r".."+"..E.Gray_Color..CharInfo.azeriteEXP.."|r"
 					end
 				end
 				return vivodCent, tooltip
@@ -948,7 +948,7 @@ function E:O_otrisovka()
 						end
 					end
 					if CharInfo.cloak_res ~= 0 then
-						vivodCent = vivodCent.."|n"..CharInfo.cloak_res
+						vivodCent = vivodCent.."+"..CharInfo.cloak_res
 					end
 				end
 				return vivodCent, tooltip

@@ -2,6 +2,25 @@ local GlobalAddonName, E = ...
 local OctoToDo_EventFrame_OCTOMAIN = CreateFrame("FRAME")
 OctoToDo_EventFrame_OCTOMAIN:Hide()
 ----------------------------------------------------------------
+
+
+
+
+
+
+ -- ЗАЧЕКАТЬ ЧУЖИЕ WTF
+
+
+
+
+
+
+
+
+
+
+
+
 OctoToDo_ToDO_E = E
 -- _G["OctoTODO"] = OctoTODO
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
@@ -42,29 +61,29 @@ local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 ----------------------------------------------------------------
-E.func_LoadAddOn("OctoToDo_Achievements")
-E.func_LoadAddOn("OctoToDo_Minecraft")
-E.func_LoadAddOn("OctoToDo_Reputations")
-E.func_LoadAddOn("OctoToDo_TrashCan")
+-- E.func_LoadAddOn("OctoToDo_Achievements")
+-- E.func_LoadAddOn("OctoToDo_Minecraft")
+-- E.func_LoadAddOn("OctoToDo_Reputations")
+-- E.func_LoadAddOn("OctoToDo_TrashCan")
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")
-E.func_LoadAddOn("MountsJournal")
+-- E.func_LoadAddOn("MountsJournal")
 E.func_LoadAddOn("HidingBar")
 E.func_LoadAddOn("HidingBar_Options")
-E.func_LoadAddOn("SpeedyAutoLoot")
-E.func_LoadAddOn("TalentTreeTweaks")
-E.func_LoadAddOn("Plater")
-E.func_LoadAddOn("MacroManager")
-E.func_LoadAddOn("MacroManagerData")
-E.func_LoadAddOn("SilverDragon")
-E.func_LoadAddOn("SilverDragon_History")
-E.func_LoadAddOn("SilverDragon_Overlay")
-E.func_LoadAddOn("SilverDragon_RangeExtender")
-E.func_LoadAddOn("TomTom")
-E.func_LoadAddOn("Pawn")
-E.func_LoadAddOn("MySlot")
-E.func_LoadAddOn("QuestsChanged")
-E.func_LoadAddOn("AdvancedInterfaceOptions")
+-- E.func_LoadAddOn("SpeedyAutoLoot")
+-- E.func_LoadAddOn("TalentTreeTweaks")
+-- E.func_LoadAddOn("Plater")
+-- E.func_LoadAddOn("MacroManager")
+-- E.func_LoadAddOn("MacroManagerData")
+-- E.func_LoadAddOn("SilverDragon")
+-- E.func_LoadAddOn("SilverDragon_History")
+-- E.func_LoadAddOn("SilverDragon_Overlay")
+-- E.func_LoadAddOn("SilverDragon_RangeExtender")
+-- E.func_LoadAddOn("TomTom")
+-- E.func_LoadAddOn("Pawn")
+-- E.func_LoadAddOn("MySlot")
+-- E.func_LoadAddOn("QuestsChanged")
+-- E.func_LoadAddOn("AdvancedInterfaceOptions")
 ----------------------------------------------------------------
 function OctoToDo_EventFrame_OCTOMAIN:MustBeHiddenFrames()
 	for _, v in next, (E.OctoTable_MustBeHiddenFrames_table) do
@@ -385,7 +404,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 local AddonHeight = 20 -- Высота
-local AddonRightFrameWeight = 90 -- Ширина
+local AddonRightFrameWeight = 110 -- Ширина
 local AddonLeftFrameWeight = 240
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
@@ -505,10 +524,12 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
 	frame.left.text:SetText(data.left)
+	E:func_SetBackdrop(frame.left)
 	for NumPlayers = 1, #data do
 		frame.cent[NumPlayers].text:SetText(data[NumPlayers][1])
 		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
 		frame.cent[NumPlayers]:Show()
+		-- E:func_SetBackdrop(frame.cent[NumPlayers])
 	end
 end
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
@@ -619,8 +640,9 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	end
 	-- fpde(CENT)
 	local newcount = #OctoTable_func_otrisovkaCENT
-	if MainFrameNumLines > newcount then
-		MainFrameNumLines = newcount
+	MainFrameNumLines = newcount
+	if MainFrameNumLines > 30 then
+		MainFrameNumLines = 30
 	end
 	if MainFrameNumLines < 1 then MainFrameNumLines = 1 end
 	local DataProvider = CreateDataProvider(CENT)
