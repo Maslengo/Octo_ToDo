@@ -10,6 +10,9 @@ local markerToHex = {
 	[7] = "ffD6210B", -- Red Cross
 	[8] = "ffFFFFFF", -- White Skull
 }
+
+
+
 E.OctoTable_Colors = {
 	{
 		name = "Class_Warrior_Color",

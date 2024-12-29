@@ -1092,27 +1092,27 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.GetAddOnMetadata(name, variable)
-	local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
+	local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
 	return GetAddOnMetadata(name, variable)
 end
 ----------------------------------------------------------------
 function E.GetAddOnInfo(name)
-	local GetAddOnInfo = GetAddOnInfo or C_AddOns.GetAddOnInfo
+	local GetAddOnInfo = C_AddOns.GetAddOnInfo
 	return GetAddOnInfo(name)
 end
 ----------------------------------------------------------------
 function E.EnableAddOn(name, character)
-	local EnableAddOn = EnableAddOn or C_AddOns.EnableAddOn
+	local EnableAddOn = C_AddOns.EnableAddOn
 	return EnableAddOn(name, character)
 end
 ----------------------------------------------------------------
 function E.DisableAddOn(name, character)
-	local DisableAddOn = DisableAddOn or C_AddOns.DisableAddOn
+	local DisableAddOn = C_AddOns.DisableAddOn
 	return DisableAddOn(name, character)
 end
 ----------------------------------------------------------------
 function E.LoadAddOn(name)
-	local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
+	local LoadAddOn = C_AddOns.LoadAddOn
 	return LoadAddOn(name)
 end
 ----------------------------------------------------------------
@@ -1122,7 +1122,7 @@ function E.IsAddOnLoaded(name)
 end
 ----------------------------------------------------------------
 function E.func_LoadAddOn(AddonName)
-	local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
+	local LoadAddOn = C_AddOns.LoadAddOn
 	local loaded, reason = LoadAddOn(AddonName)
 	if not loaded and reason == "DISABLED" then
 		E.EnableAddOn(AddonName)
