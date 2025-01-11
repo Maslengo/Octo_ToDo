@@ -538,7 +538,12 @@ function E.func_reputationName(reputationID)
 		if ShowIDS == true and vivod ~= nil then
 			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
 		end
-		return E.OctoTable_FACTIONTABLE[reputationID].faction..vivod
+		if E.OctoTable_FACTIONTABLE[reputationID] then
+			return E.OctoTable_FACTIONTABLE[reputationID].faction..vivod
+		else
+			print (reputationID.. " <- MISSING REPUTATION ID -> " .. name)
+			return name
+		end
 	else
 		return "reputationID"
 	end

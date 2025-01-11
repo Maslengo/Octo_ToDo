@@ -57,13 +57,14 @@ local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 ----------------------------------------------------------------
--- E.func_LoadAddOn("OctoToDo_Achievements")
--- E.func_LoadAddOn("OctoToDo_Minecraft")
--- E.func_LoadAddOn("OctoToDo_Reputations")
--- E.func_LoadAddOn("OctoToDo_TrashCan")
+E.func_LoadAddOn("OctoToDo_Achievements")
+E.func_LoadAddOn("OctoToDo_Minecraft")
+E.func_LoadAddOn("OctoToDo_Octocraft")
+E.func_LoadAddOn("OctoToDo_Reputations")
+E.func_LoadAddOn("OctoToDo_TrashCan")
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")
--- E.func_LoadAddOn("MountsJournal")
+E.func_LoadAddOn("MountsJournal")
 E.func_LoadAddOn("HidingBar")
 E.func_LoadAddOn("HidingBar_Options")
 -- E.func_LoadAddOn("SpeedyAutoLoot")
@@ -236,7 +237,7 @@ function  OctoToDo_EventFrame_OCTOMAIN:checkCharInfo()
 			CharInfo.Chromie_canEnter = CharInfo.Chromie_canEnter or false
 			CharInfo.Chromie_UnitChromieTimeID = CharInfo.Chromie_UnitChromieTimeID or 0
 			CharInfo.Chromie_name = CharInfo.Chromie_name or ""
-			CharInfo.buildVersion = CharInfo.buildVersion or buildVersion
+			CharInfo.buildVersion = CharInfo.buildVersion or 0
 			CharInfo.GameLimitedMode_IsActive = CharInfo.GameLimitedMode_IsActive or GameLimitedMode_IsActive
 			if CharInfo.levelCapped20 == nil then
 				CharInfo.levelCapped20 = false
@@ -376,7 +377,7 @@ function  OctoToDo_EventFrame_OCTOMAIN:checkCharInfo()
 						end
 					end
 				end
-				OctoToDo_DB_Other.Active = {}
+				OctoToDo_DB_Other.Holiday.Active = {}
 				CharInfo.LFGInstance = {}
 			end
 			for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
@@ -1208,7 +1209,7 @@ end
 function OctoToDo_EventFrame_OCTOMAIN:CreateMineFrame()
 	local MineFrame = CreateFrame("Frame", "MineFrame", UIParent, "BackdropTemplate")
 	MineFrame:SetPoint("TOPLEFT", 100, -100)
-	MineFrame:SetSize(32*8, 32*8)
+	MineFrame:SetSize(64*2, 64*2)
 	MineFrame:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
 	MineFrame:SetBackdropColor(29/255, 42/255, 76/255, 1)
 	MineFrame:SetBackdropBorderColor(0, 0, 0, 0)

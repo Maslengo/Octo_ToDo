@@ -350,7 +350,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_Currency_TEST2()
 	local expanded = {}
 	for index = C_CurrencyInfo.GetCurrencyListSize(), 1, -1 do
 		local info = C_CurrencyInfo.GetCurrencyListInfo(index)
-		if info.isHeader and not info.isHeaderExpanded then
+		if info.isHeader and not info.isHeaderExpanded and ExpandCurrencyList then
 			ExpandCurrencyList(index, true)
 			expanded[info.name] = true
 		end
@@ -369,7 +369,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_Currency_TEST2()
 	end
 	for index = C_CurrencyInfo.GetCurrencyListSize(), 1, -1 do
 		local info = C_CurrencyInfo.GetCurrencyListInfo(index)
-		if info.isHeader and expanded[info.name] then
+		if info.isHeader and expanded[info.name] and ExpandCurrencyList then
 			ExpandCurrencyList(index, false)
 		end
 	end
@@ -536,12 +536,14 @@ function OctoToDo_EventFrame_Collect:Collect_All_Reputations()
 			i = i + 1
 		end
 		for reputationID, v in next, (OctoToDo_DB_Config.ReputationDB) do
-			local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-			if isAccountWide == false then
-				collect.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
-			else
-				for GUID, tbl in next, (OctoToDo_DB_Levels) do
-					tbl.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
+			if reputationID then
+				local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+				if isAccountWide == false then
+					collect.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
+				else
+					for GUID, tbl in next, (OctoToDo_DB_Levels) do
+						tbl.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
+					end
 				end
 			end
 		end

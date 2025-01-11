@@ -17,7 +17,7 @@ OctoToDo_EventFrame_Minecraft:RegisterEvent("ADDON_LOADED")
 OctoToDo_EventFrame_Minecraft:RegisterEvent("PLAYER_REGEN_DISABLED")
 ----------------------------------------------------------------
 local AddonHeight = 68 -- Высота 27    --
-local AddonRightFrameWeight = 1190 -- Ширина 54    --
+local AddonRightFrameWeight = 1256 -- Ширина 54    --
 local MinecraftTable = ns.OctoTable_MinecraftColors
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
