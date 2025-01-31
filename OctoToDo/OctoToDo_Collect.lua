@@ -44,6 +44,37 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_PlayerInfo()
 	OctoToDo_TrashCan = OctoToDo_TrashCan or {}
 	OctoToDo_TrashCan.profileKeys = OctoToDo_TrashCan.profileKeys or {}
 	OctoToDo_TrashCan.profileKeys[curCharName.." - ".. curServer] = OctoToDo_TrashCan.profileKeys[curCharName.." - ".. curServer] or "OctoUI"
+
+
+	if E.isElvUI and ElvDB and ElvPrivateDB then
+		if ElvDB.profileKeys[curCharName.." - ".. curServer] ~= "OctoUI" then
+			ElvDB.profileKeys[curCharName.." - ".. curServer] = "OctoUI"
+			print ("ElvDB done")
+		end
+		if ElvPrivateDB.profileKeys[curCharName.." - ".. curServer] ~= "PRIVATEPROFILE" then
+			ElvPrivateDB.profileKeys[curCharName.." - ".. curServer] = "PRIVATEPROFILE"
+			print ("ElvPrivateDB done")
+		end
+	end
+
+	if E.isPlater and PlaterDB then
+		if PlaterDB.profileKeys[curCharName.." - ".. curServer] ~= "OctoUI" then
+			PlaterDB.profileKeys[curCharName.." - ".. curServer] = "OctoUI"
+			print ("PlaterDB done")
+		end
+	end
+
+	if E.isOmniCD and OmniCDDB then
+		if OmniCDDB.profileKeys[curCharName.." - ".. curServer] ~= "OctoUI" then
+			OmniCDDB.profileKeys[curCharName.." - ".. curServer] = "OctoUI"
+			print ("OmniCDDB done")
+		end
+	end
+
+
+	-- E.func_TableMerge(ElvDB.profileKeys, OctoToDo_TrashCan.profileKeys)
+	-- fpde(ElvPrivateDB.profileKeys)
+
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
 		local curServerShort = E.func_CurServerShort(curServer)

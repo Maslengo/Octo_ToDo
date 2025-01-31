@@ -8,8 +8,16 @@ OctoToDo_EventFrame_OCTOMAIN:Hide()
 
 
 
- -- ЗАЧЕКАТЬ ЧУЖИЕ WTF
-
+-- ЗАЧЕКАТЬ ЧУЖИЕ WTF
+-- function journal:getMetricFormat(distance)
+-- 	distance = distance * .9144
+-- 	if distance < 1000 then
+-- 		return math.floor(distance).." "..L["ABBR_METER"]
+-- 	elseif distance < 1000000 then
+-- 		return (math.floor(distance / 1000 * 10) / 10).." "..L["ABBR_KILOMETER"]
+-- 	end
+-- 	return math.floor(distance / 1000).." "..L["ABBR_KILOMETER"]
+-- end
 
 
 
@@ -57,16 +65,16 @@ local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 ----------------------------------------------------------------
-E.func_LoadAddOn("OctoToDo_Achievements")
-E.func_LoadAddOn("OctoToDo_Minecraft")
-E.func_LoadAddOn("OctoToDo_Octocraft")
-E.func_LoadAddOn("OctoToDo_Reputations")
-E.func_LoadAddOn("OctoToDo_TrashCan")
-E.func_LoadAddOn("!BugGrabber")
-E.func_LoadAddOn("BugSack")
-E.func_LoadAddOn("MountsJournal")
-E.func_LoadAddOn("HidingBar")
-E.func_LoadAddOn("HidingBar_Options")
+-- E.func_LoadAddOn("OctoToDo_Achievements")
+-- E.func_LoadAddOn("OctoToDo_Minecraft")
+-- E.func_LoadAddOn("OctoToDo_Octocraft")
+-- E.func_LoadAddOn("OctoToDo_Reputations")
+-- E.func_LoadAddOn("OctoToDo_TrashCan")
+-- E.func_LoadAddOn("!BugGrabber")
+-- E.func_LoadAddOn("BugSack")
+-- E.func_LoadAddOn("MountsJournal")
+-- E.func_LoadAddOn("HidingBar")
+-- E.func_LoadAddOn("HidingBar_Options")
 -- E.func_LoadAddOn("SpeedyAutoLoot")
 -- E.func_LoadAddOn("TalentTreeTweaks")
 -- E.func_LoadAddOn("Plater")
@@ -1209,15 +1217,20 @@ end
 function OctoToDo_EventFrame_OCTOMAIN:CreateMineFrame()
 	local MineFrame = CreateFrame("Frame", "MineFrame", UIParent, "BackdropTemplate")
 	MineFrame:SetPoint("TOPLEFT", 100, -100)
-	MineFrame:SetSize(64*2, 64*2)
+	MineFrame:SetSize(1256, 68)
 	MineFrame:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
 	MineFrame:SetBackdropColor(29/255, 42/255, 76/255, 1)
 	MineFrame:SetBackdropBorderColor(0, 0, 0, 0)
 
-	MineFrame.FG = MineFrame:CreateTexture()
-	MineFrame.FG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\MINECRAFT\\QWE.tga")
+	MineFrame.FG = MineFrame:CreateTexture(nil, "BACKGROUND", nil, 2)
+	MineFrame.FG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\MINECRAFT\\minecraft FG.tga")
 	MineFrame.FG:SetAllPoints(MineFrame)
 	MineFrame.FG:SetVertexColor(unpack(OctoToDo_DB_Vars.color))
+
+	MineFrame.BG = MineFrame:CreateTexture(nil, "BACKGROUND", nil, 3)
+	MineFrame.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\MINECRAFT\\minecraft BG.tga")
+	MineFrame.BG:SetAllPoints(MineFrame)
+	-- MineFrame.BG:SetVertexColor(unpack(OctoToDo_DB_Vars.color))
 
 end
 

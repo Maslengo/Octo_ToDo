@@ -530,9 +530,15 @@ function E.func_reputationName(reputationID)
 		if repInfo then
 			name = repInfo.name
 		else
-			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
 			-- name = reputationInfo.name or E.Blue_Color..SEARCH_LOADING_TEXT.."|r"
-			name = reputationInfo.name or E.OctoTable_FACTIONTABLE[reputationID].name
+			if reputationInfo.name then
+				name = reputationInfo.name
+			elseif E.OctoTable_FACTIONTABLE[reputationID] then
+				name = E.OctoTable_FACTIONTABLE[reputationID].name
+			else
+				name = reputationID.. " (UNKNOWN)"
+			end
 		end
 		vivod = vivod..name
 		if ShowIDS == true and vivod ~= nil then

@@ -18,7 +18,7 @@ OctoToDo_EventFrame_Minecraft:RegisterEvent("PLAYER_REGEN_DISABLED")
 ----------------------------------------------------------------
 local AddonHeight = 68 -- Высота 27    --
 local AddonRightFrameWeight = 1256 -- Ширина 54    --
-local MinecraftTable = ns.OctoTable_MinecraftColors
+local MinecraftTable = ns.OctoTable_MinecraftColors4
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
 -- дефолт 15
@@ -39,10 +39,25 @@ end
 local MINECRAFTtextureFG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft FG.tga"
 local MINECRAFTtextureBG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft BG.tga"
 local MINECRAFTtextureALL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft ALL.tga"
-local MINECRAFTtextureULV = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Tiers\\1 ULV.tga"
 -- frame.cent.FG:SetTexCoord(0, 1, 0, 0.5)
 -- frame.cent.BG:SetTexCoord(0, 1, 0.5, 1)
 ----------------------------------------------------------------
+local function OnENTERTTOOLTIP(f)
+	if not f.tooltip then
+		print ("NOT")
+		return
+	elseif #f.tooltip == 0 then
+		print ("== 0")
+		return
+	end
+	GameTooltip:SetOwner(f, "ANCHOR_RIGHT", 0, 0)
+	-- GameTooltip:AddLine("QWEQWE")
+	for index, v in ipairs(f.tooltip) do
+		GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
+	end
+	-- GameTooltip:AddLine("ASDASD")
+	GameTooltip:Show()
+end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function OnAcquired(owner, frame, data, new)
 	if new then
@@ -51,25 +66,16 @@ local function OnAcquired(owner, frame, data, new)
 		frame.cent:SetPropagateMouseClicks(true)
 		frame.cent:SetSize(AddonRightFrameWeight, AddonHeight)
 		frame.cent:SetPoint("TOPLEFT", frame, "TOPLEFT")
+
 		frame.cent.FG = frame.cent:CreateTexture(nil, "BACKGROUND", nil, 2)
 		frame.cent.FG:SetTexture(MINECRAFTtextureFG)
 		frame.cent.FG:SetAllPoints(frame.cent)
+
 		frame.cent.BG = frame.cent:CreateTexture(nil, "BACKGROUND", nil, 3)
 		frame.cent.BG:SetTexture(MINECRAFTtextureBG)
 		frame.cent.BG:SetAllPoints(frame.cent)
-		frame.cent.BGtier = frame.cent:CreateTexture(nil, "BACKGROUND", nil, 4)
-		frame.cent.BGtier:SetTexture(MINECRAFTtextureULV)
-		frame.cent.BGtier:SetSize(AddonHeight, AddonHeight)
-		frame.cent.BGtier:SetPoint("TOPLEFT", frame, "TOPLEFT")
-
-
-
-		frame.cent.text = frame.cent:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.cent.text:SetAllPoints()
-		frame.cent.text:SetFontObject(OctoFont11)
-		frame.cent.text:SetJustifyV("MIDDLE")
-		frame.cent.text:SetJustifyH("CENTER")
-		frame.cent.text:SetTextColor(1, 1, 1, 1)
+		frame.cent.BG:SetScript("OnEnter", OnENTERTTOOLTIP)
+		frame.cent.BG:SetScript("OnLeave", GameTooltip_Hide)
 	end
 end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
@@ -80,6 +86,7 @@ local function OctoToDo_Frame_init(frame, data)
 	local BackdropAlpha = 0
 	local BackdropBorderAlpha = .5
 	E:func_SetBackdrop(frame.cent, hexcolor, BackdropAlpha, BackdropBorderAlpha)
+	frame.cent.BG.tooltip = {{data.name}}
 end
 function OctoToDo_EventFrame_Minecraft:OctoToDo_Create_MainFrame_Minecraft()
 	local OctoToDo_MainFrame_Minecraft = CreateFrame("BUTTON", "OctoToDo_MainFrame_Minecraft", UIParent, "BackdropTemplate")

@@ -194,6 +194,15 @@ local _, _, _, isWeakAuras = C_AddOns.GetAddOnInfo("WeakAuras")
 E.isWeakAuras = isWeakAuras
 local _, _, _, isTomTom = C_AddOns.GetAddOnInfo("TomTom")
 E.isTomTom = isTomTom
+local _, _, _, isPlater = C_AddOns.GetAddOnInfo("Plater")
+E.isPlater = isPlater
+local _, _, _, isOmniCD = C_AddOns.GetAddOnInfo("OmniCD")
+E.isOmniCD = isOmniCD
+
+
+
+
+
 E.bgCr = .08 -- 14/255
 E.bgCg = .08 -- 14/255
 E.bgCb = .08 -- 14/255

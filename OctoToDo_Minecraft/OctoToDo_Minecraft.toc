@@ -12,4 +12,5 @@
 Tables\OctoTable_MinecraftColors.lua
 Tables\OctoTable_MinecraftColors2.lua
 Tables\OctoTable_MinecraftColors3HEARTS.lua
+Tables\OctoTable_MinecraftColors4.lua
 OctoToDo_Minecraft.lua

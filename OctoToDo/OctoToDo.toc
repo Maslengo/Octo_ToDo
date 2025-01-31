@@ -2,7 +2,7 @@
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Notes: |cff959595Slash command: /Octo|r
 ## Author: Octo
-## Version: v84.9(11.0.7)(12.01.2025)
+## Version: v85.0(11.0.7)(01.02.2025)
 ## IconTexture: Interface\AddOns\OctoToDo\Media\AddonTexture_1
 ## SavedVariables: OctoToDo_DB_Config OctoToDo_DB_Levels OctoToDo_DB_Vars OctoToDo_DB_Other OCTO_DB_currencies_test OCTO_DB_reputations_test
 
