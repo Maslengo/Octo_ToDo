@@ -70,8 +70,8 @@ local curServer = GetRealmName()
 -- E.func_LoadAddOn("OctoToDo_Octocraft")
 -- E.func_LoadAddOn("OctoToDo_Reputations")
 -- E.func_LoadAddOn("OctoToDo_TrashCan")
--- E.func_LoadAddOn("!BugGrabber")
--- E.func_LoadAddOn("BugSack")
+E.func_LoadAddOn("!BugGrabber")
+E.func_LoadAddOn("BugSack")
 -- E.func_LoadAddOn("MountsJournal")
 -- E.func_LoadAddOn("HidingBar")
 -- E.func_LoadAddOn("HidingBar_Options")
@@ -231,6 +231,8 @@ function  OctoToDo_EventFrame_OCTOMAIN:checkCharInfo()
 			CharInfo.avgItemLevelPvp = CharInfo.avgItemLevelPvp or 1
 			CharInfo.className = CharInfo.className or localizedClass
 			CharInfo.classFilename = CharInfo.classFilename or englishClass
+			CharInfo.cloak_lvl = CharInfo.cloak_lvl or 0
+			CharInfo.cloak_res = CharInfo.cloak_res or 0
 			CharInfo.classId = CharInfo.classId or 1
 			CharInfo.classColor = CharInfo.classColor or {r = 0.5, g = 0.5, b = 0.5}
 			CharInfo.curServer = CharInfo.curServer or curServer
@@ -536,7 +538,7 @@ local function OctoToDo_Frame_init(frame, data)
 		frame.cent[NumPlayers].text:SetText(data[NumPlayers][1])
 		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
 		frame.cent[NumPlayers]:Show()
-		-- E:func_SetBackdrop(frame.cent[NumPlayers])
+		E:func_SetBackdrop(frame.cent[NumPlayers])
 	end
 end
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
@@ -608,6 +610,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 				and (CharInfo.UnitLevel >= LevelToShow)
 				and (CharInfo.UnitLevel <= LevelToShowMAX))
 			or (curGUID == CharInfo.GUID) then
+
 				sorted[#sorted+1] = CharInfo
 			end
 		else
@@ -907,6 +910,101 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 	DD2_OCTOMAIN:ddSetMenuButtonHeight(16)
 end
 ----------------------------------------------------------------
+function OctoToDo_EventFrame_OCTOMAIN:CreateMineFrame()
+	local pizda = false
+	if pizda == true then
+		local colorBtn =  CreateFrame("BUTTON", nil, UIParent, "BackdropTemplate")
+		colorBtn:SetBackdrop({
+				edgeFile = E.edgeFile,
+				edgeSize = 1,
+				insets = {left = 1, right = 1, top = 1, bottom = 1},
+		})
+		colorBtn:SetBackdropBorderColor(0, 0, 0, bbalpha)
+
+		colorBtn:SetSize(32, 16)
+		colorBtn:SetPoint("TOPLEFT", 50, -50)
+		-- colorBtn:SetNormalTexture("Interface/ChatFrame/ChatFrameColorSwatch")
+		colorBtn:SetNormalTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+		local colorTex = colorBtn:GetNormalTexture()
+		colorTex:SetColorTexture(unpack(OctoToDo_DB_Vars.color))
+		colorTex:ClearAllPoints()
+		colorTex:SetPoint("TOPLEFT", 1, -1)
+		colorTex:SetPoint("BOTTOMRIGHT", -1, 1)
+
+		colorBtn.swatchFunc = function()
+			colorTex:SetColorTexture(ColorPickerFrame:GetColorRGB())
+			OctoToDo_DB_Vars.color = {ColorPickerFrame:GetColorRGB()}
+			MineFrame.FG:SetVertexColor(ColorPickerFrame:GetColorRGB())
+			-- self:setCursorSettings()
+		end
+		colorBtn.cancelFunc = function(color)
+			OctoToDo_DB_Vars.color = {color.r, color.g, color.b, color.a}
+			colorTex:SetColorTexture(color.r, color.g, color.b)
+
+			MineFrame.FG:SetVertexColor(color.r, color.g, color.b, color.a)
+			-- self:setCursorSettings()
+		end
+
+		colorBtn.hasOpacity = true
+		colorBtn.opacityFunc = function()
+			local a = ColorPickerFrame:GetColorAlpha()
+			OctoToDo_DB_Vars.color[4] = a
+			colorTex:SetAlpha(a)
+		end
+
+		colorBtn:SetScript("OnClick", function(btn)
+			btn.r, btn.g, btn.b, btn.opacity = unpack(OctoToDo_DB_Vars.color)
+			if OpenColorPicker then
+				OpenColorPicker(btn)
+			else
+				ColorPickerFrame:SetupColorPickerAndShow(btn)
+			end
+		end)
+
+		-- local r, g, b = E.func_hex2rgbNUMBER(E.Yellow_Color)
+		colorBtn:SetScript("OnEnter", function(btn)
+			btn:SetBackdropBorderColor(r, g, b, 1)
+		end)
+
+		colorBtn:SetScript("OnLeave", function(btn)
+			btn:SetBackdropBorderColor(0, 0, 0, 1)
+		end)
+
+		local btnResetColor = CreateFrame("BUTTON", nil, UIParent, "UIPanelButtonTemplate")
+		btnResetColor:SetSize(64, 24)
+		btnResetColor:SetPoint("LEFT", colorBtn, "RIGHT", 3, 0)
+		btnResetColor:SetText(RESET)
+		btnResetColor:SetScript("OnClick", function()
+			PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+			colorTex:SetColorTexture(1, 1, 1)
+			colorTex:SetAlpha(1)
+
+			MineFrame.FG:SetVertexColor(1,1,1,1)
+
+			OctoToDo_DB_Vars.color = {1, 1, 1, 1}
+			-- config:setCursorSettings()
+		end)
+		----
+		local MineFrame = CreateFrame("Frame", "MineFrame", UIParent, "BackdropTemplate")
+		MineFrame:SetPoint("TOPLEFT", 100, -100)
+		MineFrame:SetSize(1256, 68)
+		MineFrame:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
+		MineFrame:SetBackdropColor(29/255, 42/255, 76/255, 1)
+		MineFrame:SetBackdropBorderColor(0, 0, 0, 0)
+
+		MineFrame.FG = MineFrame:CreateTexture(nil, "BACKGROUND", nil, 2)
+		MineFrame.FG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\MINECRAFT\\minecraft FG.tga")
+		MineFrame.FG:SetAllPoints(MineFrame)
+		MineFrame.FG:SetVertexColor(unpack(OctoToDo_DB_Vars.color))
+
+		MineFrame.BG = MineFrame:CreateTexture(nil, "BACKGROUND", nil, 3)
+		MineFrame.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\MINECRAFT\\minecraft BG.tga")
+		MineFrame.BG:SetAllPoints(MineFrame)
+		-- MineFrame.BG:SetVertexColor(unpack(OctoToDo_DB_Vars.color))
+	end
+end
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 for _, event in ipairs(E.OctoTable_Events) do OctoToDo_EventFrame_OCTOMAIN:RegisterEvent(event) end
@@ -1086,7 +1184,6 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 		C_WowTokenPublic.UpdateMarketPrice()
 		OctoToDo_DB_Levels[curGUID] = OctoToDo_DB_Levels[curGUID] or {}
 		self:checkCharInfo()
-		self:CreateColorButton()
 		self:CreateMineFrame()
 		-- E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_DB_Vars, nil, function() OctoToDo_EventFrame_OCTOMAIN:main_frame_toggle() end)
 		GameMenuFrame:SetScale(OctoToDo_DB_Vars.GameMenuFrameScale or 1)
@@ -1138,101 +1235,6 @@ end
 
 
 
-
-
-function OctoToDo_EventFrame_OCTOMAIN:CreateColorButton()
-	local colorBtn =  CreateFrame("BUTTON", nil, UIParent, "BackdropTemplate")
-	colorBtn:SetBackdrop({
-			edgeFile = E.edgeFile,
-			edgeSize = 1,
-			insets = {left = 1, right = 1, top = 1, bottom = 1},
-	})
-	colorBtn:SetBackdropBorderColor(0, 0, 0, bbalpha)
-
-	colorBtn:SetSize(32, 16)
-	colorBtn:SetPoint("TOPLEFT", 50, -50)
-	-- colorBtn:SetNormalTexture("Interface/ChatFrame/ChatFrameColorSwatch")
-	colorBtn:SetNormalTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
-	local colorTex = colorBtn:GetNormalTexture()
-	colorTex:SetColorTexture(unpack(OctoToDo_DB_Vars.color))
-	colorTex:ClearAllPoints()
-	colorTex:SetPoint("TOPLEFT", 1, -1)
-	colorTex:SetPoint("BOTTOMRIGHT", -1, 1)
-
-	colorBtn.swatchFunc = function()
-		colorTex:SetColorTexture(ColorPickerFrame:GetColorRGB())
-		OctoToDo_DB_Vars.color = {ColorPickerFrame:GetColorRGB()}
-		MineFrame.FG:SetVertexColor(ColorPickerFrame:GetColorRGB())
-		-- self:setCursorSettings()
-	end
-	colorBtn.cancelFunc = function(color)
-		OctoToDo_DB_Vars.color = {color.r, color.g, color.b, color.a}
-		colorTex:SetColorTexture(color.r, color.g, color.b)
-
-		MineFrame.FG:SetVertexColor(color.r, color.g, color.b, color.a)
-		-- self:setCursorSettings()
-	end
-
-	colorBtn.hasOpacity = true
-	colorBtn.opacityFunc = function()
-		local a = ColorPickerFrame:GetColorAlpha()
-		OctoToDo_DB_Vars.color[4] = a
-		colorTex:SetAlpha(a)
-	end
-
-	colorBtn:SetScript("OnClick", function(btn)
-		btn.r, btn.g, btn.b, btn.opacity = unpack(OctoToDo_DB_Vars.color)
-		if OpenColorPicker then
-			OpenColorPicker(btn)
-		else
-			ColorPickerFrame:SetupColorPickerAndShow(btn)
-		end
-	end)
-
-	-- local r, g, b = E.func_hex2rgbNUMBER(E.Yellow_Color)
-	colorBtn:SetScript("OnEnter", function(btn)
-		btn:SetBackdropBorderColor(r, g, b, 1)
-	end)
-
-	colorBtn:SetScript("OnLeave", function(btn)
-		btn:SetBackdropBorderColor(0, 0, 0, 1)
-	end)
-
-	local btnResetColor = CreateFrame("BUTTON", nil, UIParent, "UIPanelButtonTemplate")
-	btnResetColor:SetSize(64, 24)
-	btnResetColor:SetPoint("LEFT", colorBtn, "RIGHT", 3, 0)
-	btnResetColor:SetText(RESET)
-	btnResetColor:SetScript("OnClick", function()
-		PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
-		colorTex:SetColorTexture(1, 1, 1)
-		colorTex:SetAlpha(1)
-
-		MineFrame.FG:SetVertexColor(1,1,1,1)
-
-		OctoToDo_DB_Vars.color = {1, 1, 1, 1}
-		-- config:setCursorSettings()
-	end)
-end
-
-function OctoToDo_EventFrame_OCTOMAIN:CreateMineFrame()
-	local MineFrame = CreateFrame("Frame", "MineFrame", UIParent, "BackdropTemplate")
-	MineFrame:SetPoint("TOPLEFT", 100, -100)
-	MineFrame:SetSize(1256, 68)
-	MineFrame:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-	MineFrame:SetBackdropColor(29/255, 42/255, 76/255, 1)
-	MineFrame:SetBackdropBorderColor(0, 0, 0, 0)
-
-	MineFrame.FG = MineFrame:CreateTexture(nil, "BACKGROUND", nil, 2)
-	MineFrame.FG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\MINECRAFT\\minecraft FG.tga")
-	MineFrame.FG:SetAllPoints(MineFrame)
-	MineFrame.FG:SetVertexColor(unpack(OctoToDo_DB_Vars.color))
-
-	MineFrame.BG = MineFrame:CreateTexture(nil, "BACKGROUND", nil, 3)
-	MineFrame.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\MINECRAFT\\minecraft BG.tga")
-	MineFrame.BG:SetAllPoints(MineFrame)
-	-- MineFrame.BG:SetVertexColor(unpack(OctoToDo_DB_Vars.color))
-
-end
 
 
 ----------------------------------------------------------------

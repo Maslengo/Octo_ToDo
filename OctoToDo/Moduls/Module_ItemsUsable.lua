@@ -13,30 +13,32 @@ inspectScantipUsable:SetOwner(UIParent, "ANCHOR_NONE")
 
 
 function OctoToDo_EventFrame:TEST_FUNC(itemLink)
-	local count = 0
-	inspectScantipUsable:ClearLines()
-	inspectScantipUsable:SetHyperlink(itemLink)
-	if inspectScantipUsable:NumLines() > 0 then
-		for i = 1, inspectScantipUsable:NumLines() do
-			local r, g, b, a = _G["OctoToDoScanningTooltipUsableTextLeft"..i]:GetTextColor()
-			local TEXTLEFT = _G["OctoToDoScanningTooltipUsableTextLeft"..i]:GetText()
-			local QWE_LEFT = E.func_coloredText(_G["OctoToDoScanningTooltipUsableTextLeft"..i])
-			local TEXTRIGHT = _G["OctoToDoScanningTooltipUsableTextRight"..i]:GetText()
-			local QWE_RIGHT = E.func_coloredText(_G["OctoToDoScanningTooltipUsableTextRight"..i])
-			if TEXTLEFT and TEXTLEFT ~= "" and QWE_LEFT ~= nil then
-				if QWE_LEFT:find("^|cffFF2020") or QWE_LEFT:find("^|cffFF0000") then
-					count = count + 1
+	if itemLink then
+		local count = 0
+		inspectScantipUsable:ClearLines()
+		inspectScantipUsable:SetHyperlink(itemLink)
+		if inspectScantipUsable:NumLines() > 0 then
+			for i = 1, inspectScantipUsable:NumLines() do
+				local r, g, b, a = _G["OctoToDoScanningTooltipUsableTextLeft"..i]:GetTextColor()
+				local TEXTLEFT = _G["OctoToDoScanningTooltipUsableTextLeft"..i]:GetText()
+				local QWE_LEFT = E.func_coloredText(_G["OctoToDoScanningTooltipUsableTextLeft"..i])
+				local TEXTRIGHT = _G["OctoToDoScanningTooltipUsableTextRight"..i]:GetText()
+				local QWE_RIGHT = E.func_coloredText(_G["OctoToDoScanningTooltipUsableTextRight"..i])
+				if TEXTLEFT and TEXTLEFT ~= "" and QWE_LEFT ~= nil then
+					if QWE_LEFT:find("^|cffFF2020") or QWE_LEFT:find("^|cffFF0000") then
+						count = count + 1
+					end
 				end
-			end
-			if TEXTRIGHT and TEXTRIGHT ~= "" and QWE_RIGHT ~= nil then
-				if QWE_RIGHT:find("^|cffFF2020") or QWE_RIGHT:find("^|cffFF0000") then
-					count = count + 1
+				if TEXTRIGHT and TEXTRIGHT ~= "" and QWE_RIGHT ~= nil then
+					if QWE_RIGHT:find("^|cffFF2020") or QWE_RIGHT:find("^|cffFF0000") then
+						count = count + 1
+					end
 				end
 			end
 		end
+		inspectScantipUsable:ClearLines()
+		return count
 	end
-	inspectScantipUsable:ClearLines()
-	return count
 end
 
 function OctoToDo_EventFrame:ItemsUsableFrame()
@@ -49,7 +51,7 @@ function OctoToDo_EventFrame:ItemsUsableFrame()
 				local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 				if containerInfo then
 					local itemID = containerInfo.itemID
-					if E.OctoTable_itemID_ItemsUsable[itemID] and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= E.OctoTable_itemID_ItemsUsable[itemID] then
+					if itemID and E.OctoTable_itemID_ItemsUsable[itemID] and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= E.OctoTable_itemID_ItemsUsable[itemID] then
 						if self:TEST_FUNC(E.func_GetItemLink(itemID)) == 0 then
 							Clickable_ItemsUsable:Show()
 							if not InCombatLockdown() then

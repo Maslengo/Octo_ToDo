@@ -1124,6 +1124,7 @@ local Table_Events = {
 	"QUEST_LOOT_RECEIVED",
 	"PLAYER_MONEY",
 	"ACCOUNT_MONEY",
+	"CURRENCY_DISPLAY_UPDATE",
 	"CURRENCY_TRANSFER_LOG_UPDATE",
 	"PLAYER_EQUIPMENT_CHANGED",
 	"PLAYER_LEAVING_WORLD",
@@ -1308,6 +1309,19 @@ function OctoToDo_EventFrame_Collect:ACCOUNT_MONEY()
 		self:Collect_ALL_MoneyUpdate()
 	end
 end
+
+
+
+function OctoToDo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
+	if not InCombatLockdown() then
+		self:Collect_All_Currency()
+		self:Collect_All_Currency_TEST2()
+		self:Collect_All_Covenant()
+	end
+end
+
+
+
 
 function OctoToDo_EventFrame_Collect:CURRENCY_TRANSFER_LOG_UPDATE()
 	if not InCombatLockdown() then

@@ -361,10 +361,7 @@ E.OctoTable_FACTIONTABLE = {
 	[1888] = {icon = "NONE", name = "Яндвикские врайкулы", faction = "", other = "Legion", },
 	[909] = {icon = "NONE", name = "Ярмарка Новолуния", faction = "", other = "World of Warcraft", },
 	-- [2693] = {icon = "NONE", name = "Delver's Journey (Season 1)", faction = "", other = "The War Within", },
-
-
-
-
+	[2693] = {icon = "NONE", name = "Путь участника вылазки (1-й сезон)", faction = "", other = "The War Within", },
 
 
 
