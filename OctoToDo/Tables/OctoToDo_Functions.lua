@@ -1393,7 +1393,7 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, BackdropBorderAlpha)
 	local bgCr, bgCg, bgCb, bgCa = E.bgCr, E.bgCg, E.bgCb, E.bgCa
 	-- local bgCr, bgCg, bgCb, bgCa = 0, 0, 0, 0
 	if hexcolor then
-		bgCr, bgCg, bgCb, bgCa = self.func_hex2rgbNUMBER(hexcolor)
+		bgCr, bgCg, bgCb  = self.func_hex2rgbNUMBER(hexcolor)
 	end
 	if BackdropAlpha then
 		bgCa = BackdropAlpha

@@ -377,3 +377,4 @@ E.menuBackdrop = {
 }
 
 E.OctoTable_Frames = {}
+E.listMaxSize = 30

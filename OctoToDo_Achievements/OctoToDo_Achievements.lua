@@ -232,7 +232,7 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 					----------------------------------------------------------------
 				end
 			end
-			self:ddAddButton({list = list, listMaxSize = 20}, level)
+			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			if level == 1 then
 				----------------------------------------------------------------
 				self:ddAddSeparator(level)

@@ -533,12 +533,14 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
 	frame.left.text:SetText(data.left)
-	E:func_SetBackdrop(frame.left)
+	E:func_SetBackdrop(frame.left, nil, 0)
+	-- E:func_SetBackdrop(frame.left, nil, 0, 0)
 	for NumPlayers = 1, #data do
 		frame.cent[NumPlayers].text:SetText(data[NumPlayers][1])
 		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
 		frame.cent[NumPlayers]:Show()
-		E:func_SetBackdrop(frame.cent[NumPlayers])
+		E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0)
+		-- E:func_SetBackdrop(frame.cent[NumPlayers], classColorHexCurrent, .2, 0)
 	end
 end
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
@@ -733,14 +735,14 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					value = CharInfo.BattleTagLocal
 				end
 			end
-			self:ddAddButton({list = list, listMaxSize = 20}, level)
+			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			if type(value) == "string" then
 				local tbl_Players = {}
 				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
 					if CharInfo.BattleTagLocal == value or not value then
 						tbl_Players[CharInfo.curServer] = tbl_Players[CharInfo.curServer] or {}
 						tbl_Players[CharInfo.curServer][curCharGUID] = tbl_Players[CharInfo.curServer][curCharGUID] or {}
-						tbl_Players[CharInfo.curServer][curCharGUID] = CharInfo.classColorHex..CharInfo.Name.."|r".." "..CharInfo.UnitLevel
+						tbl_Players[CharInfo.curServer][curCharGUID] = CharInfo.classColorHex..CharInfo.Name.."|r".."QEWQWE "..CharInfo.UnitLevel
 					end
 				end
 				for Server, v in next, (tbl_Players) do
@@ -761,7 +763,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					info.value = v
 					tinsert(list, info)
 				end
-				self:ddAddButton({list = list, listMaxSize = 20}, level)
+				self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			elseif type(value) == "table" then
 				local players_list = {}
 				for GUID, names in next, (value) do
@@ -798,7 +800,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					info.iconInfo = {tSizeX = 16, tSizeY = 16}
 					tinsert(list, info)
 				end
-				self:ddAddButton({list = list, listMaxSize = 20}, level)
+				self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			end
 			if level == 1 then
 				self:ddAddSeparator(level)
