@@ -1195,7 +1195,7 @@ end
 ----------------------------------------------------------------
 function E.func_EmptyZero(value)
 	if tonumber(value) == 0 then
-		return Red_Color.."NEEDDELETE|r"
+		return "" --Red_Color.."NEEDDELETE|r"
 	end
 	return value
 end
