@@ -61,6 +61,9 @@ function E:O_otrisovka()
 			tooltip[#tooltip+1] = {" ", " "}
 			tooltip[#tooltip+1] = {"hasMail", CharInfo.hasMail and E.Icon_MailBox..CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
 			tooltip[#tooltip+1] = {" ", " "}
+			tooltip[#tooltip+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.GUID.."|r"}
+			tooltip[#tooltip+1] = {E.Purple_Color.."newRealmID".."|r", E.Purple_Color..CharInfo.newRealmID.."|r"}
+			tooltip[#tooltip+1] = {" ", " "}
 			tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
 			tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID.."|r"}
 			tooltip[#tooltip+1] = {"Chromie_name", CharInfo.classColorHex..CharInfo.Chromie_name.."|r"}
@@ -437,8 +440,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_Legion_Weekly_WBALL_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Legion_Weekly_WBALL_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_WBALL_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_WBALL_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -451,8 +454,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_Legion_Once_BrokenShoreArmiesofLegionfall_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Legion_Once_BrokenShoreArmiesofLegionfall_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_BrokenShoreArmiesofLegionfall_Once ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_BrokenShoreArmiesofLegionfall_Once
 				end
 				if CharInfo.MASLENGO.OctoTable_QuestID[46246] == E.DONE then
 					vivodCent = E.DONE
@@ -468,8 +471,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_Legion_Once_BrokenShoreExcavations_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Legion_Once_BrokenShoreExcavations_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_BrokenShoreExcavations_Once ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_BrokenShoreExcavations_Once
 				end
 				if CharInfo.MASLENGO.OctoTable_QuestID[46666] == E.DONE then
 					vivodCent = E.DONE
@@ -485,8 +488,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_Legion_Once_ArgusToArgus_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Legion_Once_ArgusToArgus_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_ArgusToArgus_Once ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_ArgusToArgus_Once
 				end
 				return vivodCent, tooltip
 		end)
@@ -499,8 +502,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_Legion_Once_BalanceofPower_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_Legion_Once_BalanceofPower_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_BalanceofPower_Once ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_BalanceofPower_Once
 				end
 				if CharInfo.MASLENGO.OctoTable_QuestID[43533] == "|cff4FFF79Done|r" then
 					vivodCent = E.DONE
@@ -669,8 +672,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Daily_InvasionQuests_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Daily_InvasionQuests_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_InvasionQuests_Daily ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_InvasionQuests_Daily
 				end
 				return vivodCent, tooltip
 		end)
@@ -683,8 +686,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Weekly_AssaultTheBlackEmpire_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_AssaultTheBlackEmpire_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_AssaultTheBlackEmpire_Weekly
 				end
 				if CharInfo.MASLENGO.ItemsInBag[174765] ~= 0 then
 					vivodCent = vivodCent..CharInfo.MASLENGO.ItemsInBag[174765]..E.func_itemTexture(174765)
@@ -720,8 +723,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Daily_miniVision_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Daily_miniVision_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_miniVision_Daily ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_miniVision_Daily
 				end
 				return vivodCent, tooltip
 		end)
@@ -734,8 +737,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Weekly_WBALL_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Weekly_WBALL_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBALL_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBALL_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -748,8 +751,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Weekly_WBNazjatar_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Weekly_WBNazjatar_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBNazjatar_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBNazjatar_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -762,8 +765,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Weekly_WBAssault_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Weekly_WBAssault_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBAssault_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBAssault_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -776,8 +779,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Weekly_WBDarkshore_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Weekly_WBDarkshore_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBDarkshore_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBDarkshore_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -790,8 +793,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Daily_DarkshoreRares_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Daily_DarkshoreRares_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_DarkshoreRares_Daily ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_DarkshoreRares_Daily
 				end
 				return vivodCent, tooltip
 		end)
@@ -979,8 +982,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Weekly_Warfront1_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Weekly_Warfront1_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_Warfront1_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_Warfront1_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -993,8 +996,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Weekly_Warfront2_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Weekly_Warfront2_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_Warfront2_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_Warfront2_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1007,8 +1010,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_BfA_Weekly_WarfrontHC_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WarfrontHC_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WarfrontHC_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1104,9 +1107,9 @@ function E:O_otrisovka()
 							end
 						end
 						if k == 1 then
-							vivodCent = CharInfo.CovenantAndAnima[i][k]
+							vivodCent = E.func_EmptyZero(CharInfo.CovenantAndAnima[i][k])
 						else
-							vivodCent = CharInfo.CovenantAndAnima[i][k]
+							vivodCent = E.func_EmptyZero(CharInfo.CovenantAndAnima[i][k])
 						end
 						return vivodCent, tooltip
 				end)
@@ -1126,8 +1129,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawCovenantAssault_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawCovenantAssault_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1213,8 +1216,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMPatternsWithinPatterns_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMPatternsWithinPatterns_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1227,8 +1230,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaShapingFate_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaShapingFate_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1241,8 +1244,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_SL_Weekly_WBALL_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_SL_Weekly_WBALL_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBALL_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBALL_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1255,8 +1258,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_SL_Weekly_WBZMAntros_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_SL_Weekly_WBZMAntros_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBAntrosZM_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBAntrosZM_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1269,8 +1272,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBMorgethMaw_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBMorgethMaw_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1283,8 +1286,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ReplenishtheReservoir_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ReplenishtheReservoir_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1432,8 +1435,8 @@ function E:O_otrisovka()
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
-					if CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count ~= "" and CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count ~= E.NONE then
-						vivodCent = CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count
+					if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_AidingtheAccord_Weekly ~= "" and CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_AidingtheAccord_Weekly ~= E.NONE then
+						vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_AidingtheAccord_Weekly
 					end
 					return vivodCent, tooltip
 			end)
@@ -1447,8 +1450,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_DF_Weekly_CommunityFeast_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_CommunityFeast_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_CommunityFeast_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_CommunityFeast_Weekly
 				end
 				if CharInfo.MASLENGO.ItemsInBag[200652] ~= 0 then
 					vivodCent = vivodCent.." +"..CharInfo.MASLENGO.ItemsInBag[200652]..E.func_itemTexture(200652)
@@ -1467,8 +1470,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= E.NONE and CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count ~= "0/4" then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ResearchersUnderFire_Weekly ~= E.NONE and CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ResearchersUnderFire_Weekly ~= "0/4" then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ResearchersUnderFire_Weekly
 					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_EPIC, CharInfo.MASLENGO.OctoTable_QuestID[75630]}
 					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_RARE, CharInfo.MASLENGO.OctoTable_QuestID[75629]}
 					tooltip[#tooltip+1] = {MAW_BUFF_QUALITY_STRING_UNCOMMON, CharInfo.MASLENGO.OctoTable_QuestID[75628]}
@@ -1485,8 +1488,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ZaralekCavernAWorthyAllyLoammNiffen_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ZaralekCavernAWorthyAllyLoammNiffen_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1499,8 +1502,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_TheSuperbloom_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_TheSuperbloom_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1513,8 +1516,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_BloomingDreamseeds_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_BloomingDreamseeds_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1527,8 +1530,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_DF_Weekly_EmeraldDreamAWorthyAllyDreamWardens_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_EmeraldDreamAWorthyAllyDreamWardens_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_AWorthyAllyDreamWardens_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_AWorthyAllyDreamWardens_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1541,8 +1544,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_DF_Once_EmeraldDreamDreamsUnified_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_DreamsUnified_Once ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_DreamsUnified_Once
 				end
 				return vivodCent, tooltip
 		end)
@@ -1555,8 +1558,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_DF_Weekly_TimeRift_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_TimeRift_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_TimeRift_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_TimeRift_Weekly
 				end
 				return vivodCent, tooltip
 		end)
@@ -1614,8 +1617,8 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count ~= E.NONE then
-					vivodCent = CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ShapingtheDreamsurge_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ShapingtheDreamsurge_Weekly
 				end
 				if CharInfo.MASLENGO.ItemsInBag[209419] ~= 0 then
 					tooltip[#tooltip+1] = {E.func_texturefromIcon(1044087)..E.WOW_Rare_Color..L["Charred Elemental Remains"].."|r", CharInfo.MASLENGO.ItemsInBag[209419]}
@@ -2139,163 +2142,137 @@ function E:O_otrisovka()
 				local vivodCent, tooltip = " ", {}
 				if OctoToDo_DB_Vars.ExpansionToShow[10] then
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."Dragonflight".."«"), " "}
-					tooltip[#tooltip+1] = {E.Icon_WorldBoss..L["World Boss"], CharInfo.Octopussy_DF_Weekly_WBALL_count}
-					tooltip[#tooltip+1] = {E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"], CharInfo.Octopussy_DF_Weekly_DragonbaneKeep_count}
-					tooltip[#tooltip+1] = {E.Timers.DF_GrandHunts()..L["Grand Hunt"], CharInfo.Octopussy_DF_Weekly_TheGrandHunt_count}
-					tooltip[#tooltip+1] = {E.Timers.DF_CommunityFeast()..L["Community Feast"], CharInfo.Octopussy_DF_Weekly_CommunityFeast_count}
-					tooltip[#tooltip+1] = {L["Aiding the Accord"], CharInfo.Octopussy_DF_Weekly_AidingtheAccord_count}
-					tooltip[#tooltip+1] = {L["Keys of Loyalty"], CharInfo.Octopussy_DF_Weekly_KeysofLoyalty_count}
-					tooltip[#tooltip+1] = {L["PvP"], CharInfo.Octopussy_DF_Weekly_PVP_count}
-					if #tooltip > 0 then
-						tooltip[#tooltip+1] = {" ", " "}
-					end
-					tooltip[#tooltip+1] = {E.func_Gradient("»".."10.2.5".."«"), " "}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["The Gilneas Reclamation"]..")", CharInfo.Octopussy_DF_Once_TheGilneasReclamationStorylines_count}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["Azerothian Archives"]..")", CharInfo.Octopussy_DF_Once_AzerothianArchivesStorylines_count}
+					tooltip[#tooltip+1] = {E.Icon_WorldBoss..L["World Boss"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WBALL_Weekly}
+					tooltip[#tooltip+1] = {E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_DragonbaneKeep_Weekly}
+					tooltip[#tooltip+1] = {E.Timers.DF_GrandHunts()..L["Grand Hunt"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_TheGrandHunt_Weekly}
+					tooltip[#tooltip+1] = {E.Timers.DF_CommunityFeast()..L["Community Feast"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_CommunityFeast_Weekly}
+					tooltip[#tooltip+1] = {L["Aiding the Accord"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_AidingtheAccord_Weekly}
+					tooltip[#tooltip+1] = {L["Keys of Loyalty"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_KeysofLoyalty_Weekly}
+					tooltip[#tooltip+1] = {L["PvP"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_PVP_Weekly}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."10.2.0".."«"), " "}
-					tooltip[#tooltip+1] ={E.Timers.DF_Flower()..E.func_questName(78319), CharInfo.Octopussy_DF_Weekly_EmeraldDreamTheSuperbloom_count}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["Emerald Dream"]..")", CharInfo.Octopussy_DF_Once_ALLEmeraldDreamStorylines_count}
-					tooltip[#tooltip+1] ={E.func_questName(78444), CharInfo.Octopussy_DF_Weekly_EmeraldDreamAWorthyAllyDreamWardens_count}
-					tooltip[#tooltip+1] ={E.func_questName(78821), CharInfo.Octopussy_DF_Weekly_EmeraldDreamBloomingDreamseeds_count}
-					tooltip[#tooltip+1] ={E.func_questName(78444), CharInfo.Octopussy_DF_Weekly_EmeraldDreamAWorthyAllyDreamWardens_count}
-					tooltip[#tooltip+1] ={E.func_questName(78381), CharInfo.Octopussy_DF_Weekly_EmeraldDreamDreamsUnified_count}
-					tooltip[#tooltip+1] ={L["Rares"], CharInfo.Octopussy_DF_Daily_EmeraldDreamRares_count}
+					tooltip[#tooltip+1] ={E.Timers.DF_Flower()..E.func_questName(78319), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_TheSuperbloom_Weekly}
+					tooltip[#tooltip+1] ={E.func_questName(78444), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_AWorthyAllyDreamWardens_Weekly}
+					tooltip[#tooltip+1] ={E.func_questName(78821), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_BloomingDreamseeds_Weekly}
+					tooltip[#tooltip+1] ={E.func_questName(78444), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_AWorthyAllyDreamWardens_Weekly}
+					tooltip[#tooltip+1] ={E.func_questName(78381), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_EmeraldDream_DreamsUnified_Once}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."10.1.7".."«"), " "}
-					tooltip[#tooltip+1] = {E.Timers.DF_Dreamsurges()..L["Dreamsurges"], CharInfo.Octopussy_DF_Once_DreamsurgeInvestigation_count}
-					tooltip[#tooltip+1] = {L["Shaping the Dreamsurge"], CharInfo.Octopussy_DF_Weekly_ShapingtheDreamsurge_count}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["Tyr's Fall"]..")", CharInfo.Octopussy_DF_Once_TyrsFall_count}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["Reforging the Tyr's Guard"]..")", CharInfo.Octopussy_DF_Once_ReforgingtheTyrsGuard_count}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["Seeing Red"]..")", CharInfo.Octopussy_DF_Once_SeeingRed_count}
+					tooltip[#tooltip+1] = {E.Timers.DF_Dreamsurges()..L["Dreamsurges"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_DreamsurgeInvestigation_Once}
+					tooltip[#tooltip+1] = {L["Shaping the Dreamsurge"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ShapingtheDreamsurge_Weekly}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."10.1.5".."«"), " "}
-					tooltip[#tooltip+1] = {E.func_questName(77236), CharInfo.Octopussy_DF_Weekly_WhenTimeNeedsMending_count}
-					tooltip[#tooltip+1] = {E.Timers.DF_TimeRift()..L["TimeRift"], CharInfo.Octopussy_DF_Weekly_TimeRift_count}
-					tooltip[#tooltip+1] = {L["Temporal Acquisitions Specialist"], CharInfo.Octopussy_DF_Once_TemporalAcquisitionsSpecialist_count}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["Dawn of the Infinites"]..")", CharInfo.Octopussy_DF_Once_DawnoftheInfinitesStorylines_count}
+					tooltip[#tooltip+1] = {E.func_questName(77236), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WhenTimeNeedsMending_Weekly}
+					tooltip[#tooltip+1] = {E.Timers.DF_TimeRift()..L["TimeRift"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_TimeRift_Weekly}
+					tooltip[#tooltip+1] = {L["Temporal Acquisitions Specialist"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_TemporalAcquisitionsSpecialist_Once}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Zaralek Cavern"].."«"), " "}
-					tooltip[#tooltip+1] = {E.Timers.DF_ResearchersUnderFire()..E.func_questName(74906), CharInfo.Octopussy_DF_Weekly_ResearchersUnderFire_count}
-					tooltip[#tooltip+1] = {E.Icon_WorldBoss..E.func_questName(74892), CharInfo.Octopussy_DF_Weekly_WBZaralekCavernZaqaliElders_count}
-					tooltip[#tooltip+1] = {E.func_texturefromIcon(5062638)..E.func_questName(75694), CharInfo.Octopussy_DF_Once_AberrustheShadowedCrucibleSarkareth_count}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["Zaralek Cavern"]..")", CharInfo.Octopussy_DF_Once_ZaralekCavernStorylines_count}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["The Veiled Ossuary"]..")", CharInfo.Octopussy_DF_Once_TheVeiledOssuary_count}
-					tooltip[#tooltip+1] = {E.func_questName(75665), CharInfo.Octopussy_DF_Weekly_ZaralekCavernAWorthyAllyLoammNiffen_count}
-					tooltip[#tooltip+1] = {L["Sniffenseeking"] , CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseeking_count}
-					tooltip[#tooltip+1] = {L["Sniffenseeking (items)"], CharInfo.Octopussy_DF_Weekly_ZaralekCavernSniffenseekingItems_count}
-					tooltip[#tooltip+1] = {"Events", CharInfo.Octopussy_DF_Weekly_ZaralekCavernEvents_count}
-					tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Weekly_ZaralekCavernRares_count}
+					tooltip[#tooltip+1] = {E.Timers.DF_ResearchersUnderFire()..E.func_questName(74906), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ResearchersUnderFire_Weekly}
+					tooltip[#tooltip+1] = {E.Icon_WorldBoss..E.func_questName(74892), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WBZaqaliElders_Weekly}
+					tooltip[#tooltip+1] = {E.func_texturefromIcon(5062638)..E.func_questName(75694), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_AberrustheShadowedCrucibleSarkareth_Once}
+					tooltip[#tooltip+1] = {E.func_questName(75665), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ZaralekCavernAWorthyAllyLoammNiffen_Weekly}
+					tooltip[#tooltip+1] = {L["Sniffenseeking"] , CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ZaralekCavernSniffenseeking_Weekly}
+					tooltip[#tooltip+1] = {L["Sniffenseeking (items)"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ZaralekCavernSniffenseekingItems_Weekly}
+					tooltip[#tooltip+1] = {"Events", CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ZaralekCavernEvents_Daily}
+					tooltip[#tooltip+1] = {"Rares", CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ZaralekCavernRares_Daily}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
-					tooltip[#tooltip+1] = {L["Fighting is Its Own Reward"], CharInfo.Octopussy_DF_Weekly_FightingisItsOwnReward_count}
-					tooltip[#tooltip+1] = {L["Fyrakk Asssaults"], CharInfo.Octopussy_DF_Weekly_FyrakkAssaults_count}
-					tooltip[#tooltip+1] = {L["Disciple of Fyrakk"], CharInfo.Octopussy_DF_Weekly_DiscipleofFyrakk_count}
+					tooltip[#tooltip+1] = {L["Fighting is Its Own Reward"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_FightingisItsOwnReward_Weekly}
+					tooltip[#tooltip+1] = {L["Fyrakk Asssaults"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_FyrakkAssaults_Weekly}
+					tooltip[#tooltip+1] = {L["Disciple of Fyrakk"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_DiscipleofFyrakk_Weekly}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
-					tooltip[#tooltip+1] = {E.func_texturefromIcon(4643981)..E.func_questName(66847), CharInfo.Octopussy_DF_Once_VaultoftheIncarnatesFuryoftheStormEater_count}
+					tooltip[#tooltip+1] = {E.func_texturefromIcon(4643981)..E.func_questName(66847), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_VaultoftheIncarnatesFuryoftheStormEater_Once}
 					tooltip[#tooltip+1] = {E.func_Gradient("»"..L["The Forbidden Reach"].."«"), " "}
-					tooltip[#tooltip+1] = {E.Timers.DF_PrimalStorms()..L["The Storm's Fury"], CharInfo.Octopussy_DF_Weekly_StormsFury_count}
-					tooltip[#tooltip+1] = {"Rares", CharInfo.Octopussy_DF_Weekly_TheForbiddenReachRares_count}
-					tooltip[#tooltip+1] = {L["Storm-Bound Chest"], CharInfo.Octopussy_DF_Weekly_StormBoundChest_count}
+					tooltip[#tooltip+1] = {E.Timers.DF_PrimalStorms()..L["The Storm's Fury"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_StormsFury_Weekly}
+					tooltip[#tooltip+1] = {"Rares", CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_TheForbiddenReachRares_Daily}
+					tooltip[#tooltip+1] = {L["Storm-Bound Chest"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_StormBoundChest_Weekly}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."10.1.7".."«"), " "}
-					tooltip[#tooltip+1] = {E.Yellow_Color..L["Storyline"].."|r".." ("..L["Seeing Red"]..")", CharInfo.Octopussy_DF_Once_SeeingRed_count}
 				end
 				if OctoToDo_DB_Vars.ExpansionToShow[9] then
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."Shadowlands".."«"), " "}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_name, CharInfo.Octopussy_SL_Weekly_ReplenishtheReservoir_count}
-					-- tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_return vivodCent, tooltip
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_TradingFavors_name, CharInfo.Octopussy_SL_Weekly_TradingFavors_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WBALL_name, CharInfo.Octopussy_SL_Weekly_WBALL_count}
+					tooltip[#tooltip+1] = {"ReplenishtheReservoir", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ReplenishtheReservoir_Weekly}
+					tooltip[#tooltip+1] = {"TradingFavors", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_TradingFavors_Weekly}
+					tooltip[#tooltip+1] = {"WBALL", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBALL_Weekly}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Zereth Mortis"].."«"), " "}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_name, CharInfo.Octopussy_SL_Weekly_ZMPatternsWithinPatterns_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WBZMAntros_name, CharInfo.Octopussy_SL_Weekly_WBZMAntros_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_ZMPryingEyeDiscovery_name, CharInfo.Octopussy_SL_Daily_ZMPryingEyeDiscovery_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_ZMPUZZLECACHES_name, CharInfo.Octopussy_SL_Daily_ZMPUZZLECACHES_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_ZMRares_name, CharInfo.Octopussy_SL_Daily_ZMRares_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_ZMRaresDuneDominance_name, CharInfo.Octopussy_SL_Daily_ZMRaresDuneDominance_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_ZMTREASURES_name, CharInfo.Octopussy_SL_Daily_ZMTREASURES_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_ZMworldQuests_name, CharInfo.Octopussy_SL_Daily_ZMworldQuests_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ZMConcordance_name, CharInfo.Octopussy_SL_Once_ZMConcordance_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Once_ZMUndulatingFoliage_name, CharInfo.Octopussy_SL_Once_ZMUndulatingFoliage_count}
+					tooltip[#tooltip+1] = {"Patterns Within Patterns", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMPatternsWithinPatterns_Weekly}
+					tooltip[#tooltip+1] = {"WB Antros", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBAntrosZM_Weekly}
+					tooltip[#tooltip+1] = {"Prying Eye Discovery", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMPryingEyeDiscovery_Daily}
+					tooltip[#tooltip+1] = {"PUZZLECACHES", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMPUZZLECACHES_Daily}
+					tooltip[#tooltip+1] = {"Rares", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMRares_Daily}
+					tooltip[#tooltip+1] = {"Rares Dune Dominance", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMRaresDuneDominance_Daily}
+					tooltip[#tooltip+1] = {"TREASURES", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMTREASURES_Daily}
+					tooltip[#tooltip+1] = {"World Quests", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMWorldQuests_Daily}
+					tooltip[#tooltip+1] = {"Concordance", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMConcordance_Once}
+					tooltip[#tooltip+1] = {"Undulating Foliage", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMUndulatingFoliage_Once}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Korthia"].."«"), " "}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaCollection_name, CharInfo.Octopussy_SL_Daily_KorthiaCollection_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel_name, CharInfo.Octopussy_SL_Daily_KorthiaKorthianAnimaVessel_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaMobs_name, CharInfo.Octopussy_SL_Daily_KorthiaMobs_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger_name, CharInfo.Octopussy_SL_Daily_KorthiaRelicGorger_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_RIFTKorthiaStolenAnimaVessel_name, CharInfo.Octopussy_SL_Weekly_RIFTKorthiaStolenAnimaVessel_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_RIFTKorthiaRiftboundCache_name, CharInfo.Octopussy_SL_Daily_RIFTKorthiaRiftboundCache_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_RIFTKorthiaSpectralBoundChest_name, CharInfo.Octopussy_SL_Daily_RIFTKorthiaSpectralBoundChest_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_RIFTKorthiaZovaalsVault_name, CharInfo.Octopussy_SL_Daily_RIFTKorthiaZovaalsVault_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch_name, CharInfo.Octopussy_SL_Weekly_KorthiaLostResearch_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaRares_name, CharInfo.Octopussy_SL_Weekly_KorthiaRares_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_name, CharInfo.Octopussy_SL_Weekly_KorthiaShapingFate_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies_name, CharInfo.Octopussy_SL_Weekly_KorthiaStolenKorthianSupplies_count}
+					tooltip[#tooltip+1] = {"Collection", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaCollection_Daily}
+					tooltip[#tooltip+1] = {"Korthian Anima Vessel", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaKorthianAnimaVessel_Daily}
+					tooltip[#tooltip+1] = {"Mobs", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaMobs_Daily}
+					tooltip[#tooltip+1] = {"Relic Gorger", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaRelicGorger_Daily}
+					tooltip[#tooltip+1] = {"RIFT Stolen Anima Vessel", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaRIFTStolenAnimaVessel_Weekly}
+					tooltip[#tooltip+1] = {"RIFT Riftbound Cache", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaRIFTRiftboundCache_Daily}
+					tooltip[#tooltip+1] = {"RIFT Spectral Bound Chest", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaRIFTSpectralBoundChest_Daily}
+					tooltip[#tooltip+1] = {"RIFT Zovaals Vault", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaRIFTZovaalsVault_Daily}
+					tooltip[#tooltip+1] = {"Lost Research", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaLostResearch_Weekly}
+					tooltip[#tooltip+1] = {"Rares", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaRares_Weekly}
+					tooltip[#tooltip+1] = {"Shaping Fate", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaShapingFate_Weekly}
+					tooltip[#tooltip+1] = {"Stolen Korthian Supplies", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_KorthiaStolenKorthianSupplies_Weekly}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Maw"].."«"), " "}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_name, CharInfo.Octopussy_SL_Weekly_WBMawMorgeth_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_name, CharInfo.Octopussy_SL_Weekly_MawContainingtheHelsworn_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawQuest_name, CharInfo.Octopussy_SL_Daily_MawQuest_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Daily_MawHelswornChest_name, CharInfo.Octopussy_SL_Daily_MawHelswornChest_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_name, CharInfo.Octopussy_SL_Weekly_MawCovenantAssault_count}
-					tooltip[#tooltip+1] = {CharInfo.Octopussy_SL_Weekly_MawTorghast_name, CharInfo.Octopussy_SL_Weekly_MawTorghast_count}
+					tooltip[#tooltip+1] = {"WBMawMorgeth", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBMorgethMaw_Weekly}
+					tooltip[#tooltip+1] = {"MawContainingtheHelsworn", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawContainingtheHelsworn_Weekly}
+					tooltip[#tooltip+1] = {"MawQuest", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawQuest_Daily}
+					tooltip[#tooltip+1] = {"MawHelswornChest", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawHelswornChest_Daily}
+					tooltip[#tooltip+1] = {"MawCovenantAssault", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawCovenantAssault_Weekly}
+					tooltip[#tooltip+1] = {"MawTorghast", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawTorghast_Weekly}
 				end
+				if #tooltip > 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+				end
+				tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Another quests"].."«"), " "}
 				if CharInfo.classFilename == "WARRIOR" or CharInfo.classFilename == "PALADIN" or CharInfo.classFilename == "DEATHKNIGHT" or CharInfo.classFilename == "WARLOCK" then
-					if #tooltip > 0 then
-						tooltip[#tooltip+1] = {" ", " "}
-					end
-					tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Class quests"].."«"), " "}
 					if CharInfo.classFilename == "WARRIOR" or CharInfo.classFilename == "PALADIN" or CharInfo.classFilename == "DEATHKNIGHT" then
-						tooltip[#tooltip+1] = {L["Shadowmourne"], CharInfo.Octopussy_WotLK_Once_Shadowmourne_count}
+						tooltip[#tooltip+1] = {L["Shadowmourne"], CharInfo.MASLENGO.UniversalQuest.Octopussy_WotLK_Shadowmourne_Once}
 						if CharInfo.MASLENGO.OctoTable_QuestID[24547] ~= E.NONE and CharInfo.MASLENGO.OctoTable_QuestID[24547] ~= E.DONE then
 							tooltip[#tooltip+1] = {E.func_questName(24547), CharInfo.MASLENGO.OctoTable_QuestID[24547]}
 						end
 					end
 					if CharInfo.classFilename == "WARLOCK" then
-						tooltip[#tooltip+1] = {L["Some Wicked Things"], CharInfo.Octopussy_DF_Once_Warlock_SomeWickedThings_count}
-						tooltip[#tooltip+1] = {L["Green Fire"], CharInfo.Octopussy_MoP_Once_Warlock_GreenFire_count}
+						tooltip[#tooltip+1] = {L["Some Wicked Things"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_Warlock_SomeWickedThings_Once}
+						tooltip[#tooltip+1] = {L["Green Fire"], CharInfo.MASLENGO.UniversalQuest.Octopussy_MistsofPandaria_Warlock_GreenFire_Once}
 					end
 				end
 				for k, v in ipairs(E.OctoTable_Race) do
-					if CharInfo.RaceEnglish == v.RaceEnglish and CharInfo["Octopussy_DF_Once_"..v.RaceEnglish.."HeritageArmor_count"] ~= 0 then
-						if #tooltip > 0 then
-							tooltip[#tooltip+1] = {" ", " "}
-						end
-						tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Race quests"].."«"), " "}
-						tooltip[#tooltip+1] = {v.RaceEnglish, CharInfo["Octopussy_DF_Once_"..v.RaceEnglish.."HeritageArmor_count"]}
+					if CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmor_Once"] and CharInfo.RaceEnglish == v.RaceEnglish and CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmor_Once"] ~= 0 then
+						tooltip[#tooltip+1] = {L["Races"].." - "..v.RaceEnglish, CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmor_Once"]}
 					end
-				end
-				for k, v in ipairs(E.OctoTable_Race) do
-					if CharInfo.RaceEnglish == v.RaceEnglish and CharInfo["Octopussy_DF_Once_"..v.RaceEnglish.."HeritageArmorAllied_count"] ~= 0 then
-						if #tooltip > 0 then
-							tooltip[#tooltip+1] = {" ", " "}
-						end
-						tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Allied Races Quests"] .."«"), " "}
-						tooltip[#tooltip+1] = {v.RaceEnglish, CharInfo["Octopussy_DF_Once_"..v.RaceEnglish.."HeritageArmorAllied_count"]}
+					if CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmorAllied_Once"] and CharInfo.RaceEnglish == v.RaceEnglish and CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmorAllied_Once"] ~= 0 then
+						tooltip[#tooltip+1] = {L["Allied Races"] .." - "..v.RaceEnglish, CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmorAllied_Once"]}
 					end
 				end
 				if #tooltip ~= 0 then
@@ -2581,3 +2558,4 @@ end)
 ]]
 	return OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT
 end
+

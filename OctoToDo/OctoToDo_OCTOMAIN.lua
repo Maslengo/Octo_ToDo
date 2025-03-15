@@ -54,7 +54,7 @@ local IsTrialAccount = IsTrialAccount() or false
 local IsVeteranTrialAccount = IsVeteranTrialAccount() or false
 local BattleTag = select(2, BNGetInfo()) or "Trial Account"
 local BTAG = tostringall(strsplit("#", BattleTag))
-local GameVersion = GetCurrentRegion() == 72 and "PTR" or "Retail"
+local GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 local BattleTagLocal = BTAG.." ("..GameVersion..")"
 local curGUID = UnitGUID("PLAYER")
 local GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
@@ -65,16 +65,16 @@ local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 ----------------------------------------------------------------
--- E.func_LoadAddOn("OctoToDo_Achievements")
--- E.func_LoadAddOn("OctoToDo_Minecraft")
--- E.func_LoadAddOn("OctoToDo_Octocraft")
--- E.func_LoadAddOn("OctoToDo_Reputations")
--- E.func_LoadAddOn("OctoToDo_TrashCan")
+E.func_LoadAddOn("OctoToDo_Achievements")
+E.func_LoadAddOn("OctoToDo_Minecraft")
+E.func_LoadAddOn("OctoToDo_Octocraft")
+E.func_LoadAddOn("OctoToDo_Reputations")
+E.func_LoadAddOn("OctoToDo_TrashCan")
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")
--- E.func_LoadAddOn("MountsJournal")
--- E.func_LoadAddOn("HidingBar")
--- E.func_LoadAddOn("HidingBar_Options")
+E.func_LoadAddOn("MountsJournal")
+E.func_LoadAddOn("HidingBar")
+E.func_LoadAddOn("HidingBar_Options")
 -- E.func_LoadAddOn("SpeedyAutoLoot")
 -- E.func_LoadAddOn("TalentTreeTweaks")
 -- E.func_LoadAddOn("Plater")
@@ -143,6 +143,7 @@ function  OctoToDo_EventFrame_OCTOMAIN:checkCharInfo()
 	local Meta_Table_EmptyString = {__index = function() return "" end}
 	if OctoToDo_DB_Levels then
 		for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+			local newRealmID = tonumber(strmatch(GUID, "^Player%-(%d+)"))
 			local localizedClass, englishClass, localizedRace, englishRace, _, name = GetPlayerInfoByGUID(GUID)
 			if CharInfo.journalInstance == nil then
 				CharInfo.journalInstance = {}
@@ -228,9 +229,15 @@ function  OctoToDo_EventFrame_OCTOMAIN:checkCharInfo()
 			CharInfo.PVP = CharInfo.PVP or {}
 			CharInfo.avgItemLevel = CharInfo.avgItemLevel or 1
 			CharInfo.avgItemLevelEquipped = CharInfo.avgItemLevelEquipped or 1
+			CharInfo.azeriteEXP = CharInfo.azeriteEXP or 0
+			CharInfo.azeriteLVL = CharInfo.azeriteLVL or 0
 			CharInfo.avgItemLevelPvp = CharInfo.avgItemLevelPvp or 1
 			CharInfo.className = CharInfo.className or localizedClass
 			CharInfo.classFilename = CharInfo.classFilename or englishClass
+			CharInfo.GUID = CharInfo.GUID or GUID
+
+
+			CharInfo.newRealmID = CharInfo.newRealmID or newRealmID
 			CharInfo.cloak_lvl = CharInfo.cloak_lvl or 0
 			CharInfo.cloak_res = CharInfo.cloak_res or 0
 			CharInfo.classId = CharInfo.classId or 1
@@ -243,6 +250,9 @@ function  OctoToDo_EventFrame_OCTOMAIN:checkCharInfo()
 			CharInfo.Faction = CharInfo.Faction or "Horde"
 			CharInfo.BattleTag = CharInfo.BattleTag or BattleTag
 			CharInfo.BattleTagLocal = CharInfo.BattleTagLocal or BattleTagLocal
+			CharInfo.bounty_BfA1_icon = CharInfo.bounty_BfA1_icon or 0
+			CharInfo.bounty_BfA2_icon = CharInfo.bounty_BfA2_icon or 0
+			CharInfo.bounty_BfA3_icon = CharInfo.bounty_BfA3_icon or 0
 			CharInfo.IsPublicBuild = CharInfo.IsPublicBuild or true
 			CharInfo.Chromie_canEnter = CharInfo.Chromie_canEnter or false
 			CharInfo.Chromie_UnitChromieTimeID = CharInfo.Chromie_UnitChromieTimeID or 0
@@ -1082,7 +1092,6 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Vars.EmeraldDream_Dreamseeds == nil then OctoToDo_DB_Vars.EmeraldDream_Dreamseeds = true end
 		if OctoToDo_DB_Vars.EmeraldDream_Rares == nil then OctoToDo_DB_Vars.EmeraldDream_Rares = true end
 		if OctoToDo_DB_Vars.EmeraldDream_Sparks == nil then OctoToDo_DB_Vars.EmeraldDream_Sparks = true end
-		if OctoToDo_DB_Vars.EmeraldDream_Storyline == nil then OctoToDo_DB_Vars.EmeraldDream_Storyline = true end
 		if OctoToDo_DB_Vars.EmeraldDream_WB == nil then OctoToDo_DB_Vars.EmeraldDream_WB = true end
 		if OctoToDo_DB_Vars.Event == nil then OctoToDo_DB_Vars.Event = true end
 		if OctoToDo_DB_Vars.ExpansionToShow == nil then OctoToDo_DB_Vars.ExpansionToShow = {[1] = true} end

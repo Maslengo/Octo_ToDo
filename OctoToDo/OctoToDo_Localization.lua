@@ -77,7 +77,6 @@ if L then
 	L["h. "] = true
 	L["m. "] = true
 	L["s. "] = true
-	L["The Veiled Ossuary"] = true
 	L["Dilated Time Capsule"] = true
 	L["Dreamsurge Chrysalis"] = true
 	L["Dreamsurge Coalescence"] = true
@@ -85,8 +84,6 @@ if L then
 	L["Encapsulated Destiny"] = true
 	L["Dreamsurge Investigation"] = true
 	L["Shaping the Dreamsurge"] = true
-	L["Reforging the Tyr's Guard"] = true
-	L["Tyr's Fall"] = true
 	L["Head"] = true
 	L["Shoulder"] = true
 	L["Back"] = true
@@ -116,7 +113,6 @@ if L then
 	L["Firelands"] = true
 	L["Black Temple"] = true
 	L["Dawn of the Infinites"] = true
-	L["Seeing Red"] = true
 	L["Ulduar"] = true
 	L["Paragon"] = true
 	-- L["Superbloom"] = true
@@ -165,9 +161,8 @@ if L then
 	L["Additional Buttons"] = true
 	L["Bags"] = true
 	L["Bank"] = true
-	L["Class quests"] = true
+	L["Another quests"] = true
 	L["Maw"] = true
-	L["Storyline"] = true
 	L["Shadowmourne"] = true
 	L["Green Fire"] = true
 	L["Some Wicked Things"] = true
@@ -176,8 +171,8 @@ if L then
 	L["Parts"] = true
 	L["Optional Reagents"] = true
 	L["Trade Goods"] = true
-	L["Race quests"] = true
-	L["Allied Races Quests"] = true
+	L["Races"] = true
+	L["Allied Races"] = true
 	L["Hide: Azerite Animations"] = true
 	L["Hide: Objectives In Instance"] = true
 end
@@ -253,7 +248,6 @@ if L then
 	L["h. "] = "ч. "
 	L["m. "] = "м. "
 	L["s. "] = "с. "
-	L["The Veiled Ossuary"] = "Тайный склеп"
 	L["Dilated Time Capsule"] = "Капсула растянутого времени"
 	L["Dreamsurge Chrysalis"] = "Хризалида Дикого Сна"
 	L["Dreamsurge Coalescence"] = "Слияние Прилива Снов"
@@ -261,8 +255,6 @@ if L then
 	L["Encapsulated Destiny"] = "Инкапсулированная судьба"
 	L["Dreamsurge Investigation"] = "Исследование Прилива Снов"
 	L["Shaping the Dreamsurge"] = "Укрощение Прилива Снов"
-	L["Reforging the Tyr's Guard"] = "Возрождение Стражей Тира"
-	L["Tyr's Fall"] = "Последнее пристанище Тира"
 	L["Head"] = "Голова"
 	L["Shoulder"] = "Плечи"
 	L["Back"] = "Спина"
@@ -292,7 +284,6 @@ if L then
 	L["Firelands"] = "Огненные Просторы"
 	L["Dawn of the Infinites"] = "Рассвет Бесконечности"
 	L["Black Temple"] = "Чёрный Храм"
-	L["Seeing Red"] = "Ярость или стыд?"
 	L["Ulduar"] = "Ульдуар"
 	L["Paragon"] = "Парагон"
 	-- L["Superbloom"] = "Цветочный бум"
@@ -341,9 +332,8 @@ if L then
 	L["Bags"] = "Сумки"
 	L["Abandon"] = "Отменено: "
 	L["Bank"] = "Банк"
-	L["Class quests"] = "Классовые задания"
+	L["Another quests"] = "Другие задания"
 	L["Maw"] = "Утроба"
-	L["Storyline"] = "Сюжетная линия"
 	L["Sniffenseeking (items)"] = "Нюхорысканье ("..ITEMS..")"
 	L["Shadowmourne"] = "Темная Скорбь"
 	L["Green Fire"] = "Зелёный Огонь"
@@ -353,8 +343,8 @@ if L then
 	L["Parts"] = "Детали"
 	L["Optional Reagents"] = "Дополнительные реагенты"
 	L["Trade Goods"] = "Хозяйственные товары"
-	L["Race quests"] = "Рассовые задания"
-	L["Allied Races Quests"] = "Задания: Союзные расы"
+	L["Races"] = "Рассовые"
+	L["Allied Races"] = "Союзные расы"
 	L["Hide: Azerite Animations"] = "Скрытие анимации Азерита"
 	L["Hide: Objectives In Instance"] = "Скрытие заданий в подземельях"
 	L["AutoSellGrey"] = "Автопродажа серого хлама"
