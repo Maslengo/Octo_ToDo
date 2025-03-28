@@ -6,7 +6,7 @@ local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
 local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
-local ShowIDS = false
+local ShowIDS = true
 -- ITEMS
 local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
 local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
@@ -1594,6 +1594,7 @@ function E:func_CreateUtilsButton(frame)
 	OctoToDo_MplusButton:SetSize(E.curHeight, E.curHeight)
 	OctoToDo_MplusButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*3, 0)
 	local list = {}
+	local list2 = {}
 	OctoToDo_MplusButton:SetScript("OnEnter", function(self)
 			local i = 0
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
@@ -1605,6 +1606,7 @@ function E:func_CreateUtilsButton(frame)
 				local name = E.func_dungeonName(dungeonID)
 				if name then
 					tinsert(list, dungeonID)
+					-- tinsert(list2, E.func_dungeonName(dungeonID))
 				end
 			end
 			sort(list, E.func_Reverse_order)

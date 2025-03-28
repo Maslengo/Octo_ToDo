@@ -67,8 +67,6 @@ local curServer = GetRealmName()
 ----------------------------------------------------------------
 E.func_LoadAddOn("OctoToDo_Achievements")
 E.func_LoadAddOn("OctoToDo_Minecraft")
-E.func_LoadAddOn("OctoToDo_Octocraft")
-E.func_LoadAddOn("OctoToDo_Reputations")
 E.func_LoadAddOn("OctoToDo_TrashCan")
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")

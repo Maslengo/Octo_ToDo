@@ -31,11 +31,6 @@ if MainFrameNumLines > NumberOfLines then
 	MainFrameNumLines = NumberOfLines
 end
 
-
-
-
-
-
 local MINECRAFTtextureFG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft FG.tga"
 local MINECRAFTtextureBG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft BG.tga"
 local MINECRAFTtextureALL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft ALL.tga"

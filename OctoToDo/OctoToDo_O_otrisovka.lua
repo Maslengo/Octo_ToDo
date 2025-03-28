@@ -101,7 +101,7 @@ function E:O_otrisovka()
 	tinsert(OctoTable_func_otrisovkaLEFT,
 		function(CharInfo)
 			return E.Timers.Daily_Reset()
-	end)
+	end) 
 	----------------------------------------------------------------
 	if OctoToDo_DB_Vars.ExpansionToShow[2] then
 		--------------------------------

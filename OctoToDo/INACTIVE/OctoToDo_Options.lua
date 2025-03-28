@@ -1030,4 +1030,3 @@ end)
 local subcategory, layout = Settings.RegisterCanvasLayoutSubcategory(category, SEVENTH_Config, REPUTATION)
 subcategory.ID = L["InDev"].."SEVENTH_Config"
 Settings.RegisterAddOnCategory(subcategory)
-
