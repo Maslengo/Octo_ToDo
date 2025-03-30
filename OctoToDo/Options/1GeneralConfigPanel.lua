@@ -448,7 +448,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			PortalsButtons = {
 				type = "toggle",
-				name = E.func_texturefromIcon(3610528, 20)..L["Portals"],
+				name = E.func_texturefromIcon(3610528, 18)..L["Portals"],
 				desc = "",
 				get = function()
 					return OctoToDo_DB_Vars.PortalsButtons
@@ -462,7 +462,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			PortalsButtonsOnlyCurrent = {
 				type = "toggle",
-				name = E.func_texturefromIcon(3610528).."PortalsButtonsOnlyCurrent",
+				name = E.func_texturefromIcon(3610528, 18).."PortalsButtonsOnlyCurrent",
 				desc = "",
 				get = function()
 					return OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent

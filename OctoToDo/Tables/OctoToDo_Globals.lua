@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
-E.DebugIDs = true
+E.DebugIDs = false
 E.DebugEvents = false
 E.OctoTable_Empty = {}
 E.Modules = {}

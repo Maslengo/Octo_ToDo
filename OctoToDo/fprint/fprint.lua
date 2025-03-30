@@ -444,6 +444,38 @@ SlashCmdList.OCTOLISTREP = function(msg)
 	editFrame:Show()
 end
 ------------------------------
+SLASH_OCTOLISTSPELL1 = "/OCTOLISTSPELL"
+SlashCmdList.OCTOLISTSPELL = function(msg)
+	local str4 = ""
+	local str5 = ""
+	local vivod = ""
+	local list = {}
+	for intexRow, tbl in next, (E.OctoTable_Portals) do
+		for spellID, v in next, (tbl) do
+			tinsert(list, spellID)
+		end
+	end
+	sort(list, func_Reverse_order)
+	for _, spellID in next, (list) do
+		if E.func_GetSpellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
+			str4 = str4..spellID..", --" ..E.func_GetSpellNameFull(spellID).."\n"
+		else
+			str5 = str5..spellID..", --" ..E.func_GetSpellNameFull(spellID).."\n"
+		end
+	end
+	vivod = str4..str5
+	editBox:SetText(vivod)
+	editFrame:Show()
+end
+
+
+
+
+
+
+
+
+------------------------------
 SLASH_OCTOLISTMOUNT1 = "/OCTOLISTMOUNT"
 SlashCmdList.OCTOLISTMOUNT = function(msg)
 	local str5, list5, i = "", {}, 1
