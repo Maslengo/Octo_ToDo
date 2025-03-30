@@ -59,7 +59,7 @@ E.func_LoadAddOn("BugSack")
 E.func_LoadAddOn("MountsJournal")
 E.func_LoadAddOn("HidingBar")
 E.func_LoadAddOn("HidingBar_Options")
--- E.func_LoadAddOn("SpeedyAutoLoot")
+E.func_LoadAddOn("SpeedyAutoLoot")
 -- E.func_LoadAddOn("TalentTreeTweaks")
 -- E.func_LoadAddOn("Plater")
 -- E.func_LoadAddOn("MacroManager")
@@ -77,10 +77,16 @@ E.func_LoadAddOn("HidingBar_Options")
 function OctoToDo_EventFrame_OCTOMAIN:MustBeHiddenFrames()
 	for _, v in next, (E.OctoTable_MustBeHiddenFrames_table) do
 		if v.frame and v.frame:IsShown() then
-			v.frame:Hide()
+					-- self:SetBackdropColor(self.r, self.g, self.b, frame.a)
+					-- self:SetBackdropBorderColor(r, g, b, 1)
+					-- DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide: (", E.Green_Color, E.Yellow_Color)..v.name..E.Yellow_Color..")|r" )
+					v.frame:Hide()
 		end
 	end
 end
+
+
+
 function OctoToDo_EventFrame_OCTOMAIN:ConcatAtStart()
 	E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
 	E.func_TableConcat(E.OctoTable_itemID_Config, E.OctoTable_itemID_ALL)
@@ -1104,7 +1110,14 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 for _, event in ipairs(E.OctoTable_Events) do OctoToDo_EventFrame_OCTOMAIN:RegisterEvent(event) end
-OctoToDo_EventFrame_OCTOMAIN:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
+OctoToDo_EventFrame_OCTOMAIN:SetScript("OnEvent",
+	function(self, event, ...)
+		if self[event] then
+			self[event](self, ...)
+		else
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
+		end
+end)
 ----------------------------------------------------------------
 function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
@@ -1273,6 +1286,7 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:func_CreateMineFrame()
 	GameMenuFrame:SetScale(OctoToDo_DB_Vars.GameMenuFrameScale or 1)
 	self:MustBeHiddenFrames()
+
 	if not PlayerSpellsFrame then
 		E.func_LoadAddOn("Blizzard_PlayerSpells")
 		PlayerSpellsFrame:HookScript("OnShow", function()

@@ -18,21 +18,6 @@ E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga
 
 
 
-E.curRegion = GetLocale()
-E.time_YEAR = "y. "
-E.time_DAY = "d. "
-E.time_HOUR = "h. "
-E.time_MINUTE = "m. "
-E.time_SECOND = "s. "
-if E.Region == "ruRU" then
-	E.time_YEAR = "г. "
-	E.time_DAY = "д. "
-	E.time_HOUR = "ч. "
-	E.time_MINUTE = "м. "
-	E.time_SECOND = "с. "
-end
-
-
 
 
 

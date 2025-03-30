@@ -136,7 +136,14 @@ function OctoToDo_EventFrame_Minecraft:func_DataProvider()
 	OctoToDo_MainFrame_Minecraft.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
 ----------------------------------------------------------------
-OctoToDo_EventFrame_Minecraft:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
+OctoToDo_EventFrame_Minecraft:SetScript("OnEvent",
+	function(self, event, ...)
+		if self[event] then
+			self[event](self, ...)
+		else
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
+		end
+end)
 function OctoToDo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")

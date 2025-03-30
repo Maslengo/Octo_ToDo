@@ -617,16 +617,16 @@ end
 ----------------------------------------------------------------
 function E.func_currencyIcon(currencyID)
 	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	local iconFileID = 134400
 	if info then
 		iconFileID = info.iconFileID
-	else
-		iconFileID = 134400
 	end
 	return E.func_texturefromIcon(iconFileID)
 end
 ----------------------------------------------------------------
 function E.func_currencyquantity(currencyID)
 	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	local quantity
 	if info then
 		quantity = info.quantity or 0
 	end
@@ -645,32 +645,32 @@ end
 -- 		days = floor(mod(time, 31536000) / 86400)
 -- 		hours = floor(mod(time, 86400) / 3600)
 -- 		mins = floor(mod(time, 3600) / 60)
--- 		return years..E.time_YEAR..days..E.time_DAY..hours..E.time_HOUR..mins..E.time_MINUTE
+-- 		return years..L["time_YEAR"]..days..L["time_DAY"]..hours..L["time_HOUR"]..mins..L["time_MINUTE"]
 -- 	elseif time >= 86400 then -- 24ч
 -- 		days = floor(time / 86400)
 -- 		hours = floor(mod(time, 86400) / 3600)
 -- 		mins = floor(mod(time, 3600) / 60)
--- 		return days..E.time_DAY..hours..E.time_HOUR..mins..E.time_MINUTE
+-- 		return days..L["time_DAY"]..hours..L["time_HOUR"]..mins..L["time_MINUTE"]
 -- 	elseif time >= 3600 then -- 1 час
 -- 		hours = string.format("%01.f", math.floor(time/3600))
 -- 		mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
--- 		return hours..E.time_HOUR..mins..E.time_MINUTE
+-- 		return hours..L["time_HOUR"]..mins..L["time_MINUTE"]
 -- 	elseif time >= 600 then -- 10 минут
 -- 		hours = string.format("%01.f", math.floor(time/3600))
 -- 		mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
--- 		return mins..E.time_MINUTE
+-- 		return mins..L["time_MINUTE"]
 -- 	elseif time >= 60 then -- минута
 -- 		hours = string.format("%01.f", math.floor(time/3600))
 -- 		mins = string.format("%01.f", math.floor(time/60 - (hours*60)))
--- 		return mins..E.time_MINUTE
+-- 		return mins..L["time_MINUTE"]
 -- 	else
--- 		return time..E.time_SECOND
+-- 		return time..L["time_SECOND"]
 -- 	end
 -- end
 function E.func_SecondsToClock(time)
 	time = tonumber(time) or 0
 	if time <= 0 then
-		return "0"..(E.time_MINUTE)
+		return "0"..(L["time_MINUTE"])
 	end
 
 	local years = floor(time / 31536000)  -- 86400*365
@@ -683,24 +683,24 @@ function E.func_SecondsToClock(time)
 	local parts = {}
 
 	if years > 0 then
-		table.insert(parts, years..(E.time_YEAR or "y"))
-		table.insert(parts, days..(E.time_DAY or "d"))
-		table.insert(parts, hours..(E.time_HOUR or "h"))
-		table.insert(parts, mins..(E.time_MINUTE or "m"))
+		table.insert(parts, years..(L["time_YEAR"] or "y"))
+		table.insert(parts, days..(L["time_DAY"] or "d"))
+		table.insert(parts, hours..(L["time_HOUR"] or "h"))
+		table.insert(parts, mins..(L["time_MINUTE"] or "m"))
 	elseif days > 0 then
-		table.insert(parts, days..(E.time_DAY or "d"))
-		table.insert(parts, hours..(E.time_HOUR or "h"))
-		table.insert(parts, mins..(E.time_MINUTE or "m"))
+		table.insert(parts, days..(L["time_DAY"] or "d"))
+		table.insert(parts, hours..(L["time_HOUR"] or "h"))
+		table.insert(parts, mins..(L["time_MINUTE"] or "m"))
 	elseif hours > 0 then
-		table.insert(parts, hours..(E.time_HOUR or "h"))
-		table.insert(parts, string.format("%02d", mins)..(E.time_MINUTE or "m"))
+		table.insert(parts, hours..(L["time_HOUR"] or "h"))
+		table.insert(parts, string.format("%02d", mins)..(L["time_MINUTE"] or "m"))
 	elseif time >= 60 then
-		table.insert(parts, mins..(E.time_MINUTE or "m"))
+		table.insert(parts, mins..(L["time_MINUTE"] or "m"))
 		if time < 600 then  -- Только для 1-9 минут добавляем секунды
-			table.insert(parts, secs..(E.time_SECOND or "s"))
+			table.insert(parts, secs..(L["time_SECOND"] or "s"))
 		end
 	else
-		table.insert(parts, secs..(E.time_SECOND or "s"))
+		table.insert(parts, secs..(L["time_SECOND"] or "s"))
 	end
 
 	return table.concat(parts)
@@ -1761,13 +1761,13 @@ function E:func_CreateUtilsButton(frame)
 					-- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
 
 					-- СЕЙЧАС
-					GameTooltip:AddDoubleLine(E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				elseif v.Possible == true then
 					-- БУДУЩЕЕ
-					GameTooltip:AddDoubleLine(E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				else
 					-- ПРОШЛОЕ
-					GameTooltip:AddDoubleLine(E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				end
 			end
 			if count == 0 then

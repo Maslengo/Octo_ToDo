@@ -2540,6 +2540,7 @@ E.OctoTable_itemID_ItemsUsable_Mount = {
 	223504, 223506, 223574, 224148, 224413, 224416, 192794, 203226,
 }
 E.OctoTable_itemID_ItemsUsable_Other = {
+	230225,
 	43518, -- СТАРЫЕ БУЛКИ МАГА
 	38380,
 	39158,

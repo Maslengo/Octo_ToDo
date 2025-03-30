@@ -74,7 +74,14 @@ function OctoToDo_EventFrame:ItemsUsableFrame()
 	end
 end
 
-OctoToDo_EventFrame:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
+OctoToDo_EventFrame:SetScript("OnEvent",
+	function(self, event, ...)
+		if self[event] then
+			self[event](self, ...)
+		else
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
+		end
+end)
 
 function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then

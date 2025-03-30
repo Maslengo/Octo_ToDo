@@ -883,8 +883,11 @@ function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 end
 
 function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
+	OctoToDo_TrashCan = OctoToDo_TrashCan or {}
+	OctoToDo_TrashCan.Holiday = OctoToDo_TrashCan.Holiday or {}
 	local collect = OctoToDo_DB_Other.Holiday
 	wipe(OctoToDo_DB_Other.Holiday)
+	wipe(OctoToDo_TrashCan.Holiday)
 	if collect and not InCombatLockdown() then
 		-- if not E.IsAddOnLoaded("Blizzard_Calendar") then
 		--     E.LoadAddOn("Blizzard_Calendar")
@@ -940,6 +943,8 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 				local id = event.eventID
 				collect[id] = collect[id] or {}
 				collect[id].title = event.title -- E.func_EventName(id)
+				OctoToDo_TrashCan.Holiday[id] = event.title
+
 				local startTime = event.startTime
 				local endTime = event.endTime
 				local startTime_year = startTime.year
@@ -966,17 +971,14 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 				}
 				local event_duration = E.FriendsFrame_GetLastOnline(time(dateTbl_endTime)-time(dateTbl_startTime), true)
 				collect[id].event_duration = event_duration
-				-- collect[id].startTime = FormatShortDate(startTime_monthDay, startTime_month, startTime_year)
-				-- collect[id].endTime = FormatShortDate(endTime_monthDay, endTime_month, endTime_year)
 				collect[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month).."/"..startTime_year
 				collect[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month).."/"..endTime_year
-				-- collect[id].QWE_startTime = startTime.hour.."ч. "..startTime.minute.."м. "
-				-- collect[id].QWE_endTime = endTime.hour.."ч. "..endTime.minute.."м. "
 				collect[id].Active = collect[id].Active or false
 				collect[id].Possible = collect[id].Possible or false
-				collect[id].iconTexture = event.iconTexture
-				-- collect[id].ENDS = E.FriendsFrame_GetLastOnline(time(dateTbl_endTime)-GetServerTime(), true)
+				collect[id].iconTexture = event.iconTexture or ""
 				collect[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
+
+
 				if not collect[id].priority then
 					collect[id].priority = priority
 					priority = priority + 1

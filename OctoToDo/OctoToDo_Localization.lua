@@ -4,6 +4,13 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("OctoTODO", "enUS", true, debug)
 if L then
+	L["time_YEAR"] = "y. "
+	L["time_DAY"] = "d. "
+	L["time_HOUR"] = "h. "
+	L["time_MINUTE"] = "m. "
+	L["time_SECOND"] = "s. "
+
+
 	L["Abandon All Quests"] = true
 	L["Abandon: "] = true
 	L["Battle Pet"] = true
@@ -175,6 +182,12 @@ if L then
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
+	L["time_YEAR"] = "г. "
+	L["time_DAY"] = "д. "
+	L["time_HOUR"] = "ч. "
+	L["time_MINUTE"] = "м. "
+	L["time_SECOND"] = "с. "
+
 	L["Abandon All Quests"] = "Отменить все задания"
 	L["Abandon: "] = "Отменено: "
 	L["Battle Pet"] = "Боевой питомец"
