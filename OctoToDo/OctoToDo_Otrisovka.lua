@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------
-function E:O_otrisovka()
+function E:func_Otrisovka()
 	local OctoTable_func_otrisovkaCENT = {}
 	local OctoTable_func_otrisovkaLEFT = {}
 	----------------------------------------------------------------
@@ -9,18 +9,19 @@ function E:O_otrisovka()
 		function(CharInfo)
 			local vivodCent = " "
 			local tooltip = {}
+			local BGcolor
 			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
 			if CharInfo.Faction == "Horde" then
-				vivodCent = vivodCent.."|cffFF0000(H)|r"
+				BGcolor = "f01e38" -- RED
 			else
-				vivodCent = vivodCent.."|cff0000FF(A)|r"
+				BGcolor = "0070DD" -- BLUE
 			end
 			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerCanEarnExperience == true then
 				vivodCent = vivodCent.." "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
 			end
-			if OctoToDo_DB_Vars.ShowOnlyCurrentServer == false then
-				vivodCent = vivodCent.."+"..CharInfo.curServerShort
-			end
+			-- if OctoToDo_DB_Vars.ShowOnlyCurrentServer == false then
+			-- 	vivodCent = vivodCent.."+"..CharInfo.curServerShort
+			-- end
 			local classColor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal then
 				if CharInfo.guildRankIndex ~= 0 then
@@ -62,7 +63,6 @@ function E:O_otrisovka()
 			tooltip[#tooltip+1] = {"hasMail", CharInfo.hasMail and E.Icon_MailBox..CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
 			tooltip[#tooltip+1] = {" ", " "}
 			tooltip[#tooltip+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.GUID.."|r"}
-			tooltip[#tooltip+1] = {E.Purple_Color.."newRealmID".."|r", E.Purple_Color..CharInfo.newRealmID.."|r"}
 			tooltip[#tooltip+1] = {" ", " "}
 			tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
 			tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID.."|r"}
@@ -96,13 +96,66 @@ function E:O_otrisovka()
 			if CharInfo.MASLENGO.ItemsInBag[122284] ~= 0 then
 				tooltip[#tooltip+1] = {E.func_itemTexture(122284)..E.func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 			end
-			return vivodCent, tooltip
+			return vivodCent, tooltip, BGcolor
 	end)
 	tinsert(OctoTable_func_otrisovkaLEFT,
 		function(CharInfo)
 			return E.Timers.Daily_Reset()
-	end) 
+	end)
 	----------------------------------------------------------------
+	if OctoToDo_DB_Vars.MP_MythicKeystone == true then
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				-- print (CharInfo.classColorHex..CharInfo.Name.."|r"..": ", E.WOW_Epic_Color..CharInfo.CurrentKeyLevel or "nil".." "..CharInfo.CurrentKeyName or "nil".."|r")
+				-- if CharInfo.UnitLevel == E.currentMaxLevel then
+				if CharInfo.Chromie_inChromieTime == false then
+					if CharInfo.CurrentKeyName and CharInfo.CurrentKeyName ~= 0 then
+						tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyName.."|r", ""}
+					end
+					if CharInfo.RIO_Score_TWW_S2 ~= 0 then
+						tooltip[#tooltip+1] = {" ", " "}
+						local Enum_Activities_table = {}
+						for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
+							Enum_Activities_table[#Enum_Activities_table+1] = i
+						end
+						sort(Enum_Activities_table)
+						for j = 1, #Enum_Activities_table do
+							local i = Enum_Activities_table[j]
+							if CharInfo.GreatVault[i] and CharInfo.GreatVault[i].type ~= "" then
+								CharInfo.GreatVault[i] = CharInfo.GreatVault[i] or {}
+								CharInfo.GreatVault[i].hyperlink_STRING = CharInfo.GreatVault[i].hyperlink_STRING or 0
+								CharInfo.GreatVault[i].progress = CharInfo.GreatVault[i].progress or 0
+								CharInfo.GreatVault[i].threshold = CharInfo.GreatVault[i].threshold or 0
+								if CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
+									tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
+								elseif CharInfo.GreatVault[i].progress ~= 0 then
+									tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
+								end
+							end
+						end
+						tooltip[#tooltip+1] = {" ", " "}
+						tooltip[#tooltip+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.RIO_weeklyBest_TWW_S1.."|r"}
+						tooltip[#tooltip+1] = {"RIO Score:", E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.RIO_Score_TWW_S2.."|r"}
+					end
+					if CharInfo.CurrentKey ~= 0 then
+						vivodCent = E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.CurrentKey.."|r"
+					end
+					if CharInfo.HasAvailableRewards then
+						vivodCent = vivodCent..E.Blue_Color..">Vault<|r"
+					end
+				else
+					vivodCent = vivodCent..E.Red_Color..CharInfo.Chromie_name.."|r"
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return  E.func_texturefromIcon(4352494)..E.WOW_Epic_Color..L["Mythic Keystone"].."|r"
+		end)
+		--------------------------------
+	end
 	if OctoToDo_DB_Vars.ExpansionToShow[2] then
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -1297,135 +1350,6 @@ function E:O_otrisovka()
 		end)
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				tooltip[#tooltip+1] = {E.func_itemTexture(188957)..E.func_itemName(188957), CharInfo.MASLENGO.ItemsInBag[188957]}
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {E.func_itemTexture(187634)..E.func_itemName(187634), CharInfo.MASLENGO.ItemsInBag[187634]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(187636)..E.func_itemName(187636), CharInfo.MASLENGO.ItemsInBag[187636]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(187633)..E.func_itemName(187633), CharInfo.MASLENGO.ItemsInBag[187633]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189146)..E.func_itemName(189146), CharInfo.MASLENGO.ItemsInBag[189146]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189145)..E.func_itemName(189145), CharInfo.MASLENGO.ItemsInBag[189145]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189147)..E.func_itemName(189147), CharInfo.MASLENGO.ItemsInBag[189147]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189148)..E.func_itemName(189148), CharInfo.MASLENGO.ItemsInBag[189148]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189149)..E.func_itemName(189149), CharInfo.MASLENGO.ItemsInBag[189149]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189151)..E.func_itemName(189151), CharInfo.MASLENGO.ItemsInBag[189151]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189152)..E.func_itemName(189152), CharInfo.MASLENGO.ItemsInBag[189152]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189153)..E.func_itemName(189153), CharInfo.MASLENGO.ItemsInBag[189153]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189154)..E.func_itemName(189154), CharInfo.MASLENGO.ItemsInBag[189154]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189155)..E.func_itemName(189155), CharInfo.MASLENGO.ItemsInBag[189155]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189156)..E.func_itemName(189156), CharInfo.MASLENGO.ItemsInBag[189156]}
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189157)..E.func_itemName(189157), CharInfo.MASLENGO.ItemsInBag[189157]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189158)..E.func_itemName(189158), CharInfo.MASLENGO.ItemsInBag[189158]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189159)..E.func_itemName(189159), CharInfo.MASLENGO.ItemsInBag[189159]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189160)..E.func_itemName(189160), CharInfo.MASLENGO.ItemsInBag[189160]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189161)..E.func_itemName(189161), CharInfo.MASLENGO.ItemsInBag[189161]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189162)..E.func_itemName(189162), CharInfo.MASLENGO.ItemsInBag[189162]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189163)..E.func_itemName(189163), CharInfo.MASLENGO.ItemsInBag[189163]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189164)..E.func_itemName(189164), CharInfo.MASLENGO.ItemsInBag[189164]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189165)..E.func_itemName(189165), CharInfo.MASLENGO.ItemsInBag[189165]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189166)..E.func_itemName(189166), CharInfo.MASLENGO.ItemsInBag[189166]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189167)..E.func_itemName(189167), CharInfo.MASLENGO.ItemsInBag[189167]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189168)..E.func_itemName(189168), CharInfo.MASLENGO.ItemsInBag[189168]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189169)..E.func_itemName(189169), CharInfo.MASLENGO.ItemsInBag[189169]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(189170)..E.func_itemName(189170), CharInfo.MASLENGO.ItemsInBag[189170]}
-				local count = 0
-				if CharInfo.MASLENGO.ItemsInBag[188957] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[187634] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[187636] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[187633] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189146] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189145] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189147] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189148] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189149] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189151] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189152] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189153] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189154] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189155] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189156] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189157] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189158] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189159] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189160] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189161] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189162] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189163] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189164] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189165] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189166] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189167] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189168] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189169] >= 1 then
-					count = count + 1
-				end
-				if CharInfo.MASLENGO.ItemsInBag[189170] >= 1 then
-					count = count + 1
-				end
-				vivodCent = count.."/".."29"
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return  "Кузня творения"
-		end)
 		--------------------------------
 	end
 	----------------------------------------------------------------
@@ -1706,58 +1630,6 @@ function E:O_otrisovka()
 	end
 	----------------------------------------------------------------
 	if OctoToDo_DB_Vars.ExpansionToShow[11] then
-		if OctoToDo_DB_Vars.MP_MythicKeystone == true then
-			--------------------------------
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.UnitLevel == E.currentMaxLevel then
-						if CharInfo.CurrentKeyFULL ~= 0 then
-							tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score_TWW_S1)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyFULL.."|r", ""}
-							tooltip[#tooltip+1] = {" ", " "}
-						end
-					end
-					local Enum_Activities_table = {}
-					for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
-						Enum_Activities_table[#Enum_Activities_table+1] = i
-					end
-					sort(Enum_Activities_table)
-					for j = 1, #Enum_Activities_table do
-						local i = Enum_Activities_table[j]
-						if CharInfo.GreatVault[i] and CharInfo.GreatVault[i].type ~= "" then
-							CharInfo.GreatVault[i] = CharInfo.GreatVault[i] or {}
-							CharInfo.GreatVault[i].hyperlink_STRING = CharInfo.GreatVault[i].hyperlink_STRING or 0
-							CharInfo.GreatVault[i].progress = CharInfo.GreatVault[i].progress or 0
-							CharInfo.GreatVault[i].threshold = CharInfo.GreatVault[i].threshold or 0
-							if CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
-								tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.RIO_Score_TWW_S1)..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
-							elseif CharInfo.GreatVault[i].progress ~= 0 then
-								tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
-							end
-						end
-					end
-					if CharInfo.RIO_Score_TWW_S1 ~= 0 then
-						tooltip[#tooltip+1] = {" ", " "}
-						tooltip[#tooltip+1] = {"RIO Score:", E.func_RIOColor(CharInfo.RIO_Score_TWW_S1)..CharInfo.RIO_Score_TWW_S1.."|r"}
-						tooltip[#tooltip+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.RIO_Score_TWW_S1)..CharInfo.RIO_weeklyBest_TWW_S1.."|r"}
-					end
-					if CharInfo.CurrentKey ~= 0 then
-						vivodCent = E.func_RIOColor(CharInfo.RIO_Score_TWW_S1)..CharInfo.CurrentKey.."|r"
-					end
-					if CharInfo.HasAvailableRewards then
-						vivodCent = vivodCent..E.Blue_Color..">Vault<|r"
-					end
-					if CharInfo.Chromie_inChromieTime == true then
-						vivodCent = vivodCent..E.Red_Color..CharInfo.Chromie_name.."|r"
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					return  E.func_texturefromIcon(4352494)..E.WOW_Epic_Color..L["Mythic Keystone"].."|r"
-			end)
-			--------------------------------
-		end
 		--------------------------------
 		if OctoToDo_DB_Vars.BeledarCycle == true then
 			tinsert(OctoTable_func_otrisovkaCENT,
@@ -2075,48 +1947,6 @@ function E:O_otrisovka()
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
 				return E.func_currencyIcon(1166)..RAIDS
-		end)
-		--------------------------------
-		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ATimetoReflect_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.func_currencyIcon(1166)..E.func_questName(43323)
-		end)
-		--------------------------------
-		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Daily ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_CelebrateGoodFun_Daily
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.func_currencyIcon(3100)..E.func_questName(84616)
-		end)
-		--------------------------------
-		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_ChromiesCodex_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.func_currencyIcon(3100)..E.func_questName(82783)
 		end)
 		--------------------------------
 		--------------------------------
@@ -2558,4 +2388,3 @@ end)
 ]]
 	return OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT
 end
-

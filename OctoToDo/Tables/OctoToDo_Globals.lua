@@ -104,12 +104,19 @@ end
 function IsRetail()
 	return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 end
+
+function E:IsPTR()
+	return GetCurrentRegion() >= 72
+end
+
+
 E.AddonTexture_1 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_1.tga"
 E.AddonTexture_2 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_2.tga"
 E.AddonTexture_3 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_3.tga"
 E.AddonTexture_4 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_4.tga"
 E.AddonTexture_5 = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\AddonTexture_5.tga"
-E.currentMaxLevel = GetMaxLevelForLatestExpansion()
+E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
+E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.currentExpansionName = _G['EXPANSION_NAME'..GetExpansionLevel()] 
 -- GetMaxLevelForExpansionLevel(GetExpansionLevel())
 ----------------------------------------------------------------
@@ -159,7 +166,6 @@ E.curHeight = 20 -- *E.scale
 --E.curWidthTitle = E.curWidthCentral*2
 E.curWidthTitle = 200 -- *E.scale
 E.ilvlToShow = 400
-E.Addon_Height = 400
 E.BGALPHA = .1
 E.Color_Quest_r = .3 -- 1
 E.Color_Quest_g = .1 -- .7
@@ -207,7 +213,8 @@ E.bgCr = .08 -- 14/255
 E.bgCg = .08 -- 14/255
 E.bgCb = .08 -- 14/255
 E.bgCa = .8
-E.slider_scale = 0.8
+E.bgCaOverlay = .2
+E.slider_scale = .8
 E.multiplier = 2 - E.slider_scale
 ----------------------------------------------------------------
 --COLORS--------------------------------------------------------

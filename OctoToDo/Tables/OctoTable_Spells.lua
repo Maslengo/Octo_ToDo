@@ -11,13 +11,13 @@ E.OctoToDo_ProfessionsskillLine = {
 	[333] = true,
 	[393] = true,
 	[755] = true,
-	[773] = true
+	[773] = true,
 }
 E.OctoToDo_ProfessionsskillLine_Other = {
 	[129] = true,
 	[185] = true,
 	[356] = true,
-	[794] = true
+	[794] = true,
 }
 E.OctoTable_Portals_MoP = {
 	131232, 131231, 131229, 131228, 131222, 131225, 131205, 131205, 131204

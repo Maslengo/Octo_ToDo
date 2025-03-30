@@ -65,34 +65,6 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		name_save = "ATimetoReflect",
-		reset = "Weekly",
-		desc = "Timewalk",
-		questID = {
-			43461,
-			43323,
-		},
-		max = 1
-	},
-	{
-		name_save = "CelebrateGoodFun",
-		reset = "Daily",
-		desc = "Timewalk",
-		questID = {
-			84616,
-		},
-		max = 1
-	},
-	{
-		name_save = "ChromiesCodex",
-		reset = "Weekly",
-		desc = "Timewalk",
-		questID = {
-			82783,
-		},
-		max = 1
-	},
-	{
 		name_save = "SoldierofTime",
 		reset = "Weekly",
 		desc = "Timewalk",
@@ -106,10 +78,11 @@ E.OctoTable_UniversalQuest = {
 		reset = "Weekly",
 		desc = "TheWarWithin",
 		questID = {
-			82653,
-			81653,
-			81624,
-			81630,
+			81630, -- Протокол активации
+			82653, -- Скопище кошмаров
+			81653, -- Шуррай, мерзость из Подморья
+			81624, -- Орта, Сломленная скала
+			85088, -- Ключевое событие (Гоблионе)
 		},
 		max = 1
 	},

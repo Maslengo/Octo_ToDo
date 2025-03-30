@@ -25,7 +25,7 @@ tinsert(E.Modules, function()
 				SpeedFrame:SetMovable(true)
 				SpeedFrame:RegisterForDrag("LeftButton")
 				SpeedFrame:SetScript("OnDragStart", function()
-						-- SpeedFrame:SetAlpha(E.bgCa/2)
+						-- SpeedFrame:SetAlpha(E.bgCa)
 						SpeedFrame:StartMoving()
 						LibCustomGlow.ButtonGlow_Start(SpeedFrame, {.31, 1, .47, 1}, .1)
 				end)
@@ -65,6 +65,7 @@ tinsert(E.Modules, function()
 						end
 						if movespeed ~= 0 then
 							SpeedFrame.text_movespeed:SetText(E.func_CompactNumberSimple(movespeed))
+							-- SpeedFrame.text_movespeed:SetText(E.func_CompactNumberSimple(movespeed)/4.347826086956522) -- КМ\Ч
 						else
 							SpeedFrame.text_movespeed:SetText("")
 						end

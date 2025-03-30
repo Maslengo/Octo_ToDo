@@ -38,7 +38,7 @@ local function OnAcquired(owner, frame, data, new)
 		frame.left.text:SetAllPoints()
 		frame.left.text:SetFontObject(OctoFont11)
 		frame.left.text:SetJustifyV("MIDDLE")
-		frame.left.text:SetJustifyH("CENTER")
+		frame.left.text:SetJustifyH("LEFT")
 		frame.left.text:SetTextColor(1, 1, 1, 1)
 		frame.right = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
 		frame.right:SetPropagateMouseClicks(true)
@@ -55,10 +55,11 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
 	local hexcolor = E.func_rgb2hex(data.r, data.g, data.b)
-	frame.left.text:SetText(hexcolor..data.name.."|r")
+	-- frame.left.text:SetText(hexcolor..data.name.."|r")
+	frame.left.text:SetText(hexcolor..data.lefttext.."|r")
 	frame.right.text:SetText(data.righttext)
-	E:func_SetBackdrop(frame.left, nil, 0)
-	E:func_SetBackdrop(frame.right, hexcolor, E.bgCa/2)
+	-- E:func_SetBackdrop(frame.left, nil, 0)
+	-- E:func_SetBackdrop(frame.right, hexcolor, E.bgCa)
 end
 function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
 	local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
@@ -92,7 +93,7 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	OctoToDo_MainFrame_Achievements:SetMovable(true)
 	OctoToDo_MainFrame_Achievements:RegisterForDrag("LeftButton")
 	OctoToDo_MainFrame_Achievements:SetScript("OnDragStart", function()
-			OctoToDo_MainFrame_Achievements:SetAlpha(E.bgCa/2)
+			OctoToDo_MainFrame_Achievements:SetAlpha(E.bgCa)
 			OctoToDo_MainFrame_Achievements:StartMoving()
 	end)
 	OctoToDo_MainFrame_Achievements:SetScript("OnDragStop", function()
@@ -119,6 +120,7 @@ function OctoToDo_EventFrame_Achievements:func_DataProvider()
 						DataProvider:Insert({
 								name = name,
 								righttext = E.func_achievementvivod(AchievementID),
+								lefttext = E.func_texturefromIcon(icon).. name,
 								r = ACHr,
 								g = ACHg,
 								b = ACHb,

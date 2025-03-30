@@ -13,8 +13,6 @@ if L then
 	L["Current Location"] = true
 	L["Expire on"] = true
 	L["Fyrakk Asssaults"] = true
-
-
 	L["AutoSellGrey"] = true
 	L["Grand Hunt"] = true
 	L["Keys of Loyalty"] = true
@@ -167,7 +165,6 @@ if L then
 	L["Green Fire"] = true
 	L["Some Wicked Things"] = true
 	L["Only Current Realm"] = true
-	L["Consumables"] = true
 	L["Parts"] = true
 	L["Optional Reagents"] = true
 	L["Trade Goods"] = true
@@ -187,9 +184,6 @@ if L then
 	L["Current Location"] = "Текущее местоположение"
 	L["Expire on"] = "Истекает"
 	L["Fyrakk Asssaults"] = "Налет Фиракка (Локалка)"
-
-
-
 	L["Grand Hunt"] = "Великая охота"
 	L["Keys of Loyalty"] = "Ключи преданности"
 	L["Korthia"] = "Кортия"
@@ -339,7 +333,6 @@ if L then
 	L["Green Fire"] = "Зелёный Огонь"
 	L["Some Wicked Things"] = "Некоторые неприятные вещи (10.1.5)"
 	L["Only Current Realm"] = "Только текущий сервер"
-	L["Consumables"] = "Расходуемые предметы"
 	L["Parts"] = "Детали"
 	L["Optional Reagents"] = "Дополнительные реагенты"
 	L["Trade Goods"] = "Хозяйственные товары"

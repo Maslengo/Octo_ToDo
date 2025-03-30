@@ -393,9 +393,9 @@ function E.CreateGeneralOptions()
 				type = "range",
 				name = "Количество строк",
 				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
-				min = 200,
-				max = 1000,
-				step = 20,
+				min = 10,
+				max = 50,
+				step = 1,
 				get = function()
 					return OctoToDo_DB_Vars.Addon_Height
 				end,

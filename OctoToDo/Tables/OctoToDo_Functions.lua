@@ -697,6 +697,14 @@ function E.func_SecondsToClock(time)
 		return time..localSECOND
 	end
 end
+
+function E.ChatFrame_TimeBreakDown(time)
+	local days = floor(time / (60 * 60 * 24));
+	local hours = floor((time - (days * (60 * 60 * 24))) / (60 * 60));
+	local minutes = floor((time - (days * (60 * 60 * 24)) - (hours * (60 * 60))) / 60);
+	local seconds = mod(time, 60);
+	return days, hours, minutes, seconds;
+end
 ----------------------------------------------------------------
 function E.func_tmstpDayReset(time)
 	local time = time or 1
@@ -1211,11 +1219,6 @@ end
 ----------------------------------------------------------------
 function E.func_EventName(eventID)
 	local vivod
-	if not E.IsAddOnLoaded("Blizzard_Calendar") then
-		E.func_LoadAddOn("Blizzard_Calendar")
-		ShowUIPanel(CalendarFrame, true)
-		HideUIPanel(CalendarFrame)
-	end
 	local currentCalendarTime = C_DateAndTime.GetCurrentCalendarTime()
 	local monthDay = currentCalendarTime.monthDay -- The current day of the month [1-31]
 	local month = 0 -- currentCalendarTime.month -- The current month [1-12]
@@ -1387,64 +1390,74 @@ function E.func_coloredText(fontstring)
 	return E.func_rgb2hex(r, g, b, a)..text.."|r"
 end
 ----------------------------------------------------------------
-function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, BackdropBorderAlpha)
+function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	local _, classFilename = UnitClass("PLAYER")
 	local r, g, b = GetClassColor(classFilename)
 	local bgCr, bgCg, bgCb, bgCa = E.bgCr, E.bgCg, E.bgCb, E.bgCa
-	-- local bgCr, bgCg, bgCb, bgCa = 0, 0, 0, 0
 	if hexcolor then
 		bgCr, bgCg, bgCb  = self.func_hex2rgbNUMBER(hexcolor)
 	end
 	if BackdropAlpha then
 		bgCa = BackdropAlpha
 	end
-	local bbalpha = 1
-	if BackdropBorderAlpha then
-		bbalpha = BackdropBorderAlpha
-	end
+
+	local bbalpha = bbalpha or edgeAlpha or 1
+
 
 	frame:SetBackdrop({
 			bgFile = E.bgFile,
 			edgeFile = E.edgeFile,
 			edgeSize = 1,
-			insets = {left = 1, right = 1, top = 1, bottom = 1},
+			insets = {left = 0, right = 0, top = 0, bottom = 0},
 	})
+	frame.r = bgCr
+	frame.g = bgCg
+	frame.b = bgCb
+	frame.a = bgCa
 	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 	frame:SetBackdropBorderColor(0, 0, 0, bbalpha)
 	-- frame:SetScript("OnShow", function(self)
 	--         self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 	--         self:SetBackdropBorderColor(0, 0, 0, bbalpha)
 	-- end)
-	frame:HookScript("OnEnter", function(self)
-			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-			self:SetBackdropBorderColor(r, g, b, 1)
-	end)
-	frame:HookScript("OnLeave", function(self)
-			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-			self:SetBackdropBorderColor(0, 0, 0, bbalpha)
-	end)
-	if frame.icon then
-		frame.icon:SetAllPoints(frame)
-		frame:SetScript("OnShow", function(self)
-				self.icon:SetVertexColor(1, 1, 1, 1)
+
+	if not frame.isInit then
+		frame.isInit = true
+		frame:HookScript("OnEnter", function(self)
+				self:SetBackdropColor(self.r, self.g, self.b, frame.a)
+				self:SetBackdropBorderColor(r, g, b, 1)
 		end)
-		frame:SetScript("OnEnter", function(self)
-				self.icon:SetVertexColor(r, g, b, 1)
+		frame:HookScript("OnLeave", function(self)
+				self:SetBackdropColor(self.r, self.g, self.b, frame.a)
+				self:SetBackdropBorderColor(0, 0, 0, bbalpha)
 		end)
-		frame:SetScript("OnLeave", function(self)
-				self.icon:SetVertexColor(1, 1, 1, 1)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
-		end)
-		frame:SetScript("OnMouseDown", function(self)
-				self.icon:SetVertexColor(1, 0, 0, .5)
-				self:SetBackdropBorderColor(1, 0, 0, bbalpha)
-		end)
-		frame:SetScript("OnMouseUp", function(self)
-				self.icon:SetVertexColor(r, g, b, 1)
-				self:SetBackdropBorderColor(r, g, b, bbalpha)
-		end)
+		if frame.icon then
+			frame.icon:SetAllPoints(frame)
+			frame:SetScript("OnShow", function(self)
+					self.icon:SetVertexColor(1, 1, 1, 1)
+			end)
+			frame:SetScript("OnEnter", function(self)
+					self.icon:SetVertexColor(r, g, b, 1)
+			end)
+			frame:SetScript("OnLeave", function(self)
+					self.icon:SetVertexColor(1, 1, 1, 1)
+					GameTooltip:ClearLines()
+					GameTooltip:Hide()
+			end)
+			frame:SetScript("OnMouseDown", function(self)
+					self.icon:SetVertexColor(1, 0, 0, .5)
+					self:SetBackdropBorderColor(1, 0, 0, bbalpha)
+			end)
+			frame:SetScript("OnMouseUp", function(self)
+					self.icon:SetVertexColor(r, g, b, 1)
+					self:SetBackdropBorderColor(r, g, b, bbalpha)
+			end)
+		end
 	end
+
+
+
+
 end
 ----------------------------------------------------------------
 function E:func_CreateUtilsButton(frame)
@@ -1618,6 +1631,8 @@ function E:func_CreateUtilsButton(frame)
 				local vivod_LEFT = E.func_texturefromIcon(icon) .. name
 				local vivod_RIGHT = E.Gray_Color.."icon:|r"..E.Green_Color..icon.."|r "..E.Gray_Color.."time:|r"..E.Green_Color..E.func_SecondsToClock(timeLimit).."|r"
 				GameTooltip:AddDoubleLine(vivod_LEFT, vivod_RIGHT, 1, 1, 1, 1, 1, 1)
+
+				OctoToDo_TrashCan.OctoToDo_MplusButton[dungeonID] = C_ChallengeMode.GetMapUIInfo(dungeonID)
 			end
 			if i == 0 then
 				GameTooltip:AddLine(E.WOW_Artifact_Color.."No Data".."|r")
@@ -1632,7 +1647,11 @@ function E:func_CreateUtilsButton(frame)
 	end)
 	OctoToDo_MplusButton:SetScript("OnClick", function()
 			frame:Hide()
-			fpde(list)
+			if OctoToDo_TrashCan and OctoToDo_TrashCan.OctoToDo_MplusButton then
+				print ("OctoToDo_TrashCan EST")
+			end
+			fpde(OctoToDo_TrashCan.OctoToDo_MplusButton)
+			-- fpde(list)
 	end)
 	OctoToDo_MplusButton.icon = OctoToDo_MplusButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_MplusButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga")
@@ -1652,11 +1671,17 @@ function E:func_CreateUtilsButton(frame)
 			GameTooltip:ClearLines()
 			GameTooltip:AddLine(E.WOW_Artifact_Color.."OctoToDo_ItemsButton".."|r")
 			GameTooltip:AddDoubleLine(" ", " ")
+			local BattleTag = select(2, BNGetInfo()) or "Trial Account"
+			local BTAG = tostringall(strsplit("#", BattleTag))
+			local GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
+			local BattleTagLocal = BTAG.." ("..GameVersion..")"
 			for _, itemID in next, (E.OctoTable_itemID_Config) do
 				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
-					if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 then
-						i = i + 1
-						GameTooltip:AddDoubleLine(E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID].." "..CharInfo.classColorHex..CharInfo.Name.."|r "..CharInfo.curServerShort)
+					if CharInfo.BattleTagLocal == BattleTagLocal then
+						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 then
+							i = i + 1
+							GameTooltip:AddDoubleLine(E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID].." "..CharInfo.classColorHex..CharInfo.Name.."|r "..CharInfo.curServerShort)
+						end
 					end
 				end
 			end
@@ -1695,13 +1720,61 @@ function E:func_CreateUtilsButton(frame)
 	OctoToDo_EventsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
-			GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(date("%d/%m/%Y").."|r"))
+
+
+			-- print (FormatShortDate(date("*t")))
+
+			local curdatetable = date("*t")
+			local curdate = (FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year))
+
+
+
+
+			-- fpde(date("*t"))
+			-- [1] = {
+			--     ["hour"] = 2,
+			--     ["min"] = 15,
+			--     ["wday"] = 1,
+			--     ["day"] = 30,
+			--     ["month"] = 3,
+			--     ["year"] = 2025,
+			--     ["sec"] = 28,
+			--     ["yday"] = 89,
+			--     ["isdst"] = "false",
+			-- },
+
+
+
+
+
+			GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(curdate.."|r"))
+			-- GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(date("%d/%m/%Y").."|r"))
 			GameTooltip:AddDoubleLine(" ", " ")
 			local count = 0
-			for eventID, v in pairs(OctoToDo_DB_Other.Holiday.Active) do
-				count = count + 1
-				GameTooltip:AddDoubleLine(OctoToDo_DB_Other.Holiday.Active[eventID].title, OctoToDo_DB_Other.Holiday.Active[eventID].startTime.." - "..OctoToDo_DB_Other.Holiday.Active[eventID].endTime)
+			local sorted = {}
+			-- local faecolor = E.func_rgb2hex(NIGHT_FAE_BLUE_COLOR:GetRGB())
+			local faecolor = "|cff".."c8c8c8"
+			for k, v in pairs (OctoToDo_DB_Other.Holiday) do
+				tinsert(sorted, k)
 			end
+			sort(sorted, function(a, b) return OctoToDo_DB_Other.Holiday[a].priority < OctoToDo_DB_Other.Holiday[b].priority end)
+
+			--for eventID, v in pairs(OctoToDo_DB_Other.Holiday) do
+
+			for i, eventID in ipairs(sorted) do
+				local v = OctoToDo_DB_Other.Holiday[eventID]
+				count = count + 1
+
+				if v.Active == true then
+					GameTooltip:AddDoubleLine(E.Green_Color..v.title .. "|r"..E.White_Color.." (" .. v.event_duration..")|r"..(ShowIDS and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+				elseif v.Possible == true then
+					GameTooltip:AddDoubleLine(E.Gray_Color..v.title .." (" .. v.event_duration..")|r"..(ShowIDS and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
+				else
+					GameTooltip:AddDoubleLine(E.Gray_Color..v.title .." (" .. v.event_duration..")|r"..(ShowIDS and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
+				end
+			end
+
+
 			if count == 0 then
 				GameTooltip:AddLine("No Data")
 			end
@@ -1714,7 +1787,7 @@ function E:func_CreateUtilsButton(frame)
 	end)
 	OctoToDo_EventsButton:SetScript("OnClick", function()
 			frame:Hide()
-			fpde(OctoToDo_DB_Other.Holiday.Active)
+			fpde(OctoToDo_DB_Other.Holiday)
 	end)
 	OctoToDo_EventsButton.icon = OctoToDo_EventsButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_EventsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga")
@@ -1769,6 +1842,10 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 	LibDBIcon:Show(MinimapName)
 end
 ----------------------------------------------------------------
+function E:func_fixdate(date)
+	--return format("%.2d", date)
+	return ("%.2d"):format(date)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

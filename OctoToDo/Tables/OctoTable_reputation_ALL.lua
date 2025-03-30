@@ -126,7 +126,6 @@ E.OctoTable_FACTIONTABLE = {
 	[1177] = {icon = "NONE", name = "Защитники Тол Барада", faction = "", other = "Cataclysm", },
 	[1710] = {icon = "NONE", name = "Защитники Ша'тар", faction = "", other = "Warlords of Draenor", },
 	[1738] = {icon = "NONE", name = "Защитница Иллона", faction = "", other = "Телохранители из казарм", },
-	[2645] = {icon = "NONE", name = "Земельники", faction = "", other = "Совет Дорногала", },
 	[1272] = {icon = "NONE", name = "Земледельцы", faction = "", other = "Mists of Pandaria", },
 	[1126] = {icon = "NONE", name = "Зиморожденные", faction = "", other = "Авангард Альянса", },
 	[1269] = {icon = "NONE", name = "Золотой Лотос", faction = "", other = "Mists of Pandaria", },
@@ -362,6 +361,36 @@ E.OctoTable_FACTIONTABLE = {
 	[909] = {icon = "NONE", name = "Ярмарка Новолуния", faction = "", other = "World of Warcraft", },
 	-- [2693] = {icon = "NONE", name = "Delver's Journey (Season 1)", faction = "", other = "The War Within", },
 	[2693] = {icon = "NONE", name = "Путь участника вылазки (1-й сезон)", faction = "", other = "The War Within", },
+
+
+
+
+
+	[2653] = {icon = "NONE", name = "Картели Нижней Шахты", faction = "", other = "The War Within", },
+
+	[2645] = {icon = "NONE", name = "Земельники", faction = "", other = "Совет Дорногала", },
+
+	[2669] = {icon = "NONE", name = "Мрачные Решалы", faction = "", other = "Картели Нижней Шахт", },
+	[2685] = {icon = "NONE", name = "Клуб лояльности Галаджио", faction = "", other = "Картели Нижней Шахт", },
+	[2673] = {icon = "NONE", name = "Картель Трюмных Вод", faction = "", other = "Картели Нижней Шахты", },
+	[2677] = {icon = "NONE", name = "Картель Хитрой Шестеренки", faction = "", other = "Картели Нижней Шахты", },
+	[2675] = {icon = "NONE", name = "Картель Черноводья", faction = "", other = "Картели Нижней Шахты", },
+	[2671] = {icon = "NONE", name = "Торговая компания", faction = "", other = "Картели Нижней Шахты", },
+
+	[2601] = {icon = "NONE", name = "Прядильщица", faction = "", other = "Отрезанные нити", },
+	[2607] = {icon = "NONE", name = "Визирь", faction = "", other = "Отрезанные нити", },
+	[2605] = {icon = "NONE", name = "Генерал", faction = "", other = "Отрезанные нити", },
+
+
+	-- [ЙЦУЙЦУ] = {icon = "NONE", name = "ЙЦУЙЦУ", faction = "", other = "ЙЦУЙЦУ", },
+	-- [ЙЦУЙЦУ] = {icon = "NONE", name = "ЙЦУЙЦУ", faction = "", other = "ЙЦУЙЦУ", },
+	-- [ЙЦУЙЦУ] = {icon = "NONE", name = "ЙЦУЙЦУ", faction = "", other = "ЙЦУЙЦУ", },
+
+
+
+
+
+
 
 
 

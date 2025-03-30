@@ -52,6 +52,8 @@ function E.LoadCVars()
 		SetCVar("floatingCombatTextPetMeleeDamage", 1) -- ТУТ
 		SetCVar("floatingCombatTextPetSpellDamage", 1) -- ТУТ
 	end
+	--11.1.5
+	SetCVar("cooldownViewerEnabled", 0) -- Трекер восстановления
 	-- 11.0
 	SetCVar("CursorFreelookStartDelta", 0.001)
 	SetCVar("minimapTrackingShowAll", 1)
