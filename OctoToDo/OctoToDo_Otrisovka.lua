@@ -108,8 +108,6 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				-- print (CharInfo.classColorHex..CharInfo.Name.."|r"..": ", E.WOW_Epic_Color..CharInfo.CurrentKeyLevel or "nil".." "..CharInfo.CurrentKeyName or "nil".."|r")
-				-- if CharInfo.UnitLevel == E.currentMaxLevel then
 				if CharInfo.Chromie_inChromieTime == false then
 					if CharInfo.CurrentKeyName and CharInfo.CurrentKeyName ~= 0 then
 						tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyName.."|r", ""}
@@ -156,6 +154,77 @@ function E:func_Otrisovka()
 		end)
 		--------------------------------
 	end
+
+
+
+	--------------------------------
+	if OctoToDo_DB_Vars.WorldBoss_Weekly == true then
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if OctoToDo_DB_Vars.ExpansionToShow[11] then -- The War Within
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_WorldBoss_Weekly
+				end
+				if OctoToDo_DB_Vars.ExpansionToShow[10] then -- Dragonflight
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WorldBoss_Weekly
+				end
+				if OctoToDo_DB_Vars.ExpansionToShow[9] then -- Shadowlands
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WorldBoss_Weekly
+				end
+				if OctoToDo_DB_Vars.ExpansionToShow[8] then -- Battle for Azeroth
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WorldBoss_Weekly
+				end
+				if OctoToDo_DB_Vars.ExpansionToShow[7] then -- Legion
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_WorldBoss_Weekly
+				end
+				if OctoToDo_DB_Vars.ExpansionToShow[6] then -- Warlords of Draenor
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WarlordsofDraenor_WorldBoss_Weekly
+				end
+				if OctoToDo_DB_Vars.ExpansionToShow[5] then -- Mists of Pandaria
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_MistsofPandaria_WorldBoss_Weekly
+				end
+				-- if OctoToDo_DB_Vars.ExpansionToShow[4] then -- Cataclysm
+				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Cataclysm_WorldBoss_Weekly
+				-- end
+				-- if OctoToDo_DB_Vars.ExpansionToShow[3] then -- Wrath of the Lich King
+				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_WorldBoss_Weekly
+				-- end
+				-- if OctoToDo_DB_Vars.ExpansionToShow[2] then -- The Burning Crusade
+				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheBurningCrusade_WorldBoss_Weekly
+				-- end
+				-- if OctoToDo_DB_Vars.ExpansionToShow[1] then -- Classic
+				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Classic_WorldBoss_Weekly
+				-- end
+				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[11].color..E.OctoTable_Expansions_Table[11].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_WorldBoss_Weekly}
+				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[10].color..E.OctoTable_Expansions_Table[10].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WorldBoss_Weekly}
+				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[9].color..E.OctoTable_Expansions_Table[9].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WorldBoss_Weekly}
+				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[8].color..E.OctoTable_Expansions_Table[8].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WorldBoss_Weekly}
+				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[7].color..E.OctoTable_Expansions_Table[7].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_WorldBoss_Weekly}
+				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[6].color..E.OctoTable_Expansions_Table[6].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_WarlordsofDraenor_WorldBoss_Weekly}
+				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[5].color..E.OctoTable_Expansions_Table[5].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_MistsofPandaria_WorldBoss_Weekly}
+				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[4].color..E.OctoTable_Expansions_Table[4].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Cataclysm_WorldBoss_Weekly}
+				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[3].color..E.OctoTable_Expansions_Table[3].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_WorldBoss_Weekly}
+				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[2].color..E.OctoTable_Expansions_Table[2].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_TheBurningCrusade_WorldBoss_Weekly}
+				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[1].color..E.OctoTable_Expansions_Table[1].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Classic_WorldBoss_Weekly}
+
+
+
+
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return  E.Icon_WorldBoss..L["World Boss"]
+		end)
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+
+
 	if OctoToDo_DB_Vars.ExpansionToShow[2] then
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -490,18 +559,6 @@ function E:func_Otrisovka()
 		end)
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_WBALL_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_WBALL_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.Icon_WorldBoss.."WB"
-		end)
 		--------------------------------
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -787,60 +844,12 @@ function E:func_Otrisovka()
 		end)
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBALL_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBALL_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.Icon_WorldBoss.."WB"
-		end)
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBNazjatar_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBNazjatar_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.Icon_WorldBoss.."WB: Nazjatar"
-		end)
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBAssault_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBAssault_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.Icon_WorldBoss.."World Boss: Assault"
-		end)
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBDarkshore_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WBDarkshore_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.Icon_WorldBoss.."WB: PVP"
-		end)
 		--------------------------------
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -1156,7 +1165,7 @@ function E:func_Otrisovka()
 						vivodCent = E.OctoTable_Covenant[i].color..vivodCent.."|r"
 						if i == CharInfo.CovenantAndAnima.curCovID then
 							if CharInfo.Possible_Anima ~= 0 and k == 2 then
-								vivodCent = vivodCent .. E.Blue_Color.." +"..CharInfo.Possible_Anima.."|r"
+								vivodCent = vivodCent..E.Blue_Color.." +"..CharInfo.Possible_Anima.."|r"
 							end
 						end
 						if k == 1 then
@@ -1294,46 +1303,9 @@ function E:func_Otrisovka()
 		end)
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBALL_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBALL_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return  E.Icon_WorldBoss.."World Boss"
-		end)
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBAntrosZM_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBAntrosZM_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return  E.Icon_WorldBoss.."World Boss: "..E.func_questName(65143)
-		end)
 		--------------------------------
-		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBMorgethMaw_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBMorgethMaw_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return  E.Icon_WorldBoss.."World Boss: "..E.func_questName(64531)
-		end)
 		--------------------------------
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -1642,25 +1614,10 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return  E.Timers.TWW_BeledarCycle() .. E.func_questName(83240)
+					return  E.Timers.TWW_BeledarCycle()..E.func_questName(83240)
 			end)
 		end
 		--------------------------------
-		--------------------------------
-		if OctoToDo_DB_Vars.TWW_WorldBoss_Weekly == true then
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_WorldBoss_Weekly ~= E.NONE then
-						vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_WorldBoss_Weekly
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					return  E.Icon_WorldBoss..L["World Boss"]
-			end)
-		end
 		--------------------------------
 		if OctoToDo_DB_Vars.TWW_DungeonQuest_Weekly == true then
 			--------------------------------
@@ -1706,7 +1663,7 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return  E.func_texturefromIcon(132863) .. L["Major Keyflames"]
+					return  E.func_texturefromIcon(132863)..L["Major Keyflames"]
 			end)
 		end
 		--------------------------------
@@ -1722,7 +1679,7 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return  E.func_texturefromIcon(135619) .. L["Minor Keyflames"]
+					return  E.func_texturefromIcon(135619)..L["Minor Keyflames"]
 			end)
 		end
 		--------------------------------
@@ -1972,7 +1929,6 @@ function E:func_Otrisovka()
 				local vivodCent, tooltip = " ", {}
 				if OctoToDo_DB_Vars.ExpansionToShow[10] then
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."Dragonflight".."«"), " "}
-					tooltip[#tooltip+1] = {E.Icon_WorldBoss..L["World Boss"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WBALL_Weekly}
 					tooltip[#tooltip+1] = {E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_DragonbaneKeep_Weekly}
 					tooltip[#tooltip+1] = {E.Timers.DF_GrandHunts()..L["Grand Hunt"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_TheGrandHunt_Weekly}
 					tooltip[#tooltip+1] = {E.Timers.DF_CommunityFeast()..L["Community Feast"], CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_CommunityFeast_Weekly}
@@ -2039,13 +1995,11 @@ function E:func_Otrisovka()
 					tooltip[#tooltip+1] = {E.func_Gradient("»".."Shadowlands".."«"), " "}
 					tooltip[#tooltip+1] = {"ReplenishtheReservoir", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ReplenishtheReservoir_Weekly}
 					tooltip[#tooltip+1] = {"TradingFavors", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_TradingFavors_Weekly}
-					tooltip[#tooltip+1] = {"WBALL", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBALL_Weekly}
 					if #tooltip > 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Zereth Mortis"].."«"), " "}
 					tooltip[#tooltip+1] = {"Patterns Within Patterns", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMPatternsWithinPatterns_Weekly}
-					tooltip[#tooltip+1] = {"WB Antros", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBAntrosZM_Weekly}
 					tooltip[#tooltip+1] = {"Prying Eye Discovery", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMPryingEyeDiscovery_Daily}
 					tooltip[#tooltip+1] = {"PUZZLECACHES", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMPUZZLECACHES_Daily}
 					tooltip[#tooltip+1] = {"Rares", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_ZMRares_Daily}
@@ -2074,7 +2028,6 @@ function E:func_Otrisovka()
 						tooltip[#tooltip+1] = {" ", " "}
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Maw"].."«"), " "}
-					tooltip[#tooltip+1] = {"WBMawMorgeth", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WBMorgethMaw_Weekly}
 					tooltip[#tooltip+1] = {"MawContainingtheHelsworn", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawContainingtheHelsworn_Weekly}
 					tooltip[#tooltip+1] = {"MawQuest", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawQuest_Daily}
 					tooltip[#tooltip+1] = {"MawHelswornChest", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_MawHelswornChest_Daily}
@@ -2132,14 +2085,24 @@ function E:func_Otrisovka()
 					if v then
 						for difficultyID, w in next, (v) do
 							if w.vivod ~= nil then
-								tooltip[#tooltip+1] = {w.instanceName.."("..w.difficultyName..") "..E.Red_Color..E.func_SecondsToClock(w.instanceReset-ServerTime).."|r", w.vivod}
+								tooltip[#tooltip+1] = {w.instanceName.."("..w.difficultyName..") "..E.Red_Color..E.func_SecondsToClock(w.instanceReset-ServerTime).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..instanceID.."|r" or ""), w.vivod}
 							end
 						end
 					end
 				end
 				for dungeonID, v in next, (E.OctoTable_LFGDungeons) do
 					if CharInfo.LFGInstance[dungeonID].donetoday ~= E.NONE then
-						tooltip[#tooltip+1] = {CharInfo.LFGInstance[dungeonID].D_name, CharInfo.LFGInstance[dungeonID].donetoday}
+						tooltip[#tooltip+1] = {CharInfo.LFGInstance[dungeonID].D_name..(E.DebugIDs and E.Gray_Color.. " id:"..dungeonID.."|r" or ""), CharInfo.LFGInstance[dungeonID].donetoday}
+					end
+				end
+
+
+
+
+
+				for worldBossID, v in next, (CharInfo.SavedWorldBoss) do
+					if v then
+						tooltip[#tooltip+1] = {E.Icon_WorldBoss.. v.name .." ".. E.Red_Color..E.func_SecondsToClock(v.reset).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..worldBossID.."|r" or ""), " "}
 					end
 				end
 				if #tooltip ~= 0 then

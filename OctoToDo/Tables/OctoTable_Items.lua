@@ -253,6 +253,9 @@ E.OctoTable_itemID_Ignore_List = {
 	206015, 206016, 206017, 206021, 207030, 208153, 208485, 211495, 8529,
 }
 E.OctoTable_itemID_ItemsDelete_PTR = {
+	[191570] = true,
+	[205878] = true,
+	[113681] = true,
 	[173363] = true,
 	[167555] = true,
 	[144392] = true,

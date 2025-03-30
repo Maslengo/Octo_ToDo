@@ -5,25 +5,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
-local type, next, xpcall, setmetatable, CallErrorHandler = type, next, xpcall, setmetatable, CallErrorHandler
-local ShowIDS = true
--- ITEMS
-local DoesItemExistByID = DoesItemExistByID or C_Item.DoesItemExistByID
-local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
-local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
-local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
-local GetItemInfoInstant = GetItemInfoInstant or C_Item.GetItemInfoInstant
-local RequestLoadItemDataByID = RequestLoadItemDataByID or C_Item.RequestLoadItemDataByID
-local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
-local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
-local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
-local GetItemMaxStackSizeByID = GetItemMaxStackSizeByID or C_Item.GetItemMaxStackSizeByID
-local GetItemInventoryTypeByID = GetItemInventoryTypeByID or C_Item.GetItemInventoryTypeByID
---SPELLS
-local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
-local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
-local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
-local GetSpellName = GetSpellName or C_Spell.GetSpellName
+local type, next = type, next
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local Red_Color = "|cffFF4C4F"
 local Gray_Color = "|cff505050"
@@ -33,19 +15,7 @@ local Yellow_Color = "|cffFFF371"
 local Green_Color = "|cff4FFF79"
 local Orange_Color = "|cffFF661A"
 local Blue_Color = "|cff00A3FF"
-local Region = GetLocale()
-local localYEAR = "y. "
-local localDAY = "d. "
-local localHOUR = "h. "
-local localMINUTE = "m. "
-local localSECOND = "s. "
-if Region == "ruRU" then
-	localYEAR = "г. "
-	localDAY = "д. "
-	localHOUR = "ч. "
-	localMINUTE = "м. "
-	localSECOND = "с. "
-end
+
 ----------------------------------------------------------------
 local OctoTable_bytetoB64 = {
 	[0] =
@@ -222,7 +192,7 @@ local OctoTable_RIO_COLORS = {
 -- ITEM UTILS
 ----------------------------------------------------------------
 function E.func_GetItemInfo(itemID)
-	return GetItemInfo(itemID)
+	return C_Item.GetItemInfo(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemIcon(itemID)
@@ -251,7 +221,7 @@ function E.func_GetItemQualityColorRGB(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemCurrentLevel(itemID)
-	return GetDetailedItemLevelInfo(itemID)
+	return C_Item.GetDetailedItemLevelInfo(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemMaxStackSize(itemID)
@@ -268,17 +238,17 @@ function E.func_GetItemInventoryType(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemInventoryTypeName(itemID)
-	local _,_,_, itemEquipLoc = GetItemInfoInstant(itemID)
+	local _,_,_, itemEquipLoc = C_Item.GetItemInfoInstant(itemID)
 	return itemEquipLoc
 end
 ----------------------------------------------------------------
 function E.func_IsItemDataCached(itemID)
-	return IsItemDataCachedByID(itemID)
+	return C_Item.IsItemDataCachedByID(itemID)
 end
 ----------------------------------------------------------------
 function E.func_itemName_NOCOLOR(itemID)
 	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
-	if ShowIDS == true and vivod ~= nil then
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
 	end
 	return vivod
@@ -286,21 +256,21 @@ end
 ----------------------------------------------------------------
 function E.func_itemName(itemID)
 	local itemName = C_Item.GetItemNameByID(itemID) or Red_Color..SEARCH_LOADING_TEXT.."|r" -- RETRIEVING_ITEM_INFO
-	local itemQuality = select(3, GetItemInfo(itemID))
+	local itemQuality = select(3, C_Item.GetItemInfo(itemID))
 	local vivod
 	if itemQuality then
 		vivod = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
 	else
 		vivod = itemName
 	end
-	if ShowIDS == true and vivod ~= nil then
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
 function E.func_itemTexture(itemID)
-	local icon = GetItemIconByID(itemID) or 134400
+	local icon = C_Item.GetItemIconByID(itemID) or 134400
 	return E.func_texturefromIcon(icon)
 end
 ----------------------------------------------------------------
@@ -320,8 +290,8 @@ end
 -- SPELLS
 ----------------------------------------------------------------
 function E.func_GetSpellSubtext(spellID)
-	local vivod = GetSpellSubtext(spellID)
-	if ShowIDS == true and vivod ~= nil then
+	local vivod = C_Spell.GetSpellSubtext(spellID)
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
 	end
 	return vivod
@@ -330,8 +300,8 @@ end
 function E.func_GetSpellNameFull(spellID)
 	local name = E.GetSpellName(spellID)
 	local subText = E.GetSpellSubtext(spellID)
-	local vivod =  subText and #subText > 0 and name.."("..subText..")" or name
-	if ShowIDS == true and vivod ~= nil then
+	local vivod = subText and #subText > 0 and name.."("..subText..")" or name
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
 	end
 	return vivod
@@ -342,21 +312,21 @@ function E.func_GetSpellDescription(spellID)
 end
 ----------------------------------------------------------------
 function E.func_GetSpellName(spellID)
-	local vivod = GetSpellName(spellID)
-	if ShowIDS == true and vivod ~= nil then
+	local vivod = C_Spell.GetSpellName(spellID)
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
 function E.func_GetSpellIcon(spellID)
-	local iconID = GetSpellTexture(spellID)
+	local iconID = C_Spell.GetSpellTexture(spellID)
 	return iconID
 end
 ----------------------------------------------------------------
 function E.func_GetSpellCooldown(spellID)
-	local start = GetSpellCooldown(spellID).startTime
-	local duration = GetSpellCooldown(spellID).duration
+	local start = C_Spell.GetSpellCooldown(spellID).startTime
+	local duration = C_Spell.GetSpellCooldown(spellID).duration
 	local vivod = 0
 	if start > 0 and duration > 0 then
 		vivod = (start + duration - GetTime())
@@ -512,7 +482,7 @@ function E.func_questName(questID, useLargeIcon)
 	if isCompletedOnAccount then
 		vivod = E.Icon_AccountWide.."|cff9fc5e8"..vivod.."|r"
 	end
-	if ShowIDS == true and vivod ~= nil then
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..questID.."|r"
 	end
 	return vivod
@@ -541,13 +511,13 @@ function E.func_reputationName(reputationID)
 			end
 		end
 		vivod = vivod..name
-		if ShowIDS == true and vivod ~= nil then
+		if E.DebugIDs == true and vivod ~= nil then
 			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
 		end
 		if E.OctoTable_FACTIONTABLE[reputationID] then
 			return E.OctoTable_FACTIONTABLE[reputationID].faction..vivod
 		else
-			print (reputationID.. " <- MISSING REPUTATION ID -> " .. name)
+			print (reputationID.. " <- MISSING REPUTATION ID -> "..name)
 			return name
 		end
 	else
@@ -560,7 +530,7 @@ function E.func_reputationNameSIMPLE(reputationID)
 	if reputationID and type(reputationID) == "number" then
 		-- local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
 		-- if isAccountWide == true then
-		--     vivod = E.Icon_AccountWide..vivod
+		-- vivod = E.Icon_AccountWide..vivod
 		-- end
 		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
 		local name
@@ -571,8 +541,8 @@ function E.func_reputationNameSIMPLE(reputationID)
 			name = reputationInfo.name or Red_Color..SEARCH_LOADING_TEXT.."|r"
 		end
 		vivod = vivod..name
-		-- if ShowIDS == true and vivod ~= nil then
-		--     vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
+		-- if E.DebugIDs == true and vivod ~= nil then
+		-- vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
 		-- end
 		vivod = vivod
 	else
@@ -606,7 +576,7 @@ function E.func_currencyName(currencyID)
 		else
 			vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
 		end
-		if ShowIDS == true and vivod ~= nil then
+		if E.DebugIDs == true and vivod ~= nil then
 			vivod = vivod..Gray_Color.." id:"..currencyID.."|r"
 		end
 		return vivod
@@ -639,7 +609,7 @@ function E.func_currencyName_NOCOLOR(currencyID)
 	else
 		vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
-	if ShowIDS == true and vivod ~= nil then
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..currencyID.."|r"
 	end
 	return vivod
@@ -664,39 +634,89 @@ function E.func_currencyquantity(currencyID)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+-- function E.func_SecondsToClock(time)
+-- 	-- local years, days, hours, mins, secs = "", "", "", "", ""
+-- 	local years, days, hours, mins, secs = 0, 0, 0, 0, 0
+-- 	local time = tonumber(time)
+-- 	if time <= 0 or time == nil then --
+-- 		return "0:00"
+-- 	elseif time >= (86400*365) then -- год
+-- 		years = floor(time / (86400*365))
+-- 		days = floor(mod(time, 31536000) / 86400)
+-- 		hours = floor(mod(time, 86400) / 3600)
+-- 		mins = floor(mod(time, 3600) / 60)
+-- 		return years..E.time_YEAR..days..E.time_DAY..hours..E.time_HOUR..mins..E.time_MINUTE
+-- 	elseif time >= 86400 then -- 24ч
+-- 		days = floor(time / 86400)
+-- 		hours = floor(mod(time, 86400) / 3600)
+-- 		mins = floor(mod(time, 3600) / 60)
+-- 		return days..E.time_DAY..hours..E.time_HOUR..mins..E.time_MINUTE
+-- 	elseif time >= 3600 then -- 1 час
+-- 		hours = string.format("%01.f", math.floor(time/3600))
+-- 		mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
+-- 		return hours..E.time_HOUR..mins..E.time_MINUTE
+-- 	elseif time >= 600 then -- 10 минут
+-- 		hours = string.format("%01.f", math.floor(time/3600))
+-- 		mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
+-- 		return mins..E.time_MINUTE
+-- 	elseif time >= 60 then -- минута
+-- 		hours = string.format("%01.f", math.floor(time/3600))
+-- 		mins = string.format("%01.f", math.floor(time/60 - (hours*60)))
+-- 		return mins..E.time_MINUTE
+-- 	else
+-- 		return time..E.time_SECOND
+-- 	end
+-- end
 function E.func_SecondsToClock(time)
-	-- local years, days, hours, mins, secs = "", "", "", "", ""
-	local years, days, hours, mins, secs = 0, 0, 0, 0, 0
-	local time = tonumber(time)
-	if time <= 0 or time == nil then --
-		return "0:00"
-	elseif time >= (86400*365) then -- год
-		years = floor(time / (86400*365))
-		days = floor(mod(time, 31536000) / 86400)
-		hours = floor(mod(time, 86400) / 3600)
-		mins = floor(mod(time, 3600) / 60)
-		return years..localYEAR..days..localDAY..hours..localHOUR..mins..localMINUTE
-	elseif time >= 86400 then -- 24ч
-		days = floor(time / 86400)
-		hours = floor(mod(time, 86400) / 3600)
-		mins = floor(mod(time, 3600) / 60)
-		return days..localDAY..hours..localHOUR..mins..localMINUTE
-	elseif time >= 3600 then -- 1 час
-		hours = string.format("%01.f", math.floor(time/3600))
-		mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
-		return hours..localHOUR..mins..localMINUTE
-	elseif time >= 600 then -- 10 минут
-		hours = string.format("%01.f", math.floor(time/3600))
-		mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
-		return mins..localMINUTE
-	elseif time >= 60 then -- минута
-		hours = string.format("%01.f", math.floor(time/3600))
-		mins = string.format("%01.f", math.floor(time/60 - (hours*60)))
-		return mins..localMINUTE
-	else
-		return time..localSECOND
+	time = tonumber(time) or 0
+	if time <= 0 then
+		return "0"..(E.time_MINUTE)
 	end
+
+	local years = floor(time / 31536000)  -- 86400*365
+	local days = floor(time % 31536000 / 86400)
+	local hours = floor(time % 86400 / 3600)
+	local mins = floor(time % 3600 / 60)
+	local secs = floor(time % 60)
+
+	-- Формируем строку по частям
+	local parts = {}
+
+	if years > 0 then
+		table.insert(parts, years..(E.time_YEAR or "y"))
+		table.insert(parts, days..(E.time_DAY or "d"))
+		table.insert(parts, hours..(E.time_HOUR or "h"))
+		table.insert(parts, mins..(E.time_MINUTE or "m"))
+	elseif days > 0 then
+		table.insert(parts, days..(E.time_DAY or "d"))
+		table.insert(parts, hours..(E.time_HOUR or "h"))
+		table.insert(parts, mins..(E.time_MINUTE or "m"))
+	elseif hours > 0 then
+		table.insert(parts, hours..(E.time_HOUR or "h"))
+		table.insert(parts, string.format("%02d", mins)..(E.time_MINUTE or "m"))
+	elseif time >= 60 then
+		table.insert(parts, mins..(E.time_MINUTE or "m"))
+		if time < 600 then  -- Только для 1-9 минут добавляем секунды
+			table.insert(parts, secs..(E.time_SECOND or "s"))
+		end
+	else
+		table.insert(parts, secs..(E.time_SECOND or "s"))
+	end
+
+	return table.concat(parts)
 end
+
+
+
+
+
+
+
+
+
+
+
+
 
 function E.ChatFrame_TimeBreakDown(time)
 	local days = floor(time / (60 * 60 * 24));
@@ -712,39 +732,39 @@ function E.func_tmstpDayReset(time)
 end
 ----------------------------------------------------------------
 -- function E.func_All_objectives(questID)
---     local str = ""
---     local objectives = C_QuestLog.GetQuestObjectives(questID)
---     local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(questID, 1, false)
---     if objectives == nil then
---         return ""
---     end
---     if objectiveType == "progressbar" then
---         return "|cffFF0000"..GetQuestProgressBarPercent(questID).."%|r"
---     end
---     if objectives then
---         if objectives[5] then
---             str = str..(objectives[5].finished and Gray_Color or White_Color) ..objectives[5].text.."|r\n"
---             str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
---             str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
---             str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
---             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
---         elseif objectives[4] then
---             str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
---             str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
---             str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
---             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
---         elseif objectives[3] then
---             str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
---             str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
---             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
---         elseif objectives[2] then
---             str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
---             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
---         elseif objectives[1] then
---             str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
---         end
---     end
---     return str
+-- local str = ""
+-- local objectives = C_QuestLog.GetQuestObjectives(questID)
+-- local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(questID, 1, false)
+-- if objectives == nil then
+-- return ""
+-- end
+-- if objectiveType == "progressbar" then
+-- return "|cffFF0000"..GetQuestProgressBarPercent(questID).."%|r"
+-- end
+-- if objectives then
+-- if objectives[5] then
+-- str = str..(objectives[5].finished and Gray_Color or White_Color) ..objectives[5].text.."|r\n"
+-- str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
+-- str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
+-- str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
+-- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+-- elseif objectives[4] then
+-- str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
+-- str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
+-- str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
+-- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+-- elseif objectives[3] then
+-- str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
+-- str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
+-- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+-- elseif objectives[2] then
+-- str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
+-- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+-- elseif objectives[1] then
+-- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
+-- end
+-- end
+-- return str
 -- end
 ----------------------------------------------------------------
 function E.func_CheckCompletedByQuestID(questID)
@@ -815,7 +835,7 @@ end
 ----------------------------------------------------------------
 function E.func_achievementName(achievementID)
 	local vivod = select(2, GetAchievementInfo(achievementID))
-	if ShowIDS == true and vivod ~= nil then
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..achievementID.."|r"
 	end
 	return vivod
@@ -941,7 +961,7 @@ function E.func_npcName(npcName)
 		end
 		inspectScantipFUNC:ClearLines()
 	end
-	if ShowIDS == true and vivod ~= nil then
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..npcName.."|r"
 	end
 	return vivod
@@ -1229,7 +1249,7 @@ function E.func_EventName(eventID)
 			vivod = C_Calendar.GetDayEvent(month, monthDay, i).title
 		end
 	end
-	if ShowIDS == true and vivod ~= nil then
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..eventID.."|r"
 	end
 	return vivod
@@ -1239,7 +1259,7 @@ function E.func_ProfessionName(skillLine)
 	local vivod = ""
 	local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
 	vivod = name
-	if ShowIDS == true and vivod ~= nil then
+	if E.DebugIDs == true and vivod ~= nil then
 		vivod = vivod..Gray_Color.." id:"..skillLine.."|r"
 	end
 	return vivod
@@ -1281,8 +1301,8 @@ end
 function E.func_dungeonName(dungeonID)
 	if dungeonID then
 		local vivod = C_ChallengeMode.GetMapUIInfo(dungeonID)
-		if ShowIDS == true and vivod ~= nil then
-			vivod = vivod .. Gray_Color.." id:"..dungeonID.."|r"
+		if E.DebugIDs == true and vivod ~= nil then
+			vivod = vivod..Gray_Color.." id:"..dungeonID.."|r"
 		end
 		return vivod
 	end
@@ -1395,15 +1415,12 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	local r, g, b = GetClassColor(classFilename)
 	local bgCr, bgCg, bgCb, bgCa = E.bgCr, E.bgCg, E.bgCb, E.bgCa
 	if hexcolor then
-		bgCr, bgCg, bgCb  = self.func_hex2rgbNUMBER(hexcolor)
+		bgCr, bgCg, bgCb = self.func_hex2rgbNUMBER(hexcolor)
 	end
 	if BackdropAlpha then
 		bgCa = BackdropAlpha
 	end
-
 	local bbalpha = bbalpha or edgeAlpha or 1
-
-
 	frame:SetBackdrop({
 			bgFile = E.bgFile,
 			edgeFile = E.edgeFile,
@@ -1417,10 +1434,9 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 	frame:SetBackdropBorderColor(0, 0, 0, bbalpha)
 	-- frame:SetScript("OnShow", function(self)
-	--         self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	--         self:SetBackdropBorderColor(0, 0, 0, bbalpha)
+	-- self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+	-- self:SetBackdropBorderColor(0, 0, 0, bbalpha)
 	-- end)
-
 	if not frame.isInit then
 		frame.isInit = true
 		frame:HookScript("OnEnter", function(self)
@@ -1454,10 +1470,6 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 			end)
 		end
 	end
-
-
-
-
 end
 ----------------------------------------------------------------
 function E:func_CreateUtilsButton(frame)
@@ -1628,10 +1640,9 @@ function E:func_CreateUtilsButton(frame)
 				local timeLimit = E.func_dungeontimeLimit(dungeonID)
 				local icon = E.func_dungeonIcon(dungeonID)
 				i = i + 1
-				local vivod_LEFT = E.func_texturefromIcon(icon) .. name
+				local vivod_LEFT = E.func_texturefromIcon(icon)..name
 				local vivod_RIGHT = E.Gray_Color.."icon:|r"..E.Green_Color..icon.."|r "..E.Gray_Color.."time:|r"..E.Green_Color..E.func_SecondsToClock(timeLimit).."|r"
 				GameTooltip:AddDoubleLine(vivod_LEFT, vivod_RIGHT, 1, 1, 1, 1, 1, 1)
-
 				OctoToDo_TrashCan.OctoToDo_MplusButton[dungeonID] = C_ChallengeMode.GetMapUIInfo(dungeonID)
 			end
 			if i == 0 then
@@ -1720,61 +1731,45 @@ function E:func_CreateUtilsButton(frame)
 	OctoToDo_EventsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
-
-
-			-- print (FormatShortDate(date("*t")))
-
 			local curdatetable = date("*t")
-			local curdate = (FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year))
-
-
-
-
 			-- fpde(date("*t"))
 			-- [1] = {
-			--     ["hour"] = 2,
-			--     ["min"] = 15,
-			--     ["wday"] = 1,
-			--     ["day"] = 30,
-			--     ["month"] = 3,
-			--     ["year"] = 2025,
-			--     ["sec"] = 28,
-			--     ["yday"] = 89,
-			--     ["isdst"] = "false",
+			-- ["hour"] = 2,
+			-- ["min"] = 15,
+			-- ["wday"] = 1,
+			-- ["day"] = 30,
+			-- ["month"] = 3,
+			-- ["year"] = 2025,
+			-- ["sec"] = 28,
+			-- ["yday"] = 89,
+			-- ["isdst"] = "false",
 			-- },
-
-
-
-
-
+			local curdate = (FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year))
+			-- local curdate = E:func_fixdate(curdatetable.day).."/"..E:func_fixdate(curdatetable.month).."/"..E:func_fixdate(curdatetable.year)
 			GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(curdate.."|r"))
-			-- GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(date("%d/%m/%Y").."|r"))
 			GameTooltip:AddDoubleLine(" ", " ")
 			local count = 0
 			local sorted = {}
-			-- local faecolor = E.func_rgb2hex(NIGHT_FAE_BLUE_COLOR:GetRGB())
-			local faecolor = "|cff".."c8c8c8"
 			for k, v in pairs (OctoToDo_DB_Other.Holiday) do
 				tinsert(sorted, k)
 			end
 			sort(sorted, function(a, b) return OctoToDo_DB_Other.Holiday[a].priority < OctoToDo_DB_Other.Holiday[b].priority end)
-
-			--for eventID, v in pairs(OctoToDo_DB_Other.Holiday) do
-
 			for i, eventID in ipairs(sorted) do
 				local v = OctoToDo_DB_Other.Holiday[eventID]
 				count = count + 1
-
 				if v.Active == true then
-					GameTooltip:AddDoubleLine(E.Green_Color..v.title .. "|r"..E.White_Color.." (" .. v.event_duration..")|r"..(ShowIDS and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+					-- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
+
+					-- СЕЙЧАС
+					GameTooltip:AddDoubleLine(E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				elseif v.Possible == true then
-					GameTooltip:AddDoubleLine(E.Gray_Color..v.title .." (" .. v.event_duration..")|r"..(ShowIDS and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
+					-- БУДУЩЕЕ
+					GameTooltip:AddDoubleLine(E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				else
-					GameTooltip:AddDoubleLine(E.Gray_Color..v.title .." (" .. v.event_duration..")|r"..(ShowIDS and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
+					-- ПРОШЛОЕ
+					GameTooltip:AddDoubleLine(E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				end
 			end
-
-
 			if count == 0 then
 				GameTooltip:AddLine("No Data")
 			end
@@ -1825,15 +1820,15 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 		end
 	end
 	-- if func then
-	--     info.OnClick = func
+	-- info.OnClick = func
 	-- else
-	--     info.OnClick = function(_, button)
-	--         if button == "LeftButton" then
-	--             if not InCombatLockdown() then
-	--                 frame:SetShown(not frame:IsShown())
-	--             end
-	--         end
-	--     end
+	-- info.OnClick = function(_, button)
+	-- if button == "LeftButton" then
+	-- if not InCombatLockdown() then
+	-- frame:SetShown(not frame:IsShown())
+	-- end
+	-- end
+	-- end
 	-- end
 	local MinimapName = E.func_AddonTitle(addonName)
 	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
@@ -1843,8 +1838,15 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 end
 ----------------------------------------------------------------
 function E:func_fixdate(date)
+	-- GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(date("%d/%m/%Y").."|r"))
+	-- local curdate = (FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year))
+	local vivod = ("%.2d"):format(date)
 	--return format("%.2d", date)
-	return ("%.2d"):format(date)
+	return vivod
+end
+----------------------------------------------------------------
+function E:StopSpam(func)
+	print ("StopSpam", tostring(func))
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1907,5 +1909,3 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-----------------------------------------------------------------
-

@@ -1,34 +1,114 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
 -- E.OctoTable_Expansions_Table = {
--- 	{color = "|cff68ccef", config = 1, name = "Classic", icon = 254094,}, -- 1
--- 	{color = "|cff4fff79", config = 2, name = "The Burning Crusade", icon = 236415,}, -- 2
--- 	{color = "|cff00a3ff", config = 3, name = "Wrath of the Lich King", icon = 341221,}, -- 3
--- 	{color = "|cffffb300", config = 4, name = "Cataclysm", icon = 574788,}, -- 4
--- 	{color = "|cff00ffba", config = 5, name = "Mists of Pandaria", icon = 896622,}, -- 5
--- 	{color = "|cffc86400", config = 6, name = "Warlords of Draenor", icon = 1113431,}, -- 6
--- 	{color = "|cff1eff00", config = 7, name = "Legion", icon = 1711335,}, -- 7
--- 	{color = "|cff6464ff", config = 8, name = "Battle for Azeroth", icon = 3194610,}, -- 8
--- 	{color = "|cffc9c3aa", config = 9, name = "Shadowlands", icon = 4254080,}, -- 9
--- 	{color = "|cffe8e379", config = 10, name = "Dragonflight", icon = 5342925,}, -- 10
--- 	{color = "|cffB59377", config = 11, name = "The War Within", icon = 5779391,}, -- 11
--- 	{color = "|cffff0047", config = 12, name = "TEST", icon = 123123,}, -- 12
--- 	{color = "|cff000000", config = 13, name = "BLACK", icon = 123123,}, -- 13
--- 	-- "Midnight",
--- 	-- "The Last Titan",
+--     {color = "|cff68ccef", config = 1, name = "Classic", icon = 254094,}, -- 1
+--     {color = "|cff4fff79", config = 2, name = "The Burning Crusade", icon = 236415,}, -- 2
+--     {color = "|cff00a3ff", config = 3, name = "Wrath of the Lich King", icon = 341221,}, -- 3
+--     {color = "|cffffb300", config = 4, name = "Cataclysm", icon = 574788,}, -- 4
+--     {color = "|cff00ffba", config = 5, name = "Mists of Pandaria", icon = 896622,}, -- 5
+--     {color = "|cffc86400", config = 6, name = "Warlords of Draenor", icon = 1113431,}, -- 6
+--     {color = "|cff1eff00", config = 7, name = "Legion", icon = 1711335,}, -- 7
+--     {color = "|cff6464ff", config = 8, name = "Battle for Azeroth", icon = 3194610,}, -- 8
+--     {color = "|cffc9c3aa", config = 9, name = "Shadowlands", icon = 4254080,}, -- 9
+--     {color = "|cffe8e379", config = 10, name = "Dragonflight", icon = 5342925,}, -- 10
+--     {color = "|cffB59377", config = 11, name = "The War Within", icon = 5779391,}, -- 11
+--     {color = "|cffff0047", config = 12, name = "TEST", icon = 123123,}, -- 12
+--     {color = "|cff000000", config = 13, name = "BLACK", icon = 123123,}, -- 13
+--     -- "Midnight",
+--     -- "The Last Titan",
 -- }
 E.OctoTable_Expansions_Table = {
-	{color = "|cffD6AB7D", config = 1, name = "Classic", icon = 254094,},
-	{color = "|cffE43E5A", config = 2, name = "The Burning Crusade", icon = 236415,},
-	{color = "|cff3FC7EB", config = 3, name = "Wrath of the Lich King", icon = 341221,},
-	{color = "|cffFF7C0A", config = 4, name = "Cataclysm", icon = 574788,},
-	{color = "|cff00EF88", config = 5, name = "Mists of Pandaria", icon = 896622,},
-	{color = "|cffF48CBA", config = 6, name = "Warlords of Draenor", icon = 1113431,},
-	{color = "|cffAAD372", config = 7, name = "Legion", icon = 1711335,},
-	{color = "|cffFFF468", config = 8, name = "Battle for Azeroth", icon = 3194610,},
-	{color = "|cff9798FE", config = 9, name = "Shadowlands", icon = 4254080,},
-	{color = "|cff53B39F", config = 10, name = "Dragonflight", icon = 5342925,},
-	{color = "|cff90CCDD", config = 11, name = "The War Within", icon = 5779391,},
+	{
+		color = "|cffD6AB7D",
+		config = 1,
+		name = "Classic",
+		nameShort = "Classic",
+		icon = 254094,
+	},
+	{
+		color = "|cffE43E5A",
+		config = 2,
+		name = "The Burning Crusade",
+		nameShort = "TheBurningCrusade",
+		icon = 236415,
+	},
+	{
+		color = "|cff3FC7EB",
+		config = 3,
+		name = "Wrath of the Lich King",
+		nameShort = "WrathoftheLichKing",
+		icon = 341221,
+	},
+	{
+		color = "|cffFF7C0A",
+		config = 4,
+		name = "Cataclysm",
+		nameShort = "Cataclysm",
+		icon = 574788,
+	},
+	{
+		color = "|cff00EF88",
+		config = 5,
+		name = "Mists of Pandaria",
+		nameShort = "MistsofPandaria",
+		icon = 896622,
+	},
+	{
+		color = "|cffF48CBA",
+		config = 6,
+		name = "Warlords of Draenor",
+		nameShort = "WarlordsofDraenor",
+		icon = 1113431,
+	},
+	{
+		color = "|cffAAD372",
+		config = 7,
+		name = "Legion",
+		nameShort = "Legion",
+		icon = 1711335,
+	},
+	{
+		color = "|cffFFF468",
+		config = 8,
+		name = "Battle for Azeroth",
+		nameShort = "BattleforAzeroth",
+		icon = 3194610,
+	},
+	{
+		color = "|cff9798FE",
+		config = 9,
+		name = "Shadowlands",
+		nameShort = "Shadowlands",
+		icon = 4254080,
+	},
+	{
+		color = "|cff53B39F",
+		config = 10,
+		name = "Dragonflight",
+		nameShort = "Dragonflight",
+		icon = 5342925,
+	},
+	{
+		color = "|cff90CCDD",
+		config = 11,
+		name = "The War Within",
+		nameShort = "TheWarWithin",
+		icon = 5779391,
+	},
+	{
+		color = "|cffff0047",
+		config = 12,
+		name = "TEST",
+		nameShort = "TEST",
+		icon = 123123,
+	}, -- 12
+	{
+		color = "|cff000000",
+		config = 13,
+		name = "BLACK",
+		nameShort = "BLACK",
+		icon = 123123,
+	}, -- 13
 	-- "Midnight",
 	-- "The Last Titan",
 }
@@ -37,7 +117,7 @@ E.OctoTable_Expansions_Table = {
 
 
 -- E.OctoTable_Expansions_Table = {
--- 	icon = ЙЦУЙЦУ, name = "classic", color = "cff68ccef"
+--     icon = ЙЦУЙЦУ, name = "classic", color = "cff68ccef"
 
 -- }
 
@@ -55,3 +135,4 @@ E.OctoTable_Expansions_Table2 = {
 	EXPANSION_NAME9, -- "Dragonflight",
 	EXPANSION_NAME10, -- "The War Within",
 }
+

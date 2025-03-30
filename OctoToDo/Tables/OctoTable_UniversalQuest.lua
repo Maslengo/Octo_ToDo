@@ -73,6 +73,8 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
+
+
 	{
 		name_save = "WorldBoss",
 		reset = "Weekly",
@@ -86,6 +88,121 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1
 	},
+
+	{
+		name_save = "WorldBoss",
+		reset = "Weekly",
+		desc = "Dragonflight",
+		questID = {
+			69927,
+			69928,
+			69929,
+			69930,
+		},
+		max = 4 -- 1
+	},
+
+	{
+		name_save = "WorldBoss",
+		reset = "Weekly",
+		desc = "Shadowlands",
+		questID = {
+			65143, -- Антрос
+
+			64531, -- Мор'гет
+
+			61813, -- "Валинор", Светоч Эпох
+			61816, -- Мортанис
+			61815, -- Ораномонос Вечноветвящаяся
+			61814, -- Нургаш Жижерожденный
+		},
+		max = 3
+	},
+	{
+		name_save = "WorldBoss",
+		reset = "Weekly",
+		desc = "BattleforAzeroth",
+		questID = {
+			52196, -- WBALL 1
+			52169, -- WBALL 1
+			52181, -- WBALL 1
+			52166, -- WBALL 1
+			52163, -- WBALL 1
+			52157, -- WBALL 1
+
+			52848, -- Гибельный вой 1
+			52847, -- Гибельный вой 1
+			54895, -- Ивус Лесной Властелин 1
+			54896, -- Ивус Лесной Властелин 1
+
+			58705, -- WBAssault 1
+			55466, -- WBAssault 1
+
+			56057, -- Страж душ 1
+			56056, -- Глубинный ужас 1
+		},
+		max = 4
+	},
+	{
+		name_save = "WorldBoss",
+		reset = "Weekly",
+		desc = "Legion",
+		questID = {
+			43512, -- Ана-Муз
+			43193, -- Вредоносные намерения
+			43448, -- Король во льдах
+			43985, -- Темный прилив
+			42819, -- Карманный маг
+			43192, -- Кошмар глубин
+			43513, -- На'зак Одержимый
+			42270, -- Бич небес
+			42779, -- Спящая порча
+			42269, -- Охотники за душами
+			44287, -- СМЕРТЕЛЬНО ОПАСЕН: иссохший Дж'им
+			-- Расколотые острава
+			47061, -- Апокрон
+			46947, -- Бруталл
+			46948, -- Малификус
+			46945, -- Си'ваш
+
+			-- 43798, -- ОЧЕНЬ ОПАСЕН: Косумот Алчущий
+		},
+		max = 1
+	},
+	{
+		name_save = "WorldBoss",
+		reset = "Weekly",
+		desc = "WarlordsofDraenor",
+		questID = {
+			37460, -- Tarlna
+			37462, -- Drov
+			37464, -- Rukhmar
+			39380, -- Kazzak
+		},
+		max = 4
+	},
+
+
+	{
+		name_save = "WorldBoss",
+		reset = "Weekly",
+		desc = "MistsofPandaria",
+		questID = {
+			33118,
+			33117,
+			32519,
+			33109,
+			32098,
+			32099,
+		},
+		max = 6
+	},
+
+
+
+
+
+
 	{
 		name_save = "TheTheaterTroupe",
 		reset = "Weekly",
@@ -286,36 +403,6 @@ E.OctoTable_UniversalQuest = {
 	{
 		name_save = "WBALL",
 		reset = "Weekly",
-		desc = "Shadowlands",
-		questID = {
-			61813,
-			61814,
-			61815,
-			61816,
-		},
-		max = 1
-	},
-	{
-		name_save = "WBAntrosZM",
-		reset = "Weekly",
-		desc = "Shadowlands",
-		questID = {
-			65143,
-		},
-		max = 1
-	},
-	{
-		name_save = "WBMorgethMaw",
-		reset = "Weekly",
-		desc = "Shadowlands",
-		questID = {
-			64531,
-		},
-		max = 1
-	},
-	{
-		name_save = "WBALL",
-		reset = "Weekly",
 		desc = "BattleforAzeroth",
 		questID = {
 			52157,
@@ -324,36 +411,6 @@ E.OctoTable_UniversalQuest = {
 			52181,
 			52169,
 			52196,
-		},
-		max = 1
-	},
-	{
-		name_save = "WBNazjatar",
-		reset = "Weekly",
-		desc = "BattleforAzeroth",
-		questID = {
-			56056,
-			56057,
-		},
-		max = 1
-	},
-	{
-		name_save = "WBDarkshore",
-		reset = "Weekly",
-		desc = "BattleforAzeroth",
-		questID = {
-			54896,
-			52847,
-		},
-		max = 1
-	},
-	{
-		name_save = "WBAssault",
-		reset = "Weekly",
-		desc = "BattleforAzeroth",
-		questID = {
-			55466,
-			58705,
 		},
 		max = 1
 	},

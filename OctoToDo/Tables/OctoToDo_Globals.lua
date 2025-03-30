@@ -1,6 +1,8 @@
 local GlobalAddonName, E = ...
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
+E.DebugIDs = true
+E.DebugEvents = false
 E.OctoTable_Empty = {}
 E.Modules = {}
 E.Timers = {}
@@ -13,6 +15,27 @@ E.HALF_WIDTH = 1.88 -- 1.5
 E.FULL_WIDTH = 3.60
 E.edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
 E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
+
+
+
+E.curRegion = GetLocale()
+E.time_YEAR = "y. "
+E.time_DAY = "d. "
+E.time_HOUR = "h. "
+E.time_MINUTE = "m. "
+E.time_SECOND = "s. "
+if E.Region == "ruRU" then
+	E.time_YEAR = "г. "
+	E.time_DAY = "д. "
+	E.time_HOUR = "ч. "
+	E.time_MINUTE = "м. "
+	E.time_SECOND = "с. "
+end
+
+
+
+
+
 -- NIGHT_FAE_BLUE_COLOR
 -- WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE or 1 -- RETAIL
 -- WOW_PROJECT_CLASSIC = WOW_PROJECT_CLASSIC or 2 -- CLASSIC

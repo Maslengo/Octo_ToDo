@@ -39,6 +39,7 @@ local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 ----------------------------------------------------------------
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_PlayerInfo()
 	OctoToDo_TrashCan = OctoToDo_TrashCan or {}
 	OctoToDo_TrashCan.profileKeys = OctoToDo_TrashCan.profileKeys or {}
@@ -46,23 +47,23 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_PlayerInfo()
 	if E.isElvUI and ElvDB and ElvPrivateDB then
 		if ElvDB.profileKeys[curCharName.." - ".. curServer] ~= "OctoUI" then
 			ElvDB.profileKeys[curCharName.." - ".. curServer] = "OctoUI"
-			print ("ElvDB done")
+			DEFAULT_CHAT_FRAME:AddMessage("ElvDB: "..E.Green_Color.."done|r")
 		end
 		if ElvPrivateDB.profileKeys[curCharName.." - ".. curServer] ~= "PRIVATEPROFILE" then
 			ElvPrivateDB.profileKeys[curCharName.." - ".. curServer] = "PRIVATEPROFILE"
-			print ("ElvPrivateDB done")
+			DEFAULT_CHAT_FRAME:AddMessage("ElvPrivateDB: "..E.Green_Color.."done|r")
 		end
 	end
 	if E.isPlater and PlaterDB then
 		if PlaterDB.profileKeys[curCharName.." - ".. curServer] ~= "OctoUI" then
 			PlaterDB.profileKeys[curCharName.." - ".. curServer] = "OctoUI"
-			print ("PlaterDB done")
+			DEFAULT_CHAT_FRAME:AddMessage("PlaterDB: "..E.Green_Color.."done|r")
 		end
 	end
 	if E.isOmniCD and OmniCDDB then
 		if OmniCDDB.profileKeys[curCharName.." - ".. curServer] ~= "OctoUI" then
 			OmniCDDB.profileKeys[curCharName.." - ".. curServer] = "OctoUI"
-			print ("OmniCDDB done")
+			DEFAULT_CHAT_FRAME:AddMessage("OmniCDDB: "..E.Green_Color.."done|r")
 		end
 	end
 	-- E.func_TableMerge(ElvDB.profileKeys, OctoToDo_TrashCan.profileKeys)
@@ -121,6 +122,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_PlayerInfo()
 		collect.IsVeteranTrialAccount = IsVeteranTrialAccount
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_Covenant()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -136,6 +138,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_Covenant()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_PlayerDurability()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -165,6 +168,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_PlayerDurability()
 		collect.PlayerDurability = E.func_CompactNumberSimple(totalDurability)
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_Player_Level()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -194,6 +198,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_Player_Level()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_Played(totalTime, currentLevelTime)
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -201,6 +206,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_Played(totalTime, currentLevelT
 		collect.realLevelTime = currentLevelTime
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_WarMode()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -208,6 +214,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_WarMode()
 		collect.WarMode = WarMode
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_Mail()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -215,6 +222,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_Mail()
 		collect.hasMail = hasMail
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_LoginTime()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -227,6 +235,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_LoginTime()
 		collect.time = time()
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_Professions()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -263,9 +272,6 @@ function OctoToDo_EventFrame_Collect:Collect_All_Professions()
 				local QWEparentProfessionID = info.parentProfessionID
 				local QWEparentProfessionName = info.parentProfessionName
 				if skillLine == QWEparentProfessionID then
-					-- РЫБНАЯ 356
-					-- print (skillLine, E.func_ProfessionName(skillLine))
-					-- if skillLine == QWEparentProfessionID and QWEisPrimaryProfession then
 					collect.MASLENGO.professions[i][QWEprofessionID] = nil
 					collect.MASLENGO.professions[i].ALT = collect.MASLENGO.professions[i].ALT or {}
 					collect.MASLENGO.professions[i].ALT[QWEprofessionID] = collect.MASLENGO.professions[i].ALT[QWEprofessionID] or {}
@@ -285,6 +291,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_Professions()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_GreatVault()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -346,6 +353,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_GreatVault()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_Currency_TEST2()
 	OCTO_DB_currencies_test = OCTO_DB_currencies_test or {}
 	local expanded = {}
@@ -375,6 +383,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_Currency_TEST2()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_Reputations_TEST2()
 	OCTO_DB_reputations_test = OCTO_DB_reputations_test or {}
 	OctoToDo_TrashCan.Reputations = OctoToDo_TrashCan.Reputations or {}
@@ -413,6 +422,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_Reputations_TEST2()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_Currency()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -519,6 +529,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_Currency()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_Reputations()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -547,16 +558,9 @@ function OctoToDo_EventFrame_Collect:Collect_All_Reputations()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_ItemsInBag()
 	local collect = OctoToDo_DB_Levels[curGUID]
-	-- print ( C_ChallengeMode.GetMapUIInfo(506)) -- Искроварня
-	-- print ( C_ChallengeMode.GetMapUIInfo(504)) -- Расселина Темного Пламени
-	-- print ( C_ChallengeMode.GetMapUIInfo(525)) -- Операция: Шлюз
-	-- print ( C_ChallengeMode.GetMapUIInfo(247)) -- ЗОЛОТАЯ ЖИЛА
-	-- print ( C_ChallengeMode.GetMapUIInfo(499)) -- Приорат Священного Пламени
-	-- print ( C_ChallengeMode.GetMapUIInfo(500)) -- Гнездовье
-	-- print ( C_ChallengeMode.GetMapUIInfo(382)) -- Театр Боли
-	-- print ( C_ChallengeMode.GetMapUIInfo(370)) -- Мехагон: Мастерская
 	if collect and not InCombatLockdown() then
 		local usedSlots = 0
 		local totalSlots = 0
@@ -579,34 +583,11 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_ItemsInBag()
 					if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
 						local dungeonID = select(4, strsplit(":", hyperlink)) -- БЫЛО 3
 						local lvl = select(5, strsplit(":", hyperlink)) -- БЫЛО 4
-
-						-- local first = select(1, strsplit(":", hyperlink))
-						-- local second = select(2, strsplit(":", hyperlink))
-						-- local third = select(3, strsplit(":", hyperlink))
-						-- local forth = select(4, strsplit(":", hyperlink))
-						-- local five = select(5, strsplit(":", hyperlink))
-						-- local six = select(6, strsplit(":", hyperlink))
-						-- local seven = select(7, strsplit(":", hyperlink))
-						-- print (first, second, third, forth, five, six, seven)
-						-- print(hyperlink:gsub("|", "||"))
-
-						-- print ("|cnIQ1:".."Q1|r")
-						-- print ("|cnIQ2:".."Q2|r")
-						-- print ("|cnIQ3:".."Q3|r")
-						-- print ("|cnIQ4:".."Q4|r")
-						-- print ("|cnIQ5:".."Q5|r")
-						-- print ("|cnIQ6:".."Q6|r")
-						-- print ("|cnIQ7:".."Q7|r")
-						-- print ("|cnIQ8:".."Q8|r")
-						-- Enum.ColorOverride
-
 						collect.CurrentKeyLevel = tonumber(lvl)
 						collect.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
-
 						for k, v in next, (E.OctoTable_KeystoneAbbr) do
 							if v.mapChallengeModeID == tonumber(dungeonID) then
 								collect.CurrentKey = lvl.." "..v.abbreviation
-								-- print (collect.CurrentKey.. " ("..collect.CurrentKeyName..")")
 							end
 						end
 					end
@@ -647,6 +628,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_ItemsInBag()
 		collect.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_EncounterAndZoneLists()
 	local clear = false
 	if clear == true then
@@ -683,6 +665,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_EncounterAndZoneLists()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_Locations()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -697,6 +680,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_Locations()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_Quests()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -728,6 +712,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_Quests()
 	-- end
 	-- fpde(collect.MASLENGO.Quests)
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_ItemLevel()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -737,6 +722,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_ItemLevel()
 		collect.avgItemLevelPvp = math.floor(avgItemLevelPvp)
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_UNIVERSALQuestUpdate()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -774,6 +760,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_UNIVERSALQuestUpdate()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_MoneyUpdate()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -781,6 +768,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_MoneyUpdate()
 		OctoToDo_DB_Other.AccountMoney[BattleTagLocal] = C_Bank.FetchDepositedMoney(2)
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_ALL_MoneyOnLogin()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -788,6 +776,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_MoneyOnLogin()
 		collect.MoneyOnLogin = Money
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -807,7 +796,8 @@ function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 		if RaidInfoFrame:IsVisible() then
 			HideUIPanel(RaidInfoFrame)
 		end
-		local numsaved = GetNumSavedInstances()
+		local NumSavedInstances = GetNumSavedInstances()
+		local NumSavedWorldBosses = GetNumSavedWorldBosses()
 		local DiffAbbr = ""
 		local instancesLastBoss = {}
 		local ServerTime = GetServerTime()
@@ -815,8 +805,8 @@ function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 			collect.journalInstance = {}
 		end
 		collect.journalInstance = collect.journalInstance or {}
-		if numsaved > 0 then
-			for i = 1, numsaved do
+		if NumSavedInstances > 0 then
+			for i = 1, NumSavedInstances do
 				local instanceName, lockoutId, instanceReset, instanceDifficulty, locked, extended, instanceIDMostSig, isRaid, maxPlayers, difficultyName, totalBosses, defeatedBosses, extendDisabled, instanceId = GetSavedInstanceInfo(i)
 				collect.journalInstance[instanceId] = collect.journalInstance[instanceId] or {}
 				collect.journalInstance[instanceId][instanceDifficulty] = collect.journalInstance[instanceId][instanceDifficulty] or {}
@@ -848,7 +838,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 					else
 						DiffAbbr = "HZ"
 					end
-					vivod = color..defeatedBosses.."/"..totalBosses.."|r"
+					local vivod = color..defeatedBosses.."/"..totalBosses.."|r"
 					collect.journalInstance[instanceId][instanceDifficulty].instanceName = instanceName
 					collect.journalInstance[instanceId][instanceDifficulty].vivod = vivod
 					collect.journalInstance[instanceId][instanceDifficulty].instanceReset = instanceReset
@@ -864,6 +854,15 @@ function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 					collect.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
 					collect.journalInstance[instanceId][instanceDifficulty].Time = E.func_SecondsToClock(instanceReset-ServerTime)
 				end
+			end
+		end
+		collect.SavedWorldBoss = collect.SavedWorldBoss or {}
+		if NumSavedWorldBosses > 0 then
+			for i = 1, NumSavedWorldBosses do
+				local name, worldBossID, reset = GetSavedWorldBossInfo(i)
+				collect.SavedWorldBoss[worldBossID] = collect.SavedWorldBoss[worldBossID] or {}
+				collect.SavedWorldBoss[worldBossID].name = name
+				collect.SavedWorldBoss[worldBossID].reset = reset
 			end
 		end
 		for i=1, GetNumRandomDungeons() do
@@ -882,6 +881,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 	local collect = OctoToDo_DB_Other.Holiday
 	wipe(OctoToDo_DB_Other.Holiday)
@@ -902,13 +902,11 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 			backup.calendarShowLockouts = GetCVarBool("calendarShowLockouts")
 			backup.calendarShowWeeklyHolidays = GetCVarBool("calendarShowWeeklyHolidays")
 			backup.calendarShowBattlegrounds = GetCVarBool("calendarShowBattlegrounds")
-
 			if not backup.calendarShowHolidays then SetCVar("calendarShowHolidays", "1") end
 			if not backup.calendarShowDarkmoon then SetCVar("calendarShowDarkmoon", "1") end
 			if not backup.calendarShowLockouts then SetCVar("calendarShowLockouts", "1") end
 			if not backup.calendarShowWeeklyHolidays then SetCVar("calendarShowWeeklyHolidays", "1") end
 			if not backup.calendarShowBattlegrounds then SetCVar("calendarShowBattlegrounds", "1") end
-
 			backup.dateBackup = C_Calendar.GetMonthInfo()
 		end
 		local function function_restoreBackup()
@@ -917,7 +915,6 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 			if not backup.calendarShowLockouts then SetCVar("calendarShowLockouts", "0") end
 			if not backup.calendarShowWeeklyHolidays then SetCVar("calendarShowWeeklyHolidays", "0") end
 			if not backup.calendarShowBattlegrounds then SetCVar("calendarShowBattlegrounds", "0") end
-
 			C_Calendar.SetAbsMonth(backup.dateBackup.month, backup.dateBackup.year)
 			if CalendarFrame then
 				CalendarFrame:RegisterEvent("CALENDAR_UPDATE_EVENT_LIST")
@@ -926,16 +923,6 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 		end
 		function_setBackup()
 		local currentCalendarTime = C_DateAndTime.GetCurrentCalendarTime()
-
-
-
-		if (LOCALE_enGB) then
-			print ("return string.format(SHORTDATE_EU, day, month, year);")
-		else
-			print ("return string.format(SHORTDATE, day, month, year);")
-		end
-
-
 		local minute = currentCalendarTime.minute
 		local hour = currentCalendarTime.hour
 		local weekday = currentCalendarTime.weekday
@@ -961,11 +948,6 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 				local endTime_year = endTime.year
 				local endTime_month = endTime.month
 				local endTime_monthDay = endTime.monthDay
-
-
-
-
-
 				local dateTbl_startTime = {
 					year = startTime.year,
 					month = startTime.month,
@@ -974,7 +956,6 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 					min = startTime.minute,
 					-- sec = 0,
 				}
-
 				local dateTbl_endTime = {
 					year = endTime.year,
 					month = endTime.month,
@@ -984,30 +965,22 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 					-- sec = 0,
 				}
 				local event_duration = E.FriendsFrame_GetLastOnline(time(dateTbl_endTime)-time(dateTbl_startTime), true)
-
 				collect[id].event_duration = event_duration
-				-- collect[id].startTime = startTime_monthDay.."/"..startTime_month.."/"..startTime_year
-				-- collect[id].endTime = endTime_monthDay.."/"..endTime_month.."/"..endTime_year
-
-				collect[id].startTime = FormatShortDate(startTime_monthDay, startTime_month, startTime_year)
-				collect[id].endTime = FormatShortDate(endTime_monthDay, endTime_month, endTime_year)
-
-				-- collect[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month).."/"..startTime_year
-				-- collect[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month).."/"..endTime_year
+				-- collect[id].startTime = FormatShortDate(startTime_monthDay, startTime_month, startTime_year)
+				-- collect[id].endTime = FormatShortDate(endTime_monthDay, endTime_month, endTime_year)
+				collect[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month).."/"..startTime_year
+				collect[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month).."/"..endTime_year
 				-- collect[id].QWE_startTime = startTime.hour.."ч. "..startTime.minute.."м. "
 				-- collect[id].QWE_endTime = endTime.hour.."ч. "..endTime.minute.."м. "
 				collect[id].Active = collect[id].Active or false
 				collect[id].Possible = collect[id].Possible or false
 				collect[id].iconTexture = event.iconTexture
+				-- collect[id].ENDS = E.FriendsFrame_GetLastOnline(time(dateTbl_endTime)-GetServerTime(), true)
+				collect[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
 				if not collect[id].priority then
 					collect[id].priority = priority
 					priority = priority + 1
 				end
-
-				-- collect[id].duration =
-
-
-
 				if day == monthDay then
 					if event.sequenceType == "START" then
 						local secondsToEvent = ((event.startTime.hour - hour) * 60 + event.startTime.minute - minute) * 60
@@ -1028,13 +1001,10 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 					collect[id].Possible = true
 				end
 			end
-
 		end
-
 		function_restoreBackup()
 	end
 end
-
 
 function OctoToDo_EventFrame_Collect:Collect_All_BfA_Azerite()
 	local collect = OctoToDo_DB_Levels[curGUID]
@@ -1050,6 +1020,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_BfA_Azerite()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_BfA_Cloaklvl()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -1089,6 +1060,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_BfA_Cloaklvl()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_BfA_QuestsBounties()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -1158,6 +1130,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_BfA_QuestsBounties()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_BfA_Island()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -1167,6 +1140,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_BfA_Island()
 		end
 	end
 end
+
 function OctoToDo_EventFrame_Collect:Collect_All_Chromie()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
@@ -1189,13 +1163,7 @@ local Table_Events = {
 	"PLAYER_LOGIN",
 	"SKILL_LINES_CHANGED",
 	"PLAYER_XP_UPDATE",
-	"QUEST_ACCEPTED",
-	"QUEST_COMPLETE",
-	"QUEST_FINISHED",
 	"QUEST_LOG_UPDATE",
-	"QUEST_REMOVED",
-	"QUEST_TURNED_IN",
-	"QUEST_LOOT_RECEIVED",
 	"PLAYER_MONEY",
 	"ACCOUNT_MONEY",
 	"CURRENCY_DISPLAY_UPDATE",
@@ -1208,10 +1176,7 @@ local Table_Events = {
 	"PLAYER_DEAD",
 	"UPDATE_INVENTORY_DURABILITY",
 	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",
-	"BAG_UPDATE_DELAYED",
-	"ZONE_CHANGED_NEW_AREA",
-	"ITEM_COUNT_CHANGED",
-	"MAIL_SEND_SUCCESS",
+	"BAG_UPDATE",
 	"PLAYER_SPECIALIZATION_CHANGED",
 	"HEARTHSTONE_BOUND",
 	"ZONE_CHANGED_NEW_AREA",
@@ -1227,11 +1192,9 @@ local Table_Events = {
 	"LFG_COMPLETION_REWARD",
 	"ENCOUNTER_LOOT_RECEIVED",
 	"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+	"RECEIVED_ACHIEVEMENT_LIST",
 	"PLAYER_LEVEL_UP",
 	"QUEST_POI_UPDATE",
-	-- "TALKINGHEAD_REQUESTED",
-	-- "UNIT_SPELLCAST_FAILED_QUIET",
-	-- "ITEM_CHANGED",
 }
 for _, event in ipairs(Table_Events) do
 	OctoToDo_EventFrame_Collect:RegisterEvent(event)
@@ -1241,10 +1204,11 @@ OctoToDo_EventFrame_Collect:SetScript("OnEvent",
 		if self[event] then
 			self[event](self, ...)
 		else
-			print (E.Red_Color.."UNUSED UVENT:|r ", event)
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
 		end
 end)
 ----------------------------------------------------------------
+
 function OctoToDo_EventFrame_Collect:ADDON_LOADED()
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
@@ -1253,6 +1217,7 @@ function OctoToDo_EventFrame_Collect:ADDON_LOADED()
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	E:func_checkCharInfo()
 	RequestTimePlayed()
@@ -1285,148 +1250,105 @@ function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	self:Collect_All_BfA_Cloaklvl()
 	self:Collect_All_BfA_QuestsBounties()
 	self:Collect_All_BfA_Island()
-	E:Update()
+	E:Update("ADDON_LOADED")
 end
+
 function OctoToDo_EventFrame_Collect:SKILL_LINES_CHANGED(...)
 	if not InCombatLockdown() then
 		self:Collect_All_Professions()
-		E:Update()
+		E:Update("SKILL_LINES_CHANGED")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:PLAYER_XP_UPDATE()
 	if not InCombatLockdown() then
 		self:Collect_ALL_Player_Level()
-		E:Update()
+		E:Update("PLAYER_XP_UPDATE")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:PLAYER_LEVEL_UP()
 	C_Timer.After(1, function()
 			RequestTimePlayed()
 			if not InCombatLockdown() then
 				self:Collect_ALL_Player_Level()
-				E:Update()
+				E:Update("PLAYER_LEVEL_UP")
 			end
 		end
 	)
 end
-function OctoToDo_EventFrame_Collect:QUEST_ACCEPTED()
-	if not InCombatLockdown() then
-		C_Timer.After(1, function()
-				self:Collect_All_Quests()
-				self:Collect_ALL_UNIVERSALQuestUpdate()
-				self:Collect_All_BfA_Island()
-				self:Collect_All_BfA_QuestsBounties()
-				E:Update()
-			end
-		)
-	end
-end
-function OctoToDo_EventFrame_Collect:QUEST_COMPLETE()
-	if not InCombatLockdown() then
-		C_Timer.After(1, function()
-				self:Collect_All_Quests()
-				self:Collect_ALL_UNIVERSALQuestUpdate()
-				self:Collect_All_BfA_Island()
-				self:Collect_All_BfA_QuestsBounties()
-				E:Update()
-			end
-		)
-	end
-end
-function OctoToDo_EventFrame_Collect:QUEST_FINISHED()
-	if not InCombatLockdown() then
-		C_Timer.After(1, function()
+
+function OctoToDo_EventFrame_Collect:QUEST_LOG_UPDATE()
+	if not InCombatLockdown() and not self.questUpdatePause then
+		self.questUpdatePause = true
+		C_Timer.After(3, function()
 				self:Collect_All_Quests()
 				self:Collect_ALL_UNIVERSALQuestUpdate()
 				self:Collect_All_BfA_Island()
 				self:Collect_All_BfA_QuestsBounties()
 				self:Collect_All_Chromie()
-				E:Update()
-			end
-		)
+				E:Update("QUEST_LOG_UPDATE")
+				self.questUpdatePause = false
+		end)
 	end
 end
-function OctoToDo_EventFrame_Collect:QUEST_LOG_UPDATE()
+
+function OctoToDo_EventFrame_Collect:BAG_UPDATE()
+	if not InCombatLockdown() and not self.bagUpdatePause then
+		self.bagUpdatePause = true
+		C_Timer.After(3, function()
+				self:Collect_ALL_ItemsInBag()
+				E:Update("BAG_UPDATE")
+				self.bagUpdatePause = false
+		end)
+	end
+end
+
+function OctoToDo_EventFrame_Collect:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
 	if not InCombatLockdown() then
-		C_Timer.After(1, function()
-				self:Collect_All_Quests()
-				self:Collect_ALL_UNIVERSALQuestUpdate()
-				self:Collect_All_BfA_Island()
-				self:Collect_All_BfA_QuestsBounties()
-				E:Update()
-			end
-		)
+		self:Collect_ALL_ItemsInBag()
+		E:Update("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
 	end
 end
-function OctoToDo_EventFrame_Collect:QUEST_REMOVED()
-	if not InCombatLockdown() then
-		C_Timer.After(1, function()
-				self:Collect_All_Quests()
-				self:Collect_ALL_UNIVERSALQuestUpdate()
-				self:Collect_All_BfA_Island()
-				self:Collect_All_BfA_QuestsBounties()
-				E:Update()
-			end
-		)
-	end
-end
-function OctoToDo_EventFrame_Collect:QUEST_TURNED_IN()
-	if not InCombatLockdown() then
-		C_Timer.After(1, function()
-				self:Collect_All_Quests()
-				self:Collect_ALL_UNIVERSALQuestUpdate()
-				self:Collect_All_BfA_Island()
-				self:Collect_All_BfA_QuestsBounties()
-				E:Update()
-			end
-		)
-	end
-end
-function OctoToDo_EventFrame_Collect:QUEST_LOOT_RECEIVED()
-	if not InCombatLockdown() then
-		C_Timer.After(1, function()
-				self:Collect_All_Quests()
-				self:Collect_ALL_UNIVERSALQuestUpdate()
-				self:Collect_All_BfA_Island()
-				self:Collect_All_BfA_QuestsBounties()
-				E:Update()
-			end
-		)
-	end
-end
+
 function OctoToDo_EventFrame_Collect:PLAYER_MONEY()
 	if not InCombatLockdown() then
 		self:Collect_ALL_MoneyUpdate()
-		E:Update()
+		E:Update("PLAYER_MONEY")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:ACCOUNT_MONEY()
 	if not InCombatLockdown() then
 		self:Collect_ALL_MoneyUpdate()
-		E:Update()
+		E:Update("ACCOUNT_MONEY")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
 	if not InCombatLockdown() then
 		self:Collect_All_Currency()
 		self:Collect_All_Currency_TEST2()
 		self:Collect_All_Covenant()
-		E:Update()
+		E:Update("CURRENCY_DISPLAY_UPDATE")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:CURRENCY_TRANSFER_LOG_UPDATE()
 	if not InCombatLockdown() then
 		self:Collect_All_Currency()
 		self:Collect_All_Currency_TEST2()
-		E:Update()
+		E:Update("CURRENCY_TRANSFER_LOG_UPDATE")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:PLAYER_EQUIPMENT_CHANGED()
 	if not InCombatLockdown() then
 		self:Collect_ALL_ItemLevel()
-		E:Update()
+		E:Update("PLAYER_EQUIPMENT_CHANGED")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:PLAYER_LEAVING_WORLD()
 	if not InCombatLockdown() then
 		self:UnregisterEvent("PLAYER_LEAVING_WORLD")
@@ -1435,90 +1357,69 @@ function OctoToDo_EventFrame_Collect:PLAYER_LEAVING_WORLD()
 		self:Collect_ALL_LoginTime()
 	end
 end
+
 function OctoToDo_EventFrame_Collect:AZERITE_ITEM_EXPERIENCE_CHANGED()
 	if not InCombatLockdown() then
 		self:Collect_All_BfA_Azerite()
 		self:Collect_All_BfA_Cloaklvl()
-		E:Update()
+		E:Update("AZERITE_ITEM_EXPERIENCE_CHANGED")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:COVENANT_CHOSEN()
 	if not InCombatLockdown() then
 		self:Collect_All_Covenant()
-		E:Update()
+		E:Update("COVENANT_CHOSEN")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
 	if not InCombatLockdown() then
 		self:Collect_All_Covenant()
-		E:Update()
+		E:Update("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:PLAYER_DEAD()
 	if not InCombatLockdown() then
 		self:Collect_All_PlayerDurability()
-		E:Update()
+		E:Update("PLAYER_DEAD")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:UPDATE_INVENTORY_DURABILITY()
 	if not InCombatLockdown() then
 		self:Collect_All_PlayerDurability()
-		E:Update()
+		E:Update("UPDATE_INVENTORY_DURABILITY")
 	end
 end
-function OctoToDo_EventFrame_Collect:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
-	if not InCombatLockdown() then
-		self:Collect_ALL_ItemsInBag()
-		E:Update()
-	end
-end
-function OctoToDo_EventFrame_Collect:BAG_UPDATE_DELAYED()
-	if not InCombatLockdown() then
-		self:Collect_ALL_ItemsInBag()
-		E:Update()
-	end
-end
-function OctoToDo_EventFrame_Collect:ZONE_CHANGED_NEW_AREA()
-	if not InCombatLockdown() then
-		self:Collect_ALL_ItemsInBag()
-		E:Update()
-	end
-end
-function OctoToDo_EventFrame_Collect:ITEM_COUNT_CHANGED()
-	if not InCombatLockdown() then
-		self:Collect_ALL_ItemsInBag()
-		E:Update()
-	end
-end
-function OctoToDo_EventFrame_Collect:MAIL_SEND_SUCCESS()
-	if not InCombatLockdown() then
-		self:Collect_ALL_ItemsInBag()
-		E:Update()
-	end
-end
+
 function OctoToDo_EventFrame_Collect:PLAYER_SPECIALIZATION_CHANGED()
 	if not InCombatLockdown() then
 		self:Collect_ALL_PlayerInfo()
-		E:Update()
+		E:Update("PLAYER_SPECIALIZATION_CHANGED")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:HEARTHSTONE_BOUND()
 	if not InCombatLockdown() then
 		self:Collect_ALL_Locations()
-		E:Update()
+		E:Update("HEARTHSTONE_BOUND")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:ZONE_CHANGED_NEW_AREA()
 	if not InCombatLockdown() then
 		self:Collect_ALL_Locations()
-		E:Update()
+		E:Update("ZONE_CHANGED_NEW_AREA")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:SPELLS_CHANGED()
 	if not InCombatLockdown() then
 		C_Timer.After(2, function()
 				self:Collect_ALL_WarMode()
-				E:Update()
+				E:Update("SPELLS_CHANGED")
 			end
 		)
 	end
@@ -1526,105 +1427,106 @@ end
 -- function OctoToDo_EventFrame_Collect:CALENDAR_UPDATE_EVENT_LIST()
 --     if not InCombatLockdown() then
 --         self:Collect_All_Holiday()
---         E:Update()
+--         E:Update("CALENDAR_UPDATE_EVENT_LIST")
 --     end
 -- end
+
 function OctoToDo_EventFrame_Collect:MAIL_INBOX_UPDATE()
 	if not InCombatLockdown() then
 		self:Collect_ALL_Mail()
-		E:Update()
+		E:Update("MAIL_INBOX_UPDATE")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:MAIL_SHOW()
 	if not InCombatLockdown() then
 		self:Collect_ALL_Mail()
-		E:Update()
+		E:Update("MAIL_SHOW")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:UPDATE_PENDING_MAIL()
 	if not InCombatLockdown() then
 		self:Collect_ALL_Mail()
-		E:Update()
+		E:Update("UPDATE_PENDING_MAIL")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 	if not InCombatLockdown() then
 		C_Timer.After(5, function()
 				if not InCombatLockdown() then
+					self:Collect_All_Quests()
+					self:Collect_ALL_UNIVERSALQuestUpdate()
+					self:Collect_All_BfA_Island()
+					self:Collect_All_BfA_QuestsBounties()
 					self:Collect_All_Reputations()
 					self:Collect_All_Reputations_TEST2()
 					self:Collect_All_Currency()
 					self:Collect_All_Currency_TEST2()
-					E:Update()
+					self:Collect_All_journalInstance()
+					E:Update("PLAYER_REGEN_ENABLED")
 				end
 			end
 		)
 	end
 end
+
 function OctoToDo_EventFrame_Collect:ENCOUNTER_END()
 	if not InCombatLockdown() then
 		C_Timer.After(1, function()
 				self:Collect_All_journalInstance()
-				E:Update()
+				E:Update("ENCOUNTER_END")
 			end
 		)
 	end
 end
+
 function OctoToDo_EventFrame_Collect:TIME_PLAYED_MSG(...)
 	if not InCombatLockdown() then
 		self:Collect_ALL_Played(...)
-		E:Update()
+		E:Update("TIME_PLAYED_MSG")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:LFG_UPDATE_RANDOM_INFO()
 	if not InCombatLockdown() then
 		self:Collect_All_journalInstance()
-		E:Update()
+		E:Update("LFG_UPDATE_RANDOM_INFO")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:LFG_COMPLETION_REWARD()
 	if not InCombatLockdown() then
 		self:Collect_All_journalInstance()
-		E:Update()
+		E:Update("LFG_COMPLETION_REWARD")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:ENCOUNTER_LOOT_RECEIVED()
 	if not InCombatLockdown() then
 		self:Collect_All_journalInstance()
-		E:Update()
+		E:Update("ENCOUNTER_LOOT_RECEIVED")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	if not InCombatLockdown() then
 		self:Collect_All_journalInstance()
-		E:Update()
+		E:Update("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	end
 end
+
+function OctoToDo_EventFrame_Collect:RECEIVED_ACHIEVEMENT_LIST()
+	if not InCombatLockdown() then
+		self:Collect_All_journalInstance()
+		E:Update("RECEIVED_ACHIEVEMENT_LIST")
+	end
+end
+
 function OctoToDo_EventFrame_Collect:QUEST_POI_UPDATE()
 	if not InCombatLockdown() then
 		self:Collect_All_Chromie()
-		E:Update()
+		E:Update("QUEST_POI_UPDATE")
 	end
 end
--- function OctoToDo_EventFrame_Collect:TALKINGHEAD_REQUESTED()
---     if not InCombatLockdown() then
---         self:Collect_All_Chromie()
---         E:Update()
---     end
--- end
--- function OctoToDo_EventFrame_Collect:UNIT_SPELLCAST_FAILED_QUIET()
---     if not InCombatLockdown() then
---         C_Timer.After(1, function()
---                 self:Collect_ALL_ItemsInBag()
---                 E:Update()
---         end)
---     end
--- end
--- function OctoToDo_EventFrame_Collect:ITEM_CHANGED()
---     if not InCombatLockdown() then
---         C_Timer.After(1, function()
---                 self:Collect_ALL_ItemsInBag()
---                 E:Update()
---         end)
---     end
--- end

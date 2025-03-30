@@ -192,6 +192,8 @@
         "FACTION_ALLIANCE",
         "FACTION_HORDE",
         "ACHIEVEMENT_BUTTON",
-        "CreateScrollBoxListGridView"
+        "CreateScrollBoxListGridView",
+        "CalendarEventPickerFrame",
+        "BRAWL_TOOLTIP_ENDS"
     ]
 }

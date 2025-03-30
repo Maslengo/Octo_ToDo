@@ -127,9 +127,7 @@ function E:func_checkCharInfo()
 	if OctoToDo_DB_Levels then
 		for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 			local localizedClass, englishClass, localizedRace, englishRace, _, name = GetPlayerInfoByGUID(GUID)
-			if CharInfo.journalInstance == nil then
-				CharInfo.journalInstance = {}
-			end
+			if CharInfo.journalInstance == nil then CharInfo.journalInstance = {} end
 			local ServerTime = GetServerTime()
 			for instanceID, tbl in next, (CharInfo.journalInstance) do
 				if instanceID then
@@ -144,6 +142,7 @@ function E:func_checkCharInfo()
 					end
 				end
 			end
+			if CharInfo.SavedWorldBoss == nil then CharInfo.SavedWorldBoss = {} end
 			CharInfo.MASLENGO = CharInfo.MASLENGO or {}
 			CharInfo.UniversalQuest = nil
 			CharInfo.MASLENGO.UniversalQuest = CharInfo.MASLENGO.UniversalQuest or {}
@@ -351,6 +350,7 @@ function E:func_checkCharInfo()
 				CharInfo.CurrentKeyName = 0
 				CharInfo.CurrentKeyLevel = 0
 				CharInfo.journalInstance = {}
+				CharInfo.SavedWorldBoss = {}
 				CharInfo.RIO_weeklyBest_TWW_S1 = 0
 				CharInfo.GreatVault = {}
 				for i = 1, #CharInfo.GreatVault do
@@ -679,13 +679,68 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
-function E:Update()
-	if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
-		C_Timer.After(0, function()
-			OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
-		end)
+
+
+-- function E:Update(event_name)
+-- 	if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
+-- 		C_Timer.After(.1, function()
+-- 			if E.DebugEvents then
+-- 				DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E:Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r" )
+-- 			end
+-- 			OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+-- 		end)
+-- 	else
+-- 		if E.DebugEvents then
+-- 			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradietn("E:Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r" )
+-- 		end
+-- 	end
+-- end
+
+
+
+function E:Update(event_name)
+	local isMainFrameVisible = OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown()
+
+	if isMainFrameVisible then
+		if not self.updateScheduled then
+			self.updateScheduled = true
+
+			C_Timer.After(0.1, function()
+					self.updateScheduled = false
+					if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
+						if E.DebugEvents then
+							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E:Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r")
+						end
+						OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+					end
+			end)
+		end
+	else
+		if E.DebugEvents then
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E:Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r")
+		end
 	end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 	local DD_OCTOMAIN = CreateFrame("Button", "DD_OCTOMAIN", OctoToDo_MainFrame_OCTOMAIN, "SecureActionButtonTemplate, BackDropTemplate")
 	DD_OCTOMAIN:SetSize(AddonLeftFrameWeight/2, AddonHeight)
@@ -1184,7 +1239,7 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Vars.Timewalk == nil then OctoToDo_DB_Vars.Timewalk = true end
 		if OctoToDo_DB_Vars.TWW_Delve_Weekly == nil then OctoToDo_DB_Vars.TWW_Delve_Weekly = true end
 		if OctoToDo_DB_Vars.TWW_DungeonQuest_Weekly == nil then OctoToDo_DB_Vars.TWW_DungeonQuest_Weekly = true end
-		if OctoToDo_DB_Vars.TWW_WorldBoss_Weekly == nil then OctoToDo_DB_Vars.TWW_WorldBoss_Weekly = true end
+		if OctoToDo_DB_Vars.WorldBoss_Weekly == nil then OctoToDo_DB_Vars.WorldBoss_Weekly = true end
 		if OctoToDo_DB_Vars.UIErrorsFramePosition == nil then OctoToDo_DB_Vars.UIErrorsFramePosition = true end
 		if OctoToDo_DB_Vars.WasOnline == nil then OctoToDo_DB_Vars.WasOnline = true end
 		if OctoToDo_DB_Vars.WeatheredHarbingerCrest == nil then OctoToDo_DB_Vars.WeatheredHarbingerCrest = true end
