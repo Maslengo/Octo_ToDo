@@ -74,16 +74,9 @@ E.func_LoadAddOn("SpeedyAutoLoot")
 -- E.func_LoadAddOn("QuestsChanged")
 -- E.func_LoadAddOn("AdvancedInterfaceOptions")
 ----------------------------------------------------------------
-function OctoToDo_EventFrame_OCTOMAIN:MustBeHiddenFrames()
-	for _, v in next, (E.OctoTable_MustBeHiddenFrames_table) do
-		if v.frame and v.frame:IsShown() then
-					-- self:SetBackdropColor(self.r, self.g, self.b, frame.a)
-					-- self:SetBackdropBorderColor(r, g, b, 1)
-					-- DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide: (", E.Green_Color, E.Yellow_Color)..v.name..E.Yellow_Color..")|r" )
-					v.frame:Hide()
-		end
-	end
-end
+
+
+
 
 
 
@@ -690,13 +683,13 @@ end
 -- function E:Update(event_name)
 -- 	if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
 -- 		C_Timer.After(.1, function()
--- 			if E.DebugEvents then
+-- 			if E.DebugEvent then
 -- 				DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E:Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r" )
 -- 			end
 -- 			OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 -- 		end)
 -- 	else
--- 		if E.DebugEvents then
+-- 		if E.DebugEvent then
 -- 			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradietn("E:Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r" )
 -- 		end
 -- 	end
@@ -714,7 +707,7 @@ function E:Update(event_name)
 			C_Timer.After(0.1, function()
 					self.updateScheduled = false
 					if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
-						if E.DebugEvents then
+						if E.DebugEvent then
 							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E:Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r")
 						end
 						OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
@@ -722,7 +715,7 @@ function E:Update(event_name)
 			end)
 		end
 	else
-		if E.DebugEvents then
+		if E.DebugEvent then
 			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E:Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r")
 		end
 	end
@@ -1108,27 +1101,23 @@ function OctoToDo_EventFrame_OCTOMAIN:func_CreateMineFrame()
 	end
 end
 ----------------------------------------------------------------
-----------------------------------------------------------------
-for _, event in ipairs(E.OctoTable_Events) do OctoToDo_EventFrame_OCTOMAIN:RegisterEvent(event) end
-OctoToDo_EventFrame_OCTOMAIN:SetScript("OnEvent",
-	function(self, event, ...)
-		if self[event] then
-			self[event](self, ...)
-		else
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
-		end
-end)
-----------------------------------------------------------------
+
+local MyEventsTable = {
+	"ADDON_LOADED",
+	"VARIABLES_LOADED",
+	"PLAYER_LOGIN",
+	"PLAYER_REGEN_DISABLED",
+	"READY_CHECK",
+	"SHOW_SUBSCRIPTION_INTERSTITIAL",
+}
+E.RegisterMyEventsToFrames(OctoToDo_EventFrame_OCTOMAIN, MyEventsTable, E.func_DebugPath())
 function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
-		if OctoToDo_TrashCan == nil then OctoToDo_TrashCan = {} end
 		if OctoToDo_DB_Config == nil then OctoToDo_DB_Config = {} end
 		if OctoToDo_DB_Levels == nil then OctoToDo_DB_Levels = {} end
 		if OctoToDo_DB_Other == nil then OctoToDo_DB_Other = {} end
-		if OctoToDo_TrashCan.Reputations == nil then OctoToDo_TrashCan.Reputations = {} end
-		if OctoToDo_TrashCan.OctoToDo_MplusButton == nil then OctoToDo_TrashCan.OctoToDo_MplusButton = {} end
 		if OctoToDo_DB_Config.CurrencyDB == nil then OctoToDo_DB_Config.CurrencyDB = {} end
 		if OctoToDo_DB_Config.QuestsDB == nil then OctoToDo_DB_Config.QuestsDB = {} end
 		if OctoToDo_DB_Config.ReputationDB == nil then OctoToDo_DB_Config.ReputationDB = {} end
@@ -1140,26 +1129,31 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Other.Holiday == nil then OctoToDo_DB_Other.Holiday = {} end
 		-- if OctoToDo_DB_Other.Holiday.Active == nil then OctoToDo_DB_Other.Holiday.Active = {} end
 		-- if OctoToDo_DB_Other.Holiday.Collect == nil then OctoToDo_DB_Other.Holiday.Collect = {} end
-		if OctoToDo_TrashCan.EncounterAndZoneLists == nil then OctoToDo_TrashCan.EncounterAndZoneLists = {} end
 		if OctoToDo_DB_Vars == nil then OctoToDo_DB_Vars = {} end
+		if OctoToDo_DB_Vars.DebugIDs == nil then OctoToDo_DB_Vars.DebugIDs = false end
+		E.DebugIDs = OctoToDo_DB_Vars.DebugIDs
+		if OctoToDo_DB_Vars.DebugInfo == nil then OctoToDo_DB_Vars.DebugInfo = false end
+		E.DebugInfo = OctoToDo_DB_Vars.DebugInfo
+		if OctoToDo_DB_Vars.DebugEvent == nil then OctoToDo_DB_Vars.DebugEvent = false end
+		E.DebugEvent = OctoToDo_DB_Vars.DebugEvent
+		if OctoToDo_DB_Vars.DebugFunction == nil then OctoToDo_DB_Vars.DebugFunction = false end
+		E.DebugFunction = OctoToDo_DB_Vars.DebugFunction
+		if OctoToDo_DB_Vars.DebugButton == nil then OctoToDo_DB_Vars.DebugButton = false end
+		E.DebugButton = OctoToDo_DB_Vars.DebugButton
+
+
+
+
+		if OctoToDo_DB_Vars.PortalsButtons == nil then OctoToDo_DB_Vars.PortalsButtons = true end
+		if OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent == nil then OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent = false end
+
+
 		if OctoToDo_DB_Vars.color == nil then OctoToDo_DB_Vars.color = {1, 1, 1} end
 		if OctoToDo_DB_Vars.AchievementShowCompleted == nil then OctoToDo_DB_Vars.AchievementShowCompleted = true end
 		if OctoToDo_DB_Vars.AchievementToShow == nil then OctoToDo_DB_Vars.AchievementToShow = {[92] = true} end
 		if OctoToDo_DB_Vars.curWidthCentral == nil then OctoToDo_DB_Vars.curWidthCentral = 90 end
 		if OctoToDo_DB_Vars.curWidthCentral ~= nil then E.curWidthCentral = OctoToDo_DB_Vars.curWidthCentral end
 		if OctoToDo_DB_Vars.Addon_Height == nil then OctoToDo_DB_Vars.Addon_Height = 30 end
-		if OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS == nil then OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS = true end
-		if OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS ~= nil then E.OctoToDo_debug_BUTTONS = OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS end
-		if OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS_SECOND == nil then OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS_SECOND = true end
-		if OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS_SECOND ~= nil then E.OctoToDo_debug_BUTTONS_SECOND = OctoToDo_DB_Vars.OctoToDo_debug_BUTTONS_SECOND end
-		if OctoToDo_DB_Vars.OctoToDo_debug_Event == nil then OctoToDo_DB_Vars.OctoToDo_debug_Event = true end
-		if OctoToDo_DB_Vars.OctoToDo_debug_Event ~= nil then E.OctoToDo_debug_Event = OctoToDo_DB_Vars.OctoToDo_debug_Event end
-		if OctoToDo_DB_Vars.OctoToDo_debug_Event_SECOND == nil then OctoToDo_DB_Vars.OctoToDo_debug_Event_SECOND = true end
-		if OctoToDo_DB_Vars.OctoToDo_debug_Event_SECOND ~= nil then E.OctoToDo_debug_Event_SECOND = OctoToDo_DB_Vars.OctoToDo_debug_Event_SECOND end
-		if OctoToDo_DB_Vars.OctoToDo_debug_Function == nil then OctoToDo_DB_Vars.OctoToDo_debug_Function = false end
-		if OctoToDo_DB_Vars.OctoToDo_debug_Function ~= nil then E.OctoToDo_debug_Function = OctoToDo_DB_Vars.OctoToDo_debug_Function end
-		if OctoToDo_DB_Vars.OctoToDo_debug_Function_SECOND == nil then OctoToDo_DB_Vars.OctoToDo_debug_Function_SECOND = false end
-		if OctoToDo_DB_Vars.OctoToDo_debug_Function_SECOND ~= nil then E.OctoToDo_debug_Function_SECOND = OctoToDo_DB_Vars.OctoToDo_debug_Function_SECOND end
 		if OctoToDo_DB_Vars.curHeight == nil then OctoToDo_DB_Vars.curHeight = 20 end
 		if OctoToDo_DB_Vars.curHeight ~= nil then E.curHeight = OctoToDo_DB_Vars.curHeight end
 		if OctoToDo_DB_Vars.curWidthTitle == nil then OctoToDo_DB_Vars.curWidthTitle = 200 end
@@ -1225,8 +1219,6 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Vars.MajorKeyflames == nil then OctoToDo_DB_Vars.MajorKeyflames = true end
 		if OctoToDo_DB_Vars.MinorKeyflames == nil then OctoToDo_DB_Vars.MinorKeyflames = true end
 		if OctoToDo_DB_Vars.MP_MythicKeystone == nil then OctoToDo_DB_Vars.MP_MythicKeystone = true end
-		if OctoToDo_DB_Vars.PortalsButtons == nil then OctoToDo_DB_Vars.PortalsButtons = true end
-		if OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent == nil then OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent = false end
 		if OctoToDo_DB_Vars.prefix == nil then OctoToDo_DB_Vars.prefix = 1 end
 		if OctoToDo_DB_Vars.Quests == nil then OctoToDo_DB_Vars.Quests = true end
 		if OctoToDo_DB_Vars.QuestsShowAllways == nil then OctoToDo_DB_Vars.QuestsShowAllways = false end
@@ -1285,7 +1277,6 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	C_WowTokenPublic.UpdateMarketPrice()
 	self:func_CreateMineFrame()
 	GameMenuFrame:SetScale(OctoToDo_DB_Vars.GameMenuFrameScale or 1)
-	self:MustBeHiddenFrames()
 
 	if not PlayerSpellsFrame then
 		E.func_LoadAddOn("Blizzard_PlayerSpells")

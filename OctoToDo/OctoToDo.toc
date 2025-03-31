@@ -1,7 +1,7 @@
 ## Interface: 110105, 110100
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Author: Octo
-## Version: v86.0(11.1.0)(31.03.2025)
+## Version: v86.1(11.1.0)(31.03.2025)
 ## IconTexture: Interface\AddOns\OctoToDo\Media\AddonTexture_1
 ## SavedVariables: OctoToDo_DB_Config OctoToDo_DB_Levels OctoToDo_DB_Vars OctoToDo_DB_Other OCTO_DB_currencies_test OCTO_DB_reputations_test
 
@@ -16,13 +16,11 @@ Tables\OctoToDo_Functions.lua
 Tables\OctoTable_CLASSES.lua
 Tables\OctoTable_Colors.lua
 Tables\OctoTable_Currencies.lua
-Tables\OctoTable_Events.lua
 Tables\OctoTable_Expansions_Table.lua
 Tables\OctoTable_Instances.lua
 Tables\OctoTable_Items.lua
 Tables\OctoTable_Race.lua
 Tables\OctoTable_Movies.lua
-Tables\OctoTable_Other.lua
 Tables\OctoTable_QuestID.lua
 Tables\OctoTable_reputation_ALL.lua
 Tables\OctoTable_UniversalQuest.lua
@@ -46,15 +44,9 @@ Moduls\Auto_Repair.lua
 Moduls\Auto_Screenshot.lua
 Moduls\Auto_Sell_Grey.lua
 Moduls\Auto_Turn_Quests.lua
-Moduls\Hide_Boss_Banner.lua
-Moduls\Hide_Covenant.lua
-Moduls\Hide_Error_Messages.lua
-Moduls\Hide_ObjectivesInInstance.lua
 Moduls\Hide_OrderHallCommandBar.lua
-Moduls\Hide_RaidWarningFrame.lua
-Moduls\Hide_Talking_Head_Frame.lua
-Moduls\Hide_Zone_Text.lua
 Moduls\Module_FieldOfView.lua
+Moduls\Module_HideFrames.lua
 Moduls\Module_ItemsDelete.lua
 Moduls\Module_ItemsUsable.lua
 Moduls\Module_PortalsFrame.lua

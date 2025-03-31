@@ -67,7 +67,7 @@ E.OctoTable_Colors = {
 		hex = "33937F"
 	},
 	{
-		name = "Classic_Color",
+		name = "WorldofWarcraft_Color",
 		hex = "68CCEF"
 	},
 	{

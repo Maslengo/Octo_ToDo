@@ -41,9 +41,10 @@ local curServer = GetRealmName()
 ----------------------------------------------------------------
 
 function OctoToDo_EventFrame_Collect:Collect_ALL_PlayerInfo()
-	OctoToDo_TrashCan = OctoToDo_TrashCan or {}
-	OctoToDo_TrashCan.profileKeys = OctoToDo_TrashCan.profileKeys or {}
-	OctoToDo_TrashCan.profileKeys[curCharName.." - ".. curServer] = OctoToDo_TrashCan.profileKeys[curCharName.." - ".. curServer] or "OctoUI"
+	if OctoToDo_TrashCan then
+		OctoToDo_TrashCan.profileKeys = OctoToDo_TrashCan.profileKeys or {}
+		OctoToDo_TrashCan.profileKeys[curCharName.." - ".. curServer] = OctoToDo_TrashCan.profileKeys[curCharName.." - ".. curServer] or "OctoUI"
+	end
 	if E.isElvUI and ElvDB and ElvPrivateDB then
 		if ElvDB.profileKeys[curCharName.." - ".. curServer] ~= "OctoUI" then
 			ElvDB.profileKeys[curCharName.." - ".. curServer] = "OctoUI"
@@ -66,8 +67,6 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_PlayerInfo()
 			DEFAULT_CHAT_FRAME:AddMessage("OmniCDDB: "..E.Green_Color.."done|r")
 		end
 	end
-	-- E.func_TableMerge(ElvDB.profileKeys, OctoToDo_TrashCan.profileKeys)
-	-- fpde(ElvPrivateDB.profileKeys)
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
 		local curServerShort = E.func_CurServerShort(curServer)
@@ -386,7 +385,6 @@ end
 
 function OctoToDo_EventFrame_Collect:Collect_All_Reputations_TEST2()
 	OCTO_DB_reputations_test = OCTO_DB_reputations_test or {}
-	OctoToDo_TrashCan.Reputations = OctoToDo_TrashCan.Reputations or {}
 	local collapsed = {}
 	local index = 1
 	while index <= C_Reputation.GetNumFactions() do
@@ -407,8 +405,10 @@ function OctoToDo_EventFrame_Collect:Collect_All_Reputations_TEST2()
 			if factionData.isHeader and currentStanding == 0 then
 				OCTO_DB_reputations_test[reputationID] = OCTO_DB_reputations_test[reputationID] or {}
 				tblHeader = OCTO_DB_reputations_test[reputationID]
-				OctoToDo_TrashCan.Reputations[reputationID] = OctoToDo_TrashCan.Reputations[reputationID] or {}
-				tblHeader2 = OctoToDo_TrashCan.Reputations[reputationID]
+				if OctoToDo_TrashCan then
+					OctoToDo_TrashCan.Reputations[reputationID] = OctoToDo_TrashCan.Reputations[reputationID] or {}
+					tblHeader2 = OctoToDo_TrashCan.Reputations[reputationID]
+				end
 			else
 				tblHeader[reputationID] = tblHeader[reputationID] or false
 				tblHeader2[reputationID] = tblHeader2[reputationID] or false
@@ -630,36 +630,38 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_ItemsInBag()
 end
 
 function OctoToDo_EventFrame_Collect:Collect_ALL_EncounterAndZoneLists()
-	local clear = false
-	if clear == true then
-		OctoToDo_TrashCan.EncounterAndZoneLists = {}
-	else
-		OctoToDo_TrashCan.EncounterAndZoneLists = OctoToDo_TrashCan.EncounterAndZoneLists or {}
-		for tier = 1, EJ_GetNumTiers() do
-			EJ_SelectTier(tier)
-			local tierName = EJ_GetTierInfo(tier)
-			OctoToDo_TrashCan.EncounterAndZoneLists[tierName] = OctoToDo_TrashCan.EncounterAndZoneLists[tierName] or {}
-			for _, inRaid in next, ({false, true}) do
-				local instance_index = 1
-				local instance_id = EJ_GetInstanceByIndex(instance_index, inRaid)
-				local title = ("%s"):format(inRaid and RAIDS or DUNGEONS)
-				OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title] = OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title] or {}
-				while instance_id do
-					EJ_SelectInstance(instance_id)
-					local instance_name, _, _, _, _, icon, dungeonAreaMapID = EJ_GetInstanceInfo(instance_id)
-					OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name] = OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name] or {}
-					if dungeonAreaMapID and dungeonAreaMapID ~= 0 then
-						local mapGroupId = C_Map.GetMapGroupID(dungeonAreaMapID)
-						if mapGroupId then
-							OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].ZoneID = tostringall("g"..mapGroupId)
-						else
-							OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].ZoneID = dungeonAreaMapID
+	if OctoToDo_TrashCan then
+		local clear = false
+		if clear == true then
+			OctoToDo_TrashCan.EncounterAndZoneLists = {}
+		else
+			OctoToDo_TrashCan.EncounterAndZoneLists = OctoToDo_TrashCan.EncounterAndZoneLists or {}
+			for tier = 1, EJ_GetNumTiers() do
+				EJ_SelectTier(tier)
+				local tierName = EJ_GetTierInfo(tier)
+				OctoToDo_TrashCan.EncounterAndZoneLists[tierName] = OctoToDo_TrashCan.EncounterAndZoneLists[tierName] or {}
+				for _, inRaid in next, ({false, true}) do
+					local instance_index = 1
+					local instance_id = EJ_GetInstanceByIndex(instance_index, inRaid)
+					local title = ("%s"):format(inRaid and RAIDS or DUNGEONS)
+					OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title] = OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title] or {}
+					while instance_id do
+						EJ_SelectInstance(instance_id)
+						local instance_name, _, _, _, _, icon, dungeonAreaMapID = EJ_GetInstanceInfo(instance_id)
+						OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name] = OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name] or {}
+						if dungeonAreaMapID and dungeonAreaMapID ~= 0 then
+							local mapGroupId = C_Map.GetMapGroupID(dungeonAreaMapID)
+							if mapGroupId then
+								OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].ZoneID = tostringall("g"..mapGroupId)
+							else
+								OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].ZoneID = dungeonAreaMapID
+							end
+							OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].instance_id = instance_id
+							OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].icon = icon
 						end
-						OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].instance_id = instance_id
-						OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].icon = icon
+						instance_index = instance_index + 1
+						instance_id = EJ_GetInstanceByIndex(instance_index, inRaid)
 					end
-					instance_index = instance_index + 1
-					instance_id = EJ_GetInstanceByIndex(instance_index, inRaid)
 				end
 			end
 		end
@@ -669,15 +671,14 @@ end
 function OctoToDo_EventFrame_Collect:Collect_ALL_Locations()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
-		local mapID = C_Map.GetBestMapForUnit("player")
-		if mapID then
-			local BindLocation = GetBindLocation()
-			local info = C_Map.GetMapInfo(mapID)
-			if info then
-				collect.BindLocation = BindLocation
-				collect.CurrentLocation = info.name or "no CurrentLocation"
-			end
+		local curSubZone = GetSubZoneText()
+		local curRealZone = GetRealZoneText()
+		local curBindLocation = GetBindLocation()
+		if curSubZone ~= 0 and curSubZone ~= "" and curRealZone ~= curSubZone then
+			curRealZone = curRealZone .. " (".. curSubZone .. ")"
 		end
+		collect.CurrentLocation = curRealZone
+		collect.BindLocation = BindLocation
 	end
 end
 
@@ -727,7 +728,6 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_UNIVERSALQuestUpdate()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
 		collect.MASLENGO.UniversalQuest = collect.MASLENGO.UniversalQuest or {}
-		OctoToDo_TrashCan.UniversalQuest = {}
 		for i, v in next, (E.OctoTable_UniversalQuest) do
 			for _, w in next, (v) do
 				local count = 0
@@ -745,8 +745,10 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_UNIVERSALQuestUpdate()
 						end
 					end
 				end
-				OctoToDo_TrashCan.UniversalQuest[v.desc] = OctoToDo_TrashCan.UniversalQuest[v.desc] or {}
-				OctoToDo_TrashCan.UniversalQuest[v.desc][i] = OctoToDo_TrashCan.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest.".."Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset)
+				if OctoToDo_TrashCan then
+					OctoToDo_TrashCan.UniversalQuest[v.desc] = OctoToDo_TrashCan.UniversalQuest[v.desc] or {}
+					OctoToDo_TrashCan.UniversalQuest[v.desc][i] = OctoToDo_TrashCan.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest.".."Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset)
+				end
 				if v.max == 1 then
 					collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod
 				elseif v.max > 1 then
@@ -883,11 +885,8 @@ function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 end
 
 function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
-	OctoToDo_TrashCan = OctoToDo_TrashCan or {}
-	OctoToDo_TrashCan.Holiday = OctoToDo_TrashCan.Holiday or {}
 	local collect = OctoToDo_DB_Other.Holiday
 	wipe(OctoToDo_DB_Other.Holiday)
-	wipe(OctoToDo_TrashCan.Holiday)
 	if collect and not InCombatLockdown() then
 		-- if not E.IsAddOnLoaded("Blizzard_Calendar") then
 		--     E.LoadAddOn("Blizzard_Calendar")
@@ -943,7 +942,9 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 				local id = event.eventID
 				collect[id] = collect[id] or {}
 				collect[id].title = event.title -- E.func_EventName(id)
-				OctoToDo_TrashCan.Holiday[id] = event.title
+				if OctoToDo_TrashCan then
+					OctoToDo_TrashCan.Holiday[id] = event.title
+				end
 
 				local startTime = event.startTime
 				local endTime = event.endTime
@@ -1161,7 +1162,8 @@ function OctoToDo_EventFrame_Collect:Collect_All_Chromie()
 	end
 end
 ----------------------------------------------------------------
-local Table_Events = {
+local MyEventsTable = {
+	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 	"SKILL_LINES_CHANGED",
 	"PLAYER_XP_UPDATE",
@@ -1181,6 +1183,7 @@ local Table_Events = {
 	"BAG_UPDATE",
 	"PLAYER_SPECIALIZATION_CHANGED",
 	"HEARTHSTONE_BOUND",
+	"ZONE_CHANGED",
 	"ZONE_CHANGED_NEW_AREA",
 	"SPELLS_CHANGED",
 	-- "CALENDAR_UPDATE_EVENT_LIST",
@@ -1198,19 +1201,8 @@ local Table_Events = {
 	"PLAYER_LEVEL_UP",
 	"QUEST_POI_UPDATE",
 }
-for _, event in ipairs(Table_Events) do
-	OctoToDo_EventFrame_Collect:RegisterEvent(event)
-end
-OctoToDo_EventFrame_Collect:SetScript("OnEvent",
-	function(self, event, ...)
-		if self[event] then
-			self[event](self, ...)
-		else
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
-		end
-end)
 ----------------------------------------------------------------
-
+E.RegisterMyEventsToFrames(OctoToDo_EventFrame_Collect, MyEventsTable, E.func_DebugPath())
 function OctoToDo_EventFrame_Collect:ADDON_LOADED()
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
@@ -1407,6 +1399,12 @@ function OctoToDo_EventFrame_Collect:HEARTHSTONE_BOUND()
 	if not InCombatLockdown() then
 		self:Collect_ALL_Locations()
 		E:Update("HEARTHSTONE_BOUND")
+	end
+end
+function OctoToDo_EventFrame_Collect:ZONE_CHANGED()
+	if not InCombatLockdown() then
+		self:Collect_ALL_Locations()
+		E:Update("ZONE_CHANGED")
 	end
 end
 

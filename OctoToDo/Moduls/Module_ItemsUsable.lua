@@ -1,18 +1,15 @@
 local GlobalAddonName, E = ...
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
-----------------------------------------------------------------------------------------------------------------------------------
-local OctoToDo_EventFrame = CreateFrame("Frame")
-OctoToDo_EventFrame:Hide()
-OctoToDo_EventFrame:RegisterEvent("ADDON_LOADED")
-OctoToDo_EventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
-OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+------------------------------------------------------
+local OctoToDo_EventFrame_ItemsUsable = CreateFrame("Frame")
+OctoToDo_EventFrame_ItemsUsable:Hide()
+----------------------------------------------------------------------------
 local inspectScantipUsable = CreateFrame("GameTooltip", "OctoToDoScanningTooltipUsable", nil, "GameTooltipTemplate")
 inspectScantipUsable:SetOwner(UIParent, "ANCHOR_NONE")
 
 
-function OctoToDo_EventFrame:TEST_FUNC(itemLink)
+function OctoToDo_EventFrame_ItemsUsable:TEST_FUNC(itemLink)
 	if itemLink then
 		local count = 0
 		inspectScantipUsable:ClearLines()
@@ -41,7 +38,7 @@ function OctoToDo_EventFrame:TEST_FUNC(itemLink)
 	end
 end
 
-function OctoToDo_EventFrame:ItemsUsableFrame()
+function OctoToDo_EventFrame_ItemsUsable:ItemsUsableFrame()
 	if not InCombatLockdown() then
 		Clickable_ItemsUsable:Hide()
 		Clickable_ItemsUsable.icon:SetTexture(413587)
@@ -74,19 +71,19 @@ function OctoToDo_EventFrame:ItemsUsableFrame()
 	end
 end
 
-OctoToDo_EventFrame:SetScript("OnEvent",
-	function(self, event, ...)
-		if self[event] then
-			self[event](self, ...)
-		else
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
-		end
-end)
-
-function OctoToDo_EventFrame:ADDON_LOADED(addonName)
+----------------------------------------------------------------
+local MyEventsTable = {
+	"ADDON_LOADED",
+	"BAG_UPDATE_DELAYED",
+	"PLAYER_REGEN_DISABLED",
+	"PLAYER_REGEN_ENABLED",
+}
+E.RegisterMyEventsToFrames(OctoToDo_EventFrame_ItemsUsable, MyEventsTable, E.func_DebugPath())
+function OctoToDo_EventFrame_ItemsUsable:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		----------------------------------------------------------------
 		local Clickable_ItemsUsable = CreateFrame("Button", "Clickable_ItemsUsable", UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 		Clickable_ItemsUsable:Hide()
 		Clickable_ItemsUsable:SetSize(64*E.scale, 64*E.scale)
@@ -133,19 +130,19 @@ function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 	end
 end
 
-function OctoToDo_EventFrame:BAG_UPDATE_DELAYED()
+function OctoToDo_EventFrame_ItemsUsable:BAG_UPDATE_DELAYED()
 	if not InCombatLockdown() then
 		self:ItemsUsableFrame()
 	end
 end
 
-function OctoToDo_EventFrame:PLAYER_REGEN_DISABLED()
+function OctoToDo_EventFrame_ItemsUsable:PLAYER_REGEN_DISABLED()
 	if Clickable_ItemsUsable and Clickable_ItemsUsable:IsShown() then
 		Clickable_ItemsUsable:Hide()
 	end
 end
 
-function OctoToDo_EventFrame:PLAYER_REGEN_ENABLED()
+function OctoToDo_EventFrame_ItemsUsable:PLAYER_REGEN_ENABLED()
 	----------------------------------------------------------------
 	self:ItemsUsableFrame()
 	----------------------------------------------------------------

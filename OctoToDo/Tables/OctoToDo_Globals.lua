@@ -1,8 +1,6 @@
 local GlobalAddonName, E = ...
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
-E.DebugIDs = false
-E.DebugEvents = false
 E.OctoTable_Empty = {}
 E.Modules = {}
 E.Timers = {}
@@ -15,7 +13,6 @@ E.HALF_WIDTH = 1.88 -- 1.5
 E.FULL_WIDTH = 3.60
 E.edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
 E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga"
-
 
 
 
@@ -241,17 +238,21 @@ E.Class_Druid_Color = "|cffFF7C0A"
 E.Class_DemonHunter_Color = "|cffA330C9"
 E.Class_DeathKnight_Color = "|cffC41E3A"
 E.Class_Evoker_Color = "|cff33937F"
-E.Classic_Color = "|cff68CCEF"
-E.TheBurningCrusade_Color = "|cff4FFF79"
-E.WrathoftheLichKing_Color = "|cff00A3FF"
-E.Cataclysm_Color = "|cffFFB300"
-E.MistsofPandaria_Color = "|cff00FFBA"
-E.WarlordsofDraenor_Color = "|cffC86400"
-E.Legion_Color = "|cff1EFF00"
-E.BattleforAzeroth_Color = "|cff6464FF"
-E.Shadowlands_Color = "|cffC9C3AA"
-E.Dragonflight_Color = "|cffE8E379"
-E.TheWarWithin_Color = "|cffB59377"
+
+E.WorldofWarcraft_Color = "|cff68CCEF" -- cffD6AB7D
+E.TheBurningCrusade_Color = "|cff4FFF79" -- cffE43E5A
+E.WrathoftheLichKing_Color = "|cff00A3FF" -- cff3FC7EB
+E.Cataclysm_Color = "|cffFFB300" -- cffFF7C0A
+E.MistsofPandaria_Color = "|cff00FFBA" -- cff00EF88
+E.WarlordsofDraenor_Color = "|cffC86400" -- cffF48CBA
+E.Legion_Color = "|cff1EFF00" -- cffAAD372
+E.BattleforAzeroth_Color = "|cff6464FF" -- cffFFF468
+E.Shadowlands_Color = "|cffC9C3AA" -- cff9798FE
+E.Dragonflight_Color = "|cffE8E379" -- cff53B39F
+E.TheWarWithin_Color = "|cffB59377" -- cff90CCDD
+E.Midnight_Color = "|cff7B69FF" -- СИНИЙ
+E.TheLastTitan_Color = "|cffF4C263" -- ЖЕЛТЫЙ
+
 E.WOW_Poor_Color = "|cff9D9D9D"
 E.WOW_Common_Color = "|cffFFFFFF"
 E.WOW_Uncommon_Color = "|cff1EFF00"
@@ -393,3 +394,5 @@ E.menuBackdrop = {
 
 E.OctoTable_Frames = {}
 E.listMaxSize = 30
+E.DEVTEXT = "|T".. E.AddonTexture_1 ..":14:14:::64:64:4:60:4:60|t" .. E.Green_Color.. "DebugInfo|r: "
+E.KILLTEXT = "|T".. "Interface\\Addons\\"..GlobalAddonName.."\\Media\\ElvUI\\Facepalm.tga" ..":14:14:::64:64:4:60:4:60|t"

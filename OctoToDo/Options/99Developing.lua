@@ -195,20 +195,6 @@ function E.Developing()
 				order = 30,
 			},
 			-------------------------------------------------
-			OctoToDo_debug_Function_FIRST = {
-				type = "toggle",
-				name = "OctoToDo_debug_Function_FIRST",
-				desc = "",
-				get = function()
-					return OctoToDo_DB_Vars.OctoToDo_debug_Function_FIRST
-				end,
-				set = function(_, value)
-					OctoToDo_DB_Vars.OctoToDo_debug_Function_FIRST = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = 32,
-			},
-			-------------------------------------------------
 			Hide_ObjectivesInInstance = {
 				type = "toggle",
 				name = "Hide_ObjectivesInInstance",
@@ -237,10 +223,101 @@ function E.Developing()
 				order = 34,
 			},
 			-------------------------------------------------
+			ReloadHeaderDebugs = {
+				type = "header",
+				name = "Debug",
+				order = 35,
+			},
+			-------------------------------------------------
+			DebugIDs = {
+				type = "toggle",
+				name = "DebugIDs",
+				desc = "",
+				get = function()
+					return OctoToDo_DB_Vars.DebugIDs
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.DebugIDs = value
+					E.DebugIDs = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 36,
+			},
+			-------------------------------------------------
+			DebugInfo = {
+				type = "toggle",
+				name = "DebugInfo",
+				desc = "",
+				get = function()
+					return OctoToDo_DB_Vars.DebugInfo
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.DebugInfo = value
+					E.DebugInfo = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 37,
+			},
+			-------------------------------------------------
+			DebugEvent = {
+				type = "toggle",
+				name = "DebugEvent",
+				desc = "",
+				get = function()
+					return OctoToDo_DB_Vars.DebugEvent
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.DebugEvent = value
+					E.DebugEvent = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 38,
+			},
+			-------------------------------------------------
+			DebugFunction = {
+				type = "toggle",
+				name = "DebugFunction",
+				desc = "",
+				get = function()
+					return OctoToDo_DB_Vars.DebugFunction
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.DebugFunction = value
+					E.DebugFunction = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 39,
+			},
+			-------------------------------------------------
+			DebugButton = {
+				type = "toggle",
+				name = "DebugButton",
+				desc = "",
+				get = function()
+					return OctoToDo_DB_Vars.DebugButton
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.DebugButton = value
+					E.DebugButton = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = 40,
+			},
+
+
+
+
+
+
+
+
+
+
+			-------------------------------------------------
 			ReloadHeader3second2 = {
 				type = "header",
 				name = "FOV",
-				order = 35,
+				order = 41,
 			},
 			-------------------------------------------------
 			FieldOfView = {
@@ -254,7 +331,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.FieldOfView = value
 				end,
 				width = E.FULL_WIDTH,
-				order = 36,
+				order = 42,
 			},
 			-------------------------------------------------
 			FoV_top = {
@@ -271,7 +348,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.FoV_top = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 37,
+				order = 43,
 			},
 			-------------------------------------------------
 			FoV_bottom = {
@@ -288,7 +365,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.FoV_bottom = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 38,
+				order = 44,
 			},
 			-------------------------------------------------
 			FoV_left = {
@@ -305,7 +382,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.FoV_left = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 39,
+				order = 45,
 			},
 			-------------------------------------------------
 			FoV_right = {
@@ -322,13 +399,13 @@ function E.Developing()
 					OctoToDo_DB_Vars.FoV_right = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 40,
+				order = 46,
 			},
 			-------------------------------------------------
 			ReloadHeader3second22 = {
 				type = "header",
 				name = "",
-				order = 41,
+				order = 47,
 			},
 			-------------------------------------------------
 			-- color = {

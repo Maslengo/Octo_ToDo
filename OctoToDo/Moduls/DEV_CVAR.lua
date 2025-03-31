@@ -222,7 +222,6 @@ function E.LoadCVars()
 	-- SetCVar("Sound_EnableAmbience", 1)
 	-- SetCVar("Sound_EnableDialog", 1)
 	-- SetCVar("Sound_EnableSFX", 1)
-	-- SetCVar("chatStyle", classic)
 	-- SetCVar("whisperMode", popout_and_inline)
 	-- C_NamePlate.SetNamePlateFriendlySize(0.1, 0.1) --короткий ХП бар 50 100
 end

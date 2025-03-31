@@ -13,8 +13,6 @@ end)
 ----------------------------------------------------------------
 local OctoToDo_EventFrame_Achievements = CreateFrame("FRAME")
 OctoToDo_EventFrame_Achievements:Hide()
-OctoToDo_EventFrame_Achievements:RegisterEvent("ADDON_LOADED")
-OctoToDo_EventFrame_Achievements:RegisterEvent("PLAYER_REGEN_DISABLED")
 ----------------------------------------------------------------
 local AddonHeight = 18 -- Высота
 local AddonRightFrameWeight = 240/2 -- Ширина
@@ -257,14 +255,11 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 	dd_SECOND:ddSetMenuButtonHeight(16)
 end
 ----------------------------------------------------------------
-OctoToDo_EventFrame_Achievements:SetScript("OnEvent",
-	function(self, event, ...)
-		if self[event] then
-			self[event](self, ...)
-		else
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
-		end
-end)
+local MyEventsTable = {
+	"ADDON_LOADED",
+	"PLAYER_REGEN_DISABLED",
+}
+E.RegisterMyEventsToFrames(OctoToDo_EventFrame_Achievements, MyEventsTable, E.func_DebugPath())
 function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")

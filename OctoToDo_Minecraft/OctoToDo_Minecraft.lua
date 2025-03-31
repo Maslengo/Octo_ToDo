@@ -13,8 +13,6 @@ end)
 ----------------------------------------------------------------
 local OctoToDo_EventFrame_Minecraft = CreateFrame("FRAME")
 OctoToDo_EventFrame_Minecraft:Hide()
-OctoToDo_EventFrame_Minecraft:RegisterEvent("ADDON_LOADED")
-OctoToDo_EventFrame_Minecraft:RegisterEvent("PLAYER_REGEN_DISABLED")
 ----------------------------------------------------------------
 local AddonHeight = 68 -- Высота 27    --
 local AddonRightFrameWeight = 1256 -- Ширина 54    --
@@ -142,8 +140,18 @@ OctoToDo_EventFrame_Minecraft:SetScript("OnEvent",
 			self[event](self, ...)
 		else
 			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
+			self:UnregisterEvent(event)
+			self.event = nil
 		end
 end)
+
+
+
+local MyEventsTable = {
+	"ADDON_LOADED",
+	"PLAYER_REGEN_DISABLED",
+}
+E.RegisterMyEventsToFrames(OctoToDo_EventFrame_Minecraft, MyEventsTable, E.func_DebugPath())
 function OctoToDo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")

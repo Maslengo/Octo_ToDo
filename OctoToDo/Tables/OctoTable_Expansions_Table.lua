@@ -1,123 +1,123 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
--- E.OctoTable_Expansions_Table = {
---     {color = "|cff68ccef", config = 1, name = "Classic", icon = 254094,}, -- 1
---     {color = "|cff4fff79", config = 2, name = "The Burning Crusade", icon = 236415,}, -- 2
---     {color = "|cff00a3ff", config = 3, name = "Wrath of the Lich King", icon = 341221,}, -- 3
---     {color = "|cffffb300", config = 4, name = "Cataclysm", icon = 574788,}, -- 4
---     {color = "|cff00ffba", config = 5, name = "Mists of Pandaria", icon = 896622,}, -- 5
---     {color = "|cffc86400", config = 6, name = "Warlords of Draenor", icon = 1113431,}, -- 6
---     {color = "|cff1eff00", config = 7, name = "Legion", icon = 1711335,}, -- 7
---     {color = "|cff6464ff", config = 8, name = "Battle for Azeroth", icon = 3194610,}, -- 8
---     {color = "|cffc9c3aa", config = 9, name = "Shadowlands", icon = 4254080,}, -- 9
---     {color = "|cffe8e379", config = 10, name = "Dragonflight", icon = 5342925,}, -- 10
---     {color = "|cffB59377", config = 11, name = "The War Within", icon = 5779391,}, -- 11
---     {color = "|cffff0047", config = 12, name = "TEST", icon = 123123,}, -- 12
---     {color = "|cff000000", config = 13, name = "BLACK", icon = 123123,}, -- 13
---     -- "Midnight",
---     -- "The Last Titan",
--- }
 E.OctoTable_Expansions_Table = {
 	{
-		color = "|cffD6AB7D",
+		color = E.func_rgb2hex(EXPANSION_COLOR_1.r, EXPANSION_COLOR_1.g, EXPANSION_COLOR_1.b) or E.WorldofWarcraft_Color,
 		config = 1,
-		name = "Classic",
-		nameShort = "Classic",
+		name = EXPANSION_NAME0, --"World of Warcraft",
+		nameShort = "WorldofWarcraft",
 		icon = 254094,
 	},
 	{
-		color = "|cffE43E5A",
+		color = E.func_rgb2hex(EXPANSION_COLOR_2.r, EXPANSION_COLOR_2.g, EXPANSION_COLOR_2.b) or E.TheBurningCrusade_Color,
 		config = 2,
-		name = "The Burning Crusade",
+		name = EXPANSION_NAME1, -- "The Burning Crusade",
 		nameShort = "TheBurningCrusade",
 		icon = 236415,
 	},
 	{
-		color = "|cff3FC7EB",
+		color = E.func_rgb2hex(EXPANSION_COLOR_3.r, EXPANSION_COLOR_3.g, EXPANSION_COLOR_3.b) or E.WrathoftheLichKing_Color,
 		config = 3,
-		name = "Wrath of the Lich King",
+		name = EXPANSION_NAME2, -- "Wrath of the Lich King",
 		nameShort = "WrathoftheLichKing",
 		icon = 341221,
 	},
 	{
-		color = "|cffFF7C0A",
+		color = E.func_rgb2hex(EXPANSION_COLOR_4.r, EXPANSION_COLOR_4.g, EXPANSION_COLOR_4.b) or E.Cataclysm_Color,
 		config = 4,
-		name = "Cataclysm",
+		name = EXPANSION_NAME3, -- "Cataclysm",
 		nameShort = "Cataclysm",
 		icon = 574788,
 	},
 	{
-		color = "|cff00EF88",
+		color = E.func_rgb2hex(EXPANSION_COLOR_5.r, EXPANSION_COLOR_5.g, EXPANSION_COLOR_5.b) or E.MistsofPandaria_Color,
 		config = 5,
-		name = "Mists of Pandaria",
+		name = EXPANSION_NAME4, -- "Mists of Pandaria",
 		nameShort = "MistsofPandaria",
 		icon = 896622,
 	},
 	{
-		color = "|cffF48CBA",
+		color = E.func_rgb2hex(EXPANSION_COLOR_6.r, EXPANSION_COLOR_6.g, EXPANSION_COLOR_6.b) or E.WarlordsofDraenor_Color,
 		config = 6,
-		name = "Warlords of Draenor",
+		name = EXPANSION_NAME5, -- "Warlords of Draenor",
 		nameShort = "WarlordsofDraenor",
 		icon = 1113431,
 	},
 	{
-		color = "|cffAAD372",
+		color = E.func_rgb2hex(EXPANSION_COLOR_7.r, EXPANSION_COLOR_7.g, EXPANSION_COLOR_7.b) or E.Legion_Color,
 		config = 7,
-		name = "Legion",
+		name = EXPANSION_NAME6, -- "Legion",
 		nameShort = "Legion",
 		icon = 1711335,
 	},
 	{
-		color = "|cffFFF468",
+		color = E.func_rgb2hex(EXPANSION_COLOR_8.r, EXPANSION_COLOR_8.g, EXPANSION_COLOR_8.b) or E.BattleforAzeroth_Color,
 		config = 8,
-		name = "Battle for Azeroth",
+		name = EXPANSION_NAME7, -- "Battle for Azeroth",
 		nameShort = "BattleforAzeroth",
 		icon = 3194610,
 	},
 	{
-		color = "|cff9798FE",
+		color = E.func_rgb2hex(EXPANSION_COLOR_9.r, EXPANSION_COLOR_9.g, EXPANSION_COLOR_9.b) or E.Shadowlands_Color,
 		config = 9,
-		name = "Shadowlands",
+		name = EXPANSION_NAME8, -- "Shadowlands",
 		nameShort = "Shadowlands",
 		icon = 4254080,
 	},
 	{
-		color = "|cff53B39F",
+		color = E.func_rgb2hex(EXPANSION_COLOR_10.r, EXPANSION_COLOR_10.g, EXPANSION_COLOR_10.b) or E.Dragonflight_Color,
 		config = 10,
-		name = "Dragonflight",
+		name = EXPANSION_NAME9, -- "Dragonflight",
 		nameShort = "Dragonflight",
 		icon = 5342925,
 	},
 	{
-		color = "|cff90CCDD",
+		color = E.func_rgb2hex(EXPANSION_COLOR_11.r, EXPANSION_COLOR_11.g, EXPANSION_COLOR_11.b) or E.TheWarWithin_Color,
 		config = 11,
-		name = "The War Within",
+		name = EXPANSION_NAME10, -- "The War Within",
 		nameShort = "TheWarWithin",
 		icon = 5779391,
 	},
 	{
-		color = "|cffff0047",
+		color = E.func_rgb2hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b) or E.Midnight_Color,
 		config = 12,
-		name = "TEST",
-		nameShort = "TEST",
-		icon = 123123,
-	}, -- 12
+		name = EXPANSION_NAME11 or "Midnight", -- "Midnight",
+		nameShort = "Midnight",
+		icon = 132123,
+	},
 	{
-		color = "|cff000000",
+		color = E.func_rgb2hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b) or E.TheLastTitan_Color,
 		config = 13,
-		name = "BLACK",
-		nameShort = "BLACK",
-		icon = 123123,
-	}, -- 13
-	-- "Midnight",
-	-- "The Last Titan",
+		name = EXPANSION_NAME12 or "The Last Titan", -- "The Last Titan",
+		nameShort = "TheLastTitan",
+		icon = 4622478,
+	},
+
+
+
+
+
+	-- {
+	-- 	color = "|cffff0047",
+	-- 	config = 14,
+	-- 	name = E.Green_Color.."Developing".."|r",
+	-- 	nameShort = "Developing",
+	-- 	icon = E.AddonTexture_1,
+	-- },
+	-- {
+	-- 	color = "|cff000000",
+	-- 	config = 13,
+	-- 	name = "BLACK",
+	-- 	nameShort = "BLACK",
+	-- 	icon = 123123,
+	-- },
 }
 
 
 
 
 -- E.OctoTable_Expansions_Table = {
---     icon = ЙЦУЙЦУ, name = "classic", color = "cff68ccef"
+--     icon = ЙЦУЙЦУ, name = "World of Warcraft", color = "cff68ccef"
 
 -- }
 

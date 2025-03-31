@@ -37,23 +37,3 @@ tinsert(E.Modules, function()
 
 	end
 end)
-
-
-
--- tinsert(E.Modules, function()
--- 	if OctoToDo_DB_Vars.Hide_OrderHallCommandBar then
--- 		-- _G.OrderHallCommandBar:HookScript("OnShow", function(self, ...)
--- 		-- 	_G.OrderHallCommandBar:UnregisterAllEvents()
--- 		-- 	_G.OrderHallCommandBar:Hide()
--- 		-- end)
--- 		if _G.OrderHallCommandBar then
--- 			_G.OrderHallCommandBar:UnregisterAllEvents()
--- 			_G.OrderHallCommandBar:SetScript("OnShow", _G.OrderHallCommandBar.Hide)
--- 			_G.OrderHallCommandBar:Hide()
--- 		end
-
-
-
-
--- 	end
--- end)

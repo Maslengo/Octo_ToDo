@@ -4,9 +4,8 @@ local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 ----------------------------------------------------------------------------------------------------------------------------------
 local OctoToDo_PortalsFrame = CreateFrame("Frame")
 OctoToDo_PortalsFrame:Hide()
-OctoToDo_PortalsFrame:RegisterEvent("ADDON_LOADED")
-OctoToDo_PortalsFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-OctoToDo_PortalsFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+-- OctoToDo_PortalsFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
+-- OctoToDo_PortalsFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 
 function OctoToDo_PortalsFrame:PortalsFrame()
 	local Height = OctoToDo_DB_Vars.curHeight
@@ -14,6 +13,15 @@ function OctoToDo_PortalsFrame:PortalsFrame()
 	local RaceLocal, curRace, raceID = UnitRace("PLAYER")
 	local className, curClass, classId = UnitClass("PLAYER")
 
+	local curProfession = ""
+
+	for k, v in next, ({GetProfessions()}) do
+		local skillLine = select(7, GetProfessionInfo(v))
+		if skillLine == 202 then
+			curProfession = "Engineering"
+		end
+	end
+	local curLevel = UnitLevel("PLAYER")
 	local AnchorFrame = CreateFrame("Frame", nil, OctoToDo_MainFrame_OCTOMAIN, "BackdropTemplate")
 	AnchorFrame:SetPoint("TOPRIGHT", OctoToDo_MainFrame_OCTOMAIN, "TOPLEFT", 0, Height)
 	AnchorFrame:SetSize(Height, Height)
@@ -52,24 +60,13 @@ function OctoToDo_PortalsFrame:PortalsFrame()
 						E:CreateUsableSpellFrame(v, "TOPLEFT", AnchorFrame, "TOPLEFT", -Height*stolbec, -Height*stroka, Height)
 						stroka = stroka + 1
 					else
-
-
 						if (not v.faction or v.faction == curFaction)
 							and (not v.race or v.race == curRace)
 							and (not v.class or v.class == curClass)
-
-						-- if v.faction == curFaction and (v.class == curClass or v.race == curRace)
-						-- 	or not v.faction and (v.class == curClass or v.race == curRace)
-
-
-
+							and (not v.profession or v.profession == curProfession)
+							and (not v.level or v.level > curLevel)
 							then
-
-
-
-
-
-							E:CreateUsableSpellFrame(v.id, "TOPLEFT", AnchorFrame, "TOPLEFT", -Height*stolbec, -Height*stroka, Height)
+							E:CreateUsableSpellFrame(v.id, "TOPLEFT", AnchorFrame, "TOPLEFT", -Height*stolbec, -Height*stroka, Height, v.isItem)
 							stroka = stroka + 1
 						end
 					end
@@ -82,29 +79,26 @@ function OctoToDo_PortalsFrame:PortalsFrame()
 	end
 end
 
-OctoToDo_PortalsFrame:SetScript("OnEvent",
-	function(self, event, ...)
-		if self[event] then
-			self[event](self, ...)
-		else
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color) .. E.Green_Color.. event.."|r")
-		end
-	end)
+local MyEventsTable = {
+	"ADDON_LOADED",
+}
+E.RegisterMyEventsToFrames(OctoToDo_PortalsFrame, MyEventsTable, E.func_DebugPath())
 
 function OctoToDo_PortalsFrame:ADDON_LOADED(addonName)
+
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 		C_Timer.After(.1, function()
-			self:PortalsFrame()
+			if OctoToDo_DB_Vars.PortalsButtons then
+				self:PortalsFrame()
+			end
 		end)
 	end
 end
 
+-- function OctoToDo_PortalsFrame:PLAYER_REGEN_DISABLED()
+-- end
 
-function OctoToDo_PortalsFrame:PLAYER_REGEN_DISABLED()
-end
-
-function OctoToDo_PortalsFrame:PLAYER_REGEN_ENABLED()
-end
-
+-- function OctoToDo_PortalsFrame:PLAYER_REGEN_ENABLED()
+-- end

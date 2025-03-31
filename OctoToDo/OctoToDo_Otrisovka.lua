@@ -59,42 +59,44 @@ function E:func_Otrisovka()
 				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.classColorHex..(E.func_SecondsToClock(CharInfo.realTotalTime)).."|r")}
 				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.classColorHex..(E.func_SecondsToClock(CharInfo.realLevelTime)).."|r")}
 			end
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"hasMail", CharInfo.hasMail and E.Icon_MailBox..CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.GUID.."|r"}
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
-			tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID.."|r"}
-			tooltip[#tooltip+1] = {"Chromie_name", CharInfo.classColorHex..CharInfo.Chromie_name.."|r"}
-			tooltip[#tooltip+1] = {"BattleTag", E.Blue_Color..CharInfo.BattleTag.."|r"}
-			tooltip[#tooltip+1] = {"BattleTagLocal", E.Blue_Color..CharInfo.BattleTagLocal.."|r"}
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"GameLimitedMode_IsActive", CharInfo.GameLimitedMode_IsActive and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
-			tooltip[#tooltip+1] = {"levelCapped20", CharInfo.levelCapped20 and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
-			tooltip[#tooltip+1] = {"PlayerCanEarnExperience", CharInfo.PlayerCanEarnExperience and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"buildVersion", CharInfo.classColorHex..CharInfo.buildVersion.."|r"}
-			tooltip[#tooltip+1] = {"buildNumber", CharInfo.classColorHex..CharInfo.buildNumber.."|r"}
-			tooltip[#tooltip+1] = {"buildDate", CharInfo.classColorHex..CharInfo.buildDate.."|r"}
-			tooltip[#tooltip+1] = {"interfaceVersion", CharInfo.classColorHex..CharInfo.interfaceVersion.."|r"}
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"currentTier", CharInfo.classColorHex..CharInfo.currentTier.."|r"}
-			tooltip[#tooltip+1] = {"IsPublicBuild", CharInfo.IsPublicBuild and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
-			tooltip[#tooltip+1] = {"isBeta", CharInfo.isBeta and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"max LVL", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_rLevel).."|r"}
-			tooltip[#tooltip+1] = {"max Money", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_rMoney).."|r"}
-			tooltip[#tooltip+1] = {"max Prof", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_profCap).."|r"}
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"Authenticator", CharInfo.classColorHex..tostringall(CharInfo.IsAccountSecured).."|r"}
-			tooltip[#tooltip+1] = {"УЗ имеет ограничения пробной УЗ", CharInfo.classColorHex..tostringall(CharInfo.IsRestrictedAccount).."|r"}
-			tooltip[#tooltip+1] = {"Использует ли игрок пробную УЗ", CharInfo.classColorHex..tostringall(CharInfo.IsTrialAccount).."|r"}
-			tooltip[#tooltip+1] = {"Нет игрового времени", CharInfo.classColorHex..tostringall(CharInfo.IsVeteranTrialAccount).."|r"}
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"PlayerDurability", CharInfo.PlayerDurability.."%"}
 			if CharInfo.MASLENGO.ItemsInBag[122284] ~= 0 then
+				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {E.func_itemTexture(122284)..E.func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
+			end
+			if E.DebugInfo then
+				tooltip[#tooltip+1] = {" ", " "}
+				tooltip[#tooltip+1] = {E.DEVTEXT, " "}
+				tooltip[#tooltip+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.GUID.."|r"}
+				tooltip[#tooltip+1] = {"hasMail", CharInfo.hasMail and E.Icon_MailBox..CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
+				tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
+				tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID.."|r"}
+				tooltip[#tooltip+1] = {"Chromie_name", CharInfo.classColorHex..CharInfo.Chromie_name.."|r"}
+				tooltip[#tooltip+1] = {"BattleTag", E.Blue_Color..CharInfo.BattleTag.."|r"}
+				tooltip[#tooltip+1] = {"BattleTagLocal", E.Blue_Color..CharInfo.BattleTagLocal.."|r"}
+				tooltip[#tooltip+1] = {" ", " "}
+				tooltip[#tooltip+1] = {"GameLimitedMode_IsActive", CharInfo.GameLimitedMode_IsActive and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
+				tooltip[#tooltip+1] = {"levelCapped20", CharInfo.levelCapped20 and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
+				tooltip[#tooltip+1] = {"PlayerCanEarnExperience", CharInfo.PlayerCanEarnExperience and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
+				tooltip[#tooltip+1] = {" ", " "}
+				tooltip[#tooltip+1] = {"buildVersion", CharInfo.classColorHex..CharInfo.buildVersion.."|r"}
+				tooltip[#tooltip+1] = {"buildNumber", CharInfo.classColorHex..CharInfo.buildNumber.."|r"}
+				tooltip[#tooltip+1] = {"buildDate", CharInfo.classColorHex..CharInfo.buildDate.."|r"}
+				tooltip[#tooltip+1] = {"interfaceVersion", CharInfo.classColorHex..CharInfo.interfaceVersion.."|r"}
+				tooltip[#tooltip+1] = {" ", " "}
+				tooltip[#tooltip+1] = {"currentTier", CharInfo.classColorHex..CharInfo.currentTier.."|r"}
+				tooltip[#tooltip+1] = {"IsPublicBuild", CharInfo.IsPublicBuild and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
+				tooltip[#tooltip+1] = {"isBeta", CharInfo.isBeta and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
+				tooltip[#tooltip+1] = {" ", " "}
+				tooltip[#tooltip+1] = {"max LVL", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_rLevel).."|r"}
+				tooltip[#tooltip+1] = {"max Money", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_rMoney).."|r"}
+				tooltip[#tooltip+1] = {"max Prof", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_profCap).."|r"}
+				tooltip[#tooltip+1] = {" ", " "}
+				tooltip[#tooltip+1] = {"Authenticator", CharInfo.classColorHex..tostringall(CharInfo.IsAccountSecured).."|r"}
+				tooltip[#tooltip+1] = {"УЗ имеет ограничения пробной УЗ", CharInfo.classColorHex..tostringall(CharInfo.IsRestrictedAccount).."|r"}
+				tooltip[#tooltip+1] = {"Использует ли игрок пробную УЗ", CharInfo.classColorHex..tostringall(CharInfo.IsTrialAccount).."|r"}
+				tooltip[#tooltip+1] = {"Нет игрового времени", CharInfo.classColorHex..tostringall(CharInfo.IsVeteranTrialAccount).."|r"}
+				tooltip[#tooltip+1] = {" ", " "}
+				tooltip[#tooltip+1] = {"PlayerDurability", CharInfo.PlayerDurability.."%"}
 			end
 			return vivodCent, tooltip, BGcolor
 	end)
@@ -192,8 +194,8 @@ function E:func_Otrisovka()
 				-- if OctoToDo_DB_Vars.ExpansionToShow[2] then -- The Burning Crusade
 				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheBurningCrusade_WorldBoss_Weekly
 				-- end
-				-- if OctoToDo_DB_Vars.ExpansionToShow[1] then -- Classic
-				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Classic_WorldBoss_Weekly
+				-- if OctoToDo_DB_Vars.ExpansionToShow[1] then -- WorldofWarcraft
+				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WorldofWarcraft_WorldBoss_Weekly
 				-- end
 				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[11].color..E.OctoTable_Expansions_Table[11].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_WorldBoss_Weekly}
 				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[10].color..E.OctoTable_Expansions_Table[10].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WorldBoss_Weekly}
@@ -205,7 +207,7 @@ function E:func_Otrisovka()
 				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[4].color..E.OctoTable_Expansions_Table[4].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Cataclysm_WorldBoss_Weekly}
 				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[3].color..E.OctoTable_Expansions_Table[3].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_WorldBoss_Weekly}
 				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[2].color..E.OctoTable_Expansions_Table[2].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_TheBurningCrusade_WorldBoss_Weekly}
-				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[1].color..E.OctoTable_Expansions_Table[1].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Classic_WorldBoss_Weekly}
+				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[1].color..E.OctoTable_Expansions_Table[1].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_WorldofWarcraft_WorldBoss_Weekly}
 
 
 
@@ -511,6 +513,34 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
 				return GARRISON_LOCATION_TOOLTIP
+		end)
+		--------------------------------
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114128)..E.func_itemName(114128), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114128])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114129)..E.func_itemName(114129), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114129])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114131)..E.func_itemName(114131), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114131])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114616)..E.func_itemName(114616), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114616])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114081)..E.func_itemName(114081), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114081])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114622)..E.func_itemName(114622), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114622])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(128307)..E.func_itemName(128307), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[128307])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(120313)..E.func_itemName(120313), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[120313])}
+				tooltip[#tooltip+1] = {" ", " "}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114745)..E.func_itemName(114745), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114745])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114808)..E.func_itemName(114808), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114808])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114822)..E.func_itemName(114822), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114822])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114807)..E.func_itemName(114807), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114807])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114806)..E.func_itemName(114806), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114806])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(114746)..E.func_itemName(114746), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114746])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(128308)..E.func_itemName(128308), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[128308])}
+				vivodCent = SPELL_UPGRADE
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return GARRISON_FOLLOWERS_TITLE
 		end)
 		--------------------------------
 		--------------------------------
@@ -1134,16 +1164,16 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				tooltip[#tooltip+1] = {E.func_itemTexture(166846)..E.func_itemName(166846), CharInfo.MASLENGO.ItemsInBag[166846]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(169610)..E.func_itemName(169610), CharInfo.MASLENGO.ItemsInBag[169610]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(166970)..E.func_itemName(166970), CharInfo.MASLENGO.ItemsInBag[166970]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(168327)..E.func_itemName(168327), CharInfo.MASLENGO.ItemsInBag[168327]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(168832)..E.func_itemName(168832), CharInfo.MASLENGO.ItemsInBag[168832]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(166971)..E.func_itemName(166971), CharInfo.MASLENGO.ItemsInBag[166971]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(168946)..E.func_itemName(168946), CharInfo.MASLENGO.ItemsInBag[168946]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(168215)..E.func_itemName(168215), CharInfo.MASLENGO.ItemsInBag[168215]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(168216)..E.func_itemName(168216), CharInfo.MASLENGO.ItemsInBag[168216]}
-				tooltip[#tooltip+1] = {E.func_itemTexture(168217)..E.func_itemName(168217), CharInfo.MASLENGO.ItemsInBag[168217]}
+				tooltip[#tooltip+1] = {E.func_itemTexture(166846)..E.func_itemName(166846), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[166846])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(169610)..E.func_itemName(169610), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[169610])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(166970)..E.func_itemName(166970), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[166970])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(168327)..E.func_itemName(168327), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168327])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(168832)..E.func_itemName(168832), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168832])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(166971)..E.func_itemName(166971), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[166971])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(168946)..E.func_itemName(168946), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168946])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(168215)..E.func_itemName(168215), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168215])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(168216)..E.func_itemName(168216), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168216])}
+				tooltip[#tooltip+1] = {E.func_itemTexture(168217)..E.func_itemName(168217), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168217])}
 				vivodCent = "МЕХАГОН"
 				return vivodCent, tooltip
 		end)
@@ -1540,7 +1570,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(210254)..E.WOW_Epic_Color..E.func_itemName_NOCOLOR(210254).."|r"
+				return E.func_itemTexture(210254)..E.WOW_Epic_Color..E.func_GetItemName(210254).."|r"
 		end)
 		--------------------------------
 		--------------------------------
@@ -1816,11 +1846,12 @@ function E:func_Otrisovka()
 		end
 	end
 	----------------------------------------------------------------
-	if OctoToDo_DB_Vars.ExpansionToShow[12] then
+	if OctoToDo_DB_Vars.DebugInfo == true then
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
+				tooltip[#tooltip+1] = {E.DEVTEXT, ""}
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
 						tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
@@ -1833,7 +1864,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.Blue_Color.."ALL|r"
+				return E.DEVTEXT..E.Blue_Color.."ALL|r"
 		end)
 		--------------------------------
 		local list = {}
@@ -1847,6 +1878,7 @@ function E:func_Otrisovka()
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
+					tooltip[#tooltip+1] = {E.DEVTEXT, ""}
 					for _, v in next, (E.OctoTable_UniversalQuest) do
 						if v.desc == value then
 							tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
@@ -1857,7 +1889,7 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return i
+					return E.DEVTEXT..i
 			end)
 			--------------------------------
 		end
@@ -2190,7 +2222,7 @@ function E:func_Otrisovka()
 						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
 							tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
 						else
-							tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.Gray_Color..E.func_itemName_NOCOLOR(itemID).."|r", E.Gray_Color..CharInfo.MASLENGO.ItemsInBag[itemID].."|r"}
+							tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.Gray_Color..E.func_GetItemName(itemID).."|r", E.Gray_Color..CharInfo.MASLENGO.ItemsInBag[itemID].."|r"}
 						end
 					end
 				end

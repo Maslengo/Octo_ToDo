@@ -198,8 +198,13 @@ function E.func_GetItemIcon(itemID)
 	return C_Item.GetItemIconByID(itemID)
 end
 ----------------------------------------------------------------
+
 function E.func_GetItemName(itemID)
-	return C_Item.GetItemNameByID(itemID)
+	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
+	if E.DebugIDs == true and vivod ~= nil then
+		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
+	end
+	return vivod
 end
 ----------------------------------------------------------------
 function E.func_GetItemLink(itemID)
@@ -245,14 +250,6 @@ function E.func_IsItemDataCached(itemID)
 	return C_Item.IsItemDataCachedByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_itemName_NOCOLOR(itemID)
-	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
-	end
-	return vivod
-end
-----------------------------------------------------------------
 function E.func_itemName(itemID)
 	local itemName = C_Item.GetItemNameByID(itemID) or Red_Color..SEARCH_LOADING_TEXT.."|r" -- RETRIEVING_ITEM_INFO
 	local itemQuality = select(3, C_Item.GetItemInfo(itemID))
@@ -290,9 +287,9 @@ end
 ----------------------------------------------------------------
 function E.func_GetSpellSubtext(spellID)
 	local vivod = C_Spell.GetSpellSubtext(spellID)
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
-	end
+	-- if E.DebugIDs == true and vivod ~= nil then
+	--     vivod = vivod..Gray_Color.." id:"..spellID.."|r"
+	-- end
 	return vivod
 end
 ----------------------------------------------------------------
@@ -300,9 +297,9 @@ function E.func_GetSpellNameFull(spellID)
 	local name = E.func_GetSpellName(spellID)
 	local subText = E.func_GetSpellSubtext(spellID)
 	local vivod = subText and #subText > 0 and name.."("..subText..")" or name
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
-	end
+	-- if E.DebugIDs == true and vivod ~= nil then
+	--     vivod = vivod..Gray_Color.." id:"..spellID.."|r"
+	-- end
 	return vivod
 end
 ----------------------------------------------------------------
@@ -669,7 +666,7 @@ end
 function E.func_SecondsToClock(time)
 	time = tonumber(time) or 0
 	if time <= 0 then
-		return "0"..(L["time_MINUTE"])
+		return "" -- "0"..(L["time_SECOND"])
 	end
 	local years = floor(time / 31536000)  -- 86400*365
 	local days = floor(time % 31536000 / 86400)
@@ -693,12 +690,12 @@ function E.func_SecondsToClock(time)
 	elseif time >= 60 then
 		table.insert(parts, mins..(L["time_MINUTE"] or "m"))
 		if time < 600 then  -- Только для 1-9 минут добавляем секунды
+			table.insert(parts, secs..(L["time_SECOND"] or "s"))
+		end
+	else
 		table.insert(parts, secs..(L["time_SECOND"] or "s"))
 	end
-else
-	table.insert(parts, secs..(L["time_SECOND"] or "s"))
-end
-return table.concat(parts)
+	return table.concat(parts)
 end
 function E.ChatFrame_TimeBreakDown(time)
 	local days = floor(time / (60 * 60 * 24));
@@ -971,11 +968,11 @@ function E.func_encryption(text)
 end
 ----------------------------------------------------------------
 function E.func_GetClassColor(className) -- C_ClassColor.GetClassColor(classFilename)
-local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[className]
-if color then
-	return color.colorStr:gsub("^ff", "")
-end
-return "ffffff"
+	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[className]
+	if color then
+		return color.colorStr:gsub("^ff", "")
+	end
+	return "ffffff"
 end
 ----------------------------------------------------------------
 function E.func_Reverse_order(a, b)
@@ -1369,14 +1366,14 @@ end
 ----------------------------------------------------------------
 function E.func_SetScriptAfter(frame, event, method, ids, func)
 	frame:SetScript(event, function(frame)
-		frame:SetScript(event, nil)
-		if frame.Disable then frame:Disable() end
-		if type(ids) == "function" then ids = ids() end
-		self[method](self, ids):Then(function()
-			func(frame)
-			frame:SetScript(event, func)
-			if frame.Enable then frame:Enable() end
-		end)
+			frame:SetScript(event, nil)
+			if frame.Disable then frame:Disable() end
+			if type(ids) == "function" then ids = ids() end
+			self[method](self, ids):Then(function()
+					func(frame)
+					frame:SetScript(event, func)
+					if frame.Enable then frame:Enable() end
+			end)
 	end)
 end
 ----------------------------------------------------------------
@@ -1404,10 +1401,10 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	end
 	local bbalpha = bbalpha or edgeAlpha or 1
 	frame:SetBackdrop({
-		bgFile = E.bgFile,
-		edgeFile = E.edgeFile,
-		edgeSize = 1,
-		insets = {left = 0, right = 0, top = 0, bottom = 0},
+			bgFile = E.bgFile,
+			edgeFile = E.edgeFile,
+			edgeSize = 1,
+			insets = {left = 0, right = 0, top = 0, bottom = 0},
 	})
 	frame.r = bgCr
 	frame.g = bgCg
@@ -1422,17 +1419,17 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	if not frame.isInit then
 		frame.isInit = true
 		frame:HookScript("OnEnter", function(self)
-			self:SetBackdropColor(self.r, self.g, self.b, frame.a)
-			self:SetBackdropBorderColor(r, g, b, 1)
+				self:SetBackdropColor(self.r, self.g, self.b, frame.a)
+				self:SetBackdropBorderColor(r, g, b, 1)
 		end)
 		frame:HookScript("OnLeave", function(self)
-			self:SetBackdropColor(self.r, self.g, self.b, frame.a)
-			self:SetBackdropBorderColor(0, 0, 0, bbalpha)
+				self:SetBackdropColor(self.r, self.g, self.b, frame.a)
+				self:SetBackdropBorderColor(0, 0, 0, bbalpha)
 		end)
 		if frame.icon then
 			frame.icon:SetAllPoints(frame)
 			frame:SetScript("OnShow", function(self)
-				self.icon:SetVertexColor(1, 1, 1, 1)
+					self.icon:SetVertexColor(1, 1, 1, 1)
 			end)
 			-- frame:SetScript("OnEnter", function(self)
 			--         self.icon:SetVertexColor(r, g, b, 1)
@@ -1443,12 +1440,12 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 			--         GameTooltip:Hide()
 			-- end)
 			frame:SetScript("OnMouseDown", function(self)
-				self.icon:SetVertexColor(1, 0, 0, .5)
-				self:SetBackdropBorderColor(1, 0, 0, bbalpha)
+					self.icon:SetVertexColor(1, 0, 0, .5)
+					self:SetBackdropBorderColor(1, 0, 0, bbalpha)
 			end)
 			frame:SetScript("OnMouseUp", function(self)
-				self.icon:SetVertexColor(r, g, b, 1)
-				self:SetBackdropBorderColor(r, g, b, bbalpha)
+					self.icon:SetVertexColor(r, g, b, 1)
+					self:SetBackdropBorderColor(r, g, b, bbalpha)
 			end)
 		end
 	end
@@ -1462,25 +1459,25 @@ function E:func_CreateUtilsButton(frame)
 	OctoToDo_CloseButton:SetSize(E.curHeight, E.curHeight)
 	OctoToDo_CloseButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 0)
 	OctoToDo_CloseButton:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-		GameTooltip:ClearLines()
-		GameTooltip:AddLine(E.WOW_Artifact_Color..CLOSE.."|r")
-		GameTooltip:Show()
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			GameTooltip:AddLine(E.WOW_Artifact_Color..CLOSE.."|r")
+			GameTooltip:Show()
 	end)
 	OctoToDo_CloseButton:SetScript("OnClick", function()
-		frame:Hide()
+			frame:Hide()
 	end)
 	OctoToDo_CloseButton:SetScript("OnKeyDown", function(self, key)
-		if key == GetBindingKey("TOGGLEGAMEMENU") then
-			self:GetParent():Hide()
-			self:SetPropagateKeyboardInput(false)
-		else
-			self:SetPropagateKeyboardInput(true)
-		end
+			if key == GetBindingKey("TOGGLEGAMEMENU") then
+				self:GetParent():Hide()
+				self:SetPropagateKeyboardInput(false)
+			else
+				self:SetPropagateKeyboardInput(true)
+			end
 	end)
 	OctoToDo_CloseButton:SetScript("OnLeave", function(self)
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
 	end)
 	OctoToDo_CloseButton.icon = OctoToDo_CloseButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_CloseButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga")
@@ -1492,9 +1489,9 @@ function E:func_CreateUtilsButton(frame)
 	OctoToDo_OptionsButton:SetSize(E.curHeight, E.curHeight)
 	OctoToDo_OptionsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*1, 0)
 	OctoToDo_OptionsButton:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-		GameTooltip:AddLine(E.WOW_Artifact_Color..OPTIONS.."|r")
-		GameTooltip:Show()
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:AddLine(E.WOW_Artifact_Color..OPTIONS.."|r")
+			GameTooltip:Show()
 	end)
 	OctoToDo_OptionsButton:SetScript("OnClick", function()
 			-- frame:SetShown(not frame:IsShown())
@@ -1506,10 +1503,10 @@ function E:func_CreateUtilsButton(frame)
 			else
 				Settings.OpenToCategory(E.func_AddonTitle(GlobalAddonName), true)
 			end
-		end)
+	end)
 	OctoToDo_OptionsButton:SetScript("OnLeave", function(self)
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
 	end)
 	OctoToDo_OptionsButton.icon = OctoToDo_OptionsButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_OptionsButton.icon:SetTexture(E.AddonTexture_1)
@@ -1550,43 +1547,43 @@ function E:func_CreateUtilsButton(frame)
 	OctoToDo_AbandonButton:SetSize(E.curHeight, E.curHeight)
 	OctoToDo_AbandonButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*2, 0)
 	OctoToDo_AbandonButton:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-		GameTooltip:ClearLines()
-		if E.func_CurrentNumQuests() > 0 then
-			GameTooltip:AddLine(E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..E.func_CurrentNumQuests()..")")
-			GameTooltip:AddLine(" ")
-		else
-			GameTooltip:AddLine(L["No quests"], r, g, b)
-		end
-		local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
-		local list = {}
-		for i = 1, numShownEntries do
-			if E.func_CurrentNumQuests() ~= 0 then
-				local info = C_QuestLog.GetInfo(i)
-				if info then
-					if info.questID ~= 0 then
-						if (not info.isHeader and not info.isHidden) then
-							tinsert(list, info.questID)
-						else
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			if E.func_CurrentNumQuests() > 0 then
+				GameTooltip:AddLine(E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..E.func_CurrentNumQuests()..")")
+				GameTooltip:AddLine(" ")
+			else
+				GameTooltip:AddLine(L["No quests"], r, g, b)
+			end
+			local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
+			local list = {}
+			for i = 1, numShownEntries do
+				if E.func_CurrentNumQuests() ~= 0 then
+					local info = C_QuestLog.GetInfo(i)
+					if info then
+						if info.questID ~= 0 then
+							if (not info.isHeader and not info.isHidden) then
+								tinsert(list, info.questID)
+							else
+							end
 						end
 					end
 				end
 			end
-		end
-		sort(list, E.func_Reverse_order)
-		for k, questID in next, (list) do
-			GameTooltip:AddDoubleLine(E.func_questName(questID),E.func_CheckCompletedByQuestID(questID) , 1, 1, 1, 1, 1, 1)
-		end
-		GameTooltip:Show()
+			sort(list, E.func_Reverse_order)
+			for k, questID in next, (list) do
+				GameTooltip:AddDoubleLine(E.func_questName(questID),E.func_CheckCompletedByQuestID(questID) , 1, 1, 1, 1, 1, 1)
+			end
+			GameTooltip:Show()
 	end)
 	OctoToDo_AbandonButton:SetScript("OnLeave", function(self)
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
 	end)
 	OctoToDo_AbandonButton:SetScript("OnClick", function()
-		if E.func_CurrentNumQuests() > 0 then
-			StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
-		end
+			if E.func_CurrentNumQuests() > 0 then
+				StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
+			end
 	end)
 	OctoToDo_AbandonButton.icon = OctoToDo_AbandonButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_AbandonButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga")
@@ -1603,16 +1600,16 @@ function E:func_CreateUtilsButton(frame)
 	local list = {}
 	local list2 = {}
 	OctoToDo_MplusButton:SetScript("OnEnter", function(self)
-		local i = 0
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-		GameTooltip:ClearLines()
-		GameTooltip:AddLine(E.WOW_Artifact_Color.."OctoToDo_MplusButton".."|r")
-		GameTooltip:AddDoubleLine(" ", " ")
-		list = {}
-		for dungeonID = 1, 1000 do
-			local name = E.func_dungeonName(dungeonID)
-			if name then
-				tinsert(list, dungeonID)
+			local i = 0
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			GameTooltip:AddLine(E.WOW_Artifact_Color.."OctoToDo_MplusButton".."|r")
+			GameTooltip:AddDoubleLine(" ", " ")
+			list = {}
+			for dungeonID = 1, 1000 do
+				local name = E.func_dungeonName(dungeonID)
+				if name then
+					tinsert(list, dungeonID)
 					-- tinsert(list2, E.func_dungeonName(dungeonID))
 				end
 			end
@@ -1625,7 +1622,9 @@ function E:func_CreateUtilsButton(frame)
 				local vivod_LEFT = E.func_texturefromIcon(icon)..name
 				local vivod_RIGHT = E.Gray_Color.."icon:|r"..E.Green_Color..icon.."|r "..E.Gray_Color.."time:|r"..E.Green_Color..E.func_SecondsToClock(timeLimit).."|r"
 				GameTooltip:AddDoubleLine(vivod_LEFT, vivod_RIGHT, 1, 1, 1, 1, 1, 1)
-				OctoToDo_TrashCan.OctoToDo_MplusButton[dungeonID] = C_ChallengeMode.GetMapUIInfo(dungeonID)
+				if OctoToDo_TrashCan then
+					OctoToDo_TrashCan.OctoToDo_MplusButton[dungeonID] = C_ChallengeMode.GetMapUIInfo(dungeonID)
+				end
 			end
 			if i == 0 then
 				GameTooltip:AddLine(E.WOW_Artifact_Color.."No Data".."|r")
@@ -1633,19 +1632,18 @@ function E:func_CreateUtilsButton(frame)
 			end
 			GameTooltip:AddDoubleLine(" ", " ")
 			GameTooltip:Show()
-		end)
+	end)
 	OctoToDo_MplusButton:SetScript("OnLeave", function(self)
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
 	end)
 	OctoToDo_MplusButton:SetScript("OnClick", function()
-		frame:Hide()
-		if OctoToDo_TrashCan and OctoToDo_TrashCan.OctoToDo_MplusButton then
-			print ("OctoToDo_TrashCan EST")
-		end
-		fpde(OctoToDo_TrashCan.OctoToDo_MplusButton)
+			frame:Hide()
+			if OctoToDo_TrashCan then
+				fpde(OctoToDo_TrashCan.OctoToDo_MplusButton)
+			end
 			-- fpde(list)
-		end)
+	end)
 	OctoToDo_MplusButton.icon = OctoToDo_MplusButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_MplusButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga")
 	OctoToDo_MplusButton.icon:SetAllPoints()
@@ -1659,43 +1657,43 @@ function E:func_CreateUtilsButton(frame)
 	OctoToDo_ItemsButton:SetSize(E.curHeight, E.curHeight)
 	OctoToDo_ItemsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*4, 0)
 	OctoToDo_ItemsButton:SetScript("OnEnter", function(self)
-		local i = 0
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-		GameTooltip:ClearLines()
-		GameTooltip:AddLine(E.WOW_Artifact_Color.."OctoToDo_ItemsButton".."|r")
-		GameTooltip:AddDoubleLine(" ", " ")
-		local BattleTag = select(2, BNGetInfo()) or "Trial Account"
-		local BTAG = tostringall(strsplit("#", BattleTag))
-		local GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
-		local BattleTagLocal = BTAG.." ("..GameVersion..")"
-		for _, itemID in next, (E.OctoTable_itemID_Config) do
-			for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
-				if CharInfo.BattleTagLocal == BattleTagLocal then
-					if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 then
-						i = i + 1
-						GameTooltip:AddDoubleLine(E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID].." "..CharInfo.classColorHex..CharInfo.Name.."|r "..CharInfo.curServerShort)
+			local i = 0
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			GameTooltip:AddLine(E.WOW_Artifact_Color.."OctoToDo_ItemsButton".."|r")
+			GameTooltip:AddDoubleLine(" ", " ")
+			local BattleTag = select(2, BNGetInfo()) or "Trial Account"
+			local BTAG = tostringall(strsplit("#", BattleTag))
+			local GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
+			local BattleTagLocal = BTAG.." ("..GameVersion..")"
+			for _, itemID in next, (E.OctoTable_itemID_Config) do
+				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+					if CharInfo.BattleTagLocal == BattleTagLocal then
+						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 then
+							i = i + 1
+							GameTooltip:AddDoubleLine(E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID].." "..CharInfo.classColorHex..CharInfo.Name.."|r "..CharInfo.curServerShort)
+						end
 					end
 				end
 			end
-		end
-		if i == 0 then
-			GameTooltip:AddLine(E.WOW_Artifact_Color.."No Data".."|r")
-		end
-		GameTooltip:AddDoubleLine(" ", " ")
-		GameTooltip:Show()
+			if i == 0 then
+				GameTooltip:AddLine(E.WOW_Artifact_Color.."No Data".."|r")
+			end
+			GameTooltip:AddDoubleLine(" ", " ")
+			GameTooltip:Show()
 	end)
 	OctoToDo_ItemsButton:SetScript("OnLeave", function(self)
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
 	end)
 	OctoToDo_ItemsButton:SetScript("OnClick", function()
-		local curGUID = UnitGUID("PLAYER")
-		frame:Hide()
-		for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
-			if curCharGUID == curGUID then
-				fpde(CharInfo)
+			local curGUID = UnitGUID("PLAYER")
+			frame:Hide()
+			for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+				if curCharGUID == curGUID then
+					fpde(CharInfo)
+				end
 			end
-		end
 	end)
 	OctoToDo_ItemsButton.icon = OctoToDo_ItemsButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_ItemsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow21.tga")
@@ -1711,9 +1709,9 @@ function E:func_CreateUtilsButton(frame)
 	OctoToDo_EventsButton:SetSize(E.curHeight, E.curHeight)
 	OctoToDo_EventsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*5, 0)
 	OctoToDo_EventsButton:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-		GameTooltip:ClearLines()
-		local curdatetable = date("*t")
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			local curdatetable = date("*t")
 			-- fpde(date("*t"))
 			-- [1] = {
 			-- ["hour"] = 2,
@@ -1756,14 +1754,14 @@ function E:func_CreateUtilsButton(frame)
 			end
 			GameTooltip:AddDoubleLine(" ", " ")
 			GameTooltip:Show()
-		end)
+	end)
 	OctoToDo_EventsButton:SetScript("OnLeave", function(self)
-		GameTooltip:ClearLines()
-		GameTooltip:Hide()
+			GameTooltip:ClearLines()
+			GameTooltip:Hide()
 	end)
 	OctoToDo_EventsButton:SetScript("OnClick", function()
-		frame:Hide()
-		fpde(OctoToDo_DB_Other.Holiday)
+			frame:Hide()
+			fpde(OctoToDo_DB_Other.Holiday)
 	end)
 	OctoToDo_EventsButton.icon = OctoToDo_EventsButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_EventsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga")
@@ -1786,31 +1784,22 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 		end,
 	}
 	info.OnClick = function(_, button)
-	if button == "LeftButton" then
-		if not InCombatLockdown() then
-			if func then
-				func()
-			end
-			for index, frames in ipairs(E.OctoTable_Frames) do
-				if frame ~= frames and frames:IsShown() then
-					frames:Hide()
+		if button == "LeftButton" then
+			if not InCombatLockdown() then
+				if func then
+					func()
+				end
+				if frame then
+					for index, frames in ipairs(E.OctoTable_Frames) do
+						if frame ~= frames and frames:IsShown() then
+							frames:Hide()
+						end
+					end
+					frame:SetShown(not frame:IsShown())
 				end
 			end
-			frame:SetShown(not frame:IsShown())
 		end
 	end
-end
-	-- if func then
-	-- info.OnClick = func
-	-- else
-	-- info.OnClick = function(_, button)
-	-- if button == "LeftButton" then
-	-- if not InCombatLockdown() then
-	-- frame:SetShown(not frame:IsShown())
-	-- end
-	-- end
-	-- end
-	-- end
 	local MinimapName = E.func_AddonTitle(addonName)
 	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
 	if vars.minimapPos == nil then vars.minimapPos = 244 end
@@ -1830,9 +1819,10 @@ function E:StopSpam(func)
 	print ("StopSpam", tostring(func))
 end
 ----------------------------------------------------------------
-function E:CreateUsableSpellFrame(spellID, point, parent, rPoint, x, y, size)
-	if spellID and type(spellID) == "number" then
+function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, isItem)
+	if id and type(id) == "number" then
 		local frame = CreateFrame("Button", nil, parent, "SecureActionButtonTemplate, BackDropTemplate")
+		frame:Hide()
 		frame:SetPoint(point, parent, rPoint, x, y)
 		frame:SetSize(size, size)
 		local _, classFilename = UnitClass("PLAYER")
@@ -1840,7 +1830,11 @@ function E:CreateUsableSpellFrame(spellID, point, parent, rPoint, x, y, size)
 		local bbalpha = 1
 		frame.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.icon:SetAllPoints()
-		frame.icon:SetTexture(E.func_GetSpellIcon(spellID))
+		if isItem == true then
+			frame.icon:SetTexture(E.func_GetItemIcon(id))
+		else
+			frame.icon:SetTexture(E.func_GetSpellIcon(id))
+		end
 		frame.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		frame:SetBackdrop({
 				bgFile = E.bgFile,
@@ -1854,17 +1848,21 @@ function E:CreateUsableSpellFrame(spellID, point, parent, rPoint, x, y, size)
 		frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 		frame:SetAttribute("type", "macro")
 		if not InCombatLockdown() then
-			frame:SetAttribute("macrotext", "/cast "..E.func_GetSpellNameFull(spellID))
+			if isItem == true then
+				frame:SetAttribute("macrotext", "/use item:"..id)
+			else
+				frame:SetAttribute("macrotext", "/cast "..C_Spell.GetSpellName(id))
+			end
 		end
 
 		if not frame.isInit then
 			frame.isInit = true
 			frame:SetScript("OnShow", function(self)
 					self:SetBackdropBorderColor(0, 0, 0, bbalpha)
-					-- if E.func_GetSpellCooldown(spellID) > 0 then
-					-- 	self.icon:SetVertexColor(.5, .5, .5, 1)
+					-- if E.func_GetSpellCooldown(id) > 0 then
+					--     self.icon:SetVertexColor(.5, .5, .5, 1)
 					-- else
-					-- 	self.icon:SetVertexColor(1, 1, 1, 1)
+					--     self.icon:SetVertexColor(1, 1, 1, 1)
 					-- end
 			end)
 			frame:SetScript("OnEnter", function(self)
@@ -1873,7 +1871,13 @@ function E:CreateUsableSpellFrame(spellID, point, parent, rPoint, x, y, size)
 					-- C_Timer.NewTicker(.1, function()
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 					GameTooltip:ClearLines()
-					GameTooltip:AddDoubleLine(E.func_GetSpellNameFull(spellID), E.func_GetSpellCooldown(spellID))
+
+					if isItem == true then
+						GameTooltip:AddDoubleLine(E.func_GetItemName(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
+					else
+						GameTooltip:AddDoubleLine(E.func_GetSpellName(id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
+						GameTooltip:AddDoubleLine(E.func_GetSpellSubtext(id))
+					end
 					GameTooltip:Show()
 					-- end)
 			end)
@@ -1894,8 +1898,29 @@ function E:CreateUsableSpellFrame(spellID, point, parent, rPoint, x, y, size)
 		end
 	end
 end
+function E.func_DebugPath()
+	local stack = debugstack(2)
+	local vivod1 = stack:match("Interface/AddOns/(.-):%d+") or "unknown"
+	local vivod2 = vivod1:gsub("]", "")
+
+	return tostring(vivod2)
+end
+----------------------------------------------------------------
+function E.RegisterMyEventsToFrames(frame, MyEventsTable, DebugPath)
+	for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
+	frame:SetScript("OnEvent",
+		function(self, event, ...)
+			if self[event] then
+				self[event](self, ...)
+			else
+				DEFAULT_CHAT_FRAME:AddMessage(E.KILLTEXT.. E.Event_Color..event.."|r"..E.KILLTEXT..DebugPath)
+				self:UnregisterEvent(event)
+				self.event = nil
+			end
+	end)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-----------------------------------------------------------------
+

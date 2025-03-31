@@ -1,14 +1,10 @@
 local GlobalAddonName, E = ...
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------
 local OctoToDo_EventFrame = CreateFrame("Frame")
 OctoToDo_EventFrame:Hide()
-OctoToDo_EventFrame:RegisterEvent("ADDON_LOADED")
-OctoToDo_EventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
-OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
-OctoToDo_EventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-
+-----------------------------------------------------
 function OctoToDo_EventFrame:ItemsDeleteFrame()
 	if not InCombatLockdown() then
 		Clickable_ItemsDelete:Hide()
@@ -28,7 +24,7 @@ function OctoToDo_EventFrame:ItemsDeleteFrame()
 						end)
 						Clickable_ItemsDelete.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
 						Clickable_ItemsDelete.itemID = itemID
-						Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_itemName_NOCOLOR(itemID).."|r")
+						Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_GetItemName(itemID).."|r")
 						break
 					end
 				end
@@ -37,15 +33,14 @@ function OctoToDo_EventFrame:ItemsDeleteFrame()
 	end
 end
 
-OctoToDo_EventFrame:SetScript("OnEvent",
-	function(self, event, ...)
-		if self[event] then
-			self[event](self, ...)
-		else
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("UNUSED UVENT: ", E.Red_Color, E.Venthyr_Color).. E.Green_Color.. event.."|r")
-		end
-end)
-
+		----------------------------------------------------------------
+local MyEventsTable = {
+	"ADDON_LOADED",
+	"BAG_UPDATE_DELAYED",
+	"PLAYER_REGEN_DISABLED",
+	"PLAYER_REGEN_ENABLED",
+}
+E.RegisterMyEventsToFrames(OctoToDo_EventFrame, MyEventsTable, E.func_DebugPath())
 function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
