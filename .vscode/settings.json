@@ -194,6 +194,9 @@
         "ACHIEVEMENT_BUTTON",
         "CreateScrollBoxListGridView",
         "CalendarEventPickerFrame",
-        "BRAWL_TOOLTIP_ENDS"
+        "BRAWL_TOOLTIP_ENDS",
+        "SecondaryStatusTrackingBarContainer",
+        "SPELL_UPGRADE",
+        "GARRISON_FOLLOWERS_TITLE"
     ]
 }

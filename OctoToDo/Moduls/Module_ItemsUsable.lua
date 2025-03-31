@@ -54,7 +54,7 @@ function OctoToDo_EventFrame_ItemsUsable:ItemsUsableFrame()
 							if not InCombatLockdown() then
 								Clickable_ItemsUsable:SetAttribute("macrotext", "/use item:"..itemID)
 							end
-							Clickable_ItemsUsable.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
+							Clickable_ItemsUsable.icon:SetTexture(select(10, C_Item.GetItemInfo(itemID)) or 413587)
 							local RGB = E.func_GetItemQualityColor(itemID)
 							if RGB then
 								local r, g, b = RGB.r, RGB.g, RGB.b
@@ -94,7 +94,7 @@ function OctoToDo_EventFrame_ItemsUsable:ADDON_LOADED(addonName)
 				GameTooltip:SetOwner(Clickable_ItemsUsable, "ANCHOR_BOTTOMRIGHT", 20, -20) -- ANCHOR_CURSOR
 				GameTooltip:ClearLines()
 				if Clickable_ItemsUsable.itemID then
-					local itemLink = select(2, GetItemInfo(Clickable_ItemsUsable.itemID))
+					local itemLink = select(2, C_Item.GetItemInfo(Clickable_ItemsUsable.itemID))
 					GameTooltip:SetHyperlink(itemLink)
 				else
 					GameTooltip:SetText(E.Black_Color.."Clickable_ItemsUsable".."|r")

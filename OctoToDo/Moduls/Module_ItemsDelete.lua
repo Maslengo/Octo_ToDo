@@ -22,7 +22,7 @@ function OctoToDo_EventFrame:ItemsDeleteFrame()
 								DeleteCursorItem()
 								Clickable_ItemsDelete:Hide()
 						end)
-						Clickable_ItemsDelete.icon:SetTexture(select(10, GetItemInfo(itemID)) or 413587)
+						Clickable_ItemsDelete.icon:SetTexture(select(10, C_Item.GetItemInfo(itemID)) or 413587)
 						Clickable_ItemsDelete.itemID = itemID
 						Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_GetItemName(itemID).."|r")
 						break
@@ -56,7 +56,7 @@ function OctoToDo_EventFrame:ADDON_LOADED(addonName)
 				GameTooltip:SetOwner(Clickable_ItemsDelete, "ANCHOR_BOTTOMRIGHT", 20, -20) -- ANCHOR_CURSOR
 				GameTooltip:ClearLines()
 				if Clickable_ItemsDelete.itemID then
-					local itemLink = select(2, GetItemInfo(Clickable_ItemsDelete.itemID))
+					local itemLink = select(2, C_Item.GetItemInfo(Clickable_ItemsDelete.itemID))
 					GameTooltip:SetHyperlink(itemLink)
 				else
 					GameTooltip:SetText(E.Black_Color.."Clickable_ItemsDelete".."|r")

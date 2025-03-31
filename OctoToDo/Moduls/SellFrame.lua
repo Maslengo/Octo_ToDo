@@ -80,7 +80,7 @@ tinsert(E.Modules, function()
 								if containerInfo then
 									local itemID = containerInfo.itemID
 									local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									local _, _, itemRarity, _, _, _, _, _, _, _, itemSellPrice, classID, subclassID = GetItemInfo(itemID)
+									local _, _, itemRarity, _, _, _, _, _, _, _, itemSellPrice, classID, subclassID = C_Item.GetItemInfo(itemID)
 									--if itemRarity == 0 and itemSellPrice ~= 0 and classID ~= 2 and classID ~= 4 then
 									if itemRarity == 0 and itemSellPrice ~= 0 then
 										C_Container.UseContainerItem(bag, slot)
@@ -123,8 +123,8 @@ tinsert(E.Modules, function()
 								if containerInfo then
 									local itemID = containerInfo.itemID
 									local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									-- local _, _, _, _, _, _, classID = select(6, GetItemInfo(itemID))
-									local classID = select(12, GetItemInfo(itemID))
+									-- local _, _, _, _, _, _, classID = select(6, C_Item.GetItemInfo(itemID))
+									local classID = select(12, C_Item.GetItemInfo(itemID))
 									if itemID and classID == 0 then
 										C_Container.UseContainerItem(bag, slot)
 									end
@@ -186,7 +186,7 @@ tinsert(E.Modules, function()
 								if containerInfo then
 									local itemID = containerInfo.itemID
 									local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = GetItemInfo(itemLink)
+									local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = C_Item.GetItemInfo(itemLink)
 									local effectiveILvl = GetDetailedItemLevelInfo(itemID) or 0
 									local baseILvl = tonumber(select(3, GetDetailedItemLevelInfo(itemID))) or 0
 									local ItemTooltip = _G["OctoScanningTooltip"] or
@@ -267,7 +267,7 @@ tinsert(E.Modules, function()
 								if containerInfo then
 									local itemID = containerInfo.itemID
 									local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = GetItemInfo(itemLink)
+									local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = C_Item.GetItemInfo(itemLink)
 									local effectiveILvl = GetDetailedItemLevelInfo(itemID) or 0
 									local baseILvl = tonumber(select(3, GetDetailedItemLevelInfo(itemID))) or 0
 									local ItemTooltip = _G["OctoScanningTooltip"] or

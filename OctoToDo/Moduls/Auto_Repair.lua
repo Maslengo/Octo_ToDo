@@ -10,14 +10,13 @@ tinsert(E.Modules, function()
 					local money = GetMoney()
 					local locale = GetLocale()
 					if canRepair and repairAllCost > money then
-						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..GetCoinTextureString((repairAllCost-money)))
+						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..C_CurrencyInfo.GetCoinTextureString((repairAllCost-money)))
 						if locale == "ruRU" then
 							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg", "Master")
 						else
 							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_ENG.ogg", "Master")
 						end
 					else if (canRepair and repairAllCost > 0) then
-							local costTextureString = GetCoinTextureString(repairAllCost)
 							local guildRepairedItems = false
 							if (IsInGuild() and CanGuildBankRepair()) then
 								local amount = GetGuildBankWithdrawMoney()

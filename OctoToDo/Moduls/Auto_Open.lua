@@ -15,7 +15,7 @@ local function OpenableScan()
 				local itemID = containerInfo.itemID
 				local isLocked = containerInfo.isLocked
 				local iconFileID = containerInfo.iconFileID
-				local name, itemLink = GetItemInfo(itemID)
+				local itemLink = select(2, C_Item.GetItemInfo(itemID))
 				for _, ids in next, (E.OctoTable_itemID_AutoOpen) do
 					if ids == itemID and itemLink and not isLocked then
 						if iconFileID and itemLink and not InCombatLockdown() then

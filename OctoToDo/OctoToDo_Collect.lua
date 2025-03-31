@@ -972,8 +972,8 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 				}
 				local event_duration = E.FriendsFrame_GetLastOnline(time(dateTbl_endTime)-time(dateTbl_startTime), true)
 				collect[id].event_duration = event_duration
-				collect[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month).."/"..startTime_year
-				collect[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month).."/"..endTime_year
+				collect[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month) -- .."/"..startTime_year
+				collect[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month) -- .."/"..endTime_year
 				collect[id].Active = collect[id].Active or false
 				collect[id].Possible = collect[id].Possible or false
 				collect[id].iconTexture = event.iconTexture or ""
@@ -1033,7 +1033,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_BfA_Cloaklvl()
 			if itemLink then
 				local itemID = itemLink:match("item:(%d+)")
 				if itemID == "169223" then
-					local itemLevel = select(4, GetItemInfo(itemLink))
+					local itemLevel = select(4, C_Item.GetItemInfo(itemLink))
 					if itemLevel then
 						if collect and not InCombatLockdown() then
 							collect.cloak_lvl = min(15, max((itemLevel - 125) / 2 + 1, 1))

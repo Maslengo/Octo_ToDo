@@ -676,19 +676,19 @@ function E.func_SecondsToClock(time)
 	-- Формируем строку по частям
 	local parts = {}
 	if years > 0 then
-		table.insert(parts, years..(L["time_YEAR"] or "y"))
-		table.insert(parts, days..(L["time_DAY"] or "d"))
-		table.insert(parts, hours..(L["time_HOUR"] or "h"))
+		table.insert(parts, years..(L["time_YEAR"] or "y").." ")
+		table.insert(parts, days..(L["time_DAY"] or "d").." ")
+		table.insert(parts, hours..(L["time_HOUR"] or "h").." ")
 		table.insert(parts, mins..(L["time_MINUTE"] or "m"))
 	elseif days > 0 then
-		table.insert(parts, days..(L["time_DAY"] or "d"))
-		table.insert(parts, hours..(L["time_HOUR"] or "h"))
+		table.insert(parts, days..(L["time_DAY"] or "d").." ")
+		table.insert(parts, hours..(L["time_HOUR"] or "h").." ")
 		table.insert(parts, mins..(L["time_MINUTE"] or "m"))
 	elseif hours > 0 then
-		table.insert(parts, hours..(L["time_HOUR"] or "h"))
+		table.insert(parts, hours..(L["time_HOUR"] or "h").." ")
 		table.insert(parts, string.format("%02d", mins)..(L["time_MINUTE"] or "m"))
 	elseif time >= 60 then
-		table.insert(parts, mins..(L["time_MINUTE"] or "m"))
+		table.insert(parts, mins..(L["time_MINUTE"] or "m").." ")
 		if time < 600 then  -- Только для 1-9 минут добавляем секунды
 			table.insert(parts, secs..(L["time_SECOND"] or "s"))
 		end
@@ -1737,17 +1737,37 @@ function E:func_CreateUtilsButton(frame)
 			for i, eventID in ipairs(sorted) do
 				local v = OctoToDo_DB_Other.Holiday[eventID]
 				count = count + 1
+				-- if v.Active == true then
+				-- 	-- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
+				-- 	-- СЕЙЧАС
+				-- 	GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+				-- elseif v.Possible == true then
+				-- 	-- БУДУЩЕЕ
+				-- 	GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+				-- else
+				-- 	-- ПРОШЛОЕ
+				-- 	GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+				-- end
+
+
+
 				if v.Active == true then
 					-- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
 					-- СЕЙЧАС
-					GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(E.Green_Color..v.title.."|r"..E.White_Color.." (".. v.ENDS..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				elseif v.Possible == true then
 					-- БУДУЩЕЕ
-					GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(E.LightGray_Color..v.title ..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				else
 					-- ПРОШЛОЕ
-					GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(E.LightGray_Color..v.title ..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				end
+
+
+
+
+
+
 			end
 			if count == 0 then
 				GameTooltip:AddLine("No Data")
