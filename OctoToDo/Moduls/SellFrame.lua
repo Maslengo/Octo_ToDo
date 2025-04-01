@@ -187,8 +187,8 @@ tinsert(E.Modules, function()
 									local itemID = containerInfo.itemID
 									local itemLink = C_Container.GetContainerItemLink(bag, slot)
 									local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = C_Item.GetItemInfo(itemLink)
-									local effectiveILvl = GetDetailedItemLevelInfo(itemID) or 0
-									local baseILvl = tonumber(select(3, GetDetailedItemLevelInfo(itemID))) or 0
+									local effectiveILvl = C_Item.GetDetailedItemLevelInfo(itemID) or 0
+									local baseILvl = tonumber(select(3, C_Item.GetDetailedItemLevelInfo(itemID))) or 0
 									local ItemTooltip = _G["OctoScanningTooltip"] or
 									CreateFrame("GameTooltip", "OctoScanningTooltip", WorldFrame, "GameTooltipTemplate")
 									ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
@@ -268,8 +268,8 @@ tinsert(E.Modules, function()
 									local itemID = containerInfo.itemID
 									local itemLink = C_Container.GetContainerItemLink(bag, slot)
 									local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = C_Item.GetItemInfo(itemLink)
-									local effectiveILvl = GetDetailedItemLevelInfo(itemID) or 0
-									local baseILvl = tonumber(select(3, GetDetailedItemLevelInfo(itemID))) or 0
+									local effectiveILvl = C_Item.GetDetailedItemLevelInfo(itemID) or 0
+									local baseILvl = tonumber(select(3, C_Item.GetDetailedItemLevelInfo(itemID))) or 0
 									local ItemTooltip = _G["OctoScanningTooltip"] or
 									CreateFrame("GameTooltip", "OctoScanningTooltip", WorldFrame, "GameTooltipTemplate")
 									ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");

@@ -3,18 +3,15 @@ local GlobalAddonName, E = ...
 local OctoToDo_EventFrame_AutoTurnIn = CreateFrame("Frame")
 OctoToDo_EventFrame_AutoTurnIn:Hide()
 ----------------------------------------------------------------
-local collectTrivial = false
-local collectRepeatable = false
+local collectTrivial = true
+local collectRepeatable = true
 ----------------------------------------------------------------
 local MyEventsTable = {
-	-- "ADDON_LOADED",
 	"QUEST_DETAIL",
 	"QUEST_COMPLETE",
 	"QUEST_GREETING",
 	"GOSSIP_SHOW",
 	"QUEST_PROGRESS",
-	"QUEST_LOG_UPDATE",
-	"QUEST_ACCEPTED",
 }
 E.RegisterMyEventsToFrames(OctoToDo_EventFrame_AutoTurnIn, MyEventsTable, E.func_DebugPath())
 
@@ -67,21 +64,19 @@ function OctoToDo_EventFrame_AutoTurnIn:GOSSIP_SHOW()
 	if not IsShiftKeyDown() then
 		if C_GossipInfo.GetActiveQuests() ~= 0 then
 			for _, info in next, (C_GossipInfo.GetActiveQuests()) do
-				if info.isComplete and
-				not C_QuestLog.IsWorldQuest(info.questID) then
+				if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
 					C_GossipInfo.SelectActiveQuest(info.questID)
 				end
 			end
 		end
 		if C_GossipInfo.GetAvailableQuests() ~= 0 then
 			for _, info in next, (C_GossipInfo.GetAvailableQuests()) do
-				if (collectTrivial == info.isTrivial) or (collectRepeatable == info.collectRepeatable) then
-					print ("QWE")
+				-- ПОКА ВСЁ СТЁРТО БЕРУТСЯ ВСЕ КВЕСТЫ
+				-- if (collectTrivial == info.isTrivial) and (collectRepeatable == info.repeatable) then
+				-- 	return
+				-- else
 					C_GossipInfo.SelectAvailableQuest(info.questID)
-				else
-					print ("222")
-					C_GossipInfo.SelectAvailableQuest(info.questID)
-				end
+				-- end
 			end
 		end
 	end

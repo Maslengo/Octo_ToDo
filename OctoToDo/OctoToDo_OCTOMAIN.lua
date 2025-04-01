@@ -60,6 +60,7 @@ E.func_LoadAddOn("MountsJournal")
 E.func_LoadAddOn("HidingBar")
 E.func_LoadAddOn("HidingBar_Options")
 E.func_LoadAddOn("SpeedyAutoLoot")
+E.func_LoadAddOn("SimpleAddonManager")
 -- E.func_LoadAddOn("TalentTreeTweaks")
 -- E.func_LoadAddOn("Plater")
 -- E.func_LoadAddOn("MacroManager")
@@ -1141,11 +1142,8 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Vars.DebugButton == nil then OctoToDo_DB_Vars.DebugButton = false end
 		E.DebugButton = OctoToDo_DB_Vars.DebugButton
 
-
-
-
 		if OctoToDo_DB_Vars.PortalsButtons == nil then OctoToDo_DB_Vars.PortalsButtons = true end
-		if OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent == nil then OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent = false end
+		if OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable == nil then OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable = true end
 
 
 		if OctoToDo_DB_Vars.color == nil then OctoToDo_DB_Vars.color = {1, 1, 1} end
@@ -1263,10 +1261,14 @@ function OctoToDo_EventFrame_OCTOMAIN:VARIABLES_LOADED()
 		self:UnregisterEvent("VARIABLES_LOADED")
 		self.VARIABLES_LOADED = nil
 		----------------------------------------------------------------
-		if OctoToDo_DB_Vars.CVar and not InCombatLockdown() then
-			C_Timer.After(.1, function()
-					E.LoadCVars()
-			end)
+		if OctoToDo_DB_Vars.CVar then
+			E.LoadCVars()
+			-- C_Timer.After(.1, function()
+			-- 	if not InCombatLockdown() then
+			-- 		print ("2")
+			-- 		E.LoadCVars()
+			-- 	end
+			-- end)
 		end
 		----------------------------------------------------------------
 	end
@@ -1274,6 +1276,7 @@ end
 function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
+
 	C_WowTokenPublic.UpdateMarketPrice()
 	self:func_CreateMineFrame()
 	GameMenuFrame:SetScale(OctoToDo_DB_Vars.GameMenuFrameScale or 1)
@@ -1302,6 +1305,7 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	E:InitOptions()
 	self:OctoToDo_Create_MainFrame_OCTOMAIN()
+	E.PortalsFrame()
 	self:func_Create_DD_OCTOMAIN()
 	self:func_Create_DD2_OCTOMAIN()
 	----------------------------------------------------------------

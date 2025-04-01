@@ -9,6 +9,8 @@ local GlobalAddonName, E = ...
 -- DEV_CVAR
 function E.LoadCVars()
 	-- print (E.Green_Color.."Load CVars|r")
+	-- C_CVar.RegisterCVar("addonProfilerEnabled", 0)
+	-- SetCVar("addonProfilerEnabled", 0) -- /dump C_AddOnProfiler.IsEnabled()
 	SetCVar("overrideScreenFlash", 1)
 	SetCVar("CameraReduceUnexpectedMovement", 0)
 	SetCVar("ShakeStrengthUI", 0)

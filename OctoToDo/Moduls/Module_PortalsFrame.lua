@@ -47,7 +47,7 @@ function OctoToDo_PortalsFrame:PortalsFrame()
 			end)
 		end
 	end
-
+ -- OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable
 
 	if not InCombatLockdown() then
 		if OctoToDo_MainFrame_OCTOMAIN then
@@ -57,8 +57,13 @@ function OctoToDo_PortalsFrame:PortalsFrame()
 				local stroka = 1
 				for _, v in ipairs (tbl) do
 					if type(v) == "number" then
-						E:CreateUsableSpellFrame(v, "TOPLEFT", AnchorFrame, "TOPLEFT", -Height*stolbec, -Height*stroka, Height)
-						stroka = stroka + 1
+						if (OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable == true and E:func_IsAvailable(v, "spell") == true) then
+							E:CreateUsableSpellFrame(v, "TOPLEFT", AnchorFrame, "TOPLEFT", -Height*stolbec, -Height*stroka, Height)
+							stroka = stroka + 1
+						elseif OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable == false then
+							E:CreateUsableSpellFrame(v, "TOPLEFT", AnchorFrame, "TOPLEFT", -Height*stolbec, -Height*stroka, Height)
+							stroka = stroka + 1
+						end
 					else
 						if (not v.faction or v.faction == curFaction)
 							and (not v.race or v.race == curRace)
@@ -66,8 +71,13 @@ function OctoToDo_PortalsFrame:PortalsFrame()
 							and (not v.profession or v.profession == curProfession)
 							and (not v.level or v.level > curLevel)
 							then
-							E:CreateUsableSpellFrame(v.id, "TOPLEFT", AnchorFrame, "TOPLEFT", -Height*stolbec, -Height*stroka, Height, v.isItem)
-							stroka = stroka + 1
+								if (OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable == true and E:func_IsAvailable(v.id, v.curType) == true) then
+									E:CreateUsableSpellFrame(v.id, "TOPLEFT", AnchorFrame, "TOPLEFT", -Height*stolbec, -Height*stroka, Height, v.curType)
+									stroka = stroka + 1
+								elseif OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable == false then
+									E:CreateUsableSpellFrame(v.id, "TOPLEFT", AnchorFrame, "TOPLEFT", -Height*stolbec, -Height*stroka, Height, v.curType)
+									stroka = stroka + 1
+								end
 						end
 					end
 				end
@@ -79,23 +89,25 @@ function OctoToDo_PortalsFrame:PortalsFrame()
 	end
 end
 
-local MyEventsTable = {
-	"ADDON_LOADED",
-}
-E.RegisterMyEventsToFrames(OctoToDo_PortalsFrame, MyEventsTable, E.func_DebugPath())
+E.PortalsFrame = OctoToDo_PortalsFrame.PortalsFrame
 
-function OctoToDo_PortalsFrame:ADDON_LOADED(addonName)
 
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-		C_Timer.After(.1, function()
-			if OctoToDo_DB_Vars.PortalsButtons then
-				self:PortalsFrame()
-			end
-		end)
-	end
-end
+-- local MyEventsTable = {
+-- 	"ADDON_LOADED",
+-- }
+-- E.RegisterMyEventsToFrames(OctoToDo_PortalsFrame, MyEventsTable, E.func_DebugPath())
+
+-- function OctoToDo_PortalsFrame:ADDON_LOADED(addonName)
+-- 	if addonName == GlobalAddonName then
+-- 		self:UnregisterEvent("ADDON_LOADED")
+-- 		self.ADDON_LOADED = nil
+-- 		C_Timer.After(.1, function()
+-- 			if OctoToDo_DB_Vars.PortalsButtons then
+-- 				self:PortalsFrame()
+-- 			end
+-- 		end)
+-- 	end
+-- end
 
 -- function OctoToDo_PortalsFrame:PLAYER_REGEN_DISABLED()
 -- end

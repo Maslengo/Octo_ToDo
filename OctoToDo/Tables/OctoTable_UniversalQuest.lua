@@ -123,12 +123,12 @@ E.OctoTable_UniversalQuest = {
 		reset = "Weekly",
 		desc = "BattleforAzeroth",
 		questID = {
-			52196, -- WBALL 1
-			52169, -- WBALL 1
-			52181, -- WBALL 1
-			52166, -- WBALL 1
-			52163, -- WBALL 1
-			52157, -- WBALL 1
+			52196, -- 1
+			52169, -- 1
+			52181, -- 1
+			52166, -- 1
+			52163, -- 1
+			52157, -- 1
 
 			52848, -- Гибельный вой 1
 			52847, -- Гибельный вой 1
@@ -167,7 +167,7 @@ E.OctoTable_UniversalQuest = {
 
 			-- 43798, -- ОЧЕНЬ ОПАСЕН: Косумот Алчущий
 		},
-		max = 1
+		max = 2
 	},
 	{
 		name_save = "WorldBoss",
@@ -369,18 +369,6 @@ E.OctoTable_UniversalQuest = {
 	----------------------------------------------------------------
 	-- НОВОЕ
 	{
-		name_save = "WBALL",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			69927,
-			69928,
-			69929,
-			69930,
-		},
-		max = 1
-	},
-	{
 		name_save = "WBZaqaliElders",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -397,39 +385,6 @@ E.OctoTable_UniversalQuest = {
 		-- place = "EmeraldDream_",
 		questID = {
 			76367,
-		},
-		max = 1
-	},
-	{
-		name_save = "WBALL",
-		reset = "Weekly",
-		desc = "BattleforAzeroth",
-		questID = {
-			52157,
-			52163,
-			52166,
-			52181,
-			52169,
-			52196,
-		},
-		max = 1
-	},
-	{
-		name_save = "WBALL",
-		reset = "Weekly",
-		desc = "Legion",
-		questID = {
-			43512,
-			43193,
-			43448,
-			43985,
-			42819,
-			43192,
-			43513,
-			42270,
-			42779,
-			42269,
-			44287,
 		},
 		max = 1
 	},

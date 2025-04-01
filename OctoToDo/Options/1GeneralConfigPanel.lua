@@ -460,15 +460,15 @@ function E.CreateGeneralOptions()
 				order = 38,
 			},
 			-------------------------------------------------
-			PortalsButtonsOnlyCurrent = {
+			PortalsButtonsOnlyAvailable = {
 				type = "toggle",
-				name = E.func_texturefromIcon(3610528, 18).."PortalsButtonsOnlyCurrent",
+				name = E.func_texturefromIcon(3610528, 18).."PortalsButtonsOnlyAvailable",
 				desc = "",
 				get = function()
-					return OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent
+					return OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable
 				end,
 				set = function(_, value)
-					OctoToDo_DB_Vars.PortalsButtonsOnlyCurrent = value
+					OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = 39,

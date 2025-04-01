@@ -197,6 +197,8 @@
         "BRAWL_TOOLTIP_ENDS",
         "SecondaryStatusTrackingBarContainer",
         "SPELL_UPGRADE",
-        "GARRISON_FOLLOWERS_TITLE"
+        "GARRISON_FOLLOWERS_TITLE",
+        "PrivateRaidBossEmoteFrameAnchor",
+        "OrderHallCommandBar"
     ]
 }

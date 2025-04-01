@@ -460,6 +460,27 @@ function E.func_texturefromIcon(icon, iconSize, isShown)
 	end
 	return vivod.." "
 end
+
+
+function E.func_texturefromIconEVENT(icon, iconSize, isShown)
+	if isShown == nil then isShown = true end
+	if iconSize == nil then iconSize = 14 end
+	if icon == nil then icon = 134400 end
+	local vivod
+	if isShown == true then
+		vivod = "|T".. icon ..":"..iconSize..":"..iconSize..":::128:128:0:91:0:91|t"
+	else
+		vivod = ""
+	end
+	return vivod.." "
+end
+
+
+
+
+
+
+
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
 	local vivod = ""
@@ -565,7 +586,7 @@ function E.func_currencyName(currencyID)
 			local name = info.name
 			local iconFileID = info.iconFileID
 			local quality = info.quality
-			local r, g, b = GetItemQualityColor(quality)
+			local r, g, b = C_Item.GetItemQualityColor(quality)
 			local color = CreateColor(r, g, b, 1)
 			local currencyName = color:WrapTextInColorCode(name)
 			vivod = ATrans..AWide..currencyName
@@ -598,7 +619,7 @@ function E.func_currencyName_NOCOLOR(currencyID)
 		local name = info.name
 		-- local iconFileID = info.iconFileID
 		-- local quality = info.quality
-		-- local r, g, b = GetItemQualityColor(quality)
+		-- local r, g, b = C_Item.GetItemQualityColor(quality)
 		-- local color = CreateColor(r, g, b, 1)
 		-- local currencyName = color:WrapTextInColorCode(name)
 		vivod = ATrans..AWide..name
@@ -1750,19 +1771,16 @@ function E:func_CreateUtilsButton(frame)
 				-- end
 
 
-
 				if v.Active == true then
-					-- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
 					-- СЕЙЧАС
-					GameTooltip:AddDoubleLine(E.Green_Color..v.title.."|r"..E.White_Color.." (".. v.ENDS..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..E.White_Color.." (".. v.ENDS..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				elseif v.Possible == true then
 					-- БУДУЩЕЕ
-					GameTooltip:AddDoubleLine(E.LightGray_Color..v.title ..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.LightGray_Color..v.title ..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				else
 					-- ПРОШЛОЕ
-					GameTooltip:AddDoubleLine(E.LightGray_Color..v.title ..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.LightGray_Color..v.title ..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				end
-
 
 
 
@@ -1839,8 +1857,61 @@ function E:StopSpam(func)
 	print ("StopSpam", tostring(func))
 end
 ----------------------------------------------------------------
-function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, isItem)
+function E:func_IsAvailable(id, curType)
+	local id = id or nil
+	local curType = curType or nil
+	if id and curType then
+		if curType == "spell" and IsSpellKnown(id) then
+			return true
+		elseif curType == "item" and C_Item.GetItemCount(id, false, false, false) > 0 then
+			return true
+		elseif curType == "toy" and PlayerHasToy(id) then
+			return true
+		else
+			return false
+		end
+	end
+end
+
+-- /dump C_Item.GetItemCount(141605)
+----------------------------------------------------------------
+function E:func_IsOnCD(id, curType)
+	local id = id or nil
+	local curType = curType or nil
+	if id and curType then
+		if curType == "spell" and C_Spell.GetSpellCooldown(id).startTime > 0 then
+			return true
+		elseif curType == "item" and select(2, C_Item.GetItemCooldown(id)) > 0 then
+			return true
+		elseif curType == "toy" and select(2, C_Item.GetItemCooldown(id)) > 0 then
+			return true
+		else
+			return false
+		end
+	end
+end
+-- /dump PlayerHasToy(172924)
+function E:FrameColor(frame, id, curType)
+	if E:func_IsAvailable(id, curType) == false then
+		frame:SetBackdropBorderColor(0, 0, 0, .5)
+		frame.icon:SetVertexColor(1, 1, 1, .5)
+		frame.icon:SetDesaturated(true)
+	else
+		if E:func_IsOnCD(id, curType) == true then
+			frame.icon:SetVertexColor(1, 0, 0, 1)
+		else
+			frame.icon:SetVertexColor(1, 1, 1, 1)
+		end
+	end
+end
+
+
+
+
+----------------------------------------------------------------
+function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType)
 	if id and type(id) == "number" then
+		local curType = curType or "spell"
 		local frame = CreateFrame("Button", nil, parent, "SecureActionButtonTemplate, BackDropTemplate")
 		frame:Hide()
 		frame:SetPoint(point, parent, rPoint, x, y)
@@ -1850,7 +1921,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, isItem)
 		local bbalpha = 1
 		frame.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.icon:SetAllPoints()
-		if isItem == true then
+		if curType == "item" or curType == "toy" then
 			frame.icon:SetTexture(E.func_GetItemIcon(id))
 		else
 			frame.icon:SetTexture(E.func_GetSpellIcon(id))
@@ -1868,56 +1939,50 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, isItem)
 		frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 		frame:SetAttribute("type", "macro")
 		if not InCombatLockdown() then
-			if isItem == true then
+			if curType == "item" or curType == "toy" then
 				frame:SetAttribute("macrotext", "/use item:"..id)
 			else
 				frame:SetAttribute("macrotext", "/cast "..C_Spell.GetSpellName(id))
 			end
 		end
-
 		if not frame.isInit then
 			frame.isInit = true
 			frame:SetScript("OnShow", function(self)
 					self:SetBackdropBorderColor(0, 0, 0, bbalpha)
-					-- if E.func_GetSpellCooldown(id) > 0 then
-					--     self.icon:SetVertexColor(.5, .5, .5, 1)
-					-- else
-					--     self.icon:SetVertexColor(1, 1, 1, 1)
-					-- end
+					E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnEnter", function(self)
-					self.icon:SetVertexColor(r, g, b, 1)
 					self:SetBackdropBorderColor(r, g, b, bbalpha)
-					-- C_Timer.NewTicker(.1, function()
+					E:FrameColor(self, id, curType)
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 					GameTooltip:ClearLines()
-
-					if isItem == true then
+					if curType == "item" or curType == "toy" then
 						GameTooltip:AddDoubleLine(E.func_GetItemName(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
 					else
 						GameTooltip:AddDoubleLine(E.func_GetSpellName(id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
 						GameTooltip:AddDoubleLine(E.func_GetSpellSubtext(id))
 					end
 					GameTooltip:Show()
-					-- end)
 			end)
 			frame:SetScript("OnLeave", function(self)
-					self.icon:SetVertexColor(1, 1, 1, 1)
 					self:SetBackdropBorderColor(0, 0, 0, bbalpha)
+					E:FrameColor(self, id, curType)
 					GameTooltip:ClearLines()
 					GameTooltip:Hide()
 			end)
 			frame:SetScript("OnMouseDown", function(self)
-					self.icon:SetVertexColor(1, 0, 0, .5)
 					self:SetBackdropBorderColor(1, 0, 0, bbalpha)
+					E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnMouseUp", function(self)
-					self.icon:SetVertexColor(r, g, b, 1)
 					self:SetBackdropBorderColor(r, g, b, bbalpha)
+					E:FrameColor(self, id, curType)
 			end)
 		end
 	end
 end
+
+
 function E.func_DebugPath()
 	local stack = debugstack(2)
 	local vivod1 = stack:match("Interface/AddOns/(.-):%d+") or "unknown"

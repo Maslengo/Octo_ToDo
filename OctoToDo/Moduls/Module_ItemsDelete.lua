@@ -24,7 +24,7 @@ function OctoToDo_EventFrame:ItemsDeleteFrame()
 						end)
 						Clickable_ItemsDelete.icon:SetTexture(select(10, C_Item.GetItemInfo(itemID)) or 413587)
 						Clickable_ItemsDelete.itemID = itemID
-						Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_GetItemName(itemID).."|r")
+						Clickable_ItemsDelete.text:SetText(" "..C_Item.GetItemCount(itemID, true, true, true).." "..E.Red_Color..E.func_GetItemName(itemID).."|r")
 						break
 					end
 				end

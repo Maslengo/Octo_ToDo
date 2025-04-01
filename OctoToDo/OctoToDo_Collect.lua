@@ -184,9 +184,9 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_Player_Level()
 		else
 			if GameLimitedMode_IsActive == true then
 				if UnitLevel >= GetRestrictedAccountData_rLevel then
-					if MainStatusTrackingBarContainer and MainStatusTrackingBarContainer:IsShown() then
-						tinsert(E.OctoTable_MustBeHiddenFrames_table, {name = "MainStatusTrackingBarContainer", frame = MainStatusTrackingBarContainer})
-					end
+					-- if MainStatusTrackingBarContainer and MainStatusTrackingBarContainer:IsShown() then
+					-- 	tinsert(E.OctoTable_MustBeHiddenFrames_table, {name = "MainStatusTrackingBarContainer", frame = MainStatusTrackingBarContainer})
+					-- end
 					collect.levelCapped20 = true
 					collect.PlayerCanEarnExperience = false
 				else
@@ -338,8 +338,8 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_GreatVault()
 						collect.GreatVault[tip].type = activity_name
 						collect.GreatVault[tip].progress = activityInfo.progress
 						collect.GreatVault[tip].threshold = activityInfo.threshold
-						local hyperlink = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
-						hyperlink_STRING = GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+						local hyperlink = C_Item.GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+						hyperlink_STRING = C_Item.GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						if hyperlink_STRING then
 							vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
 							if vivod ~= nil then
@@ -386,19 +386,17 @@ end
 function OctoToDo_EventFrame_Collect:Collect_All_Reputations_TEST2()
 	OCTO_DB_reputations_test = OCTO_DB_reputations_test or {}
 	local collapsed = {}
-	local index = 1
-	while index <= C_Reputation.GetNumFactions() do
-		local factionData = C_Reputation.GetFactionDataByIndex(index)
+	for i = 1, C_Reputation.GetNumFactions() do
+		local factionData = C_Reputation.GetFactionDataByIndex(i)
 		if factionData and factionData.isHeader and factionData.isCollapsed then
-			C_Reputation.ExpandFactionHeader(index)
+			C_Reputation.ExpandFactionHeader(i)
 			collapsed[factionData.name] = true
 		end
-		index = index + 1
 	end
 	local tblHeader
 	local tblHeader2
-	for index = 1, C_Reputation.GetNumFactions() do
-		local factionData = C_Reputation.GetFactionDataByIndex(index)
+	for i = 1, C_Reputation.GetNumFactions() do
+		local factionData = C_Reputation.GetFactionDataByIndex(i)
 		if factionData then
 			local reputationID = factionData.factionID
 			local currentStanding = factionData.currentStanding
@@ -415,10 +413,10 @@ function OctoToDo_EventFrame_Collect:Collect_All_Reputations_TEST2()
 			end
 		end
 	end
-	for index = C_Reputation.GetNumFactions(), 1, -1 do
-		local factionData = C_Reputation.GetFactionDataByIndex(index)
+	for i = C_Reputation.GetNumFactions(), 1, -1 do
+		local factionData = C_Reputation.GetFactionDataByIndex(i)
 		if factionData and collapsed[factionData.name] then
-			C_Reputation.CollapseFactionHeader(index)
+			C_Reputation.CollapseFactionHeader(i)
 		end
 	end
 end
@@ -428,9 +426,9 @@ function OctoToDo_EventFrame_Collect:Collect_All_Currency()
 	if collect and not InCombatLockdown() then
 		if not InCombatLockdown() then
 			local Collapsed = {}
-			local listSize, i = C_CurrencyInfo.GetCurrencyListSize(), 1
+			local listSize = C_CurrencyInfo.GetCurrencyListSize()
 			local headerIndex
-			while listSize >= i do
+			for i = 1, listSize do
 				local info = C_CurrencyInfo.GetCurrencyListInfo(i)
 				if info.isHeader then
 					C_CurrencyInfo.ExpandCurrencyList(i, true)
@@ -444,7 +442,6 @@ function OctoToDo_EventFrame_Collect:Collect_All_Currency()
 						OctoToDo_DB_Config.CurrencyDB[currencyID] = OctoToDo_DB_Config.CurrencyDB[currencyID] or false
 					end
 				end
-				i = i + 1
 			end
 		end
 		for CurrencyID, v in next, (OctoToDo_DB_Config.CurrencyDB) do
@@ -533,16 +530,17 @@ end
 function OctoToDo_EventFrame_Collect:Collect_All_Reputations()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
-		local listSize, i = C_Reputation.GetNumFactions(), 1
+		local listSize = C_Reputation.GetNumFactions()
 		C_Reputation.ExpandAllFactionHeaders()
-		while listSize >= i do
+		for i = 1, listSize do
 			local factionData = C_Reputation.GetFactionDataByIndex(i)
-			local reputationID = factionData.factionID
-			local description = factionData.description or ""
-			if reputationID and description ~= "" then
-				OctoToDo_DB_Config.ReputationDB[reputationID] = OctoToDo_DB_Config.ReputationDB[reputationID] or false
+			if factionData then
+				local reputationID = factionData.factionID
+				local description = factionData.description or ""
+				if reputationID and description ~= "" then
+					OctoToDo_DB_Config.ReputationDB[reputationID] = OctoToDo_DB_Config.ReputationDB[reputationID] or false
+				end
 			end
-			i = i + 1
 		end
 		for reputationID, v in next, (OctoToDo_DB_Config.ReputationDB) do
 			if reputationID then
@@ -558,6 +556,8 @@ function OctoToDo_EventFrame_Collect:Collect_All_Reputations()
 		end
 	end
 end
+
+
 
 function OctoToDo_EventFrame_Collect:Collect_ALL_ItemsInBag()
 	local collect = OctoToDo_DB_Levels[curGUID]
@@ -618,7 +618,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_ItemsInBag()
 		collect.MASLENGO = collect.MASLENGO or {}
 		collect.MASLENGO.ItemsInBag = collect.MASLENGO.ItemsInBag or {}
 		for _, itemID in next, (E.OctoTable_itemID_ALL) do
-			local count = GetItemCount(itemID, true, true, true)
+			local count = C_Item.GetItemCount(itemID, true, true, true)
 			collect.MASLENGO.ItemsInBag[itemID] = count
 		end
 		collect.Possible_Anima = Possible_Anima
@@ -881,18 +881,21 @@ function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 				end
 			end
 		end
+
 	end
 end
 
 function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 	local collect = OctoToDo_DB_Other.Holiday
 	wipe(OctoToDo_DB_Other.Holiday)
+	-- fpde(C_Calendar.EventGetTextures(4))
+	-- for _, v in pairs(Enum.CalendarEventType) do
+	-- 	local textures = C_Calendar.EventGetTextures(v)
+	-- 	for p, z in pairs(textures) do
+	-- 		print (p, z.title)
+	-- 	end
+	-- end
 	if collect and not InCombatLockdown() then
-		-- if not E.IsAddOnLoaded("Blizzard_Calendar") then
-		--     E.LoadAddOn("Blizzard_Calendar")
-		--     ShowUIPanel(CalendarFrame, true)
-		--     HideUIPanel(CalendarFrame)
-		-- end
 		local backup = OctoToDo_DB_Other.CVar
 		local function function_setBackup()
 			if CalendarFrame then
@@ -938,6 +941,7 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 		for day = 1, monthInfo.numDays do
 			local numEvents = C_Calendar.GetNumDayEvents(offsetMonths, day)
 			for i = 1, numEvents do
+				local eInfo = C_Calendar.GetHolidayInfo(0, day, i)
 				local event = C_Calendar.GetDayEvent(offsetMonths, day, i)
 				local id = event.eventID
 				collect[id] = collect[id] or {}
@@ -945,7 +949,6 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 				if OctoToDo_TrashCan then
 					OctoToDo_TrashCan.Holiday[id] = event.title
 				end
-
 				local startTime = event.startTime
 				local endTime = event.endTime
 				local startTime_year = startTime.year
@@ -976,9 +979,19 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 				collect[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month) -- .."/"..endTime_year
 				collect[id].Active = collect[id].Active or false
 				collect[id].Possible = collect[id].Possible or false
-				collect[id].iconTexture = event.iconTexture or ""
+				-- collect[id].iconTexture = event.iconTexture or ""
 				collect[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
+				if eInfo then
+					collect[id].iconTexture = eInfo.texture or 134400
+				else
+					collect[id].iconTexture = event.iconTexture or 134400
+					collect[id].ENDS = event_duration
+				end
 
+				collect[id].invitedBy = event.invitedBy
+				-- if id == 244009 then
+				-- 	print (event.title, startTime, startTime_monthDay, event_duration)
+				-- end
 
 				if not collect[id].priority then
 					collect[id].priority = priority
@@ -1027,7 +1040,7 @@ end
 function OctoToDo_EventFrame_Collect:Collect_All_BfA_Cloaklvl()
 	local collect = OctoToDo_DB_Levels[curGUID]
 	if collect and not InCombatLockdown() then
-		local hasItem = GetItemCount(169223, true, true, true)
+		local hasItem = C_Item.GetItemCount(169223, true, true, true)
 		if hasItem ~= 0 then
 			local itemLink = GetInventoryItemLink("player", 15)
 			if itemLink then

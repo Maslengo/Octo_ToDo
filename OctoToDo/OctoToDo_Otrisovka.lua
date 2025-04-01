@@ -1185,30 +1185,34 @@ function E:func_Otrisovka()
 	end
 	----------------------------------------------------------------
 	if OctoToDo_DB_Vars.ExpansionToShow[9] then
+		local BGcolor
 		----------------------------------------------------------------
-		for k = 1, 2 do
-			for i = 1, 4 do
+		for kCovenant = 1, 2 do
+			for iANIMA = 1, 4 do
 				--------------------------------
 				tinsert(OctoTable_func_otrisovkaCENT,
 					function(CharInfo)
 						local vivodCent, tooltip = " ", {}
-						vivodCent = E.OctoTable_Covenant[i].color..vivodCent.."|r"
-						if i == CharInfo.CovenantAndAnima.curCovID then
-							if CharInfo.Possible_Anima ~= 0 and k == 2 then
+						if kCovenant == 1 then
+							vivodCent = vivodCent..E.func_EmptyZero(CharInfo.CovenantAndAnima[iANIMA][kCovenant])
+						else
+							vivodCent = vivodCent..E.func_EmptyZero(CharInfo.CovenantAndAnima[iANIMA][kCovenant])
+						end
+						vivodCent = E.OctoTable_Covenant[iANIMA].color..vivodCent.."|r"
+						if iANIMA == CharInfo.CovenantAndAnima.curCovID then
+							if CharInfo.Possible_Anima ~= 0 and kCovenant == 2 then
 								vivodCent = vivodCent..E.Blue_Color.." +"..CharInfo.Possible_Anima.."|r"
 							end
-						end
-						if k == 1 then
-							vivodCent = E.func_EmptyZero(CharInfo.CovenantAndAnima[i][k])
+							BGcolor = E.OctoTable_Covenant[iANIMA].color
 						else
-							vivodCent = E.func_EmptyZero(CharInfo.CovenantAndAnima[i][k])
+							BGcolor = nil
 						end
-						return vivodCent, tooltip
+						return vivodCent, tooltip, BGcolor
 				end)
 				tinsert(OctoTable_func_otrisovkaLEFT,
 					function(CharInfo)
-						local vivodLeft = E.func_texturefromIcon(E.OctoTable_Covenant[i].icon)..E.OctoTable_Covenant[i].color..E.OctoTable_Covenant[i].name.."|r"
-						if k == 2 then
+						local vivodLeft = E.func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon)..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r"
+						if kCovenant == 2 then
 							vivodLeft = vivodLeft..E.func_currencyIcon(1813)
 						end
 						return vivodLeft

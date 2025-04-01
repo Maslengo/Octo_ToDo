@@ -48,7 +48,7 @@ function OctoToDo_EventFrame_ItemsUsable:ItemsUsableFrame()
 				local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 				if containerInfo then
 					local itemID = containerInfo.itemID
-					if itemID and E.OctoTable_itemID_ItemsUsable[itemID] and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= E.OctoTable_itemID_ItemsUsable[itemID] then
+					if itemID and E.OctoTable_itemID_ItemsUsable[itemID] and not E.OctoTable_itemID_Ignore_List[itemID] and C_Item.GetItemCount(itemID) >= E.OctoTable_itemID_ItemsUsable[itemID] then
 						if self:TEST_FUNC(E.func_GetItemLink(itemID)) == 0 then
 							Clickable_ItemsUsable:Show()
 							if not InCombatLockdown() then
@@ -61,7 +61,7 @@ function OctoToDo_EventFrame_ItemsUsable:ItemsUsableFrame()
 								Clickable_ItemsUsable:SetBackdropBorderColor(r, g, b, 1)
 							end
 							Clickable_ItemsUsable.itemID = itemID
-							Clickable_ItemsUsable.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
+							Clickable_ItemsUsable.text:SetText(" "..C_Item.GetItemCount(itemID, true, true, true).." "..E.func_itemName(itemID))
 							break
 						end
 					end
