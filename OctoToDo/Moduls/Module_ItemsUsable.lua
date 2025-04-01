@@ -55,7 +55,7 @@ function OctoToDo_EventFrame_ItemsUsable:ItemsUsableFrame()
 								Clickable_ItemsUsable:SetAttribute("macrotext", "/use item:"..itemID)
 							end
 							Clickable_ItemsUsable.icon:SetTexture(select(10, C_Item.GetItemInfo(itemID)) or 413587)
-							local RGB = E.func_GetItemQualityColor(itemID)
+							local RGB = E.func_GetItemQualityColorID(itemID)
 							if RGB then
 								local r, g, b = RGB.r, RGB.g, RGB.b
 								Clickable_ItemsUsable:SetBackdropBorderColor(r, g, b, 1)

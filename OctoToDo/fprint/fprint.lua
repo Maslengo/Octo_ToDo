@@ -391,20 +391,14 @@ end
 ------------------------------
 SLASH_OCTOLISTCURRENCIES1 = "/OCTOLISTCURRENCIES"
 SlashCmdList.OCTOLISTCURRENCIES = function(msg)
-	local str3 = ""
+	local str3 = "" 
 	local headerName = ""
-	local Collapsed = {}
-	local listSize, i = C_CurrencyInfo.GetCurrencyListSize(), 1
-	local headerIndex
-	while listSize >= i do
+	for i = 1, C_CurrencyInfo.GetCurrencyListSize() do
 		local info = C_CurrencyInfo.GetCurrencyListInfo(i)
 		if info.isHeader then
 			C_CurrencyInfo.ExpandCurrencyList(i, true)
-			Collapsed[info.name] = true
-			listSize = C_CurrencyInfo.GetCurrencyListSize()
-			headerIndex = i
-			headerName = C_CurrencyInfo.GetCurrencyListInfo(i)
-			str3 = str3 .."|cff606060 ---> ".. headerName.name .. "|r\n"
+			headerName = C_CurrencyInfo.GetCurrencyListInfo(i).name
+			str3 = str3 .."|cff606060 ---> ".. headerName .. "|r\n"
 		elseif info.name then
 			local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
 			local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)

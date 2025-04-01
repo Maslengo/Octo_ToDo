@@ -190,15 +190,18 @@ local OctoTable_RIO_COLORS = {
 }
 -- ITEM UTILS
 ----------------------------------------------------------------
-function E.func_GetItemInfo(itemID)
-	return C_Item.GetItemInfo(itemID)
+function E.func_GetItemInfo(itemInfo) -- Item ID, Link or name
+	return C_Item.GetItemInfo(itemInfo)
+end
+----------------------------------------------------------------
+function E.func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
+	return GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
 end
 ----------------------------------------------------------------
 function E.func_GetItemIcon(itemID)
 	return C_Item.GetItemIconByID(itemID)
 end
 ----------------------------------------------------------------
-
 function E.func_GetItemName(itemID)
 	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
 	if E.DebugIDs == true and vivod ~= nil then
@@ -216,12 +219,22 @@ function E.func_GetItemQuality(itemID)
 	return C_Item.GetItemQualityByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_GetItemQualityColor(itemID)
+function E.func_GetItemQualityColorID(itemID)
 	return ITEM_QUALITY_COLORS[E.func_GetItemQuality(itemID)]
 end
 ----------------------------------------------------------------
 function E.func_GetItemQualityColorRGB(itemID)
 	return E.func_GetItemQualityColor(itemID).color:GetRGB()
+end
+----------------------------------------------------------------
+function E.func_GetItemQualityColor(quality)
+	local r, g, b = C_Item.GetItemQualityColor(quality)
+	return r, g, b
+
+end
+----------------------------------------------------------------
+function E.IsAnimaItemByID(itemID)
+	return C_Item.IsAnimaItemByID(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemCurrentLevel(itemID)
@@ -252,7 +265,7 @@ end
 ----------------------------------------------------------------
 function E.func_itemName(itemID)
 	local itemName = C_Item.GetItemNameByID(itemID) or Red_Color..SEARCH_LOADING_TEXT.."|r" -- RETRIEVING_ITEM_INFO
-	local itemQuality = select(3, C_Item.GetItemInfo(itemID))
+	local itemQuality = select(3, E.func_GetItemInfo(itemID))
 	local vivod
 	if itemQuality then
 		vivod = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
@@ -586,7 +599,7 @@ function E.func_currencyName(currencyID)
 			local name = info.name
 			local iconFileID = info.iconFileID
 			local quality = info.quality
-			local r, g, b = C_Item.GetItemQualityColor(quality)
+			local r, g, b = E.func_GetItemQualityColor(quality)
 			local color = CreateColor(r, g, b, 1)
 			local currencyName = color:WrapTextInColorCode(name)
 			vivod = ATrans..AWide..currencyName
