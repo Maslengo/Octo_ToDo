@@ -2018,6 +2018,38 @@ function E.RegisterMyEventsToFrames(frame, MyEventsTable, DebugPath)
 	end)
 end
 ----------------------------------------------------------------
+function E.func_Reason(reason)
+	local vivod = ADDON_DISABLED
+	if reason == "CORRUPT" then vivod = ADDON_CORRUPT end
+	if reason == "DEMAND_LOADED" then vivod = ADDON_DEMAND_LOADED end
+	if reason == "DEP_BANNED" then vivod = ADDON_DEP_BANNED end
+	if reason == "DEP_CORRUPT" then vivod = ADDON_DEP_CORRUPT end
+	if reason == "DEP_DEMAND_LOADED" then vivod = ADDON_DEP_DEMAND_LOADED end
+	if reason == "DEP_DISABLED" then vivod = ADDON_DEP_DISABLED end
+	if reason == "DEP_EXCLUDED_FROM_BUILD" then vivod = ADDON_DEP_EXCLUDED_FROM_BUILD end
+	if reason == "DEP_INSECURE" then vivod = ADDON_DEP_INSECURE end
+	if reason == "DEP_INTERFACE_VERSION" then vivod = ADDON_DEP_INTERFACE_VERSION end
+	if reason == "DEP_LOADABLE" then vivod = ADDON_DEP_LOADABLE end
+	if reason == "DEP_MISSING" then vivod = ADDON_DEP_MISSING end
+	if reason == "DEP_NO_ACTIVE_INTERFACE" then vivod = ADDON_DEP_NO_ACTIVE_INTERFACE end
+	if reason == "DEP_NOT_AVAILABLE" then vivod = ADDON_DEP_NOT_AVAILABLE end
+	if reason == "DEP_USER_ADDONS_DISABLED" then vivod = ADDON_DEP_USER_ADDONS_DISABLED end
+	if reason == "DEP_WRONG_ACTIVE_INTERFACE" then vivod = ADDON_DEP_WRONG_ACTIVE_INTERFACE end
+	if reason == "DEP_WRONG_GAME_TYPE" then vivod = ADDON_DEP_WRONG_GAME_TYPE end
+	if reason == "DEP_WRONG_LOAD_PHASE" then vivod = ADDON_DEP_WRONG_LOAD_PHASE end
+	if reason == "EXCLUDED_FROM_BUILD" then vivod = ADDON_EXCLUDED_FROM_BUILD end
+	if reason == "INSECURE" then vivod = ADDON_INSECURE end
+	if reason == "INTERFACE_VERSION" then vivod = ADDON_INTERFACE_VERSION end
+	if reason == "MISSING" then vivod = ADDON_MISSING end
+	if reason == "NO_ACTIVE_INTERFACE" then vivod = ADDON_NO_ACTIVE_INTERFACE end
+	if reason == "NOT_AVAILABLE" then vivod = ADDON_NOT_AVAILABLE end
+	if reason == "USER_ADDONS_DISABLED" then vivod = ADDON_USER_ADDONS_DISABLED end
+	if reason == "WRONG_ACTIVE_INTERFACE" then vivod = ADDON_WRONG_ACTIVE_INTERFACE end
+	if reason == "WRONG_GAME_TYPE" then vivod = ADDON_WRONG_GAME_TYPE end
+	if reason == "WRONG_LOAD_PHASE" then vivod = ADDON_WRONG_LOAD_PHASE end
+
+	return vivod
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

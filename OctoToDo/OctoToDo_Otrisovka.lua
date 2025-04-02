@@ -63,6 +63,8 @@ function E:func_Otrisovka()
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {E.func_itemTexture(122284)..E.func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 			end
+
+			tooltip[#tooltip+1] = {E.Green_Color.."Reload Count|r",CharInfo.ReloadCount}
 			if E.DebugInfo then
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {E.DEVTEXT, " "}

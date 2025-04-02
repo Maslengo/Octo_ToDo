@@ -1,0 +1,15 @@
+## Interface: 110105, 110100
+## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r AddonsManager
+## Author: Octo
+## Version: v1
+## IconTexture: Interface\AddOns\OctoToDo\Media\AddonTexture_4
+## SavedVariables: OctoToDo_AddonsManager
+## Dependencies: OctoToDo
+## Notes: Полное управление всеми аддонами
+
+
+
+
+OctoToDo_Collect.lua
+OctoToDo_AddonsManager.lua
+func.lua

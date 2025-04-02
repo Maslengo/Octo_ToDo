@@ -24,7 +24,7 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
 		f:SetPoint("TOPLEFT", 8, -2)
 		f:SetPoint("BOTTOMRIGHT", -8, 2)
-		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCaOverlay)
+		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 		f:SetBackdropBorderColor(0, 0, 0, 1)
 		return f
 end)
@@ -52,6 +52,7 @@ local curCharName, _ = UnitFullName("PLAYER")
 local curServer = GetRealmName()
 ----------------------------------------------------------------
 -- E.func_LoadAddOn("OctoToDo_Achievements")
+E.func_LoadAddOn("OctoToDo_AddonsManager")
 -- E.func_LoadAddOn("OctoToDo_Minecraft")
 E.func_LoadAddOn("OctoToDo_TrashCan")
 E.func_LoadAddOn("!BugGrabber")
@@ -60,7 +61,7 @@ E.func_LoadAddOn("MountsJournal")
 E.func_LoadAddOn("HidingBar")
 E.func_LoadAddOn("HidingBar_Options")
 E.func_LoadAddOn("SpeedyAutoLoot")
-E.func_LoadAddOn("SimpleAddonManager")
+-- E.func_LoadAddOn("SimpleAddonManager")
 -- E.func_LoadAddOn("TalentTreeTweaks")
 -- E.func_LoadAddOn("Plater")
 -- E.func_LoadAddOn("MacroManager")
@@ -75,12 +76,6 @@ E.func_LoadAddOn("SimpleAddonManager")
 -- E.func_LoadAddOn("QuestsChanged")
 -- E.func_LoadAddOn("AdvancedInterfaceOptions")
 ----------------------------------------------------------------
-
-
-
-
-
-
 function OctoToDo_EventFrame_OCTOMAIN:ConcatAtStart()
 	E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
 	E.func_TableConcat(E.OctoTable_itemID_Config, E.OctoTable_itemID_ALL)
@@ -207,6 +202,7 @@ function E:func_checkCharInfo()
 					CharInfo.CovenantAndAnima[i][k] = CharInfo.CovenantAndAnima[i][k] or 0
 				end
 			end
+			CharInfo.ReloadCount = CharInfo.ReloadCount or 0
 			CharInfo.PVP = CharInfo.PVP or {}
 			CharInfo.avgItemLevel = CharInfo.avgItemLevel or 1
 			CharInfo.avgItemLevelEquipped = CharInfo.avgItemLevelEquipped or 1
@@ -466,9 +462,7 @@ local function OnENTERTTOOLTIP(f)
 	GameTooltip:SetOwner(f, "ANCHOR_BOTTOMRIGHT", 0, 0)
 	GameTooltip:AddLine(" ")
 	for _, v in next, (f.tooltip) do
-		if v[2] ~= "0/0" then
-			GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
-		end
+		GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
 	end
 	GameTooltip:AddLine(" ")
 	GameTooltip:Show()
@@ -506,18 +500,6 @@ local function func_OnAcquired(owner, frame, data, new)
 					self[key] = f
 					return f
 		end})
-		-- for NumPlayers = 1, func_NumPlayers() do
-		--     frame[NumPlayers] = CreateFrame("FRAME", "frame"..NumPlayers, frame, "BackdropTemplate")
-		--     frame[NumPlayers]:SetPropagateMouseClicks(true)
-		--     frame[NumPlayers]:SetSize(AddonRightFrameWeight, AddonHeight)
-		--     frame[NumPlayers]:SetPoint("TOPLEFT", frame.left, "TOPLEFT", (AddonLeftFrameWeight-AddonRightFrameWeight)+(AddonRightFrameWeight*NumPlayers), 0)
-		--     frame[NumPlayers].text = frame[NumPlayers]:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		--     frame[NumPlayers].text:SetAllPoints()
-		--     frame[NumPlayers].text:SetFontObject(OctoFont11)
-		--     frame[NumPlayers].text:SetJustifyV("MIDDLE")
-		--     frame[NumPlayers].text:SetJustifyH("CENTER")
-		--     frame[NumPlayers].text:SetTextColor(1, 1, 1, 1)
-		-- end
 		------------------------------------------------
 	end
 end
@@ -547,10 +529,6 @@ local function OctoToDo_Frame_init(frame, data)
 		end
 	end
 end
-
-
-
-
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	local OctoToDo_MainFrame_OCTOMAIN = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOMAIN", UIParent, "BackdropTemplate")
 	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_OCTOMAIN)
@@ -679,32 +657,11 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
-
-
--- function E:Update(event_name)
--- 	if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
--- 		C_Timer.After(.1, function()
--- 			if E.DebugEvent then
--- 				DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E:Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r" )
--- 			end
--- 			OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
--- 		end)
--- 	else
--- 		if E.DebugEvent then
--- 			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradietn("E:Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r" )
--- 		end
--- 	end
--- end
-
-
-
 function E:Update(event_name)
 	local isMainFrameVisible = OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown()
-
 	if isMainFrameVisible then
 		if not self.updateScheduled then
 			self.updateScheduled = true
-
 			C_Timer.After(0.1, function()
 					self.updateScheduled = false
 					if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
@@ -721,26 +678,6 @@ function E:Update(event_name)
 		end
 	end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 	local DD_OCTOMAIN = CreateFrame("Button", "DD_OCTOMAIN", OctoToDo_MainFrame_OCTOMAIN, "SecureActionButtonTemplate, BackDropTemplate")
 	DD_OCTOMAIN:SetSize(AddonLeftFrameWeight/2, AddonHeight)
@@ -1102,7 +1039,6 @@ function OctoToDo_EventFrame_OCTOMAIN:func_CreateMineFrame()
 	end
 end
 ----------------------------------------------------------------
-
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"VARIABLES_LOADED",
@@ -1119,6 +1055,8 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Config == nil then OctoToDo_DB_Config = {} end
 		if OctoToDo_DB_Levels == nil then OctoToDo_DB_Levels = {} end
 		if OctoToDo_DB_Other == nil then OctoToDo_DB_Other = {} end
+
+
 		if OctoToDo_DB_Config.CurrencyDB == nil then OctoToDo_DB_Config.CurrencyDB = {} end
 		if OctoToDo_DB_Config.QuestsDB == nil then OctoToDo_DB_Config.QuestsDB = {} end
 		if OctoToDo_DB_Config.ReputationDB == nil then OctoToDo_DB_Config.ReputationDB = {} end
@@ -1141,11 +1079,8 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		E.DebugFunction = OctoToDo_DB_Vars.DebugFunction
 		if OctoToDo_DB_Vars.DebugButton == nil then OctoToDo_DB_Vars.DebugButton = false end
 		E.DebugButton = OctoToDo_DB_Vars.DebugButton
-
 		if OctoToDo_DB_Vars.PortalsButtons == nil then OctoToDo_DB_Vars.PortalsButtons = true end
 		if OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable == nil then OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable = true end
-
-
 		if OctoToDo_DB_Vars.color == nil then OctoToDo_DB_Vars.color = {1, 1, 1} end
 		if OctoToDo_DB_Vars.AchievementShowCompleted == nil then OctoToDo_DB_Vars.AchievementShowCompleted = true end
 		if OctoToDo_DB_Vars.AchievementToShow == nil then OctoToDo_DB_Vars.AchievementToShow = {[92] = true} end
@@ -1276,11 +1211,9 @@ end
 function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
-
 	C_WowTokenPublic.UpdateMarketPrice()
 	self:func_CreateMineFrame()
 	GameMenuFrame:SetScale(OctoToDo_DB_Vars.GameMenuFrameScale or 1)
-
 	if not PlayerSpellsFrame then
 		E.func_LoadAddOn("Blizzard_PlayerSpells")
 		PlayerSpellsFrame:HookScript("OnShow", function()
@@ -1321,10 +1254,7 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 			end)
 			-- promise:FailWithChecked(function(...) print (...) end)
 	end)
-
 end
-
-
 function OctoToDo_EventFrame_OCTOMAIN:SHOW_SUBSCRIPTION_INTERSTITIAL()
 	if not InCombatLockdown() then
 		if SubscriptionInterstitialFrame then

@@ -43,12 +43,12 @@ function OctoToDo_EventFrame_HideFrames:MustBeHiddenFrames_SIMPLE()
 			-- self:Hide()
 			frame:Hide()
 			-- frame:UnregisterAllEvents()
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide: (", E.Green_Color, E.Yellow_Color)..name..E.Yellow_Color..")|r" )
+			--DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide: (", E.Green_Color, E.Yellow_Color)..name..E.Yellow_Color..")|r" )
 			-- end)
 			-- else
 			-- if PTRIssueReporterAlertFrame and PTRIssueReporterAlertFrame:IsShown() then
 			--     PTRIssueReporterAlertFrame:Hide()
-			--     print(E.Red_Color.. "PTRIssueReporterAlertFrame:Hide()" .. "|r")
+			--     --print(E.Red_Color.. "PTRIssueReporterAlertFrame:Hide()" .. "|r")
 			-- end
 		end
 	end
@@ -71,7 +71,7 @@ function OctoToDo_EventFrame_HideFrames:MustBeHiddenFrames_HOOK()
 			frame:HookScript("OnShow", function(self, ...)
 					frame:UnregisterAllEvents()
 					frame:Hide()
-					DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide: (", E.Addon_Left_Color, E.Addon_Right_Color)..name..E.Addon_Right_Color..")|r" )
+					--DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide: (", E.Addon_Left_Color, E.Addon_Right_Color)..name..E.Addon_Right_Color..")|r" )
 			end)
 		end
 	end
@@ -84,7 +84,7 @@ function OctoToDo_EventFrame_HideFrames:Hide_OrderHallCommandBar()
 		_G.OrderHallCommandBar:SetScript("OnShow", _G.OrderHallCommandBar.Hide)
 		_G.OrderHallCommandBar:Hide()
 		UIParent:UnregisterEvent("UNIT_AURA") -- Only used for OrderHall Bar
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("OrderHallCommandBar Hide", E.Addon_Left_Color, E.Addon_Right_Color))
+		--DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("OrderHallCommandBar Hide", E.Addon_Left_Color, E.Addon_Right_Color))
 	end
 	if _G.OrderHallCommandBar then
 		HandleCommandBar()
@@ -113,7 +113,7 @@ function OctoToDo_EventFrame_HideFrames:Hide_BossBanner()
 	frame:HookScript("OnShow", function(self, ...)
 			frame:UnregisterEvent("ENCOUNTER_LOOT_RECEIVED")
 			frame:UnregisterEvent("BOSS_KILL")
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide: (", E.Addon_Left_Color, E.Addon_Right_Color)..name..E.Addon_Right_Color..")|r" )
+			--DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide: (", E.Addon_Left_Color, E.Addon_Right_Color)..name..E.Addon_Right_Color..")|r" )
 	end)
 end
 -------------------------------------------------------------------
@@ -154,7 +154,7 @@ function OctoToDo_EventFrame_HideFrames:Hide_RaidWarningFrame()
 	RaidBossEmoteFrame:HookScript("OnShow", function(self, ...)
 			-- RaidBossEmoteFrame:UnregisterEvent("ENCOUNTER_LOOT_RECEIVED")
 			-- RaidBossEmoteFrame:UnregisterEvent("BOSS_KILL")
-			print ("RaidBossEmoteFrame HIDE")
+			--print ("RaidBossEmoteFrame HIDE")
 			RaidBossEmoteFrame:UnregisterAllEvents()
 			RaidBossEmoteFrame:Hide()
 	end)
@@ -167,7 +167,7 @@ function OctoToDo_EventFrame_HideFrames:Hide_PTRIssueReporterAlertFrame()
 		end)
 		-- hooksecurefunc(PTRIssueReporterAlertFrame, "Show", function(self)
 		--         self:Hide()
-		--         DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("PTRIssueReporterAlertFrame canceled", E.Addon_Left_Color, E.Addon_Right_Color))
+		--         --DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("PTRIssueReporterAlertFrame canceled", E.Addon_Left_Color, E.Addon_Right_Color))
 		-- end)
 	end
 end
@@ -175,7 +175,7 @@ end
 function OctoToDo_EventFrame_HideFrames:Hide_Talking_Head_Frame()
 	hooksecurefunc(TalkingHeadFrame, "PlayCurrent", function(self)
 			self:Hide()
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Talking Head Frame canceled", E.Addon_Left_Color, E.Addon_Right_Color))
+			--DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Talking Head Frame canceled", E.Addon_Left_Color, E.Addon_Right_Color))
 	end)
 end
 ---------------------------------------------------------------

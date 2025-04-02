@@ -14,9 +14,9 @@ end)
 local OctoToDo_EventFrame_Achievements = CreateFrame("FRAME")
 OctoToDo_EventFrame_Achievements:Hide()
 ----------------------------------------------------------------
-local AddonHeight = 18 -- Высота
-local AddonRightFrameWeight = 240/2 -- Ширина
-local AddonLeftFrameWeight = 240
+local AddonHeight = 20 -- Высота -- OctoToDo_DB_Vars.curHeight
+local AddonRightFrameWeight = 90 -- Ширина Центрального -- OctoToDo_DB_Vars.curWidthCentral
+local AddonLeftFrameWeight = 200 -- Ширина Левого -- OctoToDo_DB_Vars.curWidthTitle
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
 -- дефолт 30
@@ -26,7 +26,7 @@ if MainFrameNumLines > NumberOfLines then
 end
 ----------------------------------------------------------------
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
-local function OnAcquired(owner, frame, data, new)
+local function func_OnAcquired(owner, frame, data, new)
 	if new then
 		frame.left = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
 		frame.left:SetPropagateMouseClicks(true)
@@ -38,16 +38,19 @@ local function OnAcquired(owner, frame, data, new)
 		frame.left.text:SetJustifyV("MIDDLE")
 		frame.left.text:SetJustifyH("LEFT")
 		frame.left.text:SetTextColor(1, 1, 1, 1)
-		frame.right = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
-		frame.right:SetPropagateMouseClicks(true)
-		frame.right:SetSize(AddonRightFrameWeight, AddonHeight)
-		frame.right:SetPoint("TOPRIGHT", frame, "TOPRIGHT")
-		frame.right.text = frame.right:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.right.text:SetAllPoints()
-		frame.right.text:SetFontObject(OctoFont11)
-		frame.right.text:SetJustifyV("MIDDLE")
-		frame.right.text:SetJustifyH("CENTER")
-		frame.right.text:SetTextColor(1, 1, 1, 1)
+		frame.cent = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+		frame.cent:SetPropagateMouseClicks(true)
+		frame.cent:SetSize(AddonRightFrameWeight, AddonHeight)
+		frame.cent:SetPoint("TOPRIGHT", frame, "TOPRIGHT")
+		frame.cent.text = frame.cent:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		frame.cent.text:SetAllPoints()
+		frame.cent.text:SetFontObject(OctoFont11)
+		frame.cent.text:SetJustifyV("MIDDLE")
+		frame.cent.text:SetJustifyH("CENTER")
+		frame.cent.text:SetTextColor(1, 1, 1, 1)
+		frame.cent:SetScript("OnEnter", OnENTERTTOOLTIP)
+		frame.cent:SetScript("OnLeave", GameTooltip_Hide)
+		frame.cent:SetScript("OnHide", frame.cent.Hide)
 	end
 end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
@@ -55,14 +58,15 @@ local function OctoToDo_Frame_init(frame, data)
 	local hexcolor = E.func_rgb2hex(data.r, data.g, data.b)
 	-- frame.left.text:SetText(hexcolor..data.name.."|r")
 	frame.left.text:SetText(hexcolor..data.lefttext.."|r")
-	frame.right.text:SetText(data.righttext)
+	frame.cent.text:SetText(data.righttext)
+	frame.cent.tooltip = {"QWE"}
 	-- E:func_SetBackdrop(frame.left, nil, 0)
-	-- E:func_SetBackdrop(frame.right, hexcolor, E.bgCa)
+	-- E:func_SetBackdrop(frame.cent, hexcolor, E.bgCa)
 end
 function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
 	local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
 	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_Achievements)
-	OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
+	OctoToDo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_Achievements:Hide()
 	OctoToDo_MainFrame_Achievements:SetDontSavePosition(true)
 	OctoToDo_MainFrame_Achievements.ScrollBox = CreateFrame("FRAME", nil, OctoToDo_MainFrame_Achievements, "WowScrollBoxList")
@@ -75,7 +79,7 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	OctoToDo_MainFrame_Achievements.view = CreateScrollBoxListLinearView()
 	OctoToDo_MainFrame_Achievements.view:SetElementExtent(AddonHeight)
 	OctoToDo_MainFrame_Achievements.view:SetElementInitializer("BackdropTemplate", OctoToDo_Frame_init)
-	OctoToDo_MainFrame_Achievements.view:RegisterCallback(OctoToDo_MainFrame_Achievements.view.Event.OnAcquiredFrame, OnAcquired, OctoToDo_MainFrame_Achievements)
+	OctoToDo_MainFrame_Achievements.view:RegisterCallback(OctoToDo_MainFrame_Achievements.view.Event.OnAcquiredFrame, func_OnAcquired, OctoToDo_MainFrame_Achievements)
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar, OctoToDo_MainFrame_Achievements.view)
 	-- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar)
@@ -264,6 +268,12 @@ function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		----------------------------------------------------------------
+		if OctoToDo_DB_Vars then
+			AddonHeight =  OctoToDo_DB_Vars.curHeight
+			AddonRightFrameWeight = OctoToDo_DB_Vars.curWidthCentral
+			AddonLeftFrameWeight = OctoToDo_DB_Vars.curWidthTitle
+		end
 		----------------------------------------------------------------
 		if OctoToDo_Achievements == nil then OctoToDo_Achievements = {} end
 		if OctoToDo_Achievements.AchievementShowCompleted == nil then OctoToDo_Achievements.AchievementShowCompleted = true end

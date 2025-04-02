@@ -141,6 +141,7 @@ editFrame:SetScript("OnKeyDown", function(self, key)
 		end
 end)
 local editBox = editFrame.editFrame
+tinsert(E.OctoTable_Frames, editFrame)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

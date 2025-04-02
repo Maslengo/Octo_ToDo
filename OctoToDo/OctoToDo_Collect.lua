@@ -121,6 +121,12 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_PlayerInfo()
 		collect.IsVeteranTrialAccount = IsVeteranTrialAccount
 	end
 end
+function OctoToDo_EventFrame_Collect:Collect_All_ReloadCount()
+	local collect = OctoToDo_DB_Levels[curGUID]
+	if collect then
+		collect.ReloadCount = collect.ReloadCount+1 or 0
+	end
+end
 
 function OctoToDo_EventFrame_Collect:Collect_All_Covenant()
 	local collect = OctoToDo_DB_Levels[curGUID]
@@ -607,7 +613,7 @@ function OctoToDo_EventFrame_Collect:Collect_ALL_ItemsInBag()
 		collect.MASLENGO = collect.MASLENGO or {}
 		collect.MASLENGO.ItemsInBag = collect.MASLENGO.ItemsInBag or {}
 		for _, itemID in next, (E.OctoTable_itemID_ALL) do
-			local count = E.func_GetItemInfo(itemID, true, true, true)
+			local count = E.func_GetItemCount(itemID, true, true, true)
 			collect.MASLENGO.ItemsInBag[itemID] = count
 		end
 		collect.Possible_Anima = Possible_Anima
@@ -1212,6 +1218,7 @@ function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	RequestTimePlayed()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
+	self:Collect_All_ReloadCount()
 	self:Collect_ALL_PlayerInfo()
 	self:Collect_All_Chromie()
 	self:Collect_All_Currency()
