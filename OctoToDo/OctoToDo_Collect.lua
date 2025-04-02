@@ -881,9 +881,12 @@ function OctoToDo_EventFrame_Collect:Collect_All_journalInstance()
 end
 
 function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
-	local collect = OctoToDo_DB_Other.Holiday
-	wipe(OctoToDo_DB_Other.Holiday)
-	if collect and not InCombatLockdown() then
+	if OctoToDo_TrashCan then
+		OctoToDo_TrashCan.HolidayCollectAll = OctoToDo_TrashCan.HolidayCollectAll or {}
+	end
+	E.HolidayForButton = {}
+	wipe(E.HolidayForButton)
+	if E.HolidayForButton and not InCombatLockdown() then
 		local backup = OctoToDo_DB_Other.CVar
 		local function function_setBackup()
 			if CalendarFrame then
@@ -932,10 +935,10 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 				local eInfo = C_Calendar.GetHolidayInfo(0, day, i)
 				local event = C_Calendar.GetDayEvent(offsetMonths, day, i)
 				local id = event.eventID
-				collect[id] = collect[id] or {}
-				collect[id].title = event.title -- E.func_EventName(id)
+				E.HolidayForButton[id] = E.HolidayForButton[id] or {}
+				E.HolidayForButton[id].title = event.title -- E.func_EventName(id)
 				if OctoToDo_TrashCan then
-					OctoToDo_TrashCan.Holiday[id] = event.title
+					OctoToDo_TrashCan.HolidayCollectAll[id] = event.title
 				end
 				local startTime = event.startTime
 				local endTime = event.endTime
@@ -962,47 +965,47 @@ function OctoToDo_EventFrame_Collect:Collect_All_Holiday()
 					-- sec = 0,
 				}
 				local event_duration = E.FriendsFrame_GetLastOnline(time(dateTbl_endTime)-time(dateTbl_startTime), true)
-				collect[id].event_duration = event_duration
-				collect[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month) -- .."/"..startTime_year
-				collect[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month) -- .."/"..endTime_year
-				collect[id].Active = collect[id].Active or false
-				collect[id].Possible = collect[id].Possible or false
-				-- collect[id].iconTexture = event.iconTexture or ""
-				collect[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
+				E.HolidayForButton[id].event_duration = event_duration
+				E.HolidayForButton[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month) -- .."/"..startTime_year
+				E.HolidayForButton[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month) -- .."/"..endTime_year
+				E.HolidayForButton[id].Active = E.HolidayForButton[id].Active or false
+				E.HolidayForButton[id].Possible = E.HolidayForButton[id].Possible or false
+				-- E.HolidayForButton[id].iconTexture = event.iconTexture or ""
+				E.HolidayForButton[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
 				if eInfo then
-					collect[id].iconTexture = eInfo.texture or 134400
+					E.HolidayForButton[id].iconTexture = eInfo.texture or 134400
 				else
-					collect[id].iconTexture = event.iconTexture or 134400
-					collect[id].ENDS = event_duration
+					E.HolidayForButton[id].iconTexture = event.iconTexture or 134400
+					E.HolidayForButton[id].ENDS = event_duration
 				end
 
-				collect[id].invitedBy = event.invitedBy
+				E.HolidayForButton[id].invitedBy = event.invitedBy
 				-- if id == 244009 then
 				-- 	print (event.title, startTime, startTime_monthDay, event_duration)
 				-- end
 
-				if not collect[id].priority then
-					collect[id].priority = priority
+				if not E.HolidayForButton[id].priority then
+					E.HolidayForButton[id].priority = priority
 					priority = priority + 1
 				end
 				if day == monthDay then
 					if event.sequenceType == "START" then
 						local secondsToEvent = ((event.startTime.hour - hour) * 60 + event.startTime.minute - minute) * 60
 						if secondsToEvent <= 0 then
-							collect[id].Active = true
+							E.HolidayForButton[id].Active = true
 						else
-							collect[id].Possible = true
+							E.HolidayForButton[id].Possible = true
 						end
 					elseif event.sequenceType == "END" then
 						local secondsToEvent = ((event.endTime.hour - hour) * 60 + event.endTime.minute - minute) * 60
 						if secondsToEvent > 0 then
-							collect[id].Active = true
+							E.HolidayForButton[id].Active = true
 						end
 					else
-						collect[id].Active = true
+						E.HolidayForButton[id].Active = true
 					end
 				elseif monthDay < day then
-					collect[id].Possible = true
+					E.HolidayForButton[id].Possible = true
 				end
 			end
 		end
@@ -1194,11 +1197,11 @@ local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",
 	"ENCOUNTER_END",
 	"TIME_PLAYED_MSG",
-	"LFG_UPDATE_RANDOM_INFO",
-	"LFG_COMPLETION_REWARD",
-	"ENCOUNTER_LOOT_RECEIVED",
-	"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	"RECEIVED_ACHIEVEMENT_LIST",
+	-- "LFG_UPDATE_RANDOM_INFO",
+	-- "LFG_COMPLETION_REWARD",
+	-- "ENCOUNTER_LOOT_RECEIVED",
+	-- "INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+	-- "RECEIVED_ACHIEVEMENT_LIST",
 	"PLAYER_LEVEL_UP",
 	"QUEST_POI_UPDATE",
 }
@@ -1492,40 +1495,40 @@ function OctoToDo_EventFrame_Collect:TIME_PLAYED_MSG(...)
 	end
 end
 
-function OctoToDo_EventFrame_Collect:LFG_UPDATE_RANDOM_INFO()
-	if not InCombatLockdown() then
-		self:Collect_All_journalInstance()
-		E:Update("LFG_UPDATE_RANDOM_INFO")
-	end
-end
+-- function OctoToDo_EventFrame_Collect:LFG_UPDATE_RANDOM_INFO()
+-- 	if not InCombatLockdown() then
+-- 		self:Collect_All_journalInstance()
+-- 		E:Update("LFG_UPDATE_RANDOM_INFO")
+-- 	end
+-- end
 
-function OctoToDo_EventFrame_Collect:LFG_COMPLETION_REWARD()
-	if not InCombatLockdown() then
-		self:Collect_All_journalInstance()
-		E:Update("LFG_COMPLETION_REWARD")
-	end
-end
+-- function OctoToDo_EventFrame_Collect:LFG_COMPLETION_REWARD()
+-- 	if not InCombatLockdown() then
+-- 		self:Collect_All_journalInstance()
+-- 		E:Update("LFG_COMPLETION_REWARD")
+-- 	end
+-- end
 
-function OctoToDo_EventFrame_Collect:ENCOUNTER_LOOT_RECEIVED()
-	if not InCombatLockdown() then
-		self:Collect_All_journalInstance()
-		E:Update("ENCOUNTER_LOOT_RECEIVED")
-	end
-end
+-- function OctoToDo_EventFrame_Collect:ENCOUNTER_LOOT_RECEIVED()
+-- 	if not InCombatLockdown() then
+-- 		self:Collect_All_journalInstance()
+-- 		E:Update("ENCOUNTER_LOOT_RECEIVED")
+-- 	end
+-- end
 
-function OctoToDo_EventFrame_Collect:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	if not InCombatLockdown() then
-		self:Collect_All_journalInstance()
-		E:Update("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-	end
-end
+-- function OctoToDo_EventFrame_Collect:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+-- 	if not InCombatLockdown() then
+-- 		self:Collect_All_journalInstance()
+-- 		E:Update("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+-- 	end
+-- end
 
-function OctoToDo_EventFrame_Collect:RECEIVED_ACHIEVEMENT_LIST()
-	if not InCombatLockdown() then
-		self:Collect_All_journalInstance()
-		E:Update("RECEIVED_ACHIEVEMENT_LIST")
-	end
-end
+-- function OctoToDo_EventFrame_Collect:RECEIVED_ACHIEVEMENT_LIST()
+-- 	if not InCombatLockdown() then
+-- 		self:Collect_All_journalInstance()
+-- 		E:Update("RECEIVED_ACHIEVEMENT_LIST")
+-- 	end
+-- end
 
 function OctoToDo_EventFrame_Collect:QUEST_POI_UPDATE()
 	if not InCombatLockdown() then

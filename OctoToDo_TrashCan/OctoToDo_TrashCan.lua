@@ -24,6 +24,7 @@ function OctoToDo_EventFrame_TrashCan:ADDON_LOADED(addonName)
 		if OctoToDo_TrashCan.EncounterAndZoneLists == nil then OctoToDo_TrashCan.EncounterAndZoneLists = {} end
 		if OctoToDo_TrashCan.UniversalQuest == nil then OctoToDo_TrashCan.UniversalQuest = {} end
 		if OctoToDo_TrashCan.Holiday == nil then OctoToDo_TrashCan.Holiday = {} end
+		if OctoToDo_TrashCan.HolidayCollectAll == nil then OctoToDo_TrashCan.HolidayCollectAll = {} end
 		----------------------------------------------------------------
 	end
 end

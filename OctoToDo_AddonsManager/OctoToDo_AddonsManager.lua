@@ -24,6 +24,10 @@ if MainFrameNumLines > NumberOfLines then
 	MainFrameNumLines = NumberOfLines
 end
 ----------------------------------------------------------------
+local className, classFilename, classId = UnitClass("PLAYER")
+local classColor = E.func_GetClassColor(classFilename)
+local r, g, b = GetClassColor(classFilename)
+local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 ----------------------------------------------------------------
 local ADDON_ACTIONS_BLOCKED = {}
 function AddonTooltip_ActionBlocked(addon)
@@ -37,9 +41,11 @@ local function OnENTERTTOOLTIP(f)
 		return
 	end
 	GameTooltip:SetOwner(f, "ANCHOR_BOTTOMRIGHT", 0, 0)
+	GameTooltip:AddLine(" ")
 	for k, v in next, (f.tooltip) do
 		GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
 	end
+	GameTooltip:AddLine(" ")
 	GameTooltip:Show()
 end
 ----------------------------------------------------------------
@@ -68,7 +74,7 @@ local function func_OnAcquired(owner, frame, data, new)
 			frame.isInit = true
 			frame.first.icon:SetScript("OnMouseUp", function(self)
 					C_Timer.After(0.1, function()
-							E.func_ToggleAddon(data.index)
+							E.func_ToggleAddon(data.index, data.state)
 							OctoToDo_EventFrame_AddonsManager:func_DataProvider()
 					end)
 			end)
@@ -179,23 +185,45 @@ function OctoToDo_EventFrame_AddonsManager:func_DataProvider()
 		Provider[i].firsticonTexture = v.firsticonTexture
 		Provider[i].icon = v.iconTexture
 		Provider[i].textRIGHT = v.colorAddon..v.textRIGHT.."|r"
-		if v.Version ~= "" then
-			tooltipthird[#tooltipthird+1] = {v.colorAddon..v.title.."|r", v.colorAddon..v.Version.."|r"}
+		Provider[i].state = v.state
+		if v.Version ~= 0 then
+			tooltipthird[#tooltipthird+1] = {E.func_texturefromIcon(v.iconTexture)..v.colorAddon..v.name.."|r", E.Gray_Color..v.Version.."|r"}
 		else
-			tooltipthird[#tooltipthird+1] = {v.colorAddon..v.title.."|r"}
+			tooltipthird[#tooltipthird+1] = {E.func_texturefromIcon(v.iconTexture)..v.colorAddon..v.name.."|r"}
 		end
 		if v.Author then
-			tooltipthird[#tooltipthird+1] = {" ", v.colorAddon..v.Author.."|r"}
+			tooltipthird[#tooltipthird+1] = {" ", E.Gray_Color..v.Author.."|r"}
+		end
+		if v.memory and v.memory ~= 0 then
+			tooltipthird[#tooltipthird+1] = {" ", " "}
+			if v.memory > 1024 then
+				tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. classColorHexCurrent..E.func_CompactNumberFormat(v.memory/1024).."|r Мб"}
+			else
+				tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. classColorHexCurrent..E.func_CompactNumberFormat(v.memory).."|r Кб"}
+			end
 		end
 		tooltipthird[#tooltipthird+1] = {" ", " "}
 
+		tooltipthird[#tooltipthird+1] = {"RecentAverageTime: "..classColorHexCurrent..v.RecentAverageTime.."|r".."%"}
+		tooltipthird[#tooltipthird+1] = {"SessionAverageTime: "..classColorHexCurrent..v.SessionAverageTime.."|r".."%"}
+		tooltipthird[#tooltipthird+1] = {"PeakTime: "..classColorHexCurrent..v.PeakTime.."|r".."%"}
+		tooltipthird[#tooltipthird+1] = {"EncounterAverageTime: "..classColorHexCurrent..v.EncounterAverageTime.."|r".."%"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover5ms: "..classColorHexCurrent..v.Ticksover5ms.."|r"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover10ms: "..classColorHexCurrent..v.Ticksover10ms.."|r"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover50ms: "..classColorHexCurrent..v.Ticksover50ms.."|r"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover100ms: "..classColorHexCurrent..v.Ticksover100ms.."|r"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover500ms: "..classColorHexCurrent..v.Ticksover500ms.."|r"}
 
-		if select(4, GetBuildInfo()) < v.AddonInterfaceVersion then
-			tooltipthird[#tooltipthird+1] = {E.Red_Color..v.AddonInterfaceVersion.."|r"}
-		end
-		if v.memoryVivod ~= 0 then
-			tooltipthird[#tooltipthird+1] = {string.format(ADDON_LIST_PERFORMANCE_MEMORY_KB, v.memoryVivod)}
-		end
+
+
+
+		tooltipthird[#tooltipthird+1] = {"C_AddOns.IsAddOnDefaultEnabled", tostring(v.defaultEnabled)}
+		tooltipthird[#tooltipthird+1] = {"C_AddOns.DoesAddOnExist", tostring(v.exists)}
+		tooltipthird[#tooltipthird+1] = {"C_AddOns.GetAddOnEnableState", tostring(v.state)}
+		tooltipthird[#tooltipthird+1] = {"enabled", tostring(v.enabled)}
+		tooltipthird[#tooltipthird+1] = {"needReload", tostring(v.needReload)}
+
+
 		Provider[i].tooltipthird = tooltipthird
 	end
 	MainFrameNumLines = count

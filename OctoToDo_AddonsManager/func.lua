@@ -29,32 +29,28 @@ function E.func_ListAddons(filter)
 	E.func_Print("Список аддонов (" .. #addons .. "):")
 	for i, name in ipairs(addons) do
 		if not filter or string.find(string.lower(name), string.lower(filter)) then
-			local status = C_AddOns.IsAddOnLoaded(name) and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r"
+			local status = E.IsAddOnLoaded(name) and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r"
 			print(string.format("%3d. %s - %s", i, name, status))
 		end
 	end
 end
 -- Переключить аддон
-function E.func_ToggleAddon(addonName)
-	local addons = E.func_GetAllAddons()
-	local index = tonumber(addonName)
-	-- Если введен номер
-	if index and index >= 1 and index <= #addons then
-		addonName = addons[index]
-	end
-	if not C_AddOns.GetAddOnInfo(addonName) then
-		E.func_Print("Аддон '" .. addonName .. "' не найден")
-		return
-	end
-	if C_AddOns.IsAddOnLoaded(addonName) then
-		C_AddOns.DisableAddOn(addonName)
+function E.func_ToggleAddon(i, state)
+	local addonName = C_AddOns.GetAddOnInfo(i)
+	local enabled = (C_AddOns.GetAddOnEnableState(i, UnitName("player")) > Enum.AddOnEnableState.None);
+
+	if enabled then
+		C_AddOns.DisableAddOn(i)
 		E.func_Print("Аддон '" .. addonName .. "' |cffff0000отключен|r")
 	else
-		C_AddOns.EnableAddOn(addonName)
-		-- C_AddOns.LoadAddOn(addonName)
+		C_AddOns.EnableAddOn(i)
 		E.func_Print("Аддон '" .. addonName .. "' |cff00ff00включен|r")
 	end
-	-- ReloadUI()
+	-- Если введен номер
+	if not C_AddOns.GetAddOnInfo(i) then
+		E.func_Print("Аддон '" .. i .. "' не найден")
+		return
+	end
 end
 -- Включить все аддоны
 function E.func_EnableAllAddons()
@@ -80,7 +76,7 @@ function E.func_SaveProfile(profileName)
 	profiles[profileName] = {}
 	local addons = E.func_GetAllAddons()
 	for i, name in ipairs(addons) do
-		profiles[profileName][name] = C_AddOns.IsAddOnLoaded(name)
+		profiles[profileName][name] = E.IsAddOnLoaded(name)
 	end
 	E.func_Print("Профиль '" .. profileName .. "' сохранен (" .. #addons .. " аддонов)")
 end
@@ -149,19 +145,6 @@ end)
 -- Регистрируем команды
 SLASH_UNIVERSALADDONMANAGER1 = "/uam"
 SlashCmdList["UNIVERSALADDONMANAGER"] = E.func_HandleCommand
--- ADDON_DEP_EXCLUDED_FROM_BUILD - Зависимость исключена из данной версии
--- ADDON_DEP_DISABLED - Зависимость отключена
--- ADDON_DEP_MISSING - Зависимость отсутствует
--- ADDON_DEP_INSECURE - Зависимость небезопасна
--- ADDON_DEP_NOT_AVAILABLE - Зависимость недоступна
--- ADDON_DEP_INTERFACE_VERSION - Зависимость устарела
--- ADDON_DEP_BANNED - Зависимость заблокирована
--- ADDON_DEP_CORRUPT - Зависимость повреждена
--- RELOADUI - Перезагрузка
--- REQUIRES_RELOAD - Перезагрузите интерф.
--- ADDON_DISABLED (Отключено)
--- REQUIRES_RELOAD - Перезагрузите интерф.
--- SLASH_TEXTTOSPEECH_ENABLED - Включено
 function E.GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
 	if (not C_AddOnProfiler.IsEnabled()) then
 		return def or ""
@@ -230,6 +213,21 @@ function E.AddonTooltip_BuildDeps(...)
 	return deps
 end
 ----------------------------------------------------------------
+-- function E.func_CompactMemory(memory)
+-- 	if memory > 0 then
+-- 		if memory > 1024 then
+-- 			return string.format(ADDON_LIST_PERFORMANCE_MEMORY_MB, memory/1024)
+-- 		else
+-- 			return string.format(ADDON_LIST_PERFORMANCE_MEMORY_KB, memory)
+-- 		end
+-- 	else
+-- 		return 0
+-- 	end
+-- end
+----------------------------------------------------------------
+function E.IsAddOnLoaded(addonName)
+	return C_AddOns.IsAddOnLoaded(addonName)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -247,4 +245,15 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-----------------------------------------------------------------
+-- ADDON_DEP_EXCLUDED_FROM_BUILD - Зависимость исключена из данной версии
+-- ADDON_DEP_DISABLED - Зависимость отключена
+-- ADDON_DEP_MISSING - Зависимость отсутствует
+-- ADDON_DEP_INSECURE - Зависимость небезопасна
+-- ADDON_DEP_NOT_AVAILABLE - Зависимость недоступна
+-- ADDON_DEP_INTERFACE_VERSION - Зависимость устарела
+-- ADDON_DEP_BANNED - Зависимость заблокирована
+-- ADDON_DEP_CORRUPT - Зависимость повреждена
+-- RELOADUI - Перезагрузка
+-- REQUIRES_RELOAD - Перезагрузите интерф.
+-- ADDON_DISABLED (Отключено)
+-- SLASH_TEXTTOSPEECH_ENABLED - Включено

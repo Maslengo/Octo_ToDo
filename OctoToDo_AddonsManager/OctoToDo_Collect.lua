@@ -11,57 +11,57 @@ function E.CollectAllAddons()
 		if reason ~= "MISSING" then -- Исключаем отсутствующие аддоны
 			collect[i] = collect[i] or {}
 			local firsticonTexture = ""
-			local loadedOrLoading = C_AddOns.IsAddOnLoaded(i) -- and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r" -- STATUS
+			local loadedOrLoading = E.IsAddOnLoaded(i) -- and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r" -- STATUS
 			local textRIGHT = ""
-			local AddonInterfaceVersion = C_AddOns.GetAddOnInterfaceVersion(i)
 			local colorAddon = E.White_Color
-			local iconTexture = C_AddOns.GetAddOnMetadata(i, "IconTexture") or ""
-			local iconAtlas = C_AddOns.GetAddOnMetadata(i, "IconAtlas") or ""
-			local Version = C_AddOns.GetAddOnMetadata(i, "Version") or ""
+			local iconTexture = C_AddOns.GetAddOnMetadata(i, "IconTexture")
+			local iconAtlas = C_AddOns.GetAddOnMetadata(i, "IconAtlas")
+			local Version = C_AddOns.GetAddOnMetadata(i, "Version") or 0
 			local Author = C_AddOns.GetAddOnMetadata(i, "Author") or ""
-			local RecentAverageTime = E.Red_Color..E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.RecentAverageTime).."%|r" -- ПИКОВЫЙ GPU
-			local SessionAverageTime = E.Red_Color..E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.SessionAverageTime).."%|r" -- Average CPU:
-			local PeakTime = E.Red_Color..E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.PeakTime).."%|r" -- Peak CPU:
-			local EncounterAverageTime = E.Red_Color..E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.EncounterAverageTime).."%|r"  -- Encounter CPU:
-			local Ticksover5ms = E.Red_Color..E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver5Ms).."|r"
-			local Ticksover10ms = E.Red_Color..E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver10Ms).."|r"
-			local Ticksover50ms = E.Red_Color..E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver50Ms).."|r"
-			local Ticksover100ms = E.Red_Color..E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver100Ms).."|r"
-			local Ticksover500ms = E.Red_Color..E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver100Ms).."|r"
-			local memory = GetAddOnMemoryUsage(i)
-			local memoryVivod = 0
-			if memory > 0 then
-				if memory > 1024 then
-					memoryVivod = memory / 1024
+			local RecentAverageTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.RecentAverageTime)
+			local SessionAverageTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.SessionAverageTime)
+			local PeakTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.PeakTime)
+			local EncounterAverageTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.EncounterAverageTime)
+			local Ticksover5ms = E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver5Ms)
+			local Ticksover10ms = E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver10Ms)
+			local Ticksover50ms = E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver50Ms)
+			local Ticksover100ms = E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver100Ms)
+			local Ticksover500ms = E.GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver100Ms)
+			local state = C_AddOns.GetAddOnEnableState(name)
+			local exists = C_AddOns.DoesAddOnExist(name)
+			local defaultEnabled = C_AddOns.IsAddOnDefaultEnabled(name)
+			local memory = GetAddOnMemoryUsage(i) or 0
+			local enabled = (C_AddOns.GetAddOnEnableState(i, UnitName("player")) > Enum.AddOnEnableState.None);
+			local needReload = false
+			if E.IsAddOnLoaded(i) then
+				if SessionAverageTime ~= "0.00" then
+					textRIGHT = SessionAverageTime.."%" .. " ~ ".. PeakTime.."%"
 				else
-					memoryVivod = memory
+					textRIGHT = PeakTime.."%"
 				end
-			end
-			if AddonInterfaceVersion < interfaceVersion then
-				colorAddon = E.Red_Color
-			end
-			if loadedOrLoading then
-				textRIGHT = ""
-				if AddonInterfaceVersion < interfaceVersion then
-					textRIGHT = REQUIRES_RELOAD
-				else
-					textRIGHT = SessionAverageTime
-				end
-
-
-
-				fivetext = SessionAverageTime
-				sixtext = PeakTime
-				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\buttonON"
 			else
 				textRIGHT = ADDON_DISABLED
-				fivetext = ""
-				sixtext = ""
 				colorAddon = E.Gray_Color
-				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\buttonOFF"
+			end
+			if state == 2 then
+				if loadedOrLoading then
+					firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonON"
+				else
+					firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonSOON"
+				end
+			elseif state == 1 then
+					firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonGRAY"
+				else
+				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonOFF"
+			end
+			if (enabled and not loadedOrLoading) or (not enabled and loadedOrLoading) then
+				needReload = true
+				textRIGHT = REQUIRES_RELOAD
+				colorAddon = E.Red_Color
 			end
 			-- print (i, SessionAverageTime, type(SessionAverageTime))
 			collect[i].colorAddon = colorAddon
+			collect[i].name = name
 			collect[i].title = title
 			collect[i].reason = reason
 			collect[i].iconTexture = iconTexture
@@ -78,11 +78,15 @@ function E.CollectAllAddons()
 			collect[i].Ticksover100ms = Ticksover100ms
 			collect[i].Ticksover500ms = Ticksover500ms
 			collect[i].firsticonTexture = firsticonTexture
-			collect[i].memoryVivod = memoryVivod
 			collect[i].memory = memory
 			collect[i].textRIGHT = textRIGHT
-			collect[i].AddonInterfaceVersion = AddonInterfaceVersion
+			collect[i].defaultEnabled = defaultEnabled
+			collect[i].exists = exists
+			collect[i].state = state
+			collect[i].enabled = enabled
+			collect[i].needReload = needReload
 		end
 	end
 	return collect
 end
+

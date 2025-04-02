@@ -321,7 +321,7 @@ E.NONE = E.Gray_Color.."None".."|r"
 -- console -> export "art"
 local function func_texturefromIcon(iconID, iconSize, isShown)
 	if isShown == nil then isShown = true end
-	if iconSize == nil then iconSize = 14 end
+	if iconSize == nil then iconSize = 16 end
 	if iconID == nil then iconID = 134400 end
 	local vivod
 	if isShown == true then

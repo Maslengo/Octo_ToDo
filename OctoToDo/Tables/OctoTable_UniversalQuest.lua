@@ -1,30 +1,30 @@
 local GlobalAddonName, E = ...
 E.OctoTable_UniversalQuest = {
-	{
-		name_save = "500Currency",
-		reset = "Weekly",
-		desc = "Timewalk",
-		questID = {
-			83285, -- |A:Recurringavailablequesticon:14:14:0:0|a Древний свиток
-			64710, -- |A:Recurringavailablequesticon:14:14:0:0|a Шепчущий кристалл пламени Скверны
-			55499, -- |A:Recurringavailablequesticon:14:14:0:0|a Мерцающий кристалл
-			55498, -- |A:Recurringavailablequesticon:14:14:0:0|a Мерцающий кристалл
-			45563, -- |A:Recurringavailablequesticon:14:14:0:0|a Затуманенная монета
-			40787, -- |A:Recurringavailablequesticon:14:14:0:0|a Тлеющий уголек
-			40786, -- |A:Recurringavailablequesticon:14:14:0:0|a Тлеющий уголек
-			40173, -- |A:Recurringavailablequesticon:14:14:0:0|a Нестабильная призма
-			40168, -- |A:Recurringavailablequesticon:14:14:0:0|a Бурлящий фиал
-			40173,
-			64710,
-			40168,
-			40786,
-			45563,
-			55499,
-			55498,
-			40787,
-		},
-		max = 1
-	},
+	-- {
+	-- 	name_save = "500Currency",
+	-- 	reset = "Weekly",
+	-- 	desc = "Timewalk",
+	-- 	questID = {
+	-- 		83285, -- |A:Recurringavailablequesticon:14:14:0:0|a Древний свиток
+	-- 		64710, -- |A:Recurringavailablequesticon:14:14:0:0|a Шепчущий кристалл пламени Скверны
+	-- 		55499, -- |A:Recurringavailablequesticon:14:14:0:0|a Мерцающий кристалл
+	-- 		55498, -- |A:Recurringavailablequesticon:14:14:0:0|a Мерцающий кристалл
+	-- 		45563, -- |A:Recurringavailablequesticon:14:14:0:0|a Затуманенная монета
+	-- 		40787, -- |A:Recurringavailablequesticon:14:14:0:0|a Тлеющий уголек
+	-- 		40786, -- |A:Recurringavailablequesticon:14:14:0:0|a Тлеющий уголек
+	-- 		40173, -- |A:Recurringavailablequesticon:14:14:0:0|a Нестабильная призма
+	-- 		40168, -- |A:Recurringavailablequesticon:14:14:0:0|a Бурлящий фиал
+	-- 		40173,
+	-- 		64710,
+	-- 		40168,
+	-- 		40786,
+	-- 		45563,
+	-- 		55499,
+	-- 		55498,
+	-- 		40787,
+	-- 	},
+	-- 	max = 1
+	-- },
 	{
 		name_save = "Raid",
 		reset = "Weekly",
@@ -1342,59 +1342,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 12
 	},
-	-- {
-	-- 	name_save = "coinsQuests",
-	-- 	reset = "Weekly",
-	-- 	desc = "WarlordsofDraenor",
-	-- 	questID = {
-	-- 		36058,
-	-- 		36055,
-	-- 		37452,
-	-- 		37453,
-	-- 		36056,
-	-- 		37457,
-	-- 		37456,
-	-- 		36054,
-	-- 		37455,
-	-- 		37454,
-	-- 		36057,
-	-- 		37458,
-	-- 		37459,
-	-- 	},
-	-- 	max = 3
-	-- },
-	-- {
-	-- 	name_save = "coinsQuests",
-	-- 	reset = "Weekly",
-	-- 	desc = "Legion",
-	-- 	questID = {
-	-- 		43895,
-	-- 		43897,
-	-- 		43896,
-	-- 		43892,
-	-- 		43893,
-	-- 		43894,
-	-- 		47851,
-	-- 		47864,
-	-- 		47865,
-	-- 		43510,
-	-- 	},
-	-- 	max = 3
-	-- },
-	-- {
-	-- 	name_save = "coinsQuests",
-	-- 	reset = "Weekly",
-	-- 	desc = "BattleforAzeroth",
-	-- 	questID = {
-	-- 		52835,
-	-- 		52834,
-	-- 		52837,
-	-- 		52840,
-	-- 		52838,
-	-- 		52839,
-	-- 	},
-	-- 	max = 2
-	-- },
 	{
 		name_save = "miniVision",
 		reset = "Daily",
@@ -2126,27 +2073,30 @@ E.OctoTable_UniversalQuest = {
 		max = 9
 	},
 	{
-		name_save = "Garrison_Horde", -- Octopussy_WarlordsofDraenor_Garrison_Horde_Once
+		name_save = "GarrisonLevel", -- Octopussy_WarlordsofDraenor_GarrisonLevel_Once
 		reset = "Once",
 		desc = "WarlordsofDraenor",
 		questID = {
 			34378,
 			36567,
 			36614,
+			-- 34586, -- Alliance
+			-- 36592, -- Alliance
+			-- 36615, -- Alliance
 		},
 		max = 3
 	},
 	{
-		name_save = "Garrison_Alliance", -- Octopussy_WarlordsofDraenor_Garrison_Alliance_Once
+		name_save = "GarrisonMining", -- Octopussy_WarlordsofDraenor_GarrisonMining_Once
 		reset = "Once",
 		desc = "WarlordsofDraenor",
 		questID = {
-			34586,
-			36592,
-			36615,
+			34192, -- Ally
+			35296, -- Horde (Things Are Not Goren Our Way)
 		},
-		max = 3
+		max = 1
 	},
+
 	{
 		name_save = "WorgenHeritageArmor",
 		reset = "Once",

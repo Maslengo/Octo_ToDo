@@ -1065,9 +1065,7 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Other.CVar == nil then OctoToDo_DB_Other.CVar = {} end
 		if OctoToDo_DB_Other.Items == nil then OctoToDo_DB_Other.Items = {} end
 		if OctoToDo_DB_Other.LFGInstance == nil then OctoToDo_DB_Other.LFGInstance = {} end
-		if OctoToDo_DB_Other.Holiday == nil then OctoToDo_DB_Other.Holiday = {} end
-		-- if OctoToDo_DB_Other.Holiday.Active == nil then OctoToDo_DB_Other.Holiday.Active = {} end
-		-- if OctoToDo_DB_Other.Holiday.Collect == nil then OctoToDo_DB_Other.Holiday.Collect = {} end
+		-- if OctoToDo_DB_Other.Holiday == nil then OctoToDo_DB_Other.Holiday = {} end
 		if OctoToDo_DB_Vars == nil then OctoToDo_DB_Vars = {} end
 		if OctoToDo_DB_Vars.DebugIDs == nil then OctoToDo_DB_Vars.DebugIDs = false end
 		E.DebugIDs = OctoToDo_DB_Vars.DebugIDs

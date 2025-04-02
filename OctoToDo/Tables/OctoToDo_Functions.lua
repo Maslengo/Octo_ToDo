@@ -283,6 +283,11 @@ function E.func_itemTexture(itemID)
 	return E.func_texturefromIcon(icon)
 end
 ----------------------------------------------------------------
+function E.func_spellTexture(spellID)
+	local icon = E.func_GetSpellIcon(spellID) or 134400
+	return E.func_texturefromIcon(icon)
+end
+----------------------------------------------------------------
 function E.func_GetItemCooldown(itemID)
 	local start, duration = C_Item.GetItemCooldown(itemID)
 	-- local start = C_Item.GetItemCooldown(itemID).startTimeSeconds or 0
@@ -463,21 +468,21 @@ end
 ----------------------------------------------------------------
 function E.func_texturefromIcon(icon, iconSize, isShown)
 	if isShown == nil then isShown = true end
-	if iconSize == nil then iconSize = 14 end
-	if icon == nil then icon = 134400 end
+	if iconSize == nil then iconSize = 16 end
+	if icon == nil then return "" end--icon = 134400 end
 	local vivod
 	if isShown == true then
 		vivod = "|T".. icon ..":"..iconSize..":"..iconSize..":::64:64:4:60:4:60|t"
 	else
 		vivod = ""
 	end
-	return vivod.." "
+	return vivod..""
 end
 
 
 function E.func_texturefromIconEVENT(icon, iconSize, isShown)
 	if isShown == nil then isShown = true end
-	if iconSize == nil then iconSize = 14 end
+	if iconSize == nil then iconSize = 16 end
 	if icon == nil then icon = 134400 end
 	local vivod
 	if isShown == true then
@@ -1764,12 +1769,12 @@ function E:func_CreateUtilsButton(frame)
 			GameTooltip:AddDoubleLine(" ", " ")
 			local count = 0
 			local sorted = {}
-			for k, v in pairs (OctoToDo_DB_Other.Holiday) do
+			for k, v in pairs (E.HolidayForButton) do
 				tinsert(sorted, k)
 			end
-			sort(sorted, function(a, b) return OctoToDo_DB_Other.Holiday[a].priority < OctoToDo_DB_Other.Holiday[b].priority end)
+			sort(sorted, function(a, b) return E.HolidayForButton[a].priority < E.HolidayForButton[b].priority end)
 			for i, eventID in ipairs(sorted) do
-				local v = OctoToDo_DB_Other.Holiday[eventID]
+				local v = E.HolidayForButton[eventID]
 				count = count + 1
 				-- if v.Active == true then
 				-- 	-- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
@@ -1812,7 +1817,7 @@ function E:func_CreateUtilsButton(frame)
 	end)
 	OctoToDo_EventsButton:SetScript("OnClick", function()
 			frame:Hide()
-			fpde(OctoToDo_DB_Other.Holiday)
+			fpde(E.HolidayForButton)
 	end)
 	OctoToDo_EventsButton.icon = OctoToDo_EventsButton:CreateTexture(nil, "BACKGROUND")
 	OctoToDo_EventsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga")

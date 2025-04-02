@@ -37,10 +37,8 @@ local MINECRAFTtextureALL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\mi
 ----------------------------------------------------------------
 local function OnENTERTTOOLTIP(f)
 	if not f.tooltip then
-		print ("NOT")
 		return
 	elseif #f.tooltip == 0 then
-		print ("== 0")
 		return
 	end
 	GameTooltip:SetOwner(f, "ANCHOR_RIGHT", 0, 0)
