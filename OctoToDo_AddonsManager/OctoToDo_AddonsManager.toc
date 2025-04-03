@@ -13,4 +13,3 @@
 OctoToDo_Collect.lua
 OctoToDo_AddonsManager.lua
 func.lua
-newFunc.lua

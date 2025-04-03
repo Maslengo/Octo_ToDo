@@ -1852,6 +1852,7 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 						end
 					end
 					frame:SetShown(not frame:IsShown())
+
 				end
 			end
 		end

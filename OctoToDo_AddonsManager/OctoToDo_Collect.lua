@@ -43,22 +43,43 @@ function E.CollectAllAddons()
 				textRIGHT = ADDON_DISABLED
 				colorAddon = E.Gray_Color
 			end
-			if state == 2 then
-				if loadedOrLoading then
-					firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonON"
-				else
-					firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonSOON"
-				end
-			elseif state == 1 then
-					firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonGRAY"
-				else
-				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonOFF"
+			-- if state == 2 then
+			-- 	if loadedOrLoading then
+			-- 		firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonON"
+			-- 	else
+			-- 		firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonSOON"
+			-- 	end
+			-- elseif state == 1 then
+			-- 		firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonGRAY"
+			-- 	else
+			-- 	firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonOFF"
+			-- end
+			if loadedOrLoading then
+				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonONgreen"
+			else
+				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonOFFblack"
 			end
-			if (enabled and not loadedOrLoading) or (not enabled and loadedOrLoading) then
+			if (enabled and not loadedOrLoading) then
 				needReload = true
-				textRIGHT = REQUIRES_RELOAD
+				textRIGHT = "Будет включено" -- "REQUIRES_RELOAD" VIDEO_OPTIONS_ENABLED
+				colorAddon = "|cff".."355C24" -- E.Green_Color
+				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonOFFgreen"
+			end
+			if (not enabled and loadedOrLoading) then
+				needReload = true
+				textRIGHT =  "Будет отключено" -- "REQUIRES_RELOAD" ADDON_DISABLED
+				colorAddon = "|cff".."BA1525" -- E.Red_Color
+				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonOFFred"
+			end
+			if reason == "DEP_DISABLED" then
+				textRIGHT = ADDON_DEP_DISABLED
 				colorAddon = E.Red_Color
 			end
+			if reason == "DEMAND_LOADED" then
+				textRIGHT = ADDON_DEMAND_LOADED
+				colorAddon = E.Yellow_Color
+			end
+			local dep = E.AddonTooltipBuildDepsString(i)
 			-- print (i, SessionAverageTime, type(SessionAverageTime))
 			collect[i].colorAddon = colorAddon
 			collect[i].name = name
@@ -85,6 +106,10 @@ function E.CollectAllAddons()
 			collect[i].state = state
 			collect[i].enabled = enabled
 			collect[i].needReload = needReload
+			collect[i].addonindex = i
+			collect[i].loadedOrLoading = loadedOrLoading
+			collect[i].vivod = E.func_Reason(reason)
+			collect[i].dep = dep
 		end
 	end
 	return collect

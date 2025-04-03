@@ -658,6 +658,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
 function E:Update(event_name)
+	--OctoToDo_DB_Vars.DebugFunction
 	local isMainFrameVisible = OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown()
 	if isMainFrameVisible then
 		if not self.updateScheduled then
@@ -1241,7 +1242,10 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:func_Create_DD2_OCTOMAIN()
 	----------------------------------------------------------------
 	E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN)
-	E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function() OctoToDo_EventFrame_OCTOMAIN:func_DataProvider() end)
+	E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function()
+		OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+		RequestRaidInfo()
+	end)
 	C_Timer.After(0, function()
 			local promise = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
 			promise:Then(function()
@@ -1281,12 +1285,16 @@ end
 local editFrame, editBox = _G["editFrame"], _G["editFrame"].editFrame
 SLASH_GSEARCH1, SLASH_GSEARCH2 = "/gsearch", "/gs"
 SlashCmdList.GSEARCH = function(msg)
-	DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("GSEARCH: ") .. msg)
 	local str = ""
 	local list = {}
+	local color = classColorHexCurrent
+	if classFilename == "PRIEST" then
+		color = E.Class_Priest_Color_Alternative
+	end
+	DEFAULT_CHAT_FRAME:AddMessage (color..("GSEARCH:|r ") .. msg)
 	for i, n in next, (_G) do
 		if type(n) == "string" and n:find(msg) then
-			str = str..E.func_Gradient(i).. " - ".. n .."\n"
+				str = str..color..i.. "|r - ".. n .."\n"
 		end
 	end
 	editBox:SetText(str)

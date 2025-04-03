@@ -14,15 +14,12 @@ end)
 local OctoToDo_EventFrame_AddonsManager = CreateFrame("FRAME")
 OctoToDo_EventFrame_AddonsManager:Hide()
 ----------------------------------------------------------------
-local AddonHeight = 20 -- Высота -- OctoToDo_DB_Vars.curHeight
+local AddonHeight = 20 --ADDON_BUTTON_HEIGHT -- Высота -- OctoToDo_DB_Vars.curHeight
 local AddonLeftFrameWeight = 500 -- Ширина Левого -- OctoToDo_DB_Vars.curWidthTitle
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
 -- дефолт 30
-local MainFrameNumLines = 30
-if MainFrameNumLines > NumberOfLines then
-	MainFrameNumLines = NumberOfLines
-end
+local MainFrameNumLines = 30 --MAX_ADDONS_DISPLAYED
 ----------------------------------------------------------------
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = E.func_GetClassColor(classFilename)
@@ -63,38 +60,36 @@ end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
-		frame.first = CreateFrame("BUTTON", nil, frame, "SecureActionButtonTemplate, BackDropTemplate")
-		frame.first:SetPropagateMouseClicks(true)
+		frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		frame.first:SetPropagateMouseClicks(false)
 		frame.first:SetSize(AddonHeight, AddonHeight)
-		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonHeight*0, 0)
+		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
-		frame.first.icon:SetAllPoints()
-		-- frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		if not frame.isInit then
-			frame.isInit = true
-			frame.first.icon:SetScript("OnMouseUp", function(self)
-					C_Timer.After(0.1, function()
-							E.func_ToggleAddon(data.index, data.state)
-							OctoToDo_EventFrame_AddonsManager:func_DataProvider()
-					end)
-			end)
-		end
-		frame.second = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
-		frame.second:SetPropagateMouseClicks(true)
-		frame.second:SetSize(AddonHeight, AddonHeight)
-		frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonHeight*1, 0)
-		frame.second.icon = frame:CreateTexture(nil, "BACKGROUND")
-		frame.second.icon:SetAllPoints()
-		-- frame.second.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		frame.first.icon:SetAllPoints(frame.first)
 
-		frame.third = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+		frame.DEP = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		frame.DEP:Hide()
+		frame.DEP:SetPropagateMouseClicks(false)
+		frame.DEP:SetSize(AddonHeight, AddonHeight)
+		frame.DEP:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonHeight, 0)
+		frame.DEP.icon = frame:CreateTexture(nil, "BACKGROUND")
+		frame.DEP.icon:SetAllPoints(frame.DEP)
+
+		frame.second = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+		frame.second:SetPropagateMouseClicks(false)
+		frame.second:SetSize(AddonHeight, AddonHeight)
+		frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonHeight, 0)
+		frame.second.icon = frame:CreateTexture(nil, "BACKGROUND")
+		frame.second.icon:SetAllPoints(frame.second)
+		-- frame.second.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		frame.third = CreateFrame("BUTTON", nil, frame, "SecureActionButtonTemplate, BackDropTemplate")
 		frame.third:SetPropagateMouseClicks(true)
-		frame.third:SetSize(AddonLeftFrameWeight, AddonHeight)
-		frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonHeight*2, 0)
+		frame.third:SetSize(AddonHeight+AddonHeight+AddonLeftFrameWeight, AddonHeight)
+		frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.third:SetScript("OnEnter", OnENTERTTOOLTIP)
 		frame.third:SetScript("OnLeave", GameTooltip_Hide)
 		frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.third.textLEFT:SetAllPoints()
+		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+4, 0);
 		frame.third.textLEFT:SetFontObject(OctoFont11)
 		frame.third.textLEFT:SetJustifyV("MIDDLE")
 		frame.third.textLEFT:SetJustifyH("LEFT")
@@ -105,24 +100,39 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.third.textRIGHT:SetJustifyV("MIDDLE")
 		frame.third.textRIGHT:SetJustifyH("RIGHT")
 		frame.third.textRIGHT:SetTextColor(1, 1, 1, 1)
-
+		-- frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		if not frame.isInitAddonButton then
+			frame.isInitAddonButton = true
+			frame.third:SetScript("OnClick", function(self)
+					-- if OctoToDo_MainFrame_AddonsManager.IsDraging then
+					-- 	print ("IsDraging")
+					-- 	return
+					-- end
+					if OctoToDo_MainFrame_AddonsManager:IsDragging() then
+						print ("IsDragging")
+						return
+					end
+					local data = frame:GetElementData()
+					E.func_ToggleAddon(data.addonindex, data.state)
+					OctoToDo_EventFrame_AddonsManager:func_DataProvider()
+			end)
+		end
 	end
 end
 ----------------------------------------------------------------
--- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
+-- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ + ГОВНО
 local function OctoToDo_Frame_init(frame, data)
 	frame.first.icon:SetTexture(data.firsticonTexture)
 	frame.second.icon:SetTexture(data.icon)
 	frame.third.textLEFT:SetText(data.textLEFT)
 	frame.third.textRIGHT:SetText(data.textRIGHT)
 	frame.third.tooltip = data.tooltipthird
+	frame.DEP.icon:SetTexture(data.DEPiconTexture)
+	-- frame.first.addonindex = data.addonindex
+	-- frame.first.state = data.state
 	if data.index % 2 == 0 then
-		E:func_SetBackdrop(frame.first, nil, 0, 0)
-		E:func_SetBackdrop(frame.second, nil, 0, 0)
 		E:func_SetBackdrop(frame.third, nil, 0, 0)
 	else
-		E:func_SetBackdrop(frame.first, "|cff000000", .1, 0)
-		E:func_SetBackdrop(frame.second, "|cff000000", .1, 0)
 		E:func_SetBackdrop(frame.third, "|cff000000", .1, 0)
 	end
 end
@@ -157,35 +167,39 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Create_MainFrame_AddonsManag
 	OctoToDo_MainFrame_AddonsManager:SetMovable(true)
 	OctoToDo_MainFrame_AddonsManager:RegisterForDrag("LeftButton")
 	OctoToDo_MainFrame_AddonsManager:SetScript("OnDragStart", function()
+			-- OctoToDo_MainFrame_AddonsManager.IsDraging = true
 			OctoToDo_MainFrame_AddonsManager:SetAlpha(E.bgCa)
 			OctoToDo_MainFrame_AddonsManager:StartMoving()
 	end)
 	OctoToDo_MainFrame_AddonsManager:SetScript("OnDragStop", function()
 			OctoToDo_MainFrame_AddonsManager:SetAlpha(1)
 			OctoToDo_MainFrame_AddonsManager:StopMovingOrSizing()
+			-- OctoToDo_MainFrame_AddonsManager.IsDraging = false
 	end)
 	OctoToDo_MainFrame_AddonsManager:RegisterForClicks("RightButtonUp")
 	OctoToDo_MainFrame_AddonsManager:SetScript("OnClick", function(self) self:Hide() end)
 	----------------------------------------------------------------
 	self:func_DataProvider()
+	OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function OctoToDo_EventFrame_AddonsManager:func_DataProvider()
-	local count = 0
+	-- индексдобавление(мой), название, индекс оригинальный (для функций)
 	E.UpdatePerformance()
 	local Provider = {}
 	for i, v in ipairs(OctoToDo_AddonsManager.AddonList) do
-		count = count + 1
 		Provider[i] = Provider[i] or {}
 		local tooltipthird = tooltipthird or {}
 		Provider[i].index = i
-		Provider[i].textLEFT = v.colorAddon..v.title.."|r"
+		Provider[i].textLEFT =  v.colorAddon..v.title.."|r " -- .. v.vivod
 		Provider[i].firsticonTexture = v.firsticonTexture
+		Provider[i].DEPiconTexture = v.DEPiconTexture
 		Provider[i].icon = v.iconTexture
 		Provider[i].textRIGHT = v.colorAddon..v.textRIGHT.."|r"
 		Provider[i].state = v.state
+		Provider[i].addonindex = v.addonindex
 		if v.Version ~= 0 then
 			tooltipthird[#tooltipthird+1] = {E.func_texturefromIcon(v.iconTexture)..v.colorAddon..v.name.."|r", E.Gray_Color..v.Version.."|r"}
 		else
@@ -203,7 +217,6 @@ function OctoToDo_EventFrame_AddonsManager:func_DataProvider()
 			end
 		end
 		tooltipthird[#tooltipthird+1] = {" ", " "}
-
 		tooltipthird[#tooltipthird+1] = {"RecentAverageTime: "..classColorHexCurrent..v.RecentAverageTime.."|r".."%"}
 		tooltipthird[#tooltipthird+1] = {"SessionAverageTime: "..classColorHexCurrent..v.SessionAverageTime.."|r".."%"}
 		tooltipthird[#tooltipthird+1] = {"PeakTime: "..classColorHexCurrent..v.PeakTime.."|r".."%"}
@@ -213,26 +226,19 @@ function OctoToDo_EventFrame_AddonsManager:func_DataProvider()
 		tooltipthird[#tooltipthird+1] = {"Ticksover50ms: "..classColorHexCurrent..v.Ticksover50ms.."|r"}
 		tooltipthird[#tooltipthird+1] = {"Ticksover100ms: "..classColorHexCurrent..v.Ticksover100ms.."|r"}
 		tooltipthird[#tooltipthird+1] = {"Ticksover500ms: "..classColorHexCurrent..v.Ticksover500ms.."|r"}
-
-
-
-
 		tooltipthird[#tooltipthird+1] = {"C_AddOns.IsAddOnDefaultEnabled", tostring(v.defaultEnabled)}
 		tooltipthird[#tooltipthird+1] = {"C_AddOns.DoesAddOnExist", tostring(v.exists)}
 		tooltipthird[#tooltipthird+1] = {"C_AddOns.GetAddOnEnableState", tostring(v.state)}
+		tooltipthird[#tooltipthird+1] = {" ", " "}
+		tooltipthird[#tooltipthird+1] = {" ", " "}
+		tooltipthird[#tooltipthird+1] = {"loadedOrLoading", tostring(v.loadedOrLoading)}
 		tooltipthird[#tooltipthird+1] = {"enabled", tostring(v.enabled)}
 		tooltipthird[#tooltipthird+1] = {"needReload", tostring(v.needReload)}
-
+		tooltipthird[#tooltipthird+1] = {"vivod", tostring(v.vivod)}
+		tooltipthird[#tooltipthird+1] = {"dep", tostring(v.dep)}
 
 		Provider[i].tooltipthird = tooltipthird
 	end
-	MainFrameNumLines = count
-	if OctoToDo_DB_Vars then
-		if MainFrameNumLines > OctoToDo_DB_Vars.Addon_Height then
-			MainFrameNumLines = OctoToDo_DB_Vars.Addon_Height
-		end
-	end
-	if MainFrameNumLines < 1 then MainFrameNumLines = 1 end
 	local DataProvider = CreateDataProvider(Provider)
 	OctoToDo_MainFrame_AddonsManager:SetSize(AddonHeight+AddonHeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_AddonsManager.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
@@ -332,6 +338,93 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 	OctoToDo_DD_AddonsManager:ddSetMenuButtonHeight(16)
 end
 ----------------------------------------------------------------
+function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
+-- ENABLE_ALL_ADDONS - Включить все
+-- ADDON_LIST_ENABLE_CATEGORY - Включить все модификации
+-- ENABLE_ALL_SHADERS - Включить все шейдерные эффекты
+-- ADDON_LIST_ENABLE_DEPENDENCIES - Включить все зависимости
+-- ADDON_LIST_DISABLE_CATEGORY - Отключить все модификации
+-- DISABLE_ALL_ADDONS - Отключить все
+
+	local frameONall = CreateFrame("Button", nil, OctoToDo_MainFrame_AddonsManager, "SecureActionButtonTemplate, BackDropTemplate")
+	frameONall:SetPropagateMouseClicks(true)
+	frameONall:SetSize(AddonLeftFrameWeight/5, AddonHeight)
+	frameONall:SetPoint("TOPLEFT", OctoToDo_MainFrame_AddonsManager, "BOTTOMLEFT", 0, 0)
+	E:func_SetBackdrop(frameONall)
+	frameONall.text = frameONall:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	frameONall.text:SetAllPoints()
+	frameONall.text:SetFontObject(OctoFont11)
+	frameONall.text:SetJustifyV("MIDDLE")
+	frameONall.text:SetJustifyH("CENTER")
+	frameONall.text:SetTextColor(1, 1, 1, 1)
+	frameONall.text:SetText(ENABLE_ALL_ADDONS)
+	frameONall:RegisterForClicks("LeftButtonUp")
+	frameONall:EnableMouse(true)
+	if not frameONall.frameONall then
+		frameONall.frameONall = true
+		frameONall:SetScript("OnClick", function(self)
+				E.func_EnableAllAddons()
+				OctoToDo_EventFrame_AddonsManager:func_DataProvider()
+		end)
+	end
+	frameONall:SetScript("OnEnter", function(self)
+		frameONall.text:SetText("|cff355C24"..ENABLE_ALL_ADDONS.."|r")
+	end)
+	frameONall:SetScript("OnLeave", function(self)
+		frameONall.text:SetText(ENABLE_ALL_ADDONS)
+	end)
+
+	----------------------------------------------------------------
+	local frameOFFall = CreateFrame("Button", nil, OctoToDo_MainFrame_AddonsManager, "SecureActionButtonTemplate, BackDropTemplate")
+	frameOFFall:SetPropagateMouseClicks(true)
+	frameOFFall:SetSize(AddonLeftFrameWeight/5, AddonHeight)
+	frameOFFall:SetPoint("TOPLEFT", OctoToDo_MainFrame_AddonsManager, "BOTTOMLEFT", AddonLeftFrameWeight/5, 0)
+	E:func_SetBackdrop(frameOFFall)
+	frameOFFall.text = frameOFFall:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	frameOFFall.text:SetAllPoints()
+	frameOFFall.text:SetFontObject(OctoFont11)
+	frameOFFall.text:SetJustifyV("MIDDLE")
+	frameOFFall.text:SetJustifyH("CENTER")
+	frameOFFall.text:SetTextColor(1, 1, 1, 1)
+	frameOFFall.text:SetText(DISABLE_ALL_ADDONS)
+	frameOFFall:RegisterForClicks("LeftButtonUp")
+	frameOFFall:EnableMouse(true)
+	if not frameOFFall.frameOFFall then
+		frameOFFall.frameOFFall = true
+		frameOFFall:SetScript("OnClick", function(self)
+				E.func_DisableAllAddons()
+				OctoToDo_EventFrame_AddonsManager:func_DataProvider()
+		end)
+		frameOFFall:SetScript("OnEnter", function(self)
+			frameOFFall.text:SetText("|cffBA1525"..DISABLE_ALL_ADDONS.."|r")
+		end)
+		frameOFFall:SetScript("OnLeave", function(self)
+			frameOFFall.text:SetText(DISABLE_ALL_ADDONS)
+		end)
+	end
+	----------------------------------------------------------------
+	local ReloadUIAM = CreateFrame("Button", nil, OctoToDo_MainFrame_AddonsManager, "SecureActionButtonTemplate, BackDropTemplate")
+	ReloadUIAM:SetPropagateMouseClicks(true)
+	ReloadUIAM:SetSize(AddonLeftFrameWeight/5, AddonHeight)
+	ReloadUIAM:SetPoint("TOPRIGHT", OctoToDo_MainFrame_AddonsManager, "BOTTOMRIGHT", 0, 0)
+	E:func_SetBackdrop(ReloadUIAM)
+	ReloadUIAM.text = ReloadUIAM:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	ReloadUIAM.text:SetAllPoints()
+	ReloadUIAM.text:SetFontObject(OctoFont11)
+	ReloadUIAM.text:SetJustifyV("MIDDLE")
+	ReloadUIAM.text:SetJustifyH("CENTER")
+	ReloadUIAM.text:SetTextColor(1, 1, 1, 1)
+	ReloadUIAM.text:SetText(RELOADUI)
+	ReloadUIAM:RegisterForClicks("LeftButtonUp")
+	ReloadUIAM:EnableMouse(true)
+	if not ReloadUIAM.ReloadUIAM then
+		ReloadUIAM.ReloadUIAM = true
+		ReloadUIAM:SetScript("OnClick", function(self)
+				ReloadUI()
+		end)
+	end
+end
+----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_REGEN_DISABLED",
@@ -344,9 +437,9 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		self.ADDON_LOADED = nil
 		----------------------------------------------------------------
 		-- if OctoToDo_DB_Vars then
-		-- 	print (OctoToDo_DB_Vars.curWidthTitle)
-		-- 	AddonHeight = OctoToDo_DB_Vars.curHeight
-		-- 	AddonLeftFrameWeight = OctoToDo_DB_Vars.curWidthTitle*4
+		--     print (OctoToDo_DB_Vars.curWidthTitle)
+		--     AddonHeight = OctoToDo_DB_Vars.curHeight
+		--     AddonLeftFrameWeight = OctoToDo_DB_Vars.curWidthTitle*4
 		-- end
 		----------------------------------------------------------------
 		if OctoToDo_AddonsManager == nil then OctoToDo_AddonsManager = {} end

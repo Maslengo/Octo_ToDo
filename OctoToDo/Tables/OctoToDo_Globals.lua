@@ -16,7 +16,7 @@ E.bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga
 
 
 
-
+E.MainGlobalAddonName = GlobalAddonName
 
 -- NIGHT_FAE_BLUE_COLOR
 -- WOW_PROJECT_MAINLINE = WOW_PROJECT_MAINLINE or 1 -- RETAIL
@@ -225,6 +225,7 @@ E.multiplier = 2 - E.slider_scale
 --COLORS--------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+E.Class_Priest_Color_Alternative = "|cff9659FF"--"|cff7157FF"
 E.Class_Warrior_Color = "|cffC69B6D"
 E.Class_Paladin_Color = "|cffF48CBA"
 E.Class_Hunter_Color = "|cffAAD372"

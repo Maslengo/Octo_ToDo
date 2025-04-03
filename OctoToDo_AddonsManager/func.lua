@@ -10,7 +10,7 @@ AddonManager:RegisterEvent("ADDON_LOADED")
 AddonManager:RegisterEvent("PLAYER_LOGIN")
 -- Функция для вывода сообщения в чат
 function E.func_Print(msg)
-	print("!|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r AddonsManager " .. msg.. "|r")
+	print("!|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r AddonsManager "..msg.. "|r")
 end
 -- Получить список всех аддонов
 function E.func_GetAllAddons()
@@ -26,7 +26,7 @@ end
 -- Показать список аддонов с их статусом
 function E.func_ListAddons(filter)
 	local addons = E.func_GetAllAddons()
-	E.func_Print("Список аддонов (" .. #addons .. "):")
+	E.func_Print("Список аддонов ("..#addons.."):")
 	for i, name in ipairs(addons) do
 		if not filter or string.find(string.lower(name), string.lower(filter)) then
 			local status = E.IsAddOnLoaded(name) and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r"
@@ -36,19 +36,20 @@ function E.func_ListAddons(filter)
 end
 -- Переключить аддон
 function E.func_ToggleAddon(i, state)
+	print ("func_ToggleAddon")
 	local addonName = C_AddOns.GetAddOnInfo(i)
-	local enabled = (C_AddOns.GetAddOnEnableState(i, UnitName("player")) > Enum.AddOnEnableState.None);
+	local enabled = (C_AddOns.GetAddOnEnableState(i, UnitName("player")) > Enum.AddOnEnableState.None)
 
 	if enabled then
 		C_AddOns.DisableAddOn(i)
-		E.func_Print("Аддон '" .. addonName .. "' |cffff0000отключен|r")
+		E.func_Print("Аддон '"..addonName.."' |cffff0000отключен|r".. i)
 	else
 		C_AddOns.EnableAddOn(i)
-		E.func_Print("Аддон '" .. addonName .. "' |cff00ff00включен|r")
+		E.func_Print("Аддон '"..addonName.."' |cff00ff00включен|r".. i)
 	end
 	-- Если введен номер
 	if not C_AddOns.GetAddOnInfo(i) then
-		E.func_Print("Аддон '" .. i .. "' не найден")
+		E.func_Print("Аддон '"..i.."' не найден")
 		return
 	end
 end
@@ -63,7 +64,9 @@ end
 -- Выключить все аддоны
 function E.func_DisableAllAddons()
 	for i, name in ipairs(E.func_GetAllAddons()) do
-		C_AddOns.DisableAddOn(name)
+		if name ~= E.MainGlobalAddonName then
+			C_AddOns.DisableAddOn(name)
+		end
 	end
 	E.func_Print("Все аддоны |cffff0000отключены|r")
 	-- ReloadUI()
@@ -78,12 +81,12 @@ function E.func_SaveProfile(profileName)
 	for i, name in ipairs(addons) do
 		profiles[profileName][name] = E.IsAddOnLoaded(name)
 	end
-	E.func_Print("Профиль '" .. profileName .. "' сохранен (" .. #addons .. " аддонов)")
+	E.func_Print("Профиль '"..profileName.."' сохранен ("..#addons.." аддонов)")
 end
 -- Загрузить профиль
 function E.func_LoadProfile(profileName)
 	if not profiles[profileName] then
-		E.func_Print("Профиль '" .. profileName .. "' не найден")
+		E.func_Print("Профиль '"..profileName.."' не найден")
 		return
 	end
 	for name, enabled in pairs(profiles[profileName]) do
@@ -94,14 +97,14 @@ function E.func_LoadProfile(profileName)
 		end
 	end
 	currentProfile = profileName
-	E.func_Print("Профиль '" .. profileName .. "' загружен")
+	E.func_Print("Профиль '"..profileName.."' загружен")
 	-- ReloadUI()
 end
 -- Список профилей
 function E.func_ListProfiles()
 	E.func_Print("Доступные профили:")
 	for name, _ in pairs(profiles) do
-		print("- " .. name)
+		print("- "..name)
 	end
 end
 -- Обработчик команд
@@ -161,9 +164,9 @@ function E.GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
 	end
 	local percent = addon / relative
 	if (warningInLeftSide) then
-		return E.GetWarningFor(percent) .. E.FormatProfilerPercent(percent * 100.0)
+		return E.GetWarningFor(percent)..E.FormatProfilerPercent(percent * 100.0)
 	end
-	return E.FormatProfilerPercent(percent * 100.0) .. E.GetWarningFor(percent)
+	return E.FormatProfilerPercent(percent * 100.0)..E.GetWarningFor(percent)
 end
 ----------------------------------------------------------------
 function E.FormatProfilerPercent(pct)
@@ -173,7 +176,7 @@ function E.FormatProfilerPercent(pct)
 	if (pct > 80) then color = E.Red_Color end
 	local vivod = string.format("%.2f", pct)
 	return vivod
-	-- return color:WrapText(string.format("%.2f", pct)) .. E.White_Color:WrapText("%")
+	-- return color:WrapText(string.format("%.2f", pct))..E.White_Color:WrapText("%")
 end
 ----------------------------------------------------------------
 function E.GetCVarNumber(name)
@@ -201,17 +204,6 @@ function E.GetAddonMetricCount(addonName, metric)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.AddonTooltip_BuildDeps(...)
-	local deps = ""
-	for i=1, select("#", ...) do
-		if ( i == 1 ) then
-			deps = ADDON_DEPENDENCIES .. select(i, ...)
-		else
-			deps = deps..", "..select(i, ...)
-		end
-	end
-	return deps
-end
 ----------------------------------------------------------------
 -- function E.func_CompactMemory(memory)
 -- 	if memory > 0 then
@@ -229,10 +221,80 @@ function E.IsAddOnLoaded(addonName)
 	return C_AddOns.IsAddOnLoaded(addonName)
 end
 ----------------------------------------------------------------
+function E.AddonTooltip_BuildDeps(...)
+	local deps = ""
+	for i=1, select("#", ...) do
+		if i == 1 then
+			deps = ADDON_DEPENDENCIES..select(i, ...)
+		else
+			deps = deps..", "..select(i, ...)
+		end
+	end
+	return deps
+end
 ----------------------------------------------------------------
+
+function E.AddonList_IsAddOnLoadOnDemand(index)
+	local lod = false
+	if C_AddOns.IsAddOnLoadOnDemand(index) then
+		local deps = C_AddOns.GetAddOnDependencies(index)
+		local okay = true
+		for i = 1, select('#', deps) do
+			local dep = select(i, deps)
+			if ( dep and not C_AddOns.IsAddOnLoaded(select(i, deps)) ) then
+				okay = false
+				break
+			end
+		end
+		lod = okay
+	end
+	return lod
+end
+
 ----------------------------------------------------------------
+function E.AddonTooltipBuildDepsString(index)
+	local deps = { C_AddOns.GetAddOnDependencies(index) }
+	local depsString = ""
+	for i, name in ipairs(deps) do
+		-- local color = C.white
+		-- if (not E.IsAddonInstalled(name)) then
+		-- 	color = C.red
+		-- elseif (E.IsAddonSelected(name)) then
+		-- 	color = C.green
+		-- end
+		if i == 1 then
+			depsString = ADDON_DEPENDENCIES..name
+		else
+			depsString = depsString..", "..name
+		end
+	end
+	return depsString
+end
+
+
 ----------------------------------------------------------------
+function E.IsAddonInstalled(indexOrName)
+	local _, _, _, _, reason = SAM.compat.GetAddOnInfo(indexOrName)
+	return reason ~= "MISSING"
+end
 ----------------------------------------------------------------
+function E.IsAddonSelected(nameOrIndex, forSome, charGuid)
+	if (forSome) then
+		local state = C_AddOns.GetAddOnEnableState(nameOrIndex, nil)
+		return state == 1
+	end
+	local guid = charGuid or E.GetSelectedCharGuid()
+	if (charGuid == true) then
+		guid = nil
+	end
+	local state = C_AddOns.GetAddOnEnableState(nameOrIndex, guid)
+	return state == 2
+end
+----------------------------------------------------------------
+function E.GetSelectedCharGuid()
+	if (selectedCharIndex >= 1) then return orderedCharList[selectedCharIndex + 1].guid end
+	return nil
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
