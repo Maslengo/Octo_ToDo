@@ -76,20 +76,20 @@ function E.func_SaveProfile(profileName)
 	if not profileName or profileName == "" then
 		profileName = currentProfile
 	end
-	profiles[profileName] = {}
+	OctoToDo_AddonsManager.profiles[profileName] = {}
 	local addons = E.func_GetAllAddons()
 	for i, name in ipairs(addons) do
-		profiles[profileName][name] = E.IsAddOnLoaded(name)
+		OctoToDo_AddonsManager.profiles[profileName][name] = E.IsAddOnLoaded(name)
 	end
 	E.func_Print("Профиль '"..profileName.."' сохранен ("..#addons.." аддонов)")
 end
 -- Загрузить профиль
 function E.func_LoadProfile(profileName)
-	if not profiles[profileName] then
+	if not OctoToDo_AddonsManager.profiles[profileName] then
 		E.func_Print("Профиль '"..profileName.."' не найден")
 		return
 	end
-	for name, enabled in pairs(profiles[profileName]) do
+	for name, enabled in pairs(OctoToDo_AddonsManager.profiles[profileName]) do
 		if enabled then
 			C_AddOns.EnableAddOn(name)
 		else
@@ -103,7 +103,7 @@ end
 -- Список профилей
 function E.func_ListProfiles()
 	E.func_Print("Доступные профили:")
-	for name, _ in pairs(profiles) do
+	for name, _ in pairs(OctoToDo_AddonsManager.profiles) do
 		print("- "..name)
 	end
 end
@@ -139,15 +139,16 @@ end
 AddonManager:SetScript("OnEvent", function(self, event, ...)
 		if event == "ADDON_LOADED" and ... == GlobalAddonName then
 			-- Создаем дефолтный профиль при первом запуске
-			if not profiles.default then
-				E.func_SaveProfile("default")
-			end
+			-- if not profiles.default then
+			-- 	E.func_SaveProfile("default")
+			-- end
 			print ("/uam")
 		end
 end)
 -- Регистрируем команды
 SLASH_UNIVERSALADDONMANAGER1 = "/uam"
 SlashCmdList["UNIVERSALADDONMANAGER"] = E.func_HandleCommand
+
 function E.GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
 	if (not C_AddOnProfiler.IsEnabled()) then
 		return def or ""
@@ -256,44 +257,14 @@ function E.AddonTooltipBuildDepsString(index)
 	local deps = { C_AddOns.GetAddOnDependencies(index) }
 	local depsString = ""
 	for i, name in ipairs(deps) do
-		-- local color = C.white
-		-- if (not E.IsAddonInstalled(name)) then
-		-- 	color = C.red
-		-- elseif (E.IsAddonSelected(name)) then
-		-- 	color = C.green
-		-- end
+		local color = E.Green_Color
 		if i == 1 then
-			depsString = ADDON_DEPENDENCIES..name
+			depsString = color..name.."|r"
 		else
-			depsString = depsString..", "..name
+			depsString = depsString..", "..color..name.."|r"
 		end
 	end
 	return depsString
-end
-
-
-----------------------------------------------------------------
-function E.IsAddonInstalled(indexOrName)
-	local _, _, _, _, reason = SAM.compat.GetAddOnInfo(indexOrName)
-	return reason ~= "MISSING"
-end
-----------------------------------------------------------------
-function E.IsAddonSelected(nameOrIndex, forSome, charGuid)
-	if (forSome) then
-		local state = C_AddOns.GetAddOnEnableState(nameOrIndex, nil)
-		return state == 1
-	end
-	local guid = charGuid or E.GetSelectedCharGuid()
-	if (charGuid == true) then
-		guid = nil
-	end
-	local state = C_AddOns.GetAddOnEnableState(nameOrIndex, guid)
-	return state == 2
-end
-----------------------------------------------------------------
-function E.GetSelectedCharGuid()
-	if (selectedCharIndex >= 1) then return orderedCharList[selectedCharIndex + 1].guid end
-	return nil
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------

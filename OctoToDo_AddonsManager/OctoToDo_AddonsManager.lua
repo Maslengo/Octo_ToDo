@@ -26,10 +26,49 @@ local classColor = E.func_GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
 local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 ----------------------------------------------------------------
-local ADDON_ACTIONS_BLOCKED = {}
-function AddonTooltip_ActionBlocked(addon)
-	ADDON_ACTIONS_BLOCKED[addon] = (ADDON_ACTIONS_BLOCKED[addon] or 0) + 1
-end
+-- local ADDON_ACTIONS_BLOCKED = {}
+-- function AddonTooltip_ActionBlocked(addon)
+--     ADDON_ACTIONS_BLOCKED[addon] = (ADDON_ACTIONS_BLOCKED[addon] or 0) + 1
+-- end
+----------------------------------------------------------------
+-- local function PIZDALIZ()
+-- 	local ScrollBox = CreateFrame("Frame", nil, UIParent, "WowScrollBoxList")
+-- 	ScrollBox:SetPoint("CENTER")
+-- 	ScrollBox:SetSize(300, 500)
+
+-- 	local ScrollBar = CreateFrame("EventFrame", nil, UIParent, "MinimalScrollBar")
+-- 	ScrollBar:SetPoint("TOPLEFT", ScrollBox, "TOPRIGHT")
+-- 	ScrollBar:SetPoint("BOTTOMLEFT", ScrollBox, "BOTTOMRIGHT")
+
+-- 	local DataProvider = CreateTreeDataProvider()
+-- 	local ScrollView = CreateScrollBoxListTreeListView()
+-- 	ScrollView:SetDataProvider(DataProvider)
+
+-- 	ScrollUtil.InitScrollBoxListWithScrollBar(ScrollBox, ScrollBar, ScrollView)
+
+-- 	-- The 'button' argument is the frame that our data will inhabit in our list
+-- 	-- The 'node' argument will be a node table, as explained above
+-- 	local function Initializer(button, node)
+-- 		local data = node:GetData() -- get our data from the node with :GetData()
+-- 		local text = data.ButtonText
+-- 		button:SetText(text)
+-- 		button:SetScript("OnClick", function()
+-- 			node:ToggleCollapsed()
+-- 		end)
+-- 	end
+
+-- 	-- The first argument here can either be a frame type or frame template. We're just passing the "UIPanelButtonTemplate" template here
+-- 	ScrollView:SetElementInitializer("UIPanelButtonTemplate", Initializer)
+
+-- 	local AddonList = {
+-- 		ButtonText = "AddonList",
+-- 	}
+-- 	local GhostElement = DataProvider:Insert(AddonList)
+-- 	for i = 1, C_AddOns.GetNumAddOns() do
+-- 		local name, title, notes, loadable, reason, security, updateAvailable = C_AddOns.GetAddOnInfo(i)
+-- 		GhostElement:Insert({ButtonText = name})
+-- 	end
+-- end
 ----------------------------------------------------------------
 local function OnENTERTTOOLTIP(f)
 	if not f.tooltip then
@@ -66,7 +105,6 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.first.icon:SetAllPoints(frame.first)
-
 		frame.DEP = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
 		frame.DEP:Hide()
 		frame.DEP:SetPropagateMouseClicks(false)
@@ -74,7 +112,6 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.DEP:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonHeight, 0)
 		frame.DEP.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.DEP.icon:SetAllPoints(frame.DEP)
-
 		frame.second = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
 		frame.second:SetPropagateMouseClicks(false)
 		frame.second:SetSize(AddonHeight, AddonHeight)
@@ -105,8 +142,8 @@ local function func_OnAcquired(owner, frame, data, new)
 			frame.isInitAddonButton = true
 			frame.third:SetScript("OnClick", function(self)
 					-- if OctoToDo_MainFrame_AddonsManager.IsDraging then
-					-- 	print ("IsDraging")
-					-- 	return
+					--     print ("IsDraging")
+					--     return
 					-- end
 					if OctoToDo_MainFrame_AddonsManager:IsDragging() then
 						print ("IsDragging")
@@ -193,7 +230,7 @@ function OctoToDo_EventFrame_AddonsManager:func_DataProvider()
 		Provider[i] = Provider[i] or {}
 		local tooltipthird = tooltipthird or {}
 		Provider[i].index = i
-		Provider[i].textLEFT =  v.colorAddon..v.title.."|r " -- .. v.vivod
+		Provider[i].textLEFT =  v.colorAddon..v.name.."|r " -- .. v.vivod
 		Provider[i].firsticonTexture = v.firsticonTexture
 		Provider[i].DEPiconTexture = v.DEPiconTexture
 		Provider[i].icon = v.iconTexture
@@ -201,9 +238,9 @@ function OctoToDo_EventFrame_AddonsManager:func_DataProvider()
 		Provider[i].state = v.state
 		Provider[i].addonindex = v.addonindex
 		if v.Version ~= 0 then
-			tooltipthird[#tooltipthird+1] = {E.func_texturefromIcon(v.iconTexture)..v.colorAddon..v.name.."|r", E.Gray_Color..v.Version.."|r"}
+			tooltipthird[#tooltipthird+1] = {E.func_texturefromIcon(v.iconTexture)..v.colorAddon..v.title.."|r", E.Gray_Color..v.Version.."|r"}
 		else
-			tooltipthird[#tooltipthird+1] = {E.func_texturefromIcon(v.iconTexture)..v.colorAddon..v.name.."|r"}
+			tooltipthird[#tooltipthird+1] = {E.func_texturefromIcon(v.iconTexture)..v.colorAddon..v.title.."|r"}
 		end
 		if v.Author then
 			tooltipthird[#tooltipthird+1] = {" ", E.Gray_Color..v.Author.."|r"}
@@ -235,8 +272,7 @@ function OctoToDo_EventFrame_AddonsManager:func_DataProvider()
 		tooltipthird[#tooltipthird+1] = {"enabled", tostring(v.enabled)}
 		tooltipthird[#tooltipthird+1] = {"needReload", tostring(v.needReload)}
 		tooltipthird[#tooltipthird+1] = {"vivod", tostring(v.vivod)}
-		tooltipthird[#tooltipthird+1] = {"dep", tostring(v.dep)}
-
+		tooltipthird[#tooltipthird+1] = {ADDON_DEPENDENCIES, tostring(v.dep)}
 		Provider[i].tooltipthird = tooltipthird
 	end
 	local DataProvider = CreateDataProvider(Provider)
@@ -339,13 +375,12 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 end
 ----------------------------------------------------------------
 function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
--- ENABLE_ALL_ADDONS - Включить все
--- ADDON_LIST_ENABLE_CATEGORY - Включить все модификации
--- ENABLE_ALL_SHADERS - Включить все шейдерные эффекты
--- ADDON_LIST_ENABLE_DEPENDENCIES - Включить все зависимости
--- ADDON_LIST_DISABLE_CATEGORY - Отключить все модификации
--- DISABLE_ALL_ADDONS - Отключить все
-
+	-- ENABLE_ALL_ADDONS - Включить все
+	-- ADDON_LIST_ENABLE_CATEGORY - Включить все модификации
+	-- ENABLE_ALL_SHADERS - Включить все шейдерные эффекты
+	-- ADDON_LIST_ENABLE_DEPENDENCIES - Включить все зависимости
+	-- ADDON_LIST_DISABLE_CATEGORY - Отключить все модификации
+	-- DISABLE_ALL_ADDONS - Отключить все
 	local frameONall = CreateFrame("Button", nil, OctoToDo_MainFrame_AddonsManager, "SecureActionButtonTemplate, BackDropTemplate")
 	frameONall:SetPropagateMouseClicks(true)
 	frameONall:SetSize(AddonLeftFrameWeight/5, AddonHeight)
@@ -368,12 +403,11 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 		end)
 	end
 	frameONall:SetScript("OnEnter", function(self)
-		frameONall.text:SetText("|cff355C24"..ENABLE_ALL_ADDONS.."|r")
+			frameONall.text:SetText("|cff355C24"..ENABLE_ALL_ADDONS.."|r")
 	end)
 	frameONall:SetScript("OnLeave", function(self)
-		frameONall.text:SetText(ENABLE_ALL_ADDONS)
+			frameONall.text:SetText(ENABLE_ALL_ADDONS)
 	end)
-
 	----------------------------------------------------------------
 	local frameOFFall = CreateFrame("Button", nil, OctoToDo_MainFrame_AddonsManager, "SecureActionButtonTemplate, BackDropTemplate")
 	frameOFFall:SetPropagateMouseClicks(true)
@@ -396,10 +430,10 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 				OctoToDo_EventFrame_AddonsManager:func_DataProvider()
 		end)
 		frameOFFall:SetScript("OnEnter", function(self)
-			frameOFFall.text:SetText("|cffBA1525"..DISABLE_ALL_ADDONS.."|r")
+				frameOFFall.text:SetText("|cffBA1525"..DISABLE_ALL_ADDONS.."|r")
 		end)
 		frameOFFall:SetScript("OnLeave", function(self)
-			frameOFFall.text:SetText(DISABLE_ALL_ADDONS)
+				frameOFFall.text:SetText(DISABLE_ALL_ADDONS)
 		end)
 	end
 	----------------------------------------------------------------
@@ -435,6 +469,7 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		-- PIZDALIZ()
 		----------------------------------------------------------------
 		-- if OctoToDo_DB_Vars then
 		--     print (OctoToDo_DB_Vars.curWidthTitle)
@@ -443,6 +478,10 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		-- end
 		----------------------------------------------------------------
 		if OctoToDo_AddonsManager == nil then OctoToDo_AddonsManager = {} end
+		if OctoToDo_AddonsManager.profiles == nil then OctoToDo_AddonsManager.profiles = {} end
+		if OctoToDo_AddonsManager.profiles.default == nil then
+			E.func_SaveProfile("default")
+		end
 		----------------------------------------------------------------
 		self:OctoToDo_Create_MainFrame_AddonsManager()
 		self:func_Create_DDframe_AddonsManager()

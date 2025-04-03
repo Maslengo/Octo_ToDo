@@ -80,6 +80,10 @@ function E.CollectAllAddons()
 				colorAddon = E.Yellow_Color
 			end
 			local dep = E.AddonTooltipBuildDepsString(i)
+			local depBOOLEN = false
+			if dep then
+				depBOOLEN = true
+			end
 			-- print (i, SessionAverageTime, type(SessionAverageTime))
 			collect[i].colorAddon = colorAddon
 			collect[i].name = name
@@ -115,3 +119,36 @@ function E.CollectAllAddons()
 	return collect
 end
 
+-- function E.CollectAllAddons()
+-- 	local collect = OctoToDo_AddonsManager.AddonList
+-- 	local indexByName = {}
+-- 	wipe(collect)
+-- 	for index = 1, C_AddOns.GetNumAddOns() do
+-- 		local name = C_AddOns.GetAddOnInfo(index)
+-- 		indexByName[name] = index
+-- 	end
+
+-- 	local depsByIndex = {}
+-- 	for index = 1, C_AddOns.GetNumAddOns() do
+-- 		OctoToDo_AddonsManager.AddonList[index] = OctoToDo_AddonsManager.AddonList[index] or {}
+
+-- 		local deps = {C_AddOns.GetAddOnDependencies(index)}
+-- 		if deps then
+-- 			for _, name in ipairs(deps) do
+-- 				if indexByName[name] then
+-- 					depsByIndex[indexByName[name]] = depsByIndex[indexByName[name]] or {}
+-- 					tinsert(depsByIndex[indexByName[name]], index)
+-- 					tinsert(OctoToDo_AddonsManager.AddonList[index], depsByIndex[indexByName[name]])
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- 	-- fpde(collect)
+-- 	-- fpde(depsByIndex)
+
+
+
+
+
+-- 	return collect
+-- end
