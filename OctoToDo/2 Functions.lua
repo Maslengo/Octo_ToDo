@@ -264,9 +264,7 @@ function E.func_PlaySoundFile_whisper(fileName)
 end
 ----------------------------------------------------------------
 function E.func_CompactNumberFormat(number)
-	if not number then
-		number = 0
-	end
+	local number = number or 0
 	if number == 0 then
 		return 0
 	elseif number < 1000 then
@@ -279,50 +277,30 @@ function E.func_CompactNumberFormat(number)
 end
 ----------------------------------------------------------------
 function E.func_CompactNumberSimple(number)
-	if not number then
-		number = 0
-	end
+	local number = number or 0
 	if number == 0 then
 		return 0
 	else
 		return math.floor(number+.5)
 	end
-end 
-function E.Icon_MailBoxQWE()
-	return E.func_texturefromIcon("Interface/AddOns/"..E.GlobalAddonName.."/Media/ElvUI/Mail0.tga")
 end
 ----------------------------------------------------------------
-function E.func_texturefromIcon(icon, iconSize, isShown)
-	iconSize = iconSize or 16
-	icon = icon or 134400
-	if not isShown then
-		return ""
-	else
-		return "|T".. icon ..":"..iconSize..":"..iconSize..":::64:64:4:60:4:60|t"
-	end
+function E.func_texturefromIcon(icon, iconSize)
+	return "|T"..(icon or 134400)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::64:64:4:60:4:60|t"
 end
-E.Icon_Alliance = E.func_texturefromIcon(255140) -- 132486
-E.Icon_Horde = E.func_texturefromIcon(255142) -- 132485
-E.Icon_Unknown = E.func_texturefromIcon(134400)
-E.Icon_Kyrian = E.func_texturefromIcon(3641395)
-E.Icon_Necrolord = E.func_texturefromIcon(3641396)
-E.Icon_NightFae = E.func_texturefromIcon(3641394)
-E.Icon_Venthyr = E.func_texturefromIcon(3641397)
-E.Icon_WorldBoss = E.func_texturefromIcon(3528312)
-E.Icon_Rares = E.func_texturefromIcon(135903)
-E.Icon_Money = E.func_texturefromIcon(133784, 14)
-E.Icon_MailBox = E.func_texturefromIcon("Interface/AddOns/"..E.GlobalAddonName.."/Media/ElvUI/Mail0.tga")
-function E.func_texturefromIconEVENT(icon, iconSize, isShown)
-	if isShown == nil then isShown = true end
-	if iconSize == nil then iconSize = 16 end
-	if icon == nil then icon = 134400 end
-	local vivod
-	if isShown == true then
-		vivod = "|T".. icon ..":"..iconSize..":"..iconSize..":::128:128:0:91:0:91|t"
-	else
-		vivod = ""
-	end
-	return vivod.." "
+E.Icon_Alliance = 255140-- E.func_texturefromIcon(255140) -- 132486
+E.Icon_Horde = 255142 -- 132485
+E.Icon_Unknown = 134400
+E.Icon_Kyrian = 3641395
+E.Icon_Necrolord = 3641396
+E.Icon_NightFae = 3641394
+E.Icon_Venthyr = 3641397
+E.Icon_WorldBoss = 3528312
+E.Icon_Rares = 135903
+E.Icon_Money = 133784
+E.Icon_MailBox = "Interface/AddOns/"..E.GlobalAddonName.."/Media/ElvUI/Mail0.tga"
+function E.func_texturefromIconEVENT(icon, iconSize)
+	return "|T"..(icon or 134400)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::128:128:0:91:0:91|t"
 end
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
@@ -443,6 +421,14 @@ function E.func_currencyName(currencyID)
 	else
 		return "currencyID = NIL"
 	end
+end
+function E.func_GetCurrencyIcon(currencyID)
+	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	local iconFileID = 134400
+	if info then
+		iconFileID = info.iconFileID
+	end
+	return iconFileID
 end
 ----------------------------------------------------------------
 function E.func_currencyName_NOCOLOR(currencyID)
@@ -768,11 +754,16 @@ function E.func_GetClassColor(className) -- C_ClassColor.GetClassColor(classFile
 	end
 	return "ffffff"
 end
+E.className = select(1, UnitClass("PLAYER"))
+E.classFilename = select(2, UnitClass("PLAYER"))
+E.classId = select(3, UnitClass("PLAYER"))
+
 E.classColor = E.func_GetClassColor(E.classFilename) --or {r = 0.5, g = 0.5, b = 0.5}
 local r, g, b = GetClassColor(E.classFilename)
 E.classColorHexCurrent = E.func_rgb2hex(r, g, b)
 E.curCharName = UnitFullName("PLAYER")
 E.curServer = GetRealmName()
+E.curServerShort = E.func_CurServerShort(GetRealmName())
 ----------------------------------------------------------------
 function E.func_Reverse_order(a, b)
 	return b < a
@@ -1770,6 +1761,22 @@ function E.func_Reason(reason)
 	return vivod
 end
 ----------------------------------------------------------------
+function E.func_CreateInfoFrame(text, point, parent, rPoint, x, y, sizeW, sizeH)
+	local frame = CreateFrame("frame", nil, parent, "BackDropTemplate")
+
+
+-- ("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 0)
+
+	frame:SetPoint(point, parent, rPoint, x, y)
+	frame:SetSize(sizeW, sizeH)
+	frame.text = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	frame.text:SetAllPoints()
+	frame.text:SetFontObject(OctoFont11)
+	frame.text:SetJustifyV("MIDDLE")
+	frame.text:SetJustifyH("LEFT")
+	frame.text:SetTextColor(1, 1, 1, 1)
+	frame.text:SetText(text)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 E.OctoTable_Empty = {}
@@ -1824,9 +1831,7 @@ E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
 E.curGUID = UnitGUID("PLAYER")
 E.GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
-E.className = select(1, UnitClass("PLAYER"))
-E.classFilename = select(2, UnitClass("PLAYER"))
-E.classId = select(3, UnitClass("PLAYER"))
+
 E.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
 E.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
 E.baseArmoryUrl = "https://worldofwarcraft.blizzard.com/%s/character/%s/%s"
@@ -1889,17 +1894,19 @@ E.Class_Druid_Color = "|cffFF7C0A"
 E.Class_DemonHunter_Color = "|cffA330C9"
 E.Class_DeathKnight_Color = "|cffC41E3A"
 E.Class_Evoker_Color = "|cff33937F"
-E.WorldofWarcraft_Color = "|cff68CCEF" -- cffD6AB7D
-E.TheBurningCrusade_Color = "|cff4FFF79" -- cffE43E5A
-E.WrathoftheLichKing_Color = "|cff00A3FF" -- cff3FC7EB
-E.Cataclysm_Color = "|cffFFB300" -- cffFF7C0A
-E.MistsofPandaria_Color = "|cff00FFBA" -- cff00EF88
-E.WarlordsofDraenor_Color = "|cffC86400" -- cffF48CBA
-E.Legion_Color = "|cff1EFF00" -- cffAAD372
-E.BattleforAzeroth_Color = "|cff6464FF" -- cffFFF468
-E.Shadowlands_Color = "|cffC9C3AA" -- cff9798FE
-E.Dragonflight_Color = "|cffE8E379" -- cff53B39F
-E.TheWarWithin_Color = "|cffB59377" -- cff90CCDD
+
+E.WorldofWarcraft_Color = "|cffD6AB7D" -- "|cff68CCEF"
+E.TheBurningCrusade_Color = "|cffE43E5A" -- "|cff4FFF79"
+E.WrathoftheLichKing_Color = "|cff3FC7EB" -- "|cff00A3FF"
+E.Cataclysm_Color = "|cffFF7C0A" -- "|cffFFB300"
+E.MistsofPandaria_Color = "|cff00EF88" -- "|cff00FFBA"
+E.WarlordsofDraenor_Color = "|cffF48CBA" -- "|cffC86400"
+E.Legion_Color = "|cffAAD372" -- "|cff1EFF00"
+E.BattleforAzeroth_Color = "|cffFFF468" -- "|cff6464FF"
+E.Shadowlands_Color = "|cff9798FE" -- "|cffC9C3AA"
+E.Dragonflight_Color = "|cff53B39F" -- "|cffE8E379"
+E.TheWarWithin_Color = "|cff90CCDD" -- "|cffB59377"
+
 E.Midnight_Color = "|cff7B69FF" -- СИНИЙ
 E.TheLastTitan_Color = "|cffF4C263" -- ЖЕЛТЫЙ
 E.WOW_Poor_Color = "|cff9D9D9D"

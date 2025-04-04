@@ -5,6 +5,45 @@ function E:func_Otrisovka()
 	local OctoTable_func_otrisovkaCENT = {}
 	local OctoTable_func_otrisovkaLEFT = {}
 	----------------------------------------------------------------
+
+for expID, expDATA in ipairs(E.OctoTable_Expansions_Table) do
+	if OctoToDo_DB_Vars.ExpansionToShow[expID] then
+		for k, v in pairs(E.OctoTable_UniversalQuest) do
+			if expDATA.nameShort == v.desc then
+				----------------------------------------------------------------
+				tinsert(OctoTable_func_otrisovkaCENT,
+					function(CharInfo)
+						local vivodCent, tooltip = " ", {}
+						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..expDATA.nameShort.."_"..v.name_save.."_"..v.reset] ~= E.NONE then
+							vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..expDATA.nameShort.."_"..v.name_save.."_"..v.reset]
+						end
+						return vivodCent, tooltip, expDATA.color
+				end)
+				----------------------------------------------------------------
+				tinsert(OctoTable_func_otrisovkaLEFT,
+					function()
+						return tostringall(v.textleft), v.icon -- E.func_GetItemIcon(224172)
+				end)
+				----------------------------------------------------------------
+			end
+		end
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	tinsert(OctoTable_func_otrisovkaCENT,
 		function(CharInfo)
 			local vivodCent = " "
@@ -20,7 +59,7 @@ function E:func_Otrisovka()
 				vivodCent = vivodCent.." "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
 			end
 			-- if OctoToDo_DB_Vars.ShowOnlyCurrentServer == false then
-			-- 	vivodCent = vivodCent.."+"..CharInfo.curServerShort
+			--     vivodCent = vivodCent.."+"..CharInfo.curServerShort
 			-- end
 			local classColor = CreateColor(CharInfo.classColor.r, CharInfo.classColor.g, CharInfo.classColor.b)
 			if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal then
@@ -69,7 +108,7 @@ function E:func_Otrisovka()
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {E.DEVTEXT, " "}
 				tooltip[#tooltip+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.GUID.."|r"}
-				tooltip[#tooltip+1] = {"hasMail", CharInfo.hasMail and E.Icon_MailBox..CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
+				tooltip[#tooltip+1] = {"hasMail", CharInfo.hasMail and E.func_texturefromIcon(E.Icon_MailBox)..CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
 				tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
 				tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID.."|r"}
 				tooltip[#tooltip+1] = {"Chromie_name", CharInfo.classColorHex..CharInfo.Chromie_name.."|r"}
@@ -154,7 +193,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.func_texturefromIcon(4352494)..E.WOW_Epic_Color..L["Mythic Keystone"].."|r"
+				return E.WOW_Epic_Color..L["Mythic Keystone"].."|r", 4352494
 		end)
 		--------------------------------
 	end
@@ -166,59 +205,23 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if OctoToDo_DB_Vars.ExpansionToShow[11] then -- The War Within
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_WorldBoss_Weekly
-				end
-				if OctoToDo_DB_Vars.ExpansionToShow[10] then -- Dragonflight
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WorldBoss_Weekly
-				end
-				if OctoToDo_DB_Vars.ExpansionToShow[9] then -- Shadowlands
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WorldBoss_Weekly
-				end
-				if OctoToDo_DB_Vars.ExpansionToShow[8] then -- Battle for Azeroth
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WorldBoss_Weekly
-				end
-				if OctoToDo_DB_Vars.ExpansionToShow[7] then -- Legion
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_WorldBoss_Weekly
-				end
-				if OctoToDo_DB_Vars.ExpansionToShow[6] then -- Warlords of Draenor
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WarlordsofDraenor_WorldBoss_Weekly
-				end
-				if OctoToDo_DB_Vars.ExpansionToShow[5] then -- Mists of Pandaria
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_MistsofPandaria_WorldBoss_Weekly
-				end
-				-- if OctoToDo_DB_Vars.ExpansionToShow[4] then -- Cataclysm
-				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Cataclysm_WorldBoss_Weekly
-				-- end
-				-- if OctoToDo_DB_Vars.ExpansionToShow[3] then -- Wrath of the Lich King
-				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_WorldBoss_Weekly
-				-- end
-				-- if OctoToDo_DB_Vars.ExpansionToShow[2] then -- The Burning Crusade
-				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheBurningCrusade_WorldBoss_Weekly
-				-- end
-				-- if OctoToDo_DB_Vars.ExpansionToShow[1] then -- WorldofWarcraft
-				-- 	vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_WorldofWarcraft_WorldBoss_Weekly
-				-- end
-				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[11].color..E.OctoTable_Expansions_Table[11].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_WorldBoss_Weekly}
-				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[10].color..E.OctoTable_Expansions_Table[10].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WorldBoss_Weekly}
-				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[9].color..E.OctoTable_Expansions_Table[9].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Shadowlands_WorldBoss_Weekly}
-				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[8].color..E.OctoTable_Expansions_Table[8].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_BattleforAzeroth_WorldBoss_Weekly}
-				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[7].color..E.OctoTable_Expansions_Table[7].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Legion_WorldBoss_Weekly}
-				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[6].color..E.OctoTable_Expansions_Table[6].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_WarlordsofDraenor_WorldBoss_Weekly}
-				tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[5].color..E.OctoTable_Expansions_Table[5].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_MistsofPandaria_WorldBoss_Weekly}
-				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[4].color..E.OctoTable_Expansions_Table[4].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_Cataclysm_WorldBoss_Weekly}
-				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[3].color..E.OctoTable_Expansions_Table[3].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_WrathoftheLichKing_WorldBoss_Weekly}
-				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[2].color..E.OctoTable_Expansions_Table[2].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_TheBurningCrusade_WorldBoss_Weekly}
-				-- tooltip[#tooltip+1] = {E.OctoTable_Expansions_Table[1].color..E.OctoTable_Expansions_Table[1].name.."|r", CharInfo.MASLENGO.UniversalQuest.Octopussy_WorldofWarcraft_WorldBoss_Weekly}
 
-
-
-
+				for expansionID, v in next, (E.OctoTable_Expansions_Table) do
+					local color = E.OctoTable_Expansions_Table[expansionID].color
+					if OctoToDo_DB_Vars.ExpansionToShow[expansionID] then
+						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.nameShort.."_WorldBoss_Weekly"] then
+							vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.nameShort.."_WorldBoss_Weekly"]
+						end
+					end
+					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.nameShort.."_WorldBoss_Weekly"] then
+						tooltip[#tooltip+1] = {color..E.OctoTable_Expansions_Table[expansionID].name.."|r", CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.nameShort.."_WorldBoss_Weekly"]}
+					end
+				end
 				return vivodCent, tooltip
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.Icon_WorldBoss..L["World Boss"]
+				return L["World Boss"], E.Icon_WorldBoss
 		end)
 	end
 	----------------------------------------------------------------
@@ -241,7 +244,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(23572)..E.func_itemName(23572)
+				return E.func_itemName(23572), E.func_GetItemIcon(23572)
 		end)
 		--------------------------------
 		--------------------------------
@@ -255,7 +258,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(30183)..E.func_itemName(30183)
+				return E.func_itemName(30183), E.func_GetItemIcon(30183)
 		end)
 		--------------------------------
 		--------------------------------
@@ -269,7 +272,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(32428)..E.func_itemName(32428)
+				return E.func_itemName(32428), E.func_GetItemIcon(32428)
 		end)
 		--------------------------------
 		--------------------------------
@@ -283,14 +286,12 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(34664)..E.func_itemName(34664)
+				return E.func_itemName(34664), E.func_GetItemIcon(34664)
 		end)
 		--------------------------------
 	end
 	----------------------------------------------------------------
 	if OctoToDo_DB_Vars.ExpansionToShow[3] then
-		--------------------------------
-
 		--------------------------------
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -303,7 +304,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(45087)..E.func_itemName(45087)
+				return E.func_itemName(45087), E.func_GetItemIcon(45087)
 		end)
 		--------------------------------
 		--------------------------------
@@ -317,7 +318,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(47556)..E.func_itemName(47556)
+				return E.func_itemName(47556), E.func_GetItemIcon(47556)
 		end)
 		--------------------------------
 		--------------------------------
@@ -331,7 +332,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(49908)..E.func_itemName(49908)
+				return E.func_itemName(49908), E.func_GetItemIcon(49908)
 		end)
 		--------------------------------
 	end
@@ -348,7 +349,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(52078)..E.func_itemName(52078)
+				return E.func_itemName(52078), E.func_GetItemIcon(52078)
 		end)
 		--------------------------------
 		--------------------------------
@@ -362,7 +363,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(69237)..E.func_itemName(69237)
+				return E.func_itemName(69237), E.func_GetItemIcon(69237)
 		end)
 		--------------------------------
 		--------------------------------
@@ -376,7 +377,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(71998)..E.func_itemName(71998)
+				return E.func_itemName(71998), E.func_GetItemIcon(71998)
 		end)
 		--------------------------------
 	end
@@ -393,7 +394,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(697)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(697)
+				return E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(697), E.func_GetCurrencyIcon(697)
 		end)
 		--------------------------------
 		--------------------------------
@@ -407,7 +408,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(776)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(776)
+				return E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(776), E.func_GetCurrencyIcon(776)
 		end)
 		--------------------------------
 	end
@@ -424,7 +425,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1129)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1129)
+				return E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1129), E.func_GetCurrencyIcon(1129)
 		end)
 		--------------------------------
 		--------------------------------
@@ -438,7 +439,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(994)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(994)
+				return E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(994), E.func_GetCurrencyIcon(994)
 		end)
 		--------------------------------
 		--------------------------------
@@ -452,7 +453,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(823)..E.func_currencyName(823)
+				return E.func_currencyName(823), E.func_GetCurrencyIcon(823)
 		end)
 		--------------------------------
 		--------------------------------
@@ -466,7 +467,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1101)..E.func_currencyName(1101)
+				return E.func_currencyName(1101), E.func_GetCurrencyIcon(1101)
 		end)
 		--------------------------------
 		--------------------------------
@@ -480,7 +481,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(824)..E.func_currencyName(824)
+				return E.func_currencyName(824), E.func_GetCurrencyIcon(824)
 		end)
 		--------------------------------
 		--------------------------------
@@ -496,7 +497,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(110560)..GARRISON_LOCATION_TOOLTIP
+				return GARRISON_LOCATION_TOOLTIP, E.func_GetItemIcon(110560)
 		end)
 		--------------------------------
 		--------------------------------
@@ -513,7 +514,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_spellTexture(164500)..E.func_GetSpellName(164500)
+				return E.func_GetSpellName(164500), E.func_GetSpellIcon(164500)
 		end)
 		--------------------------------
 		--------------------------------
@@ -667,7 +668,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1273)..E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1273)
+				return E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1273), E.func_GetCurrencyIcon(1273)
 		end)
 		--------------------------------
 		--------------------------------
@@ -681,7 +682,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1508)..E.func_currencyName(1508)
+				return E.func_currencyName(1508), E.func_GetCurrencyIcon(1508)
 		end)
 		--------------------------------
 		--------------------------------
@@ -693,7 +694,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1342)..E.func_currencyName(1342)
+				return E.func_currencyName(1342), E.func_GetCurrencyIcon(1342)
 		end)
 		--------------------------------
 		--------------------------------
@@ -705,7 +706,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1220)..E.func_currencyName(1220)
+				return E.func_currencyName(1220), E.func_GetCurrencyIcon(1220)
 		end)
 		--------------------------------
 		--------------------------------
@@ -717,7 +718,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1226)..E.func_currencyName(1226)
+				return E.func_currencyName(1226), E.func_GetCurrencyIcon(1226)
 		end)
 		--------------------------------
 		--------------------------------
@@ -729,7 +730,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1533)..E.func_currencyName(1533)
+				return E.func_currencyName(1533), E.func_GetCurrencyIcon(1533)
 		end)
 		--------------------------------
 		--------------------------------
@@ -741,7 +742,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1155)..E.func_currencyName(1155)
+				return E.func_currencyName(1155), E.func_GetCurrencyIcon(1155)
 		end)
 		--------------------------------
 		--------------------------------
@@ -755,55 +756,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(124124)..E.func_itemName(124124)
-		end)
-		--------------------------------
-		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.bounty_Legion1 ~= 0 and CharInfo.bounty_Legion1_questID ~= 0 then
-					vivodCent = CharInfo.bounty_Legion1_icon..CharInfo.bounty_Legion1
-					tooltip[#tooltip+1] = {E.func_questName(CharInfo.bounty_Legion1_questID)}
-					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_Legion1_end) or ""}
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return "bounty_Legion1"
-		end)
-		--------------------------------
-		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.bounty_Legion2 ~= 0 and CharInfo.bounty_Legion2_questID ~= 0 then
-					vivodCent = CharInfo.bounty_Legion2_icon..CharInfo.bounty_Legion2
-					tooltip[#tooltip+1] = {E.func_questName(CharInfo.bounty_Legion2_questID)}
-					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_Legion2_end) or ""}
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return "bounty_Legion2"
-		end)
-		--------------------------------
-		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.bounty_Legion3 ~= 0 and CharInfo.bounty_Legion3_questID ~= 0 then
-					vivodCent = CharInfo.bounty_Legion3_icon..CharInfo.bounty_Legion3
-					tooltip[#tooltip+1] = {E.func_questName(CharInfo.bounty_Legion3_questID)}
-					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_Legion3_end) or ""}
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return "bounty_Legion3"
+				return E.func_itemName(124124), E.func_GetItemIcon(124124)
 		end)
 		--------------------------------
 	end
@@ -893,7 +846,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.Icon_Rares.."Rares: Darkshore"
+				return "Rares: Darkshore", E.Icon_Rares
 		end)
 		--------------------------------
 		--------------------------------
@@ -907,7 +860,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1560)..E.func_currencyName(1560)
+				return E.func_currencyName(1560), E.func_GetCurrencyIcon(1560)
 		end)
 		--------------------------------
 		--------------------------------
@@ -921,7 +874,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1721)..E.func_currencyName(1721)
+				return E.func_currencyName(1721), E.func_GetCurrencyIcon(1721)
 		end)
 		--------------------------------
 		--------------------------------
@@ -935,7 +888,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1803)..E.func_currencyName(1803)
+				return E.func_currencyName(1803), E.func_GetCurrencyIcon(1803)
 		end)
 		--------------------------------
 		--------------------------------
@@ -952,7 +905,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1755)..E.func_currencyName(1755)
+				return E.func_currencyName(1755), E.func_GetCurrencyIcon(1755)
 		end)
 		--------------------------------
 		--------------------------------
@@ -966,7 +919,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1719)..E.func_currencyName(1719)
+				return E.func_currencyName(1719), E.func_GetCurrencyIcon(1719)
 		end)
 		--------------------------------
 		--------------------------------
@@ -980,7 +933,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1710)..E.func_currencyName(1710)
+				return E.func_currencyName(1710), E.func_GetCurrencyIcon(1710)
 		end)
 		--------------------------------
 		--------------------------------
@@ -994,7 +947,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1716)..E.func_currencyName(1716)
+				return E.func_currencyName(1716), E.func_GetCurrencyIcon(1716)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1006,7 +959,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1718)..E.func_currencyName(1718)
+				return E.func_currencyName(1718), E.func_GetCurrencyIcon(1718)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1025,7 +978,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(158075)..E.func_itemName(158075)
+				return E.func_itemName(158075), E.func_GetItemIcon(158075)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1051,7 +1004,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(169223)..E.func_itemName(169223)
+				return E.func_itemName(169223), E.func_GetItemIcon(169223)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1114,52 +1067,6 @@ function E:func_Otrisovka()
 		end)
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.bounty_BfA1 ~= 0 and CharInfo.bounty_BfA1_questID ~= 0 then
-					vivodCent = CharInfo.bounty_BfA1_icon..CharInfo.bounty_BfA1
-					tooltip[#tooltip+1] = {E.func_questName(CharInfo.bounty_BfA1_questID)}
-					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_BfA1_end) or ""}
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return "bounty_BfA1"
-		end)
-		--------------------------------
-		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.bounty_BfA2 ~= 0 and CharInfo.bounty_BfA2_questID ~= 0 then
-					vivodCent = CharInfo.bounty_BfA2_icon..CharInfo.bounty_BfA2
-					tooltip[#tooltip+1] = {E.func_questName(CharInfo.bounty_BfA2_questID)}
-					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_BfA2_end) or ""}
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return "bounty_BfA2"
-		end)
-		--------------------------------
-		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.bounty_BfA3 ~= 0 and CharInfo.bounty_BfA3_questID ~= 0 then
-					vivodCent = CharInfo.bounty_BfA3_icon..CharInfo.bounty_BfA3
-					tooltip[#tooltip+1] = {E.func_questName(CharInfo.bounty_BfA3_questID)}
-					tooltip[#tooltip+1] = {L["Expire on"], date("%d/%m/%Y %H:%M:%S", CharInfo.bounty_BfA3_end) or ""}
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return "bounty_BfA3"
-		end)
 		--------------------------------
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -1212,11 +1119,11 @@ function E:func_Otrisovka()
 				end)
 				tinsert(OctoTable_func_otrisovkaLEFT,
 					function(CharInfo)
-						local vivodLeft = E.func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon)..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r"
+						local vivodLeft = E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r"
 						if kCovenant == 2 then
-							vivodLeft = vivodLeft..E.func_currencyIcon(1813)
+							vivodLeft = vivodLeft.. E.func_texturefromIcon(E.func_GetCurrencyIcon(1813))
 						end
-						return vivodLeft
+						return vivodLeft, E.OctoTable_Covenant[iANIMA].icon
 				end)
 				--------------------------------
 			end
@@ -1233,7 +1140,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  "Maw: Covenant Assault "..E.Timers.SL_Maw_Assault()
+				return "Maw: Covenant Assault "..E.Timers.SL_Maw_Assault()
 		end)
 		--------------------------------
 		--------------------------------
@@ -1247,7 +1154,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.func_currencyIcon(2009)..E.func_currencyName(2009)
+				return E.func_currencyName(2009), E.func_GetCurrencyIcon(2009)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1261,7 +1168,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.func_currencyIcon(1906)..E.func_currencyName(1906)
+				return E.func_currencyName(1906), E.func_GetCurrencyIcon(1906)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1275,7 +1182,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.func_currencyIcon(1828)..E.func_currencyName(1828)
+				return E.func_currencyName(1828), E.func_GetCurrencyIcon(1828)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1289,7 +1196,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.func_currencyIcon(1979)..E.func_currencyName(1979)
+				return E.func_currencyName(1979), E.func_GetCurrencyIcon(1979)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1306,7 +1213,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.func_currencyIcon(1931)..E.func_currencyName(1931)
+				return E.func_currencyName(1931), E.func_GetCurrencyIcon(1931)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1320,7 +1227,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.func_texturefromIcon(4074774)..E.func_questName(66042)
+				return E.func_questName(66042), E.func_GetCurrencyIcon(2009)--4074774
 		end)
 		--------------------------------
 		--------------------------------
@@ -1334,7 +1241,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.func_texturefromIcon(4066373)..E.func_questName(63949)
+				return E.func_questName(63949), E.func_GetCurrencyIcon(1977)--4066373
 		end)
 		--------------------------------
 		--------------------------------
@@ -1353,7 +1260,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return  E.func_currencyIcon(1813)..E.func_questName(61981)
+				return E.func_questName(61981), E.func_GetCurrencyIcon(1813)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1373,7 +1280,8 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return E.func_texturefromIcon(1603189)..L["Aiding the Accord"]
+					return E.func_questName(70750), E.func_GetItemIcon(200073)
+					-- return L["Aiding the Accord"], E.func_texturefromIcon(1603189)
 			end)
 		end
 		--------------------------------
@@ -1394,7 +1302,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_texturefromIcon(629056)..E.Timers.DF_CommunityFeast()..L["Community Feast"]
+				return E.Timers.DF_CommunityFeast()..L["Community Feast"], E.func_GetItemIcon(200095)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1412,7 +1320,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_texturefromIcon(236469)..E.Timers.DF_ResearchersUnderFire()..E.func_questName(74906)
+				return E.Timers.DF_ResearchersUnderFire()..E.func_questName(74906), E.func_GetItemIcon(200224)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1426,7 +1334,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_questName(75665)
+				return E.func_questName(75665), E.func_GetItemIcon(205985)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1440,7 +1348,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_texturefromIcon(134206)..E.Timers.DF_Flower()..E.func_questName(78319)
+				return E.Timers.DF_Flower()..E.func_questName(78319), E.func_GetItemIcon(211389)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1454,7 +1362,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_questName(78821)
+				return E.func_questName(78821), E.func_GetItemIcon(211394)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1468,7 +1376,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_questName(78444)
+				return E.func_questName(78444), E.func_GetItemIcon(210421)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1482,7 +1390,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_questName(78381)
+				return E.func_questName(78381), E.func_GetItemIcon(208396)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1496,7 +1404,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return (E.func_texturefromIcon(628677)..E.Timers.DF_TimeRift()..L["TimeRift"])
+				return E.Timers.DF_TimeRift()..L["TimeRift"], E.func_GetSpellIcon(343140)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1510,7 +1418,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(209856)..E.func_itemName(209856)
+				return E.func_itemName(209856), E.func_GetItemIcon(209856)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1524,7 +1432,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(207002)..E.func_itemName(207002)
+				return E.func_itemName(207002), E.func_GetItemIcon(207002)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1541,7 +1449,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(2594)..E.func_currencyName(2594)
+				return E.func_currencyName(2594), E.func_GetCurrencyIcon(2594)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1558,7 +1466,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return (E.func_texturefromIcon(134206)..E.Timers.DF_Dreamsurges()..L["Dreamsurges"])
+				return E.Timers.DF_Dreamsurges()..L["Dreamsurges"], E.func_GetItemIcon(215364)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1575,7 +1483,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(210254)..E.WOW_Epic_Color..E.func_GetItemName(210254).."|r"
+				return E.WOW_Epic_Color..E.func_GetItemName(210254).."|r", E.func_GetItemIcon(210254)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1589,7 +1497,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(2245)..E.func_currencyName(2245)
+				return E.func_currencyName(2245), E.func_GetCurrencyIcon(2245)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1603,7 +1511,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(213089)..E.func_itemName(213089)
+				return E.func_itemName(213089), E.func_GetItemIcon(213089)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1617,7 +1525,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(211516)..E.func_itemName(211516)
+				return E.func_itemName(211516), E.func_GetItemIcon(211516)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1631,63 +1539,210 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_itemTexture(211515)..E.func_itemName(211515)
+				return E.func_itemName(211515), E.func_GetItemIcon(211515)
 		end)
 		--------------------------------
 	end
 	----------------------------------------------------------------
 	if OctoToDo_DB_Vars.ExpansionToShow[11] then
 		--------------------------------
-		if OctoToDo_DB_Vars.BeledarCycle == true then
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_TheTheaterTroupe_Weekly ~= E.NONE then
-						vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_TheTheaterTroupe_Weekly
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_AnniversaryRestoredCofferKey_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_AnniversaryRestoredCofferKey_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "AnniversaryRestoredCofferKey", E.func_GetItemIcon(224172)
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_GearingUpforTrouble_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_GearingUpforTrouble_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "GearingUpforTrouble", E.func_GetItemIcon(226273)
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_SirenIsleWeekly_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_SirenIsleWeekly_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "SirenIsleWeekly"
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_SpecialAssignments_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_SpecialAssignments_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "SpecialAssignments"
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_RollinDownintheDeeps_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_RollinDownintheDeeps_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "RollinDownintheDeeps", E.func_GetItemIcon(227792)
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TheCalloftheWorldsoul_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TheCalloftheWorldsoul_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "TheCalloftheWorldsoul", E.func_GetItemIcon(224784)
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_BiergothDungeonQuest_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_BiergothDungeonQuest_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "BiergothDungeonQuest", E.func_GetItemIcon(237014)
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_Archives_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_Archives_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "Archives", E.func_GetItemIcon(224784)
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TheKeytoSuccess_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TheKeytoSuccess_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "TheKeytoSuccess", E.func_GetItemIcon(227794)
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_Delves_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_Delves_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "Delves", E.func_GetItemIcon(224784)
+		end)
+		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TWWProfessionWeeklies_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TWWProfessionWeeklies_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				for index, id in ipairs({GetProfessions()}) do
+					local _, _, _, _, _, _, skillLine = GetProfessionInfo(id)
+					if index and skillLine then
+						return "TWWProfessionWeeklies", C_TradeSkillUI.GetTradeSkillTexture(skillLine)
+					else
+						return "TWWProfessionWeeklies"
 					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					return  E.Timers.TWW_BeledarCycle()..E.func_questName(83240)
-			end)
-		end
+				end
+		end)
 		--------------------------------
-		--------------------------------
-		if OctoToDo_DB_Vars.TWW_DungeonQuest_Weekly == true then
-			--------------------------------
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_DungeonQuest_Weekly ~= E.NONE then
-						vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_DungeonQuest_Weekly
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TWWAlgariTreatise_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TWWAlgariTreatise_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				for index, id in ipairs({GetProfessions()}) do
+					local _, _, _, _, _, _, skillLine = GetProfessionInfo(id)
+					if index and skillLine then
+						return "TWWAlgariTreatise", C_TradeSkillUI.GetTradeSkillTexture(skillLine)
+					else
+						return "TWWAlgariTreatise"
 					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					return  L["Weekly Dungeon Quest"]
-			end)
-		end
+				end
+		end)
 		--------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TheTheaterTroupe_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_TheTheaterTroupe_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return E.Timers.TWW_BeledarCycle()..E.func_questName(83240), E.func_GetItemIcon(226263)
+		end)
 		--------------------------------
-		if OctoToDo_DB_Vars.TWW_Delve_Weekly == true then
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_Delve_Weekly ~= E.NONE then
-						vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_Delve_Weekly
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					return  "TWW_Delve_Weekly"
-			end)
-		end
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_SpreadingtheLight_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TheWarWithin_SpreadingtheLight_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return "SpreadingtheLight", E.func_GetItemIcon(220756)
+		end)
 		--------------------------------
-		--------------------------------
-		if OctoToDo_DB_Vars.MajorKeyflames == true then
+
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
@@ -1698,12 +1753,10 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return  E.func_texturefromIcon(132863)..L["Major Keyflames"]
+					return L["Major Keyflames"], E.func_GetItemIcon(142307)
 			end)
-		end
 		--------------------------------
 		--------------------------------
-		if OctoToDo_DB_Vars.MinorKeyflames == true then
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
@@ -1714,9 +1767,32 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return  E.func_texturefromIcon(135619)..L["Minor Keyflames"]
+					return L["Minor Keyflames"], E.func_GetItemIcon(142307)
 			end)
-		end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		--------------------------------
+		--------------------------------
+		--------------------------------
+		--------------------------------
+		--------------------------------
+		--------------------------------
+		--------------------------------
+
 		--------------------------------
 		--------------------------------
 		if OctoToDo_DB_Vars.GildedHarbingerCrest == true then
@@ -1747,7 +1823,7 @@ function E:func_Otrisovka()
 				function(CharInfo)
 					local currencyID = 2917
 					local color = E.WOW_Epic_Color
-					return  E.func_currencyIcon(currencyID)..color..E.func_currencyName(currencyID).."|r"
+					return color..E.func_currencyName(currencyID).."|r", E.func_GetCurrencyIcon(currencyID)
 			end)
 		end
 		--------------------------------
@@ -1780,7 +1856,7 @@ function E:func_Otrisovka()
 				function(CharInfo)
 					local currencyID = 2916
 					local color = E.WOW_Epic_Color
-					return  E.func_currencyIcon(currencyID)..color..E.func_currencyName(currencyID).."|r"
+					return color..E.func_currencyName(currencyID).."|r", E.func_GetCurrencyIcon(currencyID)
 			end)
 		end
 		--------------------------------
@@ -1813,7 +1889,7 @@ function E:func_Otrisovka()
 				function(CharInfo)
 					local currencyID = 2915
 					local color = E.WOW_Rare_Color
-					return  E.func_currencyIcon(currencyID)..color..E.func_currencyName(currencyID).."|r"
+					return color..E.func_currencyName(currencyID).."|r", E.func_GetCurrencyIcon(currencyID)
 			end)
 		end
 		--------------------------------
@@ -1846,7 +1922,7 @@ function E:func_Otrisovka()
 				function(CharInfo)
 					local currencyID = 2914
 					local color = E.WOW_Rare_Color
-					return  E.func_currencyIcon(currencyID)..color..E.func_currencyName(currencyID).."|r"
+					return color..E.func_currencyName(currencyID).."|r", E.func_GetCurrencyIcon(currencyID)
 			end)
 		end
 	end
@@ -1912,21 +1988,21 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1166)..DUNGEONS
+				return DUNGEONS, E.func_GetCurrencyIcon(1166)
 		end)
 		--------------------------------
 		--------------------------------
 		-- tinsert(OctoTable_func_otrisovkaCENT,
-		-- 	function(CharInfo)
-		-- 		local vivodCent, tooltip = " ", {}
-		-- 		if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly ~= E.NONE then
-		-- 			vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly
-		-- 		end
-		-- 		return vivodCent, tooltip
+		--     function(CharInfo)
+		--         local vivodCent, tooltip = " ", {}
+		--         if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly ~= E.NONE then
+		--             vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_500Currency_Weekly
+		--         end
+		--         return vivodCent, tooltip
 		-- end)
 		-- tinsert(OctoTable_func_otrisovkaLEFT,
-		-- 	function(CharInfo)
-		-- 		return E.func_currencyIcon(1166).."500 "..E.func_currencyName(1166)
+		--     function(CharInfo)
+		--         return 500 "..E.func_currencyName(1166), E.func_GetCurrencyIcon(1166).
 		-- end)
 		--------------------------------
 		--------------------------------
@@ -1940,7 +2016,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1166)..RAIDS
+				return RAIDS, E.func_GetCurrencyIcon(1166)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1955,7 +2031,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(1166)..E.func_currencyName(1166)
+				return E.func_currencyName(1166), E.func_GetCurrencyIcon(1166)
 		end)
 		--------------------------------
 		--------------------------------
@@ -1969,7 +2045,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return E.func_currencyIcon(3100)..E.func_texturefromIcon(1322720)..E.func_questName(57300)
+				return E.func_texturefromIcon(1322720)..E.func_questName(57300), E.func_GetCurrencyIcon(3100)
 		end)
 		--------------------------------
 	end
@@ -2014,7 +2090,6 @@ function E:func_Otrisovka()
 					end
 					tooltip[#tooltip+1] = {E.func_Gradient("»"..L["Zaralek Cavern"].."«"), " "}
 					tooltip[#tooltip+1] = {E.Timers.DF_ResearchersUnderFire()..E.func_questName(74906), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ResearchersUnderFire_Weekly}
-					tooltip[#tooltip+1] = {E.Icon_WorldBoss..E.func_questName(74892), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_WBZaqaliElders_Weekly}
 					tooltip[#tooltip+1] = {E.func_texturefromIcon(5062638)..E.func_questName(75694), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_AberrustheShadowedCrucibleSarkareth_Once}
 					tooltip[#tooltip+1] = {E.func_questName(75665), CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ZaralekCavernAWorthyAllyLoammNiffen_Weekly}
 					tooltip[#tooltip+1] = {L["Sniffenseeking"] , CharInfo.MASLENGO.UniversalQuest.Octopussy_Dragonflight_ZaralekCavernSniffenseeking_Weekly}
@@ -2154,7 +2229,7 @@ function E:func_Otrisovka()
 
 				for worldBossID, v in next, (CharInfo.SavedWorldBoss) do
 					if v then
-						tooltip[#tooltip+1] = {E.Icon_WorldBoss.. v.name .." ".. E.Red_Color..E.func_SecondsToClock(v.reset).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..worldBossID.."|r" or ""), " "}
+						tooltip[#tooltip+1] = {E.func_texturefromIcon(E.Icon_WorldBoss).. v.name .." ".. E.Red_Color..E.func_SecondsToClock(v.reset).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..worldBossID.."|r" or ""), " "}
 					end
 				end
 				if #tooltip ~= 0 then
@@ -2236,7 +2311,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
 				for index, itemID in ipairs(E.OctoTable_itemID_ALL) do
-					if OctoToDo_DB_Vars.ItemsShowAllways == false  and CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
+					if OctoToDo_DB_Vars.ItemsShowAllways == false and CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
 						tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
 					elseif OctoToDo_DB_Vars.ItemsShowAllways == true then
 						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
@@ -2291,22 +2366,22 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
 				if CharInfo.Money then
-					vivodCent = E.func_CompactNumberFormat(CharInfo.Money/10000)..E.Icon_Money
+					vivodCent = E.func_CompactNumberFormat(CharInfo.Money/10000)
 				end
 				if CharInfo.MoneyOnLogin ~= 0 then
 					if CharInfo.Money < CharInfo.MoneyOnLogin then
 						vivodCent = vivodCent..E.Red_Color.."-|r"
-						tooltip[#tooltip+1] = {"lost: ", E.Red_Color..E.func_CompactNumberFormat((CharInfo.Money - CharInfo.MoneyOnLogin)/10000).."|r "..E.Icon_Money}
+						tooltip[#tooltip+1] = {"lost: ", E.Red_Color..E.func_CompactNumberFormat((CharInfo.Money - CharInfo.MoneyOnLogin)/10000).."|r "..E.func_texturefromIcon(E.Icon_Money)}
 					elseif CharInfo.Money > CharInfo.MoneyOnLogin then
 						vivodCent = vivodCent..E.Green_Color.."+|r"
-						tooltip[#tooltip+1] = {"received: ", E.Green_Color..E.func_CompactNumberFormat((CharInfo.Money - CharInfo.MoneyOnLogin)/10000).."|r "..E.Icon_Money}
+						tooltip[#tooltip+1] = {"received: ", E.Green_Color..E.func_CompactNumberFormat((CharInfo.Money - CharInfo.MoneyOnLogin)/10000).."|r "..E.func_texturefromIcon(E.Icon_Money)}
 					end
 				end
 				return vivodCent, tooltip
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
-				return BONUS_ROLL_REWARD_MONEY
+				return BONUS_ROLL_REWARD_MONEY, E.Icon_Money
 		end)
 		--------------------------------
 	end

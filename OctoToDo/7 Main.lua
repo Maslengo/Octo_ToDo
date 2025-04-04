@@ -193,9 +193,6 @@ function E:func_checkCharInfo()
 			CharInfo.Faction = CharInfo.Faction or "Horde"
 			CharInfo.BattleTag = CharInfo.BattleTag or E.BattleTag
 			CharInfo.BattleTagLocal = CharInfo.BattleTagLocal or E.BattleTagLocal
-			CharInfo.bounty_BfA1_icon = CharInfo.bounty_BfA1_icon or 0
-			CharInfo.bounty_BfA2_icon = CharInfo.bounty_BfA2_icon or 0
-			CharInfo.bounty_BfA3_icon = CharInfo.bounty_BfA3_icon or 0
 			CharInfo.IsPublicBuild = CharInfo.IsPublicBuild or E.IsPublicBuild
 			CharInfo.Chromie_canEnter = CharInfo.Chromie_canEnter or false
 			CharInfo.Chromie_UnitChromieTimeID = CharInfo.Chromie_UnitChromieTimeID or 0
@@ -438,14 +435,24 @@ end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
+		frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		frame.first:SetPropagateMouseClicks(false)
+		frame.first:SetSize(AddonHeight, AddonHeight)
+		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
+		frame.first.icon:SetAllPoints(frame.first)
+		frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		------------------------------------------------
 		frame.left = CreateFrame("FRAME", "frame.left", frame, "BackdropTemplate")
 		frame.left:SetPropagateMouseClicks(true)
 		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.left.text = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.left.text:SetAllPoints()
+		-- frame.left.text:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
+		frame.left.text:SetPoint("LEFT", AddonHeight+1, 0)
+		frame.left.text:SetPoint("RIGHT", 0, 0)
 		frame.left.text:SetFontObject(OctoFont11)
+		frame.left.text:SetWordWrap(false)
 		frame.left.text:SetJustifyV("MIDDLE")
 		frame.left.text:SetJustifyH("LEFT")
 		frame.left.text:SetTextColor(1, 1, 1, 1)
@@ -473,6 +480,7 @@ local function func_OnAcquired(owner, frame, data, new)
 end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
+	frame.first.icon:SetTexture(data.firsticonTexture)
 	frame.left.text:SetText(data.left)
 	if data.index % 2 == 0 then
 		E:func_SetBackdrop(frame.left, nil, 0, 0)
@@ -486,16 +494,18 @@ local function OctoToDo_Frame_init(frame, data)
 		if data[NumPlayers].currentChar then
 			E:func_SetBackdrop(frame.cent[NumPlayers], E.classColorHexCurrent, E.bgCaOverlay, 0)
 		else
+			if data[NumPlayers][3] then
+			E:func_SetBackdrop(frame.cent[NumPlayers], data[NumPlayers][3], E.bgCaOverlay, 0) -- print (data[NumPlayers][3]) ТУТ ЦВЕБ БГ / BGCOLOR HERE
+		else
 			if data.index % 2 == 0 then
 				E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
 			else
 				E:func_SetBackdrop(frame.cent[NumPlayers], "|cff000000", .1, 0)
 			end
 		end
-		if data[NumPlayers][3] then
-			E:func_SetBackdrop(frame.cent[NumPlayers], data[NumPlayers][3], E.bgCaOverlay, 0) -- print (data[NumPlayers][3]) ТУТ ЦВЕБ БГ / BGCOLOR HERE
-		end
 	end
+
+end
 end
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	local OctoToDo_MainFrame_OCTOMAIN = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOMAIN", UIParent, "BackdropTemplate")
@@ -609,6 +619,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	for i, func in ipairs(OctoTable_func_otrisovkaCENT) do
 		CENT[i] = CENT[i] or {}
 		CENT[i].left = OctoTable_func_otrisovkaLEFT[i]()
+		CENT[i].firsticonTexture = select(2, OctoTable_func_otrisovkaLEFT[i]())
 		CENT[i].index = i
 		for index, CharInfo in ipairs(sorted) do
 			CENT[i][index] = {func(CharInfo)}
@@ -1206,6 +1217,28 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:func_Create_DD2_OCTOMAIN()
 	----------------------------------------------------------------
 	E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN)
+	local totalMoney = 0
+	local totalReload = 0
+	local realTotalTime = 0
+	local realLevelTime = 0
+	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+		if CharInfo.curServer == E.curServer then
+			totalMoney = totalMoney + CharInfo.Money
+			totalReload = totalReload + CharInfo.ReloadCount
+			realTotalTime = realTotalTime + CharInfo.realTotalTime
+			if CharInfo.UnitLevel >= E.currentMaxLevel then
+				realLevelTime = realLevelTime + CharInfo.realLevelTime
+			end
+		end
+	end
+
+
+	E.func_CreateInfoFrame("Money: "..E.classColorHexCurrent..E.func_CompactNumberFormat(totalMoney/10000).."|r "..E.curServerShort, "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame("Reloads: "..E.classColorHexCurrent..totalReload.."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame("realTotalTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realTotalTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight)
+	if realLevelTime ~= 0 then
+		E.func_CreateInfoFrame("realLevelTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realLevelTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
+	end
 	E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function()
 		OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 		RequestRaidInfo()

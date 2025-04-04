@@ -1011,75 +1011,6 @@ function E.Collect_All_BfA_Cloaklvl()
 		end
 	end
 end
-function E.Collect_All_BfA_QuestsBounties()
-	local collect = OctoToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
-		collect["bounty_Legion1"] = 0
-		collect["bounty_Legion1_icon"] = 0
-		collect["bounty_Legion1_questID"] = 0
-		collect["bounty_Legion1_end"] = 0
-		collect["bounty_Legion2"] = 0
-		collect["bounty_Legion2_icon"] = 0
-		collect["bounty_Legion2_questID"] = 0
-		collect["bounty_Legion2_end"] = 0
-		collect["bounty_Legion3"] = 0
-		collect["bounty_Legion3_icon"] = 0
-		collect["bounty_Legion3_questID"] = 0
-		collect["bounty_Legion3_end"] = 0
-		local bounties_Legion = C_QuestLog.GetBountiesForMapID(619)
-		if bounties_Legion then
-			for i = 1, #bounties_Legion do
-				local d = bounties_Legion[i]
-				local currQ, maxQ = 0, 0
-				local secondsLeft = C_TaskQuest.GetQuestTimeLeftMinutes(d.questID)
-				if secondsLeft then
-					local strsecondsLeft = format("%dh %dm", (secondsLeft / 60) % 24, secondsLeft % 60)
-					if secondsLeft >= 1440 then
-						strsecondsLeft = floor(secondsLeft / 1440).."d "..strsecondsLeft
-					end
-				end
-				local faction_icon = "|T"..d.icon..":0|t "
-				collect["bounty_Legion"..i] = E.func_CheckCompletedByQuestID(d.questID)
-				collect["bounty_Legion"..i.."_icon"] = faction_icon
-				collect["bounty_Legion"..i.."_questID"] = d.questID
-				collect["bounty_Legion"..i.."_end"] = time() + secondsLeft * 60
-			end
-		end
-		local bounties_BfA = C_QuestLog.GetBountiesForMapID(875)
-		collect["bounty_BfA1"] = 0
-		collect["bounty_BfA1_icon"] = 0
-		collect["bounty_BfA1_questID"] = 0
-		collect["bounty_BfA1_end"] = 0
-		collect["bounty_BfA2"] = 0
-		collect["bounty_BfA2_icon"] = 0
-		collect["bounty_BfA2_questID"] = 0
-		collect["bounty_BfA2_end"] = 0
-		collect["bounty_BfA3"] = 0
-		collect["bounty_BfA3_icon"] = 0
-		collect["bounty_BfA3_questID"] = 0
-		collect["bounty_BfA3_end"] = 0
-		if bounties_BfA then
-			for i = 1, #bounties_BfA do
-				local d = bounties_BfA[i]
-				local currQ, maxQ = 0, 0
-				local secondsLeft = C_TaskQuest.GetQuestTimeLeftMinutes(d.questID)
-				if secondsLeft then
-					local strsecondsLeft = format("%dh %dm", (secondsLeft / 60) % 24, secondsLeft % 60)
-					if secondsLeft >= 1440 then
-						strsecondsLeft = floor(secondsLeft / 1440).."d "..strsecondsLeft
-					end
-					local faction_icon = "|T"..d.icon..":0|t "
-					if collect and not InCombatLockdown() then
-						collect["bounty_BfA"..i] = E.func_CheckCompletedByQuestID(d.questID)
-						collect["bounty_BfA"..i.."_icon"] = faction_icon
-						collect["bounty_BfA"..i.."_questID"] = d.questID
-						collect["bounty_BfA"..i.."_end"] = time() + secondsLeft * 60
-					end
-				end
-			end
-		end
-	end
-end
 function E.Collect_All_BfA_Island()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
@@ -1188,7 +1119,6 @@ function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_Holiday()
 	E.Collect_All_BfA_Azerite()
 	E.Collect_All_BfA_Cloaklvl()
-	E.Collect_All_BfA_QuestsBounties()
 	E.Collect_All_BfA_Island()
 	E.Collect_ALL_TRASH_EncounterAndZoneLists()
 	RequestRaidInfo()
@@ -1223,7 +1153,6 @@ function OctoToDo_EventFrame_Collect:QUEST_LOG_UPDATE()
 				E.Collect_All_Quests()
 				E.Collect_ALL_UNIVERSALQuestUpdate()
 				E.Collect_All_BfA_Island()
-				E.Collect_All_BfA_QuestsBounties()
 				E.Collect_All_Chromie()
 				E.Update("QUEST_LOG_UPDATE")
 				self.questUpdatePause = false
@@ -1380,7 +1309,6 @@ function OctoToDo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 					E.Collect_All_Quests()
 					E.Collect_ALL_UNIVERSALQuestUpdate()
 					E.Collect_All_BfA_Island()
-					E.Collect_All_BfA_QuestsBounties()
 					E.Collect_All_Reputations()
 					E.Collect_All_Reputations_TEST2()
 					E.Collect_All_Currency()
