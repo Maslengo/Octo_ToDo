@@ -1236,8 +1236,8 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = E.func_GetItemIcon(164577),
-		textleft = "Warfront1",
-		name_save = "Warfront1",
+		textleft = "Warfront: Stromgarde",
+		name_save = "WarfrontStromgarde",
 		reset = "Weekly",
 		desc = "BattleforAzeroth",
 		questID = {
@@ -1248,8 +1248,8 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = E.func_GetItemIcon(164577),
-		textleft = "Warfront2",
-		name_save = "Warfront2",
+		textleft = "Warfront: Darkshore",
+		name_save = "WarfrontDarkshore",
 		reset = "Weekly",
 		desc = "BattleforAzeroth",
 		questID = {
@@ -1260,8 +1260,8 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = E.func_GetItemIcon(164577),
-		textleft = "WarfrontHC",
-		name_save = "WarfrontHC",
+		textleft = "Warfront: Heroic",
+		name_save = "WarfrontHeroic",
 		reset = "Weekly",
 		desc = "BattleforAzeroth",
 		questID = {

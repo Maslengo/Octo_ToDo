@@ -1,5 +1,10 @@
 local GlobalAddonName, E = ...
 E.GlobalAddonName = GlobalAddonName
+E.PromiseItem = {}
+E.PromiseSpell = {}
+E.PromiseCurrency = {}
+E.PromiseQuest = {}
+E.PromiseReputation = {}
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
@@ -25,6 +30,171 @@ function E.func_IsTLT() if E.interfaceVersion > 130000 and E.interfaceVersion < 
 function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E.func_IsPTR() return GetCurrentRegion() >= 72 end
 ----------------------------------------------------------------
+function E.func_GetItemIcon(itemID)
+	tinsert(E.PromiseItem, itemID)
+	return C_Item.GetItemIconByID(itemID)
+end
+function E.func_GetItemName(itemID)
+	tinsert(E.PromiseItem, itemID)
+	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
+	if E.DebugIDs == true and vivod ~= nil then
+		vivod = vivod..E.Gray_Color.." id:"..itemID.."|r"
+	end
+	return vivod
+end
+
+
+
+function E.func_GetSpellIcon(spellID)
+	tinsert(E.PromiseSpell, spellID)
+	return C_Spell.GetSpellTexture(spellID)
+end
+function E.func_GetSpellName(spellID)
+	tinsert(E.PromiseSpell, spellID)
+	local vivod = C_Spell.GetSpellName(spellID)
+	if E.DebugIDs == true and vivod ~= nil then
+		vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
+	end
+	return vivod
+end
+
+
+
+function E.func_GetCurrencyIcon(currencyID)
+	tinsert(E.PromiseCurrency, currencyID)
+	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	local iconFileID = 134400
+	if info then
+		iconFileID = info.iconFileID
+	end
+	return iconFileID
+end
+function E.func_currencyName(currencyID)
+	tinsert(E.PromiseCurrency, currencyID)
+	if currencyID then
+		local vivod
+		local AWide = ""
+		local ATrans = ""
+		local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) or false
+		if isAccountTransferableCurrency == true then
+			AWide = E.Icon_AccountTransferable
+		end
+		local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID) or false
+		if isAccountWideCurrency == true then
+			AWide = E.Icon_AccountWide
+		end
+		local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+		if info then
+			local name = info.name
+			local iconFileID = info.iconFileID
+			local quality = info.quality
+			local r, g, b = E.func_GetItemQualityColor(quality)
+			local color = CreateColor(r, g, b, 1)
+			local currencyName = color:WrapTextInColorCode(name)
+			vivod = ATrans..AWide..currencyName
+		else
+			vivod = ATrans..AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+		end
+		if E.DebugIDs == true and vivod ~= nil then
+			vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
+		end
+		return vivod
+	else
+		return "currencyID = NIL"
+	end
+end
+
+
+function E.func_questName(questID, useLargeIcon)
+	tinsert(E.PromiseQuest, questID)
+	local vivod = ""
+	local useLargeIcon = useLargeIcon or true
+	local isAccountQuest = C_QuestLog.IsAccountQuest(questID)
+	local isCompletedOnAccount = C_QuestLog.IsQuestFlaggedCompletedOnAccount(questID)
+	local title = C_QuestLog.GetTitleForQuestID(questID)
+	if title then
+		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon)
+	else
+		vivod = vivod..E.Red_Color.."hidden?".."|r"
+	end
+	if isAccountQuest then
+		vivod = E.Icon_AccountWide.."|cffFFFF00"..vivod.."|r"
+	end
+	if isCompletedOnAccount then
+		vivod = E.Icon_AccountWide.."|cff9fc5e8"..vivod.."|r"
+	end
+	if E.DebugIDs == true and vivod ~= nil then
+		vivod = vivod..E.Gray_Color.." id:"..questID.."|r"
+	end
+	return vivod
+end
+
+function E.func_reputationName(reputationID)
+	tinsert(E.PromiseReputation, reputationID)
+	local vivod = ""
+	if reputationID and type(reputationID) == "number" then
+		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+		if isAccountWide == true then
+			vivod = E.Icon_AccountWide..vivod
+		end
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+		local name
+		if repInfo then
+			name = repInfo.name
+		else
+			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
+			-- name = reputationInfo.name or E.Blue_Color..SEARCH_LOADING_TEXT.."|r"
+			if reputationInfo.name then
+				name = reputationInfo.name
+			elseif E.OctoTable_FACTIONTABLE[reputationID] then
+				name = E.OctoTable_FACTIONTABLE[reputationID].name
+			else
+				name = reputationID.. " (UNKNOWN)"
+			end
+		end
+		vivod = vivod..name
+		if E.DebugIDs == true and vivod ~= nil then
+			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
+		end
+		if E.OctoTable_FACTIONTABLE[reputationID] then
+			return E.OctoTable_FACTIONTABLE[reputationID].faction..vivod
+		else
+			print (reputationID.. " <- MISSING REPUTATION ID -> "..name)
+			return name
+		end
+	else
+		return "reputationID"
+	end
+end
+
+function E.func_reputationNameSIMPLE(reputationID)
+	tinsert(E.PromiseReputation, reputationID)
+	local vivod = ""
+	if reputationID and type(reputationID) == "number" then
+		-- local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+		-- if isAccountWide == true then
+		-- vivod = E.Icon_AccountWide..vivod
+		-- end
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+		local name
+		if repInfo then
+			name = repInfo.name
+		else
+			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+			name = reputationInfo.name or E.Red_Color..SEARCH_LOADING_TEXT.."|r"
+		end
+		vivod = vivod..name
+		-- if E.DebugIDs == true and vivod ~= nil then
+		-- vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
+		-- end
+		vivod = vivod
+	else
+		vivod = reputationID
+	end
+	return vivod
+end
+
+----------------------------------------------------------------
 -- ITEM UTILS
 ----------------------------------------------------------------
 function E.func_GetItemInfo(itemInfo) -- Item ID, Link or name
@@ -35,17 +205,7 @@ function E.func_GetItemCount(itemID, includeBank, includeUses, includeReagentBan
 	return C_Item.GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
 end
 ----------------------------------------------------------------
-function E.func_GetItemIcon(itemID)
-	return C_Item.GetItemIconByID(itemID)
-end
 ----------------------------------------------------------------
-function E.func_GetItemName(itemID)
-	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..E.Gray_Color.." id:"..itemID.."|r"
-	end
-	return vivod
-end
 ----------------------------------------------------------------
 function E.func_GetItemLink(itemID)
 	local _, link = E.func_GetItemInfo(itemID)
@@ -87,7 +247,7 @@ function E.func_GetItemInventoryType(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemInventoryTypeName(itemID)
-	local _,_,_, itemEquipLoc = C_Item.GetItemInfoInstant(itemID)
+	local _, _, _, itemEquipLoc = C_Item.GetItemInfoInstant(itemID)
 	return itemEquipLoc
 end
 ----------------------------------------------------------------
@@ -138,7 +298,7 @@ end
 function E.func_GetSpellSubtext(spellID)
 	local vivod = C_Spell.GetSpellSubtext(spellID)
 	-- if E.DebugIDs == true and vivod ~= nil then
-	--     vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
+	--   vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
 	-- end
 	return vivod
 end
@@ -148,7 +308,7 @@ function E.func_GetSpellNameFull(spellID)
 	local subText = E.func_GetSpellSubtext(spellID)
 	local vivod = subText and #subText > 0 and name.."("..subText..")" or name
 	-- if E.DebugIDs == true and vivod ~= nil then
-	--     vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
+	--   vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
 	-- end
 	return vivod
 end
@@ -157,18 +317,6 @@ function E.func_GetSpellDescription(spellID)
 	return C_Spell.GetSpellDescription(spellID)
 end
 ----------------------------------------------------------------
-function E.func_GetSpellName(spellID)
-	local vivod = C_Spell.GetSpellName(spellID)
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
-	end
-	return vivod
-end
-----------------------------------------------------------------
-function E.func_GetSpellIcon(spellID)
-	local iconID = C_Spell.GetSpellTexture(spellID)
-	return iconID
-end
 ----------------------------------------------------------------
 function E.func_GetSpellCooldown(spellID)
 	local start = C_Spell.GetSpellCooldown(spellID).startTime
@@ -319,133 +467,10 @@ function E.func_texturefromIconEVENT(icon, iconSize)
 	return "|T"..(icon or 134400)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::128:128:0:91:0:91|t"
 end
 ----------------------------------------------------------------
-function E.func_questName(questID, useLargeIcon)
-	local vivod = ""
-	local useLargeIcon = useLargeIcon or true
-	local isAccountQuest = C_QuestLog.IsAccountQuest(questID)
-	local isCompletedOnAccount = C_QuestLog.IsQuestFlaggedCompletedOnAccount(questID)
-	local title = C_QuestLog.GetTitleForQuestID(questID)
-	if title then
-		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon)
-	else
-		vivod = vivod..E.Red_Color.."hidden?".."|r"
-	end
-	if isAccountQuest then
-		vivod = E.Icon_AccountWide.."|cffFFFF00"..vivod.."|r"
-	end
-	if isCompletedOnAccount then
-		vivod = E.Icon_AccountWide.."|cff9fc5e8"..vivod.."|r"
-	end
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..E.Gray_Color.." id:"..questID.."|r"
-	end
-	return vivod
-end
 ----------------------------------------------------------------
-function E.func_reputationName(reputationID)
-	local vivod = ""
-	if reputationID and type(reputationID) == "number" then
-		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-		if isAccountWide == true then
-			vivod = E.Icon_AccountWide..vivod
-		end
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-		local name
-		if repInfo then
-			name = repInfo.name
-		else
-			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
-			-- name = reputationInfo.name or E.Blue_Color..SEARCH_LOADING_TEXT.."|r"
-			if reputationInfo.name then
-				name = reputationInfo.name
-			elseif E.OctoTable_FACTIONTABLE[reputationID] then
-				name = E.OctoTable_FACTIONTABLE[reputationID].name
-			else
-				name = reputationID.. " (UNKNOWN)"
-			end
-		end
-		vivod = vivod..name
-		if E.DebugIDs == true and vivod ~= nil then
-			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
-		end
-		if E.OctoTable_FACTIONTABLE[reputationID] then
-			return E.OctoTable_FACTIONTABLE[reputationID].faction..vivod
-		else
-			print (reputationID.. " <- MISSING REPUTATION ID -> "..name)
-			return name
-		end
-	else
-		return "reputationID"
-	end
-end
 ----------------------------------------------------------------
-function E.func_reputationNameSIMPLE(reputationID)
-	local vivod = ""
-	if reputationID and type(reputationID) == "number" then
-		-- local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-		-- if isAccountWide == true then
-		-- vivod = E.Icon_AccountWide..vivod
-		-- end
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-		local name
-		if repInfo then
-			name = repInfo.name
-		else
-			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
-			name = reputationInfo.name or E.Red_Color..SEARCH_LOADING_TEXT.."|r"
-		end
-		vivod = vivod..name
-		-- if E.DebugIDs == true and vivod ~= nil then
-		-- vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
-		-- end
-		vivod = vivod
-	else
-		vivod = reputationID
-	end
-	return vivod
-end
 ----------------------------------------------------------------
-function E.func_currencyName(currencyID)
-	if currencyID then
-		local vivod
-		local AWide = ""
-		local ATrans = ""
-		local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) or false
-		if isAccountTransferableCurrency == true then
-			AWide = E.Icon_AccountTransferable
-		end
-		local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID) or false
-		if isAccountWideCurrency == true then
-			AWide = E.Icon_AccountWide
-		end
-		local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-		if info then
-			local name = info.name
-			local iconFileID = info.iconFileID
-			local quality = info.quality
-			local r, g, b = E.func_GetItemQualityColor(quality)
-			local color = CreateColor(r, g, b, 1)
-			local currencyName = color:WrapTextInColorCode(name)
-			vivod = ATrans..AWide..currencyName
-		else
-			vivod = ATrans..AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-		end
-		if E.DebugIDs == true and vivod ~= nil then
-			vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
-		end
-		return vivod
-	else
-		return "currencyID = NIL"
-	end
-end
-function E.func_GetCurrencyIcon(currencyID)
-	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-	local iconFileID = 134400
-	if info then
-		iconFileID = info.iconFileID
-	end
-	return iconFileID
-end
+
 ----------------------------------------------------------------
 function E.func_currencyName_NOCOLOR(currencyID)
 	local vivod
@@ -500,7 +525,7 @@ function E.func_SecondsToClock(time)
 	if time <= 0 then
 		return "" -- "0"..(L["time_SECOND"])
 	end
-	local years = floor(time / 31536000)  -- 86400*365
+	local years = floor(time / 31536000) -- 86400*365
 	local days = floor(time % 31536000 / 86400)
 	local hours = floor(time % 86400 / 3600)
 	local mins = floor(time % 3600 / 60)
@@ -521,7 +546,7 @@ function E.func_SecondsToClock(time)
 		table.insert(parts, string.format("%02d", mins)..(L["time_MINUTE"] or "m"))
 	elseif time >= 60 then
 		table.insert(parts, mins..(L["time_MINUTE"] or "m").." ")
-		if time < 600 then  -- Только для 1-9 минут добавляем секунды
+		if time < 600 then -- Только для 1-9 минут добавляем секунды
 			table.insert(parts, secs..(L["time_SECOND"] or "s"))
 		end
 	else
@@ -749,7 +774,7 @@ function E.func_RIOColor(RIOscore)
 	end
 	for _, v in next, (E.OctoTable_RIO_COLORS) do
 		if RIOscore <= v.score then
-			hexColor = E.func_rgb2hex(v.color[1],v.color[2],v.color[3])
+			hexColor = E.func_rgb2hex(v.color[1], v.color[2], v.color[3])
 		end
 	end
 	return hexColor
@@ -1198,7 +1223,7 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	frame.b = bgCb
 	frame.a = bgCa
 	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha) 
+	frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 	if not frame.isInit then
 		frame.isInit = true
 		frame:HookScript("OnEnter", function(self)
@@ -1215,12 +1240,12 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 					self.icon:SetVertexColor(1, 1, 1, 1)
 			end)
 			-- frame:SetScript("OnEnter", function(self)
-			--         self.icon:SetVertexColor(r, g, b, 1)
+			--     self.icon:SetVertexColor(r, g, b, 1)
 			-- end)
 			-- frame:SetScript("OnLeave", function(self)
-			--         self.icon:SetVertexColor(1, 1, 1, 1)
-			--         GameTooltip:ClearLines()
-			--         GameTooltip:Hide()
+			--     self.icon:SetVertexColor(1, 1, 1, 1)
+			--     GameTooltip:ClearLines()
+			--     GameTooltip:Hide()
 			-- end)
 			frame:SetScript("OnMouseDown", function(self)
 					self.icon:SetVertexColor(1, 0, 0, .5)
@@ -1355,7 +1380,7 @@ function E:func_CreateUtilsButton(frame)
 			end
 			sort(list, E.func_Reverse_order)
 			for k, questID in next, (list) do
-				GameTooltip:AddDoubleLine(E.func_questName(questID),E.func_CheckCompletedByQuestID(questID) , 1, 1, 1, 1, 1, 1)
+				GameTooltip:AddDoubleLine(E.func_questName(questID), E.func_CheckCompletedByQuestID(questID), 1, 1, 1, 1, 1, 1)
 			end
 			GameTooltip:Show()
 	end)
@@ -1521,15 +1546,15 @@ function E:func_CreateUtilsButton(frame)
 				local v = E.HolidayForButton[eventID]
 				count = count + 1
 				-- if v.Active == true then
-				--     -- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
-				--     -- СЕЙЧАС
-				--     GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+				--   -- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
+				--   -- СЕЙЧАС
+				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				-- elseif v.Possible == true then
-				--     -- БУДУЩЕЕ
-				--     GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+				--   -- БУДУЩЕЕ
+				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				-- else
-				--     -- ПРОШЛОЕ
-				--     GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+				--   -- ПРОШЛОЕ
+				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				-- end
 				if v.Active == true then
 					-- СЕЙЧАС
@@ -1809,7 +1834,7 @@ end
 E.OctoTable_Empty = {}
 E.Modules = {}
 E.Timers = {}
-E.spacer = "    "
+E.spacer = "  "
 -------------------------------------------------------------------------
 E.FULL_WIDTH = 3.60
 E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"

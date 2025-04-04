@@ -447,8 +447,8 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.left:SetPropagateMouseClicks(true)
 		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.left:SetFrameLevel(frame:GetFrameLevel()-1)
 		frame.left.text = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		-- frame.left.text:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
 		frame.left.text:SetPoint("LEFT", AddonHeight+1, 0)
 		frame.left.text:SetPoint("RIGHT", 0, 0)
 		frame.left.text:SetFontObject(OctoFont11)
@@ -480,7 +480,9 @@ local function func_OnAcquired(owner, frame, data, new)
 end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
-	frame.first.icon:SetTexture(data.firsticonTexture)
+	if data.firsticonTexture ~= E.Icon_Empty then
+		frame.first.icon:SetTexture(data.firsticonTexture)
+	end
 	frame.left.text:SetText(data.left)
 	if data.index % 2 == 0 then
 		E:func_SetBackdrop(frame.left, nil, 0, 0)
@@ -506,8 +508,6 @@ local function OctoToDo_Frame_init(frame, data)
 		if data[NumPlayers][3] then
 			E:func_SetBackdrop(frame.cent[NumPlayers], data[NumPlayers][3], E.bgCaOverlay, 0)
 		end
-
-
 	end
 end
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
@@ -1226,9 +1226,9 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	local realTotalTime = 0
 	local realLevelTime = 0
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+		totalReload = totalReload + CharInfo.ReloadCount
 		if CharInfo.curServer == E.curServer then
 			totalMoney = totalMoney + CharInfo.Money
-			totalReload = totalReload + CharInfo.ReloadCount
 			realTotalTime = realTotalTime + CharInfo.realTotalTime
 			if CharInfo.UnitLevel >= E.currentMaxLevel then
 				realLevelTime = realLevelTime + CharInfo.realLevelTime
@@ -1256,7 +1256,17 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 			RequestRaidInfo()
 	end)
 	C_Timer.After(0, function()
+			-- E.PromiseItem = {}
+			-- E.PromiseSpell = {}
+			-- E.PromiseCurrency = {}
+			-- E.PromiseQuest = {}
+			-- E.PromiseReputation = {}
 			local promise = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
+			promise:AddItems(E.PromiseItem)
+			promise:AddSpells(E.PromiseSpell)
+			-- promise:AddSpells(E.PromiseCurrency)
+			promise:AddQuests(E.PromiseQuest)
+			-- promise:AddSpells(E.PromiseReputation)
 			promise:Then(function()
 					if OctoToDo_MainFrame_OCTOMAIN:IsShown() then
 						OctoToDo_MainFrame_OCTOMAIN:Hide()

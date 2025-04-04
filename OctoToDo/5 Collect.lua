@@ -1088,6 +1088,7 @@ function OctoToDo_EventFrame_Collect:ADDON_LOADED()
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
+
 function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	E:func_checkCharInfo()
 	RequestTimePlayed()
@@ -1354,3 +1355,4 @@ function OctoToDo_EventFrame_Collect:QUEST_POI_UPDATE()
 		E.Update("QUEST_POI_UPDATE")
 	end
 end
+

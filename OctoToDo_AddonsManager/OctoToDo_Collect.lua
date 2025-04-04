@@ -43,17 +43,6 @@ function E.CollectAllAddons()
 				textRIGHT = ADDON_DISABLED
 				colorAddon = E.Gray_Color
 			end
-			-- if state == 2 then
-			-- 	if loadedOrLoading then
-			-- 		firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonON"
-			-- 	else
-			-- 		firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonSOON"
-			-- 	end
-			-- elseif state == 1 then
-			-- 		firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonGRAY"
-			-- 	else
-			-- 	firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonOFF"
-			-- end
 			if loadedOrLoading then
 				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonONgreen"
 			else
@@ -116,39 +105,44 @@ function E.CollectAllAddons()
 			collect[i].dep = dep
 		end
 	end
-	return collect
 end
 
--- function E.CollectAllAddons()
--- 	local collect = OctoToDo_AddonsManager.AddonList
--- 	local indexByName = {}
--- 	wipe(collect)
--- 	for index = 1, C_AddOns.GetNumAddOns() do
--- 		local name = C_AddOns.GetAddOnInfo(index)
--- 		indexByName[name] = index
--- 	end
-
--- 	local depsByIndex = {}
--- 	for index = 1, C_AddOns.GetNumAddOns() do
--- 		OctoToDo_AddonsManager.AddonList[index] = OctoToDo_AddonsManager.AddonList[index] or {}
-
--- 		local deps = {C_AddOns.GetAddOnDependencies(index)}
--- 		if deps then
--- 			for _, name in ipairs(deps) do
--- 				if indexByName[name] then
--- 					depsByIndex[indexByName[name]] = depsByIndex[indexByName[name]] or {}
--- 					tinsert(depsByIndex[indexByName[name]], index)
--- 					tinsert(OctoToDo_AddonsManager.AddonList[index], depsByIndex[indexByName[name]])
--- 				end
--- 			end
--- 		end
--- 	end
--- 	-- fpde(collect)
--- 	-- fpde(depsByIndex)
+function E.GetCycleByIndex(iChild, iParent)
+	if E.depsByIndex[iChild] then
+		for _, depIndex in ipairs(E.depsByIndex[iChild]) do
+			if depIndex == iParent then
+				print (E.Red_Color.."НАЙДЕН АБОБУС: |r".. iChild .." "..C_AddOns.GetAddOnInfo(iChild).." / "..iParent.." "..C_AddOns.GetAddOnInfo(iParent))
+				return true
+			end
+		end
+	end
+end
 
 
+function E.CollectAllAddonsNEW()
+	E.indexByName = {}
+	for index = 1, C_AddOns.GetNumAddOns() do
+		local name = C_AddOns.GetAddOnInfo(index)
+		E.indexByName[name] = index
+	end
+
+	E.depsByIndex = {}
+	E.parentByIndex = {}
+	E.recycleByIndex = {}
+	for index = 1, C_AddOns.GetNumAddOns() do
+		local deps = {C_AddOns.GetAddOnDependencies(index)}
+		for _, name in ipairs(deps) do
+			if E.indexByName[name] then
+				E.depsByIndex[E.indexByName[name]] = E.depsByIndex[E.indexByName[name]] or {}
+				tinsert(E.depsByIndex[E.indexByName[name]], index)
+				E.parentByIndex[index] = true
+				if E.GetCycleByIndex(index, E.indexByName[name]) then
+					E.recycleByIndex[index] = true
+					E.recycleByIndex[E.indexByName[name]] = true
+				end
+			end
+		end
+	end
 
 
-
--- 	return collect
--- end
+end

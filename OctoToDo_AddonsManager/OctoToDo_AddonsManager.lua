@@ -89,6 +89,7 @@ function E.UpdatePerformance()
 	local enabled = C_AddOnProfiler.IsEnabled()
 	if enabled then
 		E.CollectAllAddons()
+		E.CollectAllAddonsNEW()
 		UpdateAddOnCPUUsage() -- НЕ РАБОТАЕТ?
 		UpdateAddOnMemoryUsage()
 	end
@@ -377,12 +378,6 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 end
 ----------------------------------------------------------------
 function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
-	-- ENABLE_ALL_ADDONS - Включить все
-	-- ADDON_LIST_ENABLE_CATEGORY - Включить все модификации
-	-- ENABLE_ALL_SHADERS - Включить все шейдерные эффекты
-	-- ADDON_LIST_ENABLE_DEPENDENCIES - Включить все зависимости
-	-- ADDON_LIST_DISABLE_CATEGORY - Отключить все модификации
-	-- DISABLE_ALL_ADDONS - Отключить все
 	local frameONall = CreateFrame("Button", nil, OctoToDo_MainFrame_AddonsManager, "SecureActionButtonTemplate, BackDropTemplate")
 	frameONall:SetPropagateMouseClicks(true)
 	frameONall:SetSize(AddonLeftFrameWeight/5, AddonHeight)
@@ -460,6 +455,59 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 		end)
 	end
 end
+
+
+
+function E.RECURSION(i, firstABOBUS)
+	for _, depIndex in ipairs(E.depsByIndex[i]) do
+		local secondABOBUS = firstABOBUS:Insert({index = depIndex})
+		if E.depsByIndex[depIndex] and not E.recycleByIndex[depIndex] then
+			E.RECURSION(depIndex, secondABOBUS)
+		end
+	end
+end
+
+function E.func_CreateNewProvider()
+	local ScrollBox = CreateFrame("Frame", "ScrollBox", UIParent, "WowScrollBoxList")
+	ScrollBox:SetPoint("CENTER")
+
+	-- local AddonHeight = 20 --ADDON_BUTTON_HEIGHT -- Высота -- OctoToDo_DB_Vars.curHeight
+	-- local AddonLeftFrameWeight = 500 -- Ширина Левого -- OctoToDo_DB_Vars.curWidthTitle
+	ScrollBox:SetSize(400, AddonLeftFrameWeight)
+	-- ScrollBox:EnableMouse(true)
+	-- ScrollBox:SetMovable(true)
+	local ScrollBar = CreateFrame("EventFrame", nil, UIParent, "MinimalScrollBar")
+	ScrollBar:SetPoint("TOPLEFT", ScrollBox, "TOPRIGHT")
+	ScrollBar:SetPoint("BOTTOMLEFT", ScrollBox, "BOTTOMRIGHT")
+	local DataProvider = CreateTreeDataProvider()
+	local nodes = DataProvider:GetChildrenNodes()
+	local ScrollView = CreateScrollBoxListTreeListView()
+	ScrollView:SetDataProvider(DataProvider)
+	ScrollUtil.InitScrollBoxListWithScrollBar(ScrollBox, ScrollBar, ScrollView)
+	-- The 'button' argument is the frame that our data will inhabit in our list
+	-- The 'node' argument will be a node table, as explained above
+	local function Initializer(button, node)
+		local data = node:GetData() -- get our data from the node with :GetData()
+		local textLEFT = C_AddOns.GetAddOnInfo(data.index)
+		local textRIGHT = data.textRIGHT
+		button:SetText(textLEFT)
+		button:SetScript("OnClick", function()
+				node:ToggleCollapsed()
+		end)
+	end
+	-- The first argument here can either be a frame type or frame template. We're just passing the "UIPanelButtonTemplate" template here
+	ScrollView:SetElementInitializer("UIPanelButtonTemplate", Initializer)
+	for i = 1, C_AddOns.GetNumAddOns() do
+		if not E.parentByIndex[i] or E.recycleByIndex[i] then
+			local abubusTABLE = {index = i}
+			local firstABOBUS = DataProvider:Insert(abubusTABLE)
+			nodes[#nodes]:SetCollapsed(false) -- БРАТЬ ПОСЛЕДНЮЮ НОДУ И КОЛЛАПСИТЬ (ВЕСЬ СПИСОК ПРИ ЗАГРУЗКЕ)
+			if E.depsByIndex[i] then
+				E.RECURSION(i, firstABOBUS)
+			end
+		end
+	end
+end
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
@@ -498,6 +546,23 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 					end
 			end)
 		end
+
+
+
+
+
+
+
+		E.func_CreateNewProvider()
+
+
+
+
+
+
+
+
+
 	end
 end
 ----------------------------------------------------------------
