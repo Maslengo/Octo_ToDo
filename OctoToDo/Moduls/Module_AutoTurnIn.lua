@@ -14,13 +14,11 @@ local MyEventsTable = {
 	"QUEST_PROGRESS",
 }
 E.RegisterMyEventsToFrames(OctoToDo_EventFrame_AutoTurnIn, MyEventsTable, E.func_DebugPath())
-
 function OctoToDo_EventFrame_AutoTurnIn:BAG_UPDATE_DELAYED()
 	if not InCombatLockdown() then
 		self:ItemsUsableFrame()
 	end
 end
-
 function OctoToDo_EventFrame_AutoTurnIn:QUEST_DETAIL()
 	if not IsShiftKeyDown() then
 		if QuestIsFromAreaTrigger() then
@@ -31,7 +29,6 @@ function OctoToDo_EventFrame_AutoTurnIn:QUEST_DETAIL()
 		AcceptQuest()
 	end
 end
-
 function OctoToDo_EventFrame_AutoTurnIn:QUEST_COMPLETE()
 	if not IsShiftKeyDown() then
 		if GetNumQuestChoices() <= 1 then
@@ -39,7 +36,6 @@ function OctoToDo_EventFrame_AutoTurnIn:QUEST_COMPLETE()
 		end
 	end
 end
-
 function OctoToDo_EventFrame_AutoTurnIn:QUEST_GREETING()
 	if not IsShiftKeyDown() then
 		for i = 1, GetNumActiveQuests() do
@@ -59,7 +55,6 @@ function OctoToDo_EventFrame_AutoTurnIn:QUEST_GREETING()
 		end
 	end
 end
-
 function OctoToDo_EventFrame_AutoTurnIn:GOSSIP_SHOW()
 	if not IsShiftKeyDown() then
 		if C_GossipInfo.GetActiveQuests() ~= 0 then
@@ -73,15 +68,14 @@ function OctoToDo_EventFrame_AutoTurnIn:GOSSIP_SHOW()
 			for _, info in next, (C_GossipInfo.GetAvailableQuests()) do
 				-- ПОКА ВСЁ СТЁРТО БЕРУТСЯ ВСЕ КВЕСТЫ
 				-- if (collectTrivial == info.isTrivial) and (collectRepeatable == info.repeatable) then
-				-- 	return
+				--     return
 				-- else
-					C_GossipInfo.SelectAvailableQuest(info.questID)
+				C_GossipInfo.SelectAvailableQuest(info.questID)
 				-- end
 			end
 		end
 	end
 end
-
 function OctoToDo_EventFrame_AutoTurnIn:QUEST_PROGRESS()
 	if not IsShiftKeyDown() then
 		CompleteQuest()

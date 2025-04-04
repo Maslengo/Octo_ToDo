@@ -42,13 +42,6 @@ tinsert(E.Modules, function()
 								local gossipOptionID = v.gossipOptionID
 								local name = v.name
 								local icon = v.icon
-								-- local rewards = v.rewards
-								-- local status = v.status
-								-- local spellID = v.spellID
-								-- local flags = v.flags
-								-- local overrideIconID = v.overrideIconID
-								-- local selectOptionWhenOnlyOption = v.selectOptionWhenOnlyOption
-								-- local orderIndex = v.orderIndex
 								if #info == 1 then
 									C_GossipInfo.SelectOption(gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)

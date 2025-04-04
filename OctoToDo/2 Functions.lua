@@ -1,193 +1,30 @@
 local GlobalAddonName, E = ...
+E.GlobalAddonName = GlobalAddonName
+local LibSFDropDown = LibStub("LibSFDropDown-1.5")
+local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
-local type, next = type, next
-local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
-local Red_Color = "|cffFF4C4F"
-local Gray_Color = "|cff505050"
-local White_Color = "|cffFFFFFF"
-local Purple_Color = "|cffAF61FF"
-local Yellow_Color = "|cffFFF371"
-local Green_Color = "|cff4FFF79"
-local Orange_Color = "|cffFF661A"
-local Blue_Color = "|cff00A3FF"
+-- console -> export "art"
+function E.func_IsClassic() if E.interfaceVersion > 10000 and E.interfaceVersion < 20000 then return true else return false end end
+function E.func_IsBC() if E.interfaceVersion > 20000 and E.interfaceVersion < 30000 then return true else return false end end
+function E.func_IsWOTLK() if E.interfaceVersion > 30000 and E.interfaceVersion < 40000 then return true else return false end end
+function E.func_IsCataclysm() if E.interfaceVersion > 40000 and E.interfaceVersion < 50000 then return true else return false end end
+function E.func_IsMOP() if E.interfaceVersion > 50000 and E.interfaceVersion < 60000 then return true else return false end end
+function E.func_IsWOD() if E.interfaceVersion > 60000 and E.interfaceVersion < 70000 then return true else return false end end
+function E.func_IsLegion() if E.interfaceVersion > 70000 and E.interfaceVersion < 80000 then return true else return false end end
+function E.func_IsBFA() if E.interfaceVersion > 80000 and E.interfaceVersion < 90000 then return true else return false end end
+function E.func_IsShadowlands() if E.interfaceVersion > 90000 and E.interfaceVersion < 100000 then return true else return false end end
+function E.func_IsDragonflight() if E.interfaceVersion > 100000 and E.interfaceVersion < 110000 then return true else return false end end
+function E.func_IsTWW() if E.interfaceVersion > 110000 and E.interfaceVersion < 120000 then return true else return false end end
+function E.func_IsMidnight() if E.interfaceVersion > 120000 and E.interfaceVersion < 130000 then return true else return false end end
+function E.func_IsTLT() if E.interfaceVersion > 130000 and E.interfaceVersion < 140000 then return true else return false end end
+function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
+function E.func_IsPTR() return GetCurrentRegion() >= 72 end
 ----------------------------------------------------------------
-local OctoTable_bytetoB64 = {
-	[0] =
-	"a", "b", "c", "d", "e", "f", "g", "h",
-	"i", "j", "k", "l", "m", "n", "o", "p",
-	"q", "r", "s", "t", "u", "v", "w", "x",
-	"y", "z", "A", "B", "C", "D", "E", "F",
-	"G", "H", "I", "J", "K", "L", "M", "N",
-	"O", "P", "Q", "R", "S", "T", "U", "V",
-	"W", "X", "Y", "Z", "0", "1", "2", "3",
-	"4", "5", "6", "7", "8", "9", "(", ")",
-}
---------------------------------------------------------------------------------
-local OctoTable_bytetoB64Color = {
-	[0] =
-	"0", "1", "2", "3", "4", "5", "6", "7", "8",
-	"9", "A", "B", "C", "D", "E", "F",
-}
-local OctoTable_RIO_COLORS = {
-	{["score"] = 10000, ["color"] = {1, 0.5, 0}},
-	{["score"] = 3975, ["color"] = {1, 0.5, 0}},
-	{["score"] = 3900, ["color"] = {1, 0.49, 0.07}},
-	{["score"] = 3875, ["color"] = {0.99, 0.49, 0.11}},
-	{["score"] = 3850, ["color"] = {0.99, 0.48, 0.14}},
-	{["score"] = 3825, ["color"] = {0.99, 0.48, 0.17}},
-	{["score"] = 3805, ["color"] = {0.98, 0.47, 0.19}},
-	{["score"] = 3780, ["color"] = {0.98, 0.47, 0.22}},
-	{["score"] = 3755, ["color"] = {0.98, 0.46, 0.24}},
-	{["score"] = 3730, ["color"] = {0.97, 0.45, 0.25}},
-	{["score"] = 3705, ["color"] = {0.97, 0.45, 0.27}},
-	{["score"] = 3685, ["color"] = {0.96, 0.44, 0.29}},
-	{["score"] = 3660, ["color"] = {0.96, 0.44, 0.31}},
-	{["score"] = 3635, ["color"] = {0.96, 0.43, 0.33}},
-	{["score"] = 3610, ["color"] = {0.95, 0.42, 0.35}},
-	{["score"] = 3585, ["color"] = {0.95, 0.42, 0.36}},
-	{["score"] = 3565, ["color"] = {0.95, 0.41, 0.38}},
-	{["score"] = 3540, ["color"] = {0.94, 0.41, 0.4}},
-	{["score"] = 3515, ["color"] = {0.93, 0.4, 0.41}},
-	{["score"] = 3490, ["color"] = {0.93, 0.39, 0.43}},
-	{["score"] = 3465, ["color"] = {0.93, 0.39, 0.44}},
-	{["score"] = 3445, ["color"] = {0.92, 0.38, 0.46}},
-	{["score"] = 3420, ["color"] = {0.91, 0.38, 0.47}},
-	{["score"] = 3395, ["color"] = {0.91, 0.37, 0.49}},
-	{["score"] = 3370, ["color"] = {0.9, 0.36, 0.51}},
-	{["score"] = 3345, ["color"] = {0.9, 0.36, 0.52}},
-	{["score"] = 3325, ["color"] = {0.89, 0.35, 0.54}},
-	{["score"] = 3300, ["color"] = {0.89, 0.35, 0.55}},
-	{["score"] = 3275, ["color"] = {0.88, 0.34, 0.56}},
-	{["score"] = 3250, ["color"] = {0.87, 0.33, 0.58}},
-	{["score"] = 3225, ["color"] = {0.87, 0.33, 0.6}},
-	{["score"] = 3205, ["color"] = {0.86, 0.32, 0.61}},
-	{["score"] = 3180, ["color"] = {0.85, 0.32, 0.63}},
-	{["score"] = 3155, ["color"] = {0.84, 0.31, 0.64}},
-	{["score"] = 3130, ["color"] = {0.84, 0.31, 0.66}},
-	{["score"] = 3105, ["color"] = {0.83, 0.3, 0.67}},
-	{["score"] = 3085, ["color"] = {0.82, 0.29, 0.69}},
-	{["score"] = 3060, ["color"] = {0.81, 0.29, 0.7}},
-	{["score"] = 3035, ["color"] = {0.8, 0.28, 0.72}},
-	{["score"] = 3010, ["color"] = {0.8, 0.27, 0.73}},
-	{["score"] = 2985, ["color"] = {0.78, 0.27, 0.75}},
-	{["score"] = 2965, ["color"] = {0.78, 0.27, 0.76}},
-	{["score"] = 2940, ["color"] = {0.76, 0.26, 0.78}},
-	{["score"] = 2915, ["color"] = {0.76, 0.25, 0.8}},
-	{["score"] = 2890, ["color"] = {0.75, 0.25, 0.81}},
-	{["score"] = 2865, ["color"] = {0.73, 0.24, 0.82}},
-	{["score"] = 2845, ["color"] = {0.72, 0.24, 0.84}},
-	{["score"] = 2820, ["color"] = {0.71, 0.23, 0.85}},
-	{["score"] = 2795, ["color"] = {0.7, 0.23, 0.87}},
-	{["score"] = 2770, ["color"] = {0.68, 0.22, 0.89}},
-	{["score"] = 2745, ["color"] = {0.67, 0.22, 0.9}},
-	{["score"] = 2725, ["color"] = {0.65, 0.21, 0.92}},
-	{["score"] = 2700, ["color"] = {0.64, 0.21, 0.93}},
-	{["score"] = 2660, ["color"] = {0.62, 0.23, 0.93}},
-	{["score"] = 2635, ["color"] = {0.6, 0.25, 0.93}},
-	{["score"] = 2610, ["color"] = {0.58, 0.27, 0.92}},
-	{["score"] = 2585, ["color"] = {0.55, 0.29, 0.92}},
-	{["score"] = 2560, ["color"] = {0.53, 0.31, 0.91}},
-	{["score"] = 2540, ["color"] = {0.51, 0.32, 0.91}},
-	{["score"] = 2515, ["color"] = {0.48, 0.34, 0.91}},
-	{["score"] = 2490, ["color"] = {0.46, 0.35, 0.9}},
-	{["score"] = 2465, ["color"] = {0.43, 0.36, 0.9}},
-	{["score"] = 2440, ["color"] = {0.4, 0.37, 0.89}},
-	{["score"] = 2420, ["color"] = {0.37, 0.38, 0.89}},
-	{["score"] = 2395, ["color"] = {0.34, 0.4, 0.89}},
-	{["score"] = 2370, ["color"] = {0.3, 0.4, 0.88}},
-	{["score"] = 2345, ["color"] = {0.26, 0.42, 0.88}},
-	{["score"] = 2320, ["color"] = {0.21, 0.42, 0.87}},
-	{["score"] = 2300, ["color"] = {0.14, 0.43, 0.87}},
-	{["score"] = 2275, ["color"] = {0, 0.44, 0.87}},
-	{["score"] = 2195, ["color"] = {0.08, 0.45, 0.85}},
-	{["score"] = 2170, ["color"] = {0.13, 0.46, 0.85}},
-	{["score"] = 2145, ["color"] = {0.16, 0.47, 0.84}},
-	{["score"] = 2120, ["color"] = {0.19, 0.48, 0.83}},
-	{["score"] = 2100, ["color"] = {0.21, 0.49, 0.82}},
-	{["score"] = 2075, ["color"] = {0.23, 0.5, 0.81}},
-	{["score"] = 2050, ["color"] = {0.24, 0.51, 0.8}},
-	{["score"] = 2025, ["color"] = {0.26, 0.51, 0.78}},
-	{["score"] = 2000, ["color"] = {0.27, 0.53, 0.78}},
-	{["score"] = 1980, ["color"] = {0.28, 0.53, 0.76}},
-	{["score"] = 1955, ["color"] = {0.29, 0.55, 0.76}},
-	{["score"] = 1930, ["color"] = {0.3, 0.55, 0.75}},
-	{["score"] = 1905, ["color"] = {0.31, 0.56, 0.73}},
-	{["score"] = 1880, ["color"] = {0.32, 0.57, 0.73}},
-	{["score"] = 1860, ["color"] = {0.33, 0.58, 0.71}},
-	{["score"] = 1835, ["color"] = {0.33, 0.59, 0.7}},
-	{["score"] = 1810, ["color"] = {0.34, 0.6, 0.69}},
-	{["score"] = 1785, ["color"] = {0.35, 0.61, 0.68}},
-	{["score"] = 1760, ["color"] = {0.35, 0.62, 0.67}},
-	{["score"] = 1740, ["color"] = {0.36, 0.63, 0.66}},
-	{["score"] = 1715, ["color"] = {0.36, 0.64, 0.65}},
-	{["score"] = 1690, ["color"] = {0.36, 0.65, 0.64}},
-	{["score"] = 1665, ["color"] = {0.36, 0.66, 0.63}},
-	{["score"] = 1640, ["color"] = {0.37, 0.67, 0.62}},
-	{["score"] = 1620, ["color"] = {0.37, 0.68, 0.61}},
-	{["score"] = 1595, ["color"] = {0.37, 0.69, 0.6}},
-	{["score"] = 1570, ["color"] = {0.37, 0.7, 0.58}},
-	{["score"] = 1545, ["color"] = {0.37, 0.71, 0.57}},
-	{["score"] = 1520, ["color"] = {0.37, 0.72, 0.56}},
-	{["score"] = 1500, ["color"] = {0.37, 0.73, 0.55}},
-	{["score"] = 1475, ["color"] = {0.37, 0.74, 0.54}},
-	{["score"] = 1450, ["color"] = {0.37, 0.75, 0.53}},
-	{["score"] = 1425, ["color"] = {0.37, 0.76, 0.51}},
-	{["score"] = 1400, ["color"] = {0.37, 0.77, 0.5}},
-	{["score"] = 1380, ["color"] = {0.37, 0.78, 0.49}},
-	{["score"] = 1355, ["color"] = {0.36, 0.79, 0.47}},
-	{["score"] = 1330, ["color"] = {0.36, 0.8, 0.46}},
-	{["score"] = 1305, ["color"] = {0.36, 0.82, 0.45}},
-	{["score"] = 1280, ["color"] = {0.35, 0.82, 0.44}},
-	{["score"] = 1260, ["color"] = {0.35, 0.84, 0.42}},
-	{["score"] = 1235, ["color"] = {0.34, 0.84, 0.41}},
-	{["score"] = 1210, ["color"] = {0.34, 0.85, 0.39}},
-	{["score"] = 1185, ["color"] = {0.33, 0.87, 0.38}},
-	{["score"] = 1160, ["color"] = {0.32, 0.87, 0.36}},
-	{["score"] = 1140, ["color"] = {0.31, 0.89, 0.35}},
-	{["score"] = 1115, ["color"] = {0.31, 0.9, 0.33}},
-	{["score"] = 1090, ["color"] = {0.29, 0.91, 0.31}},
-	{["score"] = 1065, ["color"] = {0.28, 0.92, 0.29}},
-	{["score"] = 1040, ["color"] = {0.27, 0.93, 0.27}},
-	{["score"] = 1020, ["color"] = {0.26, 0.94, 0.25}},
-	{["score"] = 995, ["color"] = {0.24, 0.95, 0.23}},
-	{["score"] = 970, ["color"] = {0.22, 0.96, 0.2}},
-	{["score"] = 945, ["color"] = {0.2, 0.97, 0.17}},
-	{["score"] = 920, ["color"] = {0.18, 0.98, 0.14}},
-	{["score"] = 900, ["color"] = {0.15, 0.99, 0.09}},
-	{["score"] = 875, ["color"] = {0.12, 1, 0}},
-	{["score"] = 850, ["color"] = {0.22, 1, 0.13}},
-	{["score"] = 825, ["color"] = {0.29, 1, 0.19}},
-	{["score"] = 800, ["color"] = {0.35, 1, 0.24}},
-	{["score"] = 775, ["color"] = {0.4, 1, 0.29}},
-	{["score"] = 750, ["color"] = {0.44, 1, 0.33}},
-	{["score"] = 725, ["color"] = {0.47, 1, 0.36}},
-	{["score"] = 700, ["color"] = {0.51, 1, 0.4}},
-	{["score"] = 675, ["color"] = {0.55, 1, 0.44}},
-	{["score"] = 650, ["color"] = {0.58, 1, 0.47}},
-	{["score"] = 625, ["color"] = {0.6, 1, 0.5}},
-	{["score"] = 600, ["color"] = {0.64, 1, 0.53}},
-	{["score"] = 575, ["color"] = {0.66, 1, 0.56}},
-	{["score"] = 550, ["color"] = {0.69, 1, 0.59}},
-	{["score"] = 525, ["color"] = {0.71, 1, 0.62}},
-	{["score"] = 500, ["color"] = {0.74, 1, 0.65}},
-	{["score"] = 475, ["color"] = {0.76, 1, 0.68}},
-	{["score"] = 450, ["color"] = {0.79, 1, 0.71}},
-	{["score"] = 425, ["color"] = {0.81, 1, 0.74}},
-	{["score"] = 400, ["color"] = {0.83, 1, 0.77}},
-	{["score"] = 375, ["color"] = {0.85, 1, 0.8}},
-	{["score"] = 350, ["color"] = {0.88, 1, 0.83}},
-	{["score"] = 325, ["color"] = {0.9, 1, 0.85}},
-	{["score"] = 300, ["color"] = {0.92, 1, 0.88}},
-	{["score"] = 275, ["color"] = {0.94, 1, 0.91}},
-	{["score"] = 250, ["color"] = {0.96, 1, 0.94}},
-	{["score"] = 225, ["color"] = {0.98, 1, 0.97}},
-	{["score"] = 200, ["color"] = {1, 1, 1}}
-}
 -- ITEM UTILS
 ----------------------------------------------------------------
 function E.func_GetItemInfo(itemInfo) -- Item ID, Link or name
@@ -195,7 +32,7 @@ function E.func_GetItemInfo(itemInfo) -- Item ID, Link or name
 end
 ----------------------------------------------------------------
 function E.func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
-	return GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
+	return C_Item.GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
 end
 ----------------------------------------------------------------
 function E.func_GetItemIcon(itemID)
@@ -205,7 +42,7 @@ end
 function E.func_GetItemName(itemID)
 	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
 	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
+		vivod = vivod..E.Gray_Color.." id:"..itemID.."|r"
 	end
 	return vivod
 end
@@ -223,14 +60,9 @@ function E.func_GetItemQualityColorID(itemID)
 	return ITEM_QUALITY_COLORS[E.func_GetItemQuality(itemID)]
 end
 ----------------------------------------------------------------
-function E.func_GetItemQualityColorRGB(itemID)
-	return E.func_GetItemQualityColor(itemID).color:GetRGB()
-end
-----------------------------------------------------------------
 function E.func_GetItemQualityColor(quality)
 	local r, g, b = C_Item.GetItemQualityColor(quality)
 	return r, g, b
-
 end
 ----------------------------------------------------------------
 function E.IsAnimaItemByID(itemID)
@@ -264,7 +96,7 @@ function E.func_IsItemDataCached(itemID)
 end
 ----------------------------------------------------------------
 function E.func_itemName(itemID)
-	local itemName = C_Item.GetItemNameByID(itemID) or Red_Color..SEARCH_LOADING_TEXT.."|r" -- RETRIEVING_ITEM_INFO
+	local itemName = C_Item.GetItemNameByID(itemID) or E.Red_Color..SEARCH_LOADING_TEXT.."|r" -- RETRIEVING_ITEM_INFO
 	local itemQuality = select(3, E.func_GetItemInfo(itemID))
 	local vivod
 	if itemQuality then
@@ -273,7 +105,7 @@ function E.func_itemName(itemID)
 		vivod = itemName
 	end
 	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..itemID.."|r"
+		vivod = vivod..E.Gray_Color.." id:"..itemID.."|r"
 	end
 	return vivod
 end
@@ -306,7 +138,7 @@ end
 function E.func_GetSpellSubtext(spellID)
 	local vivod = C_Spell.GetSpellSubtext(spellID)
 	-- if E.DebugIDs == true and vivod ~= nil then
-	--     vivod = vivod..Gray_Color.." id:"..spellID.."|r"
+	--     vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
 	-- end
 	return vivod
 end
@@ -316,19 +148,19 @@ function E.func_GetSpellNameFull(spellID)
 	local subText = E.func_GetSpellSubtext(spellID)
 	local vivod = subText and #subText > 0 and name.."("..subText..")" or name
 	-- if E.DebugIDs == true and vivod ~= nil then
-	--     vivod = vivod..Gray_Color.." id:"..spellID.."|r"
+	--     vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
 	-- end
 	return vivod
 end
 ----------------------------------------------------------------
 function E.func_GetSpellDescription(spellID)
-	return GetSpellDescription(spellID)
+	return C_Spell.GetSpellDescription(spellID)
 end
 ----------------------------------------------------------------
 function E.func_GetSpellName(spellID)
 	local vivod = C_Spell.GetSpellName(spellID)
 	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..spellID.."|r"
+		vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
 	end
 	return vivod
 end
@@ -347,20 +179,11 @@ function E.func_GetSpellCooldown(spellID)
 	end
 	return E.func_CompactNumberSimple(vivod)
 end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
+---------------------------------------------------------------- 
 function E.COMPLETE()
-	-- return Purple_Color..">>".."Complete".."<<".."|r"
-	-- return Purple_Color..">"..COMPLETE.."<".."|r"
-	return Purple_Color..">"..QUEST_WATCH_QUEST_READY.."<".."|r"
+	-- return E.Purple_Color..">>".."Complete".."<<".."|r"
+	-- return E.Purple_Color..">"..COMPLETE.."<".."|r"
+	return E.Purple_Color..">"..QUEST_WATCH_QUEST_READY.."<".."|r"
 end
 ----------------------------------------------------------------
 function E.func_hex2rgb(hex)
@@ -421,7 +244,7 @@ end
 function E.func_GenerateUniqueID()
 	local s = {}
 	for i=1, 11 do
-		tinsert(s, OctoTable_bytetoB64[math.random(0, 63)])
+		tinsert(s, E.OctoTable_bytetoB64[math.random(0, 63)])
 	end
 	return table.concat(s)
 end
@@ -429,7 +252,7 @@ end
 function E.func_GenerateUniqueColor()
 	local s = {}
 	for i=1, 6 do
-		tinsert(s, OctoTable_bytetoB64Color[math.random(0, 15)])
+		tinsert(s, E.OctoTable_bytetoB64Color[math.random(0, 15)])
 	end
 	return table.concat(s)
 end
@@ -464,22 +287,31 @@ function E.func_CompactNumberSimple(number)
 	else
 		return math.floor(number+.5)
 	end
+end 
+function E.Icon_MailBoxQWE()
+	return E.func_texturefromIcon("Interface/AddOns/"..E.GlobalAddonName.."/Media/ElvUI/Mail0.tga")
 end
 ----------------------------------------------------------------
 function E.func_texturefromIcon(icon, iconSize, isShown)
-	if isShown == nil then isShown = true end
-	if iconSize == nil then iconSize = 16 end
-	if icon == nil then return "" end--icon = 134400 end
-	local vivod
-	if isShown == true then
-		vivod = "|T".. icon ..":"..iconSize..":"..iconSize..":::64:64:4:60:4:60|t"
+	iconSize = iconSize or 16
+	icon = icon or 134400
+	if not isShown then
+		return ""
 	else
-		vivod = ""
+		return "|T".. icon ..":"..iconSize..":"..iconSize..":::64:64:4:60:4:60|t"
 	end
-	return vivod..""
 end
-
-
+E.Icon_Alliance = E.func_texturefromIcon(255140) -- 132486
+E.Icon_Horde = E.func_texturefromIcon(255142) -- 132485
+E.Icon_Unknown = E.func_texturefromIcon(134400)
+E.Icon_Kyrian = E.func_texturefromIcon(3641395)
+E.Icon_Necrolord = E.func_texturefromIcon(3641396)
+E.Icon_NightFae = E.func_texturefromIcon(3641394)
+E.Icon_Venthyr = E.func_texturefromIcon(3641397)
+E.Icon_WorldBoss = E.func_texturefromIcon(3528312)
+E.Icon_Rares = E.func_texturefromIcon(135903)
+E.Icon_Money = E.func_texturefromIcon(133784, 14)
+E.Icon_MailBox = E.func_texturefromIcon("Interface/AddOns/"..E.GlobalAddonName.."/Media/ElvUI/Mail0.tga")
 function E.func_texturefromIconEVENT(icon, iconSize, isShown)
 	if isShown == nil then isShown = true end
 	if iconSize == nil then iconSize = 16 end
@@ -492,13 +324,6 @@ function E.func_texturefromIconEVENT(icon, iconSize, isShown)
 	end
 	return vivod.." "
 end
-
-
-
-
-
-
-
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
 	local vivod = ""
@@ -509,7 +334,7 @@ function E.func_questName(questID, useLargeIcon)
 	if title then
 		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon)
 	else
-		vivod = vivod..Red_Color.."hidden?".."|r"
+		vivod = vivod..E.Red_Color.."hidden?".."|r"
 	end
 	if isAccountQuest then
 		vivod = E.Icon_AccountWide.."|cffFFFF00"..vivod.."|r"
@@ -518,7 +343,7 @@ function E.func_questName(questID, useLargeIcon)
 		vivod = E.Icon_AccountWide.."|cff9fc5e8"..vivod.."|r"
 	end
 	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..questID.."|r"
+		vivod = vivod..E.Gray_Color.." id:"..questID.."|r"
 	end
 	return vivod
 end
@@ -573,11 +398,11 @@ function E.func_reputationNameSIMPLE(reputationID)
 			name = repInfo.name
 		else
 			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
-			name = reputationInfo.name or Red_Color..SEARCH_LOADING_TEXT.."|r"
+			name = reputationInfo.name or E.Red_Color..SEARCH_LOADING_TEXT.."|r"
 		end
 		vivod = vivod..name
 		-- if E.DebugIDs == true and vivod ~= nil then
-		-- vivod = vivod..Gray_Color.." id:"..reputationID.."|r"
+		-- vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
 		-- end
 		vivod = vivod
 	else
@@ -609,10 +434,10 @@ function E.func_currencyName(currencyID)
 			local currencyName = color:WrapTextInColorCode(name)
 			vivod = ATrans..AWide..currencyName
 		else
-			vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
+			vivod = ATrans..AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 		end
 		if E.DebugIDs == true and vivod ~= nil then
-			vivod = vivod..Gray_Color.." id:"..currencyID.."|r"
+			vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
 		end
 		return vivod
 	else
@@ -642,10 +467,10 @@ function E.func_currencyName_NOCOLOR(currencyID)
 		-- local currencyName = color:WrapTextInColorCode(name)
 		vivod = ATrans..AWide..name
 	else
-		vivod = ATrans..AWide..Red_Color..RETRIEVING_ITEM_INFO.."|r"
+		vivod = ATrans..AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
 	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..currencyID.."|r"
+		vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
 	end
 	return vivod
 end
@@ -668,40 +493,6 @@ function E.func_currencyquantity(currencyID)
 	return quantity
 end
 ----------------------------------------------------------------
-----------------------------------------------------------------
--- function E.func_SecondsToClock(time)
---     -- local years, days, hours, mins, secs = "", "", "", "", ""
---     local years, days, hours, mins, secs = 0, 0, 0, 0, 0
---     local time = tonumber(time)
---     if time <= 0 or time == nil then --
---         return "0:00"
---     elseif time >= (86400*365) then -- год
---         years = floor(time / (86400*365))
---         days = floor(mod(time, 31536000) / 86400)
---         hours = floor(mod(time, 86400) / 3600)
---         mins = floor(mod(time, 3600) / 60)
---         return years..L["time_YEAR"]..days..L["time_DAY"]..hours..L["time_HOUR"]..mins..L["time_MINUTE"]
---     elseif time >= 86400 then -- 24ч
---         days = floor(time / 86400)
---         hours = floor(mod(time, 86400) / 3600)
---         mins = floor(mod(time, 3600) / 60)
---         return days..L["time_DAY"]..hours..L["time_HOUR"]..mins..L["time_MINUTE"]
---     elseif time >= 3600 then -- 1 час
---         hours = string.format("%01.f", math.floor(time/3600))
---         mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
---         return hours..L["time_HOUR"]..mins..L["time_MINUTE"]
---     elseif time >= 600 then -- 10 минут
---         hours = string.format("%01.f", math.floor(time/3600))
---         mins = string.format("%02.f", math.floor(time/60 - (hours*60)))
---         return mins..L["time_MINUTE"]
---     elseif time >= 60 then -- минута
---         hours = string.format("%01.f", math.floor(time/3600))
---         mins = string.format("%01.f", math.floor(time/60 - (hours*60)))
---         return mins..L["time_MINUTE"]
---     else
---         return time..L["time_SECOND"]
---     end
--- end
 function E.func_SecondsToClock(time)
 	time = tonumber(time) or 0
 	if time <= 0 then
@@ -749,42 +540,6 @@ function E.func_tmstpDayReset(time)
 	return (math.ceil((tonumber(GetServerTime()) - E.thursdayReset)/(E.daytime*time))*E.daytime*time)+E.thursdayReset
 end
 ----------------------------------------------------------------
--- function E.func_All_objectives(questID)
--- local str = ""
--- local objectives = C_QuestLog.GetQuestObjectives(questID)
--- local text, objectiveType, finished, fulfilled, required = GetQuestObjectiveInfo(questID, 1, false)
--- if objectives == nil then
--- return ""
--- end
--- if objectiveType == "progressbar" then
--- return "|cffFF0000"..GetQuestProgressBarPercent(questID).."%|r"
--- end
--- if objectives then
--- if objectives[5] then
--- str = str..(objectives[5].finished and Gray_Color or White_Color) ..objectives[5].text.."|r\n"
--- str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
--- str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
--- str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
--- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- elseif objectives[4] then
--- str = str..(objectives[4].finished and Gray_Color or White_Color) ..objectives[4].text.."|r\n"
--- str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
--- str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
--- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- elseif objectives[3] then
--- str = str..(objectives[3].finished and Gray_Color or White_Color) ..objectives[3].text.."|r\n"
--- str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
--- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- elseif objectives[2] then
--- str = str..(objectives[2].finished and Gray_Color or White_Color) ..objectives[2].text.."|r\n"
--- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- elseif objectives[1] then
--- str = str..(objectives[1].finished and Gray_Color or White_Color) ..objectives[1].text.."|r\n"
--- end
--- end
--- return str
--- end
-----------------------------------------------------------------
 function E.func_CheckCompletedByQuestID(questID)
 	local vivod
 	local TEST = ""
@@ -804,12 +559,12 @@ function E.func_CheckCompletedByQuestID(questID)
 			if objectives[i] then
 				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(questID, i, false)
 				if objectiveType == "progressbar" then
-					TEST = Red_Color..GetQuestProgressBarPercent(questID).."%|r"
+					TEST = E.Red_Color..GetQuestProgressBarPercent(questID).."%|r"
 				else
 					if finished then
-						TEST = Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
+						TEST = E.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
 					else
-						TEST = Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
+						TEST = E.Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
 					end
 				end
 			end
@@ -840,7 +595,7 @@ function E.func_InList(k, t, p)
 end
 ----------------------------------------------------------------
 function E.func_achievementID(achievementID)
-	return Yellow_Color.." (id: "..achievementID..")".."|r"
+	return E.Yellow_Color.." (id: "..achievementID..")".."|r"
 end
 ----------------------------------------------------------------
 function E.func_achievementComplete(achievementID)
@@ -854,7 +609,7 @@ end
 function E.func_achievementName(achievementID)
 	local vivod = select(2, GetAchievementInfo(achievementID))
 	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..achievementID.."|r"
+		vivod = vivod..E.Gray_Color.." id:"..achievementID.."|r"
 	end
 	return vivod
 end
@@ -879,7 +634,7 @@ function E.func_achievementvivod(achievementID)
 				local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, i, false)
 				if numCriteria == 1 then
 					if quantity == 0 then
-						vivod = Red_Color..quantity.." / "..reqQuantity.."|r"
+						vivod = E.Red_Color..quantity.." / "..reqQuantity.."|r"
 					else
 						vivod = quantity.." / "..reqQuantity
 					end
@@ -888,14 +643,14 @@ function E.func_achievementvivod(achievementID)
 						count = count + 1
 					end
 					if count == 0 then
-						vivod = Red_Color..count.." / "..numCriteria.."|r"
+						vivod = E.Red_Color..count.." / "..numCriteria.."|r"
 					else
 						vivod = count.." / "..numCriteria
 					end
 				end
 			end
 		else
-			vivod = Red_Color.."0 / 1".."|r"
+			vivod = E.Red_Color.."0 / 1".."|r"
 		end
 	end
 	return vivod
@@ -908,11 +663,11 @@ function E.func_achievementcriteriaString(achievementID, i)
 	local description = select(8, GetAchievementInfo(achievementID))
 	local numCriteria = GetAchievementNumCriteria(achievementID)
 	local criteriaString, _, completedCrit, quantity = GetAchievementCriteriaInfo(achievementID, i, false)
-	local color = White_Color
+	local color = E.White_Color
 	if completedCrit == true then
-		color = Green_Color
+		color = E.Green_Color
 	elseif completedCrit == false and quantity == 0 then
-		color = Red_Color
+		color = E.Red_Color
 	end
 	if criteriaString and criteriaString ~= "" then
 		vivod = vivod..color..criteriaString.."|r"
@@ -929,11 +684,11 @@ function E.func_achievementquantity(achievementID, i)
 	local description = select(8, GetAchievementInfo(achievementID))
 	local numCriteria = GetAchievementNumCriteria(achievementID)
 	local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, i, false)
-	local color = White_Color
+	local color = E.White_Color
 	if completedCrit == true then
-		color = Green_Color
+		color = E.Green_Color
 	elseif completedCrit == false and quantity == 0 then
-		color = Red_Color
+		color = E.Red_Color
 	end
 	if quantity then
 		vivod = vivod..color..quantity.." / "..reqQuantity.."|r"
@@ -980,17 +735,17 @@ function E.func_npcName(npcName)
 		inspectScantipFUNC:ClearLines()
 	end
 	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..npcName.."|r"
+		vivod = vivod..E.Gray_Color.." id:"..npcName.."|r"
 	end
 	return vivod
 end
 ----------------------------------------------------------------
 function E.func_RIOColor(RIOscore)
-	local hexColor = Gray_Color
+	local hexColor = E.Gray_Color
 	if not RIOscore or RIOscore == 0 then
 		return hexColor
 	end
-	for _, v in next, (OctoTable_RIO_COLORS) do
+	for _, v in next, (E.OctoTable_RIO_COLORS) do
 		if RIOscore <= v.score then
 			hexColor = E.func_rgb2hex(v.color[1],v.color[2],v.color[3])
 		end
@@ -1007,12 +762,17 @@ function E.func_encryption(text)
 end
 ----------------------------------------------------------------
 function E.func_GetClassColor(className) -- C_ClassColor.GetClassColor(classFilename)
-	local color = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[className]
+	local color = (RAID_CLASS_COLORS)[className]
 	if color then
 		return color.colorStr:gsub("^ff", "")
 	end
 	return "ffffff"
 end
+E.classColor = E.func_GetClassColor(E.classFilename) --or {r = 0.5, g = 0.5, b = 0.5}
+local r, g, b = GetClassColor(E.classFilename)
+E.classColorHexCurrent = E.func_rgb2hex(r, g, b)
+E.curCharName = UnitFullName("PLAYER")
+E.curServer = GetRealmName()
 ----------------------------------------------------------------
 function E.func_Reverse_order(a, b)
 	return b < a
@@ -1021,58 +781,51 @@ end
 function E.func_CheckReputationByRepID(reputationID)
 	local vivod = ""
 	if reputationID then
-		local color = White_Color
-		local r = "|r"
+		local color = E.White_Color 
 		local standingTEXT = ""
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-		local name
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID) 
 		local barMin
 		local barMax
 		local barValue
 		local standingID
-		if repInfo then
-			name = repInfo.name
+		if repInfo then 
 			barMin = repInfo.currentReactionThreshold
 			barMax = repInfo.nextReactionThreshold
 			barValue = repInfo.currentStanding
 			standingID = repInfo.reaction
 			if standingID == 1 then
-				color = Red_Color
+				color = E.Red_Color
 				standingTEXT = " ("..FACTION_STANDING_LABEL1..")"
 			elseif standingID == 2 then
-				color = Red_Color
+				color = E.Red_Color
 				standingTEXT = " ("..FACTION_STANDING_LABEL2..")"
 			elseif standingID == 3 then
-				color = Orange_Color
+				color = E.Orange_Color
 				standingTEXT = " ("..FACTION_STANDING_LABEL3..")"
 			elseif standingID == 4 then
-				color = Yellow_Color
+				color = E.Yellow_Color
 				standingTEXT = " ("..FACTION_STANDING_LABEL4..")"
 			elseif standingID == 5 then
-				color = Yellow_Color
+				color = E.Yellow_Color
 				standingTEXT = " ("..FACTION_STANDING_LABEL5..")"
 			elseif standingID == 6 then
-				color = Green_Color
+				color = E.Green_Color
 				standingTEXT = " ("..FACTION_STANDING_LABEL6..")"
 			elseif standingID == 7 then
-				color = Green_Color
+				color = E.Green_Color
 				standingTEXT = " ("..FACTION_STANDING_LABEL7..")"
 			elseif standingID == 8 then
-				color = Green_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL8..")"
-			elseif standingID == 9 then
-				color = Green_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL9..")"
+				color = E.Green_Color
+				standingTEXT = " ("..FACTION_STANDING_LABEL8..")" 
 			end
 		end
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
 		if C_Reputation.IsFactionParagon(reputationID) then
-			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0
-			local threshold = 1
-			local _, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(reputationID)
+			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0 
+			local _, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(reputationID)
 			if threshold then
 				local value = currentValue % threshold
-				vivod = Blue_Color..(value).."/"..(threshold)..r
+				vivod = E.Blue_Color..(value).."/"..(threshold)..r
 				if hasRewardPending then
 					vivod = E.func_CheckCompletedByQuestID(rewardQuestID)
 				end
@@ -1083,14 +836,13 @@ function E.func_CheckReputationByRepID(reputationID)
 				local currentValue = data.renownReputationEarned%data.renownLevelThreshold
 				local totalValue = data.renownLevelThreshold
 				local standing = data.renownLevel
-				vivod = (currentValue).."/"..(totalValue)..Green_Color.."("..(standing)..")|r"
+				vivod = (currentValue).."/"..(totalValue)..E.Green_Color.."("..(standing)..")|r"
 			end
 		elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
 			local friendshipFactionID = reputationInfo.friendshipFactionID or 0
 			local reactionThreshold = reputationInfo.reactionThreshold or 0
 			local nextThreshold = reputationInfo.nextThreshold or 0
-			local standing = reputationInfo.standing or 0
-			local name = reputationInfo.name
+			local standing = reputationInfo.standing or 0 
 			local currentValue = standing-reactionThreshold
 			local totalValue = nextThreshold-reactionThreshold
 			local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
@@ -1101,13 +853,14 @@ function E.func_CheckReputationByRepID(reputationID)
 			end
 			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
 			vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
-			if currentLevel == maxLevel then vivod = Green_Color.."Done|r" end
+			if currentLevel == maxLevel then vivod = E.Green_Color.."Done|r" end
 		else
 			if barValue then
 				local currentValue = barValue-barMin
 				local totalValue = barMax-barMin
+				local nextThreshold = reputationInfo.nextThreshold or 0
 				vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
-				if currentValue == totalValue or nextThreshold == 0 then vivod = Green_Color.."Done|r" end
+				if currentValue == totalValue or nextThreshold == 0 then vivod = E.Green_Color.."Done|r" end
 			end
 		end
 	else
@@ -1174,7 +927,7 @@ function E.LoadAddOn(name)
 end
 ----------------------------------------------------------------
 function E.IsAddOnLoaded(name)
-	local IsAddOnLoaded = IsAddOnLoaded or C_AddOns.IsAddOnLoaded
+	local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 	return IsAddOnLoaded(name)
 end
 ----------------------------------------------------------------
@@ -1268,7 +1021,7 @@ function E.func_EventName(eventID)
 		end
 	end
 	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..eventID.."|r"
+		vivod = vivod..E.Gray_Color.." id:"..eventID.."|r"
 	end
 	return vivod
 end
@@ -1278,7 +1031,7 @@ function E.func_ProfessionName(skillLine)
 	local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
 	vivod = name
 	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..Gray_Color.." id:"..skillLine.."|r"
+		vivod = vivod..E.Gray_Color.." id:"..skillLine.."|r"
 	end
 	return vivod
 end
@@ -1320,7 +1073,7 @@ function E.func_dungeonName(dungeonID)
 	if dungeonID then
 		local vivod = C_ChallengeMode.GetMapUIInfo(dungeonID)
 		if E.DebugIDs == true and vivod ~= nil then
-			vivod = vivod..Gray_Color.." id:"..dungeonID.."|r"
+			vivod = vivod..E.Gray_Color.." id:"..dungeonID.."|r"
 		end
 		return vivod
 	end
@@ -1402,19 +1155,7 @@ function E.func_TableRemoveDuplicates(table1)
 		table2[value] = true
 	end
 end
-----------------------------------------------------------------
-function E.func_SetScriptAfter(frame, event, method, ids, func)
-	frame:SetScript(event, function(frame)
-			frame:SetScript(event, nil)
-			if frame.Disable then frame:Disable() end
-			if type(ids) == "function" then ids = ids() end
-			self[method](self, ids):Then(function()
-					func(frame)
-					frame:SetScript(event, func)
-					if frame.Enable then frame:Enable() end
-			end)
-	end)
-end
+---------------------------------------------------------------- 
 ----------------------------------------------------------------
 function E.func_coloredText(fontstring)
 	if not fontstring then
@@ -1438,7 +1179,7 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	if BackdropAlpha then
 		bgCa = BackdropAlpha
 	end
-	local bbalpha = bbalpha or edgeAlpha or 1
+	edgeAlpha = edgeAlpha or 1
 	frame:SetBackdrop({
 			bgFile = E.bgFile,
 			edgeFile = E.edgeFile,
@@ -1450,11 +1191,7 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	frame.b = bgCb
 	frame.a = bgCa
 	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	frame:SetBackdropBorderColor(0, 0, 0, bbalpha)
-	-- frame:SetScript("OnShow", function(self)
-	-- self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	-- self:SetBackdropBorderColor(0, 0, 0, bbalpha)
-	-- end)
+	frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha) 
 	if not frame.isInit then
 		frame.isInit = true
 		frame:HookScript("OnEnter", function(self)
@@ -1463,7 +1200,7 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 		end)
 		frame:HookScript("OnLeave", function(self)
 				self:SetBackdropColor(self.r, self.g, self.b, frame.a)
-				self:SetBackdropBorderColor(0, 0, 0, bbalpha)
+				self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 		end)
 		if frame.icon then
 			frame.icon:SetAllPoints(frame)
@@ -1480,11 +1217,11 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 			-- end)
 			frame:SetScript("OnMouseDown", function(self)
 					self.icon:SetVertexColor(1, 0, 0, .5)
-					self:SetBackdropBorderColor(1, 0, 0, bbalpha)
+					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
 			end)
 			frame:SetScript("OnMouseUp", function(self)
 					self.icon:SetVertexColor(r, g, b, 1)
-					self:SetBackdropBorderColor(r, g, b, bbalpha)
+					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
 			end)
 		end
 	end
@@ -1777,18 +1514,16 @@ function E:func_CreateUtilsButton(frame)
 				local v = E.HolidayForButton[eventID]
 				count = count + 1
 				-- if v.Active == true then
-				-- 	-- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
-				-- 	-- СЕЙЧАС
-				-- 	GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+				--     -- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
+				--     -- СЕЙЧАС
+				--     GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				-- elseif v.Possible == true then
-				-- 	-- БУДУЩЕЕ
-				-- 	GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+				--     -- БУДУЩЕЕ
+				--     GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				-- else
-				-- 	-- ПРОШЛОЕ
-				-- 	GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+				--     -- ПРОШЛОЕ
+				--     GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				-- end
-
-
 				if v.Active == true then
 					-- СЕЙЧАС
 					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..E.White_Color.." (".. v.ENDS..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
@@ -1799,11 +1534,6 @@ function E:func_CreateUtilsButton(frame)
 					-- ПРОШЛОЕ
 					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.LightGray_Color..v.title ..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
 				end
-
-
-
-
-
 			end
 			if count == 0 then
 				GameTooltip:AddLine("No Data")
@@ -1852,7 +1582,6 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func)
 						end
 					end
 					frame:SetShown(not frame:IsShown())
-
 				end
 			end
 		end
@@ -1872,13 +1601,7 @@ function E:func_fixdate(date)
 	return vivod
 end
 ----------------------------------------------------------------
-function E:StopSpam(func)
-	print ("StopSpam", tostring(func))
-end
-----------------------------------------------------------------
 function E:func_IsAvailable(id, curType)
-	local id = id or nil
-	local curType = curType or nil
 	if id and curType then
 		if curType == "spell" and IsSpellKnown(id) then
 			return true
@@ -1891,7 +1614,6 @@ function E:func_IsAvailable(id, curType)
 		end
 	end
 end
-
 -- /dump C_Item.GetItemCount(141605)
 ----------------------------------------------------------------
 function E:func_IsOnCD(id, curType)
@@ -1923,10 +1645,6 @@ function E:FrameColor(frame, id, curType)
 		end
 	end
 end
-
-
-
-
 ----------------------------------------------------------------
 function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType)
 	if id and type(id) == "number" then
@@ -1937,7 +1655,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 		frame:SetSize(size, size)
 		local _, classFilename = UnitClass("PLAYER")
 		local r, g, b = GetClassColor(classFilename)
-		local bbalpha = 1
+		local edgeAlpha = 1
 		frame.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.icon:SetAllPoints()
 		if curType == "item" or curType == "toy" then
@@ -1953,8 +1671,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 				insets = {left = 0, right = 0, top = 0, bottom = 0},
 		})
 		frame:SetBackdropColor(0, 0, 0, 0)
-		frame:SetBackdropBorderColor(0, 0, 0, bbalpha)
-
+		frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 		frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 		frame:SetAttribute("type", "macro")
 		if not InCombatLockdown() then
@@ -1967,11 +1684,11 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 		if not frame.isInit then
 			frame.isInit = true
 			frame:SetScript("OnShow", function(self)
-					self:SetBackdropBorderColor(0, 0, 0, bbalpha)
+					self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 					E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnEnter", function(self)
-					self:SetBackdropBorderColor(r, g, b, bbalpha)
+					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
 					E:FrameColor(self, id, curType)
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 					GameTooltip:ClearLines()
@@ -1984,29 +1701,26 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 					GameTooltip:Show()
 			end)
 			frame:SetScript("OnLeave", function(self)
-					self:SetBackdropBorderColor(0, 0, 0, bbalpha)
+					self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 					E:FrameColor(self, id, curType)
 					GameTooltip:ClearLines()
 					GameTooltip:Hide()
 			end)
 			frame:SetScript("OnMouseDown", function(self)
-					self:SetBackdropBorderColor(1, 0, 0, bbalpha)
+					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
 					E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnMouseUp", function(self)
-					self:SetBackdropBorderColor(r, g, b, bbalpha)
+					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
 					E:FrameColor(self, id, curType)
 			end)
 		end
 	end
 end
-
-
 function E.func_DebugPath()
 	local stack = debugstack(2)
 	local vivod1 = stack:match("Interface/AddOns/(.-):%d+") or "unknown"
 	local vivod2 = vivod1:gsub("]", "")
-
 	return tostring(vivod2)
 end
 ----------------------------------------------------------------
@@ -2053,10 +1767,415 @@ function E.func_Reason(reason)
 	if reason == "WRONG_ACTIVE_INTERFACE" then vivod = ADDON_WRONG_ACTIVE_INTERFACE end
 	if reason == "WRONG_GAME_TYPE" then vivod = ADDON_WRONG_GAME_TYPE end
 	if reason == "WRONG_LOAD_PHASE" then vivod = ADDON_WRONG_LOAD_PHASE end
-
 	return vivod
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
+E.OctoTable_Empty = {}
+E.Modules = {}
+E.Timers = {}
+E.spacer = "    "
+-------------------------------------------------------------------------
+E.FULL_WIDTH = 3.60
+E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
+E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
+E.OctoFont = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
+E.fontObject9 = CreateFont("OctoFont9")
+E.fontObject9:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject9:SetFont(E.OctoFont, 9, "OUTLINE")
+E.fontObject10 = CreateFont("OctoFont10")
+E.fontObject10:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject10:SetFont(E.OctoFont, 10, "OUTLINE")
+E.fontObject11 = CreateFont("OctoFont11")
+E.fontObject11:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject11:SetFont(E.OctoFont, 11, "OUTLINE")
+E.fontObject12 = CreateFont("OctoFont12")
+E.fontObject12:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject12:SetFont(E.OctoFont, 12, "OUTLINE")
+E.fontObject22 = CreateFont("OctoFont22")
+E.fontObject22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject22:SetFont("Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\02 Octo-Bold.TTF", 20, "OUTLINE")
+E.AddonTexture_1 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_1.tga"
+E.AddonTexture_2 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_2.tga"
+E.AddonTexture_3 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_3.tga"
+E.AddonTexture_4 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_4.tga"
+E.AddonTexture_5 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_5.tga"
+E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
+E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
+E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- GetExpansionLevel()
+----------------------------------------------------------------
+E.IsPublicBuild = IsPublicBuild()
+E.buildVersion = select(1, GetBuildInfo())
+E.buildNumber = select(2, GetBuildInfo())
+E.buildDate = select(3, GetBuildInfo())
+E.interfaceVersion = select(4, GetBuildInfo())
+E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
+E.GetRestrictedAccountData_rLevel = select(1, GetRestrictedAccountData())
+E.GetRestrictedAccountData_rMoney = select(2, GetRestrictedAccountData())
+E.GetRestrictedAccountData_profCap = select(3, GetRestrictedAccountData())
+E.IsAccountSecured = IsAccountSecured()
+E.IsRestrictedAccount = IsRestrictedAccount() or false
+E.IsTrialAccount = IsTrialAccount() or false
+E.IsVeteranTrialAccount = IsVeteranTrialAccount() or false
+E.BattleTag = select(2, BNGetInfo()) or "Trial Account"
+E.BTAG = tostringall(strsplit("#", E.BattleTag))
+E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
+E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
+E.curGUID = UnitGUID("PLAYER")
+E.GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
+E.className = select(1, UnitClass("PLAYER"))
+E.classFilename = select(2, UnitClass("PLAYER"))
+E.classId = select(3, UnitClass("PLAYER"))
+E.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
+E.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
+E.baseArmoryUrl = "https://worldofwarcraft.blizzard.com/%s/character/%s/%s"
+E.baseRaiderIoUrl = "https://raider.io/characters/%s/%s/%s"
+E.strategies = {}
+E.altStrategies = {}
+E.thursdayReset = (1514358000-10800)
+E.thursdayResetDay0US = 1514300400
+E.daytime = 86400
+-- E.currTime = tonumber(GetServerTime())
+E.curExpansionMaxLevel = 70
+E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
+E.curWidthCentral = 96 -- *E.scale
+E.curHeight = 20 -- *E.scale
+--E.curWidthTitle = E.curWidthCentral*2
+E.curWidthTitle = 200 -- *E.scale
+E.ilvlToShow = 400
+E.BGALPHA = .1
+E.Color_Quest_r = .3 -- 1
+E.Color_Quest_g = .1 -- .7
+E.Color_Quest_b = 0 -- 0
+E.Color_Currency_r = 0 -- 0.79
+E.Color_Currency_g = 0 -- 0.76
+E.Color_Currency_b = .3 -- 0.67
+E.Color_Crest_r = 0 -- 0
+E.Color_Crest_g = .3 -- 0
+E.Color_Crest_b = .3 -- 1
+E.Color_Item_r = 0 -- 0
+E.Color_Item_g = .3 -- 1
+E.Color_Item_b = 0 -- 1
+E.Color_Reputation_r = .3 -- 0
+E.Color_Reputation_g = .3 -- 1
+E.Color_Reputation_b = 0 -- 1
+E.MainFrame_Position = -157
+E.AnimationDuration = .2
+E.isElvUI = select(4, C_AddOns.GetAddOnInfo("ElvUI"))
+E.isRCLootCouncil = select(4, C_AddOns.GetAddOnInfo("isRCLootCouncil"))
+E.isWeakAuras = select(4, C_AddOns.GetAddOnInfo("isWeakAuras"))
+E.isTomTom = select(4, C_AddOns.GetAddOnInfo("isTomTom"))
+E.isPlater = select(4, C_AddOns.GetAddOnInfo("isPlater"))
+E.isOmniCD = select(4, C_AddOns.GetAddOnInfo("isOmniCD"))
+E.bgCr = .08 -- 14/255
+E.bgCg = .08 -- 14/255
+E.bgCb = .08 -- 14/255
+E.bgCa = .8
+E.bgCaOverlay = .2
+E.slider_scale = .8
+E.multiplier = 2 - E.slider_scale
+E.Class_Priest_Color_Alternative = "|cff9659FF"--"|cff7157FF"
+E.Class_Warrior_Color = "|cffC69B6D"
+E.Class_Paladin_Color = "|cffF48CBA"
+E.Class_Hunter_Color = "|cffAAD372"
+E.Class_Rogue_Color = "|cffFFF468"
+E.Class_Priest_Color = "|cffFFFFFF"
+E.Class_Shaman_Color = "|cff0070DD"
+E.Class_Mage_Color = "|cff3FC7EB"
+E.Class_Warlock_Color = "|cff8788EE"
+E.Class_Monk_Color = "|cff00FF98"
+E.Class_Druid_Color = "|cffFF7C0A"
+E.Class_DemonHunter_Color = "|cffA330C9"
+E.Class_DeathKnight_Color = "|cffC41E3A"
+E.Class_Evoker_Color = "|cff33937F"
+E.WorldofWarcraft_Color = "|cff68CCEF" -- cffD6AB7D
+E.TheBurningCrusade_Color = "|cff4FFF79" -- cffE43E5A
+E.WrathoftheLichKing_Color = "|cff00A3FF" -- cff3FC7EB
+E.Cataclysm_Color = "|cffFFB300" -- cffFF7C0A
+E.MistsofPandaria_Color = "|cff00FFBA" -- cff00EF88
+E.WarlordsofDraenor_Color = "|cffC86400" -- cffF48CBA
+E.Legion_Color = "|cff1EFF00" -- cffAAD372
+E.BattleforAzeroth_Color = "|cff6464FF" -- cffFFF468
+E.Shadowlands_Color = "|cffC9C3AA" -- cff9798FE
+E.Dragonflight_Color = "|cffE8E379" -- cff53B39F
+E.TheWarWithin_Color = "|cffB59377" -- cff90CCDD
+E.Midnight_Color = "|cff7B69FF" -- СИНИЙ
+E.TheLastTitan_Color = "|cffF4C263" -- ЖЕЛТЫЙ
+E.WOW_Poor_Color = "|cff9D9D9D"
+E.WOW_Common_Color = "|cffFFFFFF"
+E.WOW_Uncommon_Color = "|cff1EFF00"
+E.WOW_Rare_Color = "|cff0070DD"
+E.WOW_Epic_Color = "|cffA335EE"
+E.WOW_Legendary_Color = "|cffFF8000"
+E.WOW_Artifact_Color = "|cffD9CC80"
+E.WOW_Heirloom_Color = "|cff00CCFF"
+E.WOW_WoWToken_Color = "|cff00CCFF"
+E.Kyrian_Color = "|cff6FA8DC"
+E.Necrolord_Color = "|cff93C47D"
+E.NightFae_Color = "|cffB4A7D6"
+E.Venthyr_Color = "|cffEA9999"
+E.Black_Color = "|cff000000"
+E.DarkGray_Color = "|cff252525"
+E.Gray_Color = "|cff505050"
+E.LightGray_Color = "|cff757575"
+E.White_Color = "|cffFFFFFF"
+E.Addon_Left_Color = "|cffD177FF"
+E.Addon_Right_Color = "|cff63A4E0"
+E.Red_Color = "|cffFF4C4F"
+E.Orange_Color = "|cffFF661A"
+E.Darkorange_Color = "|cffFF8C00"
+E.Gold_Color = "|cffFFD600"
+E.Yellow_Color = "|cffFFF371" --"|cffFFFF00"
+E.Greenyellow_Color = "|cffACFF2F"
+E.Green_Color = "|cff4FFF79"
+E.Cyan_Color = "|cff00FFFF"
+E.Blue_Color = "|cff00A3FF"
+E.Purple_Color = "|cffAF61FF"
+E.Indigo_Color = "|cff4B0082"
+E.Magenta_Color = "|cffFF00FF"
+E.Pink_Color = "|cffFF69B3"
+E.Skyblue_Color = "|cff87CDEB"
+E.Steelblue_Color = "|cff4682B3"
+E.Slategray_Color = "|cff708090"
+E.Brown_Color = "|cff964B00"
+E.Event_Color = "|cff4682B3"
+----------------------------------------------------------------
+E.Kyrian_r_Color = 0.44
+E.Kyrian_g_Color = 0.66
+E.Kyrian_b_Color = 0.86
+E.Necrolord_r_Color = 0.58
+E.Necrolord_g_Color = 0.77
+E.Necrolord_b_Color = 0.49
+E.NightFae_r_Color = 0.56
+E.NightFae_g_Color = 0.49
+E.NightFae_b_Color = 0.76
+E.Venthyr_r_Color = 0.88
+E.Venthyr_g_Color = 0.40
+E.Venthyr_b_Color = 0.40
+----------------------------------------------------------------
+E.DONE = E.Green_Color.."Done".."|r"
+E.NONE = E.Gray_Color.."None".."|r"
+----------------------------------------------------------------
+E.AccountWide = E.Blue_Color.."(A)".."|r"
+E.AccountTransferable = E.Red_Color.."(T)".."|r"
+E.Icon_AccountWide = E.Blue_Color.."(A)".."|r"
+E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r"
+E.Icon_Empty = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
+E.OctoTable_Covenant = {
+	[1] = {
+		name = C_Covenants.GetCovenantData(1).name, -- "Kyrian",
+		icon = 3641395,
+		color = "|cff6FA8DC",
+		r = 0.44,
+		g = 0.66,
+		b = 0.86,
+	},
+	[2] = {
+		name = C_Covenants.GetCovenantData(2).name, -- "Venthyr",
+		icon = 3641397,
+		color = "|cffEA9999",
+		r = 0.88,
+		g = 0.40,
+		b = 0.40,
+	},
+	[3] = {
+		name = C_Covenants.GetCovenantData(3).name, -- "NightFae",
+		icon = 3641394,
+		color = "|cffB4A7D6",
+		r = 0.56,
+		g = 0.49,
+		b = 0.76,
+	},
+	[4] = {
+		name = C_Covenants.GetCovenantData(4).name, -- "Necrolord",
+		icon = 3641396,
+		color = "|cff93C47D",
+		r = 0.58,
+		g = 0.77,
+		b = 0.49,
+	},
+}
+----------------------------------------------------------------
+E.menuBackdrop = {
+	bgFile = E.bgFile,
+	edgeFile = E.edgeFile,
+	edgeSize = 1,
+}
+E.OctoTable_Frames = {}
+E.listMaxSize = 30
+E.DEVTEXT = "|T".. E.AddonTexture_1 ..":14:14:::64:64:4:60:4:60|t" .. E.Green_Color.. "DebugInfo|r: "
+E.KILLTEXT = "|T".. "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\ElvUI\\Facepalm.tga" ..":14:14:::64:64:4:60:4:60|t"
+----------------------------------------------------------------
+E.OctoTable_bytetoB64 = {
+	[0] =
+	"a", "b", "c", "d", "e", "f", "g", "h",
+	"i", "j", "k", "l", "m", "n", "o", "p",
+	"q", "r", "s", "t", "u", "v", "w", "x",
+	"y", "z", "A", "B", "C", "D", "E", "F",
+	"G", "H", "I", "J", "K", "L", "M", "N",
+	"O", "P", "Q", "R", "S", "T", "U", "V",
+	"W", "X", "Y", "Z", "0", "1", "2", "3",
+	"4", "5", "6", "7", "8", "9", "(", ")",
+}
+--------------------------------------------------------------------------------
+E.OctoTable_bytetoB64Color = {
+	[0] =
+	"0", "1", "2", "3", "4", "5", "6", "7", "8",
+	"9", "A", "B", "C", "D", "E", "F",
+}
+E.OctoTable_RIO_COLORS = {
+	{["score"] = 10000, ["color"] = {1, 0.5, 0}},
+	{["score"] = 3975, ["color"] = {1, 0.5, 0}},
+	{["score"] = 3900, ["color"] = {1, 0.49, 0.07}},
+	{["score"] = 3875, ["color"] = {0.99, 0.49, 0.11}},
+	{["score"] = 3850, ["color"] = {0.99, 0.48, 0.14}},
+	{["score"] = 3825, ["color"] = {0.99, 0.48, 0.17}},
+	{["score"] = 3805, ["color"] = {0.98, 0.47, 0.19}},
+	{["score"] = 3780, ["color"] = {0.98, 0.47, 0.22}},
+	{["score"] = 3755, ["color"] = {0.98, 0.46, 0.24}},
+	{["score"] = 3730, ["color"] = {0.97, 0.45, 0.25}},
+	{["score"] = 3705, ["color"] = {0.97, 0.45, 0.27}},
+	{["score"] = 3685, ["color"] = {0.96, 0.44, 0.29}},
+	{["score"] = 3660, ["color"] = {0.96, 0.44, 0.31}},
+	{["score"] = 3635, ["color"] = {0.96, 0.43, 0.33}},
+	{["score"] = 3610, ["color"] = {0.95, 0.42, 0.35}},
+	{["score"] = 3585, ["color"] = {0.95, 0.42, 0.36}},
+	{["score"] = 3565, ["color"] = {0.95, 0.41, 0.38}},
+	{["score"] = 3540, ["color"] = {0.94, 0.41, 0.4}},
+	{["score"] = 3515, ["color"] = {0.93, 0.4, 0.41}},
+	{["score"] = 3490, ["color"] = {0.93, 0.39, 0.43}},
+	{["score"] = 3465, ["color"] = {0.93, 0.39, 0.44}},
+	{["score"] = 3445, ["color"] = {0.92, 0.38, 0.46}},
+	{["score"] = 3420, ["color"] = {0.91, 0.38, 0.47}},
+	{["score"] = 3395, ["color"] = {0.91, 0.37, 0.49}},
+	{["score"] = 3370, ["color"] = {0.9, 0.36, 0.51}},
+	{["score"] = 3345, ["color"] = {0.9, 0.36, 0.52}},
+	{["score"] = 3325, ["color"] = {0.89, 0.35, 0.54}},
+	{["score"] = 3300, ["color"] = {0.89, 0.35, 0.55}},
+	{["score"] = 3275, ["color"] = {0.88, 0.34, 0.56}},
+	{["score"] = 3250, ["color"] = {0.87, 0.33, 0.58}},
+	{["score"] = 3225, ["color"] = {0.87, 0.33, 0.6}},
+	{["score"] = 3205, ["color"] = {0.86, 0.32, 0.61}},
+	{["score"] = 3180, ["color"] = {0.85, 0.32, 0.63}},
+	{["score"] = 3155, ["color"] = {0.84, 0.31, 0.64}},
+	{["score"] = 3130, ["color"] = {0.84, 0.31, 0.66}},
+	{["score"] = 3105, ["color"] = {0.83, 0.3, 0.67}},
+	{["score"] = 3085, ["color"] = {0.82, 0.29, 0.69}},
+	{["score"] = 3060, ["color"] = {0.81, 0.29, 0.7}},
+	{["score"] = 3035, ["color"] = {0.8, 0.28, 0.72}},
+	{["score"] = 3010, ["color"] = {0.8, 0.27, 0.73}},
+	{["score"] = 2985, ["color"] = {0.78, 0.27, 0.75}},
+	{["score"] = 2965, ["color"] = {0.78, 0.27, 0.76}},
+	{["score"] = 2940, ["color"] = {0.76, 0.26, 0.78}},
+	{["score"] = 2915, ["color"] = {0.76, 0.25, 0.8}},
+	{["score"] = 2890, ["color"] = {0.75, 0.25, 0.81}},
+	{["score"] = 2865, ["color"] = {0.73, 0.24, 0.82}},
+	{["score"] = 2845, ["color"] = {0.72, 0.24, 0.84}},
+	{["score"] = 2820, ["color"] = {0.71, 0.23, 0.85}},
+	{["score"] = 2795, ["color"] = {0.7, 0.23, 0.87}},
+	{["score"] = 2770, ["color"] = {0.68, 0.22, 0.89}},
+	{["score"] = 2745, ["color"] = {0.67, 0.22, 0.9}},
+	{["score"] = 2725, ["color"] = {0.65, 0.21, 0.92}},
+	{["score"] = 2700, ["color"] = {0.64, 0.21, 0.93}},
+	{["score"] = 2660, ["color"] = {0.62, 0.23, 0.93}},
+	{["score"] = 2635, ["color"] = {0.6, 0.25, 0.93}},
+	{["score"] = 2610, ["color"] = {0.58, 0.27, 0.92}},
+	{["score"] = 2585, ["color"] = {0.55, 0.29, 0.92}},
+	{["score"] = 2560, ["color"] = {0.53, 0.31, 0.91}},
+	{["score"] = 2540, ["color"] = {0.51, 0.32, 0.91}},
+	{["score"] = 2515, ["color"] = {0.48, 0.34, 0.91}},
+	{["score"] = 2490, ["color"] = {0.46, 0.35, 0.9}},
+	{["score"] = 2465, ["color"] = {0.43, 0.36, 0.9}},
+	{["score"] = 2440, ["color"] = {0.4, 0.37, 0.89}},
+	{["score"] = 2420, ["color"] = {0.37, 0.38, 0.89}},
+	{["score"] = 2395, ["color"] = {0.34, 0.4, 0.89}},
+	{["score"] = 2370, ["color"] = {0.3, 0.4, 0.88}},
+	{["score"] = 2345, ["color"] = {0.26, 0.42, 0.88}},
+	{["score"] = 2320, ["color"] = {0.21, 0.42, 0.87}},
+	{["score"] = 2300, ["color"] = {0.14, 0.43, 0.87}},
+	{["score"] = 2275, ["color"] = {0, 0.44, 0.87}},
+	{["score"] = 2195, ["color"] = {0.08, 0.45, 0.85}},
+	{["score"] = 2170, ["color"] = {0.13, 0.46, 0.85}},
+	{["score"] = 2145, ["color"] = {0.16, 0.47, 0.84}},
+	{["score"] = 2120, ["color"] = {0.19, 0.48, 0.83}},
+	{["score"] = 2100, ["color"] = {0.21, 0.49, 0.82}},
+	{["score"] = 2075, ["color"] = {0.23, 0.5, 0.81}},
+	{["score"] = 2050, ["color"] = {0.24, 0.51, 0.8}},
+	{["score"] = 2025, ["color"] = {0.26, 0.51, 0.78}},
+	{["score"] = 2000, ["color"] = {0.27, 0.53, 0.78}},
+	{["score"] = 1980, ["color"] = {0.28, 0.53, 0.76}},
+	{["score"] = 1955, ["color"] = {0.29, 0.55, 0.76}},
+	{["score"] = 1930, ["color"] = {0.3, 0.55, 0.75}},
+	{["score"] = 1905, ["color"] = {0.31, 0.56, 0.73}},
+	{["score"] = 1880, ["color"] = {0.32, 0.57, 0.73}},
+	{["score"] = 1860, ["color"] = {0.33, 0.58, 0.71}},
+	{["score"] = 1835, ["color"] = {0.33, 0.59, 0.7}},
+	{["score"] = 1810, ["color"] = {0.34, 0.6, 0.69}},
+	{["score"] = 1785, ["color"] = {0.35, 0.61, 0.68}},
+	{["score"] = 1760, ["color"] = {0.35, 0.62, 0.67}},
+	{["score"] = 1740, ["color"] = {0.36, 0.63, 0.66}},
+	{["score"] = 1715, ["color"] = {0.36, 0.64, 0.65}},
+	{["score"] = 1690, ["color"] = {0.36, 0.65, 0.64}},
+	{["score"] = 1665, ["color"] = {0.36, 0.66, 0.63}},
+	{["score"] = 1640, ["color"] = {0.37, 0.67, 0.62}},
+	{["score"] = 1620, ["color"] = {0.37, 0.68, 0.61}},
+	{["score"] = 1595, ["color"] = {0.37, 0.69, 0.6}},
+	{["score"] = 1570, ["color"] = {0.37, 0.7, 0.58}},
+	{["score"] = 1545, ["color"] = {0.37, 0.71, 0.57}},
+	{["score"] = 1520, ["color"] = {0.37, 0.72, 0.56}},
+	{["score"] = 1500, ["color"] = {0.37, 0.73, 0.55}},
+	{["score"] = 1475, ["color"] = {0.37, 0.74, 0.54}},
+	{["score"] = 1450, ["color"] = {0.37, 0.75, 0.53}},
+	{["score"] = 1425, ["color"] = {0.37, 0.76, 0.51}},
+	{["score"] = 1400, ["color"] = {0.37, 0.77, 0.5}},
+	{["score"] = 1380, ["color"] = {0.37, 0.78, 0.49}},
+	{["score"] = 1355, ["color"] = {0.36, 0.79, 0.47}},
+	{["score"] = 1330, ["color"] = {0.36, 0.8, 0.46}},
+	{["score"] = 1305, ["color"] = {0.36, 0.82, 0.45}},
+	{["score"] = 1280, ["color"] = {0.35, 0.82, 0.44}},
+	{["score"] = 1260, ["color"] = {0.35, 0.84, 0.42}},
+	{["score"] = 1235, ["color"] = {0.34, 0.84, 0.41}},
+	{["score"] = 1210, ["color"] = {0.34, 0.85, 0.39}},
+	{["score"] = 1185, ["color"] = {0.33, 0.87, 0.38}},
+	{["score"] = 1160, ["color"] = {0.32, 0.87, 0.36}},
+	{["score"] = 1140, ["color"] = {0.31, 0.89, 0.35}},
+	{["score"] = 1115, ["color"] = {0.31, 0.9, 0.33}},
+	{["score"] = 1090, ["color"] = {0.29, 0.91, 0.31}},
+	{["score"] = 1065, ["color"] = {0.28, 0.92, 0.29}},
+	{["score"] = 1040, ["color"] = {0.27, 0.93, 0.27}},
+	{["score"] = 1020, ["color"] = {0.26, 0.94, 0.25}},
+	{["score"] = 995, ["color"] = {0.24, 0.95, 0.23}},
+	{["score"] = 970, ["color"] = {0.22, 0.96, 0.2}},
+	{["score"] = 945, ["color"] = {0.2, 0.97, 0.17}},
+	{["score"] = 920, ["color"] = {0.18, 0.98, 0.14}},
+	{["score"] = 900, ["color"] = {0.15, 0.99, 0.09}},
+	{["score"] = 875, ["color"] = {0.12, 1, 0}},
+	{["score"] = 850, ["color"] = {0.22, 1, 0.13}},
+	{["score"] = 825, ["color"] = {0.29, 1, 0.19}},
+	{["score"] = 800, ["color"] = {0.35, 1, 0.24}},
+	{["score"] = 775, ["color"] = {0.4, 1, 0.29}},
+	{["score"] = 750, ["color"] = {0.44, 1, 0.33}},
+	{["score"] = 725, ["color"] = {0.47, 1, 0.36}},
+	{["score"] = 700, ["color"] = {0.51, 1, 0.4}},
+	{["score"] = 675, ["color"] = {0.55, 1, 0.44}},
+	{["score"] = 650, ["color"] = {0.58, 1, 0.47}},
+	{["score"] = 625, ["color"] = {0.6, 1, 0.5}},
+	{["score"] = 600, ["color"] = {0.64, 1, 0.53}},
+	{["score"] = 575, ["color"] = {0.66, 1, 0.56}},
+	{["score"] = 550, ["color"] = {0.69, 1, 0.59}},
+	{["score"] = 525, ["color"] = {0.71, 1, 0.62}},
+	{["score"] = 500, ["color"] = {0.74, 1, 0.65}},
+	{["score"] = 475, ["color"] = {0.76, 1, 0.68}},
+	{["score"] = 450, ["color"] = {0.79, 1, 0.71}},
+	{["score"] = 425, ["color"] = {0.81, 1, 0.74}},
+	{["score"] = 400, ["color"] = {0.83, 1, 0.77}},
+	{["score"] = 375, ["color"] = {0.85, 1, 0.8}},
+	{["score"] = 350, ["color"] = {0.88, 1, 0.83}},
+	{["score"] = 325, ["color"] = {0.9, 1, 0.85}},
+	{["score"] = 300, ["color"] = {0.92, 1, 0.88}},
+	{["score"] = 275, ["color"] = {0.94, 1, 0.91}},
+	{["score"] = 250, ["color"] = {0.96, 1, 0.94}},
+	{["score"] = 225, ["color"] = {0.98, 1, 0.97}},
+	{["score"] = 200, ["color"] = {1, 1, 1}},
+}

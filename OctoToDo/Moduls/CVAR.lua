@@ -227,4 +227,3 @@ function E.LoadCVars()
 	-- SetCVar("whisperMode", popout_and_inline)
 	-- C_NamePlate.SetNamePlateFriendlySize(0.1, 0.1) --короткий ХП бар 50 100
 end
-

@@ -290,18 +290,7 @@ function E:func_Otrisovka()
 	----------------------------------------------------------------
 	if OctoToDo_DB_Vars.ExpansionToShow[3] then
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[52019] ~= 0 then
-					vivodCent = CharInfo.MASLENGO.ItemsInBag[52019]
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.func_itemTexture(52019)..E.func_itemName(52019)
-		end)
+
 		--------------------------------
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,

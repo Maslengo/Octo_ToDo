@@ -63,11 +63,11 @@ E.OctoTable_Portals = {
 		-- {id = 126896, class = "MONK",},
 		-- {id = 293866, class = "MONK",},
 		-- {id = 200617, class = "MONK",},
-
-
-
-
 		{id = 265225, race = "DarkIronDwarf",},
+		{id = 312370, race = "Vulpera",},
+		{id = 312372, race = "Vulpera",},
+
+
 		460905,
 		431280,
 	},
@@ -237,4 +237,3 @@ E.OctoTable_Portals = {
 		445269, -- name = "SV", expansion = "the war within", mapID = {501}}, -- The Stonevault
 	},
 }
-

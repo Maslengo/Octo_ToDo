@@ -1,17 +1,16 @@
 ## Interface: 110105, 110100
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Author: Octo
-## Version: v86.8(11.1.0)(04.04.2025)
+## Version: v86.9(11.1.0)(04.04.2025)
 ## IconTexture: Interface\AddOns\OctoToDo\Media\AddonTexture_1
 ## SavedVariables: OctoToDo_DB_Config OctoToDo_DB_Levels OctoToDo_DB_Vars OctoToDo_DB_Other OCTO_DB_currencies_test OCTO_DB_reputations_test
 
 Libs\embeds.xml
-fprint\templates.xml
 
-OctoToDo_Localization.lua
-Tables\OctoToDo_Globals.lua
-Tables\OctoToDo_Functions.lua
-fprint\fprint.lua
+1 Localization.lua
+2 Functions.lua
+3 Templates.xml
+4 Fprint.lua
 
 Tables\OctoTable_CLASSES.lua
 Tables\OctoTable_Colors.lua
@@ -29,11 +28,6 @@ Tables\OctoTable_Gossip.lua
 Tables\OctoTable_Spells.lua
 Tables\OctoToDo_Timer.lua
 
-Tables\OctoToDo_WowheadQuickLink.lua
-Tables\OctoToDo_WowheadQuickLinkStrategies.lua
-
-Moduls\Calendar.lua
-Moduls\DEV_CVAR.lua
 Moduls\Auto_ChatClearing.lua
 Moduls\Auto_CinematicCanceler.lua
 Moduls\Auto_CinematicFastSkip.lua
@@ -43,21 +37,23 @@ Moduls\Auto_Open.lua
 Moduls\Auto_Repair.lua
 Moduls\Auto_Screenshot.lua
 Moduls\Auto_Sell_Grey.lua
+Moduls\CVAR.lua
 Moduls\Module_AutoTurnIn.lua
-Moduls\Module_FieldOfView.lua
 Moduls\Module_HideFrames.lua
 Moduls\Module_ItemsDelete.lua
 Moduls\Module_ItemsUsable.lua
 Moduls\Module_PortalsFrame.lua
 Moduls\Module_UIErrorsFramePosition.lua
+Moduls\OctoToDo_WowheadQuickLink.lua
+Moduls\OctoToDo_WowheadQuickLinkStrategies.lua
 Moduls\SellFrame.lua
 Moduls\SpeedFrame.lua
 Moduls\StaticPopup1Button1.lua
 
-OctoToDo_Collect.lua
-OctoToDo_Otrisovka.lua
-OctoToDo_OCTOMAIN.lua
-OctoToDo_SharedMedia.lua
+5 Collect.lua
+6 Otrisovka.lua
+7 Main.lua
+8 SharedMedia.lua
 
 Options\0basicOptions.lua
 

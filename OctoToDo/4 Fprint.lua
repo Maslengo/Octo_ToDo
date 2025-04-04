@@ -93,28 +93,28 @@ local colorScheme = {
 	-- [IndentationLib.tokens.TOKEN_HASH] = "|cff000000",
 	-- [IndentationLib.tokens.TOKEN_PERCENT] = "|cff000000",
 	-- ellipsis, curly braces, table access
-	["..."] = tableColor,
-	["{"] = tableColor,
-	["}"] = tableColor,
-	["["] = tableColor,
-	["]"] = tableColor,
-	-- arithmetic operators
-	["+"] = arithmeticColor,
-	["-"] = arithmeticColor,
-	["/"] = arithmeticColor,
-	["*"] = arithmeticColor,
-	[".."] = arithmeticColor,
-	-- relational operators
-	["=="] = relationColor,
-	["<"] = relationColor,
-	["<="] = relationColor,
-	[">"] = relationColor,
-	[">="] = relationColor,
-	["~="] = relationColor,
-	-- logical operators
-	["and"] = logicColor,
-	["or"] = logicColor,
-	["not"] = logicColor,
+	-- ["..."] = tableColor,
+	-- ["{"] = tableColor,
+	-- ["}"] = tableColor,
+	-- ["["] = tableColor,
+	-- ["]"] = tableColor,
+	-- -- arithmetic operators
+	-- ["+"] = arithmeticColor,
+	-- ["-"] = arithmeticColor,
+	-- ["/"] = arithmeticColor,
+	-- ["*"] = arithmeticColor,
+	-- [".."] = arithmeticColor,
+	-- -- relational operators
+	-- ["=="] = relationColor,
+	-- ["<"] = relationColor,
+	-- ["<="] = relationColor,
+	-- [">"] = relationColor,
+	-- [">="] = relationColor,
+	-- ["~="] = relationColor,
+	-- -- logical operators
+	-- ["and"] = logicColor,
+	-- ["or"] = logicColor,
+	-- ["not"] = logicColor,
 	-- misc
 	[0] = "|r",
 }
@@ -462,14 +462,6 @@ SlashCmdList.OCTOLISTSPELL = function(msg)
 	editBox:SetText(vivod)
 	editFrame:Show()
 end
-
-
-
-
-
-
-
-
 ------------------------------
 SLASH_OCTOLISTMOUNT1 = "/OCTOLISTMOUNT"
 SlashCmdList.OCTOLISTMOUNT = function(msg)

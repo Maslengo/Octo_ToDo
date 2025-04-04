@@ -92,47 +92,4 @@ E.OctoTable_Expansions_Table = {
 		nameShort = "TheLastTitan",
 		icon = 4622478,
 	},
-
-
-
-
-
-	-- {
-	-- 	color = "|cffff0047",
-	-- 	config = 14,
-	-- 	name = E.Green_Color.."Developing".."|r",
-	-- 	nameShort = "Developing",
-	-- 	icon = E.AddonTexture_1,
-	-- },
-	-- {
-	-- 	color = "|cff000000",
-	-- 	config = 13,
-	-- 	name = "BLACK",
-	-- 	nameShort = "BLACK",
-	-- 	icon = 123123,
-	-- },
 }
-
-
-
-
--- E.OctoTable_Expansions_Table = {
---     icon = ЙЦУЙЦУ, name = "World of Warcraft", color = "cff68ccef"
-
--- }
-
-
-E.OctoTable_Expansions_Table2 = {
-	EXPANSION_NAME0, -- "World of Warcraft",
-	EXPANSION_NAME1, -- "The Burning Crusade",
-	EXPANSION_NAME2, -- "Wrath of the Lich King",
-	EXPANSION_NAME3, -- "Cataclysm",
-	EXPANSION_NAME4, -- "Mists of Pandaria",
-	EXPANSION_NAME5, -- "Warlords of Draenor",
-	EXPANSION_NAME6, -- "Legion",
-	EXPANSION_NAME7, -- "Battle for Azeroth",
-	EXPANSION_NAME8, -- "Shadowlands",
-	EXPANSION_NAME9, -- "Dragonflight",
-	EXPANSION_NAME10, -- "The War Within",
-}
-

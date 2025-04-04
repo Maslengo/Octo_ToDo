@@ -1,19 +1,9 @@
 local GlobalAddonName, E = ...
+OctoToDo_ToDO_E = E
 local OctoToDo_EventFrame_OCTOMAIN = CreateFrame("FRAME")
 OctoToDo_EventFrame_OCTOMAIN:Hide()
+-- G:\World of Warcraft\MyAddons, -G:\World of Warcraft\MyAddons\OctoToDo\Libs, -G:\World of Warcraft\MyAddons\.git,-G:\World of Warcraft\MyAddons\.vscode
 ----------------------------------------------------------------
--- ЗАЧЕКАТЬ ЧУЖИЕ WTF
--- function journal:getMetricFormat(distance)
--- 	distance = distance * .9144
--- 	if distance < 1000 then
--- 		return math.floor(distance).." "..L["ABBR_METER"]
--- 	elseif distance < 1000000 then
--- 		return (math.floor(distance / 1000 * 10) / 10).." "..L["ABBR_KILOMETER"]
--- 	end
--- 	return math.floor(distance / 1000).." "..L["ABBR_KILOMETER"]
--- end
-OctoToDo_ToDO_E = E
--- _G["OctoTODO"] = OctoTODO
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
@@ -29,27 +19,6 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		return f
 end)
 ----------------------------------------------------------------
-local buildVersion, buildNumber, buildDate, interfaceVersion = GetBuildInfo()
-local IsPublicBuild = IsPublicBuild()
-local expansionQWEQWE = 13
-local isBeta = interfaceVersion >= 120000
-local GetRestrictedAccountData_rLevel = select(1, GetRestrictedAccountData()) or 20
-local IsAccountSecured = IsAccountSecured() or false
-local IsRestrictedAccount = IsRestrictedAccount() or false
-local IsTrialAccount = IsTrialAccount() or false
-local IsVeteranTrialAccount = IsVeteranTrialAccount() or false
-local BattleTag = select(2, BNGetInfo()) or "Trial Account"
-local BTAG = tostringall(strsplit("#", BattleTag))
-local GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
-local BattleTagLocal = BTAG.." ("..GameVersion..")"
-local curGUID = UnitGUID("PLAYER")
-local GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
-local className, classFilename, classId = UnitClass("PLAYER")
-local classColor = E.func_GetClassColor(classFilename)
-local r, g, b = GetClassColor(classFilename)
-local classColorHexCurrent = E.func_rgb2hex(r, g, b)
-local curCharName, _ = UnitFullName("PLAYER")
-local curServer = GetRealmName()
 ----------------------------------------------------------------
 -- E.func_LoadAddOn("OctoToDo_Achievements")
 E.func_LoadAddOn("OctoToDo_AddonsManager")
@@ -118,7 +87,7 @@ function E:func_checkCharInfo()
 	local Meta_Table_DONE = {__index = function() return E.DONE end}
 	local Meta_Table_NONE = {__index = function() return E.NONE end}
 	local Meta_Table_EmptyString = {__index = function() return "" end}
-	OctoToDo_DB_Levels[curGUID] = OctoToDo_DB_Levels[curGUID] or {}
+	OctoToDo_DB_Levels[E.curGUID] = OctoToDo_DB_Levels[E.curGUID] or {}
 	if OctoToDo_DB_Levels then
 		for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 			local localizedClass, englishClass, localizedRace, englishRace, _, name = GetPlayerInfoByGUID(GUID)
@@ -209,55 +178,54 @@ function E:func_checkCharInfo()
 			CharInfo.azeriteEXP = CharInfo.azeriteEXP or 0
 			CharInfo.azeriteLVL = CharInfo.azeriteLVL or 0
 			CharInfo.avgItemLevelPvp = CharInfo.avgItemLevelPvp or 1
-			CharInfo.className = CharInfo.className or localizedClass
-			CharInfo.classFilename = CharInfo.classFilename or englishClass
+			CharInfo.className = CharInfo.className or E.className
+			CharInfo.classFilename = CharInfo.classFilename or E.classFilename
 			CharInfo.GUID = CharInfo.GUID or GUID
 			CharInfo.cloak_lvl = CharInfo.cloak_lvl or 0
 			CharInfo.cloak_res = CharInfo.cloak_res or 0
 			CharInfo.classId = CharInfo.classId or 1
-			CharInfo.classColor = CharInfo.classColor or {r = 0.5, g = 0.5, b = 0.5}
-			CharInfo.curServer = CharInfo.curServer or curServer
+			CharInfo.classColor = CharInfo.classColor or E.classColor
+			CharInfo.curServer = CharInfo.curServer or E.curServer
 			CharInfo.guildName = CharInfo.guildName or ""
 			CharInfo.guildRankName = CharInfo.guildRankName or ""
 			CharInfo.guildRankIndex = CharInfo.guildRankIndex or 0
-			CharInfo.curServerShort = CharInfo.curServerShort or E.func_CurServerShort(curServer)
+			CharInfo.curServerShort = CharInfo.curServerShort or E.func_CurServerShort(E.curServer)
 			CharInfo.Faction = CharInfo.Faction or "Horde"
-			CharInfo.BattleTag = CharInfo.BattleTag or BattleTag
-			CharInfo.BattleTagLocal = CharInfo.BattleTagLocal or BattleTagLocal
+			CharInfo.BattleTag = CharInfo.BattleTag or E.BattleTag
+			CharInfo.BattleTagLocal = CharInfo.BattleTagLocal or E.BattleTagLocal
 			CharInfo.bounty_BfA1_icon = CharInfo.bounty_BfA1_icon or 0
 			CharInfo.bounty_BfA2_icon = CharInfo.bounty_BfA2_icon or 0
 			CharInfo.bounty_BfA3_icon = CharInfo.bounty_BfA3_icon or 0
-			CharInfo.IsPublicBuild = CharInfo.IsPublicBuild or true
+			CharInfo.IsPublicBuild = CharInfo.IsPublicBuild or E.IsPublicBuild
 			CharInfo.Chromie_canEnter = CharInfo.Chromie_canEnter or false
 			CharInfo.Chromie_UnitChromieTimeID = CharInfo.Chromie_UnitChromieTimeID or 0
 			CharInfo.Chromie_name = CharInfo.Chromie_name or ""
-			CharInfo.buildVersion = CharInfo.buildVersion or 0
-			CharInfo.GameLimitedMode_IsActive = CharInfo.GameLimitedMode_IsActive or GameLimitedMode_IsActive
+			CharInfo.GameLimitedMode_IsActive = CharInfo.GameLimitedMode_IsActive or E.GameLimitedMode_IsActive
 			if CharInfo.levelCapped20 == nil then
 				CharInfo.levelCapped20 = false
 			end
 			if CharInfo.PlayerCanEarnExperience == nil then
 				CharInfo.PlayerCanEarnExperience = true
 			end
-			CharInfo.buildNumber = CharInfo.buildNumber or buildNumber
-			CharInfo.buildDate = CharInfo.buildDate or buildDate
-			CharInfo.interfaceVersion = CharInfo.interfaceVersion or interfaceVersion
+			CharInfo.buildVersion = CharInfo.buildVersion or E.buildVersion
+			CharInfo.buildNumber = CharInfo.buildNumber or E.buildNumber
+			CharInfo.buildDate = CharInfo.buildDate or E.buildDate
+			CharInfo.interfaceVersion = CharInfo.interfaceVersion or E.interfaceVersion
 			CharInfo.currentTier = CharInfo.currentTier or E.currentTier
-			CharInfo.isBeta = CharInfo.isBeta or false
-			CharInfo.IsAccountSecured = CharInfo.IsAccountSecured or false
-			CharInfo.GetRestrictedAccountData_rLevel = CharInfo.GetRestrictedAccountData_rLevel or 20
-			CharInfo.GetRestrictedAccountData_rMoney = CharInfo.GetRestrictedAccountData_rMoney or 10000000
-			CharInfo.GetRestrictedAccountData_profCap = CharInfo.GetRestrictedAccountData_profCap or 0
-			CharInfo.IsTrialAccount = CharInfo.IsTrialAccount or false
-			CharInfo.IsVeteranTrialAccount = CharInfo.IsVeteranTrialAccount or false
+			CharInfo.IsAccountSecured = CharInfo.IsAccountSecured or E.IsAccountSecured
+			CharInfo.GetRestrictedAccountData_rLevel = CharInfo.GetRestrictedAccountData_rLevel or E.GetRestrictedAccountData_rLevel
+			CharInfo.GetRestrictedAccountData_rMoney = CharInfo.GetRestrictedAccountData_rMoney or E.GetRestrictedAccountData_rMoney
+			CharInfo.GetRestrictedAccountData_profCap = CharInfo.GetRestrictedAccountData_profCap or E.GetRestrictedAccountData_profCap
+			CharInfo.IsTrialAccount = CharInfo.IsTrialAccount or E.IsTrialAccount
+			CharInfo.IsVeteranTrialAccount = CharInfo.IsVeteranTrialAccount or E.IsVeteranTrialAccount
 			CharInfo.PlayerDurability = CharInfo.PlayerDurability or 100
 			CharInfo.maxNumQuestsCanAccept = CharInfo.maxNumQuestsCanAccept or 0
-			CharInfo.Name = CharInfo.Name or name
+			CharInfo.Name = CharInfo.Name or E.curCharName
 			CharInfo.numQuests = CharInfo.numQuests or 0
 			CharInfo.RaceLocal = CharInfo.RaceLocal or localizedRace
 			CharInfo.RaceEnglish = CharInfo.RaceEnglish or englishRace
 			CharInfo.raceID = CharInfo.raceID or 0
-			CharInfo.classColorHex = CharInfo.classColorHex or classColorHexCurrent
+			CharInfo.classColorHex = CharInfo.classColorHex or E.classColorHexCurrent
 			CharInfo.currentXP = CharInfo.currentXP or 0
 			CharInfo.UnitXPMax = CharInfo.UnitXPMax or 0
 			CharInfo.UnitXPPercent = CharInfo.UnitXPPercent or 0
@@ -420,23 +388,23 @@ local function func_NumPlayers()
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		if ShowOnlyCurrentBattleTag == true then
 			if (ShowOnlyCurrentServer == true
-				and (CharInfo.curServer == curServer)
-				and (CharInfo.BattleTagLocal == BattleTagLocal)
+				and (CharInfo.curServer == E.curServer)
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
 				and (CharInfo.isShownPLAYER == true)
 				and (CharInfo.avgItemLevel >= itemLevelToShow)
 				and (CharInfo.UnitLevel >= LevelToShow)
 				and (CharInfo.UnitLevel <= LevelToShowMAX))
 			or (ShowOnlyCurrentServer == false
-				and (CharInfo.BattleTagLocal == BattleTagLocal)
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
 				and (CharInfo.isShownPLAYER == true)
 				and (CharInfo.avgItemLevel >= itemLevelToShow)
 				and (CharInfo.UnitLevel >= LevelToShow)
 				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (curGUID == CharInfo.GUID) then
+			or (E.curGUID == CharInfo.GUID) then
 				sorted[#sorted+1] = CharInfo
 			end
 		else
-			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == curServer))
+			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
 				and (CharInfo.isShownPLAYER == true)
 				and (CharInfo.avgItemLevel >= itemLevelToShow)
 				and (CharInfo.UnitLevel >= LevelToShow)
@@ -446,7 +414,7 @@ local function func_NumPlayers()
 				and (CharInfo.avgItemLevel >= itemLevelToShow)
 				and (CharInfo.UnitLevel >= LevelToShow)
 				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (curGUID == CharInfo.GUID) then
+			or (E.curGUID == CharInfo.GUID) then
 				sorted[#sorted+1] = CharInfo
 			end
 		end
@@ -516,7 +484,7 @@ local function OctoToDo_Frame_init(frame, data)
 		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
 		frame.cent[NumPlayers]:Show()
 		if data[NumPlayers].currentChar then
-			E:func_SetBackdrop(frame.cent[NumPlayers], classColorHexCurrent, E.bgCaOverlay, 0)
+			E:func_SetBackdrop(frame.cent[NumPlayers], E.classColorHexCurrent, E.bgCaOverlay, 0)
 		else
 			if data.index % 2 == 0 then
 				E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
@@ -595,23 +563,23 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		if ShowOnlyCurrentBattleTag == true then
 			if (ShowOnlyCurrentServer == true
-				and (CharInfo.curServer == curServer)
-				and (CharInfo.BattleTagLocal == BattleTagLocal)
+				and (CharInfo.curServer == E.curServer)
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
 				and (CharInfo.isShownPLAYER == true)
 				and (CharInfo.avgItemLevel >= itemLevelToShow)
 				and (CharInfo.UnitLevel >= LevelToShow)
 				and (CharInfo.UnitLevel <= LevelToShowMAX))
 			or (ShowOnlyCurrentServer == false
-				and (CharInfo.BattleTagLocal == BattleTagLocal)
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
 				and (CharInfo.isShownPLAYER == true)
 				and (CharInfo.avgItemLevel >= itemLevelToShow)
 				and (CharInfo.UnitLevel >= LevelToShow)
 				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (curGUID == CharInfo.GUID) then
+			or (E.curGUID == CharInfo.GUID) then
 				sorted[#sorted+1] = CharInfo
 			end
 		else
-			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == curServer))
+			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
 				and (CharInfo.isShownPLAYER == true)
 				and (CharInfo.avgItemLevel >= itemLevelToShow)
 				and (CharInfo.UnitLevel >= LevelToShow)
@@ -621,7 +589,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 				and (CharInfo.avgItemLevel >= itemLevelToShow)
 				and (CharInfo.UnitLevel >= LevelToShow)
 				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (curGUID == CharInfo.GUID) then
+			or (E.curGUID == CharInfo.GUID) then
 				sorted[#sorted+1] = CharInfo
 			end
 		end
@@ -644,7 +612,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 		CENT[i].index = i
 		for index, CharInfo in ipairs(sorted) do
 			CENT[i][index] = {func(CharInfo)}
-			CENT[i][index].currentChar = CharInfo.GUID == curGUID
+			CENT[i][index].currentChar = CharInfo.GUID == E.curGUID
 		end
 	end
 	local newcount = #OctoTable_func_otrisovkaCENT
@@ -657,17 +625,18 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
-function E:Update(event_name)
+function E.Update(event_name)
 	--OctoToDo_DB_Vars.DebugFunction
+	local updateScheduled = false
 	local isMainFrameVisible = OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown()
 	if isMainFrameVisible then
-		if not self.updateScheduled then
-			self.updateScheduled = true
+		if not updateScheduled then
+			updateScheduled = true
 			C_Timer.After(0.1, function()
-					self.updateScheduled = false
+					updateScheduled = false
 					if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
 						if E.DebugEvent then
-							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E:Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r")
+							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r")
 						end
 						OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 					end
@@ -675,7 +644,7 @@ function E:Update(event_name)
 		end
 	else
 		if E.DebugEvent then
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E:Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r")
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r")
 		end
 	end
 end
@@ -693,7 +662,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 	DD_OCTOMAIN.text:SetJustifyV("MIDDLE")
 	DD_OCTOMAIN.text:SetJustifyH("CENTER")
 	DD_OCTOMAIN.text:SetTextColor(1, 1, 1, 1)
-	DD_OCTOMAIN.text:SetText(classColorHexCurrent..L["Characters"].."|r")
+	DD_OCTOMAIN.text:SetText(E.classColorHexCurrent..L["Characters"].."|r")
 	LibSFDropDown:SetMixin(DD_OCTOMAIN)
 	DD_OCTOMAIN:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_OCTOMAIN, "TOPLEFT", 0, 0)
 	DD_OCTOMAIN:ddSetDisplayMode(GlobalAddonName)
@@ -736,11 +705,11 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 						info.keepShownOnClick = true
 						info.notCheckable = true
 						local vivod = Bnets
-						if Bnets == BattleTagLocal then
-							vivod = classColorHexCurrent..Bnets.."|r"
+						if Bnets == E.BattleTagLocal then
+							vivod = E.classColorHexCurrent..Bnets.."|r"
 						end
 						if ShowOnlyCurrentBattleTag == true then
-							if Bnets ~= BattleTagLocal then
+							if Bnets ~= E.BattleTagLocal then
 								vivod = E.Gray_Color..vivod.."|r"
 							end
 						end
@@ -770,12 +739,12 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					info.keepShownOnClick = true
 					info.notCheckable = true
 					local vivod = Server
-					if ShowOnlyCurrentBattleTag and (value ~= BattleTagLocal or ShowOnlyCurrentServer and Server ~= curServer)
-					or not ShowOnlyCurrentBattleTag and ShowOnlyCurrentServer and Server ~= curServer
+					if ShowOnlyCurrentBattleTag and (value ~= E.BattleTagLocal or ShowOnlyCurrentServer and Server ~= E.curServer)
+					or not ShowOnlyCurrentBattleTag and ShowOnlyCurrentServer and Server ~= E.curServer
 					then
 						vivod = E.Gray_Color..vivod.."|r"
-					elseif Server == curServer then
-						vivod = classColorHexCurrent..vivod.."|r"
+					elseif Server == E.curServer then
+						vivod = E.classColorHexCurrent..vivod.."|r"
 					end
 					info.text = vivod
 					info.value = v
@@ -1062,7 +1031,7 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Config.QuestsDB == nil then OctoToDo_DB_Config.QuestsDB = {} end
 		if OctoToDo_DB_Config.ReputationDB == nil then OctoToDo_DB_Config.ReputationDB = {} end
 		if OctoToDo_DB_Other.AccountMoney == nil then OctoToDo_DB_Other.AccountMoney = {} end
-		if OctoToDo_DB_Other.AccountMoney[BattleTagLocal] == nil then OctoToDo_DB_Other.AccountMoney[BattleTagLocal] = 0 end
+		if OctoToDo_DB_Other.AccountMoney[E.BattleTagLocal] == nil then OctoToDo_DB_Other.AccountMoney[E.BattleTagLocal] = 0 end
 		if OctoToDo_DB_Other.CVar == nil then OctoToDo_DB_Other.CVar = {} end
 		if OctoToDo_DB_Other.Items == nil then OctoToDo_DB_Other.Items = {} end
 		if OctoToDo_DB_Other.LFGInstance == nil then OctoToDo_DB_Other.LFGInstance = {} end
@@ -1118,11 +1087,6 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Vars.EmeraldDream_WB == nil then OctoToDo_DB_Vars.EmeraldDream_WB = true end
 		if OctoToDo_DB_Vars.Event == nil then OctoToDo_DB_Vars.Event = true end
 		if OctoToDo_DB_Vars.ExpansionToShow == nil then OctoToDo_DB_Vars.ExpansionToShow = {[1] = true} end
-		if OctoToDo_DB_Vars.FieldOfView == nil then OctoToDo_DB_Vars.FieldOfView = false end
-		if OctoToDo_DB_Vars.FoV_bottom == nil then OctoToDo_DB_Vars.FoV_bottom = 0 end
-		if OctoToDo_DB_Vars.FoV_left == nil then OctoToDo_DB_Vars.FoV_left = 0 end
-		if OctoToDo_DB_Vars.FoV_right == nil then OctoToDo_DB_Vars.FoV_right = 0 end
-		if OctoToDo_DB_Vars.FoV_top == nil then OctoToDo_DB_Vars.FoV_top = 0 end
 		if OctoToDo_DB_Vars.FrameScale == nil then OctoToDo_DB_Vars.FrameScale = 1 end
 		if OctoToDo_DB_Vars.GameMenuFrameScale == nil then OctoToDo_DB_Vars.GameMenuFrameScale = .8 end
 		if OctoToDo_DB_Vars.GildedHarbingerCrest == nil then OctoToDo_DB_Vars.GildedHarbingerCrest = true end
@@ -1287,8 +1251,8 @@ SLASH_GSEARCH1, SLASH_GSEARCH2 = "/gsearch", "/gs"
 SlashCmdList.GSEARCH = function(msg)
 	local str = ""
 	local list = {}
-	local color = classColorHexCurrent
-	if classFilename == "PRIEST" then
+	local color = E.classColorHexCurrent
+	if E.classFilename == "PRIEST" then
 		color = E.Class_Priest_Color_Alternative
 	end
 	DEFAULT_CHAT_FRAME:AddMessage (color..("GSEARCH:|r ") .. msg)

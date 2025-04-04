@@ -15,7 +15,7 @@ function OctoToDo_EventFrame:ItemsDeleteFrame()
 				local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 				if containerInfo then
 					local itemID = containerInfo.itemID
-					if E.OctoTable_itemID_ItemsDelete[itemID] or (E:IsPTR() and E.OctoTable_itemID_ItemsDelete_PTR[itemID]) then
+					if E.OctoTable_itemID_ItemsDelete[itemID] or (E.func_IsPTR() and E.OctoTable_itemID_ItemsDelete_PTR[itemID]) then
 						Clickable_ItemsDelete:Show()
 						Clickable_ItemsDelete:SetScript("OnClick", function()
 								C_Container.PickupContainerItem(bag, slot)

@@ -10,6 +10,7 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		f:SetBackdropBorderColor(0, 0, 0, 1)
 		return f
 end)
+-- https://warcraft.wiki.gg/wiki/Making_scrollable_frames
 ----------------------------------------------------------------
 local OctoToDo_EventFrame_AddonsManager = CreateFrame("FRAME")
 OctoToDo_EventFrame_AddonsManager:Hide()
@@ -24,7 +25,6 @@ local MainFrameNumLines = 30 --MAX_ADDONS_DISPLAYED
 local className, classFilename, classId = UnitClass("PLAYER")
 local classColor = E.func_GetClassColor(classFilename)
 local r, g, b = GetClassColor(classFilename)
-local classColorHexCurrent = E.func_rgb2hex(r, g, b)
 ----------------------------------------------------------------
 -- local ADDON_ACTIONS_BLOCKED = {}
 -- function AddonTooltip_ActionBlocked(addon)
@@ -248,21 +248,21 @@ function OctoToDo_EventFrame_AddonsManager:func_DataProvider()
 		if v.memory and v.memory ~= 0 then
 			tooltipthird[#tooltipthird+1] = {" ", " "}
 			if v.memory > 1024 then
-				tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. classColorHexCurrent..E.func_CompactNumberFormat(v.memory/1024).."|r Мб"}
+				tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactNumberFormat(v.memory/1024).."|r Мб"}
 			else
-				tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. classColorHexCurrent..E.func_CompactNumberFormat(v.memory).."|r Кб"}
+				tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactNumberFormat(v.memory).."|r Кб"}
 			end
 		end
 		tooltipthird[#tooltipthird+1] = {" ", " "}
-		tooltipthird[#tooltipthird+1] = {"RecentAverageTime: "..classColorHexCurrent..v.RecentAverageTime.."|r".."%"}
-		tooltipthird[#tooltipthird+1] = {"SessionAverageTime: "..classColorHexCurrent..v.SessionAverageTime.."|r".."%"}
-		tooltipthird[#tooltipthird+1] = {"PeakTime: "..classColorHexCurrent..v.PeakTime.."|r".."%"}
-		tooltipthird[#tooltipthird+1] = {"EncounterAverageTime: "..classColorHexCurrent..v.EncounterAverageTime.."|r".."%"}
-		tooltipthird[#tooltipthird+1] = {"Ticksover5ms: "..classColorHexCurrent..v.Ticksover5ms.."|r"}
-		tooltipthird[#tooltipthird+1] = {"Ticksover10ms: "..classColorHexCurrent..v.Ticksover10ms.."|r"}
-		tooltipthird[#tooltipthird+1] = {"Ticksover50ms: "..classColorHexCurrent..v.Ticksover50ms.."|r"}
-		tooltipthird[#tooltipthird+1] = {"Ticksover100ms: "..classColorHexCurrent..v.Ticksover100ms.."|r"}
-		tooltipthird[#tooltipthird+1] = {"Ticksover500ms: "..classColorHexCurrent..v.Ticksover500ms.."|r"}
+		tooltipthird[#tooltipthird+1] = {"RecentAverageTime: "..E.classColorHexCurrent..v.RecentAverageTime.."|r".."%"}
+		tooltipthird[#tooltipthird+1] = {"SessionAverageTime: "..E.classColorHexCurrent..v.SessionAverageTime.."|r".."%"}
+		tooltipthird[#tooltipthird+1] = {"PeakTime: "..E.classColorHexCurrent..v.PeakTime.."|r".."%"}
+		tooltipthird[#tooltipthird+1] = {"EncounterAverageTime: "..E.classColorHexCurrent..v.EncounterAverageTime.."|r".."%"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover5ms: "..E.classColorHexCurrent..v.Ticksover5ms.."|r"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover10ms: "..E.classColorHexCurrent..v.Ticksover10ms.."|r"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover50ms: "..E.classColorHexCurrent..v.Ticksover50ms.."|r"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover100ms: "..E.classColorHexCurrent..v.Ticksover100ms.."|r"}
+		tooltipthird[#tooltipthird+1] = {"Ticksover500ms: "..E.classColorHexCurrent..v.Ticksover500ms.."|r"}
 		tooltipthird[#tooltipthird+1] = {"C_AddOns.IsAddOnDefaultEnabled", tostring(v.defaultEnabled)}
 		tooltipthird[#tooltipthird+1] = {"C_AddOns.DoesAddOnExist", tostring(v.exists)}
 		tooltipthird[#tooltipthird+1] = {"C_AddOns.GetAddOnEnableState", tostring(v.state)}

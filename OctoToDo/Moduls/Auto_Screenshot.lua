@@ -11,7 +11,7 @@ tinsert(E.Modules, function()
 				EventFrame:RegisterEvent("PLAYER_LEVEL_UP")
 				EventFrame:RegisterEvent("ACHIEVEMENT_EARNED")
 				EventFrame:RegisterEvent("SHOW_LOOT_TOAST_LEGENDARY_LOOTED")
-				if IsRetail() == true then
+				if E.func_IsRetail() == true then
 					EventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 				end
 				EventFrame:RegisterEvent("NEW_MOUNT_ADDED")

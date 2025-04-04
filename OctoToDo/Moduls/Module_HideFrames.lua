@@ -88,7 +88,7 @@ function OctoToDo_EventFrame_HideFrames:Hide_OrderHallCommandBar()
 	end
 	if _G.OrderHallCommandBar then
 		HandleCommandBar()
-	elseif IsRetail() then
+	elseif E.func_IsRetail() then
 		local frame = CreateFrame("Frame")
 		frame:RegisterEvent("ADDON_LOADED")
 		frame:SetScript("OnEvent", function(Frame, event, addon)
