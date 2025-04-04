@@ -5,45 +5,31 @@ function E:func_Otrisovka()
 	local OctoTable_func_otrisovkaCENT = {}
 	local OctoTable_func_otrisovkaLEFT = {}
 	----------------------------------------------------------------
-
-for expID, expDATA in ipairs(E.OctoTable_Expansions_Table) do
-	if OctoToDo_DB_Vars.ExpansionToShow[expID] then
-		for k, v in pairs(E.OctoTable_UniversalQuest) do
-			if expDATA.nameShort == v.desc then
-				----------------------------------------------------------------
-				tinsert(OctoTable_func_otrisovkaCENT,
-					function(CharInfo)
-						local vivodCent, tooltip = " ", {}
-						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..expDATA.nameShort.."_"..v.name_save.."_"..v.reset] ~= E.NONE then
-							vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..expDATA.nameShort.."_"..v.name_save.."_"..v.reset]
-						end
-						return vivodCent, tooltip, expDATA.color
-				end)
-				----------------------------------------------------------------
-				tinsert(OctoTable_func_otrisovkaLEFT,
-					function()
-						return tostringall(v.textleft), v.icon -- E.func_GetItemIcon(224172)
-				end)
-				----------------------------------------------------------------
+	for expID, expDATA in ipairs(E.OctoTable_Expansions_Table) do
+		if OctoToDo_DB_Vars.ExpansionToShow[expID] then
+			for _, v in ipairs(E.OctoTable_UniversalQuest) do
+				-- if expDATA.nameShort == v.desc and v.icon ~= 134400 then
+				if expDATA.nameShort == v.desc and v.icon ~= 134400 then
+					----------------------------------------------------------------
+					tinsert(OctoTable_func_otrisovkaCENT,
+						function(CharInfo)
+							local vivodCent, tooltip = " ", {}
+							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..expDATA.nameShort.."_"..v.name_save.."_"..v.reset] ~= E.NONE then
+								vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..expDATA.nameShort.."_"..v.name_save.."_"..v.reset]
+							end
+							return vivodCent, tooltip
+					end)
+					----------------------------------------------------------------
+					tinsert(OctoTable_func_otrisovkaLEFT,
+						function()
+							return --[[expDATA.color..expDATA.nameShort.."|r "..]]tostringall(v.textleft).."|r", v.icon, expDATA.color
+					end)
+					----------------------------------------------------------------
+				end
 			end
 		end
 	end
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	----------------------------------------------------------------
 	tinsert(OctoTable_func_otrisovkaCENT,
 		function(CharInfo)
 			local vivodCent = " "
@@ -102,7 +88,6 @@ end
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {E.func_itemTexture(122284)..E.func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 			end
-
 			tooltip[#tooltip+1] = {E.Green_Color.."Reload Count|r",CharInfo.ReloadCount}
 			if E.DebugInfo then
 				tooltip[#tooltip+1] = {" ", " "}
@@ -197,15 +182,11 @@ end
 		end)
 		--------------------------------
 	end
-
-
-
 	--------------------------------
 	if OctoToDo_DB_Vars.WorldBoss_Weekly == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-
 				for expansionID, v in next, (E.OctoTable_Expansions_Table) do
 					local color = E.OctoTable_Expansions_Table[expansionID].color
 					if OctoToDo_DB_Vars.ExpansionToShow[expansionID] then
@@ -230,8 +211,6 @@ end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-
-
 	if OctoToDo_DB_Vars.ExpansionToShow[2] then
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -503,19 +482,6 @@ end
 		--------------------------------
 		--------------------------------
 		--------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_WarlordsofDraenor_GarrisonMining_Once ~= E.NONE then
-					vivodCent = E.func_spellTexture(164500)..CharInfo.MASLENGO.UniversalQuest.Octopussy_WarlordsofDraenor_GarrisonMining_Once
-				end
-
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.func_GetSpellName(164500), E.func_GetSpellIcon(164500)
-		end)
 		--------------------------------
 		--------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -1742,49 +1708,32 @@ end
 				return "SpreadingtheLight", E.func_GetItemIcon(220756)
 		end)
 		--------------------------------
-
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly ~= E.NONE then
-						vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					return L["Major Keyflames"], E.func_GetItemIcon(142307)
-			end)
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MajorKeyflames_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return L["Major Keyflames"], E.func_GetItemIcon(142307)
+		end)
 		--------------------------------
 		--------------------------------
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly ~= E.NONE then
-						vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					return L["Minor Keyflames"], E.func_GetItemIcon(142307)
-			end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly ~= E.NONE then
+					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_TWW_MinorKeyflames_Weekly
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return L["Minor Keyflames"], E.func_GetItemIcon(142307)
+		end)
 		--------------------------------
 		--------------------------------
 		--------------------------------
@@ -1792,7 +1741,6 @@ end
 		--------------------------------
 		--------------------------------
 		--------------------------------
-
 		--------------------------------
 		--------------------------------
 		if OctoToDo_DB_Vars.GildedHarbingerCrest == true then
@@ -2020,7 +1968,6 @@ end
 		end)
 		--------------------------------
 		--------------------------------
-
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -2177,14 +2124,6 @@ end
 						tooltip[#tooltip+1] = {L["Green Fire"], CharInfo.MASLENGO.UniversalQuest.Octopussy_MistsofPandaria_Warlock_GreenFire_Once}
 					end
 				end
-				for k, v in ipairs(E.OctoTable_Race) do
-					if CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmor_Once"] and CharInfo.RaceEnglish == v.RaceEnglish and CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmor_Once"] ~= 0 then
-						tooltip[#tooltip+1] = {L["Races"].." - "..v.RaceEnglish, CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmor_Once"]}
-					end
-					if CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmorAllied_Once"] and CharInfo.RaceEnglish == v.RaceEnglish and CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmorAllied_Once"] ~= 0 then
-						tooltip[#tooltip+1] = {L["Allied Races"] .." - "..v.RaceEnglish, CharInfo.MASLENGO.UniversalQuest["Octopussy_Another_"..v.RaceEnglish.."HeritageArmorAllied_Once"]}
-					end
-				end
 				if #tooltip ~= 0 then
 					vivodCent = E.Gray_Color..vivodCent.."|r"
 				else
@@ -2222,11 +2161,6 @@ end
 						tooltip[#tooltip+1] = {CharInfo.LFGInstance[dungeonID].D_name..(E.DebugIDs and E.Gray_Color.. " id:"..dungeonID.."|r" or ""), CharInfo.LFGInstance[dungeonID].donetoday}
 					end
 				end
-
-
-
-
-
 				for worldBossID, v in next, (CharInfo.SavedWorldBoss) do
 					if v then
 						tooltip[#tooltip+1] = {E.func_texturefromIcon(E.Icon_WorldBoss).. v.name .." ".. E.Red_Color..E.func_SecondsToClock(v.reset).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..worldBossID.."|r" or ""), " "}

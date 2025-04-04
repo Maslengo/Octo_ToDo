@@ -439,7 +439,7 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.first:SetPropagateMouseClicks(false)
 		frame.first:SetSize(AddonHeight, AddonHeight)
 		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
+		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND", nil, -2) -- ПОФИКСИТЬ -- https://warcraft.wiki.gg/wiki/API_Frame_CreateTexture --https://warcraft.wiki.gg/wiki/API_Frame_CreateMaskTexture
 		frame.first.icon:SetAllPoints(frame.first)
 		frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		------------------------------------------------
@@ -485,27 +485,30 @@ local function OctoToDo_Frame_init(frame, data)
 	if data.index % 2 == 0 then
 		E:func_SetBackdrop(frame.left, nil, 0, 0)
 	else
-		E:func_SetBackdrop(frame.left, "|cff000000", .1, 0)
+		E:func_SetBackdrop(frame.left, "|cff000000", E.bgCaOverlay, 0)
 	end
+	E:func_SetBackdrop(frame.left, data.BGcolor, E.bgCaOverlay, 0)
 	for NumPlayers = 1, #data do
 		frame.cent[NumPlayers].text:SetText(data[NumPlayers][1])
 		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
 		frame.cent[NumPlayers]:Show()
 		if data[NumPlayers].currentChar then
-			E:func_SetBackdrop(frame.cent[NumPlayers], E.classColorHexCurrent, E.bgCaOverlay, 0)
+			E:func_SetBackdrop(frame.cent[NumPlayers], E.classColorHexCurrent, E.bgCaOverlay*2, 0)
 		else
-			if data[NumPlayers][3] then
-			E:func_SetBackdrop(frame.cent[NumPlayers], data[NumPlayers][3], E.bgCaOverlay, 0) -- print (data[NumPlayers][3]) ТУТ ЦВЕБ БГ / BGCOLOR HERE
-		else
+
 			if data.index % 2 == 0 then
 				E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
 			else
-				E:func_SetBackdrop(frame.cent[NumPlayers], "|cff000000", .1, 0)
+				E:func_SetBackdrop(frame.cent[NumPlayers], "|cff000000", E.bgCaOverlay, 0)
 			end
 		end
-	end
 
-end
+		if data[NumPlayers][3] then
+			E:func_SetBackdrop(frame.cent[NumPlayers], data[NumPlayers][3], E.bgCaOverlay, 0)
+		end
+
+
+	end
 end
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	local OctoToDo_MainFrame_OCTOMAIN = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOMAIN", UIParent, "BackdropTemplate")
@@ -533,15 +536,15 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	OctoToDo_MainFrame_OCTOMAIN:SetFrameStrata("HIGH")
 	OctoToDo_MainFrame_OCTOMAIN:SetPoint("CENTER")
 	OctoToDo_MainFrame_OCTOMAIN:SetBackdrop({
-		bgFile = E.bgFile,
-		edgeFile = E.edgeFile,
-		edgeSize = 1,
-		insets = {
-			left = 0,
-			right = 0,
-			top = 0,
-			bottom = 0
-		},
+			bgFile = E.bgFile,
+			edgeFile = E.edgeFile,
+			edgeSize = 1,
+			insets = {
+				left = 0,
+				right = 0,
+				top = 0,
+				bottom = 0
+			},
 	})
 	OctoToDo_MainFrame_OCTOMAIN:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 	OctoToDo_MainFrame_OCTOMAIN:SetBackdropBorderColor(0, 0, 0, 1)
@@ -620,6 +623,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 		CENT[i] = CENT[i] or {}
 		CENT[i].left = OctoTable_func_otrisovkaLEFT[i]()
 		CENT[i].firsticonTexture = select(2, OctoTable_func_otrisovkaLEFT[i]())
+		CENT[i].BGcolor = select(3, OctoTable_func_otrisovkaLEFT[i]())
 		CENT[i].index = i
 		for index, CharInfo in ipairs(sorted) do
 			CENT[i][index] = {func(CharInfo)}
@@ -976,31 +980,31 @@ function OctoToDo_EventFrame_OCTOMAIN:func_CreateMineFrame()
 			colorTex:SetAlpha(a)
 		end
 		colorBtn:SetScript("OnClick", function(btn)
-			btn.r, btn.g, btn.b, btn.opacity = unpack(OctoToDo_DB_Vars.color)
-			if OpenColorPicker then
-				OpenColorPicker(btn)
-			else
-				ColorPickerFrame:SetupColorPickerAndShow(btn)
-			end
+				btn.r, btn.g, btn.b, btn.opacity = unpack(OctoToDo_DB_Vars.color)
+				if OpenColorPicker then
+					OpenColorPicker(btn)
+				else
+					ColorPickerFrame:SetupColorPickerAndShow(btn)
+				end
 		end)
 		-- local r, g, b = E.func_hex2rgbNUMBER(E.Yellow_Color)
 		colorBtn:SetScript("OnEnter", function(btn)
-			btn:SetBackdropBorderColor(r, g, b, 1)
+				btn:SetBackdropBorderColor(r, g, b, 1)
 		end)
 		colorBtn:SetScript("OnLeave", function(btn)
-			btn:SetBackdropBorderColor(0, 0, 0, 1)
+				btn:SetBackdropBorderColor(0, 0, 0, 1)
 		end)
 		local btnResetColor = CreateFrame("BUTTON", nil, UIParent, "UIPanelButtonTemplate")
 		btnResetColor:SetSize(64, 24)
 		btnResetColor:SetPoint("LEFT", colorBtn, "RIGHT", 3, 0)
 		btnResetColor:SetText(RESET)
 		btnResetColor:SetScript("OnClick", function()
-			PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
-			colorTex:SetColorTexture(1, 1, 1)
-			colorTex:SetAlpha(1)
-			MineFrame.FG:SetVertexColor(1,1,1,1)
-			OctoToDo_DB_Vars.color = {1, 1, 1, 1}
-			-- config:setCursorSettings()
+				PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+				colorTex:SetColorTexture(1, 1, 1)
+				colorTex:SetAlpha(1)
+				MineFrame.FG:SetVertexColor(1,1,1,1)
+				OctoToDo_DB_Vars.color = {1, 1, 1, 1}
+				-- config:setCursorSettings()
 		end)
 		----
 		local MineFrame = CreateFrame("Frame", "MineFrame", UIParent, "BackdropTemplate")
@@ -1173,10 +1177,10 @@ function OctoToDo_EventFrame_OCTOMAIN:VARIABLES_LOADED()
 		if OctoToDo_DB_Vars.CVar then
 			E.LoadCVars()
 			-- C_Timer.After(.1, function()
-			-- 	if not InCombatLockdown() then
-			-- 		print ("2")
-			-- 		E.LoadCVars()
-			-- 	end
+			--     if not InCombatLockdown() then
+			--         print ("2")
+			--         E.LoadCVars()
+			--     end
 			-- end)
 		end
 		----------------------------------------------------------------
@@ -1239,9 +1243,17 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	if realLevelTime ~= 0 then
 		E.func_CreateInfoFrame("realLevelTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realLevelTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
 	end
+
+
+
+
+
+
+
+
 	E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function()
-		OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
-		RequestRaidInfo()
+			OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+			RequestRaidInfo()
 	end)
 	C_Timer.After(0, function()
 			local promise = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
@@ -1291,7 +1303,7 @@ SlashCmdList.GSEARCH = function(msg)
 	DEFAULT_CHAT_FRAME:AddMessage (color..("GSEARCH:|r ") .. msg)
 	for i, n in next, (_G) do
 		if type(n) == "string" and n:find(msg) then
-				str = str..color..i.. "|r - ".. n .."\n"
+			str = str..color..i.. "|r - ".. n .."\n"
 		end
 	end
 	editBox:SetText(str)

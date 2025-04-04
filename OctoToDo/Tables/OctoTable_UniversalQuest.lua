@@ -183,8 +183,8 @@ E.OctoTable_UniversalQuest = {
 	},
 
 	{
-		icon = 134400,
-		textleft = "KorthiaShapingFate",
+		icon = E.func_GetCurrencyIcon(1977),
+		textleft = E.func_questName(63949),
 		name_save = "KorthiaShapingFate",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -194,8 +194,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "ReplenishtheReservoir",
+		icon = E.func_GetCurrencyIcon(1813),
+		textleft = E.func_questName(61981),
 		name_save = "ReplenishtheReservoir",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -220,7 +220,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "MawCovenantAssault",
+		textleft = E.Timers.SL_Maw_Assault().."MawCovenantAssault",
 		name_save = "MawCovenantAssault",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -234,7 +234,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "MawContainingtheHelsworn",
+		textleft = E.func_questName(64273),
 		name_save = "MawContainingtheHelsworn",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -244,8 +244,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "ReturnLostSouls",
+		icon = E.func_GetCurrencyIcon(1810),
+		textleft = E.func_questName(62858),
 		name_save = "ReturnLostSouls",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -266,7 +266,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(184374),
 		textleft = "TradingFavors",
 		name_save = "TradingFavors",
 		reset = "Weekly",
@@ -292,52 +292,8 @@ E.OctoTable_UniversalQuest = {
 		max = 2
 	},
 	{
-		icon = 134400,
-		textleft = "TheWorldAwaits",
-		name_save = "TheWorldAwaits",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			72728,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "TheArenaCalls",
-		name_save = "TheArenaCalls",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			72720,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "EmissaryofWar",
-		name_save = "EmissaryofWar",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			72722,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "ACalltoBattle",
-		name_save = "ACalltoBattle",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			72723,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "SomethingDifferent",
+		icon = E.func_GetItemIcon(137642),
+		textleft = E.func_questName(47148),
 		name_save = "SomethingDifferent",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -347,34 +303,19 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "PVP",
-		name_save = "PVP",
+		icon = E.func_GetCurrencyIcon(1602),
+		textleft = E.func_questName(71026),
+		name_save = "AgainstOverwhelmingOdds",
 		reset = "Weekly",
 		desc = "Dragonflight",
 		questID = {
-			47148,
 			71026,
-			72169,
-			72167,
-			72166,
-			72168,
-			72171,
-			72170,
-			72646,
-			74871,
-			72648,
-			72647,
-			72649,
-			78097,
-			72649,
-			75305,
 		},
-		max = 3
+		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "KorthiaStolenKorthianSupplies",
+		icon = E.func_GetItemIcon(187551),
+		textleft = E.func_questName(64522),
 		name_save = "KorthiaStolenKorthianSupplies",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -384,8 +325,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "KorthiaLostResearch",
+		icon = E.func_GetCurrencyIcon(1931),
+		textleft = E.func_questName(65266),
 		name_save = "KorthiaLostResearch",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -533,8 +474,8 @@ E.OctoTable_UniversalQuest = {
 		max = 18
 	},
 	{
-		icon = 134400,
-		textleft = "MawQuest",
+		icon = E.func_GetCurrencyIcon(1880),
+		textleft = E.func_currencyName(1880),
 		name_save = "MawQuest",
 		reset = "Daily",
 		desc = "Shadowlands",
@@ -554,7 +495,7 @@ E.OctoTable_UniversalQuest = {
 		max = 3
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Rares,
 		textleft = "KorthiaRares",
 		name_save = "KorthiaRares",
 		reset = "Weekly",
@@ -707,7 +648,7 @@ E.OctoTable_UniversalQuest = {
 		max = 18
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Rares,
 		textleft = "ZaralekCavernRares",
 		name_save = "ZaralekCavernRares",
 		reset = "Daily",
@@ -742,8 +683,8 @@ E.OctoTable_UniversalQuest = {
 		max = 25
 	},
 	{
-		icon = 134400,
-		textleft = "ZaralekCavernAWorthyAllyLoammNiffen",
+		icon = E.func_GetItemIcon(205985),
+		textleft = E.func_questName(75665),
 		name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -754,7 +695,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "ZaralekCavernSniffenseeking",
+		textleft = L["Sniffenseeking"],
 		name_save = "ZaralekCavernSniffenseeking",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -781,7 +722,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "ZaralekCavernSniffenseekingItems",
+		textleft = L["Sniffenseeking (items)"],
 		name_save = "ZaralekCavernSniffenseekingItems",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -802,7 +743,7 @@ E.OctoTable_UniversalQuest = {
 		max = 12
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Rares,
 		textleft = "TheForbiddenReachRares",
 		name_save = "TheForbiddenReachRares",
 		reset = "Daily",
@@ -837,8 +778,8 @@ E.OctoTable_UniversalQuest = {
 		max = 25
 	},
 	{
-		icon = 134400,
-		textleft = "CommunityFeast",
+		icon = E.func_GetItemIcon(200095),
+		textleft = E.Timers.DF_CommunityFeast()..L["Community Feast"],
 		name_save = "CommunityFeast",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -849,7 +790,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "DragonbaneKeep",
+		textleft = E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"],
 		name_save = "DragonbaneKeep",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -860,7 +801,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "TheGrandHunt",
+		textleft = E.Timers.DF_GrandHunts()..L["Grand Hunt"],
 		name_save = "TheGrandHunt",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -871,7 +812,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "StormsFury",
+		textleft = E.Timers.DF_PrimalStorms()..L["The Storm's Fury"],
 		name_save = "StormsFury",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -882,7 +823,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "KeysofLoyalty",
+		textleft = E.func_questName(66133),
 		name_save = "KeysofLoyalty",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -903,8 +844,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "ResearchersUnderFire",
+		icon = E.func_GetItemIcon(200224),
+		textleft = E.Timers.DF_ResearchersUnderFire()..E.func_questName(74906),
 		name_save = "ResearchersUnderFire",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -940,8 +881,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "AidingtheAccord",
+		icon = E.func_GetItemIcon(200073),
+		textleft = E.func_questName(70750),
 		name_save = "AidingtheAccord",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -977,8 +918,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "Shadowmourne",
+		icon = E.func_GetItemIcon(49623),
+		textleft = E.func_GetItemName(49623),
 		name_save = "Shadowmourne",
 		reset = "Once",
 		desc = "WotLK",
@@ -996,8 +937,8 @@ E.OctoTable_UniversalQuest = {
 		max = 9
 	},
 	{
-		icon = 134400,
-		textleft = "Warlock_GreenFire",
+		icon = E.func_GetItemIcon(92441),
+		textleft = E.func_GetItemName(92441),
 		name_save = "Warlock_GreenFire",
 		reset = "Once",
 		desc = "MistsofPandaria",
@@ -1013,8 +954,8 @@ E.OctoTable_UniversalQuest = {
 		max = 7
 	},
 	{
-		icon = 134400,
-		textleft = "Warlock_SomeWickedThings",
+		icon = 136145,
+		textleft = E.func_questName(75538),
 		name_save = "Warlock_SomeWickedThings",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -1035,8 +976,8 @@ E.OctoTable_UniversalQuest = {
 		max = 12
 	},
 	{
-		icon = 134400,
-		textleft = "ZMPatternsWithinPatterns",
+		icon = E.func_GetCurrencyIcon(2009),
+		textleft = E.func_questName(66042),
 		name_save = "ZMPatternsWithinPatterns",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -1046,7 +987,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Rares,
 		textleft = "ZMRares",
 		name_save = "ZMRares",
 		reset = "Daily",
@@ -1088,7 +1029,7 @@ E.OctoTable_UniversalQuest = {
 		max = 25
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Rares,
 		textleft = "ZMRaresDuneDominance",
 		name_save = "ZMRaresDuneDominance",
 		reset = "Daily",
@@ -1188,8 +1129,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "CatchingUp",
+		icon = E.func_GetSpellIcon(393294),
+		textleft = E.func_GetSpellName(393294),
 		name_save = "CatchingUp",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -1265,7 +1206,7 @@ E.OctoTable_UniversalQuest = {
 		max = 12
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(174288),
 		textleft = "miniVision",
 		name_save = "miniVision",
 		reset = "Daily",
@@ -1280,8 +1221,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "AssaultTheBlackEmpire",
+		icon = E.func_GetItemIcon(173372),
+		textleft = E.Timers.BfA_Assault().."AssaultTheBlackEmpire",
 		name_save = "AssaultTheBlackEmpire",
 		reset = "Weekly",
 		desc = "BattleforAzeroth",
@@ -1294,7 +1235,7 @@ E.OctoTable_UniversalQuest = {
 		max = 2
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(164577),
 		textleft = "Warfront1",
 		name_save = "Warfront1",
 		reset = "Weekly",
@@ -1306,7 +1247,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(164577),
 		textleft = "Warfront2",
 		name_save = "Warfront2",
 		reset = "Weekly",
@@ -1318,7 +1259,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(164577),
 		textleft = "WarfrontHC",
 		name_save = "WarfrontHC",
 		reset = "Weekly",
@@ -1332,8 +1273,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "BalanceofPower",
+		icon = E.func_GetItemIcon(140307),
+		textleft = E.func_questName(43533),
 		name_save = "BalanceofPower",
 		reset = "Once",
 		desc = "Legion",
@@ -1377,8 +1318,8 @@ E.OctoTable_UniversalQuest = {
 		max = 33
 	},
 	{
-		icon = 134400,
-		textleft = "InvasionQuests",
+		icon = E.Icon_Faction,
+		textleft = E.Timers.BfA_Invasion().."InvasionQuests",
 		name_save = "InvasionQuests",
 		reset = "Daily",
 		desc = "BattleforAzeroth",
@@ -1400,7 +1341,7 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "InvasionQuests",
+		textleft = E.Timers.Legion_Invasion().."InvasionQuests",
 		name_save = "InvasionQuests",
 		reset = "Daily",
 		desc = "Legion",
@@ -1413,9 +1354,9 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "BrokenShoreArmiesofLegionfall",
-		name_save = "BrokenShoreArmiesofLegionfall",
+		icon = E.func_GetCurrencyIcon(1226),
+		textleft = "storylineBrokenShoreArmiesofLegionfall",
+		name_save = "storylineBrokenShoreArmiesofLegionfall",
 		reset = "Once",
 		desc = "Legion",
 		questID = {
@@ -1440,8 +1381,8 @@ E.OctoTable_UniversalQuest = {
 		max = 17
 	},
 	{
-		icon = 134400,
-		textleft = "AberrustheShadowedCrucibleSarkareth",
+		icon = E.func_GetItemIcon(204682),
+		textleft = E.func_questName(75694),
 		name_save = "AberrustheShadowedCrucibleSarkareth",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -1451,8 +1392,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "VaultoftheIncarnatesFuryoftheStormEater",
+		icon = E.func_GetItemIcon(197921),
+		textleft = E.func_questName(66847),
 		name_save = "VaultoftheIncarnatesFuryoftheStormEater",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -1463,8 +1404,8 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "BrokenShoreExcavations",
-		name_save = "BrokenShoreExcavations",
+		textleft = "storylineBrokenShoreExcavations",
+		name_save = "storylineBrokenShoreExcavations",
 		reset = "Once",
 		desc = "Legion",
 		questID = {
@@ -1479,8 +1420,8 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = 134400,
-		textleft = "ArgusToArgus",
-		name_save = "ArgusToArgus",
+		textleft = "storylineArgusToArgus",
+		name_save = "storylineArgusToArgus",
 		reset = "Once",
 		desc = "Legion",
 		questID = {
@@ -1581,8 +1522,8 @@ E.OctoTable_UniversalQuest = {
 		max = 93
 	},
 	{
-		icon = 134400,
-		textleft = "Blingtron",
+		icon = E.func_GetItemIcon(111821),
+		textleft = E.func_GetItemName(103670),
 		name_save = "Blingtron",
 		reset = "Daily",
 		desc = "Another",
@@ -1595,8 +1536,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "TimeRift",
+		icon = E.func_GetSpellIcon(343140),
+		textleft = E.Timers.DF_TimeRift().."TimeRift",
 		name_save = "TimeRift",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -1606,8 +1547,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "DreamsurgeInvestigation",
+		icon = E.func_GetItemIcon(209833),
+		textleft = E.Timers.DF_Dreamsurges()..E.func_questName(77414),
 		name_save = "DreamsurgeInvestigation",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -1617,8 +1558,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "ShapingtheDreamsurge",
+		icon = E.func_GetItemIcon(215364),
+		textleft = E.func_questName(77251),
 		name_save = "ShapingtheDreamsurge",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -1628,8 +1569,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "WhenTimeNeedsMending",
+		icon = E.func_GetItemIcon(208090),
+		textleft = E.func_questName(77236),
 		name_save = "WhenTimeNeedsMending",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -1639,7 +1580,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Rares,
 		textleft = "DarkshoreRares",
 		name_save = "DarkshoreRares",
 		reset = "Daily",
@@ -1699,312 +1640,7 @@ E.OctoTable_UniversalQuest = {
 		max = 25
 	},
 	{
-		icon = 134400,
-		textleft = "SummerFestival",
-		name_save = "SummerFestival",
-		reset = "Month",
-		desc = "Holiday",
-		questID = {
-			9324,
-			9325,
-			9326,
-			9330,
-			9331,
-			9332,
-			11580,
-			11581,
-			11583,
-			11584,
-			11732,
-			11734,
-			11735,
-			11736,
-			11737,
-			11738,
-			11739,
-			11740,
-			11741,
-			11742,
-			11743,
-			11744,
-			11745,
-			11746,
-			11747,
-			11749,
-			11750,
-			11751,
-			11752,
-			11753,
-			11754,
-			11755,
-			11756,
-			11757,
-			11758,
-			11759,
-			11760,
-			11761,
-			11762,
-			11763,
-			11764,
-			11765,
-			11766,
-			11767,
-			11768,
-			11769,
-			11770,
-			11771,
-			11772,
-			11773,
-			11774,
-			11775,
-			11776,
-			11777,
-			11778,
-			11779,
-			11780,
-			11781,
-			11782,
-			11783,
-			11784,
-			11786,
-			11787,
-			11799,
-			11800,
-			11801,
-			11802,
-			11803,
-			11804,
-			11805,
-			11806,
-			11807,
-			11808,
-			11809,
-			11810,
-			11811,
-			11812,
-			11813,
-			11814,
-			11815,
-			11816,
-			11817,
-			11818,
-			11820,
-			11821,
-			11822,
-			11823,
-			11824,
-			11825,
-			11826,
-			11827,
-			11828,
-			11829,
-			11830,
-			11831,
-			11832,
-			11833,
-			11834,
-			11835,
-			11836,
-			11837,
-			11838,
-			11839,
-			11840,
-			11841,
-			11842,
-			11843,
-			11844,
-			11845,
-			11846,
-			11847,
-			11848,
-			11849,
-			11850,
-			11851,
-			11852,
-			11853,
-			11854,
-			11855,
-			11856,
-			11857,
-			11858,
-			11859,
-			11860,
-			11862,
-			11863,
-			11933,
-			11935,
-			13440,
-			13441,
-			13442,
-			13443,
-			13444,
-			13445,
-			13446,
-			13447,
-			13449,
-			13450,
-			13451,
-			13453,
-			13454,
-			13455,
-			13457,
-			13458,
-			13485,
-			13486,
-			13487,
-			13488,
-			13489,
-			13490,
-			13491,
-			13492,
-			13493,
-			13494,
-			13495,
-			13496,
-			13497,
-			13498,
-			13499,
-			13500,
-			28910,
-			28911,
-			28912,
-			28913,
-			28914,
-			28915,
-			28916,
-			28917,
-			28918,
-			28919,
-			28920,
-			28921,
-			28922,
-			28923,
-			28924,
-			28925,
-			28926,
-			28927,
-			28928,
-			28929,
-			28930,
-			28931,
-			28932,
-			28933,
-			28943,
-			28944,
-			28945,
-			28946,
-			28947,
-			28948,
-			28949,
-			28950,
-			29030,
-			29031,
-			29036,
-			32496,
-			32497,
-			32498,
-			32499,
-			32500,
-			32501,
-			32502,
-			32503,
-			32509,
-			32510,
-			44570,
-			44571,
-			44572,
-			44573,
-			44574,
-			44575,
-			44576,
-			44577,
-			44579,
-			44580,
-			44582,
-			44583,
-			44613,
-			44614,
-			44624,
-			44627,
-			54736,
-			54737,
-			54739,
-			54741,
-			54742,
-			54743,
-			54744,
-			54745,
-			54746,
-			54747,
-			54749,
-			54750,
-			75398,
-			75617,
-			75640,
-			75645,
-			75647,
-			75650,
-		},
-		max = 131
-	},
-	{
-		icon = 134400,
-		textleft = "Brewfest",
-		name_save = "Brewfest",
-		reset = "Month",
-		desc = "Holiday",
-		questID = {
-			77155,
-			77152,
-			77153,
-			77747,
-			76531,
-			77099,
-			77745,
-			77095,
-			77746,
-			77096,
-			77744,
-			77097,
-		},
-		max = 12
-	},
-	{
-		icon = 134400,
-		textleft = "Brewfest_BarrelingDown",
-		name_save = "Brewfest_BarrelingDown",
-		reset = "Daily",
-		desc = "Holiday",
-		questID = {
-			77208,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "Brewfest_BubblingBrews",
-		name_save = "Brewfest_BubblingBrews",
-		reset = "Daily",
-		desc = "Holiday",
-		questID = {
-			76591,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "Brewfest_DirebrewsDireBrew",
-		name_save = "Brewfest_DirebrewsDireBrew",
-		reset = "Month",
-		desc = "Holiday",
-		questID = {
-			12491,
-			12492,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
+		icon = E.func_GetCurrencyIcon(2594),
 		textleft = "TemporalAcquisitionsSpecialist",
 		name_save = "TemporalAcquisitionsSpecialist",
 		reset = "Once",
@@ -2028,8 +1664,8 @@ E.OctoTable_UniversalQuest = {
 		max = 14
 	},
 	{
-		icon = 134400,
-		textleft = "DarkmoonFaire",
+		icon = E.func_GetItemIcon(93724),
+		textleft = E.func_GetItemName(93724),
 		name_save = "DarkmoonFaire",
 		reset = "Daily",
 		desc = "Dragonflight",
@@ -2047,8 +1683,8 @@ E.OctoTable_UniversalQuest = {
 		max = 9
 	},
 	{
-		icon = 134400,
-		textleft = "GarrisonLevel",
+		icon = E.func_GetItemIcon(110560),
+		textleft = GARRISON_LOCATION_TOOLTIP,
 		name_save = "GarrisonLevel",
 		reset = "Once",
 		desc = "WarlordsofDraenor",
@@ -2060,357 +1696,8 @@ E.OctoTable_UniversalQuest = {
 		max = 3
 	},
 	{
-		icon = 134400,
-		textleft = "GarrisonMining",
-		name_save = "GarrisonMining",
-		reset = "Once",
-		desc = "WarlordsofDraenor",
-		questID = {
-			34192,
-			35296,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "WorgenHeritageArmor",
-		name_save = "WorgenHeritageArmor",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			54976,
-			54977,
-			54980,
-			54981,
-			54982,
-			54983,
-			54984,
-			54990,
-		},
-		max = 8
-	},
-	{
-		icon = 134400,
-		textleft = "ForsakenHeritageArmor",
-		name_save = "ForsakenHeritageArmor",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			76530,
-			72854,
-			72855,
-			72856,
-			72857,
-			72858,
-			72859,
-			72860,
-			72861,
-			72862,
-			72863,
-			72864,
-			72865,
-			72866,
-			72867,
-		},
-		max = 15
-	},
-	{
-		icon = 134400,
-		textleft = "GoblinHeritageArmor",
-		name_save = "GoblinHeritageArmor",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			57043,
-			57045,
-			57047,
-			57048,
-			57051,
-			57052,
-			57053,
-			57058,
-			57059,
-			57077,
-			57078,
-			57079,
-			57080,
-		},
-		max = 13
-	},
-	{
-		icon = 134400,
-		textleft = "NightElfHeritageArmor",
-		name_save = "NightElfHeritageArmor",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			75890,
-			75891,
-			76194,
-			76195,
-			76196,
-			76203,
-			76197,
-			76205,
-			76206,
-			76207,
-			76212,
-			76213,
-		},
-		max = 12
-	},
-	{
-		icon = 134400,
-		textleft = "HumanHeritageArmor",
-		name_save = "HumanHeritageArmor",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			75265,
-			72644,
-			72405,
-			72408,
-			72409,
-			72424,
-			72426,
-			72430,
-			72431,
-			72432,
-			72453,
-			72445,
-			72446,
-			72449,
-			72450,
-			72451,
-			72452,
-		},
-		max = 17
-	},
-	{
-		icon = 134400,
-		textleft = "DwarvenHeritageArmor",
-		name_save = "DwarvenHeritageArmor",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			53838,
-			53835,
-			53836,
-			53837,
-			53839,
-			53841,
-			53840,
-			53844,
-			53842,
-			53845,
-			53846,
-		},
-		max = 11
-	},
-	{
-		icon = 134400,
-		textleft = "OrcHeritageArmor",
-		name_save = "OrcHeritageArmor",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			73703,
-			72462,
-			72464,
-			72465,
-			72466,
-			72467,
-			72474,
-			74581,
-			72475,
-			72476,
-			74374,
-			72477,
-			74415,
-			72478,
-			72479,
-		},
-		max = 15
-	},
-	{
-		icon = 134400,
-		textleft = "BloodElfHeritageArmor",
-		name_save = "BloodElfHeritageArmor",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			53791,
-			53734,
-			53882,
-			53735,
-			53736,
-			53737,
-			53738,
-			53853,
-			53725,
-			54096,
-		},
-		max = 10
-	},
-	{
-		icon = 134400,
-		textleft = "GnomeHeritageArmor",
-		name_save = "GnomeHeritageArmor",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			54402,
-			54576,
-			54577,
-			54580,
-			54581,
-			54582,
-			54639,
-			54640,
-			54850,
-			54641,
-			54642,
-		},
-		max = 11
-	},
-	{
-		icon = 134400,
-		textleft = "DarkIronDwarfHeritageArmorAllied",
-		name_save = "DarkIronDwarfHeritageArmorAllied",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			51483,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "ZandalariTrollHeritageArmorAllied",
-		name_save = "ZandalariTrollHeritageArmorAllied",
-		reset = "ALL",
-		desc = "Dragonflight",
-		questID = {
-			53721,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "VulperaHeritageArmorAllied",
-		name_save = "VulperaHeritageArmorAllied",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			58435,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "LightforgedDraeneiHeritageArmorAllied",
-		name_save = "LightforgedDraeneiHeritageArmorAllied",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			49782,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "NightborneHeritageArmorAllied",
-		name_save = "NightborneHeritageArmorAllied",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			49784,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "VoidElfHeritageArmorAllied",
-		name_save = "VoidElfHeritageArmorAllied",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			49928,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "MechagnomeHeritageArmorAllied",
-		name_save = "MechagnomeHeritageArmorAllied",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			58436,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "KulTiranHeritageArmorAllied",
-		name_save = "KulTiranHeritageArmorAllied",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			53722,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "MagharOrcHeritageArmorAllied",
-		name_save = "MagharOrcHeritageArmorAllied",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			51484,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "HighmountainTaurenHeritageArmorAllied",
-		name_save = "HighmountainTaurenHeritageArmorAllied",
-		reset = "Once",
-		desc = "Another",
-		questID = {
-			49783,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "DayoftheDead",
-		name_save = "DayoftheDead",
-		reset = "Once",
-		desc = "Holiday",
-		questID = {
-			13952,
-			14175,
-			14170,
-			14171,
-			14174,
-			27846,
-			27841,
-			14166,
-			14167,
-			14177,
-			14168,
-			14169,
-			14176,
-			14172,
-			14173,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_AWorthyAllyDreamWardens",
+		icon = E.func_GetItemIcon(210421),
+		textleft = E.func_questName(78444),
 		name_save = "EmeraldDream_AWorthyAllyDreamWardens",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -2420,8 +1707,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "EmeraldDream_BloomingDreamseeds",
+		icon = E.func_GetItemIcon(211394),
+		textleft = E.func_questName(78821),
 		name_save = "EmeraldDream_BloomingDreamseeds",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -2431,8 +1718,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "EmeraldDream_TheSuperbloom",
+		icon = E.func_GetItemIcon(211389),
+		textleft = E.Timers.DF_Flower()..E.func_questName(78319),
 		name_save = "EmeraldDream_TheSuperbloom",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -2442,7 +1729,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Rares,
 		textleft = "EmeraldDream_Rares",
 		name_save = "EmeraldDream_Rares",
 		reset = "Daily",
@@ -2508,149 +1795,8 @@ E.OctoTable_UniversalQuest = {
 		max = 19
 	},
 	{
-		icon = 134400,
-		textleft = "EmeraldDream_Sidequests_APassedTorch",
-		name_save = "EmeraldDream_Sidequests_APassedTorch",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			77948,
-			77978,
-		},
-		max = 2
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_Sidequests_TroubleattheTree",
-		name_save = "EmeraldDream_Sidequests_TroubleattheTree",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			77316,
-			77317,
-			77318,
-		},
-		max = 3
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_Sidequests_ASleepySearch",
-		name_save = "EmeraldDream_Sidequests_ASleepySearch",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			77896,
-			77911,
-			77922,
-			77955,
-			77958,
-		},
-		max = 5
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_Sidequests_TheDryadGarden",
-		name_save = "EmeraldDream_Sidequests_TheDryadGarden",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			76566,
-			76568,
-			76567,
-			76569,
-			76570,
-			76571,
-			77802,
-		},
-		max = 7
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_Sidequests_TheQonzuQuery",
-		name_save = "EmeraldDream_Sidequests_TheQonzuQuery",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			78065,
-			78163,
-			78064,
-			78162,
-			78066,
-		},
-		max = 5
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_Sidequests_SkyMothersIre",
-		name_save = "EmeraldDream_Sidequests_SkyMothersIre",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			78041,
-			78042,
-			78043,
-			77788,
-			78045,
-			78044,
-			78046,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_Sidequests_ACalltoAid",
-		name_save = "EmeraldDream_Sidequests_ACalltoAid",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			77662,
-			77739,
-			77664,
-			77665,
-			77673,
-			77674,
-			77675,
-		},
-		max = 7
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_Sidequests_MemoryoftheDreamer",
-		name_save = "EmeraldDream_Sidequests_MemoryoftheDreamer",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			77310,
-			77311,
-			77312,
-			77313,
-			77314,
-			77315,
-		},
-		max = 6
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_Sidequests_ADragoninHand",
-		name_save = "EmeraldDream_Sidequests_ADragoninHand",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			76460,
-			76460,
-			76460,
-			76460,
-			76460,
-			76460,
-			76460,
-			76460,
-			76460,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "EmeraldDream_DreamsUnified",
+		icon = E.func_GetItemIcon(208396),
+		textleft = E.func_questName(78381),
 		name_save = "EmeraldDream_DreamsUnified",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -2660,143 +1806,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "EmeraldDream_Seeds",
-		name_save = "EmeraldDream_Seeds",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			77350,
-			77353,
-			77354,
-		},
-		max = 5
-	},
-	{
-		icon = 134400,
-		textleft = "SparksofLife",
-		name_save = "SparksofLife",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			78097,
-			72649,
-			72648,
-			75305,
-			72647,
-			72646,
-			74871,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "PilgrimsBountyAlliance",
-		name_save = "PilgrimsBountyAlliance",
-		reset = "Daily",
-		desc = "Holiday",
-		questID = {
-			14048,
-			14054,
-			14053,
-			14051,
-			14055,
-		},
-		max = 5
-	},
-	{
-		icon = 134400,
-		textleft = "PilgrimsBountyHorde",
-		name_save = "PilgrimsBountyHorde",
-		reset = "Daily",
-		desc = "Holiday",
-		questID = {
-			14061,
-			14060,
-			14059,
-			14062,
-			14058,
-		},
-		max = 5
-	},
-	{
-		icon = 134400,
-		textleft = "WinterVeilAlliance",
-		name_save = "WinterVeilAlliance",
-		reset = "Once",
-		desc = "Holiday",
-		questID = {
-			8744,
-			8768,
-			8769,
-			8803,
-			78131,
-			78504,
-		},
-		max = 6
-	},
-	{
-		icon = 134400,
-		textleft = "WinterVeilHorde",
-		name_save = "WinterVeilHorde",
-		reset = "Once",
-		desc = "Holiday",
-		questID = {
-			8768,
-			8744,
-			78504,
-			8769,
-			78131,
-			8803,
-		},
-		max = 6
-	},
-	{
-		icon = 134400,
-		textleft = "WinterVeil_YoureaMeanOneAlliance",
-		name_save = "WinterVeil_YoureaMeanOneAlliance",
-		reset = "Daily",
-		desc = "Holiday",
-		questID = {
-			7043,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "WinterVeil_YoureaMeanOneHorde",
-		name_save = "WinterVeil_YoureaMeanOneHorde",
-		reset = "Daily",
-		desc = "Holiday",
-		questID = {
-			6983,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "WinterVeil_ASmokywoodPasturesThankYouAlliance",
-		name_save = "WinterVeil_ASmokywoodPasturesThankYouAlliance",
-		reset = "Once",
-		desc = "Holiday",
-		questID = {
-			7045,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
-		textleft = "WinterVeil_ASmokywoodPasturesThankYouHorde",
-		name_save = "WinterVeil_ASmokywoodPasturesThankYouHorde",
-		reset = "Once",
-		desc = "Holiday",
-		questID = {
-			6984,
-		},
-		max = 1
-	},
-	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(224784),
 		textleft = "TheCalloftheWorldsoul",
 		name_save = "TheCalloftheWorldsoul",
 		reset = "Weekly",
@@ -2848,7 +1858,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(224784),
 		textleft = "Archives",
 		name_save = "Archives",
 		reset = "Weekly",
@@ -2860,7 +1870,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(224784),
 		textleft = "Delves",
 		name_save = "Delves",
 		reset = "Weekly",
@@ -2902,8 +1912,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "TheTheaterTroupe",
+		icon = E.func_GetItemIcon(226263),
+		textleft = E.Timers.TWW_BeledarCycle()..E.func_questName(83240),
 		name_save = "TheTheaterTroupe",
 		reset = "Weekly",
 		desc = "TheWarWithin",
@@ -2913,7 +1923,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(220756),
 		textleft = "SpreadingtheLight",
 		name_save = "SpreadingtheLight",
 		reset = "Weekly",
@@ -2924,8 +1934,8 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
-		textleft = "GearingUpforTrouble",
+		icon = E.func_GetItemIcon(226273),
+		textleft = E.func_questName(83333),
 		name_save = "GearingUpforTrouble",
 		reset = "Weekly",
 		desc = "TheWarWithin",
@@ -2953,8 +1963,8 @@ E.OctoTable_UniversalQuest = {
 		max = 2
 	},
 	{
-		icon = 134400,
-		textleft = "RollinDownintheDeeps",
+		icon = E.func_GetItemIcon(227792),
+		textleft = E.func_questName(82946),
 		name_save = "RollinDownintheDeeps",
 		reset = "Weekly",
 		desc = "TheWarWithin",
@@ -2964,7 +1974,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(237014),
 		textleft = "BiergothDungeonQuest",
 		name_save = "BiergothDungeonQuest",
 		reset = "Weekly",
@@ -2983,7 +1993,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(227794),
 		textleft = "TheKeytoSuccess",
 		name_save = "TheKeytoSuccess",
 		reset = "Weekly",
@@ -2994,7 +2004,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetSpellIcon(2575), -- PROFESSION
 		textleft = "TWWProfessionWeeklies",
 		name_save = "TWWProfessionWeeklies",
 		reset = "Weekly",
@@ -3029,7 +2039,7 @@ E.OctoTable_UniversalQuest = {
 		max = 2
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetSpellIcon(2575), -- PROFESSION
 		textleft = "TWWAlgariTreatise",
 		name_save = "TWWAlgariTreatise",
 		reset = "Weekly",
@@ -3050,7 +2060,7 @@ E.OctoTable_UniversalQuest = {
 		max = 2
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(224172),
 		textleft = "AnniversaryRestoredCofferKey",
 		name_save = "AnniversaryRestoredCofferKey",
 		reset = "Weekly",
@@ -3088,7 +2098,7 @@ E.OctoTable_UniversalQuest = {
 		max = 6
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(142307),
 		textleft = "MajorKeyflames",
 		name_save = "MajorKeyflames",
 		reset = "Weekly",
@@ -3106,7 +2116,7 @@ E.OctoTable_UniversalQuest = {
 		max = 8
 	},
 	{
-		icon = 134400,
+		icon = E.func_GetItemIcon(142307),
 		textleft = "MinorKeyflames",
 		name_save = "MinorKeyflames",
 		reset = "Weekly",

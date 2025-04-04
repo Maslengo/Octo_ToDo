@@ -284,6 +284,10 @@ function E.func_CompactNumberSimple(number)
 		return math.floor(number+.5)
 	end
 end
+function E.func_UnitFaction(unit)
+	local englishFaction, localizedFaction = UnitFactionGroup(unit)
+	return englishFaction
+end
 ----------------------------------------------------------------
 function E.func_texturefromIcon(icon, iconSize)
 	return "|T"..(icon or 134400)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::64:64:4:60:4:60|t"
@@ -298,6 +302,18 @@ E.Icon_Venthyr = 3641397
 E.Icon_WorldBoss = 3528312
 E.Icon_Rares = 135903
 E.Icon_Money = 133784
+
+
+
+if E.func_UnitFaction("PLAYER") == "Horde" then
+	E.Icon_Faction = 2565244
+elseif E.func_UnitFaction("PLAYER") == "Alliance" then
+	E.Icon_Faction = 2565243
+else
+	E.Icon_Faction = 620830
+end
+
+
 E.Icon_MailBox = "Interface/AddOns/"..E.GlobalAddonName.."/Media/ElvUI/Mail0.tga"
 function E.func_texturefromIconEVENT(icon, iconSize)
 	return "|T"..(icon or 134400)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::128:128:0:91:0:91|t"
@@ -1763,10 +1779,6 @@ end
 ----------------------------------------------------------------
 function E.func_CreateInfoFrame(text, point, parent, rPoint, x, y, sizeW, sizeH)
 	local frame = CreateFrame("frame", nil, parent, "BackDropTemplate")
-
-
--- ("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 0)
-
 	frame:SetPoint(point, parent, rPoint, x, y)
 	frame:SetSize(sizeW, sizeH)
 	frame.text = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -1777,6 +1789,21 @@ function E.func_CreateInfoFrame(text, point, parent, rPoint, x, y, sizeW, sizeH)
 	frame.text:SetTextColor(1, 1, 1, 1)
 	frame.text:SetText(text)
 end
+----------------------------------------------------------------
+function E.func_CreatePlayersFrame()
+	local frame = CreateFrame("frame", nil, parent, "BackDropTemplate")
+	frame:SetPoint(point, parent, rPoint, x, y)
+	frame:SetSize(sizeW, sizeH)
+	frame.text = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	frame.text:SetAllPoints()
+	frame.text:SetFontObject(OctoFont11)
+	frame.text:SetJustifyV("MIDDLE")
+	frame.text:SetJustifyH("LEFT")
+	frame.text:SetTextColor(1, 1, 1, 1)
+	frame.text:SetText(text)
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 E.OctoTable_Empty = {}
@@ -1877,7 +1904,7 @@ E.bgCr = .08 -- 14/255
 E.bgCg = .08 -- 14/255
 E.bgCb = .08 -- 14/255
 E.bgCa = .8
-E.bgCaOverlay = .2
+E.bgCaOverlay = .1
 E.slider_scale = .8
 E.multiplier = 2 - E.slider_scale
 E.Class_Priest_Color_Alternative = "|cff9659FF"--"|cff7157FF"

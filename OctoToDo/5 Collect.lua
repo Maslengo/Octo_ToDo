@@ -60,7 +60,7 @@ function E.Collect_ALL_PlayerInfo()
 		collect.classFilename = E.classFilename
 		collect.classId = E.classId
 		collect.GUID = E.curGUID
-		collect.Faction = UnitFactionGroup("PLAYER")
+		collect.Faction = E.func_UnitFaction("PLAYER")
 		collect.specId = specId or 0
 		collect.specName = specName or ""
 		collect.specIcon = specIcon or 0
