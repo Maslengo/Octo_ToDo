@@ -64,11 +64,11 @@ end
 -- Выключить все аддоны
 function E.func_DisableAllAddons()
 	for i, name in ipairs(E.func_GetAllAddons()) do
-		if name ~= E.MainGlobalAddonName then
+		if name ~= E.GlobalAddonName then
 			C_AddOns.DisableAddOn(name)
 		end
 	end
-	E.func_Print("Все аддоны |cffff0000отключены|r")
+	E.func_Print("Все аддоны |cffff0000отключены|r, кроме: "..E.GlobalAddonName)
 	-- ReloadUI()
 end
 -- Сохранить текущий профиль

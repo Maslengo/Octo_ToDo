@@ -143,6 +143,4 @@ function E.CollectAllAddonsNEW()
 			end
 		end
 	end
-
-
 end
