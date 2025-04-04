@@ -32,5 +32,5 @@ function OctoToDo_EventFrame_TrashCan:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
 	-- E:func_CreateUtilsButton(nil)
-	E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_TrashCan, nil, function() fpde(OctoToDo_TrashCan) end)
+	-- E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_TrashCan, nil, function() fpde(OctoToDo_TrashCan) end, "OctoToDo_TrashCan")
 end

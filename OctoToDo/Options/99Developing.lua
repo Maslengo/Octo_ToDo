@@ -112,11 +112,34 @@ function E.Developing()
 				width = E.FULL_WIDTH/3,
 				order = 12,
 			},
+
 			-------------------------------------------------
-			ReloadHeader3second224 = {
-				type = "header",
-				name = ADDONS,
+			UniversalQuest = {
+				type = "execute",
+				name = "UniversalQuest",
+				func = function()
+					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+						print (CharInfo.Name, "УДАЛИЛИСЬ UniversalQuest")
+						CharInfo.MASLENGO.UniversalQuest  = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/3,
 				order = 13,
+			},
+
+			-------------------------------------------------
+			MASLENGO = {
+				type = "execute",
+				name = E.Red_Color.."MASLENGO|r",
+				func = function()
+					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+						CharInfo.MASLENGO = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/3,
+				order = 14,
 			},
 			-------------------------------------------------
 			ReloadHeader3second22154 = {
@@ -309,6 +332,14 @@ function E.Developing()
 				name = "",
 				order = 47,
 			},
+
+
+
+
+
+
+
+
 			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------

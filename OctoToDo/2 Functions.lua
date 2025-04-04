@@ -820,7 +820,7 @@ function E.func_CheckReputationByRepID(reputationID)
 		local barMax
 		local barValue
 		local standingID
-		if repInfo then 
+		if repInfo then
 			barMin = repInfo.currentReactionThreshold
 			barMax = repInfo.nextReactionThreshold
 			barValue = repInfo.currentStanding
@@ -857,7 +857,7 @@ function E.func_CheckReputationByRepID(reputationID)
 			local _, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(reputationID)
 			if threshold then
 				local value = currentValue % threshold
-				vivod = E.Blue_Color..(value).."/"..(threshold)..r
+				vivod = E.Blue_Color..(value).."/"..(threshold).."|r"
 				if hasRewardPending then
 					vivod = E.func_CheckCompletedByQuestID(rewardQuestID)
 				end
@@ -884,14 +884,14 @@ function E.func_CheckReputationByRepID(reputationID)
 				maxLevel = rankInfo.maxLevel or 0
 			end
 			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
-			vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
+			vivod = color..(currentValue).."/"..(totalValue)..standingTEXT.."|r"
 			if currentLevel == maxLevel then vivod = E.Green_Color.."Done|r" end
 		else
 			if barValue then
 				local currentValue = barValue-barMin
 				local totalValue = barMax-barMin
 				local nextThreshold = reputationInfo.nextThreshold or 0
-				vivod = color..(currentValue).."/"..(totalValue)..standingTEXT..r
+				vivod = color..(currentValue).."/"..(totalValue)..standingTEXT.."|r"
 				if currentValue == totalValue or nextThreshold == 0 then vivod = E.Green_Color.."Done|r" end
 			end
 		end
@@ -1587,7 +1587,8 @@ function E:func_CreateUtilsButton(frame)
 	-- E:func_SetBackdrop(OctoToDo_EventsButton)
 end
 ----------------------------------------------------------------
-function E:func_CreateMinimapButton(addonName, vars, frame, func)
+function E:func_CreateMinimapButton(addonName, vars, frame, func, frameString)
+	-- print (frameString)
 	local info = {
 		type = "data source",
 		text = MinimapName,

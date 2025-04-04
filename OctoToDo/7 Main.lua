@@ -439,15 +439,16 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.first:SetPropagateMouseClicks(false)
 		frame.first:SetSize(AddonHeight, AddonHeight)
 		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND", nil, -2) -- ПОФИКСИТЬ -- https://warcraft.wiki.gg/wiki/API_Frame_CreateTexture --https://warcraft.wiki.gg/wiki/API_Frame_CreateMaskTexture
+		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND", nil, -2)
 		frame.first.icon:SetAllPoints(frame.first)
 		frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		-- frame.first:SetFrameLevel(frame:GetFrameLevel()+1) -- ПОФИКСИТЬ -- https://warcraft.wiki.gg/wiki/API_Frame_CreateTexture --https://warcraft.wiki.gg/wiki/API_Frame_CreateMaskTexture
 		------------------------------------------------
 		frame.left = CreateFrame("FRAME", "frame.left", frame, "BackdropTemplate")
 		frame.left:SetPropagateMouseClicks(true)
 		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.left:SetFrameLevel(frame:GetFrameLevel()-1)
+		frame.left:SetFrameLevel(frame:GetFrameLevel()-1) -- ПОФИКСИТЬ -- https://warcraft.wiki.gg/wiki/API_Frame_CreateTexture --https://warcraft.wiki.gg/wiki/API_Frame_CreateMaskTexture
 		frame.left.text = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame.left.text:SetPoint("LEFT", AddonHeight+1, 0)
 		frame.left.text:SetPoint("RIGHT", 0, 0)
@@ -480,7 +481,8 @@ local function func_OnAcquired(owner, frame, data, new)
 end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
-	if data.firsticonTexture ~= E.Icon_Empty then
+	-- if data.firsticonTexture ~= E.Icon_Empty then
+	if data.firsticonTexture then
 		frame.first.icon:SetTexture(data.firsticonTexture)
 	end
 	frame.left.text:SetText(data.left)
@@ -497,14 +499,12 @@ local function OctoToDo_Frame_init(frame, data)
 		if data[NumPlayers].currentChar then
 			E:func_SetBackdrop(frame.cent[NumPlayers], E.classColorHexCurrent, E.bgCaOverlay*2, 0)
 		else
-
 			if data.index % 2 == 0 then
 				E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
 			else
 				E:func_SetBackdrop(frame.cent[NumPlayers], "|cff000000", E.bgCaOverlay, 0)
 			end
 		end
-
 		if data[NumPlayers][3] then
 			E:func_SetBackdrop(frame.cent[NumPlayers], data[NumPlayers][3], E.bgCaOverlay, 0)
 		end
@@ -1040,8 +1040,6 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Config == nil then OctoToDo_DB_Config = {} end
 		if OctoToDo_DB_Levels == nil then OctoToDo_DB_Levels = {} end
 		if OctoToDo_DB_Other == nil then OctoToDo_DB_Other = {} end
-
-
 		if OctoToDo_DB_Config.CurrencyDB == nil then OctoToDo_DB_Config.CurrencyDB = {} end
 		if OctoToDo_DB_Config.QuestsDB == nil then OctoToDo_DB_Config.QuestsDB = {} end
 		if OctoToDo_DB_Config.ReputationDB == nil then OctoToDo_DB_Config.ReputationDB = {} end
@@ -1166,7 +1164,7 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		for i, func in next, (E.Modules) do
 			func()
 		end
-		-- OctoToDo_MainFrame_OCTOMAIN
+		-- E.AddonManager()
 	end
 end
 function OctoToDo_EventFrame_OCTOMAIN:VARIABLES_LOADED()
@@ -1176,12 +1174,6 @@ function OctoToDo_EventFrame_OCTOMAIN:VARIABLES_LOADED()
 		----------------------------------------------------------------
 		if OctoToDo_DB_Vars.CVar then
 			E.LoadCVars()
-			-- C_Timer.After(.1, function()
-			--     if not InCombatLockdown() then
-			--         print ("2")
-			--         E.LoadCVars()
-			--     end
-			-- end)
 		end
 		----------------------------------------------------------------
 	end
@@ -1208,10 +1200,6 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 				PlayerSpellsFrame:SetAlpha(1)
 				PlayerSpellsFrame:StopMovingOrSizing()
 		end)
-		-- PlayerSpellsFrame:RegisterForClicks("RightButtonUp")
-		-- PlayerSpellsFrame:SetScript("OnClick", function(self)
-		--    self:Hide()
-		-- end)
 	end
 	----------------------------------------------------------------
 	E:InitOptions()
@@ -1235,26 +1223,16 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 			end
 		end
 	end
-
-
 	E.func_CreateInfoFrame("Money: "..E.classColorHexCurrent..E.func_CompactNumberFormat(totalMoney/10000).."|r "..E.curServerShort, "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight)
 	E.func_CreateInfoFrame("Reloads: "..E.classColorHexCurrent..totalReload.."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight, AddonLeftFrameWeight, AddonHeight)
 	E.func_CreateInfoFrame("realTotalTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realTotalTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight)
 	if realLevelTime ~= 0 then
 		E.func_CreateInfoFrame("realLevelTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realLevelTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
 	end
-
-
-
-
-
-
-
-
 	E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function()
 			OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 			RequestRaidInfo()
-	end)
+	end, "OctoToDo_MainFrame_OCTOMAIN")
 	C_Timer.After(0, function()
 			-- E.PromiseItem = {}
 			-- E.PromiseSpell = {}

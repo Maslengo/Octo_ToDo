@@ -3,48 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 function E:func_Otrisovka()
 	local OctoTable_func_otrisovkaCENT = {}
 	local OctoTable_func_otrisovkaLEFT = {}
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	for expID, expDATA in ipairs(E.OctoTable_Expansions_Table) do
-		if OctoToDo_DB_Vars.ExpansionToShow[expID] then
-			for _, v in ipairs(E.OctoTable_UniversalQuest) do
-				if expDATA.nameShort == v.desc then
-					tinsert(OctoTable_func_otrisovkaCENT,
-						function(CharInfo)
-							local vivodCent, tooltip = " ", {}
-							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= E.NONE then
-								vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-							end
-							return vivodCent, tooltip
-					end)
-					tinsert(OctoTable_func_otrisovkaLEFT,
-						function()
-							return tostringall(v.textleft).."|r", v.icon, expDATA.color
-					end)
-				end
-			end
-		end
-	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	for _, v in ipairs(E.OctoTable_UniversalQuest) do
-		if v.desc == "Another" or v.desc == "Timewalk" then
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= E.NONE then
-						vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function()
-					return tostringall(v.textleft).."|r", v.icon, E.Blue_Color
-			end)
-		end
-	end
+
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -145,6 +104,57 @@ function E:func_Otrisovka()
 		function(CharInfo)
 			return E.Timers.Daily_Reset()
 	end)
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	for expID, expDATA in ipairs(E.OctoTable_Expansions_Table) do
+		if OctoToDo_DB_Vars.ExpansionToShow[expID] then
+			for _, v in ipairs(E.OctoTable_UniversalQuest) do
+				if expDATA.nameShort == v.desc then
+					tinsert(OctoTable_func_otrisovkaCENT,
+						function(CharInfo)
+							local vivodCent, tooltip = " ", {}
+							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= E.NONE then
+								vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+							end
+							return vivodCent, tooltip
+					end)
+					tinsert(OctoTable_func_otrisovkaLEFT,
+						function()
+							return tostringall(v.textleft).."|r", v.icon, expDATA.color
+					end)
+				end
+			end
+		end
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	for _, v in ipairs(E.OctoTable_UniversalQuest) do
+		if v.desc == "Another" or v.desc == "Timewalk" then
+			tinsert(OctoTable_func_otrisovkaCENT,
+				function(CharInfo)
+					local vivodCent, tooltip = " ", {}
+					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= E.NONE then
+						vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+					end
+					return vivodCent, tooltip
+			end)
+			tinsert(OctoTable_func_otrisovkaLEFT,
+				function()
+					return tostringall(v.textleft).."|r", v.icon, E.Blue_Color
+			end)
+		end
+	end
+
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+
+
+
+
+
 	tinsert(OctoTable_func_otrisovkaCENT,
 		function(CharInfo)
 			local vivodCent, tooltip = " ", {}
