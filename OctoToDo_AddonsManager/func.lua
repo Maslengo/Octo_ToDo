@@ -8,10 +8,6 @@ local currentProfile = "default"
 -- Инициализация
 AddonManager:RegisterEvent("ADDON_LOADED")
 AddonManager:RegisterEvent("PLAYER_LOGIN")
--- Функция для вывода сообщения в чат
-function E.func_Print(msg)
-	print("!|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r AddonsManager "..msg.. "|r")
-end
 -- Получить список всех аддонов
 function E.func_GetAllAddons()
 	local addons = {}
@@ -26,7 +22,7 @@ end
 -- Показать список аддонов с их статусом
 function E.func_ListAddons(filter)
 	local addons = E.func_GetAllAddons()
-	E.func_Print("Список аддонов ("..#addons.."):")
+	print ("Список аддонов ("..#addons.."):")
 	for i, name in ipairs(addons) do
 		if not filter or string.find(string.lower(name), string.lower(filter)) then
 			local status = E.IsAddOnLoaded(name) and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r"
@@ -35,31 +31,49 @@ function E.func_ListAddons(filter)
 	end
 end
 -- Переключить аддон
-function E.func_ToggleAddon(i, state)
-	print ("func_ToggleAddon")
-	local addonName = C_AddOns.GetAddOnInfo(i)
-	local enabled = (C_AddOns.GetAddOnEnableState(i, UnitName("player")) > Enum.AddOnEnableState.None)
+function E.func_ToggleAddon(index, state)
+	local addonName = C_AddOns.GetAddOnInfo(index)
+	local enabled = (C_AddOns.GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None)
 
 	if enabled then
-		C_AddOns.DisableAddOn(i)
-		E.func_Print("Аддон '"..addonName.."' |cffff0000отключен|r".. i)
+		C_AddOns.DisableAddOn(index)
+		print (addonName.." |cffff0000отключен|r".. index)
 	else
-		C_AddOns.EnableAddOn(i)
-		E.func_Print("Аддон '"..addonName.."' |cff00ff00включен|r".. i)
+		C_AddOns.EnableAddOn(index)
+		print (addonName.." |cff00ff00включен|r".. index)
 	end
 	-- Если введен номер
-	if not C_AddOns.GetAddOnInfo(i) then
-		E.func_Print("Аддон '"..i.."' не найден")
+	if not C_AddOns.GetAddOnInfo(index) then
+		print (index.." не найден")
 		return
 	end
 end
+
+
+function E.DisableAddOn(index)
+	C_AddOns.DisableAddOn(index)
+end
+
+function E.EnableAddOn(index)
+	C_AddOns.EnableAddOn(index)
+end
+
+
+
+
+
+
+
 -- Включить все аддоны
 function E.func_EnableAllAddons()
 	for i, name in ipairs(E.func_GetAllAddons()) do
 		C_AddOns.EnableAddOn(name)
 	end
-	E.func_Print("Все аддоны |cff00ff00включены|r")
-	-- ReloadUI()
+	print ("Все аддоны |cff00ff00включены|r")
+	-- local character = GetAddonCharacter();
+
+	-- C_AddOns.EnableAllAddOns(character);
+	-- AddonList_Update();
 end
 -- Выключить все аддоны
 function E.func_DisableAllAddons()
@@ -68,8 +82,11 @@ function E.func_DisableAllAddons()
 			C_AddOns.DisableAddOn(name)
 		end
 	end
-	E.func_Print("Все аддоны |cffff0000отключены|r, кроме: "..E.GlobalAddonName)
-	-- ReloadUI()
+	print ("Все аддоны |cffff0000отключены|r, кроме: "..E.GlobalAddonName)
+	-- local character = GetAddonCharacter();
+
+	-- C_AddOns.DisableAllAddOns(character);
+	-- AddonList_Update();
 end
 -- Сохранить текущий профиль
 function E.func_SaveProfile(profileName)
@@ -81,12 +98,12 @@ function E.func_SaveProfile(profileName)
 	for i, name in ipairs(addons) do
 		OctoToDo_AddonsManager.profiles[profileName][name] = E.IsAddOnLoaded(name)
 	end
-	E.func_Print("Профиль '"..profileName.."' сохранен ("..#addons.." аддонов)")
+	print ("Профиль '"..profileName.." сохранен ("..#addons.." аддонов)")
 end
 -- Загрузить профиль
 function E.func_LoadProfile(profileName)
 	if not OctoToDo_AddonsManager.profiles[profileName] then
-		E.func_Print("Профиль '"..profileName.."' не найден")
+		print ("Профиль '"..profileName.." не найден")
 		return
 	end
 	for name, enabled in pairs(OctoToDo_AddonsManager.profiles[profileName]) do
@@ -97,12 +114,12 @@ function E.func_LoadProfile(profileName)
 		end
 	end
 	currentProfile = profileName
-	E.func_Print("Профиль '"..profileName.."' загружен")
+	print ("Профиль '"..profileName.." загружен")
 	-- ReloadUI()
 end
 -- Список профилей
 function E.func_ListProfiles()
-	E.func_Print("Доступные профили:")
+	print ("Доступные профили:")
 	for name, _ in pairs(OctoToDo_AddonsManager.profiles) do
 		print("- "..name)
 	end
@@ -125,7 +142,7 @@ function E.func_HandleCommand(msg)
 	elseif command == "profiles" then
 		E.func_ListProfiles()
 	else
-		E.func_Print("Команды:")
+		print ("Команды:")
 		print("/uam list [фильтр] - список аддонов")
 		print("/uam toggle <имя/номер> - переключить аддон")
 		print("/uam enableall - включить все аддоны")
@@ -267,6 +284,23 @@ function E.AddonTooltipBuildDepsString(index)
 	return depsString
 end
 ----------------------------------------------------------------
+function E.AddonList_HasAnyChanged()
+	if (AddonList.outOfDate and not C_AddOns.IsAddonVersionCheckEnabled() or (not AddonList.outOfDate and C_AddOns.IsAddonVersionCheckEnabled() and AddonList_HasOutOfDate())) then
+		return true;
+	end
+	for i=1,C_AddOns.GetNumAddOns() do
+		local character = nil;
+		if (not InGlue()) then
+			character = UnitName("player");
+		end
+		local enabled = (C_AddOns.GetAddOnEnableState(i, character) > Enum.AddOnEnableState.None);
+		local reason = select(5,C_AddOns.GetAddOnInfo(i))
+		if ( enabled ~= AddonList.startStatus[i] and reason ~= "DEP_DISABLED" ) then
+			return true
+		end
+	end
+	return false
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -448,7 +448,7 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.left:SetPropagateMouseClicks(true)
 		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.left:SetFrameLevel(frame:GetFrameLevel()-1) -- ПОФИКСИТЬ -- https://warcraft.wiki.gg/wiki/API_Frame_CreateTexture --https://warcraft.wiki.gg/wiki/API_Frame_CreateMaskTexture
+		-- frame.left:SetFrameLevel(frame:GetFrameLevel()-1) -- ПОФИКСИТЬ -- https://warcraft.wiki.gg/wiki/API_Frame_CreateTexture --https://warcraft.wiki.gg/wiki/API_Frame_CreateMaskTexture
 		frame.left.text = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame.left.text:SetPoint("LEFT", AddonHeight+1, 0)
 		frame.left.text:SetPoint("RIGHT", 0, 0)

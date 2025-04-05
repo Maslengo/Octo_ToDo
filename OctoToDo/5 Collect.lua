@@ -92,7 +92,7 @@ end
 function E.Collect_All_ReloadCount()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect then
-		collect.ReloadCount = collect.ReloadCount+1 or 0
+		collect.ReloadCount = collect.ReloadCount+1
 	end
 end
 function E.Collect_All_Covenant()
@@ -349,6 +349,7 @@ function E.Collect_All_Reputations_TEST2()
 	end
 	local tblHeader
 	local tblHeader2
+	C_Reputation.ExpandAllFactionHeaders()
 	for i = 1, C_Reputation.GetNumFactions() do
 		local factionData = C_Reputation.GetFactionDataByIndex(i)
 		if factionData then
@@ -367,31 +368,29 @@ function E.Collect_All_Reputations_TEST2()
 			end
 		end
 	end
-	for i = C_Reputation.GetNumFactions(), 1, -1 do
-		local factionData = C_Reputation.GetFactionDataByIndex(i)
-		if factionData then
-			C_Reputation.CollapseFactionHeader(i)
-		end
-	end
+	-- for i = C_Reputation.GetNumFactions(), 1, -1 do
+	-- 	local factionData = C_Reputation.GetFactionDataByIndex(i)
+	-- 	if factionData then
+	-- 		C_Reputation.CollapseFactionHeader(i)
+	-- 	end
+	-- end
 end
 function E.Collect_All_Currency()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
-		if not InCombatLockdown() then
-			local listSize = C_CurrencyInfo.GetCurrencyListSize()
-			local headerIndex
-			for i = 1, listSize do
-				local info = C_CurrencyInfo.GetCurrencyListInfo(i)
-				if info.isHeader then
-					C_CurrencyInfo.ExpandCurrencyList(i, true)
-					listSize = C_CurrencyInfo.GetCurrencyListSize()
-					headerIndex = i
-				elseif info.name then
-					local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
-					local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
-					if currencyID then
-						OctoToDo_DB_Config.CurrencyDB[currencyID] = OctoToDo_DB_Config.CurrencyDB[currencyID] or false
-					end
+		local listSize = C_CurrencyInfo.GetCurrencyListSize()
+		local headerIndex
+		for i = 1, listSize do
+			local info = C_CurrencyInfo.GetCurrencyListInfo(i)
+			if info and info.isHeader then
+				C_CurrencyInfo.ExpandCurrencyList(i, true)
+				listSize = C_CurrencyInfo.GetCurrencyListSize()
+				headerIndex = i
+			elseif info and info.name then
+				local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
+				local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
+				if currencyID then
+					OctoToDo_DB_Config.CurrencyDB[currencyID] = OctoToDo_DB_Config.CurrencyDB[currencyID] or false
 				end
 			end
 		end
