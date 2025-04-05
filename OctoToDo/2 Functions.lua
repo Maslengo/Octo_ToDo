@@ -327,7 +327,7 @@ function E.func_GetSpellCooldown(spellID)
 	end
 	return E.func_CompactNumberSimple(vivod)
 end
----------------------------------------------------------------- 
+----------------------------------------------------------------
 function E.COMPLETE()
 	-- return E.Purple_Color..">>".."Complete".."<<".."|r"
 	-- return E.Purple_Color..">"..COMPLETE.."<".."|r"
@@ -813,9 +813,9 @@ end
 function E.func_CheckReputationByRepID(reputationID)
 	local vivod = ""
 	if reputationID then
-		local color = E.White_Color 
+		local color = E.White_Color
 		local standingTEXT = ""
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID) 
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
 		local barMin
 		local barMax
 		local barValue
@@ -848,12 +848,12 @@ function E.func_CheckReputationByRepID(reputationID)
 				standingTEXT = " ("..FACTION_STANDING_LABEL7..")"
 			elseif standingID == 8 then
 				color = E.Green_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL8..")" 
+				standingTEXT = " ("..FACTION_STANDING_LABEL8..")"
 			end
 		end
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
 		if C_Reputation.IsFactionParagon(reputationID) then
-			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0 
+			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0
 			local _, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(reputationID)
 			if threshold then
 				local value = currentValue % threshold
@@ -874,7 +874,7 @@ function E.func_CheckReputationByRepID(reputationID)
 			local friendshipFactionID = reputationInfo.friendshipFactionID or 0
 			local reactionThreshold = reputationInfo.reactionThreshold or 0
 			local nextThreshold = reputationInfo.nextThreshold or 0
-			local standing = reputationInfo.standing or 0 
+			local standing = reputationInfo.standing or 0
 			local currentValue = standing-reactionThreshold
 			local totalValue = nextThreshold-reactionThreshold
 			local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
@@ -1187,7 +1187,7 @@ function E.func_TableRemoveDuplicates(table1)
 		table2[value] = true
 	end
 end
----------------------------------------------------------------- 
+----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_coloredText(fontstring)
 	if not fontstring then

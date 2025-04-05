@@ -30,40 +30,54 @@ function E.func_ListAddons(filter)
 		end
 	end
 end
+function E.rec_toggle(index, state)
+	if state then
+		C_AddOns.DisableAddOn(index)
+		print ("|cffff0000отключен|r".. index)
+	else
+		C_AddOns.EnableAddOn(index)
+		print ("|cff00ff00включен|r".. index)
+	end
+	if E.depsByIndex[index] and IsModifierKeyDown() then
+		for i, depIndex in ipairs(E.depsByIndex[index]) do
+			E.rec_toggle(depIndex, state)
+		end
+	end
+	-- if state then
+	-- 	C_AddOns.DisableAddOn(index)
+	-- 	if E.depsByIndex[index] and IsModifierKeyDown() then
+	-- 		for i, depIndex in ipairs(E.depsByIndex[index]) do
+	-- 			C_AddOns.DisableAddOn(depIndex)
+	-- 			E.rec_toggle(depIndex, state)
+	-- 		end
+	-- 	end
+	-- 	print (addonName.." |cffff0000отключен|r".. index)
+	-- else
+	-- 	C_AddOns.EnableAddOn(index)
+	-- 	if E.depsByIndex[index] and IsModifierKeyDown() then
+	-- 		for i, depIndex in ipairs(E.depsByIndex[index]) do
+	-- 			C_AddOns.EnableAddOn(depIndex)
+	-- 			E.rec_toggle(depIndex, state)
+	-- 		end
+	-- 	end
+	-- 	print (addonName.." |cff00ff00включен|r".. index)
+	-- end
+end
 -- Переключить аддон
 function E.func_ToggleAddon(index, state)
 	local addonName = C_AddOns.GetAddOnInfo(index)
-	local enabled = (C_AddOns.GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None)
-
-	if enabled then
-		C_AddOns.DisableAddOn(index)
-		print (addonName.." |cffff0000отключен|r".. index)
-	else
-		C_AddOns.EnableAddOn(index)
-		print (addonName.." |cff00ff00включен|r".. index)
-	end
-	-- Если введен номер
-	if not C_AddOns.GetAddOnInfo(index) then
-		print (index.." не найден")
-		return
-	end
+	local enabled = C_AddOns.GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
+	E.rec_toggle(index, enabled)
+	-- IsControlKeyDown()
+	-- IsShiftKeyDown()
+	-- IsAltKeyDown()
 end
-
-
 function E.DisableAddOn(index)
 	C_AddOns.DisableAddOn(index)
 end
-
 function E.EnableAddOn(index)
 	C_AddOns.EnableAddOn(index)
 end
-
-
-
-
-
-
-
 -- Включить все аддоны
 function E.func_EnableAllAddons()
 	for i, name in ipairs(E.func_GetAllAddons()) do
@@ -71,7 +85,6 @@ function E.func_EnableAllAddons()
 	end
 	print ("Все аддоны |cff00ff00включены|r")
 	-- local character = GetAddonCharacter();
-
 	-- C_AddOns.EnableAllAddOns(character);
 	-- AddonList_Update();
 end
@@ -84,7 +97,6 @@ function E.func_DisableAllAddons()
 	end
 	print ("Все аддоны |cffff0000отключены|r, кроме: "..E.GlobalAddonName)
 	-- local character = GetAddonCharacter();
-
 	-- C_AddOns.DisableAllAddOns(character);
 	-- AddonList_Update();
 end
@@ -165,7 +177,6 @@ end)
 -- Регистрируем команды
 SLASH_UNIVERSALADDONMANAGER1 = "/uam"
 SlashCmdList["UNIVERSALADDONMANAGER"] = E.func_HandleCommand
-
 function E.GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
 	if (not C_AddOnProfiler.IsEnabled()) then
 		return def or ""
@@ -251,7 +262,6 @@ function E.AddonTooltip_BuildDeps(...)
 	return deps
 end
 ----------------------------------------------------------------
-
 function E.AddonList_IsAddOnLoadOnDemand(index)
 	local lod = false
 	if C_AddOns.IsAddOnLoadOnDemand(index) then
@@ -268,7 +278,6 @@ function E.AddonList_IsAddOnLoadOnDemand(index)
 	end
 	return lod
 end
-
 ----------------------------------------------------------------
 function E.AddonTooltipBuildDepsString(index)
 	local deps = { C_AddOns.GetAddOnDependencies(index) }
