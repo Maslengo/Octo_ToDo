@@ -63,7 +63,7 @@ end
 function E.func_GetCurrencyIcon(currencyID)
 	tinsert(E.PromiseCurrency, currencyID)
 	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-	local iconFileID = 134400
+	local iconFileID = E.Icon_QuestionMark
 	if info then
 		iconFileID = info.iconFileID
 	end
@@ -271,12 +271,12 @@ function E.func_itemName(itemID)
 end
 ----------------------------------------------------------------
 function E.func_itemTexture(itemID)
-	local icon = C_Item.GetItemIconByID(itemID) or 134400
+	local icon = C_Item.GetItemIconByID(itemID) or E.Icon_QuestionMark
 	return E.func_texturefromIcon(icon)
 end
 ----------------------------------------------------------------
 function E.func_spellTexture(spellID)
-	local icon = E.func_GetSpellIcon(spellID) or 134400
+	local icon = E.func_GetSpellIcon(spellID) or E.Icon_QuestionMark
 	return E.func_texturefromIcon(icon)
 end
 ----------------------------------------------------------------
@@ -438,11 +438,10 @@ function E.func_UnitFaction(unit)
 end
 ----------------------------------------------------------------
 function E.func_texturefromIcon(icon, iconSize)
-	return "|T"..(icon or 134400)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::64:64:4:60:4:60|t"
+	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::64:64:4:60:4:60|t"
 end
 E.Icon_Alliance = 255140-- E.func_texturefromIcon(255140) -- 132486
 E.Icon_Horde = 255142 -- 132485
-E.Icon_Unknown = 134400
 E.Icon_Kyrian = 3641395
 E.Icon_Necrolord = 3641396
 E.Icon_NightFae = 3641394
@@ -464,7 +463,7 @@ end
 
 E.Icon_MailBox = "Interface/AddOns/"..E.GlobalAddonName.."/Media/ElvUI/Mail0.tga"
 function E.func_texturefromIconEVENT(icon, iconSize)
-	return "|T"..(icon or 134400)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::128:128:0:91:0:91|t"
+	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::128:128:0:91:0:91|t"
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -504,7 +503,7 @@ end
 ----------------------------------------------------------------
 function E.func_currencyIcon(currencyID)
 	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-	local iconFileID = 134400
+	local iconFileID = E.Icon_QuestionMark
 	if info then
 		iconFileID = info.iconFileID
 	end
@@ -1259,7 +1258,11 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	end
 end
 ----------------------------------------------------------------
-function E:func_CreateUtilsButton(frame)
+function E:func_CreateUtilsButton(frame, optionsAddonName)
+	if not optionsAddonName then
+		optionsAddonName = GlobalAddonName
+	end
+	print (optionsAddonName)
 	----------------------------------------------------------------
 	-- OctoToDo_CloseButton
 	----------------------------------------------------------------
@@ -1309,7 +1312,7 @@ function E:func_CreateUtilsButton(frame)
 			if SettingsPanel:IsVisible() and self:IsVisible() then
 				HideUIPanel(SettingsPanel)
 			else
-				Settings.OpenToCategory(E.func_AddonTitle(GlobalAddonName), true)
+				Settings.OpenToCategory(E.func_AddonTitle(optionsAddonName), true)
 			end
 	end)
 	OctoToDo_OptionsButton:SetScript("OnLeave", function(self)
@@ -1884,7 +1887,6 @@ E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
 E.curGUID = UnitGUID("PLAYER")
 E.GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
-
 E.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
 E.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
 E.baseArmoryUrl = "https://worldofwarcraft.blizzard.com/%s/character/%s/%s"
@@ -2000,6 +2002,7 @@ E.Steelblue_Color = "|cff4682B3"
 E.Slategray_Color = "|cff708090"
 E.Brown_Color = "|cff964B00"
 E.Event_Color = "|cff4682B3"
+E.Debug_Color ="|cff4682B3"
 ----------------------------------------------------------------
 E.Kyrian_r_Color = 0.44
 E.Kyrian_g_Color = 0.66
@@ -2021,7 +2024,8 @@ E.AccountWide = E.Blue_Color.."(A)".."|r"
 E.AccountTransferable = E.Red_Color.."(T)".."|r"
 E.Icon_AccountWide = E.Blue_Color.."(A)".."|r"
 E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r"
-E.Icon_Empty = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
+E.Icon_QuestionMark = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
+E.Icon_Empty = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\spacerEMPTY"
 E.OctoTable_Covenant = {
 	[1] = {
 		name = C_Covenants.GetCovenantData(1).name, -- "Kyrian",

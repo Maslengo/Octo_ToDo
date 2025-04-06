@@ -481,7 +481,6 @@ local function func_OnAcquired(owner, frame, data, new)
 end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
 local function OctoToDo_Frame_init(frame, data)
-	-- if data.firsticonTexture ~= E.Icon_Empty then
 	if data.firsticonTexture then
 		frame.first.icon:SetTexture(data.firsticonTexture)
 	end
@@ -669,7 +668,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 	E:func_SetBackdrop(DD_OCTOMAIN)
 	DD_OCTOMAIN.ExpandArrow = DD_OCTOMAIN:CreateTexture(nil, "ARTWORK")
 	DD_OCTOMAIN.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	DD_OCTOMAIN.ExpandArrow:SetSize(14, 14)
+	DD_OCTOMAIN.ExpandArrow:SetSize(16, 16)
 	DD_OCTOMAIN.ExpandArrow:SetPoint("RIGHT", -4, 0)
 	DD_OCTOMAIN.text = DD_OCTOMAIN:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	DD_OCTOMAIN.text:SetAllPoints()
@@ -872,7 +871,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 	E:func_SetBackdrop(DD2_OCTOMAIN)
 	DD2_OCTOMAIN.ExpandArrow = DD2_OCTOMAIN:CreateTexture(nil, "ARTWORK")
 	DD2_OCTOMAIN.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	DD2_OCTOMAIN.ExpandArrow:SetSize(14, 14)
+	DD2_OCTOMAIN.ExpandArrow:SetSize(16, 16)
 	DD2_OCTOMAIN.ExpandArrow:SetPoint("RIGHT", -4, 0)
 	DD2_OCTOMAIN.text = DD2_OCTOMAIN:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	DD2_OCTOMAIN.text:SetAllPoints()

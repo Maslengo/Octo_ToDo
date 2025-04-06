@@ -1,8 +1,6 @@
 local GlobalAddonName, E = ... 
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
--------------------------------------------------------------------------
--- local wipe = false
 function E.CreateGeneralOptions()
 	local generalOptions = {
 		type = "group",
@@ -10,17 +8,17 @@ function E.CreateGeneralOptions()
 		name = E.func_AddonTitle(GlobalAddonName).." "..E.Gray_Color..E.func_AddonVersion(GlobalAddonName) .. "|r",
 		args = {
 			-------------------------------------------------
-			MainHeader = {
+			Header1 = {
 				type = "header",
 				name = "",
-				order = 2,
+				order = 1,
 			},
 			-------------------------------------------------
 			-------------------------------------------------
-			MainHeader2 = {
+			Header3 = {
 				type = "header",
-				name = "AUTO",
-				order = 7,
+				name = "",
+				order = 3,
 			},
 			-------------------------------------------------
 			AutoSellGrey = {
@@ -599,7 +597,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.prefix = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 4,
+				order = 2,
 			},
 			-------------------------------------------------
 		},

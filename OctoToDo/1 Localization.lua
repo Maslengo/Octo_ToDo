@@ -4,13 +4,40 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("OctoTODO", "enUS", true, debug)
 if L then
+
+
+	L["AddonHeight"] = true
+	L["MainFrameNumLines"] = true
+	L["curWidthTitle"] = true
+
+
+	L["fullName"] = true
+	L["showIcons"] = true
+	L["showVersion"] = true
+	L["showIndex"] = true
+
+
+
+	L["minimaphide"] = true
+	L["hookMenuButton"] = true
+	L["sortingCpu"] = true
+	L["cpuShowCurrent"] = true
+	L["cpuShowEncounter"] = true
+	L["profilingcpuShowPeak"] = true
+	L["profilingcpuShowAverage"] = true
+	L["profilingcpuUpdate"] = true
+	L["localizeCategoryName"] = true
+	L["autofocusSearch"] = true
+	L["showSecureAddons"] = true
+	L["showTocXCategory"] = true
+	L["showTocCategory"] = true
+	L["showMemoryInBrokerTtp"] = true
+	L["isCategoryFrameVisible"] = true
 	L["time_YEAR"] = "y"
 	L["time_DAY"] = "d"
 	L["time_HOUR"] = "h"
 	L["time_MINUTE"] = "m"
 	L["time_SECOND"] = "s"
-
-
 	L["Abandon All Quests"] = true
 	L["Abandon: "] = true
 	L["Battle Pet"] = true
@@ -182,12 +209,36 @@ if L then
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
+
+	L["AddonHeight"] = "|cffFF00FF".."Высота строк".."|r"
+	L["MainFrameNumLines"] = "|cffFF00FF".."Количество строк".."|r"
+	L["curWidthTitle"] = "|cffFF00FF".."Ширина строк".."|r"
+
+	L["fullName"] = "Полное название"
+	L["showIcons"] = "Показывать иконку"
+	L["showVersion"] = "Показывать версию"
+	L["showIndex"] = "Показывать индекс"
+
+	L["minimaphide"] = "|cffFF4C4F".."minimaphide".."|r"
+	L["hookMenuButton"] = "|cffFF4C4F".."hookMenuButton".."|r"
+	L["sortingCpu"] = "|cffFF4C4F".."sortingCpu".."|r"
+	L["cpuShowCurrent"] = "|cffFF4C4F".."cpuShowCurrent".."|r"
+	L["cpuShowEncounter"] = "|cffFF4C4F".."cpuShowEncounter".."|r"
+	L["profilingcpuShowPeak"] = "|cffFF4C4F".."profilingcpuShowPeak".."|r"
+	L["profilingcpuShowAverage"] = "|cffFF4C4F".."profilingcpuShowAverage".."|r"
+	L["profilingcpuUpdate"] = "|cffFF4C4F".."profilingcpuUpdate".."|r"
+	L["localizeCategoryName"] = "|cffFF4C4F".."localizeCategoryName".."|r"
+	L["autofocusSearch"] = "|cffFF4C4F".."autofocusSearch".."|r"
+	L["showSecureAddons"] = "|cffFF4C4F".."showSecureAddons".."|r"
+	L["showTocXCategory"] = "|cffFF4C4F".."showTocXCategory".."|r"
+	L["showTocCategory"] = "|cffFF4C4F".."showTocCategory".."|r"
+	L["showMemoryInBrokerTtp"] = "|cffFF4C4F".."showMemoryInBrokerTtp".."|r"
+	L["isCategoryFrameVisible"] = "|cffFF4C4F".."isCategoryFrameVisible".."|r"
 	L["time_YEAR"] = "г"
 	L["time_DAY"] = "д"
 	L["time_HOUR"] = "ч"
 	L["time_MINUTE"] = "м"
 	L["time_SECOND"] = "с"
-
 	L["Abandon All Quests"] = "Отменить все задания"
 	L["Abandon: "] = "Отменено: "
 	L["Battle Pet"] = "Боевой питомец"
@@ -271,7 +322,7 @@ if L then
 	L["Waist"] = "Пояс"
 	L["Legs"] = "Ноги"
 	L["Feet"] = "Ступни"
-	L["InDev"] = "|cffFF0000В разработке|r"
+	L["InDev"] = "|cffFF4C4FВ разработке|r"
 	L["Only Current Server"] = "Только текущий сервер"
 	L["Only Current BattleTag"] = "Только текущий BattleTag"
 	L["Player level"] = "Мин. уровень"

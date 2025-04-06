@@ -1,19 +1,18 @@
 local GlobalAddonName, E = ... 
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
--------------------------------------------------------------------------
 local wipe = false
 function E.Currencies()
 	local Currencies = {
 		type = "group",
 		childGroups = "tree",
-		name = CURRENCY,
+		name = E.White_Color..CURRENCY.."|r",
 		args = {
 			-------------------------------------------------
-			ReloadHeader4 = {
+			Header1 = {
 				type = "header",
 				name = "",
-				order = 2,
+				order = 1,
 			},
 			-------------------------------------------------
 			Currency = {

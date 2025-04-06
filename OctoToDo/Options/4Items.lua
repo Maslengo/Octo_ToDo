@@ -1,19 +1,17 @@
 local GlobalAddonName, E = ... 
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
--------------------------------------------------------------------------
-local wipe = false
 function E.Items()
 	local Items = {
 		type = "group",
 		childGroups = "tree",
-		name = ITEMS,
+		name = E.White_Color..ITEMS.."|r",
 		args = {
 			-------------------------------------------------
-			ReloadHeader452 = {
+			Header1 = {
 				type = "header",
 				name = "",
-				order = 2,
+				order = 1,
 			},
 			-------------------------------------------------
 			Items = {
@@ -51,28 +49,6 @@ function E.Items()
 			},
 		},
 	}
-	-- if wipe == false then
-	--     wipe = true
-	--     local index = 0
-	--             for itemID, v in next, (OctoToDo_DB_Config.ItemDB) do
-	--                 index = index + 1
-	--                 E.func_TableMerge(Items.args, {
-	--                         ["addonNameQWE65"..index] = {
-	--                             type = "toggle",
-	--                             name = E.func_itemTexture(itemID)..E.func_itemName(itemID),
-	--                             desc = "\n".."id: |r"..E.Green_Color..tostring(itemID).."|r",
-	--                             get = function()
-	--                                 return OctoToDo_DB_Config.ItemDB[itemID]
-	--                             end,
-	--                             set = function(_, value)
-	--                                 OctoToDo_DB_Config.ItemDB[itemID] = value
-	--                             end,
-	--                             width = E.FULL_WIDTH/2,
-	--                             order = 123 + index,
-	--                         },
-	--                 })
-	--             end
-	-- end
 	return Items
 end
 

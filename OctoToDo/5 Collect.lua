@@ -920,9 +920,9 @@ function E.Collect_All_Holiday()
 				-- E.HolidayForButton[id].iconTexture = event.iconTexture or ""
 				E.HolidayForButton[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
 				if eInfo then
-					E.HolidayForButton[id].iconTexture = eInfo.texture or 134400
+					E.HolidayForButton[id].iconTexture = eInfo.texture or E.Icon_QuestionMark
 				else
-					E.HolidayForButton[id].iconTexture = event.iconTexture or 134400
+					E.HolidayForButton[id].iconTexture = event.iconTexture or E.Icon_QuestionMark
 					E.HolidayForButton[id].ENDS = event_duration
 				end
 				E.HolidayForButton[id].invitedBy = event.invitedBy

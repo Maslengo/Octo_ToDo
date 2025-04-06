@@ -6,28 +6,28 @@ function E.Developing()
 	local Developing = {
 		type = "group",
 		childGroups = "tree",
-		name = "Developing",
+		name = E.Debug_Color..BINDING_HEADER_DEBUG.."|r",
 		args = {
 			-------------------------------------------------
-			ReloadHeader3 = {
+			Header1 = {
 				type = "header",
 				name = "",
-				order = 2,
+				order = 1,
 			},
 			-------------------------------------------------
 			Reload = {
 				type = "execute",
-				name = E.Green_Color..RELOADUI.."|r",
+				name = E.Debug_Color..RELOADUI.."|r",
 				func = function()
 					return ReloadUI()
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 3,
 			},
 			-------------------------------------------------
 			DELETEALL = {
 				type = "execute",
-				name = E.Green_Color..DELETE.." "..ALL.."|r",
+				name = E.Debug_Color..DELETE.." "..ALL.."|r",
 				func = function()
 					OctoToDo_DB_Config = {}
 					OctoToDo_DB_Levels = {}
@@ -37,7 +37,7 @@ function E.Developing()
 					OCTO_DB_reputations_test = {}
 					return ReloadUI()
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 4,
 			},
 			-------------------------------------------------
@@ -54,7 +54,7 @@ function E.Developing()
 					OctoToDo_DB_Config  = {}
 					return
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 7,
 			},
 			-------------------------------------------------
@@ -65,7 +65,7 @@ function E.Developing()
 					OctoToDo_DB_Levels  = {}
 					return
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 8,
 			},
 			-------------------------------------------------
@@ -76,18 +76,18 @@ function E.Developing()
 					OctoToDo_DB_Other  = {}
 					return
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 9,
 			},
 			-------------------------------------------------
 			OctoToDo_DB_Vars = {
 				type = "execute",
-				name = E.Green_Color.."Vars".."|r",
+				name = E.Debug_Color.."Vars".."|r",
 				func = function()
 					OctoToDo_DB_Vars  = {}
 					return ReloadUI()
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 10,
 			},
 			-------------------------------------------------
@@ -98,7 +98,7 @@ function E.Developing()
 					OCTO_DB_currencies_test  = {}
 					return
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 11,
 			},
 			-------------------------------------------------
@@ -109,7 +109,7 @@ function E.Developing()
 					OCTO_DB_reputations_test  = {}
 					return
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 12,
 			},
 
@@ -124,21 +124,21 @@ function E.Developing()
 					end
 					return
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 13,
 			},
 
 			-------------------------------------------------
 			MASLENGO = {
 				type = "execute",
-				name = E.Red_Color.."MASLENGO|r",
+				name = E.Debug_Color.."MASLENGO|r",
 				func = function()
 					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 						CharInfo.MASLENGO = {}
 					end
 					return
 				end,
-				width = E.FULL_WIDTH/3,
+				width = E.FULL_WIDTH/4,
 				order = 14,
 			},
 			-------------------------------------------------

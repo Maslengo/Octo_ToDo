@@ -208,7 +208,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "MawTorghast",
 		name_save = "MawTorghast",
 		reset = "Weekly",
@@ -219,7 +219,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = E.Timers.SL_Maw_Assault().."MawCovenantAssault",
 		name_save = "MawCovenantAssault",
 		reset = "Weekly",
@@ -233,7 +233,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = E.func_questName(64273),
 		name_save = "MawContainingtheHelsworn",
 		reset = "Weekly",
@@ -336,7 +336,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaKorthianAnimaVessel",
 		name_save = "KorthiaKorthianAnimaVessel",
 		reset = "Daily",
@@ -347,7 +347,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaRIFTStolenAnimaVessel",
 		name_save = "KorthiaRIFTStolenAnimaVessel",
 		reset = "Weekly",
@@ -360,7 +360,7 @@ E.OctoTable_UniversalQuest = {
 		max = 3
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaRIFTRiftboundCache",
 		name_save = "KorthiaRIFTRiftboundCache",
 		reset = "Daily",
@@ -374,7 +374,7 @@ E.OctoTable_UniversalQuest = {
 		max = 4
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaRIFTZovaalsVault",
 		name_save = "KorthiaRIFTZovaalsVault",
 		reset = "Daily",
@@ -385,7 +385,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaRIFTSpectralBoundChest",
 		name_save = "KorthiaRIFTSpectralBoundChest",
 		reset = "Daily",
@@ -396,7 +396,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "MawHelswornChest",
 		name_save = "MawHelswornChest",
 		reset = "Daily",
@@ -407,7 +407,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaMobs",
 		name_save = "KorthiaMobs",
 		reset = "Daily",
@@ -432,7 +432,7 @@ E.OctoTable_UniversalQuest = {
 		max = 3
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaRelicGorger",
 		name_save = "KorthiaRelicGorger",
 		reset = "Daily",
@@ -446,7 +446,7 @@ E.OctoTable_UniversalQuest = {
 		max = 4
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaCollection",
 		name_save = "KorthiaCollection",
 		reset = "Daily",
@@ -532,7 +532,7 @@ E.OctoTable_UniversalQuest = {
 		max = 23
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaITEMResearchReportRelicExaminationTechniques",
 		name_save = "KorthiaITEMResearchReportRelicExaminationTechniques",
 		reset = "Once",
@@ -543,7 +543,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaITEMVaultAnimaTracker",
 		name_save = "KorthiaITEMVaultAnimaTracker",
 		reset = "Once",
@@ -554,7 +554,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaITEMTreatiseRecognizingStygiaanditsUses",
 		name_save = "KorthiaITEMTreatiseRecognizingStygiaanditsUses",
 		reset = "Once",
@@ -565,7 +565,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaITEMTreatiseBondsofStygiainMortals",
 		name_save = "KorthiaITEMTreatiseBondsofStygiainMortals",
 		reset = "Once",
@@ -576,7 +576,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop",
 		name_save = "KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop",
 		reset = "Once",
@@ -587,7 +587,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaITEMTreatiseRelicsAboundintheShadowlands",
 		name_save = "KorthiaITEMTreatiseRelicsAboundintheShadowlands",
 		reset = "Once",
@@ -598,7 +598,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaITEMResearchReportAdaptiveAlloys",
 		name_save = "KorthiaITEMResearchReportAdaptiveAlloys",
 		reset = "Once",
@@ -609,7 +609,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "KorthiaITEMResearchReportFirstAlloys",
 		name_save = "KorthiaITEMResearchReportFirstAlloys",
 		reset = "Once",
@@ -620,7 +620,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "ZaralekCavernEvents",
 		name_save = "ZaralekCavernEvents",
 		reset = "Daily",
@@ -694,7 +694,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = L["Sniffenseeking"],
 		name_save = "ZaralekCavernSniffenseeking",
 		reset = "Weekly",
@@ -721,7 +721,7 @@ E.OctoTable_UniversalQuest = {
 		max = 17
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = L["Sniffenseeking (items)"],
 		name_save = "ZaralekCavernSniffenseekingItems",
 		reset = "Weekly",
@@ -789,7 +789,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"],
 		name_save = "DragonbaneKeep",
 		reset = "Weekly",
@@ -800,7 +800,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = E.Timers.DF_GrandHunts()..L["Grand Hunt"],
 		name_save = "TheGrandHunt",
 		reset = "Weekly",
@@ -811,7 +811,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = E.Timers.DF_PrimalStorms()..L["The Storm's Fury"],
 		name_save = "StormsFury",
 		reset = "Weekly",
@@ -822,7 +822,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = E.func_questName(66133),
 		name_save = "KeysofLoyalty",
 		reset = "Weekly",
@@ -833,7 +833,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "StormBoundChest",
 		name_save = "StormBoundChest",
 		reset = "Weekly",
@@ -858,7 +858,7 @@ E.OctoTable_UniversalQuest = {
 		max = 4
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "FyrakkAssaults",
 		name_save = "FyrakkAssaults",
 		reset = "Weekly",
@@ -870,7 +870,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "DiscipleofFyrakk",
 		name_save = "DiscipleofFyrakk",
 		reset = "Weekly",
@@ -907,7 +907,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "FightingisItsOwnReward",
 		name_save = "FightingisItsOwnReward",
 		reset = "Weekly",
@@ -1042,7 +1042,7 @@ E.OctoTable_UniversalQuest = {
 		max = 3
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "ZMWorldQuests",
 		name_save = "ZMWorldQuests",
 		reset = "Daily",
@@ -1082,7 +1082,7 @@ E.OctoTable_UniversalQuest = {
 		max = 3
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "ZMTREASURES",
 		name_save = "ZMTREASURES",
 		reset = "Daily",
@@ -1118,7 +1118,7 @@ E.OctoTable_UniversalQuest = {
 		max = 36
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "ZMUndulatingFoliage",
 		name_save = "ZMUndulatingFoliage",
 		reset = "Once",
@@ -1145,7 +1145,7 @@ E.OctoTable_UniversalQuest = {
 		max = 6
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "ZMPryingEyeDiscovery",
 		name_save = "ZMPryingEyeDiscovery",
 		reset = "Daily",
@@ -1158,7 +1158,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "ZMPUZZLECACHES",
 		name_save = "ZMPUZZLECACHES",
 		reset = "Daily",
@@ -1184,7 +1184,7 @@ E.OctoTable_UniversalQuest = {
 		max = 50
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "ZMConcordance",
 		name_save = "ZMConcordance",
 		reset = "Once",
@@ -1340,7 +1340,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = E.Timers.Legion_Invasion().."InvasionQuests",
 		name_save = "InvasionQuests",
 		reset = "Daily",
@@ -1403,7 +1403,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "storylineBrokenShoreExcavations",
 		name_save = "storylineBrokenShoreExcavations",
 		reset = "Once",
@@ -1419,7 +1419,7 @@ E.OctoTable_UniversalQuest = {
 		max = 6
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "storylineArgusToArgus",
 		name_save = "storylineArgusToArgus",
 		reset = "Once",
@@ -1766,7 +1766,7 @@ E.OctoTable_UniversalQuest = {
 		max = 27
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Treasures",
 		name_save = "EmeraldDream_Treasures",
 		reset = "Once",
@@ -1945,7 +1945,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "SpecialAssignments",
 		name_save = "SpecialAssignments",
 		reset = "Weekly",
@@ -2071,7 +2071,7 @@ E.OctoTable_UniversalQuest = {
 		max = 1
 	},
 	{
-		icon = 134400,
+		icon = E.Icon_Empty,
 		textleft = "SirenIsleWeekly",
 		name_save = "SirenIsleWeekly",
 		reset = "Weekly",

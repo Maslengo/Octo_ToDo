@@ -1,19 +1,18 @@
 local GlobalAddonName, E = ... 
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
--------------------------------------------------------------------------
 local wipe = false
 function E.Reputations()
 	local Reputations = {
 		type = "group",
 		childGroups = "tree",
-		name = REPUTATION,
+		name = E.White_Color..REPUTATION.."|r",
 		args = {
 			-------------------------------------------------
-			ReloadHeader4 = {
+			Header1 = {
 				type = "header",
 				name = "",
-				order = 2,
+				order = 1,
 			},
 			-------------------------------------------------
 			Reputations = {
