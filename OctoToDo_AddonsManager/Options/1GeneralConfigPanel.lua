@@ -135,11 +135,33 @@ function E.CreateGeneralOptionsADDONS()
 				end,
 				set = function(_, value)
 					OctoToDo_AddonsManager.config.defaultAddonList = value
+					E.CreateMyDataProvider()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
 				order = 8,
 			},
+			-------------------------------------------------
+			showOnlyLoaded = {
+				type = "toggle",
+				name = L["showOnlyLoaded"],
+				desc = "",
+				get = function()
+					return OctoToDo_AddonsManager.config.showOnlyLoaded
+				end,
+				set = function(_, value)
+					OctoToDo_AddonsManager.config.showOnlyLoaded = value
+					E.CreateMyDataProvider()
+					E.AddonList_Update()
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 9,
+			},
+
+
+
+
+
 			-------------------------------------------------
 			Header24 = {
 				type = "header",
@@ -149,9 +171,9 @@ function E.CreateGeneralOptionsADDONS()
 			-------------------------------------------------
 			RESET = {
 				type = "execute",
-				name = E.Debug_Color..RESET.."|r",
+				name = E.Debug_Color..DELETE.." "..ALL.."|r",
 				func = function()
-					OctoToDo_AddonsManager.config = {}
+					OctoToDo_AddonsManager = {}
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -161,7 +183,6 @@ function E.CreateGeneralOptionsADDONS()
 				type = "execute",
 				name = E.Debug_Color..RELOADUI.."|r",
 				func = function()
-					OctoToDo_AddonsManager.config = {}
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,

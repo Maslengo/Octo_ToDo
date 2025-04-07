@@ -109,6 +109,34 @@ function E:func_Create_DDframe_AddonsManager()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = false -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = L["defaultAddonList"]
+				info.hasArrow = nil
+				info.checked = OctoToDo_AddonsManager.config.defaultAddonList
+				info.func = function(_, _, _, checked)
+					OctoToDo_AddonsManager.config.defaultAddonList = checked
+					E.CreateMyDataProvider()
+					E.AddonList_Update()
+				end
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = false -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = L["showOnlyLoaded"]
+				info.hasArrow = nil
+				info.checked = OctoToDo_AddonsManager.config.showOnlyLoaded
+				info.func = function(_, _, _, checked)
+					OctoToDo_AddonsManager.config.showOnlyLoaded = checked
+					E.CreateMyDataProvider()
+					E.AddonList_Update()
+				end
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
 				self:ddAddSeparator(level)
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
@@ -138,7 +166,7 @@ function E:func_Create_DDframe_AddonsManager()
 				info.text = ENABLE_ALL_ADDONS
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
-					E.func_SetEnabledAll()
+					E.func_EnableAllAddOns()
 					E.AddonList_Update()
 				end
 				self:ddAddButton(info, level)

@@ -1653,6 +1653,23 @@ function E:func_CreateMinimapButton(addonName, vars, frame, func, frameString)
 	LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
 	LibDBIcon:Show(MinimapName)
 end
+
+
+----------------------------------------------------------------
+function E.func_TooltipOnEnter(frame, first, second)
+	if not frame.tooltip then
+		return
+	elseif #frame.tooltip == 0 then
+		return
+	end
+	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 0, 0)
+	if first then GameTooltip:AddLine(" ") end
+	for _, value in next, (frame.tooltip) do
+		GameTooltip:AddDoubleLine(value[1], value[2], 1, 1, 1, 1, 1, 1)
+	end
+	if second then GameTooltip:AddLine(" ") end
+	GameTooltip:Show()
+end
 ----------------------------------------------------------------
 function E:func_fixdate(date)
 	-- GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(date("%d/%m/%Y").."|r"))

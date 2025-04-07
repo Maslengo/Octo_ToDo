@@ -18,15 +18,15 @@ end
 local AddonHeight = 11 --ADDON_BUTTON_HEIGHT -- Высота -- OctoToDo_DB_Vars.curHeight
 local curWidthTitle = 500 -- Ширина Левого -- OctoToDo_DB_Vars.curWidthTitle
 local MainFrameNumLines = 60 --MAX_ADDONS_DISPLAYED
-local totalNumAddOns = C_AddOns.GetNumAddOns()
+local totalNumAddOns = E.func_GetNumAddOns()
 if MainFrameNumLines > totalNumAddOns then
 	MainFrameNumLines = totalNumAddOns
 end
 ----------------------------------------------------------------
 function E.AddDeps_RECURSION(i, groupNode)
-	for _, depIndex in ipairs(E.depsByIndex[i]) do
+	for _, depIndex in ipairs(OctoToDo_AddonsTable.depsByIndex[i]) do
 		local secondABOBUS = groupNode:Insert({index = depIndex})
-		if E.depsByIndex[depIndex] and not E.recycleByIndex[depIndex] then
+		if OctoToDo_AddonsTable.depsByIndex[depIndex] and not OctoToDo_AddonsTable.recycleByIndex[depIndex] then
 			E.AddDeps_RECURSION(depIndex, secondABOBUS)
 		end
 	end
@@ -36,7 +36,7 @@ local function OnClick_Zero(frame)
 	local parent = frame:GetParent() -- ЭТО ИНДЕКС?
 	local node = parent:GetElementData()
 	local index = node:GetData().index
-	local name = C_AddOns.GetAddOnInfo(index)
+	local name = E.func_GetAddonName(index)
 	-- E:func_SetBackdrop(parent, "|cff00FF00", .1, 0)
 	local IsCollapsed = node:IsCollapsed() or true -- IsCollapsed = IsOpen т.е. ОТКРЫТ
 	if IsCollapsed ~= nil then
@@ -45,9 +45,7 @@ local function OnClick_Zero(frame)
 		OctoToDo_AddonsManager.collapsedAddons[name] = node:IsCollapsed()
 	end
 end
-
 ----------------------------------------------------------------
-
 ----------------------------------------------------------------
 function OctoToDo_EventFrame_AddonsManager:createDDMenu()
 	local DDFrame = CreateFrame("EventFrame", "DDFrame", UIParent)
@@ -56,73 +54,76 @@ function OctoToDo_EventFrame_AddonsManager:createDDMenu()
 	DDFrame:ddSetDisplayMode(GlobalAddonName)
 	DDFrame:ddSetInitFunc(function(self, level, value)
 			local info = {}
-			local addonIndex = DDFrame.addonIndex
-			local addonName = E.func_GetAddonName(addonIndex)
+			local index = DDFrame.index
+			local addonName = E.func_GetAddonName(index)
 			----------------------------------------------------------------
 			if level == 1 then
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
-				info.keepShownOnClick = false
-				info.notCheckable = true -- TRUE убрать чекбокс
-				info.isNotRadio = true -- TRUE круг, а не квадрат
-				info.text = ADD
-				info.value = ADD
-				info.hasArrow = true
-				self:ddAddButton(info, level)
+				-- info.keepShownOnClick = false
+				-- info.notCheckable = true -- TRUE убрать чекбокс
+				-- info.isNotRadio = true -- TRUE круг, а не квадрат
+				-- info.text = ADD.." или Убрать"
+				-- info.value = ADD
+				-- info.hasArrow = true
+				-- self:ddAddButton(info, level)
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = false
 				info.notCheckable = true -- TRUE убрать чекбокс
 				info.isNotRadio = true -- TRUE круг, а не квадрат
-				if OctoToDo_AddonsManager.lock.addons[E.func_GetAddonName(addonIndex)] then
-					info.text = "Разблокировать"
+				if OctoToDo_AddonsManager.lock.addons[E.func_GetAddonName(index)] then
+					info.text = UNLOCK
 				else
-					info.text = "Заблокировать"
+					info.text = LOCK
 				end
-				info.checked = OctoToDo_AddonsManager.lock.addons[E.func_GetAddonName(addonIndex)]
+				info.checked = OctoToDo_AddonsManager.lock.addons[E.func_GetAddonName(index)]
 				info.hasArrow = nil
 				info.func = function()
-					E.func_LockAddon(addonIndex)
+					E.func_LockAddon(index)
 					E.AddonList_Update()
 				end
 				self:ddAddButton(info, level)
-			elseif value == ADD then
-				info.fontObject = OctoFont11
-				info.keepShownOnClick = true
-				info.notCheckable = true -- TRUE убрать чекбокс
-				info.isNotRadio = true -- TRUE круг, а не квадрат
-				info.hasArrow = nil
+			-- elseif value == ADD then
+				----------------------------------------------------------------
+				self:ddAddSeparator(level)
+				----------------------------------------------------------------
 				for profileName, v in pairs(OctoToDo_AddonsManager.profiles) do
+					info.fontObject = OctoFont11
+					info.keepShownOnClick = true
+					info.notCheckable = false -- TRUE убрать чекбокс
+					info.isNotRadio = true -- TRUE круг, а не квадрат
+					info.hasArrow = nil
 					info.text = profileName
-					info.checked = profileName
+					info.checked = v[E.func_GetAddonName(index)]
+					info.func = function(_, _, _, checked)
+						if v[E.func_GetAddonName(index)] == true then
+							v[E.func_GetAddonName(index)] = false
+						else
+							v[E.func_GetAddonName(index)] = true
+						end
+					end
+					self:ddAddButton(info, level)
 				end
-				info.func = function(_, _, _, checked)
-					print (info.checked, addonName, addonIndex)
-					fpde(OctoToDo_AddonsManager.profiles[info.checked])
-					OctoToDo_AddonsManager.profiles[info.checked][addonName] = true
-				end
-				self:ddAddButton(info, level)
 			end
 			----------------------------------------------------------------
 	end)
 end
-
-
 ----------------------------------------------------------------
 local function OnClick_third(frame, button)
 	local parent = frame:GetParent()
 	local node = parent:GetElementData()
-	local addonIndex = parent:GetData().index
-	local value = addonIndex
+	local index = parent:GetData().index
+	local value = index
 	if OctoToDo_MainFrame_AddonsManager:IsDragging() then
 		return
 	end
 	if button == "LeftButton" then
-		E.func_ToggleAddon(addonIndex)
+		E.func_ToggleAddon(index)
 	elseif button == "MiddleButton" then
-		E.func_LockAddon(addonIndex)
+		E.func_LockAddon(index)
 	elseif button == "RightButton" then
-		DDFrame.addonIndex = addonIndex
+		DDFrame.index = index
 		DDFrame:ddToggle(level, value, "cursor")
 	end
 	OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(parent, node)
@@ -130,13 +131,13 @@ local function OnClick_third(frame, button)
 end
 ----------------------------------------------------------------
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
-function E.func_LockAddon(addonIndex)
-	local name = C_AddOns.GetAddOnInfo(addonIndex)
+function E.func_LockAddon(index)
+	local name = E.func_GetAddonName(index)
 	if OctoToDo_AddonsManager.lock.addons[name] then
 		OctoToDo_AddonsManager.lock.addons[name] = false
 	else
 		OctoToDo_AddonsManager.lock.addons[name] = true
-		-- C_AddOns.EnableAddOn(addonIndex)
+		-- E.func_EnableAddOn(index)
 	end
 end
 ----------------------------------------------------------------
@@ -171,12 +172,11 @@ local function func_OnAcquired(owner, frame, data, new)
 		-- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.third:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.third:SetScript("OnEnter", function()
-
-			E.OnENTERTTOOLTIP(frame.third)
-	end)
+				E.func_TooltipOnEnter(frame.third, true, true)
+		end)
 		frame.third:SetScript("OnLeave", GameTooltip_Hide)
 		frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+AddonHeight+4, 0)
+		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+AddonHeight+2, 0)
 		frame.third.textLEFT:SetFontObject(OctoFont11)
 		frame.third.textLEFT:SetJustifyV("MIDDLE")
 		frame.third.textLEFT:SetJustifyH("LEFT")
@@ -185,38 +185,34 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.third:RegisterForClicks("AnyUp")
 		frame.third:SetScript("OnClick", OnClick_third)
 		frame.third.textRIGHT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.third.textRIGHT:SetAllPoints()
+		-- frame.third.textRIGHT:SetAllPoints()
+		frame.third.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
 		frame.third.textRIGHT:SetFontObject(OctoFont11)
 		frame.third.textRIGHT:SetJustifyV("MIDDLE")
 		frame.third.textRIGHT:SetJustifyH("RIGHT")
 		frame.third.textRIGHT:SetTextColor(1, 1, 1, 1)
 	end
 end
-
 ----------------------------------------------------------------
-
-
-function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(addonIndex)
-	local name, title, notes, _, _, security = C_AddOns.GetAddOnInfo(addonIndex)
+function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(index)
+	local name = E.func_GetAddonName(index)
+	local title = E.func_GetAddonTitle(index)
+	local notes = E.func_GetAddonNotes(index)
+	local security = E.func_GetAddonSecurity(index)
 	local character = GetAddonCharacter()
-	local loadable, reason = C_AddOns.IsAddOnLoadable(addonIndex, character)
-	if reason ~= "MISSING" then -- Исключаем отсутствующие аддоны
+	local loadable = E.func_IsAddOnLoadable(index, character)
+	local reason = E.func_GetAddonReason(index, character) or ""
+	if E.func_IsAddonInstalled(index) then -- Исключаем отсутствующие аддоны
 		local firsticonTexture = ""
 		tooltipthird = {}
 		local textRIGHT = " "
 		local colorAddon = E.White_Color
-		local Version = C_AddOns.GetAddOnMetadata(addonIndex, "Version") or 0
-		local Author = C_AddOns.GetAddOnMetadata(addonIndex, "Author") or ""
-		local exists = C_AddOns.DoesAddOnExist(name)
-		-- local interfaceVersion = E.interfaceVersion
-		-- if E.interfaceVersion >= 110105 then
-		-- interfaceVersion = C_AddOns.GetAddOnInterfaceVersion(name)
-		-- else
-		-- interfaceVersion = 110105
-		-- end
-		local defaultEnabled = C_AddOns.IsAddOnDefaultEnabled(name)
-		local checkboxState = C_AddOns.GetAddOnEnableState(addonIndex, character)
-		local enabled = (C_AddOns.GetAddOnEnableState(addonIndex, UnitName("player")) > Enum.AddOnEnableState.None)
+		local Version = E.func_GetAddonVersion(index)
+		local Author = E.func_GetAddonAuthor(index)
+		local exists = E.func_DoesAddOnExist(index)
+		local defaultEnabled = E.func_IsAddOnDefaultEnabled(index)
+		local checkboxState = E.func_GetAddOnEnableState(index, character)
+		local enabled = (E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None)
 		if (checkboxState == Enum.AddOnEnableState.Some ) then
 			tooltipthird[#tooltipthird+1] = ENABLED_FOR_SOME
 			-- else
@@ -230,8 +226,8 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(addonIndex)
 		else
 			colorAddon = E.func_rgb2hexDEV(0.5, 0.5, 0.5)
 		end
-		local iconTexture = C_AddOns.GetAddOnMetadata(addonIndex, "IconTexture")
-		local iconAtlas = C_AddOns.GetAddOnMetadata(addonIndex, "IconAtlas")
+		local iconTexture = E.func_GetAddoniconTexture(index)
+		local iconAtlas = E.func_GetAddoniconAtlas(index)
 		if not iconTexture and not iconAtlas and OctoToDo_AddonsManager.config.showIconsQuestionMark then
 			iconTexture = [[Interface\ICONS\INV_Misc_QuestionMark]]
 		end
@@ -243,7 +239,7 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(addonIndex)
 			textLEFT = textLEFT..E.Gray_Color.." ("..Version..")|r"
 		end
 		if OctoToDo_AddonsManager.config.showIndex then
-			textLEFT = E.Debug_Color..addonIndex.."|r "..textLEFT
+			textLEFT = E.Debug_Color..index.."|r "..textLEFT
 		end
 		-- if iconTexture then
 		-- textLEFT = CreateSimpleTextureMarkup(iconTexture, 20, 20) .. " " .. textLEFT
@@ -264,9 +260,6 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(addonIndex)
 			else
 				tooltipthird[#tooltipthird+1] = {name}
 			end
-			if (reason == "MISSING") then
-				tooltipthird[#tooltipthird+1] = {E.classColorHexCurrent.."This addons is not installed!|r"}
-			end
 			if (Version and Version ~= 0) then
 				tooltipthird[#tooltipthird+1] = {"Version: "..E.classColorHexCurrent..Version.."|r"} --.. " ("..interfaceVersion..")"}
 			end
@@ -276,7 +269,7 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(addonIndex)
 			if (notes and notes ~= "") then
 				tooltipthird[#tooltipthird+1] = {"Notes: "..E.classColorHexCurrent..notes.."|r"}
 			end
-			if (loadable and C_AddOnProfiler.IsEnabled()) then
+			if (loadable and E.func_IsProfilerEnabled()) then
 				local RecentAverageTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.RecentAverageTime)
 				local SessionAverageTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.SessionAverageTime)
 				local PeakTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.PeakTime)
@@ -296,7 +289,7 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(addonIndex)
 			end
 			-- and IsMemoryUsageEnabled()
 			if (loadable and security ~= SECURE_PROTECTED_ADDON and security ~= SECURE_ADDON) then
-				local memory = GetAddOnMemoryUsage(addonIndex) or 0
+				local memory = GetAddOnMemoryUsage(index) or 0
 				if memory > 1024 then
 					tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactNumberFormat(memory/1024).."|r Мб"}
 				else
@@ -304,11 +297,11 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(addonIndex)
 				end
 			end
 			tooltipthird[#tooltipthird+1] = {" ", " "}
-			tooltipthird[#tooltipthird+1] = {E.AddonTooltipBuildDepsString(addonIndex, Parent_Color)}
-			if E.depsByIndex[addonIndex] then
+			tooltipthird[#tooltipthird+1] = {E.AddonTooltipBuildDepsString(index, Parent_Color)}
+			if OctoToDo_AddonsTable.depsByIndex[index] then
 				tooltipthird[#tooltipthird+1] = {"Дочернии аддоны"}
-				for _, depIndex in pairs(E.depsByIndex[addonIndex]) do
-					tooltipthird[#tooltipthird+1] = {" "..Child_Color..C_AddOns.GetAddOnInfo(depIndex).."|r"}
+				for _, depIndex in pairs(OctoToDo_AddonsTable.depsByIndex[index]) do
+					tooltipthird[#tooltipthird+1] = {" "..Child_Color..E.func_GetAddonName(depIndex).."|r"}
 				end
 			end
 			if loadable then
@@ -328,18 +321,18 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(addonIndex)
 			if reason == "DEMAND_LOADED" or reason == "DEP_DEMAND_LOADED" then
 				firsticonTexture = "Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\buttonOFFyellow"
 			end
-			-- if C_AddOns.IsAddonVersionCheckEnabled() and E.interfaceVersion > interfaceVersion and enabled then
+			-- if E.func_IsAddonVersionCheckEnabled() and E.interfaceVersion > interfaceVersion and enabled then
 			-- colorAddon = "|cffFF0000"
 			-- textRIGHT = ADDON_INTERFACE_VERSION.." ("..interfaceVersion..")"
 			-- end
-			local dep = E.AddonTooltipBuildDepsString(addonIndex)
+			local dep = E.AddonTooltipBuildDepsString(index)
 			local depBOOLEN = false
 			if dep then
 				depBOOLEN = true
 			end
 		end
 		local resonTEXT = ""
-		if ( not loadable and reason ) then
+		if ( not loadable and reason ~= "" ) then
 			resonTEXT = _G["ADDON_"..reason]
 		else
 			resonTEXT = ""
@@ -352,29 +345,18 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(addonIndex)
 	end
 end
 ----------------------------------------------------------------
-
-
-
-
-
-
 local function UpdateExpandOrCollapseButtonState(button, isCollapsed)
 	if (isCollapsed) then
-
 		button:SetTexture("Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\zakrito")
 		button:SetVertexColor(1, 0, 0, 1)
 		-- button:SetTexture("Interface\\Buttons\\UI-PlusButton-Up")
 	else
-
 		button:SetTexture("Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\otkrito")
 		button:SetVertexColor(1, 1, 1, 1)
 		-- button:SetTexture("Interface\\Buttons\\UI-MinusButton-Up")
 	end
 end
-
 local function CollapseOrExpand(button, isCollapsed, node, name)
-
-
 end
 local showExpandOrCollapseButton = true
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ + ГОВНО
@@ -382,7 +364,7 @@ local showExpandOrCollapseButton = true
 function OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
 	local index = node:GetData().index
-	local name = C_AddOns.GetAddOnInfo(index)
+	local name = E.func_GetAddonName(index)
 	local firsticonTexture = select(1, OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(data.index))
 	local iconTexture = select(2, OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(data.index))
 	local textLEFT = select(3, OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(data.index))
@@ -390,15 +372,17 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(frame, node)
 	local tooltipthird = select(5, OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(data.index))
 	-- local colorAddon = select(6, OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(data.index))
 	frame.first.icon:SetTexture(firsticonTexture)
-
-
-	if (OctoToDo_AddonsManager.collapsedAddons[name] == true and E.IsAddonCollapsed(name) == true) then
-		node:ToggleCollapsed()
-		print ("ЗАКРЫЛ: "..name)
-		OctoToDo_AddonsManager.collapsedAddons[name] = false
-	end
 	if showExpandOrCollapseButton then
-		if E.depsByIndex[data.index] then
+		local tbl = {}
+		-- ЙЦУЙЦУ OctoSimpleList[data.index]
+		-- ЙЦУЙЦУ OctoToDo_AddonsTable.depsByIndex[data.index]
+		if OctoToDo_AddonsManager.config.defaultAddonList then
+			tbl = OctoSimpleList
+		else
+			tbl = OctoToDo_AddonsTable.depsByIndex
+		end
+
+		if tbl[data.index] then
 			UpdateExpandOrCollapseButtonState(frame.zero.icon, node:IsCollapsed(), node, name)
 		else
 			frame.zero.icon:SetTexture("Interface\\AddOns\\OctoToDo\\Media\\SimpleAddonManager\\spacerEMPTY")
@@ -406,10 +390,6 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(frame, node)
 	else
 		frame.zero:Hide()
 	end
-
-
-
-
 	if OctoToDo_AddonsManager.config.showIcons then
 		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+AddonHeight+4, 0)
 		frame.second.icon:SetTexture(iconTexture)
@@ -422,9 +402,9 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(frame, node)
 	frame.third.tooltip = tooltipthird
 	E:func_SetBackdrop(frame.zero, nil, 0, 0)
 	-- if data.index % 2 == 0 then
-		E:func_SetBackdrop(frame.third, nil, 0, 0)
+	E:func_SetBackdrop(frame.third, nil, 0, 0)
 	-- else
-	-- 	E:func_SetBackdrop(frame.third, "|cff000000", .1, 0)
+	--     E:func_SetBackdrop(frame.third, "|cff000000", .1, 0)
 	-- end
 end
 function E.UpdateDBdata()
@@ -493,18 +473,8 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Create_MainFrame_AddonsManag
 	OctoToDo_MainFrame_AddonsManager.view:RegisterCallback(OctoToDo_MainFrame_AddonsManager.view.Event.OnAcquiredFrame, func_OnAcquired, OctoToDo_MainFrame_AddonsManager) -- ПОФИКСИТЬ
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_AddonsManager.ScrollBox, OctoToDo_MainFrame_AddonsManager.ScrollBar, OctoToDo_MainFrame_AddonsManager.view)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_AddonsManager.ScrollBox, OctoToDo_MainFrame_AddonsManager.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
-	OctoToDo_MainFrame_AddonsManager:RegisterForDrag("LeftButton")
-	OctoToDo_MainFrame_AddonsManager:SetScript("OnDragStart", function()
-			OctoToDo_MainFrame_AddonsManager:SetAlpha(E.bgCa)
-			OctoToDo_MainFrame_AddonsManager:StartMoving()
-	end)
-	OctoToDo_MainFrame_AddonsManager:SetScript("OnDragStop", function()
-			OctoToDo_MainFrame_AddonsManager:SetAlpha(1)
-			OctoToDo_MainFrame_AddonsManager:StopMovingOrSizing()
-	end)
 	----------------------------------------------------------------
 end
-
 function E.AddonList_Update()
 	if ( E.AddonList_HasAnyChanged() ) then
 		OkayButton.text:SetText(RELOADUI)
@@ -513,23 +483,87 @@ function E.AddonList_Update()
 		OkayButton.text:SetText(OKAY)
 		OctoToDo_EventFrame_AddonsManager.shouldReload = false
 	end
-
-	OctoToDo_MainFrame_AddonsManager.view:SetDataProvider(OctoToDo_EventFrame_AddonsManager.DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	OctoToDo_MainFrame_AddonsManager.view:SetDataProvider(E.DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
-function OctoToDo_EventFrame_AddonsManager:CreateMyDataProvider()
+function E.CreateMyDataProvider()
 	E.UpdatePerformance()
 	local DataProvider = CreateTreeDataProvider()
-	self.DataProvider = DataProvider
+	E.DataProvider = DataProvider
 	-- local childrenNodes = DataProvider:GetChildrenNodes()
-	for index = 1, C_AddOns.GetNumAddOns() do
-		if not E.parentByIndex[index] or E.recycleByIndex[index] then
-			local groupNode = DataProvider:Insert({index = index})
-			-- childrenNodes[#childrenNodes]:SetCollapsed(true) -- БРАТЬ ПОСЛЕДНЮЮ НОДУ И КОЛЛАПСИТЬ (ВЕСЬ СПИСОК ПРИ ЗАГРУЗКЕ)
-			if E.depsByIndex[index] then
-				E.AddDeps_RECURSION(index, groupNode)
+	if OctoToDo_AddonsManager.config.defaultAddonList == false then
+		for index = 1, E.func_GetNumAddOns() do
+			if OctoToDo_AddonsManager.config.showOnlyLoaded then -- ПОФИКСИТЬ
+				if E.func_IsAddOnLoaded(index) then
+					if not OctoToDo_AddonsTable.parentByIndex[index] or OctoToDo_AddonsTable.recycleByIndex[index] then
+						local groupNode = DataProvider:Insert({index = index})
+						-- childrenNodes[#childrenNodes]:SetCollapsed(true) -- БРАТЬ ПОСЛЕДНЮЮ НОДУ И КОЛЛАПСИТЬ (ВЕСЬ СПИСОК ПРИ ЗАГРУЗКЕ)
+						if OctoToDo_AddonsTable.depsByIndex[index] then
+							E.AddDeps_RECURSION(index, groupNode)
+						end
+					end
+				end
+
+			else
+				if not OctoToDo_AddonsTable.parentByIndex[index] or OctoToDo_AddonsTable.recycleByIndex[index] then
+					local groupNode = DataProvider:Insert({index = index})
+					-- childrenNodes[#childrenNodes]:SetCollapsed(true) -- БРАТЬ ПОСЛЕДНЮЮ НОДУ И КОЛЛАПСИТЬ (ВЕСЬ СПИСОК ПРИ ЗАГРУЗКЕ)
+					if OctoToDo_AddonsTable.depsByIndex[index] then
+						E.AddDeps_RECURSION(index, groupNode)
+					end
+				end
+
+
+
+
+
+
 			end
 		end
+
+	else
+		-- local sorted = {}
+		-- for index, v in pairs(OctoSimpleList) do
+		-- 	sorted[#sorted+1] = E.func_GetAddonName(index)
+		-- end
+
+
+		-- sort(sorted, function(b, a)
+		-- 		if a and b then
+		-- 			return a > b
+		-- 		end
+		-- end)
+
+		-- fpde(sorted)
+		--
+		-- print ("|cffFF00F0"..E.func_GetAddonIndex("OctoToDo").."|r")
+		-- for name, k in pairs(sorted) do
+		-- 	local index = E.func_GetAddonIndex(name)
+		-- 	local groupNode = DataProvider:Insert({index = index})
+			-- for _, depIndex in pairs(v) do
+			-- 	local secondABOBUS = groupNode:Insert({index = depIndex})
+			-- end
+		-- end
+		if OctoToDo_AddonsManager.config.showOnlyLoaded then -- ПОФИКСИТЬ
+			for index, v in pairs(OctoSimpleList) do
+				if E.func_IsAddOnLoaded(index) then
+					local groupNode = DataProvider:Insert({index = index})
+					for _, depIndex in pairs(v) do
+						local secondABOBUS = groupNode:Insert({index = depIndex})
+					end
+				end
+			end
+		else
+			for index, v in pairs(OctoSimpleList) do
+				local groupNode = DataProvider:Insert({index = index})
+				for _, depIndex in pairs(v) do
+					local secondABOBUS = groupNode:Insert({index = depIndex})
+				end
+			end
+		end
+
+
 	end
+
 	E.AddonList_Update()
 end
 function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
@@ -549,7 +583,7 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	frameEnableAll:RegisterForClicks("LeftButtonUp")
 	frameEnableAll:EnableMouse(true)
 	frameEnableAll:SetScript("OnClick", function(self)
-			E.func_SetEnabledAll()
+			E.func_EnableAllAddOns()
 			E.AddonList_Update()
 	end)
 	----------------------------------------------------------------
@@ -571,6 +605,17 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 			E.func_DisableAllAddons()
 			E.AddonList_Update()
 	end)
+	frameDisableAll:SetScript("OnEnter", function(self)
+			local DisableAllTooltip = {}
+			for name, value in pairs(OctoToDo_AddonsManager.lock.addons) do
+				if value then
+					DisableAllTooltip[#DisableAllTooltip+1] = {E.func_texturefromIcon(E.func_GetAddoniconTexture(name))..E.func_GetAddonTitle(name), E.func_texturefromIcon([[Interface\AddOns\OctoToDo\Media\SimpleAddonManager\lock]])}
+				end
+			end
+			frameDisableAll.tooltip = DisableAllTooltip
+			E.func_TooltipOnEnter(self, true, true)
+	end)
+	frameDisableAll:SetScript("OnLeave", GameTooltip_Hide)
 	----------------------------------------------------------------
 	local frameCollapseAll = CreateFrame("Button", "frameCollapseAll", OctoToDo_MainFrame_AddonsManager, "BackDropTemplate")
 	frameCollapseAll:SetPropagateMouseClicks(true)
@@ -587,8 +632,8 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	frameCollapseAll:RegisterForClicks("LeftButtonUp")
 	frameCollapseAll:EnableMouse(true)
 	frameCollapseAll:SetScript("OnClick", function(self)
-			for addonIndex, v in pairs(E.parentByIndex) do
-				OctoToDo_AddonsManager.collapsedAddons[E.func_GetAddonName(addonIndex)] = true
+			for index, v in pairs(OctoToDo_AddonsTable.parentByIndex) do
+				OctoToDo_AddonsManager.collapsedAddons[E.func_GetAddonName(index)] = true
 			end
 			E.AddonList_Update()
 	end)
@@ -608,8 +653,8 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	frameExpandAll:RegisterForClicks("LeftButtonUp")
 	frameExpandAll:EnableMouse(true)
 	frameExpandAll:SetScript("OnClick", function(self)
-			for addonIndex, v in pairs(E.parentByIndex) do
-				OctoToDo_AddonsManager.collapsedAddons[E.func_GetAddonName(addonIndex)] = false
+			for index, v in pairs(OctoToDo_AddonsTable.parentByIndex) do
+				OctoToDo_AddonsManager.collapsedAddons[E.func_GetAddonName(index)] = false
 			end
 			E.AddonList_Update()
 	end)
@@ -671,10 +716,12 @@ function OctoToDo_EventFrame_AddonsManager:AddonList_OnCancel()
 end
 function E.CheckWTFinfo()
 	if OctoToDo_AddonsManager == nil then OctoToDo_AddonsManager = {} end
-	if OctoToDo_AddonsManager.defaultAddonList then OctoToDo_AddonsManager.defaultAddonList = false end
 	if OctoToDo_AddonsManager.collapsedAddons == nil then OctoToDo_AddonsManager.collapsedAddons = {} end
 	if OctoToDo_AddonsManager.profiles == nil then OctoToDo_AddonsManager.profiles = {} end
+	if OctoToDo_AddonsManager.profiles.forceload == nil then OctoToDo_AddonsManager.profiles.forceload = {[GlobalAddonName] = true,} end
 	if OctoToDo_AddonsManager.config == nil then OctoToDo_AddonsManager.config = {} end
+	if OctoToDo_AddonsManager.config.defaultAddonList == nil then OctoToDo_AddonsManager.config.defaultAddonList = false end
+	if OctoToDo_AddonsManager.config.showOnlyLoaded == nil then OctoToDo_AddonsManager.config.showOnlyLoaded = false end
 	if OctoToDo_AddonsManager.config.fullName == nil then OctoToDo_AddonsManager.config.fullName = false end
 	if OctoToDo_AddonsManager.config.showIcons == nil then OctoToDo_AddonsManager.config.showIcons = false end
 	if OctoToDo_AddonsManager.config.showIconsQuestionMark == nil then OctoToDo_AddonsManager.config.showIconsQuestionMark = true end
@@ -710,10 +757,10 @@ function E.CheckWTFinfo()
 end
 ----------------------------------------------------------------
 function E:GetCycleByIndexSFMICT(iChild, iParent)
-	if E.depsByIndex[iChild] then
-		for _, depIndex in ipairs(E.depsByIndex[iChild]) do
+	if OctoToDo_AddonsTable.depsByIndex[iChild] then
+		for _, depIndex in ipairs(OctoToDo_AddonsTable.depsByIndex[iChild]) do
 			if depIndex == iParent then
-				print (E.Red_Color.."НАЙДЕН АБОБУС: |r".. iChild .." "..C_AddOns.GetAddOnInfo(iChild).." / "..iParent.." "..C_AddOns.GetAddOnInfo(iParent))
+				print (E.Red_Color.."НАЙДЕН АБОБУС: |r".. iChild .." "..E.func_GetAddonName(iChild).." / "..iParent.." "..E.func_GetAddonName(iParent))
 				return true
 			end
 		end
@@ -721,40 +768,54 @@ function E:GetCycleByIndexSFMICT(iChild, iParent)
 end
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
 function OctoToDo_EventFrame_AddonsManager:CollectAllAddonsSFMICT()
-	E.indexByName = {}
-	for index = 1, C_AddOns.GetNumAddOns() do
-		local name = C_AddOns.GetAddOnInfo(index)
-		E.indexByName[name] = index
-	end
-	E.depsByIndex = {}
-	E.parentByIndex = {}
-	E.recycleByIndex = {}
-	for index = 1, C_AddOns.GetNumAddOns() do
-		local deps = {C_AddOns.GetAddOnDependencies(index)}
-		for _, name in ipairs(deps) do
-			if E.indexByName[name] then
-				E.depsByIndex[E.indexByName[name]] = E.depsByIndex[E.indexByName[name]] or {}
-				tinsert(E.depsByIndex[E.indexByName[name]], index)
-				E.parentByIndex[index] = true
-				if E:GetCycleByIndexSFMICT(index, E.indexByName[name]) then
-					E.recycleByIndex[index] = true
-					E.recycleByIndex[E.indexByName[name]] = true
+
+	if OctoToDo_AddonsManager.config.defaultAddonList == false then
+		OctoToDo_AddonsTable = {}
+		OctoToDo_AddonsTable.indexByName = {}
+		for index = 1, E.func_GetNumAddOns() do
+			local name = E.func_GetAddonName(index)
+			OctoToDo_AddonsTable.indexByName[name] = index
+		end
+		OctoToDo_AddonsTable.depsByIndex = {}
+		OctoToDo_AddonsTable.parentByIndex = {}
+		OctoToDo_AddonsTable.recycleByIndex = {}
+		for index = 1, E.func_GetNumAddOns() do
+			local deps = E.func_GetAddOnDependenciesTable(index)
+			for _, name in ipairs(deps) do
+				if OctoToDo_AddonsTable.indexByName[name] then
+					OctoToDo_AddonsTable.depsByIndex[OctoToDo_AddonsTable.indexByName[name]] = OctoToDo_AddonsTable.depsByIndex[OctoToDo_AddonsTable.indexByName[name]] or {}
+					tinsert(OctoToDo_AddonsTable.depsByIndex[OctoToDo_AddonsTable.indexByName[name]], index)
+					OctoToDo_AddonsTable.parentByIndex[index] = true
+					if E:GetCycleByIndexSFMICT(index, OctoToDo_AddonsTable.indexByName[name]) then
+						OctoToDo_AddonsTable.recycleByIndex[index] = true
+						OctoToDo_AddonsTable.recycleByIndex[OctoToDo_AddonsTable.indexByName[name]] = true
+					end
 				end
 			end
 		end
+	else
+		OctoSimpleList = {}
+		-- СОХРАНИТЬ НАЗВАНИЯ
+		-- for index = 1, E.func_GetNumAddOns() do
+		--     local name = E.func_GetAddonName(index)
+		--     local group = E.func_GetAddonGroup(index)
+		--     OctoSimpleList[group] = OctoSimpleList[group] or {}
+		--     if name ~= group then
+		--         table.insert(OctoSimpleList[group], name)
+		--     end
+		-- end
+		-- СОХРАНИТЬ ИНДЕКСЫ
+		for index = 1, E.func_GetNumAddOns() do
+			local name = E.func_GetAddonName(index)
+			local group = E.func_GetAddonGroup(index)
+			OctoSimpleList[OctoToDo_AddonsTable.indexByName[group]] = OctoSimpleList[OctoToDo_AddonsTable.indexByName[group]] or {}
+			if name ~= group then
+				table.insert(OctoSimpleList[OctoToDo_AddonsTable.indexByName[group]], OctoToDo_AddonsTable.indexByName[name])
+			end
+		end
+		-- fpde(OctoSimpleList)
 	end
 end
-
-
-
-function OctoToDo_EventFrame_AddonsManager:CollectAllAddonsSIMPLE()
-	for index = 1, C_AddOns.GetNumAddOns() do
-
-	end
-end
-
-
-
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_REGEN_DISABLED",
@@ -765,85 +826,66 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 		----------------------------------------------------------------
-		-- if OctoToDo_DB_Vars then
-		-- print (OctoToDo_DB_Vars.curWidthTitle)
-		-- AddonHeight = OctoToDo_DB_Vars.curHeight
-		-- curWidthTitle = OctoToDo_DB_Vars.curWidthTitle*4
-		-- end
-		----------------------------------------------------------------
 		E.CheckWTFinfo()
 		self.startStatus = {}
 		self.shouldReload = false
-		self.outOfDate = C_AddOns.IsAddonVersionCheckEnabled() and AddonList_HasOutOfDate()
+		self.outOfDate = E.func_IsAddonVersionCheckEnabled() and AddonList_HasOutOfDate()
 		self.outOfDateIndexes = {}
-		for i=1, C_AddOns.GetNumAddOns() do
-			self.startStatus[i] = (C_AddOns.GetAddOnEnableState(i, UnitName("player")) > Enum.AddOnEnableState.None)
-			if (select(5, C_AddOns.GetAddOnInfo(i)) == "INTERFACE_VERSION") then
+		for i=1, E.func_GetNumAddOns() do
+			self.startStatus[i] = (E.func_GetAddOnEnableState(i, UnitName("player")) > Enum.AddOnEnableState.None)
+			if (E.func_GetAddonReason(i) == "INTERFACE_VERSION") then
 				tinsert(self.outOfDateIndexes, i)
 			end
 		end
 		addonCharacter = UnitGUID("player")
 		if OctoToDo_AddonsManager.profiles.default == nil then
-			print ("NADO SOZDAT")
-			E.func_SaveProfile("default")
+			E.func_SaveProfile("default") -- CHAT_DEFAULT
 		end
 		print ("/uam")
-		if OctoToDo_AddonsManager.defaultAddonList == true then
-			self:CollectAllAddonsSIMPLE()
-		else
-			self:CollectAllAddonsSFMICT()
-		end
+		self:CollectAllAddonsSFMICT()
 		self:OctoToDo_Create_MainFrame_AddonsManager()
 		self:func_Create_AdditionalFrame()
 		E:func_Create_DDframe_AddonsManager()
-		self:CreateMyDataProvider()
+		E.CreateMyDataProvider()
 		-- E.AddonList_Update()
 		E:InitOptionsADDONS()
 		self:createDDMenu()
-
-
-		MONEY_CAP_REACHED_TRIAL = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии. [Щелкните здесь], чтобы купить полную версию!
-		TRIAL_CAPPED_MONEY = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии.
-		CAPPED_MONEY_TRIAL = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии.
-		SPELL_FAILED_CUSTOM_ERROR_76 = "" -- Вы накопили максимальный объем ярости.
-		TRIAL_ACCOUNT_MONEY_CAP_REACHED = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии. [Щелкните здесь], чтобы купить полную версию!
-		CAP_REACHED_TRIAL = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
-		TRIAL_CAPPED = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
-		TRIAL_LEVEL_CAPPED = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
-		CAPPED_LEVEL_TRIAL = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
-		ERR_RESTRICTED_ACCOUNT_LFG_LIST = "" -- Владельцы бесплатной пробной версии не могут воспользоваться этой функцией.
-		ERR_RESTRICTED_ACCOUNT_TRIAL = "" -- Владельцы бесплатной пробной версии не могут выполнять это действие.
-		ERR_PETITION_RESTRICTED_ACCOUNT = "" -- Владельцы бесплатной пробной версии не могут вступать в гильдии. [Щелкните, чтобы купить полную версию]
-		ERR_INVITE_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии не могут приглашать персонажей в группы. [Щелкните, чтобы купить полную версию]
-		CALENDAR_ERROR_MODERATOR_RESTRICTED = "" -- Владельцы бесплатной пробной версии не могут редактировать события в календаре.
-		ERR_CHAT_RESTRICTED = "" -- Владельцы бесплатной пробной версии могут посылать лимитированное количество сообщений. Пожалуйста, подождите, прежде чем отправлять новые сообщения.[Щелкните, чтобы купить полную версию]
-		LEVEL_CAP_REACHED_TRIAL = "" -- Вы достигли максимального уровня, доступного в бесплатной пробной версии игры. [Щелкните здесь], чтобы купить полную версию!
-		ERR_PETBATTLE_RESTRICTED_ACCOUNT = "" -- Владельцы бесплатной пробной версии не могут участвовать в битвах питомцев.
-		ERR_RESTRICTED_ACCOUNT_LFG_LIST_TRIAL = "" -- Владельцы бесплатной пробной версии не могут воспользоваться этой функцией.
-		ERR_INVITE_RESTRICTED = "" -- Владельцы бесплатной пробной версии не могут приглашать персонажей в группы. [Щелкните, чтобы купить полную версию]
-		ERR_CHAT_RAID_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии не могут отправлять сообщения в канал рейда. [Щелкните здесь, чтобы купить полную версию.]
-		ERR_YELL_RESTRICTED = "" -- Команда "/крик" недоступна владельцам бесплатной пробной версии. [Щелкните, чтобы купить полную версию]
-		ERR_CHAT_RAID_RESTRICTED_VETERAN = "" -- Владельцы бесплатной пробной версии не могут отправлять сообщения в канал рейда. [Щелкните здесь, чтобы купить полную версию.]
-		CHAT_TRIAL_RESTRICTED_NOTICE = "" -- [%s] Владельцы бесплатной пробной версии не могут отправлять сообщения в этот канал. [Щелкните, чтобы купить полную версию]
-		CALENDAR_ERROR_MODERATOR_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии не могут редактировать события в календаре.
-		ERR_PETITION_RESTRICTED_ACCOUNT_TRIAL = "" -- Владельцы бесплатной пробной версии не могут вступать в гильдии. [Щелкните, чтобы купить полную версию]
-		ERR_RESTRICTED_ACCOUNT = "" -- Владельцы бесплатной пробной версии не могут выполнять это действие.
-		TRIAL_ACCOUNT_LEVEL_CAP_REACHED = "" -- Вы достигли максимального уровня, доступного в бесплатной пробной версии игры. [Щелкните здесь], чтобы купить полную версию!
-		NPEV2_CHAT_GUIDE_FRAME_ERROR_STARTER_ACCOUNTS_CANNOT_GUIDE = "" -- Недоступно для владельцев бесплатной пробной версии.
-		CHAT_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии могут шептать только тем игрокам, которые добавили их персонажей в список друзей. [Щелкните, чтобы купить полную версию]
-		CHAT_TRIAL_RESTRICTED_NOTICE_TRIAL = "" -- [%s] Владельцы бесплатной пробной версии не могут отправлять сообщения в этот канал. [Щелкните, чтобы купить полную версию]
-		ERR_YELL_RESTRICTED_TRIAL = "" -- Команда "/крик" недоступна владельцам бесплатной пробной версии. [Щелкните, чтобы купить полную версию]
-		CHAT_RESTRICTED = "" -- Владельцы бесплатной пробной версии могут шептать только тем игрокам, которые добавили их персонажей в список друзей. [Щелкните, чтобы купить полную версию]
-		ERR_CHAT_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии могут посылать лимитированное количество сообщений. Пожалуйста, подождите, прежде чем отправлять новые сообщения.[Щелкните, чтобы купить полную версию]
-		ERROR_COMMUNITIES_VETERAN_TRIAL = "" -- Недоступно для владельцев бесплатной пробной версии.
-		ERR_GUILD_TRIAL_ACCOUNT_TRIAL = "" -- Владельцы бесплатной пробной версии не могут вступать в гильдии.
-		ERR_FEATURE_RESTRICTED_TRIAL = "" -- Недоступно для владельцев бесплатной пробной версии.
-
-
-
-
-
-
+		-- MONEY_CAP_REACHED_TRIAL = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии. [Щелкните здесь], чтобы купить полную версию!
+		-- TRIAL_CAPPED_MONEY = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии.
+		-- CAPPED_MONEY_TRIAL = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии.
+		-- SPELL_FAILED_CUSTOM_ERROR_76 = "" -- Вы накопили максимальный объем ярости.
+		-- TRIAL_ACCOUNT_MONEY_CAP_REACHED = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии. [Щелкните здесь], чтобы купить полную версию!
+		-- CAP_REACHED_TRIAL = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
+		-- TRIAL_CAPPED = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
+		-- TRIAL_LEVEL_CAPPED = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
+		-- CAPPED_LEVEL_TRIAL = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
+		-- ERR_RESTRICTED_ACCOUNT_LFG_LIST = "" -- Владельцы бесплатной пробной версии не могут воспользоваться этой функцией.
+		-- ERR_RESTRICTED_ACCOUNT_TRIAL = "" -- Владельцы бесплатной пробной версии не могут выполнять это действие.
+		-- ERR_PETITION_RESTRICTED_ACCOUNT = "" -- Владельцы бесплатной пробной версии не могут вступать в гильдии. [Щелкните, чтобы купить полную версию]
+		-- ERR_INVITE_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии не могут приглашать персонажей в группы. [Щелкните, чтобы купить полную версию]
+		-- CALENDAR_ERROR_MODERATOR_RESTRICTED = "" -- Владельцы бесплатной пробной версии не могут редактировать события в календаре.
+		-- ERR_CHAT_RESTRICTED = "" -- Владельцы бесплатной пробной версии могут посылать лимитированное количество сообщений. Пожалуйста, подождите, прежде чем отправлять новые сообщения.[Щелкните, чтобы купить полную версию]
+		-- LEVEL_CAP_REACHED_TRIAL = "" -- Вы достигли максимального уровня, доступного в бесплатной пробной версии игры. [Щелкните здесь], чтобы купить полную версию!
+		-- ERR_PETBATTLE_RESTRICTED_ACCOUNT = "" -- Владельцы бесплатной пробной версии не могут участвовать в битвах питомцев.
+		-- ERR_RESTRICTED_ACCOUNT_LFG_LIST_TRIAL = "" -- Владельцы бесплатной пробной версии не могут воспользоваться этой функцией.
+		-- ERR_INVITE_RESTRICTED = "" -- Владельцы бесплатной пробной версии не могут приглашать персонажей в группы. [Щелкните, чтобы купить полную версию]
+		-- ERR_CHAT_RAID_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии не могут отправлять сообщения в канал рейда. [Щелкните здесь, чтобы купить полную версию.]
+		-- ERR_YELL_RESTRICTED = "" -- Команда "/крик" недоступна владельцам бесплатной пробной версии. [Щелкните, чтобы купить полную версию]
+		-- ERR_CHAT_RAID_RESTRICTED_VETERAN = "" -- Владельцы бесплатной пробной версии не могут отправлять сообщения в канал рейда. [Щелкните здесь, чтобы купить полную версию.]
+		-- CHAT_TRIAL_RESTRICTED_NOTICE = "" -- [%s] Владельцы бесплатной пробной версии не могут отправлять сообщения в этот канал. [Щелкните, чтобы купить полную версию]
+		-- CALENDAR_ERROR_MODERATOR_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии не могут редактировать события в календаре.
+		-- ERR_PETITION_RESTRICTED_ACCOUNT_TRIAL = "" -- Владельцы бесплатной пробной версии не могут вступать в гильдии. [Щелкните, чтобы купить полную версию]
+		-- ERR_RESTRICTED_ACCOUNT = "" -- Владельцы бесплатной пробной версии не могут выполнять это действие.
+		-- TRIAL_ACCOUNT_LEVEL_CAP_REACHED = "" -- Вы достигли максимального уровня, доступного в бесплатной пробной версии игры. [Щелкните здесь], чтобы купить полную версию!
+		-- NPEV2_CHAT_GUIDE_FRAME_ERROR_STARTER_ACCOUNTS_CANNOT_GUIDE = "" -- Недоступно для владельцев бесплатной пробной версии.
+		-- CHAT_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии могут шептать только тем игрокам, которые добавили их персонажей в список друзей. [Щелкните, чтобы купить полную версию]
+		-- CHAT_TRIAL_RESTRICTED_NOTICE_TRIAL = "" -- [%s] Владельцы бесплатной пробной версии не могут отправлять сообщения в этот канал. [Щелкните, чтобы купить полную версию]
+		-- ERR_YELL_RESTRICTED_TRIAL = "" -- Команда "/крик" недоступна владельцам бесплатной пробной версии. [Щелкните, чтобы купить полную версию]
+		-- CHAT_RESTRICTED = "" -- Владельцы бесплатной пробной версии могут шептать только тем игрокам, которые добавили их персонажей в список друзей. [Щелкните, чтобы купить полную версию]
+		-- ERR_CHAT_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии могут посылать лимитированное количество сообщений. Пожалуйста, подождите, прежде чем отправлять новые сообщения.[Щелкните, чтобы купить полную версию]
+		-- ERROR_COMMUNITIES_VETERAN_TRIAL = "" -- Недоступно для владельцев бесплатной пробной версии.
+		-- ERR_GUILD_TRIAL_ACCOUNT_TRIAL = "" -- Владельцы бесплатной пробной версии не могут вступать в гильдии.
+		-- ERR_FEATURE_RESTRICTED_TRIAL = "" -- Недоступно для владельцев бесплатной пробной версии.
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_AddonsManager, GlobalAddonName)
 		E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_AddonsManager, OctoToDo_MainFrame_AddonsManager, nil, "OctoToDo_MainFrame_AddonsManager")
@@ -862,3 +904,4 @@ function OctoToDo_EventFrame_AddonsManager:PLAYER_REGEN_DISABLED()
 	end
 end
 -- self.SearchBox:HookScript("OnTextChanged", AddonList_Update)
+

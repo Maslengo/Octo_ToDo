@@ -3,7 +3,7 @@
 ## Author: Octo
 ## Version: v1
 ## IconTexture: Interface\AddOns\OctoToDo\Media\AddonTexture_4
-## SavedVariables: OctoToDo_AddonsManager
+## SavedVariables: OctoSimpleList OctoToDo_AddonsTable OctoToDo_AddonsManager
 ## Dependencies: OctoToDo
 ## Notes: пук среньк
 

@@ -17,6 +17,7 @@ if L then
 	L["showVersion"] = true
 	L["showIndex"] = true
 	L["defaultAddonList"] = true
+	L["showOnlyLoaded"] = true
 
 
 	L["minimaphide"] = true
@@ -211,9 +212,9 @@ end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
 
-	L["AddonHeight"] = "|cffFF00FF".."Высота строк".."|r"
-	L["MainFrameNumLines"] = "|cffFF00FF".."Количество строк".."|r"
-	L["curWidthTitle"] = "|cffFF00FF".."Ширина строк".."|r"
+	L["AddonHeight"] = "Высота строк"
+	L["MainFrameNumLines"] = "Количество строк"
+	L["curWidthTitle"] = "Ширина строк"
 
 	L["fullName"] = "Полное название"
 	L["showIcons"] = "Показывать иконку"
@@ -221,6 +222,7 @@ if L then
 	L["showVersion"] = "Показывать версию"
 	L["showIndex"] = "Показывать индекс"
 	L["defaultAddonList"] = "Стандартный список аддонов"
+	L["showOnlyLoaded"] = "Показывать только загруженные"
 
 	L["minimaphide"] = "|cffFF4C4F".."minimaphide".."|r"
 	L["hookMenuButton"] = "|cffFF4C4F".."hookMenuButton".."|r"
