@@ -167,6 +167,7 @@ function E:func_Create_DDframe_AddonsManager()
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
 			elseif value == BINDING_HEADER_DEBUG then
+				----------------------------------------------------------------
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
 				info.notCheckable = true -- TRUE убрать чекбокс
@@ -223,6 +224,7 @@ function E:func_Create_DDframe_AddonsManager()
 					E.AddonList_Update()
 				end
 				self:ddAddButton(info, level)
+				----------------------------------------------------------------
 			elseif value == CREATE_NEW_COMPACT_UNIT_FRAME_PROFILE then
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
@@ -242,15 +244,18 @@ function E:func_Create_DDframe_AddonsManager()
 				info.hasArrow = nil
 				info.func = function() self:createProfile(true) end
 				self:ddAddButton(info, level)
+				----------------------------------------------------------------
 			elseif value == "ПРОФИЛИ" then
 				----------------------------------------------------------------
 				for profileName, v in next, (OctoToDo_AddonsManager.profiles) do
+					print (profileName, "QWEQWEQWEWE")
 					info.fontObject = OctoFont11
 					info.keepShownOnClick = true
 					info.notCheckable = true -- TRUE убрать чекбокс
 					info.isNotRadio = true -- TRUE круг, а не квадрат
 					info.text = profileName
-					info.hasArrow = nil
+					info.value = profileName
+					info.hasArrow = true
 					info.func = function()
 						E.func_LoadProfile(profileName)
 						E.AddonList_Update()
@@ -259,6 +264,19 @@ function E:func_Create_DDframe_AddonsManager()
 				end
 				----------------------------------------------------------------
 				self:ddAddSeparator(level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = E.Debug_Color..RELOADUI.."|r"
+				info.hasArrow = nil
+				info.func = function(_, _, _, checked)
+					ReloadUI()
+				end
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+			elseif value == profileName then
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = true

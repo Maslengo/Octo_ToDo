@@ -207,6 +207,7 @@ function E.Collect_All_Professions()
 		collect.MASLENGO = collect.MASLENGO or {}
 		collect.MASLENGO.professions = collect.MASLENGO.professions or {}
 		for i, id in ipairs({GetProfessions()}) do
+
 			collect.MASLENGO.professions[i] = collect.MASLENGO.professions[i] or {}
 			local _, _, skillLevel, maxSkillLevel, _, _, skillLine = GetProfessionInfo(id)
 			collect.MASLENGO.professions[i].name = E.func_ProfessionName(skillLine)
@@ -246,6 +247,11 @@ function E.Collect_All_Professions()
 					-- collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEparentProfessionName = QWEparentProfessionName
 				end
 			end
+			-- if i ~= 2 then
+			-- 	collect.MASLENGO.professions[2] = {}
+			-- 	collect.MASLENGO.professions[2] = collect.MASLENGO.professions[2] or {}
+			-- 	print ("АЙ РАВНО НИЛ")
+			-- end
 		end
 	end
 end
@@ -340,41 +346,43 @@ function E.Collect_All_Currency_TEST2()
 	end
 end
 function E.Collect_All_Reputations_TEST2()
-	OCTO_DB_reputations_test = OCTO_DB_reputations_test or {}
-	for i = 1, C_Reputation.GetNumFactions() do
-		local factionData = C_Reputation.GetFactionDataByIndex(i)
-		if factionData and factionData.isHeader then
-			C_Reputation.ExpandFactionHeader(i)
-		end
-	end
-	local tblHeader
-	local tblHeader2
-	C_Reputation.ExpandAllFactionHeaders()
-	for i = 1, C_Reputation.GetNumFactions() do
-		local factionData = C_Reputation.GetFactionDataByIndex(i)
-		if factionData then
-			local reputationID = factionData.factionID
-			local currentStanding = factionData.currentStanding
-			if factionData.isHeader and currentStanding == 0 then
-				OCTO_DB_reputations_test[reputationID] = OCTO_DB_reputations_test[reputationID] or {}
-				tblHeader = OCTO_DB_reputations_test[reputationID]
-				if OctoToDo_TrashCan then
-					OctoToDo_TrashCan.Reputations[reputationID] = OctoToDo_TrashCan.Reputations[reputationID] or {}
-					tblHeader2 = OctoToDo_TrashCan.Reputations[reputationID]
-				end
-			else
-				tblHeader[reputationID] = tblHeader[reputationID] or false
-				tblHeader2[reputationID] = tblHeader2[reputationID] or false
-			end
-		end
-	end
-	-- for i = C_Reputation.GetNumFactions(), 1, -1 do
-	-- 	local factionData = C_Reputation.GetFactionDataByIndex(i)
-	-- 	if factionData then
-	-- 		C_Reputation.CollapseFactionHeader(i)
-	-- 	end
-	-- end
+    if OctoToDo_TrashCan then
+        OCTO_DB_reputations_test = OCTO_DB_reputations_test or {}
+        for i = 1, C_Reputation.GetNumFactions() do
+            local factionData = C_Reputation.GetFactionDataByIndex(i)
+            if factionData and factionData.isHeader then
+                C_Reputation.ExpandFactionHeader(i)
+            end
+        end
+        local tblHeader
+        local tblHeader2
+        C_Reputation.ExpandAllFactionHeaders()
+        for i = 1, C_Reputation.GetNumFactions() do
+            local factionData = C_Reputation.GetFactionDataByIndex(i)
+            if factionData then
+                local reputationID = factionData.factionID
+                local currentStanding = factionData.currentStanding
+                if factionData.isHeader and currentStanding == 0 then
+                    OCTO_DB_reputations_test[reputationID] = OCTO_DB_reputations_test[reputationID] or {}
+                    tblHeader = OCTO_DB_reputations_test[reputationID]
+                    OctoToDo_TrashCan.Reputations[reputationID] = OctoToDo_TrashCan.Reputations[reputationID] or {}
+                    tblHeader2 = OctoToDo_TrashCan.Reputations[reputationID]
+                else
+                    tblHeader[reputationID] = tblHeader[reputationID] or false
+                    tblHeader2[reputationID] = tblHeader2[reputationID] or false
+                end
+            end
+        end
+        -- for i = C_Reputation.GetNumFactions(), 1, -1 do
+        --     local factionData = C_Reputation.GetFactionDataByIndex(i)
+        --     if factionData then
+        --         C_Reputation.CollapseFactionHeader(i)
+        --     end
+        -- end
+    end
 end
+
+
 function E.Collect_All_Currency()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then

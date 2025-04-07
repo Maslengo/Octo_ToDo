@@ -63,7 +63,10 @@ function E.IsAddonCollapsed(name)
 end
 
 function E.func_GetAddonName(indexOrName)
-	return C_AddOns.GetAddOnInfo(indexOrName)
+	return select(1, C_AddOns.GetAddOnInfo(indexOrName))
+end
+function E.func_GetAddonTitle(indexOrName)
+	return select(2, C_AddOns.GetAddOnInfo(indexOrName))
 end
 function E.AddonListEntry_SetEnabled(index, character, enabled)
 	if enabled == nil then
@@ -127,9 +130,6 @@ function E.AddonTooltipBuildDepsString(addonIndex, color)
 		depsString = depsString..color.."    "..(name).."|r|n"
 	end
 	return depsString
-end
-function E.func_GetAddonTitle(indexOrName)
-	return select(2, C_AddOns.GetAddOnInfo(indexOrName))
 end
 function E.IsAddonInstalled(indexOrName)
 	local _, _, _, _, reason = C_AddOns.GetAddOnInfo(indexOrName)

@@ -2544,7 +2544,7 @@ E.OctoTable_itemID_ItemsUsable_Mount = {
 }
 E.OctoTable_itemID_ItemsUsable_Other = {
 
-
+173523,
 114128,
 114129,
 114131,
@@ -2560,7 +2560,7 @@ E.OctoTable_itemID_ItemsUsable_Other = {
 114806,
 114746,
 128308,
-
+173430,
 
 
 

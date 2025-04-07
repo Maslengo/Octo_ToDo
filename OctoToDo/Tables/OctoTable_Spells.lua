@@ -43,6 +43,7 @@ E.OctoTable_Portals = {
 		{id = 87215, curType = "toy", profession = "Engineering",},
 		{id = 172924, curType = "toy", profession = "Engineering",},
 		{id = 112059, curType = "toy", profession = "Engineering",},
+
 	},
 	-- OTHER
 	{
@@ -70,6 +71,7 @@ E.OctoTable_Portals = {
 
 		460905,
 		431280,
+		{id = 187339, curType = "toy",},
 	},
 	--["Portals_Mage_Solo"] = {
 	{

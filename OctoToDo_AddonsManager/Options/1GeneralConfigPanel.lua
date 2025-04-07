@@ -30,7 +30,7 @@ function E.CreateGeneralOptionsADDONS()
 				end,
 				set = function(_, value)
 					OctoToDo_AddonsManager.AddonHeight = value
-					-- E.UpdateDBdata()
+					E.UpdateDBdata()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -49,7 +49,7 @@ function E.CreateGeneralOptionsADDONS()
 				end,
 				set = function(_, value)
 					OctoToDo_AddonsManager.MainFrameNumLines = value
-					-- E.UpdateDBdata()
+					E.UpdateDBdata()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -68,7 +68,7 @@ function E.CreateGeneralOptionsADDONS()
 				end,
 				set = function(_, value)
 					OctoToDo_AddonsManager.curWidthTitle = value
-					-- E.UpdateDBdata()
+					E.UpdateDBdata()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -120,6 +120,21 @@ function E.CreateGeneralOptionsADDONS()
 				end,
 				set = function(_, value)
 					OctoToDo_AddonsManager.config.showVersion = value
+					E.AddonList_Update()
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 8,
+			},
+			-------------------------------------------------
+			defaultAddonList = {
+				type = "toggle",
+				name = L["defaultAddonList"],
+				desc = "",
+				get = function()
+					return OctoToDo_AddonsManager.config.defaultAddonList
+				end,
+				set = function(_, value)
+					OctoToDo_AddonsManager.config.defaultAddonList = value
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,

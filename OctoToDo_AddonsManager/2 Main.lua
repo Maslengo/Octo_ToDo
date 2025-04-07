@@ -56,38 +56,58 @@ function OctoToDo_EventFrame_AddonsManager:createDDMenu()
 	DDFrame:ddSetDisplayMode(GlobalAddonName)
 	DDFrame:ddSetInitFunc(function(self, level, value)
 			local info = {}
-			-- info.isTitle = true
-			-- info.keepShownOnClick = true
-			-- info.notCheckable = true -- TRUE убрать чекбокс
-			-- info.isNotRadio = true -- TRUE круг, а не квадрат
-			-- info.text = E.func_GetAddonTitle(value)
-			-- info.hasArrow = nil
-			-- info.func = nil
-			-- self:ddAddButton(info, level)
-			info.isTitle = false
-			info.keepShownOnClick = false
-			info.notCheckable = true -- TRUE убрать чекбокс
-			info.isNotRadio = true -- TRUE круг, а не квадрат
-			if OctoToDo_AddonsManager.lock.addons[E.func_GetAddonName(value)] then
-				info.text = "Разблокировать"
-			else
-				info.text = "Заблокировать"
+			local addonIndex = DDFrame.addonIndex
+			local addonName = E.func_GetAddonName(addonIndex)
+			----------------------------------------------------------------
+			if level == 1 then
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = false
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = ADD
+				info.value = ADD
+				info.hasArrow = true
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = false
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				if OctoToDo_AddonsManager.lock.addons[E.func_GetAddonName(addonIndex)] then
+					info.text = "Разблокировать"
+				else
+					info.text = "Заблокировать"
+				end
+				info.checked = OctoToDo_AddonsManager.lock.addons[E.func_GetAddonName(addonIndex)]
+				info.hasArrow = nil
+				info.func = function()
+					E.func_LockAddon(addonIndex)
+					E.AddonList_Update()
+				end
+				self:ddAddButton(info, level)
+			elseif value == ADD then
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.hasArrow = nil
+				for profileName, v in pairs(OctoToDo_AddonsManager.profiles) do
+					info.text = profileName
+					info.checked = profileName
+				end
+				info.func = function(_, _, _, checked)
+					print (info.checked, addonName, addonIndex)
+					fpde(OctoToDo_AddonsManager.profiles[info.checked])
+					OctoToDo_AddonsManager.profiles[info.checked][addonName] = true
+				end
+				self:ddAddButton(info, level)
 			end
-			info.checked = OctoToDo_AddonsManager.lock.addons[E.func_GetAddonName(value)]
-			info.func = function()
-				E.func_LockAddon(value)
-				E.AddonList_Update()
-			end
-			self:ddAddButton(info, level)
-			-- info.isTitle = false
-			-- info.keepShownOnClick = false
-			-- info.notCheckable = true -- TRUE убрать чекбокс
-			-- info.isNotRadio = true -- TRUE круг, а не квадрат
-			-- info.text = CANCEL
-			-- info.func = nil
-			-- self:ddAddButton(info, level)
+			----------------------------------------------------------------
 	end)
 end
+
+
 ----------------------------------------------------------------
 local function OnClick_third(frame, button)
 	local parent = frame:GetParent()
@@ -102,6 +122,7 @@ local function OnClick_third(frame, button)
 	elseif button == "MiddleButton" then
 		E.func_LockAddon(addonIndex)
 	elseif button == "RightButton" then
+		DDFrame.addonIndex = addonIndex
 		DDFrame:ddToggle(level, value, "cursor")
 	end
 	OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(parent, node)
@@ -650,6 +671,7 @@ function OctoToDo_EventFrame_AddonsManager:AddonList_OnCancel()
 end
 function E.CheckWTFinfo()
 	if OctoToDo_AddonsManager == nil then OctoToDo_AddonsManager = {} end
+	if OctoToDo_AddonsManager.defaultAddonList then OctoToDo_AddonsManager.defaultAddonList = false end
 	if OctoToDo_AddonsManager.collapsedAddons == nil then OctoToDo_AddonsManager.collapsedAddons = {} end
 	if OctoToDo_AddonsManager.profiles == nil then OctoToDo_AddonsManager.profiles = {} end
 	if OctoToDo_AddonsManager.config == nil then OctoToDo_AddonsManager.config = {} end
@@ -725,6 +747,14 @@ end
 
 
 
+function OctoToDo_EventFrame_AddonsManager:CollectAllAddonsSIMPLE()
+	for index = 1, C_AddOns.GetNumAddOns() do
+
+	end
+end
+
+
+
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_REGEN_DISABLED",
@@ -758,8 +788,11 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 			E.func_SaveProfile("default")
 		end
 		print ("/uam")
-
-		self:CollectAllAddonsSFMICT()
+		if OctoToDo_AddonsManager.defaultAddonList == true then
+			self:CollectAllAddonsSIMPLE()
+		else
+			self:CollectAllAddonsSFMICT()
+		end
 		self:OctoToDo_Create_MainFrame_AddonsManager()
 		self:func_Create_AdditionalFrame()
 		E:func_Create_DDframe_AddonsManager()
@@ -767,6 +800,50 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		-- E.AddonList_Update()
 		E:InitOptionsADDONS()
 		self:createDDMenu()
+
+
+		MONEY_CAP_REACHED_TRIAL = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии. [Щелкните здесь], чтобы купить полную версию!
+		TRIAL_CAPPED_MONEY = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии.
+		CAPPED_MONEY_TRIAL = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии.
+		SPELL_FAILED_CUSTOM_ERROR_76 = "" -- Вы накопили максимальный объем ярости.
+		TRIAL_ACCOUNT_MONEY_CAP_REACHED = "" -- Вы накопили максимальное количество золота, доступное в бесплатной пробной версии. [Щелкните здесь], чтобы купить полную версию!
+		CAP_REACHED_TRIAL = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
+		TRIAL_CAPPED = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
+		TRIAL_LEVEL_CAPPED = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
+		CAPPED_LEVEL_TRIAL = "" -- Достигнут максимальный уровень в бесплатной пробной версии.
+		ERR_RESTRICTED_ACCOUNT_LFG_LIST = "" -- Владельцы бесплатной пробной версии не могут воспользоваться этой функцией.
+		ERR_RESTRICTED_ACCOUNT_TRIAL = "" -- Владельцы бесплатной пробной версии не могут выполнять это действие.
+		ERR_PETITION_RESTRICTED_ACCOUNT = "" -- Владельцы бесплатной пробной версии не могут вступать в гильдии. [Щелкните, чтобы купить полную версию]
+		ERR_INVITE_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии не могут приглашать персонажей в группы. [Щелкните, чтобы купить полную версию]
+		CALENDAR_ERROR_MODERATOR_RESTRICTED = "" -- Владельцы бесплатной пробной версии не могут редактировать события в календаре.
+		ERR_CHAT_RESTRICTED = "" -- Владельцы бесплатной пробной версии могут посылать лимитированное количество сообщений. Пожалуйста, подождите, прежде чем отправлять новые сообщения.[Щелкните, чтобы купить полную версию]
+		LEVEL_CAP_REACHED_TRIAL = "" -- Вы достигли максимального уровня, доступного в бесплатной пробной версии игры. [Щелкните здесь], чтобы купить полную версию!
+		ERR_PETBATTLE_RESTRICTED_ACCOUNT = "" -- Владельцы бесплатной пробной версии не могут участвовать в битвах питомцев.
+		ERR_RESTRICTED_ACCOUNT_LFG_LIST_TRIAL = "" -- Владельцы бесплатной пробной версии не могут воспользоваться этой функцией.
+		ERR_INVITE_RESTRICTED = "" -- Владельцы бесплатной пробной версии не могут приглашать персонажей в группы. [Щелкните, чтобы купить полную версию]
+		ERR_CHAT_RAID_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии не могут отправлять сообщения в канал рейда. [Щелкните здесь, чтобы купить полную версию.]
+		ERR_YELL_RESTRICTED = "" -- Команда "/крик" недоступна владельцам бесплатной пробной версии. [Щелкните, чтобы купить полную версию]
+		ERR_CHAT_RAID_RESTRICTED_VETERAN = "" -- Владельцы бесплатной пробной версии не могут отправлять сообщения в канал рейда. [Щелкните здесь, чтобы купить полную версию.]
+		CHAT_TRIAL_RESTRICTED_NOTICE = "" -- [%s] Владельцы бесплатной пробной версии не могут отправлять сообщения в этот канал. [Щелкните, чтобы купить полную версию]
+		CALENDAR_ERROR_MODERATOR_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии не могут редактировать события в календаре.
+		ERR_PETITION_RESTRICTED_ACCOUNT_TRIAL = "" -- Владельцы бесплатной пробной версии не могут вступать в гильдии. [Щелкните, чтобы купить полную версию]
+		ERR_RESTRICTED_ACCOUNT = "" -- Владельцы бесплатной пробной версии не могут выполнять это действие.
+		TRIAL_ACCOUNT_LEVEL_CAP_REACHED = "" -- Вы достигли максимального уровня, доступного в бесплатной пробной версии игры. [Щелкните здесь], чтобы купить полную версию!
+		NPEV2_CHAT_GUIDE_FRAME_ERROR_STARTER_ACCOUNTS_CANNOT_GUIDE = "" -- Недоступно для владельцев бесплатной пробной версии.
+		CHAT_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии могут шептать только тем игрокам, которые добавили их персонажей в список друзей. [Щелкните, чтобы купить полную версию]
+		CHAT_TRIAL_RESTRICTED_NOTICE_TRIAL = "" -- [%s] Владельцы бесплатной пробной версии не могут отправлять сообщения в этот канал. [Щелкните, чтобы купить полную версию]
+		ERR_YELL_RESTRICTED_TRIAL = "" -- Команда "/крик" недоступна владельцам бесплатной пробной версии. [Щелкните, чтобы купить полную версию]
+		CHAT_RESTRICTED = "" -- Владельцы бесплатной пробной версии могут шептать только тем игрокам, которые добавили их персонажей в список друзей. [Щелкните, чтобы купить полную версию]
+		ERR_CHAT_RESTRICTED_TRIAL = "" -- Владельцы бесплатной пробной версии могут посылать лимитированное количество сообщений. Пожалуйста, подождите, прежде чем отправлять новые сообщения.[Щелкните, чтобы купить полную версию]
+		ERROR_COMMUNITIES_VETERAN_TRIAL = "" -- Недоступно для владельцев бесплатной пробной версии.
+		ERR_GUILD_TRIAL_ACCOUNT_TRIAL = "" -- Владельцы бесплатной пробной версии не могут вступать в гильдии.
+		ERR_FEATURE_RESTRICTED_TRIAL = "" -- Недоступно для владельцев бесплатной пробной версии.
+
+
+
+
+
+
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_AddonsManager, GlobalAddonName)
 		E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_AddonsManager, OctoToDo_MainFrame_AddonsManager, nil, "OctoToDo_MainFrame_AddonsManager")
