@@ -6,9 +6,6 @@ local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local AddonManager = CreateFrame("Frame")
 local profiles = {}
 local currentProfile = "default"
--- Инициализация
-AddonManager:RegisterEvent("ADDON_LOADED")
-AddonManager:RegisterEvent("PLAYER_LOGIN")
 -- Получить список всех аддонов
 function E.func_GetAllAddons()
 	local addons = {}
@@ -31,12 +28,113 @@ function E.func_ListAddons(filter)
 		end
 	end
 end
+-- Включить все аддоны
+function E.func_SetEnabledAll()
+	for i, name in ipairs(E.func_GetAllAddons()) do
+		C_AddOns.EnableAddOn(name)
+	end
+	-- print ("Все аддоны |cff00ff00включены|r")
+end
+-- Выключить все аддоны
+function E.func_DisableAllAddons()
+	local str = ""
+	for addonIndex, name in ipairs(E.func_GetAllAddons()) do
+		-- local enabled = (C_AddOns.GetAddOnEnableState(addonIndex, UnitName("player")) > Enum.AddOnEnableState.None)
+		if not OctoToDo_AddonsManager.lock.addons[name] then
+			C_AddOns.DisableAddOn(name)
+		else -- ПОФИКСИТЬ (ДОБАВИТЬ ВКЛЮЧЕН ЛИ АДДОН)
+			if addonIndex == 1 then
+				str = name
+			else
+				str = str ..", ".. name
+			end
+		end
+	end
+	-- if str ~= "" then
+	-- 	print ("Все аддоны |cffFF0000отключены|r, кроме: " .. E.Green_Color.. str.."|r")
+	-- end
+end
 
+
+
+function E.IsAddonCollapsed(name)
+	local collapsedAddons = OctoToDo_AddonsManager.collapsedAddons[name]
+	return collapsedAddons or false
+end
+
+function E.func_GetAddonName(indexOrName)
+	return C_AddOns.GetAddOnInfo(indexOrName)
+end
+function E.AddonListEntry_SetEnabled(index, character, enabled)
+	if enabled == nil then
+		enabled = C_AddOns.IsAddOnDefaultEnabled(index)
+	end
+	if enabled then
+		C_AddOns.EnableAddOn(index, character)
+	else
+		C_AddOns.DisableAddOn(index, character)
+	end
+end
+
+function E.UpdatePerformance()
+	local enabled = C_AddOnProfiler.IsEnabled()
+	if enabled then
+		UpdateAddOnMemoryUsage()
+		-- UpdateAddOnCPUUsage() -- НЕ РАБОТАЕТ?
+	end
+end
+
+function E.OnENTERTTOOLTIP(f)
+	if not f.tooltip then
+		return
+	elseif #f.tooltip == 0 then
+		return
+	end
+	GameTooltip:SetOwner(f, "ANCHOR_BOTTOMRIGHT", 0, 0)
+	GameTooltip:AddLine(" ")
+	for _, v in next, (f.tooltip) do
+		GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
+	end
+	GameTooltip:AddLine(" ")
+	GameTooltip:Show()
+end
+
+
+function E.AddonList_HasAnyChanged()
+	if (AddonList.outOfDate and not C_AddOns.IsAddonVersionCheckEnabled() or (not AddonList.outOfDate and C_AddOns.IsAddonVersionCheckEnabled() and AddonList_HasOutOfDate())) then
+		return true
+	end
+	for i=1,C_AddOns.GetNumAddOns() do
+		local character = nil
+		character = UnitName("player")
+		local enabled = (C_AddOns.GetAddOnEnableState(i, character) > Enum.AddOnEnableState.None)
+		local reason = select(5,C_AddOns.GetAddOnInfo(i))
+		if ( enabled ~= AddonList.startStatus[i] and reason ~= "DEP_DISABLED" ) then
+			return true
+		end
+	end
+	return false
+end
+
+function E.AddonTooltipBuildDepsString(addonIndex, color)
+	color = color or "|cff000000"
+	local deps = { C_AddOns.GetAddOnDependencies(addonIndex) }
+	local depsString = ""
+	for i, name in ipairs(deps) do
+		if i == 1 then
+			depsString = "Родители:|n" -- ADDON_DEPENDENCIES
+		end
+		depsString = depsString..color.."    "..(name).."|r|n"
+	end
+	return depsString
+end
+function E.func_GetAddonTitle(indexOrName)
+	return select(2, C_AddOns.GetAddOnInfo(indexOrName))
+end
 function E.IsAddonInstalled(indexOrName)
 	local _, _, _, _, reason = C_AddOns.GetAddOnInfo(indexOrName)
 	return reason ~= "MISSING"
 end
-
 function E.IsAddonSelected(nameOrIndex, forSome, charGuid)
 	if (forSome) then
 		local state = C_AddOns.GetAddOnEnableState(nameOrIndex, nil)
@@ -44,36 +142,29 @@ function E.IsAddonSelected(nameOrIndex, forSome, charGuid)
 	end
 	-- local guid = charGuid or E.GetSelectedCharGuid()
 	-- if (charGuid == true) then
-	-- 	guid = nil
+	--     guid = nil
 	-- end
 	local state = C_AddOns.GetAddOnEnableState(nameOrIndex, guid)
 	return state == 2
 end
-
 -- function E.GetSelectedCharGuid()
--- 	if (selectedCharIndex >= 1) then return orderedCharList[selectedCharIndex + 1].guid end
--- 	return nil
+--     if (selectedCharIndex >= 1) then return orderedCharList[selectedCharIndex + 1].guid end
+--     return nil
 -- end
-
-
 function E.LocalizeCategoryName(name, isUserCategory)
 	if (isUserCategory) then
 		return name
 	end
 	return rawget(L, string.lower(name)) or name
 end
-
 function E.GetCategoryTables()
 	local db = self:GetDb()
 	local userCategories = db.categories
 	local tocCategories = categoryTocTable
 	return userCategories, tocCategories, fixedCategories
 end
-
-
 function E.CategoriesForAddon(name)
 	local userTable, tocTable, fixedTable = E.GetCategoryTables()
-
 	local resultText = ""
 	local sep = ""
 	for _, categoryTable in pairs(userTable) do
@@ -82,14 +173,12 @@ function E.CategoriesForAddon(name)
 			sep = ", "
 		end
 	end
-
 	for _, categoryTable in pairs(tocTable) do
 		if (categoryTable.addons[name]) then
 			resultText = resultText .. sep .. E.LocalizeCategoryName(categoryTable.name, tocTable)
 			sep = ", "
 		end
 	end
-
 	for _, categoryTable in pairs(fixedTable) do
 		if (categoryTable.prepare) then categoryTable:prepare() end
 		if (categoryTable:addons(name)) then
@@ -97,74 +186,37 @@ function E.CategoriesForAddon(name)
 			sep = ", "
 		end
 	end
-
 	return resultText
 end
-
-
-
-
-
-
-
-
-
-function E.rec_toggle(index, state)
+function E.rec_toggle(addonIndex, state)
 	if state then
-		C_AddOns.DisableAddOn(index)
-		print ("|cffff0000отключен|r".. index)
+		C_AddOns.DisableAddOn(addonIndex)
+		print ("|cffff0000отключен|r".. addonIndex)
 	else
-		C_AddOns.EnableAddOn(index)
-		print ("|cff00ff00включен|r".. index)
+		C_AddOns.EnableAddOn(addonIndex)
+		print ("|cff00ff00включен|r".. addonIndex)
 	end
-	if E.depsByIndex[index] and not IsModifierKeyDown() then
-		for i, depIndex in ipairs(E.depsByIndex[index]) do
+	if E.depsByIndex[addonIndex] and not IsModifierKeyDown() then
+		for i, depIndex in ipairs(E.depsByIndex[addonIndex]) do
 			E.rec_toggle(depIndex, state)
 		end
 	end
 end
 -- Переключить аддон
-function E.func_ToggleAddon(index, state)
-	local addonName = C_AddOns.GetAddOnInfo(index)
-	local enabled = C_AddOns.GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
-	E.rec_toggle(index, enabled)
-	-- IsControlKeyDown()
-	-- IsShiftKeyDown()
-	-- IsAltKeyDown()
-end
--- Включить все аддоны
-function E.func_EnableAllAddons()
-	for i, name in ipairs(E.func_GetAllAddons()) do
-		C_AddOns.EnableAddOn(name)
-	end
-	print ("Все аддоны |cff00ff00включены|r")
-	-- local character = GetAddonCharacter();
-	-- C_AddOns.EnableAllAddOns(character);
-	-- AddonList_Update();
-end
--- Выключить все аддоны
-function E.func_DisableAllAddons()
-	local str = ""
-	for i, name in ipairs(E.func_GetAllAddons()) do
-		if not OctoToDo_AddonsManager.lock.addons[name] then
-			C_AddOns.DisableAddOn(name)
-		else -- ПОФИКСИТЬ (ДОБАВИТЬ ВКЛЮЧЕН ЛИ АДДОН)
-			if i == 1 then
-				str = name
-			else
-				str = str ..", ".. name
-			end
-		end
-	end
-	if str ~= "" then
-		print ("Все аддоны отключены, кроме: " .. E.Green_Color.. str.."|r")
-	end
+function E.func_ToggleAddon(addonIndex, state)
+	local addonName = C_AddOns.GetAddOnInfo(addonIndex)
+	local enabled = C_AddOns.GetAddOnEnableState(addonIndex, UnitName("player")) > Enum.AddOnEnableState.None
+	E.rec_toggle(addonIndex, enabled)
+	-- if OctoToDo_AddonsManager.lock.addons[addonName] then
+	--     C_AddOns.EnableAddOn(addonIndex)
+	-- end
 end
 -- Сохранить текущий профиль
 function E.func_SaveProfile(profileName)
 	if not profileName or profileName == "" then
 		profileName = currentProfile
 	end
+	OctoToDo_AddonsManager.profiles = OctoToDo_AddonsManager.profiles or {}
 	OctoToDo_AddonsManager.profiles[profileName] = {}
 	local addons = E.func_GetAllAddons()
 	for i, name in ipairs(addons) do
@@ -204,7 +256,7 @@ function E.func_HandleCommand(msg)
 	elseif command == "toggle" then
 		E.func_ToggleAddon(arg1)
 	elseif command == "enableall" then
-		E.func_EnableAllAddons()
+		E.func_SetEnabledAll()
 	elseif command == "disableall" then
 		E.func_DisableAllAddons()
 	elseif command == "save" then
@@ -225,15 +277,6 @@ function E.func_HandleCommand(msg)
 	end
 end
 -- Инициализация при загрузке
-AddonManager:SetScript("OnEvent", function(self, event, ...)
-		if event == "ADDON_LOADED" and ... == GlobalAddonName then
-			-- Создаем дефолтный профиль при первом запуске
-			-- if not profiles.default then
-			-- 	E.func_SaveProfile("default")
-			-- end
-			print ("/uam")
-		end
-end)
 -- Регистрируем команды
 SLASH_UNIVERSALADDONMANAGER1 = "/uam"
 SlashCmdList["UNIVERSALADDONMANAGER"] = E.func_HandleCommand
@@ -295,15 +338,15 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- function E.func_CompactMemory(memory)
--- 	if memory > 0 then
--- 		if memory > 1024 then
--- 			return string.format(ADDON_LIST_PERFORMANCE_MEMORY_MB, memory/1024)
--- 		else
--- 			return string.format(ADDON_LIST_PERFORMANCE_MEMORY_KB, memory)
--- 		end
--- 	else
--- 		return 0
--- 	end
+--     if memory > 0 then
+--         if memory > 1024 then
+--             return string.format(ADDON_LIST_PERFORMANCE_MEMORY_MB, memory/1024)
+--         else
+--             return string.format(ADDON_LIST_PERFORMANCE_MEMORY_KB, memory)
+--         end
+--     else
+--         return 0
+--     end
 -- end
 ----------------------------------------------------------------
 function E.IsAddOnLoaded(addonName)
@@ -339,50 +382,29 @@ function E.AddonList_IsAddOnLoadOnDemand(index)
 	return lod
 end
 ----------------------------------------------------------------
-function E.AddonTooltipBuildDepsString(index)
-	local deps = { C_AddOns.GetAddOnDependencies(index) }
-	local depsString = ""
-	for i, name in ipairs(deps) do
-		local color = E.Green_Color
-		if i == 1 then
-			depsString = color..name.."|r"
-		else
-			depsString = depsString..", "..color..name.."|r"
-		end
-	end
-	return depsString
-end
-
-
-
-
-
-
-
-
-
-
-
-
 ----------------------------------------------------------------
-function E.AddonList_HasAnyChanged()
-	if (AddonList.outOfDate and not C_AddOns.IsAddonVersionCheckEnabled() or (not AddonList.outOfDate and C_AddOns.IsAddonVersionCheckEnabled() and AddonList_HasOutOfDate())) then
-		return true;
-	end
-	for i=1,C_AddOns.GetNumAddOns() do
-		local character = nil;
-		if (not InGlue()) then
-			character = UnitName("player");
-		end
-		local enabled = (C_AddOns.GetAddOnEnableState(i, character) > Enum.AddOnEnableState.None);
-		local reason = select(5,C_AddOns.GetAddOnInfo(i))
-		if ( enabled ~= AddonList.startStatus[i] and reason ~= "DEP_DISABLED" ) then
-			return true
-		end
-	end
-	return false
-end
 ----------------------------------------------------------------
+local function getFunction(fun)
+	return (C_AddOns and C_AddOns[fun]) or _G[fun]
+end
+E.compat = {
+	EnableAddOn = getFunction("EnableAddOn"),
+	DisableAddOn = getFunction("DisableAddOn"),
+	IsAddOnLoaded = getFunction("IsAddOnLoaded"),
+	EnableAllAddOns = getFunction("EnableAllAddOns"),
+	DisableAllAddOns = getFunction("DisableAllAddOns"),
+	GetAddOnInfo = getFunction("GetAddOnInfo"),
+	GetAddOnDependencies = getFunction("GetAddOnDependencies"),
+	GetNumAddOns = getFunction("GetNumAddOns"),
+	SaveAddOns = getFunction("SaveAddOns"),
+	ResetAddOns = getFunction("ResetAddOns"),
+	IsAddonVersionCheckEnabled = getFunction("IsAddonVersionCheckEnabled"),
+	SetAddonVersionCheck = getFunction("SetAddonVersionCheck"),
+	IsAddOnLoadOnDemand = getFunction("IsAddOnLoadOnDemand"),
+	GetAddOnEnableState = (C_AddOns and C_AddOns.GetAddOnEnableState) or function(nameOrIndex, character)
+		return GetAddOnEnableState(character, nameOrIndex) -- the old API has inverted parameters
+	end
+}
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -409,4 +431,3 @@ end
 -- NEW_COMPACT_UNIT_FRAME_PROFILE - Новый профиль
 -- CREATE_NEW_COMPACT_UNIT_FRAME_PROFILE - Новый профиль
 -- NEW - Создать
-

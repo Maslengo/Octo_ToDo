@@ -28,7 +28,7 @@ function E:func_Create_DDframe_AddonsManager()
 	DD_AddonsManager.text:SetJustifyV("MIDDLE")
 	DD_AddonsManager.text:SetJustifyH("CENTER")
 	DD_AddonsManager.text:SetTextColor(1, 1, 1, 1)
-	DD_AddonsManager.text:SetText("ПУК СРЕНЬК")
+	DD_AddonsManager.text:SetText(MAIN_MENU)
 	LibSFDropDown:SetMixin(DD_AddonsManager)
 	DD_AddonsManager:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_AddonsManager, "TOPLEFT", 0, 0)
 	DD_AddonsManager:ddSetDisplayMode(GlobalAddonName)
@@ -45,27 +45,8 @@ function E:func_Create_DDframe_AddonsManager()
 			if level == 1 then
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
-				info.notCheckable = true -- ВООБЩЕ ПОКАЖЕТ ЛИ КВАДРАТ
-				info.isNotRadio = true -- КРУГ А НЕ КВАДРАТ
-				info.text = MAIN_MENU
-				info.value = MAIN_MENU
-				info.hasArrow = true
-				self:ddAddButton(info, level)
-				----------------------------------------------------------------
-				info.fontObject = OctoFont11
-				info.keepShownOnClick = true
-				info.notCheckable = true
-				info.isNotRadio = true
-				info.text = E.Debug_Color..BINDING_HEADER_DEBUG.."|r"
-				info.value = BINDING_HEADER_DEBUG
-				info.hasArrow = true
-				self:ddAddButton(info, level)
-				----------------------------------------------------------------
-			elseif value == MAIN_MENU then
-				info.fontObject = OctoFont11
-				info.keepShownOnClick = true
-				info.notCheckable = false -- ВООБЩЕ ПОКАЖЕТ ЛИ КВАДРАТ
-				info.isNotRadio = true -- КРУГ А НЕ КВАДРАТ
+				info.notCheckable = false -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
 				info.text = L["fullName"]
 				info.hasArrow = nil
 				info.checked = OctoToDo_AddonsManager.config.fullName
@@ -77,10 +58,11 @@ function E:func_Create_DDframe_AddonsManager()
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
-				info.notCheckable = false -- ВООБЩЕ ПОКАЖЕТ ЛИ КВАДРАТ
-				info.isNotRadio = true -- КРУГ А НЕ КВАДРАТ
+				info.notCheckable = false -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
 				info.text = L["showIcons"]
-				info.hasArrow = nil
+				info.value = "showIcons"
+				info.hasArrow = true
 				info.checked = OctoToDo_AddonsManager.config.showIcons
 				info.func = function(_, _, _, checked)
 					OctoToDo_AddonsManager.config.showIcons = checked
@@ -90,8 +72,8 @@ function E:func_Create_DDframe_AddonsManager()
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
-				info.notCheckable = false -- ВООБЩЕ ПОКАЖЕТ ЛИ КВАДРАТ
-				info.isNotRadio = true -- КРУГ А НЕ КВАДРАТ
+				info.notCheckable = false -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
 				info.text = L["showVersion"]
 				info.hasArrow = nil
 				info.checked = OctoToDo_AddonsManager.config.showVersion
@@ -103,8 +85,8 @@ function E:func_Create_DDframe_AddonsManager()
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
-				info.notCheckable = false -- ВООБЩЕ ПОКАЖЕТ ЛИ КВАДРАТ
-				info.isNotRadio = true -- КРУГ А НЕ КВАДРАТ
+				info.notCheckable = false -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
 				info.text = E.Debug_Color..L["showIndex"].."|r"
 				info.hasArrow = nil
 				info.checked = OctoToDo_AddonsManager.config.showIndex
@@ -114,11 +96,81 @@ function E:func_Create_DDframe_AddonsManager()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = false -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = ADDON_FORCE_LOAD
+				info.hasArrow = nil
+				info.checked = not C_AddOns.IsAddonVersionCheckEnabled()
+				info.func = function(_, _, _, checked)
+					E.compat.SetAddonVersionCheck(not checked)
+					E.AddonList_Update()
+				end
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+				self:ddAddSeparator(level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = "ПРОФИЛИ"
+				info.value = "ПРОФИЛИ"
+				info.hasArrow = true
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = CREATE_NEW_COMPACT_UNIT_FRAME_PROFILE
+				info.value = CREATE_NEW_COMPACT_UNIT_FRAME_PROFILE
+				info.hasArrow = true
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+				self:ddAddSeparator(level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = ENABLE_ALL_ADDONS
+				info.hasArrow = nil
+				info.func = function(_, _, _, checked)
+					E.func_SetEnabledAll()
+					E.AddonList_Update()
+				end
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = DISABLE_ALL_ADDONS
+				info.hasArrow = nil
+				info.func = function(_, _, _, checked)
+					E.func_DisableAllAddons()
+					E.AddonList_Update()
+				end
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+				self:ddAddSeparator(level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = E.Debug_Color..BINDING_HEADER_DEBUG.."|r"
+				info.value = BINDING_HEADER_DEBUG
+				info.hasArrow = true
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
 			elseif value == BINDING_HEADER_DEBUG then
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
-				info.notCheckable = true -- ВООБЩЕ ПОКАЖЕТ ЛИ КВАДРАТ
-				info.isNotRadio = true -- КРУГ А НЕ КВАДРАТ
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
 				info.text = E.Debug_Color.."fpde(OctoToDo_AddonsManager)".."|r"
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
@@ -136,14 +188,89 @@ function E:func_Create_DDframe_AddonsManager()
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = false
-				info.notCheckable = true -- ВООБЩЕ ПОКАЖЕТ ЛИ КВАДРАТ
-				info.isNotRadio = true -- КРУГ А НЕ КВАДРАТ
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = E.Debug_Color..DELETE.." "..ALL.."|r"
+				info.hasArrow = nil
+				info.func = function(_, _, _, checked)
+					OctoToDo_AddonsManager = {}
+					ReloadUI()
+				end
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
 				info.text = E.Debug_Color..RELOADUI.."|r"
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
 					ReloadUI()
 				end
 				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+			elseif value == "showIcons" then
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = false -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = L["showIconsQuestionMark"]
+				info.hasArrow = nil
+				info.checked = OctoToDo_AddonsManager.config.showIconsQuestionMark
+				info.func = function(_, _, _, checked)
+					OctoToDo_AddonsManager.config.showIconsQuestionMark = checked
+					E.AddonList_Update()
+				end
+				self:ddAddButton(info, level)
+			elseif value == CREATE_NEW_COMPACT_UNIT_FRAME_PROFILE then
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = "Create"
+				info.hasArrow = nil
+				info.func = function() self:createProfile() end
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = "|cffFFFFFFCopy current|r" -- ПОФИКСИТЬ
+				info.hasArrow = nil
+				info.func = function() self:createProfile(true) end
+				self:ddAddButton(info, level)
+			elseif value == "ПРОФИЛИ" then
+				----------------------------------------------------------------
+				for profileName, v in next, (OctoToDo_AddonsManager.profiles) do
+					info.fontObject = OctoFont11
+					info.keepShownOnClick = true
+					info.notCheckable = true -- TRUE убрать чекбокс
+					info.isNotRadio = true -- TRUE круг, а не квадрат
+					info.text = profileName
+					info.hasArrow = nil
+					info.func = function()
+						E.func_LoadProfile(profileName)
+						E.AddonList_Update()
+					end
+					self:ddAddButton(info, level)
+				end
+				----------------------------------------------------------------
+				self:ddAddSeparator(level)
+				----------------------------------------------------------------
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true -- TRUE убрать чекбокс
+				info.isNotRadio = true -- TRUE круг, а не квадрат
+				info.text = E.Debug_Color..RELOADUI.."|r"
+				info.hasArrow = nil
+				info.func = function(_, _, _, checked)
+					ReloadUI()
+				end
+				self:ddAddButton(info, level)
+				----------------------------------------------------------------
 			end
 			----------------------------------------------------------------
 			----------------------------------------------------------------

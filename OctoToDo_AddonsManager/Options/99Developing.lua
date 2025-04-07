@@ -47,4 +47,3 @@ function E.DevelopingADDONS()
 	}
 	return Developing
 end
-

@@ -360,7 +360,7 @@ function E.func_rgb2hexDEV(r, g, b, a)
 	if not a then
 		a = 1
 	end
-	return "c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
 ----------------------------------------------------------------
 function E.func_percent(percent, maxvalue)
@@ -798,12 +798,38 @@ E.className = select(1, UnitClass("PLAYER"))
 E.classFilename = select(2, UnitClass("PLAYER"))
 E.classId = select(3, UnitClass("PLAYER"))
 
-E.classColor = E.func_GetClassColor(E.classFilename) --or {r = 0.5, g = 0.5, b = 0.5}
+E.classColor = E.func_GetClassColor(E.classFilename)
 local r, g, b = GetClassColor(E.classFilename)
+if (r == 1 and g == 1 and b == 1) then
+	r = 150/255
+	g = 89/255
+	b = 255/255
+end
+
+
+
+
 E.classColorHexCurrent = E.func_rgb2hex(r, g, b)
 E.curCharName = UnitFullName("PLAYER")
 E.curServer = GetRealmName()
 E.curServerShort = E.func_CurServerShort(GetRealmName())
+E.Class_Priest_Color_Alternative = "|cff9659FF"--"|cff7157FF"
+-- if E.classColorHexCurrent == "|cffFFFFFF" then
+-- 	E.classColorHexCurrent = E.Class_Priest_Color_Alternative
+-- end
+E.Class_Warrior_Color = "|cffC69B6D"
+E.Class_Paladin_Color = "|cffF48CBA"
+E.Class_Hunter_Color = "|cffAAD372"
+E.Class_Rogue_Color = "|cffFFF468"
+E.Class_Priest_Color = "|cffFFFFFF"
+E.Class_Shaman_Color = "|cff0070DD"
+E.Class_Mage_Color = "|cff3FC7EB"
+E.Class_Warlock_Color = "|cff8788EE"
+E.Class_Monk_Color = "|cff00FF98"
+E.Class_Druid_Color = "|cffFF7C0A"
+E.Class_DemonHunter_Color = "|cffA330C9"
+E.Class_DeathKnight_Color = "|cffC41E3A"
+E.Class_Evoker_Color = "|cff33937F"
 ----------------------------------------------------------------
 function E.func_Reverse_order(a, b)
 	return b < a
@@ -1201,8 +1227,8 @@ function E.func_coloredText(fontstring)
 end
 ----------------------------------------------------------------
 function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
-	local _, classFilename = UnitClass("PLAYER")
-	local r, g, b = GetClassColor(classFilename)
+	-- local r, g, b = GetClassColor(E.classFilename)
+	local r, g, b = E.func_hex2rgbNUMBER(E.classColorHexCurrent)
 	local bgCr, bgCg, bgCb, bgCa = E.bgCr, E.bgCg, E.bgCb, E.bgCa
 	if hexcolor then
 		bgCr, bgCg, bgCb = self.func_hex2rgbNUMBER(hexcolor)
@@ -1262,7 +1288,6 @@ function E:func_CreateUtilsButton(frame, optionsAddonName)
 	if not optionsAddonName then
 		optionsAddonName = GlobalAddonName
 	end
-	print (optionsAddonName)
 	----------------------------------------------------------------
 	-- OctoToDo_CloseButton
 	----------------------------------------------------------------
@@ -1775,7 +1800,7 @@ function E.RegisterMyEventsToFrames(frame, MyEventsTable, DebugPath)
 end
 ----------------------------------------------------------------
 function E.func_Reason(reason)
-	local vivod = ADDON_DISABLED
+	local vivod = ""
 	if reason == "CORRUPT" then vivod = ADDON_CORRUPT end
 	if reason == "DEMAND_LOADED" then vivod = ADDON_DEMAND_LOADED end
 	if reason == "DEP_BANNED" then vivod = ADDON_DEP_BANNED end
@@ -1899,6 +1924,8 @@ E.daytime = 86400
 -- E.currTime = tonumber(GetServerTime())
 E.curExpansionMaxLevel = 70
 E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
+E.MonitorWidth = GetPhysicalScreenSize()
+E.MonitorHeight = select(2, GetPhysicalScreenSize())
 E.curWidthCentral = 96 -- *E.scale
 E.curHeight = 20 -- *E.scale
 --E.curWidthTitle = E.curWidthCentral*2
@@ -1935,20 +1962,7 @@ E.bgCa = .8
 E.bgCaOverlay = .1
 E.slider_scale = .8
 E.multiplier = 2 - E.slider_scale
-E.Class_Priest_Color_Alternative = "|cff9659FF"--"|cff7157FF"
-E.Class_Warrior_Color = "|cffC69B6D"
-E.Class_Paladin_Color = "|cffF48CBA"
-E.Class_Hunter_Color = "|cffAAD372"
-E.Class_Rogue_Color = "|cffFFF468"
-E.Class_Priest_Color = "|cffFFFFFF"
-E.Class_Shaman_Color = "|cff0070DD"
-E.Class_Mage_Color = "|cff3FC7EB"
-E.Class_Warlock_Color = "|cff8788EE"
-E.Class_Monk_Color = "|cff00FF98"
-E.Class_Druid_Color = "|cffFF7C0A"
-E.Class_DemonHunter_Color = "|cffA330C9"
-E.Class_DeathKnight_Color = "|cffC41E3A"
-E.Class_Evoker_Color = "|cff33937F"
+
 
 E.WorldofWarcraft_Color = "|cffD6AB7D" -- "|cff68CCEF"
 E.TheBurningCrusade_Color = "|cffE43E5A" -- "|cff4FFF79"
@@ -2002,7 +2016,7 @@ E.Steelblue_Color = "|cff4682B3"
 E.Slategray_Color = "|cff708090"
 E.Brown_Color = "|cff964B00"
 E.Event_Color = "|cff4682B3"
-E.Debug_Color ="|cff4682B3"
+E.Debug_Color = E.classColorHexCurrent -- "|cff4682B3"
 ----------------------------------------------------------------
 E.Kyrian_r_Color = 0.44
 E.Kyrian_g_Color = 0.66

@@ -30,6 +30,7 @@ function E.CreateGeneralOptionsADDONS()
 				end,
 				set = function(_, value)
 					OctoToDo_AddonsManager.AddonHeight = value
+					-- E.UpdateDBdata()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -48,6 +49,7 @@ function E.CreateGeneralOptionsADDONS()
 				end,
 				set = function(_, value)
 					OctoToDo_AddonsManager.MainFrameNumLines = value
+					-- E.UpdateDBdata()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -66,6 +68,7 @@ function E.CreateGeneralOptionsADDONS()
 				end,
 				set = function(_, value)
 					OctoToDo_AddonsManager.curWidthTitle = value
+					-- E.UpdateDBdata()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -122,230 +125,6 @@ function E.CreateGeneralOptionsADDONS()
 				width = E.FULL_WIDTH/4,
 				order = 8,
 			},
-			-- minimaphide = {
-			-- 	type = "toggle",
-			-- 	name = L["minimaphide"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.minimaphide
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.minimaphide = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 7,
-			-- },
-			-- hookMenuButton = {
-			-- 	type = "toggle",
-			-- 	name = L["hookMenuButton"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.hookMenuButton
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.hookMenuButton = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 8,
-			-- },
-			-- sortingCpu = {
-			-- 	type = "toggle",
-			-- 	name = L["sortingCpu"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.sortingCpu
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.sortingCpu = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 9,
-			-- },
-			-- profilingcpuShowCurrent = {
-			-- 	type = "toggle",
-			-- 	name = L["cpuShowCurrent"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.profilingcpuShowCurrent
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.profilingcpuShowCurrent = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 11,
-			-- },
-			-- profilingcpuShowEncounter = {
-			-- 	type = "toggle",
-			-- 	name = L["cpuShowEncounter"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.profilingcpuShowEncounter
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.profilingcpuShowEncounter = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 12,
-			-- },
-			-- profilingcpuShowPeak = {
-			-- 	type = "toggle",
-			-- 	name = L["profilingcpuShowPeak"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.profilingcpuShowPeak
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.profilingcpuShowPeak = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 13,
-			-- },
-			-- profilingcpuShowAverage = {
-			-- 	type = "toggle",
-			-- 	name = L["profilingcpuShowAverage"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.profilingcpuShowAverage
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.profilingcpuShowAverage = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 14,
-			-- },
-			-- profilingcpuUpdate = {
-			-- 	type = "toggle",
-			-- 	name = L["profilingcpuUpdate"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.profilingcpuUpdate
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.profilingcpuUpdate = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 15,
-			-- },
-			-- localizeCategoryName = {
-			-- 	type = "toggle",
-			-- 	name = L["localizeCategoryName"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.localizeCategoryName
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.localizeCategoryName = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 16,
-			-- },
-			-- showVersions = {
-			-- 	type = "toggle",
-			-- 	name = L["showVersions"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.showVersions
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.showVersions = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 17,
-			-- },
-			-- autofocusSearch = {
-			-- 	type = "toggle",
-			-- 	name = L["autofocusSearch"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.autofocusSearch
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.autofocusSearch = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 18,
-			-- },
-			-- showSecureAddons = {
-			-- 	type = "toggle",
-			-- 	name = L["showSecureAddons"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.showSecureAddons
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.showSecureAddons = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 19,
-			-- },
-			-- showTocXCategory = {
-			-- 	type = "toggle",
-			-- 	name = L["showTocXCategory"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.showTocXCategory
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.showTocXCategory = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 20,
-			-- },
-			-- showTocCategory = {
-			-- 	type = "toggle",
-			-- 	name = L["showTocCategory"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.showTocCategory
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.showTocCategory = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 21,
-			-- },
-			-- showMemoryInBrokerTtp = {
-			-- 	type = "toggle",
-			-- 	name = L["showMemoryInBrokerTtp"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.showMemoryInBrokerTtp
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.showMemoryInBrokerTtp = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 22,
-			-- },
-			-- isCategoryFrameVisible = {
-			-- 	type = "toggle",
-			-- 	name = L["isCategoryFrameVisible"],
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_AddonsManager.config.isCategoryFrameVisible
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_AddonsManager.config.isCategoryFrameVisible = value
-			-- 		E.AddonList_Update()
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 23,
-			-- },
 			-------------------------------------------------
 			Header24 = {
 				type = "header",

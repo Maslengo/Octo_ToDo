@@ -13,6 +13,7 @@ if L then
 
 	L["fullName"] = true
 	L["showIcons"] = true
+	L["showIconsQuestionMark"] = true
 	L["showVersion"] = true
 	L["showIndex"] = true
 
@@ -216,6 +217,7 @@ if L then
 
 	L["fullName"] = "Полное название"
 	L["showIcons"] = "Показывать иконку"
+	L["showIconsQuestionMark"] = "Показывать иконку со знаком вопроса"
 	L["showVersion"] = "Показывать версию"
 	L["showIndex"] = "Показывать индекс"
 

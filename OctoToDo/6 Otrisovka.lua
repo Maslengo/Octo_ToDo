@@ -3,7 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 function E:func_Otrisovka()
 	local OctoTable_func_otrisovkaCENT = {}
 	local OctoTable_func_otrisovkaLEFT = {}
-
+	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -62,7 +62,9 @@ function E:func_Otrisovka()
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {E.func_itemTexture(122284)..E.func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 			end
-			tooltip[#tooltip+1] = {E.Green_Color.."Reload Count|r",CharInfo.ReloadCount}
+			if CharInfo.ReloadCount ~= 0 then
+				tooltip[#tooltip+1] = {"Reload Count: "..CharInfo.classColorHex..CharInfo.ReloadCount.."|r"}
+			end
 			if E.DebugInfo then
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {E.DEVTEXT, " "}
@@ -111,6 +113,7 @@ function E:func_Otrisovka()
 		if OctoToDo_DB_Vars.ExpansionToShow[expID] then
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
 				if expDATA.nameShort == v.desc then
+					----------------------------------------------------------------
 					tinsert(OctoTable_func_otrisovkaCENT,
 						function(CharInfo)
 							local vivodCent, tooltip = " ", {}
@@ -132,6 +135,7 @@ function E:func_Otrisovka()
 	----------------------------------------------------------------
 	for _, v in ipairs(E.OctoTable_UniversalQuest) do
 		if v.desc == "Another" or v.desc == "Timewalk" then
+			----------------------------------------------------------------
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
@@ -146,15 +150,10 @@ function E:func_Otrisovka()
 			end)
 		end
 	end
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-
-
-
-
-
+	----------------------------------------------------------------
 	tinsert(OctoTable_func_otrisovkaCENT,
 		function(CharInfo)
 			local vivodCent, tooltip = " ", {}
@@ -203,6 +202,7 @@ function E:func_Otrisovka()
 			return E.WOW_Epic_Color..L["Mythic Keystone"].."|r", 4352494
 	end)
 	if OctoToDo_DB_Vars.ExpansionToShow[2] then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -215,6 +215,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(23572), E.func_GetItemIcon(23572)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -227,6 +228,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(30183), E.func_GetItemIcon(30183)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -239,6 +241,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(32428), E.func_GetItemIcon(32428)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -253,6 +256,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.ExpansionToShow[3] then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -265,6 +269,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(45087), E.func_GetItemIcon(45087)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -277,6 +282,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(47556), E.func_GetItemIcon(47556)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -291,6 +297,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.ExpansionToShow[4] then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -303,6 +310,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(52078), E.func_GetItemIcon(52078)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -315,6 +323,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(69237), E.func_GetItemIcon(69237)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -329,6 +338,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.ExpansionToShow[5] then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -341,6 +351,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(697), E.func_GetCurrencyIcon(697)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -355,6 +366,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.ExpansionToShow[6] then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -367,6 +379,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1129), E.func_GetCurrencyIcon(1129)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -379,6 +392,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(994), E.func_GetCurrencyIcon(994)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -391,6 +405,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(823), E.func_GetCurrencyIcon(823)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -403,6 +418,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1101), E.func_GetCurrencyIcon(1101)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -415,6 +431,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(824), E.func_GetCurrencyIcon(824)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -441,6 +458,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return GARRISON_FOLLOWERS_TITLE
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -456,6 +474,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_questName(38242).." (ап пета)"
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -470,6 +489,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.ExpansionToShow[7] then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -479,6 +499,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return (E.Timers.Legion_Invasion().."Timer_Legion_Invasion")
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -491,6 +512,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1273), E.func_GetCurrencyIcon(1273)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -503,6 +525,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1508), E.func_GetCurrencyIcon(1508)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -513,6 +536,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1342), E.func_GetCurrencyIcon(1342)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -523,6 +547,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1220), E.func_GetCurrencyIcon(1220)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -533,6 +558,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1226), E.func_GetCurrencyIcon(1226)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -543,6 +569,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1533), E.func_GetCurrencyIcon(1533)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -553,6 +580,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1155), E.func_GetCurrencyIcon(1155)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -567,6 +595,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.ExpansionToShow[8] then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -579,6 +608,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1560), E.func_GetCurrencyIcon(1560)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -591,6 +621,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1721), E.func_GetCurrencyIcon(1721)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -603,6 +634,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1803), E.func_GetCurrencyIcon(1803)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -618,6 +650,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1755), E.func_GetCurrencyIcon(1755)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -630,6 +663,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1719), E.func_GetCurrencyIcon(1719)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -642,6 +676,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1710), E.func_GetCurrencyIcon(1710)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -654,6 +689,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1716), E.func_GetCurrencyIcon(1716)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -664,6 +700,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1718), E.func_GetCurrencyIcon(1718)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -681,6 +718,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(158075), E.func_GetItemIcon(158075)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -705,6 +743,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(169223), E.func_GetItemIcon(169223)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -720,6 +759,7 @@ function E:func_Otrisovka()
 					return "All_BfA_Island"
 				end
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -745,6 +785,7 @@ function E:func_Otrisovka()
 		local BGcolor
 		for kCovenant = 1, 2 do
 			for iANIMA = 1, 4 do
+				----------------------------------------------------------------
 				tinsert(OctoTable_func_otrisovkaCENT,
 					function(CharInfo)
 						local vivodCent, tooltip = " ", {}
@@ -774,6 +815,7 @@ function E:func_Otrisovka()
 				end)
 			end
 		end
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -786,6 +828,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(2009), E.func_GetCurrencyIcon(2009)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -798,6 +841,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1906), E.func_GetCurrencyIcon(1906)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -810,6 +854,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1828), E.func_GetCurrencyIcon(1828)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -822,6 +867,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(1979), E.func_GetCurrencyIcon(1979)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -839,6 +885,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.ExpansionToShow[10] then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -851,6 +898,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(209856), E.func_GetItemIcon(209856)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -863,6 +911,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(207002), E.func_GetItemIcon(207002)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -878,6 +927,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(2594), E.func_GetCurrencyIcon(2594)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -893,6 +943,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.WOW_Epic_Color..E.func_GetItemName(210254).."|r", E.func_GetItemIcon(210254)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -905,6 +956,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_currencyName(2245), E.func_GetCurrencyIcon(2245)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -917,6 +969,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(213089), E.func_GetItemIcon(213089)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -929,6 +982,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_itemName(211516), E.func_GetItemIcon(211516)
 		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -944,6 +998,7 @@ function E:func_Otrisovka()
 	end
 	if OctoToDo_DB_Vars.ExpansionToShow[11] then
 		if OctoToDo_DB_Vars.GildedHarbingerCrest == true then
+			----------------------------------------------------------------
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
@@ -975,6 +1030,7 @@ function E:func_Otrisovka()
 			end)
 		end
 		if OctoToDo_DB_Vars.RunedHarbingerCrest == true then
+			----------------------------------------------------------------
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
@@ -1006,6 +1062,7 @@ function E:func_Otrisovka()
 			end)
 		end
 		if OctoToDo_DB_Vars.CarvedHarbingerCrest == true then
+			----------------------------------------------------------------
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
@@ -1037,6 +1094,7 @@ function E:func_Otrisovka()
 			end)
 		end
 		if OctoToDo_DB_Vars.WeatheredHarbingerCrest == true then
+			----------------------------------------------------------------
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
@@ -1069,6 +1127,7 @@ function E:func_Otrisovka()
 		end
 	end
 	if OctoToDo_DB_Vars.DebugInfo == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1094,6 +1153,7 @@ function E:func_Otrisovka()
 		E.func_TableRemoveDuplicates(list)
 		sort(list)
 		for i, value in ipairs(list) do
+			----------------------------------------------------------------
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
@@ -1113,30 +1173,7 @@ function E:func_Otrisovka()
 		end
 	end
 	if OctoToDo_DB_Vars.Timewalk == true then
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Dungeons_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return DUNGEONS, E.func_GetCurrencyIcon(1166)
-		end)
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly ~= E.NONE then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest.Octopussy_Timewalk_Raid_Weekly
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return RAIDS, E.func_GetCurrencyIcon(1166)
-		end)
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1151,7 +1188,10 @@ function E:func_Otrisovka()
 		end)
 	end
 
+
+
 	if OctoToDo_DB_Vars.Quests == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1166,6 +1206,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.Dungeons == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1202,6 +1243,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.Currency == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1231,6 +1273,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.Reputations == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1255,6 +1298,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.Items == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1282,6 +1326,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.Professions == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1304,6 +1349,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.Gold == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1327,6 +1373,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.ItemLevel == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -1361,6 +1408,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if OctoToDo_DB_Vars.WasOnline == true then
+		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}

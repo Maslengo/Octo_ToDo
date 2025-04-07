@@ -9,6 +9,7 @@ local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
+
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
 		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
@@ -418,20 +419,7 @@ local function func_NumPlayers()
 	end
 	return #sorted or 1
 end
-local function OnENTERTTOOLTIP(f)
-	if not f.tooltip then
-		return
-	elseif #f.tooltip == 0 then
-		return
-	end
-	GameTooltip:SetOwner(f, "ANCHOR_BOTTOMRIGHT", 0, 0)
-	GameTooltip:AddLine(" ")
-	for _, v in next, (f.tooltip) do
-		GameTooltip:AddDoubleLine(v[1], v[2], 1, 1, 1, 1, 1, 1)
-	end
-	GameTooltip:AddLine(" ")
-	GameTooltip:Show()
-end
+
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
@@ -470,7 +458,11 @@ local function func_OnAcquired(owner, frame, data, new)
 					f.text:SetJustifyV("MIDDLE")
 					f.text:SetJustifyH("CENTER")
 					f.text:SetTextColor(1, 1, 1, 1)
-					f:SetScript("OnEnter", OnENTERTTOOLTIP)
+					f:SetScript("OnEnter", 	function()
+
+						E.OnENTERTTOOLTIP(f)
+
+						end)
 					f:SetScript("OnLeave", GameTooltip_Hide)
 					f:SetScript("OnHide", f.Hide)
 					self[key] = f
