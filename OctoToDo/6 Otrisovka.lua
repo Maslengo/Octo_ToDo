@@ -1414,7 +1414,7 @@ function E:func_Otrisovka()
 				local vivodCent, tooltip = " ", {}
 				local color = "|cffFFFFFF"
 				if CharInfo.loginHour and CharInfo.loginDay then
-					if CharInfo.Name == UnitName("Player") then
+					if CharInfo.GUID == E.curGUID then
 						vivodCent = E.Green_Color..FRIENDS_LIST_ONLINE.."|r"
 					else
 						if CharInfo.needResetWeekly == true then

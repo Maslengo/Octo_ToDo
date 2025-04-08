@@ -207,7 +207,6 @@ function E.Collect_All_Professions()
 		collect.MASLENGO = collect.MASLENGO or {}
 		collect.MASLENGO.professions = collect.MASLENGO.professions or {}
 		for i, id in ipairs({GetProfessions()}) do
-
 			collect.MASLENGO.professions[i] = collect.MASLENGO.professions[i] or {}
 			local _, _, skillLevel, maxSkillLevel, _, _, skillLine = GetProfessionInfo(id)
 			collect.MASLENGO.professions[i].name = E.func_ProfessionName(skillLine)
@@ -345,44 +344,6 @@ function E.Collect_All_Currency_TEST2()
 		end
 	end
 end
-function E.Collect_All_Reputations_TEST2()
-    if OctoToDo_TrashCan then
-        OCTO_DB_reputations_test = OCTO_DB_reputations_test or {}
-        for i = 1, C_Reputation.GetNumFactions() do
-            local factionData = C_Reputation.GetFactionDataByIndex(i)
-            if factionData and factionData.isHeader then
-                C_Reputation.ExpandFactionHeader(i)
-            end
-        end
-        local tblHeader
-        local tblHeader2
-        C_Reputation.ExpandAllFactionHeaders()
-        for i = 1, C_Reputation.GetNumFactions() do
-            local factionData = C_Reputation.GetFactionDataByIndex(i)
-            if factionData then
-                local reputationID = factionData.factionID
-                local currentStanding = factionData.currentStanding
-                if factionData.isHeader and currentStanding == 0 then
-                    OCTO_DB_reputations_test[reputationID] = OCTO_DB_reputations_test[reputationID] or {}
-                    tblHeader = OCTO_DB_reputations_test[reputationID]
-                    OctoToDo_TrashCan.Reputations[reputationID] = OctoToDo_TrashCan.Reputations[reputationID] or {}
-                    tblHeader2 = OctoToDo_TrashCan.Reputations[reputationID]
-                else
-                    tblHeader[reputationID] = tblHeader[reputationID] or false
-                    tblHeader2[reputationID] = tblHeader2[reputationID] or false
-                end
-            end
-        end
-        -- for i = C_Reputation.GetNumFactions(), 1, -1 do
-        --     local factionData = C_Reputation.GetFactionDataByIndex(i)
-        --     if factionData then
-        --         C_Reputation.CollapseFactionHeader(i)
-        --     end
-        -- end
-    end
-end
-
-
 function E.Collect_All_Currency()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
@@ -484,35 +445,47 @@ function E.Collect_All_Currency()
 		end
 	end
 end
+
 function E.Collect_All_Reputations()
+	OCTO_DB_reputations_test = OCTO_DB_reputations_test or {}
 	local collect = OctoToDo_DB_Levels[E.curGUID]
+	C_Reputation.ExpandAllFactionHeaders()
 	if collect and not InCombatLockdown() then
-		local listSize = C_Reputation.GetNumFactions()
-		C_Reputation.ExpandAllFactionHeaders()
-		for i = 1, listSize do
+		local tblHeader
+		for i = 1, C_Reputation.GetNumFactions() do
 			local factionData = C_Reputation.GetFactionDataByIndex(i)
 			if factionData then
+				local currentStanding = factionData.currentStanding
 				local reputationID = factionData.factionID
 				local description = factionData.description or ""
 				if reputationID and description ~= "" then
 					OctoToDo_DB_Config.ReputationDB[reputationID] = OctoToDo_DB_Config.ReputationDB[reputationID] or false
 				end
+				if factionData.isHeader and currentStanding == 0 then
+					OCTO_DB_reputations_test[reputationID] = OCTO_DB_reputations_test[reputationID] or {}
+					tblHeader = OCTO_DB_reputations_test[reputationID]
+				else
+					tblHeader[reputationID] = tblHeader[reputationID] or false
+				end
 			end
 		end
 		for reputationID, v in next, (OctoToDo_DB_Config.ReputationDB) do
 			if reputationID then
-				local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-				if isAccountWide == false then
-					collect.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
-				else
+
+				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, tbl in next, (OctoToDo_DB_Levels) do
-						tbl.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID) or 0
+						tbl.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID)
 					end
+				else
+					collect.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID)
 				end
+
+
 			end
 		end
 	end
 end
+
 function E.Collect_ALL_ItemsInBag()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
@@ -867,7 +840,6 @@ function E.Collect_All_Holiday()
 		local currentCalendarTime = C_DateAndTime.GetCurrentCalendarTime()
 		local minute = currentCalendarTime.minute
 		local hour = currentCalendarTime.hour
-		local weekday = currentCalendarTime.weekday
 		local monthDay = currentCalendarTime.monthDay
 		local month = currentCalendarTime.month
 		local offsetMonths = 0
@@ -1095,7 +1067,6 @@ function OctoToDo_EventFrame_Collect:ADDON_LOADED()
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
-
 function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	E:func_checkCharInfo()
 	RequestTimePlayed()
@@ -1107,7 +1078,6 @@ function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_Currency()
 	E.Collect_All_Currency_TEST2()
 	E.Collect_All_Reputations()
-	E.Collect_All_Reputations_TEST2()
 	E.Collect_ALL_GreatVault()
 	E.Collect_ALL_ItemLevel()
 	E.Collect_ALL_ItemsInBag()
@@ -1318,7 +1288,6 @@ function OctoToDo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 					E.Collect_ALL_UNIVERSALQuestUpdate()
 					E.Collect_All_BfA_Island()
 					E.Collect_All_Reputations()
-					E.Collect_All_Reputations_TEST2()
 					E.Collect_All_Currency()
 					E.Collect_All_Currency_TEST2()
 					-- E.Collect_All_journalInstance()
@@ -1337,19 +1306,12 @@ function OctoToDo_EventFrame_Collect:ENCOUNTER_END()
 		)
 	end
 end
-
 function OctoToDo_EventFrame_Collect:UPDATE_INSTANCE_INFO()
 	if not InCombatLockdown() then
 		E.Collect_All_journalInstance()
 		E.Update("UPDATE_INSTANCE_INFO")
 	end
 end
-
-
-
-
-
-
 function OctoToDo_EventFrame_Collect:TIME_PLAYED_MSG(...)
 	if not InCombatLockdown() then
 		E.Collect_ALL_Played(...)
@@ -1362,4 +1324,3 @@ function OctoToDo_EventFrame_Collect:QUEST_POI_UPDATE()
 		E.Update("QUEST_POI_UPDATE")
 	end
 end
-

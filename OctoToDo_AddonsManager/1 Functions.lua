@@ -199,8 +199,7 @@ function E.AddonList_HasAnyChanged()
 		local character = nil
 		character = UnitName("player")
 		local enabled = (E.func_GetAddOnEnableState(i, character) > Enum.AddOnEnableState.None)
-		local reason = select(5,C_AddOns.GetAddOnInfo(i))
-		if ( enabled ~= AddonList.startStatus[i] and reason ~= "DEP_DISABLED" ) then
+		if ( enabled ~= AddonList.startStatus[i] and E.func_GetAddonReason(i) ~= "DEP_DISABLED" ) then
 			return true
 		end
 	end

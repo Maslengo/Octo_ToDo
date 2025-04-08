@@ -554,11 +554,11 @@ function E.func_SecondsToClock(time)
 	return table.concat(parts)
 end
 function E.ChatFrame_TimeBreakDown(time)
-	local days = floor(time / (60 * 60 * 24));
-	local hours = floor((time - (days * (60 * 60 * 24))) / (60 * 60));
-	local minutes = floor((time - (days * (60 * 60 * 24)) - (hours * (60 * 60))) / 60);
-	local seconds = mod(time, 60);
-	return days, hours, minutes, seconds;
+	local days = floor(time / (60 * 60 * 24))
+	local hours = floor((time - (days * (60 * 60 * 24))) / (60 * 60))
+	local minutes = floor((time - (days * (60 * 60 * 24)) - (hours * (60 * 60))) / 60)
+	local seconds = mod(time, 60)
+	return days, hours, minutes, seconds
 end
 ----------------------------------------------------------------
 function E.func_tmstpDayReset(time)
@@ -837,45 +837,25 @@ end
 ----------------------------------------------------------------
 function E.func_CheckReputationByRepID(reputationID)
 	local vivod = ""
-	if reputationID then
+	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+	if repInfo then
 		local color = E.White_Color
-		local standingTEXT = ""
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-		local barMin
-		local barMax
-		local barValue
-		local standingID
-		if repInfo then
-			barMin = repInfo.currentReactionThreshold
-			barMax = repInfo.nextReactionThreshold
-			barValue = repInfo.currentStanding
-			standingID = repInfo.reaction
-			if standingID == 1 then
-				color = E.Red_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL1..")"
-			elseif standingID == 2 then
-				color = E.Red_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL2..")"
-			elseif standingID == 3 then
-				color = E.Orange_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL3..")"
-			elseif standingID == 4 then
-				color = E.Yellow_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL4..")"
-			elseif standingID == 5 then
-				color = E.Yellow_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL5..")"
-			elseif standingID == 6 then
-				color = E.Green_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL6..")"
-			elseif standingID == 7 then
-				color = E.Green_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL7..")"
-			elseif standingID == 8 then
-				color = E.Green_Color
-				standingTEXT = " ("..FACTION_STANDING_LABEL8..")"
-			end
+		local barMin = repInfo.currentReactionThreshold
+		local barMax = repInfo.nextReactionThreshold
+		local barValue = repInfo.currentStanding
+		local standingID = repInfo.reaction
+		local standingTEXT = GetText("FACTION_STANDING_LABEL"..standingID, UnitSex("player"))
+
+		if (standingID == 1 or standingID == 2) then
+			color = E.Red_Color
+		elseif (standingID == 3) then
+			color = E.Orange_Color
+		elseif (standingID == 4 or standingID == 5) then
+			color = E.Yellow_Color
+		elseif (standingID == 6 or standingID == 7 or standingID == 8) then
+			color = E.Green_Color
 		end
+
 		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
 		if C_Reputation.IsFactionParagon(reputationID) then
 			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0
@@ -893,7 +873,7 @@ function E.func_CheckReputationByRepID(reputationID)
 				local currentValue = data.renownReputationEarned%data.renownLevelThreshold
 				local totalValue = data.renownLevelThreshold
 				local standing = data.renownLevel
-				vivod = (currentValue).."/"..(totalValue)..E.Green_Color.."("..(standing)..")|r"
+				vivod = (currentValue).."/"..(totalValue)..color.."("..(standing)..")|r"
 			end
 		elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
 			local friendshipFactionID = reputationInfo.friendshipFactionID or 0
@@ -910,21 +890,27 @@ function E.func_CheckReputationByRepID(reputationID)
 			end
 			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
 			vivod = color..(currentValue).."/"..(totalValue)..standingTEXT.."|r"
-			if currentLevel == maxLevel then vivod = E.Green_Color.."Done|r" end
+			if currentLevel == maxLevel then
+				vivod = color.."Done|r"
+			end
 		else
 			if barValue then
 				local currentValue = barValue-barMin
 				local totalValue = barMax-barMin
 				local nextThreshold = reputationInfo.nextThreshold or 0
-				vivod = color..(currentValue).."/"..(totalValue)..standingTEXT.."|r"
-				if currentValue == totalValue or nextThreshold == 0 then vivod = E.Green_Color.."Done|r" end
+				vivod = color..(currentValue).."/"..(totalValue).." ("..standingTEXT..")|r"
+				if currentValue == totalValue then -- or nextThreshold == 0 then
+					vivod = color.."Done|r"
+				end
 			end
 		end
-	else
-		vivod = "ERROR NO ID"
 	end
 	return vivod
 end
+
+
+
+
 ----------------------------------------------------------------
 function E.func_CurrentNumQuests()
 	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
@@ -1613,6 +1599,32 @@ function E:func_CreateUtilsButton(frame, optionsAddonName)
 	OctoToDo_EventsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga")
 	OctoToDo_EventsButton.icon:SetAllPoints()
 	-- E:func_SetBackdrop(OctoToDo_EventsButton)
+
+
+	----------------------------------------------------------------
+	-- OctoToDo_FramerateFrame GetFramerate()
+	----------------------------------------------------------------
+
+		-- local vars = OctoToDo_DB_Vars.OctoToDo_FramerateFrame
+		-- if vars.Shown then
+	local OctoToDo_FramerateFrame = CreateFrame("Frame", "OctoToDo_FramerateFrame", frame)
+	OctoToDo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*6, 0)
+	OctoToDo_FramerateFrame:SetSize(E.curHeight*2, E.curHeight)
+	OctoToDo_FramerateFrame:SetFrameStrata("HIGH")
+	OctoToDo_FramerateFrame.text_fps = OctoToDo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	OctoToDo_FramerateFrame.text_fps:SetPoint("CENTER", 0, 0)
+	OctoToDo_FramerateFrame.text_fps:SetFontObject(OctoFont12)
+	OctoToDo_FramerateFrame.text_fps:SetJustifyV("MIDDLE")
+	OctoToDo_FramerateFrame.text_fps:SetJustifyH("CENTER")
+	OctoToDo_FramerateFrame.text_fps:SetTextColor(.31, 1, .47, 1)
+	C_Timer.NewTicker(1, function()
+			local fps = math.floor(GetFramerate())
+			OctoToDo_FramerateFrame.text_fps:SetText(fps)
+	end)
+
+
+
+
 end
 ----------------------------------------------------------------
 function E:func_CreateMinimapButton(addonName, vars, frame, func, frameString)

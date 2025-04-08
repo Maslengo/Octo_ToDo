@@ -110,4 +110,36 @@ button:ddSetInitFunc(function(self, level, value)
 			self:ddAddButton(info, level)
 		end
 end)
-----------------------------------------------------------------
+----------------------------------------------------------------------
+local lsfdd = LibStub("LibSFDropDown-1.5")
+local menu = lsfdd:SetMixin({})
+menu:ddHideWhenButtonHidden(parentFrame)
+menu:ddSetMaxHeight(180)
+
+local check = random(10)
+local menuList = {}
+local menuListFunc = function(btn) check = btn.value end
+local menuListChecked = function(btn) return check == btn.value end
+
+for i = 1, 10 do
+  menuList[i] = {
+    text = "test text "..i,
+    value = i,
+    checked = menuListChecked,
+    func = menuListFunc,
+  }
+end
+menuList[11] = {
+  text = "test",
+  menuList = {
+    {
+      notCheckable = true,
+      text = "wow",
+      func = function() print("wow") end,
+    },
+  },
+}
+parentFrame:SetScript("OnMouseDown", function(self, button)
+  if button ~= "RightButton" then return end
+  menu:ddEasyMenu(menuList, "cursor", nil, nil, "menu")
+end)
