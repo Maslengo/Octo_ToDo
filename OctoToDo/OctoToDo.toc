@@ -1,63 +1,28 @@
 ## Interface: 110105, 110100
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Author: Octo
-## Version: v88.2(11.1.5)(09.04.2025)
+## Version: v88.3(11.1.5)(09.04.2025)
 ## IconTexture: Interface\AddOns\OctoToDo\Media\AddonTexture_1
 ## SavedVariables: OctoToDo_DB_Config OctoToDo_DB_Levels OctoToDo_DB_Vars OctoToDo_DB_Other OCTO_DB_currencies_test OCTO_DB_reputations_test
+## SavedVariables: OctoSimpleList OctoToDo_AddonsTable OctoToDo_AddonsManager
+## SavedVariables: OctoToDo_TrashCan
+
 
 Libs\embeds.xml
+Templates.xml
 
-1 Localization.lua
-2 Functions.lua
-3 Templates.xml
-4 Fprint.lua
+OctoToDo_1OctoToDo\OctoToDo.xml
+OctoToDo_2Achievements\Achievements.xml
+OctoToDo_3AddonsManager\AddonsManager.xml
 
-Tables\OctoToDo_Timer.lua
-Tables\OctoTable_CLASSES.lua
-Tables\OctoTable_Colors.lua
-Tables\OctoTable_Currencies.lua
-Tables\OctoTable_Expansions_Table.lua
-Tables\OctoTable_Instances.lua
-Tables\OctoTable_Items.lua
-Tables\OctoTable_Race.lua
-Tables\OctoTable_Movies.lua
-Tables\OctoTable_QuestID.lua
-Tables\OctoTable_reputation_ALL.lua
-Tables\OctoTable_UniversalQuest.lua
-Tables\OctoTable_Prefixes.lua
-Tables\OctoTable_Gossip.lua
-Tables\OctoTable_Spells.lua
-
-Moduls\Auto_ChatClearing.lua
-Moduls\Auto_CinematicCanceler.lua
-Moduls\Auto_CinematicFastSkip.lua
-Moduls\Auto_Gossip.lua
-Moduls\Auto_InputDelete.lua
-Moduls\Auto_Open.lua
-Moduls\Auto_Repair.lua
-Moduls\Auto_Screenshot.lua
-Moduls\Auto_Sell_Grey.lua
-Moduls\CVAR.lua
-Moduls\Module_AutoTurnIn.lua
-Moduls\Module_HideFrames.lua
-Moduls\Module_ItemsDelete.lua
-Moduls\Module_ItemsUsable.lua
-Moduls\Module_PortalsFrame.lua
-Moduls\Module_UIErrorsFramePosition.lua
-Moduls\OctoToDo_WowheadQuickLink.lua
-Moduls\OctoToDo_WowheadQuickLinkStrategies.lua
-Moduls\SellFrame.lua
-Moduls\SpeedFrame.lua
-Moduls\StaticPopup1Button1.lua
-
-5 Collect.lua
-6 Otrisovka.lua
-7 Main.lua
-8 SharedMedia.lua
+OctoToDo_5TrashCan\TrashCan.xml
 
 Options\0basicOptions.lua
 Options\1GeneralConfigPanel.lua
 Options\2Currencies.lua
 Options\3Reputations.lua
 Options\4Items.lua
+Options\5AddonsManager.lua
 Options\99Developing.lua
+
+SharedMedia.lua

@@ -1,0 +1,48 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Script file="OctoToDo_1OctoToDo\1 Localization.lua"/>
+	<Script file="OctoToDo_1OctoToDo\2 Functions.lua"/>
+	<Script file="OctoToDo_1OctoToDo\3 Fprint.lua"/>
+
+	<Script file="Tables\OctoToDo_Timer.lua"/>
+	<Script file="Tables\OctoTable_Currencies.lua"/>
+	<Script file="Tables\OctoTable_Expansions_Table.lua"/>
+	<Script file="Tables\OctoTable_Instances.lua"/>
+	<Script file="Tables\OctoTable_Items.lua"/>
+	<Script file="Tables\OctoTable_Race.lua"/>
+	<Script file="Tables\OctoTable_Movies.lua"/>
+	<Script file="Tables\OctoTable_QuestID.lua"/>
+	<Script file="Tables\OctoTable_reputation_ALL.lua"/>
+	<Script file="Tables\OctoTable_UniversalQuest.lua"/>
+	<Script file="Tables\OctoTable_Prefixes.lua"/>
+	<Script file="Tables\OctoTable_Gossip.lua"/>
+	<Script file="Tables\OctoTable_Spells.lua"/>
+
+	<Script file="Moduls\Auto_ChatClearing.lua"/>
+	<Script file="Moduls\Auto_CinematicCanceler.lua"/>
+	<Script file="Moduls\Auto_CinematicFastSkip.lua"/>
+	<Script file="Moduls\Auto_Gossip.lua"/>
+	<Script file="Moduls\Auto_InputDelete.lua"/>
+	<Script file="Moduls\Auto_Open.lua"/>
+	<Script file="Moduls\Auto_Repair.lua"/>
+	<Script file="Moduls\Auto_Screenshot.lua"/>
+	<Script file="Moduls\Auto_Sell_Grey.lua"/>
+	<Script file="Moduls\CVAR.lua"/>
+	<Script file="Moduls\Module_AutoTurnIn.lua"/>
+	<Script file="Moduls\Module_HideFrames.lua"/>
+	<Script file="Moduls\Module_ItemsDelete.lua"/>
+	<Script file="Moduls\Module_ItemsUsable.lua"/>
+	<Script file="Moduls\Module_PortalsFrame.lua"/>
+	<Script file="Moduls\Module_UIErrorsFramePosition.lua"/>
+	<Script file="Moduls\OctoToDo_WowheadQuickLink.lua"/>
+	<Script file="Moduls\OctoToDo_WowheadQuickLinkStrategies.lua"/>
+	<Script file="Moduls\SellFrame.lua"/>
+	<Script file="Moduls\SpeedFrame.lua"/>
+	<Script file="Moduls\StaticPopup1Button1.lua"/>
+
+	<Script file="OctoToDo_1OctoToDo\4 Collect.lua"/>
+	<Script file="OctoToDo_1OctoToDo\5 Otrisovka.lua"/>
+	<Script file="OctoToDo_1OctoToDo\6 OctoToDo.lua"/>
+
+</Ui>

@@ -6,14 +6,6 @@ local ignoreNPCID = {
 	[213837] = true,
 	[208831] = true,
 }
-local function govno_function(name)
-	for _, v in next, (E.OctoTable_Gossip) do
-		if name:find(v) then
-			return true
-		end
-	end
-	return false
-end
 tinsert(E.Modules, function()
 		if OctoToDo_DB_Vars.Auto_Gossip then
 			if not OctoToDo_AUTO_GOSSIP then
@@ -47,28 +39,22 @@ tinsert(E.Modules, function()
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 									DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
 								else
-									if govno_function(v.name) then
+									if E.First_Option[targetNPCID] and i == 1 then
 										C_GossipInfo.SelectOption(gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..v.name)
-									else
-										if E.First_Option[targetNPCID] and i == 1 then
-											C_GossipInfo.SelectOption(gossipOptionID)
-											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-											DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
-										elseif E.Second_Option[targetNPCID] and i == 2 then
-											C_GossipInfo.SelectOption(gossipOptionID)
-											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-											DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
-										elseif E.Third_Option[targetNPCID] and i == 3 then
-											C_GossipInfo.SelectOption(gossipOptionID)
-											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-											DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
-										elseif E.Fourth_Option[targetNPCID] and i == 4 then
-											C_GossipInfo.SelectOption(gossipOptionID)
-											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-											DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
-										end
+										DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
+									elseif E.Second_Option[targetNPCID] and i == 2 then
+										C_GossipInfo.SelectOption(gossipOptionID)
+										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+										DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
+									elseif E.Third_Option[targetNPCID] and i == 3 then
+										C_GossipInfo.SelectOption(gossipOptionID)
+										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+										DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
+									elseif E.Fourth_Option[targetNPCID] and i == 4 then
+										C_GossipInfo.SelectOption(gossipOptionID)
+										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+										DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
 									end
 								end
 							end
