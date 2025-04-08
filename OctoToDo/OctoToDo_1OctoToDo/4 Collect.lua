@@ -471,7 +471,6 @@ function E.Collect_All_Reputations()
 		end
 		for reputationID, v in next, (OctoToDo_DB_Config.ReputationDB) do
 			if reputationID then
-
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, tbl in next, (OctoToDo_DB_Levels) do
 						tbl.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID)

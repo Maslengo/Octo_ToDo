@@ -1,11 +1,13 @@
 ## Interface: 110105, 110100
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Author: Octo
-## Version: v88.4(11.1.5)(09.04.2025)
+## Version: v88.5(11.1.5)(09.04.2025)
 ## IconTexture: Interface\AddOns\OctoToDo\Media\AddonTexture_1
+
 ## SavedVariables: OctoToDo_DB_Config OctoToDo_DB_Levels OctoToDo_DB_Vars OctoToDo_DB_Other OCTO_DB_currencies_test OCTO_DB_reputations_test
 ## SavedVariables: OctoToDo_Achievements
 ## SavedVariables: OctoSimpleList OctoToDo_AddonsTable OctoToDo_AddonsManager
+## SavedVariables: OctoToDo_OCTOREP
 ## SavedVariables: OctoToDo_TrashCan
 
 
@@ -16,7 +18,8 @@ OctoToDo_1OctoToDo\OctoToDo.xml
 OctoToDo_2Achievements\Achievements.xml
 OctoToDo_3AddonsManager\AddonsManager.xml
 OctoToDo_4Minecraft\Minecraft.xml
-OctoToDo_5TrashCan\TrashCan.xml
+OctoToDo_5OCTOREP\OCTOREP.xml
+OctoToDo_100TrashCan\TrashCan.xml
 
 Options\0basicOptions.lua
 Options\1GeneralConfigPanel.lua

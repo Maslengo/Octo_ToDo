@@ -115,9 +115,9 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	end)
 	OctoToDo_MainFrame_Achievements:RegisterForClicks("RightButtonUp")
 	OctoToDo_MainFrame_Achievements:SetScript("OnClick", function(self) self:Hide() end)
-	self:func_DataProvider()
+	self:func_CreateMyDataProvider()
 end
-function OctoToDo_EventFrame_Achievements:func_DataProvider()
+function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 	local DataProvider = CreateDataProvider()
 	local count = 0
 	for categoryID, v in next, (OctoToDo_Achievements.AchievementToShow) do
@@ -180,7 +180,7 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 		if arg2 == 2 then
 			dd_SECOND:ddRefresh(arg2-1)
 		end
-		OctoToDo_EventFrame_Achievements:func_DataProvider()
+		OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 	end
 	local function TEST_FUNC(menuButton, arg1)
 		local categories = GetCategoryList()
@@ -243,7 +243,7 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 				info.checked = OctoToDo_Achievements.AchievementShowCompleted
 				info.func = function(_, _, _, checked)
 					OctoToDo_Achievements.AchievementShowCompleted = checked
-					OctoToDo_EventFrame_Achievements:func_DataProvider()
+					OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 			end
