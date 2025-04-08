@@ -9,7 +9,6 @@ local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
-
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
 		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
@@ -419,7 +418,6 @@ local function func_NumPlayers()
 	end
 	return #sorted or 1
 end
-
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
@@ -459,9 +457,7 @@ local function func_OnAcquired(owner, frame, data, new)
 					f.text:SetJustifyH("CENTER")
 					f.text:SetTextColor(1, 1, 1, 1)
 					f:SetScript("OnEnter", 	function()
-
 						E.func_TooltipOnEnter(f, true, true)
-
 						end)
 					f:SetScript("OnLeave", GameTooltip_Hide)
 					f:SetScript("OnHide", f.Hide)

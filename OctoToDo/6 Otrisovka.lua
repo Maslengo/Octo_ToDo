@@ -1416,6 +1416,8 @@ function E:func_Otrisovka()
 				if CharInfo.loginHour and CharInfo.loginDay then
 					if CharInfo.GUID == E.curGUID then
 						vivodCent = E.Green_Color..FRIENDS_LIST_ONLINE.."|r"
+						tooltip[#tooltip+1] = {"Время без релога: "..CharInfo.classColorHex.. E.func_SecondsToClock(GetServerTime() - CharInfo.time).."|r"}
+						tooltip[#tooltip+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.classColorHex..E.func_SecondsToClock(GetSessionTime()).."|r"      )}
 					else
 						if CharInfo.needResetWeekly == true then
 							color = E.Gray_Color

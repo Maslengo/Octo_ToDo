@@ -603,7 +603,7 @@ function E.Collect_ALL_Locations()
 			curRealZone = curRealZone .. " (".. curSubZone .. ")"
 		end
 		collect.CurrentLocation = curRealZone
-		collect.BindLocation = BindLocation
+		collect.BindLocation = curBindLocation
 	end
 end
 function E.Collect_All_Quests()

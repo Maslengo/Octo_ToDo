@@ -219,12 +219,11 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(index)
 			-- tooltipthird[#tooltipthird+1] = nil
 		end
 		if ( loadable or ( enabled and (reason == "DEP_DEMAND_LOADED" or reason == "DEMAND_LOADED") ) ) then
-			colorAddon = E.func_rgb2hexDEV(1.0, 0.78, 0.0)
-			-- colorAddon = E.White_Color
+			colorAddon =  E.White_Color --"|cffFFC600" -- E.func_rgb2hexDEV(1.0, 0.78, 0.0)
 		elseif ( enabled and reason ~= "DEP_DISABLED" ) then
-			colorAddon = E.func_rgb2hexDEV(1.0, 0.1, 0.1)
+			colorAddon = "|cffFF1919"-- E.func_rgb2hexDEV(1.0, 0.1, 0.1)
 		else
-			colorAddon = E.func_rgb2hexDEV(0.5, 0.5, 0.5)
+			colorAddon = "|cff7F7F7F"-- E.func_rgb2hexDEV(0.5, 0.5, 0.5)
 		end
 		local iconTexture = E.func_GetAddoniconTexture(index)
 		local iconAtlas = E.func_GetAddoniconAtlas(index)
