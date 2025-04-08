@@ -11,6 +11,7 @@
 	<Script file="Tables\OctoTable_Instances.lua"/>
 	<Script file="Tables\OctoTable_Items.lua"/>
 	<Script file="Tables\OctoTable_Race.lua"/>
+	<Script file="Tables\OctoTable_MinecraftColors.lua"/>
 	<Script file="Tables\OctoTable_Movies.lua"/>
 	<Script file="Tables\OctoTable_QuestID.lua"/>
 	<Script file="Tables\OctoTable_reputation_ALL.lua"/>

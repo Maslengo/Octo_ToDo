@@ -1,23 +1,52 @@
-local GlobalAddonName, ns = ...
+local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
-ns.OctoTable_MinecraftColors = {
+E.OctoTable_MinecraftColors = {
+
+
+	{name = "LV",	hex = "9ea4c1"}, --
+	{name = "MV",	hex = "ff6638"}, --
+	{name = "HV",	hex = "ff8b24"}, --
+	{name = "EV",	hex = "707070"}, --
+	{name = "IV",	hex = "ffffff"}, --
+	{name = "LUV",	hex = "ff7597"}, --
+	{name = "ZPM",	hex = "47d1ff"}, --
+	{name = "UV",	hex = "4fff38"}, --
+	{name = "UHV",	hex = "f735ff"}, --
+	{name = "UEV",	hex = "0061dd"}, --
+	{name = "UIV",	hex = "00a100"}, --
+	{name = "UMV",	hex = "5e3387"}, --
+	{name = "UXV",	hex = "ff7600"}, --
+	{name = "MAX",	hex = "a5fffb"}, --
+
+
+
+	-- {name = "ULV", hex = "FFFFFF"}, --
+	-- {name = "LV", hex = "FFFFFF"}, --
+	-- {name = "MV", hex = "C41E3A"}, -- DeathKnight
+	-- {name = "HV", hex = "FF7C0A"}, -- Druid
+	-- {name = "EV", hex = "FFFFFF"}, --
+	-- {name = "IV", hex = "FFF468"}, -- Rogue
+	-- {name = "LUV", hex = "AAD372"}, -- Hunter
+	-- {name = "ZPM", hex = "3FC7EB"}, -- Mage
+	-- {name = "UV", hex = "0070DD"}, -- Shaman
+	-- {name = "UHV", hex = "F48CBA"}, -- Paladin
+	-- {name = "UEV", hex = "33937F"}, -- Evoker
+	-- {name = "UIV", hex = "C69B6D"}, -- Warrior
+	-- {name = "UMV", hex = "A330C9"}, -- DemonHunter
+	-- {name = "UXV", hex = "E25107"}, --Orange
+	-- {name = "MAX", hex = "D0D0D0"}, --White
+
+
+
+
+
+
+
+
+
+
 	-- Инструмент для подбора цветов и генерации цветовых схем
 	-- https://colorscheme.ru/color-names.html
-	{name = "ULV", hex = "FFFFFF"}, --
-	{name = "LV", hex = "FFFFFF"}, --
-	{name = "MV", hex = "C41E3A"}, -- DeathKnight
-	{name = "HV", hex = "FF7C0A"}, -- Druid
-	{name = "EV", hex = "FFFFFF"}, --
-	{name = "IV", hex = "FFF468"}, -- Rogue
-	{name = "LUV", hex = "AAD372"}, -- Hunter
-	{name = "ZPM", hex = "3FC7EB"}, -- Mage
-	{name = "UV", hex = "0070DD"}, -- Shaman
-	{name = "UHV", hex = "F48CBA"}, -- Paladin
-	{name = "UEV", hex = "33937F"}, -- Evoker
-	{name = "UIV", hex = "C69B6D"}, -- Warrior
-	{name = "UMV", hex = "A330C9"}, -- DemonHunter
-	{name = "UXV", hex = "E25107"}, --Orange
-	{name = "MAX", hex = "D0D0D0"}, --White
 	-- {name = "Class_Warrior_Color", hex = "C69B6D"},
 	-- {name = "Class_Paladin_Color", hex = "F48CBA"},
 	-- {name = "Class_Hunter_Color", hex = "AAD372"},

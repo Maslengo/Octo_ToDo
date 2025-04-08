@@ -1,5 +1,4 @@
-local GlobalAddonName, ns = ...
-local E = OctoToDo_ToDO_E
+local GlobalAddonName, E = ...
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
@@ -16,7 +15,7 @@ OctoToDo_EventFrame_Minecraft:Hide()
 ----------------------------------------------------------------
 local AddonHeight = 68 -- Высота 27    --
 local AddonRightFrameWeight = 1256 -- Ширина 54    --
-local MinecraftTable = ns.OctoTable_MinecraftColors4
+local MinecraftTable = E.OctoTable_MinecraftColors
 local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
 local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
 -- дефолт 15
@@ -29,9 +28,9 @@ if MainFrameNumLines > NumberOfLines then
 	MainFrameNumLines = NumberOfLines
 end
 
-local MINECRAFTtextureFG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft FG.tga"
-local MINECRAFTtextureBG = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft BG.tga"
-local MINECRAFTtextureALL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\minecraft ALL.tga"
+local MINECRAFTtextureFG = "Interface\\Addons\\"..GlobalAddonName.."\\OctoToDo_4Minecraft\\Media\\minecraft FG.tga"
+local MINECRAFTtextureBG = "Interface\\Addons\\"..GlobalAddonName.."\\OctoToDo_4Minecraft\\Media\\minecraft BG.tga"
+local MINECRAFTtextureALL = "Interface\\Addons\\"..GlobalAddonName.."\\OctoToDo_4Minecraft\\Media\\minecraft ALL.tga"
 -- frame.cent.FG:SetTexCoord(0, 1, 0, 0.5)
 -- frame.cent.BG:SetTexCoord(0, 1, 0.5, 1)
 ----------------------------------------------------------------
@@ -162,7 +161,7 @@ function OctoToDo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 		-- OctoToDo_MainFrame_Minecraft:SetPoint("CENTER", UIParent)
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_Minecraft)
 		----------------------------------------------------------------
-		E:func_CreateMinimapButton(GlobalAddonName, OctoToDo_Minecraft, OctoToDo_MainFrame_Minecraft)
+		E:func_CreateMinimapButton(GlobalAddonName, "Minecraft", OctoToDo_Minecraft, OctoToDo_MainFrame_Minecraft)
 		----------------------------------------------------------------
 	end
 end

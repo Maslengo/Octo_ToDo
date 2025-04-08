@@ -23,41 +23,64 @@ if MainFrameNumLines > NumberOfLines then
 end
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
-		frame.left = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
-		frame.left:SetPropagateMouseClicks(true)
-		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
-		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.left.text = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.left.text:SetAllPoints()
-		frame.left.text:SetFontObject(OctoFont11)
-		frame.left.text:SetJustifyV("MIDDLE")
-		frame.left.text:SetJustifyH("LEFT")
-		frame.left.text:SetTextColor(1, 1, 1, 1)
-		frame.cent = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
-		frame.cent:SetPropagateMouseClicks(true)
-		frame.cent:SetSize(AddonRightFrameWeight, AddonHeight)
-		frame.cent:SetPoint("TOPRIGHT", frame, "TOPRIGHT")
-		frame.cent.text = frame.cent:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.cent.text:SetAllPoints()
-		frame.cent.text:SetFontObject(OctoFont11)
-		frame.cent.text:SetJustifyV("MIDDLE")
-		frame.cent.text:SetJustifyH("CENTER")
-		frame.cent.text:SetTextColor(1, 1, 1, 1)
-		frame.cent:SetScript("OnEnter", OnENTERTTOOLTIP)
-		frame.cent:SetScript("OnLeave", GameTooltip_Hide)
-		frame.cent:SetScript("OnHide", frame.cent.Hide)
+		frame.first = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+		frame.first:SetPropagateMouseClicks(false)
+		frame.first:SetSize(AddonHeight, AddonHeight)
+		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
+		frame.first.icon:SetAllPoints(frame.first)
+		frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+
+
+
+
+		frame.second = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+		frame.second:SetPropagateMouseClicks(true)
+		frame.second:SetSize(500, AddonHeight)
+		frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.second.textLEFT = frame.second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		frame.second.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
+		frame.second.textLEFT:SetFontObject(OctoFont11)
+		frame.second.textLEFT:SetJustifyV("MIDDLE")
+		frame.second.textLEFT:SetJustifyH("LEFT")
+		frame.second.textLEFT:SetTextColor(1, 1, 1, 1)
+		-- frame.second = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+		-- frame.second:SetPropagateMouseClicks(true)
+		-- frame.second:SetSize(AddonRightFrameWeight, AddonHeight)
+		-- frame.second:SetPoint("TOPRIGHT", frame, "TOPRIGHT")
+		frame.second.textRIGHT = frame.second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		frame.second.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
+		frame.second.textRIGHT:SetFontObject(OctoFont11)
+		frame.second.textRIGHT:SetJustifyV("MIDDLE")
+		frame.second.textRIGHT:SetJustifyH("RIGHT")
+		frame.second.textRIGHT:SetTextColor(1, 1, 1, 1)
+
+		frame.second:SetScript("OnEnter", function()
+				E.func_TooltipOnEnter(frame.second, false, false)
+		end)
+		frame.second:SetScript("OnLeave", GameTooltip_Hide)
+		-- frame.second:SetScript("OnHide", frame.second.Hide)
 	end
 end
-local function OctoToDo_Frame_init(frame, data)
-	local hexcolor = E.func_rgb2hex(data.r, data.g, data.b)
-	frame.left.text:SetText(hexcolor..data.lefttext.."|r")
-	frame.cent.text:SetText(data.righttext)
-	frame.cent.tooltip = {"QWE"}
+
+local function CreateTooltip(AchievementID)
+	local tooltipfirst = {}
+	tooltipfirst[#tooltipfirst+1] = {E.func_texturefromIcon(E.func_achievementIcon(AchievementID)).. E.func_achievementName(AchievementID), AchievementID}
+	tooltipfirst[#tooltipfirst+1] = {" ", " "}
+	tooltipfirst[#tooltipfirst+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
+	return tooltipfirst
+end
+
+local function OctoToDo_Frame_init(frame, data, AchievementID)
+	frame.first.icon:SetTexture(data.icon)
+	frame.second.textLEFT:SetText(data.textLEFT)
+	frame.second.textRIGHT:SetText(data.textRIGHT or "NIL?")
+	frame.second.tooltip = CreateTooltip(data.AchievementID)
 end
 function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
 	local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
 	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_Achievements)
-	OctoToDo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight, AddonHeight*MainFrameNumLines)
+	OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_Achievements:Hide()
 	OctoToDo_MainFrame_Achievements:SetDontSavePosition(true)
 	OctoToDo_MainFrame_Achievements.ScrollBox = CreateFrame("FRAME", nil, OctoToDo_MainFrame_Achievements, "WowScrollBoxList")
@@ -98,7 +121,7 @@ function OctoToDo_EventFrame_Achievements:func_DataProvider()
 	local DataProvider = CreateDataProvider()
 	local count = 0
 	for categoryID, v in next, (OctoToDo_Achievements.AchievementToShow) do
-		local ACHr, ACHg, ACHb = E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor()), E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor()), E.func_hex2rgbNUMBER(E.func_GenerateUniqueColor())
+
 		local total = GetCategoryNumAchievements(categoryID, true)
 		if total then
 			for i = 1, total do
@@ -107,12 +130,10 @@ function OctoToDo_EventFrame_Achievements:func_DataProvider()
 					if completedAchi == false or (completedAchi == OctoToDo_Achievements.AchievementShowCompleted) then
 						count = count + 1
 						DataProvider:Insert({
-								name = name,
-								righttext = E.func_achievementvivod(AchievementID),
-								lefttext = E.func_texturefromIcon(icon).. name,
-								r = ACHr,
-								g = ACHg,
-								b = ACHb,
+								textLEFT = name,
+								textRIGHT = E.func_achievementvivod(AchievementID),
+								AchievementID = AchievementID,
+								icon = icon,
 						})
 					end
 				end
@@ -120,11 +141,11 @@ function OctoToDo_EventFrame_Achievements:func_DataProvider()
 		end
 	end
 	if count > 0 and count < MainFrameNumLines then
-		OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*count)
+		OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*count)
 	elseif count > MainFrameNumLines then
-		OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*MainFrameNumLines)
+		OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*MainFrameNumLines)
 	elseif count == 0 then
-		OctoToDo_MainFrame_Achievements:SetSize(AddonRightFrameWeight+AddonLeftFrameWeight, AddonHeight*1)
+		OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*1)
 	end
 	OctoToDo_MainFrame_Achievements.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
@@ -135,7 +156,7 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 	E:func_SetBackdrop(dd_SECOND)
 	dd_SECOND.ExpandArrow = dd_SECOND:CreateTexture(nil, "ARTWORK")
 	dd_SECOND.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	dd_SECOND.ExpandArrow:SetSize(16*multiply, 16*multiply)
+	dd_SECOND.ExpandArrow:SetSize(AddonHeight, AddonHeight)
 	dd_SECOND.ExpandArrow:SetPoint("RIGHT", -4, 0)
 	dd_SECOND.text = dd_SECOND:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	dd_SECOND.text:SetAllPoints()

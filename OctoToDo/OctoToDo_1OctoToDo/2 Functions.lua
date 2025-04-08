@@ -620,10 +620,6 @@ function E.func_InList(k, t, p)
 	end
 end
 ----------------------------------------------------------------
-function E.func_achievementID(achievementID)
-	return E.Yellow_Color.." (id: "..achievementID..")".."|r"
-end
-----------------------------------------------------------------
 function E.func_achievementComplete(achievementID)
 	if not achievementID then
 		return false
@@ -646,7 +642,7 @@ function E.func_achievementIcon(achievementID)
 end
 ----------------------------------------------------------------
 function E.func_achievementvivod(achievementID)
-	local vivod = ""
+	local vivod
 	local completed = select(4, GetAchievementInfo(achievementID))
 	local wasEarnedByMe = select(13, GetAchievementInfo(achievementID))
 	local earnedBy = select(14, GetAchievementInfo(achievementID))
@@ -679,7 +675,7 @@ function E.func_achievementvivod(achievementID)
 			vivod = E.Red_Color.."0 / 1".."|r"
 		end
 	end
-	return vivod
+	return vivod or "CHETNET"
 end
 ----------------------------------------------------------------
 function E.func_achievementcriteriaString(achievementID, i)
@@ -688,17 +684,19 @@ function E.func_achievementcriteriaString(achievementID, i)
 	local completed = select(4, GetAchievementInfo(achievementID))
 	local description = select(8, GetAchievementInfo(achievementID))
 	local numCriteria = GetAchievementNumCriteria(achievementID)
-	local criteriaString, _, completedCrit, quantity = GetAchievementCriteriaInfo(achievementID, i, false)
-	local color = E.White_Color
-	if completedCrit == true then
-		color = E.Green_Color
-	elseif completedCrit == false and quantity == 0 then
-		color = E.Red_Color
-	end
-	if criteriaString and criteriaString ~= "" then
-		vivod = vivod..color..criteriaString.."|r"
-	else
-		vivod = vivod..color..description.."|r"
+	for i = 1, numCriteria do
+		local criteriaString, _, completedCrit, quantity = GetAchievementCriteriaInfo(achievementID, i, false)
+		local color = E.White_Color
+		if completedCrit == true then
+			color = E.Green_Color
+		elseif completedCrit == false and quantity == 0 then
+			color = E.Red_Color
+		end
+		if criteriaString and criteriaString ~= "" then
+			vivod = vivod..color..criteriaString.."|n|r"
+		else
+			vivod = vivod..color..description.."|r"
+		end
 	end
 	return vivod
 end
@@ -709,17 +707,19 @@ function E.func_achievementquantity(achievementID, i)
 	local completed = select(4, GetAchievementInfo(achievementID))
 	local description = select(8, GetAchievementInfo(achievementID))
 	local numCriteria = GetAchievementNumCriteria(achievementID)
-	local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, i, false)
-	local color = E.White_Color
-	if completedCrit == true then
-		color = E.Green_Color
-	elseif completedCrit == false and quantity == 0 then
-		color = E.Red_Color
-	end
-	if quantity then
-		vivod = vivod..color..quantity.." / "..reqQuantity.."|r"
-	else
-		vivod = vivod..color.."0/1PIZZA".."|r"
+	for i = 1, numCriteria do
+		local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, i, false)
+		local color = E.White_Color
+		if completedCrit == true then
+			color = E.Green_Color
+		elseif completedCrit == false and quantity == 0 then
+			color = E.Red_Color
+		end
+		if quantity then
+			vivod = vivod..color..quantity.." / "..reqQuantity.."|n|r"
+		else
+			vivod = vivod..color.."0/1PIZZA".."|r"
+		end
 	end
 	return vivod
 end
