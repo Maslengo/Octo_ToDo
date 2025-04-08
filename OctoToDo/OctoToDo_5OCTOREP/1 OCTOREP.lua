@@ -37,6 +37,11 @@ local function func_OnAcquired(owner, frame, data, new)
 				E.func_TooltipOnEnter(frame.third, true, true)
 		end)
 		frame.third:SetScript("OnLeave", GameTooltip_Hide)
+		frame.third.texture = frame.third:CreateTexture()
+		frame.third.texture:SetSize(curWidthTitle, AddonHeight)
+		frame.third.texture:SetVertexColor(1,0,0,1)
+		frame.third.texture:SetPoint("LEFT", frame.third, "LEFT")
+		frame.third.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
 		frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
 		frame.third.textLEFT:SetFontObject(OctoFont11)
@@ -52,20 +57,28 @@ local function func_OnAcquired(owner, frame, data, new)
 	end
 end
 ----------------------------------------------------------------
-function OctoToDo_EventFrame_OCTOREP:CollectREPInfo(index)
-	local icon, textLEFT, textRIGHT = 2024072, " ", " "
-
-	return icon
-end
 ----------------------------------------------------------------
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ + ГОВНО
 -- ЭТО ФУНКЦИЯ АПДЕЙТА(ОТРИСОФКИ)
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
 	local reputationID = data.reputationID
-	-- frame.first.icon:SetTexture(select(1, OctoToDo_EventFrame_OCTOREP:CollectREPInfo(index)))
 	frame.third.textLEFT:SetText(E.func_reputationName(reputationID))
 	frame.third.textRIGHT:SetText(E.func_CheckReputationByRepID(reputationID))
+	local FIRST = select(1, E.func_CheckRepCURSTANDING(reputationID))
+	local SECOND = select(2, E.func_CheckRepCURSTANDING(reputationID))
+	local color = E.func_GetReputationStandingColor(reputationID)
+	local r = select(1, E.func_hex2rgbNUMBER(color))
+	local g = select(2, E.func_hex2rgbNUMBER(color))
+	local b = select(3, E.func_hex2rgbNUMBER(color))
+	frame.third.texture:SetVertexColor(r, g, b, .5)
+	if FIRST == 0 then
+		frame.third.texture:SetWidth(.1)
+	elseif FIRST == SECOND then
+		frame.third.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+	elseif FIRST >= 1 then
+		frame.third.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+	end
 end
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	local OctoToDo_MainFrame_OCTOREP = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOREP", UIParent, "BackdropTemplate")
@@ -114,10 +127,16 @@ end
 function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	C_Reputation.ExpandAllFactionHeaders()
+	local list = {}
 	for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
 		for reputationID, config in next, (tbl) do
-			local groupNode = DataProvider:Insert({reputationID = reputationID})
+			tinsert(list, reputationID)
+			-- local groupNode = DataProvider:Insert({reputationID = reputationID})
 		end
+	end
+	sort(list, E.func_Reverse_order)
+	for index, reputationID in ipairs(list) do
+		local groupNode = DataProvider:Insert({reputationID = reputationID})
 	end
 	OctoToDo_MainFrame_OCTOREP.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
@@ -150,4 +169,3 @@ function OctoToDo_EventFrame_OCTOREP:PLAYER_REGEN_DISABLED()
 		OctoToDo_MainFrame_OCTOREP:Hide()
 	end
 end
-

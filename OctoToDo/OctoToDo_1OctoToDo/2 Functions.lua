@@ -360,7 +360,7 @@ function E.func_rgb2hexDEV(r, g, b, a)
 	if not a then
 		a = 1
 	end
-	return "c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
 ----------------------------------------------------------------
 function E.func_percent(percent, maxvalue)
@@ -839,7 +839,7 @@ function E.func_CheckReputationByRepID(reputationID)
 	local vivod = ""
 	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
 	if repInfo then
-		local color = E.White_Color
+		local color = E.Gray_Color
 		local barMin = repInfo.currentReactionThreshold
 		local barMax = repInfo.nextReactionThreshold
 		local barValue = repInfo.currentStanding
@@ -891,7 +891,7 @@ function E.func_CheckReputationByRepID(reputationID)
 			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
 			vivod = color..(currentValue).."/"..(totalValue)..standingTEXT.."|r"
 			if currentLevel == maxLevel then
-				vivod = color.."Done|r"
+				vivod = color.."Done|r "
 			end
 		else
 			if barValue then
@@ -909,6 +909,119 @@ function E.func_CheckReputationByRepID(reputationID)
 end
 
 
+
+function E.func_GetReputationStandingColor(reputationID)
+	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+	local color = E.Gray_Color
+	if repInfo then
+		local standingID = repInfo.reaction
+		if (standingID == 1 or standingID == 2) then
+			color = E.Red_Color
+		end
+		if (standingID == 3) then
+			color = E.Orange_Color
+		end
+		if (standingID == 4 or standingID == 5) then
+			color = E.Yellow_Color
+		end
+		if (standingID == 6 or standingID == 7 or standingID == 8) then
+			color = E.Green_Color
+		end
+		-- print (standingID, color..standingID.."|r")
+	end
+
+	return color
+end
+
+
+
+function E.func_CheckRepCURSTANDING(reputationID)
+	local vivod1 = 0
+	local vivod2 = 0
+	local checkrepid = 1741+9999
+	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+	if repInfo then
+		local barMin = repInfo.currentReactionThreshold
+		local barMax = repInfo.nextReactionThreshold
+		local barValue = repInfo.currentStanding
+
+		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+		if C_Reputation.IsFactionParagon(reputationID) then
+			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0
+			local _, threshold = C_Reputation.GetFactionParagonInfo(reputationID)
+			if threshold then
+				vivod1 = currentValue % threshold
+				vivod2 = threshold
+			end
+			if reputationID == checkrepid then
+				print (reputationID, "paragon", vivod1, vivod2)
+			end
+		elseif C_Reputation.IsMajorFaction(reputationID) then
+			local data = C_MajorFactions.GetMajorFactionData(reputationID) or 0
+			if data ~= 0 then
+				local currentValue = data.renownReputationEarned%data.renownLevelThreshold
+				local totalValue = data.renownLevelThreshold
+				vivod1 = currentValue
+				vivod2 = totalValue
+			end
+			if reputationID == checkrepid then
+				print (reputationID, "major", vivod1, vivod2)
+			end
+		elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
+			local friendshipFactionID = reputationInfo.friendshipFactionID or 0
+			local reactionThreshold = reputationInfo.reactionThreshold or 0
+			local nextThreshold = reputationInfo.nextThreshold or 0
+			local standing = reputationInfo.standing or 0
+			local currentValue = standing-reactionThreshold
+			local totalValue = nextThreshold-reactionThreshold
+			local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
+			local currentLevel, maxLevel
+			if rankInfo then
+				currentLevel = rankInfo.currentLevel or 0
+				maxLevel = rankInfo.maxLevel or 0
+			end
+			-- standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
+			vivod1 = currentValue
+			vivod2 = totalValue
+			if currentLevel == maxLevel then
+				vivod1 = 100
+				vivod2 = 100
+			end
+
+			if reputationID == checkrepid then
+				print (reputationID, "friend", vivod1, vivod2)
+			end
+		else
+			if barValue then
+				local currentValue = barValue-barMin
+				local totalValue = barMax-barMin
+				local nextThreshold = reputationInfo.nextThreshold or 0
+				vivod1 = currentValue
+				vivod2 = totalValue
+				if currentValue == totalValue then -- or nextThreshold == 0 then
+
+					vivod1 = 100
+					vivod2 = 100
+				end
+
+				if reputationID == checkrepid then
+					print (reputationID, "else", vivod1, vivod2)
+				end
+
+
+
+
+			end
+		end
+	end
+
+
+
+
+
+
+	return vivod1, vivod2, color
+end
 
 
 ----------------------------------------------------------------
