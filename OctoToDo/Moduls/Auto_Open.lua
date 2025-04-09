@@ -20,8 +20,10 @@ local function OpenableScan()
 					if ids == itemID and itemLink and not isLocked then
 						if iconFileID and itemLink and not InCombatLockdown() then
 							C_Timer.After(1, function()
+								if not InCombatLockdown() then
 									C_Container.UseContainerItem(bag, numSlots)
 									print (E.func_Gradient("Auto Open Item ", E.Addon_Left_Color, E.Addon_Right_Color), E.func_texturefromIcon(iconFileID)..itemLink)
+								end
 							end)
 						end
 					end

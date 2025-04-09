@@ -39,7 +39,6 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.third:SetScript("OnLeave", GameTooltip_Hide)
 		frame.third.texture = frame.third:CreateTexture()
 		frame.third.texture:SetSize(curWidthTitle, AddonHeight)
-		frame.third.texture:SetVertexColor(1,0,0,1)
 		frame.third.texture:SetPoint("LEFT", frame.third, "LEFT")
 		frame.third.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
 		frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -63,6 +62,7 @@ end
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
 	local reputationID = data.reputationID
+	frame.first.icon:SetTexture(E.OctoTable_FACTIONTABLE[reputationID].icon)
 	frame.third.textLEFT:SetText(E.func_reputationName(reputationID))
 	frame.third.textRIGHT:SetText(E.func_CheckReputationByRepID(reputationID))
 	local FIRST = select(1, E.func_CheckRepCURSTANDING(reputationID))
@@ -128,12 +128,20 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	C_Reputation.ExpandAllFactionHeaders()
 	local list = {}
-	for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
-		for reputationID, config in next, (tbl) do
-			tinsert(list, reputationID)
-			-- local groupNode = DataProvider:Insert({reputationID = reputationID})
-		end
+	-- for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
+	-- 	for reputationID, config in next, (tbl) do
+	-- 		tinsert(list, reputationID)
+	-- 	end
+	-- end
+
+
+	for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
+		tinsert(list, reputationID)
 	end
+
+
+
+
 	sort(list, E.func_Reverse_order)
 	for index, reputationID in ipairs(list) do
 		local groupNode = DataProvider:Insert({reputationID = reputationID})
