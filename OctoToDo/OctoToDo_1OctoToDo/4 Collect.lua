@@ -170,14 +170,14 @@ function E.Collect_ALL_Player_Level()
 end
 function E.Collect_ALL_Played(totalTime, currentLevelTime)
 	local collect = OctoToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	if collect  then
 		collect.realTotalTime = totalTime
 		collect.realLevelTime = currentLevelTime
 	end
 end
 function E.Collect_ALL_WarMode()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	if collect then
 		local WarMode = C_PvP.IsWarModeDesired()
 		collect.WarMode = WarMode
 	end
@@ -191,7 +191,7 @@ function E.Collect_ALL_Mail()
 end
 function E.Collect_ALL_LoginTime()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	if collect then
 		collect.loginDate = date("%d.%m.%Y %H:%M:%S")
 		collect.loginDay = date("%d.%m.%Y")
 		collect.loginHour = date("%H:%M")
@@ -201,6 +201,32 @@ function E.Collect_ALL_LoginTime()
 		collect.time = time()
 	end
 end
+
+function E.Collect_All_STARTTODAY()
+	local collect = OctoToDo_DB_Levels[E.curGUID]
+	if collect then
+		collect.isOnline = true
+		if collect.STARTTODAY == 0 then
+			collect.STARTTODAY = time()
+		end
+		if collect.STARTWEEK == 0 then
+			collect.STARTWEEK = time()
+		end
+
+
+		if collect.STARTMONTH == 0 then
+			collect.STARTMONTH = time()
+		end
+	end
+end
+
+function E.Collect_ALL_END()
+	local collect = OctoToDo_DB_Levels[E.curGUID]
+	if collect then
+		collect.isOnline = false
+	end
+end
+
 function E.Collect_All_Professions()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
@@ -1098,8 +1124,14 @@ function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_BfA_Cloaklvl()
 	E.Collect_All_BfA_Island()
 	E.Collect_ALL_TRASH_EncounterAndZoneLists()
+	E.Collect_All_STARTTODAY()
 	RequestRaidInfo()
 	E.Update("ADDON_LOADED")
+
+
+
+
+
 end
 function OctoToDo_EventFrame_Collect:SKILL_LINES_CHANGED(...)
 	if not InCombatLockdown() then
@@ -1195,6 +1227,7 @@ function OctoToDo_EventFrame_Collect:PLAYER_LEAVING_WORLD()
 		self.PLAYER_LEAVING_WORLD = nil
 		E.Collect_ALL_GreatVault()
 		E.Collect_ALL_LoginTime()
+		E.Collect_ALL_END()
 	end
 end
 function OctoToDo_EventFrame_Collect:AZERITE_ITEM_EXPERIENCE_CHANGED()

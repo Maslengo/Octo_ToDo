@@ -80,6 +80,7 @@ function OctoToDo_EventFrame_OCTOMAIN:ConcatAtStart()
 	end
 end
 function E:func_checkCharInfo()
+	print ("func_checkCharInfo")
 	local Meta_Table_0 = {__index = function() return 0 end}
 	local Meta_Table_1 = {__index = function() return 1 end}
 	local Meta_Table_false = {__index = function() return false end}
@@ -227,6 +228,7 @@ function E:func_checkCharInfo()
 			CharInfo.UnitXPMax = CharInfo.UnitXPMax or 0
 			CharInfo.UnitXPPercent = CharInfo.UnitXPPercent or 0
 			CharInfo.realTotalTime = CharInfo.realTotalTime or 0
+			CharInfo.TodayTimePlayed = CharInfo.TodayTimePlayed or 0
 			CharInfo.realLevelTime = CharInfo.realLevelTime or 0
 			CharInfo.Possible_Anima = CharInfo.Possible_Anima or 0
 			CharInfo.Possible_CatalogedResearch = CharInfo.Possible_CatalogedResearch or 0
@@ -239,6 +241,18 @@ function E:func_checkCharInfo()
 			CharInfo.Money = CharInfo.Money or 0
 			CharInfo.totalSlots = CharInfo.totalSlots or 0
 			CharInfo.usedSlots = CharInfo.usedSlots or 0
+			CharInfo.STARTTODAY = CharInfo.STARTTODAY or 0
+			CharInfo.STARTWEEK = CharInfo.STARTWEEK or 0
+			CharInfo.STARTMONTH = CharInfo.STARTMONTH or 0
+
+
+
+
+
+
+			if CharInfo.isOnline == nil then
+				CharInfo.isOnline = false
+			end
 			CharInfo.MoneyOnLogin = CharInfo.MoneyOnLogin or 0
 			CharInfo.BindLocation = CharInfo.BindLocation or 0
 			CharInfo.CurrentLocation = CharInfo.CurrentLocation or 0
@@ -314,6 +328,8 @@ function E:func_checkCharInfo()
 				CharInfo.SavedWorldBoss = {}
 				CharInfo.RIO_weeklyBest_TWW_S1 = 0
 				CharInfo.GreatVault = {}
+				CharInfo.STARTWEEK = 0
+
 				for i = 1, #CharInfo.GreatVault do
 					if CharInfo.GreatVault[i] then
 						CharInfo.GreatVault[i] = {}
@@ -340,6 +356,7 @@ function E:func_checkCharInfo()
 						end
 					end
 				end
+				CharInfo.STARTTODAY = 0
 				CharInfo.LFGInstance = {}
 			end
 			for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
@@ -350,6 +367,7 @@ function E:func_checkCharInfo()
 			if (CharInfo.tmstp_Month or 0) < GetServerTime() then
 				CharInfo.tmstp_Month = E.func_tmstpDayReset(30)
 				CharInfo.needResetMonth = true
+				CharInfo.STARTMONTH = 0
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					for q, w in next, (v) do
 						if w == "Month" then
@@ -1200,20 +1218,31 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	local totalMoney = 0
 	local totalReload = 0
 	local realTotalTime = 0
+	local TodayTimePlayedtotal = 0
 	local realLevelTime = 0
+	local totalSTARTTODAY = 0
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		totalReload = totalReload + CharInfo.ReloadCount
 		if CharInfo.curServer == E.curServer then
 			totalMoney = totalMoney + CharInfo.Money
-			realTotalTime = realTotalTime + CharInfo.realTotalTime
+			realTotalTime = realTotalTime + (CharInfo.realTotalTime)
+			TodayTimePlayedtotal = TodayTimePlayedtotal + CharInfo.TodayTimePlayed
+
 			if CharInfo.UnitLevel >= E.currentMaxLevel then
 				realLevelTime = realLevelTime + CharInfo.realLevelTime
 			end
 		end
+		if CharInfo.STARTTODAY ~= 0 then
+			totalSTARTTODAY = totalSTARTTODAY + (GetServerTime()-CharInfo.STARTTODAY)
+		end
 	end
-	E.func_CreateInfoFrame("Money: "..E.classColorHexCurrent..E.func_CompactNumberFormat(totalMoney/10000).."|r "..E.curServerShort, "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight)
-	E.func_CreateInfoFrame("Reloads: "..E.classColorHexCurrent..totalReload.."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame("Money: "..E.classColorHexCurrent..E.func_CompactNumberFormat(totalMoney/10000).."|r "..E.curServerShort, "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", -AddonHeight*0, 0, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame("Reloads: "..E.classColorHexCurrent..totalReload.."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*1, AddonLeftFrameWeight, AddonHeight)
 	E.func_CreateInfoFrame("realTotalTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realTotalTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame(COMMUNITIES_CALENDAR_TODAY..": "..E.classColorHexCurrent..E.func_SecondsToClock(totalSTARTTODAY).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
+
+
+
 	if realLevelTime ~= 0 then
 		E.func_CreateInfoFrame("realLevelTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realLevelTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
 	end
@@ -1242,6 +1271,14 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 			end)
 			-- promise:FailWithChecked(function(...) print (...) end)
 	end)
+
+
+	C_Timer.NewTicker(1, function()
+		if OctoToDo_MainFrame_OCTOMAIN:IsShown() then
+			E.Collect_All_STARTTODAY()
+		end
+	end)
+
 end
 -- function OctoToDo_EventFrame_OCTOMAIN:SHOW_SUBSCRIPTION_INTERSTITIAL()
 -- 	if not InCombatLockdown() then

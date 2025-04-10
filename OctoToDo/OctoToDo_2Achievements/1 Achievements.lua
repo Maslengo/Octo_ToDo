@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
-
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
 		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
@@ -21,17 +20,13 @@ local MainFrameNumLines = 30
 if MainFrameNumLines > NumberOfLines then
 	MainFrameNumLines = NumberOfLines
 end
-
-
 local function TrackAch(AchievementID)
 	if OctoToDo_Achievements.Tracked[AchievementID] then
 		C_ContentTracking.StartTracking(2, AchievementID)
 	else
 		C_ContentTracking.StopTracking(2, AchievementID, 2)
 	end
-
 end
-
 local function ToggleAchievement(AchievementID)
 	if E.func_achievementComplete(AchievementID) then
 		OctoToDo_Achievements.Tracked[AchievementID] = nil
@@ -42,13 +37,15 @@ local function ToggleAchievement(AchievementID)
 		return C_ContentTracking.StartTracking(2, AchievementID)
 	end
 end
-
-
-local function OnClick_Second(frame, data)
-	local AchievementID = data.AchievementID
+local function OnClick_Second(frame)
+	if OctoToDo_MainFrame_Achievements:IsDragging() then
+		return
+	end
+	local parent = frame:GetParent()
+	local node = parent:GetElementData()
+	local AchievementID = parent:GetData().AchievementID
 	ToggleAchievement(AchievementID)
 end
-
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
 		frame.first = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
@@ -58,13 +55,12 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.first.icon:SetAllPoints(frame.first)
 		frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-
 		frame.second = CreateFrame("BUTTON", nil, frame, "BackdropTemplate")
 		frame.second:SetPropagateMouseClicks(true)
 		frame.second:SetSize(500, AddonHeight)
 		frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.second:RegisterForClicks("LeftButtonUp")
-		frame.second:SetScript("OnClick", function() OnClick_Second(frame, data) end)
+		frame.second:SetScript("OnClick", OnClick_Second)
 		frame.second:SetScript("OnEnter", function()
 				E.func_TooltipOnEnter(frame.second, false, false)
 		end)
@@ -85,12 +81,9 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.second.textRIGHT:SetJustifyV("MIDDLE")
 		frame.second.textRIGHT:SetJustifyH("RIGHT")
 		frame.second.textRIGHT:SetTextColor(1, 1, 1, 1)
-
-
 		-- frame.second:SetScript("OnHide", frame.second.Hide)
 	end
 end
-
 local function CreateTooltip(AchievementID)
 	local tooltipsecond = {}
 	tooltipsecond[#tooltipsecond+1] = {E.func_texturefromIcon(E.func_achievementIcon(AchievementID)).. E.func_achievementName(AchievementID), AchievementID}
@@ -98,10 +91,8 @@ local function CreateTooltip(AchievementID)
 	tooltipsecond[#tooltipsecond+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
 	return tooltipsecond
 end
-
-
-
-local function OctoToDo_Frame_init(frame, data)
+function OctoToDo_EventFrame_Achievements:OctoToDo_Frame_init(frame, node)
+	local data = node:GetData()
 	frame.first.icon:SetTexture(data.icon)
 	frame.second.textLEFT:SetText(data.textLEFT)
 	frame.second.textRIGHT:SetText(data.textRIGHT or "NIL?")
@@ -111,7 +102,6 @@ local function OctoToDo_Frame_init(frame, data)
 	else
 		E:func_SetBackdrop(frame.second, nil, 0, 0)
 	end
-
 end
 function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
 	local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
@@ -119,19 +109,6 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_Achievements:Hide()
 	OctoToDo_MainFrame_Achievements:SetDontSavePosition(true)
-	OctoToDo_MainFrame_Achievements.ScrollBox = CreateFrame("FRAME", nil, OctoToDo_MainFrame_Achievements, "WowScrollBoxList")
-	OctoToDo_MainFrame_Achievements.ScrollBox:SetAllPoints()
-	OctoToDo_MainFrame_Achievements.ScrollBox:SetPropagateMouseClicks(true)
-	OctoToDo_MainFrame_Achievements.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
-	OctoToDo_MainFrame_Achievements.ScrollBar = CreateFrame("EventFrame", nil, OctoToDo_MainFrame_Achievements, "MinimalScrollBar")
-	OctoToDo_MainFrame_Achievements.ScrollBar:SetPoint("TOPLEFT", OctoToDo_MainFrame_Achievements.ScrollBox, "TOPRIGHT", 6, 0)
-	OctoToDo_MainFrame_Achievements.ScrollBar:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_Achievements.ScrollBox, "BOTTOMRIGHT", 6, 0)
-	OctoToDo_MainFrame_Achievements.view = CreateScrollBoxListLinearView()
-	OctoToDo_MainFrame_Achievements.view:SetElementExtent(AddonHeight)
-	OctoToDo_MainFrame_Achievements.view:SetElementInitializer("BackdropTemplate", OctoToDo_Frame_init)
-	OctoToDo_MainFrame_Achievements.view:RegisterCallback(OctoToDo_MainFrame_Achievements.view.Event.OnAcquiredFrame, func_OnAcquired, OctoToDo_MainFrame_Achievements)
-	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar, OctoToDo_MainFrame_Achievements.view)
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar)
 	OctoToDo_MainFrame_Achievements:SetClampedToScreen(false)
 	OctoToDo_MainFrame_Achievements:SetFrameStrata("HIGH")
 	OctoToDo_MainFrame_Achievements:SetPoint("CENTER")
@@ -151,14 +128,29 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	end)
 	OctoToDo_MainFrame_Achievements:RegisterForClicks("RightButtonUp")
 	OctoToDo_MainFrame_Achievements:SetScript("OnClick", function(self) self:Hide() end)
-	self:func_CreateMyDataProvider()
+	OctoToDo_MainFrame_Achievements.ScrollBox = CreateFrame("FRAME", nil, OctoToDo_MainFrame_Achievements, "WowScrollBoxList")
+	OctoToDo_MainFrame_Achievements.ScrollBox:SetAllPoints()
+	OctoToDo_MainFrame_Achievements.ScrollBox:SetPropagateMouseClicks(true)
+	OctoToDo_MainFrame_Achievements.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
+	OctoToDo_MainFrame_Achievements.ScrollBox:Layout()
+	OctoToDo_MainFrame_Achievements.ScrollBar = CreateFrame("EventFrame", nil, OctoToDo_MainFrame_Achievements, "MinimalScrollBar")
+	OctoToDo_MainFrame_Achievements.ScrollBar:SetPoint("TOPLEFT", OctoToDo_MainFrame_Achievements.ScrollBox, "TOPRIGHT", 6, 0)
+	OctoToDo_MainFrame_Achievements.ScrollBar:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_Achievements.ScrollBox, "BOTTOMRIGHT", 6, 0)
+	OctoToDo_MainFrame_Achievements.view = CreateScrollBoxListTreeListView()
+	OctoToDo_MainFrame_Achievements.view:SetElementExtent(AddonHeight)
+	OctoToDo_MainFrame_Achievements.view:SetElementInitializer("BackdropTemplate",
+		function(...)
+			self:OctoToDo_Frame_init(...)
+	end)
+	OctoToDo_MainFrame_Achievements.view:RegisterCallback(OctoToDo_MainFrame_Achievements.view.Event.OnAcquiredFrame, func_OnAcquired, OctoToDo_MainFrame_Achievements) -- ПОФИКСИТЬ
+	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar, OctoToDo_MainFrame_Achievements.view)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 end
 function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 	if OctoToDo_MainFrame_Achievements then
-		local DataProvider = CreateDataProvider()
+		local DataProvider = CreateTreeDataProvider()
 		local count = 0
 		for categoryID, v in next, (OctoToDo_Achievements.AchievementToShow) do
-
 			local total = GetCategoryNumAchievements(categoryID, true)
 			if total then
 				for i = 1, total do
@@ -184,7 +176,8 @@ function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 		elseif count == 0 then
 			OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*1)
 		end
-		OctoToDo_MainFrame_Achievements.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+		-- OctoToDo_MainFrame_Achievements.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+		OctoToDo_MainFrame_Achievements.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	end
 end
 function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
@@ -288,20 +281,15 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 	end)
 	dd_SECOND:ddSetMenuButtonHeight(16)
 end
-
-
 function OctoToDo_EventFrame_Achievements:func_CheckWTF()
-		if OctoToDo_Achievements == nil then OctoToDo_Achievements = {} end
-		if OctoToDo_Achievements.AchievementShowCompleted == nil then OctoToDo_Achievements.AchievementShowCompleted = true end
-		if OctoToDo_Achievements.AchievementToShow == nil then OctoToDo_Achievements.AchievementToShow = {[92] = true} end
-		if OctoToDo_Achievements.Tracked == nil then OctoToDo_Achievements.Tracked = {} end
-
-		for AchievementID, value in pairs(OctoToDo_Achievements.Tracked) do
-			TrackAch(AchievementID)
-		end
+	if OctoToDo_Achievements == nil then OctoToDo_Achievements = {} end
+	if OctoToDo_Achievements.AchievementShowCompleted == nil then OctoToDo_Achievements.AchievementShowCompleted = true end
+	if OctoToDo_Achievements.AchievementToShow == nil then OctoToDo_Achievements.AchievementToShow = {[92] = true} end
+	if OctoToDo_Achievements.Tracked == nil then OctoToDo_Achievements.Tracked = {} end
+	for AchievementID, value in pairs(OctoToDo_Achievements.Tracked) do
+		TrackAch(AchievementID)
+	end
 end
-
-
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"CONTENT_TRACKING_UPDATE",
@@ -318,21 +306,19 @@ function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 			AddonRightFrameWeight = OctoToDo_DB_Vars.curWidthCentral
 			AddonLeftFrameWeight = OctoToDo_DB_Vars.curWidthTitle
 		end
-
 		self:OctoToDo_Create_MainFrame_Achievements()
+		self:func_CreateMyDataProvider()
 		self:func_Create_DDframe_Achievements()
 		E:func_CreateUtilsButton(OctoToDo_MainFrame_Achievements, "Achievements")
 		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", OctoToDo_Achievements, OctoToDo_MainFrame_Achievements, function() OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider() end)
 	end
 end
-
 function OctoToDo_EventFrame_Achievements:CONTENT_TRACKING_UPDATE(type, AchievementID, isTracked)
 	if type == 2 then -- Enum.ContentTrackingType
 		OctoToDo_Achievements.Tracked[AchievementID] = isTracked
 		self:func_CreateMyDataProvider()
 	end
 end
-
 function OctoToDo_EventFrame_Achievements:PLAYER_REGEN_DISABLED()
 	if OctoToDo_MainFrame_Achievements and OctoToDo_MainFrame_Achievements:IsShown() then
 		OctoToDo_MainFrame_Achievements:Hide()

@@ -11,64 +11,71 @@ local totalNumAddOns = E.func_GetNumAddOns()
 if MainFrameNumLines > totalNumAddOns then
 	MainFrameNumLines = totalNumAddOns
 end
-local TrackedFrame
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
 
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function OctoToDo_EventFrame_OCTOREP:CreateTrackedFrame()
-	if not TrackedFrame then
-		TrackedFrame = CreateFrame("Frame", "TrackedFrame", UIParent, "BackdropTemplate")
-	end
-	-- TrackedFrame:Hide()
+	TrackedFrame = CreateFrame("BUTTON", "TrackedFrame", UIParent, "BackdropTemplate")
+	TrackedFrame:Hide()
 	TrackedFrame:SetBackdrop({
 			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
 			edgeSize = 1,
 	})
 	TrackedFrame:SetBackdropBorderColor(0, 0, 0, 1)
-	TrackedFrame:SetPoint("TOP",0,-120)
+	TrackedFrame:SetPoint("TOP", 0, -100)
 	TrackedFrame:SetFrameStrata("HIGH")
+	TrackedFrame:SetDontSavePosition(false)
+	TrackedFrame:SetClampedToScreen(true)
+	TrackedFrame:EnableMouse(true)
+	TrackedFrame:SetMovable(true)
 	TrackedFrame:SetSize(curWidthTitle, AddonHeight)
+
+
+	TrackedFrame:RegisterForDrag("LeftButton")
+	TrackedFrame:SetScript("OnDragStart", function()
+			TrackedFrame:SetAlpha(E.bgCa/2)
+			TrackedFrame:StartMoving()
+	end)
+	TrackedFrame:SetScript("OnDragStop", function()
+			TrackedFrame:SetAlpha(1)
+			TrackedFrame:StopMovingOrSizing()
+	end)
+
+	TrackedFrame:RegisterForClicks("RightButtonUp") -- ПОФИКСИТЬ (ДОБАВИТЬ ОПЦИЮ ЛОКА)
+	TrackedFrame:SetScript("OnClick", function(self) self:Hide() end)
+
+
 	TrackedFrame.BG = TrackedFrame:CreateTexture()
 	TrackedFrame.BG:SetAllPoints(TrackedFrame)
 	TrackedFrame.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-	TrackedFrame.BG:SetVertexColor(0,0,0,.5)
+	TrackedFrame.BG:SetVertexColor(0, 0, 0, .5)
 	TrackedFrame.texture = TrackedFrame:CreateTexture()
 	TrackedFrame.texture:SetSize(curWidthTitle, AddonHeight)
-	TrackedFrame.texture:SetVertexColor(1,0,0,1)
+	TrackedFrame.texture:SetVertexColor(1, 0, 0, 1)
 	TrackedFrame.texture:SetPoint("LEFT", TrackedFrame, "LEFT")
 	TrackedFrame.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-
 	TrackedFrame.textLEFT = TrackedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	TrackedFrame.textLEFT:SetPoint("LEFT", TrackedFrame, "LEFT", AddonHeight+2, 0)
 	TrackedFrame.textLEFT:SetFontObject(OctoFont11)
 	TrackedFrame.textLEFT:SetJustifyV("MIDDLE")
 	TrackedFrame.textLEFT:SetJustifyH("LEFT")
 	TrackedFrame.textLEFT:SetTextColor(1, 1, 1, 1)
-
 	TrackedFrame.textRIGHT = TrackedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	TrackedFrame.textRIGHT:SetPoint("RIGHT", TrackedFrame, "RIGHT", -4, 0)
 	TrackedFrame.textRIGHT:SetFontObject(OctoFont11)
 	TrackedFrame.textRIGHT:SetJustifyV("MIDDLE")
 	TrackedFrame.textRIGHT:SetJustifyH("RIGHT")
 	TrackedFrame.textRIGHT:SetTextColor(1, 1, 1, 1)
-
 end
-
-
-
 function OctoToDo_EventFrame_OCTOREP:TrackedFrame_OnEvent()
 	local reputationID = OctoToDo_OCTOREP.TrackedRepID or 369
 	if reputationID then
-
-
-	-- frame.first.icon:SetTexture(E.OctoTable_FACTIONTABLE[reputationID].icon)
-	TrackedFrame.textLEFT:SetText(E.func_reputationName(reputationID))
-	TrackedFrame.textRIGHT:SetText(E.func_CheckReputationByRepID(reputationID))
-
-
+		-- frame.first.icon:SetTexture(E.OctoTable_FACTIONTABLE[reputationID].icon)
+		TrackedFrame.textLEFT:SetText(E.func_reputationName(reputationID))
+		TrackedFrame.textRIGHT:SetText(E.func_CheckReputationByRepID(reputationID))
 		local FIRST = select(1, E.func_CheckRepCURSTANDING(reputationID))
 		local SECOND = select(2, E.func_CheckRepCURSTANDING(reputationID))
 		local color = E.func_GetReputationStandingColor(reputationID)
@@ -83,14 +90,6 @@ function OctoToDo_EventFrame_OCTOREP:TrackedFrame_OnEvent()
 		E:func_SetBackdrop(TrackedFrame, nil, 0, 0)
 	end
 end
-
-
-
-
-
-
-
-
 local function OnClick_Second(frame)
 	if OctoToDo_MainFrame_OCTOREP:IsDragging() then
 		return
@@ -185,7 +184,7 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	OctoToDo_MainFrame_OCTOREP:SetMovable(true)
 	OctoToDo_MainFrame_OCTOREP:RegisterForDrag("LeftButton")
 	OctoToDo_MainFrame_OCTOREP:SetScript("OnDragStart", function()
-			OctoToDo_MainFrame_OCTOREP:SetAlpha(E.bgCa)
+			OctoToDo_MainFrame_OCTOREP:SetAlpha(E.bgCa/2)
 			OctoToDo_MainFrame_OCTOREP:StartMoving()
 	end)
 	OctoToDo_MainFrame_OCTOREP:SetScript("OnDragStop", function()
@@ -217,14 +216,9 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	C_Reputation.ExpandAllFactionHeaders()
 	local list = {}
-
 	for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
 		tinsert(list, reputationID)
 	end
-
-
-
-
 	sort(list, E.func_Reverse_order)
 	for index, reputationID in ipairs(list) do
 		local groupNode = DataProvider:Insert({reputationID = reputationID})
@@ -235,18 +229,15 @@ end
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
 function OctoToDo_EventFrame_OCTOREP:CollectAllAddonsSFMICT()
 end
-
-
 function OctoToDo_EventFrame_OCTOREP:func_CheckWTF()
-		if OctoToDo_OCTOREP == nil then OctoToDo_OCTOREP = {} end
-		if OctoToDo_OCTOREP.TrackedRepID == nil then OctoToDo_OCTOREP.TrackedRepID = 369 end
+	if OctoToDo_OCTOREP == nil then OctoToDo_OCTOREP = {} end
+	if OctoToDo_OCTOREP.TrackedRepID == nil then OctoToDo_OCTOREP.TrackedRepID = 369 end
 end
-
-
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_REGEN_DISABLED",
 	"UPDATE_FACTION",
+	"PLAYER_REGEN_ENABLED",
 }
 E.RegisterMyEventsToFrames(OctoToDo_EventFrame_OCTOREP, MyEventsTable, E.func_DebugPath())
 function OctoToDo_EventFrame_OCTOREP:ADDON_LOADED(addonName)
@@ -270,11 +261,16 @@ function OctoToDo_EventFrame_OCTOREP:PLAYER_REGEN_DISABLED()
 		OctoToDo_MainFrame_OCTOREP:Hide()
 	end
 end
-
-
 function OctoToDo_EventFrame_OCTOREP:UPDATE_FACTION()
-	if TrackedFrame:IsShown() then
+	if TrackedFrame and TrackedFrame:IsShown() then
 		self:TrackedFrame_OnEvent()
 	end
 end
 
+
+
+function OctoToDo_EventFrame_OCTOREP:PLAYER_REGEN_ENABLED()
+	if TrackedFrame and TrackedFrame:IsShown() then
+		self:TrackedFrame_OnEvent()
+	end
+end

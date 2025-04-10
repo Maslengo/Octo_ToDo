@@ -1414,7 +1414,8 @@ function E:func_Otrisovka()
 				local vivodCent, tooltip = " ", {}
 				local color = "|cffFFFFFF"
 				if CharInfo.loginHour and CharInfo.loginDay then
-					if CharInfo.GUID == E.curGUID then
+					-- if CharInfo.GUID == E.curGUID then
+					if CharInfo.isOnline == true then
 						vivodCent = E.Green_Color..FRIENDS_LIST_ONLINE.."|r"
 						tooltip[#tooltip+1] = {"Время без релога: "..CharInfo.classColorHex.. E.func_SecondsToClock(GetServerTime() - CharInfo.time).."|r"}
 						tooltip[#tooltip+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.classColorHex..E.func_SecondsToClock(GetSessionTime()).."|r"      )}
@@ -1429,6 +1430,11 @@ function E:func_Otrisovka()
 						tooltip[#tooltip+1] = {" ", " "}
 						tooltip[#tooltip+1] = {" ", color..CharInfo.loginDay.."|r"}
 						tooltip[#tooltip+1] = {" ", color..CharInfo.loginHour.."|r"}
+					end
+					if CharInfo.STARTTODAY and CharInfo.STARTTODAY ~= 0 then
+						tooltip[#tooltip+1] = {" ", " "}
+						tooltip[#tooltip+1] = {COMMUNITIES_CALENDAR_TODAY..": "..CharInfo.classColorHex ..E.func_SecondsToClock(GetServerTime()-CharInfo.STARTTODAY).."|r"}
+						tooltip[#tooltip+1] = {"IsOnline:", CharInfo.IsOnline}
 					end
 				end
 				return vivodCent, tooltip

@@ -1949,6 +1949,7 @@ E.OctoTable_itemID_ItemsDelete_PTR = {
 	[187320] = true,
 }
 E.OctoTable_itemID_ItemsDelete = {
+	[9249] = true,
 	[140192] = true,
 	[110560] = true,
 	[43518] = true, -- СТАРЫЕ БУЛКИ МАГА
@@ -2543,6 +2544,7 @@ E.OctoTable_itemID_ItemsUsable_Mount = {
 	223504, 223506, 223574, 224148, 224413, 224416, 192794, 203226,
 }
 E.OctoTable_itemID_ItemsUsable_Other = {
+	9276,
 	61379,
 	7973,
 	173523,
