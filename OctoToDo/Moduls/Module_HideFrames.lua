@@ -7,6 +7,8 @@ local OctoTable_MustBeHiddenFrames_SIMPLE = {
 	-- {name = "ExtraActionButton1.style", frame = ExtraActionButton1.style},
 	-- {name = "PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator", frame = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator},
 	-- {name = "EncounterBar", frame = EncounterBar}, -- ДЛЯ ПОЛЁТА
+
+
 	{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
 	{name = "SplashFrame", frame = SplashFrame},
 	{name = "MajorFactionsRenownToast", frame = MajorFactionsRenownToast},
@@ -21,7 +23,7 @@ local OctoTable_MustBeHiddenFrames_SIMPLE = {
 	{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
 	{name = "UIWidgetTopCenterContainerFrame", frame = UIWidgetTopCenterContainerFrame},
 	{name = "MainStatusTrackingBarContainer", frame = MainStatusTrackingBarContainer},
-	{name = "SecondaryStatusTrackingBarContainer", frame = SecondaryStatusTrackingBarContainer},
+	{name = "SecondaryStatusTrackingBarContainer", frame = SecondaryStatusTrackingBarContainer}, -- РЕПА
 	{name = "BossBanner", frame = BossBanner},
 	{name = "RaidWarningFrame", frame = RaidWarningFrame},
 	{name = "RaidBossEmoteFrame", frame = RaidBossEmoteFrame},
@@ -31,6 +33,7 @@ local OctoTable_MustBeHiddenFrames_SIMPLE = {
 	{name = "PTRIssueReporterAlertFrame", frame = PTRIssueReporterAlertFrame},
 	{name = "CheckListText", frame = CheckListText},
 	{name = "PrivateRaidBossEmoteFrameAnchor", frame = PrivateRaidBossEmoteFrameAnchor},
+	{name = "SubscriptionInterstitialFrame", frame = SubscriptionInterstitialFrame},
 
 }
 function OctoToDo_EventFrame_HideFrames:MustBeHiddenFrames_SIMPLE()

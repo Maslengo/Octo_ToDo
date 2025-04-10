@@ -690,7 +690,7 @@ function E.func_achievementcriteriaString(achievementID, i)
 		if completedCrit == true then
 			color = E.Green_Color
 		elseif completedCrit == false and quantity == 0 then
-			color = E.Red_Color
+			color = E.LightGray_Color
 		end
 		if criteriaString and criteriaString ~= "" then
 			vivod = vivod..color..criteriaString.."|n|r"
@@ -713,7 +713,7 @@ function E.func_achievementquantity(achievementID, i)
 		if completedCrit == true then
 			color = E.Green_Color
 		elseif completedCrit == false and quantity == 0 then
-			color = E.Red_Color
+			color = E.LightGray_Color
 		end
 		if quantity then
 			vivod = vivod..color..quantity.." / "..reqQuantity.."|n|r"
@@ -1383,10 +1383,7 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	end
 end
 ----------------------------------------------------------------
-function E:func_CreateUtilsButton(frame, optionsAddonName)
-	if not optionsAddonName then
-		optionsAddonName = GlobalAddonName
-	end
+function E:func_CreateUtilsButton(frame, title)
 	----------------------------------------------------------------
 	-- OctoToDo_CloseButton
 	----------------------------------------------------------------
@@ -1433,10 +1430,10 @@ function E:func_CreateUtilsButton(frame, optionsAddonName)
 			if frame and frame:IsShown() then
 				frame:Hide()
 			end
-			if SettingsPanel:IsVisible() and self:IsVisible() then
+			if SettingsPanel:IsVisible() and frame:IsVisible() then
 				HideUIPanel(SettingsPanel)
 			else
-				Settings.OpenToCategory(E.func_AddonTitle(optionsAddonName), true)
+				Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
 			end
 	end)
 	OctoToDo_OptionsButton:SetScript("OnLeave", function(self)
@@ -1444,7 +1441,7 @@ function E:func_CreateUtilsButton(frame, optionsAddonName)
 			GameTooltip:Hide()
 	end)
 	OctoToDo_OptionsButton.icon = OctoToDo_OptionsButton:CreateTexture(nil, "BACKGROUND")
-	OctoToDo_OptionsButton.icon:SetTexture(E.AddonTexture_1)
+	OctoToDo_OptionsButton.icon:SetTexture("Interface\\AddOns\\OctoToDo\\Media\\IconTexture\\"..title)
 	OctoToDo_OptionsButton.icon:SetAllPoints()
 	----------------------------------------------------------------
 	-- OctoToDo_AbandonButton
@@ -1741,14 +1738,15 @@ function E:func_CreateUtilsButton(frame, optionsAddonName)
 end
 ----------------------------------------------------------------
 function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameString)
-	title = E.func_AddonTitle(E.GlobalAddonName).." ~ "..title
+	-- print (MinimapName, title)
+	local MinimapName = E.func_AddonTitle(E.GlobalAddonName).." » "..title
 	local info = {
 		type = "data source",
 		text = MinimapName,
-		icon = E.func_AddonIconTexture(addonName),
+		icon = "Interface\\AddOns\\OctoToDo\\Media\\IconTexture\\"..title,
 		OnEnter = function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-			GameTooltip_SetTitle(GameTooltip, title)
+			GameTooltip_SetTitle(GameTooltip, MinimapName)
 			GameTooltip:Show()
 		end,
 		OnLeave = function()
@@ -1769,10 +1767,15 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 					end
 					frame:SetShown(not frame:IsShown())
 				end
+				if SettingsPanel:IsVisible() and frame:IsVisible() then
+					HideUIPanel(SettingsPanel)
+				end
+				if GameMenuFrame:IsVisible() and frame:IsVisible() then
+					HideUIPanel(GameMenuFrame)
+				end
 			end
 		end
 	end
-	local MinimapName = title
 	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
 	if vars.minimapPos == nil then vars.minimapPos = 244 end
 	LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)

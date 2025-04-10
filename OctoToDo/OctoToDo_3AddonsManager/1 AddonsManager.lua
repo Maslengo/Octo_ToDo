@@ -847,7 +847,7 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		E.CreateMyDataProvider()
 		self:createDDMenu()
 		----------------------------------------------------------------
-		E:func_CreateUtilsButton(OctoToDo_MainFrame_AddonsManager, GlobalAddonName)
+		E:func_CreateUtilsButton(OctoToDo_MainFrame_AddonsManager, "AddonsManager")
 		E:func_CreateMinimapButton(GlobalAddonName, "AddonsManager", OctoToDo_AddonsManager, OctoToDo_MainFrame_AddonsManager, nil, "OctoToDo_MainFrame_AddonsManager")
 		OctoToDo_MainFrame_AddonsManager:SetScript("OnShow", function()
 				C_Timer.After(0, function()

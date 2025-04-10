@@ -11,11 +11,100 @@ local totalNumAddOns = E.func_GetNumAddOns()
 if MainFrameNumLines > totalNumAddOns then
 	MainFrameNumLines = totalNumAddOns
 end
+local TrackedFrame
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+
+function OctoToDo_EventFrame_OCTOREP:CreateTrackedFrame()
+	if not TrackedFrame then
+		TrackedFrame = CreateFrame("Frame", "TrackedFrame", UIParent, "BackdropTemplate")
+	end
+	-- TrackedFrame:Hide()
+	TrackedFrame:SetBackdrop({
+			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
+			edgeSize = 1,
+	})
+	TrackedFrame:SetBackdropBorderColor(0, 0, 0, 1)
+	TrackedFrame:SetPoint("TOP",0,-120)
+	TrackedFrame:SetFrameStrata("HIGH")
+	TrackedFrame:SetSize(curWidthTitle, AddonHeight)
+	TrackedFrame.BG = TrackedFrame:CreateTexture()
+	TrackedFrame.BG:SetAllPoints(TrackedFrame)
+	TrackedFrame.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+	TrackedFrame.BG:SetVertexColor(0,0,0,.5)
+	TrackedFrame.texture = TrackedFrame:CreateTexture()
+	TrackedFrame.texture:SetSize(curWidthTitle, AddonHeight)
+	TrackedFrame.texture:SetVertexColor(1,0,0,1)
+	TrackedFrame.texture:SetPoint("LEFT", TrackedFrame, "LEFT")
+	TrackedFrame.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+
+	TrackedFrame.textLEFT = TrackedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	TrackedFrame.textLEFT:SetPoint("LEFT", TrackedFrame, "LEFT", AddonHeight+2, 0)
+	TrackedFrame.textLEFT:SetFontObject(OctoFont11)
+	TrackedFrame.textLEFT:SetJustifyV("MIDDLE")
+	TrackedFrame.textLEFT:SetJustifyH("LEFT")
+	TrackedFrame.textLEFT:SetTextColor(1, 1, 1, 1)
+
+	TrackedFrame.textRIGHT = TrackedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	TrackedFrame.textRIGHT:SetPoint("RIGHT", TrackedFrame, "RIGHT", -4, 0)
+	TrackedFrame.textRIGHT:SetFontObject(OctoFont11)
+	TrackedFrame.textRIGHT:SetJustifyV("MIDDLE")
+	TrackedFrame.textRIGHT:SetJustifyH("RIGHT")
+	TrackedFrame.textRIGHT:SetTextColor(1, 1, 1, 1)
+
+end
+
+
+
+function OctoToDo_EventFrame_OCTOREP:TrackedFrame_OnEvent()
+	local reputationID = OctoToDo_OCTOREP.TrackedRepID or 369
+	if reputationID then
+
+
+	-- frame.first.icon:SetTexture(E.OctoTable_FACTIONTABLE[reputationID].icon)
+	TrackedFrame.textLEFT:SetText(E.func_reputationName(reputationID))
+	TrackedFrame.textRIGHT:SetText(E.func_CheckReputationByRepID(reputationID))
+
+
+		local FIRST = select(1, E.func_CheckRepCURSTANDING(reputationID))
+		local SECOND = select(2, E.func_CheckRepCURSTANDING(reputationID))
+		local color = E.func_GetReputationStandingColor(reputationID)
+		TrackedFrame.texture:SetVertexColor(select(1, E.func_hex2rgbNUMBER(color)), select(2, E.func_hex2rgbNUMBER(color)), select(3, E.func_hex2rgbNUMBER(color)), .5)
+		if FIRST == 0 then
+			TrackedFrame.texture:SetWidth(.1)
+		elseif FIRST == SECOND then
+			TrackedFrame.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+		elseif FIRST >= 1 then
+			TrackedFrame.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+		end
+		E:func_SetBackdrop(TrackedFrame, nil, 0, 0)
+	end
+end
+
+
+
+
+
+
+
+
+local function OnClick_Second(frame)
+	if OctoToDo_MainFrame_OCTOREP:IsDragging() then
+		return
+	end
+	local parent = frame:GetParent()
+	local node = parent:GetElementData()
+	local reputationID = parent:GetData().reputationID
+	if reputationID then
+		TrackedFrame:Show()
+		-- TrackedFrame:SetShown(not TrackedFrame:IsShown()) -- TOGGLE
+		OctoToDo_OCTOREP.TrackedRepID = reputationID
+		OctoToDo_EventFrame_OCTOREP:TrackedFrame_OnEvent()
+	end
+end
 ----------------------------------------------------------------
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
 ----------------------------------------------------------------
@@ -28,31 +117,33 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.first.icon:SetAllPoints(frame.first)
 		-- frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		frame.third = CreateFrame("BUTTON", nil, frame, "BackDropTemplate")
-		frame.third:SetPropagateMouseClicks(true)
-		frame.third:SetSize(curWidthTitle, AddonHeight)
-		-- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.third:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.third:SetScript("OnEnter", function()
-				E.func_TooltipOnEnter(frame.third, true, true)
+		frame.second = CreateFrame("BUTTON", nil, frame, "BackDropTemplate")
+		frame.second:SetPropagateMouseClicks(true)
+		frame.second:SetSize(curWidthTitle, AddonHeight)
+		-- frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.second:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.second:RegisterForClicks("LeftButtonUp")
+		frame.second:SetScript("OnClick", OnClick_Second)
+		frame.second:SetScript("OnEnter", function()
+				E.func_TooltipOnEnter(frame.second, true, true)
 		end)
-		frame.third:SetScript("OnLeave", GameTooltip_Hide)
-		frame.third.texture = frame.third:CreateTexture()
-		frame.third.texture:SetSize(curWidthTitle, AddonHeight)
-		frame.third.texture:SetPoint("LEFT", frame.third, "LEFT")
-		frame.third.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-		frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
-		frame.third.textLEFT:SetFontObject(OctoFont11)
-		frame.third.textLEFT:SetJustifyV("MIDDLE")
-		frame.third.textLEFT:SetJustifyH("LEFT")
-		frame.third.textLEFT:SetTextColor(1, 1, 1, 1)
-		frame.third.textRIGHT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.third.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
-		frame.third.textRIGHT:SetFontObject(OctoFont11)
-		frame.third.textRIGHT:SetJustifyV("MIDDLE")
-		frame.third.textRIGHT:SetJustifyH("RIGHT")
-		frame.third.textRIGHT:SetTextColor(1, 1, 1, 1)
+		frame.second:SetScript("OnLeave", GameTooltip_Hide)
+		frame.second.texture = frame.second:CreateTexture()
+		frame.second.texture:SetSize(curWidthTitle, AddonHeight)
+		frame.second.texture:SetPoint("LEFT", frame.second, "LEFT")
+		frame.second.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+		frame.second.textLEFT = frame.second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		frame.second.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
+		frame.second.textLEFT:SetFontObject(OctoFont11)
+		frame.second.textLEFT:SetJustifyV("MIDDLE")
+		frame.second.textLEFT:SetJustifyH("LEFT")
+		frame.second.textLEFT:SetTextColor(1, 1, 1, 1)
+		frame.second.textRIGHT = frame.second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		frame.second.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
+		frame.second.textRIGHT:SetFontObject(OctoFont11)
+		frame.second.textRIGHT:SetJustifyV("MIDDLE")
+		frame.second.textRIGHT:SetJustifyH("RIGHT")
+		frame.second.textRIGHT:SetTextColor(1, 1, 1, 1)
 	end
 end
 ----------------------------------------------------------------
@@ -63,22 +154,20 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
 	local reputationID = data.reputationID
 	frame.first.icon:SetTexture(E.OctoTable_FACTIONTABLE[reputationID].icon)
-	frame.third.textLEFT:SetText(E.func_reputationName(reputationID))
-	frame.third.textRIGHT:SetText(E.func_CheckReputationByRepID(reputationID))
+	frame.second.textLEFT:SetText(E.func_reputationName(reputationID))
+	frame.second.textRIGHT:SetText(E.func_CheckReputationByRepID(reputationID))
 	local FIRST = select(1, E.func_CheckRepCURSTANDING(reputationID))
 	local SECOND = select(2, E.func_CheckRepCURSTANDING(reputationID))
 	local color = E.func_GetReputationStandingColor(reputationID)
-	local r = select(1, E.func_hex2rgbNUMBER(color))
-	local g = select(2, E.func_hex2rgbNUMBER(color))
-	local b = select(3, E.func_hex2rgbNUMBER(color))
-	frame.third.texture:SetVertexColor(r, g, b, .5)
+	frame.second.texture:SetVertexColor(select(1, E.func_hex2rgbNUMBER(color)), select(2, E.func_hex2rgbNUMBER(color)), select(3, E.func_hex2rgbNUMBER(color)), .5)
 	if FIRST == 0 then
-		frame.third.texture:SetWidth(.1)
+		frame.second.texture:SetWidth(.1)
 	elseif FIRST == SECOND then
-		frame.third.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+		frame.second.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
 	elseif FIRST >= 1 then
-		frame.third.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+		frame.second.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
 	end
+	E:func_SetBackdrop(frame.second, nil, 0, 0)
 end
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	local OctoToDo_MainFrame_OCTOREP = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOREP", UIParent, "BackdropTemplate")
@@ -128,12 +217,6 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	C_Reputation.ExpandAllFactionHeaders()
 	local list = {}
-	-- for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
-	-- 	for reputationID, config in next, (tbl) do
-	-- 		tinsert(list, reputationID)
-	-- 	end
-	-- end
-
 
 	for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
 		tinsert(list, reputationID)
@@ -152,21 +235,31 @@ end
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
 function OctoToDo_EventFrame_OCTOREP:CollectAllAddonsSFMICT()
 end
+
+
+function OctoToDo_EventFrame_OCTOREP:func_CheckWTF()
+		if OctoToDo_OCTOREP == nil then OctoToDo_OCTOREP = {} end
+		if OctoToDo_OCTOREP.TrackedRepID == nil then OctoToDo_OCTOREP.TrackedRepID = 369 end
+end
+
+
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_REGEN_DISABLED",
+	"UPDATE_FACTION",
 }
 E.RegisterMyEventsToFrames(OctoToDo_EventFrame_OCTOREP, MyEventsTable, E.func_DebugPath())
 function OctoToDo_EventFrame_OCTOREP:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		self.func_CheckWTF()
 		----------------------------------------------------------------
-		OctoToDo_OCTOREP = OctoToDo_OCTOREP or {}
 		self:OctoToDo_Create_MainFrame_AddonsManager()
 		self:func_CreateMyDataProvider()
+		self:CreateTrackedFrame()
 		----------------------------------------------------------------
-		E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOREP, GlobalAddonName)
+		E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOREP, "OCTOREP")
 		E:func_CreateMinimapButton(GlobalAddonName, "OCTOREP", OctoToDo_OCTOREP, OctoToDo_MainFrame_OCTOREP, nil, "OctoToDo_MainFrame_OCTOREP")
 		----------------------------------------------------------------
 	end
@@ -177,3 +270,11 @@ function OctoToDo_EventFrame_OCTOREP:PLAYER_REGEN_DISABLED()
 		OctoToDo_MainFrame_OCTOREP:Hide()
 	end
 end
+
+
+function OctoToDo_EventFrame_OCTOREP:UPDATE_FACTION()
+	if TrackedFrame:IsShown() then
+		self:TrackedFrame_OnEvent()
+	end
+end
+

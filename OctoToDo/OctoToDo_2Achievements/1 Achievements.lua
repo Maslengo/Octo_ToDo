@@ -21,6 +21,34 @@ local MainFrameNumLines = 30
 if MainFrameNumLines > NumberOfLines then
 	MainFrameNumLines = NumberOfLines
 end
+
+
+local function TrackAch(AchievementID)
+	if OctoToDo_Achievements.Tracked[AchievementID] then
+		C_ContentTracking.StartTracking(2, AchievementID)
+	else
+		C_ContentTracking.StopTracking(2, AchievementID, 2)
+	end
+
+end
+
+local function ToggleAchievement(AchievementID)
+	if E.func_achievementComplete(AchievementID) then
+		OctoToDo_Achievements.Tracked[AchievementID] = nil
+		return
+	elseif OctoToDo_Achievements.Tracked[AchievementID] then
+		return C_ContentTracking.StopTracking(2, AchievementID, 2)
+	else
+		return C_ContentTracking.StartTracking(2, AchievementID)
+	end
+end
+
+
+local function OnClick_Second(frame, data)
+	local AchievementID = data.AchievementID
+	ToggleAchievement(AchievementID)
+end
+
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
 		frame.first = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
@@ -31,13 +59,16 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.first.icon:SetAllPoints(frame.first)
 		frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 
-
-
-
-		frame.second = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
+		frame.second = CreateFrame("BUTTON", nil, frame, "BackdropTemplate")
 		frame.second:SetPropagateMouseClicks(true)
 		frame.second:SetSize(500, AddonHeight)
 		frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.second:RegisterForClicks("LeftButtonUp")
+		frame.second:SetScript("OnClick", function() OnClick_Second(frame, data) end)
+		frame.second:SetScript("OnEnter", function()
+				E.func_TooltipOnEnter(frame.second, false, false)
+		end)
+		frame.second:SetScript("OnLeave", GameTooltip_Hide)
 		frame.second.textLEFT = frame.second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame.second.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
 		frame.second.textLEFT:SetFontObject(OctoFont11)
@@ -55,27 +86,32 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.second.textRIGHT:SetJustifyH("RIGHT")
 		frame.second.textRIGHT:SetTextColor(1, 1, 1, 1)
 
-		frame.second:SetScript("OnEnter", function()
-				E.func_TooltipOnEnter(frame.second, false, false)
-		end)
-		frame.second:SetScript("OnLeave", GameTooltip_Hide)
+
 		-- frame.second:SetScript("OnHide", frame.second.Hide)
 	end
 end
 
 local function CreateTooltip(AchievementID)
-	local tooltipfirst = {}
-	tooltipfirst[#tooltipfirst+1] = {E.func_texturefromIcon(E.func_achievementIcon(AchievementID)).. E.func_achievementName(AchievementID), AchievementID}
-	tooltipfirst[#tooltipfirst+1] = {" ", " "}
-	tooltipfirst[#tooltipfirst+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
-	return tooltipfirst
+	local tooltipsecond = {}
+	tooltipsecond[#tooltipsecond+1] = {E.func_texturefromIcon(E.func_achievementIcon(AchievementID)).. E.func_achievementName(AchievementID), AchievementID}
+	tooltipsecond[#tooltipsecond+1] = {" ", " "}
+	tooltipsecond[#tooltipsecond+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
+	return tooltipsecond
 end
 
-local function OctoToDo_Frame_init(frame, data, AchievementID)
+
+
+local function OctoToDo_Frame_init(frame, data)
 	frame.first.icon:SetTexture(data.icon)
 	frame.second.textLEFT:SetText(data.textLEFT)
 	frame.second.textRIGHT:SetText(data.textRIGHT or "NIL?")
 	frame.second.tooltip = CreateTooltip(data.AchievementID)
+	if OctoToDo_Achievements.Tracked[data.AchievementID] then
+		E:func_SetBackdrop(frame.second, E.classColorHexCurrent, .3, 0)
+	else
+		E:func_SetBackdrop(frame.second, nil, 0, 0)
+	end
+
 end
 function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
 	local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
@@ -118,36 +154,38 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	self:func_CreateMyDataProvider()
 end
 function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
-	local DataProvider = CreateDataProvider()
-	local count = 0
-	for categoryID, v in next, (OctoToDo_Achievements.AchievementToShow) do
+	if OctoToDo_MainFrame_Achievements then
+		local DataProvider = CreateDataProvider()
+		local count = 0
+		for categoryID, v in next, (OctoToDo_Achievements.AchievementToShow) do
 
-		local total = GetCategoryNumAchievements(categoryID, true)
-		if total then
-			for i = 1, total do
-				local AchievementID, name, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
-				if AchievementID then
-					if completedAchi == false or (completedAchi == OctoToDo_Achievements.AchievementShowCompleted) then
-						count = count + 1
-						DataProvider:Insert({
-								textLEFT = name,
-								textRIGHT = E.func_achievementvivod(AchievementID),
-								AchievementID = AchievementID,
-								icon = icon,
-						})
+			local total = GetCategoryNumAchievements(categoryID, true)
+			if total then
+				for i = 1, total do
+					local AchievementID, name, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
+					if AchievementID then
+						if completedAchi == false or (completedAchi == OctoToDo_Achievements.AchievementShowCompleted) then
+							count = count + 1
+							DataProvider:Insert({
+									textLEFT = name,
+									textRIGHT = E.func_achievementvivod(AchievementID),
+									AchievementID = AchievementID,
+									icon = icon,
+							})
+						end
 					end
 				end
 			end
 		end
+		if count > 0 and count < MainFrameNumLines then
+			OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*count)
+		elseif count > MainFrameNumLines then
+			OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*MainFrameNumLines)
+		elseif count == 0 then
+			OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*1)
+		end
+		OctoToDo_MainFrame_Achievements.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	end
-	if count > 0 and count < MainFrameNumLines then
-		OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*count)
-	elseif count > MainFrameNumLines then
-		OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*MainFrameNumLines)
-	elseif count == 0 then
-		OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*1)
-	end
-	OctoToDo_MainFrame_Achievements.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
 function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 	local dd_SECOND = CreateFrame("Button", "dd_SECOND", OctoToDo_MainFrame_Achievements, "SecureActionButtonTemplate, BackDropTemplate")
@@ -250,8 +288,23 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 	end)
 	dd_SECOND:ddSetMenuButtonHeight(16)
 end
+
+
+function OctoToDo_EventFrame_Achievements:func_CheckWTF()
+		if OctoToDo_Achievements == nil then OctoToDo_Achievements = {} end
+		if OctoToDo_Achievements.AchievementShowCompleted == nil then OctoToDo_Achievements.AchievementShowCompleted = true end
+		if OctoToDo_Achievements.AchievementToShow == nil then OctoToDo_Achievements.AchievementToShow = {[92] = true} end
+		if OctoToDo_Achievements.Tracked == nil then OctoToDo_Achievements.Tracked = {} end
+
+		for AchievementID, value in pairs(OctoToDo_Achievements.Tracked) do
+			TrackAch(AchievementID)
+		end
+end
+
+
 local MyEventsTable = {
 	"ADDON_LOADED",
+	"CONTENT_TRACKING_UPDATE",
 	"PLAYER_REGEN_DISABLED",
 }
 E.RegisterMyEventsToFrames(OctoToDo_EventFrame_Achievements, MyEventsTable, E.func_DebugPath())
@@ -259,20 +312,27 @@ function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		self:func_CheckWTF()
 		if OctoToDo_DB_Vars then
 			AddonHeight =  OctoToDo_DB_Vars.curHeight
 			AddonRightFrameWeight = OctoToDo_DB_Vars.curWidthCentral
 			AddonLeftFrameWeight = OctoToDo_DB_Vars.curWidthTitle
 		end
-		if OctoToDo_Achievements == nil then OctoToDo_Achievements = {} end
-		if OctoToDo_Achievements.AchievementShowCompleted == nil then OctoToDo_Achievements.AchievementShowCompleted = true end
-		if OctoToDo_Achievements.AchievementToShow == nil then OctoToDo_Achievements.AchievementToShow = {[92] = true} end
+
 		self:OctoToDo_Create_MainFrame_Achievements()
 		self:func_Create_DDframe_Achievements()
-		E:func_CreateUtilsButton(OctoToDo_MainFrame_Achievements)
-		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", OctoToDo_Achievements, OctoToDo_MainFrame_Achievements)
+		E:func_CreateUtilsButton(OctoToDo_MainFrame_Achievements, "Achievements")
+		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", OctoToDo_Achievements, OctoToDo_MainFrame_Achievements, function() OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider() end)
 	end
 end
+
+function OctoToDo_EventFrame_Achievements:CONTENT_TRACKING_UPDATE(type, AchievementID, isTracked)
+	if type == 2 then -- Enum.ContentTrackingType
+		OctoToDo_Achievements.Tracked[AchievementID] = isTracked
+		self:func_CreateMyDataProvider()
+	end
+end
+
 function OctoToDo_EventFrame_Achievements:PLAYER_REGEN_DISABLED()
 	if OctoToDo_MainFrame_Achievements and OctoToDo_MainFrame_Achievements:IsShown() then
 		OctoToDo_MainFrame_Achievements:Hide()

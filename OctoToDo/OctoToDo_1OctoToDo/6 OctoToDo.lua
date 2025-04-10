@@ -1165,6 +1165,8 @@ function OctoToDo_EventFrame_OCTOMAIN:VARIABLES_LOADED()
 		----------------------------------------------------------------
 	end
 end
+
+
 function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
@@ -1195,7 +1197,6 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:func_Create_DD_OCTOMAIN()
 	self:func_Create_DD2_OCTOMAIN()
 	----------------------------------------------------------------
-	E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN)
 	local totalMoney = 0
 	local totalReload = 0
 	local realTotalTime = 0
@@ -1216,6 +1217,7 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	if realLevelTime ~= 0 then
 		E.func_CreateInfoFrame("realLevelTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realLevelTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
 	end
+	E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN, "Core")
 	E:func_CreateMinimapButton(GlobalAddonName, "Core", OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function()
 			OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 			RequestRaidInfo()
@@ -1241,14 +1243,14 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 			-- promise:FailWithChecked(function(...) print (...) end)
 	end)
 end
-function OctoToDo_EventFrame_OCTOMAIN:SHOW_SUBSCRIPTION_INTERSTITIAL()
-	if not InCombatLockdown() then
-		if SubscriptionInterstitialFrame then
-			SubscriptionInterstitialFrame:SetScript("OnEvent", nil)
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide trash frames: ").."SubscriptionInterstitialFrame")
-		end
-	end
-end
+-- function OctoToDo_EventFrame_OCTOMAIN:SHOW_SUBSCRIPTION_INTERSTITIAL()
+-- 	if not InCombatLockdown() then
+-- 		if SubscriptionInterstitialFrame then
+-- 			SubscriptionInterstitialFrame:SetScript("OnEvent", nil)
+-- 			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide trash frames: ").."SubscriptionInterstitialFrame")
+-- 		end
+-- 	end
+-- end
 function OctoToDo_EventFrame_OCTOMAIN:PLAYER_REGEN_DISABLED()
 	if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
 		OctoToDo_MainFrame_OCTOMAIN:Hide()
