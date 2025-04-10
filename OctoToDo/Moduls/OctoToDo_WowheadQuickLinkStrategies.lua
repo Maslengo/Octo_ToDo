@@ -222,6 +222,10 @@ function strategies.wowhead.GetQuestFromFocus(data)
 	return data.focus.questID, "quest"
 end
 function strategies.wowhead.GetTrackerFromFocus(data)
+
+    if not data.focus.GetParent then return end
+
+
 	local parent = data.focus:GetParent()
 	if not parent or not parent.parentModule then
 		return
@@ -274,17 +278,15 @@ function strategies.wowhead.GetLearntMountFromFocus(data)
 	return select(2, C_MountJournal.GetMountInfoByID(data.focus.mountID)), "spell"
 end
 function strategies.wowhead.GetBattlePetFromFocus(data)
-	if not data.focus.petID and (not data.focus:GetParent() or not data.focus:GetParent().petID) then
-		return
-	end
-	local petId = data.focus.petID or data.focus:GetParent().petID
-	local id
-	if type(petId) == "string" then
-		id = select(11, C_PetJournal.GetPetInfoByPetID(petId))
-	else
-		id = select(4, C_PetJournal.GetPetInfoBySpeciesID(petId))
-	end
-	return id, "npc"
+    if not data.focus.petID and (not data.focus.GetParent or not data.focus:GetParent().petID) then return end
+    local petId = data.focus.petID or data.focus:GetParent().petID
+    local id
+    if type(petId) == "string" then
+        id = select(11, C_PetJournal.GetPetInfoByPetID(petId))
+    else
+        id = select(4, C_PetJournal.GetPetInfoBySpeciesID(petId))
+    end
+    return id, "npc"
 end
 function strategies.wowhead.GetBattlePetFromFloatingTooltip(data)
 	if not data.focus.speciesID then

@@ -47,7 +47,6 @@ E.func_LoadAddOn("HidingBar_Options")
 ----------------------------------------------------------------
 function OctoToDo_EventFrame_OCTOMAIN:ConcatAtStart()
 	E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
-	E.func_TableConcat(E.OctoTable_itemID_Config, E.OctoTable_itemID_ALL)
 	for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Cosmetic) do
 		E.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
@@ -80,7 +79,6 @@ function OctoToDo_EventFrame_OCTOMAIN:ConcatAtStart()
 	end
 end
 function E:func_checkCharInfo()
-	print ("func_checkCharInfo")
 	local Meta_Table_0 = {__index = function() return 0 end}
 	local Meta_Table_1 = {__index = function() return 1 end}
 	local Meta_Table_false = {__index = function() return false end}
@@ -1280,14 +1278,14 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	end)
 
 end
--- function OctoToDo_EventFrame_OCTOMAIN:SHOW_SUBSCRIPTION_INTERSTITIAL()
--- 	if not InCombatLockdown() then
--- 		if SubscriptionInterstitialFrame then
--- 			SubscriptionInterstitialFrame:SetScript("OnEvent", nil)
--- 			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide trash frames: ").."SubscriptionInterstitialFrame")
--- 		end
--- 	end
--- end
+function OctoToDo_EventFrame_OCTOMAIN:SHOW_SUBSCRIPTION_INTERSTITIAL()
+	if not InCombatLockdown() then
+		if SubscriptionInterstitialFrame then
+			SubscriptionInterstitialFrame:SetScript("OnEvent", nil)
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide trash frames: ").."SubscriptionInterstitialFrame")
+		end
+	end
+end
 function OctoToDo_EventFrame_OCTOMAIN:PLAYER_REGEN_DISABLED()
 	if OctoToDo_MainFrame_OCTOMAIN and OctoToDo_MainFrame_OCTOMAIN:IsShown() then
 		OctoToDo_MainFrame_OCTOMAIN:Hide()

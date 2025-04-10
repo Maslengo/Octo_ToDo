@@ -33,7 +33,7 @@ local OctoTable_MustBeHiddenFrames_SIMPLE = {
 	{name = "PTRIssueReporterAlertFrame", frame = PTRIssueReporterAlertFrame},
 	{name = "CheckListText", frame = CheckListText},
 	{name = "PrivateRaidBossEmoteFrameAnchor", frame = PrivateRaidBossEmoteFrameAnchor},
-	{name = "SubscriptionInterstitialFrame", frame = SubscriptionInterstitialFrame},
+	{name = "SubscriptionInterstitialFrame", frame = SubscriptionInterstitialFrame},  -- НАДО ПОФИКСИТЬ(в другом файле работает)
 
 }
 function OctoToDo_EventFrame_HideFrames:MustBeHiddenFrames_SIMPLE()

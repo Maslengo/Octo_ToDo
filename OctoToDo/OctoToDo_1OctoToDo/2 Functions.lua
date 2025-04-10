@@ -641,6 +641,11 @@ function E.func_achievementIcon(achievementID)
 	return Icon
 end
 ----------------------------------------------------------------
+function E.func_achievementDescription(achievementID)
+	local description = select(8, GetAchievementInfo(achievementID)) or ""
+	return description
+end
+----------------------------------------------------------------
 function E.func_achievementvivod(achievementID)
 	local vivod
 	local completed = select(4, GetAchievementInfo(achievementID))
@@ -690,7 +695,7 @@ function E.func_achievementcriteriaString(achievementID, i)
 		if completedCrit == true then
 			color = E.Green_Color
 		elseif completedCrit == false and quantity == 0 then
-			color = E.LightGray_Color
+			color = E.Gray_Color
 		end
 		if criteriaString and criteriaString ~= "" then
 			vivod = vivod..color..criteriaString.."|n|r"
@@ -713,7 +718,7 @@ function E.func_achievementquantity(achievementID, i)
 		if completedCrit == true then
 			color = E.Green_Color
 		elseif completedCrit == false and quantity == 0 then
-			color = E.LightGray_Color
+			color = E.Gray_Color
 		end
 		if quantity then
 			vivod = vivod..color..quantity.." / "..reqQuantity.."|n|r"
@@ -1598,7 +1603,7 @@ function E:func_CreateUtilsButton(frame, title)
 			local BTAG = tostringall(strsplit("#", BattleTag))
 			local GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 			local BattleTagLocal = BTAG.." ("..GameVersion..")"
-			for _, itemID in next, (E.OctoTable_itemID_Config) do
+			for _, itemID in next, (E.OctoTable_itemID_ALL) do
 				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
 					if CharInfo.BattleTagLocal == BattleTagLocal then
 						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 then
@@ -1672,23 +1677,23 @@ function E:func_CreateUtilsButton(frame, title)
 				-- if v.Active == true then
 				--   -- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
 				--   -- СЕЙЧАС
-				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				-- elseif v.Possible == true then
 				--   -- БУДУЩЕЕ
-				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				-- else
 				--   -- ПРОШЛОЕ
-				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.LightGray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				-- end
 				if v.Active == true then
 					-- СЕЙЧАС
-					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..E.White_Color.." (".. v.ENDS..")|r"..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..E.White_Color.." (".. v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				elseif v.Possible == true then
 					-- БУДУЩЕЕ
-					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.LightGray_Color..v.title ..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Gray_Color..v.title ..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				else
 					-- ПРОШЛОЕ
-					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.LightGray_Color..v.title ..(E.DebugIDs and E.LightGray_Color.. " id:"..eventID.."|r" or ""), E.LightGray_Color..v.startTime.." - "..v.endTime.."|r")
+					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Gray_Color..v.title ..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				end
 			end
 			if count == 0 then
@@ -2138,8 +2143,8 @@ E.NightFae_Color = "|cffB4A7D6"
 E.Venthyr_Color = "|cffEA9999"
 E.Black_Color = "|cff000000"
 E.DarkGray_Color = "|cff252525"
-E.Gray_Color = "|cff505050"
-E.LightGray_Color = "|cff757575"
+E.Gray_Color = "|cff757575" -- "|cff505050"
+E.LightGray_Color = "|cff909090" -- "|cff757575"
 E.White_Color = "|cffFFFFFF"
 E.Addon_Left_Color = "|cffD177FF"
 E.Addon_Right_Color = "|cff63A4E0"
@@ -2820,7 +2825,7 @@ function E.func_ListProfiles()
 	end
 end
 -- Обработчик команд
-function E.func_HandleCommand(msg)
+local function func_HandleCommand(msg)
 	local command, arg1, arg2 = strsplit(" ", msg, 3)
 	if command == "list" then
 		E.func_ListAddons(arg1)
@@ -2850,7 +2855,7 @@ end
 -- Инициализация при загрузке
 -- Регистрируем команды
 SLASH_UNIVERSALADDONMANAGER1 = "/uam"
-SlashCmdList["UNIVERSALADDONMANAGER"] = E.func_HandleCommand
+SlashCmdList["UNIVERSALADDONMANAGER"] = func_HandleCommand
 function E.GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
 	if (not E.func_IsProfilerEnabled()) then
 		return def or ""

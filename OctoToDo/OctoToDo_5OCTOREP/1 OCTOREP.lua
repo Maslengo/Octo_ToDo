@@ -6,13 +6,14 @@ OctoToDo_EventFrame_OCTOREP:Hide()
 ----------------------------------------------------------------
 local AddonHeight = 20 --ADDON_BUTTON_HEIGHT -- Высота -- OctoToDo_DB_Vars.curHeight
 local curWidthTitle = 500 -- Ширина Левого -- OctoToDo_DB_Vars.curWidthTitle
-local MainFrameNumLines = 40 --MAX_ADDONS_DISPLAYED
+local MainFrameNumLines = 30 --MAX_ADDONS_DISPLAYED
 local totalNumAddOns = E.func_GetNumAddOns()
 if MainFrameNumLines > totalNumAddOns then
 	MainFrameNumLines = totalNumAddOns
 end
 
 ----------------------------------------------------------------
+-- /dump C_Reputation.GetWatchedFactionData()
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -215,14 +216,33 @@ end
 function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	C_Reputation.ExpandAllFactionHeaders()
-	local list = {}
-	for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
-		tinsert(list, reputationID)
+	-- local list = {}
+	-- for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
+	-- 	tinsert(list, reputationID)
+	-- end
+	-- sort(list, E.func_Reverse_order)
+	-- for index, reputationID in ipairs(list) do
+	-- 	local groupNode = DataProvider:Insert({reputationID = reputationID})
+	-- end
+
+
+
+
+	for i = 1, C_Reputation.GetNumFactions() do
+		local factionData = C_Reputation.GetFactionDataByIndex(i)
+		if factionData then
+			if (factionData.isHeaderWithRep or not factionData.isHeader) then
+				local groupNode = DataProvider:Insert({reputationID = factionData.factionID})
+			end
+		end
 	end
-	sort(list, E.func_Reverse_order)
-	for index, reputationID in ipairs(list) do
-		local groupNode = DataProvider:Insert({reputationID = reputationID})
-	end
+
+
+
+
+
+
+
 	OctoToDo_MainFrame_OCTOREP.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
 ----------------------------------------------------------------

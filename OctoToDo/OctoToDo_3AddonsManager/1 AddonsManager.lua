@@ -605,11 +605,25 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	end)
 	frameDisableAll:SetScript("OnEnter", function(self)
 			local DisableAllTooltip = {}
+			local sorted = {}
 			for name, value in pairs(OctoToDo_AddonsManager.lock.addons) do
 				if value then
-					DisableAllTooltip[#DisableAllTooltip+1] = {E.func_texturefromIcon(E.func_GetAddoniconTexture(name))..E.func_GetAddonTitle(name), E.func_texturefromIcon([[Interface\AddOns\OctoToDo\Media\SimpleAddonManager\lock]])}
+					tinsert(sorted, name)
 				end
 			end
+			sort(sorted)
+
+
+			for index, name in ipairs(sorted) do
+				DisableAllTooltip[#DisableAllTooltip+1] = {E.func_texturefromIcon(E.func_GetAddoniconTexture(name))..E.func_GetAddonTitle(name), E.func_texturefromIcon([[Interface\AddOns\OctoToDo\Media\SimpleAddonManager\lock]])}
+			end
+
+
+			-- for name, value in pairs(OctoToDo_AddonsManager.lock.addons) do
+			-- 	if value then
+			-- 		DisableAllTooltip[#DisableAllTooltip+1] = {E.func_texturefromIcon(E.func_GetAddoniconTexture(name))..E.func_GetAddonTitle(name), E.func_texturefromIcon([[Interface\AddOns\OctoToDo\Media\SimpleAddonManager\lock]])}
+			-- 	end
+			-- end
 			frameDisableAll.tooltip = DisableAllTooltip
 			E.func_TooltipOnEnter(self, true, true)
 	end)

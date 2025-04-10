@@ -20,18 +20,12 @@ local MainFrameNumLines = 30
 if MainFrameNumLines > NumberOfLines then
 	MainFrameNumLines = NumberOfLines
 end
-local function TrackAch(AchievementID)
-	if OctoToDo_Achievements.Tracked[AchievementID] then
-		C_ContentTracking.StartTracking(2, AchievementID)
-	else
-		C_ContentTracking.StopTracking(2, AchievementID, 2)
-	end
-end
 local function ToggleAchievement(AchievementID)
-	if E.func_achievementComplete(AchievementID) then
-		OctoToDo_Achievements.Tracked[AchievementID] = nil
+	if E.func_achievementComplete(AchievementID) and C_ContentTracking.IsTracking(2, AchievementID) then
+		return C_ContentTracking.StopTracking(2, AchievementID, 2)
+	elseif E.func_achievementComplete(AchievementID) then
 		return
-	elseif OctoToDo_Achievements.Tracked[AchievementID] then
+	elseif C_ContentTracking.IsTracking(2, AchievementID) then
 		return C_ContentTracking.StopTracking(2, AchievementID, 2)
 	else
 		return C_ContentTracking.StartTracking(2, AchievementID)
@@ -88,6 +82,10 @@ local function CreateTooltip(AchievementID)
 	local tooltipsecond = {}
 	tooltipsecond[#tooltipsecond+1] = {E.func_texturefromIcon(E.func_achievementIcon(AchievementID)).. E.func_achievementName(AchievementID), AchievementID}
 	tooltipsecond[#tooltipsecond+1] = {" ", " "}
+	if E.func_achievementDescription(AchievementID) ~= "" then
+		tooltipsecond[#tooltipsecond+1] = {E.func_achievementDescription(AchievementID)}
+		tooltipsecond[#tooltipsecond+1] = {" ", " "}
+	end
 	tooltipsecond[#tooltipsecond+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
 	return tooltipsecond
 end
@@ -97,7 +95,7 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Frame_init(frame, node)
 	frame.second.textLEFT:SetText(data.textLEFT)
 	frame.second.textRIGHT:SetText(data.textRIGHT or "NIL?")
 	frame.second.tooltip = CreateTooltip(data.AchievementID)
-	if OctoToDo_Achievements.Tracked[data.AchievementID] then
+	if C_ContentTracking.IsTracking(2, data.AchievementID) then
 		E:func_SetBackdrop(frame.second, E.classColorHexCurrent, .3, 0)
 	else
 		E:func_SetBackdrop(frame.second, nil, 0, 0)
@@ -285,10 +283,6 @@ function OctoToDo_EventFrame_Achievements:func_CheckWTF()
 	if OctoToDo_Achievements == nil then OctoToDo_Achievements = {} end
 	if OctoToDo_Achievements.AchievementShowCompleted == nil then OctoToDo_Achievements.AchievementShowCompleted = true end
 	if OctoToDo_Achievements.AchievementToShow == nil then OctoToDo_Achievements.AchievementToShow = {[92] = true} end
-	if OctoToDo_Achievements.Tracked == nil then OctoToDo_Achievements.Tracked = {} end
-	for AchievementID, value in pairs(OctoToDo_Achievements.Tracked) do
-		TrackAch(AchievementID)
-	end
 end
 local MyEventsTable = {
 	"ADDON_LOADED",
@@ -315,7 +309,6 @@ function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 end
 function OctoToDo_EventFrame_Achievements:CONTENT_TRACKING_UPDATE(type, AchievementID, isTracked)
 	if type == 2 then -- Enum.ContentTrackingType
-		OctoToDo_Achievements.Tracked[AchievementID] = isTracked
 		self:func_CreateMyDataProvider()
 	end
 end

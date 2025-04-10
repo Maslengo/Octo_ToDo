@@ -269,13 +269,13 @@ local function tToStr(t)
 	end
 	return "{"..str:sub(1, -2).."}"
 end
-SLASH_MOUNTSLIST1 = "/mountslist"
-SlashCmdList.MOUNTSLIST = function(full)
+function E.func_mountslist(full)
+
 	if E.IsAddOnLoaded("Blizzard_Collections") then
 		fprint("|cffff0000NEED RELOAD|r")
 		-- return
 	end
-	fprint("begin /mountslist")
+
 	full = full == "1"
 	local tbl, types, currentTier, t, c, w = {}, {}, tonumber(GetBuildInfo():match("(.-)%.")), {}, 0, {}
 	-- for k, v in next, (MountsJournal.mountsDB) do
@@ -334,12 +334,10 @@ SlashCmdList.MOUNTSLIST = function(full)
 		editFrame:Show()
 	end
 	fprint(("Mounts: %s. In base %s. Not in base: %s."):format(i, c, j))
-	fprint("end /mountslist")
+
 end
 ------------------------------
--- отделил
-SLASH_OCTOLISTITEMS1 = "/OCTOLISTITEMS"
-SlashCmdList.OCTOLISTITEMS = function(msg)
+function E.func_itemslist(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
@@ -357,15 +355,88 @@ SlashCmdList.OCTOLISTITEMS = function(msg)
 			for _, id2 in next, (list2) do
 				str = str..id2..", -- "..E.func_itemTexture(id2)..E.func_itemName(id2).."\n"
 			end
-			fprint("begin /OCTOLISTITEMS")
+
 			editBox:SetText(str)
 			editFrame:Show()
-			fprint("end /OCTOLISTITEMS")
+
 	end)
 end
+
+
+function E.func_itemslistSort(msg)
+	local str = ""
+	local list1 = {}
+	local list2 = {}
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_ArmorTokens):ThenForAllWithCached(function(_, ids1)
+			tinsert(list1, ids1)
+	end)
+	promise1:FailWithChecked(function(_, ids2)
+			tinsert(list2, ids2)
+	end)
+	local count = 0
+	promise1:Then(function()
+			sort(list1, func_Reverse_order)
+			for _, id1 in next, (list1) do
+				count = count + 1
+				if count < 16 then
+					str = str..id1..", "
+				else
+					count = 0
+					str = str..id1..", |n"
+				end
+			end
+			for _, id2 in next, (list2) do
+				str = str..id2..", -- UNKNOWN|n"
+			end
+			editBox:SetText(str)
+			editFrame:Show()
+	end)
+end
+
+
+
+
+function E.func_itemslistSortBOOLEN(msg)
+	local str = ""
+	local list1 = {}
+	local list2 = {}
+	local tbl = {}
+	for k, v in next, (E.OctoTable_itemID_ItemsDelete) do
+		tinsert(tbl, k)
+	end
+	local promise1 = LibThingsLoad:Items(tbl):ThenForAllWithCached(function(_, ids1)
+			tinsert(list1, ids1)
+	end)
+	promise1:FailWithChecked(function(_, ids2)
+			tinsert(list2, ids2)
+	end)
+	local count = 0
+	promise1:Then(function()
+			sort(list1, func_Reverse_order)
+			for _, id1 in next, (list1) do
+				count = count + 1
+				if count < 8 then
+					str = str.."["..id1.."] = true, "
+				else
+					count = 0
+					str = str.."["..id1.."] = true, |n"
+				end
+			end
+			for _, id2 in next, (list2) do
+				str = str..id2..", -- UNKNOWN|n"
+			end
+			editBox:SetText(str)
+			editFrame:Show()
+	end)
+end
+
+
+
+
+
+
 ------------------------------
-SLASH_OCTOLISTQUESTS1 = "/OCTOLISTQUESTS"
-SlashCmdList.OCTOLISTQUESTS = function(msg)
+function E.func_questslist(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
@@ -384,15 +455,14 @@ SlashCmdList.OCTOLISTQUESTS = function(msg)
 			for _, id2 in next, (list2) do
 				str = str..id2..", -- "..E.func_questName(id2).."\n"
 			end
-			fprint("begin /OCTOLISTQUESTS")
+
 			editBox:SetText(str)
 			editFrame:Show()
-			fprint("end /OCTOLISTQUESTS")
+
 	end)
 end
 ------------------------------
-SLASH_OCTOLISTCURRENCIES1 = "/OCTOLISTCURRENCIES"
-SlashCmdList.OCTOLISTCURRENCIES = function(msg)
+function E.func_currencieslist(msg)
 	local str3 = "" 
 	local headerName = ""
 	for i = 1, C_CurrencyInfo.GetCurrencyListSize() do
@@ -412,14 +482,13 @@ SlashCmdList.OCTOLISTCURRENCIES = function(msg)
 		end
 		i = i + 1
 	end
-	fprint("begin /OCTOLISTCURRENCIES")
+
 	editBox:SetText(str3)
 	editFrame:Show()
-	fprint("end /OCTOLISTCURRENCIES")
+
 end
 ------------------------------
-SLASH_OCTOLISTREP1 = "/OCTOLISTREP"
-SlashCmdList.OCTOLISTREP = function(msg)
+function E.func_reputationslist(msg)
 	local str4 = ""
 	local str5 = ""
 	local vivod = ""
@@ -440,8 +509,7 @@ SlashCmdList.OCTOLISTREP = function(msg)
 	editFrame:Show()
 end
 ------------------------------
-SLASH_OCTOLISTSPELL1 = "/OCTOLISTSPELL"
-SlashCmdList.OCTOLISTSPELL = function(msg)
+function E.func_spellslist(msg)
 	local str4 = ""
 	local str5 = ""
 	local vivod = ""
@@ -463,19 +531,39 @@ SlashCmdList.OCTOLISTSPELL = function(msg)
 	editBox:SetText(vivod)
 	editFrame:Show()
 end
-------------------------------
-SLASH_OCTOLISTMOUNT1 = "/OCTOLISTMOUNT"
-SlashCmdList.OCTOLISTMOUNT = function(msg)
-	local str5, list5, i = "", {}, 1
-	local mountsIDs = C_MountJournal.GetMountIDs()
-	-- sort(mountsIDs, func_Reverse_order)
-	sort(mountsIDs, func_Reverse_order)
-	for _, id in next, (mountsIDs) do
-		local name, spellID, icon,_,_,_,_, isFactionSpecific, faction = C_MountJournal.GetMountInfoByID(id)
-		if isFactionSpecific then name = name.." ("..(faction == 0 and FACTION_HORDE or FACTION_ALLIANCE).. ")" end
-		str5 = str5 .."[".. id .."] = true, -- "..spellID.." "..E.func_texturefromIcon(icon)..name.."\n"
-		i = i + 1
+
+local function func_HandleCommand(msg)
+	local command, arg1, arg2 = strsplit(" ", msg, 3)
+	if (command == "mount" or command == "1") then
+		E.func_mountslist(arg1)
+	elseif (command == "item" or command == "2") then
+		E.func_itemslist(arg1)
+	elseif (command == "quest" or command == "3") then
+		E.func_questslist(arg1)
+	elseif (command == "currency" or command == "4") then
+		E.func_currencieslist(arg1)
+	elseif (command == "rep" or command == "5") then
+		E.func_reputationslist(arg1)
+	elseif (command == "spell" or command == "6") then
+		E.func_spellslist(arg1)
+	elseif (command == "item2" or command == "7") then
+		E.func_itemslistSort(arg1)
+	elseif (command == "item3" or command == "8") then
+		E.func_itemslistSortBOOLEN(arg1)
+	else
+		print ("Команды:")
+		print ("/fp ".."mount".." (1)")
+		print ("/fp ".."item".." (2)")
+		print ("/fp ".."quest".." (3)")
+		print ("/fp ".."currency".." (4)")
+		print ("/fp ".."rep".." (5)")
+		print ("/fp ".."spell".." (6)")
+		print ("/fp ".."item2".." (7)")
+		print ("/fp ".."item3".." (8)")
+
 	end
-	editBox:SetText(str5)
-	editFrame:Show()
 end
+
+
+SLASH_OCTOLIST1 = "/fp"
+SlashCmdList["OCTOLIST"] = func_HandleCommand

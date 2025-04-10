@@ -45,6 +45,7 @@ E.OctoTable_currencyID_Hidden = {
 }
 
 local currency = {
+	-- classic
 	81, -- Epicurean Award
 	515, -- Darkmoon Prize Ticket
 	2588, -- Riders of Azeroth Badge
