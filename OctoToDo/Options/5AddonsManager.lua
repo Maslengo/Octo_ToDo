@@ -17,62 +17,62 @@ function E.Addons()
 			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------
-			AddonHeight = {
-				type = "range",
-				name = L["AddonHeight"],
-				desc = "OctoToDo_AddonsManager.AddonHeight",
-				min = 8,
-				max = 32,
-				step = 1,
-				get = function()
-					return OctoToDo_AddonsManager.AddonHeight
-				end,
-				set = function(_, value)
-					OctoToDo_AddonsManager.AddonHeight = value
-					E.UpdateDBdata()
-					E.AddonList_Update()
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 2,
-			},
+			-- AddonHeight = {
+			-- 	type = "range",
+			-- 	name = L["AddonHeight"],
+			-- 	desc = "OctoToDo_AddonsManager.AddonHeight",
+			-- 	min = 8,
+			-- 	max = 32,
+			-- 	step = 1,
+			-- 	get = function()
+			-- 		return OctoToDo_AddonsManager.AddonHeight
+			-- 	end,
+			-- 	set = function(_, value)
+			-- 		OctoToDo_AddonsManager.AddonHeight = value
+			-- 		E.UpdateDBdata()
+			-- 		E.AddonList_Update()
+			-- 	end,
+			-- 	width = E.FULL_WIDTH/4,
+			-- 	order = 2,
+			-- },
 			-------------------------------------------------
-			MainFrameNumLines = {
-				type = "range",
-				name = L["MainFrameNumLines"],
-				desc = "OctoToDo_AddonsManager.MainFrameNumLines",
-				min = 1,
-				max = C_AddOns.GetNumAddOns() or 1,
-				step = 1,
-				get = function()
-					return OctoToDo_AddonsManager.MainFrameNumLines
-				end,
-				set = function(_, value)
-					OctoToDo_AddonsManager.MainFrameNumLines = value
-					E.UpdateDBdata()
-					E.AddonList_Update()
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 3,
-			},
+			-- MainFrameDefaultLines = {
+			-- 	type = "range",
+			-- 	name = L["MainFrameDefaultLines"],
+			-- 	desc = "OctoToDo_AddonsManager.MainFrameDefaultLines",
+			-- 	min = 1,
+			-- 	max = C_AddOns.GetNumAddOns() or 1,
+			-- 	step = 1,
+			-- 	get = function()
+			-- 		return OctoToDo_AddonsManager.MainFrameDefaultLines
+			-- 	end,
+			-- 	set = function(_, value)
+			-- 		OctoToDo_AddonsManager.MainFrameDefaultLines = value
+			-- 		E.UpdateDBdata()
+			-- 		E.AddonList_Update()
+			-- 	end,
+			-- 	width = E.FULL_WIDTH/4,
+			-- 	order = 3,
+			-- },
 			-------------------------------------------------
-			curWidthTitle = {
-				type = "range",
-				name = L["curWidthTitle"],
-				desc = "OctoToDo_AddonsManager.curWidthTitle",
-				min = 400,
-				max = 1000,
-				step = 1,
-				get = function()
-					return OctoToDo_AddonsManager.curWidthTitle
-				end,
-				set = function(_, value)
-					OctoToDo_AddonsManager.curWidthTitle = value
-					E.UpdateDBdata()
-					E.AddonList_Update()
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 4,
-			},
+			-- AddonCentralFrameWeight = {
+			-- 	type = "range",
+			-- 	name = L["AddonCentralFrameWeight"],
+			-- 	desc = "OctoToDo_AddonsManager.AddonCentralFrameWeight",
+			-- 	min = 400,
+			-- 	max = 1000,
+			-- 	step = 1,
+			-- 	get = function()
+			-- 		return OctoToDo_AddonsManager.AddonCentralFrameWeight
+			-- 	end,
+			-- 	set = function(_, value)
+			-- 		OctoToDo_AddonsManager.AddonCentralFrameWeight = value
+			-- 		E.UpdateDBdata()
+			-- 		E.AddonList_Update()
+			-- 	end,
+			-- 	width = E.FULL_WIDTH/4,
+			-- 	order = 4,
+			-- },
 			-------------------------------------------------
 			Header5 = {
 				type = "header",

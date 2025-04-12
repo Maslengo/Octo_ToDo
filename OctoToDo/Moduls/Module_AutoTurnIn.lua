@@ -3,9 +3,6 @@ local GlobalAddonName, E = ...
 local OctoToDo_EventFrame_AutoTurnIn = CreateFrame("Frame")
 OctoToDo_EventFrame_AutoTurnIn:Hide()
 ----------------------------------------------------------------
-local collectTrivial = true
-local collectRepeatable = true
-----------------------------------------------------------------
 local MyEventsTable = {
 	"QUEST_DETAIL",
 	"QUEST_COMPLETE",
@@ -66,12 +63,7 @@ function OctoToDo_EventFrame_AutoTurnIn:GOSSIP_SHOW()
 		end
 		if C_GossipInfo.GetAvailableQuests() ~= 0 then
 			for _, info in next, (C_GossipInfo.GetAvailableQuests()) do
-				-- ПОКА ВСЁ СТЁРТО БЕРУТСЯ ВСЕ КВЕСТЫ
-				-- if (collectTrivial == info.isTrivial) and (collectRepeatable == info.repeatable) then
-				--     return
-				-- else
 				C_GossipInfo.SelectAvailableQuest(info.questID)
-				-- end
 			end
 		end
 	end

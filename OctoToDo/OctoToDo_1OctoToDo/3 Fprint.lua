@@ -367,7 +367,7 @@ function E.func_itemslistSort(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_ArmorTokens):ThenForAllWithCached(function(_, ids1)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Other):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
 	promise1:FailWithChecked(function(_, ids2)
@@ -378,7 +378,7 @@ function E.func_itemslistSort(msg)
 			sort(list1, func_Reverse_order)
 			for _, id1 in next, (list1) do
 				count = count + 1
-				if count < 16 then
+				if count < 24 then
 					str = str..id1..", "
 				else
 					count = 0
@@ -493,15 +493,15 @@ function E.func_reputationslist(msg)
 	local str5 = ""
 	local vivod = ""
 	local list = {}
-	for _, factionID in next, (E.OctoTable_reputation_ALL) do
-		tinsert(list, factionID)
+	for _, reputationID in next, (E.OctoTable_allfaction) do
+		tinsert(list, reputationID)
 	end
 	sort(list, func_Reverse_order)
-	for _, factionID in next, (list) do
-		if E.func_reputationName(factionID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
-			str4 = str4..factionID..", --" ..E.func_reputationName(factionID).. E.func_CheckReputationByRepID(factionID).."\n"
+	for _, reputationID in next, (list) do
+		if E.func_reputationName(reputationID) ~= (reputationID.. " (UNKNOWN)") then
+			str4 = str4..reputationID..", --" ..E.func_reputationName(reputationID).."|n"
 		else
-			str5 = str5..factionID..", --" ..E.func_reputationName(factionID).. E.func_CheckReputationByRepID(factionID).."\n"
+			str5 = str5..reputationID..", --" ..E.func_reputationName(reputationID).."|n"
 		end
 	end
 	vivod = str4..str5

@@ -1,9 +1,31 @@
 local GlobalAddonName, E = ...
+local OctoToDo_EventFrame_AddonsManager = CreateFrame("FRAME")
+OctoToDo_EventFrame_AddonsManager:Hide()
+local OctoToDo_MainFrame_AddonsManager = CreateFrame("BUTTON", "OctoToDo_MainFrame_AddonsManager", UIParent, "BackdropTemplate")
+OctoToDo_MainFrame_AddonsManager:Hide()
+tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_AddonsManager)
+----------------------------------------------------------------
+local AddonHeight = 20 -- Высота -- OctoToDo_DB_Vars.curHeight
+local AddonLeftFrameWeight = 200 -- Ширина Левого -- OctoToDo_DB_Vars.AddonLeftFrameWeight
+local AddonCentralFrameWeight = 90 -- Ширина Центрального -- OctoToDo_DB_Vars.AddonCentralFrameWeight
+local MainFrameDefaultLines = 30
+local MainFrameTotalLines = E.func_GetNumAddOns() -- math.floor((math.floor(select(2, GetPhysicalScreenSize()) / AddonHeight))*.7)
+if MainFrameDefaultLines > MainFrameTotalLines then
+	MainFrameDefaultLines = MainFrameTotalLines
+end
+local SFDropDownWeight = 100
+----------------------------------------------------------------
+
+
+
+
+
+
+
+
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
-local OctoToDo_EventFrame_AddonsManager = CreateFrame("FRAME")
-OctoToDo_EventFrame_AddonsManager:Hide()
 ----------------------------------------------------------------
 local ADDON_ACTIONS_BLOCKED = { }
 local ALL_CHARACTERS = "All"
@@ -14,13 +36,7 @@ local function GetAddonCharacter()
 	end
 	return addonCharacter
 end
-local AddonHeight = 11 --ADDON_BUTTON_HEIGHT -- Высота -- OctoToDo_DB_Vars.curHeight
-local curWidthTitle = 500 -- Ширина Левого -- OctoToDo_DB_Vars.curWidthTitle
-local MainFrameNumLines = 60 --MAX_ADDONS_DISPLAYED
-local totalNumAddOns = E.func_GetNumAddOns()
-if MainFrameNumLines > totalNumAddOns then
-	MainFrameNumLines = totalNumAddOns
-end
+
 ----------------------------------------------------------------
 function E.AddDeps_RECURSION(i, groupNode)
 	for _, depIndex in ipairs(OctoToDo_AddonsTable.depsByIndex[i]) do
@@ -158,7 +174,7 @@ local function func_OnAcquired(owner, frame, data, new)
 		-- frame.second.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		frame.third = CreateFrame("BUTTON", nil, frame, "BackDropTemplate")
 		frame.third:SetPropagateMouseClicks(true)
-		frame.third:SetSize(AddonHeight+AddonHeight+curWidthTitle, AddonHeight)
+		frame.third:SetSize(AddonLeftFrameWeight*3, AddonHeight)
 		-- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.third:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.third:SetScript("OnEnter", function()
@@ -395,35 +411,8 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(frame, node)
 	--     E:func_SetBackdrop(frame.third, "|cff000000", .1, 0)
 	-- end
 end
-function E.UpdateDBdata()
-	local AddonHeight = OctoToDo_AddonsManager.AddonHeight
-	local MainFrameNumLines = OctoToDo_AddonsManager.MainFrameNumLines
-	local curWidthTitle = OctoToDo_AddonsManager.curWidthTitle
-	local MAXSIZE = math.floor((E.MonitorHeight-E.MonitorHeight/6 )/ AddonHeight )
-	if MainFrameNumLines > MAXSIZE then
-		MainFrameNumLines = MAXSIZE
-	end
-	-- MainFrameNumLines
-	-- OctoToDo_MainFrame_AddonsManager.view
-	OctoToDo_MainFrame_AddonsManager:SetSize(AddonHeight+AddonHeight+curWidthTitle, AddonHeight*MainFrameNumLines)
-	frameEnableAll:SetSize(curWidthTitle/5, AddonHeight)
-	frameDisableAll:SetSize(curWidthTitle/5, AddonHeight)
-	frameCollapseAll:SetSize(curWidthTitle/5, AddonHeight)
-	frameExpandAll:SetSize(curWidthTitle/5, AddonHeight)
-	OkayButton:SetSize(curWidthTitle/5, AddonHeight)
-	CancelButton:SetSize(curWidthTitle/5, AddonHeight)
-	-- OctoToDo_MainFrame_AddonsManager.view.zero:SetSize(AddonHeight, AddonHeight)
-	-- OctoToDo_MainFrame_AddonsManager.view.first:SetSize(AddonHeight, AddonHeight)
-	-- OctoToDo_MainFrame_AddonsManager.view.second:SetSize(AddonHeight, AddonHeight)
-	-- OctoToDo_MainFrame_AddonsManager.view.third:SetSize(AddonHeight+AddonHeight+curWidthTitle, AddonHeight)
-	OctoToDo_MainFrame_AddonsManager.view:SetElementExtent(AddonHeight)
-	OctoToDo_MainFrame_AddonsManager.ScrollBox:RecalculateDerivedExtent()
-end
 function OctoToDo_EventFrame_AddonsManager:OctoToDo_Create_MainFrame_AddonsManager()
-	local OctoToDo_MainFrame_AddonsManager = CreateFrame("BUTTON", "OctoToDo_MainFrame_AddonsManager", UIParent, "BackdropTemplate")
-	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_AddonsManager)
-	OctoToDo_MainFrame_AddonsManager:SetSize(AddonHeight+AddonHeight+curWidthTitle, AddonHeight*MainFrameNumLines)
-	OctoToDo_MainFrame_AddonsManager:Hide()
+	OctoToDo_MainFrame_AddonsManager:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_AddonsManager:SetDontSavePosition(true)
 	OctoToDo_MainFrame_AddonsManager:SetClampedToScreen(false)
 	OctoToDo_MainFrame_AddonsManager:SetFrameStrata("HIGH")
@@ -435,7 +424,7 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Create_MainFrame_AddonsManag
 	OctoToDo_MainFrame_AddonsManager:SetMovable(true)
 	OctoToDo_MainFrame_AddonsManager:RegisterForDrag("LeftButton")
 	OctoToDo_MainFrame_AddonsManager:SetScript("OnDragStart", function()
-			OctoToDo_MainFrame_AddonsManager:SetAlpha(E.bgCa)
+			OctoToDo_MainFrame_AddonsManager:SetAlpha(E.bgCa/2)
 			OctoToDo_MainFrame_AddonsManager:StartMoving()
 	end)
 	OctoToDo_MainFrame_AddonsManager:SetScript("OnDragStop", function()
@@ -544,7 +533,7 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	----------------------------------------------------------------
 	local frameEnableAll = CreateFrame("Button", "frameEnableAll", OctoToDo_MainFrame_AddonsManager, "BackDropTemplate")
 	frameEnableAll:SetPropagateMouseClicks(true)
-	frameEnableAll:SetSize(curWidthTitle/5, AddonHeight)
+	frameEnableAll:SetSize(AddonCentralFrameWeight, AddonHeight)
 	frameEnableAll:SetPoint("TOPLEFT", OctoToDo_MainFrame_AddonsManager, "BOTTOMLEFT", 0, 0)
 	E:func_SetBackdrop(frameEnableAll)
 	frameEnableAll.text = frameEnableAll:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -563,8 +552,8 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	----------------------------------------------------------------
 	local frameDisableAll = CreateFrame("Button", "frameDisableAll", OctoToDo_MainFrame_AddonsManager, "BackDropTemplate")
 	frameDisableAll:SetPropagateMouseClicks(true)
-	frameDisableAll:SetSize(curWidthTitle/5, AddonHeight)
-	frameDisableAll:SetPoint("TOPLEFT", OctoToDo_MainFrame_AddonsManager, "BOTTOMLEFT", curWidthTitle/5, 0)
+	frameDisableAll:SetSize(AddonCentralFrameWeight, AddonHeight)
+	frameDisableAll:SetPoint("TOPLEFT", OctoToDo_MainFrame_AddonsManager, "BOTTOMLEFT", AddonCentralFrameWeight, 0)
 	E:func_SetBackdrop(frameDisableAll)
 	frameDisableAll.text = frameDisableAll:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	frameDisableAll.text:SetAllPoints()
@@ -603,7 +592,7 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	----------------------------------------------------------------
 	local frameCollapseAll = CreateFrame("Button", "frameCollapseAll", OctoToDo_MainFrame_AddonsManager, "BackDropTemplate")
 	frameCollapseAll:SetPropagateMouseClicks(true)
-	frameCollapseAll:SetSize(curWidthTitle/5, AddonHeight)
+	frameCollapseAll:SetSize(AddonCentralFrameWeight, AddonHeight)
 	frameCollapseAll:SetPoint("TOPLEFT", OctoToDo_MainFrame_AddonsManager, "BOTTOMLEFT", 0, -AddonHeight)
 	E:func_SetBackdrop(frameCollapseAll)
 	frameCollapseAll.text = frameCollapseAll:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -624,8 +613,8 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	----------------------------------------------------------------
 	local frameExpandAll = CreateFrame("Button", "frameExpandAll", OctoToDo_MainFrame_AddonsManager, "BackDropTemplate")
 	frameExpandAll:SetPropagateMouseClicks(true)
-	frameExpandAll:SetSize(curWidthTitle/5, AddonHeight)
-	frameExpandAll:SetPoint("TOPLEFT", OctoToDo_MainFrame_AddonsManager, "BOTTOMLEFT", curWidthTitle/5, -AddonHeight)
+	frameExpandAll:SetSize(AddonCentralFrameWeight, AddonHeight)
+	frameExpandAll:SetPoint("TOPLEFT", OctoToDo_MainFrame_AddonsManager, "BOTTOMLEFT", AddonCentralFrameWeight, -AddonHeight)
 	E:func_SetBackdrop(frameExpandAll)
 	frameExpandAll.text = frameExpandAll:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	frameExpandAll.text:SetAllPoints()
@@ -645,8 +634,8 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	----------------------------------------------------------------
 	local OkayButton = CreateFrame("Button", "OkayButton", OctoToDo_MainFrame_AddonsManager, "BackDropTemplate")
 	OkayButton:SetPropagateMouseClicks(true)
-	OkayButton:SetSize(curWidthTitle/5, AddonHeight)
-	OkayButton:SetPoint("TOPRIGHT", OctoToDo_MainFrame_AddonsManager, "BOTTOMRIGHT", -curWidthTitle/5, 0)
+	OkayButton:SetSize(AddonCentralFrameWeight, AddonHeight)
+	OkayButton:SetPoint("TOPRIGHT", OctoToDo_MainFrame_AddonsManager, "BOTTOMRIGHT", -AddonCentralFrameWeight, 0)
 	E:func_SetBackdrop(OkayButton)
 	OkayButton.text = OkayButton:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	OkayButton.text:SetAllPoints()
@@ -663,7 +652,7 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	----------------------------------------------------------------
 	local CancelButton = CreateFrame("Button", "CancelButton", OctoToDo_MainFrame_AddonsManager, "BackDropTemplate")
 	CancelButton:SetPropagateMouseClicks(true)
-	CancelButton:SetSize(curWidthTitle/5, AddonHeight)
+	CancelButton:SetSize(AddonCentralFrameWeight, AddonHeight)
 	CancelButton:SetPoint("TOPRIGHT", OctoToDo_MainFrame_AddonsManager, "BOTTOMRIGHT", 0, 0)
 	E:func_SetBackdrop(CancelButton)
 	CancelButton.text = CancelButton:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -689,16 +678,12 @@ function OctoToDo_EventFrame_AddonsManager:AddonList_OnOkay()
 end
 function OctoToDo_EventFrame_AddonsManager:AddonList_Hide(save)
 	AddonList.save = save
-	-- HideUIPanel(OctoToDo_MainFrame_AddonsManager)
-	if OctoToDo_MainFrame_AddonsManager and OctoToDo_MainFrame_AddonsManager:IsShown() then
-		OctoToDo_MainFrame_AddonsManager:Hide()
-	end
 end
 function OctoToDo_EventFrame_AddonsManager:AddonList_OnCancel()
 	PlaySound(SOUNDKIT.GS_LOGIN_CHANGE_REALM_CANCEL)
 	self:AddonList_Hide(false)
 end
-function E.CheckWTFinfo()
+function OctoToDo_EventFrame_AddonsManager:CheckWTFinfo()
 	if OctoToDo_AddonsManager == nil then OctoToDo_AddonsManager = {} end
 	if OctoToDo_AddonsManager.collapsedAddons == nil then OctoToDo_AddonsManager.collapsedAddons = {} end
 	if OctoToDo_AddonsManager.profiles == nil then OctoToDo_AddonsManager.profiles = {} end
@@ -732,12 +717,8 @@ function E.CheckWTFinfo()
 	if OctoToDo_AddonsManager.lock == nil then OctoToDo_AddonsManager.lock = {} end
 	if OctoToDo_AddonsManager.lock.addons == nil then OctoToDo_AddonsManager.lock.addons = {} end
 	if OctoToDo_AddonsManager.lock.addons[E.GlobalAddonName] == nil then OctoToDo_AddonsManager.lock.addons[E.GlobalAddonName] = true end
-	if OctoToDo_AddonsManager.AddonHeight == nil then OctoToDo_AddonsManager.AddonHeight = 20 end -- ВЫСОТА СТРОКИ
-	AddonHeight = OctoToDo_AddonsManager.AddonHeight
-	if OctoToDo_AddonsManager.MainFrameNumLines == nil then OctoToDo_AddonsManager.MainFrameNumLines = 30 end -- КОЛИЧЕСТВО СТРОК
-	MainFrameNumLines = OctoToDo_AddonsManager.MainFrameNumLines
-	if OctoToDo_AddonsManager.curWidthTitle == nil then OctoToDo_AddonsManager.curWidthTitle = 500 end -- ШИРИНА ФРЕЙМА АДДОНА
-	curWidthTitle = OctoToDo_AddonsManager.curWidthTitle
+
+
 end
 ----------------------------------------------------------------
 function E:GetCycleByIndexSFMICT(iChild, iParent)
@@ -809,7 +790,27 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 		----------------------------------------------------------------
-		E.CheckWTFinfo()
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		if OctoToDo_DB_Vars.AddonHeight then
+			AddonHeight = OctoToDo_DB_Vars.AddonHeight
+		end
+		if OctoToDo_DB_Vars.AddonLeftFrameWeight then
+			AddonLeftFrameWeight = OctoToDo_DB_Vars.AddonLeftFrameWeight
+		end
+		if OctoToDo_DB_Vars.AddonCentralFrameWeight then
+			AddonCentralFrameWeight = OctoToDo_DB_Vars.AddonCentralFrameWeight
+		end
+		if OctoToDo_DB_Vars.MainFrameDefaultLines then
+			MainFrameDefaultLines = OctoToDo_DB_Vars.MainFrameDefaultLines
+		end
+		if OctoToDo_DB_Vars.SFDropDownWeight then
+			SFDropDownWeight = OctoToDo_DB_Vars.SFDropDownWeight
+		end
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		self:CheckWTFinfo()
 		self.startStatus = {}
 		self.shouldReload = false
 		self.outOfDate = E.func_IsAddonVersionCheckEnabled() and AddonList_HasOutOfDate()

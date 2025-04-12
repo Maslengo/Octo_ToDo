@@ -14,12 +14,117 @@ function E.CreateGeneralOptions()
 				order = 1,
 			},
 			-------------------------------------------------
+			-- ПРЕФИКСЫ 2
 			-------------------------------------------------
 			Header3 = {
 				type = "header",
 				name = "",
 				order = 3,
 			},
+			-------------------------------------------------
+			AddonHeight = {
+				type = "range",
+				name = L["AddonHeight"],
+				desc = "AddonHeight",
+				min = 10,
+				max = 30,
+				step = 1,
+				get = function()
+					return OctoToDo_DB_Vars.AddonHeight
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.AddonHeight = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 4,
+			},
+			-------------------------------------------------
+			AddonLeftFrameWeight = {
+				type = "range",
+				name = L["AddonLeftFrameWeight"],
+				desc = "AddonLeftFrameWeight",
+				min = 200,
+				max = 500,
+				step = 1,
+				get = function()
+					return OctoToDo_DB_Vars.AddonLeftFrameWeight
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.AddonLeftFrameWeight = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 5,
+			},
+			-------------------------------------------------
+			AddonCentralFrameWeight = {
+				type = "range",
+				name = L["AddonCentralFrameWeight"],
+				desc = "AddonCentralFrameWeight",
+				min = 60,
+				max = 160,
+				step = 1,
+				get = function()
+					return OctoToDo_DB_Vars.AddonCentralFrameWeight
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.AddonCentralFrameWeight = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 6,
+			},
+
+
+			-------------------------------------------------
+			MainFrameDefaultLines = {
+				type = "range",
+				name = L["MainFrameDefaultLines"],
+				desc = "MainFrameDefaultLines",
+				min = 10,
+				max = 50,
+				step = 1,
+				get = function()
+					return OctoToDo_DB_Vars.MainFrameDefaultLines
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.MainFrameDefaultLines = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 7,
+			},
+			-------------------------------------------------
+			SFDropDownWeight = {
+				type = "range",
+				name = L["SFDropDownWeight"],
+				desc = "SFDropDownWeight",
+				min = 50,
+				max = 200,
+				step = 1,
+				get = function()
+					return OctoToDo_DB_Vars.SFDropDownWeight
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.SFDropDownWeight = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = 8,
+			},
+
+
+
+			-------------------------------------------------
+			Header9 = {
+				type = "header",
+				name = "",
+				order = 9,
+			},
+
+
+
+
+
+
+
+
 			-------------------------------------------------
 			AutoSellGrey = {
 				type = "toggle",
@@ -32,7 +137,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AutoSellGrey = value
 				end,
 				width = E.FULL_WIDTH/2, -- "full",
-				order = 8,
+				order = 10,
 			},
 			-------------------------------------------------
 			AutoRepair = {
@@ -46,7 +151,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AutoRepair = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 9,
+				order = 11,
 			},
 			-------------------------------------------------
 			InputDelete = {
@@ -60,7 +165,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.InputDelete = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 10,
+				order = 12,
 			},
 			-------------------------------------------------
 			AutoOpen = {
@@ -74,7 +179,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AutoOpen = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 11,
+				order = 13,
 			},
 			-------------------------------------------------
 			Auto_Gossip = {
@@ -88,7 +193,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_Gossip = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 12,
+				order = 14,
 			},
 			-------------------------------------------------
 			AutoTurnQuests = {
@@ -102,7 +207,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AutoTurnQuests = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 13,
+				order = 15,
 			},
 			-------------------------------------------------
 			Auto_ChatClearing = {
@@ -116,7 +221,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_ChatClearing = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 14,
+				order = 16,
 			},
 			-------------------------------------------------
 			Auto_Screenshot = {
@@ -130,7 +235,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_Screenshot = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 15,
+				order = 17,
 			},
 			-------------------------------------------------
 			Auto_CinematicCanceler = {
@@ -144,7 +249,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_CinematicCanceler = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 16,
+				order = 18,
 			},
 			-------------------------------------------------
 			Auto_CinematicFastSkip = {
@@ -158,13 +263,13 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_CinematicFastSkip = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 17,
+				order = 19,
 			},
 			-------------------------------------------------
-			HideHeader3 = {
+			Header20 = {
 				type = "header",
 				name = "HIDE",
-				order = 18,
+				order = 20,
 			},
 			-------------------------------------------------
 			Hide_Boss_Banner = {
@@ -178,7 +283,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Boss_Banner = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 19,
+				order = 21,
 			},
 			-------------------------------------------------
 			Hide_Covenant = {
@@ -192,7 +297,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Covenant = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 20,
+				order = 22,
 			},
 			-------------------------------------------------
 			Hide_Error_Messages = {
@@ -206,7 +311,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Error_Messages = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 21,
+				order = 23,
 			},
 			-------------------------------------------------
 			Hide_RaidWarningFrame = {
@@ -220,7 +325,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_RaidWarningFrame = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 22,
+				order = 24,
 			},
 			-------------------------------------------------
 			Hide_OrderHallCommandBar = {
@@ -234,7 +339,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_OrderHallCommandBar = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 23,
+				order = 25,
 			},
 			-------------------------------------------------
 			Hide_Talking_Head_Frame = {
@@ -248,7 +353,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Talking_Head_Frame = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 24,
+				order = 26,
 			},
 			-------------------------------------------------
 			Hide_Zone_Text = {
@@ -262,7 +367,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Zone_Text = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 25,
+				order = 27,
 			},
 			-------------------------------------------------
 			UIErrorsFramePosition = {
@@ -276,19 +381,19 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.UIErrorsFramePosition = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 26,
+				order = 28,
 			},
 			-------------------------------------------------
-			LevelToShowHeader = {
+			Header29 = {
 				type = "header",
 				name = "настройки аддона",
-				order = 27,
+				order = 29,
 			},
 			-------------------------------------------------
 			LevelToShow = {
 				type = "range",
 				name = L["Player level"],
-				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
+				desc = "",
 				min = 1,
 				max = 80,
 				step = 1,
@@ -299,13 +404,13 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.LevelToShow = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 28,
+				order = 30,
 			},
 			-------------------------------------------------
 			LevelToShowMAX = {
 				type = "range",
 				name = L["Player MAX level"],
-				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
+				desc = "",
 				min = 1,
 				max = 80*2,
 				step = 1,
@@ -316,13 +421,13 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.LevelToShowMAX = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 29,
+				order = 31,
 			},
 			-------------------------------------------------
 			itemLevelToShow = {
 				type = "range",
 				name = L["Item level: "],
-				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
+				desc = "",
 				min = 0,
 				max = 560,
 				step = 1,
@@ -333,81 +438,13 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.itemLevelToShow = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 30,
-			},
-			-------------------------------------------------
-			curWidthCentral = {
-				type = "range",
-				name = L["Width: "],
-				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
-				min = 60,
-				max = 160,
-				step = 1,
-				get = function()
-					return OctoToDo_DB_Vars.curWidthCentral
-				end,
-				set = function(_, value)
-					OctoToDo_DB_Vars.curWidthCentral = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 31,
-			},
-			-------------------------------------------------
-			curWidthTitle = {
-				type = "range",
-				name = L["curWidthTitle: "],
-				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
-				min = 200,
-				max = 500,
-				step = 1,
-				get = function()
-					return OctoToDo_DB_Vars.curWidthTitle
-				end,
-				set = function(_, value)
-					OctoToDo_DB_Vars.curWidthTitle = value
-				end,
-				width = E.FULL_WIDTH/4,
 				order = 32,
-			},
-			-------------------------------------------------
-			curHeight = {
-				type = "range",
-				name = "Высота строк: ",
-				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
-				min = 10,
-				max = 30,
-				step = 1,
-				get = function()
-					return OctoToDo_DB_Vars.curHeight
-				end,
-				set = function(_, value)
-					OctoToDo_DB_Vars.curHeight = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 33,
-			},
-			-------------------------------------------------
-			Addon_Height = {
-				type = "range",
-				name = "Количество строк",
-				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
-				min = 10,
-				max = 50,
-				step = 1,
-				get = function()
-					return OctoToDo_DB_Vars.Addon_Height
-				end,
-				set = function(_, value)
-					OctoToDo_DB_Vars.Addon_Height = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 34,
 			},
 			-------------------------------------------------
 			FrameScale = {
 				type = "range",
 				name = "FrameScale",
-				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
+				desc = "",
 				min = 0.5,
 				max = 2.5,
 				step = 0.1,
@@ -418,13 +455,14 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.FrameScale = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 35,
+				order = 33,
 			},
+
 			-------------------------------------------------
 			GameMenuFrameScale = {
 				type = "range",
 				name = "GameMenuFrameScale",
-				desc = "The scale of in-world damage numbers, xp gain, artifact gains, etc",
+				desc = "",
 				min = 0.5,
 				max = 2.5,
 				step = 0.1,
@@ -435,13 +473,13 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.GameMenuFrameScale = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 36,
+				order = 34,
 			},
 			-------------------------------------------------
 			MainHeader24 = {
 				type = "header",
 				name = OTHER,
-				order = 37,
+				order = 35,
 			},
 			-------------------------------------------------
 			PortalsButtons = {
@@ -455,7 +493,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.PortalsButtons = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 38,
+				order = 36,
 			},
 			-------------------------------------------------
 			PortalsButtonsOnlyAvailable = {
@@ -469,7 +507,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 39,
+				order = 37,
 			},
 			-------------------------------------------------
 			ShowOnlyCurrentServer = {
@@ -483,7 +521,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.ShowOnlyCurrentServer = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 40,
+				order = 38,
 			},
 			-------------------------------------------------
 			ShowOnlyCurrentBattleTag = {
@@ -497,7 +535,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 41,
+				order = 39,
 			},
 			-------------------------------------------------
 			Dungeons = {
@@ -511,7 +549,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Dungeons = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 45,
+				order = 40,
 			},
 			-------------------------------------------------
 			Professions = {
@@ -525,7 +563,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Professions = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 46,
+				order = 41,
 			},
 			-------------------------------------------------
 			Gold = {
@@ -539,7 +577,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Gold = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 47,
+				order = 42,
 			},
 			-------------------------------------------------
 			ItemLevel = {
@@ -553,7 +591,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.ItemLevel = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 48,
+				order = 43,
 			},
 			-------------------------------------------------
 			WasOnline = {
@@ -567,23 +605,8 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.WasOnline = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 49,
+				order = 44,
 			},
-			-------------------------------------------------
-			-- ["ExpansionToShow"] = {
-			-- 	type = "select",
-			-- 	name = "ExpansionToShow",
-			-- 	values = {},
-			-- 	desc = "",
-			-- 	get = function()
-			-- 		return OctoToDo_DB_Vars.ExpansionToShow
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		OctoToDo_DB_Vars.ExpansionToShow = value
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 3,
-			-- },
 			-------------------------------------------------
 			["prefix"] = {
 				type = "select",

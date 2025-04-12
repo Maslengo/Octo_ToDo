@@ -2,12 +2,6 @@ local GlobalAddonName, E = ...
 local OctoToDo_EventFrame_TrashCan = CreateFrame("FRAME")
 OctoToDo_EventFrame_TrashCan:Hide()
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
-local LibDataBroker = LibStub("LibDataBroker-1.1")
-local LibDBIcon = LibStub("LibDBIcon-1.0")
-local LibSFDropDown = LibStub("LibSFDropDown-1.5")
-local LibThingsLoad = LibStub("LibThingsLoad-1.0")
-----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
 }

@@ -11,11 +11,17 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		return f
 end)
 function E:func_Create_DDframe_AddonsManager()
-	local AddonHeight = OctoToDo_AddonsManager.AddonHeight
-	local MainFrameNumLines = OctoToDo_AddonsManager.MainFrameNumLines
-	local AddonLeftFrameWeight = OctoToDo_AddonsManager.curWidthTitle
+	local AddonHeight = OctoToDo_DB_Vars.AddonHeight
+	local AddonLeftFrameWeight = OctoToDo_DB_Vars.AddonLeftFrameWeight
+	local AddonCentralFrameWeight = OctoToDo_DB_Vars.AddonCentralFrameWeight
+	local MainFrameDefaultLines = OctoToDo_DB_Vars.MainFrameDefaultLines
+	local SFDropDownWeight = OctoToDo_DB_Vars.SFDropDownWeight
+
+
+
+
 	local DD_AddonsManager = CreateFrame("Button", "DD_AddonsManager", OctoToDo_MainFrame_AddonsManager, "BackDropTemplate")
-	DD_AddonsManager:SetSize(AddonLeftFrameWeight/4, AddonHeight)
+	DD_AddonsManager:SetSize(SFDropDownWeight, AddonHeight)
 	E:func_SetBackdrop(DD_AddonsManager)
 	DD_AddonsManager.ExpandArrow = DD_AddonsManager:CreateTexture(nil, "ARTWORK")
 	DD_AddonsManager.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")

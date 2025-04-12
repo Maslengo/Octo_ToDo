@@ -5,7 +5,6 @@ E.PromiseSpell = {}
 E.PromiseCurrency = {}
 E.PromiseQuest = {}
 E.PromiseReputation = {}
-local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 local LibStub = LibStub
@@ -132,39 +131,47 @@ end
 function E.func_reputationName(reputationID)
 	tinsert(E.PromiseReputation, reputationID)
 	local vivod = ""
-	if reputationID and type(reputationID) == "number" then
-		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-		if isAccountWide == true then
-			vivod = E.Icon_AccountWide..vivod
-		end
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-		local name
-		if repInfo then
-			name = repInfo.name
-		else
-			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
-			-- name = reputationInfo.name or E.Blue_Color..SEARCH_LOADING_TEXT.."|r"
-			if reputationInfo.name then
-				name = reputationInfo.name
-			elseif E.OctoTable_FACTIONTABLE[reputationID] then
-				name = E.OctoTable_FACTIONTABLE[reputationID].name
-			else
-				name = reputationID.. " (UNKNOWN)"
-			end
-		end
-		vivod = vivod..name
-		if E.DebugIDs == true and vivod ~= nil then
-			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
-		end
-		if E.OctoTable_FACTIONTABLE[reputationID] then
-			return E.OctoTable_FACTIONTABLE[reputationID].faction..vivod
-		else
-			print (reputationID.. " <- MISSING REPUTATION ID -> "..name)
-			return name
-		end
-	else
-		return "reputationID"
+	local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+	if isAccountWide == true then
+		vivod = E.Icon_AccountWide..vivod
 	end
+	local color = E.White_Color
+	local factionname = ""
+	if E.OctoTable_FACTIONTABLE[reputationID].side == "Альянс" then
+		vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
+	end
+
+	if E.OctoTable_FACTIONTABLE[reputationID].side == "Орда" then
+		vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
+	end
+
+
+
+	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+	local name
+	if repInfo then
+		vivod = vivod.. repInfo.name
+	else
+		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
+		if reputationInfo.name then
+			vivod = vivod.. reputationInfo.name
+		elseif E.OctoTable_FACTIONTABLE[reputationID] then
+			vivod = vivod.. E.OctoTable_FACTIONTABLE[reputationID].name
+		else
+			vivod = vivod.. reputationID.. " (UNKNOWN)"
+		end
+	end
+	if E.DebugIDs == true and vivod ~= nil then
+		vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
+	end
+	-- if E.OctoTable_FACTIONTABLE[reputationID] then
+	-- 	vivod = vivod
+	-- else
+	-- 	print (reputationID.. " <- MISSING REPUTATION ID -> "..name)
+	-- 	vivod = name
+	-- end
+
+	return vivod
 end
 
 function E.func_reputationNameSIMPLE(reputationID)
@@ -846,7 +853,7 @@ function E.func_CheckReputationByRepID(reputationID)
 	local color = E.Gray_Color
 	if repInfo then
 		local reaction = repInfo.reaction
-		local standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+		--local standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
 
 
 		if (reaction == 1 or reaction == 2) then
@@ -892,8 +899,8 @@ function E.func_CheckReputationByRepID(reputationID)
 				currentLevel = rankInfo.currentLevel or 0
 				maxLevel = rankInfo.maxLevel or 0
 			end
-			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
-			vivod = color..(currentValue).."/"..(totalValue)..standingTEXT.."|r"
+			--standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
+			vivod = color..(currentValue).."/"..(totalValue) --..standingTEXT.."|r"
 			if currentLevel == maxLevel then
 				vivod = color.."Done|r "
 			end
@@ -905,7 +912,7 @@ function E.func_CheckReputationByRepID(reputationID)
 				local currentValue = barValue-barMin
 				local totalValue = barMax-barMin
 				local nextThreshold = reputationInfo.nextThreshold or 0
-				vivod = color..(currentValue).."/"..(totalValue).." ("..standingTEXT..")|r"
+				vivod = color..(currentValue).."/"..(totalValue) --.." ("..standingTEXT..")|r"
 				if currentValue == totalValue then -- or nextThreshold == 0 then
 					vivod = color.."Done|r"
 				end
@@ -913,6 +920,94 @@ function E.func_CheckReputationByRepID(reputationID)
 		end
 	end
 	return vivod
+end
+
+
+function E.func_CheckReputationFULL(reputationID)
+	local FIRST = 0
+	local SECOND = 0
+	local vivod = ""
+	local color = E.Gray_Color
+----------------------------------------------------------------
+	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+	if repInfo then
+		local reaction = repInfo.reaction
+		local standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+
+
+		if (reaction == 1 or reaction == 2) then
+			color = E.Red_Color
+		elseif (reaction == 3) then
+			color = E.Orange_Color
+		elseif (reaction == 4 or reaction == 5) then
+			color = E.Yellow_Color
+		elseif (reaction == 6 or reaction == 7 or reaction == 8) then
+			color = E.Green_Color
+		end
+
+		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
+		if C_Reputation.IsFactionParagon(reputationID) then
+			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID)
+			local _, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(reputationID)
+			if threshold then
+				local value = currentValue % threshold
+				color = E.Blue_Color
+				vivod = color..(value).."/"..(threshold).."|r"
+				FIRST = value
+				SECOND = threshold
+				if hasRewardPending then
+					vivod = E.func_CheckCompletedByQuestID(rewardQuestID)
+				end
+			end
+		elseif C_Reputation.IsMajorFaction(reputationID) then
+			local data = C_MajorFactions.GetMajorFactionData(reputationID) or 0
+			if data ~= 0 then
+				local currentValue = data.renownReputationEarned%data.renownLevelThreshold
+				local totalValue = data.renownLevelThreshold
+				local standing = data.renownLevel
+				vivod = (currentValue).."/"..(totalValue)..color.."("..(standing)..")|r"
+				FIRST = currentValue
+				second = totalValue
+			end
+		elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
+			local friendshipFactionID = reputationInfo.friendshipFactionID or 0
+			local reactionThreshold = reputationInfo.reactionThreshold or 0
+			local nextThreshold = reputationInfo.nextThreshold or 0
+			local standing = reputationInfo.standing or 0
+			local currentValue = standing-reactionThreshold
+			local totalValue = nextThreshold-reactionThreshold
+			local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
+			local currentLevel, maxLevel
+			if rankInfo then
+				currentLevel = rankInfo.currentLevel or 0
+				maxLevel = rankInfo.maxLevel or 0
+			end
+			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
+			vivod = color..(currentValue).."/"..(totalValue) --..standingTEXT.."|r"
+			FIRST = currentValue
+			SECOND = totalValue
+			if currentLevel == maxLevel then
+				vivod = color.."Done|r "
+			end
+		else
+			local barMin = repInfo.currentReactionThreshold
+			local barMax = repInfo.nextReactionThreshold
+			local barValue = repInfo.currentStanding
+			if barValue then
+				local currentValue = barValue-barMin
+				local totalValue = barMax-barMin
+				local nextThreshold = reputationInfo.nextThreshold or 0
+				vivod = color..(currentValue).."/"..(totalValue) --.." ("..standingTEXT..")|r"
+				FIRST = currentValue
+				SECOND = totalValue
+				if currentValue == totalValue then -- or nextThreshold == 0 then
+					vivod = color.."Done|r"
+				end
+			end
+		end
+	end
+----------------------------------------------------------------
+	return FIRST, SECOND, vivod, color, standingTEXT
 end
 
 
@@ -1407,7 +1502,7 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 end
 ----------------------------------------------------------------
 function E:func_CreateUtilsButton(frame, title, height, indent)
-	local curHeight = height or E.curHeight
+	local curHeight = height
 	local indent = indent or 0
 	----------------------------------------------------------------
 	-- OctoToDo_CloseButton
@@ -2096,11 +2191,6 @@ E.curExpansionMaxLevel = 70
 E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
 E.MonitorWidth = GetPhysicalScreenSize()
 E.MonitorHeight = select(2, GetPhysicalScreenSize())
-E.curWidthCentral = 96 -- *E.scale
-E.curHeight = 20 -- *E.scale
---E.curWidthTitle = E.curWidthCentral*2
-E.curWidthTitle = 200 -- *E.scale
-E.ilvlToShow = 400
 E.BGALPHA = .1
 E.Color_Quest_r = .3 -- 1
 E.Color_Quest_g = .1 -- .7
@@ -2581,7 +2671,19 @@ end
 
 
 
-
+function E.func_GetNumReps()
+	local LineNumber = 0
+	C_Reputation.ExpandAllFactionHeaders()
+	for i = 1, C_Reputation.GetNumFactions() do
+		local factionData = C_Reputation.GetFactionDataByIndex(i)
+		if factionData then
+			if (factionData.isHeaderWithRep or not factionData.isHeader) then
+				LineNumber = LineNumber + 1
+			end
+		end
+	end
+	return LineNumber
+end
 
 
 

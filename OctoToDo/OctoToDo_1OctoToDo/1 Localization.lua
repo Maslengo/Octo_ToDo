@@ -7,8 +7,10 @@ if L then
 
 
 	L["AddonHeight"] = true
-	L["MainFrameNumLines"] = true
-	L["curWidthTitle"] = true
+	L["AddonLeftFrameWeight"] = true
+	L["AddonCentralFrameWeight"] = true
+	L["MainFrameDefaultLines"] = true
+	L["SFDropDownWeight"] = true
 
 
 	L["fullName"] = true
@@ -133,7 +135,6 @@ if L then
 	L["Player MAX level"] = true
 	L["Item level: "] = true -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
 	L["Width: "] = true
-	L["curWidthTitle: "] = true
 	L["Auto Turn Quests"] = true
 	L["Aiding the Accord"] = true
 	L["InDev"] = true
@@ -213,8 +214,10 @@ L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
 
 	L["AddonHeight"] = "Высота строк"
-	L["MainFrameNumLines"] = "Количество строк"
-	L["curWidthTitle"] = "Ширина строк"
+	L["AddonLeftFrameWeight"] = "Ширина левого"
+	L["AddonCentralFrameWeight"] = "Ширина строк"
+	L["MainFrameDefaultLines"] = "Количество строк"
+	L["SFDropDownWeight"] = "SFDropDownWeight"
 
 	L["fullName"] = "Полное название"
 	L["showIcons"] = "Показывать иконку"
@@ -334,7 +337,6 @@ if L then
 	L["Player MAX level"] = "Макс. уровень"
 	L["Item level: "] = "Уровень предметов: " -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT
 	L["Width: "] = "Ширина: "
-	-- L["curWidthTitle: "] = true
 	L["Auto Turn Quests"] = "Автопринятие заданий"
 	L["Aiding the Accord"] = "Помощь союзу"
 	L["Total"] = "Всего"

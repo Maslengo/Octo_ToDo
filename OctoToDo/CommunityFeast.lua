@@ -13,7 +13,7 @@ if show then
 		EventFrame_CommunityFeast:RegisterEvent("ZONE_CHANGED")
 		EventFrame_CommunityFeast:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	end
-	local curWidthTitle = 446
+	local AddonCentralFrameWeight = 446
 	local AddonHeight = 26
 	local reputationID = 2685
 	if not MainFrame_CommunityFeast then
@@ -27,13 +27,13 @@ if show then
 	MainFrame_CommunityFeast:SetBackdropBorderColor(0, 0, 0, 1)
 	MainFrame_CommunityFeast:SetPoint("TOP",0,-220)
 	MainFrame_CommunityFeast:SetFrameStrata("BACKGROUND")
-	MainFrame_CommunityFeast:SetSize(curWidthTitle, AddonHeight)
+	MainFrame_CommunityFeast:SetSize(AddonCentralFrameWeight, AddonHeight)
 	MainFrame_CommunityFeast.BG = MainFrame_CommunityFeast:CreateTexture()
 	MainFrame_CommunityFeast.BG:SetAllPoints(MainFrame_CommunityFeast)
 	MainFrame_CommunityFeast.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
 	MainFrame_CommunityFeast.BG:SetVertexColor(0,0,0,.5)
 	MainFrame_CommunityFeast.texture = MainFrame_CommunityFeast:CreateTexture()
-	MainFrame_CommunityFeast.texture:SetSize(curWidthTitle, AddonHeight)
+	MainFrame_CommunityFeast.texture:SetSize(AddonCentralFrameWeight, AddonHeight)
 	MainFrame_CommunityFeast.texture:SetVertexColor(1,0,0,1)
 	MainFrame_CommunityFeast.texture:SetPoint("LEFT", MainFrame_CommunityFeast, "LEFT")
 	MainFrame_CommunityFeast.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
@@ -58,10 +58,10 @@ if show then
 		if FIRST == 0 then
 			MainFrame_CommunityFeast.texture:SetWidth(.1)
 		elseif FIRST == SECOND then
-			MainFrame_CommunityFeast.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+			MainFrame_CommunityFeast.texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
 			MainFrame_CommunityFeast.texture:SetVertexColor(0,1,0,1)
 		elseif FIRST >= 1 then
-			MainFrame_CommunityFeast.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+			MainFrame_CommunityFeast.texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
 		end
 		MainFrame_CommunityFeast.textLEFT:SetText(E.func_reputationName(reputationID))
 	end

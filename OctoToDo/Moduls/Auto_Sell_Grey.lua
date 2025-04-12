@@ -10,7 +10,9 @@ tinsert(E.Modules, function()
 					for bagSlots = 1, C_Container.GetContainerNumSlots(myBags) do
 						CurrentItemLink = C_Container.GetContainerItemLink(myBags, bagSlots)
 						if CurrentItemLink then
-							local _, _, itemQuality, _, _, _, _, _, _, _, sellPrice, classID = C_Item.GetItemInfo(CurrentItemLink)
+							local itemQuality = select(3, C_Item.GetItemInfo(CurrentItemLink))
+							local sellPrice = select(11, C_Item.GetItemInfo(CurrentItemLink))
+							local classID = select(12, C_Item.GetItemInfo(CurrentItemLink))
 							local itemInfo = C_Container.GetContainerItemInfo(myBags, bagSlots)
 							if itemQuality == 0 and sellPrice ~= 0 and classID ~= 2 and classID ~= 4 then
 								totalPrice = totalPrice + (sellPrice * itemInfo.stackCount)

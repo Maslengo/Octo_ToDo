@@ -1,4 +1,23 @@
 local GlobalAddonName, E = ...
+local OctoToDo_EventFrame_Achievements = CreateFrame("FRAME")
+OctoToDo_EventFrame_Achievements:Hide()
+local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
+OctoToDo_MainFrame_Achievements:Hide()
+tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_Achievements)
+----------------------------------------------------------------
+local AddonHeight = 20 -- Высота -- OctoToDo_DB_Vars.curHeight
+local AddonLeftFrameWeight = 200 -- Ширина Левого -- OctoToDo_DB_Vars.AddonLeftFrameWeight
+local AddonCentralFrameWeight = 90 -- Ширина Центрального -- OctoToDo_DB_Vars.AddonCentralFrameWeight
+local MainFrameDefaultLines = 30
+local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / AddonHeight))*.7)
+if MainFrameDefaultLines > MainFrameTotalLines then
+	MainFrameDefaultLines = MainFrameTotalLines
+end
+local SFDropDownWeight = 100
+----------------------------------------------------------------
+
+
+
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
@@ -9,17 +28,7 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		f:SetBackdropBorderColor(0, 0, 0, 1)
 		return f
 end)
-local OctoToDo_EventFrame_Achievements = CreateFrame("FRAME")
-OctoToDo_EventFrame_Achievements:Hide()
-local AddonHeight = 20
-local AddonRightFrameWeight = 90
-local AddonLeftFrameWeight = 200
-local PhysicalScreenWidth, PhysicalScreenHeight = GetPhysicalScreenSize()
-local NumberOfLines = math.floor((math.floor(PhysicalScreenHeight / AddonHeight))*.7)
-local MainFrameNumLines = 30
-if MainFrameNumLines > NumberOfLines then
-	MainFrameNumLines = NumberOfLines
-end
+
 local function ToggleAchievement(AchievementID)
 	if E.func_achievementComplete(AchievementID) and C_ContentTracking.IsTracking(2, AchievementID) then
 		return C_ContentTracking.StopTracking(2, AchievementID, 2)
@@ -51,7 +60,7 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		frame.second = CreateFrame("BUTTON", nil, frame, "BackdropTemplate")
 		frame.second:SetPropagateMouseClicks(true)
-		frame.second:SetSize(500, AddonHeight)
+		frame.second:SetSize(AddonLeftFrameWeight*3, AddonHeight)
 		frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.second:RegisterForClicks("LeftButtonUp")
 		frame.second:SetScript("OnClick", OnClick_Second)
@@ -65,10 +74,6 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.second.textLEFT:SetJustifyV("MIDDLE")
 		frame.second.textLEFT:SetJustifyH("LEFT")
 		frame.second.textLEFT:SetTextColor(1, 1, 1, 1)
-		-- frame.second = CreateFrame("FRAME", nil, frame, "BackdropTemplate")
-		-- frame.second:SetPropagateMouseClicks(true)
-		-- frame.second:SetSize(AddonRightFrameWeight, AddonHeight)
-		-- frame.second:SetPoint("TOPRIGHT", frame, "TOPRIGHT")
 		frame.second.textRIGHT = frame.second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame.second.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
 		frame.second.textRIGHT:SetFontObject(OctoFont11)
@@ -105,10 +110,7 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Frame_init(frame, node)
 	end
 end
 function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
-	local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFrame_Achievements", UIParent, "BackdropTemplate")
-	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_Achievements)
-	OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*MainFrameNumLines)
-	OctoToDo_MainFrame_Achievements:Hide()
+	OctoToDo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_Achievements:SetDontSavePosition(true)
 	OctoToDo_MainFrame_Achievements:SetClampedToScreen(false)
 	OctoToDo_MainFrame_Achievements:SetFrameStrata("HIGH")
@@ -120,7 +122,7 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	OctoToDo_MainFrame_Achievements:SetMovable(true)
 	OctoToDo_MainFrame_Achievements:RegisterForDrag("LeftButton")
 	OctoToDo_MainFrame_Achievements:SetScript("OnDragStart", function()
-			OctoToDo_MainFrame_Achievements:SetAlpha(E.bgCa)
+			OctoToDo_MainFrame_Achievements:SetAlpha(E.bgCa/2)
 			OctoToDo_MainFrame_Achievements:StartMoving()
 	end)
 	OctoToDo_MainFrame_Achievements:SetScript("OnDragStop", function()
@@ -147,15 +149,9 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar, OctoToDo_MainFrame_Achievements.view)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 end
-
-
 function OctoToDo_EventFrame_Achievements:Update()
 	OctoToDo_MainFrame_Achievements.view:SetDataProvider(OctoToDo_EventFrame_Achievements.DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
-
-
-
-
 function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 	if OctoToDo_MainFrame_Achievements then
 		OctoToDo_EventFrame_Achievements.DataProvider = CreateTreeDataProvider()
@@ -179,20 +175,20 @@ function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 				end
 			end
 		end
-		if count > 0 and count < MainFrameNumLines then
-			OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*count)
-		elseif count > MainFrameNumLines then
-			OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*MainFrameNumLines)
+		if count > 0 and count < MainFrameDefaultLines then
+			OctoToDo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*count)
+		elseif count > MainFrameDefaultLines then
+			OctoToDo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 		elseif count == 0 then
-			OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*1)
+			OctoToDo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*1)
 		end
-		self:Update()
+		OctoToDo_EventFrame_Achievements:Update()
 	end
 end
 function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 	local dd_SECOND = CreateFrame("Button", "dd_SECOND", OctoToDo_MainFrame_Achievements, "SecureActionButtonTemplate, BackDropTemplate")
 	local multiply = 2/3
-	dd_SECOND:SetSize(AddonLeftFrameWeight/2, AddonHeight)
+	dd_SECOND:SetSize(SFDropDownWeight, AddonHeight)
 	E:func_SetBackdrop(dd_SECOND)
 	dd_SECOND.ExpandArrow = dd_SECOND:CreateTexture(nil, "ARTWORK")
 	dd_SECOND.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
@@ -305,12 +301,28 @@ function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
-		self:func_CheckWTF()
-		if OctoToDo_DB_Vars then
-			AddonHeight =  OctoToDo_DB_Vars.curHeight
-			AddonRightFrameWeight = OctoToDo_DB_Vars.curWidthCentral
-			AddonLeftFrameWeight = OctoToDo_DB_Vars.curWidthTitle
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		if OctoToDo_DB_Vars.AddonHeight then
+			AddonHeight = OctoToDo_DB_Vars.AddonHeight
 		end
+		if OctoToDo_DB_Vars.AddonLeftFrameWeight then
+			AddonLeftFrameWeight = OctoToDo_DB_Vars.AddonLeftFrameWeight
+		end
+		if OctoToDo_DB_Vars.AddonCentralFrameWeight then
+			AddonCentralFrameWeight = OctoToDo_DB_Vars.AddonCentralFrameWeight
+		end
+		if OctoToDo_DB_Vars.MainFrameDefaultLines then
+			MainFrameDefaultLines = OctoToDo_DB_Vars.MainFrameDefaultLines
+		end
+		if OctoToDo_DB_Vars.SFDropDownWeight then
+			SFDropDownWeight = OctoToDo_DB_Vars.SFDropDownWeight
+		end
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		self:func_CheckWTF()
 		self:OctoToDo_Create_MainFrame_Achievements()
 		self:func_CreateMyDataProvider()
 		self:func_Create_DDframe_Achievements()

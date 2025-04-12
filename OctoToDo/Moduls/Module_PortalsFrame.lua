@@ -9,10 +9,10 @@ OctoToDo_PortalsFrame:Hide()
 function OctoToDo_PortalsFrame:PortalsFrame()
 	local Height = OctoToDo_DB_Vars.curHeight
 	local curFaction = UnitFactionGroup("PLAYER")
-	local RaceLocal, curRace, raceID = UnitRace("PLAYER")
-	local className, curClass, classId = UnitClass("PLAYER")
+	local curRace = select(2, UnitRace("PLAYER"))
+	local curClass = select(2, UnitClass("PLAYER"))
 	local curProfession = ""
-	for k, v in next, ({GetProfessions()}) do
+	for _, v in next, ({GetProfessions()}) do
 		local skillLine = select(7, GetProfessionInfo(v))
 		if skillLine == 202 then
 			curProfession = "Engineering"
