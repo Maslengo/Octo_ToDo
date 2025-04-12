@@ -440,7 +440,7 @@ function E.func_questslist(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestIDTEST):ThenForAllWithCached(function(_, ids1)
+	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID_Paragon):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
 	sort(list1, func_Reverse_order)
@@ -463,7 +463,7 @@ function E.func_questslist(msg)
 end
 ------------------------------
 function E.func_currencieslist(msg)
-	local str3 = "" 
+	local str3 = ""
 	local headerName = ""
 	for i = 1, C_CurrencyInfo.GetCurrencyListSize() do
 		local info = C_CurrencyInfo.GetCurrencyListInfo(i)

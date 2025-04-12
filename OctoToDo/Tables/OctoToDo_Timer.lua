@@ -3,6 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 local LibStub, ldb, ldbi = LibStub, LibStub("LibDataBroker-1.1"), LibStub("LibDBIcon-1.0")
 local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
+
 function E.Timers.Legion_Invasion()
 	local TIMER = (1547586000-10800)
 	local interval = 66600
@@ -15,6 +16,7 @@ function E.Timers.Legion_Invasion()
 	end
 	return Timer_Legion_Invasion
 end
+
 function E.Timers.BfA_Invasion()
 	local TIMER = (1547586000+3600)
 	local interval = 68400
@@ -27,6 +29,7 @@ function E.Timers.BfA_Invasion()
 	end
 	return Timer_BfA_Invasion
 end
+
 function E.Timers.BfA_Assault()
 	local TIMER = (1547586000+3600+3600+3600+3600+3600+3600+3600)
 	local interval = 86400
@@ -39,6 +42,7 @@ function E.Timers.BfA_Assault()
 	end
 	return Timer_BfA_Assault
 end
+
 function E.Timers.DF_ToDragonbaneKeep()
 	local TIMER = 1670342460
 	local interval = 7200
@@ -51,6 +55,7 @@ function E.Timers.DF_ToDragonbaneKeep()
 	end
 	return Timer_DF_ToDragonbaneKeep
 end
+
 function E.Timers.DF_GrandHunts()
 	local TIMER = 1671307200
 	local interval = 7200
@@ -63,6 +68,7 @@ function E.Timers.DF_GrandHunts()
 	end
 	return Timer_DF_GrandHunts
 end
+
 function E.Timers.DF_CommunityFeast()
 	local TIMER = 1677168000
 	local interval = 5400
@@ -75,6 +81,7 @@ function E.Timers.DF_CommunityFeast()
 	end
 	return Timer_DF_CommunityFeast
 end
+
 function E.Timers.DF_PrimalStorms()
 	local TIMER = 1683804640
 	local interval = 18000
@@ -87,6 +94,7 @@ function E.Timers.DF_PrimalStorms()
 	end
 	return Timer_DF_PrimalStorms
 end
+
 function E.Timers.DF_ResearchersUnderFire()
 	local TIMER = 1683804640
 	local interval = 3600
@@ -99,6 +107,7 @@ function E.Timers.DF_ResearchersUnderFire()
 	end
 	return Timer_DF_ResearchersUnderFire
 end
+
 function E.Timers.DF_TimeRift()
 	local TIMER = 1689159620
 	local interval = (1*60)*60
@@ -111,6 +120,7 @@ function E.Timers.DF_TimeRift()
 	end
 	return Timer_DF_TimeRift
 end
+
 function E.Timers.DF_Dreamsurges()
 	local TIMER = 1689159620
 	local interval = 30*60
@@ -123,6 +133,7 @@ function E.Timers.DF_Dreamsurges()
 	end
 	return Timer_DF_Dreamsurges
 end
+
 function E.Timers.SL_Maw_Assault()
 	local TIMER = 3780
 	local interval = 7200
@@ -135,6 +146,7 @@ function E.Timers.SL_Maw_Assault()
 	end
 	return Timer_SL_Maw_Assault
 end
+
 function E.Timers.Daily_Reset()
 	local TIMER = 1687579264
 	local interval = 86400
@@ -151,6 +163,7 @@ function E.Timers.Daily_Reset()
 		return ""
 	end
 end
+
 function E.Timers.Treasure_Goblin()
 	local TIMER = 1685001600
 	local interval = 1800
@@ -167,6 +180,7 @@ function E.Timers.Treasure_Goblin()
 		return ""
 	end
 end
+
 function E.Timers.ElementalStorm()
 	local TIMER = 1689166820
 	local interval = (3*60)*60
@@ -183,6 +197,7 @@ function E.Timers.ElementalStorm()
 		return ""
 	end
 end
+
 function E.Timers.DF_Flower()
 	local TIMER = 1689166820
 	local interval = (60)*60
@@ -199,6 +214,7 @@ function E.Timers.DF_Flower()
 		return ""
 	end
 end
+
 function E.Timers.TWW_BeledarCycle()
 	local TIMER = 1726311612
 	local interval = (180)*60

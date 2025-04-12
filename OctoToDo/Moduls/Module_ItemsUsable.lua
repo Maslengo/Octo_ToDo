@@ -147,5 +147,3 @@ function OctoToDo_EventFrame_ItemsUsable:PLAYER_REGEN_ENABLED()
 	self:ItemsUsableFrame()
 	----------------------------------------------------------------
 end
-
-

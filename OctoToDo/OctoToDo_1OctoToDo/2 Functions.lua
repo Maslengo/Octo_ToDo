@@ -843,31 +843,30 @@ end
 function E.func_CheckReputationByRepID(reputationID)
 	local vivod = ""
 	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+	local color = E.Gray_Color
 	if repInfo then
-		local color = E.Gray_Color
-		local barMin = repInfo.currentReactionThreshold
-		local barMax = repInfo.nextReactionThreshold
-		local barValue = repInfo.currentStanding
-		local standingID = repInfo.reaction
-		local standingTEXT = GetText("FACTION_STANDING_LABEL"..standingID, UnitSex("player"))
+		local reaction = repInfo.reaction
+		local standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
 
-		if (standingID == 1 or standingID == 2) then
+
+		if (reaction == 1 or reaction == 2) then
 			color = E.Red_Color
-		elseif (standingID == 3) then
+		elseif (reaction == 3) then
 			color = E.Orange_Color
-		elseif (standingID == 4 or standingID == 5) then
+		elseif (reaction == 4 or reaction == 5) then
 			color = E.Yellow_Color
-		elseif (standingID == 6 or standingID == 7 or standingID == 8) then
+		elseif (reaction == 6 or reaction == 7 or reaction == 8) then
 			color = E.Green_Color
 		end
 
-		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
+		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
 		if C_Reputation.IsFactionParagon(reputationID) then
-			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID) or 0
+			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID)
 			local _, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(reputationID)
 			if threshold then
 				local value = currentValue % threshold
-				vivod = E.Blue_Color..(value).."/"..(threshold).."|r"
+				color = E.Blue_Color
+				vivod = color..(value).."/"..(threshold).."|r"
 				if hasRewardPending then
 					vivod = E.func_CheckCompletedByQuestID(rewardQuestID)
 				end
@@ -899,6 +898,9 @@ function E.func_CheckReputationByRepID(reputationID)
 				vivod = color.."Done|r "
 			end
 		else
+			local barMin = repInfo.currentReactionThreshold
+			local barMax = repInfo.nextReactionThreshold
+			local barValue = repInfo.currentStanding
 			if barValue then
 				local currentValue = barValue-barMin
 				local totalValue = barMax-barMin
@@ -919,20 +921,28 @@ function E.func_GetReputationStandingColor(reputationID)
 	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
 	local color = E.Gray_Color
 	if repInfo then
-		local standingID = repInfo.reaction
-		if (standingID == 1 or standingID == 2) then
+		local reaction = repInfo.reaction
+		if (reaction == 1 or reaction == 2) then
 			color = E.Red_Color
 		end
-		if (standingID == 3) then
+		if (reaction == 3) then
 			color = E.Orange_Color
 		end
-		if (standingID == 4 or standingID == 5) then
+		if (reaction == 4 or reaction == 5) then
 			color = E.Yellow_Color
 		end
-		if (standingID == 6 or standingID == 7 or standingID == 8) then
+		if (reaction == 6 or reaction == 7 or reaction == 8) then
 			color = E.Green_Color
 		end
-		-- print (standingID, color..standingID.."|r")
+
+
+		if C_Reputation.IsFactionParagon(reputationID) then
+			local threshold = select(2, C_Reputation.GetFactionParagonInfo(reputationID))
+			if threshold then
+				color = E.Blue_Color
+			end
+		end
+		-- print (reaction, color..reaction.."|r")
 	end
 
 	return color
@@ -1189,32 +1199,40 @@ end
 ----------------------------------------------------------------
 function E.func_ProfessionName(skillLine)
 	local vivod = ""
-	local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
-	vivod = name
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..E.Gray_Color.." id:"..skillLine.."|r"
+	if skillLine then
+		local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
+		vivod = name
+		if E.DebugIDs == true and vivod ~= nil then
+			vivod = vivod..E.Gray_Color.." id:"..skillLine.."|r"
+		end
 	end
 	return vivod
 end
 ----------------------------------------------------------------
 function E.func_ProfessionIcon(skillLine)
 	local vivod = ""
-	local icon = C_TradeSkillUI.GetTradeSkillTexture(skillLine)
-	vivod = E.func_texturefromIcon(icon)
+	if skillLine then
+		local icon = C_TradeSkillUI.GetTradeSkillTexture(skillLine)
+		vivod = E.func_texturefromIcon(icon)
+	end
 	return vivod
 end
 ----------------------------------------------------------------
 function E.func_ProfessionSkillLevel(skillLine)
 	local vivod = ""
-	local skillLevel = select(3, GetProfessionInfo(skillLine))
-	vivod = skillLevel
+	if skillLine then
+		local skillLevel = select(3, GetProfessionInfo(skillLine))
+		vivod = skillLevel
+	end
 	return vivod
 end
 ----------------------------------------------------------------
 function E.func_ProfessionMaxSkillLevel(skillLine)
 	local vivod = ""
-	local maxSkillLevel = select(4, GetProfessionInfo(skillLine))
-	vivod = maxSkillLevel
+	if skillLine then
+		local maxSkillLevel = select(4, GetProfessionInfo(skillLine))
+		vivod = maxSkillLevel
+	end
 	return vivod
 end
 ----------------------------------------------------------------
@@ -1388,13 +1406,15 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	end
 end
 ----------------------------------------------------------------
-function E:func_CreateUtilsButton(frame, title)
+function E:func_CreateUtilsButton(frame, title, height, indent)
+	local curHeight = height or E.curHeight
+	local indent = indent or 0
 	----------------------------------------------------------------
 	-- OctoToDo_CloseButton
 	----------------------------------------------------------------
 	local OctoToDo_CloseButton = CreateFrame("Button", "OctoToDo_CloseButton", frame)
-	OctoToDo_CloseButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_CloseButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 0)
+	OctoToDo_CloseButton:SetSize(curHeight, curHeight)
+	OctoToDo_CloseButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, indent)
 	OctoToDo_CloseButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
@@ -1423,8 +1443,8 @@ function E:func_CreateUtilsButton(frame, title)
 	-- OctoToDo_OptionsButton
 	----------------------------------------------------------------
 	local OctoToDo_OptionsButton = CreateFrame("Button", "OctoToDo_OptionsButton", frame)
-	OctoToDo_OptionsButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_OptionsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*1, 0)
+	OctoToDo_OptionsButton:SetSize(curHeight, curHeight)
+	OctoToDo_OptionsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*1, indent)
 	OctoToDo_OptionsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:AddLine(E.WOW_Artifact_Color..OPTIONS.."|r")
@@ -1481,8 +1501,8 @@ function E:func_CreateUtilsButton(frame, title)
 		end,
 	}
 	local OctoToDo_AbandonButton = CreateFrame("Button", "OctoToDo_AbandonButton", frame)
-	OctoToDo_AbandonButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_AbandonButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*2, 0)
+	OctoToDo_AbandonButton:SetSize(curHeight, curHeight)
+	OctoToDo_AbandonButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*2, indent)
 	OctoToDo_AbandonButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
@@ -1532,8 +1552,8 @@ function E:func_CreateUtilsButton(frame, title)
 	-- OctoToDo_MplusButton
 	----------------------------------------------------------------
 	local OctoToDo_MplusButton = CreateFrame("Button", "OctoToDo_MplusButton", frame)
-	OctoToDo_MplusButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_MplusButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*3, 0)
+	OctoToDo_MplusButton:SetSize(curHeight, curHeight)
+	OctoToDo_MplusButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*3, indent)
 	local list = {}
 	local list2 = {}
 	OctoToDo_MplusButton:SetScript("OnEnter", function(self)
@@ -1591,8 +1611,8 @@ function E:func_CreateUtilsButton(frame, title)
 	-- OctoToDo_ItemsButton
 	----------------------------------------------------------------
 	local OctoToDo_ItemsButton = CreateFrame("Button", "OctoToDo_ItemsButton", frame)
-	OctoToDo_ItemsButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_ItemsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*4, 0)
+	OctoToDo_ItemsButton:SetSize(curHeight, curHeight)
+	OctoToDo_ItemsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*4, indent)
 	OctoToDo_ItemsButton:SetScript("OnEnter", function(self)
 			local i = 0
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
@@ -1606,7 +1626,7 @@ function E:func_CreateUtilsButton(frame, title)
 			for _, itemID in next, (E.OctoTable_itemID_ALL) do
 				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
 					if CharInfo.BattleTagLocal == BattleTagLocal then
-						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 then
+						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= nil then
 							i = i + 1
 							GameTooltip:AddDoubleLine(E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID].." "..CharInfo.classColorHex..CharInfo.Name.."|r "..CharInfo.curServerShort)
 						end
@@ -1643,8 +1663,8 @@ function E:func_CreateUtilsButton(frame, title)
 	----------------------------------------------------------------
 	-- local OctoToDo_EventsButton = CreateFrame("Button", "OctoToDo_EventsButton", frame, "BackDropTemplate")
 	local OctoToDo_EventsButton = CreateFrame("Button", "OctoToDo_EventsButton", frame)
-	OctoToDo_EventsButton:SetSize(E.curHeight, E.curHeight)
-	OctoToDo_EventsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*5, 0)
+	OctoToDo_EventsButton:SetSize(curHeight, curHeight)
+	OctoToDo_EventsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*5, indent)
 	OctoToDo_EventsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
@@ -1723,8 +1743,8 @@ function E:func_CreateUtilsButton(frame, title)
 		-- local vars = OctoToDo_DB_Vars.OctoToDo_FramerateFrame
 		-- if vars.Shown then
 	local OctoToDo_FramerateFrame = CreateFrame("Frame", "OctoToDo_FramerateFrame", frame)
-	OctoToDo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-E.curHeight)*6, 0)
-	OctoToDo_FramerateFrame:SetSize(E.curHeight*2, E.curHeight)
+	OctoToDo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*6, indent)
+	OctoToDo_FramerateFrame:SetSize(curHeight*2, curHeight)
 	OctoToDo_FramerateFrame:SetFrameStrata("HIGH")
 	OctoToDo_FramerateFrame.text_fps = OctoToDo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	OctoToDo_FramerateFrame.text_fps:SetPoint("CENTER", 0, 0)
@@ -2749,9 +2769,32 @@ end
 
 
 
+-- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
+function E.func_LockAddon(index)
+	local name = E.func_GetAddonName(index)
+	if OctoToDo_AddonsManager.lock.addons[name] then
+		OctoToDo_AddonsManager.lock.addons[name] = false
+	else
+		OctoToDo_AddonsManager.lock.addons[name] = true
+		-- E.func_EnableAddOn(index)
+	end
+end
 
 
-
+function E.rec_lock(index)
+	E.func_LockAddon(index)
+	if OctoToDo_AddonsTable.depsByIndex[index] and not IsModifierKeyDown() then
+		for i, depIndex in ipairs(OctoToDo_AddonsTable.depsByIndex[index]) do
+			E.rec_lock(depIndex)
+		end
+	end
+end
+-- Переключить аддон
+function E.func_lockAddonNEW(index, state)
+	local addonName = C_AddOns.GetAddOnInfo(index)
+	local enabled = E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
+	E.rec_lock(index, enabled)
+end
 
 
 

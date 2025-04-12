@@ -5,17 +5,17 @@
 ## IconTexture: 986485
 ## Version: r62
 
-## Category-enUS: Libraries
-## Category-deDE: Bibliotheken
-## Category-esES: Bibliotecas
-## Category-esMX: Bibliotecas
-## Category-frFR: Bibliothèques
-## Category-itIT: Biblioteche
-## Category-koKR: 도서관
-## Category-ptBR: Bibliotecas
-## Category-ruRU: Библиотеки
-## Category-zhCN: 函数库
-## Category-zhTW: 函式庫
+## CategoryQWEQWE-enUS: Libraries
+## CategoryQWEQWE-deDE: Bibliotheken
+## CategoryQWEQWE-esES: Bibliotecas
+## CategoryQWEQWE-esMX: Bibliotecas
+## CategoryQWEQWE-frFR: Bibliothèques
+## CategoryQWEQWE-itIT: Biblioteche
+## CategoryQWEQWE-koKR: 도서관
+## CategoryQWEQWE-ptBR: Bibliotecas
+## CategoryQWEQWE-ruRU: Библиотеки
+## CategoryQWEQWE-zhCN: 函数库
+## CategoryQWEQWE-zhTW: 函式庫
 
 ## OptionalDeps: LibStub, CallbackHandler-1.0
 

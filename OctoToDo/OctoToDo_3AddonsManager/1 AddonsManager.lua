@@ -79,11 +79,12 @@ function OctoToDo_EventFrame_AddonsManager:createDDMenu()
 				info.checked = OctoToDo_AddonsManager.lock.addons[E.func_GetAddonName(index)]
 				info.hasArrow = nil
 				info.func = function()
-					E.func_LockAddon(index)
+					-- E.func_LockAddon(index)
+					E.func_lockAddonNEW(index)
 					E.AddonList_Update()
 				end
 				self:ddAddButton(info, level)
-			-- elseif value == ADD then
+				-- elseif value == ADD then
 				----------------------------------------------------------------
 				self:ddAddSeparator(level)
 				----------------------------------------------------------------
@@ -129,16 +130,6 @@ local function OnClick_third(frame, button)
 	E.AddonList_Update()
 end
 ----------------------------------------------------------------
--- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
-function E.func_LockAddon(index)
-	local name = E.func_GetAddonName(index)
-	if OctoToDo_AddonsManager.lock.addons[name] then
-		OctoToDo_AddonsManager.lock.addons[name] = false
-	else
-		OctoToDo_AddonsManager.lock.addons[name] = true
-		-- E.func_EnableAddOn(index)
-	end
-end
 ----------------------------------------------------------------
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
@@ -379,7 +370,6 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(frame, node)
 		else
 			tbl = OctoToDo_AddonsTable.depsByIndex
 		end
-
 		if tbl[data.index] then
 			UpdateExpandOrCollapseButtonState(frame.zero.icon, node:IsCollapsed(), node, name)
 		else
@@ -500,7 +490,6 @@ function E.CreateMyDataProvider()
 						end
 					end
 				end
-
 			else
 				if not OctoToDo_AddonsTable.parentByIndex[index] or OctoToDo_AddonsTable.recycleByIndex[index] then
 					local groupNode = DataProvider:Insert({index = index})
@@ -509,37 +498,27 @@ function E.CreateMyDataProvider()
 						E.AddDeps_RECURSION(index, groupNode)
 					end
 				end
-
-
-
-
-
-
 			end
 		end
-
 	else
 		-- local sorted = {}
 		-- for index, v in pairs(OctoSimpleList) do
-		-- 	sorted[#sorted+1] = E.func_GetAddonName(index)
+		--     sorted[#sorted+1] = E.func_GetAddonName(index)
 		-- end
-
-
 		-- sort(sorted, function(b, a)
-		-- 		if a and b then
-		-- 			return a > b
-		-- 		end
+		--         if a and b then
+		--             return a > b
+		--         end
 		-- end)
-
 		-- fpde(sorted)
 		--
 		-- print ("|cffFF00F0"..E.func_GetAddonIndex("OctoToDo").."|r")
 		-- for name, k in pairs(sorted) do
-		-- 	local index = E.func_GetAddonIndex(name)
-		-- 	local groupNode = DataProvider:Insert({index = index})
-			-- for _, depIndex in pairs(v) do
-			-- 	local secondABOBUS = groupNode:Insert({index = depIndex})
-			-- end
+		--     local index = E.func_GetAddonIndex(name)
+		--     local groupNode = DataProvider:Insert({index = index})
+		-- for _, depIndex in pairs(v) do
+		--     local secondABOBUS = groupNode:Insert({index = depIndex})
+		-- end
 		-- end
 		if OctoToDo_AddonsManager.config.showOnlyLoaded then -- ПОФИКСИТЬ
 			for index, v in pairs(OctoSimpleList) do
@@ -558,10 +537,7 @@ function E.CreateMyDataProvider()
 				end
 			end
 		end
-
-
 	end
-
 	E.AddonList_Update()
 end
 function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
@@ -612,17 +588,13 @@ function OctoToDo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 				end
 			end
 			sort(sorted)
-
-
 			for index, name in ipairs(sorted) do
 				DisableAllTooltip[#DisableAllTooltip+1] = {E.func_texturefromIcon(E.func_GetAddoniconTexture(name))..E.func_GetAddonTitle(name), E.func_texturefromIcon([[Interface\AddOns\OctoToDo\Media\SimpleAddonManager\lock]])}
 			end
-
-
 			-- for name, value in pairs(OctoToDo_AddonsManager.lock.addons) do
-			-- 	if value then
-			-- 		DisableAllTooltip[#DisableAllTooltip+1] = {E.func_texturefromIcon(E.func_GetAddoniconTexture(name))..E.func_GetAddonTitle(name), E.func_texturefromIcon([[Interface\AddOns\OctoToDo\Media\SimpleAddonManager\lock]])}
-			-- 	end
+			--     if value then
+			--         DisableAllTooltip[#DisableAllTooltip+1] = {E.func_texturefromIcon(E.func_GetAddoniconTexture(name))..E.func_GetAddonTitle(name), E.func_texturefromIcon([[Interface\AddOns\OctoToDo\Media\SimpleAddonManager\lock]])}
+			--     end
 			-- end
 			frameDisableAll.tooltip = DisableAllTooltip
 			E.func_TooltipOnEnter(self, true, true)
@@ -780,7 +752,6 @@ function E:GetCycleByIndexSFMICT(iChild, iParent)
 end
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
 function OctoToDo_EventFrame_AddonsManager:CollectAllAddonsSFMICT()
-
 	if OctoToDo_AddonsManager.config.defaultAddonList == false then
 		OctoToDo_AddonsTable = {}
 		OctoToDo_AddonsTable.indexByName = {}
@@ -808,23 +779,23 @@ function OctoToDo_EventFrame_AddonsManager:CollectAllAddonsSFMICT()
 	else
 		OctoSimpleList = {}
 		-- СОХРАНИТЬ НАЗВАНИЯ
-		-- for index = 1, E.func_GetNumAddOns() do
-		--     local name = E.func_GetAddonName(index)
-		--     local group = E.func_GetAddonGroup(index)
-		--     OctoSimpleList[group] = OctoSimpleList[group] or {}
-		--     if name ~= group then
-		--         table.insert(OctoSimpleList[group], name)
-		--     end
-		-- end
-		-- СОХРАНИТЬ ИНДЕКСЫ
 		for index = 1, E.func_GetNumAddOns() do
 			local name = E.func_GetAddonName(index)
 			local group = E.func_GetAddonGroup(index)
-			OctoSimpleList[OctoToDo_AddonsTable.indexByName[group]] = OctoSimpleList[OctoToDo_AddonsTable.indexByName[group]] or {}
+			OctoSimpleList[group] = OctoSimpleList[group] or {}
 			if name ~= group then
-				table.insert(OctoSimpleList[OctoToDo_AddonsTable.indexByName[group]], OctoToDo_AddonsTable.indexByName[name])
+				table.insert(OctoSimpleList[group], name)
 			end
 		end
+		-- СОХРАНИТЬ ИНДЕКСЫ
+		-- for index = 1, E.func_GetNumAddOns() do
+		--     local name = E.func_GetAddonName(index)
+		--     local group = E.func_GetAddonGroup(index)
+		--     OctoSimpleList[OctoToDo_AddonsTable.indexByName[group]] = OctoSimpleList[OctoToDo_AddonsTable.indexByName[group]] or {}
+		--     if name ~= group then
+		--         table.insert(OctoSimpleList[OctoToDo_AddonsTable.indexByName[group]], OctoToDo_AddonsTable.indexByName[name])
+		--     end
+		-- end
 		-- fpde(OctoSimpleList)
 	end
 end
@@ -861,7 +832,7 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		E.CreateMyDataProvider()
 		self:createDDMenu()
 		----------------------------------------------------------------
-		E:func_CreateUtilsButton(OctoToDo_MainFrame_AddonsManager, "AddonsManager")
+		E:func_CreateUtilsButton(OctoToDo_MainFrame_AddonsManager, "AddonsManager", AddonHeight, 0)
 		E:func_CreateMinimapButton(GlobalAddonName, "AddonsManager", OctoToDo_AddonsManager, OctoToDo_MainFrame_AddonsManager, nil, "OctoToDo_MainFrame_AddonsManager")
 		OctoToDo_MainFrame_AddonsManager:SetScript("OnShow", function()
 				C_Timer.After(0, function()
@@ -878,4 +849,3 @@ function OctoToDo_EventFrame_AddonsManager:PLAYER_REGEN_DISABLED()
 	end
 end
 -- self.SearchBox:HookScript("OnTextChanged", AddonList_Update)
-

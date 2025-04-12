@@ -89,6 +89,9 @@ local function CreateTooltip(AchievementID)
 	tooltipsecond[#tooltipsecond+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
 	return tooltipsecond
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+-- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function OctoToDo_EventFrame_Achievements:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
 	frame.first.icon:SetTexture(data.icon)
@@ -144,9 +147,18 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar, OctoToDo_MainFrame_Achievements.view)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_Achievements.ScrollBox, OctoToDo_MainFrame_Achievements.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 end
+
+
+function OctoToDo_EventFrame_Achievements:Update()
+	OctoToDo_MainFrame_Achievements.view:SetDataProvider(OctoToDo_EventFrame_Achievements.DataProvider, ScrollBoxConstants.RetainScrollPosition)
+end
+
+
+
+
 function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 	if OctoToDo_MainFrame_Achievements then
-		local DataProvider = CreateTreeDataProvider()
+		OctoToDo_EventFrame_Achievements.DataProvider = CreateTreeDataProvider()
 		local count = 0
 		for categoryID, v in next, (OctoToDo_Achievements.AchievementToShow) do
 			local total = GetCategoryNumAchievements(categoryID, true)
@@ -156,7 +168,7 @@ function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 					if AchievementID then
 						if completedAchi == false or (completedAchi == OctoToDo_Achievements.AchievementShowCompleted) then
 							count = count + 1
-							DataProvider:Insert({
+							OctoToDo_EventFrame_Achievements.DataProvider:Insert({
 									textLEFT = name,
 									textRIGHT = E.func_achievementvivod(AchievementID),
 									AchievementID = AchievementID,
@@ -174,8 +186,7 @@ function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 		elseif count == 0 then
 			OctoToDo_MainFrame_Achievements:SetSize(500, AddonHeight*1)
 		end
-		-- OctoToDo_MainFrame_Achievements.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-		OctoToDo_MainFrame_Achievements.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+		self:Update()
 	end
 end
 function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
@@ -303,13 +314,16 @@ function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 		self:OctoToDo_Create_MainFrame_Achievements()
 		self:func_CreateMyDataProvider()
 		self:func_Create_DDframe_Achievements()
-		E:func_CreateUtilsButton(OctoToDo_MainFrame_Achievements, "Achievements")
-		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", OctoToDo_Achievements, OctoToDo_MainFrame_Achievements, function() OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider() end)
+		E:func_CreateUtilsButton(OctoToDo_MainFrame_Achievements, "Achievements", AddonHeight, 0)
+		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", OctoToDo_Achievements, OctoToDo_MainFrame_Achievements, function() OctoToDo_EventFrame_Achievements:Update() end)
+		OctoToDo_MainFrame_Achievements:SetScript("OnShow", function()
+				OctoToDo_EventFrame_Achievements.func_CreateMyDataProvider()
+		end)
 	end
 end
 function OctoToDo_EventFrame_Achievements:CONTENT_TRACKING_UPDATE(type, AchievementID, isTracked)
 	if type == 2 then -- Enum.ContentTrackingType
-		self:func_CreateMyDataProvider()
+		self:Update()
 	end
 end
 function OctoToDo_EventFrame_Achievements:PLAYER_REGEN_DISABLED()

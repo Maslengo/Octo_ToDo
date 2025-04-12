@@ -3,94 +3,86 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------
 local OctoToDo_EventFrame_OCTOREP = CreateFrame("FRAME")
 OctoToDo_EventFrame_OCTOREP:Hide()
+local OctoToDo_MainFrame_OCTOREP = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOREP", UIParent, "BackdropTemplate")
+OctoToDo_MainFrame_OCTOREP:Hide()
+local sorted = {}
 ----------------------------------------------------------------
+local function LineNumber()
+	local LineNumber = 0
+	for i = 1, C_Reputation.GetNumFactions() do
+		local factionData = C_Reputation.GetFactionDataByIndex(i)
+		if factionData then
+			if (factionData.isHeaderWithRep or not factionData.isHeader) then
+				LineNumber = LineNumber + 1
+			end
+		end
+	end
+	return LineNumber
+end
 local AddonHeight = 20 --ADDON_BUTTON_HEIGHT -- Высота -- OctoToDo_DB_Vars.curHeight
-local curWidthTitle = 500 -- Ширина Левого -- OctoToDo_DB_Vars.curWidthTitle
+local curWidthTitle = 160 -- Ширина Левого -- OctoToDo_DB_Vars.curWidthTitle
 local MainFrameNumLines = 30 --MAX_ADDONS_DISPLAYED
-local totalNumAddOns = E.func_GetNumAddOns()
+
+
+
+local AddonHeight = 20 -- Высота -- OctoToDo_DB_Vars.curHeight
+local AddonRightFrameWeight = 90 -- Ширина Центрального -- OctoToDo_DB_Vars.curWidthCentral
+local AddonLeftFrameWeight = 300 -- Ширина Левого -- OctoToDo_DB_Vars.curWidthTitle
+
+
+local totalNumAddOns = LineNumber()
 if MainFrameNumLines > totalNumAddOns then
 	MainFrameNumLines = totalNumAddOns
 end
-
+local function func_NumPlayers()
+	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
+	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
+	local LevelToShow = OctoToDo_DB_Vars.LevelToShow
+	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
+	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
+	sorted = {}
+	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+		if ShowOnlyCurrentBattleTag == true then
+			if (ShowOnlyCurrentServer == true
+				and (CharInfo.curServer == E.curServer)
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (ShowOnlyCurrentServer == false
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (E.curGUID == CharInfo.GUID) then
+				sorted[#sorted+1] = CharInfo
+			end
+		else
+			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (ShowOnlyCurrentServer == false
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (E.curGUID == CharInfo.GUID) then
+				sorted[#sorted+1] = CharInfo
+			end
+		end
+	end
+	return #sorted or 1
+end
 ----------------------------------------------------------------
 -- /dump C_Reputation.GetWatchedFactionData()
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function OctoToDo_EventFrame_OCTOREP:CreateTrackedFrame()
-	TrackedFrame = CreateFrame("BUTTON", "TrackedFrame", UIParent, "BackdropTemplate")
-	TrackedFrame:Hide()
-	TrackedFrame:SetBackdrop({
-			edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-			edgeSize = 1,
-	})
-	TrackedFrame:SetBackdropBorderColor(0, 0, 0, 1)
-	TrackedFrame:SetPoint("TOP", 0, -100)
-	TrackedFrame:SetFrameStrata("HIGH")
-	TrackedFrame:SetDontSavePosition(false)
-	TrackedFrame:SetClampedToScreen(true)
-	TrackedFrame:EnableMouse(true)
-	TrackedFrame:SetMovable(true)
-	TrackedFrame:SetSize(curWidthTitle, AddonHeight)
-
-
-	TrackedFrame:RegisterForDrag("LeftButton")
-	TrackedFrame:SetScript("OnDragStart", function()
-			TrackedFrame:SetAlpha(E.bgCa/2)
-			TrackedFrame:StartMoving()
-	end)
-	TrackedFrame:SetScript("OnDragStop", function()
-			TrackedFrame:SetAlpha(1)
-			TrackedFrame:StopMovingOrSizing()
-	end)
-
-	TrackedFrame:RegisterForClicks("RightButtonUp") -- ПОФИКСИТЬ (ДОБАВИТЬ ОПЦИЮ ЛОКА)
-	TrackedFrame:SetScript("OnClick", function(self) self:Hide() end)
-
-
-	TrackedFrame.BG = TrackedFrame:CreateTexture()
-	TrackedFrame.BG:SetAllPoints(TrackedFrame)
-	TrackedFrame.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-	TrackedFrame.BG:SetVertexColor(0, 0, 0, .5)
-	TrackedFrame.texture = TrackedFrame:CreateTexture()
-	TrackedFrame.texture:SetSize(curWidthTitle, AddonHeight)
-	TrackedFrame.texture:SetVertexColor(1, 0, 0, 1)
-	TrackedFrame.texture:SetPoint("LEFT", TrackedFrame, "LEFT")
-	TrackedFrame.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-	TrackedFrame.textLEFT = TrackedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	TrackedFrame.textLEFT:SetPoint("LEFT", TrackedFrame, "LEFT", AddonHeight+2, 0)
-	TrackedFrame.textLEFT:SetFontObject(OctoFont11)
-	TrackedFrame.textLEFT:SetJustifyV("MIDDLE")
-	TrackedFrame.textLEFT:SetJustifyH("LEFT")
-	TrackedFrame.textLEFT:SetTextColor(1, 1, 1, 1)
-	TrackedFrame.textRIGHT = TrackedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	TrackedFrame.textRIGHT:SetPoint("RIGHT", TrackedFrame, "RIGHT", -4, 0)
-	TrackedFrame.textRIGHT:SetFontObject(OctoFont11)
-	TrackedFrame.textRIGHT:SetJustifyV("MIDDLE")
-	TrackedFrame.textRIGHT:SetJustifyH("RIGHT")
-	TrackedFrame.textRIGHT:SetTextColor(1, 1, 1, 1)
-end
-function OctoToDo_EventFrame_OCTOREP:TrackedFrame_OnEvent()
-	local reputationID = OctoToDo_OCTOREP.TrackedRepID or 369
-	if reputationID then
-		-- frame.first.icon:SetTexture(E.OctoTable_FACTIONTABLE[reputationID].icon)
-		TrackedFrame.textLEFT:SetText(E.func_reputationName(reputationID))
-		TrackedFrame.textRIGHT:SetText(E.func_CheckReputationByRepID(reputationID))
-		local FIRST = select(1, E.func_CheckRepCURSTANDING(reputationID))
-		local SECOND = select(2, E.func_CheckRepCURSTANDING(reputationID))
-		local color = E.func_GetReputationStandingColor(reputationID)
-		TrackedFrame.texture:SetVertexColor(select(1, E.func_hex2rgbNUMBER(color)), select(2, E.func_hex2rgbNUMBER(color)), select(3, E.func_hex2rgbNUMBER(color)), .5)
-		if FIRST == 0 then
-			TrackedFrame.texture:SetWidth(.1)
-		elseif FIRST == SECOND then
-			TrackedFrame.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
-		elseif FIRST >= 1 then
-			TrackedFrame.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
-		end
-		E:func_SetBackdrop(TrackedFrame, nil, 0, 0)
-	end
-end
 local function OnClick_Second(frame)
 	if OctoToDo_MainFrame_OCTOREP:IsDragging() then
 		return
@@ -99,10 +91,7 @@ local function OnClick_Second(frame)
 	local node = parent:GetElementData()
 	local reputationID = parent:GetData().reputationID
 	if reputationID then
-		TrackedFrame:Show()
-		-- TrackedFrame:SetShown(not TrackedFrame:IsShown()) -- TOGGLE
 		OctoToDo_OCTOREP.TrackedRepID = reputationID
-		OctoToDo_EventFrame_OCTOREP:TrackedFrame_OnEvent()
 	end
 end
 ----------------------------------------------------------------
@@ -110,69 +99,98 @@ end
 ----------------------------------------------------------------
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
-		frame.first = CreateFrame("BUTTON", nil, frame, "BackDropTemplate")
+		frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
 		frame.first:SetPropagateMouseClicks(false)
-		frame.first:SetSize(AddonHeight, AddonHeight)
+		frame.first:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
-		frame.first.icon:SetAllPoints(frame.first)
-		-- frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		frame.second = CreateFrame("BUTTON", nil, frame, "BackDropTemplate")
-		frame.second:SetPropagateMouseClicks(true)
-		frame.second:SetSize(curWidthTitle, AddonHeight)
-		-- frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.second:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.second:RegisterForClicks("LeftButtonUp")
-		frame.second:SetScript("OnClick", OnClick_Second)
-		frame.second:SetScript("OnEnter", function()
-				E.func_TooltipOnEnter(frame.second, true, true)
-		end)
-		frame.second:SetScript("OnLeave", GameTooltip_Hide)
-		frame.second.texture = frame.second:CreateTexture()
-		frame.second.texture:SetSize(curWidthTitle, AddonHeight)
-		frame.second.texture:SetPoint("LEFT", frame.second, "LEFT")
-		frame.second.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-		frame.second.textLEFT = frame.second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.second.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
-		frame.second.textLEFT:SetFontObject(OctoFont11)
-		frame.second.textLEFT:SetJustifyV("MIDDLE")
-		frame.second.textLEFT:SetJustifyH("LEFT")
-		frame.second.textLEFT:SetTextColor(1, 1, 1, 1)
-		frame.second.textRIGHT = frame.second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.second.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
-		frame.second.textRIGHT:SetFontObject(OctoFont11)
-		frame.second.textRIGHT:SetJustifyV("MIDDLE")
-		frame.second.textRIGHT:SetJustifyH("RIGHT")
-		frame.second.textRIGHT:SetTextColor(1, 1, 1, 1)
+		frame.first.textLEFT = frame.first:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		-- frame.first.textLEFT:SetPoint("LEFT", frame, "LEFT", 2, 0)
+		frame.first.textLEFT:SetPoint("LEFT", 2, 0)
+		frame.first.textLEFT:SetPoint("RIGHT", 0, 0)
+		frame.first.textLEFT:SetFontObject(OctoFont11)
+		frame.first.textLEFT:SetWordWrap(false)
+		frame.first.textLEFT:SetJustifyV("MIDDLE")
+		frame.first.textLEFT:SetJustifyH("LEFT")
+		frame.first.textLEFT:SetTextColor(1, 1, 1, 1)
+		frame.second = setmetatable({}, {
+				__index = function(self, key)
+					local f = CreateFrame("BUTTON", "frame"..key, frame, "BackDropTemplate")
+					f:SetPropagateMouseClicks(true)
+					f:SetSize(curWidthTitle, AddonHeight)
+					f:SetPoint("TOPLEFT", frame, "TOPLEFT", (AddonLeftFrameWeight-curWidthTitle)+curWidthTitle*key, 0)
+					f:RegisterForClicks("LeftButtonUp")
+					f:SetScript("OnClick", OnClick_Second)
+					f.texture = f:CreateTexture()
+					f.texture:SetSize(curWidthTitle, AddonHeight)
+					f.texture:SetPoint("LEFT", f, "LEFT")
+					f.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+					f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+					f.textCENT:SetPoint("CENTER", f, "CENTER", 0, 0)
+					f.textCENT:SetFontObject(OctoFont11)
+					f.textCENT:SetJustifyV("MIDDLE")
+					f.textCENT:SetJustifyH("CENTER")
+					f.textCENT:SetTextColor(1, 1, 1, 1)
+					self[key] = f
+					return f
+		end})
 	end
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
--- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ + ГОВНО
--- ЭТО ФУНКЦИЯ АПДЕЙТА(ОТРИСОФКИ)
+-- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
-	local reputationID = data.reputationID
-	frame.first.icon:SetTexture(E.OctoTable_FACTIONTABLE[reputationID].icon)
-	frame.second.textLEFT:SetText(E.func_reputationName(reputationID))
-	frame.second.textRIGHT:SetText(E.func_CheckReputationByRepID(reputationID))
-	local FIRST = select(1, E.func_CheckRepCURSTANDING(reputationID))
-	local SECOND = select(2, E.func_CheckRepCURSTANDING(reputationID))
-	local color = E.func_GetReputationStandingColor(reputationID)
-	frame.second.texture:SetVertexColor(select(1, E.func_hex2rgbNUMBER(color)), select(2, E.func_hex2rgbNUMBER(color)), select(3, E.func_hex2rgbNUMBER(color)), .5)
-	if FIRST == 0 then
-		frame.second.texture:SetWidth(.1)
-	elseif FIRST == SECOND then
-		frame.second.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
-	elseif FIRST >= 1 then
-		frame.second.texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+	-- fpde(data)
+	E:func_SetBackdrop(frame.first, nil, 0, 0)
+	frame.first.textLEFT:SetText(E.func_reputationName(data.reputationID))
+	for i = 1, #data.vivod do
+		if data.vivod[i] ~= "NONE" then
+			frame.second[i].textCENT:SetText(data.vivod[i])
+			frame.second[i].texture:SetVertexColor(0, 1, 0, .2) -- УДАЛИТЬ
+		else
+			frame.second[i].textCENT:SetText("")
+			frame.second[i].texture:SetVertexColor(1, 0, 0, .2) -- УДАЛИТЬ
+		end
 	end
-	E:func_SetBackdrop(frame.second, nil, 0, 0)
+
+
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- for index = 1, #data do
+	-- 	-- local reputationID = data[index].reputationID
+	-- 	for NumPlayers = 1, func_NumPlayers() do
+	-- 		-- print (data[index][NumPlayers].vivod)
+	-- 		frame.second[index].textCENT:SetText(data[index][NumPlayers].vivod) -- value[index]
+	-- 		frame.second[index].texture:SetVertexColor(1, 0, 0, .2) -- УДАЛИТЬ
+	-- 		E:func_SetBackdrop(frame.second[index], nil, 0, 0) -- УДАЛИТЬ
+	-- 		-- local FIRST = select(1, E.func_CheckRepCURSTANDING(reputationID))
+	-- 		-- local SECOND = select(2, E.func_CheckRepCURSTANDING(reputationID))
+	-- 		-- local color = E.func_GetReputationStandingColor(reputationID)
+	-- 		-- frame.second[index].texture:SetVertexColor(select(1, E.func_hex2rgbNUMBER(color)), select(2, E.func_hex2rgbNUMBER(color)), select(3, E.func_hex2rgbNUMBER(color)), .5)
+	-- 		-- if FIRST == 0 then
+	-- 		--     frame.second[index].texture:SetWidth(.1)
+	-- 		-- elseif FIRST == SECOND then
+	-- 		--     frame.second[index].texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+	-- 		-- elseif FIRST >= 1 then
+	-- 		--     frame.second[index].texture:SetWidth((curWidthTitle/SECOND)*FIRST)
+	-- 		-- end
+	-- 	end
+	-- end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+
+
+
 end
+
+
+
+
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
-	local OctoToDo_MainFrame_OCTOREP = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCTOREP", UIParent, "BackdropTemplate")
 	tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_OCTOREP)
-	OctoToDo_MainFrame_OCTOREP:SetSize(curWidthTitle, AddonHeight*MainFrameNumLines)
+	OctoToDo_MainFrame_OCTOREP:SetSize(AddonLeftFrameWeight+curWidthTitle*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOREP:Hide()
 	OctoToDo_MainFrame_OCTOREP:SetDontSavePosition(true)
 	OctoToDo_MainFrame_OCTOREP:SetClampedToScreen(false)
@@ -211,38 +229,116 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	OctoToDo_MainFrame_OCTOREP.view:RegisterCallback(OctoToDo_MainFrame_OCTOREP.view.Event.OnAcquiredFrame, func_OnAcquired, OctoToDo_MainFrame_OCTOREP) -- ПОФИКСИТЬ
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_OCTOREP.ScrollBox, OctoToDo_MainFrame_OCTOREP.ScrollBar, OctoToDo_MainFrame_OCTOREP.view)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_OCTOREP.ScrollBox, OctoToDo_MainFrame_OCTOREP.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
-	----------------------------------------------------------------
-end
-function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
-	local DataProvider = CreateTreeDataProvider()
-	C_Reputation.ExpandAllFactionHeaders()
-	-- local list = {}
-	-- for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
-	-- 	tinsert(list, reputationID)
-	-- end
-	-- sort(list, E.func_Reverse_order)
-	-- for index, reputationID in ipairs(list) do
-	-- 	local groupNode = DataProvider:Insert({reputationID = reputationID})
-	-- end
 
 
+	func_NumPlayers()
 
-
-	for i = 1, C_Reputation.GetNumFactions() do
-		local factionData = C_Reputation.GetFactionDataByIndex(i)
-		if factionData then
-			if (factionData.isHeaderWithRep or not factionData.isHeader) then
-				local groupNode = DataProvider:Insert({reputationID = factionData.factionID})
-			end
+	for count, CharInfo in next, (sorted) do
+		local curCharFrame = CreateFrame("Frame", nil, OctoToDo_MainFrame_OCTOREP, "BackdropTemplate")
+		curCharFrame:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_OCTOREP, "TOPLEFT", (AddonLeftFrameWeight-curWidthTitle)+(curWidthTitle*count), 0)
+		curCharFrame:SetSize(curWidthTitle, AddonHeight)
+		curCharFrame.text = curCharFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		curCharFrame.text:SetPoint("CENTER", curCharFrame, "CENTER", 0, 0)
+		curCharFrame.text:SetFontObject(OctoFont11)
+		curCharFrame.text:SetJustifyV("MIDDLE")
+		curCharFrame.text:SetJustifyH("CENTER")
+		curCharFrame.text:SetTextColor(1, 1, 1, 1)
+		curCharFrame.text:SetText(CharInfo.classColorHex .. CharInfo.Name .. "|r")
+		if CharInfo.Faction == "Horde" then
+			E:func_SetBackdrop(curCharFrame, "|cfff01e38", E.bgCaOverlay*2, 0)
+		else
+			E:func_SetBackdrop(curCharFrame, "|cff0070DD", E.bgCaOverlay*2, 0)
 		end
+		-- if sorted[count] and sorted[count].Name ~= CharInfo.Name then
+		-- 	print (CharInfo.Name)
+		-- 	curCharFrame:Hide()
+		-- end
 	end
 
 
 
 
+	----------------------------------------------------------------
+end
+function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
+	C_Reputation.ExpandAllFactionHeaders()
+	--------------------------------------------
+	-- ВСЯ РЕПУТАЦИЯ
+	--------------------------------------------
+	-- local list = {}
+	-- for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
+	--     tinsert(list, reputationID)
+	-- end
+	-- sort(list, E.func_Reverse_order)
+	-- for index, reputationID in ipairs(list) do
+	--     local groupNode = DataProvider:Insert({reputationID = reputationID})
+	-- end
+	--------------------------------------------
+	-- ТЕКУЩАЯ РЕПУТАЦИЯ ПЕРСА
+	--------------------------------------------
+	-- for i = 1, C_Reputation.GetNumFactions() do
+	--     local factionData = C_Reputation.GetFactionDataByIndex(i)
+	--     if factionData then
+	--         if (factionData.isHeaderWithRep or not factionData.isHeader) then
+	--             local groupNode = DataProvider:Insert({reputationID = factionData.factionID})
+	--         end
+	--     end
+	-- end
+	--------------------------------------------
+	-- В НАСТРОЙКАХ (ПОФИКСИТь)
+	--------------------------------------------
+	-- local list = {}
+	-- wipe(list)
+	-- for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
+	--     table.insert(list, reputationHEADER)
+	--     for reputationID, config in next, (tbl) do
+	--         table.insert(list, reputationID)
+	--     end
+	-- end
+	-- sort(list, E.func_Reverse_order)
+	-- for index, reputationID in ipairs(list) do
+	--     local groupNode = DataProvider:Insert({reputationID = reputationID})
+	-- end
 
 
 
+
+	-- for _, CharInfo in next, (sorted) do
+	--     for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
+	--         if CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" and CharInfo.MASLENGO.reputationID[reputationID] ~= nil then
+
+	--             -- local groupNode = DataProvider:Insert({reputationID = reputationID, vivod = CharInfo.MASLENGO.reputationID[reputationID]})
+	--             CENT
+	--             CENT = {reputationID = reputationID, vivod = CharInfo.MASLENGO.reputationID[reputationID]}
+
+	--         end
+	--     end
+	-- end
+	local DataProvider = CreateTreeDataProvider()
+	for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do -- OctoTable_FACTIONTABLE
+		local vivod = {}
+		for CharIndex, CharInfo in ipairs(sorted) do
+			if CharInfo.MASLENGO.reputationID[reputationID] ~= nil then
+				vivod[CharIndex] = CharInfo.MASLENGO.reputationID[reputationID]
+			else
+				vivod[CharIndex] = "NONE"
+			end
+		end
+		local groupNode = DataProvider:Insert({
+				reputationID = reputationID,
+				vivod = vivod,
+		})
+	end
+
+	-- fpde(CENT)
+
+
+
+	-- local groupNode = DataProvider:Insert({reputationID = reputationID, vivod = CharInfo.MASLENGO.reputationID[reputationID]})
+	--------------------------------------------
+	--------------------------------------------
+	--------------------------------------------
+	OctoToDo_MainFrame_OCTOREP:SetSize(AddonLeftFrameWeight+curWidthTitle*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOREP.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
 ----------------------------------------------------------------
@@ -256,23 +352,23 @@ end
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_REGEN_DISABLED",
-	"UPDATE_FACTION",
-	"PLAYER_REGEN_ENABLED",
 }
 E.RegisterMyEventsToFrames(OctoToDo_EventFrame_OCTOREP, MyEventsTable, E.func_DebugPath())
 function OctoToDo_EventFrame_OCTOREP:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
-		self.func_CheckWTF()
+		self:func_CheckWTF()
 		----------------------------------------------------------------
 		self:OctoToDo_Create_MainFrame_AddonsManager()
 		self:func_CreateMyDataProvider()
-		self:CreateTrackedFrame()
 		----------------------------------------------------------------
-		E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOREP, "OCTOREP")
+		E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOREP, "OCTOREP", AddonHeight, AddonHeight)
 		E:func_CreateMinimapButton(GlobalAddonName, "OCTOREP", OctoToDo_OCTOREP, OctoToDo_MainFrame_OCTOREP, nil, "OctoToDo_MainFrame_OCTOREP")
 		----------------------------------------------------------------
+		OctoToDo_MainFrame_OCTOREP:SetScript("OnShow", function()
+				OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider() -- ПОФИКСИТЬ (HAS ANY CHANGE)
+		end)
 	end
 end
 ----------------------------------------------------------------
@@ -281,16 +377,6 @@ function OctoToDo_EventFrame_OCTOREP:PLAYER_REGEN_DISABLED()
 		OctoToDo_MainFrame_OCTOREP:Hide()
 	end
 end
-function OctoToDo_EventFrame_OCTOREP:UPDATE_FACTION()
-	if TrackedFrame and TrackedFrame:IsShown() then
-		self:TrackedFrame_OnEvent()
-	end
-end
 
 
 
-function OctoToDo_EventFrame_OCTOREP:PLAYER_REGEN_ENABLED()
-	if TrackedFrame and TrackedFrame:IsShown() then
-		self:TrackedFrame_OnEvent()
-	end
-end

@@ -116,4 +116,3 @@ function OctoToDo_EventFrame:PLAYER_REGEN_ENABLED()
 	self:ItemsDeleteFrame()
 	----------------------------------------------------------------
 end
-

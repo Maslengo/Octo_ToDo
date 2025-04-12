@@ -27,8 +27,6 @@ tinsert(E.Modules, function()
 				EventFrame_SPB:RegisterEvent("EQUIP_BIND_TRADEABLE_CONFIRM")
 				-- EventFrame_SPB:RegisterEvent("CONFIRM_BINDER")
 				-- EventFrame_SPB:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
-
-
 				-- EventFrame_SPB:RegisterEvent("CONVERT_TO_BIND_TO_ACCOUNT_CONFIRM") --sequre
 				-- EventFrame_SPB:RegisterEvent("SPELL_CONFIRMATION_PROMPT") --block
 			end

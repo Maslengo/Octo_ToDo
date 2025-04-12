@@ -18,6 +18,7 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		f:SetBackdropBorderColor(0, 0, 0, 1)
 		return f
 end)
+local sorted = {}
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- E.func_LoadAddOn("OctoToDo_Achievements")
@@ -74,9 +75,6 @@ function OctoToDo_EventFrame_OCTOMAIN:ConcatAtStart()
 	for _, reputationID in next, (E.OctoTable_reputation_ALL) do
 		OctoToDo_DB_Config.ReputationDB[reputationID] = OctoToDo_DB_Config.ReputationDB[reputationID] or false
 	end
-	for _, questID in next, (E.OctoTable_QuestID) do
-		OctoToDo_DB_Config.QuestsDB[questID] = OctoToDo_DB_Config.QuestsDB[questID] or false
-	end
 end
 function E:func_checkCharInfo()
 	local Meta_Table_0 = {__index = function() return 0 end}
@@ -109,38 +107,98 @@ function E:func_checkCharInfo()
 			CharInfo.MASLENGO = CharInfo.MASLENGO or {}
 			CharInfo.UniversalQuest = nil
 			CharInfo.MASLENGO.UniversalQuest = CharInfo.MASLENGO.UniversalQuest or {}
-			CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
-			CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
-			CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
+			----------------------------------------------------------------
+			----------------------------------------------------------------
 			CharInfo.MASLENGO.ItemsInBag = CharInfo.MASLENGO.ItemsInBag or {}
-			CharInfo.MASLENGO.professions = CharInfo.MASLENGO.professions or {}
-			CharInfo.MASLENGO.reputationID = CharInfo.MASLENGO.reputationID or {}
+			for iID, value in next, (CharInfo.MASLENGO.ItemsInBag) do
+				if value == 0 then
+					print ("TRY TO WIPE ItemsInBag", iID, value)
+					CharInfo.MASLENGO.ItemsInBag[iID] = nil
+				end
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
+			for iID, value in next, (CharInfo.MASLENGO.CurrencyID) do
+				if value == 0 then
+					print ("TRY TO WIPE CurrencyID", iID, value)
+					CharInfo.MASLENGO.CurrencyID[iID] = nil
+				end
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
+			for iID, value in next, (CharInfo.MASLENGO.CurrencyID_Total) do
+				if value == 0 then
+					print ("TRY TO WIPE CurrencyID_Total", iID, value)
+					CharInfo.MASLENGO.CurrencyID_Total[iID] = nil
+				end
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
+			for iID, value in next, (CharInfo.MASLENGO.CurrencyID_totalEarned) do
+				if value == 0 then
+					print ("TRY TO WIPE CurrencyID_totalEarned", iID, value)
+					CharInfo.MASLENGO.CurrencyID_totalEarned[iID] = nil
+				end
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
 			CharInfo.MASLENGO.OctoTable_QuestID = CharInfo.MASLENGO.OctoTable_QuestID or {}
+			for iID, value in next, (CharInfo.MASLENGO.OctoTable_QuestID) do
+				if (value == 0 or value == E.NONE) then
+					print ("TRY TO WIPE OctoTable_QuestID", iID, value)
+					CharInfo.MASLENGO.OctoTable_QuestID[iID] = nil
+				end
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+
+			CharInfo.LFGInstance = CharInfo.LFGInstance or {}
+			for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
+				if dungeonID then
+					CharInfo.LFGInstance[dungeonID] = CharInfo.LFGInstance[dungeonID] or {}
+					if (CharInfo.LFGInstance[dungeonID].donetoday == E.NONE) then
+						print ("TRY TO WIPE LFGInstance donetoday", dungeonID, name)
+						CharInfo.LFGInstance[dungeonID].donetoday = nil
+
+					end
+				end
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			CharInfo.Chromie_name = CharInfo.Chromie_name or nil
+			if CharInfo.Chromie_name == 0 or CharInfo.Chromie_name == "" or CharInfo.Chromie_name == E.NONE then
+				print ("TRY TO WIPE Chromie_name")
+				CharInfo.Chromie_name = nil
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			CharInfo.MASLENGO.reputationID = CharInfo.MASLENGO.reputationID or {}
+			for iID, value in next, (CharInfo.MASLENGO.reputationID) do
+				if (value == 0 or value == "") then
+					print ("TRY TO WIPE reputationID", iID, value)
+					CharInfo.MASLENGO.reputationID[iID] = nil
+				end
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			CharInfo.islandBfA = CharInfo.islandBfA or nil
+			if CharInfo.islandBfA == 0 or CharInfo.islandBfA == "" or CharInfo.islandBfA == E.NONE then
+				print ("TRY TO WIPE islandBfA")
+				CharInfo.islandBfA = nil
+			end
+			-- CharInfo.islandBfA = CharInfo.islandBfA or E.NONE
+
+
+
+
+
+
+
+			CharInfo.MASLENGO.professions = CharInfo.MASLENGO.professions or {}
 			CharInfo.MASLENGO.Quests = CharInfo.MASLENGO.Quests or {}
-			if CharInfo.CurrencyID ~= nil then
-				CharInfo.MASLENGO.CurrencyID = CharInfo.CurrencyID
-				CharInfo.CurrencyID = nil
-			end
-			if CharInfo.CurrencyID_Total ~= nil then
-				CharInfo.MASLENGO.CurrencyID_Total = CharInfo.CurrencyID_Total
-				CharInfo.CurrencyID_Total = nil
-			end
-			if CharInfo.CurrencyID_totalEarned ~= nil then
-				CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.CurrencyID_totalEarned
-				CharInfo.CurrencyID_totalEarned = nil
-			end
-			if CharInfo.ItemsInBag ~= nil then
-				CharInfo.MASLENGO.ItemsInBag = CharInfo.ItemsInBag
-				CharInfo.ItemsInBag = nil
-			end
-			if CharInfo.reputationID ~= nil then
-				CharInfo.MASLENGO.reputationID = CharInfo.reputationID
-				CharInfo.reputationID = nil
-			end
-			if CharInfo.OctoTable_QuestID ~= nil then
-				CharInfo.MASLENGO.OctoTable_QuestID = CharInfo.OctoTable_QuestID
-				CharInfo.OctoTable_QuestID = nil
-			end
 			if CharInfo.time == nil and CharInfo.tmstp_Daily ~= nil then
 				CharInfo.time = CharInfo.tmstp_Daily
 			end
@@ -150,11 +208,9 @@ function E:func_checkCharInfo()
 				CharInfo.MASLENGO.professions[i].skillLevel = CharInfo.MASLENGO.professions[i].skillLevel or 0
 				CharInfo.MASLENGO.professions[i].maxSkillLevel = CharInfo.MASLENGO.professions[i].maxSkillLevel or 0
 			end
-			CharInfo.LFGInstance = CharInfo.LFGInstance or {}
-			CharInfo.MASLENGO.OctoTable_QuestID = CharInfo.MASLENGO.OctoTable_QuestID or {}
 			CharInfo.GreatVault = CharInfo.GreatVault or {}
 			for _, v in next, (E.OctoTable_UniversalQuest) do
-				CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] or E.NONE
+				CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] or nil
 			end
 			CharInfo.professions = nil
 			CharInfo.Shadowland = nil
@@ -195,7 +251,6 @@ function E:func_checkCharInfo()
 			CharInfo.IsPublicBuild = CharInfo.IsPublicBuild or E.IsPublicBuild
 			CharInfo.Chromie_canEnter = CharInfo.Chromie_canEnter or false
 			CharInfo.Chromie_UnitChromieTimeID = CharInfo.Chromie_UnitChromieTimeID or 0
-			CharInfo.Chromie_name = CharInfo.Chromie_name or ""
 			CharInfo.GameLimitedMode_IsActive = CharInfo.GameLimitedMode_IsActive or E.GameLimitedMode_IsActive
 			if CharInfo.levelCapped20 == nil then
 				CharInfo.levelCapped20 = false
@@ -242,15 +297,6 @@ function E:func_checkCharInfo()
 			CharInfo.STARTTODAY = CharInfo.STARTTODAY or 0
 			CharInfo.STARTWEEK = CharInfo.STARTWEEK or 0
 			CharInfo.STARTMONTH = CharInfo.STARTMONTH or 0
-
-
-
-
-
-
-			if CharInfo.isOnline == nil then
-				CharInfo.isOnline = false
-			end
 			CharInfo.MoneyOnLogin = CharInfo.MoneyOnLogin or 0
 			CharInfo.BindLocation = CharInfo.BindLocation or 0
 			CharInfo.CurrentLocation = CharInfo.CurrentLocation or 0
@@ -286,24 +332,12 @@ function E:func_checkCharInfo()
 				CharInfo.GreatVault[i].hyperlink_STRING = CharInfo.GreatVault[i].hyperlink_STRING or 0
 				CharInfo.GreatVault[i].type = CharInfo.GreatVault[i].type or ""
 			end
-			if type(CharInfo.MASLENGO.CurrencyID) == "number" then
-				CharInfo.MASLENGO.CurrencyID = {}
-			end
-			if type(CharInfo.MASLENGO.CurrencyID_Total) == "number" then
-				CharInfo.MASLENGO.CurrencyID_Total = {}
-			end
-			if type(CharInfo.MASLENGO.CurrencyID_totalEarned) == "number" then
-				CharInfo.MASLENGO.CurrencyID_totalEarned = {}
-			end
-			if type(CharInfo.MASLENGO.ItemsInBag) == "number" then
-				CharInfo.MASLENGO.ItemsInBag = {}
-			end
-			setmetatable(CharInfo.MASLENGO.OctoTable_QuestID, Meta_Table_NONE)
-			setmetatable(CharInfo.MASLENGO.CurrencyID, Meta_Table_0)
-			setmetatable(CharInfo.MASLENGO.CurrencyID_Total, Meta_Table_0)
-			setmetatable(CharInfo.MASLENGO.CurrencyID_totalEarned, Meta_Table_0)
-			setmetatable(CharInfo.MASLENGO.ItemsInBag, Meta_Table_0)
-			setmetatable(CharInfo.MASLENGO.reputationID, Meta_Table_0)
+			-- setmetatable(CharInfo.MASLENGO.OctoTable_QuestID, Meta_Table_NONE)
+			-- setmetatable(CharInfo.MASLENGO.CurrencyID, Meta_Table_0)
+			-- setmetatable(CharInfo.MASLENGO.CurrencyID_Total, Meta_Table_0)
+			-- setmetatable(CharInfo.MASLENGO.CurrencyID_totalEarned, Meta_Table_0)
+			-- setmetatable(CharInfo.MASLENGO.ItemsInBag, Meta_Table_0)
+			-- setmetatable(CharInfo.MASLENGO.reputationID, Meta_Table_0)
 			if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
 				for i = 1, #CharInfo.GreatVault do
 					if CharInfo.GreatVault[i] and CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
@@ -314,7 +348,7 @@ function E:func_checkCharInfo()
 				end
 			end
 			if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.MASLENGO.UniversalQuest.Octopussy_DF_Weekly_CommunityFeast_count == E.DONE then
-				CharInfo.Octopussy_DF_Weekly_CommunityFeast_count = E.NONE
+				CharInfo.Octopussy_DF_Weekly_CommunityFeast_count = nil
 			end
 			if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
 				CharInfo.tmstp_Weekly = E.func_tmstpDayReset(7)
@@ -327,7 +361,6 @@ function E:func_checkCharInfo()
 				CharInfo.RIO_weeklyBest_TWW_S1 = 0
 				CharInfo.GreatVault = {}
 				CharInfo.STARTWEEK = 0
-
 				for i = 1, #CharInfo.GreatVault do
 					if CharInfo.GreatVault[i] then
 						CharInfo.GreatVault[i] = {}
@@ -339,7 +372,7 @@ function E:func_checkCharInfo()
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					for q, w in next, (v) do
 						if w == "Weekly" then
-							CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Weekly"] = E.NONE
+							CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Weekly"] = nil
 						end
 					end
 				end
@@ -350,7 +383,7 @@ function E:func_checkCharInfo()
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					for q, w in next, (v) do
 						if w == "Daily" then
-							CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Daily"] = E.NONE
+							CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Daily"] = nil
 						end
 					end
 				end
@@ -360,7 +393,7 @@ function E:func_checkCharInfo()
 			for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
 				CharInfo.LFGInstance[dungeonID] = CharInfo.LFGInstance[dungeonID] or {}
 				CharInfo.LFGInstance[dungeonID].D_name = CharInfo.LFGInstance[dungeonID].D_name or name
-				CharInfo.LFGInstance[dungeonID].donetoday = CharInfo.LFGInstance[dungeonID].donetoday or E.NONE
+				CharInfo.LFGInstance[dungeonID].donetoday = CharInfo.LFGInstance[dungeonID].donetoday or nil
 			end
 			if (CharInfo.tmstp_Month or 0) < GetServerTime() then
 				CharInfo.tmstp_Month = E.func_tmstpDayReset(30)
@@ -369,7 +402,7 @@ function E:func_checkCharInfo()
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					for q, w in next, (v) do
 						if w == "Month" then
-							CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Month"] = E.NONE
+							CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Month"] = nil
 						end
 					end
 				end
@@ -397,7 +430,7 @@ local function func_NumPlayers()
 	local LevelToShow = OctoToDo_DB_Vars.LevelToShow
 	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
 	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
-	local sorted = {}
+	sorted = {}
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		if ShowOnlyCurrentBattleTag == true then
 			if (ShowOnlyCurrentServer == true
@@ -483,7 +516,9 @@ local function func_OnAcquired(owner, frame, data, new)
 		------------------------------------------------
 	end
 end
--- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ
+----------------------------------------------------------------
+----------------------------------------------------------------
+-- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 local function OctoToDo_Frame_init(frame, data)
 	if data.firsticonTexture then
 		frame.first.icon:SetTexture(data.firsticonTexture)
@@ -495,6 +530,7 @@ local function OctoToDo_Frame_init(frame, data)
 		E:func_SetBackdrop(frame.left, "|cff000000", E.bgCaOverlay, 0)
 	end
 	E:func_SetBackdrop(frame.left, data.BGcolor, E.bgCaOverlay, 0)
+
 	for NumPlayers = 1, #data do
 		frame.cent[NumPlayers].text:SetText(data[NumPlayers][1])
 		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
@@ -568,58 +604,42 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	OctoToDo_MainFrame_OCTOMAIN:SetScript("OnClick", function(self) self:Hide() end)
 	----------------------------------------------------------------
 	self:func_DataProvider()
+
+
+
+	for count, CharInfo in next, (sorted) do
+		local curCharFrame = CreateFrame("Frame", nil, OctoToDo_MainFrame_OCTOMAIN, "BackdropTemplate")
+		curCharFrame:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_OCTOMAIN, "TOPLEFT", (AddonLeftFrameWeight-AddonRightFrameWeight)+(AddonRightFrameWeight*count), 0)
+		curCharFrame:SetSize(AddonRightFrameWeight, AddonHeight)
+		curCharFrame.text = curCharFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		curCharFrame.text:SetPoint("CENTER", curCharFrame, "CENTER", 0, 0)
+		curCharFrame.text:SetFontObject(OctoFont11)
+		curCharFrame.text:SetJustifyV("MIDDLE")
+		curCharFrame.text:SetJustifyH("CENTER")
+		curCharFrame.text:SetTextColor(1, 1, 1, 1)
+		curCharFrame.text:SetText(CharInfo.classColorHex .. CharInfo.Name .. "|r")
+		if CharInfo.Faction == "Horde" then
+			E:func_SetBackdrop(curCharFrame, "|cfff01e38", E.bgCaOverlay*2, 0)
+		else
+			E:func_SetBackdrop(curCharFrame, "|cff0070DD", E.bgCaOverlay*2, 0)
+		end
+		-- if sorted[count] and sorted[count].Name ~= CharInfo.Name then
+		-- 	print (CharInfo.Name)
+		-- 	curCharFrame:Hide()
+		-- end
+	end
+	-- fpde(sorted)
+
 end
+
+
 function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
 	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
 	local LevelToShow = OctoToDo_DB_Vars.LevelToShow
 	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
 	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
-	local sorted = {}
-	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
-		if ShowOnlyCurrentBattleTag == true then
-			if (ShowOnlyCurrentServer == true
-				and (CharInfo.curServer == E.curServer)
-				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.avgItemLevel >= itemLevelToShow)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (ShowOnlyCurrentServer == false
-				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.avgItemLevel >= itemLevelToShow)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (E.curGUID == CharInfo.GUID) then
-				sorted[#sorted+1] = CharInfo
-			end
-		else
-			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.avgItemLevel >= itemLevelToShow)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (ShowOnlyCurrentServer == false
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.avgItemLevel >= itemLevelToShow)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (E.curGUID == CharInfo.GUID) then
-				sorted[#sorted+1] = CharInfo
-			end
-		end
-	end
-	sort(sorted, function(b, a)
-			if a and b then
-				return
-				a.UnitLevel < b.UnitLevel or a.UnitLevel == b.UnitLevel
-				and
-				a.avgItemLevel < b.avgItemLevel or a.avgItemLevel == b.avgItemLevel
-				and
-				b.Name < a.Name
-			end
-	end)
+	func_NumPlayers()
 	local OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT = E:func_Otrisovka()
 	local CENT = {}
 	for i, func in ipairs(OctoTable_func_otrisovkaCENT) do
@@ -643,6 +663,11 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonRightFrameWeight*func_NumPlayers(), AddonHeight*MainFrameNumLines)
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
+
+
+
+
+
 function E.Update(event_name)
 	--OctoToDo_DB_Vars.DebugFunction
 	local updateScheduled = false
@@ -1044,7 +1069,6 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Levels == nil then OctoToDo_DB_Levels = {} end
 		if OctoToDo_DB_Other == nil then OctoToDo_DB_Other = {} end
 		if OctoToDo_DB_Config.CurrencyDB == nil then OctoToDo_DB_Config.CurrencyDB = {} end
-		if OctoToDo_DB_Config.QuestsDB == nil then OctoToDo_DB_Config.QuestsDB = {} end
 		if OctoToDo_DB_Config.ReputationDB == nil then OctoToDo_DB_Config.ReputationDB = {} end
 		if OctoToDo_DB_Other.AccountMoney == nil then OctoToDo_DB_Other.AccountMoney = {} end
 		if OctoToDo_DB_Other.AccountMoney[E.BattleTagLocal] == nil then OctoToDo_DB_Other.AccountMoney[E.BattleTagLocal] = 0 end
@@ -1145,6 +1169,15 @@ function OctoToDo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 		if OctoToDo_DB_Vars.SpeedFrame.relativePoint == nil then OctoToDo_DB_Vars.SpeedFrame.relativePoint = "BOTTOM" end
 		if OctoToDo_DB_Vars.SpeedFrame.xOfs == nil then OctoToDo_DB_Vars.SpeedFrame.xOfs = 129 end
 		if OctoToDo_DB_Vars.SpeedFrame.yOfs == nil then OctoToDo_DB_Vars.SpeedFrame.yOfs = 67 end
+
+		if OctoToDo_DB_Vars.PosFrame == nil then OctoToDo_DB_Vars.PosFrame = {} end
+		if OctoToDo_DB_Vars.PosFrame.Shown == nil then OctoToDo_DB_Vars.PosFrame.Shown = true end
+		if OctoToDo_DB_Vars.PosFrame.point == nil then OctoToDo_DB_Vars.PosFrame.point = "BOTTOM" end
+		if OctoToDo_DB_Vars.PosFrame.relativePoint == nil then OctoToDo_DB_Vars.PosFrame.relativePoint = "BOTTOM" end
+		if OctoToDo_DB_Vars.PosFrame.xOfs == nil then OctoToDo_DB_Vars.PosFrame.xOfs = 129 end
+		if OctoToDo_DB_Vars.PosFrame.yOfs == nil then OctoToDo_DB_Vars.PosFrame.yOfs = 67 end
+
+
 		if OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag == nil then OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag = false end
 		if OctoToDo_DB_Vars.ShowOnlyCurrentServer == nil then OctoToDo_DB_Vars.ShowOnlyCurrentServer = true end
 		if OctoToDo_DB_Vars.ShowTime70 == nil then OctoToDo_DB_Vars.ShowTime70 = true end
@@ -1181,8 +1214,6 @@ function OctoToDo_EventFrame_OCTOMAIN:VARIABLES_LOADED()
 		----------------------------------------------------------------
 	end
 end
-
-
 function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
@@ -1220,17 +1251,18 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	local realLevelTime = 0
 	local totalSTARTTODAY = 0
 	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
-		totalReload = totalReload + CharInfo.ReloadCount
+		if CharInfo.ReloadCount ~= nil then
+			totalReload = totalReload + CharInfo.ReloadCount
+		end
 		if CharInfo.curServer == E.curServer then
 			totalMoney = totalMoney + CharInfo.Money
 			realTotalTime = realTotalTime + (CharInfo.realTotalTime)
 			TodayTimePlayedtotal = TodayTimePlayedtotal + CharInfo.TodayTimePlayed
-
 			if CharInfo.UnitLevel >= E.currentMaxLevel then
 				realLevelTime = realLevelTime + CharInfo.realLevelTime
 			end
 		end
-		if CharInfo.STARTTODAY ~= 0 then
+		if CharInfo.STARTTODAY ~= 0 and CharInfo.STARTTODAY ~= nil then
 			totalSTARTTODAY = totalSTARTTODAY + (GetServerTime()-CharInfo.STARTTODAY)
 		end
 	end
@@ -1238,13 +1270,10 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	E.func_CreateInfoFrame("Reloads: "..E.classColorHexCurrent..totalReload.."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*1, AddonLeftFrameWeight, AddonHeight)
 	E.func_CreateInfoFrame("realTotalTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realTotalTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight)
 	E.func_CreateInfoFrame(COMMUNITIES_CALENDAR_TODAY..": "..E.classColorHexCurrent..E.func_SecondsToClock(totalSTARTTODAY).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
-
-
-
 	if realLevelTime ~= 0 then
 		E.func_CreateInfoFrame("realLevelTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realLevelTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
 	end
-	E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN, "Core")
+	E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN, "Core", AddonHeight, AddonHeight)
 	E:func_CreateMinimapButton(GlobalAddonName, "Core", OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function()
 			OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 			RequestRaidInfo()
@@ -1269,14 +1298,11 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 			end)
 			-- promise:FailWithChecked(function(...) print (...) end)
 	end)
-
-
 	C_Timer.NewTicker(1, function()
 		if OctoToDo_MainFrame_OCTOMAIN:IsShown() then
 			E.Collect_All_STARTTODAY()
 		end
 	end)
-
 end
 function OctoToDo_EventFrame_OCTOMAIN:SHOW_SUBSCRIPTION_INTERSTITIAL()
 	if not InCombatLockdown() then

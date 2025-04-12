@@ -49,8 +49,20 @@ E.First_Option = {
 	[199198] = true,
 	[56592] = true,
 	[188246] = true,
-	[206941] = true
+	[206941] = true,
 }
-E.Second_Option = {[201398] = true, [56591] = true}
-E.Third_Option = {[56585] = true, [191156] = true, [188601] = true}
-E.Fourth_Option = {[54959] = true}
+
+E.Second_Option = {
+	[201398] = true,
+	[56591] = true,
+}
+
+E.Third_Option = {
+	[56585] = true,
+	[191156] = true,
+	[188601] = true,
+}
+
+E.Fourth_Option = {
+	[54959] = true,
+}

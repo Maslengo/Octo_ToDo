@@ -164,7 +164,7 @@ function E.Collect_ALL_Player_Level()
 			if E.GameLimitedMode_IsActive == true then
 				if UnitLevel >= E.GetRestrictedAccountData_rLevel then
 					-- if MainStatusTrackingBarContainer and MainStatusTrackingBarContainer:IsShown() then
-					--     tinsert(E.OctoTable_MustBeHiddenFrames_table, {name = "MainStatusTrackingBarContainer", frame = MainStatusTrackingBarContainer})
+					-- tinsert(E.OctoTable_MustBeHiddenFrames_table, {name = "MainStatusTrackingBarContainer", frame = MainStatusTrackingBarContainer})
 					-- end
 					collect.levelCapped20 = true
 					collect.PlayerCanEarnExperience = false
@@ -180,7 +180,7 @@ end
 
 function E.Collect_ALL_Played(totalTime, currentLevelTime)
 	local collect = OctoToDo_DB_Levels[E.curGUID]
-	if collect  then
+	if collect then
 		collect.realTotalTime = totalTime
 		collect.realLevelTime = currentLevelTime
 	end
@@ -222,26 +222,18 @@ end
 function E.Collect_All_STARTTODAY()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect then
-		collect.isOnline = true
-		if collect.STARTTODAY == 0 then
+		if (collect.STARTTODAY == 0 or collect.STARTTODAY == nil) then
 			collect.STARTTODAY = time()
 		end
-		if collect.STARTWEEK == 0 then
+		if (collect.STARTWEEK == 0 or collect.STARTWEEK == nil) then
 			collect.STARTWEEK = time()
 		end
-		if collect.STARTMONTH == 0 then
+		if (collect.STARTMONTH == 0 or collect.STARTMONTH == nil) then
 			collect.STARTMONTH = time()
 		end
 	end
 end
 
-
-function E.Collect_ALL_END()
-	local collect = OctoToDo_DB_Levels[E.curGUID]
-	if collect then
-		collect.isOnline = false
-	end
-end
 
 
 function E.Collect_All_Professions()
@@ -285,19 +277,12 @@ function E.Collect_All_Professions()
 					collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEexpansionName = QWEexpansionName
 					collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEskillLevel = QWEskillLevel
 					collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEmaxSkillLevel = QWEmaxSkillLevel
-					-- collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEprofessionID = QWEprofessionID
-					-- collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEsourceCounter = QWEsourceCounter
-					-- collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEprofessionName = QWEprofessionName
-					-- collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEskillModifier = QWEskillModifier
-					-- collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEisPrimaryProfession = QWEisPrimaryProfession
-					-- collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEparentProfessionID = QWEparentProfessionID
-					-- collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEparentProfessionName = QWEparentProfessionName
 				end
 			end
 			-- if i ~= 2 then
-			--     collect.MASLENGO.professions[2] = {}
-			--     collect.MASLENGO.professions[2] = collect.MASLENGO.professions[2] or {}
-			--     print ("АЙ РАВНО НИЛ")
+			-- collect.MASLENGO.professions[2] = {}
+			-- collect.MASLENGO.professions[2] = collect.MASLENGO.professions[2] or {}
+			-- print ("АЙ РАВНО НИЛ")
 			-- end
 		end
 	end
@@ -426,32 +411,25 @@ function E.Collect_All_Currency()
 				local totalEarned = data.totalEarned
 				if isAccountWideCurrency == false then
 					if collect.MASLENGO and not InCombatLockdown() then
-						if type(collect.MASLENGO.CurrencyID) == "number" then
-							collect.MASLENGO.CurrencyID = {}
-						end
 						collect.MASLENGO.CurrencyID = collect.MASLENGO.CurrencyID or {}
-						if type(collect.MASLENGO.CurrencyID_totalEarned) == "number" then
-							collect.MASLENGO.CurrencyID_totalEarned = {}
-						end
 						collect.MASLENGO.CurrencyID_totalEarned = collect.MASLENGO.CurrencyID_totalEarned or {}
-						if type(collect.MASLENGO.CurrencyID_Total) == "number" then
-							collect.MASLENGO.CurrencyID_Total = {}
-						end
 						collect.MASLENGO.CurrencyID_Total = collect.MASLENGO.CurrencyID_Total or {}
-						if quantity then
+						if quantity ~= nil and quantity ~= 0 then
 							collect.MASLENGO.CurrencyID[CurrencyID] = quantity
 						end
-						if totalEarned then
+						if totalEarned ~= nil and totalEarned ~= 0 then
 							collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
 						end
-						if maxQuantity ~= 0 then
+						if maxQuantity ~= nil and maxQuantity ~= 0 then
 							if quantity ~= maxQuantity then
 								collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
 							else
 								collect.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
 							end
 						else
-							collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
+							if quantity ~= nil and quantity ~= 0 then
+								collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
+							end
 						end
 					end
 				else
@@ -461,40 +439,26 @@ function E.Collect_All_Currency()
 						tbl.MASLENGO.CurrencyID_totalEarned = tbl.MASLENGO.CurrencyID_totalEarned or {}
 						tbl.MASLENGO.CurrencyID_Total = tbl.MASLENGO.CurrencyID_Total or {}
 						if tbl and not InCombatLockdown() then
-							if type(tbl.MASLENGO.CurrencyID) == "number" then
-								tbl.MASLENGO.CurrencyID = {}
-							end
-							tbl.MASLENGO.CurrencyID = tbl.MASLENGO.CurrencyID or {}
-							if type(tbl.MASLENGO.CurrencyID_totalEarned) == "number" then
-								tbl.MASLENGO.CurrencyID_totalEarned = {}
-							end
-							tbl.MASLENGO.CurrencyID_totalEarned = tbl.MASLENGO.CurrencyID_totalEarned or {}
-							if type(tbl.MASLENGO.CurrencyID_Total) == "number" then
-								tbl.MASLENGO.CurrencyID_Total = {}
-							end
-							tbl.MASLENGO.CurrencyID_Total = tbl.MASLENGO.CurrencyID_Total or {}
-							if quantity then
+							if quantity ~= nil and quantity ~= 0 then
 								tbl.MASLENGO.CurrencyID[CurrencyID] = quantity
 							end
-							if totalEarned then
+							if totalEarned ~= nil and totalEarned ~= 0 then
 								tbl.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
 							end
-							if maxQuantity ~= 0 then
+							if maxQuantity ~= nil and maxQuantity ~= 0 then
 								if quantity ~= maxQuantity then
 									tbl.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
 								else
 									tbl.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
 								end
-							else
-								tbl.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
 							end
 						end
 					end
 				end
 			else
-				collect.MASLENGO.CurrencyID[CurrencyID] = 0
-				collect.MASLENGO.CurrencyID_Total[CurrencyID] = 0
-				collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = 0
+				collect.MASLENGO.CurrencyID[CurrencyID] = nil
+				collect.MASLENGO.CurrencyID_Total[CurrencyID] = nil
+				collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
 			end
 		end
 	end
@@ -528,10 +492,14 @@ function E.Collect_All_Reputations()
 			if reputationID then
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, tbl in next, (OctoToDo_DB_Levels) do
-						tbl.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID)
+						if (E.func_CheckReputationByRepID(reputationID) ~= "" and E.func_CheckReputationByRepID(reputationID) ~= 0 and E.func_CheckReputationByRepID(reputationID) ~= nil) then
+							tbl.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID)
+						end
 					end
 				else
-					collect.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID)
+					if (E.func_CheckReputationByRepID(reputationID) ~= "" and E.func_CheckReputationByRepID(reputationID) ~= 0 and E.func_CheckReputationByRepID(reputationID) ~= nil) then
+						collect.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID)
+					end
 				end
 			end
 		end
@@ -599,7 +567,11 @@ function E.Collect_ALL_ItemsInBag()
 		collect.MASLENGO.ItemsInBag = collect.MASLENGO.ItemsInBag or {}
 		for _, itemID in next, (E.OctoTable_itemID_ALL) do
 			local count = E.func_GetItemCount(itemID, true, true, true)
-			collect.MASLENGO.ItemsInBag[itemID] = count
+			if count ~= 0 then
+				collect.MASLENGO.ItemsInBag[itemID] = count
+			else
+				collect.MASLENGO.ItemsInBag[itemID] = nil
+			end
 		end
 		collect.Possible_Anima = Possible_Anima
 		collect.Possible_CatalogedResearch = Possible_CatalogedResearch
@@ -609,45 +581,6 @@ function E.Collect_ALL_ItemsInBag()
 	end
 end
 
-
-function E.Collect_ALL_TRASH_EncounterAndZoneLists()
-	if OctoToDo_TrashCan then
-		local clear = false
-		if clear == true then
-			OctoToDo_TrashCan.EncounterAndZoneLists = {}
-		else
-			OctoToDo_TrashCan.EncounterAndZoneLists = OctoToDo_TrashCan.EncounterAndZoneLists or {}
-			for tier = 1, EJ_GetNumTiers() do
-				EJ_SelectTier(tier)
-				local tierName = EJ_GetTierInfo(tier)
-				OctoToDo_TrashCan.EncounterAndZoneLists[tierName] = OctoToDo_TrashCan.EncounterAndZoneLists[tierName] or {}
-				for _, inRaid in next, ({false, true}) do
-					local instance_index = 1
-					local instance_id = EJ_GetInstanceByIndex(instance_index, inRaid)
-					local title = ("%s"):format(inRaid and RAIDS or DUNGEONS)
-					OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title] = OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title] or {}
-					while instance_id do
-						EJ_SelectInstance(instance_id)
-						local instance_name, _, _, _, _, icon, dungeonAreaMapID = EJ_GetInstanceInfo(instance_id)
-						OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name] = OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name] or {}
-						if dungeonAreaMapID and dungeonAreaMapID ~= 0 then
-							local mapGroupId = C_Map.GetMapGroupID(dungeonAreaMapID)
-							if mapGroupId then
-								OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].ZoneID = tostringall("g"..mapGroupId)
-							else
-								OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].ZoneID = dungeonAreaMapID
-							end
-							OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].instance_id = instance_id
-							OctoToDo_TrashCan.EncounterAndZoneLists[tierName][title][instance_name].icon = icon
-						end
-						instance_index = instance_index + 1
-						instance_id = EJ_GetInstanceByIndex(instance_index, inRaid)
-					end
-				end
-			end
-		end
-	end
-end
 
 
 function E.Collect_ALL_Locations()
@@ -670,30 +603,16 @@ function E.Collect_All_Quests()
 	if collect and not InCombatLockdown() then
 		local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
 		local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
-		for questID, v in next, (OctoToDo_DB_Config.QuestsDB) do
+		for questID, v in next, (E.OctoTable_QuestID) do
 			local vivod = E.func_CheckCompletedByQuestID(questID)
-			collect.MASLENGO.OctoTable_QuestID[questID] = vivod
+			if vivod ~= E.NONE then
+				collect.MASLENGO.OctoTable_QuestID[questID] = vivod
+			end
 		end
 		collect.numShownEntries = numShownEntries or 0
 		collect.numQuests = E.func_CurrentNumQuests()
 		collect.maxNumQuestsCanAccept = maxNumQuestsCanAccept or 0
 	end
-	-- local tblHeader
-	-- collect.MASLENGO.Quests = {}
-	-- for i = 1, numShownEntries do
-	--     if E.func_CurrentNumQuests() ~= 0 then
-	--         local info = C_QuestLog.GetInfo(i)
-	--         if info then
-	--             if info.isHeader then
-	--                 collect.MASLENGO.Quests[info.title] = collect.MASLENGO.Quests[info.title] or {}
-	--                 tblHeader = collect.MASLENGO.Quests[info.title]
-	--             else
-	--                 tblHeader[info.title] = tblHeader[info.title] or E.func_CheckCompletedByQuestID(info.questID)
-	--             end
-	--         end
-	--     end
-	-- end
-	-- fpde(collect.MASLENGO.Quests)
 end
 
 
@@ -715,7 +634,7 @@ function E.Collect_ALL_UNIVERSALQuestUpdate()
 		for i, v in next, (E.OctoTable_UniversalQuest) do
 			for _, w in next, (v) do
 				local count = 0
-				local vivod = E.NONE
+				local vivod = nil
 				for _, questID in next, (v.questID) do
 					if v.max > 1 then
 						if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
@@ -770,20 +689,20 @@ function E.Collect_All_journalInstance()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		-- if ((GetNumSavedInstances() + GetNumSavedWorldBosses() > 0) and not RaidInfoFrame:IsVisible()) then
-		--     ToggleRaidFrame()
-		--     RaidInfoFrame:Show()
+		-- ToggleRaidFrame()
+		-- RaidInfoFrame:Show()
 		-- end
 		-- if (not RaidFrame:IsVisible()) then
-		--     ToggleRaidFrame()
+		-- ToggleRaidFrame()
 		-- end
 		-- if RaidFrame:IsVisible() then
-		--     HideUIPanel(RaidFrame)
+		-- HideUIPanel(RaidFrame)
 		-- end
 		-- if FriendsFrame:IsVisible() then
-		--     HideUIPanel(FriendsFrame)
+		-- HideUIPanel(FriendsFrame)
 		-- end
 		-- if RaidInfoFrame:IsVisible() then
-		--     HideUIPanel(RaidInfoFrame)
+		-- HideUIPanel(RaidInfoFrame)
 		-- end
 		local NumSavedInstances = GetNumSavedInstances()
 		local NumSavedWorldBosses = GetNumSavedWorldBosses()
@@ -864,7 +783,7 @@ function E.Collect_All_journalInstance()
 				if donetoday == true then
 					collect.LFGInstance[dungeonID].donetoday = E.DONE
 				else
-					collect.LFGInstance[dungeonID].donetoday = E.NONE
+					collect.LFGInstance[dungeonID].donetoday = nil
 				end
 			end
 		end
@@ -929,18 +848,6 @@ function E.Collect_All_Holiday()
 				local id = event.eventID
 				E.HolidayForButton[id] = E.HolidayForButton[id] or {}
 				E.HolidayForButton[id].title = event.title -- E.func_EventName(id)
-				if OctoToDo_TrashCan then
-					OctoToDo_TrashCan.HolidayCollectID = OctoToDo_TrashCan.HolidayCollectID or {}
-					-- wipe(OctoToDo_TrashCan.HolidayCollectID)
-					OctoToDo_TrashCan.HolidayCollectID[id] = OctoToDo_TrashCan.HolidayCollectID[id] or {}
-					OctoToDo_TrashCan.HolidayCollectID[id][locale] = OctoToDo_TrashCan.HolidayCollectID[id][locale] or {}
-					OctoToDo_TrashCan.HolidayCollectID[id][locale] = event.title
-					OctoToDo_TrashCan.HolidayCollectName = OctoToDo_TrashCan.HolidayCollectName or {}
-					-- wipe(OctoToDo_TrashCan.HolidayCollectName)
-					OctoToDo_TrashCan.HolidayCollectName[locale] = OctoToDo_TrashCan.HolidayCollectName[locale] or {}
-					OctoToDo_TrashCan.HolidayCollectName[locale][event.title] = OctoToDo_TrashCan.HolidayCollectName[locale][event.title] or {}
-					OctoToDo_TrashCan.HolidayCollectName[locale][event.title][id] = OctoToDo_TrashCan.HolidayCollectName[locale][event.title][id] or true
-				end
 				local startTime = event.startTime
 				local endTime = event.endTime
 				local startTime_year = startTime.year
@@ -981,7 +888,7 @@ function E.Collect_All_Holiday()
 				end
 				E.HolidayForButton[id].invitedBy = event.invitedBy
 				-- if id == 244009 then
-				--     print (event.title, startTime, startTime_monthDay, event_duration)
+				-- print (event.title, startTime, startTime_monthDay, event_duration)
 				-- end
 				if not E.HolidayForButton[id].priority then
 					E.HolidayForButton[id].priority = priority
@@ -1075,7 +982,9 @@ function E.Collect_All_BfA_Island()
 	if collect and not InCombatLockdown() then
 		local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
 		if questID then
-			collect.islandBfA = E.func_CheckCompletedByQuestID(questID)
+			if E.func_CheckCompletedByQuestID(questID) ~= E.NONE then
+				collect.islandBfA = E.func_CheckCompletedByQuestID(questID)
+			end
 		end
 	end
 end
@@ -1088,7 +997,7 @@ function E.Collect_All_Chromie()
 		collect.Chromie_inChromieTime = C_PlayerInfo.IsPlayerInChromieTime()
 		collect.Chromie_canEnter = C_PlayerInfo.CanPlayerEnterChromieTime()
 		collect.Chromie_UnitChromieTimeID = UnitChromieTimeID("player")
-		collect.Chromie_name = E.NONE
+		collect.Chromie_name = nil
 		collect.GameLimitedMode_IsActive = E.GameLimitedMode_IsActive
 		for i = 1, #expansionOptions do
 			if expansionOptions[i].id == UnitChromieTimeID("player") then
@@ -1184,7 +1093,6 @@ function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_BfA_Azerite()
 	E.Collect_All_BfA_Cloaklvl()
 	E.Collect_All_BfA_Island()
-	E.Collect_ALL_TRASH_EncounterAndZoneLists()
 	E.Collect_All_STARTTODAY()
 	RequestRaidInfo()
 	E.Update("ADDON_LOADED")
@@ -1310,7 +1218,6 @@ function OctoToDo_EventFrame_Collect:PLAYER_LEAVING_WORLD()
 		self.PLAYER_LEAVING_WORLD = nil
 		E.Collect_ALL_GreatVault()
 		E.Collect_ALL_LoginTime()
-		E.Collect_ALL_END()
 	end
 end
 

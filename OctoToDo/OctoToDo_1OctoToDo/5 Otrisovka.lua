@@ -58,7 +58,7 @@ function E:func_Otrisovka()
 				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.classColorHex..(E.func_SecondsToClock(CharInfo.realTotalTime)).."|r")}
 				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.classColorHex..(E.func_SecondsToClock(CharInfo.realLevelTime)).."|r")}
 			end
-			if CharInfo.MASLENGO.ItemsInBag[122284] ~= 0 then
+			if CharInfo.MASLENGO.ItemsInBag[122284] ~= nil then
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {E.func_itemTexture(122284)..E.func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 			end
@@ -72,7 +72,9 @@ function E:func_Otrisovka()
 				tooltip[#tooltip+1] = {"hasMail", CharInfo.hasMail and E.func_texturefromIcon(E.Icon_MailBox)..CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
 				tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
 				tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID.."|r"}
-				tooltip[#tooltip+1] = {"Chromie_name", CharInfo.classColorHex..CharInfo.Chromie_name.."|r"}
+				if CharInfo.Chromie_name ~= nil then
+					tooltip[#tooltip+1] = {"Chromie_name", CharInfo.classColorHex..CharInfo.Chromie_name.."|r"}
+				end
 				tooltip[#tooltip+1] = {"BattleTag", E.Blue_Color..CharInfo.BattleTag.."|r"}
 				tooltip[#tooltip+1] = {"BattleTagLocal", E.Blue_Color..CharInfo.BattleTagLocal.."|r"}
 				tooltip[#tooltip+1] = {" ", " "}
@@ -117,7 +119,7 @@ function E:func_Otrisovka()
 					tinsert(OctoTable_func_otrisovkaCENT,
 						function(CharInfo)
 							local vivodCent, tooltip = " ", {}
-							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= E.NONE then
+							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 								vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 							end
 							return vivodCent, tooltip
@@ -139,7 +141,7 @@ function E:func_Otrisovka()
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= E.NONE then
+					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 						vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 					end
 					return vivodCent, tooltip
@@ -193,7 +195,9 @@ function E:func_Otrisovka()
 					vivodCent = vivodCent..E.Blue_Color..">Vault<|r"
 				end
 			else
-				vivodCent = vivodCent..E.Red_Color..CharInfo.Chromie_name.."|r"
+				if CharInfo.Chromie_name ~= nil then
+					vivodCent = vivodCent..E.Red_Color..CharInfo.Chromie_name.."|r"
+				end
 			end
 			return vivodCent, tooltip
 	end)
@@ -206,7 +210,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[23572] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[23572] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[23572]
 				end
 				return vivodCent, tooltip
@@ -219,7 +223,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[30183] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[30183] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[30183]
 				end
 				return vivodCent, tooltip
@@ -232,7 +236,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[32428] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[32428] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[32428]
 				end
 				return vivodCent, tooltip
@@ -245,7 +249,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[34664] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[34664] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[34664]
 				end
 				return vivodCent, tooltip
@@ -260,7 +264,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[45087] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[45087] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[45087]
 				end
 				return vivodCent, tooltip
@@ -273,7 +277,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[47556] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[47556] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[47556]
 				end
 				return vivodCent, tooltip
@@ -286,7 +290,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[49908] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[49908] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[49908]
 				end
 				return vivodCent, tooltip
@@ -301,7 +305,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[52078] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[52078] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[52078]
 				end
 				return vivodCent, tooltip
@@ -314,7 +318,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[69237] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[69237] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[69237]
 				end
 				return vivodCent, tooltip
@@ -327,7 +331,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[71998] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[71998] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[71998]
 				end
 				return vivodCent, tooltip
@@ -342,7 +346,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[697] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[697] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[697]
 				end
 				return vivodCent, tooltip
@@ -355,7 +359,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[776] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[776] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[776]
 				end
 				return vivodCent, tooltip
@@ -370,7 +374,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1129] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1129] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1129]
 				end
 				return vivodCent, tooltip
@@ -383,7 +387,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[994] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[994] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[994]
 				end
 				return vivodCent, tooltip
@@ -396,7 +400,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[823] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[823] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[823]
 				end
 				return vivodCent, tooltip
@@ -409,7 +413,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1101] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1101] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1101]
 				end
 				return vivodCent, tooltip
@@ -422,7 +426,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[824] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[824] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[824]
 				end
 				return vivodCent, tooltip
@@ -462,10 +466,10 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.OctoTable_QuestID[38242] ~= E.NONE then
+				if CharInfo.MASLENGO.OctoTable_QuestID[38242] ~= nil then
 					vivodCent = CharInfo.MASLENGO.OctoTable_QuestID[38242]
 				end
-				if CharInfo.MASLENGO.ItemsInBag[122457] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[122457] ~= nil then
 					vivodCent = vivodCent.."+"..CharInfo.MASLENGO.ItemsInBag[122457]..E.func_itemTexture(122457)
 				end
 				return vivodCent, tooltip
@@ -478,7 +482,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.OctoTable_QuestID[39246] ~= E.NONE then
+				if CharInfo.MASLENGO.OctoTable_QuestID[39246] ~= nil then
 					vivodCent = CharInfo.MASLENGO.OctoTable_QuestID[39246]
 				end
 				return vivodCent, tooltip
@@ -516,7 +520,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1508] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1508] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1508]
 				end
 				return vivodCent, tooltip
@@ -584,7 +588,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[124124] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[124124] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[124124]
 				end
 				return vivodCent, tooltip
@@ -599,7 +603,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1560] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1560] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1560]
 				end
 				return vivodCent, tooltip
@@ -612,7 +616,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1721] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1721] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1721]
 				end
 				return vivodCent, tooltip
@@ -625,7 +629,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1803] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1803] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1803]
 				end
 				return vivodCent, tooltip
@@ -638,10 +642,10 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1755] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1755] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1755]
 				end
-				if CharInfo.MASLENGO.ItemsInBag[173363] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[173363] ~= nil then
 					vivodCent = vivodCent.." +"..CharInfo.MASLENGO.ItemsInBag[173363]..E.func_itemTexture(173363)
 				end
 				return vivodCent, tooltip
@@ -654,7 +658,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1719] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1719] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1719]
 				end
 				return vivodCent, tooltip
@@ -667,7 +671,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1710] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1710] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1710]
 				end
 				return vivodCent, tooltip
@@ -680,7 +684,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1716] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1716] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1716]
 				end
 				return vivodCent, tooltip
@@ -704,7 +708,10 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[158075] == 0 then
+
+
+
+				if CharInfo.MASLENGO.ItemsInBag[158075] == nil then
 					vivodCent = E.Red_Color.."no neck|r"
 				else
 					vivodCent = E.Orange_Color.."neeed to equip|r"
@@ -722,10 +729,10 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[169223] == 0 then
+				if CharInfo.MASLENGO.ItemsInBag[169223] == nil then
 					vivodCent = E.Red_Color.."no cloak|r"
 				end
-				if CharInfo.MASLENGO.ItemsInBag[169223] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[169223] ~= nil then
 					vivodCent = E.Orange_Color.."neeed to equip|r"
 					if CharInfo.cloak_lvl ~= 0 then
 						vivodCent = CharInfo.cloak_lvl.." lvl"
@@ -747,7 +754,9 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				vivodCent = CharInfo.islandBfA
+				if CharInfo.islandBfA ~= nil then
+					vivodCent = CharInfo.islandBfA
+				end
 				return vivodCent, tooltip
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
@@ -819,7 +828,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[2009] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[2009] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[2009]
 				end
 				return vivodCent, tooltip
@@ -832,7 +841,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1906] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1906] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1906]
 				end
 				return vivodCent, tooltip
@@ -845,7 +854,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1828] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1828] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1828]
 				end
 				return vivodCent, tooltip
@@ -858,7 +867,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1979] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1979] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1979]
 				end
 				return vivodCent, tooltip
@@ -871,7 +880,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1931] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1931] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1931]
 				end
 				if CharInfo.Possible_CatalogedResearch ~= 0 then
@@ -889,7 +898,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[209856] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[209856] ~= nil then
 					vivodCent = vivodCent..E.WOW_Epic_Color..CharInfo.MASLENGO.ItemsInBag[209856].."|r"
 				end
 				return vivodCent, tooltip
@@ -902,7 +911,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[207002] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[207002] ~= nil then
 					vivodCent = E.WOW_Rare_Color..CharInfo.MASLENGO.ItemsInBag[207002].."|r"
 				end
 				return vivodCent, tooltip
@@ -915,10 +924,10 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[2594] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[2594] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[2594]
 				end
-				if CharInfo.MASLENGO.ItemsInBag[208945] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[208945] ~= nil then
 					vivodCent = vivodCent..E.WOW_WoWToken_Color.." +"..CharInfo.MASLENGO.ItemsInBag[208945].."|r"..E.func_itemTexture(208945)
 				end
 				return vivodCent, tooltip
@@ -931,10 +940,10 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[210254] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[210254] ~= nil then
 					vivodCent = vivodCent..E.WOW_Epic_Color..CharInfo.MASLENGO.ItemsInBag[210254].."|r"
 				end
-				if CharInfo.MASLENGO.ItemsInBag[208153] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[208153] ~= nil then
 					vivodCent = vivodCent..E.Gray_Color.." +"..CharInfo.MASLENGO.ItemsInBag[208153].."(old)|r"
 				end
 				return vivodCent, tooltip
@@ -947,7 +956,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[2245] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[2245] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[2245]
 				end
 				return vivodCent, tooltip
@@ -960,7 +969,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[213089] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[213089] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[213089]
 				end
 				return vivodCent, tooltip
@@ -973,7 +982,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[211516] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[211516] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[211516]
 				end
 				return vivodCent, tooltip
@@ -986,7 +995,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[211515] ~= 0 then
+				if CharInfo.MASLENGO.ItemsInBag[211515] ~= nil then
 					vivodCent = CharInfo.MASLENGO.ItemsInBag[211515]
 				end
 				return vivodCent, tooltip
@@ -1008,7 +1017,7 @@ function E:func_Otrisovka()
 					if data then
 						local maxQuantity = data.maxQuantity
 						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
 							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
 							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
 							tooltip[#tooltip+1] = {" ", " "}
@@ -1016,7 +1025,7 @@ function E:func_Otrisovka()
 						else
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
 							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
@@ -1040,7 +1049,7 @@ function E:func_Otrisovka()
 					if data then
 						local maxQuantity = data.maxQuantity
 						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
 							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
 							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
 							tooltip[#tooltip+1] = {" ", " "}
@@ -1048,7 +1057,7 @@ function E:func_Otrisovka()
 						else
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
 							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
@@ -1072,7 +1081,7 @@ function E:func_Otrisovka()
 					if data then
 						local maxQuantity = data.maxQuantity
 						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
 							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
 							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
 							tooltip[#tooltip+1] = {" ", " "}
@@ -1080,7 +1089,7 @@ function E:func_Otrisovka()
 						else
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
 							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
@@ -1104,7 +1113,7 @@ function E:func_Otrisovka()
 					if data then
 						local maxQuantity = data.maxQuantity
 						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
 							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
 							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
 							tooltip[#tooltip+1] = {" ", " "}
@@ -1112,7 +1121,7 @@ function E:func_Otrisovka()
 						else
 							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
 						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= 0 then
+						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
 							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
 						end
 					end
@@ -1177,7 +1186,7 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1166] ~= 0 then
+				if CharInfo.MASLENGO.CurrencyID[1166] ~= nil then
 					vivodCent = CharInfo.MASLENGO.CurrencyID[1166]
 				end
 				return vivodCent, tooltip
@@ -1221,7 +1230,7 @@ function E:func_Otrisovka()
 					end
 				end
 				for dungeonID, v in next, (E.OctoTable_LFGDungeons) do
-					if CharInfo.LFGInstance[dungeonID].donetoday ~= E.NONE then
+					if CharInfo.LFGInstance[dungeonID].donetoday ~= nil then
 						tooltip[#tooltip+1] = {CharInfo.LFGInstance[dungeonID].D_name..(E.DebugIDs and E.Gray_Color.. " id:"..dungeonID.."|r" or ""), CharInfo.LFGInstance[dungeonID].donetoday}
 					end
 				end
@@ -1249,10 +1258,10 @@ function E:func_Otrisovka()
 				local vivodCent, tooltip = " ", {}
 				for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
 					for CurrencyID, config in next, (tbl) do
-						if OctoToDo_DB_Vars.CurrencyShowAllways == false and config == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
+						if OctoToDo_DB_Vars.CurrencyShowAllways == false and config == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
 							tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
 						elseif OctoToDo_DB_Vars.CurrencyShowAllways == true and config == true then
-							if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= 0 then
+							if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
 								tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
 							else
 								tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.Gray_Color..E.func_currencyName_NOCOLOR(CurrencyID), E.Gray_Color..CharInfo.MASLENGO.CurrencyID_Total[CurrencyID].."|r"}
@@ -1280,7 +1289,7 @@ function E:func_Otrisovka()
 				vivodCent = E.Gray_Color..REPUTATION.."|r"
 				for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
 					for reputationID, config in next, (tbl) do
-						if config == true and CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" then
+						if config == true and CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" and CharInfo.MASLENGO.reputationID[reputationID] ~= nil then
 							tooltip[#tooltip+1] = {E.func_reputationName(reputationID).."|r", CharInfo.MASLENGO.reputationID[reputationID]}
 						end
 					end
@@ -1303,14 +1312,8 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
 				for index, itemID in ipairs(E.OctoTable_itemID_ALL) do
-					if OctoToDo_DB_Vars.ItemsShowAllways == false and CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
+					if CharInfo.MASLENGO.ItemsInBag[itemID] ~= nil then
 						tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
-					elseif OctoToDo_DB_Vars.ItemsShowAllways == true then
-						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= 0 and CharInfo.MASLENGO.ItemsInBag[itemID] ~= "" then
-							tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
-						else
-							tooltip[#tooltip+1] = {E.func_itemTexture(itemID)..E.Gray_Color..E.func_GetItemName(itemID).."|r", E.Gray_Color..CharInfo.MASLENGO.ItemsInBag[itemID].."|r"}
-						end
 					end
 				end
 				if #tooltip ~= 0 then
@@ -1330,14 +1333,14 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.professions[1].skillLine ~= 0 then
+				if CharInfo.MASLENGO.professions[1].skillLine ~= nil and CharInfo.MASLENGO.professions[1].skillLine ~= 0 then
 					vivodCent = vivodCent..E.func_ProfessionIcon(CharInfo.MASLENGO.professions[1].skillLine)
-					if CharInfo.MASLENGO.professions[2].skillLine ~= 0 then
+					if CharInfo.MASLENGO.professions[2].skillLine ~= nil and CharInfo.MASLENGO.professions[2].skillLine ~= 0 then
 						vivodCent = vivodCent.." "..E.func_ProfessionIcon(CharInfo.MASLENGO.professions[2].skillLine)
 					end
 				end
 				for i = 1, 5 do
-					if CharInfo.MASLENGO.professions[i].skillLine ~= 0 then
+					if CharInfo.MASLENGO.professions[i].skillLine ~= nil and CharInfo.MASLENGO.professions[i].skillLine ~= 0 then
 						tooltip[#tooltip+1] = {E.func_ProfessionIcon(CharInfo.MASLENGO.professions[i].skillLine)..E.func_ProfessionName(CharInfo.MASLENGO.professions[i].skillLine), CharInfo.MASLENGO.professions[i].skillLevel.."/"..CharInfo.MASLENGO.professions[i].maxSkillLevel}
 					end
 				end
@@ -1414,8 +1417,7 @@ function E:func_Otrisovka()
 				local vivodCent, tooltip = " ", {}
 				local color = "|cffFFFFFF"
 				if CharInfo.loginHour and CharInfo.loginDay then
-					-- if CharInfo.GUID == E.curGUID then
-					if CharInfo.isOnline == true then
+					if CharInfo.GUID == E.curGUID then
 						vivodCent = E.Green_Color..FRIENDS_LIST_ONLINE.."|r"
 						tooltip[#tooltip+1] = {"Время без релога: "..CharInfo.classColorHex.. E.func_SecondsToClock(GetServerTime() - CharInfo.time).."|r"}
 						tooltip[#tooltip+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.classColorHex..E.func_SecondsToClock(GetSessionTime()).."|r"      )}
@@ -1434,7 +1436,6 @@ function E:func_Otrisovka()
 					if CharInfo.STARTTODAY and CharInfo.STARTTODAY ~= 0 then
 						tooltip[#tooltip+1] = {" ", " "}
 						tooltip[#tooltip+1] = {COMMUNITIES_CALENDAR_TODAY..": "..CharInfo.classColorHex ..E.func_SecondsToClock(GetServerTime()-CharInfo.STARTTODAY).."|r"}
-						tooltip[#tooltip+1] = {"IsOnline:", CharInfo.IsOnline}
 					end
 				end
 				return vivodCent, tooltip

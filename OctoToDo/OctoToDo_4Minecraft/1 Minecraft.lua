@@ -160,7 +160,7 @@ function OctoToDo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 		-- OctoToDo_MainFrame_Minecraft:ClearAllPoints()
 		-- OctoToDo_MainFrame_Minecraft:SetPoint("CENTER", UIParent)
 		----------------------------------------------------------------
-		E:func_CreateUtilsButton(OctoToDo_MainFrame_Minecraft, "Minecraft")
+		E:func_CreateUtilsButton(OctoToDo_MainFrame_Minecraft, "Minecraft", AddonHeight, 0)
 		E:func_CreateMinimapButton(GlobalAddonName, "Minecraft", OctoToDo_Minecraft, OctoToDo_MainFrame_Minecraft)
 		----------------------------------------------------------------
 	end

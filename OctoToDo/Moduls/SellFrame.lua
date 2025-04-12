@@ -149,15 +149,15 @@ tinsert(E.Modules, function()
 							OctoFrame_SellOther.promise:FailWithChecked(print)
 						end
 						OctoFrame_SellOther.promise:Then(function()
-							GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-							GameTooltip:ClearLines()
-							GameTooltip:AddLine("itemQuality < фиолет")
-							GameTooltip:AddLine(" ")
-							for index, itemID in next, (E.OctoTable_itemID_Ignore_List) do
-								GameTooltip:AddLine(E.func_itemTexture(itemID)..E.func_itemName(itemID))
-							end
-							GameTooltip:Show()
-					end)
+								GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+								GameTooltip:ClearLines()
+								GameTooltip:AddLine("itemQuality < фиолет")
+								GameTooltip:AddLine(" ")
+								for index, itemID in next, (E.OctoTable_itemID_Ignore_List) do
+									GameTooltip:AddLine(E.func_itemTexture(itemID)..E.func_itemName(itemID))
+								end
+								GameTooltip:Show()
+						end)
 				end)
 				OctoFrame_SellOther:SetScript("OnLeave", function(self)
 						GameTooltip:ClearLines()
@@ -455,4 +455,3 @@ tinsert(E.Modules, function()
 			OctoToDo_Trade_OnLoad()
 		end
 end)
-

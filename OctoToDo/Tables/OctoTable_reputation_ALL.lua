@@ -10,6 +10,22 @@ E.OctoTable_reputation_ALL = {
 E.OctoTable_reputationID_Hidden = {
 	2463,
 }
+
+
+
+
+E.OctoTable_OCTOREP = {
+	[81] = {icon = "NONE", name = "Громовой Утес", faction = E.func_texturefromIcon(E.Icon_Horde), other = "Орда", },
+	[1133] = {icon = "NONE", name = "Картель Трюмных Вод", faction = E.func_texturefromIcon(E.Icon_Horde), other = "Орда", },
+	[911] = {icon = "NONE", name = "Луносвет", faction = E.func_texturefromIcon(E.Icon_Horde), other = "Орда", },
+	[76] = {icon = "NONE", name = "Оргриммар", faction = E.func_texturefromIcon(E.Icon_Horde), other = "Орда", },
+	[1352] = {icon = "NONE", name = "Пандарены Хоцзинь", faction = E.func_texturefromIcon(E.Icon_Horde), other = "Орда", },
+	[530] = {icon = "NONE", name = "Племя Черного Копья", faction = E.func_texturefromIcon(E.Icon_Horde), other = "Орда", },
+	[68] = {icon = "NONE", name = "Подгород", faction = E.func_texturefromIcon(E.Icon_Horde), other = "Орда", },
+	[2523] = {icon = "NONE", name = "Темные Когти", faction = E.func_texturefromIcon(E.Icon_Horde), other = "Орда", },
+}
+
+
 E.OctoTable_FACTIONTABLE = {
 	-- [1072] = {icon = 0, name = "[DNT] AC Major Faction Child Renown Test", faction = "", other = "Кентавры Маруук", },
 	[2159] = {icon = 2024072, name = "7-й легион", faction = "", other = "Battle for Azeroth", },

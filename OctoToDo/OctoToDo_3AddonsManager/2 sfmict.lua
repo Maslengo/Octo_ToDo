@@ -275,13 +275,12 @@ function E:func_Create_DDframe_AddonsManager()
 			elseif value == "ПРОФИЛИ" then
 				----------------------------------------------------------------
 				for profileName, v in next, (OctoToDo_AddonsManager.profiles) do
-					print (profileName, "QWEQWEQWEWE")
 					info.fontObject = OctoFont11
 					info.keepShownOnClick = true
 					info.notCheckable = true -- TRUE убрать чекбокс
 					info.isNotRadio = true -- TRUE круг, а не квадрат
 					info.text = profileName
-					info.value = profileName
+					info.value = v
 					info.hasArrow = true
 					info.func = function()
 						E.func_LoadProfile(profileName)
@@ -303,18 +302,26 @@ function E:func_Create_DDframe_AddonsManager()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
-			elseif value == profileName then
+			elseif value then -- type(value) == "table"
 				----------------------------------------------------------------
-				info.fontObject = OctoFont11
-				info.keepShownOnClick = true
-				info.notCheckable = true -- TRUE убрать чекбокс
-				info.isNotRadio = true -- TRUE круг, а не квадрат
-				info.text = E.Debug_Color..RELOADUI.."|r"
-				info.hasArrow = nil
-				info.func = function(_, _, _, checked)
-					ReloadUI()
+				for k, v in next, (value) do
+					if v == true then
+						info.fontObject = OctoFont11
+						info.keepShownOnClick = true
+						info.notCheckable = true -- TRUE убрать чекбокс
+						info.isNotRadio = true -- TRUE круг, а не квадрат
+
+
+						info.text = k
+
+
+						info.hasArrow = nil
+						info.func = function(_, _, _, checked)
+							ReloadUI()
+						end
+						self:ddAddButton(info, level)
+					end
 				end
-				self:ddAddButton(info, level)
 				----------------------------------------------------------------
 			end
 			----------------------------------------------------------------
@@ -323,3 +330,4 @@ function E:func_Create_DDframe_AddonsManager()
 	end)
 	DD_AddonsManager:ddSetMenuButtonHeight(16)
 end
+
