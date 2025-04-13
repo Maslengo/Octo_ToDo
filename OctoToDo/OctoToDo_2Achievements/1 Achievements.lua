@@ -15,9 +15,6 @@ if MainFrameDefaultLines > MainFrameTotalLines then
 end
 local SFDropDownWeight = 100
 ----------------------------------------------------------------
-
-
-
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")

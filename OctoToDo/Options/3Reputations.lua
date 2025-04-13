@@ -70,7 +70,7 @@ function E.Reputations()
 				E.func_TableMerge(Reputations.args, {
 						["addonNameHEADER5"..index] = {
 							type = "header",
-							name = E.func_reputationName(reputationHEADER),
+							name = reputationHEADER,
 							order = 123 + index,
 						},
 				})

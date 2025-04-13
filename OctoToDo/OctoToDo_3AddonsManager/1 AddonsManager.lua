@@ -683,43 +683,6 @@ function OctoToDo_EventFrame_AddonsManager:AddonList_OnCancel()
 	PlaySound(SOUNDKIT.GS_LOGIN_CHANGE_REALM_CANCEL)
 	self:AddonList_Hide(false)
 end
-function OctoToDo_EventFrame_AddonsManager:CheckWTFinfo()
-	if OctoToDo_AddonsManager == nil then OctoToDo_AddonsManager = {} end
-	if OctoToDo_AddonsManager.collapsedAddons == nil then OctoToDo_AddonsManager.collapsedAddons = {} end
-	if OctoToDo_AddonsManager.profiles == nil then OctoToDo_AddonsManager.profiles = {} end
-	if OctoToDo_AddonsManager.profiles.forceload == nil then OctoToDo_AddonsManager.profiles.forceload = {[GlobalAddonName] = true,} end
-	if OctoToDo_AddonsManager.config == nil then OctoToDo_AddonsManager.config = {} end
-	if OctoToDo_AddonsManager.config.defaultAddonList == nil then OctoToDo_AddonsManager.config.defaultAddonList = false end
-	if OctoToDo_AddonsManager.config.showOnlyLoaded == nil then OctoToDo_AddonsManager.config.showOnlyLoaded = false end
-	if OctoToDo_AddonsManager.config.fullName == nil then OctoToDo_AddonsManager.config.fullName = false end
-	if OctoToDo_AddonsManager.config.showIcons == nil then OctoToDo_AddonsManager.config.showIcons = false end
-	if OctoToDo_AddonsManager.config.showIconsQuestionMark == nil then OctoToDo_AddonsManager.config.showIconsQuestionMark = true end
-	if OctoToDo_AddonsManager.config.showVersion == nil then OctoToDo_AddonsManager.config.showVersion = false end
-	if OctoToDo_AddonsManager.config.showIndex == nil then OctoToDo_AddonsManager.config.showIndex = false end
-	if OctoToDo_AddonsManager.config.minimaphide == nil then OctoToDo_AddonsManager.config.minimaphide = false end
-	if OctoToDo_AddonsManager.config.hookMenuButton == nil then OctoToDo_AddonsManager.config.hookMenuButton = false end
-	if OctoToDo_AddonsManager.config.sortingCpu == nil then OctoToDo_AddonsManager.config.sortingCpu = false end
-	if OctoToDo_AddonsManager.config.profilingcpuShowCurrent == nil then OctoToDo_AddonsManager.config.profilingcpuShowCurrent = true end
-	if OctoToDo_AddonsManager.config.profilingcpuShowEncounter == nil then OctoToDo_AddonsManager.config.profilingcpuShowEncounter = true end
-	if OctoToDo_AddonsManager.config.profilingcpuShowPeak == nil then OctoToDo_AddonsManager.config.profilingcpuShowPeak = true end
-	if OctoToDo_AddonsManager.config.profilingcpuShowAverage == nil then OctoToDo_AddonsManager.config.profilingcpuShowAverage = true end
-	if OctoToDo_AddonsManager.config.profilingcpuUpdate == nil then OctoToDo_AddonsManager.config.profilingcpuUpdate = 0 end
-	if OctoToDo_AddonsManager.config.localizeCategoryName == nil then OctoToDo_AddonsManager.config.localizeCategoryName = true end
-	if OctoToDo_AddonsManager.config.showVersions == nil then OctoToDo_AddonsManager.config.showVersions = true end
-	if OctoToDo_AddonsManager.config.autofocusSearch == nil then OctoToDo_AddonsManager.config.autofocusSearch = true end
-	if OctoToDo_AddonsManager.config.sorting == nil then OctoToDo_AddonsManager.config.sorting = "title" end
-	if OctoToDo_AddonsManager.config.showSecureAddons == nil then OctoToDo_AddonsManager.config.showSecureAddons = true end
-	if OctoToDo_AddonsManager.config.addonListStyle == nil then OctoToDo_AddonsManager.config.addonListStyle = "tree" end
-	if OctoToDo_AddonsManager.config.showTocXCategory == nil then OctoToDo_AddonsManager.config.showTocXCategory = true end
-	if OctoToDo_AddonsManager.config.showTocCategory == nil then OctoToDo_AddonsManager.config.showTocCategory = true end
-	if OctoToDo_AddonsManager.config.showMemoryInBrokerTtp == nil then OctoToDo_AddonsManager.config.showMemoryInBrokerTtp = true end
-	if OctoToDo_AddonsManager.isCategoryFrameVisible == nil then OctoToDo_AddonsManager.isCategoryFrameVisible = true end
-	if OctoToDo_AddonsManager.lock == nil then OctoToDo_AddonsManager.lock = {} end
-	if OctoToDo_AddonsManager.lock.addons == nil then OctoToDo_AddonsManager.lock.addons = {} end
-	if OctoToDo_AddonsManager.lock.addons[E.GlobalAddonName] == nil then OctoToDo_AddonsManager.lock.addons[E.GlobalAddonName] = true end
-
-
-end
 ----------------------------------------------------------------
 function E:GetCycleByIndexSFMICT(iChild, iParent)
 	if OctoToDo_AddonsTable.depsByIndex[iChild] then
@@ -810,7 +773,6 @@ function OctoToDo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		self:CheckWTFinfo()
 		self.startStatus = {}
 		self.shouldReload = false
 		self.outOfDate = E.func_IsAddonVersionCheckEnabled() and AddonList_HasOutOfDate()

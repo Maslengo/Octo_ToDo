@@ -441,25 +441,17 @@ function E.Collect_All_Reputations()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	C_Reputation.ExpandAllFactionHeaders()
 	if collect and not InCombatLockdown() then
-		local tblHeader
-		for i = 1, C_Reputation.GetNumFactions() do
-			local factionData = C_Reputation.GetFactionDataByIndex(i)
-			if factionData then
-				local currentStanding = factionData.currentStanding
-				local reputationID = factionData.factionID
-				local description = factionData.description or ""
-				if reputationID and description ~= "" then
-					OctoToDo_DB_Config.ReputationDB[reputationID] = OctoToDo_DB_Config.ReputationDB[reputationID] or false
-				end
-				if factionData.isHeader and currentStanding == 0 then
-					OCTO_DB_reputations_test[reputationID] = OCTO_DB_reputations_test[reputationID] or {}
-					tblHeader = OCTO_DB_reputations_test[reputationID]
-				else
-					tblHeader[reputationID] = tblHeader[reputationID] or false
-				end
-			end
-		end
-		for reputationID, v in next, (OctoToDo_DB_Config.ReputationDB) do
+
+
+
+
+
+
+
+
+
+
+		for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
 			if reputationID then
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, tbl in next, (OctoToDo_DB_Levels) do
@@ -476,17 +468,33 @@ function E.Collect_All_Reputations()
 		end
 		----------------------------------------------------------------
 		for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
+			local Header = v.category
+			OCTO_DB_reputations_test[Header] = OCTO_DB_reputations_test[Header] or {}
+			OCTO_DB_reputations_test[Header][reputationID] = OCTO_DB_reputations_test[Header][reputationID] or false
 			collect.MASLENGO.reputationFULL[reputationID] = collect.MASLENGO.reputationFULL[reputationID] or {}
 			local FIRST = select(1, E.func_CheckReputationFULL(reputationID))
 			local SECOND = select(2, E.func_CheckReputationFULL(reputationID))
 			local vivod = select(3, E.func_CheckReputationFULL(reputationID))
 			local color = select(4, E.func_CheckReputationFULL(reputationID))
 			local standingTEXT = select(5, E.func_CheckReputationFULL(reputationID))
-			collect.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
-			collect.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
-			collect.MASLENGO.reputationFULL[reputationID].vivod = vivod
-			collect.MASLENGO.reputationFULL[reputationID].color = color
-			collect.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
+
+			if C_Reputation.IsAccountWideReputation(reputationID) then
+				for GUID, tbl in next, (OctoToDo_DB_Levels) do
+					tbl.MASLENGO.reputationFULL[reputationID] = tbl.MASLENGO.reputationFULL[reputationID] or {}
+					tbl.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
+					tbl.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
+					tbl.MASLENGO.reputationFULL[reputationID].vivod = vivod
+					tbl.MASLENGO.reputationFULL[reputationID].color = color
+					tbl.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
+				end
+			else
+				collect.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
+				collect.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
+				collect.MASLENGO.reputationFULL[reputationID].vivod = vivod
+				collect.MASLENGO.reputationFULL[reputationID].color = color
+				collect.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
+
+			end
 			-- collect.MASLENGO.reputationFULL[reputationID].name = v.name
 		end
 		----------------------------------------------------------------

@@ -92,8 +92,17 @@ end
 ----------------------------------------------------------------
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
+
+
+		frame.full = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		frame.full:SetPropagateMouseClicks(true)
+		frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*func_NumPlayers(), AddonHeight)
+		frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		E:func_SetBackdrop(frame.full, nil, 0, 0)
+
+
 		frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
-		frame.first:SetPropagateMouseClicks(false)
+		frame.first:SetPropagateMouseClicks(true)
 		frame.first:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.first.textLEFT = frame.first:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -133,20 +142,28 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
-
-
-
-
-	E:func_SetBackdrop(frame.first, nil, 0, 0)
+	-- E:func_SetBackdrop(frame.first, nil, 0, 0)
 	frame.first.textLEFT:SetText(E.func_reputationName(data.reputationID))
 	for i = 1, #data.zxc.vivod do
 		if data.zxc.vivod[i] ~= "" then
 			frame.second[i].textCENT:SetText(data.zxc.vivod[i])
-			-- E:func_SetBackdrop(frame.second[i], "|cff00FF00", E.bgCaOverlay*2, 0)
+			local FIRST =  data.zxc.FIRST[i]
+			local SECOND = data.zxc.SECOND[i]
+			local color = data.zxc.color[i]
+			frame.second[i].texture:SetVertexColor(select(1, E.func_hex2rgbNUMBER(color)), select(2, E.func_hex2rgbNUMBER(color)), select(3, E.func_hex2rgbNUMBER(color)), .5)
+			if FIRST == 0 then
+				frame.second[i].texture:SetWidth(.1)
+			elseif FIRST == SECOND then
+				frame.second[i].texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
+			elseif FIRST >= 1 then
+				frame.second[i].texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
+			end
 		else
-			frame.second[i].textCENT:SetText("")
-			-- E:func_SetBackdrop(frame.second[i], nil, 0, 0)
+			frame.second[i].textCENT:SetText(E.Gray_Color.."-".."|r")
+			-- frame.second[i].textCENT:SetText(E.Gray_Color..E.func_reputationName(data.reputationID).."|r")
+			frame.second[i].texture:SetVertexColor(0,0,0,0)
 		end
+		-- E:func_SetBackdrop(frame.second[i], nil, 0, 0)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -211,31 +228,48 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	----------------------------------------------------------------
 	self:func_CreateMyDataProvider()
 end
-function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
+
+
+
+-- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
+local function CollectRepList()
 	C_Reputation.ExpandAllFactionHeaders()
 	----------------------------------------------------------------
+	local reputationList = {}
+	for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do -- OctoTable_FACTIONTABLE
+		if E.func_reputationName(reputationID) then
+			tinsert(reputationList, reputationID)
+		end
+	end
+	sort(reputationList, E.func_Reverse_order)
 	----------------------------------------------------------------
+	return reputationList
+end
+
+local reputationList = CollectRepList()
+
+function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	----------------------------------------------------------------
 	local DataProvider = CreateTreeDataProvider()
-	for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do -- OctoTable_FACTIONTABLE
-		local zxc = {}
-		zxc.FIRST = {}
-		zxc.SECOND = {}
-		zxc.vivod = {}
-		zxc.color = {}
-		zxc.standingTEXT = {}
-		for CharIndex, CharInfo in ipairs(sorted) do
-			zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].FIRST or ""
-			zxc.SECOND[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].SECOND or ""
-			zxc.vivod[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].vivod or ""
-			zxc.color[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].color or ""
-			zxc.standingTEXT[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].standingTEXT or ""
-		end
-		local groupNode = DataProvider:Insert({
-				reputationID = reputationID,
-				zxc = zxc,
+	for _, reputationID in ipairs(reputationList) do
+			local zxc = {}
+			zxc.FIRST = {}
+			zxc.SECOND = {}
+			zxc.vivod = {}
+			zxc.color = {}
+			zxc.standingTEXT = {}
+			for CharIndex, CharInfo in ipairs(sorted) do
+				zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].FIRST or ""
+				zxc.SECOND[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].SECOND or ""
+				zxc.vivod[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].vivod or ""
+				zxc.color[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].color or ""
+				zxc.standingTEXT[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].standingTEXT or ""
+			end
+			local groupNode = DataProvider:Insert({
+					reputationID = reputationID,
+					zxc = zxc,
 
-		})
+			})
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -260,13 +294,7 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
--- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
-function OctoToDo_EventFrame_OCTOREP:CollectAllAddonsSFMICT()
-end
-function OctoToDo_EventFrame_OCTOREP:func_CheckWTF()
-	if OctoToDo_OCTOREP == nil then OctoToDo_OCTOREP = {} end
-	if OctoToDo_OCTOREP.TrackedRepID == nil then OctoToDo_OCTOREP.TrackedRepID = 369 end
-end
+
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_REGEN_DISABLED",
@@ -297,7 +325,6 @@ function OctoToDo_EventFrame_OCTOREP:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		self:func_CheckWTF()
 		----------------------------------------------------------------
 		self:OctoToDo_Create_MainFrame_AddonsManager()
 		self:func_CreateMyDataProvider()

@@ -2,9 +2,7 @@ local GlobalAddonName, E = ...
 E.GlobalAddonName = GlobalAddonName
 E.PromiseItem = {}
 E.PromiseSpell = {}
-E.PromiseCurrency = {}
 E.PromiseQuest = {}
-E.PromiseReputation = {}
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 local LibStub = LibStub
@@ -60,7 +58,6 @@ end
 
 
 function E.func_GetCurrencyIcon(currencyID)
-	tinsert(E.PromiseCurrency, currencyID)
 	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 	local iconFileID = E.Icon_QuestionMark
 	if info then
@@ -69,7 +66,6 @@ function E.func_GetCurrencyIcon(currencyID)
 	return iconFileID
 end
 function E.func_currencyName(currencyID)
-	tinsert(E.PromiseCurrency, currencyID)
 	if currencyID then
 		local vivod
 		local AWide = ""
@@ -129,53 +125,48 @@ function E.func_questName(questID, useLargeIcon)
 end
 
 function E.func_reputationName(reputationID)
-	tinsert(E.PromiseReputation, reputationID)
-	local vivod = ""
-	local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-	if isAccountWide == true then
-		vivod = E.Icon_AccountWide..vivod
-	end
-	local color = E.White_Color
-	local factionname = ""
-	if E.OctoTable_FACTIONTABLE[reputationID].side == "Альянс" then
-		vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
-	end
-
-	if E.OctoTable_FACTIONTABLE[reputationID].side == "Орда" then
-		vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
-	end
-
-
-
-	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-	local name
-	if repInfo then
-		vivod = vivod.. repInfo.name
-	else
-		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
-		if reputationInfo.name then
-			vivod = vivod.. reputationInfo.name
-		elseif E.OctoTable_FACTIONTABLE[reputationID] then
-			vivod = vivod.. E.OctoTable_FACTIONTABLE[reputationID].name
-		else
-			vivod = vivod.. reputationID.. " (UNKNOWN)"
+	if reputationID and E.OctoTable_FACTIONTABLE[reputationID] then
+		local vivod = ""
+		local side = E.OctoTable_FACTIONTABLE[reputationID].side or "-"
+		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+		if isAccountWide == true then
+			vivod = E.Icon_AccountWide..vivod
 		end
-	end
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
-	end
-	-- if E.OctoTable_FACTIONTABLE[reputationID] then
-	-- 	vivod = vivod
-	-- else
-	-- 	print (reputationID.. " <- MISSING REPUTATION ID -> "..name)
-	-- 	vivod = name
-	-- end
+		local color = E.White_Color
+		local factionname = ""
+		if side == "Alliance" then
+			vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
+		elseif side == "Horde" then
+			vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
+		end
 
-	return vivod
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+		local name
+		if repInfo then
+			vivod = vivod.. repInfo.name
+		else
+			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
+			if reputationInfo.name then
+				vivod = vivod.. reputationInfo.name
+			elseif E.OctoTable_FACTIONTABLE[reputationID] then
+				vivod = vivod.. E.OctoTable_FACTIONTABLE[reputationID].name
+			else
+				vivod = vivod.. reputationID.. " (UNKNOWN)"
+			end
+		end
+		if E.DebugIDs == true and vivod ~= nil then
+			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
+		end
+		return vivod
+	else
+		return "|cffFF0000noname|r"
+	end
+
 end
 
+
+
 function E.func_reputationNameSIMPLE(reputationID)
-	tinsert(E.PromiseReputation, reputationID)
 	local vivod = ""
 	if reputationID and type(reputationID) == "number" then
 		-- local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
@@ -987,7 +978,9 @@ function E.func_CheckReputationFULL(reputationID)
 			FIRST = currentValue
 			SECOND = totalValue
 			if currentLevel == maxLevel then
-				vivod = color.."Done|r "
+				vivod = color.."Done|r"
+				FIRST = currentLevel
+				SECOND = maxLevel
 			end
 		else
 			local barMin = repInfo.currentReactionThreshold
@@ -1002,6 +995,8 @@ function E.func_CheckReputationFULL(reputationID)
 				SECOND = totalValue
 				if currentValue == totalValue then -- or nextThreshold == 0 then
 					vivod = color.."Done|r"
+					-- FIRST = currentValue
+					-- SECOND = totalValue
 				end
 			end
 		end

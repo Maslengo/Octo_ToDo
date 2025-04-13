@@ -1,7 +1,7 @@
 ## Interface: 110105, 110100
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Author: Octo
-## Version: v89.2(11.1.5)(12.04.2025)
+## Version: v89.3(11.1.5)(13.04.2025)
 ## IconTexture: Interface\AddOns\OctoToDo\Media\IconTexture\Core
 
 ## SavedVariables: OctoToDo_DB_Config OctoToDo_DB_Levels OctoToDo_DB_Vars OctoToDo_DB_Other OCTO_DB_currencies_test OCTO_DB_reputations_test
@@ -13,6 +13,12 @@
 
 Libs\embeds.xml
 Templates.xml
+
+1 Localization.lua
+2 Functions.lua
+3 Fprint.lua
+WTF.lua
+
 
 OctoToDo_1OctoToDo\OctoToDo.xml
 OctoToDo_2Achievements\Achievements.xml
@@ -28,7 +34,5 @@ Options\3Reputations.lua
 Options\4Items.lua
 Options\5AddonsManager.lua
 Options\99Developing.lua
-
-CommunityFeast.lua
 
 SharedMedia.lua
