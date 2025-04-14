@@ -5,9 +5,9 @@ local OctoToDo_MainFrame_OCTOMAIN = CreateFrame("BUTTON", "OctoToDo_MainFrame_OC
 OctoToDo_MainFrame_OCTOMAIN:Hide()
 tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_OCTOMAIN)
 ----------------------------------------------------------------
-local AddonHeight = 20 -- Высота -- OctoToDo_DB_Vars.curHeight
-local AddonLeftFrameWeight = 200 -- Ширина Левого -- OctoToDo_DB_Vars.AddonLeftFrameWeight
-local AddonCentralFrameWeight = 90 -- Ширина Центрального -- OctoToDo_DB_Vars.AddonCentralFrameWeight
+local AddonHeight = 20
+local AddonLeftFrameWeight = 200
+local AddonCentralFrameWeight = 90
 local MainFrameDefaultLines = 30
 local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / AddonHeight))*.7)
 if MainFrameDefaultLines > MainFrameTotalLines then
@@ -60,363 +60,12 @@ E.func_LoadAddOn("HidingBar_Options")
 ----------------------------------------------------------------
 function OctoToDo_EventFrame_OCTOMAIN:ConcatAtStart()
 	E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
-	-- for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Cosmetic) do
-	-- 	E.OctoTable_itemID_ItemsUsable[itemID] = 1
-	-- end
-	-- for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Mount) do
-	-- 	E.OctoTable_itemID_ItemsUsable[itemID] = 1
-	-- end
+
 	for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Other) do
 		E.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
-	-- for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Pets) do
-	-- 	E.OctoTable_itemID_ItemsUsable[itemID] = 1
-	-- end
-	-- for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Toys) do
-	-- 	E.OctoTable_itemID_ItemsUsable[itemID] = 1
-	-- end
-	-- for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_ArmorTokens) do
-	-- 	E.OctoTable_itemID_ItemsUsable[itemID] = 1
-	-- end
-	for _, currencyID in next, (E.OctoTable_currencyID_Hidden) do
-		OctoToDo_DB_Config.CurrencyDB[currencyID] = OctoToDo_DB_Config.CurrencyDB[currencyID] or false
-	end
-	-- for _, reputationID in next, (E.OctoTable_reputationID_Hidden) do
-	-- 	OctoToDo_DB_Config.ReputationDB[reputationID] = OctoToDo_DB_Config.ReputationDB[reputationID] or false
-	-- end
-	-- for _, reputationID in next, (E.OctoTable_reputation_ALL) do
-	-- 	OctoToDo_DB_Config.ReputationDB[reputationID] = OctoToDo_DB_Config.ReputationDB[reputationID] or false
-	-- end
 end
-function E:func_checkCharInfo()
-	local Meta_Table_0 = {__index = function() return 0 end}
-	local Meta_Table_1 = {__index = function() return 1 end}
-	local Meta_Table_false = {__index = function() return false end}
-	local Meta_Table_true = {__index = function() return true end}
-	local Meta_Table_DONE = {__index = function() return E.DONE end}
-	local Meta_Table_NONE = {__index = function() return E.NONE end}
-	local Meta_Table_EmptyString = {__index = function() return "" end}
-	OctoToDo_DB_Levels[E.curGUID] = OctoToDo_DB_Levels[E.curGUID] or {}
-	if OctoToDo_DB_Levels then
-		for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
-			local localizedClass, englishClass, localizedRace, englishRace, _, name = GetPlayerInfoByGUID(GUID)
-			if CharInfo.journalInstance == nil then CharInfo.journalInstance = {} end
-			local ServerTime = GetServerTime()
-			for instanceID, tbl in next, (CharInfo.journalInstance) do
-				if instanceID then
-					for difficultyID, w in next, (tbl) do
-						for e, r in next, (w) do
-							if e == "instanceReset" then
-								if ServerTime >= r then
-									CharInfo.journalInstance[instanceID] = {}
-								end
-							end
-						end
-					end
-				end
-			end
-			if CharInfo.SavedWorldBoss == nil then CharInfo.SavedWorldBoss = {} end
-			CharInfo.MASLENGO = CharInfo.MASLENGO or {}
-			CharInfo.UniversalQuest = nil
-			CharInfo.MASLENGO.UniversalQuest = CharInfo.MASLENGO.UniversalQuest or {}
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			CharInfo.MASLENGO.ItemsInBag = CharInfo.MASLENGO.ItemsInBag or {}
-			for iID, value in next, (CharInfo.MASLENGO.ItemsInBag) do
-				if value == 0 then
-					print ("TRY TO WIPE ItemsInBag", iID, value)
-					CharInfo.MASLENGO.ItemsInBag[iID] = nil
-				end
-			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
-			for iID, value in next, (CharInfo.MASLENGO.CurrencyID) do
-				if value == 0 then
-					print ("TRY TO WIPE CurrencyID", iID, value)
-					CharInfo.MASLENGO.CurrencyID[iID] = nil
-				end
-			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
-			for iID, value in next, (CharInfo.MASLENGO.CurrencyID_Total) do
-				if value == 0 then
-					print ("TRY TO WIPE CurrencyID_Total", iID, value)
-					CharInfo.MASLENGO.CurrencyID_Total[iID] = nil
-				end
-			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
-			for iID, value in next, (CharInfo.MASLENGO.CurrencyID_totalEarned) do
-				if value == 0 then
-					print ("TRY TO WIPE CurrencyID_totalEarned", iID, value)
-					CharInfo.MASLENGO.CurrencyID_totalEarned[iID] = nil
-				end
-			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			CharInfo.MASLENGO.OctoTable_QuestID = CharInfo.MASLENGO.OctoTable_QuestID or {}
-			for iID, value in next, (CharInfo.MASLENGO.OctoTable_QuestID) do
-				if (value == 0 or value == E.NONE) then
-					print ("TRY TO WIPE OctoTable_QuestID", iID, value)
-					CharInfo.MASLENGO.OctoTable_QuestID[iID] = nil
-				end
-			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			CharInfo.LFGInstance = CharInfo.LFGInstance or {}
-			for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
-				if dungeonID then
-					CharInfo.LFGInstance[dungeonID] = CharInfo.LFGInstance[dungeonID] or {}
-					if (CharInfo.LFGInstance[dungeonID].donetoday == E.NONE) then
-						print ("TRY TO WIPE LFGInstance donetoday", dungeonID, name)
-						CharInfo.LFGInstance[dungeonID].donetoday = nil
-					end
-				end
-			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			CharInfo.Chromie_name = CharInfo.Chromie_name or nil
-			if CharInfo.Chromie_name == 0 or CharInfo.Chromie_name == "" or CharInfo.Chromie_name == E.NONE then
-				print ("TRY TO WIPE Chromie_name")
-				CharInfo.Chromie_name = nil
-			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			CharInfo.MASLENGO.reputationFULL = CharInfo.MASLENGO.reputationFULL or {}
-			-- for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
-			-- 	CharInfo.MASLENGO.reputationFULL[reputationID] = CharInfo.MASLENGO.reputationFULL[reputationID] or {}
-			-- end
-			CharInfo.MASLENGO.reputationID = CharInfo.MASLENGO.reputationID or {}
-			for iID, value in next, (CharInfo.MASLENGO.reputationID) do
-				if (value == 0 or value == "") then
-					print ("TRY TO WIPE reputationID", iID, value)
-					CharInfo.MASLENGO.reputationID[iID] = nil
-				end
-			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			CharInfo.islandBfA = CharInfo.islandBfA or nil
-			if CharInfo.islandBfA == 0 or CharInfo.islandBfA == "" or CharInfo.islandBfA == E.NONE then
-				print ("TRY TO WIPE islandBfA")
-				CharInfo.islandBfA = nil
-			end
-			-- CharInfo.islandBfA = CharInfo.islandBfA or E.NONE
-			CharInfo.MASLENGO.professions = CharInfo.MASLENGO.professions or {}
-			CharInfo.MASLENGO.Quests = CharInfo.MASLENGO.Quests or {}
-			if CharInfo.time == nil and CharInfo.tmstp_Daily ~= nil then
-				CharInfo.time = CharInfo.tmstp_Daily
-			end
-			for i = 1, 5 do
-				CharInfo.MASLENGO.professions[i] = CharInfo.MASLENGO.professions[i] or {}
-				CharInfo.MASLENGO.professions[i].skillLine = CharInfo.MASLENGO.professions[i].skillLine or 0
-				CharInfo.MASLENGO.professions[i].skillLevel = CharInfo.MASLENGO.professions[i].skillLevel or 0
-				CharInfo.MASLENGO.professions[i].maxSkillLevel = CharInfo.MASLENGO.professions[i].maxSkillLevel or 0
-			end
-			CharInfo.GreatVault = CharInfo.GreatVault or {}
-			for _, v in next, (E.OctoTable_UniversalQuest) do
-				CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] or nil
-			end
-			CharInfo.professions = nil
-			CharInfo.Shadowland = nil
-			if CharInfo.CovenantAndAnima == nil then
-				CharInfo.CovenantAndAnima = {}
-			end
-			if CharInfo.CovenantAndAnima.curCovID == nil then
-				CharInfo.CovenantAndAnima.curCovID = 0
-			end
-			for k = 1, 2 do
-				for i = 1, 4 do
-					CharInfo.CovenantAndAnima[i] = CharInfo.CovenantAndAnima[i] or {}
-					CharInfo.CovenantAndAnima[i][k] = CharInfo.CovenantAndAnima[i][k] or 0
-				end
-			end
-			CharInfo.ReloadCount = CharInfo.ReloadCount or 0
-			CharInfo.PVP = CharInfo.PVP or {}
-			CharInfo.avgItemLevel = CharInfo.avgItemLevel or 1
-			CharInfo.avgItemLevelEquipped = CharInfo.avgItemLevelEquipped or 1
-			CharInfo.azeriteEXP = CharInfo.azeriteEXP or 0
-			CharInfo.azeriteLVL = CharInfo.azeriteLVL or 0
-			CharInfo.avgItemLevelPvp = CharInfo.avgItemLevelPvp or 1
-			CharInfo.className = CharInfo.className or E.className
-			CharInfo.classFilename = CharInfo.classFilename or E.classFilename
-			CharInfo.GUID = CharInfo.GUID or GUID
-			CharInfo.cloak_lvl = CharInfo.cloak_lvl or 0
-			CharInfo.cloak_res = CharInfo.cloak_res or 0
-			CharInfo.classId = CharInfo.classId or 1
-			CharInfo.classColor = CharInfo.classColor or E.classColor
-			CharInfo.curServer = CharInfo.curServer or E.curServer
-			CharInfo.guildName = CharInfo.guildName or ""
-			CharInfo.guildRankName = CharInfo.guildRankName or ""
-			CharInfo.guildRankIndex = CharInfo.guildRankIndex or 0
-			CharInfo.curServerShort = CharInfo.curServerShort or E.func_CurServerShort(E.curServer)
-			CharInfo.Faction = CharInfo.Faction or "Horde"
-			CharInfo.BattleTag = CharInfo.BattleTag or E.BattleTag
-			CharInfo.BattleTagLocal = CharInfo.BattleTagLocal or E.BattleTagLocal
-			CharInfo.IsPublicBuild = CharInfo.IsPublicBuild or E.IsPublicBuild
-			CharInfo.Chromie_canEnter = CharInfo.Chromie_canEnter or false
-			CharInfo.Chromie_UnitChromieTimeID = CharInfo.Chromie_UnitChromieTimeID or 0
-			CharInfo.GameLimitedMode_IsActive = CharInfo.GameLimitedMode_IsActive or E.GameLimitedMode_IsActive
-			if CharInfo.levelCapped20 == nil then
-				CharInfo.levelCapped20 = false
-			end
-			if CharInfo.PlayerCanEarnExperience == nil then
-				CharInfo.PlayerCanEarnExperience = true
-			end
-			CharInfo.buildVersion = CharInfo.buildVersion or E.buildVersion
-			CharInfo.buildNumber = CharInfo.buildNumber or E.buildNumber
-			CharInfo.buildDate = CharInfo.buildDate or E.buildDate
-			CharInfo.interfaceVersion = CharInfo.interfaceVersion or E.interfaceVersion
-			CharInfo.currentTier = CharInfo.currentTier or E.currentTier
-			CharInfo.IsAccountSecured = CharInfo.IsAccountSecured or E.IsAccountSecured
-			CharInfo.GetRestrictedAccountData_rLevel = CharInfo.GetRestrictedAccountData_rLevel or E.GetRestrictedAccountData_rLevel
-			CharInfo.GetRestrictedAccountData_rMoney = CharInfo.GetRestrictedAccountData_rMoney or E.GetRestrictedAccountData_rMoney
-			CharInfo.GetRestrictedAccountData_profCap = CharInfo.GetRestrictedAccountData_profCap or E.GetRestrictedAccountData_profCap
-			CharInfo.IsTrialAccount = CharInfo.IsTrialAccount or E.IsTrialAccount
-			CharInfo.IsVeteranTrialAccount = CharInfo.IsVeteranTrialAccount or E.IsVeteranTrialAccount
-			CharInfo.PlayerDurability = CharInfo.PlayerDurability or 100
-			CharInfo.maxNumQuestsCanAccept = CharInfo.maxNumQuestsCanAccept or 0
-			CharInfo.Name = CharInfo.Name or E.curCharName
-			CharInfo.numQuests = CharInfo.numQuests or 0
-			CharInfo.RaceLocal = CharInfo.RaceLocal or localizedRace
-			CharInfo.RaceEnglish = CharInfo.RaceEnglish or englishRace
-			CharInfo.raceID = CharInfo.raceID or 0
-			CharInfo.classColorHex = CharInfo.classColorHex or E.classColorHexCurrent
-			CharInfo.currentXP = CharInfo.currentXP or 0
-			CharInfo.UnitXPMax = CharInfo.UnitXPMax or 0
-			CharInfo.UnitXPPercent = CharInfo.UnitXPPercent or 0
-			CharInfo.realTotalTime = CharInfo.realTotalTime or 0
-			CharInfo.TodayTimePlayed = CharInfo.TodayTimePlayed or 0
-			CharInfo.realLevelTime = CharInfo.realLevelTime or 0
-			CharInfo.Possible_Anima = CharInfo.Possible_Anima or 0
-			CharInfo.Possible_CatalogedResearch = CharInfo.Possible_CatalogedResearch or 0
-			CharInfo.numShownEntries = CharInfo.numShownEntries or 0
-			CharInfo.loginDate = CharInfo.loginDate or date("%d.%m.%Y %H:%M:%S")
-			CharInfo.loginDay = CharInfo.loginDay or date("%d.%m.%Y")
-			CharInfo.loginHour = CharInfo.loginHour or date("%H:%M")
-			CharInfo.time = CharInfo.time or time()
-			CharInfo.UnitLevel = CharInfo.UnitLevel or 1
-			CharInfo.Money = CharInfo.Money or 0
-			CharInfo.totalSlots = CharInfo.totalSlots or 0
-			CharInfo.usedSlots = CharInfo.usedSlots or 0
-			CharInfo.STARTTODAY = CharInfo.STARTTODAY or 0
-			CharInfo.STARTWEEK = CharInfo.STARTWEEK or 0
-			CharInfo.STARTMONTH = CharInfo.STARTMONTH or 0
-			CharInfo.MoneyOnLogin = CharInfo.MoneyOnLogin or 0
-			CharInfo.BindLocation = CharInfo.BindLocation or 0
-			CharInfo.CurrentLocation = CharInfo.CurrentLocation or 0
-			CharInfo.WarMode = CharInfo.WarMode or false
-			CharInfo.CurrentKey = CharInfo.CurrentKey or 0
-			CharInfo.CurrentKeyName = CharInfo.CurrentKeyName or 0
-			CharInfo.CurrentKeyLevel = CharInfo.CurrentKeyLevel or 0
-			if CharInfo.needResetDaily == nil then
-				CharInfo.needResetDaily = false
-			end
-			if CharInfo.needResetWeekly == nil then
-				CharInfo.needResetWeekly = false
-			end
-			if CharInfo.needResetMonth == nil then
-				CharInfo.needResetMonth = false
-			end
-			if CharInfo.HasAvailableRewards == nil then
-				CharInfo.HasAvailableRewards = false
-			end
-			if CharInfo.hasMail == nil then
-				CharInfo.hasMail = false
-			end
-			if CharInfo.isShownPLAYER == nil then
-				CharInfo.isShownPLAYER = true
-			end
-			CharInfo.MoneyOnLogin = CharInfo.Money
-			CharInfo.RIO_Score_TWW_S2 = CharInfo.RIO_Score_TWW_S2 or 0
-			CharInfo.RIO_weeklyBest_TWW_S1 = CharInfo.RIO_weeklyBest_TWW_S1 or 0
-			for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
-				CharInfo.GreatVault[i] = CharInfo.GreatVault[i] or {}
-				CharInfo.GreatVault[i].progress = CharInfo.GreatVault[i].progress or 0
-				CharInfo.GreatVault[i].threshold = CharInfo.GreatVault[i].threshold or 0
-				CharInfo.GreatVault[i].hyperlink_STRING = CharInfo.GreatVault[i].hyperlink_STRING or 0
-				CharInfo.GreatVault[i].type = CharInfo.GreatVault[i].type or ""
-			end
-			-- setmetatable(CharInfo.MASLENGO.OctoTable_QuestID, Meta_Table_NONE)
-			-- setmetatable(CharInfo.MASLENGO.CurrencyID, Meta_Table_0)
-			-- setmetatable(CharInfo.MASLENGO.CurrencyID_Total, Meta_Table_0)
-			-- setmetatable(CharInfo.MASLENGO.CurrencyID_totalEarned, Meta_Table_0)
-			-- setmetatable(CharInfo.MASLENGO.ItemsInBag, Meta_Table_0)
-			-- setmetatable(CharInfo.MASLENGO.reputationID, Meta_Table_0)
-			if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
-				for i = 1, #CharInfo.GreatVault do
-					if CharInfo.GreatVault[i] and CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
-						CharInfo.HasAvailableRewards = true
-						CharInfo.GreatVault = {}
-						break
-					end
-				end
-			end
-			if (CharInfo.tmstp_Weekly or 0) < GetServerTime() and CharInfo.MASLENGO.UniversalQuest.Octopussy_DF_Weekly_CommunityFeast_count == E.DONE then
-				CharInfo.Octopussy_DF_Weekly_CommunityFeast_count = nil
-			end
-			if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
-				CharInfo.tmstp_Weekly = E.func_tmstpDayReset(7)
-				CharInfo.needResetWeekly = true
-				CharInfo.CurrentKey = 0
-				CharInfo.CurrentKeyName = 0
-				CharInfo.CurrentKeyLevel = 0
-				CharInfo.journalInstance = {}
-				CharInfo.SavedWorldBoss = {}
-				CharInfo.RIO_weeklyBest_TWW_S1 = 0
-				CharInfo.GreatVault = {}
-				CharInfo.STARTWEEK = 0
-				for i = 1, #CharInfo.GreatVault do
-					if CharInfo.GreatVault[i] then
-						CharInfo.GreatVault[i] = {}
-						CharInfo.GreatVault[i].progress = 0
-						CharInfo.GreatVault[i].threshold = 0
-						CharInfo.GreatVault[i].hyperlink_STRING = 0
-					end
-				end
-				for _, v in next, (E.OctoTable_UniversalQuest) do
-					for q, w in next, (v) do
-						if w == "Weekly" then
-							CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Weekly"] = nil
-						end
-					end
-				end
-			end
-			if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
-				CharInfo.tmstp_Daily = E.func_tmstpDayReset(1)
-				CharInfo.needResetDaily = true
-				for _, v in next, (E.OctoTable_UniversalQuest) do
-					for q, w in next, (v) do
-						if w == "Daily" then
-							CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Daily"] = nil
-						end
-					end
-				end
-				CharInfo.STARTTODAY = 0
-				CharInfo.LFGInstance = {}
-			end
-			for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
-				CharInfo.LFGInstance[dungeonID] = CharInfo.LFGInstance[dungeonID] or {}
-				CharInfo.LFGInstance[dungeonID].D_name = CharInfo.LFGInstance[dungeonID].D_name or name
-				CharInfo.LFGInstance[dungeonID].donetoday = CharInfo.LFGInstance[dungeonID].donetoday or nil
-			end
-			if (CharInfo.tmstp_Month or 0) < GetServerTime() then
-				CharInfo.tmstp_Month = E.func_tmstpDayReset(30)
-				CharInfo.needResetMonth = true
-				CharInfo.STARTMONTH = 0
-				for _, v in next, (E.OctoTable_UniversalQuest) do
-					for q, w in next, (v) do
-						if w == "Month" then
-							CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_".."Month"] = nil
-						end
-					end
-				end
-			end
-		end
-	end
-end
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -427,7 +76,7 @@ local function func_NumPlayers()
 	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
 	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
 	sorted = {}
-	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		if ShowOnlyCurrentBattleTag == true then
 			if (ShowOnlyCurrentServer == true
 				and (CharInfo.curServer == E.curServer)
@@ -466,6 +115,20 @@ end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
+
+
+
+		-- frame.full = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		-- frame.full:SetPropagateMouseClicks(true)
+		-- frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*func_NumPlayers(), AddonHeight)
+		-- frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		-- E:func_SetBackdrop(frame.full, nil, 0, 0)
+		-- frame.full:SetFrameStrata("BACKGROUND")
+
+
+
+
+
 		frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
 		frame.first:SetPropagateMouseClicks(false)
 		frame.first:SetSize(AddonHeight, AddonHeight)
@@ -545,8 +208,12 @@ local function OctoToDo_Frame_init(frame, data)
 	end
 end
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
+	OctoToDo_MainFrame_OCTOMAIN:SetPoint("TOP", 0, -200)
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_OCTOMAIN:SetDontSavePosition(true)
+	OctoToDo_MainFrame_OCTOMAIN:SetClampedToScreen(false)
+	OctoToDo_MainFrame_OCTOMAIN:SetFrameStrata("HIGH")
+
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox = CreateFrame("FRAME", "ScrollBox", OctoToDo_MainFrame_OCTOMAIN, "WowScrollBoxList")
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetAllPoints()
 	OctoToDo_MainFrame_OCTOMAIN.ScrollBox:SetPropagateMouseClicks(true)
@@ -563,9 +230,6 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_OCTOMAIN.ScrollBox, OctoToDo_MainFrame_OCTOMAIN.ScrollBar, OctoToDo_MainFrame_OCTOMAIN.view)
 	-- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_OCTOMAIN.ScrollBox, OctoToDo_MainFrame_OCTOMAIN.ScrollBar)
-	OctoToDo_MainFrame_OCTOMAIN:SetClampedToScreen(false)
-	OctoToDo_MainFrame_OCTOMAIN:SetFrameStrata("HIGH")
-	OctoToDo_MainFrame_OCTOMAIN:SetPoint("CENTER")
 	OctoToDo_MainFrame_OCTOMAIN:SetBackdrop({
 			bgFile = E.bgFile,
 			edgeFile = E.edgeFile,
@@ -628,15 +292,15 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 		CENT[i].firsticonTexture = select(2, OctoTable_func_otrisovkaLEFT[i]())
 		CENT[i].BGcolor = select(3, OctoTable_func_otrisovkaLEFT[i]())
 		CENT[i].index = i
-		for index, CharInfo in ipairs(sorted) do
-			CENT[i][index] = {func(CharInfo)}
-			CENT[i][index].currentChar = CharInfo.GUID == E.curGUID
+		for index, info in ipairs(sorted) do
+			CENT[i][index] = {func(info)}
+			CENT[i][index].currentChar = info.GUID == E.curGUID
 		end
 	end
 	local newcount = #OctoTable_func_otrisovkaCENT
 	MainFrameDefaultLines = newcount
-	if MainFrameDefaultLines > OctoToDo_DB_Vars.AddonHeight then
-		MainFrameDefaultLines = OctoToDo_DB_Vars.AddonHeight
+	if MainFrameDefaultLines > OctoToDo_DB_Vars.MainFrameDefaultLines then
+		MainFrameDefaultLines = OctoToDo_DB_Vars.MainFrameDefaultLines
 	end
 	if MainFrameDefaultLines < 1 then MainFrameDefaultLines = 1 end
 	local DataProvider = CreateDataProvider(CENT)
@@ -646,11 +310,11 @@ function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	--------------------------- POOL -------------------------------
 	----------------------------------------------------------------
 	OctoToDo_MainFrame_OCTOMAIN.pool:ReleaseAll()
-	for count, CharInfo in next, (sorted) do
+	for count, info in next, (sorted) do
 		local curCharFrame = OctoToDo_MainFrame_OCTOMAIN.pool:Acquire()
 		curCharFrame:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_OCTOMAIN, "TOPLEFT", (AddonLeftFrameWeight-AddonCentralFrameWeight)+(AddonCentralFrameWeight*count), 0)
-		curCharFrame.text:SetText(CharInfo.classColorHex .. CharInfo.Name .. "|r")
-		if CharInfo.Faction == "Horde" then
+		curCharFrame.text:SetText(info.classColorHex .. info.Name .. "|r")
+		if info.Faction == "Horde" then
 			E:func_SetBackdrop(curCharFrame, "|cfff01e38", E.bgCaOverlay*2, 0)
 		else
 			E:func_SetBackdrop(curCharFrame, "|cff0070DD", E.bgCaOverlay*2, 0)
@@ -715,6 +379,15 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 		OctoToDo_DB_Levels[menuButton.value] = nil
 		OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 	end
+
+	local function selectFunctionExpansion(menuButton, _, _, checked)
+		OctoToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
+		-- DD_OCTOMAIN:SetText("EXP")
+		OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+	end
+
+
+
 	DD_OCTOMAIN:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
 			local count = 0
@@ -723,7 +396,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 			if level == 1 then
 				local BnetList = {}
 				local OctoToDo_BatlleNets = {}
-				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+				for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 					if not BnetList[CharInfo.BattleTagLocal] then
 						count = count + 1
 						OctoToDo_BatlleNets[count] = CharInfo.BattleTagLocal
@@ -752,18 +425,18 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 						tinsert(list, info)
 					end
 				else
-					local curCharGUID, CharInfo = next(OctoToDo_DB_Levels)
+					local GUID, CharInfo = next(OctoToDo_DB_Levels)
 					value = CharInfo.BattleTagLocal
 				end
 			end
 			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			if type(value) == "string" then
 				local tbl_Players = {}
-				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+				for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 					if CharInfo.BattleTagLocal == value or not value then
 						tbl_Players[CharInfo.curServer] = tbl_Players[CharInfo.curServer] or {}
-						tbl_Players[CharInfo.curServer][curCharGUID] = tbl_Players[CharInfo.curServer][curCharGUID] or {}
-						tbl_Players[CharInfo.curServer][curCharGUID] = CharInfo.classColorHex..CharInfo.Name.."|r".."QEWQWE "..CharInfo.UnitLevel
+						tbl_Players[CharInfo.curServer][GUID] = tbl_Players[CharInfo.curServer][GUID] or {}
+						tbl_Players[CharInfo.curServer][GUID] = CharInfo.classColorHex..CharInfo.Name.."|r".."QEWQWE "..CharInfo.UnitLevel
 					end
 				end
 				for Server, v in next, (tbl_Players) do
@@ -855,12 +528,14 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 				end
 				----------------
 				self:ddAddSeparator(level)
+				----------------
 				info.keepShownOnClick = false
 				info.notCheckable = true
 				info.text = "Show all"
 				info.icon = false
+				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
-					for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 						CharInfo.isShownPLAYER = true
 					end
 					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
@@ -871,20 +546,83 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 				info.notCheckable = true
 				info.text = "Hide all"
 				info.icon = false
+				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
-					for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 						CharInfo.isShownPLAYER = false
 					end
 					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
+				self:ddAddSeparator(level)
+				----------------
+			end
+
+			if level == 1 then
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true
+				info.text = EXPANSION_FILTER_TEXT
+				info.value = EXPANSION_FILTER_TEXT
+				info.icon = false
+				info.hasArrow = true
+				info.func = function(_, _, _, checked)
+					for expansionID, v in ipairs(E.OctoTable_Expansions) do
+						OctoToDo_DB_Vars.ExpansionToShow[expansionID] = true
+					end
+					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+				end
+				self:ddAddButton(info, level)
+			elseif value == EXPANSION_FILTER_TEXT then
+				for expansionID, v in ipairs(E.OctoTable_Expansions) do
+					info.fontObject = OctoFont11
+					info.isNotRadio = true
+					info.notCheckable = false
+					info.keepShownOnClick = true
+					info.text = v.color..v.name.."|r"
+					info.value = expansionID
+					info.icon = v.icon
+					info.checked = OctoToDo_DB_Vars.ExpansionToShow[expansionID]
+					info.func = selectFunctionExpansion
+					self:ddAddButton(info, level)
+				end
+				----------------
+				self:ddAddSeparator(level)
+
+				info.keepShownOnClick = true
+				info.notCheckable = true
+				info.text = "Show all"
+				info.icon = false
+				info.func = function(_, _, _, checked)
+					for expansionID, v in ipairs(E.OctoTable_Expansions) do
+						OctoToDo_DB_Vars.ExpansionToShow[expansionID] = true
+					end
+					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = true
+				info.text = "Hide all"
+				info.icon = false
+				info.func = function(_, _, _, checked)
+					for expansionID, v in ipairs(E.OctoTable_Expansions) do
+						OctoToDo_DB_Vars.ExpansionToShow[expansionID] = false
+					end
+					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+				end
+				self:ddAddButton(info, level)
+
+
 			end
 		end
 	)
 	DD_OCTOMAIN:ddSetOpenMenuUp(true)
 	DD_OCTOMAIN:ddSetMenuButtonHeight(16)
 end
+
+
 function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 	local DD2_OCTOMAIN = CreateFrame("Button", "DD2_OCTOMAIN", OctoToDo_MainFrame_OCTOMAIN, "SecureActionButtonTemplate, BackDropTemplate")
 	DD2_OCTOMAIN:SetSize(SFDropDownWeight, AddonHeight)
@@ -918,7 +656,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 			local info = {}
 			info.fontObject = OctoFont11
 			if not value then
-				for expansionID, v in ipairs(E.OctoTable_Expansions_Table) do
+				for expansionID, v in ipairs(E.OctoTable_Expansions) do
 					info.isNotRadio = true
 					info.notCheckable = false
 					info.keepShownOnClick = true
@@ -937,7 +675,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 			info.text = "Show all"
 			info.icon = false
 			info.func = function(_, _, _, checked)
-				for expansionID, v in ipairs(E.OctoTable_Expansions_Table) do
+				for expansionID, v in ipairs(E.OctoTable_Expansions) do
 					OctoToDo_DB_Vars.ExpansionToShow[expansionID] = true
 				end
 				OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
@@ -949,7 +687,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 			info.text = "Hide all"
 			info.icon = false
 			info.func = function(_, _, _, checked)
-				for expansionID, v in ipairs(E.OctoTable_Expansions_Table) do
+				for expansionID, v in ipairs(E.OctoTable_Expansions) do
 					OctoToDo_DB_Vars.ExpansionToShow[expansionID] = false
 				end
 				OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
@@ -1112,7 +850,7 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:OctoToDo_Create_MainFrame_OCTOMAIN()
 	E.PortalsFrame()
 	self:func_Create_DD_OCTOMAIN()
-	self:func_Create_DD2_OCTOMAIN()
+	-- self:func_Create_DD2_OCTOMAIN()
 	----------------------------------------------------------------
 	local totalMoney = 0
 	local totalReload = 0
@@ -1120,7 +858,7 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	local TodayTimePlayedtotal = 0
 	local realLevelTime = 0
 	local totalSTARTTODAY = 0
-	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		if CharInfo.ReloadCount ~= nil then
 			totalReload = totalReload + CharInfo.ReloadCount
 		end

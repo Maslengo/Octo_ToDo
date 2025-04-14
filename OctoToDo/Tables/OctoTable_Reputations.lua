@@ -1,6 +1,22 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
-E.OctoTable_FACTIONTABLE = {
+E.OctoTable_Reputations = {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	[2697] = {name = "Chase's test faction (DNT)", side = "-", category = "Другое", }, --[faction=2697]
 	[2695] = {name = "Test Account Wide Stormwind (DNT)", side = "Alliance", category = "Альянс", }, --[faction=2695]
 	[2693] = {name = "Путь участника вылазки (1-й сезон)", side = "-", category = "The War Within", }, --[faction=2693]

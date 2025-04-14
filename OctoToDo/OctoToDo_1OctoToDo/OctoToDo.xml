@@ -7,12 +7,12 @@
 
 	<Script file="Tables\OctoToDo_Timer.lua"/>
 	<Script file="Tables\OctoTable_Currencies.lua"/>
-	<Script file="Tables\OctoTable_Expansions_Table.lua"/>
-	<Script file="Tables\OctoTable_Instances.lua"/>
+	<Script file="Tables\OctoTable_Expansions.lua"/>
+	<Script file="Tables\OctoTable_KeystoneAbbr.lua"/>
 	<Script file="Tables\OctoTable_Items.lua"/>
 	<Script file="Tables\OctoTable_MinecraftColors.lua"/>
 	<Script file="Tables\OctoTable_QuestID.lua"/>
-	<Script file="Tables\OctoTable_reputation_ALL.lua"/>
+	<Script file="Tables\OctoTable_Reputations.lua"/>
 	<Script file="Tables\OctoTable_UniversalQuest.lua"/>
 	<Script file="Tables\OctoTable_Prefixes.lua"/>
 	<Script file="Tables\OctoTable_Gossip.lua"/>

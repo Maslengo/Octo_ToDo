@@ -5,9 +5,9 @@ local OctoToDo_MainFrame_Achievements = CreateFrame("BUTTON", "OctoToDo_MainFram
 OctoToDo_MainFrame_Achievements:Hide()
 tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_Achievements)
 ----------------------------------------------------------------
-local AddonHeight = 20 -- Высота -- OctoToDo_DB_Vars.curHeight
-local AddonLeftFrameWeight = 200 -- Ширина Левого -- OctoToDo_DB_Vars.AddonLeftFrameWeight
-local AddonCentralFrameWeight = 90 -- Ширина Центрального -- OctoToDo_DB_Vars.AddonCentralFrameWeight
+local AddonHeight = 20
+local AddonLeftFrameWeight = 200
+local AddonCentralFrameWeight = 90
 local MainFrameDefaultLines = 30
 local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / AddonHeight))*.7)
 if MainFrameDefaultLines > MainFrameTotalLines then
@@ -107,11 +107,12 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Frame_init(frame, node)
 	end
 end
 function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
+	OctoToDo_MainFrame_Achievements:SetPoint("TOP", 0, -200)
 	OctoToDo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_Achievements:SetDontSavePosition(true)
 	OctoToDo_MainFrame_Achievements:SetClampedToScreen(false)
 	OctoToDo_MainFrame_Achievements:SetFrameStrata("HIGH")
-	OctoToDo_MainFrame_Achievements:SetPoint("CENTER")
+
 	OctoToDo_MainFrame_Achievements:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
 	OctoToDo_MainFrame_Achievements:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 	OctoToDo_MainFrame_Achievements:SetBackdropBorderColor(0, 0, 0, 1)
@@ -283,11 +284,6 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 	end)
 	dd_SECOND:ddSetMenuButtonHeight(16)
 end
-function OctoToDo_EventFrame_Achievements:func_CheckWTF()
-	if OctoToDo_Achievements == nil then OctoToDo_Achievements = {} end
-	if OctoToDo_Achievements.AchievementShowCompleted == nil then OctoToDo_Achievements.AchievementShowCompleted = true end
-	if OctoToDo_Achievements.AchievementToShow == nil then OctoToDo_Achievements.AchievementToShow = {[92] = true} end
-end
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"CONTENT_TRACKING_UPDATE",
@@ -319,7 +315,6 @@ function OctoToDo_EventFrame_Achievements:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		self:func_CheckWTF()
 		self:OctoToDo_Create_MainFrame_Achievements()
 		self:func_CreateMyDataProvider()
 		self:func_Create_DDframe_Achievements()

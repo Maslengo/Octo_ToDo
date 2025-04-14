@@ -5,9 +5,9 @@ local OctoToDo_MainFrame_AddonsManager = CreateFrame("BUTTON", "OctoToDo_MainFra
 OctoToDo_MainFrame_AddonsManager:Hide()
 tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_AddonsManager)
 ----------------------------------------------------------------
-local AddonHeight = 20 -- Высота -- OctoToDo_DB_Vars.curHeight
-local AddonLeftFrameWeight = 200 -- Ширина Левого -- OctoToDo_DB_Vars.AddonLeftFrameWeight
-local AddonCentralFrameWeight = 90 -- Ширина Центрального -- OctoToDo_DB_Vars.AddonCentralFrameWeight
+local AddonHeight = 20
+local AddonLeftFrameWeight = 200
+local AddonCentralFrameWeight = 90
 local MainFrameDefaultLines = 30
 local MainFrameTotalLines = E.func_GetNumAddOns() -- math.floor((math.floor(select(2, GetPhysicalScreenSize()) / AddonHeight))*.7)
 if MainFrameDefaultLines > MainFrameTotalLines then
@@ -412,11 +412,12 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(frame, node)
 	-- end
 end
 function OctoToDo_EventFrame_AddonsManager:OctoToDo_Create_MainFrame_AddonsManager()
+	OctoToDo_MainFrame_AddonsManager:SetPoint("TOP", 0, -200)
 	OctoToDo_MainFrame_AddonsManager:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_AddonsManager:SetDontSavePosition(true)
 	OctoToDo_MainFrame_AddonsManager:SetClampedToScreen(false)
 	OctoToDo_MainFrame_AddonsManager:SetFrameStrata("HIGH")
-	OctoToDo_MainFrame_AddonsManager:SetPoint("CENTER", 0, 0)
+
 	OctoToDo_MainFrame_AddonsManager:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
 	OctoToDo_MainFrame_AddonsManager:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 	OctoToDo_MainFrame_AddonsManager:SetBackdropBorderColor(0, 0, 0, 1)

@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
-E.OctoTable_Expansions_Table = {
+E.OctoTable_Expansions = {
 	{
 		color = --[[E.func_rgb2hex(EXPANSION_COLOR_1.r, EXPANSION_COLOR_1.g, EXPANSION_COLOR_1.b) or]] E.WorldofWarcraft_Color,
 		config = 1,

@@ -628,7 +628,7 @@ function E.CreateGeneralOptions()
 	-- if wipe == false then
 	-- wipe = true
 	-------------------------------------------------
-	-- for index, v in ipairs(E.OctoTable_Expansions_Table) do
+	-- for index, v in ipairs(E.OctoTable_Expansions) do
 	-- 	generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r"
 	-- end
 	-------------------------------------------------

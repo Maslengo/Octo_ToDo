@@ -68,7 +68,9 @@ function E:func_Otrisovka()
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {E.DEVTEXT, " "}
 				tooltip[#tooltip+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.GUID.."|r"}
-				tooltip[#tooltip+1] = {"hasMail", CharInfo.hasMail and E.func_texturefromIcon(E.Icon_MailBox)..CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
+				if CharInfo.hasMail ~= false then
+					tooltip[#tooltip+1] = {"hasMail", E.func_texturefromIcon(E.Icon_MailBox)..CharInfo.classColorHex.."true|r"}
+				end
 				tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
 				tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID.."|r"}
 				if CharInfo.Chromie_name ~= nil then
@@ -110,7 +112,7 @@ function E:func_Otrisovka()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	for expID, expDATA in ipairs(E.OctoTable_Expansions_Table) do
+	for expID, expDATA in ipairs(E.OctoTable_Expansions) do
 		if OctoToDo_DB_Vars.ExpansionToShow[expID] then
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
 				if expDATA.nameShort == v.desc then
@@ -160,9 +162,9 @@ function E:func_Otrisovka()
 			local vivodCent, tooltip = " ", {}
 			if CharInfo.Chromie_inChromieTime == false then
 				if CharInfo.CurrentKeyName and CharInfo.CurrentKeyName ~= 0 then
-					tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyName.."|r", ""}
+					tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyName.."|r", ""}
 				end
-				if CharInfo.RIO_Score_TWW_S2 ~= 0 then
+				if CharInfo.RIO_Score ~= 0 then
 					tooltip[#tooltip+1] = {" ", " "}
 					local Enum_Activities_table = {}
 					for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
@@ -171,24 +173,24 @@ function E:func_Otrisovka()
 					sort(Enum_Activities_table)
 					for j = 1, #Enum_Activities_table do
 						local i = Enum_Activities_table[j]
-						if CharInfo.GreatVault[i] and CharInfo.GreatVault[i].type ~= "" then
-							CharInfo.GreatVault[i] = CharInfo.GreatVault[i] or {}
-							CharInfo.GreatVault[i].hyperlink_STRING = CharInfo.GreatVault[i].hyperlink_STRING or 0
-							CharInfo.GreatVault[i].progress = CharInfo.GreatVault[i].progress or 0
-							CharInfo.GreatVault[i].threshold = CharInfo.GreatVault[i].threshold or 0
-							if CharInfo.GreatVault[i].hyperlink_STRING ~= 0 then
-								tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.GreatVault[i].hyperlink_STRING.."|r"}
-							elseif CharInfo.GreatVault[i].progress ~= 0 then
-								tooltip[#tooltip+1] = {CharInfo.GreatVault[i].type, CharInfo.GreatVault[i].progress.."/"..CharInfo.GreatVault[i].threshold}
+						if CharInfo.PIZDALISHE.GreatVault[i] and CharInfo.PIZDALISHE.GreatVault[i].type ~= "" then
+							CharInfo.PIZDALISHE.GreatVault[i] = CharInfo.PIZDALISHE.GreatVault[i] or {}
+							CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING = CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING or 0
+							CharInfo.PIZDALISHE.GreatVault[i].progress = CharInfo.PIZDALISHE.GreatVault[i].progress or 0
+							CharInfo.PIZDALISHE.GreatVault[i].threshold = CharInfo.PIZDALISHE.GreatVault[i].threshold or 0
+							if CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING ~= 0 then
+								tooltip[#tooltip+1] = {CharInfo.PIZDALISHE.GreatVault[i].type, CharInfo.PIZDALISHE.GreatVault[i].progress.."/"..CharInfo.PIZDALISHE.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING.."|r"}
+							elseif CharInfo.PIZDALISHE.GreatVault[i].progress ~= 0 then
+								tooltip[#tooltip+1] = {CharInfo.PIZDALISHE.GreatVault[i].type, CharInfo.PIZDALISHE.GreatVault[i].progress.."/"..CharInfo.PIZDALISHE.GreatVault[i].threshold}
 							end
 						end
 					end
 					tooltip[#tooltip+1] = {" ", " "}
-					tooltip[#tooltip+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.RIO_weeklyBest_TWW_S1.."|r"}
-					tooltip[#tooltip+1] = {"RIO Score:", E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.RIO_Score_TWW_S2.."|r"}
+					tooltip[#tooltip+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_weeklyBest.."|r"}
+					tooltip[#tooltip+1] = {"RIO Score:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_Score.."|r"}
 				end
 				if CharInfo.CurrentKey ~= 0 then
-					vivodCent = E.func_RIOColor(CharInfo.RIO_Score_TWW_S2)..CharInfo.CurrentKey.."|r"
+					vivodCent = E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKey.."|r"
 				end
 				if CharInfo.HasAvailableRewards then
 					vivodCent = vivodCent..E.Blue_Color..">Vault<|r"
@@ -256,6 +258,25 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
 				return E.func_itemName(34664), E.func_GetItemIcon(34664)
+		end)
+		----------------------------------------------------------------
+		tinsert(OctoTable_func_otrisovkaCENT, -- 24581(Horde) 24579(Alliance)
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.ItemsInBag[24581] ~= nil then
+					vivodCent = CharInfo.MASLENGO.ItemsInBag[24581]
+				elseif CharInfo.MASLENGO.ItemsInBag[24579] ~= nil then
+					vivodCent = CharInfo.MASLENGO.ItemsInBag[24579]
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				-- if CharInfo.Faction == "Horde" then
+					return E.func_itemName(24581), E.func_GetItemIcon(24581)
+				-- else
+				-- 	return E.func_itemName(24579), E.func_GetItemIcon(24579)
+				-- end
 		end)
 	end
 	if OctoToDo_DB_Vars.ExpansionToShow[3] then
@@ -753,8 +774,8 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.islandBfA ~= nil then
-					vivodCent = CharInfo.islandBfA
+				if CharInfo.PIZDALISHE.islandBfA ~= nil then
+					vivodCent = CharInfo.PIZDALISHE.islandBfA
 				end
 				return vivodCent, tooltip
 		end)
@@ -798,12 +819,12 @@ function E:func_Otrisovka()
 					function(CharInfo)
 						local vivodCent, tooltip = " ", {}
 						if kCovenant == 1 then
-							vivodCent = vivodCent..E.func_EmptyZero(CharInfo.CovenantAndAnima[iANIMA][kCovenant])
+							vivodCent = vivodCent..E.func_EmptyZero(CharInfo.PIZDALISHE.CovenantAndAnima[iANIMA][kCovenant])
 						else
-							vivodCent = vivodCent..E.func_EmptyZero(CharInfo.CovenantAndAnima[iANIMA][kCovenant])
+							vivodCent = vivodCent..E.func_EmptyZero(CharInfo.PIZDALISHE.CovenantAndAnima[iANIMA][kCovenant])
 						end
 						vivodCent = E.OctoTable_Covenant[iANIMA].color..vivodCent.."|r"
-						if iANIMA == CharInfo.CovenantAndAnima.curCovID then
+						if iANIMA == CharInfo.PIZDALISHE.CovenantAndAnima.curCovID then
 							if CharInfo.Possible_Anima ~= 0 and kCovenant == 2 then
 								vivodCent = vivodCent..E.Blue_Color.." +"..CharInfo.Possible_Anima.."|r"
 							end
@@ -1219,7 +1240,7 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
 				local ServerTime = GetServerTime()
-				for instanceID, v in next, (CharInfo.journalInstance) do
+				for instanceID, v in next, (CharInfo.PIZDALISHE.journalInstance) do
 					if v then
 						for difficultyID, w in next, (v) do
 							if w.vivod ~= nil then
@@ -1228,12 +1249,14 @@ function E:func_Otrisovka()
 						end
 					end
 				end
-				for dungeonID, v in next, (E.OctoTable_LFGDungeons) do
-					if CharInfo.LFGInstance[dungeonID].donetoday ~= nil then
-						tooltip[#tooltip+1] = {CharInfo.LFGInstance[dungeonID].D_name..(E.DebugIDs and E.Gray_Color.. " id:"..dungeonID.."|r" or ""), CharInfo.LFGInstance[dungeonID].donetoday}
+				for dungeonID, v in next, (CharInfo.PIZDALISHE.LFGInstance) do
+					if v then
+						if CharInfo.PIZDALISHE.LFGInstance[dungeonID].donetoday ~= nil then
+							tooltip[#tooltip+1] = {CharInfo.PIZDALISHE.LFGInstance[dungeonID].D_name..(E.DebugIDs and E.Gray_Color.. " id:"..dungeonID.."|r" or ""), CharInfo.PIZDALISHE.LFGInstance[dungeonID].donetoday}
+						end
 					end
 				end
-				for worldBossID, v in next, (CharInfo.SavedWorldBoss) do
+				for worldBossID, v in next, (CharInfo.PIZDALISHE.SavedWorldBoss) do
 					if v then
 						tooltip[#tooltip+1] = {E.func_texturefromIcon(E.Icon_WorldBoss).. v.name .." ".. E.Red_Color..E.func_SecondsToClock(v.reset).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..worldBossID.."|r" or ""), " "}
 					end
@@ -1252,59 +1275,36 @@ function E:func_Otrisovka()
 	end
 	if OctoToDo_DB_Vars.Currency == true then
 		----------------------------------------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
-					for CurrencyID, config in next, (tbl) do
-						if OctoToDo_DB_Vars.CurrencyShowAllways == false and config == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
-							tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
-						elseif OctoToDo_DB_Vars.CurrencyShowAllways == true and config == true then
-							if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
-								tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
-							else
-								tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.Gray_Color..E.func_currencyName_NOCOLOR(CurrencyID), E.Gray_Color..CharInfo.MASLENGO.CurrencyID_Total[CurrencyID].."|r"}
-							end
-						end
-					end
-				end
-				if #tooltip ~= 0 then
-					vivodCent = E.Gray_Color..CURRENCY.."|r"
-				else
-					vivodCent = ""
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return CURRENCY
-		end)
+		-- tinsert(OctoTable_func_otrisovkaCENT,
+		-- 	function(CharInfo)
+		-- 		local vivodCent, tooltip = " ", {}
+		-- 		for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
+		-- 			for CurrencyID, config in next, (tbl) do
+		-- 				if OctoToDo_DB_Vars.CurrencyShowAllways == false and config == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
+		-- 					tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
+		-- 				elseif OctoToDo_DB_Vars.CurrencyShowAllways == true and config == true then
+		-- 					if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
+		-- 						tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
+		-- 					else
+		-- 						tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.Gray_Color..E.func_currencyName_NOCOLOR(CurrencyID), E.Gray_Color..CharInfo.MASLENGO.CurrencyID_Total[CurrencyID].."|r"}
+		-- 					end
+		-- 				end
+		-- 			end
+		-- 		end
+		-- 		if #tooltip ~= 0 then
+		-- 			vivodCent = E.Gray_Color..CURRENCY.."|r"
+		-- 		else
+		-- 			vivodCent = ""
+		-- 		end
+		-- 		return vivodCent, tooltip
+		-- end)
+		-- tinsert(OctoTable_func_otrisovkaLEFT,
+		-- 	function(CharInfo)
+		-- 		return CURRENCY
+		-- end)
 	end
-	if OctoToDo_DB_Vars.Reputations == true then
-		----------------------------------------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				vivodCent = E.Gray_Color..REPUTATION.."|r"
-				for reputationHEADER, tbl in next, (OCTO_DB_reputations_test) do
-					for reputationID, config in next, (tbl) do
-						if config == true and CharInfo.MASLENGO.reputationID[reputationID] ~= 0 and CharInfo.MASLENGO.reputationID[reputationID] ~= "" and CharInfo.MASLENGO.reputationID[reputationID] ~= nil then
-							tooltip[#tooltip+1] = {E.func_reputationName(reputationID).."|r", CharInfo.MASLENGO.reputationID[reputationID]}
-						end
-					end
-				end
-				if #tooltip ~= 0 then
-					vivodCent = E.Gray_Color..REPUTATION.."|r"
-				else
-					vivodCent = ""
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return REPUTATION
-		end)
-	end
+	-- if OctoToDo_DB_Vars.Reputations == true then
+	-- end
 	if OctoToDo_DB_Vars.Items == true then
 		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,

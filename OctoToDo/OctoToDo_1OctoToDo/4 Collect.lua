@@ -103,10 +103,10 @@ function E.Collect_All_Covenant()
 			local curCovLevel = C_CovenantSanctumUI.GetRenownLevel()
 			local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(1813)
 			local curAnimaAmount = currencyInfo.quantity
-			collect.CovenantAndAnima.curCovID = curCovID
-			collect.CovenantAndAnima = collect.CovenantAndAnima or {}
-			collect.CovenantAndAnima[curCovID][1] = curCovLevel
-			collect.CovenantAndAnima[curCovID][2] = curAnimaAmount
+			collect.PIZDALISHE.CovenantAndAnima = collect.PIZDALISHE.CovenantAndAnima or {}
+			collect.PIZDALISHE.CovenantAndAnima.curCovID = curCovID
+			collect.PIZDALISHE.CovenantAndAnima[curCovID][1] = curCovLevel
+			collect.PIZDALISHE.CovenantAndAnima[curCovID][2] = curAnimaAmount
 		end
 	end
 end
@@ -279,8 +279,8 @@ function E.Collect_ALL_GreatVault()
 				currentWeekBestLevel = level
 			end
 		end
-		collect.RIO_Score_TWW_S2 = C_ChallengeMode.GetOverallDungeonScore("PLAYER")
-		collect.RIO_weeklyBest_TWW_S1 = currentWeekBestLevel
+		collect.RIO_Score = C_ChallengeMode.GetOverallDungeonScore("PLAYER")
+		collect.RIO_weeklyBest = currentWeekBestLevel
 		local name_activities = setmetatable({
 				[0] = "None",
 				[1] = DUNGEONS,
@@ -309,50 +309,21 @@ function E.Collect_ALL_GreatVault()
 				if activityInfo then
 					local tip = activityInfo.type
 					if collect and tip ~= nil then
-						collect.GreatVault[tip] = collect.GreatVault[tip] or {}
-						collect.GreatVault[tip].type = activity_name
-						collect.GreatVault[tip].progress = activityInfo.progress
-						collect.GreatVault[tip].threshold = activityInfo.threshold
+						collect.PIZDALISHE.GreatVault[tip] = collect.PIZDALISHE.GreatVault[tip] or {}
+						collect.PIZDALISHE.GreatVault[tip].type = activity_name
+						collect.PIZDALISHE.GreatVault[tip].progress = activityInfo.progress
+						collect.PIZDALISHE.GreatVault[tip].threshold = activityInfo.threshold
 						local hyperlink = E.func_GetItemCurrentLevel(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						hyperlink_STRING = E.func_GetItemCurrentLevel(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						if hyperlink_STRING then
 							vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
 							if vivod ~= nil then
-								collect.GreatVault[tip].hyperlink_STRING = vivod
+								collect.PIZDALISHE.GreatVault[tip].hyperlink_STRING = vivod
 							end
 						end
 					end
 				end
 			end
-		end
-	end
-end
-function E.Collect_All_Currency_TEST2()
-	OCTO_DB_currencies_test = OCTO_DB_currencies_test or {}
-	local expanded = {}
-	for index = C_CurrencyInfo.GetCurrencyListSize(), 1, -1 do
-		local info = C_CurrencyInfo.GetCurrencyListInfo(index)
-		if info.isHeader and not info.isHeaderExpanded and ExpandCurrencyList then
-			ExpandCurrencyList(index, true)
-			expanded[info.name] = true
-		end
-	end
-	local tblHeader
-	for index = 1, C_CurrencyInfo.GetCurrencyListSize() do
-		local link = C_CurrencyInfo.GetCurrencyListLink(index)
-		local info = C_CurrencyInfo.GetCurrencyListInfo(index)
-		if info.isHeader then
-			OCTO_DB_currencies_test[info.name] = OCTO_DB_currencies_test[info.name] or {}
-			tblHeader = OCTO_DB_currencies_test[info.name]
-		elseif link then
-			local currencyID = C_CurrencyInfo.GetCurrencyIDFromLink(link)
-			tblHeader[currencyID] = tblHeader[currencyID] or false
-		end
-	end
-	for index = C_CurrencyInfo.GetCurrencyListSize(), 1, -1 do
-		local info = C_CurrencyInfo.GetCurrencyListInfo(index)
-		if info.isHeader and expanded[info.name] and ExpandCurrencyList then
-			ExpandCurrencyList(index, false)
 		end
 	end
 end
@@ -406,23 +377,23 @@ function E.Collect_All_Currency()
 						end
 					end
 				else
-					for GUID, tbl in next, (OctoToDo_DB_Levels) do
-						tbl.MASLENGO = tbl.MASLENGO or {}
-						tbl.MASLENGO.CurrencyID = tbl.MASLENGO.CurrencyID or {}
-						tbl.MASLENGO.CurrencyID_totalEarned = tbl.MASLENGO.CurrencyID_totalEarned or {}
-						tbl.MASLENGO.CurrencyID_Total = tbl.MASLENGO.CurrencyID_Total or {}
-						if tbl and not InCombatLockdown() then
+					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+						CharInfo.MASLENGO = CharInfo.MASLENGO or {}
+						CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
+						CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
+						CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
+						if CharInfo and not InCombatLockdown() then
 							if quantity ~= nil and quantity ~= 0 then
-								tbl.MASLENGO.CurrencyID[CurrencyID] = quantity
+								CharInfo.MASLENGO.CurrencyID[CurrencyID] = quantity
 							end
 							if totalEarned ~= nil and totalEarned ~= 0 then
-								tbl.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
+								CharInfo.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
 							end
 							if maxQuantity ~= nil and maxQuantity ~= 0 then
 								if quantity ~= maxQuantity then
-									tbl.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+									CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
 								else
-									tbl.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+									CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
 								end
 							end
 						end
@@ -437,40 +408,14 @@ function E.Collect_All_Currency()
 	end
 end
 function E.Collect_All_Reputations()
-	OCTO_DB_reputations_test = OCTO_DB_reputations_test or {}
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	C_Reputation.ExpandAllFactionHeaders()
 	if collect and not InCombatLockdown() then
 
 
-
-
-
-
-
-
-
-
-		for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
-			if reputationID then
-				if C_Reputation.IsAccountWideReputation(reputationID) then
-					for GUID, tbl in next, (OctoToDo_DB_Levels) do
-						if (E.func_CheckReputationByRepID(reputationID) ~= "" and E.func_CheckReputationByRepID(reputationID) ~= 0 and E.func_CheckReputationByRepID(reputationID) ~= nil) then
-							tbl.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID)
-						end
-					end
-				else
-					if (E.func_CheckReputationByRepID(reputationID) ~= "" and E.func_CheckReputationByRepID(reputationID) ~= 0 and E.func_CheckReputationByRepID(reputationID) ~= nil) then
-						collect.MASLENGO.reputationID[reputationID] = E.func_CheckReputationByRepID(reputationID)
-					end
-				end
-			end
-		end
 		----------------------------------------------------------------
-		for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do
+		for reputationID, v in next, (E.OctoTable_Reputations) do
 			local Header = v.category
-			OCTO_DB_reputations_test[Header] = OCTO_DB_reputations_test[Header] or {}
-			OCTO_DB_reputations_test[Header][reputationID] = OCTO_DB_reputations_test[Header][reputationID] or false
 			collect.MASLENGO.reputationFULL[reputationID] = collect.MASLENGO.reputationFULL[reputationID] or {}
 			local FIRST = select(1, E.func_CheckReputationFULL(reputationID))
 			local SECOND = select(2, E.func_CheckReputationFULL(reputationID))
@@ -479,13 +424,13 @@ function E.Collect_All_Reputations()
 			local standingTEXT = select(5, E.func_CheckReputationFULL(reputationID))
 
 			if C_Reputation.IsAccountWideReputation(reputationID) then
-				for GUID, tbl in next, (OctoToDo_DB_Levels) do
-					tbl.MASLENGO.reputationFULL[reputationID] = tbl.MASLENGO.reputationFULL[reputationID] or {}
-					tbl.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
-					tbl.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
-					tbl.MASLENGO.reputationFULL[reputationID].vivod = vivod
-					tbl.MASLENGO.reputationFULL[reputationID].color = color
-					tbl.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
+				for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+					CharInfo.MASLENGO.reputationFULL[reputationID] = CharInfo.MASLENGO.reputationFULL[reputationID] or {}
+					CharInfo.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
+					CharInfo.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
+					CharInfo.MASLENGO.reputationFULL[reputationID].vivod = vivod
+					CharInfo.MASLENGO.reputationFULL[reputationID].color = color
+					CharInfo.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
 				end
 			else
 				collect.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
@@ -687,15 +632,11 @@ function E.Collect_All_journalInstance()
 		local DiffAbbr = ""
 		local instancesLastBoss = {}
 		local ServerTime = GetServerTime()
-		if collect.journalInstance == 0 then
-			collect.journalInstance = {}
-		end
-		collect.journalInstance = collect.journalInstance or {}
 		if NumSavedInstances > 0 then
 			for i = 1, NumSavedInstances do
 				local instanceName, lockoutId, instanceReset, instanceDifficulty, locked, extended, instanceIDMostSig, isRaid, maxPlayers, difficultyName, totalBosses, defeatedBosses, extendDisabled, instanceId = GetSavedInstanceInfo(i)
-				collect.journalInstance[instanceId] = collect.journalInstance[instanceId] or {}
-				collect.journalInstance[instanceId][instanceDifficulty] = collect.journalInstance[instanceId][instanceDifficulty] or {}
+				collect.PIZDALISHE.journalInstance[instanceId] = collect.PIZDALISHE.journalInstance[instanceId] or {}
+				collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty] = collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty] or {}
 				if locked then
 					local _, _, lastBossDefeated = GetSavedInstanceEncounterInfo(i, instancesLastBoss[i] or totalBosses)
 					if defeatedBosses == 0 and lastBossDefeated then
@@ -725,30 +666,29 @@ function E.Collect_All_journalInstance()
 						DiffAbbr = "HZ"
 					end
 					local vivod = color..defeatedBosses.."/"..totalBosses.."|r"
-					collect.journalInstance[instanceId][instanceDifficulty].instanceName = instanceName
-					collect.journalInstance[instanceId][instanceDifficulty].vivod = vivod
-					collect.journalInstance[instanceId][instanceDifficulty].instanceReset = instanceReset
-					collect.journalInstance[instanceId][instanceDifficulty].difficultyName = difficultyName
-					collect.journalInstance[instanceId][instanceDifficulty].instanceDifficulty = instanceDifficulty
-					collect.journalInstance[instanceId][instanceDifficulty].extended = extended
-					collect.journalInstance[instanceId][instanceDifficulty].instanceIDMostSig = instanceIDMostSig
-					collect.journalInstance[instanceId][instanceDifficulty].isRaid = isRaid
-					collect.journalInstance[instanceId][instanceDifficulty].maxPlayers = maxPlayers
-					collect.journalInstance[instanceId][instanceDifficulty].totalBosses = totalBosses
-					collect.journalInstance[instanceId][instanceDifficulty].defeatedBosses = defeatedBosses
-					collect.journalInstance[instanceId][instanceDifficulty].extendDisabled = extendDisabled
-					collect.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
-					collect.journalInstance[instanceId][instanceDifficulty].Time = E.func_SecondsToClock(instanceReset-ServerTime)
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].instanceName = instanceName
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].vivod = vivod
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].instanceReset = instanceReset
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].difficultyName = difficultyName
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].instanceDifficulty = instanceDifficulty
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].extended = extended
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].instanceIDMostSig = instanceIDMostSig
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].isRaid = isRaid
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].maxPlayers = maxPlayers
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].totalBosses = totalBosses
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].defeatedBosses = defeatedBosses
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].extendDisabled = extendDisabled
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
+					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].Time = E.func_SecondsToClock(instanceReset-ServerTime)
 				end
 			end
 		end
-		collect.SavedWorldBoss = collect.SavedWorldBoss or {}
 		if NumSavedWorldBosses > 0 then
 			for i = 1, NumSavedWorldBosses do
 				local name, worldBossID, reset = GetSavedWorldBossInfo(i)
-				collect.SavedWorldBoss[worldBossID] = collect.SavedWorldBoss[worldBossID] or {}
-				collect.SavedWorldBoss[worldBossID].name = name
-				collect.SavedWorldBoss[worldBossID].reset = reset
+				collect.PIZDALISHE.SavedWorldBoss[worldBossID] = collect.PIZDALISHE.SavedWorldBoss[worldBossID] or {}
+				collect.PIZDALISHE.SavedWorldBoss[worldBossID].name = name
+				collect.PIZDALISHE.SavedWorldBoss[worldBossID].reset = reset
 			end
 		end
 		for i=1, GetNumRandomDungeons() do
@@ -756,12 +696,12 @@ function E.Collect_All_journalInstance()
 			if dungeonID and E.OctoTable_LFGDungeons[dungeonID] then
 				local D_name = GetLFGDungeonInfo(dungeonID)
 				local donetoday = GetLFGDungeonRewards(dungeonID)
-				collect.LFGInstance[dungeonID] = collect.LFGInstance[dungeonID] or {}
-				collect.LFGInstance[dungeonID].D_name = D_name
+				collect.PIZDALISHE.LFGInstance[dungeonID] = collect.PIZDALISHE.LFGInstance[dungeonID] or {}
+				collect.PIZDALISHE.LFGInstance[dungeonID].D_name = D_name
 				if donetoday == true then
-					collect.LFGInstance[dungeonID].donetoday = E.DONE
+					collect.PIZDALISHE.LFGInstance[dungeonID].donetoday = E.DONE
 				else
-					collect.LFGInstance[dungeonID].donetoday = nil
+					collect.PIZDALISHE.LFGInstance[dungeonID].donetoday = nil
 				end
 			end
 		end
@@ -949,7 +889,7 @@ function E.Collect_All_BfA_Island()
 		local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
 		if questID then
 			if E.func_CheckCompletedByQuestID(questID) ~= E.NONE then
-				collect.islandBfA = E.func_CheckCompletedByQuestID(questID)
+				collect.PIZDALISHE.islandBfA = E.func_CheckCompletedByQuestID(questID)
 			end
 		end
 	end
@@ -1023,7 +963,6 @@ function OctoToDo_EventFrame_Collect:ADDON_LOADED()
 	end
 end
 function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
-	E:func_checkCharInfo()
 	RequestTimePlayed()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
@@ -1031,7 +970,6 @@ function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_ALL_PlayerInfo()
 	E.Collect_All_Chromie()
 	E.Collect_All_Currency()
-	E.Collect_All_Currency_TEST2()
 	E.Collect_All_Reputations()
 	E.Collect_ALL_GreatVault()
 	E.Collect_ALL_ItemLevel()
@@ -1128,7 +1066,6 @@ function OctoToDo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
 		self.currencyUpdatePause = true
 		C_Timer.After(3, function()
 				E.Collect_All_Currency()
-				E.Collect_All_Currency_TEST2()
 				E.Collect_All_Covenant()
 				E.Update("CURRENCY_DISPLAY_UPDATE")
 				self.currencyUpdatePause = false
@@ -1138,7 +1075,6 @@ end
 function OctoToDo_EventFrame_Collect:CURRENCY_TRANSFER_LOG_UPDATE()
 	if not InCombatLockdown() then
 		E.Collect_All_Currency()
-		E.Collect_All_Currency_TEST2()
 		E.Update("CURRENCY_TRANSFER_LOG_UPDATE")
 	end
 end
@@ -1248,7 +1184,6 @@ function OctoToDo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 					E.Collect_All_BfA_Island()
 					E.Collect_All_Reputations()
 					E.Collect_All_Currency()
-					E.Collect_All_Currency_TEST2()
 					-- E.Collect_All_journalInstance()
 					E.Update("PLAYER_REGEN_ENABLED")
 				end

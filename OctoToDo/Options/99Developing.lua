@@ -31,10 +31,18 @@ function E.Developing()
 				func = function()
 					OctoToDo_DB_Config = {}
 					OctoToDo_DB_Levels = {}
-					OctoToDo_DB_Other = {}
 					OctoToDo_DB_Vars = {}
-					OCTO_DB_currencies_test = {}
-					OCTO_DB_reputations_test = {}
+					OctoToDo_DB_Other = {}
+					OctoToDo_Achievements = {}
+					OctoSimpleList = {}
+					OctoToDo_AddonsTable = {}
+					OctoToDo_AddonsManager = {}
+					OctoToDo_OCTOREP = {}
+					OctoToDo_TrashCan = {}
+
+
+
+
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -90,28 +98,6 @@ function E.Developing()
 				width = E.FULL_WIDTH/4,
 				order = 10,
 			},
-			-------------------------------------------------
-			OCTO_DB_currencies_test = {
-				type = "execute",
-				name = "currencies",
-				func = function()
-					OCTO_DB_currencies_test  = {}
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 11,
-			},
-			-------------------------------------------------
-			OCTO_DB_reputations_test = {
-				type = "execute",
-				name = "reputations",
-				func = function()
-					OCTO_DB_reputations_test  = {}
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 12,
-			},
 
 			-------------------------------------------------
 			UniversalQuest = {
@@ -119,7 +105,7 @@ function E.Developing()
 				name = "UniversalQuest",
 				func = function()
 					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
-						print (CharInfo.Name, "УДАЛИЛИСЬ UniversalQuest")
+						print (CharInfo.Name, "УДАЛИЛИСЬ CharInfo.MASLENGO.UniversalQuest")
 						CharInfo.MASLENGO.UniversalQuest  = {}
 					end
 					return
@@ -127,13 +113,13 @@ function E.Developing()
 				width = E.FULL_WIDTH/4,
 				order = 13,
 			},
-
 			-------------------------------------------------
 			MASLENGO = {
 				type = "execute",
 				name = E.Debug_Color.."MASLENGO|r",
 				func = function()
 					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+						print (CharInfo.Name, "УДАЛИЛИСЬ CharInfo.MASLENGO")
 						CharInfo.MASLENGO = {}
 					end
 					return

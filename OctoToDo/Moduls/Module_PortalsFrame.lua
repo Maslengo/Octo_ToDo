@@ -7,7 +7,7 @@ OctoToDo_PortalsFrame:Hide()
 -- OctoToDo_PortalsFrame:RegisterEvent("PLAYER_REGEN_DISABLED")
 -- OctoToDo_PortalsFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 function OctoToDo_PortalsFrame:PortalsFrame()
-	local Height = OctoToDo_DB_Vars.curHeight
+	local Height = OctoToDo_DB_Vars.AddonHeight
 	local curFaction = UnitFactionGroup("PLAYER")
 	local curRace = select(2, UnitRace("PLAYER"))
 	local curClass = select(2, UnitClass("PLAYER"))

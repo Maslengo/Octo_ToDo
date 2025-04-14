@@ -5,7 +5,7 @@ E.OctoTable_currencyID_Hidden = {
 	3023,
 }
 
-local currency = {
+E.OctoTable_Currencies = {
 	-- classic
 	81, -- Epicurean Award
 	515, -- Darkmoon Prize Ticket

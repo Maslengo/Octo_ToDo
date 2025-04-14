@@ -125,9 +125,9 @@ function E.func_questName(questID, useLargeIcon)
 end
 
 function E.func_reputationName(reputationID)
-	if reputationID and E.OctoTable_FACTIONTABLE[reputationID] then
+	if reputationID and E.OctoTable_Reputations[reputationID] then
 		local vivod = ""
-		local side = E.OctoTable_FACTIONTABLE[reputationID].side or "-"
+		local side = E.OctoTable_Reputations[reputationID].side or "-"
 		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
 		if isAccountWide == true then
 			vivod = E.Icon_AccountWide..vivod
@@ -148,8 +148,8 @@ function E.func_reputationName(reputationID)
 			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
 			if reputationInfo.name then
 				vivod = vivod.. reputationInfo.name
-			elseif E.OctoTable_FACTIONTABLE[reputationID] then
-				vivod = vivod.. E.OctoTable_FACTIONTABLE[reputationID].name
+			elseif E.OctoTable_Reputations[reputationID] then
+				vivod = vivod.. E.OctoTable_Reputations[reputationID].name
 			else
 				vivod = vivod.. reputationID.. " (UNKNOWN)"
 			end
@@ -1638,113 +1638,11 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- OctoToDo_MplusButton
-	----------------------------------------------------------------
-	local OctoToDo_MplusButton = CreateFrame("Button", "OctoToDo_MplusButton", frame)
-	OctoToDo_MplusButton:SetSize(curHeight, curHeight)
-	OctoToDo_MplusButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*3, indent)
-	local list = {}
-	local list2 = {}
-	OctoToDo_MplusButton:SetScript("OnEnter", function(self)
-			local i = 0
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			GameTooltip:AddLine(E.WOW_Artifact_Color.."OctoToDo_MplusButton".."|r")
-			GameTooltip:AddDoubleLine(" ", " ")
-			list = {}
-			for dungeonID = 1, 1000 do
-				local name = E.func_dungeonName(dungeonID)
-				if name then
-					tinsert(list, dungeonID)
-					-- tinsert(list2, E.func_dungeonName(dungeonID))
-				end
-			end
-			sort(list, E.func_Reverse_order)
-			for count, dungeonID in next, (list) do
-				local name = E.func_dungeonName(dungeonID)
-				local timeLimit = E.func_dungeontimeLimit(dungeonID)
-				local icon = E.func_dungeonIcon(dungeonID)
-				i = i + 1
-				local vivod_LEFT = E.func_texturefromIcon(icon)..name
-				local vivod_RIGHT = E.Gray_Color.."icon:|r"..E.Green_Color..icon.."|r "..E.Gray_Color.."time:|r"..E.Green_Color..E.func_SecondsToClock(timeLimit).."|r"
-				GameTooltip:AddDoubleLine(vivod_LEFT, vivod_RIGHT, 1, 1, 1, 1, 1, 1)
-				if OctoToDo_TrashCan then
-					OctoToDo_TrashCan.OctoToDo_MplusButton[dungeonID] = C_ChallengeMode.GetMapUIInfo(dungeonID)
-				end
-			end
-			if i == 0 then
-				GameTooltip:AddLine(E.WOW_Artifact_Color.."No Data".."|r")
-				OctoToDo_MplusButton:Hide()
-			end
-			GameTooltip:AddDoubleLine(" ", " ")
-			GameTooltip:Show()
-	end)
-	OctoToDo_MplusButton:SetScript("OnLeave", function(self)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	OctoToDo_MplusButton:SetScript("OnClick", function()
-			frame:Hide()
-			if OctoToDo_TrashCan then
-				fpde(OctoToDo_TrashCan.OctoToDo_MplusButton)
-			end
-			-- fpde(list)
-	end)
-	OctoToDo_MplusButton.icon = OctoToDo_MplusButton:CreateTexture(nil, "BACKGROUND")
-	OctoToDo_MplusButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow4.tga")
-	OctoToDo_MplusButton.icon:SetAllPoints()
+
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	-- OctoToDo_ItemsButton
-	----------------------------------------------------------------
-	local OctoToDo_ItemsButton = CreateFrame("Button", "OctoToDo_ItemsButton", frame)
-	OctoToDo_ItemsButton:SetSize(curHeight, curHeight)
-	OctoToDo_ItemsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*4, indent)
-	OctoToDo_ItemsButton:SetScript("OnEnter", function(self)
-			local i = 0
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			GameTooltip:AddLine(E.WOW_Artifact_Color.."OctoToDo_ItemsButton".."|r")
-			GameTooltip:AddDoubleLine(" ", " ")
-			local BattleTag = select(2, BNGetInfo()) or "Trial Account"
-			local BTAG = tostringall(strsplit("#", BattleTag))
-			local GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
-			local BattleTagLocal = BTAG.." ("..GameVersion..")"
-			for _, itemID in next, (E.OctoTable_itemID_ALL) do
-				for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
-					if CharInfo.BattleTagLocal == BattleTagLocal then
-						if CharInfo.MASLENGO.ItemsInBag[itemID] ~= nil then
-							i = i + 1
-							GameTooltip:AddDoubleLine(E.func_itemTexture(itemID)..E.func_itemName(itemID), CharInfo.MASLENGO.ItemsInBag[itemID].." "..CharInfo.classColorHex..CharInfo.Name.."|r "..CharInfo.curServerShort)
-						end
-					end
-				end
-			end
-			if i == 0 then
-				GameTooltip:AddLine(E.WOW_Artifact_Color.."No Data".."|r")
-			end
-			GameTooltip:AddDoubleLine(" ", " ")
-			GameTooltip:Show()
-	end)
-	OctoToDo_ItemsButton:SetScript("OnLeave", function(self)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	OctoToDo_ItemsButton:SetScript("OnClick", function()
-			local curGUID = UnitGUID("PLAYER")
-			frame:Hide()
-			for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
-				if curCharGUID == curGUID then
-					fpde(CharInfo)
-				end
-			end
-	end)
-	OctoToDo_ItemsButton.icon = OctoToDo_ItemsButton:CreateTexture(nil, "BACKGROUND")
-	OctoToDo_ItemsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow21.tga")
-	OctoToDo_ItemsButton.icon:SetAllPoints()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -1754,7 +1652,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	-- local OctoToDo_EventsButton = CreateFrame("Button", "OctoToDo_EventsButton", frame, "BackDropTemplate")
 	local OctoToDo_EventsButton = CreateFrame("Button", "OctoToDo_EventsButton", frame)
 	OctoToDo_EventsButton:SetSize(curHeight, curHeight)
-	OctoToDo_EventsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*5, indent)
+	OctoToDo_EventsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*3, indent)
 	OctoToDo_EventsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
@@ -1833,7 +1731,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		-- local vars = OctoToDo_DB_Vars.OctoToDo_FramerateFrame
 		-- if vars.Shown then
 	local OctoToDo_FramerateFrame = CreateFrame("Frame", "OctoToDo_FramerateFrame", frame)
-	OctoToDo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*6, indent)
+	OctoToDo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*4, indent)
 	OctoToDo_FramerateFrame:SetSize(curHeight*2, curHeight)
 	OctoToDo_FramerateFrame:SetFrameStrata("HIGH")
 	OctoToDo_FramerateFrame.text_fps = OctoToDo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")

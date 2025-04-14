@@ -5,9 +5,9 @@ local OctoToDo_MainFrame_OCTOREP = CreateFrame("BUTTON", "OctoToDo_MainFrame_OCT
 OctoToDo_MainFrame_OCTOREP:Hide()
 tinsert(E.OctoTable_Frames, OctoToDo_MainFrame_OCTOREP)
 ----------------------------------------------------------------
-local AddonHeight = 20 -- Высота -- OctoToDo_DB_Vars.curHeight
-local AddonLeftFrameWeight = 200 -- Ширина Левого -- OctoToDo_DB_Vars.AddonLeftFrameWeight
-local AddonCentralFrameWeight = 90 -- Ширина Центрального -- OctoToDo_DB_Vars.AddonCentralFrameWeight
+local AddonHeight = 20
+local AddonLeftFrameWeight = 200
+local AddonCentralFrameWeight = 90
 local MainFrameDefaultLines = 30
 local MainFrameTotalLines = E.func_GetNumReps() -- math.floor((math.floor(select(2, GetPhysicalScreenSize()) / AddonHeight))*.7)
 if MainFrameDefaultLines > MainFrameTotalLines then
@@ -34,7 +34,7 @@ local function func_NumPlayers()
 	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
 	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
 	sorted = {}
-	for curCharGUID, CharInfo in next, (OctoToDo_DB_Levels) do
+	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		if ShowOnlyCurrentBattleTag == true then
 			if (ShowOnlyCurrentServer == true
 				and (CharInfo.curServer == E.curServer)
@@ -94,11 +94,12 @@ local function func_OnAcquired(owner, frame, data, new)
 	if new then
 
 
-		frame.full = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
-		frame.full:SetPropagateMouseClicks(true)
-		frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*func_NumPlayers(), AddonHeight)
-		frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		E:func_SetBackdrop(frame.full, nil, 0, 0)
+		-- frame.full = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		-- frame.full:SetPropagateMouseClicks(true)
+		-- frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*func_NumPlayers(), AddonHeight)
+		-- frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		-- E:func_SetBackdrop(frame.full, nil, 0, 0)
+		-- frame.full:SetFrameStrata("BACKGROUND")
 
 
 		frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
@@ -170,11 +171,12 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	----------------------------------------------------------------
 end
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
+	OctoToDo_MainFrame_OCTOREP:SetPoint("TOP", 0, -200)
 	OctoToDo_MainFrame_OCTOREP:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_OCTOREP:SetDontSavePosition(true)
 	OctoToDo_MainFrame_OCTOREP:SetClampedToScreen(false)
 	OctoToDo_MainFrame_OCTOREP:SetFrameStrata("HIGH")
-	OctoToDo_MainFrame_OCTOREP:SetPoint("CENTER", 0, 0)
+
 	OctoToDo_MainFrame_OCTOREP:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
 	OctoToDo_MainFrame_OCTOREP:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 	OctoToDo_MainFrame_OCTOREP:SetBackdropBorderColor(0, 0, 0, 1)
@@ -236,7 +238,7 @@ local function CollectRepList()
 	C_Reputation.ExpandAllFactionHeaders()
 	----------------------------------------------------------------
 	local reputationList = {}
-	for reputationID, v in next, (E.OctoTable_FACTIONTABLE) do -- OctoTable_FACTIONTABLE
+	for reputationID, v in next, (E.OctoTable_Reputations) do -- OctoTable_Reputations
 		if E.func_reputationName(reputationID) then
 			tinsert(reputationList, reputationID)
 		end
@@ -259,11 +261,12 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 			zxc.color = {}
 			zxc.standingTEXT = {}
 			for CharIndex, CharInfo in ipairs(sorted) do
-				zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].FIRST or ""
-				zxc.SECOND[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].SECOND or ""
-				zxc.vivod[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].vivod or ""
-				zxc.color[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].color or ""
-				zxc.standingTEXT[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].standingTEXT or ""
+					zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].FIRST or ""
+					zxc.SECOND[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].SECOND or ""
+					zxc.vivod[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].vivod or ""
+					zxc.color[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].color or ""
+					zxc.standingTEXT[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].standingTEXT or ""
+
 			end
 			local groupNode = DataProvider:Insert({
 					reputationID = reputationID,
