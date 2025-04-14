@@ -1,26 +1,20 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
-function E:func_Otrisovka()
-	local OctoTable_func_otrisovkaCENT = {}
-	local OctoTable_func_otrisovkaLEFT = {}
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	tinsert(OctoTable_func_otrisovkaCENT,
-		function(CharInfo)
-			local vivodCent = " "
-			local tooltip = {}
-			local BGcolor
-			vivodCent = CharInfo.classColorHex..CharInfo.Name.."|r"
-			if CharInfo.Faction == "Horde" then
-				BGcolor = "f01e38"
-			else
-				BGcolor = "0070DD"
-			end
-			if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerCanEarnExperience == true then
-				vivodCent = vivodCent.." "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
-			end
+
+
+
+
+function E.func_vivodCent(CharInfo)
+
+		local vivod = CharInfo.classColorHex..CharInfo.Name.."|r"
+		if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerCanEarnExperience == true then
+			vivod = vivod.." "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
+		end
+		return vivod
+end
+
+function E.CreateTooltipPlayers(CharInfo)
+	local tooltip = {}
 			if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal then
 				if CharInfo.guildRankIndex ~= 0 then
 					tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", "<"..E.Green_Color..CharInfo.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.guildRankName.."|r".."]"}
@@ -103,12 +97,22 @@ function E:func_Otrisovka()
 				tooltip[#tooltip+1] = {" ", " "}
 				tooltip[#tooltip+1] = {"PlayerDurability", CharInfo.PlayerDurability.."%"}
 			end
-			return vivodCent, tooltip, BGcolor
-	end)
-	tinsert(OctoTable_func_otrisovkaLEFT,
-		function(CharInfo)
-			return E.Timers.Daily_Reset()
-	end)
+	return tooltip
+end
+
+
+
+
+
+
+
+
+
+
+
+function E:func_Otrisovka()
+	local OctoTable_func_otrisovkaCENT = {}
+	local OctoTable_func_otrisovkaLEFT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -1415,10 +1419,12 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
 				local color = "|cffFFFFFF"
+				-- tooltip[#tooltip+1] = {E.Timers.Daily_Reset()}
+				-- tooltip[#tooltip+1] = {" ", " "}
 				if CharInfo.loginHour and CharInfo.loginDay then
 					if CharInfo.GUID == E.curGUID then
 						vivodCent = E.Green_Color..FRIENDS_LIST_ONLINE.."|r"
-						tooltip[#tooltip+1] = {"Время без релога: "..CharInfo.classColorHex.. E.func_SecondsToClock(GetServerTime() - CharInfo.time).."|r"}
+						tooltip[#tooltip+1] = {"Время после релоуда: "..CharInfo.classColorHex.. E.func_SecondsToClock(GetServerTime() - CharInfo.time).."|r"}
 						tooltip[#tooltip+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.classColorHex..E.func_SecondsToClock(GetSessionTime()).."|r"      )}
 					else
 						if CharInfo.needResetWeekly == true then
@@ -1432,10 +1438,7 @@ function E:func_Otrisovka()
 						tooltip[#tooltip+1] = {" ", color..CharInfo.loginDay.."|r"}
 						tooltip[#tooltip+1] = {" ", color..CharInfo.loginHour.."|r"}
 					end
-					if CharInfo.STARTTODAY and CharInfo.STARTTODAY ~= 0 then
-						tooltip[#tooltip+1] = {" ", " "}
-						tooltip[#tooltip+1] = {COMMUNITIES_CALENDAR_TODAY..": "..CharInfo.classColorHex ..E.func_SecondsToClock(GetServerTime()-CharInfo.STARTTODAY).."|r"}
-					end
+
 				end
 				return vivodCent, tooltip
 		end)

@@ -201,20 +201,7 @@ function E.Collect_ALL_LoginTime()
 		collect.time = time()
 	end
 end
-function E.Collect_All_STARTTODAY()
-	local collect = OctoToDo_DB_Levels[E.curGUID]
-	if collect then
-		if (collect.STARTTODAY == 0 or collect.STARTTODAY == nil) then
-			collect.STARTTODAY = time()
-		end
-		if (collect.STARTWEEK == 0 or collect.STARTWEEK == nil) then
-			collect.STARTWEEK = time()
-		end
-		if (collect.STARTMONTH == 0 or collect.STARTMONTH == nil) then
-			collect.STARTMONTH = time()
-		end
-	end
-end
+
 function E.Collect_All_Professions()
 	local collect = OctoToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
@@ -991,7 +978,6 @@ function OctoToDo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_BfA_Azerite()
 	E.Collect_All_BfA_Cloaklvl()
 	E.Collect_All_BfA_Island()
-	E.Collect_All_STARTTODAY()
 	RequestRaidInfo()
 	E.Update("ADDON_LOADED")
 end

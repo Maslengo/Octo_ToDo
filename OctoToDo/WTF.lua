@@ -1,8 +1,9 @@
 local GlobalAddonName, E = ...
 local OctoToDo_EventFrame_WTF = CreateFrame("FRAME")
 OctoToDo_EventFrame_WTF:Hide()
+
+
 function OctoToDo_EventFrame_WTF:OctoToDo_DB_Levels()
-	print ("ВЫЗОВ: OctoToDo_DB_Levels()")
 	if OctoToDo_DB_Levels == nil then OctoToDo_DB_Levels = {} end
 	if OctoToDo_DB_Levels[E.curGUID] == nil then OctoToDo_DB_Levels[E.curGUID] = {} end
 	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
@@ -69,9 +70,6 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Levels()
 		CharInfo.MoneyOnLogin = CharInfo.Money
 		CharInfo.totalSlots = CharInfo.totalSlots or 0
 		CharInfo.usedSlots = CharInfo.usedSlots or 0
-		CharInfo.STARTTODAY = CharInfo.STARTTODAY or 0
-		CharInfo.STARTWEEK = CharInfo.STARTWEEK or 0
-		CharInfo.STARTMONTH = CharInfo.STARTMONTH or 0
 		CharInfo.BindLocation = CharInfo.BindLocation or 0
 		CharInfo.CurrentLocation = CharInfo.CurrentLocation or 0
 		CharInfo.WarMode = CharInfo.WarMode or false
@@ -162,6 +160,8 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Levels()
 		----------------------------------------------------------------
 	end
 end
+
+
 function OctoToDo_EventFrame_WTF:OctoToDo_DB_Config()
 	if OctoToDo_DB_Config == nil then OctoToDo_DB_Config = {} end
 	if OctoToDo_DB_Config.CurrencyDB == nil then OctoToDo_DB_Config.CurrencyDB = {} end
@@ -173,6 +173,8 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Config()
 		OctoToDo_DB_Config.ReputationDB[reputationID] = OctoToDo_DB_Config.ReputationDB[reputationID] or false
 	end
 end
+
+
 function OctoToDo_EventFrame_WTF:OctoToDo_DB_Vars()
 	if OctoToDo_DB_Vars == nil then OctoToDo_DB_Vars = {} end
 	if OctoToDo_DB_Vars.DebugIDs == nil then OctoToDo_DB_Vars.DebugIDs = false end
@@ -287,6 +289,8 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Vars()
 	if OctoToDo_DB_Vars.WasOnline == nil then OctoToDo_DB_Vars.WasOnline = true end
 	if OctoToDo_DB_Vars.WeatheredHarbingerCrest == nil then OctoToDo_DB_Vars.WeatheredHarbingerCrest = true end
 end
+
+
 function OctoToDo_EventFrame_WTF:OctoToDo_DB_Other()
 	if OctoToDo_DB_Other == nil then OctoToDo_DB_Other = {} end
 	if OctoToDo_DB_Other.AccountMoney == nil then OctoToDo_DB_Other.AccountMoney = {} end
@@ -295,17 +299,25 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Other()
 	if OctoToDo_DB_Other.Items == nil then OctoToDo_DB_Other.Items = {} end
 	if OctoToDo_DB_Other.Holiday == nil then OctoToDo_DB_Other.Holiday = {} end
 end
+
+
 function OctoToDo_EventFrame_WTF:OctoToDo_Achievements()
 	if OctoToDo_Achievements == nil then OctoToDo_Achievements = {} end
 	if OctoToDo_Achievements.AchievementShowCompleted == nil then OctoToDo_Achievements.AchievementShowCompleted = true end
 	if OctoToDo_Achievements.AchievementToShow == nil then OctoToDo_Achievements.AchievementToShow = {[92] = true} end
 end
+
+
 function OctoToDo_EventFrame_WTF:OctoSimpleList()
 	if OctoSimpleList == nil then OctoSimpleList = {} end
 end
+
+
 function OctoToDo_EventFrame_WTF:OctoToDo_AddonsTable()
 	if OctoToDo_AddonsTable == nil then OctoToDo_AddonsTable = {} end
 end
+
+
 function OctoToDo_EventFrame_WTF:OctoToDo_AddonsManager()
 	if OctoToDo_AddonsManager == nil then OctoToDo_AddonsManager = {} end
 	if OctoToDo_AddonsManager == nil then OctoToDo_AddonsManager = {} end
@@ -342,10 +354,14 @@ function OctoToDo_EventFrame_WTF:OctoToDo_AddonsManager()
 	if OctoToDo_AddonsManager.lock.addons == nil then OctoToDo_AddonsManager.lock.addons = {} end
 	if OctoToDo_AddonsManager.lock.addons[E.GlobalAddonName] == nil then OctoToDo_AddonsManager.lock.addons[E.GlobalAddonName] = true end
 end
+
+
 function OctoToDo_EventFrame_WTF:OctoToDo_OCTOREP()
 	if OctoToDo_OCTOREP == nil then OctoToDo_OCTOREP = {} end
 	if OctoToDo_OCTOREP.TrackedRepID == nil then OctoToDo_OCTOREP.TrackedRepID = 369 end
 end
+
+
 function OctoToDo_EventFrame_WTF:OctoToDo_TrashCan()
 	if OctoToDo_TrashCan == nil then OctoToDo_TrashCan = {} end
 	if OctoToDo_TrashCan.Reputations == nil then OctoToDo_TrashCan.Reputations = {} end
@@ -359,6 +375,8 @@ function OctoToDo_EventFrame_WTF:OctoToDo_TrashCan()
 
 
 end
+
+
 function OctoToDo_EventFrame_WTF:Daily_Reset() -- ПОФИКСИТЬ (ПОВЕСИТЬ НЕ НА ПЕРСА)
 	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		if (CharInfo.tmstp_Daily or 0) < GetServerTime() then
@@ -376,6 +394,8 @@ function OctoToDo_EventFrame_WTF:Daily_Reset() -- ПОФИКСИТЬ (ПОВЕС
 		end
 	end
 end
+
+
 function OctoToDo_EventFrame_WTF:Weekly_Reset()
 	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		if (CharInfo.tmstp_Weekly or 0) < GetServerTime() then
@@ -419,6 +439,8 @@ function OctoToDo_EventFrame_WTF:Weekly_Reset()
 		end
 	end
 end
+
+
 function OctoToDo_EventFrame_WTF:Month_Reset()
 	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 		if (CharInfo.tmstp_Month or 0) < GetServerTime() then
@@ -435,11 +457,15 @@ function OctoToDo_EventFrame_WTF:Month_Reset()
 		end
 	end
 end
-local MyEventsTable = {
-	"ADDON_LOADED",
-	"VARIABLES_LOADED",
-}
-E.RegisterMyEventsToFrames(OctoToDo_EventFrame_WTF, MyEventsTable, E.func_DebugPath())
+
+do
+	local MyEventsTable = {
+		"ADDON_LOADED",
+		"VARIABLES_LOADED",
+	}
+	E.RegisterMyEventsToFrames(OctoToDo_EventFrame_WTF, MyEventsTable, E.func_DebugPath())
+end
+
 function OctoToDo_EventFrame_WTF:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
@@ -462,6 +488,8 @@ function OctoToDo_EventFrame_WTF:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 	end
 end
+
+
 function OctoToDo_EventFrame_WTF:VARIABLES_LOADED()
 	if not InCombatLockdown() then
 		self:UnregisterEvent("VARIABLES_LOADED")
@@ -471,5 +499,3 @@ function OctoToDo_EventFrame_WTF:VARIABLES_LOADED()
 		end
 	end
 end
-
-

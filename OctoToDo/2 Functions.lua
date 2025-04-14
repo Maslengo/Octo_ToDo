@@ -842,60 +842,65 @@ function E.func_CheckReputationByRepID(reputationID)
 	local vivod = ""
 	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
 	local color = E.Gray_Color
+	local reaction = 0
 	if repInfo then
-		local reaction = repInfo.reaction
+		reaction = repInfo.reaction
 		--local standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
 
 
-		if (reaction == 1 or reaction == 2) then
-			color = E.Red_Color
-		elseif (reaction == 3) then
-			color = E.Orange_Color
-		elseif (reaction == 4 or reaction == 5) then
-			color = E.Yellow_Color
-		elseif (reaction == 6 or reaction == 7 or reaction == 8) then
-			color = E.Green_Color
-		end
+	end
 
-		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
-		if C_Reputation.IsFactionParagon(reputationID) then
-			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID)
-			local _, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(reputationID)
-			if threshold then
-				local value = currentValue % threshold
-				color = E.Blue_Color
-				vivod = color..(value).."/"..(threshold).."|r"
-				if hasRewardPending then
-					vivod = E.func_CheckCompletedByQuestID(rewardQuestID)
-				end
+	if (reaction == 1 or reaction == 2) then
+		color = E.Red_Color
+	elseif (reaction == 3) then
+		color = E.Orange_Color
+	elseif (reaction == 4 or reaction == 5) then
+		color = E.Yellow_Color
+	elseif (reaction == 6 or reaction == 7 or reaction == 8) then
+		color = E.Green_Color
+	end
+
+
+	local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
+	if C_Reputation.IsFactionParagon(reputationID) then
+		local currentValue = C_Reputation.GetFactionParagonInfo(reputationID)
+		local _, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(reputationID)
+		if threshold then
+			local value = currentValue % threshold
+			color = E.Blue_Color
+			vivod = color..(value).."/"..(threshold).."|r"
+			if hasRewardPending then
+				vivod = E.func_CheckCompletedByQuestID(rewardQuestID)
 			end
-		elseif C_Reputation.IsMajorFaction(reputationID) then
-			local data = C_MajorFactions.GetMajorFactionData(reputationID) or 0
-			if data ~= 0 then
-				local currentValue = data.renownReputationEarned%data.renownLevelThreshold
-				local totalValue = data.renownLevelThreshold
-				local standing = data.renownLevel
-				vivod = (currentValue).."/"..(totalValue)..color.."("..(standing)..")|r"
-			end
-		elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
-			local friendshipFactionID = reputationInfo.friendshipFactionID or 0
-			local reactionThreshold = reputationInfo.reactionThreshold or 0
-			local nextThreshold = reputationInfo.nextThreshold or 0
-			local standing = reputationInfo.standing or 0
-			local currentValue = standing-reactionThreshold
-			local totalValue = nextThreshold-reactionThreshold
-			local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
-			local currentLevel, maxLevel
-			if rankInfo then
-				currentLevel = rankInfo.currentLevel or 0
-				maxLevel = rankInfo.maxLevel or 0
-			end
-			--standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
-			vivod = color..(currentValue).."/"..(totalValue) --..standingTEXT.."|r"
-			if currentLevel == maxLevel then
-				vivod = color.."Done|r "
-			end
-		else
+		end
+	elseif C_Reputation.IsMajorFaction(reputationID) then
+		local data = C_MajorFactions.GetMajorFactionData(reputationID) or 0
+		if data ~= 0 then
+			local currentValue = data.renownReputationEarned%data.renownLevelThreshold
+			local totalValue = data.renownLevelThreshold
+			local standing = data.renownLevel
+			vivod = (currentValue).."/"..(totalValue)..color.."("..(standing)..")|r"
+		end
+	elseif (reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0) then
+		local friendshipFactionID = reputationInfo.friendshipFactionID or 0
+		local reactionThreshold = reputationInfo.reactionThreshold or 0
+		local nextThreshold = reputationInfo.nextThreshold or 0
+		local standing = reputationInfo.standing or 0
+		local currentValue = standing-reactionThreshold
+		local totalValue = nextThreshold-reactionThreshold
+		local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
+		local currentLevel, maxLevel
+		if rankInfo then
+			currentLevel = rankInfo.currentLevel or 0
+			maxLevel = rankInfo.maxLevel or 0
+		end
+		--standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
+		vivod = color..(currentValue).."/"..(totalValue) --..standingTEXT.."|r"
+		if currentLevel == maxLevel then
+			vivod = color.."Done|r "
+		end
+	else
+		if repInfo then
 			local barMin = repInfo.currentReactionThreshold
 			local barMax = repInfo.nextReactionThreshold
 			local barValue = repInfo.currentStanding
@@ -919,11 +924,33 @@ function E.func_CheckReputationFULL(reputationID)
 	local SECOND = 0
 	local vivod = ""
 	local color = E.Gray_Color
-----------------------------------------------------------------
-	local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-	if repInfo then
-		local reaction = repInfo.reaction
-		local standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+	local reaction = 0
+	local standingTEXT = ""
+
+
+
+	local isSimple = C_Reputation.GetFactionDataByID(reputationID) and true or false
+	local simpleData = C_Reputation.GetFactionDataByID(reputationID)
+
+	local isParagon = C_Reputation.IsFactionParagon(reputationID)
+
+	local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
+	local isFriend = reputationInfo and true or false
+	-- if reputationInfo and reputationInfo.friendshipFactionID and reputationInfo.friendshipFactionID > 0 then
+	-- 	isFriend = true
+	-- end
+
+	local isMajor = C_Reputation.IsMajorFaction(reputationID)
+
+
+
+
+
+
+	if isSimple then
+		reaction = simpleData.reaction
+		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+	end
 
 
 		if (reaction == 1 or reaction == 2) then
@@ -936,27 +963,29 @@ function E.func_CheckReputationFULL(reputationID)
 			color = E.Green_Color
 		end
 
-		local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
-		if C_Reputation.IsFactionParagon(reputationID) then
+
+
+		if isParagon then
 			local currentValue = C_Reputation.GetFactionParagonInfo(reputationID)
 			local _, threshold, rewardQuestID, hasRewardPending = C_Reputation.GetFactionParagonInfo(reputationID)
 			if threshold then
 				local value = currentValue % threshold
 				color = E.Blue_Color
-				vivod = color..(value).."/"..(threshold).."|r"
+				vivod = value.."/"..threshold.." (isParagon)"
 				FIRST = value
 				SECOND = threshold
 				if hasRewardPending then
 					vivod = E.func_CheckCompletedByQuestID(rewardQuestID)
 				end
 			end
-		elseif C_Reputation.IsMajorFaction(reputationID) then
+		elseif isMajor then
 			local data = C_MajorFactions.GetMajorFactionData(reputationID) or 0
 			if data ~= 0 then
 				local currentValue = data.renownReputationEarned%data.renownLevelThreshold
 				local totalValue = data.renownLevelThreshold
 				local standing = data.renownLevel
-				vivod = (currentValue).."/"..(totalValue)..color.."("..(standing)..")|r"
+				-- vivod = (currentValue).."/"..(totalValue)..color.."("..(standing)..")|r"
+				vivod = currentValue.."/"..totalValue.."(isMajor)"
 				FIRST = currentValue
 				second = totalValue
 			end
@@ -974,34 +1003,36 @@ function E.func_CheckReputationFULL(reputationID)
 				maxLevel = rankInfo.maxLevel or 0
 			end
 			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
-			vivod = color..(currentValue).."/"..(totalValue) --..standingTEXT.."|r"
+			vivod = color..(currentValue).."/"..(totalValue).." (isFriend)" --..standingTEXT.."|r"
 			FIRST = currentValue
 			SECOND = totalValue
 			if currentLevel == maxLevel then
-				vivod = color.."Done|r"
+				-- vivod = color.."Done|r"
+				vivod = currentLevel.."/"..maxLevel.." (isFriend)"
 				FIRST = currentLevel
 				SECOND = maxLevel
 			end
 		else
-			local barMin = repInfo.currentReactionThreshold
-			local barMax = repInfo.nextReactionThreshold
-			local barValue = repInfo.currentStanding
-			if barValue then
-				local currentValue = barValue-barMin
-				local totalValue = barMax-barMin
-				local nextThreshold = reputationInfo.nextThreshold or 0
-				vivod = color..(currentValue).."/"..(totalValue) --.." ("..standingTEXT..")|r"
-				FIRST = currentValue
-				SECOND = totalValue
-				if currentValue == totalValue then -- or nextThreshold == 0 then
-					vivod = color.."Done|r"
-					-- FIRST = currentValue
-					-- SECOND = totalValue
+			if isSimple then
+				local barMin = simpleData.currentReactionThreshold
+				local barMax = simpleData.nextReactionThreshold
+				local barValue = simpleData.currentStanding
+				if barValue then
+					local currentValue = barValue-barMin
+					local totalValue = barMax-barMin
+					local nextThreshold = reputationInfo.nextThreshold or 0
+					vivod = color..(currentValue).."/"..(totalValue).." (isSimple)" --.." ("..standingTEXT..")|r"
+					FIRST = currentValue
+					SECOND = totalValue
+					if currentValue == totalValue then -- or nextThreshold == 0 then
+						-- vivod = color.."Done|r"
+						vivod = standingTEXT.." (isSimple)"
+						FIRST = 1
+						SECOND = 1
+					end
 				end
 			end
 		end
-	end
-----------------------------------------------------------------
 	return FIRST, SECOND, vivod, color, standingTEXT
 end
 
@@ -3016,6 +3047,104 @@ E.compat = {
 	end
 }
 ----------------------------------------------------------------
+
+
+function E.func_NumPlayers()
+	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
+	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
+	local LevelToShow = OctoToDo_DB_Vars.LevelToShow
+	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
+	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
+	local sorted = {}
+	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+		if ShowOnlyCurrentBattleTag == true then
+			if (ShowOnlyCurrentServer == true
+				and (CharInfo.curServer == E.curServer)
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (ShowOnlyCurrentServer == false
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (E.curGUID == CharInfo.GUID) then
+				sorted[#sorted+1] = CharInfo
+			end
+		else
+			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (ShowOnlyCurrentServer == false
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (E.curGUID == CharInfo.GUID) then
+				sorted[#sorted+1] = CharInfo
+			end
+		end
+	end
+	return #sorted or 1
+end
+
+
+
+
+function E.sorted()
+	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
+	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
+	local LevelToShow = OctoToDo_DB_Vars.LevelToShow
+	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
+	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
+	local sorted = {}
+	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+		if ShowOnlyCurrentBattleTag == true then
+			if (ShowOnlyCurrentServer == true
+				and (CharInfo.curServer == E.curServer)
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (ShowOnlyCurrentServer == false
+				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (E.curGUID == CharInfo.GUID) then
+				sorted[#sorted+1] = CharInfo
+			end
+		else
+			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (ShowOnlyCurrentServer == false
+				and (CharInfo.isShownPLAYER == true)
+				and (CharInfo.avgItemLevel >= itemLevelToShow)
+				and (CharInfo.UnitLevel >= LevelToShow)
+				and (CharInfo.UnitLevel <= LevelToShowMAX))
+			or (E.curGUID == CharInfo.GUID) then
+				sorted[#sorted+1] = CharInfo
+			end
+		end
+	end
+	return sorted
+end
+
+
+
+
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

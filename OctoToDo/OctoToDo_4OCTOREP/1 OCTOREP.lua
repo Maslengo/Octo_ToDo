@@ -23,53 +23,9 @@ local SFDropDownWeight = 100
 
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 ----------------------------------------------------------------
-local sorted = {}
 ----------------------------------------------------------------
 
 
-local function func_NumPlayers()
-	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
-	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
-	local LevelToShow = OctoToDo_DB_Vars.LevelToShow
-	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
-	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
-	sorted = {}
-	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
-		if ShowOnlyCurrentBattleTag == true then
-			if (ShowOnlyCurrentServer == true
-				and (CharInfo.curServer == E.curServer)
-				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.avgItemLevel >= itemLevelToShow)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (ShowOnlyCurrentServer == false
-				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.avgItemLevel >= itemLevelToShow)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (E.curGUID == CharInfo.GUID) then
-				sorted[#sorted+1] = CharInfo
-			end
-		else
-			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.avgItemLevel >= itemLevelToShow)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (ShowOnlyCurrentServer == false
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.avgItemLevel >= itemLevelToShow)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (E.curGUID == CharInfo.GUID) then
-				sorted[#sorted+1] = CharInfo
-			end
-		end
-	end
-	return #sorted or 1
-end
 ----------------------------------------------------------------
 -- /dump C_Reputation.GetWatchedFactionData()
 ----------------------------------------------------------------
@@ -96,7 +52,7 @@ local function func_OnAcquired(owner, frame, data, new)
 
 		-- frame.full = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
 		-- frame.full:SetPropagateMouseClicks(true)
-		-- frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*func_NumPlayers(), AddonHeight)
+		-- frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight)
 		-- frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		-- E:func_SetBackdrop(frame.full, nil, 0, 0)
 		-- frame.full:SetFrameStrata("BACKGROUND")
@@ -172,7 +128,7 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 end
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	OctoToDo_MainFrame_OCTOREP:SetPoint("TOP", 0, -200)
-	OctoToDo_MainFrame_OCTOREP:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
+	OctoToDo_MainFrame_OCTOREP:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_OCTOREP:SetDontSavePosition(true)
 	OctoToDo_MainFrame_OCTOREP:SetClampedToScreen(false)
 	OctoToDo_MainFrame_OCTOREP:SetFrameStrata("HIGH")
@@ -210,7 +166,7 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	OctoToDo_MainFrame_OCTOREP.view:RegisterCallback(OctoToDo_MainFrame_OCTOREP.view.Event.OnAcquiredFrame, func_OnAcquired, OctoToDo_MainFrame_OCTOREP) -- ПОФИКСИТЬ
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoToDo_MainFrame_OCTOREP.ScrollBox, OctoToDo_MainFrame_OCTOREP.ScrollBar, OctoToDo_MainFrame_OCTOREP.view)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoToDo_MainFrame_OCTOREP.ScrollBox, OctoToDo_MainFrame_OCTOREP.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
-	func_NumPlayers()
+	E.func_NumPlayers()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -260,7 +216,7 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 			zxc.vivod = {}
 			zxc.color = {}
 			zxc.standingTEXT = {}
-			for CharIndex, CharInfo in ipairs(sorted) do
+			for CharIndex, CharInfo in ipairs(E.sorted()) do
 					zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].FIRST or ""
 					zxc.SECOND[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].SECOND or ""
 					zxc.vivod[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].vivod or ""
@@ -277,21 +233,26 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	OctoToDo_MainFrame_OCTOREP:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
+	OctoToDo_MainFrame_OCTOREP:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_OCTOREP.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	----------------------------------------------------------------
 	--------------------------- POOL -------------------------------
 	----------------------------------------------------------------
 	OctoToDo_MainFrame_OCTOREP.pool:ReleaseAll()
-	for count, CharInfo in next, (sorted) do
+	for count, CharInfo in next, (E.sorted()) do
 		local curCharFrame = OctoToDo_MainFrame_OCTOREP.pool:Acquire()
 		curCharFrame:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_OCTOREP, "TOPLEFT", (AddonLeftFrameWeight-AddonCentralFrameWeight)+(AddonCentralFrameWeight*count), 0)
-		curCharFrame.text:SetText(CharInfo.classColorHex .. CharInfo.Name .. "|r")
+		curCharFrame.text:SetText(E.func_vivodCent(CharInfo))
 		if CharInfo.Faction == "Horde" then
 			E:func_SetBackdrop(curCharFrame, "|cfff01e38", E.bgCaOverlay*2, 0)
 		else
 			E:func_SetBackdrop(curCharFrame, "|cff0070DD", E.bgCaOverlay*2, 0)
 		end
+		curCharFrame:SetScript("OnEnter", function()
+			E.func_TooltipOnEnter(curCharFrame, true, true)
+		end)
+		curCharFrame:SetScript("OnLeave", GameTooltip_Hide)
+		curCharFrame.tooltip = E.CreateTooltipPlayers(CharInfo)
 		curCharFrame:Show()
 	end
 	----------------------------------------------------------------
@@ -308,6 +269,7 @@ function OctoToDo_EventFrame_OCTOREP:ADDON_LOADED(addonName)
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 		----------------------------------------------------------------
+		print (E.func_texturefromIcon(5862764))
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if OctoToDo_DB_Vars.AddonHeight then
