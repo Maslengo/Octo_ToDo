@@ -123,11 +123,7 @@ function E.func_reputationName(reputationID)
 
 		local color = E.White_Color
 		local factionname = ""
-		if side == "Alliance" then
-			vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
-		elseif side == "Horde" then
-			vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
-		end
+
 		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
 		local name
 		if repInfo then
@@ -169,7 +165,17 @@ function E.func_reputationName(reputationID)
 		-- 		end
 		-- 	end
 		-- end
-		if icon ~= 134400 then
+
+
+		if side == "Alliance" then
+			vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
+		elseif side == "Horde" then
+			vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
+		end
+
+
+
+		if icon ~= E.Icon_QuestionMark then
 			vivod = E.func_texturefromIcon(icon)..vivod
 		end
 		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false

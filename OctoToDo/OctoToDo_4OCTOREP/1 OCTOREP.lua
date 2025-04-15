@@ -98,19 +98,13 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
-	-- E:func_SetBackdrop(frame.first, nil, 0, 0)
 	frame.first.textLEFT:SetText(E.func_reputationName(data.reputationID))
 
 
 
 	for i = 1, #data.zxc.vivod do
 		if data.zxc.vivod[i] ~= "" then
-			if data.zxc.currentChar[i] then
-				-- frame.second[i].textCENT:SetText(data.zxc.color[i]..data.zxc.vivod[i].."|r")
-				E:func_SetBackdrop(frame.second[i], E.classColorHexCurrent, E.bgCaOverlay, 0)
-			else
-				-- frame.second[i].textCENT:SetText(data.zxc.vivod[i])
-			end
+
 			frame.second[i].textCENT:SetText(data.zxc.vivod[i])
 			local FIRST = data.zxc.FIRST[i]
 			local SECOND = data.zxc.SECOND[i]
@@ -123,19 +117,21 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 			elseif FIRST >= 1 then
 				frame.second[i].texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
 			end
-
-
-
-
-
-
 		else
-			-- frame.second[i].textCENT:SetText(E.Gray_Color.."-".."|r")
 			frame.second[i].textCENT:SetText(E.func_reputationIconString(data.reputationID))
-			-- frame.second[i].textCENT:SetText(E.Gray_Color..E.func_reputationName(data.reputationID).."|r")
 			frame.second[i].texture:SetVertexColor(0, 0, 0, 0)
 		end
-		-- E:func_SetBackdrop(frame.second[i], nil, 0, 0)
+
+
+		if data.zxc.currentChar[i] then
+			E:func_SetBackdrop(frame.second[i], E.classColorHexCurrent, E.bgCaOverlay, 0)
+		-- else
+		-- 	E:func_SetBackdrop(frame.second[i], nil, 0, 0)
+		end
+
+
+
+
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -200,13 +196,17 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	----------------------------------------------------------------
 	self:func_CreateMyDataProvider()
 end
+
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
 local function CollectRepList()
 	C_Reputation.ExpandAllFactionHeaders()
 	----------------------------------------------------------------
 	local reputationList = {}
 	for reputationID, v in next, (E.OctoTable_Reputations) do
-		if E.func_reputationName(reputationID) then
+		if E.func_reputationName(reputationID) then -- ВСЕ
+		-- if (v.side == E.func_UnitFaction("PLAYER") or v.side == "-") and E.func_reputationName(reputationID) then -- НОРМА
+		-- if (v.side == E.func_UnitFaction("PLAYER")) and E.func_reputationName(reputationID) then -- ТОЛЬКО ТЕКУЩАЯ ФРАКЦИЯ
+		-- if (v.side ~= E.func_UnitFaction("PLAYER") and v.side ~= "-") and E.func_reputationName(reputationID) then -- ИНВЕРНУТАЯ ФРАКЦИЯ
 			tinsert(reputationList, reputationID)
 		end
 	end
@@ -221,6 +221,7 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	local numlines = 0
 	local DataProvider = CreateTreeDataProvider()
 	for _, reputationID in ipairs(reputationList) do
+	-- for reputationID, _ in next, (E.OctoTable_Reputations) do
 		if OctoToDo_DB_Config.ReputationDB[reputationID] == true then
 			numlines = numlines + 1
 			local zxc = {}
@@ -313,7 +314,6 @@ function OctoToDo_EventFrame_OCTOREP:ADDON_LOADED(addonName)
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 		----------------------------------------------------------------
-		print (E.func_texturefromIcon(5862764))
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if OctoToDo_DB_Vars.AddonHeight then

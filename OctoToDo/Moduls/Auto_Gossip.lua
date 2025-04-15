@@ -34,27 +34,29 @@ tinsert(E.Modules, function()
 								local gossipOptionID = v.gossipOptionID
 								local name = v.name
 								local icon = v.icon
-								if #info == 1 then
-									C_GossipInfo.SelectOption(gossipOptionID)
-									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
-								else
-									if E.First_Option[targetNPCID] and i == 1 then
+								if gossipOptionID then
+									if #info == 1 then
 										C_GossipInfo.SelectOption(gossipOptionID)
 										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 										DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
-									elseif E.Second_Option[targetNPCID] and i == 2 then
-										C_GossipInfo.SelectOption(gossipOptionID)
-										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
-									elseif E.Third_Option[targetNPCID] and i == 3 then
-										C_GossipInfo.SelectOption(gossipOptionID)
-										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
-									elseif E.Fourth_Option[targetNPCID] and i == 4 then
-										C_GossipInfo.SelectOption(gossipOptionID)
-										StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-										DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
+									else
+										if E.First_Option[targetNPCID] and i == 1 then
+											C_GossipInfo.SelectOption(gossipOptionID)
+											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+											DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
+										elseif E.Second_Option[targetNPCID] and i == 2 then
+											C_GossipInfo.SelectOption(gossipOptionID)
+											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+											DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
+										elseif E.Third_Option[targetNPCID] and i == 3 then
+											C_GossipInfo.SelectOption(gossipOptionID)
+											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+											DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
+										elseif E.Fourth_Option[targetNPCID] and i == 4 then
+											C_GossipInfo.SelectOption(gossipOptionID)
+											StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+											DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name)
+										end
 									end
 								end
 							end
