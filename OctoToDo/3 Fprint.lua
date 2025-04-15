@@ -367,7 +367,7 @@ function E.func_itemslistSort(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Other):ThenForAllWithCached(function(_, ids1)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ALL):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
 	promise1:FailWithChecked(function(_, ids2)

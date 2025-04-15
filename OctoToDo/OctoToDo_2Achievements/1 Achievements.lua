@@ -107,7 +107,7 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Frame_init(frame, node)
 	end
 end
 function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements()
-	OctoToDo_MainFrame_Achievements:SetPoint("TOP", 0, -200)
+	OctoToDo_MainFrame_Achievements:SetPoint("CENTER", 0, 0)
 	OctoToDo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_Achievements:SetDontSavePosition(true)
 	OctoToDo_MainFrame_Achievements:SetClampedToScreen(false)

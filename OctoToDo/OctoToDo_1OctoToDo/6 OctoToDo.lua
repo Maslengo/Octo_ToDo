@@ -143,7 +143,7 @@ local function OctoToDo_Frame_init(frame, data)
 		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
 		frame.cent[NumPlayers]:Show()
 		if data[NumPlayers].currentChar then
-			E:func_SetBackdrop(frame.cent[NumPlayers], E.classColorHexCurrent, E.bgCaOverlay*2, 0)
+			E:func_SetBackdrop(frame.cent[NumPlayers], E.classColorHexCurrent, E.bgCaOverlay, 0)
 		else
 			if data.index % 2 == 0 then
 				E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
@@ -158,7 +158,7 @@ local function OctoToDo_Frame_init(frame, data)
 end
 
 function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
-	OctoToDo_MainFrame_OCTOMAIN:SetPoint("TOP", 0, -200)
+	OctoToDo_MainFrame_OCTOMAIN:SetPoint("CENTER", 0, 0)
 	OctoToDo_MainFrame_OCTOMAIN:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_OCTOMAIN:SetDontSavePosition(true)
 	OctoToDo_MainFrame_OCTOMAIN:SetClampedToScreen(false)
@@ -224,15 +224,12 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	self:func_DataProvider()
+	self:func_CreateMyDataProvider()
 end
 
-function OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+function OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 	local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
 	local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
-	local LevelToShow = OctoToDo_DB_Vars.LevelToShow
-	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
-	local itemLevelToShow = OctoToDo_DB_Vars.itemLevelToShow
 	local OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT = E:func_Otrisovka()
 	local CENT = {}
 	for i, func in ipairs(OctoTable_func_otrisovkaCENT) do
@@ -293,7 +290,7 @@ function E.Update(event_name)
 						if E.DebugEvent then
 							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r")
 						end
-						OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+						OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 					end
 			end)
 		end
@@ -331,16 +328,16 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 	)
 	local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 		OctoToDo_DB_Levels[menuButton.value].isShownPLAYER = checked
-		OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+		OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 	end
 	local function func_remove_GUID(menuButton)
 		OctoToDo_DB_Levels[menuButton.value] = nil
-		OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+		OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 	end
 	local function selectFunctionExpansion(menuButton, _, _, checked)
 		OctoToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
 		-- DD_OCTOMAIN:SetText("EXP")
-		OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+		OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 	end
 	DD_OCTOMAIN:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
@@ -462,7 +459,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 				info.checked = OctoToDo_DB_Vars.ShowOnlyCurrentServer
 				info.func = function(_, _, _, checked)
 					OctoToDo_DB_Vars.ShowOnlyCurrentServer = checked
-					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+					OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
@@ -476,7 +473,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					info.checked = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
 					info.func = function(_, _, _, checked)
 						OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag = checked
-						OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+						OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 					end
 					self:ddAddButton(info, level)
 				end
@@ -492,7 +489,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 						CharInfo.isShownPLAYER = true
 					end
-					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+					OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
@@ -505,7 +502,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
 						CharInfo.isShownPLAYER = false
 					end
-					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+					OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
@@ -524,7 +521,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					for expansionID, v in ipairs(E.OctoTable_Expansions) do
 						OctoToDo_DB_Vars.ExpansionToShow[expansionID] = true
 					end
-					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+					OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 			elseif value == EXPANSION_FILTER_TEXT then
@@ -550,7 +547,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					for expansionID, v in ipairs(E.OctoTable_Expansions) do
 						OctoToDo_DB_Vars.ExpansionToShow[expansionID] = true
 					end
-					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+					OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				--------------------------------------------------
@@ -562,7 +559,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					for expansionID, v in ipairs(E.OctoTable_Expansions) do
 						OctoToDo_DB_Vars.ExpansionToShow[expansionID] = false
 					end
-					OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+					OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 			end
@@ -599,7 +596,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 	local function selectFunctionExpansion(menuButton, _, _, checked)
 		OctoToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
 		DD2_OCTOMAIN:SetText("EXP")
-		OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+		OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 	end
 	DD2_OCTOMAIN:ddSetInitFunc(function(self, level, value)
 			local info = {}
@@ -627,7 +624,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 				for expansionID, v in ipairs(E.OctoTable_Expansions) do
 					OctoToDo_DB_Vars.ExpansionToShow[expansionID] = true
 				end
-				OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+				OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 			end
 			self:ddAddButton(info, level)
 			--------------------------------------------------
@@ -639,7 +636,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD2_OCTOMAIN()
 				for expansionID, v in ipairs(E.OctoTable_Expansions) do
 					OctoToDo_DB_Vars.ExpansionToShow[expansionID] = false
 				end
-				OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+				OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 			end
 			self:ddAddButton(info, level)
 			--------------------------------------------------
@@ -831,7 +828,7 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	end
 	E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN, "Core", AddonHeight, AddonHeight)
 	E:func_CreateMinimapButton(GlobalAddonName, "Core", OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function()
-			OctoToDo_EventFrame_OCTOMAIN:func_DataProvider()
+			OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 			RequestRaidInfo()
 	end, "OctoToDo_MainFrame_OCTOMAIN")
 	C_Timer.After(0, function()

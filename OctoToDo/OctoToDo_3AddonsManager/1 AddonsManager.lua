@@ -412,7 +412,7 @@ function OctoToDo_EventFrame_AddonsManager:OctoToDo_Frame_init(frame, node)
 	-- end
 end
 function OctoToDo_EventFrame_AddonsManager:OctoToDo_Create_MainFrame_AddonsManager()
-	OctoToDo_MainFrame_AddonsManager:SetPoint("TOP", 0, -200)
+	OctoToDo_MainFrame_AddonsManager:SetPoint("CENTER", 0, 0)
 	OctoToDo_MainFrame_AddonsManager:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_AddonsManager:SetDontSavePosition(true)
 	OctoToDo_MainFrame_AddonsManager:SetClampedToScreen(false)

@@ -242,7 +242,6 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Vars()
 	if OctoToDo_DB_Vars.Hide_Zone_Text == nil then OctoToDo_DB_Vars.Hide_Zone_Text = true end
 	if OctoToDo_DB_Vars.InputDelete == nil then OctoToDo_DB_Vars.InputDelete = true end
 	if OctoToDo_DB_Vars.ItemLevel == nil then OctoToDo_DB_Vars.ItemLevel = true end
-	if OctoToDo_DB_Vars.itemLevelToShow == nil then OctoToDo_DB_Vars.itemLevelToShow = 1 end
 	if OctoToDo_DB_Vars.Items == nil then OctoToDo_DB_Vars.Items = true end
 	if OctoToDo_DB_Vars.ItemsShowAllways == nil then OctoToDo_DB_Vars.ItemsShowAllways = false end
 	if OctoToDo_DB_Vars.ItemsUsable == nil then OctoToDo_DB_Vars.ItemsUsable = false end
