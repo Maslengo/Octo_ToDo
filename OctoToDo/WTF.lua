@@ -90,8 +90,10 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Levels()
 		----------------------------------------------------------------
 		if CharInfo.MASLENGO == nil then CharInfo.MASLENGO = {} end
 		if CharInfo.MASLENGO.reputationFULL == nil then CharInfo.MASLENGO.reputationFULL = {} end
-		for reputationID, v in next, (E.OctoTable_Reputations) do
-			CharInfo.MASLENGO.reputationFULL[reputationID] = CharInfo.MASLENGO.reputationFULL[reputationID] or {}
+		for index, tbl in ipairs(E.OctoTable_Reputations) do
+			for i, v in ipairs(tbl) do
+				CharInfo.MASLENGO.reputationFULL[v.id] = CharInfo.MASLENGO.reputationFULL[v.id] or {}
+			end
 		end
 		if CharInfo.MASLENGO.CurrencyID == nil then CharInfo.MASLENGO.CurrencyID = {} end
 		if CharInfo.MASLENGO.CurrencyID_totalEarned == nil then CharInfo.MASLENGO.CurrencyID_totalEarned = {} end
@@ -169,8 +171,11 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Config()
 		OctoToDo_DB_Config.CurrencyDB[currencyID] = OctoToDo_DB_Config.CurrencyDB[currencyID] or false
 	end
 	if OctoToDo_DB_Config.ReputationDB == nil then OctoToDo_DB_Config.ReputationDB = {} end
-	for reputationID, v in next, (E.OctoTable_Reputations) do
-		OctoToDo_DB_Config.ReputationDB[reputationID] = OctoToDo_DB_Config.ReputationDB[reputationID] or false
+
+	for index, tbl in ipairs(E.OctoTable_Reputations) do
+		for i, v in ipairs(tbl) do
+			OctoToDo_DB_Config.ReputationDB[v.id] = OctoToDo_DB_Config.ReputationDB[v.id] or false
+		end
 	end
 end
 

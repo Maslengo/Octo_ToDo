@@ -53,10 +53,6 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.full.texture:HookScript("OnEnter", function() frame.full.texture:SetVertexColor(1, 1, 1, .1) end)
 		frame.full.texture:HookScript("OnLeave", function() frame.full.texture:SetVertexColor(1, 1, 1, 0) end)
 		frame.full.texture:SetPropagateMouseClicks(true)
-
-
-
-
 		frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
 		frame.first:SetPropagateMouseClicks(true)
 		frame.first:SetSize(AddonLeftFrameWeight, AddonHeight)
@@ -98,13 +94,18 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
-	frame.first.textLEFT:SetText(E.func_reputationName(data.reputationID))
-
-
-
+	if data.repHeader then
+		frame.first.textLEFT:SetText(data.repHeader)
+	else
+		frame.first.textLEFT:SetText(E.func_reputationName(data.reputationID))
+	end
 	for i = 1, #data.zxc.vivod do
-		if data.zxc.vivod[i] ~= "" then
 
+		if data.repHeader then
+			frame.second[i].textCENT:SetText("QWEQWE")
+		end
+
+		if data.zxc.vivod[i] ~= "" then
 			frame.second[i].textCENT:SetText(data.zxc.vivod[i])
 			local FIRST = data.zxc.FIRST[i]
 			local SECOND = data.zxc.SECOND[i]
@@ -121,21 +122,10 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 			frame.second[i].textCENT:SetText(E.func_reputationIconString(data.reputationID))
 			frame.second[i].texture:SetVertexColor(0, 0, 0, 0)
 		end
-
-
 		if data.zxc.currentChar[i] then
 			E:func_SetBackdrop(frame.second[i], E.classColorHexCurrent, E.bgCaOverlay, 0)
-		-- else
-		-- 	E:func_SetBackdrop(frame.second[i], nil, 0, 0)
 		end
-
-
-
-
 	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
 end
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	OctoToDo_MainFrame_OCTOREP:SetPoint("CENTER", 0, 0)
@@ -167,7 +157,7 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	OctoToDo_MainFrame_OCTOREP.ScrollBar = CreateFrame("EventFrame", nil, OctoToDo_MainFrame_OCTOREP, "MinimalScrollBar")
 	OctoToDo_MainFrame_OCTOREP.ScrollBar:SetPoint("TOPLEFT", OctoToDo_MainFrame_OCTOREP.ScrollBox, "TOPRIGHT", 6, 0)
 	OctoToDo_MainFrame_OCTOREP.ScrollBar:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_OCTOREP.ScrollBox, "BOTTOMRIGHT", 6, 0)
-	OctoToDo_MainFrame_OCTOREP.view = CreateScrollBoxListTreeListView()
+	OctoToDo_MainFrame_OCTOREP.view = CreateScrollBoxListTreeListView(AddonHeight)
 	OctoToDo_MainFrame_OCTOREP.view:SetElementExtent(AddonHeight)
 	OctoToDo_MainFrame_OCTOREP.view:SetElementInitializer("BackdropTemplate",
 		function(...)
@@ -196,89 +186,63 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	----------------------------------------------------------------
 	self:func_CreateMyDataProvider()
 end
-
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
-local function CollectRepList()
-	C_Reputation.ExpandAllFactionHeaders()
-	----------------------------------------------------------------
-	local reputationList = {}
-	for reputationID, v in next, (E.OctoTable_Reputations) do
-		if E.func_reputationName(reputationID) then -- ВСЕ
-		-- if (v.side == E.func_UnitFaction("PLAYER") or v.side == "-") and E.func_reputationName(reputationID) then -- НОРМА
-		-- if (v.side == E.func_UnitFaction("PLAYER")) and E.func_reputationName(reputationID) then -- ТОЛЬКО ТЕКУЩАЯ ФРАКЦИЯ
-		-- if (v.side ~= E.func_UnitFaction("PLAYER") and v.side ~= "-") and E.func_reputationName(reputationID) then -- ИНВЕРНУТАЯ ФРАКЦИЯ
-			tinsert(reputationList, reputationID)
-		end
-	end
-	sort(reputationList, E.func_Reverse_order)
-	----------------------------------------------------------------
-	return reputationList
-end
-local reputationList = CollectRepList()
+-- local reputationList = CollectRepList()
 function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	----------------------------------------------------------------
-
 	local numlines = 0
 	local DataProvider = CreateTreeDataProvider()
-	for _, reputationID in ipairs(reputationList) do
-	-- for reputationID, _ in next, (E.OctoTable_Reputations) do
-		if OctoToDo_DB_Config.ReputationDB[reputationID] == true then
+
+	local zxc = {}
+	zxc.currentChar = {}
+	zxc.FIRST = {}
+	zxc.SECOND = {}
+	zxc.vivod = {}
+	zxc.color = {}
+	zxc.standingTEXT = {}
+	zxc.description = {}
+	zxc.textureKit = {}
+
+	for index, tbl in ipairs(E.OctoTable_Reputations) do
+		numlines = numlines + 1
+
+		-- for CharIndex, CharInfo in ipairs(E.sorted()) do
+		-- 	zxc.currentChar[CharIndex] = CharInfo.GUID == E.curGUID
+		-- end
+		local groupNode = DataProvider:Insert({
+				repHeader = tbl.header,
+				zxc = zxc,
+		})
+
+		for i, v in ipairs(tbl) do
+			if OctoToDo_DB_Config.ReputationDB[v.id] == true then
 			numlines = numlines + 1
-			local zxc = {}
-			zxc.FIRST = {}
-			zxc.SECOND = {}
-			zxc.vivod = {}
-			zxc.color = {}
-			zxc.standingTEXT = {}
-			zxc.description = {}
-			zxc.textureKit = {}
-
-			zxc.currentChar = {}
-			for CharIndex, CharInfo in ipairs(E.sorted()) do
-				zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].FIRST or ""
-				zxc.SECOND[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].SECOND or ""
-				zxc.vivod[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].vivod or ""
-				zxc.color[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].color or ""
-				zxc.standingTEXT[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].standingTEXT or ""
-				zxc.description[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].description or ""
-				zxc.textureKit[CharIndex] = CharInfo.MASLENGO.reputationFULL[reputationID].textureKit or 0
-
-
-				zxc.currentChar[CharIndex] = CharInfo.GUID == E.curGUID
+				for CharIndex, CharInfo in ipairs(E.sorted()) do
+					zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].FIRST or ""
+					zxc.SECOND[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].SECOND or ""
+					zxc.vivod[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].vivod or ""
+					zxc.color[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].color or ""
+					zxc.standingTEXT[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].standingTEXT or ""
+					zxc.description[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].description or ""
+					zxc.textureKit[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].textureKit or 0
+					zxc.currentChar[CharIndex] = CharInfo.GUID == E.curGUID
+				end
+				local secondABOBUS = groupNode:Insert({
+						reputationID = v.id,
+						zxc = zxc,
+				})
 			end
-			local groupNode = DataProvider:Insert({
-					reputationID = reputationID,
-					zxc = zxc,
-			})
 		end
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-
-	-- if newcount < MainFrameDefaultLines then
-	-- 	MainFrameDefaultLines = newcount
-	-- elseif newcount > MainFrameDefaultLines then
-	-- 	MainFrameDefaultLines = OctoToDo_DB_Vars.MainFrameDefaultLines
-	-- elseif MainFrameDefaultLines == 0 then
-	-- 	MainFrameDefaultLines = MainFrameDefaultLines + 1
-	-- end
-
-
-
 	local newcount = numlines
 	MainFrameDefaultLines = newcount
 	if MainFrameDefaultLines > OctoToDo_DB_Vars.MainFrameDefaultLines then
 		MainFrameDefaultLines = OctoToDo_DB_Vars.MainFrameDefaultLines
 	end
 	if MainFrameDefaultLines < 1 then MainFrameDefaultLines = 1 end
-
-
-
-
-
-
-
 	OctoToDo_MainFrame_OCTOREP:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
 	OctoToDo_MainFrame_OCTOREP.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	----------------------------------------------------------------
@@ -342,9 +306,9 @@ function OctoToDo_EventFrame_OCTOREP:ADDON_LOADED(addonName)
 		E:func_CreateMinimapButton(GlobalAddonName, "OCTOREP", OctoToDo_OCTOREP, OctoToDo_MainFrame_OCTOREP, nil, "OctoToDo_MainFrame_OCTOREP")
 		----------------------------------------------------------------
 		OctoToDo_MainFrame_OCTOREP:SetScript("OnShow", function()
-			C_Timer.After(0, function()
-				OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider() -- ПОФИКСИТЬ (HAS ANY CHANGE)
-			end)
+				C_Timer.After(0, function()
+						OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider() -- ПОФИКСИТЬ (HAS ANY CHANGE)
+				end)
 		end)
 	end
 end

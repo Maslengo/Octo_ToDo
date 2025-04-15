@@ -116,10 +116,10 @@ function E.func_questName(questID, useLargeIcon)
 	return vivod
 end
 function E.func_reputationName(reputationID)
-	if reputationID and E.OctoTable_Reputations[reputationID] then
+	if reputationID --[[and E.OctoTable_Reputations[reputationID] ]] then
 		local vivod = ""
-		local side = E.OctoTable_Reputations[reputationID].side or "-"
-		local icon = E.OctoTable_Reputations[reputationID].icon
+		-- local side = E.OctoTable_Reputations[reputationID].side or "-"
+		-- local icon = E.OctoTable_Reputations[reputationID].icon
 
 		local color = E.White_Color
 		local factionname = ""
@@ -132,8 +132,8 @@ function E.func_reputationName(reputationID)
 			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
 			if reputationInfo.name then
 				vivod = vivod.. reputationInfo.name
-			elseif E.OctoTable_Reputations[reputationID] then
-				vivod = vivod.. E.OctoTable_Reputations[reputationID].name
+			-- elseif E.OctoTable_Reputations[reputationID] then
+			-- 	vivod = vivod.. E.OctoTable_Reputations[reputationID].name
 			else
 				vivod = vivod.. reputationID.. " (UNKNOWN)"
 			end
@@ -167,17 +167,17 @@ function E.func_reputationName(reputationID)
 		-- end
 
 
-		if side == "Alliance" then
-			vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
-		elseif side == "Horde" then
-			vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
-		end
+		-- if side == "Alliance" then
+		-- 	vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
+		-- elseif side == "Horde" then
+		-- 	vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
+		-- end
 
 
 
-		if icon ~= E.Icon_QuestionMark then
-			vivod = E.func_texturefromIcon(icon)..vivod
-		end
+		-- if icon ~= E.Icon_QuestionMark then
+		-- 	vivod = E.func_texturefromIcon(icon)..vivod
+		-- end
 		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
 		if isAccountWide == true then
 			vivod = E.Icon_AccountWide..vivod
@@ -185,7 +185,7 @@ function E.func_reputationName(reputationID)
 
 		return vivod
 	else
-		return "|cffFF0000noname|r"
+		return "|cffFF0000no reputationID|r"
 	end
 end
 
@@ -193,13 +193,13 @@ end
 
 function E.func_reputationIconString(reputationID)
 	local icon = E.Icon_Empty
-	local side = E.OctoTable_Reputations[reputationID].side
+	-- local side = E.OctoTable_Reputations[reputationID].side
 
-	if side == "Alliance" then
-		icon = E.Icon_Alliance
-	elseif side == "Horde" then
-		icon = E.Icon_Horde
-	end
+	-- if side == "Alliance" then
+	-- 	icon = E.Icon_Alliance
+	-- elseif side == "Horde" then
+	-- 	icon = E.Icon_Horde
+	-- end
 	return E.func_texturefromIcon(icon)
 
 end

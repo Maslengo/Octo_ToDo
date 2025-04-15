@@ -30,27 +30,34 @@ function E.Reputations()
 			},
 			-------------------------------------------------
 			ReputationALLTURNON = {
-				type = "execute",
-				name = ENABLE_ALL_ADDONS,
-				func = function()
-						for reputationID, config in next, (OctoToDo_DB_Config.ReputationDB) do
-							OctoToDo_DB_Config.ReputationDB[reputationID] = true
-						end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 3,
+			    type = "execute",
+			    name = ENABLE_ALL_ADDONS,
+			    func = function()
+			        for index, tbl in ipairs(E.OctoTable_Reputations) do
+			            for i, v in ipairs(tbl) do
+			            	print (v.id)
+			                OctoToDo_DB_Config.ReputationDB[v.id] = true
+			            end
+			        end
+			        return
+			    end,
+			    width = E.FULL_WIDTH/4,
+			    order = 3,
 			},
+
+
 			-------------------------------------------------
 			ReputationALLTURNOFF = {
 				type = "execute",
-				name = "Выключить все",
-				func = function()
-						for reputationID, config in next, (OctoToDo_DB_Config.ReputationDB) do
-							OctoToDo_DB_Config.ReputationDB[reputationID] = false
-					end
-					return
-				end,
+				name = DISABLE_ALL_ADDONS,
+			    func = function()
+			        for index, tbl in ipairs(E.OctoTable_Reputations) do
+			            for i, v in ipairs(tbl) do
+			                OctoToDo_DB_Config.ReputationDB[v.id] = false
+			            end
+			        end
+			        return
+			    end,
 				width = E.FULL_WIDTH/4,
 				order = 4,
 			},
@@ -103,46 +110,33 @@ function E.Reputations()
 
 
 
-
 	if wipe == false then
 		wipe = true
-
-
-	local list = {}
-	for reputationID, tbl in next, (E.OctoTable_Reputations) do
-		local Header = tostring(tbl.exp)
-		list[Header] = list[Header] or {}
-		list[Header][reputationID] = list[Header][reputationID] or true
-	end
-
-	-- fpde(list)
-
-
 		local index = 0
-			for reputationHEADER, tbl in next, (list) do
+			for i, tbl in ipairs(E.OctoTable_Reputations) do
 				index = index + 1
 				E.func_TableMerge(Reputations.args, {
 						["addonNameHEADER5"..index] = {
 							type = "header",
-							name = reputationHEADER,
-							order = 5 + index,
+							name = tbl.header,
+							order = 123 + index,
 						},
 				})
-				for reputationID, config in next, (tbl) do
+				for i, v in ipairs(tbl) do
 					index = index + 1
 					E.func_TableMerge(Reputations.args, {
 							["addonNameQWE6"..index] = {
 								type = "toggle",
-								name = E.func_reputationName(reputationID),
-								desc = "\n".."id: |r"..E.Green_Color..tostring(reputationID).."|r",
+								name = E.func_reputationName(v.id),
+								desc = "\n".."id: |r"..E.Green_Color..tostring(v.id).."|r",
 								get = function()
-									return OctoToDo_DB_Config.ReputationDB[reputationID]
+									return OctoToDo_DB_Config.ReputationDB[v.id]
 								end,
 								set = function(_, value)
-									OctoToDo_DB_Config.ReputationDB[reputationID] = value
+									OctoToDo_DB_Config.ReputationDB[v.id] = value
 								end,
 								width = E.FULL_WIDTH/2, --.9,
-								order = 5 + index,
+								order = 123 + index,
 							},
 					})
 				end

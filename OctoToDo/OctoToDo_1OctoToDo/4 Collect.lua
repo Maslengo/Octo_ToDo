@@ -401,36 +401,38 @@ function E.Collect_All_Reputations()
 
 
 		----------------------------------------------------------------
-		for reputationID, v in next, (E.OctoTable_Reputations) do
-			local Header = v.category
-			collect.MASLENGO.reputationFULL[reputationID] = collect.MASLENGO.reputationFULL[reputationID] or {}
-			local FIRST = select(1, E.func_CheckReputationFULL(reputationID))
-			local SECOND = select(2, E.func_CheckReputationFULL(reputationID))
-			local vivod = select(3, E.func_CheckReputationFULL(reputationID))
-			local color = select(4, E.func_CheckReputationFULL(reputationID))
-			local standingTEXT = select(5, E.func_CheckReputationFULL(reputationID))
-			local description = select(6, E.func_CheckReputationFULL(reputationID))
+	for index, tbl in ipairs(E.OctoTable_Reputations) do
+		for i, v in ipairs(tbl) do
+			local reputationID = v.id
+				collect.MASLENGO.reputationFULL[reputationID] = collect.MASLENGO.reputationFULL[reputationID] or {}
+				local FIRST = select(1, E.func_CheckReputationFULL(reputationID))
+				local SECOND = select(2, E.func_CheckReputationFULL(reputationID))
+				local vivod = select(3, E.func_CheckReputationFULL(reputationID))
+				local color = select(4, E.func_CheckReputationFULL(reputationID))
+				local standingTEXT = select(5, E.func_CheckReputationFULL(reputationID))
+				local description = select(6, E.func_CheckReputationFULL(reputationID))
 
-			if C_Reputation.IsAccountWideReputation(reputationID) then
-				for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
-					CharInfo.MASLENGO.reputationFULL[reputationID] = CharInfo.MASLENGO.reputationFULL[reputationID] or {}
-					CharInfo.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
-					CharInfo.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
-					CharInfo.MASLENGO.reputationFULL[reputationID].vivod = vivod
-					CharInfo.MASLENGO.reputationFULL[reputationID].color = color
-					CharInfo.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
-					CharInfo.MASLENGO.reputationFULL[reputationID].description = description
+				if C_Reputation.IsAccountWideReputation(reputationID) then
+					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+						CharInfo.MASLENGO.reputationFULL[reputationID] = CharInfo.MASLENGO.reputationFULL[reputationID] or {}
+						CharInfo.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
+						CharInfo.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
+						CharInfo.MASLENGO.reputationFULL[reputationID].vivod = vivod
+						CharInfo.MASLENGO.reputationFULL[reputationID].color = color
+						CharInfo.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
+						CharInfo.MASLENGO.reputationFULL[reputationID].description = description
+					end
+				else
+					collect.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
+					collect.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
+					collect.MASLENGO.reputationFULL[reputationID].vivod = vivod
+					collect.MASLENGO.reputationFULL[reputationID].color = color
+					collect.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
+					collect.MASLENGO.reputationFULL[reputationID].description = description
+
 				end
-			else
-				collect.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
-				collect.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
-				collect.MASLENGO.reputationFULL[reputationID].vivod = vivod
-				collect.MASLENGO.reputationFULL[reputationID].color = color
-				collect.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
-				collect.MASLENGO.reputationFULL[reputationID].description = description
-
+				-- collect.MASLENGO.reputationFULL[reputationID].name = v.name
 			end
-			-- collect.MASLENGO.reputationFULL[reputationID].name = v.name
 		end
 		----------------------------------------------------------------
 	end

@@ -306,7 +306,7 @@ function OctoToDo_EventFrame_AddonsManager:CollectAddonInfo(index)
 			if OctoToDo_AddonsTable.depsByIndex[index] then
 				tooltipthird[#tooltipthird+1] = {"Дочернии аддоны"}
 				for _, depIndex in pairs(OctoToDo_AddonsTable.depsByIndex[index]) do
-					tooltipthird[#tooltipthird+1] = {" "..Child_Color..E.func_GetAddonName(depIndex).."|r"}
+					tooltipthird[#tooltipthird+1] = {"    "..Child_Color..E.func_GetAddonName(depIndex).."|r"}
 				end
 			end
 			if loadable then
