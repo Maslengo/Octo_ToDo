@@ -225,6 +225,7 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	end)
 
 	local HorizontalScrollBar = CreateFrame("EventFrame", nil, OctoToDo_MainFrame_OCTOMAIN, "OctoWowTrimHorizontalScrollBar")
+	HorizontalScrollBar:Hide()
 	HorizontalScrollBar.Backplate = HorizontalScrollBar:GetRegions()
 	HorizontalScrollBar.Backplate:Hide()
 	HorizontalScrollBar.Back.Texture:SetTexCoord(0, 0, 1, 0, 0, 1, 1, 1)
@@ -245,6 +246,7 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	end, barPanelScroll)
 	OctoToDo_MainFrame_OCTOMAIN.child = CreateFrame("FRAME")
 	OctoToDo_MainFrame_OCTOMAIN.child:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
+
 
 	HorizontalScrollBar:SetScript("OnSizeChanged", function (self)
 		self:SetShown(not WithinRangeExclusive(self:GetVisibleExtentPercentage(), MathUtil.Epsilon, 1 - MathUtil.Epsilon))
@@ -592,6 +594,18 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					self:ddAddButton(info, level)
 				end
 				----------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.text = REPUTATION
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = OctoToDo_DB_Vars.Reputations
+				info.func = function(_, _, _, checked)
+					OctoToDo_DB_Vars.Reputations = checked
+					OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				----------------
 				self:ddAddSeparator(level)
 				----------------
 				info.keepShownOnClick = false
@@ -619,6 +633,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_OCTOMAIN()
 					OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
+
 				----------------
 				self:ddAddSeparator(level)
 				----------------
