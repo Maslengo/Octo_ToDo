@@ -3,6 +3,11 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
 function E.Addons()
+	local index = 0
+	local function GetOrder()
+		index = index + 1
+		return index
+	end
 	local GeneralOptionsADDONS = {
 		type = "group",
 		childGroups = "tree",
@@ -12,7 +17,7 @@ function E.Addons()
 			Header1 = {
 				type = "header",
 				name = "",
-				order = 1,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			-------------------------------------------------
@@ -33,7 +38,7 @@ function E.Addons()
 			-- 		E.AddonList_Update()
 			-- 	end,
 			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 2,
+			-- 	order = GetOrder(),
 			-- },
 			-------------------------------------------------
 			-- MainFrameDefaultLines = {
@@ -52,7 +57,7 @@ function E.Addons()
 			-- 		E.AddonList_Update()
 			-- 	end,
 			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 3,
+			-- 	order = GetOrder(),
 			-- },
 			-------------------------------------------------
 			-- AddonCentralFrameWeight = {
@@ -71,13 +76,13 @@ function E.Addons()
 			-- 		E.AddonList_Update()
 			-- 	end,
 			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = 4,
+			-- 	order = GetOrder(),
 			-- },
 			-------------------------------------------------
 			Header5 = {
 				type = "header",
 				name = "",
-				order = 5,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			fullName = {
@@ -92,7 +97,7 @@ function E.Addons()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 6,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			showIcons = {
@@ -107,7 +112,7 @@ function E.Addons()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 7,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			showVersion = {
@@ -122,7 +127,7 @@ function E.Addons()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 8,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			defaultAddonList = {
@@ -138,7 +143,7 @@ function E.Addons()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 8,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			showOnlyLoaded = {
@@ -154,7 +159,7 @@ function E.Addons()
 					E.AddonList_Update()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 9,
+				order = GetOrder(),
 			},
 
 
@@ -165,7 +170,7 @@ function E.Addons()
 			Header24 = {
 				type = "header",
 				name = "",
-				order = 24,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			RESET = {
@@ -176,7 +181,7 @@ function E.Addons()
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 25,
+				order = GetOrder(),
 			},
 			RELOADUI = {
 				type = "execute",
@@ -185,7 +190,7 @@ function E.Addons()
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 26,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			-------------------------------------------------

@@ -2,6 +2,11 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 function E.Items()
+	local index = 0
+	local function GetOrder()
+		index = index + 1
+		return index
+	end
 	local Items = {
 		type = "group",
 		childGroups = "tree",
@@ -11,7 +16,7 @@ function E.Items()
 			Header1 = {
 				type = "header",
 				name = "",
-				order = 1,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Items = {
@@ -25,7 +30,7 @@ function E.Items()
 					OctoToDo_DB_Vars.Items = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 3,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ItemsShowAllways = {
@@ -39,13 +44,13 @@ function E.Items()
 					OctoToDo_DB_Vars.ItemsShowAllways = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 4,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ReloadHeader453 = {
 				type = "header",
 				name = "",
-				order = 7,
+				order = GetOrder(),
 			},
 		},
 	}

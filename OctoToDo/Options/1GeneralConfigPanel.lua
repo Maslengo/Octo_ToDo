@@ -2,6 +2,11 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 function E.CreateGeneralOptions()
+	local index = 0
+	local function GetOrder()
+		index = index + 1
+		return index
+	end
 	local generalOptions = {
 		type = "group",
 		childGroups = "tree",
@@ -11,15 +16,28 @@ function E.CreateGeneralOptions()
 			Header1 = {
 				type = "header",
 				name = "",
-				order = 1,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
-			-- ПРЕФИКСЫ 2
+			["prefix"] = {
+				type = "select",
+				name = "prefix",
+				values = {},
+				desc = "",
+				get = function()
+					return OctoToDo_DB_Vars.prefix
+				end,
+				set = function(_, value)
+					OctoToDo_DB_Vars.prefix = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
 			-------------------------------------------------
 			Header3 = {
 				type = "header",
 				name = "",
-				order = 3,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			AddonHeight = {
@@ -36,7 +54,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AddonHeight = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 4,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			AddonLeftFrameWeight = {
@@ -53,7 +71,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AddonLeftFrameWeight = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 5,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			AddonCentralFrameWeight = {
@@ -70,10 +88,8 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AddonCentralFrameWeight = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 6,
+				order = GetOrder(),
 			},
-
-
 			-------------------------------------------------
 			MainFrameDefaultLines = {
 				type = "range",
@@ -89,7 +105,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.MainFrameDefaultLines = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 7,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			SFDropDownWeight = {
@@ -106,25 +122,14 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.SFDropDownWeight = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 8,
+				order = GetOrder(),
 			},
-
-
-
 			-------------------------------------------------
 			Header9 = {
 				type = "header",
 				name = "",
-				order = 9,
+				order = GetOrder(),
 			},
-
-
-
-
-
-
-
-
 			-------------------------------------------------
 			AutoSellGrey = {
 				type = "toggle",
@@ -137,7 +142,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AutoSellGrey = value
 				end,
 				width = E.FULL_WIDTH/2, -- "full",
-				order = 10,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			AutoRepair = {
@@ -151,7 +156,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AutoRepair = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 11,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			InputDelete = {
@@ -165,7 +170,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.InputDelete = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 12,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			AutoOpen = {
@@ -179,7 +184,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AutoOpen = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 13,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Auto_Gossip = {
@@ -193,7 +198,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_Gossip = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 14,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			AutoTurnQuests = {
@@ -207,7 +212,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.AutoTurnQuests = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 15,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Auto_ChatClearing = {
@@ -221,7 +226,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_ChatClearing = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 16,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Auto_Screenshot = {
@@ -235,7 +240,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_Screenshot = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 17,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Auto_CinematicCanceler = {
@@ -249,7 +254,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_CinematicCanceler = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 18,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Auto_CinematicFastSkip = {
@@ -263,13 +268,13 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Auto_CinematicFastSkip = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 19,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Header20 = {
 				type = "header",
 				name = "HIDE",
-				order = 20,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Hide_Boss_Banner = {
@@ -283,7 +288,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Boss_Banner = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 21,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Hide_Covenant = {
@@ -297,7 +302,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Covenant = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 22,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Hide_Error_Messages = {
@@ -311,7 +316,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Error_Messages = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 23,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Hide_RaidWarningFrame = {
@@ -325,7 +330,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_RaidWarningFrame = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 24,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Hide_OrderHallCommandBar = {
@@ -339,7 +344,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_OrderHallCommandBar = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 25,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Hide_Talking_Head_Frame = {
@@ -353,7 +358,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Talking_Head_Frame = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 26,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Hide_Zone_Text = {
@@ -367,7 +372,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Hide_Zone_Text = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 27,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			UIErrorsFramePosition = {
@@ -381,13 +386,13 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.UIErrorsFramePosition = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 28,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Header29 = {
 				type = "header",
 				name = "настройки аддона",
-				order = 29,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			LevelToShow = {
@@ -404,7 +409,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.LevelToShow = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 30,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			LevelToShowMAX = {
@@ -421,7 +426,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.LevelToShowMAX = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 31,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			itemLevelToShow = {
@@ -438,7 +443,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.itemLevelToShow = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 32,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			FrameScale = {
@@ -455,9 +460,8 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.FrameScale = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 33,
+				order = GetOrder(),
 			},
-
 			-------------------------------------------------
 			GameMenuFrameScale = {
 				type = "range",
@@ -473,13 +477,13 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.GameMenuFrameScale = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 34,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			MainHeader24 = {
 				type = "header",
 				name = OTHER,
-				order = 35,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			PortalsButtons = {
@@ -493,7 +497,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.PortalsButtons = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 36,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			PortalsButtonsOnlyAvailable = {
@@ -507,7 +511,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 37,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ShowOnlyCurrentServer = {
@@ -521,7 +525,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.ShowOnlyCurrentServer = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 38,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ShowOnlyCurrentBattleTag = {
@@ -535,7 +539,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 39,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Dungeons = {
@@ -549,7 +553,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Dungeons = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 40,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Professions = {
@@ -563,7 +567,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Professions = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 41,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Gold = {
@@ -577,7 +581,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.Gold = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 42,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ItemLevel = {
@@ -591,7 +595,7 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.ItemLevel = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 43,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			WasOnline = {
@@ -605,23 +609,9 @@ function E.CreateGeneralOptions()
 					OctoToDo_DB_Vars.WasOnline = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 44,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
-			["prefix"] = {
-				type = "select",
-				name = "prefix",
-				values = {},
-				desc = "",
-				get = function()
-					return OctoToDo_DB_Vars.prefix
-				end,
-				set = function(_, value)
-					OctoToDo_DB_Vars.prefix = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = 2,
-			},
 			-------------------------------------------------
 		},
 	}
@@ -638,9 +628,5 @@ function E.CreateGeneralOptions()
 	-------------------------------------------------
 	-- end
 	-------------------------------------------------
-
-
-
 	return generalOptions
 end
-

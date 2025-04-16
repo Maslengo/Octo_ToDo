@@ -3,6 +3,11 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 local wipe = false
 function E.Currencies()
+	local index = 0
+	local function GetOrder()
+		index = index + 1
+		return index
+	end
 	local Currencies = {
 		type = "group",
 		childGroups = "tree",
@@ -12,7 +17,7 @@ function E.Currencies()
 			Header1 = {
 				type = "header",
 				name = "",
-				order = 1,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Currency = {
@@ -26,7 +31,7 @@ function E.Currencies()
 					OctoToDo_DB_Vars.Currency = value
 				end,
 				width = E.FULL_WIDTH/4, -- 1.8,
-				order = 3,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			CurrencyShowAllways = {
@@ -40,7 +45,7 @@ function E.Currencies()
 					OctoToDo_DB_Vars.CurrencyShowAllways = value
 				end,
 				width = E.FULL_WIDTH/4, -- 1.8,
-				order = 4,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			-------------------------------------------------
@@ -57,7 +62,7 @@ function E.Currencies()
 	-- 					["addonNameHEADER57"..index] = {
 	-- 						type = "header",
 	-- 						name = currencyHEADER,
-	-- 						order = 123 + index,
+	-- 						order = GetOrder(),
 	-- 					},
 	-- 			})
 	-- 			for CurrencyID, config in next, (tbl) do
@@ -74,7 +79,7 @@ function E.Currencies()
 	-- 								OCTO_DB_currencies_test[currencyHEADER][CurrencyID] = value
 	-- 							end,
 	-- 							width = E.FULL_WIDTH/2,
-	-- 							order = 123 + index,
+	-- 							order = GetOrder(),
 	-- 						},
 	-- 				})
 	-- 			end
@@ -85,9 +90,8 @@ function E.Currencies()
 			["ReloadHeader4second322"..1] = {
 				type = "header",
 				name = "",
-				order = 322 + 1,
+				order = GetOrder(),
 			},
 	})
 	return Currencies
 end
-

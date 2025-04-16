@@ -3,6 +3,11 @@ local L = LibStub("AceLocale-3.0"):GetLocale("OctoTODO")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
 function E.Developing()
+	local index = 0
+	local function GetOrder()
+		index = index + 1
+		return index
+	end
 	local Developing = {
 		type = "group",
 		childGroups = "tree",
@@ -12,7 +17,7 @@ function E.Developing()
 			Header1 = {
 				type = "header",
 				name = "",
-				order = 1,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Reload = {
@@ -22,7 +27,7 @@ function E.Developing()
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 3,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			DELETEALL = {
@@ -46,13 +51,13 @@ function E.Developing()
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 4,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ReloadHeader3second = {
 				type = "header",
 				name = "",
-				order = 5,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			OctoToDo_DB_Config = {
@@ -63,7 +68,7 @@ function E.Developing()
 					return
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 7,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			OctoToDo_DB_Levels = {
@@ -74,7 +79,7 @@ function E.Developing()
 					return
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 8,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			OctoToDo_DB_Other = {
@@ -85,7 +90,7 @@ function E.Developing()
 					return
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 9,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			OctoToDo_DB_Vars = {
@@ -96,7 +101,7 @@ function E.Developing()
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 10,
+				order = GetOrder(),
 			},
 
 			-------------------------------------------------
@@ -111,7 +116,7 @@ function E.Developing()
 					return
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 13,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			MASLENGO = {
@@ -125,13 +130,13 @@ function E.Developing()
 					return
 				end,
 				width = E.FULL_WIDTH/4,
-				order = 14,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ReloadHeader3second22154 = {
 				type = "header",
 				name = OTHER,
-				order = 15,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ItemsUsable = {
@@ -145,7 +150,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.ItemsUsable = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 25,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ItemsDelete = {
@@ -159,7 +164,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.ItemsDelete = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 26,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			StaticPopup1Button1 = {
@@ -173,7 +178,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.StaticPopup1Button1 = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 27,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			CVar = {
@@ -187,7 +192,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.CVar = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 29,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			SpeedFrameShown = {
@@ -201,7 +206,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.SpeedFrame.Shown = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 30,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Hide_ObjectivesInInstance = {
@@ -215,7 +220,7 @@ function E.Developing()
 					OctoToDo_DB_Vars.Hide_ObjectivesInInstance = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 33,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			SellFrame = {
@@ -229,13 +234,13 @@ function E.Developing()
 					OctoToDo_DB_Vars.SellFrame = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 34,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ReloadHeaderDebugs = {
 				type = "header",
 				name = "Debug",
-				order = 35,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			DebugIDs = {
@@ -250,7 +255,7 @@ function E.Developing()
 					E.DebugIDs = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 36,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			DebugInfo = {
@@ -265,7 +270,7 @@ function E.Developing()
 					E.DebugInfo = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 37,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			DebugEvent = {
@@ -280,7 +285,7 @@ function E.Developing()
 					E.DebugEvent = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 38,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			DebugFunction = {
@@ -295,7 +300,7 @@ function E.Developing()
 					E.DebugFunction = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 39,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			DebugButton = {
@@ -310,13 +315,13 @@ function E.Developing()
 					E.DebugButton = value
 				end,
 				width = E.FULL_WIDTH/2,
-				order = 40,
+				order = GetOrder(),
 			},
 			-------------------------------------------------
 			ReloadHeader3second22 = {
 				type = "header",
 				name = "",
-				order = 47,
+				order = GetOrder(),
 			},
 
 
