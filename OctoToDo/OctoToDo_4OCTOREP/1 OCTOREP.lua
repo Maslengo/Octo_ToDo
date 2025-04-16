@@ -100,16 +100,12 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 		frame.first.textLEFT:SetText(E.func_reputationName(data.reputationID))
 	end
 	for i = 1, #data.zxc.vivod do
-
-		if data.repHeader then
-			frame.second[i].textCENT:SetText("QWEQWE")
-		end
-
-		if data.zxc.vivod[i] ~= "" then
-			frame.second[i].textCENT:SetText(data.zxc.vivod[i])
+		if data.reputationID and data.zxc.vivod[i] ~= "" then
+			local text = data.zxc.vivod[i]
 			local FIRST = data.zxc.FIRST[i]
 			local SECOND = data.zxc.SECOND[i]
 			local color = data.zxc.color[i]
+			frame.second[i].textCENT:SetText(text)
 			frame.second[i].texture:SetVertexColor(select(1, E.func_hex2rgbNUMBER(color)), select(2, E.func_hex2rgbNUMBER(color)), select(3, E.func_hex2rgbNUMBER(color)), .3)
 			if FIRST == 0 then
 				frame.second[i].texture:SetWidth(.1)
@@ -119,7 +115,7 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 				frame.second[i].texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
 			end
 		else
-			frame.second[i].textCENT:SetText(E.func_reputationIconString(data.reputationID))
+			frame.second[i].textCENT:SetText("")
 			frame.second[i].texture:SetVertexColor(0, 0, 0, 0)
 		end
 		if data.zxc.currentChar[i] then
@@ -157,7 +153,7 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 	OctoToDo_MainFrame_OCTOREP.ScrollBar = CreateFrame("EventFrame", nil, OctoToDo_MainFrame_OCTOREP, "MinimalScrollBar")
 	OctoToDo_MainFrame_OCTOREP.ScrollBar:SetPoint("TOPLEFT", OctoToDo_MainFrame_OCTOREP.ScrollBox, "TOPRIGHT", 6, 0)
 	OctoToDo_MainFrame_OCTOREP.ScrollBar:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_OCTOREP.ScrollBox, "BOTTOMRIGHT", 6, 0)
-	OctoToDo_MainFrame_OCTOREP.view = CreateScrollBoxListTreeListView(AddonHeight)
+	OctoToDo_MainFrame_OCTOREP.view = CreateScrollBoxListTreeListView(0)
 	OctoToDo_MainFrame_OCTOREP.view:SetElementExtent(AddonHeight)
 	OctoToDo_MainFrame_OCTOREP.view:SetElementInitializer("BackdropTemplate",
 		function(...)
@@ -188,33 +184,29 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Create_MainFrame_AddonsManager()
 end
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
 -- local reputationList = CollectRepList()
+
+
 function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	----------------------------------------------------------------
 	local numlines = 0
 	local DataProvider = CreateTreeDataProvider()
 
 	local zxc = {}
-	zxc.currentChar = {}
+	-- wipe(zxc)
 	zxc.FIRST = {}
 	zxc.SECOND = {}
 	zxc.vivod = {}
 	zxc.color = {}
 	zxc.standingTEXT = {}
-	zxc.description = {}
-	zxc.textureKit = {}
 
-	for index, tbl in ipairs(E.OctoTable_Reputations) do
+	zxc.currentChar = {}
+	for _, tbl in ipairs(E.OctoTable_Reputations) do
 		numlines = numlines + 1
-
-		-- for CharIndex, CharInfo in ipairs(E.sorted()) do
-		-- 	zxc.currentChar[CharIndex] = CharInfo.GUID == E.curGUID
-		-- end
-		local groupNode = DataProvider:Insert({
+		local groupNodeFirst = DataProvider:Insert({
 				repHeader = tbl.header,
 				zxc = zxc,
 		})
-
-		for i, v in ipairs(tbl) do
+		for _, v in ipairs(tbl) do
 			if OctoToDo_DB_Config.ReputationDB[v.id] == true then
 			numlines = numlines + 1
 				for CharIndex, CharInfo in ipairs(E.sorted()) do
@@ -223,11 +215,13 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 					zxc.vivod[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].vivod or ""
 					zxc.color[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].color or ""
 					zxc.standingTEXT[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].standingTEXT or ""
-					zxc.description[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].description or ""
-					zxc.textureKit[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].textureKit or 0
+
 					zxc.currentChar[CharIndex] = CharInfo.GUID == E.curGUID
+					-- if zxc.vivod[CharIndex] ~= "" then
+					-- 	print (zxc.vivod[CharIndex])
+					-- end
 				end
-				local secondABOBUS = groupNode:Insert({
+				local groupNodeSecondary = groupNodeFirst:Insert({
 						reputationID = v.id,
 						zxc = zxc,
 				})
@@ -237,8 +231,7 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	local newcount = numlines
-	MainFrameDefaultLines = newcount
+	MainFrameDefaultLines = numlines
 	if MainFrameDefaultLines > OctoToDo_DB_Vars.MainFrameDefaultLines then
 		MainFrameDefaultLines = OctoToDo_DB_Vars.MainFrameDefaultLines
 	end

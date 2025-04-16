@@ -64,29 +64,29 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Levels()
 		CharInfo.loginDate = CharInfo.loginDate or date("%d.%m.%Y %H:%M:%S")
 		CharInfo.loginDay = CharInfo.loginDay or date("%d.%m.%Y")
 		CharInfo.loginHour = CharInfo.loginHour or date("%H:%M")
-		CharInfo.time = CharInfo.time or time()
-		CharInfo.UnitLevel = CharInfo.UnitLevel or 1
-		CharInfo.Money = CharInfo.Money or 0
-		CharInfo.MoneyOnLogin = CharInfo.Money
-		CharInfo.totalSlots = CharInfo.totalSlots or 0
-		CharInfo.usedSlots = CharInfo.usedSlots or 0
-		CharInfo.BindLocation = CharInfo.BindLocation or 0
-		CharInfo.CurrentLocation = CharInfo.CurrentLocation or 0
-		CharInfo.WarMode = CharInfo.WarMode or false
-		CharInfo.CurrentKey = CharInfo.CurrentKey or 0
-		CharInfo.CurrentKeyName = CharInfo.CurrentKeyName or 0
-		CharInfo.CurrentKeyLevel = CharInfo.CurrentKeyLevel or 0
-		CharInfo.hasMail = CharInfo.hasMail or false -- ОСТАВИТЬ
-		CharInfo.levelCapped20 = CharInfo.levelCapped20 or false
-		CharInfo.PlayerCanEarnExperience = CharInfo.PlayerCanEarnExperience or true
-		CharInfo.needResetDaily = CharInfo.needResetDaily or false
-		CharInfo.needResetWeekly = CharInfo.needResetWeekly or false
-		CharInfo.needResetMonth = CharInfo.needResetMonth or false
-		CharInfo.HasAvailableRewards = CharInfo.HasAvailableRewards or false
-		CharInfo.isShownPLAYER = CharInfo.isShownPLAYER or true
-		CharInfo.Chromie_name = CharInfo.Chromie_name or nil
-		CharInfo.RIO_Score = CharInfo.RIO_Score or 0
-		CharInfo.RIO_weeklyBest = CharInfo.RIO_weeklyBest or 0
+		if CharInfo.time == nil then CharInfo.time = time() end
+		if CharInfo.UnitLevel == nil then CharInfo.UnitLevel = 1 end
+		if CharInfo.Money == nil then CharInfo.Money = 0 end
+		if CharInfo.MoneyOnLogin == nil then CharInfo.MoneyOnLogin = CharInfo.Money end
+		if CharInfo.totalSlots == nil then CharInfo.totalSlots = 0 end
+		if CharInfo.usedSlots == nil then CharInfo.usedSlots = 0 end
+		if CharInfo.BindLocation == nil then CharInfo.BindLocation = 0 end
+		if CharInfo.CurrentLocation == nil then CharInfo.CurrentLocation = 0 end
+		if CharInfo.WarMode == nil then CharInfo.WarMode = false end
+		if CharInfo.CurrentKey == nil then CharInfo.CurrentKey = 0 end
+		if CharInfo.CurrentKeyName == nil then CharInfo.CurrentKeyName = 0 end
+		if CharInfo.CurrentKeyLevel == nil then CharInfo.CurrentKeyLevel = 0 end
+		if CharInfo.hasMail == nil then CharInfo.hasMail = false end -- ОСТАВИТЬ
+		if CharInfo.levelCapped20 == nil then CharInfo.levelCapped20 = false end
+		if CharInfo.PlayerCanEarnExperience == nil then CharInfo.PlayerCanEarnExperience = true end
+		if CharInfo.needResetDaily == nil then CharInfo.needResetDaily = false end
+		if CharInfo.needResetWeekly == nil then CharInfo.needResetWeekly = false end
+		if CharInfo.needResetMonth == nil then CharInfo.needResetMonth = false end
+		if CharInfo.HasAvailableRewards == nil then CharInfo.HasAvailableRewards = false end
+		if CharInfo.isShownPLAYER == nil then CharInfo.isShownPLAYER = false end
+		-- if CharInfo.Chromie_name == nil then CharInfo.Chromie_name = 0 end = CharInfo.Chromie_name or nil
+		if CharInfo.RIO_Score == nil then CharInfo.RIO_Score = 0 end
+		if CharInfo.RIO_weeklyBest == nil then CharInfo.RIO_weeklyBest = 0 end
 		----------------------------------------------------------------
 		if CharInfo.MASLENGO == nil then CharInfo.MASLENGO = {} end
 		if CharInfo.MASLENGO.reputationFULL == nil then CharInfo.MASLENGO.reputationFULL = {} end

@@ -551,7 +551,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	{
-	header = E.func_texturefromIcon("Interface\\AddOns\\OctoToDo\\Media\\IconTexture\\OCTOREP")..OTHER,
+		header = E.func_texturefromIcon("Interface\\AddOns\\OctoToDo\\Media\\IconTexture\\OCTOREP")..OTHER,
 		{icon = 135026, exp = OTHER, id = 1168, name = "Гильдия", side = "-", category = "Гильдия", }, --[faction=1168]
 	},
 	----------------------------------------------------------------
