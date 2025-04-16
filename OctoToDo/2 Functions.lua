@@ -2800,14 +2800,16 @@ function E.sorted()
 	-- return sorted
 	local list = sorted
 	sort(list, function(a, b)
+		if a and b then
 			local infoA = OctoToDo_DB_Levels[a.GUID]
 			local infoB = OctoToDo_DB_Levels[b.GUID]
-			if infoA and infoB then
-				return
-				infoA.curServer > infoB.curServer or
-				infoA.curServer == infoB.curServer and infoA.UnitLevel > infoB.UnitLevel or
-				infoA.UnitLevel == infoB.UnitLevel and infoA.avgItemLevel > infoB.avgItemLevel or
-				infoA.avgItemLevel == infoB.avgItemLevel and infoB.Name > infoA.Name
+				if infoA and infoB then
+					return
+					infoA.curServer > infoB.curServer or
+					infoA.curServer == infoB.curServer and infoA.UnitLevel > infoB.UnitLevel or
+					infoA.UnitLevel == infoB.UnitLevel and infoA.avgItemLevel > infoB.avgItemLevel or
+					infoA.avgItemLevel == infoB.avgItemLevel and infoB.Name > infoA.Name
+				end
 			end
 		end
 	)
