@@ -45,7 +45,6 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight)
 		frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		E:func_SetBackdrop(frame.full, nil, 0, 0)
-		-- frame.full:SetFrameStrata("BACKGROUND")
 		frame.full.texture = frame.full:CreateTexture(nil, "BACKGROUND", nil, 3)
 		frame.full.texture:SetAllPoints()
 		frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
@@ -102,6 +101,7 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	end
 	if not data.zxc then return end
 	for i = 1, #data.zxc.vivod do
+		-- print ("|cffFF0000"..#data.zxc.vivod.."|r")
 		if data.reputationID and data.zxc.vivod[i] ~= "" then
 			local text = data.zxc.vivod[i]
 			local FIRST = data.zxc.FIRST[i]
@@ -194,6 +194,9 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	local numlines = 0
 	local DataProvider = CreateTreeDataProvider()
 
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
 
 	for _, tbl in ipairs(E.OctoTable_Reputations) do
 		numlines = numlines + 1
