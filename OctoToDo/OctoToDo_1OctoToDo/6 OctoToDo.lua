@@ -69,12 +69,11 @@ end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
-		frame.full = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		frame.full = CreateFrame("FRAME", nil, frame)
 		frame.full:SetPropagateMouseClicks(true)
 		frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight)
 		frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 		frame.full:SetPoint("RIGHT")
-		E:func_SetBackdrop(frame.full, nil, 0, 0)
 		-- frame.full:SetFrameLevel(frame:GetFrameLevel()-1)
 		-- frame.full:SetFrameStrata("BACKGROUND")
 		frame.full.texture = frame.full:CreateTexture(nil, "BACKGROUND")
@@ -85,20 +84,17 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.full:SetScript("OnLeave", function(self) self.texture:SetVertexColor(1, 1, 1, 0) end)
 		frame.full:SetPropagateMouseClicks(true)
 		frame.full:SetPropagateMouseMotion(true)
-		-- frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
-		-- frame.first:SetPropagateMouseClicks(false)
-		-- frame.first:SetSize(AddonHeight, AddonHeight)
-		-- frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.icon = frame:CreateTexture(nil, "BACKGROUND", nil, -2)
+		------------------------------------------------
+		frame.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.icon:SetPoint("TOPLEFT", 1, -1)
 		frame.icon:SetSize(AddonHeight-2, AddonHeight-2)
 		frame.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		------------------------------------------------
-		frame.left = CreateFrame("FRAME", "frame.left", frame, "BackdropTemplate")
+		frame.left = CreateFrame("FRAME", "frame.left", frame)
 		frame.left:SetPropagateMouseClicks(true)
 		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		-- frame.left:SetFrameLevel(frame:GetFrameLevel()-1) -- ПОФИКСИТЬ -- https://warcraft.wiki.gg/wiki/API_Frame_CreateTexture --https://warcraft.wiki.gg/wiki/API_Frame_CreateMaskTexture
+		frame.left:SetFrameLevel(frame:GetFrameLevel()-1)
 		frame.left.text = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame.left.text:SetPoint("LEFT", AddonHeight+1, 0)
 		frame.left.text:SetPoint("RIGHT", 0, 0)
@@ -108,9 +104,18 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.left.text:SetJustifyH("LEFT")
 		frame.left.text:SetTextColor(1, 1, 1, 1)
 		------------------------------------------------
-		frame.cent  = setmetatable({}, {
+		frame.left.texture = frame.left:CreateTexture(nil, "BACKGROUND")
+		frame.left.texture:SetAllPoints()
+		frame.left.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+
+
+
+
+
+		------------------------------------------------
+		frame.cent = setmetatable({}, {
 				__index = function(self, key)
-					local f = CreateFrame("FRAME", "frame"..key, frame, "BackdropTemplate")
+					local f = CreateFrame("FRAME", "frame"..key, frame)
 					f:SetPropagateMouseClicks(true)
 					f:SetSize(AddonCentralFrameWeight, AddonHeight)
 					f:SetPoint("TOPLEFT", frame.left, "TOPLEFT", (AddonLeftFrameWeight-AddonCentralFrameWeight)+(AddonCentralFrameWeight*key), 0)
@@ -120,6 +125,10 @@ local function func_OnAcquired(owner, frame, data, new)
 					f.text:SetJustifyV("MIDDLE")
 					f.text:SetJustifyH("CENTER")
 					f.text:SetTextColor(1, 1, 1, 1)
+
+					f.texture = f:CreateTexture(nil, "BACKGROUND")
+					f.texture:SetAllPoints()
+					-- f.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
 					f:SetScript("OnEnter",     function()
 							E.func_TooltipOnEnter(f, true, true)
 					end)
@@ -141,30 +150,48 @@ local function OctoToDo_Frame_init(frame, data)
 		frame.icon:SetTexture(E.Icon_Empty)
 	end
 	frame.left.text:SetText(data.left)
-	-- if data.index % 2 == 0 then
-	--     E:func_SetBackdrop(frame.left, nil, 0, 0)
-	-- else
-	--     E:func_SetBackdrop(frame.left, "|cff000000", E.bgCaOverlay, 0)
-	-- end
-	E:func_SetBackdrop(frame.left, data.BGcolor, E.bgCaOverlay, 0)
+	-- цвета
+	-- E:func_SetBackdrop(frame.left, data.BGcolor, E.bgCaOverlay, 0)
+	if data.BGcolor then
+		local r, g, b = E.func_hex2rgbNUMBER(data.BGcolor)
+		frame.left.texture:SetVertexColor(r, g, b, E.bgCaOverlay)
+		frame.left.texture:Show()
+	else
+		frame.left.texture:Hide()
+	end
+
+
 	for NumPlayers = 1, #data do
 		frame.cent[NumPlayers].text:SetText(data[NumPlayers][1])
 		frame.cent[NumPlayers].tooltip = data[NumPlayers][2]
 		frame.cent[NumPlayers]:Show()
-		if data[NumPlayers].currentChar then
-			E:func_SetBackdrop(frame.cent[NumPlayers], E.classColorHexCurrent, E.bgCaOverlay, 0)
-		else
-			-- if data.index % 2 == 0 then
-			--     E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
-			-- else
-			--     E:func_SetBackdrop(frame.cent[NumPlayers], "|cff000000", E.bgCaOverlay, 0)
-			-- end
-		end
+
+
+
 		if data[NumPlayers][3] then
-			E:func_SetBackdrop(frame.cent[NumPlayers], data[NumPlayers][3], E.bgCaOverlay, 0)
+			local r, g, b = E.func_hex2rgbNUMBER(data[NumPlayers][3])
+			frame.cent[NumPlayers].texture:SetColorTexture(r, g, b, .3)
+			frame.cent[NumPlayers].texture:Show()
+
+
+		elseif data[NumPlayers].currentChar then
+			local r, g, b = E.func_hex2rgbNUMBER(E.classColorHexCurrent)
+			frame.cent[NumPlayers].texture:SetColorTexture(r, g, b, E.bgCaOverlay)
+			frame.cent[NumPlayers].texture:Show()
+
+
+
+
 		else
-			E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
+			frame.cent[NumPlayers].texture:Hide()
 		end
+
+
+
+
+
+
+
 	end
 end
 
@@ -264,15 +291,19 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	OctoToDo_MainFrame_OCTOMAIN:SetBackdropBorderColor(0, 0, 0, 1)
 	OctoToDo_MainFrame_OCTOMAIN:EnableMouse(true)
 	OctoToDo_MainFrame_OCTOMAIN:SetMovable(true)
-	OctoToDo_MainFrame_OCTOMAIN:RegisterForDrag("LeftButton")
+	-- OctoToDo_MainFrame_OCTOMAIN:RegisterForDrag("LeftButton")
 
-	OctoToDo_MainFrame_OCTOMAIN:SetScript("OnMouseDown", function()
+	OctoToDo_MainFrame_OCTOMAIN:SetScript("OnMouseDown", function(self, button)
+		if button == "LeftButton" then
 			OctoToDo_MainFrame_OCTOMAIN:SetAlpha(E.bgCa)
 			OctoToDo_MainFrame_OCTOMAIN:StartMoving()
+		end
 	end)
-	OctoToDo_MainFrame_OCTOMAIN:SetScript("OnMouseUp", function()
+	OctoToDo_MainFrame_OCTOMAIN:SetScript("OnMouseUp", function(self, button)
+		if button == "LeftButton" then
 			OctoToDo_MainFrame_OCTOMAIN:SetAlpha(1)
 			OctoToDo_MainFrame_OCTOMAIN:StopMovingOrSizing()
+		end
 	end)
 	-- OctoToDo_MainFrame_OCTOMAIN:SetScript("OnDragStart", function()
 	-- 		OctoToDo_MainFrame_OCTOMAIN:SetAlpha(E.bgCa)
@@ -308,7 +339,6 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 end
 
 function OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
-	print ("func_CreateMyDataProvider")
 	local NumPlayers = E.func_NumPlayers()
 	if NumPlayers > 8 then
 		NumPlayers = 8
@@ -906,7 +936,7 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	if realLevelTime ~= 0 then
 		E.func_CreateInfoFrame("realLevelTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realLevelTime).."|r", "TOPLEFT", OctoToDo_MainFrame_OCTOMAIN, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
 	end
-	E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN, "Core", AddonHeight, AddonHeight)
+	E:func_CreateUtilsButton(OctoToDo_MainFrame_OCTOMAIN, "Core", AddonHeight, 0)
 	E:func_CreateMinimapButton(GlobalAddonName, "Core", OctoToDo_DB_Vars, OctoToDo_MainFrame_OCTOMAIN, function()
 			OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 			RequestRaidInfo()

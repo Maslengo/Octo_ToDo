@@ -108,11 +108,12 @@ function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 			local SECOND = data.zxc.SECOND[i]
 			local color = data.zxc.color[i]
 			frame.second[i].textCENT:SetText(text)
-			frame.second[i].texture:SetVertexColor(select(1, E.func_hex2rgbNUMBER(color)), select(2, E.func_hex2rgbNUMBER(color)), select(3, E.func_hex2rgbNUMBER(color)), .3)
+			local r, g, b = E.func_hex2rgbNUMBER(color)
+			frame.second[i].texture:SetVertexColor(r, g, b, E.bgCaOverlay*3)
 			if FIRST == 0 then
 				frame.second[i].texture:SetWidth(.1)
 			elseif FIRST == SECOND then
-				frame.second[i].texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
+				frame.second[i].texture:SetWidth(AddonCentralFrameWeight)
 			elseif FIRST >= 1 then
 				frame.second[i].texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
 			end
