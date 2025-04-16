@@ -94,11 +94,13 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function OctoToDo_EventFrame_OCTOREP:OctoToDo_Frame_init(frame, node)
 	local data = node:GetData()
+
 	if data.repHeader then
 		frame.first.textLEFT:SetText(data.repHeader)
 	else
 		frame.first.textLEFT:SetText(E.func_reputationName(data.reputationID))
 	end
+	if not data.zxc then return end
 	for i = 1, #data.zxc.vivod do
 		if data.reputationID and data.zxc.vivod[i] ~= "" then
 			local text = data.zxc.vivod[i]
@@ -191,24 +193,24 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 	local numlines = 0
 	local DataProvider = CreateTreeDataProvider()
 
-	local zxc = {}
-	-- wipe(zxc)
-	zxc.FIRST = {}
-	zxc.SECOND = {}
-	zxc.vivod = {}
-	zxc.color = {}
-	zxc.standingTEXT = {}
 
-	zxc.currentChar = {}
 	for _, tbl in ipairs(E.OctoTable_Reputations) do
 		numlines = numlines + 1
 		local groupNodeFirst = DataProvider:Insert({
 				repHeader = tbl.header,
-				zxc = zxc,
 		})
 		for _, v in ipairs(tbl) do
 			if OctoToDo_DB_Config.ReputationDB[v.id] == true then
-			numlines = numlines + 1
+				numlines = numlines + 1
+				local zxc = {}
+				zxc.FIRST = {}
+				zxc.SECOND = {}
+				zxc.vivod = {}
+				zxc.color = {}
+				zxc.standingTEXT = {}
+
+				zxc.currentChar = {}
+
 				for CharIndex, CharInfo in ipairs(E.sorted()) do
 					zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].FIRST or ""
 					zxc.SECOND[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].SECOND or ""
@@ -217,9 +219,6 @@ function OctoToDo_EventFrame_OCTOREP:func_CreateMyDataProvider()
 					zxc.standingTEXT[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].standingTEXT or ""
 
 					zxc.currentChar[CharIndex] = CharInfo.GUID == E.curGUID
-					-- if zxc.vivod[CharIndex] ~= "" then
-					-- 	print (zxc.vivod[CharIndex])
-					-- end
 				end
 				local groupNodeSecondary = groupNodeFirst:Insert({
 						reputationID = v.id,

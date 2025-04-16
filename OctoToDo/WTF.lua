@@ -30,7 +30,6 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Levels()
 		CharInfo.BattleTag = CharInfo.BattleTag or E.BattleTag
 		CharInfo.BattleTagLocal = CharInfo.BattleTagLocal or E.BattleTagLocal
 		CharInfo.IsPublicBuild = CharInfo.IsPublicBuild or E.IsPublicBuild
-		CharInfo.Chromie_canEnter = CharInfo.Chromie_canEnter or false
 		CharInfo.Chromie_UnitChromieTimeID = CharInfo.Chromie_UnitChromieTimeID or 0
 		CharInfo.GameLimitedMode_IsActive = CharInfo.GameLimitedMode_IsActive or E.GameLimitedMode_IsActive
 		CharInfo.buildVersion = CharInfo.buildVersion or E.buildVersion
@@ -64,6 +63,9 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Levels()
 		CharInfo.loginDate = CharInfo.loginDate or date("%d.%m.%Y %H:%M:%S")
 		CharInfo.loginDay = CharInfo.loginDay or date("%d.%m.%Y")
 		CharInfo.loginHour = CharInfo.loginHour or date("%H:%M")
+
+
+		if CharInfo.Chromie_canEnter == nil then CharInfo.Chromie_canEnter = false end
 		if CharInfo.time == nil then CharInfo.time = time() end
 		if CharInfo.UnitLevel == nil then CharInfo.UnitLevel = 1 end
 		if CharInfo.Money == nil then CharInfo.Money = 0 end

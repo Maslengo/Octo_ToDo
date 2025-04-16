@@ -70,20 +70,32 @@ end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
-		-- frame.full = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
-		-- frame.full:SetPropagateMouseClicks(true)
-		-- frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight)
-		-- frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		-- E:func_SetBackdrop(frame.full, nil, 0, 0)
+		frame.full = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		frame.full:SetPropagateMouseClicks(true)
+		frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight)
+		frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		E:func_SetBackdrop(frame.full, nil, 0, 0)
+		-- frame.full:SetFrameLevel(frame:GetFrameLevel()-1)
 		-- frame.full:SetFrameStrata("BACKGROUND")
-		frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
-		frame.first:SetPropagateMouseClicks(false)
-		frame.first:SetSize(AddonHeight, AddonHeight)
-		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND", nil, -2)
-		frame.first.icon:SetAllPoints(frame.first)
-		frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		-- frame.first:SetFrameLevel(frame:GetFrameLevel()+1) -- ПОФИКСИТЬ -- https://warcraft.wiki.gg/wiki/API_Frame_CreateTexture --https://warcraft.wiki.gg/wiki/API_Frame_CreateMaskTexture
+		frame.full.texture = frame.full:CreateTexture(nil, "BACKGROUND")
+		frame.full.texture:SetAllPoints()
+		frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+		frame.full.texture:SetVertexColor(1, 1, 1, 0)
+		frame.full:SetScript("OnEnter", function(self) self.texture:SetVertexColor(1, 1, 1, .1) end)
+		frame.full:SetScript("OnLeave", function(self) self.texture:SetVertexColor(1, 1, 1, 0) end)
+		frame.full:SetPropagateMouseClicks(true)
+		frame.full:SetPropagateMouseMotion(true)
+
+
+
+		-- frame.first = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		-- frame.first:SetPropagateMouseClicks(false)
+		-- frame.first:SetSize(AddonHeight, AddonHeight)
+		-- frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.icon = frame:CreateTexture(nil, "BACKGROUND", nil, -2)
+		frame.icon:SetPoint("TOPLEFT", 1, -1)
+		frame.icon:SetSize(AddonHeight-2, AddonHeight-2)
+		frame.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		------------------------------------------------
 		frame.left = CreateFrame("FRAME", "frame.left", frame, "BackdropTemplate")
 		frame.left:SetPropagateMouseClicks(true)
@@ -127,9 +139,9 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 local function OctoToDo_Frame_init(frame, data)
 	if data.firsticonTexture then
-		frame.first.icon:SetTexture(data.firsticonTexture)
+		frame.icon:SetTexture(data.firsticonTexture)
 	else
-		frame.first.icon:SetTexture(E.Icon_Empty)
+		frame.icon:SetTexture(E.Icon_Empty)
 	end
 	frame.left.text:SetText(data.left)
 	if data.index % 2 == 0 then
@@ -145,14 +157,16 @@ local function OctoToDo_Frame_init(frame, data)
 		if data[NumPlayers].currentChar then
 			E:func_SetBackdrop(frame.cent[NumPlayers], E.classColorHexCurrent, E.bgCaOverlay, 0)
 		else
-			if data.index % 2 == 0 then
-				E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
-			else
-				E:func_SetBackdrop(frame.cent[NumPlayers], "|cff000000", E.bgCaOverlay, 0)
-			end
+			-- if data.index % 2 == 0 then
+			-- 	E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
+			-- else
+			-- 	E:func_SetBackdrop(frame.cent[NumPlayers], "|cff000000", E.bgCaOverlay, 0)
+			-- end
 		end
 		if data[NumPlayers][3] then
 			E:func_SetBackdrop(frame.cent[NumPlayers], data[NumPlayers][3], E.bgCaOverlay, 0)
+		else
+			E:func_SetBackdrop(frame.cent[NumPlayers], nil, 0, 0)
 		end
 	end
 end

@@ -119,60 +119,65 @@ function E.func_reputationName(reputationID)
 	if reputationID then
 		for _, tbl in ipairs(E.OctoTable_Reputations) do
 			for _, v in ipairs(tbl) do
-				local vivod = ""
-				local icon = v.icon
-				local side = v.side or "-"
-				local color = E.White_Color
-				local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-				if repInfo then
-					vivod = vivod.. repInfo.name
-				else
-					local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
-					if reputationInfo.name then
-						vivod = vivod.. reputationInfo.name
-					elseif v.name then
-						vivod = vivod.. v.name
+				if reputationID == v.id then
+
+
+
+					local vivod = ""
+					local icon = v.icon
+					local side = v.side or "-"
+					local color = E.White_Color
+					local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+					if repInfo then
+						vivod = vivod.. repInfo.name
 					else
-						vivod = vivod.. reputationID.. " (UNKNOWN)"
+						local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
+						if reputationInfo.name then
+							vivod = vivod.. reputationInfo.name
+						elseif v.name then
+							vivod = vivod.. v.name
+						else
+							vivod = vivod.. reputationID.. " (UNKNOWN)"
+						end
 					end
-				end
-				if E.DebugIDs == true and vivod ~= nil then
-					vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
-				end
-				local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
-				local isFriend = friendData and true or false
-				if isFriend then
-					if (friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0) then
-						local texture = friendData.texture or error
-						vivod = E.func_texturefromIcon(texture) .. vivod
+					if E.DebugIDs == true and vivod ~= nil then
+						vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
 					end
+					local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
+					local isFriend = friendData and true or false
+					if isFriend then
+						if (friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0) then
+							local texture = friendData.texture or error
+							vivod = E.func_texturefromIcon(texture) .. vivod
+						end
+					end
+					-- local isMajor = C_Reputation.IsMajorFaction(reputationID) and true or false
+					-- if isMajor then
+					--     local majorData = C_MajorFactions.GetMajorFactionData(reputationID) or 0
+					--     if majorData ~= 0 then
+					--         local textureKit = majorData.textureKit or 0
+					--         if textureKit ~= 0 then
+					--             local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s", textureKit))
+					--             -- local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s_256", textureKit))
+					--             print (KitIcon, textureKit)
+					--             vivod = "|cffFF00FF"..textureKit.."|r" .. KitIcon.. vivod
+					--         end
+					--     end
+					-- end
+					if side == "Alliance" then
+						vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
+					elseif side == "Horde" then
+						vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
+					end
+					if icon ~= E.Icon_QuestionMark then
+						vivod = E.func_texturefromIcon(v.icon)..vivod
+					end
+					local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+					if isAccountWide == true then
+						vivod = E.Icon_AccountWide..vivod
+					end
+					return vivod
 				end
-				-- local isMajor = C_Reputation.IsMajorFaction(reputationID) and true or false
-				-- if isMajor then
-				--     local majorData = C_MajorFactions.GetMajorFactionData(reputationID) or 0
-				--     if majorData ~= 0 then
-				--         local textureKit = majorData.textureKit or 0
-				--         if textureKit ~= 0 then
-				--             local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s", textureKit))
-				--             -- local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s_256", textureKit))
-				--             print (KitIcon, textureKit)
-				--             vivod = "|cffFF00FF"..textureKit.."|r" .. KitIcon.. vivod
-				--         end
-				--     end
-				-- end
-				if side == "Alliance" then
-					vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
-				elseif side == "Horde" then
-					vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
-				end
-				if icon ~= E.Icon_QuestionMark then
-					vivod = E.func_texturefromIcon(v.icon)..vivod
-				end
-				local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-				if isAccountWide == true then
-					vivod = E.Icon_AccountWide..vivod
-				end
-				return vivod
 			end
 		end
 	else
@@ -2792,21 +2797,21 @@ function E.sorted()
 			end
 		end
 	end
-	return sorted
-	-- local list = sorted
-	-- sort(list, function(a, b)
-	-- 		local infoA = OctoToDo_DB_Levels[a]
-	-- 		local infoB = OctoToDo_DB_Levels[b]
-	-- 		if infoA and infoB then
-	-- 			return
-	-- 			infoA.curServer > infoB.curServer or
-	-- 			infoA.curServer == infoB.curServer and infoA.UnitLevel > infoB.UnitLevel or
-	-- 			infoA.UnitLevel == infoB.UnitLevel and infoA.avgItemLevel > infoB.avgItemLevel or
-	-- 			infoA.avgItemLevel == infoB.avgItemLevel and infoB.Name > infoA.Name
-	-- 		end
-	-- 	end
-	-- )
-	-- return list
+	-- return sorted
+	local list = sorted
+	sort(list, function(a, b)
+			local infoA = OctoToDo_DB_Levels[a.GUID]
+			local infoB = OctoToDo_DB_Levels[b.GUID]
+			if infoA and infoB then
+				return
+				infoA.curServer > infoB.curServer or
+				infoA.curServer == infoB.curServer and infoA.UnitLevel > infoB.UnitLevel or
+				infoA.UnitLevel == infoB.UnitLevel and infoA.avgItemLevel > infoB.avgItemLevel or
+				infoA.avgItemLevel == infoB.avgItemLevel and infoB.Name > infoA.Name
+			end
+		end
+	)
+	return list
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
