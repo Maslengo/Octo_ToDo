@@ -470,25 +470,20 @@ function E.CreateMyDataProvider()
 	-- local childrenNodes = DataProvider:GetChildrenNodes()
 	if OctoToDo_AddonsManager.config.defaultAddonList == false then
 		for index = 1, E.func_GetNumAddOns() do
-			if OctoToDo_AddonsManager.config.showOnlyLoaded then -- ПОФИКСИТЬ
-				if E.func_IsAddOnLoaded(index) then
-					if not OctoToDo_AddonsTable.parentByIndex[index] or OctoToDo_AddonsTable.recycleByIndex[index] then
-						local groupNode = DataProvider:Insert({index = index})
-						-- childrenNodes[#childrenNodes]:SetCollapsed(true) -- БРАТЬ ПОСЛЕДНЮЮ НОДУ И КОЛЛАПСИТЬ (ВЕСЬ СПИСОК ПРИ ЗАГРУЗКЕ)
-						if OctoToDo_AddonsTable.depsByIndex[index] then
-							E.AddDeps_RECURSION(index, groupNode)
-						end
-					end
-				end
-			else
-				if not OctoToDo_AddonsTable.parentByIndex[index] or OctoToDo_AddonsTable.recycleByIndex[index] then
-					local groupNode = DataProvider:Insert({index = index})
-					-- childrenNodes[#childrenNodes]:SetCollapsed(true) -- БРАТЬ ПОСЛЕДНЮЮ НОДУ И КОЛЛАПСИТЬ (ВЕСЬ СПИСОК ПРИ ЗАГРУЗКЕ)
-					if OctoToDo_AddonsTable.depsByIndex[index] then
-						E.AddDeps_RECURSION(index, groupNode)
-					end
+
+
+
+
+
+			if not OctoToDo_AddonsManager.config.showOnlyLoaded or E.func_IsAddOnLoaded(index) and (not OctoToDo_AddonsTable.parentByIndex[index] or OctoToDo_AddonsTable.recycleByIndex[index]) then
+				local groupNode = DataProvider:Insert({index = index})
+				if OctoToDo_AddonsTable.depsByIndex[index] then
+					E.AddDeps_RECURSION(index, groupNode)
 				end
 			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
 		end
 	else
 		-- local sorted = {}
@@ -722,6 +717,14 @@ function OctoToDo_EventFrame_AddonsManager:CollectAllAddonsSFMICT()
 			end
 		end
 	else
+
+
+
+
+
+
+
+
 		OctoSimpleList = {}
 		-- СОХРАНИТЬ НАЗВАНИЯ
 		for index = 1, E.func_GetNumAddOns() do
@@ -813,3 +816,131 @@ function OctoToDo_EventFrame_AddonsManager:PLAYER_REGEN_DISABLED()
 	end
 end
 -- self.SearchBox:HookScript("OnTextChanged", AddonList_Update)
+
+
+
+
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
+
+-- OctoToDo_AddonsTable.indexByName = {}
+-- OctoToDo_AddonsTable.depsByIndex = {}
+-- OctoToDo_AddonsTable.parentByIndex = {}
+-- OctoToDo_AddonsTable.recycleByIndex = {}
+
+-- local function checkCirc(i)
+-- 	if context[i] then
+-- 		circular[i] = true
+-- 		return
+-- 	end
+-- 	context[i] = true
+-- 	local deps = {C_AddOns.GetAddOnDependencies(i)}
+-- 	for i = 1, #deps do
+-- 		local di = OctoToDo_AddonsTable.indexByName[deps[i]]
+-- 		if di and checkCirc(di) then return end
+-- 	end
+-- 	context[i] = nil
+-- end
+
+-- for i = 1, C_AddOns.GetNumAddOns() do
+-- 	checkCirc(i)
+-- end
+
+
+-- local function checkDeps(dIndex, pIndex, list)
+-- 	if circular[pIndex] then return false end
+-- 	for i = 1, #list do
+-- 		local index = OctoToDo_AddonsTable.indexByName[list[i]]
+-- 		if index then
+-- 			local deps = {C_AddOns.GetAddOnDependencies(list[i])}
+-- 			for j = 1, #deps do
+-- 				local depIndex = OctoToDo_AddonsTable.indexByName[deps[j]]
+-- 				if depIndex then
+-- 					if dIndex == depIndex or not checkDeps(dIndex, index, deps) then
+-- 						return false
+-- 					end
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- 	return true
+-- end
+
+-- for i = 1, C_AddOns.GetNumAddOns() do
+-- 	local deps = {C_AddOns.GetAddOnDependencies(i)}
+-- 	for j = 1, #deps do
+-- 		local depIndex = OctoToDo_AddonsTable.indexByName[deps[j]]
+-- 		if depIndex then
+-- 			if checkDeps(depIndex, i, deps) then
+-- 				OctoToDo_AddonsTable.parentByIndex[i] = true
+-- 				OctoToDo_AddonsTable.depsByIndex[depIndex] = OctoToDo_AddonsTable.depsByIndex[depIndex] or {}
+-- 				tinsert(OctoToDo_AddonsTable.depsByIndex[depIndex], i)
+-- 			end
+-- 			p = false
+-- 		end
+-- 	end
+-- end
+
+
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
+
+
+
+
+
+-- do
+-- 	local function addChilds(childByPIndex, pNode, pIndex)
+-- 		for i = 1, #childByPIndex[pIndex] do
+-- 			local index = childByPIndex[pIndex][i]
+-- 			local node = pNode:Insert({index = index, isParent = childByPIndex[index] and true})
+-- 			if childByPIndex[index] then
+-- 				addChilds(childByPIndex, node, index)
+-- 			end
+-- 		end
+-- 	end
+
+
+-- 	function listFrame:dataUpdate()
+-- 		self.dataProvider = CreateTreeDataProvider()
+
+-- 		for i = 1, C_AddOns.GetNumAddOns() do
+-- 			if not self.hasParentByIndex[i] and true then
+-- 				local node = self.dataProvider:Insert({index = i, isParent = self.childByPIndex[i] and true})
+-- 				if self.childByPIndex[i] then
+-- 					addChilds(self.childByPIndex, node, i)
+-- 				end
+-- 			end
+-- 		end
+
+-- 		self:listUpdate()
+-- 	end
+-- end
+
+
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+

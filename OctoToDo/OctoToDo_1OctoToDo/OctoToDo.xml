@@ -13,6 +13,7 @@
 	<Script file="Tables\OctoTable_MinecraftColors.lua"/>
 	<Script file="Tables\OctoTable_QuestID.lua"/>
 	<Script file="Tables\OctoTable_Reputations.lua"/>
+	<Script file="Tables\OctoTable_ReputationsDB.lua"/>
 	<Script file="Tables\OctoTable_UniversalQuest.lua"/>
 	<Script file="Tables\OctoTable_Prefixes.lua"/>
 	<Script file="Tables\OctoTable_Gossip.lua"/>

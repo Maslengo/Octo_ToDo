@@ -115,76 +115,76 @@ function E.func_questName(questID, useLargeIcon)
 	end
 	return vivod
 end
+
+
 function E.func_reputationName(reputationID)
 	if reputationID then
-		for _, tbl in ipairs(E.OctoTable_Reputations) do
-			for _, v in ipairs(tbl) do
-				if reputationID == v.id then
-
-
-
-					local vivod = ""
-					local icon = v.icon
-					local side = v.side or "-"
-					local color = E.White_Color
-					local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-					if repInfo then
-						vivod = vivod.. repInfo.name
-					else
-						local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
-						if reputationInfo.name then
-							vivod = vivod.. reputationInfo.name
-						elseif v.name then
-							vivod = vivod.. v.name
-						else
-							vivod = vivod.. reputationID.. " (UNKNOWN)"
-						end
-					end
-					if E.DebugIDs == true and vivod ~= nil then
-						vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
-					end
-					local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
-					local isFriend = friendData and true or false
-					if isFriend then
-						if (friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0) then
-							local texture = friendData.texture or error
-							vivod = E.func_texturefromIcon(texture) .. vivod
-						end
-					end
-					-- local isMajor = C_Reputation.IsMajorFaction(reputationID) and true or false
-					-- if isMajor then
-					--     local majorData = C_MajorFactions.GetMajorFactionData(reputationID) or 0
-					--     if majorData ~= 0 then
-					--         local textureKit = majorData.textureKit or 0
-					--         if textureKit ~= 0 then
-					--             local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s", textureKit))
-					--             -- local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s_256", textureKit))
-					--             print (KitIcon, textureKit)
-					--             vivod = "|cffFF00FF"..textureKit.."|r" .. KitIcon.. vivod
-					--         end
-					--     end
-					-- end
-					if side == "Alliance" then
-						vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
-					elseif side == "Horde" then
-						vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
-					end
-					if icon ~= E.Icon_QuestionMark then
-						vivod = E.func_texturefromIcon(v.icon)..vivod
-					end
-					local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-					if isAccountWide == true then
-						vivod = E.Icon_AccountWide..vivod
-					end
-					return vivod
-				end
+		local vivod = ""
+		-- local icon = E.OctoTable_ReputationsDB[reputationID].icon
+		local side = E.OctoTable_ReputationsDB[reputationID].side or "-"
+		local name = E.OctoTable_ReputationsDB[reputationID].name
+		local color = E.White_Color
+		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+		if repInfo then
+			vivod = vivod.. repInfo.name
+		else
+			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
+			if reputationInfo.name then
+				vivod = vivod.. reputationInfo.name
+			elseif name then
+				vivod = vivod.. name
+			else
+				vivod = vivod.. reputationID.. " (UNKNOWN)"
 			end
 		end
+		if E.DebugIDs == true and vivod ~= nil then
+			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
+		end
+		----------------------------------------------------------------
+		-- local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
+		-- local isFriend = friendData and true or false
+		-- if isFriend then
+		-- 	if (friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0) then
+		-- 		local texture = friendData.texture or error
+		-- 		vivod = E.func_texturefromIcon(texture) .. vivod .. "|cffFFF00F ".. texture .. "|r"
+		-- 	end
+		-- end
+		----------------------------------------------------------------
+		-- local isMajor = C_Reputation.IsMajorFaction(reputationID) and true or false
+		-- if isMajor then
+		--     local majorData = C_MajorFactions.GetMajorFactionData(reputationID) or 0
+		--     if majorData ~= 0 then
+		--         local textureKit = majorData.textureKit or 0
+		--         if textureKit ~= 0 then
+		--             local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s", textureKit))
+		--             -- local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s_256", textureKit))
+		--             print (KitIcon, textureKit)
+		--             vivod = "|cffFF00FF"..textureKit.."|r" .. KitIcon.. vivod
+		--         end
+		--     end
+		-- end
+		----------------------------------------------------------------
+		if side == "Alliance" then
+			vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
+			vivod = E.Blue_Color..vivod.."|r"
+		elseif side == "Horde" then
+			vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
+			vivod = E.Red_Color..vivod.."|r"
+		end
+		----------------------------------------------------------------
+		-- if icon ~= E.Icon_QuestionMark then
+		-- 	vivod = E.func_texturefromIcon(icon)..vivod
+		-- end
+		----------------------------------------------------------------
+		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+		if isAccountWide == true then
+			vivod = E.Icon_AccountWide..vivod
+		end
+		return vivod
 	else
 		return "|cffFF0000no reputationID|r"
 	end
 end
-
 
 
 function E.func_reputationNameSIMPLE(reputationID)
@@ -2488,6 +2488,9 @@ function E.CategoriesForAddon(name)
 	end
 	return resultText
 end
+
+
+
 function E.rec_toggle(index, state)
 	if state then
 		E.func_DisableAddOn(index)
@@ -2496,18 +2499,24 @@ function E.rec_toggle(index, state)
 		E.func_EnableAddOn(index)
 		-- print ("|cff00ff00включен|r".. index)
 	end
-	if OctoToDo_AddonsTable.depsByIndex[index] and not IsModifierKeyDown() then
+	if OctoToDo_AddonsTable.depsByIndex[index] and not IsModifierKeyDown() and not OctoToDo_AddonsTable.recycleByIndex[index] then
 		for i, depIndex in ipairs(OctoToDo_AddonsTable.depsByIndex[index]) do
 			E.rec_toggle(depIndex, state)
 		end
 	end
 end
+
+
 -- Переключить аддон
 function E.func_ToggleAddon(index, state)
 	local addonName = C_AddOns.GetAddOnInfo(index)
 	local enabled = E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
 	E.rec_toggle(index, enabled)
 end
+
+
+
+
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
 function E.func_LockAddon(index)
 	local name = E.func_GetAddonName(index)

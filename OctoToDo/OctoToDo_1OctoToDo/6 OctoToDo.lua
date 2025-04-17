@@ -90,10 +90,11 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.icon:SetSize(AddonHeight-2, AddonHeight-2)
 		frame.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 
-		frame.left = CreateFrame("FRAME", nil, frame, "BackDropTemplate")
+		frame.left = CreateFrame("FRAME", nil, frame)
 		frame.left:SetPropagateMouseClicks(true)
 		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		-- frame.left:SetPoint("RIGHT")
 
 		frame.left.textLEFT = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame.left.textLEFT:SetPoint("LEFT", 2+AddonHeight, 0)
@@ -106,7 +107,7 @@ local function func_OnAcquired(owner, frame, data, new)
 
 		frame.second = setmetatable({}, {
 				__index = function(self, key)
-					local f = CreateFrame("BUTTON", "frame"..key, frame, "BackDropTemplate")
+					local f = CreateFrame("BUTTON", "frame"..key, frame)
 					f:SetPropagateMouseClicks(true)
 					f:SetSize(AddonCentralFrameWeight, AddonHeight)
 					f:SetPoint("TOPLEFT", frame, "TOPLEFT", (AddonLeftFrameWeight-AddonCentralFrameWeight)+AddonCentralFrameWeight*key, 0)
@@ -116,18 +117,19 @@ local function func_OnAcquired(owner, frame, data, new)
 					f.texture = f:CreateTexture(nil, "BACKGROUND", nil, 2)
 					f.texture:SetSize(AddonCentralFrameWeight, AddonHeight)
 					f.texture:SetPoint("LEFT", f, "LEFT")
-					f.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
+					f.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo.tga")
 
 					f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-					f.textCENT:SetPoint("CENTER", f, "CENTER", 0, 0)
+					f.textCENT:SetPoint("LEFT")
+					f.textCENT:SetPoint("RIGHT")
 					f.textCENT:SetFontObject(OctoFont11)
+					f.textCENT:SetWordWrap(false)
 					f.textCENT:SetJustifyV("MIDDLE")
 					f.textCENT:SetJustifyH("CENTER")
 					f.textCENT:SetTextColor(1, 1, 1, 1)
 					self[key] = f
 					return f
 		end})
-
 	end
 end
 ----------------------------------------------------------------
@@ -142,37 +144,58 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Frame_init(frame, node)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	frame.left.textLEFT:SetText(data.textLEFT)
-	if not data.zxc then return end
-	local icon = data.zxc.icon or E.Icon_Empty
-	frame.icon:SetTexture(icon)
-	for i = 1, #data.zxc.textCENT do
-		-- print ("|cffFF0000"..#data.zxc.textCENT.."|r")
-		if data.zxc.textCENT[i] ~= "" then
-			local textCENT = data.zxc.textCENT[i]
-			local FIRST = data.zxc.FIRST[i]
-			local SECOND = data.zxc.SECOND[i]
-			frame.second[i].textCENT:SetText(textCENT)
-			local color = data.zxc.color[i]
-			local r, g, b = E.func_hex2rgbNUMBER(color)
-			frame.second[i].texture:SetVertexColor(r, g, b, E.bgCaOverlay*3)
-			if FIRST == 0 then
-				frame.second[i].texture:SetWidth(.1)
-				frame.second[i].texture:Hide()
-			elseif FIRST == SECOND then
-				frame.second[i].texture:SetWidth(AddonCentralFrameWeight)
-				frame.second[i].texture:Show()
-			elseif FIRST >= 1 then
-				frame.second[i].texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
-				frame.second[i].texture:Show()
-			end
-		else
-			frame.second[i].textCENT:SetText("")
-			frame.second[i].texture:SetVertexColor(0, 0, 0, 0)
+	frame.icon:SetTexture(data.headerIcon)
+
+	if not data.zxc then
+
+		for i, v in ipairs(frame.second) do
+			-- frame.second[i].textCENT:SetText("")
+			frame.second[i]:Hide()
 		end
-		if data.zxc.currentChar[i] then
-			E:func_SetBackdrop(frame.second[i], E.classColorHexCurrent, E.bgCaOverlay, 0)
+
+	else
+
+		if data.headerIcon then
+			frame.icon:SetTexture(data.headerIcon)
+		elseif data.zxc.icon then
+			frame.icon:SetTexture(data.zxc.icon)
+		else
+			frame.icon:SetTexture(E.Icon_Empty)
+		end
+
+		for i = 1, #data.zxc.textCENT do
+			if data.zxc.textCENT[i] and data.zxc.textCENT[i] ~= "" then
+				local textCENT = data.zxc.textCENT[i]
+				local FIRST = data.zxc.FIRST[i]
+				local SECOND = data.zxc.SECOND[i]
+				frame.second[i].textCENT:SetText(textCENT)
+				local color = data.zxc.color[i]
+				local r, g, b = E.func_hex2rgbNUMBER(color)
+				frame.second[i].texture:SetVertexColor(r, g, b, E.bgCaOverlay*5)
+				if FIRST == 0 then
+					frame.second[i].texture:SetWidth(.1)
+					frame.second[i].texture:Hide()
+				elseif FIRST == SECOND then
+					frame.second[i].texture:SetWidth(AddonCentralFrameWeight)
+					frame.second[i].texture:Show()
+				elseif FIRST >= 1 then
+					frame.second[i].texture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
+					frame.second[i].texture:Show()
+				end
+			else
+				frame.second[i].textCENT:SetText("-")
+				frame.second[i].texture:SetVertexColor(0, 0, 0, 0)
+			end
+			-- if data.zxc.currentChar[i] then
+			--     E:func_SetBackdrop(frame.second[i], E.classColorHexCurrent, E.bgCaOverlay, 0)
+			-- end
+				frame.second[i]:Show()
 		end
 	end
+
+
+
+
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -224,8 +247,10 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	end, barPanelScroll)
 	OctoToDo_MainFrame_OCTOMAIN.child = CreateFrame("FRAME")
 	OctoToDo_MainFrame_OCTOMAIN.child:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
-	HorizontalScrollBar:SetScript("OnSizeChanged", function (self)
+
+	HorizontalScrollBar:SetScript("OnSizeChanged", function(self)
 			self:SetShown(not WithinRangeExclusive(self:GetVisibleExtentPercentage(), MathUtil.Epsilon, 1 - MathUtil.Epsilon))
+			print (not WithinRangeExclusive(self:GetVisibleExtentPercentage(), MathUtil.Epsilon, 1 - MathUtil.Epsilon))
 	end)
 	-- OctoToDo_MainFrame_OCTOMAIN.child.texture = OctoToDo_MainFrame_OCTOMAIN.child:CreateTexture(nil, "BACKGROUND")
 	-- OctoToDo_MainFrame_OCTOMAIN.child.texture:SetAllPoints()
@@ -245,7 +270,7 @@ function OctoToDo_EventFrame_OCTOMAIN:OctoToDo_Create_MainFrame_OCTOMAIN()
 	----------------------------------------------------------------
 	OctoToDo_MainFrame_OCTOMAIN.view = CreateScrollBoxListTreeListView(0)
 	OctoToDo_MainFrame_OCTOMAIN.view:SetElementExtent(AddonHeight)
-	OctoToDo_MainFrame_OCTOMAIN.view:SetElementInitializer("BackdropTemplate",
+	OctoToDo_MainFrame_OCTOMAIN.view:SetElementInitializer("Frame",
 		function(...)
 			self:OctoToDo_Frame_init(...)
 	end)
@@ -327,7 +352,8 @@ function OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 		for _, tbl in ipairs(E.OctoTable_Reputations) do
 			numlines = numlines + 1
 			local groupNodeFirst = DataProvider:Insert({
-					textLEFT = tbl.header,
+					textLEFT = tbl.header.name,
+					headerIcon = tbl.header.icon,
 			})
 			for _, v in ipairs(tbl) do
 				if OctoToDo_DB_Config.ReputationDB[v.id] == true then
@@ -338,7 +364,7 @@ function OctoToDo_EventFrame_OCTOMAIN:func_CreateMyDataProvider()
 					zxc.textCENT = {}
 					zxc.color = {}
 					zxc.standingTEXT = {}
-					zxc.icon = E.Icon_Empty
+					zxc.icon = E.OctoTable_ReputationsDB[v.id].icon or E.Icon_Empty
 					zxc.currentChar = {}
 					for CharIndex, CharInfo in ipairs(E.sorted()) do
 						zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].FIRST or 0
@@ -944,6 +970,9 @@ end
 function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
+
+	self:LIBSHARED()
+
 	C_WowTokenPublic.UpdateMarketPrice()
 	self:func_CreateMineFrame()
 	GameMenuFrame:SetScale(OctoToDo_DB_Vars.GameMenuFrameScale or 1)
@@ -1070,3 +1099,73 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_REGEN_DISABLED()
 		OctoToDo_MainFrame_OCTOMAIN:Hide()
 	end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+local parentFrame = UIParent
+
+
+
+
+
+function OctoToDo_EventFrame_OCTOMAIN:LIBSHARED()
+
+	local media = LibStub("LibSharedMedia-3.0")
+
+	local background = LibSFDropDown:CreateMediaBackgroundModernButton(parentFrame, 120) -- BACKGROUND
+	background:SetPoint("TOPLEFT", 20, -20)
+	background:ddSetSelectedValue(currentValue or media:GetDefault("background"))
+	background:ddSetOnSelectedFunc(function(value)
+			local texture = media:Fetch("background", value)
+			print(value, texture)
+			-- some code
+	end)
+
+	local border = LibSFDropDown:CreateMediaBorderModernButton(parentFrame, 120) -- BORDER
+	border:SetPoint("TOPLEFT", background, "BOTTOMLEFT", 0, -10)
+	border:ddSetSelectedValue(currentValue or media:GetDefault("border"))
+	border:ddSetOnSelectedFunc(function(value)
+			local texture = media:Fetch("border", value)
+			print(value, texture)
+			-- some code
+	end)
+
+	local statusbar = LibSFDropDown:CreateMediaStatusbarModernButton(parentFrame, 120) -- STATUSBAR
+	statusbar:SetPoint("TOPLEFT", border, "BOTTOMLEFT", 0, -10)
+	statusbar:ddSetSelectedValue(currentValue or media:GetDefault("statusbar"))
+	statusbar:ddSetOnSelectedFunc(function(value)
+			local texture = media:Fetch("statusbar", value)
+			print(value, texture)
+			-- some code
+	end)
+
+	local font = LibSFDropDown:CreateMediaFontModernButton(parentFrame, 120) -- FONT
+	font:SetPoint("TOPLEFT", statusbar, "BOTTOMLEFT", 0, -10)
+	font:ddSetSelectedValue(currentValue or media:GetDefault("font"))
+	font:ddSetOnSelectedFunc(function(value)
+			local selectedFont = media:Fetch("font", value)
+			print(value, selectedFont)
+			-- some code
+	end)
+
+	local sound = LibSFDropDown:CreateMediaSoundModernButton(parentFrame, 120) -- SOUND
+	sound:SetPoint("TOPLEFT", font, "BOTTOMLEFT", 0, -10)
+	sound:ddSetSelectedValue(currentValue or media:GetDefault("sound"))
+	sound:ddSetOnSelectedFunc(function(value)
+			local selectedSound = media:Fetch("sound", value)
+			print(value, selectedSound)
+			-- some code
+	end)
+
+
+end
+
