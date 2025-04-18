@@ -1,4 +1,3 @@
--- /fprint {OctoToDo_DB_Config, OctoToDo_DB_Other}
 local GlobalAddonName, E = ...
 local function func_Reverse_order(a, b)
 	return b < a

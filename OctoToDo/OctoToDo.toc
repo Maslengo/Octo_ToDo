@@ -1,10 +1,10 @@
 ## Interface: 110105, 110100
 ## Title: !|cffd177ffO|r|cffc27dfbc|r|cffb283f7t|r|cffa28af2o_|r|cff9390eeT|r|cff8397e9o|r|cff739de5D|r|cff63a4e0o|r
 ## Author: Octo
-## Version: v90.6(11.1.5)(17.04.2025)
+## Version: v90.7(11.1.5)(18.04.2025)
 ## IconTexture: Interface\AddOns\OctoToDo\Media\IconTexture\Core
 
-## SavedVariables: OctoToDo_DB_Levels OctoToDo_DB_Config OctoToDo_DB_Vars OctoToDo_DB_Other
+## SavedVariables: OctoToDo_DB_Levels OctoToDo_DB_Vars OctoToDo_DB_Other
 ## SavedVariables: OctoToDo_Achievements
 ## SavedVariables: OctoSimpleList OctoToDo_AddonsTable OctoToDo_AddonsManager
 ## SavedVariables: OctoToDo_OCTOREP
@@ -26,10 +26,7 @@ OctoToDo_3AddonsManager\AddonsManager.xml
 
 Options\0basicOptions.lua
 Options\1GeneralConfigPanel.lua
-Options\2Currencies.lua
-Options\3Reputations.lua
-Options\4Items.lua
-Options\5AddonsManager.lua
+Options\2AddonsManager.lua
 Options\99Developing.lua
 
 SharedMedia.lua

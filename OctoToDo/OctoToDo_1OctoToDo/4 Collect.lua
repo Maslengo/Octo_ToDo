@@ -328,70 +328,70 @@ function E.Collect_All_Currency()
 			elseif info and info.name then
 				local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
 				local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
-				if currencyID then
-					OctoToDo_DB_Config.CurrencyDB[currencyID] = OctoToDo_DB_Config.CurrencyDB[currencyID] or false
-				end
+				-- if currencyID then
+				-- 	OctoToDo_DB_Config.CurrencyDB[currencyID] = OctoToDo_DB_Config.CurrencyDB[currencyID] or false
+				-- end
 			end
 		end
-		for CurrencyID, v in next, (OctoToDo_DB_Config.CurrencyDB) do
-			local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID) or false
-			local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
-			if data then
-				local quantity = data.quantity
-				local maxQuantity = data.maxQuantity
-				local totalEarned = data.totalEarned
-				if isAccountWideCurrency == false then
-					if collect.MASLENGO and not InCombatLockdown() then
-						collect.MASLENGO.CurrencyID = collect.MASLENGO.CurrencyID or {}
-						collect.MASLENGO.CurrencyID_totalEarned = collect.MASLENGO.CurrencyID_totalEarned or {}
-						collect.MASLENGO.CurrencyID_Total = collect.MASLENGO.CurrencyID_Total or {}
-						if quantity ~= nil and quantity ~= 0 then
-							collect.MASLENGO.CurrencyID[CurrencyID] = quantity
-						end
-						if totalEarned ~= nil and totalEarned ~= 0 then
-							collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
-						end
-						if maxQuantity ~= nil and maxQuantity ~= 0 then
-							if quantity ~= maxQuantity then
-								collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
-							else
-								collect.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
-							end
-						else
-							if quantity ~= nil and quantity ~= 0 then
-								collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
-							end
-						end
-					end
-				else
-					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
-						CharInfo.MASLENGO = CharInfo.MASLENGO or {}
-						CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
-						CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
-						CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
-						if CharInfo and not InCombatLockdown() then
-							if quantity ~= nil and quantity ~= 0 then
-								CharInfo.MASLENGO.CurrencyID[CurrencyID] = quantity
-							end
-							if totalEarned ~= nil and totalEarned ~= 0 then
-								CharInfo.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
-							end
-							if maxQuantity ~= nil and maxQuantity ~= 0 then
-								if quantity ~= maxQuantity then
-									CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
-								else
-									CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
-								end
-							end
-						end
-					end
-				end
-			else
-				collect.MASLENGO.CurrencyID[CurrencyID] = nil
-				collect.MASLENGO.CurrencyID_Total[CurrencyID] = nil
-				collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
-			end
-		end
+		-- for CurrencyID, v in next, (OctoToDo_DB_Config.CurrencyDB) do
+		-- 	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID) or false
+		-- 	local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
+		-- 	if data then
+		-- 		local quantity = data.quantity
+		-- 		local maxQuantity = data.maxQuantity
+		-- 		local totalEarned = data.totalEarned
+		-- 		if isAccountWideCurrency == false then
+		-- 			if collect.MASLENGO and not InCombatLockdown() then
+		-- 				collect.MASLENGO.CurrencyID = collect.MASLENGO.CurrencyID or {}
+		-- 				collect.MASLENGO.CurrencyID_totalEarned = collect.MASLENGO.CurrencyID_totalEarned or {}
+		-- 				collect.MASLENGO.CurrencyID_Total = collect.MASLENGO.CurrencyID_Total or {}
+		-- 				if quantity ~= nil and quantity ~= 0 then
+		-- 					collect.MASLENGO.CurrencyID[CurrencyID] = quantity
+		-- 				end
+		-- 				if totalEarned ~= nil and totalEarned ~= 0 then
+		-- 					collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
+		-- 				end
+		-- 				if maxQuantity ~= nil and maxQuantity ~= 0 then
+		-- 					if quantity ~= maxQuantity then
+		-- 						collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+		-- 					else
+		-- 						collect.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+		-- 					end
+		-- 				else
+		-- 					if quantity ~= nil and quantity ~= 0 then
+		-- 						collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
+		-- 					end
+		-- 				end
+		-- 			end
+		-- 		else
+		-- 			for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+		-- 				CharInfo.MASLENGO = CharInfo.MASLENGO or {}
+		-- 				CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
+		-- 				CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
+		-- 				CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
+		-- 				if CharInfo and not InCombatLockdown() then
+		-- 					if quantity ~= nil and quantity ~= 0 then
+		-- 						CharInfo.MASLENGO.CurrencyID[CurrencyID] = quantity
+		-- 					end
+		-- 					if totalEarned ~= nil and totalEarned ~= 0 then
+		-- 						CharInfo.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
+		-- 					end
+		-- 					if maxQuantity ~= nil and maxQuantity ~= 0 then
+		-- 						if quantity ~= maxQuantity then
+		-- 							CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+		-- 						else
+		-- 							CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+		-- 						end
+		-- 					end
+		-- 				end
+		-- 			end
+		-- 		end
+		-- 	else
+		-- 		collect.MASLENGO.CurrencyID[CurrencyID] = nil
+		-- 		collect.MASLENGO.CurrencyID_Total[CurrencyID] = nil
+		-- 		collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
+		-- 	end
+		-- end
 	end
 end
 function E.Collect_All_Reputations()
@@ -489,7 +489,6 @@ function E.Collect_ALL_ItemsInBag()
 				end
 			end
 		end
-		OctoToDo_DB_Config = OctoToDo_DB_Config or {}
 		collect.MASLENGO = collect.MASLENGO or {}
 		collect.MASLENGO.ItemsInBag = collect.MASLENGO.ItemsInBag or {}
 		for _, itemID in next, (E.OctoTable_itemID_ALL) do

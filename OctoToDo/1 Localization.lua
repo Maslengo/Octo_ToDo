@@ -4,6 +4,8 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("OctoTODO", "enUS", true, debug)
 if L then
+	L["Only Horde"] = true
+	L["Only Alliance"] = true
 
 
 	L["AddonHeight"] = true
@@ -20,6 +22,7 @@ if L then
 	L["showIndex"] = true
 	L["defaultAddonList"] = true
 	L["showOnlyLoaded"] = true
+
 
 
 	L["minimaphide"] = true
@@ -212,6 +215,8 @@ if L then
 end
 L = AL3:NewLocale("OctoTODO", "ruRU")
 if L then
+	L["Only Horde"] = "Только Орда"
+	L["Only Alliance"] = "Только Альянс"
 
 	L["AddonHeight"] = "Высота строк"
 	L["AddonLeftFrameWeight"] = "Ширина левого"

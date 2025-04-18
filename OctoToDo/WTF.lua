@@ -166,22 +166,6 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Levels()
 end
 
 
-function OctoToDo_EventFrame_WTF:OctoToDo_DB_Config()
-	if OctoToDo_DB_Config == nil then OctoToDo_DB_Config = {} end
-	if OctoToDo_DB_Config.CurrencyDB == nil then OctoToDo_DB_Config.CurrencyDB = {} end
-	for currencyID, v in next, (E.OctoTable_Currencies) do
-		OctoToDo_DB_Config.CurrencyDB[currencyID] = OctoToDo_DB_Config.CurrencyDB[currencyID] or false
-	end
-	if OctoToDo_DB_Config.ReputationDB == nil then OctoToDo_DB_Config.ReputationDB = {} end
-
-	for index, tbl in ipairs(E.OctoTable_Reputations) do
-		for i, v in ipairs(tbl) do
-			OctoToDo_DB_Config.ReputationDB[v.id] = OctoToDo_DB_Config.ReputationDB[v.id] or false
-		end
-	end
-end
-
-
 function OctoToDo_EventFrame_WTF:OctoToDo_DB_Vars()
 	if OctoToDo_DB_Vars == nil then OctoToDo_DB_Vars = {} end
 	if OctoToDo_DB_Vars.DebugIDs == nil then OctoToDo_DB_Vars.DebugIDs = false end
@@ -195,9 +179,9 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Vars()
 	if OctoToDo_DB_Vars.DebugButton == nil then OctoToDo_DB_Vars.DebugButton = false end
 	E.DebugButton = OctoToDo_DB_Vars.DebugButton
 	if OctoToDo_DB_Vars.AddonHeight == nil then OctoToDo_DB_Vars.AddonHeight = 20 end
-	if OctoToDo_DB_Vars.AddonLeftFrameWeight == nil then OctoToDo_DB_Vars.AddonLeftFrameWeight = 200 end
-	if OctoToDo_DB_Vars.AddonCentralFrameWeight == nil then OctoToDo_DB_Vars.AddonCentralFrameWeight = 90 end
-	if OctoToDo_DB_Vars.MainFrameDefaultLines == nil then OctoToDo_DB_Vars.MainFrameDefaultLines = 30 end
+	if OctoToDo_DB_Vars.AddonLeftFrameWeight == nil then OctoToDo_DB_Vars.AddonLeftFrameWeight = 220 end
+	if OctoToDo_DB_Vars.AddonCentralFrameWeight == nil then OctoToDo_DB_Vars.AddonCentralFrameWeight = 110 end
+	if OctoToDo_DB_Vars.MainFrameDefaultLines == nil then OctoToDo_DB_Vars.MainFrameDefaultLines = 40 end
 	if OctoToDo_DB_Vars.SFDropDownWeight == nil then OctoToDo_DB_Vars.SFDropDownWeight = 100 end
 	if OctoToDo_DB_Vars.PortalsButtons == nil then OctoToDo_DB_Vars.PortalsButtons = true end
 	if OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable == nil then OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable = true end
@@ -231,7 +215,7 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Vars()
 	if OctoToDo_DB_Vars.EmeraldDream_Sparks == nil then OctoToDo_DB_Vars.EmeraldDream_Sparks = true end
 	if OctoToDo_DB_Vars.EmeraldDream_WB == nil then OctoToDo_DB_Vars.EmeraldDream_WB = true end
 	if OctoToDo_DB_Vars.Event == nil then OctoToDo_DB_Vars.Event = true end
-	if OctoToDo_DB_Vars.ExpansionToShow == nil then OctoToDo_DB_Vars.ExpansionToShow = {[1] = true} end
+	if OctoToDo_DB_Vars.ExpansionToShow == nil then OctoToDo_DB_Vars.ExpansionToShow = {[11] = true} end
 	if OctoToDo_DB_Vars.FrameScale == nil then OctoToDo_DB_Vars.FrameScale = 1 end
 	if OctoToDo_DB_Vars.GameMenuFrameScale == nil then OctoToDo_DB_Vars.GameMenuFrameScale = .8 end
 	if OctoToDo_DB_Vars.GildedHarbingerCrest == nil then OctoToDo_DB_Vars.GildedHarbingerCrest = true end
@@ -262,8 +246,8 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Vars()
 	if OctoToDo_DB_Vars.prefix == nil then OctoToDo_DB_Vars.prefix = 1 end
 	if OctoToDo_DB_Vars.Quests == nil then OctoToDo_DB_Vars.Quests = true end
 	if OctoToDo_DB_Vars.QuestsShowAllways == nil then OctoToDo_DB_Vars.QuestsShowAllways = false end
-	if OctoToDo_DB_Vars.Reputations == nil then OctoToDo_DB_Vars.Reputations = true end
-	if OctoToDo_DB_Vars.ReputationsShowAllways == nil then OctoToDo_DB_Vars.ReputationsShowAllways = false end
+	if OctoToDo_DB_Vars.Reputations == nil then OctoToDo_DB_Vars.Reputations = false end
+	if OctoToDo_DB_Vars.OnlyCurrentFaction == nil then OctoToDo_DB_Vars.OnlyCurrentFaction = true end
 	if OctoToDo_DB_Vars.ResetAllChars == nil then OctoToDo_DB_Vars.ResetAllChars = true end
 	if OctoToDo_DB_Vars.RunedHarbingerCrest == nil then OctoToDo_DB_Vars.RunedHarbingerCrest = true end
 	if OctoToDo_DB_Vars.ShowIDS == nil then OctoToDo_DB_Vars.ShowIDS = true end
@@ -478,7 +462,6 @@ function OctoToDo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self.ADDON_LOADED = nil
 		----------------------------------------------------------------
 		self:OctoToDo_DB_Levels()
-		self:OctoToDo_DB_Config()
 		self:OctoToDo_DB_Vars()
 		self:OctoToDo_DB_Other()
 		self:OctoToDo_Achievements()

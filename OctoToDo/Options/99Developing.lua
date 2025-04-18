@@ -34,12 +34,11 @@ function E.Developing()
 				type = "execute",
 				name = E.Debug_Color..DELETE.." "..ALL.."|r",
 				func = function()
-					OctoToDo_DB_Config = {}
 					OctoToDo_DB_Levels = {}
 					OctoToDo_DB_Vars = {}
 					OctoToDo_DB_Other = {}
-					OctoToDo_Achievements = {}
 					OctoSimpleList = {}
+					OctoToDo_Achievements = {}
 					OctoToDo_AddonsTable = {}
 					OctoToDo_AddonsManager = {}
 					OctoToDo_OCTOREP = {}
@@ -57,17 +56,6 @@ function E.Developing()
 			ReloadHeader3second = {
 				type = "header",
 				name = "",
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			OctoToDo_DB_Config = {
-				type = "execute",
-				name = "Config",
-				func = function()
-					OctoToDo_DB_Config  = {}
-					return
-				end,
-				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------

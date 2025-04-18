@@ -100,6 +100,7 @@ E.OctoTable_Reputations = {
 	-- { id = 1815, }, --name = "Выжившие из Гилнеаса", side = "-", category = "Legion", }, --[faction=1815]
 	-- { id = 1984, }, --name = "Спасатели", side = "-", category = "Legion", }, --[faction=1984]
 	-- { id = 1899, }, --name = "Лунные стражи", side = "-", category = "Legion", }, --[faction=1899]
+	-- { id = 2111, }, --name = "Зандаларские динозавры", side = "-", category = "Battle for Azeroth", }, --[faction=2111]
 	-- },
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -110,7 +111,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[11] = {
 		header = {icon = E.OctoTable_Expansions[11].icon, name = E.OctoTable_Expansions[11].color..E.OctoTable_Expansions[11].name.."|r",},
 
 		-- ["The War Within"] = {
@@ -141,27 +142,30 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[10] = {
 		header = {icon = E.OctoTable_Expansions[10].icon, name = E.OctoTable_Expansions[10].color..E.OctoTable_Expansions[10].name.."|r",},
 		-- ["Dragonflight"] = {
-		{ id = 2574, }, --name = "Стражи Сна", side = "-", category = "Dragonflight", }, --[faction=2574]
-		{ id = 2568, }, --name = "Гонщик Мерцающего Огга", side = "-", category = "Dragonflight", }, --[faction=2568]
-		{ id = 2564, }, --name = "Лоаммские ниффы", side = "-", category = "Dragonflight", }, --[faction=2564]
-		{ id = 2526, }, --name = "Фурболги из клана Зимней Шкуры", side = "-", category = "Dragonflight", }, --[faction=2526]
-		{ id = 2511, }, --name = "Искарские клыкарры", side = "-", category = "Dragonflight", }, --[faction=2511]
-		{ id = 2510, }, --name = "Союз Вальдраккена", side = "-", category = "Dragonflight", }, --[faction=2510]
 		{ id = 2507, }, --name = "Драконья экспедиция", side = "-", category = "Dragonflight", }, --[faction=2507]
+		{ id = 2574, }, --name = "Стражи Сна", side = "-", category = "Dragonflight", }, --[faction=2574]
+		{ id = 2511, }, --name = "Искарские клыкарры", side = "-", category = "Dragonflight", }, --[faction=2511]
+		{ id = 2564, }, --name = "Лоаммские ниффы", side = "-", category = "Dragonflight", }, --[faction=2564]
 		{ id = 2503, }, --name = "Кентавры Маруук", side = "-", category = "Dragonflight", }, --[faction=2503]
+
+
+		{ id = 2510, }, --name = "Союз Вальдраккена", side = "-", category = "Dragonflight", }, --[faction=2510]
 		----------------------------------------------------------------
-		{ id = 2553, }, --name = "Соридорми", side = "-", category = "Союз Вальдраккена", }, --[faction=2553]
 		{ id = 2550, }, --name = "Кобальтовая ассамблея", side = "-", category = "Союз Вальдраккена", }, --[faction=2550]
 		{ id = 2544, }, --name = "Консорциум ремесленников – филиал на Драконьих островах", side = "-", category = "Союз Вальдраккена", }, --[faction=2544]
+		{ id = 2553, }, --name = "Соридорми", side = "-", category = "Союз Вальдраккена", }, --[faction=2553]
 		{ id = 2518, }, --name = "Сабеллиан", side = "-", category = "Союз Вальдраккена", }, --[faction=2518]
 		{ id = 2517, }, --name = "Гневион", side = "-", category = "Союз Вальдраккена", }, --[faction=2517]
+		----------------------------------------------------------------
+		{ id = 2568, }, --name = "Гонщик Мерцающего Огга", side = "-", category = "Dragonflight", }, --[faction=2568]
 		----------------------------------------------------------------
 		{ id = 2615, }, --name = "Азеротские Архивы", side = "-", category = "Драконья экспедиция", }, --[faction=2615]
 		----------------------------------------------------------------
 		{ id = 2593, }, --name = "Команда Бочконога", side = "-", category = "Другое", }, --[faction=2593]
+		{ id = 2526, }, --name = "Фурболги из клана Зимней Шкуры", side = "-", category = "Dragonflight", }, --[faction=2526]
 	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -172,33 +176,42 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[9] = {
 		header = {icon = E.OctoTable_Expansions[9].icon, name = E.OctoTable_Expansions[9].color..E.OctoTable_Expansions[9].name.."|r",},
 		-- ["Shadowlands"] = {
-		{ id = 2478, }, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
-		{ id = 2472, }, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
-		{ id = 2470, }, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
-		{ id = 2469, }, --name = "Понимание фракталов", side = "-", category = "Темные Земли", }, --[faction=2469]
-		{ id = 2465, }, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
-		{ id = 2464, }, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
-		{ id = 2463, }, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
-		{ id = 2462, }, --name = "Штопальщики", side = "-", category = "Темные Земли", }, --[faction=2462]
-		{ id = 2445, }, --name = "Пепельный двор", side = "-", category = "Темные Земли", }, --[faction=2445]
-		{ id = 2439, }, --name = "Нераскаявшиеся", side = "-", category = "Темные Земли", }, --[faction=2439]
-		{ id = 2432, }, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
 		{ id = 2413, }, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
-		{ id = 2410, }, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
+		{ id = 2464, }, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
+		{ id = 2470, }, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
+		{ id = 2462, }, --name = "Штопальщики", side = "-", category = "Темные Земли", }, --[faction=2462]
+		{ id = 2472, }, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
 		{ id = 2407, }, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
+		{ id = 2439, }, --name = "Нераскаявшиеся", side = "-", category = "Темные Земли", }, --[faction=2439]
+		{ id = 2478, }, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
+		{ id = 2410, }, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
+		{ id = 2465, }, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
+		{ id = 2432, }, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
+
+
+		{ id = 2445, }, --name = "Пепельный двор", side = "-", category = "Темные Земли", }, --[faction=2445]
+
+
+
+
+
+		{ id = 2469, }, --name = "Понимание фракталов", side = "-", category = "Темные Земли", }, --[faction=2469]
+		{ id = 2463, }, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
 		----------------------------------------------------------------
-		{ id = 2461, }, --name = "Изобретатель чумы Марилет", side = "-", category = "Пепельный двор", }, --[faction=2461]
-		{ id = 2460, }, --name = "Камнелоб", side = "-", category = "Пепельный двор", }, --[faction=2460]
-		{ id = 2459, }, --name = "Сика", side = "-", category = "Пепельный двор", }, --[faction=2459]
+		{ id = 2455, }, --name = "Хранитель склепа Каззир", side = "-", category = "Пепельный двор", }, --[faction=2455]
 		{ id = 2458, }, --name = "Клейя и Пелагий", side = "-", category = "Пепельный двор", }, --[faction=2458]
+		{ id = 2453, }, --name = "Рендл и Дуборыл", side = "-", category = "Пепельный двор", }, --[faction=2453]
+		{ id = 2460, }, --name = "Камнелоб", side = "-", category = "Пепельный двор", }, --[faction=2460]
+
+
+		{ id = 2461, }, --name = "Изобретатель чумы Марилет", side = "-", category = "Пепельный двор", }, --[faction=2461]
+		{ id = 2459, }, --name = "Сика", side = "-", category = "Пепельный двор", }, --[faction=2459]
 		{ id = 2457, }, --name = "Великий мастер Воул", side = "-", category = "Пепельный двор", }, --[faction=2457]
 		{ id = 2456, }, --name = "Дроман Алиот", side = "-", category = "Пепельный двор", }, --[faction=2456]
-		{ id = 2455, }, --name = "Хранитель склепа Каззир", side = "-", category = "Пепельный двор", }, --[faction=2455]
 		{ id = 2454, }, --name = "Чуфа", side = "-", category = "Пепельный двор", }, --[faction=2454]
-		{ id = 2453, }, --name = "Рендл и Дуборыл", side = "-", category = "Пепельный двор", }, --[faction=2453]
 		{ id = 2452, }, --name = "Полемарх Адрест", side = "-", category = "Пепельный двор", }, --[faction=2452]
 		{ id = 2451, }, --name = "Капитан-егерь Корейн", side = "-", category = "Пепельный двор", }, --[faction=2451]
 		{ id = 2450, }, --name = "Александрос Могрейн", side = "-", category = "Пепельный двор", }, --[faction=2450]
@@ -216,39 +229,43 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[8] = {
 		header = {icon = E.OctoTable_Expansions[8].icon, name = E.OctoTable_Expansions[8].color..E.OctoTable_Expansions[8].name.."|r",},
 		-- ["Battle for Azeroth"] = {
-		{ id = 2427, }, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
-		{ id = 2417, }, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
-		{ id = 2415, }, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
-		{ id = 2400, }, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
-		{ id = 2395, }, --name = "Улей Медокрылов", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2395]
-		{ id = 2391, }, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
-		{ id = 2390, }, --name = "Вим Соленодух", side = "-", category = "Battle for Azeroth", }, --[faction=2390]
-		{ id = 2389, }, --name = "Нери Остроерш", side = "-", category = "Battle for Azeroth", }, --[faction=2389]
-		{ id = 2388, }, --name = "Поэн Солежабрик", side = "-", category = "Battle for Azeroth", }, --[faction=2388]
-		{ id = 2377, }, --name = "Мастер клинка Иновари", side = "-", category = "Battle for Azeroth", }, --[faction=2377]
-		{ id = 2376, }, --name = "Оракул Ори", side = "-", category = "Battle for Azeroth", }, --[faction=2376]
-		{ id = 2375, }, --name = "Мастер охоты Акана", side = "-", category = "Battle for Azeroth", }, --[faction=2375]
-		{ id = 2373, }, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373
-		{ id = 2370, }, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
-		{ id = 2233, }, --name = "Dino Training - Pterrodax", side = "-", category = "Battle for Azeroth", }, --[faction=2233]
 		{ id = 2164, }, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
+		{ id = 2415, }, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
+		{ id = 2391, }, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
 		{ id = 2163, }, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
-		{ id = 2162, }, --name = "Орден Возрождения Шторма", side = "-", category = "Battle for Azeroth", }, --[faction=2162]
-		{ id = 2161, }, --name = "Орден Пылающих Углей", side = "-", category = "Battle for Azeroth", }, --[faction=2161]
-		{ id = 2160, }, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
-		{ id = 2159, }, --name = "7-й легион", side = "-", category = "Battle for Azeroth", }, --[faction=2159]
+		{ id = 2417, }, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
+
+
+		{ id = 2427, }, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
+
+
+
+		{ id = 2157, }, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
+		{ id = 2373, }, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
 		{ id = 2158, }, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
-		{ id = 2157, }, --name = "Армия Чести", side = "-", category = "Battle for Azeroth", }, --[faction=2157]
-		{ id = 2156, }, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
-		{ id = 2111, }, --name = "Зандаларские динозавры", side = "-", category = "Battle for Azeroth", }, --[faction=2111]
 		{ id = 2103, }, --name = "Империя Зандалари", side = "Horde", category = "Battle for Azeroth", }, --[faction=2103]
-		----------------------------------------------------------------
-		{ id = 2398, }, --name = "Фуражир из улья Медокрылов", side = "-", category = "Другое", }, --[faction=2398]
-		{ id = 2397, }, --name = "Пчеломатка улья Медокрылов", side = "-", category = "Другое", }, --[faction=2397]
-		{ id = 2396, }, --name = "Трутень из улья Медокрылов", side = "-", category = "Другое", }, --[faction=2396]
+		{ id = 2156, }, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
+		{ id = 2233, }, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
+		{ id = 2370, }, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
+		{ id = 2390, }, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
+		{ id = 2389, }, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
+		{ id = 2388, }, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
+
+		{ id = 2159, }, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
+		{ id = 2160, }, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
+		{ id = 2400, }, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
+		{ id = 2162, }, --name = "Орден Возрождения Шторма", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2162]
+		{ id = 2161, }, --name = "Орден Пылающих Углей", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2161]
+		{ id = 2395, }, --name = "Улей Медокрылов", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2395]
+		{ id = 2398, }, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
+		{ id = 2397, }, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
+		{ id = 2396, }, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
+		{ id = 2376, }, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
+		{ id = 2375, }, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
+		{ id = 2377, }, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
 	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -259,7 +276,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[7] = {
 		header = {icon = E.OctoTable_Expansions[7].icon, name = E.OctoTable_Expansions[7].color..E.OctoTable_Expansions[7].name.."|r",},
 		-- ["Legion"] = {
 		{ id = 2170, }, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
@@ -298,7 +315,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[6] = {
 		header = {icon = E.OctoTable_Expansions[6].icon, name = E.OctoTable_Expansions[6].color..E.OctoTable_Expansions[6].name.."|r",},
 		-- ["Warlords of Draenor"] = {
 		{ id = 1850, }, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
@@ -332,7 +349,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[5] = {
 		header = {icon = E.OctoTable_Expansions[5].icon, name = E.OctoTable_Expansions[5].color..E.OctoTable_Expansions[5].name.."|r",},
 		-- ["Mists of Pandaria"] = {
 		{ id = 1492, }, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
@@ -380,7 +397,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[4] = {
 		header = {icon = E.OctoTable_Expansions[4].icon, name = E.OctoTable_Expansions[4].color..E.OctoTable_Expansions[4].name.."|r",},
 		-- ["Cataclysm"] = {
 		{ id = 1204, }, --name = "Хиджальские мстители", side = "-", category = "Cataclysm", }, --[faction=1204]
@@ -404,7 +421,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[3] = {
 		header = {icon = E.OctoTable_Expansions[3].icon, name = E.OctoTable_Expansions[3].color..E.OctoTable_Expansions[3].name.."|r",},
 		-- ["Wrath of the Lich King"] = {
 		{ id = 1156, }, --name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1156]
@@ -440,7 +457,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[2] = {
 		header = {icon = E.OctoTable_Expansions[2].icon, name = E.OctoTable_Expansions[2].color..E.OctoTable_Expansions[2].name.."|r",},
 		-- ["The Burning Crusade"] = {
 		{ id = 1038, }, --name = "Огри'ла", side = "-", category = "The Burning Crusade", }, --[faction=1038]
@@ -475,7 +492,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
+	[1] = {
 		header = {icon = E.OctoTable_Expansions[1].icon, name = E.OctoTable_Expansions[1].color..E.OctoTable_Expansions[1].name.."|r",},
 		-- ["World of Warcraft"] = {
 		{ id = 910, }, --name = "Род Ноздорму", side = "-", category = "World of Warcraft", }, --[faction=910]
@@ -547,10 +564,10 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	{
-		header = {icon = ("Interface\\AddOns\\OctoToDo\\Media\\IconTexture\\OCTOREP"), name = OTHER, },
-		{ id = 1168, }, --name = "Гильдия", side = "-", category = "Гильдия", }, --[faction=1168]
-	},
+	-- {
+	-- 	header = {icon = ("Interface\\AddOns\\OctoToDo\\Media\\IconTexture\\OCTOREP"), name = OTHER, },
+	-- 	{ id = 1168, }, --name = "Гильдия", side = "-", category = "Гильдия", }, --[faction=1168]
+	-- },
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
