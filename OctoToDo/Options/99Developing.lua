@@ -41,7 +41,6 @@ function E.Developing()
 					OctoToDo_Achievements = {}
 					OctoToDo_AddonsTable = {}
 					OctoToDo_AddonsManager = {}
-					OctoToDo_OCTOREP = {}
 					OctoToDo_TrashCan = {}
 
 

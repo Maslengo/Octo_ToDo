@@ -462,27 +462,47 @@ function E.func_questslist(msg)
 end
 ------------------------------
 function E.func_currencieslist(msg)
-	local str3 = ""
-	local headerName = ""
-	for i = 1, C_CurrencyInfo.GetCurrencyListSize() do
-		local info = C_CurrencyInfo.GetCurrencyListInfo(i)
-		if info.isHeader then
-			C_CurrencyInfo.ExpandCurrencyList(i, true)
-			headerName = C_CurrencyInfo.GetCurrencyListInfo(i).name
-			str3 = str3 .."|cff606060 ---> ".. headerName .. "|r\n"
-		elseif info.name then
-			local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
-			local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
-			local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-			local quantity = currencyInfo.quantity
-			if currencyID then
-				str3 = str3 ..tostringall(currencyID) .. " - ".. E.func_currencyIcon(currencyID)..E.func_currencyName(currencyID) .." ("..quantity..")".. "\n"
-			end
-		end
-		i = i + 1
-	end
+	-- local str1 = ""
+	-- local headerName = ""
+	-- for i = 1, C_CurrencyInfo.GetCurrencyListSize() do
+	-- 	local info = C_CurrencyInfo.GetCurrencyListInfo(i)
+	-- 	if info.isHeader then
+	-- 		C_CurrencyInfo.ExpandCurrencyList(i, true)
+	-- 		headerName = C_CurrencyInfo.GetCurrencyListInfo(i).name
+	-- 		str1 = str1 .."|cff606060 ---> ".. headerName .. "|r\n"
+	-- 	elseif info.name then
+	-- 		local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
+	-- 		local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
+	-- 		local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	-- 		local quantity = currencyInfo.quantity
+	-- 		if currencyID then
+	-- 			str1 = str1 ..tostringall(currencyID) .. " - ".. E.func_currencyIcon(currencyID)..E.func_currencyName(currencyID) .." ("..quantity..")".. "\n"
+	-- 		end
+	-- 	end
+	-- 	i = i + 1
+	-- end
 
-	editBox:SetText(str3)
+
+
+
+
+	local str1 = ""
+	local str2 = ""
+	local vivod = ""
+	local list = {}
+	for _, currencyID in next, (E.TESTCURR) do
+		tinsert(list, currencyID)
+	end
+	sort(list, func_Reverse_order)
+	for _, currencyID in next, (list) do
+		if E.func_currencyName(currencyID) ~= (currencyID.. " (UNKNOWN)") then
+			str1 = str1..currencyID..", --" ..E.func_currencyName(currencyID).."|n"
+		else
+			str2 = str2..currencyID..", --" ..E.func_currencyName(currencyID).."|n"
+		end
+	end
+	vivod = str1..str2
+	editBox:SetText(vivod)
 	editFrame:Show()
 
 end

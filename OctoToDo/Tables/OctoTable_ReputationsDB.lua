@@ -103,6 +103,11 @@ E.OctoTable_ReputationsDB = {
 	[1984] = {icon = E.Icon_QuestionMark,  name = "Спасатели", side = "-", category = "Legion", },
 	[1899] = {icon = E.Icon_QuestionMark,  name = "Лунные стражи", side = "-", category = "Legion", },
 	[2111] = {icon = 236192,  name = "Зандаларские динозавры", side = "-", category = "Battle for Azeroth", },
+	[1520] = {icon = E.Icon_QuestionMark,  name = "Изгнанники клана Призрачной Луны", side = "-", category = "Warlords of Draenor", },
+	[1735] = {icon = E.Icon_QuestionMark,  name = "Телохранители из казарм", side = "-", category = "Warlords of Draenor", },
+	[1351] = {icon = E.Icon_QuestionMark,  name = "Хмелевары", side = "-", category = "Mists of Pandaria", },
+	[1216] = {icon = E.Icon_QuestionMark,  name = "Академия Шан Си", side = "-", category = "Mists of Pandaria", },
+	[1440] = {icon = 666624,  name = "Восстание Черного Копья", side = "-", category = "Mists of Pandaria", },
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -128,7 +133,6 @@ E.OctoTable_ReputationsDB = {
 	[2507] = {icon = 454065,  name = "Драконья экспедиция", side = "-", category = "Dragonflight", },
 	[2503] = {icon = 2101975,  name = "Кентавры Маруук", side = "-", category = "Dragonflight", },
 	[2511] = {icon = 629056,  name = "Искарские клыкарры", side = "-", category = "Dragonflight", },
-
 	[2574] = {icon = 1394953,  name = "Стражи Сна", side = "-", category = "Dragonflight", },
 	[2568] = {icon = 604882,  name = "Гонщик Мерцающего Огга", side = "-", category = "Dragonflight", },
 	[2564] = {icon = 237477,  name = "Лоаммские ниффы", side = "-", category = "Dragonflight", },
@@ -157,7 +161,6 @@ E.OctoTable_ReputationsDB = {
 	[2413] = {icon = 3540525,  name = "Двор Жнецов", side = "-", category = "Темные Земли", },
 	[2410] = {icon = 3604102,  name = "Неумирающая армия", side = "-", category = "Темные Земли", },
 	[2407] = {icon = 3555147,  name = "Перерожденные", side = "-", category = "Темные Земли", },
-
 	[2461] = {icon = 604882,  name = "Изобретатель чумы Марилет", side = "-", category = "Пепельный двор", },
 	[2460] = {icon = 604882,  name = "Камнелоб", side = "-", category = "Пепельный двор", },
 	[2459] = {icon = 604882,  name = "Сика", side = "-", category = "Пепельный двор", },
@@ -174,7 +177,6 @@ E.OctoTable_ReputationsDB = {
 	[2448] = {icon = 604882,  name = "Миканикос", side = "-", category = "Пепельный двор", },
 	[2447] = {icon = 604882,  name = "Леди Лунная Ягода", side = "-", category = "Пепельный двор", },
 	[2446] = {icon = 604882,  name = "Баронесса Вайш", side = "-", category = "Пепельный двор", },
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -188,8 +190,6 @@ E.OctoTable_ReputationsDB = {
 	[2391] = {icon = 2921023,  name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", },
 	[2164] = {icon = 2029406,  name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", },
 	[2163] = {icon = 2065717,  name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", },
-
-
 	[2157] = {icon = 2024073,  name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, -- ОРДА
 	[2373] = {icon = 2821776,  name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, -- ОРДА
 	[2158] = {icon = 2057295,  name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, -- ОРДА
@@ -200,11 +200,6 @@ E.OctoTable_ReputationsDB = {
 	[2390] = {icon = 604882,  name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, -- ОРДА
 	[2389] = {icon = 604882,  name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, -- ОРДА
 	[2388] = {icon = 666624,  name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, -- ОРДА
-
-
-
-
-
 	[2159] = {icon = 2024072,  name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, -- АЛЬЯНС
 	[2400] = {icon = 2921024,  name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, -- АЛЬЯНС
 	[2160] = {icon = 2012311,  name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, -- АЛЬЯНС
@@ -217,8 +212,6 @@ E.OctoTable_ReputationsDB = {
 	[2376] = {icon = 604882,  name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, -- АЛЬЯНС
 	[2375] = {icon = 604882,  name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, -- АЛЬЯНС
 	[2377] = {icon = 604882,  name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, -- АЛЬЯНС
-
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -253,20 +246,20 @@ E.OctoTable_ReputationsDB = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	[1850] = {icon = E.Icon_QuestionMark,  name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", },
-	[1849] = {icon = E.Icon_QuestionMark,  name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", },
-	[1848] = {icon = E.Icon_QuestionMark,  name = "Охотники за головами", side = "-", category = "Warlords of Draenor", },
-	[1847] = {icon = E.Icon_QuestionMark,  name = "Длань Пророка", side = "-", category = "Warlords of Draenor", },
-	[1735] = {icon = E.Icon_QuestionMark,  name = "Телохранители из казарм", side = "-", category = "Warlords of Draenor", },
+	[1850] = {icon = 1240657,  name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", },
+	[1849] = {icon = 1240656,  name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", },
 	[1732] = {icon = E.Icon_QuestionMark,  name = "Дренорcкая Экспедиция Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", },
-	[1731] = {icon = E.Icon_QuestionMark,  name = "Совет экзархов", side = "-", category = "Warlords of Draenor", },
-	[1711] = {icon = E.Icon_QuestionMark,  name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", },
-	[1710] = {icon = E.Icon_QuestionMark,  name = "Защитники Ша'тар", side = "-", category = "Warlords of Draenor", },
-	[1708] = {icon = E.Icon_QuestionMark,  name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", },
-	[1520] = {icon = E.Icon_QuestionMark,  name = "Изгнанники клана Призрачной Луны", side = "-", category = "Warlords of Draenor", },
-	[1515] = {icon = E.Icon_QuestionMark,  name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", },
-	[1445] = {icon = E.Icon_QuestionMark,  name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", },
-
+	[1711] = {icon = 1052654,  name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", },
+	[1515] = {icon = 1042646,  name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", },
+	----------------------------------------------------------------
+	[1708] = {icon = 1043559,  name = "Клан Веселого Черепа", side = "Horde", category = "Warlords of Draenor", }, -- ОРДА
+	[1445] = {icon = 1044164,  name = "Клан Северного Волка", side = "Horde", category = "Warlords of Draenor", }, -- ОРДА
+	[1848] = {icon = 1122137,  name = "Охотники за головами", side = "Horde", category = "Warlords of Draenor", }, -- ОРДА
+	----------------------------------------------------------------
+	[1731] = {icon = 1048727,  name = "Совет экзархов", side = "Alliance", category = "Warlords of Draenor", }, -- АЛЬЯНС
+	[1710] = {icon = 1042739,  name = "Защитники Ша'тар", side = "Alliance", category = "Warlords of Draenor", }, -- АЛЬЯНС
+	[1847] = {icon = 1122137,  name = "Длань Пророка", side = "Alliance", category = "Warlords of Draenor", }, -- АЛЬЯНС
+	----------------------------------------------------------------
 	[1741] = {icon = 666623,  name = "Леорадж", side = "-", category = "Телохранители из казарм", },
 	[1740] = {icon = 666623,  name = "Аеда Ясная Заря", side = "-", category = "Телохранители из казарм", },
 	[1739] = {icon = 666623,  name = "Вивианна", side = "-", category = "Телохранители из казарм", },
@@ -274,8 +267,6 @@ E.OctoTable_ReputationsDB = {
 	[1737] = {icon = 666623,  name = "Жрец Когтя Ишааль", side = "-", category = "Телохранители из казарм", },
 	[1736] = {icon = 666623,  name = "Тормок", side = "-", category = "Телохранители из казарм", },
 	[1733] = {icon = 666623,  name = "Делвар Железный Кулак", side = "-", category = "Телохранители из казарм", },
-
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -283,28 +274,17 @@ E.OctoTable_ReputationsDB = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-
-	[1492] = {icon = E.Icon_QuestionMark,  name = "Император Шаохао", side = "-", category = "Mists of Pandaria", },
-	[1440] = {icon = 666624,  name = "Восстание Черного Копья", side = "-", category = "Mists of Pandaria", },
-	[1435] = {icon = E.Icon_QuestionMark,  name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", },
-	[1388] = {icon = E.Icon_QuestionMark,  name = "Войска Похитителей Солнца", side = "-", category = "Mists of Pandaria", },
-	[1387] = {icon = E.Icon_QuestionMark,  name = "Армия Кирин-Тора", side = "-", category = "Mists of Pandaria", },
-	[1376] = {icon = E.Icon_QuestionMark,  name = "Операция \"Заслон\"", side = "-", category = "Mists of Pandaria", },
-	[1375] = {icon = E.Icon_QuestionMark,  name = "Армия Покорителей", side = "-", category = "Mists of Pandaria", },
-	[1359] = {icon = E.Icon_QuestionMark,  name = "Черный принц", side = "-", category = "Mists of Pandaria", },
-	[1351] = {icon = E.Icon_QuestionMark,  name = "Хмелевары", side = "-", category = "Mists of Pandaria", },
-	[1345] = {icon = E.Icon_QuestionMark,  name = "Хранители истории", side = "-", category = "Mists of Pandaria", },
-	[1341] = {icon = E.Icon_QuestionMark,  name = "Небожители", side = "-", category = "Mists of Pandaria", },
-	[1337] = {icon = E.Icon_QuestionMark,  name = "Клакси", side = "-", category = "Mists of Pandaria", },
-	[1302] = {icon = E.Icon_QuestionMark,  name = "Рыболовы", side = "-", category = "Mists of Pandaria", },
-	[1272] = {icon = E.Icon_QuestionMark,  name = "Земледельцы", side = "-", category = "Mists of Pandaria", },
-	[1271] = {icon = E.Icon_QuestionMark,  name = "Орден Облачного Змея", side = "-", category = "Mists of Pandaria", },
-	[1270] = {icon = E.Icon_QuestionMark,  name = "Шадо-Пан", side = "-", category = "Mists of Pandaria", },
-	[1269] = {icon = E.Icon_QuestionMark,  name = "Золотой Лотос", side = "-", category = "Mists of Pandaria", },
-	[1242] = {icon = E.Icon_QuestionMark,  name = "Цзинь-юй Жемчужного Плавника", side = "-", category = "Mists of Pandaria", },
-	[1228] = {icon = E.Icon_QuestionMark,  name = "Лесные хозены", side = "-", category = "Mists of Pandaria", },
-	[1216] = {icon = E.Icon_QuestionMark,  name = "Академия Шан Си", side = "-", category = "Mists of Pandaria", },
-
+	[1492] = {icon = 901300,  name = "Император Шаохао", side = "-", category = "Mists of Pandaria", },
+	[1435] = {icon = 838811,  name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", },
+	[1359] = {icon = 397907,  name = "Черный принц", side = "-", category = "Mists of Pandaria", },
+	[1345] = {icon = 645218,  name = "Хранители истории", side = "-", category = "Mists of Pandaria", },
+	[1341] = {icon = 645203,  name = "Небожители", side = "-", category = "Mists of Pandaria", },
+	[1337] = {icon = 646377,  name = "Клакси", side = "-", category = "Mists of Pandaria", },
+	[1302] = {icon = 643874,  name = "Рыболовы", side = "-", category = "Mists of Pandaria", },
+	[1272] = {icon = 645198,  name = "Земледельцы", side = "-", category = "Mists of Pandaria", },
+	[1271] = {icon = 646324,  name = "Орден Облачного Змея", side = "-", category = "Mists of Pandaria", },
+	[1270] = {icon = 645204,  name = "Шадо-Пан", side = "-", category = "Mists of Pandaria", },
+	[1269] = {icon = 643910,  name = "Золотой Лотос", side = "-", category = "Mists of Pandaria", },
 	[1283] = {icon = 604882,  name = "Фермер Фун", side = "-", category = "Земледельцы", },
 	[1282] = {icon = 604882,  name = "Рыба Тростниковая Шкура", side = "-", category = "Земледельцы", },
 	[1281] = {icon = 604882,  name = "Джина Грязный Коготь", side = "-", category = "Земледельцы", },
@@ -317,11 +297,16 @@ E.OctoTable_ReputationsDB = {
 	[1273] = {icon = 604882,  name = "Йогу Пьяный", side = "-", category = "Земледельцы", },
 	[1358] = {icon = 604882,  name = "Нат Пэгл", side = "-", category = "Рыболовы", },
 	[1357] = {icon = 604882,  name = "Номи", side = "-", category = "Другое", },
+	[1388] = {icon = 838819,  name = "Войска Похитителей Солнца", side = "Horde", category = "Mists of Pandaria", }, -- ОРДА
+	[1375] = {icon = 463451,  name = "Армия Покорителей", side = "Horde", category = "Mists of Pandaria", }, -- ОРДА 463451 773277
+	[1228] = {icon = 1542852,  name = "Лесные хозены", side = "Horde", category = "Mists of Pandaria", }, -- ОРДА
+	[1387] = {icon = 801132,  name = "Армия Кирин-Тора", side = "Alliance", category = "Mists of Pandaria", }, -- АЛЬЯНС
+	[1376] = {icon = 463450,  name = "Операция \"Заслон\"", side = "Alliance", category = "Mists of Pandaria", }, -- АЛЬЯНС 463450 773275
+	[1242] = {icon = 1542852,  name = "Цзинь-юй Жемчужного Плавника", side = "Alliance", category = "Mists of Pandaria", }, -- АЛЬЯНС
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	-- CATACLYSM
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -334,47 +319,73 @@ E.OctoTable_ReputationsDB = {
 	[1172] = {icon = 456565,  name = "Клан Драконьей Пасти", side = "Horde", category = "Cataclysm", }, -- ОРДА
 	[1177] = {icon = 456564,  name = "Защитники Тол Барада", side = "Alliance", category = "Cataclysm", }, -- АЛЬЯНС
 	[1174] = {icon = 456575,  name = "Клан Громового Молота", side = "Alliance", category = "Cataclysm", }, -- АЛЬЯНС
-	[1156] = {icon = E.Icon_QuestionMark,  name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", },
-	[1119] = {icon = E.Icon_QuestionMark,  name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", },
-	[1117] = {icon = E.Icon_QuestionMark,  name = "Низина Шолазар", side = "-", category = "Wrath of the Lich King", },
-	[1106] = {icon = E.Icon_QuestionMark,  name = "Серебряный Авангард", side = "-", category = "Wrath of the Lich King", },
-	[1098] = {icon = E.Icon_QuestionMark,  name = "Рыцари Черного Клинка", side = "-", category = "Wrath of the Lich King", },
-	[1091] = {icon = E.Icon_QuestionMark,  name = "Драконий союз", side = "-", category = "Wrath of the Lich King", },
-	[1090] = {icon = E.Icon_QuestionMark,  name = "Кирин-Тор", side = "-", category = "Wrath of the Lich King", },
-	[1073] = {icon = E.Icon_QuestionMark,  name = "Калу'ак", side = "-", category = "Wrath of the Lich King", },
-	[1052] = {icon = E.Icon_QuestionMark,  name = "Экспедиция Орды", side = "-", category = "Wrath of the Lich King", },
-	[1037] = {icon = E.Icon_QuestionMark,  name = "Авангард Альянса", side = "-", category = "Wrath of the Lich King", },
-	[1105] = {icon = E.Icon_QuestionMark,  name = "Оракулы", side = "-", category = "Низина Шолазар", },
-	[1104] = {icon = E.Icon_QuestionMark,  name = "Племя Бешеного Сердца", side = "-", category = "Низина Шолазар", },
-	[1124] = {icon = E.Icon_QuestionMark,  name = "Похитители Солнца", side = "-", category = "Экспедиция Орды", },
-	[1085] = {icon = E.Icon_QuestionMark,  name = "Армия Песни Войны", side = "-", category = "Экспедиция Орды", },
-	[1067] = {icon = E.Icon_QuestionMark,  name = "Карающая Длань", side = "-", category = "Экспедиция Орды", },
-	[1064] = {icon = E.Icon_QuestionMark,  name = "Таунка", side = "-", category = "Экспедиция Орды", },
-	[1126] = {icon = E.Icon_QuestionMark,  name = "Зиморожденные", side = "-", category = "Авангард Альянса", },
-	[1094] = {icon = E.Icon_QuestionMark,  name = "Серебряный Союз", side = "-", category = "Авангард Альянса", },
-	[1068] = {icon = E.Icon_QuestionMark,  name = "Лига исследователей", side = "-", category = "Авангард Альянса", },
-	[1050] = {icon = E.Icon_QuestionMark,  name = "Экспедиция Отважных", side = "-", category = "Авангард Альянса", },
-	[1038] = {icon = E.Icon_QuestionMark,  name = "Огри'ла", side = "-", category = "The Burning Crusade", },
-	[1015] = {icon = E.Icon_QuestionMark,  name = "Крылья Пустоты", side = "-", category = "The Burning Crusade", },
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- Wrath of the Lich King
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	[1156] = {icon = 313914,  name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", },
+	[1119] = {icon = 236241,  name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", },
+	[1106] = {icon = 133441,  name = "Серебряный Авангард", side = "-", category = "Wrath of the Lich King", },
+	[1098] = {icon = 135309,  name = "Рыцари Черного Клинка", side = "-", category = "Wrath of the Lich King", },
+	[1091] = {icon = 134158,  name = "Драконий союз", side = "-", category = "Wrath of the Lich King", },
+	[1090] = {icon = 135933,  name = "Кирин-Тор", side = "-", category = "Wrath of the Lich King", },
+	[1073] = {icon = 132933,  name = "Калу'ак", side = "-", category = "Wrath of the Lich King", },
+	----------------------------------------------------------------
+	[1117] = {icon = 236817,  name = "Низина Шолазар", side = "-", category = "Wrath of the Lich King", },
+	[1105] = {icon = 134418,  name = "Оракулы", side = "-", category = "Низина Шолазар", },
+	[1104] = {icon = 237427,  name = "Племя Бешеного Сердца", side = "-", category = "Низина Шолазар", },
+	----------------------------------------------------------------
+	[1052] = {icon = 463451,  name = "Экспедиция Орды", side = "Horde", category = "Wrath of the Lich King", }, -- ОРДА
+	[1124] = {icon = 134473,  name = "Похитители Солнца", side = "Horde", category = "Экспедиция Орды", },
+	[1085] = {icon = 463451,  name = "Армия Песни Войны", side = "Horde", category = "Экспедиция Орды", },
+	[1067] = {icon = 463451,  name = "Карающая Длань", side = "Horde", category = "Экспедиция Орды", },
+	[1064] = {icon = 463451,  name = "Таунка", side = "Horde", category = "Экспедиция Орды", },
+	----------------------------------------------------------------
+	[1037] = {icon = 463450,  name = "Авангард Альянса", side = "Alliance", category = "Wrath of the Lich King", }, -- АЛЬЯНС
+	[1094] = {icon = 134472,  name = "Серебряный Союз", side = "Alliance", category = "Авангард Альянса", },
+	[1126] = {icon = 463450,  name = "Зиморожденные", side = "Alliance", category = "Авангард Альянса", },
+	[1068] = {icon = 463450,  name = "Лига исследователей", side = "Alliance", category = "Авангард Альянса", },
+	[1050] = {icon = 463450,  name = "Экспедиция Отважных", side = "Alliance", category = "Авангард Альянса", },
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- The Burning Crusade
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	[1038] = {icon = 135026,  name = "Огри'ла", side = "-", category = "The Burning Crusade", },
+	[1015] = {icon = 132250,  name = "Крылья Пустоты", side = "-", category = "The Burning Crusade", },
 	[1012] = {icon = E.Icon_QuestionMark,  name = "Пеплоусты-служители", side = "-", category = "The Burning Crusade", },
 	[990] = {icon = E.Icon_QuestionMark,  name = "Песчаная Чешуя", side = "-", category = "The Burning Crusade", },
-	[989] = {icon = E.Icon_QuestionMark,  name = "Хранители Времени", side = "-", category = "The Burning Crusade", },
-	[978] = {icon = E.Icon_QuestionMark,  name = "Куренай", side = "-", category = "The Burning Crusade", },
-	[970] = {icon = E.Icon_QuestionMark,  name = "Спореггар", side = "-", category = "The Burning Crusade", },
+	[989] = {icon = 135026,  name = "Хранители Времени", side = "-", category = "The Burning Crusade", },
+	[970] = {icon = 135026,  name = "Спореггар", side = "-", category = "The Burning Crusade", },
 	[967] = {icon = E.Icon_QuestionMark,  name = "Аметистовое Око", side = "-", category = "The Burning Crusade", },
-	[947] = {icon = E.Icon_QuestionMark,  name = "Траллмар", side = "-", category = "The Burning Crusade", },
-	[946] = {icon = E.Icon_QuestionMark,  name = "Оплот Чести", side = "-", category = "The Burning Crusade", },
-	[942] = {icon = E.Icon_QuestionMark,  name = "Кенарийская экспедиция", side = "-", category = "The Burning Crusade", },
-	[941] = {icon = E.Icon_QuestionMark,  name = "Маг'хары", side = "-", category = "The Burning Crusade", },
+	[942] = {icon = 135026,  name = "Кенарийская экспедиция", side = "-", category = "The Burning Crusade", },
+	[933] = {icon = 135026,  name = "Консорциум", side = "-", category = "The Burning Crusade", },
+	[922] = {icon = 135026,  name = "Транквиллион", side = "-", category = "The Burning Crusade", },
+		----------------------------------------------------------------
 	[936] = {icon = E.Icon_QuestionMark,  name = "Город Шаттрат", side = "-", category = "The Burning Crusade", },
-	[933] = {icon = E.Icon_QuestionMark,  name = "Консорциум", side = "-", category = "The Burning Crusade", },
-	[922] = {icon = E.Icon_QuestionMark,  name = "Транквиллион", side = "-", category = "The Burning Crusade", },
-	[1077] = {icon = E.Icon_QuestionMark,  name = "Армия Расколотого Солнца", side = "-", category = "Город Шаттрат", },
-	[1031] = {icon = E.Icon_QuestionMark,  name = "Стражи небес Ша'тар", side = "-", category = "Город Шаттрат", },
-	[1011] = {icon = E.Icon_QuestionMark,  name = "Нижний Город", side = "-", category = "Город Шаттрат", },
-	[935] = {icon = E.Icon_QuestionMark,  name = "Ша'тар", side = "-", category = "Город Шаттрат", },
-	[934] = {icon = E.Icon_QuestionMark,  name = "Провидцы", side = "-", category = "Город Шаттрат", },
-	[932] = {icon = E.Icon_QuestionMark,  name = "Алдоры", side = "-", category = "Город Шаттрат", },
+		----------------------------------------------------------------
+	[1077] = {icon = 135026,  name = "Армия Расколотого Солнца", side = "-", category = "Город Шаттрат", },
+	[1031] = {icon = 135026,  name = "Стражи небес Ша'тар", side = "-", category = "Город Шаттрат", },
+	[1011] = {icon = 135026,  name = "Нижний Город", side = "-", category = "Город Шаттрат", },
+	[935] = {icon = 135026,  name = "Ша'тар", side = "-", category = "Город Шаттрат", },
+	[934] = {icon = 135026,  name = "Провидцы", side = "-", category = "Город Шаттрат", },
+	[932] = {icon = 135026,  name = "Алдоры", side = "-", category = "Город Шаттрат", },
+		----------------------------------------------------------------
+	[947] = {icon = 463451,  name = "Траллмар", side = "Horde", category = "The Burning Crusade", },
+	[941] = {icon = 463451,  name = "Маг'хары", side = "Horde", category = "The Burning Crusade", },
+		----------------------------------------------------------------
+	[946] = {icon = 463450,  name = "Оплот Чести", side = "Alliance", category = "The Burning Crusade", },
+	[978] = {icon = 463450,  name = "Куренай", side = "Alliance", category = "The Burning Crusade", },
+		----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- World of Warcraft
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------

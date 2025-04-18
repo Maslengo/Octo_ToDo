@@ -31,6 +31,7 @@ function E.func_GetItemIcon(itemID)
 	tinsert(E.PromiseItem, itemID)
 	return C_Item.GetItemIconByID(itemID)
 end
+----------------------------------------------------------------
 function E.func_GetItemName(itemID)
 	tinsert(E.PromiseItem, itemID)
 	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
@@ -39,10 +40,12 @@ function E.func_GetItemName(itemID)
 	end
 	return vivod
 end
+----------------------------------------------------------------
 function E.func_GetSpellIcon(spellID)
 	tinsert(E.PromiseSpell, spellID)
 	return C_Spell.GetSpellTexture(spellID)
 end
+----------------------------------------------------------------
 function E.func_GetSpellName(spellID)
 	tinsert(E.PromiseSpell, spellID)
 	local vivod = C_Spell.GetSpellName(spellID)
@@ -51,6 +54,7 @@ function E.func_GetSpellName(spellID)
 	end
 	return vivod
 end
+----------------------------------------------------------------
 function E.func_GetCurrencyIcon(currencyID)
 	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 	local iconFileID = E.Icon_QuestionMark
@@ -59,6 +63,7 @@ function E.func_GetCurrencyIcon(currencyID)
 	end
 	return iconFileID
 end
+----------------------------------------------------------------
 function E.func_currencyName(currencyID)
 	if currencyID then
 		local vivod
@@ -92,6 +97,7 @@ function E.func_currencyName(currencyID)
 		return "currencyID = NIL"
 	end
 end
+----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
 	tinsert(E.PromiseQuest, questID)
 	local vivod = ""
@@ -116,6 +122,7 @@ function E.func_questName(questID, useLargeIcon)
 	return vivod
 end
 
+----------------------------------------------------------------
 
 function E.func_reputationName(reputationID)
 	if reputationID then
@@ -184,33 +191,6 @@ function E.func_reputationName(reputationID)
 	else
 		return "|cffFF0000no reputationID|r"
 	end
-end
-
-
-function E.func_reputationNameSIMPLE(reputationID)
-	local vivod = ""
-	if reputationID and type(reputationID) == "number" then
-		-- local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
-		-- if isAccountWide == true then
-		-- vivod = E.Icon_AccountWide..vivod
-		-- end
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-		local name
-		if repInfo then
-			name = repInfo.name
-		else
-			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID or 0)
-			name = reputationInfo.name or E.Red_Color..SEARCH_LOADING_TEXT.."|r"
-		end
-		vivod = vivod..name
-		-- if E.DebugIDs == true and vivod ~= nil then
-		-- vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
-		-- end
-		vivod = vivod
-	else
-		vivod = reputationID
-	end
-	return vivod
 end
 ----------------------------------------------------------------
 -- ITEM UTILS
@@ -2739,32 +2719,35 @@ function E.func_NumPlayers()
 	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
 	local sorted = {}
 	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
-		if ShowOnlyCurrentBattleTag == true then
-			if (ShowOnlyCurrentServer == true
-				and (CharInfo.curServer == E.curServer)
-				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (ShowOnlyCurrentServer == false
-				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (E.curGUID == CharInfo.GUID) then
-				sorted[#sorted+1] = CharInfo
-			end
-		else
-			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (ShowOnlyCurrentServer == false
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (E.curGUID == CharInfo.GUID) then
-				sorted[#sorted+1] = CharInfo
+
+		if not OctoToDo_DB_Vars.OnlyCurrentFaction or (OctoToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.func_UnitFaction("PLAYER")) then
+			if ShowOnlyCurrentBattleTag == true then
+				if (ShowOnlyCurrentServer == true
+					and (CharInfo.curServer == E.curServer)
+					and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+					and (CharInfo.isShownPLAYER == true)
+					and (CharInfo.UnitLevel >= LevelToShow)
+					and (CharInfo.UnitLevel <= LevelToShowMAX))
+				or (ShowOnlyCurrentServer == false
+					and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+					and (CharInfo.isShownPLAYER == true)
+					and (CharInfo.UnitLevel >= LevelToShow)
+					and (CharInfo.UnitLevel <= LevelToShowMAX))
+				or (E.curGUID == CharInfo.GUID) then
+					sorted[#sorted+1] = CharInfo
+				end
+			else
+				if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
+					and (CharInfo.isShownPLAYER == true)
+					and (CharInfo.UnitLevel >= LevelToShow)
+					and (CharInfo.UnitLevel <= LevelToShowMAX))
+				or (ShowOnlyCurrentServer == false
+					and (CharInfo.isShownPLAYER == true)
+					and (CharInfo.UnitLevel >= LevelToShow)
+					and (CharInfo.UnitLevel <= LevelToShowMAX))
+				or (E.curGUID == CharInfo.GUID) then
+					sorted[#sorted+1] = CharInfo
+				end
 			end
 		end
 	end
@@ -2777,34 +2760,41 @@ function E.sorted()
 	local LevelToShowMAX = OctoToDo_DB_Vars.LevelToShowMAX
 	local sorted = {}
 	for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
-		if ShowOnlyCurrentBattleTag == true then
-			if (ShowOnlyCurrentServer == true
-				and (CharInfo.curServer == E.curServer)
-				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (ShowOnlyCurrentServer == false
-				and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (E.curGUID == CharInfo.GUID) then
-				sorted[#sorted+1] = CharInfo
-			end
-		else
-			if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (ShowOnlyCurrentServer == false
-				and (CharInfo.isShownPLAYER == true)
-				and (CharInfo.UnitLevel >= LevelToShow)
-				and (CharInfo.UnitLevel <= LevelToShowMAX))
-			or (E.curGUID == CharInfo.GUID) then
-				sorted[#sorted+1] = CharInfo
+
+		if not OctoToDo_DB_Vars.OnlyCurrentFaction or (OctoToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.func_UnitFaction("PLAYER")) then
+			if ShowOnlyCurrentBattleTag == true then
+				if (ShowOnlyCurrentServer == true
+					and (CharInfo.curServer == E.curServer)
+					and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+					and (CharInfo.isShownPLAYER == true)
+					and (CharInfo.UnitLevel >= LevelToShow)
+					and (CharInfo.UnitLevel <= LevelToShowMAX))
+				or (ShowOnlyCurrentServer == false
+					and (CharInfo.BattleTagLocal == E.BattleTagLocal)
+					and (CharInfo.isShownPLAYER == true)
+					and (CharInfo.UnitLevel >= LevelToShow)
+					and (CharInfo.UnitLevel <= LevelToShowMAX))
+				or (E.curGUID == CharInfo.GUID) then
+					sorted[#sorted+1] = CharInfo
+				end
+			else
+				if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
+					and (CharInfo.isShownPLAYER == true)
+					and (CharInfo.UnitLevel >= LevelToShow)
+					and (CharInfo.UnitLevel <= LevelToShowMAX))
+				or (ShowOnlyCurrentServer == false
+					and (CharInfo.isShownPLAYER == true)
+					and (CharInfo.UnitLevel >= LevelToShow)
+					and (CharInfo.UnitLevel <= LevelToShowMAX))
+				or (E.curGUID == CharInfo.GUID) then
+					sorted[#sorted+1] = CharInfo
+				end
 			end
 		end
+
+
+
+
 	end
 	-- return sorted
 	local list = sorted

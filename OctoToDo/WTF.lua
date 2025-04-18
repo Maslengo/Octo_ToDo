@@ -181,7 +181,7 @@ function OctoToDo_EventFrame_WTF:OctoToDo_DB_Vars()
 	if OctoToDo_DB_Vars.AddonHeight == nil then OctoToDo_DB_Vars.AddonHeight = 20 end
 	if OctoToDo_DB_Vars.AddonLeftFrameWeight == nil then OctoToDo_DB_Vars.AddonLeftFrameWeight = 220 end
 	if OctoToDo_DB_Vars.AddonCentralFrameWeight == nil then OctoToDo_DB_Vars.AddonCentralFrameWeight = 110 end
-	if OctoToDo_DB_Vars.MainFrameDefaultLines == nil then OctoToDo_DB_Vars.MainFrameDefaultLines = 40 end
+	if OctoToDo_DB_Vars.MainFrameDefaultLines == nil then OctoToDo_DB_Vars.MainFrameDefaultLines = 30 end
 	if OctoToDo_DB_Vars.SFDropDownWeight == nil then OctoToDo_DB_Vars.SFDropDownWeight = 100 end
 	if OctoToDo_DB_Vars.PortalsButtons == nil then OctoToDo_DB_Vars.PortalsButtons = true end
 	if OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable == nil then OctoToDo_DB_Vars.PortalsButtonsOnlyAvailable = true end
@@ -346,12 +346,6 @@ function OctoToDo_EventFrame_WTF:OctoToDo_AddonsManager()
 end
 
 
-function OctoToDo_EventFrame_WTF:OctoToDo_OCTOREP()
-	if OctoToDo_OCTOREP == nil then OctoToDo_OCTOREP = {} end
-	if OctoToDo_OCTOREP.TrackedRepID == nil then OctoToDo_OCTOREP.TrackedRepID = 369 end
-end
-
-
 function OctoToDo_EventFrame_WTF:OctoToDo_TrashCan()
 	if OctoToDo_TrashCan == nil then OctoToDo_TrashCan = {} end
 	if OctoToDo_TrashCan.Reputations == nil then OctoToDo_TrashCan.Reputations = {} end
@@ -468,7 +462,6 @@ function OctoToDo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:OctoSimpleList()
 		self:OctoToDo_AddonsTable()
 		self:OctoToDo_AddonsManager()
-		self:OctoToDo_OCTOREP()
 		self:OctoToDo_TrashCan()
 		----------------------------------------------------------------
 		self:Daily_Reset()

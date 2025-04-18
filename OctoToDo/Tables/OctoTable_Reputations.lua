@@ -101,6 +101,12 @@ E.OctoTable_Reputations = {
 	-- { id = 1984, }, --name = "Спасатели", side = "-", category = "Legion", }, --[faction=1984]
 	-- { id = 1899, }, --name = "Лунные стражи", side = "-", category = "Legion", }, --[faction=1899]
 	-- { id = 2111, }, --name = "Зандаларские динозавры", side = "-", category = "Battle for Azeroth", }, --[faction=2111]
+	-- { id = 1732, }, --name = "Дренорcкая Экспедиция Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1732]
+	-- { id = 1520, }, --name = "Изгнанники клана Призрачной Луны", side = "-", category = "Warlords of Draenor", }, --[faction=1520]
+	-- { id = 1735, }, --name = "Телохранители из казарм", side = "-", category = "Warlords of Draenor", }, --[faction=1735]
+	-- { id = 1351, }, --name = "Хмелевары", side = "-", category = "Mists of Pandaria", }, --[faction=1351]
+	-- { id = 1216, }, --name = "Академия Шан Си", side = "-", category = "Mists of Pandaria", }, --[faction=1216]
+		-- { id = 1440, }, --name = "Восстание Черного Копья", side = "-", category = "Mists of Pandaria", }, --[faction=1440]
 	-- },
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -113,7 +119,6 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	[11] = {
 		header = {icon = E.OctoTable_Expansions[11].icon, name = E.OctoTable_Expansions[11].color..E.OctoTable_Expansions[11].name.."|r",},
-
 		-- ["The War Within"] = {
 		{ id = 2653, }, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
 		{ id = 2640, }, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
@@ -150,8 +155,6 @@ E.OctoTable_Reputations = {
 		{ id = 2511, }, --name = "Искарские клыкарры", side = "-", category = "Dragonflight", }, --[faction=2511]
 		{ id = 2564, }, --name = "Лоаммские ниффы", side = "-", category = "Dragonflight", }, --[faction=2564]
 		{ id = 2503, }, --name = "Кентавры Маруук", side = "-", category = "Dragonflight", }, --[faction=2503]
-
-
 		{ id = 2510, }, --name = "Союз Вальдраккена", side = "-", category = "Dragonflight", }, --[faction=2510]
 		----------------------------------------------------------------
 		{ id = 2550, }, --name = "Кобальтовая ассамблея", side = "-", category = "Союз Вальдраккена", }, --[faction=2550]
@@ -190,14 +193,7 @@ E.OctoTable_Reputations = {
 		{ id = 2410, }, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
 		{ id = 2465, }, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
 		{ id = 2432, }, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
-
-
 		{ id = 2445, }, --name = "Пепельный двор", side = "-", category = "Темные Земли", }, --[faction=2445]
-
-
-
-
-
 		{ id = 2469, }, --name = "Понимание фракталов", side = "-", category = "Темные Земли", }, --[faction=2469]
 		{ id = 2463, }, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
 		----------------------------------------------------------------
@@ -205,8 +201,6 @@ E.OctoTable_Reputations = {
 		{ id = 2458, }, --name = "Клейя и Пелагий", side = "-", category = "Пепельный двор", }, --[faction=2458]
 		{ id = 2453, }, --name = "Рендл и Дуборыл", side = "-", category = "Пепельный двор", }, --[faction=2453]
 		{ id = 2460, }, --name = "Камнелоб", side = "-", category = "Пепельный двор", }, --[faction=2460]
-
-
 		{ id = 2461, }, --name = "Изобретатель чумы Марилет", side = "-", category = "Пепельный двор", }, --[faction=2461]
 		{ id = 2459, }, --name = "Сика", side = "-", category = "Пепельный двор", }, --[faction=2459]
 		{ id = 2457, }, --name = "Великий мастер Воул", side = "-", category = "Пепельный двор", }, --[faction=2457]
@@ -237,12 +231,7 @@ E.OctoTable_Reputations = {
 		{ id = 2391, }, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
 		{ id = 2163, }, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
 		{ id = 2417, }, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
-
-
 		{ id = 2427, }, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
-
-
-
 		{ id = 2157, }, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
 		{ id = 2373, }, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
 		{ id = 2158, }, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
@@ -253,7 +242,6 @@ E.OctoTable_Reputations = {
 		{ id = 2390, }, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
 		{ id = 2389, }, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
 		{ id = 2388, }, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
-
 		{ id = 2159, }, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
 		{ id = 2160, }, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
 		{ id = 2400, }, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
@@ -320,17 +308,16 @@ E.OctoTable_Reputations = {
 		-- ["Warlords of Draenor"] = {
 		{ id = 1850, }, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
 		{ id = 1849, }, --name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", }, --[faction=1849]
-		{ id = 1848, }, --name = "Охотники за головами", side = "-", category = "Warlords of Draenor", }, --[faction=1848]
-		{ id = 1847, }, --name = "Длань Пророка", side = "-", category = "Warlords of Draenor", }, --[faction=1847]
-		{ id = 1735, }, --name = "Телохранители из казарм", side = "-", category = "Warlords of Draenor", }, --[faction=1735]
-		{ id = 1732, }, --name = "Дренорcкая Экспедиция Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1732]
-		{ id = 1731, }, --name = "Совет экзархов", side = "-", category = "Warlords of Draenor", }, --[faction=1731]
 		{ id = 1711, }, --name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1711]
-		{ id = 1710, }, --name = "Защитники Ша'тар", side = "-", category = "Warlords of Draenor", }, --[faction=1710]
-		{ id = 1708, }, --name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", }, --[faction=1708]
-		{ id = 1520, }, --name = "Изгнанники клана Призрачной Луны", side = "-", category = "Warlords of Draenor", }, --[faction=1520]
 		{ id = 1515, }, --name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", }, --[faction=1515]
-		{ id = 1445, }, --name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", }, --[faction=1445]
+		----------------------------------------------------------------
+		{ id = 1708, }, --name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", }, --[faction=1708] -- ОРДА
+		{ id = 1445, }, --name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", }, --[faction=1445] -- ОРДА
+		{ id = 1848, }, --name = "Охотники за головами", side = "-", category = "Warlords of Draenor", }, --[faction=1848] -- ОРДА
+		----------------------------------------------------------------
+		{ id = 1731, }, --name = "Совет экзархов", side = "-", category = "Warlords of Draenor", }, --[faction=1731] -- АЛЬЯНС
+		{ id = 1710, }, --name = "Защитники Ша'тар", side = "-", category = "Warlords of Draenor", }, --[faction=1710] -- АЛЬЯНС
+		{ id = 1847, }, --name = "Длань Пророка", side = "-", category = "Warlords of Draenor", }, --[faction=1847] -- АЛЬЯНС
 		----------------------------------------------------------------
 		{ id = 1741, }, --name = "Леорадж", side = "-", category = "Телохранители из казарм", }, --[faction=1741]
 		{ id = 1740, }, --name = "Аеда Ясная Заря", side = "-", category = "Телохранители из казарм", }, --[faction=1740]
@@ -353,26 +340,23 @@ E.OctoTable_Reputations = {
 		header = {icon = E.OctoTable_Expansions[5].icon, name = E.OctoTable_Expansions[5].color..E.OctoTable_Expansions[5].name.."|r",},
 		-- ["Mists of Pandaria"] = {
 		{ id = 1492, }, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
-		{ id = 1440, }, --name = "Восстание Черного Копья", side = "-", category = "Mists of Pandaria", }, --[faction=1440]
 		{ id = 1435, }, --name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1435]
-		{ id = 1388, }, --name = "Войска Похитителей Солнца", side = "-", category = "Mists of Pandaria", }, --[faction=1388]
-		{ id = 1387, }, --name = "Армия Кирин-Тора", side = "-", category = "Mists of Pandaria", }, --[faction=1387]
-		{ id = 1376, }, --name = "Операция \"Заслон\"", side = "-", category = "Mists of Pandaria", }, --[faction=1376]
-		{ id = 1375, }, --name = "Армия Покорителей", side = "-", category = "Mists of Pandaria", }, --[faction=1375
 		{ id = 1359, }, --name = "Черный принц", side = "-", category = "Mists of Pandaria", }, --[faction=1359]
-		{ id = 1351, }, --name = "Хмелевары", side = "-", category = "Mists of Pandaria", }, --[faction=1351]
 		{ id = 1345, }, --name = "Хранители истории", side = "-", category = "Mists of Pandaria", }, --[faction=1345]
 		{ id = 1341, }, --name = "Небожители", side = "-", category = "Mists of Pandaria", }, --[faction=1341]
 		{ id = 1337, }, --name = "Клакси", side = "-", category = "Mists of Pandaria", }, --[faction=1337]
-		{ id = 1302, }, --name = "Рыболовы", side = "-", category = "Mists of Pandaria", }, --[faction=1302]
-		{ id = 1272, }, --name = "Земледельцы", side = "-", category = "Mists of Pandaria", }, --[faction=1272]
 		{ id = 1271, }, --name = "Орден Облачного Змея", side = "-", category = "Mists of Pandaria", }, --[faction=1271]
 		{ id = 1270, }, --name = "Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1270]
 		{ id = 1269, }, --name = "Золотой Лотос", side = "-", category = "Mists of Pandaria", }, --[faction=1269]
-		{ id = 1242, }, --name = "Цзинь-юй Жемчужного Плавника", side = "-", category = "Mists of Pandaria", }, --[faction=1242]
-		{ id = 1228, }, --name = "Лесные хозены", side = "-", category = "Mists of Pandaria", }, --[faction=1228]
-		{ id = 1216, }, --name = "Академия Шан Си", side = "-", category = "Mists of Pandaria", }, --[faction=1216]
+	----------------------------------------------------------------
+		{ id = 1388, }, --name = "Войска Похитителей Солнца", side = "-", category = "Mists of Pandaria", }, --[faction=1388]
+		{ id = 1375, }, --name = "Армия Покорителей", side = "-", category = "Mists of Pandaria", }, --[faction=1375] -- ОРДА
+		{ id = 1228, }, --name = "Лесные хозены", side = "-", category = "Mists of Pandaria", }, --[faction=1228] -- ОРДА
+		{ id = 1387, }, --name = "Армия Кирин-Тора", side = "-", category = "Mists of Pandaria", }, --[faction=1387]
+		{ id = 1376, }, --name = "Операция \"Заслон\"", side = "-", category = "Mists of Pandaria", }, --[faction=1376] -- АЛЬЯНС
+		{ id = 1242, }, --name = "Цзинь-юй Жемчужного Плавника", side = "-", category = "Mists of Pandaria", }, --[faction=1242] -- АЛЬЯНС
 		----------------------------------------------------------------
+		{ id = 1272, }, --name = "Земледельцы", side = "-", category = "Mists of Pandaria", }, --[faction=1272]
 		{ id = 1283, }, --name = "Фермер Фун", side = "-", category = "Земледельцы", }, --[faction=1283]
 		{ id = 1282, }, --name = "Рыба Тростниковая Шкура", side = "-", category = "Земледельцы", }, --[faction=1282]
 		{ id = 1281, }, --name = "Джина Грязный Коготь", side = "-", category = "Земледельцы", }, --[faction=1281]
@@ -384,6 +368,7 @@ E.OctoTable_Reputations = {
 		{ id = 1275, }, --name = "Элла", side = "-", category = "Земледельцы", }, --[faction=1275]
 		{ id = 1273, }, --name = "Йогу Пьяный", side = "-", category = "Земледельцы", }, --[faction=1273]
 		----------------------------------------------------------------
+		{ id = 1302, }, --name = "Рыболовы", side = "-", category = "Mists of Pandaria", }, --[faction=1302]
 		{ id = 1358, }, --name = "Нат Пэгл", side = "-", category = "Рыболовы", }, --[faction=1358]
 		----------------------------------------------------------------
 		{ id = 1357, }, --name = "Номи", side = "-", category = "Другое", }, --[faction=1357]
@@ -426,27 +411,30 @@ E.OctoTable_Reputations = {
 		-- ["Wrath of the Lich King"] = {
 		{ id = 1156, }, --name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1156]
 		{ id = 1119, }, --name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", }, --[faction=1119]
-		{ id = 1117, }, --name = "Низина Шолазар", side = "-", category = "Wrath of the Lich King", }, --[faction=1117]
 		{ id = 1106, }, --name = "Серебряный Авангард", side = "-", category = "Wrath of the Lich King", }, --[faction=1106]
 		{ id = 1098, }, --name = "Рыцари Черного Клинка", side = "-", category = "Wrath of the Lich King", }, --[faction=1098]
 		{ id = 1091, }, --name = "Драконий союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1091]
 		{ id = 1090, }, --name = "Кирин-Тор", side = "-", category = "Wrath of the Lich King", }, --[faction=1090]
 		{ id = 1073, }, --name = "Калу'ак", side = "-", category = "Wrath of the Lich King", }, --[faction=1073]
-		{ id = 1052, }, --name = "Экспедиция Орды", side = "-", category = "Wrath of the Lich King", }, --[faction=1052]
-		{ id = 1037, }, --name = "Авангард Альянса", side = "-", category = "Wrath of the Lich King", }, --[faction=1037] -- ХЕДЕР ВНУТРЕННИЙ
 		----------------------------------------------------------------
+		{ id = 1117, }, --name = "Низина Шолазар", side = "-", category = "Wrath of the Lich King", }, --[faction=1117]
 		{ id = 1105, }, --name = "Оракулы", side = "-", category = "Низина Шолазар", }, --[faction=1105]
 		{ id = 1104, }, --name = "Племя Бешеного Сердца", side = "-", category = "Низина Шолазар", }, --[faction=1104]
+		----------------------------------------------------------------
+		{ id = 1052, }, --name = "Экспедиция Орды", side = "-", category = "Wrath of the Lich King", }, --[faction=1052] -- ОРДА
 		----------------------------------------------------------------
 		{ id = 1124, }, --name = "Похитители Солнца", side = "-", category = "Экспедиция Орды", }, --[faction=1124]
 		{ id = 1085, }, --name = "Армия Песни Войны", side = "-", category = "Экспедиция Орды", }, --[faction=1085]
 		{ id = 1067, }, --name = "Карающая Длань", side = "-", category = "Экспедиция Орды", }, --[faction=1067]
 		{ id = 1064, }, --name = "Таунка", side = "-", category = "Экспедиция Орды", }, --[faction=1064]
 		----------------------------------------------------------------
-		{ id = 1126, }, --name = "Зиморожденные", side = "-", category = "Авангард Альянса", }, --[faction=1126]
+		{ id = 1037, }, --name = "Авангард Альянса", side = "-", category = "Wrath of the Lich King", }, --[faction=1037] -- АЛЬЯНС
+		----------------------------------------------------------------
 		{ id = 1094, }, --name = "Серебряный Союз", side = "-", category = "Авангард Альянса", }, --[faction=1094]
+		{ id = 1126, }, --name = "Зиморожденные", side = "-", category = "Авангард Альянса", }, --[faction=1126]
 		{ id = 1068, }, --name = "Лига исследователей", side = "-", category = "Авангард Альянса", }, --[faction=1068]
 		{ id = 1050, }, --name = "Экспедиция Отважных", side = "-", category = "Авангард Альянса", }, --[faction=1050]
+		----------------------------------------------------------------
 	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -465,16 +453,13 @@ E.OctoTable_Reputations = {
 		{ id = 1012, }, --name = "Пеплоусты-служители", side = "-", category = "The Burning Crusade", }, --[faction=1012]
 		{ id = 990, }, --name = "Песчаная Чешуя", side = "-", category = "The Burning Crusade", }, --[faction=990]
 		{ id = 989, }, --name = "Хранители Времени", side = "-", category = "The Burning Crusade", }, --[faction=989]
-		{ id = 978, }, --name = "Куренай", side = "-", category = "The Burning Crusade", }, --[faction=978]
 		{ id = 970, }, --name = "Спореггар", side = "-", category = "The Burning Crusade", }, --[faction=970]
 		{ id = 967, }, --name = "Аметистовое Око", side = "-", category = "The Burning Crusade", }, --[faction=967]
-		{ id = 947, }, --name = "Траллмар", side = "-", category = "The Burning Crusade", }, --[faction=947]
-		{ id = 946, }, --name = "Оплот Чести", side = "-", category = "The Burning Crusade", }, --[faction=946]
 		{ id = 942, }, --name = "Кенарийская экспедиция", side = "-", category = "The Burning Crusade", }, --[faction=942]
-		{ id = 941, }, --name = "Маг'хары", side = "-", category = "The Burning Crusade", }, --[faction=941]
-		{ id = 936, }, --name = "Город Шаттрат", side = "-", category = "The Burning Crusade", }, --[faction=936]
 		{ id = 933, }, --name = "Консорциум", side = "-", category = "The Burning Crusade", }, --[faction=933]
 		{ id = 922, }, --name = "Транквиллион", side = "-", category = "The Burning Crusade", }, --[faction=922]
+		----------------------------------------------------------------
+		{ id = 936, }, --name = "Город Шаттрат", side = "-", category = "The Burning Crusade", }, --[faction=936]
 		----------------------------------------------------------------
 		{ id = 1077, }, --name = "Армия Расколотого Солнца", side = "-", category = "Город Шаттрат", }, --[faction=1077]
 		{ id = 1031, }, --name = "Стражи небес Ша'тар", side = "-", category = "Город Шаттрат", }, --[faction=1031]
@@ -482,6 +467,13 @@ E.OctoTable_Reputations = {
 		{ id = 935, }, --name = "Ша'тар", side = "-", category = "Город Шаттрат", }, --[faction=935]
 		{ id = 934, }, --name = "Провидцы", side = "-", category = "Город Шаттрат", }, --[faction=934]
 		{ id = 932, }, --name = "Алдоры", side = "-", category = "Город Шаттрат", }, --[faction=932]
+		----------------------------------------------------------------
+		{ id = 947, }, --name = "Траллмар", side = "-", category = "The Burning Crusade", }, --[faction=947] -- ОРДА
+		{ id = 941, }, --name = "Маг'хары", side = "-", category = "The Burning Crusade", }, --[faction=941] -- ОРДА
+		----------------------------------------------------------------
+		{ id = 946, }, --name = "Оплот Чести", side = "-", category = "The Burning Crusade", }, --[faction=946] -- АЛЬЯНС
+		{ id = 978, }, --name = "Куренай", side = "-", category = "The Burning Crusade", }, --[faction=978] -- АЛЬЯНС
+		----------------------------------------------------------------
 	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------
