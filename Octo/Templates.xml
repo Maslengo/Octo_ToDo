@@ -1,0 +1,248 @@
+<Ui>
+	<Frame name="MyAddonEditFrameTemplate" movable="true" resizable="true" dontSavePosition="true" enableMouse="true" inherits="DialogBoxFrame" hidden="true" virtual="true">
+		<Size x="740" y="500"/>
+		<Frames>
+			<EventFrame parentKey="scrollBar" inherits="MinimalScrollBar">
+				<Anchors>
+					<Anchor point="TOPRIGHT" x="14" y="0"/>
+					<Anchor point="BOTTOMRIGHT" x="14" y="0"/>
+				</Anchors>
+			</EventFrame>
+			<Frame parentKey="editFrame" inherits="BackdropTemplate, ScrollingEditBoxTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="20" y="-20"/>
+					<Anchor point="BOTTOMRIGHT" x="-20" y="60"/>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture setAllPoints="true">
+							<Color r=".08" g=".08" b=".5" a=".1"/>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Button parentKey="resize">
+				<Size x="16" y="16"/>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+				</Anchors>
+				<NormalTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up"/>
+				<HighlightTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
+				<PushedTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
+				<Scripts>
+					<OnDragStart>
+						local parent = self:GetParent()
+						parent:StartSizing("BOTTOMRIGHT", true)
+					</OnDragStart>
+					<OnDragStop>
+						self:GetParent():StopMovingOrSizing()
+					</OnDragStop>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+
+					self.resize:RegisterForDrag("LeftButton")
+					self:SetBackdrop({
+						bgFile = "Interface\\Addons\\Octo\\Media\\border\\01 Octo.tga",
+						edgeFile = "Interface\\Addons\\Octo\\Media\\border\\01 Octo.tga",
+						edgeSize = 1,
+						insets = {left = 1, right = 1, top = 1, bottom = 1},
+					})
+					self:SetBackdropColor(.08, .08, .08, 0.8)
+					self:SetBackdropBorderColor(0, 0, 0, 1)
+
+					editFrame.editFrame:SetBackdrop({
+							bgFile = "Interface\\Addons\\Octo\\Media\\border\\01 Octo.tga",
+							edgeFile = "Interface\\Addons\\Octo\\Media\\border\\01 Octo.tga",
+							edgeSize = 1,
+							insets = {left = 1, right = 1, top = 1, bottom = 1},
+						})
+					editFrame.editFrame:SetBackdropColor(.08, .08, .08, 0.8)
+					editFrame.editFrame:SetBackdropBorderColor(0, 0, 0, 1)
+
+					local scrollBox = self.editFrame:GetScrollBox()
+					scrollBox:SetAllPoints(self.editFrame)
+					ScrollUtil.RegisterScrollBoxWithScrollBar(scrollBox, self.scrollBar)
+
+					local editBox = self.editFrame:GetEditBox()
+					editBox:HookScript("OnEnterPressed", function(self) self:Insert("\n") end)
+					editBox:HookScript("OnEscapePressed", function(self) self:ClearFocus() end)
+
+				</OnLoad>
+			<OnMouseDown>
+					if (button == "LeftButton") then
+						self:StartMoving()
+					end
+					if (button == "TOGGLEGAMEMENU") then
+						self:Hide()
+						self:SetPropagateKeyboardInput(false)
+					else
+						self:SetPropagateKeyboardInput(true)
+					end
+
+				</OnMouseDown>
+			<OnMouseUp>
+					self:StopMovingOrSizing()
+				</OnMouseUp>
+		</Scripts>
+	</Frame>
+
+
+
+
+
+
+	<EventFrame name="OctoWowTrimHorizontalScrollBar" inherits="HorizontalScrollBarTemplate" mixin="WowTrimScrollBarMixin" virtual="true">
+		<Size x="560" y="8"/>
+		<KeyValues>
+			<KeyValue key="minThumbExtent" value="23" type="number"/>
+		</KeyValues>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture>
+					<Anchors>
+						<Anchor point="TOPLEFT" x="3"/>
+						<Anchor point="BOTTOMRIGHT" x="-3"/>
+					</Anchors>
+					<Color r="0" g="0" b="0" a=".75"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Frame parentKey="Track" enableMouse="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="19" y="0"/>
+					<Anchor point="BOTTOMRIGHT" x="-19" y="0"/>
+				</Anchors>
+
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture parentKey="Begin" atlas="minimal-scrollbar-track-top" useAtlasSize="true">
+							<Anchors>
+								<Anchor point="TOPLEFT"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="End" atlas="minimal-scrollbar-track-bottom" useAtlasSize="true">
+							<Anchors>
+								<Anchor point="TOPRIGHT"/>
+							</Anchors>
+						</Texture>
+						<Texture parentKey="Middle" atlas="!minimal-scrollbar-track-middle" useAtlasSize="true">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeKey="$parent.Begin" relativePoint="TOPRIGHT"/>
+								<Anchor point="BOTTOMRIGHT" relativeKey="$parent.End" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+
+				<Frames>
+					<EventButton parentKey="Thumb" mixin="MinimalScrollBarThumbScriptsMixin" enableMouse="true">
+						<Size y="8"/>
+						<HitRectInsets>
+							<AbsInset left="-4" right="-4" top="-4" bottom="-4"/>
+						</HitRectInsets>
+						<KeyValues>
+							<KeyValue key="isHorizontal" value="false" type="boolean"/>
+							<KeyValue key="upBeginTexture" value="minimal-scrollbar-small-thumb-top" type="string"/>
+							<KeyValue key="upMiddleTexture" value="minimal-scrollbar-small-thumb-middle" type="string"/>
+							<KeyValue key="upEndTexture" value="minimal-scrollbar-small-thumb-bottom" type="string"/>
+							<KeyValue key="overBeginTexture" value="minimal-scrollbar-small-thumb-top-over" type="string"/>
+							<KeyValue key="overMiddleTexture" value="minimal-scrollbar-small-thumb-middle-over" type="string"/>
+							<KeyValue key="overEndTexture" value="minimal-scrollbar-small-thumb-bottom-over" type="string"/>
+							<KeyValue key="downBeginTexture" value="minimal-scrollbar-small-thumb-top-down" type="string"/>
+							<KeyValue key="downMiddleTexture" value="minimal-scrollbar-small-thumb-middle-down" type="string"/>
+							<KeyValue key="downEndTexture" value="minimal-scrollbar-small-thumb-bottom-down" type="string"/>
+							<KeyValue key="mouseDownSoundKitID" value="SOUNDKIT.U_CHAT_SCROLL_BUTTON" type="global"/>
+						</KeyValues>
+						<Layers>
+							<Layer level="BACKGROUND" textureSubLevel="1">
+								<Texture parentKey="Middle">
+									<Anchors>
+										<Anchor point="TOPLEFT" x="5"/>
+										<Anchor point="BOTTOMRIGHT" x="-5"/>
+									</Anchors>
+								</Texture>
+							</Layer>
+							<Layer level="BACKGROUND" textureSubLevel="2">
+								<Texture parentKey="Begin">
+									<Anchors>
+										<Anchor point="TOPLEFT"/>
+									</Anchors>
+								</Texture>
+								<Texture parentKey="End">
+									<Anchors>
+										<Anchor point="TOPRIGHT"/>
+									</Anchors>
+								</Texture>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad method="OnLoad"/>
+							<!-- <OnSizeChanged method="OnSizeChanged"/> -->
+							<OnEnter method="OnEnter"/>
+							<OnLeave method="OnLeave"/>
+							<OnMouseDown method="OnMouseDown"/>
+							<OnMouseUp method="OnMouseUp"/>
+							<OnEnable method="OnEnable"/>
+							<OnDisable method="OnDisable"/>
+						</Scripts>
+					</EventButton>
+				</Frames>
+			</Frame>
+			<EventButton parentKey="Back" inherits="MinimalScrollBarStepperScripts">
+				<Size x="11" y="17"/>
+				<Anchors>
+					<Anchor point="LEFT"/>
+				</Anchors>
+				<KeyValues>
+					<KeyValue key="direction" value="ScrollControllerMixin.Directions.Decrease" type="global"/>
+					<KeyValue key="normalTexture" value="minimal-scrollbar-arrow-top" type="string"/>
+					<KeyValue key="overTexture" value="minimal-scrollbar-arrow-top-over" type="string"/>
+					<KeyValue key="downTexture" value="minimal-scrollbar-arrow-top-down" type="string"/>
+					<KeyValue key="disabledTexture" value="minimal-scrollbar-arrow-top" type="string"/>
+					<KeyValue key="mouseDownSoundKitID" value="SOUNDKIT.SCROLLBAR_STEP" type="global"/>
+				</KeyValues>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Texture"/>
+					</Layer>
+					<Layer level="OVERLAY">
+						<Texture parentKey="Overlay" atlas="UI-ScrollBar-ScrollLeftButton-Highlight" useAtlasSize="true" hidden="true"/>
+					</Layer>
+				</Layers>
+			</EventButton>
+			<EventButton parentKey="Forward" inherits="MinimalScrollBarStepperScripts">
+				<Size x="11" y="17"/>
+				<Anchors>
+					<Anchor point="RIGHT"/>
+				</Anchors>
+				<KeyValues>
+					<KeyValue key="direction" value="ScrollControllerMixin.Directions.Increase" type="global"/>
+					<KeyValue key="normalTexture" value="minimal-scrollbar-arrow-bottom" type="string"/>
+					<KeyValue key="overTexture" value="minimal-scrollbar-arrow-bottom-over" type="string"/>
+					<KeyValue key="downTexture" value="minimal-scrollbar-arrow-bottom-down" type="string"/>
+					<KeyValue key="disabledTexture" value="minimal-scrollbar-bottom-top" type="string"/>
+					<KeyValue key="mouseDownSoundKitID" value="SOUNDKIT.SCROLLBAR_STEP" type="global"/>
+				</KeyValues>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture parentKey="Texture"/>
+					</Layer>
+					<Layer level="OVERLAY">
+						<Texture parentKey="Overlay" atlas="UI-ScrollBar-ScrollRightButton-Highlight" useAtlasSize="true" hidden="true"/>
+					</Layer>
+				</Layers>
+			</EventButton>
+		</Frames>
+		<Scripts>
+			<OnLoad method="OnLoad"/>
+		</Scripts>
+	</EventFrame>
+
+
+
+
+</Ui>

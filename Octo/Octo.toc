@@ -1,0 +1,31 @@
+## Interface: 110105, 110100
+## Title: !|cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r
+## Author: Octo
+## Version: v91.0(11.1.5)(19.04.2025)
+## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Core
+
+## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other
+## SavedVariables: Octo_Achievements_DB
+## SavedVariables: OctoSimpleList Octo_AddonsTable Octo_AddonsManager_DB
+## SavedVariables: Octo_TrashCan_DB
+
+
+Libs\embeds.xml
+Templates.xml
+
+1 Localization.lua
+2 Functions.lua
+3 Fprint.lua
+WTF.lua
+
+
+1 Core\Core.xml
+2 ToDo\ToDo.xml
+3 Achievements\Achievements.xml
+4 AddonsManager\AddonsManager.xml
+
+Options\0basicOptions.lua
+Options\1GeneralConfigPanel.lua
+Options\99Developing.lua
+
+SharedMedia.lua
