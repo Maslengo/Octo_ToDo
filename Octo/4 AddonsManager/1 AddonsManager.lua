@@ -160,38 +160,33 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.full:SetPoint("RIGHT")
 		frame.full.texture = frame.full:CreateTexture(nil, "BACKGROUND")
 		frame.full.texture:SetAllPoints()
-		frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-		frame.full.texture:SetVertexColor(1, 1, 1, 0) -- SetColorTexture
-		frame.full:SetScript("OnEnter", function(self) self.texture:SetVertexColor(1, 1, 1, .1) end) -- SetColorTexture
-		frame.full:SetScript("OnLeave", function(self) self.texture:SetVertexColor(1, 1, 1, 0) end) -- SetColorTexture
+		frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+		local r, g, b = GetClassColor(E.classFilename)
+		frame.full.texture:SetVertexColor(r, g, b, 0)
+		frame.full:SetScript("OnEnter", function(self) self.texture:SetAlpha(E.BGALPHA) end)
+		frame.full:SetScript("OnLeave", function(self) self.texture:SetAlpha(0) end)
 		frame.full:SetPropagateMouseClicks(true)
 		frame.full:SetPropagateMouseMotion(true)
 		------------------------------------------------
-		frame.zero = CreateFrame("BUTTON", nil, frame)
-		frame.zero:SetPropagateMouseClicks(false)
-		frame.zero:SetSize(AddonHeight, AddonHeight)
-		frame.zero:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.zero.icon = frame:CreateTexture(nil, "BACKGROUND")
-		frame.zero.icon:SetAllPoints(frame.zero)
-		frame.zero:SetScript("OnClick", OnClick_Zero)
-		-- frame.zero.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		------------------------------------------------
-		frame.first = CreateFrame("FRAME", nil, frame)
+		frame.first = CreateFrame("BUTTON", nil, frame)
 		frame.first:SetPropagateMouseClicks(false)
 		frame.first:SetSize(AddonHeight, AddonHeight)
-		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonHeight, 0)
-		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
-		frame.first.icon:SetAllPoints(frame.first)
-		frame.first.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonWHITE")
-		-- frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.icon_firstSlot = frame:CreateTexture(nil, "BACKGROUND")
+		frame.icon_firstSlot:SetAllPoints(frame.first)
+		frame.first:SetScript("OnClick", OnClick_Zero)
+		-- frame.icon_firstSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		------------------------------------------------
-		frame.second = CreateFrame("FRAME", nil, frame)
-		frame.second:SetPropagateMouseClicks(false)
-		frame.second:SetSize(AddonHeight, AddonHeight)
-		frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonHeight+AddonHeight, 0)
-		frame.second.icon = frame:CreateTexture(nil, "BACKGROUND")
-		frame.second.icon:SetAllPoints(frame.second)
-		-- frame.second.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		frame.icon_secondSlot = frame:CreateTexture(nil, "BACKGROUND")
+		frame.icon_secondSlot:SetPoint("TOPLEFT", AddonHeight+1, -1)
+		frame.icon_secondSlot:SetSize(AddonHeight-2, AddonHeight-2)
+		frame.icon_secondSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		frame.icon_secondSlot:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonWHITE")
+		------------------------------------------------
+		frame.icon_third = frame:CreateTexture(nil, "BACKGROUND")
+		frame.icon_third:SetPoint("TOPLEFT", AddonHeight+AddonHeight+1, -1)
+		frame.icon_third:SetSize(AddonHeight-2, AddonHeight-2)
+		frame.icon_third:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		------------------------------------------------
 		frame.third = CreateFrame("BUTTON", nil, frame)
 		frame.third:SetPropagateMouseClicks(true)
@@ -221,6 +216,22 @@ local function func_OnAcquired(owner, frame, data, new)
 		------------------------------------------------
 	end
 end
+
+
+
+
+
+
+----------------------------------------------------------------
+
+function Octo_EventFrame_AddonsManager:func_CollectTooltipOnEnter(index) -- ПОФИКСИТЬ
+
+
+
+end
+
+
+
 ----------------------------------------------------------------
 function Octo_EventFrame_AddonsManager:CollectAddonInfo(index)
 	local name = E.func_GetAddonName(index)
@@ -398,31 +409,31 @@ function Octo_EventFrame_AddonsManager:Octo_Frame_init(frame, node)
 	local textRIGHT = select(4, Octo_EventFrame_AddonsManager:CollectAddonInfo(data.index))
 	local tooltipthird = select(5, Octo_EventFrame_AddonsManager:CollectAddonInfo(data.index))
 	-- local colorAddon = select(6, Octo_EventFrame_AddonsManager:CollectAddonInfo(data.index))
-	frame.first.icon:SetTexture(firsticonTexture)
+	frame.icon_secondSlot:SetTexture(firsticonTexture)
 	if showExpandOrCollapseButton then
 		local tbl = {}
 		-- ЙЦУЙЦУ OctoSimpleList[data.index]
 		-- ЙЦУЙЦУ Octo_AddonsTable.depsByIndex[data.index]
 			tbl = Octo_AddonsTable.depsByIndex
 		if tbl[data.index] then
-			UpdateExpandOrCollapseButtonState(frame.zero.icon, node:IsCollapsed(), node, name)
+			UpdateExpandOrCollapseButtonState(frame.icon_firstSlot, node:IsCollapsed(), node, name)
 		else
-			frame.zero.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\spacerEMPTY")
+			frame.icon_firstSlot:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\spacerEMPTY")
 		end
 	else
-		frame.zero:Hide()
+		frame.first:Hide()
 	end
 	if Octo_AddonsManager_DB.config.showIcons then
 		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+AddonHeight+4, 0)
-		frame.second.icon:SetTexture(iconTexture)
+		frame.icon_third:SetTexture(iconTexture)
 	else
 		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+4, 0)
-		frame.second.icon:SetTexture(E.Icon_Empty)
+		frame.icon_third:SetTexture(E.Icon_Empty)
 	end
 	frame.third.textLEFT:SetText(textLEFT)
 	frame.third.textRIGHT:SetText(textRIGHT)
 	frame.third.tooltip = tooltipthird
-	-- E:func_SetBackdrop(frame.zero, nil, 0, 0)
+	-- E:func_SetBackdrop(frame.first, nil, 0, 0)
 	-- E:func_SetBackdrop(frame.third, nil, 0, 0)
 end
 function Octo_EventFrame_AddonsManager:Octo_Create_MainFrame_AddonsManager()
@@ -543,7 +554,7 @@ function Octo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 				DisableAllTooltip[#DisableAllTooltip+1] = {E.func_texturefromIcon(E.func_GetAddoniconTexture(name))..E.func_GetAddonTitle(name), E.func_texturefromIcon([[Interface\AddOns\Octo\Media\SimpleAddonManager\lock]])}
 			end
 			frame_DisableAll.tooltip = DisableAllTooltip
-			E.func_TooltipOnEnter(self, true, true)
+			E.func_TooltipOnEnter(self, false, false)
 	end)
 	frame_DisableAll:SetScript("OnLeave", GameTooltip_Hide)
 	----------------------------------------------------------------

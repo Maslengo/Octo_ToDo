@@ -1,5 +1,10 @@
-local GlobalAddonName, E = ... 
+local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local LibDataBroker = LibStub("LibDataBroker-1.1")
+local LibDBIcon = LibStub("LibDBIcon-1.0")
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local LibThingsLoad = LibStub("LibThingsLoad-1.0")
+local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 -------------------------------------------------------------------------
 function E.CreateGeneralOptions()
 	local index = 0
@@ -615,18 +620,14 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 		},
 	}
-	-- if wipe == false then
-	-- wipe = true
-	-------------------------------------------------
-	-- for index, v in ipairs(E.OctoTable_Expansions) do
-	-- 	generalOptions.args.ExpansionToShow.values[index] = E.func_texturefromIcon(v.icon)..v.color..v.name.."|r"
-	-- end
 	-------------------------------------------------
 	for index, name in ipairs(E.OctoTable_Prefixes) do
 		generalOptions.args.prefix.values[index] = name
 	end
-	-------------------------------------------------
-	-- end
+
+
+
+
 	-------------------------------------------------
 	return generalOptions
 end

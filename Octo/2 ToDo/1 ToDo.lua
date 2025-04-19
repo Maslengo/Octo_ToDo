@@ -77,17 +77,19 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.full:SetPoint("RIGHT")
 		frame.full.texture = frame.full:CreateTexture(nil, "BACKGROUND")
 		frame.full.texture:SetAllPoints()
-		frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-		frame.full.texture:SetVertexColor(1, 1, 1, 0) -- SetColorTexture
-		frame.full:SetScript("OnEnter", function(self) self.texture:SetVertexColor(1, 1, 1, .1) end) -- SetColorTexture
-		frame.full:SetScript("OnLeave", function(self) self.texture:SetVertexColor(1, 1, 1, 0) end) -- SetColorTexture
+		frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+		local r, g, b = GetClassColor(E.classFilename)
+		frame.full.texture:SetVertexColor(r, g, b, 0)
+		frame.full:SetScript("OnEnter", function(self) self.texture:SetAlpha(E.BGALPHA) end)
+		frame.full:SetScript("OnLeave", function(self) self.texture:SetAlpha(0) end)
 		frame.full:SetPropagateMouseClicks(true)
 		frame.full:SetPropagateMouseMotion(true)
 		------------------------------------------------
-		frame.icon = frame:CreateTexture(nil, "BACKGROUND")
-		frame.icon:SetPoint("TOPLEFT", 1, -1)
-		frame.icon:SetSize(AddonHeight-2, AddonHeight-2)
-		frame.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		frame.icon_firstSlot = frame:CreateTexture(nil, "BACKGROUND")
+		frame.icon_firstSlot:SetPoint("TOPLEFT", 1, -1)
+		frame.icon_firstSlot:SetSize(AddonHeight-2, AddonHeight-2)
+		frame.icon_firstSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		------------------------------------------------
 		frame.left = CreateFrame("FRAME", nil, frame)
 		frame.left:SetPropagateMouseClicks(true)
 		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
@@ -138,22 +140,22 @@ function Octo_EventFrame_OCTOMAIN:Octo_Frame_init(frame, node)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	frame.left.textLEFT:SetText(data.textLEFT)
-	frame.icon:SetTexture(data.headerIcon)
+	frame.icon_firstSlot:SetTexture(data.headerIcon)
 	if not data.zxc then
 		for i, v in ipairs(frame.second) do
 			frame.second[i]:Hide()
 		end
 	else
 		if data.headerIcon then
-			frame.icon:SetTexture(data.headerIcon)
-			-- frame.icon:SetPoint("TOPLEFT", 1, -1)
+			frame.icon_firstSlot:SetTexture(data.headerIcon)
+			-- frame.icon_firstSlot:SetPoint("TOPLEFT", 1, -1)
 			-- frame.left.textLEFT:SetPoint("LEFT", 2+AddonHeight, 0)
 		elseif data.zxc.icon then
-			frame.icon:SetTexture(data.zxc.icon)
-			-- frame.icon:SetPoint("TOPLEFT", 1+AddonHeight, -1)
+			frame.icon_firstSlot:SetTexture(data.zxc.icon)
+			-- frame.icon_firstSlot:SetPoint("TOPLEFT", 1+AddonHeight, -1)
 		else
-			frame.icon:SetTexture(E.Icon_Empty)
-			-- frame.icon:SetPoint("TOPLEFT", 1+AddonHeight, -1)
+			frame.icon_firstSlot:SetTexture(E.Icon_Empty)
+			-- frame.icon_firstSlot:SetPoint("TOPLEFT", 1+AddonHeight, -1)
 			-- frame.left.textLEFT:SetPoint("LEFT", 2+AddonHeight+AddonHeight, 0)
 		end
 		for i = 1, #data.zxc.textCENT do
@@ -806,7 +808,7 @@ end
 function Octo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
-	-- self:LIBSHAREDSFMIC()
+	self:LIBSHAREDSFMIC()
 	C_WowTokenPublic.UpdateMarketPrice()
 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.GameMenuFrameScale or 1)
 	if not PlayerSpellsFrame then
@@ -936,46 +938,52 @@ end
 
 
 
--- local parentFrame = UIParent
--- function Octo_EventFrame_OCTOMAIN:LIBSHAREDSFMIC()
--- 	local background = LibSFDropDown:CreateMediaBackgroundModernButton(parentFrame, 120) -- BACKGROUND
--- 	background:SetPoint("TOPLEFT", 20, -20)
--- 	background:ddSetSelectedValue(currentValue or LibSharedMedia:GetDefault("background"))
--- 	background:ddSetOnSelectedFunc(function(value)
--- 			local texture = LibSharedMedia:Fetch("background", value)
--- 			print(value, texture)
--- 			-- some code
--- 	end)
--- 	local border = LibSFDropDown:CreateMediaBorderModernButton(parentFrame, 120) -- BORDER
--- 	border:SetPoint("TOPLEFT", background, "BOTTOMLEFT", 0, -10)
--- 	border:ddSetSelectedValue(currentValue or LibSharedMedia:GetDefault("border"))
--- 	border:ddSetOnSelectedFunc(function(value)
--- 			local texture = LibSharedMedia:Fetch("border", value)
--- 			print(value, texture)
--- 			-- some code
--- 	end)
--- 	local statusbar = LibSFDropDown:CreateMediaStatusbarModernButton(parentFrame, 120) -- STATUSBAR
--- 	statusbar:SetPoint("TOPLEFT", border, "BOTTOMLEFT", 0, -10)
--- 	statusbar:ddSetSelectedValue(currentValue or LibSharedMedia:GetDefault("statusbar"))
--- 	statusbar:ddSetOnSelectedFunc(function(value)
--- 			local texture = LibSharedMedia:Fetch("statusbar", value)
--- 			print(value, texture)
--- 			-- some code
--- 	end)
--- 	local font = LibSFDropDown:CreateMediaFontModernButton(parentFrame, 120) -- FONT
--- 	font:SetPoint("TOPLEFT", statusbar, "BOTTOMLEFT", 0, -10)
--- 	font:ddSetSelectedValue(currentValue or LibSharedMedia:GetDefault("font"))
--- 	font:ddSetOnSelectedFunc(function(value)
--- 			local selectedFont = LibSharedMedia:Fetch("font", value)
--- 			print(value, selectedFont)
--- 			-- some code
--- 	end)
--- 	local sound = LibSFDropDown:CreateMediaSoundModernButton(parentFrame, 120) -- SOUND
--- 	sound:SetPoint("TOPLEFT", font, "BOTTOMLEFT", 0, -10)
--- 	sound:ddSetSelectedValue(currentValue or LibSharedMedia:GetDefault("sound"))
--- 	sound:ddSetOnSelectedFunc(function(value)
--- 			local selectedSound = LibSharedMedia:Fetch("sound", value)
--- 			print(value, selectedSound)
--- 			-- some code
--- 	end)
--- end
+local parentFrame = UIParent
+function Octo_EventFrame_OCTOMAIN:LIBSHAREDSFMIC()
+	local background = LibSFDropDown:CreateMediaBackgroundModernButton(parentFrame, 120) -- BACKGROUND
+	background:SetPoint("TOPLEFT", 20, -20)
+	background:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_background or currentValue or LibSharedMedia:GetDefault("background"))
+	background:ddSetOnSelectedFunc(function(value)
+			local texture = LibSharedMedia:Fetch("background", value)
+			print(value, ">", texture)
+			Octo_ToDo_DB_Vars.interface.Octo_background = value
+			-- some code
+	end)
+	local border = LibSFDropDown:CreateMediaBorderModernButton(parentFrame, 120) -- BORDER
+	border:SetPoint("TOPLEFT", background, "BOTTOMLEFT", 0, -10)
+	border:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_border or currentValue or LibSharedMedia:GetDefault("border"))
+	border:ddSetOnSelectedFunc(function(value)
+			local texture = LibSharedMedia:Fetch("border", value)
+			print(value, ">", texture)
+			Octo_ToDo_DB_Vars.interface.Octo_border = value
+			-- some code
+	end)
+	local statusbar = LibSFDropDown:CreateMediaStatusbarModernButton(parentFrame, 120) -- STATUSBAR
+	statusbar:SetPoint("TOPLEFT", border, "BOTTOMLEFT", 0, -10)
+	statusbar:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_statusbar or currentValue or LibSharedMedia:GetDefault("statusbar"))
+	statusbar:ddSetOnSelectedFunc(function(value)
+			local texture = LibSharedMedia:Fetch("statusbar", value)
+			print(value, ">", texture)
+
+			Octo_ToDo_DB_Vars.interface.Octo_statusbar = value
+			-- some code
+	end)
+	local font = LibSFDropDown:CreateMediaFontModernButton(parentFrame, 120) -- FONT
+	font:SetPoint("TOPLEFT", statusbar, "BOTTOMLEFT", 0, -10)
+	font:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_font or currentValue or LibSharedMedia:GetDefault("font"))
+	font:ddSetOnSelectedFunc(function(value)
+			local selectedFont = LibSharedMedia:Fetch("font", value)
+			print(value, ">", selectedFont)
+			Octo_ToDo_DB_Vars.interface.Octo_font = value
+			-- some code
+	end)
+	local sound = LibSFDropDown:CreateMediaSoundModernButton(parentFrame, 120) -- SOUND
+	sound:SetPoint("TOPLEFT", font, "BOTTOMLEFT", 0, -10)
+	sound:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_sound or currentValue or LibSharedMedia:GetDefault("sound"))
+	sound:ddSetOnSelectedFunc(function(value)
+			local selectedSound = LibSharedMedia:Fetch("sound", value)
+			print(value, ">", selectedSound)
+			Octo_ToDo_DB_Vars.interface.Octo_sound = value
+			-- some code
+	end)
+end

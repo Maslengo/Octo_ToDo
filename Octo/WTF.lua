@@ -244,6 +244,18 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	if Octo_ToDo_DB_Vars.MinorKeyflames == nil then Octo_ToDo_DB_Vars.MinorKeyflames = true end
 	if Octo_ToDo_DB_Vars.MP_MythicKeystone == nil then Octo_ToDo_DB_Vars.MP_MythicKeystone = true end
 	if Octo_ToDo_DB_Vars.prefix == nil then Octo_ToDo_DB_Vars.prefix = 1 end
+
+	if Octo_ToDo_DB_Vars.interface == nil then Octo_ToDo_DB_Vars.interface = {} end
+
+
+	if Octo_ToDo_DB_Vars.interface.Octo_background == nil then Octo_ToDo_DB_Vars.interface.Octo_background = "None" end
+	if Octo_ToDo_DB_Vars.interface.Octo_border == nil then Octo_ToDo_DB_Vars.interface.Octo_border = "None" end
+	if Octo_ToDo_DB_Vars.interface.Octo_statusbar == nil then Octo_ToDo_DB_Vars.interface.Octo_statusbar = "Blizzard" end
+	if Octo_ToDo_DB_Vars.interface.Octo_font == nil then Octo_ToDo_DB_Vars.interface.Octo_font = "Friz Quadrata TT" end
+	if Octo_ToDo_DB_Vars.interface.Octo_sound == nil then Octo_ToDo_DB_Vars.interface.Octo_sound = "None" end
+
+
+
 	if Octo_ToDo_DB_Vars.Quests == nil then Octo_ToDo_DB_Vars.Quests = true end
 	if Octo_ToDo_DB_Vars.QuestsShowAllways == nil then Octo_ToDo_DB_Vars.QuestsShowAllways = false end
 	if Octo_ToDo_DB_Vars.Reputations == nil then Octo_ToDo_DB_Vars.Reputations = false end

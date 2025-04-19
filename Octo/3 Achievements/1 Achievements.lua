@@ -63,20 +63,18 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.full:SetPoint("RIGHT")
 		frame.full.texture = frame.full:CreateTexture(nil, "BACKGROUND")
 		frame.full.texture:SetAllPoints()
-		frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-		frame.full.texture:SetVertexColor(1, 1, 1, 0) -- SetColorTexture
-		frame.full:SetScript("OnEnter", function(self) self.texture:SetVertexColor(1, 1, 1, .1) end) -- SetColorTexture
-		frame.full:SetScript("OnLeave", function(self) self.texture:SetVertexColor(1, 1, 1, 0) end) -- SetColorTexture
+		frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+		local r, g, b = GetClassColor(E.classFilename)
+		frame.full.texture:SetVertexColor(r, g, b, 0)
+		frame.full:SetScript("OnEnter", function(self) self.texture:SetAlpha(E.BGALPHA) end)
+		frame.full:SetScript("OnLeave", function(self) self.texture:SetAlpha(0) end)
 		frame.full:SetPropagateMouseClicks(true)
 		frame.full:SetPropagateMouseMotion(true)
 		------------------------------------------------
-		frame.first = CreateFrame("FRAME", nil, frame)
-		frame.first:SetPropagateMouseClicks(false)
-		frame.first:SetSize(AddonHeight, AddonHeight)
-		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.first.icon = frame:CreateTexture(nil, "BACKGROUND")
-		frame.first.icon:SetAllPoints(frame.first)
-		-- frame.first.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		frame.icon_firstSlot = frame:CreateTexture(nil, "BACKGROUND")
+		frame.icon_firstSlot:SetPoint("TOPLEFT", 1, -1)
+		frame.icon_firstSlot:SetSize(AddonHeight-2, AddonHeight-2)
+		frame.icon_firstSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		------------------------------------------------
 		frame.second = CreateFrame("BUTTON", nil, frame)
 		frame.second:SetPropagateMouseClicks(true)
@@ -120,7 +118,7 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function Octo_EventFrame_Achievements:Octo_Frame_init(frame, node)
 	local data = node:GetData()
-	frame.first.icon:SetTexture(data.icon)
+	frame.icon_firstSlot:SetTexture(data.icon)
 	frame.second.textLEFT:SetText(data.textLEFT)
 	frame.second.textRIGHT:SetText(data.textRIGHT or "NIL?")
 	frame.second.tooltip = CreateTooltip(data.AchievementID)

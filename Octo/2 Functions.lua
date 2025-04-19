@@ -1837,28 +1837,46 @@ E.spacer = "  "
 E.FULL_WIDTH = 3.60
 E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
 E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
-E.OctoFont = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
+
+				-- ["Octo_statusbar"] = "Blizzard",
+				-- ["Octo_sound"] = "None",
+				-- ["Octo_background"] = "None",
+				-- ["Octo_border"] = "None",
+				-- ["Octo_font"] = "Friz Quadrata TT",
+
+
+E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
+-- E.Octo_font = "Friz Quadrata TT"
+
+
+-- print (Octo_ToDo_DB_Vars.interface.Octo_font)
+
 E.fontObject9 = CreateFont("OctoFont9")
 E.fontObject9:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject9:SetFont(E.OctoFont, 9, "OUTLINE")
+E.fontObject9:SetFont(E.Octo_font, 9, "OUTLINE")
+
 E.fontObject10 = CreateFont("OctoFont10")
 E.fontObject10:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject10:SetFont(E.OctoFont, 10, "OUTLINE")
+E.fontObject10:SetFont(E.Octo_font, 10, "OUTLINE")
+
 E.fontObject11 = CreateFont("OctoFont11")
 E.fontObject11:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject11:SetFont(E.OctoFont, 11, "OUTLINE")
+E.fontObject11:SetFont(E.Octo_font, 11, "OUTLINE")
+
 E.fontObject12 = CreateFont("OctoFont12")
 E.fontObject12:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject12:SetFont(E.OctoFont, 12, "OUTLINE")
+E.fontObject12:SetFont(E.Octo_font, 12, "OUTLINE")
+
 E.fontObject22 = CreateFont("OctoFont22")
 E.fontObject22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject22:SetFont("Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\02 Octo-Bold.TTF", 20, "OUTLINE")
+E.fontObject22:SetFont(E.Octo_font, 20, "OUTLINE")
+
+
 E.AddonTexture_1 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_1.tga"
 E.AddonTexture_2 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_2.tga"
 E.AddonTexture_3 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_3.tga"
 E.AddonTexture_4 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_4.tga"
 E.AddonTexture_5 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_5.tga"
-E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- GetExpansionLevel()
 ----------------------------------------------------------------
@@ -1895,7 +1913,6 @@ E.curExpansionMaxLevel = 70
 E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
 E.MonitorWidth = GetPhysicalScreenSize()
 E.MonitorHeight = select(2, GetPhysicalScreenSize())
-E.BGALPHA = .1
 E.Color_Quest_r = .3 -- 1
 E.Color_Quest_g = .1 -- .7
 E.Color_Quest_b = 0 -- 0
@@ -1925,6 +1942,7 @@ E.bgCb = .08 -- 14/255
 E.bgCa = .8
 E.bgCaOverlay = .1
 E.slider_scale = .8
+E.BGALPHA = .3
 E.multiplier = 2 - E.slider_scale
 E.WorldofWarcraft_Color = "|cffD6AB7D" -- "|cff68CCEF"
 E.TheBurningCrusade_Color = "|cffE43E5A" -- "|cff4FFF79"
