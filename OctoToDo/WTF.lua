@@ -315,8 +315,6 @@ function OctoToDo_EventFrame_WTF:OctoToDo_AddonsManager()
 	if OctoToDo_AddonsManager.profiles == nil then OctoToDo_AddonsManager.profiles = {} end
 	if OctoToDo_AddonsManager.profiles.forceload == nil then OctoToDo_AddonsManager.profiles.forceload = {[GlobalAddonName] = true,} end
 	if OctoToDo_AddonsManager.config == nil then OctoToDo_AddonsManager.config = {} end
-	if OctoToDo_AddonsManager.config.defaultAddonList == nil then OctoToDo_AddonsManager.config.defaultAddonList = false end
-	if OctoToDo_AddonsManager.config.showOnlyLoaded == nil then OctoToDo_AddonsManager.config.showOnlyLoaded = false end
 	if OctoToDo_AddonsManager.config.fullName == nil then OctoToDo_AddonsManager.config.fullName = false end
 	if OctoToDo_AddonsManager.config.showIcons == nil then OctoToDo_AddonsManager.config.showIcons = false end
 	if OctoToDo_AddonsManager.config.showIconsQuestionMark == nil then OctoToDo_AddonsManager.config.showIconsQuestionMark = true end

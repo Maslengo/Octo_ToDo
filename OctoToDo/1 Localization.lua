@@ -20,8 +20,6 @@ if L then
 	L["showIconsQuestionMark"] = true
 	L["showVersion"] = true
 	L["showIndex"] = true
-	L["defaultAddonList"] = true
-	L["showOnlyLoaded"] = true
 
 
 
@@ -229,8 +227,6 @@ if L then
 	L["showIconsQuestionMark"] = "Показывать иконку со знаком вопроса"
 	L["showVersion"] = "Показывать версию"
 	L["showIndex"] = "Показывать индекс"
-	L["defaultAddonList"] = "Стандартный список аддонов"
-	L["showOnlyLoaded"] = "Показывать только загруженные"
 
 	L["minimaphide"] = "|cffFF4C4F".."minimaphide".."|r"
 	L["hookMenuButton"] = "|cffFF4C4F".."hookMenuButton".."|r"

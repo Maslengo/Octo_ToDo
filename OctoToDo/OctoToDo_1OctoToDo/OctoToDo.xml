@@ -45,6 +45,5 @@
 	<Script file="OctoToDo_1OctoToDo\4 Collect.lua"/>
 	<Script file="OctoToDo_1OctoToDo\5 Otrisovka.lua"/>
 	<Script file="OctoToDo_1OctoToDo\6 OctoToDo.lua"/>
-	<Script file="OctoToDo_1OctoToDo\7 func_Create_DD_OCTOMAIN.lua"/>
 
 </Ui>

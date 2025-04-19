@@ -21,7 +21,17 @@ local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
-
+local LibSFDropDown = LibStub("LibSFDropDown-1.5")
+----------------------------------------------------------------
+LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
+		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
+		f:SetPoint("TOPLEFT", 8, -2)
+		f:SetPoint("BOTTOMRIGHT", -8, 2)
+		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+		f:SetBackdropBorderColor(0, 0, 0, 1)
+		return f
+end)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- E.func_LoadAddOn("OctoToDo_Achievements")
@@ -61,6 +71,7 @@ end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local function func_OnAcquired(owner, frame, data, new)
 	if new then
+		------------------------------------------------
 		frame.full = CreateFrame("FRAME", nil, frame)
 		frame.full:SetPropagateMouseClicks(true)
 		frame.full:SetSize(AddonLeftFrameWeight+AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight)
@@ -451,87 +462,305 @@ function E.Update(event_name)
 	end
 end
 
-----------------------------------------------------------------
-function OctoToDo_EventFrame_OCTOMAIN:func_CreateMineFrame()
-	local pizda = false
-	if pizda == true then
-		local colorBtn =  CreateFrame("BUTTON", nil, UIParent, "BackdropTemplate")
-		colorBtn:SetBackdrop({
-				edgeFile = E.edgeFile,
-				edgeSize = 1,
-				insets = {left = 1, right = 1, top = 1, bottom = 1},
-		})
-		colorBtn:SetBackdropBorderColor(0, 0, 0, bbalpha)
-		colorBtn:SetSize(32, 16)
-		colorBtn:SetPoint("TOPLEFT", 50, -50)
-		-- colorBtn:SetNormalTexture("Interface/ChatFrame/ChatFrameColorSwatch")
-		colorBtn:SetNormalTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
-		local colorTex = colorBtn:GetNormalTexture()
-		colorTex:SetColorTexture(unpack(OctoToDo_DB_Vars.color))
-		colorTex:ClearAllPoints()
-		colorTex:SetPoint("TOPLEFT", 1, -1)
-		colorTex:SetPoint("BOTTOMRIGHT", -1, 1)
-		colorBtn.swatchFunc = function()
-			colorTex:SetColorTexture(ColorPickerFrame:GetColorRGB())
-			OctoToDo_DB_Vars.color = {ColorPickerFrame:GetColorRGB()}
-			MineFrame.FG:SetVertexColor(ColorPickerFrame:GetColorRGB())
-			-- self:setCursorSettings()
+function OctoToDo_EventFrame_OCTOMAIN:func_Create_DD_TODO()
+	local DD_TODO = CreateFrame("Button", "DD_TODO", OctoToDo_MainFrame_OCTOMAIN, "SecureActionButtonTemplate, BackDropTemplate")
+	DD_TODO:SetSize(SFDropDownWeight, AddonHeight)
+	E:func_SetBackdrop(DD_TODO)
+	DD_TODO.ExpandArrow = DD_TODO:CreateTexture(nil, "ARTWORK")
+	DD_TODO.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
+	DD_TODO.ExpandArrow:SetSize(AddonHeight, AddonHeight)
+	DD_TODO.ExpandArrow:SetPoint("RIGHT", -4, 0)
+	DD_TODO.text = DD_TODO:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	DD_TODO.text:SetAllPoints()
+	DD_TODO.text:SetFontObject(OctoFont11)
+	DD_TODO.text:SetJustifyV("MIDDLE")
+	DD_TODO.text:SetJustifyH("CENTER")
+	DD_TODO.text:SetTextColor(1, 1, 1, 1)
+	DD_TODO.text:SetText(E.Purple_Color..MAIN_MENU.."|r")
+	LibSFDropDown:SetMixin(DD_TODO)
+	DD_TODO:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_OCTOMAIN, "TOPLEFT", 0, 0)
+	DD_TODO:ddSetDisplayMode(GlobalAddonName)
+	DD_TODO:ddSetNoGlobalMouseEvent(true)
+	DD_TODO:ddHideWhenButtonHidden()
+	DD_TODO:RegisterForClicks("LeftButtonUp")
+	DD_TODO:SetScript("OnClick", function(self)
+			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 		end
-		colorBtn.cancelFunc = function(color)
-			OctoToDo_DB_Vars.color = {color.r, color.g, color.b, color.a}
-			colorTex:SetColorTexture(color.r, color.g, color.b)
-			MineFrame.FG:SetVertexColor(color.r, color.g, color.b, color.a)
-			-- self:setCursorSettings()
-		end
-		colorBtn.hasOpacity = true
-		colorBtn.opacityFunc = function()
-			local a = ColorPickerFrame:GetColorAlpha()
-			OctoToDo_DB_Vars.color[4] = a
-			colorTex:SetAlpha(a)
-		end
-		colorBtn:SetScript("OnClick", function(btn)
-				btn.r, btn.g, btn.b, btn.opacity = unpack(OctoToDo_DB_Vars.color)
-				if OpenColorPicker then
-					OpenColorPicker(btn)
-				else
-					ColorPickerFrame:SetupColorPickerAndShow(btn)
-				end
-		end)
-		-- local r, g, b = E.func_hex2rgbNUMBER(E.Yellow_Color)
-		colorBtn:SetScript("OnEnter", function(btn)
-				btn:SetBackdropBorderColor(r, g, b, 1)
-		end)
-		colorBtn:SetScript("OnLeave", function(btn)
-				btn:SetBackdropBorderColor(0, 0, 0, 1)
-		end)
-		local btnResetColor = CreateFrame("BUTTON", nil, UIParent, "UIPanelButtonTemplate")
-		btnResetColor:SetSize(64, 24)
-		btnResetColor:SetPoint("LEFT", colorBtn, "RIGHT", 3, 0)
-		btnResetColor:SetText(RESET)
-		btnResetColor:SetScript("OnClick", function()
-				PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
-				colorTex:SetColorTexture(1, 1, 1)
-				colorTex:SetAlpha(1)
-				MineFrame.FG:SetVertexColor(1,1,1,1)
-				OctoToDo_DB_Vars.color = {1, 1, 1, 1}
-				-- config:setCursorSettings()
-		end)
-		----
-		local MineFrame = CreateFrame("Frame", "MineFrame", UIParent, "BackdropTemplate")
-		MineFrame:SetPoint("TOPLEFT", 100, -100)
-		MineFrame:SetSize(1256, 68)
-		MineFrame:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-		MineFrame:SetBackdropColor(29/255, 42/255, 76/255, 1)
-		MineFrame:SetBackdropBorderColor(0, 0, 0, 0)
-		MineFrame.FG = MineFrame:CreateTexture(nil, "BACKGROUND", nil, 2)
-		MineFrame.FG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\MINECRAFT\\minecraft FG.tga")
-		MineFrame.FG:SetAllPoints(MineFrame)
-		MineFrame.FG:SetVertexColor(unpack(OctoToDo_DB_Vars.color))
-		MineFrame.BG = MineFrame:CreateTexture(nil, "BACKGROUND", nil, 3)
-		MineFrame.BG:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\MINECRAFT\\minecraft BG.tga")
-		MineFrame.BG:SetAllPoints(MineFrame)
-		-- MineFrame.BG:SetVertexColor(unpack(OctoToDo_DB_Vars.color))
+	)
+	local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
+		OctoToDo_DB_Levels[menuButton.value].isShownPLAYER = checked
+		E.func_CreateMyDataProvider()
 	end
+	local function func_remove_GUID(menuButton)
+		OctoToDo_DB_Levels[menuButton.value] = nil
+		E.func_CreateMyDataProvider()
+	end
+	local function selectFunctionExpansion(menuButton, _, _, checked)
+		OctoToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
+		-- DD_TODO:SetText("EXP")
+		E.func_CreateMyDataProvider()
+	end
+	DD_TODO:ddSetInitFunc(function(self, level, value)
+			local info, list = {}, {}
+			local count = 0
+			-- local ShowOnlyCurrentServer = OctoToDo_DB_Vars.ShowOnlyCurrentServer
+			-- local ShowOnlyCurrentBattleTag = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
+			-- local OnlyCurrentFaction = OctoToDo_DB_Vars.OnlyCurrentFaction
+			-- local Reputations = OctoToDo_DB_Vars.Reputations
+			if level == 1 then
+				local BnetList = {}
+				local OctoToDo_BatlleNets = {}
+				for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+					if not BnetList[CharInfo.BattleTagLocal] then
+						count = count + 1
+						OctoToDo_BatlleNets[count] = CharInfo.BattleTagLocal
+					end
+					BnetList[CharInfo.BattleTagLocal] = true
+				end
+				sort(OctoToDo_BatlleNets)
+				if count > 1 then
+					for i, Bnets in ipairs(OctoToDo_BatlleNets) do
+						local info = {}
+						info.fontObject = OctoFont11
+						info.hasArrow = true
+						info.keepShownOnClick = true
+						info.notCheckable = true
+						local vivod = Bnets
+						if Bnets == E.BattleTagLocal then
+							vivod = E.classColorHexCurrent..Bnets.."|r"
+						end
+						if OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag == true then
+							if Bnets ~= E.BattleTagLocal then
+								vivod = E.Gray_Color..vivod.."|r"
+							end
+						end
+						info.text = vivod
+						info.value = Bnets
+						tinsert(list, info)
+					end
+				else
+					local GUID, CharInfo = next(OctoToDo_DB_Levels)
+					value = CharInfo.BattleTagLocal
+				end
+			end
+			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
+			if type(value) == "string" then
+				local tbl_Players = {}
+				for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+					if CharInfo.BattleTagLocal == value or not value then
+						tbl_Players[CharInfo.curServer] = tbl_Players[CharInfo.curServer] or {}
+						tbl_Players[CharInfo.curServer][GUID] = tbl_Players[CharInfo.curServer][GUID] or {}
+						tbl_Players[CharInfo.curServer][GUID] = CharInfo.classColorHex..CharInfo.Name.."|r"..CharInfo.UnitLevel
+					end
+				end
+				for Server, v in next, (tbl_Players) do
+					local info = {}
+					info.fontObject = OctoFont11
+					info.hasArrow = true
+					info.keepShownOnClick = true
+					info.notCheckable = true
+					local vivod = Server
+					if OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag and (value ~= E.BattleTagLocal or OctoToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.curServer)
+					or not OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag and OctoToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.curServer
+					then
+						vivod = E.Gray_Color..vivod.."|r"
+					elseif Server == E.curServer then
+						vivod = E.classColorHexCurrent..vivod.."|r"
+					end
+					info.text = vivod
+					info.value = v
+					tinsert(list, info)
+				end
+				self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
+			elseif type(value) == "table" then
+				local players_list = {}
+				for GUID, names in next, (value) do
+					tinsert(players_list, GUID)
+				end
+				sort(players_list, function(a, b)
+						local infoA = OctoToDo_DB_Levels[a]
+						local infoB = OctoToDo_DB_Levels[b]
+						if infoA and infoB then
+							return
+							infoA.curServer > infoB.curServer or
+							infoA.curServer == infoB.curServer and infoA.UnitLevel > infoB.UnitLevel or
+							infoA.UnitLevel == infoB.UnitLevel and infoA.avgItemLevel > infoB.avgItemLevel or
+							infoA.avgItemLevel == infoB.avgItemLevel and infoB.Name > infoA.Name
+						end
+					end
+				)
+				for _, GUID in next, (players_list) do
+					local info = {}
+					info.fontObject = OctoFont11
+					info.keepShownOnClick = true
+					info.isNotRadio = true
+					local vivod = OctoToDo_DB_Levels[GUID].classColorHex..OctoToDo_DB_Levels[GUID].Name.."|r"
+					if OctoToDo_DB_Levels[GUID].UnitLevel ~= E.currentMaxLevel then
+						vivod = vivod.." "..E.Yellow_Color..OctoToDo_DB_Levels[GUID].UnitLevel.."|r"
+					end
+					info.text = vivod
+					info.value = GUID
+					info.func = selectFunctionisShownPLAYER
+					info.checked = OctoToDo_DB_Levels[GUID].isShownPLAYER
+					info.remove = func_remove_GUID
+					info.removeDoNotHide = true
+					info.icon = OctoToDo_DB_Levels[GUID].specIcon
+					info.iconInfo = {tSizeX = 16, tSizeY = 16}
+					tinsert(list, info)
+				end
+				self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
+			end
+			if level == 1 then
+				----------------
+				self:ddAddSeparator(level)
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = L["Only Current Server"]
+				info.hasArrow = nil
+				info.checked = OctoToDo_DB_Vars.ShowOnlyCurrentServer
+				info.func = function(_, _, _, checked)
+					OctoToDo_DB_Vars.ShowOnlyCurrentServer = checked
+					E.func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				----------------
+				if count > 1 then
+					info.fontObject = OctoFont11
+					info.keepShownOnClick = true
+					info.notCheckable = false
+					info.isNotRadio = true
+					info.text = L["Only Current BattleTag"]
+					info.hasArrow = nil
+					info.checked = OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag
+					info.func = function(_, _, _, checked)
+						OctoToDo_DB_Vars.ShowOnlyCurrentBattleTag = checked
+						E.func_CreateMyDataProvider()
+					end
+					self:ddAddButton(info, level)
+				end
+				----------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				if E.func_UnitFaction("PLAYER") == "Horde" then
+					info.text = E.func_texturefromIcon(E.Icon_Horde)..L["Only Horde"]
+				else
+					info.text = E.func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"]
+				end
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = OctoToDo_DB_Vars.OnlyCurrentFaction
+				info.func = function(_, _, _, checked)
+					OctoToDo_DB_Vars.OnlyCurrentFaction = checked
+					E.func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				----------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = REPUTATION
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = OctoToDo_DB_Vars.Reputations
+				info.func = function(_, _, _, checked)
+					OctoToDo_DB_Vars.Reputations = checked
+					E.func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				----------------
+				self:ddAddSeparator(level)
+				----------------
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = "Show all"
+				info.icon = false
+				info.hasArrow = nil
+				info.func = function(_, _, _, checked)
+					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+						CharInfo.isShownPLAYER = true
+					end
+					E.func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				----------------
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = "Hide all"
+				info.icon = false
+				info.hasArrow = nil
+				info.func = function(_, _, _, checked)
+					for GUID, CharInfo in next, (OctoToDo_DB_Levels) do
+						CharInfo.isShownPLAYER = false
+					end
+					E.func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				----------------
+				self:ddAddSeparator(level)
+				----------------
+			end
+			if level == 1 then
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true
+				info.text = EXPANSION_FILTER_TEXT
+				info.value = EXPANSION_FILTER_TEXT
+				info.icon = false
+				info.hasArrow = true
+				info.func = nil
+				-- info.func = function(_, _, _, checked)
+				--     for expansionID, v in ipairs(E.OctoTable_Expansions) do
+				--         OctoToDo_DB_Vars.ExpansionToShow[expansionID] = true
+				--     end
+				--     E.func_CreateMyDataProvider()
+				-- end
+				self:ddAddButton(info, level)
+			elseif value == EXPANSION_FILTER_TEXT then
+				for expansionID, v in ipairs(E.OctoTable_Expansions) do
+					info.fontObject = OctoFont11
+					info.isNotRadio = true
+					info.notCheckable = false
+					info.keepShownOnClick = true
+					info.text = v.color..v.name.."|r"
+					info.value = expansionID
+					info.icon = v.icon
+					info.checked = OctoToDo_DB_Vars.ExpansionToShow[expansionID]
+					info.func = selectFunctionExpansion
+					self:ddAddButton(info, level)
+				end
+				----------------
+				self:ddAddSeparator(level)
+				info.keepShownOnClick = true
+				info.notCheckable = true
+				info.text = "Show all"
+				info.icon = false
+				info.func = function(_, _, _, checked)
+					for expansionID, v in ipairs(E.OctoTable_Expansions) do
+						OctoToDo_DB_Vars.ExpansionToShow[expansionID] = true
+					end
+					E.func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = true
+				info.text = "Hide all"
+				info.icon = false
+				info.func = function(_, _, _, checked)
+					for expansionID, v in ipairs(E.OctoTable_Expansions) do
+						OctoToDo_DB_Vars.ExpansionToShow[expansionID] = false
+					end
+					E.func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+			end
+		end
+	)
+	DD_TODO:ddSetOpenMenuUp(true)
+	DD_TODO:ddSetMenuButtonHeight(16)
 end
 ----------------------------------------------------------------
 do
@@ -580,7 +809,6 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self.PLAYER_LOGIN = nil
 	-- self:LIBSHAREDSFMIC()
 	C_WowTokenPublic.UpdateMarketPrice()
-	self:func_CreateMineFrame()
 	GameMenuFrame:SetScale(OctoToDo_DB_Vars.GameMenuFrameScale or 1)
 	if not PlayerSpellsFrame then
 		E.func_LoadAddOn("Blizzard_PlayerSpells")
@@ -603,7 +831,7 @@ function OctoToDo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	E:InitOptions()
 	self:OctoToDo_Create_MainFrame_OCTOMAIN()
 	E.PortalsFrame()
-	E.func_Create_DD_OCTOMAIN()
+	self:func_Create_DD_TODO()
 	----------------------------------------------------------------
 	local totalMoney = 0
 	local totalReload = 0

@@ -2,6 +2,5 @@
 ..\FrameXML\UI.xsd">
 
 	<Script file="OctoToDo_3AddonsManager\1 AddonsManager.lua"/>
-	<Script file="OctoToDo_3AddonsManager\2 sfmict.lua"/>
 
 </Ui>

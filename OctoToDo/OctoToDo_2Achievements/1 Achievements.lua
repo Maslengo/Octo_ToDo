@@ -120,7 +120,7 @@ function OctoToDo_EventFrame_Achievements:OctoToDo_Create_MainFrame_Achievements
 	OctoToDo_MainFrame_Achievements:SetMovable(true)
 	OctoToDo_MainFrame_Achievements:RegisterForDrag("LeftButton")
 	OctoToDo_MainFrame_Achievements:SetScript("OnDragStart", function()
-			OctoToDo_MainFrame_Achievements:SetAlpha(E.bgCa/2)
+			OctoToDo_MainFrame_Achievements:SetAlpha(E.bgCa)
 			OctoToDo_MainFrame_Achievements:StartMoving()
 	end)
 	OctoToDo_MainFrame_Achievements:SetScript("OnDragStop", function()
@@ -184,35 +184,34 @@ function OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 	end
 end
 function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
-	local dd_SECOND = CreateFrame("Button", "dd_SECOND", OctoToDo_MainFrame_Achievements, "SecureActionButtonTemplate, BackDropTemplate")
-	local multiply = 2/3
-	dd_SECOND:SetSize(SFDropDownWeight, AddonHeight)
-	E:func_SetBackdrop(dd_SECOND)
-	dd_SECOND.ExpandArrow = dd_SECOND:CreateTexture(nil, "ARTWORK")
-	dd_SECOND.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	dd_SECOND.ExpandArrow:SetSize(AddonHeight, AddonHeight)
-	dd_SECOND.ExpandArrow:SetPoint("RIGHT", -4, 0)
-	dd_SECOND.text = dd_SECOND:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	dd_SECOND.text:SetAllPoints()
-	dd_SECOND.text:SetFontObject(OctoFont11)
-	dd_SECOND.text:SetJustifyV("MIDDLE")
-	dd_SECOND.text:SetJustifyH("CENTER")
-	dd_SECOND.text:SetTextColor(1, 1, 1, 1)
-	dd_SECOND.text:SetText(ACHIEVEMENT_BUTTON)
-	LibSFDropDown:SetMixin(dd_SECOND)
-	dd_SECOND:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_Achievements, "TOPLEFT", 0, 0)
-	dd_SECOND:ddSetDisplayMode(GlobalAddonName)
-	dd_SECOND:ddSetOpenMenuUp(true)
-	dd_SECOND:ddSetNoGlobalMouseEvent(true)
-	dd_SECOND:ddHideWhenButtonHidden()
-	dd_SECOND:RegisterForClicks("LeftButtonUp")
-	dd_SECOND:SetScript("OnClick", function(self)
+	local DD_Achievements = CreateFrame("Button", "DD_Achievements", OctoToDo_MainFrame_Achievements, "SecureActionButtonTemplate, BackDropTemplate")
+	DD_Achievements:SetSize(SFDropDownWeight, AddonHeight)
+	E:func_SetBackdrop(DD_Achievements)
+	DD_Achievements.ExpandArrow = DD_Achievements:CreateTexture(nil, "ARTWORK")
+	DD_Achievements.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
+	DD_Achievements.ExpandArrow:SetSize(AddonHeight, AddonHeight)
+	DD_Achievements.ExpandArrow:SetPoint("RIGHT", -4, 0)
+	DD_Achievements.text = DD_Achievements:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	DD_Achievements.text:SetAllPoints()
+	DD_Achievements.text:SetFontObject(OctoFont11)
+	DD_Achievements.text:SetJustifyV("MIDDLE")
+	DD_Achievements.text:SetJustifyH("CENTER")
+	DD_Achievements.text:SetTextColor(1, 1, 1, 1)
+	DD_Achievements.text:SetText(E.Lime_Color..MAIN_MENU.."|r")
+	LibSFDropDown:SetMixin(DD_Achievements)
+	DD_Achievements:SetPoint("BOTTOMLEFT", OctoToDo_MainFrame_Achievements, "TOPLEFT", 0, 0)
+	DD_Achievements:ddSetDisplayMode(GlobalAddonName)
+	DD_Achievements:ddSetOpenMenuUp(true)
+	DD_Achievements:ddSetNoGlobalMouseEvent(true)
+	DD_Achievements:ddHideWhenButtonHidden()
+	DD_Achievements:RegisterForClicks("LeftButtonUp")
+	DD_Achievements:SetScript("OnClick", function(self)
 			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 	end)
 	local function selectFunctionAchievementToShow(menuButton, _, arg2, checked)
 		OctoToDo_Achievements.AchievementToShow[menuButton.value] = checked or nil
 		if arg2 == 2 then
-			dd_SECOND:ddRefresh(arg2-1)
+			DD_Achievements:ddRefresh(arg2-1)
 		end
 		OctoToDo_EventFrame_Achievements:func_CreateMyDataProvider()
 	end
@@ -228,7 +227,7 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 		end
 		return arg1.name..arg1.vivod
 	end
-	dd_SECOND:ddSetInitFunc(function(self, level, value)
+	DD_Achievements:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
 			local categories = GetCategoryList()
 			for i = 1, #categories do
@@ -282,7 +281,7 @@ function OctoToDo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 				self:ddAddButton(info, level)
 			end
 	end)
-	dd_SECOND:ddSetMenuButtonHeight(16)
+	DD_Achievements:ddSetMenuButtonHeight(16)
 end
 local MyEventsTable = {
 	"ADDON_LOADED",
