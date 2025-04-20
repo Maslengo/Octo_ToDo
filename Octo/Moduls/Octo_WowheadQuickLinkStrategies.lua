@@ -417,7 +417,7 @@ function strategies.wowheadTradingPostActivity.GetTradingPostActivityFromTracker
 		return parent.id
 	end
 end
-function CheckFrameName(name, data)
+function CheckFrameName2(name, data)
 	if not name or not data.focus or not data.focus:GetName() then
 		return false
 	end

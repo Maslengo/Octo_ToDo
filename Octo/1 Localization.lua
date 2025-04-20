@@ -14,7 +14,6 @@ if L then
 	L["MainFrameDefaultLines"] = true
 	L["SFDropDownWeight"] = true
 
-
 	L["fullName"] = true
 	L["showIcons"] = true
 	L["showIconsQuestionMark"] = true

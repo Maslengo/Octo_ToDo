@@ -86,15 +86,21 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.full:SetPropagateMouseMotion(true)
 		------------------------------------------------
 		frame.icon_firstSlot = frame:CreateTexture(nil, "BACKGROUND")
-		frame.icon_firstSlot:SetPoint("TOPLEFT", 1, -1)
 		frame.icon_firstSlot:SetSize(AddonHeight-2, AddonHeight-2)
+		frame.icon_firstSlot:SetPoint("TOPLEFT", 1, -1)
 		frame.icon_firstSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		------------------------------------------------
 		frame.left = CreateFrame("FRAME", nil, frame)
-		frame.left:SetPropagateMouseClicks(true)
 		frame.left:SetSize(AddonLeftFrameWeight, AddonHeight)
 		frame.left:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+		frame.left:SetPropagateMouseClicks(true)
 		-- frame.left:SetPoint("RIGHT")
+		------------------------------------------------
+		frame.left.texture = frame.left:CreateTexture(nil, "BACKGROUND")
+		frame.left.texture:SetAllPoints()
+		frame.left.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+		frame.left.texture:SetVertexColor(1, 1, 1, 0)
+		------------------------------------------------
 		frame.left.textLEFT = frame.left:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame.left.textLEFT:SetPoint("LEFT", 2+AddonHeight, 0)
 		frame.left.textLEFT:SetPoint("RIGHT", 0, 0)
@@ -103,6 +109,7 @@ local function func_OnAcquired(owner, frame, data, new)
 		frame.left.textLEFT:SetJustifyV("MIDDLE")
 		frame.left.textLEFT:SetJustifyH("LEFT")
 		frame.left.textLEFT:SetTextColor(1, 1, 1, 1)
+		------------------------------------------------
 		frame.second = setmetatable({}, {
 				__index = function(self, key)
 					local f = CreateFrame("BUTTON", "frame"..key, frame)
@@ -114,7 +121,7 @@ local function func_OnAcquired(owner, frame, data, new)
 					f.texture = f:CreateTexture(nil, "BACKGROUND", nil, 2)
 					f.texture:SetSize(AddonCentralFrameWeight, AddonHeight)
 					f.texture:SetPoint("LEFT", f, "LEFT")
-					-- f.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+					f.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo.tga")
 					f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 					f.textCENT:SetPoint("LEFT")
 					f.textCENT:SetPoint("RIGHT")
@@ -140,6 +147,15 @@ function Octo_EventFrame_OCTOMAIN:Octo_Frame_init(frame, node)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	frame.left.textLEFT:SetText(data.textLEFT)
+	-- print (data.expColor)
+	-- if data.expColor then
+	-- 	local r1, g1, b1 = E.func_hex2rgbNUMBER(data.expColor)
+	-- 	frame.left.texture:SetVertexColor(r1, g1, b1, E.BGALPHA)
+	-- else
+	-- 	frame.left.texture:SetAlpha(0)
+	-- end
+
+
 	frame.icon_firstSlot:SetTexture(data.headerIcon)
 	if not data.zxc then
 		for i, v in ipairs(frame.second) do
@@ -153,6 +169,7 @@ function Octo_EventFrame_OCTOMAIN:Octo_Frame_init(frame, node)
 		elseif data.zxc.icon then
 			frame.icon_firstSlot:SetTexture(data.zxc.icon)
 			-- frame.icon_firstSlot:SetPoint("TOPLEFT", 1+AddonHeight, -1)
+			-- frame.left.textLEFT:SetPoint("LEFT", 2+AddonHeight+AddonHeight, 0)
 		else
 			frame.icon_firstSlot:SetTexture(E.Icon_Empty)
 			-- frame.icon_firstSlot:SetPoint("TOPLEFT", 1+AddonHeight, -1)
@@ -165,8 +182,8 @@ function Octo_EventFrame_OCTOMAIN:Octo_Frame_init(frame, node)
 				local SECOND = data.zxc.SECOND[i]
 				local color = data.zxc.color[i]
 				local r, g, b = E.func_hex2rgbNUMBER(color)
-				frame.second[i].textCENT:SetText(color..textCENT.."|r")
-				frame.second[i].texture:SetColorTexture(r, g, b, E.bgCaOverlay*3) -- SetVertexColor
+				frame.second[i].textCENT:SetText(textCENT)
+				frame.second[i].texture:SetVertexColor(r, g, b, E.BGALPHA)
 				if FIRST == 0 then
 					frame.second[i].texture:SetWidth(.1)
 					frame.second[i].texture:Hide()
@@ -179,7 +196,7 @@ function Octo_EventFrame_OCTOMAIN:Octo_Frame_init(frame, node)
 				end
 			else
 				frame.second[i].textCENT:SetText("-")
-				frame.second[i].texture:SetColorTexture(0, 0, 0, 0) -- SetVertexColor
+				frame.second[i].texture:SetVertexColor(0, 0, 0, 0)
 			end
 			-- ТЕКУЩИЙ ПЕРСОНАЖ
 			-- if data.zxc.currentChar[i] then
@@ -349,6 +366,7 @@ function E.func_CreateMyDataProvider()
 				local groupNodeFirst = DataProvider:Insert({
 						textLEFT = tbl.header.name,
 						headerIcon = tbl.header.icon,
+						expColor = E.OctoTable_Expansions[index].color,
 				})
 				for _, v in ipairs(tbl) do
 					if (Octo_ToDo_DB_Vars.OnlyCurrentFaction == true and (E.OctoTable_ReputationsDB[v.id].side == E.func_UnitFaction("PLAYER") or E.OctoTable_ReputationsDB[v.id].side == "-")) or not Octo_ToDo_DB_Vars.OnlyCurrentFaction then
@@ -372,6 +390,7 @@ function E.func_CreateMyDataProvider()
 						local groupNodeSecondary = groupNodeFirst:Insert({
 								textLEFT = E.func_reputationName(v.id),
 								zxc = zxc,
+								expColor = E.OctoTable_Expansions[index].color,
 						})
 					end
 				end
@@ -778,6 +797,7 @@ function Octo_EventFrame_OCTOMAIN:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
@@ -808,6 +828,11 @@ end
 function Octo_EventFrame_OCTOMAIN:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
+
+
+	-- C_CVar.RegisterCVar("addonProfilerEnabled", "1")
+	-- C_CVar.SetCVar("addonProfilerEnabled", "1")
+
 	self:LIBSHAREDSFMIC()
 	C_WowTokenPublic.UpdateMarketPrice()
 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.GameMenuFrameScale or 1)
@@ -987,3 +1012,4 @@ function Octo_EventFrame_OCTOMAIN:LIBSHAREDSFMIC()
 			-- some code
 	end)
 end
+

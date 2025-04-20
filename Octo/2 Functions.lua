@@ -28,7 +28,7 @@ function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E.func_IsPTR() return GetCurrentRegion() >= 72 end
 ----------------------------------------------------------------
 function E.func_GetItemIcon(itemID)
-	tinsert(E.PromiseItem, itemID)
+	table.insert(E.PromiseItem, itemID)
 	return C_Item.GetItemIconByID(itemID)
 end
 ----------------------------------------------------------------
@@ -521,7 +521,6 @@ function E.func_SecondsToClock(time)
 	local hours = floor(time % 86400 / 3600)
 	local mins = floor(time % 3600 / 60)
 	local secs = floor(time % 60)
-	-- Формируем строку по частям
 	local parts = {}
 	if years > 0 then
 		table.insert(parts, years..(L["time_YEAR"] or "y").." ")
@@ -537,7 +536,7 @@ function E.func_SecondsToClock(time)
 		table.insert(parts, string.format("%02d", mins)..(L["time_MINUTE"] or "m"))
 	elseif time >= 60 then
 		table.insert(parts, mins..(L["time_MINUTE"] or "m").." ")
-		if time < 600 then -- Только для 1-9 минут добавляем секунды
+		if time < 600 then
 			table.insert(parts, secs..(L["time_SECOND"] or "s"))
 		end
 	else
@@ -1066,6 +1065,9 @@ end
 -- C_AddOns.EnableAllAddOns([character])
 -- C_AddOns.GetAddOnEnableState(name [, character])
 -- C_AddOns.IsAddOnLoadable(name [, character [, demandLoaded]])
+
+
+
 ----------------------------------------------------------------
 function E.IsInArray(arr, subj)
 	for i = 1, #arr do
@@ -1402,7 +1404,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	end
 	----------------------------------------------------------------
 	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
-		text = E.Red_Color.."!!! ACHTUNG !!!|r\n"..E.WOW_Artifact_Color.."Отменить все задания?|r",
+		text = E.Red_Color.."!!! ACHTUNG !!!|r\n"..E.WOW_Artifact_Color.."Đ Ñ‚Đ¼ĐµĐ½Đ¸Ñ‚ÑŒ Đ²Ñ Đµ Đ·Đ°Đ´Đ°Đ½Đ¸Ñ ?|r",
 		button1 = YES,
 		button2 = NO,
 		hideOnEscape = 1,
@@ -1503,24 +1505,24 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 				local v = E.HolidayForButton[eventID]
 				count = count + 1
 				-- if v.Active == true then
-				--   -- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
-				--   -- СЕЙЧАС
+				--   -- BRAWL_TOOLTIP_ENDS - Đ—Đ°ĐºĐ°Đ½Ñ‡Đ¸Đ²Đ°ĐµÑ‚Ñ Ñ  Ñ‡ĐµÑ€ĐµĐ· %s
+				--   -- Đ¡Đ•Đ™Đ§Đ Đ¡
 				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				-- elseif v.Possible == true then
-				--   -- БУДУЩЕЕ
+				--   -- Đ‘Đ£Đ”Đ£Đ©Đ•Đ•
 				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				-- else
-				--   -- ПРОШЛОЕ
+				--   -- ĐŸĐ Đ Đ¨Đ›Đ Đ•
 				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				-- end
 				if v.Active == true then
-					-- СЕЙЧАС
+					-- Đ¡Đ•Đ™Đ§Đ Đ¡
 					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..E.White_Color.." (".. v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
 				elseif v.Possible == true then
-					-- БУДУЩЕЕ
+					-- Đ‘Đ£Đ”Đ£Đ©Đ•Đ•
 					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Gray_Color..v.title ..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				else
-					-- ПРОШЛОЕ
+					-- ĐŸĐ Đ Đ¨Đ›Đ Đ•
 					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Gray_Color..v.title ..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
 				end
 			end
@@ -1848,27 +1850,30 @@ E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.t
 E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
 
+-- TextStatusBarText
+-- SystemFont_Outline_Small
+-- GameFontNormalSmall
 
 -- print (Octo_ToDo_DB_Vars.interface.Octo_font)
 
 E.fontObject9 = CreateFont("OctoFont9")
-E.fontObject9:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject9:CopyFontObject(TextStatusBarText)-- local font = GameFontHighlightSmallLeft
 E.fontObject9:SetFont(E.Octo_font, 9, "OUTLINE")
 
 E.fontObject10 = CreateFont("OctoFont10")
-E.fontObject10:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject10:CopyFontObject(TextStatusBarText)-- local font = GameFontHighlightSmallLeft
 E.fontObject10:SetFont(E.Octo_font, 10, "OUTLINE")
 
 E.fontObject11 = CreateFont("OctoFont11")
-E.fontObject11:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject11:CopyFontObject(TextStatusBarText)-- local font = GameFontHighlightSmallLeft
 E.fontObject11:SetFont(E.Octo_font, 11, "OUTLINE")
 
 E.fontObject12 = CreateFont("OctoFont12")
-E.fontObject12:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject12:CopyFontObject(TextStatusBarText)-- local font = GameFontHighlightSmallLeft
 E.fontObject12:SetFont(E.Octo_font, 12, "OUTLINE")
 
 E.fontObject22 = CreateFont("OctoFont22")
-E.fontObject22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject22:CopyFontObject(TextStatusBarText)-- local font = GameFontHighlightSmallLeft
 E.fontObject22:SetFont(E.Octo_font, 20, "OUTLINE")
 
 
@@ -1955,8 +1960,8 @@ E.BattleforAzeroth_Color = "|cffFFF468" -- "|cff6464FF"
 E.Shadowlands_Color = "|cff9798FE" -- "|cffC9C3AA"
 E.Dragonflight_Color = "|cff53B39F" -- "|cffE8E379"
 E.TheWarWithin_Color = "|cff90CCDD" -- "|cffB59377"
-E.Midnight_Color = "|cff7B69FF" -- СИНИЙ
-E.TheLastTitan_Color = "|cffF4C263" -- ЖЕЛТЫЙ
+E.Midnight_Color = "|cff7B69FF" -- Đ¡Đ˜Đ Đ˜Đ™
+E.TheLastTitan_Color = "|cffF4C263" -- Đ–Đ•Đ›Đ¢Đ«Đ™
 E.WOW_Poor_Color = "|cff9D9D9D"
 E.WOW_Common_Color = "|cffFFFFFF"
 E.WOW_Uncommon_Color = "|cff1EFF00"
@@ -2266,7 +2271,7 @@ function E.func_GetAddonReason(index, character)
 	local reason = select(2, C_AddOns.IsAddOnLoadable(index, character));
 	return reason
 end
-function E.func_IsAddonInstalled(index) -- Исключаем отсутствующие аддоны
+function E.func_IsAddonInstalled(index) -- Đ˜Ñ ĐºĐ»Ñ Ñ‡Đ°ĐµĐ¼ Đ¾Ñ‚Ñ ÑƒÑ‚Ñ Ñ‚Đ²ÑƒÑ Ñ‰Đ¸Đµ Đ°Đ´Đ´Đ¾Đ½Ñ‹
 	local reason = select(5, C_AddOns.GetAddOnInfo(index))
 	return reason ~= "MISSING"
 end
@@ -2347,7 +2352,7 @@ function E.func_EnableAddOn(name, character)
 	character = character or UnitName("player")
 	return C_AddOns.EnableAddOn(name, character)
 end
-function E.func_EnableAllAddOns(character) -- Включить все аддоны
+function E.func_EnableAllAddOns(character) -- Đ’ĐºĐ»Ñ Ñ‡Đ¸Ñ‚ÑŒ Đ²Ñ Đµ Đ°Đ´Đ´Đ¾Đ½Ñ‹
 	character = character or UnitName("player")
 	return C_AddOns.EnableAllAddOns(character)
 end
@@ -2368,29 +2373,29 @@ end
 function E.UpdatePerformance()
 	if E.func_IsProfilerEnabled() then
 		UpdateAddOnMemoryUsage()
-		-- UpdateAddOnCPUUsage() -- НЕ РАБОТАЕТ?
+		-- UpdateAddOnCPUUsage() -- Đ Đ• Đ Đ Đ‘Đ Đ¢Đ Đ•Đ¢?
 	end
 end
 function E.func_IsAddonVersionCheckEnabled()
 	return C_AddOns.IsAddonVersionCheckEnabled()
 end
--- Получить список всех аддонов
+-- ĐŸĐ¾Đ»ÑƒÑ‡Đ¸Ñ‚ÑŒ Ñ Đ¿Đ¸Ñ Đ¾Đº Đ²Ñ ĐµÑ… Đ°Đ´Đ´Đ¾Đ½Đ¾Đ²
 function E.func_GetAllAddons()
 	local addons = {}
 	for index = 1, E.func_GetNumAddOns() do
-		if E.func_IsAddonInstalled(index) then -- Исключаем отсутствующие аддоны
+		if E.func_IsAddonInstalled(index) then -- Đ˜Ñ ĐºĐ»Ñ Ñ‡Đ°ĐµĐ¼ Đ¾Ñ‚Ñ ÑƒÑ‚Ñ Ñ‚Đ²ÑƒÑ Ñ‰Đ¸Đµ Đ°Đ´Đ´Đ¾Đ½Ñ‹
 			table.insert(addons, E.func_GetAddonName(index))
 		end
 	end
 	return addons
 end
--- Показать список аддонов с их статусом
+-- ĐŸĐ¾ĐºĐ°Đ·Đ°Ñ‚ÑŒ Ñ Đ¿Đ¸Ñ Đ¾Đº Đ°Đ´Đ´Đ¾Đ½Đ¾Đ² Ñ  Đ¸Ñ… Ñ Ñ‚Đ°Ñ‚ÑƒÑ Đ¾Đ¼
 function E.func_ListAddons(filter)
 	local addons = E.func_GetAllAddons()
-	print ("Список аддонов ("..#addons.."):")
+	print ("Đ¡Đ¿Đ¸Ñ Đ¾Đº Đ°Đ´Đ´Đ¾Đ½Đ¾Đ² ("..#addons.."):")
 	for index, name in ipairs(addons) do
 		if not filter or string.find(string.lower(name), string.lower(filter)) then
-			local status = E.func_IsAddOnLoaded(index) and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r"
+			local status = E.func_IsAddOnLoaded(index) and "|cff00ff00Đ’Đ Đ›|r" or "|cffff0000Đ’Đ«Đ Đ›|r"
 			print(string.format("%3d. %s - %s", index, name, status))
 		end
 	end
@@ -2425,7 +2430,7 @@ function E.AddonTooltipBuildDepsString(index, color)
 	local depsString = ""
 	for i, name in ipairs(deps) do
 		if i == 1 then
-			depsString = "Родители:|n" -- ADDON_DEPENDENCIES
+			depsString = "Đ Đ¾Đ´Đ¸Ñ‚ĐµĐ»Đ¸:|n" -- ADDON_DEPENDENCIES
 		end
 		depsString = depsString..color.."    "..(name).."|r|n"
 	end
@@ -2490,10 +2495,10 @@ end
 function E.rec_toggle(index, state)
 	if state then
 		E.func_DisableAddOn(index)
-		-- print ("|cffff0000отключен|r".. index)
+		-- print ("|cffff0000Đ¾Ñ‚ĐºĐ»Ñ Ñ‡ĐµĐ½|r".. index)
 	else
 		E.func_EnableAddOn(index)
-		-- print ("|cff00ff00включен|r".. index)
+		-- print ("|cff00ff00Đ²ĐºĐ»Ñ Ñ‡ĐµĐ½|r".. index)
 	end
 	if Octo_AddonsTable.depsByIndex[index] and not IsModifierKeyDown() and not Octo_AddonsTable.recycleByIndex[index] then
 		for i, depIndex in ipairs(Octo_AddonsTable.depsByIndex[index]) do
@@ -2503,7 +2508,7 @@ function E.rec_toggle(index, state)
 end
 
 
--- Переключить аддон
+-- ĐŸĐµÑ€ĐµĐºĐ»Ñ Ñ‡Đ¸Ñ‚ÑŒ Đ°Đ´Đ´Đ¾Đ½
 function E.func_ToggleAddon(index, state)
 	local addonName = C_AddOns.GetAddOnInfo(index)
 	local enabled = E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
@@ -2513,7 +2518,7 @@ end
 
 
 
--- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
+-- Đ¡Đ Đ—Đ”Đ Đ•Đ¢ Đ¤Đ Đ•Đ™ĐœĐ« / Đ Đ•Đ“Đ˜Đ Đ Đ«(Ñ‚ĐµĐºÑ Ñ‚ÑƒÑ€Ñ‹, ÑˆÑ€Đ¸Ñ„Ñ‚Ñ‹) / Đ§Đ˜Đ›Đ”Đ« / CALLBACK
 function E.func_LockAddon(index)
 	local name = E.func_GetAddonName(index)
 	if Octo_AddonsManager_DB.lock.addons[name] then
@@ -2531,13 +2536,13 @@ function E.rec_lock(index)
 		end
 	end
 end
--- Переключить аддон
+-- ĐŸĐµÑ€ĐµĐºĐ»Ñ Ñ‡Đ¸Ñ‚ÑŒ Đ°Đ´Đ´Đ¾Đ½
 function E.func_lockAddonNEW(index, state)
 	local addonName = C_AddOns.GetAddOnInfo(index)
 	local enabled = E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
 	E.rec_lock(index, enabled)
 end
--- Сохранить текущий профиль
+-- Đ¡Đ¾Ñ…Ñ€Đ°Đ½Đ¸Ñ‚ÑŒ Ñ‚ĐµĐºÑƒÑ‰Đ¸Đ¹ Đ¿Ñ€Đ¾Ñ„Đ¸Đ»ÑŒ
 function E.func_SaveProfile(profileName)
 	if not profileName or profileName == "" then
 		profileName = currentProfile
@@ -2548,12 +2553,12 @@ function E.func_SaveProfile(profileName)
 	for index, name in ipairs(addons) do
 		Octo_AddonsManager_DB.profiles[profileName][name] = E.func_IsAddOnLoaded(index)
 	end
-	print ("Профиль '"..profileName.." сохранен ("..#addons.." аддонов)")
+	print ("ĐŸÑ€Đ¾Ñ„Đ¸Đ»ÑŒ '"..profileName.." Ñ Đ¾Ñ…Ñ€Đ°Đ½ĐµĐ½ ("..#addons.." Đ°Đ´Đ´Đ¾Đ½Đ¾Đ²)")
 end
--- Загрузить профиль
+-- Đ—Đ°Đ³Ñ€ÑƒĐ·Đ¸Ñ‚ÑŒ Đ¿Ñ€Đ¾Ñ„Đ¸Đ»ÑŒ
 function E.func_LoadProfile(profileName)
 	if not Octo_AddonsManager_DB.profiles[profileName] then
-		print ("Профиль '"..profileName.." не найден")
+		print ("ĐŸÑ€Đ¾Ñ„Đ¸Đ»ÑŒ '"..profileName.." Đ½Đµ Đ½Đ°Đ¹Đ´ĐµĐ½")
 		return
 	end
 	for name, enabled in pairs(Octo_AddonsManager_DB.profiles[profileName]) do
@@ -2564,17 +2569,17 @@ function E.func_LoadProfile(profileName)
 		end
 	end
 	currentProfile = profileName
-	print ("Профиль '"..profileName.." загружен")
+	print ("ĐŸÑ€Đ¾Ñ„Đ¸Đ»ÑŒ '"..profileName.." Đ·Đ°Đ³Ñ€ÑƒĐ¶ĐµĐ½")
 	-- ReloadUI()
 end
--- Список профилей
+-- Đ¡Đ¿Đ¸Ñ Đ¾Đº Đ¿Ñ€Đ¾Ñ„Đ¸Đ»ĐµĐ¹
 function E.func_ListProfiles()
-	print ("Доступные профили:")
+	print ("Đ”Đ¾Ñ Ñ‚ÑƒĐ¿Đ½Ñ‹Đµ Đ¿Ñ€Đ¾Ñ„Đ¸Đ»Đ¸:")
 	for name, _ in pairs(Octo_AddonsManager_DB.profiles) do
 		print("- "..name)
 	end
 end
--- Обработчик команд
+-- Đ Đ±Ñ€Đ°Đ±Đ¾Ñ‚Ñ‡Đ¸Đº ĐºĐ¾Đ¼Đ°Đ½Đ´
 local function func_HandleCommand(msg)
 	local command, arg1, arg2 = strsplit(" ", msg, 3)
 	if command == "list" then
@@ -2592,18 +2597,18 @@ local function func_HandleCommand(msg)
 	elseif command == "profiles" then
 		E.func_ListProfiles()
 	else
-		print ("Команды:")
-		print("/uam list [фильтр] - список аддонов")
-		print("/uam toggle <имя/номер> - переключить аддон")
-		print("/uam enableall - включить все аддоны")
-		print("/uam disableall - выключить все аддоны")
-		print("/uam save [профиль] - сохранить текущие настройки")
-		print("/uam load <профиль> - загрузить профиль")
-		print("/uam profiles - список профилей")
+		print ("Đ Đ¾Đ¼Đ°Đ½Đ´Ñ‹:")
+		print("/uam list [Ñ„Đ¸Đ»ÑŒÑ‚Ñ€] - Ñ Đ¿Đ¸Ñ Đ¾Đº Đ°Đ´Đ´Đ¾Đ½Đ¾Đ²")
+		print("/uam toggle <Đ¸Đ¼Ñ /Đ½Đ¾Đ¼ĐµÑ€> - Đ¿ĐµÑ€ĐµĐºĐ»Ñ Ñ‡Đ¸Ñ‚ÑŒ Đ°Đ´Đ´Đ¾Đ½")
+		print("/uam enableall - Đ²ĐºĐ»Ñ Ñ‡Đ¸Ñ‚ÑŒ Đ²Ñ Đµ Đ°Đ´Đ´Đ¾Đ½Ñ‹")
+		print("/uam disableall - Đ²Ñ‹ĐºĐ»Ñ Ñ‡Đ¸Ñ‚ÑŒ Đ²Ñ Đµ Đ°Đ´Đ´Đ¾Đ½Ñ‹")
+		print("/uam save [Đ¿Ñ€Đ¾Ñ„Đ¸Đ»ÑŒ] - Ñ Đ¾Ñ…Ñ€Đ°Đ½Đ¸Ñ‚ÑŒ Ñ‚ĐµĐºÑƒÑ‰Đ¸Đµ Đ½Đ°Ñ Ñ‚Ñ€Đ¾Đ¹ĐºĐ¸")
+		print("/uam load <Đ¿Ñ€Đ¾Ñ„Đ¸Đ»ÑŒ> - Đ·Đ°Đ³Ñ€ÑƒĐ·Đ¸Ñ‚ÑŒ Đ¿Ñ€Đ¾Ñ„Đ¸Đ»ÑŒ")
+		print("/uam profiles - Ñ Đ¿Đ¸Ñ Đ¾Đº Đ¿Ñ€Đ¾Ñ„Đ¸Đ»ĐµĐ¹")
 	end
 end
--- Инициализация при загрузке
--- Регистрируем команды
+-- Đ˜Đ½Đ¸Ñ†Đ¸Đ°Đ»Đ¸Đ·Đ°Ñ†Đ¸Ñ  Đ¿Ñ€Đ¸ Đ·Đ°Đ³Ñ€ÑƒĐ·ĐºĐµ
+-- Đ ĐµĐ³Đ¸Ñ Ñ‚Ñ€Đ¸Ñ€ÑƒĐµĐ¼ ĐºĐ¾Đ¼Đ°Đ½Đ´Ñ‹
 SLASH_UNIVERSALADDONMANAGER1 = "/uam"
 SlashCmdList["UNIVERSALADDONMANAGER"] = func_HandleCommand
 function E.GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
