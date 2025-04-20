@@ -33,11 +33,16 @@ function E.Developing()
 			DELETEALL = {
 				type = "execute",
 				name = E.Debug_Color..DELETE.." "..ALL.."|r",
+				desc = "Octo_ToDo_DB_Levels  = {}|nOcto_ToDo_DB_Vars = {}",
+
+
+
+
+
 				func = function()
 					Octo_ToDo_DB_Levels = {}
 					Octo_ToDo_DB_Vars = {}
 					Octo_ToDo_DB_Other = {}
-					OctoSimpleList = {}
 					Octo_Achievements_DB = {}
 					Octo_AddonsTable = {}
 					Octo_AddonsManager_DB = {}
@@ -60,7 +65,8 @@ function E.Developing()
 			-------------------------------------------------
 			Octo_ToDo_DB_Levels = {
 				type = "execute",
-				name = "Players",
+				name = "Levels",
+				desc = "Octo_ToDo_DB_Levels  = {}",
 				func = function()
 					Octo_ToDo_DB_Levels  = {}
 					return
@@ -72,6 +78,7 @@ function E.Developing()
 			Octo_ToDo_DB_Other = {
 				type = "execute",
 				name = "Other",
+				desc = "Octo_ToDo_DB_Other  = {}",
 				func = function()
 					Octo_ToDo_DB_Other  = {}
 					return
@@ -83,24 +90,10 @@ function E.Developing()
 			Octo_ToDo_DB_Vars = {
 				type = "execute",
 				name = E.Debug_Color.."Vars".."|r",
+				desc = "Octo_ToDo_DB_Vars  = {}",
 				func = function()
 					Octo_ToDo_DB_Vars  = {}
 					return ReloadUI()
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-
-			-------------------------------------------------
-			UniversalQuest = {
-				type = "execute",
-				name = "UniversalQuest",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.Name, "УДАЛИЛИСЬ CharInfo.MASLENGO.UniversalQuest")
-						CharInfo.MASLENGO.UniversalQuest  = {}
-					end
-					return
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -109,10 +102,26 @@ function E.Developing()
 			MASLENGO = {
 				type = "execute",
 				name = E.Debug_Color.."MASLENGO|r",
+				desc = "CharInfo.MASLENGO = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.Name, "УДАЛИЛИСЬ CharInfo.MASLENGO")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO")
 						CharInfo.MASLENGO = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			UniversalQuest = {
+				type = "execute",
+				name = "UniversalQuest",
+				desc = "CharInfo.MASLENGO.UniversalQuest = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.UniversalQuest")
+						CharInfo.MASLENGO.UniversalQuest  = {}
 					end
 					return
 				end,

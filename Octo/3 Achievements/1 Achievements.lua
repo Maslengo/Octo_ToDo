@@ -45,11 +45,10 @@ local function ToggleAchievement(AchievementID)
 		return C_ContentTracking.StartTracking(2, AchievementID)
 	end
 end
-
-
 ------------------------------------------------
 ------------------------------------------------
 ------------------------------------------------
+-- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local func_OnAcquired do
 	------------------------------------------------
 	local function func_OnClick(frame)
@@ -61,37 +60,37 @@ local func_OnAcquired do
 	end
 	------------------------------------------------
 	local function func_OnEnter(frame)
-		frame.texture:SetAlpha(E.BGALPHA)
+		frame.texture_full:SetAlpha(E.BGALPHA)
 		E.func_TooltipOnEnter(frame, false, false)
 	end
 	------------------------------------------------
 	local function func_OnOnLeave(frame)
-		frame.texture:SetAlpha(0)
+		frame.texture_full:SetAlpha(0)
 		GameTooltip_Hide()
 	end
 	------------------------------------------------
 	function func_OnAcquired(owner, frame, data, new)
 		if new then
+			------------------------------------------------
 			frame:SetPropagateMouseClicks(true)
-			-- frame:SetPropagateMouseMotion(true)
 			------------------------------------------------
-			frame.texture = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
-			frame.texture:SetSize(AddonLeftFrameWeight*3, AddonHeight)
-			frame.texture:SetPoint("RIGHT")
-			frame.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+			frame.texture_full = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
+			frame.texture_full:SetSize(AddonLeftFrameWeight*3, AddonHeight)
+			frame.texture_full:SetPoint("RIGHT")
+			frame.texture_full:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
 			local r, g, b = GetClassColor(E.classFilename)
-			frame.texture:SetVertexColor(r, g, b, 0)
+			frame.texture_full:SetVertexColor(r, g, b, 0)
 			------------------------------------------------
-			frame.icon_firstSlot = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
-			frame.icon_firstSlot:SetPoint("TOPLEFT", 1, -1)
-			frame.icon_firstSlot:SetSize(AddonHeight-2, AddonHeight-2)
-			frame.icon_firstSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+			frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
+			frame.icon_1:SetPoint("TOPLEFT", 1, -1)
+			frame.icon_1:SetSize(AddonHeight-2, AddonHeight-2)
+			frame.icon_1:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 			------------------------------------------------
-			frame.texture2 = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
-			frame.texture2:SetSize(AddonLeftFrameWeight*3, AddonHeight)
-			frame.texture2:SetPoint("RIGHT")
-			frame.texture2:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
-			frame.texture2:SetVertexColor(1, 1, 1, .1)
+			frame.texture_2 = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
+			frame.texture_2:SetSize(AddonLeftFrameWeight*3, AddonHeight)
+			frame.texture_2:SetPoint("RIGHT")
+			frame.texture_2:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+			frame.texture_2:SetVertexColor(1, 1, 1, .1)
 			------------------------------------------------
 			frame.textLEFT = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			frame.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
@@ -131,15 +130,15 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function Octo_EventFrame_Achievements:Octo_Frame_init(frame, node)
 	local data = node:GetData()
-	frame.icon_firstSlot:SetTexture(data.icon)
+	frame.icon_1:SetTexture(data.icon)
 	frame.textLEFT:SetText(data.textLEFT)
 	frame.textRIGHT:SetText(data.textRIGHT or "NIL?")
 	frame.tooltip = CreateTooltip(data.AchievementID)
 	if C_ContentTracking.IsTracking(2, data.AchievementID) then
-		frame.texture2:Show()
+		frame.texture_2:Show()
 		-- E:func_SetBackdrop(frame, E.classColorHexCurrent, .3, 0)
 	else
-		frame.texture2:Hide()
+		frame.texture_2:Hide()
 		-- E:func_SetBackdrop(frame, nil, 0, 0)
 	end
 end

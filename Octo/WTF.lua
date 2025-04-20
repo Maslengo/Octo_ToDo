@@ -310,11 +310,6 @@ function Octo_EventFrame_WTF:Octo_Achievements_DB()
 end
 
 
-function Octo_EventFrame_WTF:OctoSimpleList()
-	if OctoSimpleList == nil then OctoSimpleList = {} end
-end
-
-
 function Octo_EventFrame_WTF:Octo_AddonsTable()
 	if Octo_AddonsTable == nil then Octo_AddonsTable = {} end
 end
@@ -469,7 +464,6 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:Octo_ToDo_DB_Vars()
 		self:Octo_ToDo_DB_Other()
 		self:Octo_Achievements_DB()
-		self:OctoSimpleList()
 		self:Octo_AddonsTable()
 		self:Octo_AddonsManager_DB()
 		self:Octo_TrashCan_DB()

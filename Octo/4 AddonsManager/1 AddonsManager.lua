@@ -151,69 +151,95 @@ local function OnClick_third(frame, button)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local function func_OnAcquired(owner, frame, data, new)
-	if new then
-		------------------------------------------------
-		frame.full = CreateFrame("FRAME", nil, frame)
-		frame.full:SetSize(AddonLeftFrameWeight*3, AddonHeight)
-		-- frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.full:SetPoint("RIGHT")
-		frame.full.texture = frame.full:CreateTexture(nil, "BACKGROUND")
-		frame.full.texture:SetAllPoints()
-		frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
-		local r, g, b = GetClassColor(E.classFilename)
-		frame.full.texture:SetVertexColor(r, g, b, 0)
-		frame.full:SetScript("OnEnter", function(self) self.texture:SetAlpha(E.BGALPHA) end)
-		frame.full:SetScript("OnLeave", function(self) self.texture:SetAlpha(0) end)
-		frame.full:SetPropagateMouseClicks(true)
-		frame.full:SetPropagateMouseMotion(true)
-		------------------------------------------------
-		frame.first = CreateFrame("BUTTON", nil, frame)
-		frame.first:SetPropagateMouseClicks(false)
-		frame.first:SetSize(AddonHeight, AddonHeight)
-		frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.icon_firstSlot = frame:CreateTexture(nil, "BACKGROUND")
-		frame.icon_firstSlot:SetAllPoints(frame.first)
-		frame.first:SetScript("OnClick", OnClick_Zero)
-		-- frame.icon_firstSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		------------------------------------------------
-		frame.icon_secondSlot = frame:CreateTexture(nil, "BACKGROUND")
-		frame.icon_secondSlot:SetPoint("TOPLEFT", AddonHeight+1, -1)
-		frame.icon_secondSlot:SetSize(AddonHeight-2, AddonHeight-2)
-		frame.icon_secondSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		frame.icon_secondSlot:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonWHITE")
-		------------------------------------------------
-		frame.icon_third = frame:CreateTexture(nil, "BACKGROUND")
-		frame.icon_third:SetPoint("TOPLEFT", AddonHeight+AddonHeight+1, -1)
-		frame.icon_third:SetSize(AddonHeight-2, AddonHeight-2)
-		frame.icon_third:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		------------------------------------------------
-		frame.third = CreateFrame("BUTTON", nil, frame)
-		frame.third:SetPropagateMouseClicks(true)
-		frame.third:SetSize(AddonLeftFrameWeight*3, AddonHeight)
-		-- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.third:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-		frame.third:SetScript("OnEnter", function()
-				E.func_TooltipOnEnter(frame.third, true, true)
-		end)
-		frame.third:SetScript("OnLeave", GameTooltip_Hide)
-		frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+AddonHeight+2, 0)
-		frame.third.textLEFT:SetFontObject(OctoFont11)
-		frame.third.textLEFT:SetJustifyV("MIDDLE")
-		frame.third.textLEFT:SetJustifyH("LEFT")
-		frame.third.textLEFT:SetTextColor(1, 1, 1, 1)
-		-- frame.third:RegisterForClicks("LeftButtonUp", "RightButtonUp", "MiddleButton")
-		frame.third:RegisterForClicks("AnyUp")
-		frame.third:SetScript("OnClick", OnClick_third)
-		frame.third.textRIGHT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		-- frame.third.textRIGHT:SetAllPoints()
-		frame.third.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
-		frame.third.textRIGHT:SetFontObject(OctoFont11)
-		frame.third.textRIGHT:SetJustifyV("MIDDLE")
-		frame.third.textRIGHT:SetJustifyH("RIGHT")
-		frame.third.textRIGHT:SetTextColor(1, 1, 1, 1)
-		------------------------------------------------
+-- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
+local func_OnAcquired do
+	------------------------------------------------
+	local function func_OnClick(frame)
+		--if Octo_MainFrame_Achievements:IsDragging() then
+		--	return
+		--end
+		--local AchievementID = frame:GetData().AchievementID
+		--ToggleAchievement(AchievementID)
+	end
+	------------------------------------------------
+	local function func_OnEnter(frame)
+		--frame.texture_1:SetAlpha(E.BGALPHA)
+		--E.func_TooltipOnEnter(frame, false, false)
+	end
+	------------------------------------------------
+	local function func_OnOnLeave(frame)
+		--frame.texture_1:SetAlpha(0)
+		--GameTooltip_Hide()
+	end
+	------------------------------------------------
+	function func_OnAcquired(owner, frame, data, new)
+		if new then
+			------------------------------------------------
+			frame.full = CreateFrame("FRAME", nil, frame)
+			frame.full:SetSize(AddonLeftFrameWeight*3, AddonHeight)
+			-- frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+			frame.full:SetPoint("RIGHT")
+			frame.full.texture = frame.full:CreateTexture(nil, "BACKGROUND")
+			frame.full.texture:SetAllPoints()
+			frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+			local r, g, b = GetClassColor(E.classFilename)
+			frame.full.texture:SetVertexColor(r, g, b, 0)
+			frame.full:SetScript("OnEnter", function(self) self.texture:SetAlpha(E.BGALPHA) end)
+			frame.full:SetScript("OnLeave", function(self) self.texture:SetAlpha(0) end)
+			frame.full:SetPropagateMouseClicks(true)
+			frame.full:SetPropagateMouseMotion(true)
+			------------------------------------------------
+			frame.first = CreateFrame("BUTTON", nil, frame)
+			frame.first:SetPropagateMouseClicks(false)
+			frame.first:SetSize(AddonHeight, AddonHeight)
+			frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+			frame.icon_firstSlot = frame:CreateTexture(nil, "BACKGROUND")
+			frame.icon_firstSlot:SetAllPoints(frame.first)
+			frame.first:SetScript("OnClick", OnClick_Zero)
+			-- frame.icon_firstSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+			------------------------------------------------
+			frame.icon_secondSlot = frame:CreateTexture(nil, "BACKGROUND")
+			frame.icon_secondSlot:SetPoint("TOPLEFT", AddonHeight+1, -1)
+			frame.icon_secondSlot:SetSize(AddonHeight-2, AddonHeight-2)
+			frame.icon_secondSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+			frame.icon_secondSlot:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonWHITE")
+			------------------------------------------------
+			frame.icon_third = frame:CreateTexture(nil, "BACKGROUND")
+			frame.icon_third:SetPoint("TOPLEFT", AddonHeight+AddonHeight+1, -1)
+			frame.icon_third:SetSize(AddonHeight-2, AddonHeight-2)
+			frame.icon_third:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+			------------------------------------------------
+			frame.third = CreateFrame("BUTTON", nil, frame)
+			frame.third:SetPropagateMouseClicks(true)
+			frame.third:SetSize(AddonLeftFrameWeight*3, AddonHeight)
+			-- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+			frame.third:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+			frame.third:SetScript("OnEnter", function()
+					E.func_TooltipOnEnter(frame.third, true, true)
+			end)
+			frame.third:SetScript("OnLeave", GameTooltip_Hide)
+			frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+AddonHeight+2, 0)
+			frame.third.textLEFT:SetFontObject(OctoFont11)
+			frame.third.textLEFT:SetJustifyV("MIDDLE")
+			frame.third.textLEFT:SetJustifyH("LEFT")
+			frame.third.textLEFT:SetTextColor(1, 1, 1, 1)
+			-- frame.third:RegisterForClicks("LeftButtonUp", "RightButtonUp", "MiddleButton")
+			frame.third:RegisterForClicks("AnyUp")
+			frame.third:SetScript("OnClick", OnClick_third)
+			frame.third.textRIGHT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			-- frame.third.textRIGHT:SetAllPoints()
+			frame.third.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
+			frame.third.textRIGHT:SetFontObject(OctoFont11)
+			frame.third.textRIGHT:SetJustifyV("MIDDLE")
+			frame.third.textRIGHT:SetJustifyH("RIGHT")
+			frame.third.textRIGHT:SetTextColor(1, 1, 1, 1)
+			------------------------------------------------
+			frame:SetScript("OnClick", func_OnClick)
+			frame:SetScript("OnEnter", func_OnEnter)
+			frame:SetScript("OnLeave", func_OnOnLeave)
+			------------------------------------------------
+		end
 	end
 end
 
@@ -412,8 +438,6 @@ function Octo_EventFrame_AddonsManager:Octo_Frame_init(frame, node)
 	frame.icon_secondSlot:SetTexture(firsticonTexture)
 	if showExpandOrCollapseButton then
 		local tbl = {}
-		-- ЙЦУЙЦУ OctoSimpleList[data.index]
-		-- ЙЦУЙЦУ Octo_AddonsTable.depsByIndex[data.index]
 			tbl = Octo_AddonsTable.depsByIndex
 		if tbl[data.index] then
 			UpdateExpandOrCollapseButtonState(frame.icon_firstSlot, node:IsCollapsed(), node, name)
@@ -470,7 +494,7 @@ function Octo_EventFrame_AddonsManager:Octo_Create_MainFrame_AddonsManager()
 	Octo_MainFrame_AddonsManager.ScrollBar:SetPoint("BOTTOMLEFT", Octo_MainFrame_AddonsManager.ScrollBox, "BOTTOMRIGHT", 6, 0)
 	Octo_MainFrame_AddonsManager.view = CreateScrollBoxListTreeListView()
 	Octo_MainFrame_AddonsManager.view:SetElementExtent(AddonHeight)
-	Octo_MainFrame_AddonsManager.view:SetElementInitializer("Frame",
+	Octo_MainFrame_AddonsManager.view:SetElementInitializer("BUTTON",
 		function(...)
 			self:Octo_Frame_init(...)
 	end)

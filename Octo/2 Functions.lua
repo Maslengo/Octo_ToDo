@@ -35,10 +35,7 @@ end
 function E.func_GetItemName(itemID)
 	tinsert(E.PromiseItem, itemID)
 	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..E.Gray_Color.." id:"..itemID.."|r"
-	end
-	return vivod
+	return (vivod and E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r") or vivod
 end
 ----------------------------------------------------------------
 function E.func_GetSpellIcon(spellID)
@@ -49,10 +46,7 @@ end
 function E.func_GetSpellName(spellID)
 	tinsert(E.PromiseSpell, spellID)
 	local vivod = C_Spell.GetSpellName(spellID)
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
-	end
-	return vivod
+	return (vivod and E.DebugIDs and E.Gray_Color.." id:"..spellID.."|r") or vivod
 end
 ----------------------------------------------------------------
 function E.func_GetCurrencyIcon(currencyID)
@@ -64,38 +58,50 @@ function E.func_GetCurrencyIcon(currencyID)
 	return iconFileID
 end
 ----------------------------------------------------------------
-function E.func_currencyName(currencyID)
-	if currencyID then
-		local vivod
-		local AWide = ""
-		local ATrans = ""
-		local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) or false
-		if isAccountTransferableCurrency == true then
-			AWide = E.Icon_AccountTransferable
-		end
-		local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID) or false
-		if isAccountWideCurrency == true then
-			AWide = E.Icon_AccountWide
-		end
-		local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-		if info then
-			local name = info.name
-			local iconFileID = info.iconFileID
-			local quality = info.quality
-			local r, g, b = E.func_GetItemQualityColor(quality)
-			local color = CreateColor(r, g, b, 1)
-			local currencyName = color:WrapTextInColorCode(name)
-			vivod = ATrans..AWide..currencyName
-		else
-			vivod = ATrans..AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-		end
-		if E.DebugIDs == true and vivod ~= nil then
-			vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
-		end
-		return vivod
-	else
-		return "currencyID = NIL"
+function E.func_currencyName_NOCOLOR(currencyID)
+	local vivod = ""
+	local AWide = ""
+	if C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) then
+		AWide = E.Icon_AccountTransferable
+	elseif C_CurrencyInfo.IsAccountWideCurrency(currencyID) then
+		AWide = E.Icon_AccountWide
 	end
+	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	if info then
+		local name = info.name
+		vivod = AWide..name
+	else
+		vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+	end
+	if E.DebugIDs then
+		vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
+	end
+	return vivod
+end
+----------------------------------------------------------------
+function E.func_currencyName(currencyID)
+	local vivod = ""
+	local AWide = ""
+	if C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) then
+		AWide = E.Icon_AccountTransferable
+	elseif C_CurrencyInfo.IsAccountWideCurrency(currencyID) then
+		AWide = E.Icon_AccountWide
+	end
+	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	if info then
+		local name = info.name
+		local quality = info.quality
+		local r, g, b = E.func_GetItemQualityColor(quality)
+		local color = CreateColor(r, g, b, 1)
+		local currencyName = color:WrapTextInColorCode(name)
+		vivod = AWide..currencyName
+	else
+		vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+	end
+	if E.DebugIDs then
+		vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
+	end
+	return vivod
 end
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
@@ -116,7 +122,7 @@ function E.func_questName(questID, useLargeIcon)
 	if isCompletedOnAccount then
 		vivod = E.Icon_AccountWide.."|cff9fc5e8"..vivod.."|r"
 	end
-	if E.DebugIDs == true and vivod ~= nil then
+	if E.DebugIDs then
 		vivod = vivod..E.Gray_Color.." id:"..questID.."|r"
 	end
 	return vivod
@@ -144,7 +150,7 @@ function E.func_reputationName(reputationID)
 				vivod = vivod.. reputationID.. " (UNKNOWN)"
 			end
 		end
-		if E.DebugIDs == true and vivod ~= nil then
+		if E.DebugIDs then
 			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
 		end
 		----------------------------------------------------------------
@@ -262,7 +268,7 @@ function E.func_itemName(itemID)
 	else
 		vivod = itemName
 	end
-	if E.DebugIDs == true and vivod ~= nil then
+	if E.DebugIDs then
 		vivod = vivod..E.Gray_Color.." id:"..itemID.."|r"
 	end
 	return vivod
@@ -295,7 +301,7 @@ end
 ----------------------------------------------------------------
 function E.func_GetSpellSubtext(spellID)
 	local vivod = C_Spell.GetSpellSubtext(spellID)
-	-- if E.DebugIDs == true and vivod ~= nil then
+	-- if E.DebugIDs then
 	--   vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
 	-- end
 	return vivod
@@ -305,7 +311,7 @@ function E.func_GetSpellNameFull(spellID)
 	local name = E.func_GetSpellName(spellID)
 	local subText = E.func_GetSpellSubtext(spellID)
 	local vivod = subText and #subText > 0 and name.."("..subText..")" or name
-	-- if E.DebugIDs == true and vivod ~= nil then
+	-- if E.DebugIDs then
 	--   vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
 	-- end
 	return vivod
@@ -463,35 +469,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_currencyName_NOCOLOR(currencyID)
-	local vivod
-	local AWide = ""
-	local ATrans = ""
-	local isAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) or false
-	if isAccountTransferableCurrency == true then
-		AWide = E.Icon_AccountTransferable
-	end
-	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID) or false
-	if isAccountWideCurrency == true then
-		AWide = E.Icon_AccountWide
-	end
-	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-	if info then
-		local name = info.name
-		-- local iconFileID = info.iconFileID
-		-- local quality = info.quality
-		-- local r, g, b = C_Item.GetItemQualityColor(quality)
-		-- local color = CreateColor(r, g, b, 1)
-		-- local currencyName = color:WrapTextInColorCode(name)
-		vivod = ATrans..AWide..name
-	else
-		vivod = ATrans..AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-	end
-	if E.DebugIDs == true and vivod ~= nil then
-		vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
-	end
-	return vivod
-end
 ----------------------------------------------------------------
 function E.func_currencyIcon(currencyID)
 	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
@@ -622,7 +599,7 @@ end
 ----------------------------------------------------------------
 function E.func_achievementName(achievementID)
 	local vivod = select(2, GetAchievementInfo(achievementID))
-	if E.DebugIDs == true and vivod ~= nil then
+	if E.DebugIDs then
 		vivod = vivod..E.Gray_Color.." id:"..achievementID.."|r"
 	end
 	return vivod
@@ -757,7 +734,7 @@ function E.func_npcName(npcName)
 		end
 		inspectScantipFUNC:ClearLines()
 	end
-	if E.DebugIDs == true and vivod ~= nil then
+	if E.DebugIDs then
 		vivod = vivod..E.Gray_Color.." id:"..npcName.."|r"
 	end
 	return vivod
@@ -791,12 +768,16 @@ function E.func_GetClassColor(className) -- C_ClassColor.GetClassColor(classFile
 	end
 	return "ffffff"
 end
-E.className = select(1, UnitClass("PLAYER"))
-E.classFilename = select(2, UnitClass("PLAYER"))
-E.classId = select(3, UnitClass("PLAYER"))
+
+
+
+E.className, E.classFilename, E.classId = UnitClass("PLAYER")
+
+
+
 E.classColor = E.func_GetClassColor(E.classFilename)
 local r, g, b = GetClassColor(E.classFilename)
-if (r == 1 and g == 1 and b == 1) then
+if (r == 1 and g == 1 and b == 1) then -- "|cff9659FF"--"|cff7157FF"
 	r = 150/255
 	g = 89/255
 	b = 255/255
@@ -805,10 +786,6 @@ E.classColorHexCurrent = E.func_rgb2hex(r, g, b)
 E.curCharName = UnitFullName("PLAYER")
 E.curServer = GetRealmName()
 E.curServerShort = E.func_CurServerShort(GetRealmName())
-E.Class_Priest_Color_Alternative = "|cff9659FF"--"|cff7157FF"
--- if E.classColorHexCurrent == "|cffFFFFFF" then
--- 	E.classColorHexCurrent = E.Class_Priest_Color_Alternative
--- end
 E.Class_Warrior_Color = "|cffC69B6D"
 E.Class_Paladin_Color = "|cffF48CBA"
 E.Class_Hunter_Color = "|cffAAD372"
@@ -1104,7 +1081,7 @@ function E.func_EventName(eventID)
 			vivod = C_Calendar.GetDayEvent(month, monthDay, i).title
 		end
 	end
-	if E.DebugIDs == true and vivod ~= nil then
+	if E.DebugIDs then
 		vivod = vivod..E.Gray_Color.." id:"..eventID.."|r"
 	end
 	return vivod
@@ -1115,7 +1092,7 @@ function E.func_ProfessionName(skillLine)
 	if skillLine then
 		local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
 		vivod = name
-		if E.DebugIDs == true and vivod ~= nil then
+		if E.DebugIDs then
 			vivod = vivod..E.Gray_Color.." id:"..skillLine.."|r"
 		end
 	end
@@ -1164,7 +1141,7 @@ end
 function E.func_dungeonName(dungeonID)
 	if dungeonID then
 		local vivod = C_ChallengeMode.GetMapUIInfo(dungeonID)
-		if E.DebugIDs == true and vivod ~= nil then
+		if E.DebugIDs then
 			vivod = vivod..E.Gray_Color.." id:"..dungeonID.."|r"
 		end
 		return vivod
@@ -1262,7 +1239,6 @@ function E.func_coloredText(fontstring)
 end
 ----------------------------------------------------------------
 function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
-	-- local r, g, b = GetClassColor(E.classFilename)
 	local r, g, b = E.func_hex2rgbNUMBER(E.classColorHexCurrent)
 	local bgCr, bgCg, bgCb, bgCa = E.bgCr, E.bgCg, E.bgCb, E.bgCa
 	if hexcolor then
@@ -1881,10 +1857,14 @@ E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- GetExpansionLevel()
 ----------------------------------------------------------------
 E.IsPublicBuild = IsPublicBuild()
-E.buildVersion = select(1, GetBuildInfo())
-E.buildNumber = select(2, GetBuildInfo())
-E.buildDate = select(3, GetBuildInfo())
-E.interfaceVersion = select(4, GetBuildInfo())
+
+
+
+
+
+E.buildVersion, E.buildNumber, E.buildDate, E.interfaceVersion = GetBuildInfo()
+
+
 E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 E.GetRestrictedAccountData_rLevel = select(1, GetRestrictedAccountData())
 E.GetRestrictedAccountData_rMoney = select(2, GetRestrictedAccountData())
