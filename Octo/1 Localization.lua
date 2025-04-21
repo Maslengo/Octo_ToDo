@@ -209,6 +209,11 @@ if L then
 	L["Allied Races"] = true
 	L["Hide: Azerite Animations"] = true
 	L["Hide: Objectives In Instance"] = true
+
+
+	L["Faction Assault"] = true
+	L["Legion Invasion"] = true
+
 end
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
@@ -412,4 +417,17 @@ if L then
 	L["Hide: Azerite Animations"] = "Скрытие анимации Азерита"
 	L["Hide: Objectives In Instance"] = "Скрытие заданий в подземельях"
 	L["AutoSellGrey"] = "Автопродажа серого хлама"
+
+
+
+
+
+
+
+	L["Faction Assault"] = "Вторжение Фракций"
+	L["Legion Invasion"] = "Вторжение Легиона"
+
+
+
+
 end

@@ -256,10 +256,14 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 
 
 
+	if Octo_ToDo_DB_Vars.ShowOnlyCurrentServer == nil then Octo_ToDo_DB_Vars.ShowOnlyCurrentServer = false end
+	if Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag == nil then Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag = false end
+	if Octo_ToDo_DB_Vars.OnlyCurrentFaction == nil then Octo_ToDo_DB_Vars.OnlyCurrentFaction = false end
+
+
 	if Octo_ToDo_DB_Vars.Quests == nil then Octo_ToDo_DB_Vars.Quests = true end
 	if Octo_ToDo_DB_Vars.QuestsShowAllways == nil then Octo_ToDo_DB_Vars.QuestsShowAllways = false end
 	if Octo_ToDo_DB_Vars.Reputations == nil then Octo_ToDo_DB_Vars.Reputations = false end
-	if Octo_ToDo_DB_Vars.OnlyCurrentFaction == nil then Octo_ToDo_DB_Vars.OnlyCurrentFaction = true end
 	if Octo_ToDo_DB_Vars.ResetAllChars == nil then Octo_ToDo_DB_Vars.ResetAllChars = true end
 	if Octo_ToDo_DB_Vars.RunedHarbingerCrest == nil then Octo_ToDo_DB_Vars.RunedHarbingerCrest = true end
 	if Octo_ToDo_DB_Vars.ShowIDS == nil then Octo_ToDo_DB_Vars.ShowIDS = true end
@@ -275,8 +279,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	if Octo_ToDo_DB_Vars.PosFrame.relativePoint == nil then Octo_ToDo_DB_Vars.PosFrame.relativePoint = "BOTTOM" end
 	if Octo_ToDo_DB_Vars.PosFrame.xOfs == nil then Octo_ToDo_DB_Vars.PosFrame.xOfs = 129 end
 	if Octo_ToDo_DB_Vars.PosFrame.yOfs == nil then Octo_ToDo_DB_Vars.PosFrame.yOfs = 67 end
-	if Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag == nil then Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag = false end
-	if Octo_ToDo_DB_Vars.ShowOnlyCurrentServer == nil then Octo_ToDo_DB_Vars.ShowOnlyCurrentServer = true end
 	if Octo_ToDo_DB_Vars.ShowTime70 == nil then Octo_ToDo_DB_Vars.ShowTime70 = true end
 	if Octo_ToDo_DB_Vars.SORTING == nil then Octo_ToDo_DB_Vars.SORTING = true end
 	if Octo_ToDo_DB_Vars.StaticPopup1Button1 == nil then Octo_ToDo_DB_Vars.StaticPopup1Button1 = true end

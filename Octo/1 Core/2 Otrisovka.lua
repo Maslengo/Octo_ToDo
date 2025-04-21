@@ -521,16 +521,6 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return (E.Timers.Legion_Invasion().."Timer_Legion_Invasion")
-		end)
-		----------------------------------------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
 				if CharInfo.MASLENGO.CurrencyID[1273] then
 					vivodCent = CharInfo.MASLENGO.CurrencyID_Total[1273]
 				end

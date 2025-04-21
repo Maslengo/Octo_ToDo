@@ -436,14 +436,14 @@ function E.func_CompactNumberSimple(number)
 		return math.floor(number+.5)
 	end
 end
-function E.func_UnitFaction(unit)
-	local englishFaction, localizedFaction = UnitFactionGroup(unit)
-	return englishFaction
-end
 ----------------------------------------------------------------
 function E.func_texturefromIcon(icon, iconSize)
 	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::64:64:4:60:4:60|t"
 end
+----------------------------------------------------------------
+E.curFaction = UnitFactionGroup("PLAYER")
+E.oppositeFaction = E.curFaction == "Alliance" and "Horde" or "Alliance"
+
 E.Icon_Alliance = 255140-- E.func_texturefromIcon(255140) -- 132486
 E.Icon_Horde = 255142 -- 132485
 E.Icon_Kyrian = 3641395
@@ -453,9 +453,9 @@ E.Icon_Venthyr = 3641397
 E.Icon_WorldBoss = 3528312
 E.Icon_Rares = 135903
 E.Icon_Money = 133784
-if E.func_UnitFaction("PLAYER") == "Horde" then
+if E.curFaction == "Horde" then
 	E.Icon_Faction = 2565244
-elseif E.func_UnitFaction("PLAYER") == "Alliance" then
+elseif E.curFaction == "Alliance" then
 	E.Icon_Faction = 2565243
 else
 	E.Icon_Faction = 620830
@@ -1875,6 +1875,15 @@ E.IsTrialAccount = IsTrialAccount() or false
 E.IsVeteranTrialAccount = IsVeteranTrialAccount() or false
 E.BattleTag = select(2, BNGetInfo()) or "Trial Account"
 E.BTAG = tostringall(strsplit("#", E.BattleTag))
+E.regionID = GetCurrentRegion()
+E.regionName = GetCurrentRegionName()
+if E.regionName == "" then
+	E.regionName = "US"
+end
+
+
+
+
 E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
 E.curGUID = UnitGUID("PLAYER")
@@ -2716,7 +2725,7 @@ function E.func_NumPlayers()
 	local sorted = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 
-		if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.func_UnitFaction("PLAYER")) then
+		if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
 			if ShowOnlyCurrentBattleTag == true then
 				if (ShowOnlyCurrentServer == true
 					and (CharInfo.curServer == E.curServer)
@@ -2757,7 +2766,7 @@ function E.sorted()
 	local sorted = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 
-		if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.func_UnitFaction("PLAYER")) then
+		if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
 			if ShowOnlyCurrentBattleTag == true then
 				if (ShowOnlyCurrentServer == true
 					and (CharInfo.curServer == E.curServer)
@@ -2787,14 +2796,9 @@ function E.sorted()
 				end
 			end
 		end
-
-
-
-
 	end
-	-- return sorted
-	local list = sorted
-	sort(list, function(a, b)
+
+	sort(sorted, function(a, b)
 		if a and b then
 			local infoA = Octo_ToDo_DB_Levels[a.GUID]
 			local infoB = Octo_ToDo_DB_Levels[b.GUID]
@@ -2808,7 +2812,7 @@ function E.sorted()
 			end
 		end
 	)
-	return list
+	return sorted
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
