@@ -11,7 +11,7 @@ function E.Developing()
 	local Developing = {
 		type = "group",
 		childGroups = "tree",
-		name = E.Debug_Color..BINDING_HEADER_DEBUG.."|r",
+		name = BINDING_HEADER_DEBUG,
 		args = {
 			-------------------------------------------------
 			Header1 = {
@@ -22,7 +22,7 @@ function E.Developing()
 			-------------------------------------------------
 			Reload = {
 				type = "execute",
-				name = E.Debug_Color..RELOADUI.."|r",
+				name = RELOADUI,
 				func = function()
 					return ReloadUI()
 				end,
@@ -32,7 +32,7 @@ function E.Developing()
 			-------------------------------------------------
 			DELETEALL = {
 				type = "execute",
-				name = E.Debug_Color..DELETE.." "..ALL.."|r",
+				name = DELETE.." "..ALL,
 				desc = "Octo_ToDo_DB_Levels  = {}|nOcto_ToDo_DB_Vars = {}",
 
 
@@ -89,7 +89,7 @@ function E.Developing()
 			-------------------------------------------------
 			Octo_ToDo_DB_Vars = {
 				type = "execute",
-				name = E.Debug_Color.."Vars".."|r",
+				name = "Vars",
 				desc = "Octo_ToDo_DB_Vars  = {}",
 				func = function()
 					Octo_ToDo_DB_Vars  = {}
@@ -108,11 +108,11 @@ function E.Developing()
 			-------------------------------------------------
 			MASLENGO = {
 				type = "execute",
-				name = E.Debug_Color.."MASLENGO|r",
+				name = "MASLENGO",
 				desc = "CharInfo.MASLENGO = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO")
 						CharInfo.MASLENGO = {}
 					end
 					return
@@ -133,7 +133,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.CurrencyID_totalEarned = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.CurrencyID_totalEarned")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.CurrencyID_totalEarned")
 						CharInfo.MASLENGO.CurrencyID_totalEarned  = {}
 					end
 					return
@@ -148,7 +148,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.CurrencyID = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.CurrencyID")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.CurrencyID")
 						CharInfo.MASLENGO.CurrencyID  = {}
 					end
 					return
@@ -163,7 +163,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.OctoTable_QuestID = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.OctoTable_QuestID")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.OctoTable_QuestID")
 						CharInfo.MASLENGO.OctoTable_QuestID  = {}
 					end
 					return
@@ -178,7 +178,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.ItemsInBag = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.ItemsInBag")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.ItemsInBag")
 						CharInfo.MASLENGO.ItemsInBag  = {}
 					end
 					return
@@ -193,7 +193,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.professions = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.professions")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.professions")
 						CharInfo.MASLENGO.professions  = {}
 					end
 					return
@@ -208,7 +208,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.reputationFULL = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.reputationFULL")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.reputationFULL")
 						CharInfo.MASLENGO.reputationFULL  = {}
 					end
 					return
@@ -223,7 +223,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.CurrencyID_Total = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.CurrencyID_Total")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.CurrencyID_Total")
 						CharInfo.MASLENGO.CurrencyID_Total  = {}
 					end
 					return
@@ -238,7 +238,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.Quests = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.Quests")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.Quests")
 						CharInfo.MASLENGO.Quests  = {}
 					end
 					return
@@ -253,7 +253,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.UniversalQuest = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.UniversalQuest")
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.UniversalQuest")
 						CharInfo.MASLENGO.UniversalQuest  = {}
 					end
 					return

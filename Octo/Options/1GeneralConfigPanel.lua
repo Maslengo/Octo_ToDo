@@ -43,7 +43,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			Reload = {
 				type = "execute",
-				name = E.Debug_Color..RELOADUI.."|r",
+				name = RELOADUI,
 				func = function()
 					return ReloadUI()
 				end,
@@ -284,7 +284,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			Auto_CinematicCanceler = {
 				type = "toggle",
-				name = E.Green_Color..L["CinematicCanceler"].."|r",
+				name = L["CinematicCanceler"],
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.Auto_CinematicCanceler
@@ -298,7 +298,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			Auto_CinematicFastSkip = {
 				type = "toggle",
-				name = E.Green_Color.."Fast Cinematic Skip (ESC/Space/Enter)".."|r",
+				name = "Fast Cinematic Skip (ESC/Space/Enter)",
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.Auto_CinematicFastSkip

@@ -36,16 +36,12 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 end)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
--- E.func_LoadAddOn("Octo_Achievements_DB")
-E.func_LoadAddOn("Octo_AddonsManager_DB")
--- E.func_LoadAddOn("Octo_Minecraft")
-E.func_LoadAddOn("Octo_DEBUG")
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")
--- E.func_LoadAddOn("MountsJournal")
 E.func_LoadAddOn("HidingBar")
 E.func_LoadAddOn("HidingBar_Options")
--- E.func_LoadAddOn("SpeedyAutoLoot")
+E.func_LoadAddOn("SpeedyAutoLoot")
+-- E.func_LoadAddOn("MountsJournal")
 -- E.func_LoadAddOn("SimpleAddonManager")
 -- E.func_LoadAddOn("TalentTreeTweaks")
 -- E.func_LoadAddOn("Plater")
@@ -937,16 +933,14 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 	DD_ToDo:ddSetMenuButtonHeight(16)
 end
 ----------------------------------------------------------------
-do
-	local MyEventsTable = {
-		"ADDON_LOADED",
-		"PLAYER_LOGIN",
-		"PLAYER_REGEN_DISABLED",
-		"READY_CHECK",
-		"SHOW_SUBSCRIPTION_INTERSTITIAL",
-	}
-	E.RegisterMyEventsToFrames(Octo_EventFrame_ToDo, MyEventsTable, E.func_DebugPath())
-end
+local MyEventsTable = {
+	"ADDON_LOADED",
+	"PLAYER_LOGIN",
+	"PLAYER_REGEN_DISABLED",
+	"READY_CHECK",
+	"SHOW_SUBSCRIPTION_INTERSTITIAL",
+}
+E.RegisterMyEventsToFrames(Octo_EventFrame_ToDo, MyEventsTable, E.func_DebugPath())
 
 
 function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
