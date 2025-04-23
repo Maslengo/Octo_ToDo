@@ -1,60 +1,52 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 E.OctoTable_UniversalQuest = {
-	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1166),
-	-- 	textleft = RAIDS,
-	-- 	name_save = "Raid",
-	-- 	reset = "Weekly",
-	-- 	desc = "Timewalk",
-	-- 	questID = {
-	-- 		57637,
-	-- 		50316,
-	-- 		47523,
-	-- 		82817,
-	-- 	},
-	-- 	max = 1
-	-- },
-	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1166),
-	-- 	textleft = DUNGEONS,
-	-- 	name_save = "Dungeons",
-	-- 	reset = "Weekly",
-	-- 	desc = "Timewalk",
-	-- 	questID = {
-	-- 		86560,
-	-- 		86556,
-	-- 		85949,
-	-- 		85948,
-	-- 		85947,
-	-- 		86564,
-	-- 		86563,
-	-- 		83365,
-	-- 		83363,
-	-- 		83274,
-	-- 		40792,
-	-- 		39021,
-	-- 		39020,
-	-- 		72719,
-	-- 		72724,
-	-- 		72725,
-	-- 		72726,
-	-- 		72727,
-	-- 		72810,
-	-- 	},
-	-- 	max = 1
-	-- },
-	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1166),
-	-- 	textleft = E.func_questName(57300),
-	-- 	name_save = "SoldierofTime",
-	-- 	reset = "Weekly",
-	-- 	desc = "Timewalk",
-	-- 	questID = {
-	-- 		57300,
-	-- 	},
-	-- 	max = 1
-	-- },
+	{
+		icon = E.func_GetCurrencyIcon(1166),
+		textleft = RAIDS,
+		name_save = "Raid",
+		reset = "Weekly",
+		desc = "Timewalk",
+		questID = {
+			57637,
+			50316,
+			47523,
+			82817,
+		},
+		max = 1
+	},
+	{
+		icon = E.func_GetCurrencyIcon(1166),
+		textleft = DUNGEONS,
+		name_save = "Dungeons",
+		reset = "Weekly",
+		desc = "Timewalk",
+		questID = {
+			86560,
+			86556,
+			85949,
+			85948,
+			85947,
+			86564,
+			86563,
+			83365,
+			83363,
+			83274,
+			40792,
+			39021,
+			39020,
+			72719,
+			72724,
+			72725,
+			72726,
+			72727,
+			72810,
+
+
+			86564,
+		},
+		max = 1
+	},
 	{
 		icon = E.Icon_WorldBoss,
 		textleft = L["World Boss"],

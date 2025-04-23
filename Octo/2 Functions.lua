@@ -533,37 +533,47 @@ function E.func_tmstpDayReset(time)
 end
 ----------------------------------------------------------------
 function E.func_CheckCompletedByQuestID(questID)
-	local vivod
-	local TEST = ""
-	if C_QuestLog.IsFailed(questID) then return "|cffFF0000>"..FAILED.."<|r" end
-	if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
-		vivod = E.DONE
-	elseif C_QuestLog.IsComplete(questID) == true then
-		vivod = E.COMPLETE()
-	elseif C_QuestLog.IsQuestFlaggedCompleted(questID) == false and C_QuestLog.IsOnQuest(questID) == false then
-		vivod = E.NONE
-	elseif C_QuestLog.IsOnQuest(questID) == true --[[and C_QuestLog.IsComplete(questID) == false ]]then
-		local objectives = C_QuestLog.GetQuestObjectives(questID)
-		if objectives == nil then
-			return ""
-		end
-		for i = 1, #objectives do
-			if objectives[i] then
-				local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(questID, i, false)
-				if objectiveType == "progressbar" then
-					TEST = E.Red_Color..GetQuestProgressBarPercent(questID).."%|r"
-				else
-					if finished then
-						TEST = E.Yellow_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
-					else
-						TEST = E.Red_Color..(objectives[i].numFulfilled).."/"..(objectives[i].numRequired).."|r"
-					end
-				end
-			end
-			vivod = vivod and vivod.."»"..TEST or TEST
-		end
-	end
-	return vivod
+    if C_QuestLog.IsFailed(questID) then
+        return "|cffFF0000>"..FAILED.."<|r"
+    end
+
+    if C_QuestLog.IsQuestFlaggedCompleted(questID) then
+        return E.DONE
+    end
+
+    if C_QuestLog.IsComplete(questID) then
+        return E.COMPLETE()
+    end
+
+    if not C_QuestLog.IsOnQuest(questID) then
+        return E.NONE
+    end
+
+    -- Если мы дошли сюда, значит квест взят, но не завершен
+    local objectives = C_QuestLog.GetQuestObjectives(questID)
+    if not objectives then
+        return ""
+    end
+
+    local parts = {}
+    for i = 1, #objectives do
+        local objective = objectives[i]
+        if objective then
+            local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(questID, i, false)
+            local color = finished and E.Yellow_Color or E.Red_Color
+            local text
+
+            if objectiveType == "progressbar" then
+                text = color..GetQuestProgressBarPercent(questID).."%|r"
+            else
+                text = color..objective.numFulfilled.."/"..objective.numRequired.."|r"
+            end
+
+            table.insert(parts, text)
+        end
+    end
+
+    return table.concat(parts, "»")
 end
 ----------------------------------------------------------------
 function E.func_OnlyFirstWord(text)
@@ -613,97 +623,81 @@ function E.func_achievementDescription(achievementID)
 end
 ----------------------------------------------------------------
 function E.func_achievementvivod(achievementID)
-	local vivod
-	local completed = select(4, GetAchievementInfo(achievementID))
-	local wasEarnedByMe = select(13, GetAchievementInfo(achievementID))
-	local earnedBy = select(14, GetAchievementInfo(achievementID))
-	if completed == true then
-		vivod = E.DONE
-	else
-		local numCriteria = GetAchievementNumCriteria(achievementID)
-		if numCriteria ~= 0 then
-			local count = 0
-			for i = 1, numCriteria do
-				local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, i, false)
-				if numCriteria == 1 then
-					if quantity == 0 then
-						vivod = E.Red_Color..quantity.." / "..reqQuantity.."|r"
-					else
-						vivod = quantity.." / "..reqQuantity
-					end
-				else
-					if completedCrit == true then
-						count = count + 1
-					end
-					if count == 0 then
-						vivod = E.Red_Color..count.." / "..numCriteria.."|r"
-					else
-						vivod = count.." / "..numCriteria
-					end
-				end
-			end
-		else
-			vivod = E.Red_Color.."0 / 1".."|r"
-		end
-	end
-	return vivod or "CHETNET"
+    local name, _, _, completed, _, _, _, _, _, _, _, _, wasEarnedByMe, earnedBy = GetAchievementInfo(achievementID)
+
+    if completed then
+        return E.DONE
+    end
+
+    local numCriteria = GetAchievementNumCriteria(achievementID)
+    if numCriteria == 0 then
+        return E.Red_Color.."0 / 1".."|r"
+    end
+
+    if numCriteria == 1 then
+        local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, 1, false)
+        return quantity == 0 and (E.Red_Color..quantity.." / "..reqQuantity.."|r") or (quantity.." / "..reqQuantity)
+    else
+        local count = 0
+        for i = 1, numCriteria do
+            local _, _, completedCrit = GetAchievementCriteriaInfo(achievementID, i, false)
+            if completedCrit then
+                count = count + 1
+            end
+        end
+        return count == 0 and (E.Red_Color..count.." / "..numCriteria.."|r") or (count.." / "..numCriteria)
+    end
 end
 ----------------------------------------------------------------
 function E.func_achievementcriteriaString(achievementID, i)
-	i = i or 1
-	local vivod = ""
-	local completed = select(4, GetAchievementInfo(achievementID))
-	local description = select(8, GetAchievementInfo(achievementID))
-	local numCriteria = GetAchievementNumCriteria(achievementID)
-	for i = 1, numCriteria do
-		local criteriaString, _, completedCrit, quantity = GetAchievementCriteriaInfo(achievementID, i, false)
-		local color = E.White_Color
-		if completedCrit == true then
-			color = E.Green_Color
-		elseif completedCrit == false and quantity == 0 then
-			color = E.Gray_Color
-		end
-		if criteriaString and criteriaString ~= "" then
-			vivod = vivod..color..criteriaString.."|n|r"
-		else
-			vivod = vivod..color..description.."|r"
-		end
-	end
-	return vivod
+    i = i or 1
+    local vivod = {}
+    local _, _, _, completed, _, _, _, description = GetAchievementInfo(achievementID)
+    local numCriteria = GetAchievementNumCriteria(achievementID)
+
+    for critIndex = 1, numCriteria do
+        local criteriaString, _, completedCrit, quantity = GetAchievementCriteriaInfo(achievementID, critIndex, false)
+        local color = completedCrit and E.Green_Color or (not completedCrit and quantity == 0 and E.Gray_Color or E.White_Color)
+        local text = criteriaString and criteriaString ~= "" and criteriaString or description
+
+        table.insert(vivod, color .. text .. "|r")
+    end
+
+    return table.concat(vivod, "|n")
 end
 ----------------------------------------------------------------
 function E.func_achievementquantity(achievementID, i)
-	i = i or 1
-	local vivod = ""
-	local completed = select(4, GetAchievementInfo(achievementID))
-	local description = select(8, GetAchievementInfo(achievementID))
-	local numCriteria = GetAchievementNumCriteria(achievementID)
-	for i = 1, numCriteria do
-		local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, i, false)
-		local color = E.White_Color
-		if completedCrit == true then
-			color = E.Green_Color
-		elseif completedCrit == false and quantity == 0 then
-			color = E.Gray_Color
-		end
-		if quantity then
-			vivod = vivod..color..quantity.." / "..reqQuantity.."|n|r"
-		else
-			vivod = vivod..color.."0/1PIZZA".."|r"
-		end
-	end
-	return vivod
+    i = i or 1
+    local vivod = {}
+    local _, _, _, completed, _, _, _, description = GetAchievementInfo(achievementID)
+    local numCriteria = GetAchievementNumCriteria(achievementID)
+
+    for critIndex = 1, numCriteria do
+        local _, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, critIndex, false)
+        local color = completedCrit and E.Green_Color or (not completedCrit and quantity == 0) and E.Gray_Color or E.White_Color
+        local text = quantity and (color..quantity.." / "..reqQuantity) or (color.."0/1PIZZA")
+        table.insert(vivod, text.."|r")
+    end
+
+    return table.concat(vivod, "|n")
 end
 ----------------------------------------------------------------
+-- function E.func_CurServerShort(text)
+-- 	local text = (text):gsub("-", " "):gsub("'", " ")
+-- 	local a, b = strsplit(" ", text)
+-- 	if b then
+-- 		text = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
+-- 	else
+-- 		text = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
+-- 	end
+-- 	return text
+-- end
 function E.func_CurServerShort(text)
-	local text = (text):gsub("-", " "):gsub("'", " ")
-	local a, b = strsplit(" ", text)
-	if b then
-		text = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
-	else
-		text = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
-	end
-	return text
+    local a, b = strsplit(" ", text:gsub("[-']", " "))
+    if b then
+        return utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
+    end
+    return utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
 end
 ----------------------------------------------------------------
 function E.func_GetMapName(mapID)
@@ -716,55 +710,67 @@ function E.func_GetMapName(mapID)
 end
 ----------------------------------------------------------------
 function E.func_npcName(npcName)
-	local inspectScantipFUNC = nil
-	if not inspectScantipFUNC then
-		inspectScantipFUNC = CreateFrame("GameTooltip", "OctoScanningTooltipFUNC", nil, "GameTooltipTemplate")
-		inspectScantipFUNC:SetOwner(UIParent, "ANCHOR_NONE")
-	end
-	local vivod = "|cffFF0000error|r"
-	if not npcName then return E.NONE end
-	if npcName then
-		inspectScantipFUNC:SetHyperlink("unit:Creature-0-0-0-0-"..npcName)
-		if inspectScantipFUNC:NumLines() > 0 then
-			vivod = _G["OctoScanningTooltipFUNCTextLeft1"]:GetText()
-			return vivod
-		end
-		inspectScantipFUNC:ClearLines()
-	end
-	if E.DebugIDs then
-		vivod = vivod..E.Gray_Color.." id:"..npcName.."|r"
-	end
-	return vivod
+    if not npcName then return E.NONE end
+
+    -- Создаем tooltip только один раз
+    E.inspectScantipFUNC = E.inspectScantipFUNC or CreateFrame("GameTooltip", "OctoScanningTooltipFUNC", nil, "GameTooltipTemplate")
+    local tooltip = E.inspectScantipFUNC
+
+    -- Настраиваем tooltip
+    tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+    tooltip:ClearLines()
+    tooltip:SetHyperlink("unit:Creature-0-0-0-0-"..npcName)
+
+    local vivod = "|cffFF0000error|r"
+    if tooltip:NumLines() > 0 then
+        vivod = _G["OctoScanningTooltipFUNCTextLeft1"]:GetText()
+    end
+
+    -- Добавляем отладочную информацию, если нужно
+    if E.DebugIDs then
+        vivod = vivod..E.Gray_Color.." id:"..npcName.."|r"
+    end
+
+    return vivod
 end
 ----------------------------------------------------------------
 function E.func_RIOColor(RIOscore)
-	local hexColor = E.Gray_Color
-	if not RIOscore or RIOscore == 0 then
-		return hexColor
-	end
-	for _, v in next, (E.OctoTable_RIO_COLORS) do
-		if RIOscore <= v.score then
-			hexColor = E.func_rgb2hex(v.color[1], v.color[2], v.color[3])
-		end
-	end
-	return hexColor
+    if not RIOscore or RIOscore == 0 then
+        return E.Gray_Color
+    end
+
+    local colors = E.OctoTable_RIO_COLORS
+    for i = 1, #colors do
+        local v = colors[i]
+        if RIOscore <= v.score then
+            return E.func_rgb2hex(v.color[1], v.color[2], v.color[3])
+        end
+    end
+
+    return E.Gray_Color
 end
 ----------------------------------------------------------------
 function E.func_encryption(text)
-	local text = utf8reverse(tostring(text))
-	local text = strsplit("-", text)
-	local vivod = ""
-	vivod = utf8lower(text:gsub("0", ""):gsub("1", ""):gsub("2", ""):gsub("3", ""):gsub("4", ""):gsub("5", ""):gsub("6", ""):gsub("7", ""):gsub("8", ""):gsub("9", ""))
-	return vivod
+    -- Преобразуем в строку и переворачиваем
+    local reversed = utf8reverse(tostring(text))
+
+    -- Удаляем все цифры за одну операцию
+    local cleaned = reversed:gsub("%d", "")
+
+    -- Разделяем по дефисам (хотя результат не используется - возможно, это ошибка)
+    -- Если разделение нужно, то должно быть что-то вроде:
+    -- local parts = { strsplit("-", cleaned) }
+    -- Но в оригинале результат strsplit не использовался
+
+    -- Приводим к нижнему регистру и возвращаем
+    return utf8lower(cleaned)
 end
 ----------------------------------------------------------------
-function E.func_GetClassColor(className) -- C_ClassColor.GetClassColor(classFilename)
-	local color = (RAID_CLASS_COLORS)[className]
-	if color then
-		return color.colorStr:gsub("^ff", "")
-	end
-	return "ffffff"
+function E.func_GetClassColor(className)
+    local color = RAID_CLASS_COLORS[className]
+    return color and color.colorStr:sub(3) or "ffffff"
 end
+----------------------------------------------------------------
 E.className, E.classFilename, E.classId = UnitClass("PLAYER")
 E.classColor = E.func_GetClassColor(E.classFilename)
 local r, g, b = GetClassColor(E.classFilename)
@@ -797,149 +803,107 @@ end
 ----------------------------------------------------------------
 function E.func_CheckReputationFULL(reputationID)
 	local SHOWFULL = false
-	local FIRST = 0
-	local SECOND = 0
+	local FIRST, SECOND = 0, 0
 	local vivod = ""
 	local color = E.Pink_Color
-	local reaction = 0
 	local standingTEXT = ""
-	local error = 0 --("|cffFF0000".."nil".."|r")
-	local isSimple = C_Reputation.GetFactionDataByID(reputationID) and true or false
+	local reaction = 0
+
+	-- Получаем данные о репутации
 	local simpleData = C_Reputation.GetFactionDataByID(reputationID)
+	local isSimple = simpleData ~= nil
 	local isParagon = C_Reputation.IsFactionParagon(reputationID)
 	local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
-	local isFriend = friendData and true or false
-	-- if friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0 then
-	--     isFriend = true
-	-- end
+	local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
 	local isMajor = C_Reputation.IsMajorFaction(reputationID)
+
+	-- Обработка простой репутации
 	if isSimple then
 		reaction = simpleData.reaction
 		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+
+		-- Устанавливаем цвет в зависимости от уровня репутации
+		if reaction == 1 or reaction == 2 then
+			color = E.Red_Color
+		elseif reaction == 3 then
+			color = E.Orange_Color
+		elseif reaction == 4 or reaction == 5 then
+			color = E.Yellow_Color
+		elseif reaction >= 6 then
+			color = E.Green_Color
+		end
 	end
-	if (reaction == 1 or reaction == 2) then
-		color = E.Red_Color
-	elseif (reaction == 3) then
-		color = E.Orange_Color
-	elseif (reaction == 4 or reaction == 5) then
-		color = E.Yellow_Color
-	elseif (reaction == 6 or reaction == 7 or reaction == 8) then
-		color = E.Green_Color
-	end
+
+	-- Обработка разных типов репутации
 	if isParagon then
-		local currentValue, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(reputationID)
+		local currentValue, threshold, rewardQuestID, _, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(reputationID)
 		if threshold then
 			local value = currentValue % threshold
 			color = E.Blue_Color
 			vivod = value.."/"..threshold
 			if tooLowLevelForParagon then
-				vivod = vivod .. " (low)"
+				vivod = vivod .. E.Red_Color.."*|r"
 			end
-			FIRST = value
-			SECOND = threshold
-			if hasRewardPending then
-				vivod = E.func_CheckCompletedByQuestID(rewardQuestID)
-			end
+			FIRST, SECOND = value, threshold
 		end
 	elseif isMajor then
-		local majorData = C_MajorFactions.GetMajorFactionData(reputationID) or 0
-		if majorData ~= 0 then
-			local currentValue = majorData.renownReputationEarned%majorData.renownLevelThreshold
+		local majorData = C_MajorFactions.GetMajorFactionData(reputationID)
+		if majorData then
+			local currentValue = majorData.renownReputationEarned % majorData.renownLevelThreshold
 			local totalValue = majorData.renownLevelThreshold
-			local standing = majorData.renownLevel
-			vivod = currentValue.."/"..totalValue..color.."("..(standing)..")|r"
-			FIRST = currentValue
-			SECOND = totalValue
+			vivod = currentValue.."/"..totalValue..color.."("..majorData.renownLevel..")|r"
+			FIRST, SECOND = currentValue, totalValue
 		end
-	elseif (isFriend and friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0) then
-		local friendshipFactionID = friendData.friendshipFactionID or error
-		local standing = friendData.standing or error
-		local maxRep = friendData.maxRep or error
-		local reactionThreshold = friendData.reactionThreshold or error
-		local nextThreshold = friendData.nextThreshold or error
-		local currentValue = standing-reactionThreshold
-		local totalValue = nextThreshold-reactionThreshold
-		local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
-		local currentLevel, maxLevel
-		if rankInfo then
-			currentLevel = rankInfo.currentLevel or 0
-			maxLevel = rankInfo.maxLevel or 0
-		end
+	elseif isFriend then
+		local standing = friendData.standing or 0
+		local maxRep = friendData.maxRep or 0
+		local reactionThreshold = friendData.reactionThreshold or 0
+		local nextThreshold = friendData.nextThreshold or 0
+		local currentValue = standing - reactionThreshold
+		local totalValue = nextThreshold - reactionThreshold
+
+		local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendData.friendshipFactionID)
+		local currentLevel = rankInfo and rankInfo.currentLevel or 0
+		local maxLevel = rankInfo and rankInfo.maxLevel or 0
+
 		if currentLevel == maxLevel then
-			FIRST = currentLevel
-			SECOND = maxLevel
+			FIRST, SECOND = currentLevel, maxLevel
 			vivod = FIRST.."/"..SECOND
 		else
 			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
-			if SHOWFULL then
-				FIRST = standing
-				SECOND = maxRep
-			else
-				FIRST = currentValue
-				SECOND = totalValue
-			end
+			FIRST, SECOND = SHOWFULL and standing or currentValue, SHOWFULL and maxRep or totalValue
 			vivod = FIRST.."/"..SECOND..standingTEXT
 		end
-		-- vivod = E.func_texturefromIcon(texture)..vivod
-	else
-		if isSimple then
-			local barMin = simpleData.currentReactionThreshold
-			local barMax = simpleData.nextReactionThreshold
-			local barValue = simpleData.currentStanding
-			if barValue then
-				local currentValue = barValue-barMin
-				local totalValue = barMax-barMin
-				-- local nextThreshold = friendData.nextThreshold or 0
-				if currentValue == totalValue then -- or nextThreshold == 0 then
-					FIRST = 1
-					SECOND = 1
-					vivod = standingTEXT
-				else
-					if SHOWFULL then
-						if barMin < 0 then
-							FIRST = barMin
-							SECOND = 42000
-						else
-							FIRST = barMin
-							SECOND = barMax
-						end
-					else
-						if barMin < 0 then
-							FIRST = currentValue
-							SECOND = totalValue
-						else
-							FIRST = currentValue
-							SECOND = totalValue
-						end
-					end
-					vivod = FIRST.."/"..SECOND
-				end
+	elseif isSimple and simpleData.currentStanding then
+		local barMin = simpleData.currentReactionThreshold
+		local barMax = simpleData.nextReactionThreshold
+		local barValue = simpleData.currentStanding
+		local currentValue = barValue - barMin
+		local totalValue = barMax - barMin
+
+		if currentValue == totalValue then
+			FIRST, SECOND = 1, 1
+			vivod = standingTEXT
+		else
+			if SHOWFULL then
+				FIRST, SECOND = barMin, barMin < 0 and 42000 or barMax
+			else
+				FIRST, SECOND = currentValue, totalValue
 			end
+			vivod = FIRST.."/"..SECOND
 		end
 	end
+
 	return FIRST, SECOND, vivod, color, standingTEXT
 end
 ----------------------------------------------------------------
 function E.func_CurrentNumQuests()
-	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
-	local numQuests = 0
-	for i = 1, numShownEntries do
-		local info = C_QuestLog.GetInfo(i) -- questLogIndex
-		if info then
-			if info.questID ~= 0 then
-				if (not info.isHeader and not info.isHidden) then
-					numQuests = numQuests + 1
-				else
-					numQuests = numQuests
-				end
-			end
-		end
-	end
-	return numQuests
-end
-----------------------------------------------------------------
-function E.ReloadUI()
-	return ReloadUI
+    local numQuests = 0
+    for i = 1, C_QuestLog.GetNumQuestLogEntries() do
+        local info = C_QuestLog.GetInfo(i)
+        numQuests = numQuests + (info and info.questID ~= 0 and not info.isHeader and not info.isHidden and 1 or 0)
+    end
+    return numQuests
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1060,68 +1024,55 @@ function E.func_CurrentExpansion()
 end
 ----------------------------------------------------------------
 function E.func_EventName(eventID)
-	local vivod
-	local currentCalendarTime = C_DateAndTime.GetCurrentCalendarTime()
-	local monthDay = currentCalendarTime.monthDay -- The current day of the month [1-31]
-	local month = 0 -- currentCalendarTime.month -- The current month [1-12]
-	local numEvents = C_Calendar.GetNumDayEvents(month, monthDay)
-	for i = 1, numEvents do
-		local eID = C_Calendar.GetDayEvent(month, monthDay, i).eventID
-		if eID == eventID then
-			vivod = C_Calendar.GetDayEvent(month, monthDay, i).title
-		end
-	end
-	if E.DebugIDs then
-		vivod = vivod..E.Gray_Color.." id:"..eventID.."|r"
-	end
-	return vivod
+    local monthDay = C_DateAndTime.GetCurrentCalendarTime().monthDay
+    local month = 0 -- Можно раскомментировать, если нужен текущий месяц
+    local numEvents = C_Calendar.GetNumDayEvents(month, monthDay)
+
+    for i = 1, numEvents do
+        local event = C_Calendar.GetDayEvent(month, monthDay, i)
+        if event.eventID == eventID then
+            local vivod = event.title
+            if E.DebugIDs then
+                vivod = vivod .. E.Gray_Color .. " id:" .. eventID .. "|r"
+            end
+            return vivod
+        end
+    end
+
+    return nil
 end
 ----------------------------------------------------------------
 function E.func_ProfessionName(skillLine)
-	local vivod = UNKNOWN
-	if skillLine then
-		local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
-		vivod = name
-		if E.DebugIDs then
-			vivod = vivod..E.Gray_Color.." id:"..skillLine.."|r"
-		end
-	end
-	return vivod
+    if not skillLine then return UNKNOWN end
+
+    local vivod = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine) or UNKNOWN
+    if E.DebugIDs then
+        vivod = vivod .. E.Gray_Color .. " id:" .. skillLine .. "|r"
+    end
+    return vivod
 end
 ----------------------------------------------------------------
+-- Возвращает иконку профессии в виде текстуры
 function E.func_ProfessionIcon(skillLine)
-	local vivod = ""
-	if skillLine then
-		local icon = C_TradeSkillUI.GetTradeSkillTexture(skillLine)
-		vivod = E.func_texturefromIcon(icon)
-	end
-	return vivod
+    return skillLine and E.func_texturefromIcon(C_TradeSkillUI.GetTradeSkillTexture(skillLine)) or ""
 end
-----------------------------------------------------------------
+
+-- Возвращает текущий уровень навыка профессии
 function E.func_ProfessionSkillLevel(skillLine)
-	local vivod = ""
-	if skillLine then
-		local skillLevel = select(3, GetProfessionInfo(skillLine))
-		vivod = skillLevel
-	end
-	return vivod
+    return skillLine and select(3, GetProfessionInfo(skillLine)) or ""
 end
-----------------------------------------------------------------
+
+-- Возвращает максимальный уровень навыка профессии
 function E.func_ProfessionMaxSkillLevel(skillLine)
-	local vivod = ""
-	if skillLine then
-		local maxSkillLevel = select(4, GetProfessionInfo(skillLine))
-		vivod = maxSkillLevel
-	end
-	return vivod
+    return skillLine and select(4, GetProfessionInfo(skillLine)) or ""
 end
 ----------------------------------------------------------------
-function E.START()
+function E.debugprofileSTART()
 	local timer = debugprofilestart()
 	return timer
 end
 ----------------------------------------------------------------
-function E.STOP()
+function E.debugprofileSTOP()
 	local timer = E.func_CompactNumberSimple(debugprofilestop())
 	local vivod = E.func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")
 	vivod = vivod..timer
@@ -1160,377 +1111,386 @@ function E.FriendsFrame_GetLastOnlineText(time, color)
 	end
 end
 ----------------------------------------------------------------
-function E.FriendsFrame_GetLastOnline(timeDifference, isAbsolute)
-	if (not isAbsolute) then
-		timeDifference = time() - timeDifference
-	end
-	if (timeDifference < SECONDS_PER_MIN) then
-		return LASTONLINE_SECS
-	elseif (timeDifference >= SECONDS_PER_MIN and timeDifference < SECONDS_PER_HOUR) then
-		return format(LASTONLINE_MINUTES, floor(timeDifference / SECONDS_PER_MIN))
-	elseif (timeDifference >= SECONDS_PER_HOUR and timeDifference < SECONDS_PER_DAY) then
-		return format(LASTONLINE_HOURS, floor(timeDifference / SECONDS_PER_HOUR))
-	elseif (timeDifference >= SECONDS_PER_DAY and timeDifference < SECONDS_PER_MONTH) then
-		return format(LASTONLINE_DAYS, floor(timeDifference / SECONDS_PER_DAY))
-	elseif (timeDifference >= SECONDS_PER_MONTH and timeDifference < SECONDS_PER_YEAR) then
-		return format(LASTONLINE_MONTHS, floor(timeDifference / SECONDS_PER_MONTH))
-	else
-		return format(LASTONLINE_YEARS, floor(timeDifference / SECONDS_PER_YEAR))
-	end
+function E.FriendsFrame_GetLastOnline(timeDiff, isAbsolute)
+    if not isAbsolute then
+        timeDiff = time() - timeDiff
+    end
+
+    if timeDiff < SECONDS_PER_MIN then
+        return LASTONLINE_SECS
+    elseif timeDiff < SECONDS_PER_HOUR then
+        return format(LASTONLINE_MINUTES, floor(timeDiff / SECONDS_PER_MIN))
+    elseif timeDiff < SECONDS_PER_DAY then
+        return format(LASTONLINE_HOURS, floor(timeDiff / SECONDS_PER_HOUR))
+    elseif timeDiff < SECONDS_PER_MONTH then
+        return format(LASTONLINE_DAYS, floor(timeDiff / SECONDS_PER_DAY))
+    elseif timeDiff < SECONDS_PER_YEAR then
+        return format(LASTONLINE_MONTHS, floor(timeDiff / SECONDS_PER_MONTH))
+    else
+        return format(LASTONLINE_YEARS, floor(timeDiff / SECONDS_PER_YEAR))
+    end
 end
+
+
+
 ----------------------------------------------------------------
+
 function E.func_TableMerge(table1, table2)
-	for k, v in pairs(table2) do
-		if table1[k] == nil or type(table1[k]) ~= type(table2[k]) then
-			table1[k] = v
-			-- print("replacing key", k, v)
-		elseif type(v) == "table" then
-			table1[k] = MergeTable(table1[k], table2[k])
-		end
-	end
-	return table1
+    for k, v in pairs(table2) do
+        local t1_val = table1[k]
+        local t2_type = type(v)
+
+        if t1_val == nil or type(t1_val) ~= t2_type then
+            table1[k] = v
+        elseif t2_type == "table" then
+            E.func_TableMerge(t1_val, v)  -- Рекурсивный вызов вместо MergeTable
+        end
+    end
+    return table1
 end
+-- function E.func_TableMerge(table1, table2)
+-- 	for k, v in pairs(table2) do
+-- 		if table1[k] == nil or type(table1[k]) ~= type(table2[k]) then
+-- 			table1[k] = v
+-- 			-- print("replacing key", k, v)
+-- 		elseif type(v) == "table" then
+-- 			table1[k] = MergeTable(table1[k], table2[k])
+-- 		end
+-- 	end
+-- 	return table1
+-- end
 ----------------------------------------------------------------
 function E.func_TableConcat(table1, table2)
-	for i = 1, #table2 do
-		table1[#table1+1] = table2[i]
-	end
-	return table1
+    local len = #table1
+    for i = 1, #table2 do
+        len = len + 1
+        table1[len] = table2[i]
+    end
+    return table1
 end
+
+-- function E.func_TableConcat(table1, table2)
+-- 	for i = 1, #table2 do
+-- 		table1[#table1+1] = table2[i]
+-- 	end
+-- 	return table1
+-- end
+
 ----------------------------------------------------------------
+
 function E.func_TableRemoveDuplicates(table1)
-	if type(table1) ~= "table" then
-		table1 = {}
-	end
-	local table2 = {}
-	local i = 1
-	while table1[i] do
-		local value = table1[i]
-		if table2[value] then
-			tremove(table1, i)
-		else
-			i = i + 1
-		end
-		table2[value] = true
-	end
+    if type(table1) ~= "table" then
+        return {}
+    end
+
+    local seen = {}
+    local write_idx = 1
+
+    for i = 1, #table1 do
+        local value = table1[i]
+        if not seen[value] then
+            seen[value] = true
+            if write_idx ~= i then
+                table1[write_idx] = value
+            end
+            write_idx = write_idx + 1
+        end
+    end
+
+    for i = write_idx, #table1 do
+        table1[i] = nil
+    end
+
+    return table1
 end
-----------------------------------------------------------------
+-- function E.func_TableRemoveDuplicates(table1)
+-- 	if type(table1) ~= "table" then
+-- 		table1 = {}
+-- 	end
+-- 	local table2 = {}
+-- 	local i = 1
+-- 	while table1[i] do
+-- 		local value = table1[i]
+-- 		if table2[value] then
+-- 			tremove(table1, i)
+-- 		else
+-- 			i = i + 1
+-- 		end
+-- 		table2[value] = true
+-- 	end
+-- end
 ----------------------------------------------------------------
 function E.func_coloredText(fontstring)
-	if not fontstring then
-		return nil
-	end
-	local text = fontstring:GetText()
-	if not text then
-		return nil
-	end
-	local r, g, b, a = fontstring:GetTextColor()
-	return E.func_rgb2hex(r, g, b, a)..text.."|r"
+    if not fontstring then return nil end
+
+    local text = fontstring:GetText()
+    if not text or text == "" then return nil end  -- Проверка на пустую строку
+
+    -- Получаем цвет и сразу конвертируем в hex
+    return E.func_rgb2hex(fontstring:GetTextColor()) .. text .. "|r"
 end
 ----------------------------------------------------------------
 function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
-	local r, g, b = E.func_hex2rgbNUMBER(E.classColorHexCurrent)
-	local bgCr, bgCg, bgCb, bgCa = E.bgCr, E.bgCg, E.bgCb, E.bgCa
-	if hexcolor then
-		bgCr, bgCg, bgCb = self.func_hex2rgbNUMBER(hexcolor)
-	end
-	if BackdropAlpha then
-		bgCa = BackdropAlpha
-	end
-	edgeAlpha = edgeAlpha or 1
-	frame:SetBackdrop({
-			bgFile = E.bgFile,
-			edgeFile = E.edgeFile,
-			edgeSize = 1,
-			insets = {left = 0, right = 0, top = 0, bottom = 0},
-	})
-	frame.r = bgCr
-	frame.g = bgCg
-	frame.b = bgCb
-	frame.a = bgCa
-	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
-	if not frame.isInit then
-		frame.isInit = true
-		frame:HookScript("OnEnter", function(self)
-				self:SetBackdropColor(self.r, self.g, self.b, frame.a)
-				self:SetBackdropBorderColor(r, g, b, 1)
-		end)
-		frame:HookScript("OnLeave", function(self)
-				self:SetBackdropColor(self.r, self.g, self.b, frame.a)
-				self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
-		end)
-		if frame.icon then
-			frame.icon:SetAllPoints(frame)
-			frame:SetScript("OnShow", function(self)
-					self.icon:SetVertexColor(1, 1, 1, 1)
-			end)
-			-- frame:SetScript("OnEnter", function(self)
-			--     self.icon:SetVertexColor(r, g, b, 1)
-			-- end)
-			-- frame:SetScript("OnLeave", function(self)
-			--     self.icon:SetVertexColor(1, 1, 1, 1)
-			--     GameTooltip:ClearLines()
-			--     GameTooltip:Hide()
-			-- end)
-			frame:SetScript("OnMouseDown", function(self)
-					self.icon:SetVertexColor(1, 0, 0, .5)
-					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
-			end)
-			frame:SetScript("OnMouseUp", function(self)
-					self.icon:SetVertexColor(r, g, b, 1)
-					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
-			end)
-		end
-	end
+    -- Предварительная обработка параметров
+    edgeAlpha = edgeAlpha or 1
+    local bgCr, bgCg, bgCb = E.bgCr, E.bgCg, E.bgCb
+    local bgCa = BackdropAlpha or E.bgCa
+
+    -- Обработка цвета, если он передан
+    if hexcolor then
+        bgCr, bgCg, bgCb = self.func_hex2rgbNUMBER(hexcolor)
+    end
+
+    -- Установка фрейма
+    frame:SetBackdrop({
+        bgFile = E.bgFile,
+        edgeFile = E.edgeFile,
+        edgeSize = 1,
+        insets = {left = 0, right = 0, top = 0, bottom = 0},
+    })
+
+    -- Сохранение цветов во фрейме
+    frame.r, frame.g, frame.b, frame.a = bgCr, bgCg, bgCb, bgCa
+    frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+    frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
+
+    -- Если фрейм еще не инициализирован
+    if not frame.isInit then
+        frame.isInit = true
+        local r, g, b = E.func_hex2rgbNUMBER(E.classColorHexCurrent)
+
+        -- Общие обработчики событий
+        frame:HookScript("OnEnter", function(self)
+            self:SetBackdropColor(self.r, self.g, self.b, self.a)
+            self:SetBackdropBorderColor(r, g, b, 1)
+        end)
+
+        frame:HookScript("OnLeave", function(self)
+            self:SetBackdropColor(self.r, self.g, self.b, self.a)
+            self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
+        end)
+
+        -- Дополнительные обработчики для фреймов с иконкой
+        if frame.icon then
+            frame.icon:SetAllPoints(frame)
+
+            frame:SetScript("OnShow", function(self)
+                self.icon:SetVertexColor(1, 1, 1, 1)
+            end)
+
+            frame:SetScript("OnMouseDown", function(self)
+                self.icon:SetVertexColor(1, 0, 0, 0.5)
+                self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
+            end)
+
+            frame:SetScript("OnMouseUp", function(self)
+                self.icon:SetVertexColor(r, g, b, 1)
+                self:SetBackdropBorderColor(r, g, b, edgeAlpha)
+            end)
+        end
+    end
 end
 ----------------------------------------------------------------
 function E:func_CreateUtilsButton(frame, title, height, indent)
-	local curHeight = height
-	local indent = indent or 0
-	----------------------------------------------------------------
-	local Octo_CloseButton = CreateFrame("Button", "Octo_CloseButton", frame)
-	Octo_CloseButton:SetSize(curHeight, curHeight)
-	Octo_CloseButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, indent)
-	Octo_CloseButton:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			GameTooltip:AddLine(E.WOW_Artifact_Color..CLOSE.."|r")
-			GameTooltip:Show()
-	end)
-	Octo_CloseButton:SetScript("OnClick", function()
-			frame:Hide()
-	end)
-	Octo_CloseButton:SetScript("OnKeyDown", function(self, key)
-			if key == GetBindingKey("TOGGLEGAMEMENU") then
-				self:GetParent():Hide()
-				self:SetPropagateKeyboardInput(false)
-			else
-				self:SetPropagateKeyboardInput(true)
-			end
-	end)
-	Octo_CloseButton:SetScript("OnLeave", function(self)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	Octo_CloseButton.icon = Octo_CloseButton:CreateTexture(nil, "BACKGROUND")
-	Octo_CloseButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga")
-	Octo_CloseButton.icon:SetAllPoints()
-	----------------------------------------------------------------
-	-- Octo_OptionsButton
-	----------------------------------------------------------------
-	local Octo_OptionsButton = CreateFrame("Button", "Octo_OptionsButton", frame)
-	Octo_OptionsButton:SetSize(curHeight, curHeight)
-	Octo_OptionsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*1, indent)
-	Octo_OptionsButton:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:AddLine(E.WOW_Artifact_Color..OPTIONS.."|r")
-			GameTooltip:Show()
-	end)
-	Octo_OptionsButton:SetScript("OnClick", function()
-			-- frame:SetShown(not frame:IsShown())
-			if frame and frame:IsShown() then
-				frame:Hide()
-			end
-			if SettingsPanel:IsVisible() and frame:IsVisible() then
-				HideUIPanel(SettingsPanel)
-			else
-				Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
-			end
-	end)
-	Octo_OptionsButton:SetScript("OnLeave", function(self)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	Octo_OptionsButton.icon = Octo_OptionsButton:CreateTexture(nil, "BACKGROUND")
-	Octo_OptionsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..title)
-	Octo_OptionsButton.icon:SetAllPoints()
-	----------------------------------------------------------------
-	-- Octo_AbandonButton
-	----------------------------------------------------------------
-	local function AbandonQuests()
-		local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
-		local numQuests = E.func_CurrentNumQuests()
-		for i = 1, numShownEntries do
-			if numQuests ~= 0 then
-				local info = C_QuestLog.GetInfo(i)
-				if info then
-					if (not info.isHeader and not info.isHidden) then
-						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
-						C_QuestLog.SetSelectedQuest(info.questID)
-						C_QuestLog.SetAbandonQuest()
-						C_QuestLog.AbandonQuest()
-					end
-				end
-			end
-		end
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
-	end
-	----------------------------------------------------------------
-	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
-		text = E.Red_Color.."!!! ACHTUNG !!!|r\n"..E.WOW_Artifact_Color.."Отменить все задания?|r",
-		button1 = YES,
-		button2 = NO,
-		hideOnEscape = 1,
-		whileDead = 1,
-		OnAccept = function()
-			C_Timer.After(1, AbandonQuests)
-		end,
-	}
-	local Octo_AbandonButton = CreateFrame("Button", "Octo_AbandonButton", frame)
-	Octo_AbandonButton:SetSize(curHeight, curHeight)
-	Octo_AbandonButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*2, indent)
-	Octo_AbandonButton:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			if E.func_CurrentNumQuests() > 0 then
-				GameTooltip:AddLine(E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..E.func_CurrentNumQuests()..")")
-				GameTooltip:AddLine(" ")
-			else
-				GameTooltip:AddLine(L["No quests"], r, g, b)
-			end
-			local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
-			local list = {}
-			for i = 1, numShownEntries do
-				if E.func_CurrentNumQuests() ~= 0 then
-					local info = C_QuestLog.GetInfo(i)
-					if info then
-						if info.questID ~= 0 then
-							if (not info.isHeader and not info.isHidden) then
-								tinsert(list, info.questID)
-							else
-							end
-						end
-					end
-				end
-			end
-			sort(list, E.func_Reverse_order)
-			for k, questID in next, (list) do
-				GameTooltip:AddDoubleLine(E.func_questName(questID), E.func_CheckCompletedByQuestID(questID), 1, 1, 1, 1, 1, 1)
-			end
-			GameTooltip:Show()
-	end)
-	Octo_AbandonButton:SetScript("OnLeave", function(self)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	Octo_AbandonButton:SetScript("OnClick", function()
-			if E.func_CurrentNumQuests() > 0 then
-				StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
-			end
-	end)
-	Octo_AbandonButton.icon = Octo_AbandonButton:CreateTexture(nil, "BACKGROUND")
-	Octo_AbandonButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga")
-	Octo_AbandonButton.icon:SetAllPoints()
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- Octo_EventsButton
-	----------------------------------------------------------------
-	-- local Octo_EventsButton = CreateFrame("Button", "Octo_EventsButton", frame, "BackDropTemplate")
-	local Octo_EventsButton = CreateFrame("Button", "Octo_EventsButton", frame)
-	Octo_EventsButton:SetSize(curHeight, curHeight)
-	Octo_EventsButton:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*3, indent)
-	Octo_EventsButton:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
-			local curdatetable = date("*t")
-			-- fpde(date("*t"))
-			-- [1] = {
-			-- ["hour"] = 2,
-			-- ["min"] = 15,
-			-- ["wday"] = 1,
-			-- ["day"] = 30,
-			-- ["month"] = 3,
-			-- ["year"] = 2025,
-			-- ["sec"] = 28,
-			-- ["yday"] = 89,
-			-- ["isdst"] = "false",
-			-- },
-			local curdate = (FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year))
-			-- local curdate = E:func_fixdate(curdatetable.day).."/"..E:func_fixdate(curdatetable.month).."/"..E:func_fixdate(curdatetable.year)
-			GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(curdate.."|r"))
-			GameTooltip:AddDoubleLine(" ", " ")
-			local count = 0
-			local sorted = {}
-			for k, v in pairs (E.HolidayForButton) do
-				tinsert(sorted, k)
-			end
-			sort(sorted, function(a, b) return E.HolidayForButton[a].priority < E.HolidayForButton[b].priority end)
-			for i, eventID in ipairs(sorted) do
-				local v = E.HolidayForButton[eventID]
-				count = count + 1
-				-- if v.Active == true then
-				--   -- BRAWL_TOOLTIP_ENDS - Заканчивается через %s
-				--   -- СЕЙЧАС
-				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Green_Color..v.title.."|r"..E.White_Color.." (".. string.format(BRAWL_TOOLTIP_ENDS, v.ENDS)..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
-				-- elseif v.Possible == true then
-				--   -- БУДУЩЕЕ
-				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
-				-- else
-				--   -- ПРОШЛОЕ
-				--   GameTooltip:AddDoubleLine(--[[E.func_texturefromIcon(v.iconTexture)..]]E.Gray_Color..v.title .." ("..v.event_duration..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
-				-- end
-				if v.Active == true then
-					-- СЕЙЧАС
-					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..E.White_Color.." (".. v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Green_Color..v.startTime.." - "..v.endTime.."|r")
-				elseif v.Possible == true then
-					-- БУДУЩЕЕ
-					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Gray_Color..v.title ..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
-				else
-					-- ПРОШЛОЕ
-					GameTooltip:AddDoubleLine(v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Gray_Color..v.title ..(E.DebugIDs and E.Gray_Color.. " id:"..eventID.."|r" or ""), E.Gray_Color..v.startTime.." - "..v.endTime.."|r")
-				end
-			end
-			if count == 0 then
-				GameTooltip:AddLine("No Data")
-			end
-			GameTooltip:AddDoubleLine(" ", " ")
-			GameTooltip:Show()
-	end)
-	Octo_EventsButton:SetScript("OnLeave", function(self)
-			GameTooltip:ClearLines()
-			GameTooltip:Hide()
-	end)
-	Octo_EventsButton:SetScript("OnClick", function()
-			frame:Hide()
-			fpde(E.HolidayForButton)
-	end)
-	Octo_EventsButton.icon = Octo_EventsButton:CreateTexture(nil, "BACKGROUND")
-	Octo_EventsButton.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga")
-	Octo_EventsButton.icon:SetAllPoints()
-	-- E:func_SetBackdrop(Octo_EventsButton)
-	----------------------------------------------------------------
-	-- Octo_FramerateFrame GetFramerate()
-	----------------------------------------------------------------
-		-- local vars = Octo_ToDo_DB_Vars.Octo_FramerateFrame
-		-- if vars.Shown then
-	local Octo_FramerateFrame = CreateFrame("Frame", "Octo_FramerateFrame", frame)
-	Octo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", (-curHeight)*4, indent)
-	Octo_FramerateFrame:SetSize(curHeight*2, curHeight)
-	Octo_FramerateFrame:SetFrameStrata("HIGH")
-	Octo_FramerateFrame.text_fps = Octo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	Octo_FramerateFrame.text_fps:SetPoint("CENTER", 0, 0)
-	Octo_FramerateFrame.text_fps:SetFontObject(OctoFont12)
-	Octo_FramerateFrame.text_fps:SetJustifyV("MIDDLE")
-	Octo_FramerateFrame.text_fps:SetJustifyH("CENTER")
-	Octo_FramerateFrame.text_fps:SetTextColor(.31, 1, .47, 1)
-	C_Timer.NewTicker(1, function()
-			local fps = math.floor(GetFramerate())
-			Octo_FramerateFrame.text_fps:SetText(fps)
-	end)
+    local curHeight = height
+    local indent = indent or 0
+
+    -- Helper function to create consistent buttons
+    local function CreateUtilButton(name, relativeTo, xOffset, texture, tooltip, onClick)
+        local button = CreateFrame("Button", name, frame)
+        button:SetSize(curHeight, curHeight)
+        button:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", xOffset, indent)
+
+        if tooltip then
+            button:SetScript("OnEnter", function(self)
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+                GameTooltip:ClearLines()
+                GameTooltip:AddLine(E.WOW_Artifact_Color..tooltip.."|r")
+                GameTooltip:Show()
+            end)
+            button:SetScript("OnLeave", GameTooltip_Hide)
+        end
+
+        if onClick then
+            button:SetScript("OnClick", onClick)
+        end
+
+        if texture then
+            button.icon = button:CreateTexture(nil, "BACKGROUND")
+            button.icon:SetTexture(texture)
+            button.icon:SetAllPoints()
+        end
+
+        return button
+    end
+
+    -- Close Button
+    CreateUtilButton(
+        "Octo_CloseButton",
+        frame,
+        0,
+        "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga",
+        CLOSE,
+        function() frame:Hide() end
+    )
+
+    -- Options Button
+    CreateUtilButton(
+        "Octo_OptionsButton",
+        frame,
+        -curHeight,
+        "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..title,
+        OPTIONS,
+        function()
+            if frame and frame:IsShown() then
+                frame:Hide()
+            end
+            if SettingsPanel:IsVisible() and frame:IsVisible() then
+                HideUIPanel(SettingsPanel)
+            else
+                Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
+            end
+        end
+    )
+
+    -- Abandon Button
+    local function AbandonQuests()
+        local numQuests = E.func_CurrentNumQuests()
+        for i = 1, C_QuestLog.GetNumQuestLogEntries() do
+            if numQuests ~= 0 then
+                local info = C_QuestLog.GetInfo(i)
+                if info and not info.isHeader and not info.isHidden then
+                    DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
+                    C_QuestLog.SetSelectedQuest(info.questID)
+                    C_QuestLog.SetAbandonQuest()
+                    C_QuestLog.AbandonQuest()
+                end
+            end
+        end
+        DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
+    end
+
+    StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
+        text = E.WOW_Artifact_Color..L["Abandon All Quests"].."?|r",
+        button1 = YES,
+        button2 = NO,
+        hideOnEscape = 1,
+        whileDead = 1,
+        OnAccept = function() C_Timer.After(1, AbandonQuests) end,
+    }
+
+    local Octo_AbandonButton = CreateUtilButton(
+        "Octo_AbandonButton",
+        frame,
+        -curHeight*2,
+        "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga"
+    )
+
+    Octo_AbandonButton:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+        GameTooltip:ClearLines()
+        local numQuests = E.func_CurrentNumQuests()
+        if numQuests > 0 then
+            GameTooltip:AddLine(E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..numQuests..")")
+            GameTooltip:AddLine(" ")
+
+            local list = {}
+            for i = 1, C_QuestLog.GetNumQuestLogEntries() do
+                if numQuests ~= 0 then
+                    local info = C_QuestLog.GetInfo(i)
+                    if info and info.questID ~= 0 and not info.isHeader and not info.isHidden then
+                        tinsert(list, info.questID)
+                    end
+                end
+            end
+
+            sort(list, E.func_Reverse_order)
+            for _, questID in ipairs(list) do
+                GameTooltip:AddDoubleLine(E.func_questName(questID), E.func_CheckCompletedByQuestID(questID), 1, 1, 1, 1, 1, 1)
+            end
+        else
+            GameTooltip:AddLine(L["No quests"], r, g, b)
+        end
+        GameTooltip:Show()
+    end)
+
+    Octo_AbandonButton:SetScript("OnClick", function()
+        if E.func_CurrentNumQuests() > 0 then
+            StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
+        end
+    end)
+
+    -- Events Button
+    local Octo_EventsButton = CreateUtilButton(
+        "Octo_EventsButton",
+        frame,
+        -curHeight*3,
+        "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga"
+    )
+
+    Octo_EventsButton:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+        GameTooltip:ClearLines()
+
+        local curdatetable = date("*t")
+        local curdate = FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year)
+        GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..L["Current Date"].."|r", E.WOW_Artifact_Color..curdate.."|r")
+        GameTooltip:AddDoubleLine(" ", " ")
+
+        local sorted = {}
+        for k in pairs(E.HolidayForButton) do
+            tinsert(sorted, k)
+        end
+        sort(sorted, function(a, b) return E.HolidayForButton[a].priority < E.HolidayForButton[b].priority end)
+
+        for _, eventID in ipairs(sorted) do
+            local v = E.HolidayForButton[eventID]
+            if v.Active then
+                GameTooltip:AddDoubleLine(
+                    v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..
+                    E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or ""),
+                    E.Green_Color..v.startTime.." - "..v.endTime.."|r"
+                )
+            else
+                GameTooltip:AddDoubleLine(
+                    v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Gray_Color..v.title..
+                    (E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or ""),
+                    E.Gray_Color..v.startTime.." - "..v.endTime.."|r"
+                )
+            end
+        end
+
+        if #sorted == 0 then
+            GameTooltip:AddLine("No Data")
+        end
+
+        GameTooltip:AddDoubleLine(" ", " ")
+        GameTooltip:Show()
+    end)
+
+    Octo_EventsButton:SetScript("OnClick", function()
+        frame:Hide()
+        fpde(E.HolidayForButton)
+    end)
+
+    -- Framerate Frame
+    local Octo_FramerateFrame = CreateFrame("Frame", "Octo_FramerateFrame", frame)
+    Octo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -curHeight*4, indent)
+    Octo_FramerateFrame:SetSize(curHeight*2, curHeight)
+    Octo_FramerateFrame:SetFrameStrata("HIGH")
+
+    Octo_FramerateFrame.text_fps = Octo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+    Octo_FramerateFrame.text_fps:SetPoint("CENTER")
+    Octo_FramerateFrame.text_fps:SetFontObject(OctoFont12)
+    Octo_FramerateFrame.text_fps:SetJustifyH("CENTER")
+    Octo_FramerateFrame.text_fps:SetTextColor(0.31, 1, 0.47, 1)
+
+    C_Timer.NewTicker(1, function()
+        Octo_FramerateFrame.text_fps:SetText(math.floor(GetFramerate()))
+    end)
 end
 ----------------------------------------------------------------
 function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameString)
-	-- print (MinimapName, title)
 	local MinimapName = E.func_AddonTitle(E.GlobalAddonName).." » "..title
 	local info = {
 		type = "data source",
@@ -1568,10 +1528,10 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 			end
 		end
 	end
-	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
-	if vars.minimapPos == nil then vars.minimapPos = 244 end
-	LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
-	LibDBIcon:Show(MinimapName)
+    vars.minimapPos = vars.minimapPos or 244
+    local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
+    LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
+    LibDBIcon:Show(MinimapName)
 end
 ----------------------------------------------------------------
 function E.func_TooltipOnEnter(frame, first, second)
@@ -2489,11 +2449,20 @@ function E.func_SaveProfile(profileName)
 	if not profileName or profileName == "" then
 		profileName = currentProfile
 	end
-	Octo_AddonsManager_DB.profiles = Octo_AddonsManager_DB.profiles or {}
 	Octo_AddonsManager_DB.profiles[profileName] = {}
 	local addons = E.func_GetAllAddons()
 	for index, name in ipairs(addons) do
-		Octo_AddonsManager_DB.profiles[profileName][name] = E.func_IsAddOnLoaded(index)
+		-- Octo_AddonsManager_DB.profiles[profileName][name] = E.func_IsAddOnLoaded(index)
+		local loadable = E.func_IsAddOnLoadable(index, character)
+		local reason = E.func_GetAddonReason(index, character) or ""
+
+			if loadable or reason == "DEMAND_LOADED" or reason == "DEP_DEMAND_LOADED" then
+				Octo_AddonsManager_DB.profiles[profileName][name] = true
+			else
+				Octo_AddonsManager_DB.profiles[profileName][name] = false
+			end
+
+
 	end
 	print ("Профиль '"..profileName.." сохранен ("..#addons.." аддонов)")
 end

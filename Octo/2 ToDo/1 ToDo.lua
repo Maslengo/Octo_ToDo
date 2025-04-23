@@ -3,6 +3,7 @@ local Octo_EventFrame_ToDo = CreateFrame("FRAME")
 Octo_EventFrame_ToDo:Hide()
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
 Octo_MainFrame_ToDo:Hide()
+tinsert(UISpecialFrames, "Octo_MainFrame_ToDo")
 tinsert(E.OctoTable_Frames, Octo_MainFrame_ToDo)
 ----------------------------------------------------------------
 local AddonHeight = 20
@@ -105,9 +106,17 @@ local func_OnAcquired do
 		frame.icon_1:SetTexCoord(.10, .90, .10, .90)
 
 		-- Left text
+		-- text:IsTruncated() если тру то подсказку ПОФИКСИТЬ
+
+		-- if self.Text:IsTruncated() then
+		-- 	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
+		-- 	GameTooltip:SetText(self.Text:GetText())
+		-- 	GameTooltip:Show()
+		-- end
 		frame.textLEFT = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame.textLEFT:SetPoint("LEFT", 2+AddonHeight, 0)
-		frame.textLEFT:SetPoint("RIGHT", 0, 0)
+		frame.textLEFT:SetWidth(AddonLeftFrameWeight-2-AddonHeight)
+		-- frame.textLEFT:SetPoint("RIGHT", 0, 0)
 		frame.textLEFT:SetFontObject(OctoFont11)
 		frame.textLEFT:SetWordWrap(false)
 		frame.textLEFT:SetJustifyV("MIDDLE")
@@ -121,19 +130,18 @@ local func_OnAcquired do
 				f:SetPropagateMouseClicks(true)
 				f:SetPropagateMouseMotion(true)
 				f:SetSize(AddonCentralFrameWeight, AddonHeight)
-				f:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonLeftFrameWeight+(AddonCentralFrameWeight*key-AddonCentralFrameWeight), 0)
+				f:SetHitRectInsets(1, 1, 0, 0)
+				f:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonLeftFrameWeight+(AddonCentralFrameWeight*(key-1)), 0)
 				f:RegisterForClicks("LeftButtonUp")
 
 				-- Reputation texture
 				f.ReputTexture = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-				f.ReputTexture:SetSize(AddonCentralFrameWeight, AddonHeight)
-				f.ReputTexture:SetPoint("LEFT")
+				f.ReputTexture:SetAllPoints()
 				f.ReputTexture:SetTexture(TEXTURE_PATH)
 
 				-- Current character texture
 				f.curCharTexture = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-				f.curCharTexture:SetSize(AddonCentralFrameWeight, AddonHeight)
-				f.curCharTexture:SetPoint("LEFT")
+				f.curCharTexture:SetAllPoints()
 				f.curCharTexture:SetTexture(TEXTURE_PATH)
 				f.curCharTexture:SetVertexColor(r, g, b, E.bgCaOverlay)
 				f.curCharTexture:Hide()
@@ -292,7 +300,23 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 
 	barPanelScroll:SetScrollChild(childCENT)
 
-	-- Настройка ScrollBox
+
+
+
+
+	-- Настройка ScrollBoxLEFT
+	-- frame.ScrollBoxLEFT = CreateFrame("Frame", "ScrollBox", childCENT, "WowScrollBoxList")
+	-- frame.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -AddonHeight)
+	-- frame.ScrollBoxLEFT:SetPoint("BOTTOMRIGHT")
+	-- frame.ScrollBoxLEFT:SetPropagateMouseClicks(true)
+	-- frame.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
+
+	-- frame.viewLEFT = CreateScrollBoxListTreeListView(0)
+	-- frame.viewLEFT:SetElementExtent(AddonHeight)
+	-- frame.viewLEFT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_init(...) end)
+	-- frame.viewLEFT:RegisterCallback(frame.viewLEFT.Event.OnAcquiredFrame, func_OnAcquired, frame)
+
+	-- Настройка ScrollBoxCENT
 	frame.ScrollBoxCENT = CreateFrame("Frame", "ScrollBox", childCENT, "WowScrollBoxList")
 	frame.ScrollBoxCENT:SetPoint("TOPLEFT", 0, -AddonHeight)
 	frame.ScrollBoxCENT:SetPoint("BOTTOMRIGHT")
@@ -310,6 +334,10 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 
 	ScrollUtil.InitScrollBoxListWithScrollBar(frame.ScrollBoxCENT, frame.ScrollBarCENT, frame.viewCENT)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(frame.ScrollBoxCENT, frame.ScrollBarCENT)
+
+
+
+
 
 	-- Настройка внешнего вида фрейма
 	frame:SetBackdrop({

@@ -144,55 +144,7 @@ function E:func_Otrisovka()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	tinsert(OctoTable_func_otrisovkaCENT,
-		function(CharInfo)
-			local vivodCent, tooltip = " ", {}
-			if CharInfo.Chromie_inChromieTime == false then
-				if CharInfo.CurrentKeyName and CharInfo.CurrentKeyName ~= 0 then
-					tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyName.."|r", ""}
-				end
-				if CharInfo.RIO_Score ~= 0 then
-					tooltip[#tooltip+1] = {" ", " "}
-					local Enum_Activities_table = {}
-					for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
-						Enum_Activities_table[#Enum_Activities_table+1] = i
-					end
-					sort(Enum_Activities_table)
-					for j = 1, #Enum_Activities_table do
-						local i = Enum_Activities_table[j]
-						if CharInfo.PIZDALISHE.GreatVault[i] and CharInfo.PIZDALISHE.GreatVault[i].type ~= "" then
-							CharInfo.PIZDALISHE.GreatVault[i] = CharInfo.PIZDALISHE.GreatVault[i] or {}
-							CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING = CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING or 0
-							CharInfo.PIZDALISHE.GreatVault[i].progress = CharInfo.PIZDALISHE.GreatVault[i].progress or 0
-							CharInfo.PIZDALISHE.GreatVault[i].threshold = CharInfo.PIZDALISHE.GreatVault[i].threshold or 0
-							if CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING ~= 0 then
-								tooltip[#tooltip+1] = {CharInfo.PIZDALISHE.GreatVault[i].type, CharInfo.PIZDALISHE.GreatVault[i].progress.."/"..CharInfo.PIZDALISHE.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING.."|r"}
-							elseif CharInfo.PIZDALISHE.GreatVault[i].progress ~= 0 then
-								tooltip[#tooltip+1] = {CharInfo.PIZDALISHE.GreatVault[i].type, CharInfo.PIZDALISHE.GreatVault[i].progress.."/"..CharInfo.PIZDALISHE.GreatVault[i].threshold}
-							end
-						end
-					end
-					tooltip[#tooltip+1] = {" ", " "}
-					tooltip[#tooltip+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_weeklyBest.."|r"}
-					tooltip[#tooltip+1] = {"RIO Score:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_Score.."|r"}
-				end
-				if CharInfo.CurrentKey ~= 0 then
-					vivodCent = E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKey.."|r"
-				end
-				if CharInfo.HasAvailableRewards then
-					vivodCent = vivodCent..E.Blue_Color..">Vault<|r"
-				end
-			else
-				if CharInfo.Chromie_name ~= nil then
-					vivodCent = vivodCent..E.Red_Color..CharInfo.Chromie_name.."|r"
-				end
-			end
-			return vivodCent, tooltip
-	end)
-	tinsert(OctoTable_func_otrisovkaLEFT,
-		function(CharInfo)
-			return E.WOW_Epic_Color..L["Mythic Keystone"].."|r", 4352494
-	end)
+
 	if Octo_ToDo_DB_Vars.ExpansionToShow[2] then
 		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -1000,7 +952,50 @@ function E:func_Otrisovka()
 		end)
 	end
 	if Octo_ToDo_DB_Vars.ExpansionToShow[11] then
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+					if CharInfo.CurrentKeyName and CharInfo.CurrentKeyName ~= 0 then
+						tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyName.."|r", ""}
+					end
+					if CharInfo.RIO_Score ~= 0 then
+						tooltip[#tooltip+1] = {" ", " "}
+						local Enum_Activities_table = {}
+						for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
+							Enum_Activities_table[#Enum_Activities_table+1] = i
+						end
+						sort(Enum_Activities_table)
+						for j = 1, #Enum_Activities_table do
+							local i = Enum_Activities_table[j]
+							if CharInfo.PIZDALISHE.GreatVault[i] and CharInfo.PIZDALISHE.GreatVault[i].type ~= "" then
+								CharInfo.PIZDALISHE.GreatVault[i] = CharInfo.PIZDALISHE.GreatVault[i] or {}
+								CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING = CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING or 0
+								CharInfo.PIZDALISHE.GreatVault[i].progress = CharInfo.PIZDALISHE.GreatVault[i].progress or 0
+								CharInfo.PIZDALISHE.GreatVault[i].threshold = CharInfo.PIZDALISHE.GreatVault[i].threshold or 0
+								if CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING ~= 0 then
+									tooltip[#tooltip+1] = {CharInfo.PIZDALISHE.GreatVault[i].type, CharInfo.PIZDALISHE.GreatVault[i].progress.."/"..CharInfo.PIZDALISHE.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING.."|r"}
+								elseif CharInfo.PIZDALISHE.GreatVault[i].progress ~= 0 then
+									tooltip[#tooltip+1] = {CharInfo.PIZDALISHE.GreatVault[i].type, CharInfo.PIZDALISHE.GreatVault[i].progress.."/"..CharInfo.PIZDALISHE.GreatVault[i].threshold}
+								end
+							end
+						end
+						tooltip[#tooltip+1] = {" ", " "}
+						tooltip[#tooltip+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_weeklyBest.."|r"}
+						tooltip[#tooltip+1] = {"RIO Score:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_Score.."|r"}
+					end
+					if CharInfo.CurrentKey ~= 0 then
+						vivodCent = E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKey.."|r"
+					end
+					if CharInfo.HasAvailableRewards then
+						vivodCent = vivodCent..E.Blue_Color..">Vault<|r"
+					end
 
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return E.WOW_Epic_Color..L["Mythic Keystone"].."|r", 4352494
+		end)
 	end
 	if Octo_ToDo_DB_Vars.DebugInfo == true then
 		----------------------------------------------------------------

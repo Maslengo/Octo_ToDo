@@ -3,15 +3,15 @@
 ## Author: sfmict
 ## Version: r19
 ## Notes: Library for load quests, items and spells
-## Category: Libraries
-## Category-deDE: Bibliotheken
-## Category-esES: Bibliotecas
-## Category-esMX: Bibliotecas
-## Category-frFR: Bibliothèques
-## Category-ptBR: Bibliotecas
-## Category-ruRU: Библиотеки
-## Category-zhCN: 函数库
-## Category-zhTW: 函式庫
+## CategoryQWEQWEQWEQWE: Libraries
+## CategoryQWEQWEQWEQWE-deDE: Bibliotheken
+## CategoryQWEQWEQWEQWE-esES: Bibliotecas
+## CategoryQWEQWEQWEQWE-esMX: Bibliotecas
+## CategoryQWEQWEQWEQWE-frFR: Bibliothèques
+## CategoryQWEQWEQWEQWE-ptBR: Bibliotecas
+## CategoryQWEQWEQWEQWE-ruRU: Библиотеки
+## CategoryQWEQWEQWEQWE-zhCN: 函数库
+## CategoryQWEQWEQWEQWE-zhTW: 函式庫
 ## LoadOnDemand: 1
 ## OptionalDeps: LibStub
 libs\LibStub\LibStub.lua
