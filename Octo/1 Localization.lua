@@ -12,6 +12,7 @@ if L then
 	L["AddonLeftFrameWeight"] = true
 	L["AddonCentralFrameWeight"] = true
 	L["MainFrameDefaultLines"] = true
+	L["MaxNumCharacters"] = true
 	L["SFDropDownWeight"] = true
 
 	L["fullName"] = true
@@ -224,6 +225,7 @@ if L then
 	L["AddonLeftFrameWeight"] = "Ширина левого"
 	L["AddonCentralFrameWeight"] = "Ширина строк"
 	L["MainFrameDefaultLines"] = "Количество строк"
+	L["MaxNumCharacters"] = "Количество персонажей"
 	L["SFDropDownWeight"] = "SFDropDownWeight"
 
 	L["fullName"] = "Полное название"

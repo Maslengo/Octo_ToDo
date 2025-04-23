@@ -1,0 +1,18 @@
+## Interface: 110105, 40402, 11507
+## Title: LibSFDropDown
+## Author: sfmict
+## Version: r46
+## Notes: Dropdown menu library
+## Category: Libraries
+## Category-deDE: Bibliotheken
+## Category-esES: Bibliotecas
+## Category-esMX: Bibliotecas
+## Category-frFR: Bibliothèques
+## Category-ptBR: Bibliotecas
+## Category-ruRU: Библиотеки
+## Category-zhCN: 函数库
+## Category-zhTW: 函式庫
+## LoadOnDemand: 1
+## OptionalDeps: LibStub
+libs\LibStub\LibStub.lua
+LibSFDropDown.xml

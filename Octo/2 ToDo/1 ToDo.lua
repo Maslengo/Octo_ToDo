@@ -16,6 +16,7 @@ if MainFrameDefaultLines > MainFrameTotalLines then
 	MainFrameDefaultLines = MainFrameTotalLines
 end
 local SFDropDownWeight = 100
+local MaxNumCharacters = 10
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
@@ -38,7 +39,7 @@ end)
 -- E.func_LoadAddOn("Octo_Achievements_DB")
 E.func_LoadAddOn("Octo_AddonsManager_DB")
 -- E.func_LoadAddOn("Octo_Minecraft")
-E.func_LoadAddOn("Octo_TrashCan_DB")
+E.func_LoadAddOn("Octo_DEBUG")
 E.func_LoadAddOn("!BugGrabber")
 E.func_LoadAddOn("BugSack")
 -- E.func_LoadAddOn("MountsJournal")
@@ -77,21 +78,39 @@ local func_OnAcquired do
 	------------------------------------------------
 	local function func_OnClick(frame)
 		--if Octo_MainFrame_ToDo:IsDragging() then
-		--	return
+		--    return
 		--end
 		--local AchievementID = frame:GetData().AchievementID
 		--ToggleAchievement(AchievementID)
 	end
 	------------------------------------------------
 	local function func_OnEnter(frame)
-		E.func_TooltipOnEnter(frame, false, false)
-		frame.texture_full:SetAlpha(E.BGALPHA)
+		frame.texture_full:SetAlpha(E.bgCaOverlay)
 	end
 	------------------------------------------------
-	local function func_OnOnLeave(frame)
+	local function func_OnLeave(frame)
 		frame.texture_full:SetAlpha(0)
-		GameTooltip_Hide()
 	end
+	------------------------------------------------
+	local function func_OnEnterSecond(frame)
+		E.func_TooltipOnEnter(frame, true, true)
+	end
+	------------------------------------------------
+	--local function func_OnLeaveSecond(frame)
+	--    GameTooltip_Hide()
+	--end
+	------------------------------------------------
+	--local function func_SecondShow(tbl)
+	--    for k, v in next, (tbl) do
+	--        v:Show()
+	--    end
+	--end
+	--------------------------------------------------
+	--local function func_SecondHide(tbl)
+	--    for k, v in next, (tbl) do
+	--        v:Hide()
+	--    end
+	--end
 	------------------------------------------------
 	function func_OnAcquired(owner, frame, data, new)
 		if new then
@@ -99,8 +118,7 @@ local func_OnAcquired do
 			frame:SetPropagateMouseClicks(true)
 			------------------------------------------------
 			frame.texture_full = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
-			frame.texture_full:SetSize(AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight)
-			frame.texture_full:SetPoint("RIGHT")
+			frame.texture_full:SetAllPoints()
 			frame.texture_full:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
 			local r, g, b = GetClassColor(E.classFilename)
 			frame.texture_full:SetVertexColor(r, g, b, 0)
@@ -109,6 +127,7 @@ local func_OnAcquired do
 					__index = function(self, key)
 						local f = CreateFrame("BUTTON", "frame"..key, frame)
 						f:SetPropagateMouseClicks(true)
+						f:SetPropagateMouseMotion(true)
 						f:SetSize(AddonCentralFrameWeight, AddonHeight)
 						f:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*key-AddonCentralFrameWeight, 0)
 						f:RegisterForClicks("LeftButtonUp")
@@ -116,16 +135,12 @@ local func_OnAcquired do
 						f.ReputTexture:SetSize(AddonCentralFrameWeight, AddonHeight)
 						f.ReputTexture:SetPoint("LEFT", f, "LEFT")
 						f.ReputTexture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
-
-
 						f.curCharTexture = f:CreateTexture(nil, "BACKGROUND", nil, -2)
 						f.curCharTexture:SetSize(AddonCentralFrameWeight, AddonHeight)
 						f.curCharTexture:SetPoint("LEFT", f, "LEFT")
 						f.curCharTexture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
 						f.curCharTexture:SetVertexColor(r, g, b, E.bgCaOverlay) -- BGALPHA
-						--f.curCharTexture:Hide()
-
-
+						f.curCharTexture:Hide()
 						f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 						f.textCENT:SetPoint("LEFT")
 						f.textCENT:SetPoint("RIGHT")
@@ -134,13 +149,19 @@ local func_OnAcquired do
 						f.textCENT:SetJustifyV("MIDDLE")
 						f.textCENT:SetJustifyH("CENTER")
 						f.textCENT:SetTextColor(1, 1, 1, 1)
+						f:SetScript("OnEnter", func_OnEnterSecond)
+						f:SetScript("OnLeave", GameTooltip_Hide)
+						f:SetScript("OnHide", f.Hide)
+						f.curCharTexture:SetScript("OnHide", f.curCharTexture.Hide)
 						self[key] = f
 						return f
 			end})
+			--frame.second.Show = func_SecondShow
+			--frame.second.Hide = func_SecondHide
 			------------------------------------------------
 			frame:SetScript("OnClick", func_OnClick)
 			frame:SetScript("OnEnter", func_OnEnter)
-			frame:SetScript("OnLeave", func_OnOnLeave)
+			frame:SetScript("OnLeave", func_OnLeave)
 			------------------------------------------------
 		end
 	end
@@ -149,29 +170,25 @@ end
 
 
 function Octo_EventFrame_ToDo:Octo_Frame_init(frame, node)
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
 	local data = node:GetData()
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	if not data.zxc then
-		for i, v in ipairs(frame.second) do
-			frame.second[i]:Hide()
-		end
-	else
-		for i = 1, #data.zxc.textCENT do
-			if data.zxc.textCENT[i] and data.zxc.textCENT[i] ~= "" then
+	if data.totalPers > 1 then
+		frame.second[data.currentChar]:Show()
+		frame.second[data.currentChar].curCharTexture:Show()
+		frame.second[data.currentChar].textCENT:SetText("")
+		frame.second[data.currentChar].ReputTexture:Hide()
+	end
+	if data.zxc then
+		for i = 1, #data.zxc.FIRST do
+			if data.zxc.textCENT[i] then
 				local textCENT = data.zxc.textCENT[i]
 				local FIRST = data.zxc.FIRST[i]
 				local SECOND = data.zxc.SECOND[i]
 				local color = data.zxc.color[i]
 				local r, g, b = E.func_hex2rgbNUMBER(color)
 				frame.second[i].textCENT:SetText(textCENT)
-				frame.second[i].ReputTexture:SetVertexColor(r, g, b, 1)
+				frame.second[i].ReputTexture:SetVertexColor(r, g, b, .3)
 				if FIRST == 0 then
-					--frame.second[i].ReputTexture:SetWidth(.1)
+					frame.second[i].ReputTexture:SetWidth(.1)
 					frame.second[i].ReputTexture:Hide()
 				elseif FIRST == SECOND then
 					frame.second[i].ReputTexture:SetWidth(AddonCentralFrameWeight)
@@ -185,24 +202,25 @@ function Octo_EventFrame_ToDo:Octo_Frame_init(frame, node)
 				frame.second[i].ReputTexture:SetVertexColor(0, 0, 0, 0)
 			end
 			-- ТЕКУЩИЙ ПЕРСОНАЖ
-			if data.zxc.currentChar[i] and #data.zxc.textCENT > 1 then
-				frame.second[i].curCharTexture:Show()
-			else
-				frame.second[i].curCharTexture:Hide()
-			end
+			-- frame.second[i].curCharTexture:SetShown(i == data.currentChar)
+			--if data.zxc.currentChar[i] and #data.zxc.currentChar > 1 then
+			--    frame.second[i].curCharTexture:Show()
+			--else
+			--    frame.second[i].curCharTexture:Hide()
+			--end
 			frame.second[i]:Show()
+			frame.second[i].tooltip = data.zxc.tooltip[i]
 		end
 	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
 end
+
+
 function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
-	-- Octo_MainFrame_ToDo:SetPoint("CENTER", 0, 0)
-	Octo_MainFrame_ToDo:SetPoint("TOP", 0, -200)
+	Octo_MainFrame_ToDo:SetPoint("CENTER", (AddonLeftFrameWeight/2), 0)
+	-- Octo_MainFrame_ToDo:SetPoint("TOP", 0, -200)
 	local NumPlayers = E.func_NumPlayers()
-	if NumPlayers > 8 then
-		NumPlayers = 8
+	if NumPlayers > MaxNumCharacters then
+		NumPlayers = MaxNumCharacters
 	end
 	Octo_MainFrame_ToDo:SetSize(AddonCentralFrameWeight*NumPlayers, AddonHeight*MainFrameDefaultLines)
 	Octo_MainFrame_ToDo:SetDontSavePosition(true)
@@ -212,6 +230,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	local barPanelScroll = CreateFrame("scrollFrame", nil, Octo_MainFrame_ToDo)
+	Octo_MainFrame_ToDo.barPanelScroll = barPanelScroll
 	barPanelScroll:SetPoint("TOPLEFT", Octo_MainFrame_ToDo)
 	barPanelScroll:SetPoint("BOTTOMRIGHT", Octo_MainFrame_ToDo)
 	barPanelScroll:SetScript("OnHorizontalScroll", function(self, offset)
@@ -226,7 +245,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 			self.hBar:SetPanExtentPercentage(xrange > 0 and num / xrange or 0)
 	end)
 	local HorizontalScrollBar = CreateFrame("EventFrame", nil, Octo_MainFrame_ToDo, "OctoWowTrimHorizontalScrollBar")
-	HorizontalScrollBar:Hide()
+	--HorizontalScrollBar:Hide()
 	HorizontalScrollBar.Backplate = HorizontalScrollBar:GetRegions()
 	HorizontalScrollBar.Backplate:Hide()
 	HorizontalScrollBar.Back.Texture:SetTexCoord(0, 0, 1, 0, 0, 1, 1, 1)
@@ -245,16 +264,10 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	end, barPanelScroll)
 	Octo_MainFrame_ToDo.child = CreateFrame("FRAME")
 	Octo_MainFrame_ToDo.child:SetSize(AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight*MainFrameDefaultLines)
-	HorizontalScrollBar:SetScript("OnSizeChanged", function(self)
-			self:SetShown(not WithinRangeExclusive(self:GetVisibleExtentPercentage(), MathUtil.Epsilon, 1 - MathUtil.Epsilon))
-	end)
-
-
+	HorizontalScrollBar:SetHideIfUnscrollable(true)
 	--Octo_MainFrame_ToDo.child.texture = Octo_MainFrame_ToDo.child:CreateTexture(nil, "BACKGROUND")
 	--Octo_MainFrame_ToDo.child.texture:SetAllPoints()
 	--Octo_MainFrame_ToDo.child.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\01 Octo Naowh.tga")
-
-
 	barPanelScroll:SetScrollChild(Octo_MainFrame_ToDo.child)
 	Octo_MainFrame_ToDo.ScrollBox = CreateFrame("FRAME", "ScrollBox", Octo_MainFrame_ToDo.child, "WowScrollBoxList")
 	Octo_MainFrame_ToDo.ScrollBox:SetPoint("TOPLEFT", 0, -AddonHeight)
@@ -265,34 +278,6 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	Octo_MainFrame_ToDo.ScrollBar = CreateFrame("EventFrame", "ScrollBar", Octo_MainFrame_ToDo, "MinimalScrollBar")
 	Octo_MainFrame_ToDo.ScrollBar:SetPoint("TOPLEFT", Octo_MainFrame_ToDo, "TOPRIGHT", 6, 0)
 	Octo_MainFrame_ToDo.ScrollBar:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo, "BOTTOMRIGHT", 6, 0)
-
-
-	--fpde(Octo_MainFrame_ToDo.ScrollBar)
-	--Octo_MainFrame_ToDo.ScrollBar:SetScript("OnSizeChanged", function(self)
-	--	print ("QWE")
-		--print (self:GetVisibleExtentPercentage())
-		--print(not WithinRangeExclusive(self:GetVisibleExtentPercentage(), MathUtil.Epsilon, 1 - MathUtil.Epsilon))
-	--end)
-
-	--["Event"] = {
-	--	["OnSizeChanged"] = "OnSizeChanged",
-	--	["OnShow"] = "OnShow",
-	--	["OnScroll"] = "OnScroll",
-	--	["OnAllowScrollChanged"] = "OnAllowScrollChanged",
-	--	["OnHide"] = "OnHide",
-	--},
-
-	--["Back"] = {
-	--	["Event"] = {
-	--		["OnSizeChanged"] = "OnSizeChanged",
-	--		["OnEnter"] = "OnEnter",
-	--		["OnMouseDown"] = "OnMouseDown",
-	--		["OnLeave"] = "OnLeave",
-	--		["OnClick"] = "OnClick",
-	--		["OnMouseUp"] = "OnMouseUp",
-	--	},
-	--}
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -361,42 +346,39 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
-
-
-
-
 local func_OnAcquired2 do
 	------------------------------------------------
 	local function func_OnClick(frame)
 		--if Octo_LeftFrame_ToDo:IsDragging() then
-		--	return
+		--    return
 		--end
 		--local AchievementID = frame:GetData().AchievementID
 		--ToggleAchievement(AchievementID)
 	end
 	------------------------------------------------
 	local function func_OnEnter(frame)
-		--frame.texture_full:SetAlpha(E.BGALPHA)
-		--E.func_TooltipOnEnter(frame, false, false)
+		frame.texture_full:SetAlpha(E.bgCaOverlay)
 	end
 	------------------------------------------------
-	local function func_OnOnLeave(frame)
-		--frame.texture_full:SetAlpha(0)
-		--GameTooltip_Hide()
+	local function func_OnLeave(frame)
+		frame.texture_full:SetAlpha(0)
 	end
 	------------------------------------------------
 	function func_OnAcquired2(owner, frame, data, new)
 		if new then
 			------------------------------------------------
 			frame:SetPropagateMouseClicks(true)
+			------------------------------------------------
+			frame.texture_full = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
+			frame.texture_full:SetAllPoints()
+			frame.texture_full:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+			local r, g, b = GetClassColor(E.classFilename)
+			frame.texture_full:SetVertexColor(r, g, b, 0)
 			------------------------------------------------
 			frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND")
 			frame.icon_1:SetSize(AddonHeight-2, AddonHeight-2)
@@ -414,7 +396,7 @@ local func_OnAcquired2 do
 			------------------------------------------------
 			frame:SetScript("OnClick", func_OnClick)
 			frame:SetScript("OnEnter", func_OnEnter)
-			frame:SetScript("OnLeave", func_OnOnLeave)
+			frame:SetScript("OnLeave", func_OnLeave)
 			------------------------------------------------
 		end
 	end
@@ -422,6 +404,8 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
+
+
 function Octo_EventFrame_ToDo:Octo_Frame_init2(frame, node)
 	local data = node:GetData()
 	----------------------------------------------------------------
@@ -429,45 +413,43 @@ function Octo_EventFrame_ToDo:Octo_Frame_init2(frame, node)
 	frame.icon_1:SetTexture(data.headerIcon)
 	if not data.zxc then return end
 	--if not data.zxc then
-	--	for i, v in ipairs(frame.second) do
-	--		frame.second[i]:Hide()
-	--	end
+	--    for i, v in ipairs(frame.second) do
+	--        frame.second[i]:Hide()
+	--    end
 	--else
-		if data.headerIcon then
-			frame.icon_1:SetTexture(data.headerIcon)
-			-- frame.icon_1:SetPoint("TOPLEFT", 1, -1)
-			-- frame.textLEFT:SetPoint("LEFT", 2+AddonHeight, 0)
-		elseif data.zxc.icon then
-			frame.icon_1:SetTexture(data.zxc.icon)
-			-- frame.icon_1:SetPoint("TOPLEFT", 1+AddonHeight, -1)
-			-- frame.textLEFT:SetPoint("LEFT", 2+AddonHeight+AddonHeight, 0)
-		else
-			frame.icon_1:SetTexture(E.Icon_Empty)
-			-- frame.icon_1:SetPoint("TOPLEFT", 1+AddonHeight, -1)
-			-- frame.textLEFT:SetPoint("LEFT", 2+AddonHeight+AddonHeight, 0)
-		end
+	if data.headerIcon then
+		frame.icon_1:SetTexture(data.headerIcon)
+		-- frame.icon_1:SetPoint("TOPLEFT", 1, -1)
+		-- frame.textLEFT:SetPoint("LEFT", 2+AddonHeight, 0)
+	elseif data.zxc.icon then
+		frame.icon_1:SetTexture(data.zxc.icon)
+		-- frame.icon_1:SetPoint("TOPLEFT", 1+AddonHeight, -1)
+		-- frame.textLEFT:SetPoint("LEFT", 2+AddonHeight+AddonHeight, 0)
+	else
+		frame.icon_1:SetTexture(E.Icon_Empty)
+		-- frame.icon_1:SetPoint("TOPLEFT", 1+AddonHeight, -1)
+		-- frame.textLEFT:SetPoint("LEFT", 2+AddonHeight+AddonHeight, 0)
+	end
 	--end
 end
 
+
 function Octo_EventFrame_ToDo:Octo_Create_LeftFrame_ToDo()
-	Octo_LeftFrame_ToDo:SetPoint("BOTTOMRIGHT", Octo_MainFrame_ToDo, "BOTTOMLEFT", -1-AddonHeight, 0)
+	Octo_LeftFrame_ToDo:SetPoint("BOTTOMRIGHT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 1, 0)
 	local NumPlayers = E.func_NumPlayers()
-	if NumPlayers > 8 then
-		NumPlayers = 8
+	if NumPlayers > MaxNumCharacters then
+		NumPlayers = MaxNumCharacters
 	end
 	Octo_LeftFrame_ToDo:SetSize(AddonLeftFrameWeight, AddonHeight*MainFrameDefaultLines)
 	Octo_LeftFrame_ToDo:SetFrameStrata("HIGH")
-
 	Octo_LeftFrame_ToDo.ScrollBox = CreateFrame("FRAME", "ScrollBox", Octo_LeftFrame_ToDo, "WowScrollBoxList")
 	Octo_LeftFrame_ToDo.ScrollBox:SetPoint("TOPLEFT", 0, -AddonHeight)
 	Octo_LeftFrame_ToDo.ScrollBox:SetPoint("BOTTOMRIGHT")
 	Octo_LeftFrame_ToDo.ScrollBox:SetPropagateMouseClicks(true)
 	Octo_LeftFrame_ToDo.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
-
-	Octo_LeftFrame_ToDo.ScrollBar = CreateFrame("EventFrame", "ScrollBar", Octo_LeftFrame_ToDo, "MinimalScrollBar")
-	Octo_LeftFrame_ToDo.ScrollBar:SetPoint("TOPLEFT", Octo_LeftFrame_ToDo, "TOPRIGHT", 6, 0)
-	Octo_LeftFrame_ToDo.ScrollBar:SetPoint("BOTTOMLEFT", Octo_LeftFrame_ToDo, "BOTTOMRIGHT", 6, 0)
-
+	--Octo_LeftFrame_ToDo.ScrollBar = CreateFrame("EventFrame", "ScrollBar", Octo_LeftFrame_ToDo, "MinimalScrollBar")
+	--Octo_LeftFrame_ToDo.ScrollBar:SetPoint("TOPLEFT", Octo_LeftFrame_ToDo, "TOPRIGHT", 6, 0)
+	--Octo_LeftFrame_ToDo.ScrollBar:SetPoint("BOTTOMLEFT", Octo_LeftFrame_ToDo, "BOTTOMRIGHT", 6, 0)
 	Octo_LeftFrame_ToDo.view = CreateScrollBoxListTreeListView(0)
 	Octo_LeftFrame_ToDo.view:SetElementExtent(AddonHeight)
 	Octo_LeftFrame_ToDo.view:SetElementInitializer("BUTTON",
@@ -475,14 +457,10 @@ function Octo_EventFrame_ToDo:Octo_Create_LeftFrame_ToDo()
 			self:Octo_Frame_init2(...)
 	end)
 	Octo_LeftFrame_ToDo.view:RegisterCallback(Octo_LeftFrame_ToDo.view.Event.OnAcquiredFrame, func_OnAcquired2, Octo_LeftFrame_ToDo)
-	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_LeftFrame_ToDo.ScrollBox, Octo_LeftFrame_ToDo.ScrollBar, Octo_LeftFrame_ToDo.view)
+	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_LeftFrame_ToDo.ScrollBox, Octo_MainFrame_ToDo.ScrollBar, Octo_LeftFrame_ToDo.view)
 	----------------------------------------------------------------
 	-- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА/ЕСЛИ НЕНУЖНЫ
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_LeftFrame_ToDo.ScrollBox, Octo_LeftFrame_ToDo.ScrollBar)
-
-
-
-
+	--ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_LeftFrame_ToDo.ScrollBox, Octo_LeftFrame_ToDo.ScrollBar)
 	Octo_LeftFrame_ToDo:SetBackdrop({
 			bgFile = E.bgFile,
 			edgeFile = E.edgeFile,
@@ -497,32 +475,42 @@ function Octo_EventFrame_ToDo:Octo_Create_LeftFrame_ToDo()
 	Octo_LeftFrame_ToDo:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 	Octo_LeftFrame_ToDo:SetBackdropBorderColor(0, 0, 0, 1)
 	----------------------------------------------------------------
-
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 
 
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
 function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 	local NumPlayers = E.func_NumPlayers()
-	if NumPlayers > 8 then
-		NumPlayers = 8
+	if NumPlayers > MaxNumCharacters then
+		NumPlayers = MaxNumCharacters
 	end
 	local DataProvider = CreateTreeDataProvider()
 	local numlines = 0
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
+	local peLmennaya = E.sorted()
+	local MyCharIndex
+	for CharIndex, CharInfo in ipairs(peLmennaya) do
+		if CharInfo.GUID == E.curGUID then
+			MyCharIndex = CharIndex
+			break
+		end
+	end
 	if Octo_ToDo_DB_Vars.Reputations then
 		for index, tbl in ipairs(E.OctoTable_Reputations) do
 			if Octo_ToDo_DB_Vars.ExpansionToShow[index] then
 				numlines = numlines + 1
-				local groupNodeFirst = DataProvider:Insert({
-						textLEFT = tbl.header.name,
-						headerIcon = tbl.header.icon,
-				})
+				local Data = {
+					textLEFT = tbl.header.name,
+					headerIcon = tbl.header.icon,
+					currentChar = MyCharIndex,
+					totalPers = #peLmennaya,
+				}
+				local groupNodeFirst = DataProvider:Insert(Data)
 				for _, v in ipairs(tbl) do
 					if (Octo_ToDo_DB_Vars.OnlyCurrentFaction == true and (E.OctoTable_ReputationsDB[v.id].side == E.curFaction or E.OctoTable_ReputationsDB[v.id].side == "-")) or not Octo_ToDo_DB_Vars.OnlyCurrentFaction then
 						numlines = numlines + 1
@@ -533,18 +521,20 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 						zxc.color = {}
 						zxc.standingTEXT = {}
 						zxc.icon = E.OctoTable_ReputationsDB[v.id].icon or E.Icon_Empty
-						zxc.currentChar = {}
-						for CharIndex, CharInfo in ipairs(E.sorted()) do
+						zxc.tooltip = {}
+						for CharIndex, CharInfo in ipairs(peLmennaya) do
 							zxc.FIRST[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].FIRST or 0
 							zxc.SECOND[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].SECOND or 0
 							zxc.textCENT[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].vivod or ""
-							zxc.color[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].color or ""
+							zxc.color[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].color or "000000"
 							zxc.standingTEXT[CharIndex] = CharInfo.MASLENGO.reputationFULL[v.id].standingTEXT or ""
-							zxc.currentChar[CharIndex] = CharInfo.GUID == E.curGUID
+							-- zxc.currentChar[CharIndex] = CharInfo.GUID == E.curGUID
 						end
 						local groupNodeSecondary = groupNodeFirst:Insert({
 								textLEFT = E.func_reputationName(v.id),
 								zxc = zxc,
+								currentChar = MyCharIndex,
+								totalPers = #peLmennaya,
 						})
 					end
 				end
@@ -561,19 +551,21 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 			zxc.color = {}
 			-- zxc.standingTEXT = {}
 			zxc.icon = {}
-			zxc.currentChar = {}
 			zxc.icon = select(2, OctoTable_func_otrisovkaLEFT[i]())
-			for CharIndex, CharInfo in ipairs(E.sorted()) do
+			zxc.tooltip = {}
+			for CharIndex, CharInfo in ipairs(peLmennaya) do
 				zxc.FIRST[CharIndex] = 0
 				zxc.SECOND[CharIndex] = 0
-				zxc.textCENT[CharIndex] = func(CharInfo) or ""
+				zxc.textCENT[CharIndex], zxc.tooltip[CharIndex] = func(CharInfo)
 				zxc.color[CharIndex] = E.Red_Color
 				-- zxc.color[CharIndex] = select(3, OctoTable_func_otrisovkaLEFT[i]())
-				zxc.currentChar[CharIndex] = CharInfo.GUID == E.curGUID
+				zxc.currentChar = MyCharIndex
 			end
 			local groupNodeFirst = DataProvider:Insert({
 					textLEFT = OctoTable_func_otrisovkaLEFT[i](),
 					zxc = zxc,
+					currentChar = MyCharIndex,
+					totalPers = #peLmennaya,
 			})
 		end
 	end
@@ -590,7 +582,6 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 		Octo_MainFrame_ToDo.child:SetSize(AddonCentralFrameWeight*E.func_NumPlayers(), AddonHeight*MainFrameDefaultLines+AddonHeight)
 		Octo_MainFrame_ToDo.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	end
-
 	if Octo_LeftFrame_ToDo then
 		Octo_LeftFrame_ToDo:SetSize(AddonLeftFrameWeight, AddonHeight*MainFrameDefaultLines+AddonHeight)
 		Octo_LeftFrame_ToDo.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
@@ -599,7 +590,7 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 	--------------------------- POOL -------------------------------
 	----------------------------------------------------------------
 	Octo_MainFrame_ToDo.pool:ReleaseAll()
-	for count, CharInfo in next, (E.sorted()) do
+	for count, CharInfo in next, (peLmennaya) do
 		local curCharFrame = Octo_MainFrame_ToDo.pool:Acquire()
 		curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.child, "TOPLEFT", AddonCentralFrameWeight*count-AddonCentralFrameWeight, -AddonHeight)
 		curCharFrame.text:SetText(E.func_vivodCent(CharInfo))
@@ -619,8 +610,6 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 	end
 	----------------------------------------------------------------
 end
-
-
 function E.Update(event_name)
 	local updateScheduled = false
 	local isMainFrameVisible = Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown()
@@ -672,10 +661,13 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 	local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 		Octo_ToDo_DB_Levels[menuButton.value].isShownPLAYER = checked
 		Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+		Octo_MainFrame_ToDo.ScrollBox:ScrollToOffset(0)
+		Octo_MainFrame_ToDo.barPanelScroll:SetHorizontalScroll(0)
 	end
 	local function func_remove_GUID(menuButton)
 		Octo_ToDo_DB_Levels[menuButton.value] = nil
 		Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+		Octo_MainFrame_ToDo.ScrollBox:ScrollToOffset(0)
 	end
 	local function selectFunctionExpansion(menuButton, _, _, checked)
 		Octo_ToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
@@ -979,6 +971,13 @@ function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 		if Octo_ToDo_DB_Vars.SFDropDownWeight then
 			SFDropDownWeight = Octo_ToDo_DB_Vars.SFDropDownWeight
 		end
+		local maxNum = math.floor((E.MonitorWidth-AddonLeftFrameWeight)/AddonCentralFrameWeight)-1
+		if maxNum < Octo_ToDo_DB_Vars.MaxNumCharacters then
+			Octo_ToDo_DB_Vars.MaxNumCharacters = maxNum
+		end
+		if Octo_ToDo_DB_Vars.MaxNumCharacters then
+			MaxNumCharacters = Octo_ToDo_DB_Vars.MaxNumCharacters
+		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
@@ -1020,7 +1019,6 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	self:Octo_Create_MainFrame_ToDo()
 	self:Octo_Create_LeftFrame_ToDo()
 	self:func_CreateMyDataProvider()
-
 	E.PortalsFrame()
 	self:func_Create_DD_ToDo()
 	----------------------------------------------------------------
@@ -1042,12 +1040,12 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 			end
 		end
 	end
-	E.func_CreateInfoFrame("Money: "..E.classColorHexCurrent..E.func_CompactNumberFormat(totalMoney/10000).."|r "..E.curServerShort, "TOPLEFT", Octo_LeftFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*1, AddonLeftFrameWeight, AddonHeight)
-	E.func_CreateInfoFrame("Reloads: "..E.classColorHexCurrent..totalReload.."|r", "TOPLEFT", Octo_LeftFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight)
-	E.func_CreateInfoFrame("realTotalTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realTotalTime).."|r", "TOPLEFT", Octo_LeftFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame("Money: "..E.classColorHexCurrent..E.func_CompactNumberFormat(totalMoney/10000).."|r "..E.curServerShort, "TOPLEFT", Octo_LeftFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*0, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame(string.format(TIME_PLAYED_TOTAL, E.classColorHexCurrent..(E.func_SecondsToClock(realTotalTime)).."|r"), "TOPLEFT", Octo_LeftFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*1, AddonLeftFrameWeight, AddonHeight)
 	if realLevelTime ~= 0 then
-		E.func_CreateInfoFrame("realLevelTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realLevelTime).."|r", "TOPLEFT", Octo_LeftFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*3, AddonLeftFrameWeight, AddonHeight)
+		E.func_CreateInfoFrame("realLevelTime: "..E.classColorHexCurrent..E.func_SecondsToClock(realLevelTime).."|r", "TOPLEFT", Octo_LeftFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight)
 	end
+	E.func_CreateInfoFrame("Reloads: "..E.classColorHexCurrent..totalReload.."|r", "TOPLEFT", Octo_LeftFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight)
 	E:func_CreateUtilsButton(Octo_MainFrame_ToDo, "ToDo", AddonHeight, 0)
 	E:func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, function()
 			Octo_EventFrame_ToDo:func_CreateMyDataProvider()
@@ -1088,8 +1086,6 @@ function Octo_EventFrame_ToDo:READY_CHECK()
 end
 ----------------------------------------------------------------
 SLASH_Octo1, SLASH_Octo2, SLASH_Octo3, SLASH_Octo4 = "/Octo", "/OctoTWW", "/octo", "/o"
-
-
 function SlashCmdList.Octo(msg)
 	if not InCombatLockdown() then
 		Octo_EventFrame_ToDo:main_frame_toggle()
@@ -1127,60 +1123,44 @@ function Octo_EventFrame_ToDo:PLAYER_REGEN_DISABLED()
 		Octo_MainFrame_ToDo:Hide()
 		Octo_LeftFrame_ToDo:Hide()
 	end
-
-
-
-
-
-
 end
 ----------------------------------------------------------------
 
 
 function Octo_EventFrame_ToDo:LIBSHAREDSFMIC()
-	local background = LibSFDropDown:CreateMediaBackgroundModernButton(UIParent, 120) -- BACKGROUND
-	background:SetPoint("TOPLEFT", 20, -20)
-	background:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_background or currentValue or LibSharedMedia:GetDefault("background"))
-	background:ddSetOnSelectedFunc(function(value)
-			local texture = LibSharedMedia:Fetch("background", value)
-			-- print(value, ">", texture)
-			Octo_ToDo_DB_Vars.interface.Octo_background = value
-
-	end)
-	local border = LibSFDropDown:CreateMediaBorderModernButton(UIParent, 120) -- BORDER
-	border:SetPoint("TOPLEFT", background, "BOTTOMLEFT", 0, -10)
-	border:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_border or currentValue or LibSharedMedia:GetDefault("border"))
-	border:ddSetOnSelectedFunc(function(value)
-			local texture = LibSharedMedia:Fetch("border", value)
-			-- print(value, ">", texture)
-			Octo_ToDo_DB_Vars.interface.Octo_border = value
-
-	end)
-	local statusbar = LibSFDropDown:CreateMediaStatusbarModernButton(UIParent, 120) -- STATUSBAR
-	statusbar:SetPoint("TOPLEFT", border, "BOTTOMLEFT", 0, -10)
-	statusbar:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_statusbar or currentValue or LibSharedMedia:GetDefault("statusbar"))
-	statusbar:ddSetOnSelectedFunc(function(value)
-			local texture = LibSharedMedia:Fetch("statusbar", value)
-			-- print(value, ">", texture)
-			Octo_ToDo_DB_Vars.interface.Octo_statusbar = value
-
-	end)
-	local font = LibSFDropDown:CreateMediaFontModernButton(UIParent, 120) -- FONT
-	font:SetPoint("TOPLEFT", statusbar, "BOTTOMLEFT", 0, -10)
-	font:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_font or currentValue or LibSharedMedia:GetDefault("font"))
-	font:ddSetOnSelectedFunc(function(value)
-			local selectedFont = LibSharedMedia:Fetch("font", value)
-			-- print(value, ">", selectedFont)
-			Octo_ToDo_DB_Vars.interface.Octo_font = value
-
-	end)
-	local sound = LibSFDropDown:CreateMediaSoundModernButton(UIParent, 120) -- SOUND
-	sound:SetPoint("TOPLEFT", font, "BOTTOMLEFT", 0, -10)
-	sound:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_sound or currentValue or LibSharedMedia:GetDefault("sound"))
-	sound:ddSetOnSelectedFunc(function(value)
-			local selectedSound = LibSharedMedia:Fetch("sound", value)
-			-- print(value, ">", selectedSound)
-			Octo_ToDo_DB_Vars.interface.Octo_sound = value
-
-	end)
+	-- local background = LibSFDropDown:CreateMediaBackgroundModernButton(UIParent, 120) -- BACKGROUND
+	-- background:SetPoint("TOPLEFT", 20, -20)
+	-- background:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_background or currentValue or LibSharedMedia:GetDefault("background"))
+	-- background:ddSetOnSelectedFunc(function(value)
+	-- 		local texture = LibSharedMedia:Fetch("background", value)
+	-- 		Octo_ToDo_DB_Vars.interface.Octo_background = value
+	-- end)
+	-- local border = LibSFDropDown:CreateMediaBorderModernButton(UIParent, 120) -- BORDER
+	-- border:SetPoint("TOPLEFT", background, "BOTTOMLEFT", 0, -10)
+	-- border:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_border or currentValue or LibSharedMedia:GetDefault("border"))
+	-- border:ddSetOnSelectedFunc(function(value)
+	-- 		local texture = LibSharedMedia:Fetch("border", value)
+	-- 		Octo_ToDo_DB_Vars.interface.Octo_border = value
+	-- end)
+	-- local statusbar = LibSFDropDown:CreateMediaStatusbarModernButton(UIParent, 120) -- STATUSBAR
+	-- statusbar:SetPoint("TOPLEFT", border, "BOTTOMLEFT", 0, -10)
+	-- statusbar:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_statusbar or currentValue or LibSharedMedia:GetDefault("statusbar"))
+	-- statusbar:ddSetOnSelectedFunc(function(value)
+	-- 		local texture = LibSharedMedia:Fetch("statusbar", value)
+	-- 		Octo_ToDo_DB_Vars.interface.Octo_statusbar = value
+	-- end)
+	-- local font = LibSFDropDown:CreateMediaFontModernButton(UIParent, 120) -- FONT
+	-- font:SetPoint("TOPLEFT", statusbar, "BOTTOMLEFT", 0, -10)
+	-- font:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_font or currentValue or LibSharedMedia:GetDefault("font"))
+	-- font:ddSetOnSelectedFunc(function(value)
+	-- 		local selectedFont = LibSharedMedia:Fetch("font", value)
+	-- 		Octo_ToDo_DB_Vars.interface.Octo_font = value
+	-- end)
+	-- local sound = LibSFDropDown:CreateMediaSoundModernButton(UIParent, 120) -- SOUND
+	-- sound:SetPoint("TOPLEFT", font, "BOTTOMLEFT", 0, -10)
+	-- sound:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_sound or currentValue or LibSharedMedia:GetDefault("sound"))
+	-- sound:ddSetOnSelectedFunc(function(value)
+	-- 		local selectedSound = LibSharedMedia:Fetch("sound", value)
+	-- 		Octo_ToDo_DB_Vars.interface.Octo_sound = value
+	-- end)
 end

@@ -1,115 +1,98 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-
-
-
-
 function E.func_vivodCent(CharInfo)
-
-		local vivod = CharInfo.classColorHex..CharInfo.Name.."|r"
-		if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerCanEarnExperience == true then
-			vivod = vivod.." "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
-		end
-		return vivod
+	local vivod = CharInfo.classColorHex..CharInfo.Name.."|r"
+	if CharInfo.UnitLevel ~= 0 and CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerCanEarnExperience == true then
+		vivod = vivod.." "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
+	end
+	return vivod
 end
-
 function E.CreateTooltipPlayers(CharInfo)
 	local tooltip = {}
-			if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal then
-				if CharInfo.guildRankIndex ~= 0 then
-					tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", "<"..E.Green_Color..CharInfo.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.guildRankName.."|r".."]"}
-				else
-					tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", " "}
-				end
-				if CharInfo.WarMode == true then
-					tooltip[#tooltip+1] = {CharInfo.WarMode and E.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or "", ""}
-				end
-				if CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.UnitXPPercent then
-					tooltip[#tooltip+1] = {CharInfo.RaceLocal.." "..CharInfo.classColorHex..CharInfo.UnitLevel.."-го|r уровня "..CharInfo.classColorHex..CharInfo.UnitXPPercent.."%|r", " "}
-				else
-					tooltip[#tooltip+1] = {CharInfo.RaceLocal, " "}
-				end
-				if CharInfo.specName ~= 0 or CharInfo.specName ~= 0 then
-					tooltip[#tooltip+1] = {E.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName.." "..CharInfo.className, " "}
-				end
-				tooltip[#tooltip+1] = {" ", " "}
-			end
-			if CharInfo.BindLocation ~= 0 then
-				tooltip[#tooltip+1] = {E.func_texturefromIcon(134414)..L["Bind Location"], CharInfo.BindLocation}
-			end
-			if CharInfo.CurrentLocation ~= 0 then
-				tooltip[#tooltip+1] = {E.func_texturefromIcon(132319)..L["Current Location"], CharInfo.CurrentLocation}
-			end
-			if CharInfo.totalSlots ~= 0 then
-				tooltip[#tooltip+1] = {E.func_texturefromIcon(133634)..L["Bags"], CharInfo.classColorHex..(CharInfo.usedSlots.."/"..CharInfo.totalSlots).."|r"}
-			end
-			if CharInfo.maxNumQuestsCanAccept ~= 0 then
-				tooltip[#tooltip+1] = {E.func_texturefromIcon(236664)..QUESTS_LABEL, CharInfo.classColorHex..(CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept).."|r"}
-			end
-			if CharInfo.realTotalTime ~= 0 and CharInfo.realLevelTime ~= 0 then
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.classColorHex..(E.func_SecondsToClock(CharInfo.realTotalTime)).."|r")}
-				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.classColorHex..(E.func_SecondsToClock(CharInfo.realLevelTime)).."|r")}
-			end
-			if CharInfo.MASLENGO.ItemsInBag[122284] ~= nil then
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {E.func_itemTexture(122284)..E.func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
-			end
-			if CharInfo.ReloadCount ~= 0 then
-				tooltip[#tooltip+1] = {"Reload Count: "..CharInfo.classColorHex..CharInfo.ReloadCount.."|r"}
-			end
-			if E.DebugInfo then
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {E.DEVTEXT, " "}
-				tooltip[#tooltip+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.GUID.."|r"}
-				if CharInfo.hasMail ~= false then
-					tooltip[#tooltip+1] = {"hasMail", E.func_texturefromIcon(E.Icon_MailBox)..CharInfo.classColorHex.."true|r"}
-				end
-				tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
-				tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID.."|r"}
-				if CharInfo.Chromie_name ~= nil then
-					tooltip[#tooltip+1] = {"Chromie_name", CharInfo.classColorHex..CharInfo.Chromie_name.."|r"}
-				end
-				tooltip[#tooltip+1] = {"BattleTag", E.Blue_Color..CharInfo.BattleTag.."|r"}
-				tooltip[#tooltip+1] = {"BattleTagLocal", E.Blue_Color..CharInfo.BattleTagLocal.."|r"}
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {"GameLimitedMode_IsActive", CharInfo.GameLimitedMode_IsActive and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
-				tooltip[#tooltip+1] = {"levelCapped20", CharInfo.levelCapped20 and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
-				tooltip[#tooltip+1] = {"PlayerCanEarnExperience", CharInfo.PlayerCanEarnExperience and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {"buildVersion", CharInfo.classColorHex..CharInfo.buildVersion.."|r"}
-				tooltip[#tooltip+1] = {"buildNumber", CharInfo.classColorHex..CharInfo.buildNumber.."|r"}
-				tooltip[#tooltip+1] = {"buildDate", CharInfo.classColorHex..CharInfo.buildDate.."|r"}
-				tooltip[#tooltip+1] = {"interfaceVersion", CharInfo.classColorHex..CharInfo.interfaceVersion.."|r"}
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {"currentTier", CharInfo.classColorHex..CharInfo.currentTier.."|r"}
-				tooltip[#tooltip+1] = {"IsPublicBuild", CharInfo.IsPublicBuild and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
-				tooltip[#tooltip+1] = {"isBeta", CharInfo.isBeta and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {"max LVL", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_rLevel).."|r"}
-				tooltip[#tooltip+1] = {"max Money", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_rMoney).."|r"}
-				tooltip[#tooltip+1] = {"max Prof", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_profCap).."|r"}
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {"Authenticator", CharInfo.classColorHex..tostringall(CharInfo.IsAccountSecured).."|r"}
-				tooltip[#tooltip+1] = {"УЗ имеет ограничения пробной УЗ", CharInfo.classColorHex..tostringall(CharInfo.IsRestrictedAccount).."|r"}
-				tooltip[#tooltip+1] = {"Использует ли игрок пробную УЗ", CharInfo.classColorHex..tostringall(CharInfo.IsTrialAccount).."|r"}
-				tooltip[#tooltip+1] = {"Нет игрового времени", CharInfo.classColorHex..tostringall(CharInfo.IsVeteranTrialAccount).."|r"}
-				tooltip[#tooltip+1] = {" ", " "}
-				tooltip[#tooltip+1] = {"PlayerDurability", CharInfo.PlayerDurability.."%"}
-			end
+	if CharInfo.Name and CharInfo.curServer and CharInfo.specIcon and CharInfo.classColorHex and CharInfo.specName and CharInfo.RaceLocal then
+		if CharInfo.guildRankIndex ~= 0 then
+			tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", "<"..E.Green_Color..CharInfo.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.guildRankName.."|r".."]"}
+		else
+			tooltip[#tooltip+1] = {CharInfo.classColorHex..CharInfo.Name.."|r ("..CharInfo.curServer..")", " "}
+		end
+		if CharInfo.WarMode == true then
+			tooltip[#tooltip+1] = {CharInfo.WarMode and E.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or "", ""}
+		end
+		if CharInfo.UnitLevel ~= E.currentMaxLevel and CharInfo.UnitXPPercent then
+			tooltip[#tooltip+1] = {CharInfo.RaceLocal.." "..CharInfo.classColorHex..CharInfo.UnitLevel.."-го|r уровня "..CharInfo.classColorHex..CharInfo.UnitXPPercent.."%|r", " "}
+		else
+			tooltip[#tooltip+1] = {CharInfo.RaceLocal, " "}
+		end
+		if CharInfo.specName ~= 0 or CharInfo.specName ~= 0 then
+			tooltip[#tooltip+1] = {E.func_texturefromIcon(CharInfo.specIcon)..CharInfo.specName.." "..CharInfo.className, " "}
+		end
+		tooltip[#tooltip+1] = {" ", " "}
+	end
+	if CharInfo.BindLocation ~= 0 then
+		tooltip[#tooltip+1] = {E.func_texturefromIcon(134414)..L["Bind Location"], CharInfo.BindLocation}
+	end
+	if CharInfo.CurrentLocation ~= 0 then
+		tooltip[#tooltip+1] = {E.func_texturefromIcon(132319)..L["Current Location"], CharInfo.CurrentLocation}
+	end
+	if CharInfo.totalSlots ~= 0 then
+		tooltip[#tooltip+1] = {E.func_texturefromIcon(133634)..L["Bags"], CharInfo.classColorHex..(CharInfo.usedSlots.."/"..CharInfo.totalSlots).."|r"}
+	end
+	if CharInfo.maxNumQuestsCanAccept ~= 0 then
+		tooltip[#tooltip+1] = {E.func_texturefromIcon(236664)..QUESTS_LABEL, CharInfo.classColorHex..(CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept).."|r"}
+	end
+	if CharInfo.realTotalTime ~= 0 and CharInfo.realLevelTime ~= 0 then
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.classColorHex..(E.func_SecondsToClock(CharInfo.realTotalTime)).."|r")}
+		tooltip[#tooltip+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.classColorHex..(E.func_SecondsToClock(CharInfo.realLevelTime)).."|r")}
+	end
+	if CharInfo.MASLENGO.ItemsInBag[122284] ~= nil then
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {E.func_itemTexture(122284)..E.func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
+	end
+	if CharInfo.ReloadCount ~= 0 then
+		tooltip[#tooltip+1] = {"Reload Count: "..CharInfo.classColorHex..CharInfo.ReloadCount.."|r"}
+	end
+	if E.DebugInfo then
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {E.DEVTEXT, " "}
+		tooltip[#tooltip+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.GUID.."|r"}
+		if CharInfo.hasMail ~= false then
+			tooltip[#tooltip+1] = {"hasMail", E.func_texturefromIcon(E.Icon_MailBox)..CharInfo.classColorHex.."true|r"}
+		end
+		tooltip[#tooltip+1] = {"Chromie_canEnter", CharInfo.Chromie_canEnter and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
+		tooltip[#tooltip+1] = {"Chromie_UnitChromieTimeID", CharInfo.Chromie_UnitChromieTimeID.."|r"}
+		if CharInfo.Chromie_name ~= nil then
+			tooltip[#tooltip+1] = {"Chromie_name", CharInfo.classColorHex..CharInfo.Chromie_name.."|r"}
+		end
+		tooltip[#tooltip+1] = {"BattleTag", E.Blue_Color..CharInfo.BattleTag.."|r"}
+		tooltip[#tooltip+1] = {"BattleTagLocal", E.Blue_Color..CharInfo.BattleTagLocal.."|r"}
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {"GameLimitedMode_IsActive", CharInfo.GameLimitedMode_IsActive and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
+		tooltip[#tooltip+1] = {"levelCapped20", CharInfo.levelCapped20 and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
+		tooltip[#tooltip+1] = {"PlayerCanEarnExperience", CharInfo.PlayerCanEarnExperience and E.Green_Color.."true|r" or E.Red_Color.."false|r"}
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {"buildVersion", CharInfo.classColorHex..CharInfo.buildVersion.."|r"}
+		tooltip[#tooltip+1] = {"buildNumber", CharInfo.classColorHex..CharInfo.buildNumber.."|r"}
+		tooltip[#tooltip+1] = {"buildDate", CharInfo.classColorHex..CharInfo.buildDate.."|r"}
+		tooltip[#tooltip+1] = {"interfaceVersion", CharInfo.classColorHex..CharInfo.interfaceVersion.."|r"}
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {"currentTier", CharInfo.classColorHex..CharInfo.currentTier.."|r"}
+		tooltip[#tooltip+1] = {"IsPublicBuild", CharInfo.IsPublicBuild and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
+		tooltip[#tooltip+1] = {"isBeta", CharInfo.isBeta and CharInfo.classColorHex.."true|r" or E.Gray_Color.."false|r"}
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {"max LVL", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_rLevel).."|r"}
+		tooltip[#tooltip+1] = {"max Money", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_rMoney).."|r"}
+		tooltip[#tooltip+1] = {"max Prof", CharInfo.classColorHex..tostringall(CharInfo.GetRestrictedAccountData_profCap).."|r"}
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {"Authenticator", CharInfo.classColorHex..tostringall(CharInfo.IsAccountSecured).."|r"}
+		tooltip[#tooltip+1] = {"УЗ имеет ограничения пробной УЗ", CharInfo.classColorHex..tostringall(CharInfo.IsRestrictedAccount).."|r"}
+		tooltip[#tooltip+1] = {"Использует ли игрок пробную УЗ", CharInfo.classColorHex..tostringall(CharInfo.IsTrialAccount).."|r"}
+		tooltip[#tooltip+1] = {"Нет игрового времени", CharInfo.classColorHex..tostringall(CharInfo.IsVeteranTrialAccount).."|r"}
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {"PlayerDurability", CharInfo.PlayerDurability.."%"}
+	end
 	return tooltip
 end
-
-
-
-
-
-
-
-
-
-
-
 function E:func_Otrisovka()
 	local OctoTable_func_otrisovkaCENT = {}
 	local OctoTable_func_otrisovkaLEFT = {}
@@ -277,9 +260,9 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaLEFT,
 			function(CharInfo)
 				-- if CharInfo.Faction == "Horde" then
-					return E.func_itemName(24581), E.func_GetItemIcon(24581)
+				return E.func_itemName(24581), E.func_GetItemIcon(24581)
 				-- else
-				-- 	return E.func_itemName(24579), E.func_GetItemIcon(24579)
+				--     return E.func_itemName(24579), E.func_GetItemIcon(24579)
 				-- end
 		end)
 	end
@@ -722,9 +705,6 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-
-
-
 				if CharInfo.MASLENGO.ItemsInBag[158075] == nil then
 					vivodCent = E.Red_Color.."no neck|r"
 				else
@@ -1020,134 +1000,7 @@ function E:func_Otrisovka()
 		end)
 	end
 	if Octo_ToDo_DB_Vars.ExpansionToShow[11] then
-		if Octo_ToDo_DB_Vars.GildedHarbingerCrest == true then
-			----------------------------------------------------------------
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					local currencyID = 2917
-					local color = E.WOW_Epic_Color
-					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-					if data then
-						local maxQuantity = data.maxQuantity
-						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
-							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
-							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
-						else
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
-						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
-							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
-						end
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					local currencyID = 2917
-					local color = E.WOW_Epic_Color
-					return color..E.func_currencyName(currencyID).."|r", E.func_GetCurrencyIcon(currencyID)
-			end)
-		end
-		if Octo_ToDo_DB_Vars.RunedHarbingerCrest == true then
-			----------------------------------------------------------------
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					local currencyID = 2916
-					local color = E.WOW_Epic_Color
-					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-					if data then
-						local maxQuantity = data.maxQuantity
-						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
-							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
-							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
-						else
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
-						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
-							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
-						end
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					local currencyID = 2916
-					local color = E.WOW_Epic_Color
-					return color..E.func_currencyName(currencyID).."|r", E.func_GetCurrencyIcon(currencyID)
-			end)
-		end
-		if Octo_ToDo_DB_Vars.CarvedHarbingerCrest == true then
-			----------------------------------------------------------------
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					local currencyID = 2915
-					local color = E.WOW_Rare_Color
-					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-					if data then
-						local maxQuantity = data.maxQuantity
-						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
-							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
-							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
-						else
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
-						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
-							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
-						end
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					local currencyID = 2915
-					local color = E.WOW_Rare_Color
-					return color..E.func_currencyName(currencyID).."|r", E.func_GetCurrencyIcon(currencyID)
-			end)
-		end
-		if Octo_ToDo_DB_Vars.WeatheredHarbingerCrest == true then
-			----------------------------------------------------------------
-			tinsert(OctoTable_func_otrisovkaCENT,
-				function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					local currencyID = 2914
-					local color = E.WOW_Rare_Color
-					local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-					if data then
-						local maxQuantity = data.maxQuantity
-						local totalEarned = data.totalEarned
-						if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
-							tooltip[#tooltip+1] = {TOTAL, color..CharInfo.MASLENGO.CurrencyID[currencyID].."|r"}
-							tooltip[#tooltip+1] = {L["Season Maximum"], color..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."/"..maxQuantity.."|r"}
-							tooltip[#tooltip+1] = {" ", " "}
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID].."|r"}
-						else
-							tooltip[#tooltip+1] = {L["Can Earned"], color..maxQuantity.."|r"}
-						end
-						if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] ~= nil then
-							vivodCent = CharInfo.MASLENGO.CurrencyID[currencyID]..E.LightGray_Color.." (+"..maxQuantity-CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
-						end
-					end
-					return vivodCent, tooltip
-			end)
-			tinsert(OctoTable_func_otrisovkaLEFT,
-				function(CharInfo)
-					local currencyID = 2914
-					local color = E.WOW_Rare_Color
-					return color..E.func_currencyName(currencyID).."|r", E.func_GetCurrencyIcon(currencyID)
-			end)
-		end
+
 	end
 	if Octo_ToDo_DB_Vars.DebugInfo == true then
 		----------------------------------------------------------------
@@ -1195,24 +1048,6 @@ function E:func_Otrisovka()
 			end)
 		end
 	end
-	if Octo_ToDo_DB_Vars.Timewalk == true then
-		----------------------------------------------------------------
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.CurrencyID[1166] ~= nil then
-					vivodCent = CharInfo.MASLENGO.CurrencyID[1166]
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.func_currencyName(1166), E.func_GetCurrencyIcon(1166)
-		end)
-	end
-
-
-
 	if Octo_ToDo_DB_Vars.Quests == true then
 		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -1270,31 +1105,31 @@ function E:func_Otrisovka()
 	if Octo_ToDo_DB_Vars.Currency == true then
 		----------------------------------------------------------------
 		-- tinsert(OctoTable_func_otrisovkaCENT,
-		-- 	function(CharInfo)
-		-- 		local vivodCent, tooltip = " ", {}
-		-- 		for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
-		-- 			for CurrencyID, config in next, (tbl) do
-		-- 				if Octo_ToDo_DB_Vars.CurrencyShowAllways == false and config == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
-		-- 					tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
-		-- 				elseif Octo_ToDo_DB_Vars.CurrencyShowAllways == true and config == true then
-		-- 					if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
-		-- 						tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
-		-- 					else
-		-- 						tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.Gray_Color..E.func_currencyName_NOCOLOR(CurrencyID), E.Gray_Color..CharInfo.MASLENGO.CurrencyID_Total[CurrencyID].."|r"}
-		-- 					end
-		-- 				end
-		-- 			end
-		-- 		end
-		-- 		if #tooltip ~= 0 then
-		-- 			vivodCent = E.Gray_Color..CURRENCY.."|r"
-		-- 		else
-		-- 			vivodCent = ""
-		-- 		end
-		-- 		return vivodCent, tooltip
+		--     function(CharInfo)
+		--         local vivodCent, tooltip = " ", {}
+		--         for currencyHEADER, tbl in next, (OCTO_DB_currencies_test) do
+		--             for CurrencyID, config in next, (tbl) do
+		--                 if Octo_ToDo_DB_Vars.CurrencyShowAllways == false and config == true and CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
+		--                     tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
+		--                 elseif Octo_ToDo_DB_Vars.CurrencyShowAllways == true and config == true then
+		--                     if CharInfo.MASLENGO.CurrencyID[CurrencyID] ~= nil then
+		--                         tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.func_currencyName(CurrencyID), CharInfo.MASLENGO.CurrencyID_Total[CurrencyID]}
+		--                     else
+		--                         tooltip[#tooltip+1] = {E.func_currencyIcon(CurrencyID)..E.Gray_Color..E.func_currencyName_NOCOLOR(CurrencyID), E.Gray_Color..CharInfo.MASLENGO.CurrencyID_Total[CurrencyID].."|r"}
+		--                     end
+		--                 end
+		--             end
+		--         end
+		--         if #tooltip ~= 0 then
+		--             vivodCent = E.Gray_Color..CURRENCY.."|r"
+		--         else
+		--             vivodCent = ""
+		--         end
+		--         return vivodCent, tooltip
 		-- end)
 		-- tinsert(OctoTable_func_otrisovkaLEFT,
-		-- 	function(CharInfo)
-		-- 		return CURRENCY
+		--     function(CharInfo)
+		--         return CURRENCY
 		-- end)
 	end
 	-- if Octo_ToDo_DB_Vars.Reputations == true then
@@ -1326,15 +1161,33 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.professions[1].skillLine ~= nil and CharInfo.MASLENGO.professions[1].skillLine ~= 0 then
-					vivodCent = vivodCent..E.func_ProfessionIcon(CharInfo.MASLENGO.professions[1].skillLine)
-					if CharInfo.MASLENGO.professions[2].skillLine ~= nil and CharInfo.MASLENGO.professions[2].skillLine ~= 0 then
-						vivodCent = vivodCent.." "..E.func_ProfessionIcon(CharInfo.MASLENGO.professions[2].skillLine)
-					end
-				end
+				local charProf = CharInfo.MASLENGO.professions
+				local pic = E.func_ProfessionIcon
+				local pin = E.func_ProfessionName
 				for i = 1, 5 do
-					if CharInfo.MASLENGO.professions[i].skillLine ~= nil and CharInfo.MASLENGO.professions[i].skillLine ~= 0 then
-						tooltip[#tooltip+1] = {E.func_ProfessionIcon(CharInfo.MASLENGO.professions[i].skillLine)..E.func_ProfessionName(CharInfo.MASLENGO.professions[i].skillLine), CharInfo.MASLENGO.professions[i].skillLevel.."/"..CharInfo.MASLENGO.professions[i].maxSkillLevel}
+					if charProf[i] and charProf[i].skillLine ~= nil and charProf[i].skillLine ~= 0 then
+						if i == 1 or i == 2 then
+							vivodCent = vivodCent..pic(charProf[i].skillLine).." "
+						end
+						local leftText = pic(charProf[i].skillLine).." "..pin(charProf[i].skillLine)
+						local RightText = charProf[i].skillLevel.."/"..charProf[i].maxSkillLevel
+						if charProf[i].skillModifier ~= nil and charProf[i].skillModifier ~= 0 then
+							RightText = charProf[i].skillLevel.."|cff00FF00+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
+						end
+						tooltip[#tooltip+1] = {leftText, RightText}
+						if charProf[i].child ~= nil then
+							for expIndex, v in ipairs(charProf[i].child) do
+								if v.QWEskillLevel ~= nil and v.QWEskillLevel ~= 0 and v.QWEprofessionName ~= nil then
+									for expI, j in ipairs(E.OctoTable_Expansions) do
+										if expIndex == j.revers then
+											tooltip[#tooltip+1] = {"     "..E.func_texturefromIcon(j.icon).." "..j.color..j.nameVeryShort.."|r ", v.QWEskillLevel.."/"..v.QWEmaxSkillLevel}
+										end
+									end
+									-- tooltip[#tooltip+1] = {"     "..E.func_ProfessionName(v.QWEprofessionID), v.QWEskillLevel.."/"..v.QWEmaxSkillLevel}
+								end
+							end
+							-- tooltip[#tooltip+1] = {" ", " "}
+						end
 					end
 				end
 				return vivodCent, tooltip
@@ -1428,7 +1281,6 @@ function E:func_Otrisovka()
 						tooltip[#tooltip+1] = {" ", color..CharInfo.loginDay.."|r"}
 						tooltip[#tooltip+1] = {" ", color..CharInfo.loginHour.."|r"}
 					end
-
 				end
 				return vivodCent, tooltip
 		end)

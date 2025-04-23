@@ -38,6 +38,23 @@ function E.CreateGeneralOptions()
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
+
+
+			-------------------------------------------------
+			Reload = {
+				type = "execute",
+				name = E.Debug_Color..RELOADUI.."|r",
+				func = function()
+					return ReloadUI()
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+
+
+
+
+
 			-------------------------------------------------
 			Header3 = {
 				type = "header",
@@ -108,6 +125,23 @@ function E.CreateGeneralOptions()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.MainFrameDefaultLines = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			MaxNumCharacters = {
+				type = "range",
+				name = L["MaxNumCharacters"],
+				desc = "MaxNumCharacters",
+				min = 1,
+				max = 20,
+				step = 1,
+				get = function()
+					return Octo_ToDo_DB_Vars.MaxNumCharacters
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.MaxNumCharacters = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),

@@ -127,9 +127,7 @@ function E.func_questName(questID, useLargeIcon)
 	end
 	return vivod
 end
-
 ----------------------------------------------------------------
-
 function E.func_reputationName(reputationID)
 	if reputationID then
 		local vivod = ""
@@ -443,7 +441,6 @@ end
 ----------------------------------------------------------------
 E.curFaction = UnitFactionGroup("PLAYER")
 E.oppositeFaction = E.curFaction == "Alliance" and "Horde" or "Alliance"
-
 E.Icon_Alliance = 255140-- E.func_texturefromIcon(255140) -- 132486
 E.Icon_Horde = 255142 -- 132485
 E.Icon_Kyrian = 3641395
@@ -768,20 +765,14 @@ function E.func_GetClassColor(className) -- C_ClassColor.GetClassColor(classFile
 	end
 	return "ffffff"
 end
-
-
-
 E.className, E.classFilename, E.classId = UnitClass("PLAYER")
-
-
-
 E.classColor = E.func_GetClassColor(E.classFilename)
 local r, g, b = GetClassColor(E.classFilename)
-if (r == 1 and g == 1 and b == 1) then -- "|cff9659FF"--"|cff7157FF"
-	r = 150/255
-	g = 89/255
-	b = 255/255
-end
+-- if (r == 1 and g == 1 and b == 1) then -- "|cff9659FF"--"|cff7157FF"
+-- 	r = 150/255
+-- 	g = 89/255
+-- 	b = 255/255
+-- end
 E.classColorHexCurrent = E.func_rgb2hex(r, g, b)
 E.curCharName = UnitFullName("PLAYER")
 E.curServer = GetRealmName()
@@ -858,7 +849,7 @@ function E.func_CheckReputationFULL(reputationID)
 			local standing = majorData.renownLevel
 			vivod = currentValue.."/"..totalValue..color.."("..(standing)..")|r"
 			FIRST = currentValue
-			second = totalValue
+			SECOND = totalValue
 		end
 	elseif (isFriend and friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0) then
 		local friendshipFactionID = friendData.friendshipFactionID or error
@@ -928,7 +919,6 @@ function E.func_CheckReputationFULL(reputationID)
 	end
 	return FIRST, SECOND, vivod, color, standingTEXT
 end
-
 ----------------------------------------------------------------
 function E.func_CurrentNumQuests()
 	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
@@ -1088,7 +1078,7 @@ function E.func_EventName(eventID)
 end
 ----------------------------------------------------------------
 function E.func_ProfessionName(skillLine)
-	local vivod = ""
+	local vivod = UNKNOWN
 	if skillLine then
 		local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine)
 		vivod = name
@@ -1813,41 +1803,29 @@ E.spacer = "  "
 E.FULL_WIDTH = 3.60
 E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
 E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
-
 				-- ["Octo_statusbar"] = "Blizzard",
 				-- ["Octo_sound"] = "None",
 				-- ["Octo_background"] = "None",
 				-- ["Octo_border"] = "None",
 				-- ["Octo_font"] = "Friz Quadrata TT",
-
-
 E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
-
-
 -- print (Octo_ToDo_DB_Vars.interface.Octo_font)
-
 E.fontObject9 = CreateFont("OctoFont9")
 E.fontObject9:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject9:SetFont(E.Octo_font, 9, "OUTLINE")
-
 E.fontObject10 = CreateFont("OctoFont10")
 E.fontObject10:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject10:SetFont(E.Octo_font, 10, "OUTLINE")
-
 E.fontObject11 = CreateFont("OctoFont11")
 E.fontObject11:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject11:SetFont(E.Octo_font, 11, "OUTLINE")
-
 E.fontObject12 = CreateFont("OctoFont12")
 E.fontObject12:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject12:SetFont(E.Octo_font, 12, "OUTLINE")
-
 E.fontObject22 = CreateFont("OctoFont22")
 E.fontObject22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject22:SetFont(E.Octo_font, 20, "OUTLINE")
-
-
 E.AddonTexture_1 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_1.tga"
 E.AddonTexture_2 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_2.tga"
 E.AddonTexture_3 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_3.tga"
@@ -1857,14 +1835,7 @@ E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- GetExpansionLevel()
 ----------------------------------------------------------------
 E.IsPublicBuild = IsPublicBuild()
-
-
-
-
-
 E.buildVersion, E.buildNumber, E.buildDate, E.interfaceVersion = GetBuildInfo()
-
-
 E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 E.GetRestrictedAccountData_rLevel = select(1, GetRestrictedAccountData())
 E.GetRestrictedAccountData_rMoney = select(2, GetRestrictedAccountData())
@@ -1880,10 +1851,6 @@ E.regionName = GetCurrentRegionName()
 if E.regionName == "" then
 	E.regionName = "US"
 end
-
-
-
-
 E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
 E.curGUID = UnitGUID("PLAYER")
@@ -2473,9 +2440,6 @@ function E.CategoriesForAddon(name)
 	end
 	return resultText
 end
-
-
-
 function E.rec_toggle(index, state)
 	if state then
 		E.func_DisableAddOn(index)
@@ -2490,18 +2454,12 @@ function E.rec_toggle(index, state)
 		end
 	end
 end
-
-
 -- Переключить аддон
 function E.func_ToggleAddon(index, state)
 	local addonName = C_AddOns.GetAddOnInfo(index)
 	local enabled = E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
 	E.rec_toggle(index, enabled)
 end
-
-
-
-
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
 function E.func_LockAddon(index)
 	local name = E.func_GetAddonName(index)
@@ -2723,35 +2681,26 @@ function E.func_NumPlayers()
 	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
 	local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
 	local sorted = {}
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 
-		if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
-			if ShowOnlyCurrentBattleTag == true then
-				if (ShowOnlyCurrentServer == true
-					and (CharInfo.curServer == E.curServer)
-					and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-					and (CharInfo.isShownPLAYER == true)
-					and (CharInfo.UnitLevel >= LevelToShow)
-					and (CharInfo.UnitLevel <= LevelToShowMAX))
-				or (ShowOnlyCurrentServer == false
-					and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-					and (CharInfo.isShownPLAYER == true)
-					and (CharInfo.UnitLevel >= LevelToShow)
-					and (CharInfo.UnitLevel <= LevelToShowMAX))
-				or (E.curGUID == CharInfo.GUID) then
-					sorted[#sorted+1] = CharInfo
-				end
-			else
-				if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
-					and (CharInfo.isShownPLAYER == true)
-					and (CharInfo.UnitLevel >= LevelToShow)
-					and (CharInfo.UnitLevel <= LevelToShowMAX))
-				or (ShowOnlyCurrentServer == false
-					and (CharInfo.isShownPLAYER == true)
-					and (CharInfo.UnitLevel >= LevelToShow)
-					and (CharInfo.UnitLevel <= LevelToShowMAX))
-				or (E.curGUID == CharInfo.GUID) then
-					sorted[#sorted+1] = CharInfo
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		if E.curGUID == CharInfo.GUID then
+			sorted[#sorted+1] = CharInfo
+		end
+		if CharInfo.isShownPLAYER and E.curGUID ~= CharInfo.GUID then
+			if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
+				if ShowOnlyCurrentBattleTag then
+					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
+					and CharInfo.BattleTagLocal == E.BattleTagLocal
+					and CharInfo.UnitLevel >= LevelToShow
+					and CharInfo.UnitLevel <= LevelToShowMAX then
+						sorted[#sorted+1] = CharInfo
+					end
+				else
+					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
+					and CharInfo.UnitLevel >= LevelToShow
+					and CharInfo.UnitLevel <= LevelToShowMAX then
+						sorted[#sorted+1] = CharInfo
+					end
 				end
 			end
 		end
@@ -2764,56 +2713,56 @@ function E.sorted()
 	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
 	local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
 	local sorted = {}
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 
-		if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
-			if ShowOnlyCurrentBattleTag == true then
-				if (ShowOnlyCurrentServer == true
-					and (CharInfo.curServer == E.curServer)
-					and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-					and (CharInfo.isShownPLAYER == true)
-					and (CharInfo.UnitLevel >= LevelToShow)
-					and (CharInfo.UnitLevel <= LevelToShowMAX))
-				or (ShowOnlyCurrentServer == false
-					and (CharInfo.BattleTagLocal == E.BattleTagLocal)
-					and (CharInfo.isShownPLAYER == true)
-					and (CharInfo.UnitLevel >= LevelToShow)
-					and (CharInfo.UnitLevel <= LevelToShowMAX))
-				or (E.curGUID == CharInfo.GUID) then
-					sorted[#sorted+1] = CharInfo
-				end
-			else
-				if ((ShowOnlyCurrentServer == true and (CharInfo.curServer == E.curServer))
-					and (CharInfo.isShownPLAYER == true)
-					and (CharInfo.UnitLevel >= LevelToShow)
-					and (CharInfo.UnitLevel <= LevelToShowMAX))
-				or (ShowOnlyCurrentServer == false
-					and (CharInfo.isShownPLAYER == true)
-					and (CharInfo.UnitLevel >= LevelToShow)
-					and (CharInfo.UnitLevel <= LevelToShowMAX))
-				or (E.curGUID == CharInfo.GUID) then
-					sorted[#sorted+1] = CharInfo
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		if E.curGUID == CharInfo.GUID then
+			sorted[#sorted+1] = CharInfo
+		end
+		if CharInfo.isShownPLAYER and E.curGUID ~= CharInfo.GUID then
+			if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
+				if ShowOnlyCurrentBattleTag then
+					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
+					and CharInfo.BattleTagLocal == E.BattleTagLocal
+					and CharInfo.UnitLevel >= LevelToShow
+					and CharInfo.UnitLevel <= LevelToShowMAX then
+						sorted[#sorted+1] = CharInfo
+					end
+				else
+					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
+					and CharInfo.UnitLevel >= LevelToShow
+					and CharInfo.UnitLevel <= LevelToShowMAX then
+						sorted[#sorted+1] = CharInfo
+					end
 				end
 			end
 		end
 	end
 
-	sort(sorted, function(a, b)
-		if a and b then
-			local infoA = Octo_ToDo_DB_Levels[a.GUID]
-			local infoB = Octo_ToDo_DB_Levels[b.GUID]
-				if infoA and infoB then
-					return
-					infoA.curServer > infoB.curServer or
-					infoA.curServer == infoB.curServer and infoA.UnitLevel > infoB.UnitLevel or
-					infoA.UnitLevel == infoB.UnitLevel and infoA.avgItemLevel > infoB.avgItemLevel or
-					infoA.avgItemLevel == infoB.avgItemLevel and infoB.Name > infoA.Name
-				end
+	table.sort(sorted, function(a, b)
+			if not a or not b then return false end
+
+			-- Сначала сортируем по серверу (в алфавитном порядке)
+			if a.curServer ~= b.curServer then
+				return a.curServer < b.curServer
 			end
-		end
-	)
+
+			-- Затем по уровню (по убыванию)
+			if a.UnitLevel ~= b.UnitLevel then
+				return a.UnitLevel > b.UnitLevel
+			end
+
+			-- Затем по уровню предметов (по убыванию)
+			if a.avgItemLevel ~= b.avgItemLevel then
+				return a.avgItemLevel > b.avgItemLevel
+			end
+
+			-- В конце по имени (по возрастанию)
+			return a.Name < b.Name
+	end)
+
 	return sorted
 end
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

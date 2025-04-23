@@ -20,9 +20,9 @@ local locale = GetLocale()
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.Collect_ALL_PlayerInfo()
-	if Octo_TrashCan_DB then
-		Octo_TrashCan_DB.profileKeys = Octo_TrashCan_DB.profileKeys or {}
-		Octo_TrashCan_DB.profileKeys[E.curCharName.." - ".. E.curServer] = Octo_TrashCan_DB.profileKeys[E.curCharName.." - ".. E.curServer] or "OctoUI"
+	if Octo_DEBUG then
+		Octo_DEBUG.profileKeys = Octo_DEBUG.profileKeys or {}
+		Octo_DEBUG.profileKeys[E.curCharName.." - ".. E.curServer] = Octo_DEBUG.profileKeys[E.curCharName.." - ".. E.curServer] or "OctoUI"
 	end
 	if E.isElvUI and ElvDB and ElvPrivateDB then
 		if ElvDB.profileKeys[E.curCharName.." - ".. E.curServer] ~= "OctoUI" then
@@ -201,57 +201,217 @@ function E.Collect_ALL_LoginTime()
 		collect.time = time()
 	end
 end
-
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
+-- POSTMASTER_PIPE_BROKEN_ISLES (New) - Broken Isles
+-- POSTMASTER_PIPE_DRAENOR (New) - Draenor
+-- POSTMASTER_PIPE_EASTERNKINGDOMS (New) - Eastern Kingdoms
+-- POSTMASTER_PIPE_KALIMDOR (New) - Kalimdor
+-- POSTMASTER_PIPE_NORTHREND (New) - Northrend
+-- POSTMASTER_PIPE_OUTLAND (New) - Outland
+-- POSTMASTER_PIPE_PANDARIA (New) - Pandaria
+-- ВЫЗЫВАЕТСЯ 1 РАЗ
+function E.Collect_All_Professions_Debug()
+	E.func_LoadAddOn("Blizzard_Professions")
+	E.func_LoadAddOn("Blizzard_ProfessionsBook")
+	if not ProfessionsFrame then
+		ProfessionsFrame_LoadUI()
+		-- else
+		--     C_Timer.After(1, function()
+		--         OpenProfessionUIToSkillLine(2)
+		--         ShowUIPanel(ProfessionsFrame)
+		--     end)
+	end
+	-- if not C_TradeSkillUI.IsTradeSkillReady() then
+	--     C_TradeSkillUI.OpenTradeSkill(185)
+	--         print ("OPPENED?")
+	-- end
+	if Octo_ToDo_DB_Other.professions.DEBUG == nil then
+		Octo_ToDo_DB_Other.professions.DEBUG = {}
+		for skillLineID = 1, 3000 do
+			if E.func_ProfessionName(skillLineID) ~= UNKNOWN then
+				Octo_ToDo_DB_Other.professions.DEBUG[skillLineID] = E.func_ProfessionName(skillLineID)
+				-- Octo_ToDo_DB_Other.professions.DEBUG[skillLineID] = true
+			end
+		end
+	end
+end
+--[[
+с первых двух как и собираю
+3 - арх
+остальные своя таблица сортировки
+]]
+function LoadProfessionSilently(professionID)
+	if not C_TradeSkillUI.IsTradeSkillReady() then
+		C_TradeSkillUI.OpenTradeSkill(professionID) -- "Открываем" профессию в фоне
+	end
+end
 function E.Collect_All_Professions()
+	-- info = C_TradeSkillUI.GetBaseProfessionInfo() https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetBaseProfessionInfo
+	-- WORLD_QUEST_ICONS_BY_PROFESSION https://www.townlong-yak.com/framexml/8.1.5/Constants.lua#81
+	-- C_TradeSkillUI.GetChildProfessionInfos()  -- ВЫЗЫВАЕТСЯ ТОЛЬКО ПРИ ОТКРЫТОМ ЮАЙ
+	-- https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetTradeSkillDisplayName
+	-- https://warcraft.wiki.gg/wiki/TradeSkillLineID
+	-- https://wago.tools/db2/SkillLine
+	-- /dump C_TradeSkillUI.GetTradeSkillDisplayName(2543) -- Кулинария Дренора 2543
+	-- 3
+	local archaeology = {
+		--ID,Name_lang,ResearchFieldID,CurrencyID,TextureFileID,BigTextureFileID,ItemID
+		1, -- Дворфы,1,384,461831,461832,52843
+		2, -- Дренеи,1,398,461829,461830,64394
+		3, -- Окаменелости,1,393,461833,461834,0
+		4, -- "Ночные эльфы",1,394,461837,461838,63127
+		5, -- Нерубы,1,400,461835,461836,64396
+		6, -- Орки,1,397,462321,462322,64392
+		7, -- Тол'виры,1,401,461839,461840,64397
+		8, -- Тролли,1,385,461841,461842,63128
+		27, -- Врайкулы,1,399,461843,461844,64395
+		29, -- Богомолы,1,754,839111,839112,95373
+		229, -- Пандарены,1,676,633002,633003,79868
+		231, -- Могу,1,677,633000,633001,79869
+		315, -- Араккоа,1,829,1030616,1030821,109585
+		350, -- "Дренорские кланы",1,821,1030617,1030822,108439
+		382, -- Огры,1,828,1030618,1030823,109584
+		404, -- Высокорожденные,1,1172,1445575,1445576,130903
+		406, -- "Таурены Крутогорья",1,1173,1445577,1445578,130904
+		408, -- Демоны,1,1174,1445573,1445574,130905
+		423, -- Зандалари,1,1534,2060051,2060052,154989
+		424, -- Друсты,1,1535,2060049,2060050,154990
+	}
+	-- 4
+	local prof34 = {
+		--fishing
+		2876, --"Рыбная ловля Каз Алгара",
+		2826, --"Рыбная ловля Драконьих островов",
+		2754, --"Рыбная ловля Темных Земель",
+		2585, --"Кул-тирасская рыбная ловля",
+		2586, --"Рыбная ловля Legion",
+		2587, --"Рыбная ловля Дренора",
+		2588, --"Рыбная ловля Пандарии",
+		2589, --"Рыбная ловля времен Катаклизма",
+		2590, --"Рыбная ловля Нордскола",
+		2591, --"Рыбная ловля в Запределье",
+		-- 356, --"Рыбная ловля", -- МЕЙН?
+		2592, --"Классическая рыбная ловля",
+		--cooking
+		2873,-- "Кулинария Каз Алгара",
+		2824,-- "Кулинария Драконьих островов",
+		2752,-- "Кулинария Темных Земель",
+		2541,-- "Кул-тирасская кулинария",
+		2542,-- "Кулинария Легиона",
+		2543,-- "Кулинария Дренора",
+		2544,-- "Кулинария Пандарии",
+		2545,-- "Кулинария времен Катаклизма",
+		2546,-- "Кулинария Нордскола",
+		2547,-- "Кулинария Запределья",
+		-- 185,-- "Кулинария", -- МЕЙН?
+		2548,-- "Классическая кулинария",
+		-- 981,-- "Кулинария для новичков", -- WTF?
+		-- 982,-- "Кулинария для подмастерьев", -- WTF?
+	}
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		collect.MASLENGO = collect.MASLENGO or {}
-		collect.MASLENGO.professions = collect.MASLENGO.professions or {}
-		for i, id in ipairs({GetProfessions()}) do
-			if i ~= 2 then
-				if collect.MASLENGO.professions[1].name == collect.MASLENGO.professions[2].name then
-					collect.MASLENGO.professions[2] = {}
-				end
-			end
+		-- collect.MASLENGO.professions = collect.MASLENGO.professions or {}
+		collect.MASLENGO.professions = {}
+		for i, id in next, ({GetProfessions()}) do
 			collect.MASLENGO.professions[i] = collect.MASLENGO.professions[i] or {}
-			local _, _, skillLevel, maxSkillLevel, _, _, skillLine = GetProfessionInfo(id)
-			collect.MASLENGO.professions[i].name = E.func_ProfessionName(skillLine)
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			local _, _, skillLevel, maxSkillLevel, _, _, skillLine, skillModifier = GetProfessionInfo(id)
 			collect.MASLENGO.professions[i].skillLine = skillLine
 			collect.MASLENGO.professions[i].skillLevel = skillLevel
 			collect.MASLENGO.professions[i].maxSkillLevel = maxSkillLevel
-			-- collect.MASLENGO.professions[i].ALT = nil
-			-- /dump C_TradeSkillUI.GetProfessionInfoBySkillLineID(2548).parentProfessionID
-			for index, skillLineID in ipairs(C_TradeSkillUI.GetAllProfessionTradeSkillLines()) do
-				collect.MASLENGO.professions.ALL = collect.MASLENGO.professions.ALL or {}
-				collect.MASLENGO.professions.ALL[skillLineID] = E.func_ProfessionName(skillLineID)
-				local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
-				local QWEprofessionID = info.professionID
-				local QWEsourceCounter = info.sourceCounter
-				local QWEprofessionName = info.professionName
-				local QWEexpansionName = info.expansionName
-				local QWEskillLevel = info.skillLevel
-				local QWEmaxSkillLevel = info.maxSkillLevel
-				local QWEskillModifier = info.skillModifier
-				local QWEisPrimaryProfession = info.isPrimaryProfession
-				local QWEparentProfessionID = info.parentProfessionID
-				local QWEparentProfessionName = info.parentProfessionName
-				if skillLine == QWEparentProfessionID then
-					collect.MASLENGO.professions[i][QWEprofessionID] = nil
-					collect.MASLENGO.professions[i].ALT = collect.MASLENGO.professions[i].ALT or {}
-					collect.MASLENGO.professions[i].ALT[QWEprofessionID] = collect.MASLENGO.professions[i].ALT[QWEprofessionID] or {}
-					collect.MASLENGO.professions[i].ALT[QWEprofessionID].name = E.func_ProfessionName(QWEprofessionID)
-					collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEexpansionName = QWEexpansionName
-					collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEskillLevel = QWEskillLevel
-					collect.MASLENGO.professions[i].ALT[QWEprofessionID].QWEmaxSkillLevel = QWEmaxSkillLevel
+			collect.MASLENGO.professions[i].skillModifier = skillModifier
+			if i == 1 or i == 2 then
+				for index, skillLineID in ipairs(C_TradeSkillUI.GetAllProfessionTradeSkillLines()) do -- СОБИРАТЬ ТОЛЬКО ОСНОВНЫЕ
+					-- for skillLineID, j in next, (Octo_ToDo_DB_Other.professions.DEBUG) do -- СОБИРАТЬ ВСЁ
+					local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
+					local QWEprofessionName = info.professionName
+					local QWEskillLevel = info.skillLevel
+					local QWEmaxSkillLevel = info.maxSkillLevel
+					local QWEprofessionID = info.professionID
+					local QWEexpansionName = info.expansionName
+					local QWEparentProfessionID = info.parentProfessionID
+					local QWEsourceCounter = info.sourceCounter
+					local QWEskillModifier = info.skillModifier
+					local QWEisPrimaryProfession = info.isPrimaryProfession
+					local QWEparentProfessionName = info.parentProfessionName
+					if skillLine == QWEparentProfessionID then
+						collect.MASLENGO.professions[i].child = collect.MASLENGO.professions[i].child or {}
+						tinsert(collect.MASLENGO.professions[i].child, {
+								QWEprofessionName = QWEprofessionName,
+								QWEskillLevel = QWEskillLevel,
+								QWEmaxSkillLevel = QWEmaxSkillLevel,
+								QWEprofessionID = QWEprofessionID,
+								QWEexpansionName = QWEexpansionName,
+								QWEsourceCounter = QWEsourceCounter,
+								QWEskillModifier = QWEskillModifier,
+								QWEisPrimaryProfession = QWEisPrimaryProfession,
+								QWEparentProfessionName = QWEparentProfessionName,
+						})
+					end
 				end
 			end
-			-- if i ~= 2 then
-			-- collect.MASLENGO.professions[2] = {}
-			-- collect.MASLENGO.professions[2] = collect.MASLENGO.professions[2] or {}
-			-- print ("АЙ РАВНО НИЛ")
-			-- end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			if i == 3 then
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			if i == 4 or i == 5 then
+				-- local _, _, skillLevel, maxSkillLevel, _, _, skillLine, skillModifier = GetProfessionInfo(id)
+				for index, skillLineID in next, (prof34) do -- СОБИРАТЬ ВСЁ
+					local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
+					local QWEprofessionName = info.professionName
+					local QWEskillLevel = info.skillLevel
+					local QWEmaxSkillLevel = info.maxSkillLevel
+					local QWEprofessionID = info.professionID
+					local QWEexpansionName = info.expansionName
+					local QWEparentProfessionID = info.parentProfessionID
+					-- local QWEsourceCounter = info.sourceCounter
+					-- local QWEskillModifier = info.skillModifier
+					-- local QWEisPrimaryProfession = info.isPrimaryProfession
+					-- local QWEparentProfessionName = info.parentProfessionName
+					if skillLine == QWEparentProfessionID then
+						collect.MASLENGO.professions[i].child = collect.MASLENGO.professions[i].child or {}
+						tinsert(collect.MASLENGO.professions[i].child, {
+								QWEprofessionName = QWEprofessionName,
+								QWEskillLevel = QWEskillLevel,
+								QWEmaxSkillLevel = QWEmaxSkillLevel,
+								QWEprofessionID = QWEprofessionID,
+								QWEexpansionName = QWEexpansionName,
+						})
+					end
+				end
+			end
+			----------------------------------------------------------------
+			----------------------------------------------------------------
+			----------------------------------------------------------------
 		end
 	end
+	--     for _, branchID in ipairs(ArchaeologyTBL) do
+	--         local raceName, raceTextureID, raceItemID, numFragmentsCollected, numFragmentsRequired, maxFragments = GetArchaeologyRaceInfoByID(branchID)
+	--         print (raceName, E.func_texturefromIcon(raceTextureID), raceItemID, numFragmentsCollected, numFragmentsRequired, maxFragments)
+	--     end
+	-- for raceIndex = 1, GetNumArchaeologyRaces() do
+	--     local numProjects = GetNumArtifactsByRace(raceIndex)
+	--     print (numProjects)
+	-- end
 end
 function E.Collect_ALL_GreatVault()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
@@ -329,68 +489,68 @@ function E.Collect_All_Currency()
 				local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
 				local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
 				-- if currencyID then
-				-- 	Octo_DB_Config.CurrencyDB[currencyID] = Octo_DB_Config.CurrencyDB[currencyID] or false
+				-- Octo_DB_Config.CurrencyDB[currencyID] = Octo_DB_Config.CurrencyDB[currencyID] or false
 				-- end
 			end
 		end
 		-- for CurrencyID, v in next, (Octo_DB_Config.CurrencyDB) do
-		-- 	local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID) or false
-		-- 	local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
-		-- 	if data then
-		-- 		local quantity = data.quantity
-		-- 		local maxQuantity = data.maxQuantity
-		-- 		local totalEarned = data.totalEarned
-		-- 		if isAccountWideCurrency == false then
-		-- 			if collect.MASLENGO and not InCombatLockdown() then
-		-- 				collect.MASLENGO.CurrencyID = collect.MASLENGO.CurrencyID or {}
-		-- 				collect.MASLENGO.CurrencyID_totalEarned = collect.MASLENGO.CurrencyID_totalEarned or {}
-		-- 				collect.MASLENGO.CurrencyID_Total = collect.MASLENGO.CurrencyID_Total or {}
-		-- 				if quantity ~= nil and quantity ~= 0 then
-		-- 					collect.MASLENGO.CurrencyID[CurrencyID] = quantity
-		-- 				end
-		-- 				if totalEarned ~= nil and totalEarned ~= 0 then
-		-- 					collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
-		-- 				end
-		-- 				if maxQuantity ~= nil and maxQuantity ~= 0 then
-		-- 					if quantity ~= maxQuantity then
-		-- 						collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
-		-- 					else
-		-- 						collect.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
-		-- 					end
-		-- 				else
-		-- 					if quantity ~= nil and quantity ~= 0 then
-		-- 						collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
-		-- 					end
-		-- 				end
-		-- 			end
-		-- 		else
-		-- 			for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		-- 				CharInfo.MASLENGO = CharInfo.MASLENGO or {}
-		-- 				CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
-		-- 				CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
-		-- 				CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
-		-- 				if CharInfo and not InCombatLockdown() then
-		-- 					if quantity ~= nil and quantity ~= 0 then
-		-- 						CharInfo.MASLENGO.CurrencyID[CurrencyID] = quantity
-		-- 					end
-		-- 					if totalEarned ~= nil and totalEarned ~= 0 then
-		-- 						CharInfo.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
-		-- 					end
-		-- 					if maxQuantity ~= nil and maxQuantity ~= 0 then
-		-- 						if quantity ~= maxQuantity then
-		-- 							CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
-		-- 						else
-		-- 							CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
-		-- 						end
-		-- 					end
-		-- 				end
-		-- 			end
-		-- 		end
-		-- 	else
-		-- 		collect.MASLENGO.CurrencyID[CurrencyID] = nil
-		-- 		collect.MASLENGO.CurrencyID_Total[CurrencyID] = nil
-		-- 		collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
-		-- 	end
+		-- local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID) or false
+		-- local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
+		-- if data then
+		--     local quantity = data.quantity
+		--     local maxQuantity = data.maxQuantity
+		--     local totalEarned = data.totalEarned
+		--     if isAccountWideCurrency == false then
+		--         if collect.MASLENGO and not InCombatLockdown() then
+		--             collect.MASLENGO.CurrencyID = collect.MASLENGO.CurrencyID or {}
+		--             collect.MASLENGO.CurrencyID_totalEarned = collect.MASLENGO.CurrencyID_totalEarned or {}
+		--             collect.MASLENGO.CurrencyID_Total = collect.MASLENGO.CurrencyID_Total or {}
+		--             if quantity ~= nil and quantity ~= 0 then
+		--                 collect.MASLENGO.CurrencyID[CurrencyID] = quantity
+		--             end
+		--             if totalEarned ~= nil and totalEarned ~= 0 then
+		--                 collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
+		--             end
+		--             if maxQuantity ~= nil and maxQuantity ~= 0 then
+		--                 if quantity ~= maxQuantity then
+		--                     collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+		--                 else
+		--                     collect.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+		--                 end
+		--             else
+		--                 if quantity ~= nil and quantity ~= 0 then
+		--                     collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
+		--                 end
+		--             end
+		--         end
+		--     else
+		--         for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		--             CharInfo.MASLENGO = CharInfo.MASLENGO or {}
+		--             CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
+		--             CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
+		--             CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
+		--             if CharInfo and not InCombatLockdown() then
+		--                 if quantity ~= nil and quantity ~= 0 then
+		--                     CharInfo.MASLENGO.CurrencyID[CurrencyID] = quantity
+		--                 end
+		--                 if totalEarned ~= nil and totalEarned ~= 0 then
+		--                     CharInfo.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
+		--                 end
+		--                 if maxQuantity ~= nil and maxQuantity ~= 0 then
+		--                     if quantity ~= maxQuantity then
+		--                         CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+		--                     else
+		--                         CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+		--                     end
+		--                 end
+		--             end
+		--         end
+		--     end
+		-- else
+		--     collect.MASLENGO.CurrencyID[CurrencyID] = nil
+		--     collect.MASLENGO.CurrencyID_Total[CurrencyID] = nil
+		--     collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
+		-- end
 		-- end
 	end
 end
@@ -398,19 +558,16 @@ function E.Collect_All_Reputations()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	C_Reputation.ExpandAllFactionHeaders()
 	if collect and not InCombatLockdown() then
-
-
 		----------------------------------------------------------------
-	for index, tbl in ipairs(E.OctoTable_Reputations) do
-		for i, v in ipairs(tbl) do
-			local reputationID = v.id
+		for index, tbl in ipairs(E.OctoTable_Reputations) do
+			for i, v in ipairs(tbl) do
+				local reputationID = v.id
 				collect.MASLENGO.reputationFULL[reputationID] = collect.MASLENGO.reputationFULL[reputationID] or {}
 				local FIRST = select(1, E.func_CheckReputationFULL(reputationID))
 				local SECOND = select(2, E.func_CheckReputationFULL(reputationID))
 				local vivod = select(3, E.func_CheckReputationFULL(reputationID))
 				local color = select(4, E.func_CheckReputationFULL(reputationID))
 				local standingTEXT = select(5, E.func_CheckReputationFULL(reputationID))
-
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.MASLENGO.reputationFULL[reputationID] = CharInfo.MASLENGO.reputationFULL[reputationID] or {}
@@ -426,7 +583,6 @@ function E.Collect_All_Reputations()
 					collect.MASLENGO.reputationFULL[reputationID].vivod = vivod
 					collect.MASLENGO.reputationFULL[reputationID].color = color
 					collect.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
-
 				end
 				-- collect.MASLENGO.reputationFULL[reputationID].name = v.name
 			end
@@ -565,9 +721,9 @@ function E.Collect_ALL_UNIVERSALQuestUpdate()
 						end
 					end
 				end
-				if Octo_TrashCan_DB then
-					Octo_TrashCan_DB.UniversalQuest[v.desc] = Octo_TrashCan_DB.UniversalQuest[v.desc] or {}
-					Octo_TrashCan_DB.UniversalQuest[v.desc][i] = Octo_TrashCan_DB.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest.".."Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset)
+				if Octo_DEBUG then
+					Octo_DEBUG.UniversalQuest[v.desc] = Octo_DEBUG.UniversalQuest[v.desc] or {}
+					Octo_DEBUG.UniversalQuest[v.desc][i] = Octo_DEBUG.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest.".."Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset)
 				end
 				if v.max == 1 then
 					collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod
@@ -787,9 +943,6 @@ function E.Collect_All_Holiday()
 					E.HolidayForButton[id].ENDS = event_duration
 				end
 				E.HolidayForButton[id].invitedBy = event.invitedBy
-				-- if id == 244009 then
-				-- print (event.title, startTime, startTime_monthDay, event_duration)
-				-- end
 				if not E.HolidayForButton[id].priority then
 					E.HolidayForButton[id].priority = priority
 					priority = priority + 1
@@ -843,9 +996,7 @@ function E.Collect_All_BfA_Cloaklvl()
 				if itemID == "169223" then
 					local itemLevel = select(4, E.func_GetItemInfo(itemLink))
 					if itemLevel then
-						if collect and not InCombatLockdown() then
-							collect.cloak_lvl = min(15, max((itemLevel - 125) / 2 + 1, 1))
-						end
+						collect.cloak_lvl = min(15, max((itemLevel - 125) / 2 + 1, 1))
 					end
 				end
 			end
@@ -904,6 +1055,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 	"SKILL_LINES_CHANGED",
+	"TRADE_SKILL_SHOW",
 	"PLAYER_XP_UPDATE",
 	"QUEST_LOG_UPDATE",
 	"PLAYER_MONEY",
@@ -967,7 +1119,8 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_ALL_Mail()
 	E.Collect_ALL_MoneyOnLogin()
 	E.Collect_ALL_MoneyUpdate()
-	E.Collect_All_Professions()
+	E.Collect_All_Professions_Debug()
+	-- E.Collect_All_Professions()
 	E.Collect_All_Quests()
 	E.Collect_All_Covenant()
 	E.Collect_All_PlayerDurability()
@@ -982,14 +1135,21 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	RequestRaidInfo()
 	E.Update("ADDON_LOADED")
 end
-function Octo_EventFrame_Collect:SKILL_LINES_CHANGED(...)
+function Octo_EventFrame_Collect:SKILL_LINES_CHANGED()
 	if not InCombatLockdown() and not self.SKLCHUpdatePause then
 		self.SKLCHUpdatePause = true
 		C_Timer.After(1, function()
 				E.Collect_All_Professions()
 				E.Update("SKILL_LINES_CHANGED")
+				self.SKLCHUpdatePause = false
 		end)
 	end
+end
+function Octo_EventFrame_Collect:TRADE_SKILL_SHOW()
+	C_Timer.After(1, function()
+			E.Collect_All_Professions()
+			E.Update("TRADE_SKILL_SHOW")
+	end)
 end
 function Octo_EventFrame_Collect:PLAYER_XP_UPDATE()
 	if not InCombatLockdown() then

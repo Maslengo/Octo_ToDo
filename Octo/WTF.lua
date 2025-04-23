@@ -85,7 +85,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		if CharInfo.needResetWeekly == nil then CharInfo.needResetWeekly = false end
 		if CharInfo.needResetMonth == nil then CharInfo.needResetMonth = false end
 		if CharInfo.HasAvailableRewards == nil then CharInfo.HasAvailableRewards = false end
-		if CharInfo.isShownPLAYER == nil then CharInfo.isShownPLAYER = false end
+		if CharInfo.isShownPLAYER == nil then CharInfo.isShownPLAYER = true end
 		-- if CharInfo.Chromie_name == nil then CharInfo.Chromie_name = 0 end = CharInfo.Chromie_name or nil
 		if CharInfo.RIO_Score == nil then CharInfo.RIO_Score = 0 end
 		if CharInfo.RIO_weeklyBest == nil then CharInfo.RIO_weeklyBest = 0 end
@@ -112,6 +112,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			CharInfo.MASLENGO.professions[i].skillLine = CharInfo.MASLENGO.professions[i].skillLine or 0
 			CharInfo.MASLENGO.professions[i].skillLevel = CharInfo.MASLENGO.professions[i].skillLevel or 0
 			CharInfo.MASLENGO.professions[i].maxSkillLevel = CharInfo.MASLENGO.professions[i].maxSkillLevel or 0
+
+			-- CharInfo.MASLENGO.professions[i].child = CharInfo.MASLENGO.professions[i].child or {}
+
 		end
 		if CharInfo.MASLENGO.ItemsInBag == nil then CharInfo.MASLENGO.ItemsInBag = {} end
 		----------------------------------------------------------------
@@ -183,6 +186,13 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	if Octo_ToDo_DB_Vars.AddonCentralFrameWeight == nil then Octo_ToDo_DB_Vars.AddonCentralFrameWeight = 110 end
 	if Octo_ToDo_DB_Vars.MainFrameDefaultLines == nil then Octo_ToDo_DB_Vars.MainFrameDefaultLines = 30 end
 	if Octo_ToDo_DB_Vars.SFDropDownWeight == nil then Octo_ToDo_DB_Vars.SFDropDownWeight = 100 end
+	if Octo_ToDo_DB_Vars.MaxNumCharacters == nil then Octo_ToDo_DB_Vars.MaxNumCharacters = 10 end
+
+
+
+
+
+
 	if Octo_ToDo_DB_Vars.PortalsButtons == nil then Octo_ToDo_DB_Vars.PortalsButtons = true end
 	if Octo_ToDo_DB_Vars.PortalsButtonsOnlyAvailable == nil then Octo_ToDo_DB_Vars.PortalsButtonsOnlyAvailable = true end
 	if Octo_ToDo_DB_Vars.color == nil then Octo_ToDo_DB_Vars.color = {1, 1, 1} end
@@ -203,7 +213,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	if Octo_ToDo_DB_Vars.AutoSellGrey == nil then Octo_ToDo_DB_Vars.AutoSellGrey = true end
 	if Octo_ToDo_DB_Vars.AutoTurnQuests == nil then Octo_ToDo_DB_Vars.AutoTurnQuests = true end
 	if Octo_ToDo_DB_Vars.BeledarCycle == nil then Octo_ToDo_DB_Vars.BeledarCycle = true end
-	if Octo_ToDo_DB_Vars.CarvedHarbingerCrest == nil then Octo_ToDo_DB_Vars.CarvedHarbingerCrest = true end
+
 	if Octo_ToDo_DB_Vars.ChallengesKeystoneFrame == nil then Octo_ToDo_DB_Vars.ChallengesKeystoneFrame = true end
 	if Octo_ToDo_DB_Vars.CinematicCanceler == nil then Octo_ToDo_DB_Vars.CinematicCanceler = true end
 	if Octo_ToDo_DB_Vars.Currency == nil then Octo_ToDo_DB_Vars.Currency = true end
@@ -218,7 +228,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	if Octo_ToDo_DB_Vars.ExpansionToShow == nil then Octo_ToDo_DB_Vars.ExpansionToShow = {[11] = true} end
 	if Octo_ToDo_DB_Vars.FrameScale == nil then Octo_ToDo_DB_Vars.FrameScale = 1 end
 	if Octo_ToDo_DB_Vars.GameMenuFrameScale == nil then Octo_ToDo_DB_Vars.GameMenuFrameScale = .8 end
-	if Octo_ToDo_DB_Vars.GildedHarbingerCrest == nil then Octo_ToDo_DB_Vars.GildedHarbingerCrest = true end
+
 	if Octo_ToDo_DB_Vars.Gold == nil then Octo_ToDo_DB_Vars.Gold = true end
 	if Octo_ToDo_DB_Vars.Professions == nil then Octo_ToDo_DB_Vars.Professions = true end
 	if Octo_ToDo_DB_Vars.Hide_AzeriteEmpoweredItemUI == nil then Octo_ToDo_DB_Vars.Hide_AzeriteEmpoweredItemUI = true end
@@ -265,7 +275,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	if Octo_ToDo_DB_Vars.QuestsShowAllways == nil then Octo_ToDo_DB_Vars.QuestsShowAllways = false end
 	if Octo_ToDo_DB_Vars.Reputations == nil then Octo_ToDo_DB_Vars.Reputations = false end
 	if Octo_ToDo_DB_Vars.ResetAllChars == nil then Octo_ToDo_DB_Vars.ResetAllChars = true end
-	if Octo_ToDo_DB_Vars.RunedHarbingerCrest == nil then Octo_ToDo_DB_Vars.RunedHarbingerCrest = true end
 	if Octo_ToDo_DB_Vars.ShowIDS == nil then Octo_ToDo_DB_Vars.ShowIDS = true end
 	if Octo_ToDo_DB_Vars.SpeedFrame == nil then Octo_ToDo_DB_Vars.SpeedFrame = {} end
 	if Octo_ToDo_DB_Vars.SpeedFrame.Shown == nil then Octo_ToDo_DB_Vars.SpeedFrame.Shown = true end
@@ -285,13 +294,12 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	if Octo_ToDo_DB_Vars.TalentTreeTweaks == nil then Octo_ToDo_DB_Vars.TalentTreeTweaks = true end
 	if Octo_ToDo_DB_Vars.TalentTreeTweaks_Alpha == nil then Octo_ToDo_DB_Vars.TalentTreeTweaks_Alpha = 1 end
 	if Octo_ToDo_DB_Vars.TalentTreeTweaks_Scale == nil then Octo_ToDo_DB_Vars.TalentTreeTweaks_Scale = 1 end
-	if Octo_ToDo_DB_Vars.Timewalk == nil then Octo_ToDo_DB_Vars.Timewalk = true end
 	if Octo_ToDo_DB_Vars.TWW_Delve_Weekly == nil then Octo_ToDo_DB_Vars.TWW_Delve_Weekly = true end
 	if Octo_ToDo_DB_Vars.TWW_DungeonQuest_Weekly == nil then Octo_ToDo_DB_Vars.TWW_DungeonQuest_Weekly = true end
 	if Octo_ToDo_DB_Vars.WorldBoss_Weekly == nil then Octo_ToDo_DB_Vars.WorldBoss_Weekly = true end
 	if Octo_ToDo_DB_Vars.UIErrorsFramePosition == nil then Octo_ToDo_DB_Vars.UIErrorsFramePosition = true end
 	if Octo_ToDo_DB_Vars.WasOnline == nil then Octo_ToDo_DB_Vars.WasOnline = true end
-	if Octo_ToDo_DB_Vars.WeatheredHarbingerCrest == nil then Octo_ToDo_DB_Vars.WeatheredHarbingerCrest = true end
+
 end
 
 
@@ -302,6 +310,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	if Octo_ToDo_DB_Other.CVar == nil then Octo_ToDo_DB_Other.CVar = {} end
 	if Octo_ToDo_DB_Other.Items == nil then Octo_ToDo_DB_Other.Items = {} end
 	if Octo_ToDo_DB_Other.Holiday == nil then Octo_ToDo_DB_Other.Holiday = {} end
+	if Octo_ToDo_DB_Other.professions == nil then Octo_ToDo_DB_Other.professions = {} end
 end
 
 
@@ -353,18 +362,13 @@ function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 end
 
 
-function Octo_EventFrame_WTF:Octo_TrashCan_DB()
-	if Octo_TrashCan_DB == nil then Octo_TrashCan_DB = {} end
-	if Octo_TrashCan_DB.Reputations == nil then Octo_TrashCan_DB.Reputations = {} end
-	if Octo_TrashCan_DB.Octo_MplusButton == nil then Octo_TrashCan_DB.Octo_MplusButton = {} end
-	if Octo_TrashCan_DB.UniversalQuest == nil then Octo_TrashCan_DB.UniversalQuest = {} end
-	if Octo_TrashCan_DB.Holiday == nil then Octo_TrashCan_DB.Holiday = {} end
-	if Octo_TrashCan_DB.HolidayCollectAll == nil then Octo_TrashCan_DB.HolidayCollectAll = {} end
-
-
-
-
-
+function Octo_EventFrame_WTF:Octo_DEBUG()
+	if Octo_DEBUG == nil then Octo_DEBUG = {} end
+	if Octo_DEBUG.Reputations == nil then Octo_DEBUG.Reputations = {} end
+	if Octo_DEBUG.Octo_MplusButton == nil then Octo_DEBUG.Octo_MplusButton = {} end
+	if Octo_DEBUG.UniversalQuest == nil then Octo_DEBUG.UniversalQuest = {} end
+	if Octo_DEBUG.Holiday == nil then Octo_DEBUG.Holiday = {} end
+	if Octo_DEBUG.HolidayCollectAll == nil then Octo_DEBUG.HolidayCollectAll = {} end
 end
 
 
@@ -382,6 +386,7 @@ function Octo_EventFrame_WTF:Daily_Reset() -- ПОФИКСИТЬ (ПОВЕСИТ
 			end
 			CharInfo.STARTTODAY = 0
 			CharInfo.PIZDALISHE.LFGInstance = {}
+			Octo_ToDo_DB_Other.professions.DEBUG = nil
 		end
 	end
 end
@@ -468,7 +473,7 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:Octo_Achievements_DB()
 		self:Octo_AddonsTable()
 		self:Octo_AddonsManager_DB()
-		self:Octo_TrashCan_DB()
+		self:Octo_DEBUG()
 		----------------------------------------------------------------
 		self:Daily_Reset()
 		self:Weekly_Reset()
@@ -487,3 +492,12 @@ function Octo_EventFrame_WTF:VARIABLES_LOADED()
 		end
 	end
 end
+
+
+
+
+
+-- if Octo_ToDo_DB_Vars.RunedHarbingerCrest == nil then Octo_ToDo_DB_Vars.RunedHarbingerCrest = true end
+-- if Octo_ToDo_DB_Vars.GildedHarbingerCrest == nil then Octo_ToDo_DB_Vars.GildedHarbingerCrest = true end
+-- if Octo_ToDo_DB_Vars.CarvedHarbingerCrest == nil then Octo_ToDo_DB_Vars.CarvedHarbingerCrest = true end
+-- if Octo_ToDo_DB_Vars.WeatheredHarbingerCrest == nil then Octo_ToDo_DB_Vars.WeatheredHarbingerCrest = true end

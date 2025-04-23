@@ -14,6 +14,7 @@ if MainFrameDefaultLines > MainFrameTotalLines then
 	MainFrameDefaultLines = MainFrameTotalLines
 end
 local SFDropDownWeight = 100
+local MaxNumCharacters = 10
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
@@ -461,8 +462,8 @@ function Octo_EventFrame_AddonsManager:Octo_Frame_init(frame, node)
 	-- E:func_SetBackdrop(frame.third, nil, 0, 0)
 end
 function Octo_EventFrame_AddonsManager:Octo_Create_MainFrame_AddonsManager()
-	-- Octo_MainFrame_AddonsManager:SetPoint("CENTER", 0, 0)
-	Octo_MainFrame_AddonsManager:SetPoint("TOP", 0, -200)
+	Octo_MainFrame_AddonsManager:SetPoint("CENTER", 0, 0)
+	-- Octo_MainFrame_AddonsManager:SetPoint("TOP", 0, -200)
 
 	Octo_MainFrame_AddonsManager:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 	Octo_MainFrame_AddonsManager:SetDontSavePosition(true)
@@ -992,6 +993,9 @@ function Octo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		end
 		if Octo_ToDo_DB_Vars.SFDropDownWeight then
 			SFDropDownWeight = Octo_ToDo_DB_Vars.SFDropDownWeight
+		end
+		if Octo_ToDo_DB_Vars.MaxNumCharacters then
+			MaxNumCharacters = Octo_ToDo_DB_Vars.MaxNumCharacters
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------

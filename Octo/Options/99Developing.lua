@@ -46,7 +46,7 @@ function E.Developing()
 					Octo_Achievements_DB = {}
 					Octo_AddonsTable = {}
 					Octo_AddonsManager_DB = {}
-					Octo_TrashCan_DB = {}
+					Octo_DEBUG = {}
 
 
 
@@ -98,6 +98,13 @@ function E.Developing()
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
+
+			-------------------------------------------------
+			ReloadHeader3second221542 = {
+				type = "header",
+				name = OTHER,
+				order = GetOrder(),
+			},
 			-------------------------------------------------
 			MASLENGO = {
 				type = "execute",
@@ -107,6 +114,132 @@ function E.Developing()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO")
 						CharInfo.MASLENGO = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			ReloadHeader3second222154 = {
+				type = "header",
+				name = OTHER,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			CurrencyID_totalEarned = {
+				type = "execute",
+				name = "CurrencyID_totalEarned",
+				desc = "CharInfo.MASLENGO.CurrencyID_totalEarned = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.CurrencyID_totalEarned")
+						CharInfo.MASLENGO.CurrencyID_totalEarned  = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			CurrencyID = {
+				type = "execute",
+				name = "CurrencyID",
+				desc = "CharInfo.MASLENGO.CurrencyID = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.CurrencyID")
+						CharInfo.MASLENGO.CurrencyID  = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			OctoTable_QuestID = {
+				type = "execute",
+				name = "OctoTable_QuestID",
+				desc = "CharInfo.MASLENGO.OctoTable_QuestID = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.OctoTable_QuestID")
+						CharInfo.MASLENGO.OctoTable_QuestID  = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			ItemsInBag = {
+				type = "execute",
+				name = "ItemsInBag",
+				desc = "CharInfo.MASLENGO.ItemsInBag = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.ItemsInBag")
+						CharInfo.MASLENGO.ItemsInBag  = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			professions = {
+				type = "execute",
+				name = "professions",
+				desc = "CharInfo.MASLENGO.professions = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.professions")
+						CharInfo.MASLENGO.professions  = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			reputationFULL = {
+				type = "execute",
+				name = "reputationFULL",
+				desc = "CharInfo.MASLENGO.reputationFULL = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.reputationFULL")
+						CharInfo.MASLENGO.reputationFULL  = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			CurrencyID_Total = {
+				type = "execute",
+				name = "CurrencyID_Total",
+				desc = "CharInfo.MASLENGO.CurrencyID_Total = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.CurrencyID_Total")
+						CharInfo.MASLENGO.CurrencyID_Total  = {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Quests = {
+				type = "execute",
+				name = "Quests",
+				desc = "CharInfo.MASLENGO.Quests = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "УДАЛИЛИСЬ CharInfo.MASLENGO.Quests")
+						CharInfo.MASLENGO.Quests  = {}
 					end
 					return
 				end,
