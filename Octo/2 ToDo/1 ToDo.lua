@@ -16,6 +16,9 @@ if MainFrameDefaultLines > MainFrameTotalLines then
 end
 local SFDropDownWeight = 100
 local MaxNumCharacters = 10
+-- Shared constants and textures
+local r, g, b = GetClassColor(E.classFilename)
+local TEXTURE_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga"
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
@@ -58,21 +61,60 @@ E.func_LoadAddOn("SpeedyAutoLoot")
 ----------------------------------------------------------------
 
 
-function Octo_EventFrame_ToDo:ConcatAtStart()
-	E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
-	for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Other) do
-		E.OctoTable_itemID_ItemsUsable[itemID] = 1
-	end
+
+
+
+local func_OnAcquiredLEFT = function(owner, frame, data, new)
+	if not new then return end
+
+	-- Frame setup
+	frame:SetPropagateMouseClicks(true)
+
+	-- Full texture background
+	local textureFull = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
+	textureFull:SetAllPoints()
+	textureFull:SetTexture(TEXTURE_PATH)
+	textureFull:SetVertexColor(r, g, b, 0)
+	frame.texture_full = textureFull
+
+	-- Icon setup
+	local icon = frame:CreateTexture(nil, "BACKGROUND")
+	icon:SetSize(AddonHeight - 2, AddonHeight - 2)
+	icon:SetPoint("TOPLEFT", 1, -1)
+	icon:SetTexCoord(0.10, 0.90, 0.10, 0.90)
+	frame.icon_1 = icon
+
+	-- Left text
+	local textLeft = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	textLeft:SetPoint("LEFT", 2 + AddonHeight, 0)
+	textLeft:SetWidth(AddonLeftFrameWeight - 2 - AddonHeight)
+	textLeft:SetFontObject(OctoFont11)
+	textLeft:SetWordWrap(false)
+	textLeft:SetJustifyV("MIDDLE")
+	textLeft:SetJustifyH("LEFT")
+	textLeft:SetTextColor(1, 1, 1, 1)
+	frame.textLEFT = textLeft
+
+	-- Event handlers
+	frame:SetScript("OnEnter", function(self)
+		self.texture_full:SetAlpha(E.bgCaOverlay)
+		if not self.textLEFT:IsTruncated() then return end
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+		GameTooltip:SetText(E.func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText())
+		GameTooltip:Show()
+	end)
+
+	frame:SetScript("OnLeave", function(self)
+		self.texture_full:SetAlpha(0)
+		GameTooltip:Hide()
+	end)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
-local func_OnAcquired do
-	-- Shared constants and textures
-	local TEXTURE_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga"
-	local r, g, b = GetClassColor(E.classFilename)
+local func_OnAcquiredCENT do
 
 	-- Event handlers
 	local function func_OnEnter(frame)
@@ -87,7 +129,7 @@ local func_OnAcquired do
 		E.func_TooltipOnEnter(frame, true, true)
 	end
 
-	function func_OnAcquired(owner, frame, data, new)
+	function func_OnAcquiredCENT(owner, frame, data, new)
 		if not new then return end
 
 		-- Frame setup
@@ -99,30 +141,6 @@ local func_OnAcquired do
 		frame.texture_full:SetTexture(TEXTURE_PATH)
 		frame.texture_full:SetVertexColor(r, g, b, 0)
 
-		-- Icon setup
-		frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND")
-		frame.icon_1:SetSize(AddonHeight-2, AddonHeight-2)
-		frame.icon_1:SetPoint("TOPLEFT", 1, -1)
-		frame.icon_1:SetTexCoord(.10, .90, .10, .90)
-
-		-- Left text
-		-- text:IsTruncated() если тру то подсказку ПОФИКСИТЬ
-
-		-- if self.Text:IsTruncated() then
-		-- 	GameTooltip:SetOwner(self, "ANCHOR_TOPLEFT", 0, 0)
-		-- 	GameTooltip:SetText(self.Text:GetText())
-		-- 	GameTooltip:Show()
-		-- end
-		frame.textLEFT = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		frame.textLEFT:SetPoint("LEFT", 2+AddonHeight, 0)
-		frame.textLEFT:SetWidth(AddonLeftFrameWeight-2-AddonHeight)
-		-- frame.textLEFT:SetPoint("RIGHT", 0, 0)
-		frame.textLEFT:SetFontObject(OctoFont11)
-		frame.textLEFT:SetWordWrap(false)
-		frame.textLEFT:SetJustifyV("MIDDLE")
-		frame.textLEFT:SetJustifyH("LEFT")
-		frame.textLEFT:SetTextColor(1, 1, 1, 1)
-
 		-- Secondary frames metatable
 		frame.second = setmetatable({}, {
 			__index = function(self, key)
@@ -131,7 +149,7 @@ local func_OnAcquired do
 				f:SetPropagateMouseMotion(true)
 				f:SetSize(AddonCentralFrameWeight, AddonHeight)
 				f:SetHitRectInsets(1, 1, 0, 0)
-				f:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonLeftFrameWeight+(AddonCentralFrameWeight*(key-1)), 0)
+				f:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*(key-1), 0)
 				f:RegisterForClicks("LeftButtonUp")
 
 				-- Reputation texture
@@ -174,7 +192,9 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 
 
-function Octo_EventFrame_ToDo:Octo_Frame_init(frame, node)
+
+
+function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	local data = node:GetData()
 
 	-- LEFT FRAME INITIALIZATION
@@ -183,6 +203,14 @@ function Octo_EventFrame_ToDo:Octo_Frame_init(frame, node)
 	-- Set icon for left frame
 	local icon = data.headerIcon or (data.zxc and data.zxc.icon) or E.Icon_Empty
 	frame.icon_1:SetTexture(icon)
+
+end
+
+
+
+
+function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
+	local data = node:GetData()
 
 	-- RIGHT FRAME INITIALIZATION
 	if not data.zxc then return end
@@ -205,10 +233,10 @@ function Octo_EventFrame_ToDo:Octo_Frame_init(frame, node)
 			local textCENT = frameData.textCENT[i]
 			local FIRST = frameData.FIRST[i]
 			local SECOND = frameData.SECOND[i]
-			local r, g, b = E.func_hex2rgbNUMBER(frameData.color[i])
+			local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.color[i])
 
 			secondFrame.textCENT:SetText(textCENT)
-			secondFrame.ReputTexture:SetVertexColor(r, g, b, 0.3)
+			secondFrame.ReputTexture:SetVertexColor(r1, g1, b1, 0.3)
 
 			if FIRST == 0 then
 				secondFrame.ReputTexture:SetWidth(0.1)
@@ -240,12 +268,6 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	frame:SetDontSavePosition(true)
 	frame:SetClampedToScreen(false)
 	frame:SetFrameStrata("HIGH")
-
-
-
-
-
-
 
 	-- Создание скролл-фрейма
 	local barPanelScroll = CreateFrame("ScrollFrame", nil, frame)
@@ -310,7 +332,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	frame.ScrollBoxLEFT = CreateFrame("Frame", nil, frame, "WowScrollBoxList")
 	frame.ScrollBoxLEFT:SetWidth(AddonLeftFrameWeight)
 	frame.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -AddonHeight)
-	frame.ScrollBoxLEFT:SetPoint("BOTTOMLEFT", 0, 0)
+	frame.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
 	frame.ScrollBoxLEFT:SetPropagateMouseClicks(true)
 	frame.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
 	barPanelScroll:SetPoint("TOPLEFT", frame.ScrollBoxLEFT, "TOPRIGHT", 0, AddonHeight)
@@ -319,8 +341,8 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 
 	frame.viewLEFT = CreateScrollBoxListTreeListView(0)
 	frame.viewLEFT:SetElementExtent(AddonHeight)
-	frame.viewLEFT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_init(...) end)
-	frame.viewLEFT:RegisterCallback(frame.viewLEFT.Event.OnAcquiredFrame, func_OnAcquired, frame)
+	frame.viewLEFT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_initLEFT(...) end)
+	frame.viewLEFT:RegisterCallback(frame.viewLEFT.Event.OnAcquiredFrame, func_OnAcquiredLEFT, frame)
 
 	-- Настройка ScrollBoxCENT
 	frame.ScrollBoxCENT = CreateFrame("Frame", nil, childCENT, "WowScrollBoxList")
@@ -335,13 +357,19 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 
 	frame.viewCENT = CreateScrollBoxListTreeListView(0)
 	frame.viewCENT:SetElementExtent(AddonHeight)
-	frame.viewCENT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_init(...) end)
-	frame.viewCENT:RegisterCallback(frame.viewCENT.Event.OnAcquiredFrame, func_OnAcquired, frame)
+	frame.viewCENT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_initCENT(...) end)
+	frame.viewCENT:RegisterCallback(frame.viewCENT.Event.OnAcquiredFrame, func_OnAcquiredCENT, frame)
+
+
+
+
+	ScrollUtil.InitScrollBoxListWithScrollBar(frame.ScrollBoxLEFT, frame.ScrollBarCENT, frame.viewLEFT)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(frame.ScrollBoxLEFT, frame.ScrollBarCENT)
 
 	ScrollUtil.InitScrollBoxListWithScrollBar(frame.ScrollBoxCENT, frame.ScrollBarCENT, frame.viewCENT)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(frame.ScrollBoxCENT, frame.ScrollBarCENT)
 
-	-- Настройка внешнего вида фрейма
+	-- Настройка внешнего вида основного фрейма
 	frame:SetBackdrop({
 		bgFile = E.bgFile,
 		edgeFile = E.edgeFile,
@@ -506,8 +534,10 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 		local height = AddonHeight * MainFrameDefaultLines + AddonHeight
 
 		Octo_MainFrame_ToDo:SetSize(width, height)
-		Octo_MainFrame_ToDo.childCENT:SetSize(AddonLeftFrameWeight + AddonCentralFrameWeight * E.func_NumPlayers(), height)
+		Octo_MainFrame_ToDo.childCENT:SetSize(AddonCentralFrameWeight * E.func_NumPlayers(), height)
 		Octo_MainFrame_ToDo.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+		Octo_MainFrame_ToDo.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+
 	end
 
 	-- Обновление фреймов персонажей
@@ -516,8 +546,8 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 	for count, CharInfo in ipairs(peLmennaya) do
 		local curCharFrame = Octo_MainFrame_ToDo.pool:Acquire()
 		curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT",
-							 AddonLeftFrameWeight + (AddonCentralFrameWeight * (count - 1)),
-							 -AddonHeight)
+							AddonCentralFrameWeight * (count - 1),
+							-AddonHeight)
 
 		curCharFrame.text:SetText(E.func_vivodCent(CharInfo))
 
@@ -887,7 +917,17 @@ function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 	local maxNum = math.floor((E.MonitorWidth - AddonLeftFrameWeight) / AddonCentralFrameWeight) - 1
 	MaxNumCharacters = db.MaxNumCharacters and math.min(db.MaxNumCharacters, maxNum) or MaxNumCharacters
 
-	self:ConcatAtStart()
+
+
+	local function ConcatAtStart()
+		E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
+		for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Other) do
+			E.OctoTable_itemID_ItemsUsable[itemID] = 1
+		end
+	end
+	ConcatAtStart()
+
+
 
 	-- Process modules
 	for _, func in next, E.Modules do

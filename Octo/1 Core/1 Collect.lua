@@ -475,85 +475,92 @@ function E.Collect_ALL_GreatVault()
 	end
 end
 function E.Collect_All_Currency()
+	-- local list = Octo_DB_Config.CurrencyDB
+	local list = {}
+
+
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
-		local listSize = C_CurrencyInfo.GetCurrencyListSize()
-		local headerIndex
-		for i = 1, listSize do
-			local info = C_CurrencyInfo.GetCurrencyListInfo(i)
-			if info and info.isHeader then
-				C_CurrencyInfo.ExpandCurrencyList(i, true)
-				listSize = C_CurrencyInfo.GetCurrencyListSize()
-				headerIndex = i
-			elseif info and info.name then
-				local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
-				local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
-				-- if currencyID then
-				-- Octo_DB_Config.CurrencyDB[currencyID] = Octo_DB_Config.CurrencyDB[currencyID] or false
-				-- end
+		-- local listSize = C_CurrencyInfo.GetCurrencyListSize()
+		-- local headerIndex
+		-- for i = 1, listSize do
+		-- 	local info = C_CurrencyInfo.GetCurrencyListInfo(i)
+		-- 	if info and info.isHeader then
+		-- 		C_CurrencyInfo.ExpandCurrencyList(i, true)
+		-- 		listSize = C_CurrencyInfo.GetCurrencyListSize()
+		-- 		headerIndex = i
+		-- 	elseif info and info.name then
+		-- 		local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
+		-- 		local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
+		-- 		if currencyID then
+		-- 			list[currencyID] = list[currencyID] or false
+		-- 		end
+		-- 	end
+		-- end
+		-- for CurrencyID, v in next, (list) do
+		for _, CurrencyID in ipairs(E.TESTCURR) do
+			local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID) or false
+			local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
+			if data then
+				local quantity = data.quantity
+				local maxQuantity = data.maxQuantity
+				local totalEarned = data.totalEarned
+				if isAccountWideCurrency == false then
+					if collect.MASLENGO and not InCombatLockdown() then
+						collect.MASLENGO.CurrencyID = collect.MASLENGO.CurrencyID or {}
+						collect.MASLENGO.CurrencyID_totalEarned = collect.MASLENGO.CurrencyID_totalEarned or {}
+						collect.MASLENGO.CurrencyID_Total = collect.MASLENGO.CurrencyID_Total or {}
+						if quantity ~= nil and quantity ~= 0 then
+							collect.MASLENGO.CurrencyID[CurrencyID] = quantity
+						end
+						if totalEarned ~= nil and totalEarned ~= 0 then
+							collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
+						end
+						if maxQuantity ~= nil and maxQuantity ~= 0 then
+							if quantity ~= maxQuantity then
+								collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+							else
+								collect.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+							end
+						else
+							if quantity ~= nil and quantity ~= 0 then
+								collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
+							end
+						end
+					end
+				else
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO = CharInfo.MASLENGO or {}
+						CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
+						CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
+						CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
+						if CharInfo and not InCombatLockdown() then
+							if quantity ~= nil and quantity ~= 0 then
+								CharInfo.MASLENGO.CurrencyID[CurrencyID] = quantity
+							end
+							if totalEarned ~= nil and totalEarned ~= 0 then
+								CharInfo.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
+							end
+							if maxQuantity ~= nil and maxQuantity ~= 0 then
+								if quantity ~= maxQuantity then
+									CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+								else
+									CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+								end
+							end
+						end
+					end
+				end
+			else
+				collect.MASLENGO.CurrencyID[CurrencyID] = nil
+				collect.MASLENGO.CurrencyID_Total[CurrencyID] = nil
+				collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
 			end
 		end
-		-- for CurrencyID, v in next, (Octo_DB_Config.CurrencyDB) do
-		-- local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID) or false
-		-- local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
-		-- if data then
-		--     local quantity = data.quantity
-		--     local maxQuantity = data.maxQuantity
-		--     local totalEarned = data.totalEarned
-		--     if isAccountWideCurrency == false then
-		--         if collect.MASLENGO and not InCombatLockdown() then
-		--             collect.MASLENGO.CurrencyID = collect.MASLENGO.CurrencyID or {}
-		--             collect.MASLENGO.CurrencyID_totalEarned = collect.MASLENGO.CurrencyID_totalEarned or {}
-		--             collect.MASLENGO.CurrencyID_Total = collect.MASLENGO.CurrencyID_Total or {}
-		--             if quantity ~= nil and quantity ~= 0 then
-		--                 collect.MASLENGO.CurrencyID[CurrencyID] = quantity
-		--             end
-		--             if totalEarned ~= nil and totalEarned ~= 0 then
-		--                 collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
-		--             end
-		--             if maxQuantity ~= nil and maxQuantity ~= 0 then
-		--                 if quantity ~= maxQuantity then
-		--                     collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
-		--                 else
-		--                     collect.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
-		--                 end
-		--             else
-		--                 if quantity ~= nil and quantity ~= 0 then
-		--                     collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
-		--                 end
-		--             end
-		--         end
-		--     else
-		--         for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		--             CharInfo.MASLENGO = CharInfo.MASLENGO or {}
-		--             CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
-		--             CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
-		--             CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
-		--             if CharInfo and not InCombatLockdown() then
-		--                 if quantity ~= nil and quantity ~= 0 then
-		--                     CharInfo.MASLENGO.CurrencyID[CurrencyID] = quantity
-		--                 end
-		--                 if totalEarned ~= nil and totalEarned ~= 0 then
-		--                     CharInfo.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
-		--                 end
-		--                 if maxQuantity ~= nil and maxQuantity ~= 0 then
-		--                     if quantity ~= maxQuantity then
-		--                         CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
-		--                     else
-		--                         CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
-		--                     end
-		--                 end
-		--             end
-		--         end
-		--     end
-		-- else
-		--     collect.MASLENGO.CurrencyID[CurrencyID] = nil
-		--     collect.MASLENGO.CurrencyID_Total[CurrencyID] = nil
-		--     collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
-		-- end
-		-- end
 	end
 end
+
+
 function E.Collect_All_Reputations()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	C_Reputation.ExpandAllFactionHeaders()
