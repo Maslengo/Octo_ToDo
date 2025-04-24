@@ -241,10 +241,16 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	frame:SetClampedToScreen(false)
 	frame:SetFrameStrata("HIGH")
 
+
+
+
+
+
+
 	-- Создание скролл-фрейма
 	local barPanelScroll = CreateFrame("ScrollFrame", nil, frame)
 	frame.barPanelScroll = barPanelScroll
-	barPanelScroll:SetAllPoints()
+	-- barPanelScroll:SetAllPoints()
 
 	-- Настройка скроллинга
 	local function OnHorizontalScroll(self, offset)
@@ -300,30 +306,30 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 
 	barPanelScroll:SetScrollChild(childCENT)
 
-
-
-
-
 	-- Настройка ScrollBoxLEFT
-	-- frame.ScrollBoxLEFT = CreateFrame("Frame", "ScrollBox", childCENT, "WowScrollBoxList")
-	-- frame.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -AddonHeight)
-	-- frame.ScrollBoxLEFT:SetPoint("BOTTOMRIGHT")
-	-- frame.ScrollBoxLEFT:SetPropagateMouseClicks(true)
-	-- frame.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
+	frame.ScrollBoxLEFT = CreateFrame("Frame", nil, frame, "WowScrollBoxList")
+	frame.ScrollBoxLEFT:SetWidth(AddonLeftFrameWeight)
+	frame.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -AddonHeight)
+	frame.ScrollBoxLEFT:SetPoint("BOTTOMLEFT", 0, 0)
+	frame.ScrollBoxLEFT:SetPropagateMouseClicks(true)
+	frame.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
+	barPanelScroll:SetPoint("TOPLEFT", frame.ScrollBoxLEFT, "TOPRIGHT", 0, AddonHeight)
+	barPanelScroll:SetPoint("BOTTOMRIGHT")
 
-	-- frame.viewLEFT = CreateScrollBoxListTreeListView(0)
-	-- frame.viewLEFT:SetElementExtent(AddonHeight)
-	-- frame.viewLEFT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_init(...) end)
-	-- frame.viewLEFT:RegisterCallback(frame.viewLEFT.Event.OnAcquiredFrame, func_OnAcquired, frame)
+
+	frame.viewLEFT = CreateScrollBoxListTreeListView(0)
+	frame.viewLEFT:SetElementExtent(AddonHeight)
+	frame.viewLEFT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_init(...) end)
+	frame.viewLEFT:RegisterCallback(frame.viewLEFT.Event.OnAcquiredFrame, func_OnAcquired, frame)
 
 	-- Настройка ScrollBoxCENT
-	frame.ScrollBoxCENT = CreateFrame("Frame", "ScrollBox", childCENT, "WowScrollBoxList")
+	frame.ScrollBoxCENT = CreateFrame("Frame", nil, childCENT, "WowScrollBoxList")
 	frame.ScrollBoxCENT:SetPoint("TOPLEFT", 0, -AddonHeight)
 	frame.ScrollBoxCENT:SetPoint("BOTTOMRIGHT")
 	frame.ScrollBoxCENT:SetPropagateMouseClicks(true)
 	frame.ScrollBoxCENT:GetScrollTarget():SetPropagateMouseClicks(true)
 
-	frame.ScrollBarCENT = CreateFrame("EventFrame", "ScrollBar", frame, "MinimalScrollBar")
+	frame.ScrollBarCENT = CreateFrame("EventFrame", nil, frame, "MinimalScrollBar")
 	frame.ScrollBarCENT:SetPoint("TOPLEFT", frame, "TOPRIGHT", 6, 0)
 	frame.ScrollBarCENT:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 6, 0)
 
@@ -334,10 +340,6 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 
 	ScrollUtil.InitScrollBoxListWithScrollBar(frame.ScrollBoxCENT, frame.ScrollBarCENT, frame.viewCENT)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(frame.ScrollBoxCENT, frame.ScrollBarCENT)
-
-
-
-
 
 	-- Настройка внешнего вида фрейма
 	frame:SetBackdrop({
