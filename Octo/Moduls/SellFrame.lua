@@ -1,457 +1,255 @@
 local GlobalAddonName, E = ...
-local ltl = LibStub("LibThingsLoad-1.0") 
-----------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------------------------------------------------------------------------
---SellFrame
-tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.SellFrame then
-			sort(E.OctoTable_itemID_Ignore_List, E.func_Reverse_order)
+local ltl = LibStub("LibThingsLoad-1.0")
 
-			local ignorelist = {}
-			for k, itemID in pairs(E.OctoTable_itemID_Ignore_List) do
-				ignorelist[itemID] = true
-			end
-			local size = 32
-			local bgCr, bgCg, bgCb, bgCa = 14/255, 14/255, 14/255, 0.8
-			local OctoFrame_Events = nil
-			local OctoFrame_SellALLGRAY = nil
-			local OctoFrame_SellOther = nil
-			local OctoFrame_SellOtherFiolet = nil
-			local OctoFrame_SellConsumable = nil
-			local OctoFrame_foundLevelTooltip = nil
-			local OctoFrame_FROMBANK = nil
-			local OctoFrame_TOBANK = nil
-			local avgItemLevel, avgItemLevelEquipped = GetAverageItemLevel()
-			local ilvlStr = avgItemLevelEquipped or 0
-			function Octo_Trade_OnLoad()
-				if not OctoFrame_Events then
-					OctoFrame_Events = CreateFrame("Frame", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID())
-					OctoFrame_Events:Hide()
-				end
-				OctoFrame_Events:RegisterEvent("Trade_SHOW")
-				OctoFrame_Events:RegisterEvent("SECURE_TRANSFER_CANCEL")
-				OctoFrame_Events:RegisterEvent("MERCHANT_SHOW")
-				OctoFrame_Events:RegisterEvent("MERCHANT_CLOSED")
-				OctoFrame_Events:RegisterEvent("BANKFRAME_OPENED")
-				OctoFrame_Events:RegisterEvent("BANKFRAME_CLOSED")
-				OctoFrame_Events:RegisterEvent("PLAYER_STARTED_MOVING")
-				OctoFrame_Events:RegisterEvent("MAIL_SHOW")
-				OctoFrame_Events:SetScript("OnEvent", Octo_Trade_OnEvent)
-			end
-			function MASLENGO_Trade()
-				local function SetQAButtonGameTooltip(button, text)
-					button:SetScript("OnEnter", function(self)
-							GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-							GameTooltip:ClearLines()
-							GameTooltip:SetText(text)
-							GameTooltip:Show()
-					end)
-					button:SetScript("OnLeave", function()
-							GameTooltip:Hide()
-					end)
-				end
-				----------------------------------------------------------------------------------------------------------------------------------
-				----------------------------------------------------------------------------------------------------------------------------------
-				if not OctoFrame_SellALLGRAY then
-					OctoFrame_SellALLGRAY = CreateFrame("BUTTON", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
-					OctoFrame_SellALLGRAY:Hide()
-					SetQAButtonGameTooltip(OctoFrame_SellALLGRAY, "Gray items")
-				end
-				OctoFrame_SellALLGRAY:SetSize(size*E.scale, size*E.scale)
-				OctoFrame_SellALLGRAY:SetFrameStrata("LOW")
-				OctoFrame_SellALLGRAY:EnableMouse(true)
-				OctoFrame_SellALLGRAY:SetMovable(true)
-				OctoFrame_SellALLGRAY:RegisterForDrag("RightButton")
-				OctoFrame_SellALLGRAY:SetScript("OnDragStart", OctoFrame_SellALLGRAY.StartMoving)
-				OctoFrame_SellALLGRAY:SetScript("OnDragStop", function() OctoFrame_SellALLGRAY:StopMovingOrSizing() end)
-				OctoFrame_SellALLGRAY:SetPoint("CENTER", -551, 130)
-				OctoFrame_SellALLGRAY:SetBackdrop({
-						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeSize = 1,
-				})
-				OctoFrame_SellALLGRAY:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-				OctoFrame_SellALLGRAY:SetBackdropBorderColor(0, 0, 0, 1)
-				OctoFrame_SellALLGRAY:RegisterForClicks("LeftButtonUp")
-				OctoFrame_SellALLGRAY:SetScript("OnClick", function()
-						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-								if containerInfo then
-									local itemID = containerInfo.itemID
-									local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									local _, _, itemRarity, _, _, _, _, _, _, _, itemSellPrice, classID, subclassID = C_Item.GetItemInfo(itemID)
-									--if itemRarity == 0 and itemSellPrice ~= 0 and classID ~= 2 and classID ~= 4 then
-									if itemRarity == 0 and itemSellPrice ~= 0 then
-										C_Container.UseContainerItem(bag, slot)
-									end
-								end
-							end
-						end
-					end
-				)
-				OctoFrame_SellALLGRAY.icon = OctoFrame_SellALLGRAY:CreateTexture(nil, "ARTWORK")
-				OctoFrame_SellALLGRAY.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Garbage.tga")
-				OctoFrame_SellALLGRAY.icon:SetAllPoints(OctoFrame_SellALLGRAY)
-				OctoFrame_SellALLGRAY:Show()
-				----------------------------------------------------------------------------------------------------------------------------------
-				if not OctoFrame_SellConsumable then
-					OctoFrame_SellConsumable = CreateFrame("BUTTON", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
-					OctoFrame_SellConsumable:Hide()
-					SetQAButtonGameTooltip(OctoFrame_SellConsumable, "Consumable")
-				end
-				OctoFrame_SellConsumable:SetSize(size*E.scale, size*E.scale)
-				OctoFrame_SellConsumable:SetFrameStrata("LOW")
-				OctoFrame_SellConsumable:EnableMouse(true)
-				OctoFrame_SellConsumable:SetMovable(true)
-				OctoFrame_SellConsumable:RegisterForDrag("RightButton")
-				OctoFrame_SellConsumable:SetScript("OnDragStart", OctoFrame_SellConsumable.StartMoving)
-				OctoFrame_SellConsumable:SetScript("OnDragStop", function() OctoFrame_SellConsumable:StopMovingOrSizing() end)
-				OctoFrame_SellConsumable:SetPoint("CENTER", -551, 65)
-				OctoFrame_SellConsumable:SetBackdrop({
-						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeSize = 1,
-				})
-				OctoFrame_SellConsumable:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-				OctoFrame_SellConsumable:SetBackdropBorderColor(0, 0, 0, 1)
-				OctoFrame_SellConsumable:RegisterForClicks("LeftButtonUp")
-				OctoFrame_SellConsumable:SetScript("OnClick", function()
-						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-								if containerInfo then
-									local itemID = containerInfo.itemID
-									local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									-- local _, _, _, _, _, _, classID = select(6, C_Item.GetItemInfo(itemID))
-									local classID = select(12, C_Item.GetItemInfo(itemID))
-									if itemID and classID == 0 then
-										C_Container.UseContainerItem(bag, slot)
-									end
-								end
-							end
-						end
-					end
-				)
-				OctoFrame_SellConsumable.icon = OctoFrame_SellConsumable:CreateTexture(nil, "ARTWORK")
-				OctoFrame_SellConsumable.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Trade_Alchemy_DPotion_A28.tga")
-				OctoFrame_SellConsumable.icon:SetAllPoints(OctoFrame_SellConsumable)
-				OctoFrame_SellConsumable:Show()
-				----------------------------------------------------------------------------------------------------------------------------------
-				if not OctoFrame_SellOther then
-					OctoFrame_SellOther = CreateFrame("BUTTON", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
-					OctoFrame_SellOther:Hide()
-					-- SetQAButtonGameTooltip(OctoFrame_SellOther, "itemQuality < фиолет")
-				end
-				OctoFrame_SellOther:SetScript("OnEnter", function(self)
-						if not OctoFrame_SellOther.promise then
-							OctoFrame_SellOther.promise = ltl:Items(E.OctoTable_itemID_Ignore_List)
-							OctoFrame_SellOther.promise:FailWithChecked(print)
-						end
-						OctoFrame_SellOther.promise:Then(function()
-								GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-								GameTooltip:ClearLines()
-								GameTooltip:AddLine("itemQuality < фиолет")
-								GameTooltip:AddLine(" ")
-								for index, itemID in next, (E.OctoTable_itemID_Ignore_List) do
-									GameTooltip:AddLine(E.func_itemTexture(itemID)..E.func_itemName(itemID))
-								end
-								GameTooltip:Show()
-						end)
-				end)
-				OctoFrame_SellOther:SetScript("OnLeave", function(self)
-						GameTooltip:ClearLines()
-						GameTooltip:Hide()
-				end)
-				OctoFrame_SellOther:SetSize(size*E.scale, size*E.scale)
-				OctoFrame_SellOther:SetFrameStrata("LOW")
-				OctoFrame_SellOther:EnableMouse(true)
-				OctoFrame_SellOther:SetMovable(true)
-				OctoFrame_SellOther:RegisterForDrag("RightButton")
-				OctoFrame_SellOther:SetScript("OnDragStart", OctoFrame_SellOther.StartMoving)
-				OctoFrame_SellOther:SetScript("OnDragStop", function() OctoFrame_SellOther:StopMovingOrSizing() end)
-				OctoFrame_SellOther:SetPoint("CENTER", -551, 0)
-				OctoFrame_SellOther:SetBackdrop({
-						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeSize = 1,
-				})
-				OctoFrame_SellOther:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-				OctoFrame_SellOther:SetBackdropBorderColor(0, 0, 0, 1)
-				OctoFrame_SellOther:RegisterForClicks("LeftButtonUp")
-				OctoFrame_SellOther:SetScript("OnClick", function()
-						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-								if containerInfo then
-									local itemID = containerInfo.itemID
-									local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = C_Item.GetItemInfo(itemLink)
-									local effectiveILvl = C_Item.GetDetailedItemLevelInfo(itemID) or 0
-									local baseILvl = tonumber(select(3, C_Item.GetDetailedItemLevelInfo(itemID))) or 0
-									local ItemTooltip = _G["OctoScanningTooltip"] or
-									CreateFrame("GameTooltip", "OctoScanningTooltip", WorldFrame, "GameTooltipTemplate")
-									ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
-									ItemTooltip:ClearLines()
-									ItemTooltip:SetHyperlink(itemLink)
-									local enchant = ""
-									local emptySockets = 0
-									for i = 1, ItemTooltip:NumLines() do
-										if not OctoFrame_foundLevelTooltip then
-											OctoFrame_foundLevelTooltip = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
-										end
-										if OctoFrame_foundLevelTooltip then
-											itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
-										end
-									end
-									if sellPrice and itemQuality then
-										if not ignorelist[itemID] and sellPrice ~= 0 and itemQuality < 4 --[[and itemLevel < 150 and itemLevel ~= 0]] then --4 фиолет
-											C_Container.UseContainerItem(bag, slot)
-										end
-									end
-								end
-							end
-						end
-					end
-				)
-				OctoFrame_SellOther.icon = OctoFrame_SellOther:CreateTexture(nil, "ARTWORK")
-				OctoFrame_SellOther.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Sell.tga")
-				OctoFrame_SellOther.icon:SetAllPoints(OctoFrame_SellOther)
-				OctoFrame_SellOther:Show()
-				----------------------------------------------------------------------------------------------------------------------------------
-				if not OctoFrame_SellOtherFiolet then
-					OctoFrame_SellOtherFiolet = CreateFrame("BUTTON", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
-					OctoFrame_SellOtherFiolet:Hide()
-					-- SetQAButtonGameTooltip(OctoFrame_SellOtherFiolet, "itemQuality = фиолет")
-				end
-				OctoFrame_SellOtherFiolet:SetScript("OnEnter", function(self)
-						if not OctoFrame_SellOtherFiolet.promise then
-							OctoFrame_SellOtherFiolet.promise = ltl:Items(E.OctoTable_itemID_Ignore_List)
-							OctoFrame_SellOtherFiolet.promise:FailWithChecked(print)
-						end
-						OctoFrame_SellOtherFiolet.promise:Then(function()
-								GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
-								GameTooltip:ClearLines()
-								GameTooltip:AddLine("itemQuality = фиолет")
-								GameTooltip:AddLine(" ")
-								for index, itemID in next, (E.OctoTable_itemID_Ignore_List) do
-									GameTooltip:AddLine(E.func_itemTexture(itemID)..E.func_itemName(itemID))
-								end
-								GameTooltip:Show()
-						end)
-				end)
-				OctoFrame_SellOtherFiolet:SetScript("OnLeave", function(self)
-						GameTooltip:ClearLines()
-						GameTooltip:Hide()
-				end)
-				OctoFrame_SellOtherFiolet:SetSize(size*E.scale, size*E.scale)
-				OctoFrame_SellOtherFiolet:SetFrameStrata("LOW")
-				OctoFrame_SellOtherFiolet:EnableMouse(true)
-				OctoFrame_SellOtherFiolet:SetMovable(true)
-				OctoFrame_SellOtherFiolet:RegisterForDrag("RightButton")
-				OctoFrame_SellOtherFiolet:SetScript("OnDragStart", OctoFrame_SellOtherFiolet.StartMoving)
-				OctoFrame_SellOtherFiolet:SetScript("OnDragStop", function() OctoFrame_SellOtherFiolet:StopMovingOrSizing() end)
-				OctoFrame_SellOtherFiolet:SetPoint("CENTER", -551, -30)
-				OctoFrame_SellOtherFiolet:SetBackdrop({
-						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeSize = 1,
-				})
-				OctoFrame_SellOtherFiolet:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-				OctoFrame_SellOtherFiolet:SetBackdropBorderColor(0, 0, 0, 1)
-				OctoFrame_SellOtherFiolet:RegisterForClicks("LeftButtonUp")
-				OctoFrame_SellOtherFiolet:SetScript("OnClick", function()
-						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-								if containerInfo then
-									local itemID = containerInfo.itemID
-									local itemLink = C_Container.GetContainerItemLink(bag, slot)
-									local name, _, itemQuality, itemLevel, _, _, _, _, _, _, sellPrice = C_Item.GetItemInfo(itemLink)
-									local effectiveILvl = C_Item.GetDetailedItemLevelInfo(itemID) or 0
-									local baseILvl = tonumber(select(3, C_Item.GetDetailedItemLevelInfo(itemID))) or 0
-									local ItemTooltip = _G["OctoScanningTooltip"] or
-									CreateFrame("GameTooltip", "OctoScanningTooltip", WorldFrame, "GameTooltipTemplate")
-									ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
-									ItemTooltip:ClearLines()
-									ItemTooltip:SetHyperlink(itemLink)
-									local enchant = ""
-									local emptySockets = 0
-									for i = 1, ItemTooltip:NumLines() do
-										if not OctoFrame_foundLevelTooltip then
-											OctoFrame_foundLevelTooltip = _G["OctoScanningTooltipTextLeft" .. i]:GetText():match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
-										end
-										if OctoFrame_foundLevelTooltip then
-											itemLevel = tonumber(OctoFrame_foundLevelTooltip) or 0
-										end
-									end
-									if sellPrice and itemQuality then
-										if not ignorelist[itemID] and sellPrice ~= 0 and itemQuality <= 4 --[[and itemLevel < 150 and itemLevel ~= 0]] then --4 фиолет
-											C_Container.UseContainerItem(bag, slot)
-										end
-									end
-								end
-							end
-						end
-					end
-				)
-				OctoFrame_SellOtherFiolet.icon = OctoFrame_SellOtherFiolet:CreateTexture(nil, "ARTWORK")
-				OctoFrame_SellOtherFiolet.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Sell.tga")
-				OctoFrame_SellOtherFiolet.icon:SetAllPoints(OctoFrame_SellOtherFiolet)
-				OctoFrame_SellOtherFiolet:Show()
-				----------------------------------------------------------------------------------------------------------------------------------
-				if not OctoFrame_SellAll then
-					OctoFrame_SellAll = CreateFrame("BUTTON", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
-					OctoFrame_SellAll:Hide()
-					SetQAButtonGameTooltip(OctoFrame_SellAll, "Sell All")
-				end
-				OctoFrame_SellAll:SetSize(size*E.scale, size*E.scale)
-				OctoFrame_SellAll:SetFrameStrata("LOW")
-				OctoFrame_SellAll:EnableMouse(true)
-				OctoFrame_SellAll:SetMovable(true)
-				OctoFrame_SellAll:RegisterForDrag("RightButton")
-				OctoFrame_SellAll:SetScript("OnDragStart", OctoFrame_SellAll.StartMoving)
-				OctoFrame_SellAll:SetScript("OnDragStop", function() OctoFrame_SellAll:StopMovingOrSizing() end)
-				OctoFrame_SellAll:SetPoint("CENTER", -551, -65)
-				OctoFrame_SellAll:SetBackdrop({
-						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeSize = 1,
-				})
-				OctoFrame_SellAll:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-				OctoFrame_SellAll:SetBackdropBorderColor(0, 0, 0, 1)
-				OctoFrame_SellAll:RegisterForClicks("LeftButtonUp")
-				OctoFrame_SellAll:SetScript("OnClick", function()
-						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-								if containerInfo then
-									local itemID = containerInfo.itemID
-									if itemID then
-										if not ignorelist[itemID] then
-											C_Container.UseContainerItem(bag, slot)
-										end
-									end
-								end
-							end
-						end
-					end
-				)
-				OctoFrame_SellAll.icon = OctoFrame_SellAll:CreateTexture(nil, "ARTWORK")
-				OctoFrame_SellAll.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SellAll.tga")
-				OctoFrame_SellAll.icon:SetAllPoints(OctoFrame_SellAll)
-				OctoFrame_SellAll:Show()
-				----------------------------------------------------------------------------------------------------------------------------------
-			end
-			local function MASLENGO_BANK()
-				if not OctoFrame_FROMBANK then
-					OctoFrame_FROMBANK = CreateFrame("BUTTON", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
-					OctoFrame_FROMBANK:Hide()
-				end
-				OctoFrame_FROMBANK:SetSize(size*E.scale, size*E.scale)
-				OctoFrame_FROMBANK:SetFrameStrata("LOW")
-				OctoFrame_FROMBANK:SetPoint("CENTER", -500, 32)
-				OctoFrame_FROMBANK:SetBackdrop({
-						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeSize = 1,
-				})
-				OctoFrame_FROMBANK:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-				OctoFrame_FROMBANK:SetBackdropBorderColor(0, 0, 0, 1)
-				OctoFrame_FROMBANK:RegisterForClicks("LeftButtonUp")
-				OctoFrame_FROMBANK:SetScript("OnClick", function()
-						for bag=REAGENTBANK_CONTAINER, BANK_CONTAINER do
-							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local n = C_Container.GetContainerItemLink(bag, slot)
-								if n then
-									C_Container.UseContainerItem(bag, slot)
-								end
-							end
-						end
-						for bag=NUM_TOTAL_EQUIPPED_BAG_SLOTS+1, NUM_TOTAL_EQUIPPED_BAG_SLOTS+NUM_BANKBAGSLOTS do
-							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local n = C_Container.GetContainerItemLink(bag, slot)
-								if n then
-									C_Container.UseContainerItem(bag, slot)
-								end
-							end
-						end
-					end
-				)
-				OctoFrame_FROMBANK.RightEdge:SetVertexColor(0, 1, 0)
-				OctoFrame_FROMBANK.icon = OctoFrame_FROMBANK:CreateTexture(nil, "ARTWORK")
-				OctoFrame_FROMBANK.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_RIGHT.tga")
-				OctoFrame_FROMBANK.icon:SetAllPoints(OctoFrame_FROMBANK)
-				OctoFrame_FROMBANK:Show()
-				----------------------------------------------------------------------------------------------------------------------------------
-				if not OctoFrame_TOBANK then
-					OctoFrame_TOBANK = CreateFrame("BUTTON", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
-					OctoFrame_TOBANK:Hide()
-				end
-				OctoFrame_TOBANK:SetSize(size*E.scale, size*E.scale)
-				OctoFrame_TOBANK:SetFrameStrata("LOW")
-				OctoFrame_TOBANK:SetPoint("CENTER", -500, -32)
-				OctoFrame_TOBANK:SetBackdrop({
-						bgFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeFile = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\border\\01 Octo.tga",
-						edgeSize = 1,
-				})
-				OctoFrame_TOBANK:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-				OctoFrame_TOBANK:SetBackdropBorderColor(0, 0, 0, 1)
-				OctoFrame_TOBANK:RegisterForClicks("LeftButtonUp")
-				OctoFrame_TOBANK:RegisterForClicks("LeftButtonUp")
-				OctoFrame_TOBANK:SetScript("OnClick", function()
-						for bag=BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-							for slot=1, C_Container.GetContainerNumSlots(bag) do
-								local itemLink = C_Container.GetContainerItemLink(bag, slot)
-								if itemLink then
-									C_Container.UseContainerItem(bag, slot)
-								end
-							end
-						end
-					end
-				)
-				OctoFrame_TOBANK.LeftEdge:SetVertexColor(0, 1, 0)
-				OctoFrame_TOBANK.icon = OctoFrame_TOBANK:CreateTexture(nil, "ARTWORK")
-				OctoFrame_TOBANK.icon:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow_LEFT.tga")
-				OctoFrame_TOBANK.icon:SetAllPoints(OctoFrame_TOBANK)
-				OctoFrame_TOBANK:Show()
-				----------------------------------------------------------------------------------------------------------------------------------
-			end
-			function Octo_Trade_OnEvent(self, event, ...)
-				if event == "MERCHANT_SHOW" and not InCombatLockdown() then
-					MASLENGO_Trade()
-				elseif event == "Trade_SHOW" and not InCombatLockdown() then
-					MASLENGO_Trade()
-				elseif event == "SECURE_TRANSFER_CANCEL" or event == "MERCHANT_CLOSED" or event == "PLAYER_STARTED_MOVING" then
-					if OctoFrame_SellALLGRAY then
-						OctoFrame_SellALLGRAY:Hide()
-					end
-					if OctoFrame_SellConsumable then
-						OctoFrame_SellConsumable:Hide()
-					end
-					if OctoFrame_SellOther then
-						OctoFrame_SellOther:Hide()
-					end
-					if OctoFrame_SellOtherFiolet then
-						OctoFrame_SellOtherFiolet:Hide()
-					end
-					if OctoFrame_SellAll then
-						OctoFrame_SellAll:Hide()
-					end
-				elseif event == "BANKFRAME_OPENED" and not InCombatLockdown() then
-					MASLENGO_BANK()
-				elseif event == "BANKFRAME_CLOSED" or event == "PLAYER_STARTED_MOVING" then
-					if OctoFrame_FROMBANK then
-						OctoFrame_FROMBANK:Hide()
-					end
-					if OctoFrame_TOBANK then
-						OctoFrame_TOBANK:Hide()
-					end
-				elseif event == "MAIL_SHOW" then
-					MASLENGO_Trade()
-				end
-			end
-			Octo_Trade_OnLoad()
+-- SellFrame
+tinsert(E.Modules, function()
+	if not Octo_ToDo_DB_Vars.SellFrame then return end
+
+	-- Сортировка и создание таблицы игнорируемых предметов
+	sort(E.OctoTable_itemID_Ignore_List, E.func_Reverse_order)
+	local ignorelist = {}
+	for _, itemID in pairs(E.OctoTable_itemID_Ignore_List) do
+		ignorelist[itemID] = true
+	end
+
+	local size = 32
+	local bgColor = {14/255, 14/255, 14/255, 0.8}
+	local avgItemLevelEquipped = select(2, GetAverageItemLevel())
+	local ilvlStr = avgItemLevelEquipped or 0
+
+	-- Локальные переменные для фреймов
+	local OctoFrame_Events, OctoFrame_SellALLGRAY, OctoFrame_SellConsumable, OctoFrame_SellOther
+	local OctoFrame_SellOtherFiolet, OctoFrame_SellAll, OctoFrame_FROMBANK, OctoFrame_TOBANK
+
+	-- Общие функции
+	local function SetQAButtonGameTooltip(button, text)
+		button:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+			GameTooltip:ClearLines()
+			GameTooltip:SetText(text)
+			GameTooltip:Show()
+		end)
+		button:SetScript("OnLeave", GameTooltip.Hide)
+	end
+
+	local function CreateSellButton(name, texture, tooltip, x, y)
+		local button = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
+		button:SetSize(size*E.scale, size*E.scale)
+		button:SetFrameStrata("LOW")
+		button:EnableMouse(true)
+		button:SetMovable(true)
+		button:RegisterForDrag("RightButton")
+		button:SetScript("OnDragStart", button.StartMoving)
+		button:SetScript("OnDragStop", button.StopMovingOrSizing)
+		button:SetPoint("CENTER", x, y)
+
+		button:SetBackdrop({
+			bgFile = format("Interface\\Addons\\%s\\Media\\border\\01 Octo.tga", GlobalAddonName),
+			edgeFile = format("Interface\\Addons\\%s\\Media\\border\\01 Octo.tga", GlobalAddonName),
+			edgeSize = 1,
+		})
+		button:SetBackdropColor(unpack(bgColor))
+		button:SetBackdropBorderColor(0, 0, 0, 1)
+		button:RegisterForClicks("LeftButtonUp")
+
+		button.icon = button:CreateTexture(nil, "ARTWORK")
+		button.icon:SetTexture(format("Interface\\AddOns\\%s\\Media\\%s", GlobalAddonName, texture))
+		button.icon:SetAllPoints(button)
+
+		if tooltip then
+			SetQAButtonGameTooltip(button, tooltip)
 		end
+
+		return button
+	end
+
+	local function ScanItemTooltip(itemLink)
+		local ItemTooltip = _G["OctoScanningTooltip"] or CreateFrame("GameTooltip", "OctoScanningTooltip", WorldFrame, "GameTooltipTemplate")
+		ItemTooltip:SetOwner(WorldFrame, "ANCHOR_NONE")
+		ItemTooltip:ClearLines()
+		ItemTooltip:SetHyperlink(itemLink)
+
+		local itemLevel
+		for i = 1, ItemTooltip:NumLines() do
+			local text = _G["OctoScanningTooltipTextLeft"..i]:GetText()
+			itemLevel = text and text:match(ITEM_LEVEL:gsub("%%d", "(%%d+)"))
+			if itemLevel then break end
+		end
+
+		return tonumber(itemLevel) or 0
+	end
+
+	-- Функции для кнопок
+	local function SellGrayItems()
+		for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+			for slot = 1, C_Container.GetContainerNumSlots(bag) do
+				local info = C_Container.GetContainerItemInfo(bag, slot)
+				if info then
+					local _, _, rarity, _, _, _, _, _, _, _, price = GetItemInfo(info.itemID)
+					if rarity == 0 and price ~= 0 then
+						C_Container.UseContainerItem(bag, slot)
+					end
+				end
+			end
+		end
+	end
+
+	local function SellConsumables()
+		for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+			for slot = 1, C_Container.GetContainerNumSlots(bag) do
+				local info = C_Container.GetContainerItemInfo(bag, slot)
+				if info then
+					local classID = select(12, GetItemInfo(info.itemID))
+					if classID == 0 then -- Consumables
+						C_Container.UseContainerItem(bag, slot)
+					end
+				end
+			end
+		end
+	end
+
+	local function SellItemsByQuality(maxQuality)
+		for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+			for slot = 1, C_Container.GetContainerNumSlots(bag) do
+				local info = C_Container.GetContainerItemInfo(bag, slot)
+				if info and not ignorelist[info.itemID] then
+					local link = C_Container.GetContainerItemLink(bag, slot)
+					local _, _, quality, _, _, _, _, _, _, _, price = GetItemInfo(link)
+
+					if price and price ~= 0 and quality and quality <= maxQuality then
+						C_Container.UseContainerItem(bag, slot)
+					end
+				end
+			end
+		end
+	end
+
+	local function SellAllItems()
+		for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+			for slot = 1, C_Container.GetContainerNumSlots(bag) do
+				local info = C_Container.GetContainerItemInfo(bag, slot)
+				if info and not ignorelist[info.itemID] then
+					C_Container.UseContainerItem(bag, slot)
+				end
+			end
+		end
+	end
+
+	local function BankTransfer(fromBank)
+		local startBag, endBag
+		if fromBank then
+			startBag = REAGENTBANK_CONTAINER
+			endBag = NUM_TOTAL_EQUIPPED_BAG_SLOTS + NUM_BANKBAGSLOTS
+		else
+			startBag = BACKPACK_CONTAINER
+			endBag = NUM_TOTAL_EQUIPPED_BAG_SLOTS
+		end
+
+		for bag = startBag, endBag do
+			for slot = 1, C_Container.GetContainerNumSlots(bag) do
+				if C_Container.GetContainerItemLink(bag, slot) then
+					C_Container.UseContainerItem(bag, slot)
+				end
+			end
+		end
+	end
+
+	-- Создание кнопок
+	local function CreateTradeButtons()
+		-- Gray Items
+		OctoFrame_SellALLGRAY = CreateSellButton("SellGray", "Garbage.tga", "Gray items", -551, 130)
+		OctoFrame_SellALLGRAY:SetScript("OnClick", SellGrayItems)
+
+		-- Consumables
+		OctoFrame_SellConsumable = CreateSellButton("SellConsumable", "Trade_Alchemy_DPotion_A28.tga", "Consumable", -551, 65)
+		OctoFrame_SellConsumable:SetScript("OnClick", SellConsumables)
+
+		-- Items < Epic
+		OctoFrame_SellOther = CreateSellButton("SellOther", "Sell.tga", nil, -551, 0)
+		OctoFrame_SellOther:SetScript("OnEnter", function(self)
+			if not self.promise then
+				self.promise = ltl:Items(E.OctoTable_itemID_Ignore_List)
+				self.promise:FailWithChecked(print)
+			end
+			self.promise:Then(function()
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+				GameTooltip:ClearLines()
+				GameTooltip:AddLine("itemQuality < фиолет")
+				GameTooltip:AddLine(" ")
+				for _, itemID in next, E.OctoTable_itemID_Ignore_List do
+					GameTooltip:AddLine(E.func_itemTexture(itemID)..E.func_itemName(itemID))
+				end
+				GameTooltip:Show()
+			end)
+		end)
+		OctoFrame_SellOther:SetScript("OnLeave", GameTooltip.Hide)
+		OctoFrame_SellOther:SetScript("OnClick", function() SellItemsByQuality(3) end) -- 3 = Rare
+
+		-- Epic Items
+		OctoFrame_SellOtherFiolet = CreateSellButton("SellEpic", "Sell.tga", nil, -551, -30)
+		OctoFrame_SellOtherFiolet:SetScript("OnEnter", function(self)
+			if not self.promise then
+				self.promise = ltl:Items(E.OctoTable_itemID_Ignore_List)
+				self.promise:FailWithChecked(print)
+			end
+			self.promise:Then(function()
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
+				GameTooltip:ClearLines()
+				GameTooltip:AddLine("itemQuality = фиолет")
+				GameTooltip:AddLine(" ")
+				for _, itemID in next, E.OctoTable_itemID_Ignore_List do
+					GameTooltip:AddLine(E.func_itemTexture(itemID)..E.func_itemName(itemID))
+				end
+				GameTooltip:Show()
+			end)
+		end)
+		OctoFrame_SellOtherFiolet:SetScript("OnLeave", GameTooltip.Hide)
+		OctoFrame_SellOtherFiolet:SetScript("OnClick", function() SellItemsByQuality(4) end) -- 4 = Epic
+
+		-- Sell All
+		OctoFrame_SellAll = CreateSellButton("SellAll", "SellAll.tga", "Sell All", -551, -65)
+		OctoFrame_SellAll:SetScript("OnClick", SellAllItems)
+	end
+
+	local function CreateBankButtons()
+		-- From Bank
+		OctoFrame_FROMBANK = CreateSellButton("FromBank", "Arrow_RIGHT.tga", nil, -500, 32)
+		OctoFrame_FROMBANK:SetScript("OnClick", function() BankTransfer(true) end)
+
+		-- To Bank
+		OctoFrame_TOBANK = CreateSellButton("ToBank", "Arrow_LEFT.tga", nil, -500, -32)
+		OctoFrame_TOBANK:SetScript("OnClick", function() BankTransfer(false) end)
+	end
+
+	-- Обработчик событий
+	local function Octo_Trade_OnEvent(self, event)
+		if InCombatLockdown() then return end
+
+		if event == "MERCHANT_SHOW" or event == "TRADE_SHOW" or event == "MAIL_SHOW" then
+			CreateTradeButtons()
+		elseif event == "BANKFRAME_OPENED" then
+			CreateBankButtons()
+		elseif event == "SECURE_TRANSFER_CANCEL" or event == "MERCHANT_CLOSED" or event == "PLAYER_STARTED_MOVING" then
+			for _, frame in pairs({OctoFrame_SellALLGRAY, OctoFrame_SellConsumable, OctoFrame_SellOther,
+								 OctoFrame_SellOtherFiolet, OctoFrame_SellAll}) do
+				if frame then frame:Hide() end
+			end
+		elseif event == "BANKFRAME_CLOSED" then
+			for _, frame in pairs({OctoFrame_FROMBANK, OctoFrame_TOBANK}) do
+				if frame then frame:Hide() end
+			end
+		end
+	end
+
+	-- Инициализация
+	OctoFrame_Events = CreateFrame("Frame")
+	OctoFrame_Events:RegisterEvent("TRADE_SHOW")
+	OctoFrame_Events:RegisterEvent("SECURE_TRANSFER_CANCEL")
+	OctoFrame_Events:RegisterEvent("MERCHANT_SHOW")
+	OctoFrame_Events:RegisterEvent("MERCHANT_CLOSED")
+	OctoFrame_Events:RegisterEvent("BANKFRAME_OPENED")
+	OctoFrame_Events:RegisterEvent("BANKFRAME_CLOSED")
+	OctoFrame_Events:RegisterEvent("PLAYER_STARTED_MOVING")
+	OctoFrame_Events:RegisterEvent("MAIL_SHOW")
+	OctoFrame_Events:SetScript("OnEvent", Octo_Trade_OnEvent)
 end)

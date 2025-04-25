@@ -43,6 +43,7 @@ E.func_LoadAddOn("BugSack")
 E.func_LoadAddOn("HidingBar")
 E.func_LoadAddOn("HidingBar_Options")
 E.func_LoadAddOn("SpeedyAutoLoot")
+-- E.func_LoadAddOn("AddonMrgl")
 -- E.func_LoadAddOn("MountsJournal")
 -- E.func_LoadAddOn("SimpleAddonManager")
 -- E.func_LoadAddOn("TalentTreeTweaks")
@@ -59,23 +60,38 @@ E.func_LoadAddOn("SpeedyAutoLoot")
 -- E.func_LoadAddOn("QuestsChanged")
 -- E.func_LoadAddOn("AdvancedInterfaceOptions")
 ----------------------------------------------------------------
-
-
-
-
+local function func_OnEnter1(frame)
+	frame.texture:Show()
+end
+local function func_OnLeave1(frame)
+	frame.texture:Hide()
+end
 
 local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	if not new then return end
 
 	-- Frame setup
 	frame:SetPropagateMouseClicks(true)
+	frame:SetPropagateMouseMotion(true)
 
 	-- Full texture background
-	local textureFull = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
-	textureFull:SetAllPoints()
-	textureFull:SetTexture(TEXTURE_PATH)
-	textureFull:SetVertexColor(r, g, b, 0)
-	frame.texture_full = textureFull
+	local frameFULL = CreateFrame("Frame", nil, Octo_MainFrame_ToDo)
+	frameFULL:SetPropagateMouseClicks(true)
+	frameFULL:SetPropagateMouseMotion(true)
+	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+	local texture = frameFULL:CreateTexture(nil, "BACKGROUND", nil, 3)
+	texture:Hide()
+	texture:SetAllPoints()
+	texture:SetTexture(TEXTURE_PATH)
+	texture:SetVertexColor(r, g, b, E.bgCaOverlay)
+	frameFULL.texture = texture
+	frameFULL:SetPoint("LEFT", frame)
+	frameFULL:SetPoint("TOP", frame)
+	frameFULL:SetPoint("BOTTOM", frame)
+	frameFULL:SetPoint("RIGHT")
+
+	frameFULL:SetScript("OnEnter", func_OnEnter1)
+	frameFULL:SetScript("OnLeave", func_OnLeave1)
 
 	-- Icon setup
 	local icon = frame:CreateTexture(nil, "BACKGROUND")
@@ -97,17 +113,22 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 
 	-- Event handlers
 	frame:SetScript("OnEnter", function(self)
-		self.texture_full:SetAlpha(E.bgCaOverlay)
 		if not self.textLEFT:IsTruncated() then return end
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-		GameTooltip:SetText(E.func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText())
+		GameTooltip:SetOwner(self, "ANCHOR_NONE")
+		GameTooltip:SetPoint("CENTER", self)
+		GameTooltip:SetText(E.func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText(), 1, 1, 1)
 		GameTooltip:Show()
 	end)
 
 	frame:SetScript("OnLeave", function(self)
-		self.texture_full:SetAlpha(0)
 		GameTooltip:Hide()
 	end)
+
+
+
+
+
+
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -118,11 +139,11 @@ local func_OnAcquiredCENT do
 
 	-- Event handlers
 	local function func_OnEnter(frame)
-		frame.texture_full:SetAlpha(E.bgCaOverlay)
+		-- frame.texture_full:SetAlpha(E.bgCaOverlay)
 	end
 
 	local function func_OnLeave(frame)
-		frame.texture_full:SetAlpha(0)
+		-- frame.texture_full:SetAlpha(0)
 	end
 
 	local function func_OnEnterSecond(frame)
@@ -136,10 +157,10 @@ local func_OnAcquiredCENT do
 		frame:SetPropagateMouseClicks(true)
 
 		-- Full texture background
-		frame.texture_full = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
-		frame.texture_full:SetAllPoints()
-		frame.texture_full:SetTexture(TEXTURE_PATH)
-		frame.texture_full:SetVertexColor(r, g, b, 0)
+		-- frame.texture_full = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
+		-- frame.texture_full:SetAllPoints()
+		-- frame.texture_full:SetTexture(TEXTURE_PATH)
+		-- frame.texture_full:SetVertexColor(r, g, b, 0)
 
 		-- Secondary frames metatable
 		frame.second = setmetatable({}, {
@@ -154,7 +175,8 @@ local func_OnAcquiredCENT do
 
 				-- Reputation texture
 				f.ReputTexture = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-				f.ReputTexture:SetAllPoints()
+				f.ReputTexture:SetPoint("LEFT")
+				f.ReputTexture:SetHeight(AddonHeight)
 				f.ReputTexture:SetTexture(TEXTURE_PATH)
 
 				-- Current character texture
@@ -177,9 +199,11 @@ local func_OnAcquiredCENT do
 				f:SetScript("OnEnter", func_OnEnterSecond)
 				f:SetScript("OnLeave", GameTooltip_Hide)
 				f:SetScript("OnHide", f.Hide)
+
 				f.curCharTexture:SetScript("OnHide", f.curCharTexture.Hide)
 
-				self[key] = f
+				-- self[key] = f
+				rawset(self, key, f)
 				return f
 			end
 		})
@@ -245,7 +269,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 				secondFrame.ReputTexture:SetWidth(AddonCentralFrameWeight)
 				secondFrame.ReputTexture:Show()
 			elseif FIRST >= 1 then
-				secondFrame.ReputTexture:SetWidth((AddonCentralFrameWeight/SECOND)*FIRST)
+				secondFrame.ReputTexture:SetWidth(AddonCentralFrameWeight/SECOND*FIRST)
 				secondFrame.ReputTexture:Show()
 			end
 		else
@@ -262,6 +286,12 @@ end
 function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	local frame = Octo_MainFrame_ToDo
 	frame:SetPoint("CENTER", 0, 0)
+
+	frame:SetScript("OnShow", function()
+		self:func_CreateMyDataProvider()
+		RequestRaidInfo()
+	end)
+
 
 	local NumPlayers = math.min(E.func_NumPlayers(), MaxNumCharacters)
 	frame:SetSize(AddonLeftFrameWeight + AddonCentralFrameWeight * NumPlayers, AddonHeight * MainFrameDefaultLines)
@@ -859,7 +889,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 				end
 				----------------
 				self:ddAddSeparator(level)
-				info.keepShownOnClick = true
+				info.keepShownOnClick = false
 				info.notCheckable = true
 				info.text = "Show all"
 				info.icon = false
@@ -871,7 +901,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 				end
 				self:ddAddButton(info, level)
 				--------------------------------------------------
-				info.keepShownOnClick = true
+				info.keepShownOnClick = false
 				info.notCheckable = true
 				info.text = "Hide all"
 				info.icon = false
@@ -904,7 +934,9 @@ function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
-
+	if AddonMgrAddonList then
+		tinsert(E.OctoTable_Frames, AddonMgrAddonList)
+	end
 	-- Load settings with defaults in a more concise way
 	local db = Octo_ToDo_DB_Vars
 	AddonHeight = db.AddonHeight or AddonHeight
@@ -956,7 +988,7 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	-- Initialize main systems
 	E:InitOptions()
 	self:Octo_Create_MainFrame_ToDo()
-	self:func_CreateMyDataProvider()
+	-- self:func_CreateMyDataProvider()
 	E.PortalsFrame()
 	self:func_Create_DD_ToDo()
 
@@ -965,10 +997,7 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 
 	-- Create UI elements
 	E:func_CreateUtilsButton(Octo_MainFrame_ToDo, "ToDo", AddonHeight, 0)
-	E:func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, function()
-		self:func_CreateMyDataProvider()
-		RequestRaidInfo()
-	end, "Octo_MainFrame_ToDo")
+	E:func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
 
 	-- Load assets after a delay
 	C_Timer.After(0, function()
@@ -1040,8 +1069,9 @@ function Octo_EventFrame_ToDo:LoadAssetsAsync()
 
 	promise:Then(function()
 		if Octo_MainFrame_ToDo:IsShown() then
-			Octo_MainFrame_ToDo:Hide()
-			Octo_MainFrame_ToDo:Show()
+			-- Octo_MainFrame_ToDo:Hide()
+			-- Octo_MainFrame_ToDo:Show()
+			Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 		end
 	end)
 end

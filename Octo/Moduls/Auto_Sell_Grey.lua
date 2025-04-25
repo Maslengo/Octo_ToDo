@@ -1,33 +1,32 @@
-local GlobalAddonName, E = ...
-----------------------------------------------------------------------------------------------------------------------------------
--- Auto_Sell_Grey
+local _, E = ...
+
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.AutoSellGrey then
-			local function OnEvent(self, event)
-				totalPrice = 0
-				--for myBags = 0, 4 do
-				for myBags = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-					for bagSlots = 1, C_Container.GetContainerNumSlots(myBags) do
-						CurrentItemLink = C_Container.GetContainerItemLink(myBags, bagSlots)
-						if CurrentItemLink then
-							local itemQuality = select(3, C_Item.GetItemInfo(CurrentItemLink))
-							local sellPrice = select(11, C_Item.GetItemInfo(CurrentItemLink))
-							local classID = select(12, C_Item.GetItemInfo(CurrentItemLink))
-							local itemInfo = C_Container.GetContainerItemInfo(myBags, bagSlots)
-							if itemQuality == 0 and sellPrice ~= 0 and classID ~= 2 and classID ~= 4 then
-								totalPrice = totalPrice + (sellPrice * itemInfo.stackCount)
-								C_Container.UseContainerItem(myBags, bagSlots)
-								PickupMerchantItem(0)
-							end
-						end
+	if not Octo_ToDo_DB_Vars.AutoSellGrey then return end
+
+	local function SellGreyItems()
+		local totalPrice = 0
+
+		for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+			for slot = 1, C_Container.GetContainerNumSlots(bag) do
+				local itemLink = C_Container.GetContainerItemLink(bag, slot)
+				if itemLink then
+					local _, _, quality, _, _, _, _, _, _, sellPrice, _, classID = C_Item.GetItemInfo(itemLink)
+					local itemInfo = C_Container.GetContainerItemInfo(bag, slot)
+
+					if quality == Enum.ItemQuality.Poor and sellPrice > 0 and classID ~= Enum.ItemClass.Weapon and classID ~= Enum.ItemClass.Armor then
+						totalPrice = totalPrice + (sellPrice * (itemInfo.stackCount or 1))
+						C_Container.UseContainerItem(bag, slot)
 					end
 				end
 			end
-			if not AutoSellGreyFrame then
-				AutoSellGreyFrame = CreateFrame("Frame")
-				AutoSellGreyFrame:Hide()
-			end
-			AutoSellGreyFrame:SetScript("OnEvent", OnEvent)
-			AutoSellGreyFrame:RegisterEvent("MERCHANT_SHOW")
 		end
+
+		if totalPrice > 0 then
+			PickupMerchantItem(0) -- Закрываем окно продажи
+		end
+	end
+
+	local frame = CreateFrame("Frame")
+	frame:SetScript("OnEvent", SellGreyItems)
+	frame:RegisterEvent("MERCHANT_SHOW")
 end)

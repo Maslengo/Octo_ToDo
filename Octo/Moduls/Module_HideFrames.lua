@@ -263,4 +263,3 @@ function Octo_EventFrame_HideFrames:PLAYER_STARTED_MOVING()
 			self:MustBeHiddenFrames_HOOK()
 	end)
 end
-

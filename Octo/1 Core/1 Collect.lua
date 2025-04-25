@@ -682,31 +682,43 @@ function E.Collect_ALL_Locations()
 		collect.BindLocation = curBindLocation
 	end
 end
+
+
 function E.Collect_All_Quests()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
-		local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
-		local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
-		for questID, v in next, (E.OctoTable_QuestID) do
-			local vivod = E.func_CheckCompletedByQuestID(questID)
-			if vivod ~= E.NONE then
-				collect.MASLENGO.OctoTable_QuestID[questID] = vivod
-			end
+	if not collect or InCombatLockdown() then return end
+
+	-- Очищаем таблицы
+	wipe(collect.MASLENGO.Quests)
+	wipe(collect.MASLENGO.OctoTable_QuestID)
+
+	-- Обрабатываем OctoTable_QuestID
+	for questID, v in pairs(E.OctoTable_QuestID) do
+		local status = E.func_CheckCompletedByQuestID(questID)
+		if status ~= E.NONE then
+			collect.MASLENGO.OctoTable_QuestID[questID] = status
 		end
-		collect.numShownEntries = numShownEntries or 0
-		collect.numQuests = E.func_CurrentNumQuests()
-		collect.maxNumQuestsCanAccept = maxNumQuestsCanAccept or 0
 	end
-end
-function E.Collect_ALL_ItemLevel()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
-		local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvp = GetAverageItemLevel()
-		collect.avgItemLevel = math.floor(avgItemLevel)
-		collect.avgItemLevelEquipped = math.floor(avgItemLevelEquipped)
-		collect.avgItemLevelPvp = math.floor(avgItemLevelPvp)
+
+	-- Собираем информацию о квестах
+	local numQuests = 0
+	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
+
+	for i = 1, numShownEntries do
+		local info = C_QuestLog.GetInfo(i)
+		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
+			numQuests = numQuests + 1
+			collect.MASLENGO.Quests[info.questID] = E.func_CheckCompletedByQuestID(info.questID)
+		end
 	end
+
+	-- Сохраняем статистику
+	collect.numShownEntries = numShownEntries
+	collect.numQuests = numQuests
+	collect.maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept() or 0
 end
+
+
 function E.Collect_ALL_UNIVERSALQuestUpdate()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
@@ -743,6 +755,15 @@ function E.Collect_ALL_UNIVERSALQuestUpdate()
 				end
 			end
 		end
+	end
+end
+function E.Collect_ALL_ItemLevel()
+	local collect = Octo_ToDo_DB_Levels[E.curGUID]
+	if collect and not InCombatLockdown() then
+		local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvp = GetAverageItemLevel()
+		collect.avgItemLevel = math.floor(avgItemLevel)
+		collect.avgItemLevelEquipped = math.floor(avgItemLevelEquipped)
+		collect.avgItemLevelPvp = math.floor(avgItemLevelPvp)
 	end
 end
 function E.Collect_ALL_MoneyUpdate()
@@ -1174,19 +1195,23 @@ function Octo_EventFrame_Collect:PLAYER_LEVEL_UP()
 		end
 	)
 end
-function Octo_EventFrame_Collect:QUEST_LOG_UPDATE()
-	if not InCombatLockdown() and not self.questUpdatePause then
-		self.questUpdatePause = true
-		C_Timer.After(3, function()
-				E.Collect_All_Quests()
-				E.Collect_ALL_UNIVERSALQuestUpdate()
-				E.Collect_All_BfA_Island()
-				E.Collect_All_Chromie()
-				E.Update("QUEST_LOG_UPDATE")
-				self.questUpdatePause = false
-		end)
-	end
+
+function Octo_EventFrame_Collect:QUEST_LOG_UPDATE() -- QUEST_REMOVED
+	if InCombatLockdown() or self.questUpdatePause then return end
+	self.questUpdatePause = true
+	C_Timer.After(1, function()
+			local E = E -- локальная ссылка для быстрого доступа
+			E.Collect_All_Quests()
+			E.Collect_ALL_UNIVERSALQuestUpdate()
+			E.Collect_All_BfA_Island()
+			E.Collect_All_Chromie()
+			E.Update("QUEST_LOG_UPDATE")
+
+			self.questUpdatePause = false
+	end)
 end
+
+
 function Octo_EventFrame_Collect:BAG_UPDATE()
 	if not InCombatLockdown() and not self.bagUpdatePause then
 		self.bagUpdatePause = true

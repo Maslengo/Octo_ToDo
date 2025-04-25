@@ -1,44 +1,55 @@
-local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo") 
-----------------------------------------------------------------------------------------------------------------------------------
--- Auto_Repair
+local _, E = ...
+local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+
 tinsert(E.Modules, function()
-		if Octo_ToDo_DB_Vars.AutoRepair then
-			local function OnEvent(self, event)
-				if (CanMerchantRepair()) then
-					local repairAllCost, canRepair = GetRepairAllCost()
-					local money = GetMoney()
-					local locale = GetLocale()
-					if canRepair and repairAllCost > money then
-						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..C_CurrencyInfo.GetCoinTextureString((repairAllCost-money)))
-						if locale == "ruRU" then
-							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg", "Master")
-						else
-							PlaySoundFile("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\sound\\Memes\\WeNeedMoreGold_ENG.ogg", "Master")
-						end
-					else if (canRepair and repairAllCost > 0) then
-							local guildRepairedItems = false
-							if (IsInGuild() and CanGuildBankRepair()) then
-								local amount = GetGuildBankWithdrawMoney()
-								local guildBankMoney = GetGuildBankMoney()
-								amount = amount == -1 and guildBankMoney or min(amount, guildBankMoney)
-								if (amount >= repairAllCost) then
-									RepairAllItems(true)
-									guildRepairedItems = true
-								end
-							end
-							if (repairAllCost <= money and not guildRepairedItems) then
-								RepairAllItems(false)
-							end
-						end
-					end
+	if not Octo_ToDo_DB_Vars.AutoRepair then return end
+
+	local function PlayNoGoldSound()
+		local soundFile = GetLocale() == "ruRU" and
+			"Interface\\AddOns\\Octo\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg" or
+			"Interface\\AddOns\\Octo\\Media\\sound\\Memes\\WeNeedMoreGold_ENG.ogg"
+		PlaySoundFile(soundFile, "Master")
+	end
+
+	local function HandleRepair()
+		if not CanMerchantRepair() then return end
+
+		local repairAllCost, canRepair = GetRepairAllCost()
+		if not canRepair or repairAllCost <= 0 then return end
+
+		local money = GetMoney()
+
+		-- Недостаточно золота
+		if repairAllCost > money then
+			DEFAULT_CHAT_FRAME:AddMessage(
+				E.func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..
+				C_CurrencyInfo.GetCoinTextureString(repairAllCost - money)
+			)
+			PlayNoGoldSound()
+			return
+		end
+
+		-- Попытка починки за счет гильдбанка
+		if IsInGuild() and CanGuildBankRepair() then
+			local guildMoney = GetGuildBankMoney()
+			local withdrawLimit = GetGuildBankWithdrawMoney()
+
+			if withdrawLimit == -1 or withdrawLimit >= repairAllCost then
+				if guildMoney >= repairAllCost then
+					RepairAllItems(true)
+					return
 				end
 			end
-			if not AutoRepairFrame then
-				AutoRepairFrame = CreateFrame("Frame")
-				AutoRepairFrame:Hide()
-			end
-			AutoRepairFrame:SetScript("OnEvent", OnEvent)
-			AutoRepairFrame:RegisterEvent("MERCHANT_SHOW")
 		end
+
+		-- Починка за свои деньги
+		if repairAllCost <= money then
+			RepairAllItems(false)
+		end
+	end
+
+	-- Создаем и настраиваем фрейм
+	local frame = CreateFrame("Frame")
+	frame:SetScript("OnEvent", HandleRepair)
+	frame:RegisterEvent("MERCHANT_SHOW")
 end)

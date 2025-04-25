@@ -28,6 +28,10 @@ function E.CreateTooltipPlayers(CharInfo)
 		end
 		tooltip[#tooltip+1] = {" ", " "}
 	end
+	if CharInfo.Chromie_name ~= nil then
+		tooltip[#tooltip+1] = {E.Red_Color..CharInfo.Chromie_name.."|r"}
+		tooltip[#tooltip+1] = {" ", " "}
+	end
 	if CharInfo.BindLocation ~= 0 then
 		tooltip[#tooltip+1] = {E.func_texturefromIcon(134414)..L["Bind Location"], CharInfo.BindLocation}
 	end
@@ -144,7 +148,6 @@ function E:func_Otrisovka()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-
 	if Octo_ToDo_DB_Vars.ExpansionToShow[2] then
 		----------------------------------------------------------------
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -989,7 +992,6 @@ function E:func_Otrisovka()
 					if CharInfo.HasAvailableRewards then
 						vivodCent = vivodCent..E.Blue_Color..">Vault<|r"
 					end
-
 				return vivodCent, tooltip
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,
@@ -1048,8 +1050,17 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				if CharInfo.maxNumQuestsCanAccept ~= 0 then
-					vivodCent = CharInfo.classColorHex..(CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept).."|r"
+				if CharInfo.numQuests ~= 0 then
+					vivodCent = CharInfo.classColorHex..CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept.."|r"
+					local questIDs = {}
+					for questID in next, CharInfo.MASLENGO.Quests do
+						questIDs[#questIDs+1] = questID
+					end
+					table.sort(questIDs, E.func_Reverse_order)
+					for i = 1, #questIDs do
+						local questID = questIDs[i]
+						tooltip[i] = {E.func_questName(questID), CharInfo.MASLENGO.Quests[questID]}
+					end
 				end
 				return vivodCent, tooltip
 		end)

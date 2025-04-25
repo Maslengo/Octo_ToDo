@@ -17,7 +17,6 @@
 
 	<Script file="Moduls\Auto_ChatClearing.lua"/>
 	<Script file="Moduls\Auto_CinematicCanceler.lua"/>
-	<Script file="Moduls\Auto_CinematicFastSkip.lua"/>
 	<Script file="Moduls\Auto_Gossip.lua"/>
 	<Script file="Moduls\Auto_InputDelete.lua"/>
 	<Script file="Moduls\Auto_Open.lua"/>

@@ -1,229 +1,185 @@
 local GlobalAddonName, E = ...
-----------------------------------------------------------------------------------------------------------------------------------
--- SetCVar("nameplateShowOnlyNames", 1)
--- SetCVar("nameplateShowFriends", 1)
--- SetCVar("nameplateVerticalScale", 1)
--- SetCVar("nameplateShowOnlyNames", 0) --1 убирает ХП бар (френдли и энеми) лишь ctrl+V
--- SetCVar("nameplateShowFriends", 0)--1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
--- SetCVar("nameplateVerticalScale", 1)--0.1 мелкий 1 дефолт 2.7 большая
--- DEV_CVAR
+
 function E.LoadCVars()
-	-- print (E.Green_Color.."Load CVars|r")
-	-- C_CVar.RegisterCVar("addonProfilerEnabled", 0)
-	-- SetCVar("addonProfilerEnabled", 0) -- /dump C_AddOnProfiler.IsEnabled()
-	SetCVar("overrideScreenFlash", 1)
-	SetCVar("CameraReduceUnexpectedMovement", 0)
-	SetCVar("ShakeStrengthUI", 0)
-	SetCVar("motionSicknessLandscapeDarkening", 0)
-	SetCVar("motionSicknessFocalCircle", 0)
-	SetCVar("DisableAdvancedFlyingFullScreenEffects", 1)
-	SetCVar("DisableAdvancedFlyingVelocityVFX", 0)
-	SetCVar("enableMultiActionBars", 63)
-	-- SetCVar("enableMultiActionBars", 127)
-	if E.isElvUI then
-		SetCVar("countdownForCooldowns", 0)
-		SetCVar("StatusText", 0)
-		SetCVar("StatusTextDisplay", "NONE") -- NONE
-	else
-		SetCVar("countdownForCooldowns", 1)
-		SetCVar("StatusText", 1)
-		SetCVar("StatusTextDisplay", "BOTH") -- BOTH
+	-- print(E.Green_Color.."Load CVars|r")
+
+	-- Grouped CVars by functionality
+	local cvars = {
+		-- Performance and UI
+		["addonProfilerEnabled"] = 0,
+		["overrideScreenFlash"] = 1,
+		["CameraReduceUnexpectedMovement"] = 0,
+		["ShakeStrengthUI"] = 0,
+		["motionSicknessLandscapeDarkening"] = 0,
+		["motionSicknessFocalCircle"] = 0,
+		["DisableAdvancedFlyingFullScreenEffects"] = 1,
+		["DisableAdvancedFlyingVelocityVFX"] = 0,
+		["enableMultiActionBars"] = E.isElvUI and 63 or 127,
+
+		-- Combat text
+		["spellActivationOverlayOpacity"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextCombatDamage"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextCombatDamageAllAutos"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextCombatDamageDirectionalOffset"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextCombatDamageDirectionalScale"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextCombatHealing"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextCombatHealingAbsorbSelf"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextCombatHealingAbsorbTarget"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextCombatLogPeriodicSpells"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextPetMeleeDamage"] = E.isWeakAuras and 0 or 1,
+		["floatingCombatTextPetSpellDamage"] = E.isWeakAuras and 0 or 1,
+
+		-- Nameplates
+		["nameplateShowOnlyNames"] = 0,
+		["nameplateShowFriends"] = 0,
+		["nameplateVerticalScale"] = 1,
+		["nameplateMotion"] = 1,
+		["NamePlateClassificationScale"] = 1,
+		["nameplateGlobalScale"] = 1,
+		["NamePlateHorizontalScale"] = 1,
+		["nameplateLargerScale"] = 1.2,
+		["nameplateLargeTopInset"] = 0.1,
+		["nameplateMaxAlpha"] = 0.6,
+		["nameplateMaxDistance"] = 60,
+		["NamePlateMaximumClassificationScale"] = 1,
+		["nameplateMaxScale"] = 1,
+		["nameplateMaxScaleDistance"] = 10,
+		["nameplateMinAlpha"] = 0.6,
+		["nameplateMinAlphaDistance"] = 10,
+		["nameplateMinScale"] = 1,
+		["nameplateMotionSpeed"] = 0.025,
+		["nameplateOccludedAlphaMult"] = 0.4,
+		["nameplateOverlapV"] = 1,
+		["NameplatePersonalHideDelayAlpha"] = 0.45,
+		["NameplatePersonalHideDelaySeconds"] = 3,
+		["NameplatePersonalShowInCombat"] = 1,
+		["nameplateResourceOnTarget"] = 0,
+		["nameplateSelectedAlpha"] = 1,
+		["nameplateSelectedScale"] = 1.2,
+		["nameplateSelfAlpha"] = 0.75,
+		["nameplateSelfScale"] = 1,
+		["nameplateShowAll"] = 1,
+		["nameplateShowDebuffsOnFriendly"] = 1,
+		["nameplateShowEnemyGuardians"] = 0,
+		["nameplateShowEnemyMinions"] = 0,
+		["nameplateShowEnemyPets"] = 0,
+		["nameplateShowEnemyTotems"] = 1,
+		["nameplateShowSelf"] = 0,
+		["nameplateTargetBehindMaxDistance"] = 30,
+
+		-- UI Settings
+		["countdownForCooldowns"] = E.isElvUI and 0 or 1,
+		["StatusText"] = E.isElvUI and 0 or 1,
+		["StatusTextDisplay"] = E.isElvUI and "NONE" or "BOTH",
+		["alwaysCompareItems"] = 0,
+		["rotateMinimap"] = 0,
+		["showBattlefieldMinimap"] = 0,
+		["displaySpellActivationOverlays"] = 1,
+		["AutoPushSpellToActionBar"] = 0,
+		["alwaysShowActionBars"] = 1,
+		["autoLootDefault"] = 1,
+		["cameraDistanceMaxZoomFactor"] = 2.6,
+		["cameraSmoothStyle"] = 0,
+		["colorChatNamesByClass"] = 1,
+		["combinedBags"] = 1,
+		["displayFreeBagSlots"] = 1,
+		["doNotFlashLowHealthWarning"] = 1,
+		["enableFloatingCombatText"] = 0,
+		["enablePetBattleFloatingCombatText"] = 0,
+		["expandBagBar"] = 0,
+		["findYourselfAnywhere"] = 0,
+		["findYourselfMode"] = 0,
+		["mapFade"] = 0,
+		["useUiScale"] = 1,
+		["uiScale"] = 0.7111111111111111,
+		["WorldTextScale"] = 0.7111111111111111,
+
+		-- Visual Effects
+		["ffxDeath"] = 1,
+		["ffxGlow"] = 0,
+		["ffxLingeringVenari"] = 1,
+		["ffxNether"] = 1,
+		["ffxVenari"] = 1,
+
+		-- Social
+		["profanityFilter"] = 0,
+		["guildMemberNotify"] = 0,
+		["showToastWindow"] = 0,
+
+		-- Sound
+		["Sound_MaxCacheSizeInBytes"] = 134217728,
+		["Sound_NumChannels"] = 64,
+
+		-- Gameplay
+		["spellqueuewindow"] = 140,
+		["LowLatencyMode"] = 2,
+		["SoftTargetEnemy"] = 1,
+
+		-- Tutorials
+		["showTutorials"] = 0,
+		["showNPETutorials"] = 0,
+		["gameTip"] = 0,
+		["interactKeyWarningTutorial"] = 0,
+
+		-- Unit Names
+		["ShowClassColorInFriendlyNameplate"] = 1,
+		["ShowClassColorInNameplate"] = 1,
+		["UnitNameEnemyGuardianName"] = 1,
+		["UnitNameEnemyMinionName"] = 1,
+		["UnitNameEnemyPetName"] = 0,
+		["UnitNameEnemyPlayerName"] = 1,
+		["UnitNameEnemyTotemName"] = 1,
+		["UnitNameForceHideMinus"] = 0,
+		["UnitNameFriendlyGuardianName"] = 1,
+		["UnitNameFriendlyMinionName"] = 1,
+		["UnitNameFriendlyPetName"] = 0,
+		["UnitNameFriendlyPlayerName"] = 1,
+		["UnitNameFriendlySpecialNPCName"] = 1,
+		["UnitNameFriendlyTotemName"] = 1,
+		["UnitNameGuildTitle"] = 0,
+		["UnitNameHostleNPC"] = 1,
+		["UnitNameInteractiveNPC"] = 1,
+		["UnitNameNPC"] = 1,
+		["UnitNameOwn"] = 0,
+		["UnitNamePlayerGuild"] = 0,
+		["UnitNamePlayerPVPTitle"] = 0,
+
+		-- Raid Frames
+		["raidFramesDisplayPowerBars"] = 1,
+		["raidFramesDisplayOnlyHealerPowerBars"] = 1,
+		["raidFramesDisplayAggroHighlight"] = 1,
+		["raidFramesDisplayClassColor"] = 1,
+		["raidFramesDisplayDebuffs"] = 1,
+		["raidFramesDisplayIncomingHeals"] = 1,
+		["raidFramesDisplayOnlyDispellableDebuffs"] = 1,
+
+		-- 11.1.5 Features
+		["cooldownViewerEnabled"] = 0,
+		["CursorFreelookStartDelta"] = 0.001,
+		["minimapTrackingShowAll"] = 1,
+		["bankAutoDepositReagents"] = 1,
+		["enablePings"] = 0,
+		["pingMode"] = 0,
+		["showPingsInChat"] = 0,
+		["Sound_EnablePingSounds"] = 0,
+		["Sound_PingVolume"] = 0,
+	}
+
+	-- Register and set all CVars
+	C_CVar.RegisterCVar("addonProfilerEnabled", 0)
+	for cvar, value in next, (cvars) do
+		C_CVar.SetCVar(cvar, value)
 	end
-	if E.isWeakAuras then
-		SetCVar("spellActivationOverlayOpacity", 0) -- интерфейс - бой - предупреждения
-		SetCVar("floatingCombatTextCombatDamage", 0) -- ТУТ
-		SetCVar("floatingCombatTextCombatDamageAllAutos", 0) -- ТУТ
-		SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 0) -- ТУТ
-		SetCVar("floatingCombatTextCombatDamageDirectionalScale", 0) -- ТУТ
-		SetCVar("floatingCombatTextCombatHealing", 0) -- ТУТ
-		SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 0) -- ТУТ
-		SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 0) -- ТУТ
-		SetCVar("floatingCombatTextCombatLogPeriodicSpells", 0) -- ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
-		SetCVar("floatingCombatTextPetMeleeDamage", 0) -- ТУТ
-		SetCVar("floatingCombatTextPetSpellDamage", 0) -- ТУТ
-	else
-		SetCVar("spellActivationOverlayOpacity", 1) -- интерфейс - бой - предупреждения
-		SetCVar("floatingCombatTextCombatDamage", 1) -- ТУТ
-		SetCVar("floatingCombatTextCombatDamageAllAutos", 1) -- ТУТ
-		SetCVar("floatingCombatTextCombatDamageDirectionalOffset", 1) -- ТУТ
-		SetCVar("floatingCombatTextCombatDamageDirectionalScale", 1) -- ТУТ
-		SetCVar("floatingCombatTextCombatHealing", 1) -- ТУТ
-		SetCVar("floatingCombatTextCombatHealingAbsorbSelf", 1) -- ТУТ
-		SetCVar("floatingCombatTextCombatHealingAbsorbTarget", 1) -- ТУТ
-		SetCVar("floatingCombatTextCombatLogPeriodicSpells", 1) -- ТУТ Отображение урона от периодически действующих эффектов, таких как "Кровопускание" и "Слово Тьмы:Болль"
-		SetCVar("floatingCombatTextPetMeleeDamage", 1) -- ТУТ
-		SetCVar("floatingCombatTextPetSpellDamage", 1) -- ТУТ
-	end
-	--11.1.5
-	SetCVar("cooldownViewerEnabled", 0) -- Трекер восстановления
-	-- 11.0
-	SetCVar("CursorFreelookStartDelta", 0.001)
-	SetCVar("minimapTrackingShowAll", 1)
-	SetCVar("bankAutoDepositReagents", 1)
-	SetCVar("enablePings", 0) -- Enables ping system.
-	SetCVar("pingMode", 0) -- Determines which mode is used to use the ping system.
-	SetCVar("showPingsInChat", 0) -- Enables ping details being shown in chat.
-	SetCVar("Sound_EnablePingSounds", 0) -- Enable Ping Sounds
-	SetCVar("Sound_PingVolume", 0) -- Ping Volume (0.0 to 1.0)
-	----
-	SetCVar("raidFramesDisplayPowerBars", 1)
-	SetCVar("raidFramesDisplayOnlyHealerPowerBars", 1)
-	SetCVar("LowLatencyMode", 2) -- 0=None, 1=BuiltIn, 2=Reflex
-	SetCVar("SoftTargetEnemy", 1) -- 1 ВЫКЛ, 3 ВКЛ
-	-- SetCVar("nameplateShowOnlyNames", 1)
-	-- SetCVar("nameplateShowFriends", 1)
-	-- SetCVar("nameplateVerticalScale", 1)
-	SetCVar("nameplateShowOnlyNames", 0) -- 1 убирает ХП бар (френдли и энеми) лишь ctrl+V
-	SetCVar("nameplateShowFriends", 0) -- 1 отображение френдли немплейта 1вкл 0 выкл (самая полоса с именем)
-	SetCVar("nameplateVerticalScale", 1) -- 0.1 мелкий 1 дефолт 2.7 большая
-	SetCVar("nameplateMotion", 1) -- (0 Наложение) (1 Друг над другом) stack
-	-- SetCVar("questPOI", 101)
-	SetCVar("alwaysCompareItems", 0)
-	SetCVar("rotateMinimap", 0)
-	SetCVar("showBattlefieldMinimap", 0)
-	SetCVar("displaySpellActivationOverlays", 1)
-	SetCVar("raidFramesDisplayAggroHighlight", 1)
-	SetCVar("raidFramesDisplayClassColor", 1)
-	SetCVar("raidFramesDisplayDebuffs", 1)
-	SetCVar("raidFramesDisplayIncomingHeals", 1)
-	SetCVar("raidFramesDisplayOnlyDispellableDebuffs", 1)
-	SetCVar("AutoPushSpellToActionBar", 0) -- Выставление спеллов на бар
-	SetCVar("AllowDangerousScripts", 1)
-	SetCVar("alwaysShowActionBars", 1)
-	SetCVar("autoLootDefault", 1) -- автолут 1 вкл
-	SetCVar("cameraDistanceMaxZoomFactor", 2.6)
-	SetCVar("cameraSmoothStyle", 0) -- 0 не выравнивать камеру в движении
-	SetCVar("colorChatNamesByClass", 1)
-	SetCVar("combinedBags", 1) -- /console combinedBags 1
-	SetCVar("displayFreeBagSlots", 1) -- отображает кол-во свободного места
-	SetCVar("doNotFlashLowHealthWarning", 1)
-	SetCVar("enableFloatingCombatText", 0) -- НЕ надо, отображение на экране дополнительных сообщений
-	SetCVar("enablePetBattleFloatingCombatText", 0)
-	SetCVar("expandBagBar", 0) -- 0 сумки скрыты
-	SetCVar("ffxDeath", 1) -- во время смерти
-	SetCVar("ffxGlow", 0) -- мыло на экране
-	SetCVar("ffxLingeringVenari", 1)
-	SetCVar("ffxNether", 1) -- во время атаки фей ласт фаза или инвиза
-	SetCVar("ffxVenari", 1)
-	SetCVar("findYourselfAnywhere", 0)
-	SetCVar("findYourselfMode", 0)
-	SetCVar("floatingCombatTextAllSpellMechanics", 0)
-	SetCVar("floatingCombatTextAuras", 0)
-	SetCVar("floatingCombatTextCombatState", 0) -- Проки по центру экрана
-	SetCVar("floatingCombatTextComboPoints", 0)
-	SetCVar("floatingCombatTextDamageReduction", 0)
-	SetCVar("floatingCombatTextDodgeParryMiss", 0)
-	SetCVar("floatingCombatTextEnergyGains", 0)
-	SetCVar("floatingCombatTextFloatMode", 0)
-	SetCVar("floatingCombatTextFriendlyHealers", 0)
-	SetCVar("floatingCombatTextHonorGains", 0)
-	SetCVar("floatingCombatTextLowManaHealth", 0)
-	SetCVar("floatingCombatTextPeriodicEnergyGains", 0)
-	SetCVar("floatingCombatTextReactives", 0)
-	SetCVar("floatingCombatTextRepChanges", 0)
-	SetCVar("floatingCombatTextSpellMechanics", 0)
-	SetCVar("floatingCombatTextSpellMechanicsOther", 0)
-	SetCVar("guildMemberNotify", 0) -- 1 окно уведомлений бнет
-	SetCVar("lastRenownForCovenant1", 80)
-	SetCVar("lastRenownForCovenant2", 80)
-	SetCVar("lastRenownForCovenant3", 80)
-	SetCVar("lastRenownForCovenant4", 80)
-	SetCVar("lastRenownForMajorFaction2564", 20)
-	SetCVar("lastRenownForMajorFaction2507", 25)
-	SetCVar("lastRenownForMajorFaction2503", 25)
-	SetCVar("lastRenownForMajorFaction2511", 30)
-	SetCVar("lastRenownForMajorFaction2510", 30)
-	SetCVar("lastRenownForMajorFaction2574", 20)
-	SetCVar("mapFade", 0) -- прозрачность карты в движении
-	SetCVar("NamePlateClassificationScale", 1) -- 1.25
-	SetCVar("nameplateGlobalScale", 1)
-	SetCVar("NamePlateHorizontalScale", 1) -- 0.1 мелкий 1 дефотл 1.4 большая
-	SetCVar("nameplateLargerScale", 1.2) -- 1.2 DEF FOR IMPORTANT MONSTERS
-	SetCVar("nameplateLargeTopInset", 0.1) -- 0.10 От края экрана
-	SetCVar("nameplateMaxAlpha", 0.6) -- меняет прозрачность неймплейтов которые не являются текущей целью, хз может что еще меняет
-	SetCVar("nameplateMaxDistance", 60) -- 60 --максимальная дальность отображения неймплейтов
-	SetCVar("NamePlateMaximumClassificationScale", 1)
-	SetCVar("nameplateMaxScale", 1)
-	SetCVar("nameplateMaxScaleDistance", 10)
-	SetCVar("nameplateMinAlpha", 0.6)
-	SetCVar("nameplateMinAlphaDistance", 10)
-	SetCVar("nameplateMinScale", 1)
-	SetCVar("nameplateMotionSpeed", 0.025)
-	SetCVar("nameplateOccludedAlphaMult", 0.4)
-	SetCVar("nameplateOverlapV", 1) -- если выключено наложение нейплейтов (интерфейс-имена-друг над другом включено), то эта переменная указывает расстояние между неймплейтами по вертикали
-	SetCVar("NameplatePersonalHideDelayAlpha", 0.45)
-	SetCVar("NameplatePersonalHideDelaySeconds", 3)
-	SetCVar("NameplatePersonalShowInCombat", 1)
-	SetCVar("nameplateResourceOnTarget", 0)
-	SetCVar("nameplateSelectedAlpha", 1)
-	SetCVar("nameplateSelectedScale", 1.2) -- Размер таргета --масштабирование неймплейта, который является текущей целью
-	SetCVar("nameplateSelfAlpha", 0.75)
-	SetCVar("nameplateSelfScale", 1)
-	SetCVar("nameplateShowAll", 1)
-	SetCVar("nameplateShowDebuffsOnFriendly", 1)
-	SetCVar("nameplateShowEnemyGuardians", 0)
-	SetCVar("nameplateShowEnemyMinions", 0)
-	SetCVar("nameplateShowEnemyPets", 0)
-	SetCVar("nameplateShowEnemyTotems", 1)
-	SetCVar("nameplateShowSelf", 0) --- PIZZA
-	SetCVar("nameplateTargetBehindMaxDistance", 30)
-	SetCVar("profanityFilter", 0) -- выключает фильтр нецензурной речи
-	SetCVar("ScriptErrors", 0)
-	SetCVar("scriptErrors", 0)
-	SetCVar("scriptWarnings", 0)
-	SetCVar("ShowClassColorInFriendlyNameplate", 1)
-	SetCVar("ShowClassColorInNameplate", 1)
-	SetCVar("showLootSpam", 1)
-	SetCVar("showTamers", 0) -- показывает петов на карте
-	SetCVar("showToastWindow", 0) -- 1 окно уведомлений бнет
-	SetCVar("Sound_MaxCacheSizeInBytes", 134217728) -- 67108864)
-	SetCVar("Sound_NumChannels", 64)
-	SetCVar("spellqueuewindow", 140)
-	SetCVar("timeMgrUseLocalTime", 1) -- локал время
-	SetCVar("useUiScale", 1)
-	SetCVar("uiScale", 0.7111111111111111)
-	SetCVar("UnitNameEnemyGuardianName", 1)
-	SetCVar("UnitNameEnemyMinionName", 1)
-	SetCVar("UnitNameEnemyPetName", 0)
-	SetCVar("UnitNameEnemyPlayerName", 1)
-	SetCVar("UnitNameEnemyTotemName", 1)
-	SetCVar("UnitNameForceHideMinus", 0)
-	SetCVar("UnitNameFriendlyGuardianName", 1)
-	SetCVar("UnitNameFriendlyMinionName", 1)
-	SetCVar("UnitNameFriendlyPetName", 0)
-	SetCVar("UnitNameFriendlyPlayerName", 1)
-	SetCVar("UnitNameFriendlySpecialNPCName", 1)
-	SetCVar("UnitNameFriendlyTotemName", 1)
-	SetCVar("UnitNameGuildTitle", 0)
-	SetCVar("UnitNameHostleNPC", 1)
-	SetCVar("UnitNameInteractiveNPC", 1)
-	SetCVar("UnitNameNPC", 1)
-	SetCVar("UnitNameOwn", 0)
-	SetCVar("UnitNamePlayerGuild", 0)
-	SetCVar("UnitNamePlayerPVPTitle", 0)
-	SetCVar("WorldTextScale", 0.7111111111111111)
-	SetCVar("xpBarText", 1)
-	SetCVar("interactKeyWarningTutorial", 0)
-	SetCVar("lastGarrisonMissionTutorial", 8)
-	SetCVar("lastVoidStorageTutorial", 3)
-	SetCVar("orderHallMissionTutorial", 851970)
-	SetCVar("pingCategoryTutorialShown", 1)
-	SetCVar("dangerousShipyardMissionWarningAlreadyShown", 1)
-	SetCVar("shipyardMissionTutorialAreaBuff", 1)
-	SetCVar("shipyardMissionTutorialBlockade", 1)
-	SetCVar("shipyardMissionTutorialFirst", 1)
-	SetCVar("showTutorials", 0)
-	SetCVar("showNPETutorials", 0) -- 1
-	SetCVar("gameTip", 0)
-	-- SetCVar("closedExtraAbilityTutorials", 1)
-	-- SetCVar("covenantMissionTutorial", 1)
-	-- SetCVar("soulbindsActivatedTutorial", 1)
-	-- SetCVar("soulbindsLandingPageTutorial", 1)
-	-- SetCVar("soulbindsViewedTutorial", 1)
-	-- SetCVar("Sound_EnableMusic", 1)
-	-- SetCVar("Sound_EnableAmbience", 1)
-	-- SetCVar("Sound_EnableDialog", 1)
-	-- SetCVar("Sound_EnableSFX", 1)
-	-- SetCVar("whisperMode", popout_and_inline)
-	-- C_NamePlate.SetNamePlateFriendlySize(0.1, 0.1) --короткий ХП бар 50 100
 end
+
+-- C_CVar.SetCVar("closedExtraAbilityTutorials", 1)
+-- C_CVar.SetCVar("covenantMissionTutorial", 1)
+-- C_CVar.SetCVar("soulbindsActivatedTutorial", 1)
+-- C_CVar.SetCVar("soulbindsLandingPageTutorial", 1)
+-- C_CVar.SetCVar("soulbindsViewedTutorial", 1)
+-- C_CVar.SetCVar("Sound_EnableMusic", 1)
+-- C_CVar.SetCVar("Sound_EnableAmbience", 1)
+-- C_CVar.SetCVar("Sound_EnableDialog", 1)
+-- C_CVar.SetCVar("Sound_EnableSFX", 1)
+-- C_CVar.SetCVar("whisperMode", popout_and_inline)
+-- C_NamePlate.SetNamePlateFriendlySize(0.1, 0.1) --короткий ХП бар 50 100

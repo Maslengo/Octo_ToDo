@@ -1,70 +1,49 @@
-local GlobalAddonName, E = ... 
-----------------------------------------------------------------------------------------------------------------------------------
--- Auto_Screenshot
+local _, E = ...
+
 tinsert(E.Modules, function()
-	if Octo_ToDo_DB_Vars.Auto_Screenshot then
-		local EventFrame = nil
-		local function Octo_OnLoad()
-			if not EventFrame then
-				EventFrame = CreateFrame("FRAME", GlobalAddonName.."Auto_Screenshot"..E.func_GenerateUniqueID())
-			end
-			EventFrame:RegisterEvent("PLAYER_LEVEL_UP")
-			EventFrame:RegisterEvent("ACHIEVEMENT_EARNED")
-			EventFrame:RegisterEvent("SHOW_LOOT_TOAST_LEGENDARY_LOOTED")
-			if E.func_IsRetail() == true then
-				EventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-			end
-			EventFrame:RegisterEvent("NEW_MOUNT_ADDED")
-			EventFrame:RegisterEvent("NEW_PET_ADDED")
-			EventFrame:RegisterEvent("NEW_TOY_ADDED")
-			EventFrame:RegisterEvent("TRADE_ACCEPT_UPDATE")
-		end
-		local function Octo_OnEvent(self, event, ...)
-			local generalDelay = 1
-			local CurrentTime = date("%m/%d/%y %H:%M:%S")
-			if event == "SHOW_LOOT_TOAST_LEGENDARY_LOOTED" then
-				DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Received a legendary item: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
-				C_Timer.After(generalDelay, function()
-					Screenshot()
-				end)
-			elseif event == "ACHIEVEMENT_EARNED" then
-				DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Earned an achievement: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
-				C_Timer.After(generalDelay, function()
-					Screenshot()
-				end)
-			elseif event == "PLAYER_LEVEL_UP" then
-				DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Leveled up: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
-				C_Timer.After(generalDelay, function()
-					Screenshot()
-				end)
-			elseif event == "CHALLENGE_MODE_COMPLETED" then
-				DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Completed M+: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
-				C_Timer.After(generalDelay, function()
-					Screenshot()
-				end)
-			elseif event == "NEW_MOUNT_ADDED" then
-				DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient(CurrentTime, E.Addon_Left_Color, E.Addon_Right_Color))
-				C_Timer.After(generalDelay, function()
-					Screenshot()
-				end)
-			elseif event == "NEW_PET_ADDED" then
-				DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient(CurrentTime, E.Addon_Left_Color, E.Addon_Right_Color))
-				C_Timer.After(generalDelay, function()
-					Screenshot()
-				end)
-			elseif event == "NEW_TOY_ADDED" then
-				DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient(CurrentTime, E.Addon_Left_Color, E.Addon_Right_Color))
-				C_Timer.After(generalDelay, function()
-					Screenshot()
-				end)
-			elseif event == "TRADE_ACCEPT_UPDATE" then
-				DEFAULT_CHAT_FRAME:AddMessage (E.func_Gradient("Completed M+: ", E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..CurrentTime.."|r")
-				C_Timer.After(generalDelay, function()
-					Screenshot()
-				end)
-			end
-		end
-		Octo_OnLoad()
-		EventFrame:SetScript("OnEvent", Octo_OnEvent)
+	if not Octo_ToDo_DB_Vars.Auto_Screenshot then return end
+
+	-- Создаем таблицу сообщений для разных событий
+	local EVENT_MESSAGES = {
+		SHOW_LOOT_TOAST_LEGENDARY_LOOTED = "Received a legendary item: ",
+		ACHIEVEMENT_EARNED = "Earned an achievement: ",
+		PLAYER_LEVEL_UP = "Leveled up: ",
+		CHALLENGE_MODE_COMPLETED = "Completed M+: ",
+		NEW_MOUNT_ADDED = "New mount added: ",
+		NEW_PET_ADDED = "New pet added: ",
+		NEW_TOY_ADDED = "New toy added: ",
+		TRADE_ACCEPT_UPDATE = "Trade completed: "
+	}
+
+	local function TakeScreenshotWithMessage(event)
+		local message = EVENT_MESSAGES[event] or ""
+		local currentTime = date("%m/%d/%y %H:%M:%S")
+
+		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message, E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..currentTime.."|r")
+
+		C_Timer.After(1, Screenshot)
 	end
+
+	-- Создаем и настраиваем фрейм
+	local eventFrame = CreateFrame("Frame", E.func_GenerateUniqueID())
+
+	-- Регистрируем события
+	eventFrame:RegisterEvent("PLAYER_LEVEL_UP")
+	eventFrame:RegisterEvent("ACHIEVEMENT_EARNED")
+	eventFrame:RegisterEvent("SHOW_LOOT_TOAST_LEGENDARY_LOOTED")
+	eventFrame:RegisterEvent("NEW_MOUNT_ADDED")
+	eventFrame:RegisterEvent("NEW_PET_ADDED")
+	eventFrame:RegisterEvent("NEW_TOY_ADDED")
+	eventFrame:RegisterEvent("TRADE_ACCEPT_UPDATE")
+
+	if E.func_IsRetail() then
+		eventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+	end
+
+	-- Устанавливаем обработчик событий
+	eventFrame:SetScript("OnEvent", function(self, event, ...)
+		if EVENT_MESSAGES[event] then
+			TakeScreenshotWithMessage(event)
+		end
+	end)
 end)

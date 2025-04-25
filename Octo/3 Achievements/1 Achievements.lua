@@ -116,17 +116,36 @@ local func_OnAcquired do
 	end
 	------------------------------------------------
 end
+
+
+-- local function CreateTooltip(AchievementID)
+-- 	local tooltipsecond = {}
+-- 	tooltipsecond[#tooltipsecond+1] = {E.func_texturefromIcon(E.func_achievementIcon(AchievementID)).. E.func_achievementName(AchievementID), AchievementID}
+-- 	tooltipsecond[#tooltipsecond+1] = {" ", " "}
+-- 	if E.func_achievementDescription(AchievementID) ~= "" then
+-- 		tooltipsecond[#tooltipsecond+1] = {E.func_achievementDescription(AchievementID)}
+-- 		tooltipsecond[#tooltipsecond+1] = {" ", " "}
+-- 	end
+-- 	tooltipsecond[#tooltipsecond+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
+-- 	return tooltipsecond
+-- end
+
 local function CreateTooltip(AchievementID)
+	local _, name, _, _, _, _, _, description, _, icon = GetAchievementInfo(AchievementID)
 	local tooltipsecond = {}
-	tooltipsecond[#tooltipsecond+1] = {E.func_texturefromIcon(E.func_achievementIcon(AchievementID)).. E.func_achievementName(AchievementID), AchievementID}
-	tooltipsecond[#tooltipsecond+1] = {" ", " "}
-	if E.func_achievementDescription(AchievementID) ~= "" then
-		tooltipsecond[#tooltipsecond+1] = {E.func_achievementDescription(AchievementID)}
+	tooltipsecond[#tooltipsecond+1] = {E.func_texturefromIcon(icon)..(name .. (E.DebugIDs and E.Gray_Color.." id:"..AchievementID.."|r" or "")), " "}
+
+	if description ~= "" then
+		tooltipsecond[#tooltipsecond+1] = {" ", " "}
+		tooltipsecond[#tooltipsecond+1] = {E.Yellow_Color..description.."|r"}
 		tooltipsecond[#tooltipsecond+1] = {" ", " "}
 	end
+
 	tooltipsecond[#tooltipsecond+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
 	return tooltipsecond
 end
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)

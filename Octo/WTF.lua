@@ -492,12 +492,3 @@ function Octo_EventFrame_WTF:VARIABLES_LOADED()
 		end
 	end
 end
-
-
-
-
-
--- if Octo_ToDo_DB_Vars.RunedHarbingerCrest == nil then Octo_ToDo_DB_Vars.RunedHarbingerCrest = true end
--- if Octo_ToDo_DB_Vars.GildedHarbingerCrest == nil then Octo_ToDo_DB_Vars.GildedHarbingerCrest = true end
--- if Octo_ToDo_DB_Vars.CarvedHarbingerCrest == nil then Octo_ToDo_DB_Vars.CarvedHarbingerCrest = true end
--- if Octo_ToDo_DB_Vars.WeatheredHarbingerCrest == nil then Octo_ToDo_DB_Vars.WeatheredHarbingerCrest = true end

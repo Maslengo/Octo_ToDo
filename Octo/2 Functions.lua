@@ -1396,11 +1396,9 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 
 			local list = {}
 			for i = 1, C_QuestLog.GetNumQuestLogEntries() do
-				if numQuests ~= 0 then
-					local info = C_QuestLog.GetInfo(i)
-					if info and info.questID ~= 0 and not info.isHeader and not info.isHidden then
-						tinsert(list, info.questID)
-					end
+				local info = C_QuestLog.GetInfo(i)
+				if info and info.questID ~= 0 and not info.isHeader and not info.isHidden then
+					tinsert(list, info.questID)
 				end
 			end
 
