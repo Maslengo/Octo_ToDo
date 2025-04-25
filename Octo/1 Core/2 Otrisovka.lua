@@ -28,7 +28,7 @@ function E.CreateTooltipPlayers(CharInfo)
 		end
 		tooltip[#tooltip+1] = {" ", " "}
 	end
-	if CharInfo.Chromie_name ~= nil then
+	if CharInfo.Chromie_name ~= nil and CharInfo.Chromie_name ~= "" then
 		tooltip[#tooltip+1] = {E.Red_Color..CharInfo.Chromie_name.."|r"}
 		tooltip[#tooltip+1] = {" ", " "}
 	end
