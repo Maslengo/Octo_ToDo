@@ -8,8 +8,9 @@ local function InitField(tbl, field, default) if tbl[field] == nil then tbl[fiel
 local function InitSubTable(tbl, field) if tbl[field] == nil then tbl[field] = {} end end
 
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
+	local curGUID = UnitGUID("PLAYER")
 	Octo_ToDo_DB_Levels = InitTable(Octo_ToDo_DB_Levels)
-	Octo_ToDo_DB_Levels[E.curGUID] = InitTable(Octo_ToDo_DB_Levels[E.curGUID])
+	Octo_ToDo_DB_Levels[curGUID] = InitTable(Octo_ToDo_DB_Levels[curGUID])
 
 	local ServerTime = GetServerTime()
 	local currentDate = date("%d.%m.%Y")

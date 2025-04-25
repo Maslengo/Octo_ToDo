@@ -936,7 +936,7 @@ function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 	self.ADDON_LOADED = nil
 	if AddonMgrAddonList then
 		tinsert(E.OctoTable_Frames, AddonMgrAddonList)
-		AddonMgrAddonList:SetScale(.8)
+		-- AddonMgrAddonList:SetScale(.8)
 		-- /run AddonMgrAddonList:SetScale(.8)
 	end
 	-- Load settings with defaults in a more concise way

@@ -169,7 +169,6 @@ function E.func_reputationName(reputationID)
 		--         if textureKit ~= 0 then
 		--             local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s", textureKit))
 		--             -- local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s_256", textureKit))
-		--             print (KitIcon, textureKit)
 		--             vivod = "|cffFF00FF"..textureKit.."|r" .. KitIcon.. vivod
 		--         end
 		--     end
@@ -2398,10 +2397,8 @@ end
 function E.rec_toggle(index, state)
 	if state then
 		E.func_DisableAddOn(index)
-		-- print ("|cffff0000отключен|r".. index)
 	else
 		E.func_EnableAddOn(index)
-		-- print ("|cff00ff00включен|r".. index)
 	end
 	if Octo_AddonsTable.depsByIndex[index] and not IsModifierKeyDown() and not Octo_AddonsTable.recycleByIndex[index] then
 		for i, depIndex in ipairs(Octo_AddonsTable.depsByIndex[index]) do
@@ -2476,7 +2473,6 @@ function E.func_LoadProfile(profileName)
 	end
 	currentProfile = profileName
 	print ("Профиль '"..profileName.." загружен")
-	-- ReloadUI()
 end
 -- Список профилей
 function E.func_ListProfiles()
