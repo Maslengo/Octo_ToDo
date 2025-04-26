@@ -10,7 +10,7 @@ E.OctoTable_UniversalQuest = {
 		icon = E.func_GetItemIconByID(45072),
 		textleft = E.func_questName(13503),
 		name_save = "ATisketaTasketaNoblegardenBasket",
-		reset = "Once",
+		reset = "Month",
 		desc = "EventNoblegarden",
 		questID = {
 			13503,
@@ -21,7 +21,7 @@ E.OctoTable_UniversalQuest = {
 		icon = E.func_GetItemIconByID(45072),
 		textleft = E.func_questName(79575),
 		name_save = "WhattheDuck",
-		reset = "Once",
+		reset = "Month",
 		desc = "EventNoblegarden",
 		questID = {
 			79575,
@@ -43,7 +43,7 @@ E.OctoTable_UniversalQuest = {
 		icon = E.func_GetItemIconByID(45072),
 		textleft = E.func_questName(79576),
 		name_save = "AFowlConcoction",
-		reset = "Once",
+		reset = "Month",
 		desc = "EventNoblegarden",
 		questID = {
 			79576,
@@ -54,7 +54,7 @@ E.OctoTable_UniversalQuest = {
 		icon = E.func_GetItemIconByID(45072),
 		textleft = E.func_questName(79577),
 		name_save = "DuckTales",
-		reset = "Once",
+		reset = "Month",
 		desc = "EventNoblegarden",
 		questID = {
 			79577,
@@ -65,10 +65,11 @@ E.OctoTable_UniversalQuest = {
 		icon = E.func_GetItemIconByID(45072),
 		textleft = E.func_questName(79578),
 		name_save = "JustaWaddleAway",
-		reset = "Once",
+		reset = "Month",
 		desc = "EventNoblegarden",
 		questID = {
-			79578,
+			79578, -- Horde
+			79331, -- Alliance
 		},
 		max = 1
 	},
@@ -79,7 +80,8 @@ E.OctoTable_UniversalQuest = {
 		reset = "Daily",
 		desc = "EventNoblegarden",
 		questID = {
-			79558,
+			79558, -- Horde
+			73192, -- Alliance
 		},
 		max = 1
 	},

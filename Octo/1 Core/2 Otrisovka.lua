@@ -32,14 +32,14 @@ function E.func_vivodCent(CharInfo)
 	-- Добавляем уровень, если персонаж не максимального уровня и может получать опыт
 	local levelPart = ""
 	if CharInfo.UnitLevel ~= 0 and
-	   CharInfo.UnitLevel ~= E.currentMaxLevel and
-	   CharInfo.PlayerCanEarnExperience then
+	CharInfo.UnitLevel ~= E.currentMaxLevel and
+	CharInfo.PlayerCanEarnExperience then
 		levelPart = " "..E.Yellow_Color..CharInfo.UnitLevel.."|r"
 	end
 	-- Добавляем сервер, если нужно и если он отличается от текущего
 	local serverPart = ""
 	if not Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and
-	   E.func_CurServerShort(E.curServer) ~= CharInfo.curServerShort then
+	E.func_CurServerShort(E.curServer) ~= CharInfo.curServerShort then
 		serverPart = E.Skyblue_Color.."("..CharInfo.curServerShort..")|r"
 	end
 	return namePart..levelPart..serverPart
@@ -283,15 +283,15 @@ function E:func_Otrisovka()
 				if expDATA.nameShort == v.desc then
 					-- Добавление центральной части информации
 					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-						local vivodCent, tooltip = " ", {}
-						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
-							vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-						end
-						return vivodCent, tooltip
+							local vivodCent, tooltip = " ", {}
+							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
+								vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+							end
+							return vivodCent, tooltip
 					end)
 					-- Добавление левой части информации
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
-						return tostringall(v.textleft).."|r", v.icon, expDATA.color
+							return tostringall(v.textleft).."|r", v.icon, expDATA.color
 					end)
 				end
 			end
@@ -304,14 +304,14 @@ function E:func_Otrisovka()
 	for _, v in ipairs(E.OctoTable_UniversalQuest) do
 		if v.desc == "Another" then
 			tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
-					vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-				end
-				return vivodCent, tooltip
+					local vivodCent, tooltip = " ", {}
+					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
+						vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+					end
+					return vivodCent, tooltip
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT, function()
-				return tostringall(v.textleft).."|r", v.icon, E.Blue_Color
+					return tostringall(v.textleft).."|r", v.icon, E.Blue_Color
 			end)
 		end
 	end
@@ -323,29 +323,17 @@ function E:func_Otrisovka()
 		for _, v in ipairs(E.OctoTable_UniversalQuest) do
 			if v.desc == "EventNoblegarden" then
 				tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
-						vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-					end
-					return vivodCent, tooltip
+						local vivodCent, tooltip = " ", {}
+						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
+							vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+						end
+						return vivodCent, tooltip
 				end)
 				tinsert(OctoTable_func_otrisovkaLEFT, function()
-					return tostringall(v.textleft).."|r", v.icon, E.Orange_Color
+						return tostringall(v.textleft).."|r", v.icon, E.Orange_Color
 				end)
 			end
 		end
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[45072] ~= nil then
-					vivodCent = CharInfo.MASLENGO.ItemsInBag[45072]
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.func_GetItemNameByID(45072), E.func_GetItemIconByID(45072), E.Orange_Color
-		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
@@ -358,6 +346,19 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return E.func_GetItemNameByID(44791), E.func_GetItemIconByID(44791), E.Orange_Color
 		end)
+
+		tinsert(OctoTable_func_otrisovkaCENT,
+			function(CharInfo)
+				local vivodCent, tooltip = " ", {}
+				if CharInfo.MASLENGO.ItemsInBag[45072] ~= nil then
+					vivodCent = CharInfo.MASLENGO.ItemsInBag[45072]
+				end
+				return vivodCent, tooltip
+		end)
+		tinsert(OctoTable_func_otrisovkaLEFT,
+			function(CharInfo)
+				return E.func_GetItemNameByID(45072), E.func_GetItemIconByID(45072), E.Orange_Color
+		end)
 	end
 
 	----------------------------------------------------------------
@@ -367,14 +368,14 @@ function E:func_Otrisovka()
 		for _, v in ipairs(E.OctoTable_UniversalQuest) do
 			if v.desc == "Timewalk" then
 				tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-					local vivodCent, tooltip = " ", {}
-					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
-						vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-					end
-					return vivodCent, tooltip
+						local vivodCent, tooltip = " ", {}
+						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
+							vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+						end
+						return vivodCent, tooltip
 				end)
 				tinsert(OctoTable_func_otrisovkaLEFT, function()
-					return tostringall(v.textleft).."|r", v.icon, E.Yellow_Color
+						return tostringall(v.textleft).."|r", v.icon, E.Yellow_Color
 				end)
 			end
 		end
@@ -1196,40 +1197,40 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-					if CharInfo.CurrentKeyName and CharInfo.CurrentKeyName ~= 0 then
-						tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyName.."|r", ""}
+				if CharInfo.CurrentKeyName and CharInfo.CurrentKeyName ~= 0 then
+					tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyName.."|r", ""}
+				end
+				if CharInfo.RIO_Score ~= 0 then
+					tooltip[#tooltip+1] = {" ", " "}
+					local Enum_Activities_table = {}
+					for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
+						Enum_Activities_table[#Enum_Activities_table+1] = i
 					end
-					if CharInfo.RIO_Score ~= 0 then
-						tooltip[#tooltip+1] = {" ", " "}
-						local Enum_Activities_table = {}
-						for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
-							Enum_Activities_table[#Enum_Activities_table+1] = i
-						end
-						tsort(Enum_Activities_table)
-						for j = 1, #Enum_Activities_table do
-							local i = Enum_Activities_table[j]
-							if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].type ~= "" then
-								CharInfo.MASLENGO.GreatVault[i] = CharInfo.MASLENGO.GreatVault[i] or {}
-								CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING = CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING or 0
-								CharInfo.MASLENGO.GreatVault[i].progress = CharInfo.MASLENGO.GreatVault[i].progress or 0
-								CharInfo.MASLENGO.GreatVault[i].threshold = CharInfo.MASLENGO.GreatVault[i].threshold or 0
-								if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING ~= 0 then
-									tooltip[#tooltip+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING.."|r"}
-								elseif CharInfo.MASLENGO.GreatVault[i].progress ~= 0 then
-									tooltip[#tooltip+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold}
-								end
+					tsort(Enum_Activities_table)
+					for j = 1, #Enum_Activities_table do
+						local i = Enum_Activities_table[j]
+						if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].type ~= "" then
+							CharInfo.MASLENGO.GreatVault[i] = CharInfo.MASLENGO.GreatVault[i] or {}
+							CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING = CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING or 0
+							CharInfo.MASLENGO.GreatVault[i].progress = CharInfo.MASLENGO.GreatVault[i].progress or 0
+							CharInfo.MASLENGO.GreatVault[i].threshold = CharInfo.MASLENGO.GreatVault[i].threshold or 0
+							if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING ~= 0 then
+								tooltip[#tooltip+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING.."|r"}
+							elseif CharInfo.MASLENGO.GreatVault[i].progress ~= 0 then
+								tooltip[#tooltip+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold}
 							end
 						end
-						tooltip[#tooltip+1] = {" ", " "}
-						tooltip[#tooltip+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_weeklyBest.."|r"}
-						tooltip[#tooltip+1] = {"RIO Score:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_Score.."|r"}
 					end
-					if CharInfo.CurrentKey ~= 0 then
-						vivodCent = E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKey.."|r"
-					end
-					if CharInfo.HasAvailableRewards then
-						vivodCent = vivodCent..E.Blue_Color..">Vault<|r"
-					end
+					tooltip[#tooltip+1] = {" ", " "}
+					tooltip[#tooltip+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_weeklyBest.."|r"}
+					tooltip[#tooltip+1] = {"RIO Score:", E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.RIO_Score.."|r"}
+				end
+				if CharInfo.CurrentKey ~= 0 then
+					vivodCent = E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKey.."|r"
+				end
+				if CharInfo.HasAvailableRewards then
+					vivodCent = vivodCent..E.Blue_Color..">Vault<|r"
+				end
 				return vivodCent, tooltip
 		end)
 		tinsert(OctoTable_func_otrisovkaLEFT,

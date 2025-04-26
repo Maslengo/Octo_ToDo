@@ -1127,6 +1127,7 @@ local MyEventsTable = {
 	-- "RECEIVED_ACHIEVEMENT_LIST",
 	"PLAYER_LEVEL_UP",
 	"QUEST_POI_UPDATE",
+	"PLAYER_ENTERING_WORLD",
 }
 ----------------------------------------------------------------
 E.RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable, E.func_DebugPath())

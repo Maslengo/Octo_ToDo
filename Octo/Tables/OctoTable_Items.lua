@@ -176,8 +176,8 @@ E.OctoTable_itemID_ItemsUsable_Other = {
 	216900,
 	216901,
 	216902,
-
-
+	188698,
+	173716,
 	45072,
 
 	44794,

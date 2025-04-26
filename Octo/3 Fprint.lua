@@ -1,4 +1,7 @@
 local GlobalAddonName, E = ...
+local LibThingsLoad = LibStub("LibThingsLoad-1.0")
+
+
 local function func_Reverse_order(a, b) return b < a end
 
 local editor_themes = {
@@ -169,63 +172,14 @@ local function processList(list, processor, showUnknown)
 	editFrame:Show()
 end
 
-function E.func_mountslist(full)
-	if E.func_IsAddOnLoaded("Blizzard_Collections") then return fprint("|cffff0000NEED RELOAD|r") end
-
-	full = full == "1"
-	local tbl, types, currentTier, t, c, w = {}, {}, tonumber(GetBuildInfo():match("(.-)%.")), {}, 0, {}
-	local mountsIDs = C_MountJournal.GetMountIDs()
-	sort(mountsIDs, func_Reverse_order)
-
-	for _, id in ipairs(mountsIDs) do
-		local mountType = select(5, C_MountJournal.GetMountInfoExtraByID(id))
-		if types[mountType] == nil then
-			local name = C_MountJournal.GetMountInfoByID(id)
-			fprint(("Unregistred mount type:%s, ID:%s, name: %s"):format(mountType, id, name))
-		else
-			types[mountType] = types[mountType] + 1
-		end
-
-		local name, spellID, icon, _,_,_,_, isFactionSpecific, faction = C_MountJournal.GetMountInfoByID(id)
-		if isFactionSpecific then name = name.." ("..(faction == 0 and FACTION_HORDE or FACTION_ALLIANCE).. ")" end
-		if full then
-			local v = tbl[id] or {currentTier, 0, 0}
-			tinsert(t, {id, v[1], v[2], v[3], spellID, name})
-		elseif not tbl[id] then
-			c = c + 1
-			editBox:SetText((editBox:GetText() or "")..("[%s] = true, -- %s %s %s\n"):format(id, E.func_texturefromIcon(icon), spellID, name))
-		end
-		w[id] = true
-	end
-
-	for k, v in next, types do
-		if v == 0 then fprint(("No mounts with type: %d"):format(k)) end
-	end
-
-	if full then
-		sort(t, function(a,b) return a[2]<b[2] or a[2]==b[2] and a[1]<b[1] end)
-		for _, m in ipairs(t) do
-			local ids = type(m[3]) == "table" and tToStr(m[3]) or m[3]
-			editBox:SetText((editBox:GetText() or "")..("[%s] = {%s, %s, %s}, -- %s %s\n"):format(m[1], m[2], ids, m[4], m[5], m[6]))
-		end
-	end
-
-	for id in next, tbl do
-		if not w[id] then fprint("wtf", id) end
-	end
-
-	if c > 0 or full then editFrame:Show() end
-	fprint(("Mounts: %s. In base %s. Not in base: %s."):format(#mountsIDs, #tbl, c))
-end
-
 function E.func_itemslist(msg)
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Other)
 	promise1:ThenForAllWithCached(function(_, ids) processList(ids, function(id) return E.func_GetItemIconByID(id)..E.func_GetItemNameByID(id) end) end)
 	promise1:FailWithChecked(function(_, ids) processList(ids, function(id) return E.func_GetItemIconByID(id)..E.func_GetItemNameByID(id) end) end)
 end
 
 function E.func_itemslistSort(msg)
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Other)
 	promise1:ThenForAllWithCached(function(_, ids)
 		local str = ""
 		for i, id in ipairs(ids) do
@@ -286,7 +240,6 @@ end
 local function func_HandleCommand(msg)
 	local command, arg = strsplit(" ", msg, 2)
 	local commands = {
-		mount = E.func_mountslist,
 		item = E.func_itemslist,
 		quest = E.func_questslist,
 		currency = E.func_currencieslist,
@@ -294,7 +247,6 @@ local function func_HandleCommand(msg)
 		spell = E.func_spellslist,
 		item2 = E.func_itemslistSort,
 		item3 = E.func_itemslistSortBOOLEN,
-		["1"] = E.func_mountslist,
 		["2"] = E.func_itemslist,
 		["3"] = E.func_questslist,
 		["4"] = E.func_currencieslist,
@@ -309,7 +261,7 @@ local function func_HandleCommand(msg)
 	else
 		print("Команды:")
 		for i = 1, 8 do
-			local name = i == 1 and "mount" or i == 2 and "item" or i == 3 and "quest" or
+			local name = i == 2 and "item" or i == 3 and "quest" or
 						 i == 4 and "currency" or i == 5 and "rep" or i == 6 and "spell" or
 						 i == 7 and "item2" or "item3"
 			print("/fp "..name.." ("..i..")")
