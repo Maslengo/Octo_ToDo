@@ -1,7 +1,5 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-
-
 -- Кэширование часто используемых функций
 local tinsert = table.insert
 local tremove = table.remove
@@ -16,16 +14,6 @@ local select = select
 local GetServerTime = GetServerTime
 local string_format = string.format
 local math_floor = math.floor
-
-
-
-
-
-
-
-
-
-
 -- Функция для форматированного вывода имени персонажа с уровнем и сервером
 function E.func_vivodCent(CharInfo)
 	local namePart = CharInfo.classColorHex..CharInfo.Name.."|r"
@@ -315,74 +303,122 @@ function E:func_Otrisovka()
 			end)
 		end
 	end
+	if Octo_ToDo_DB_Vars.Holidays then
+		----------------------------------------------------------------
+		-- Сад чудес (181)
+		----------------------------------------------------------------
+		if Octo_ToDo_DB_Other.ActiveHoliday[181] then
 
-	----------------------------------------------------------------
-	-- Сад чудес (181)
-	----------------------------------------------------------------
-	if Octo_ToDo_DB_Other.ActiveHoliday[181] then
-		for _, v in ipairs(E.OctoTable_UniversalQuest) do
-			if v.desc == "EventNoblegarden" then
-				tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-						local vivodCent, tooltip = " ", {}
-						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
-							vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-						end
-						return vivodCent, tooltip
-				end)
-				tinsert(OctoTable_func_otrisovkaLEFT, function()
-						return tostringall(v.textleft).."|r", v.icon, E.Orange_Color
-				end)
+
+
+			tinsert(OctoTable_func_otrisovkaCENT,
+				function(CharInfo)
+					local vivodCent, tooltip = " ", {}
+					local v = Octo_ToDo_DB_Other.Holiday[181]
+					if CharInfo.Name == UnitName("player") then
+						vivodCent = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
+					end
+					return vivodCent, tooltip
+			end)
+			tinsert(OctoTable_func_otrisovkaLEFT,
+				function(CharInfo)
+					local v = Octo_ToDo_DB_Other.Holiday[181]
+					local name = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or "")
+					local icon = v.iconTexture
+					return name, icon, E.Holiday_Color
+			end)
+
+
+
+
+			for _, v in ipairs(E.OctoTable_UniversalQuest) do
+				if v.desc == "HolidaysNoblegarden" then
+					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
+							local vivodCent, tooltip = " ", {}
+							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
+								vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+							end
+							return vivodCent, tooltip
+					end)
+					tinsert(OctoTable_func_otrisovkaLEFT, function()
+							return tostringall(v.textleft).."|r", v.icon, E.Holiday_Color
+					end)
+				end
+			end
+			tinsert(OctoTable_func_otrisovkaCENT,
+				function(CharInfo)
+					local vivodCent, tooltip = " ", {}
+					if CharInfo.MASLENGO.ItemsInBag[44791] ~= nil then
+						vivodCent = CharInfo.MASLENGO.ItemsInBag[44791]
+					end
+					return vivodCent, tooltip
+			end)
+			tinsert(OctoTable_func_otrisovkaLEFT,
+				function(CharInfo)
+					return E.func_GetItemNameByID(44791), E.func_GetItemIconByID(44791), E.Holiday_Color
+			end)
+			tinsert(OctoTable_func_otrisovkaCENT,
+				function(CharInfo)
+					local vivodCent, tooltip = " ", {}
+					if CharInfo.MASLENGO.ItemsInBag[45072] ~= nil then
+						vivodCent = CharInfo.MASLENGO.ItemsInBag[45072]
+					end
+					return vivodCent, tooltip
+			end)
+			tinsert(OctoTable_func_otrisovkaLEFT,
+				function(CharInfo)
+					return E.func_GetItemNameByID(45072), E.func_GetItemIconByID(45072), E.Holiday_Color
+			end)
+		end
+		----------------------------------------------------------------
+		-- Путешествие во времени по подземельям (1265) Legion
+		----------------------------------------------------------------
+		if Octo_ToDo_DB_Other.ActiveHoliday[1265] then
+
+
+
+
+
+			tinsert(OctoTable_func_otrisovkaCENT,
+				function(CharInfo)
+					local vivodCent, tooltip = " ", {}
+					local v = Octo_ToDo_DB_Other.Holiday[1265]
+					if CharInfo.Name == UnitName("player") then
+						vivodCent = E.Event_Color..v.startTime.." - "..v.endTime.."|r"
+					end
+					return vivodCent, tooltip
+			end)
+			tinsert(OctoTable_func_otrisovkaLEFT,
+				function(CharInfo)
+					local v = Octo_ToDo_DB_Other.Holiday[1265]
+					local name = v.invitedBy..E.Event_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or "")
+					local icon = v.iconTexture
+					return name, icon, E.Event_Color
+			end)
+
+
+
+
+
+
+
+
+			for _, v in ipairs(E.OctoTable_UniversalQuest) do
+				if v.desc == "HolidaysTimewalk" then
+					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
+							local vivodCent, tooltip = " ", {}
+							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
+								vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+							end
+							return vivodCent, tooltip
+					end)
+					tinsert(OctoTable_func_otrisovkaLEFT, function()
+							return tostringall(v.textleft).."|r", v.icon, E.Event_Color
+					end)
+				end
 			end
 		end
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[44791] ~= nil then
-					vivodCent = CharInfo.MASLENGO.ItemsInBag[44791]
-				end
-				return vivodCent, tooltip, E.Red_Color
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.func_GetItemNameByID(44791), E.func_GetItemIconByID(44791), E.Orange_Color
-		end)
-
-		tinsert(OctoTable_func_otrisovkaCENT,
-			function(CharInfo)
-				local vivodCent, tooltip = " ", {}
-				if CharInfo.MASLENGO.ItemsInBag[45072] ~= nil then
-					vivodCent = CharInfo.MASLENGO.ItemsInBag[45072]
-				end
-				return vivodCent, tooltip
-		end)
-		tinsert(OctoTable_func_otrisovkaLEFT,
-			function(CharInfo)
-				return E.func_GetItemNameByID(45072), E.func_GetItemIconByID(45072), E.Orange_Color
-		end)
 	end
-
-	----------------------------------------------------------------
-	-- Путешествие во времени по подземельям (1265) Legion
-	----------------------------------------------------------------
-	if Octo_ToDo_DB_Other.ActiveHoliday[1265] then
-		for _, v in ipairs(E.OctoTable_UniversalQuest) do
-			if v.desc == "Timewalk" then
-				tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-						local vivodCent, tooltip = " ", {}
-						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
-							vivodCent = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-						end
-						return vivodCent, tooltip
-				end)
-				tinsert(OctoTable_func_otrisovkaLEFT, function()
-						return tostringall(v.textleft).."|r", v.icon, E.Yellow_Color
-				end)
-			end
-		end
-	end
-
-
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -1243,14 +1279,13 @@ function E:func_Otrisovka()
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
 				local vivodCent, tooltip = " ", {}
-				tooltip[#tooltip+1] = {E.DEVTEXT, ""}
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
 						tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
 					end
 				end
 				if #tooltip ~= 0 then
-					vivodCent = E.Green_Color.."Octopussy|r"
+					vivodCent = E.Green_Color.."Выполненные|r"
 				end
 				return vivodCent, tooltip
 		end)

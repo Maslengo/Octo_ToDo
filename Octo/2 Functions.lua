@@ -1076,13 +1076,12 @@ function E.func_IsAddOnLoaded(AddonNameOrIndex)
 end
 ----------------------------------------------------------------
 function E.func_LoadAddOnFORCED(AddonName)
-	if not E.func_IsAddOnLoaded(AddonName) then
-		local _, _, _, enabled = GetAddOnInfo(AddonName)
-		if not enabled then
-			E.func_EnableAddOn(AddonName)
-			-- E.func_EnableAddOn(AddonName, "All")
+	if DoesAddOnExist(AddonName) and not E.func_IsAddOnLoaded(AddonName) then
+		local _, _, _, loadable = GetAddOnInfo(AddonName)
+		if not loadable then
+			EnableAddOn(AddonName)
+			LoadAddOn(AddonName)
 		end
-		LoadAddOn(AddonName)
 	end
 end
 ----------------------------------------------------------------
@@ -1541,13 +1540,13 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		GameTooltip:AddDoubleLine(" ", " ")
 
 		local sorted = {}
-		for k in pairs(E.HolidayForButton) do
+		for k in pairs(Octo_ToDo_DB_Other.Holiday) do
 			table_insert(sorted, k)
 		end
-		sort(sorted, function(a, b) return E.HolidayForButton[a].priority < E.HolidayForButton[b].priority end)
+		sort(sorted, function(a, b) return Octo_ToDo_DB_Other.Holiday[a].priority < Octo_ToDo_DB_Other.Holiday[b].priority end)
 
 		for _, eventID in ipairs(sorted) do
-			local v = E.HolidayForButton[eventID]
+			local v = Octo_ToDo_DB_Other.Holiday[eventID]
 			if v.Active then
 				GameTooltip:AddDoubleLine(
 					v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..
@@ -1573,7 +1572,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 
 	Octo_EventsButton:SetScript("OnClick", function()
 		frame:Hide()
-		fpde(E.HolidayForButton)
+		fpde(Octo_ToDo_DB_Other.Holiday)
 	end)
 
 	-- Framerate Frame
@@ -1884,11 +1883,10 @@ E.fontObject12:SetFont(E.Octo_font, 12, "OUTLINE")
 E.fontObject22 = CreateFont("OctoFont22")
 E.fontObject22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject22:SetFont(E.Octo_font, 20, "OUTLINE")
-E.AddonTexture_1 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_1.tga"
-E.AddonTexture_2 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_2.tga"
-E.AddonTexture_3 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_3.tga"
-E.AddonTexture_4 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_4.tga"
-E.AddonTexture_5 = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\AddonTexture_5.tga"
+E.IconTexture = C_AddOns.GetAddOnMetadata(GlobalAddonName, "IconTexture")
+
+
+
 E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- GetExpansionLevel()
 ----------------------------------------------------------------
@@ -2008,7 +2006,8 @@ E.Skyblue_Color = "|cff87CDEB"
 E.Steelblue_Color = "|cff4682B3"
 E.Slategray_Color = "|cff708090"
 E.Brown_Color = "|cff964B00"
-E.Event_Color = "|cff4682B3"
+E.Holiday_Color = "|cffFF8C00"
+E.Event_Color = "|cffFFF371"-- "|cff4682B3" КРАСИВОЕ
 E.Debug_Color = E.classColorHexCurrent -- "|cff4682B3"
 ----------------------------------------------------------------
 E.Kyrian_r_Color = 0.44
@@ -2075,7 +2074,7 @@ E.menuBackdrop = {
 }
 E.OctoTable_Frames = {}
 E.listMaxSize = 30
-E.DEVTEXT = "|T".. E.AddonTexture_1 ..":14:14:::64:64:4:60:4:60|t" .. E.Green_Color.. "DebugInfo|r: "
+E.DEVTEXT = "|T".. E.IconTexture ..":14:14:::64:64:4:60:4:60|t" .. E.Green_Color.. "DebugInfo|r: "
 E.KILLTEXT = "|T".. "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\ElvUI\\Facepalm.tga" ..":14:14:::64:64:4:60:4:60|t"
 ----------------------------------------------------------------
 E.OctoTable_bytetoB64 = {

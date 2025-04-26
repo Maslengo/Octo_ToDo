@@ -11,7 +11,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = E.func_questName(13503),
 		name_save = "ATisketaTasketaNoblegardenBasket",
 		reset = "Month",
-		desc = "EventNoblegarden",
+		desc = "HolidaysNoblegarden",
 		questID = {
 			13503,
 		},
@@ -22,7 +22,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = E.func_questName(79575),
 		name_save = "WhattheDuck",
 		reset = "Month",
-		desc = "EventNoblegarden",
+		desc = "HolidaysNoblegarden",
 		questID = {
 			79575,
 		},
@@ -33,7 +33,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = E.func_questName(13479),
 		name_save = "TheGreatEggHunt",
 		reset = "Daily",
-		desc = "EventNoblegarden",
+		desc = "HolidaysNoblegarden",
 		questID = {
 			13479,
 		},
@@ -44,7 +44,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = E.func_questName(79576),
 		name_save = "AFowlConcoction",
 		reset = "Month",
-		desc = "EventNoblegarden",
+		desc = "HolidaysNoblegarden",
 		questID = {
 			79576,
 		},
@@ -55,7 +55,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = E.func_questName(79577),
 		name_save = "DuckTales",
 		reset = "Month",
-		desc = "EventNoblegarden",
+		desc = "HolidaysNoblegarden",
 		questID = {
 			79577,
 		},
@@ -66,7 +66,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = E.func_questName(79578),
 		name_save = "JustaWaddleAway",
 		reset = "Month",
-		desc = "EventNoblegarden",
+		desc = "HolidaysNoblegarden",
 		questID = {
 			79578, -- Horde
 			79331, -- Alliance
@@ -78,7 +78,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = E.func_questName(79558),
 		name_save = "FeatheredFiend",
 		reset = "Daily",
-		desc = "EventNoblegarden",
+		desc = "HolidaysNoblegarden",
 		questID = {
 			79558, -- Horde
 			73192, -- Alliance
@@ -90,7 +90,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = E.func_questName(79135),
 		name_save = "QuackingDown",
 		reset = "Daily",
-		desc = "EventNoblegarden",
+		desc = "HolidaysNoblegarden",
 		questID = {
 			79135,
 		},
@@ -109,7 +109,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = RAIDS,
 		name_save = "Raid",
 		reset = "Weekly",
-		desc = "Timewalk",
+		desc = "HolidaysTimewalk",
 		questID = {
 			57637,
 			50316,
@@ -123,7 +123,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = DUNGEONS,
 		name_save = "Dungeons",
 		reset = "Weekly",
-		desc = "Timewalk",
+		desc = "HolidaysTimewalk",
 		questID = {
 			86560,
 			86556,

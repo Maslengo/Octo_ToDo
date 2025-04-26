@@ -228,7 +228,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			Auto_Gossip = {
 				type = "toggle",
-				name = L["AutoGossip"],
+				name = L["Auto_Gossip"],
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.Auto_Gossip
@@ -284,7 +284,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			Auto_CinematicCanceler = {
 				type = "toggle",
-				name = L["CinematicCanceler"],
+				name = L["Auto_CinematicCanceler"],
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.Auto_CinematicCanceler
@@ -604,6 +604,20 @@ function E.CreateGeneralOptions()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Professions = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Holidays = {
+				type = "toggle",
+				name = CALENDAR_FILTER_HOLIDAYS,
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.Holidays
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Holidays = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),

@@ -19,7 +19,7 @@ end)
 local locale = GetLocale()
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.Collect_ALL_PlayerInfo()
+function E.Collect_All_PlayerInfo()
 	if Octo_DEBUG then
 		Octo_DEBUG.profileKeys = Octo_DEBUG.profileKeys or {}
 		Octo_DEBUG.profileKeys[E.curCharName.." - ".. E.curServer] = Octo_DEBUG.profileKeys[E.curCharName.." - ".. E.curServer] or "OctoUI"
@@ -139,7 +139,7 @@ function E.Collect_All_PlayerDurability()
 		collect.PlayerDurability = E.func_CompactNumberSimple(totalDurability)
 	end
 end
-function E.Collect_ALL_Player_Level()
+function E.Collect_All_PlayerLevel()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		local UnitLevel = UnitLevel("PLAYER") or 0
@@ -168,28 +168,28 @@ function E.Collect_ALL_Player_Level()
 		end
 	end
 end
-function E.Collect_ALL_Played(totalTime, currentLevelTime)
+function E.Collect_All_Played(totalTime, currentLevelTime)
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect then
 		collect.realTotalTime = totalTime
 		collect.realLevelTime = currentLevelTime
 	end
 end
-function E.Collect_ALL_WarMode()
+function E.Collect_All_WarMode()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect then
 		local WarMode = C_PvP.IsWarModeDesired()
 		collect.WarMode = WarMode
 	end
 end
-function E.Collect_ALL_Mail()
+function E.Collect_All_Mail()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		local hasMail = HasNewMail()
 		collect.hasMail = hasMail
 	end
 end
-function E.Collect_ALL_LoginTime()
+function E.Collect_All_LoginTime()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect then
 		collect.loginDate = date("%d.%m.%Y %H:%M:%S")
@@ -201,71 +201,7 @@ function E.Collect_ALL_LoginTime()
 		collect.time = time()
 	end
 end
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes
--- POSTMASTER_PIPE_BROKEN_ISLES (New) - Broken Isles
--- POSTMASTER_PIPE_DRAENOR (New) - Draenor
--- POSTMASTER_PIPE_EASTERNKINGDOMS (New) - Eastern Kingdoms
--- POSTMASTER_PIPE_KALIMDOR (New) - Kalimdor
--- POSTMASTER_PIPE_NORTHREND (New) - Northrend
--- POSTMASTER_PIPE_OUTLAND (New) - Outland
--- POSTMASTER_PIPE_PANDARIA (New) - Pandaria
--- ВЫЗЫВАЕТСЯ 1 РАЗ
-function E.Collect_All_Professions_Debug()
-	E.func_LoadAddOnFORCED("Blizzard_Professions")
-	E.func_LoadAddOnFORCED("Blizzard_ProfessionsBook")
-	if not ProfessionsFrame then
-		ProfessionsFrame_LoadUI()
-		-- else
-		--     C_Timer.After(1, function()
-		--         OpenProfessionUIToSkillLine(2)
-		--         ShowUIPanel(ProfessionsFrame)
-		--     end)
-	end
-	-- if not C_TradeSkillUI.IsTradeSkillReady() then
-	--     C_TradeSkillUI.OpenTradeSkill(185)
-	--         print ("OPPENED?")
-	-- end
-	if Octo_ToDo_DB_Other.professions.DEBUG == nil then
-		Octo_ToDo_DB_Other.professions.DEBUG = {}
-		for skillLineID = 1, 3000 do
-			if E.func_ProfessionName(skillLineID) ~= UNKNOWN then
-				Octo_ToDo_DB_Other.professions.DEBUG[skillLineID] = E.func_ProfessionName(skillLineID)
-				-- Octo_ToDo_DB_Other.professions.DEBUG[skillLineID] = true
-			end
-		end
-	end
-end
---[[
-с первых двух как и собираю
-3 - арх
-остальные своя таблица сортировки
-]]
-function LoadProfessionSilently(professionID)
-	if not C_TradeSkillUI.IsTradeSkillReady() then
-		C_TradeSkillUI.OpenTradeSkill(professionID) -- "Открываем" профессию в фоне
-	end
-end
 function E.Collect_All_Professions()
-	-- info = C_TradeSkillUI.GetBaseProfessionInfo() https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetBaseProfessionInfo
-	-- WORLD_QUEST_ICONS_BY_PROFESSION https://www.townlong-yak.com/framexml/8.1.5/Constants.lua#81
-	-- C_TradeSkillUI.GetChildProfessionInfos()  -- ВЫЗЫВАЕТСЯ ТОЛЬКО ПРИ ОТКРЫТОМ ЮАЙ
-	-- https://warcraft.wiki.gg/wiki/API_C_TradeSkillUI.GetTradeSkillDisplayName
-	-- https://warcraft.wiki.gg/wiki/TradeSkillLineID
-	-- https://wago.tools/db2/SkillLine
-	-- /dump C_TradeSkillUI.GetTradeSkillDisplayName(2543) -- Кулинария Дренора 2543
-	-- 3
 	local archaeology = {
 		--ID,Name_lang,ResearchFieldID,CurrencyID,TextureFileID,BigTextureFileID,ItemID
 		1, -- Дворфы,1,384,461831,461832,52843
@@ -373,38 +309,38 @@ function E.Collect_All_Professions()
 			----------------------------------------------------------------
 			----------------------------------------------------------------
 			----------------------------------------------------------------
-			if i == 4 or i == 5 then
-				-- local _, _, skillLevel, maxSkillLevel, _, _, skillLine, skillModifier = GetProfessionInfo(id)
-				for index, skillLineID in next, (prof34) do -- СОБИРАТЬ ВСЁ
-					local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
-					local QWEprofessionName = info.professionName
-					local QWEskillLevel = info.skillLevel
-					local QWEmaxSkillLevel = info.maxSkillLevel
-					local QWEprofessionID = info.professionID
-					local QWEexpansionName = info.expansionName
-					local QWEparentProfessionID = info.parentProfessionID
-					-- local QWEsourceCounter = info.sourceCounter
-					-- local QWEskillModifier = info.skillModifier
-					-- local QWEisPrimaryProfession = info.isPrimaryProfession
-					-- local QWEparentProfessionName = info.parentProfessionName
-					if skillLine == QWEparentProfessionID then
-						collect.MASLENGO.professions[i].child = collect.MASLENGO.professions[i].child or {}
-						tinsert(collect.MASLENGO.professions[i].child, {
-								QWEprofessionName = QWEprofessionName,
-								QWEskillLevel = QWEskillLevel,
-								QWEmaxSkillLevel = QWEmaxSkillLevel,
-								QWEprofessionID = QWEprofessionID,
-								QWEexpansionName = QWEexpansionName,
-						})
-					end
-				end
-			end
+			-- if i == 4 or i == 5 then
+			--     -- local _, _, skillLevel, maxSkillLevel, _, _, skillLine, skillModifier = GetProfessionInfo(id)
+			--     for index, skillLineID in next, (prof34) do -- СОБИРАТЬ ВСЁ
+			--         local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
+			--         local QWEprofessionName = info.professionName
+			--         local QWEskillLevel = info.skillLevel
+			--         local QWEmaxSkillLevel = info.maxSkillLevel
+			--         local QWEprofessionID = info.professionID
+			--         local QWEexpansionName = info.expansionName
+			--         local QWEparentProfessionID = info.parentProfessionID
+			--         -- local QWEsourceCounter = info.sourceCounter
+			--         -- local QWEskillModifier = info.skillModifier
+			--         -- local QWEisPrimaryProfession = info.isPrimaryProfession
+			--         -- local QWEparentProfessionName = info.parentProfessionName
+			--         if skillLine == QWEparentProfessionID then
+			--             collect.MASLENGO.professions[i].child = collect.MASLENGO.professions[i].child or {}
+			--             tinsert(collect.MASLENGO.professions[i].child, {
+			--                     QWEprofessionName = QWEprofessionName,
+			--                     QWEskillLevel = QWEskillLevel,
+			--                     QWEmaxSkillLevel = QWEmaxSkillLevel,
+			--                     QWEprofessionID = QWEprofessionID,
+			--                     QWEexpansionName = QWEexpansionName,
+			--             })
+			--         end
+			--     end
+			-- end
 			----------------------------------------------------------------
 			----------------------------------------------------------------
 			----------------------------------------------------------------
 		end
 	end
-	--     for _, branchID in ipairs(ArchaeologyTBL) do
+	-- for _, branchID in ipairs(ArchaeologyTBL) do
 	--         local raceName, raceTextureID, raceItemID, numFragmentsCollected, numFragmentsRequired, maxFragments = GetArchaeologyRaceInfoByID(branchID)
 	--         print (raceName, E.func_texturefromIcon(raceTextureID), raceItemID, numFragmentsCollected, numFragmentsRequired, maxFragments)
 	--     end
@@ -413,7 +349,7 @@ function E.Collect_All_Professions()
 	--     print (numProjects)
 	-- end
 end
-function E.Collect_ALL_GreatVault()
+function E.Collect_All_GreatVault()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		local mapChallengeModeIDs = C_ChallengeMode.GetMapTable()
@@ -477,25 +413,23 @@ end
 function E.Collect_All_Currency()
 	-- local list = Octo_DB_Config.CurrencyDB
 	local list = {}
-
-
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		-- local listSize = C_CurrencyInfo.GetCurrencyListSize()
 		-- local headerIndex
 		-- for i = 1, listSize do
-		-- 	local info = C_CurrencyInfo.GetCurrencyListInfo(i)
-		-- 	if info and info.isHeader then
-		-- 		C_CurrencyInfo.ExpandCurrencyList(i, true)
-		-- 		listSize = C_CurrencyInfo.GetCurrencyListSize()
-		-- 		headerIndex = i
-		-- 	elseif info and info.name then
-		-- 		local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
-		-- 		local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
-		-- 		if currencyID then
-		-- 			list[currencyID] = list[currencyID] or false
-		-- 		end
-		-- 	end
+		--     local info = C_CurrencyInfo.GetCurrencyListInfo(i)
+		--     if info and info.isHeader then
+		--         C_CurrencyInfo.ExpandCurrencyList(i, true)
+		--         listSize = C_CurrencyInfo.GetCurrencyListSize()
+		--         headerIndex = i
+		--     elseif info and info.name then
+		--         local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
+		--         local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
+		--         if currencyID then
+		--             list[currencyID] = list[currencyID] or false
+		--         end
+		--     end
 		-- end
 		-- for CurrencyID, v in next, (list) do
 		for _, CurrencyID in ipairs(E.TESTCURR) do
@@ -559,8 +493,6 @@ function E.Collect_All_Currency()
 		end
 	end
 end
-
-
 function E.Collect_All_Reputations()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	C_Reputation.ExpandAllFactionHeaders()
@@ -597,7 +529,7 @@ function E.Collect_All_Reputations()
 		----------------------------------------------------------------
 	end
 end
-function E.Collect_ALL_ItemsInBag()
+function E.Collect_All_ItemsInBag()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		local usedSlots = 0
@@ -669,7 +601,7 @@ function E.Collect_ALL_ItemsInBag()
 		collect.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
 	end
 end
-function E.Collect_ALL_Locations()
+function E.Collect_All_Locations()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		local curSubZone = GetSubZoneText()
@@ -677,22 +609,18 @@ function E.Collect_ALL_Locations()
 		local curBindLocation = GetBindLocation()
 		local CurrentLocation = ""
 		if curSubZone ~= 0 and curSubZone ~= "" and curRealZone ~= curSubZone then
-			CurrentLocation = curRealZone .. " (".. curSubZone .. ")"
+			CurrentLocation = curRealZone.." (".. curSubZone..")"
 		end
 		collect.CurrentLocation = CurrentLocation
 		collect.BindLocation = curRealZone.." ("..curBindLocation..")"
 	end
 end
-
-
 function E.Collect_All_Quests()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if not collect or InCombatLockdown() then return end
-
 	-- Очищаем таблицы
 	wipe(collect.MASLENGO.Quests)
 	wipe(collect.MASLENGO.OctoTable_QuestID)
-
 	-- Обрабатываем OctoTable_QuestID
 	for questID, v in pairs(E.OctoTable_QuestID) do
 		local status = E.func_CheckCompletedByQuestID(questID)
@@ -700,11 +628,9 @@ function E.Collect_All_Quests()
 			collect.MASLENGO.OctoTable_QuestID[questID] = status
 		end
 	end
-
 	-- Собираем информацию о квестах
 	local numQuests = 0
 	local numShownEntries = C_QuestLog.GetNumQuestLogEntries()
-
 	for i = 1, numShownEntries do
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
@@ -712,15 +638,12 @@ function E.Collect_All_Quests()
 			collect.MASLENGO.Quests[info.questID] = E.func_CheckCompletedByQuestID(info.questID)
 		end
 	end
-
 	-- Сохраняем статистику
 	collect.numShownEntries = numShownEntries
 	collect.numQuests = numQuests
 	collect.maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept() or 0
 end
-
-
-function E.Collect_ALL_UNIVERSALQuestUpdate()
+function E.Collect_All_UNIVERSALQuestUpdate()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		collect.MASLENGO.UniversalQuest = collect.MASLENGO.UniversalQuest or {}
@@ -758,7 +681,7 @@ function E.Collect_ALL_UNIVERSALQuestUpdate()
 		end
 	end
 end
-function E.Collect_ALL_ItemLevel()
+function E.Collect_All_ItemLevel()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvp = GetAverageItemLevel()
@@ -767,21 +690,21 @@ function E.Collect_ALL_ItemLevel()
 		collect.avgItemLevelPvp = math.floor(avgItemLevelPvp)
 	end
 end
-function E.Collect_ALL_MoneyUpdate()
+function E.Collect_All_MoneyUpdate()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		collect.Money = GetMoney() or 0
 		Octo_ToDo_DB_Other.AccountMoney[E.BattleTagLocal] = C_Bank.FetchDepositedMoney(2)
 	end
 end
-function E.Collect_ALL_MoneyOnLogin()
+function E.Collect_All_MoneyOnLogin()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		local Money = GetMoney()
 		collect.MoneyOnLogin = Money
 	end
 end
-function E.Collect_All_journalInstance()
+function E.Collect_All_JournalInstance()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		-- if ((GetNumSavedInstances() + GetNumSavedWorldBosses() > 0) and not RaidInfoFrame:IsVisible()) then
@@ -881,13 +804,11 @@ function E.Collect_All_journalInstance()
 	end
 end
 function E.Collect_All_Holiday()
-	E.HolidayForButton = {}
-	wipe(E.HolidayForButton)
-
+	Octo_ToDo_DB_Other.Holiday = Octo_ToDo_DB_Other.Holiday or {}
+	-- wipe(Octo_ToDo_DB_Other.Holiday)
 	Octo_ToDo_DB_Other.ActiveHoliday = {}
 	wipe(Octo_ToDo_DB_Other.ActiveHoliday)
-
-	if E.HolidayForButton and not InCombatLockdown() then
+	if Octo_ToDo_DB_Other.Holiday and not InCombatLockdown() then
 		local backup = Octo_ToDo_DB_Other.CVar
 		local function function_setBackup()
 			if CalendarFrame then
@@ -935,8 +856,8 @@ function E.Collect_All_Holiday()
 				local eInfo = C_Calendar.GetHolidayInfo(0, day, i)
 				local event = C_Calendar.GetDayEvent(offsetMonths, day, i)
 				local id = event.eventID
-				E.HolidayForButton[id] = E.HolidayForButton[id] or {}
-				E.HolidayForButton[id].title = event.title -- E.func_EventName(id)
+				Octo_ToDo_DB_Other.Holiday[id] = Octo_ToDo_DB_Other.Holiday[id] or {}
+				Octo_ToDo_DB_Other.Holiday[id].title = event.title -- E.func_EventName(id)
 				local startTime = event.startTime
 				local endTime = event.endTime
 				local startTime_year = startTime.year
@@ -962,22 +883,22 @@ function E.Collect_All_Holiday()
 					-- sec = 0,
 				}
 				local event_duration = E.FriendsFrame_GetLastOnline(time(dateTbl_endTime)-time(dateTbl_startTime), true)
-				E.HolidayForButton[id].event_duration = event_duration
-				E.HolidayForButton[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month) -- .."/"..startTime_year
-				E.HolidayForButton[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month) -- .."/"..endTime_year
-				E.HolidayForButton[id].Active = E.HolidayForButton[id].Active or false
-				E.HolidayForButton[id].Possible = E.HolidayForButton[id].Possible or false
-				-- E.HolidayForButton[id].iconTexture = event.iconTexture or ""
-				E.HolidayForButton[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
+				Octo_ToDo_DB_Other.Holiday[id].event_duration = event_duration
+				Octo_ToDo_DB_Other.Holiday[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month) -- .."/"..startTime_year
+				Octo_ToDo_DB_Other.Holiday[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month) -- .."/"..endTime_year
+				Octo_ToDo_DB_Other.Holiday[id].Active = Octo_ToDo_DB_Other.Holiday[id].Active or false
+				Octo_ToDo_DB_Other.Holiday[id].Possible = Octo_ToDo_DB_Other.Holiday[id].Possible or false
+				-- Octo_ToDo_DB_Other.Holiday[id].iconTexture = event.iconTexture or ""
+				Octo_ToDo_DB_Other.Holiday[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
 				if eInfo then
-					E.HolidayForButton[id].iconTexture = eInfo.texture or E.Icon_QuestionMark
+					Octo_ToDo_DB_Other.Holiday[id].iconTexture = eInfo.texture or E.Icon_QuestionMark
 				else
-					E.HolidayForButton[id].iconTexture = event.iconTexture or E.Icon_QuestionMark
-					E.HolidayForButton[id].ENDS = event_duration
+					Octo_ToDo_DB_Other.Holiday[id].iconTexture = event.iconTexture or E.Icon_QuestionMark
+					Octo_ToDo_DB_Other.Holiday[id].ENDS = event_duration
 				end
-				E.HolidayForButton[id].invitedBy = event.invitedBy
-				if not E.HolidayForButton[id].priority then
-					E.HolidayForButton[id].priority = priority
+				Octo_ToDo_DB_Other.Holiday[id].invitedBy = event.invitedBy
+				if not Octo_ToDo_DB_Other.Holiday[id].priority then
+					Octo_ToDo_DB_Other.Holiday[id].priority = priority
 					priority = priority + 1
 				end
 				if day == monthDay then
@@ -985,22 +906,22 @@ function E.Collect_All_Holiday()
 						local secondsToEvent = ((event.startTime.hour - hour) * 60 + event.startTime.minute - minute) * 60
 						if secondsToEvent <= 0 then
 							Octo_ToDo_DB_Other.ActiveHoliday[id] = true
-							E.HolidayForButton[id].Active = true
+							Octo_ToDo_DB_Other.Holiday[id].Active = true
 						else
-							E.HolidayForButton[id].Possible = true
+							Octo_ToDo_DB_Other.Holiday[id].Possible = true
 						end
 					elseif event.sequenceType == "END" then
 						local secondsToEvent = ((event.endTime.hour - hour) * 60 + event.endTime.minute - minute) * 60
 						if secondsToEvent > 0 then
 							Octo_ToDo_DB_Other.ActiveHoliday[id] = true
-							E.HolidayForButton[id].Active = true
+							Octo_ToDo_DB_Other.Holiday[id].Active = true
 						end
 					else
 						Octo_ToDo_DB_Other.ActiveHoliday[id] = true
-						E.HolidayForButton[id].Active = true
+						Octo_ToDo_DB_Other.Holiday[id].Active = true
 					end
 				elseif monthDay < day then
-					E.HolidayForButton[id].Possible = true
+					Octo_ToDo_DB_Other.Holiday[id].Possible = true
 				end
 			end
 		end
@@ -1088,47 +1009,77 @@ function E.Collect_All_Chromie()
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
+
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
-	"SKILL_LINES_CHANGED",
-	"TRADE_SKILL_SHOW",
-	"PLAYER_XP_UPDATE",
-	"QUEST_LOG_UPDATE",
-	"PLAYER_MONEY",
-	"ACCOUNT_MONEY",
-	"CURRENCY_DISPLAY_UPDATE",
-	"CURRENCY_TRANSFER_LOG_UPDATE",
-	"PLAYER_EQUIPMENT_CHANGED",
+	"TIME_PLAYED_MSG",
+
 	"PLAYER_LEAVING_WORLD",
+
+	"ACCOUNT_MONEY",
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
+	"BAG_UPDATE",
 	"COVENANT_CHOSEN",
 	"COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED",
-	"PLAYER_DEAD",
-	"UPDATE_INVENTORY_DURABILITY",
-	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",
-	"BAG_UPDATE",
-	"PLAYER_SPECIALIZATION_CHANGED",
+	"CURRENCY_DISPLAY_UPDATE",
+	"CURRENCY_TRANSFER_LOG_UPDATE",
+	"ENCOUNTER_END",
 	"HEARTHSTONE_BOUND",
-	"ZONE_CHANGED",
-	"ZONE_CHANGED_NEW_AREA",
-	"SPELLS_CHANGED",
-	-- "CALENDAR_UPDATE_EVENT_LIST",
 	"MAIL_INBOX_UPDATE",
 	"MAIL_SHOW",
-	"UPDATE_PENDING_MAIL",
-	"PLAYER_REGEN_ENABLED",
-	"ENCOUNTER_END",
-	"UPDATE_INSTANCE_INFO",
-	"TIME_PLAYED_MSG",
-	-- "LFG_UPDATE_RANDOM_INFO",
-	-- "LFG_COMPLETION_REWARD",
-	-- "ENCOUNTER_LOOT_RECEIVED",
-	-- "INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	-- "RECEIVED_ACHIEVEMENT_LIST",
+	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",
+	"PLAYER_DEAD",
+	-- "PLAYER_ENTERING_WORLD",
+	"PLAYER_EQUIPMENT_CHANGED",
 	"PLAYER_LEVEL_UP",
+	"PLAYER_MONEY",
+	"PLAYER_REGEN_ENABLED",
+	"PLAYER_SPECIALIZATION_CHANGED",
+	"PLAYER_XP_UPDATE",
+	"QUEST_LOG_UPDATE",
 	"QUEST_POI_UPDATE",
-	"PLAYER_ENTERING_WORLD",
+	"SKILL_LINES_CHANGED",
+	"SPELLS_CHANGED",
+	"TRADE_SKILL_SHOW",
+	"UPDATE_INSTANCE_INFO",
+	"UPDATE_INVENTORY_DURABILITY",
+	"UPDATE_PENDING_MAIL",
+	"ZONE_CHANGED",
+	"ZONE_CHANGED_NEW_AREA"
 }
+function E.Collect_All_Table(event)
+	-- print("E.Collect_All_Table() » "..(event and E.Event_Color..event or E.Green_Color.."func_CreateMyDataProvider()").."|r")
+	-- Персонаж и прогресс
+	-- E.Collect_All_PlayerInfo() -- общая информация о персонаже
+	E.Collect_All_PlayerLevel() -- уровень персонажа
+	E.Collect_All_ItemLevel() -- уровень предметов
+	E.Collect_All_PlayerDurability() -- прочность экипировки
+	-- E.Collect_All_Professions() -- профессии
+	-- E.Collect_All_Reputations() -- репутации
+	-- E.Collect_All_Quests() -- квесты
+	-- E.Collect_All_UNIVERSALQuestUpdate() -- обновления квестов
+	-- Предметы и валюта
+	-- E.Collect_All_ItemsInBag() -- предметы в сумках
+	-- E.Collect_All_Currency() -- валюта
+	-- E.Collect_All_MoneyOnLogin() -- деньги при входе
+	-- E.Collect_All_MoneyUpdate() -- обновление денег
+	-- E.Collect_All_Mail() -- почта
+	-- Локации и активность
+	-- E.Collect_All_Locations() -- местоположение
+	-- E.Collect_All_JournalInstance() -- информация о подземельях/рейдах
+	-- E.Collect_All_WarMode() -- режим войны
+	-- E.Collect_All_Chromie() -- хроми
+	-- E.Collect_All_BfA_Island() -- острова Battle for Azeroth
+	-- Системные и служебные данные
+	-- E.Collect_All_LoginTime() -- время входа (УБРАТЬ?)
+	-- E.Collect_All_ReloadCount() -- счётчик перезагрузок UI
+	E.Collect_All_Holiday() -- праздничные события
+	-- Особые системы (BfA, Shadowlands и др.)
+	-- E.Collect_All_BfA_Azerite() -- азерит, Battle for Azeroth
+	-- E.Collect_All_BfA_Cloaklvl() -- уровень плаща, BfA
+	-- E.Collect_All_Covenant() -- ковенанты, Shadowlands
+	-- E.Collect_All_GreatVault() -- Великое Хранилище
+end
 ----------------------------------------------------------------
 E.RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable, E.func_DebugPath())
 function Octo_EventFrame_Collect:ADDON_LOADED()
@@ -1140,112 +1091,142 @@ function Octo_EventFrame_Collect:ADDON_LOADED()
 	end
 end
 function Octo_EventFrame_Collect:PLAYER_LOGIN()
-	RequestTimePlayed()
-	self:UnregisterEvent("PLAYER_LOGIN")
-	self.PLAYER_LOGIN = nil
-	E.Collect_All_ReloadCount()
-	E.Collect_ALL_PlayerInfo()
-	E.Collect_All_Chromie()
-	E.Collect_All_Currency()
-	E.Collect_All_Reputations()
-	E.Collect_ALL_GreatVault()
-	E.Collect_ALL_ItemLevel()
-	E.Collect_ALL_ItemsInBag()
-	E.Collect_ALL_Locations()
-	E.Collect_ALL_LoginTime()
-	E.Collect_ALL_Mail()
-	E.Collect_ALL_MoneyOnLogin()
-	E.Collect_ALL_MoneyUpdate()
-	E.Collect_All_Professions_Debug()
-	-- E.Collect_All_Professions()
-	E.Collect_All_Quests()
-	E.Collect_All_Covenant()
-	E.Collect_All_PlayerDurability()
-	E.Collect_ALL_UNIVERSALQuestUpdate()
-	E.Collect_All_journalInstance()
-	E.Collect_ALL_Player_Level()
-	E.Collect_ALL_WarMode()
-	E.Collect_All_Holiday()
-	E.Collect_All_BfA_Azerite()
-	E.Collect_All_BfA_Cloaklvl()
-	E.Collect_All_BfA_Island()
-	RequestRaidInfo()
-	E.Update("ADDON_LOADED")
+    RequestTimePlayed()
+    RequestRaidInfo()
+
+    self:UnregisterEvent("PLAYER_LOGIN")
+    self.PLAYER_LOGIN = nil
+    E.Collect_All_MoneyOnLogin()
+
+	-- Персонаж и прогресс
+	E.Collect_All_PlayerInfo() -- общая информация о персонаже
+	E.Collect_All_PlayerLevel() -- уровень персонажа
+	E.Collect_All_ItemLevel() -- уровень предметов
+	E.Collect_All_PlayerDurability() -- прочность экипировки
+	E.Collect_All_Professions() -- профессии
+	E.Collect_All_Reputations() -- репутации
+	E.Collect_All_Quests() -- квесты
+	E.Collect_All_UNIVERSALQuestUpdate() -- обновления квестов
+	-- Предметы и валюта
+	E.Collect_All_ItemsInBag() -- предметы в сумках
+	E.Collect_All_Currency() -- валюта
+	E.Collect_All_MoneyOnLogin() -- деньги при входе
+	E.Collect_All_MoneyUpdate() -- обновление денег
+	E.Collect_All_Mail() -- почта
+	-- Локации и активность
+	E.Collect_All_Locations() -- местоположение
+	E.Collect_All_JournalInstance() -- информация о подземельях/рейдах
+	E.Collect_All_WarMode() -- режим войны
+	E.Collect_All_Chromie() -- хроми
+	E.Collect_All_BfA_Island() -- острова Battle for Azeroth
+	-- Системные и служебные данные
+	E.Collect_All_LoginTime() -- время входа (УБРАТЬ?)
+	E.Collect_All_ReloadCount() -- счётчик перезагрузок UI
+	E.Collect_All_Holiday() -- праздничные события
+	-- Особые системы (BfA, Shadowlands и др.)
+	E.Collect_All_BfA_Azerite() -- азерит, Battle for Azeroth
+	E.Collect_All_BfA_Cloaklvl() -- уровень плаща, BfA
+	E.Collect_All_Covenant() -- ковенанты, Shadowlands
+	E.Collect_All_GreatVault() -- Великое Хранилище
+
+    E.Update("PLAYER_LOGIN")
 end
 function Octo_EventFrame_Collect:SKILL_LINES_CHANGED()
-	if not InCombatLockdown() and not self.SKLCHUpdatePause then
-		self.SKLCHUpdatePause = true
-		C_Timer.After(1, function()
-				E.Collect_All_Professions()
-				E.Update("SKILL_LINES_CHANGED")
-				self.SKLCHUpdatePause = false
-		end)
-	end
+    if InCombatLockdown() or self.SKLCHUpdatePause then return end
+
+    self.SKLCHUpdatePause = true
+    C_Timer.After(1, function()
+        E.Collect_All_Professions()
+        E.Update("SKILL_LINES_CHANGED")
+        self.SKLCHUpdatePause = nil  -- Используем nil вместо false для экономии памяти
+    end)
 end
 function Octo_EventFrame_Collect:TRADE_SKILL_SHOW()
-	C_Timer.After(1, function()
-			E.Collect_All_Professions()
-			E.Update("TRADE_SKILL_SHOW")
-	end)
+    local update = function()
+        E.Collect_All_Professions()
+        E.Update("TRADE_SKILL_SHOW")
+    end
+    C_Timer.After(1, update)
 end
+
+
 function Octo_EventFrame_Collect:PLAYER_XP_UPDATE()
-	if not InCombatLockdown() then
-		E.Collect_ALL_Player_Level()
-		E.Update("PLAYER_XP_UPDATE")
-	end
+    if InCombatLockdown() or UnitLevel("player") == MAX_PLAYER_LEVEL or self.xpUpdateThrottle then return end
+
+    self.xpUpdateThrottle = true
+    C_Timer.After(0.5, function() self.xpUpdateThrottle = nil end)
+
+    E.Collect_All_PlayerLevel()
+    E.Update("PLAYER_XP_UPDATE")
 end
+
+
 function Octo_EventFrame_Collect:PLAYER_LEVEL_UP()
-	C_Timer.After(1, function()
-			RequestTimePlayed()
-			if not InCombatLockdown() then
-				E.Collect_ALL_Player_Level()
-				E.Update("PLAYER_LEVEL_UP")
-			end
-		end
-	)
+    C_Timer.After(1, function()
+        RequestTimePlayed()
+        if not InCombatLockdown() then
+		    E.Collect_All_PlayerLevel()
+		    E.Update("PLAYER_LEVEL_UP_FAST")
+        end
+    end)
 end
 
-function Octo_EventFrame_Collect:QUEST_LOG_UPDATE() -- QUEST_REMOVED
-	if InCombatLockdown() or self.questUpdatePause then return end
-	self.questUpdatePause = true
-	C_Timer.After(1, function()
-			local E = E -- локальная ссылка для быстрого доступа
-			E.Collect_All_Quests()
-			E.Collect_ALL_UNIVERSALQuestUpdate()
-			E.Collect_All_BfA_Island()
-			E.Collect_All_Chromie()
-			E.Update("QUEST_LOG_UPDATE")
 
-			self.questUpdatePause = false
-	end)
+
+function Octo_EventFrame_Collect:QUEST_LOG_UPDATE()
+    if self.questTimer then  -- Если таймер уже есть, сбрасываем его
+        self.questTimer:Cancel()
+    end
+
+    -- Запускаем новый таймер (дебаунс 1 сек)
+    self.questTimer = C_Timer.After(1, function()
+        if InCombatLockdown() then return end
+        local E = E
+        E.Collect_All_Quests()
+        E.Collect_All_UNIVERSALQuestUpdate()
+        E.Collect_All_BfA_Island()
+        E.Collect_All_Chromie()
+        E.Update("QUEST_LOG_UPDATE")
+    end)
 end
+
+
+
+
 
 
 function Octo_EventFrame_Collect:BAG_UPDATE()
-	if not InCombatLockdown() and not self.bagUpdatePause then
-		self.bagUpdatePause = true
-		C_Timer.After(3, function()
-				E.Collect_ALL_ItemsInBag()
-				E.Update("BAG_UPDATE")
-				self.bagUpdatePause = false
-		end)
-	end
+    if self.bagTimer then  -- Если таймер уже есть, сбрасываем его
+        self.bagTimer:Cancel()
+    end
+
+    -- Запускаем новый таймер (дебаунс 1 сек)
+    self.bagTimer = C_Timer.After(1, function()
+        if InCombatLockdown() then return end
+        local E = E
+		E.Collect_All_ItemsInBag()
+		E.Update("BAG_UPDATE")
+    end)
 end
+
+
+
+
 function Octo_EventFrame_Collect:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
 	if not InCombatLockdown() then
-		E.Collect_ALL_ItemsInBag()
+		E.Collect_All_ItemsInBag()
 		E.Update("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
 	end
 end
 function Octo_EventFrame_Collect:PLAYER_MONEY()
 	if not InCombatLockdown() then
-		E.Collect_ALL_MoneyUpdate()
+		E.Collect_All_MoneyUpdate()
 		E.Update("PLAYER_MONEY")
 	end
 end
 function Octo_EventFrame_Collect:ACCOUNT_MONEY()
 	if not InCombatLockdown() then
-		E.Collect_ALL_MoneyUpdate()
+		E.Collect_All_MoneyUpdate()
 		E.Update("ACCOUNT_MONEY")
 	end
 end
@@ -1268,7 +1249,7 @@ function Octo_EventFrame_Collect:CURRENCY_TRANSFER_LOG_UPDATE()
 end
 function Octo_EventFrame_Collect:PLAYER_EQUIPMENT_CHANGED()
 	if not InCombatLockdown() then
-		E.Collect_ALL_ItemLevel()
+		E.Collect_All_ItemLevel()
 		E.Update("PLAYER_EQUIPMENT_CHANGED")
 	end
 end
@@ -1276,8 +1257,8 @@ function Octo_EventFrame_Collect:PLAYER_LEAVING_WORLD()
 	if not InCombatLockdown() then
 		self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 		self.PLAYER_LEAVING_WORLD = nil
-		E.Collect_ALL_GreatVault()
-		E.Collect_ALL_LoginTime()
+		E.Collect_All_GreatVault()
+		E.Collect_All_LoginTime()
 	end
 end
 function Octo_EventFrame_Collect:AZERITE_ITEM_EXPERIENCE_CHANGED()
@@ -1313,25 +1294,25 @@ function Octo_EventFrame_Collect:UPDATE_INVENTORY_DURABILITY()
 end
 function Octo_EventFrame_Collect:PLAYER_SPECIALIZATION_CHANGED()
 	if not InCombatLockdown() then
-		E.Collect_ALL_PlayerInfo()
+		E.Collect_All_PlayerInfo()
 		E.Update("PLAYER_SPECIALIZATION_CHANGED")
 	end
 end
 function Octo_EventFrame_Collect:HEARTHSTONE_BOUND()
 	if not InCombatLockdown() then
-		E.Collect_ALL_Locations()
+		E.Collect_All_Locations()
 		E.Update("HEARTHSTONE_BOUND")
 	end
 end
 function Octo_EventFrame_Collect:ZONE_CHANGED()
 	if not InCombatLockdown() then
-		E.Collect_ALL_Locations()
+		E.Collect_All_Locations()
 		E.Update("ZONE_CHANGED")
 	end
 end
 function Octo_EventFrame_Collect:ZONE_CHANGED_NEW_AREA()
 	if not InCombatLockdown() then
-		E.Collect_ALL_Locations()
+		E.Collect_All_Locations()
 		E.Update("ZONE_CHANGED_NEW_AREA")
 	end
 end
@@ -1339,7 +1320,7 @@ function Octo_EventFrame_Collect:SPELLS_CHANGED()
 	if not InCombatLockdown() and not self.spellUpdatePause then
 		self.spellUpdatePause = true
 		C_Timer.After(2, function()
-				E.Collect_ALL_WarMode()
+				E.Collect_All_WarMode()
 				E.Update("SPELLS_CHANGED")
 			end
 		)
@@ -1347,19 +1328,19 @@ function Octo_EventFrame_Collect:SPELLS_CHANGED()
 end
 function Octo_EventFrame_Collect:MAIL_INBOX_UPDATE()
 	if not InCombatLockdown() then
-		E.Collect_ALL_Mail()
+		E.Collect_All_Mail()
 		E.Update("MAIL_INBOX_UPDATE")
 	end
 end
 function Octo_EventFrame_Collect:MAIL_SHOW()
 	if not InCombatLockdown() then
-		E.Collect_ALL_Mail()
+		E.Collect_All_Mail()
 		E.Update("MAIL_SHOW")
 	end
 end
 function Octo_EventFrame_Collect:UPDATE_PENDING_MAIL()
 	if not InCombatLockdown() then
-		E.Collect_ALL_Mail()
+		E.Collect_All_Mail()
 		E.Update("UPDATE_PENDING_MAIL")
 	end
 end
@@ -1368,11 +1349,11 @@ function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 		C_Timer.After(5, function()
 				if not InCombatLockdown() then
 					E.Collect_All_Quests()
-					E.Collect_ALL_UNIVERSALQuestUpdate()
+					E.Collect_All_UNIVERSALQuestUpdate()
 					E.Collect_All_BfA_Island()
 					E.Collect_All_Reputations()
 					E.Collect_All_Currency()
-					-- E.Collect_All_journalInstance()
+					-- E.Collect_All_JournalInstance()
 					E.Update("PLAYER_REGEN_ENABLED")
 				end
 			end
@@ -1382,7 +1363,7 @@ end
 function Octo_EventFrame_Collect:ENCOUNTER_END()
 	if not InCombatLockdown() then
 		C_Timer.After(1, function()
-				E.Collect_All_journalInstance()
+				E.Collect_All_JournalInstance()
 				E.Update("ENCOUNTER_END")
 			end
 		)
@@ -1390,13 +1371,13 @@ function Octo_EventFrame_Collect:ENCOUNTER_END()
 end
 function Octo_EventFrame_Collect:UPDATE_INSTANCE_INFO()
 	if not InCombatLockdown() then
-		E.Collect_All_journalInstance()
+		E.Collect_All_JournalInstance()
 		E.Update("UPDATE_INSTANCE_INFO")
 	end
 end
 function Octo_EventFrame_Collect:TIME_PLAYED_MSG(...)
 	if not InCombatLockdown() then
-		E.Collect_ALL_Played(...)
+		E.Collect_All_Played(...)
 		E.Update("TIME_PLAYED_MSG")
 	end
 end

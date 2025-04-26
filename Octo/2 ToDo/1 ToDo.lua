@@ -38,29 +38,38 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 end)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-E.func_LoadAddOnFORCED("!BugGrabber")
-E.func_LoadAddOnFORCED("BugSack")
-E.func_LoadAddOnFORCED("HidingBar")
-E.func_LoadAddOnFORCED("HidingBar_Options")
-E.func_LoadAddOnFORCED("SpeedyAutoLoot")
-E.func_LoadAddOnFORCED("AddonMrgl")
-C_AddOns.SaveAddOns()
--- E.func_LoadAddOnFORCED("Blizzard_WeeklyRewards"); WeeklyRewardsFrame:Show()
--- E.func_LoadAddOnFORCED("MountsJournal")
--- E.func_LoadAddOnFORCED("SimpleAddonManager")
--- E.func_LoadAddOnFORCED("TalentTreeTweaks")
--- E.func_LoadAddOnFORCED("Plater")
--- E.func_LoadAddOnFORCED("MacroManager")
--- E.func_LoadAddOnFORCED("MacroManagerData")
--- E.func_LoadAddOnFORCED("SilverDragon")
--- E.func_LoadAddOnFORCED("SilverDragon_History")
--- E.func_LoadAddOnFORCED("SilverDragon_Overlay")
--- E.func_LoadAddOnFORCED("SilverDragon_RangeExtender")
--- E.func_LoadAddOnFORCED("TomTom")
--- E.func_LoadAddOnFORCED("Pawn")
--- E.func_LoadAddOnFORCED("MySlot")
--- E.func_LoadAddOnFORCED("QuestsChanged")
--- E.func_LoadAddOnFORCED("AdvancedInterfaceOptions")
+do
+	local addons = {
+		"!BugGrabber",
+		"BugSack",
+		"HidingBar",
+		"HidingBar_Options",
+		"SpeedyAutoLoot",
+		"AddonMrgl",
+	}
+
+	for _, name in ipairs(addons) do
+		E.func_LoadAddOnFORCED(name)
+	end
+	C_AddOns.SaveAddOns()
+
+	-- E.func_LoadAddOnFORCED("Blizzard_WeeklyRewards"); WeeklyRewardsFrame:Show()
+	-- E.func_LoadAddOnFORCED("MountsJournal")
+	-- E.func_LoadAddOnFORCED("SimpleAddonManager")
+	-- E.func_LoadAddOnFORCED("TalentTreeTweaks")
+	-- E.func_LoadAddOnFORCED("Plater")
+	-- E.func_LoadAddOnFORCED("MacroManager")
+	-- E.func_LoadAddOnFORCED("MacroManagerData")
+	-- E.func_LoadAddOnFORCED("SilverDragon")
+	-- E.func_LoadAddOnFORCED("SilverDragon_History")
+	-- E.func_LoadAddOnFORCED("SilverDragon_Overlay")
+	-- E.func_LoadAddOnFORCED("SilverDragon_RangeExtender")
+	-- E.func_LoadAddOnFORCED("TomTom")
+	-- E.func_LoadAddOnFORCED("Pawn")
+	-- E.func_LoadAddOnFORCED("MySlot")
+	-- E.func_LoadAddOnFORCED("QuestsChanged")
+	-- E.func_LoadAddOnFORCED("AdvancedInterfaceOptions")
+end
 ----------------------------------------------------------------
 local function func_OnEnter1(frame)
 	frame.texture:Show()
@@ -472,6 +481,8 @@ end
 
 
 function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+	E.Collect_All_Table()
+
 	local NumPlayers = math.min(E.func_NumPlayers(), MaxNumCharacters)
 	local DataProvider = CreateTreeDataProvider()
 	local numlines = 0

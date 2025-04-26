@@ -233,8 +233,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 
 	-- Настройки функций
 	local featureDefaults = {
-		PortalsButtons = true,
-		PortalsButtonsOnlyAvailable = true,
 		AchievementShowCompleted = true,
 		AidingtheAccord = true,
 		AnotherAddonsCasual = true,
@@ -245,14 +243,12 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Auto_CinematicFastSkip = true,
 		Auto_Gossip = true,
 		Auto_Screenshot = true,
-		AutoGossip = true,
 		AutoOpen = true,
 		AutoRepair = true,
 		AutoSellGrey = true,
 		AutoTurnQuests = true,
 		BeledarCycle = true,
 		ChallengesKeystoneFrame = true,
-		CinematicCanceler = true,
 		Currency = true,
 		CurrencyShowAllways = false,
 		CVar = true,
@@ -263,7 +259,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		EmeraldDream_WB = true,
 		Event = true,
 		Gold = true,
-		Professions = true,
 		Hide_AzeriteEmpoweredItemUI = true,
 		Hide_Boss_Banner = true,
 		Hide_Covenant = true,
@@ -274,6 +269,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Hide_RaidWarningFrame = true,
 		Hide_Talking_Head_Frame = true,
 		Hide_Zone_Text = true,
+		Holidays = false,
 		InputDelete = true,
 		ItemLevel = true,
 		Items = true,
@@ -284,11 +280,17 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		MajorKeyflames = true,
 		MinorKeyflames = true,
 		MP_MythicKeystone = true,
+		OnlyCurrentFaction = false,
+		PortalsButtons = true,
+		PortalsButtonsOnlyAvailable = true,
+		Professions = true,
 		Quests = true,
 		QuestsShowAllways = false,
 		Reputations = false,
 		ResetAllChars = true,
 		ShowIDS = true,
+		ShowOnlyCurrentBattleTag = false,
+		ShowOnlyCurrentServer = false,
 		ShowTime70 = true,
 		SORTING = true,
 		StaticPopup1Button1 = true,
@@ -297,12 +299,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		TalentTreeTweaks_Scale = 1,
 		TWW_Delve_Weekly = true,
 		TWW_DungeonQuest_Weekly = true,
-		WorldBoss_Weekly = true,
 		UIErrorsFramePosition = true,
 		WasOnline = true,
-		ShowOnlyCurrentServer = false,
-		ShowOnlyCurrentBattleTag = false,
-		OnlyCurrentFaction = false
+		WorldBoss_Weekly = true
 	}
 
 	for k, v in next, (featureDefaults) do
@@ -425,8 +424,6 @@ function Octo_EventFrame_WTF:Octo_DEBUG()
 	InitSubTable(Octo_DEBUG, "Reputations")
 	InitSubTable(Octo_DEBUG, "Octo_MplusButton")
 	InitSubTable(Octo_DEBUG, "UniversalQuest")
-	InitSubTable(Octo_DEBUG, "Holiday")
-	InitSubTable(Octo_DEBUG, "HolidayCollectAll")
 end
 
 function Octo_EventFrame_WTF:Daily_Reset()
@@ -446,6 +443,7 @@ function Octo_EventFrame_WTF:Daily_Reset()
 
 			CharInfo.STARTTODAY = 0
 			CharInfo.MASLENGO.LFGInstance = {}
+			Octo_ToDo_DB_Other.Holiday = nil
 			Octo_ToDo_DB_Other.professions.DEBUG = nil
 			Octo_ToDo_DB_Other.ActiveHoliday = nil
 		end

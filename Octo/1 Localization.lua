@@ -183,8 +183,8 @@ if L then
 	L["AutoRepair"] = true
 	L["InputDelete"] = true
 	L["AutoOpen"] = true
-	L["AutoGossip"] = true
-	L["CinematicCanceler"] = true
+	L["Auto_Gossip"] = true
+	L["Auto_CinematicCanceler"] = true
 	L["ClearChat"] = true
 	L["UIErrorsFramePosition"] = true
 	L["Functions"] = true
@@ -405,8 +405,8 @@ if L then
 	L["AutoRepair"] = "Автопочинка"
 	L["InputDelete"] = "Автозаполнение 'УДАЛИТЬ'"
 	L["AutoOpen"] = "Автооткрытие предметов"
-	L["AutoGossip"] = "Авторазговор с НПЦ"
-	L["CinematicCanceler"] = "Автопропуск видео"
+	L["Auto_Gossip"] = "Авторазговор с НПЦ"
+	L["Auto_CinematicCanceler"] = "Автопропуск видео"
 	L["ClearChat"] = "Чистка чата при заходе в игру"
 	L["UIErrorsFramePosition"] = "Смена позиции фрейма ошибок"
 	L["Functions"] = "Функции"
