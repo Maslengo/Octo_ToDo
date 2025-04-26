@@ -38,27 +38,28 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 end)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-E.func_LoadAddOn("!BugGrabber")
-E.func_LoadAddOn("BugSack")
-E.func_LoadAddOn("HidingBar")
-E.func_LoadAddOn("HidingBar_Options")
-E.func_LoadAddOn("SpeedyAutoLoot")
--- E.func_LoadAddOn("AddonMrgl")
--- E.func_LoadAddOn("MountsJournal")
--- E.func_LoadAddOn("SimpleAddonManager")
--- E.func_LoadAddOn("TalentTreeTweaks")
--- E.func_LoadAddOn("Plater")
--- E.func_LoadAddOn("MacroManager")
--- E.func_LoadAddOn("MacroManagerData")
--- E.func_LoadAddOn("SilverDragon")
--- E.func_LoadAddOn("SilverDragon_History")
--- E.func_LoadAddOn("SilverDragon_Overlay")
--- E.func_LoadAddOn("SilverDragon_RangeExtender")
--- E.func_LoadAddOn("TomTom")
--- E.func_LoadAddOn("Pawn")
--- E.func_LoadAddOn("MySlot")
--- E.func_LoadAddOn("QuestsChanged")
--- E.func_LoadAddOn("AdvancedInterfaceOptions")
+E.func_LoadAddOnFORCED("!BugGrabber")
+E.func_LoadAddOnFORCED("BugSack")
+E.func_LoadAddOnFORCED("HidingBar")
+E.func_LoadAddOnFORCED("HidingBar_Options")
+E.func_LoadAddOnFORCED("SpeedyAutoLoot")
+E.func_LoadAddOnFORCED("AddonMrgl")
+-- E.func_LoadAddOnFORCED("Blizzard_WeeklyRewards"); WeeklyRewardsFrame:Show()
+-- E.func_LoadAddOnFORCED("MountsJournal")
+-- E.func_LoadAddOnFORCED("SimpleAddonManager")
+-- E.func_LoadAddOnFORCED("TalentTreeTweaks")
+-- E.func_LoadAddOnFORCED("Plater")
+-- E.func_LoadAddOnFORCED("MacroManager")
+-- E.func_LoadAddOnFORCED("MacroManagerData")
+-- E.func_LoadAddOnFORCED("SilverDragon")
+-- E.func_LoadAddOnFORCED("SilverDragon_History")
+-- E.func_LoadAddOnFORCED("SilverDragon_Overlay")
+-- E.func_LoadAddOnFORCED("SilverDragon_RangeExtender")
+-- E.func_LoadAddOnFORCED("TomTom")
+-- E.func_LoadAddOnFORCED("Pawn")
+-- E.func_LoadAddOnFORCED("MySlot")
+-- E.func_LoadAddOnFORCED("QuestsChanged")
+-- E.func_LoadAddOnFORCED("AdvancedInterfaceOptions")
 ----------------------------------------------------------------
 local function func_OnEnter1(frame)
 	frame.texture:Show()
@@ -110,6 +111,13 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	textLeft:SetJustifyH("LEFT")
 	textLeft:SetTextColor(1, 1, 1, 1)
 	frame.textLEFT = textLeft
+
+
+	local textureLEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
+	textureLEFT:Hide()
+	textureLEFT:SetAllPoints()
+	textureLEFT:SetTexture(TEXTURE_PATH)
+	frame.textureLEFT = textureLEFT
 
 	-- Event handlers
 	frame:SetScript("OnEnter", function(self)
@@ -221,13 +229,20 @@ end
 function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	local data = node:GetData()
 
-	-- LEFT FRAME INITIALIZATION
-	frame.textLEFT:SetText(data.textLEFT)
+	-- Set text
+	frame.textLEFT:SetText(data.textLEFT or "")
 
-	-- Set icon for left frame
-	local icon = data.headerIcon or (data.zxc and data.zxc.icon) or E.Icon_Empty
-	frame.icon_1:SetTexture(icon)
+	-- Set icon (optimized texture path resolution)
+	frame.icon_1:SetTexture(data.headerIcon or (data.zxc and data.zxc.icon) or E.Icon_Empty)
 
+	-- Handle color (optimized conditional and vertex color setting)
+	if data.color then
+		local r, g, b = E.func_hex2rgbNUMBER(data.color)
+		frame.textureLEFT:SetVertexColor(r, g, b, 0.1)
+		frame.textureLEFT:Show()
+	else
+		frame.textureLEFT:Hide()
+	end
 end
 
 
@@ -461,22 +476,52 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 	local numlines = 0
 
 	-- Находим индекс текущего персонажа
-	local peLmennaya = E.sorted()
+	local sortedPlayersTBL = E.sorted()
 	local MyCharIndex
-	for CharIndex, CharInfo in ipairs(peLmennaya) do
+	for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
 		if CharInfo.GUID == E.curGUID then
 			MyCharIndex = CharIndex
 			break
 		end
 	end
 
-	local totalPers = #peLmennaya
+	local totalPers = #sortedPlayersTBL
 	local commonNodeData = {
 		currentChar = MyCharIndex,
 		totalPers = totalPers
 	}
 
-	if Octo_ToDo_DB_Vars.Reputations then
+	if not Octo_ToDo_DB_Vars.Reputations then
+		-- Альтернативный режим (не репутации)
+		local OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT = E:func_Otrisovka()
+
+		for i, func in ipairs(OctoTable_func_otrisovkaCENT) do
+			numlines = numlines + 1
+			local zxc = {
+				FIRST = {},
+				SECOND = {},
+				textCENT = {},
+				color = {},
+				icon = select(2, OctoTable_func_otrisovkaLEFT[i]()),
+				tooltip = {}
+			}
+
+			for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
+				zxc.FIRST[CharIndex] = 0
+				zxc.SECOND[CharIndex] = 0
+				zxc.textCENT[CharIndex], zxc.tooltip[CharIndex] = func(CharInfo)
+				zxc.color[CharIndex] = E.Red_Color
+			end
+
+			DataProvider:Insert({
+				textLEFT = OctoTable_func_otrisovkaLEFT[i](),
+				zxc = zxc,
+				currentChar = MyCharIndex,
+				totalPers = totalPers,
+				color = select(3, OctoTable_func_otrisovkaLEFT[i]())
+			})
+		end
+	else
 		-- Обработка репутаций
 		for index, tbl in ipairs(E.OctoTable_Reputations) do
 			if Octo_ToDo_DB_Vars.ExpansionToShow[index] then
@@ -506,7 +551,7 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 							tooltip = {}
 						}
 
-						for CharIndex, CharInfo in ipairs(peLmennaya) do
+						for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
 							local repData = CharInfo.MASLENGO.reputationFULL[v.id]
 							zxc.FIRST[CharIndex] = repData.FIRST or 0
 							zxc.SECOND[CharIndex] = repData.SECOND or 0
@@ -524,35 +569,6 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 					end
 				end
 			end
-		end
-	else
-		-- Альтернативный режим (не репутации)
-		local OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT = E:func_Otrisovka()
-
-		for i, func in ipairs(OctoTable_func_otrisovkaCENT) do
-			numlines = numlines + 1
-			local zxc = {
-				FIRST = {},
-				SECOND = {},
-				textCENT = {},
-				color = {},
-				icon = select(2, OctoTable_func_otrisovkaLEFT[i]()),
-				tooltip = {}
-			}
-
-			for CharIndex, CharInfo in ipairs(peLmennaya) do
-				zxc.FIRST[CharIndex] = 0
-				zxc.SECOND[CharIndex] = 0
-				zxc.textCENT[CharIndex], zxc.tooltip[CharIndex] = func(CharInfo)
-				zxc.color[CharIndex] = E.Red_Color
-			end
-
-			DataProvider:Insert({
-				textLEFT = OctoTable_func_otrisovkaLEFT[i](),
-				zxc = zxc,
-				currentChar = MyCharIndex,
-				totalPers = totalPers,
-			})
 		end
 	end
 
@@ -573,12 +589,16 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 	-- Обновление фреймов персонажей
 	Octo_MainFrame_ToDo.pool:ReleaseAll()
 
-	for count, CharInfo in ipairs(peLmennaya) do
+	for count, CharInfo in ipairs(sortedPlayersTBL) do
 		local curCharFrame = Octo_MainFrame_ToDo.pool:Acquire()
 		curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT",
 							AddonCentralFrameWeight * (count - 1),
 							-AddonHeight)
-
+		curCharFrame.text:SetAllPoints()
+		curCharFrame.text:SetFontObject(OctoFont11)
+		curCharFrame.text:SetWordWrap(false)
+		curCharFrame.text:SetJustifyV("MIDDLE")
+		curCharFrame.text:SetJustifyH("CENTER")
 		curCharFrame.text:SetText(E.func_vivodCent(CharInfo))
 
 		local color = CharInfo.Faction == "Horde" and "|cfff01e38" or "|cff0070DD"
@@ -1009,7 +1029,7 @@ end
 
 -- Helper functions
 function Octo_EventFrame_ToDo:SetupPlayerSpellsFrame()
-	E.func_LoadAddOn("Blizzard_PlayerSpells")
+	E.func_LoadAddOnFORCED("Blizzard_PlayerSpells")
 
 	PlayerSpellsFrame:HookScript("OnShow", function()
 		PlayerSpellsFrame:SetScale(0.8)
@@ -1049,18 +1069,20 @@ function Octo_EventFrame_ToDo:DisplayCharacterStats()
 
 	-- Create info frames
 	local moneyText = format("Money: %s%s|r %s", E.classColorHexCurrent, E.func_CompactNumberFormat(totalMoney/10000), E.curServerShort)
-	E.func_CreateInfoFrame(moneyText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*0, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame(moneyText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*0, AddonLeftFrameWeight, AddonHeight, "LEFT")
 
 	local timePlayedText = format(TIME_PLAYED_TOTAL, E.classColorHexCurrent..E.func_SecondsToClock(realTotalTime).."|r")
-	E.func_CreateInfoFrame(timePlayedText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*1, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame(timePlayedText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*1, AddonLeftFrameWeight, AddonHeight, "LEFT")
 
 	if realLevelTime ~= 0 then
 		local levelTimeText = format("realLevelTime: %s%s|r", E.classColorHexCurrent, E.func_SecondsToClock(realLevelTime))
-		E.func_CreateInfoFrame(levelTimeText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight)
+		E.func_CreateInfoFrame(levelTimeText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight, "LEFT")
 	end
 
 	local reloadsText = format("Reloads: %s%s|r", E.classColorHexCurrent, totalReload)
-	E.func_CreateInfoFrame(reloadsText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight)
+	E.func_CreateInfoFrame(reloadsText, "TOPRIGHT", Octo_MainFrame_ToDo, "BOTTOMRIGHT", 0, -AddonHeight*0, AddonLeftFrameWeight, AddonHeight, "RIGHT")
+
+	E.func_CreateInfoFrame(E.Timers.Daily_Reset(), "TOPLEFT", Octo_MainFrame_ToDo, "TOPLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight, "LEFT")
 end
 
 function Octo_EventFrame_ToDo:LoadAssetsAsync()
@@ -1130,8 +1152,8 @@ local slashCommands = {
 	FRAMESTK = {
 		commands = {"/fs"},
 		handler = function(msg)
-			if not E.IsAddOnLoaded("Blizzard_DebugTools") then
-				E.LoadAddOn("Blizzard_DebugTools")
+			if not E.func_IsAddOnLoaded("Blizzard_DebugTools") then
+				E.func_LoadAddOnFORCED("Blizzard_DebugTools")
 			end
 			FrameStackTooltip_Toggle(msg == "true", true, true)
 		end

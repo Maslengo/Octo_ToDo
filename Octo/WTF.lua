@@ -8,7 +8,7 @@ local function InitField(tbl, field, default) if tbl[field] == nil then tbl[fiel
 local function InitSubTable(tbl, field) if tbl[field] == nil then tbl[field] = {} end end
 
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
-	local curGUID = UnitGUID("PLAYER")
+	local curGUID = UnitGUID("player")
 	Octo_ToDo_DB_Levels = InitTable(Octo_ToDo_DB_Levels)
 	Octo_ToDo_DB_Levels[curGUID] = InitTable(Octo_ToDo_DB_Levels[curGUID])
 
@@ -17,92 +17,136 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local currentTime = date("%H:%M")
 	local currentDateTime = date("%d.%m.%Y %H:%M:%S")
 
-	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-		-- Базовые поля персонажа
-		local defaults = {
-			ReloadCount = 0,
-			avgItemLevel = 1,
-			avgItemLevelEquipped = 1,
-			avgItemLevelPvp = 1,
-			azeriteEXP = 0,
-			azeriteLVL = 0,
-			className = E.className,
-			classFilename = E.classFilename,
-			GUID = GUID,
-			cloak_lvl = 0,
-			cloak_res = 0,
-			classId = 1,
-			classColor = E.classColor,
-			curServer = E.curServer,
-			guildName = "",
-			guildRankName = "",
-			guildRankIndex = 0,
-			curServerShort = E.func_CurServerShort(E.curServer),
-			Faction = "Horde",
-			BattleTag = E.BattleTag,
-			BattleTagLocal = E.BattleTagLocal,
-			IsPublicBuild = E.IsPublicBuild,
-			Chromie_UnitChromieTimeID = 0,
-			GameLimitedMode_IsActive = E.GameLimitedMode_IsActive,
-			buildVersion = E.buildVersion,
-			buildNumber = E.buildNumber,
-			buildDate = E.buildDate,
-			interfaceVersion = E.interfaceVersion,
-			currentTier = E.currentTier,
-			IsAccountSecured = E.IsAccountSecured,
-			GetRestrictedAccountData_rLevel = E.GetRestrictedAccountData_rLevel,
-			GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney,
-			GetRestrictedAccountData_profCap = E.GetRestrictedAccountData_profCap,
-			IsTrialAccount = E.IsTrialAccount,
-			IsVeteranTrialAccount = E.IsVeteranTrialAccount,
-			PlayerDurability = 100,
-			maxNumQuestsCanAccept = 0,
-			Name = E.curCharName,
-			numQuests = 0,
-			RaceLocal = 0,
-			RaceEnglish = 0,
-			raceID = 0,
-			classColorHex = E.classColorHexCurrent,
-			currentXP = 0,
-			UnitXPMax = 0,
-			UnitXPPercent = 0,
-			realTotalTime = 0,
-			TodayTimePlayed = 0,
-			realLevelTime = 0,
-			Possible_Anima = 0,
-			Possible_CatalogedResearch = 0,
-			numShownEntries = 0,
-			loginDate = currentDateTime,
-			loginDay = currentDate,
-			loginHour = currentTime,
-			Chromie_canEnter = false,
-			time = ServerTime,
-			UnitLevel = 1,
-			Money = 0,
-			totalSlots = 0,
-			usedSlots = 0,
-			BindLocation = 0,
-			CurrentLocation = 0,
-			WarMode = false,
-			CurrentKey = 0,
-			CurrentKeyName = 0,
-			CurrentKeyLevel = 0,
-			hasMail = false,
-			levelCapped20 = false,
-			PlayerCanEarnExperience = true,
-			needResetDaily = false,
-			needResetWeekly = false,
-			needResetMonth = false,
-			HasAvailableRewards = false,
-			isShownPLAYER = true,
-			RIO_Score = 0,
-			RIO_weeklyBest = 0
-		}
+	-- Предварительно вычисляем часто используемые значения
+	local defaults = {
+		ReloadCount = 0,
+		avgItemLevel = 1,
+		avgItemLevelEquipped = 1,
+		avgItemLevelPvp = 1,
+		azeriteEXP = 0,
+		azeriteLVL = 0,
+		className = E.className,
+		classFilename = E.classFilename,
+		GUID = curGUID, -- Используем текущий GUID вместо параметра
+		cloak_lvl = 0,
+		cloak_res = 0,
+		classId = 1,
+		classColor = E.classColor,
+		curServer = E.curServer,
+		guildName = "",
+		guildRankName = "",
+		guildRankIndex = 0,
+		curServerShort = E.func_CurServerShort(E.curServer),
+		Faction = "Horde",
+		BattleTag = E.BattleTag,
+		BattleTagLocal = E.BattleTagLocal,
+		IsPublicBuild = E.IsPublicBuild,
+		Chromie_UnitChromieTimeID = 0,
+		GameLimitedMode_IsActive = E.GameLimitedMode_IsActive,
+		buildVersion = E.buildVersion,
+		buildNumber = E.buildNumber,
+		buildDate = E.buildDate,
+		interfaceVersion = E.interfaceVersion,
+		currentTier = E.currentTier,
+		IsAccountSecured = E.IsAccountSecured,
+		GetRestrictedAccountData_rLevel = E.GetRestrictedAccountData_rLevel,
+		GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney,
+		GetRestrictedAccountData_profCap = E.GetRestrictedAccountData_profCap,
+		IsTrialAccount = E.IsTrialAccount,
+		IsVeteranTrialAccount = E.IsVeteranTrialAccount,
+		PlayerDurability = 100,
+		maxNumQuestsCanAccept = 0,
+		Name = E.curCharName,
+		numQuests = 0,
+		RaceLocal = 0,
+		RaceEnglish = 0,
+		raceID = 0,
+		classColorHex = E.classColorHexCurrent,
+		currentXP = 0,
+		UnitXPMax = 0,
+		UnitXPPercent = 0,
+		realTotalTime = 0,
+		TodayTimePlayed = 0,
+		realLevelTime = 0,
+		Possible_Anima = 0,
+		Possible_CatalogedResearch = 0,
+		numShownEntries = 0,
+		loginDate = currentDateTime,
+		loginDay = currentDate,
+		loginHour = currentTime,
+		Chromie_canEnter = false,
+		time = ServerTime,
+		UnitLevel = 1,
+		Money = 0,
+		totalSlots = 0,
+		usedSlots = 0,
+		BindLocation = 0,
+		CurrentLocation = 0,
+		WarMode = false,
+		CurrentKey = 0,
+		CurrentKeyName = 0,
+		CurrentKeyLevel = 0,
+		hasMail = false,
+		levelCapped20 = false,
+		PlayerCanEarnExperience = true,
+		needResetDaily = false,
+		needResetWeekly = false,
+		needResetMonth = false,
+		HasAvailableRewards = false,
+		isShownPLAYER = true,
+		RIO_Score = 0,
+		RIO_weeklyBest = 0
+	}
 
+	-- Оптимизация: предварительно инициализируем таблицы
+	local MASLENGO_DEFAULTS = {
+		reputationFULL = {},
+		CurrencyID = {},
+		CurrencyID_totalEarned = {},
+		CurrencyID_Total = {},
+		UniversalQuest = {},
+		OctoTable_QuestID = {},
+		Quests = {},
+		professions = {
+			[1] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
+			[2] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
+			[3] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
+			[4] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
+			[5] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0}
+		},
+		ItemsInBag = {},
+		GreatVault = {},
+		CovenantAndAnima = {
+			[1] = {[1] = 0, [2] = 0},
+			[2] = {[1] = 0, [2] = 0},
+			[3] = {[1] = 0, [2] = 0},
+			[4] = {[1] = 0, [2] = 0}
+		},
+		journalInstance = {},
+		SavedWorldBoss = {},
+		LFGInstance = {}
+	}
+
+	-- Инициализация GreatVault
+	for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
+		MASLENGO_DEFAULTS.GreatVault[i] = {
+			progress = 0,
+			threshold = 0,
+			hyperlink_STRING = 0,
+			type = ""
+		}
+	end
+
+	-- Инициализация CovenantAndAnima
+	MASLENGO_DEFAULTS.CovenantAndAnima.curCovID = 0
+
+	-- Обработка всех персонажей
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- Установка значений по умолчанию
-		for k, v in pairs(defaults) do
+		for k, v in next, (defaults) do
 			InitField(CharInfo, k, v)
 		end
+		CharInfo.GUID = GUID -- Перезаписываем GUID для текущего персонажа
 
 		-- Инициализация MoneyOnLogin
 		CharInfo.MoneyOnLogin = CharInfo.MoneyOnLogin or CharInfo.Money
@@ -111,80 +155,42 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		InitSubTable(CharInfo, "MASLENGO")
 		local MASLENGO = CharInfo.MASLENGO
 
-		InitSubTable(MASLENGO, "reputationFULL")
+		-- Применяем предопределенные значения для MASLENGO
+		for k, v in next, (MASLENGO_DEFAULTS) do
+			if MASLENGO[k] == nil then
+				MASLENGO[k] = type(v) == "table" and CopyTable(v) or v
+			end
+		end
+
+		-- Инициализация репутаций
 		for _, tbl in ipairs(E.OctoTable_Reputations) do
 			for _, v in ipairs(tbl) do
 				MASLENGO.reputationFULL[v.id] = InitTable(MASLENGO.reputationFULL[v.id])
 			end
 		end
 
-		InitSubTable(MASLENGO, "CurrencyID")
-		InitSubTable(MASLENGO, "CurrencyID_totalEarned")
-		InitSubTable(MASLENGO, "CurrencyID_Total")
-		InitSubTable(MASLENGO, "UniversalQuest")
-
-		for _, v in pairs(E.OctoTable_UniversalQuest) do
+		-- Инициализация UniversalQuest
+		for _, v in next, (E.OctoTable_UniversalQuest) do
 			local key = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
 			MASLENGO.UniversalQuest[key] = MASLENGO.UniversalQuest[key] or nil
 		end
 
-		InitSubTable(MASLENGO, "OctoTable_QuestID")
-		InitSubTable(MASLENGO, "Quests")
-		InitSubTable(MASLENGO, "professions")
-
-		for i = 1, 5 do
-			MASLENGO.professions[i] = InitTable(MASLENGO.professions[i])
-			InitField(MASLENGO.professions[i], "skillLine", 0)
-			InitField(MASLENGO.professions[i], "skillLevel", 0)
-			InitField(MASLENGO.professions[i], "maxSkillLevel", 0)
-		end
-
-		InitSubTable(MASLENGO, "ItemsInBag")
-
-		-- Инициализация PIZDALISHE таблиц
-		InitSubTable(CharInfo, "PIZDALISHE")
-		local PIZDALISHE = CharInfo.PIZDALISHE
-
-		PIZDALISHE.islandBfA = PIZDALISHE.islandBfA or nil
-		InitSubTable(PIZDALISHE, "GreatVault")
-
-		for name, i in pairs(Enum.WeeklyRewardChestThresholdType) do
-			PIZDALISHE.GreatVault[i] = InitTable(PIZDALISHE.GreatVault[i])
-			InitField(PIZDALISHE.GreatVault[i], "progress", 0)
-			InitField(PIZDALISHE.GreatVault[i], "threshold", 0)
-			InitField(PIZDALISHE.GreatVault[i], "hyperlink_STRING", 0)
-			InitField(PIZDALISHE.GreatVault[i], "type", "")
-		end
-
-		InitSubTable(PIZDALISHE, "CovenantAndAnima")
-		InitField(PIZDALISHE.CovenantAndAnima, "curCovID", 0)
-
-		for k = 1, 2 do
-			for i = 1, 4 do
-				PIZDALISHE.CovenantAndAnima[i] = InitTable(PIZDALISHE.CovenantAndAnima[i])
-				PIZDALISHE.CovenantAndAnima[i][k] = PIZDALISHE.CovenantAndAnima[i][k] or 0
-			end
+		-- Инициализация LFGInstance
+		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
+			MASLENGO.LFGInstance[dungeonID] = InitTable(MASLENGO.LFGInstance[dungeonID])
+			InitField(MASLENGO.LFGInstance[dungeonID], "D_name", name)
+			MASLENGO.LFGInstance[dungeonID].donetoday = MASLENGO.LFGInstance[dungeonID].donetoday or nil
 		end
 
 		-- Очистка устаревших данных журнала
-		InitSubTable(PIZDALISHE, "journalInstance")
-		for instanceID, tbl in pairs(PIZDALISHE.journalInstance) do
+		for instanceID, tbl in next, (MASLENGO.journalInstance) do
 			if instanceID then
-				for difficultyID, w in pairs(tbl) do
+				for difficultyID, w in next, (tbl) do
 					if w.instanceReset and ServerTime >= w.instanceReset then
-						PIZDALISHE.journalInstance[instanceID] = {}
+						MASLENGO.journalInstance[instanceID] = {}
 					end
 				end
 			end
-		end
-
-		PIZDALISHE.SavedWorldBoss = InitTable(PIZDALISHE.SavedWorldBoss)
-		InitSubTable(PIZDALISHE, "LFGInstance")
-
-		for dungeonID, name in pairs(E.OctoTable_LFGDungeons) do
-			PIZDALISHE.LFGInstance[dungeonID] = InitTable(PIZDALISHE.LFGInstance[dungeonID])
-			InitField(PIZDALISHE.LFGInstance[dungeonID], "D_name", name)
-			PIZDALISHE.LFGInstance[dungeonID].donetoday = PIZDALISHE.LFGInstance[dungeonID].donetoday or nil
 		end
 	end
 end
@@ -201,7 +207,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		DebugButton = false
 	}
 
-	for k, v in pairs(debugDefaults) do
+	for k, v in next, (debugDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
 		E[k] = Octo_ToDo_DB_Vars[k]
 	end
@@ -217,11 +223,11 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		FrameScale = 1,
 		GameMenuFrameScale = 0.8,
 		LevelToShow = 1,
-		LevelToShowMAX = E.currentMaxLevel,
+		LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT),
 		prefix = 1
 	}
 
-	for k, v in pairs(uiDefaults) do
+	for k, v in next, (uiDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
 	end
 
@@ -299,7 +305,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		OnlyCurrentFaction = false
 	}
 
-	for k, v in pairs(featureDefaults) do
+	for k, v in next, (featureDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
 	end
 
@@ -318,7 +324,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		yOfs = 67
 	}
 
-	for k, v in pairs(speedFrameDefaults) do
+	for k, v in next, (speedFrameDefaults) do
 		InitField(Octo_ToDo_DB_Vars.SpeedFrame, k, v)
 	end
 
@@ -331,7 +337,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		yOfs = 67
 	}
 
-	for k, v in pairs(posFrameDefaults) do
+	for k, v in next, (posFrameDefaults) do
 		InitField(Octo_ToDo_DB_Vars.PosFrame, k, v)
 	end
 
@@ -345,7 +351,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Octo_sound = "None"
 	}
 
-	for k, v in pairs(interfaceDefaults) do
+	for k, v in next, (interfaceDefaults) do
 		InitField(Octo_ToDo_DB_Vars.interface, k, v)
 	end
 end
@@ -357,6 +363,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	InitSubTable(Octo_ToDo_DB_Other, "CVar")
 	InitSubTable(Octo_ToDo_DB_Other, "Items")
 	InitSubTable(Octo_ToDo_DB_Other, "Holiday")
+	InitSubTable(Octo_ToDo_DB_Other, "ActiveHoliday")
 	InitSubTable(Octo_ToDo_DB_Other, "professions")
 end
 
@@ -403,7 +410,7 @@ function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 		showMemoryInBrokerTtp = true
 	}
 
-	for k, v in pairs(configDefaults) do
+	for k, v in next, (configDefaults) do
 		InitField(Octo_AddonsManager_DB.config, k, v)
 	end
 
@@ -425,21 +432,22 @@ end
 function Octo_EventFrame_WTF:Daily_Reset()
 	local ServerTime = GetServerTime()
 
-	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.tmstp_Daily or 0) < ServerTime then
 			CharInfo.tmstp_Daily = E.func_tmstpDayReset(1)
 			CharInfo.needResetDaily = true
 
 			-- Сброс ежедневных квестов
-			for _, v in pairs(E.OctoTable_UniversalQuest) do
+			for _, v in next, (E.OctoTable_UniversalQuest) do
 				if v.reset == "Daily" then
 					CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Daily"] = nil
 				end
 			end
 
 			CharInfo.STARTTODAY = 0
-			CharInfo.PIZDALISHE.LFGInstance = {}
+			CharInfo.MASLENGO.LFGInstance = {}
 			Octo_ToDo_DB_Other.professions.DEBUG = nil
+			Octo_ToDo_DB_Other.ActiveHoliday = nil
 		end
 	end
 end
@@ -447,11 +455,11 @@ end
 function Octo_EventFrame_WTF:Weekly_Reset()
 	local ServerTime = GetServerTime()
 
-	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.tmstp_Weekly or 0) < ServerTime then
 			-- Проверка награды из Великого Хранилища
-			for i = 1, #CharInfo.PIZDALISHE.GreatVault do
-				if CharInfo.PIZDALISHE.GreatVault[i] and CharInfo.PIZDALISHE.GreatVault[i].hyperlink_STRING ~= 0 then
+			for i = 1, #CharInfo.MASLENGO.GreatVault do
+				if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING ~= 0 then
 					CharInfo.HasAvailableRewards = true
 					break
 				end
@@ -463,14 +471,14 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 			CharInfo.CurrentKey = 0
 			CharInfo.CurrentKeyName = 0
 			CharInfo.CurrentKeyLevel = 0
-			CharInfo.PIZDALISHE.journalInstance = {}
-			CharInfo.PIZDALISHE.SavedWorldBoss = {}
+			CharInfo.MASLENGO.journalInstance = {}
+			CharInfo.MASLENGO.SavedWorldBoss = {}
 			CharInfo.RIO_weeklyBest = 0
-			CharInfo.PIZDALISHE.GreatVault = {}
+			CharInfo.MASLENGO.GreatVault = {}
 			CharInfo.STARTWEEK = 0
 
 			-- Сброс еженедельных квестов
-			for _, v in pairs(E.OctoTable_UniversalQuest) do
+			for _, v in next, (E.OctoTable_UniversalQuest) do
 				if v.reset == "Weekly" then
 					CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Weekly"] = nil
 				end
@@ -482,14 +490,14 @@ end
 function Octo_EventFrame_WTF:Month_Reset()
 	local ServerTime = GetServerTime()
 
-	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.tmstp_Month or 0) < ServerTime then
 			CharInfo.tmstp_Month = E.func_tmstpDayReset(30)
 			CharInfo.needResetMonth = true
 			CharInfo.STARTMONTH = 0
 
 			-- Сброс ежемесячных квестов
-			for _, v in pairs(E.OctoTable_UniversalQuest) do
+			for _, v in next, (E.OctoTable_UniversalQuest) do
 				if v.reset == "Month" then
 					CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Month"] = nil
 				end

@@ -16,7 +16,7 @@ local DeleteCursorItem = DeleteCursorItem
 
 -- Local references for better performance
 local Red_Color = E.Red_Color
-local func_GetItemName = E.func_GetItemName
+local func_GetItemNameByID = E.func_GetItemNameByID
 local OctoTable_itemID_ItemsDelete = E.OctoTable_itemID_ItemsDelete
 
 function Octo_EventFrame_ItemsDelete:ItemsDeleteFrame()
@@ -40,7 +40,7 @@ function Octo_EventFrame_ItemsDelete:ItemsDeleteFrame()
 
 				Clickable_ItemsDelete.icon:SetTexture(itemTexture or 413587)
 				Clickable_ItemsDelete.itemID = itemID
-				Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, false, false, false).." "..Red_Color..func_GetItemName(itemID).."|r")
+				Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, false, false, false).." "..Red_Color..func_GetItemNameByID(itemID).."|r")
 
 				foundItem = true
 				break
@@ -116,7 +116,7 @@ function Octo_EventFrame_ItemsDelete:ADDON_LOADED(addonName)
 	Clickable_ItemsDelete.text = Clickable_ItemsDelete:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	Clickable_ItemsDelete.text:SetPoint("LEFT", Clickable_ItemsDelete, "RIGHT")
 	Clickable_ItemsDelete.text:SetFontObject(OctoFont22)
-	Clickable_ItemsDelete.text:SetText(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"))
+	Clickable_ItemsDelete.text:SetText(E.func_GetAddOnMetadata(GlobalAddonName, "Version"))
 
 	Clickable_ItemsDelete.icon = Clickable_ItemsDelete:CreateTexture(nil, "BACKGROUND")
 	Clickable_ItemsDelete.icon:SetAllPoints(Clickable_ItemsDelete)

@@ -321,32 +321,35 @@ function Octo_EventFrame_AddonsManager:CollectAddonInfo(index)
 		if (security == BANNED_ADDON) then
 			tooltipthird[#tooltipthird+1] = {ADDON_BANNED_TOOLTIP}
 		else
-			if title then
-				tooltipthird[#tooltipthird+1] = {title}
-			else
-				tooltipthird[#tooltipthird+1] = {name}
-			end
-			if (Version and Version ~= 0) then
-				tooltipthird[#tooltipthird+1] = {"Version: "..E.classColorHexCurrent..Version.."|r"} --.. " ("..interfaceVersion..")"}
-			end
-			if (Author and Author ~= "") then
-				tooltipthird[#tooltipthird+1] = {"Author: "..E.classColorHexCurrent..Author.."|r"}
-			end
-			if (notes and notes ~= "") then
-				tooltipthird[#tooltipthird+1] = {"Notes: "..E.classColorHexCurrent..notes.."|r"}
-			end
+				local entryTitle = title or name  -- Используем title, если он есть, иначе name
+				local entryText  -- Текст для добавления в tooltipthird
+
+				if Version and Version ~= 0 then
+				    entryText = {entryTitle, E.classColorHexCurrent .. Version .. "|r"}
+				else
+				    entryText = {entryTitle}
+				end
+
+				tooltipthird[#tooltipthird + 1] = entryText
+
+			-- if (Author and Author ~= "") then
+			-- 	tooltipthird[#tooltipthird+1] = {"Author: "..E.classColorHexCurrent..Author.."|r"}
+			-- end
+			-- if (notes and notes ~= "") then
+			-- 	tooltipthird[#tooltipthird+1] = {"Notes: "..E.classColorHexCurrent..notes.."|r"}
+			-- end
 			if (loadable and E.func_IsProfilerEnabled()) then
 				local RecentAverageTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.RecentAverageTime)
 				local SessionAverageTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.SessionAverageTime)
 				local PeakTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.PeakTime)
 				local EncounterAverageTime = E.GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.EncounterAverageTime)
-				tooltipthird[#tooltipthird+1] = {" ", " "}
-				tooltipthird[#tooltipthird+1] = {"RecentAverageTime: "..E.classColorHexCurrent..RecentAverageTime.."|r".."%"}
-				tooltipthird[#tooltipthird+1] = {"SessionAverageTime: "..E.classColorHexCurrent..SessionAverageTime.."|r".."%"}
-				tooltipthird[#tooltipthird+1] = {"PeakTime: "..E.classColorHexCurrent..PeakTime.."|r".."%"}
-				if EncounterAverageTime ~= "" then
-					tooltipthird[#tooltipthird+1] = {"EncounterAverageTime: "..E.classColorHexCurrent..EncounterAverageTime.."|r".."%"}
-				end
+				-- tooltipthird[#tooltipthird+1] = {" ", " "}
+				-- tooltipthird[#tooltipthird+1] = {"RecentAverageTime: "..E.classColorHexCurrent..RecentAverageTime.."|r".."%"}
+				-- tooltipthird[#tooltipthird+1] = {"SessionAverageTime: "..E.classColorHexCurrent..SessionAverageTime.."|r".."%"}
+				-- tooltipthird[#tooltipthird+1] = {"PeakTime: "..E.classColorHexCurrent..PeakTime.."|r".."%"}
+				-- if EncounterAverageTime ~= "" then
+				-- 	tooltipthird[#tooltipthird+1] = {"EncounterAverageTime: "..E.classColorHexCurrent..EncounterAverageTime.."|r".."%"}
+				-- end
 				-- AddLineIfNotEmpty(AddonTooltip, L["Ticks over 5ms: "], profiler:GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver5Ms))
 				-- AddLineIfNotEmpty(AddonTooltip, L["Ticks over 10ms: "], profiler:GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver10Ms))
 				-- AddLineIfNotEmpty(AddonTooltip, L["Ticks over 50ms: "], profiler:GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver50Ms))
@@ -354,22 +357,22 @@ function Octo_EventFrame_AddonsManager:CollectAddonInfo(index)
 				-- AddLineIfNotEmpty(AddonTooltip, L["Ticks over 500ms: "], profiler:GetAddonMetricCount(name, Enum.AddOnProfilerMetric.CountTimeOver500Ms))
 			end
 			-- and IsMemoryUsageEnabled()
-			if (loadable and security ~= SECURE_PROTECTED_ADDON and security ~= SECURE_ADDON) then
-				local memory = GetAddOnMemoryUsage(index) or 0
-				if memory > 1024 then
-					tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactNumberFormat(memory/1024).."|r Мб"}
-				else
-					tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactNumberFormat(memory).."|r Кб"}
-				end
-			end
-			tooltipthird[#tooltipthird+1] = {" ", " "}
-			tooltipthird[#tooltipthird+1] = {E.AddonTooltipBuildDepsString(index, Parent_Color)}
-			if Octo_AddonsTable.depsByIndex[index] then
-				tooltipthird[#tooltipthird+1] = {"Дочернии аддоны"}
-				for _, depIndex in pairs(Octo_AddonsTable.depsByIndex[index]) do
-					tooltipthird[#tooltipthird+1] = {"    "..Child_Color..E.func_GetAddonName(depIndex).."|r"}
-				end
-			end
+			-- if (loadable and security ~= SECURE_PROTECTED_ADDON and security ~= SECURE_ADDON) then
+			-- 	local memory = GetAddOnMemoryUsage(index) or 0
+			-- 	if memory > 1024 then
+			-- 		tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactNumberFormat(memory/1024).."|r Мб"}
+			-- 	else
+			-- 		tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactNumberFormat(memory).."|r Кб"}
+			-- 	end
+			-- end
+			-- tooltipthird[#tooltipthird+1] = {" ", " "}
+			-- tooltipthird[#tooltipthird+1] = {E.AddonTooltipBuildDepsString(index, Parent_Color)}
+			-- if Octo_AddonsTable.depsByIndex[index] then
+			-- 	tooltipthird[#tooltipthird+1] = {"Дочернии аддоны"}
+			-- 	for _, depIndex in pairs(Octo_AddonsTable.depsByIndex[index]) do
+			-- 		tooltipthird[#tooltipthird+1] = {"    "..Child_Color..E.func_GetAddonName(depIndex).."|r"}
+			-- 	end
+			-- end
 			if loadable then
 				firsticonTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonONgreen"
 			else
@@ -727,7 +730,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 				info.isNotRadio = true -- TRUE круг, а не квадрат
 				info.text = ADDON_FORCE_LOAD
 				info.hasArrow = nil
-				info.checked = not C_AddOns.IsAddonVersionCheckEnabled()
+				info.checked = not E.func_IsAddonVersionCheckEnabled()
 				info.func = function(_, _, _, checked)
 					E.compat.SetAddonVersionCheck(not checked)
 					E.AddonList_Update()
@@ -1003,7 +1006,7 @@ function Octo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		self.startStatus = {}
 		self.shouldReload = false
-		self.outOfDate = E.func_IsAddonVersionCheckEnabled() and AddonList_HasOutOfDate()
+		self.outOfDate = E.func_IsAddonVersionCheckEnabled() and E.func_AddonList_HasOutOfDate()
 		self.outOfDateIndexes = {}
 		for i=1, E.func_GetNumAddOns() do
 			self.startStatus[i] = (E.func_GetAddOnEnableState(i, UnitName("player")) > Enum.AddOnEnableState.None)

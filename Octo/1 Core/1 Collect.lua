@@ -103,10 +103,10 @@ function E.Collect_All_Covenant()
 			local curCovLevel = C_CovenantSanctumUI.GetRenownLevel()
 			local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(1813)
 			local curAnimaAmount = currencyInfo.quantity
-			collect.PIZDALISHE.CovenantAndAnima = collect.PIZDALISHE.CovenantAndAnima or {}
-			collect.PIZDALISHE.CovenantAndAnima.curCovID = curCovID
-			collect.PIZDALISHE.CovenantAndAnima[curCovID][1] = curCovLevel
-			collect.PIZDALISHE.CovenantAndAnima[curCovID][2] = curAnimaAmount
+			collect.MASLENGO.CovenantAndAnima = collect.MASLENGO.CovenantAndAnima or {}
+			collect.MASLENGO.CovenantAndAnima.curCovID = curCovID
+			collect.MASLENGO.CovenantAndAnima[curCovID][1] = curCovLevel
+			collect.MASLENGO.CovenantAndAnima[curCovID][2] = curAnimaAmount
 		end
 	end
 end
@@ -223,8 +223,8 @@ end
 -- POSTMASTER_PIPE_PANDARIA (New) - Pandaria
 -- ВЫЗЫВАЕТСЯ 1 РАЗ
 function E.Collect_All_Professions_Debug()
-	E.func_LoadAddOn("Blizzard_Professions")
-	E.func_LoadAddOn("Blizzard_ProfessionsBook")
+	E.func_LoadAddOnFORCED("Blizzard_Professions")
+	E.func_LoadAddOnFORCED("Blizzard_ProfessionsBook")
 	if not ProfessionsFrame then
 		ProfessionsFrame_LoadUI()
 		-- else
@@ -456,16 +456,16 @@ function E.Collect_ALL_GreatVault()
 				if activityInfo then
 					local tip = activityInfo.type
 					if collect and tip ~= nil then
-						collect.PIZDALISHE.GreatVault[tip] = collect.PIZDALISHE.GreatVault[tip] or {}
-						collect.PIZDALISHE.GreatVault[tip].type = activity_name
-						collect.PIZDALISHE.GreatVault[tip].progress = activityInfo.progress
-						collect.PIZDALISHE.GreatVault[tip].threshold = activityInfo.threshold
-						local hyperlink = E.func_GetItemCurrentLevel(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
-						hyperlink_STRING = E.func_GetItemCurrentLevel(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+						collect.MASLENGO.GreatVault[tip] = collect.MASLENGO.GreatVault[tip] or {}
+						collect.MASLENGO.GreatVault[tip].type = activity_name
+						collect.MASLENGO.GreatVault[tip].progress = activityInfo.progress
+						collect.MASLENGO.GreatVault[tip].threshold = activityInfo.threshold
+						local hyperlink = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+						hyperlink_STRING = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						if hyperlink_STRING then
 							vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
 							if vivod ~= nil then
-								collect.PIZDALISHE.GreatVault[tip].hyperlink_STRING = vivod
+								collect.MASLENGO.GreatVault[tip].hyperlink_STRING = vivod
 							end
 						end
 					end
@@ -634,7 +634,7 @@ function E.Collect_ALL_ItemsInBag()
 							Possible_CatalogedResearch = Possible_CatalogedResearch + tbl.count
 						end
 					end
-					local isAnima = E.IsAnimaItemByID(itemID)
+					local isAnima = E.func_IsAnimaItemByID(itemID)
 					if stackCount and isAnima and itemID ~= nil then
 						if (quality == 2) and (itemID ~= 183727) then
 							Possible_Anima = Possible_Anima + (5 * stackCount)
@@ -808,8 +808,8 @@ function E.Collect_All_journalInstance()
 		if NumSavedInstances > 0 then
 			for i = 1, NumSavedInstances do
 				local instanceName, lockoutId, instanceReset, instanceDifficulty, locked, extended, instanceIDMostSig, isRaid, maxPlayers, difficultyName, totalBosses, defeatedBosses, extendDisabled, instanceId = GetSavedInstanceInfo(i)
-				collect.PIZDALISHE.journalInstance[instanceId] = collect.PIZDALISHE.journalInstance[instanceId] or {}
-				collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty] = collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty] or {}
+				collect.MASLENGO.journalInstance[instanceId] = collect.MASLENGO.journalInstance[instanceId] or {}
+				collect.MASLENGO.journalInstance[instanceId][instanceDifficulty] = collect.MASLENGO.journalInstance[instanceId][instanceDifficulty] or {}
 				if locked then
 					local _, _, lastBossDefeated = GetSavedInstanceEncounterInfo(i, instancesLastBoss[i] or totalBosses)
 					if defeatedBosses == 0 and lastBossDefeated then
@@ -839,29 +839,29 @@ function E.Collect_All_journalInstance()
 						DiffAbbr = "HZ"
 					end
 					local vivod = color..defeatedBosses.."/"..totalBosses.."|r"
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].instanceName = instanceName
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].vivod = vivod
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].instanceReset = instanceReset
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].difficultyName = difficultyName
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].instanceDifficulty = instanceDifficulty
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].extended = extended
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].instanceIDMostSig = instanceIDMostSig
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].isRaid = isRaid
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].maxPlayers = maxPlayers
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].totalBosses = totalBosses
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].defeatedBosses = defeatedBosses
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].extendDisabled = extendDisabled
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
-					collect.PIZDALISHE.journalInstance[instanceId][instanceDifficulty].Time = E.func_SecondsToClock(instanceReset-ServerTime)
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].instanceName = instanceName
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].vivod = vivod
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].instanceReset = instanceReset
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].difficultyName = difficultyName
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].instanceDifficulty = instanceDifficulty
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].extended = extended
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].instanceIDMostSig = instanceIDMostSig
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].isRaid = isRaid
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].maxPlayers = maxPlayers
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].totalBosses = totalBosses
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].defeatedBosses = defeatedBosses
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].extendDisabled = extendDisabled
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
+					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].Time = E.func_SecondsToClock(instanceReset-ServerTime)
 				end
 			end
 		end
 		if NumSavedWorldBosses > 0 then
 			for i = 1, NumSavedWorldBosses do
 				local name, worldBossID, reset = GetSavedWorldBossInfo(i)
-				collect.PIZDALISHE.SavedWorldBoss[worldBossID] = collect.PIZDALISHE.SavedWorldBoss[worldBossID] or {}
-				collect.PIZDALISHE.SavedWorldBoss[worldBossID].name = name
-				collect.PIZDALISHE.SavedWorldBoss[worldBossID].reset = reset
+				collect.MASLENGO.SavedWorldBoss[worldBossID] = collect.MASLENGO.SavedWorldBoss[worldBossID] or {}
+				collect.MASLENGO.SavedWorldBoss[worldBossID].name = name
+				collect.MASLENGO.SavedWorldBoss[worldBossID].reset = reset
 			end
 		end
 		for i=1, GetNumRandomDungeons() do
@@ -869,12 +869,12 @@ function E.Collect_All_journalInstance()
 			if dungeonID and E.OctoTable_LFGDungeons[dungeonID] then
 				local D_name = GetLFGDungeonInfo(dungeonID)
 				local donetoday = GetLFGDungeonRewards(dungeonID)
-				collect.PIZDALISHE.LFGInstance[dungeonID] = collect.PIZDALISHE.LFGInstance[dungeonID] or {}
-				collect.PIZDALISHE.LFGInstance[dungeonID].D_name = D_name
+				collect.MASLENGO.LFGInstance[dungeonID] = collect.MASLENGO.LFGInstance[dungeonID] or {}
+				collect.MASLENGO.LFGInstance[dungeonID].D_name = D_name
 				if donetoday == true then
-					collect.PIZDALISHE.LFGInstance[dungeonID].donetoday = E.DONE
+					collect.MASLENGO.LFGInstance[dungeonID].donetoday = E.DONE
 				else
-					collect.PIZDALISHE.LFGInstance[dungeonID].donetoday = nil
+					collect.MASLENGO.LFGInstance[dungeonID].donetoday = nil
 				end
 			end
 		end
@@ -883,6 +883,10 @@ end
 function E.Collect_All_Holiday()
 	E.HolidayForButton = {}
 	wipe(E.HolidayForButton)
+
+	Octo_ToDo_DB_Other.ActiveHoliday = {}
+	wipe(Octo_ToDo_DB_Other.ActiveHoliday)
+
 	if E.HolidayForButton and not InCombatLockdown() then
 		local backup = Octo_ToDo_DB_Other.CVar
 		local function function_setBackup()
@@ -980,6 +984,7 @@ function E.Collect_All_Holiday()
 					if event.sequenceType == "START" then
 						local secondsToEvent = ((event.startTime.hour - hour) * 60 + event.startTime.minute - minute) * 60
 						if secondsToEvent <= 0 then
+							Octo_ToDo_DB_Other.ActiveHoliday[id] = true
 							E.HolidayForButton[id].Active = true
 						else
 							E.HolidayForButton[id].Possible = true
@@ -987,9 +992,11 @@ function E.Collect_All_Holiday()
 					elseif event.sequenceType == "END" then
 						local secondsToEvent = ((event.endTime.hour - hour) * 60 + event.endTime.minute - minute) * 60
 						if secondsToEvent > 0 then
+							Octo_ToDo_DB_Other.ActiveHoliday[id] = true
 							E.HolidayForButton[id].Active = true
 						end
 					else
+						Octo_ToDo_DB_Other.ActiveHoliday[id] = true
 						E.HolidayForButton[id].Active = true
 					end
 				elseif monthDay < day then
@@ -1057,7 +1064,7 @@ function E.Collect_All_BfA_Island()
 		local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
 		if questID then
 			if E.func_CheckCompletedByQuestID(questID) ~= E.NONE then
-				collect.PIZDALISHE.islandBfA = E.func_CheckCompletedByQuestID(questID)
+				collect.MASLENGO.islandBfA = E.func_CheckCompletedByQuestID(questID)
 			end
 		end
 	end

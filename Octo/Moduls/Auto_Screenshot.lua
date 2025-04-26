@@ -21,7 +21,9 @@ tinsert(E.Modules, function()
 
 		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message, E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..currentTime.."|r")
 
-		C_Timer.After(1, Screenshot)
+		C_Timer.After(1, function()
+			Screenshot()
+		end)
 	end
 
 	-- Создаем и настраиваем фрейм

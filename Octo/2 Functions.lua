@@ -10,6 +10,203 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
+-- Кеширование глобальных функций и таблиц
+local _G = _G
+local table_insert = table.insert
+local table_concat = table.concat
+local string_format = string.format
+local string_upper = string.upper
+local string_lower = string.lower
+local string_sub = string.sub
+local string_gsub = string.gsub
+local string_match = string.match
+local math_floor = math.floor
+local math_ceil = math.ceil
+local tonumber = tonumber
+local tostring = tostring
+local select = select
+local pairs = pairs
+local ipairs = ipairs
+local next = next
+local type = type
+local CreateFrame = CreateFrame
+local GetTime = GetTime
+local GetServerTime = GetServerTime
+local GetFramerate = GetFramerate
+local UnitClass = UnitClass
+local UnitFactionGroup = UnitFactionGroup
+local UnitFullName = UnitFullName
+local UnitGUID = UnitGUID
+local UnitLevel = UnitLevel
+local UnitSex = UnitSex
+local GetClassColor = GetClassColor
+local GetRealmName = GetRealmName
+local GetCurrentRegion = GetCurrentRegion
+local GetCurrentRegionName = GetCurrentRegionName
+local GetBuildInfo = GetBuildInfo
+local GetPhysicalScreenSize = GetPhysicalScreenSize
+local GetQuestProgressBarPercent = GetQuestProgressBarPercent
+local GetQuestObjectiveInfo = GetQuestObjectiveInfo
+local GetAchievementInfo = GetAchievementInfo
+local GetAchievementNumCriteria = GetAchievementNumCriteria
+local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
+
+
+local GetProfessionInfo = GetProfessionInfo
+local BNGetInfo = BNGetInfo
+local PlayerHasToy = PlayerHasToy
+local CreateColor = CreateColor
+local GameTooltip = GameTooltip
+local GameTooltip_Hide = GameTooltip_Hide
+local StaticPopup_Show = StaticPopup_Show
+local Settings = Settings
+local SettingsPanel = SettingsPanel
+local HideUIPanel = HideUIPanel
+local GameMenuFrame = GameMenuFrame
+local UIParent = UIParent
+local WorldFrame = WorldFrame
+local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME
+local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
+local RAID_CLASS_COLORS = RAID_CLASS_COLORS
+
+-- Кеширование часто используемых строк
+local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local SEARCH_LOADING_TEXT = SEARCH_LOADING_TEXT or "Loading..."
+local RETRIEVING_ITEM_INFO = RETRIEVING_ITEM_INFO or "Retrieving info"
+local QUEST_WATCH_QUEST_READY = QUEST_WATCH_QUEST_READY or "Complete"
+local COMPLETE = COMPLETE or "Complete"
+local FAILED = FAILED or "Failed"
+local CLOSE = CLOSE or "Close"
+local OPTIONS = OPTIONS or "Options"
+local YES = YES or "Yes"
+local NO = NO or "No"
+local UNKNOWN = UNKNOWN or "Unknown"
+local FACTION_STANDING_LABEL = FACTION_STANDING_LABEL or {}
+local ADDON_DEPENDENCIES = ADDON_DEPENDENCIES or "Dependencies:"
+
+-- AddOn functions
+local DisableAddOn = DisableAddOn or C_AddOns.DisableAddOn
+local DisableAllAddOns = DisableAllAddOns or C_AddOns.DisableAllAddOns
+local DoesAddOnExist = DoesAddOnExist or C_AddOns.DoesAddOnExist
+local EnableAddOn = EnableAddOn or C_AddOns.EnableAddOn
+local EnableAllAddOns = EnableAllAddOns or C_AddOns.EnableAllAddOns
+local GetAddOnDependencies = GetAddOnDependencies or C_AddOns.GetAddOnDependencies
+local GetAddOnEnableState = GetAddOnEnableState or C_AddOns.GetAddOnEnableState
+local GetAddOnInfo = GetAddOnInfo or C_AddOns.GetAddOnInfo
+local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
+local GetAddOnOptionalDependencies = GetAddOnOptionalDependencies or C_AddOns.GetAddOnOptionalDependencies
+local GetNumAddOns = GetNumAddOns or C_AddOns.GetNumAddOns
+local GetScriptsDisallowedForBeta = GetScriptsDisallowedForBeta or C_AddOns.GetScriptsDisallowedForBeta
+local IsAddOnDefaultEnabled = IsAddOnDefaultEnabled or C_AddOns.IsAddOnDefaultEnabled
+local IsAddOnLoaded = IsAddOnLoaded or C_AddOns.IsAddOnLoaded
+local IsAddOnLoadable = IsAddOnLoadable or C_AddOns.IsAddOnLoadable
+local IsAddOnLoadOnDemand = IsAddOnLoadOnDemand or C_AddOns.IsAddOnLoadOnDemand
+local IsAddonVersionCheckEnabled = IsAddonVersionCheckEnabled or C_AddOns.IsAddonVersionCheckEnabled
+local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
+local ResetAddOns = ResetAddOns or C_AddOns.ResetAddOns
+local ResetDisabledAddOns = ResetDisabledAddOns or C_AddOns.ResetDisabledAddOns
+local SaveAddOns = SaveAddOns or C_AddOns.SaveAddOns
+local SetAddonVersionCheck = SetAddonVersionCheck or C_AddOns.SetAddonVersionCheck
+local AddonList_HasOutOfDate = AddonList_HasOutOfDate
+
+-- AddOn Profiler
+local IsEnabled = IsEnabled or C_AddOnProfiler.IsEnabled
+local GetOverallMetric = GetOverallMetric or C_AddOnProfiler.GetOverallMetric
+local GetAddOnMetric = GetAddOnMetric or C_AddOnProfiler.GetAddOnMetric
+local GetApplicationMetric = GetApplicationMetric or C_AddOnProfiler.GetApplicationMetric
+
+
+-- Item functions
+local GetItemCooldown = GetItemCooldown or C_Item.GetItemCooldown
+local GetItemCount = GetItemCount or C_Item.GetItemCount
+local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
+local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
+local GetItemInfoInstant = GetItemInfoInstant or C_Item.GetItemInfoInstant
+local GetItemInventoryTypeByID = GetItemInventoryTypeByID or C_Item.GetItemInventoryTypeByID
+local GetItemMaxStackSizeByID = GetItemMaxStackSizeByID or C_Item.GetItemMaxStackSizeByID
+local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
+local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
+local GetItemQualityColor = GetItemQualityColor or C_Item.GetItemQualityColor
+local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
+local IsAnimaItemByID = IsAnimaItemByID or C_Item.IsAnimaItemByID
+local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
+
+-- Spell functions
+local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
+local GetSpellDescription = GetSpellDescription or C_Spell.GetSpellDescription
+local GetSpellName = GetSpellName or C_Spell.GetSpellName
+local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
+local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
+local IsSpellKnown = IsSpellKnown
+
+-- Currency functions
+local GetCurrencyInfo = GetCurrencyInfo or C_CurrencyInfo.GetCurrencyInfo
+local IsAccountWideCurrency = IsAccountWideCurrency or C_CurrencyInfo.IsAccountWideCurrency
+local IsAccountTransferableCurrency = IsAccountTransferableCurrency or C_CurrencyInfo.IsAccountTransferableCurrency
+
+-- Quest functions
+local GetTitleForQuestID = GetTitleForQuestID or C_QuestLog.GetTitleForQuestID
+local IsQuestFlaggedCompleted = IsQuestFlaggedCompleted or C_QuestLog.IsQuestFlaggedCompleted
+local IsQuestFlaggedCompletedOnAccount = IsQuestFlaggedCompletedOnAccount or C_QuestLog.IsQuestFlaggedCompletedOnAccount
+local IsComplete = IsComplete or C_QuestLog.IsComplete
+local IsOnQuest = IsOnQuest or C_QuestLog.IsOnQuest
+local GetQuestObjectives = GetQuestObjectives or C_QuestLog.GetQuestObjectives
+local GetInfo = GetInfo or C_QuestLog.GetInfo
+local SetSelectedQuest = SetSelectedQuest or C_QuestLog.SetSelectedQuest
+local SetAbandonQuest = SetAbandonQuest or C_QuestLog.SetAbandonQuest
+local AbandonQuest = AbandonQuest or C_QuestLog.AbandonQuest
+local IsAccountQuest = IsAccountQuest or C_QuestLog.IsAccountQuest
+local IsFailed = IsFailed or C_QuestLog.IsFailed
+local GetNumQuestLogEntries = GetNumQuestLogEntries or C_QuestLog.GetNumQuestLogEntries
+
+-- Reputation functions
+local GetFactionDataByID = GetFactionDataByID or C_Reputation.GetFactionDataByID
+local IsFactionParagon = IsFactionParagon or C_Reputation.IsFactionParagon
+local GetFactionParagonInfo = GetFactionParagonInfo or C_Reputation.GetFactionParagonInfo
+local IsAccountWideReputation = IsAccountWideReputation or C_Reputation.IsAccountWideReputation
+local IsMajorFaction = IsMajorFaction or C_Reputation.IsMajorFaction
+local ExpandAllFactionHeaders = ExpandAllFactionHeaders or C_Reputation.ExpandAllFactionHeaders
+local GetNumFactions = GetNumFactions or C_Reputation.GetNumFactions
+local GetFactionDataByIndex = GetFactionDataByIndex or C_Reputation.GetFactionDataByIndex
+
+-- Major Faction functions
+local GetMajorFactionData = GetMajorFactionData or C_MajorFactions.GetMajorFactionData
+
+-- Gossip/Friendship functions
+local GetFriendshipReputation = GetFriendshipReputation or C_GossipInfo.GetFriendshipReputation
+local GetFriendshipReputationRanks = GetFriendshipReputationRanks or C_GossipInfo.GetFriendshipReputationRanks
+
+-- Challenge Mode functions
+local GetMapUIInfo = GetMapUIInfo or C_ChallengeMode.GetMapUIInfo
+
+-- Covenant functions
+local GetCovenantData = GetCovenantData or C_Covenants.GetCovenantData
+
+-- Trade Skill functions
+local GetTradeSkillDisplayName = GetTradeSkillDisplayName or C_TradeSkillUI.GetTradeSkillDisplayName
+local GetTradeSkillTexture = GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
+
+-- Map functions
+local GetMapInfo = GetMapInfo or C_Map.GetMapInfo
+
+-- Date/Time functions
+local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
+
+-- Calendar functions
+local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
+local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
+----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 -- console -> export "art"
 function E.func_IsClassic() if E.interfaceVersion > 10000 and E.interfaceVersion < 20000 then return true else return false end end
 function E.func_IsBC() if E.interfaceVersion > 20000 and E.interfaceVersion < 30000 then return true else return false end end
@@ -27,30 +224,34 @@ function E.func_IsTLT() if E.interfaceVersion > 130000 and E.interfaceVersion < 
 function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E.func_IsPTR() return GetCurrentRegion() >= 72 end
 ----------------------------------------------------------------
-function E.func_GetItemIcon(itemID)
-	tinsert(E.PromiseItem, itemID)
-	return C_Item.GetItemIconByID(itemID)
+function E.func_GetItemIconByID(itemID)
+	return GetItemIconByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_GetItemName(itemID)
-	tinsert(E.PromiseItem, itemID)
-	local vivod = C_Item.GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
-	return (vivod and E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r") or vivod
+function E.func_GetItemNameByID(itemID)
+	table_insert(E.PromiseItem, itemID)
+	local itemName = GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
+	local vivod = ""
+	local itemQuality = select(3, E.func_GetItemInfo(itemID)) or 0
+	local QWEQWE = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
+	if itemQuality then
+		vivod = vivod .. ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
+	end
+	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E.func_GetSpellIcon(spellID)
-	tinsert(E.PromiseSpell, spellID)
-	return C_Spell.GetSpellTexture(spellID)
+	return GetSpellTexture(spellID)
 end
 ----------------------------------------------------------------
 function E.func_GetSpellName(spellID)
-	tinsert(E.PromiseSpell, spellID)
-	local vivod = C_Spell.GetSpellName(spellID)
-	return (vivod and E.DebugIDs and E.Gray_Color.." id:"..spellID.."|r") or vivod
+	table_insert(E.PromiseSpell, spellID)
+	local vivod = GetSpellName(spellID)
+	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..spellID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E.func_GetCurrencyIcon(currencyID)
-	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	local info = GetCurrencyInfo(currencyID)
 	local iconFileID = E.Icon_QuestionMark
 	if info then
 		iconFileID = info.iconFileID
@@ -61,33 +262,30 @@ end
 function E.func_currencyName_NOCOLOR(currencyID)
 	local vivod = ""
 	local AWide = ""
-	if C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) then
+	if IsAccountTransferableCurrency(currencyID) then
 		AWide = E.Icon_AccountTransferable
-	elseif C_CurrencyInfo.IsAccountWideCurrency(currencyID) then
+	elseif IsAccountWideCurrency(currencyID) then
 		AWide = E.Icon_AccountWide
 	end
-	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	local info = GetCurrencyInfo(currencyID)
 	if info then
 		local name = info.name
 		vivod = AWide..name
 	else
 		vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
-	if E.DebugIDs then
-		vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
-	end
-	return vivod
+	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..currencyID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E.func_currencyName(currencyID)
 	local vivod = ""
 	local AWide = ""
-	if C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) then
+	if IsAccountTransferableCurrency(currencyID) then
 		AWide = E.Icon_AccountTransferable
-	elseif C_CurrencyInfo.IsAccountWideCurrency(currencyID) then
+	elseif IsAccountWideCurrency(currencyID) then
 		AWide = E.Icon_AccountWide
 	end
-	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	local info = GetCurrencyInfo(currencyID)
 	if info then
 		local name = info.name
 		local quality = info.quality
@@ -98,34 +296,26 @@ function E.func_currencyName(currencyID)
 	else
 		vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	end
-	if E.DebugIDs then
-		vivod = vivod..E.Gray_Color.." id:"..currencyID.."|r"
-	end
-	return vivod
+	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..currencyID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
-	tinsert(E.PromiseQuest, questID)
+	table_insert(E.PromiseQuest, questID)
 	local vivod = ""
 	local useLargeIcon = useLargeIcon or true
-	local isAccountQuest = C_QuestLog.IsAccountQuest(questID)
-	local isCompletedOnAccount = C_QuestLog.IsQuestFlaggedCompletedOnAccount(questID)
-	local title = C_QuestLog.GetTitleForQuestID(questID)
+	local title = GetTitleForQuestID(questID)
 	if title then
 		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon)
 	else
 		vivod = vivod..E.Red_Color.."hidden?".."|r"
 	end
-	if isAccountQuest then
+	if IsAccountQuest(questID) then
 		vivod = E.Icon_AccountWide.."|cffFFFF00"..vivod.."|r"
 	end
-	if isCompletedOnAccount then
+	if IsQuestFlaggedCompletedOnAccount(questID) then
 		vivod = E.Icon_AccountWide.."|cff9fc5e8"..vivod.."|r"
 	end
-	if E.DebugIDs then
-		vivod = vivod..E.Gray_Color.." id:"..questID.."|r"
-	end
-	return vivod
+	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..questID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E.func_reputationName(reputationID)
@@ -135,11 +325,11 @@ function E.func_reputationName(reputationID)
 		local side = E.OctoTable_ReputationsDB[reputationID].side or "-"
 		local name = E.OctoTable_ReputationsDB[reputationID].name
 		local color = E.White_Color
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
+		local repInfo = GetFactionDataByID(reputationID)
 		if repInfo then
 			vivod = vivod.. repInfo.name
 		else
-			local reputationInfo = C_GossipInfo.GetFriendshipReputation(reputationID)
+			local reputationInfo = GetFriendshipReputation(reputationID)
 			if reputationInfo.name then
 				vivod = vivod.. reputationInfo.name
 			elseif name then
@@ -148,11 +338,8 @@ function E.func_reputationName(reputationID)
 				vivod = vivod.. reputationID.. " (UNKNOWN)"
 			end
 		end
-		if E.DebugIDs then
-			vivod = vivod..E.Gray_Color.." id:"..reputationID.."|r"
-		end
 		----------------------------------------------------------------
-		-- local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
+		-- local friendData = GetFriendshipReputation(reputationID)
 		-- local isFriend = friendData and true or false
 		-- if isFriend then
 		-- 	if (friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0) then
@@ -161,14 +348,14 @@ function E.func_reputationName(reputationID)
 		-- 	end
 		-- end
 		----------------------------------------------------------------
-		-- local isMajor = C_Reputation.IsMajorFaction(reputationID) and true or false
+		-- local isMajor = IsMajorFaction(reputationID) and true or false
 		-- if isMajor then
-		--     local majorData = C_MajorFactions.GetMajorFactionData(reputationID) or 0
+		--     local majorData = GetMajorFactionData(reputationID) or 0
 		--     if majorData ~= 0 then
 		--         local textureKit = majorData.textureKit or 0
 		--         if textureKit ~= 0 then
-		--             local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s", textureKit))
-		--             -- local KitIcon = E.func_texturefromIcon(string.format("Interface\\ICONS\\UI_MajorFactions_%s_256", textureKit))
+		--             local KitIcon = E.func_texturefromIcon(string_format("Interface\\ICONS\\UI_MajorFactions_%s", textureKit))
+		--             -- local KitIcon = E.func_texturefromIcon(string_format("Interface\\ICONS\\UI_MajorFactions_%s_256", textureKit))
 		--             vivod = "|cffFF00FF"..textureKit.."|r" .. KitIcon.. vivod
 		--         end
 		--     end
@@ -177,20 +364,22 @@ function E.func_reputationName(reputationID)
 		if side == "Alliance" then
 			vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
 			vivod = E.Blue_Color..vivod.."|r"
+			-- vivod = "|cffC6D2FF"..vivod.."|r"
 		elseif side == "Horde" then
 			vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
 			vivod = E.Red_Color..vivod.."|r"
+			-- vivod = "|cffFFC6CB"..vivod.."|r"
 		end
 		----------------------------------------------------------------
 		-- if icon ~= E.Icon_QuestionMark then
 		-- 	vivod = E.func_texturefromIcon(icon)..vivod
 		-- end
 		----------------------------------------------------------------
-		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID) or false
+		local isAccountWide = IsAccountWideReputation(reputationID) or false
 		if isAccountWide == true then
 			vivod = E.Icon_AccountWide..vivod
 		end
-		return vivod
+		return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..reputationID.."|r" or "")
 	else
 		return "|cffFF0000no reputationID|r"
 	end
@@ -199,11 +388,11 @@ end
 -- ITEM UTILS
 ----------------------------------------------------------------
 function E.func_GetItemInfo(itemInfo) -- Item ID, Link or name
-	return C_Item.GetItemInfo(itemInfo)
+	return GetItemInfo(itemInfo)
 end
 ----------------------------------------------------------------
 function E.func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
-	return C_Item.GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
+	return GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -214,7 +403,7 @@ function E.func_GetItemLink(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemQuality(itemID)
-	return C_Item.GetItemQualityByID(itemID)
+	return GetItemQualityByID(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemQualityColorID(itemID)
@@ -222,20 +411,20 @@ function E.func_GetItemQualityColorID(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemQualityColor(quality)
-	local r, g, b = C_Item.GetItemQualityColor(quality)
+	local r, g, b = GetItemQualityColor(quality)
 	return r, g, b
 end
 ----------------------------------------------------------------
-function E.IsAnimaItemByID(itemID)
-	return C_Item.IsAnimaItemByID(itemID)
+function E.func_IsAnimaItemByID(itemID)
+	return IsAnimaItemByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_GetItemCurrentLevel(itemID)
-	return C_Item.GetDetailedItemLevelInfo(itemID)
+function E.func_GetDetailedItemLevelInfo(itemID)
+	return GetDetailedItemLevelInfo(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemMaxStackSize(itemID)
-	return C_Item.GetItemMaxStackSizeByID(itemID)
+	return GetItemMaxStackSizeByID(itemID)
 end
 ----------------------------------------------------------------
 function E.func_IsItemStackable(itemID)
@@ -244,49 +433,27 @@ function E.func_IsItemStackable(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemInventoryType(itemID)
-	return C_Item.GetItemInventoryTypeByID(itemID)
+	return GetItemInventoryTypeByID(itemID)
 end
 ----------------------------------------------------------------
 function E.func_GetItemInventoryTypeName(itemID)
-	local _, _, _, itemEquipLoc = C_Item.GetItemInfoInstant(itemID)
+	local _, _, _, itemEquipLoc = GetItemInfoInstant(itemID)
 	return itemEquipLoc
 end
 ----------------------------------------------------------------
 function E.func_IsItemDataCached(itemID)
-	return C_Item.IsItemDataCachedByID(itemID)
+	return IsItemDataCachedByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_itemName(itemID)
-	local itemName = C_Item.GetItemNameByID(itemID) or E.Red_Color..SEARCH_LOADING_TEXT.."|r" -- RETRIEVING_ITEM_INFO
-	local itemQuality = select(3, E.func_GetItemInfo(itemID))
-	local vivod
-	if itemQuality then
-		vivod = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
-	else
-		vivod = itemName
-	end
-	if E.DebugIDs then
-		vivod = vivod..E.Gray_Color.." id:"..itemID.."|r"
-	end
-	return vivod
-end
 ----------------------------------------------------------------
-function E.func_itemTexture(itemID)
-	local icon = C_Item.GetItemIconByID(itemID) or E.Icon_QuestionMark
-	return E.func_texturefromIcon(icon)
-end
 ----------------------------------------------------------------
 function E.func_spellTexture(spellID)
-	local icon = E.func_GetSpellIcon(spellID) or E.Icon_QuestionMark
+	local icon = E.func_GetSpellIcon(spellID)
 	return E.func_texturefromIcon(icon)
 end
 ----------------------------------------------------------------
 function E.func_GetItemCooldown(itemID)
-	local start, duration = C_Item.GetItemCooldown(itemID)
-	-- local start = C_Item.GetItemCooldown(itemID).startTimeSeconds or 0
-	-- local duration = C_Item.GetItemCooldown(itemID).durationSeconds or 0
-	-- local start = C_Container.GetItemCooldown(itemID).startTime or 0
-	-- local duration = C_Container.GetItemCooldown(itemID).duration or 0
+	local start, duration = GetItemCooldown(itemID)
 	local vivod = 0
 	if start > 0 and duration > 0 then
 		vivod = (start + duration - GetTime())
@@ -297,31 +464,18 @@ end
 -- SPELLS
 ----------------------------------------------------------------
 function E.func_GetSpellSubtext(spellID)
-	local vivod = C_Spell.GetSpellSubtext(spellID)
-	-- if E.DebugIDs then
-	--   vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
-	-- end
-	return vivod
-end
-----------------------------------------------------------------
-function E.func_GetSpellNameFull(spellID)
-	local name = E.func_GetSpellName(spellID)
-	local subText = E.func_GetSpellSubtext(spellID)
-	local vivod = subText and #subText > 0 and name.."("..subText..")" or name
-	-- if E.DebugIDs then
-	--   vivod = vivod..E.Gray_Color.." id:"..spellID.."|r"
-	-- end
+	local vivod = GetSpellSubtext(spellID)
 	return vivod
 end
 ----------------------------------------------------------------
 function E.func_GetSpellDescription(spellID)
-	return C_Spell.GetSpellDescription(spellID)
+	return GetSpellDescription(spellID)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_GetSpellCooldown(spellID)
-	local start = C_Spell.GetSpellCooldown(spellID).startTime
-	local duration = C_Spell.GetSpellCooldown(spellID).duration
+	local start = GetSpellCooldown(spellID).startTime
+	local duration = GetSpellCooldown(spellID).duration
 	local vivod = 0
 	if start > 0 and duration > 0 then
 		vivod = (start + duration - GetTime())
@@ -353,7 +507,7 @@ function E.func_rgb2hex(r, g, b, a)
 	if not a then
 		a = 1
 	end
-	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+	return "|c"..string_format("%02x", math_floor(a*255))..utf8upper(string_format("%02x%02x%02x", math_floor(r*255), math_floor(g*255), math_floor(b*255)))
 end
 ----------------------------------------------------------------
 function E.func_rgb2hexDEV(r, g, b, a)
@@ -361,7 +515,7 @@ function E.func_rgb2hexDEV(r, g, b, a)
 	if not a then
 		a = 1
 	end
-	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+	return "|c"..string_format("%02x", math_floor(a*255))..utf8upper(string_format("%02x%02x%02x", math_floor(r*255), math_floor(g*255), math_floor(b*255)))
 end
 ----------------------------------------------------------------
 function E.func_percent(percent, maxvalue)
@@ -381,7 +535,7 @@ function E.func_Gradient(text, firstColor, secondColor)
 	local g3 = g1
 	local b3 = b1
 	for i = 1, total do
-		str = str..("|cff%02x%02x%02x%s|r"):format(math.floor(r3+.5), math.floor(g3+.5), math.floor(b3+.5), utf8sub(text, i, i))
+		str = str..("|cff%02x%02x%02x%s|r"):format(math_floor(r3+.5), math_floor(g3+.5), math_floor(b3+.5), utf8sub(text, i, i))
 		r3 = r3 + rdelta
 		g3 = g3 + gdelta
 		b3 = b3 + bdelta
@@ -393,17 +547,17 @@ end
 function E.func_GenerateUniqueID()
 	local s = {}
 	for i=1, 11 do
-		tinsert(s, E.OctoTable_bytetoB64[math.random(0, 63)])
+		table_insert(s, E.OctoTable_bytetoB64[math.random(0, 63)])
 	end
-	return table.concat(s)
+	return table_concat(s)
 end
 ----------------------------------------------------------------
 function E.func_GenerateUniqueColor()
 	local s = {}
 	for i=1, 6 do
-		tinsert(s, E.OctoTable_bytetoB64Color[math.random(0, 15)])
+		table_insert(s, E.OctoTable_bytetoB64Color[math.random(0, 15)])
 	end
-	return table.concat(s)
+	return table_concat(s)
 end
 ----------------------------------------------------------------
 function E.func_PlaySoundFile_whisper(fileName)
@@ -417,11 +571,11 @@ function E.func_CompactNumberFormat(number)
 	if number == 0 then
 		return 0
 	elseif number < 1000 then
-		return (math.floor((number+0.5)-0.5)/10)*10
+		return (math_floor((number+0.5)-0.5)/10)*10
 	elseif number < 1000000 then
-		return (math.floor(number/100)/10).."k"
+		return (math_floor(number/100)/10).."k"
 	else
-		return (math.floor(number/100000)/10).."m"
+		return (math_floor(number/100000)/10).."m"
 	end
 end
 ----------------------------------------------------------------
@@ -430,7 +584,7 @@ function E.func_CompactNumberSimple(number)
 	if number == 0 then
 		return 0
 	else
-		return math.floor(number+.5)
+		return math_floor(number+.5)
 	end
 end
 ----------------------------------------------------------------
@@ -467,7 +621,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_currencyIcon(currencyID)
-	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	local info = GetCurrencyInfo(currencyID)
 	local iconFileID = E.Icon_QuestionMark
 	if info then
 		iconFileID = info.iconFileID
@@ -476,7 +630,7 @@ function E.func_currencyIcon(currencyID)
 end
 ----------------------------------------------------------------
 function E.func_currencyquantity(currencyID)
-	local info = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	local info = GetCurrencyInfo(currencyID)
 	local quantity
 	if info then
 		quantity = info.quantity or 0
@@ -507,7 +661,7 @@ function E.func_SecondsToClock(time)
 		table.insert(parts, mins..(L["time_MINUTE"] or "m"))
 	elseif hours > 0 then
 		table.insert(parts, hours..(L["time_HOUR"] or "h").." ")
-		table.insert(parts, string.format("%02d", mins)..(L["time_MINUTE"] or "m"))
+		table.insert(parts, string_format("%02d", mins)..(L["time_MINUTE"] or "m"))
 	elseif time >= 60 then
 		table.insert(parts, mins..(L["time_MINUTE"] or "m").." ")
 		if time < 600 then -- Только для 1-9 минут добавляем секунды
@@ -516,7 +670,7 @@ function E.func_SecondsToClock(time)
 	else
 		table.insert(parts, secs..(L["time_SECOND"] or "s"))
 	end
-	return table.concat(parts)
+	return table_concat(parts)
 end
 function E.ChatFrame_TimeBreakDown(time)
 	local days = floor(time / (60 * 60 * 24))
@@ -528,28 +682,28 @@ end
 ----------------------------------------------------------------
 function E.func_tmstpDayReset(time)
 	local time = time or 1
-	return (math.ceil((tonumber(GetServerTime()) - E.thursdayReset)/(E.daytime*time))*E.daytime*time)+E.thursdayReset
+	return (math_ceil((tonumber(GetServerTime()) - E.thursdayReset)/(E.daytime*time))*E.daytime*time)+E.thursdayReset
 end
 ----------------------------------------------------------------
 function E.func_CheckCompletedByQuestID(questID)
-	if C_QuestLog.IsFailed(questID) then
+	if IsFailed(questID) then
 		return "|cffFF0000>"..FAILED.."<|r"
 	end
 
-	if C_QuestLog.IsQuestFlaggedCompleted(questID) then
+	if IsQuestFlaggedCompleted(questID) then
 		return E.DONE
 	end
 
-	if C_QuestLog.IsComplete(questID) then
+	if IsComplete(questID) then
 		return E.COMPLETE()
 	end
 
-	if not C_QuestLog.IsOnQuest(questID) then
+	if not IsOnQuest(questID) then
 		return E.NONE
 	end
 
 	-- Если мы дошли сюда, значит квест взят, но не завершен
-	local objectives = C_QuestLog.GetQuestObjectives(questID)
+	local objectives = GetQuestObjectives(questID)
 	if not objectives then
 		return ""
 	end
@@ -572,7 +726,7 @@ function E.func_CheckCompletedByQuestID(questID)
 		end
 	end
 
-	return table.concat(parts, "»")
+	return table_concat(parts, "»")
 end
 ----------------------------------------------------------------
 function E.func_OnlyFirstWord(text)
@@ -605,10 +759,7 @@ end
 ----------------------------------------------------------------
 function E.func_achievementName(achievementID)
 	local vivod = select(2, GetAchievementInfo(achievementID))
-	if E.DebugIDs then
-		vivod = vivod..E.Gray_Color.." id:"..achievementID.."|r"
-	end
-	return vivod
+	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..achievementID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E.func_achievementIcon(achievementID)
@@ -662,7 +813,7 @@ function E.func_achievementcriteriaString(achievementID, i)
 		table.insert(vivod, color .. text .. "|r")
 	end
 
-	return table.concat(vivod, "|n")
+	return table_concat(vivod, "|n")
 end
 ----------------------------------------------------------------
 function E.func_achievementquantity(achievementID, i)
@@ -678,7 +829,7 @@ function E.func_achievementquantity(achievementID, i)
 		table.insert(vivod, text.."|r")
 	end
 
-	return table.concat(vivod, "|n")
+	return table_concat(vivod, "|n")
 end
 ----------------------------------------------------------------
 -- function E.func_CurServerShort(text)
@@ -701,7 +852,7 @@ end
 ----------------------------------------------------------------
 function E.func_GetMapName(mapID)
 	if not mapID then return end
-	local info = C_Map.GetMapInfo(mapID)
+	local info = GetMapInfo(mapID)
 	if info then
 		local name = info.name
 		return tostring(name)
@@ -725,12 +876,7 @@ function E.func_npcName(npcName)
 		vivod = _G["OctoScanningTooltipFUNCTextLeft1"]:GetText()
 	end
 
-	-- Добавляем отладочную информацию, если нужно
-	if E.DebugIDs then
-		vivod = vivod..E.Gray_Color.." id:"..npcName.."|r"
-	end
-
-	return vivod
+	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..npcName.."|r" or "")
 end
 ----------------------------------------------------------------
 function E.func_RIOColor(RIOscore)
@@ -756,22 +902,12 @@ function E.func_encryption(text)
 	-- Удаляем все цифры за одну операцию
 	local cleaned = reversed:gsub("%d", "")
 
-	-- Разделяем по дефисам (хотя результат не используется - возможно, это ошибка)
-	-- Если разделение нужно, то должно быть что-то вроде:
-	-- local parts = { strsplit("-", cleaned) }
-	-- Но в оригинале результат strsplit не использовался
-
 	-- Приводим к нижнему регистру и возвращаем
 	return utf8lower(cleaned)
 end
 ----------------------------------------------------------------
-function E.func_GetClassColor(className)
-	local color = RAID_CLASS_COLORS[className]
-	return color and color.colorStr:sub(3) or "ffffff"
-end
-----------------------------------------------------------------
 E.className, E.classFilename, E.classId = UnitClass("PLAYER")
-E.classColor = E.func_GetClassColor(E.classFilename)
+E.classColor = RAID_CLASS_COLORS[E.classFilename] and RAID_CLASS_COLORS[E.classFilename].colorStr:sub(3) or "ffffff"
 local r, g, b = GetClassColor(E.classFilename)
 -- if (r == 1 and g == 1 and b == 1) then -- "|cff9659FF"--"|cff7157FF"
 -- 	r = 150/255
@@ -801,6 +937,7 @@ function E.func_Reverse_order(a, b)
 end
 ----------------------------------------------------------------
 function E.func_CheckReputationFULL(reputationID)
+	-- Инициализация переменных по умолчанию
 	local SHOWFULL = false
 	local FIRST, SECOND = 0, 0
 	local vivod = ""
@@ -809,33 +946,49 @@ function E.func_CheckReputationFULL(reputationID)
 	local reaction = 0
 
 	-- Получаем данные о репутации
-	local simpleData = C_Reputation.GetFactionDataByID(reputationID)
+	local simpleData = GetFactionDataByID(reputationID)
 	local isSimple = simpleData ~= nil
-	local isParagon = C_Reputation.IsFactionParagon(reputationID)
-	local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
+	local isParagon = IsFactionParagon(reputationID)
+	local friendData = GetFriendshipReputation(reputationID)
 	local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
-	local isMajor = C_Reputation.IsMajorFaction(reputationID)
+	local isMajor = IsMajorFaction(reputationID)
+
+	-- Таблица цветов для уровней репутации
+	-- local reactionColors = {
+	--     [0] = "FFFFFF", -- Нейтральный E.White_Color
+	--     [1] = "CC1111", -- Ненависть E.Red_Color
+	--     [2] = "FF0000", -- Враждебность E.Red_Color
+	--     [3] = "FFA600", -- Неприязнь E.Orange_Color
+	--     [4] = "FFFF00", -- Равнодушие E.Yellow_Color
+	--     [5] = "00FF00", -- Дружелюбие E.Yellow_Color
+	--     [6] = "00FF88", -- Уважение E.Green_Color
+	--     [7] = "00FFCC", -- Почет E.Green_Color
+	--     [8] = "00FFFF",  -- Превознесение E.Green_Color
+	-- }
+
+	local reactionColors = {
+		[0] = E.White_Color, -- Нейтральный E.White_Color
+		[1] = E.Red_Color, -- Ненависть E.Red_Color
+		[2] = E.Red_Color, -- Враждебность E.Red_Color
+		[3] = E.Orange_Color, -- Неприязнь E.Orange_Color
+		[4] = E.Yellow_Color, -- Равнодушие E.Yellow_Color
+		[5] = E.Yellow_Color, -- Дружелюбие E.Yellow_Color
+		[6] = E.Green_Color, -- Уважение E.Green_Color
+		[7] = E.Green_Color, -- Почет E.Green_Color
+		[8] = E.Green_Color, -- Превознесение E.Green_Color
+	}
 
 	-- Обработка простой репутации
 	if isSimple then
 		reaction = simpleData.reaction
 		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
-
-		-- Устанавливаем цвет в зависимости от уровня репутации
-		if reaction == 1 or reaction == 2 then
-			color = E.Red_Color
-		elseif reaction == 3 then
-			color = E.Orange_Color
-		elseif reaction == 4 or reaction == 5 then
-			color = E.Yellow_Color
-		elseif reaction >= 6 then
-			color = E.Green_Color
-		end
+		color = reactionColors[reaction] or E.Pink_Color
 	end
 
 	-- Обработка разных типов репутации
 	if isParagon then
-		local currentValue, threshold, rewardQuestID, _, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(reputationID)
+		-- Репутация Paragon
+		local currentValue, threshold, _, _, tooLowLevelForParagon = GetFactionParagonInfo(reputationID)
 		if threshold then
 			local value = currentValue % threshold
 			color = E.Blue_Color
@@ -846,7 +999,8 @@ function E.func_CheckReputationFULL(reputationID)
 			FIRST, SECOND = value, threshold
 		end
 	elseif isMajor then
-		local majorData = C_MajorFactions.GetMajorFactionData(reputationID)
+		-- Основные фракции
+		local majorData = GetMajorFactionData(reputationID)
 		if majorData then
 			local currentValue = majorData.renownReputationEarned % majorData.renownLevelThreshold
 			local totalValue = majorData.renownLevelThreshold
@@ -854,14 +1008,14 @@ function E.func_CheckReputationFULL(reputationID)
 			FIRST, SECOND = currentValue, totalValue
 		end
 	elseif isFriend then
+		-- Репутация дружбы
 		local standing = friendData.standing or 0
-		local maxRep = friendData.maxRep or 0
 		local reactionThreshold = friendData.reactionThreshold or 0
 		local nextThreshold = friendData.nextThreshold or 0
 		local currentValue = standing - reactionThreshold
 		local totalValue = nextThreshold - reactionThreshold
 
-		local rankInfo = C_GossipInfo.GetFriendshipReputationRanks(friendData.friendshipFactionID)
+		local rankInfo = GetFriendshipReputationRanks(friendData.friendshipFactionID)
 		local currentLevel = rankInfo and rankInfo.currentLevel or 0
 		local maxLevel = rankInfo and rankInfo.maxLevel or 0
 
@@ -870,10 +1024,11 @@ function E.func_CheckReputationFULL(reputationID)
 			vivod = FIRST.."/"..SECOND
 		else
 			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
-			FIRST, SECOND = SHOWFULL and standing or currentValue, SHOWFULL and maxRep or totalValue
+			FIRST, SECOND = SHOWFULL and standing or currentValue, SHOWFULL and (friendData.maxRep or 0) or totalValue
 			vivod = FIRST.."/"..SECOND..standingTEXT
 		end
 	elseif isSimple and simpleData.currentStanding then
+		-- Обычная репутация
 		local barMin = simpleData.currentReactionThreshold
 		local barMax = simpleData.nextReactionThreshold
 		local barValue = simpleData.currentStanding
@@ -884,11 +1039,8 @@ function E.func_CheckReputationFULL(reputationID)
 			FIRST, SECOND = 1, 1
 			vivod = standingTEXT
 		else
-			if SHOWFULL then
-				FIRST, SECOND = barMin, barMin < 0 and 42000 or barMax
-			else
-				FIRST, SECOND = currentValue, totalValue
-			end
+			FIRST, SECOND = SHOWFULL and barMin or currentValue,
+						  SHOWFULL and (barMin < 0 and 42000 or barMax) or totalValue
 			vivod = FIRST.."/"..SECOND
 		end
 	end
@@ -898,8 +1050,8 @@ end
 ----------------------------------------------------------------
 function E.func_CurrentNumQuests()
 	local numQuests = 0
-	for i = 1, C_QuestLog.GetNumQuestLogEntries() do
-		local info = C_QuestLog.GetInfo(i)
+	for i = 1, GetNumQuestLogEntries() do
+		local info = GetInfo(i)
 		numQuests = numQuests + (info and info.questID ~= 0 and not info.isHeader and not info.isHidden and 1 or 0)
 	end
 	return numQuests
@@ -915,87 +1067,51 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.GetAddOnMetadata(name, variable)
-	local GetAddOnMetadata = C_AddOns.GetAddOnMetadata
+function E.func_GetAddOnMetadata(name, variable)
 	return GetAddOnMetadata(name, variable)
 end
 ----------------------------------------------------------------
-function E.GetAddOnInfo(name)
-	local GetAddOnInfo = C_AddOns.GetAddOnInfo
-	return GetAddOnInfo(name)
+function E.func_IsAddOnLoaded(AddonNameOrIndex)
+	return IsAddOnLoaded(AddonNameOrIndex)
 end
 ----------------------------------------------------------------
-function E.EnableAddOn(name, character)
-	local EnableAddOn = C_AddOns.EnableAddOn
-	return EnableAddOn(name, character)
-end
-----------------------------------------------------------------
-function E.DisableAddOn(name, character)
-	local DisableAddOn = C_AddOns.DisableAddOn
-	return DisableAddOn(name, character)
-end
-----------------------------------------------------------------
-function E.LoadAddOn(name)
-	local LoadAddOn = C_AddOns.LoadAddOn
-	return LoadAddOn(name)
-end
-----------------------------------------------------------------
-function E.IsAddOnLoaded(name)
-	local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
-	return IsAddOnLoaded(name)
-end
-----------------------------------------------------------------
-function E.func_LoadAddOn(AddonName)
-	local LoadAddOn = C_AddOns.LoadAddOn
-	local loaded, reason = LoadAddOn(AddonName)
-	if not loaded and reason == "DISABLED" then
-		E.EnableAddOn(AddonName)
-		E.LoadAddOn(AddonName)
+function E.func_LoadAddOnFORCED(AddonName)
+	if not E.func_IsAddOnLoaded(AddonName) then
+		local _, _, _, enabled = GetAddOnInfo(AddonName)
+		if not enabled then
+			E.func_EnableAddOn(AddonName)
+			-- E.func_EnableAddOn(AddonName, "All")
+		end
+		LoadAddOn(AddonName)
 	end
 end
 ----------------------------------------------------------------
 function E.func_AddonTitle(AddonName)
-	local AddonTitle = C_AddOns.GetAddOnMetadata(AddonName, "Title")
+	local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 	return AddonTitle
 end
 ----------------------------------------------------------------
 function E.func_AddonNotes(AddonName)
-	local AddonNotes = C_AddOns.GetAddOnMetadata(AddonName, "Notes")
+	local AddonNotes = GetAddOnMetadata(AddonName, "Notes")
 	return AddonNotes
 end
 ----------------------------------------------------------------
 function E.func_AddonAuthor(AddonName)
-	local AddonAuthor = C_AddOns.GetAddOnMetadata(AddonName, "Author")
+	local AddonAuthor = GetAddOnMetadata(AddonName, "Author")
 	return AddonAuthor
 end
 ----------------------------------------------------------------
 function E.func_AddonVersion(AddonName)
-	local AddonVersion = C_AddOns.GetAddOnMetadata(AddonName, "Version")
+	local AddonVersion = GetAddOnMetadata(AddonName, "Version")
 	return AddonVersion
 end
 ----------------------------------------------------------------
 function E.func_AddonIconTexture(AddonName)
-	local AddonIconTexture = C_AddOns.GetAddOnMetadata(AddonName, "IconTexture")
+	local AddonIconTexture = GetAddOnMetadata(AddonName, "IconTexture")
 	return AddonIconTexture
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
--- C_AddOns.DoesAddOnExist(name)
--- C_AddOns.GetAddOnDependencies(name)
--- C_AddOns.GetAddOnOptionalDependencies(name)
--- C_AddOns.GetNumAddOns()
--- C_AddOns.GetScriptsDisallowedForBeta()
--- C_AddOns.IsAddOnLoaded(name)
--- C_AddOns.IsAddOnLoadOnDemand(name)
--- C_AddOns.IsAddonVersionCheckEnabled()
--- C_AddOns.ResetAddOns()
--- C_AddOns.ResetDisabledAddOns()
--- C_AddOns.SaveAddOns()
--- C_AddOns.SetAddonVersionCheck(enabled)
--- C_AddOns.DisableAllAddOns([character])
--- C_AddOns.EnableAllAddOns([character])
--- C_AddOns.GetAddOnEnableState(name [, character])
--- C_AddOns.IsAddOnLoadable(name [, character [, demandLoaded]])
 ----------------------------------------------------------------
 function E.IsInArray(arr, subj)
 	for i = 1, #arr do
@@ -1023,18 +1139,15 @@ function E.func_CurrentExpansion()
 end
 ----------------------------------------------------------------
 function E.func_EventName(eventID)
-	local monthDay = C_DateAndTime.GetCurrentCalendarTime().monthDay
+	local monthDay = GetCurrentCalendarTime().monthDay
 	local month = 0 -- Можно раскомментировать, если нужен текущий месяц
-	local numEvents = C_Calendar.GetNumDayEvents(month, monthDay)
+	local numEvents = GetNumDayEvents(month, monthDay)
 
 	for i = 1, numEvents do
-		local event = C_Calendar.GetDayEvent(month, monthDay, i)
+		local event = GetDayEvent(month, monthDay, i)
 		if event.eventID == eventID then
 			local vivod = event.title
-			if E.DebugIDs then
-				vivod = vivod .. E.Gray_Color .. " id:" .. eventID .. "|r"
-			end
-			return vivod
+			return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or "")
 		end
 	end
 
@@ -1044,16 +1157,13 @@ end
 function E.func_ProfessionName(skillLine)
 	if not skillLine then return UNKNOWN end
 
-	local vivod = C_TradeSkillUI.GetTradeSkillDisplayName(skillLine) or UNKNOWN
-	if E.DebugIDs then
-		vivod = vivod .. E.Gray_Color .. " id:" .. skillLine .. "|r"
-	end
-	return vivod
+	local vivod = GetTradeSkillDisplayName(skillLine) or UNKNOWN
+	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..skillLine.."|r" or "")
 end
 ----------------------------------------------------------------
 -- Возвращает иконку профессии в виде текстуры
 function E.func_ProfessionIcon(skillLine)
-	return skillLine and E.func_texturefromIcon(C_TradeSkillUI.GetTradeSkillTexture(skillLine)) or ""
+	return skillLine and E.func_texturefromIcon(GetTradeSkillTexture(skillLine)) or ""
 end
 
 -- Возвращает текущий уровень навыка профессии
@@ -1080,24 +1190,21 @@ end
 ----------------------------------------------------------------
 function E.func_dungeonName(dungeonID)
 	if dungeonID then
-		local vivod = C_ChallengeMode.GetMapUIInfo(dungeonID)
-		if E.DebugIDs then
-			vivod = vivod..E.Gray_Color.." id:"..dungeonID.."|r"
-		end
-		return vivod
+		local vivod = GetMapUIInfo(dungeonID)
+		return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..dungeonID.."|r" or "")
 	end
 end
 ----------------------------------------------------------------
 function E.func_dungeontimeLimit(dungeonID)
 	if dungeonID then
-		local timeLimit = select(3, C_ChallengeMode.GetMapUIInfo(dungeonID))
+		local timeLimit = select(3, GetMapUIInfo(dungeonID))
 		return timeLimit
 	end
 end
 ----------------------------------------------------------------
 function E.func_dungeonIcon(dungeonID)
 	if dungeonID then
-		local texture = select(4, C_ChallengeMode.GetMapUIInfo(dungeonID))
+		local texture = select(4, GetMapUIInfo(dungeonID))
 		return texture
 	end
 end
@@ -1106,7 +1213,7 @@ function E.FriendsFrame_GetLastOnlineText(time, color)
 	if not time then
 		return FRIENDS_LIST_OFFLINE
 	else
-		return string.format(BNET_LAST_ONLINE_TIME, color..E.FriendsFrame_GetLastOnline(time).."|r")
+		return string_format(BNET_LAST_ONLINE_TIME, color..E.FriendsFrame_GetLastOnline(time).."|r")
 	end
 end
 ----------------------------------------------------------------
@@ -1256,7 +1363,6 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	-- Если фрейм еще не инициализирован
 	if not frame.isInit then
 		frame.isInit = true
-		local r, g, b = E.func_hex2rgbNUMBER(E.classColorHexCurrent)
 
 		-- Общие обработчики событий
 		frame:HookScript("OnEnter", function(self)
@@ -1353,16 +1459,16 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	)
 
 	-- Abandon Button
-	local function AbandonQuests()
+	local function f_AbandonQuests()
 		local numQuests = E.func_CurrentNumQuests()
-		for i = 1, C_QuestLog.GetNumQuestLogEntries() do
+		for i = 1, GetNumQuestLogEntries() do
 			if numQuests ~= 0 then
-				local info = C_QuestLog.GetInfo(i)
+				local info = GetInfo(i)
 				if info and not info.isHeader and not info.isHidden then
 					DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
-					C_QuestLog.SetSelectedQuest(info.questID)
-					C_QuestLog.SetAbandonQuest()
-					C_QuestLog.AbandonQuest()
+					SetSelectedQuest(info.questID)
+					SetAbandonQuest()
+					AbandonQuest()
 				end
 			end
 		end
@@ -1375,7 +1481,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		button2 = NO,
 		hideOnEscape = 1,
 		whileDead = 1,
-		OnAccept = function() C_Timer.After(1, AbandonQuests) end,
+		OnAccept = function() C_Timer.After(1, f_AbandonQuests) end,
 	}
 
 	local Octo_AbandonButton = CreateUtilButton(
@@ -1394,10 +1500,10 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 			GameTooltip:AddLine(" ")
 
 			local list = {}
-			for i = 1, C_QuestLog.GetNumQuestLogEntries() do
-				local info = C_QuestLog.GetInfo(i)
+			for i = 1, GetNumQuestLogEntries() do
+				local info = GetInfo(i)
 				if info and info.questID ~= 0 and not info.isHeader and not info.isHidden then
-					tinsert(list, info.questID)
+					table_insert(list, info.questID)
 				end
 			end
 
@@ -1436,7 +1542,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 
 		local sorted = {}
 		for k in pairs(E.HolidayForButton) do
-			tinsert(sorted, k)
+			table_insert(sorted, k)
 		end
 		sort(sorted, function(a, b) return E.HolidayForButton[a].priority < E.HolidayForButton[b].priority end)
 
@@ -1483,7 +1589,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	Octo_FramerateFrame.text_fps:SetTextColor(0.31, 1, 0.47, 1)
 
 	C_Timer.NewTicker(1, function()
-		Octo_FramerateFrame.text_fps:SetText(math.floor(GetFramerate()))
+		Octo_FramerateFrame.text_fps:SetText(math_floor(GetFramerate()))
 	end)
 end
 ----------------------------------------------------------------
@@ -1555,7 +1661,7 @@ function E:func_IsAvailable(id, curType)
 	if id and curType then
 		if curType == "spell" and IsSpellKnown(id) then
 			return true
-		elseif curType == "item" and C_Item.GetItemCount(id, false, false, false) > 0 then
+		elseif curType == "item" and GetItemCount(id, false, false, false) > 0 then
 			return true
 		elseif curType == "toy" and PlayerHasToy(id) then
 			return true
@@ -1564,17 +1670,16 @@ function E:func_IsAvailable(id, curType)
 		end
 	end
 end
--- /dump C_Item.GetItemCount(141605)
 ----------------------------------------------------------------
 function E:func_IsOnCD(id, curType)
 	local id = id or nil
 	local curType = curType or nil
 	if id and curType then
-		if curType == "spell" and C_Spell.GetSpellCooldown(id).startTime > 0 then
+		if curType == "spell" and GetSpellCooldown(id).startTime > 0 then
 			return true
-		elseif curType == "item" and select(2, C_Item.GetItemCooldown(id)) > 0 then
+		elseif curType == "item" and select(2, GetItemCooldown(id)) > 0 then
 			return true
-		elseif curType == "toy" and select(2, C_Item.GetItemCooldown(id)) > 0 then
+		elseif curType == "toy" and select(2, GetItemCooldown(id)) > 0 then
 			return true
 		else
 			return false
@@ -1603,13 +1708,11 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 		frame:Hide()
 		frame:SetPoint(point, parent, rPoint, x, y)
 		frame:SetSize(size, size)
-		local _, classFilename = UnitClass("PLAYER")
-		local r, g, b = GetClassColor(classFilename)
 		local edgeAlpha = 1
 		frame.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.icon:SetAllPoints()
 		if curType == "item" or curType == "toy" then
-			frame.icon:SetTexture(E.func_GetItemIcon(id))
+			frame.icon:SetTexture(E.func_GetItemIconByID(id))
 		else
 			frame.icon:SetTexture(E.func_GetSpellIcon(id))
 		end
@@ -1628,7 +1731,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 			if curType == "item" or curType == "toy" then
 				frame:SetAttribute("macrotext", "/use item:"..id)
 			else
-				frame:SetAttribute("macrotext", "/cast "..C_Spell.GetSpellName(id))
+				frame:SetAttribute("macrotext", "/cast "..E.func_GetSpellName(id))
 			end
 		end
 		if not frame.isInit then
@@ -1643,7 +1746,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 					GameTooltip:ClearLines()
 					if curType == "item" or curType == "toy" then
-						GameTooltip:AddDoubleLine(E.func_GetItemName(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
+						GameTooltip:AddDoubleLine(E.func_GetItemNameByID(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
 					else
 						GameTooltip:AddDoubleLine(E.func_GetSpellName(id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
 						GameTooltip:AddDoubleLine(E.func_GetSpellSubtext(id))
@@ -1720,15 +1823,16 @@ function E.func_Reason(reason)
 	return vivod
 end
 ----------------------------------------------------------------
-function E.func_CreateInfoFrame(text, point, parent, rPoint, x, y, sizeW, sizeH)
+function E.func_CreateInfoFrame(text, point, parent, rPoint, x, y, sizeW, sizeH, JustifyH)
 	local frame = CreateFrame("frame", nil, parent, "BackDropTemplate")
+
 	frame:SetPoint(point, parent, rPoint, x, y)
 	frame:SetSize(sizeW, sizeH)
 	frame.text = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	frame.text:SetAllPoints()
 	frame.text:SetFontObject(OctoFont11)
 	frame.text:SetJustifyV("MIDDLE")
-	frame.text:SetJustifyH("LEFT")
+	frame.text:SetJustifyH(JustifyH)
 	frame.text:SetTextColor(1, 1, 1, 1)
 	frame.text:SetText(text)
 end
@@ -1840,12 +1944,12 @@ E.Color_Reputation_g = .3 -- 1
 E.Color_Reputation_b = 0 -- 1
 E.MainFrame_Position = -157
 E.AnimationDuration = .2
-E.isElvUI = select(4, C_AddOns.GetAddOnInfo("ElvUI"))
-E.isRCLootCouncil = select(4, C_AddOns.GetAddOnInfo("isRCLootCouncil"))
-E.isWeakAuras = select(4, C_AddOns.GetAddOnInfo("isWeakAuras"))
-E.isTomTom = select(4, C_AddOns.GetAddOnInfo("isTomTom"))
-E.isPlater = select(4, C_AddOns.GetAddOnInfo("isPlater"))
-E.isOmniCD = select(4, C_AddOns.GetAddOnInfo("isOmniCD"))
+E.isElvUI = select(4, GetAddOnInfo("ElvUI"))
+E.isRCLootCouncil = select(4, GetAddOnInfo("isRCLootCouncil"))
+E.isWeakAuras = select(4, GetAddOnInfo("isWeakAuras"))
+E.isTomTom = select(4, GetAddOnInfo("isTomTom"))
+E.isPlater = select(4, GetAddOnInfo("isPlater"))
+E.isOmniCD = select(4, GetAddOnInfo("isOmniCD"))
 E.bgCr = .08 -- 14/255
 E.bgCg = .08 -- 14/255
 E.bgCb = .08 -- 14/255
@@ -1931,7 +2035,7 @@ E.Icon_QuestionMark = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.Icon_Empty = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\spacerEMPTY"
 E.OctoTable_Covenant = {
 	[1] = {
-		name = C_Covenants.GetCovenantData(1).name, -- "Kyrian",
+		name = GetCovenantData(1).name, -- "Kyrian",
 		icon = 3641395,
 		color = "|cff6FA8DC",
 		r = 0.44,
@@ -1939,7 +2043,7 @@ E.OctoTable_Covenant = {
 		b = 0.86,
 	},
 	[2] = {
-		name = C_Covenants.GetCovenantData(2).name, -- "Venthyr",
+		name = GetCovenantData(2).name, -- "Venthyr",
 		icon = 3641397,
 		color = "|cffEA9999",
 		r = 0.88,
@@ -1947,7 +2051,7 @@ E.OctoTable_Covenant = {
 		b = 0.40,
 	},
 	[3] = {
-		name = C_Covenants.GetCovenantData(3).name, -- "NightFae",
+		name = GetCovenantData(3).name, -- "NightFae",
 		icon = 3641394,
 		color = "|cffB4A7D6",
 		r = 0.56,
@@ -1955,7 +2059,7 @@ E.OctoTable_Covenant = {
 		b = 0.76,
 	},
 	[4] = {
-		name = C_Covenants.GetCovenantData(4).name, -- "Necrolord",
+		name = GetCovenantData(4).name, -- "Necrolord",
 		icon = 3641396,
 		color = "|cff93C47D",
 		r = 0.58,
@@ -2155,92 +2259,83 @@ function E.func_GetAddonIndex(name)
 	return tonumber(index)
 end
 function E.func_GetAddonName(index)
-	local name = select(1, C_AddOns.GetAddOnInfo(index))
+	local name = select(1, GetAddOnInfo(index))
 	return name
 end
 function E.func_GetAddonTitle(index)
-	local title = select(2, C_AddOns.GetAddOnInfo(index))
+	local title = select(2, GetAddOnInfo(index))
 	return title
 end
 function E.func_GetAddonNotes(index)
-	local notes = select(2, C_AddOns.GetAddOnInfo(index))
+	local notes = select(2, GetAddOnInfo(index))
 	return notes
 end
-function E.func_GetAddonLoadable(index, character)
-	character = character or UnitName("player")
-	local loadable = select(1, C_AddOns.IsAddOnLoadable(index, character));
-	return loadable
-end
 function E.func_GetAddonReason(index, character)
-	character = character or UnitName("player")
-	local reason = select(2, C_AddOns.IsAddOnLoadable(index, character));
+	character = character or UnitName("player") -- ALL_CHARACTERS
+	local reason = select(2, IsAddOnLoadable(index, character));
 	return reason
 end
 function E.func_IsAddonInstalled(index) -- Исключаем отсутствующие аддоны
-	local reason = select(5, C_AddOns.GetAddOnInfo(index))
+	local reason = select(5, GetAddOnInfo(index))
 	return reason ~= "MISSING"
 end
 function E.func_GetAddonSecurity(index)
-	local security = select(6, C_AddOns.GetAddOnInfo(index))
+	local security = select(6, GetAddOnInfo(index))
 	return security
 end
 function E.func_GetAddonUpdateAvailable(index)
-	local updateAvailable = select(7, C_AddOns.GetAddOnInfo(index))
+	local updateAvailable = select(7, GetAddOnInfo(index))
 	return updateAvailable
 end
 function E.func_GetAddonVersion(index)
-	local Version = C_AddOns.GetAddOnMetadata(index, "Version") or 0
+	local Version = GetAddOnMetadata(index, "Version") or 0
 	return Version
 end
 function E.func_GetAddonAuthor(index)
-	local Author = C_AddOns.GetAddOnMetadata(index, "Author") or ""
+	local Author = GetAddOnMetadata(index, "Author") or ""
 	return Author
 end
 function E.func_GetAddoniconTexture(index)
-	local iconTexture = C_AddOns.GetAddOnMetadata(index, "IconTexture")
+	local iconTexture = GetAddOnMetadata(index, "IconTexture")
 	return iconTexture
 end
 function E.func_GetAddoniconAtlas(index)
-	local iconAtlas = C_AddOns.GetAddOnMetadata(index, "IconAtlas")
+	local iconAtlas = GetAddOnMetadata(index, "IconAtlas")
 	return iconAtlas
 end
 function E.func_GetAddonCategory(index)
-	local Category = C_AddOns.GetAddOnMetadata(index, "Category")
+	local Category = GetAddOnMetadata(index, "Category")
 	return Category
 end
 function E.func_GetAddonGroup(index)
-	local Group = C_AddOns.GetAddOnMetadata(index, "Group")
+	local Group = GetAddOnMetadata(index, "Group")
 	return Group
 end
-function E.func_IsAddOnLoaded(index)
-	local loadedOrLoading = select(1, C_AddOns.IsAddOnLoaded(index))
-	return loadedOrLoading
-end
 function E.func_GetAddOnEnableState(i, character)
-	character = character or UnitName("player")
-	return C_AddOns.GetAddOnEnableState(i, character)
+	character = character or UnitName("player") -- ALL_CHARACTERS
+	return GetAddOnEnableState(i, character)
 end
 function E.func_IsAddOnLoadable(index, character)
-	local loadable = select(1, C_AddOns.IsAddOnLoadable(index, character)) -- reason 2
+	local loadable = select(1, IsAddOnLoadable(index, character)) -- reason 2
 	return loadable
 end
 function E.func_DoesAddOnExist(index)
-	return C_AddOns.DoesAddOnExist(index)
+	return DoesAddOnExist(index)
 end
 function E.func_IsAddOnDefaultEnabled(index)
-	return C_AddOns.IsAddOnDefaultEnabled(index)
+	return IsAddOnDefaultEnabled(index)
 end
 function E.func_GetAddOnDependenciesTable(index)
-	return {C_AddOns.GetAddOnDependencies(index)}
+	return {GetAddOnDependencies(index)}
 end
 function E.func_GetAddOnDependenciesSTR(index)
-	return C_AddOns.GetAddOnDependencies(index)
+	return GetAddOnDependencies(index)
 end
 function E.func_GetNumReps()
 	local LineNumber = 0
-	C_Reputation.ExpandAllFactionHeaders()
-	for i = 1, C_Reputation.GetNumFactions() do
-		local factionData = C_Reputation.GetFactionDataByIndex(i)
+	ExpandAllFactionHeaders()
+	for i = 1, GetNumFactions() do
+		local factionData = GetFactionDataByIndex(i)
 		if factionData then
 			if (factionData.isHeaderWithRep or not factionData.isHeader) then
 				LineNumber = LineNumber + 1
@@ -2250,20 +2345,19 @@ function E.func_GetNumReps()
 	return LineNumber
 end
 function E.func_GetNumAddOns()
-	local NumAddOns = C_AddOns.GetNumAddOns()
-	return NumAddOns
+	return GetNumAddOns()
 end
 function E.func_EnableAddOn(name, character)
-	character = character or UnitName("player")
-	return C_AddOns.EnableAddOn(name, character)
+	character = character or UnitName("player") -- ALL_CHARACTERS
+	return EnableAddOn(name, character)
 end
 function E.func_EnableAllAddOns(character) -- Включить все аддоны
-	character = character or UnitName("player")
-	return C_AddOns.EnableAllAddOns(character)
+	character = character or UnitName("player") -- ALL_CHARACTERS
+	return EnableAllAddOns(character)
 end
 function E.func_DisableAddOn(name, character)
-	character = character or UnitName("player")
-	return C_AddOns.DisableAddOn(name, character)
+	character = character or UnitName("player") -- ALL_CHARACTERS
+	return DisableAddOn(name, character)
 end
 function E.func_DisableAllAddons()
 	for index, name in ipairs(E.func_GetAllAddons()) do
@@ -2273,7 +2367,7 @@ function E.func_DisableAllAddons()
 	end
 end
 function E.func_IsProfilerEnabled()
-	return C_AddOnProfiler.IsEnabled()
+	return IsEnabled()
 end
 function E.UpdatePerformance()
 	if E.func_IsProfilerEnabled() then
@@ -2282,8 +2376,14 @@ function E.UpdatePerformance()
 	end
 end
 function E.func_IsAddonVersionCheckEnabled()
-	return C_AddOns.IsAddonVersionCheckEnabled()
+	return IsAddonVersionCheckEnabled()
 end
+
+function E.func_AddonList_HasOutOfDate()
+	return AddonList_HasOutOfDate()
+end
+
+
 -- Получить список всех аддонов
 function E.func_GetAllAddons()
 	local addons = {}
@@ -2299,15 +2399,15 @@ function E.func_ListAddons(filter)
 	local addons = E.func_GetAllAddons()
 	print ("Список аддонов ("..#addons.."):")
 	for index, name in ipairs(addons) do
-		if not filter or string.find(string.lower(name), string.lower(filter)) then
+		if not filter or string.find(string_lower(name), string_lower(filter)) then
 			local status = E.func_IsAddOnLoaded(index) and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r"
-			print(string.format("%3d. %s - %s", index, name, status))
+			print(string_format("%3d. %s - %s", index, name, status))
 		end
 	end
 end
 function E.AddonListEntry_SetEnabled(index, character, enabled)
 	if enabled == nil then
-		enabled = C_AddOns.IsAddOnDefaultEnabled(index)
+		enabled = IsAddOnDefaultEnabled(index)
 	end
 	if enabled then
 		E.func_EnableAddOn(index, character)
@@ -2316,7 +2416,7 @@ function E.AddonListEntry_SetEnabled(index, character, enabled)
 	end
 end
 function E.AddonList_HasAnyChanged()
-	if (AddonList.outOfDate and not E.func_IsAddonVersionCheckEnabled() or (not AddonList.outOfDate and E.func_IsAddonVersionCheckEnabled() and AddonList_HasOutOfDate())) then
+	if (AddonList.outOfDate and not E.func_IsAddonVersionCheckEnabled() or (not AddonList.outOfDate and E.func_IsAddonVersionCheckEnabled() and E.func_AddonList_HasOutOfDate())) then
 		return true
 	end
 	for i=1,E.func_GetNumAddOns() do
@@ -2361,7 +2461,7 @@ function E.LocalizeCategoryName(name, isUserCategory)
 	if (isUserCategory) then
 		return name
 	end
-	return rawget(L, string.lower(name)) or name
+	return rawget(L, string_lower(name)) or name
 end
 function E.GetCategoryTables()
 	local db = self:GetDb()
@@ -2408,7 +2508,7 @@ function E.rec_toggle(index, state)
 end
 -- Переключить аддон
 function E.func_ToggleAddon(index, state)
-	local addonName = C_AddOns.GetAddOnInfo(index)
+	local addonName = GetAddOnInfo(index)
 	local enabled = E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
 	E.rec_toggle(index, enabled)
 end
@@ -2432,7 +2532,7 @@ function E.rec_lock(index)
 end
 -- Переключить аддон
 function E.func_lockAddonNEW(index, state)
-	local addonName = C_AddOns.GetAddOnInfo(index)
+	local addonName = GetAddOnInfo(index)
 	local enabled = E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
 	E.rec_lock(index, enabled)
 end
@@ -2517,11 +2617,11 @@ function E.GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
 	if (not E.func_IsProfilerEnabled()) then
 		return def or ""
 	end
-	local overall = C_AddOnProfiler.GetOverallMetric(metric)
-	local addon = C_AddOnProfiler.GetAddOnMetric(addonName, metric)
+	local overall = GetOverallMetric(metric)
+	local addon = GetAddOnMetric(addonName, metric)
 	local relative = overall
-	if (C_AddOnProfiler.GetApplicationMetric) then
-		local app = C_AddOnProfiler.GetApplicationMetric(metric)
+	if GetApplicationMetric then
+		local app = GetApplicationMetric(metric)
 		relative = app - overall + addon
 	end
 	if relative <= 0 then
@@ -2539,9 +2639,9 @@ function E.FormatProfilerPercent(pct)
 	if (pct > 25) then color = E.Yellow_Color end
 	if (pct > 50) then color = E.Orange_Color end
 	if (pct > 80) then color = E.Red_Color end
-	local vivod = string.format("%.2f", pct)
+	local vivod = string_format("%.2f", pct)
 	return vivod
-	-- return color:WrapText(string.format("%.2f", pct))..E.White_Color:WrapText("%")
+	-- return color:WrapText(string_format("%.2f", pct))..E.White_Color:WrapText("%")
 end
 ----------------------------------------------------------------
 function E.GetCVarNumber(name)
@@ -2564,7 +2664,7 @@ function E.GetAddonMetricCount(addonName, metric)
 	if (not E.func_IsProfilerEnabled()) then
 		return ""
 	end
-	local count = C_AddOnProfiler.GetAddOnMetric(addonName, metric) or 0
+	local count = GetAddOnMetric(addonName, metric) or 0
 	return count
 end
 ----------------------------------------------------------------
@@ -2573,9 +2673,9 @@ end
 -- function E.func_CompactMemory(memory)
 --     if memory > 0 then
 --         if memory > 1024 then
---             return string.format(ADDON_LIST_PERFORMANCE_MEMORY_MB, memory/1024)
+--             return string_format(ADDON_LIST_PERFORMANCE_MEMORY_MB, memory/1024)
 --         else
---             return string.format(ADDON_LIST_PERFORMANCE_MEMORY_KB, memory)
+--             return string_format(ADDON_LIST_PERFORMANCE_MEMORY_KB, memory)
 --         end
 --     else
 --         return 0
@@ -2596,7 +2696,7 @@ end
 ----------------------------------------------------------------
 function E.AddonList_IsAddOnLoadOnDemand(index)
 	local lod = false
-	if C_AddOns.IsAddOnLoadOnDemand(index) then
+	if IsAddOnLoadOnDemand(index) then
 		local deps = E.func_GetAddOnDependenciesSTR(index)
 		local okay = true
 		for i = 1, select('#', deps) do
@@ -2613,27 +2713,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local function getFunction(fun)
-	return (C_AddOns and C_AddOns[fun]) or _G[fun]
-end
-E.compat = {
-	EnableAddOn = getFunction("EnableAddOn"),
-	DisableAddOn = getFunction("DisableAddOn"),
-	IsAddOnLoaded = getFunction("IsAddOnLoaded"),
-	EnableAllAddOns = getFunction("EnableAllAddOns"),
-	DisableAllAddOns = getFunction("DisableAllAddOns"),
-	GetAddOnInfo = getFunction("GetAddOnInfo"),
-	GetAddOnDependencies = getFunction("GetAddOnDependencies"),
-	GetNumAddOns = getFunction("GetNumAddOns"),
-	SaveAddOns = getFunction("SaveAddOns"),
-	ResetAddOns = getFunction("ResetAddOns"),
-	IsAddonVersionCheckEnabled = getFunction("IsAddonVersionCheckEnabled"),
-	SetAddonVersionCheck = getFunction("SetAddonVersionCheck"),
-	IsAddOnLoadOnDemand = getFunction("IsAddOnLoadOnDemand"),
-	GetAddOnEnableState = (C_AddOns and C_AddOns.GetAddOnEnableState) or function(nameOrIndex, character)
-		return GetAddOnEnableState(character, nameOrIndex) -- the old API has inverted parameters
-	end
-}
 ----------------------------------------------------------------
 function E.func_NumPlayers()
 	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
@@ -2684,13 +2763,15 @@ function E.sorted()
 					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
 					and CharInfo.BattleTagLocal == E.BattleTagLocal
 					and CharInfo.UnitLevel >= LevelToShow
-					and CharInfo.UnitLevel <= LevelToShowMAX then
+					and CharInfo.UnitLevel <= LevelToShowMAX
+					then
 						sorted[#sorted+1] = CharInfo
 					end
 				else
 					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
 					and CharInfo.UnitLevel >= LevelToShow
-					and CharInfo.UnitLevel <= LevelToShowMAX then
+					and CharInfo.UnitLevel <= LevelToShowMAX
+					then
 						sorted[#sorted+1] = CharInfo
 					end
 				end
@@ -2702,16 +2783,16 @@ function E.sorted()
 			if not a or not b then return false end
 
 			-- Сначала сортируем по серверу (в алфавитном порядке)
-			if a.curServer ~= b.curServer then
-				return a.curServer < b.curServer
-			end
+			-- if a.curServer ~= b.curServer then
+			-- 	return a.curServer < b.curServer
+			-- end
 
 			-- Затем по уровню (по убыванию)
 			if a.UnitLevel ~= b.UnitLevel then
 				return a.UnitLevel > b.UnitLevel
 			end
 
-			-- Затем по уровню предметов (по убыванию)
+			-- Затем по уровню предметов (по убыванию) -- avgItemLevelEquipped
 			if a.avgItemLevel ~= b.avgItemLevel then
 				return a.avgItemLevel > b.avgItemLevel
 			end
@@ -2724,10 +2805,52 @@ function E.sorted()
 end
 
 ----------------------------------------------------------------
+-- 1 Работа с цветами:
+-- Кэширование расчетов цветов:
+local function GetClassColorCache()
+    local r, g, b = GetClassColor(E.classFilename)
+    return {r = r, g = g, b = b, hex = E.func_rgb2hex(r, g, b)}
+end
+E.classColorCache = GetClassColorCache()
 ----------------------------------------------------------------
+-- 2 Операции с таблицами:
+-- Предварительное выделение памяти:
+local function CreateTable(size)
+    local t = {}
+    for i = 1, size do t[i] = 0 end
+    return t
+end
 ----------------------------------------------------------------
+-- 3 Сборка строк:
+-- Использование table_concat для множественных конкатенаций:
+local function BuildString(parts)
+    local t = {}
+    for i, part in ipairs(parts) do
+        t[i] = tostring(part)
+    end
+    return table_concat(t)
+end
 ----------------------------------------------------------------
+-- 4 Создание фреймов:
+-- Переиспользование шаблонов фреймов:
+local function CreateOptimizedFrame(parent)
+    if not E.framePool then
+        E.framePool = CreateFrame("Frame", nil, parent, "BackdropTemplate")
+        -- Настройка общих свойств
+    end
+    return E.framePool
+end
 ----------------------------------------------------------------
+-- 5 Оптимизация подсказок:
+-- Переиспользование объекта подсказки:
+local tooltip = E.tooltip or CreateFrame("GameTooltip", "OctoTooltip", nil, "GameTooltipTemplate")
+E.tooltip = tooltip
+
+function E.ShowTooltip(...)
+    tooltip:ClearLines()
+    -- Добавление строк
+    tooltip:Show()
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

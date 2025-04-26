@@ -492,10 +492,8 @@ E.OctoTable_Reputations = {
 		{ id = 809, }, --name = "Шен'дралар", side = "-", category = "World of Warcraft", }, --[faction=809]
 		{ id = 749, }, --name = "Гидраксианские Повелители Вод", side = "-", category = "World of Warcraft", }, --[faction=749]
 		{ id = 609, }, --name = "Круг Кенария", side = "-", category = "World of Warcraft", }, --[faction=609]
-		{ id = 589, }, --name = "Укротители ледопардов", side = "Alliance", category = "World of Warcraft", }, --[faction=589]
 		{ id = 576, }, --name = "Древобрюхи", side = "-", category = "World of Warcraft", }, --[faction=576]
 		{ id = 529, }, --name = "Серебряный Рассвет", side = "-", category = "World of Warcraft", }, --[faction=529]
-		{ id = 469, }, --name = "Альянс", side = "Alliance", category = "World of Warcraft", }, --[faction=469]
 		{ id = 349, }, --name = "Черный Ворон", side = "-", category = "World of Warcraft", }, --[faction=349]
 		{ id = 270, }, --name = "Племя Зандалари", side = "-", category = "World of Warcraft", }, --[faction=270]
 		{ id = 169, }, --name = "Картель Хитрой Шестеренки", side = "-", category = "World of Warcraft", }, --[faction=169]
@@ -503,7 +501,6 @@ E.OctoTable_Reputations = {
 		{ id = 92, }, --name = "Кентавры из племени Гелкис", side = "-", category = "World of Warcraft", }, --[faction=92]
 		{ id = 87, }, --name = "Пираты Кровавого Паруса", side = "-", category = "World of Warcraft", }, --[faction=87]
 		{ id = 70, }, --name = "Синдикат", side = "-", category = "World of Warcraft", }, --[faction=70]
-		{ id = 67, }, --name = "Орда", side = "Horde", category = "World of Warcraft", }, --[faction=67]
 		{ id = 59, }, --name = "Братство Тория", side = "-", category = "World of Warcraft", }, --[faction=59]
 		----------------------------------------------------------------
 		{ id = 577, }, --name = "Круговзор", side = "-", category = "Картель Хитрой Шестеренки", }, --[faction=577]
@@ -511,15 +508,7 @@ E.OctoTable_Reputations = {
 		{ id = 369, }, --name = "Прибамбасск", side = "-", category = "Картель Хитрой Шестеренки", }, --[faction=369]
 		{ id = 21, }, --name = "Пиратская Бухта", side = "-", category = "Картель Хитрой Шестеренки", }, --[faction=21]
 		----------------------------------------------------------------
-		{ id = 2372, }, --name = "Арена \"Морд'Бой\"", side = "Horde", category = "Силы Орды", }, --[faction=2372]
-		{ id = 2010, }, --name = "Арена \"Морд'Бой\" (3-й сезон)", side = "Horde", category = "Силы Орды", }, --[faction=2010]
-		{ id = 1690, }, --name = "Арена \"Морд'Бой\" (сезон 2)", side = "Horde", category = "Силы Орды", }, --[faction=1690]
-		{ id = 1681, }, --name = "Копье Вол'джина", side = "Horde", category = "Силы Орды", }, --[faction=1681]
-		{ id = 1374, }, --name = "Арена \"Морд'Бой\" (сезон 1)", side = "Horde", category = "Силы Орды", }, --[faction=1374]
-		{ id = 889, }, --name = "Всадники Песни Войны", side = "Horde", category = "Силы Орды", }, --[faction=889]
-		{ id = 729, }, --name = "Азеротский клан Северного Волка", side = "Horde", category = "Силы Орды", }, --[faction=729]
-		{ id = 510, }, --name = "Осквернители", side = "Horde", category = "Силы Орды", }, --[faction=510]
-		----------------------------------------------------------------
+		{ id = 67, }, --name = "Орда", side = "Horde", category = "World of Warcraft", }, --[faction=67]
 		{ id = 2523, }, --name = "Темные Когти", side = "Horde", category = "Орда", }, --[faction=2523]
 		{ id = 1352, }, --name = "Пандарены Хоцзинь", side = "Horde", category = "Орда", }, --[faction=1352]
 		{ id = 1133, }, --name = "Картель Трюмных Вод", side = "Horde", category = "Орда", }, --[faction=1133]
@@ -529,15 +518,17 @@ E.OctoTable_Reputations = {
 		{ id = 76, }, --name = "Оргриммар", side = "Horde", category = "Орда", }, --[faction=76]
 		{ id = 68, }, --name = "Подгород", side = "Horde", category = "Орда", }, --[faction=68]
 		----------------------------------------------------------------
-		{ id = 2371, }, --name = "Потасовочная \"У Бизмо\"", side = "Alliance", category = "Силы Альянса", }, --[faction=2371]
-		{ id = 2011, }, --name = "Потасовочная \"У Бизмо\" (3-й сезон)", side = "Alliance", category = "Силы Альянса", }, --[faction=2011
-		{ id = 1691, }, --name = "Потасовочная \"У Бизмо\" (сезон 2)", side = "Alliance", category = "Силы Альянса", }, --[faction=1691
-		{ id = 1682, }, --name = "Авангард Ринна", side = "Alliance", category = "Силы Альянса", }, --[faction=1682
-		{ id = 1419, }, --name = "Потасовочная \"У Бизмо\" (сезон 1)", side = "Alliance", category = "Силы Альянса", }, --[faction=1419]
-		{ id = 890, }, --name = "Среброкрылые Часовые", side = "Alliance", category = "Силы Альянса", }, --[faction=890
-		{ id = 730, }, --name = "Стража Грозовой Вершины", side = "Alliance", category = "Силы Альянса", }, --[faction=730
-		{ id = 509, }, --name = "Лига Аратора", side = "Alliance", category = "Силы Альянса", }, --[faction=509]
+
+		{ id = 2372, }, --name = "Арена \"Морд'Бой\"", side = "Horde", category = "Силы Орды", }, --[faction=2372]
+		{ id = 2010, }, --name = "Арена \"Морд'Бой\" (3-й сезон)", side = "Horde", category = "Силы Орды", }, --[faction=2010]
+		{ id = 1690, }, --name = "Арена \"Морд'Бой\" (сезон 2)", side = "Horde", category = "Силы Орды", }, --[faction=1690]
+		{ id = 1681, }, --name = "Копье Вол'джина", side = "Horde", category = "Силы Орды", }, --[faction=1681]
+		{ id = 1374, }, --name = "Арена \"Морд'Бой\" (сезон 1)", side = "Horde", category = "Силы Орды", }, --[faction=1374]
+		{ id = 889, }, --name = "Всадники Песни Войны", side = "Horde", category = "Силы Орды", }, --[faction=889]
+		{ id = 729, }, --name = "Азеротский клан Северного Волка", side = "Horde", category = "Силы Орды", }, --[faction=729]
+		{ id = 510, }, --name = "Осквернители", side = "Horde", category = "Силы Орды", }, --[faction=510]
 		----------------------------------------------------------------
+		{ id = 469, }, --name = "Альянс", side = "Alliance", category = "World of Warcraft", }, --[faction=469]
 		{ id = 2524, }, --name = "Обсидиановые Хранители", side = "Alliance", category = "Альянс", }, --[faction=2524]
 		{ id = 1353, }, --name = "Пандарены Тушуй", side = "Alliance", category = "Альянс", }, --[faction=1353]
 		{ id = 1134, }, --name = "Гилнеас", side = "Alliance", category = "Альянс", }, --[faction=1134]
@@ -546,6 +537,16 @@ E.OctoTable_Reputations = {
 		{ id = 69, }, --name = "Дарнас", side = "Alliance", category = "Альянс", }, --[faction=69]
 		{ id = 54, }, --name = "Гномреган", side = "Alliance", category = "Альянс", }, --[faction=54]
 		{ id = 47, }, --name = "Стальгорн", side = "Alliance", category = "Альянс", }, --[faction=47]
+		----------------------------------------------------------------
+		{ id = 2371, }, --name = "Потасовочная \"У Бизмо\"", side = "Alliance", category = "Силы Альянса", }, --[faction=2371]
+		{ id = 2011, }, --name = "Потасовочная \"У Бизмо\" (3-й сезон)", side = "Alliance", category = "Силы Альянса", }, --[faction=2011
+		{ id = 1691, }, --name = "Потасовочная \"У Бизмо\" (сезон 2)", side = "Alliance", category = "Силы Альянса", }, --[faction=1691
+		{ id = 1682, }, --name = "Авангард Ринна", side = "Alliance", category = "Силы Альянса", }, --[faction=1682
+		{ id = 1419, }, --name = "Потасовочная \"У Бизмо\" (сезон 1)", side = "Alliance", category = "Силы Альянса", }, --[faction=1419]
+		{ id = 890, }, --name = "Среброкрылые Часовые", side = "Alliance", category = "Силы Альянса", }, --[faction=890
+		{ id = 730, }, --name = "Стража Грозовой Вершины", side = "Alliance", category = "Силы Альянса", }, --[faction=730
+		{ id = 509, }, --name = "Лига Аратора", side = "Alliance", category = "Силы Альянса", }, --[faction=509]
+		{ id = 589, }, --name = "Укротители ледопардов", side = "Alliance", category = "World of Warcraft", }, --[faction=589]
 	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------

@@ -177,7 +177,7 @@ tinsert(E.Modules, function()
 				GameTooltip:AddLine("itemQuality < фиолет")
 				GameTooltip:AddLine(" ")
 				for _, itemID in next, E.OctoTable_itemID_Ignore_List do
-					GameTooltip:AddLine(E.func_itemTexture(itemID)..E.func_itemName(itemID))
+					GameTooltip:AddLine(E.func_GetItemIconByID(itemID)..E.func_GetItemNameByID(itemID))
 				end
 				GameTooltip:Show()
 			end)
@@ -198,7 +198,7 @@ tinsert(E.Modules, function()
 				GameTooltip:AddLine("itemQuality = фиолет")
 				GameTooltip:AddLine(" ")
 				for _, itemID in next, E.OctoTable_itemID_Ignore_List do
-					GameTooltip:AddLine(E.func_itemTexture(itemID)..E.func_itemName(itemID))
+					GameTooltip:AddLine(E.func_GetItemIconByID(itemID)..E.func_GetItemNameByID(itemID))
 				end
 				GameTooltip:Show()
 			end)

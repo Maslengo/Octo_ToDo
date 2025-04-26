@@ -170,7 +170,7 @@ local function processList(list, processor, showUnknown)
 end
 
 function E.func_mountslist(full)
-	if E.IsAddOnLoaded("Blizzard_Collections") then return fprint("|cffff0000NEED RELOAD|r") end
+	if E.func_IsAddOnLoaded("Blizzard_Collections") then return fprint("|cffff0000NEED RELOAD|r") end
 
 	full = full == "1"
 	local tbl, types, currentTier, t, c, w = {}, {}, tonumber(GetBuildInfo():match("(.-)%.")), {}, 0, {}
@@ -220,8 +220,8 @@ end
 
 function E.func_itemslist(msg)
 	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
-	promise1:ThenForAllWithCached(function(_, ids) processList(ids, function(id) return E.func_itemTexture(id)..E.func_itemName(id) end) end)
-	promise1:FailWithChecked(function(_, ids) processList(ids, function(id) return E.func_itemTexture(id)..E.func_itemName(id) end) end)
+	promise1:ThenForAllWithCached(function(_, ids) processList(ids, function(id) return E.func_GetItemIconByID(id)..E.func_GetItemNameByID(id) end) end)
+	promise1:FailWithChecked(function(_, ids) processList(ids, function(id) return E.func_GetItemIconByID(id)..E.func_GetItemNameByID(id) end) end)
 end
 
 function E.func_itemslistSort(msg)
@@ -280,7 +280,7 @@ function E.func_spellslist(msg)
 	for _, tbl in next, E.OctoTable_Portals do
 		for spellID in next, tbl do tinsert(list, spellID) end
 	end
-	processList(list, E.func_GetSpellNameFull)
+	processList(list, E.func_GetSpellName)
 end
 
 local function func_HandleCommand(msg)
