@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = false
+local enable = true
 if enable then
 	local Octo_EventFrame_Achievements = CreateFrame("FRAME")
 	Octo_EventFrame_Achievements:Hide()
@@ -36,17 +36,26 @@ if enable then
 			return f
 	end)
 	----------------------------------------------------------------
+	local table_insert = table.insert
+	local table_concat = table.concat
+	local CreateFrame = CreateFrame
+	local r, g, b = GetClassColor(E.classFilename)
+	local GetAchievementInfo = GetAchievementInfo
+	local GetCategoryNumAchievements = GetCategoryNumAchievements
+	local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
+	local IsTracking = C_ContentTracking.IsTracking
+	local StartTracking = C_ContentTracking.StartTracking
+	local StopTracking = C_ContentTracking.StopTracking
 	----------------------------------------------------------------
-
 	local function ToggleAchievement(AchievementID)
-		if E.func_achievementComplete(AchievementID) and C_ContentTracking.IsTracking(2, AchievementID) then
-			return C_ContentTracking.StopTracking(2, AchievementID, 2)
+		if E.func_achievementComplete(AchievementID) and IsTracking(2, AchievementID) then
+			return StopTracking(2, AchievementID, 2)
 		elseif E.func_achievementComplete(AchievementID) then
 			return
-		elseif C_ContentTracking.IsTracking(2, AchievementID) then
-			return C_ContentTracking.StopTracking(2, AchievementID, 2)
+		elseif IsTracking(2, AchievementID) then
+			return StopTracking(2, AchievementID, 2)
 		else
-			return C_ContentTracking.StartTracking(2, AchievementID)
+			return StartTracking(2, AchievementID)
 		end
 	end
 	------------------------------------------------
@@ -82,7 +91,6 @@ if enable then
 				frame.texture_full:SetSize(AddonLeftFrameWeight*3, AddonHeight)
 				frame.texture_full:SetPoint("RIGHT")
 				frame.texture_full:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
-				local r, g, b = GetClassColor(E.classFilename)
 				frame.texture_full:SetVertexColor(r, g, b, 0)
 				------------------------------------------------
 				frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
@@ -118,36 +126,45 @@ if enable then
 		end
 		------------------------------------------------
 	end
-
-
-	-- local function CreateTooltip(AchievementID)
-	-- 	local tooltipsecond = {}
-	-- 	tooltipsecond[#tooltipsecond+1] = {E.func_texturefromIcon(E.func_achievementIcon(AchievementID)).. E.func_achievementName(AchievementID), AchievementID}
-	-- 	tooltipsecond[#tooltipsecond+1] = {" ", " "}
-	-- 	if E.func_achievementDescription(AchievementID) ~= "" then
-	-- 		tooltipsecond[#tooltipsecond+1] = {E.func_achievementDescription(AchievementID)}
-	-- 		tooltipsecond[#tooltipsecond+1] = {" ", " "}
-	-- 	end
-	-- 	tooltipsecond[#tooltipsecond+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
-	-- 	return tooltipsecond
-	-- end
-
-	local function CreateTooltip(AchievementID)
-		local _, name, _, _, _, _, _, description, _, icon = GetAchievementInfo(AchievementID)
-		local tooltipsecond = {}
-		tooltipsecond[#tooltipsecond+1] = {E.func_texturefromIcon(icon)..(name .. (E.DebugIDs and E.Gray_Color.." id:"..AchievementID.."|r" or "")), " "}
-
-		if description ~= "" then
-			tooltipsecond[#tooltipsecond+1] = {" ", " "}
-			tooltipsecond[#tooltipsecond+1] = {E.Yellow_Color..description.."|r"}
-			tooltipsecond[#tooltipsecond+1] = {" ", " "}
+	local function CreateAchievementTooltip(achievementID)
+		local tooltipData = {}
+		local _, name, points, completed, month, day, year, description, _, icon, _, _, _, _, isStatistic = GetAchievementInfo(achievementID)
+		local color = completed and E.Green_Color or E.Red_Color
+		-- Build header line
+		local textLEFT = E.func_texturefromIcon(icon)..name
+		if E.DebugIDs then
+			textLEFT = textLEFT..E.Gray_Color.." id:"..achievementID.."|r"
 		end
-
-		tooltipsecond[#tooltipsecond+1] = {E.func_achievementcriteriaString(AchievementID), E.func_achievementquantity(AchievementID)}
-		return tooltipsecond
+		if points and points ~= 0 then
+			textLEFT = textLEFT.." "..color..points.."|r"
+		end
+		local textRIGHT = day and (day.."/"..month.."/20"..year) or ""
+		table_insert(tooltipData, {textLEFT, textRIGHT})
+		-- Add description if exists
+		if description and description ~= "" then
+			table_insert(tooltipData, {" ", " "})
+			table_insert(tooltipData, {E.Yellow_Color..description.."|r"})
+			table_insert(tooltipData, {" ", " "})
+		end
+		-- Process criteria data
+		local vivodLeft, vivodRight = {}, {}
+		local numCriteria = GetAchievementNumCriteria(achievementID)
+		for critIndex = 1, numCriteria do
+			local criteriaString, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, critIndex, false)
+			-- Left column (criteria text)
+			local text = criteriaString and criteriaString ~= "" and criteriaString or description
+			local critColor = completedCrit and E.Green_Color or (not completedCrit and quantity == 0 and E.Gray_Color or E.White_Color)
+			table_insert(vivodLeft, critColor .. text .. "|r")
+			-- Right column (quantity)
+			local qText = isStatistic and "" or (critColor..(quantity or 0).." / "..(reqQuantity or 1).."|r")
+			table_insert(vivodRight, qText)
+		end
+		-- Add criteria data to tooltip if any criteria exists
+		if #vivodLeft > 0 then
+			table_insert(tooltipData, {table_concat(vivodLeft, "|n"), table_concat(vivodRight, "|n")} )
+		end
+		return tooltipData
 	end
-
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	-- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
@@ -156,8 +173,8 @@ if enable then
 		frame.icon_1:SetTexture(data.icon)
 		frame.textLEFT:SetText(data.textLEFT)
 		frame.textRIGHT:SetText(data.textRIGHT or "NIL?")
-		frame.tooltip = CreateTooltip(data.AchievementID)
-		if C_ContentTracking.IsTracking(2, data.AchievementID) then
+		frame.tooltip = CreateAchievementTooltip(data.AchievementID)
+		if IsTracking(2, data.AchievementID) then
 			frame.texture_2:Show()
 			-- E:func_SetBackdrop(frame, E.classColorHexCurrent, .3, 0)
 		else
@@ -168,12 +185,10 @@ if enable then
 	function Octo_EventFrame_Achievements:Octo_Create_MainFrame_Achievements()
 		Octo_MainFrame_Achievements:SetPoint("CENTER", 0, 0)
 		-- Octo_MainFrame_Achievements:SetPoint("TOP", 0, -200)
-
 		Octo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 		Octo_MainFrame_Achievements:SetDontSavePosition(true)
 		Octo_MainFrame_Achievements:SetClampedToScreen(false)
 		Octo_MainFrame_Achievements:SetFrameStrata("HIGH")
-
 		Octo_MainFrame_Achievements:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
 		Octo_MainFrame_Achievements:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 		Octo_MainFrame_Achievements:SetBackdropBorderColor(0, 0, 0, 1)
@@ -222,9 +237,15 @@ if enable then
 						local AchievementID, name, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
 						if AchievementID then
 							if completedAchi == false or (completedAchi == Octo_Achievements_DB.AchievementShowCompleted) then
+								local color = E.Red_Color
+								if completedAchi then color = E.Green_Color end
+								local textLEFT = name
+								if points and points ~= 0 then
+									textLEFT = textLEFT .. " " .. color..points.."|r"
+								end
 								count = count + 1
 								Octo_EventFrame_Achievements.DataProvider:Insert({
-										textLEFT = name,
+										textLEFT = textLEFT,
 										textRIGHT = E.func_achievementvivod(AchievementID),
 										AchievementID = AchievementID,
 										icon = icon,

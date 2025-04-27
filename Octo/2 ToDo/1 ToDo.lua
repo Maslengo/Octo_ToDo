@@ -611,7 +611,7 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 		curCharFrame.text:SetWordWrap(false)
 		curCharFrame.text:SetJustifyV("MIDDLE")
 		curCharFrame.text:SetJustifyH("CENTER")
-		curCharFrame.text:SetText(E.func_vivodCent(CharInfo))
+		curCharFrame.text:SetText(E.func_textCENT(CharInfo))
 
 		local color = CharInfo.Faction == "Horde" and "|cfff01e38" or "|cff0070DD"
 		E:func_SetBackdrop(curCharFrame, color, E.bgCaOverlay * 2, 0)
