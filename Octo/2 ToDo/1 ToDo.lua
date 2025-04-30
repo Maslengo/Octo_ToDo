@@ -187,7 +187,7 @@ local func_OnAcquiredCENT do
 				f:SetPropagateMouseClicks(true)
 				f:SetPropagateMouseMotion(true)
 				f:SetSize(AddonCentralFrameWeight, AddonHeight)
-				f:SetHitRectInsets(1, 1, 0, 0)
+				f:SetHitRectInsets(1, 1, 1, 1)
 				f:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*(key-1), 0)
 				f:RegisterForClicks("LeftButtonUp")
 

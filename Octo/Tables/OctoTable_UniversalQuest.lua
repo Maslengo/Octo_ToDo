@@ -99,11 +99,66 @@ E.OctoTable_UniversalQuest = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
+	-- E.func_EventName(201) (ChildrensWeek) (Детская неделя)
+	-- orgrimmar / Stormwind
+	{
+		icon = E.func_GetItemIconByID(132161),
+		textleft = "Orgrimmar/Stormwind",
+		name_save = "orgrimmarStormwind",
+		reset = "Month",
+		desc = "HolidaysChildrensWeek",
+		questID = {
+			172, -- Horde
+			29146, -- Horde
+			29176, -- Horde
+			54146, -- Horde
+			29190, -- Horde
+			29191, -- Horde
+			5502, -- Horde
+			----
+			1468,
+			29093,
+			29106,
+			54130,
+			-- 29117, -- ДУБЛЬ
+			-- 29119, -- ДУБЛЬ
+			171,
+		},
+		max = 7
+	},
+	----------------------------------------------------------------
+	{
+		icon = E.func_GetItemIconByID(132161),
+		textleft = "Shattrath",
+		name_save = "Shattrath", --
+		reset = "Month",
+		desc = "HolidaysChildrensWeek",
+		questID = {
+			10942, -- Horde
+			10953, -- Horde
+			10951, -- Horde
+			10945, -- Horde
+			11975, -- Horde
+			10963, -- Horde
+			10967, -- Horde
+			----
+			10943,
+			10950,
+			10952,
+			10954,
+			-- 10962, -- ДУБЛЬ
+			10956,
+			-- 10966, -- ЛИШНЕЕ?
+			-- 10968, -- ЛИШНЕЕ?
+			10966,
+		},
+		max = 7
+	},
 
 
-
-
-
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
 	{
 		icon = E.func_GetCurrencyIcon(1166),
 		textleft = RAIDS,

@@ -1009,13 +1009,10 @@ function E.Collect_All_Chromie()
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
-
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 	"TIME_PLAYED_MSG",
-
 	"PLAYER_LEAVING_WORLD",
-
 	"ACCOUNT_MONEY",
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
 	"BAG_UPDATE",
@@ -1082,6 +1079,8 @@ function E.Collect_All_Table(event)
 end
 ----------------------------------------------------------------
 E.RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable, E.func_DebugPath())
+
+
 function Octo_EventFrame_Collect:ADDON_LOADED()
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
@@ -1090,14 +1089,14 @@ function Octo_EventFrame_Collect:ADDON_LOADED()
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
+
+
 function Octo_EventFrame_Collect:PLAYER_LOGIN()
-    RequestTimePlayed()
-    RequestRaidInfo()
-
-    self:UnregisterEvent("PLAYER_LOGIN")
-    self.PLAYER_LOGIN = nil
-    E.Collect_All_MoneyOnLogin()
-
+	RequestTimePlayed()
+	RequestRaidInfo()
+	self:UnregisterEvent("PLAYER_LOGIN")
+	self.PLAYER_LOGIN = nil
+	E.Collect_All_MoneyOnLogin()
 	-- Персонаж и прогресс
 	E.Collect_All_PlayerInfo() -- общая информация о персонаже
 	E.Collect_All_PlayerLevel() -- уровень персонажа
@@ -1128,262 +1127,351 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_BfA_Cloaklvl() -- уровень плаща, BfA
 	E.Collect_All_Covenant() -- ковенанты, Shadowlands
 	E.Collect_All_GreatVault() -- Великое Хранилище
-
-    E.Update("PLAYER_LOGIN")
+	E.Update("PLAYER_LOGIN")
 end
+
+
 function Octo_EventFrame_Collect:SKILL_LINES_CHANGED()
-    if InCombatLockdown() or self.SKLCHUpdatePause then return end
-
-    self.SKLCHUpdatePause = true
-    C_Timer.After(1, function()
-        E.Collect_All_Professions()
-        E.Update("SKILL_LINES_CHANGED")
-        self.SKLCHUpdatePause = nil  -- Используем nil вместо false для экономии памяти
-    end)
+	if InCombatLockdown() or self.SKILL_LINES_CHANGED_pause then return end
+	self.SKILL_LINES_CHANGED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Professions()
+			E.Update("SKILL_LINES_CHANGED")
+			self.SKILL_LINES_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:TRADE_SKILL_SHOW()
-    local update = function()
-        E.Collect_All_Professions()
-        E.Update("TRADE_SKILL_SHOW")
-    end
-    C_Timer.After(1, update)
+	if InCombatLockdown() or self.TRADE_SKILL_SHOW_Pause then return end
+	self.TRADE_SKILL_SHOW_Pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Professions()
+			E.Update("TRADE_SKILL_SHOW")
+			self.SKILL_LINES_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
 
 
 function Octo_EventFrame_Collect:PLAYER_XP_UPDATE()
-    if InCombatLockdown() or UnitLevel("player") == MAX_PLAYER_LEVEL or self.xpUpdateThrottle then return end
-
-    self.xpUpdateThrottle = true
-    C_Timer.After(0.5, function() self.xpUpdateThrottle = nil end)
-
-    E.Collect_All_PlayerLevel()
-    E.Update("PLAYER_XP_UPDATE")
+	if InCombatLockdown() or UnitLevel("player") == MAX_PLAYER_LEVEL or self.PLAYER_XP_UPDATE_pause then return end
+	self.PLAYER_XP_UPDATE_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_PlayerLevel()
+			E.Update("PLAYER_XP_UPDATE")
+			self.PLAYER_XP_UPDATE_pause = nil
+	end)
 end
 
 
 function Octo_EventFrame_Collect:PLAYER_LEVEL_UP()
-    C_Timer.After(1, function()
-        RequestTimePlayed()
-        if not InCombatLockdown() then
-		    E.Collect_All_PlayerLevel()
-		    E.Update("PLAYER_LEVEL_UP_FAST")
-        end
-    end)
+	if InCombatLockdown() or self.PLAYER_LEVEL_UP_Pause then return end
+	self.PLAYER_LEVEL_UP_Pause = true
+	C_Timer.After(1, function()
+			RequestTimePlayed()
+			E.Collect_All_PlayerLevel()
+			E.Update("PLAYER_LEVEL_UP")
+			self.PLAYER_LEVEL_UP_Pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
-
 
 
 function Octo_EventFrame_Collect:QUEST_LOG_UPDATE()
-    if self.questTimer then  -- Если таймер уже есть, сбрасываем его
-        self.questTimer:Cancel()
-    end
-
-    -- Запускаем новый таймер (дебаунс 1 сек)
-    self.questTimer = C_Timer.After(1, function()
-        if InCombatLockdown() then return end
-        local E = E
-        E.Collect_All_Quests()
-        E.Collect_All_UNIVERSALQuestUpdate()
-        E.Collect_All_BfA_Island()
-        E.Collect_All_Chromie()
-        E.Update("QUEST_LOG_UPDATE")
-    end)
+	if InCombatLockdown() or self.QUEST_LOG_UPDATE_Pause then return end
+	self.QUEST_LOG_UPDATE_Pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Quests()
+			E.Collect_All_UNIVERSALQuestUpdate()
+			E.Collect_All_BfA_Island()
+			E.Collect_All_Chromie()
+			E.Update("QUEST_LOG_UPDATE")
+			self.QUEST_LOG_UPDATE_Pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
-
-
-
-
 
 
 function Octo_EventFrame_Collect:BAG_UPDATE()
-    if self.bagTimer then  -- Если таймер уже есть, сбрасываем его
-        self.bagTimer:Cancel()
-    end
-
-    -- Запускаем новый таймер (дебаунс 1 сек)
-    self.bagTimer = C_Timer.After(1, function()
-        if InCombatLockdown() then return end
-        local E = E
-		E.Collect_All_ItemsInBag()
-		E.Update("BAG_UPDATE")
-    end)
+	if InCombatLockdown() or self.BAG_UPDATE_pause then return end
+	self.BAG_UPDATE_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_ItemsInBag()
+			E.Update("BAG_UPDATE")
+			self.BAG_UPDATE_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
-
-
 
 
 function Octo_EventFrame_Collect:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
-	if not InCombatLockdown() then
-		E.Collect_All_ItemsInBag()
-		E.Update("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
-	end
+	if InCombatLockdown() or self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause then return end
+	self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_ItemsInBag()
+			E.Update("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
+			self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:PLAYER_MONEY()
-	if not InCombatLockdown() then
-		E.Collect_All_MoneyUpdate()
-		E.Update("PLAYER_MONEY")
-	end
+	if InCombatLockdown() or self.PLAYER_MONEY_pause then return end
+	self.PLAYER_MONEY_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_MoneyUpdate()
+			E.Update("PLAYER_MONEY")
+			self.PLAYER_MONEY_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:ACCOUNT_MONEY()
-	if not InCombatLockdown() then
-		E.Collect_All_MoneyUpdate()
-		E.Update("ACCOUNT_MONEY")
-	end
+	if InCombatLockdown() or self.ACCOUNT_MONEY_pause then return end
+	self.ACCOUNT_MONEY_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_MoneyUpdate()
+			E.Update("ACCOUNT_MONEY")
+			self.ACCOUNT_MONEY_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
-	if not InCombatLockdown() and not self.currencyUpdatePause then
-		self.currencyUpdatePause = true
-		C_Timer.After(3, function()
-				E.Collect_All_Currency()
-				E.Collect_All_Covenant()
-				E.Update("CURRENCY_DISPLAY_UPDATE")
-				self.currencyUpdatePause = false
-		end)
-	end
+	if InCombatLockdown() or self.CURRENCY_DISPLAY_UPDATE_pause then return end
+	self.CURRENCY_DISPLAY_UPDATE_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Currency()
+			E.Collect_All_Covenant()
+			E.Update("CURRENCY_DISPLAY_UPDATE")
+			self.CURRENCY_DISPLAY_UPDATE_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:CURRENCY_TRANSFER_LOG_UPDATE()
-	if not InCombatLockdown() then
-		E.Collect_All_Currency()
-		E.Update("CURRENCY_TRANSFER_LOG_UPDATE")
-	end
+	if InCombatLockdown() or self.CURRENCY_TRANSFER_LOG_UPDATE_pause then return end
+	self.CURRENCY_TRANSFER_LOG_UPDATE_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Currency()
+			E.Collect_All_Covenant()
+			E.Update("CURRENCY_TRANSFER_LOG_UPDATE")
+			self.CURRENCY_TRANSFER_LOG_UPDATE_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:PLAYER_EQUIPMENT_CHANGED()
-	if not InCombatLockdown() then
-		E.Collect_All_ItemLevel()
-		E.Update("PLAYER_EQUIPMENT_CHANGED")
-	end
+	if InCombatLockdown() or self.PLAYER_EQUIPMENT_CHANGED_pause then return end
+	self.PLAYER_EQUIPMENT_CHANGED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_ItemLevel()
+			E.Update("PLAYER_EQUIPMENT_CHANGED")
+			self.PLAYER_EQUIPMENT_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:PLAYER_LEAVING_WORLD()
-	if not InCombatLockdown() then
-		self:UnregisterEvent("PLAYER_LEAVING_WORLD")
-		self.PLAYER_LEAVING_WORLD = nil
-		E.Collect_All_GreatVault()
-		E.Collect_All_LoginTime()
-	end
+	if not InCombatLockdown() then return end
+	self:UnregisterEvent("PLAYER_LEAVING_WORLD")
+	self.PLAYER_LEAVING_WORLD = nil
+	E.Collect_All_GreatVault()
+	E.Collect_All_LoginTime()
 end
+
+
 function Octo_EventFrame_Collect:AZERITE_ITEM_EXPERIENCE_CHANGED()
-	if not InCombatLockdown() then
-		E.Collect_All_BfA_Azerite()
-		E.Collect_All_BfA_Cloaklvl()
-		E.Update("AZERITE_ITEM_EXPERIENCE_CHANGED")
-	end
+	if InCombatLockdown() or self.AZERITE_ITEM_EXPERIENCE_CHANGED_pause then return end
+	self.AZERITE_ITEM_EXPERIENCE_CHANGED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_BfA_Azerite()
+			E.Collect_All_BfA_Cloaklvl()
+			E.Update("AZERITE_ITEM_EXPERIENCE_CHANGED")
+			self.AZERITE_ITEM_EXPERIENCE_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:COVENANT_CHOSEN()
-	if not InCombatLockdown() then
-		E.Collect_All_Covenant()
-		E.Update("COVENANT_CHOSEN")
-	end
+	if InCombatLockdown() or self.COVENANT_CHOSEN_pause then return end
+	self.COVENANT_CHOSEN_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Covenant()
+			E.Update("COVENANT_CHOSEN")
+			self.COVENANT_CHOSEN_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
-	if not InCombatLockdown() then
-		E.Collect_All_Covenant()
-		E.Update("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
-	end
+	if InCombatLockdown() or self.COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED_pause then return end
+	self.COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Covenant()
+			E.Update("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
+			self.COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:PLAYER_DEAD()
-	if not InCombatLockdown() then
-		E.Collect_All_PlayerDurability()
-		E.Update("PLAYER_DEAD")
-	end
+	if InCombatLockdown() or self.PLAYER_DEAD_pause then return end
+	self.PLAYER_DEAD_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_PlayerDurability()
+			E.Update("PLAYER_DEAD")
+			self.PLAYER_DEAD_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:UPDATE_INVENTORY_DURABILITY()
-	if not InCombatLockdown() then
-		E.Collect_All_PlayerDurability()
-		E.Update("UPDATE_INVENTORY_DURABILITY")
-	end
+	if InCombatLockdown() or self.UPDATE_INVENTORY_DURABILITY_pause then return end
+	self.UPDATE_INVENTORY_DURABILITY_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_PlayerDurability()
+			E.Update("UPDATE_INVENTORY_DURABILITY")
+			self.UPDATE_INVENTORY_DURABILITY_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:PLAYER_SPECIALIZATION_CHANGED()
-	if not InCombatLockdown() then
-		E.Collect_All_PlayerInfo()
-		E.Update("PLAYER_SPECIALIZATION_CHANGED")
-	end
+	if InCombatLockdown() or self.PLAYER_SPECIALIZATION_CHANGED_pause then return end
+	self.PLAYER_SPECIALIZATION_CHANGED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_PlayerInfo()
+			E.Update("PLAYER_SPECIALIZATION_CHANGED")
+			self.PLAYER_SPECIALIZATION_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:HEARTHSTONE_BOUND()
-	if not InCombatLockdown() then
-		E.Collect_All_Locations()
-		E.Update("HEARTHSTONE_BOUND")
-	end
+	if InCombatLockdown() or self.HEARTHSTONE_BOUND_pause then return end
+	self.HEARTHSTONE_BOUND_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Locations()
+			E.Update("HEARTHSTONE_BOUND")
+			self.HEARTHSTONE_BOUND_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:ZONE_CHANGED()
-	if not InCombatLockdown() then
-		E.Collect_All_Locations()
-		E.Update("ZONE_CHANGED")
-	end
+	if InCombatLockdown() or self.ZONE_CHANGED_pause then return end
+	self.ZONE_CHANGED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Locations()
+			E.Update("ZONE_CHANGED")
+			self.ZONE_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:ZONE_CHANGED_NEW_AREA()
-	if not InCombatLockdown() then
-		E.Collect_All_Locations()
-		E.Update("ZONE_CHANGED_NEW_AREA")
-	end
+	if InCombatLockdown() or self.ZONE_CHANGED_NEW_AREA_pause then return end
+	self.ZONE_CHANGED_NEW_AREA_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Locations()
+			E.Update("ZONE_CHANGED_NEW_AREA")
+			self.ZONE_CHANGED_NEW_AREA_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:SPELLS_CHANGED()
-	if not InCombatLockdown() and not self.spellUpdatePause then
-		self.spellUpdatePause = true
-		C_Timer.After(2, function()
-				E.Collect_All_WarMode()
-				E.Update("SPELLS_CHANGED")
-			end
-		)
-	end
+	if InCombatLockdown() or self.SPELLS_CHANGED_pause then return end
+	self.SPELLS_CHANGED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_WarMode()
+			E.Update("SPELLS_CHANGED")
+			self.SPELLS_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:MAIL_INBOX_UPDATE()
-	if not InCombatLockdown() then
-		E.Collect_All_Mail()
-		E.Update("MAIL_INBOX_UPDATE")
-	end
+	if InCombatLockdown() or self.MAIL_INBOX_UPDATE_pause then return end
+	self.MAIL_INBOX_UPDATE_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Mail()
+			E.Update("MAIL_INBOX_UPDATE")
+			self.MAIL_INBOX_UPDATE_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:MAIL_SHOW()
-	if not InCombatLockdown() then
-		E.Collect_All_Mail()
-		E.Update("MAIL_SHOW")
-	end
+	if InCombatLockdown() or self.MAIL_SHOW_pause then return end
+	self.MAIL_SHOW_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Mail()
+			E.Update("MAIL_SHOW")
+			self.MAIL_SHOW_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:UPDATE_PENDING_MAIL()
-	if not InCombatLockdown() then
-		E.Collect_All_Mail()
-		E.Update("UPDATE_PENDING_MAIL")
-	end
+	if InCombatLockdown() or self.UPDATE_PENDING_MAIL_pause then return end
+	self.UPDATE_PENDING_MAIL_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Mail()
+			E.Update("UPDATE_PENDING_MAIL")
+			self.UPDATE_PENDING_MAIL_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
-	if not InCombatLockdown() then
-		C_Timer.After(5, function()
-				if not InCombatLockdown() then
-					E.Collect_All_Quests()
-					E.Collect_All_UNIVERSALQuestUpdate()
-					E.Collect_All_BfA_Island()
-					E.Collect_All_Reputations()
-					E.Collect_All_Currency()
-					-- E.Collect_All_JournalInstance()
-					E.Update("PLAYER_REGEN_ENABLED")
-				end
-			end
-		)
-	end
+	if InCombatLockdown() or self.PLAYER_REGEN_ENABLED_pause then return end
+	self.PLAYER_REGEN_ENABLED_pause = true
+	C_Timer.After(5, function()
+			E.Collect_All_Quests()
+			E.Collect_All_UNIVERSALQuestUpdate()
+			E.Collect_All_BfA_Island()
+			E.Collect_All_Reputations()
+			E.Collect_All_Currency()
+			E.Update("PLAYER_REGEN_ENABLED")
+			self.PLAYER_REGEN_ENABLED_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:ENCOUNTER_END()
-	if not InCombatLockdown() then
-		C_Timer.After(1, function()
-				E.Collect_All_JournalInstance()
-				E.Update("ENCOUNTER_END")
-			end
-		)
-	end
+	if InCombatLockdown() or self.ENCOUNTER_END_pause then return end
+	self.ENCOUNTER_END_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_JournalInstance()
+			E.Update("ENCOUNTER_END")
+			self.ENCOUNTER_END_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:UPDATE_INSTANCE_INFO()
-	if not InCombatLockdown() then
-		E.Collect_All_JournalInstance()
-		E.Update("UPDATE_INSTANCE_INFO")
-	end
+	if InCombatLockdown() or self.UPDATE_INSTANCE_INFO_pause then return end
+	self.UPDATE_INSTANCE_INFO_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_JournalInstance()
+			E.Update("UPDATE_INSTANCE_INFO")
+			self.UPDATE_INSTANCE_INFO_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end
+
+
 function Octo_EventFrame_Collect:TIME_PLAYED_MSG(...)
-	if not InCombatLockdown() then
-		E.Collect_All_Played(...)
-		E.Update("TIME_PLAYED_MSG")
-	end
+	if not InCombatLockdown() then return end
+	E.Collect_All_Played(...)
+	E.Update("TIME_PLAYED_MSG")
 end
+
+
 function Octo_EventFrame_Collect:QUEST_POI_UPDATE()
-	if not InCombatLockdown() then
-		E.Collect_All_Chromie()
-		E.Update("QUEST_POI_UPDATE")
-	end
+	if InCombatLockdown() or self.QUEST_POI_UPDATE_pause then return end
+	self.QUEST_POI_UPDATE_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Chromie()
+			E.Update("QUEST_POI_UPDATE")
+			self.QUEST_POI_UPDATE_pause = nil  -- Используем nil вместо false для экономии памяти
+	end)
 end

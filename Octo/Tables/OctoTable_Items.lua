@@ -113,14 +113,16 @@ E.OctoTable_itemID_ItemsDelete = {
 	[37604] = true, [37584] = true, [37583] = true, [37582] = true, [35953] = true, [35947] = true, [34068] = true, [33470] = true,
 	[33460] = true, [33458] = true, [33454] = true, [33452] = true, [33448] = true, [33445] = true, [33444] = true, [33226] = true,
 	[22832] = true, [22829] = true, [22578] = true, [21325] = true, [21254] = true, [20414] = true, [20413] = true, [20411] = true,
-	[20410] = true, [20409] = true, [20399] = true, [20398] = true, [20397] = true, [17712] = true, [13446] = true, [13444] = true,
+	[20410] = true, [20409] = true, [20399] = true, [20398] = true, [20397] = true, [17712] = true, [13444] = true,
 	[9249] = true, [159] = true,
 }
 E.OctoTable_itemID_ItemsUsable = {
-	[38323] = 3,
-	[35188] = 15,
-	[201437] = 5,
+	[30704] = 6,
+	[31121] = 5,
 	[31373] = 5,
+	[35188] = 15,
+	[38323] = 3,
+	[46365] = 10,
 	[169491] = 3,
 	[174756] = 6,
 	[174758] = 6,
@@ -132,11 +134,11 @@ E.OctoTable_itemID_ItemsUsable = {
 	[190198] = 5,
 	[191160] = 5,
 	[192658] = 20,
+	[201437] = 5,
 	[203430] = 5,
 	[203683] = 5,
 	[203710] = 3,
 	[204352] = 50,
-	[46365] = 10,
 }
 E.OctoTable_itemID_Cataloged_Research = {
 	{itemiD = 186685, count = 1},
@@ -170,7 +172,12 @@ E.OctoTable_itemID_Cataloged_Research = {
 	{itemiD = 187335, count = 300},
 }
 E.OctoTable_itemID_ItemsUsable_Other = {
-
+	32617,
+	29903,
+	29904,
+	68890,
+	69027,
+	30650,
 	213073,
 	213076,
 	213064,
@@ -182,7 +189,7 @@ E.OctoTable_itemID_ItemsUsable_Other = {
 	164922,
 	164923,
 	164924,
-
+	31122,
 	136789,
 	136795,
 	136790,
