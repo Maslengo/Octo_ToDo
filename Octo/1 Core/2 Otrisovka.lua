@@ -1217,7 +1217,8 @@ function E:func_Otrisovka()
 								if CharInfo.GUID == E.curGUID then
 									-- sort(v.questID)
 									for questindex, questID in ipairs(v.questID) do
-										tooltip[#tooltip+1] = {questindex..") "..E.func_questName(questID), C_QuestLog.IsQuestFlaggedCompleted(questID) and "|cff00FF00true|r" or "|cffFF0000false|r"}
+										tooltip[#tooltip+1] = {questindex..") "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+										-- tooltip[#tooltip+1] = {questindex..") "..E.func_questName(questID), C_QuestLog.IsQuestFlaggedCompleted(questID) and "|cff00FF00true|r" or "|cffFF0000false|r"}
 									end
 								end
 							end

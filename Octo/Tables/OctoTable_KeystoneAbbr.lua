@@ -30,7 +30,7 @@ E.OctoTable_KeystoneAbbr = {
 	{mapChallengeModeID = 239, abbreviation = "SotT", portal = 000000}, -- Seat of the Triumvirate
 	{mapChallengeModeID = 245, abbreviation = "FH", portal = 410071}, -- Freehold
 	{mapChallengeModeID = 246, abbreviation = "TD", portal = 000000}, -- Tol Dagor
-	{mapChallengeModeID = 247, abbreviation = "ML", portal = 000000}, -- The MOTHERLODE!!
+	{mapChallengeModeID = 247, abbreviation = "ML", portal = 467553}, -- The MOTHERLODE!!
 	{mapChallengeModeID = 249, abbreviation = "KR", portal = 000000}, -- Kings' Rest
 	{mapChallengeModeID = 250, abbreviation = "ToS", portal = 000000}, -- Temple of Sethraliss
 	{mapChallengeModeID = 251, abbreviation = "UNDR", portal = 410074}, -- The Underrot
@@ -79,7 +79,11 @@ E.OctoTable_KeystoneAbbr = {
 	{mapChallengeModeID = 504, abbreviation = "DC", portal = 445441}, -- Darkflame Cleft
 	{mapChallengeModeID = 506, abbreviation = "CM", portal = 445440}, -- Cinderbrew Maedery
 	-- AATDH - raid
+
+
+
 	{mapChallengeModeID = 525, abbreviation = "FG", portal = 123123} -- Операция: шлюз
+	-- 1216786
 
 }
 E.OctoTable_LFGDungeons = {
