@@ -233,7 +233,6 @@ function E.func_GetItemNameByID(itemID)
 	local itemName = GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
 	local vivod = ""
 	local itemQuality = select(3, E.func_GetItemInfo(itemID)) or 0
-	local QWEQWE = ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
 	if itemQuality then
 		vivod = vivod .. ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
 	end
@@ -307,7 +306,7 @@ function E.func_questName(questID, useLargeIcon)
 	if title then
 		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon)
 	else
-		vivod = vivod..E.Red_Color.."hidden?".."|r"
+		vivod = vivod..E.Red_Color.."-".."|r"
 	end
 	if IsAccountQuest(questID) then
 		vivod = E.Icon_AccountWide.."|cffFFFF00"..vivod.."|r"
@@ -517,6 +516,15 @@ function E.func_rgb2hexDEV(r, g, b, a)
 	end
 	return "|c"..string_format("%02x", math_floor(a*255))..utf8upper(string_format("%02x%02x%02x", math_floor(r*255), math_floor(g*255), math_floor(b*255)))
 end
+----------------------------------------------------------------
+function E.func_rgb2hexSTRING(r, g, b, a)
+	local r, g, b, a = r, g, b, a
+	if not a then
+		a = 1
+	end
+	return utf8upper(string_format("%02x%02x%02x", math_floor(r*255), math_floor(g*255), math_floor(b*255)))
+end
+
 ----------------------------------------------------------------
 function E.func_percent(percent, maxvalue)
 	return (maxvalue*percent)/100

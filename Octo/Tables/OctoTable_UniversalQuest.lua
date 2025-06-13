@@ -2149,4 +2149,96 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 8
 	},
+
+
+	{
+		icon = E.func_GetItemIconByID(38181), -- https://www.wowhead.com/ptr/storyline/5718
+		textleft = E.func_questName(85884),
+		name_save = "Arthas",
+		reset = "Once",
+		desc = "Storyline",
+		questID = {
+			85884, --1
+			85862,
+			12291, --2
+			12301, --3
+			12305,
+			12478, --4?
+			85885, -- 5 last ?
+			85875, -- 6
+			85878,
+		},
+		max = 9
+	},
+
+
+
+	{
+		icon = E.func_GetItemIconByID(229361), -- https://www.wowhead.com/ptr/storyline/5673
+		textleft = E.func_questName(84371),
+		name_save = "Xal'atath",
+		reset = "Once",
+		desc = "Storyline",
+		questID = {
+			84371,
+			40710,
+			84779,
+			54114,
+			54118,
+			54058,
+			53761,
+			53762,
+			53763,
+			54126,
+			84782,
+			84784,
+			85871,
+			84789,
+		},
+		max = 12
+	},
+
+
+
+
+	{
+		icon = E.func_GetItemIconByID(152713), -- https://www.wowhead.com/ptr/storyline/5691
+		textleft = E.func_questName(85027),
+		name_save = "Ethereals",
+		reset = "Once",
+		desc = "Storyline",
+		questID = {
+			85027,
+			10339,
+			10384,
+			10385,
+			10406,
+			10408,
+			10437,
+			10439,
+			85029,
+			47203,
+			47218,
+			47217,
+			47219,
+			85028,
+			63976,
+			63977,
+			63979,
+			63980,
+			63982,
+			63983,
+			63984,
+			63985,
+			63855,
+			63895,
+			85035,
+			85036,
+		},
+		max = 26
+	},
+
+
+
+
 }

@@ -266,6 +266,11 @@ function E:func_Otrisovka()
 								if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 									textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 								end
+								if CharInfo.GUID == E.curGUID then
+									for index, questID in ipairs(v.questID) do
+										tooltip[#tooltip+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+									end
+								end
 								return textCENT, tooltip, colorCENT
 						end)
 						tinsert(OctoTable_func_otrisovkaLEFT, function()
@@ -1121,6 +1126,11 @@ function E:func_Otrisovka()
 							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 								textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 							end
+							if CharInfo.GUID == E.curGUID then
+								for index, questID in ipairs(v.questID) do
+									tooltip[#tooltip+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+								end
+							end
 							return textCENT, tooltip, colorCENT
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
@@ -1180,6 +1190,11 @@ function E:func_Otrisovka()
 							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 								textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 							end
+							if CharInfo.GUID == E.curGUID then
+								for index, questID in ipairs(v.questID) do
+									tooltip[#tooltip+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+								end
+							end
 							return textCENT, tooltip, colorCENT
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
@@ -1215,10 +1230,8 @@ function E:func_Otrisovka()
 							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 								textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 								if CharInfo.GUID == E.curGUID then
-									-- sort(v.questID)
-									for questindex, questID in ipairs(v.questID) do
-										tooltip[#tooltip+1] = {questindex..") "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
-										-- tooltip[#tooltip+1] = {questindex..") "..E.func_questName(questID), C_QuestLog.IsQuestFlaggedCompleted(questID) and "|cff00FF00true|r" or "|cffFF0000false|r"}
+									for index, questID in ipairs(v.questID) do
+										tooltip[#tooltip+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
 									end
 								end
 							end
@@ -1323,6 +1336,32 @@ function E:func_Otrisovka()
 			function(CharInfo)
 				return QUESTS_LABEL
 		end)
+
+
+
+		for _, v in ipairs(E.OctoTable_UniversalQuest) do
+			if v.desc == "Storyline" then
+				tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
+						local textCENT, tooltip, colorCENT = " ", {}, nil
+						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
+							textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+							if CharInfo.GUID == E.curGUID then
+								for index, questID in ipairs(v.questID) do
+									tooltip[#tooltip+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+								end
+							end
+						end
+						return textCENT, tooltip, colorCENT
+				end)
+				tinsert(OctoTable_func_otrisovkaLEFT, function()
+						return tostringall(v.textleft).."|r", v.icon, E.Holiday_Color
+				end)
+			end
+		end
+
+
+
+
 	end
 	if Octo_ToDo_DB_Vars.Dungeons == true then
 		tinsert(OctoTable_func_otrisovkaCENT,

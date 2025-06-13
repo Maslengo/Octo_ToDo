@@ -366,6 +366,22 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	InitSubTable(Octo_ToDo_DB_Other, "professions")
 end
 
+function Octo_EventFrame_WTF:Octo_ToDo_DB_Minecraft()
+	Octo_ToDo_DB_Minecraft = InitTable(Octo_ToDo_DB_Minecraft)
+	InitSubTable(Octo_ToDo_DB_Minecraft, "ColorFG")
+	InitField(Octo_ToDo_DB_Minecraft.ColorFG, "r", 1)
+	InitField(Octo_ToDo_DB_Minecraft.ColorFG, "g", 1)
+	InitField(Octo_ToDo_DB_Minecraft.ColorFG, "b", 1)
+	InitField(Octo_ToDo_DB_Minecraft.ColorFG, "a", 1)
+	InitSubTable(Octo_ToDo_DB_Minecraft, "ColorBG")
+	InitField(Octo_ToDo_DB_Minecraft.ColorBG, "r", 1)
+	InitField(Octo_ToDo_DB_Minecraft.ColorBG, "g", 1)
+	InitField(Octo_ToDo_DB_Minecraft.ColorBG, "b", 1)
+	InitField(Octo_ToDo_DB_Minecraft.ColorBG, "a", 1)
+
+end
+
+
 function Octo_EventFrame_WTF:Octo_Achievements_DB()
 	Octo_Achievements_DB = InitTable(Octo_Achievements_DB)
 	InitField(Octo_Achievements_DB, "AchievementShowCompleted", true)
@@ -522,6 +538,7 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:Octo_ToDo_DB_Levels()
 		self:Octo_ToDo_DB_Vars()
 		self:Octo_ToDo_DB_Other()
+		self:Octo_ToDo_DB_Minecraft()
 		self:Octo_Achievements_DB()
 		self:Octo_AddonsTable()
 		self:Octo_AddonsManager_DB()

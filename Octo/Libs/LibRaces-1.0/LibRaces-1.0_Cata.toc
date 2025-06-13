@@ -5,18 +5,6 @@
 ## IconTexture: 986485
 ## Version: r62
 
-## CategoryQWEQWEQWEQWE-enUS: Libraries
-## CategoryQWEQWEQWEQWE-deDE: Bibliotheken
-## CategoryQWEQWEQWEQWE-esES: Bibliotecas
-## CategoryQWEQWEQWEQWE-esMX: Bibliotecas
-## CategoryQWEQWEQWEQWE-frFR: Bibliothèques
-## CategoryQWEQWEQWEQWE-itIT: Biblioteche
-## CategoryQWEQWEQWEQWE-koKR: 도서관
-## CategoryQWEQWEQWEQWE-ptBR: Bibliotecas
-## CategoryQWEQWEQWEQWE-ruRU: Библиотеки
-## CategoryQWEQWEQWEQWE-zhCN: 函数库
-## CategoryQWEQWEQWEQWE-zhTW: 函式庫
-
 ## OptionalDeps: LibStub, CallbackHandler-1.0
 
 ## X-Curse-Project-ID: 269683
