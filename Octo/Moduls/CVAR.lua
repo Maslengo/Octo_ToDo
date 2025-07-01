@@ -163,6 +163,9 @@ function E.LoadCVars()
 		["showPingsInChat"] = 0,
 		["Sound_EnablePingSounds"] = 0,
 		["Sound_PingVolume"] = 0,
+
+		-- 11.1.7 Features
+		["assistedCombatHighlight"] = 1,
 	}
 
 	-- Register and set all CVars

@@ -787,8 +787,10 @@ function E.Collect_All_JournalInstance()
 				collect.MASLENGO.SavedWorldBoss[worldBossID].reset = reset
 			end
 		end
+		-- local qweLIST = {}
 		for i=1, GetNumRandomDungeons() do
 			local dungeonID, name = GetLFGRandomDungeonInfo(i)
+			-- tinsert(qweLIST, "["..dungeonID .. "] = "..name)
 			if dungeonID and E.OctoTable_LFGDungeons[dungeonID] then
 				local D_name = GetLFGDungeonInfo(dungeonID)
 				local donetoday = GetLFGDungeonRewards(dungeonID)
@@ -801,6 +803,7 @@ function E.Collect_All_JournalInstance()
 				end
 			end
 		end
+		-- fpde (qweLIST)
 	end
 end
 function E.Collect_All_Holiday()

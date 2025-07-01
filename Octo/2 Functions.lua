@@ -239,6 +239,16 @@ function E.func_GetItemNameByID(itemID)
 	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
 ----------------------------------------------------------------
+function E.func_LFGdungName(dID)
+	for i = 1, GetNumRandomDungeons() do
+		local dungeonID, name = GetLFGRandomDungeonInfo(i)
+		if dungeonID == dID then
+			return name  -- Возвращаем имя сразу при нахождении
+		end
+	end
+	return "noname"  -- Возвращаем значение по умолчанию только если ничего не найдено
+end
+----------------------------------------------------------------
 function E.func_GetSpellIcon(spellID)
 	return GetSpellTexture(spellID)
 end
@@ -1052,11 +1062,8 @@ end
 ----------------------------------------------------------------
 function E.func_LoadAddOnFORCED(AddonName)
 	if DoesAddOnExist(AddonName) and not E.func_IsAddOnLoaded(AddonName) then
-		local _, _, _, loadable = GetAddOnInfo(AddonName)
-		if not loadable then
-			EnableAddOn(AddonName)
-			LoadAddOn(AddonName)
-		end
+		EnableAddOn(AddonName)
+		LoadAddOn(AddonName)
 	end
 end
 ----------------------------------------------------------------
@@ -1603,6 +1610,15 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 					HideUIPanel(GameMenuFrame)
 				end
 			end
+		elseif button == "RightButton" then
+			if frame and frame:IsShown() then
+				frame:Hide()
+			end
+			if SettingsPanel:IsVisible() and frame:IsVisible() then
+				HideUIPanel(SettingsPanel)
+			else
+				Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
+			end
 		end
 	end
 	vars.minimapPos = vars.minimapPos or 244
@@ -1631,6 +1647,7 @@ function E:func_fixdate(date)
 	return vivod
 end
 ----------------------------------------------------------------
+-- ПОФИКСИТЬ 61304 это заклиание ГКД
 function E:func_IsAvailable(id, curType)
 	if id and curType then
 		if curType == "spell" and IsSpellKnown(id) then
@@ -2007,6 +2024,11 @@ E.Icon_AccountWide = E.Blue_Color.."(A)".."|r"
 E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r"
 E.Icon_QuestionMark = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.Icon_Empty = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\spacerEMPTY"
+E.Icon_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
+
+
+
+
 E.OctoTable_Covenant = {
 	[1] = {
 		name = GetCovenantData(1).name, -- "Kyrian",
@@ -2782,37 +2804,37 @@ end
 -- 1 Работа с цветами:
 -- Кэширование расчетов цветов:
 local function GetClassColorCache()
-    local r, g, b = GetClassColor(E.classFilename)
-    return {r = r, g = g, b = b, hex = E.func_rgb2hex(r, g, b)}
+	local r, g, b = GetClassColor(E.classFilename)
+	return {r = r, g = g, b = b, hex = E.func_rgb2hex(r, g, b)}
 end
 E.classColorCache = GetClassColorCache()
 ----------------------------------------------------------------
 -- 2 Операции с таблицами:
 -- Предварительное выделение памяти:
 local function CreateTable(size)
-    local t = {}
-    for i = 1, size do t[i] = 0 end
-    return t
+	local t = {}
+	for i = 1, size do t[i] = 0 end
+	return t
 end
 ----------------------------------------------------------------
 -- 3 Сборка строк:
 -- Использование table_concat для множественных конкатенаций:
 local function BuildString(parts)
-    local t = {}
-    for i, part in ipairs(parts) do
-        t[i] = tostring(part)
-    end
-    return table_concat(t)
+	local t = {}
+	for i, part in ipairs(parts) do
+		t[i] = tostring(part)
+	end
+	return table_concat(t)
 end
 ----------------------------------------------------------------
 -- 4 Создание фреймов:
 -- Переиспользование шаблонов фреймов:
 local function CreateOptimizedFrame(parent)
-    if not E.framePool then
-        E.framePool = CreateFrame("Frame", nil, parent, "BackdropTemplate")
-        -- Настройка общих свойств
-    end
-    return E.framePool
+	if not E.framePool then
+		E.framePool = CreateFrame("Frame", nil, parent, "BackdropTemplate")
+		-- Настройка общих свойств
+	end
+	return E.framePool
 end
 ----------------------------------------------------------------
 -- 5 Оптимизация подсказок:
@@ -2821,9 +2843,9 @@ local tooltip = E.tooltip or CreateFrame("GameTooltip", "OctoTooltip", nil, "Gam
 E.tooltip = tooltip
 
 function E.ShowTooltip(...)
-    tooltip:ClearLines()
-    -- Добавление строк
-    tooltip:Show()
+	tooltip:ClearLines()
+	-- Добавление строк
+	tooltip:Show()
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------

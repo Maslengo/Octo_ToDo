@@ -14,7 +14,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			13503,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(45072),
@@ -25,7 +25,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			79575,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(45072),
@@ -36,7 +36,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			13479,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(45072),
@@ -47,7 +47,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			79576,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(45072),
@@ -58,7 +58,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			79577,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(45072),
@@ -70,7 +70,7 @@ E.OctoTable_UniversalQuest = {
 			79578, -- Horde
 			79331, -- Alliance
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(45072),
@@ -82,7 +82,7 @@ E.OctoTable_UniversalQuest = {
 			79558, -- Horde
 			73192, -- Alliance
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(45072),
@@ -93,7 +93,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			79135,
 		},
-		max = 1
+		max = 1,
 	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -123,7 +123,7 @@ E.OctoTable_UniversalQuest = {
 			-- 29119, -- ДУБЛЬ
 			171,
 		},
-		max = 7
+		max = 7,
 	},
 	----------------------------------------------------------------
 	{
@@ -151,8 +151,41 @@ E.OctoTable_UniversalQuest = {
 			-- 10968, -- ЛИШНЕЕ?
 			10966,
 		},
-		max = 7
+		max = 7,
 	},
+
+	----------------------------------------------------------------
+	-- {
+	-- 	icon = E.func_GetItemIconByID(23247),
+	-- 	textleft = E.func_questName(11972)..E.func_texturefromIcon(E.func_GetItemIconByID(35279))..E.func_texturefromIcon(E.func_GetItemIconByID(35280)),
+	-- 	name_save = "LFG", --
+	-- 	reset = "Month",
+	-- 	desc = "HolidaysMidsummerFireFestival",
+	-- 	questID = {
+	-- 		11972, -- both
+	-- 	},
+	-- 	max = 1,
+	-- },
+
+	{
+		icon = E.func_GetItemIconByID(23247),
+		textleft = E.func_questName(11971),
+		name_save = "orgrimmarStormwind", --
+		reset = "Month",
+		desc = "TheSpinnerofSummerTales",
+		questID = {
+			11971, -- horde
+
+			11966,
+			82105,
+			11886,
+		},
+		max = 4,
+	},
+
+
+
+
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -168,7 +201,7 @@ E.OctoTable_UniversalQuest = {
 			47523,
 			82817,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetCurrencyIcon(1166),
@@ -198,7 +231,7 @@ E.OctoTable_UniversalQuest = {
 			72810,
 			86564,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_WorldBoss,
@@ -213,7 +246,7 @@ E.OctoTable_UniversalQuest = {
 			81624,
 			85088,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_WorldBoss,
@@ -229,7 +262,7 @@ E.OctoTable_UniversalQuest = {
 			74892,
 			76367,
 		},
-		max = 3
+		max = 3,
 	},
 	{
 		icon = E.Icon_WorldBoss,
@@ -245,7 +278,7 @@ E.OctoTable_UniversalQuest = {
 			61815,
 			61814,
 		},
-		max = 3
+		max = 3,
 	},
 	{
 		icon = E.Icon_WorldBoss,
@@ -269,7 +302,7 @@ E.OctoTable_UniversalQuest = {
 			56057,
 			56056,
 		},
-		max = 4
+		max = 4,
 	},
 	{
 		icon = E.Icon_WorldBoss,
@@ -294,7 +327,7 @@ E.OctoTable_UniversalQuest = {
 			46948,
 			46945,
 		},
-		max = 2
+		max = 2,
 	},
 	{
 		icon = E.Icon_WorldBoss,
@@ -308,7 +341,7 @@ E.OctoTable_UniversalQuest = {
 			37464,
 			39380,
 		},
-		max = 4
+		max = 4,
 	},
 	{
 		icon = E.Icon_WorldBoss,
@@ -324,7 +357,7 @@ E.OctoTable_UniversalQuest = {
 			32098,
 			32099,
 		},
-		max = 6
+		max = 6,
 	},
 	{
 		icon = E.func_GetCurrencyIcon(1977),
@@ -335,7 +368,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			63949,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetCurrencyIcon(1813),
@@ -349,7 +382,7 @@ E.OctoTable_UniversalQuest = {
 			61983,
 			61984,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -360,7 +393,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64347,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -374,7 +407,7 @@ E.OctoTable_UniversalQuest = {
 			63824,
 			63543,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -385,7 +418,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64273,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetCurrencyIcon(1810),
@@ -407,7 +440,7 @@ E.OctoTable_UniversalQuest = {
 			62868,
 			62869,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(184374),
@@ -433,7 +466,7 @@ E.OctoTable_UniversalQuest = {
 			60256,
 			60257,
 		},
-		max = 2
+		max = 2,
 	},
 	{
 		icon = E.func_GetItemIconByID(137642),
@@ -444,7 +477,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			47148,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetCurrencyIcon(1602),
@@ -455,7 +488,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			71026,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(187551),
@@ -466,7 +499,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64522,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetCurrencyIcon(1931),
@@ -477,7 +510,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			65266,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -488,7 +521,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64575,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -501,7 +534,7 @@ E.OctoTable_UniversalQuest = {
 			64269,
 			64270,
 		},
-		max = 3
+		max = 3,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -515,7 +548,7 @@ E.OctoTable_UniversalQuest = {
 			64472,
 			64456,
 		},
-		max = 4
+		max = 4,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -526,7 +559,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64283,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -537,7 +570,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64247,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -548,7 +581,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64256,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -573,7 +606,7 @@ E.OctoTable_UniversalQuest = {
 			64756,
 			64757,
 		},
-		max = 3
+		max = 3,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -587,7 +620,7 @@ E.OctoTable_UniversalQuest = {
 			64435,
 			64436,
 		},
-		max = 4
+		max = 4,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -615,7 +648,7 @@ E.OctoTable_UniversalQuest = {
 			64564,
 			64565,
 		},
-		max = 18
+		max = 18,
 	},
 	{
 		icon = E.func_GetCurrencyIcon(1880),
@@ -636,7 +669,7 @@ E.OctoTable_UniversalQuest = {
 			62214,
 			62234,
 		},
-		max = 3
+		max = 3,
 	},
 	{
 		icon = E.Icon_Rares,
@@ -673,7 +706,7 @@ E.OctoTable_UniversalQuest = {
 			64152,
 			64439,
 		},
-		max = 23
+		max = 23,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -684,7 +717,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64367,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -695,7 +728,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64061,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -706,7 +739,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64307,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -717,7 +750,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64828,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -728,7 +761,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64027,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -739,7 +772,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64366,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -750,7 +783,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64300,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -761,7 +794,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			64303,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -789,7 +822,7 @@ E.OctoTable_UniversalQuest = {
 			75624,
 			74352,
 		},
-		max = 18
+		max = 18,
 	},
 	{
 		icon = E.Icon_Rares,
@@ -824,7 +857,7 @@ E.OctoTable_UniversalQuest = {
 			75349,
 			75364,
 		},
-		max = 25
+		max = 25,
 	},
 	{
 		icon = E.func_GetItemIconByID(205985),
@@ -835,7 +868,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			75665,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -862,7 +895,7 @@ E.OctoTable_UniversalQuest = {
 			76015,
 			76084,
 		},
-		max = 17
+		max = 17,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -884,7 +917,7 @@ E.OctoTable_UniversalQuest = {
 			75773,
 			76004,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Rares,
@@ -919,7 +952,7 @@ E.OctoTable_UniversalQuest = {
 			74330,
 			74328,
 		},
-		max = 25
+		max = 25,
 	},
 	{
 		icon = E.func_GetItemIconByID(200095),
@@ -930,7 +963,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			70893,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -941,7 +974,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			70866,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -952,7 +985,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			70906,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -963,7 +996,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			73162,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -974,7 +1007,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			66133,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -985,7 +1018,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			74567,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(200224),
@@ -999,7 +1032,7 @@ E.OctoTable_UniversalQuest = {
 			75628,
 			75627,
 		},
-		max = 4
+		max = 4,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1011,7 +1044,7 @@ E.OctoTable_UniversalQuest = {
 			74501,
 			75280,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1022,7 +1055,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			75467,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(200073),
@@ -1048,7 +1081,7 @@ E.OctoTable_UniversalQuest = {
 			80386,
 			80388,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1059,7 +1092,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			76122,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(49623),
@@ -1078,7 +1111,7 @@ E.OctoTable_UniversalQuest = {
 			24549,
 			24748,
 		},
-		max = 9
+		max = 9,
 	},
 	{
 		icon = E.func_GetItemIconByID(92441),
@@ -1095,7 +1128,7 @@ E.OctoTable_UniversalQuest = {
 			32324,
 			32325,
 		},
-		max = 7
+		max = 7,
 	},
 	{
 		icon = 136145,
@@ -1117,7 +1150,7 @@ E.OctoTable_UniversalQuest = {
 			76410,
 			76155,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.func_GetCurrencyIcon(2009),
@@ -1128,7 +1161,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			66042,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Rares,
@@ -1170,7 +1203,7 @@ E.OctoTable_UniversalQuest = {
 			65555,
 			65549,
 		},
-		max = 25
+		max = 25,
 	},
 	{
 		icon = E.Icon_Rares,
@@ -1183,7 +1216,7 @@ E.OctoTable_UniversalQuest = {
 			65586,
 			65587,
 		},
-		max = 3
+		max = 3,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1223,7 +1256,7 @@ E.OctoTable_UniversalQuest = {
 			65417,
 			65231,
 		},
-		max = 3
+		max = 3,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1259,7 +1292,7 @@ E.OctoTable_UniversalQuest = {
 			65565,
 			65175,
 		},
-		max = 36
+		max = 36,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1270,7 +1303,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			65572,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetSpellIcon(393294),
@@ -1286,7 +1319,7 @@ E.OctoTable_UniversalQuest = {
 			69946,
 			69979,
 		},
-		max = 6
+		max = 6,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1299,7 +1332,7 @@ E.OctoTable_UniversalQuest = {
 			65501,
 			65611,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1325,7 +1358,7 @@ E.OctoTable_UniversalQuest = {
 			65314,
 			65319,
 		},
-		max = 50
+		max = 50,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1347,7 +1380,7 @@ E.OctoTable_UniversalQuest = {
 			65209,
 			65215,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Faction,
@@ -1369,7 +1402,7 @@ E.OctoTable_UniversalQuest = {
 			54135,
 			54132,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(173372),
@@ -1383,7 +1416,7 @@ E.OctoTable_UniversalQuest = {
 			55350,
 			57157,
 		},
-		max = 2
+		max = 2,
 	},
 	{
 		icon = E.func_GetItemIconByID(174288),
@@ -1398,7 +1431,7 @@ E.OctoTable_UniversalQuest = {
 			58167,
 			58156,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(164577),
@@ -1410,7 +1443,7 @@ E.OctoTable_UniversalQuest = {
 			53416,
 			53414,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(164577),
@@ -1422,7 +1455,7 @@ E.OctoTable_UniversalQuest = {
 			53955,
 			53992,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(164577),
@@ -1436,7 +1469,7 @@ E.OctoTable_UniversalQuest = {
 			57959,
 			57960,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Rares,
@@ -1496,7 +1529,7 @@ E.OctoTable_UniversalQuest = {
 			54889,
 			54274,
 		},
-		max = 25
+		max = 25,
 	},
 	{
 		icon = E.func_GetItemIconByID(140307),
@@ -1541,7 +1574,7 @@ E.OctoTable_UniversalQuest = {
 			43532,
 			43533,
 		},
-		max = 33
+		max = 33,
 	},
 	{
 		icon = 1450455,
@@ -1555,7 +1588,7 @@ E.OctoTable_UniversalQuest = {
 			45840,
 			45839,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(204682),
@@ -1566,7 +1599,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			75694,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(197921),
@@ -1577,7 +1610,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			66847,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetSpellIcon(343140),
@@ -1588,7 +1621,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			77836,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(209833),
@@ -1599,7 +1632,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			77414,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(215364),
@@ -1610,7 +1643,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			77251,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(208090),
@@ -1621,7 +1654,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			77236,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetCurrencyIcon(2594),
@@ -1645,7 +1678,7 @@ E.OctoTable_UniversalQuest = {
 			76351,
 			76533,
 		},
-		max = 14
+		max = 14,
 	},
 	{
 		icon = E.func_GetItemIconByID(93724),
@@ -1664,7 +1697,7 @@ E.OctoTable_UniversalQuest = {
 			29455,
 			64783,
 		},
-		max = 9
+		max = 9,
 	},
 	{
 		icon = E.func_GetItemIconByID(110560),
@@ -1677,117 +1710,7 @@ E.OctoTable_UniversalQuest = {
 			36567,
 			36614,
 		},
-		max = 3
-	},
-	{
-		icon = E.func_GetItemIconByID(210421),
-		textleft = E.func_questName(78444),
-		name_save = "EmeraldDream_AWorthyAllyDreamWardens",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			78444,
-		},
-		max = 1
-	},
-	{
-		icon = E.func_GetItemIconByID(211394),
-		textleft = E.func_questName(78821),
-		name_save = "EmeraldDream_BloomingDreamseeds",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			78821,
-		},
-		max = 1
-	},
-	{
-		icon = E.func_GetItemIconByID(211389),
-		textleft = E.Timers.DF_Flower()..E.func_questName(78319),
-		name_save = "EmeraldDream_TheSuperbloom",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			78319,
-		},
-		max = 1
-	},
-	{
-		icon = E.Icon_Rares,
-		textleft = "EmeraldDream_Rares",
-		name_save = "EmeraldDream_Rares",
-		reset = "Daily",
-		desc = "Dragonflight",
-		questID = {
-			77942,
-			77867,
-			77862,
-			77878,
-			78015,
-			77846,
-			77982,
-			77944,
-			77864,
-			77989,
-			78211,
-			78213,
-			77941,
-			77943,
-			78210,
-			77940,
-			77570,
-			77890,
-			78212,
-			77863,
-			78263,
-			77994,
-			77990,
-			78214,
-			78039,
-			77859,
-			77856,
-		},
-		max = 27
-	},
-	{
-		icon = E.Icon_Empty,
-		textleft = "EmeraldDream_Treasures",
-		name_save = "EmeraldDream_Treasures",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			77872,
-			77950,
-			78005,
-			78107,
-			78359,
-			77858,
-			78120,
-			78006,
-			78360,
-			78361,
-			78550,
-			78551,
-			78547,
-			78552,
-			78831,
-			78911,
-			78833,
-			78834,
-			78835,
-		},
-		max = 19
-	},
-	{
-		icon = E.func_GetItemIconByID(208396),
-		textleft = E.func_questName(78381),
-		name_save = "EmeraldDream_DreamsUnified",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			78381,
-		},
-		max = 1
+		max = 3,
 	},
 	{
 		icon = E.func_GetItemIconByID(224784),
@@ -1839,7 +1762,7 @@ E.OctoTable_UniversalQuest = {
 			82164,
 			81985,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(224784),
@@ -1851,7 +1774,7 @@ E.OctoTable_UniversalQuest = {
 			82678,
 			82679,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(224784),
@@ -1893,7 +1816,7 @@ E.OctoTable_UniversalQuest = {
 			83357,
 			83366,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(226263),
@@ -1904,7 +1827,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			83240,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(220756),
@@ -1915,7 +1838,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			76586,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(226273),
@@ -1926,7 +1849,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			83333,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -1944,7 +1867,7 @@ E.OctoTable_UniversalQuest = {
 			82414,
 			82531,
 		},
-		max = 2
+		max = 2,
 	},
 	{
 		icon = E.func_GetItemIconByID(227792),
@@ -1955,7 +1878,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			82946,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(237014),
@@ -1974,7 +1897,7 @@ E.OctoTable_UniversalQuest = {
 			83469,
 			83460,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetItemIconByID(227794),
@@ -1985,7 +1908,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			84370,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.func_GetSpellIcon(2575), -- PROFESSION
@@ -2020,7 +1943,7 @@ E.OctoTable_UniversalQuest = {
 			82958,
 			82916,
 		},
-		max = 2
+		max = 2,
 	},
 	{
 		icon = E.func_GetSpellIcon(2575), -- PROFESSION
@@ -2041,7 +1964,7 @@ E.OctoTable_UniversalQuest = {
 			83734,
 			83735,
 		},
-		max = 2
+		max = 2,
 	},
 	{
 		icon = E.func_GetItemIconByID(224172),
@@ -2052,7 +1975,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			86202,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
@@ -2079,7 +2002,7 @@ E.OctoTable_UniversalQuest = {
 			85051,
 			84627,
 		},
-		max = 6
+		max = 6,
 	},
 	{
 		icon = E.func_GetItemIconByID(142307),
@@ -2097,7 +2020,7 @@ E.OctoTable_UniversalQuest = {
 			78590,
 			76338,
 		},
-		max = 8
+		max = 8,
 	},
 	{
 		icon = E.func_GetItemIconByID(142307),
@@ -2124,87 +2047,9 @@ E.OctoTable_UniversalQuest = {
 			80004,
 			80562,
 		},
-		max = 8
+		max = 8,
 	},
-	{
-		icon = E.func_GetItemIconByID(38181), -- https://www.wowhead.com/ptr/storyline/5718
-		textleft = E.func_questName(85884),
-		name_save = "Arthas",
-		reset = "Once",
-		desc = "Storyline",
-		questID = {
-			85884, --1
-			85862,
-			12291, --2
-			12301, --3
-			12305,
-			12478, --4?
-			85885, -- 5 last ?
-			85875, -- 6
-			85878,
-		},
-		max = 9
-	},
-	{
-		icon = E.func_GetItemIconByID(229361), -- https://www.wowhead.com/ptr/storyline/5673
-		textleft = E.func_questName(84371),
-		name_save = "Xal'atath",
-		reset = "Once",
-		desc = "Storyline",
-		questID = {
-			84371,
-			40710,
-			84779,
-			54114,
-			54118,
-			54058,
-			53761,
-			53762,
-			53763,
-			54126,
-			84782,
-			84784,
-			85871,
-			84789,
-		},
-		max = 12
-	},
-	{
-		icon = E.func_GetItemIconByID(152713), -- https://www.wowhead.com/ptr/storyline/5691
-		textleft = E.func_questName(85027),
-		name_save = "Ethereals",
-		reset = "Once",
-		desc = "Storyline",
-		questID = {
-			85027,
-			10339,
-			10384,
-			10385,
-			10406,
-			10408,
-			10437,
-			10439,
-			85029,
-			47203,
-			47218,
-			47217,
-			47219,
-			85028,
-			63976,
-			63977,
-			63979,
-			63980,
-			63982,
-			63983,
-			63984,
-			63985,
-			63855,
-			63895,
-			85035,
-			85036,
-		},
-		max = 26
-	},
+
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -2213,8 +2058,7 @@ E.OctoTable_UniversalQuest = {
 		textleft = "storylineBrokenShoreArmiesofLegionfall",
 		name_save = "storylineBrokenShoreArmiesofLegionfall",
 		reset = "Once",
-		--desc = "Legion",
-		desc = "Storyline",
+		desc = "Legion",
 		questID = {
 			46730,
 			46734,
@@ -2234,15 +2078,14 @@ E.OctoTable_UniversalQuest = {
 			46249,
 			46246,
 		},
-		max = 17
+		max = 17,
 	},
 	{
 		icon = 134400,
 		textleft = "storylineBrokenShoreExcavations",
 		name_save = "storylineBrokenShoreExcavations",
 		reset = "Once",
-		--desc = "Legion",
-		desc = "Storyline",
+		desc = "Legion",
 		questID = {
 			46499,
 			46501,
@@ -2251,15 +2094,14 @@ E.OctoTable_UniversalQuest = {
 			46511,
 			46666,
 		},
-		max = 6
+		max = 6,
 	},
 	{
 		icon = 134400,
 		textleft = "storylineArgusToArgus",
 		name_save = "storylineArgusToArgus",
 		reset = "Once",
-		--desc = "Legion",
-		desc = "Storyline",
+		desc = "Legion",
 		questID = {
 			46734,
 			48507,
@@ -2355,15 +2197,14 @@ E.OctoTable_UniversalQuest = {
 			48560,
 			47654,
 		},
-		max = 93
+		max = 93,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "ZaralekCavernStorylines",
 		name_save = "ZaralekCavernStorylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			72977,
 			72978,
@@ -2433,15 +2274,14 @@ E.OctoTable_UniversalQuest = {
 			75029,
 			75417,
 		},
-		max = 67
+		max = 67,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "DawnoftheInfinitesStorylines",
 		name_save = "DawnoftheInfinitesStorylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76140,
 			76142,
@@ -2452,15 +2292,124 @@ E.OctoTable_UniversalQuest = {
 			76147,
 			76141,
 		},
-		max = 8
+		max = 8,
+	},
+	{
+		icon = E.func_GetItemIconByID(210421),
+		textleft = E.func_questName(78444),
+		name_save = "EmeraldDream_AWorthyAllyDreamWardens",
+		reset = "Weekly",
+		desc = "Dragonflight",
+		questID = {
+			78444,
+		},
+		max = 1,
+	},
+	{
+		icon = E.func_GetItemIconByID(211394),
+		textleft = E.func_questName(78821),
+		name_save = "EmeraldDream_BloomingDreamseeds",
+		reset = "Weekly",
+		desc = "Dragonflight",
+		questID = {
+			78821,
+		},
+		max = 1,
+	},
+	{
+		icon = E.func_GetItemIconByID(211389),
+		textleft = E.Timers.DF_Flower()..E.func_questName(78319),
+		name_save = "EmeraldDream_TheSuperbloom",
+		reset = "Weekly",
+		desc = "Dragonflight",
+		questID = {
+			78319,
+		},
+		max = 1,
+	},
+	{
+		icon = E.Icon_Rares,
+		textleft = "EmeraldDream_Rares",
+		name_save = "EmeraldDream_Rares",
+		reset = "Daily",
+		desc = "Dragonflight",
+		questID = {
+			77942,
+			77867,
+			77862,
+			77878,
+			78015,
+			77846,
+			77982,
+			77944,
+			77864,
+			77989,
+			78211,
+			78213,
+			77941,
+			77943,
+			78210,
+			77940,
+			77570,
+			77890,
+			78212,
+			77863,
+			78263,
+			77994,
+			77990,
+			78214,
+			78039,
+			77859,
+			77856,
+		},
+		max = 27,
+	},
+	{
+		icon = E.Icon_Empty,
+		textleft = "EmeraldDream_Treasures",
+		name_save = "EmeraldDream_Treasures",
+		reset = "Once",
+		desc = "Dragonflight",
+		questID = {
+			77872,
+			77950,
+			78005,
+			78107,
+			78359,
+			77858,
+			78120,
+			78006,
+			78360,
+			78361,
+			78550,
+			78551,
+			78547,
+			78552,
+			78831,
+			78911,
+			78833,
+			78834,
+			78835,
+		},
+		max = 19,
+	},
+	{
+		icon = E.func_GetItemIconByID(208396),
+		textleft = E.func_questName(78381),
+		name_save = "EmeraldDream_DreamsUnified",
+		reset = "Once",
+		desc = "Dragonflight",
+		questID = {
+			78381,
+		},
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_ALL_Storylines",
 		name_save = "EmeraldDream_ALL_Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76982,
 			75918,
@@ -2531,15 +2480,14 @@ E.OctoTable_UniversalQuest = {
 			76282,
 			76283,
 		},
-		max = 68
+		max = 68,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_1Storylines",
 		name_save = "EmeraldDream_1Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76982,
 			75918,
@@ -2549,15 +2497,14 @@ E.OctoTable_UniversalQuest = {
 			75922,
 			75923,
 		},
-		max = 7
+		max = 7,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_2Storylines",
 		name_save = "EmeraldDream_2Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76317,
 			76318,
@@ -2572,15 +2519,14 @@ E.OctoTable_UniversalQuest = {
 			76326,
 			77283,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_3Storylines",
 		name_save = "EmeraldDream_3Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77436,
 			76433,
@@ -2591,15 +2537,14 @@ E.OctoTable_UniversalQuest = {
 			76442,
 			76443,
 		},
-		max = 8
+		max = 8,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_4Storylines",
 		name_save = "EmeraldDream_4Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76403,
 			76342,
@@ -2611,15 +2556,14 @@ E.OctoTable_UniversalQuest = {
 			76347,
 			77178,
 		},
-		max = 9
+		max = 9,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_5Storylines",
 		name_save = "EmeraldDream_5Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76327,
 			76328,
@@ -2634,15 +2578,14 @@ E.OctoTable_UniversalQuest = {
 			76336,
 			76337,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_6Storylines",
 		name_save = "EmeraldDream_6Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76384,
 			76416,
@@ -2656,15 +2599,14 @@ E.OctoTable_UniversalQuest = {
 			76401,
 			76402,
 		},
-		max = 11
+		max = 11,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_7Storylines",
 		name_save = "EmeraldDream_7Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77780,
 			76276,
@@ -2676,15 +2618,14 @@ E.OctoTable_UniversalQuest = {
 			76282,
 			76283,
 		},
-		max = 9
+		max = 9,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "TheGilneasReclamation_Storylines",
 		name_save = "TheGilneasReclamation_Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			78178,
 			78180,
@@ -2700,15 +2641,14 @@ E.OctoTable_UniversalQuest = {
 			78597,
 			79137,
 		},
-		max = 13
+		max = 13,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_ALL_Storylines",
 		name_save = "EmeraldDream_ALL_Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76982,
 			75918,
@@ -2779,15 +2719,14 @@ E.OctoTable_UniversalQuest = {
 			76282,
 			76283,
 		},
-		max = 68
+		max = 68,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_1Storylines",
 		name_save = "EmeraldDream_1Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76982,
 			75918,
@@ -2797,15 +2736,14 @@ E.OctoTable_UniversalQuest = {
 			75922,
 			75923,
 		},
-		max = 7
+		max = 7,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_2Storylines",
 		name_save = "EmeraldDream_2Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76317,
 			76318,
@@ -2820,15 +2758,14 @@ E.OctoTable_UniversalQuest = {
 			76326,
 			77283,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_3Storylines",
 		name_save = "EmeraldDream_3Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77436,
 			76433,
@@ -2839,15 +2776,14 @@ E.OctoTable_UniversalQuest = {
 			76442,
 			76443,
 		},
-		max = 8
+		max = 8,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_4Storylines",
 		name_save = "EmeraldDream_4Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76403,
 			76342,
@@ -2859,15 +2795,14 @@ E.OctoTable_UniversalQuest = {
 			76347,
 			77178,
 		},
-		max = 9
+		max = 9,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_5Storylines",
 		name_save = "EmeraldDream_5Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76327,
 			76328,
@@ -2882,15 +2817,14 @@ E.OctoTable_UniversalQuest = {
 			76336,
 			76337,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_6Storylines",
 		name_save = "EmeraldDream_6Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76384,
 			76416,
@@ -2904,15 +2838,14 @@ E.OctoTable_UniversalQuest = {
 			76401,
 			76402,
 		},
-		max = 11
+		max = 11,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_7Storylines",
 		name_save = "EmeraldDream_7Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77780,
 			76276,
@@ -2924,42 +2857,39 @@ E.OctoTable_UniversalQuest = {
 			76282,
 			76283,
 		},
-		max = 9
+		max = 9,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Sidequests_APassedTorch",
 		name_save = "EmeraldDream_Sidequests_APassedTorch",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77948,
 			77978,
 		},
-		max = 2
+		max = 2,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Sidequests_TroubleattheTree",
 		name_save = "EmeraldDream_Sidequests_TroubleattheTree",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77316,
 			77317,
 			77318,
 		},
-		max = 3
+		max = 3,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Sidequests_ASleepySearch",
 		name_save = "EmeraldDream_Sidequests_ASleepySearch",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77896,
 			77911,
@@ -2967,15 +2897,14 @@ E.OctoTable_UniversalQuest = {
 			77955,
 			77958,
 		},
-		max = 5
+		max = 5,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Sidequests_TheDryadGarden",
 		name_save = "EmeraldDream_Sidequests_TheDryadGarden",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76566,
 			76568,
@@ -2985,15 +2914,14 @@ E.OctoTable_UniversalQuest = {
 			76571,
 			77802,
 		},
-		max = 7
+		max = 7,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Sidequests_TheQonzuQuery",
 		name_save = "EmeraldDream_Sidequests_TheQonzuQuery",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			78065,
 			78163,
@@ -3001,15 +2929,14 @@ E.OctoTable_UniversalQuest = {
 			78162,
 			78066,
 		},
-		max = 5
+		max = 5,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Sidequests_SkyMothersIre",
 		name_save = "EmeraldDream_Sidequests_SkyMothersIre",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			78041,
 			78042,
@@ -3019,15 +2946,14 @@ E.OctoTable_UniversalQuest = {
 			78044,
 			78046,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Sidequests_ACalltoAid",
 		name_save = "EmeraldDream_Sidequests_ACalltoAid",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77662,
 			77739,
@@ -3037,15 +2963,14 @@ E.OctoTable_UniversalQuest = {
 			77674,
 			77675,
 		},
-		max = 7
+		max = 7,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Sidequests_MemoryoftheDreamer",
 		name_save = "EmeraldDream_Sidequests_MemoryoftheDreamer",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77310,
 			77311,
@@ -3054,15 +2979,14 @@ E.OctoTable_UniversalQuest = {
 			77314,
 			77315,
 		},
-		max = 6
+		max = 6,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Sidequests_ADragoninHand",
 		name_save = "EmeraldDream_Sidequests_ADragoninHand",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			76460,
 			76460,
@@ -3074,41 +2998,38 @@ E.OctoTable_UniversalQuest = {
 			76460,
 			76460,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_DreamsUnified",
 		name_save = "EmeraldDream_DreamsUnified",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			78381,
 		},
-		max = 1
+		max = 1,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "EmeraldDream_Seeds",
 		name_save = "EmeraldDream_Seeds",
 		reset = "Weekly",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			77350,
 			77353,
 			77354,
 		},
-		max = 5
+		max = 5,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "TheGilneasReclamation_Storylines",
 		name_save = "TheGilneasReclamation_Storylines",
 		reset = "Once",
-		--desc = "Dragonflight",
-		desc = "Storyline",
+		desc = "Dragonflight",
 		questID = {
 			78178,
 			78180,
@@ -3124,15 +3045,14 @@ E.OctoTable_UniversalQuest = {
 			78597,
 			79137,
 		},
-		max = 13
+		max = 13,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "BASTION_TOTAL",
 		name_save = "BASTION_TOTAL",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			59773,
 			59774,
@@ -3220,15 +3140,14 @@ E.OctoTable_UniversalQuest = {
 			60181,
 			57515,
 		},
-		max = 85
+		max = 85,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "BASTION_ASoulbindInNeed",
 		name_save = "BASTION_ASoulbindInNeed",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			59773,
 			59774,
@@ -3239,15 +3158,14 @@ E.OctoTable_UniversalQuest = {
 			57676,
 			57677,
 		},
-		max = 8
+		max = 8,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "BASTION_TheAspirantsCrucible",
 		name_save = "BASTION_TheAspirantsCrucible",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57709,
 			57710,
@@ -3277,15 +3195,14 @@ E.OctoTable_UniversalQuest = {
 			60229,
 			58174,
 		},
-		max = 27
+		max = 27,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "BASTION_TheTempleofPurity",
 		name_save = "BASTION_TheTempleofPurity",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57270,
 			57977,
@@ -3300,15 +3217,14 @@ E.OctoTable_UniversalQuest = {
 			57269,
 			57447,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "BASTION_ChasingaMemory",
 		name_save = "BASTION_ChasingaMemory",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			58976,
 			58771,
@@ -3322,15 +3238,14 @@ E.OctoTable_UniversalQuest = {
 			60180,
 			60013,
 		},
-		max = 11
+		max = 11,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "BASTION_BytheArchonsWill",
 		name_save = "BASTION_BytheArchonsWill",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			59196,
 			59197,
@@ -3339,15 +3254,14 @@ E.OctoTable_UniversalQuest = {
 			59200,
 			59426,
 		},
-		max = 6
+		max = 6,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "BASTION_TheTempleofCourage",
 		name_save = "BASTION_TheTempleofCourage",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			60005,
 			60006,
@@ -3359,15 +3273,14 @@ E.OctoTable_UniversalQuest = {
 			60054,
 			60055,
 		},
-		max = 9
+		max = 9,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "BASTION_ChampionofPain",
 		name_save = "BASTION_ChampionofPain",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			61096,
 			61107,
@@ -3382,15 +3295,15 @@ E.OctoTable_UniversalQuest = {
 			60181,
 			57515,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "MALDRAXUS_TOTAL",
 		name_save = "MALDRAXUS_TOTAL",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+
+		desc = "Shadowlands",
 		questID = {
 			61096,
 			61107,
@@ -3469,15 +3382,14 @@ E.OctoTable_UniversalQuest = {
 			61715,
 			61716,
 		},
-		max = 76
+		max = 76,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "MALDRAXUS_ChampionofPain",
 		name_save = "MALDRAXUS_ChampionofPain",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			61096,
 			61107,
@@ -3492,15 +3404,14 @@ E.OctoTable_UniversalQuest = {
 			60181,
 			57515,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "MALDRAXUS_HouseoftheChosen",
 		name_save = "MALDRAXUS_HouseoftheChosen",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57514,
 			57516,
@@ -3515,15 +3426,14 @@ E.OctoTable_UniversalQuest = {
 			60461,
 			60886,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "MALDRAXUS_MatronofSpies",
 		name_save = "MALDRAXUS_MatronofSpies",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			58751,
 			59171,
@@ -3536,15 +3446,14 @@ E.OctoTable_UniversalQuest = {
 			59025,
 			59009,
 		},
-		max = 10
+		max = 10,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "MALDRAXUS_HouseofConstructs",
 		name_save = "MALDRAXUS_HouseofConstructs",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57912,
 			57976,
@@ -3562,15 +3471,14 @@ E.OctoTable_UniversalQuest = {
 			57994,
 			60733,
 		},
-		max = 15
+		max = 15,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "MALDRAXUS_HouseofPlagues",
 		name_save = "MALDRAXUS_HouseofPlagues",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			59130,
 			58011,
@@ -3583,15 +3491,14 @@ E.OctoTable_UniversalQuest = {
 			60831,
 			59231,
 		},
-		max = 10
+		max = 10,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "MALDRAXUS_RitualfortheDamned",
 		name_save = "MALDRAXUS_RitualfortheDamned",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			59202,
 			59874,
@@ -3606,15 +3513,14 @@ E.OctoTable_UniversalQuest = {
 			62654,
 			59974,
 		},
-		max = 12
+		max = 12,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "MALDRAXUS_TheEmptyThrone",
 		name_save = "MALDRAXUS_TheEmptyThrone",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			59011,
 			60737,
@@ -3622,15 +3528,15 @@ E.OctoTable_UniversalQuest = {
 			61715,
 			61716,
 		},
-		max = 5
+		max = 5,
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = "ARDENWEAL_DTOTAL",
-		name_save = "ARDENWEAL_DTOTAL",
+		textleft = "ARDENWEALD_TOTAL",
+		name_save = "ARDENWEALD_TOTAL",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+
+		desc = "Shadowlands",
 		questID = {
 			60338,
 			60763,
@@ -3700,15 +3606,14 @@ E.OctoTable_UniversalQuest = {
 			58723,
 			58724,
 		},
-		max = 67
+		max = 67,
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = "ARDENWEAL_WelcometoArdenweald",
-		name_save = "ARDENWEAL_WelcometoArdenweald",
+		textleft = "ARDENWEALD_WelcometoArdenweald",
+		name_save = "ARDENWEALD_WelcometoArdenweald",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			60338,
 			60763,
@@ -3718,15 +3623,14 @@ E.OctoTable_UniversalQuest = {
 			60859,
 			57787,
 		},
-		max = 7
+		max = 7,
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = "ARDENWEAL_AidingTirnaVaal",
-		name_save = "ARDENWEAL_AidingTirnaVaal",
+		textleft = "ARDENWEALD_AidingTirnaVaal",
+		name_save = "ARDENWEALD_AidingTirnaVaal",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57816,
 			57947,
@@ -3740,15 +3644,14 @@ E.OctoTable_UniversalQuest = {
 			57950,
 			57951,
 		},
-		max = 11
+		max = 11,
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = "ARDENWEAL_WaningGrove",
-		name_save = "ARDENWEAL_WaningGrove",
+		textleft = "ARDENWEALD_WaningGrove",
+		name_save = "ARDENWEALD_WaningGrove",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			60600,
 			60624,
@@ -3762,15 +3665,14 @@ E.OctoTable_UniversalQuest = {
 			60724,
 			60519,
 		},
-		max = 11
+		max = 11,
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = "ARDENWEAL_GlitterfallHeights",
-		name_save = "ARDENWEAL_GlitterfallHeights",
+		textleft = "ARDENWEALD_GlitterfallHeights",
+		name_save = "ARDENWEALD_GlitterfallHeights",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			60521,
 			60628,
@@ -3781,15 +3683,14 @@ E.OctoTable_UniversalQuest = {
 			60522,
 			60520,
 		},
-		max = 8
+		max = 8,
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = "ARDENWEAL_ThisIstheWay",
-		name_save = "ARDENWEAL_ThisIstheWay",
+		textleft = "ARDENWEALD_ThisIstheWay",
+		name_save = "ARDENWEALD_ThisIstheWay",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			60738,
 			60764,
@@ -3799,15 +3700,14 @@ E.OctoTable_UniversalQuest = {
 			60901,
 			60905,
 		},
-		max = 7
+		max = 7,
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = "ARDENWEAL_TheFallenTree",
-		name_save = "ARDENWEAL_TheFallenTree",
+		textleft = "ARDENWEALD_TheFallenTree",
+		name_save = "ARDENWEALD_TheFallenTree",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			58473,
 			58480,
@@ -3817,15 +3717,14 @@ E.OctoTable_UniversalQuest = {
 			58488,
 			58524,
 		},
-		max = 7
+		max = 7,
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = "ARDENWEAL_VisionsoftheDreamer",
-		name_save = "ARDENWEAL_VisionsoftheDreamer",
+		textleft = "ARDENWEALD_VisionsoftheDreamer",
+		name_save = "ARDENWEALD_VisionsoftheDreamer",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			60572,
 			58589,
@@ -3835,15 +3734,14 @@ E.OctoTable_UniversalQuest = {
 			60578,
 			58593,
 		},
-		max = 7
+		max = 7,
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = "ARDENWEAL_AwakentheDreamer",
-		name_save = "ARDENWEAL_AwakentheDreamer",
+		textleft = "ARDENWEALD_AwakentheDreamer",
+		name_save = "ARDENWEALD_AwakentheDreamer",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			58714,
 			58719,
@@ -3855,15 +3753,15 @@ E.OctoTable_UniversalQuest = {
 			58723,
 			58724,
 		},
-		max = 9
+		max = 9,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "REVENDRETH_TOTAL",
 		name_save = "REVENDRETH_TOTAL",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+
+		desc = "Shadowlands",
 		questID = {
 			57025,
 			57026,
@@ -3923,15 +3821,14 @@ E.OctoTable_UniversalQuest = {
 			58086,
 			59644,
 		},
-		max = 57
+		max = 57,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "REVENDRETH_WelcometoRevendreth",
 		name_save = "REVENDRETH_WelcometoRevendreth",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57025,
 			57026,
@@ -3943,30 +3840,28 @@ E.OctoTable_UniversalQuest = {
 			58433,
 			56978,
 		},
-		max = 9
+		max = 9,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "REVENDRETH_TheMaster",
 		name_save = "REVENDRETH_TheMaster",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57174,
 			58654,
 			57178,
 			57179,
 		},
-		max = 4
+		max = 4,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "REVENDRETH_TheAccuser",
 		name_save = "REVENDRETH_TheAccuser",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57161,
 			57173,
@@ -3980,15 +3875,14 @@ E.OctoTable_UniversalQuest = {
 			57182,
 			59232,
 		},
-		max = 11
+		max = 11,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "REVENDRETH_ThePenitentHunt",
 		name_save = "REVENDRETH_ThePenitentHunt",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57098,
 			58916,
@@ -4005,15 +3899,14 @@ E.OctoTable_UniversalQuest = {
 			57190,
 			59256,
 		},
-		max = 14
+		max = 14,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "REVENDRETH_TheMadDuke",
 		name_save = "REVENDRETH_TheMadDuke",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			57240,
 			57380,
@@ -4027,15 +3920,14 @@ E.OctoTable_UniversalQuest = {
 			60566,
 			57724,
 		},
-		max = 11
+		max = 11,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "REVENDRETH_PrinceRenathal",
 		name_save = "REVENDRETH_PrinceRenathal",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			59327,
 			57689,
@@ -4044,20 +3936,117 @@ E.OctoTable_UniversalQuest = {
 			57693,
 			57694,
 		},
-		max = 6
+		max = 6,
 	},
 	{
 		icon = E.Icon_Empty,
 		textleft = "REVENDRETH_TheMasterofLies",
 		name_save = "REVENDRETH_TheMasterofLies",
 		reset = "Once",
-		--desc = "Shadowlands",
-		desc = "Storyline",
+		desc = "Shadowlands",
 		questID = {
 			58086,
 			59644,
 		},
-		max = 2
+		max = 2,
 	},
+
+
+
+
+	-- {
+	-- 	icon = E.Icon_Empty,
+	-- 	textleft = "Lorewalking",
+	-- 	name_save = "Lorewalking",
+	-- 	reset = "Once",
+	-- 	desc = "TheWarWithin",
+	-- 	questID = {
+	-- 		90705,
+	-- 	},
+	-- 	max = 1,
+	-- },
+
+
+	{
+		icon = E.func_GetItemIconByID(38181), -- https://www.wowhead.com/ptr/storyline/5718
+		textleft = E.func_questName(85884),
+		name_save = "Lorewalking: Arthas",
+		reset = "Once",
+		desc = "TheWarWithin", -- STORYLINE
+		questID = {
+			85884, --1
+			85862,
+			12291, --2
+			12301, --3
+			12305,
+			12478, --4?
+			85885, -- 5 last ?
+			85875, -- 6
+			85878,
+		},
+		max = 9,
+	},
+	{
+		icon = E.func_GetItemIconByID(229361), -- https://www.wowhead.com/ptr/storyline/5673
+		textleft = E.func_questName(84371),
+		name_save = "Lorewalking: Xal'atath",
+		reset = "Once",
+		desc = "TheWarWithin",
+		questID = {
+			84371,
+			40710,
+			84779,
+			54114,
+			54118,
+			54058,
+			53761,
+			53762,
+			53763,
+			54126,
+			84782,
+			84784,
+			85871,
+			84789,
+		},
+		max = 12,
+	},
+	{
+		icon = E.func_GetItemIconByID(152713), -- https://www.wowhead.com/ptr/storyline/5691
+		textleft = E.func_questName(85027),
+		name_save = "Lorewalking: Ethereals",
+		reset = "Once",
+		desc = "TheWarWithin",
+		questID = {
+			85027,
+			10339,
+			10384,
+			10385,
+			10406,
+			10408,
+			10437,
+			10439,
+			85029,
+			47203,
+			47218,
+			47217,
+			47219,
+			85028,
+			63976,
+			63977,
+			63979,
+			63980,
+			63982,
+			63983,
+			63984,
+			63985,
+			63855,
+			63895,
+			85035,
+			85036,
+		},
+		max = 26,
+	},
+
+
 }
 

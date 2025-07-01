@@ -6,6 +6,7 @@ Octo_EventFrame_WTF:Hide()
 local function InitTable(tbl) return tbl or {} end
 local function InitField(tbl, field, default) if tbl[field] == nil then tbl[field] = default end end
 local function InitSubTable(tbl, field) if tbl[field] == nil then tbl[field] = {} end end
+local wipe = wipe
 
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local curGUID = UnitGUID("player")
@@ -458,7 +459,11 @@ function Octo_EventFrame_WTF:Daily_Reset()
 			end
 
 			CharInfo.STARTTODAY = 0
-			CharInfo.MASLENGO.LFGInstance = {}
+			wipe(CharInfo.MASLENGO.LFGInstance)
+			for _, v in ipairs (E.OctoTable_LFGDungeons) do
+				CharInfo.MASLENGO.LFGInstance[v] = CharInfo.MASLENGO.LFGInstance[v] or {}
+				CharInfo.MASLENGO.LFGInstance[v].donetoday = nil
+			end
 			Octo_ToDo_DB_Other.Holiday = nil
 			Octo_ToDo_DB_Other.professions.DEBUG = nil
 			Octo_ToDo_DB_Other.ActiveHoliday = nil

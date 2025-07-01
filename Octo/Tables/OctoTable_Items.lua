@@ -97,6 +97,7 @@ E.OctoTable_itemID_Ignore_List = {
 	8529,
 }
 E.OctoTable_itemID_ItemsDelete = {
+	[17202] = true,
 	[44792] = true, [6833] = true,
 	[211376] = true, [210737] = true, [210656] = true, [210501] = true, [210434] = true, [210412] = true, [210346] = true, [210049] = true,
 	[209419] = true, [208937] = true, [208825] = true, [208649] = true, [208619] = true, [208396] = true, [208144] = true, [208067] = true,
@@ -172,6 +173,7 @@ E.OctoTable_itemID_Cataloged_Research = {
 	{itemiD = 187335, count = 300},
 }
 E.OctoTable_itemID_ItemsUsable_Other = {
+	35512,
 	32617,
 	29903,
 	29904,

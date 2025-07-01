@@ -3,11 +3,15 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
 function E.Developing()
+
+
 	local index = 0
 	local function GetOrder()
 		index = index + 1
 		return index
 	end
+
+
 	local Developing = {
 		type = "group",
 		childGroups = "tree",
@@ -34,11 +38,6 @@ function E.Developing()
 				type = "execute",
 				name = DELETE.." "..ALL,
 				desc = "Octo_ToDo_DB_Levels  = {}|nOcto_ToDo_DB_Vars = {}",
-
-
-
-
-
 				func = function()
 					Octo_ToDo_DB_Levels = {}
 					Octo_ToDo_DB_Vars = {}
@@ -47,10 +46,6 @@ function E.Developing()
 					Octo_AddonsTable = {}
 					Octo_AddonsManager_DB = {}
 					Octo_DEBUG = {}
-
-
-
-
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -98,7 +93,6 @@ function E.Developing()
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-
 			-------------------------------------------------
 			ReloadHeader3second221542 = {
 				type = "header",
@@ -447,21 +441,11 @@ function E.Developing()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			ReloadHeader3second22 = {
+			Header999 = {
 				type = "header",
 				name = "",
-				order = GetOrder(),
+				order = GetOrder()+999,
 			},
-
-
-
-
-
-
-
-
-			-------------------------------------------------
-			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------
@@ -472,6 +456,70 @@ function E.Developing()
 			-------------------------------------------------
 		},
 	}
+
+
+	local function add_args_recursive(tbl, text)
+		for k, v in next, (tbl) do
+			if type(v) == "table" and type(k) ~= "table" then
+				local order1 = GetOrder()
+				k = tostring(k)
+				Developing.args[k..order1] = {
+					type = "execute",
+					name = k,
+					desc = text.."."..k.." = {}",
+					order = order1,
+					width = E.FULL_WIDTH/4,
+					func = function()
+						-- wipe(tbl[k])
+						print (text..".|cffFF5050"..k .. "|r=", v)
+						fpde(tbl[k])
+						return
+					end,
+				}
+				add_args_recursive(v, k)
+			end
+		end
+	end
+
+	local function add_args(tbl, text)
+		local order2 = GetOrder()
+		Developing.args[text..order2] = {
+			type = "header",
+			name = text,
+			order = order2,
+		}
+
+		local order3 = GetOrder()
+		Developing.args[text..order3] = {
+			type = "execute",
+			name = "|cff4fff79ALL|r",
+			desc = text.." = {}",
+			order = order3,
+			width = E.FULL_WIDTH/4,
+			func = function()
+				wipe(tbl)
+				-- Octo_ToDo_DB_Levels = {}
+				-- print (text.." = {}")
+				-- fpde(tbl)
+				return
+			end,
+		}
+
+		add_args_recursive(tbl, text)
+	end
+
+
+
+
+	-- add_args(Octo_ToDo_DB_Levels, "Octo_ToDo_DB_Levels")
+	add_args(Octo_ToDo_DB_Vars, "Octo_ToDo_DB_Vars")
+	add_args(Octo_ToDo_DB_Other, "Octo_ToDo_DB_Other")
+	add_args(Octo_Achievements_DB, "Octo_Achievements_DB")
+	add_args(Octo_AddonsTable, "Octo_AddonsTable")
+	add_args(Octo_AddonsManager_DB, "Octo_AddonsManager_DB")
+	add_args(Octo_DEBUG, "Octo_DEBUG")
+
+
+
 	return Developing
 end
-
