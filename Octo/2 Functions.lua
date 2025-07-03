@@ -504,8 +504,12 @@ function E.func_hex2rgb(hex)
 end
 ----------------------------------------------------------------
 function E.func_hex2rgbNUMBER(hex)
-	hex = hex:gsub("|cff", "")
-	return tonumber("0x"..hex:sub(1, 2))/255, tonumber("0x"..hex:sub(3, 4))/255, tonumber("0x"..hex:sub(5, 6))/255, 1
+	if hex and hex ~= "" then
+		hex = hex:gsub("|cff", "")
+		return tonumber("0x"..hex:sub(1, 2))/255, tonumber("0x"..hex:sub(3, 4))/255, tonumber("0x"..hex:sub(5, 6))/255, 1
+	else
+		return 1, 1, 1
+	end
 end
 ----------------------------------------------------------------
 function E.func_rgb2hex(r, g, b, a)
@@ -939,18 +943,6 @@ function E.func_CheckReputationFULL(reputationID)
 	local isMajor = IsMajorFaction(reputationID)
 
 	-- Таблица цветов для уровней репутации
-	-- local reactionColors = {
-	--     [0] = "FFFFFF", -- Нейтральный E.White_Color
-	--     [1] = "CC1111", -- Ненависть E.Red_Color
-	--     [2] = "FF0000", -- Враждебность E.Red_Color
-	--     [3] = "FFA600", -- Неприязнь E.Orange_Color
-	--     [4] = "FFFF00", -- Равнодушие E.Yellow_Color
-	--     [5] = "00FF00", -- Дружелюбие E.Yellow_Color
-	--     [6] = "00FF88", -- Уважение E.Green_Color
-	--     [7] = "00FFCC", -- Почет E.Green_Color
-	--     [8] = "00FFFF",  -- Превознесение E.Green_Color
-	-- }
-
 	local reactionColors = {
 		[0] = E.White_Color, -- Нейтральный E.White_Color
 		[1] = E.Red_Color, -- Ненависть E.Red_Color
@@ -1031,6 +1023,105 @@ function E.func_CheckReputationFULL(reputationID)
 	end
 
 	return FIRST, SECOND, vivod, color, standingTEXT
+end
+----------------------------------------------------------------
+function E.func_CheckReputationNEW(reputationID)
+	-- Инициализация переменных по умолчанию
+	local SHOWFULL = false
+	local FIRST, SECOND = 0, 0
+	local vivod = ""
+	local color = E.Pink_Color
+	local standingTEXT = ""
+	local reaction = 0
+
+	-- Получаем данные о репутации
+	local simpleData = GetFactionDataByID(reputationID)
+	local isSimple = simpleData ~= nil
+	local isParagon = IsFactionParagon(reputationID)
+	local friendData = GetFriendshipReputation(reputationID)
+	local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
+	local isMajor = IsMajorFaction(reputationID)
+
+	-- Таблица цветов для уровней репутации
+	local reactionColors = {
+		[0] = E.White_Color, -- Нейтральный E.White_Color
+		[1] = E.Red_Color, -- Ненависть E.Red_Color
+		[2] = E.Red_Color, -- Враждебность E.Red_Color
+		[3] = E.Orange_Color, -- Неприязнь E.Orange_Color
+		[4] = E.Yellow_Color, -- Равнодушие E.Yellow_Color
+		[5] = E.Yellow_Color, -- Дружелюбие E.Yellow_Color
+		[6] = E.Green_Color, -- Уважение E.Green_Color
+		[7] = E.Green_Color, -- Почет E.Green_Color
+		[8] = E.Green_Color, -- Превознесение E.Green_Color
+	}
+
+	-- Обработка простой репутации
+	if isSimple then
+		reaction = simpleData.reaction
+		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+		color = reactionColors[reaction] or E.Pink_Color
+	end
+
+	-- Обработка разных типов репутации
+	if isParagon then
+		-- Репутация Paragon
+		local currentValue, threshold, _, _, tooLowLevelForParagon = GetFactionParagonInfo(reputationID)
+		if threshold then
+			local value = currentValue % threshold
+			color = E.Blue_Color
+			vivod = value.."/"..threshold
+			if tooLowLevelForParagon then
+				vivod = vivod .. E.Red_Color.."*|r"
+			end
+			FIRST, SECOND = value, threshold
+		end
+	elseif isMajor then
+		-- Основные фракции
+		local majorData = GetMajorFactionData(reputationID)
+		if majorData then
+			local currentValue = majorData.renownReputationEarned % majorData.renownLevelThreshold
+			local totalValue = majorData.renownLevelThreshold
+			vivod = currentValue.."/"..totalValue..color.."("..majorData.renownLevel..")|r"
+			FIRST, SECOND = currentValue, totalValue
+		end
+	elseif isFriend then
+		-- Репутация дружбы
+		local standing = friendData.standing or 0
+		local reactionThreshold = friendData.reactionThreshold or 0
+		local nextThreshold = friendData.nextThreshold or 0
+		local currentValue = standing - reactionThreshold
+		local totalValue = nextThreshold - reactionThreshold
+
+		local rankInfo = GetFriendshipReputationRanks(friendData.friendshipFactionID)
+		local currentLevel = rankInfo and rankInfo.currentLevel or 0
+		local maxLevel = rankInfo and rankInfo.maxLevel or 0
+
+		if currentLevel == maxLevel then
+			FIRST, SECOND = currentLevel, maxLevel
+			vivod = FIRST.."/"..SECOND
+		else
+			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
+			FIRST, SECOND = SHOWFULL and standing or currentValue, SHOWFULL and (friendData.maxRep or 0) or totalValue
+			vivod = FIRST.."/"..SECOND..standingTEXT
+		end
+	elseif isSimple and simpleData.currentStanding then
+		-- Обычная репутация
+		local barMin = simpleData.currentReactionThreshold
+		local barMax = simpleData.nextReactionThreshold
+		local barValue = simpleData.currentStanding
+		local currentValue = barValue - barMin
+		local totalValue = barMax - barMin
+
+		if currentValue == totalValue then
+			FIRST, SECOND = 1, 1
+			vivod = standingTEXT
+		else
+			FIRST, SECOND = SHOWFULL and barMin or currentValue,
+						  SHOWFULL and (barMin < 0 and 42000 or barMax) or totalValue
+			vivod = FIRST.."/"..SECOND
+		end
+	end
+	return FIRST.."#"..SECOND.."#"..vivod.."#"..color.."#"..standingTEXT
 end
 ----------------------------------------------------------------
 function E.func_CurrentNumQuests()

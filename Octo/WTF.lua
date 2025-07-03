@@ -28,7 +28,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		azeriteLVL = 0,
 		className = E.className,
 		classFilename = E.classFilename,
-		GUID = curGUID, -- Используем текущий GUID вместо параметра
+		GUID = curGUID,
 		cloak_lvl = 0,
 		cloak_res = 0,
 		classId = 1,
@@ -76,7 +76,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		loginDay = currentDate,
 		loginHour = currentTime,
 		Chromie_canEnter = false,
-		time = ServerTime,
 		UnitLevel = 1,
 		Money = 0,
 		totalSlots = 0,
@@ -102,6 +101,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	-- Оптимизация: предварительно инициализируем таблицы
 	local MASLENGO_DEFAULTS = {
 		reputationFULL = {},
+		reputationNEW = {},
 		CurrencyID = {},
 		CurrencyID_totalEarned = {},
 		CurrencyID_Total = {},
@@ -121,11 +121,11 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			[1] = {[1] = 0, [2] = 0},
 			[2] = {[1] = 0, [2] = 0},
 			[3] = {[1] = 0, [2] = 0},
-			[4] = {[1] = 0, [2] = 0}
+			[4] = {[1] = 0, [2] = 0},
 		},
 		journalInstance = {},
 		SavedWorldBoss = {},
-		LFGInstance = {}
+		LFGInstance = {},
 	}
 
 	-- Инициализация GreatVault
@@ -134,7 +134,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			progress = 0,
 			threshold = 0,
 			hyperlink_STRING = 0,
-			type = ""
+			type = "",
 		}
 	end
 
@@ -147,9 +147,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		for k, v in next, (defaults) do
 			InitField(CharInfo, k, v)
 		end
-		CharInfo.GUID = GUID -- Перезаписываем GUID для текущего персонажа
 
-		-- Инициализация MoneyOnLogin
+		CharInfo.time = CharInfo.time or CharInfo.tmstp_Daily or ServerTime
+		CharInfo.GUID = GUID -- Перезаписываем GUID для текущего персонажа
 		CharInfo.MoneyOnLogin = CharInfo.MoneyOnLogin or CharInfo.Money
 
 		-- Инициализация MASLENGO таблиц
@@ -193,8 +193,155 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				end
 			end
 		end
+
+		-- Перенос и очистка данных
+		local tablesToProcess = {
+			ItemsInBag = {cleanZeros = true},
+			LFGInstance = {cleanZeros = false},
+			GreatVault = {cleanZeros = false},
+			PVP = {cleanZeros = false},
+			journalInstance = {cleanZeros = false},
+			CurrencyID = {cleanZeros = true},
+			CurrencyID_Total = {cleanZeros = true},
+			CurrencyID_totalEarned = {cleanZeros = true},
+			professions = {cleanZeros = false},
+			OctoTable_QuestID = {cleanZeros = false},
+			reputationID = {specialHandler = function(sourceTable, target)
+				for repID, value in next, (sourceTable) do
+					target.reputationFULL[repID] = target.reputationFULL[repID] or {}
+					target.reputationFULL[repID].standingTEXT = value
+				end
+			end}
+		}
+
+		for tableName, options in next, (tablesToProcess) do
+			local sourceTable = CharInfo[tableName]
+			if sourceTable then
+				-- Переносим таблицу
+				MASLENGO[tableName] = sourceTable
+				CharInfo[tableName] = nil
+
+				-- Обработка специальных случаев
+				if options.specialHandler then
+					options.specialHandler(sourceTable, MASLENGO)
+					MASLENGO[tableName] = nil -- Удаляем после обработки, если нужно
+				elseif options.cleanZeros and type(sourceTable) == "table" then
+					for k, v in next, (sourceTable) do
+						if type(v) == "number" and v == 0 then
+							sourceTable[k] = nil
+						end
+					end
+				end
+			end
+		end
+		if CharInfo.MASLENGO.reputationFULL and CharInfo.MASLENGO.reputationNEW then
+			for k, v in pairs(CharInfo.MASLENGO.reputationFULL) do
+				local FIRST = v.FIRST or 0
+				local SECOND = v.SECOND or 0
+				local vivod = v.vivod or "|cffFF00000/0|r"
+				local color = v.color or "|cffFF0000"
+				local standingTEXT = v.standingTEXT or ""
+				CharInfo.MASLENGO.reputationNEW[k] = FIRST.."#"..SECOND.."#"..vivod.."#"..color.."#"..standingTEXT
+			end
+		end
+
+
+		for k, v in next, (CharInfo) do
+			if type(v) ~= "table" then
+				-- if k and strfind(k, "Octopussy_", 1, true) then
+				if k and k:find("Octopussy_", 1, true) then -- это используется для МЕЧИНГА (4ый параметр true не учитывает регулярные выражения для ускорения поиска)
+					CharInfo[k] = nil
+				end
+			end
+		end
+
+
+		local tablesToDelete = {
+			"bounty_BfA2_questID",
+			"bounty_BfA1_end",
+			"bounty_BfA3_icon",
+			"bounty_Legion2_icon",
+			"bounty_Legion1_end",
+			"bounty_BfA3_questID",
+			"bounty_BfA2_end",
+			"bounty_BfA1_questID",
+			"bounty_BfA3_end",
+			"bounty_BfA2_icon",
+			"bounty_Legion3",
+			"bounty_Legion1",
+			"bounty_Legion3_icon",
+			"bounty_Legion2",
+			"bounty_Legion1_icon",
+			"bounty_BfA2",
+			"bounty_Legion1_questID",
+			"bounty_Legion3_questID",
+			"bounty_Legion2_end",
+			"bounty_BfA1_icon",
+			"bounty_BfA3",
+			"bounty_BfA1",
+			"bounty_Legion3_end",
+			"bounty_Legion2_questID",
+			"CurrencyID_trackedQuantity",
+			"STARTWEEK",
+			"DreamsurgeInvestigation",
+
+		}
+
+
+		for _, key in ipairs(tablesToDelete) do
+			if CharInfo[key] ~= nil then
+				CharInfo[key] = nil
+			end
+		end
+
+
+
+		-- CharInfo.MASLENGO.CovenantAndAnima = {
+		-- 	[1] = {[1] = 5, [2] = 5},
+		-- 	[2] = {[1] = 5, [2] = 5},
+		-- 	[3] = {[1] = 5, [2] = 5},
+		-- 	[4] = {[1] = 5, [2] = 5},
+		-- }
+
+
+		if CharInfo.curCovID and CharInfo.MASLENGO.CovenantAndAnima and CharInfo.MASLENGO.CovenantAndAnima.curCovID ~= CharInfo.curCovID then
+			CharInfo.MASLENGO.CovenantAndAnima.curCovID = CharInfo.curCovID
+			CharInfo.curCovID = nil
+		end
+
+
+
+
+
+
+
+
+		-- CreateTable/TableCreate -- ПОГУГЛИТЬ ПОФИКСИТЬ
+		if CharInfo.Shadowland then
+			CharInfo.MASLENGO.CovenantAndAnima[1] = {CharInfo.Shadowland[1], CharInfo.Shadowland[2]}
+			CharInfo.MASLENGO.CovenantAndAnima[2] = {CharInfo.Shadowland[3], CharInfo.Shadowland[4]}
+			CharInfo.MASLENGO.CovenantAndAnima[3] = {CharInfo.Shadowland[5], CharInfo.Shadowland[6]}
+			CharInfo.MASLENGO.CovenantAndAnima[4] = {CharInfo.Shadowland[7], CharInfo.Shadowland[8]}
+			CharInfo.Shadowland = nil
+		end
 	end
 end
+
+
+do
+		local myText = "QWEQWE#123124#привет###6"
+		-- local one, two, three = strsplit("#", myText) -- в глобал обращается
+		local one, two, three, four, five, six = ("#"):split(myText) -- сразу из памяти
+		local vivod = tonumber(four) or 0
+		print (one, two, three, four, five, six, vivod)
+end
+
+
+
+
+
+
+
 
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars = InitTable(Octo_ToDo_DB_Vars)
@@ -494,7 +641,6 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 			CharInfo.MASLENGO.SavedWorldBoss = {}
 			CharInfo.RIO_weeklyBest = 0
 			CharInfo.MASLENGO.GreatVault = {}
-			CharInfo.STARTWEEK = 0
 
 			-- Сброс еженедельных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
@@ -566,3 +712,4 @@ function Octo_EventFrame_WTF:VARIABLES_LOADED()
 		end
 	end
 end
+

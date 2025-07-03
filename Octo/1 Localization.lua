@@ -220,6 +220,7 @@ if L then
 	L["Player level"] = true
 	L["Player MAX level"] = true
 	L["Only Current Realm"] = true
+	L["Daily quests"] = true
 end
 
 -- Russian localization
@@ -442,4 +443,5 @@ if L then
 	L["Player level"] = "Мин. уровень"
 	L["Player MAX level"] = "Макс. уровень"
 	L["Only Current Realm"] = "Только текущий сервер"
+	L["Daily quests"] = "Ежедневные задания"
 end

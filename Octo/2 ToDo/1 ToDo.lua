@@ -192,10 +192,10 @@ local func_OnAcquiredCENT do
 				f:RegisterForClicks("LeftButtonUp")
 
 				-- Reputation texture
-				f.ReputTexture = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-				f.ReputTexture:SetPoint("LEFT")
-				f.ReputTexture:SetHeight(AddonHeight)
-				f.ReputTexture:SetTexture(TEXTURE_PATH)
+				f.ReputTextureAndBg = f:CreateTexture(nil, "BACKGROUND", nil, -2)
+				f.ReputTextureAndBg:SetPoint("LEFT")
+				f.ReputTextureAndBg:SetHeight(AddonHeight)
+				f.ReputTextureAndBg:SetTexture(TEXTURE_PATH)
 
 				-- Current character texture
 				f.curCharTexture = f:CreateTexture(nil, "BACKGROUND", nil, -2)
@@ -270,7 +270,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 		current:Show()
 		current.curCharTexture:Show()
 		current.textCENT:SetText("")
-		current.ReputTexture:Hide()
+		current.ReputTextureAndBg:Hide()
 	end
 
 	-- Process right frame data
@@ -282,24 +282,33 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			local textCENT = frameData.textCENT[i]
 			local FIRST = frameData.FIRST[i]
 			local SECOND = frameData.SECOND[i]
-			local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.color[i])
+
+			secondFrame.ReputTextureAndBg:Hide()
+
+			if frameData.color[i] then
+				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.color[i])
+				if not frameData.isRep then
+					secondFrame.ReputTextureAndBg:SetWidth(AddonCentralFrameWeight)
+					secondFrame.ReputTextureAndBg:Show()
+					secondFrame.ReputTextureAndBg:SetVertexColor(r1, g1, b1, E.bgCaOverlay)
+				else
+					secondFrame.ReputTextureAndBg:SetVertexColor(r1, g1, b1, .3)
+				end
+			end
 
 			secondFrame.textCENT:SetText(textCENT)
-			secondFrame.ReputTexture:SetVertexColor(r1, g1, b1, 0.3)
-
-			if FIRST == 0 then
-				secondFrame.ReputTexture:SetWidth(0.1)
-				secondFrame.ReputTexture:Hide()
-			elseif FIRST == SECOND then
-				secondFrame.ReputTexture:SetWidth(AddonCentralFrameWeight)
-				secondFrame.ReputTexture:Show()
-			elseif FIRST >= 1 then
-				secondFrame.ReputTexture:SetWidth(AddonCentralFrameWeight/SECOND*FIRST)
-				secondFrame.ReputTexture:Show()
+			if frameData.isRep and FIRST ~= 0 then
+				if FIRST == SECOND then
+					secondFrame.ReputTextureAndBg:SetWidth(AddonCentralFrameWeight)
+					secondFrame.ReputTextureAndBg:Show()
+				elseif FIRST >= 1 then
+					secondFrame.ReputTextureAndBg:SetWidth(AddonCentralFrameWeight/SECOND*FIRST)
+					secondFrame.ReputTextureAndBg:Show()
+				end
 			end
 		else
 			secondFrame.textCENT:SetText("")
-			secondFrame.ReputTexture:SetVertexColor(0, 0, 0, 0)
+			secondFrame.ReputTextureAndBg:SetVertexColor(0, 0, 0, 0)
 		end
 
 		secondFrame:Show()
@@ -515,14 +524,14 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 				textCENT = {},
 				color = {},
 				icon = select(2, OctoTable_func_otrisovkaLEFT[i]()),
-				tooltip = {}
+				tooltip = {},
+				isRep = false,
 			}
 
 			for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
 				zxc.FIRST[CharIndex] = 0
 				zxc.SECOND[CharIndex] = 0
-				zxc.textCENT[CharIndex], zxc.tooltip[CharIndex] = func(CharInfo)
-				zxc.color[CharIndex] = E.Red_Color
+				zxc.textCENT[CharIndex], zxc.tooltip[CharIndex], zxc.color[CharIndex] = func(CharInfo)
 			end
 
 			DataProvider:Insert({
@@ -530,7 +539,7 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 				zxc = zxc,
 				currentChar = MyCharIndex,
 				totalPers = totalPers,
-				color = select(3, OctoTable_func_otrisovkaLEFT[i]())
+				color = select(3, OctoTable_func_otrisovkaLEFT[i]()),
 			})
 		end
 	else
@@ -560,16 +569,18 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 							color = {},
 							standingTEXT = {},
 							icon = repInfo.icon or E.Icon_Empty,
-							tooltip = {}
+							tooltip = {},
+							isRep = true,
 						}
 
 						for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
-							local repData = CharInfo.MASLENGO.reputationFULL[v.id]
-							zxc.FIRST[CharIndex] = repData.FIRST or 0
-							zxc.SECOND[CharIndex] = repData.SECOND or 0
-							zxc.textCENT[CharIndex] = repData.vivod or ""
-							zxc.color[CharIndex] = repData.color or "000000"
-							zxc.standingTEXT[CharIndex] = repData.standingTEXT or ""
+							local FIRST, SECOND, vivod, color, standingTEXT = ("#"):split(CharInfo.MASLENGO.reputationNEW[v.id])
+
+							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
+							zxc.SECOND[CharIndex] = tonumber(SECOND) or 0
+							zxc.textCENT[CharIndex] = vivod or "vivod"
+							zxc.color[CharIndex] = (color or "000000")
+							zxc.standingTEXT[CharIndex] = standingTEXT or ""
 						end
 
 						groupNodeFirst:Insert({
@@ -799,6 +810,36 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 				self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			end
 			if level == 1 then
+
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = "Show all"
+				info.icon = false
+				info.hasArrow = nil
+				info.func = function(_, _, _, checked)
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.isShownPLAYER = true
+					end
+					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				----------------
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = "Hide all"
+				info.icon = false
+				info.hasArrow = nil
+				info.func = function(_, _, _, checked)
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.isShownPLAYER = false
+					end
+					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+
+
+
+
 				----------------
 				self:ddAddSeparator(level)
 				info.fontObject = OctoFont11
@@ -855,34 +896,6 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 				info.checked = Octo_ToDo_DB_Vars.Reputations
 				info.func = function(_, _, _, checked)
 					Octo_ToDo_DB_Vars.Reputations = checked
-					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
-				end
-				self:ddAddButton(info, level)
-				----------------
-				self:ddAddSeparator(level)
-				----------------
-				info.keepShownOnClick = false
-				info.notCheckable = true
-				info.text = "Show all"
-				info.icon = false
-				info.hasArrow = nil
-				info.func = function(_, _, _, checked)
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.isShownPLAYER = true
-					end
-					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
-				end
-				self:ddAddButton(info, level)
-				----------------
-				info.keepShownOnClick = false
-				info.notCheckable = true
-				info.text = "Hide all"
-				info.icon = false
-				info.hasArrow = nil
-				info.func = function(_, _, _, checked)
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.isShownPLAYER = false
-					end
 					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)

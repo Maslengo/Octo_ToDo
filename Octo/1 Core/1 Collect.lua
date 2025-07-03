@@ -502,11 +502,8 @@ function E.Collect_All_Reputations()
 			for i, v in ipairs(tbl) do
 				local reputationID = v.id
 				collect.MASLENGO.reputationFULL[reputationID] = collect.MASLENGO.reputationFULL[reputationID] or {}
-				local FIRST = select(1, E.func_CheckReputationFULL(reputationID))
-				local SECOND = select(2, E.func_CheckReputationFULL(reputationID))
-				local vivod = select(3, E.func_CheckReputationFULL(reputationID))
-				local color = select(4, E.func_CheckReputationFULL(reputationID))
-				local standingTEXT = select(5, E.func_CheckReputationFULL(reputationID))
+				local FIRST, SECOND, vivod, color, standingTEXT = E.func_CheckReputationFULL(reputationID)
+
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.MASLENGO.reputationFULL[reputationID] = CharInfo.MASLENGO.reputationFULL[reputationID] or {}
@@ -524,6 +521,20 @@ function E.Collect_All_Reputations()
 					collect.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
 				end
 				-- collect.MASLENGO.reputationFULL[reputationID].name = v.name
+			end
+		end
+		----------------------------------------------------------------
+		for index, tbl in ipairs(E.OctoTable_Reputations) do
+			for i, v in ipairs(tbl) do
+				local reputationID = v.id
+
+				if C_Reputation.IsAccountWideReputation(reputationID) then
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.reputationNEW[reputationID] = E.func_CheckReputationNEW(reputationID)
+					end
+				else
+					collect.MASLENGO.reputationNEW[reputationID] = E.func_CheckReputationNEW(reputationID)
+				end
 			end
 		end
 		----------------------------------------------------------------

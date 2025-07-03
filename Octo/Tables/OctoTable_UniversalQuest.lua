@@ -167,21 +167,49 @@ E.OctoTable_UniversalQuest = {
 	-- 	max = 1,
 	-- },
 
+	-- {
+	-- 	icon = E.func_GetItemIconByID(23247),
+	-- 	textleft = E.func_questName(11971),
+	-- 	name_save = "orgrimmarStormwind", --
+	-- 	reset = "Month",
+	-- 	desc = "TheSpinnerofSummerTales",
+	-- 	questID = {
+	-- 		11971, -- horde
+
+	-- 		11966, -- horde
+	-- 		82105, -- horde
+
+
+	-- 		11964, -- ally
+	-- 		82087, -- ally
+
+	-- 		11886, -- BOTH
+
+
+
+	-- 	},
+	-- 	max = 4,
+	-- },
+
+
+
 	{
 		icon = E.func_GetItemIconByID(23247),
-		textleft = E.func_questName(11971),
-		name_save = "orgrimmarStormwind", --
-		reset = "Month",
+		textleft = L["Daily quests"],
+		name_save = "orgrimmarStormwindDAILY", --
+		reset = "Daily",
 		desc = "TheSpinnerofSummerTales",
 		questID = {
-			11971, -- horde
+			82109, -- daily horde
+			11925, -- daily horde
 
-			11966,
-			82105,
-			11886,
+			-- 82080, -- daily ally
+			-- 11924, -- daily ally
 		},
-		max = 4,
+		max = 2,
 	},
+
+
 
 
 
@@ -4046,6 +4074,22 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 26,
 	},
+
+	{
+		icon = E.func_GetItemIconByID(245589),
+		textleft = E.Timers.Treasure_Goblin(),
+		name_save = "TreasureGoblin",
+		reset = "Once",
+		desc = "HolidaysAGreedyEmissary",
+		questID = {
+			76215,
+		},
+		max = 1,
+	},
+
+
+
+
 
 
 }

@@ -126,9 +126,60 @@ function E.Timers.Daily_Reset()
 	return timerText..E.Gray_Color.."Daily Reset|r"
 end
 
--- Other Timers
+
+local spawns = {
+	{mapId = 2112, name="в Вальдракене"},
+	{mapId = 84, name="в Штормграде"},
+	{mapId = 2022, name="на Берегах Пробуждения"},
+	{mapId = 85, name="в Оргриммаре"},
+	{mapId = 2023, name="на Равнинах Он'ары"},
+	{mapId = 84, name="в Штормграде"},
+	{mapId = 2024, name="в Лазурном Просторе"},
+	{mapId = 85, name="в Оргриммаре"},
+	{mapId = 2025, name="в Тальдразусе"},
+	{mapId = 84, name="в Штормграде"},
+	{mapId = 2112, name="в Вальдракене"},
+	{mapId = 85, name="в Оргриммаре"},
+	{mapId = 2022, name="на Берегах Пробуждения"},
+	{mapId = 84, name="в Штормграде"},
+	{mapId = 2023, name="на Равнинах Он'ары"},
+	{mapId = 85, name="в Оргриммаре"},
+	{mapId = 2024, name="в Лазурном Просторе"},
+	{mapId = 84, name="в Штормграде"},
+	{mapId = 2025, name="в Тальдразусе"},
+	{mapId = 85, name="в Оргриммаре"}
+}
+
 function E.Timers.Treasure_Goblin()
-	return CreateTimer(1685001600, 1800, 300, E.Red_Color, E.Green_Color)
+	local offset = 1675076400 -- = time({year=2023,month=1,day=30,hour=12})
+	local interval = 1800 -- 30 минут в секундах
+	local portal_delay = 1500 -- 25 минут в секундах
+
+	local current_time = time()
+	local elapsed = current_time - offset
+	local cycle_position = elapsed / interval
+	local cycle_remainder = (math.floor(cycle_position) - cycle_position + 1) * interval
+	local next_index = (math.ceil(cycle_position) - 1) % #spawns + 1
+
+	local spawn = spawns[next_index]
+	local next_location = spawn.name
+
+	local time_until_portal = cycle_remainder
+	local time_until_goblin = time_until_portal - portal_delay
+
+	local message, location
+	if time_until_portal < portal_delay then
+		local s, f = SecondsToTimeAbbrev(time_until_portal)
+		-- message = "|cff1abc9cПортал появится через " .. s:format(f)
+		location = next_location
+	else
+		local t, f = SecondsToTimeAbbrev(time_until_goblin)
+		-- message = "|cffe74c3cГоблин появится через " .. t:format(f)
+		location = spawns[next_index == 1 and #spawns or next_index - 1].name
+	end
+
+	local vivod = --[[message .. " " .. ]]next_location .. " -> " .. location
+	return CreateTimer(1675076400, 1800, 300, E.Red_Color, E.Green_Color) .. vivod
 end
 
 function E.Timers.ElementalStorm()
@@ -146,68 +197,69 @@ end
 -- Removed BfA_Warfront as it had print statements and unclear functionality
 
 -- function E.Timers.BfA_Warfront()
--- 	-- Arathi Highlands
--- 	--/dump C_ContributionCollector.GetName(116) -- Alliance
--- 	--/dump C_ContributionCollector.GetState(116) -- Alliance
--- 	--/dump C_ContributionCollector.GetName(11) -- Horde
--- 	--/dump C_ContributionCollector.GetState(11) -- Horde
--- 	-- Darkshores
--- 	--/dump C_ContributionCollector.GetName(117) -- Alliance
--- 	--/dump C_ContributionCollector.GetState(117) -- Alliance
--- 	--/dump C_ContributionCollector.GetName(118) -- Horde
--- 	--/dump C_ContributionCollector.GetState(118) -- Horde
--- 	local warfronts = {
--- 		-- Arathi Highlands
--- 		{
--- 			Alliance = 116,
--- 			Horde = 11,
--- 		},
--- 		-- Darkshores
--- 		{
--- 			Alliance = 117,
--- 			Horde = 118,
--- 		},
--- 	}
--- 	local vivod = ""
--- 	for _, warfront in ipairs(warfronts) do
--- 		local contributionID = warfront[E.curFaction]
--- 		local contributionName = C_ContributionCollector.GetName(contributionID)
--- 		local state, stateAmount, timeOfNextStateChange = C_ContributionCollector.GetState(contributionID)
--- 		local stateName = C_ContributionCollector.GetContributionAppearance(contributionID, state or 0).stateName
--- 		--if state == 4 then
--- 		--	-- captured
--- 		--	state, stateAmount, timeOfNextStateChange = C_ContributionCollector.GetState(warfront[E.oppositeFaction])
--- 		--	stateName = format("%s (%s)", stateName, C_ContributionCollector.GetContributionAppearance(contributionID, state or 0).stateName)
--- 		--end
--- 		if state == 2 and timeOfNextStateChange then
--- 			-- attacking
--- 			-- rest time available
--- 			vivod = vivod .. E.WOW_Poor_Color..("1)   "..contributionName.." ~ "..SecondsToTime(timeOfNextStateChange - GetServerTime()) ).."|r|n"
--- 			vivod = vivod .. E.WOW_Common_Color..("2)   "..stateName.." ~ "..date("%m/%d %H:%M", timeOfNextStateChange) ).."|r|n"
--- 		elseif state == 2 then
--- 			-- rest time not available
--- 			local expectTime = 7 * 24 * 60 * 60 -- 7 days
--- 			vivod = vivod .. E.WOW_Uncommon_Color..("3)   "..contributionName.." ~ ".."100%" ).."|r|n"
--- 			vivod = vivod .. E.WOW_Rare_Color..("4)   "..stateName.." ~ "..date("~ %m/%d %H:00", expectTime + GetServerTime()) ).."|r|n"
--- 		elseif stateAmount then
--- 			-- contributing
--- 			-- contribute amount available
--- 			local expectTime = (1 - stateAmount) * 7 * 24 * 60 * 60 -- 7 days
--- 			local hour = expectTime / 60 / 60
--- 			local day = floor(hour / 24)
--- 			hour = hour - day * 24
--- 			local expectTimeText
--- 			if day > 0 then
--- 				expectTimeText = format("%d %d", day, hour)
--- 			else
--- 				expectTimeText = format("%d", hour)
--- 			end
--- 			vivod = vivod .. E.WOW_Epic_Color..("5)   "..contributionName.." ~ "..format("%.2f%% (%s)", stateAmount * 100, expectTimeText) ).."|r|n"
--- 			vivod = vivod .. E.WOW_Legendary_Color..("6)   "..stateName.." ~ "..date("~ %m/%d %H:00", expectTime + GetServerTime()) ).."|r|n"
--- 		else
--- 			-- contribute amount not available
--- 			vivod = vivod .. E.Venthyr_Color..("7)   "..contributionName.." ~ "..stateName ).."|r|n"
--- 		end
--- 		print (vivod)
--- 	end
+--     -- Arathi Highlands
+--     --/dump C_ContributionCollector.GetName(116) -- Alliance
+--     --/dump C_ContributionCollector.GetState(116) -- Alliance
+--     --/dump C_ContributionCollector.GetName(11) -- Horde
+--     --/dump C_ContributionCollector.GetState(11) -- Horde
+--     -- Darkshores
+--     --/dump C_ContributionCollector.GetName(117) -- Alliance
+--     --/dump C_ContributionCollector.GetState(117) -- Alliance
+--     --/dump C_ContributionCollector.GetName(118) -- Horde
+--     --/dump C_ContributionCollector.GetState(118) -- Horde
+--     local warfronts = {
+--         -- Arathi Highlands
+--         {
+--             Alliance = 116,
+--             Horde = 11,
+--         },
+--         -- Darkshores
+--         {
+--             Alliance = 117,
+--             Horde = 118,
+--         },
+--     }
+--     local vivod = ""
+--     for _, warfront in ipairs(warfronts) do
+--         local contributionID = warfront[E.curFaction]
+--         local contributionName = C_ContributionCollector.GetName(contributionID)
+--         local state, stateAmount, timeOfNextStateChange = C_ContributionCollector.GetState(contributionID)
+--         local stateName = C_ContributionCollector.GetContributionAppearance(contributionID, state or 0).stateName
+--         --if state == 4 then
+--         --    -- captured
+--         --    state, stateAmount, timeOfNextStateChange = C_ContributionCollector.GetState(warfront[E.oppositeFaction])
+--         --    stateName = format("%s (%s)", stateName, C_ContributionCollector.GetContributionAppearance(contributionID, state or 0).stateName)
+--         --end
+--         if state == 2 and timeOfNextStateChange then
+--             -- attacking
+--             -- rest time available
+--             vivod = vivod .. E.WOW_Poor_Color..("1)   "..contributionName.." ~ "..SecondsToTime(timeOfNextStateChange - GetServerTime()) ).."|r|n"
+--             vivod = vivod .. E.WOW_Common_Color..("2)   "..stateName.." ~ "..date("%m/%d %H:%M", timeOfNextStateChange) ).."|r|n"
+--         elseif state == 2 then
+--             -- rest time not available
+--             local expectTime = 7 * 24 * 60 * 60 -- 7 days
+--             vivod = vivod .. E.WOW_Uncommon_Color..("3)   "..contributionName.." ~ ".."100%" ).."|r|n"
+--             vivod = vivod .. E.WOW_Rare_Color..("4)   "..stateName.." ~ "..date("~ %m/%d %H:00", expectTime + GetServerTime()) ).."|r|n"
+--         elseif stateAmount then
+--             -- contributing
+--             -- contribute amount available
+--             local expectTime = (1 - stateAmount) * 7 * 24 * 60 * 60 -- 7 days
+--             local hour = expectTime / 60 / 60
+--             local day = floor(hour / 24)
+--             hour = hour - day * 24
+--             local expectTimeText
+--             if day > 0 then
+--                 expectTimeText = format("%d %d", day, hour)
+--             else
+--                 expectTimeText = format("%d", hour)
+--             end
+--             vivod = vivod .. E.WOW_Epic_Color..("5)   "..contributionName.." ~ "..format("%.2f%% (%s)", stateAmount * 100, expectTimeText) ).."|r|n"
+--             vivod = vivod .. E.WOW_Legendary_Color..("6)   "..stateName.." ~ "..date("~ %m/%d %H:00", expectTime + GetServerTime()) ).."|r|n"
+--         else
+--             -- contribute amount not available
+--             vivod = vivod .. E.Venthyr_Color..("7)   "..contributionName.." ~ "..stateName ).."|r|n"
+--         end
+--         print (vivod)
+--     end
 -- end
+

@@ -263,7 +263,7 @@ function E:func_Otrisovka()
 				for _, v in ipairs(E.OctoTable_UniversalQuest) do
 					if expDATA.nameShort == v.desc then
 						tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-								local textCENT, tooltip, colorCENT = " ", {}, nil
+								local textCENT, tooltip, colorCENT = "", {}, nil
 								if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 									textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 								end
@@ -286,7 +286,7 @@ function E:func_Otrisovka()
 		Universal(11)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.CurrentKeyName and CharInfo.CurrentKeyName ~= 0 then
 					tooltip[#tooltip+1] = {E.func_RIOColor(CharInfo.RIO_Score)..CharInfo.CurrentKeyLevel.." "..CharInfo.CurrentKeyName.."|r", ""}
 				end
@@ -332,7 +332,7 @@ function E:func_Otrisovka()
 		Universal(10)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[209856] ~= nil then
 					textCENT = textCENT..E.WOW_Epic_Color..CharInfo.MASLENGO.ItemsInBag[209856].."|r"
 				end
@@ -344,7 +344,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[207002] ~= nil then
 					textCENT = E.WOW_Rare_Color..CharInfo.MASLENGO.ItemsInBag[207002].."|r"
 				end
@@ -356,7 +356,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[2594] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[2594]
 				end
@@ -371,7 +371,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[210254] ~= nil then
 					textCENT = textCENT..E.WOW_Epic_Color..CharInfo.MASLENGO.ItemsInBag[210254].."|r"
 				end
@@ -386,7 +386,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[2245] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[2245]
 				end
@@ -398,7 +398,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[213089] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[213089]
 				end
@@ -410,7 +410,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[211516] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[211516]
 				end
@@ -422,7 +422,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[211515] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[211515]
 				end
@@ -440,11 +440,13 @@ function E:func_Otrisovka()
 			for iANIMA = 1, 4 do
 				tinsert(OctoTable_func_otrisovkaCENT,
 					function(CharInfo)
-						local textCENT, tooltip, colorCENT = " ", {}, nil
-						if kCovenant == 1 then
-							textCENT = textCENT..E.func_EmptyZero(CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant])
-						else
-							textCENT = textCENT..E.func_EmptyZero(CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant])
+						local textCENT, tooltip, colorCENT = "", {}, nil
+						if CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] ~= nil then
+							if kCovenant == 1 then
+								textCENT = textCENT..E.func_EmptyZero(CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant])
+							else
+								textCENT = textCENT..E.func_EmptyZero(CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant])
+							end
 						end
 						textCENT = E.OctoTable_Covenant[iANIMA].color..textCENT.."|r"
 						if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
@@ -469,7 +471,7 @@ function E:func_Otrisovka()
 		end
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[2009] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[2009]
 				end
@@ -481,7 +483,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1906] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1906]
 				end
@@ -493,7 +495,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1828] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1828]
 				end
@@ -505,7 +507,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1979] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1979]
 				end
@@ -517,7 +519,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1931] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1931]
 				end
@@ -535,7 +537,7 @@ function E:func_Otrisovka()
 		Universal(8)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1560] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1560]
 				end
@@ -547,7 +549,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1721] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1721]
 				end
@@ -559,7 +561,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1803] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1803]
 				end
@@ -571,7 +573,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1755] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1755]
 				end
@@ -586,7 +588,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1719] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1719]
 				end
@@ -598,7 +600,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1710] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1710]
 				end
@@ -610,7 +612,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1716] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1716]
 				end
@@ -622,7 +624,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				textCENT = CharInfo.MASLENGO.CurrencyID_Total[1718]
 				return textCENT, tooltip, colorCENT
 		end)
@@ -632,7 +634,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[158075] == nil then
 					textCENT = E.Red_Color.."no neck|r"
 				else
@@ -649,7 +651,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[169223] == nil then
 					textCENT = E.Red_Color.."no cloak|r"
 				end
@@ -673,7 +675,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.islandBfA ~= nil then
 					textCENT = CharInfo.MASLENGO.islandBfA
 				end
@@ -690,7 +692,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(166846))..E.func_GetItemNameByID(166846), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[166846])}
 				tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(169610))..E.func_GetItemNameByID(169610), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[169610])}
 				tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(166970))..E.func_GetItemNameByID(166970), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[166970])}
@@ -713,7 +715,7 @@ function E:func_Otrisovka()
 		Universal(7)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1273] then
 					textCENT = CharInfo.MASLENGO.CurrencyID_Total[1273]
 				end
@@ -725,7 +727,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1508] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID_Total[1508]
 				end
@@ -737,7 +739,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				textCENT = CharInfo.MASLENGO.CurrencyID_Total[1342]
 				return textCENT, tooltip, colorCENT
 		end)
@@ -747,7 +749,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				textCENT = CharInfo.MASLENGO.CurrencyID_Total[1220]
 				return textCENT, tooltip, colorCENT
 		end)
@@ -757,7 +759,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				textCENT = CharInfo.MASLENGO.CurrencyID_Total[1226]
 				return textCENT, tooltip, colorCENT
 		end)
@@ -767,7 +769,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				textCENT = CharInfo.MASLENGO.CurrencyID_Total[1533]
 				return textCENT, tooltip, colorCENT
 		end)
@@ -777,7 +779,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				textCENT = CharInfo.MASLENGO.CurrencyID_Total[1155]
 				return textCENT, tooltip, colorCENT
 		end)
@@ -787,7 +789,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[124124] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[124124]
 				end
@@ -802,7 +804,7 @@ function E:func_Otrisovka()
 		Universal(6)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1129] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1129]
 				end
@@ -814,7 +816,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[994] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[994]
 				end
@@ -826,7 +828,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[823] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[823]
 				end
@@ -838,7 +840,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[1101] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1101]
 				end
@@ -850,7 +852,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[824] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[824]
 				end
@@ -862,7 +864,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(114128))..E.func_GetItemNameByID(114128), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114128])}
 				tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(114129))..E.func_GetItemNameByID(114129), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114129])}
 				tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(114131))..E.func_GetItemNameByID(114131), E.func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[114131])}
@@ -888,7 +890,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.OctoTable_QuestID[38242] ~= nil then
 					textCENT = CharInfo.MASLENGO.OctoTable_QuestID[38242]
 				end
@@ -903,7 +905,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.OctoTable_QuestID[39246] ~= nil then
 					textCENT = CharInfo.MASLENGO.OctoTable_QuestID[39246]
 				end
@@ -918,7 +920,7 @@ function E:func_Otrisovka()
 		Universal(5)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[697] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[697]
 				end
@@ -930,7 +932,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.CurrencyID[776] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[776]
 				end
@@ -945,7 +947,7 @@ function E:func_Otrisovka()
 		Universal(4)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[52078] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[52078]
 				end
@@ -957,7 +959,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[69237] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[69237]
 				end
@@ -969,7 +971,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[71998] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[71998]
 				end
@@ -984,7 +986,7 @@ function E:func_Otrisovka()
 		Universal(3)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[45087] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[45087]
 				end
@@ -996,7 +998,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[47556] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[47556]
 				end
@@ -1008,7 +1010,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[49908] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[49908]
 				end
@@ -1023,7 +1025,7 @@ function E:func_Otrisovka()
 		Universal(2)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[23572] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[23572]
 				end
@@ -1035,7 +1037,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[30183] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[30183]
 				end
@@ -1047,7 +1049,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[32428] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[32428]
 				end
@@ -1059,7 +1061,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[34664] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[34664]
 				end
@@ -1071,7 +1073,7 @@ function E:func_Otrisovka()
 		end)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[24581] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[24581]
 				elseif CharInfo.MASLENGO.ItemsInBag[24579] ~= nil then
@@ -1088,7 +1090,7 @@ function E:func_Otrisovka()
 		Universal(1)
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.MASLENGO.ItemsInBag[23572] ~= nil then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[23572]
 				end
@@ -1106,7 +1108,7 @@ function E:func_Otrisovka()
 		if Octo_ToDo_DB_Other.ActiveHoliday[181] then
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
-					local textCENT, tooltip, colorCENT = " ", {}, nil
+					local textCENT, tooltip, colorCENT = "", {}, nil
 					local v = Octo_ToDo_DB_Other.Holiday[181]
 					if CharInfo.GUID == E.curGUID then
 						textCENT = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
@@ -1115,15 +1117,19 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 					local v = Octo_ToDo_DB_Other.Holiday[181]
-					local name = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 181|r" or "")
-					local icon = v.iconTexture
-					return name, icon, E.Holiday_Color
+
+					textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 181|r" or "")
+					iconLEFT = v.iconTexture
+					colorLEFT = E.Holiday_Color
+
+					return textLEFT, iconLEFT, colorLEFT
 			end)
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
 				if v.desc == "HolidaysNoblegarden" then
 					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-							local textCENT, tooltip, colorCENT = " ", {}, nil
+							local textCENT, tooltip, colorCENT = "", {}, nil
 							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 								textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 							end
@@ -1135,13 +1141,19 @@ function E:func_Otrisovka()
 							return textCENT, tooltip, colorCENT
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
-							return tostringall(v.textleft).."|r", v.icon, E.Holiday_Color
+							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+							textLEFT = tostringall(v.textleft).."|r"
+							iconLEFT = v.icon
+							colorLEFT = E.Holiday_Color
+
+							return textLEFT, iconLEFT, colorLEFT
 					end)
 				end
 			end
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
-					local textCENT, tooltip, colorCENT = " ", {}, nil
+					local textCENT, tooltip, colorCENT = "", {}, nil
 					if CharInfo.MASLENGO.ItemsInBag[44791] ~= nil then
 						textCENT = CharInfo.MASLENGO.ItemsInBag[44791]
 					end
@@ -1149,11 +1161,17 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return E.func_GetItemNameByID(44791), E.func_GetItemIconByID(44791), E.Holiday_Color
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+					textLEFT = E.func_GetItemNameByID(44791)
+					iconLEFT = E.func_GetItemIconByID(44791)
+					colorLEFT = E.Holiday_Color
+
+					return textLEFT, iconLEFT, colorLEFT
 			end)
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
-					local textCENT, tooltip, colorCENT = " ", {}, nil
+					local textCENT, tooltip, colorCENT = "", {}, nil
 					if CharInfo.MASLENGO.ItemsInBag[45072] ~= nil then
 						textCENT = CharInfo.MASLENGO.ItemsInBag[45072]
 					end
@@ -1161,18 +1179,24 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return E.func_GetItemNameByID(45072), E.func_GetItemIconByID(45072), E.Holiday_Color
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+					textLEFT = E.func_GetItemNameByID(45072)
+					iconLEFT = E.func_GetItemIconByID(45072)
+					colorLEFT = E.Holiday_Color
+
+					return textLEFT, iconLEFT, colorLEFT
 			end)
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		local TimewalkHolidayTBL = {1265, 652}
+		local TimewalkHolidayTBL = {1265, 652, 622} -- 1458 Бурные потоки
 		for _, HolidayID in ipairs(TimewalkHolidayTBL) do
 			if Octo_ToDo_DB_Other.ActiveHoliday[HolidayID] then
 				tinsert(OctoTable_func_otrisovkaCENT,
 					function(CharInfo)
-						local textCENT, tooltip, colorCENT = " ", {}, nil
+						local textCENT, tooltip, colorCENT = "", {}, nil
 						local v = Octo_ToDo_DB_Other.Holiday[HolidayID]
 						if CharInfo.GUID == E.curGUID then
 							textCENT = E.Event_Color..v.startTime.." - "..v.endTime.."|r"
@@ -1181,15 +1205,19 @@ function E:func_Otrisovka()
 				end)
 				tinsert(OctoTable_func_otrisovkaLEFT,
 					function(CharInfo)
+						local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 						local v = Octo_ToDo_DB_Other.Holiday[HolidayID]
-						local name = v.invitedBy..E.Event_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..HolidayID.."|r" or "")
-						local icon = v.iconTexture
-						return name, icon, E.Event_Color
+
+						textLEFT = v.invitedBy..E.Event_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..HolidayID.."|r" or "")
+						iconLEFT = v.iconTexture
+						colorLEFT = E.Event_Color
+
+						return textLEFT, iconLEFT, colorLEFT
 				end)
 				for _, v in ipairs(E.OctoTable_UniversalQuest) do
 					if v.desc == "HolidaysTimewalk" then
 						tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-								local textCENT, tooltip, colorCENT = " ", {}, nil
+								local textCENT, tooltip, colorCENT = "", {}, nil
 								if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 									textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 								end
@@ -1201,21 +1229,34 @@ function E:func_Otrisovka()
 								return textCENT, tooltip, colorCENT
 						end)
 						tinsert(OctoTable_func_otrisovkaLEFT, function()
-								return E.func_texturefromIcon(E.Icon_LFG) .. tostringall(v.textleft).."|r", v.icon, E.Event_Color
+								local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+								textLEFT = E.func_texturefromIcon(E.Icon_LFG) .. tostringall(v.textleft).."|r"
+								iconLEFT = v.icon
+								colorLEFT = E.Event_Color
+
+								return textLEFT, iconLEFT, colorLEFT
 						end)
 					end
 				end
 				tinsert(OctoTable_func_otrisovkaCENT,
 					function(CharInfo)
-						local textCENT, tooltip, colorCENT = " ", {}, nil
+						local textCENT, tooltip, colorCENT = "", {}, nil
 						if CharInfo.MASLENGO.CurrencyID[1166] ~= nil then
 							textCENT = CharInfo.MASLENGO.CurrencyID[1166]
 						end
-						return textCENT, tooltip, E.Event_Color
+						return textCENT, tooltip, colorCENT
 				end)
 				tinsert(OctoTable_func_otrisovkaLEFT,
 					function(CharInfo)
-						return E.func_currencyName(1166), E.func_GetCurrencyIcon(1166), E.Event_Color
+						local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+						local colorCENT = E.Event_Color
+
+						textLEFT = E.func_currencyName(1166)
+						iconLEFT = E.func_GetCurrencyIcon(1166)
+						colorLEFT = E.Event_Color
+
+						return textLEFT, iconLEFT, colorLEFT
 				end)
 			end
 		end
@@ -1225,7 +1266,7 @@ function E:func_Otrisovka()
 		if Octo_ToDo_DB_Other.ActiveHoliday[201] then
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
-					local textCENT, tooltip, colorCENT = " ", {}, nil
+					local textCENT, tooltip, colorCENT = "", {}, nil
 					local v = Octo_ToDo_DB_Other.Holiday[201]
 					if CharInfo.GUID == E.curGUID then
 						textCENT = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
@@ -1234,15 +1275,19 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 					local v = Octo_ToDo_DB_Other.Holiday[201]
-					local name = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 201|r" or "")
-					local icon = v.iconTexture
-					return name, icon, E.Holiday_Color
+
+					textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 201|r" or "")
+					iconLEFT = v.iconTexture
+					colorLEFT = E.Holiday_Color
+
+					return textLEFT, iconLEFT, colorLEFT
 			end)
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
 				if v.desc == "HolidaysChildrensWeek" then
 					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-							local textCENT, tooltip, colorCENT = " ", {}, nil
+							local textCENT, tooltip, colorCENT = "", {}, nil
 							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 								textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 								if CharInfo.GUID == E.curGUID then
@@ -1254,34 +1299,16 @@ function E:func_Otrisovka()
 							return textCENT, tooltip, colorCENT
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
-							return tostringall(v.textleft).."|r", v.icon, E.Holiday_Color
+							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+							local colorCENT = E.Holiday_Color
+
+							textLEFT = tostringall(v.textleft).."|r"
+							iconLEFT =  v.icon
+
+							return textLEFT, iconLEFT, colorLEFT
 					end)
 				end
 			end
-			-- tinsert(OctoTable_func_otrisovkaCENT,
-			--     function(CharInfo)
-			--         local textCENT, tooltip, colorCENT = " ", {}, nil
-			--         if CharInfo.MASLENGO.ItemsInBag[44791] ~= nil then
-			--             textCENT = CharInfo.MASLENGO.ItemsInBag[44791]
-			--         end
-			--         return textCENT, tooltip, colorCENT
-			-- end)
-			-- tinsert(OctoTable_func_otrisovkaLEFT,
-			--     function(CharInfo)
-			--         return E.func_GetItemNameByID(44791), E.func_GetItemIconByID(44791), E.Holiday_Color
-			-- end)
-			-- tinsert(OctoTable_func_otrisovkaCENT,
-			--     function(CharInfo)
-			--         local textCENT, tooltip, colorCENT = " ", {}, nil
-			--         if CharInfo.MASLENGO.ItemsInBag[45072] ~= nil then
-			--             textCENT = CharInfo.MASLENGO.ItemsInBag[45072]
-			--         end
-			--         return textCENT, tooltip, colorCENT
-			-- end)
-			-- tinsert(OctoTable_func_otrisovkaLEFT,
-			--     function(CharInfo)
-			--         return E.func_GetItemNameByID(45072), E.func_GetItemIconByID(45072), E.Holiday_Color
-			-- end)
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
@@ -1289,7 +1316,7 @@ function E:func_Otrisovka()
 		if Octo_ToDo_DB_Other.ActiveHoliday[341] then -- СОЛНЦЕВОРОТ
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
-					local textCENT, tooltip, colorCENT = " ", {}, nil
+					local textCENT, tooltip, colorCENT = "", {}, nil
 					local v = Octo_ToDo_DB_Other.Holiday[341]
 					if CharInfo.GUID == E.curGUID then
 						textCENT = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
@@ -1298,15 +1325,18 @@ function E:func_Otrisovka()
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 					local v = Octo_ToDo_DB_Other.Holiday[341]
-					local name = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 341|r" or "")
-					local icon = v.iconTexture
-					return name, icon, E.Holiday_Color
+					textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 341|r" or "")
+					iconLEFT = v.iconTexture
+					colorLEFT = E.Holiday_Color
+
+					return textLEFT, iconLEFT, colorLEFT
 			end)
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
 				if v.desc == "HolidaysMidsummerFireFestival" then
 					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-							local textCENT, tooltip, colorCENT = " ", {}, nil
+							local textCENT, tooltip, colorCENT = "", {}, nil
 							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 								textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 								if CharInfo.GUID == E.curGUID then
@@ -1318,12 +1348,18 @@ function E:func_Otrisovka()
 							return textCENT, tooltip, colorCENT
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
-							return tostringall(v.textleft).."|r", v.icon, E.Holiday_Color
+							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+							textLEFT = tostringall(v.textleft).."|r"
+							iconLEFT = v.icon
+							colorLEFT = E.Holiday_Color
+
+							return textLEFT, iconLEFT, colorLEFT
 					end)
 				end
 				if v.desc == "TheSpinnerofSummerTales" then
 					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-							local textCENT, tooltip, colorCENT = " ", {}, nil
+							local textCENT, tooltip, colorCENT = "", {}, nil
 							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 								textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 								if CharInfo.GUID == E.curGUID then
@@ -1335,43 +1371,146 @@ function E:func_Otrisovka()
 							return textCENT, tooltip, colorCENT
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
-							return tostringall(v.textleft).."|r", v.icon, E.Holiday_Color
+							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+							textLEFT = tostringall(v.textleft).."|r"
+							iconLEFT = v.icon
+							colorLEFT = E.Holiday_Color
+
+							return textLEFT, iconLEFT, colorLEFT
 					end)
 				end
 			end
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
-					local textCENT, tooltip, colorCENT = " ", {}, nil
-					if CharInfo.MASLENGO.LFGInstance[286].donetoday ~= nil then
+					local textCENT, tooltip, colorCENT = "", {}, nil
+					if CharInfo.MASLENGO.LFGInstance[286] and CharInfo.MASLENGO.LFGInstance[286].donetoday ~= nil then
 						textCENT = textCENT .. CharInfo.MASLENGO.LFGInstance[286].donetoday
 					end
-					return textCENT, tooltip, E.Holiday_Color
+					return textCENT, tooltip, colorCENT
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return E.func_texturefromIcon(E.Icon_LFG) .. E.func_LFGdungName(286), E.func_GetItemIconByID(23247), E.Holiday_Color
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+					textLEFT = E.func_texturefromIcon(E.Icon_LFG) .. E.func_LFGdungName(286)
+					iconLEFT = E.func_GetItemIconByID(23247)
+					colorLEFT = E.Holiday_Color
+
+					return textLEFT, iconLEFT, colorLEFT
 			end)
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
-					local textCENT, tooltip, colorCENT = " ", {}, nil
+					local textCENT, tooltip, colorCENT = "", {}, nil
 					if CharInfo.MASLENGO.ItemsInBag[23247] ~= nil then
 						textCENT = textCENT..CharInfo.MASLENGO.ItemsInBag[23247]
 					end
-					return textCENT, tooltip, E.Holiday_Color
+
+					return textCENT, tooltip, colorCENT
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
-					return E.func_GetItemNameByID(23247), E.func_GetItemIconByID(23247), E.Holiday_Color
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+					textLEFT = E.func_GetItemNameByID(23247)
+					iconLEFT = E.func_GetItemIconByID(23247)
+					colorLEFT = E.Holiday_Color
+
+					return textLEFT, iconLEFT, colorLEFT
 			end)
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
+		if Octo_ToDo_DB_Other.ActiveHoliday[1691] then -- Алчный посланец
+			tinsert(OctoTable_func_otrisovkaCENT,
+				function(CharInfo)
+					local textCENT, tooltip, colorCENT = "", {}, nil
+					local v = Octo_ToDo_DB_Other.Holiday[1691]
+					if CharInfo.GUID == E.curGUID then
+						textCENT = E.Red_Color..v.startTime.." - "..v.endTime.."|r"
+					end
+					return textCENT, tooltip, colorCENT
+			end)
+			tinsert(OctoTable_func_otrisovkaLEFT,
+				function(CharInfo)
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+					local v = Octo_ToDo_DB_Other.Holiday[1691]
+
+					textLEFT = v.invitedBy..E.Red_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 1691|r" or "")
+					iconLEFT = v.iconTexture
+					colorLEFT = E.Red_Color
+
+					return textLEFT, iconLEFT, colorLEFT
+			end)
+
+
+
+
+			for _, v in ipairs(E.OctoTable_UniversalQuest) do
+				if v.desc == "HolidaysAGreedyEmissary" then
+					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
+							local textCENT, tooltip, colorCENT = "", {}, nil
+							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
+								textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+							end
+							if CharInfo.GUID == E.curGUID then
+								for index, questID in ipairs(v.questID) do
+									tooltip[#tooltip+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+								end
+							end
+							return textCENT, tooltip, colorCENT
+					end)
+					tinsert(OctoTable_func_otrisovkaLEFT, function()
+							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+							textLEFT = tostringall(v.textleft).."|r"
+							iconLEFT = v.icon
+							colorLEFT = E.Red_Color
+
+							return textLEFT, iconLEFT, colorLEFT
+					end)
+				end
+			end
+
+
+
+
+			tinsert(OctoTable_func_otrisovkaCENT,
+				function(CharInfo)
+					local textCENT, tooltip, colorCENT = "", {}, nil
+					if CharInfo.MASLENGO.CurrencyID[3309] ~= nil then
+						textCENT = CharInfo.MASLENGO.CurrencyID[3309]
+					end
+					return textCENT, tooltip, colorCENT
+			end)
+			tinsert(OctoTable_func_otrisovkaLEFT,
+				function(CharInfo)
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+
+					textLEFT = E.func_currencyName(3309)
+					iconLEFT = E.func_GetCurrencyIcon(3309)
+					colorLEFT = E.Red_Color
+
+					return textLEFT, iconLEFT, colorLEFT
+			end)
+
+		end
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+
+
+
+
+
+
+
 	end
 	if Octo_ToDo_DB_Vars.DebugInfo == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
 						tooltip[#tooltip+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
@@ -1395,7 +1534,7 @@ function E:func_Otrisovka()
 		for i, value in ipairs(list) do
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
-					local textCENT, tooltip, colorCENT = " ", {}, nil
+					local textCENT, tooltip, colorCENT = "", {}, nil
 					tooltip[#tooltip+1] = {E.DEVTEXT, ""}
 					for _, v in next, (E.OctoTable_UniversalQuest) do
 						if v.desc == value then
@@ -1414,7 +1553,7 @@ function E:func_Otrisovka()
 	if Octo_ToDo_DB_Vars.Quests == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.numQuests ~= 0 then
 					textCENT = CharInfo.classColorHex..CharInfo.numQuests.."/"..CharInfo.maxNumQuestsCanAccept.."|r"
 					local questIDs = {}
@@ -1436,7 +1575,7 @@ function E:func_Otrisovka()
 		for _, v in ipairs(E.OctoTable_UniversalQuest) do
 			if v.desc == "Storyline" then
 				tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
-						local textCENT, tooltip, colorCENT = " ", {}, nil
+						local textCENT, tooltip, colorCENT = "", {}, nil
 						if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
 							textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 							if CharInfo.GUID == E.curGUID then
@@ -1456,7 +1595,7 @@ function E:func_Otrisovka()
 	if Octo_ToDo_DB_Vars.Dungeons == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				local ServerTime = GetServerTime()
 				for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
 					if v then
@@ -1494,7 +1633,7 @@ function E:func_Otrisovka()
 	if Octo_ToDo_DB_Vars.Items == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				for index, itemID in ipairs(E.OctoTable_itemID_ALL) do
 					if CharInfo.MASLENGO.ItemsInBag[itemID] ~= nil then
 						tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(itemID))..E.func_GetItemNameByID(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
@@ -1515,7 +1654,7 @@ function E:func_Otrisovka()
 	if Octo_ToDo_DB_Vars.Professions == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				local charProf = CharInfo.MASLENGO.professions
 				local pic = E.func_ProfessionIcon
 				local pin = E.func_ProfessionName
@@ -1553,7 +1692,7 @@ function E:func_Otrisovka()
 	if Octo_ToDo_DB_Vars.Gold == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				if CharInfo.Money then
 					textCENT = E.func_CompactNumberFormat(CharInfo.Money/10000)
 				end
@@ -1576,7 +1715,7 @@ function E:func_Otrisovka()
 	if Octo_ToDo_DB_Vars.ItemLevel == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				local color = E.Red_Color
 				local ItemLevelGreen = 625
 				local ItemLevelOrange = 610
@@ -1610,7 +1749,7 @@ function E:func_Otrisovka()
 	if Octo_ToDo_DB_Vars.WasOnline == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
 			function(CharInfo)
-				local textCENT, tooltip, colorCENT = " ", {}, nil
+				local textCENT, tooltip, colorCENT = "", {}, nil
 				local color = "|cffFFFFFF"
 				if CharInfo.loginHour and CharInfo.loginDay then
 					if CharInfo.GUID == E.curGUID then
