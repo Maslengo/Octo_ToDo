@@ -1,9 +1,0 @@
-## Interface: 110105, 40402, 11507
-## Title: LibThingsLoad
-## Author: sfmict
-## Version: r19
-## Notes: Library for load quests, items and spells
-## LoadOnDemand: 1
-## OptionalDeps: LibStub
-libs\LibStub\LibStub.lua
-LibThingsLoad.xml
