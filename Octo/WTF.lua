@@ -262,7 +262,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		if CharInfo.reputationID then
 			for k, v in pairs(CharInfo.reputationID) do
 				if v and v ~= "" and v ~= 0 then
-
 					if v == "|cff4FFF79Done|r" then
 						CharInfo.MASLENGO.reputationNEW[k] = "1#1#"..E.DONE.."#"..E.Green_Color.."#"
 					else
