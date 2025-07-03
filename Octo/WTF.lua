@@ -8,6 +8,37 @@ local function InitField(tbl, field, default) if tbl[field] == nil then tbl[fiel
 local function InitSubTable(tbl, field) if tbl[field] == nil then tbl[field] = {} end end
 local wipe = wipe
 
+
+-- do
+-- 	local text = "|cffFFF3712500/3000 (Равнодушие)|r"
+
+-- 	-- -- цвет
+-- 	-- local color = string.match(text, "^(|c%x%x%x%x%x%x%x%x)")  -- "|cffFFF371"
+
+-- 	-- -- удаляю цвет и закрывающий тег
+-- 	-- local content = text:gsub("^(|c%x%x%x%x%x%x%x%x)", ""):gsub("|r", "")
+
+-- 	-- -- делю на лево/право
+-- 	-- local vivod, rightStanding = (" "):split(content)
+-- 	-- local FIRST, SECOND = ("/"):split(vivod)
+
+-- 	-- local standingTEXT = rightStanding:gsub("(", "")
+-- 	-- print (standingTEXT)
+
+-- 	-- цвет
+-- 	local color, vivod, FIRST, SECOND, standingTEXT = string.match(text, "^(|c%x%x%x%x%x%x%x%x)((%d+)/(%d+)) %((.*)%)")  -- "|cffFFF371"
+
+-- 	local vivod = FIRST.."/"..SECOND
+
+-- end
+
+
+
+
+
+
+
+
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local curGUID = UnitGUID("player")
 	Octo_ToDo_DB_Levels = InitTable(Octo_ToDo_DB_Levels)
@@ -100,7 +131,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 
 	-- Оптимизация: предварительно инициализируем таблицы
 	local MASLENGO_DEFAULTS = {
-		reputationFULL = {},
 		reputationNEW = {},
 		CurrencyID = {},
 		CurrencyID_totalEarned = {},
@@ -166,7 +196,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		-- Инициализация репутаций
 		for _, tbl in ipairs(E.OctoTable_Reputations) do
 			for _, v in ipairs(tbl) do
-				MASLENGO.reputationFULL[v.id] = InitTable(MASLENGO.reputationFULL[v.id])
+				MASLENGO.reputationNEW[v.id] = MASLENGO.reputationNEW[v.id] or "####"
 			end
 		end
 
@@ -206,12 +236,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			CurrencyID_totalEarned = {cleanZeros = true},
 			professions = {cleanZeros = false},
 			OctoTable_QuestID = {cleanZeros = false},
-			reputationID = {specialHandler = function(sourceTable, target)
-				for repID, value in next, (sourceTable) do
-					target.reputationFULL[repID] = target.reputationFULL[repID] or {}
-					target.reputationFULL[repID].standingTEXT = value
-				end
-			end}
 		}
 
 		for tableName, options in next, (tablesToProcess) do
@@ -223,8 +247,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 
 				-- Обработка специальных случаев
 				if options.specialHandler then
-					options.specialHandler(sourceTable, MASLENGO)
-					MASLENGO[tableName] = nil -- Удаляем после обработки, если нужно
+					-- options.specialHandler(sourceTable, MASLENGO)
+					-- MASLENGO[tableName] = nil -- Удаляем после обработки, если нужно
 				elseif options.cleanZeros and type(sourceTable) == "table" then
 					for k, v in next, (sourceTable) do
 						if type(v) == "number" and v == 0 then
@@ -234,15 +258,35 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				end
 			end
 		end
+
+		if CharInfo.reputationID then
+			for k, v in pairs(CharInfo.reputationID) do
+				if v and v ~= "" and v ~= 0 then
+
+					if v == "|cff4FFF79Done|r" then
+						CharInfo.MASLENGO.reputationNEW[k] = "1#1#"..E.DONE.."#"..E.Green_Color.."#"
+					else
+						local color = v:match("c%x%x%x%x%x%x%x%x")
+						local vivod, FIRST, SECOND, standingTEXT = v:gsub("|c%x%x%x%x%x%x%x%x", ""):match("((%d+)/(%d+)) ?%(?(.*)%)?")  -- "|cffFFF371"
+						print (v, "|cff000000--->>>|r" , vivod, FIRST, SECOND, standingTEXT)
+
+						CharInfo.MASLENGO.reputationNEW[k] = FIRST.."#"..SECOND.."#"..vivod.."#"..color.."#"..standingTEXT
+					end
+				end
+			end
+			CharInfo.reputationID = nil
+		end
+
 		if CharInfo.MASLENGO.reputationFULL and CharInfo.MASLENGO.reputationNEW then
 			for k, v in pairs(CharInfo.MASLENGO.reputationFULL) do
 				local FIRST = v.FIRST or 0
 				local SECOND = v.SECOND or 0
-				local vivod = v.vivod or "|cffFF00000/0|r"
+				local vivod = v.vivod or "-QWEQWEQWE"
 				local color = v.color or "|cffFF0000"
 				local standingTEXT = v.standingTEXT or ""
 				CharInfo.MASLENGO.reputationNEW[k] = FIRST.."#"..SECOND.."#"..vivod.."#"..color.."#"..standingTEXT
 			end
+			CharInfo.MASLENGO.reputationFULL = nil
 		end
 
 
@@ -328,13 +372,13 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 end
 
 
-do
-		local myText = "QWEQWE#123124#привет###6"
-		-- local one, two, three = strsplit("#", myText) -- в глобал обращается
-		local one, two, three, four, five, six = ("#"):split(myText) -- сразу из памяти
-		local vivod = tonumber(four) or 0
-		print (one, two, three, four, five, six, vivod)
-end
+-- do
+-- 		local myText = "QWEQWE#123124#привет###6"
+-- 		-- local one, two, three = strsplit("#", myText) -- в глобал обращается
+-- 		local one, two, three, four, five, six = ("#"):split(myText) -- сразу из памяти
+-- 		local vivod = tonumber(four) or 0
+-- 		print (one, two, three, four, five, six, vivod)
+-- end
 
 
 

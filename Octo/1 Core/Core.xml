@@ -14,7 +14,6 @@
 	<Script file="Tables\OctoTable_Prefixes.lua"/>
 	<Script file="Tables\OctoTable_Gossip.lua"/>
 	<Script file="Tables\OctoTable_Spells.lua"/>
-	<Script file="Tables\OctoTable_WTF.lua"/>
 
 	<Script file="Moduls\Auto_ChatClearing.lua"/>
 	<Script file="Moduls\Auto_CinematicCanceler.lua"/>

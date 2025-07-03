@@ -196,14 +196,14 @@ function E.Developing()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			reputationFULL = {
+			reputationNEW = {
 				type = "execute",
-				name = "reputationFULL",
-				desc = "CharInfo.MASLENGO.reputationFULL = {}",
+				name = "reputationNEW",
+				desc = "CharInfo.MASLENGO.reputationNEW = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.reputationFULL")
-						CharInfo.MASLENGO.reputationFULL  = {}
+						print (CharInfo.classColorHex..CharInfo.Name.."|r", "CharInfo.MASLENGO.reputationNEW")
+						CharInfo.MASLENGO.reputationNEW = {}
 					end
 					return
 				end,

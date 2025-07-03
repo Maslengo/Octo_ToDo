@@ -501,32 +501,6 @@ function E.Collect_All_Reputations()
 		for index, tbl in ipairs(E.OctoTable_Reputations) do
 			for i, v in ipairs(tbl) do
 				local reputationID = v.id
-				collect.MASLENGO.reputationFULL[reputationID] = collect.MASLENGO.reputationFULL[reputationID] or {}
-				local FIRST, SECOND, vivod, color, standingTEXT = E.func_CheckReputationFULL(reputationID)
-
-				if C_Reputation.IsAccountWideReputation(reputationID) then
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.reputationFULL[reputationID] = CharInfo.MASLENGO.reputationFULL[reputationID] or {}
-						CharInfo.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
-						CharInfo.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
-						CharInfo.MASLENGO.reputationFULL[reputationID].vivod = vivod
-						CharInfo.MASLENGO.reputationFULL[reputationID].color = color
-						CharInfo.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
-					end
-				else
-					collect.MASLENGO.reputationFULL[reputationID].FIRST = FIRST
-					collect.MASLENGO.reputationFULL[reputationID].SECOND = SECOND
-					collect.MASLENGO.reputationFULL[reputationID].vivod = vivod
-					collect.MASLENGO.reputationFULL[reputationID].color = color
-					collect.MASLENGO.reputationFULL[reputationID].standingTEXT = standingTEXT
-				end
-				-- collect.MASLENGO.reputationFULL[reputationID].name = v.name
-			end
-		end
-		----------------------------------------------------------------
-		for index, tbl in ipairs(E.OctoTable_Reputations) do
-			for i, v in ipairs(tbl) do
-				local reputationID = v.id
 
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
