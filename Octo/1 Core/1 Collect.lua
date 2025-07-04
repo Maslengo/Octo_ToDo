@@ -1411,7 +1411,7 @@ function Octo_EventFrame_Collect:UPDATE_INSTANCE_INFO()
 	end)
 end
 function Octo_EventFrame_Collect:TIME_PLAYED_MSG(...)
-	if not InCombatLockdown() then return end
+	if InCombatLockdown() then return end
 	E.Collect_All_Played(...)
 	E.Update("TIME_PLAYED_MSG")
 end

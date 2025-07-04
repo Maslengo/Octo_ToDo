@@ -1081,7 +1081,8 @@ function Octo_EventFrame_ToDo:DisplayCharacterStats()
 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 		totalReload = totalReload + (CharInfo.ReloadCount or 0)
 
-		if CharInfo.curServer == E.curServer then
+		if CharInfo.BattleTag == E.BattleTag then
+		-- if CharInfo.curServer == E.curServer then
 			totalMoney = totalMoney + CharInfo.Money
 			realTotalTime = realTotalTime + CharInfo.realTotalTime
 			TodayTimePlayedtotal = TodayTimePlayedtotal + CharInfo.TodayTimePlayed

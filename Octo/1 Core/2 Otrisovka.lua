@@ -118,7 +118,7 @@ function E.CreateTooltipPlayers(CharInfo)
 	if CharInfo.MASLENGO.ItemsInBag[122284] ~= nil then
 		tooltip[#tooltip+1] = {" ", " "}
 		tooltip[#tooltip+1] = {
-			E.func_GetItemIconByID(122284)..E.func_GetItemNameByID(122284),
+			E.func_texturefromIcon(E.func_GetItemIconByID(122284))..E.func_GetItemNameByID(122284),
 			CharInfo.MASLENGO.ItemsInBag[122284]
 		}
 	end
