@@ -470,9 +470,9 @@ function E.Developing()
 					order = order1,
 					width = E.FULL_WIDTH/4,
 					func = function()
-						-- wipe(tbl[k])
+						tbl[k] = nil
 						print (text..".|cffFF5050"..k .. "|r=", v)
-						fpde(tbl[k])
+						-- fpde(tbl[k])
 						return
 					end,
 				}
@@ -492,14 +492,13 @@ function E.Developing()
 		local order3 = GetOrder()
 		Developing.args[text..order3] = {
 			type = "execute",
-			name = "|cff4fff79ALL|r",
+			name = "|cff4fff79"..text.."|r",
 			desc = text.." = {}",
 			order = order3,
 			width = E.FULL_WIDTH/4,
 			func = function()
-				wipe(tbl)
-				-- Octo_ToDo_DB_Levels = {}
-				-- print (text.." = {}")
+				tbl = nil
+				print (text.." = {}")
 				-- fpde(tbl)
 				return
 			end,
