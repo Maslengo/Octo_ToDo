@@ -400,8 +400,9 @@ function E.func_GetItemInfo(itemInfo) -- Item ID, Link or name
 	return GetItemInfo(itemInfo)
 end
 ----------------------------------------------------------------
-function E.func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
-	return GetItemCount(itemID, includeBank, includeUses, includeReagentBank)
+function E.func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
+	if not itemID then return 0 end
+	return GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -843,29 +844,26 @@ function E.func_GetMapName(mapID)
 	if not mapID then return end
 	local info = GetMapInfo(mapID)
 	if info then
-		local name = info.name
-		return tostring(name)
+		return tostring(info.name) .. (E.DebugIDs and E.Gray_Color.." id:"..mapID.."|r" or "")
 	end
 end
 ----------------------------------------------------------------
-function E.func_npcName(npcName)
-	if not npcName then return E.NONE end
+function E.func_npcName(npcID)
+	if not npcID then return E.NONE end
 
-	-- Создаем tooltip только один раз
 	E.inspectScantipFUNC = E.inspectScantipFUNC or CreateFrame("GameTooltip", "OctoScanningTooltipFUNC", nil, "GameTooltipTemplate")
 	local tooltip = E.inspectScantipFUNC
 
-	-- Настраиваем tooltip
 	tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	tooltip:ClearLines()
-	tooltip:SetHyperlink("unit:Creature-0-0-0-0-"..npcName)
+	tooltip:SetHyperlink("unit:Creature-0-0-0-0-"..npcID)
 
 	local vivod = "|cffFF0000error|r"
 	if tooltip:NumLines() > 0 then
 		vivod = _G["OctoScanningTooltipFUNCTextLeft1"]:GetText()
 	end
 
-	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..npcName.."|r" or "")
+	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..npcID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E.func_RIOColor(RIOscore)
@@ -1713,7 +1711,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 			if curType == "item" or curType == "toy" then
 				frame:SetAttribute("macrotext", "/use item:"..id)
 			else
-				frame:SetAttribute("macrotext", "/cast "..E.func_GetSpellName(id))
+				frame:SetAttribute("macrotext", "/cast "..GetSpellName(id))
 			end
 		end
 		if not frame.isInit then
@@ -1926,11 +1924,13 @@ E.Color_Reputation_b = 0 -- 1
 E.MainFrame_Position = -157
 E.AnimationDuration = .2
 E.isElvUI = select(4, GetAddOnInfo("ElvUI"))
-E.isRCLootCouncil = select(4, GetAddOnInfo("isRCLootCouncil"))
-E.isWeakAuras = select(4, GetAddOnInfo("isWeakAuras"))
-E.isTomTom = select(4, GetAddOnInfo("isTomTom"))
-E.isPlater = select(4, GetAddOnInfo("isPlater"))
-E.isOmniCD = select(4, GetAddOnInfo("isOmniCD"))
+E.isRCLootCouncil = select(4, GetAddOnInfo("RCLootCouncil"))
+E.isWeakAuras = select(4, GetAddOnInfo("WeakAuras"))
+E.isTomTom = select(4, GetAddOnInfo("TomTom"))
+E.isPlater = select(4, GetAddOnInfo("Plater"))
+E.isOmniCD = select(4, GetAddOnInfo("OmniCD"))
+E.isOmniCC = select(4, GetAddOnInfo("OmniCC"))
+E.isParrot = select(4, GetAddOnInfo("Parrot"))
 E.bgCr = .08 -- 14/255
 E.bgCg = .08 -- 14/255
 E.bgCb = .08 -- 14/255

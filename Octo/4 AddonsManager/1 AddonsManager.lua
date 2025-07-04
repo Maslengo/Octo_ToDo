@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = false
+local enable = true
 if enable then
 	local Octo_EventFrame_AddonsManager = CreateFrame("FRAME")
 	Octo_EventFrame_AddonsManager:Hide()

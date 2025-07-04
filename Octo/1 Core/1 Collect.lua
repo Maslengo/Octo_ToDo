@@ -18,34 +18,59 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 end)
 local locale = GetLocale()
 ----------------------------------------------------------------
+function E.LoadOctoUIforAddons()
+	if not Octo_DEBUG then return end
+	Octo_DEBUG.profileKeys = Octo_DEBUG.profileKeys or {}
+	local currentKey = E.curCharName.." - "..E.curServer
+	Octo_DEBUG.profileKeys[currentKey] = Octo_DEBUG.profileKeys[currentKey] or "OctoUI"
+	if ElvDB then
+		for name, v in next, (ElvDB.profileKeys) do
+			Octo_DEBUG.profileKeys[name] = "OctoUI"
+		end
+	end
+
+
+	local AddonsAndDB = {
+		{database = AddonCpuUsageDB, profileName = "OctoUI"}, -- ACU
+		{database = AddOnSkinsDB, profileName = "OctoUI"}, -- AddOnSkins
+		{database = Bartender4DB, profileName = "OctoUI"}, -- Bartender4
+		{database = ElvDB, profileName = "OctoUI"}, -- ElvUI
+		{database = ElvPrivateDB, profileName = "PRIVATEPROFILE"}, -- ElvUI
+		{database = MythicDungeonToolsDB, profileName = "OctoUI"}, -- MythicDungeonTools
+		{database = OmniCCDB, profileName = "OctoUI"}, -- OmniCC
+		{database = OmniCDDB, profileName = "OctoUI"}, -- OmniCD
+		{database = ParrotDB, profileName = "OctoUI"}, -- Parrot
+		{database = PlaterDB, profileName = "OctoUI"}, -- Plater
+		{database = RareScannerDB, profileName = "OctoUI"}, -- RareScanner
+		{database = RCLootCouncilDB, profileName = "OctoUI"}, -- RCLootCouncil
+		{database = RCLootCouncilLootDB, profileName = "OctoUI"}, -- RCLootCouncil
+		{database = SilverDragon3DB, profileName = "OctoUI"}, -- SilverDragon
+		{database = TomTomDB, profileName = "OctoUI"}, -- TomTom
+		{database = TomTomWaypointsM, profileName = "OctoUI"}, -- TomTom
+		{database = VMRT, profileName = "OctoUI"}, -- MRT
+		{database = WarpDepleteDB, profileName = "OctoUI"}, -- WarpDeplete
+	}
+
+
+	for k, v in ipairs(AddonsAndDB) do
+		local addonName = v.addonName
+		local database = v.database
+		local profileName = v.profileName
+		if database then
+			database.profileKeys = database.profileKeys or {}
+			for name, OctoUI in next, Octo_DEBUG.profileKeys do
+				if database == VMRT then
+					local nameWithoutSpace = name:gsub(" ", "")
+					VMRT.ProfileKeys[nameWithoutSpace] = profileName
+				else
+					database.profileKeys[name] = profileName
+				end
+			end
+		end
+	end
+end
 ----------------------------------------------------------------
 function E.Collect_All_PlayerInfo()
-	if Octo_DEBUG then
-		Octo_DEBUG.profileKeys = Octo_DEBUG.profileKeys or {}
-		Octo_DEBUG.profileKeys[E.curCharName.." - ".. E.curServer] = Octo_DEBUG.profileKeys[E.curCharName.." - ".. E.curServer] or "OctoUI"
-	end
-	if E.isElvUI and ElvDB and ElvPrivateDB then
-		if ElvDB.profileKeys[E.curCharName.." - ".. E.curServer] ~= "OctoUI" then
-			ElvDB.profileKeys[E.curCharName.." - ".. E.curServer] = "OctoUI"
-			DEFAULT_CHAT_FRAME:AddMessage("ElvDB: "..E.Green_Color.."done|r")
-		end
-		if ElvPrivateDB.profileKeys[E.curCharName.." - ".. E.curServer] ~= "PRIVATEPROFILE" then
-			ElvPrivateDB.profileKeys[E.curCharName.." - ".. E.curServer] = "PRIVATEPROFILE"
-			DEFAULT_CHAT_FRAME:AddMessage("ElvPrivateDB: "..E.Green_Color.."done|r")
-		end
-	end
-	if E.isPlater and PlaterDB then
-		if PlaterDB.profileKeys[E.curCharName.." - ".. E.curServer] ~= "OctoUI" then
-			PlaterDB.profileKeys[E.curCharName.." - ".. E.curServer] = "OctoUI"
-			DEFAULT_CHAT_FRAME:AddMessage("PlaterDB: "..E.Green_Color.."done|r")
-		end
-	end
-	if E.isOmniCD and OmniCDDB then
-		if OmniCDDB.profileKeys[E.curCharName.." - ".. E.curServer] ~= "OctoUI" then
-			OmniCDDB.profileKeys[E.curCharName.." - ".. E.curServer] = "OctoUI"
-			DEFAULT_CHAT_FRAME:AddMessage("OmniCDDB: "..E.Green_Color.."done|r")
-		end
-	end
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
 		local curServerShort = E.func_CurServerShort(E.curServer)
@@ -501,7 +526,6 @@ function E.Collect_All_Reputations()
 		for index, tbl in ipairs(E.OctoTable_Reputations) do
 			for i, v in ipairs(tbl) do
 				local reputationID = v.id
-
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.MASLENGO.reputationNEW[reputationID] = E.func_CheckReputationNEW(reputationID)
@@ -548,7 +572,7 @@ function E.Collect_All_ItemsInBag()
 					end
 					for _, tbl in next, (E.OctoTable_itemID_Cataloged_Research) do
 						if itemID == tbl.itemiD then
-							Possible_CatalogedResearch = Possible_CatalogedResearch + tbl.count
+							Possible_CatalogedResearch = Possible_CatalogedResearch + (tbl.count*E.func_GetItemCount(itemID))
 						end
 					end
 					local isAnima = E.func_IsAnimaItemByID(itemID)
@@ -572,7 +596,7 @@ function E.Collect_All_ItemsInBag()
 		collect.MASLENGO = collect.MASLENGO or {}
 		collect.MASLENGO.ItemsInBag = collect.MASLENGO.ItemsInBag or {}
 		for _, itemID in next, (E.OctoTable_itemID_ALL) do
-			local count = E.func_GetItemCount(itemID, true, true, true)
+			local count = E.func_GetItemCount(itemID, true, true, true, false)
 			if count ~= 0 then
 				collect.MASLENGO.ItemsInBag[itemID] = count
 			else
@@ -646,6 +670,8 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 						local IsComplete = E.func_CheckCompletedByQuestID(questID)
 						if IsComplete ~= E.NONE then
 							vivod = IsComplete
+							-- else
+							--     vivod = "0/" ..v.max
 						end
 					end
 				end
@@ -933,7 +959,7 @@ end
 function E.Collect_All_BfA_Cloaklvl()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
-		local hasItem = E.func_GetItemCount(169223, true, true, true)
+		local hasItem = E.func_GetItemCount(169223, true, true, true, false)
 		if hasItem ~= 0 then
 			local itemLink = GetInventoryItemLink("player", 15)
 			if itemLink then
@@ -1067,8 +1093,6 @@ function E.Collect_All_Table(event)
 end
 ----------------------------------------------------------------
 E.RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable, E.func_DebugPath())
-
-
 function Octo_EventFrame_Collect:ADDON_LOADED()
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
@@ -1077,13 +1101,12 @@ function Octo_EventFrame_Collect:ADDON_LOADED()
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	RequestTimePlayed()
 	RequestRaidInfo()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
+	E.LoadOctoUIforAddons()
 	E.Collect_All_MoneyOnLogin()
 	-- Персонаж и прогресс
 	E.Collect_All_PlayerInfo() -- общая информация о персонаже
@@ -1117,8 +1140,6 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_GreatVault() -- Великое Хранилище
 	E.Update("PLAYER_LOGIN")
 end
-
-
 function Octo_EventFrame_Collect:SKILL_LINES_CHANGED()
 	if InCombatLockdown() or self.SKILL_LINES_CHANGED_pause then return end
 	self.SKILL_LINES_CHANGED_pause = true
@@ -1128,8 +1149,6 @@ function Octo_EventFrame_Collect:SKILL_LINES_CHANGED()
 			self.SKILL_LINES_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:TRADE_SKILL_SHOW()
 	if InCombatLockdown() or self.TRADE_SKILL_SHOW_Pause then return end
 	self.TRADE_SKILL_SHOW_Pause = true
@@ -1139,8 +1158,6 @@ function Octo_EventFrame_Collect:TRADE_SKILL_SHOW()
 			self.SKILL_LINES_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_XP_UPDATE()
 	if InCombatLockdown() or UnitLevel("player") == MAX_PLAYER_LEVEL or self.PLAYER_XP_UPDATE_pause then return end
 	self.PLAYER_XP_UPDATE_pause = true
@@ -1150,8 +1167,6 @@ function Octo_EventFrame_Collect:PLAYER_XP_UPDATE()
 			self.PLAYER_XP_UPDATE_pause = nil
 	end)
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_LEVEL_UP()
 	if InCombatLockdown() or self.PLAYER_LEVEL_UP_Pause then return end
 	self.PLAYER_LEVEL_UP_Pause = true
@@ -1162,8 +1177,6 @@ function Octo_EventFrame_Collect:PLAYER_LEVEL_UP()
 			self.PLAYER_LEVEL_UP_Pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:QUEST_LOG_UPDATE()
 	if InCombatLockdown() or self.QUEST_LOG_UPDATE_Pause then return end
 	self.QUEST_LOG_UPDATE_Pause = true
@@ -1176,8 +1189,6 @@ function Octo_EventFrame_Collect:QUEST_LOG_UPDATE()
 			self.QUEST_LOG_UPDATE_Pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:BAG_UPDATE()
 	if InCombatLockdown() or self.BAG_UPDATE_pause then return end
 	self.BAG_UPDATE_pause = true
@@ -1187,8 +1198,6 @@ function Octo_EventFrame_Collect:BAG_UPDATE()
 			self.BAG_UPDATE_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
 	if InCombatLockdown() or self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause then return end
 	self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = true
@@ -1198,8 +1207,6 @@ function Octo_EventFrame_Collect:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
 			self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_MONEY()
 	if InCombatLockdown() or self.PLAYER_MONEY_pause then return end
 	self.PLAYER_MONEY_pause = true
@@ -1209,8 +1216,6 @@ function Octo_EventFrame_Collect:PLAYER_MONEY()
 			self.PLAYER_MONEY_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:ACCOUNT_MONEY()
 	if InCombatLockdown() or self.ACCOUNT_MONEY_pause then return end
 	self.ACCOUNT_MONEY_pause = true
@@ -1220,8 +1225,6 @@ function Octo_EventFrame_Collect:ACCOUNT_MONEY()
 			self.ACCOUNT_MONEY_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
 	if InCombatLockdown() or self.CURRENCY_DISPLAY_UPDATE_pause then return end
 	self.CURRENCY_DISPLAY_UPDATE_pause = true
@@ -1232,8 +1235,6 @@ function Octo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
 			self.CURRENCY_DISPLAY_UPDATE_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:CURRENCY_TRANSFER_LOG_UPDATE()
 	if InCombatLockdown() or self.CURRENCY_TRANSFER_LOG_UPDATE_pause then return end
 	self.CURRENCY_TRANSFER_LOG_UPDATE_pause = true
@@ -1244,8 +1245,6 @@ function Octo_EventFrame_Collect:CURRENCY_TRANSFER_LOG_UPDATE()
 			self.CURRENCY_TRANSFER_LOG_UPDATE_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_EQUIPMENT_CHANGED()
 	if InCombatLockdown() or self.PLAYER_EQUIPMENT_CHANGED_pause then return end
 	self.PLAYER_EQUIPMENT_CHANGED_pause = true
@@ -1255,8 +1254,6 @@ function Octo_EventFrame_Collect:PLAYER_EQUIPMENT_CHANGED()
 			self.PLAYER_EQUIPMENT_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_LEAVING_WORLD()
 	if not InCombatLockdown() then return end
 	self:UnregisterEvent("PLAYER_LEAVING_WORLD")
@@ -1264,8 +1261,6 @@ function Octo_EventFrame_Collect:PLAYER_LEAVING_WORLD()
 	E.Collect_All_GreatVault()
 	E.Collect_All_LoginTime()
 end
-
-
 function Octo_EventFrame_Collect:AZERITE_ITEM_EXPERIENCE_CHANGED()
 	if InCombatLockdown() or self.AZERITE_ITEM_EXPERIENCE_CHANGED_pause then return end
 	self.AZERITE_ITEM_EXPERIENCE_CHANGED_pause = true
@@ -1276,8 +1271,6 @@ function Octo_EventFrame_Collect:AZERITE_ITEM_EXPERIENCE_CHANGED()
 			self.AZERITE_ITEM_EXPERIENCE_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:COVENANT_CHOSEN()
 	if InCombatLockdown() or self.COVENANT_CHOSEN_pause then return end
 	self.COVENANT_CHOSEN_pause = true
@@ -1287,8 +1280,6 @@ function Octo_EventFrame_Collect:COVENANT_CHOSEN()
 			self.COVENANT_CHOSEN_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
 	if InCombatLockdown() or self.COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED_pause then return end
 	self.COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED_pause = true
@@ -1298,8 +1289,6 @@ function Octo_EventFrame_Collect:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
 			self.COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_DEAD()
 	if InCombatLockdown() or self.PLAYER_DEAD_pause then return end
 	self.PLAYER_DEAD_pause = true
@@ -1309,8 +1298,6 @@ function Octo_EventFrame_Collect:PLAYER_DEAD()
 			self.PLAYER_DEAD_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:UPDATE_INVENTORY_DURABILITY()
 	if InCombatLockdown() or self.UPDATE_INVENTORY_DURABILITY_pause then return end
 	self.UPDATE_INVENTORY_DURABILITY_pause = true
@@ -1320,8 +1307,6 @@ function Octo_EventFrame_Collect:UPDATE_INVENTORY_DURABILITY()
 			self.UPDATE_INVENTORY_DURABILITY_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_SPECIALIZATION_CHANGED()
 	if InCombatLockdown() or self.PLAYER_SPECIALIZATION_CHANGED_pause then return end
 	self.PLAYER_SPECIALIZATION_CHANGED_pause = true
@@ -1331,8 +1316,6 @@ function Octo_EventFrame_Collect:PLAYER_SPECIALIZATION_CHANGED()
 			self.PLAYER_SPECIALIZATION_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:HEARTHSTONE_BOUND()
 	if InCombatLockdown() or self.HEARTHSTONE_BOUND_pause then return end
 	self.HEARTHSTONE_BOUND_pause = true
@@ -1342,8 +1325,6 @@ function Octo_EventFrame_Collect:HEARTHSTONE_BOUND()
 			self.HEARTHSTONE_BOUND_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:ZONE_CHANGED()
 	if InCombatLockdown() or self.ZONE_CHANGED_pause then return end
 	self.ZONE_CHANGED_pause = true
@@ -1353,8 +1334,6 @@ function Octo_EventFrame_Collect:ZONE_CHANGED()
 			self.ZONE_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:ZONE_CHANGED_NEW_AREA()
 	if InCombatLockdown() or self.ZONE_CHANGED_NEW_AREA_pause then return end
 	self.ZONE_CHANGED_NEW_AREA_pause = true
@@ -1364,8 +1343,6 @@ function Octo_EventFrame_Collect:ZONE_CHANGED_NEW_AREA()
 			self.ZONE_CHANGED_NEW_AREA_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:SPELLS_CHANGED()
 	if InCombatLockdown() or self.SPELLS_CHANGED_pause then return end
 	self.SPELLS_CHANGED_pause = true
@@ -1375,8 +1352,6 @@ function Octo_EventFrame_Collect:SPELLS_CHANGED()
 			self.SPELLS_CHANGED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:MAIL_INBOX_UPDATE()
 	if InCombatLockdown() or self.MAIL_INBOX_UPDATE_pause then return end
 	self.MAIL_INBOX_UPDATE_pause = true
@@ -1386,8 +1361,6 @@ function Octo_EventFrame_Collect:MAIL_INBOX_UPDATE()
 			self.MAIL_INBOX_UPDATE_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:MAIL_SHOW()
 	if InCombatLockdown() or self.MAIL_SHOW_pause then return end
 	self.MAIL_SHOW_pause = true
@@ -1397,8 +1370,6 @@ function Octo_EventFrame_Collect:MAIL_SHOW()
 			self.MAIL_SHOW_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:UPDATE_PENDING_MAIL()
 	if InCombatLockdown() or self.UPDATE_PENDING_MAIL_pause then return end
 	self.UPDATE_PENDING_MAIL_pause = true
@@ -1408,8 +1379,6 @@ function Octo_EventFrame_Collect:UPDATE_PENDING_MAIL()
 			self.UPDATE_PENDING_MAIL_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 	if InCombatLockdown() or self.PLAYER_REGEN_ENABLED_pause then return end
 	self.PLAYER_REGEN_ENABLED_pause = true
@@ -1423,8 +1392,6 @@ function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 			self.PLAYER_REGEN_ENABLED_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:ENCOUNTER_END()
 	if InCombatLockdown() or self.ENCOUNTER_END_pause then return end
 	self.ENCOUNTER_END_pause = true
@@ -1434,8 +1401,6 @@ function Octo_EventFrame_Collect:ENCOUNTER_END()
 			self.ENCOUNTER_END_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:UPDATE_INSTANCE_INFO()
 	if InCombatLockdown() or self.UPDATE_INSTANCE_INFO_pause then return end
 	self.UPDATE_INSTANCE_INFO_pause = true
@@ -1445,15 +1410,11 @@ function Octo_EventFrame_Collect:UPDATE_INSTANCE_INFO()
 			self.UPDATE_INSTANCE_INFO_pause = nil  -- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
 function Octo_EventFrame_Collect:TIME_PLAYED_MSG(...)
 	if not InCombatLockdown() then return end
 	E.Collect_All_Played(...)
 	E.Update("TIME_PLAYED_MSG")
 end
-
-
 function Octo_EventFrame_Collect:QUEST_POI_UPDATE()
 	if InCombatLockdown() or self.QUEST_POI_UPDATE_pause then return end
 	self.QUEST_POI_UPDATE_pause = true

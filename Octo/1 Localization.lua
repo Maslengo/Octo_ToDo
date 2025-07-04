@@ -221,7 +221,29 @@ if L then
 	L["Player MAX level"] = true
 	L["Only Current Realm"] = true
 	L["Daily quests"] = true
+	L["Anima Vessel"] = true
+	L["Stolen Anima Vessel"] = true
+	L["Nests"] = true
+	L["Mushrooms"] = true
+	L["Mawsworn Caches"] = true
+	L["Relic Gorgers"] = true
+	L["Purple Mobs"] = true
+	L["Bones/Stones/Relics"] = true
+	L["Spectral Bound Chest"] = true
+	L["Helsworn Chest"] = true
+	L["Riftbound Caches"] = true
+	L["Zovaal's Vault"] = true
 end
+
+
+
+
+
+
+
+
+
+
 
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
@@ -444,4 +466,16 @@ if L then
 	L["Player MAX level"] = "Макс. уровень"
 	L["Only Current Realm"] = "Только текущий сервер"
 	L["Daily quests"] = "Ежедневные задания"
+	L["Anima Vessel"] = "Сосуд с анимой"
+	L["Stolen Anima Vessel"] = "Сосуд с украденной анимой"
+	L["Nests"] = "Гнёзда"
+	L["Mushrooms"] = "Грибы"
+	L["Mawsworn Caches"] = "Тайники Верных Утробе"
+	L["Relic Gorgers"] = "Поглотители реликвий"
+	L["Purple Mobs"] = "Фиолетовые мобы"
+	L["Bones/Stones/Relics"] = "Кости/Камни/Реликвии"
+	L["Spectral Bound Chest"] = "Сундук с призрачным замком"
+	L["Helsworn Chest"] = "Сундук Верных Хелии"
+	L["Riftbound Caches"] = "Тайник Разлома"
+	L["Zovaal's Vault"] = "Хранилище Зоваала"
 end

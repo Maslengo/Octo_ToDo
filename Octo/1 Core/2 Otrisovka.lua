@@ -578,7 +578,7 @@ function E:func_Otrisovka()
 					textCENT = CharInfo.MASLENGO.CurrencyID[1755]
 				end
 				if CharInfo.MASLENGO.ItemsInBag[173363] ~= nil then
-					textCENT = textCENT.." +"..CharInfo.MASLENGO.ItemsInBag[173363]..E.func_GetItemIconByID(173363)
+					textCENT = textCENT.." +"..CharInfo.MASLENGO.ItemsInBag[173363]..E.func_texturefromIcon(E.func_GetItemIconByID(173363))
 				end
 				return textCENT, tooltip, colorCENT
 		end)

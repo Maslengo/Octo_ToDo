@@ -93,6 +93,7 @@ function E.LoadCVars()
 		["useUiScale"] = 1,
 		["uiScale"] = 0.7111111111111111,
 		["WorldTextScale"] = 0.7111111111111111,
+		["ActionButtonUseKeyDown"] = 1,
 
 		-- Visual Effects
 		["ffxDeath"] = 1,

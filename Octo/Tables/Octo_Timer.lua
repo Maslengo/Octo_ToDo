@@ -15,7 +15,7 @@ local function CreateTimer(baseTime, interval, duration, colorBefore, colorDurin
 		timerText = colorDuring..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 
-	return timerText .. (label or "")
+	return timerText..(label or "")
 end
 
 -- Legion Invasion
@@ -45,7 +45,7 @@ function E.Timers.Legion_Invasion()
 		end
 	end
 
-	return timerText .. str
+	return timerText..str
 end
 
 -- BfA Invasion
@@ -77,7 +77,7 @@ function E.Timers.BfA_Invasion()
 		end
 	end
 
-	return timerText .. str
+	return timerText..str
 end
 
 -- baseTime, interval, duration, colorBefore, colorDuring, label)
@@ -126,60 +126,41 @@ function E.Timers.Daily_Reset()
 	return timerText..E.Gray_Color.."Daily Reset|r"
 end
 
+-- 04.07.2025 00ч	0		     	0	1	2346 (TWW шахта)	85   	(ОГРИ)
+-- 04.07.2025 01ч	3600			1	2	85   (ОГРИ)     	2248 	(TWW остров)
+-- 04.07.2025 02ч	7200			2	3	2248 (TWW остров)	84   	(ШТОРМ)
+-- 04.07.2025 03ч	10800			3	4	84   (ШТОРМ)    	2346 	(TWW шахта)
+
 
 local spawns = {
-	{mapId = 2112, name="в Вальдракене"},
-	{mapId = 84, name="в Штормграде"},
-	{mapId = 2022, name="на Берегах Пробуждения"},
-	{mapId = 85, name="в Оргриммаре"},
-	{mapId = 2023, name="на Равнинах Он'ары"},
-	{mapId = 84, name="в Штормграде"},
-	{mapId = 2024, name="в Лазурном Просторе"},
-	{mapId = 85, name="в Оргриммаре"},
-	{mapId = 2025, name="в Тальдразусе"},
-	{mapId = 84, name="в Штормграде"},
-	{mapId = 2112, name="в Вальдракене"},
-	{mapId = 85, name="в Оргриммаре"},
-	{mapId = 2022, name="на Берегах Пробуждения"},
-	{mapId = 84, name="в Штормграде"},
-	{mapId = 2023, name="на Равнинах Он'ары"},
-	{mapId = 85, name="в Оргриммаре"},
-	{mapId = 2024, name="в Лазурном Просторе"},
-	{mapId = 84, name="в Штормграде"},
-	{mapId = 2025, name="в Тальдразусе"},
-	{mapId = 85, name="в Оргриммаре"}
+	{mapId = 2346},  -- TWW шахта (первая локация)
+	{mapId = 85},    -- ОГРИ 1:00
+	{mapId = 2248},  -- TWW остров
+	{mapId = 84},    -- ШТОРМ
 }
 
 function E.Timers.Treasure_Goblin()
-	local offset = 1675076400 -- = time({year=2023,month=1,day=30,hour=12})
-	local interval = 1800 -- 30 минут в секундах
-	local portal_delay = 1500 -- 25 минут в секундах
+	if #spawns == 0 then return "Нет точек спауна!" end
+
+	local offset = 1698494400
+	local interval = 3600     -- 1 час в секундах
+	local delay = 600         -- 10 минут в секундах
 
 	local current_time = time()
 	local elapsed = current_time - offset
-	local cycle_position = elapsed / interval
-	local cycle_remainder = (math.floor(cycle_position) - cycle_position + 1) * interval
-	local next_index = (math.ceil(cycle_position) - 1) % #spawns + 1
+	if elapsed < 0 then return "Ожидание начала цикла..." end
 
-	local spawn = spawns[next_index]
-	local next_location = spawn.name
+	-- Текущая и следующая локации
+	local cycle_position = math.floor(elapsed / interval)
+	local current_index = cycle_position % #spawns + 1
+	local next_index = current_index % #spawns + 1
 
-	local time_until_portal = cycle_remainder
-	local time_until_goblin = time_until_portal - portal_delay
+	local current_location = E.func_GetMapName(spawns[current_index].mapId)
+	local next_location = E.func_GetMapName(spawns[next_index].mapId)
 
-	local message, location
-	if time_until_portal < portal_delay then
-		local s, f = SecondsToTimeAbbrev(time_until_portal)
-		-- message = "|cff1abc9cПортал появится через " .. s:format(f)
-		location = next_location
-	else
-		local t, f = SecondsToTimeAbbrev(time_until_goblin)
-		-- message = "|cffe74c3cГоблин появится через " .. t:format(f)
-		location = spawns[next_index == 1 and #spawns or next_index - 1].name
-	end
-
-	local vivod = --[[message .. " " .. ]]next_location .. " -> " .. location
-	return CreateTimer(1675076400, 1800, 300, E.Red_Color, E.Green_Color) .. vivod
+	-- Форматированный вывод
+	local vivod = current_location .. E.Gray_Color .. " -> " .. next_location .. "|r"
+	return CreateTimer(offset, interval, delay, E.Red_Color, E.Green_Color) .. vivod
 end
 
 function E.Timers.ElementalStorm()
@@ -233,13 +214,13 @@ end
 --         if state == 2 and timeOfNextStateChange then
 --             -- attacking
 --             -- rest time available
---             vivod = vivod .. E.WOW_Poor_Color..("1)   "..contributionName.." ~ "..SecondsToTime(timeOfNextStateChange - GetServerTime()) ).."|r|n"
---             vivod = vivod .. E.WOW_Common_Color..("2)   "..stateName.." ~ "..date("%m/%d %H:%M", timeOfNextStateChange) ).."|r|n"
+--             vivod = vivod..E.WOW_Poor_Color..("1)   "..contributionName.." ~ "..SecondsToTime(timeOfNextStateChange - GetServerTime()) ).."|r|n"
+--             vivod = vivod..E.WOW_Common_Color..("2)   "..stateName.." ~ "..date("%m/%d %H:%M", timeOfNextStateChange) ).."|r|n"
 --         elseif state == 2 then
 --             -- rest time not available
 --             local expectTime = 7 * 24 * 60 * 60 -- 7 days
---             vivod = vivod .. E.WOW_Uncommon_Color..("3)   "..contributionName.." ~ ".."100%" ).."|r|n"
---             vivod = vivod .. E.WOW_Rare_Color..("4)   "..stateName.." ~ "..date("~ %m/%d %H:00", expectTime + GetServerTime()) ).."|r|n"
+--             vivod = vivod..E.WOW_Uncommon_Color..("3)   "..contributionName.." ~ ".."100%" ).."|r|n"
+--             vivod = vivod..E.WOW_Rare_Color..("4)   "..stateName.." ~ "..date("~ %m/%d %H:00", expectTime + GetServerTime()) ).."|r|n"
 --         elseif stateAmount then
 --             -- contributing
 --             -- contribute amount available
@@ -253,11 +234,11 @@ end
 --             else
 --                 expectTimeText = format("%d", hour)
 --             end
---             vivod = vivod .. E.WOW_Epic_Color..("5)   "..contributionName.." ~ "..format("%.2f%% (%s)", stateAmount * 100, expectTimeText) ).."|r|n"
---             vivod = vivod .. E.WOW_Legendary_Color..("6)   "..stateName.." ~ "..date("~ %m/%d %H:00", expectTime + GetServerTime()) ).."|r|n"
+--             vivod = vivod..E.WOW_Epic_Color..("5)   "..contributionName.." ~ "..format("%.2f%% (%s)", stateAmount * 100, expectTimeText) ).."|r|n"
+--             vivod = vivod..E.WOW_Legendary_Color..("6)   "..stateName.." ~ "..date("~ %m/%d %H:00", expectTime + GetServerTime()) ).."|r|n"
 --         else
 --             -- contribute amount not available
---             vivod = vivod .. E.Venthyr_Color..("7)   "..contributionName.." ~ "..stateName ).."|r|n"
+--             vivod = vivod..E.Venthyr_Color..("7)   "..contributionName.." ~ "..stateName ).."|r|n"
 --         end
 --         print (vivod)
 --     end
