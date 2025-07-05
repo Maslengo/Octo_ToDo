@@ -1,58 +1,93 @@
 local GlobalAddonName, E = ...
 local Octo_EventFrame = CreateFrame("FRAME")
 Octo_EventFrame:Hide()
+
+----------------------------------------------------------------
+-- Frequently used functions and variables moved to the top
 ----------------------------------------------------------------
 local UIParent = UIParent
 local CreateFrame = CreateFrame
 local Show = Show
 local Hide = Hide
+local pairs = pairs
+local ipairs = ipairs
+local table_remove = table.remove
+local table_insert = table.insert
+local C_Item = C_Item
+local C_Spell = C_Spell
+local C_Timer = C_Timer
+local GameTooltip = GameTooltip
+local C_TradeSkillUI = C_TradeSkillUI
+-- Spell functions
+local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
+local GetSpellDescription = GetSpellDescription or C_Spell.GetSpellDescription
+local GetSpellName = GetSpellName or C_Spell.GetSpellName
+local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
+local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
+local IsSpellKnown = IsSpellKnown
+-- Item functions
+local GetItemCooldown = GetItemCooldown or C_Item.GetItemCooldown
+local GetItemCount = GetItemCount or C_Item.GetItemCount
+local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
+local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
+local GetItemInfoInstant = GetItemInfoInstant or C_Item.GetItemInfoInstant
+local GetItemInventoryTypeByID = GetItemInventoryTypeByID or C_Item.GetItemInventoryTypeByID
+local GetItemMaxStackSizeByID = GetItemMaxStackSizeByID or C_Item.GetItemMaxStackSizeByID
+local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
+local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
+local GetItemQualityColor = GetItemQualityColor or C_Item.GetItemQualityColor
+local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
+local IsAnimaItemByID = IsAnimaItemByID or C_Item.IsAnimaItemByID
+local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
 
---------------------------------------
--- Frames
---------------------------------------
-
-local flyOutButtons = {}
-local flyOutButtonsPool = {}
-local flyOutFrames = {}
-local flyOutFramesPool = {}
 local secureButtons = {}
 local secureButtonsPool = {}
 
+local MyTESTid = 26573 -- Лужа паладина
+local globalWidth, globalHeight = 40, 40 -- defaults
+local DEFAULT_ICON = "Interface\\Icons\\INV_Misc_QuestionMark"
+
+----------------------------------------------------------------
+-- Optimized helper functions
+----------------------------------------------------------------
 local function IsItemEquipped(id)
 	return C_Item.IsEquippableItem(id) and C_Item.IsEquippedItem(id)
 end
 
 local function SetTextureByItemId(frame, itemId)
-	frame:SetNormalTexture(DEFAULT_ICON) -- Temp while loading
-	local item = Item:CreateFromItemID(tonumber(itemId))
+	frame.Icon:SetTexture(DEFAULT_ICON) -- Temp while loading
+	local item = Item:CreateFromItemID(itemId)
 	item:ContinueOnItemLoad(function()
-		local icon = item:GetItemIcon()
-		frame:SetNormalTexture(icon)
+			local icon = item:GetItemIcon()
+			frame.Icon:SetTexture(E.func_GetItemIconByID(itemId))
 	end)
 end
+
+local function ClearAllInvalidHighlights()
+	for _, button in pairs(secureButtons) do
+		button:ClearHighlightTexture()
+
+		if button:GetAttribute("item") ~= nil then
+			local id = string.match(button:GetAttribute("item"), "%d+")
+			if IsItemEquipped(id) then
+				button:Highlight()
+			end
+		end
+	end
+end
 ----------------------------------------------------------------
-local GlowTexture = "Interface\\AddOns\\Octo\\Media\\BUTTON\\GlowTexture.tga"
-local ClickTexture = "Interface\\AddOns\\Octo\\Media\\BUTTON\\ClickTexture.tga"
-local ShowBlackSwipe = true
-local ShowYellowSwipe = true
-
-
 local function createCooldownFrame(frame)
-	-- Если у переданного frame уже есть cooldownFrame, функция просто возвращает существующий фрейм, а не создает новый
-
 	if frame.cooldownFrame then
 		return frame.cooldownFrame
 	end
-	frame.cooldownFrame = CreateFrame("Cooldown", nil, frame, "CooldownFrameTemplate") -- '$parentCooldown'
+	frame.cooldownFrame = CreateFrame("Cooldown", nil, frame, "CooldownFrameTemplate")
 	frame.cooldownFrame:SetAllPoints()
 
-	function frame.cooldownFrame:CheckCooldown(id, type)
-		if not id then
-			return
-		end
+	function frame.cooldownFrame:CheckCooldown(id, curType)
+		if not id or not E:func_IsAvailable(id, curType) then return end
 		if frame:IsVisible() then
 			local start, duration, enabled
-			if type == "toy" or type == "item" then
+			if curType == "toy" or curType == "item" then
 				start, duration, enabled = C_Item.GetItemCooldown(id)
 			else
 				local cooldown = C_Spell.GetSpellCooldown(id)
@@ -71,213 +106,191 @@ local function createCooldownFrame(frame)
 	return frame.cooldownFrame
 end
 
+----------------------------------------------------------------
+function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 
 
+	-- local function CreateButton(parent, curType, text, id)
+	if id and type(id) == "number" then
+		local curType = curType or "spell"
+		local button
+		if next(secureButtonsPool) then
+			button = table_remove(secureButtonsPool)
+		else
+			button = CreateFrame('Button', nil, nil, "SecureActionButtonTemplate")
+			button.Cooldown = createCooldownFrame(button)
+			button.Text = button:CreateFontString(nil, 'OVERLAY', 'NumberFontNormal')
+			button:LockHighlight()
+			button.Text:SetPoint("BOTTOM", button, "BOTTOM", 0, 5)
+			table_insert(secureButtons, button)
+		end
 
-local function onLeave()
-	GameTooltip:Hide()
-end
-
-local function OnClick()
-
-end
-
-
-local type = "spell"
-local MyTESTid = 26573 -- ЛУЖА ПАЛАДИНА
-local size = 44
-
-
-local function ClearAllInvalidHighlights()
-	for _, button in pairs(secureButtons) do
-		button:ClearHighlightTexture()
-
-		if button:GetAttribute("item") ~= nil then
-			local id = string.match(button:GetAttribute("item"), "%d+")
-			if IsItemEquipped(id) then
-				button:Highlight()
+		function button:Recycle()
+			self:SetParent(nil)
+			self:ClearAllPoints()
+			self:Hide()
+			if curType == "item" and not C_Item.IsEquippedItem(id) then
+				self:ClearHighlightTexture()
 			end
+
+			table_insert(secureButtonsPool, self)
 		end
-	end
-end
+
+		button:Hide()
+		-- button:EnableMouse(true)
+
+		button.Icon = button:CreateTexture(nil, "BACKGROUND")
+		button.Icon:SetAllPoints(button)
 
 
-local function CreateButton(frame, type, text, id, hearthstone)
-	local button
-	if next(secureButtonsPool) then
-		button = table.remove(secureButtonsPool)
-	else
-		button = CreateFrame('Button', nil, nil, "SecureActionButtonTemplate") -- ActionButtonTemplate, ПОРТИТСЯ ХАЙЛАЙТ
-		button.Cooldown = createCooldownFrame(button)
-		button.Text = button:CreateFontString(nil, 'OVERLAY', 'NumberFontNormal')
-		button:LockHighlight()
-		button.Text:SetPoint("BOTTOM", button, "BOTTOM", 0, 5)
-		table.insert(secureButtons, button)
-	end
-
-	function button:Recycle()
-		self:SetParent(nil)
-		self:ClearAllPoints()
-		self:Hide()
-		if type == "item" and not C_Item.IsEquippedItem(id) then
-			self:ClearHighlightTexture()
-		end
-		table.insert(secureButtonsPool, self)
-	end
-
-	button:Hide()
-	button:SetPoint("CENTER")
-	button:SetSize(size, size)
-	button:EnableMouse(true)
-	button:RegisterForClicks("AnyDown", "AnyUp")
 
 
-	----------------
-	----------------
-	button.Icon = button:CreateTexture(nil, "BACKGROUND")
-	button.Icon:SetAllPoints(button)
-	----------------
-	button.Text:SetPoint('BOTTOMRIGHT', button, 'BOTTOMRIGHT', -1, 0)
-	button.Text:SetText(text)
-	----------------
-	button:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
+		button.Text:SetPoint('BOTTOMRIGHT', button, 'BOTTOMRIGHT', -1, 0)
+		button.Text:SetText(text)
 
+		button:SetScript("OnEnter", function(self)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+				GameTooltip:ClearLines()
 
-			if type == "item" then
-				GameTooltip:SetItemByID(MyTESTid)
-			elseif type == "item_teleports" then
-				GameTooltip:SetText(L["Item Teleports"] .. "\n" .. L["Item Teleports Tooltip"], 1, 1, 1)
-			elseif type == "toy" then
-				GameTooltip:SetToyByItemID(MyTESTid)
-			elseif type == "spell" then
-				GameTooltip:SetSpellByID(MyTESTid)
-			elseif type == "flyout" then
-				local name = GetFlyoutInfo(MyTESTid)
-				GameTooltip:SetText(name, 1, 1, 1)
-			elseif type == "profession" then
-				local professionInfo = C_TradeSkillUI.GetProfessionInfoBySkillLineID(MyTESTid)
-				if professionInfo then
-					GameTooltip:SetText(professionInfo.professionName, 1, 1, 1)
-				end
-			elseif type == "seasonalteleport" then
-				local currExpID = GetExpansionLevel()
-				local expName = _G["EXPANSION_NAME" .. currExpID]
-				local title = MYTHIC_DUNGEON_SEASON:format(expName, tpm.settings.current_season)
-				GameTooltip:SetText(title, 1, 1, 1)
-				GameTooltip:AddLine(L["Seasonal Teleports Tooltip"], 1, 1, 1)
+				if curType == "item" then
+					GameTooltip:SetItemByID(id)
+				elseif curType == "item_teleports" then
+					GameTooltip:SetText(L["Item Teleports"] .. "\n" .. L["Item Teleports Tooltip"], 1, 1, 1)
+				elseif curType == "toy" then
+					GameTooltip:SetToyByItemID(id)
+				elseif curType == "spell" then
+					GameTooltip:SetSpellByID(id)
+				elseif curType == "flyout" then
+					local name = GetFlyoutInfo(id)
+					GameTooltip:SetText(name, 1, 1, 1)
+				elseif curType == "profession" then
+					local professionInfo = C_TradeSkillUI.GetProfessionInfoBySkillLineID(id)
+					if professionInfo then
+						GameTooltip:SetText(professionInfo.professionName, 1, 1, 1)
+					end
+				elseif curType == "seasonalteleport" then
+					local currExpID = GetExpansionLevel()
+					local expName = _G["EXPANSION_NAME" .. currExpID]
+					local title = MYTHIC_DUNGEON_SEASON:format(expName, tpm.settings.current_season)
+					GameTooltip:SetText(title, 1, 1, 1)
+					GameTooltip:AddLine(L["Seasonal Teleports Tooltip"], 1, 1, 1)
 					GameTooltip:Show()
+				end
+		end)
+
+		button:SetScript('OnLeave', GameTooltip_Hide)
+
+		button:SetScript("PostClick", function(self)
+				if curType == "item" and C_Item.IsEquippableItem(id) then
+					C_Timer.After(0.25, function()
+							if IsItemEquipped(id) then
+								ClearAllInvalidHighlights()
+								self:Highlight()
+							end
+					end)
+				end
+		end)
+
+		button:SetScript("OnShow", function(self)
+				self.cooldownFrame:CheckCooldown(id, curType)
+				self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
+				self:RegisterEvent("PLAYER_REGEN_DISABLED")
+		end)
+
+		button:SetScript("OnHide", function(self)
+				self:UnregisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
+				self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end)
+
+		button:SetScript("OnEvent", function(self, event)
+			if event == "ACTIONBAR_UPDATE_COOLDOWN" then
+				if curType == "spell" and IsSpellKnown(id) and C_Spell.GetSpellCharges(id) then
+					button.Text:SetText(C_Spell.GetSpellCharges(id).currentCharges)
+				end
+				self.cooldownFrame:CheckCooldown(id, curType)
 			end
 
 		end)
 
-	button:SetScript('OnLeave', onLeave)
-	button:SetScript('OnClick', OnClick)
+		-- Textures
+		button:SetPushedAtlas("UI-HUD-ActionBar-IconFrame-Down")
+		button.PushedTexture = button:GetPushedTexture()
+		button.PushedTexture:ClearAllPoints()
+		button.PushedTexture:SetPoint("CENTER")
+		button.PushedTexture:SetSize(size-2, size-2)
+		button.PushedTexture:SetDrawLayer("OVERLAY")
+		button.PushedTexture:SetSize(size, size)
 
 
-	button:SetScript("PostClick", function(self)
-		if type == "item" and C_Item.IsEquippableItem(id) then
-			C_Timer.After(0.25, function() -- Slight delay due to equipping the item not being instant.
-				if IsItemEquipped(id) then
-					ClearAllInvalidHighlights()
-					self:Highlight()
-				end
-			end)
+
+
+		if curType == "spell" then
+			button.Icon:SetTexture(E.func_GetSpellIcon(id))
+		else -- item or toy
+			SetTextureByItemId(button, id)
 		end
-	end)
 
-	button:SetScript("OnShow", function(self)
-			self.cooldownFrame:CheckCooldown(id, type)
-			self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
-	end)
-	button:SetScript("OnHide", function(self)
-			self:UnregisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
-	end)
+		-- Attribute
+		if E:func_IsAvailable(id, curType) == false then
+			button.Icon:SetDesaturated(true)
+			button:SetAlpha(.5)
+		else
+			button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+			-- button:RegisterForClicks("AnyDown", "AnyUp")
 
-	button:SetScript("OnEvent", function(self)
-			self.cooldownFrame:CheckCooldown(id, type)
-	end)
-
-	-- Textures
-	----------------
-	button:SetPushedAtlas("UI-HUD-ActionBar-IconFrame-Down")
-	button.PushedTexture = button:GetPushedTexture()
-	button.PushedTexture:ClearAllPoints()
-	button.PushedTexture:SetPoint("CENTER")
-	button.PushedTexture:SetSize(size-2, size-2)
-	button.PushedTexture:SetDrawLayer("OVERLAY")
-	button.PushedTexture:SetSize(size, size)
-	----------------
-	-- button:SetHighlightAtlas("UI-HUD-ActionBar-IconFrame-Mouseover", "ADD")
-	-- button.HighlightTexture:SetSize(size, size)
-	----------------
-	if type == "spell" then
-		button.Icon:SetTexture(E.func_GetSpellIcon(id))
-		-- icon:SetTexCoord(.05, .95, .05, .95) -- zoom 5%
-	else -- item or toy
-		SetTextureByItemId(button, id)
-	end
-	----------------
-	-- Attributes
-	button:SetAttribute("type", type)
-	if type == "item" then
-		button:SetAttribute(type, "item:" .. id)
-		if C_Item.IsEquippableItem(id) and IsItemEquipped(id) then
-			button:Highlight()
+			if curType == "item" or curType == "toy" then
+				button:SetAttribute("type", "item")
+				button:SetAttribute("item", "item:"..id)
+			else
+				button:SetAttribute("type", "spell")
+				button:SetAttribute("spell", GetSpellName(id)) -- или button:SetAttribute("spell", id) для ID
+			end
 		end
-	else
-		button:SetAttribute(type, id)
+
+
+		-- Positioning/Size
+		button:SetParent(parent)
+		button:SetPoint(point, parent, rPoint, x, y)
+		button:SetSize(size, size)
+		button:SetFrameStrata("HIGH")
+		button:SetFrameLevel(102)
+
+		return button
 	end
-
-
-	-- Positioning/Size
-	button:SetParent(frame)
-	button:SetSize(size, size)
-	button:SetFrameStrata("HIGH")
-	button:SetFrameLevel(102) -- This needs to be lower than the flyout frame
-
-	----------------
-	return button
 end
 ----------------------------------------------------------------
+-- /dump
 function Octo_EventFrame:OnLoad()
-	CreateButton(UIParent, "spell", "teXT", MyTESTid)
-
-	for k, frame in ipairs(secureButtons) do
-		frame:Show()
-	end
+	-- CreateButton(UIParent, "spell", "", MyTESTid):Show()
+	-- for _, frame in ipairs(secureButtons) do
+	--     frame:Show()
+	-- end
 end
+
 function Octo_EventFrame:Update()
-
-	for k, frame in ipairs(secureButtons) do
-		if not frame:IsShown() then
-			frame:Show()
-		end
-		-- frame.cooldownFrame:CheckCooldown(MyTESTid, type)
-	end
-
-
-
+	-- for _, frame in ipairs(secureButtons) do
+	--     if not frame:IsShown() then
+	--         frame:Show()
+	--     end
+	-- end
 end
+
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
-	"UPDATE_BINDINGS",
-	"GAME_PAD_ACTIVE_CHANGED",
-	"PLAYER_ENTERING_WORLD",
-	"ACTIONBAR_UPDATE_COOLDOWN",
 }
 E.RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable, E.func_DebugPath())
+
 ----------------------------------------------------------------
 function Octo_EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
-	----------------
 	self:OnLoad()
 end
-----------------------------------------------------------------
-function Octo_EventFrame:ACTIONBAR_UPDATE_COOLDOWN()
-	self:Update()
+
+
+function Octo_EventFrame:PLAYER_REGEN_DISABLED()
+
+
 end

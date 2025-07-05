@@ -16,7 +16,7 @@ local function ShouldShowButton(v, curFaction, curRace, curClass, curProfession,
 end
 
 function Octo_EventFrame_PortalsFrame:PortalsFrame()
-	local Height = Octo_ToDo_DB_Vars.AddonHeight*2
+	local Height = 32 -- Octo_ToDo_DB_Vars.AddonHeight
 	local curFaction = UnitFactionGroup("player")
 	local curRace = select(2, UnitRace("player"))
 	local curClass = select(2, UnitClass("player"))
@@ -64,7 +64,10 @@ function Octo_EventFrame_PortalsFrame:PortalsFrame()
 					local curType = type(v) == "number" and "spell" or v.curType
 
 					if not Octo_ToDo_DB_Vars.PortalsButtonsOnlyAvailable or E:func_IsAvailable(id, curType) then
-						E:CreateUsableSpellFrame(
+						-- E:CreateUsableSpellFrame(
+						E:OctoCreateButton(
+
+
 							id,
 							"TOPLEFT",
 							AnchorFrame,

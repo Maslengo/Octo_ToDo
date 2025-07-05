@@ -44,7 +44,7 @@ function Octo_EventFrame_AutoTurnIn:ProcessActiveQuests()
 	for i = 1, GetNumActiveQuests() do
 		local _, isComplete = GetActiveTitle(i)
 		local questID = GetActiveQuestID(i)
-		if isComplete and not C_QuestLog.IsWorldQuest(questID) then
+		if questID and isComplete and not C_QuestLog.IsWorldQuest(questID) then
 			C_GossipInfo.SelectActiveQuest(i)
 		end
 	end

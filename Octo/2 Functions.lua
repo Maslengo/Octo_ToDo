@@ -137,7 +137,10 @@ local GetSpellDescription = GetSpellDescription or C_Spell.GetSpellDescription
 local GetSpellName = GetSpellName or C_Spell.GetSpellName
 local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
 local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
+local GetSpellCharges = GetSpellCharges or C_Spell.GetSpellCharges
 local IsSpellKnown = IsSpellKnown
+
+
 
 -- Currency functions
 local GetCurrencyInfo = GetCurrencyInfo or C_CurrencyInfo.GetCurrencyInfo
