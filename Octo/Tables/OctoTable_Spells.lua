@@ -20,30 +20,20 @@ E.Octo_ProfessionsskillLine_Other = {
 	[794] = true,
 }
 E.OctoTable_Portals = {
-	{
-		{id = 187898, curType = "item", level = 20,},
-		{id = 187869, curType = "item", level = 20,},
-		{id = 187875, curType = "item", level = 20,},
-		{id = 187895, curType = "item", level = 20,},
-		{id = 187897, curType = "item", level = 20,},
-		{id = 187896, curType = "item", level = 20,},
-		{id = 187899, curType = "item", level = 20,},
-		{id = 187900, curType = "item", level = 20,},
-		{id = 150743, curType = "item", level = 20, faction = "Alliance",},  -- ALLY
-		{id = 150744, curType = "item", level = 20, faction = "Horde",},  -- HORDE
-		{id = 150746, curType = "item", level = 20, faction = "Alliance",},  -- ALLY
-		{id = 150745, curType = "item", level = 20, faction = "Horde",},  -- HORDE
-	},
-	{
-		{id = 198156, curType = "toy", profession = "Engineering",},
-		{id = 151652, curType = "toy", profession = "Engineering",},
-		{id = 168808, curType = "toy", profession = "Engineering",},
-		{id = 168807, curType = "toy", profession = "Engineering",},
-		{id = 48933, curType = "toy", profession = "Engineering",},
-		{id = 87215, curType = "toy", profession = "Engineering",},
-		{id = 172924, curType = "toy", profession = "Engineering",},
-		{id = 112059, curType = "toy", profession = "Engineering",},
-	},
+	-- {
+	-- 	{id = 187898, curType = "item", level = 20,},
+	-- 	{id = 187869, curType = "item", level = 20,},
+	-- 	{id = 187875, curType = "item", level = 20,},
+	-- 	{id = 187895, curType = "item", level = 20,},
+	-- 	{id = 187897, curType = "item", level = 20,},
+	-- 	{id = 187896, curType = "item", level = 20,},
+	-- 	{id = 187899, curType = "item", level = 20,},
+	-- 	{id = 187900, curType = "item", level = 20,},
+	-- 	{id = 150743, curType = "item", level = 20, faction = "Alliance",},  -- ALLY
+	-- 	{id = 150744, curType = "item", level = 20, faction = "Horde",},  -- HORDE
+	-- 	{id = 150746, curType = "item", level = 20, faction = "Alliance",},  -- ALLY
+	-- 	{id = 150745, curType = "item", level = 20, faction = "Horde",},  -- HORDE
+	-- },
 	-- OTHER
 	{
 		{id = 110560, curType = "toy",},
@@ -54,7 +44,6 @@ E.OctoTable_Portals = {
 		436854, -- режим полёта
 		-- 72286, -- НЕПОБЕДИМЫЙ
 		{id = 193753, class = "DRUID",},
-		{id = 99, class = "DRUID",},
 		{id = 50977, class = "DEATHKNIGHT",},
 		{id = 53428, class = "DEATHKNIGHT",},
 		{id = 556, class = "SHAMAN",},
@@ -69,6 +58,17 @@ E.OctoTable_Portals = {
 		460905,
 		431280,
 		{id = 187339, curType = "toy",},
+	},
+	-- Engineering
+	{
+		{id = 48933, curType = "toy", profession = "Engineering",}, -- WOTLK
+		{id = 87215, curType = "toy", profession = "Engineering",}, -- PANDA
+		{id = 112059, curType = "toy", profession = "Engineering",}, -- DRAENOR
+		{id = 151652, curType = "toy", profession = "Engineering",}, -- LEGION
+		{id = 168808, curType = "toy", profession = "Engineering",}, -- BFA
+		{id = 168807, curType = "toy", profession = "Engineering",}, -- BFA
+		{id = 172924, curType = "toy", profession = "Engineering",}, -- SL
+		{id = 198156, curType = "toy", profession = "Engineering",}, -- DF
 	},
 	--["Portals_Mage_Solo"] = {
 		{
@@ -236,17 +236,17 @@ E.OctoTable_Portals = {
 		445269, -- name = "SV", expansion = "the war within", mapID = {501}}, -- The Stonevault
 	},
 	-- TWW S1
-	{
-		{id = 464256, faction = "Horde",},  -- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Horde)
-		{id = 445418, faction = "Alliance",}, -- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Alliance)
-		354464, -- Mists
-		354462, -- Necrotic Wake
-		445269, -- Stonevault
-		445416, -- City of Threads
-		445417, -- Ara Ara
-		445414, -- The Dawnbreaker
-		445424, -- Grim Batol
-	},
+	-- {
+	-- 	{id = 464256, faction = "Horde",},  -- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Horde)
+	-- 	{id = 445418, faction = "Alliance",}, -- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Alliance)
+	-- 	354464, -- Mists
+	-- 	354462, -- Necrotic Wake
+	-- 	445269, -- Stonevault
+	-- 	445416, -- City of Threads
+	-- 	445417, -- Ara Ara
+	-- 	445414, -- The Dawnbreaker
+	-- 	445424, -- Grim Batol
+	-- },
 	-- TWW S2
 	{
 		{id = 467555, faction = "Horde",}, -- name = "ML", expansion = "battle for azeroth", mapID = {247}}, -- The MOTHERLODE

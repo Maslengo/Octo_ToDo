@@ -29,7 +29,6 @@ function E.LoadOctoUIforAddons()
 		end
 	end
 
-
 	local AddonsAndDB = {
 		{database = AddonCpuUsageDB, profileName = "OctoUI"}, -- ACU
 		{database = AddOnSkinsDB, profileName = "OctoUI"}, -- AddOnSkins
@@ -50,7 +49,6 @@ function E.LoadOctoUIforAddons()
 		{database = VMRT, profileName = "OctoUI"}, -- MRT
 		{database = WarpDepleteDB, profileName = "OctoUI"}, -- WarpDeplete
 	}
-
 
 	for k, v in ipairs(AddonsAndDB) do
 		local addonName = v.addonName

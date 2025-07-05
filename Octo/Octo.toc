@@ -1,7 +1,7 @@
 ## Interface: 110107
 ## Title: !|cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r
 ## Author: Octo
-## Version: v94.7(11.1.7)(05.07.2025)
+## Version: v94.8(11.1.7)(06.07.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Core
 
 ## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other

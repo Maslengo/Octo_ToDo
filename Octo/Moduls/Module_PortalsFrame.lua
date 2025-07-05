@@ -16,7 +16,7 @@ local function ShouldShowButton(v, curFaction, curRace, curClass, curProfession,
 end
 
 function Octo_EventFrame_PortalsFrame:PortalsFrame()
-	local Height = 32 -- Octo_ToDo_DB_Vars.AddonHeight
+	local Height = 40 -- Octo_ToDo_DB_Vars.AddonHeight
 	local curFaction = UnitFactionGroup("player")
 	local curRace = select(2, UnitRace("player"))
 	local curClass = select(2, UnitClass("player"))
@@ -32,8 +32,9 @@ function Octo_EventFrame_PortalsFrame:PortalsFrame()
 	end
 
 	-- Create anchor frame
+	local indend = 1
 	local AnchorFrame = CreateFrame("Frame", nil, GameMenuFrame, "BackdropTemplate")
-	AnchorFrame:SetPoint("TOPRIGHT", GameMenuFrame, "TOPLEFT", 0, Height)
+	AnchorFrame:SetPoint("TOPRIGHT", GameMenuFrame, "TOPLEFT", -(indend*2), Height+(indend*2))
 	AnchorFrame:SetSize(Height, Height)
 
 	AnchorFrame.icon = AnchorFrame:CreateTexture()
@@ -72,8 +73,8 @@ function Octo_EventFrame_PortalsFrame:PortalsFrame()
 							"TOPLEFT",
 							AnchorFrame,
 							"TOPLEFT",
-							-Height * column,
-							-Height * row,
+							-(Height+indend) * column,
+							-(Height+indend) * row,
 							Height,
 							curType
 						)
