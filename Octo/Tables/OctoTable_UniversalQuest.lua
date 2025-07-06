@@ -3185,6 +3185,29 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 13,
 	},
+
+	{
+		icon = E.func_GetItemIconByID(245589),
+		textleft = E.Timers.Treasure_Goblin()..E.func_npcName(205490),
+		name_save = "TreasureGoblin",
+		reset = "Once",
+		desc = "HolidaysAGreedyEmissary",
+		questID = {
+			76215, -- шам, пал ->Убийство гоблина -- /run print(C_QuestLog.IsQuestFlaggedCompleted(76215))
+
+			-- 91091, -- шам, (хз на пале не сделан)
+			-- 76216, -- шам
+
+			-- 91166, -- шам
+			-- 91167, -- шам
+			-- 91168, -- шам
+			-- 91169, -- пал ->Открытие сундука
+			-- 91170, -- пал ->Открытие сундука
+		},
+		max = 1,
+	},
+
+
 	-- {
 	-- 	icon = E.func_GetItemIconByID(38181), -- https://www.wowhead.com/ptr/storyline/5718
 	-- 	textleft = E.func_questName(85884),
@@ -3264,21 +3287,6 @@ E.OctoTable_UniversalQuest = {
 	-- 	},
 	-- 	max = 26,
 	-- },
-
-	{
-		icon = E.func_GetItemIconByID(245589),
-		textleft = E.Timers.Treasure_Goblin(),
-		name_save = "TreasureGoblin",
-		reset = "Once",
-		desc = "HolidaysAGreedyEmissary",
-		questID = {
-			76215,
-		},
-		max = 1,
-	},
-
-
-
 
 
 

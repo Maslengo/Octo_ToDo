@@ -249,7 +249,7 @@ function E.func_LFGdungName(dID)
 			return name  -- Возвращаем имя сразу при нахождении
 		end
 	end
-	return "noname"  -- Возвращаем значение по умолчанию только если ничего не найдено
+	return UNKNOWN  -- Возвращаем значение по умолчанию только если ничего не найдено
 end
 ----------------------------------------------------------------
 function E.func_GetSpellIcon(spellID)
@@ -319,13 +319,17 @@ function E.func_questName(questID, useLargeIcon)
 	if title then
 		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon)
 	else
-		vivod = vivod..E.Red_Color.."-".."|r"
+		vivod = vivod..UNKNOWN
 	end
 	if IsAccountQuest(questID) then
 		vivod = E.Icon_AccountWide.."|cffFFFF00"..vivod.."|r"
+		-- vivod = E.Icon_Warbands.."|cffFFFF00"..vivod.."|r"
+
 	end
 	if IsQuestFlaggedCompletedOnAccount(questID) then
 		vivod = E.Icon_AccountWide.."|cff9fc5e8"..vivod.."|r"
+		-- vivod = E.Icon_Warbands.."|cff9fc5e8"..vivod.."|r"
+
 	end
 	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..questID.."|r" or "")
 end
@@ -347,31 +351,9 @@ function E.func_reputationName(reputationID)
 			elseif name then
 				vivod = vivod.. name
 			else
-				vivod = vivod.. reputationID.. " (UNKNOWN)"
+				vivod = vivod.. reputationID.. "("..UNKNOWN..")"
 			end
 		end
-		----------------------------------------------------------------
-		-- local friendData = GetFriendshipReputation(reputationID)
-		-- local isFriend = friendData and true or false
-		-- if isFriend then
-		-- 	if (friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0) then
-		-- 		local texture = friendData.texture or error
-		-- 		vivod = E.func_texturefromIcon(texture) .. vivod .. "|cffFFF00F ".. texture .. "|r"
-		-- 	end
-		-- end
-		----------------------------------------------------------------
-		-- local isMajor = IsMajorFaction(reputationID) and true or false
-		-- if isMajor then
-		--     local majorData = GetMajorFactionData(reputationID) or 0
-		--     if majorData ~= 0 then
-		--         local textureKit = majorData.textureKit or 0
-		--         if textureKit ~= 0 then
-		--             local KitIcon = E.func_texturefromIcon(string_format("Interface\\ICONS\\UI_MajorFactions_%s", textureKit))
-		--             -- local KitIcon = E.func_texturefromIcon(string_format("Interface\\ICONS\\UI_MajorFactions_%s_256", textureKit))
-		--             vivod = "|cffFF00FF"..textureKit.."|r" .. KitIcon.. vivod
-		--         end
-		--     end
-		-- end
 		----------------------------------------------------------------
 		if side == "Alliance" then
 			vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
@@ -861,11 +843,10 @@ function E.func_npcName(npcID)
 	tooltip:ClearLines()
 	tooltip:SetHyperlink("unit:Creature-0-0-0-0-"..npcID)
 
-	local vivod = "|cffFF0000error|r"
+	local vivod = UNKNOWN
 	if tooltip:NumLines() > 0 then
 		vivod = _G["OctoScanningTooltipFUNCTextLeft1"]:GetText()
 	end
-
 	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..npcID.."|r" or "")
 end
 ----------------------------------------------------------------
@@ -1102,7 +1083,7 @@ function E.func_EmptyZero(value)
 	return value
 end
 ----------------------------------------------------------------
--- https://warcraft.wiki.gg/wiki/API_GetAccountExpansionLevel
+-- warcraft.wiki.gg/wiki/API_GetAccountExpansionLevel
 function E.func_CurrentExpansion()
 	if LE_EXPANSION_LEVEL_CURRENT ~= nil then
 		return LE_EXPANSION_LEVEL_CURRENT+1
@@ -1755,7 +1736,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 end
 function E.func_DebugPath()
 	local stack = debugstack(2)
-	local vivod1 = stack:match("Interface/AddOns/(.-):%d+") or "unknown"
+	local vivod1 = stack:match("Interface/AddOns/(.-):%d+") or UNKNOWN
 	local vivod2 = vivod1:gsub("]", "")
 	return tostring(vivod2)
 end
@@ -1895,10 +1876,10 @@ E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
 E.curGUID = UnitGUID("PLAYER")
 E.GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
-E.baseWowheadAzEsUrl = "https://%swowhead.com/azerite-essence/%s%s"
-E.baseWowheadTradingPostActivityUrl = "https://%swowhead.com/trading-post-activity/%s%s"
-E.baseArmoryUrl = "https://worldofwarcraft.blizzard.com/%s/character/%s/%s"
-E.baseRaiderIoUrl = "https://raider.io/characters/%s/%s/%s"
+E.baseWowheadAzEsUrl = "%swowhead.com/azerite-essence/%s%s"
+E.baseWowheadTradingPostActivityUrl = "%swowhead.com/trading-post-activity/%s%s"
+E.baseArmoryUrl = "worldofwarcraft.blizzard.com/%s/character/%s/%s"
+E.baseRaiderIoUrl = "raider.io/characters/%s/%s/%s"
 E.strategies = {}
 E.altStrategies = {}
 E.thursdayReset = (1514358000-10800)
@@ -2015,6 +1996,7 @@ E.NONE = E.Gray_Color.."None".."|r"
 E.AccountWide = E.Blue_Color.."(A)".."|r"
 E.AccountTransferable = E.Red_Color.."(T)".."|r"
 E.Icon_AccountWide = E.Blue_Color.."(A)".."|r"
+E.Icon_Warbands = CreateAtlasMarkup("warbands-icon", 16, 16)
 E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r"
 E.Icon_QuestionMark = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.Icon_Empty = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\spacerEMPTY"

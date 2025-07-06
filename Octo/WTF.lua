@@ -633,6 +633,16 @@ function Octo_EventFrame_WTF:Octo_DEBUG()
 	InitSubTable(Octo_DEBUG, "UniversalQuest")
 end
 
+
+
+function Octo_EventFrame_WTF:Octo_QuestsChangedDB()
+	Octo_QuestsChangedDB = InitTable(Octo_QuestsChangedDB)
+	InitSubTable(Octo_QuestsChangedDB, "log")
+end
+
+
+
+
 function Octo_EventFrame_WTF:Daily_Reset()
 	local ServerTime = GetServerTime()
 
@@ -737,6 +747,7 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:Octo_AddonsTable()
 		self:Octo_AddonsManager_DB()
 		self:Octo_DEBUG()
+		self:Octo_QuestsChangedDB()
 
 		-- Сброс данных по времени
 		self:Daily_Reset()

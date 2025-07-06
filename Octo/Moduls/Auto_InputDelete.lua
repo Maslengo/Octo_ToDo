@@ -1,6 +1,6 @@
 local _, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-
+local STATICPOPUP_NUMDIALOGS = STATICPOPUP_NUMDIALOGS or 1
 tinsert(E.Modules, function()
 	if not Octo_ToDo_DB_Vars.InputDelete then return end
 

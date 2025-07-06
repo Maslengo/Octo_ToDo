@@ -19,13 +19,13 @@ local regions = {
 local output_preffix = ""
 
 if E.func_IsRetail() == true then
-	E.baseWowheadUrl = "https://wowhead.com/%s%s=%s"
+	E.baseWowheadUrl = "wowhead.com/%s%s=%s"
 end
 if E.func_IsClassic() == true then
-	E.baseWowheadUrl = "https://wowhead.com/classic/%s=%s%s"
+	E.baseWowheadUrl = "wowhead.com/classic/%s=%s%s"
 end
 if E.func_IsCataclysm() == true then
-	E.baseWowheadUrl = "https://wowhead.com/cata/%s=%s%s"
+	E.baseWowheadUrl = "wowhead.com/cata/%s=%s%s"
 end
 
 

@@ -126,6 +126,11 @@ function E.Timers.Daily_Reset()
 	return timerText..E.Gray_Color.."Daily Reset|r"
 end
 
+function E.Timers.Treasure_Goblin()
+	return CreateTimer(1698494400, 3600, 600, E.Red_Color, E.Green_Color)
+end
+
+
 -- 04.07.2025 00ч	0		     	0	1	2346 (TWW шахта)	85   	(ОГРИ)
 -- 04.07.2025 01ч	3600			1	2	85   (ОГРИ)     	2248 	(TWW остров)
 -- 04.07.2025 02ч	7200			2	3	2248 (TWW остров)	84   	(ШТОРМ)
@@ -139,7 +144,7 @@ local spawns = {
 	{mapId = 84},    -- ШТОРМ
 }
 
-function E.Timers.Treasure_Goblin()
+function E.Timers.Treasure_Goblin2()
 	if #spawns == 0 then return "Нет точек спауна!" end
 
 	local offset = 1698494400

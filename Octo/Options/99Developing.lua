@@ -497,6 +497,7 @@ function E.Developing()
 			order = order3,
 			width = E.FULL_WIDTH/4,
 			func = function()
+				wipe(tbl)
 				tbl = nil
 				print (text.." = {}")
 				-- fpde(tbl)
@@ -517,6 +518,7 @@ function E.Developing()
 	add_args(Octo_AddonsTable, "Octo_AddonsTable")
 	add_args(Octo_AddonsManager_DB, "Octo_AddonsManager_DB")
 	add_args(Octo_DEBUG, "Octo_DEBUG")
+	add_args(Octo_QuestsChangedDB, "Octo_QuestsChangedDB")
 
 
 

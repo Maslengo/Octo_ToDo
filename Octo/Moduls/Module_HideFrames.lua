@@ -34,6 +34,8 @@ local OctoTable_MustBeHiddenFrames_SIMPLE = {
 	{name = "CheckListText", frame = CheckListText},
 	{name = "PrivateRaidBossEmoteFrameAnchor", frame = PrivateRaidBossEmoteFrameAnchor},
 	{name = "SubscriptionInterstitialFrame", frame = SubscriptionInterstitialFrame},  -- НАДО ПОФИКСИТЬ(в другом файле работает)
+	-- {name = "ActionStatus", frame = ActionStatus},
+	{name = "ActionStatus.Text", frame = ActionStatus.Text},
 
 }
 function Octo_EventFrame_HideFrames:MustBeHiddenFrames_SIMPLE()

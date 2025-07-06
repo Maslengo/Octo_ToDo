@@ -5,7 +5,7 @@ local popupText = "%s Link\nCTRL-C to copy"
 
 
 local function ShowUrlPopup(header, url)
-	StaticPopup_Show("WowheadQuickLinkUrl", header, _, url)
+	StaticPopup_Show("WowheadQuickLink_CopyBox", header, _, url)
 end
 
 
@@ -40,24 +40,32 @@ function RunAlternativeQuickLink()
 end
 
 
-StaticPopupDialogs["WowheadQuickLinkUrl"] = {
-	text = popupText,
-	button1 = "Close",
-	OnShow = function(self, data)
-		local function HidePopup(self) self:GetParent():Hide() end
-		self.editBox:SetScript("OnEscapePressed", HidePopup)
-		self.editBox:SetScript("OnEnterPressed", HidePopup)
-		self.editBox:SetScript("OnKeyUp", function(self, key)
-				if IsControlKeyDown() and key == "C" then HidePopup(self) end
-		end)
-		self.editBox:SetMaxLetters(0)
-		self.editBox:SetText(data)
-		self.editBox:HighlightText()
-	end,
-	hasEditBox = true,
-	editBoxWidth = 240,
+StaticPopupDialogs["WowheadQuickLink_CopyBox"] = {
+	text = E.classColorHexCurrent.."CTRL-C|r|n"..CALENDAR_COPY_EVENT,
+	button1 = CLOSE,
+	button2 = CANCEL,
+	hasEditBox = 1, -- true
+	whileDead = 1, -- true
+	maxLetters = 0,
 	timeout = 0,
-	whileDead = true,
-	hideOnEscape = true,
+	EditBoxOnEscapePressed = StaticPopup_StandardEditBoxOnEscapePressed,
+	EditBoxOnEnterPressed = StaticPopup_StandardEditBoxOnEscapePressed,
+	hideOnEscape = 1, -- true
+
+	editBoxWidth = 256,
+	closeButton = false,
+
 	preferredIndex = 3,
+
+	OnShow = function(self, data)
+		if data then
+			self.editBox:SetText(data)
+			self.editBox:HighlightText()
+		end
+		self.editBox:SetScript("OnKeyUp", function(self, key)
+				if IsControlKeyDown() and key == "C" then
+					self:GetParent():Hide()
+				end
+		end)
+	end,
 }

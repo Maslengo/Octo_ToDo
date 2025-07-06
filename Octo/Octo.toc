@@ -1,7 +1,7 @@
 ## Interface: 110107
 ## Title: !|cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r
 ## Author: Octo
-## Version: v94.9(11.1.7)(06.07.2025)
+## Version: v95.0(11.1.7)(06.07.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Core
 
 ## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other
@@ -9,7 +9,7 @@
 ## SavedVariables: Octo_Achievements_DB
 ## SavedVariables: Octo_AddonsTable Octo_AddonsManager_DB
 ## SavedVariables: Octo_DEBUG
-
+## SavedVariables: Octo_QuestsChangedDB
 
 Libs\embeds.xml
 Templates.xml
@@ -24,6 +24,7 @@ WTF.lua
 2 ToDo\ToDo.xml
 3 Achievements\Achievements.xml
 4 AddonsManager\AddonsManager.xml
+5 QuestsChanged\QuestsChanged.xml
 
 Options\0basicOptions.lua
 Options\1GeneralConfigPanel.lua
