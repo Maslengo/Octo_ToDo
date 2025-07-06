@@ -6,7 +6,7 @@ tinsert(E.Modules, function()
 	local vars = Octo_ToDo_DB_Vars.PosFrame
 	if not vars.Shown then return end
 
-	local PosFrame = CreateFrame("Frame", "PosFrame", UIParent, "BackdropTemplate")
+	local PosFrame = CreateFrame("Frame", "PosFrame", WorldMapFrame, "BackdropTemplate")
 	PosFrame:SetPoint(vars.point, nil, vars.relativePoint, vars.xOfs, vars.yOfs)
 	PosFrame:SetSize(280, 32)
 	PosFrame:SetClampedToScreen(false)
@@ -42,6 +42,7 @@ tinsert(E.Modules, function()
 		return text
 	end
 
+	local mapIdText = CreateTextElement(20, {1, 1, 1, 1})
 	local cursorText = CreateTextElement(7, {0, .65, 1, 1})
 	local playerText = CreateTextElement(-7, {.31, 1, .47, 1})
 
@@ -64,16 +65,20 @@ tinsert(E.Modules, function()
 			cursorY = cursorY and string.format("%.1f", cursorY*100) or 0
 
 			if tonumber(cursorX) <= 0 or tonumber(cursorX) >= 100 or
-			   tonumber(cursorY) <= 0 or tonumber(cursorY) >= 100 then
-				cursorX, cursorY = nil, nil
+				tonumber(cursorY) <= 0 or tonumber(cursorY) >= 100 then
+					cursorX, cursorY = nil, nil
+				end
 			end
-		end
+		local MapId = WorldMapFrame:GetMapID("current")
 
 		-- Update cursor text
 		if cursorX and cursorY then
 			cursorText:SetText(cursorX.." / "..cursorY)
 			playerText:SetPoint("CENTER", 0, -7)
 		else
+			if MapId then
+				mapIdText:SetText("id: "..MapId)
+			end
 			cursorText:SetText("")
 			playerText:SetPoint("CENTER", 0, 0)
 		end
@@ -82,3 +87,8 @@ tinsert(E.Modules, function()
 		playerText:SetText(posX.." / "..posY)
 	end)
 end)
+
+
+-- ADVENTURE_MAP_UPDATE_POIS,
+-- ADVENTURE_MAP_OPEN,
+-- ADVENTURE_MAP_UPDATE_INSETS

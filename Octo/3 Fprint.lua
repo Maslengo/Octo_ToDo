@@ -364,7 +364,7 @@ function E.func_itemslistSort(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ALL):ThenForAllWithCached(function(_, ids1)
+	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Other):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
 	promise1:FailWithChecked(function(_, ids2)
@@ -398,7 +398,7 @@ function E.func_itemslistSortBOOLEN(msg)
 	local list1 = {}
 	local list2 = {}
 	local tbl = {}
-	for k, v in next, (E.OctoTable_itemID_ItemsDelete) do
+	for k, v in next, (E.OctoTable_itemID_ItemsUsable_Other) do
 		tinsert(tbl, k)
 	end
 	local promise1 = LibThingsLoad:Items(tbl):ThenForAllWithCached(function(_, ids1)
