@@ -136,7 +136,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	if not data.zxc then return end
 	local frameData = data.zxc
 	-- local index = node:GetData().index
-	frame.first.textLEFT:SetText(frameData.playerName.."-"..frameData.curServerShort)
+	frame.first.textLEFT:SetText(frameData.classColorHex..frameData.playerName.."|r-"..E.func_CurServerShort(frameData.curServer))
 	frame.second.textLEFT:SetText(frameData.id)
 	frame.third.textLEFT:SetText(E.func_questName(frameData.id))
 	frame.fourth.textLEFT:SetText(frameData.map)
@@ -215,15 +215,15 @@ function E.QuestsChanged_CreateMyDataProvider()
 	for k, v in next, (Octo_QuestsChangedDB.log) do
 		count = count + 1
 		local zxc = {
-			map = v.map,
 			id = v.id,
+			time = v.time,
+			map = v.map,
 			x = v.x,
 			y = v.y,
-			time = v.time,
 			curServer = v.curServer,
-			playerFullName = v.playerFullName,
-			curServerShort = v.curServerShort,
 			playerName = v.playerName,
+			classColorHex = v.classColorHex,
+
 		}
 		local groupNode = DataProvider:Insert({zxc = zxc})
 	end

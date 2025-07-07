@@ -161,9 +161,6 @@ if enable then
 					end
 				end
 				-- UnitName("player")
-				local playerFullName, curServer = UnitFullName("PLAYER")
-				local playerName = E.classColorHexCurrent..E.curCharName.."|r"
-				local curServerShort = E.curServerShort
 				local questName = self.quest_names[questid] -- prime it
 				local quest = {
 					id = questid,
@@ -171,10 +168,9 @@ if enable then
 					map = mapdata and mapdata.mapID or 0,
 					x = x or 0,
 					y = y or 0,
-					playerFullName = playerFullName,
-					playerName = playerName,
-					curServer = curServer,
-					curServerShort = curServerShort,
+					playerName = E.curCharName,
+					curServer = GetRealmName(),
+					classColorHex = E.classColorHexCurrent,
 				}
 				table.insert(self.quests_completed, quest)
 				table.insert(self.Octo_QuestsChangedDB.log, quest)
