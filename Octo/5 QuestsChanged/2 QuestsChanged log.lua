@@ -105,7 +105,7 @@ if enable then
 				GameTooltip:SetOwner(self, "ANCHOR_LEFT")
 				GameTooltip:AddLine(E.quest_names[quest.id] or UNKNOWN)
 				GameTooltip:AddDoubleLine("id", quest.id)
-				GameTooltip:AddDoubleLine("map", quest.map)
+				GameTooltip:AddDoubleLine("mapID", quest.mapID)
 				if quest.level then
 					-- pre-8.0
 					GameTooltip:AddDoubleLine("level", quest.level)
@@ -129,12 +129,12 @@ if enable then
 				E:RemoveQuest(quest)
 			elseif IsShiftKeyDown() then
 				StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d},"):format(
-					E.GetCoord(quest.x, quest.y),
+					E.func_GetCoord(quest.x, quest.y),
 					quest.id or "nil"
 				))
 			else
-				if quest and quest.map and quest.x and quest.y then
-					local m = tonumber(quest.map)
+				if quest and quest.mapID and quest.x and quest.y then
+					local m = tonumber(quest.mapID)
 					if C_Map.CanSetUserWaypointOnMap(m) then
 						if C_Map.HasUserWaypoint() then
 							C_Map.ClearUserWaypoint()
@@ -196,19 +196,19 @@ if enable then
 			local quest = self.Octo_QuestsChangedDB.log[#self.Octo_QuestsChangedDB.log - (index - 1)]
 			line.data = quest
 
-			local map, level
-			if type(quest.map) == 'string' then
+			local mapID, level
+			if type(quest.mapID) == 'string' then
 				-- pre-8.0 quest logging has mapFiles, just show them
-				map = quest.map
+				mapID = quest.mapID
 				level = quest.level
 			else
-				map, level = self.MapNameFromID(quest.map)
+				mapID, level = self.func_GetMapNameFromID(quest.mapID)
 			end
 			line.Title:SetFormattedText("%d: %s %s",
 				quest.id, self.quest_names[quest.id] or UNKNOWN,
 				C_QuestLog.IsQuestFlaggedCompletedOnAccount and C_QuestLog.IsQuestFlaggedCompletedOnAccount(quest.id) and E.WARBANDS_ICON or ""
 			)
-			line.Location:SetFormattedText("%s (%s)", quest.map, map .. (level and (' / ' .. level) or ''))
+			line.Location:SetFormattedText("%s (%s)", quest.mapID, mapID .. (level and (' / ' .. level) or ''))
 			line.Coords:SetFormattedText("%.2f, %.2f", quest.x * 100, quest.y * 100)
 			line.Time:SetText(self.FormatLastSeen(quest.time))
 			if index == #E.quests_completed then
@@ -241,7 +241,7 @@ if enable then
 				GameTooltip:SetOwner(self, "ANCHOR_LEFT")
 				GameTooltip:AddLine(vignette.name or UNKNOWN)
 				GameTooltip:AddDoubleLine("id", vignette.id)
-				GameTooltip:AddDoubleLine("map", vignette.uiMapID)
+				GameTooltip:AddDoubleLine("mapID", vignette.mapID)
 				GameTooltip:AddDoubleLine("atlas", vignette.atlas)
 				GameTooltip:AddDoubleLine("coords", ("%.2f, %.2f"):format(vignette.x * 100, vignette.y * 100))
 				GameTooltip:AddDoubleLine("time", vignette.time)
@@ -259,13 +259,13 @@ if enable then
 				E:RemoveVignette(vignette)
 			elseif IsShiftKeyDown() then
 				StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {vignette=%d, label=\"%s\"},"):format(
-					E.GetCoord(vignette.x, vignette.y),
+					E.func_GetCoord(vignette.x, vignette.y),
 					vignette.id or "nil",
 					vignette.name or UNKNOWN
 				))
 			else
-				if vignette and vignette.uiMapID and vignette.x and vignette.y then
-					local m = tonumber(vignette.uiMapID)
+				if vignette and vignette.mapID and vignette.x and vignette.y then
+					local m = tonumber(vignette.mapID)
 					if C_Map.CanSetUserWaypointOnMap(m) then
 						if C_Map.HasUserWaypoint() then
 							C_Map.ClearUserWaypoint()
@@ -317,10 +317,10 @@ if enable then
 			local vignette = self.vignetteLog[vignetteGUID]
 			line.data = vignette
 
-			local map, level = self.MapNameFromID(vignette.uiMapID)
+			local mapID, level = self.func_GetMapNameFromID(vignette.mapID)
 			line.Texture:SetAtlas(vignette.atlas)
 			line.Title:SetFormattedText("%d: %s", vignette.id, vignette.name or UNKNOWN)
-			line.Location:SetFormattedText("%s (%s)", vignette.uiMapID or "?", map .. (level and (' / ' .. level) or ''))
+			line.Location:SetFormattedText("%s (%s)", vignette.mapID or "?", mapID .. (level and (' / ' .. level) or ''))
 			line.Coords:SetFormattedText("%.2f, %.2f", vignette.x * 100, vignette.y * 100)
 			line.Time:SetText(self.FormatLastSeen(vignette.time))
 		end

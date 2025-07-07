@@ -55,17 +55,17 @@ tinsert(E.Modules, function()
 		if not pos then return end
 
 		local posX, posY = pos:GetXY()
-		posX = posX and string.format("%.1f", posX*100) or 0
-		posY = posY and string.format("%.1f", posY*100) or 0
+		-- posX = posX and string.format("%.1f", posX*100) or 0
+		-- posY = posY and string.format("%.1f", posY*100) or 0
 
 		local cursorX, cursorY
 		if WorldMapFrame:IsShown() then
 			cursorX, cursorY = WorldMapFrame.ScrollContainer:GetNormalizedCursorPosition()
-			cursorX = cursorX and string.format("%.1f", cursorX*100) or 0
-			cursorY = cursorY and string.format("%.1f", cursorY*100) or 0
+			-- cursorX = cursorX and string.format("%.1f", cursorX*100) or 0
+			-- cursorY = cursorY and string.format("%.1f", cursorY*100) or 0
 
-			if tonumber(cursorX) <= 0 or tonumber(cursorX) >= 100 or
-				tonumber(cursorY) <= 0 or tonumber(cursorY) >= 100 then
+			if tonumber(cursorX) <= 0 or tonumber(cursorX) >= 1 or
+				tonumber(cursorY) <= 0 or tonumber(cursorY) >= 1 then
 					cursorX, cursorY = nil, nil
 				end
 			end
@@ -73,7 +73,7 @@ tinsert(E.Modules, function()
 
 		-- Update cursor text
 		if cursorX and cursorY then
-			cursorText:SetText(cursorX.." / "..cursorY)
+			cursorText:SetText(E.func_GetCoordFormated(cursorX, cursorY))
 			playerText:SetPoint("CENTER", 0, -7)
 		else
 			if MapId then
@@ -84,7 +84,7 @@ tinsert(E.Modules, function()
 		end
 
 		-- Update player position text
-		playerText:SetText(posX.." / "..posY)
+		playerText:SetText(E.func_GetCoordFormated(posX, posY))
 	end)
 end)
 

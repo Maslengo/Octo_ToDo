@@ -65,9 +65,6 @@ local func_OnAcquired do
 			-- Frame setup
 			frame:SetPropagateMouseClicks(true)
 			frame:SetPropagateMouseMotion(true)
-			-- Frame setup
-			frame:SetPropagateMouseClicks(true)
-			frame:SetPropagateMouseMotion(true)
 			-- Full texture background
 			local frameFULL = CreateFrame("Frame", nil, Octo_MainFrame_QuestsChanged)
 			frameFULL:SetPropagateMouseClicks(true)
@@ -85,33 +82,125 @@ local func_OnAcquired do
 			frameFULL:SetPoint("RIGHT")
 			frameFULL:SetScript("OnEnter", func_OnEnter)
 			frameFULL:SetScript("OnLeave", func_OnLeave)
-			-- first
-			frame.first = CreateFrame("BUTTON", nil, frame); frame.first:SetPropagateMouseClicks(true); frame.first:SetSize(AddonCentralFrameWeight, AddonHeight); frame.first:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*0, 0); frame.first:SetScript("OnLeave", GameTooltip_Hide);
-			frame.first.textLEFT = frame.first:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall"); frame.first.textLEFT:SetAllPoints(); frame.first.textLEFT:SetFontObject(OctoFont11); frame.first.textLEFT:SetJustifyV("MIDDLE"); frame.first.textLEFT:SetJustifyH("LEFT"); frame.first.textLEFT:SetTextColor(1, 1, 1, 1);
+			------------------------------------------------
+			-- Icon setup
+			local icon = frame:CreateTexture(nil, "BACKGROUND")
+			icon:SetSize(AddonHeight - 2, AddonHeight - 2)
+			icon:SetPoint("TOPLEFT", 1, -1)
+			icon:SetTexCoord(0.10, 0.90, 0.10, 0.90) -- zoom 10%
+			frame.icon_1 = icon
+			------------------------------------------------
+			-- -- first
+			local first = CreateFrame("Frame", nil, frame)
+			first:SetPropagateMouseClicks(true)
+			first:SetSize(AddonCentralFrameWeight, AddonHeight)
+			first:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*0, 0)
+			first:SetScript("OnLeave", GameTooltip_Hide)
+			first.textLEFT = first:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			first.textLEFT:SetAllPoints()
+			first.textLEFT:SetFontObject(OctoFont11)
+			first.textLEFT:SetJustifyV("MIDDLE")
+			first.textLEFT:SetJustifyH("LEFT")
+			first.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.first = first
 			------------------------------------------------
 			-- second
-			frame.second = CreateFrame("BUTTON", nil, frame); frame.second:SetPropagateMouseClicks(true); frame.second:SetSize(AddonCentralFrameWeight, AddonHeight); frame.second:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*1, 0); frame.second:SetScript("OnLeave", GameTooltip_Hide);
-			frame.second.textLEFT = frame.second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall"); frame.second.textLEFT:SetAllPoints(); frame.second.textLEFT:SetFontObject(OctoFont11); frame.second.textLEFT:SetJustifyV("MIDDLE"); frame.second.textLEFT:SetJustifyH("LEFT"); frame.second.textLEFT:SetTextColor(1, 1, 1, 1);
+			local second = CreateFrame("Frame", nil, frame)
+			second:SetPropagateMouseClicks(true)
+			second:SetSize(AddonCentralFrameWeight, AddonHeight)
+			second:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*0, 0)
+			second:SetScript("OnLeave", GameTooltip_Hide)
+			second.textLEFT = second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			second.textLEFT:SetAllPoints()
+			second.textLEFT:SetFontObject(OctoFont11)
+			second.textLEFT:SetJustifyV("MIDDLE")
+			second.textLEFT:SetJustifyH("LEFT")
+			second.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.second = second
 			------------------------------------------------
 			-- third
-			frame.third = CreateFrame("BUTTON", nil, frame); frame.third:SetPropagateMouseClicks(true); frame.third:SetSize(AddonCentralFrameWeight, AddonHeight); frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*2, 0); frame.third:SetScript("OnLeave", GameTooltip_Hide);
-			frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall"); frame.third.textLEFT:SetAllPoints(); frame.third.textLEFT:SetFontObject(OctoFont11); frame.third.textLEFT:SetJustifyV("MIDDLE"); frame.third.textLEFT:SetJustifyH("LEFT"); frame.third.textLEFT:SetTextColor(1, 1, 1, 1);
+			local third = CreateFrame("Frame", nil, frame)
+			third:SetPropagateMouseClicks(true)
+			third:SetSize(AddonCentralFrameWeight, AddonHeight)
+			third:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*1, 0)
+			third:SetScript("OnLeave", GameTooltip_Hide)
+			third.textLEFT = third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			third.textLEFT:SetAllPoints()
+			third.textLEFT:SetFontObject(OctoFont11)
+			third.textLEFT:SetJustifyV("MIDDLE")
+			third.textLEFT:SetJustifyH("LEFT")
+			third.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.third = third
 			------------------------------------------------
 			-- fourth
-			frame.fourth = CreateFrame("BUTTON", nil, frame); frame.fourth:SetPropagateMouseClicks(true); frame.fourth:SetSize(AddonCentralFrameWeight, AddonHeight); frame.fourth:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*3, 0); frame.fourth:SetScript("OnLeave", GameTooltip_Hide);
-			frame.fourth.textLEFT = frame.fourth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall"); frame.fourth.textLEFT:SetAllPoints(); frame.fourth.textLEFT:SetFontObject(OctoFont11); frame.fourth.textLEFT:SetJustifyV("MIDDLE"); frame.fourth.textLEFT:SetJustifyH("LEFT"); frame.fourth.textLEFT:SetTextColor(1, 1, 1, 1);
+			local fourth = CreateFrame("Frame", nil, frame)
+			fourth:SetPropagateMouseClicks(true)
+			fourth:SetSize(AddonCentralFrameWeight, AddonHeight)
+			fourth:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*2, 0)
+			fourth:SetScript("OnLeave", GameTooltip_Hide)
+			fourth.textLEFT = fourth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			fourth.textLEFT:SetAllPoints()
+			fourth.textLEFT:SetFontObject(OctoFont11)
+			fourth.textLEFT:SetJustifyV("MIDDLE")
+			fourth.textLEFT:SetJustifyH("LEFT")
+			fourth.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.fourth = fourth
 			------------------------------------------------
 			-- fifth
-			frame.fifth = CreateFrame("BUTTON", nil, frame); frame.fifth:SetPropagateMouseClicks(true); frame.fifth:SetSize(AddonCentralFrameWeight, AddonHeight); frame.fifth:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*4, 0); frame.fifth:SetScript("OnLeave", GameTooltip_Hide);
-			frame.fifth.textLEFT = frame.fifth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall"); frame.fifth.textLEFT:SetAllPoints(); frame.fifth.textLEFT:SetFontObject(OctoFont11); frame.fifth.textLEFT:SetJustifyV("MIDDLE"); frame.fifth.textLEFT:SetJustifyH("LEFT"); frame.fifth.textLEFT:SetTextColor(1, 1, 1, 1);
+			local fifth = CreateFrame("Frame", nil, frame)
+			fifth:SetPropagateMouseClicks(true)
+			fifth:SetSize(AddonCentralFrameWeight, AddonHeight)
+			fifth:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*3, 0)
+			fifth:SetScript("OnLeave", GameTooltip_Hide)
+			fifth.textLEFT = fifth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			fifth.textLEFT:SetAllPoints()
+			fifth.textLEFT:SetFontObject(OctoFont11)
+			fifth.textLEFT:SetJustifyV("MIDDLE")
+			fifth.textLEFT:SetJustifyH("LEFT")
+			fifth.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.fifth = fifth
 			------------------------------------------------
 			-- sixth
-			frame.sixth = CreateFrame("BUTTON", nil, frame); frame.sixth:SetPropagateMouseClicks(true); frame.sixth:SetSize(AddonCentralFrameWeight, AddonHeight); frame.sixth:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*5, 0); frame.sixth:SetScript("OnLeave", GameTooltip_Hide);
-			frame.sixth.textLEFT = frame.sixth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall"); frame.sixth.textLEFT:SetAllPoints(); frame.sixth.textLEFT:SetFontObject(OctoFont11); frame.sixth.textLEFT:SetJustifyV("MIDDLE"); frame.sixth.textLEFT:SetJustifyH("LEFT"); frame.sixth.textLEFT:SetTextColor(1, 1, 1, 1);
+			local sixth = CreateFrame("Frame", nil, frame)
+			sixth:SetPropagateMouseClicks(true)
+			sixth:SetSize(AddonCentralFrameWeight, AddonHeight)
+			sixth:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*4, 0)
+			sixth:SetScript("OnLeave", GameTooltip_Hide)
+			sixth.textLEFT = sixth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			sixth.textLEFT:SetAllPoints()
+			sixth.textLEFT:SetFontObject(OctoFont11)
+			sixth.textLEFT:SetJustifyV("MIDDLE")
+			sixth.textLEFT:SetJustifyH("LEFT")
+			sixth.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.sixth = sixth
 			------------------------------------------------
 			-- seventh
-			frame.seventh = CreateFrame("BUTTON", nil, frame); frame.seventh:SetPropagateMouseClicks(true); frame.seventh:SetSize(AddonCentralFrameWeight, AddonHeight); frame.seventh:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*6, 0); frame.seventh:SetScript("OnLeave", GameTooltip_Hide);
-			frame.seventh.textLEFT = frame.seventh:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall"); frame.seventh.textLEFT:SetAllPoints(); frame.seventh.textLEFT:SetFontObject(OctoFont11); frame.seventh.textLEFT:SetJustifyV("MIDDLE"); frame.seventh.textLEFT:SetJustifyH("LEFT"); frame.seventh.textLEFT:SetTextColor(1, 1, 1, 1);
+			local seventh = CreateFrame("Frame", nil, frame)
+			seventh:SetPropagateMouseClicks(true)
+			seventh:SetSize(AddonCentralFrameWeight, AddonHeight)
+			seventh:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*5, 0)
+			seventh:SetScript("OnLeave", GameTooltip_Hide)
+			seventh.textLEFT = seventh:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			seventh.textLEFT:SetAllPoints()
+			seventh.textLEFT:SetFontObject(OctoFont11)
+			seventh.textLEFT:SetJustifyV("MIDDLE")
+			seventh.textLEFT:SetJustifyH("LEFT")
+			seventh.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.seventh = seventh
+			------------------------------------------------
+			-- eighth
+			local eighth = CreateFrame("Frame", nil, frame)
+			eighth:SetPropagateMouseClicks(true)
+			eighth:SetSize(AddonCentralFrameWeight, AddonHeight)
+			eighth:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*6, 0)
+			eighth:SetScript("OnLeave", GameTooltip_Hide)
+			eighth.textLEFT = eighth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			eighth.textLEFT:SetAllPoints()
+			eighth.textLEFT:SetFontObject(OctoFont11)
+			eighth.textLEFT:SetJustifyV("MIDDLE")
+			eighth.textLEFT:SetJustifyH("LEFT")
+			eighth.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.eighth = eighth
 			------------------------------------------------
 			------------------------------------------------
 		end
@@ -136,22 +225,17 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	if not data.zxc then return end
 	local frameData = data.zxc
 	-- local index = node:GetData().index
-	frame.first.textLEFT:SetText(frameData.classColorHex..frameData.playerName.."|r-"..E.func_CurServerShort(frameData.curServer))
-	frame.second.textLEFT:SetText(frameData.id)
-	frame.third.textLEFT:SetText(E.func_questName(frameData.id))
-	frame.fourth.textLEFT:SetText(frameData.map)
-	frame.fifth.textLEFT:SetText(E.func_GetMapName(frameData.map))
-
-
-
-
-
-
-
-	frame.sixth.textLEFT:SetText(string.format("%.1f", frameData.x*100).." / "..string.format("%.1f", frameData.y*100))
-	frame.seventh.textLEFT:SetText(E.func_SecondsToClock(time()-frameData.time))
+	-- frame.icon_1:SetTexture(data.headerIcon or (data.zxc and data.zxc.icon) or E.Icon_Empty)
+	frame.icon_1:SetTexture(E.Icon_LFG)
+	frame.second.textLEFT:SetText(frameData.classColorHex..frameData.playerName.."|r-"..E.func_CurServerShort(frameData.curServer))
+	frame.third.textLEFT:SetText(frameData.id)
+	frame.fourth.textLEFT:SetText(E.func_questName(frameData.id))
+	frame.fifth.textLEFT:SetText(frameData.mapID)
+	frame.sixth.textLEFT:SetText(E.func_GetMapName(frameData.mapID))
+	-- frame.seventh.textLEFT:SetText(string.format("%.1f", frameData.x*100).." / "..string.format("%.1f", frameData.y*100))
+	frame.seventh.textLEFT:SetText(E.func_GetCoordFormated(frameData.x, frameData.y))
+	frame.eighth.textLEFT:SetText(E.func_SecondsToClock(time()-frameData.time))
 end
-
 function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	Octo_MainFrame_QuestsChanged:SetPoint("CENTER", 0, 0)
 	Octo_MainFrame_QuestsChanged:SetSize(AddonCentralFrameWeight*7, AddonHeight*MainFrameDefaultLines)
@@ -193,41 +277,31 @@ function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_QuestsChanged.ScrollBox, Octo_MainFrame_QuestsChanged.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	----------------------------------------------------------------
 end
-function E.QuestsChanged_DataProviderUpdate()
-	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
-end
-
-
-
-
 function E.QuestsChanged_CreateMyDataProvider()
-	E.UpdatePerformance()
+	print ("QuestsChanged_CreateMyDataProvider")
 	local count = 0
 	local DataProvider = CreateTreeDataProvider()
-
-
-	-- dataProvider:SetSortComparator(function(lhs, rhs)
-	-- 	return Octo_QuestsChangedDB.log[lhs].time > Octo_QuestsChangedDB.log[rhs].time
-	-- end)
-
-
 	E.DataProvider_QuestsChanged = DataProvider
 	for k, v in next, (Octo_QuestsChangedDB.log) do
 		count = count + 1
 		local zxc = {
 			id = v.id,
 			time = v.time,
-			map = v.map,
+			mapID = v.mapID,
 			x = v.x,
 			y = v.y,
 			curServer = v.curServer,
 			playerName = v.playerName,
 			classColorHex = v.classColorHex,
-
 		}
 		local groupNode = DataProvider:Insert({zxc = zxc})
 	end
-
+	DataProvider:SetSortComparator(function(a, b)
+			local aData = a.data.zxc
+			local bData = b.data.zxc
+			return aData.time > bData.time
+	end)
+	DataProvider:Sort()
 	if count > 0 and count < MainFrameDefaultLines then
 		Octo_MainFrame_QuestsChanged:SetSize(AddonCentralFrameWeight*7, AddonHeight*count)
 	elseif count > MainFrameDefaultLines then
@@ -235,14 +309,11 @@ function E.QuestsChanged_CreateMyDataProvider()
 	elseif count == 0 then
 		Octo_MainFrame_QuestsChanged:SetSize(AddonCentralFrameWeight*7, AddonHeight*1)
 	end
-
-
-	E.QuestsChanged_DataProviderUpdate()
+	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
-
 -- ЧЕТ ТУТ
 local MyEventsTable = {
 	"ADDON_LOADED",
@@ -288,12 +359,12 @@ function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
 		E.QuestsChanged_CreateMyDataProvider()
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(Octo_MainFrame_QuestsChanged, "QuestsChanged", AddonHeight, 0)
-		E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChangedDB, Octo_MainFrame_QuestsChanged, nil, "Octo_MainFrame_QuestsChanged")
-		Octo_MainFrame_QuestsChanged:SetScript("OnShow", function()
-				C_Timer.After(.1, function()
-						E.QuestsChanged_DataProviderUpdate()
-				end)
-		end)
+		E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChangedDB, Octo_MainFrame_QuestsChanged, function() E.QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
+		-- Octo_MainFrame_QuestsChanged:SetScript("OnShow", function()
+		--         C_Timer.After(.1, function()
+		--                 E.QuestsChanged_CreateMyDataProvider()
+		--         end)
+		-- end)
 		----------------------------------------------------------------
 	end
 end
@@ -304,63 +375,51 @@ function Octo_EventFrame_QuestsChanged:PLAYER_REGEN_DISABLED()
 		Octo_MainFrame_QuestsChanged:Hide()
 	end
 end
-
-function Octo_EventFrame_QuestsChanged:PLAYER_LOGIN()
-	print ("PLAYER_LOGIN")
-	E.QuestsChanged_DataProviderUpdate()
-end
-
-
-function Octo_EventFrame_QuestsChanged:QUEST_LOG_UPDATE()
-	if InCombatLockdown() or self.QUEST_LOG_UPDATE_Pause then return end
-	self.QUEST_LOG_UPDATE_Pause = true
-	C_Timer.After(5, function()
-			print ("QUEST_LOG_UPDATE")
-			E.QuestsChanged_CreateMyDataProvider()
-			self.QUEST_LOG_UPDATE_Pause = nil
-	end)
-end
-
-
-
+-- function Octo_EventFrame_QuestsChanged:PLAYER_LOGIN()
+--     print ("PLAYER_LOGIN")
+-- end
+-- function Octo_EventFrame_QuestsChanged:QUEST_LOG_UPDATE()
+--     if InCombatLockdown() or self.QUEST_LOG_UPDATE_Pause then return end
+--     self.QUEST_LOG_UPDATE_Pause = true
+--     C_Timer.After(5, function()
+--             print ("QUEST_LOG_UPDATE")
+--             E.QuestsChanged_CreateMyDataProvider()
+--             self.QUEST_LOG_UPDATE_Pause = nil
+--     end)
+-- end
 -- function Octo_EventFrame_QuestsChanged:ENCOUNTER_LOOT_RECEIVED()
--- 	if InCombatLockdown() or self.ENCOUNTER_LOOT_RECEIVED_Pause then return end
--- 	self.ENCOUNTER_LOOT_RECEIVED_Pause = true
--- 	C_Timer.After(1, function()
--- 			print ("ENCOUNTER_LOOT_RECEIVED")
--- 			E.QuestsChanged_CreateMyDataProvider()
--- 			self.ENCOUNTER_LOOT_RECEIVED_Pause = nil
--- 	end)
+--     if InCombatLockdown() or self.ENCOUNTER_LOOT_RECEIVED_Pause then return end
+--     self.ENCOUNTER_LOOT_RECEIVED_Pause = true
+--     C_Timer.After(1, function()
+--             print ("ENCOUNTER_LOOT_RECEIVED")
+--             E.QuestsChanged_CreateMyDataProvider()
+--             self.ENCOUNTER_LOOT_RECEIVED_Pause = nil
+--     end)
 -- end
-
-
 -- function Octo_EventFrame_QuestsChanged:PLAYER_ENTERING_WORLD()
--- 	if InCombatLockdown() or self.PLAYER_ENTERING_WORLD_Pause then return end
--- 	self.PLAYER_ENTERING_WORLD_Pause = true
--- 	C_Timer.After(1, function()
--- 			print ("PLAYER_ENTERING_WORLD")
--- 			E.QuestsChanged_CreateMyDataProvider()
--- 			self.PLAYER_ENTERING_WORLD_Pause = nil
--- 	end)
+--     if InCombatLockdown() or self.PLAYER_ENTERING_WORLD_Pause then return end
+--     self.PLAYER_ENTERING_WORLD_Pause = true
+--     C_Timer.After(1, function()
+--             print ("PLAYER_ENTERING_WORLD")
+--             E.QuestsChanged_CreateMyDataProvider()
+--             self.PLAYER_ENTERING_WORLD_Pause = nil
+--     end)
 -- end
-
-
 -- function Octo_EventFrame_QuestsChanged:VIGNETTE_MINIMAP_UPDATED()
--- 	if InCombatLockdown() or self.VIGNETTE_MINIMAP_UPDATED_Pause then return end
--- 	self.VIGNETTE_MINIMAP_UPDATED_Pause = true
--- 	C_Timer.After(1, function()
--- 			print ("VIGNETTE_MINIMAP_UPDATED")
--- 			E.QuestsChanged_CreateMyDataProvider()
--- 			self.VIGNETTE_MINIMAP_UPDATED_Pause = nil
--- 	end)
+--     if InCombatLockdown() or self.VIGNETTE_MINIMAP_UPDATED_Pause then return end
+--     self.VIGNETTE_MINIMAP_UPDATED_Pause = true
+--     C_Timer.After(1, function()
+--             print ("VIGNETTE_MINIMAP_UPDATED")
+--             E.QuestsChanged_CreateMyDataProvider()
+--             self.VIGNETTE_MINIMAP_UPDATED_Pause = nil
+--     end)
 -- end
-
 -- function Octo_EventFrame_QuestsChanged:VIGNETTES_UPDATED()
--- 	if InCombatLockdown() or self.VIGNETTES_UPDATED_Pause then return end
--- 	self.VIGNETTES_UPDATED_Pause = true
--- 	C_Timer.After(1, function()
--- 			print ("VIGNETTES_UPDATED")
--- 			E.QuestsChanged_CreateMyDataProvider()
--- 			self.VIGNETTES_UPDATED_Pause = nil
--- 	end)
+--     if InCombatLockdown() or self.VIGNETTES_UPDATED_Pause then return end
+--     self.VIGNETTES_UPDATED_Pause = true
+--     C_Timer.After(1, function()
+--             print ("VIGNETTES_UPDATED")
+--             E.QuestsChanged_CreateMyDataProvider()
+--             self.VIGNETTES_UPDATED_Pause = nil
+--     end)
 -- end

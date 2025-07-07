@@ -127,7 +127,7 @@ function E.Timers.Daily_Reset()
 end
 
 function E.Timers.Treasure_Goblin()
-	return CreateTimer(1698494400, 3600, 600, E.Red_Color, E.Green_Color)
+	return CreateTimer(1689159620, 3600, 600, E.Red_Color, E.Green_Color)
 end
 
 
@@ -144,7 +144,7 @@ local spawns = {
 	{mapId = 84},    -- ШТОРМ
 }
 
-function E.Timers.Treasure_Goblin2()
+function E.Timers.Treasure_GoblinOLD()
 	if #spawns == 0 then return "Нет точек спауна!" end
 
 	local offset = 1698494400

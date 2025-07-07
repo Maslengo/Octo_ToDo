@@ -191,6 +191,9 @@ local GetTradeSkillTexture = GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkil
 
 -- Map functions
 local GetMapInfo = GetMapInfo or C_Map.GetMapInfo
+local GetMapGroupID = GetMapGroupID or C_Map.GetMapGroupID
+local GetMapGroupMembersInfo = GetMapGroupMembersInfo or C_Map.GetMapGroupMembersInfo
+local GetBestMapForUnit = GetBestMapForUnit or C_Map.GetBestMapForUnit
 
 -- Date/Time functions
 local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
@@ -313,24 +316,20 @@ end
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
 	table_insert(E.PromiseQuest, questID)
-	local vivod = ""
-	local useLargeIcon = useLargeIcon or true
+
 	local title = GetTitleForQuestID(questID)
-	if title then
-		vivod = vivod..QuestUtils_DecorateQuestText(questID, title, useLargeIcon)
-	else
-		vivod = vivod..UNKNOWN
+	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false) or UNKNOWN
+
+	if IsAccountQuest(questID) or IsQuestFlaggedCompletedOnAccount(questID) then
+		vivod = E.Icon_AccountWide..vivod
 	end
+
 	if IsAccountQuest(questID) then
-		vivod = E.Icon_AccountWide.."|cffFFFF00"..vivod.."|r"
-		-- vivod = E.Icon_Warbands.."|cffFFFF00"..vivod.."|r"
-
+		vivod = "|cffFFFF00"..vivod.."|r"
+	elseif IsQuestFlaggedCompletedOnAccount(questID) then
+		vivod = "|cff9fc5e8"..vivod.."|r"
 	end
-	if IsQuestFlaggedCompletedOnAccount(questID) then
-		vivod = E.Icon_AccountWide.."|cff9fc5e8"..vivod.."|r"
-		-- vivod = E.Icon_Warbands.."|cff9fc5e8"..vivod.."|r"
 
-	end
 	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..questID.."|r" or "")
 end
 ----------------------------------------------------------------
@@ -831,6 +830,37 @@ function E.func_GetMapName(mapID)
 	if info then
 		return tostring(info.name) .. (E.DebugIDs and E.Gray_Color.." id:"..mapID.."|r" or "")
 	end
+end
+----------------------------------------------------------------
+	function E.func_GetMapNameFromID(mapID) -- ПОФИКСИТЬ
+		if not mapID then
+			return UNKNOWN
+		end
+		local mapdata = GetMapInfo(mapID)
+		if not mapdata then
+			return UNKNOWN
+		end
+		local groupID = GetMapGroupID(mapID)
+		if groupID then
+			local groupdata = GetMapGroupMembersInfo(groupID)
+			for _, subzonedata in ipairs(groupdata) do
+				if subzonedata.mapID == mapID then
+					return mapdata.name, subzonedata.name
+				end
+			end
+		end
+		return mapdata.name
+	end
+
+
+----------------------------------------------------------------
+function E.func_GetCoord(x, y)
+	return floor(x * 10000 + 0.5) * 10000 + floor(y * 10000 + 0.5)
+end
+----------------------------------------------------------------
+function E.func_GetCoordFormated(x, y)
+	-- return string.format("%.1f", x*100).." / "..string.format("%.1f", y*100)
+	return string.format("%.2f", x*100)..", "..string.format("%.2f", y*100)
 end
 ----------------------------------------------------------------
 function E.func_npcName(npcID)

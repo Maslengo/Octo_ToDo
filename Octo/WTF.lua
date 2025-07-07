@@ -638,6 +638,7 @@ end
 function Octo_EventFrame_WTF:Octo_QuestsChangedDB()
 	Octo_QuestsChangedDB = InitTable(Octo_QuestsChangedDB)
 	InitSubTable(Octo_QuestsChangedDB, "log")
+	InitSubTable(Octo_QuestsChangedDB, "vignette")
 end
 
 

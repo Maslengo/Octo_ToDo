@@ -160,12 +160,11 @@ if enable then
 						end
 					end
 				end
-				-- UnitName("player")
 				local questName = self.quest_names[questid] -- prime it
 				local quest = {
 					id = questid,
 					time = time(),
-					map = mapdata and mapdata.mapID or 0,
+					mapID = mapdata and mapdata.mapID or 0,
 					x = x or 0,
 					y = y or 0,
 					playerName = E.curCharName,
@@ -237,7 +236,7 @@ if enable then
 			if IsShiftKeyDown() then
 				local data = E.Octo_QuestsChangedDB.log[#E.Octo_QuestsChangedDB.log]
 				StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d, label=\"\"},"):format(
-					E.GetCoord(data.x, data.y),
+					E.func_GetCoord(data.x, data.y),
 					(data.id or "nil")
 				))
 			else
@@ -250,20 +249,20 @@ if enable then
 		E:CheckQuests() -- in case
 		tooltip:AddLine("QuestsChanged")
 		for _, quest in ipairs(E.quests_completed) do
-			local map, level
-			if type(quest.map) == 'string' then
+			local mapID, level
+			if type(quest.mapID) == 'string' then
 				-- pre-8.0 quest logging has mapFiles, just show them
-				map = quest.map
+				mapID = quest.mapID
 				level = quest.level
 			else
-				map, level = E.MapNameFromID(quest.map)
+				mapID, level = E.func_GetMapNameFromID(quest.mapID)
 			end
 			tooltip:AddDoubleLine(
 				("%d: %s %s"):format(
 					quest.id, E.quest_names[quest.id] or UNKNOWN,
 					C_QuestLog.IsQuestFlaggedCompletedOnAccount and C_QuestLog.IsQuestFlaggedCompletedOnAccount(quest.id) and E.WARBANDS_ICON or ""
 				),
-				("%s (%s) %.2f, %.2f"):format(quest.map, map .. (level and (' / ' .. level) or ''), quest.x * 100, quest.y * 100)
+				("%s (%s) %.2f, %.2f"):format(quest.mapID, mapID .. (level and (' / ' .. level) or ''), quest.x * 100, quest.y * 100)
 			)
 		end
 
@@ -275,7 +274,7 @@ if enable then
 				x, y = position:GetXY()
 			end
 		end
-		local mapname, subname = E.MapNameFromID(mapID)
+		local mapname, subname = E.func_GetMapNameFromID(mapID)
 
 		tooltip:AddDoubleLine("Location", ("%s (%s) %.2f, %.2f"):format(mapID or UNKNOWN, mapname .. (subname and (' / ' .. subname) or ''), (x or 0) * 100, (y or 0) * 100), 1, 0, 1, 1, 0, 1)
 		tooltip:AddLine("Left-click to show your quest history", 0, 1, 1)
@@ -310,33 +309,10 @@ if enable then
 		end
 	end
 
-	-- utility
 
-	function E.Print(...) print("|cFF33FF99".. myfullname.. "|r:", ...) end
 
-	function E.MapNameFromID(mapID)
-		if not mapID then
-			return UNKNOWN
-		end
-		local mapdata = C_Map.GetMapInfo(mapID)
-		if not mapdata then
-			return UNKNOWN
-		end
-		local groupID = C_Map.GetMapGroupID(mapID)
-		if groupID then
-			local groupdata = C_Map.GetMapGroupMembersInfo(groupID)
-			for _, subzonedata in ipairs(groupdata) do
-				if subzonedata.mapID == mapID then
-					return mapdata.name, subzonedata.name
-				end
-			end
-		end
-		return mapdata.name
-	end
 
-	function E.GetCoord(x, y)
-		return floor(x * 10000 + 0.5) * 10000 + floor(y * 10000 + 0.5)
-	end
+
 
 	StaticPopupDialogs["QuestsChanged_CopyBox"] = {
 		text = E.classColorHexCurrent.."CTRL-C|r|n"..CALENDAR_COPY_EVENT,

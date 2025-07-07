@@ -3190,7 +3190,7 @@ E.OctoTable_UniversalQuest = {
 		icon = E.func_GetItemIconByID(245589),
 		textleft = E.Timers.Treasure_Goblin()..E.func_npcName(205490),
 		name_save = "TreasureGoblin",
-		reset = "Once",
+		reset = "Daily",
 		desc = "HolidaysAGreedyEmissary",
 		questID = {
 			76215, -- шам, пал ->Убийство гоблина -- /run print(C_QuestLog.IsQuestFlaggedCompleted(76215))
