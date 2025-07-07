@@ -1,8 +1,7 @@
 local GlobalAddonName, E = ...
 local enable = true
 if enable then
-	print (E.func_Gradient("2 QuestsChanged log: ")..VIDEO_OPTIONS_ENABLED)
-
+	-- print (E.func_Gradient("2 QuestsChanged log: ")..VIDEO_OPTIONS_ENABLED)
 	local floor = math.floor
 	local log, copybox
 	function E:BuildLog()
@@ -18,33 +17,25 @@ if enable then
 		log:SetSize(600, 500)
 		log:SetPoint("TOP", 0, -80)
 		log:Hide()
-
 		tinsert(UISpecialFrames, log:GetName())
-
 		log.Title:SetText(GlobalAddonName)
-
 		local drag = CreateFrame("Frame", "$parentTitleButton", log, "TitleDragAreaTemplate")
 		drag:SetPoint("TOPLEFT", _G["QuestsChangedFrameTitleBG"])
 		drag:SetPoint("BOTTOMRIGHT", _G["QuestsChangedFrameTitleBG"])
-
 		log.Quests = self:BuildQuestLog()
 		if E.VIGNETTES then
 			log.Vignettes = self:BuildVignetteLog()
 			log.Vignettes:Hide()
 		end
-
 		if log.TabSystem then
 			log.TabSystem = CreateFrame("Frame", nil, log, "TabSystemTemplate")
 			log.TabSystem:SetPoint("TOPLEFT", log, "BOTTOMLEFT", 22, 6)
 			log:SetTabSystem(log.TabSystem)
-
 			log.Quests:Show()
 			log.questTabID = log:AddNamedTab(QUESTS_LABEL, log.Quests)
-
 			if VIGNETTES then
 				log.vignettesTabID = log:AddNamedTab("Vignettes", log.Vignettes)
 			end
-
 			log:SetTab(log.questTabID)
 		elseif E.VIGNETTES then
 			local QuestButton = CreateFrame("EventButton", nil, log, "UIPanelButtonTemplate")
@@ -52,52 +43,44 @@ if enable then
 			QuestButton:SetSize(120, 22)
 			QuestButton:SetPoint("TOP", log, "BOTTOM", -71, 8)
 			QuestButton:SetScript("OnClick", function()
-				log.Vignettes:Hide()
-				log.Quests:Show()
+					log.Vignettes:Hide()
+					log.Quests:Show()
 			end)
 			local VignetteButton = CreateFrame("EventButton", nil, log, "UIPanelButtonTemplate")
 			VignetteButton:SetText("Vignettes")
 			VignetteButton:SetSize(120, 22)
 			VignetteButton:SetPoint("LEFT", QuestButton, "RIGHT", 22, 0)
 			VignetteButton:SetScript("OnClick", function()
-				log.Quests:Hide()
-				log.Vignettes:Show()
+					log.Quests:Hide()
+					log.Vignettes:Show()
 			end)
 		end
 	end
-
 	function E:BuildLogPanel(initializer, dataProvider)
 		local Container = CreateFrame("Frame", nil, log)
 		Container:SetPoint("TOPLEFT", 12, -32)
 		Container:SetPoint("BOTTOMRIGHT", -3, 4)
-
 		local ScrollBar = CreateFrame("EventFrame", nil, Container, "WowTrimScrollBar")
 		ScrollBar:SetPoint("TOPRIGHT", 0, 5)
 		ScrollBar:SetPoint("BOTTOMRIGHT", 0, 2)
 		Container.ScrollBar = ScrollBar
-
 		local ScrollBox = CreateFrame("Frame", nil, Container, "WowScrollBoxList")
 		ScrollBox:SetPoint("TOPLEFT")
 		ScrollBox:SetPoint("BOTTOMRIGHT", ScrollBar, "BOTTOMLEFT", -2, 2)
 		Container.ScrollBox = ScrollBox
-
 		local ScrollView = CreateScrollBoxListLinearView()
 		ScrollView:SetDataProvider(dataProvider, ScrollBoxConstants.RetainScrollPosition)
 		ScrollView:SetElementExtent(32)  -- Fixed height for each row; required as we're not using XML.
 		ScrollView:SetElementInitializer("Button", initializer)
 		Container.ScrollView = ScrollView
-
 		ScrollUtil.InitScrollBoxWithScrollBar(ScrollBox, ScrollBar, ScrollView)
-
 		-- This causes errors when removing lines:
 		-- Container:SetScript("OnShow", function()
 		--     -- for the timestamps
 		--     ScrollView:Rebuild()
 		-- end)
-
 		return Container
 	end
-
 	function E:BuildQuestLog()
 		local function Line_OnEnter(self)
 			local quest = self.data
@@ -122,15 +105,14 @@ if enable then
 				GameTooltip:Show()
 			end
 		end
-
 		local function Line_OnClick(self, button, down)
 			local quest = self.data
 			if button == "RightButton" then
 				E:RemoveQuest(quest)
 			elseif IsShiftKeyDown() then
 				StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d},"):format(
-					E.func_GetCoord(quest.x, quest.y),
-					quest.id or "nil"
+						E.func_GetCoord(quest.x, quest.y),
+						quest.id or "nil"
 				))
 			else
 				if quest and quest.mapID and quest.x and quest.y then
@@ -148,7 +130,6 @@ if enable then
 				end
 			end
 		end
-
 		local function Time_OnShow(self)
 			if self.data and self.data.time then
 				self.Time:SetText(E.FormatLastSeen(self.data.time))
@@ -156,13 +137,11 @@ if enable then
 				self.Time:SetText(UNKNOWN)
 			end
 		end
-
 		local initializer = function(line, index)
 			if not line.Title then
 				line:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD")
 				line:GetHighlightTexture():SetTexCoord(0.2, 0.8, 0.2, 0.8)
 				line:GetHighlightTexture():SetAlpha(0.5)
-
 				line.Title = line:CreateFontString(nil, "ARTWORK", "GameFontHighlightLeft")
 				line.Title:SetPoint("TOPLEFT")
 				line.Title:SetPoint("TOPRIGHT", line, "TOPLEFT", 260, 0)
@@ -183,19 +162,16 @@ if enable then
 				line.Divider:SetColorTexture(1, 1, 0, 0.5)
 				line.Divider:SetPoint("BOTTOMLEFT")
 				line.Divider:SetPoint("BOTTOMRIGHT")
-
 				line:SetScript("OnEnter", Line_OnEnter)
 				line:SetScript("OnLeave", GameTooltip_Hide)
 				line:SetScript("OnClick", Line_OnClick)
 				line:SetScript("OnShow", Time_OnShow)
 				line:RegisterForClicks("LeftButtonUp","RightButtonUp")
 			end
-
 			-- It's an append table, but I want this to be newest-first
 			-- (And the indexrange dataprovider doesn't have a sort comparator)
 			local quest = self.Octo_QuestsChangedDB.log[#self.Octo_QuestsChangedDB.log - (index - 1)]
 			line.data = quest
-
 			local mapID, level
 			if type(quest.mapID) == 'string' then
 				-- pre-8.0 quest logging has mapFiles, just show them
@@ -217,23 +193,19 @@ if enable then
 				line.Divider:Hide()
 			end
 		end
-
 		-- This is a vast table (my main has 18,586 entries in it), so use the IndexRange provider
 		local dataProvider = CreateIndexRangeDataProvider(#self.Octo_QuestsChangedDB.log)
-
 		self:RegisterCallback(self.Event.OnQuestAdded, function(_, quest, index)
-			dataProvider:SetSize(#self.Octo_QuestsChangedDB.log)
+				dataProvider:SetSize(#self.Octo_QuestsChangedDB.log)
 		end)
 		self:RegisterCallback(self.Event.OnQuestRemoved, function(_, quest, index)
-			dataProvider:SetSize(#self.Octo_QuestsChangedDB.log)
+				dataProvider:SetSize(#self.Octo_QuestsChangedDB.log)
 		end)
 		self:RegisterCallback(self.Event.OnAllQuestsRemoved, function()
-			dataProvider:Flush()
+				dataProvider:Flush()
 		end)
-
 		return E:BuildLogPanel(initializer, dataProvider)
 	end
-
 	function E:BuildVignetteLog()
 		local function Line_OnEnter(self)
 			local vignette = self.data
@@ -252,16 +224,15 @@ if enable then
 				GameTooltip:Show()
 			end
 		end
-
 		local function Line_OnClick(self, button, down)
 			local vignette = self.data
 			if button == "RightButton" then
 				E:RemoveVignette(vignette)
 			elseif IsShiftKeyDown() then
 				StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {vignette=%d, label=\"%s\"},"):format(
-					E.func_GetCoord(vignette.x, vignette.y),
-					vignette.id or "nil",
-					vignette.name or UNKNOWN
+						E.func_GetCoord(vignette.x, vignette.y),
+						vignette.id or "nil",
+						vignette.name or UNKNOWN
 				))
 			else
 				if vignette and vignette.mapID and vignette.x and vignette.y then
@@ -279,13 +250,11 @@ if enable then
 				end
 			end
 		end
-
 		local initializer = function(line, vignetteGUID)
 			if not line.Title then
 				line:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD")
 				line:GetHighlightTexture():SetTexCoord(0.2, 0.8, 0.2, 0.8)
 				line:GetHighlightTexture():SetAlpha(0.5)
-
 				line.Texture = line:CreateTexture(nil, "ARTWORK")
 				line.Texture:SetPoint("TOPLEFT")
 				line.Texture:SetPoint("BOTTOMLEFT")
@@ -306,17 +275,14 @@ if enable then
 				line.Coords:SetPoint("TOPLEFT", line.Location, "BOTTOMLEFT")
 				line.Coords:SetPoint("TOPRIGHT", line.Location, "BOTTOMRIGHT")
 				line.Coords:SetPoint("BOTTOM")
-
 				line:SetScript("OnEnter", Line_OnEnter)
 				line:SetScript("OnLeave", GameTooltip_Hide)
 				line:SetScript("OnClick", Line_OnClick)
 				line:SetScript("OnShow", function(self) if self.data then self.Time:SetText(E.FormatLastSeen(self.data.time)) end end)
 				line:RegisterForClicks("LeftButtonUp","RightButtonUp")
 			end
-
 			local vignette = self.vignetteLog[vignetteGUID]
 			line.data = vignette
-
 			local mapID, level = self.func_GetMapNameFromID(vignette.mapID)
 			line.Texture:SetAtlas(vignette.atlas)
 			line.Title:SetFormattedText("%d: %s", vignette.id, vignette.name or UNKNOWN)
@@ -324,31 +290,26 @@ if enable then
 			line.Coords:SetFormattedText("%.2f, %.2f", vignette.x * 100, vignette.y * 100)
 			line.Time:SetText(self.FormatLastSeen(vignette.time))
 		end
-
 		-- This is a tiny table that's its own source-of-truth, so regular dataprovider is fine
 		local dataProvider = CreateDataProvider(self.vignetteLogOrder)
 		-- It's stored in an append-table, but I want the new events at the top:
 		dataProvider:SetSortComparator(function(lhs, rhs)
-			return self.vignetteLog[lhs].time > self.vignetteLog[rhs].time
+				return self.vignetteLog[lhs].time > self.vignetteLog[rhs].time
 		end)
-
 		self:RegisterCallback(self.Event.OnVignetteAdded, function(_, vignette, guid)
-			dataProvider:Insert(guid)
+				dataProvider:Insert(guid)
 		end)
 		self:RegisterCallback(self.Event.OnVignetteRemoved, function(_, vignette, guid)
-			dataProvider:Remove(guid)
+				dataProvider:Remove(guid)
 		end)
 		self:RegisterCallback(self.Event.OnAllVignettesRemoved, function()
-			dataProvider:Flush()
+				dataProvider:Flush()
 		end)
-
 		return E:BuildLogPanel(initializer, dataProvider)
 	end
-
 	function E:LogShown()
 		return log and log:IsShown()
 	end
-
 	function E:ToggleLog()
 		if not log then self:BuildLog() end
 		if log:IsShown() then
@@ -357,7 +318,6 @@ if enable then
 			log:Show()
 		end
 	end
-
 	do
 		local QCSecondsFormatter = CreateFromMixins(SecondsFormatterMixin)
 		QCSecondsFormatter:Init(
@@ -373,7 +333,6 @@ if enable then
 		function QCSecondsFormatter:GetMinInterval(seconds)
 			return SecondsFormatter.Interval.Minutes
 		end
-
 		function E.FormatLastSeen(t)
 			local now = time()
 			if not now then return UNKNOWN end
@@ -382,5 +341,4 @@ if enable then
 			return QCSecondsFormatter:Format(now - t)
 		end
 	end
-
 end

@@ -314,19 +314,59 @@ function E.func_currencyName(currencyID)
 	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..currencyID.."|r" or "")
 end
 ----------------------------------------------------------------
+function E.func_IsAccountQuest(questID)
+	return IsAccountQuest(questID)
+end
+
+function E.func_IsQuestFlaggedCompletedOnAccount(questID)
+	return IsQuestFlaggedCompletedOnAccount(questID)
+end
+
+----------------------------------------------------------------
+function E.func_questName_SIMPLE(questID, useLargeIcon)
+	table_insert(E.PromiseQuest, questID)
+
+	local title = GetTitleForQuestID(questID)
+	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false) or UNKNOWN
+
+	return vivod
+end
+----------------------------------------------------------------
+function E.func_questNameForQC(questID, useLargeIcon)
+	table_insert(E.PromiseQuest, questID)
+	local title = GetTitleForQuestID(questID)
+	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false) or ""
+
+
+	return E.Gray_Color.."id:"..questID.."|r "..vivod
+end
+
+
+----------------------------------------------------------------
+function E.func_GetCurrentLocation()
+	local curSubZone = GetSubZoneText() or 0
+	local curRealZone = GetRealZoneText() or 0
+	local curLocation = ""
+	if curSubZone ~= 0 and curSubZone ~= "" and curRealZone ~= curSubZone then
+		curLocation = curRealZone.." (".. curSubZone..")"
+	end
+	return curLocation
+end
+
+----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
 	table_insert(E.PromiseQuest, questID)
 
 	local title = GetTitleForQuestID(questID)
 	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false) or UNKNOWN
 
-	if IsAccountQuest(questID) or IsQuestFlaggedCompletedOnAccount(questID) then
+	if E.func_IsAccountQuest(questID) or E.func_IsQuestFlaggedCompletedOnAccount(questID) then
 		vivod = E.Icon_AccountWide..vivod
 	end
 
-	if IsAccountQuest(questID) then
+	if E.func_IsAccountQuest(questID) then
 		vivod = "|cffFFFF00"..vivod.."|r"
-	elseif IsQuestFlaggedCompletedOnAccount(questID) then
+	elseif E.func_IsQuestFlaggedCompletedOnAccount(questID) then
 		vivod = "|cff9fc5e8"..vivod.."|r"
 	end
 
@@ -381,7 +421,7 @@ end
 -- ITEM UTILS
 ----------------------------------------------------------------
 function E.func_GetItemInfo(itemInfo) -- Item ID, Link or name
-	return GetItemInfo(itemInfo)
+return GetItemInfo(itemInfo)
 end
 ----------------------------------------------------------------
 function E.func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
@@ -672,12 +712,12 @@ function E.func_SecondsToClock(time)
 	elseif time >= 60 then
 		table.insert(parts, mins..(L["time_MINUTE"] or "m").." ")
 		if time < 600 then -- Только для 1-9 минут добавляем секунды
-			table.insert(parts, secs..(L["time_SECOND"] or "s"))
-		end
-	else
 		table.insert(parts, secs..(L["time_SECOND"] or "s"))
 	end
-	return table_concat(parts)
+else
+	table.insert(parts, secs..(L["time_SECOND"] or "s"))
+end
+return table_concat(parts)
 end
 function E.ChatFrame_TimeBreakDown(time)
 	local days = floor(time / (60 * 60 * 24))
@@ -833,24 +873,24 @@ function E.func_GetMapName(mapID)
 end
 ----------------------------------------------------------------
 	function E.func_GetMapNameFromID(mapID) -- ПОФИКСИТЬ
-		if not mapID then
-			return UNKNOWN
-		end
-		local mapdata = GetMapInfo(mapID)
-		if not mapdata then
-			return UNKNOWN
-		end
-		local groupID = GetMapGroupID(mapID)
-		if groupID then
-			local groupdata = GetMapGroupMembersInfo(groupID)
-			for _, subzonedata in ipairs(groupdata) do
-				if subzonedata.mapID == mapID then
-					return mapdata.name, subzonedata.name
-				end
+	if not mapID then
+		return UNKNOWN
+	end
+	local mapdata = GetMapInfo(mapID)
+	if not mapdata then
+		return UNKNOWN
+	end
+	local groupID = GetMapGroupID(mapID)
+	if groupID then
+		local groupdata = GetMapGroupMembersInfo(groupID)
+		for _, subzonedata in ipairs(groupdata) do
+			if subzonedata.mapID == mapID then
+				return mapdata.name, subzonedata.name
 			end
 		end
-		return mapdata.name
 	end
+	return mapdata.name
+end
 
 
 ----------------------------------------------------------------
@@ -859,8 +899,8 @@ function E.func_GetCoord(x, y)
 end
 ----------------------------------------------------------------
 function E.func_GetCoordFormated(x, y)
-	-- return string.format("%.1f", x*100).." / "..string.format("%.1f", y*100)
-	return string.format("%.2f", x*100)..", "..string.format("%.2f", y*100)
+	return string.format("%.1f", x*100).." / "..string.format("%.1f", y*100)
+	-- return string.format("%.2f", x*100)..", "..string.format("%.2f", y*100)
 end
 ----------------------------------------------------------------
 function E.func_npcName(npcID)
@@ -1029,7 +1069,7 @@ function E.func_CheckReputationNEW(reputationID)
 			vivod = standingTEXT
 		else
 			FIRST, SECOND = SHOWFULL and barMin or currentValue,
-						  SHOWFULL and (barMin < 0 and 42000 or barMax) or totalValue
+			SHOWFULL and (barMin < 0 and 42000 or barMax) or totalValue
 			vivod = FIRST.."/"..SECOND
 		end
 	end
@@ -1421,7 +1461,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga",
 		CLOSE,
 		function() frame:Hide() end
-	)
+		)
 
 	-- Options Button
 	CreateUtilButton(
@@ -1440,7 +1480,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 				Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
 			end
 		end
-	)
+		)
 
 	-- Abandon Button
 	local function f_AbandonQuests()
@@ -1473,7 +1513,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		frame,
 		-curHeight*2,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga"
-	)
+		)
 
 	Octo_AbandonButton:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
@@ -1513,7 +1553,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		frame,
 		-curHeight*3,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga"
-	)
+		)
 
 	Octo_EventsButton:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
@@ -1537,13 +1577,13 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 					v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..
 					E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or ""),
 					E.Green_Color..v.startTime.." - "..v.endTime.."|r"
-				)
+					)
 			else
 				GameTooltip:AddDoubleLine(
 					v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Gray_Color..v.title..
 					(E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or ""),
 					E.Gray_Color..v.startTime.." - "..v.endTime.."|r"
-				)
+					)
 			end
 		end
 
@@ -1593,41 +1633,41 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 		end,
 	}
 	info.OnClick = function(_, button)
-		if button == "LeftButton" then
-			if not InCombatLockdown() then
-				if func then
-					func()
-				end
-				if frame then
-					for index, frames in ipairs(E.OctoTable_Frames) do
-						if frame ~= frames and frames:IsShown() then
-							frames:Hide()
-						end
-					end
-					frame:SetShown(not frame:IsShown())
-				end
-				if SettingsPanel:IsVisible() and frame:IsVisible() then
-					HideUIPanel(SettingsPanel)
-				end
-				if GameMenuFrame:IsVisible() and frame:IsVisible() then
-					HideUIPanel(GameMenuFrame)
-				end
+	if button == "LeftButton" then
+		if not InCombatLockdown() then
+			if func then
+				func()
 			end
-		elseif button == "RightButton" then
-			if frame and frame:IsShown() then
-				frame:Hide()
+			if frame then
+				for index, frames in ipairs(E.OctoTable_Frames) do
+					if frame ~= frames and frames:IsShown() then
+						frames:Hide()
+					end
+				end
+				frame:SetShown(not frame:IsShown())
 			end
 			if SettingsPanel:IsVisible() and frame:IsVisible() then
 				HideUIPanel(SettingsPanel)
-			else
-				Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
+			end
+			if GameMenuFrame:IsVisible() and frame:IsVisible() then
+				HideUIPanel(GameMenuFrame)
 			end
 		end
+	elseif button == "RightButton" then
+		if frame and frame:IsShown() then
+			frame:Hide()
+		end
+		if SettingsPanel:IsVisible() and frame:IsVisible() then
+			HideUIPanel(SettingsPanel)
+		else
+			Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
+		end
 	end
-	vars.minimapPos = vars.minimapPos or 244
-	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
-	LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
-	LibDBIcon:Show(MinimapName)
+end
+vars.minimapPos = vars.minimapPos or 244
+local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
+LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
+LibDBIcon:Show(MinimapName)
 end
 ----------------------------------------------------------------
 function E.func_TooltipOnEnter(frame, first, second)
@@ -1712,10 +1752,10 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 		end
 		frame.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		frame:SetBackdrop({
-				bgFile = E.bgFile,
-				edgeFile = E.edgeFile,
-				edgeSize = 1,
-				insets = {left = 0, right = 0, top = 0, bottom = 0},
+			bgFile = E.bgFile,
+			edgeFile = E.edgeFile,
+			edgeSize = 1,
+			insets = {left = 0, right = 0, top = 0, bottom = 0},
 		})
 		frame:SetBackdropColor(0, 0, 0, 0)
 		frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
@@ -1731,35 +1771,35 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 		if not frame.isInit then
 			frame.isInit = true
 			frame:SetScript("OnShow", function(self)
-					self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
-					E:FrameColor(self, id, curType)
+				self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
+				E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnEnter", function(self)
-					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
-					E:FrameColor(self, id, curType)
-					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-					GameTooltip:ClearLines()
-					if curType == "item" or curType == "toy" then
-						GameTooltip:AddDoubleLine(E.func_GetItemNameByID(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
-					else
-						GameTooltip:AddDoubleLine(E.func_GetSpellName(id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
-						GameTooltip:AddDoubleLine(E.func_GetSpellSubtext(id))
-					end
-					GameTooltip:Show()
+				self:SetBackdropBorderColor(r, g, b, edgeAlpha)
+				E:FrameColor(self, id, curType)
+				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+				GameTooltip:ClearLines()
+				if curType == "item" or curType == "toy" then
+					GameTooltip:AddDoubleLine(E.func_GetItemNameByID(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
+				else
+					GameTooltip:AddDoubleLine(E.func_GetSpellName(id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
+					GameTooltip:AddDoubleLine(E.func_GetSpellSubtext(id))
+				end
+				GameTooltip:Show()
 			end)
 			frame:SetScript("OnLeave", function(self)
-					self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
-					E:FrameColor(self, id, curType)
-					GameTooltip:ClearLines()
-					GameTooltip:Hide()
+				self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
+				E:FrameColor(self, id, curType)
+				GameTooltip:ClearLines()
+				GameTooltip:Hide()
 			end)
 			frame:SetScript("OnMouseDown", function(self)
-					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
-					E:FrameColor(self, id, curType)
+				self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
+				E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnMouseUp", function(self)
-					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
-					E:FrameColor(self, id, curType)
+				self:SetBackdropBorderColor(r, g, b, edgeAlpha)
+				E:FrameColor(self, id, curType)
 			end)
 		end
 	end
@@ -1782,7 +1822,7 @@ function E.RegisterMyEventsToFrames(frame, MyEventsTable, DebugPath)
 				self:UnregisterEvent(event)
 				self.event = nil
 			end
-	end)
+		end)
 end
 ----------------------------------------------------------------
 function E.func_Reason(reason)
@@ -1860,7 +1900,7 @@ E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.t
 				-- ["Octo_background"] = "None",
 				-- ["Octo_border"] = "None",
 				-- ["Octo_font"] = "Friz Quadrata TT",
-E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
+				E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
 -- print (Octo_ToDo_DB_Vars.interface.Octo_font)
 E.fontObject9 = CreateFont("OctoFont9")
@@ -2278,8 +2318,8 @@ function E.func_GetAddonReason(index, character)
 	return reason
 end
 function E.func_IsAddonInstalled(index) -- Исключаем отсутствующие аддоны
-	local reason = select(5, GetAddOnInfo(index))
-	return reason ~= "MISSING"
+local reason = select(5, GetAddOnInfo(index))
+return reason ~= "MISSING"
 end
 function E.func_GetAddonSecurity(index)
 	local security = select(6, GetAddOnInfo(index))
@@ -2391,10 +2431,10 @@ function E.func_GetAllAddons()
 	local addons = {}
 	for index = 1, E.func_GetNumAddOns() do
 		if E.func_IsAddonInstalled(index) then -- Исключаем отсутствующие аддоны
-			table.insert(addons, E.func_GetAddonName(index))
-		end
+		table.insert(addons, E.func_GetAddonName(index))
 	end
-	return addons
+end
+return addons
 end
 -- Показать список аддонов с их статусом
 function E.func_ListAddons(filter)
@@ -2550,11 +2590,11 @@ function E.func_SaveProfile(profileName)
 		local loadable = E.func_IsAddOnLoadable(index, character)
 		local reason = E.func_GetAddonReason(index, character) or ""
 
-			if loadable or reason == "DEMAND_LOADED" or reason == "DEP_DEMAND_LOADED" then
-				Octo_AddonsManager_DB.profiles[profileName][name] = true
-			else
-				Octo_AddonsManager_DB.profiles[profileName][name] = false
-			end
+		if loadable or reason == "DEMAND_LOADED" or reason == "DEP_DEMAND_LOADED" then
+			Octo_AddonsManager_DB.profiles[profileName][name] = true
+		else
+			Octo_AddonsManager_DB.profiles[profileName][name] = false
+		end
 
 
 	end
@@ -2731,58 +2771,58 @@ function E.func_NumPlayers()
 			if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
 				if ShowOnlyCurrentBattleTag then
 					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
-					and CharInfo.BattleTagLocal == E.BattleTagLocal
-					and CharInfo.UnitLevel >= LevelToShow
-					and CharInfo.UnitLevel <= LevelToShowMAX then
-						sorted[#sorted+1] = CharInfo
-					end
-				else
-					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
-					and CharInfo.UnitLevel >= LevelToShow
-					and CharInfo.UnitLevel <= LevelToShowMAX then
-						sorted[#sorted+1] = CharInfo
-					end
-				end
-			end
-		end
-	end
-	return #sorted or 1
-end
-function E.sorted()
-	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
-	local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
-	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
-	local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
-	local sorted = {}
-
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if E.curGUID == CharInfo.GUID then
-			sorted[#sorted+1] = CharInfo
-		end
-		if CharInfo.isShownPLAYER and E.curGUID ~= CharInfo.GUID then
-			if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
-				if ShowOnlyCurrentBattleTag then
-					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
-					and CharInfo.BattleTagLocal == E.BattleTagLocal
-					and CharInfo.UnitLevel >= LevelToShow
-					and CharInfo.UnitLevel <= LevelToShowMAX
-					then
-						sorted[#sorted+1] = CharInfo
-					end
-				else
-					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
-					and CharInfo.UnitLevel >= LevelToShow
-					and CharInfo.UnitLevel <= LevelToShowMAX
-					then
-						sorted[#sorted+1] = CharInfo
+						and CharInfo.BattleTagLocal == E.BattleTagLocal
+						and CharInfo.UnitLevel >= LevelToShow
+						and CharInfo.UnitLevel <= LevelToShowMAX then
+							sorted[#sorted+1] = CharInfo
+						end
+					else
+						if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
+							and CharInfo.UnitLevel >= LevelToShow
+							and CharInfo.UnitLevel <= LevelToShowMAX then
+								sorted[#sorted+1] = CharInfo
+							end
+						end
 					end
 				end
 			end
+			return #sorted or 1
 		end
-	end
+		function E.sorted()
+			local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
+			local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
+			local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
+			local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
+			local sorted = {}
 
-	table.sort(sorted, function(a, b)
-			if not a or not b then return false end
+			for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+				if E.curGUID == CharInfo.GUID then
+					sorted[#sorted+1] = CharInfo
+				end
+				if CharInfo.isShownPLAYER and E.curGUID ~= CharInfo.GUID then
+					if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
+						if ShowOnlyCurrentBattleTag then
+							if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
+								and CharInfo.BattleTagLocal == E.BattleTagLocal
+								and CharInfo.UnitLevel >= LevelToShow
+								and CharInfo.UnitLevel <= LevelToShowMAX
+								then
+									sorted[#sorted+1] = CharInfo
+								end
+							else
+								if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
+									and CharInfo.UnitLevel >= LevelToShow
+									and CharInfo.UnitLevel <= LevelToShowMAX
+									then
+										sorted[#sorted+1] = CharInfo
+									end
+								end
+							end
+						end
+					end
+
+					table.sort(sorted, function(a, b)
+						if not a or not b then return false end
 
 			-- Сначала сортируем по серверу (в алфавитном порядке)
 			-- if a.curServer ~= b.curServer then
@@ -2801,10 +2841,10 @@ function E.sorted()
 
 			-- В конце по имени (по возрастанию)
 			return a.Name < b.Name
-	end)
+		end)
 
-	return sorted
-end
+					return sorted
+				end
 
 ----------------------------------------------------------------
 -- 1 Работа с цветами:

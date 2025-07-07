@@ -48,8 +48,6 @@ local editor_themes = {
 		["String"] = "|cff829D61", -- Зелен
 	},
 }
-
-
 local colorScheme = {
 	[IndentationLib.tokens.TOKEN_SPECIAL] = editor_themes["Sublime"]["Special"],
 	[IndentationLib.tokens.TOKEN_KEYWORD] = editor_themes["Sublime"]["Keyword"],
@@ -121,7 +119,6 @@ local colorScheme = {
 -- fprint
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local IndentationLib = IndentationLib
-
 ----------------------------------------------------------------
 -- editFrame
 ----------------------------------------------------------------
@@ -130,22 +127,20 @@ editFrame:ClearAllPoints()
 editFrame:SetPoint("CENTER")
 -- editFrame:SetScale(1.5)
 editFrame:SetScript("OnKeyDown", function(self, key)
-		if key == GetBindingKey("TOGGLEGAMEMENU") then
-			self:Hide()
-			self:SetPropagateKeyboardInput(false)
-		else
-			self:SetPropagateKeyboardInput(true)
+		if not InCombatLockdown() then
+			if key == GetBindingKey("TOGGLEGAMEMENU") then
+				self:Hide()
+				self:SetPropagateKeyboardInput(false)
+			else
+				self:SetPropagateKeyboardInput(true)
+			end
 		end
 end)
 local editBox = editFrame.editFrame
 tinsert(E.OctoTable_Frames, editFrame)
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
-
 local function dumpEdit(indent, msg, tables)
 	local str, indentStr, tables = "", "", tables or {}
 	for i = 1, indent do
@@ -267,12 +262,10 @@ local function tToStr(t)
 	return "{"..str:sub(1, -2).."}"
 end
 function E.func_mountslist(full)
-
 	if E.IsAddOnLoaded("Blizzard_Collections") then
 		fprint("|cffff0000NEED RELOAD|r")
 		-- return
 	end
-
 	full = full == "1"
 	local tbl, types, currentTier, t, c, w = {}, {}, tonumber(GetBuildInfo():match("(.-)%.")), {}, 0, {}
 	-- for k, v in next, (MountsJournal.mountsDB) do
@@ -331,7 +324,6 @@ function E.func_mountslist(full)
 		editFrame:Show()
 	end
 	fprint(("Mounts: %s. In base %s. Not in base: %s."):format(i, c, j))
-
 end
 ------------------------------
 function E.func_itemslist(msg)
@@ -352,14 +344,10 @@ function E.func_itemslist(msg)
 			for _, id2 in next, (list2) do
 				str = str..id2..", -- "..E.func_itemTexture(id2)..E.func_itemName(id2).."\n"
 			end
-
 			editBox:SetText(str)
 			editFrame:Show()
-
 	end)
 end
-
-
 function E.func_itemslistSort(msg)
 	local str = ""
 	local list1 = {}
@@ -389,10 +377,6 @@ function E.func_itemslistSort(msg)
 			editFrame:Show()
 	end)
 end
-
-
-
-
 function E.func_itemslistSortBOOLEN(msg)
 	local str = ""
 	local list1 = {}
@@ -426,12 +410,6 @@ function E.func_itemslistSortBOOLEN(msg)
 			editFrame:Show()
 	end)
 end
-
-
-
-
-
-
 ------------------------------
 function E.func_questslist(msg)
 	local str = ""
@@ -452,10 +430,8 @@ function E.func_questslist(msg)
 			for _, id2 in next, (list2) do
 				str = str..id2..", -- "..E.func_questName(id2).."\n"
 			end
-
 			editBox:SetText(str)
 			editFrame:Show()
-
 	end)
 end
 ------------------------------
@@ -463,27 +439,22 @@ function E.func_currencieslist(msg)
 	-- local str1 = ""
 	-- local headerName = ""
 	-- for i = 1, C_CurrencyInfo.GetCurrencyListSize() do
-	-- 	local info = C_CurrencyInfo.GetCurrencyListInfo(i)
-	-- 	if info.isHeader then
-	-- 		C_CurrencyInfo.ExpandCurrencyList(i, true)
-	-- 		headerName = C_CurrencyInfo.GetCurrencyListInfo(i).name
-	-- 		str1 = str1 .."|cff606060 ---> ".. headerName .. "|r\n"
-	-- 	elseif info.name then
-	-- 		local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
-	-- 		local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
-	-- 		local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-	-- 		local quantity = currencyInfo.quantity
-	-- 		if currencyID then
-	-- 			str1 = str1 ..tostringall(currencyID) .. " - ".. E.func_currencyIcon(currencyID)..E.func_currencyName(currencyID) .." ("..quantity..")".. "\n"
-	-- 		end
-	-- 	end
-	-- 	i = i + 1
+	--     local info = C_CurrencyInfo.GetCurrencyListInfo(i)
+	--     if info.isHeader then
+	--         C_CurrencyInfo.ExpandCurrencyList(i, true)
+	--         headerName = C_CurrencyInfo.GetCurrencyListInfo(i).name
+	--         str1 = str1 .."|cff606060 ---> ".. headerName .. "|r\n"
+	--     elseif info.name then
+	--         local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
+	--         local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
+	--         local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	--         local quantity = currencyInfo.quantity
+	--         if currencyID then
+	--             str1 = str1 ..tostringall(currencyID) .. " - ".. E.func_currencyIcon(currencyID)..E.func_currencyName(currencyID) .." ("..quantity..")".. "\n"
+	--         end
+	--     end
+	--     i = i + 1
 	-- end
-
-
-
-
-
 	local str1 = ""
 	local str2 = ""
 	local vivod = ""
@@ -502,7 +473,6 @@ function E.func_currencieslist(msg)
 	vivod = str1..str2
 	editBox:SetText(vivod)
 	editFrame:Show()
-
 end
 ------------------------------
 function E.func_reputationslist(msg)
@@ -548,7 +518,6 @@ function E.func_spellslist(msg)
 	editBox:SetText(vivod)
 	editFrame:Show()
 end
-
 local function func_HandleCommand(msg)
 	local command, arg1, arg2 = strsplit(" ", msg, 3)
 	if (command == "mount" or command == "1") then
@@ -577,10 +546,7 @@ local function func_HandleCommand(msg)
 		print ("/fp ".."spell".." (6)")
 		print ("/fp ".."item2".." (7)")
 		print ("/fp ".."item3".." (8)")
-
 	end
 end
-
-
 SLASH_OCTOLIST1 = "/fp"
 SlashCmdList["OCTOLIST"] = func_HandleCommand

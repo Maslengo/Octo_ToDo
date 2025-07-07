@@ -1,40 +1,32 @@
 local GlobalAddonName, E = ...
 local enable = true
 if enable then
-	print (E.func_Gradient("1 QuestsChanged addons: ")..VIDEO_OPTIONS_ENABLED)
-
+	-- print (E.func_Gradient("1 QuestsChanged addons: ")..VIDEO_OPTIONS_ENABLED)
 	local icon = LibStub("LibDBIcon-1.0", true)
-
 	E.VIGNETTES = C_EventUtils.IsEventValid("VIGNETTE_MINIMAP_UPDATED")
-
 	local quests = {}
 	local new_quests = {}
 	local new_quests_byid = {}
 	local session_quests = {}
 	E.quests_completed = {}
-
 	E.WARBANDS_ICON = CreateAtlasMarkup("warbands-icon", 16, 16)
-
 	local SPAM_QUESTS = {
 		[32468] = true, -- Crystal Clarity
 		[32469] = true, -- Crystal Clarity
 	}
-
 	local Callbacks = CreateFrame("EventFrame")
 	Callbacks:SetUndefinedEventsAllowed(true)
 	Callbacks:SetScript("OnEvent", function(self, event, ...)
-		self:TriggerEvent(event, event, ...)
+			self:TriggerEvent(event, event, ...)
 	end)
 	Callbacks:RegisterEvent("ADDON_LOADED")
 	Callbacks:Hide()
 	E.Callbacks = Callbacks
-
 	Callbacks:GenerateCallbackEvents{
 		"OnQuestAdded", "OnQuestRemoved", "OnAllQuestsRemoved",
 		"OnVignetteAdded", "OnVignetteRemoved", "OnAllVignettesRemoved",
 	}
 	E.Event = Callbacks.Event
-
 	-- help out with callback boilerplate:
 	function E:RegisterCallback(event, func)
 		if not func and E[event] then func = E[event] end
@@ -52,31 +44,25 @@ if enable then
 	function E:TriggerEvent(...)
 		return Callbacks:TriggerEvent(...)
 	end
-
 	E:RegisterCallback("ADDON_LOADED", function(self, event, name)
-		if name ~= GlobalAddonName then return end
-
-		Octo_QuestsChangedDB = setmetatable(Octo_QuestsChangedDB or {}, {
-			__index = {
-				minimap = false,
-				announce = false,
-				removed = true,
-				showInCompartment=true,
-			},
-		})
-
-		if not Octo_QuestsChangedDB.log then
-			Octo_QuestsChangedDB.log = {}
-		end
-
-		E.Octo_QuestsChangedDB = Octo_QuestsChangedDB
-
-		if icon then
-			icon:Register(GlobalAddonName, E.dataobject, Octo_QuestsChangedDB)
-		end
-
-		self:UnregisterCallback("ADDON_LOADED")
-		if IsLoggedIn() then self:PLAYER_LOGIN() else self:RegisterCallback("PLAYER_LOGIN") end
+			if name ~= GlobalAddonName then return end
+			Octo_QuestsChangedDB = setmetatable(Octo_QuestsChangedDB or {}, {
+					__index = {
+						minimap = false,
+						announce = false,
+						removed = true,
+						showInCompartment=true,
+					},
+			})
+			if not Octo_QuestsChangedDB.log then
+				Octo_QuestsChangedDB.log = {}
+			end
+			E.Octo_QuestsChangedDB = Octo_QuestsChangedDB
+			if icon then
+				icon:Register(GlobalAddonName, E.dataobject, Octo_QuestsChangedDB)
+			end
+			self:UnregisterCallback("ADDON_LOADED")
+			if IsLoggedIn() then self:PLAYER_LOGIN() else self:RegisterCallback("PLAYER_LOGIN") end
 	end)
 	function E:PLAYER_LOGIN()
 		-- Quests
@@ -85,7 +71,6 @@ if enable then
 			self:RegisterCallback("ENCOUNTER_LOOT_RECEIVED")
 		end
 		self:UnregisterCallback("PLAYER_LOGIN")
-
 		if C_QuestLog.GetAllCompletedQuestIDs then
 			new_quests = C_QuestLog.GetAllCompletedQuestIDs(new_quests)
 			for _, questid in pairs(new_quests) do
@@ -94,7 +79,6 @@ if enable then
 		else
 			quests = GetQuestsCompleted()
 		end
-
 		-- Vignettes
 		if E.VIGNETTES then
 			self:RegisterCallback("PLAYER_ENTERING_WORLD")
@@ -106,34 +90,30 @@ if enable then
 		Callbacks:Show()
 	end
 	E.ENCOUNTER_LOOT_RECEIVED = E.QUEST_LOG_UPDATE
-
 	do
 		local time_since = 0
 		Callbacks:SetScript("OnUpdate", function(self, elapsed)
-			time_since = time_since + elapsed
-			if time_since < 0.3 then
-				return
-			end
-			E:CheckQuests()
-			time_since = 0
-			self:Hide()
+				time_since = time_since + elapsed
+				if time_since < 0.3 then
+					return
+				end
+				E:CheckQuests()
+				time_since = 0
+				self:Hide()
 		end)
 	end
-
 	E.quest_names = {}
 	setmetatable(E.quest_names, {__index = function(self, key)
-		local name = (C_QuestLog.GetTitleForQuestID or C_QuestLog.GetQuestInfo)(key)
-		if name then
-			self[key] = name
-			return name
-		end
-		return false
+				local name = (C_QuestLog.GetTitleForQuestID or C_QuestLog.GetQuestInfo)(key)
+				if name then
+					self[key] = name
+					return name
+				end
+				return false
 	end,})
-
 	function QuestsChangedGetQuestTitle(id)
 		return E.quest_names[id]
 	end
-
 	function E:CheckQuests()
 		if not quests then
 			return
@@ -170,15 +150,14 @@ if enable then
 					playerName = E.curCharName,
 					curServer = GetRealmName(),
 					classColorHex = E.classColorHexCurrent,
+					curLocation = E.func_GetCurrentLocation(),
 				}
 				table.insert(self.quests_completed, quest)
 				table.insert(self.Octo_QuestsChangedDB.log, quest)
 				session_quests[questid] = true
-
 				if Octo_QuestsChangedDB.announce then
 					self.Print("Quest complete:", questid, questName or UNKNOWN)
 				end
-
 				self:TriggerEvent(self.Event.OnQuestAdded, quest, #self.Octo_QuestsChangedDB.log)
 			end
 			quests[questid] = true
@@ -194,7 +173,6 @@ if enable then
 			end
 		end
 	end
-
 	function E:RemoveQuest(index)
 		if index == 0 then
 			table.wipe(self.quests_completed)
@@ -209,7 +187,6 @@ if enable then
 			else
 				quest = self.Octo_QuestsChangedDB.log[index]
 			end
-
 			for i, q in ipairs(self.quests_completed) do
 				if q.id == quest.id then
 					tremove(self.quests_completed, i)
@@ -220,14 +197,12 @@ if enable then
 			self:TriggerEvent(self.Event.OnQuestRemoved, quest, index)
 		end
 	end
-
 	local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 	local dataobject = ldb:GetDataObjectByName("QuestsChanged") or ldb:NewDataObject("QuestsChanged", {
-		type = "data source",
-		label = "QuestsChanged",
-		icon = [[Interface\Minimap\Tracking\QuestBlob]],
+			type = "data source",
+			label = "QuestsChanged",
+			icon = [[Interface\Minimap\Tracking\QuestBlob]],
 	})
-
 	dataobject.OnClick = function(frame, button)
 		if button == "RightButton" then
 			-- clear the current session
@@ -236,15 +211,14 @@ if enable then
 			if IsShiftKeyDown() then
 				local data = E.Octo_QuestsChangedDB.log[#E.Octo_QuestsChangedDB.log]
 				StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d, label=\"\"},"):format(
-					E.func_GetCoord(data.x, data.y),
-					(data.id or "nil")
+						E.func_GetCoord(data.x, data.y),
+						(data.id or "nil")
 				))
 			else
 				E:ToggleLog()
 			end
 		end
 	end
-
 	dataobject.OnTooltipShow = function(tooltip)
 		E:CheckQuests() -- in case
 		tooltip:AddLine("QuestsChanged")
@@ -265,7 +239,6 @@ if enable then
 				("%s (%s) %.2f, %.2f"):format(quest.mapID, mapID .. (level and (' / ' .. level) or ''), quest.x * 100, quest.y * 100)
 			)
 		end
-
 		local x, y
 		local mapID = C_Map.GetBestMapForUnit('player')
 		if mapID then
@@ -275,17 +248,13 @@ if enable then
 			end
 		end
 		local mapname, subname = E.func_GetMapNameFromID(mapID)
-
 		tooltip:AddDoubleLine("Location", ("%s (%s) %.2f, %.2f"):format(mapID or UNKNOWN, mapname .. (subname and (' / ' .. subname) or ''), (x or 0) * 100, (y or 0) * 100), 1, 0, 1, 1, 0, 1)
 		tooltip:AddLine("Left-click to show your quest history", 0, 1, 1)
 		tooltip:AddLine("Shift-left-click to copy the last quest", 0, 1, 1)
 		tooltip:AddLine("Right-click to clear the current session", 0, 1, 1)
 	end
-
 	E.dataobject = dataobject
-
 	-- slash
-
 	_G["SLASH_".. GlobalAddonName:upper().."1"] = "/questschanged"
 	SlashCmdList[GlobalAddonName:upper()] = function(msg)
 		msg = msg:trim()
@@ -308,12 +277,6 @@ if enable then
 			E.Print("announce in chat", Octo_QuestsChangedDB.announce and "enabled" or "disabled")
 		end
 	end
-
-
-
-
-
-
 	StaticPopupDialogs["QuestsChanged_CopyBox"] = {
 		text = E.classColorHexCurrent.."CTRL-C|r|n"..CALENDAR_COPY_EVENT,
 		button1 = CLOSE,
@@ -325,12 +288,9 @@ if enable then
 		EditBoxOnEscapePressed = StaticPopup_StandardEditBoxOnEscapePressed,
 		EditBoxOnEnterPressed = StaticPopup_StandardEditBoxOnEscapePressed,
 		hideOnEscape = 1, -- true
-
 		editBoxWidth = 256,
 		closeButton = false,
-
 		preferredIndex = 3,
-
 		OnShow = function(self, data)
 			if data then
 				self.editBox:SetText(data)

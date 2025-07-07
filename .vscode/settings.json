@@ -282,7 +282,19 @@
         "WorldMapFrame",
         "REAGENTBANK_CONTAINER",
         "NUM_BANKBAGSLOTS",
-        "CALENDAR_FILTER_HOLIDAYS"
+        "CALENDAR_FILTER_HOLIDAYS",
+        "VIDEO_OPTIONS_ENABLED",
+        "StaticPopup_StandardEditBoxOnEscapePressed",
+        "CALENDAR_COPY_EVENT",
+        "SecondsFormatterConstants",
+        "CreateIndexRangeDataProvider",
+        "SecondsFormatterMixin",
+        "SecondsFormatter",
+        "NEVER",
+        "ACCOUNT_COMPLETED_QUEST_LABEL",
+        "OpenWorldMap",
+        "UiMapPoint",
+        "ActionStatus"
     ],
     "Lua.type.weakUnionCheck": true
 }

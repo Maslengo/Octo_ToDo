@@ -84,10 +84,10 @@ function E.CreateTooltipPlayers(CharInfo)
 			CharInfo.BindLocation
 		}
 	end
-	if CharInfo.CurrentLocation ~= 0 then
+	if CharInfo.curLocation ~= 0 then
 		tooltip[#tooltip+1] = {
 			E.func_texturefromIcon(132319)..L["Current Location"],
-			CharInfo.CurrentLocation
+			CharInfo.curLocation
 		}
 	end
 	-- Inventory info

@@ -611,14 +611,9 @@ end
 function E.Collect_All_Locations()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if collect and not InCombatLockdown() then
-		local curSubZone = GetSubZoneText()
 		local curRealZone = GetRealZoneText() or 0
 		local curBindLocation = GetBindLocation()
-		local CurrentLocation = ""
-		if curSubZone ~= 0 and curSubZone ~= "" and curRealZone ~= curSubZone then
-			CurrentLocation = curRealZone.." (".. curSubZone..")"
-		end
-		collect.CurrentLocation = CurrentLocation
+		collect.curLocation = E.func_GetCurrentLocation()
 		collect.BindLocation = curRealZone.." ("..curBindLocation..")"
 	end
 end

@@ -112,7 +112,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		totalSlots = 0,
 		usedSlots = 0,
 		BindLocation = 0,
-		CurrentLocation = 0,
+		curLocation = 0,
 		WarMode = false,
 		CurrentKey = 0,
 		CurrentKeyName = 0,
