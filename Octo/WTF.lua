@@ -406,8 +406,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	-- Размеры и параметры интерфейса
 	local uiDefaults = {
 		AddonHeight = 20,
-		AddonLeftFrameWeight = 220,
-		AddonCentralFrameWeight = 110,
+		AddonLeftFrameWeight = 256,
+		AddonCentralFrameWeight = 128,
 		MainFrameDefaultLines = 30,
 		SFDropDownWeight = 100,
 		MaxNumCharacters = 10,

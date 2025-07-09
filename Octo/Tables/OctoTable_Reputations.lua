@@ -118,7 +118,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[11] = {
-		header = {icon = E.OctoTable_Expansions[11].icon, name = E.OctoTable_Expansions[11].color..E.OctoTable_Expansions[11].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[11].icon, name = E.OctoTable_Expansions[11].color..E.OctoTable_Expansions[11].name.."|r",},
 		-- ["The War Within"] = {
 		{ id = 2653, }, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
 		{ id = 2640, }, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
@@ -148,7 +148,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[10] = {
-		header = {icon = E.OctoTable_Expansions[10].icon, name = E.OctoTable_Expansions[10].color..E.OctoTable_Expansions[10].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[10].icon, name = E.OctoTable_Expansions[10].color..E.OctoTable_Expansions[10].name.."|r",},
 		-- ["Dragonflight"] = {
 		{ id = 2507, }, --name = "Драконья экспедиция", side = "-", category = "Dragonflight", }, --[faction=2507]
 		{ id = 2574, }, --name = "Стражи Сна", side = "-", category = "Dragonflight", }, --[faction=2574]
@@ -180,7 +180,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[9] = {
-		header = {icon = E.OctoTable_Expansions[9].icon, name = E.OctoTable_Expansions[9].color..E.OctoTable_Expansions[9].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[9].icon, name = E.OctoTable_Expansions[9].color..E.OctoTable_Expansions[9].name.."|r",},
 		-- ["Shadowlands"] = {
 		{ id = 2413, }, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
 		{ id = 2464, }, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
@@ -224,7 +224,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[8] = {
-		header = {icon = E.OctoTable_Expansions[8].icon, name = E.OctoTable_Expansions[8].color..E.OctoTable_Expansions[8].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[8].icon, name = E.OctoTable_Expansions[8].color..E.OctoTable_Expansions[8].name.."|r",},
 		-- ["Battle for Azeroth"] = {
 		{ id = 2164, }, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
 		{ id = 2415, }, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
@@ -265,7 +265,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[7] = {
-		header = {icon = E.OctoTable_Expansions[7].icon, name = E.OctoTable_Expansions[7].color..E.OctoTable_Expansions[7].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[7].icon, name = E.OctoTable_Expansions[7].color..E.OctoTable_Expansions[7].name.."|r",},
 		-- ["Legion"] = {
 		{ id = 2170, }, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
 		{ id = 2165, }, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
@@ -304,7 +304,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[6] = {
-		header = {icon = E.OctoTable_Expansions[6].icon, name = E.OctoTable_Expansions[6].color..E.OctoTable_Expansions[6].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[6].icon, name = E.OctoTable_Expansions[6].color..E.OctoTable_Expansions[6].name.."|r",},
 		-- ["Warlords of Draenor"] = {
 		{ id = 1850, }, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
 		{ id = 1849, }, --name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", }, --[faction=1849]
@@ -337,7 +337,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[5] = {
-		header = {icon = E.OctoTable_Expansions[5].icon, name = E.OctoTable_Expansions[5].color..E.OctoTable_Expansions[5].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[5].icon, name = E.OctoTable_Expansions[5].color..E.OctoTable_Expansions[5].name.."|r",},
 		-- ["Mists of Pandaria"] = {
 		{ id = 1492, }, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
 		{ id = 1435, }, --name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1435]
@@ -383,7 +383,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[4] = {
-		header = {icon = E.OctoTable_Expansions[4].icon, name = E.OctoTable_Expansions[4].color..E.OctoTable_Expansions[4].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[4].icon, name = E.OctoTable_Expansions[4].color..E.OctoTable_Expansions[4].name.."|r",},
 		-- ["Cataclysm"] = {
 		{ id = 1204, }, --name = "Хиджальские мстители", side = "-", category = "Cataclysm", }, --[faction=1204]
 		{ id = 1173, }, --name = "Рамкахены", side = "-", category = "Cataclysm", }, --[faction=1173]
@@ -407,7 +407,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[3] = {
-		header = {icon = E.OctoTable_Expansions[3].icon, name = E.OctoTable_Expansions[3].color..E.OctoTable_Expansions[3].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[3].icon, name = E.OctoTable_Expansions[3].color..E.OctoTable_Expansions[3].name.."|r",},
 		-- ["Wrath of the Lich King"] = {
 		{ id = 1156, }, --name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1156]
 		{ id = 1119, }, --name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", }, --[faction=1119]
@@ -446,7 +446,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[2] = {
-		header = {icon = E.OctoTable_Expansions[2].icon, name = E.OctoTable_Expansions[2].color..E.OctoTable_Expansions[2].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[2].icon, name = E.OctoTable_Expansions[2].color..E.OctoTable_Expansions[2].name.."|r",},
 		-- ["The Burning Crusade"] = {
 		{ id = 1038, }, --name = "Огри'ла", side = "-", category = "The Burning Crusade", }, --[faction=1038]
 		{ id = 1015, }, --name = "Крылья Пустоты", side = "-", category = "The Burning Crusade", }, --[faction=1015]
@@ -485,7 +485,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	[1] = {
-		header = {icon = E.OctoTable_Expansions[1].icon, name = E.OctoTable_Expansions[1].color..E.OctoTable_Expansions[1].name.."|r",},
+		-- header = {icon = E.OctoTable_Expansions[1].icon, name = E.OctoTable_Expansions[1].color..E.OctoTable_Expansions[1].name.."|r",},
 		-- ["World of Warcraft"] = {
 		{ id = 910, }, --name = "Род Ноздорму", side = "-", category = "World of Warcraft", }, --[faction=910]
 		{ id = 909, }, --name = "Ярмарка Новолуния", side = "-", category = "World of Warcraft", }, --[faction=909]
@@ -558,7 +558,7 @@ E.OctoTable_Reputations = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	-- {
-	-- 	header = {icon = ("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\OCTOREP"), name = OTHER, },
+	-- -- 	header = {icon = ("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\OCTOREP"), name = OTHER, },
 	-- 	{ id = 1168, }, --name = "Гильдия", side = "-", category = "Гильдия", }, --[faction=1168]
 	-- },
 	----------------------------------------------------------------

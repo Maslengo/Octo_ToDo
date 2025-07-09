@@ -1,5 +1,3 @@
--- ДАТА ПРОВАЙДЕР - ОБНОВЛЕНИЕ ПРИ КЛИКЕ
--- СОРТИРОВКА ТЕКУЩЕЙ ТАБЛЫ
 local GlobalAddonName, E = ...
 local Octo_EventFrame_QuestsChanged = CreateFrame("FRAME")
 Octo_EventFrame_QuestsChanged:Hide()
@@ -107,37 +105,37 @@ local func_OnAcquired do
 			first.text:SetTextColor(1, 1, 1, 1)
 			frame.first = first
 			------------------------------------------------
-			-- Icon setup
-			local icon_2 = frame:CreateTexture(nil, "BACKGROUND")
-			local icon_2_width = AddonHeight - 2
-			local icon_2_height = AddonHeight - 2
-			icon_2:SetSize(icon_2_width, icon_2_height)
-			icon_2:SetPoint("TOPLEFT", first, "TOPRIGHT", 1, -1)
-			icon_2:SetTexCoord(0.10, 0.90, 0.10, 0.90) -- zoom 10%
-			frame.icon_2 = icon_2
-			------------------------------------------------
 			------------------------------------------------
 			-- second
 			local second = CreateFrame("FRAME", nil, frame)
 			local second_width = AddonCentralFrameWeight/2
 			local second_height = AddonHeight
 			second:SetSize(second_width, second_height)
-			second:SetPoint("TOPLEFT", icon_2, "TOPRIGHT")
+			second:SetPoint("TOPLEFT", first, "TOPRIGHT")
 			second:SetPropagateMouseClicks(true)
 			second.text = second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			second.text:SetAllPoints()
 			second.text:SetFontObject(OctoFont11)
 			second.text:SetJustifyV(JustifyV)
-			second.text:SetJustifyH("CENTER")
+			second.text:SetJustifyH("RIGHT")
 			second.text:SetTextColor(1, 1, 1, 1)
 			frame.second = second
+			------------------------------------------------
+			-- Icon setup
+			local icon_2 = frame:CreateTexture(nil, "BACKGROUND")
+			local icon_2_width = AddonHeight - 2
+			local icon_2_height = AddonHeight - 2
+			icon_2:SetSize(icon_2_width, icon_2_height)
+			icon_2:SetPoint("TOPLEFT", second, "TOPRIGHT", 1, -1)
+			icon_2:SetTexCoord(0.10, 0.90, 0.10, 0.90) -- zoom 10%
+			frame.icon_2 = icon_2
 			------------------------------------------------
 			-- third
 			local third = CreateFrame("FRAME", nil, frame)
 			local third_width = AddonCentralFrameWeight*2
 			local third_height = AddonHeight
 			third:SetSize(third_width, third_height)
-			third:SetPoint("TOPLEFT", second, "TOPRIGHT")
+			third:SetPoint("TOPLEFT", icon_2, "TOPRIGHT")
 			third:SetPropagateMouseClicks(true)
 			third.text = third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			third.text:SetAllPoints()
@@ -158,13 +156,13 @@ local func_OnAcquired do
 			fourth.text:SetAllPoints()
 			fourth.text:SetFontObject(OctoFont11)
 			fourth.text:SetJustifyV(JustifyV)
-			fourth.text:SetJustifyH("CENTER")
+			fourth.text:SetJustifyH("RIGHT")
 			fourth.text:SetTextColor(1, 1, 1, 1)
 			frame.fourth = fourth
 			------------------------------------------------
 			-- fifth
 			local fifth = CreateFrame("FRAME", nil, frame)
-			local fifth_width = AddonCentralFrameWeight*3
+			local fifth_width = AddonCentralFrameWeight*2
 			local fifth_height = AddonHeight
 			fifth:SetSize(fifth_width, fifth_height)
 			fifth:SetPoint("TOPLEFT", fourth, "TOPRIGHT")

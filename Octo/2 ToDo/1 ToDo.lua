@@ -38,6 +38,10 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 end)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+local math_min = math.min
+local math_max = math.max
+
+
 do
 	local addons = {
 		"!BugGrabber",
@@ -202,14 +206,13 @@ end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	local data = node:GetData()
-	-- Set text
-	frame.textLEFT:SetText(data.textLEFT or "")
-	-- Set icon (optimized texture path resolution)
-	frame.icon_1:SetTexture(data.headerIcon or (data.zxc and data.zxc.icon) or E.Icon_Empty)
-	-- Handle color (optimized conditional and vertex color setting)
-	if data.color then
-		local r, g, b = E.func_hex2rgbNUMBER(data.color)
-		frame.textureLEFT:SetVertexColor(r, g, b, 0.1)
+	if not data.zxc then return end
+	local frameData = data.zxc
+	frame.textLEFT:SetText(frameData.textLEFT)
+	frame.icon_1:SetTexture(frameData.iconLEFT)
+	if frameData.colorLEFT then
+		local r, g, b = E.func_hex2rgbNUMBER(frameData.colorLEFT)
+		frame.textureLEFT:SetVertexColor(r, g, b, .2)
 		frame.textureLEFT:Show()
 	else
 		frame.textureLEFT:Hide()
@@ -217,7 +220,6 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 end
 function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 	local data = node:GetData()
-	-- RIGHT FRAME INITIALIZATION
 	if not data.zxc then return end
 	-- Handle multiple characters case
 	if data.totalPers > 1 then
@@ -236,8 +238,8 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			local FIRST = frameData.FIRST[i]
 			local SECOND = frameData.SECOND[i]
 			secondFrame.ReputTextureAndBg:Hide()
-			if frameData.color[i] then
-				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.color[i])
+			if frameData.colorCENT[i] then
+				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.colorCENT[i])
 				if not frameData.isRep then
 					secondFrame.ReputTextureAndBg:SetWidth(AddonCentralFrameWeight)
 					secondFrame.ReputTextureAndBg:Show()
@@ -271,7 +273,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 		self:func_CreateMyDataProvider()
 		RequestRaidInfo()
 	end)
-	local NumPlayers = math.min(E.func_NumPlayers(), MaxNumCharacters)
+	local NumPlayers = math_min(E.func_NumPlayers(), MaxNumCharacters)
 	frame:SetSize(AddonLeftFrameWeight + AddonCentralFrameWeight * NumPlayers, AddonHeight * MainFrameDefaultLines)
 	frame:SetDontSavePosition(true)
 	frame:SetClampedToScreen(false)
@@ -402,10 +404,11 @@ end
 ----------------------------------------------------------------
 function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 	E.Collect_All_Table()
-	local NumPlayers = math.min(E.func_NumPlayers(), MaxNumCharacters)
+	local NumPlayers = math_min(E.func_NumPlayers(), MaxNumCharacters)
 	local DataProvider = CreateTreeDataProvider()
 	local numlines = 0
-	-- Находим индекс текущего персонажа
+
+	-- Find current character index
 	local sortedPlayersTBL = E.sorted()
 	local MyCharIndex
 	for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
@@ -414,76 +417,85 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 			break
 		end
 	end
+
 	local totalPers = #sortedPlayersTBL
 	local commonNodeData = {
 		currentChar = MyCharIndex,
 		totalPers = totalPers
 	}
+
+	-- Helper function to create zxc table
+	local function CreateZxcTable(isRep)
+		return {
+			FIRST = {},
+			SECOND = {},
+			textLEFT = {},
+			iconLEFT = {},
+			colorLEFT = {},
+			textCENT = {},
+			tooltip = {},
+			colorCENT = {},
+			isRep = isRep or false,
+		}
+	end
+
 	if not Octo_ToDo_DB_Vars.Reputations then
-		-- Альтернативный режим (не репутации)
-		local OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT = E:func_Otrisovka()
-		for i, func in ipairs(OctoTable_func_otrisovkaCENT) do
+		-- Alternative mode (not reputations)
+		for index, func in ipairs(E:func_Otrisovka()) do
 			numlines = numlines + 1
-			local zxc = {
-				FIRST = {},
-				SECOND = {},
-				textCENT = {},
-				color = {},
-				icon = select(2, OctoTable_func_otrisovkaLEFT[i]()),
-				tooltip = {},
-				isRep = false,
-			}
+			local zxc = CreateZxcTable(false)
+
+			-- Process all characters first for CENT data
 			for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
 				zxc.FIRST[CharIndex] = 0
 				zxc.SECOND[CharIndex] = 0
-				zxc.textCENT[CharIndex], zxc.tooltip[CharIndex], zxc.color[CharIndex] = func(CharInfo)
+				local _, _, _, textCENT, tooltip, colorCENT = func(CharInfo)
+				zxc.textCENT[CharIndex] = textCENT or "0"
+				zxc.tooltip[CharIndex] = tooltip or {}
+				zxc.colorCENT[CharIndex] = colorCENT
 			end
+
+			-- Get LEFT data from first character only
+			local firstChar = sortedPlayersTBL[1]
+			if firstChar then
+				local textLEFT, iconLEFT, colorLEFT = func(firstChar)
+				zxc.textLEFT = textLEFT
+				zxc.iconLEFT = iconLEFT or E.Icon_Empty
+				zxc.colorLEFT = colorLEFT
+			end
+
 			DataProvider:Insert({
-				textLEFT = OctoTable_func_otrisovkaLEFT[i](),
 				zxc = zxc,
 				currentChar = MyCharIndex,
 				totalPers = totalPers,
-				color = select(3, OctoTable_func_otrisovkaLEFT[i]()),
 			})
 		end
 	else
-		-- Обработка репутаций
+		-- Reputations processing
 		for index, tbl in ipairs(E.OctoTable_Reputations) do
 			if Octo_ToDo_DB_Vars.ExpansionToShow[index] then
-				numlines = numlines + 1
-				local groupNodeFirst = DataProvider:Insert({
-					textLEFT = tbl.header.name,
-					headerIcon = tbl.header.icon,
-					currentChar = MyCharIndex,
-					totalPers = totalPers,
-				})
 				for _, v in ipairs(tbl) do
 					local repInfo = E.OctoTable_ReputationsDB[v.id]
-					local factionMatch = not Octo_ToDo_DB_Vars.OnlyCurrentFaction
-									  or repInfo.side == E.curFaction
-									  or repInfo.side == "-"
+					local factionMatch = not Octo_ToDo_DB_Vars.OnlyCurrentFaction or
+									   repInfo.side == E.curFaction or
+									   repInfo.side == "-"
 					if factionMatch then
 						numlines = numlines + 1
-						local zxc = {
-							FIRST = {},
-							SECOND = {},
-							textCENT = {},
-							color = {},
-							standingTEXT = {},
-							icon = repInfo.icon or E.Icon_Empty,
-							tooltip = {},
-							isRep = true,
-						}
+						local zxc = CreateZxcTable(true)
+
 						for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
-							local FIRST, SECOND, vivod, color, standingTEXT = ("#"):split(CharInfo.MASLENGO.reputationNEW[v.id])
+							local FIRST, SECOND, vivod, colorCENT = ("#"):split(CharInfo.MASLENGO.reputationNEW[v.id])
 							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
 							zxc.SECOND[CharIndex] = tonumber(SECOND) or 0
+							zxc.textLEFT = E.func_reputationName(v.id)
+							zxc.iconLEFT = repInfo.icon or E.Icon_Empty
+							zxc.colorLEFT = E.OctoTable_Expansions[index].color
 							zxc.textCENT[CharIndex] = vivod or "vivod"
-							zxc.color[CharIndex] = (color or "000000")
-							zxc.standingTEXT[CharIndex] = standingTEXT or ""
+							zxc.tooltip[CharIndex] = {}
+							zxc.colorCENT[CharIndex] = colorCENT
 						end
-						groupNodeFirst:Insert({
-							textLEFT = E.func_reputationName(v.id),
+
+						DataProvider:Insert({
 							zxc = zxc,
 							currentChar = MyCharIndex,
 							totalPers = totalPers,
@@ -493,8 +505,10 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 			end
 		end
 	end
-	-- Установка размера фрейма
-	MainFrameDefaultLines = math.max(1, math.min(numlines, Octo_ToDo_DB_Vars.MainFrameDefaultLines or numlines))
+
+	-- Frame size adjustment
+	MainFrameDefaultLines = math_max(1, math_min(numlines, Octo_ToDo_DB_Vars.MainFrameDefaultLines or numlines))
+
 	if Octo_MainFrame_ToDo then
 		local width = AddonLeftFrameWeight + AddonCentralFrameWeight * NumPlayers
 		local height = AddonHeight * MainFrameDefaultLines + AddonHeight
@@ -502,28 +516,29 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 		Octo_MainFrame_ToDo.childCENT:SetSize(AddonCentralFrameWeight * E.func_NumPlayers(), height)
 		Octo_MainFrame_ToDo.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 		Octo_MainFrame_ToDo.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-	end
-	-- Обновление фреймов персонажей
-	Octo_MainFrame_ToDo.pool:ReleaseAll()
-	for count, CharInfo in ipairs(sortedPlayersTBL) do
-		local curCharFrame = Octo_MainFrame_ToDo.pool:Acquire()
-		curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT",
-							AddonCentralFrameWeight * (count - 1),
-							-AddonHeight)
-		curCharFrame.text:SetAllPoints()
-		curCharFrame.text:SetFontObject(OctoFont11)
-		curCharFrame.text:SetWordWrap(false)
-		curCharFrame.text:SetJustifyV("MIDDLE")
-		curCharFrame.text:SetJustifyH("CENTER")
-		curCharFrame.text:SetText(E.func_textCENT(CharInfo))
-		local color = CharInfo.Faction == "Horde" and "|cfff01e38" or "|cff0070DD"
-		E:func_SetBackdrop(curCharFrame, color, E.bgCaOverlay * 2, 0)
-		curCharFrame.tooltip = E.CreateTooltipPlayers(CharInfo)
-		curCharFrame:SetScript("OnEnter", function()
-			E.func_TooltipOnEnter(curCharFrame, true, true)
-		end)
-		curCharFrame:SetScript("OnLeave", GameTooltip_Hide)
-		curCharFrame:Show()
+
+		-- Update character frames
+		Octo_MainFrame_ToDo.pool:ReleaseAll()
+		for count, CharInfo in ipairs(sortedPlayersTBL) do
+			local curCharFrame = Octo_MainFrame_ToDo.pool:Acquire()
+			curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT", AddonCentralFrameWeight * (count - 1), -AddonHeight)
+			curCharFrame.text:SetAllPoints()
+			curCharFrame.text:SetFontObject(OctoFont11)
+			curCharFrame.text:SetWordWrap(false)
+			curCharFrame.text:SetJustifyV("MIDDLE")
+			curCharFrame.text:SetJustifyH("CENTER")
+			curCharFrame.text:SetText(E.func_textCENT(CharInfo))
+
+			local color = CharInfo.Faction == "Horde" and "|cfff01e38" or "|cff0070DD"
+			E:func_SetBackdrop(curCharFrame, color, E.bgCaOverlay * 2, 0)
+
+			curCharFrame.tooltip = E.CreateTooltipPlayers(CharInfo)
+			curCharFrame:SetScript("OnEnter", function()
+				E.func_TooltipOnEnter(curCharFrame, true, true)
+			end)
+			curCharFrame:SetScript("OnLeave", GameTooltip_Hide)
+			curCharFrame:Show()
+		end
 	end
 end
 function E.Update(event_name)
@@ -857,8 +872,8 @@ function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	if AddonMgrAddonList then
-		tinsert(E.OctoTable_Frames, AddonMgrAddonList)
-		-- AddonMgrAddonList:SetScale(.8)
+		-- tinsert(E.OctoTable_Frames, AddonMgrAddonList)
+		AddonMgrAddonList:SetScale(.9)
 		-- /run AddonMgrAddonList:SetScale(.8)
 	end
 	-- Load settings with defaults in a more concise way
@@ -870,7 +885,7 @@ function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 	SFDropDownWeight = db.SFDropDownWeight or SFDropDownWeight
 	-- Calculate and set MaxNumCharacters
 	local maxNum = math.floor((E.MonitorWidth - AddonLeftFrameWeight) / AddonCentralFrameWeight) - 1
-	MaxNumCharacters = db.MaxNumCharacters and math.min(db.MaxNumCharacters, maxNum) or MaxNumCharacters
+	MaxNumCharacters = db.MaxNumCharacters and math_min(db.MaxNumCharacters, maxNum) or MaxNumCharacters
 	local function ConcatAtStart()
 		E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
 		for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Other) do
@@ -914,21 +929,23 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 end
 -- Helper functions
 function Octo_EventFrame_ToDo:SetupPlayerSpellsFrame()
-	E.func_LoadAddOnFORCED("Blizzard_PlayerSpells")
-	PlayerSpellsFrame:HookScript("OnShow", function()
-		PlayerSpellsFrame:SetScale(0.8)
-	end)
-	PlayerSpellsFrame:EnableMouse(true)
-	PlayerSpellsFrame:SetMovable(true)
-	PlayerSpellsFrame:RegisterForDrag("LeftButton")
-	PlayerSpellsFrame:SetScript("OnDragStart", function()
-		PlayerSpellsFrame:SetAlpha(E.bgCa)
-		PlayerSpellsFrame:StartMoving()
-	end)
-	PlayerSpellsFrame:SetScript("OnDragStop", function()
-		PlayerSpellsFrame:SetAlpha(1)
-		PlayerSpellsFrame:StopMovingOrSizing()
-	end)
+	if not InCombatLockdown() then
+		E.func_LoadAddOnFORCED("Blizzard_PlayerSpells")
+		PlayerSpellsFrame:HookScript("OnShow", function()
+			PlayerSpellsFrame:SetScale(0.8)
+		end)
+		PlayerSpellsFrame:EnableMouse(true)
+		PlayerSpellsFrame:SetMovable(true)
+		PlayerSpellsFrame:RegisterForDrag("LeftButton")
+		PlayerSpellsFrame:SetScript("OnDragStart", function()
+			PlayerSpellsFrame:SetAlpha(E.bgCa)
+			PlayerSpellsFrame:StartMoving()
+		end)
+		PlayerSpellsFrame:SetScript("OnDragStop", function()
+			PlayerSpellsFrame:SetAlpha(1)
+			PlayerSpellsFrame:StopMovingOrSizing()
+		end)
+	end
 end
 function Octo_EventFrame_ToDo:DisplayCharacterStats()
 	local totalMoney, totalReload, realTotalTime, TodayTimePlayedtotal, realLevelTime = 0, 0, 0, 0, 0

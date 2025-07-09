@@ -22,6 +22,8 @@ local string_gsub = string.gsub
 local string_match = string.match
 local math_floor = math.floor
 local math_ceil = math.ceil
+local math_min = math.min
+local math_max = math.max
 local tonumber = tonumber
 local tostring = tostring
 local select = select
@@ -327,7 +329,7 @@ function E.func_questName_SIMPLE(questID, useLargeIcon)
 	table_insert(E.PromiseQuest, questID)
 
 	local title = GetTitleForQuestID(questID)
-	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false) or UNKNOWN
+	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false) or "" or UNKNOWN
 
 	return vivod
 end
@@ -1423,6 +1425,8 @@ end
 function E:func_CreateUtilsButton(frame, title, height, indent)
 	local curHeight = height
 	local indent = indent or 0
+	local mediaPath = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\"
+	local elvUIPath = mediaPath.."ElvUI\\"
 
 	-- Helper function to create consistent buttons
 	local function CreateUtilButton(name, relativeTo, xOffset, texture, tooltip, onClick)
@@ -1458,17 +1462,17 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		"Octo_CloseButton",
 		frame,
 		0,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga",
+		mediaPath.."CloseTest.tga",
 		CLOSE,
 		function() frame:Hide() end
-		)
+	)
 
 	-- Options Button
 	CreateUtilButton(
 		"Octo_OptionsButton",
 		frame,
 		-curHeight,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..title,
+		mediaPath.."IconTexture\\"..title,
 		OPTIONS,
 		function()
 			if frame and frame:IsShown() then
@@ -1480,7 +1484,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 				Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
 			end
 		end
-		)
+	)
 
 	-- Abandon Button
 	local function f_AbandonQuests()
@@ -1512,8 +1516,8 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		"Octo_AbandonButton",
 		frame,
 		-curHeight*2,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow72.tga"
-		)
+		elvUIPath.."Arrow72.tga"
+	)
 
 	Octo_AbandonButton:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
@@ -1540,6 +1544,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		end
 		GameTooltip:Show()
 	end)
+	Octo_AbandonButton:SetScript("OnLeave", GameTooltip_Hide)
 
 	Octo_AbandonButton:SetScript("OnClick", function()
 		if E.func_CurrentNumQuests() > 0 then
@@ -1552,8 +1557,8 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		"Octo_EventsButton",
 		frame,
 		-curHeight*3,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\ElvUI\\Arrow6.tga"
-		)
+		elvUIPath.."Arrow6.tga"
+	)
 
 	Octo_EventsButton:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
@@ -1572,19 +1577,22 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 
 		for _, eventID in ipairs(sorted) do
 			local v = Octo_ToDo_DB_Other.Holiday[eventID]
+			local titleText = v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)
+			local timeText = v.startTime.." - "..v.endTime
+
 			if v.Active then
-				GameTooltip:AddDoubleLine(
-					v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Green_Color..v.title.."|r"..
-					E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or ""),
-					E.Green_Color..v.startTime.." - "..v.endTime.."|r"
-					)
+				titleText = titleText..E.Green_Color..v.title.."|r"..E.White_Color.." ("..v.ENDS..")|r"
+				timeText = E.Green_Color..timeText.."|r"
 			else
-				GameTooltip:AddDoubleLine(
-					v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)..E.Gray_Color..v.title..
-					(E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or ""),
-					E.Gray_Color..v.startTime.." - "..v.endTime.."|r"
-					)
+				titleText = titleText..E.Gray_Color..v.title.."|r"
+				timeText = E.Gray_Color..timeText.."|r"
 			end
+
+			if E.DebugIDs then
+				titleText = titleText..E.Gray_Color.." id:"..eventID.."|r"
+			end
+
+			GameTooltip:AddDoubleLine(titleText, timeText)
 		end
 
 		if #sorted == 0 then
@@ -1594,6 +1602,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		GameTooltip:AddDoubleLine(" ", " ")
 		GameTooltip:Show()
 	end)
+	Octo_EventsButton:SetScript("OnLeave", GameTooltip_Hide)
 
 	Octo_EventsButton:SetScript("OnClick", function()
 		frame:Hide()
@@ -1606,14 +1615,15 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	Octo_FramerateFrame:SetSize(curHeight*2, curHeight)
 	Octo_FramerateFrame:SetFrameStrata("HIGH")
 
-	Octo_FramerateFrame.text_fps = Octo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	Octo_FramerateFrame.text_fps:SetPoint("CENTER")
-	Octo_FramerateFrame.text_fps:SetFontObject(OctoFont12)
-	Octo_FramerateFrame.text_fps:SetJustifyH("CENTER")
-	Octo_FramerateFrame.text_fps:SetTextColor(0.31, 1, 0.47, 1)
+	local text_fps = Octo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	text_fps:SetPoint("CENTER")
+	text_fps:SetFontObject(OctoFont12)
+	text_fps:SetJustifyH("CENTER")
+	text_fps:SetTextColor(0.31, 1, 0.47, 1)
+	Octo_FramerateFrame.text_fps = text_fps
 
 	C_Timer.NewTicker(1, function()
-		Octo_FramerateFrame.text_fps:SetText(math_floor(GetFramerate()))
+		text_fps:SetText(math_floor(GetFramerate()))
 	end)
 end
 ----------------------------------------------------------------
@@ -1906,15 +1916,19 @@ E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.t
 E.fontObject9 = CreateFont("OctoFont9")
 E.fontObject9:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject9:SetFont(E.Octo_font, 9, "OUTLINE")
+
 E.fontObject10 = CreateFont("OctoFont10")
 E.fontObject10:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject10:SetFont(E.Octo_font, 10, "OUTLINE")
+
 E.fontObject11 = CreateFont("OctoFont11")
 E.fontObject11:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject11:SetFont(E.Octo_font, 11, "OUTLINE")
+
 E.fontObject12 = CreateFont("OctoFont12")
 E.fontObject12:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject12:SetFont(E.Octo_font, 12, "OUTLINE")
+
 E.fontObject22 = CreateFont("OctoFont22")
 E.fontObject22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject22:SetFont(E.Octo_font, 20, "OUTLINE")
