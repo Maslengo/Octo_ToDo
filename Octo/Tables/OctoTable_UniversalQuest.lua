@@ -153,7 +153,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 7,
 	},
-
 	----------------------------------------------------------------
 	-- {
 	-- 	icon = E.func_GetItemIconByID(23247),
@@ -166,7 +165,6 @@ E.OctoTable_UniversalQuest = {
 	-- 	},
 	-- 	max = 1,
 	-- },
-
 	-- {
 	-- 	icon = E.func_GetItemIconByID(23247),
 	-- 	textleft = E.func_questName(11971),
@@ -175,24 +173,14 @@ E.OctoTable_UniversalQuest = {
 	-- 	desc = "TheSpinnerofSummerTales",
 	-- 	questID = {
 	-- 		11971, -- horde
-
 	-- 		11966, -- horde
 	-- 		82105, -- horde
-
-
 	-- 		11964, -- ally
 	-- 		82087, -- ally
-
 	-- 		11886, -- BOTH
-
-
-
 	-- 	},
 	-- 	max = 4,
 	-- },
-
-
-
 	{
 		icon = E.func_GetItemIconByID(23247),
 		textleft = L["Daily quests"],
@@ -202,18 +190,11 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			82109, -- daily horde
 			11925, -- daily horde
-
 			-- 82080, -- daily ally
 			-- 11924, -- daily ally
 		},
 		max = 2,
 	},
-
-
-
-
-
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -380,7 +361,7 @@ E.OctoTable_UniversalQuest = {
 		questID = {
 			33118,
 			33117,
-			32519,
+			32519, -- Undasta
 			33109,
 			32098,
 			32099,
@@ -409,9 +390,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1,
 	},
-
-
-
 	{
 		icon = E.func_GetCurrencyIcon(1813),
 		textleft = E.func_questName(61981),
@@ -510,7 +488,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 2,
 	},
-
 	{
 		icon = E.func_GetCurrencyIcon(1880),
 		textleft = E.func_currencyName(1880),
@@ -532,12 +509,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 3,
 	},
-
-
-
-
-
-
 	{
 		icon = E.func_GetCurrencyIcon(1977),
 		textleft = E.func_questName(63949),
@@ -549,7 +520,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1,
 	},
-
 	{
 		icon = E.func_GetCurrencyIcon(1977),
 		textleft = L["Daily quests"],
@@ -564,12 +534,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 4,
 	},
-
-
-
-
-
-
 	{
 		icon = E.func_GetItemIconByID(187551),
 		textleft = E.func_questName(64522),
@@ -592,10 +556,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1,
 	},
-
-
-
-
 	{
 		icon = E.Icon_Rares,
 		textleft = "KorthiaRares",
@@ -633,8 +593,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 23,
 	},
-
-
 	{
 		icon = E.func_GetCurrencyIcon(1767),
 		textleft = L["Purple Mobs"],
@@ -674,10 +632,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 4,
 	},
-
-
-
-
 	{
 		icon = E.func_GetCurrencyIcon(1767),
 		textleft = L["Mushrooms"],
@@ -693,7 +647,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 5,
 	},
-
 	{
 		icon = E.func_GetCurrencyIcon(1767),
 		textleft = L["Nests"],
@@ -709,8 +662,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 5,
 	},
-
-
 	{
 		icon = E.func_GetCurrencyIcon(1767),
 		textleft = L["Mawsworn Caches"],
@@ -724,7 +675,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 3,
 	},
-
 	{
 		icon = E.func_GetCurrencyIcon(1767),
 		textleft = L["Bones/Stones/Relics"],
@@ -740,10 +690,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 5,
 	},
-
-
-
-
 	{
 		icon = E.func_GetCurrencyIcon(1767),
 		textleft = L["Spectral Bound Chest"],
@@ -755,7 +701,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1,
 	},
-
 	{
 		icon = E.func_GetCurrencyIcon(1767),
 		textleft = L["Helsworn Chest"],
@@ -767,9 +712,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1,
 	},
-
-
-
 	-- {
 	-- 	icon = E.func_GetCurrencyIcon(1767),
 	-- 	textleft = L["Anima Vessel"],
@@ -794,9 +736,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 3,
 	},
-
-
-
 	{
 		icon = 528693,
 		textleft = L["Riftbound Caches"],
@@ -811,9 +750,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 4,
 	},
-
-
-
 	{
 		icon = E.func_GetItemIconByID(186731),
 		textleft = L["Zovaal's Vault"],
@@ -825,10 +761,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1,
 	},
-
-
-
-
 	{
 		icon = E.func_GetItemIconByID(187216),
 		textleft = E.func_GetItemNameByID(187216),
@@ -840,10 +772,6 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 1,
 	},
-
-
-
-
 	-- {
 	-- 	icon = E.func_GetCurrencyIcon(1767),
 	-- 	textleft = "KorthiaITEMResearchReportRelicExaminationTechniques",
@@ -932,8 +860,6 @@ E.OctoTable_UniversalQuest = {
 	-- 	},
 	-- 	max = 1,
 	-- },
-
-
 	{
 		icon = E.Icon_Empty,
 		textleft = "ZaralekCavernEvents",
@@ -1254,9 +1180,9 @@ E.OctoTable_UniversalQuest = {
 	{
 		icon = E.func_GetItemIconByID(92441),
 		textleft = E.func_GetItemNameByID(92441),
-		name_save = "Warlock_GreenFire",
+		name_save = "MistsofPandaria_GreenFire",
 		reset = "Once",
-		desc = "MistsofPandaria",
+		desc = "Warlock",
 		questID = {
 			32295,
 			32307,
@@ -1271,9 +1197,9 @@ E.OctoTable_UniversalQuest = {
 	{
 		icon = 136145,
 		textleft = E.func_questName(75538),
-		name_save = "Warlock_SomeWickedThings",
+		name_save = "Dragonflight_SomeWickedThings",
 		reset = "Once",
-		desc = "Dragonflight",
+		desc = "Warlock",
 		questID = {
 			75538,
 			75539,
@@ -1345,8 +1271,8 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = E.Icon_Rares,
-		textleft = "ZMRaresDuneDominance",
-		name_save = "ZMRaresDuneDominance",
+		textleft = "ZMDuneDominanceRares",
+		name_save = "ZMDuneDominanceRares",
 		reset = "Daily",
 		desc = "Shadowlands",
 		questID = {
@@ -2187,6 +2113,29 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 8,
 	},
+	{
+		icon = 5315246,
+		textleft = L["Delver's Call"],
+		name_save = "DelversCall",
+		reset = "Once",
+		desc = "TheWarWithin", -- STORYLINE
+		questID = {
+			83768,
+			83770,
+			83758,
+			83767,
+			83759,
+			83771,
+			83766,
+			85667,
+			85664,
+			85666,
+			83769,
+			85648,
+			85649,
+		},
+		max = 13,
+	},
 
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -2467,8 +2416,8 @@ E.OctoTable_UniversalQuest = {
 	},
 	{
 		icon = E.Icon_Rares,
-		textleft = "EmeraldDream_Rares",
-		name_save = "EmeraldDream_Rares",
+		textleft = "EmeraldDreamRares",
+		name_save = "EmeraldDreamRares",
 		reset = "Daily",
 		desc = "Dragonflight",
 		questID = {
@@ -3185,19 +3134,16 @@ E.OctoTable_UniversalQuest = {
 		},
 		max = 13,
 	},
-
 	{
 		icon = E.func_GetItemIconByID(245589),
-		textleft = E.Timers.Treasure_Goblin()..E.func_npcName(205490),
+		textleft = E.Timers.Treasure_Goblin()..E.func_npcName(205722), -- 205490
 		name_save = "TreasureGoblin",
 		reset = "Daily",
 		desc = "HolidaysAGreedyEmissary",
 		questID = {
 			76215, -- шам, пал ->Убийство гоблина -- /run print(C_QuestLog.IsQuestFlaggedCompleted(76215))
-
 			-- 91091, -- шам, (хз на пале не сделан)
 			-- 76216, -- шам
-
 			-- 91166, -- шам
 			-- 91167, -- шам
 			-- 91168, -- шам
@@ -3208,87 +3154,115 @@ E.OctoTable_UniversalQuest = {
 	},
 
 
-	-- {
-	-- 	icon = E.func_GetItemIconByID(38181), -- https://www.wowhead.com/ptr/storyline/5718
-	-- 	textleft = E.func_questName(85884),
-	-- 	name_save = "Lorewalking: Arthas",
-	-- 	reset = "Once",
-	-- 	desc = "TheWarWithin", -- STORYLINE
-	-- 	questID = {
-	-- 		85884, --1
-	-- 		85862,
-	-- 		12291, --2
-	-- 		12301, --3
-	-- 		12305,
-	-- 		12478, --4?
-	-- 		85885, -- 5 last ?
-	-- 		85875, -- 6
-	-- 		85878,
-	-- 	},
-	-- 	max = 9,
-	-- },
-	-- {
-	-- 	icon = E.func_GetItemIconByID(229361), -- https://www.wowhead.com/ptr/storyline/5673
-	-- 	textleft = E.func_questName(84371),
-	-- 	name_save = "Lorewalking: Xal'atath",
-	-- 	reset = "Once",
-	-- 	desc = "TheWarWithin",
-	-- 	questID = {
-	-- 		84371,
-	-- 		40710,
-	-- 		84779,
-	-- 		54114,
-	-- 		54118,
-	-- 		54058,
-	-- 		53761,
-	-- 		53762,
-	-- 		53763,
-	-- 		54126,
-	-- 		84782,
-	-- 		84784,
-	-- 		85871,
-	-- 		84789,
-	-- 	},
-	-- 	max = 12,
-	-- },
-	-- {
-	-- 	icon = E.func_GetItemIconByID(152713), -- https://www.wowhead.com/ptr/storyline/5691
-	-- 	textleft = E.func_questName(85027),
-	-- 	name_save = "Lorewalking: Ethereals",
-	-- 	reset = "Once",
-	-- 	desc = "TheWarWithin",
-	-- 	questID = {
-	-- 		85027,
-	-- 		10339,
-	-- 		10384,
-	-- 		10385,
-	-- 		10406,
-	-- 		10408,
-	-- 		10437,
-	-- 		10439,
-	-- 		85029,
-	-- 		47203,
-	-- 		47218,
-	-- 		47217,
-	-- 		47219,
-	-- 		85028,
-	-- 		63976,
-	-- 		63977,
-	-- 		63979,
-	-- 		63980,
-	-- 		63982,
-	-- 		63983,
-	-- 		63984,
-	-- 		63985,
-	-- 		63855,
-	-- 		63895,
-	-- 		85035,
-	-- 		85036,
-	-- 	},
-	-- 	max = 26,
-	-- },
+
+
+
+
+
+	{
+		icon = 531974,
+		textleft = "Profession Monthlies",
+		name_save = "ProfessionMonthlies",
+		reset = "Month",
+		desc = "HolidaysDarkmoonFaire",
+		questID = {
+			29506,
+			29507,
+			29508,
+			29509,
+			29510,
+			29511,
+			29513,
+			29514,
+			29515,
+			29516,
+			29517,
+			29518,
+			29519,
+			29520,
+		},
+		max = 14,
+	},
+
+
+
+	{
+		icon = 531974,
+		textleft = "Monthly Quests",
+		name_save = "MonthlyQuests",
+		reset = "Month",
+		desc = "HolidaysDarkmoonFaire",
+		questID = {
+			33354,
+			29443,
+		},
+		max = 2,
+	},
+
+
+	{
+		icon = 531974,
+		textleft = "Acount-wide Dailies",
+		name_save = "AcountwideDailies",
+		reset = "Daily",
+		desc = "HolidaysDarkmoonFaire",
+		questID = {
+			32175,
+			36471,
+		},
+		max = 2,
+	},
+
+
+
+
+	{
+		icon = 531974,
+		textleft = "Game Dailies",
+		name_save = "GameDailies",
+		reset = "Daily",
+		desc = "HolidaysDarkmoonFaire",
+		questID = {
+			29463,
+			29436,
+			29438,
+			29434,
+			36481,
+			64783,
+			29455,
+			37910,
+			37911,
+		},
+		max = 9,
+	},
+
+
+
+
+	{
+		icon = 531974,
+		textleft = "item turns ins",
+		name_save = "itemturnsins",
+		reset = "Daily",
+		desc = "HolidaysDarkmoonFaire",
+		questID = {
+			29458,
+			29456,
+			29457,
+			29443,
+			29444,
+			29445,
+			29446,
+			29464,
+			29451,
+		},
+		max = 9,
+	},
+
+
+
+
 
 
 
 }
-

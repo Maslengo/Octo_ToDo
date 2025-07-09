@@ -3,6 +3,7 @@ local GlobalAddonName, E = ...
 -- Auto_Cinematic_Canceler
 tinsert(E.Modules, function()
 	local function HandleFrameAction(frame, dialogPath, confirmButtonPath, message)
+		print ("HandleFrameAction", frame, dialogPath, confirmButtonPath, message)
 		if not frame:IsShown() then return end
 
 		local dialog = frame[dialogPath] or _G[dialogPath]
@@ -19,6 +20,7 @@ tinsert(E.Modules, function()
 	end
 
 	local function OnKeyUp(self, key)
+		print ("OnKeyUp")
 		if key == "SPACE" or key == "ESCAPE" or key == "ENTER" then
 			if self == CinematicFrame then
 				HandleFrameAction(CinematicFrame, "closeDialog", "CloseDialogConfirmButton")
@@ -29,6 +31,7 @@ tinsert(E.Modules, function()
 	end
 
 	local function OnFrameShow(self)
+		print ("OnFrameShow")
 		if IsModifierKeyDown() then return end
 
 		if self == CinematicFrame then

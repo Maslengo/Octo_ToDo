@@ -127,7 +127,7 @@ function E.Timers.Daily_Reset()
 end
 
 function E.Timers.Treasure_Goblin()
-	return CreateTimer(1689159620, 3600, 600, E.Red_Color, E.Green_Color)
+	return CreateTimer(1689159620, 3600, 300, E.Red_Color, E.Green_Color)
 end
 
 

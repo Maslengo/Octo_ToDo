@@ -233,6 +233,7 @@ if L then
 	L["Helsworn Chest"] = true
 	L["Riftbound Caches"] = true
 	L["Zovaal's Vault"] = true
+	L["Delver's Call"] = true
 end
 
 
@@ -478,4 +479,5 @@ if L then
 	L["Helsworn Chest"] = "Сундук Верных Хелии"
 	L["Riftbound Caches"] = "Тайник Разлома"
 	L["Zovaal's Vault"] = "Хранилище Зоваала"
+	L["Delver's Call"] = "Вызов в вылазку"
 end

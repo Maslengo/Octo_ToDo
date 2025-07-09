@@ -885,11 +885,11 @@ end
 		local groupdata = GetMapGroupMembersInfo(groupID)
 		for _, subzonedata in ipairs(groupdata) do
 			if subzonedata.mapID == mapID then
-				return mapdata.name, subzonedata.name
+				return mapdata.name, " ("..subzonedata.name..")"
 			end
 		end
 	end
-	return mapdata.name
+	return mapdata.name, ""
 end
 
 

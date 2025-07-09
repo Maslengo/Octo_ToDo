@@ -1119,11 +1119,9 @@ function E:func_Otrisovka()
 				function(CharInfo)
 					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 					local v = Octo_ToDo_DB_Other.Holiday[181]
-
 					textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 181|r" or "")
 					iconLEFT = v.iconTexture
 					colorLEFT = E.Holiday_Color
-
 					return textLEFT, iconLEFT, colorLEFT
 			end)
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
@@ -1142,11 +1140,9 @@ function E:func_Otrisovka()
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
 							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 							textLEFT = tostringall(v.textleft).."|r"
 							iconLEFT = v.icon
 							colorLEFT = E.Holiday_Color
-
 							return textLEFT, iconLEFT, colorLEFT
 					end)
 				end
@@ -1162,11 +1158,9 @@ function E:func_Otrisovka()
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
 					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 					textLEFT = E.func_GetItemNameByID(44791)
 					iconLEFT = E.func_GetItemIconByID(44791)
 					colorLEFT = E.Holiday_Color
-
 					return textLEFT, iconLEFT, colorLEFT
 			end)
 			tinsert(OctoTable_func_otrisovkaCENT,
@@ -1180,18 +1174,16 @@ function E:func_Otrisovka()
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
 					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 					textLEFT = E.func_GetItemNameByID(45072)
 					iconLEFT = E.func_GetItemIconByID(45072)
 					colorLEFT = E.Holiday_Color
-
 					return textLEFT, iconLEFT, colorLEFT
 			end)
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		local TimewalkHolidayTBL = {1265, 652, 622} -- 1458 Бурные потоки
+		local TimewalkHolidayTBL = {1265, 1063, 652, 622} -- 1458 Бурные потоки
 		for _, HolidayID in ipairs(TimewalkHolidayTBL) do
 			if Octo_ToDo_DB_Other.ActiveHoliday[HolidayID] then
 				tinsert(OctoTable_func_otrisovkaCENT,
@@ -1207,11 +1199,9 @@ function E:func_Otrisovka()
 					function(CharInfo)
 						local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 						local v = Octo_ToDo_DB_Other.Holiday[HolidayID]
-
 						textLEFT = v.invitedBy..E.Event_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..HolidayID.."|r" or "")
 						iconLEFT = v.iconTexture
 						colorLEFT = E.Event_Color
-
 						return textLEFT, iconLEFT, colorLEFT
 				end)
 				for _, v in ipairs(E.OctoTable_UniversalQuest) do
@@ -1230,11 +1220,9 @@ function E:func_Otrisovka()
 						end)
 						tinsert(OctoTable_func_otrisovkaLEFT, function()
 								local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 								textLEFT = E.func_texturefromIcon(E.Icon_LFG) .. tostringall(v.textleft).."|r"
 								iconLEFT = v.icon
 								colorLEFT = E.Event_Color
-
 								return textLEFT, iconLEFT, colorLEFT
 						end)
 					end
@@ -1251,11 +1239,9 @@ function E:func_Otrisovka()
 					function(CharInfo)
 						local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 						local colorCENT = E.Event_Color
-
 						textLEFT = E.func_currencyName(1166)
 						iconLEFT = E.func_GetCurrencyIcon(1166)
 						colorLEFT = E.Event_Color
-
 						return textLEFT, iconLEFT, colorLEFT
 				end)
 			end
@@ -1277,11 +1263,9 @@ function E:func_Otrisovka()
 				function(CharInfo)
 					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 					local v = Octo_ToDo_DB_Other.Holiday[201]
-
 					textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 201|r" or "")
 					iconLEFT = v.iconTexture
 					colorLEFT = E.Holiday_Color
-
 					return textLEFT, iconLEFT, colorLEFT
 			end)
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
@@ -1301,10 +1285,8 @@ function E:func_Otrisovka()
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
 							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 							local colorCENT = E.Holiday_Color
-
 							textLEFT = tostringall(v.textleft).."|r"
 							iconLEFT =  v.icon
-
 							return textLEFT, iconLEFT, colorLEFT
 					end)
 				end
@@ -1330,7 +1312,6 @@ function E:func_Otrisovka()
 					textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 341|r" or "")
 					iconLEFT = v.iconTexture
 					colorLEFT = E.Holiday_Color
-
 					return textLEFT, iconLEFT, colorLEFT
 			end)
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
@@ -1349,11 +1330,9 @@ function E:func_Otrisovka()
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
 							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 							textLEFT = tostringall(v.textleft).."|r"
 							iconLEFT = v.icon
 							colorLEFT = E.Holiday_Color
-
 							return textLEFT, iconLEFT, colorLEFT
 					end)
 				end
@@ -1372,11 +1351,9 @@ function E:func_Otrisovka()
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
 							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 							textLEFT = tostringall(v.textleft).."|r"
 							iconLEFT = v.icon
 							colorLEFT = E.Holiday_Color
-
 							return textLEFT, iconLEFT, colorLEFT
 					end)
 				end
@@ -1392,11 +1369,9 @@ function E:func_Otrisovka()
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
 					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 					textLEFT = E.func_texturefromIcon(E.Icon_LFG) .. E.func_LFGdungName(286)
 					iconLEFT = E.func_GetItemIconByID(23247)
 					colorLEFT = E.Holiday_Color
-
 					return textLEFT, iconLEFT, colorLEFT
 			end)
 			tinsert(OctoTable_func_otrisovkaCENT,
@@ -1405,17 +1380,14 @@ function E:func_Otrisovka()
 					if CharInfo.MASLENGO.ItemsInBag[23247] ~= nil then
 						textCENT = textCENT..CharInfo.MASLENGO.ItemsInBag[23247]
 					end
-
 					return textCENT, tooltip, colorCENT
 			end)
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
 					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 					textLEFT = E.func_GetItemNameByID(23247)
 					iconLEFT = E.func_GetItemIconByID(23247)
 					colorLEFT = E.Holiday_Color
-
 					return textLEFT, iconLEFT, colorLEFT
 			end)
 		end
@@ -1436,17 +1408,11 @@ function E:func_Otrisovka()
 				function(CharInfo)
 					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
 					local v = Octo_ToDo_DB_Other.Holiday[1691]
-
 					textLEFT = v.invitedBy..E.Red_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 1691|r" or "")
 					iconLEFT = v.iconTexture
 					colorLEFT = E.Red_Color
-
 					return textLEFT, iconLEFT, colorLEFT
 			end)
-
-
-
-
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
 				if v.desc == "HolidaysAGreedyEmissary" then
 					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
@@ -1463,19 +1429,13 @@ function E:func_Otrisovka()
 					end)
 					tinsert(OctoTable_func_otrisovkaLEFT, function()
 							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 							textLEFT = tostringall(v.textleft).."|r"
 							iconLEFT = v.icon
 							colorLEFT = E.Red_Color
-
 							return textLEFT, iconLEFT, colorLEFT
 					end)
 				end
 			end
-
-
-
-
 			tinsert(OctoTable_func_otrisovkaCENT,
 				function(CharInfo)
 					local textCENT, tooltip, colorCENT = "", {}, nil
@@ -1487,25 +1447,77 @@ function E:func_Otrisovka()
 			tinsert(OctoTable_func_otrisovkaLEFT,
 				function(CharInfo)
 					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
-
 					textLEFT = E.func_currencyName(3309)
 					iconLEFT = E.func_GetCurrencyIcon(3309)
 					colorLEFT = E.Red_Color
-
 					return textLEFT, iconLEFT, colorLEFT
 			end)
-
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-
-
-
-
-
-
-
+		if Octo_ToDo_DB_Other.ActiveHoliday[479] then -- Ярмарка новолунья
+			tinsert(OctoTable_func_otrisovkaCENT,
+				function(CharInfo)
+					local textCENT, tooltip, colorCENT = "", {}, nil
+					local v = Octo_ToDo_DB_Other.Holiday[479]
+					if CharInfo.GUID == E.curGUID then
+						textCENT = E.Purple_Color..v.startTime.." - "..v.endTime.."|r"
+					end
+					return textCENT, tooltip, colorCENT
+			end)
+			tinsert(OctoTable_func_otrisovkaLEFT,
+				function(CharInfo)
+					local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+					local v = Octo_ToDo_DB_Other.Holiday[479]
+					textLEFT = v.invitedBy..E.Purple_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 479|r" or "")
+					iconLEFT = v.iconTexture
+					colorLEFT = E.Purple_Color
+					return textLEFT, iconLEFT, colorLEFT
+			end)
+			for _, v in ipairs(E.OctoTable_UniversalQuest) do
+				if v.desc == "HolidaysDarkmoonFaire" then
+					tinsert(OctoTable_func_otrisovkaCENT, function(CharInfo)
+							local textCENT, tooltip, colorCENT = "", {}, nil
+							if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] ~= nil then
+								textCENT = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+							end
+							if CharInfo.GUID == E.curGUID then
+								for index, questID in ipairs(v.questID) do
+									tooltip[#tooltip+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+								end
+							end
+							return textCENT, tooltip, colorCENT
+					end)
+					tinsert(OctoTable_func_otrisovkaLEFT, function()
+							local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+							textLEFT = tostringall(v.textleft).."|r"
+							iconLEFT = v.icon
+							colorLEFT = E.Purple_Color
+							return textLEFT, iconLEFT, colorLEFT
+					end)
+				end
+			end
+			-- tinsert(OctoTable_func_otrisovkaCENT,
+			-- 	function(CharInfo)
+			-- 		local textCENT, tooltip, colorCENT = "", {}, nil
+			-- 		if CharInfo.MASLENGO.CurrencyID[3309] ~= nil then
+			-- 			textCENT = CharInfo.MASLENGO.CurrencyID[3309]
+			-- 		end
+			-- 		return textCENT, tooltip, colorCENT
+			-- end)
+			-- tinsert(OctoTable_func_otrisovkaLEFT,
+			-- 	function(CharInfo)
+			-- 		local textLEFT, iconLEFT, colorLEFT = "", nil, nil
+			-- 		textLEFT = E.func_currencyName(3309)
+			-- 		iconLEFT = E.func_GetCurrencyIcon(3309)
+			-- 		colorLEFT = E.Purple_Color
+			-- 		return textLEFT, iconLEFT, colorLEFT
+			-- end)
+		end
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
 	end
 	if Octo_ToDo_DB_Vars.DebugInfo == true then
 		tinsert(OctoTable_func_otrisovkaCENT,
@@ -1778,3 +1790,4 @@ function E:func_Otrisovka()
 	end
 	return OctoTable_func_otrisovkaCENT, OctoTable_func_otrisovkaLEFT
 end
+

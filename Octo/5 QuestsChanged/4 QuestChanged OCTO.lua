@@ -66,7 +66,7 @@ local func_OnAcquired do
 			local frameFULL = CreateFrame("FRAME", nil, Octo_MainFrame_QuestsChanged)
 			frameFULL:SetPropagateMouseClicks(true)
 			frameFULL:SetPropagateMouseMotion(true)
-			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+			frameFULL:SetFrameLevel(frame:GetFrameLevel() + 2)
 			local texture = frameFULL:CreateTexture(nil, "BACKGROUND", nil, 3)
 			texture:Hide()
 			texture:SetAllPoints()
@@ -79,12 +79,25 @@ local func_OnAcquired do
 			frameFULL:SetPoint("RIGHT")
 			frameFULL:SetScript("OnEnter", func_OnEnter)
 			frameFULL:SetScript("OnLeave", func_OnLeave)
-			-- -- first
+			------------------------------------------------
+			------------------------------------------------
+			------------------------------------------------
+			------------------------------------------------
+			-- Icon setup
+			local icon_1 = frame:CreateTexture(nil, "BACKGROUND")
+			local icon_1_width = AddonHeight - 2
+			local icon_1_height = AddonHeight - 2
+			icon_1:SetSize(icon_1_width, icon_1_height)
+			icon_1:SetPoint("TOPLEFT", 1, -1)
+			icon_1:SetTexCoord(0.10, 0.90, 0.10, 0.90) -- zoom 10%
+			frame.icon_1 = icon_1
+			------------------------------------------------
+			-- first
 			local first = CreateFrame("FRAME", nil, frame)
 			local first_width = AddonCentralFrameWeight
 			local first_height = AddonHeight
 			first:SetSize(first_width, first_height)
-			first:SetPoint("TOPLEFT")
+			first:SetPoint("TOPLEFT", icon_1, "TOPRIGHT")
 			first:SetPropagateMouseClicks(true)
 			first.text = first:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			first.text:SetAllPoints()
@@ -106,7 +119,7 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- second
 			local second = CreateFrame("FRAME", nil, frame)
-			local second_width = AddonCentralFrameWeight*2
+			local second_width = AddonCentralFrameWeight/2
 			local second_height = AddonHeight
 			second:SetSize(second_width, second_height)
 			second:SetPoint("TOPLEFT", icon_2, "TOPRIGHT")
@@ -115,13 +128,13 @@ local func_OnAcquired do
 			second.text:SetAllPoints()
 			second.text:SetFontObject(OctoFont11)
 			second.text:SetJustifyV(JustifyV)
-			second.text:SetJustifyH(JustifyH)
+			second.text:SetJustifyH("CENTER")
 			second.text:SetTextColor(1, 1, 1, 1)
 			frame.second = second
 			------------------------------------------------
 			-- third
 			local third = CreateFrame("FRAME", nil, frame)
-			local third_width = AddonCentralFrameWeight*3
+			local third_width = AddonCentralFrameWeight*2
 			local third_height = AddonHeight
 			third:SetSize(third_width, third_height)
 			third:SetPoint("TOPLEFT", second, "TOPRIGHT")
@@ -136,7 +149,7 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- fourth
 			local fourth = CreateFrame("FRAME", nil, frame)
-			local fourth_width = AddonCentralFrameWeight
+			local fourth_width = AddonCentralFrameWeight/2
 			local fourth_height = AddonHeight
 			fourth:SetSize(fourth_width, fourth_height)
 			fourth:SetPoint("TOPLEFT", third, "TOPRIGHT")
@@ -151,7 +164,7 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- fifth
 			local fifth = CreateFrame("FRAME", nil, frame)
-			local fifth_width = AddonCentralFrameWeight
+			local fifth_width = AddonCentralFrameWeight*3
 			local fifth_height = AddonHeight
 			fifth:SetSize(fifth_width, fifth_height)
 			fifth:SetPoint("TOPLEFT", fourth, "TOPRIGHT")
@@ -160,39 +173,39 @@ local func_OnAcquired do
 			fifth.text:SetAllPoints()
 			fifth.text:SetFontObject(OctoFont11)
 			fifth.text:SetJustifyV(JustifyV)
-			fifth.text:SetJustifyH("CENTER")
+			fifth.text:SetJustifyH(JustifyH)
 			fifth.text:SetTextColor(1, 1, 1, 1)
 			frame.fifth = fifth
 			------------------------------------------------
-			-- -- sixth
-			-- local sixth = CreateFrame("FRAME", nil, frame)
-			-- local sixth_width = AddonCentralFrameWeight*3
-			-- local sixth_height = AddonHeight
-			-- sixth:SetSize(sixth_width, sixth_height)
-			-- sixth:SetPoint("TOPLEFT", fifth, "TOPRIGHT")
-			-- sixth:SetPropagateMouseClicks(true)
-			-- sixth.text = sixth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			-- sixth.text:SetAllPoints()
-			-- sixth.text:SetFontObject(OctoFont11)
-			-- sixth.text:SetJustifyV(JustifyV)
-			-- sixth.text:SetJustifyH(JustifyH)
-			-- sixth.text:SetTextColor(1, 1, 1, 1)
-			-- frame.sixth = sixth
-			-- ------------------------------------------------
-			-- -- seventh
-			-- local seventh = CreateFrame("FRAME", nil, frame)
-			-- local seventh_width = AddonCentralFrameWeight
-			-- local seventh_height = AddonHeight
-			-- seventh:SetSize(seventh_width, seventh_height)
-			-- seventh:SetPoint("TOPLEFT", sixth, "TOPRIGHT")
-			-- seventh:SetPropagateMouseClicks(true)
-			-- seventh.text = seventh:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			-- seventh.text:SetAllPoints()
-			-- seventh.text:SetFontObject(OctoFont11)
-			-- seventh.text:SetJustifyV(JustifyV)
-			-- seventh.text:SetJustifyH(JustifyH)
-			-- seventh.text:SetTextColor(1, 1, 1, 1)
-			-- frame.seventh = seventh
+			-- sixth
+			local sixth = CreateFrame("FRAME", nil, frame)
+			local sixth_width = AddonCentralFrameWeight
+			local sixth_height = AddonHeight
+			sixth:SetSize(sixth_width, sixth_height)
+			sixth:SetPoint("TOPLEFT", fifth, "TOPRIGHT")
+			sixth:SetPropagateMouseClicks(true)
+			sixth.text = sixth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			sixth.text:SetAllPoints()
+			sixth.text:SetFontObject(OctoFont11)
+			sixth.text:SetJustifyV(JustifyV)
+			sixth.text:SetJustifyH("CENTER")
+			sixth.text:SetTextColor(1, 1, 1, 1)
+			frame.sixth = sixth
+			------------------------------------------------
+			-- seventh
+			local seventh = CreateFrame("FRAME", nil, frame)
+			local seventh_width = AddonCentralFrameWeight
+			local seventh_height = AddonHeight
+			seventh:SetSize(seventh_width, seventh_height)
+			seventh:SetPoint("TOPLEFT", sixth, "TOPRIGHT")
+			seventh:SetPropagateMouseClicks(true)
+			seventh.text = seventh:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			seventh.text:SetAllPoints()
+			seventh.text:SetFontObject(OctoFont11)
+			seventh.text:SetJustifyV(JustifyV)
+			seventh.text:SetJustifyH("CENTER")
+			seventh.text:SetTextColor(1, 1, 1, 1)
+			frame.seventh = seventh
 			-- ------------------------------------------------
 			-- -- eighth
 			-- local eighth = CreateFrame("FRAME", nil, frame)
@@ -209,8 +222,8 @@ local func_OnAcquired do
 			-- eighth.text:SetTextColor(1, 1, 1, 1)
 			-- frame.eighth = eighth
 			------------------------------------------------
-			E.total_width = first_width + icon_2_width + second_width + third_width + fourth_width + fifth_width --+ sixth_width + seventh_width + eighth_width
-			E.total_height = first_height + icon_2_height + second_height +third_height +fourth_height +fifth_height --+sixth_height +seventh_height +eighth_height
+			E.total_width = icon_1_width + first_width + icon_2_width + second_width + third_width + fourth_width + fifth_width + sixth_width + seventh_width -- + eighth_width
+			E.total_height = icon_1_height + first_height + icon_2_height + second_height + third_height + fourth_height + fifth_height + sixth_height + seventh_height -- + eighth_height
 			------------------------------------------------
 		end
 	end
@@ -222,21 +235,29 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	local data = node:GetData()
 	if not data.zxc then return end
 	local frameData = data.zxc
+	frame.icon_1:SetTexture(frameData.specIcon)
 	if E.func_IsAccountQuest(frameData.id) or E.func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
 		frame.icon_2:SetAtlas("warbands-icon")
 	end
 	frame.first.text:SetText(frameData.classColorHex..frameData.playerName.."|r-"..E.func_CurServerShort(frameData.curServer))
-	frame.second.text:SetText(E.func_questNameForQC(frameData.id))
+	frame.second.text:SetText(E.Gray_Color..frameData.id.."|r")
+	frame.third.text:SetText(E.func_questName_SIMPLE(frameData.id))
+
+	frame.fourth.text:SetText(E.Gray_Color..frameData.mapID.. "|r")
+	----------------------------------------------------------------
 	if frameData.curLocation and frameData.curLocation ~= "" then
-		frame.third.text:SetText(E.Gray_Color.."id:"..frameData.mapID.. "|r "..frameData.curLocation)
+		frame.fifth.text:SetText(frameData.curLocation)
 	else
-		frame.third.text:SetText(E.Gray_Color.."id:"..frameData.mapID.. "|r "..E.func_GetMapName(frameData.mapID))
+		frame.fifth.text:SetText(E.func_GetMapName(frameData.mapID))
 	end
+	-- local mapIDnew, level = E.func_GetMapNameFromID(frameData.mapID)
+	-- frame.third.text:SetText(mapIDnew..level)
+	----------------------------------------------------------------
+
+
 	-- frame.third.text:SetText(E.Gray_Color.."id:"..frameData.mapID.. "|r "..(frameData.curLocation or E.func_GetMapName(frameData.mapID)))
-	frame.fourth.text:SetText(E.Green_Color..E.func_GetCoordFormated(frameData.x, frameData.y).."|r")
-	frame.fifth.text:SetText(E.Blue_Color..E.func_SecondsToClock(time()-frameData.time).."|r")
-	-- frame.sixth.text:SetText(6)
-	-- frame.seventh.text:SetText(7)
+	frame.sixth.text:SetText(E.Green_Color..E.func_GetCoordFormated(frameData.x, frameData.y).."|r")
+	frame.seventh.text:SetText(E.Blue_Color..E.func_SecondsToClock(time()-frameData.time).."|r")
 	-- frame.eighth.text:SetText(8)
 end
 function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
@@ -297,6 +318,7 @@ function E.QuestsChanged_CreateMyDataProvider()
 			playerName = v.playerName,
 			classColorHex = v.classColorHex,
 			curLocation = v.curLocation,
+			specIcon = v.specIcon,
 		}
 		local groupNode = DataProvider:Insert({zxc = zxc})
 	end
@@ -356,9 +378,9 @@ function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
 		E:func_CreateUtilsButton(Octo_MainFrame_QuestsChanged, "QuestsChanged", AddonHeight, 0)
 		E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChangedDB, Octo_MainFrame_QuestsChanged, function() E.QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
 		-- Octo_MainFrame_QuestsChanged:SetScript("OnShow", function()
-		--         C_Timer.After(.1, function()
-		--                 E.QuestsChanged_CreateMyDataProvider()
-		--         end)
+		-- C_Timer.After(.1, function()
+		-- E.QuestsChanged_CreateMyDataProvider()
+		-- end)
 		-- end)
 		----------------------------------------------------------------
 	end

@@ -32,6 +32,11 @@ if enable then
 					curServer = GetRealmName(),
 					classColorHex = E.classColorHexCurrent,
 					curLocation = E.func_GetCurrentLocation(),
+					specIcon = select(4, GetSpecializationInfo(GetSpecialization())),
+
+
+
+
 					guid = vignetteInfo.vignetteGUID,
 					name = vignetteInfo.name,
 					atlas = vignetteInfo.atlasName,

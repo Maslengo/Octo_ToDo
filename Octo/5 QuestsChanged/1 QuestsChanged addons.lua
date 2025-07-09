@@ -151,6 +151,7 @@ if enable then
 					curServer = GetRealmName(),
 					classColorHex = E.classColorHexCurrent,
 					curLocation = E.func_GetCurrentLocation(),
+					specIcon = select(4, GetSpecializationInfo(GetSpecialization())),
 				}
 				table.insert(self.quests_completed, quest)
 				table.insert(self.Octo_QuestsChangedDB.log, quest)
