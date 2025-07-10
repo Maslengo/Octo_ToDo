@@ -3,8 +3,6 @@ local Octo_EventFrame_ToDo = CreateFrame("FRAME")
 Octo_EventFrame_ToDo:Hide()
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
 Octo_MainFrame_ToDo:Hide()
-tinsert(UISpecialFrames, "Octo_MainFrame_ToDo")
-tinsert(E.OctoTable_Frames, Octo_MainFrame_ToDo)
 ----------------------------------------------------------------
 local AddonHeight = 20
 local AddonLeftFrameWeight = 200

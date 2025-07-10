@@ -161,9 +161,15 @@ local function func_Universal(expansionID)
 							if LeftData and type(LeftData) == "number" and max then
 								if LeftData < max then
 									textCENT = LeftData.."/"..max
+								elseif LeftData >= max then
+									textCENT = E.DONE
 								else
 									textCENT = E.DONE
 								end
+							elseif max ~= 1 then
+								textCENT = "0/"..max
+							elseif type(LeftData) == "string" then
+								textCENT = LeftData
 							end
 							if CharInfo.GUID == E.curGUID then
 								for index, questID in ipairs(v.questID) do

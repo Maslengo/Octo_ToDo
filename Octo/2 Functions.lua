@@ -737,6 +737,11 @@ function E.func_tmstpDayReset(time)
 	return (math_ceil((tonumber(GetServerTime()) - E.thursdayReset)/(E.daytime*time))*E.daytime*time)+E.thursdayReset
 end
 ----------------------------------------------------------------
+function E.func_IsOnQuest(questID)
+	return IsOnQuest(questID)
+end
+
+----------------------------------------------------------------
 function E.func_CheckCompletedByQuestID(questID)
 	if IsFailed(questID) then
 		return "|cffFF0000>"..FAILED.."<|r"
@@ -750,7 +755,7 @@ function E.func_CheckCompletedByQuestID(questID)
 		return E.COMPLETE()
 	end
 
-	if not IsOnQuest(questID) then
+	if not E.func_IsOnQuest(questID) then
 		return E.NONE
 	end
 
@@ -904,11 +909,12 @@ function E.func_GetCoord(x, y)
 end
 ----------------------------------------------------------------
 function E.func_GetCoordFormated(x, y)
-    if x == 0 or y == 0 then
-        return ""
-    end
+	if x == 0 or y == 0 then
+		return ""
+	end
 
-    return string.format("%.1f / %.1f", x * 100, y * 100)
+	-- return ("%.2f, %.2f"):format(x * 100, y * 100)
+	return string.format("%.1f / %.1f", x * 100, y * 100)
 end
 ----------------------------------------------------------------
 function E.func_npcName(npcID)
@@ -1644,6 +1650,12 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 				func()
 			end
 			if frame then
+				tinsert(UISpecialFrames, frameString)
+				tinsert(E.OctoTable_Frames, frame)
+
+
+
+
 				for index, frames in ipairs(E.OctoTable_Frames) do
 					if frame ~= frames and frames:IsShown() then
 						frames:Hide()
@@ -1893,7 +1905,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 E.ddMenuButtonHeight = 16
-E.DBVersion = tonumber(GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
 E.OctoTable_Empty = {}
 E.Modules = {}
 E.Timers = {}

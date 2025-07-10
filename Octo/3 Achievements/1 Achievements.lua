@@ -1,12 +1,10 @@
 local GlobalAddonName, E = ...
-local enable = false
+local enable = true
 if enable then
 	local Octo_EventFrame_Achievements = CreateFrame("FRAME")
 	Octo_EventFrame_Achievements:Hide()
 	local Octo_MainFrame_Achievements = CreateFrame("BUTTON", "Octo_MainFrame_Achievements", UIParent, "BackdropTemplate")
 	Octo_MainFrame_Achievements:Hide()
-	tinsert(UISpecialFrames, "Octo_MainFrame_Achievements")
-	tinsert(E.OctoTable_Frames, Octo_MainFrame_Achievements)
 	----------------------------------------------------------------
 	local AddonHeight = 20
 	local AddonLeftFrameWeight = 200

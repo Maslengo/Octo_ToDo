@@ -28,7 +28,6 @@ function E.LoadOctoUIforAddons()
 			Octo_DEBUG.profileKeys[name] = "OctoUI"
 		end
 	end
-
 	local AddonsAndDB = {
 		{database = AddonCpuUsageDB, profileName = "OctoUI"}, -- ACU
 		{database = AddOnSkinsDB, profileName = "OctoUI"}, -- AddOnSkins
@@ -50,7 +49,6 @@ function E.LoadOctoUIforAddons()
 		{database = WarpDepleteDB, profileName = "OctoUI"}, -- WarpDeplete
 		{database = GreatVaultList2DB, profileName = "OctoUI"}, -- GreatVaultList
 	}
-
 	for k, v in ipairs(AddonsAndDB) do
 		local addonName = v.addonName
 		local database = v.database
@@ -622,7 +620,6 @@ function E.Collect_All_Quests()
 	-- Очищаем таблицы
 	wipe(collect.MASLENGO.ListOfQuests)
 	wipe(collect.MASLENGO.OctoTable_QuestID)
-
 	-- Обрабатываем OctoTable_QuestID
 	for _, questID in ipairs(E.OctoTable_QuestID) do
 		if C_QuestLog.IsQuestFlaggedCompleted(questID) then
@@ -650,39 +647,25 @@ function E.Collect_All_Quests()
 end
 function E.Collect_All_UNIVERSALQuestUpdate()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
-		collect.MASLENGO.UniversalQuest = collect.MASLENGO.UniversalQuest or {}
-		for i, v in next, (E.OctoTable_UniversalQuest) do
-			for _, w in next, (v) do
-				local count = 0
-				for _, questID in next, (v.questID) do
-				if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
-					count = count + 1
-				end
-				end
-				if Octo_DEBUG then
-					Octo_DEBUG.UniversalQuest[v.desc] = Octo_DEBUG.UniversalQuest[v.desc] or {}
-					Octo_DEBUG.UniversalQuest[v.desc][i] = Octo_DEBUG.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest.".."Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset)
-				end
-
-				if count > 0 then
-					collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = count
-				else
-					collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = nil
-
-				end
-
-
-				-- if v.max == 1 then
-				-- 	collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod
-				-- elseif v.max > 1 then
-				-- 	if vivod == v.max and v.max > 1 then
-				-- 		collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = E.DONE
-				-- 	else
-				-- 		collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod.."/"..v.max
-				-- 	end
-				-- end
+	if not collect or InCombatLockdown() then return end
+	collect.MASLENGO.UniversalQuest = collect.MASLENGO.UniversalQuest or {}
+	for i, v in next, (E.OctoTable_UniversalQuest) do
+		local count = 0
+		local questKey = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
+		for _, questID in next, (v.questID) do
+			if C_QuestLog.IsQuestFlaggedCompleted(questID) then
+				count = count + 1
 			end
+			if v.max == 1 and E.func_IsOnQuest(questID) then
+				collect.MASLENGO.UniversalQuest[questKey] = E.func_CheckCompletedByQuestID(questID)
+			end
+		end
+		if Octo_DEBUG then
+			Octo_DEBUG.UniversalQuest[v.desc] = Octo_DEBUG.UniversalQuest[v.desc] or {}
+			Octo_DEBUG.UniversalQuest[v.desc][i] = Octo_DEBUG.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest."..questKey)
+		end
+		if count > 0 then
+			collect.MASLENGO.UniversalQuest[questKey] = count
 		end
 	end
 end
@@ -795,7 +778,7 @@ function E.Collect_All_JournalInstance()
 		-- local qweLIST = {}
 		for i=1, GetNumRandomDungeons() do
 			local dungeonID, name = GetLFGRandomDungeonInfo(i)
-			-- tinsert(qweLIST, "["..dungeonID .. "] = "..name)
+			-- tinsert(qweLIST, "["..dungeonID.."] = "..name)
 			if dungeonID and E.OctoTable_LFGDungeons[dungeonID] then
 				local D_name = GetLFGDungeonInfo(dungeonID)
 				local donetoday = GetLFGDungeonRewards(dungeonID)

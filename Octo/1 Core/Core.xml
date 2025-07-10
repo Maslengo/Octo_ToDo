@@ -37,7 +37,6 @@
 
 	<Script file="1 Core\1 Collect.lua"/>
 	<Script file="1 Core\2 Otrisovka.lua"/>
-	<Script file="1 Core\3 Minecraft.lua"/>
 
 
 </Ui>

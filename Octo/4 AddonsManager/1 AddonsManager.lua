@@ -1,12 +1,10 @@
 local GlobalAddonName, E = ...
-local enable = false
+local enable = true
 if enable then
 	local Octo_EventFrame_AddonsManager = CreateFrame("FRAME")
 	Octo_EventFrame_AddonsManager:Hide()
 	local Octo_MainFrame_AddonsManager = CreateFrame("BUTTON", "Octo_MainFrame_AddonsManager", UIParent, "BackdropTemplate")
 	Octo_MainFrame_AddonsManager:Hide()
-	tinsert(UISpecialFrames, "Octo_MainFrame_AddonsManager")
-	tinsert(E.OctoTable_Frames, Octo_MainFrame_AddonsManager)
 	----------------------------------------------------------------
 	local AddonHeight = 20 --Octo_ToDo_DB_Vars.AddonHeight --20
 	local AddonLeftFrameWeight = 200

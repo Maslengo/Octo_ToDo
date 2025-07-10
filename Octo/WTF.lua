@@ -106,7 +106,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		isShownPLAYER = true,
 		RIO_Score = 0,
 		RIO_weeklyBest = 0,
-		DBVersion = E.DBVersion,
 	}
 	-- Оптимизация: предварительно инициализируем таблицы
 	local MASLENGO_DEFAULTS = {
@@ -172,14 +171,13 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			end
 		end
 		-- Инициализация UniversalQuest
-		for _, v in next, (E.OctoTable_UniversalQuest) do
-			local key = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
-			MASLENGO.UniversalQuest[key] = MASLENGO.UniversalQuest[key] or nil
-			if type(MASLENGO.UniversalQuest[key]) == "string" then
-				MASLENGO.UniversalQuest[key] = nil
-			end
-		end
-
+		-- for _, v in next, (E.OctoTable_UniversalQuest) do
+		-- 	local key = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
+		-- 	MASLENGO.UniversalQuest[key] = MASLENGO.UniversalQuest[key] or nil
+		-- 	if type(MASLENGO.UniversalQuest[key]) == "string" then
+		-- 		MASLENGO.UniversalQuest[key] = nil
+		-- 	end
+		-- end
 
 
 		-- Инициализация LFGInstance
@@ -314,10 +312,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			CharInfo.MASLENGO.CovenantAndAnima[3] = {CharInfo.Shadowland[5], CharInfo.Shadowland[6]}
 			CharInfo.MASLENGO.CovenantAndAnima[4] = {CharInfo.Shadowland[7], CharInfo.Shadowland[8]}
 			CharInfo.Shadowland = nil
-		end
-		-- Clear old version tables
-		if not Octo_ToDo_DB_Vars.DBVersion or Octo_ToDo_DB_Vars.DBVersion < E.DBVersion then
-			wipe(CharInfo.MASLENGO.OctoTable_QuestID)
 		end
 
 
@@ -544,7 +538,6 @@ end
 function Octo_EventFrame_WTF:Octo_DEBUG()
 	Octo_DEBUG = InitTable(Octo_DEBUG)
 	InitSubTable(Octo_DEBUG, "Reputations")
-	InitSubTable(Octo_DEBUG, "Octo_MplusButton")
 	InitSubTable(Octo_DEBUG, "UniversalQuest")
 end
 function Octo_EventFrame_WTF:Octo_QuestsChangedDB()
@@ -648,7 +641,7 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:Daily_Reset()
 		self:Weekly_Reset()
 		self:Month_Reset()
-		Octo_ToDo_DB_Vars.DBVersion = E.DBVersion
+		E:setOldChanges()
 	end
 end
 function Octo_EventFrame_WTF:VARIABLES_LOADED()

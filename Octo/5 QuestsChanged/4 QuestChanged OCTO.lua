@@ -3,8 +3,6 @@ local Octo_EventFrame_QuestsChanged = CreateFrame("FRAME")
 Octo_EventFrame_QuestsChanged:Hide()
 local Octo_MainFrame_QuestsChanged = CreateFrame("BUTTON", "Octo_MainFrame_QuestsChanged", UIParent, "BackdropTemplate")
 Octo_MainFrame_QuestsChanged:Hide()
-tinsert(UISpecialFrames, "Octo_MainFrame_QuestsChanged")
-tinsert(E.OctoTable_Frames, Octo_MainFrame_QuestsChanged)
 ----------------------------------------------------------------
 local AddonHeight = 20
 local AddonLeftFrameWeight = 200
@@ -220,23 +218,28 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	local data = node:GetData()
 	if not data.zxc then return end
 	local frameData = data.zxc
+	local playerName = frameData.classColorHex..frameData.playerName.."|r-"..E.func_CurServerShort(frameData.curServer)
+
+
 	frame.icon_1:SetTexture(frameData.specIcon)
+	frame.first.text:SetText(playerName)
+
+
+
 	if frameData.type == "QC_Quests" then
 		if E.func_IsAccountQuest(frameData.id) or E.func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
 			frame.icon_2:SetAtlas("warbands-icon")
 		end
-	end
-	if frameData.type == "QC_Vignettes" then
-		frame.icon_2:SetAtlas(frameData.atlas)
-	end
-	frame.first.text:SetText(frameData.classColorHex..frameData.playerName.."|r-"..E.func_CurServerShort(frameData.curServer))
-	frame.second.text:SetText(E.Gray_Color..frameData.id.."|r")
-	if frameData.type == "QC_Quests" then
 		frame.third.text:SetText(E.func_questName_SIMPLE(frameData.id))
-	end
-	if frameData.type == "QC_Vignettes" then
+	elseif frameData.type == "QC_Vignettes" then
+		frame.icon_2:SetAtlas(frameData.atlas)
 		frame.third.text:SetText(frameData.name)
 	end
+
+
+
+
+	frame.second.text:SetText(E.Gray_Color..frameData.id.."|r")
 	frame.fourth.text:SetText(E.Gray_Color..frameData.mapID.. "|r")
 	----------------------------------------------------------------
 	if frameData.curLocation and frameData.curLocation ~= "" then
@@ -247,6 +250,8 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	----------------------------------------------------------------
 	-- frame.sixth.text:SetText(E.Green_Color..E.func_GetCoordFormated(frameData.x, frameData.y).."|r")
 	frame.sixth.text:SetText(E.func_GetCoordFormated(frameData.x, frameData.y))
+
+
 	if self.minTime then
 		-- local currentTime = time()
 		local done = frameData.time - self.minTime
