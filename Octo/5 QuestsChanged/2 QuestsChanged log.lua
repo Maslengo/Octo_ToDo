@@ -1,63 +1,62 @@
 local GlobalAddonName, E = ...
 local enable = true
 if enable then
-	-- print (E.func_Gradient("2 QuestsChanged log: ")..VIDEO_OPTIONS_ENABLED)
 	local floor = math.floor
-	local log, copybox
+	local QC_Quests, copybox
 	function E:BuildLog()
 		if _G.TabSystemOwnerMixin then
-			log = CreateFrame("Frame", "QuestsChangedFrame", UIParent, "UIPanelDialogTemplate, TabSystemOwnerTemplate")
+			QC_Quests = CreateFrame("Frame", "QuestsChangedFrame", UIParent, "UIPanelDialogTemplate, TabSystemOwnerTemplate")
 		else
-			log = CreateFrame("Frame", "QuestsChangedFrame", UIParent, "UIPanelDialogTemplate")
+			QC_Quests = CreateFrame("Frame", "QuestsChangedFrame", UIParent, "UIPanelDialogTemplate")
 		end
-		log:EnableMouse(true)
-		log:SetMovable(true)
-		log:SetClampedToScreen(true)
-		log:SetFrameStrata("DIALOG")
-		log:SetSize(600, 500)
-		log:SetPoint("TOP", 0, -80)
-		log:Hide()
-		tinsert(UISpecialFrames, log:GetName())
-		log.Title:SetText(GlobalAddonName)
-		local drag = CreateFrame("Frame", "$parentTitleButton", log, "TitleDragAreaTemplate")
+		QC_Quests:EnableMouse(true)
+		QC_Quests:SetMovable(true)
+		QC_Quests:SetClampedToScreen(true)
+		QC_Quests:SetFrameStrata("DIALOG")
+		QC_Quests:SetSize(600, 500)
+		QC_Quests:SetPoint("TOP", 0, -80)
+		QC_Quests:Hide()
+		tinsert(UISpecialFrames, QC_Quests:GetName())
+		QC_Quests.Title:SetText(GlobalAddonName)
+		local drag = CreateFrame("Frame", "$parentTitleButton", QC_Quests, "TitleDragAreaTemplate")
 		drag:SetPoint("TOPLEFT", _G["QuestsChangedFrameTitleBG"])
 		drag:SetPoint("BOTTOMRIGHT", _G["QuestsChangedFrameTitleBG"])
-		log.Quests = self:BuildQuestLog()
+		QC_Quests.Quests = self:BuildQuestLog()
 		if E.VIGNETTES then
-			log.Vignettes = self:BuildVignetteLog()
-			log.Vignettes:Hide()
+			QC_Quests.Vignettes = self:BuildVignetteLog()
+			QC_Quests.Vignettes:Hide()
 		end
-		if log.TabSystem then
-			log.TabSystem = CreateFrame("Frame", nil, log, "TabSystemTemplate")
-			log.TabSystem:SetPoint("TOPLEFT", log, "BOTTOMLEFT", 22, 6)
-			log:SetTabSystem(log.TabSystem)
-			log.Quests:Show()
-			log.questTabID = log:AddNamedTab(QUESTS_LABEL, log.Quests)
+		if QC_Quests.TabSystem then
+			QC_Quests.TabSystem = CreateFrame("Frame", nil, QC_Quests, "TabSystemTemplate")
+			QC_Quests.TabSystem:SetPoint("TOPLEFT", QC_Quests, "BOTTOMLEFT", 22, 6)
+			QC_Quests:SetTabSystem(QC_Quests.TabSystem)
+			QC_Quests.Quests:Show()
+			QC_Quests.questTabID = QC_Quests:AddNamedTab(QUESTS_LABEL, QC_Quests.Quests)
 			if VIGNETTES then
-				log.vignettesTabID = log:AddNamedTab("Vignettes", log.Vignettes)
+				QC_Quests.vignettesTabID = QC_Quests:AddNamedTab("Vignettes", QC_Quests.Vignettes)
 			end
-			log:SetTab(log.questTabID)
+			QC_Quests:SetTab(QC_Quests.questTabID)
 		elseif E.VIGNETTES then
-			local QuestButton = CreateFrame("EventButton", nil, log, "UIPanelButtonTemplate")
+			local QuestButton = CreateFrame("EventButton", nil, QC_Quests, "UIPanelButtonTemplate")
 			QuestButton:SetText(QUESTS_LABEL)
 			QuestButton:SetSize(120, 22)
-			QuestButton:SetPoint("TOP", log, "BOTTOM", -71, 8)
+			QuestButton:SetPoint("TOP", QC_Quests, "BOTTOM", -71, 8)
 			QuestButton:SetScript("OnClick", function()
-					log.Vignettes:Hide()
-					log.Quests:Show()
+					QC_Quests.Vignettes:Hide()
+					QC_Quests.Quests:Show()
 			end)
-			local VignetteButton = CreateFrame("EventButton", nil, log, "UIPanelButtonTemplate")
+			local VignetteButton = CreateFrame("EventButton", nil, QC_Quests, "UIPanelButtonTemplate")
 			VignetteButton:SetText("Vignettes")
 			VignetteButton:SetSize(120, 22)
 			VignetteButton:SetPoint("LEFT", QuestButton, "RIGHT", 22, 0)
 			VignetteButton:SetScript("OnClick", function()
-					log.Quests:Hide()
-					log.Vignettes:Show()
+					QC_Quests.Quests:Hide()
+					QC_Quests.Vignettes:Show()
 			end)
 		end
 	end
 	function E:BuildLogPanel(initializer, dataProvider)
-		local Container = CreateFrame("Frame", nil, log)
+		local Container = CreateFrame("Frame", nil, QC_Quests)
 		Container:SetPoint("TOPLEFT", 12, -32)
 		Container:SetPoint("BOTTOMRIGHT", -3, 4)
 		local ScrollBar = CreateFrame("EventFrame", nil, Container, "WowTrimScrollBar")
@@ -124,8 +123,6 @@ if enable then
 						local p = UiMapPoint.CreateFromCoordinates(m,quest.x,quest.y)
 						C_Map.SetUserWaypoint(p)
 						OpenWorldMap(m)
-					else
-						E.Print('Can\'t set waypoint for', m, quest.x, quest.y)
 					end
 				end
 			end
@@ -170,7 +167,7 @@ if enable then
 			end
 			-- It's an append table, but I want this to be newest-first
 			-- (And the indexrange dataprovider doesn't have a sort comparator)
-			local quest = self.Octo_QuestsChangedDB.log[#self.Octo_QuestsChangedDB.log - (index - 1)]
+			local quest = self.Octo_QuestsChangedDB.QC_Quests[#self.Octo_QuestsChangedDB.QC_Quests - (index - 1)]
 			line.data = quest
 			local mapID, level
 			if type(quest.mapID) == 'string' then
@@ -194,12 +191,12 @@ if enable then
 			end
 		end
 		-- This is a vast table (my main has 18,586 entries in it), so use the IndexRange provider
-		local dataProvider = CreateIndexRangeDataProvider(#self.Octo_QuestsChangedDB.log)
+		local dataProvider = CreateIndexRangeDataProvider(#self.Octo_QuestsChangedDB.QC_Quests)
 		self:RegisterCallback(self.Event.OnQuestAdded, function(_, quest, index)
-				dataProvider:SetSize(#self.Octo_QuestsChangedDB.log)
+				dataProvider:SetSize(#self.Octo_QuestsChangedDB.QC_Quests)
 		end)
 		self:RegisterCallback(self.Event.OnQuestRemoved, function(_, quest, index)
-				dataProvider:SetSize(#self.Octo_QuestsChangedDB.log)
+				dataProvider:SetSize(#self.Octo_QuestsChangedDB.QC_Quests)
 		end)
 		self:RegisterCallback(self.Event.OnAllQuestsRemoved, function()
 				dataProvider:Flush()
@@ -244,8 +241,6 @@ if enable then
 						local p = UiMapPoint.CreateFromCoordinates(m, vignette.x, vignette.y)
 						C_Map.SetUserWaypoint(p)
 						OpenWorldMap(m)
-					else
-						E.Print('Can\'t set waypoint for', m, vignette.x, vignette.y)
 					end
 				end
 			end
@@ -308,14 +303,14 @@ if enable then
 		return E:BuildLogPanel(initializer, dataProvider)
 	end
 	function E:LogShown()
-		return log and log:IsShown()
+		return QC_Quests and QC_Quests:IsShown()
 	end
 	function E:ToggleLog()
-		if not log then self:BuildLog() end
-		if log:IsShown() then
-			log:Hide()
+		if not QC_Quests then self:BuildLog() end
+		if QC_Quests:IsShown() then
+			QC_Quests:Hide()
 		else
-			log:Show()
+			QC_Quests:Show()
 		end
 	end
 	do

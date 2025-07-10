@@ -3,6 +3,7 @@ E.GlobalAddonName = GlobalAddonName
 E.PromiseItem = {}
 E.PromiseSpell = {}
 E.PromiseQuest = {}
+
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 local LibStub = LibStub
@@ -31,6 +32,7 @@ local pairs = pairs
 local ipairs = ipairs
 local next = next
 local type = type
+local AddMessage = AddMessage
 local CreateFrame = CreateFrame
 local GetTime = GetTime
 local GetServerTime = GetServerTime
@@ -342,19 +344,20 @@ function E.func_questNameForQC(questID, useLargeIcon)
 
 	return E.Gray_Color.."id:"..questID.."|r "..vivod
 end
-
-
 ----------------------------------------------------------------
 function E.func_GetCurrentLocation()
-	local curSubZone = GetSubZoneText() or 0
-	local curRealZone = GetRealZoneText() or 0
-	local curLocation = ""
-	if curSubZone ~= 0 and curSubZone ~= "" and curRealZone ~= curSubZone then
-		curLocation = curRealZone.." (".. curSubZone..")"
-	end
-	return curLocation
-end
+	local curRealZone = GetRealZoneText()
+	local curSubZone = GetSubZoneText()
 
+	local FIRSTtext = curRealZone ~= "" and curRealZone or GetZoneText()
+	local SECONDtext = curSubZone ~= "" and curSubZone or GetMinimapZoneText()
+
+	if FIRSTtext == SECONDtext then
+		return FIRSTtext
+	else
+		return SECONDtext ~= "" and FIRSTtext .. " (" .. SECONDtext .. ")" or FIRSTtext
+	end
+end
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
 	table_insert(E.PromiseQuest, questID)
@@ -637,8 +640,8 @@ function E.func_CompactNumberSimple(number)
 	end
 end
 ----------------------------------------------------------------
-function E.func_texturefromIcon(icon, iconSize)
-	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::64:64:4:60:4:60|t"
+function E.func_texturefromIcon(icon, iconWidth, iconHeight)
+	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth or 16)..":"..(iconHeight or iconWidth or 16)..":::64:64:4:60:4:60|t"
 end
 ----------------------------------------------------------------
 E.curFaction = UnitFactionGroup("PLAYER")
@@ -901,8 +904,11 @@ function E.func_GetCoord(x, y)
 end
 ----------------------------------------------------------------
 function E.func_GetCoordFormated(x, y)
-	return string.format("%.1f", x*100).." / "..string.format("%.1f", y*100)
-	-- return string.format("%.2f", x*100)..", "..string.format("%.2f", y*100)
+    if x == 0 or y == 0 then
+        return ""
+    end
+
+    return string.format("%.1f / %.1f", x * 100, y * 100)
 end
 ----------------------------------------------------------------
 function E.func_npcName(npcID)
@@ -1280,17 +1286,6 @@ function E.func_TableMerge(table1, table2)
 	end
 	return table1
 end
--- function E.func_TableMerge(table1, table2)
--- 	for k, v in pairs(table2) do
--- 		if table1[k] == nil or type(table1[k]) ~= type(table2[k]) then
--- 			table1[k] = v
--- 			-- print("replacing key", k, v)
--- 		elseif type(v) == "table" then
--- 			table1[k] = MergeTable(table1[k], table2[k])
--- 		end
--- 	end
--- 	return table1
--- end
 ----------------------------------------------------------------
 function E.func_TableConcat(table1, table2)
 	local len = #table1
@@ -1897,6 +1892,8 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+E.ddMenuButtonHeight = 16
+E.DBVersion = tonumber(GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
 E.OctoTable_Empty = {}
 E.Modules = {}
 E.Timers = {}
@@ -1912,7 +1909,6 @@ E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.t
 				-- ["Octo_font"] = "Friz Quadrata TT",
 				E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
--- print (Octo_ToDo_DB_Vars.interface.Octo_font)
 E.fontObject9 = CreateFont("OctoFont9")
 E.fontObject9:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject9:SetFont(E.Octo_font, 9, "OUTLINE")
@@ -2079,14 +2075,24 @@ E.NONE = E.Gray_Color.."None".."|r"
 ----------------------------------------------------------------
 E.AccountWide = E.Blue_Color.."(A)".."|r"
 E.AccountTransferable = E.Red_Color.."(T)".."|r"
-E.Icon_AccountWide = E.Blue_Color.."(A)".."|r"
-E.Icon_Warbands = CreateAtlasMarkup("warbands-icon", 16, 16)
+E.Icon_AccountWide = CreateAtlasMarkup("warbands-icon", 16, 16)
+E.Icon_Warbands = E.Blue_Color.."(A)".."|r"
 E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r"
 E.Icon_QuestionMark = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.Icon_Empty = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\spacerEMPTY"
 E.Icon_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
 
-
+E.OctoTable_Prefixes = {
+	"Русский", -- "ru.",
+	"Deutsch", -- "de.",
+	"English", -- "",
+	"Español", -- "es.",
+	"Français", -- "fr.",
+	"Italiano", -- "it.",
+	"Português Brasileiro", -- "pt.",
+	"Korean", -- "한국어", --"ko.",
+	"Chinese" -- "简体中文", --"cn.",
+}
 
 
 E.OctoTable_Covenant = {
@@ -2453,11 +2459,11 @@ end
 -- Показать список аддонов с их статусом
 function E.func_ListAddons(filter)
 	local addons = E.func_GetAllAddons()
-	print ("Список аддонов ("..#addons.."):")
+	DEFAULT_CHAT_FRAME:AddMessage("Список аддонов ("..#addons.."):")
 	for index, name in ipairs(addons) do
 		if not filter or string.find(string_lower(name), string_lower(filter)) then
 			local status = E.func_IsAddOnLoaded(index) and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r"
-			print(string_format("%3d. %s - %s", index, name, status))
+			DEFAULT_CHAT_FRAME:AddMessage(string_format("%3d. %s - %s", index, name, status))
 		end
 	end
 end
@@ -2612,12 +2618,12 @@ function E.func_SaveProfile(profileName)
 
 
 	end
-	print ("Профиль '"..profileName.." сохранен ("..#addons.." аддонов)")
+	DEFAULT_CHAT_FRAME:AddMessage("Профиль '"..profileName.." сохранен ("..#addons.." аддонов)")
 end
 -- Загрузить профиль
 function E.func_LoadProfile(profileName)
 	if not Octo_AddonsManager_DB.profiles[profileName] then
-		print ("Профиль '"..profileName.." не найден")
+		DEFAULT_CHAT_FRAME:AddMessage("Профиль '"..profileName.." не найден")
 		return
 	end
 	for name, enabled in pairs(Octo_AddonsManager_DB.profiles[profileName]) do
@@ -2628,13 +2634,13 @@ function E.func_LoadProfile(profileName)
 		end
 	end
 	currentProfile = profileName
-	print ("Профиль '"..profileName.." загружен")
+	DEFAULT_CHAT_FRAME:AddMessage("Профиль '"..profileName.." загружен")
 end
 -- Список профилей
 function E.func_ListProfiles()
-	print ("Доступные профили:")
+	DEFAULT_CHAT_FRAME:AddMessage("Доступные профили:")
 	for name, _ in pairs(Octo_AddonsManager_DB.profiles) do
-		print("- "..name)
+		DEFAULT_CHAT_FRAME:AddMessage("- "..name)
 	end
 end
 -- Обработчик команд
@@ -2655,14 +2661,14 @@ local function func_HandleCommand(msg)
 	elseif command == "profiles" then
 		E.func_ListProfiles()
 	else
-		print ("Команды:")
-		print("/uam list [фильтр] - список аддонов")
-		print("/uam toggle <имя/номер> - переключить аддон")
-		print("/uam enableall - включить все аддоны")
-		print("/uam disableall - выключить все аддоны")
-		print("/uam save [профиль] - сохранить текущие настройки")
-		print("/uam load <профиль> - загрузить профиль")
-		print("/uam profiles - список профилей")
+		DEFAULT_CHAT_FRAME:AddMessage("Команды:")
+		DEFAULT_CHAT_FRAME:AddMessage("/uam list [фильтр] - список аддонов")
+		DEFAULT_CHAT_FRAME:AddMessage("/uam toggle <имя/номер> - переключить аддон")
+		DEFAULT_CHAT_FRAME:AddMessage("/uam enableall - включить все аддоны")
+		DEFAULT_CHAT_FRAME:AddMessage("/uam disableall - выключить все аддоны")
+		DEFAULT_CHAT_FRAME:AddMessage("/uam save [профиль] - сохранить текущие настройки")
+		DEFAULT_CHAT_FRAME:AddMessage("/uam load <профиль> - загрузить профиль")
+		DEFAULT_CHAT_FRAME:AddMessage("/uam profiles - список профилей")
 	end
 end
 -- Инициализация при загрузке

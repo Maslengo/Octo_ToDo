@@ -116,7 +116,6 @@ local colorScheme = {
 	[0] = "|r",
 }
 ----------------------------------------------------------------------------------------------------------------------------------
--- fprint
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local IndentationLib = IndentationLib
 ----------------------------------------------------------------
@@ -172,7 +171,6 @@ local function dumpEdit(indent, msg, tables)
 		return str
 	end
 end
--- FPRINT
 local LOCAL_FPrintHandler = function(...)
 	local function sendMessage(frame, indent, msg, allChildren)
 		local indentStr = E.func_Gradient(GlobalAddonName..": ")
@@ -537,15 +535,15 @@ local function func_HandleCommand(msg)
 	elseif (command == "item3" or command == "8") then
 		E.func_itemslistSortBOOLEN(arg1)
 	else
-		print ("Команды:")
-		print ("/fp ".."mount".." (1)")
-		print ("/fp ".."item".." (2)")
-		print ("/fp ".."quest".." (3)")
-		print ("/fp ".."currency".." (4)")
-		print ("/fp ".."rep".." (5)")
-		print ("/fp ".."spell".." (6)")
-		print ("/fp ".."item2".." (7)")
-		print ("/fp ".."item3".." (8)")
+		DEFAULT_CHAT_FRAME:AddMessage("Команды:")
+		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."mount".." (1)")
+		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."item".." (2)")
+		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."quest".." (3)")
+		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."currency".." (4)")
+		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."rep".." (5)")
+		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."spell".." (6)")
+		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."item2".." (7)")
+		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."item3".." (8)")
 	end
 end
 SLASH_OCTOLIST1 = "/fp"

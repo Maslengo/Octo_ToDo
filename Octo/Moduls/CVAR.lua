@@ -1,8 +1,6 @@
 local GlobalAddonName, E = ...
 
 function E.LoadCVars()
-	-- print(E.Green_Color.."Load CVars|r")
-
 	-- Grouped CVars by functionality
 	local cvars = {
 		-- Performance and UI

@@ -35,8 +35,7 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 end)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-E.total_width = E.total_width or 100
-E.total_height = E.total_height or 100
+E.total_width = E.total_width or 500
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -46,39 +45,28 @@ E.total_height = E.total_height or 100
 ----------------------------------------------------------------
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local func_OnAcquired do
-	local function func_OnEnter(frame)
-		frame.texture:Show()
-	end
-	local function func_OnLeave(frame)
-		frame.texture:Hide()
-	end
 	------------------------------------------------
 	function func_OnAcquired(owner, frame, data, new)
 		if new then
-			-- Frame setup
 			local JustifyV = "MIDDLE"
 			local JustifyH = "LEFT"
+			-- Frame setup
 			frame:SetPropagateMouseClicks(true)
 			frame:SetPropagateMouseMotion(true)
+			------------------------------------------------
+			------------------------------------------------
 			-- Full texture background
-			local frameFULL = CreateFrame("FRAME", nil, Octo_MainFrame_QuestsChanged)
+			local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_QuestsChanged)
 			frameFULL:SetPropagateMouseClicks(true)
 			frameFULL:SetPropagateMouseMotion(true)
-			frameFULL:SetFrameLevel(frame:GetFrameLevel() + 2)
-			local texture = frameFULL:CreateTexture(nil, "BACKGROUND", nil, 3)
-			texture:Hide()
-			texture:SetAllPoints()
-			texture:SetTexture(TEXTURE_PATH)
-			texture:SetVertexColor(r, g, b, E.bgCaOverlay)
-			frameFULL.texture = texture
+			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+			frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
+			frameFULL.HighlightTexture:SetAlpha(.2)
 			frameFULL:SetPoint("LEFT", frame)
 			frameFULL:SetPoint("TOP", frame)
 			frameFULL:SetPoint("BOTTOM", frame)
 			frameFULL:SetPoint("RIGHT")
-			frameFULL:SetScript("OnEnter", func_OnEnter)
-			frameFULL:SetScript("OnLeave", func_OnLeave)
-			------------------------------------------------
-			------------------------------------------------
 			------------------------------------------------
 			------------------------------------------------
 			-- Icon setup
@@ -221,7 +209,6 @@ local func_OnAcquired do
 			-- frame.eighth = eighth
 			------------------------------------------------
 			E.total_width = icon_1_width + first_width + icon_2_width + second_width + third_width + fourth_width + fifth_width + sixth_width + seventh_width -- + eighth_width
-			E.total_height = icon_1_height + first_height + icon_2_height + second_height + third_height + fourth_height + fifth_height + sixth_height + seventh_height -- + eighth_height
 			------------------------------------------------
 		end
 	end
@@ -234,13 +221,22 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	if not data.zxc then return end
 	local frameData = data.zxc
 	frame.icon_1:SetTexture(frameData.specIcon)
-	if E.func_IsAccountQuest(frameData.id) or E.func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
-		frame.icon_2:SetAtlas("warbands-icon")
+	if frameData.type == "QC_Quests" then
+		if E.func_IsAccountQuest(frameData.id) or E.func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
+			frame.icon_2:SetAtlas("warbands-icon")
+		end
+	end
+	if frameData.type == "QC_Vignettes" then
+		frame.icon_2:SetAtlas(frameData.atlas)
 	end
 	frame.first.text:SetText(frameData.classColorHex..frameData.playerName.."|r-"..E.func_CurServerShort(frameData.curServer))
 	frame.second.text:SetText(E.Gray_Color..frameData.id.."|r")
-	frame.third.text:SetText(E.func_questName_SIMPLE(frameData.id))
-
+	if frameData.type == "QC_Quests" then
+		frame.third.text:SetText(E.func_questName_SIMPLE(frameData.id))
+	end
+	if frameData.type == "QC_Vignettes" then
+		frame.third.text:SetText(frameData.name)
+	end
 	frame.fourth.text:SetText(E.Gray_Color..frameData.mapID.. "|r")
 	----------------------------------------------------------------
 	if frameData.curLocation and frameData.curLocation ~= "" then
@@ -248,14 +244,19 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	else
 		frame.fifth.text:SetText(E.func_GetMapName(frameData.mapID))
 	end
-	-- local mapIDnew, level = E.func_GetMapNameFromID(frameData.mapID)
-	-- frame.third.text:SetText(mapIDnew..level)
 	----------------------------------------------------------------
-
-
-	-- frame.third.text:SetText(E.Gray_Color.."id:"..frameData.mapID.. "|r "..(frameData.curLocation or E.func_GetMapName(frameData.mapID)))
-	frame.sixth.text:SetText(E.Green_Color..E.func_GetCoordFormated(frameData.x, frameData.y).."|r")
-	frame.seventh.text:SetText(E.Blue_Color..E.func_SecondsToClock(time()-frameData.time).."|r")
+	-- frame.sixth.text:SetText(E.Green_Color..E.func_GetCoordFormated(frameData.x, frameData.y).."|r")
+	frame.sixth.text:SetText(E.func_GetCoordFormated(frameData.x, frameData.y))
+	if self.minTime then
+		-- local currentTime = time()
+		local done = frameData.time - self.minTime
+		-- local total = self.maxTime - self.minTime
+		local total = time() - self.minTime
+		local red = min(255, (1 - done / total) * 510)
+		local green = min(255, (done / total) * 510)
+		local hexcolor = string.format("|cff%2x%2x00", red, green)
+		frame.seventh.text:SetText(hexcolor..E.func_SecondsToClock(time()-frameData.time).."|r")
+	end
 	-- frame.eighth.text:SetText(8)
 end
 function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
@@ -300,25 +301,57 @@ function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_QuestsChanged.ScrollBox, Octo_MainFrame_QuestsChanged.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	----------------------------------------------------------------
 end
-function E.QuestsChanged_CreateMyDataProvider()
+function E:QuestsChanged_CreateMyDataProvider()
 	local count = 0
 	local DataProvider = CreateTreeDataProvider()
 	E.DataProvider_QuestsChanged = DataProvider
-	for k, v in next, (Octo_QuestsChangedDB.log) do
-		count = count + 1
-		local zxc = {
-			id = v.id,
-			time = v.time,
-			mapID = v.mapID,
-			x = v.x,
-			y = v.y,
-			curServer = v.curServer,
-			playerName = v.playerName,
-			classColorHex = v.classColorHex,
-			curLocation = v.curLocation,
-			specIcon = v.specIcon,
-		}
-		local groupNode = DataProvider:Insert({zxc = zxc})
+	local times = {}
+	if Octo_ToDo_DB_Vars.QC_Quests then
+		for k, v in next, (Octo_QuestsChangedDB.QC_Quests) do
+			if v.time then tinsert(times, v.time) end
+			count = count + 1
+			local zxc = {
+				id = v.id,
+				time = v.time,
+				mapID = v.mapID,
+				x = v.x,
+				y = v.y,
+				curServer = v.curServer,
+				playerName = v.playerName,
+				classColorHex = v.classColorHex,
+				curLocation = v.curLocation,
+				specIcon = v.specIcon,
+				type = "QC_Quests",
+			}
+			DataProvider:Insert({zxc = zxc})
+		end
+	end
+
+	if Octo_ToDo_DB_Vars.QC_Vignettes then
+		for k, v in next, (Octo_QuestsChangedDB.QC_Vignettes) do
+			if v.time then tinsert(times, v.time) end
+			count = count + 1
+			local zxc = {
+				id = v.id,
+				time = v.time,
+				mapID = v.mapID,
+				x = v.x,
+				y = v.y,
+				atlas = v.atlas,
+				curServer = v.curServer,
+				playerName = v.playerName,
+				classColorHex = v.classColorHex,
+				curLocation = v.curLocation,
+				specIcon = v.specIcon,
+				type = "QC_Vignettes",
+				name = v.name,
+			}
+			DataProvider:Insert({zxc = zxc})
+		end
+	end
+	if #times > 0 then
+		Octo_EventFrame_QuestsChanged.minTime = math.min(unpack(times))
+		Octo_EventFrame_QuestsChanged.maxTime = math.max(unpack(times))
 	end
 	DataProvider:SetSortComparator(function(a, b)
 			local aData = a.data.zxc
@@ -326,6 +359,8 @@ function E.QuestsChanged_CreateMyDataProvider()
 			return aData.time > bData.time
 	end)
 	DataProvider:Sort()
+	-- SetDataProvider триггерит создания фреймов
+	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
 	if count > 0 and count < MainFrameDefaultLines then
 		Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*count)
 	elseif count > MainFrameDefaultLines then
@@ -333,7 +368,6 @@ function E.QuestsChanged_CreateMyDataProvider()
 	elseif count == 0 then
 		Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*1)
 	end
-	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -342,6 +376,7 @@ end
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_REGEN_DISABLED",
+	"PLAYER_LOGIN",
 }
 E.RegisterMyEventsToFrames(Octo_EventFrame_QuestsChanged, MyEventsTable, E.func_DebugPath())
 function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
@@ -371,13 +406,13 @@ function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
 		end
 		----------------------------------------------------------------
 		self:Octo_Create_MainFrame_QuestsChanged()
-		E.QuestsChanged_CreateMyDataProvider()
+		E:QuestsChanged_CreateMyDataProvider()
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(Octo_MainFrame_QuestsChanged, "QuestsChanged", AddonHeight, 0)
-		E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChangedDB, Octo_MainFrame_QuestsChanged, function() E.QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
+		E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChangedDB, Octo_MainFrame_QuestsChanged, function() E:QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
 		-- Octo_MainFrame_QuestsChanged:SetScript("OnShow", function()
 		-- C_Timer.After(.1, function()
-		-- E.QuestsChanged_CreateMyDataProvider()
+		-- E:QuestsChanged_CreateMyDataProvider()
 		-- end)
 		-- end)
 		----------------------------------------------------------------
@@ -388,4 +423,10 @@ function Octo_EventFrame_QuestsChanged:PLAYER_REGEN_DISABLED()
 	if Octo_MainFrame_QuestsChanged and Octo_MainFrame_QuestsChanged:IsShown() then
 		Octo_MainFrame_QuestsChanged:Hide()
 	end
+end
+function Octo_EventFrame_QuestsChanged:PLAYER_LOGIN()
+	-- Cleanup event
+	self:UnregisterEvent("PLAYER_LOGIN")
+	self.PLAYER_LOGIN = nil
+	E:func_Create_DD_ToDo(Octo_MainFrame_QuestsChanged)
 end

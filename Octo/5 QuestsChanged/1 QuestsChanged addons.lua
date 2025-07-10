@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 local enable = true
 if enable then
-	-- print (E.func_Gradient("1 QuestsChanged addons: ")..VIDEO_OPTIONS_ENABLED)
 	local icon = LibStub("LibDBIcon-1.0", true)
 	E.VIGNETTES = C_EventUtils.IsEventValid("VIGNETTE_MINIMAP_UPDATED")
 	local quests = {}
@@ -54,8 +53,8 @@ if enable then
 						showInCompartment=true,
 					},
 			})
-			if not Octo_QuestsChangedDB.log then
-				Octo_QuestsChangedDB.log = {}
+			if not Octo_QuestsChangedDB.QC_Quests then
+				Octo_QuestsChangedDB.QC_Quests = {}
 			end
 			E.Octo_QuestsChangedDB = Octo_QuestsChangedDB
 			if icon then
@@ -154,12 +153,9 @@ if enable then
 					specIcon = select(4, GetSpecializationInfo(GetSpecialization())),
 				}
 				table.insert(self.quests_completed, quest)
-				table.insert(self.Octo_QuestsChangedDB.log, quest)
+				table.insert(self.Octo_QuestsChangedDB.QC_Quests, quest)
 				session_quests[questid] = true
-				if Octo_QuestsChangedDB.announce then
-					self.Print("Quest complete:", questid, questName or UNKNOWN)
-				end
-				self:TriggerEvent(self.Event.OnQuestAdded, quest, #self.Octo_QuestsChangedDB.log)
+				self:TriggerEvent(self.Event.OnQuestAdded, quest, #self.Octo_QuestsChangedDB.QC_Quests)
 			end
 			quests[questid] = true
 		end
@@ -167,9 +163,6 @@ if enable then
 			for questid in pairs(quests) do
 				if not new_quests_byid[questid] and not SPAM_QUESTS[questid] then
 					quests[questid] = nil
-					if Octo_QuestsChangedDB.announce then
-						self.Print("Quest no longer complete:", questid, self.quest_names[questid] or UNKNOWN)
-					end
 				end
 			end
 		end
@@ -177,16 +170,16 @@ if enable then
 	function E:RemoveQuest(index)
 		if index == 0 then
 			table.wipe(self.quests_completed)
-			table.wipe(self.Octo_QuestsChangedDB.log)
+			table.wipe(self.Octo_QuestsChangedDB.QC_Quests)
 			self:TriggerEvent(self.Event.OnAllQuestsRemoved)
 		else
 			local quest
 			if type(index) == "table" then
 				quest = index
-				index = tIndexOf(self.Octo_QuestsChangedDB.log, quest)
+				index = tIndexOf(self.Octo_QuestsChangedDB.QC_Quests, quest)
 				if not index then return end
 			else
-				quest = self.Octo_QuestsChangedDB.log[index]
+				quest = self.Octo_QuestsChangedDB.QC_Quests[index]
 			end
 			for i, q in ipairs(self.quests_completed) do
 				if q.id == quest.id then
@@ -194,7 +187,7 @@ if enable then
 					break
 				end
 			end
-			tremove(self.Octo_QuestsChangedDB.log, index)
+			tremove(self.Octo_QuestsChangedDB.QC_Quests, index)
 			self:TriggerEvent(self.Event.OnQuestRemoved, quest, index)
 		end
 	end
@@ -210,7 +203,7 @@ if enable then
 			table.wipe(E.quests_completed)
 		else
 			if IsShiftKeyDown() then
-				local data = E.Octo_QuestsChangedDB.log[#E.Octo_QuestsChangedDB.log]
+				local data = E.Octo_QuestsChangedDB.QC_Quests[#E.Octo_QuestsChangedDB.QC_Quests]
 				StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d, label=\"\"},"):format(
 						E.func_GetCoord(data.x, data.y),
 						(data.id or "nil")
@@ -259,7 +252,7 @@ if enable then
 	_G["SLASH_".. GlobalAddonName:upper().."1"] = "/questschanged"
 	SlashCmdList[GlobalAddonName:upper()] = function(msg)
 		msg = msg:trim()
-		if msg == "log" or msg == "" then
+		if msg == "QC_Quests" or msg == "" then
 			E:ToggleLog()
 		elseif msg == "icon" then
 			if not icon then return end
@@ -269,13 +262,10 @@ if enable then
 			else
 				icon:Show(GlobalAddonName)
 			end
-			E.Print("icon", Octo_QuestsChangedDB.hide and "hidden" or "shown")
 		elseif msg == "removed" then
 			Octo_QuestsChangedDB.removed = not Octo_QuestsChangedDB.removed
-			E.Print("watch for removed quests", Octo_QuestsChangedDB.removed and "enabled" or "disabled")
 		elseif msg == "announce" then
 			Octo_QuestsChangedDB.announce = not Octo_QuestsChangedDB.announce
-			E.Print("announce in chat", Octo_QuestsChangedDB.announce and "enabled" or "disabled")
 		end
 	end
 	StaticPopupDialogs["QuestsChanged_CopyBox"] = {

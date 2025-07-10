@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 local enable = false
 if enable then
-	print (E.func_Gradient("1 AddonsManager: ")..VIDEO_OPTIONS_ENABLED)
 	local Octo_EventFrame_AddonsManager = CreateFrame("FRAME")
 	Octo_EventFrame_AddonsManager:Hide()
 	local Octo_MainFrame_AddonsManager = CreateFrame("BUTTON", "Octo_MainFrame_AddonsManager", UIParent, "BackdropTemplate")
@@ -179,20 +178,25 @@ if enable then
 		------------------------------------------------
 		function func_OnAcquired(owner, frame, data, new)
 			if new then
+				local JustifyV = "MIDDLE"
+				local JustifyH = "LEFT"
+				-- Frame setup
+				frame:SetPropagateMouseClicks(true)
+				frame:SetPropagateMouseMotion(true)
 				------------------------------------------------
-				frame.full = CreateFrame("FRAME", nil, frame)
-				frame.full:SetSize(AddonLeftFrameWeight*3, AddonHeight)
-				-- frame.full:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-				frame.full:SetPoint("RIGHT")
-				frame.full.texture = frame.full:CreateTexture(nil, "BACKGROUND")
-				frame.full.texture:SetAllPoints()
-				frame.full.texture:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
-				local r, g, b = GetClassColor(E.classFilename)
-				frame.full.texture:SetVertexColor(r, g, b, 0)
-				frame.full:SetScript("OnEnter", function(self) self.texture:SetAlpha(E.BGALPHA) end)
-				frame.full:SetScript("OnLeave", function(self) self.texture:SetAlpha(0) end)
-				frame.full:SetPropagateMouseClicks(true)
-				frame.full:SetPropagateMouseMotion(true)
+				------------------------------------------------
+				-- Full texture background
+				local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_AddonsManager)
+				frameFULL:SetPropagateMouseClicks(true)
+				frameFULL:SetPropagateMouseMotion(true)
+				frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+				frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+				frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
+				frameFULL.HighlightTexture:SetAlpha(.2)
+				frameFULL:SetPoint("LEFT", frame)
+				frameFULL:SetPoint("TOP", frame)
+				frameFULL:SetPoint("BOTTOM", frame)
+				frameFULL:SetPoint("RIGHT")
 				------------------------------------------------
 				frame.first = CreateFrame("BUTTON", nil, frame)
 				frame.first:SetPropagateMouseClicks(false)
@@ -247,22 +251,6 @@ if enable then
 			end
 		end
 	end
-
-
-
-
-
-
-	----------------------------------------------------------------
-
-	function Octo_EventFrame_AddonsManager:func_CollectTooltipOnEnter(index) -- ПОФИКСИТЬ
-
-
-
-	end
-
-
-
 	----------------------------------------------------------------
 	function Octo_EventFrame_AddonsManager:CollectAddonInfo(index)
 		local name = E.func_GetAddonName(index)
@@ -326,15 +314,12 @@ if enable then
 			else
 				local entryTitle = title or name  -- Используем title, если он есть, иначе name
 				local entryText  -- Текст для добавления в tooltipthird
-
 				if Version and Version ~= 0 then
 					entryText = {entryTitle, E.classColorHexCurrent .. Version .. "|r"}
 				else
 					entryText = {entryTitle}
 				end
-
 				tooltipthird[#tooltipthird + 1] = entryText
-
 				-- if (Author and Author ~= "") then
 				--     tooltipthird[#tooltipthird+1] = {"Author: "..E.classColorHexCurrent..Author.."|r"}
 				-- end
@@ -471,7 +456,6 @@ if enable then
 	function Octo_EventFrame_AddonsManager:Octo_Create_MainFrame_AddonsManager()
 		Octo_MainFrame_AddonsManager:SetPoint("CENTER", 0, 0)
 		-- Octo_MainFrame_AddonsManager:SetPoint("TOP", 0, -200)
-
 		Octo_MainFrame_AddonsManager:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 		Octo_MainFrame_AddonsManager:SetDontSavePosition(true)
 		Octo_MainFrame_AddonsManager:SetClampedToScreen(false)
@@ -490,8 +474,6 @@ if enable then
 				Octo_MainFrame_AddonsManager:SetAlpha(1)
 				Octo_MainFrame_AddonsManager:StopMovingOrSizing()
 		end)
-		-- Octo_MainFrame_AddonsManager:RegisterForClicks("RightButtonUp") -- ПОФИКСИТЬ (ДОБАВИТЬ ОПЦИЮ ЛОКА)
-		-- Octo_MainFrame_AddonsManager:SetScript("OnClick", function(self) self:Hide() end)
 		Octo_MainFrame_AddonsManager.ScrollBox = CreateFrame("FRAME", nil, Octo_MainFrame_AddonsManager, "WowScrollBoxList")
 		Octo_MainFrame_AddonsManager.ScrollBox:SetAllPoints()
 		Octo_MainFrame_AddonsManager.ScrollBox:SetPropagateMouseClicks(true)
@@ -506,7 +488,7 @@ if enable then
 			function(...)
 				self:Octo_Frame_init(...)
 		end)
-		Octo_MainFrame_AddonsManager.view:RegisterCallback(Octo_MainFrame_AddonsManager.view.Event.OnAcquiredFrame, func_OnAcquired, Octo_MainFrame_AddonsManager) -- ПОФИКСИТЬ
+		Octo_MainFrame_AddonsManager.view:RegisterCallback(Octo_MainFrame_AddonsManager.view.Event.OnAcquiredFrame, func_OnAcquired, Octo_MainFrame_AddonsManager)
 		ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_AddonsManager.ScrollBox, Octo_MainFrame_AddonsManager.ScrollBar, Octo_MainFrame_AddonsManager.view)
 		ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_AddonsManager.ScrollBox, Octo_MainFrame_AddonsManager.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 		----------------------------------------------------------------
@@ -611,9 +593,6 @@ if enable then
 		frame_CancelButton:SetPropagateMouseClicks(true)
 		frame_CancelButton:SetSize(AddonCentralFrameWeight, AddonHeight)
 		frame_CancelButton:SetPoint("TOPRIGHT", Octo_MainFrame_AddonsManager, "BOTTOMRIGHT", 0, 0)
-
-
-
 		frame_CancelButton.text = frame_CancelButton:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		frame_CancelButton.text:SetAllPoints()
 		frame_CancelButton.text:SetFontObject(OctoFont11)
@@ -642,8 +621,6 @@ if enable then
 		PlaySound(SOUNDKIT.GS_LOGIN_CHANGE_REALM_CANCEL)
 		self:AddonList_Hide(false)
 	end
-
-
 	----------------------------------------------------------------
 	function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 		local DD_AddonsManager = CreateFrame("Button", "DD_AddonsManager", Octo_MainFrame_AddonsManager, "BackDropTemplate")
@@ -914,11 +891,7 @@ if enable then
 							info.keepShownOnClick = true
 							info.notCheckable = true -- TRUE убрать чекбокс
 							info.isNotRadio = true -- TRUE круг, а не квадрат
-
-
 							info.text = k
-
-
 							info.hasArrow = nil
 							info.func = function(_, _, _, checked)
 								ReloadUI()
@@ -935,14 +908,12 @@ if enable then
 		DD_AddonsManager:ddSetMenuButtonHeight(16)
 	end
 	----------------------------------------------------------------
-
-
 	----------------------------------------------------------------
 	function E:GetCycleByIndexSFMICT(iChild, iParent)
 		if Octo_AddonsTable.depsByIndex[iChild] then
 			for _, depIndex in ipairs(Octo_AddonsTable.depsByIndex[iChild]) do
 				if depIndex == iParent then
-					print (E.Red_Color.."НАЙДЕН АБОБУС: |r".. iChild .." "..E.func_GetAddonName(iChild).." / "..iParent.." "..E.func_GetAddonName(iParent))
+					DEFAULT_CHAT_FRAME:AddMessage(E.Red_Color.."НАЙДЕН АБОБУС: |r".. iChild .." "..E.func_GetAddonName(iChild).." / "..iParent.." "..E.func_GetAddonName(iParent))
 					return true
 				end
 			end
@@ -1021,7 +992,7 @@ if enable then
 			if Octo_AddonsManager_DB.profiles.default == nil then
 				E.func_SaveProfile("default") -- CHAT_DEFAULT
 			end
-			print ("/uam")
+			DEFAULT_CHAT_FRAME:AddMessage("/uam")
 			self:CollectAllAddonsSFMICT()
 			self:Octo_Create_MainFrame_AddonsManager()
 			self:func_Create_AdditionalFrame()

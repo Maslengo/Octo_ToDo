@@ -29,19 +29,6 @@ tinsert(E.Modules, function()
 				local numOptions = #info
 				for i = 1, math.min(numOptions, 4) do
 					local option = info[i]
-					-- print (
-					--     "|cffFF00FFgossipOptionID:|r "..tostring(option.gossipOptionID).."|n",
-					--     "|cffFF00FFname:|r "..tostring(option.name).."|n",
-					--     "|cffFF00FFicon:|r "..tostring(option.icon).."|n",
-					--     "|cffFF00FFrewards:|r "..tostring(option.rewards).."|n",
-					--     "|cffFF00FFstatus:|r "..tostring(option.status).."|n",
-					--     "|cffFF00FFspellID:|r "..tostring(option.spellID).."|n",
-					--     "|cffFF00FFflags:|r "..tostring(option.flags).."|n",
-					--     "|cffFF00FFoverrideIconID:|r "..tostring(option.overrideIconID).."|n",
-					--     "|cffFF00FFselectOptionWhenOnlyOption:|r "..tostring(option.selectOptionWhenOnlyOption).."|n",
-					--     "|cffFF00FForderIndex:|r "..tostring(option.orderIndex)
-					--     )
-					-- print (option.name:gsub("|", ""))
 					if string.find(option.name:gsub("|", ""), "0000FF") then
 						print ("|cff0000FFНАЙДЕНА СИНЯЯ ХУЙНЯ|r")
 						C_GossipInfo.SelectOption(option.gossipOptionID)

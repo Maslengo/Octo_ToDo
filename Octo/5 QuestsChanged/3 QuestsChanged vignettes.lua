@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 local enable = true
 if enable then
-	-- print (E.func_Gradient("3 QuestsChanged vignettes: ")..VIDEO_OPTIONS_ENABLED)
 	local function VignettePosition(vignetteGUID)
 		local mapID = C_Map.GetBestMapForUnit('player')
 		if not mapID then return end
@@ -42,8 +41,8 @@ if enable then
 					atlas = vignetteInfo.atlasName,
 				}
 				table.insert(ordered, vignetteInfo.vignetteGUID)
-				table.insert(Octo_QuestsChangedDB.vignette, log[vignetteInfo.vignetteGUID])
-				-- fpde(Octo_QuestsChangedDB.vignette)
+				table.insert(Octo_QuestsChangedDB.QC_Vignettes, log[vignetteInfo.vignetteGUID])
+				-- fpde(Octo_QuestsChangedDB.QC_Vignettes)
 				self:TriggerEvent(self.Event.OnVignetteAdded, log[vignetteInfo.vignetteGUID], vignetteInfo.vignetteGUID)
 			end
 		end
@@ -51,10 +50,10 @@ if enable then
 	E.PLAYER_ENTERING_WORLD = E.OnVignetteEvent
 	E.VIGNETTE_MINIMAP_UPDATED = E.OnVignetteEvent
 	E.VIGNETTES_UPDATED = E.OnVignetteEvent
-	function E:RemoveVignette(vignette)
-		if not (vignette and vignette.guid) then return end
-		log[vignette.guid] = nil
-		table.remove(ordered, tIndexOf(ordered, vignette.guid))
-		self:TriggerEvent(self.Event.OnVignetteRemoved, vignette, vignette.guid)
+	function E:RemoveVignette(QC_Vignettes)
+		if not (QC_Vignettes and QC_Vignettes.guid) then return end
+		log[QC_Vignettes.guid] = nil
+		table.remove(ordered, tIndexOf(ordered, QC_Vignettes.guid))
+		self:TriggerEvent(self.Event.OnVignetteRemoved, QC_Vignettes, QC_Vignettes.guid)
 	end
 end

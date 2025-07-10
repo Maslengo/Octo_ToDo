@@ -79,9 +79,6 @@ E.OctoTable_KeystoneAbbr = {
 	{mapChallengeModeID = 504, abbreviation = "DC", portal = 445441}, -- Darkflame Cleft
 	{mapChallengeModeID = 506, abbreviation = "CM", portal = 445440}, -- Cinderbrew Maedery
 	-- AATDH - raid
-
-
-
 	{mapChallengeModeID = 525, abbreviation = "FG", portal = 123123} -- Операция: шлюз
 	-- 1216786
 

@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = true
+local enable = false
 if enable then
 	local Octo_EventFrame_Achievements = CreateFrame("FRAME")
 	Octo_EventFrame_Achievements:Hide()
@@ -73,25 +73,36 @@ if enable then
 		end
 		------------------------------------------------
 		local function func_OnEnter(frame)
-			frame.texture_full:SetAlpha(E.BGALPHA)
+			-- frame.texture_full:SetAlpha(E.BGALPHA)
 			E.func_TooltipOnEnter(frame, false, false)
 		end
 		------------------------------------------------
 		local function func_OnOnLeave(frame)
-			frame.texture_full:SetAlpha(0)
+			-- frame.texture_full:SetAlpha(0)
 			GameTooltip_Hide()
 		end
 		------------------------------------------------
 		function func_OnAcquired(owner, frame, data, new)
 			if new then
+				local JustifyV = "MIDDLE"
+				local JustifyH = "LEFT"
 				------------------------------------------------
 				frame:SetPropagateMouseClicks(true)
+				frame:SetPropagateMouseMotion(true)
 				------------------------------------------------
-				frame.texture_full = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
-				frame.texture_full:SetSize(AddonLeftFrameWeight*3, AddonHeight)
-				frame.texture_full:SetPoint("RIGHT")
-				frame.texture_full:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
-				frame.texture_full:SetVertexColor(r, g, b, 0)
+				-- Full texture background
+				local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_Achievements)
+				frameFULL:SetPropagateMouseClicks(true)
+				frameFULL:SetPropagateMouseMotion(true)
+				frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+				frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+				frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
+				frameFULL.HighlightTexture:SetAlpha(.2)
+				frameFULL:SetPoint("LEFT", frame)
+				frameFULL:SetPoint("TOP", frame)
+				frameFULL:SetPoint("BOTTOM", frame)
+				frameFULL:SetPoint("RIGHT")
+				------------------------------------------------
 				------------------------------------------------
 				frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 				frame.icon_1:SetPoint("TOPLEFT", 1, -1)

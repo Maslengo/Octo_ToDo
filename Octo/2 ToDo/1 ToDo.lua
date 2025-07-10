@@ -18,7 +18,9 @@ local SFDropDownWeight = 100
 local MaxNumCharacters = 10
 -- Shared constants and textures
 local r, g, b = GetClassColor(E.classFilename)
-local TEXTURE_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga"
+local TEXTURE_PATH_CENTRAL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\octo\\CentralFrame.tga"
+local TEXTURE_PATH_LEFT = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\octo\\LeftFrame.tga"
+local HighlightTexture = "Interface\\AddOns\\Octo\\Media\\BUTTON\\GlowTexture.tga"
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
@@ -40,8 +42,6 @@ end)
 ----------------------------------------------------------------
 local math_min = math.min
 local math_max = math.max
-
-
 do
 	local addons = {
 		"!BugGrabber",
@@ -50,57 +50,45 @@ do
 		"HidingBar_Options",
 		"SpeedyAutoLoot",
 		"AddonMrgl",
+		"SilverDragon",
+		"SilverDragon_History",
+		"SilverDragon_Overlay",
+		"SilverDragon_RangeExtender",
+		"GreatVaultList",
+		"MountsJournal",
+		"MacroManager",
+		"MacroManagerData",
+		"AdvancedInterfaceOptions",
 	}
 	for _, name in ipairs(addons) do
 		E.func_LoadAddOnFORCED(name)
 	end
 	C_AddOns.SaveAddOns()
-	-- E.func_LoadAddOnFORCED("Blizzard_WeeklyRewards"); WeeklyRewardsFrame:Show()
-	-- E.func_LoadAddOnFORCED("MountsJournal")
-	-- E.func_LoadAddOnFORCED("SimpleAddonManager")
-	-- E.func_LoadAddOnFORCED("TalentTreeTweaks")
-	-- E.func_LoadAddOnFORCED("Plater")
-	-- E.func_LoadAddOnFORCED("MacroManager")
-	-- E.func_LoadAddOnFORCED("MacroManagerData")
-	-- E.func_LoadAddOnFORCED("SilverDragon")
-	-- E.func_LoadAddOnFORCED("SilverDragon_History")
-	-- E.func_LoadAddOnFORCED("SilverDragon_Overlay")
-	-- E.func_LoadAddOnFORCED("SilverDragon_RangeExtender")
-	-- E.func_LoadAddOnFORCED("TomTom")
-	-- E.func_LoadAddOnFORCED("Pawn")
-	-- E.func_LoadAddOnFORCED("MySlot")
-	-- E.func_LoadAddOnFORCED("QuestsChanged")
-	-- E.func_LoadAddOnFORCED("AdvancedInterfaceOptions")
 end
 ----------------------------------------------------------------
-local function func_OnEnter1(frame)
-	frame.texture:Show()
-end
-local function func_OnLeave1(frame)
-	frame.texture:Hide()
-end
 local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	if not new then return end
+	local JustifyV = "MIDDLE"
+	local JustifyH = "LEFT"
 	-- Frame setup
 	frame:SetPropagateMouseClicks(true)
 	frame:SetPropagateMouseMotion(true)
+	------------------------------------------------
+	------------------------------------------------
 	-- Full texture background
-	local frameFULL = CreateFrame("Frame", nil, Octo_MainFrame_ToDo)
+	local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_ToDo)
 	frameFULL:SetPropagateMouseClicks(true)
 	frameFULL:SetPropagateMouseMotion(true)
 	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-	local texture = frameFULL:CreateTexture(nil, "BACKGROUND", nil, 3)
-	texture:Hide()
-	texture:SetAllPoints()
-	texture:SetTexture(TEXTURE_PATH)
-	texture:SetVertexColor(r, g, b, E.bgCaOverlay)
-	frameFULL.texture = texture
+	frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+	frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
+	frameFULL.HighlightTexture:SetAlpha(.2)
 	frameFULL:SetPoint("LEFT", frame)
 	frameFULL:SetPoint("TOP", frame)
 	frameFULL:SetPoint("BOTTOM", frame)
 	frameFULL:SetPoint("RIGHT")
-	frameFULL:SetScript("OnEnter", func_OnEnter1)
-	frameFULL:SetScript("OnLeave", func_OnLeave1)
+	------------------------------------------------
+	------------------------------------------------
 	-- Icon setup
 	local icon = frame:CreateTexture(nil, "BACKGROUND")
 	icon:SetSize(AddonHeight - 2, AddonHeight - 2)
@@ -113,25 +101,26 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	textLeft:SetWidth(AddonLeftFrameWeight - 2 - AddonHeight)
 	textLeft:SetFontObject(OctoFont11)
 	textLeft:SetWordWrap(false)
-	textLeft:SetJustifyV("MIDDLE")
-	textLeft:SetJustifyH("LEFT")
+	textLeft:SetJustifyV(JustifyV)
+	textLeft:SetJustifyH(JustifyH)
 	textLeft:SetTextColor(1, 1, 1, 1)
 	frame.textLEFT = textLeft
+	-- textureLEFT
 	local textureLEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
 	textureLEFT:Hide()
 	textureLEFT:SetAllPoints()
-	textureLEFT:SetTexture(TEXTURE_PATH)
+	textureLEFT:SetTexture(TEXTURE_PATH_LEFT)
 	frame.textureLEFT = textureLEFT
 	-- Event handlers
 	frame:SetScript("OnEnter", function(self)
-		if not self.textLEFT:IsTruncated() then return end
-		GameTooltip:SetOwner(self, "ANCHOR_NONE")
-		GameTooltip:SetPoint("CENTER", self)
-		GameTooltip:SetText(E.func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText(), 1, 1, 1)
-		GameTooltip:Show()
+			if not self.textLEFT:IsTruncated() then return end
+			GameTooltip:SetOwner(self, "ANCHOR_NONE")
+			GameTooltip:SetPoint("CENTER", self)
+			GameTooltip:SetText(E.func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText(), 1, 1, 1)
+			GameTooltip:Show()
 	end)
 	frame:SetScript("OnLeave", function(self)
-		GameTooltip:Hide()
+			GameTooltip:Hide()
 	end)
 end
 ----------------------------------------------------------------
@@ -154,54 +143,64 @@ local func_OnAcquiredCENT do
 		if not new then return end
 		-- Frame setup
 		frame:SetPropagateMouseClicks(true)
-		-- Full texture background
-		-- frame.texture_full = frame:CreateTexture(nil, "BACKGROUND", nil, 3)
-		-- frame.texture_full:SetAllPoints()
-		-- frame.texture_full:SetTexture(TEXTURE_PATH)
-		-- frame.texture_full:SetVertexColor(r, g, b, 0)
 		-- Secondary frames metatable
 		frame.second = setmetatable({}, {
-			__index = function(self, key)
-				local f = CreateFrame("BUTTON", "frame"..key, frame)
-				f:SetPropagateMouseClicks(true)
-				f:SetPropagateMouseMotion(true)
-				f:SetSize(AddonCentralFrameWeight, AddonHeight)
-				f:SetHitRectInsets(1, 1, 1, 1)
-				f:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*(key-1), 0)
-				f:RegisterForClicks("LeftButtonUp")
-				-- Reputation texture
-				f.ReputTextureAndBg = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-				f.ReputTextureAndBg:SetPoint("LEFT")
-				f.ReputTextureAndBg:SetHeight(AddonHeight)
-				f.ReputTextureAndBg:SetTexture(TEXTURE_PATH)
-				-- Current character texture
-				f.curCharTexture = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-				f.curCharTexture:SetAllPoints()
-				f.curCharTexture:SetTexture(TEXTURE_PATH)
-				f.curCharTexture:SetVertexColor(r, g, b, E.bgCaOverlay)
-				f.curCharTexture:Hide()
-				-- Center text
-				f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-				f.textCENT:SetAllPoints()
-				f.textCENT:SetFontObject(OctoFont11)
-				f.textCENT:SetWordWrap(false)
-				f.textCENT:SetJustifyV("MIDDLE")
-				f.textCENT:SetJustifyH("CENTER")
-				f.textCENT:SetTextColor(1, 1, 1, 1)
-				-- Event handlers
-				f:SetScript("OnEnter", func_OnEnterSecond)
-				f:SetScript("OnLeave", GameTooltip_Hide)
-				f:SetScript("OnHide", f.Hide)
-				f.curCharTexture:SetScript("OnHide", f.curCharTexture.Hide)
-				-- self[key] = f
-				rawset(self, key, f)
-				return f
-			end
+				__index = function(self, key)
+					if key then
+						local f = CreateFrame("BUTTON", "frame"..key, frame)
+						f:SetPropagateMouseClicks(true)
+						f:SetPropagateMouseMotion(true)
+						f:SetSize(AddonCentralFrameWeight, AddonHeight)
+						f:SetHitRectInsets(1, 1, 1, 1)
+						f:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*(key-1), 0)
+						f:RegisterForClicks("LeftButtonUp")
+						-- Reputation texture
+						f.ReputTextureAndBg = f:CreateTexture(nil, "BACKGROUND", nil, -2)
+						f.ReputTextureAndBg:SetPoint("LEFT")
+						f.ReputTextureAndBg:SetHeight(AddonHeight)
+						f.ReputTextureAndBg:SetTexture(TEXTURE_PATH_CENTRAL)
+						-- Current character texture
+						f.curCharTexture = f:CreateTexture(nil, "BACKGROUND", nil, -2)
+						f.curCharTexture:SetAllPoints()
+						f.curCharTexture:SetTexture(TEXTURE_PATH_CENTRAL)
+						f.curCharTexture:SetVertexColor(r, g, b, E.bgCaOverlay)
+						f.curCharTexture:Hide()
+						-- Center text
+						f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+						f.textCENT:SetAllPoints()
+						f.textCENT:SetFontObject(OctoFont11)
+						f.textCENT:SetWordWrap(false)
+						f.textCENT:SetJustifyV("MIDDLE")
+						f.textCENT:SetJustifyH("CENTER")
+						f.textCENT:SetTextColor(1, 1, 1, 1)
+						-- Event handlers
+						f:SetScript("OnEnter", func_OnEnterSecond)
+						f:SetScript("OnLeave", GameTooltip_Hide)
+						f:SetScript("OnHide", f.Hide)
+						f.curCharTexture:SetScript("OnHide", f.curCharTexture.Hide)
+						-- self[key] = f
+						rawset(self, key, f)
+						return f
+					end
+				end
 		})
 		-- Frame event handlers
 		frame:SetScript("OnEnter", func_OnEnter)
 		frame:SetScript("OnLeave", func_OnLeave)
 	end
+end
+local function InitButtonTexture(frame, texture, iconWidth)
+	if not frame or not texture then
+		return;
+	end
+	if C_Texture.GetAtlasInfo(texture) then
+		frame:SetAtlas(texture, true)
+	else
+		frame:SetTexture(texture)
+		-- frame:SetNormalTexture(texture);
+	end
+	frame:SetPoint("TOPLEFT", 2, 1);
+	frame:SetSize(iconWidth, iconWidth);
 end
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
@@ -209,10 +208,15 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	if not data.zxc then return end
 	local frameData = data.zxc
 	frame.textLEFT:SetText(frameData.textLEFT)
-	frame.icon_1:SetTexture(frameData.iconLEFT)
+	InitButtonTexture(frame.icon_1, frameData.iconLEFT, AddonHeight-2)
+	-- if C_Texture.GetAtlasInfo(frameData.iconLEFT) then
+	--     frame.icon_1:SetAtlas(frameData.iconLEFT)
+	-- else
+	--     frame.icon_1:SetTexture(frameData.iconLEFT)
+	-- end
 	if frameData.colorLEFT then
 		local r, g, b = E.func_hex2rgbNUMBER(frameData.colorLEFT)
-		frame.textureLEFT:SetVertexColor(r, g, b, .2)
+		frame.textureLEFT:SetVertexColor(r, g, b, .1)
 		frame.textureLEFT:Show()
 	else
 		frame.textureLEFT:Hide()
@@ -224,10 +228,12 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 	-- Handle multiple characters case
 	if data.totalPers > 1 then
 		local current = frame.second[data.currentChar]
-		current:Show()
-		current.curCharTexture:Show()
-		current.textCENT:SetText("")
-		current.ReputTextureAndBg:Hide()
+		if current then
+			current:Show()
+			current.curCharTexture:Show()
+			current.textCENT:SetText("")
+			current.ReputTextureAndBg:Hide()
+		end
 	end
 	-- Process right frame data
 	for i = 1, #data.zxc.FIRST do
@@ -240,7 +246,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			secondFrame.ReputTextureAndBg:Hide()
 			if frameData.colorCENT[i] then
 				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.colorCENT[i])
-				if not frameData.isRep then
+				if not frameData.isReputations then
 					secondFrame.ReputTextureAndBg:SetWidth(AddonCentralFrameWeight)
 					secondFrame.ReputTextureAndBg:Show()
 					secondFrame.ReputTextureAndBg:SetVertexColor(r1, g1, b1, E.bgCaOverlay)
@@ -249,7 +255,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 				end
 			end
 			secondFrame.textCENT:SetText(textCENT)
-			if frameData.isRep and FIRST ~= 0 then
+			if frameData.isReputations and FIRST ~= 0 then
 				if FIRST == SECOND then
 					secondFrame.ReputTextureAndBg:SetWidth(AddonCentralFrameWeight)
 					secondFrame.ReputTextureAndBg:Show()
@@ -263,15 +269,15 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			secondFrame.ReputTextureAndBg:SetVertexColor(0, 0, 0, 0)
 		end
 		secondFrame:Show()
-		secondFrame.tooltip = frameData.tooltip[i]
+		secondFrame.tooltip = frameData.tooltipRIGHT[i]
 	end
 end
 function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	local frame = Octo_MainFrame_ToDo
 	frame:SetPoint("CENTER", 0, 0)
 	frame:SetScript("OnShow", function()
-		self:func_CreateMyDataProvider()
-		RequestRaidInfo()
+			E:func_CreateMyDataProvider()
+			RequestRaidInfo()
 	end)
 	local NumPlayers = math_min(E.func_NumPlayers(), MaxNumCharacters)
 	frame:SetSize(AddonLeftFrameWeight + AddonCentralFrameWeight * NumPlayers, AddonHeight * MainFrameDefaultLines)
@@ -316,7 +322,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	HorizontalScrollBar:SetPoint("TOPLEFT", barPanelScroll, "BOTTOMLEFT", 0, -6)
 	HorizontalScrollBar:SetPoint("TOPRIGHT", barPanelScroll, "BOTTOMRIGHT")
 	HorizontalScrollBar:RegisterCallback(HorizontalScrollBar.Event.OnScroll, function(_, scrollPercentage)
-		barPanelScroll:SetHorizontalScroll(scrollPercentage * barPanelScroll:GetHorizontalScrollRange())
+			barPanelScroll:SetHorizontalScroll(scrollPercentage * barPanelScroll:GetHorizontalScrollRange())
 	end)
 	HorizontalScrollBar:SetHideIfUnscrollable(true)
 	-- Дочерний фрейм для содержимого
@@ -358,10 +364,10 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(frame.ScrollBoxCENT, frame.ScrollBarCENT)
 	-- Настройка внешнего вида основного фрейма
 	frame:SetBackdrop({
-		bgFile = E.bgFile,
-		edgeFile = E.edgeFile,
-		edgeSize = 1,
-		insets = {left = 0, right = 0, top = 0, bottom = 0}
+			bgFile = E.bgFile,
+			edgeFile = E.edgeFile,
+			edgeSize = 1,
+			insets = {left = 0, right = 0, top = 0, bottom = 0}
 	})
 	frame:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
 	frame:SetBackdropBorderColor(0, 0, 0, 1)
@@ -369,16 +375,16 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	frame:SetMovable(true)
 	-- Обработчики перемещения фрейма
 	frame:SetScript("OnMouseDown", function(_, button)
-		if button == "LeftButton" then
-			frame:SetAlpha(E.bgCa)
-			frame:StartMoving()
-		end
+			if button == "LeftButton" then
+				frame:SetAlpha(E.bgCa)
+				frame:StartMoving()
+			end
 	end)
 	frame:SetScript("OnMouseUp", function(_, button)
-		if button == "LeftButton" then
-			frame:SetAlpha(1)
-			frame:StopMovingOrSizing()
-		end
+			if button == "LeftButton" then
+				frame:SetAlpha(1)
+				frame:StopMovingOrSizing()
+			end
 	end)
 	frame:RegisterForClicks("RightButtonUp")
 	frame:SetScript("OnClick", frame.Hide)
@@ -402,12 +408,11 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+function E:func_CreateMyDataProvider()
 	E.Collect_All_Table()
 	local NumPlayers = math_min(E.func_NumPlayers(), MaxNumCharacters)
 	local DataProvider = CreateTreeDataProvider()
 	local numlines = 0
-
 	-- Find current character index
 	local sortedPlayersTBL = E.sorted()
 	local MyCharIndex
@@ -417,15 +422,13 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 			break
 		end
 	end
-
 	local totalPers = #sortedPlayersTBL
 	local commonNodeData = {
 		currentChar = MyCharIndex,
 		totalPers = totalPers
 	}
-
 	-- Helper function to create zxc table
-	local function CreateZxcTable(isRep)
+	local function CreateZxcTable(isReputations)
 		return {
 			FIRST = {},
 			SECOND = {},
@@ -433,28 +436,25 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 			iconLEFT = {},
 			colorLEFT = {},
 			textCENT = {},
-			tooltip = {},
+			tooltipRIGHT = {},
 			colorCENT = {},
-			isRep = isRep or false,
+			isReputations = isReputations or false,
 		}
 	end
-
 	if not Octo_ToDo_DB_Vars.Reputations then
 		-- Alternative mode (not reputations)
 		for index, func in ipairs(E:func_Otrisovka()) do
 			numlines = numlines + 1
 			local zxc = CreateZxcTable(false)
-
 			-- Process all characters first for CENT data
 			for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
 				zxc.FIRST[CharIndex] = 0
 				zxc.SECOND[CharIndex] = 0
-				local _, _, _, textCENT, tooltip, colorCENT = func(CharInfo)
+				local _, _, _, textCENT, tooltipRIGHT, colorCENT = func(CharInfo)
 				zxc.textCENT[CharIndex] = textCENT or "0"
-				zxc.tooltip[CharIndex] = tooltip or {}
+				zxc.tooltipRIGHT[CharIndex] = tooltipRIGHT or {}
 				zxc.colorCENT[CharIndex] = colorCENT
 			end
-
 			-- Get LEFT data from first character only
 			local firstChar = sortedPlayersTBL[1]
 			if firstChar then
@@ -463,26 +463,27 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 				zxc.iconLEFT = iconLEFT or E.Icon_Empty
 				zxc.colorLEFT = colorLEFT
 			end
-
 			DataProvider:Insert({
-				zxc = zxc,
-				currentChar = MyCharIndex,
-				totalPers = totalPers,
+					zxc = zxc,
+					currentChar = MyCharIndex,
+					totalPers = totalPers,
 			})
 		end
 	else
 		-- Reputations processing
-		for index, tbl in ipairs(E.OctoTable_Reputations) do
+		-- for index, tbl in ipairs(E.OctoTable_Reputations) do
+		-- В ОБРАТНОМ ПОРЯДКЕ
+		for index = #E.OctoTable_Reputations, 1, -1 do
+			local tbl = E.OctoTable_Reputations[index]
 			if Octo_ToDo_DB_Vars.ExpansionToShow[index] then
 				for _, v in ipairs(tbl) do
 					local repInfo = E.OctoTable_ReputationsDB[v.id]
 					local factionMatch = not Octo_ToDo_DB_Vars.OnlyCurrentFaction or
-									   repInfo.side == E.curFaction or
-									   repInfo.side == "-"
+					repInfo.side == E.curFaction or
+					repInfo.side == "-"
 					if factionMatch then
 						numlines = numlines + 1
 						local zxc = CreateZxcTable(true)
-
 						for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
 							local FIRST, SECOND, vivod, colorCENT = ("#"):split(CharInfo.MASLENGO.reputationNEW[v.id])
 							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
@@ -491,32 +492,29 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 							zxc.iconLEFT = repInfo.icon or E.Icon_Empty
 							zxc.colorLEFT = E.OctoTable_Expansions[index].color
 							zxc.textCENT[CharIndex] = vivod or "vivod"
-							zxc.tooltip[CharIndex] = {}
+							zxc.tooltipRIGHT[CharIndex] = {}
 							zxc.colorCENT[CharIndex] = colorCENT
 						end
-
 						DataProvider:Insert({
-							zxc = zxc,
-							currentChar = MyCharIndex,
-							totalPers = totalPers,
+								zxc = zxc,
+								currentChar = MyCharIndex,
+								totalPers = totalPers,
 						})
 					end
 				end
 			end
 		end
 	end
-
 	-- Frame size adjustment
 	MainFrameDefaultLines = math_max(1, math_min(numlines, Octo_ToDo_DB_Vars.MainFrameDefaultLines or numlines))
-
 	if Octo_MainFrame_ToDo then
+		-- SetDataProvider триггерит создания фреймов
+		Octo_MainFrame_ToDo.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+		Octo_MainFrame_ToDo.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 		local width = AddonLeftFrameWeight + AddonCentralFrameWeight * NumPlayers
 		local height = AddonHeight * MainFrameDefaultLines + AddonHeight
 		Octo_MainFrame_ToDo:SetSize(width, height)
 		Octo_MainFrame_ToDo.childCENT:SetSize(AddonCentralFrameWeight * E.func_NumPlayers(), height)
-		Octo_MainFrame_ToDo.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-		Octo_MainFrame_ToDo.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-
 		-- Update character frames
 		Octo_MainFrame_ToDo.pool:ReleaseAll()
 		for count, CharInfo in ipairs(sortedPlayersTBL) do
@@ -528,13 +526,11 @@ function Octo_EventFrame_ToDo:func_CreateMyDataProvider()
 			curCharFrame.text:SetJustifyV("MIDDLE")
 			curCharFrame.text:SetJustifyH("CENTER")
 			curCharFrame.text:SetText(E.func_textCENT(CharInfo))
-
 			local color = CharInfo.Faction == "Horde" and "|cfff01e38" or "|cff0070DD"
 			E:func_SetBackdrop(curCharFrame, color, E.bgCaOverlay * 2, 0)
-
 			curCharFrame.tooltip = E.CreateTooltipPlayers(CharInfo)
 			curCharFrame:SetScript("OnEnter", function()
-				E.func_TooltipOnEnter(curCharFrame, true, true)
+					E.func_TooltipOnEnter(curCharFrame, true, true)
 			end)
 			curCharFrame:SetScript("OnLeave", GameTooltip_Hide)
 			curCharFrame:Show()
@@ -548,19 +544,20 @@ function E.Update(event_name)
 		if not E.updateScheduled then
 			E.updateScheduled = true
 			C_Timer.After(0.1, function()
-				E.updateScheduled = false
-				if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() and E.DebugEvent then
-					DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r")
-				end
+					E.updateScheduled = false
+					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() and E.DebugEvent then
+						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r")
+					end
 			end)
 		end
 	else
 		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r")
 	end
 end
-function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
-	local DD_ToDo = CreateFrame("Button", "DD_ToDo", Octo_MainFrame_ToDo, "SecureActionButtonTemplate, BackDropTemplate")
-	DD_ToDo:SetSize(SFDropDownWeight, AddonHeight)
+function E:func_Create_DD_ToDo(mainFrame)
+	local DD_ToDo = CreateFrame("Button", "DD_ToDo", mainFrame, "SecureActionButtonTemplate, BackDropTemplate")
+	-- DD_ToDo:SetSize(SFDropDownWeight, AddonHeight)
+	DD_ToDo:SetSize(AddonLeftFrameWeight/2, AddonHeight)
 	E:func_SetBackdrop(DD_ToDo)
 	DD_ToDo.ExpandArrow = DD_ToDo:CreateTexture(nil, "ARTWORK")
 	DD_ToDo.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
@@ -574,7 +571,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 	DD_ToDo.text:SetTextColor(1, 1, 1, 1)
 	DD_ToDo.text:SetText(E.Purple_Color..MAIN_MENU.."|r")
 	LibSFDropDown:SetMixin(DD_ToDo)
-	DD_ToDo:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo, "TOPLEFT", 0, 0)
+	DD_ToDo:SetPoint("BOTTOMLEFT", mainFrame, "TOPLEFT", 0, 0)
 	DD_ToDo:ddSetDisplayMode(GlobalAddonName)
 	DD_ToDo:ddSetNoGlobalMouseEvent(true)
 	DD_ToDo:ddHideWhenButtonHidden()
@@ -585,19 +582,19 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 	)
 	local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 		Octo_ToDo_DB_Levels[menuButton.value].isShownPLAYER = checked
-		Octo_EventFrame_ToDo:func_CreateMyDataProvider()
-		Octo_MainFrame_ToDo.ScrollBoxCENT:ScrollToOffset(0)
-		Octo_MainFrame_ToDo.barPanelScroll:SetHorizontalScroll(0)
+		E:func_CreateMyDataProvider()
+		mainFrame.ScrollBoxCENT:ScrollToOffset(0)
+		mainFrame.barPanelScroll:SetHorizontalScroll(0)
 	end
 	local function func_remove_GUID(menuButton)
 		Octo_ToDo_DB_Levels[menuButton.value] = nil
-		Octo_EventFrame_ToDo:func_CreateMyDataProvider()
-		Octo_MainFrame_ToDo.ScrollBoxCENT:ScrollToOffset(0)
+		E:func_CreateMyDataProvider()
+		mainFrame.ScrollBoxCENT:ScrollToOffset(0)
 	end
 	local function selectFunctionExpansion(menuButton, _, _, checked)
 		Octo_ToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
 		-- DD_ToDo:SetText("EXP")
-		Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+		E:func_CreateMyDataProvider()
 	end
 	DD_ToDo:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
@@ -719,7 +716,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.isShownPLAYER = true
 					end
-					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
@@ -732,7 +729,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.isShownPLAYER = false
 					end
-					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
@@ -746,7 +743,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 				info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
 				info.func = function(_, _, _, checked)
 					Octo_ToDo_DB_Vars.ShowOnlyCurrentServer = checked
-					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
@@ -760,7 +757,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 					info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
 					info.func = function(_, _, _, checked)
 						Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag = checked
-						Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+						E:func_CreateMyDataProvider()
 					end
 					self:ddAddButton(info, level)
 				end
@@ -778,7 +775,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 				info.checked = Octo_ToDo_DB_Vars.OnlyCurrentFaction
 				info.func = function(_, _, _, checked)
 					Octo_ToDo_DB_Vars.OnlyCurrentFaction = checked
-					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
@@ -791,7 +788,35 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 				info.checked = Octo_ToDo_DB_Vars.Reputations
 				info.func = function(_, _, _, checked)
 					Octo_ToDo_DB_Vars.Reputations = checked
-					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+					E:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				----------------
+				self:ddAddSeparator(level)
+				----------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = "QC_Vignettes"
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.QC_Vignettes
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.QC_Vignettes = checked
+					E:QuestsChanged_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				----------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = "QC_Quests"
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.QC_Quests
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.QC_Quests = checked
+					E:QuestsChanged_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
@@ -811,11 +836,18 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 				-- for expansionID, v in ipairs(E.OctoTable_Expansions) do
 				-- Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = true
 				-- end
-				-- Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+				-- E:func_CreateMyDataProvider()
 				-- end
 				self:ddAddButton(info, level)
 			elseif value == EXPANSION_FILTER_TEXT then
-				for expansionID, v in ipairs(E.OctoTable_Expansions) do
+				info.iconInfo = {
+					tSizeX = E.ddMenuButtonHeight*2,
+					tSizeY = E.ddMenuButtonHeight,
+				}
+				-- for expansionID, v in ipairs(E.OctoTable_Expansions) do
+				-- В ОБРАТНОМ ПОРЯДКЕ
+				for expansionID = #E.OctoTable_Expansions, 1, -1 do
+					local v = E.OctoTable_Expansions[expansionID]
 					info.fontObject = OctoFont11
 					info.isNotRadio = true
 					info.notCheckable = false
@@ -827,6 +859,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 					info.func = selectFunctionExpansion
 					self:ddAddButton(info, level)
 				end
+				info.iconInfo = nil
 				----------------
 				self:ddAddSeparator(level)
 				info.keepShownOnClick = false
@@ -837,7 +870,7 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 					for expansionID, v in ipairs(E.OctoTable_Expansions) do
 						Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = true
 					end
-					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				--------------------------------------------------
@@ -849,14 +882,14 @@ function Octo_EventFrame_ToDo:func_Create_DD_ToDo()
 					for expansionID, v in ipairs(E.OctoTable_Expansions) do
 						Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
 					end
-					Octo_EventFrame_ToDo:func_CreateMyDataProvider()
+					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 			end
 		end
 	)
 	DD_ToDo:ddSetOpenMenuUp(true)
-	DD_ToDo:ddSetMenuButtonHeight(16)
+	DD_ToDo:ddSetMenuButtonHeight(E.ddMenuButtonHeight)
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
@@ -903,7 +936,6 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
 	-- Initialize systems
-	self:LIBSHAREDSFMIC()
 	C_WowTokenPublic.UpdateMarketPrice()
 	-- Apply GameMenu scale
 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.GameMenuFrameScale or 1)
@@ -914,9 +946,8 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	-- Initialize main systems
 	E:InitOptions()
 	self:Octo_Create_MainFrame_ToDo()
-	-- self:func_CreateMyDataProvider()
 	E.PortalsFrame()
-	self:func_Create_DD_ToDo()
+	E:func_Create_DD_ToDo(Octo_MainFrame_ToDo)
 	-- Calculate and display character statistics
 	self:DisplayCharacterStats()
 	-- Create UI elements
@@ -924,7 +955,7 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	E:func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
 	-- Load assets after a delay
 	C_Timer.After(0, function()
-		self:LoadAssetsAsync()
+			self:LoadAssetsAsync()
 	end)
 end
 -- Helper functions
@@ -932,18 +963,18 @@ function Octo_EventFrame_ToDo:SetupPlayerSpellsFrame()
 	if not InCombatLockdown() then
 		E.func_LoadAddOnFORCED("Blizzard_PlayerSpells")
 		PlayerSpellsFrame:HookScript("OnShow", function()
-			PlayerSpellsFrame:SetScale(0.8)
+				PlayerSpellsFrame:SetScale(0.8)
 		end)
 		PlayerSpellsFrame:EnableMouse(true)
 		PlayerSpellsFrame:SetMovable(true)
 		PlayerSpellsFrame:RegisterForDrag("LeftButton")
 		PlayerSpellsFrame:SetScript("OnDragStart", function()
-			PlayerSpellsFrame:SetAlpha(E.bgCa)
-			PlayerSpellsFrame:StartMoving()
+				PlayerSpellsFrame:SetAlpha(E.bgCa)
+				PlayerSpellsFrame:StartMoving()
 		end)
 		PlayerSpellsFrame:SetScript("OnDragStop", function()
-			PlayerSpellsFrame:SetAlpha(1)
-			PlayerSpellsFrame:StopMovingOrSizing()
+				PlayerSpellsFrame:SetAlpha(1)
+				PlayerSpellsFrame:StopMovingOrSizing()
 		end)
 	end
 end
@@ -952,7 +983,7 @@ function Octo_EventFrame_ToDo:DisplayCharacterStats()
 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 		totalReload = totalReload + (CharInfo.ReloadCount or 0)
 		if CharInfo.BattleTag == E.BattleTag then
-		-- if CharInfo.curServer == E.curServer then
+			-- if CharInfo.curServer == E.curServer then
 			totalMoney = totalMoney + CharInfo.Money
 			realTotalTime = realTotalTime + CharInfo.realTotalTime
 			TodayTimePlayedtotal = TodayTimePlayedtotal + CharInfo.TodayTimePlayed
@@ -980,11 +1011,11 @@ function Octo_EventFrame_ToDo:LoadAssetsAsync()
 	promise:AddSpells(E.PromiseSpell)
 	promise:AddQuests(E.PromiseQuest)
 	promise:Then(function()
-		if Octo_MainFrame_ToDo:IsShown() then
-			-- Octo_MainFrame_ToDo:Hide()
-			-- Octo_MainFrame_ToDo:Show()
-			Octo_EventFrame_ToDo:func_CreateMyDataProvider()
-		end
+			if Octo_MainFrame_ToDo:IsShown() then
+				-- Octo_MainFrame_ToDo:Hide()
+				-- Octo_MainFrame_ToDo:Show()
+				E:func_CreateMyDataProvider()
+			end
 	end)
 end
 function Octo_EventFrame_ToDo:SHOW_SUBSCRIPTION_INTERSTITIAL()
@@ -1054,40 +1085,3 @@ function Octo_EventFrame_ToDo:PLAYER_REGEN_DISABLED()
 	end
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_ToDo:LIBSHAREDSFMIC()
-	-- local background = LibSFDropDown:CreateMediaBackgroundModernButton(UIParent, 120) -- BACKGROUND
-	-- background:SetPoint("TOPLEFT", 20, -20)
-	-- background:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_background or currentValue or LibSharedMedia:GetDefault("background"))
-	-- background:ddSetOnSelectedFunc(function(value)
-	-- 		local texture = LibSharedMedia:Fetch("background", value)
-	-- 		Octo_ToDo_DB_Vars.interface.Octo_background = value
-	-- end)
-	-- local border = LibSFDropDown:CreateMediaBorderModernButton(UIParent, 120) -- BORDER
-	-- border:SetPoint("TOPLEFT", background, "BOTTOMLEFT", 0, -10)
-	-- border:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_border or currentValue or LibSharedMedia:GetDefault("border"))
-	-- border:ddSetOnSelectedFunc(function(value)
-	-- 		local texture = LibSharedMedia:Fetch("border", value)
-	-- 		Octo_ToDo_DB_Vars.interface.Octo_border = value
-	-- end)
-	-- local statusbar = LibSFDropDown:CreateMediaStatusbarModernButton(UIParent, 120) -- STATUSBAR
-	-- statusbar:SetPoint("TOPLEFT", border, "BOTTOMLEFT", 0, -10)
-	-- statusbar:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_statusbar or currentValue or LibSharedMedia:GetDefault("statusbar"))
-	-- statusbar:ddSetOnSelectedFunc(function(value)
-	-- 		local texture = LibSharedMedia:Fetch("statusbar", value)
-	-- 		Octo_ToDo_DB_Vars.interface.Octo_statusbar = value
-	-- end)
-	-- local font = LibSFDropDown:CreateMediaFontModernButton(UIParent, 120) -- FONT
-	-- font:SetPoint("TOPLEFT", statusbar, "BOTTOMLEFT", 0, -10)
-	-- font:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_font or currentValue or LibSharedMedia:GetDefault("font"))
-	-- font:ddSetOnSelectedFunc(function(value)
-	-- 		local selectedFont = LibSharedMedia:Fetch("font", value)
-	-- 		Octo_ToDo_DB_Vars.interface.Octo_font = value
-	-- end)
-	-- local sound = LibSFDropDown:CreateMediaSoundModernButton(UIParent, 120) -- SOUND
-	-- sound:SetPoint("TOPLEFT", font, "BOTTOMLEFT", 0, -10)
-	-- sound:ddSetSelectedValue(Octo_ToDo_DB_Vars.interface.Octo_sound or currentValue or LibSharedMedia:GetDefault("sound"))
-	-- sound:ddSetOnSelectedFunc(function(value)
-	-- 		local selectedSound = LibSharedMedia:Fetch("sound", value)
-	-- 		Octo_ToDo_DB_Vars.interface.Octo_sound = value
-	-- end)
-end

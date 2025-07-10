@@ -6,7 +6,7 @@ local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
 -- Lua APIs
-local select, pairs, print = select, pairs, print
+local select, pairs = select, pairs
 
 -- WoW APIs
 local CreateFrame, UIParent = CreateFrame, UIParent
@@ -132,7 +132,7 @@ local function Constructor()
 		widget[method] = func
 	end
 
-	widget.SetText = function(self, ...) print("AceGUI-3.0-Icon: SetText is deprecated! Use SetLabel instead!"); self:SetLabel(...) end
+	widget.SetText = function(self, ...) self:SetLabel(...) end
 
 	return AceGUI:RegisterAsWidget(widget)
 end

@@ -26,7 +26,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			["prefix"] = {
 				type = "select",
-				name = "prefix",
+				name = "wowhead",
 				values = {},
 				desc = "",
 				get = function()
@@ -38,8 +38,6 @@ function E.CreateGeneralOptions()
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-
-
 			-------------------------------------------------
 			Reload = {
 				type = "execute",
@@ -50,15 +48,10 @@ function E.CreateGeneralOptions()
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-
-
-
-
-
 			-------------------------------------------------
 			Header3 = {
 				type = "header",
-				name = "",
+				name = "Настройки фреймов аддона",
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -164,9 +157,106 @@ function E.CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+			Header29 = {
+				type = "header",
+				name = "Настройка отображения персонажей",
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			LevelToShow = {
+				type = "range",
+				name = L["Player level"],
+				desc = "",
+				min = 1,
+				max = 80,
+				step = 1,
+				get = function()
+					return Octo_ToDo_DB_Vars.LevelToShow
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.LevelToShow = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			LevelToShowMAX = {
+				type = "range",
+				name = L["Player MAX level"],
+				desc = "",
+				min = 1,
+				max = 80*2,
+				step = 1,
+				get = function()
+					return Octo_ToDo_DB_Vars.LevelToShowMAX
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.LevelToShowMAX = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			itemLevelToShow = {
+				type = "range",
+				name = L["Item level: "],
+				desc = "",
+				min = 0,
+				max = 560,
+				step = 1,
+				get = function()
+					return Octo_ToDo_DB_Vars.itemLevelToShow
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.itemLevelToShow = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			FrameScale = {
+				type = "range",
+				name = "FrameScale",
+				desc = "",
+				min = 0.5,
+				max = 2.5,
+				step = 0.1,
+				get = function()
+					return Octo_ToDo_DB_Vars.FrameScale
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.FrameScale = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			HeaderAuto = {
+				type = "header",
+				name = "Автоматизация",
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			GameMenuFrameScale = {
+				type = "range",
+				name = "GameMenuFrameScale",
+				desc = "",
+				min = 0.5,
+				max = 2.5,
+				step = 0.1,
+				get = function()
+					return Octo_ToDo_DB_Vars.GameMenuFrameScale
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.GameMenuFrameScale = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
 			Header9 = {
 				type = "header",
-				name = "",
+				name = "Автоматизация",
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -312,7 +402,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			Header20 = {
 				type = "header",
-				name = "HIDE",
+				name = "Скрытие фреймов",
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -428,96 +518,6 @@ function E.CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Header29 = {
-				type = "header",
-				name = "настройки аддона",
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			LevelToShow = {
-				type = "range",
-				name = L["Player level"],
-				desc = "",
-				min = 1,
-				max = 80,
-				step = 1,
-				get = function()
-					return Octo_ToDo_DB_Vars.LevelToShow
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.LevelToShow = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			LevelToShowMAX = {
-				type = "range",
-				name = L["Player MAX level"],
-				desc = "",
-				min = 1,
-				max = 80*2,
-				step = 1,
-				get = function()
-					return Octo_ToDo_DB_Vars.LevelToShowMAX
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.LevelToShowMAX = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			itemLevelToShow = {
-				type = "range",
-				name = L["Item level: "],
-				desc = "",
-				min = 0,
-				max = 560,
-				step = 1,
-				get = function()
-					return Octo_ToDo_DB_Vars.itemLevelToShow
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.itemLevelToShow = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			FrameScale = {
-				type = "range",
-				name = "FrameScale",
-				desc = "",
-				min = 0.5,
-				max = 2.5,
-				step = 0.1,
-				get = function()
-					return Octo_ToDo_DB_Vars.FrameScale
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.FrameScale = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			GameMenuFrameScale = {
-				type = "range",
-				name = "GameMenuFrameScale",
-				desc = "",
-				min = 0.5,
-				max = 2.5,
-				step = 0.1,
-				get = function()
-					return Octo_ToDo_DB_Vars.GameMenuFrameScale
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.GameMenuFrameScale = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
 			-------------------------------------------------
 			MainHeader24 = {
 				type = "header",
@@ -672,10 +672,6 @@ function E.CreateGeneralOptions()
 	for index, name in ipairs(E.OctoTable_Prefixes) do
 		generalOptions.args.prefix.values[index] = name
 	end
-
-
-
-
 	-------------------------------------------------
 	return generalOptions
 end

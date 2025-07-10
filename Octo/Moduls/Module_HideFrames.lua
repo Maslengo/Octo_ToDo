@@ -3,12 +3,6 @@ local Octo_EventFrame_HideFrames = CreateFrame("FRAME")
 Octo_EventFrame_HideFrames:Hide()
 ----------------------------------------------------------------
 local OctoTable_MustBeHiddenFrames_SIMPLE = {
-	-- {name = "ZoneAbilityFrame.Style", frame = ZoneAbilityFrame.Style},
-	-- {name = "ExtraActionButton1.style", frame = ExtraActionButton1.style},
-	-- {name = "PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator", frame = PlayerFrame.PlayerFrameContent.PlayerFrameContentMain.HitIndicator},
-	-- {name = "EncounterBar", frame = EncounterBar}, -- ДЛЯ ПОЛЁТА
-
-
 	{name = "WeeklyRewardExpirationWarningDialog", frame = WeeklyRewardExpirationWarningDialog},
 	{name = "SplashFrame", frame = SplashFrame},
 	{name = "MajorFactionsRenownToast", frame = MajorFactionsRenownToast},
@@ -34,7 +28,6 @@ local OctoTable_MustBeHiddenFrames_SIMPLE = {
 	{name = "CheckListText", frame = CheckListText},
 	{name = "PrivateRaidBossEmoteFrameAnchor", frame = PrivateRaidBossEmoteFrameAnchor},
 	{name = "SubscriptionInterstitialFrame", frame = SubscriptionInterstitialFrame},  -- НАДО ПОФИКСИТЬ(в другом файле работает)
-	-- {name = "ActionStatus", frame = ActionStatus},
 	{name = "ActionStatus.Text", frame = ActionStatus.Text},
 
 }
@@ -42,19 +35,8 @@ function Octo_EventFrame_HideFrames:MustBeHiddenFrames_SIMPLE()
 	for _, v in next, (OctoTable_MustBeHiddenFrames_SIMPLE) do
 		local frame = v.frame
 		local name = v.name
-		if frame and frame:IsShown() --[[and not frame.isInit]] then
-			-- frame.isInit = true
-			-- frame:HookScript("OnShow", function(self)
-			-- self:Hide()
+		if frame and frame:IsShown() then
 			frame:Hide()
-			-- frame:UnregisterAllEvents()
-			--DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide: (", E.Green_Color, E.Yellow_Color)..name..E.Yellow_Color..")|r" )
-			-- end)
-			-- else
-			-- if PTRIssueReporterAlertFrame and PTRIssueReporterAlertFrame:IsShown() then
-			--     PTRIssueReporterAlertFrame:Hide()
-			--     --print(E.Red_Color.. "PTRIssueReporterAlertFrame:Hide()" .. "|r")
-			-- end
 		end
 	end
 end
@@ -157,9 +139,6 @@ function Octo_EventFrame_HideFrames:Hide_RaidWarningFrame()
 			RaidWarningFrame:Hide()
 	end)
 	RaidBossEmoteFrame:HookScript("OnShow", function(self, ...)
-			-- RaidBossEmoteFrame:UnregisterEvent("ENCOUNTER_LOOT_RECEIVED")
-			-- RaidBossEmoteFrame:UnregisterEvent("BOSS_KILL")
-			--print ("RaidBossEmoteFrame HIDE")
 			RaidBossEmoteFrame:UnregisterAllEvents()
 			RaidBossEmoteFrame:Hide()
 	end)

@@ -6,12 +6,10 @@
 	<Script file="Tables\OctoTable_Expansions.lua"/>
 	<Script file="Tables\OctoTable_KeystoneAbbr.lua"/>
 	<Script file="Tables\OctoTable_Items.lua"/>
-	<Script file="Tables\OctoTable_MinecraftColors.lua"/>
 	<Script file="Tables\OctoTable_QuestID.lua"/>
 	<Script file="Tables\OctoTable_Reputations.lua"/>
 	<Script file="Tables\OctoTable_ReputationsDB.lua"/>
 	<Script file="Tables\OctoTable_UniversalQuest.lua"/>
-	<Script file="Tables\OctoTable_Prefixes.lua"/>
 	<Script file="Tables\OctoTable_Gossip.lua"/>
 	<Script file="Tables\OctoTable_Spells.lua"/>
 

@@ -1,54 +1,33 @@
 local GlobalAddonName, E = ...
 local Octo_EventFrame_WTF = CreateFrame("FRAME")
 Octo_EventFrame_WTF:Hide()
-
 -- Локальные функции для часто используемых операций
 local function InitTable(tbl) return tbl or {} end
 local function InitField(tbl, field, default) if tbl[field] == nil then tbl[field] = default end end
 local function InitSubTable(tbl, field) if tbl[field] == nil then tbl[field] = {} end end
 local wipe = wipe
-
-
 -- do
--- 	local text = "|cffFFF3712500/3000 (Равнодушие)|r"
-
--- 	-- -- цвет
--- 	-- local color = string.match(text, "^(|c%x%x%x%x%x%x%x%x)")  -- "|cffFFF371"
-
--- 	-- -- удаляю цвет и закрывающий тег
--- 	-- local content = text:gsub("^(|c%x%x%x%x%x%x%x%x)", ""):gsub("|r", "")
-
--- 	-- -- делю на лево/право
--- 	-- local vivod, rightStanding = (" "):split(content)
--- 	-- local FIRST, SECOND = ("/"):split(vivod)
-
--- 	-- local standingTEXT = rightStanding:gsub("(", "")
--- 	-- print (standingTEXT)
-
--- 	-- цвет
--- 	local color, vivod, FIRST, SECOND, standingTEXT = string.match(text, "^(|c%x%x%x%x%x%x%x%x)((%d+)/(%d+)) %((.*)%)")  -- "|cffFFF371"
-
--- 	local vivod = FIRST.."/"..SECOND
-
+--     local text = "|cffFFF3712500/3000 (Равнодушие)|r"
+--     -- -- цвет
+--     -- local color = string.match(text, "^(|c%x%x%x%x%x%x%x%x)")  -- "|cffFFF371"
+--     -- -- удаляю цвет и закрывающий тег
+--     -- local content = text:gsub("^(|c%x%x%x%x%x%x%x%x)", ""):gsub("|r", "")
+--     -- -- делю на лево/право
+--     -- local vivod, rightStanding = (" "):split(content)
+--     -- local FIRST, SECOND = ("/"):split(vivod)
+--     -- local standingTEXT = rightStanding:gsub("(", "")
+--     -- цвет
+--     local color, vivod, FIRST, SECOND, standingTEXT = string.match(text, "^(|c%x%x%x%x%x%x%x%x)((%d+)/(%d+)) %((.*)%)")  -- "|cffFFF371"
+--     local vivod = FIRST.."/"..SECOND
 -- end
-
-
-
-
-
-
-
-
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local curGUID = UnitGUID("player")
 	Octo_ToDo_DB_Levels = InitTable(Octo_ToDo_DB_Levels)
 	Octo_ToDo_DB_Levels[curGUID] = InitTable(Octo_ToDo_DB_Levels[curGUID])
-
 	local ServerTime = GetServerTime()
 	local currentDate = date("%d.%m.%Y")
 	local currentTime = date("%H:%M")
 	local currentDateTime = date("%d.%m.%Y %H:%M:%S")
-
 	-- Предварительно вычисляем часто используемые значения
 	local defaults = {
 		ReloadCount = 0,
@@ -126,9 +105,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		HasAvailableRewards = false,
 		isShownPLAYER = true,
 		RIO_Score = 0,
-		RIO_weeklyBest = 0
+		RIO_weeklyBest = 0,
+		DBVersion = E.DBVersion,
 	}
-
 	-- Оптимизация: предварительно инициализируем таблицы
 	local MASLENGO_DEFAULTS = {
 		reputationNEW = {},
@@ -137,7 +116,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		CurrencyID_Total = {},
 		UniversalQuest = {},
 		OctoTable_QuestID = {},
-		Quests = {},
+		ListOfQuests = {}, -- Quests
 		professions = {
 			[1] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
 			[2] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
@@ -157,7 +136,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		SavedWorldBoss = {},
 		LFGInstance = {},
 	}
-
 	-- Инициализация GreatVault
 	for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
 		MASLENGO_DEFAULTS.GreatVault[i] = {
@@ -167,44 +145,42 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			type = "",
 		}
 	end
-
 	-- Инициализация CovenantAndAnima
 	MASLENGO_DEFAULTS.CovenantAndAnima.curCovID = 0
-
 	-- Обработка всех персонажей
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- Установка значений по умолчанию
 		for k, v in next, (defaults) do
 			InitField(CharInfo, k, v)
 		end
-
 		CharInfo.time = CharInfo.time or CharInfo.tmstp_Daily or ServerTime
 		CharInfo.GUID = GUID -- Перезаписываем GUID для текущего персонажа
 		CharInfo.MoneyOnLogin = CharInfo.MoneyOnLogin or CharInfo.Money
-
 		-- Инициализация MASLENGO таблиц
 		InitSubTable(CharInfo, "MASLENGO")
 		local MASLENGO = CharInfo.MASLENGO
-
 		-- Применяем предопределенные значения для MASLENGO
 		for k, v in next, (MASLENGO_DEFAULTS) do
 			if MASLENGO[k] == nil then
 				MASLENGO[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
-
 		-- Инициализация репутаций
 		for _, tbl in ipairs(E.OctoTable_Reputations) do
 			for _, v in ipairs(tbl) do
 				MASLENGO.reputationNEW[v.id] = MASLENGO.reputationNEW[v.id] or "####"
 			end
 		end
-
 		-- Инициализация UniversalQuest
 		for _, v in next, (E.OctoTable_UniversalQuest) do
 			local key = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
 			MASLENGO.UniversalQuest[key] = MASLENGO.UniversalQuest[key] or nil
+			if type(MASLENGO.UniversalQuest[key]) == "string" then
+				MASLENGO.UniversalQuest[key] = nil
+			end
 		end
+
+
 
 		-- Инициализация LFGInstance
 		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
@@ -212,7 +188,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			InitField(MASLENGO.LFGInstance[dungeonID], "D_name", name)
 			MASLENGO.LFGInstance[dungeonID].donetoday = MASLENGO.LFGInstance[dungeonID].donetoday or nil
 		end
-
 		-- Очистка устаревших данных журнала
 		for instanceID, tbl in next, (MASLENGO.journalInstance) do
 			if instanceID then
@@ -223,7 +198,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				end
 			end
 		end
-
 		-- Перенос и очистка данных
 		local tablesToProcess = {
 			ItemsInBag = {cleanZeros = true},
@@ -237,14 +211,12 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			professions = {cleanZeros = false},
 			OctoTable_QuestID = {cleanZeros = false},
 		}
-
 		for tableName, options in next, (tablesToProcess) do
 			local sourceTable = CharInfo[tableName]
 			if sourceTable then
 				-- Переносим таблицу
 				MASLENGO[tableName] = sourceTable
 				CharInfo[tableName] = nil
-
 				-- Обработка специальных случаев
 				if options.specialHandler then
 					-- options.specialHandler(sourceTable, MASLENGO)
@@ -258,7 +230,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				end
 			end
 		end
-
 		if CharInfo.reputationID then
 			for k, v in pairs(CharInfo.reputationID) do
 				if v and v ~= "" and v ~= 0 then
@@ -267,15 +238,12 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 					else
 						local color = v:match("c%x%x%x%x%x%x%x%x")
 						local vivod, FIRST, SECOND, standingTEXT = v:gsub("|c%x%x%x%x%x%x%x%x", ""):match("((%d+)/(%d+)) ?%(?(.*)%)?")  -- "|cffFFF371"
-						print (v, "|cff000000--->>>|r" , vivod, FIRST, SECOND, standingTEXT)
-
 						CharInfo.MASLENGO.reputationNEW[k] = FIRST.."#"..SECOND.."#"..vivod.."#"..color.."#"..standingTEXT
 					end
 				end
 			end
 			CharInfo.reputationID = nil
 		end
-
 		if CharInfo.MASLENGO.reputationFULL and CharInfo.MASLENGO.reputationNEW then
 			for k, v in pairs(CharInfo.MASLENGO.reputationFULL) do
 				local FIRST = v.FIRST or 0
@@ -287,8 +255,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			end
 			CharInfo.MASLENGO.reputationFULL = nil
 		end
-
-
 		for k, v in next, (CharInfo) do
 			if type(v) ~= "table" then
 				-- if k and strfind(k, "Octopussy_", 1, true) then
@@ -297,8 +263,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				end
 			end
 		end
-
-
 		local tablesToDelete = {
 			"bounty_BfA2_questID",
 			"bounty_BfA1_end",
@@ -327,38 +291,22 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			"CurrencyID_trackedQuantity",
 			"STARTWEEK",
 			"DreamsurgeInvestigation",
-
 		}
-
-
 		for _, key in ipairs(tablesToDelete) do
 			if CharInfo[key] ~= nil then
 				CharInfo[key] = nil
 			end
 		end
-
-
-
 		-- CharInfo.MASLENGO.CovenantAndAnima = {
-		-- 	[1] = {[1] = 5, [2] = 5},
-		-- 	[2] = {[1] = 5, [2] = 5},
-		-- 	[3] = {[1] = 5, [2] = 5},
-		-- 	[4] = {[1] = 5, [2] = 5},
+		--     [1] = {[1] = 5, [2] = 5},
+		--     [2] = {[1] = 5, [2] = 5},
+		--     [3] = {[1] = 5, [2] = 5},
+		--     [4] = {[1] = 5, [2] = 5},
 		-- }
-
-
 		if CharInfo.curCovID and CharInfo.MASLENGO.CovenantAndAnima and CharInfo.MASLENGO.CovenantAndAnima.curCovID ~= CharInfo.curCovID then
 			CharInfo.MASLENGO.CovenantAndAnima.curCovID = CharInfo.curCovID
 			CharInfo.curCovID = nil
 		end
-
-
-
-
-
-
-
-
 		-- CreateTable/TableCreate -- ПОГУГЛИТЬ ПОФИКСИТЬ
 		if CharInfo.Shadowland then
 			CharInfo.MASLENGO.CovenantAndAnima[1] = {CharInfo.Shadowland[1], CharInfo.Shadowland[2]}
@@ -367,28 +315,16 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			CharInfo.MASLENGO.CovenantAndAnima[4] = {CharInfo.Shadowland[7], CharInfo.Shadowland[8]}
 			CharInfo.Shadowland = nil
 		end
+		-- Clear old version tables
+		if not Octo_ToDo_DB_Vars.DBVersion or Octo_ToDo_DB_Vars.DBVersion < E.DBVersion then
+			wipe(CharInfo.MASLENGO.OctoTable_QuestID)
+		end
+
+
 	end
 end
-
-
--- do
--- 		local myText = "QWEQWE#123124#привет###6"
--- 		-- local one, two, three = strsplit("#", myText) -- в глобал обращается
--- 		local one, two, three, four, five, six = ("#"):split(myText) -- сразу из памяти
--- 		local vivod = tonumber(four) or 0
--- 		print (one, two, three, four, five, six, vivod)
--- end
-
-
-
-
-
-
-
-
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars = InitTable(Octo_ToDo_DB_Vars)
-
 	-- Настройки отладки
 	local debugDefaults = {
 		DebugIDs = false,
@@ -397,12 +333,10 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		DebugFunction = false,
 		DebugButton = false
 	}
-
 	for k, v in next, (debugDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
 		E[k] = Octo_ToDo_DB_Vars[k]
 	end
-
 	-- Размеры и параметры интерфейса
 	local uiDefaults = {
 		AddonHeight = 20,
@@ -417,11 +351,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT),
 		prefix = 1
 	}
-
 	for k, v in next, (uiDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
 	end
-
 	-- Настройки функций
 	local featureDefaults = {
 		AchievementShowCompleted = true,
@@ -478,6 +410,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Quests = true,
 		QuestsShowAllways = false,
 		Reputations = false,
+		QC_Quests = true,
+		QC_Vignettes = false,
 		ResetAllChars = true,
 		ShowIDS = true,
 		ShowOnlyCurrentBattleTag = false,
@@ -492,18 +426,15 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		TWW_DungeonQuest_Weekly = true,
 		UIErrorsFramePosition = true,
 		WasOnline = true,
-		WorldBoss_Weekly = true
+		WorldBoss_Weekly = true,
 	}
-
 	for k, v in next, (featureDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
 	end
-
 	-- Таблицы по умолчанию
 	InitField(Octo_ToDo_DB_Vars, "color", {1, 1, 1})
 	InitField(Octo_ToDo_DB_Vars, "AchievementToShow", {[92] = true})
 	InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {[11] = true})
-
 	-- Настройки позиционирования
 	InitSubTable(Octo_ToDo_DB_Vars, "SpeedFrame")
 	local speedFrameDefaults = {
@@ -513,11 +444,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		xOfs = 129,
 		yOfs = 67
 	}
-
 	for k, v in next, (speedFrameDefaults) do
 		InitField(Octo_ToDo_DB_Vars.SpeedFrame, k, v)
 	end
-
 	InitSubTable(Octo_ToDo_DB_Vars, "PosFrame")
 	local posFrameDefaults = {
 		Shown = true,
@@ -526,11 +455,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		xOfs = 129,
 		yOfs = 67
 	}
-
 	for k, v in next, (posFrameDefaults) do
 		InitField(Octo_ToDo_DB_Vars.PosFrame, k, v)
 	end
-
 	-- Настройки интерфейса
 	InitSubTable(Octo_ToDo_DB_Vars, "interface")
 	local interfaceDefaults = {
@@ -540,12 +467,10 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Octo_font = "Friz Quadrata TT",
 		Octo_sound = "None"
 	}
-
 	for k, v in next, (interfaceDefaults) do
 		InitField(Octo_ToDo_DB_Vars.interface, k, v)
 	end
 end
-
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	Octo_ToDo_DB_Other = InitTable(Octo_ToDo_DB_Other)
 	InitSubTable(Octo_ToDo_DB_Other, "AccountMoney")
@@ -556,7 +481,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	InitSubTable(Octo_ToDo_DB_Other, "ActiveHoliday")
 	InitSubTable(Octo_ToDo_DB_Other, "professions")
 end
-
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Minecraft()
 	Octo_ToDo_DB_Minecraft = InitTable(Octo_ToDo_DB_Minecraft)
 	InitSubTable(Octo_ToDo_DB_Minecraft, "ColorFG")
@@ -569,27 +493,21 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Minecraft()
 	InitField(Octo_ToDo_DB_Minecraft.ColorBG, "g", 1)
 	InitField(Octo_ToDo_DB_Minecraft.ColorBG, "b", 1)
 	InitField(Octo_ToDo_DB_Minecraft.ColorBG, "a", 1)
-
 end
-
-
 function Octo_EventFrame_WTF:Octo_Achievements_DB()
 	Octo_Achievements_DB = InitTable(Octo_Achievements_DB)
 	InitField(Octo_Achievements_DB, "AchievementShowCompleted", true)
 	InitField(Octo_Achievements_DB, "AchievementToShow", {[92] = true})
 end
-
 function Octo_EventFrame_WTF:Octo_AddonsTable()
 	Octo_AddonsTable = InitTable(Octo_AddonsTable)
 end
-
 function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 	Octo_AddonsManager_DB = InitTable(Octo_AddonsManager_DB)
 	InitSubTable(Octo_AddonsManager_DB, "collapsedAddons")
 	InitSubTable(Octo_AddonsManager_DB, "profiles")
 	InitSubTable(Octo_AddonsManager_DB.profiles, "forceload")
 	InitField(Octo_AddonsManager_DB.profiles.forceload, GlobalAddonName, true)
-
 	InitSubTable(Octo_AddonsManager_DB, "config")
 	local configDefaults = {
 		fullName = false,
@@ -615,50 +533,37 @@ function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 		showTocCategory = true,
 		showMemoryInBrokerTtp = true
 	}
-
 	for k, v in next, (configDefaults) do
 		InitField(Octo_AddonsManager_DB.config, k, v)
 	end
-
 	InitField(Octo_AddonsManager_DB, "isCategoryFrameVisible", true)
 	InitSubTable(Octo_AddonsManager_DB, "lock")
 	InitSubTable(Octo_AddonsManager_DB.lock, "addons")
 	InitField(Octo_AddonsManager_DB.lock.addons, E.GlobalAddonName, true)
 end
-
 function Octo_EventFrame_WTF:Octo_DEBUG()
 	Octo_DEBUG = InitTable(Octo_DEBUG)
 	InitSubTable(Octo_DEBUG, "Reputations")
 	InitSubTable(Octo_DEBUG, "Octo_MplusButton")
 	InitSubTable(Octo_DEBUG, "UniversalQuest")
 end
-
-
-
 function Octo_EventFrame_WTF:Octo_QuestsChangedDB()
 	Octo_QuestsChangedDB = InitTable(Octo_QuestsChangedDB)
-	InitSubTable(Octo_QuestsChangedDB, "log")
-	InitSubTable(Octo_QuestsChangedDB, "vignette")
+	InitSubTable(Octo_QuestsChangedDB, "QC_Quests")
+	InitSubTable(Octo_QuestsChangedDB, "QC_Vignettes")
 end
-
-
-
-
 function Octo_EventFrame_WTF:Daily_Reset()
 	local ServerTime = GetServerTime()
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.tmstp_Daily or 0) < ServerTime then
 			CharInfo.tmstp_Daily = E.func_tmstpDayReset(1)
 			CharInfo.needResetDaily = true
-
 			-- Сброс ежедневных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
 				if v.reset == "Daily" then
 					CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Daily"] = nil
 				end
 			end
-
 			CharInfo.STARTTODAY = 0
 			wipe(CharInfo.MASLENGO.LFGInstance)
 			for _, v in ipairs (E.OctoTable_LFGDungeons) do
@@ -671,10 +576,8 @@ function Octo_EventFrame_WTF:Daily_Reset()
 		end
 	end
 end
-
 function Octo_EventFrame_WTF:Weekly_Reset()
 	local ServerTime = GetServerTime()
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.tmstp_Weekly or 0) < ServerTime then
 			-- Проверка награды из Великого Хранилища
@@ -684,7 +587,6 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 					break
 				end
 			end
-
 			-- Сброс данных
 			CharInfo.tmstp_Weekly = E.func_tmstpDayReset(7)
 			CharInfo.needResetWeekly = true
@@ -695,7 +597,6 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 			CharInfo.MASLENGO.SavedWorldBoss = {}
 			CharInfo.RIO_weeklyBest = 0
 			CharInfo.MASLENGO.GreatVault = {}
-
 			-- Сброс еженедельных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
 				if v.reset == "Weekly" then
@@ -705,16 +606,13 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 		end
 	end
 end
-
 function Octo_EventFrame_WTF:Month_Reset()
 	local ServerTime = GetServerTime()
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.tmstp_Month or 0) < ServerTime then
 			CharInfo.tmstp_Month = E.func_tmstpDayReset(30)
 			CharInfo.needResetMonth = true
 			CharInfo.STARTMONTH = 0
-
 			-- Сброс ежемесячных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
 				if v.reset == "Month" then
@@ -724,7 +622,6 @@ function Octo_EventFrame_WTF:Month_Reset()
 		end
 	end
 end
-
 -- Регистрация событий
 do
 	local MyEventsTable = {
@@ -733,12 +630,10 @@ do
 	}
 	E.RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable, E.func_DebugPath())
 end
-
 function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
-
 		-- Инициализация всех баз данных
 		self:Octo_ToDo_DB_Levels()
 		self:Octo_ToDo_DB_Vars()
@@ -749,22 +644,19 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:Octo_AddonsManager_DB()
 		self:Octo_DEBUG()
 		self:Octo_QuestsChangedDB()
-
 		-- Сброс данных по времени
 		self:Daily_Reset()
 		self:Weekly_Reset()
 		self:Month_Reset()
+		Octo_ToDo_DB_Vars.DBVersion = E.DBVersion
 	end
 end
-
 function Octo_EventFrame_WTF:VARIABLES_LOADED()
 	if not InCombatLockdown() then
 		self:UnregisterEvent("VARIABLES_LOADED")
 		self.VARIABLES_LOADED = nil
-
 		if Octo_ToDo_DB_Vars.CVar then
 			E.LoadCVars()
 		end
 	end
 end
-

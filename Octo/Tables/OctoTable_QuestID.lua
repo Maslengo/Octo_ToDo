@@ -56,5 +56,6 @@ E.OctoTable_QuestID_Paragon = {
 }
 
 E.OctoTable_QuestID = {
-	38242, 39246,
+	38242,
+	39246,
 }

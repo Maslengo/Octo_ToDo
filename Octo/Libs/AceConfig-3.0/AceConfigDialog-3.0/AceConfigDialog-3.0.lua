@@ -1265,7 +1265,6 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 								radio:SetWidth(width_multiplier * width)
 							elseif width == "full" then
 								radio.width = "fill"
-								print (radio.width)
 							else
 								radio:SetWidth(width_multiplier)
 							end

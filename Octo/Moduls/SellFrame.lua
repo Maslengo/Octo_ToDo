@@ -169,7 +169,6 @@ tinsert(E.Modules, function()
 		OctoFrame_SellOther:SetScript("OnEnter", function(self)
 			if not self.promise then
 				self.promise = ltl:Items(E.OctoTable_itemID_Ignore_List)
-				self.promise:FailWithChecked(print)
 			end
 			self.promise:Then(function()
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)
@@ -190,7 +189,6 @@ tinsert(E.Modules, function()
 		OctoFrame_SellOtherFiolet:SetScript("OnEnter", function(self)
 			if not self.promise then
 				self.promise = ltl:Items(E.OctoTable_itemID_Ignore_List)
-				self.promise:FailWithChecked(print)
 			end
 			self.promise:Then(function()
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 20, -30)

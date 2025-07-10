@@ -48,6 +48,7 @@ function E.LoadOctoUIforAddons()
 		{database = TomTomWaypointsM, profileName = "OctoUI"}, -- TomTom
 		{database = VMRT, profileName = "OctoUI"}, -- MRT
 		{database = WarpDepleteDB, profileName = "OctoUI"}, -- WarpDeplete
+		{database = GreatVaultList2DB, profileName = "OctoUI"}, -- GreatVaultList
 	}
 
 	for k, v in ipairs(AddonsAndDB) do
@@ -365,11 +366,9 @@ function E.Collect_All_Professions()
 	end
 	-- for _, branchID in ipairs(ArchaeologyTBL) do
 	--         local raceName, raceTextureID, raceItemID, numFragmentsCollected, numFragmentsRequired, maxFragments = GetArchaeologyRaceInfoByID(branchID)
-	--         print (raceName, E.func_texturefromIcon(raceTextureID), raceItemID, numFragmentsCollected, numFragmentsRequired, maxFragments)
 	--     end
 	-- for raceIndex = 1, GetNumArchaeologyRaces() do
 	--     local numProjects = GetNumArtifactsByRace(raceIndex)
-	--     print (numProjects)
 	-- end
 end
 function E.Collect_All_GreatVault()
@@ -621,14 +620,18 @@ function E.Collect_All_Quests()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID]
 	if not collect or InCombatLockdown() then return end
 	-- Очищаем таблицы
-	wipe(collect.MASLENGO.Quests)
+	wipe(collect.MASLENGO.ListOfQuests)
 	wipe(collect.MASLENGO.OctoTable_QuestID)
+
 	-- Обрабатываем OctoTable_QuestID
-	for questID, v in pairs(E.OctoTable_QuestID) do
-		local status = E.func_CheckCompletedByQuestID(questID)
-		if status ~= E.NONE then
-			collect.MASLENGO.OctoTable_QuestID[questID] = status
+	for _, questID in ipairs(E.OctoTable_QuestID) do
+		if C_QuestLog.IsQuestFlaggedCompleted(questID) then
+			collect.MASLENGO.OctoTable_QuestID[questID] = true
 		end
+		-- local status = E.func_CheckCompletedByQuestID(questID)
+		-- if status ~= E.NONE then
+		-- 	collect.MASLENGO.OctoTable_QuestID[questID] = status
+		-- end
 	end
 	-- Собираем информацию о квестах
 	local numQuests = 0
@@ -637,7 +640,7 @@ function E.Collect_All_Quests()
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
 			numQuests = numQuests + 1
-			collect.MASLENGO.Quests[info.questID] = E.func_CheckCompletedByQuestID(info.questID)
+			collect.MASLENGO.ListOfQuests[info.questID] = E.func_CheckCompletedByQuestID(info.questID)
 		end
 	end
 	-- Сохраняем статистику
@@ -652,35 +655,33 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 		for i, v in next, (E.OctoTable_UniversalQuest) do
 			for _, w in next, (v) do
 				local count = 0
-				local vivod = nil
 				for _, questID in next, (v.questID) do
-					if v.max > 1 then
-						if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
-							count = count + 1
-						end
-						vivod = count
-					else
-						local IsComplete = E.func_CheckCompletedByQuestID(questID)
-						if IsComplete ~= E.NONE then
-							vivod = IsComplete
-							-- else
-							--     vivod = "0/" ..v.max
-						end
-					end
+				if C_QuestLog.IsQuestFlaggedCompleted(questID) == true then
+					count = count + 1
+				end
 				end
 				if Octo_DEBUG then
 					Octo_DEBUG.UniversalQuest[v.desc] = Octo_DEBUG.UniversalQuest[v.desc] or {}
 					Octo_DEBUG.UniversalQuest[v.desc][i] = Octo_DEBUG.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest.".."Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset)
 				end
-				if v.max == 1 then
-					collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod
-				elseif v.max > 1 then
-					if vivod == v.max and v.max > 1 then
-						collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = E.DONE
-					else
-						collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod.."/"..v.max
-					end
+
+				if count > 0 then
+					collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = count
+				else
+					collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = nil
+
 				end
+
+
+				-- if v.max == 1 then
+				-- 	collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod
+				-- elseif v.max > 1 then
+				-- 	if vivod == v.max and v.max > 1 then
+				-- 		collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = E.DONE
+				-- 	else
+				-- 		collect.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] = vivod.."/"..v.max
+				-- 	end
+				-- end
 			end
 		end
 	end
@@ -1052,7 +1053,6 @@ local MyEventsTable = {
 	"ZONE_CHANGED_NEW_AREA"
 }
 function E.Collect_All_Table(event)
-	-- print("E.Collect_All_Table() » "..(event and E.Event_Color..event or E.Green_Color.."func_CreateMyDataProvider()").."|r")
 	-- Персонаж и прогресс
 	-- E.Collect_All_PlayerInfo() -- общая информация о персонаже
 	E.Collect_All_PlayerLevel() -- уровень персонажа
