@@ -13,7 +13,9 @@ if MainFrameDefaultLines > MainFrameTotalLines then
 	MainFrameDefaultLines = MainFrameTotalLines
 end
 local r, g, b = GetClassColor(E.classFilename)
-local TEXTURE_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga"
+local TEXTURE_PATH_CENTRAL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\octo\\CentralFrame.tga"
+local TEXTURE_PATH_LEFT = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\octo\\LeftFrame.tga"
+local HighlightTexture = "Interface\\AddOns\\Octo\\Media\\BUTTON\\GlowTexture.tga"
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
@@ -65,6 +67,14 @@ local func_OnAcquired do
 			frameFULL:SetPoint("TOP", frame)
 			frameFULL:SetPoint("BOTTOM", frame)
 			frameFULL:SetPoint("RIGHT")
+			frame.frameFULL = frameFULL
+			------------------------------------------------
+			local textureLEFT = frameFULL:CreateTexture(nil, "BACKGROUND", nil, -3)
+			textureLEFT:Hide()
+			textureLEFT:SetAllPoints()
+			textureLEFT:SetTexture(TEXTURE_PATH_LEFT)
+			textureLEFT:SetVertexColor(r, g, b, E.bgCaOverlay*2)
+			frame.textureLEFT = textureLEFT
 			------------------------------------------------
 			------------------------------------------------
 			-- Icon setup
@@ -221,6 +231,8 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	local playerName = frameData.classColorHex..frameData.playerName.."|r-"..E.func_CurServerShort(frameData.curServer)
 
 
+
+
 	frame.icon_1:SetTexture(frameData.specIcon)
 	frame.first.text:SetText(playerName)
 
@@ -229,14 +241,24 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	if frameData.type == "QC_Quests" then
 		if E.func_IsAccountQuest(frameData.id) or E.func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
 			frame.icon_2:SetAtlas("warbands-icon")
+		else
+			frame.icon_2:SetTexture(E.Icon_Empty)
 		end
 		frame.third.text:SetText(E.func_questName_SIMPLE(frameData.id))
 	elseif frameData.type == "QC_Vignettes" then
-		frame.icon_2:SetAtlas(frameData.atlas)
+		if frameData.atlas then
+			frame.icon_2:SetAtlas(frameData.atlas)
+		else
+			frame.icon_2:SetAtlas(E.Icon_Empty)
+		end
 		frame.third.text:SetText(frameData.name)
 	end
 
-
+	if Octo_ToDo_DB_Vars.QC_Vignettes and Octo_ToDo_DB_Vars.QC_Quests and frameData.type == "QC_Quests" then
+		frame.textureLEFT:Show()
+	else
+		frame.textureLEFT:Hide()
+	end
 
 
 	frame.second.text:SetText(E.Gray_Color..frameData.id.."|r")

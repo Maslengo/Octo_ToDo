@@ -415,7 +415,7 @@ function E:func_CreateMyDataProvider()
 	local sortedPlayersTBL = E.sorted()
 	local MyCharIndex
 	for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
-		if CharInfo.GUID == E.curGUID then
+		if CharInfo.PlayerData.GUID == E.curGUID then
 			MyCharIndex = CharIndex
 			break
 		end
@@ -524,7 +524,7 @@ function E:func_CreateMyDataProvider()
 			curCharFrame.text:SetJustifyV("MIDDLE")
 			curCharFrame.text:SetJustifyH("CENTER")
 			curCharFrame.text:SetText(E.func_textCENT(CharInfo))
-			local color = CharInfo.Faction == "Horde" and "|cfff01e38" or "|cff0070DD"
+			local color = CharInfo.PlayerData.Faction == "Horde" and "|cfff01e38" or "|cff0070DD"
 			E:func_SetBackdrop(curCharFrame, color, E.bgCaOverlay * 2, 0)
 			curCharFrame.tooltip = E.CreateTooltipPlayers(CharInfo)
 			curCharFrame:SetScript("OnEnter", function()
@@ -579,13 +579,13 @@ function E:func_Create_DD_ToDo(mainFrame)
 		end
 	)
 	local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
-		Octo_ToDo_DB_Levels[menuButton.value].isShownPLAYER = checked
+		Octo_ToDo_DB_Levels[menuButton.value].PlayerData.isShownPLAYER = checked
 		E:func_CreateMyDataProvider()
 		mainFrame.ScrollBoxCENT:ScrollToOffset(0)
 		mainFrame.barPanelScroll:SetHorizontalScroll(0)
 	end
 	local function func_remove_GUID(menuButton)
-		Octo_ToDo_DB_Levels[menuButton.value] = nil
+		Octo_ToDo_DB_Levels[menuButton.value].PlayerData = nil
 		E:func_CreateMyDataProvider()
 		mainFrame.ScrollBoxCENT:ScrollToOffset(0)
 	end
@@ -605,11 +605,11 @@ function E:func_Create_DD_ToDo(mainFrame)
 				local BnetList = {}
 				local Octo_BatlleNets = {}
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-					if not BnetList[CharInfo.BattleTagLocal] then
+					if not BnetList[CharInfo.PlayerData.BattleTagLocal] then
 						count = count + 1
-						Octo_BatlleNets[count] = CharInfo.BattleTagLocal
+						Octo_BatlleNets[count] = CharInfo.PlayerData.BattleTagLocal
 					end
-					BnetList[CharInfo.BattleTagLocal] = true
+					BnetList[CharInfo.PlayerData.BattleTagLocal] = true
 				end
 				sort(Octo_BatlleNets)
 				if count > 1 then
@@ -634,17 +634,17 @@ function E:func_Create_DD_ToDo(mainFrame)
 					end
 				else
 					local GUID, CharInfo = next(Octo_ToDo_DB_Levels)
-					value = CharInfo.BattleTagLocal
+					value = CharInfo.PlayerData.BattleTagLocal
 				end
 			end
 			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			if type(value) == "string" then
 				local tbl_Players = {}
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-					if CharInfo.BattleTagLocal == value or not value then
-						tbl_Players[CharInfo.curServer] = tbl_Players[CharInfo.curServer] or {}
-						tbl_Players[CharInfo.curServer][GUID] = tbl_Players[CharInfo.curServer][GUID] or {}
-						tbl_Players[CharInfo.curServer][GUID] = CharInfo.classColorHex..CharInfo.Name.."|r"..CharInfo.UnitLevel
+					if CharInfo.PlayerData.BattleTagLocal == value or not value then
+						tbl_Players[CharInfo.PlayerData.curServer] = tbl_Players[CharInfo.PlayerData.curServer] or {}
+						tbl_Players[CharInfo.PlayerData.curServer][GUID] = tbl_Players[CharInfo.PlayerData.curServer][GUID] or {}
+						tbl_Players[CharInfo.PlayerData.curServer][GUID] = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r"..CharInfo.PlayerData.UnitLevel
 					end
 				end
 				for Server, v in next, (tbl_Players) do
@@ -672,8 +672,8 @@ function E:func_Create_DD_ToDo(mainFrame)
 					tinsert(players_list, GUID)
 				end
 				sort(players_list, function(a, b)
-						local infoA = Octo_ToDo_DB_Levels[a]
-						local infoB = Octo_ToDo_DB_Levels[b]
+						local infoA = Octo_ToDo_DB_Levels[a].PlayerData
+						local infoB = Octo_ToDo_DB_Levels[b].PlayerData
 						if infoA and infoB then
 							return
 							infoA.curServer > infoB.curServer or
@@ -688,17 +688,17 @@ function E:func_Create_DD_ToDo(mainFrame)
 					info.fontObject = OctoFont11
 					info.keepShownOnClick = true
 					info.isNotRadio = true
-					local vivod = Octo_ToDo_DB_Levels[GUID].classColorHex..Octo_ToDo_DB_Levels[GUID].Name.."|r"
-					if Octo_ToDo_DB_Levels[GUID].UnitLevel ~= E.currentMaxLevel then
-						vivod = vivod.." "..E.Yellow_Color..Octo_ToDo_DB_Levels[GUID].UnitLevel.."|r"
+					local vivod = Octo_ToDo_DB_Levels[GUID].PlayerData.classColorHex..Octo_ToDo_DB_Levels[GUID].PlayerData.Name.."|r"
+					if Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel ~= E.currentMaxLevel then
+						vivod = vivod.." "..E.Yellow_Color..Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel.."|r"
 					end
 					info.text = vivod
 					info.value = GUID
 					info.func = selectFunctionisShownPLAYER
-					info.checked = Octo_ToDo_DB_Levels[GUID].isShownPLAYER
+					info.checked = Octo_ToDo_DB_Levels[GUID].PlayerData.isShownPLAYER
 					info.remove = func_remove_GUID
 					info.removeDoNotHide = true
-					info.icon = Octo_ToDo_DB_Levels[GUID].specIcon
+					info.icon = Octo_ToDo_DB_Levels[GUID].PlayerData.specIcon
 					info.iconInfo = {tSizeX = 16, tSizeY = 16}
 					tinsert(list, info)
 				end
@@ -712,7 +712,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.isShownPLAYER = true
+						CharInfo.PlayerData.isShownPLAYER = true
 					end
 					E:func_CreateMyDataProvider()
 				end
@@ -725,7 +725,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.isShownPLAYER = false
+						CharInfo.PlayerData.isShownPLAYER = nil
 					end
 					E:func_CreateMyDataProvider()
 				end
@@ -977,16 +977,19 @@ function Octo_EventFrame_ToDo:SetupPlayerSpellsFrame()
 	end
 end
 function Octo_EventFrame_ToDo:DisplayCharacterStats()
-	local totalMoney, totalReload, realTotalTime, TodayTimePlayedtotal, realLevelTime = 0, 0, 0, 0, 0
+	local totalMoney, totalReload, realTotalTime, realLevelTime = 0, 0, 0, 0
 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-		totalReload = totalReload + (CharInfo.ReloadCount or 0)
-		if CharInfo.BattleTag == E.BattleTag then
-			-- if CharInfo.curServer == E.curServer then
-			totalMoney = totalMoney + CharInfo.Money
-			realTotalTime = realTotalTime + CharInfo.realTotalTime
-			TodayTimePlayedtotal = TodayTimePlayedtotal + CharInfo.TodayTimePlayed
-			if CharInfo.UnitLevel >= E.currentMaxLevel then
-				realLevelTime = realLevelTime + CharInfo.realLevelTime
+		totalReload = totalReload + (CharInfo.PlayerData.ReloadCount or 0)
+		if CharInfo.PlayerData.BattleTag == E.BattleTag then
+			-- if CharInfo.PlayerData.curServer == E.curServer then
+			if CharInfo.PlayerData.Money then
+				totalMoney = totalMoney + CharInfo.PlayerData.Money
+			end
+			if CharInfo.PlayerData.realTotalTime then
+				realTotalTime = realTotalTime + CharInfo.PlayerData.realTotalTime
+			end
+			if CharInfo.PlayerData.UnitLevel >= E.currentMaxLevel then
+				realLevelTime = realLevelTime + CharInfo.PlayerData.realLevelTime
 			end
 		end
 	end

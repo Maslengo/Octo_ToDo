@@ -1949,13 +1949,15 @@ E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- Get
 E.IsPublicBuild = IsPublicBuild()
 E.buildVersion, E.buildNumber, E.buildDate, E.interfaceVersion = GetBuildInfo()
 E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
-E.GetRestrictedAccountData_rLevel = select(1, GetRestrictedAccountData())
-E.GetRestrictedAccountData_rMoney = select(2, GetRestrictedAccountData())
-E.GetRestrictedAccountData_profCap = select(3, GetRestrictedAccountData())
+
+E.GetRestrictedAccountData_rLevel, E.GetRestrictedAccountData_rMoney = GetRestrictedAccountData()
+
+
+
 E.IsAccountSecured = IsAccountSecured()
-E.IsRestrictedAccount = IsRestrictedAccount() or false
-E.IsTrialAccount = IsTrialAccount() or false
-E.IsVeteranTrialAccount = IsVeteranTrialAccount() or false
+E.IsRestrictedAccount = IsRestrictedAccount()
+E.IsTrialAccount = IsTrialAccount()
+E.IsVeteranTrialAccount = IsVeteranTrialAccount()
 E.BattleTag = select(2, BNGetInfo()) or "Trial Account"
 E.BTAG = tostringall(strsplit("#", E.BattleTag))
 E.regionID = GetCurrentRegion()
@@ -2083,6 +2085,8 @@ E.Venthyr_b_Color = 0.40
 ----------------------------------------------------------------
 E.DONE = E.Green_Color.."Done".."|r"
 E.NONE = E.Gray_Color.."None".."|r"
+E.TRUE = E.Green_Color.."true|r"
+E.FALSE = E.Red_Color.."false|r"
 ----------------------------------------------------------------
 E.AccountWide = E.Blue_Color.."(A)".."|r"
 E.AccountTransferable = E.Red_Color.."(T)".."|r"
@@ -2788,94 +2792,95 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_NumPlayers()
-	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
-	local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
-	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
-	local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
-	local sorted = {}
+    local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
+    local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
+    local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
+    local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
+    local sorted = {}
 
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if E.curGUID == CharInfo.GUID then
-			sorted[#sorted+1] = CharInfo
-		end
-		if CharInfo.isShownPLAYER and E.curGUID ~= CharInfo.GUID then
-			if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
-				if ShowOnlyCurrentBattleTag then
-					if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
-						and CharInfo.BattleTagLocal == E.BattleTagLocal
-						and CharInfo.UnitLevel >= LevelToShow
-						and CharInfo.UnitLevel <= LevelToShowMAX then
-							sorted[#sorted+1] = CharInfo
-						end
-					else
-						if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
-							and CharInfo.UnitLevel >= LevelToShow
-							and CharInfo.UnitLevel <= LevelToShowMAX then
-								sorted[#sorted+1] = CharInfo
-							end
-						end
-					end
-				end
-			end
-			return #sorted or 1
-		end
-		function E.sorted()
-			local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
-			local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
-			local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
-			local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
-			local sorted = {}
+    for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+        if E.curGUID == GUID then
+            sorted[#sorted+1] = CharInfo
+        end
+        if CharInfo.PlayerData.isShownPLAYER and E.curGUID ~= GUID then
+            if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.PlayerData.Faction == E.curFaction) then
+                if ShowOnlyCurrentBattleTag then
+                    if (ShowOnlyCurrentServer and CharInfo.PlayerData.curServer == E.curServer or not ShowOnlyCurrentServer)
+                    and CharInfo.PlayerData.BattleTagLocal == E.BattleTagLocal
+                    and CharInfo.PlayerData.UnitLevel >= LevelToShow
+                    and CharInfo.PlayerData.UnitLevel <= LevelToShowMAX then
+                        sorted[#sorted+1] = CharInfo
+                    end
+                else
+                    if (ShowOnlyCurrentServer and CharInfo.PlayerData.curServer == E.curServer or not ShowOnlyCurrentServer)
+                    and CharInfo.PlayerData.UnitLevel >= LevelToShow
+                    and CharInfo.PlayerData.UnitLevel <= LevelToShowMAX then
+                        sorted[#sorted+1] = CharInfo
+                    end
+                end
+            end
+        end
+    end
+    return #sorted or 1
+end
+function E.sorted()
+    local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
+    local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
+    local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
+    local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
+    local sorted = {}
 
-			for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-				if E.curGUID == CharInfo.GUID then
-					sorted[#sorted+1] = CharInfo
-				end
-				if CharInfo.isShownPLAYER and E.curGUID ~= CharInfo.GUID then
-					if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.Faction == E.curFaction) then
-						if ShowOnlyCurrentBattleTag then
-							if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
-								and CharInfo.BattleTagLocal == E.BattleTagLocal
-								and CharInfo.UnitLevel >= LevelToShow
-								and CharInfo.UnitLevel <= LevelToShowMAX
-								then
-									sorted[#sorted+1] = CharInfo
-								end
-							else
-								if (ShowOnlyCurrentServer and CharInfo.curServer == E.curServer or not ShowOnlyCurrentServer)
-									and CharInfo.UnitLevel >= LevelToShow
-									and CharInfo.UnitLevel <= LevelToShowMAX
-									then
-										sorted[#sorted+1] = CharInfo
-									end
-								end
-							end
-						end
-					end
+    for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+        if E.curGUID == CharInfo.PlayerData.GUID then
+            sorted[#sorted+1] = CharInfo
+        end
+        if CharInfo.PlayerData.isShownPLAYER and E.curGUID ~= CharInfo.PlayerData.GUID then
+            if not Octo_ToDo_DB_Vars.OnlyCurrentFaction or (Octo_ToDo_DB_Vars.OnlyCurrentFaction and CharInfo.PlayerData.Faction == E.curFaction) then
+                if ShowOnlyCurrentBattleTag then
+                    if (ShowOnlyCurrentServer and CharInfo.PlayerData.curServer == E.curServer or not ShowOnlyCurrentServer)
+                    and CharInfo.PlayerData.BattleTagLocal == E.BattleTagLocal
+                    and CharInfo.PlayerData.UnitLevel >= LevelToShow
+                    and CharInfo.PlayerData.UnitLevel <= LevelToShowMAX
+                    then
+                        sorted[#sorted+1] = CharInfo
+                    end
+                else
+                    if (ShowOnlyCurrentServer and CharInfo.PlayerData.curServer == E.curServer or not ShowOnlyCurrentServer)
+                    and CharInfo.PlayerData.UnitLevel >= LevelToShow
+                    and CharInfo.PlayerData.UnitLevel <= LevelToShowMAX
+                    then
+                        sorted[#sorted+1] = CharInfo
+                    end
+                end
+            end
+        end
+    end
 
-					table.sort(sorted, function(a, b)
-						if not a or not b then return false end
+    table.sort(sorted, function(a, b)
+            if not a or not b then return false end
 
-			-- Сначала сортируем по серверу (в алфавитном порядке)
-			-- if a.curServer ~= b.curServer then
-			-- 	return a.curServer < b.curServer
-			-- end
+            -- Сначала сортируем по серверу (в алфавитном порядке)
+            -- if a.curServer ~= b.curServer then
+            --     return a.curServer < b.curServer
+            -- end
 
-			-- Затем по уровню (по убыванию)
-			if a.UnitLevel ~= b.UnitLevel then
-				return a.UnitLevel > b.UnitLevel
-			end
+            -- Затем по уровню (по убыванию)
+            if a.PlayerData.UnitLevel ~= b.PlayerData.UnitLevel then
+                return a.PlayerData.UnitLevel > b.PlayerData.UnitLevel
+            end
 
-			-- Затем по уровню предметов (по убыванию) -- avgItemLevelEquipped
-			if a.avgItemLevel ~= b.avgItemLevel then
-				return a.avgItemLevel > b.avgItemLevel
-			end
+            -- Затем по уровню предметов (по убыванию) -- avgItemLevelEquipped
+            if a.PlayerData.avgItemLevel ~= b.PlayerData.avgItemLevel then
+                return a.PlayerData.avgItemLevel > b.PlayerData.avgItemLevel
+            end
 
-			-- В конце по имени (по возрастанию)
-			return a.Name < b.Name
-		end)
+            -- В конце по имени (по возрастанию)
+            return a.PlayerData.Name < b.PlayerData.Name
+    end)
 
-					return sorted
-				end
+    return sorted
+end
+
 
 ----------------------------------------------------------------
 -- 1 Работа с цветами:

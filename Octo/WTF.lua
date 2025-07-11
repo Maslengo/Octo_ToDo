@@ -2,9 +2,19 @@ local GlobalAddonName, E = ...
 local Octo_EventFrame_WTF = CreateFrame("FRAME")
 Octo_EventFrame_WTF:Hide()
 -- Локальные функции для часто используемых операций
-local function InitTable(tbl) return tbl or {} end
-local function InitField(tbl, field, default) if tbl[field] == nil then tbl[field] = default end end
-local function InitSubTable(tbl, field) if tbl[field] == nil then tbl[field] = {} end end
+local function InitTable(tbl)
+	return tbl or {}
+end
+local function InitField(tbl, field, default)
+	if tbl[field] == nil then
+		tbl[field] = default
+	end
+end
+local function InitSubTable(tbl, field)
+	if tbl[field] == nil then
+		tbl[field] = {}
+	end
+end
 local wipe = wipe
 -- do
 --     local text = "|cffFFF3712500/3000 (Равнодушие)|r"
@@ -30,82 +40,95 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local currentDateTime = date("%d.%m.%Y %H:%M:%S")
 	-- Предварительно вычисляем часто используемые значения
 	local defaults = {
-		ReloadCount = 0,
-		avgItemLevel = 1,
-		avgItemLevelEquipped = 1,
-		avgItemLevelPvp = 1,
-		azeriteEXP = 0,
-		azeriteLVL = 0,
 		className = E.className,
 		classFilename = E.classFilename,
 		GUID = curGUID,
-		cloak_lvl = 0,
-		cloak_res = 0,
-		classId = 1,
 		classColor = E.classColor,
 		curServer = E.curServer,
 		guildName = "",
 		guildRankName = "",
-		guildRankIndex = 0,
 		curServerShort = E.func_CurServerShort(E.curServer),
 		Faction = "Horde",
 		BattleTag = E.BattleTag,
 		BattleTagLocal = E.BattleTagLocal,
-		IsPublicBuild = E.IsPublicBuild,
-		Chromie_UnitChromieTimeID = 0,
-		GameLimitedMode_IsActive = E.GameLimitedMode_IsActive,
 		buildVersion = E.buildVersion,
 		buildNumber = E.buildNumber,
 		buildDate = E.buildDate,
 		interfaceVersion = E.interfaceVersion,
 		currentTier = E.currentTier,
-		IsAccountSecured = E.IsAccountSecured,
-		GetRestrictedAccountData_rLevel = E.GetRestrictedAccountData_rLevel,
-		GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney,
-		GetRestrictedAccountData_profCap = E.GetRestrictedAccountData_profCap,
-		IsTrialAccount = E.IsTrialAccount,
-		IsVeteranTrialAccount = E.IsVeteranTrialAccount,
-		PlayerDurability = 100,
-		maxNumQuestsCanAccept = 0,
+		-- GetRestrictedAccountData_rLevel = E.GetRestrictedAccountData_rLevel,
+		-- GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney,
+		-- PlayerDurability = 100,
 		Name = E.curCharName,
-		numQuests = 0,
-		RaceLocal = 0,
-		RaceEnglish = 0,
-		raceID = 0,
 		classColorHex = E.classColorHexCurrent,
-		currentXP = 0,
-		UnitXPMax = 0,
-		UnitXPPercent = 0,
-		realTotalTime = 0,
-		TodayTimePlayed = 0,
-		realLevelTime = 0,
-		Possible_Anima = 0,
-		Possible_CatalogedResearch = 0,
-		numShownEntries = 0,
 		loginDate = currentDateTime,
 		loginDay = currentDate,
 		loginHour = currentTime,
-		Chromie_canEnter = false,
-		UnitLevel = 1,
-		Money = 0,
-		totalSlots = 0,
-		usedSlots = 0,
-		BindLocation = 0,
-		curLocation = 0,
-		WarMode = false,
-		CurrentKey = 0,
-		CurrentKeyName = 0,
-		CurrentKeyLevel = 0,
-		hasMail = false,
-		levelCapped20 = false,
-		PlayerCanEarnExperience = true,
-		needResetDaily = false,
-		needResetWeekly = false,
-		needResetMonth = false,
-		HasAvailableRewards = false,
+
+		-- ReloadCount = 0,
+		-- azeriteEXP = 0,
+		-- azeriteLVL = 0,
+		-- cloak_lvl = 0,
+		-- cloak_res = 0,
+		-- guildRankIndex = 0,
+		-- Chromie_UnitChromieTimeID = 0,
+		-- maxNumQuestsCanAccept = 0,
+		-- numQuests = 0,
+		-- RaceLocal = 0,
+		-- RaceEnglish = 0,
+		-- raceID = 0,
+		-- currentXP = 0,
+		-- UnitXPMax = 0,
+		-- UnitXPPercent = 0,
+		-- realTotalTime = 0,
+		-- TodayTimePlayed = 0,
+		-- realLevelTime = 0,
+		-- Possible_Anima = 0,
+		-- Possible_CatalogedResearch = 0,
+		-- numShownEntries = 0,
+		-- Money = 0,
+		-- totalSlots = 0,
+		-- usedSlots = 0,
+		-- BindLocation = 0,
+		-- curLocation = 0,
+		-- CurrentKey = 0,
+		-- CurrentKeyName = 0,
+		-- CurrentKeyLevel = 0,
+		-- RIO_Score = 0,
+		-- RIO_weeklyBest = 0,
+
+		-- avgItemLevel = 1,
+		-- avgItemLevelEquipped = 1,
+		-- avgItemLevelPvp = 1,
+		-- classId = 1,
+		-- UnitLevel = 1,
+
+
+		-- hasMail = false,
+		-- levelCapped20 = false,
+		-- GameLimitedMode_IsActive = E.GameLimitedMode_IsActive,
+		-- IsRestrictedAccount
 		isShownPLAYER = true,
-		RIO_Score = 0,
-		RIO_weeklyBest = 0,
+		-- Chromie_inChromieTime
+		-- IsVeteranTrialAccount = E.IsVeteranTrialAccount,
+		-- Chromie_canEnter = false,
+		-- IsPublicBuild = E.IsPublicBuild,
+		-- HasAvailableRewards = false,
+
+		-- IsTrialAccount = E.IsTrialAccount,
+		-- IsAccountSecured = E.IsAccountSecured,
+		-- needResetDaily = false,
+		-- needResetWeekly = false,
+		-- needResetMonth = false,
+		-- WarMode = false,
+		-- PlayerCanEarnExperience = true,
+
+
+
+
+
+
+
 	}
 	-- Оптимизация: предварительно инициализируем таблицы
 	local MASLENGO_DEFAULTS = {
@@ -113,7 +136,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		CurrencyID = {},
 		CurrencyID_totalEarned = {},
 		CurrencyID_Total = {},
-		UniversalQuest = {},
+		-- UniversalQuest = {},
 		OctoTable_QuestID = {},
 		ListOfQuests = {}, -- Quests
 		professions = {
@@ -148,16 +171,19 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	MASLENGO_DEFAULTS.CovenantAndAnima.curCovID = 0
 	-- Обработка всех персонажей
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		-- Установка значений по умолчанию
-		for k, v in next, (defaults) do
-			InitField(CharInfo, k, v)
-		end
-		CharInfo.time = CharInfo.time or CharInfo.tmstp_Daily or ServerTime
-		CharInfo.GUID = GUID -- Перезаписываем GUID для текущего персонажа
-		CharInfo.MoneyOnLogin = CharInfo.MoneyOnLogin or CharInfo.Money
-		-- Инициализация MASLENGO таблиц
+
 		InitSubTable(CharInfo, "MASLENGO")
 		local MASLENGO = CharInfo.MASLENGO
+
+		InitSubTable(CharInfo, "PlayerData")
+		local PlayerData = CharInfo.PlayerData
+		for k, v in next, (defaults) do
+			InitField(PlayerData, k, v)
+		end
+		PlayerData.time = PlayerData.time or PlayerData.tmstp_Daily or ServerTime
+		PlayerData.MoneyOnLogin = PlayerData.MoneyOnLogin or PlayerData.Money
+
+
 		-- Применяем предопределенные значения для MASLENGO
 		for k, v in next, (MASLENGO_DEFAULTS) do
 			if MASLENGO[k] == nil then
@@ -319,18 +345,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 end
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars = InitTable(Octo_ToDo_DB_Vars)
-	-- Настройки отладки
-	local debugDefaults = {
-		DebugIDs = false,
-		DebugInfo = false,
-		DebugEvent = false,
-		DebugFunction = false,
-		DebugButton = false
-	}
-	for k, v in next, (debugDefaults) do
-		InitField(Octo_ToDo_DB_Vars, k, v)
-		E[k] = Octo_ToDo_DB_Vars[k]
-	end
 	-- Размеры и параметры интерфейса
 	local uiDefaults = {
 		AddonHeight = 20,
@@ -343,10 +357,22 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		GameMenuFrameScale = 0.8,
 		LevelToShow = 1,
 		LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT),
-		prefix = 1
+		prefix = 1,
 	}
 	for k, v in next, (uiDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
+	end
+	-- Настройки отладки
+	local debugDefaults = {
+		DebugIDs = nil,
+		DebugInfo = nil,
+		DebugEvent = nil,
+		DebugFunction = nil,
+		DebugButton = nil,
+	}
+	for k, v in next, (debugDefaults) do
+		InitField(Octo_ToDo_DB_Vars, k, v)
+		E[k] = Octo_ToDo_DB_Vars[k]
 	end
 	-- Настройки функций
 	local featureDefaults = {
@@ -355,7 +381,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		AnotherAddonsCasual = true,
 		AnotherAddonsDUNG = true,
 		AnotherAddonsRAID = true,
-		Auto_ChatClearing = false,
 		Auto_CinematicCanceler = true,
 		Auto_CinematicFastSkip = true,
 		Auto_Gossip = true,
@@ -367,7 +392,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		BeledarCycle = true,
 		ChallengesKeystoneFrame = true,
 		Currency = true,
-		CurrencyShowAllways = false,
 		CVar = true,
 		Dungeons = true,
 		EmeraldDream_Dreamseeds = true,
@@ -386,30 +410,22 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Hide_RaidWarningFrame = true,
 		Hide_Talking_Head_Frame = true,
 		Hide_Zone_Text = true,
-		Holidays = false,
+		Holidays = true,
 		InputDelete = true,
 		ItemLevel = true,
 		Items = true,
-		ItemsShowAllways = false,
-		ItemsUsable = false,
 		LastUpdate = true,
 		LootFrame = true,
 		MajorKeyflames = true,
 		MinorKeyflames = true,
 		MP_MythicKeystone = true,
-		OnlyCurrentFaction = false,
 		PortalsButtons = true,
 		PortalsButtonsOnlyAvailable = true,
 		Professions = true,
 		Quests = true,
-		QuestsShowAllways = false,
-		Reputations = false,
 		QC_Quests = true,
-		QC_Vignettes = false,
 		ResetAllChars = true,
 		ShowIDS = true,
-		ShowOnlyCurrentBattleTag = false,
-		ShowOnlyCurrentServer = false,
 		ShowTime70 = true,
 		SORTING = true,
 		StaticPopup1Button1 = true,
@@ -421,6 +437,17 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		UIErrorsFramePosition = true,
 		WasOnline = true,
 		WorldBoss_Weekly = true,
+
+		Auto_ChatClearing = nil,
+		Reputations = nil,
+		CurrencyShowAllways = nil,
+		ItemsShowAllways = nil,
+		ItemsUsable = nil,
+		OnlyCurrentFaction = nil,
+		QuestsShowAllways = nil,
+		QC_Vignettes = nil,
+		ShowOnlyCurrentBattleTag = nil,
+		ShowOnlyCurrentServer = nil,
 	}
 	for k, v in next, (featureDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
@@ -504,28 +531,31 @@ function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 	InitField(Octo_AddonsManager_DB.profiles.forceload, GlobalAddonName, true)
 	InitSubTable(Octo_AddonsManager_DB, "config")
 	local configDefaults = {
-		fullName = false,
-		showIcons = false,
-		showIconsQuestionMark = true,
-		showVersion = false,
-		showIndex = false,
-		minimaphide = false,
-		hookMenuButton = false,
-		sortingCpu = false,
-		profilingcpuShowCurrent = true,
-		profilingcpuShowEncounter = true,
-		profilingcpuShowPeak = true,
-		profilingcpuShowAverage = true,
-		profilingcpuUpdate = 0,
-		localizeCategoryName = true,
-		showVersions = true,
-		autofocusSearch = true,
 		sorting = "title",
-		showSecureAddons = true,
 		addonListStyle = "tree",
-		showTocXCategory = true,
-		showTocCategory = true,
-		showMemoryInBrokerTtp = true
+
+		profilingcpuUpdate = nil, -- 0
+
+		showIconsQuestionMark = nil,
+		profilingcpuShowCurrent = nil,
+		profilingcpuShowEncounter = nil,
+		profilingcpuShowPeak = nil,
+		profilingcpuShowAverage = nil,
+		localizeCategoryName = nil,
+		showVersions = nil,
+		autofocusSearch = nil,
+		showSecureAddons = nil,
+		showTocXCategory = nil,
+		showTocCategory = nil,
+		showMemoryInBrokerTtp = nil,
+
+		fullName = nil,
+		showIcons = nil,
+		showVersion = nil,
+		showIndex = nil,
+		minimaphide = nil,
+		hookMenuButton = nil,
+		sortingCpu = nil,
 	}
 	for k, v in next, (configDefaults) do
 		InitField(Octo_AddonsManager_DB.config, k, v)
@@ -537,8 +567,6 @@ function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 end
 function Octo_EventFrame_WTF:Octo_DEBUG()
 	Octo_DEBUG = InitTable(Octo_DEBUG)
-	InitSubTable(Octo_DEBUG, "Reputations")
-	InitSubTable(Octo_DEBUG, "UniversalQuest")
 end
 function Octo_EventFrame_WTF:Octo_QuestsChangedDB()
 	Octo_QuestsChangedDB = InitTable(Octo_QuestsChangedDB)
@@ -557,7 +585,6 @@ function Octo_EventFrame_WTF:Daily_Reset()
 					CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Daily"] = nil
 				end
 			end
-			CharInfo.STARTTODAY = 0
 			wipe(CharInfo.MASLENGO.LFGInstance)
 			for _, v in ipairs (E.OctoTable_LFGDungeons) do
 				CharInfo.MASLENGO.LFGInstance[v] = CharInfo.MASLENGO.LFGInstance[v] or {}
@@ -583,12 +610,12 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 			-- Сброс данных
 			CharInfo.tmstp_Weekly = E.func_tmstpDayReset(7)
 			CharInfo.needResetWeekly = true
-			CharInfo.CurrentKey = 0
-			CharInfo.CurrentKeyName = 0
-			CharInfo.CurrentKeyLevel = 0
+			CharInfo.CurrentKey = nil
+			CharInfo.CurrentKeyName = nil
+			CharInfo.CurrentKeyLevel = nil
+			CharInfo.RIO_weeklyBest = nil
 			CharInfo.MASLENGO.journalInstance = {}
 			CharInfo.MASLENGO.SavedWorldBoss = {}
-			CharInfo.RIO_weeklyBest = 0
 			CharInfo.MASLENGO.GreatVault = {}
 			-- Сброс еженедельных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
@@ -605,7 +632,6 @@ function Octo_EventFrame_WTF:Month_Reset()
 		if (CharInfo.tmstp_Month or 0) < ServerTime then
 			CharInfo.tmstp_Month = E.func_tmstpDayReset(30)
 			CharInfo.needResetMonth = true
-			CharInfo.STARTMONTH = 0
 			-- Сброс ежемесячных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
 				if v.reset == "Month" then

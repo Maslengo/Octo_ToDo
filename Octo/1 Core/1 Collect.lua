@@ -68,73 +68,96 @@ function E.LoadOctoUIforAddons()
 end
 ----------------------------------------------------------------
 function E.Collect_All_PlayerInfo()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
 		local curServerShort = E.func_CurServerShort(E.curServer)
 		local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
 		local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
 		local guildName, guildRankName, guildRankIndex = GetGuildInfo("PLAYER")
 		----
-		collect.curServerShort = curServerShort
-		collect.Name = E.curCharName
-		collect.curServer = E.curServer
-		collect.className = E.className
-		collect.classFilename = E.classFilename
-		collect.classId = E.classId
-		collect.GUID = E.curGUID
-		collect.Faction = E.curFaction
-		collect.specId = specId or 0
-		collect.specName = specName or ""
-		collect.specIcon = specIcon or 0
-		collect.classColor = E.classColor
-		collect.RaceLocal = RaceLocal
-		collect.RaceEnglish = RaceEnglish
-		collect.raceID = raceID
-		collect.classColorHex = E.classColorHexCurrent
-		collect.guildName = guildName
-		collect.guildRankName = guildRankName
-		collect.guildRankIndex = guildRankIndex
-		collect.BattleTag = E.BattleTag
-		collect.BattleTagLocal = E.BattleTagLocal
-		collect.buildVersion = E.buildVersion
-		collect.buildNumber = E.buildNumber
-		collect.buildDate = E.buildDate
-		collect.interfaceVersion = E.interfaceVersion
-		collect.currentTier = E.currentTier
-		collect.IsPublicBuild = E.IsPublicBuild
-		collect.GetRestrictedAccountData_rLevel = E.GetRestrictedAccountData_rLevel
-		collect.GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney
-		collect.GetRestrictedAccountData_profCap = E.GetRestrictedAccountData_profCap
-		collect.IsAccountSecured = E.IsAccountSecured
-		collect.IsRestrictedAccount = E.IsRestrictedAccount
-		collect.IsTrialAccount = E.IsTrialAccount
-		collect.IsVeteranTrialAccount = E.IsVeteranTrialAccount
+		collectPlayerData.curServerShort = curServerShort
+		collectPlayerData.Name = E.curCharName
+		collectPlayerData.curServer = E.curServer
+		collectPlayerData.className = E.className
+		collectPlayerData.classFilename = E.classFilename
+		collectPlayerData.classId = E.classId
+		collectPlayerData.GUID = E.curGUID
+		collectPlayerData.Faction = E.curFaction
+		collectPlayerData.specId = specId or 0
+		collectPlayerData.specName = specName or ""
+		collectPlayerData.specIcon = specIcon or 0
+		collectPlayerData.classColor = E.classColor
+		collectPlayerData.RaceLocal = RaceLocal
+		collectPlayerData.RaceEnglish = RaceEnglish
+		collectPlayerData.raceID = raceID
+		collectPlayerData.classColorHex = E.classColorHexCurrent
+		collectPlayerData.guildName = guildName
+		collectPlayerData.guildRankName = guildRankName
+		if guildRankIndex and guildRankIndex ~= 0 then
+			collectPlayerData.guildRankIndex = guildRankIndex
+		end
+		collectPlayerData.BattleTag = E.BattleTag
+		collectPlayerData.BattleTagLocal = E.BattleTagLocal
+		collectPlayerData.buildVersion = E.buildVersion
+		collectPlayerData.buildNumber = E.buildNumber
+		collectPlayerData.buildDate = E.buildDate
+		collectPlayerData.interfaceVersion = E.interfaceVersion
+		collectPlayerData.currentTier = E.currentTier
+		if E.IsPublicBuild then
+			collectPlayerData.IsPublicBuild = E.IsPublicBuild
+		else
+			collectPlayerData.IsPublicBuild = nil
+		end
+		collectPlayerData.GetRestrictedAccountData_rLevel = E.GetRestrictedAccountData_rLevel
+		collectPlayerData.GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney
+		if E.IsAccountSecured then
+			collectPlayerData.IsAccountSecured = E.IsAccountSecured
+		else
+			collectPlayerData.IsAccountSecured = nil
+		end
+		if E.IsRestrictedAccount then
+			collectPlayerData.IsRestrictedAccount = E.IsRestrictedAccount
+		else
+			collectPlayerData.IsRestrictedAccount = nil
+		end
+		if E.IsTrialAccount then
+			collectPlayerData.IsTrialAccount = E.IsTrialAccount
+		else
+			collectPlayerData.IsTrialAccount = nil
+		end
+		if E.IsVeteranTrialAccount then
+			collectPlayerData.IsVeteranTrialAccount = E.IsVeteranTrialAccount
+		else
+			collectPlayerData.IsVeteranTrialAccount = nil
+		end
+		collectPlayerData.DBVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
 	end
 end
 function E.Collect_All_ReloadCount()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect then
-		collect.ReloadCount = collect.ReloadCount+1
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData then
+		collectPlayerData.ReloadCount = collectPlayerData.ReloadCount or 0
+		collectPlayerData.ReloadCount = collectPlayerData.ReloadCount + 1
 	end
 end
 function E.Collect_All_Covenant()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if collectMASLENGO and not InCombatLockdown() then
 		local curCovID = C_Covenants.GetActiveCovenantID() or 0
 		if curCovID > 0 then
 			local curCovLevel = C_CovenantSanctumUI.GetRenownLevel()
 			local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(1813)
 			local curAnimaAmount = currencyInfo.quantity
-			collect.MASLENGO.CovenantAndAnima = collect.MASLENGO.CovenantAndAnima or {}
-			collect.MASLENGO.CovenantAndAnima.curCovID = curCovID
-			collect.MASLENGO.CovenantAndAnima[curCovID][1] = curCovLevel
-			collect.MASLENGO.CovenantAndAnima[curCovID][2] = curAnimaAmount
+			collectMASLENGO.CovenantAndAnima = collectMASLENGO.CovenantAndAnima or {}
+			collectMASLENGO.CovenantAndAnima.curCovID = curCovID
+			collectMASLENGO.CovenantAndAnima[curCovID][1] = curCovLevel
+			collectMASLENGO.CovenantAndAnima[curCovID][2] = curAnimaAmount
 		end
 	end
 end
 function E.Collect_All_PlayerDurability()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
 		local totalDurability = 100
 		local slots = {
 			[1] = _G.INVTYPE_HEAD,
@@ -158,69 +181,77 @@ function E.Collect_All_PlayerDurability()
 				end
 			end
 		end
-		collect.PlayerDurability = E.func_CompactNumberSimple(totalDurability)
+		collectPlayerData.PlayerDurability = E.func_CompactNumberSimple(totalDurability)
 	end
 end
 function E.Collect_All_PlayerLevel()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
 		local UnitLevel = UnitLevel("PLAYER") or 0
 		local currentXP = UnitXP("PLAYER") or 0
 		local UnitXPMax = UnitXPMax("PLAYER") or 0
 		local UnitXPPercent = math.ceil((currentXP/UnitXPMax)*100)
-		collect.UnitLevel = UnitLevel
-		collect.currentXP = currentXP
-		collect.UnitXPMax = UnitXPMax
-		collect.UnitXPPercent = UnitXPPercent
+		collectPlayerData.UnitLevel = UnitLevel
+		collectPlayerData.currentXP = currentXP
+		collectPlayerData.UnitXPMax = UnitXPMax
+		collectPlayerData.UnitXPPercent = UnitXPPercent
 		if UnitLevel == E.currentMaxLevel then
-			collect.PlayerCanEarnExperience = false
+			collectPlayerData.PlayerCanEarnExperience = nil
 		else
 			if E.GameLimitedMode_IsActive == true then
 				if UnitLevel >= E.GetRestrictedAccountData_rLevel then
 					-- if MainStatusTrackingBarContainer and MainStatusTrackingBarContainer:IsShown() then
 					-- tinsert(E.OctoTable_MustBeHiddenFrames_table, {name = "MainStatusTrackingBarContainer", frame = MainStatusTrackingBarContainer})
 					-- end
-					collect.levelCapped20 = true
-					collect.PlayerCanEarnExperience = false
+					collectPlayerData.levelCapped20 = true
+					collectPlayerData.PlayerCanEarnExperience = nil
 				else
-					collect.levelCapped20 = false
-					collect.PlayerCanEarnExperience = true
+					collectPlayerData.levelCapped20 = nil
+					collectPlayerData.PlayerCanEarnExperience = true
 				end
 			end
 		end
 	end
 end
 function E.Collect_All_Played(totalTime, currentLevelTime)
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect then
-		collect.realTotalTime = totalTime
-		collect.realLevelTime = currentLevelTime
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData then
+		collectPlayerData.realTotalTime = totalTime
+		collectPlayerData.realLevelTime = currentLevelTime
 	end
 end
 function E.Collect_All_WarMode()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData then
 		local WarMode = C_PvP.IsWarModeDesired()
-		collect.WarMode = WarMode
+		if WarMode then
+			collectPlayerData.WarMode = WarMode
+		else
+			collectPlayerData.WarMode = nil
+		end
 	end
 end
 function E.Collect_All_Mail()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
 		local hasMail = HasNewMail()
-		collect.hasMail = hasMail
+		if hasMail then
+			collectPlayerData.hasMail = hasMail
+		else
+			collectPlayerData.hasMail = nil
+		end
 	end
 end
 function E.Collect_All_LoginTime()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect then
-		collect.loginDate = date("%d.%m.%Y %H:%M:%S")
-		collect.loginDay = date("%d.%m.%Y")
-		collect.loginHour = date("%H:%M")
-		collect.needResetWeekly = false
-		collect.needResetDaily = false
-		collect.needResetMonth = false
-		collect.time = time()
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData then
+		collectPlayerData.loginDate = date("%d.%m.%Y %H:%M:%S")
+		collectPlayerData.loginDay = date("%d.%m.%Y")
+		collectPlayerData.loginHour = date("%H:%M")
+		collectPlayerData.needResetWeekly = nil
+		collectPlayerData.needResetDaily = nil
+		collectPlayerData.needResetMonth = nil
+		collectPlayerData.time = time()
 	end
 end
 function E.Collect_All_Professions()
@@ -278,85 +309,95 @@ function E.Collect_All_Professions()
 		-- 981,-- "Кулинария для новичков", -- WTF?
 		-- 982,-- "Кулинария для подмастерьев", -- WTF?
 	}
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
-		collect.MASLENGO = collect.MASLENGO or {}
-		-- collect.MASLENGO.professions = collect.MASLENGO.professions or {}
-		collect.MASLENGO.professions = {}
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	local collectENABLEmoreprof = false
+	if collectMASLENGO and not InCombatLockdown() then
+		-- collectMASLENGO.professions = collectMASLENGO.professions or {}
+		collectMASLENGO.professions = {}
 		for i, id in next, ({GetProfessions()}) do
-			collect.MASLENGO.professions[i] = collect.MASLENGO.professions[i] or {}
+			collectMASLENGO.professions[i] = collectMASLENGO.professions[i] or {}
 			----------------------------------------------------------------
 			----------------------------------------------------------------
 			----------------------------------------------------------------
 			local _, _, skillLevel, maxSkillLevel, _, _, skillLine, skillModifier = GetProfessionInfo(id)
-			collect.MASLENGO.professions[i].skillLine = skillLine
-			collect.MASLENGO.professions[i].skillLevel = skillLevel
-			collect.MASLENGO.professions[i].maxSkillLevel = maxSkillLevel
-			collect.MASLENGO.professions[i].skillModifier = skillModifier
-			if i == 1 or i == 2 then
-				for index, skillLineID in ipairs(C_TradeSkillUI.GetAllProfessionTradeSkillLines()) do -- СОБИРАТЬ ТОЛЬКО ОСНОВНЫЕ
-					-- for skillLineID, j in next, (Octo_ToDo_DB_Other.professions.DEBUG) do -- СОБИРАТЬ ВСЁ
-					local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
-					local QWEprofessionName = info.professionName
-					local QWEskillLevel = info.skillLevel
-					local QWEmaxSkillLevel = info.maxSkillLevel
-					local QWEprofessionID = info.professionID
-					local QWEexpansionName = info.expansionName
-					local QWEparentProfessionID = info.parentProfessionID
-					local QWEsourceCounter = info.sourceCounter
-					local QWEskillModifier = info.skillModifier
-					local QWEisPrimaryProfession = info.isPrimaryProfession
-					local QWEparentProfessionName = info.parentProfessionName
-					if skillLine == QWEparentProfessionID then
-						collect.MASLENGO.professions[i].child = collect.MASLENGO.professions[i].child or {}
-						tinsert(collect.MASLENGO.professions[i].child, {
-								QWEprofessionName = QWEprofessionName,
-								QWEskillLevel = QWEskillLevel,
-								QWEmaxSkillLevel = QWEmaxSkillLevel,
-								QWEprofessionID = QWEprofessionID,
-								QWEexpansionName = QWEexpansionName,
-								QWEsourceCounter = QWEsourceCounter,
-								QWEskillModifier = QWEskillModifier,
-								QWEisPrimaryProfession = QWEisPrimaryProfession,
-								QWEparentProfessionName = QWEparentProfessionName,
-						})
+			if skillLine and skillLine ~= 0 then
+				collectMASLENGO.professions[i].skillLine = skillLine
+			end
+			if skillLevel and skillLevel ~= 0 then
+				collectMASLENGO.professions[i].skillLevel = skillLevel
+			end
+			if maxSkillLevel and maxSkillLevel ~= 0 then
+				collectMASLENGO.professions[i].maxSkillLevel = maxSkillLevel
+			end
+			if skillModifier and skillModifier ~= 0 then
+				collectMASLENGO.professions[i].skillModifier = skillModifier
+			end
+			if  collectENABLEmoreprof  then
+				if i == 1 or i == 2 then
+					for index, skillLineID in ipairs(C_TradeSkillUI.GetAllProfessionTradeSkillLines()) do -- СОБИРАТЬ ТОЛЬКО ОСНОВНЫЕ
+						-- for skillLineID, j in next, (Octo_ToDo_DB_Other.professions.DEBUG) do -- СОБИРАТЬ ВСЁ
+						local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
+						local QWEprofessionName = info.professionName
+						local QWEskillLevel = info.skillLevel
+						local QWEmaxSkillLevel = info.maxSkillLevel
+						local QWEprofessionID = info.professionID
+						local QWEexpansionName = info.expansionName
+						local QWEparentProfessionID = info.parentProfessionID
+						local QWEsourceCounter = info.sourceCounter
+						local QWEskillModifier = info.skillModifier
+						local QWEisPrimaryProfession = info.isPrimaryProfession
+						local QWEparentProfessionName = info.parentProfessionName
+						if skillLine == QWEparentProfessionID then
+							collectMASLENGO.professions[i].child = collectMASLENGO.professions[i].child or {}
+							tinsert(collectMASLENGO.professions[i].child, {
+									QWEprofessionName = QWEprofessionName,
+									QWEskillLevel = QWEskillLevel,
+									QWEmaxSkillLevel = QWEmaxSkillLevel,
+									QWEprofessionID = QWEprofessionID,
+									QWEexpansionName = QWEexpansionName,
+									QWEsourceCounter = QWEsourceCounter,
+									QWEskillModifier = QWEskillModifier,
+									QWEisPrimaryProfession = QWEisPrimaryProfession,
+									QWEparentProfessionName = QWEparentProfessionName,
+							})
+						end
+					end
+				end
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				if i == 3 then
+				end
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				if i == 4 or i == 5 then
+					-- local _, _, skillLevel, maxSkillLevel, _, _, skillLine, skillModifier = GetProfessionInfo(id)
+					for index, skillLineID in next, (prof34) do -- СОБИРАТЬ ВСЁ
+						local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
+						local QWEprofessionName = info.professionName
+						local QWEskillLevel = info.skillLevel
+						local QWEmaxSkillLevel = info.maxSkillLevel
+						local QWEprofessionID = info.professionID
+						local QWEexpansionName = info.expansionName
+						local QWEparentProfessionID = info.parentProfessionID
+						-- local QWEsourceCounter = info.sourceCounter
+						-- local QWEskillModifier = info.skillModifier
+						-- local QWEisPrimaryProfession = info.isPrimaryProfession
+						-- local QWEparentProfessionName = info.parentProfessionName
+						if skillLine == QWEparentProfessionID then
+							collectMASLENGO.professions[i].child = collectMASLENGO.professions[i].child or {}
+							tinsert(collectMASLENGO.professions[i].child, {
+									QWEprofessionName = QWEprofessionName,
+									QWEskillLevel = QWEskillLevel,
+									QWEmaxSkillLevel = QWEmaxSkillLevel,
+									QWEprofessionID = QWEprofessionID,
+									QWEexpansionName = QWEexpansionName,
+							})
+						end
 					end
 				end
 			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			if i == 3 then
-			end
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			----------------------------------------------------------------
-			-- if i == 4 or i == 5 then
-			--     -- local _, _, skillLevel, maxSkillLevel, _, _, skillLine, skillModifier = GetProfessionInfo(id)
-			--     for index, skillLineID in next, (prof34) do -- СОБИРАТЬ ВСЁ
-			--         local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
-			--         local QWEprofessionName = info.professionName
-			--         local QWEskillLevel = info.skillLevel
-			--         local QWEmaxSkillLevel = info.maxSkillLevel
-			--         local QWEprofessionID = info.professionID
-			--         local QWEexpansionName = info.expansionName
-			--         local QWEparentProfessionID = info.parentProfessionID
-			--         -- local QWEsourceCounter = info.sourceCounter
-			--         -- local QWEskillModifier = info.skillModifier
-			--         -- local QWEisPrimaryProfession = info.isPrimaryProfession
-			--         -- local QWEparentProfessionName = info.parentProfessionName
-			--         if skillLine == QWEparentProfessionID then
-			--             collect.MASLENGO.professions[i].child = collect.MASLENGO.professions[i].child or {}
-			--             tinsert(collect.MASLENGO.professions[i].child, {
-			--                     QWEprofessionName = QWEprofessionName,
-			--                     QWEskillLevel = QWEskillLevel,
-			--                     QWEmaxSkillLevel = QWEmaxSkillLevel,
-			--                     QWEprofessionID = QWEprofessionID,
-			--                     QWEexpansionName = QWEexpansionName,
-			--             })
-			--         end
-			--     end
-			-- end
 			----------------------------------------------------------------
 			----------------------------------------------------------------
 			----------------------------------------------------------------
@@ -370,8 +411,9 @@ function E.Collect_All_Professions()
 	-- end
 end
 function E.Collect_All_GreatVault()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if collectPlayerData and not InCombatLockdown() then
 		local mapChallengeModeIDs = C_ChallengeMode.GetMapTable()
 		C_MythicPlus.RequestRewards()
 		local currentWeekBestLevel = C_MythicPlus.GetWeeklyChestRewardLevel() or 0
@@ -382,8 +424,16 @@ function E.Collect_All_GreatVault()
 				currentWeekBestLevel = level
 			end
 		end
-		collect.RIO_Score = C_ChallengeMode.GetOverallDungeonScore("PLAYER")
-		collect.RIO_weeklyBest = currentWeekBestLevel
+		if C_ChallengeMode.GetOverallDungeonScore("PLAYER") and C_ChallengeMode.GetOverallDungeonScore("PLAYER") ~= 0 then
+			collectPlayerData.RIO_Score = C_ChallengeMode.GetOverallDungeonScore("PLAYER")
+		else
+			collectPlayerData.RIO_Score = nil
+		end
+		if currentWeekBestLevel and currentWeekBestLevel ~= 0 then
+			collectPlayerData.RIO_weeklyBest = currentWeekBestLevel
+		else
+			collectPlayerData.RIO_weeklyBest = nil
+		end
 		local name_activities = setmetatable({
 				[0] = "None",
 				[1] = DUNGEONS,
@@ -411,17 +461,17 @@ function E.Collect_All_GreatVault()
 				local activityInfo = activities[k]
 				if activityInfo then
 					local tip = activityInfo.type
-					if collect and tip ~= nil then
-						collect.MASLENGO.GreatVault[tip] = collect.MASLENGO.GreatVault[tip] or {}
-						collect.MASLENGO.GreatVault[tip].type = activity_name
-						collect.MASLENGO.GreatVault[tip].progress = activityInfo.progress
-						collect.MASLENGO.GreatVault[tip].threshold = activityInfo.threshold
+					if collectPlayerData and tip ~= nil then
+						collectMASLENGO.GreatVault[tip] = collectMASLENGO.GreatVault[tip] or {}
+						collectMASLENGO.GreatVault[tip].type = activity_name
+						collectMASLENGO.GreatVault[tip].progress = activityInfo.progress
+						collectMASLENGO.GreatVault[tip].threshold = activityInfo.threshold
 						local hyperlink = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						hyperlink_STRING = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						if hyperlink_STRING then
 							vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
 							if vivod ~= nil then
-								collect.MASLENGO.GreatVault[tip].hyperlink_STRING = vivod
+								collectMASLENGO.GreatVault[tip].hyperlink_STRING = vivod
 							end
 						end
 					end
@@ -433,8 +483,8 @@ end
 function E.Collect_All_Currency()
 	-- local list = Octo_DB_Config.CurrencyDB
 	local list = {}
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if collectPlayerData and not InCombatLockdown() then
 		-- local listSize = C_CurrencyInfo.GetCurrencyListSize()
 		-- local headerIndex
 		-- for i = 1, listSize do
@@ -460,73 +510,72 @@ function E.Collect_All_Currency()
 				local maxQuantity = data.maxQuantity
 				local totalEarned = data.totalEarned
 				if isAccountWideCurrency == false then
-					if collect.MASLENGO and not InCombatLockdown() then
-						collect.MASLENGO.CurrencyID = collect.MASLENGO.CurrencyID or {}
-						collect.MASLENGO.CurrencyID_totalEarned = collect.MASLENGO.CurrencyID_totalEarned or {}
-						collect.MASLENGO.CurrencyID_Total = collect.MASLENGO.CurrencyID_Total or {}
+					if collectMASLENGO and not InCombatLockdown() then
+						collectMASLENGO.CurrencyID = collectMASLENGO.CurrencyID or {}
+						collectMASLENGO.CurrencyID_totalEarned = collectMASLENGO.CurrencyID_totalEarned or {}
+						collectMASLENGO.CurrencyID_Total = collectMASLENGO.CurrencyID_Total or {}
 						if quantity ~= nil and quantity ~= 0 then
-							collect.MASLENGO.CurrencyID[CurrencyID] = quantity
+							collectMASLENGO.CurrencyID[CurrencyID] = quantity
 						end
 						if totalEarned ~= nil and totalEarned ~= 0 then
-							collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
+							collectMASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
 						end
 						if maxQuantity ~= nil and maxQuantity ~= 0 then
 							if quantity ~= maxQuantity then
-								collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+								collectMASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
 							else
-								collect.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+								collectMASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
 							end
 						else
 							if quantity ~= nil and quantity ~= 0 then
-								collect.MASLENGO.CurrencyID_Total[CurrencyID] = quantity
+								collectMASLENGO.CurrencyID_Total[CurrencyID] = quantity
 							end
 						end
 					end
 				else
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO = CharInfo.MASLENGO or {}
-						CharInfo.MASLENGO.CurrencyID = CharInfo.MASLENGO.CurrencyID or {}
-						CharInfo.MASLENGO.CurrencyID_totalEarned = CharInfo.MASLENGO.CurrencyID_totalEarned or {}
-						CharInfo.MASLENGO.CurrencyID_Total = CharInfo.MASLENGO.CurrencyID_Total or {}
+						collectMASLENGO.CurrencyID = collectMASLENGO.CurrencyID or {}
+						collectMASLENGO.CurrencyID_totalEarned = collectMASLENGO.CurrencyID_totalEarned or {}
+						collectMASLENGO.CurrencyID_Total = collectMASLENGO.CurrencyID_Total or {}
 						if CharInfo and not InCombatLockdown() then
 							if quantity ~= nil and quantity ~= 0 then
-								CharInfo.MASLENGO.CurrencyID[CurrencyID] = quantity
+								collectMASLENGO.CurrencyID[CurrencyID] = quantity
 							end
 							if totalEarned ~= nil and totalEarned ~= 0 then
-								CharInfo.MASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
+								collectMASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
 							end
 							if maxQuantity ~= nil and maxQuantity ~= 0 then
 								if quantity ~= maxQuantity then
-									CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
+									collectMASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
 								else
-									CharInfo.MASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
+									collectMASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
 								end
 							end
 						end
 					end
 				end
 			else
-				collect.MASLENGO.CurrencyID[CurrencyID] = nil
-				collect.MASLENGO.CurrencyID_Total[CurrencyID] = nil
-				collect.MASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
+				collectMASLENGO.CurrencyID[CurrencyID] = nil
+				collectMASLENGO.CurrencyID_Total[CurrencyID] = nil
+				collectMASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
 			end
 		end
 	end
 end
 function E.Collect_All_Reputations()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	C_Reputation.ExpandAllFactionHeaders()
-	if collect and not InCombatLockdown() then
+	if collectMASLENGO and not InCombatLockdown() then
 		----------------------------------------------------------------
 		for index, tbl in ipairs(E.OctoTable_Reputations) do
 			for i, v in ipairs(tbl) do
 				local reputationID = v.id
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.reputationNEW[reputationID] = E.func_CheckReputationNEW(reputationID)
+						collectMASLENGO.reputationNEW[reputationID] = E.func_CheckReputationNEW(reputationID)
 					end
 				else
-					collect.MASLENGO.reputationNEW[reputationID] = E.func_CheckReputationNEW(reputationID)
+					collectMASLENGO.reputationNEW[reputationID] = E.func_CheckReputationNEW(reputationID)
 				end
 			end
 		end
@@ -534,8 +583,9 @@ function E.Collect_All_Reputations()
 	end
 end
 function E.Collect_All_ItemsInBag()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if collectPlayerData and not InCombatLockdown() then
 		local usedSlots = 0
 		local totalSlots = 0
 		local Possible_Anima = 0
@@ -557,11 +607,11 @@ function E.Collect_All_ItemsInBag()
 					if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
 						local dungeonID = select(4, strsplit(":", hyperlink)) -- БЫЛО 3
 						local lvl = select(5, strsplit(":", hyperlink)) -- БЫЛО 4
-						collect.CurrentKeyLevel = tonumber(lvl)
-						collect.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
+						collectPlayerData.CurrentKeyLevel = tonumber(lvl)
+						collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
 						for k, v in next, (E.OctoTable_KeystoneAbbr) do
 							if v.mapChallengeModeID == tonumber(dungeonID) then
-								collect.CurrentKey = lvl.." "..v.abbreviation
+								collectPlayerData.CurrentKey = lvl.." "..v.abbreviation
 							end
 						end
 					end
@@ -588,46 +638,60 @@ function E.Collect_All_ItemsInBag()
 				end
 			end
 		end
-		collect.MASLENGO = collect.MASLENGO or {}
-		collect.MASLENGO.ItemsInBag = collect.MASLENGO.ItemsInBag or {}
+		collectMASLENGO.ItemsInBag = collectMASLENGO.ItemsInBag or {}
 		for _, itemID in next, (E.OctoTable_itemID_ALL) do
 			local count = E.func_GetItemCount(itemID, true, true, true, false)
 			if count ~= 0 then
-				collect.MASLENGO.ItemsInBag[itemID] = count
+				collectMASLENGO.ItemsInBag[itemID] = count
 			else
-				collect.MASLENGO.ItemsInBag[itemID] = nil
+				collectMASLENGO.ItemsInBag[itemID] = nil
 			end
 		end
-		collect.Possible_Anima = Possible_Anima
-		collect.Possible_CatalogedResearch = Possible_CatalogedResearch
-		collect.usedSlots = usedSlots
-		collect.totalSlots = totalSlots
-		collect.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
+		if Possible_Anima ~= 0 then
+			collectPlayerData.Possible_Anima = Possible_Anima
+		end
+		if Possible_CatalogedResearch ~= 0 then
+			collectPlayerData.Possible_CatalogedResearch = Possible_CatalogedResearch
+		end
+		if usedSlots ~= 0 then
+			collectPlayerData.usedSlots = usedSlots
+		end
+		if totalSlots ~= 0 then
+			collectPlayerData.totalSlots = totalSlots
+		end
+		if C_WeeklyRewards.HasAvailableRewards() then
+			collectPlayerData.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
+		else
+			collectPlayerData.HasAvailableRewards = nil
+		end
 	end
 end
 function E.Collect_All_Locations()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
-		local curRealZone = GetRealZoneText() or 0
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
+		local curRealZone = GetRealZoneText()
 		local curBindLocation = GetBindLocation()
-		collect.curLocation = E.func_GetCurrentLocation()
-		collect.BindLocation = curRealZone.." ("..curBindLocation..")"
+		collectPlayerData.curLocation = E.func_GetCurrentLocation()
+		if curRealZone and curBindLocation then
+			collectPlayerData.BindLocation = curRealZone.." ("..curBindLocation..")"
+		end
 	end
 end
 function E.Collect_All_Quests()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if not collect or InCombatLockdown() then return end
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if not collectPlayerData or InCombatLockdown() then return end
 	-- Очищаем таблицы
-	wipe(collect.MASLENGO.ListOfQuests)
-	wipe(collect.MASLENGO.OctoTable_QuestID)
+	wipe(collectMASLENGO.ListOfQuests)
+	wipe(collectMASLENGO.OctoTable_QuestID)
 	-- Обрабатываем OctoTable_QuestID
 	for _, questID in ipairs(E.OctoTable_QuestID) do
 		if C_QuestLog.IsQuestFlaggedCompleted(questID) then
-			collect.MASLENGO.OctoTable_QuestID[questID] = true
+			collectMASLENGO.OctoTable_QuestID[questID] = true
 		end
 		-- local status = E.func_CheckCompletedByQuestID(questID)
 		-- if status ~= E.NONE then
-		-- 	collect.MASLENGO.OctoTable_QuestID[questID] = status
+		--     collectMASLENGO.OctoTable_QuestID[questID] = status
 		-- end
 	end
 	-- Собираем информацию о квестах
@@ -637,80 +701,72 @@ function E.Collect_All_Quests()
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
 			numQuests = numQuests + 1
-			collect.MASLENGO.ListOfQuests[info.questID] = E.func_CheckCompletedByQuestID(info.questID)
+			collectMASLENGO.ListOfQuests[info.questID] = E.func_CheckCompletedByQuestID(info.questID)
 		end
 	end
 	-- Сохраняем статистику
-	collect.numShownEntries = numShownEntries
-	collect.numQuests = numQuests
-	collect.maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept() or 0
+	if numShownEntries then
+		collectPlayerData.numShownEntries = numShownEntries
+	end
+	if numQuests ~= 0 then
+		collectPlayerData.numQuests = numQuests
+	end
+	if C_QuestLog.GetMaxNumQuestsCanAccept() then
+		collectPlayerData.maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
+	end
 end
 function E.Collect_All_UNIVERSALQuestUpdate()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if not collect or InCombatLockdown() then return end
-	collect.MASLENGO.UniversalQuest = collect.MASLENGO.UniversalQuest or {}
-	for i, v in next, (E.OctoTable_UniversalQuest) do
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if not collectMASLENGO or InCombatLockdown() then return end
+	collectMASLENGO.UniversalQuest = collectMASLENGO.UniversalQuest or {}
+	for i, v in ipairs(E.OctoTable_UniversalQuest) do
 		local count = 0
 		local questKey = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
 		for _, questID in next, (v.questID) do
+
+			-- /dump C_QuestLog.IsQuestFlaggedCompleted(76215)
 			if C_QuestLog.IsQuestFlaggedCompleted(questID) then
 				count = count + 1
+				print (questID, count)
 			end
 			if v.max == 1 and E.func_IsOnQuest(questID) then
-				collect.MASLENGO.UniversalQuest[questKey] = E.func_CheckCompletedByQuestID(questID)
+				print (questKey, count)
+				collectMASLENGO.UniversalQuest[questKey] = E.func_CheckCompletedByQuestID(questID)
 			end
 		end
-		if Octo_DEBUG then
-			Octo_DEBUG.UniversalQuest[v.desc] = Octo_DEBUG.UniversalQuest[v.desc] or {}
-			Octo_DEBUG.UniversalQuest[v.desc][i] = Octo_DEBUG.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest."..questKey)
-		end
 		if count > 0 then
-			collect.MASLENGO.UniversalQuest[questKey] = count
+			print (questKey, count)
+			collectMASLENGO.UniversalQuest[questKey] = count
 		end
 	end
 end
 function E.Collect_All_ItemLevel()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
 		local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvp = GetAverageItemLevel()
-		collect.avgItemLevel = math.floor(avgItemLevel)
-		collect.avgItemLevelEquipped = math.floor(avgItemLevelEquipped)
-		collect.avgItemLevelPvp = math.floor(avgItemLevelPvp)
+		collectPlayerData.avgItemLevel = math.floor(avgItemLevel)
+		collectPlayerData.avgItemLevelEquipped = math.floor(avgItemLevelEquipped)
+		collectPlayerData.avgItemLevelPvp = math.floor(avgItemLevelPvp)
 	end
 end
 function E.Collect_All_MoneyUpdate()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
-		collect.Money = GetMoney() or 0
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
+		collectPlayerData.Money = GetMoney() or 0
 		Octo_ToDo_DB_Other.AccountMoney[E.BattleTagLocal] = C_Bank.FetchDepositedMoney(2)
 	end
 end
 function E.Collect_All_MoneyOnLogin()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
 		local Money = GetMoney()
-		collect.MoneyOnLogin = Money
+		collectPlayerData.MoneyOnLogin = Money
 	end
 end
 function E.Collect_All_JournalInstance()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
-		-- if ((GetNumSavedInstances() + GetNumSavedWorldBosses() > 0) and not RaidInfoFrame:IsVisible()) then
-		-- ToggleRaidFrame()
-		-- RaidInfoFrame:Show()
-		-- end
-		-- if (not RaidFrame:IsVisible()) then
-		-- ToggleRaidFrame()
-		-- end
-		-- if RaidFrame:IsVisible() then
-		-- HideUIPanel(RaidFrame)
-		-- end
-		-- if FriendsFrame:IsVisible() then
-		-- HideUIPanel(FriendsFrame)
-		-- end
-		-- if RaidInfoFrame:IsVisible() then
-		-- HideUIPanel(RaidInfoFrame)
-		-- end
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if collectPlayerData and not InCombatLockdown() then
 		local NumSavedInstances = GetNumSavedInstances()
 		local NumSavedWorldBosses = GetNumSavedWorldBosses()
 		local DiffAbbr = ""
@@ -719,8 +775,8 @@ function E.Collect_All_JournalInstance()
 		if NumSavedInstances > 0 then
 			for i = 1, NumSavedInstances do
 				local instanceName, lockoutId, instanceReset, instanceDifficulty, locked, extended, instanceIDMostSig, isRaid, maxPlayers, difficultyName, totalBosses, defeatedBosses, extendDisabled, instanceId = GetSavedInstanceInfo(i)
-				collect.MASLENGO.journalInstance[instanceId] = collect.MASLENGO.journalInstance[instanceId] or {}
-				collect.MASLENGO.journalInstance[instanceId][instanceDifficulty] = collect.MASLENGO.journalInstance[instanceId][instanceDifficulty] or {}
+				collectMASLENGO.journalInstance[instanceId] = collectMASLENGO.journalInstance[instanceId] or {}
+				collectMASLENGO.journalInstance[instanceId][instanceDifficulty] = collectMASLENGO.journalInstance[instanceId][instanceDifficulty] or {}
 				if locked then
 					local _, _, lastBossDefeated = GetSavedInstanceEncounterInfo(i, instancesLastBoss[i] or totalBosses)
 					if defeatedBosses == 0 and lastBossDefeated then
@@ -750,29 +806,29 @@ function E.Collect_All_JournalInstance()
 						DiffAbbr = "HZ"
 					end
 					local vivod = color..defeatedBosses.."/"..totalBosses.."|r"
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].instanceName = instanceName
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].vivod = vivod
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].instanceReset = instanceReset
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].difficultyName = difficultyName
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].instanceDifficulty = instanceDifficulty
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].extended = extended
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].instanceIDMostSig = instanceIDMostSig
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].isRaid = isRaid
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].maxPlayers = maxPlayers
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].totalBosses = totalBosses
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].defeatedBosses = defeatedBosses
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].extendDisabled = extendDisabled
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
-					collect.MASLENGO.journalInstance[instanceId][instanceDifficulty].Time = E.func_SecondsToClock(instanceReset-ServerTime)
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].instanceName = instanceName
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].vivod = vivod
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].instanceReset = instanceReset
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].difficultyName = difficultyName
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].instanceDifficulty = instanceDifficulty
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].extended = extended
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].instanceIDMostSig = instanceIDMostSig
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].isRaid = isRaid
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].maxPlayers = maxPlayers
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].totalBosses = totalBosses
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].defeatedBosses = defeatedBosses
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].extendDisabled = extendDisabled
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].Time = E.func_SecondsToClock(instanceReset-ServerTime)
 				end
 			end
 		end
 		if NumSavedWorldBosses > 0 then
 			for i = 1, NumSavedWorldBosses do
 				local name, worldBossID, reset = GetSavedWorldBossInfo(i)
-				collect.MASLENGO.SavedWorldBoss[worldBossID] = collect.MASLENGO.SavedWorldBoss[worldBossID] or {}
-				collect.MASLENGO.SavedWorldBoss[worldBossID].name = name
-				collect.MASLENGO.SavedWorldBoss[worldBossID].reset = reset
+				collectMASLENGO.SavedWorldBoss[worldBossID] = collectMASLENGO.SavedWorldBoss[worldBossID] or {}
+				collectMASLENGO.SavedWorldBoss[worldBossID].name = name
+				collectMASLENGO.SavedWorldBoss[worldBossID].reset = reset
 			end
 		end
 		-- local qweLIST = {}
@@ -782,12 +838,12 @@ function E.Collect_All_JournalInstance()
 			if dungeonID and E.OctoTable_LFGDungeons[dungeonID] then
 				local D_name = GetLFGDungeonInfo(dungeonID)
 				local donetoday = GetLFGDungeonRewards(dungeonID)
-				collect.MASLENGO.LFGInstance[dungeonID] = collect.MASLENGO.LFGInstance[dungeonID] or {}
-				collect.MASLENGO.LFGInstance[dungeonID].D_name = D_name
+				collectMASLENGO.LFGInstance[dungeonID] = collectMASLENGO.LFGInstance[dungeonID] or {}
+				collectMASLENGO.LFGInstance[dungeonID].D_name = D_name
 				if donetoday == true then
-					collect.MASLENGO.LFGInstance[dungeonID].donetoday = E.DONE
+					collectMASLENGO.LFGInstance[dungeonID].donetoday = E.DONE
 				else
-					collect.MASLENGO.LFGInstance[dungeonID].donetoday = nil
+					collectMASLENGO.LFGInstance[dungeonID].donetoday = nil
 				end
 			end
 		end
@@ -920,22 +976,22 @@ function E.Collect_All_Holiday()
 	end
 end
 function E.Collect_All_BfA_Azerite()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
 		local azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem()
 		if azeriteItemLocation then
 			local xp, totalLevelXP = C_AzeriteItem.GetAzeriteItemXPInfo(azeriteItemLocation)
 			local currentLevel = C_AzeriteItem.GetPowerLevel(azeriteItemLocation)
 			if totalLevelXP and totalLevelXP ~= 0 then
-				collect.azeriteLVL = currentLevel
-				collect.azeriteEXP = floor(xp / totalLevelXP * 100).."%, -"..E.func_CompactNumberFormat(totalLevelXP - xp)
+				collectPlayerData.azeriteLVL = currentLevel
+				collectPlayerData.azeriteEXP = floor(xp / totalLevelXP * 100).."%, -"..E.func_CompactNumberFormat(totalLevelXP - xp)
 			end
 		end
 	end
 end
 function E.Collect_All_BfA_Cloaklvl()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
 		local hasItem = E.func_GetItemCount(169223, true, true, true, false)
 		if hasItem ~= 0 then
 			local itemLink = GetInventoryItemLink("player", 15)
@@ -944,7 +1000,7 @@ function E.Collect_All_BfA_Cloaklvl()
 				if itemID == "169223" then
 					local itemLevel = select(4, E.func_GetItemInfo(itemLink))
 					if itemLevel then
-						collect.cloak_lvl = min(15, max((itemLevel - 125) / 2 + 1, 1))
+						collectPlayerData.cloak_lvl = min(15, max((itemLevel - 125) / 2 + 1, 1))
 					end
 				end
 			end
@@ -956,7 +1012,7 @@ function E.Collect_All_BfA_Cloaklvl()
 						if text and text ~= "" then
 							local res = text:gsub("[, ]", ""):gsub("(%d+)[ ]+(%d+)", "%1%2"):match("%+(%d+) ?"..(ITEM_MOD_CORRUPTION_RESISTANCE or "Corruption resistance").."$")
 							if res then
-								collect.cloak_res = res
+								collectPlayerData.cloak_res = res
 								break
 							end
 						end
@@ -965,37 +1021,59 @@ function E.Collect_All_BfA_Cloaklvl()
 				OctpToDo_inspectScantip:ClearLines()
 			end
 		else
-			collect.cloak_lvl = 0
-			collect.cloak_res = 0
+			collectPlayerData.cloak_lvl = nil
+			collectPlayerData.cloak_res = nil
 		end
 	end
 end
 function E.Collect_All_BfA_Island()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if collectPlayerData and not InCombatLockdown() then
 		local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
 		if questID then
 			if E.func_CheckCompletedByQuestID(questID) ~= E.NONE then
-				collect.MASLENGO.islandBfA = E.func_CheckCompletedByQuestID(questID)
+				collectMASLENGO.islandBfA = E.func_CheckCompletedByQuestID(questID)
 			end
 		end
 	end
 end
 function E.Collect_All_Chromie()
-	local collect = Octo_ToDo_DB_Levels[E.curGUID]
-	if collect and not InCombatLockdown() then
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if collectPlayerData and not InCombatLockdown() then
 		local expansionOptions = C_ChromieTime.GetChromieTimeExpansionOptions()
-		collect.Chromie_inChromieTime = C_PlayerInfo.IsPlayerInChromieTime()
-		collect.Chromie_canEnter = C_PlayerInfo.CanPlayerEnterChromieTime()
-		collect.Chromie_UnitChromieTimeID = UnitChromieTimeID("player")
-		collect.Chromie_name = nil
-		collect.GameLimitedMode_IsActive = E.GameLimitedMode_IsActive
-		for i = 1, #expansionOptions do
-			if expansionOptions[i].id == UnitChromieTimeID("player") then
-				local expansionChromie = expansionOptions[i].name
-				collect.Chromie_name = tostring(expansionChromie)
-			end
+		if C_PlayerInfo.IsPlayerInChromieTime() then
+			collectPlayerData.Chromie_inChromieTime = C_PlayerInfo.IsPlayerInChromieTime()
+		else
+			collectPlayerData.Chromie_inChromieTime = nil
 		end
+		if C_PlayerInfo.CanPlayerEnterChromieTime() then
+			collectPlayerData.Chromie_canEnter = C_PlayerInfo.CanPlayerEnterChromieTime()
+		else
+			collectPlayerData.Chromie_canEnter = nil
+		end
+		if E.GameLimitedMode_IsActive then
+			collectPlayerData.GameLimitedMode_IsActive = E.GameLimitedMode_IsActive
+		else
+			collectPlayerData.GameLimitedMode_IsActive = nil
+		end
+
+
+		local UnitChromieTimeID = UnitChromieTimeID("player")
+		if UnitChromieTimeID ~= 0 then
+			collectPlayerData.Chromie_UnitChromieTimeID = UnitChromieTimeID
+			for i = 1, #expansionOptions do
+				if expansionOptions[i].id == UnitChromieTimeID then
+					local expansionChromie = expansionOptions[i].name
+					collectPlayerData.Chromie_name = tostring(expansionChromie)
+				end
+			end
+		else
+			collectPlayerData.Chromie_UnitChromieTimeID = nil
+			collectPlayerData.Chromie_name = nil
+		end
+
+
 	end
 end
 ----------------------------------------------------------------
@@ -1036,36 +1114,10 @@ local MyEventsTable = {
 	"ZONE_CHANGED_NEW_AREA"
 }
 function E.Collect_All_Table(event)
-	-- Персонаж и прогресс
-	-- E.Collect_All_PlayerInfo() -- общая информация о персонаже
-	E.Collect_All_PlayerLevel() -- уровень персонажа
-	E.Collect_All_ItemLevel() -- уровень предметов
-	E.Collect_All_PlayerDurability() -- прочность экипировки
-	-- E.Collect_All_Professions() -- профессии
-	-- E.Collect_All_Reputations() -- репутации
-	-- E.Collect_All_Quests() -- квесты
-	-- E.Collect_All_UNIVERSALQuestUpdate() -- обновления квестов
-	-- Предметы и валюта
-	-- E.Collect_All_ItemsInBag() -- предметы в сумках
-	-- E.Collect_All_Currency() -- валюта
-	-- E.Collect_All_MoneyOnLogin() -- деньги при входе
-	-- E.Collect_All_MoneyUpdate() -- обновление денег
-	-- E.Collect_All_Mail() -- почта
-	-- Локации и активность
-	-- E.Collect_All_Locations() -- местоположение
-	-- E.Collect_All_JournalInstance() -- информация о подземельях/рейдах
-	-- E.Collect_All_WarMode() -- режим войны
-	-- E.Collect_All_Chromie() -- хроми
-	-- E.Collect_All_BfA_Island() -- острова Battle for Azeroth
-	-- Системные и служебные данные
-	-- E.Collect_All_LoginTime() -- время входа (УБРАТЬ?)
-	-- E.Collect_All_ReloadCount() -- счётчик перезагрузок UI
-	E.Collect_All_Holiday() -- праздничные события
-	-- Особые системы (BfA, Shadowlands и др.)
-	-- E.Collect_All_BfA_Azerite() -- азерит, Battle for Azeroth
-	-- E.Collect_All_BfA_Cloaklvl() -- уровень плаща, BfA
-	-- E.Collect_All_Covenant() -- ковенанты, Shadowlands
-	-- E.Collect_All_GreatVault() -- Великое Хранилище
+	E.Collect_All_PlayerLevel()
+	E.Collect_All_ItemLevel()
+	E.Collect_All_PlayerDurability()
+	E.Collect_All_Holiday()
 end
 ----------------------------------------------------------------
 E.RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable, E.func_DebugPath())
