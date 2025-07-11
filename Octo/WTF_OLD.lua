@@ -14,32 +14,6 @@ local function updateGlobal(db)
 	end
 end
 
-local function replaceFalseWithNil(tbl)
-	if type(tbl) ~= "table" then return tbl end
-	for k, value in pairs(tbl) do
-		if value == false then
-			print (k, value)
-			tbl[k] = nil
-		elseif type(value) == "table" then
-			replaceFalseWithNil(value)
-		end
-	end
-	return tbl
-end
-
-
-local function replaceZeroWithNil(tbl)
-	if type(tbl) ~= "table" then return tbl end
-	for k, value in pairs(tbl) do
-		if value == 0 then
-			print (k, value)
-			tbl[k] = nil
-		elseif type(value) == "table" then
-			replaceZeroWithNil(value)
-		end
-	end
-	return tbl
-end
 
 
 local function updateChar(CharInfo)
@@ -52,27 +26,10 @@ local function updateChar(CharInfo)
 	if compareVersion(100000, CharInfo.DBVersion) then
 		CharInfo.STARTTODAY = nil
 		CharInfo.STARTMONTH = nil
-		for k, value in pairs(CharInfo) do
-			if type(value) ~= "table" then
-				CharInfo.PlayerData[k] = value
-				CharInfo[k] = nil
-
-			end
-			-- replaceFalseWithNil(CharInfo.PlayerData)
-		end
 
 
-		replaceFalseWithNil(Octo_ToDo_DB_Levels)
-		replaceFalseWithNil(Octo_ToDo_DB_Vars)
-		replaceFalseWithNil(Octo_ToDo_DB_Other)
-		replaceFalseWithNil(Octo_ToDo_DB_Minecraft)
-		replaceFalseWithNil(Octo_Achievements_DB)
-		replaceFalseWithNil(Octo_AddonsTable)
-		replaceFalseWithNil(Octo_AddonsManager_DB)
-		replaceFalseWithNil(Octo_DEBUG)
-		replaceFalseWithNil(Octo_QuestsChangedDB)
 
-		replaceZeroWithNil(Octo_ToDo_DB_Levels)
+
 	end
 
 	-- CharInfo.DBVersion = currentVersion

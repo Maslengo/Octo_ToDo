@@ -16,20 +16,96 @@ local function InitSubTable(tbl, field)
 	end
 end
 local wipe = wipe
--- do
---     local text = "|cffFFF3712500/3000 (Равнодушие)|r"
---     -- -- цвет
---     -- local color = string.match(text, "^(|c%x%x%x%x%x%x%x%x)")  -- "|cffFFF371"
---     -- -- удаляю цвет и закрывающий тег
---     -- local content = text:gsub("^(|c%x%x%x%x%x%x%x%x)", ""):gsub("|r", "")
---     -- -- делю на лево/право
---     -- local vivod, rightStanding = (" "):split(content)
---     -- local FIRST, SECOND = ("/"):split(vivod)
---     -- local standingTEXT = rightStanding:gsub("(", "")
---     -- цвет
---     local color, vivod, FIRST, SECOND, standingTEXT = string.match(text, "^(|c%x%x%x%x%x%x%x%x)((%d+)/(%d+)) %((.*)%)")  -- "|cffFFF371"
---     local vivod = FIRST.."/"..SECOND
+-- local function replaceZeroWithNil(tbl, what)
+-- 	if not tbl or type(tbl) ~= "table" or not what then
+-- 		return tbl
+-- 	end
+
+-- 	local whatSet = type(what) == "table" and {} or what
+
+-- 	if type(what) == "table" then
+-- 		for _, w in ipairs(what) do
+-- 			whatSet[w] = true
+-- 		end
+-- 	end
+
+-- 	for k, value in pairs(tbl) do
+-- 		if (type(what) == "table" and whatSet[value]) or value == what then
+-- 			print(k, E.Yellow_Color .. tostring(value) .. "|r")
+-- 			tbl[k] = nil
+-- 		elseif type(value) == "table" then
+-- 			replaceZeroWithNil(value, what)
+-- 		end
+-- 	end
+
+-- 	return tbl
 -- end
+
+
+local function replaceZeroWithNil(tbl, smth)
+	if tbl and smth then
+		if type(tbl) ~= "table" then return tbl end
+
+
+		if type(smth) == "table" then
+			for q, w in ipairs(smth) do
+				for k, value in pairs(tbl) do
+					if value == w then
+						print (k, E.Yellow_Color..tostring(value).."|r")
+						tbl[k] = nil
+					elseif type(value) == "table" then
+						replaceZeroWithNil(value)
+					end
+				end
+				return tbl
+			end
+		else
+			for k, value in pairs(tbl) do
+				if value == smth then
+					print (k, E.Purple_Color..tostring(value).."|r")
+					tbl[k] = nil
+				elseif type(value) == "table" then
+					replaceZeroWithNil(value)
+				end
+			end
+			return tbl
+		end
+	end
+end
+
+
+function Octo_EventFrame_WTF:DatabaseTransfer()
+	if Octo_ToDo_DB_Levels then
+		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+			CharInfo.PlayerData = CharInfo.PlayerData or {}
+			for k, value in pairs(CharInfo) do
+				if type(value) ~= "table" then
+					-- print (k, value, CharInfo.PlayerData[k])
+					CharInfo.PlayerData[k] = value
+					CharInfo[k] = nil
+				end
+			end
+		end
+
+	end
+
+
+	replaceZeroWithNil(Octo_ToDo_DB_Levels, 0)
+	replaceZeroWithNil(Octo_ToDo_DB_Vars, 0)
+	replaceZeroWithNil(Octo_ToDo_DB_Other, 0)
+	replaceZeroWithNil(Octo_ToDo_DB_Minecraft, 0)
+	replaceZeroWithNil(Octo_Achievements_DB, 0)
+	replaceZeroWithNil(Octo_AddonsTable, 0)
+	replaceZeroWithNil(Octo_AddonsManager_DB, 0)
+	replaceZeroWithNil(Octo_DEBUG, 0)
+	replaceZeroWithNil(Octo_QuestsChangedDB, 0)
+end
+
+
+
+
+
+
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local curGUID = UnitGUID("player")
 	Octo_ToDo_DB_Levels = InitTable(Octo_ToDo_DB_Levels)
@@ -56,14 +132,19 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		buildDate = E.buildDate,
 		interfaceVersion = E.interfaceVersion,
 		currentTier = E.currentTier,
-		-- GetRestrictedAccountData_rLevel = E.GetRestrictedAccountData_rLevel,
-		-- GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney,
-		-- PlayerDurability = 100,
-		Name = E.curCharName,
+		Name = "E.curCharName",
 		classColorHex = E.classColorHexCurrent,
 		loginDate = currentDateTime,
 		loginDay = currentDate,
 		loginHour = currentTime,
+
+
+
+
+
+		-- GetRestrictedAccountData_rLevel = E.GetRestrictedAccountData_rLevel,
+		-- GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney,
+		-- PlayerDurability = 100,
 
 		-- ReloadCount = 0,
 		-- azeriteEXP = 0,
@@ -108,7 +189,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		-- levelCapped20 = false,
 		-- GameLimitedMode_IsActive = E.GameLimitedMode_IsActive,
 		-- IsRestrictedAccount
-		isShownPLAYER = true,
 		-- Chromie_inChromieTime
 		-- IsVeteranTrialAccount = E.IsVeteranTrialAccount,
 		-- Chromie_canEnter = false,
@@ -124,6 +204,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		-- PlayerCanEarnExperience = true,
 
 
+		isShownPLAYER = true,
 
 
 
@@ -136,7 +217,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		CurrencyID = {},
 		CurrencyID_totalEarned = {},
 		CurrencyID_Total = {},
-		-- UniversalQuest = {},
+		UniversalQuest = {},
 		OctoTable_QuestID = {},
 		ListOfQuests = {}, -- Quests
 		professions = {
@@ -576,9 +657,9 @@ end
 function Octo_EventFrame_WTF:Daily_Reset()
 	local ServerTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (CharInfo.tmstp_Daily or 0) < ServerTime then
-			CharInfo.tmstp_Daily = E.func_tmstpDayReset(1)
-			CharInfo.needResetDaily = true
+		if (CharInfo.PlayerData.tmstp_Daily or 0) < ServerTime then
+			CharInfo.PlayerData.tmstp_Daily = E.func_tmstpDayReset(1)
+			CharInfo.PlayerData.needResetDaily = true
 			-- Сброс ежедневных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
 				if v.reset == "Daily" then
@@ -599,7 +680,7 @@ end
 function Octo_EventFrame_WTF:Weekly_Reset()
 	local ServerTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (CharInfo.tmstp_Weekly or 0) < ServerTime then
+		if (CharInfo.PlayerData.tmstp_Weekly or 0) < ServerTime then
 			-- Проверка награды из Великого Хранилища
 			for i = 1, #CharInfo.MASLENGO.GreatVault do
 				if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING ~= 0 then
@@ -608,12 +689,12 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 				end
 			end
 			-- Сброс данных
-			CharInfo.tmstp_Weekly = E.func_tmstpDayReset(7)
-			CharInfo.needResetWeekly = true
-			CharInfo.CurrentKey = nil
-			CharInfo.CurrentKeyName = nil
-			CharInfo.CurrentKeyLevel = nil
-			CharInfo.RIO_weeklyBest = nil
+			CharInfo.PlayerData.tmstp_Weekly = E.func_tmstpDayReset(7)
+			CharInfo.PlayerData.needResetWeekly = true
+			CharInfo.PlayerData.CurrentKey = nil
+			CharInfo.PlayerData.CurrentKeyName = nil
+			CharInfo.PlayerData.CurrentKeyLevel = nil
+			CharInfo.PlayerData.RIO_weeklyBest = nil
 			CharInfo.MASLENGO.journalInstance = {}
 			CharInfo.MASLENGO.SavedWorldBoss = {}
 			CharInfo.MASLENGO.GreatVault = {}
@@ -629,9 +710,9 @@ end
 function Octo_EventFrame_WTF:Month_Reset()
 	local ServerTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (CharInfo.tmstp_Month or 0) < ServerTime then
-			CharInfo.tmstp_Month = E.func_tmstpDayReset(30)
-			CharInfo.needResetMonth = true
+		if (CharInfo.PlayerData.tmstp_Month or 0) < ServerTime then
+			CharInfo.PlayerData.tmstp_Month = E.func_tmstpDayReset(30)
+			CharInfo.PlayerData.needResetMonth = true
 			-- Сброс ежемесячных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
 				if v.reset == "Month" then
@@ -653,6 +734,9 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		-- Перенос старой базы
+		self:DatabaseTransfer()
+
 		-- Инициализация всех баз данных
 		self:Octo_ToDo_DB_Levels()
 		self:Octo_ToDo_DB_Vars()

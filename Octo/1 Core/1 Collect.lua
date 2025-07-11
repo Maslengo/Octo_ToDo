@@ -464,13 +464,17 @@ function E.Collect_All_GreatVault()
 					if collectPlayerData and tip ~= nil then
 						collectMASLENGO.GreatVault[tip] = collectMASLENGO.GreatVault[tip] or {}
 						collectMASLENGO.GreatVault[tip].type = activity_name
-						collectMASLENGO.GreatVault[tip].progress = activityInfo.progress
-						collectMASLENGO.GreatVault[tip].threshold = activityInfo.threshold
+						if activityInfo.progress ~= 0 then
+							collectMASLENGO.GreatVault[tip].progress = activityInfo.progress
+						end
+						if activityInfo.threshold ~= 0 then
+							collectMASLENGO.GreatVault[tip].threshold = activityInfo.threshold
+						end
 						local hyperlink = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						hyperlink_STRING = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						if hyperlink_STRING then
 							vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
-							if vivod ~= nil then
+							if vivod ~= nil and vivod ~= 0 then
 								collectMASLENGO.GreatVault[tip].hyperlink_STRING = vivod
 							end
 						end
@@ -715,7 +719,7 @@ function E.Collect_All_Quests()
 		collectPlayerData.maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
 	end
 end
-function E.Collect_All_UNIVERSALQuestUpdate()
+function E.Collect_All_UNIVERSALQuestUpdateQWEQWE()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO or InCombatLockdown() then return end
 	collectMASLENGO.UniversalQuest = collectMASLENGO.UniversalQuest or {}
@@ -727,19 +731,53 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 			-- /dump C_QuestLog.IsQuestFlaggedCompleted(76215)
 			if C_QuestLog.IsQuestFlaggedCompleted(questID) then
 				count = count + 1
-				print (questID, count)
 			end
 			if v.max == 1 and E.func_IsOnQuest(questID) then
-				print (questKey, count)
 				collectMASLENGO.UniversalQuest[questKey] = E.func_CheckCompletedByQuestID(questID)
 			end
 		end
 		if count > 0 then
-			print (questKey, count)
 			collectMASLENGO.UniversalQuest[questKey] = count
 		end
 	end
 end
+
+
+
+function E.Collect_All_UNIVERSALQuestUpdate()
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if not collectMASLENGO or InCombatLockdown() then return end
+	-- collectMASLENGO.UniversalQuest = collectMASLENGO.UniversalQuest or {}
+	for i, v in next, (E.OctoTable_UniversalQuest) do
+		local count = 0
+		local questKey = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
+		for _, questID in next, (v.questID) do
+			if C_QuestLog.IsQuestFlaggedCompleted(questID) then
+				count = count + 1
+			end
+			if v.max == 1 and E.func_IsOnQuest(questID) then
+				collectMASLENGO.UniversalQuest[questKey] = E.func_CheckCompletedByQuestID(questID)
+			end
+		end
+		-- if Octo_DEBUG then
+			-- Octo_DEBUG.UniversalQuest[v.desc] = Octo_DEBUG.UniversalQuest[v.desc] or {}
+			-- Octo_DEBUG.UniversalQuest[v.desc][i] = Octo_DEBUG.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest."..questKey)
+		-- end
+		if count > 0 then
+			collectMASLENGO.UniversalQuest[questKey] = count
+		end
+	end
+end
+
+
+
+
+
+
+
+
+
+
 function E.Collect_All_ItemLevel()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
@@ -933,8 +971,8 @@ function E.Collect_All_Holiday()
 				Octo_ToDo_DB_Other.Holiday[id].event_duration = event_duration
 				Octo_ToDo_DB_Other.Holiday[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month) -- .."/"..startTime_year
 				Octo_ToDo_DB_Other.Holiday[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month) -- .."/"..endTime_year
-				Octo_ToDo_DB_Other.Holiday[id].Active = Octo_ToDo_DB_Other.Holiday[id].Active or false
-				Octo_ToDo_DB_Other.Holiday[id].Possible = Octo_ToDo_DB_Other.Holiday[id].Possible or false
+				-- Octo_ToDo_DB_Other.Holiday[id].Active = Octo_ToDo_DB_Other.Holiday[id].Active or nil
+				-- Octo_ToDo_DB_Other.Holiday[id].Possible = Octo_ToDo_DB_Other.Holiday[id].Possible or nil
 				-- Octo_ToDo_DB_Other.Holiday[id].iconTexture = event.iconTexture or ""
 				Octo_ToDo_DB_Other.Holiday[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
 				if eInfo then

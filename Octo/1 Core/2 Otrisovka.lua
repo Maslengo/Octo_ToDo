@@ -37,7 +37,7 @@ function E.CreateTooltipPlayers(CharInfo)
 	-- Basic character information
 	if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer and CharInfo.PlayerData.specIcon and CharInfo.PlayerData.classColorHex and CharInfo.PlayerData.specName and CharInfo.PlayerData.RaceLocal then
 		-- Name and guild info
-		if CharInfo.PlayerData.guildRankIndex then
+		if CharInfo.PlayerData.guildRankName and CharInfo.PlayerData.guildRankIndex then
 			tooltipRIGHT[#tooltipRIGHT+1] = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")", "<"..E.Green_Color..CharInfo.PlayerData.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.PlayerData.guildRankName.."|r".."]"}
 		else
 			tooltipRIGHT[#tooltipRIGHT+1] = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")", " "}
@@ -71,7 +71,7 @@ function E.CreateTooltipPlayers(CharInfo)
 		tooltipRIGHT[#tooltipRIGHT+1] = {E.func_texturefromIcon(132319)..L["Current Location"], CharInfo.PlayerData.curLocation}
 	end
 	-- Inventory info
-	if CharInfo.PlayerData.totalSlots then
+	if CharInfo.PlayerData.usedSlots and CharInfo.PlayerData.totalSlots then
 		tooltipRIGHT[#tooltipRIGHT+1] = {E.func_texturefromIcon(133634)..L["Bags"], CharInfo.PlayerData.classColorHex..(CharInfo.PlayerData.usedSlots.."/"..CharInfo.PlayerData.totalSlots).."|r"}
 	end
 	-- Quests info
@@ -280,7 +280,7 @@ function E:func_Otrisovka()
 				if CharInfo.PlayerData.CurrentKeyName and CharInfo.PlayerData.CurrentKeyName ~= 0 then
 					tooltipRIGHT[#tooltipRIGHT+1] = {E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName.."|r", ""}
 				end
-				if CharInfo.PlayerData.RIO_Score then
+				if CharInfo.PlayerData.RIO_Score and CharInfo.PlayerData.RIO_weeklyBest then
 					tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
 					tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
 					tooltipRIGHT[#tooltipRIGHT+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.RIO_weeklyBest.."|r"}
@@ -451,7 +451,7 @@ function E:func_Otrisovka()
 						end
 						textCENT = E.OctoTable_Covenant[iANIMA].color..textCENT.."|r"
 						if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-							if CharInfo.PlayerData.Possible_Anima ~= 0 and kCovenant == 2 then
+							if CharInfo.PlayerData.Possible_Anima and CharInfo.PlayerData.Possible_Anima ~= 0 and kCovenant == 2 then
 								textCENT = textCENT..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
 							end
 							colorCENT = E.OctoTable_Covenant[iANIMA].color
@@ -540,7 +540,7 @@ function E:func_Otrisovka()
 				if CharInfo.MASLENGO.CurrencyID[1931] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1931]
 				end
-				if CharInfo.PlayerData.Possible_CatalogedResearch ~= 0 then
+				if CharInfo.PlayerData.Possible_CatalogedResearch and CharInfo.PlayerData.Possible_CatalogedResearch ~= 0 then
 					textCENT = textCENT..E.Purple_Color.." +"..CharInfo.PlayerData.Possible_CatalogedResearch.."|r"
 				end
 				----------------------------------------------------------------
@@ -686,7 +686,7 @@ function E:func_Otrisovka()
 					textCENT = E.Red_Color.."no neck|r"
 				else
 					textCENT = E.Orange_Color.."neeed to equip|r"
-					if CharInfo.PlayerData.azeriteLVL ~= 0 then
+					if CharInfo.PlayerData.azeriteLVL then
 						textCENT = E.Green_Color..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.Gray_Color..CharInfo.PlayerData.azeriteEXP.."|r"
 					end
 				end
@@ -707,13 +707,13 @@ function E:func_Otrisovka()
 				end
 				if CharInfo.MASLENGO.ItemsInBag[169223] ~= nil then
 					textCENT = E.Orange_Color.."neeed to equip|r"
-					if CharInfo.PlayerData.cloak_lvl ~= 0 then
+					if CharInfo.PlayerData.cloak_lvl then
 						textCENT = CharInfo.PlayerData.cloak_lvl.." lvl"
 						if CharInfo.PlayerData.cloak_lvl == 15 then
 							textCENT = E.Green_Color..textCENT.."|r"
 						end
 					end
-					if CharInfo.PlayerData.cloak_res ~= 0 then
+					if CharInfo.PlayerData.cloak_res then
 						textCENT = textCENT.."+"..CharInfo.PlayerData.cloak_res
 					end
 				end
@@ -1701,7 +1701,7 @@ function E:func_Otrisovka()
 				if CharInfo.PlayerData.Money then
 					textCENT = E.func_CompactNumberFormat(CharInfo.PlayerData.Money/10000)
 				end
-				if CharInfo.PlayerData.MoneyOnLogin ~= 0 then
+				if CharInfo.PlayerData.Money and CharInfo.PlayerData.MoneyOnLogin then
 					if CharInfo.PlayerData.Money < CharInfo.PlayerData.MoneyOnLogin then
 						textCENT = textCENT..E.Red_Color.."-|r"
 						tooltipRIGHT[#tooltipRIGHT+1] = {"lost: ", E.Red_Color..E.func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E.func_texturefromIcon(E.Icon_Money)}

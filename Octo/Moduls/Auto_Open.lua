@@ -14,7 +14,6 @@ local InCombatLockdown = InCombatLockdown
 local UnitIsDead = UnitIsDead
 local select = select
 local next = next
-local print = print
 -- Оптимизация: создаем таблицу для быстрого поиска itemID
 local autoOpenItems = {}
 for _, id in ipairs(E.OctoTable_itemID_AutoOpen) do
@@ -36,7 +35,7 @@ local function OpenableScan()
 					C_Timer.After(1, function()
 							if not InCombatLockdown() then
 								UseContainerItem(bag, slot)
-								print(E.func_Gradient("Auto Open Item ", E.Addon_Left_Color, E.Addon_Right_Color),
+								DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Open Item ", E.Addon_Left_Color, E.Addon_Right_Color),
 									E.func_texturefromIcon(containerInfo.iconFileID)..itemLink)
 							end
 					end)

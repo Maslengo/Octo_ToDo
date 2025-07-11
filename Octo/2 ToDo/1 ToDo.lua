@@ -605,11 +605,13 @@ function E:func_Create_DD_ToDo(mainFrame)
 				local BnetList = {}
 				local Octo_BatlleNets = {}
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-					if not BnetList[CharInfo.PlayerData.BattleTagLocal] then
-						count = count + 1
-						Octo_BatlleNets[count] = CharInfo.PlayerData.BattleTagLocal
+					if CharInfo.PlayerData then
+						if not BnetList[CharInfo.PlayerData.BattleTagLocal] then
+							count = count + 1
+							Octo_BatlleNets[count] = CharInfo.PlayerData.BattleTagLocal
+						end
+						BnetList[CharInfo.PlayerData.BattleTagLocal] = true
 					end
-					BnetList[CharInfo.PlayerData.BattleTagLocal] = true
 				end
 				sort(Octo_BatlleNets)
 				if count > 1 then
@@ -641,10 +643,10 @@ function E:func_Create_DD_ToDo(mainFrame)
 			if type(value) == "string" then
 				local tbl_Players = {}
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-					if CharInfo.PlayerData.BattleTagLocal == value or not value then
+					if CharInfo.PlayerData and CharInfo.PlayerData.BattleTagLocal == value or not value then
 						tbl_Players[CharInfo.PlayerData.curServer] = tbl_Players[CharInfo.PlayerData.curServer] or {}
 						tbl_Players[CharInfo.PlayerData.curServer][GUID] = tbl_Players[CharInfo.PlayerData.curServer][GUID] or {}
-						tbl_Players[CharInfo.PlayerData.curServer][GUID] = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r"..CharInfo.PlayerData.UnitLevel
+						tbl_Players[CharInfo.PlayerData.curServer][GUID] = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r"..(CharInfo.PlayerData.UnitLevel or 0)
 					end
 				end
 				for Server, v in next, (tbl_Players) do
@@ -676,31 +678,33 @@ function E:func_Create_DD_ToDo(mainFrame)
 						local infoB = Octo_ToDo_DB_Levels[b].PlayerData
 						if infoA and infoB then
 							return
-							infoA.curServer > infoB.curServer or
-							infoA.curServer == infoB.curServer and infoA.UnitLevel > infoB.UnitLevel or
-							infoA.UnitLevel == infoB.UnitLevel and infoA.avgItemLevel > infoB.avgItemLevel or
-							infoA.avgItemLevel == infoB.avgItemLevel and infoB.Name > infoA.Name
+							(infoA.curServer or 0) > (infoB.curServer or 0) or
+							(infoA.curServer or 0) == (infoB.curServer or 0) and (infoA.UnitLevel or 0) > (infoB.UnitLevel or 0) or
+							(infoA.UnitLevel or 0) == (infoB.UnitLevel or 0) and (infoA.avgItemLevel or 0) > (infoB.avgItemLevel or 0) or
+							(infoA.avgItemLevel or 0) == (infoB.avgItemLevel or 0) and (infoB.Name or 0) > (infoA.Name or 0)
 						end
 					end
 				)
 				for _, GUID in next, (players_list) do
-					local info = {}
-					info.fontObject = OctoFont11
-					info.keepShownOnClick = true
-					info.isNotRadio = true
-					local vivod = Octo_ToDo_DB_Levels[GUID].PlayerData.classColorHex..Octo_ToDo_DB_Levels[GUID].PlayerData.Name.."|r"
-					if Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel ~= E.currentMaxLevel then
-						vivod = vivod.." "..E.Yellow_Color..Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel.."|r"
+					if Octo_ToDo_DB_Levels[GUID].PlayerData then
+						local info = {}
+						info.fontObject = OctoFont11
+						info.keepShownOnClick = true
+						info.isNotRadio = true
+						local vivod = Octo_ToDo_DB_Levels[GUID].PlayerData.classColorHex..Octo_ToDo_DB_Levels[GUID].PlayerData.Name.."|r"
+						if Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel ~= E.currentMaxLevel then
+							vivod = vivod.." "..E.Yellow_Color..(Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel or 0).."|r"
+						end
+						info.text = vivod
+						info.value = GUID
+						info.func = selectFunctionisShownPLAYER
+						info.checked = Octo_ToDo_DB_Levels[GUID].PlayerData.isShownPLAYER
+						info.remove = func_remove_GUID
+						info.removeDoNotHide = true
+						info.icon = Octo_ToDo_DB_Levels[GUID].PlayerData.specIcon
+						info.iconInfo = {tSizeX = 16, tSizeY = 16}
+						tinsert(list, info)
 					end
-					info.text = vivod
-					info.value = GUID
-					info.func = selectFunctionisShownPLAYER
-					info.checked = Octo_ToDo_DB_Levels[GUID].PlayerData.isShownPLAYER
-					info.remove = func_remove_GUID
-					info.removeDoNotHide = true
-					info.icon = Octo_ToDo_DB_Levels[GUID].PlayerData.specIcon
-					info.iconInfo = {tSizeX = 16, tSizeY = 16}
-					tinsert(list, info)
 				end
 				self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			end
@@ -988,7 +992,7 @@ function Octo_EventFrame_ToDo:DisplayCharacterStats()
 			if CharInfo.PlayerData.realTotalTime then
 				realTotalTime = realTotalTime + CharInfo.PlayerData.realTotalTime
 			end
-			if CharInfo.PlayerData.UnitLevel >= E.currentMaxLevel then
+			if CharInfo.PlayerData.UnitLevel and (CharInfo.PlayerData.UnitLevel >= E.currentMaxLevel) then
 				realLevelTime = realLevelTime + CharInfo.PlayerData.realLevelTime
 			end
 		end
