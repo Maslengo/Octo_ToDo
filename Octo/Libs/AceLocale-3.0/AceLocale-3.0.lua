@@ -21,13 +21,13 @@ if gameLocale == "enGB" then
 	gameLocale = "enUS"
 end
 
-AceLocale.apps = AceLocale.apps or {}          -- array of ["AppName"]=localetableref
-AceLocale.appnames = AceLocale.appnames or {}  -- array of [localetableref]="AppName"
+AceLocale.apps = AceLocale.apps or {}-- array of ["AppName"]=localetableref
+AceLocale.appnames = AceLocale.appnames or {}-- array of [localetableref]="AppName"
 
 -- This metatable is used on all tables returned from GetLocale
 local readmeta = {
 	__index = function(self, key) -- requesting totally unknown entries: fire off a nonbreaking error and return key
-		rawset(self, key, key)      -- only need to see the warning once, really
+		rawset(self, key, key)-- only need to see the warning once, really
 		geterrorhandler()(MAJOR..": "..tostring(AceLocale.appnames[self])..": Missing entry for '"..tostring(key).."'")
 		return key
 	end
@@ -36,7 +36,7 @@ local readmeta = {
 -- This metatable is used on all tables returned from GetLocale if the silent flag is true, it does not issue a warning on unknown keys
 local readmetasilent = {
 	__index = function(self, key) -- requesting totally unknown entries: return key
-		rawset(self, key, key)      -- only need to invoke this function once
+		rawset(self, key, key)-- only need to invoke this function once
 		return key
 	end
 }
@@ -60,8 +60,8 @@ local writeproxy = setmetatable({}, {
 -- It refuses to overwrite existing values
 -- Reason 1: Allows loading locales in any order
 -- Reason 2: If 2 modules have the same string, but only the first one to be
---           loaded has a translation for the current locale, the translation
---           doesn't get overwritten.
+-- loaded has a translation for the current locale, the translation
+-- doesn't get overwritten.
 --
 local writedefaultproxy = setmetatable({}, {
 	__newindex = function(self, key, value)

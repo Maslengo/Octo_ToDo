@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+if not E.Enable_Options then return end
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
@@ -33,7 +34,7 @@ function E.Developing()
 			DELETEALL = {
 				type = "execute",
 				name = DELETE.." "..ALL,
-				desc = "Octo_ToDo_DB_Levels  = {}|nOcto_ToDo_DB_Vars = {}",
+				desc = "Octo_ToDo_DB_Levels= {}|nOcto_ToDo_DB_Vars = {}",
 				func = function()
 					Octo_ToDo_DB_Levels = {}
 					Octo_ToDo_DB_Vars = {}
@@ -59,9 +60,9 @@ function E.Developing()
 			Octo_ToDo_DB_Levels = {
 				type = "execute",
 				name = "Levels",
-				desc = "Octo_ToDo_DB_Levels  = {}",
+				desc = "Octo_ToDo_DB_Levels= {}",
 				func = function()
-					Octo_ToDo_DB_Levels  = {}
+					Octo_ToDo_DB_Levels= {}
 					return
 				end,
 				width = E.FULL_WIDTH/4,
@@ -71,9 +72,9 @@ function E.Developing()
 			Octo_ToDo_DB_Other = {
 				type = "execute",
 				name = "Other",
-				desc = "Octo_ToDo_DB_Other  = {}",
+				desc = "Octo_ToDo_DB_Other= {}",
 				func = function()
-					Octo_ToDo_DB_Other  = {}
+					Octo_ToDo_DB_Other= {}
 					return
 				end,
 				width = E.FULL_WIDTH/4,
@@ -83,9 +84,9 @@ function E.Developing()
 			Octo_ToDo_DB_Vars = {
 				type = "execute",
 				name = "Vars",
-				desc = "Octo_ToDo_DB_Vars  = {}",
+				desc = "Octo_ToDo_DB_Vars= {}",
 				func = function()
-					Octo_ToDo_DB_Vars  = {}
+					Octo_ToDo_DB_Vars= {}
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -124,7 +125,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.CurrencyID_totalEarned = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.CurrencyID_totalEarned  = {}
+						CharInfo.MASLENGO.CurrencyID_totalEarned= {}
 					end
 					return
 				end,
@@ -138,7 +139,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.CurrencyID = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.CurrencyID  = {}
+						CharInfo.MASLENGO.CurrencyID= {}
 					end
 					return
 				end,
@@ -152,7 +153,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.OctoTable_QuestID = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.OctoTable_QuestID  = {}
+						CharInfo.MASLENGO.OctoTable_QuestID= {}
 					end
 					return
 				end,
@@ -166,7 +167,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.ItemsInBag = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.ItemsInBag  = {}
+						CharInfo.MASLENGO.ItemsInBag= {}
 					end
 					return
 				end,
@@ -180,7 +181,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.professions = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.professions  = {}
+						CharInfo.MASLENGO.professions= {}
 					end
 					return
 				end,
@@ -208,7 +209,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.CurrencyID_Total = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.CurrencyID_Total  = {}
+						CharInfo.MASLENGO.CurrencyID_Total= {}
 					end
 					return
 				end,
@@ -222,7 +223,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.Quests = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.Quests  = {}
+						CharInfo.MASLENGO.Quests= {}
 					end
 					return
 				end,
@@ -236,7 +237,7 @@ function E.Developing()
 				desc = "CharInfo.MASLENGO.UniversalQuest = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.UniversalQuest  = {}
+						CharInfo.MASLENGO.UniversalQuest= {}
 					end
 					return
 				end,

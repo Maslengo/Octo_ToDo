@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = true
-if not enable then return end
+if not E.Enable_QuestsChanged then return end
 local floor = math.floor
 local QC_Quests, copybox
 function E:BuildLog()
@@ -69,14 +68,14 @@ function E:BuildLogPanel(initializer, dataProvider)
 	Container.ScrollBox = ScrollBox
 	local ScrollView = CreateScrollBoxListLinearView()
 	ScrollView:SetDataProvider(dataProvider, ScrollBoxConstants.RetainScrollPosition)
-	ScrollView:SetElementExtent(32)  -- Fixed height for each row; required as we're not using XML.
+	ScrollView:SetElementExtent(32)-- Fixed height for each row; required as we're not using XML.
 	ScrollView:SetElementInitializer("Button", initializer)
 	Container.ScrollView = ScrollView
 	ScrollUtil.InitScrollBoxWithScrollBar(ScrollBox, ScrollBar, ScrollView)
 	-- This causes errors when removing lines:
 	-- Container:SetScript("OnShow", function()
-	--     -- for the timestamps
-	--     ScrollView:Rebuild()
+	-- -- for the timestamps
+	-- ScrollView:Rebuild()
 	-- end)
 	return Container
 end

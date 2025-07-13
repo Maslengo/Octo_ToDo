@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = true
-if not enable then return end
+if not E.Enable_QuestsChanged then return end
 local Octo_EventFrame_QuestsChanged = CreateFrame("FRAME")
 Octo_EventFrame_QuestsChanged:Hide()
 local Octo_MainFrame_QuestsChanged = CreateFrame("BUTTON", "Octo_MainFrame_QuestsChanged", UIParent, "BackdropTemplate")
@@ -262,14 +261,23 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 		frame.textureFULL:Hide()
 	end
 
-
-	frame.second.text:SetText(E.Gray_Color.."id: "..frameData.id.."|r")
-	frame.fourth.text:SetText(E.Gray_Color.."id: "..frameData.mapID.. "|r")
+	if frameData.id then
+		frame.second.text:SetText(E.Gray_Color.."id: "..frameData.id.."|r")
+	else
+		frame.second.text:SetText("QWEQWEQWEQWEQWEQWE")
+	end
+	if frameData.mapID then
+		frame.fourth.text:SetText(E.Gray_Color.."id: "..frameData.mapID.. "|r")
+	else
+		frame.second.text:SetText("QWEQWEQWEQWEQWEQWE")
+	end
 	----------------------------------------------------------------
 	if frameData.curLocation and frameData.curLocation ~= "" then
 		frame.fifth.text:SetText(frameData.curLocation)
-	else
+	elseif frameData.mapID then
 		frame.fifth.text:SetText(E.func_GetMapName(frameData.mapID))
+	else
+		frame.fifth.text:SetText("QWEQWEQWEQWEQWEQWE")
 	end
 	----------------------------------------------------------------
 	-- frame.sixth.text:SetText(E.Green_Color..E.func_GetCoordFormated(frameData.x, frameData.y).."|r")

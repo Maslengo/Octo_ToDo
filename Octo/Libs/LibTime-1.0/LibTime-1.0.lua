@@ -252,10 +252,10 @@ end
 
 
 --- GetTimeString
--- @param name of time   <GameTime|LocalTime|UTCTime|CountryTime>
--- @param 24hours        [boolean] - optional, default = true
+-- @param name of time <GameTime|LocalTime|UTCTime|CountryTime>
+-- @param 24hours[boolean] - optional, default = true
 -- @param displaySeconds [boolean] - optional, default = false
--- @param countryId      [number]  - only for use with GetCountryTime
+-- @param countryId[number]- only for use with GetCountryTime
 function lib.GetTimeString(name,b24hours,displaySeconds,countryId)
 	assert(lib["Get"..name],"Usage: <LibTime-1.0>.GetTimeString(<GameTime|LocalTime|UTCTime|CountryTime>[,<b24hours>[,<bDisplaySeconds>[,<iCountryId>]]])");
 	if b24hours==nil then

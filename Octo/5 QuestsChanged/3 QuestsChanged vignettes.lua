@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = true
-if not enable or not C_EventUtils.IsEventValid("VIGNETTE_MINIMAP_UPDATED") then return end
+if not E.Enable_QuestsChanged or not C_EventUtils.IsEventValid("VIGNETTE_MINIMAP_UPDATED") then return end
 
 
 local Octo_EventFrame_Vignettes = CreateFrame("FRAME")

@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+if not E.Enable_ToDo then return end
 local Octo_EventFrame_ToDo = CreateFrame("FRAME")
 Octo_EventFrame_ToDo:Hide()
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
@@ -37,6 +38,29 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		return f
 end)
 ----------------------------------------------------------------
+E.OctoTable_Otrisovka = {}
+local function func_ConcatAtStart()
+	wipe(E.OctoTable_Otrisovka)
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_01_WorldofWarcraft())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_02_TheBurningCrusade())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_03_WrathoftheLichKing())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_04_Cataclysm())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_05_MistsofPandaria())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_06_WarlordsofDraenor())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_07_Legion())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_08_BattleforAzeroth())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_09_Shadowlands())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_10_Dragonflight())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_11_TheWarWithin())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_12_Midnight())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_13_TheLastTitan())
+
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_90_Holidays())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_91_Other())
+
+
+	return E.OctoTable_Otrisovka
+end
 ----------------------------------------------------------------
 local math_min = math.min
 local math_max = math.max
@@ -208,13 +232,13 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	frame.textLEFT:SetText(frameData.textLEFT)
 	InitButtonTexture(frame.icon_1, frameData.iconLEFT, AddonHeight-2)
 	-- if C_Texture.GetAtlasInfo(frameData.iconLEFT) then
-	--     frame.icon_1:SetAtlas(frameData.iconLEFT)
+	-- frame.icon_1:SetAtlas(frameData.iconLEFT)
 	-- else
-	--     frame.icon_1:SetTexture(frameData.iconLEFT)
+	-- frame.icon_1:SetTexture(frameData.iconLEFT)
 	-- end
 	if frameData.colorLEFT then
 		local r, g, b = E.func_hex2rgbNUMBER(frameData.colorLEFT)
-		frame.textureLEFT:SetVertexColor(r, g, b, .1)
+		frame.textureLEFT:SetVertexColor(r, g, b, .2)
 		frame.textureLEFT:Show()
 	else
 		frame.textureLEFT:Hide()
@@ -247,7 +271,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 				if not frameData.isReputations then
 					secondFrame.ReputTextureAndBG:SetWidth(AddonCentralFrameWeight)
 					secondFrame.ReputTextureAndBG:Show()
-					secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, E.bgCaOverlay)
+					secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3) -- E.bgCaOverlay
 				else
 					secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3)
 				end
@@ -445,7 +469,8 @@ function E:func_CreateMyDataProvider()
 	end
 	if not Octo_ToDo_DB_Vars.Reputations then
 		-- Alternative mode (not reputations)
-		for index, func in ipairs(E:func_Otrisovka()) do
+		-- for index, func in ipairs(E:func_Otrisovka()) do
+		for index, func in ipairs(func_ConcatAtStart()) do
 			numlines = numlines + 1
 			local zxc = CreateZxcTable(false)
 			-- Process all characters first for CENT data
@@ -722,7 +747,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 			if level == 1 then
 				info.keepShownOnClick = false
 				info.notCheckable = true
-				info.text = "Show all"
+				info.text = INTERACT_ICONS_SHOW_ALL -- "Show all"
 				info.icon = false
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
@@ -735,7 +760,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 				----------------
 				info.keepShownOnClick = false
 				info.notCheckable = true
-				info.text = "Hide all"
+				info.text = HIDE -- INTERACT_ICONS_SHOW_NONE -- "Hide all"
 				info.icon = false
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
@@ -873,11 +898,12 @@ function E:func_Create_DD_ToDo(mainFrame)
 					self:ddAddButton(info, level)
 				end
 				info.iconInfo = nil
-				----------------
+				--------------------------------------------------
 				self:ddAddSeparator(level)
+				--------------------------------------------------
 				info.keepShownOnClick = false
 				info.notCheckable = true
-				info.text = "Show all"
+				info.text = INTERACT_ICONS_SHOW_ALL -- "Show all"
 				info.icon = false
 				info.func = function(_, _, _, checked)
 					for expansionID, v in ipairs(E.OctoTable_Expansions) do
@@ -889,7 +915,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 				--------------------------------------------------
 				info.keepShownOnClick = false
 				info.notCheckable = true
-				info.text = "Hide all"
+				info.text = HIDE -- INTERACT_ICONS_SHOW_NONE -- "Hide all"
 				info.icon = false
 				info.func = function(_, _, _, checked)
 					for expansionID, v in ipairs(E.OctoTable_Expansions) do
@@ -898,6 +924,121 @@ function E:func_Create_DD_ToDo(mainFrame)
 					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
+				--------------------------------------------------
+				self:ddAddSeparator(level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = QUESTS_LABEL
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.Quests
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.Quests = checked
+					E:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = CALENDAR_FILTER_HOLIDAYS
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.Holidays
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.Holidays = checked
+					E:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = DUNGEONS
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.Dungeons
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.Dungeons = checked
+					E:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = ITEMS
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.Items
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.Items = checked
+					E:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = TRADE_SKILLS
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.Professions
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.Professions = checked
+					E:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = BONUS_ROLL_REWARD_MONEY
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.Gold
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.Gold = checked
+					E:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = STAT_AVERAGE_ITEM_LEVEL
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.ItemLevel
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.ItemLevel = checked
+					E:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+				info.text = L["Was online"]
+				info.icon = false
+				info.hasArrow = nil
+				info.checked = Octo_ToDo_DB_Vars.WasOnline
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.WasOnline = checked
+					E:func_CreateMyDataProvider()
+				end
+				self:ddAddButton(info, level)
+				--------------------------------------------------
+
+
+
+
+
+
+
+
 			end
 		end
 	)

@@ -168,7 +168,7 @@ local methods = {
 Constructor
 -------------------------------------------------------------------------------]]
 
-local ControlBackdrop  = {
+local ControlBackdrop= {
 	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true, tileSize = 16, edgeSize = 16,
@@ -227,12 +227,12 @@ local function Constructor()
 	msgframe:Hide()
 
 	local widget = {
-		button      = button,
-		label       = label,
-		msgframe    = msgframe,
-		frame       = frame,
+		button= button,
+		label = label,
+		msgframe= msgframe,
+		frame = frame,
 		alignoffset = 30,
-		type        = Type
+		type= Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func

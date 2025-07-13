@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+if not E.Enable_ToDo then return end
 local Octo_EventFrame = CreateFrame("FRAME")
 Octo_EventFrame:Hide()
 
@@ -329,9 +330,9 @@ end
 
 function Octo_EventFrame:Update()
 	-- for _, frame in ipairs(secureButtons) do
-	--     if not frame:IsShown() then
-	--         frame:Show()
-	--     end
+	-- if not frame:IsShown() then
+	-- frame:Show()
+	-- end
 	-- end
 end
 

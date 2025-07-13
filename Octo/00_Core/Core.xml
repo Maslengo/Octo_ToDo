@@ -1,0 +1,86 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Script file="00_Core\1 Localization.lua"/>
+	<Script file="00_Core\2 Functions.lua"/>
+	<Script file="00_Core\3 Fprint.lua"/>
+	<Script file="00_Core\4 WTF.lua"/>
+	<Script file="00_Core\5 WTF_OLD.lua"/>
+	<Script file="00_Core\6 Collect.lua"/>
+
+
+
+
+
+
+	<Script file="00_Core\01_Otrisovka\01_WorldofWarcraft.lua"/>
+	<Script file="00_Core\01_Otrisovka\02_TheBurningCrusade.lua"/>
+	<Script file="00_Core\01_Otrisovka\03_WrathoftheLichKing.lua"/>
+	<Script file="00_Core\01_Otrisovka\04_Cataclysm.lua"/>
+	<Script file="00_Core\01_Otrisovka\05_MistsofPandaria.lua"/>
+	<Script file="00_Core\01_Otrisovka\06_WarlordsofDraenor.lua"/>
+	<Script file="00_Core\01_Otrisovka\07_Legion.lua"/>
+	<Script file="00_Core\01_Otrisovka\08_BattleforAzeroth.lua"/>
+	<Script file="00_Core\01_Otrisovka\09_Shadowlands.lua"/>
+	<Script file="00_Core\01_Otrisovka\10_Dragonflight.lua"/>
+	<Script file="00_Core\01_Otrisovka\11_TheWarWithin.lua"/>
+	<Script file="00_Core\01_Otrisovka\12_Midnight.lua"/>
+	<Script file="00_Core\01_Otrisovka\13_TheLastTitan.lua"/>
+
+
+	<Script file="00_Core\01_Otrisovka\90_Holidays.lua"/>
+	<Script file="00_Core\01_Otrisovka\91_Other.lua"/>
+
+
+
+	<Script file="00_Core\02_Tables\Octo_Timer.lua"/>
+	<Script file="00_Core\02_Tables\OctoTable_Currencies.lua"/>
+	<Script file="00_Core\02_Tables\OctoTable_Expansions.lua"/>
+	<Script file="00_Core\02_Tables\OctoTable_KeystoneAbbr.lua"/>
+	<Script file="00_Core\02_Tables\OctoTable_Items.lua"/>
+	<Script file="00_Core\02_Tables\OctoTable_QuestID.lua"/>
+	<Script file="00_Core\02_Tables\OctoTable_Reputations.lua"/>
+	<Script file="00_Core\02_Tables\OctoTable_ReputationsDB.lua"/>
+
+	<Script file="00_Core\02_Tables\UniversalQuests\01_WorldofWarcraft.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\02_TheBurningCrusade.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\03_WrathoftheLichKing.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\04_Cataclysm.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\05_MistsofPandaria.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\06_WarlordsofDraenor.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\07_Legion.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\08_BattleforAzeroth.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\09_Shadowlands.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\10_Dragonflight.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\11_TheWarWithin.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\12_Midnight.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\13_TheLastTitan.lua"/>
+	<Script file="00_Core\02_Tables\UniversalQuests\99_Other.lua"/>
+
+	<Script file="00_Core\02_Tables\OctoTable_Gossip.lua"/>
+	<Script file="00_Core\02_Tables\OctoTable_Spells.lua"/>
+
+	<Script file="00_Core\03_Moduls\Auto_ChatClearing.lua"/>
+	<Script file="00_Core\03_Moduls\Auto_CinematicCanceler.lua"/>
+	<Script file="00_Core\03_Moduls\Auto_Gossip.lua"/>
+	<Script file="00_Core\03_Moduls\Auto_InputDelete.lua"/>
+	<Script file="00_Core\03_Moduls\Auto_Open.lua"/>
+	<Script file="00_Core\03_Moduls\Auto_Repair.lua"/>
+	<Script file="00_Core\03_Moduls\Auto_Screenshot.lua"/>
+	<Script file="00_Core\03_Moduls\Auto_Sell_Grey.lua"/>
+	<Script file="00_Core\03_Moduls\CVAR.lua"/>
+	<Script file="00_Core\03_Moduls\Module_AutoTurnIn.lua"/>
+	<Script file="00_Core\03_Moduls\Module_HideFrames.lua"/>
+	<Script file="00_Core\03_Moduls\Module_ItemsDelete.lua"/>
+	<Script file="00_Core\03_Moduls\Module_ItemsUsable.lua"/>
+	<Script file="00_Core\03_Moduls\Module_PortalsFrame.lua"/>
+	<Script file="00_Core\03_Moduls\Module_UIErrorsFramePosition.lua"/>
+	<Script file="00_Core\03_Moduls\Octo_WowheadQuickLink.lua"/>
+	<Script file="00_Core\03_Moduls\Octo_WowheadQuickLinkStrategies.lua"/>
+	<Script file="00_Core\03_Moduls\PosFrame.lua"/>
+	<Script file="00_Core\03_Moduls\SellFrame.lua"/>
+	<Script file="00_Core\03_Moduls\SpeedFrame.lua"/>
+	<Script file="00_Core\03_Moduls\StaticPopup1Button1.lua"/>
+
+
+</Ui>

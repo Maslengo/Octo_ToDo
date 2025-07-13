@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+if not E.Enable_Options then return end
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
@@ -581,35 +582,27 @@ function E.CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Dungeons = {
+			Header122 = {
+				type = "header",
+				name = "",
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			QUESTS_LABEL = {
 				type = "toggle",
-				name = "КД инстов",
+				name = QUESTS_LABEL,
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Dungeons
+					return Octo_ToDo_DB_Vars.Quests
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Dungeons = value
+					Octo_ToDo_DB_Vars.Quests = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Professions = {
-				type = "toggle",
-				name = TRADE_SKILLS,
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Professions
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Professions = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Holidays = {
+			CALENDAR_FILTER_HOLIDAYS = {
 				type = "toggle",
 				name = CALENDAR_FILTER_HOLIDAYS,
 				desc = "",
@@ -623,7 +616,51 @@ function E.CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Gold = {
+			DUNGEONS = {
+				type = "toggle",
+				name = DUNGEONS,
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.Dungeons
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Dungeons = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			ITEMS = {
+				type = "toggle",
+				name = ITEMS,
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.Items
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Items = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+
+
+			TRADE_SKILLS = {
+				type = "toggle",
+				name = TRADE_SKILLS,
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.Professions
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Professions = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			BONUS_ROLL_REWARD_MONEY = {
 				type = "toggle",
 				name = BONUS_ROLL_REWARD_MONEY,
 				desc = "",
@@ -637,7 +674,7 @@ function E.CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			ItemLevel = {
+			STAT_AVERAGE_ITEM_LEVEL = {
 				type = "toggle",
 				name = STAT_AVERAGE_ITEM_LEVEL,
 				desc = "",
@@ -662,6 +699,12 @@ function E.CreateGeneralOptions()
 					Octo_ToDo_DB_Vars.WasOnline = value
 				end,
 				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Header123 = {
+				type = "header",
+				name = "",
 				order = GetOrder(),
 			},
 			-------------------------------------------------
