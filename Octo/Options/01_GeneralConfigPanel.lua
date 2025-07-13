@@ -124,35 +124,64 @@ function E.CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			MaxNumCharacters = {
-				type = "range",
-				name = L["MaxNumCharacters"],
-				desc = "MaxNumCharacters",
-				min = 1,
-				max = 20,
-				step = 1,
+			-- MaxNumCharacters = {
+			-- 	type = "range",
+			-- 	name = L["MaxNumCharacters"],
+			-- 	desc = "MaxNumCharacters",
+			-- 	min = 1,
+			-- 	max = 20,
+			-- 	step = 1,
+			-- 	get = function()
+			-- 		return Octo_ToDo_DB_Vars.MaxNumCharacters
+			-- 	end,
+			-- 	set = function(_, value)
+			-- 		Octo_ToDo_DB_Vars.MaxNumCharacters = value
+			-- 	end,
+			-- 	width = E.FULL_WIDTH/4,
+			-- 	order = GetOrder(),
+			-- },
+			-- -----------------------------------------------
+			-- SFDropDownWeight = {
+			-- 	type = "range",
+			-- 	name = L["SFDropDownWeight"],
+			-- 	desc = "SFDropDownWeight",
+			-- 	min = 50,
+			-- 	max = 200,
+			-- 	step = 1,
+			-- 	get = function()
+			-- 		return Octo_ToDo_DB_Vars.SFDropDownWeight
+			-- 	end,
+			-- 	set = function(_, value)
+			-- 		Octo_ToDo_DB_Vars.SFDropDownWeight = value
+			-- 	end,
+			-- 	width = E.FULL_WIDTH/4,
+			-- 	order = GetOrder(),
+			-- },
+
+			-------------------------------------------------
+			DontSavePosition = {
+				type = "toggle",
+				name = "Dont Save Position",
+				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.MaxNumCharacters
+					return Octo_ToDo_DB_Vars.DontSavePosition
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.MaxNumCharacters = value
+					Octo_ToDo_DB_Vars.DontSavePosition = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			SFDropDownWeight = {
-				type = "range",
-				name = L["SFDropDownWeight"],
-				desc = "SFDropDownWeight",
-				min = 50,
-				max = 200,
-				step = 1,
+			ClampedToScreen = {
+				type = "toggle",
+				name = "Clamped To Screen",
+				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.SFDropDownWeight
+					return Octo_ToDo_DB_Vars.ClampedToScreen
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.SFDropDownWeight = value
+					Octo_ToDo_DB_Vars.ClampedToScreen = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -214,27 +243,13 @@ function E.CreateGeneralOptions()
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
+
+
 			-------------------------------------------------
-			FrameScale = {
-				type = "range",
-				name = "FrameScale",
-				desc = "",
-				min = 0.5,
-				max = 2.5,
-				step = 0.1,
-				get = function()
-					return Octo_ToDo_DB_Vars.FrameScale
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.FrameScale = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
 			-------------------------------------------------
-			HeaderAuto = {
+			MainHeader24 = {
 				type = "header",
-				name = "Автоматизация",
+				name = OTHER,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -255,274 +270,20 @@ function E.CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Header9 = {
-				type = "header",
-				name = "Автоматизация",
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			AutoSellGrey = {
-				type = "toggle",
-				name = L["AutoSellGrey"], -- "AUTO "..SELL_ALL_JUNK_ITEMS_EXCLUDE_HEADER, --
+			FrameScale = {
+				type = "range",
+				name = "FrameScale",
 				desc = "",
+				min = 0.5,
+				max = 2.5,
+				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.AutoSellGrey
+					return Octo_ToDo_DB_Vars.FrameScale
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.AutoSellGrey = value
+					Octo_ToDo_DB_Vars.FrameScale = value
 				end,
-				width = E.FULL_WIDTH/2, -- "full",
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			AutoRepair = {
-				type = "toggle",
-				name = L["AutoRepair"], -- "AUTO "..REPAIR_ALL_ITEMS, --
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.AutoRepair
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.AutoRepair = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			InputDelete = {
-				type = "toggle",
-				name = L["InputDelete"], -- "AUTO "..DELETE, --
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.InputDelete
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.InputDelete = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			AutoOpen = {
-				type = "toggle",
-				name = L["AutoOpen"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.AutoOpen
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.AutoOpen = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Auto_Gossip = {
-				type = "toggle",
-				name = L["Auto_Gossip"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Auto_Gossip
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_Gossip = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			AutoTurnQuests = {
-				type = "toggle",
-				name = L["Auto Turn Quests"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.AutoTurnQuests
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.AutoTurnQuests = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Auto_ChatClearing = {
-				type = "toggle",
-				name = L["ClearChat"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Auto_ChatClearing
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_ChatClearing = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Auto_Screenshot = {
-				type = "toggle",
-				name = L["Auto_Screenshot"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Auto_Screenshot
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_Screenshot = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Auto_CinematicCanceler = {
-				type = "toggle",
-				name = L["Auto_CinematicCanceler"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Auto_CinematicCanceler
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_CinematicCanceler = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Auto_CinematicFastSkip = {
-				type = "toggle",
-				name = "Fast Cinematic Skip (ESC/Space/Enter)",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Auto_CinematicFastSkip
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_CinematicFastSkip = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Header20 = {
-				type = "header",
-				name = "Скрытие фреймов",
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Hide_Boss_Banner = {
-				type = "toggle",
-				name = L["Hide: Boss Banner"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Hide_Boss_Banner
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Hide_Boss_Banner = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Hide_Covenant = {
-				type = "toggle",
-				name = L["Hide: Covenant"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Hide_Covenant
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Hide_Covenant = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Hide_Error_Messages = {
-				type = "toggle",
-				name = L["Hide: Error Messages"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Hide_Error_Messages
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Hide_Error_Messages = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Hide_RaidWarningFrame = {
-				type = "toggle",
-				name = "Hide_RaidWarningFrame",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Hide_RaidWarningFrame
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Hide_RaidWarningFrame = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Hide_OrderHallCommandBar = {
-				type = "toggle",
-				name = "Hide_OrderHallCommandBar",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Hide_OrderHallCommandBar
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Hide_OrderHallCommandBar = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Hide_Talking_Head_Frame = {
-				type = "toggle",
-				name = L["Hide: TalkingHeadFrame"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Hide_Talking_Head_Frame
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Hide_Talking_Head_Frame = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Hide_Zone_Text = {
-				type = "toggle",
-				name = L["Hide: Zone Text"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Hide_Zone_Text
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Hide_Zone_Text = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			UIErrorsFramePosition = {
-				type = "toggle",
-				name = L["UIErrorsFramePosition"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.UIErrorsFramePosition
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.UIErrorsFramePosition = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			-------------------------------------------------
-			MainHeader24 = {
-				type = "header",
-				name = OTHER,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -536,7 +297,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.PortalsButtons = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -550,7 +311,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.PortalsButtonsOnlyAvailable = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -564,7 +325,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.ShowOnlyCurrentServer = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -578,7 +339,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -598,7 +359,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Quests = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -612,7 +373,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Holidays = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -626,7 +387,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Dungeons = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -640,7 +401,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Items = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -656,7 +417,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Professions = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -670,7 +431,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Gold = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -684,7 +445,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.ItemLevel = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -698,7 +459,7 @@ function E.CreateGeneralOptions()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.WasOnline = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------

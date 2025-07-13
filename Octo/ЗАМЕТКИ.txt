@@ -2,7 +2,6 @@
 MonsterFriend
 -- ДАТА ПРОВАЙДЕР - ОБНОВЛЕНИЕ ПРИ КЛИКЕ
 -- СОРТИРОВКА ТЕКУЩЕЙ ТАБЛЫ
-
 OPENVAULT
 градиент для уровня предметов
 
@@ -29,6 +28,28 @@ local GREEDY = core.conditions.AuraActive(1250685) -- core.conditions.CalendarEv
 
 КАСТБАР СПЕЛЛОВ
 СКРОЛЛ ПО КОНТРЛ КАК В ВАРМАПЕ
+
+
+Octo_ToDo_DB_Vars.DontSavePosition КАК РАБОТАЕТ?
+
+DELVES_NEW_CURIO - НОВОЕ
+NEW_CAPS - НОВОЕ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

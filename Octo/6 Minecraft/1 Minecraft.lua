@@ -102,8 +102,8 @@ function Octo_EventFrame_Minecraft:CreateOcto_MinecraftFrameFG()
 	-- Main Frame
 	Octo_MinecraftFrameFG = CreateFrameWithTexture("Octo_MinecraftFrameFG", UIParent, SIZE, "HIGH", TEXTURE_PATH_FG, colorFG, {"TOPLEFT", 300, -100})
 	Octo_MinecraftFrameFG:Hide()
-	Octo_MinecraftFrameFG:SetDontSavePosition(true)
-	Octo_MinecraftFrameFG:SetClampedToScreen(false)
+	Octo_MinecraftFrameFG:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
+	Octo_MinecraftFrameFG:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
 	Octo_MinecraftFrameFG:EnableMouse(true)
 	Octo_MinecraftFrameFG:SetMovable(true)
 

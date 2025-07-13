@@ -24,10 +24,10 @@ end
 --------------------------------------------------------------------------
 -- CallbackHandler:New
 --
--- target- target object to embed public APIs in
--- RegisterName- name of the callback registration API, default "RegisterCallback"
--- UnregisterName- name of the callback unregistration API, default "UnregisterCallback"
--- UnregisterAllName - name of the API to unregister all callbacks, default "UnregisterAllCallbacks". false == don't publish this API.
+--   target            - target object to embed public APIs in
+--   RegisterName      - name of the callback registration API, default "RegisterCallback"
+--   UnregisterName    - name of the callback unregistration API, default "UnregisterCallback"
+--   UnregisterAllName - name of the API to unregister all callbacks, default "UnregisterAllCallbacks". false == don't publish this API.
 
 function CallbackHandler.New(_self, target, RegisterName, UnregisterName, UnregisterAllName)
 
@@ -73,9 +73,9 @@ function CallbackHandler.New(_self, target, RegisterName, UnregisterName, Unregi
 	end
 
 	-- Registration of a callback, handles:
-	-- self["method"], leads to self["method"](self, ...)
-	-- self with function ref, leads to functionref(...)
-	-- "addonId" (instead of self) with function ref, leads to functionref(...)
+	--   self["method"], leads to self["method"](self, ...)
+	--   self with function ref, leads to functionref(...)
+	--   "addonId" (instead of self) with function ref, leads to functionref(...)
 	-- all with an optional arg, which, if present, gets passed as first argument (after self if present)
 	target[RegisterName] = function(self, eventname, method, ... --[[actually just a single arg]])
 		if type(eventname) ~= "string" then

@@ -32,7 +32,7 @@ local function replaceZeroWithNil(tbl, what)
 
 	for k, value in pairs(tbl) do
 		if (type(what) == "table" and whatSet[value]) or value == what then
-			print(k, E.Yellow_Color .. tostring(value) .. "|r")
+			print(tbl, k, E.Yellow_Color .. tostring(value) .. "|r")
 			tbl[k] = nil
 		elseif type(value) == "table" then
 			replaceZeroWithNil(value, what)
@@ -116,7 +116,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local defaults = {
 		className = E.className,
 		classFilename = E.classFilename,
-		GUID = curGUID,
+		GUID = "curGUID",
 		classColor = E.classColor,
 		curServer = E.curServer,
 		guildName = "",
@@ -144,7 +144,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		-- GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney,
 		-- PlayerDurability = 100,
 
-		-- ReloadCount = 0,
 		-- azeriteEXP = 0,
 		-- azeriteLVL = 0,
 		-- cloak_lvl = 0,
@@ -437,6 +436,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		LevelToShow = 1,
 		LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT),
 		prefix = 1,
+		DontSavePosition = true,
+		ClampedToScreen = false,
 	}
 	for k, v in next, (uiDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
@@ -455,19 +456,52 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	end
 	-- Настройки функций
 	local featureDefaults = {
+		Auto_SellGrey = false,
+		Auto_Repair = false,
+		Auto_InputDelete = false,
+		Auto_OpenItems = false,
+		Auto_Gossip = false,
+		Auto_TurnQuests = false,
+		Auto_ChatClearing = false,
+		Auto_Screenshot = false,
+		Auto_CinematicCanceler = false,
+		Auto_CinematicFastSkip = false,
+
+		Hide_CheckListText = false,
+		Hide_SubscriptionInterstitialFrame = false,
+		Hide_ActionStatusText = false,
+		Hide_SecondaryStatusTrackingBarContainer = false,
+		Hide_MainStatusTrackingBarContainer = false,
+		Hide_WeeklyRewardExpirationWarningDialog = false,
+		Hide_MajorFactionsRenownToast = false,
+		Hide_UIWidgetTopCenterContainerFrame = false,
+		Hide_BossBanner = false,
+		Hide_RaidWarningFrame = false,
+		Hide_RaidBossEmoteFrame = false,
+		Hide_PrivateRaidBossEmoteFrameAnchor = false,
+		Hide_SplashFrame = false,
+		Hide_PTRReporter = false,
+		Hide_PTRIssueReporter = false,
+		Hide_PTRIssueReporterAlertFrame = false,
+		Hide_Bug = false,
+		Hide_CovenantRenownToast = false,
+		Hide_CovenantChoiceToast = false,
+		Hide_ZoneTextFrame = false,
+		Hide_SubZoneTextFrame = false,
+		Hide_PVPArenaTextString = false,
+		Hide_ZoneTextString = false,
+		Hide_SubZoneTextString = false,
+		Hide_OrderHallCommandBar = false,
+		Hide_ErrorMessages = false,
+		Hide_TalkingHeadFrame = false,
+		Hide_EventToastManagerFrame = false,
+
+
 		AchievementShowCompleted = true,
 		AidingtheAccord = true,
 		AnotherAddonsCasual = true,
 		AnotherAddonsDUNG = true,
 		AnotherAddonsRAID = true,
-		Auto_CinematicCanceler = true,
-		Auto_CinematicFastSkip = true,
-		Auto_Gossip = true,
-		Auto_Screenshot = true,
-		AutoOpen = true,
-		AutoRepair = true,
-		AutoSellGrey = true,
-		AutoTurnQuests = true,
 		BeledarCycle = true,
 		ChallengesKeystoneFrame = true,
 		Currency = true,
@@ -476,17 +510,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		EmeraldDream_Rares = true,
 		EmeraldDream_Sparks = true,
 		EmeraldDream_WB = true,
-		Hide_AzeriteEmpoweredItemUI = true,
-		Hide_Boss_Banner = true,
-		Hide_Covenant = true,
-		Hide_Error_Messages = true,
-		Hide_ObjectivesInInstance = true,
-		Hide_OrderHallCommandBar = true,
-		Hide_Raid_Boss_Emote_Frame = true,
-		Hide_RaidWarningFrame = true,
-		Hide_Talking_Head_Frame = true,
-		Hide_Zone_Text = true,
-		InputDelete = true,
 		LastUpdate = true,
 		LootFrame = true,
 		MajorKeyflames = true,
@@ -517,7 +540,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		ItemLevel = true,
 		WasOnline = true,
 
-		Auto_ChatClearing = false,
 		Reputations = false,
 		CurrencyShowAllways = false,
 		ItemsShowAllways = false,

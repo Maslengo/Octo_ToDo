@@ -78,10 +78,6 @@ function E.func_textCENT(CharInfo)
 		tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
 		tooltipRIGHT[#tooltipRIGHT+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(122284))..E.func_GetItemNameByID(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 	end
-	-- Reload count
-	if CharInfo.PlayerData.ReloadCount then
-		tooltipRIGHT[#tooltipRIGHT+1] = {"Reload Count: "..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.ReloadCount.."|r"}
-	end
 	-- Debug information
 	if E.DebugInfo then
 		tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}

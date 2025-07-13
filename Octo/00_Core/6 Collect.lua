@@ -165,13 +165,6 @@ function E.Collect_All_PlayerInfo()
 		collectPlayerData.DBVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
 	end
 end
-function E.Collect_All_ReloadCount()
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	if collectPlayerData then
-		collectPlayerData.ReloadCount = collectPlayerData.ReloadCount or 0
-		collectPlayerData.ReloadCount = collectPlayerData.ReloadCount + 1
-	end
-end
 function E.Collect_All_Covenant()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if collectMASLENGO and not InCombatLockdown() then
@@ -393,7 +386,7 @@ function E.Collect_All_Professions()
 			if skillModifier and skillModifier ~= 0 then
 				collectMASLENGO.professions[i].skillModifier = skillModifier
 			end
-			ifcollectENABLEmoreprofthen
+			if collectENABLEmoreprof then
 				if i == 1 or i == 2 then
 					for index, skillLineID in ipairs(C_TradeSkillUI.GetAllProfessionTradeSkillLines()) do -- СОБИРАТЬ ТОЛЬКО ОСНОВНЫЕ
 						-- for skillLineID, j in next, (Octo_ToDo_DB_Other.professions.DEBUG) do -- СОБИРАТЬ ВСЁ
@@ -514,7 +507,6 @@ function E.Collect_All_GreatVault()
 				end
 		})
 		for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
-			local vivod
 			local activities = C_WeeklyRewards.GetActivities(i)
 			local activity_name = name_activities[i] or name
 			for k = 1, #activities do
@@ -536,13 +528,13 @@ function E.Collect_All_GreatVault()
 						end
 						local hyperlink = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						local hyperlink_STRING = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
-						if hyperlink_STRING then
-							vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
-							if vivod and vivod ~= 0 then
+						if hyperlink_STRING ~= nil then
+							local vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
+							if vivod and vivod ~= "" and vivod ~= 0 then
 								collectMASLENGO.GreatVault[tip].hyperlink_STRING = vivod
-							else
-								collectMASLENGO.GreatVault[tip].hyperlink_STRING = nil
 							end
+						else
+							collectMASLENGO.GreatVault[tip].hyperlink_STRING = nil
 						end
 					end
 				end
@@ -1262,7 +1254,6 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_BfA_Island() -- острова Battle for Azeroth
 	-- Системные и служебные данные
 	E.Collect_All_LoginTime() -- время входа (УБРАТЬ?)
-	E.Collect_All_ReloadCount() -- счётчик перезагрузок UI
 	E.Collect_All_Holiday() -- праздничные события
 	-- Особые системы (BfA, Shadowlands и др.)
 	E.Collect_All_BfA_Azerite() -- азерит, Battle for Azeroth

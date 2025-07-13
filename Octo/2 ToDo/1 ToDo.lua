@@ -303,8 +303,8 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	end)
 	local NumPlayers = math_min(E.func_NumPlayers(), MaxNumCharacters)
 	frame:SetSize(AddonLeftFrameWeight + AddonCentralFrameWeight * NumPlayers, AddonHeight * MainFrameDefaultLines)
-	frame:SetDontSavePosition(true)
-	frame:SetClampedToScreen(false)
+	frame:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
+	frame:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
 	frame:SetFrameStrata("HIGH")
 	-- Создание скролл-фрейма
 	local barPanelScroll = CreateFrame("ScrollFrame", nil, frame)
@@ -1133,9 +1133,8 @@ function Octo_EventFrame_ToDo:SetupPlayerSpellsFrame()
 	end
 end
 function Octo_EventFrame_ToDo:DisplayCharacterStats()
-	local totalMoney, totalReload, realTotalTime, realLevelTime = 0, 0, 0, 0
+	local totalMoney, realTotalTime, realLevelTime = 0, 0, 0
 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-		totalReload = totalReload + (CharInfo.PlayerData.ReloadCount or 0)
 		if CharInfo.PlayerData.BattleTag == E.BattleTag then
 			-- if CharInfo.PlayerData.curServer == E.curServer then
 			if CharInfo.PlayerData.Money then
@@ -1158,9 +1157,7 @@ function Octo_EventFrame_ToDo:DisplayCharacterStats()
 		local levelTimeText = format("realLevelTime: %s%s|r", E.classColorHexCurrent, E.func_SecondsToClock(realLevelTime))
 		E.func_CreateInfoFrame(levelTimeText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight, "LEFT")
 	end
-	local reloadsText = format("Reloads: %s%s|r", E.classColorHexCurrent, totalReload)
-	E.func_CreateInfoFrame(reloadsText, "TOPRIGHT", Octo_MainFrame_ToDo, "BOTTOMRIGHT", 0, -AddonHeight*0, AddonLeftFrameWeight, AddonHeight, "RIGHT")
-	E.func_CreateInfoFrame(E.Timers.Daily_Reset(), "TOPLEFT", Octo_MainFrame_ToDo, "TOPLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight*2, "LEFT")
+	E.func_CreateInfoFrame("     "..E.Timers.Daily_Reset(), "TOPLEFT", Octo_MainFrame_ToDo, "TOPLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight*2, "LEFT")
 end
 function Octo_EventFrame_ToDo:LoadAssetsAsync()
 	local promise = LibThingsLoad:Items(E.OctoTable_itemID_ALL)

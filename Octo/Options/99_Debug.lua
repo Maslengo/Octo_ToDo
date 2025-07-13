@@ -3,21 +3,35 @@ if not E.Enable_Options then return end
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
-function E.Developing()
+function E.Debug()
 	local index = 0
 	local function GetOrder()
 		index = index + 1
 		return index
 	end
-	local Developing = {
+	local Debug = {
 		type = "group",
-		childGroups = "tree",
-		name = BINDING_HEADER_DEBUG,
+		childGroups = "tab",
+		name = "Debug", -- BINDING_HEADER_DEBUG
 		args = {
 			-------------------------------------------------
 			Header1 = {
 				type = "header",
 				name = "",
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			UIErrorsFramePosition = {
+				type = "toggle",
+				name = L["UIErrorsFramePosition"],
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.UIErrorsFramePosition
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.UIErrorsFramePosition = value
+				end,
+				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -321,20 +335,6 @@ function E.Developing()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Hide_ObjectivesInInstance = {
-				type = "toggle",
-				name = "Hide_ObjectivesInInstance",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Hide_ObjectivesInInstance
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Hide_ObjectivesInInstance = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			SellFrame = {
 				type = "toggle",
 				name = "SellFrame",
@@ -450,7 +450,7 @@ function E.Developing()
 			if type(v) == "table" and type(k) ~= "table" then
 				local order1 = GetOrder()
 				k = tostring(k)
-				Developing.args[k..order1] = {
+				Debug.args[k..order1] = {
 					type = "execute",
 					name = k,
 					desc = text.."."..k.." = {}",
@@ -467,13 +467,13 @@ function E.Developing()
 	end
 	local function add_args(tbl, text)
 		local order2 = GetOrder()
-		Developing.args[text..order2] = {
+		Debug.args[text..order2] = {
 			type = "header",
 			name = text,
 			order = order2,
 		}
 		local order3 = GetOrder()
-		Developing.args[text..order3] = {
+		Debug.args[text..order3] = {
 			type = "execute",
 			name = "|cff4fff79"..text.."|r",
 			desc = text.." = {}",
@@ -495,5 +495,5 @@ function E.Developing()
 	add_args(Octo_AddonsManager_DB, "Octo_AddonsManager_DB")
 	add_args(Octo_DEBUG, "Octo_DEBUG")
 	add_args(Octo_QuestsChangedDB, "Octo_QuestsChangedDB")
-	return Developing
+	return Debug
 end

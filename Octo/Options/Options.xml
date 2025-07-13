@@ -1,0 +1,13 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Script file="Options\00_basicOptions.lua"/>
+	<Script file="Options\01_GeneralConfigPanel.lua"/>
+	<Script file="Options\02_Automatization.lua"/>
+	<Script file="Options\03_HideFrames.lua"/>
+
+
+
+	<Script file="Options\99_Debug.lua"/>
+
+</Ui>

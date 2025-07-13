@@ -2,7 +2,48 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
-	-- General terms
+	L["Auto Sell Grey"] = true
+	L["Auto Repair"] = true
+	L["Auto Input Delete"] = true
+	L["Auto Open Items"] = true
+	L["Auto Gossip"] = true
+	L["Auto Turn Quests"] = true
+	L["Auto Clear Chat"] = true
+	L["Auto Screenshot"] = true
+	L["Auto Cinematic Canceler"] = true
+
+	-- UI elements
+	L["Hide: CheckListText"] = true
+	L["Hide: SubscriptionInterstitialFrame"] = true
+	L["Hide: ActionStatusText"] = true
+	L["Hide: SecondaryStatusTrackingBarContainer"] = true
+	L["Hide: MainStatusTrackingBarContainer"] = true
+	L["Hide: WeeklyRewardExpirationWarningDialog"] = true
+	L["Hide: MajorFactionsRenownToast"] = true
+	L["Hide: UIWidgetTopCenterContainerFrame"] = true
+	L["Hide: BossBanner"] = true
+	L["Hide: RaidWarningFrame"] = true
+	L["Hide: RaidBossEmoteFrame"] = true
+	L["Hide: PrivateRaidBossEmoteFrameAnchor"] = true
+	L["Hide: SplashFrame"] = true
+	L["Hide: PTRReporter"] = true
+	L["Hide: PTRIssueReporter"] = true
+	L["Hide: PTRIssueReporterAlertFrame"] = true
+	L["Hide: Bug"] = true
+	L["Hide: CovenantRenownToast"] = true
+	L["Hide: CovenantChoiceToast"] = true
+	L["Hide: ZoneTextFrame"] = true
+	L["Hide: SubZoneTextFrame"] = true
+	L["Hide: PVPArenaTextString"] = true
+	L["Hide: ZoneTextString"] = true
+	L["Hide: SubZoneTextString"] = true
+	L["Hide: OrderHallCommandBar"] = true
+	L["Hide: ErrorMessages"] = true
+	L["Hide: TalkingHeadFrame"] = true
+	L["Hide: EventToastManagerFrame"] = true
+
+
+
 	L["Only Horde"] = true
 	L["Only Alliance"] = true
 	L["Other"] = true
@@ -123,7 +164,6 @@ if L then
 	L["Encapsulated Destiny"] = true
 	L["Dreamsurge Investigation"] = true
 	L["Shaping the Dreamsurge"] = true
-	L["Auto Turn Quests"] = true
 	L["Aiding the Accord"] = true
 	L["When Time Needs Mending"] = true
 	L["Emerald Dream"] = true
@@ -163,32 +203,15 @@ if L then
 	L["Treasures"] = true
 	L["Faction Assault"] = true
 	L["Legion Invasion"] = true
-	-- UI elements
-	L["Hide: Boss Banner"] = true
-	L["Hide: Covenant"] = true
-	L["Hide: Error Messages"] = true
-	L["Hide: RaidBossEmoteFrame"] = true
-	L["Hide: TalkingHeadFrame"] = true
-	L["Hide: Zone Text"] = true
-	L["Hide: Azerite Animations"] = true
-	L["Hide: Objectives In Instance"] = true
 	-- Functions/features
-	L["AutoRepair"] = true
-	L["InputDelete"] = true
-	L["AutoOpen"] = true
-	L["Auto_Gossip"] = true
-	L["Auto_CinematicCanceler"] = true
-	L["ClearChat"] = true
 	L["UIErrorsFramePosition"] = true
 	L["Functions"] = true
 	L["Modules"] = true
 	L["DisplaySettings"] = true
-	L["Auto_Screenshot"] = true
 	L["Additional Buttons"] = true
 	L["Optional Reagents"] = true
 	L["Trade Goods"] = true
 	L["Allied Races"] = true
-	L["AutoSellGrey"] = true
 	-- Game strings
 	L["RESET"] = RESET
 	L["Warmode"] = PVP_LABEL_WAR_MODE
@@ -227,7 +250,51 @@ end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
-	-- General terms
+	L["Auto Sell Grey"] = "Автопродажа серого хлама"
+	L["Auto Repair"] = "Автопочинка"
+	L["Auto Input Delete"] = "Автозаполнение 'УДАЛИТЬ'"
+	L["Auto Open Items"] = "Автооткрытие предметов"
+	L["Auto Gossip"] = "Авторазговор с НПЦ"
+	L["Auto Turn Quests"] = "Автопринятие заданий"
+	L["Auto Clear Chat"] = "Чистка чата при заходе в игру"
+	L["Auto Screenshot"] = "Автоскриншот"
+	L["Auto Cinematic Canceler"] = "Автопропуск видео"
+
+	-- UI elements
+	L["Hide: CheckListText"] = HIDE..": CheckListText"
+	L["Hide: SubscriptionInterstitialFrame"] = HIDE..": SubscriptionInterstitialFrame"
+	L["Hide: ActionStatusText"] = HIDE..": ActionStatusText"
+	L["Hide: SecondaryStatusTrackingBarContainer"] = HIDE..": SecondaryStatusTrackingBarContainer"
+	L["Hide: MainStatusTrackingBarContainer"] = HIDE..": MainStatusTrackingBarContainer"
+	L["Hide: WeeklyRewardExpirationWarningDialog"] = HIDE..": WeeklyRewardExpirationWarningDialog"
+	L["Hide: MajorFactionsRenownToast"] = HIDE..": MajorFactionsRenownToast"
+	L["Hide: UIWidgetTopCenterContainerFrame"] = HIDE..": UIWidgetTopCenterContainerFrame"
+	L["Hide: BossBanner"] = HIDE..": BossBanner"
+	L["Hide: RaidWarningFrame"] = HIDE..": RaidWarningFrame"
+	L["Hide: RaidBossEmoteFrame"] = HIDE..": RaidBossEmoteFrame"
+	L["Hide: PrivateRaidBossEmoteFrameAnchor"] = HIDE..": PrivateRaidBossEmoteFrameAnchor"
+	L["Hide: SplashFrame"] = HIDE..": SplashFrame"
+	L["Hide: PTRReporter"] = HIDE..": PTRReporter"
+	L["Hide: PTRIssueReporter"] = HIDE..": PTRIssueReporter"
+	L["Hide: PTRIssueReporterAlertFrame"] = HIDE..": PTRIssueReporterAlertFrame"
+	L["Hide: Bug"] = HIDE..": Bug"
+	L["Hide: CovenantRenownToast"] = HIDE..": CovenantRenownToast"
+	L["Hide: CovenantChoiceToast"] = HIDE..": CovenantChoiceToast"
+	L["Hide: ZoneTextFrame"] = HIDE..": ZoneTextFrame"
+	L["Hide: SubZoneTextFrame"] = HIDE..": SubZoneTextFrame"
+	L["Hide: PVPArenaTextString"] = HIDE..": PVPArenaTextString"
+	L["Hide: ZoneTextString"] = HIDE..": ZoneTextString"
+	L["Hide: SubZoneTextString"] = HIDE..": SubZoneTextString"
+	L["Hide: OrderHallCommandBar"] = HIDE..": OrderHallCommandBar"
+	L["Hide: ErrorMessages"] = HIDE..": ErrorMessages"
+	L["Hide: TalkingHeadFrame"] = HIDE..": TalkingHeadFrame"
+	L["Hide: EventToastManagerFrame"] = HIDE..": EventToastManagerFrame"
+
+
+
+
+
+
 	L["Only Horde"] = "Только Орда"
 	L["Only Alliance"] = "Только Альянс"
 	L["Other"] = "Другое"
@@ -348,7 +415,6 @@ if L then
 	L["Encapsulated Destiny"] = "Инкапсулированная судьба"
 	L["Dreamsurge Investigation"] = "Исследование Прилива Снов"
 	L["Shaping the Dreamsurge"] = "Укрощение Прилива Снов"
-	L["Auto Turn Quests"] = "Автопринятие заданий"
 	L["Aiding the Accord"] = "Помощь союзу"
 	L["When Time Needs Mending"] = "Исцелить само время"
 	L["Emerald Dream"] = "Изумрудный Сон"
@@ -388,32 +454,15 @@ if L then
 	L["Treasures"] = "Сундуки"
 	L["Faction Assault"] = "Вторжение Фракций"
 	L["Legion Invasion"] = "Вторжение Легиона"
-	-- UI elements
-	L["Hide: Boss Banner"] = "Скрытие баннера босса"
-	L["Hide: Covenant"] = "Скрытие ковенанта"
-	L["Hide: Error Messages"] = "Скрытие текста ошибок"
-	L["Hide: RaidBossEmoteFrame"] = "Скрытие эмоций босса"
-	L["Hide: TalkingHeadFrame"] = "Скрытие говорящей головы"
-	L["Hide: Zone Text"] = "Скрытие текста зон"
-	L["Hide: Azerite Animations"] = "Скрытие анимации Азерита"
-	L["Hide: Objectives In Instance"] = "Скрытие заданий в подземельях"
 	-- Functions/features
-	L["AutoRepair"] = "Автопочинка"
-	L["InputDelete"] = "Автозаполнение 'УДАЛИТЬ'"
-	L["AutoOpen"] = "Автооткрытие предметов"
-	L["Auto_Gossip"] = "Авторазговор с НПЦ"
-	L["Auto_CinematicCanceler"] = "Автопропуск видео"
-	L["ClearChat"] = "Чистка чата при заходе в игру"
 	L["UIErrorsFramePosition"] = "Смена позиции фрейма ошибок"
 	L["Functions"] = "Функции"
 	L["Modules"] = "Модули"
 	L["DisplaySettings"] = "Настройки отображения"
-	L["Auto_Screenshot"] = "Автоскриншот"
 	L["Additional Buttons"] = "Дополнительные кнопки"
 	L["Optional Reagents"] = "Дополнительные реагенты"
 	L["Trade Goods"] = "Хозяйственные товары"
 	L["Allied Races"] = "Союзные расы"
-	L["AutoSellGrey"] = "Автопродажа серого хлама"
 	-- Game strings
 	L["RESET"] = "Сброс всех данных аддона"
 	L["Warmode"] = PVP_LABEL_WAR_MODE

@@ -318,6 +318,23 @@ function E:func_Universal_99_Other()
 			},
 			max = 9,
 		},
+		{
+			icon = E.func_GetItemIconByID(92441),
+			textleft = E.func_GetItemNameByID(92441),
+			name_save = "GreenFire",
+			reset = "Once",
+			desc = "Warlock",
+			questID = {
+				32295,
+				32307,
+				32309,
+				32310,
+				32317,
+				32324,
+				32325,
+			},
+			max = 7,
+		},
 	}
 	return OctoTable_Universal
 end

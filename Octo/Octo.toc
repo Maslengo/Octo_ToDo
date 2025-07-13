@@ -1,7 +1,7 @@
 ## Interface: 110200, 110107
 ## Title: !|cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r
 ## Author: Octo
-## Version: v96.1(11.1.7)(14.07.2025)
+## Version: v96.2(11.1.7)(14.07.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Core
 
 ## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other
@@ -21,8 +21,6 @@ Templates.xml
 5 QuestsChanged\QuestsChanged.xml
 6 Minecraft\Minecraft.xml
 
-Options\0basicOptions.lua
-Options\1GeneralConfigPanel.lua
-Options\99Developing.lua
+Options\Options.xml
 
 SharedMedia.lua

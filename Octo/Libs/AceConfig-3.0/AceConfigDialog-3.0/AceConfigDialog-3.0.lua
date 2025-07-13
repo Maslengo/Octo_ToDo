@@ -50,19 +50,19 @@ local width_multiplier = 170
 
 --[[
 Group Types
-Tree 	- All Descendant Groups will all become nodes on the tree, direct child options will appear above the tree
-- Descendant Groups with inline=true and thier children will not become nodes
+  Tree 	- All Descendant Groups will all become nodes on the tree, direct child options will appear above the tree
+        - Descendant Groups with inline=true and thier children will not become nodes
 
-Tab	- Direct Child Groups will become tabs, direct child options will appear above the tab control
-- Grandchild groups will default to inline unless specified otherwise
+  Tab	- Direct Child Groups will become tabs, direct child options will appear above the tab control
+        - Grandchild groups will default to inline unless specified otherwise
 
-Select- Same as Tab but with entries in a dropdown rather than tabs
+  Select- Same as Tab but with entries in a dropdown rather than tabs
 
 
-Inline Groups
-- Will not become nodes of a select group, they will be effectivly part of thier parent group seperated by a border
-- If declared on a direct child of a root node of a select group, they will appear above the group container control
-- When a group is displayed inline, all descendants will also be inline members of the group
+  Inline Groups
+    - Will not become nodes of a select group, they will be effectivly part of thier parent group seperated by a border
+    - If declared on a direct child of a root node of a select group, they will appear above the group container control
+    - When a group is displayed inline, all descendants will also be inline members of the group
 
 ]]
 
@@ -105,11 +105,11 @@ end
 
 -- picks the first non-nil value and returns it
 local function pickfirstset(...)
-for i=1,select("#",...) do
-if select(i,...)~=nil then
-return select(i,...)
-end
-end
+  for i=1,select("#",...) do
+    if select(i,...)~=nil then
+      return select(i,...)
+    end
+  end
 end
 
 --gets an option from a given group, checking plugins
@@ -248,7 +248,7 @@ local function CallOptionsFunction(funcname ,option, options, path, appName, ...
 		group = GetSubOption(group, v)
 		info[i] = v
 		if group[funcname] ~= nil then
-			func =group[funcname]
+			func =  group[funcname]
 		end
 		handler = group.handler or handler
 	end
@@ -676,7 +676,7 @@ local function ActivateControl(widget, event, ...)
 	--build the info table containing the path
 	-- pick up functions while traversing the tree
 	if group[funcname] ~= nil then
-		func =group[funcname]
+		func =  group[funcname]
 	end
 	handler = group.handler
 	confirm = group.confirm
@@ -686,7 +686,7 @@ local function ActivateControl(widget, event, ...)
 		group = GetSubOption(group, v)
 		info[i] = v
 		if group[funcname] ~= nil then
-			func =group[funcname]
+			func =  group[funcname]
 		end
 		handler = group.handler or handler
 		if group.confirm ~= nil then
@@ -1468,7 +1468,7 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 end
 
 local function BuildPath(path, ...)
-	for i = 1, select("#",...)do
+	for i = 1, select("#",...)  do
 		tinsert(path, (select(i,...)))
 	end
 end
@@ -1583,7 +1583,7 @@ Rules:
 
 	If the group is a tab or select group, FeedOptions then add the Group Control
 	If the group is a tree group FeedOptions then
-		its parent isnt a tree group:then add the tree control containing this and all child tree groups
+		its parent isnt a tree group:  then add the tree control containing this and all child tree groups
 		if its parent is a tree group, its already a node on a tree
 --]]
 
@@ -1890,7 +1890,7 @@ function AceConfigDialog:Open(appName, container, ...)
 		end
 		local status = AceConfigDialog:GetStatusTable(appName)
 		if not status.width then
-			status.width =700
+			status.width =  700
 		end
 		if not status.height then
 			status.height = 500
