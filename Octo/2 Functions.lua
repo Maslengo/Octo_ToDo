@@ -3,6 +3,11 @@ E.GlobalAddonName = GlobalAddonName
 E.PromiseItem = {}
 E.PromiseSpell = {}
 E.PromiseQuest = {}
+E.ActiveHoliday = {}
+E.Holiday = {}
+
+
+
 
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
@@ -152,6 +157,7 @@ local IsAccountWideCurrency = IsAccountWideCurrency or C_CurrencyInfo.IsAccountW
 local IsAccountTransferableCurrency = IsAccountTransferableCurrency or C_CurrencyInfo.IsAccountTransferableCurrency
 
 -- Quest functions
+local GetQuestInfo = GetQuestInfo or C_QuestLog.GetQuestInfo
 local GetTitleForQuestID = GetTitleForQuestID or C_QuestLog.GetTitleForQuestID
 local IsQuestFlaggedCompleted = IsQuestFlaggedCompleted or C_QuestLog.IsQuestFlaggedCompleted
 local IsQuestFlaggedCompletedOnAccount = IsQuestFlaggedCompletedOnAccount or C_QuestLog.IsQuestFlaggedCompletedOnAccount
@@ -326,44 +332,28 @@ function E.func_IsQuestFlaggedCompletedOnAccount(questID)
 	return IsQuestFlaggedCompletedOnAccount(questID)
 end
 
+
+
+table_insert(E.PromiseQuest, questID)
 ----------------------------------------------------------------
-function E.func_questName_SIMPLE(questID, useLargeIcon)
-	table_insert(E.PromiseQuest, questID)
-
-	local title = GetTitleForQuestID(questID)
-	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false) or "" or UNKNOWN
-
-	return vivod
-end
-----------------------------------------------------------------
-function E.func_questNameForQC(questID, useLargeIcon)
-	table_insert(E.PromiseQuest, questID)
-	local title = GetTitleForQuestID(questID)
-	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false) or ""
-
-
-	return E.Gray_Color.."id:"..questID.."|r "..vivod
-end
-----------------------------------------------------------------
-function E.func_GetCurrentLocation()
-	local curRealZone = GetRealZoneText()
-	local curSubZone = GetSubZoneText()
-
-	local FIRSTtext = curRealZone ~= "" and curRealZone or GetZoneText()
-	local SECONDtext = curSubZone ~= "" and curSubZone or GetMinimapZoneText()
-
-	if FIRSTtext == SECONDtext then
-		return FIRSTtext
-	else
-		return SECONDtext ~= "" and FIRSTtext .. " (" .. SECONDtext .. ")" or FIRSTtext
-	end
+E.quest_names = {}
+setmetatable(E.quest_names, {__index = function(self, key)
+			local title = (C_QuestLog.GetTitleForQuestID or C_QuestLog.GetQuestInfo)(key)
+			if title then
+				self[key] = title
+				return title
+			end
+			return E.Red_Color..UNKNOWN.."|r"
+end,})
+function E.func_questName_SIMPLE(questID)
+	return E.quest_names[questID]
 end
 ----------------------------------------------------------------
 function E.func_questName(questID, useLargeIcon)
 	table_insert(E.PromiseQuest, questID)
 
-	local title = GetTitleForQuestID(questID)
-	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false) or UNKNOWN
+	local title = E.quest_names[questID] -- GetTitleForQuestID(questID)
+	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false)
 
 	if E.func_IsAccountQuest(questID) or E.func_IsQuestFlaggedCompletedOnAccount(questID) then
 		vivod = E.Icon_AccountWide..vivod
@@ -376,6 +366,54 @@ function E.func_questName(questID, useLargeIcon)
 	end
 
 	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..questID.."|r" or "")
+end
+
+
+
+
+----------------------------------------------------------------
+function E.getMapFullNameInfo(mapID)
+	local mapInfo = C_Map.GetMapInfo(mapID)
+
+	local mapGroupID = C_Map.GetMapGroupID(mapID)
+	if mapGroupID then
+		local mapGroupInfo = C_Map.GetMapGroupMembersInfo(mapGroupID)
+		if mapGroupInfo then
+			for _, mapGroupMemberInfo in ipairs(mapGroupInfo) do
+				if mapGroupMemberInfo.mapID == mapID then
+					mapInfo.name = ("%s (%s)"):format(mapInfo.name, mapGroupMemberInfo.name)
+					break
+				end
+			end
+		end
+	end
+
+	return mapInfo
+end
+
+----------------------------------------------------------------
+function E.func_GetCurrentLocation()
+	local curRealZone = GetRealZoneText()
+	local curSubZone = GetSubZoneText()
+
+	local FIRSTtext = curRealZone ~= "" and curRealZone or GetZoneText()
+	local SECONDtext = curSubZone ~= "" and curSubZone or GetMinimapZoneText()
+	----
+	-- local uiMapID = GetBestMapForUnit("PLAYER") or 0
+	local uiMapID = MapUtil.GetDisplayableMapForPlayer()
+	if uiMapID ~= 0 then
+		local mapInfo = E.getMapFullNameInfo(uiMapID)
+		-- print (FIRSTtext, SECONDtext, E.Green_Color..uiMapID.."|r", info.name)
+		----
+		if FIRSTtext == "" then
+			return E.Red_Color..mapInfo.name.."|r"
+		elseif FIRSTtext == SECONDtext then
+			return FIRSTtext
+		else
+			return SECONDtext ~= "" and FIRSTtext .. " (" .. SECONDtext .. ")" or FIRSTtext
+		end
+	end
+	return UNKNOWN
 end
 ----------------------------------------------------------------
 function E.func_reputationName(reputationID)
@@ -969,23 +1007,32 @@ local r, g, b = GetClassColor(E.classFilename)
 -- 	g = 89/255
 -- 	b = 255/255
 -- end
-E.classColorHexCurrent = E.func_rgb2hex(r, g, b)
+
+
+
+-- E.classColorHexCurrent = E.func_rgb2hex(r, g, b)
+E.classColorHexCurrent = C_ClassColor.GetClassColor(E.classFilename):GenerateHexColorMarkup()
 E.curCharName = UnitFullName("PLAYER")
 E.curServer = GetRealmName()
 E.curServerShort = E.func_CurServerShort(GetRealmName())
-E.Class_Warrior_Color = "|cffC69B6D"
-E.Class_Paladin_Color = "|cffF48CBA"
-E.Class_Hunter_Color = "|cffAAD372"
-E.Class_Rogue_Color = "|cffFFF468"
-E.Class_Priest_Color = "|cffFFFFFF"
-E.Class_Shaman_Color = "|cff0070DD"
-E.Class_Mage_Color = "|cff3FC7EB"
-E.Class_Warlock_Color = "|cff8788EE"
-E.Class_Monk_Color = "|cff00FF98"
-E.Class_Druid_Color = "|cffFF7C0A"
-E.Class_DemonHunter_Color = "|cffA330C9"
-E.Class_DeathKnight_Color = "|cffC41E3A"
-E.Class_Evoker_Color = "|cff33937F"
+E.Class_Warrior_Color = C_ClassColor.GetClassColor("WARRIOR"):GenerateHexColorMarkup() --"|cffC69B6D"
+E.Class_Paladin_Color = C_ClassColor.GetClassColor("PALADIN"):GenerateHexColorMarkup() --"|cffF48CBA"
+E.Class_Hunter_Color = C_ClassColor.GetClassColor("HUNTER"):GenerateHexColorMarkup() --"|cffAAD372"
+E.Class_Rogue_Color = C_ClassColor.GetClassColor("ROGUE"):GenerateHexColorMarkup() --"|cffFFF468"
+E.Class_Priest_Color = C_ClassColor.GetClassColor("PRIEST"):GenerateHexColorMarkup() --"|cffFFFFFF"
+E.Class_Shaman_Color = C_ClassColor.GetClassColor("SHAMAN"):GenerateHexColorMarkup() --"|cff0070DD"
+E.Class_Mage_Color = C_ClassColor.GetClassColor("MAGE"):GenerateHexColorMarkup() --"|cff3FC7EB"
+E.Class_Warlock_Color = C_ClassColor.GetClassColor("WARLOCK"):GenerateHexColorMarkup() --"|cff8788EE"
+E.Class_Monk_Color = C_ClassColor.GetClassColor("MONK"):GenerateHexColorMarkup() --"|cff00FF98"
+E.Class_Druid_Color = C_ClassColor.GetClassColor("DRUID"):GenerateHexColorMarkup() --"|cffFF7C0A"
+E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHexColorMarkup() --"|cffA330C9"
+E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup() --"|cffC41E3A"
+E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup() --"|cff33937F"
+
+
+E.Horde_Color = "|cffC41E3A"
+-- E.Horde_Color = "|cfff01e38" -- было
+E.Alliance_Color = "|cff0070DD"
 ----------------------------------------------------------------
 function E.func_Reverse_order(a, b)
 	return b < a
@@ -1218,6 +1265,7 @@ function E.debugprofileSTART()
 	local timer = debugprofilestart()
 	return timer
 end
+
 ----------------------------------------------------------------
 function E.debugprofileSTOP()
 	local timer = E.func_CompactNumberSimple(debugprofilestop())
@@ -1274,11 +1322,7 @@ function E.FriendsFrame_GetLastOnline(timeDiff, isAbsolute)
 		return format(LASTONLINE_YEARS, floor(timeDiff / SECONDS_PER_YEAR))
 	end
 end
-
-
-
 ----------------------------------------------------------------
-
 function E.func_TableMerge(table1, table2)
 	for k, v in pairs(table2) do
 		local t1_val = table1[k]
@@ -1301,14 +1345,24 @@ function E.func_TableConcat(table1, table2)
 	end
 	return table1
 end
-
+----------------------------------------------------------------
+function E.MergeTableSFMICTipairs(table1, table2)
+	for k, v in pairs(table2) do
+		table1[k] = v
+	end
+end
+----------------------------------------------------------------
+function E.tinsertGPTipairs(table1, table2)
+	for _, value in ipairs(table2) do
+		table.insert(table1, value)
+	end
+end
 -- function E.func_TableConcat(table1, table2)
 -- 	for i = 1, #table2 do
 -- 		table1[#table1+1] = table2[i]
 -- 	end
 -- 	return table1
 -- end
-
 ----------------------------------------------------------------
 
 function E.func_TableRemoveDuplicates(table1)
@@ -1571,13 +1625,13 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		GameTooltip:AddDoubleLine(" ", " ")
 
 		local sorted = {}
-		for k in pairs(Octo_ToDo_DB_Other.Holiday) do
+		for k in pairs(E.Holiday) do
 			table_insert(sorted, k)
 		end
-		sort(sorted, function(a, b) return Octo_ToDo_DB_Other.Holiday[a].priority < Octo_ToDo_DB_Other.Holiday[b].priority end)
+		sort(sorted, function(a, b) return E.Holiday[a].priority < E.Holiday[b].priority end)
 
 		for _, eventID in ipairs(sorted) do
-			local v = Octo_ToDo_DB_Other.Holiday[eventID]
+			local v = E.Holiday[eventID]
 			local titleText = v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)
 			local timeText = v.startTime.." - "..v.endTime
 
@@ -1607,7 +1661,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 
 	Octo_EventsButton:SetScript("OnClick", function()
 		frame:Hide()
-		fpde(Octo_ToDo_DB_Other.Holiday)
+		fpde(E.Holiday)
 	end)
 
 	-- Framerate Frame
@@ -1821,21 +1875,20 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 		end
 	end
 end
-function E.func_DebugPath()
-	local stack = debugstack(2)
-	local vivod1 = stack:match("Interface/AddOns/(.-):%d+") or UNKNOWN
-	local vivod2 = vivod1:gsub("]", "")
-	return tostring(vivod2)
-end
 ----------------------------------------------------------------
-function E.RegisterMyEventsToFrames(frame, MyEventsTable, DebugPath)
+function E.RegisterMyEventsToFrames(frame, MyEventsTable)
+
+	local stack = debugstack(2)
+	local STR = stack:match("Interface/AddOns/(.-):%d+") or UNKNOWN
+	local DebugPath = STR:gsub("]", "")
+	----------------------------------------------------------------
 	for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
 	frame:SetScript("OnEvent",
 		function(self, event, ...)
 			if self[event] then
 				self[event](self, ...)
 			else
-				DEFAULT_CHAT_FRAME:AddMessage(E.KILLTEXT.. E.Event_Color..event.."|r"..E.KILLTEXT..DebugPath)
+				DEFAULT_CHAT_FRAME:AddMessage(E.KILLTEXT.. E.Event_Color..event.."|r"..E.KILLTEXT..tostring(DebugPath))
 				self:UnregisterEvent(event)
 				self.event = nil
 			end
@@ -1913,12 +1966,7 @@ E.spacer = "  "
 E.FULL_WIDTH = 3.60
 E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
 E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
-				-- ["Octo_statusbar"] = "Blizzard",
-				-- ["Octo_sound"] = "None",
-				-- ["Octo_background"] = "None",
-				-- ["Octo_border"] = "None",
-				-- ["Octo_font"] = "Friz Quadrata TT",
-				E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
+E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
 E.fontObject9 = CreateFont("OctoFont9")
 E.fontObject9:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
@@ -2964,3 +3012,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+
+
+
+-- print (      E.func_SecondsToClock(debugprofilestop())       , E.func_SecondsToClock(GetTime())     )

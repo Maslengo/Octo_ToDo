@@ -206,7 +206,7 @@ local MyEventsTable = {
 	"PLAYER_REGEN_DISABLED",
 	"PLAYER_STARTED_MOVING",
 }
-E.RegisterMyEventsToFrames(Octo_EventFrame_HideFrames, MyEventsTable, E.func_DebugPath())
+E.RegisterMyEventsToFrames(Octo_EventFrame_HideFrames, MyEventsTable)
 function Octo_EventFrame_HideFrames:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")

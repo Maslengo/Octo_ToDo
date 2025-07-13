@@ -340,7 +340,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 }
-E.RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable, E.func_DebugPath())
+E.RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
 
 ----------------------------------------------------------------
 function Octo_EventFrame:ADDON_LOADED(addonName)

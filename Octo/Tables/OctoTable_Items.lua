@@ -101,6 +101,7 @@ E.OctoTable_itemID_Ignore_List = {
 	8529,
 }
 E.OctoTable_itemID_ItemsDelete = {
+	[27944] = true,
 	[151804] = true,
 	[151806] = true,
 	[17202] = true,

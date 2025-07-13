@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = true
+local enable = false
 if enable then
 	local Octo_EventFrame_Achievements = CreateFrame("FRAME")
 	Octo_EventFrame_Achievements:Hide()
@@ -379,7 +379,7 @@ if enable then
 		"CONTENT_TRACKING_UPDATE",
 		"PLAYER_REGEN_DISABLED",
 	}
-	E.RegisterMyEventsToFrames(Octo_EventFrame_Achievements, MyEventsTable, E.func_DebugPath())
+	E.RegisterMyEventsToFrames(Octo_EventFrame_Achievements, MyEventsTable)
 	function Octo_EventFrame_Achievements:ADDON_LOADED(addonName)
 		if addonName == GlobalAddonName then
 			self:UnregisterEvent("ADDON_LOADED")

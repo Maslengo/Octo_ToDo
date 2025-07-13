@@ -171,7 +171,7 @@ local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",  -- При выходе из боя
 }
 -- Регистрируем события
-E.RegisterMyEventsToFrames(Octo_EventFrame_Items, MyEventsTable, E.func_DebugPath())
+E.RegisterMyEventsToFrames(Octo_EventFrame_Items, MyEventsTable)
 -- Обработчик события загрузки аддона
 function Octo_EventFrame_Items:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end

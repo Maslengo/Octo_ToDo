@@ -18,6 +18,24 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 end)
 local locale = GetLocale()
 ----------------------------------------------------------------
+E.OctoTable_UniversalQuest = E.OctoTable_UniversalQuest or {}
+function Octo_EventFrame_Collect:func_ConcatAtStart()
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_00_Other)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_01_WorldofWarcraft)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_02_TheBurningCrusade)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_03_WrathoftheLichKing)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_04_Cataclysm)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_05_MistsofPandaria)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_06_WarlordsofDraenor)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_07_Legion)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_08_BattleforAzeroth)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_09_Shadowlands)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_10_Dragonflight)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_11_TheWarWithin)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_12_Midnight)
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTable_13_TheLastTitan)
+end
+----------------------------------------------------------------
 function E.LoadOctoUIforAddons()
 	if not Octo_DEBUG then return end
 	Octo_DEBUG.profileKeys = Octo_DEBUG.profileKeys or {}
@@ -83,9 +101,9 @@ function E.Collect_All_PlayerInfo()
 		collectPlayerData.classId = E.classId
 		collectPlayerData.GUID = E.curGUID
 		collectPlayerData.Faction = E.curFaction
-		collectPlayerData.specId = specId or 0
-		collectPlayerData.specName = specName or ""
-		collectPlayerData.specIcon = specIcon or 0
+		collectPlayerData.specId = specId
+		collectPlayerData.specName = specName
+		collectPlayerData.specIcon = specIcon
 		collectPlayerData.classColor = E.classColor
 		collectPlayerData.RaceLocal = RaceLocal
 		collectPlayerData.RaceEnglish = RaceEnglish
@@ -155,6 +173,12 @@ function E.Collect_All_Covenant()
 		end
 	end
 end
+
+
+
+
+
+
 function E.Collect_All_PlayerDurability()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
@@ -254,6 +278,10 @@ function E.Collect_All_LoginTime()
 		collectPlayerData.time = time()
 	end
 end
+
+
+
+
 function E.Collect_All_Professions()
 	local archaeology = {
 		--ID,Name_lang,ResearchFieldID,CurrencyID,TextureFileID,BigTextureFileID,ItemID
@@ -488,7 +516,7 @@ function E.Collect_All_Currency()
 	-- local list = Octo_DB_Config.CurrencyDB
 	local list = {}
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if collectPlayerData and not InCombatLockdown() then
+	if collectMASLENGO and not InCombatLockdown() then
 		-- local listSize = C_CurrencyInfo.GetCurrencyListSize()
 		-- local headerIndex
 		-- for i = 1, listSize do
@@ -889,11 +917,7 @@ function E.Collect_All_JournalInstance()
 	end
 end
 function E.Collect_All_Holiday()
-	Octo_ToDo_DB_Other.Holiday = Octo_ToDo_DB_Other.Holiday or {}
-	-- wipe(Octo_ToDo_DB_Other.Holiday)
-	Octo_ToDo_DB_Other.ActiveHoliday = {}
-	wipe(Octo_ToDo_DB_Other.ActiveHoliday)
-	if Octo_ToDo_DB_Other.Holiday and not InCombatLockdown() then
+	if E.ActiveHoliday and E.Holiday and not InCombatLockdown() then
 		local backup = Octo_ToDo_DB_Other.CVar
 		local function function_setBackup()
 			if CalendarFrame then
@@ -941,14 +965,12 @@ function E.Collect_All_Holiday()
 				local eInfo = C_Calendar.GetHolidayInfo(0, day, i)
 				local event = C_Calendar.GetDayEvent(offsetMonths, day, i)
 				local id = event.eventID
-				Octo_ToDo_DB_Other.Holiday[id] = Octo_ToDo_DB_Other.Holiday[id] or {}
-				Octo_ToDo_DB_Other.Holiday[id].title = event.title -- E.func_EventName(id)
+				E.Holiday[id] = E.Holiday[id] or {}
+				E.Holiday[id].title = event.title -- E.func_EventName(id)
 				local startTime = event.startTime
 				local endTime = event.endTime
-				local startTime_year = startTime.year
 				local startTime_month = startTime.month
 				local startTime_monthDay = startTime.monthDay
-				local endTime_year = endTime.year
 				local endTime_month = endTime.month
 				local endTime_monthDay = endTime.monthDay
 				local dateTbl_startTime = {
@@ -957,7 +979,6 @@ function E.Collect_All_Holiday()
 					day = startTime.monthDay,
 					hour = startTime.hour,
 					min = startTime.minute,
-					-- sec = 0,
 				}
 				local dateTbl_endTime = {
 					year = endTime.year,
@@ -965,48 +986,44 @@ function E.Collect_All_Holiday()
 					day = endTime.monthDay,
 					hour = endTime.hour,
 					min = endTime.minute,
-					-- sec = 0,
 				}
 				local event_duration = E.FriendsFrame_GetLastOnline(time(dateTbl_endTime)-time(dateTbl_startTime), true)
-				Octo_ToDo_DB_Other.Holiday[id].event_duration = event_duration
-				Octo_ToDo_DB_Other.Holiday[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month) -- .."/"..startTime_year
-				Octo_ToDo_DB_Other.Holiday[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month) -- .."/"..endTime_year
-				-- Octo_ToDo_DB_Other.Holiday[id].Active = Octo_ToDo_DB_Other.Holiday[id].Active or nil
-				-- Octo_ToDo_DB_Other.Holiday[id].Possible = Octo_ToDo_DB_Other.Holiday[id].Possible or nil
-				-- Octo_ToDo_DB_Other.Holiday[id].iconTexture = event.iconTexture or ""
-				Octo_ToDo_DB_Other.Holiday[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
+				E.Holiday[id].event_duration = event_duration
+				E.Holiday[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month)
+				E.Holiday[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month)
+				E.Holiday[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
 				if eInfo then
-					Octo_ToDo_DB_Other.Holiday[id].iconTexture = eInfo.texture or E.Icon_QuestionMark
+					E.Holiday[id].iconTexture = eInfo.texture or E.Icon_QuestionMark
 				else
-					Octo_ToDo_DB_Other.Holiday[id].iconTexture = event.iconTexture or E.Icon_QuestionMark
-					Octo_ToDo_DB_Other.Holiday[id].ENDS = event_duration
+					E.Holiday[id].iconTexture = event.iconTexture or E.Icon_QuestionMark
+					E.Holiday[id].ENDS = event_duration
 				end
-				Octo_ToDo_DB_Other.Holiday[id].invitedBy = event.invitedBy
-				if not Octo_ToDo_DB_Other.Holiday[id].priority then
-					Octo_ToDo_DB_Other.Holiday[id].priority = priority
+				E.Holiday[id].invitedBy = event.invitedBy
+				if not E.Holiday[id].priority then
+					E.Holiday[id].priority = priority
 					priority = priority + 1
 				end
 				if day == monthDay then
 					if event.sequenceType == "START" then
 						local secondsToEvent = ((event.startTime.hour - hour) * 60 + event.startTime.minute - minute) * 60
 						if secondsToEvent <= 0 then
-							Octo_ToDo_DB_Other.ActiveHoliday[id] = true
-							Octo_ToDo_DB_Other.Holiday[id].Active = true
+							E.ActiveHoliday[id] = true
+							E.Holiday[id].Active = true
 						else
-							Octo_ToDo_DB_Other.Holiday[id].Possible = true
+							E.Holiday[id].Possible = true
 						end
 					elseif event.sequenceType == "END" then
 						local secondsToEvent = ((event.endTime.hour - hour) * 60 + event.endTime.minute - minute) * 60
 						if secondsToEvent > 0 then
-							Octo_ToDo_DB_Other.ActiveHoliday[id] = true
-							Octo_ToDo_DB_Other.Holiday[id].Active = true
+							E.ActiveHoliday[id] = true
+							E.Holiday[id].Active = true
 						end
 					else
-						Octo_ToDo_DB_Other.ActiveHoliday[id] = true
-						Octo_ToDo_DB_Other.Holiday[id].Active = true
+						E.ActiveHoliday[id] = true
+						E.Holiday[id].Active = true
 					end
 				elseif monthDay < day then
-					Octo_ToDo_DB_Other.Holiday[id].Possible = true
+					E.Holiday[id].Possible = true
 				end
 			end
 		end
@@ -1158,11 +1175,12 @@ function E.Collect_All_Table(event)
 	E.Collect_All_Holiday()
 end
 ----------------------------------------------------------------
-E.RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable, E.func_DebugPath())
-function Octo_EventFrame_Collect:ADDON_LOADED()
+E.RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable)
+function Octo_EventFrame_Collect:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		self:func_ConcatAtStart()
 		OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end

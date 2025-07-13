@@ -947,7 +947,7 @@ if enable then
 		"ADDON_LOADED",
 		"PLAYER_REGEN_DISABLED",
 	}
-	E.RegisterMyEventsToFrames(Octo_EventFrame_AddonsManager, MyEventsTable, E.func_DebugPath())
+	E.RegisterMyEventsToFrames(Octo_EventFrame_AddonsManager, MyEventsTable)
 	function Octo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		if addonName == GlobalAddonName then
 			self:UnregisterEvent("ADDON_LOADED")

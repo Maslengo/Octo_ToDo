@@ -89,9 +89,8 @@ function Octo_EventFrame_WTF:DatabaseTransfer()
 
 	end
 
-
 	replaceZeroWithNil(Octo_ToDo_DB_Levels, 0)
-	replaceZeroWithNil(Octo_ToDo_DB_Vars, 0)
+	-- replaceZeroWithNil(Octo_ToDo_DB_Vars, 0)
 	replaceZeroWithNil(Octo_ToDo_DB_Other, 0)
 	replaceZeroWithNil(Octo_ToDo_DB_Minecraft, 0)
 	replaceZeroWithNil(Octo_Achievements_DB, 0)
@@ -445,11 +444,11 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	end
 	-- Настройки отладки
 	local debugDefaults = {
-		DebugIDs = nil,
-		DebugInfo = nil,
-		DebugEvent = nil,
-		DebugFunction = nil,
-		DebugButton = nil,
+		DebugIDs = false,
+		DebugInfo = false,
+		DebugEvent = false,
+		DebugFunction = false,
+		DebugButton = false,
 	}
 	for k, v in next, (debugDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
@@ -519,22 +518,22 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		WasOnline = true,
 		WorldBoss_Weekly = true,
 
-		Auto_ChatClearing = nil,
-		Reputations = nil,
-		CurrencyShowAllways = nil,
-		ItemsShowAllways = nil,
-		ItemsUsable = nil,
-		OnlyCurrentFaction = nil,
-		QuestsShowAllways = nil,
-		QC_Vignettes = nil,
-		ShowOnlyCurrentBattleTag = nil,
-		ShowOnlyCurrentServer = nil,
+		Auto_ChatClearing = false,
+		Reputations = false,
+		CurrencyShowAllways = false,
+		ItemsShowAllways = false,
+		ItemsUsable = false,
+		OnlyCurrentFaction = false,
+		QuestsShowAllways = false,
+		QC_Vignettes = false,
+		ShowOnlyCurrentBattleTag = false,
+		ShowOnlyCurrentServer = false,
 	}
 	for k, v in next, (featureDefaults) do
 		InitField(Octo_ToDo_DB_Vars, k, v)
 	end
 	-- Таблицы по умолчанию
-	InitField(Octo_ToDo_DB_Vars, "color", {1, 1, 1})
+	-- InitField(Octo_ToDo_DB_Vars, "color", {1, 1, 1})
 	InitField(Octo_ToDo_DB_Vars, "AchievementToShow", {[92] = true})
 	InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {[11] = true})
 	-- Настройки позиционирования
@@ -555,22 +554,10 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		point = "BOTTOM",
 		relativePoint = "BOTTOM",
 		xOfs = 129,
-		yOfs = 67
+		yOfs = 67,
 	}
 	for k, v in next, (posFrameDefaults) do
 		InitField(Octo_ToDo_DB_Vars.PosFrame, k, v)
-	end
-	-- Настройки интерфейса
-	InitSubTable(Octo_ToDo_DB_Vars, "interface")
-	local interfaceDefaults = {
-		Octo_background = "None",
-		Octo_border = "None",
-		Octo_statusbar = "Blizzard",
-		Octo_font = "Friz Quadrata TT",
-		Octo_sound = "None"
-	}
-	for k, v in next, (interfaceDefaults) do
-		InitField(Octo_ToDo_DB_Vars.interface, k, v)
 	end
 end
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
@@ -580,7 +567,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	InitSubTable(Octo_ToDo_DB_Other, "CVar")
 	InitSubTable(Octo_ToDo_DB_Other, "Items")
 	InitSubTable(Octo_ToDo_DB_Other, "Holiday")
-	InitSubTable(Octo_ToDo_DB_Other, "ActiveHoliday")
+	-- InitSubTable(Octo_ToDo_DB_Other, "ActiveHoliday")
 	InitSubTable(Octo_ToDo_DB_Other, "professions")
 end
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Minecraft()
@@ -671,9 +658,8 @@ function Octo_EventFrame_WTF:Daily_Reset()
 				CharInfo.MASLENGO.LFGInstance[v] = CharInfo.MASLENGO.LFGInstance[v] or {}
 				CharInfo.MASLENGO.LFGInstance[v].donetoday = nil
 			end
-			Octo_ToDo_DB_Other.Holiday = nil
 			Octo_ToDo_DB_Other.professions.DEBUG = nil
-			Octo_ToDo_DB_Other.ActiveHoliday = nil
+			-- Octo_ToDo_DB_Other.ActiveHoliday = nil
 		end
 	end
 end
@@ -684,7 +670,7 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 			-- Проверка награды из Великого Хранилища
 			for i = 1, #CharInfo.MASLENGO.GreatVault do
 				if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING ~= 0 then
-					CharInfo.HasAvailableRewards = true
+					CharInfo.PlayerData.HasAvailableRewards = true
 					break
 				end
 			end
@@ -711,7 +697,7 @@ function Octo_EventFrame_WTF:Month_Reset()
 	local ServerTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.PlayerData.tmstp_Month or 0) < ServerTime then
-			CharInfo.PlayerData.tmstp_Month = E.func_tmstpDayReset(30)
+			CharInfo.PlayerData.tmstp_Month = E.func_tmstpDayReset(365/12)
 			CharInfo.PlayerData.needResetMonth = true
 			-- Сброс ежемесячных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
@@ -723,20 +709,17 @@ function Octo_EventFrame_WTF:Month_Reset()
 	end
 end
 -- Регистрация событий
-do
-	local MyEventsTable = {
-		"ADDON_LOADED",
-		"VARIABLES_LOADED",
-	}
-	E.RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable, E.func_DebugPath())
-end
+local MyEventsTable = {
+	"ADDON_LOADED",
+	"VARIABLES_LOADED",
+}
+E.RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable)
 function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 		-- Перенос старой базы
 		self:DatabaseTransfer()
-
 		-- Инициализация всех баз данных
 		self:Octo_ToDo_DB_Levels()
 		self:Octo_ToDo_DB_Vars()

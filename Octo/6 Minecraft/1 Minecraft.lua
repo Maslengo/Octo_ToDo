@@ -148,7 +148,7 @@ if enable then
 	end
 
 	local MyEventsTable = {"ADDON_LOADED"}
-	E.RegisterMyEventsToFrames(Octo_EventFrame_Minecraft, MyEventsTable, E.func_DebugPath())
+	E.RegisterMyEventsToFrames(Octo_EventFrame_Minecraft, MyEventsTable)
 
 	function Octo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 		if addonName == GlobalAddonName then

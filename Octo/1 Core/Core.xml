@@ -9,7 +9,22 @@
 	<Script file="Tables\OctoTable_QuestID.lua"/>
 	<Script file="Tables\OctoTable_Reputations.lua"/>
 	<Script file="Tables\OctoTable_ReputationsDB.lua"/>
-	<Script file="Tables\OctoTable_UniversalQuest.lua"/>
+
+	<Script file="Tables\UniversalQuests\00_Other.lua"/>
+	<Script file="Tables\UniversalQuests\01_WorldofWarcraft.lua"/>
+	<Script file="Tables\UniversalQuests\02_TheBurningCrusade.lua"/>
+	<Script file="Tables\UniversalQuests\03_WrathoftheLichKing.lua"/>
+	<Script file="Tables\UniversalQuests\04_Cataclysm.lua"/>
+	<Script file="Tables\UniversalQuests\05_MistsofPandaria.lua"/>
+	<Script file="Tables\UniversalQuests\06_WarlordsofDraenor.lua"/>
+	<Script file="Tables\UniversalQuests\07_Legion.lua"/>
+	<Script file="Tables\UniversalQuests\08_BattleforAzeroth.lua"/>
+	<Script file="Tables\UniversalQuests\09_Shadowlands.lua"/>
+	<Script file="Tables\UniversalQuests\10_Dragonflight.lua"/>
+	<Script file="Tables\UniversalQuests\11_TheWarWithin.lua"/>
+	<Script file="Tables\UniversalQuests\12_Midnight.lua"/>
+	<Script file="Tables\UniversalQuests\13_TheLastTitan.lua"/>
+
 	<Script file="Tables\OctoTable_Gossip.lua"/>
 	<Script file="Tables\OctoTable_Spells.lua"/>
 

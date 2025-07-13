@@ -232,6 +232,9 @@
         "EXPANSION_NAME8",
         "EXPANSION_NAME9",
         "EXPANSION_NAME10",
-        "GARRISON_LOCATION_TOOLTIP"
-    ]
+        "GARRISON_LOCATION_TOOLTIP",
+        "UIWidgetManager",
+        "MapUtil"
+    ],
+    "Lua.type.weakUnionCheck": true
 }

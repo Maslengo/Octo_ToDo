@@ -1,4 +1,6 @@
 local GlobalAddonName, E = ...
+local enable = true
+if not enable then return end
 local Octo_EventFrame_QuestsChanged = CreateFrame("FRAME")
 Octo_EventFrame_QuestsChanged:Hide()
 local Octo_MainFrame_QuestsChanged = CreateFrame("BUTTON", "Octo_MainFrame_QuestsChanged", UIParent, "BackdropTemplate")
@@ -59,7 +61,7 @@ local func_OnAcquired do
 			local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_QuestsChanged)
 			frameFULL:SetPropagateMouseClicks(true)
 			frameFULL:SetPropagateMouseMotion(true)
-			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+			-- frameFULL:SetFrameLevel(frame:GetFrameLevel()+2) -- ВСЕГДА НА ВЕРХНЕМ СЛОЕ
 			frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
 			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
 			frameFULL.HighlightTexture:SetAlpha(.2)
@@ -69,12 +71,12 @@ local func_OnAcquired do
 			frameFULL:SetPoint("RIGHT")
 			frame.frameFULL = frameFULL
 			------------------------------------------------
-			local textureLEFT = frameFULL:CreateTexture(nil, "BACKGROUND", nil, -3)
-			textureLEFT:Hide()
-			textureLEFT:SetAllPoints()
-			textureLEFT:SetTexture(TEXTURE_PATH_LEFT)
-			textureLEFT:SetVertexColor(r, g, b, E.bgCaOverlay*2)
-			frame.textureLEFT = textureLEFT
+			local textureFULL = frameFULL:CreateTexture(nil, "BACKGROUND", nil, -3)
+			textureFULL:Hide()
+			textureFULL:SetAllPoints()
+			textureFULL:SetTexture(TEXTURE_PATH_LEFT)
+			textureFULL:SetVertexColor(r, g, b, E.bgCaOverlay)
+			frame.textureFULL = textureFULL
 			------------------------------------------------
 			------------------------------------------------
 			-- Icon setup
@@ -255,14 +257,14 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	end
 
 	if Octo_ToDo_DB_Vars.QC_Vignettes and Octo_ToDo_DB_Vars.QC_Quests and frameData.type == "QC_Quests" then
-		frame.textureLEFT:Show()
+		frame.textureFULL:Show()
 	else
-		frame.textureLEFT:Hide()
+		frame.textureFULL:Hide()
 	end
 
 
-	frame.second.text:SetText(E.Gray_Color..frameData.id.."|r")
-	frame.fourth.text:SetText(E.Gray_Color..frameData.mapID.. "|r")
+	frame.second.text:SetText(E.Gray_Color.."id: "..frameData.id.."|r")
+	frame.fourth.text:SetText(E.Gray_Color.."id: "..frameData.mapID.. "|r")
 	----------------------------------------------------------------
 	if frameData.curLocation and frameData.curLocation ~= "" then
 		frame.fifth.text:SetText(frameData.curLocation)
@@ -405,7 +407,7 @@ local MyEventsTable = {
 	"PLAYER_REGEN_DISABLED",
 	"PLAYER_LOGIN",
 }
-E.RegisterMyEventsToFrames(Octo_EventFrame_QuestsChanged, MyEventsTable, E.func_DebugPath())
+E.RegisterMyEventsToFrames(Octo_EventFrame_QuestsChanged, MyEventsTable)
 function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")

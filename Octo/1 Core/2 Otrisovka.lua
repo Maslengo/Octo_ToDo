@@ -14,21 +14,21 @@ local GetServerTime = GetServerTime
 local string_format = string.format
 local math_floor = math.floor
 local wipe = wipe
+
 function E.func_textCENT(CharInfo)
 	local namePart = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r"
 	local levelPart = ""
-	if CharInfo.PlayerData.UnitLevel ~= 0 and
-	CharInfo.PlayerData.UnitLevel ~= E.currentMaxLevel and
-	CharInfo.PlayerData.PlayerCanEarnExperience then
+	local serverPart = ""
+	if CharInfo.PlayerData.UnitLevel and CharInfo.PlayerData.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerData.PlayerCanEarnExperience then
 		levelPart = " "..E.Yellow_Color..CharInfo.PlayerData.UnitLevel.."|r"
 	end
-	local serverPart = ""
 	if not Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and
-	E.func_CurServerShort(E.curServer) ~= CharInfo.PlayerData.curServerShort then
-		serverPart = E.Skyblue_Color.."("..CharInfo.PlayerData.curServerShort..")|r"
+		E.func_CurServerShort(E.curServer) ~= CharInfo.PlayerData.curServer then
+		serverPart = E.Skyblue_Color.."("..CharInfo.PlayerData.curServer..")|r"
 	end
-	return namePart..levelPart..serverPart
+	return namePart..levelPart.."|n"..serverPart
 end
+
 local function AddDoubleLine(left, right, tooltip)
 	tooltip[#tooltip+1] = {left, right or ""}
 end
@@ -53,7 +53,7 @@ function E.CreateTooltipPlayers(CharInfo)
 			tooltipRIGHT[#tooltipRIGHT+1] = {CharInfo.PlayerData.RaceLocal, " "}
 		end
 		-- Spec and class info
-		if CharInfo.PlayerData.specName or CharInfo.PlayerData.specName ~= 0 then
+		if CharInfo.PlayerData.specName then
 			tooltipRIGHT[#tooltipRIGHT+1] = {E.func_texturefromIcon(CharInfo.PlayerData.specIcon)..CharInfo.PlayerData.specName.." "..CharInfo.PlayerData.className, " "}
 		end
 		tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
@@ -75,11 +75,11 @@ function E.CreateTooltipPlayers(CharInfo)
 		tooltipRIGHT[#tooltipRIGHT+1] = {E.func_texturefromIcon(133634)..L["Bags"], CharInfo.PlayerData.classColorHex..(CharInfo.PlayerData.usedSlots.."/"..CharInfo.PlayerData.totalSlots).."|r"}
 	end
 	-- Quests info
-	if CharInfo.PlayerData.numQuests and CharInfo.PlayerData.maxNumQuestsCanAccept ~= 0 then
+	if CharInfo.PlayerData.numQuests and CharInfo.PlayerData.maxNumQuestsCanAccept then
 		tooltipRIGHT[#tooltipRIGHT+1] = {E.func_texturefromIcon(236664)..QUESTS_LABEL, CharInfo.PlayerData.classColorHex..(CharInfo.PlayerData.numQuests.."/"..CharInfo.PlayerData.maxNumQuestsCanAccept).."|r"}
 	end
 	-- Play time info
-	if CharInfo.PlayerData.realTotalTime and CharInfo.PlayerData.realLevelTime ~= 0 then
+	if CharInfo.PlayerData.realTotalTime  then
 		tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
 		tooltipRIGHT[#tooltipRIGHT+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.PlayerData.classColorHex..E.func_SecondsToClock(CharInfo.PlayerData.realTotalTime)).."|r"}
 		tooltipRIGHT[#tooltipRIGHT+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.PlayerData.classColorHex..E.func_SecondsToClock(CharInfo.PlayerData.realLevelTime)).."|r"}
@@ -94,6 +94,7 @@ function E.CreateTooltipPlayers(CharInfo)
 		tooltipRIGHT[#tooltipRIGHT+1] = {"Reload Count: "..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.ReloadCount.."|r"}
 	end
 	-- Debug information
+	print (E.DebugInfo)
 	if E.DebugInfo then
 		tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
 		tooltipRIGHT[#tooltipRIGHT+1] = {E.DEVTEXT, " "}
@@ -154,23 +155,25 @@ local function func_Universal(expansionID)
 							local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
 							----------------------------------------------------------------
 							local LeftData = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-							local max = v.max
-							if LeftData and type(LeftData) == "number" and max then
-								if LeftData < max then
-									textCENT = LeftData.."/"..max
-								elseif LeftData >= max then
-									textCENT = E.DONE
-								else
-									textCENT = E.DONE
+							if LeftData then
+								local max = v.max
+								if type(LeftData) == "number" and max then
+									if LeftData < max then
+										textCENT = LeftData.."/"..max
+									elseif LeftData >= max then
+										textCENT = E.DONE
+									else
+										textCENT = E.DONE
+									end
+								elseif max ~= 1 then
+									textCENT = "0/"..max
+								elseif type(LeftData) == "string" then
+									textCENT = LeftData
 								end
-							elseif max ~= 1 then
-								textCENT = "0/"..max
-							elseif type(LeftData) == "string" then
-								textCENT = LeftData
-							end
-							if CharInfo.PlayerData.GUID == E.curGUID then
-								for index, questID in ipairs(v.questID) do
-									tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+								if CharInfo.PlayerData.GUID == E.curGUID then
+									for index, questID in ipairs(v.questID) do
+										tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+									end
 								end
 							end
 							----------------------------------------------------------------
@@ -194,17 +197,25 @@ local function func_Universal_Holiday(Holiday, color)
 					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
 					----------------------------------------------------------------
 					local LeftData = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-					local max = v.max
-					if LeftData and type(LeftData) == "number" and max then
-						if LeftData < max then
-							textCENT = LeftData.."/"..max
-						else
-							textCENT = E.DONE
+					if LeftData then
+						local max = v.max
+						if type(LeftData) == "number" and max then
+							if LeftData < max then
+								textCENT = LeftData.."/"..max
+							elseif LeftData >= max then
+								textCENT = E.DONE
+							else
+								textCENT = E.DONE
+							end
+						elseif max ~= 1 then
+							textCENT = "0/"..max
+						elseif type(LeftData) == "string" then
+							textCENT = LeftData
 						end
-					end
-					if CharInfo.PlayerData.GUID == E.curGUID then
-						for index, questID in ipairs(v.questID) do
-							tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+						if CharInfo.PlayerData.GUID == E.curGUID then
+							for index, questID in ipairs(v.questID) do
+								tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+							end
 						end
 					end
 					----------------------------------------------------------------
@@ -252,9 +263,9 @@ function E:func_Otrisovka()
 						CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING = CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING or 0
 						CharInfo.MASLENGO.GreatVault[i].progress = CharInfo.MASLENGO.GreatVault[i].progress or 0
 						CharInfo.MASLENGO.GreatVault[i].threshold = CharInfo.MASLENGO.GreatVault[i].threshold or 0
-						if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING ~= 0 then
+						if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING then
 							tooltipRIGHT[#tooltipRIGHT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING.."|r"}
-						elseif CharInfo.MASLENGO.GreatVault[i].progress ~= 0 then
+						elseif CharInfo.MASLENGO.GreatVault[i].progress then
 							tooltipRIGHT[#tooltipRIGHT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold}
 						end
 					end
@@ -277,11 +288,10 @@ function E:func_Otrisovka()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
 				----------------------------------------------------------------
-				if CharInfo.PlayerData.CurrentKeyName and CharInfo.PlayerData.CurrentKeyName ~= 0 then
+				if CharInfo.PlayerData.CurrentKeyName then
 					tooltipRIGHT[#tooltipRIGHT+1] = {E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName.."|r", ""}
 				end
 				if CharInfo.PlayerData.RIO_Score and CharInfo.PlayerData.RIO_weeklyBest then
-					tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
 					tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
 					tooltipRIGHT[#tooltipRIGHT+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.RIO_weeklyBest.."|r"}
 					tooltipRIGHT[#tooltipRIGHT+1] = {"RIO Score:", E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.RIO_Score.."|r"}
@@ -451,7 +461,7 @@ function E:func_Otrisovka()
 						end
 						textCENT = E.OctoTable_Covenant[iANIMA].color..textCENT.."|r"
 						if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-							if CharInfo.PlayerData.Possible_Anima and CharInfo.PlayerData.Possible_Anima ~= 0 and kCovenant == 2 then
+							if CharInfo.PlayerData.Possible_Anima and kCovenant == 2 then
 								textCENT = textCENT..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
 							end
 							colorCENT = E.OctoTable_Covenant[iANIMA].color
@@ -540,12 +550,30 @@ function E:func_Otrisovka()
 				if CharInfo.MASLENGO.CurrencyID[1931] ~= nil then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1931]
 				end
-				if CharInfo.PlayerData.Possible_CatalogedResearch and CharInfo.PlayerData.Possible_CatalogedResearch ~= 0 then
+				if CharInfo.PlayerData.Possible_CatalogedResearch then
 					textCENT = textCENT..E.Purple_Color.." +"..CharInfo.PlayerData.Possible_CatalogedResearch.."|r"
 				end
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(1931)
 				iconLEFT = E.func_GetCurrencyIcon(1931)
+				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID9].color
+				----------------------------------------------------------------
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+				----------------------------------------------------------------
+		end)
+		tinsert(OctoTable_func_otrisovka, function(CharInfo)
+				----------------------------------------------------------------
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+				----------------------------------------------------------------
+				if CharInfo.MASLENGO.CurrencyID[1904] ~= nil then
+					textCENT = CharInfo.MASLENGO.CurrencyID[1904]
+				end
+				if CharInfo.PlayerData.Possible_CatalogedResearch then
+					textCENT = textCENT..E.Purple_Color.." +"..CharInfo.PlayerData.Possible_CatalogedResearch.."|r"
+				end
+				----------------------------------------------------------------
+				textLEFT = E.func_currencyName(1904)
+				iconLEFT = E.func_GetCurrencyIcon(1904)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID9].color
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
@@ -561,7 +589,7 @@ function E:func_Otrisovka()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID[1560] ~= nil then
+				if CharInfo.MASLENGO.CurrencyID[1560] then
 					textCENT = CharInfo.MASLENGO.CurrencyID[1560]
 				end
 				----------------------------------------------------------------
@@ -871,7 +899,7 @@ function E:func_Otrisovka()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[124124] ~= nil then
+				if CharInfo.MASLENGO.ItemsInBag[124124] then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[124124]
 				end
 				----------------------------------------------------------------
@@ -1273,24 +1301,24 @@ function E:func_Otrisovka()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		if Octo_ToDo_DB_Other.ActiveHoliday[181] then
-			tinsert(OctoTable_func_otrisovka, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
-					----------------------------------------------------------------
-					local v = Octo_ToDo_DB_Other.Holiday[181]
-					if CharInfo.PlayerData.GUID == E.curGUID then
-						textCENT = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
-					end
-					----------------------------------------------------------------
-					local v = Octo_ToDo_DB_Other.Holiday[181]
-					textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 181|r" or "")
-					iconLEFT = v.iconTexture
-					colorLEFT = E.Holiday_Color
-					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
-					----------------------------------------------------------------
-			end)
+		if E.ActiveHoliday[181] then
+			-- tinsert(OctoTable_func_otrisovka, function(CharInfo)
+			-- 		----------------------------------------------------------------
+			-- 		local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+			-- 		----------------------------------------------------------------
+			-- 		local v = E.Holiday[181]
+			-- 		if CharInfo.PlayerData.GUID == E.curGUID then
+			-- 			textCENT = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
+			-- 		end
+			-- 		----------------------------------------------------------------
+			-- 		local v = E.Holiday[181]
+			-- 		textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 181|r" or "")
+			-- 		iconLEFT = v.iconTexture
+			-- 		colorLEFT = E.Holiday_Color
+			-- 		----------------------------------------------------------------
+			-- 		return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+			-- 		----------------------------------------------------------------
+			-- end)
 			func_Universal_Holiday("HolidaysNoblegarden", E.Holiday_Color)
 			tinsert(OctoTable_func_otrisovka, function(CharInfo)
 					----------------------------------------------------------------
@@ -1328,23 +1356,23 @@ function E:func_Otrisovka()
 		----------------------------------------------------------------
 		local TimewalkHolidayTBL = {1265, 1063, 652, 622} -- 1458 Бурные потоки
 		for _, HolidayID in ipairs(TimewalkHolidayTBL) do
-			if Octo_ToDo_DB_Other.ActiveHoliday[HolidayID] then
-				tinsert(OctoTable_func_otrisovka, function(CharInfo)
-						----------------------------------------------------------------
-						local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
-						----------------------------------------------------------------
-						local v = Octo_ToDo_DB_Other.Holiday[HolidayID]
-						if CharInfo.PlayerData.GUID == E.curGUID then
-							textCENT = E.Event_Color..v.startTime.." - "..v.endTime.."|r"
-						end
-						----------------------------------------------------------------
-						textLEFT = v.invitedBy..E.Event_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..HolidayID.."|r" or "")
-						iconLEFT = v.iconTexture
-						colorLEFT = E.Event_Color
-						----------------------------------------------------------------
-						return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
-						----------------------------------------------------------------
-				end)
+			if E.ActiveHoliday[HolidayID] then
+				-- tinsert(OctoTable_func_otrisovka, function(CharInfo)
+				-- 		----------------------------------------------------------------
+				-- 		local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+				-- 		----------------------------------------------------------------
+				-- 		local v = E.Holiday[HolidayID]
+				-- 		if CharInfo.PlayerData.GUID == E.curGUID then
+				-- 			textCENT = E.Event_Color..v.startTime.." - "..v.endTime.."|r"
+				-- 		end
+				-- 		----------------------------------------------------------------
+				-- 		textLEFT = v.invitedBy..E.Event_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id:"..HolidayID.."|r" or "")
+				-- 		iconLEFT = v.iconTexture
+				-- 		colorLEFT = E.Event_Color
+				-- 		----------------------------------------------------------------
+				-- 		return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+				-- 		----------------------------------------------------------------
+				-- end)
 				func_Universal_Holiday("HolidaysTimewalk", E.Event_Color)
 				tinsert(OctoTable_func_otrisovka, function(CharInfo)
 						----------------------------------------------------------------
@@ -1366,47 +1394,47 @@ function E:func_Otrisovka()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		if Octo_ToDo_DB_Other.ActiveHoliday[201] then
-			tinsert(OctoTable_func_otrisovka, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
-					----------------------------------------------------------------
-					local v = Octo_ToDo_DB_Other.Holiday[201]
-					if CharInfo.PlayerData.GUID == E.curGUID then
-						textCENT = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
-					end
-					----------------------------------------------------------------
-					textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 201|r" or "")
-					iconLEFT = v.iconTexture
-					colorLEFT = E.Holiday_Color
-					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
-					----------------------------------------------------------------
-			end)
+		if E.ActiveHoliday[201] then
+			-- tinsert(OctoTable_func_otrisovka, function(CharInfo)
+			-- 		----------------------------------------------------------------
+			-- 		local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+			-- 		----------------------------------------------------------------
+			-- 		local v = E.Holiday[201]
+			-- 		if CharInfo.PlayerData.GUID == E.curGUID then
+			-- 			textCENT = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
+			-- 		end
+			-- 		----------------------------------------------------------------
+			-- 		textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 201|r" or "")
+			-- 		iconLEFT = v.iconTexture
+			-- 		colorLEFT = E.Holiday_Color
+			-- 		----------------------------------------------------------------
+			-- 		return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+			-- 		----------------------------------------------------------------
+			-- end)
 			func_Universal_Holiday("HolidaysChildrensWeek", E.Holiday_Color)
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		if Octo_ToDo_DB_Other.ActiveHoliday[341] then -- СОЛНЦЕВОРОТ
-			tinsert(OctoTable_func_otrisovka, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
-					----------------------------------------------------------------
-					local v = Octo_ToDo_DB_Other.Holiday[341]
-					if CharInfo.PlayerData.GUID == E.curGUID then
-						textCENT = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
-					end
-					----------------------------------------------------------------
-					textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 341|r" or "")
-					iconLEFT = v.iconTexture
-					colorLEFT = E.Holiday_Color
-					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
-					----------------------------------------------------------------
-			end)
+		if E.ActiveHoliday[341] then -- СОЛНЦЕВОРОТ
+			-- tinsert(OctoTable_func_otrisovka, function(CharInfo)
+			-- 		----------------------------------------------------------------
+			-- 		local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+			-- 		----------------------------------------------------------------
+			-- 		local v = E.Holiday[341]
+			-- 		if CharInfo.PlayerData.GUID == E.curGUID then
+			-- 			textCENT = E.Holiday_Color..v.startTime.." - "..v.endTime.."|r"
+			-- 		end
+			-- 		----------------------------------------------------------------
+			-- 		textLEFT = v.invitedBy..E.Holiday_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 341|r" or "")
+			-- 		iconLEFT = v.iconTexture
+			-- 		colorLEFT = E.Holiday_Color
+			-- 		----------------------------------------------------------------
+			-- 		return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+			-- 		----------------------------------------------------------------
+			-- end)
 			func_Universal_Holiday("HolidaysMidsummerFireFestival", E.Holiday_Color)
-			func_Universal_Holiday("TheSpinnerofSummerTales", E.Holiday_Color)
+			func_Universal_Holiday("HolidaysTheSpinnerofSummerTales", E.Holiday_Color)
 			tinsert(OctoTable_func_otrisovka, function(CharInfo)
 					----------------------------------------------------------------
 					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
@@ -1441,23 +1469,23 @@ function E:func_Otrisovka()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		if Octo_ToDo_DB_Other.ActiveHoliday[1691] then -- Алчный посланец
-			tinsert(OctoTable_func_otrisovka, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
-					----------------------------------------------------------------
-					local v = Octo_ToDo_DB_Other.Holiday[1691]
-					if CharInfo.PlayerData.GUID == E.curGUID then
-						textCENT = E.Red_Color..v.startTime.." - "..v.endTime.."|r"
-					end
-					----------------------------------------------------------------
-					textLEFT = v.invitedBy..E.Red_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 1691|r" or "")
-					iconLEFT = v.iconTexture
-					colorLEFT = E.Red_Color
-					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
-					----------------------------------------------------------------
-			end)
+		if E.ActiveHoliday[1691] then -- Алчный посланец
+			-- tinsert(OctoTable_func_otrisovka, function(CharInfo)
+			-- 		----------------------------------------------------------------
+			-- 		local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+			-- 		----------------------------------------------------------------
+			-- 		local v = E.Holiday[1691]
+			-- 		if CharInfo.PlayerData.GUID == E.curGUID then
+			-- 			textCENT = E.Red_Color..v.startTime.." - "..v.endTime.."|r"
+			-- 		end
+			-- 		----------------------------------------------------------------
+			-- 		textLEFT = v.invitedBy..E.Red_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 1691|r" or "")
+			-- 		iconLEFT = v.iconTexture
+			-- 		colorLEFT = E.Red_Color
+			-- 		----------------------------------------------------------------
+			-- 		return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+			-- 		----------------------------------------------------------------
+			-- end)
 			func_Universal_Holiday("HolidaysAGreedyEmissary", E.Red_Color)
 			tinsert(OctoTable_func_otrisovka, function(CharInfo)
 					----------------------------------------------------------------
@@ -1478,23 +1506,23 @@ function E:func_Otrisovka()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		if Octo_ToDo_DB_Other.ActiveHoliday[479] then -- Ярмарка новолунья
-			tinsert(OctoTable_func_otrisovka, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
-					----------------------------------------------------------------
-					local v = Octo_ToDo_DB_Other.Holiday[479]
-					if CharInfo.PlayerData.GUID == E.curGUID then
-						textCENT = E.Purple_Color..v.startTime.." - "..v.endTime.."|r"
-					end
-					----------------------------------------------------------------
-					textLEFT = v.invitedBy..E.Purple_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 479|r" or "")
-					iconLEFT = v.iconTexture
-					colorLEFT = E.Purple_Color
-					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
-					----------------------------------------------------------------
-			end)
+		if E.ActiveHoliday[479] then -- Ярмарка новолунья
+			-- tinsert(OctoTable_func_otrisovka, function(CharInfo)
+			-- 		----------------------------------------------------------------
+			-- 		local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+			-- 		----------------------------------------------------------------
+			-- 		local v = E.Holiday[479]
+			-- 		if CharInfo.PlayerData.GUID == E.curGUID then
+			-- 			textCENT = E.Purple_Color..v.startTime.." - "..v.endTime.."|r"
+			-- 		end
+			-- 		----------------------------------------------------------------
+			-- 		textLEFT = v.invitedBy..E.Purple_Color..v.title.."|r".. E.White_Color.." ("..v.ENDS..")|r"..(E.DebugIDs and E.Gray_Color.." id: 479|r" or "")
+			-- 		iconLEFT = v.iconTexture
+			-- 		colorLEFT = E.Purple_Color
+			-- 		----------------------------------------------------------------
+			-- 		return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+			-- 		----------------------------------------------------------------
+			-- end)
 			func_Universal_Holiday("HolidaysDarkmoonFaire", E.Purple_Color)
 		end
 		----------------------------------------------------------------
@@ -1557,7 +1585,7 @@ function E:func_Otrisovka()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
 				----------------------------------------------------------------
-				if CharInfo.PlayerData.numQuests and CharInfo.PlayerData.numQuests ~= 0 then
+				if CharInfo.PlayerData.numQuests then
 					textCENT = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.numQuests.."/"..CharInfo.PlayerData.maxNumQuestsCanAccept.."|r"
 					local questIDs = {}
 					for questID in next, CharInfo.MASLENGO.ListOfQuests do
@@ -1609,8 +1637,6 @@ function E:func_Otrisovka()
 				end
 				if #tooltipRIGHT ~= 0 then
 					textCENT = E.Gray_Color..DUNGEONS.."|r"
-				else
-					textCENT = ""
 				end
 				----------------------------------------------------------------
 				textLEFT = DUNGEONS
@@ -1634,8 +1660,6 @@ function E:func_Otrisovka()
 				end
 				if #tooltipRIGHT ~= 0 then
 					textCENT = E.Gray_Color..ITEMS.."|r"
-				else
-					textCENT = ""
 				end
 				----------------------------------------------------------------
 				textLEFT = ITEMS
@@ -1656,13 +1680,13 @@ function E:func_Otrisovka()
 				local pic = E.func_ProfessionIcon
 				local pin = E.func_ProfessionName
 				for i = 1, 5 do
-					if charProf[i] and charProf[i].skillLine ~= nil and charProf[i].skillLine ~= 0 then
+					if charProf[i] and charProf[i].skillLine then
 						if i == 1 or i == 2 then
 							textCENT = textCENT..pic(charProf[i].skillLine).." "
 						end
 						local leftText = pic(charProf[i].skillLine).." "..pin(charProf[i].skillLine)
 						local RightText = charProf[i].skillLevel.."/"..charProf[i].maxSkillLevel
-						if charProf[i].skillModifier ~= nil and charProf[i].skillModifier ~= 0 then
+						if charProf[i].skillModifier then
 							RightText = charProf[i].skillLevel.."|cff00FF00+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
 						end
 						tooltipRIGHT[#tooltipRIGHT+1] = {leftText, RightText}
@@ -1670,7 +1694,7 @@ function E:func_Otrisovka()
 							-- for expIndex, v in ipairs(charProf[i].child) do
 							for expIndex = #charProf[i].child, 1, -1 do
 								local v = charProf[i].child[expIndex]
-								if v.QWEskillLevel ~= nil and v.QWEskillLevel ~= 0 and v.QWEprofessionName ~= nil then
+								if v.QWEskillLevel and v.QWEprofessionName then
 									-- for expI, j in ipairs(E.OctoTable_Expansions) do
 									-- for expI = #E.OctoTable_Expansions, 1, -1 do
 									--     local j = E.OctoTable_Expansions[expI]
@@ -1769,8 +1793,8 @@ function E:func_Otrisovka()
 				if CharInfo.PlayerData.loginHour and CharInfo.PlayerData.loginDay then
 					if CharInfo.PlayerData.GUID == E.curGUID then
 						textCENT = E.Green_Color..FRIENDS_LIST_ONLINE.."|r"
-						tooltipRIGHT[#tooltipRIGHT+1] = {"Время после релоуда: "..CharInfo.PlayerData.classColorHex.. E.func_SecondsToClock(GetServerTime() - CharInfo.PlayerData.time).."|r"}
-						tooltipRIGHT[#tooltipRIGHT+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.PlayerData.classColorHex..E.func_SecondsToClock(GetSessionTime()).."|r" )}
+						-- tooltipRIGHT[#tooltipRIGHT+1] = {"Время после релоуда: "..CharInfo.PlayerData.classColorHex.. E.func_SecondsToClock(GetServerTime() - CharInfo.PlayerData.time).."|r"}
+						-- tooltipRIGHT[#tooltipRIGHT+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.PlayerData.classColorHex..E.func_SecondsToClock(GetSessionTime()).."|r" )}
 					else
 						if CharInfo.PlayerData.needResetWeekly == true then
 							color = E.Gray_Color
