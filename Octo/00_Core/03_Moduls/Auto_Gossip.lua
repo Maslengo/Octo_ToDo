@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-if not E.Enable_Moduls then return end
+-- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
 -- Auto_Gossip
 local targetNPCID = nil
 local ignoreNPCID = {

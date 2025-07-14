@@ -5,6 +5,7 @@
 	<Script file="Options\01_GeneralConfigPanel.lua"/>
 	<Script file="Options\02_Automatization.lua"/>
 	<Script file="Options\03_HideFrames.lua"/>
+	<Script file="Options\04_Other.lua"/>
 
 
 

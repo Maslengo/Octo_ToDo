@@ -1,5 +1,7 @@
 local GlobalAddonName, E = ...
-if not E.Enable_QuestsChanged then return end
+local enable = true
+if not enable then return end
+
 local icon = LibStub("LibDBIcon-1.0", true)
 local quests = {}
 local new_quests = {}

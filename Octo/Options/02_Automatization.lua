@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-if not E.Enable_Options then return end
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------

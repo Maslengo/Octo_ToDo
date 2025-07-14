@@ -1,5 +1,7 @@
 local GlobalAddonName, E = ...
-if not E.Enable_Achievements then return end
+local enable = true
+if not enable then return end
+
 local Octo_EventFrame_Achievements = CreateFrame("FRAME")
 Octo_EventFrame_Achievements:Hide()
 local Octo_MainFrame_Achievements = CreateFrame("BUTTON", "Octo_MainFrame_Achievements", UIParent, "BackdropTemplate")
@@ -70,12 +72,10 @@ local func_OnAcquired do
 	end
 	------------------------------------------------
 	local function func_OnEnter(frame)
-		-- frame.texture_full:SetAlpha(E.BGALPHA)
 		E.func_TooltipOnEnter(frame, false, false)
 	end
 	------------------------------------------------
 	local function func_OnOnLeave(frame)
-		-- frame.texture_full:SetAlpha(0)
 		GameTooltip_Hide()
 	end
 	------------------------------------------------
@@ -92,7 +92,7 @@ local func_OnAcquired do
 			frameFULL:SetPropagateMouseClicks(true)
 			frameFULL:SetPropagateMouseMotion(true)
 			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-			frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+			frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
 			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
 			frameFULL.HighlightTexture:SetAlpha(.2)
 			frameFULL:SetPoint("LEFT", frame)
@@ -109,7 +109,7 @@ local func_OnAcquired do
 			frame.texture_2 = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
 			frame.texture_2:SetSize(AddonLeftFrameWeight*3, AddonHeight)
 			frame.texture_2:SetPoint("RIGHT")
-			frame.texture_2:SetTexture("Interface\\Addons\\"..GlobalAddonName.."\\Media\\statusbar\\02 Octo-Blank.tga")
+			frame.texture_2:SetTexture(E.TEXTURE_LEFT_PATH)
 			frame.texture_2:SetVertexColor(1, 1, 1, .1)
 			------------------------------------------------
 			frame.textLEFT = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")

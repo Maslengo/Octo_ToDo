@@ -85,18 +85,19 @@ function Octo_EventFrame_WTF:DatabaseTransfer()
 				end
 			end
 		end
-
 	end
 
 	replaceZeroWithNil(Octo_ToDo_DB_Levels, {false, 0})
-	-- replaceZeroWithNil(Octo_ToDo_DB_Vars, {false, 0})
 	replaceZeroWithNil(Octo_ToDo_DB_Other, {false, 0})
 	replaceZeroWithNil(Octo_ToDo_DB_Minecraft, {false, 0})
 	replaceZeroWithNil(Octo_Achievements_DB, {false, 0})
 	replaceZeroWithNil(Octo_AddonsTable, {false, 0})
 	replaceZeroWithNil(Octo_AddonsManager_DB, {false, 0})
 	replaceZeroWithNil(Octo_DEBUG, {false, 0})
-	replaceZeroWithNil(Octo_QuestsChangedDB, {false, 0})
+
+
+	-- replaceZeroWithNil(Octo_ToDo_DB_Vars, {false, 0})
+	-- replaceZeroWithNil(Octo_QuestsChangedDB, {false, 0})
 end
 
 
@@ -203,10 +204,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 
 		isShownPLAYER = true,
 
-
-
-
-
 	}
 	-- Оптимизация: предварительно инициализируем таблицы
 	local MASLENGO_DEFAULTS = {
@@ -271,7 +268,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		-- Инициализация репутаций
 		for _, tbl in ipairs(E.OctoTable_Reputations) do
 			for _, v in ipairs(tbl) do
-				MASLENGO.reputationNEW[v.id] = MASLENGO.reputationNEW[v.id] or "####"
+				MASLENGO.reputationNEW[v.id] = MASLENGO.reputationNEW[v.id] or "0#0###"
 			end
 		end
 		-- Инициализация UniversalQuest
@@ -456,6 +453,16 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	end
 	-- Настройки функций
 	local featureDefaults = {
+		Enable_ToDo = true,
+		Enable_Moduls = true,
+		Enable_Achievements = false,
+		Enable_AddonsManager = false,
+		Enable_QuestsChanged = false,
+		Enable_Minecraft = false,
+		-- Enable_Options = false,
+
+
+
 		Auto_SellGrey = false,
 		Auto_Repair = false,
 		Auto_InputDelete = false,
@@ -466,6 +473,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Auto_Screenshot = false,
 		Auto_CinematicCanceler = false,
 		Auto_CinematicFastSkip = false,
+
+
 
 		Hide_CheckListText = false,
 		Hide_SubscriptionInterstitialFrame = false,
@@ -495,6 +504,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Hide_ErrorMessages = false,
 		Hide_TalkingHeadFrame = false,
 		Hide_EventToastManagerFrame = false,
+
 
 
 		AchievementShowCompleted = true,
@@ -740,7 +750,7 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 		-- Перенос старой базы
-		self:DatabaseTransfer()
+		-- self:DatabaseTransfer()
 		-- Инициализация всех баз данных
 		self:Octo_ToDo_DB_Levels()
 		self:Octo_ToDo_DB_Vars()

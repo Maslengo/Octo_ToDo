@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-if not E.Enable_Moduls then return end
+-- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 
 -- SpeedFrame
@@ -46,7 +46,7 @@ tinsert(E.Modules, function()
 
 	local text_movespeed = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	text_movespeed:SetPoint("CENTER", 0, -7)
-	text_movespeed:SetFontObject(OctoFont12)
+	text_movespeed:SetFontObject(OctoFont11)
 	text_movespeed:SetJustifyV("MIDDLE")
 	text_movespeed:SetJustifyH("CENTER")
 	text_movespeed:SetTextColor(0.31, 1, 0.47, 1)

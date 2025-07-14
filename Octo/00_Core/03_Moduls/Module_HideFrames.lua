@@ -1,11 +1,7 @@
 local GlobalAddonName, E = ...
-if not E.Enable_Moduls then return end
+-- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
 local Octo_EventFrame_HideFrames = CreateFrame("FRAME")
 Octo_EventFrame_HideFrames:Hide()
-
-
-
-
 
 function E:Hide_CheckListText()
 	local frame = CheckListText
@@ -19,8 +15,6 @@ function E:Hide_CheckListText()
 		end
 	end
 end
-
-
 
 function E:Hide_SubscriptionInterstitialFrame()
 	local frame = SubscriptionInterstitialFrame
@@ -178,7 +172,6 @@ function E:Hide_SplashFrame()
 	end
 end
 
-
 function E:Hide_PTRReporter()
 	local frame = PTR_Reporter
 	if frame and not self[frame] then
@@ -192,7 +185,6 @@ function E:Hide_PTRReporter()
 	end
 end
 
-
 function E:Hide_PTRIssueReporter()
 	local frame = PTR_IssueReporter
 	if frame and not self[frame] then
@@ -205,7 +197,6 @@ function E:Hide_PTRIssueReporter()
 		end
 	end
 end
-
 
 function E:Hide_PTRIssueReporterAlertFrame()
 	local frame = PTRIssueReporterAlertFrame
@@ -258,7 +249,6 @@ function E:Hide_CovenantChoiceToast()
 		end
 	end
 end
-
 
 function E:Hide_ZoneTextFrame()
 	local frame = ZoneTextFrame
@@ -325,7 +315,6 @@ function E:Hide_SubZoneTextString()
 	end
 end
 
-
 function E:Hide_OrderHallCommandBar()
 	if not self.OrderHallCommandBar then
 		self.OrderHallCommandBar = true
@@ -356,6 +345,7 @@ function E:Hide_OrderHallCommandBar()
 		end
 	end
 end
+
 function E:Hide_ErrorMessages()
 	if not self.ErrorMessages then
 		self.ErrorMessages = true
@@ -385,6 +375,7 @@ function E:Hide_ErrorMessages()
 			end)
 	end
 end
+
 function E:Hide_TalkingHeadFrame()
 	if TalkingHeadFrame and not self.TalkingHeadFrame then
 		self.TalkingHeadFrame = true
@@ -393,6 +384,7 @@ function E:Hide_TalkingHeadFrame()
 		end)
 	end
 end
+
 function E:Hide_EventToastManagerFrame()
 	if EventToastManagerFrame and not self.EventToastManagerFrame then
 		self.EventToastManagerFrame = true
@@ -417,6 +409,7 @@ function E:Hide_EventToastManagerFrame()
 		end)
 	end
 end
+
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
@@ -425,13 +418,16 @@ local MyEventsTable = {
 	"PLAYER_STARTED_MOVING",
 	"TALKINGHEAD_REQUESTED",
 }
+
 E.RegisterMyEventsToFrames(Octo_EventFrame_HideFrames, MyEventsTable)
+
 function Octo_EventFrame_HideFrames:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 	end
 end
+
 function Octo_EventFrame_HideFrames:START_HF_functions()
 	if Octo_ToDo_DB_Vars.Hide_CheckListText then E:Hide_CheckListText() end
 	if Octo_ToDo_DB_Vars.Hide_SubscriptionInterstitialFrame then E:Hide_SubscriptionInterstitialFrame() end
@@ -462,20 +458,23 @@ function Octo_EventFrame_HideFrames:START_HF_functions()
 	if Octo_ToDo_DB_Vars.Hide_TalkingHeadFrame then E:Hide_TalkingHeadFrame() end
 	if Octo_ToDo_DB_Vars.Hide_EventToastManagerFrame then E:Hide_EventToastManagerFrame() end
 end
+
 function Octo_EventFrame_HideFrames:PLAYER_LOGIN()
 	self:START_HF_functions()
 end
+
 function Octo_EventFrame_HideFrames:PLAYER_REGEN_ENABLED()
 	self:START_HF_functions()
 end
+
 function Octo_EventFrame_HideFrames:PLAYER_REGEN_DISABLED()
 	self:START_HF_functions()
 end
+
 function Octo_EventFrame_HideFrames:PLAYER_STARTED_MOVING()
 	self:START_HF_functions()
 end
+
 function Octo_EventFrame_HideFrames:TALKINGHEAD_REQUESTED()
 	self:START_HF_functions()
 end
-
-

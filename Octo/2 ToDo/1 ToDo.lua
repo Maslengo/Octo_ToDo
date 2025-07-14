@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-if not E.Enable_ToDo then return end
+-- if not Octo_ToDo_DB_Vars.Enable_ToDo then return end
 local Octo_EventFrame_ToDo = CreateFrame("FRAME")
 Octo_EventFrame_ToDo:Hide()
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
@@ -17,9 +17,14 @@ local SFDropDownWeight = 100
 local MaxNumCharacters = 10
 -- Shared constants and textures
 local r, g, b = GetClassColor(E.classFilename)
-local TEXTURE_PATH_CENTRAL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\octo\\CentralFrame.tga"
-local TEXTURE_PATH_LEFT = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\octo\\LeftFrame.tga"
-local HighlightTexture = "Interface\\AddOns\\Octo\\Media\\BUTTON\\GlowTexture.tga"
+
+
+
+
+
+
+
+
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
@@ -101,8 +106,9 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_ToDo)
 	frameFULL:SetPropagateMouseClicks(true)
 	frameFULL:SetPropagateMouseMotion(true)
-	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-	frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+	-- frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+	print (E.TEXTURE_HIGHLIGHT_ATLAS)
+	frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
 	frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
 	frameFULL.HighlightTexture:SetAlpha(.2)
 	frameFULL:SetPoint("LEFT", frame)
@@ -131,7 +137,7 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	local textureLEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
 	textureLEFT:Hide()
 	textureLEFT:SetAllPoints()
-	textureLEFT:SetTexture(TEXTURE_PATH_LEFT)
+	textureLEFT:SetTexture(E.TEXTURE_LEFT_PATH)
 	frame.textureLEFT = textureLEFT
 	-- Event handlers
 	frame:SetScript("OnEnter", function(self)
@@ -180,11 +186,11 @@ local func_OnAcquiredCENT do
 						f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
 						f.ReputTextureAndBG:SetPoint("LEFT")
 						f.ReputTextureAndBG:SetHeight(AddonHeight)
-						f.ReputTextureAndBG:SetTexture(TEXTURE_PATH_CENTRAL)
+						f.ReputTextureAndBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
 						-- Current character texture
 						f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
 						f.curCharTextureBG:SetAllPoints()
-						f.curCharTextureBG:SetTexture(TEXTURE_PATH_CENTRAL)
+						f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
 						f.curCharTextureBG:SetVertexColor(r, g, b, E.bgCaOverlay)
 						f.curCharTextureBG:Hide()
 						-- Center text
@@ -350,9 +356,6 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	-- Дочерний фрейм для содержимого
 	local childCENT = CreateFrame("Frame")
 	frame.childCENT = childCENT
-	-- childCENT.texture = childCENT:CreateTexture(nil, "BACKGROUND")
-	-- childCENT.texture:SetAllPoints()
-	-- childCENT.texture:SetTexture(format("Interface\\Addons\\%s\\Media\\statusbar\\01 Octo Naowh.tga", GlobalAddonName))
 	barPanelScroll:SetScrollChild(childCENT)
 	-- Настройка ScrollBoxLEFT
 	frame.ScrollBoxLEFT = CreateFrame("Frame", nil, frame, "WowScrollBoxList")
@@ -426,7 +429,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 
 		self.CharTexture = self:CreateTexture(nil, "BACKGROUND", nil, -3)
 		self.CharTexture:SetAllPoints()
-		self.CharTexture:SetTexture(TEXTURE_PATH_CENTRAL)
+		self.CharTexture:SetTexture(E.TEXTURE_CENTRAL_PATH)
 	end
 	frame.pool = CreateFramePool("FRAME", childCENT, nil, resetFunc, false, initFunc) -- nil eto template
 end
@@ -574,19 +577,24 @@ function E:func_CreateMyDataProvider()
 end
 function E.Update(event_name)
 	local isMainFrameVisible = Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown()
-	if not E.DebugEvent then return end
+	-- if not E.DebugEvent then return end
 	if isMainFrameVisible then
 		if not E.updateScheduled then
 			E.updateScheduled = true
 			C_Timer.After(0.1, function()
 					E.updateScheduled = false
-					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() and E.DebugEvent then
-						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r")
+					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
+						E:func_CreateMyDataProvider()
+						if E.DebugEvent then
+							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Green_Color, E.Yellow_Color)..event_name..E.Yellow_Color..")|r")
+						end
 					end
 			end)
 		end
 	else
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r")
+		if E.DebugEvent then
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name..E.Addon_Right_Color..")|r")
+		end
 	end
 end
 function E:func_Create_DD_ToDo(mainFrame)
@@ -634,6 +642,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 	end
 	DD_ToDo:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
+			info.fontObject = OctoFont11
 			local count = 0
 			if level == 1 then
 				local BnetList = {}
@@ -765,14 +774,13 @@ function E:func_Create_DD_ToDo(mainFrame)
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.PlayerData.isShownPLAYER = nil
+						CharInfo.PlayerData.isShownPLAYER = false
 					end
 					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				----------------
 				self:ddAddSeparator(level)
-				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
 				info.notCheckable = false
 				info.isNotRadio = true
@@ -786,7 +794,6 @@ function E:func_Create_DD_ToDo(mainFrame)
 				self:ddAddButton(info, level)
 				----------------
 				if count > 1 then
-					info.fontObject = OctoFont11
 					info.keepShownOnClick = true
 					info.notCheckable = false
 					info.isNotRadio = true
@@ -862,7 +869,6 @@ function E:func_Create_DD_ToDo(mainFrame)
 				----------------
 			end
 			if level == 1 then
-				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
 				info.notCheckable = true
 				info.text = EXPANSION_FILTER_TEXT
@@ -870,12 +876,6 @@ function E:func_Create_DD_ToDo(mainFrame)
 				info.icon = false
 				info.hasArrow = true
 				info.func = nil
-				-- info.func = function(_, _, _, checked)
-				-- for expansionID, v in ipairs(E.OctoTable_Expansions) do
-				-- Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = true
-				-- end
-				-- E:func_CreateMyDataProvider()
-				-- end
 				self:ddAddButton(info, level)
 			elseif value == EXPANSION_FILTER_TEXT then
 				info.iconInfo = {
@@ -886,7 +886,6 @@ function E:func_Create_DD_ToDo(mainFrame)
 				-- В ОБРАТНОМ ПОРЯДКЕ
 				for expansionID = #E.OctoTable_Expansions, 1, -1 do
 					local v = E.OctoTable_Expansions[expansionID]
-					info.fontObject = OctoFont11
 					info.isNotRadio = true
 					info.notCheckable = false
 					info.keepShownOnClick = true
@@ -1051,7 +1050,6 @@ local MyEventsTable = {
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
 	"READY_CHECK",
-	"SHOW_SUBSCRIPTION_INTERSTITIAL",
 }
 E.RegisterMyEventsToFrames(Octo_EventFrame_ToDo, MyEventsTable)
 function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
@@ -1171,14 +1169,6 @@ function Octo_EventFrame_ToDo:LoadAssetsAsync()
 				E:func_CreateMyDataProvider()
 			end
 	end)
-end
-function Octo_EventFrame_ToDo:SHOW_SUBSCRIPTION_INTERSTITIAL()
-	if not InCombatLockdown() then
-		if SubscriptionInterstitialFrame then
-			SubscriptionInterstitialFrame:SetScript("OnEvent", nil)
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Hide trash frames: ").."SubscriptionInterstitialFrame")
-		end
-	end
 end
 function Octo_EventFrame_ToDo:READY_CHECK()
 	if not InCombatLockdown() then

@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-if not E.Enable_ToDo then return end
+-- if not Octo_ToDo_DB_Vars.Enable_ToDo then return end
 local Octo_EventFrame = CreateFrame("FRAME")
 Octo_EventFrame:Hide()
 
@@ -34,7 +34,6 @@ local StaticPopup_Show = StaticPopup_Show
 local Settings = Settings
 local SettingsPanel = SettingsPanel
 local HideUIPanel = HideUIPanel
-local GameMenuFrame = GameMenuFrame
 local WorldFrame = WorldFrame
 local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS

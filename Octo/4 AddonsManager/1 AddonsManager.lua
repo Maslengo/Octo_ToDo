@@ -1,5 +1,7 @@
 local GlobalAddonName, E = ...
-if not E.Enable_AddonsManager then return end
+local enable = true
+if not enable then return end
+
 local Octo_EventFrame_AddonsManager = CreateFrame("FRAME")
 Octo_EventFrame_AddonsManager:Hide()
 local Octo_MainFrame_AddonsManager = CreateFrame("BUTTON", "Octo_MainFrame_AddonsManager", UIParent, "BackdropTemplate")
@@ -186,7 +188,7 @@ local func_OnAcquired do
 			local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_AddonsManager)
 			frameFULL:SetPropagateMouseClicks(true)
 			frameFULL:SetPropagateMouseMotion(true)
-			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+			-- frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
 			frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
 			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
 			frameFULL.HighlightTexture:SetAlpha(.2)
@@ -208,7 +210,7 @@ local func_OnAcquired do
 			frame.icon_secondSlot:SetPoint("TOPLEFT", AddonHeight+1, -1)
 			frame.icon_secondSlot:SetSize(AddonHeight-2, AddonHeight-2)
 			frame.icon_secondSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-			frame.icon_secondSlot:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonWHITE")
+			frame.icon_secondSlot:SetTexture(E.Icon_Empty)
 			------------------------------------------------
 			frame.icon_third = frame:CreateTexture(nil, "BACKGROUND")
 			frame.icon_third:SetPoint("TOPLEFT", AddonHeight+AddonHeight+1, -1)
@@ -432,7 +434,7 @@ function Octo_EventFrame_AddonsManager:Octo_Frame_init(frame, node)
 		if tbl[data.index] then
 			UpdateExpandOrCollapseButtonState(frame.icon_firstSlot, node:IsCollapsed(), node, name)
 		else
-			frame.icon_firstSlot:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\spacerEMPTY")
+			frame.icon_firstSlot:SetTexture(E.Icon_Empty)
 		end
 	else
 		frame.first:Hide()

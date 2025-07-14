@@ -1,5 +1,7 @@
 local GlobalAddonName, E = ...
-if not E.Enable_QuestsChanged then return end
+local enable = true
+if not enable then return end
+
 local floor = math.floor
 local QC_Quests, copybox
 function E:BuildLog()

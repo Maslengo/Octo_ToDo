@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-if not E.Enable_Moduls then return end
+-- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
 -- Auto_Open
 local Octo_AUTO_OPEN = CreateFrame("Frame", GlobalAddonName.."Auto_Open"..E.func_GenerateUniqueID())
 Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")

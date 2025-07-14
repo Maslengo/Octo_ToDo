@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-if not E.Enable_ToDo then return end
+-- if not Octo_ToDo_DB_Vars.Enable_ToDo then return end
 local Octo_EventFrame_Collect = CreateFrame("FRAME")
 Octo_EventFrame_Collect:Hide()
 ----------------------------------------------------------------
@@ -177,7 +177,7 @@ function E.Collect_All_Covenant()
 
 
 
-				collectMASLENGO.CovenantAndAnima.curCovID = curCovID
+			collectMASLENGO.CovenantAndAnima.curCovID = curCovID
 
 
 
@@ -634,12 +634,16 @@ function E.Collect_All_Reputations()
 		for index, tbl in ipairs(E.OctoTable_Reputations) do
 			for i, v in ipairs(tbl) do
 				local reputationID = v.id
+				local vivod = E.func_CheckReputationNEW(reputationID)
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						collectMASLENGO.reputationNEW[reputationID] = E.func_CheckReputationNEW(reputationID)
+						CharInfo.MASLENGO.reputationNEW[reputationID] = CharInfo.MASLENGO.reputationNEW[reputationID] or {}
+						if CharInfo.PlayerData.BattleTagLocal == E.BattleTagLocal then
+							CharInfo.MASLENGO.reputationNEW[reputationID] = vivod
+						end
 					end
 				else
-					collectMASLENGO.reputationNEW[reputationID] = E.func_CheckReputationNEW(reputationID)
+					collectMASLENGO.reputationNEW[reputationID] = vivod
 				end
 			end
 		end
@@ -667,18 +671,24 @@ function E.Collect_All_ItemsInBag()
 					local stackCount = containerInfo.stackCount
 					local itemID = containerInfo.itemID
 					local quality = containerInfo.quality
-					local hyperlink = containerInfo.hyperlink
-					if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
-						local dungeonID = select(4, strsplit(":", hyperlink)) -- БЫЛО 3
-						local lvl = select(5, strsplit(":", hyperlink)) -- БЫЛО 4
-						collectPlayerData.CurrentKeyLevel = tonumber(lvl)
-						collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
-						for k, v in next, (E.OctoTable_KeystoneAbbr) do
-							if v.mapChallengeModeID == tonumber(dungeonID) then
-								collectPlayerData.CurrentKey = lvl.." "..v.abbreviation
+					C_Timer.After(1, function()
+							local hyperlink = containerInfo.hyperlink
+							if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
+								local dungeonID = select(4, strsplit(":", hyperlink)) -- БЫЛО 3
+								local lvl = select(5, strsplit(":", hyperlink)) -- БЫЛО 4
+								print (hyperlink:gsub("|", ""))
+								collectPlayerData.CurrentKeyLevel = tonumber(lvl)
+								-- print (hyperlink, C_ChallengeMode.GetMapUIInfo(dungeonID)) -- ПОФИКСИТЬ
+								collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
+								for k, v in next, (E.OctoTable_KeystoneAbbr) do
+									if v.mapChallengeModeID == tonumber(dungeonID) then
+										collectPlayerData.CurrentKey = lvl.." "..v.abbreviation
+									end
+								end
+								E.Update("TESTEVENT")
 							end
-						end
-					end
+					end)
+
 					for _, tbl in next, (E.OctoTable_itemID_Cataloged_Research) do
 						if itemID == tbl.itemiD then
 							Possible_CatalogedResearch = Possible_CatalogedResearch + (tbl.count*E.func_GetItemCount(itemID))
@@ -737,6 +747,46 @@ function E.Collect_All_ItemsInBag()
 		end
 	end
 end
+
+
+
+function E.Collect_All_ItemsInBagQWEQWEQWE(arg2)
+	-- local textprint = arg2:gsub("|", "")
+
+	-- print (textprint)
+	-- local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	-- local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	-- if collectPlayerData then
+	--     for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+	--         for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
+	--             local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
+	--             if containerInfo then
+
+	--                 if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
+	--                     print (1)
+	--                     local dungeonID = select(4, strsplit(":", arg2)) -- БЫЛО 3
+	--                     local lvl = select(5, strsplit(":", arg2)) -- БЫЛО 4
+	--                     collectPlayerData.CurrentKeyLevel = tonumber(lvl)
+	--                     print (C_ChallengeMode.GetMapUIInfo(dungeonID))
+	--                     collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
+	--                     for k, v in next, (E.OctoTable_KeystoneAbbr) do
+	--                         if v.mapChallengeModeID == tonumber(dungeonID) then
+	--                             collectPlayerData.CurrentKey = lvl.." "..v.abbreviation
+	--                         end
+	--                     end
+
+
+	--                 end
+	--             end
+	--         end
+	--     end
+	-- end
+end
+
+
+
+
+
 function E.Collect_All_Locations()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
@@ -827,8 +877,8 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 			end
 		end
 		-- if Octo_DEBUG then
-			-- Octo_DEBUG.UniversalQuest[v.desc] = Octo_DEBUG.UniversalQuest[v.desc] or {}
-			-- Octo_DEBUG.UniversalQuest[v.desc][i] = Octo_DEBUG.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest."..questKey)
+		-- Octo_DEBUG.UniversalQuest[v.desc] = Octo_DEBUG.UniversalQuest[v.desc] or {}
+		-- Octo_DEBUG.UniversalQuest[v.desc][i] = Octo_DEBUG.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest."..questKey)
 		-- end
 		if count > 0 then
 			collectMASLENGO.UniversalQuest[questKey] = count
@@ -1179,6 +1229,7 @@ local MyEventsTable = {
 	"ACCOUNT_MONEY",
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
 	"BAG_UPDATE",
+	"ITEM_CHANGED",
 	"COVENANT_CHOSEN",
 	"COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED",
 	"CURRENCY_DISPLAY_UPDATE",
@@ -1320,6 +1371,16 @@ function Octo_EventFrame_Collect:BAG_UPDATE()
 			self.BAG_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
 	end)
 end
+
+function Octo_EventFrame_Collect:ITEM_CHANGED(...)
+	local arg1, arg2 = ...
+	E.Collect_All_ItemsInBag()
+	E.Update("ITEM_CHANGED")
+end
+
+
+
+
 function Octo_EventFrame_Collect:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
 	if InCombatLockdown() or self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause then return end
 	self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = true

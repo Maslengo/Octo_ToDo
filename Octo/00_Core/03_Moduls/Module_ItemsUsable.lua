@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-if not E.Enable_Moduls then return end
+-- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")-- Подключаем библиотеку для свечения кнопок
 -- Создаем кнопки для использования и удаления предметов
 local Clickable_ItemsUsable = CreateFrame("Button", "Clickable_ItemsUsable", UIParent, "SecureActionButtonTemplate, BackDropTemplate")

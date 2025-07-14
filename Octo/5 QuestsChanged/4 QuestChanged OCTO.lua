@@ -1,5 +1,7 @@
 local GlobalAddonName, E = ...
-if not E.Enable_QuestsChanged then return end
+local enable = true
+if not enable then return end
+
 local Octo_EventFrame_QuestsChanged = CreateFrame("FRAME")
 Octo_EventFrame_QuestsChanged:Hide()
 local Octo_MainFrame_QuestsChanged = CreateFrame("BUTTON", "Octo_MainFrame_QuestsChanged", UIParent, "BackdropTemplate")
@@ -14,9 +16,6 @@ if MainFrameDefaultLines > MainFrameTotalLines then
 	MainFrameDefaultLines = MainFrameTotalLines
 end
 local r, g, b = GetClassColor(E.classFilename)
-local TEXTURE_PATH_CENTRAL = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\octo\\CentralFrame.tga"
-local TEXTURE_PATH_LEFT = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\octo\\LeftFrame.tga"
-local HighlightTexture = "Interface\\AddOns\\Octo\\Media\\BUTTON\\GlowTexture.tga"
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
@@ -73,7 +72,7 @@ local func_OnAcquired do
 			local textureFULL = frameFULL:CreateTexture(nil, "BACKGROUND", nil, -3)
 			textureFULL:Hide()
 			textureFULL:SetAllPoints()
-			textureFULL:SetTexture(TEXTURE_PATH_LEFT)
+			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
 			textureFULL:SetVertexColor(r, g, b, E.bgCaOverlay)
 			frame.textureFULL = textureFULL
 			------------------------------------------------
@@ -343,6 +342,10 @@ function E:QuestsChanged_CreateMyDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	E.DataProvider_QuestsChanged = DataProvider
 	local times = {}
+	Octo_QuestsChangedDB = Octo_QuestsChangedDB or {}
+	Octo_QuestsChangedDB.QC_Quests = Octo_QuestsChangedDB.QC_Quests or {}
+	Octo_QuestsChangedDB.QC_Vignettes = Octo_QuestsChangedDB.QC_Vignettes or {}
+
 	if Octo_ToDo_DB_Vars.QC_Quests then
 		for k, v in next, (Octo_QuestsChangedDB.QC_Quests) do
 			if v.time then tinsert(times, v.time) end

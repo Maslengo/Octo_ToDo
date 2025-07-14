@@ -67,6 +67,58 @@ function E:func_Otrisovka_11_TheWarWithin()
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
 				----------------------------------------------------------------
 		end)
+
+
+		table.insert(OctoTable_Otrisovka, function(CharInfo)
+				----------------------------------------------------------------
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+				----------------------------------------------------------------
+				if CharInfo.MASLENGO.CurrencyID[3116] then
+					textCENT = CharInfo.MASLENGO.CurrencyID_Total[3116]
+				end
+				----------------------------------------------------------------
+				textLEFT = E.func_currencyName(3116)
+				iconLEFT = E.func_GetCurrencyIcon(3116)
+				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+				----------------------------------------------------------------
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+				----------------------------------------------------------------
+		end)
+
+
+
+		table.insert(OctoTable_Otrisovka, function(CharInfo)
+				----------------------------------------------------------------
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+				----------------------------------------------------------------
+				if CharInfo.MASLENGO.CurrencyID[2815] then
+					textCENT = CharInfo.MASLENGO.CurrencyID_Total[2815]
+				end
+				----------------------------------------------------------------
+				textLEFT = E.func_currencyName(2815)
+				iconLEFT = E.func_GetCurrencyIcon(2815)
+				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+				----------------------------------------------------------------
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+				----------------------------------------------------------------
+		end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		E.func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
@@ -74,3 +126,4 @@ function E:func_Otrisovka_11_TheWarWithin()
 	----------------------------------------------------------------
 	return OctoTable_Otrisovka
 end
+

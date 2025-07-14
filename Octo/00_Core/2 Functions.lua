@@ -5,13 +5,15 @@ E.PromiseSpell = {}
 E.PromiseQuest = {}
 E.ActiveHoliday = {}
 E.Holiday = {}
-E.Enable_ToDo = true
-E.Enable_Options = true
-E.Enable_Moduls = true
-E.Enable_Achievements = false
-E.Enable_AddonsManager = false
-E.Enable_QuestsChanged = true
-E.Enable_Minecraft = false
+
+E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
+E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\LeftFrame.tga"
+E.TEXTURE_HIGHLIGHT_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
+E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
+E.TEXTURE_BLANK_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Blank.tga"
+E.HighlightTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
+
+
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 local LibStub = LibStub
@@ -72,7 +74,6 @@ local StaticPopup_Show = StaticPopup_Show
 local Settings = Settings
 local SettingsPanel = SettingsPanel
 local HideUIPanel = HideUIPanel
-local GameMenuFrame = GameMenuFrame
 local UIParent = UIParent
 local WorldFrame = WorldFrame
 local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME
@@ -572,20 +573,24 @@ function E.func_Gradient(text, firstColor, secondColor)
 	local vivod = ""
 	local str = ""
 	local total = utf8len(text)-1
-	local r1, g1, b1 = E.func_hex2rgb(firstColor)
-	local r2, g2, b2 = E.func_hex2rgb(secondColor)
-	local rdelta, gdelta, bdelta = (r2-r1)/total, (g2-g1)/total, (b2-b1)/total
-	local r3 = r1
-	local g3 = g1
-	local b3 = b1
-	for i = 1, total do
-		str = str..("|cff%02x%02x%02x%s|r"):format(math_floor(r3+.5), math_floor(g3+.5), math_floor(b3+.5), utf8sub(text, i, i))
-		r3 = r3 + rdelta
-		g3 = g3 + gdelta
-		b3 = b3 + bdelta
+	if total > 0 then
+		local r1, g1, b1 = E.func_hex2rgb(firstColor)
+		local r2, g2, b2 = E.func_hex2rgb(secondColor)
+		local rdelta, gdelta, bdelta = (r2-r1)/total, (g2-g1)/total, (b2-b1)/total
+		local r3 = r1
+		local g3 = g1
+		local b3 = b1
+		for i = 1, total do
+			str = str..("|cff%02x%02x%02x%s|r"):format(math_floor(r3+.5), math_floor(g3+.5), math_floor(b3+.5), utf8sub(text, i, i))
+			r3 = r3 + rdelta
+			g3 = g3 + gdelta
+			b3 = b3 + bdelta
+		end
+		vivod = str..secondColor..utf8sub(text, utf8len(text)).."|r"
+		return vivod
+	else
+		return text
 	end
-	vivod = str..secondColor..utf8sub(text, utf8len(text)).."|r"
-	return vivod
 end
 ----------------------------------------------------------------
 function E.func_GenerateUniqueID()
@@ -602,12 +607,6 @@ function E.func_GenerateUniqueColor()
 		table_insert(s, E.OctoTable_bytetoB64Color[math.random(0, 15)])
 	end
 	return table_concat(s)
-end
-----------------------------------------------------------------
-function E.func_PlaySoundFile_whisper(fileName)
-	if fileName then
-		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Memes\\"..fileName..".ogg", "Master")
-	end
 end
 ----------------------------------------------------------------
 function E.func_CompactNumberFormat(number)
@@ -654,7 +653,7 @@ elseif E.curFaction == "Alliance" then
 else
 	E.Icon_Faction = 620830
 end
-E.Icon_MailBox = "Interface/AddOns/"..E.GlobalAddonName.."/Media/ElvUI/Mail0.tga"
+E.Icon_MailBox = "Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga"
 function E.func_texturefromIconEVENT(icon, iconSize)
 	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::128:128:0:91:0:91|t"
 end
@@ -1541,7 +1540,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	Octo_FramerateFrame:SetFrameStrata("HIGH")
 	local text_fps = Octo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	text_fps:SetPoint("CENTER")
-	text_fps:SetFontObject(OctoFont12)
+	text_fps:SetFontObject(OctoFont11)
 	text_fps:SetJustifyH("CENTER")
 	text_fps:SetTextColor(0.31, 1, 0.47, 1)
 	Octo_FramerateFrame.text_fps = text_fps
@@ -1826,29 +1825,19 @@ E.Timers = {}
 E.spacer = ""
 -------------------------------------------------------------------------
 E.FULL_WIDTH = 3.60
-E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
-E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\border\\01 Octo.tga"
-E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\01 Octo.TTF"
-E.Warmup_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\font\\00 FiraCode-Regular.TTF"
+E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\03_Borders\\Octo.tga"
+E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\03_Borders\\Octo.tga"
+E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\02_Fonts\\Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
-E.fontObject9 = CreateFont("OctoFont9")
-E.fontObject9:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject9:SetFont(E.Octo_font, 9, "OUTLINE")
-E.fontObject10 = CreateFont("OctoFont10")
-E.fontObject10:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject10:SetFont(E.Octo_font, 10, "OUTLINE")
+
 E.fontObject11 = CreateFont("OctoFont11")
-E.fontObject11:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.fontObject11:CopyFontObject(GameTooltipText)-- local font = GameFontHighlightSmallLeft
 E.fontObject11:SetFont(E.Octo_font, 11, "OUTLINE")
-E.fontObject12 = CreateFont("OctoFont12")
-E.fontObject12:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject12:SetFont(E.Octo_font, 12, "OUTLINE")
+
 E.fontObject22 = CreateFont("OctoFont22")
 E.fontObject22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject22:SetFont(E.Octo_font, 22, "OUTLINE")
-E.fontObject24 = CreateFont("WarmupFont24")
-E.fontObject24:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject24:SetFont(E.Warmup_font, 24, "OUTLINE")
+
 E.IconTexture = C_AddOns.GetAddOnMetadata(GlobalAddonName, "IconTexture")
 E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- GetExpansionLevel()
@@ -1998,7 +1987,7 @@ E.Icon_AccountWide = CreateAtlasMarkup("warbands-icon", 16, 16)
 E.Icon_Warbands = E.Blue_Color.."(A)".."|r"
 E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r"
 E.Icon_QuestionMark = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
-E.Icon_Empty = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\spacerEMPTY"
+E.Icon_Empty = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Util_Icons\\Icon_Empty"
 E.Icon_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
 E.OctoTable_Prefixes = {
 	"Русский", -- "ru.",
