@@ -136,7 +136,7 @@ function E:func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.DebugInfo == true then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
@@ -149,7 +149,7 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				textLEFT = E.DEVTEXT..E.Blue_Color.."ALL|r"
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		local list = {}
@@ -161,7 +161,7 @@ function E:func_Otrisovka_91_Other()
 		for i, value in ipairs(list) do
 			table.insert(OctoTable_Otrisovka, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 					----------------------------------------------------------------
 					tooltipRIGHT[#tooltipRIGHT+1] = {E.DEVTEXT, ""}
 					for _, v in next, (E.OctoTable_UniversalQuest) do
@@ -173,7 +173,7 @@ function E:func_Otrisovka_91_Other()
 					----------------------------------------------------------------
 					textLEFT = E.DEVTEXT..i
 					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 					----------------------------------------------------------------
 				end)
 		end
@@ -184,7 +184,7 @@ function E:func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Quests == true then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.numQuests then
 					textCENT = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.numQuests.."/"..CharInfo.PlayerData.maxNumQuestsCanAccept.."|r"
@@ -201,7 +201,7 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				textLEFT = QUESTS_LABEL
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		E.func_Universal_Holiday(OctoTable_Otrisovka, "Storyline", E.Holiday_Color)
@@ -212,7 +212,7 @@ function E:func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Dungeons == true then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				local ServerTime = GetServerTime()
 				for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
@@ -242,7 +242,7 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				textLEFT = DUNGEONS
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 	end
@@ -252,7 +252,7 @@ function E:func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Items == true then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				for index, itemID in ipairs(E.OctoTable_itemID_ALL) do
 					if CharInfo.MASLENGO.ItemsInBag[itemID] then
@@ -265,7 +265,7 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				textLEFT = ITEMS
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 	end
@@ -275,7 +275,7 @@ function E:func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Professions == true then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				local charProf = CharInfo.MASLENGO.professions
 				local pic = E.func_ProfessionIcon
@@ -311,7 +311,7 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				textLEFT = PROFESSIONS_BUTTON
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 	end
@@ -321,7 +321,7 @@ function E:func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Gold == true then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.Money then
 					textCENT = E.func_CompactNumberFormat(CharInfo.PlayerData.Money/10000)
@@ -340,7 +340,7 @@ function E:func_Otrisovka_91_Other()
 				-- iconLEFT = E.Icon_Money
 				-- iconLEFT = "coin-gold"
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 	end
@@ -350,7 +350,7 @@ function E:func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.ItemLevel == true then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				local color = E.Red_Color
 				local ItemLevelGreen = 625
@@ -378,7 +378,7 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				textLEFT = STAT_AVERAGE_ITEM_LEVEL
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 	end
@@ -388,7 +388,7 @@ function E:func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.WasOnline == true then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				local color = "|cffFFFFFF"
 				if CharInfo.PlayerData.loginHour and CharInfo.PlayerData.loginDay then
@@ -412,7 +412,7 @@ function E:func_Otrisovka_91_Other()
 				textLEFT = L["Was online"]
 				----------------------------------------------------------------
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 	end

@@ -1622,7 +1622,6 @@ end
 ----------------------------------------------------------------
 function E.func_TooltipOnEnter(frame, first, second)
 	local tooltip = frame.tooltip
-	-- fpde(tooltip)
 	if not tooltip or #tooltip == 0 then return end
 	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 0, 0)
 	if first then GameTooltip:AddLine(" ") end
@@ -2918,8 +2917,10 @@ function E.func_Universal_Holiday(tbl, Holiday, color)
 		end
 	end
 end
-----------------------------------------------------------------
-function E.func_tooltipCurrencyAllPlayers(type, ID)
+
+
+--------------------------------------------------------------
+function E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 	----------------------------------------------------------------
 	local tooltip = {}
 	local total = 0
@@ -2927,50 +2928,83 @@ function E.func_tooltipCurrencyAllPlayers(type, ID)
 	local specIcon, color, Name, curServerShort, RIGHT
 	local sortedPlayersTBL = E.sorted()
 
-
+	local visiblePlayers = {}
+	for _, charInfo in ipairs(sortedPlayersTBL) do
+		visiblePlayers[charInfo.PlayerData.GUID] = true
+	end
 	----------------------------------------------------------------
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		RIGHT = nil
-		if type == "Currency" and CharInfo.MASLENGO.CurrencyID[ID] then
+		if typeQ == "Currency" and CharInfo.MASLENGO.CurrencyID[ID] then
 			total = total + CharInfo.MASLENGO.CurrencyID[ID]
-			RIGHT = CharInfo.MASLENGO.CurrencyID[ID]
+			-- RIGHT = CharInfo.MASLENGO.CurrencyID[ID]
+			if CharInfo.MASLENGO.CurrencyID[ID] and CharInfo.MASLENGO.CurrencyID_Total[ID] then
+				RIGHT = CharInfo.MASLENGO.CurrencyID_Total[ID]
+				RIGHTforSORT = CharInfo.MASLENGO.CurrencyID[ID]
+			elseif CharInfo.MASLENGO.CurrencyID[ID] then
+				RIGHT = CharInfo.MASLENGO.CurrencyID[ID]
+				RIGHTforSORT = CharInfo.MASLENGO.CurrencyID[ID]
+			end
+
 		end
-		if type == "Item" and CharInfo.MASLENGO.ItemsInBag[ID] then
+		if typeQ == "Item" and CharInfo.MASLENGO.ItemsInBag[ID] then
 			total = total + CharInfo.MASLENGO.ItemsInBag[ID]
 			RIGHT = CharInfo.MASLENGO.ItemsInBag[ID]
+			RIGHTforSORT = CharInfo.MASLENGO.ItemsInBag[ID]
+		end
+
+		if (typeQ == "Currency_Covenant_Anima" or typeQ == "Currency_Covenant_Renown") and CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] then
+			total = total + CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
+			RIGHT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
+			RIGHTforSORT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
 		end
 		if RIGHT then
 			specIcon = E.func_texturefromIcon(CharInfo.PlayerData.specIcon)
 
-
+			color = visiblePlayers[GUID] and CharInfo.PlayerData.classColorHex or E.Gray_Color
 			-- color = CharInfo.PlayerData.isShownPLAYER and CharInfo.PlayerData.classColorHex or E.Gray_Color
-			color = E.Gray_Color
-			for CharIndex, CharInfo2 in ipairs(sortedPlayersTBL) do
-				if CharInfo.PlayerData.GUID == CharInfo2.PlayerData.GUID then
-					color = CharInfo.PlayerData.classColorHex
-				end
-			end
+			-- color = E.Gray_Color
+			-- for CharIndex, CharInfo2 in ipairs(sortedPlayersTBL) do
+			-- 	if CharInfo.PlayerData.GUID == CharInfo2.PlayerData.GUID then
+			-- 		color = CharInfo.PlayerData.classColorHex
+			-- 	end
+			-- end
 			Name = CharInfo.PlayerData.Name
 			curServerShort = "|r - "..CharInfo.PlayerData.curServerShort
-			sorted[#sorted+1] = {specIcon, color, Name, curServerShort, RIGHT}
+			sorted[#sorted+1] = {specIcon, color, Name, curServerShort, RIGHT, RIGHTforSORT}
 		end
 	end
 		----------------------------------------------------------------
 	sort(sorted, function(a, b)
-			if a[5] == b[5] then
+			if a[6] == b[6] then
 				return a[3] < b[3]
 			end
-			return a[5] > b[5]
+			return a[6] > b[6]
 	end)
 	----------------------------------------------------------------
-	if type == "Currency" and total ~= 0 then
+	if typeQ == "Currency" and total ~= 0 then
 		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetCurrencyIcon(ID)).." "..TOTAL, total}
 		tooltip[#tooltip+1] = {" ", " "}
 	end
-	if type == "Item" and total ~= 0 then
+	if typeQ == "Item" and total ~= 0 then
 		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(ID)).." "..TOTAL, total}
 		tooltip[#tooltip+1] = {" ", " "}
 	end
+	if typeQ == "Currency_Covenant_Anima" and total ~= 0 then
+		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
+		tooltip[#tooltip+1] = {" ", " "}
+	end
+	if typeQ == "Currency_Covenant_Renown" and total ~= 0 then
+		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
+		tooltip[#tooltip+1] = {" ", " "}
+	end
+
+
+
+
+
+
+
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	for _, v in ipairs(sorted) do
@@ -2981,7 +3015,98 @@ function E.func_tooltipCurrencyAllPlayers(type, ID)
 	----------------------------------------------------------------
 	return tooltip
 end
+-- function E.func_tooltipCurrencyAllPlayers(typeQ, ID)
+-- 	local tooltip = {}
+-- 	local total = 0
+-- 	local sorted = {}
 
+-- 	-- Предварительно вычисляем часто используемые значения
+-- 	local isCurrency = (typeQ == "Currency")
+-- 	local field = isCurrency and "CurrencyID" or "ItemsInBag"
+-- 	local sortedPlayersTBL = E.sorted()
+
+-- 	-- Создаем lookup-таблицу для видимых игроков
+-- 	local visiblePlayers = {}
+-- 	for _, charInfo in ipairs(sortedPlayersTBL) do
+-- 		visiblePlayers[charInfo.PlayerData.GUID] = true
+-- 	end
+
+-- 	-- Основной цикл обработки данных
+-- 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+-- 		local value = CharInfo.MASLENGO[field] and CharInfo.MASLENGO[field][ID]
+-- 		if value and value > 0 then
+-- 			total = total + value
+-- 			local playerData = CharInfo.PlayerData
+
+-- 			-- Определяем цвет имени
+-- 			local color = visiblePlayers[GUID] and playerData.classColorHex or E.Gray_Color
+-- 			local nameLine = format("%s%s|r - %s",
+-- 				color,
+-- 				playerData.Name,
+-- 				playerData.curServerShort)
+
+-- 			-- Добавляем в сортированный список
+-- 			sorted[#sorted+1] = {
+-- 				specIcon = E.func_texturefromIcon(playerData.specIcon),
+-- 				nameLine = nameLine,
+-- 				value = value,
+-- 				name = playerData.Name  -- Для сортировки
+-- 			}
+-- 		end
+-- 	end
+
+-- 	-- Сортировка результатов
+-- 	table.sort(sorted, function(a, b)
+-- 		return a.value > b.value or (a.value == b.value and a.name < b.name)
+-- 	end)
+
+-- 	-- Формирование заголовка
+-- 	if total > 0 then
+-- 		local iconFunc = isCurrency and E.func_GetCurrencyIcon or E.func_GetItemIconByID
+-- 		local icon = E.func_texturefromIcon(iconFunc(ID))
+-- 		tooltip[#tooltip+1] = {icon .. " " .. TOTAL, total}
+-- 		tooltip[#tooltip+1] = {" ", " "}
+-- 	end
+
+-- 	-- Добавление записей в тултип
+-- 	-- for i = 1, math.min(#sorted, 123) do  -- Лимит 123 строки включая заголовок
+-- 	for i = 1, #sorted do  -- Лимит 123 строки включая заголовок
+-- 		local entry = sorted[i]
+-- 		tooltip[#tooltip+1] = {entry.specIcon .. " " .. entry.nameLine, entry.value}
+-- 	end
+
+-- 	return tooltip
+-- end
+----------------------------------------------------------------
+function E.func_textCENT_Currency(CharInfo, currencyID)
+	local vivod = ""
+	if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_Total[currencyID] then
+		vivod = CharInfo.MASLENGO.CurrencyID_Total[currencyID]
+	elseif CharInfo.MASLENGO.CurrencyID[currencyID] then
+		vivod = CharInfo.MASLENGO.CurrencyID[currencyID]
+	end
+	return vivod
+end
+
+
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- print (E.func_SecondsToClock(debugprofilestop()) , E.func_SecondsToClock(GetTime()) )

@@ -180,6 +180,7 @@ E.OctoTable_itemID_Cataloged_Research = {
 	{itemiD = 187335, count = 300},
 }
 E.OctoTable_itemID_ItemsUsable_Other = {
+
 	151060,
 	78904,
 	78910,

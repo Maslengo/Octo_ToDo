@@ -83,8 +83,24 @@ if not WarmupSV then
 end
 ----------------------------------------------------------------
 local function func_OnEnterFirst(frame)
-	E.func_TooltipOnEnter(frame, false, true)
+	-- E.func_TooltipOnEnter(frame, false, false)
+
+
+
+	local tooltip = frame.tooltip
+	if not tooltip or #tooltip == 0 then return end
+	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMLEFT", 0, AddonHeight)
+	if first then GameTooltip:AddLine(" ") end
+	for _, value in ipairs(tooltip) do
+		GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
+	end
+	if second then GameTooltip:AddLine(" ") end
+	GameTooltip:Show()
 end
+
+
+
+
 local function func_OnHideFirst(frame)
 	frame.frameFULL:Hide()
 end
@@ -140,7 +156,11 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frame.textureLEFT = textureLEFT
 						-- f:SetPropagateMouseClicks(true)
 						-- f:SetPropagateMouseMotion(true)
-	frame:SetScript("OnEnter", func_OnEnterFirst)
+
+
+
+	local frameData = data.parent.dataProvider.linearized
+	-- frame:SetScript("OnEnter", func_OnEnterFirst)
 	frame:SetScript("OnLeave", GameTooltip_Hide)
 	frame:SetScript("OnHide", func_OnHideFirst)
 	frame:SetScript("OnShow", func_OnShowFirst)
@@ -164,7 +184,7 @@ end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local func_OnAcquiredCENT do
 	local function func_OnEnterSecond(frame)
-		E.func_TooltipOnEnter(frame, false, true)
+		E.func_TooltipOnEnter(frame, true, true)
 	end
 	function func_OnAcquiredCENT(owner, frame, data, new)
 		if not new then return end
@@ -229,6 +249,7 @@ local function InitButtonTexture(frame, texture, iconWidth)
 	frame:SetPoint("TOPLEFT", 2, 1);
 	frame:SetSize(iconWidth, iconWidth);
 end
+
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
 function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	local data = node:GetData()
@@ -248,8 +269,27 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	else
 		frame.textureLEFT:Hide()
 	end
-	frame.tooltip = frameData.tooltipLEFT
+	----------------------------------------------------------------
+	local typeQ, ID, iANIMA, kCovenant = frameData.myType[1], frameData.myType[2], frameData.myType[3], frameData.myType[4]
+
+	frame:SetScript("OnEnter", function()
+		local tooltipOCTO = {}
+		if type(ID) == "table" then
+			for _, tblID in ipairs(ID) do
+				E.func_TableConcat(tooltipOCTO, E.func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
+			end
+			-- fpde(tooltipOCTO)
+		else
+			tooltipOCTO = E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
+		end
+		frame.tooltip = tooltipOCTO
+		func_OnEnterFirst(frame)
+	end)
+	----------------------------------------------------------------
 end
+
+
+
 function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 	local data = node:GetData()
 	if not data.zxc then return end
@@ -476,7 +516,7 @@ function E:func_CreateMyDataProvider()
 			tooltipRIGHT = {},
 			colorCENT = {},
 			isReputations = isReputations or false,
-			tooltipLEFT = {},
+			myType = {},
 		}
 	end
 	if not Octo_ToDo_DB_Vars.Reputations then
@@ -497,11 +537,11 @@ function E:func_CreateMyDataProvider()
 			-- Get LEFT data from first character only
 			local firstChar = sortedPlayersTBL[1]
 			if firstChar then
-				local textLEFT, iconLEFT, colorLEFT, _, _, _, tooltipLEFT = func(firstChar)
+				local textLEFT, iconLEFT, colorLEFT, _, _, _, myType = func(firstChar)
 				zxc.textLEFT = textLEFT
 				zxc.iconLEFT = iconLEFT or E.Icon_Empty
 				zxc.colorLEFT = colorLEFT
-				zxc.tooltipLEFT = tooltipLEFT or {}
+				zxc.myType = myType or {}
 			end
 			DataProvider:Insert({
 					zxc = zxc,
@@ -534,7 +574,7 @@ function E:func_CreateMyDataProvider()
 							zxc.textCENT[CharIndex] = vivod or "vivod"
 							zxc.tooltipRIGHT[CharIndex] = {}
 							zxc.colorCENT[CharIndex] = colorCENT
-							zxc.tooltipLEFT = {}
+							zxc.myType = {}
 						end
 						DataProvider:Insert({
 								zxc = zxc,
@@ -1101,7 +1141,6 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	C_WowTokenPublic.UpdateMarketPrice()
 	-- Apply GameMenu scale
 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.GameMenuFrameScale or 1)
-	-- Setup PlayerSpellsFrame if not exists
 	if not PlayerSpellsFrame then
 		self:SetupPlayerSpellsFrame()
 	end

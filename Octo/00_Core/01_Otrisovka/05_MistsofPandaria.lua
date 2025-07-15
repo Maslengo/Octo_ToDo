@@ -10,34 +10,31 @@ function E:func_Otrisovka_05_MistsofPandaria()
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID[697] then
-					textCENT = CharInfo.MASLENGO.CurrencyID[697]
-				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Currency", 697)
+
+				textCENT = E.func_textCENT_Currency(CharInfo, 697)
+				myType = {"Currency", 697}
 				----------------------------------------------------------------
 				textLEFT = E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(697)
 				iconLEFT = E.func_GetCurrencyIcon(697)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID[776] then
-					textCENT = CharInfo.MASLENGO.CurrencyID[776]
-				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Currency", 776)
+				textCENT = E.func_textCENT_Currency(CharInfo, 776)
+				myType = {"Currency", 776}
 				----------------------------------------------------------------
 				textLEFT = E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(776)
 				iconLEFT =E.func_GetCurrencyIcon(776)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		E.func_Universal(OctoTable_Otrisovka, OCTOexpansionID)

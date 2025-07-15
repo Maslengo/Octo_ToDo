@@ -45,8 +45,8 @@
 
 					self.resize:RegisterForDrag("LeftButton")
 					self:SetBackdrop({
-						bgFile = "Interface\\Addons\\Octo\\Media\\border\\01 Octo.tga",
-						edgeFile = "Interface\\Addons\\Octo\\Media\\border\\01 Octo.tga",
+						bgFile = "Interface\\Addons\\Octo\\Media\\03_Borders\\Octo.tga",
+						edgeFile = "Interface\\Addons\\Octo\\Media\\03_Borders\\Octo.tga",
 						edgeSize = 1,
 						insets = {left = 1, right = 1, top = 1, bottom = 1},
 					})
@@ -54,8 +54,8 @@
 					self:SetBackdropBorderColor(0, 0, 0, 1)
 
 					editFrame.editFrame:SetBackdrop({
-							bgFile = "Interface\\Addons\\Octo\\Media\\border\\01 Octo.tga",
-							edgeFile = "Interface\\Addons\\Octo\\Media\\border\\01 Octo.tga",
+							bgFile = "Interface\\Addons\\Octo\\Media\\03_Borders\\Octo.tga",
+							edgeFile = "Interface\\Addons\\Octo\\Media\\03_Borders\\Octo.tga",
 							edgeSize = 1,
 							insets = {left = 1, right = 1, top = 1, bottom = 1},
 						})

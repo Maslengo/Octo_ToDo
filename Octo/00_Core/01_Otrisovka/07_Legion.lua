@@ -10,144 +10,116 @@ function E:func_Otrisovka_07_Legion()
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID_Total[1273] then
-					textCENT = CharInfo.MASLENGO.CurrencyID_Total[1273]
-				elseif CharInfo.MASLENGO.CurrencyID[1273] then
-					textCENT = CharInfo.MASLENGO.CurrencyID[1273]
-				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Currency", 1273)
+				textCENT = E.func_textCENT_Currency(CharInfo, 1273)
+				myType = {"Currency", 1273}
 				----------------------------------------------------------------
 				textLEFT = E.Blue_Color.."("..L["Coins"]..") |r"..E.func_currencyName(1273)
 				iconLEFT = E.func_GetCurrencyIcon(1273)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID_Total[1508] then
-					textCENT = CharInfo.MASLENGO.CurrencyID_Total[1508]
-				elseif CharInfo.MASLENGO.CurrencyID[1508] then
-					textCENT = CharInfo.MASLENGO.CurrencyID[1508]
-				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Currency", 1508)
+				textCENT = E.func_textCENT_Currency(CharInfo, 1508)
+				myType = {"Currency", 1508}
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(1508)
 				iconLEFT = E.func_GetCurrencyIcon(1508)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID_Total[1342] then
-					textCENT = CharInfo.MASLENGO.CurrencyID_Total[1342]
-				elseif CharInfo.MASLENGO.CurrencyID[1342] then
-					textCENT = CharInfo.MASLENGO.CurrencyID[1342]
-				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Currency", 1342)
+				textCENT = E.func_textCENT_Currency(CharInfo, 1342)
+				myType = {"Currency", 1342}
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(1342)
 				iconLEFT = E.func_GetCurrencyIcon(1342)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID_Total[1220] then
-					textCENT = CharInfo.MASLENGO.CurrencyID_Total[1220]
-				elseif CharInfo.MASLENGO.CurrencyID[1220] then
-					textCENT = CharInfo.MASLENGO.CurrencyID[1220]
-				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Currency", 1220)
+				textCENT = E.func_textCENT_Currency(CharInfo, 1220)
+				myType = {"Currency", 1220}
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(1220)
 				iconLEFT = E.func_GetCurrencyIcon(1220)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID_Total[1226] then
-					textCENT = CharInfo.MASLENGO.CurrencyID_Total[1226]
-				elseif CharInfo.MASLENGO.CurrencyID[1226] then
-					textCENT = CharInfo.MASLENGO.CurrencyID[1226]
-				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Currency", 1226)
+				textCENT = E.func_textCENT_Currency(CharInfo, 1226)
+				myType = {"Currency", 1226}
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(1226)
 				iconLEFT = E.func_GetCurrencyIcon(1226)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID_Total[1533] then
-					textCENT = CharInfo.MASLENGO.CurrencyID_Total[1533]
-				elseif CharInfo.MASLENGO.CurrencyID[1533] then
-					textCENT = CharInfo.MASLENGO.CurrencyID[1533]
-				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Currency", 1533)
+				textCENT = E.func_textCENT_Currency(CharInfo, 1533)
+				myType = {"Currency", 1533}
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(1533)
 				iconLEFT = E.func_GetCurrencyIcon(1533)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.CurrencyID_Total[1155] then
-					textCENT = CharInfo.MASLENGO.CurrencyID_Total[1155]
-				elseif CharInfo.MASLENGO.CurrencyID[1155] then
-					textCENT = CharInfo.MASLENGO.CurrencyID[1155]
-				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Currency", 1155)
+				textCENT = E.func_textCENT_Currency(CharInfo, 1155)
+				myType = {"Currency", 1155}
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(1155)
 				iconLEFT = E.func_GetCurrencyIcon(1155)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.MASLENGO.ItemsInBag[124124] then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[124124]
 				end
-				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Item", 124124)
+				myType = {"Item", 124124}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(124124)
 				iconLEFT = E.func_GetItemIconByID(124124)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
 		E.func_Universal(OctoTable_Otrisovka, OCTOexpansionID)

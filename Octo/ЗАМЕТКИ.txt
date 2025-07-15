@@ -1,6 +1,5 @@
 /dump C_Map.GetMapInfo(572)
 MonsterFriend
--- ДАТА ПРОВАЙДЕР - ОБНОВЛЕНИЕ ПРИ КЛИКЕ
 -- СОРТИРОВКА ТЕКУЩЕЙ ТАБЛЫ
 OPENVAULT
 градиент для уровня предметов
@@ -36,6 +35,13 @@ DELVES_NEW_CURIO - НОВОЕ
 NEW_CAPS - НОВОЕ
 
 
+дренорский квест
+
+МЕХАГОН
+
+обновлять репу провайдером если видно
+
+при кнопки отмены квестов не считается кол-во(либо не отрисовывается)
 
 
 
@@ -58,15 +64,11 @@ NEW_CAPS - НОВОЕ
 
 
 
-
+-- ДАТА ПРОВАЙДЕР - ОБНОВЛЕНИЕ ПРИ КЛИКЕ
 QuestsChanged_CopyBox??
 Octo_ToDo_DB_Other.ActiveHoliday -> E.ActiveHoliday
 Octo_ToDo_DB_Other.Holiday -> E.Holiday
-
-
-
-
-
 центральный фрейм изменить текстуру
 UniversalQuest Переделать сохранения на цифру
 OctoTable_QuestID
+ТУЛТИПЫ СДЕЛАТЬ В ОНШОУ
