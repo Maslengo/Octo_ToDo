@@ -4,14 +4,14 @@
 ## Version: r20
 ## Notes: Library for load quests, items and spells
 ## Category: Libraries
-## Category-deDE: Bibliotheken
-## Category-esES: Bibliotecas
-## Category-esMX: Bibliotecas
-## Category-frFR: Bibliothèques
-## Category-ptBR: Bibliotecas
-## Category-ruRU: Библиотеки
-## Category-zhCN: 函数库
-## Category-zhTW: 函式庫
+## ЙУЦЙЦУCategory-deDE: Bibliotheken
+## ЙУЦЙЦУCategory-esES: Bibliotecas
+## ЙУЦЙЦУCategory-esMX: Bibliotecas
+## ЙУЦЙЦУCategory-frFR: Bibliothèques
+## ЙУЦЙЦУCategory-ptBR: Bibliotecas
+## ЙУЦЙЦУCategory-ruRU: Библиотеки
+## ЙУЦЙЦУCategory-zhCN: 函数库
+## ЙУЦЙЦУCategory-zhTW: 函式庫
 ## LoadOnDemand: 1
 ## OptionalDeps: LibStub
 libs\LibStub\LibStub.lua

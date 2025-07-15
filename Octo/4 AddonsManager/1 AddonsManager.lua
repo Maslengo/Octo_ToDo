@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = true
-if not enable then return end
+if not E.Enable_AddonsManager then return end
 
 local Octo_EventFrame_AddonsManager = CreateFrame("FRAME")
 Octo_EventFrame_AddonsManager:Hide()
@@ -25,15 +24,15 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
-LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
-		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
-		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-		f:SetPoint("TOPLEFT", 8, -2)
-		f:SetPoint("BOTTOMRIGHT", -8, 2)
-		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
-		f:SetBackdropBorderColor(0, 0, 0, 1)
-		return f
-end)
+-- LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
+-- 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+-- 		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
+-- 		f:SetPoint("TOPLEFT", 8, -2)
+-- 		f:SetPoint("BOTTOMRIGHT", -8, 2)
+-- 		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+-- 		f:SetBackdropBorderColor(0, 0, 0, 1)
+-- 		return f
+-- end)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 local ADDON_ACTIONS_BLOCKED = { }
@@ -188,7 +187,7 @@ local func_OnAcquired do
 			local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_AddonsManager)
 			frameFULL:SetPropagateMouseClicks(true)
 			frameFULL:SetPropagateMouseMotion(true)
-			-- frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
 			frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
 			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
 			frameFULL.HighlightTexture:SetAlpha(.2)

@@ -1,6 +1,8 @@
 local GlobalAddonName, E = ...
--- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
--- Octo_WowheadQuickLink
+if not E.Enable_Moduls then return end
+
+
+
 local popupText = "%s Link\nCTRL-C to copy"
 
 

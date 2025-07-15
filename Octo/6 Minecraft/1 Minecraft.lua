@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = false
-if not enable then return end
+if not E.Enable_Minecraft then return end
 
 local Octo_MinecraftFrameFG, frameLEFT, frameRIGHT
 local Octo_EventFrame_Minecraft = CreateFrame("Frame")

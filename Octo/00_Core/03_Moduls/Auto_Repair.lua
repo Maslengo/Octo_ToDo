@@ -1,5 +1,8 @@
 local GlobalAddonName, E = ...
--- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
+if not E.Enable_Moduls then return end
+
+
+
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 
 tinsert(E.Modules, function()

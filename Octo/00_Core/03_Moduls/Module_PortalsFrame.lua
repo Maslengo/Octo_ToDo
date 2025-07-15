@@ -1,5 +1,8 @@
 local GlobalAddonName, E = ...
--- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
+if not E.Enable_Moduls then return end
+
+
+
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 

@@ -14,6 +14,18 @@ E.TEXTURE_BLANK_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\04_Stat
 E.HighlightTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
 
 
+
+
+
+
+
+
+E.Enable_Achievements = false
+E.Enable_AddonsManager = false
+E.Enable_QuestsChanged = false
+E.Enable_Minecraft = false
+E.Enable_Moduls = true
+
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 local LibStub = LibStub
@@ -23,6 +35,7 @@ local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
 -- Кеширование глобальных функций и таблиц
 local _G = _G
+local sort = table.sort
 local table_insert = table.insert
 local table_concat = table.concat
 local string_format = string.format
@@ -404,7 +417,7 @@ function E.func_reputationName(reputationID)
 		end
 		----------------------------------------------------------------
 		-- if icon ~= E.Icon_QuestionMark then
-		-- 	vivod = E.func_texturefromIcon(icon)..vivod
+		--     vivod = E.func_texturefromIcon(icon)..vivod
 		-- end
 		----------------------------------------------------------------
 		local isAccountWide = IsAccountWideReputation(reputationID) or false
@@ -420,7 +433,7 @@ end
 -- ITEM UTILS
 ----------------------------------------------------------------
 function E.func_GetItemInfo(itemInfo) -- Item ID, Link or name
-return GetItemInfo(itemInfo)
+	return GetItemInfo(itemInfo)
 end
 ----------------------------------------------------------------
 function E.func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
@@ -691,7 +704,6 @@ function E.func_SecondsToClock(time)
 	local hours = floor(time % 86400 / 3600)
 	local mins = floor(time % 3600 / 60)
 	local secs = floor(time % 60)
-	-- Формируем строку по частям
 	local parts = {}
 	if years > 0 then
 		table.insert(parts, years..(L["time_YEAR"] or "y").." ")
@@ -708,13 +720,14 @@ function E.func_SecondsToClock(time)
 	elseif time >= 60 then
 		table.insert(parts, mins..(L["time_MINUTE"] or "m").." ")
 		if time < 600 then -- Только для 1-9 минут добавляем секунды
+			table.insert(parts, secs..(L["time_SECOND"] or "s"))
+		end
+	else
 		table.insert(parts, secs..(L["time_SECOND"] or "s"))
 	end
-else
-	table.insert(parts, secs..(L["time_SECOND"] or "s"))
+	return table_concat(parts)
 end
-return table_concat(parts)
-end
+----------------------------------------------------------------
 function E.ChatFrame_TimeBreakDown(time)
 	local days = floor(time / (60 * 60 * 24))
 	local hours = floor((time - (days * (60 * 60 * 24))) / (60 * 60))
@@ -836,14 +849,14 @@ function E.func_achievementvivod(achievementID)
 end
 ----------------------------------------------------------------
 -- function E.func_CurServerShort(text)
--- 	local text = (text):gsub("-", " "):gsub("'", " ")
--- 	local a, b = strsplit(" ", text)
--- 	if b then
--- 		text = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
--- 	else
--- 		text = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
--- 	end
--- 	return text
+--     local text = (text):gsub("-", " "):gsub("'", " ")
+--     local a, b = strsplit(" ", text)
+--     if b then
+--         text = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
+--     else
+--         text = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
+--     end
+--     return text
 -- end
 function E.func_CurServerShort(text)
 	local a, b = strsplit(" ", text:gsub("[-']", " "))
@@ -861,7 +874,7 @@ function E.func_GetMapName(mapID)
 	end
 end
 ----------------------------------------------------------------
-	function E.func_GetMapNameFromID(mapID) -- ПОФИКСИТЬ
+function E.func_GetMapNameFromID(mapID) -- ПОФИКСИТЬ
 	if not mapID then
 		return UNKNOWN
 	end
@@ -935,9 +948,9 @@ E.className, E.classFilename, E.classId = UnitClass("PLAYER")
 E.classColor = RAID_CLASS_COLORS[E.classFilename] and RAID_CLASS_COLORS[E.classFilename].colorStr:sub(3) or "ffffff"
 local r, g, b = GetClassColor(E.classFilename)
 -- if (r == 1 and g == 1 and b == 1) then -- "|cff9659FF"--"|cff7157FF"
--- 	r = 150/255
--- 	g = 89/255
--- 	b = 255/255
+--     r = 150/255
+--     g = 89/255
+--     b = 255/255
 -- end
 -- E.classColorHexCurrent = E.func_rgb2hex(r, g, b)
 E.classColorHexCurrent = C_ClassColor.GetClassColor(E.classFilename):GenerateHexColorMarkup()
@@ -1258,10 +1271,11 @@ function E.func_TableConcat(table1, table2)
 	return table1
 end
 ----------------------------------------------------------------
-function E.MergeTableSFMICTipairs(table1, table2)
+function E.MergeTableSFMICTpairs(table1, table2)
 	for k, v in pairs(table2) do
 		table1[k] = v
 	end
+	return table1
 end
 ----------------------------------------------------------------
 function E.tinsertGPTipairs(table1, table2)
@@ -1270,10 +1284,10 @@ function E.tinsertGPTipairs(table1, table2)
 	end
 end
 -- function E.func_TableConcat(table1, table2)
--- 	for i = 1, #table2 do
--- 		table1[#table1+1] = table2[i]
--- 	end
--- 	return table1
+--     for i = 1, #table2 do
+--         table1[#table1+1] = table2[i]
+--     end
+--     return table1
 -- end
 ----------------------------------------------------------------
 function E.func_TableRemoveDuplicates(table1)
@@ -1298,20 +1312,20 @@ function E.func_TableRemoveDuplicates(table1)
 	return table1
 end
 -- function E.func_TableRemoveDuplicates(table1)
--- 	if type(table1) ~= "table" then
--- 		table1 = {}
--- 	end
--- 	local table2 = {}
--- 	local i = 1
--- 	while table1[i] do
--- 		local value = table1[i]
--- 		if table2[value] then
--- 			tremove(table1, i)
--- 		else
--- 			i = i + 1
--- 		end
--- 		table2[value] = true
--- 	end
+--     if type(table1) ~= "table" then
+--         table1 = {}
+--     end
+--     local table2 = {}
+--     local i = 1
+--     while table1[i] do
+--         local value = table1[i]
+--         if table2[value] then
+--             tremove(table1, i)
+--         else
+--             i = i + 1
+--         end
+--         table2[value] = true
+--     end
 -- end
 ----------------------------------------------------------------
 function E.func_coloredText(fontstring)
@@ -1333,10 +1347,10 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	end
 	-- Установка фрейма
 	frame:SetBackdrop({
-		bgFile = E.bgFile,
-		edgeFile = E.edgeFile,
-		edgeSize = 1,
-		insets = {left = 0, right = 0, top = 0, bottom = 0},
+			bgFile = E.bgFile,
+			edgeFile = E.edgeFile,
+			edgeSize = 1,
+			insets = {left = 0, right = 0, top = 0, bottom = 0},
 	})
 	-- Сохранение цветов во фрейме
 	frame.r, frame.g, frame.b, frame.a = bgCr, bgCg, bgCb, bgCa
@@ -1347,26 +1361,26 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 		frame.isInit = true
 		-- Общие обработчики событий
 		frame:HookScript("OnEnter", function(self)
-			self:SetBackdropColor(self.r, self.g, self.b, self.a)
-			self:SetBackdropBorderColor(r, g, b, 1)
+				self:SetBackdropColor(self.r, self.g, self.b, self.a)
+				self:SetBackdropBorderColor(r, g, b, 1)
 		end)
 		frame:HookScript("OnLeave", function(self)
-			self:SetBackdropColor(self.r, self.g, self.b, self.a)
-			self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
+				self:SetBackdropColor(self.r, self.g, self.b, self.a)
+				self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 		end)
 		-- Дополнительные обработчики для фреймов с иконкой
 		if frame.icon then
 			frame.icon:SetAllPoints(frame)
 			frame:SetScript("OnShow", function(self)
-				self.icon:SetVertexColor(1, 1, 1, 1)
+					self.icon:SetVertexColor(1, 1, 1, 1)
 			end)
 			frame:SetScript("OnMouseDown", function(self)
-				self.icon:SetVertexColor(1, 0, 0, 0.5)
-				self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
+					self.icon:SetVertexColor(1, 0, 0, 0.5)
+					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
 			end)
 			frame:SetScript("OnMouseUp", function(self)
-				self.icon:SetVertexColor(r, g, b, 1)
-				self:SetBackdropBorderColor(r, g, b, edgeAlpha)
+					self.icon:SetVertexColor(r, g, b, 1)
+					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
 			end)
 		end
 	end
@@ -1384,10 +1398,10 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		button:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", xOffset, indent)
 		if tooltip then
 			button:SetScript("OnEnter", function(self)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-				GameTooltip:ClearLines()
-				GameTooltip:AddLine(E.WOW_Artifact_Color..tooltip.."|r")
-				GameTooltip:Show()
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+					GameTooltip:ClearLines()
+					GameTooltip:AddLine(E.WOW_Artifact_Color..tooltip.."|r")
+					GameTooltip:Show()
 			end)
 			button:SetScript("OnLeave", GameTooltip_Hide)
 		end
@@ -1459,33 +1473,33 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		elvUIPath.."Arrow72.tga"
 	)
 	Octo_AbandonButton:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-		GameTooltip:ClearLines()
-		local numQuests = E.func_CurrentNumQuests()
-		if numQuests > 0 then
-			GameTooltip:AddLine(E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..numQuests..")")
-			GameTooltip:AddLine(" ")
-			local list = {}
-			for i = 1, GetNumQuestLogEntries() do
-				local info = GetInfo(i)
-				if info and info.questID ~= 0 and not info.isHeader and not info.isHidden then
-					table_insert(list, info.questID)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			local numQuests = E.func_CurrentNumQuests()
+			if numQuests > 0 then
+				GameTooltip:AddLine(E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..numQuests..")")
+				GameTooltip:AddLine(" ")
+				local list = {}
+				for i = 1, GetNumQuestLogEntries() do
+					local info = GetInfo(i)
+					if info and info.questID ~= 0 and not info.isHeader and not info.isHidden then
+						table_insert(list, info.questID)
+					end
 				end
+				sort(list, E.func_Reverse_order)
+				for _, questID in ipairs(list) do
+					GameTooltip:AddDoubleLine(E.func_questName(questID), E.func_CheckCompletedByQuestID(questID), 1, 1, 1, 1, 1, 1)
+				end
+			else
+				GameTooltip:AddLine(L["No quests"], r, g, b)
 			end
-			sort(list, E.func_Reverse_order)
-			for _, questID in ipairs(list) do
-				GameTooltip:AddDoubleLine(E.func_questName(questID), E.func_CheckCompletedByQuestID(questID), 1, 1, 1, 1, 1, 1)
-			end
-		else
-			GameTooltip:AddLine(L["No quests"], r, g, b)
-		end
-		GameTooltip:Show()
+			GameTooltip:Show()
 	end)
 	Octo_AbandonButton:SetScript("OnLeave", GameTooltip_Hide)
 	Octo_AbandonButton:SetScript("OnClick", function()
-		if E.func_CurrentNumQuests() > 0 then
-			StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
-		end
+			if E.func_CurrentNumQuests() > 0 then
+				StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
+			end
 	end)
 	-- Events Button
 	local Octo_EventsButton = CreateUtilButton(
@@ -1495,43 +1509,45 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		elvUIPath.."Arrow6.tga"
 	)
 	Octo_EventsButton:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-		GameTooltip:ClearLines()
-		local curdatetable = date("*t")
-		local curdate = FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year)
-		GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..L["Current Date"].."|r", E.WOW_Artifact_Color..curdate.."|r")
-		GameTooltip:AddDoubleLine(" ", " ")
-		local sorted = {}
-		for k in pairs(E.Holiday) do
-			table_insert(sorted, k)
-		end
-		sort(sorted, function(a, b) return E.Holiday[a].priority < E.Holiday[b].priority end)
-		for _, eventID in ipairs(sorted) do
-			local v = E.Holiday[eventID]
-			local titleText = v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)
-			local timeText = v.startTime.." - "..v.endTime
-			if v.Active then
-				titleText = titleText..E.Green_Color..v.title.."|r"..E.White_Color.." ("..v.ENDS..")|r"
-				timeText = E.Green_Color..timeText.."|r"
-			else
-				titleText = titleText..E.Gray_Color..v.title.."|r"
-				timeText = E.Gray_Color..timeText.."|r"
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+			GameTooltip:ClearLines()
+			local curdatetable = date("*t")
+			local curdate = FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year)
+			GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..L["Current Date"].."|r", E.WOW_Artifact_Color..curdate.."|r")
+			GameTooltip:AddDoubleLine(" ", " ")
+			local sorted = {}
+			for k in pairs(E.Holiday) do
+				table_insert(sorted, k)
 			end
-			if E.DebugIDs then
-				titleText = titleText..E.Gray_Color.." id:"..eventID.."|r"
+			sort(sorted, function(a, b)
+					return E.Holiday[a].priority < E.Holiday[b].priority
+			end)
+			for _, eventID in ipairs(sorted) do
+				local v = E.Holiday[eventID]
+				local titleText = v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)
+				local timeText = v.startTime.." - "..v.endTime
+				if v.Active then
+					titleText = titleText..E.Green_Color..v.title.."|r"..E.White_Color.." ("..v.ENDS..")|r"
+					timeText = E.Green_Color..timeText.."|r"
+				else
+					titleText = titleText..E.Gray_Color..v.title.."|r"
+					timeText = E.Gray_Color..timeText.."|r"
+				end
+				if E.DebugIDs then
+					titleText = titleText..E.Gray_Color.." id:"..eventID.."|r"
+				end
+				GameTooltip:AddDoubleLine(titleText, timeText)
 			end
-			GameTooltip:AddDoubleLine(titleText, timeText)
-		end
-		if #sorted == 0 then
-			GameTooltip:AddLine("No Data")
-		end
-		GameTooltip:AddDoubleLine(" ", " ")
-		GameTooltip:Show()
+			if #sorted == 0 then
+				GameTooltip:AddLine("No Data")
+			end
+			GameTooltip:AddDoubleLine(" ", " ")
+			GameTooltip:Show()
 	end)
 	Octo_EventsButton:SetScript("OnLeave", GameTooltip_Hide)
 	Octo_EventsButton:SetScript("OnClick", function()
-		frame:Hide()
-		fpde(E.Holiday)
+			frame:Hide()
+			fpde(E.Holiday)
 	end)
 	-- Framerate Frame
 	local Octo_FramerateFrame = CreateFrame("Frame", "Octo_FramerateFrame", frame)
@@ -1545,7 +1561,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	text_fps:SetTextColor(0.31, 1, 0.47, 1)
 	Octo_FramerateFrame.text_fps = text_fps
 	C_Timer.NewTicker(1, function()
-		text_fps:SetText(math_floor(GetFramerate()))
+			text_fps:SetText(math_floor(GetFramerate()))
 	end)
 end
 ----------------------------------------------------------------
@@ -1565,52 +1581,53 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 		end,
 	}
 	info.OnClick = function(_, button)
-	if button == "LeftButton" then
-		if not InCombatLockdown() then
-			if func then
-				func()
-			end
-			if frame then
-				tinsert(UISpecialFrames, frameString)
-				tinsert(E.OctoTable_Frames, frame)
-				for index, frames in ipairs(E.OctoTable_Frames) do
-					if frame ~= frames and frames:IsShown() then
-						frames:Hide()
-					end
+		if button == "LeftButton" then
+			if not InCombatLockdown() then
+				if func then
+					func()
 				end
-				frame:SetShown(not frame:IsShown())
+				if frame then
+					tinsert(UISpecialFrames, frameString)
+					tinsert(E.OctoTable_Frames, frame)
+					for index, frames in ipairs(E.OctoTable_Frames) do
+						if frame ~= frames and frames:IsShown() then
+							frames:Hide()
+						end
+					end
+					frame:SetShown(not frame:IsShown())
+				end
+				if SettingsPanel:IsVisible() and frame:IsVisible() then
+					HideUIPanel(SettingsPanel)
+				end
+				if GameMenuFrame:IsVisible() and frame:IsVisible() then
+					HideUIPanel(GameMenuFrame)
+				end
+			end
+		elseif button == "RightButton" then
+			if frame and frame:IsShown() then
+				frame:Hide()
 			end
 			if SettingsPanel:IsVisible() and frame:IsVisible() then
 				HideUIPanel(SettingsPanel)
+			else
+				Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
 			end
-			if GameMenuFrame:IsVisible() and frame:IsVisible() then
-				HideUIPanel(GameMenuFrame)
-			end
-		end
-	elseif button == "RightButton" then
-		if frame and frame:IsShown() then
-			frame:Hide()
-		end
-		if SettingsPanel:IsVisible() and frame:IsVisible() then
-			HideUIPanel(SettingsPanel)
-		else
-			Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
 		end
 	end
-end
-vars.minimapPos = vars.minimapPos or 244
-local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
-LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
-LibDBIcon:Show(MinimapName)
+	vars.minimapPos = vars.minimapPos or 244
+	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
+	LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
+	LibDBIcon:Show(MinimapName)
 end
 ----------------------------------------------------------------
 function E.func_TooltipOnEnter(frame, first, second)
 	local tooltip = frame.tooltip
+	-- fpde(tooltip)
 	if not tooltip or #tooltip == 0 then return end
 	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 0, 0)
 	if first then GameTooltip:AddLine(" ") end
 	for _, value in ipairs(tooltip) do
-		GameTooltip:AddDoubleLine(value[1], value[2], 1, 1, 1, 1, 1, 1)
+		GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
 	end
 	if second then GameTooltip:AddLine(" ") end
 	GameTooltip:Show()
@@ -1686,10 +1703,10 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 		end
 		frame.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		frame:SetBackdrop({
-			bgFile = E.bgFile,
-			edgeFile = E.edgeFile,
-			edgeSize = 1,
-			insets = {left = 0, right = 0, top = 0, bottom = 0},
+				bgFile = E.bgFile,
+				edgeFile = E.edgeFile,
+				edgeSize = 1,
+				insets = {left = 0, right = 0, top = 0, bottom = 0},
 		})
 		frame:SetBackdropColor(0, 0, 0, 0)
 		frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
@@ -1705,35 +1722,35 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 		if not frame.isInit then
 			frame.isInit = true
 			frame:SetScript("OnShow", function(self)
-				self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
-				E:FrameColor(self, id, curType)
+					self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
+					E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnEnter", function(self)
-				self:SetBackdropBorderColor(r, g, b, edgeAlpha)
-				E:FrameColor(self, id, curType)
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-				GameTooltip:ClearLines()
-				if curType == "item" or curType == "toy" then
-					GameTooltip:AddDoubleLine(E.func_GetItemNameByID(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
-				else
-					GameTooltip:AddDoubleLine(E.func_GetSpellName(id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
-					GameTooltip:AddDoubleLine(E.func_GetSpellSubtext(id))
-				end
-				GameTooltip:Show()
+					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
+					E:FrameColor(self, id, curType)
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+					GameTooltip:ClearLines()
+					if curType == "item" or curType == "toy" then
+						GameTooltip:AddDoubleLine(E.func_GetItemNameByID(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
+					else
+						GameTooltip:AddDoubleLine(E.func_GetSpellName(id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
+						GameTooltip:AddDoubleLine(E.func_GetSpellSubtext(id))
+					end
+					GameTooltip:Show()
 			end)
 			frame:SetScript("OnLeave", function(self)
-				self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
-				E:FrameColor(self, id, curType)
-				GameTooltip:ClearLines()
-				GameTooltip:Hide()
+					self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
+					E:FrameColor(self, id, curType)
+					GameTooltip:ClearLines()
+					GameTooltip:Hide()
 			end)
 			frame:SetScript("OnMouseDown", function(self)
-				self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
-				E:FrameColor(self, id, curType)
+					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
+					E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnMouseUp", function(self)
-				self:SetBackdropBorderColor(r, g, b, edgeAlpha)
-				E:FrameColor(self, id, curType)
+					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
+					E:FrameColor(self, id, curType)
 			end)
 		end
 	end
@@ -1754,7 +1771,7 @@ function E.RegisterMyEventsToFrames(frame, MyEventsTable)
 				self:UnregisterEvent(event)
 				self.event = nil
 			end
-		end)
+	end)
 end
 ----------------------------------------------------------------
 function E.func_Reason(reason)
@@ -1799,20 +1816,7 @@ function E.func_CreateInfoFrame(text, point, parent, rPoint, x, y, sizeW, sizeH,
 	frame.text:SetJustifyV("MIDDLE")
 	frame.text:SetJustifyH(JustifyH)
 	frame.text:SetTextColor(1, 1, 1, 1)
-	frame.text:SetText(text)
-end
-----------------------------------------------------------------
-function E.func_CreatePlayersFrame()
-	local frame = CreateFrame("frame", nil, parent, "BackDropTemplate")
-	frame:SetPoint(point, parent, rPoint, x, y)
-	frame:SetSize(sizeW, sizeH)
-	frame.text = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	frame.text:SetAllPoints()
-	frame.text:SetFontObject(OctoFont11)
-	frame.text:SetJustifyV("MIDDLE")
-	frame.text:SetJustifyH("LEFT")
-	frame.text:SetTextColor(1, 1, 1, 1)
-	frame.text:SetText(text)
+	return frame
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -2243,8 +2247,8 @@ function E.func_GetAddonReason(index, character)
 	return reason
 end
 function E.func_IsAddonInstalled(index) -- Исключаем отсутствующие аддоны
-local reason = select(5, GetAddOnInfo(index))
-return reason ~= "MISSING"
+	local reason = select(5, GetAddOnInfo(index))
+	return reason ~= "MISSING"
 end
 function E.func_GetAddonSecurity(index)
 	local security = select(6, GetAddOnInfo(index))
@@ -2353,10 +2357,10 @@ function E.func_GetAllAddons()
 	local addons = {}
 	for index = 1, E.func_GetNumAddOns() do
 		if E.func_IsAddonInstalled(index) then -- Исключаем отсутствующие аддоны
-		table.insert(addons, E.func_GetAddonName(index))
+			table.insert(addons, E.func_GetAddonName(index))
+		end
 	end
-end
-return addons
+	return addons
 end
 -- Показать список аддонов с их статусом
 function E.func_ListAddons(filter)
@@ -2752,7 +2756,7 @@ function E.sorted()
 				end
 			end
 		end
-		table.sort(sorted, function(a, b)
+		sort(sorted, function(a, b)
 				if not a or not b then return false end
 				local a_UnitLevel = a.PlayerData.UnitLevel or 0
 				local b_UnitLevel = b.PlayerData.UnitLevel or 0
@@ -2835,7 +2839,7 @@ function E.func_Universal(tbl, expansionID)
 				if expDATA.nameShort == v.desc then
 					table.insert(tbl, function(CharInfo)
 							----------------------------------------------------------------
-							local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+							local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
 							----------------------------------------------------------------
 							local LeftData = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 							if LeftData then
@@ -2864,9 +2868,9 @@ function E.func_Universal(tbl, expansionID)
 							iconLEFT = v.icon
 							colorLEFT = expDATA.color
 							----------------------------------------------------------------
-							return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+							return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
 							----------------------------------------------------------------
-						end)
+					end)
 				end
 			end
 		end
@@ -2879,7 +2883,7 @@ function E.func_Universal_Holiday(tbl, Holiday, color)
 		if v.desc == Holiday then
 			table.insert(tbl, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
 					----------------------------------------------------------------
 					local LeftData = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 					if LeftData then
@@ -2908,13 +2912,76 @@ function E.func_Universal_Holiday(tbl, Holiday, color)
 					iconLEFT = v.icon
 					colorLEFT = color
 					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
 					----------------------------------------------------------------
-				end)
+			end)
 		end
 	end
 end
 ----------------------------------------------------------------
+function E.func_tooltipCurrencyAllPlayers(type, ID)
+	----------------------------------------------------------------
+	local tooltip = {}
+	local total = 0
+	local sorted = {}
+	local specIcon, color, Name, curServerShort, RIGHT
+	local sortedPlayersTBL = E.sorted()
+
+
+	----------------------------------------------------------------
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		RIGHT = nil
+		if type == "Currency" and CharInfo.MASLENGO.CurrencyID[ID] then
+			total = total + CharInfo.MASLENGO.CurrencyID[ID]
+			RIGHT = CharInfo.MASLENGO.CurrencyID[ID]
+		end
+		if type == "Item" and CharInfo.MASLENGO.ItemsInBag[ID] then
+			total = total + CharInfo.MASLENGO.ItemsInBag[ID]
+			RIGHT = CharInfo.MASLENGO.ItemsInBag[ID]
+		end
+		if RIGHT then
+			specIcon = E.func_texturefromIcon(CharInfo.PlayerData.specIcon)
+
+
+			-- color = CharInfo.PlayerData.isShownPLAYER and CharInfo.PlayerData.classColorHex or E.Gray_Color
+			color = E.Gray_Color
+			for CharIndex, CharInfo2 in ipairs(sortedPlayersTBL) do
+				if CharInfo.PlayerData.GUID == CharInfo2.PlayerData.GUID then
+					color = CharInfo.PlayerData.classColorHex
+				end
+			end
+			Name = CharInfo.PlayerData.Name
+			curServerShort = "|r - "..CharInfo.PlayerData.curServerShort
+			sorted[#sorted+1] = {specIcon, color, Name, curServerShort, RIGHT}
+		end
+	end
+		----------------------------------------------------------------
+	sort(sorted, function(a, b)
+			if a[5] == b[5] then
+				return a[3] < b[3]
+			end
+			return a[5] > b[5]
+	end)
+	----------------------------------------------------------------
+	if type == "Currency" and total ~= 0 then
+		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetCurrencyIcon(ID)).." "..TOTAL, total}
+		tooltip[#tooltip+1] = {" ", " "}
+	end
+	if type == "Item" and total ~= 0 then
+		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(ID)).." "..TOTAL, total}
+		tooltip[#tooltip+1] = {" ", " "}
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	for _, v in ipairs(sorted) do
+		if #tooltip < 123 then
+			tooltip[#tooltip+1] = {v[1].." "..v[2]..v[3]..v[4], v[5]}
+		end
+	end
+	----------------------------------------------------------------
+	return tooltip
+end
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- print (E.func_SecondsToClock(debugprofilestop()) , E.func_SecondsToClock(GetTime()) )

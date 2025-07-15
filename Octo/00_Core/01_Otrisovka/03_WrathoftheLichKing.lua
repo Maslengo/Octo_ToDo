@@ -10,47 +10,50 @@ function E:func_Otrisovka_03_WrathoftheLichKing()
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.MASLENGO.ItemsInBag[45087] then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[45087]
 				end
+				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Item", 45087)
 				----------------------------------------------------------------
 				textLEFT =E.func_GetItemNameByID(45087)
 				iconLEFT =E.func_GetItemIconByID(45087)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.MASLENGO.ItemsInBag[47556] then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[47556]
 				end
+				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Item", 47556)
 				----------------------------------------------------------------
 				textLEFT =E.func_GetItemNameByID(47556)
 				iconLEFT =E.func_GetItemIconByID(47556)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
 				----------------------------------------------------------------
 			end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT = "", nil, nil, "", {}, nil
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.MASLENGO.ItemsInBag[49908] then
 					textCENT = CharInfo.MASLENGO.ItemsInBag[49908]
 				end
+				tooltipLEFT = E.func_tooltipCurrencyAllPlayers("Item", 49908)
 				----------------------------------------------------------------
 				textLEFT =E.func_GetItemNameByID(49908)
 				iconLEFT =E.func_GetItemIconByID(49908)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
 				----------------------------------------------------------------
 			end)
 		E.func_Universal(OctoTable_Otrisovka, OCTOexpansionID)

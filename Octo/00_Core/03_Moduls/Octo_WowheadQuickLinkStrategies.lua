@@ -1,5 +1,8 @@
 local GlobalAddonName, E = ...
--- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
+if not E.Enable_Moduls then return end
+
+
+
 local utf8lower = string.utf8lower
 -- Octo_WowheadQuickLinkStrategies
 local strategies = {
@@ -26,6 +29,9 @@ if E.func_IsClassic() == true then
 end
 if E.func_IsCataclysm() == true then
 	E.baseWowheadUrl = "wowhead.com/cata/%s=%s%s"
+end
+if E.func_IsPTR() then
+	E.baseWowheadUrl = "wowhead.com/ptr/%s%s=%s"
 end
 
 

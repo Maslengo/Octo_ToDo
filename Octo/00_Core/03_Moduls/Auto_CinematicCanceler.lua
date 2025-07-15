@@ -1,6 +1,8 @@
 local GlobalAddonName, E = ...
--- if not Octo_ToDo_DB_Vars.Enable_Moduls then return end
--- Auto_Cinematic_Canceler
+if not E.Enable_Moduls then return end
+
+
+
 tinsert(E.Modules, function()
 		local function HandleFrameAction(frame, dialogPath, confirmButtonPath, message)
 			if not frame:IsShown() then return end

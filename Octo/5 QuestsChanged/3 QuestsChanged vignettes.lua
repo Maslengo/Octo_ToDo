@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
-local enable = true
-if not enable then return end
+if not E.Enable_QuestsChanged then return end
 
 if not C_EventUtils.IsEventValid("VIGNETTE_MINIMAP_UPDATED") then return end
 

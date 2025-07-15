@@ -8,15 +8,15 @@ local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
-LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
-		local frame = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
-		frame:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-		frame:SetPoint("TOPLEFT", 8, -2)
-		frame:SetPoint("BOTTOMRIGHT", -8, 2)
-		frame:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
-		frame:SetBackdropBorderColor(0, 0, 0, 1)
-		return frame
-end)
+-- LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
+-- 		local frame = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+-- 		frame:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
+-- 		frame:SetPoint("TOPLEFT", 8, -2)
+-- 		frame:SetPoint("BOTTOMRIGHT", -8, 2)
+-- 		frame:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+-- 		frame:SetBackdropBorderColor(0, 0, 0, 1)
+-- 		return frame
+-- end)
 local locale = GetLocale()
 ----------------------------------------------------------------
 E.OctoTable_UniversalQuest = E.OctoTable_UniversalQuest or {}
@@ -544,6 +544,8 @@ function E.Collect_All_GreatVault()
 		collectPlayerData.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards() or nil
 	end
 end
+
+
 function E.Collect_All_Currency()
 	-- local list = Octo_DB_Config.CurrencyDB
 	local list = {}
@@ -626,6 +628,8 @@ function E.Collect_All_Currency()
 		end
 	end
 end
+
+
 function E.Collect_All_Reputations()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	C_Reputation.ExpandAllFactionHeaders()
@@ -671,23 +675,20 @@ function E.Collect_All_ItemsInBag()
 					local stackCount = containerInfo.stackCount
 					local itemID = containerInfo.itemID
 					local quality = containerInfo.quality
-					C_Timer.After(1, function()
-							local hyperlink = containerInfo.hyperlink
-							if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
-								local dungeonID = select(4, strsplit(":", hyperlink)) -- БЫЛО 3
-								local lvl = select(5, strsplit(":", hyperlink)) -- БЫЛО 4
-								print (hyperlink:gsub("|", ""))
-								collectPlayerData.CurrentKeyLevel = tonumber(lvl)
-								-- print (hyperlink, C_ChallengeMode.GetMapUIInfo(dungeonID)) -- ПОФИКСИТЬ
-								collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
-								for k, v in next, (E.OctoTable_KeystoneAbbr) do
-									if v.mapChallengeModeID == tonumber(dungeonID) then
-										collectPlayerData.CurrentKey = lvl.." "..v.abbreviation
-									end
-								end
-								E.Update("TESTEVENT")
-							end
-					end)
+					local hyperlink = containerInfo.hyperlink
+					if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
+						local dungeonSTR = select(4, strsplit(":", hyperlink)) -- БЫЛО 3
+						local lvl = select(5, strsplit(":", hyperlink)) -- БЫЛО 4
+						local dungeonID = tonumber(dungeonSTR)
+						local KeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
+						collectPlayerData.CurrentKeyLevel = tonumber(lvl)
+						collectPlayerData.CurrentKeyName = KeyName
+						if E.OctoTable_KeystoneAbbr[dungeonID] then
+							collectPlayerData.CurrentKey = lvl.." "..E.OctoTable_KeystoneAbbr[dungeonID].abbreviation
+						else
+							collectPlayerData.CurrentKey = lvl.." "..KeyName
+						end
+					end
 
 					for _, tbl in next, (E.OctoTable_itemID_Cataloged_Research) do
 						if itemID == tbl.itemiD then
@@ -750,37 +751,22 @@ end
 
 
 
-function E.Collect_All_ItemsInBagQWEQWEQWE(arg2)
-	-- local textprint = arg2:gsub("|", "")
+function E.Collect_CurrentKey_ITEM_CHANGED(arg2)
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	----------------------------------------------------------------
 
-	-- print (textprint)
-	-- local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	-- local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	-- if collectPlayerData then
-	--     for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-	--         for slot = C_Container.GetContainerNumSlots(bag), 1, -1 do
-	--             local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
-	--             if containerInfo then
-
-	--                 if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
-	--                     print (1)
-	--                     local dungeonID = select(4, strsplit(":", arg2)) -- БЫЛО 3
-	--                     local lvl = select(5, strsplit(":", arg2)) -- БЫЛО 4
-	--                     collectPlayerData.CurrentKeyLevel = tonumber(lvl)
-	--                     print (C_ChallengeMode.GetMapUIInfo(dungeonID))
-	--                     collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
-	--                     for k, v in next, (E.OctoTable_KeystoneAbbr) do
-	--                         if v.mapChallengeModeID == tonumber(dungeonID) then
-	--                             collectPlayerData.CurrentKey = lvl.." "..v.abbreviation
-	--                         end
-	--                     end
-
-
-	--                 end
-	--             end
-	--         end
-	--     end
-	-- end
+	local dungeonSTR = select(18, strsplit(":", arg2))
+	local lvl = select(20, strsplit(":", arg2))
+	local dungeonID = tonumber(dungeonSTR)
+	local KeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
+	collectPlayerData.CurrentKeyLevel = tonumber(lvl)
+	collectPlayerData.CurrentKeyName = KeyName
+	if E.OctoTable_KeystoneAbbr[dungeonID] then
+		collectPlayerData.CurrentKey = lvl.." "..E.OctoTable_KeystoneAbbr[dungeonID].abbreviation
+	else
+		collectPlayerData.CurrentKey = lvl.." "..KeyName
+	end
 end
 
 
@@ -1374,8 +1360,10 @@ end
 
 function Octo_EventFrame_Collect:ITEM_CHANGED(...)
 	local arg1, arg2 = ...
-	E.Collect_All_ItemsInBag()
-	E.Update("ITEM_CHANGED")
+	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
+		E.Collect_CurrentKey_ITEM_CHANGED(arg2)
+		E.Update("ITEM_CHANGED")
+	end
 end
 
 
