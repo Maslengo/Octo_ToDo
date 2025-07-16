@@ -32,23 +32,25 @@ tinsert(E.Modules, function()
 				local numOptions = #info
 				for i = 1, math.min(numOptions, 4) do
 					local option = info[i]
-					if string.find(option.name:gsub("|", ""), "0000FF") then
-						print ("|cff0000FFНАЙДЕНА СИНЯЯ ХУЙНЯ|r")
-						C_GossipInfo.SelectOption(option.gossipOptionID)
-						StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
-						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(option.icon)..option.name)
-						break
-					else
-						if numOptions == 1 then
+					if option.gossipOptionID then
+						if string.find(option.name:gsub("|", ""), "0000FF") then
+							print ("|cff0000FFНАЙДЕНА СИНЯЯ ХУЙНЯ|r")
 							C_GossipInfo.SelectOption(option.gossipOptionID)
 							StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
 							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(option.icon)..option.name)
+							break
 						else
-							if option.gossipOptionID and E[({"First", "Second", "Third", "Fourth"})[i].."_Option"][targetNPCID] then
+							if numOptions == 1 then
 								C_GossipInfo.SelectOption(option.gossipOptionID)
-								StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+								StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
 								DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(option.icon)..option.name)
-								break
+							else
+								if option.gossipOptionID and E[({"First", "Second", "Third", "Fourth"})[i].."_Option"][targetNPCID] then
+									C_GossipInfo.SelectOption(option.gossipOptionID)
+									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
+									DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(option.icon)..option.name)
+									break
+								end
 							end
 						end
 					end

@@ -132,20 +132,6 @@ function E.Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			CurrencyID_totalEarned = {
-				type = "execute",
-				name = "CurrencyID_totalEarned",
-				desc = "CharInfo.MASLENGO.CurrencyID_totalEarned = {}",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.CurrencyID_totalEarned= {}
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			CurrencyID = {
 				type = "execute",
 				name = "CurrencyID",

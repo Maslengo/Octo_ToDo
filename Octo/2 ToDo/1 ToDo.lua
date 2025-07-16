@@ -38,48 +38,54 @@ end)
 E.OctoTable_Otrisovka = {}
 local function func_ConcatAtStart()
 	wipe(E.OctoTable_Otrisovka)
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_01_WorldofWarcraft())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_02_TheBurningCrusade())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_03_WrathoftheLichKing())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_04_Cataclysm())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_05_MistsofPandaria())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_06_WarlordsofDraenor())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_07_Legion())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_08_BattleforAzeroth())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_09_Shadowlands())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_10_Dragonflight())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_11_TheWarWithin())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_12_Midnight())
 	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_13_TheLastTitan())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_12_Midnight())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_11_TheWarWithin())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_10_Dragonflight())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_09_Shadowlands())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_08_BattleforAzeroth())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_07_Legion())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_06_WarlordsofDraenor())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_05_MistsofPandaria())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_04_Cataclysm())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_03_WrathoftheLichKing())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_02_TheBurningCrusade())
+	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_01_WorldofWarcraft())
+
 	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_90_Holidays())
 	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_91_Other())
+
+
+
 	return E.OctoTable_Otrisovka
 end
 ----------------------------------------------------------------
 local math_min = math.min
 local math_max = math.max
-if not WarmupSV then
-	local addons = {
-		"!BugGrabber",
-		"BugSack",
-		"HidingBar",
-		"HidingBar_Options",
-		"SpeedyAutoLoot",
-		"AddonMrgl",
-		"SilverDragon",
-		"SilverDragon_History",
-		"SilverDragon_Overlay",
-		"SilverDragon_RangeExtender",
-		"GreatVaultList",
-		"MountsJournal",
-		"MacroManager",
-		"MacroManagerData",
-		"AdvancedInterfaceOptions",
-	}
-	for _, name in ipairs(addons) do
-		E.func_LoadAddOnFORCED(name)
+do
+	if not WarmupSV then
+		local addons = {
+			"!BugGrabber",
+			"BugSack",
+			"HidingBar",
+			"HidingBar_Options",
+			"SpeedyAutoLoot",
+			"AddonMrgl",
+			"SilverDragon",
+			"SilverDragon_History",
+			"SilverDragon_Overlay",
+			"SilverDragon_RangeExtender",
+			"GreatVaultList",
+			"MountsJournal",
+			"MacroManager",
+			"MacroManagerData",
+			"AdvancedInterfaceOptions",
+		}
+		for _, name in ipairs(addons) do
+			E.func_LoadAddOnFORCED(name)
+		end
+		C_AddOns.SaveAddOns()
 	end
-	C_AddOns.SaveAddOns()
 end
 ----------------------------------------------------------------
 local function func_OnEnterFirst(frame)
@@ -530,7 +536,7 @@ function E:func_CreateMyDataProvider()
 				zxc.FIRST[CharIndex] = 0
 				zxc.SECOND[CharIndex] = 0
 				local _, _, _, textCENT, tooltipRIGHT, colorCENT = func(CharInfo)
-				zxc.textCENT[CharIndex] = textCENT or "0"
+				zxc.textCENT[CharIndex] = textCENT
 				zxc.tooltipRIGHT[CharIndex] = tooltipRIGHT or {}
 				zxc.colorCENT[CharIndex] = colorCENT
 			end
@@ -607,8 +613,8 @@ function E:func_CreateMyDataProvider()
 			curCharFrame.text:SetWordWrap(true)
 			curCharFrame.text:SetJustifyV("MIDDLE")
 			curCharFrame.text:SetJustifyH("CENTER")
-			curCharFrame.text:SetMaxLines(2)
-			curCharFrame.text:SetText(E.func_textCENT(CharInfo))
+			curCharFrame.text:SetMaxLines(3)
+			curCharFrame.text:SetText(E.func_textCENT_Chars(CharInfo))
 			curCharFrame:SetPropagateMouseClicks(true)
 			curCharFrame:SetPropagateMouseMotion(true)
 			----------------------------------------------------------------
@@ -1141,9 +1147,6 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	C_WowTokenPublic.UpdateMarketPrice()
 	-- Apply GameMenu scale
 	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.GameMenuFrameScale or 1)
-	if not PlayerSpellsFrame then
-		self:SetupPlayerSpellsFrame()
-	end
 	-- Initialize main systems
 	E:InitOptions()
 	self:Octo_Create_MainFrame_ToDo()
@@ -1157,11 +1160,15 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	C_Timer.After(0, function()
 			self:LoadAssetsAsync()
 	end)
+	self:SetupPlayerSpellsFrame()
 end
 -- Helper functions
 function Octo_EventFrame_ToDo:SetupPlayerSpellsFrame()
-	if not InCombatLockdown() then
+	if InCombatLockdown() then return end
+	if not PlayerSpellsFrame then
 		E.func_LoadAddOnFORCED("Blizzard_PlayerSpells")
+	end
+	if PlayerSpellsFrame then
 		PlayerSpellsFrame:HookScript("OnShow", function()
 				PlayerSpellsFrame:SetScale(0.8)
 		end)

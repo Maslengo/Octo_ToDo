@@ -38,8 +38,7 @@ local function OpenableScan()
 					C_Timer.After(1, function()
 							if not InCombatLockdown() then
 								UseContainerItem(bag, slot)
-								DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Open Item ", E.Addon_Left_Color, E.Addon_Right_Color),
-									E.func_texturefromIcon(containerInfo.iconFileID)..itemLink)
+								DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Open Item ", E.Addon_Left_Color, E.Addon_Right_Color)..E.func_texturefromIcon(containerInfo.iconFileID)..itemLink)
 							end
 					end)
 				end

@@ -12,9 +12,7 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[23572] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[23572]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 23572)
 				myType = {"Item", 23572}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(23572)
@@ -28,9 +26,7 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[30183] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[30183]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 30183)
 				myType = {"Item", 30183}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(30183)
@@ -44,9 +40,7 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[32428] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[32428]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 32428)
 				myType = {"Item", 32428}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(32428)
@@ -60,9 +54,7 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[34664] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[34664]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 34664)
 				myType = {"Item", 34664}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(34664)
@@ -76,13 +68,7 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[24581] then -- HORDE
-					textCENT = CharInfo.MASLENGO.ItemsInBag[24581]
-				end
-				-- myType[#myType+1] = {" ", " "}
-				if CharInfo.MASLENGO.ItemsInBag[24579] then -- ALLIANCE
-					textCENT = CharInfo.MASLENGO.ItemsInBag[24579]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, {24581, 24579}) -- HORDE, ALLIANCE
 				myType = {"Item", {24581, 24579}}
 				----------------------------------------------------------------
 				if E.curFaction == "Horde" then

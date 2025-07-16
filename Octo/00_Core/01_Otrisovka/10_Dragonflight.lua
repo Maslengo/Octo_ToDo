@@ -12,9 +12,7 @@ function E:func_Otrisovka_10_Dragonflight()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[209856] then
-					textCENT = E.WOW_Epic_Color..CharInfo.MASLENGO.ItemsInBag[209856].."|r"
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 209856)
 				myType = {"Item", 209856}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(209856)
@@ -28,9 +26,7 @@ function E:func_Otrisovka_10_Dragonflight()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[207002] then
-					textCENT = E.WOW_Rare_Color..CharInfo.MASLENGO.ItemsInBag[207002].."|r"
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 207002)
 				myType = {"Item", 207002}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(207002)
@@ -44,9 +40,7 @@ function E:func_Otrisovka_10_Dragonflight()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[210254] then
-					textCENT = E.WOW_Epic_Color..CharInfo.MASLENGO.ItemsInBag[210254].."|r"
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 210254)
 				myType = {"Item", 210254}
 				----------------------------------------------------------------
 				textLEFT = E.WOW_Epic_Color..E.func_GetItemNameByID(210254).."|r"
@@ -60,9 +54,7 @@ function E:func_Otrisovka_10_Dragonflight()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[213089] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[213089]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 213089)
 				myType = {"Item", 213089}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(213089)
@@ -76,9 +68,7 @@ function E:func_Otrisovka_10_Dragonflight()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[211516] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[211516]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 211516)
 				myType = {"Item", 211516}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(211516)
@@ -92,9 +82,7 @@ function E:func_Otrisovka_10_Dragonflight()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[211515] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[211515]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 211515)
 				myType = {"Item", 211515}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(211515)
@@ -108,11 +96,8 @@ function E:func_Otrisovka_10_Dragonflight()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				textCENT = E.func_textCENT_Currency(CharInfo, 2594)
+				textCENT = E.func_textCENT_Currency(CharInfo, 2594, 208945)
 				myType = {"Currency", 2594}
-				if CharInfo.MASLENGO.ItemsInBag[208945] then
-					textCENT = textCENT..E.WOW_WoWToken_Color.." +"..CharInfo.MASLENGO.ItemsInBag[208945].."|r"..E.func_GetItemIconByID(208945)
-				end
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(2594)
 				iconLEFT = E.func_GetCurrencyIcon(2594)

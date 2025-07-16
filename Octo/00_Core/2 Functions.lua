@@ -22,7 +22,7 @@ E.HighlightTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\G
 
 E.Enable_Achievements = false
 E.Enable_AddonsManager = false
-E.Enable_QuestsChanged = false
+E.Enable_QuestsChanged = true
 E.Enable_Minecraft = false
 E.Enable_Moduls = true
 
@@ -372,8 +372,6 @@ function E.func_GetCurrentLocation()
 	local uiMapID = MapUtil.GetDisplayableMapForPlayer()
 	if uiMapID ~= 0 then
 		local mapInfo = E.getMapFullNameInfo(uiMapID)
-		-- print (FIRSTtext, SECONDtext, E.Green_Color..uiMapID.."|r", info.name)
-		----
 		if FIRSTtext == "" then
 			return E.Red_Color..mapInfo.name.."|r"
 		elseif FIRSTtext == SECONDtext then
@@ -2925,7 +2923,7 @@ function E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 	local tooltip = {}
 	local total = 0
 	local sorted = {}
-	local specIcon, color, Name, curServerShort, RIGHT
+
 	local sortedPlayersTBL = E.sorted()
 
 	local visiblePlayers = {}
@@ -2934,7 +2932,8 @@ function E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 	end
 	----------------------------------------------------------------
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		RIGHT = nil
+	local specIcon, color, Name, RIGHT
+	local curServer, curPers = "", ""
 		if typeQ == "Currency" and CharInfo.MASLENGO.CurrencyID[ID] then
 			total = total + CharInfo.MASLENGO.CurrencyID[ID]
 			-- RIGHT = CharInfo.MASLENGO.CurrencyID[ID]
@@ -2970,16 +2969,21 @@ function E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 			-- 	end
 			-- end
 			Name = CharInfo.PlayerData.Name
-			curServerShort = "|r - "..CharInfo.PlayerData.curServerShort
-			sorted[#sorted+1] = {specIcon, color, Name, curServerShort, RIGHT, RIGHTforSORT}
+			if CharInfo.PlayerData.GUID == E.curGUID then
+				curPers = "---->"
+			end
+			if CharInfo.PlayerData.curServer ~= E.curServer then
+				curServer = "|r-"..CharInfo.PlayerData.curServer
+			end
+			sorted[#sorted+1] = {specIcon, curPers, color, Name, curServer, RIGHT, RIGHTforSORT}
 		end
 	end
 		----------------------------------------------------------------
 	sort(sorted, function(a, b)
-			if a[6] == b[6] then
-				return a[3] < b[3]
+			if a[7] == b[7] then
+				return a[4] < b[4]
 			end
-			return a[6] > b[6]
+			return a[7] > b[7]
 	end)
 	----------------------------------------------------------------
 	if typeQ == "Currency" and total ~= 0 then
@@ -3009,7 +3013,7 @@ function E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 	----------------------------------------------------------------
 	for _, v in ipairs(sorted) do
 		if #tooltip < 123 then
-			tooltip[#tooltip+1] = {v[1].." "..v[2]..v[3]..v[4], v[5]}
+			tooltip[#tooltip+1] = {v[1].." "..v[2]..v[3]..v[4]..v[5], v[6]}
 		end
 	end
 	----------------------------------------------------------------
@@ -3077,19 +3081,86 @@ end
 
 -- 	return tooltip
 -- end
-----------------------------------------------------------------
-function E.func_textCENT_Currency(CharInfo, currencyID)
+
+function E.func_textCENT_Items(CharInfo, itemID, showIcon)
+	if not itemID then return "" end
+	showIcon = showIcon or false
 	local vivod = ""
-	if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_Total[currencyID] then
-		vivod = CharInfo.MASLENGO.CurrencyID_Total[currencyID]
-	elseif CharInfo.MASLENGO.CurrencyID[currencyID] then
-		vivod = CharInfo.MASLENGO.CurrencyID[currencyID]
+
+	if type(itemID) == "number" then
+		vivod = vivod..(CharInfo.MASLENGO.ItemsInBag[itemID] or "")
+	elseif type(itemID) == "table" then
+		for _, v in ipairs(itemID) do
+			vivod = vivod..(CharInfo.MASLENGO.ItemsInBag[v] or "")
+		end
 	end
+
+	if showIcon and vivod ~= "" then
+		vivod = " +"..vivod..E.func_texturefromIcon(E.func_GetItemIconByID(itemID))
+	end
+
+
 	return vivod
 end
 
+-- function E.func_textCENT_Items(CharInfo, itemID)
+-- 	if not itemID then return "" end
 
+-- 	local ItemsInBag = CharInfo.MASLENGO.ItemsInBag
+-- 	local vivod = {}
 
+-- 	if type(itemID) == "number" then
+-- 		local value = ItemsInBag[itemID]
+-- 		if value then table.insert(vivod, value) end
+-- 	elseif type(itemID) == "table" then
+-- 		for _, v in ipairs(itemID) do
+-- 			local value = ItemsInBag[v]
+-- 			if value then table.insert(vivod, value) end
+-- 		end
+-- 	end
+-- 	return table.concat(vivod)
+-- end
+
+function E.func_textCENT_Currency(CharInfo, currencyID, itemID)
+	local MASLENGO = CharInfo.MASLENGO
+	local currency = MASLENGO.CurrencyID
+	local total = MASLENGO.CurrencyID_Total
+	local totalEarned = MASLENGO.CurrencyID_totalEarned
+
+	local vivod = total[currencyID] or currency[currencyID] or ""
+
+	if totalEarned and totalEarned[currencyID] then
+		vivod = vivod..E.Red_Color.." ("..totalEarned[currencyID]..")|r"
+	end
+	local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	if currencyInfo.maxQuantity == (totalEarned and totalEarned[currencyID]) and not currency[currencyID] then
+		vivod = E.Red_Color.."max|r"
+	end
+	if itemID then
+		vivod = vivod..E.func_textCENT_Items(CharInfo, itemID, true)
+	end
+
+	return vivod
+end
+
+----------------------------------------------------------------
+-- function E.func_textCENT_Currency(CharInfo, currencyID)
+-- 	local vivod = ""
+-- 	if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_Total[currencyID] then
+-- 		vivod = CharInfo.MASLENGO.CurrencyID_Total[currencyID]
+-- 	elseif CharInfo.MASLENGO.CurrencyID[currencyID] then
+-- 		vivod = CharInfo.MASLENGO.CurrencyID[currencyID]
+-- 	end
+
+-- 	if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] then
+-- 		vivod = vivod..E.Red_Color.." ("..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
+-- 	end
+-- 	if C_CurrencyInfo.GetCurrencyInfo(currencyID).maxQuantity == CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and not CharInfo.MASLENGO.CurrencyID[currencyID] then
+-- 		vivod = E.Red_Color.."max|r"
+-- 	end
+
+-- 	return vivod
+-- end
 
 ----------------------------------------------------------------
 ----------------------------------------------------------------

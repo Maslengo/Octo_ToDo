@@ -54,11 +54,8 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				textCENT = E.func_textCENT_Currency(CharInfo, 1755)
+				textCENT = E.func_textCENT_Currency(CharInfo, 1755, 173363)
 				myType = {"Currency", 1755}
-				if CharInfo.MASLENGO.ItemsInBag[173363] then
-					textCENT = textCENT.." +"..CharInfo.MASLENGO.ItemsInBag[173363]..E.func_texturefromIcon(E.func_GetItemIconByID(173363))
-				end
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(1755)
 				iconLEFT = E.func_GetCurrencyIcon(1755)
@@ -100,10 +97,24 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				textCENT = E.func_textCENT_Currency(CharInfo, 1716)
-				myType = {"Currency", 1716}
+				textCENT = E.func_textCENT_Currency(CharInfo, 1717)
+				myType = {"Currency", {1716, 1717}}
 				----------------------------------------------------------------
-				textLEFT = E.func_currencyName(1716)
-				iconLEFT = E.func_GetCurrencyIcon(1716)
+
+
+
+				if E.curFaction == "Horde" then
+					textLEFT = E.func_currencyName(1716)
+					iconLEFT = E.func_GetCurrencyIcon(1716)
+				else
+					textLEFT = E.func_currencyName(1717)
+					iconLEFT = E.func_GetCurrencyIcon(1717)
+				end
+
+
+
+
+
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -127,13 +138,13 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[158075] == nil then
-					textCENT = E.Red_Color.."no neck|r"
-				else
+				if CharInfo.MASLENGO.ItemsInBag[158075] then
 					textCENT = E.Orange_Color.."neeed to equip|r"
 					if CharInfo.PlayerData.azeriteLVL then
 						textCENT = E.Green_Color..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.Gray_Color..CharInfo.PlayerData.azeriteEXP.."|r"
 					end
+				else
+					textCENT = E.Red_Color.."no neck|r"
 				end
 				myType = {"Item", 158075}
 				----------------------------------------------------------------

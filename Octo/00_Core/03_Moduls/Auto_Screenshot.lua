@@ -48,6 +48,7 @@ tinsert(E.Modules, function()
 	-- Устанавливаем обработчик событий
 	eventFrame:SetScript("OnEvent", function(self, event, ...)
 		if EVENT_MESSAGES[event] then
+			print (event)
 			TakeScreenshotWithMessage(event)
 		end
 	end)

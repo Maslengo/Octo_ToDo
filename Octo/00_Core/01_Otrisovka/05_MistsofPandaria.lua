@@ -12,7 +12,6 @@ function E:func_Otrisovka_05_MistsofPandaria()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-
 				textCENT = E.func_textCENT_Currency(CharInfo, 697)
 				myType = {"Currency", 697}
 				----------------------------------------------------------------

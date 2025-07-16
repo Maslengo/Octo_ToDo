@@ -214,24 +214,24 @@ function E:func_Universal_99_Other()
 			},
 			max = 1,
 		},
-		{
-			icon = E.func_GetItemIconByID(245589),
-			textleft = E.Timers.Treasure_Goblin()..E.func_npcName(205722), -- 205490
-			name_save = "TreasureGoblin",
-			reset = "Daily",
-			desc = "HolidaysAGreedyEmissary",
-			questID = {
-				76215, -- шам, пал ->Убийство гоблина
-				-- 91091, -- шам, (хз на пале не сделан)
-				-- 76216, -- шам
-				-- 91166, -- шам
-				-- 91167, -- шам
-				-- 91168, -- шам
-				-- 91169, -- пал ->Открытие сундука
-				-- 91170, -- пал ->Открытие сундука
-			},
-			max = 1,
-		},
+		-- {
+		-- 	icon = E.func_GetItemIconByID(245589),
+		-- 	textleft = E.Timers.Treasure_Goblin()..E.func_npcName(205722), -- 205490
+		-- 	name_save = "TreasureGoblin",
+		-- 	reset = "Daily",
+		-- 	desc = "HolidaysAGreedyEmissary",
+		-- 	questID = {
+		-- 		76215, -- шам, пал ->Убийство гоблина
+		-- 		-- 91091, -- шам, (хз на пале не сделан)
+		-- 		-- 76216, -- шам
+		-- 		-- 91166, -- шам
+		-- 		-- 91167, -- шам
+		-- 		-- 91168, -- шам
+		-- 		-- 91169, -- пал ->Открытие сундука
+		-- 		-- 91170, -- пал ->Открытие сундука
+		-- 	},
+		-- 	max = 1,
+		-- },
 		{
 			icon = 531974,
 			textleft = "Profession Monthlies",

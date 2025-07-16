@@ -12,9 +12,7 @@ function E:func_Otrisovka_04_Cataclysm()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[52078] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[52078]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 52078)
 				myType = {"Item", 52078}
 				----------------------------------------------------------------
 				textLEFT =E.func_GetItemNameByID(52078)
@@ -28,9 +26,7 @@ function E:func_Otrisovka_04_Cataclysm()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[69237] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[69237]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 69237)
 				myType = {"Item", 69237}
 				----------------------------------------------------------------
 				textLEFT =E.func_GetItemNameByID(69237)
@@ -44,9 +40,7 @@ function E:func_Otrisovka_04_Cataclysm()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[71998] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[71998]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 71998)
 				myType = {"Item", 71998}
 				----------------------------------------------------------------
 				textLEFT =E.func_GetItemNameByID(71998)

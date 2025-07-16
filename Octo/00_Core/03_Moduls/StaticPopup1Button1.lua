@@ -15,7 +15,7 @@ tinsert(E.Modules, function()
 	local eventFrame = CreateFrame("Frame")
 	eventFrame:RegisterEvent("EQUIP_BIND_CONFIRM")
 	eventFrame:RegisterEvent("EQUIP_BIND_REFUNDABLE_CONFIRM")
-	eventFrame:RegisterEvent("VOID_DEPOSIT_WARNING")
+	-- eventFrame:RegisterEvent("VOID_DEPOSIT_WARNING")
 	eventFrame:RegisterEvent("USE_NO_REFUND_CONFIRM")
 	eventFrame:RegisterEvent("EQUIP_BIND_TRADEABLE_CONFIRM")
 

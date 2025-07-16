@@ -209,8 +209,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local MASLENGO_DEFAULTS = {
 		reputationNEW = {},
 		CurrencyID = {},
-		CurrencyID_totalEarned = {},
 		CurrencyID_Total = {},
+		CurrencyID_totalEarned = {},
 		UniversalQuest = {},
 		OctoTable_QuestID = {},
 		ListOfQuests = {}, -- Quests
@@ -257,6 +257,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		end
 		PlayerData.time = PlayerData.time or PlayerData.tmstp_Daily or ServerTime
 		PlayerData.MoneyOnLogin = PlayerData.MoneyOnLogin or PlayerData.Money
+
+
 
 
 		-- Применяем предопределенные значения для MASLENGO

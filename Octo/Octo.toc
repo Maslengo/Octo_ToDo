@@ -1,7 +1,7 @@
 ## Interface: 110200, 110107
 ## Title: !|cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r
 ## Author: Octo
-## Version: v96.5(11.1.7)(15.07.2025)
+## Version: v96.7(11.1.7)(17.07.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Core
 
 ## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other
@@ -11,17 +11,17 @@
 ## SavedVariables: Octo_DEBUG
 ## SavedVariables: Octo_QuestsChangedDB
 
-## ЙУЦЙЦУCategory-enUS: !!!
-## ЙУЦЙЦУCategory-deDE: !!!
-## ЙУЦЙЦУCategory-esES: !!!
-## ЙУЦЙЦУCategory-esMX: !!!
-## ЙУЦЙЦУCategory-frFR: !!!
-## ЙУЦЙЦУCategory-itIT: !!!
-## ЙУЦЙЦУCategory-koKR: !!!
-## ЙУЦЙЦУCategory-ptBR: !!!
-## ЙУЦЙЦУCategory-ruRU: !!!
-## ЙУЦЙЦУCategory-zhCN: !!!
-## ЙУЦЙЦУCategory-zhTW: !!!
+## Category-enUS: !!!
+## Category-deDE: !!!
+## Category-esES: !!!
+## Category-esMX: !!!
+## Category-frFR: !!!
+## Category-itIT: !!!
+## Category-koKR: !!!
+## Category-ptBR: !!!
+## Category-ruRU: !!!
+## Category-zhCN: !!!
+## Category-zhTW: !!!
 
 Libs\embeds.xml
 Templates.xml

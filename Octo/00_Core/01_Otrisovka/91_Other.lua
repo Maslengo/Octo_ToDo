@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E.func_textCENT(CharInfo)
+function E.func_textCENT_Chars(CharInfo)
 	local namePart = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r"
 	local levelPart = ""
 	local serverPart = ""
@@ -10,7 +10,7 @@ function E.func_textCENT(CharInfo)
 	end
 	if not Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and
 		E.func_CurServerShort(E.curServer) ~= CharInfo.PlayerData.curServer then
-			serverPart = E.Skyblue_Color.."("..CharInfo.PlayerData.curServer..")|r"
+			serverPart = E.Skyblue_Color..CharInfo.PlayerData.curServer.."|r"
 		end
 		return namePart..levelPart.."|n"..serverPart
 	end

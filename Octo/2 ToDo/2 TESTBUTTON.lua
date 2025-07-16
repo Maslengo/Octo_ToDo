@@ -222,7 +222,7 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 		end)
 
 		button:SetScript("OnHide", function(self)
-				self:UnregisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
+				self:UnregisterEvent("ACTIONBAR_UPDATE_COOLDOWN") -- ПОФИКСИТЬ
 				-- self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end)
 

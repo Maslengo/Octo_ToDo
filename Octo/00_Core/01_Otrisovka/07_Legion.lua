@@ -110,9 +110,7 @@ function E:func_Otrisovka_07_Legion()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				if CharInfo.MASLENGO.ItemsInBag[124124] then
-					textCENT = CharInfo.MASLENGO.ItemsInBag[124124]
-				end
+				textCENT = E.func_textCENT_Items(CharInfo, 124124)
 				myType = {"Item", 124124}
 				----------------------------------------------------------------
 				textLEFT = E.func_GetItemNameByID(124124)

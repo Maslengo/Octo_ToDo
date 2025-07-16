@@ -9,13 +9,13 @@ local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 -- LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
--- 		local frame = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
--- 		frame:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
--- 		frame:SetPoint("TOPLEFT", 8, -2)
--- 		frame:SetPoint("BOTTOMRIGHT", -8, 2)
--- 		frame:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
--- 		frame:SetBackdropBorderColor(0, 0, 0, 1)
--- 		return frame
+--         local frame = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+--         frame:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
+--         frame:SetPoint("TOPLEFT", 8, -2)
+--         frame:SetPoint("BOTTOMRIGHT", -8, 2)
+--         frame:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+--         frame:SetBackdropBorderColor(0, 0, 0, 1)
+--         return frame
 -- end)
 local locale = GetLocale()
 ----------------------------------------------------------------
@@ -34,7 +34,6 @@ function Octo_EventFrame_Collect:func_ConcatAtStart()
 	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_11_TheWarWithin())
 	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_12_Midnight())
 	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_13_TheLastTitan())
-
 	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_99_Other())
 end
 ----------------------------------------------------------------
@@ -133,15 +132,11 @@ function E.Collect_All_PlayerInfo()
 		else
 			collectPlayerData.GetRestrictedAccountData_rLevel = nil
 		end
-
 		if E.GetRestrictedAccountData_rMoney and E.GetRestrictedAccountData_rMoney ~= 0 then
 			collectPlayerData.GetRestrictedAccountData_rMoney = E.GetRestrictedAccountData_rMoney
 		else
 			collectPlayerData.GetRestrictedAccountData_rMoney = nil
-
 		end
-
-
 		if E.IsAccountSecured then
 			collectPlayerData.IsAccountSecured = E.IsAccountSecured
 		else
@@ -173,24 +168,13 @@ function E.Collect_All_Covenant()
 			local curCovLevel = C_CovenantSanctumUI.GetRenownLevel()
 			local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(1813)
 			local curAnimaAmount = currencyInfo.quantity
-			collectMASLENGO.CovenantAndAnima = collectMASLENGO.CovenantAndAnima or {}
-
-
-
+			-- collectMASLENGO.CovenantAndAnima = collectMASLENGO.CovenantAndAnima or {}
 			collectMASLENGO.CovenantAndAnima.curCovID = curCovID
-
-
-
-
 			if curCovLevel ~= 0 then
 				collectMASLENGO.CovenantAndAnima[curCovID][1] = curCovLevel
 			else
 				collectMASLENGO.CovenantAndAnima[curCovID][1] = nil
 			end
-
-
-
-
 			if curAnimaAmount ~= 0 then
 				collectMASLENGO.CovenantAndAnima[curCovID][2] = curAnimaAmount
 			else
@@ -199,12 +183,6 @@ function E.Collect_All_Covenant()
 		end
 	end
 end
-
-
-
-
-
-
 function E.Collect_All_PlayerDurability()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
@@ -304,10 +282,6 @@ function E.Collect_All_LoginTime()
 		collectPlayerData.time = time()
 	end
 end
-
-
-
-
 function E.Collect_All_Professions()
 	local archaeology = {
 		--ID,Name_lang,ResearchFieldID,CurrencyID,TextureFileID,BigTextureFileID,ItemID
@@ -540,17 +514,14 @@ function E.Collect_All_GreatVault()
 				end
 			end
 		end
-
 		collectPlayerData.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards() or nil
 	end
 end
-
-
 function E.Collect_All_Currency()
-	-- local list = Octo_DB_Config.CurrencyDB
 	local list = {}
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if collectMASLENGO and not InCombatLockdown() then
+	if not collectMASLENGO or InCombatLockdown() then return end
+		----------------------------------------------------------------
 		-- local listSize = C_CurrencyInfo.GetCurrencyListSize()
 		-- local headerIndex
 		-- for i = 1, listSize do
@@ -568,18 +539,56 @@ function E.Collect_All_Currency()
 		-- end
 		-- end
 		-- for CurrencyID, v in next, (list) do
+		----------------------------------------------------------------
+		-- for _, CurrencyID in ipairs(E.isAccountTransferableCurrencyTABLE) do
+
+
+		-- НЕ УЧИТЫВАЕТ ТЕКУЩЕГО ПЕРСА?
+		local currencyCache = {}
+
 		for _, CurrencyID in ipairs(E.TESTCURR) do
-			local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID) or false
+			-- Проверяем, есть ли данные в кэше
+			if not currencyCache[CurrencyID] then
+				currencyCache[CurrencyID] = C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters(CurrencyID)
+			end
+
+			local rosterCurrencyData = currencyCache[CurrencyID]
+			if rosterCurrencyData then
+				-- Создаем таблицу для быстрого доступа по GUID
+				local currencyMap = {}
+				for _, v in ipairs(rosterCurrencyData) do
+					currencyMap[v.characterGUID] = v.quantity
+				end
+
+				for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+					if currencyMap[GUID] then
+						CharInfo.MASLENGO.CurrencyID[CurrencyID] = currencyMap[GUID]
+					end
+				end
+			end
+			----------------------------------------------------------------
+			local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID)
 			local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
 			if data then
 				local quantity = data.quantity
 				local maxQuantity = data.maxQuantity
 				local totalEarned = data.totalEarned
-				if isAccountWideCurrency == false then
+				local maxWeeklyQuantity = data.maxWeeklyQuantity
+				local useTotalEarnedForMaxQty = data.useTotalEarnedForMaxQty
+				local discovered = data.discovered
+				local transferPercentage = data.transferPercentage
+				local rechargingCycleDurationMS = data.rechargingCycleDurationMS
+				local rechargingAmountPerCycle = data.rechargingAmountPerCycle
+
+
+				-- if CurrencyID == 1904 then
+				-- 	print (quantity,maxQuantity,totalEarned,maxWeeklyQuantity,useTotalEarnedForMaxQty,discovered,transferPercentage,rechargingCycleDurationMS,rechargingAmountPerCycle)
+				-- 	-- print (transferPercentage, rechargingAmountPerCycle)
+				-- 	-- print (E.func_SecondsToClock(GetServerTime()/1000-rechargingCycleDurationMS/1000))
+				-- end
+
+				if not isAccountWideCurrency then
 					if collectMASLENGO and not InCombatLockdown() then
-						collectMASLENGO.CurrencyID = collectMASLENGO.CurrencyID or {}
-						collectMASLENGO.CurrencyID_totalEarned = collectMASLENGO.CurrencyID_totalEarned or {}
-						collectMASLENGO.CurrencyID_Total = collectMASLENGO.CurrencyID_Total or {}
 						if quantity ~= nil and quantity ~= 0 then
 							collectMASLENGO.CurrencyID[CurrencyID] = quantity
 						end
@@ -600,9 +609,6 @@ function E.Collect_All_Currency()
 					end
 				else
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						collectMASLENGO.CurrencyID = collectMASLENGO.CurrencyID or {}
-						collectMASLENGO.CurrencyID_totalEarned = collectMASLENGO.CurrencyID_totalEarned or {}
-						collectMASLENGO.CurrencyID_Total = collectMASLENGO.CurrencyID_Total or {}
 						if CharInfo and not InCombatLockdown() then
 							if quantity ~= nil and quantity ~= 0 then
 								collectMASLENGO.CurrencyID[CurrencyID] = quantity
@@ -626,7 +632,7 @@ function E.Collect_All_Currency()
 				collectMASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
 			end
 		end
-	end
+		----------------------------------------------------------------
 end
 
 
@@ -689,7 +695,6 @@ function E.Collect_All_ItemsInBag()
 							collectPlayerData.CurrentKey = lvl.." "..KeyName
 						end
 					end
-
 					for _, tbl in next, (E.OctoTable_itemID_Cataloged_Research) do
 						if itemID == tbl.itemiD then
 							Possible_CatalogedResearch = Possible_CatalogedResearch + (tbl.count*E.func_GetItemCount(itemID))
@@ -726,36 +731,28 @@ function E.Collect_All_ItemsInBag()
 			collectPlayerData.Possible_Anima = Possible_Anima
 		else
 			collectPlayerData.Possible_Anima = nil
-
 		end
 		if Possible_CatalogedResearch ~= 0 then
 			collectPlayerData.Possible_CatalogedResearch = Possible_CatalogedResearch
 		else
-
 			collectPlayerData.Possible_CatalogedResearch = nil
 		end
 		if usedSlots ~= 0 then
 			collectPlayerData.usedSlots = usedSlots
 		else
-
 			collectPlayerData.usedSlots = nil
 		end
 		if totalSlots ~= 0 then
 			collectPlayerData.totalSlots = totalSlots
 		else
-
 			collectPlayerData.totalSlots = nil
 		end
 	end
 end
-
-
-
 function E.Collect_CurrentKey_ITEM_CHANGED(arg2)
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	----------------------------------------------------------------
-
 	local dungeonSTR = select(18, strsplit(":", arg2))
 	local lvl = select(20, strsplit(":", arg2))
 	local dungeonID = tonumber(dungeonSTR)
@@ -768,11 +765,6 @@ function E.Collect_CurrentKey_ITEM_CHANGED(arg2)
 		collectPlayerData.CurrentKey = lvl.." "..KeyName
 	end
 end
-
-
-
-
-
 function E.Collect_All_Locations()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
@@ -830,7 +822,6 @@ function E.Collect_All_UNIVERSALQuestUpdateQWEQWE()
 		local count = 0
 		local questKey = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
 		for _, questID in next, (v.questID) do
-
 			-- /dump C_QuestLog.IsQuestFlaggedCompleted(76215)
 			if C_QuestLog.IsQuestFlaggedCompleted(questID) then
 				count = count + 1
@@ -844,9 +835,6 @@ function E.Collect_All_UNIVERSALQuestUpdateQWEQWE()
 		end
 	end
 end
-
-
-
 function E.Collect_All_UNIVERSALQuestUpdate()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO or InCombatLockdown() then return end
@@ -871,16 +859,6 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 		end
 	end
 end
-
-
-
-
-
-
-
-
-
-
 function E.Collect_All_ItemLevel()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
@@ -967,7 +945,7 @@ function E.Collect_All_JournalInstance()
 		if NumSavedWorldBosses > 0 then
 			for i = 1, NumSavedWorldBosses do
 				local name, worldBossID, reset = GetSavedWorldBossInfo(i)
-				collectMASLENGO.SavedWorldBoss[worldBossID] = collectMASLENGO.SavedWorldBoss[worldBossID] or {}
+				-- collectMASLENGO.SavedWorldBoss[worldBossID] = collectMASLENGO.SavedWorldBoss[worldBossID] or {}
 				collectMASLENGO.SavedWorldBoss[worldBossID].name = name
 				collectMASLENGO.SavedWorldBoss[worldBossID].reset = reset
 			end
@@ -979,7 +957,7 @@ function E.Collect_All_JournalInstance()
 			if dungeonID and E.OctoTable_LFGDungeons[dungeonID] then
 				local D_name = GetLFGDungeonInfo(dungeonID)
 				local donetoday = GetLFGDungeonRewards(dungeonID)
-				collectMASLENGO.LFGInstance[dungeonID] = collectMASLENGO.LFGInstance[dungeonID] or {}
+				-- collectMASLENGO.LFGInstance[dungeonID] = collectMASLENGO.LFGInstance[dungeonID] or {}
 				collectMASLENGO.LFGInstance[dungeonID].D_name = D_name
 				if donetoday == true then
 					collectMASLENGO.LFGInstance[dungeonID].donetoday = E.DONE
@@ -1187,8 +1165,6 @@ function E.Collect_All_Chromie()
 		else
 			collectPlayerData.GameLimitedMode_IsActive = nil
 		end
-
-
 		local UnitChromieTimeID = UnitChromieTimeID("player")
 		if UnitChromieTimeID ~= 0 then
 			collectPlayerData.Chromie_UnitChromieTimeID = UnitChromieTimeID
@@ -1202,8 +1178,6 @@ function E.Collect_All_Chromie()
 			collectPlayerData.Chromie_UnitChromieTimeID = nil
 			collectPlayerData.Chromie_name = nil
 		end
-
-
 	end
 end
 ----------------------------------------------------------------
@@ -1242,7 +1216,7 @@ local MyEventsTable = {
 	"UPDATE_INVENTORY_DURABILITY",
 	"UPDATE_PENDING_MAIL",
 	"ZONE_CHANGED",
-	"ZONE_CHANGED_NEW_AREA"
+	"ZONE_CHANGED_NEW_AREA",
 }
 function E.Collect_All_Table(event)
 	E.Collect_All_PlayerLevel()
@@ -1279,7 +1253,7 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_UNIVERSALQuestUpdate() -- обновления квестов
 	-- Предметы и валюта
 	E.Collect_All_ItemsInBag() -- предметы в сумках
-	E.Collect_All_Currency() -- валюта
+	-- E.Collect_All_Currency() -- валюта
 	E.Collect_All_MoneyOnLogin() -- деньги при входе
 	E.Collect_All_MoneyUpdate() -- обновление денег
 	E.Collect_All_Mail() -- почта
@@ -1357,7 +1331,6 @@ function Octo_EventFrame_Collect:BAG_UPDATE()
 			self.BAG_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
 	end)
 end
-
 function Octo_EventFrame_Collect:ITEM_CHANGED(...)
 	local arg1, arg2 = ...
 	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
@@ -1365,10 +1338,6 @@ function Octo_EventFrame_Collect:ITEM_CHANGED(...)
 		E.Update("ITEM_CHANGED")
 	end
 end
-
-
-
-
 function Octo_EventFrame_Collect:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
 	if InCombatLockdown() or self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause then return end
 	self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = true
@@ -1595,3 +1564,4 @@ function Octo_EventFrame_Collect:QUEST_POI_UPDATE()
 			self.QUEST_POI_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
 	end)
 end
+
