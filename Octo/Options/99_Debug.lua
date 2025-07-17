@@ -231,13 +231,13 @@ function E.Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			reputationNEW = {
+			Reputation = {
 				type = "execute",
-				name = "reputationNEW",
-				desc = "CharInfo.MASLENGO.reputationNEW = {}",
+				name = "Reputation",
+				desc = "CharInfo.MASLENGO.Reputation = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.reputationNEW = {}
+						CharInfo.MASLENGO.Reputation = {}
 					end
 					return
 				end,

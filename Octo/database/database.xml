@@ -1,0 +1,27 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Script file="database\Localization.lua"/>
+
+
+
+
+
+
+	<Script file="database\Constants.lua"/>
+
+	<Script file="database\AllCurrencies.lua"/>
+	<Script file="database\AllReputations.lua"/>
+	<Script file="database\Expansions.lua"/>
+	<Script file="database\Gossip.lua"/>
+	<Script file="database\Items.lua"/>
+	<Script file="database\KeystoneAbbr.lua"/>
+	<Script file="database\Quests.lua"/>
+	<Script file="database\Spells.lua"/>
+	<Script file="database\Timers.lua"/>
+
+	<Script file="database\OctoTable_Reputations.lua"/>
+	<Script file="database\OctoTable_ReputationsDB.lua"/>
+
+
+</Ui>

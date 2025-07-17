@@ -1,0 +1,49 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Script file="Core\2 Functions.lua"/>
+	<Script file="Core\4 WTF.lua"/>
+	<Script file="Core\5 WTF_OLD.lua"/>
+	<Script file="Core\6 Collect.lua"/>
+	<Script file="Core\7 SharedMedia.lua"/>
+
+
+
+
+
+
+	<Script file="Core\01_Otrisovka\01_WorldofWarcraft.lua"/>
+	<Script file="Core\01_Otrisovka\02_TheBurningCrusade.lua"/>
+	<Script file="Core\01_Otrisovka\03_WrathoftheLichKing.lua"/>
+	<Script file="Core\01_Otrisovka\04_Cataclysm.lua"/>
+	<Script file="Core\01_Otrisovka\05_MistsofPandaria.lua"/>
+	<Script file="Core\01_Otrisovka\06_WarlordsofDraenor.lua"/>
+	<Script file="Core\01_Otrisovka\07_Legion.lua"/>
+	<Script file="Core\01_Otrisovka\08_BattleforAzeroth.lua"/>
+	<Script file="Core\01_Otrisovka\09_Shadowlands.lua"/>
+	<Script file="Core\01_Otrisovka\10_Dragonflight.lua"/>
+	<Script file="Core\01_Otrisovka\11_TheWarWithin.lua"/>
+	<Script file="Core\01_Otrisovka\12_Midnight.lua"/>
+	<Script file="Core\01_Otrisovka\13_TheLastTitan.lua"/>
+
+	<Script file="Core\01_Otrisovka\90_Holidays.lua"/>
+	<Script file="Core\01_Otrisovka\91_Other.lua"/>
+
+
+	<Script file="Core\UniversalQuests\01_WorldofWarcraft.lua"/>
+	<Script file="Core\UniversalQuests\02_TheBurningCrusade.lua"/>
+	<Script file="Core\UniversalQuests\03_WrathoftheLichKing.lua"/>
+	<Script file="Core\UniversalQuests\04_Cataclysm.lua"/>
+	<Script file="Core\UniversalQuests\05_MistsofPandaria.lua"/>
+	<Script file="Core\UniversalQuests\06_WarlordsofDraenor.lua"/>
+	<Script file="Core\UniversalQuests\07_Legion.lua"/>
+	<Script file="Core\UniversalQuests\08_BattleforAzeroth.lua"/>
+	<Script file="Core\UniversalQuests\09_Shadowlands.lua"/>
+	<Script file="Core\UniversalQuests\10_Dragonflight.lua"/>
+	<Script file="Core\UniversalQuests\11_TheWarWithin.lua"/>
+	<Script file="Core\UniversalQuests\12_Midnight.lua"/>
+	<Script file="Core\UniversalQuests\13_TheLastTitan.lua"/>
+	<Script file="Core\UniversalQuests\99_Other.lua"/>
+
+
+</Ui>
