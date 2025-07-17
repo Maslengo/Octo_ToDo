@@ -42,6 +42,12 @@ E.total_width = E.total_width or 500
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+local function func_OnHideFirst(frame)
+	frame.frameFULL:Hide()
+end
+local function func_OnShowFirst(frame)
+	frame.frameFULL:Show()
+end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local func_OnAcquired do
 	------------------------------------------------
@@ -103,7 +109,7 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- second
 			local second = CreateFrame("FRAME", nil, frame)
-			local second_width = AddonCentralFrameWeight/2
+			local second_width = AddonCentralFrameWeight
 			local second_height = AddonHeight
 			second:SetSize(second_width, second_height)
 			second:SetPoint("TOPLEFT", first, "TOPRIGHT")
@@ -142,7 +148,7 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- fourth
 			local fourth = CreateFrame("FRAME", nil, frame)
-			local fourth_width = AddonCentralFrameWeight/2
+			local fourth_width = AddonCentralFrameWeight
 			local fourth_height = AddonHeight
 			fourth:SetSize(fourth_width, fourth_height)
 			fourth:SetPoint("TOPLEFT", third, "TOPRIGHT")
@@ -214,6 +220,18 @@ local func_OnAcquired do
 			-- eighth.text:SetJustifyH(JustifyH)
 			-- eighth.text:SetTextColor(1, 1, 1, 1)
 			-- frame.eighth = eighth
+
+
+
+			-- frame:SetScript("OnLeave", GameTooltip_Hide)
+			frame:SetScript("OnHide", func_OnHideFirst)
+			frame:SetScript("OnShow", func_OnShowFirst)
+
+
+
+
+
+
 			------------------------------------------------
 			E.total_width = icon_1_width + first_width + icon_2_width + second_width + third_width + fourth_width + fifth_width + sixth_width + seventh_width -- + eighth_width
 			------------------------------------------------
@@ -227,7 +245,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	local data = node:GetData()
 	if not data.zxc then return end
 	local frameData = data.zxc
-	local playerName = frameData.classColorHex..frameData.playerName.."|r-"..E.func_CurServerShort(frameData.curServer)
+	local playerName = frameData.classColorHex..frameData.playerName.."|r-"..E:func_CurServerShort(frameData.curServer)
 
 
 
@@ -238,12 +256,12 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 
 
 	if frameData.type == "QC_Quests" then
-		if E.func_IsAccountQuest(frameData.id) or E.func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
+		if E:func_IsAccountQuest(frameData.id) or E:func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
 			frame.icon_2:SetAtlas("warbands-icon")
 		else
 			frame.icon_2:SetTexture(E.Icon_Empty)
 		end
-		frame.third.text:SetText(E.func_questName_SIMPLE(frameData.id))
+		frame.third.text:SetText(E:func_questName_SIMPLE(frameData.id))
 	elseif frameData.type == "QC_Vignettes" then
 		if frameData.atlas then
 			frame.icon_2:SetAtlas(frameData.atlas)
@@ -273,13 +291,13 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	if frameData.curLocation and frameData.curLocation ~= "" then
 		frame.fifth.text:SetText(frameData.curLocation)
 	elseif frameData.mapID then
-		frame.fifth.text:SetText(E.func_GetMapName(frameData.mapID))
+		frame.fifth.text:SetText(E:func_GetMapName(frameData.mapID))
 	else
 		frame.fifth.text:SetText("QWEQWEQWEQWEQWEQWE")
 	end
 	----------------------------------------------------------------
-	-- frame.sixth.text:SetText(E.Green_Color..E.func_GetCoordFormated(frameData.x, frameData.y).."|r")
-	frame.sixth.text:SetText(E.func_GetCoordFormated(frameData.x, frameData.y))
+	-- frame.sixth.text:SetText(E.Green_Color..E:func_GetCoordFormated(frameData.x, frameData.y).."|r")
+	frame.sixth.text:SetText(E:func_GetCoordFormated(frameData.x, frameData.y))
 
 
 	if self.minTime then
@@ -290,7 +308,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 		local red = min(255, (1 - done / total) * 510)
 		local green = min(255, (done / total) * 510)
 		local hexcolor = string.format("|cff%2x%2x00", red, green)
-		frame.seventh.text:SetText(hexcolor..E.func_SecondsToClock(time()-frameData.time).."|r")
+		frame.seventh.text:SetText(hexcolor..E:func_SecondsToClock(time()-frameData.time).."|r")
 	end
 	-- frame.eighth.text:SetText(8)
 end
@@ -417,7 +435,7 @@ local MyEventsTable = {
 	"PLAYER_REGEN_DISABLED",
 	"PLAYER_LOGIN",
 }
-E.RegisterMyEventsToFrames(Octo_EventFrame_QuestsChanged, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_QuestsChanged, MyEventsTable)
 function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")

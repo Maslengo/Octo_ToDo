@@ -18,10 +18,10 @@ function E:InitOptions()
 
 	AceConfigRegistry:RegisterOptionsTable("Debug", E.Debug())
 	----------------------------------------------------------------
-	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", E.func_AddonTitle(GlobalAddonName))
-	AceConfigDialog:AddToBlizOptions("Automatization", "Automatization", E.func_AddonTitle(GlobalAddonName))
-	AceConfigDialog:AddToBlizOptions("HideFrames", "HideFrames", E.func_AddonTitle(GlobalAddonName))
-	AceConfigDialog:AddToBlizOptions("myOther", "myOther", E.func_AddonTitle(GlobalAddonName))
+	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", E:func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("Automatization", "Automatization", E:func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("HideFrames", "HideFrames", E:func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("myOther", "myOther", E:func_AddonTitle(GlobalAddonName))
 
 
 
@@ -32,6 +32,6 @@ function E:InitOptions()
 
 
 
-	AceConfigDialog:AddToBlizOptions("Debug", "Debug", E.func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("Debug", "Debug", E:func_AddonTitle(GlobalAddonName))
 	----------------------------------------------------------------
 end

@@ -15,7 +15,7 @@ local gossipOptionIDs = {
 tinsert(E.Modules, function()
 		if not Octo_ToDo_DB_Vars.Auto_Gossip then return end
 		if not Octo_AUTO_GOSSIP then
-			Octo_AUTO_GOSSIP = CreateFrame("Frame", GlobalAddonName.."Auto_Gossip"..E.func_GenerateUniqueID())
+			Octo_AUTO_GOSSIP = CreateFrame("Frame", GlobalAddonName.."Auto_Gossip"..E:func_GenerateUniqueID())
 			Octo_AUTO_GOSSIP:Hide()
 		end
 		Octo_AUTO_GOSSIP:RegisterEvent("GOSSIP_SHOW")
@@ -37,18 +37,18 @@ tinsert(E.Modules, function()
 							print ("|cff0000FFНАЙДЕНА СИНЯЯ ХУЙНЯ|r")
 							C_GossipInfo.SelectOption(option.gossipOptionID)
 							StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
-							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(option.icon)..option.name)
+							DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E:func_texturefromIcon(option.icon)..option.name)
 							break
 						else
 							if numOptions == 1 then
 								C_GossipInfo.SelectOption(option.gossipOptionID)
 								StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
-								DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(option.icon)..option.name)
+								DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E:func_texturefromIcon(option.icon)..option.name)
 							else
 								if option.gossipOptionID and E[({"First", "Second", "Third", "Fourth"})[i].."_Option"][targetNPCID] then
 									C_GossipInfo.SelectOption(option.gossipOptionID)
 									StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
-									DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(option.icon)..option.name)
+									DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("Auto Gossip Select")..E.Green_Color.." ("..i..")|r "..E:func_texturefromIcon(option.icon)..option.name)
 									break
 								end
 							end

@@ -1,78 +1,71 @@
 local GlobalAddonName, E = ...
 local Octo_EventFrame_WTF = CreateFrame("FRAME")
 Octo_EventFrame_WTF:Hide()
+----------------------------------------------------------------
 -- Локальные функции для часто используемых операций
 local function InitTable(tbl)
 	return tbl or {}
 end
+----------------------------------------------------------------
 local function InitField(tbl, field, default)
 	if tbl[field] == nil then
 		tbl[field] = default
 	end
 end
+----------------------------------------------------------------
 local function InitSubTable(tbl, field)
 	if tbl[field] == nil then
 		tbl[field] = {}
 	end
 end
+----------------------------------------------------------------
+local function replaceZeroWithNil(tbl, smth)
+	if not tbl or not smth or type(tbl) ~= "table" then return end
 
+	if type(smth) == "table" then
+		for q, w in ipairs(smth) do
+			for k, value in pairs(tbl) do
+				if value == w then
+					print (k, E.Yellow_Color..tostring(value).."|r")
+					tbl[k] = nil
+				elseif type(value) == "table" then
+					replaceZeroWithNil(value, w)
+				end
+			end
+			return tbl
+		end
+	elseif type(smth) == "number" then
+		for k, value in pairs(tbl) do
+			if value == smth then
+				print (k, E.Purple_Color..tostring(value).."|r")
+				tbl[k] = nil
+			elseif type(value) == "table" then
+				replaceZeroWithNil(value, smth)
+			end
+		end
+		return tbl
+	elseif type(smth) == "string" then
+		for k, value in pairs(tbl) do
+			if value and smth == "anynumber" and type(value) == "number" then
+				print (k, E.WOW_WoWToken_Color..tostring(value).."|r")
+				tbl[k] = nil
+			else
+				replaceZeroWithNil(value, smth)
+			end
 
-local function replaceZeroWithNil(tbl, what)
-	if not tbl or type(tbl) ~= "table" or not what then
+			if value and type(value) == "string" then
+				if string.find(value, smth) then
+					print (k, E.Magenta_Color..tostring(value).."|r")
+					tbl[k] = nil
+				end
+			else
+				replaceZeroWithNil(value, smth)
+			end
+		end
 		return tbl
 	end
-
-	local whatSet = type(what) == "table" and {} or what
-
-	if type(what) == "table" then
-		for _, w in ipairs(what) do
-			whatSet[w] = true
-		end
-	end
-
-	for k, value in pairs(tbl) do
-		if (type(what) == "table" and whatSet[value]) or value == what then
-			print(tbl, k, E.Yellow_Color .. tostring(value) .. "|r")
-			tbl[k] = nil
-		elseif type(value) == "table" then
-			replaceZeroWithNil(value, what)
-		end
-	end
-
-	return tbl
 end
-
--- local function replaceZeroWithNil(tbl, smth)
--- 	if tbl and smth then
--- 		if type(tbl) ~= "table" then return tbl end
-
--- 		if type(smth) == "table" then
--- 			for q, w in ipairs(smth) do
--- 				for k, value in pairs(tbl) do
--- 					if value == w then
--- 						print (k, E.Yellow_Color..tostring(value).."|r")
--- 						tbl[k] = nil
--- 					elseif type(value) == "table" then
--- 						replaceZeroWithNil(value, w)
--- 					end
--- 				end
--- 				return tbl
--- 			end
--- 		else
--- 			for k, value in pairs(tbl) do
--- 				if value == smth then
--- 					print (k, E.Purple_Color..tostring(value).."|r")
--- 					tbl[k] = nil
--- 				elseif type(value) == "table" then
--- 					replaceZeroWithNil(value, smth)
--- 				end
--- 			end
--- 			return tbl
--- 		end
--- 	end
--- end
-
-
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:DatabaseTransfer()
 	if Octo_ToDo_DB_Levels then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -84,27 +77,121 @@ function Octo_EventFrame_WTF:DatabaseTransfer()
 					CharInfo[k] = nil
 				end
 			end
+
+			if CharInfo.MASLENGO then
+				-- fpde(CharInfo.MASLENGO.CurrencyID)
+				if CharInfo.MASLENGO.CurrencyID then
+					for CurrencyID, value in next, (CharInfo.MASLENGO.CurrencyID) do
+						if type(value) == "number" then
+							CharInfo.MASLENGO.Currency[CurrencyID] = CharInfo.MASLENGO.Currency[CurrencyID] or {}
+							CharInfo.MASLENGO.Currency[CurrencyID].quantity = value
+						end
+					end
+					CharInfo.MASLENGO.CurrencyID = nil
+				end
+
+				if CharInfo.MASLENGO.CurrencyID_Total then
+					for CurrencyID, value in next, (CharInfo.MASLENGO.CurrencyID_Total) do
+						if type(value) == "number" then
+							print (CurrencyID, value)
+							CharInfo.MASLENGO.Currency[CurrencyID] = CharInfo.MASLENGO.Currency[CurrencyID] or {}
+							CharInfo.MASLENGO.Currency[CurrencyID].maxQuantity = value
+						end
+					end
+					CharInfo.MASLENGO.CurrencyID_Total = nil
+				end
+				if CharInfo.MASLENGO.CurrencyID_totalEarned then
+					for CurrencyID, value in next, (CharInfo.MASLENGO.CurrencyID_totalEarned) do
+						if type(value) == "number" then
+							CharInfo.MASLENGO.Currency[CurrencyID] = CharInfo.MASLENGO.Currency[CurrencyID] or {}
+							CharInfo.MASLENGO.Currency[CurrencyID].totalEarned = value
+						end
+					end
+					CharInfo.MASLENGO.CurrencyID_totalEarned = nil
+				end
+			end
+			-- CurrencyID = {},
+			-- CurrencyID_Total = {},
+			-- CurrencyID_totalEarned = {},
 		end
 	end
-
-	replaceZeroWithNil(Octo_ToDo_DB_Levels, {false, 0})
-	replaceZeroWithNil(Octo_ToDo_DB_Other, {false, 0})
-	replaceZeroWithNil(Octo_ToDo_DB_Minecraft, {false, 0})
-	replaceZeroWithNil(Octo_Achievements_DB, {false, 0})
-	replaceZeroWithNil(Octo_AddonsTable, {false, 0})
-	replaceZeroWithNil(Octo_AddonsManager_DB, {false, 0})
-	replaceZeroWithNil(Octo_DEBUG, {false, 0})
-
-
-	-- replaceZeroWithNil(Octo_ToDo_DB_Vars, {false, 0})
-	-- replaceZeroWithNil(Octo_QuestsChangedDB, {false, 0})
 end
 
 
+function Octo_EventFrame_WTF:DatabaseClear()
+
+	if Octo_ToDo_DB_Levels then
+		replaceZeroWithNil(Octo_ToDo_DB_Levels, "^0/")
+
+		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+			if CharInfo.MASLENGO and CharInfo.MASLENGO.CurrencyID_Total then
+				replaceZeroWithNil(CharInfo.MASLENGO.CurrencyID_Total, "anynumber")
+			end
+		end
+		-- replaceZeroWithNil(Octo_ToDo_DB_Other, {false, 0})
+		-- replaceZeroWithNil(Octo_ToDo_DB_Minecraft, {false, 0})
+		-- replaceZeroWithNil(Octo_Achievements_DB, {false, 0})
+		-- replaceZeroWithNil(Octo_AddonsTable, {false, 0})
+		-- replaceZeroWithNil(Octo_AddonsManager_DB, {false, 0})
+		-- replaceZeroWithNil(Octo_DEBUG, {false, 0})
+
+		-- replaceZeroWithNil(Octo_ToDo_DB_Vars, {false, 0})
+		-- replaceZeroWithNil(Octo_QuestsChangedDB, {false, 0})
+		-- replaceZeroWithNil(Octo_Cache_DB, {false, 0})
+	end
+end
 
 
+function Octo_EventFrame_WTF:DatabaseCreateMaxQuantity()
+	local currencyCache = {}
+	for CurrencyID, cachedName in next, (Octo_Cache_DB.AllCurrencies) do
+		local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
+
+		if data then
+			local quantity = data.quantity
+			local maxQuantity = data.maxQuantity
+			local totalEarned = data.totalEarned
+
+			local maxWeeklyQuantity = data.maxWeeklyQuantity
+			local useTotalEarnedForMaxQty = data.useTotalEarnedForMaxQty
+
+			-- if CurrencyID == 2653 then
+			-- 	print (quantity, E.Red_Color..maxQuantity.."|r", totalEarned, maxWeeklyQuantity, useTotalEarnedForMaxQty)
+			-- end
+
+			if maxQuantity and maxQuantity ~= 0 and not currencyCache[CurrencyID] then
+				currencyCache[CurrencyID] = maxQuantity
+			end
+		end
+	end
+
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		if CharInfo.MASLENGO then
+			for CurrencyID, value in next, (currencyCache) do
+
+				-- if CurrencyID == 2653 then
+				-- 	print (E.Green_Color..value.."|r")
+				-- end
+
+				if CharInfo.MASLENGO.Currency[CurrencyID] and not CharInfo.MASLENGO.Currency[CurrencyID].maxQuantity then
+					print (CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r", "id: "..CurrencyID, E:func_currencyName(CurrencyID), "max: "..value)
+					CharInfo.MASLENGO.Currency[CurrencyID].maxQuantity = value
+				end
+
+				-- if CharInfo.MASLENGO.Currency[CurrencyID] and CharInfo.MASLENGO.Currency[CurrencyID].quantity and CharInfo.MASLENGO.Currency[CurrencyID].maxQuantity and not CharInfo.MASLENGO.Currency[CurrencyID].totalEarned then
+				-- 	print (CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r", "id: "..CurrencyID, E:func_currencyName(CurrencyID), "earned: "..value)
+				-- 	CharInfo.MASLENGO.Currency[CurrencyID].totalEarned = CharInfo.MASLENGO.Currency[CurrencyID].quantity
+				-- end
 
 
+			end
+		end
+	end
+	fpde(currencyCache)
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local curGUID = UnitGUID("player")
 	Octo_ToDo_DB_Levels = InitTable(Octo_ToDo_DB_Levels)
@@ -122,7 +209,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		curServer = E.curServer,
 		guildName = "",
 		guildRankName = "",
-		curServerShort = E.func_CurServerShort(E.curServer),
+		curServerShort = E:func_CurServerShort(E.curServer),
 		Faction = "Horde",
 		BattleTag = E.BattleTag,
 		BattleTagLocal = E.BattleTagLocal,
@@ -208,9 +295,10 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	-- Оптимизация: предварительно инициализируем таблицы
 	local MASLENGO_DEFAULTS = {
 		reputationNEW = {},
-		CurrencyID = {},
-		CurrencyID_Total = {},
-		CurrencyID_totalEarned = {},
+		Currency = {},
+		-- CurrencyID = {},
+		-- CurrencyID_Total = {},
+		-- CurrencyID_totalEarned = {},
 		UniversalQuest = {},
 		OctoTable_QuestID = {},
 		ListOfQuests = {}, -- Quests
@@ -258,9 +346,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		PlayerData.time = PlayerData.time or PlayerData.tmstp_Daily or ServerTime
 		PlayerData.MoneyOnLogin = PlayerData.MoneyOnLogin or PlayerData.Money
 
-
-
-
 		-- Применяем предопределенные значения для MASLENGO
 		for k, v in next, (MASLENGO_DEFAULTS) do
 			if MASLENGO[k] == nil then
@@ -275,11 +360,11 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		end
 		-- Инициализация UniversalQuest
 		-- for _, v in next, (E.OctoTable_UniversalQuest) do
-		-- 	local key = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
-		-- 	MASLENGO.UniversalQuest[key] = MASLENGO.UniversalQuest[key] or nil
-		-- 	if type(MASLENGO.UniversalQuest[key]) == "string" then
-		-- 		MASLENGO.UniversalQuest[key] = nil
-		-- 	end
+		--     local key = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
+		--     MASLENGO.UniversalQuest[key] = MASLENGO.UniversalQuest[key] or nil
+		--     if type(MASLENGO.UniversalQuest[key]) == "string" then
+		--         MASLENGO.UniversalQuest[key] = nil
+		--     end
 		-- end
 
 
@@ -306,9 +391,10 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			GreatVault = {cleanZeros = false},
 			PVP = {cleanZeros = false},
 			journalInstance = {cleanZeros = false},
-			CurrencyID = {cleanZeros = true},
-			CurrencyID_Total = {cleanZeros = true},
-			CurrencyID_totalEarned = {cleanZeros = true},
+			Currency = {cleanZeros = true},
+			CurrencyID = {cleanZeros = true}, -- OLD
+			CurrencyID_Total = {cleanZeros = true, cleanNumber = true}, -- OLD
+			CurrencyID_totalEarned = {cleanZeros = true}, -- OLD
 			professions = {cleanZeros = false},
 			OctoTable_QuestID = {cleanZeros = false},
 		}
@@ -325,6 +411,13 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				elseif options.cleanZeros and type(sourceTable) == "table" then
 					for k, v in next, (sourceTable) do
 						if type(v) == "number" and v == 0 then
+							sourceTable[k] = nil
+						end
+					end
+				elseif options.cleanNumber and type(sourceTable) == "table" then
+					for k, v in next, (sourceTable) do
+						if type(v) == "number" then
+							print (tableName, k, v)
 							sourceTable[k] = nil
 						end
 					end
@@ -420,6 +513,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 
 	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars = InitTable(Octo_ToDo_DB_Vars)
 	-- Размеры и параметры интерфейса
@@ -593,6 +689,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		InitField(Octo_ToDo_DB_Vars.PosFrame, k, v)
 	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	Octo_ToDo_DB_Other = InitTable(Octo_ToDo_DB_Other)
 	InitSubTable(Octo_ToDo_DB_Other, "AccountMoney")
@@ -603,6 +702,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	-- InitSubTable(Octo_ToDo_DB_Other, "ActiveHoliday")
 	InitSubTable(Octo_ToDo_DB_Other, "professions")
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Minecraft()
 	Octo_ToDo_DB_Minecraft = InitTable(Octo_ToDo_DB_Minecraft)
 	InitSubTable(Octo_ToDo_DB_Minecraft, "ColorFG")
@@ -616,14 +718,23 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Minecraft()
 	InitField(Octo_ToDo_DB_Minecraft.ColorBG, "b", 1)
 	InitField(Octo_ToDo_DB_Minecraft.ColorBG, "a", 1)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Achievements_DB()
 	Octo_Achievements_DB = InitTable(Octo_Achievements_DB)
 	InitField(Octo_Achievements_DB, "AchievementShowCompleted", true)
 	InitField(Octo_Achievements_DB, "AchievementToShow", {[92] = true})
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_AddonsTable()
 	Octo_AddonsTable = InitTable(Octo_AddonsTable)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 	Octo_AddonsManager_DB = InitTable(Octo_AddonsManager_DB)
 	InitSubTable(Octo_AddonsManager_DB, "collapsedAddons")
@@ -666,19 +777,76 @@ function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 	InitSubTable(Octo_AddonsManager_DB.lock, "addons")
 	InitField(Octo_AddonsManager_DB.lock.addons, E.GlobalAddonName, true)
 end
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_DEBUG()
 	Octo_DEBUG = InitTable(Octo_DEBUG)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+function Octo_EventFrame_WTF:Octo_Cache_DB()
+	Octo_Cache_DB = InitTable(Octo_Cache_DB)
+	InitSubTable(Octo_Cache_DB, "AllCurrencies")
+	E:func_CurrencyCaching()
+end
+
+
+function E:func_CurrencyCaching()
+	if not Octo_Cache_DB.buildNumber then
+		Octo_Cache_DB.buildNumber = 1
+		if Octo_Cache_DB.buildNumber < tonumber(E.buildNumber) then
+			print ("func_CurrencyCaching", Octo_Cache_DB.buildNumber .. "->" .. E.buildNumber)
+			local list = {}
+			local new = false
+			for CurrencyID = 4000, 1, -1 do
+				local name = C_AccountStore.GetCurrencyInfo(CurrencyID).name
+				if name and name ~= "" then
+					if not Octo_Cache_DB.AllCurrencies[CurrencyID] then
+						new = true
+						print (E.Green_Color.."FIND NEW CUURENCY|r", E.Red_Color..CurrencyID.."|r", E.func_texturefromIcon(C_AccountStore.GetCurrencyInfo(CurrencyID).icon)..name)
+						tinsert(list, CurrencyID)
+						Octo_Cache_DB.AllCurrencies[CurrencyID] = name
+					end
+				end
+			end
+			if new then
+				fpde(list)
+			end
+			Octo_Cache_DB.buildNumber = E.buildNumber
+		end
+	end
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
 function Octo_EventFrame_WTF:Octo_QuestsChangedDB()
 	Octo_QuestsChangedDB = InitTable(Octo_QuestsChangedDB)
 	InitSubTable(Octo_QuestsChangedDB, "QC_Quests")
 	InitSubTable(Octo_QuestsChangedDB, "QC_Vignettes")
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Daily_Reset()
 	local ServerTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.PlayerData.tmstp_Daily or 0) < ServerTime then
-			CharInfo.PlayerData.tmstp_Daily = E.func_tmstpDayReset(1)
+			CharInfo.PlayerData.tmstp_Daily = E:func_tmstpDayReset(1)
 			CharInfo.PlayerData.needResetDaily = true
 			-- Сброс ежедневных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
@@ -696,19 +864,22 @@ function Octo_EventFrame_WTF:Daily_Reset()
 		end
 	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Weekly_Reset()
 	local ServerTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.PlayerData.tmstp_Weekly or 0) < ServerTime then
 			-- Проверка награды из Великого Хранилища
 			for i = 1, #CharInfo.MASLENGO.GreatVault do
-				if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING then
+				if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING and CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING ~= 0 then
 					CharInfo.PlayerData.HasAvailableRewards = true
 					break
 				end
 			end
 			-- Сброс данных
-			CharInfo.PlayerData.tmstp_Weekly = E.func_tmstpDayReset(7)
+			CharInfo.PlayerData.tmstp_Weekly = E:func_tmstpDayReset(7)
 			CharInfo.PlayerData.needResetWeekly = true
 			CharInfo.PlayerData.CurrentKey = nil
 			CharInfo.PlayerData.CurrentKeyName = nil
@@ -725,12 +896,16 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 			end
 		end
 	end
+	E:func_CurrencyCaching()
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function Octo_EventFrame_WTF:Month_Reset()
 	local ServerTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (CharInfo.PlayerData.tmstp_Month or 0) < ServerTime then
-			CharInfo.PlayerData.tmstp_Month = E.func_tmstpDayReset(365/12)
+			CharInfo.PlayerData.tmstp_Month = E:func_tmstpDayReset(365/12)
 			CharInfo.PlayerData.needResetMonth = true
 			-- Сброс ежемесячных квестов
 			for _, v in next, (E.OctoTable_UniversalQuest) do
@@ -746,13 +921,15 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"VARIABLES_LOADED",
 }
-E.RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable)
 function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		-- создание таблицы с валютой
+		self:Octo_Cache_DB()
 		-- Перенос старой базы
-		-- self:DatabaseTransfer()
+		self:DatabaseTransfer()
 		-- Инициализация всех баз данных
 		self:Octo_ToDo_DB_Levels()
 		self:Octo_ToDo_DB_Vars()
@@ -763,6 +940,12 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:Octo_AddonsManager_DB()
 		self:Octo_DEBUG()
 		self:Octo_QuestsChangedDB()
+		-- Очистка базы
+		self:DatabaseClear()
+
+		-- Создание MaxQuantity если её нет
+		self:DatabaseCreateMaxQuantity()
+
 		-- Сброс данных по времени
 		self:Daily_Reset()
 		self:Weekly_Reset()
@@ -779,3 +962,4 @@ function Octo_EventFrame_WTF:VARIABLES_LOADED()
 		end
 	end
 end
+

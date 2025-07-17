@@ -173,7 +173,7 @@ local function dumpEdit(indent, msg, tables)
 end
 local LOCAL_FPrintHandler = function(...)
 	local function sendMessage(frame, indent, msg, allChildren)
-		local indentStr = E.func_Gradient(GlobalAddonName..": ")
+		local indentStr = E:func_Gradient(GlobalAddonName..": ")
 		for i = 1, indent do
 			indentStr = indentStr.." "
 		end
@@ -192,7 +192,7 @@ local LOCAL_FPrintHandler = function(...)
 			end
 		end
 	end
-	local message = strjoin(" ", E.func_Gradient(GlobalAddonName..": "), tostringall(...))
+	local message = strjoin(" ", E:func_Gradient(GlobalAddonName..": "), tostringall(...))
 	local mFrame = DEFAULT_CHAT_FRAME
 	local i = 1
 	repeat
@@ -259,7 +259,7 @@ local function tToStr(t)
 	end
 	return "{"..str:sub(1, -2).."}"
 end
-function E.func_mountslist(full)
+function E:func_mountslist(full)
 	if E.IsAddOnLoaded("Blizzard_Collections") then
 		fprint("|cffff0000NEED RELOAD|r")
 		-- return
@@ -295,7 +295,7 @@ function E.func_mountslist(full)
 			tinsert(t, {id, v[1], v[2], v[3], spellID, name})
 		elseif not tbl[id] then
 			j = j + 1
-			str = strjoin(str ~= "" and "\n" or "", str, ("[%s] = true, -- %s %s %s"):format(id, E.func_texturefromIcon(icon), spellID, name))
+			str = strjoin(str ~= "" and "\n" or "", str, ("[%s] = true, -- %s %s %s"):format(id, E:func_texturefromIcon(icon), spellID, name))
 		end
 		i = i + 1
 		w[id] = true
@@ -324,7 +324,7 @@ function E.func_mountslist(full)
 	fprint(("Mounts: %s. In base %s. Not in base: %s."):format(i, c, j))
 end
 ------------------------------
-function E.func_itemslist(msg)
+function E:func_itemslist(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
@@ -337,16 +337,16 @@ function E.func_itemslist(msg)
 	promise1:Then(function()
 			sort(list1, func_Reverse_order)
 			for _, id1 in next, (list1) do
-				str = str..id1..", -- "..E.func_itemTexture(id1)..E.func_itemName(id1).."\n"
+				str = str..id1..", -- "..E:func_itemTexture(id1)..E:func_itemName(id1).."\n"
 			end
 			for _, id2 in next, (list2) do
-				str = str..id2..", -- "..E.func_itemTexture(id2)..E.func_itemName(id2).."\n"
+				str = str..id2..", -- "..E:func_itemTexture(id2)..E:func_itemName(id2).."\n"
 			end
 			editBox:SetText(str)
 			editFrame:Show()
 	end)
 end
-function E.func_itemslistSort(msg)
+function E:func_itemslistSort(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
@@ -375,7 +375,7 @@ function E.func_itemslistSort(msg)
 			editFrame:Show()
 	end)
 end
-function E.func_itemslistSortBOOLEN(msg)
+function E:func_itemslistSortBOOLEN(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
@@ -409,7 +409,7 @@ function E.func_itemslistSortBOOLEN(msg)
 	end)
 end
 ------------------------------
-function E.func_questslist(msg)
+function E:func_questslist(msg)
 	local str = ""
 	local list1 = {}
 	local list2 = {}
@@ -423,17 +423,17 @@ function E.func_questslist(msg)
 	sort(list2, func_Reverse_order)
 	promise2:Then(function()
 			for _, id1 in next, (list1) do
-				str = str..id1..", -- "..E.func_questName(id1).."\n"
+				str = str..id1..", -- "..E:func_questName(id1).."\n"
 			end
 			for _, id2 in next, (list2) do
-				str = str..id2..", -- "..E.func_questName(id2).."\n"
+				str = str..id2..", -- "..E:func_questName(id2).."\n"
 			end
 			editBox:SetText(str)
 			editFrame:Show()
 	end)
 end
 ------------------------------
-function E.func_currencieslist(msg)
+function E:func_currencieslist(msg)
 	-- local str1 = ""
 	-- local headerName = ""
 	-- for i = 1, C_CurrencyInfo.GetCurrencyListSize() do
@@ -444,11 +444,11 @@ function E.func_currencieslist(msg)
 	-- str1 = str1 .."|cff606060 ---> ".. headerName .. "|r\n"
 	-- elseif info.name then
 	-- local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
-	-- local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
-	-- local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+	-- local CurrencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
+	-- local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
 	-- local quantity = currencyInfo.quantity
-	-- if currencyID then
-	-- str1 = str1 ..tostringall(currencyID) .. " - ".. E.func_currencyIcon(currencyID)..E.func_currencyName(currencyID) .." ("..quantity..")".. "\n"
+	-- if CurrencyID then
+	-- str1 = str1 ..tostringall(CurrencyID) .. " - ".. E:func_currencyIcon(CurrencyID)..E:func_currencyName(CurrencyID) .." ("..quantity..")".. "\n"
 	-- end
 	-- end
 	-- i = i + 1
@@ -457,15 +457,17 @@ function E.func_currencieslist(msg)
 	local str2 = ""
 	local vivod = ""
 	local list = {}
-	for _, currencyID in next, (E.TESTCURR) do
-		tinsert(list, currencyID)
+	for CurrencyID,	cachedName in next, (Octo_Cache_DB.AllCurrencies) do
+		tinsert(list, CurrencyID)
 	end
 	sort(list, func_Reverse_order)
-	for _, currencyID in next, (list) do
-		if E.func_currencyName(currencyID) ~= (currencyID.. " (UNKNOWN)") then
-			str1 = str1..currencyID..", --" ..E.func_currencyName(currencyID).."|n"
+	for _, CurrencyID in ipairs(list) do
+
+	-- for CurrencyID = 3360, 1, -1 do
+		if E:func_currencyName(CurrencyID) ~= (CurrencyID.. " (UNKNOWN)") then
+			str1 = str1..CurrencyID..", --" ..E:func_currencyName(CurrencyID).."|n"
 		else
-			str2 = str2..currencyID..", --" ..E.func_currencyName(currencyID).."|n"
+			str2 = str2..CurrencyID..", --" ..E:func_currencyName(CurrencyID).."|n"
 		end
 	end
 	vivod = str1..str2
@@ -473,7 +475,7 @@ function E.func_currencieslist(msg)
 	editFrame:Show()
 end
 ------------------------------
-function E.func_reputationslist(msg)
+function E:func_reputationslist(msg)
 	local str4 = ""
 	local str5 = ""
 	local vivod = ""
@@ -483,10 +485,10 @@ function E.func_reputationslist(msg)
 	end
 	sort(list, func_Reverse_order)
 	for _, reputationID in next, (list) do
-		if E.func_reputationName(reputationID) ~= (reputationID.. " (UNKNOWN)") then
-			str4 = str4..reputationID..", --" ..E.func_reputationName(reputationID).."|n"
+		if E:func_reputationName(reputationID) ~= (reputationID.. " (UNKNOWN)") then
+			str4 = str4..reputationID..", --" ..E:func_reputationName(reputationID).."|n"
 		else
-			str5 = str5..reputationID..", --" ..E.func_reputationName(reputationID).."|n"
+			str5 = str5..reputationID..", --" ..E:func_reputationName(reputationID).."|n"
 		end
 	end
 	vivod = str4..str5
@@ -494,7 +496,7 @@ function E.func_reputationslist(msg)
 	editFrame:Show()
 end
 ------------------------------
-function E.func_spellslist(msg)
+function E:func_spellslist(msg)
 	local str4 = ""
 	local str5 = ""
 	local vivod = ""
@@ -506,10 +508,10 @@ function E.func_spellslist(msg)
 	end
 	sort(list, func_Reverse_order)
 	for _, spellID in next, (list) do
-		if E.func_GetSpellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
-			str4 = str4..spellID..", --" ..E.func_GetSpellNameFull(spellID).."\n"
+		if E:func_GetSpellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
+			str4 = str4..spellID..", --" ..E:func_GetSpellNameFull(spellID).."\n"
 		else
-			str5 = str5..spellID..", --" ..E.func_GetSpellNameFull(spellID).."\n"
+			str5 = str5..spellID..", --" ..E:func_GetSpellNameFull(spellID).."\n"
 		end
 	end
 	vivod = str4..str5
@@ -519,21 +521,21 @@ end
 local function func_HandleCommand(msg)
 	local command, arg1, arg2 = strsplit(" ", msg, 3)
 	if (command == "mount" or command == "1") then
-		E.func_mountslist(arg1)
+		E:func_mountslist(arg1)
 	elseif (command == "item" or command == "2") then
-		E.func_itemslist(arg1)
+		E:func_itemslist(arg1)
 	elseif (command == "quest" or command == "3") then
-		E.func_questslist(arg1)
+		E:func_questslist(arg1)
 	elseif (command == "currency" or command == "4") then
-		E.func_currencieslist(arg1)
+		E:func_currencieslist(arg1)
 	elseif (command == "rep" or command == "5") then
-		E.func_reputationslist(arg1)
+		E:func_reputationslist(arg1)
 	elseif (command == "spell" or command == "6") then
-		E.func_spellslist(arg1)
+		E:func_spellslist(arg1)
 	elseif (command == "item2" or command == "7") then
-		E.func_itemslistSort(arg1)
+		E:func_itemslistSort(arg1)
 	elseif (command == "item3" or command == "8") then
-		E.func_itemslistSortBOOLEN(arg1)
+		E:func_itemslistSortBOOLEN(arg1)
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("Команды:")
 		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."mount".." (1)")

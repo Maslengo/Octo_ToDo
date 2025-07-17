@@ -21,20 +21,20 @@ local locale = GetLocale()
 ----------------------------------------------------------------
 E.OctoTable_UniversalQuest = E.OctoTable_UniversalQuest or {}
 function Octo_EventFrame_Collect:func_ConcatAtStart()
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_01_WorldofWarcraft())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_02_TheBurningCrusade())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_03_WrathoftheLichKing())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_04_Cataclysm())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_05_MistsofPandaria())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_06_WarlordsofDraenor())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_07_Legion())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_08_BattleforAzeroth())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_09_Shadowlands())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_10_Dragonflight())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_11_TheWarWithin())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_12_Midnight())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_13_TheLastTitan())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_99_Other())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_01_WorldofWarcraft())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_02_TheBurningCrusade())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_03_WrathoftheLichKing())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_04_Cataclysm())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_05_MistsofPandaria())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_06_WarlordsofDraenor())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_07_Legion())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_08_BattleforAzeroth())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_09_Shadowlands())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_10_Dragonflight())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_11_TheWarWithin())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_12_Midnight())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_13_TheLastTitan())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_99_Other())
 end
 ----------------------------------------------------------------
 function E.LoadOctoUIforAddons()
@@ -89,7 +89,7 @@ end
 function E.Collect_All_PlayerInfo()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
-		local curServerShort = E.func_CurServerShort(E.curServer)
+		local curServerShort = E:func_CurServerShort(E.curServer)
 		local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
 		local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
 		local guildName, guildRankName, guildRankIndex = GetGuildInfo("PLAYER")
@@ -209,7 +209,7 @@ function E.Collect_All_PlayerDurability()
 				end
 			end
 		end
-		collectPlayerData.PlayerDurability = E.func_CompactNumberSimple(totalDurability)
+		collectPlayerData.PlayerDurability = E:func_CompactNumberSimple(totalDurability)
 	end
 end
 function E.Collect_All_PlayerLevel()
@@ -500,8 +500,8 @@ function E.Collect_All_GreatVault()
 						else
 							collectMASLENGO.GreatVault[tip].threshold = nil
 						end
-						local hyperlink = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
-						local hyperlink_STRING = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+						local hyperlink = E:func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+						local hyperlink_STRING = E:func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 						if hyperlink_STRING ~= nil then
 							local vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
 							if vivod and vivod ~= "" and vivod ~= 0 then
@@ -540,96 +540,125 @@ function E.Collect_All_Currency()
 		-- end
 		-- for CurrencyID, v in next, (list) do
 		----------------------------------------------------------------
-		-- for _, CurrencyID in ipairs(E.isAccountTransferableCurrencyTABLE) do
-
 
 		-- НЕ УЧИТЫВАЕТ ТЕКУЩЕГО ПЕРСА?
 		local currencyCache = {}
 
-		for _, CurrencyID in ipairs(E.TESTCURR) do
-			-- Проверяем, есть ли данные в кэше
-			if not currencyCache[CurrencyID] then
-				currencyCache[CurrencyID] = C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters(CurrencyID)
-			end
-
-			local rosterCurrencyData = currencyCache[CurrencyID]
-			if rosterCurrencyData then
-				-- Создаем таблицу для быстрого доступа по GUID
-				local currencyMap = {}
-				for _, v in ipairs(rosterCurrencyData) do
-					currencyMap[v.characterGUID] = v.quantity
-				end
-
-				for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
-					if currencyMap[GUID] then
-						CharInfo.MASLENGO.CurrencyID[CurrencyID] = currencyMap[GUID]
-					end
-				end
-			end
-			----------------------------------------------------------------
+		for CurrencyID,	cachedName in next, (Octo_Cache_DB.AllCurrencies) do
 			local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID)
+
+			collectMASLENGO.Currency[CurrencyID] = collectMASLENGO.Currency[CurrencyID] or {}
 			local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
 			if data then
 				local quantity = data.quantity
 				local maxQuantity = data.maxQuantity
 				local totalEarned = data.totalEarned
+
 				local maxWeeklyQuantity = data.maxWeeklyQuantity
 				local useTotalEarnedForMaxQty = data.useTotalEarnedForMaxQty
-				local discovered = data.discovered
-				local transferPercentage = data.transferPercentage
-				local rechargingCycleDurationMS = data.rechargingCycleDurationMS
-				local rechargingAmountPerCycle = data.rechargingAmountPerCycle
+				-- local discovered = data.discovered
+				-- local transferPercentage = data.transferPercentage
+				-- local rechargingCycleDurationMS = data.rechargingCycleDurationMS
+				-- local rechargingAmountPerCycle = data.rechargingAmountPerCycle
 
 
-				-- if CurrencyID == 1904 then
-				-- 	print (quantity,maxQuantity,totalEarned,maxWeeklyQuantity,useTotalEarnedForMaxQty,discovered,transferPercentage,rechargingCycleDurationMS,rechargingAmountPerCycle)
-				-- 	-- print (transferPercentage, rechargingAmountPerCycle)
-				-- 	-- print (E.func_SecondsToClock(GetServerTime()/1000-rechargingCycleDurationMS/1000))
-				-- end
+				if CurrencyID == 2912 then
+					print (quantity, maxQuantity, totalEarned, maxWeeklyQuantity, useTotalEarnedForMaxQty)
+				end
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				-- Проверяем, есть ли данные в кэше
+				if not currencyCache[CurrencyID] then
+					currencyCache[CurrencyID] = C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters(CurrencyID)
+				end
 
+				local rosterCurrencyData = currencyCache[CurrencyID]
+				if rosterCurrencyData then
+					-- Создаем таблицу для быстрого доступа по GUID
+					local currencyMap = {}
+					for _, v in ipairs(rosterCurrencyData) do
+						currencyMap[v.characterGUID] = v.quantity
+					end
+
+					for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+						CharInfo.MASLENGO.Currency[CurrencyID] = CharInfo.MASLENGO.Currency[CurrencyID] or {}
+						if currencyMap[GUID] then
+							CharInfo.MASLENGO.Currency[CurrencyID].quantity = currencyMap[GUID]
+							CharInfo.MASLENGO.Currency[CurrencyID].maxQuantity = maxQuantity
+						else
+							CharInfo.MASLENGO.Currency[CurrencyID].quantity = nil
+						end
+					end
+				end
+				----------------------------------------------------------------
+				----------------------------------------------------------------
+				----------------------------------------------------------------
 				if not isAccountWideCurrency then
 					if collectMASLENGO and not InCombatLockdown() then
-						if quantity ~= nil and quantity ~= 0 then
-							collectMASLENGO.CurrencyID[CurrencyID] = quantity
-						end
-						if totalEarned ~= nil and totalEarned ~= 0 then
-							collectMASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
-						end
-						if maxQuantity ~= nil and maxQuantity ~= 0 then
-							if quantity ~= maxQuantity then
-								collectMASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
-							else
-								collectMASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
-							end
+						----------------------------------------------------------------
+						if quantity and quantity ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].quantity = quantity
 						else
-							if quantity ~= nil and quantity ~= 0 then
-								collectMASLENGO.CurrencyID_Total[CurrencyID] = quantity
-							end
+							collectMASLENGO.Currency[CurrencyID].quantity = nil
 						end
+						if maxQuantity and maxQuantity ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].maxQuantity = maxQuantity
+						else
+							collectMASLENGO.Currency[CurrencyID].maxQuantity = nil
+						end
+						if totalEarned and totalEarned ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].totalEarned = totalEarned
+						else
+							collectMASLENGO.Currency[CurrencyID].totalEarned = nil
+						end
+						if maxWeeklyQuantity and maxWeeklyQuantity ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].maxWeeklyQuantity = maxWeeklyQuantity
+						else
+							collectMASLENGO.Currency[CurrencyID].maxWeeklyQuantity = nil
+						end
+						if useTotalEarnedForMaxQty and useTotalEarnedForMaxQty ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].useTotalEarnedForMaxQty = useTotalEarnedForMaxQty
+						else
+							collectMASLENGO.Currency[CurrencyID].useTotalEarnedForMaxQty = nil
+						end
+						----------------------------------------------------------------
 					end
 				else
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						if CharInfo and not InCombatLockdown() then
-							if quantity ~= nil and quantity ~= 0 then
-								collectMASLENGO.CurrencyID[CurrencyID] = quantity
-							end
-							if totalEarned ~= nil and totalEarned ~= 0 then
-								collectMASLENGO.CurrencyID_totalEarned[CurrencyID] = totalEarned
-							end
-							if maxQuantity ~= nil and maxQuantity ~= 0 then
-								if quantity ~= maxQuantity then
-									collectMASLENGO.CurrencyID_Total[CurrencyID] = quantity.."/"..maxQuantity
-								else
-									collectMASLENGO.CurrencyID_Total[CurrencyID] = E.Green_Color..quantity.."/"..maxQuantity.."|r"
-								end
-							end
+							----------------------------------------------------------------
+						if quantity and quantity ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].quantity = quantity
+						else
+							collectMASLENGO.Currency[CurrencyID].quantity = nil
+						end
+						if maxQuantity and maxQuantity ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].maxQuantity = maxQuantity
+						else
+							collectMASLENGO.Currency[CurrencyID].maxQuantity = nil
+						end
+						if totalEarned and totalEarned ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].totalEarned = totalEarned
+						else
+							collectMASLENGO.Currency[CurrencyID].totalEarned = nil
+						end
+						if maxWeeklyQuantity and maxWeeklyQuantity ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].maxWeeklyQuantity = maxWeeklyQuantity
+						else
+							collectMASLENGO.Currency[CurrencyID].maxWeeklyQuantity = nil
+						end
+						if useTotalEarnedForMaxQty and useTotalEarnedForMaxQty ~= 0 then
+							collectMASLENGO.Currency[CurrencyID].useTotalEarnedForMaxQty = useTotalEarnedForMaxQty
+						else
+							collectMASLENGO.Currency[CurrencyID].useTotalEarnedForMaxQty = nil
+						end
+							----------------------------------------------------------------
 						end
 					end
 				end
 			else
-				collectMASLENGO.CurrencyID[CurrencyID] = nil
-				collectMASLENGO.CurrencyID_Total[CurrencyID] = nil
-				collectMASLENGO.CurrencyID_totalEarned[CurrencyID] = nil
+				collectMASLENGO.Currency[CurrencyID] = nil
 			end
 		end
 		----------------------------------------------------------------
@@ -644,7 +673,7 @@ function E.Collect_All_Reputations()
 		for index, tbl in ipairs(E.OctoTable_Reputations) do
 			for i, v in ipairs(tbl) do
 				local reputationID = v.id
-				local vivod = E.func_CheckReputationNEW(reputationID)
+				local vivod = E:func_CheckReputationNEW(reputationID)
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.MASLENGO.reputationNEW[reputationID] = CharInfo.MASLENGO.reputationNEW[reputationID] or {}
@@ -697,10 +726,10 @@ function E.Collect_All_ItemsInBag()
 					end
 					for _, tbl in next, (E.OctoTable_itemID_Cataloged_Research) do
 						if itemID == tbl.itemiD then
-							Possible_CatalogedResearch = Possible_CatalogedResearch + (tbl.count*E.func_GetItemCount(itemID))
+							Possible_CatalogedResearch = Possible_CatalogedResearch + (tbl.count*E:func_GetItemCount(itemID))
 						end
 					end
-					local isAnima = E.func_IsAnimaItemByID(itemID)
+					local isAnima = E:func_IsAnimaItemByID(itemID)
 					if stackCount and isAnima and itemID ~= nil then
 						if (quality == 2) and (itemID ~= 183727) then
 							Possible_Anima = Possible_Anima + (5 * stackCount)
@@ -720,7 +749,7 @@ function E.Collect_All_ItemsInBag()
 		end
 		collectMASLENGO.ItemsInBag = collectMASLENGO.ItemsInBag or {}
 		for _, itemID in next, (E.OctoTable_itemID_ALL) do
-			local count = E.func_GetItemCount(itemID, true, true, true, false)
+			local count = E:func_GetItemCount(itemID, true, true, true, false)
 			if count ~= 0 then
 				collectMASLENGO.ItemsInBag[itemID] = count
 			else
@@ -770,7 +799,7 @@ function E.Collect_All_Locations()
 	if collectPlayerData and not InCombatLockdown() then
 		local curRealZone = GetRealZoneText()
 		local curBindLocation = GetBindLocation()
-		collectPlayerData.curLocation = E.func_GetCurrentLocation()
+		collectPlayerData.curLocation = E:func_GetCurrentLocation()
 		if curRealZone and curBindLocation then
 			collectPlayerData.BindLocation = curRealZone.." ("..curBindLocation..")"
 		end
@@ -788,7 +817,7 @@ function E.Collect_All_Quests()
 		if C_QuestLog.IsQuestFlaggedCompleted(questID) then
 			collectMASLENGO.OctoTable_QuestID[questID] = true
 		end
-		-- local status = E.func_CheckCompletedByQuestID(questID)
+		-- local status = E:func_CheckCompletedByQuestID(questID)
 		-- if status ~= E.NONE then
 		-- collectMASLENGO.OctoTable_QuestID[questID] = status
 		-- end
@@ -800,7 +829,7 @@ function E.Collect_All_Quests()
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
 			numQuests = numQuests + 1
-			collectMASLENGO.ListOfQuests[info.questID] = E.func_CheckCompletedByQuestID(info.questID)
+			collectMASLENGO.ListOfQuests[info.questID] = E:func_CheckCompletedByQuestID(info.questID)
 		end
 	end
 	-- Сохраняем статистику
@@ -826,8 +855,8 @@ function E.Collect_All_UNIVERSALQuestUpdateQWEQWE()
 			if C_QuestLog.IsQuestFlaggedCompleted(questID) then
 				count = count + 1
 			end
-			if v.max == 1 and E.func_IsOnQuest(questID) then
-				collectMASLENGO.UniversalQuest[questKey] = E.func_CheckCompletedByQuestID(questID)
+			if v.max == 1 and E:func_IsOnQuest(questID) then
+				collectMASLENGO.UniversalQuest[questKey] = E:func_CheckCompletedByQuestID(questID)
 			end
 		end
 		if count > 0 then
@@ -846,8 +875,8 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 			if C_QuestLog.IsQuestFlaggedCompleted(questID) then
 				count = count + 1
 			end
-			if v.max == 1 and E.func_IsOnQuest(questID) then
-				collectMASLENGO.UniversalQuest[questKey] = E.func_CheckCompletedByQuestID(questID)
+			if v.max == 1 and E:func_IsOnQuest(questID) then
+				collectMASLENGO.UniversalQuest[questKey] = E:func_CheckCompletedByQuestID(questID)
 			end
 		end
 		-- if Octo_DEBUG then
@@ -938,7 +967,7 @@ function E.Collect_All_JournalInstance()
 					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].defeatedBosses = defeatedBosses
 					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].extendDisabled = extendDisabled
 					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
-					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].Time = E.func_SecondsToClock(instanceReset-ServerTime)
+					collectMASLENGO.journalInstance[instanceId][instanceDifficulty].Time = E:func_SecondsToClock(instanceReset-ServerTime)
 				end
 			end
 		end
@@ -1018,43 +1047,51 @@ function E.Collect_All_Holiday()
 				local eInfo = C_Calendar.GetHolidayInfo(0, day, i)
 				local event = C_Calendar.GetDayEvent(offsetMonths, day, i)
 				local id = event.eventID
-				E.Holiday[id] = E.Holiday[id] or {}
-				E.Holiday[id].title = event.title -- E.func_EventName(id)
-				local startTime = event.startTime
-				local endTime = event.endTime
-				local startTime_month = startTime.month
-				local startTime_monthDay = startTime.monthDay
-				local endTime_month = endTime.month
-				local endTime_monthDay = endTime.monthDay
-				local dateTbl_startTime = {
-					year = startTime.year,
-					month = startTime.month,
-					day = startTime.monthDay,
-					hour = startTime.hour,
-					min = startTime.minute,
-				}
-				local dateTbl_endTime = {
-					year = endTime.year,
-					month = endTime.month,
-					day = endTime.monthDay,
-					hour = endTime.hour,
-					min = endTime.minute,
-				}
-				local event_duration = E.FriendsFrame_GetLastOnline(time(dateTbl_endTime)-time(dateTbl_startTime), true)
-				E.Holiday[id].event_duration = event_duration
-				E.Holiday[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month)
-				E.Holiday[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month)
-				E.Holiday[id].ENDS = E.func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
-				if eInfo then
-					E.Holiday[id].iconTexture = eInfo.texture or E.Icon_QuestionMark
-				else
-					E.Holiday[id].iconTexture = event.iconTexture or E.Icon_QuestionMark
-					E.Holiday[id].ENDS = event_duration
-				end
-				E.Holiday[id].invitedBy = event.invitedBy
-				if not E.Holiday[id].priority then
-					E.Holiday[id].priority = priority
-					priority = priority + 1
+				-- E.Holiday[id] = E.Holiday[id] or {}
+				if not E.Holiday[id] then
+					E.Holiday[id] = E.Holiday[id] or {}
+					E.Holiday[id].title = event.title -- E:func_EventName(id)
+					local startTime = event.startTime
+					local endTime = event.endTime
+					local startTime_month = startTime.month
+					local startTime_monthDay = startTime.monthDay
+					local endTime_month = endTime.month
+					local endTime_monthDay = endTime.monthDay
+					local dateTbl_startTime = {
+						year = startTime.year,
+						month = startTime.month,
+						day = startTime.monthDay,
+						hour = startTime.hour,
+						min = startTime.minute,
+					}
+					local dateTbl_endTime = {
+						year = endTime.year,
+						month = endTime.month,
+						day = endTime.monthDay,
+						hour = endTime.hour,
+						min = endTime.minute,
+					}
+					local event_duration = E.func_FriendsFrame_GetLastOnline(time(dateTbl_endTime)-time(dateTbl_startTime), true)
+					E.Holiday[id].event_duration = event_duration
+					E.Holiday[id].startTime = E:func_fixdate(startTime_monthDay).."/"..E:func_fixdate(startTime_month)
+					E.Holiday[id].endTime = E:func_fixdate(endTime_monthDay).."/"..E:func_fixdate(endTime_month)
+					E.Holiday[id].ENDS = E:func_SecondsToClock(time(dateTbl_endTime)-GetServerTime(), true)
+					if eInfo then
+						E.Holiday[id].iconTexture = eInfo.texture or E.Icon_QuestionMark
+					else
+						E.Holiday[id].iconTexture = event.iconTexture or E.Icon_QuestionMark
+						E.Holiday[id].ENDS = event_duration
+					end
+					E.Holiday[id].invitedBy = event.invitedBy
+					if not E.Holiday[id].priority then
+						E.Holiday[id].priority = priority
+						priority = priority + 1
+					end
+					if event.sequenceType then
+						E.Holiday[id].sequenceType = event.sequenceType
+					end
+				elseif event.sequenceType ~= "ONGOING" and (not E.Holiday[id].sequenceType or E.Holiday[id].sequenceType == "ONGOING") then
+					E.Holiday[id].iconTexture = C_Calendar.GetHolidayInfo(0, day, i).texture
 				end
 				if day == monthDay then
 					if event.sequenceType == "START" then
@@ -1083,6 +1120,8 @@ function E.Collect_All_Holiday()
 		function_restoreBackup()
 	end
 end
+
+
 function E.Collect_All_BfA_Azerite()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
@@ -1092,7 +1131,7 @@ function E.Collect_All_BfA_Azerite()
 			local currentLevel = C_AzeriteItem.GetPowerLevel(azeriteItemLocation)
 			if totalLevelXP and totalLevelXP ~= 0 then
 				collectPlayerData.azeriteLVL = currentLevel
-				collectPlayerData.azeriteEXP = floor(xp / totalLevelXP * 100).."%, -"..E.func_CompactNumberFormat(totalLevelXP - xp)
+				collectPlayerData.azeriteEXP = floor(xp / totalLevelXP * 100).."%, -"..E:func_CompactNumberFormat(totalLevelXP - xp)
 			end
 		end
 	end
@@ -1100,13 +1139,13 @@ end
 function E.Collect_All_BfA_Cloaklvl()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
-		local hasItem = E.func_GetItemCount(169223, true, true, true, false)
+		local hasItem = E:func_GetItemCount(169223, true, true, true, false)
 		if hasItem ~= 0 then
 			local itemLink = GetInventoryItemLink("player", 15)
 			if itemLink then
 				local itemID = itemLink:match("item:(%d+)")
 				if itemID == "169223" then
-					local itemLevel = select(4, E.func_GetItemInfo(itemLink))
+					local itemLevel = select(4, E:func_GetItemInfo(itemLink))
 					if itemLevel then
 						collectPlayerData.cloak_lvl = min(15, max((itemLevel - 125) / 2 + 1, 1))
 					end
@@ -1140,8 +1179,8 @@ function E.Collect_All_BfA_Island()
 	if collectPlayerData and not InCombatLockdown() then
 		local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
 		if questID then
-			if E.func_CheckCompletedByQuestID(questID) ~= E.NONE then
-				collectMASLENGO.islandBfA = E.func_CheckCompletedByQuestID(questID)
+			if E:func_CheckCompletedByQuestID(questID) ~= E.NONE then
+				collectMASLENGO.islandBfA = E:func_CheckCompletedByQuestID(questID)
 			end
 		end
 	end
@@ -1225,7 +1264,7 @@ function E.Collect_All_Table(event)
 	E.Collect_All_Holiday()
 end
 ----------------------------------------------------------------
-E.RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable)
 function Octo_EventFrame_Collect:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")

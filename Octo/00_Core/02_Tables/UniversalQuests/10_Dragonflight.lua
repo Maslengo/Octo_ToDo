@@ -21,8 +21,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 3,
 	},
 	{
-		icon = E.func_GetItemIconByID(137642),
-		textleft = E.func_questName(47148),
+		icon = E:func_GetItemIconByID(137642),
+		textleft = E:func_questName(47148),
 		name_save = "SomethingDifferent",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -32,8 +32,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetCurrencyIcon(1602),
-		textleft = E.func_questName(71026),
+		icon = E:func_GetCurrencyIcon(1602),
+		textleft = E:func_questName(71026),
 		name_save = "AgainstOverwhelmingOdds",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -108,8 +108,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 25,
 	},
 	{
-		icon = E.func_GetItemIconByID(205985),
-		textleft = E.func_questName(75665),
+		icon = E:func_GetItemIconByID(205985),
+		textleft = E:func_questName(75665),
 		name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -203,7 +203,7 @@ function E:func_Universal_10_Dragonflight()
 		max = 25,
 	},
 	{
-		icon = E.func_GetItemIconByID(200095),
+		icon = E:func_GetItemIconByID(200095),
 		textleft = E.Timers.DF_CommunityFeast()..L["Community Feast"],
 		name_save = "CommunityFeast",
 		reset = "Weekly",
@@ -248,7 +248,7 @@ function E:func_Universal_10_Dragonflight()
 	},
 	{
 		icon = E.Icon_Empty,
-		textleft = E.func_questName(66133),
+		textleft = E:func_questName(66133),
 		name_save = "KeysofLoyalty",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -269,8 +269,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(200224),
-		textleft = E.Timers.DF_ResearchersUnderFire()..E.func_questName(74906),
+		icon = E:func_GetItemIconByID(200224),
+		textleft = E.Timers.DF_ResearchersUnderFire()..E:func_questName(74906),
 		name_save = "ResearchersUnderFire",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -306,8 +306,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(200073),
-		textleft = E.func_questName(70750),
+		icon = E:func_GetItemIconByID(200073),
+		textleft = E:func_questName(70750),
 		name_save = "AidingtheAccord",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -345,8 +345,8 @@ function E:func_Universal_10_Dragonflight()
 
 
 	{
-		icon = E.func_GetSpellIcon(393294),
-		textleft = E.func_GetSpellName(393294),
+		icon = E:func_GetSpellIcon(393294),
+		textleft = E:func_GetSpellName(393294),
 		name_save = "CatchingUp",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -362,8 +362,8 @@ function E:func_Universal_10_Dragonflight()
 	},
 
 	{
-		icon = E.func_GetItemIconByID(204682),
-		textleft = E.func_questName(75694),
+		icon = E:func_GetItemIconByID(204682),
+		textleft = E:func_questName(75694),
 		name_save = "AberrustheShadowedCrucibleSarkareth",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -373,8 +373,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(197921),
-		textleft = E.func_questName(66847),
+		icon = E:func_GetItemIconByID(197921),
+		textleft = E:func_questName(66847),
 		name_save = "VaultoftheIncarnatesFuryoftheStormEater",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -384,7 +384,7 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetSpellIcon(343140),
+		icon = E:func_GetSpellIcon(343140),
 		textleft = E.Timers.DF_TimeRift().."TimeRift",
 		name_save = "TimeRift",
 		reset = "Weekly",
@@ -395,8 +395,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(209833),
-		textleft = E.Timers.DF_Dreamsurges()..E.func_questName(77414),
+		icon = E:func_GetItemIconByID(209833),
+		textleft = E.Timers.DF_Dreamsurges()..E:func_questName(77414),
 		name_save = "DreamsurgeInvestigation",
 		reset = "Once",
 		desc = "Dragonflight",
@@ -406,8 +406,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(215364),
-		textleft = E.func_questName(77251),
+		icon = E:func_GetItemIconByID(215364),
+		textleft = E:func_questName(77251),
 		name_save = "ShapingtheDreamsurge",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -417,8 +417,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(208090),
-		textleft = E.func_questName(77236),
+		icon = E:func_GetItemIconByID(208090),
+		textleft = E:func_questName(77236),
 		name_save = "WhenTimeNeedsMending",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -428,7 +428,7 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetCurrencyIcon(2594),
+		icon = E:func_GetCurrencyIcon(2594),
 		textleft = "TemporalAcquisitionsSpecialist",
 		name_save = "TemporalAcquisitionsSpecialist",
 		reset = "Once",
@@ -452,8 +452,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 14,
 	},
 	{
-		icon = E.func_GetItemIconByID(93724),
-		textleft = E.func_GetItemNameByID(93724),
+		icon = E:func_GetItemIconByID(93724),
+		textleft = E:func_GetItemNameByID(93724),
 		name_save = "DarkmoonFaire",
 		reset = "Daily",
 		desc = "Dragonflight",
@@ -474,8 +474,8 @@ function E:func_Universal_10_Dragonflight()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	{
-		icon = E.func_GetItemIconByID(210421),
-		textleft = E.func_questName(78444),
+		icon = E:func_GetItemIconByID(210421),
+		textleft = E:func_questName(78444),
 		name_save = "EmeraldDream_AWorthyAllyDreamWardens",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -485,8 +485,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(211394),
-		textleft = E.func_questName(78821),
+		icon = E:func_GetItemIconByID(211394),
+		textleft = E:func_questName(78821),
 		name_save = "EmeraldDream_BloomingDreamseeds",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -496,8 +496,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(211389),
-		textleft = E.Timers.DF_Flower()..E.func_questName(78319),
+		icon = E:func_GetItemIconByID(211389),
+		textleft = E.Timers.DF_Flower()..E:func_questName(78319),
 		name_save = "EmeraldDream_TheSuperbloom",
 		reset = "Weekly",
 		desc = "Dragonflight",
@@ -573,8 +573,8 @@ function E:func_Universal_10_Dragonflight()
 		max = 19,
 	},
 	{
-		icon = E.func_GetItemIconByID(208396),
-		textleft = E.func_questName(78381),
+		icon = E:func_GetItemIconByID(208396),
+		textleft = E:func_questName(78381),
 		name_save = "EmeraldDream_DreamsUnified",
 		reset = "Once",
 		desc = "Dragonflight",

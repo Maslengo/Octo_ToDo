@@ -111,7 +111,7 @@ function E:BuildQuestLog()
 			E:RemoveQuest(quest)
 		elseif IsShiftKeyDown() then
 			StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d},"):format(
-					E.func_GetCoord(quest.x, quest.y),
+					E:func_GetCoord(quest.x, quest.y),
 					quest.id or "nil"
 			))
 		else
@@ -228,7 +228,7 @@ function E:BuildVignetteLog()
 			E:RemoveVignette(vignette)
 		elseif IsShiftKeyDown() then
 			StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {vignette=%d, label=\"%s\"},"):format(
-					E.func_GetCoord(vignette.x, vignette.y),
+					E:func_GetCoord(vignette.x, vignette.y),
 					vignette.id or "nil",
 					vignette.name or UNKNOWN
 			))

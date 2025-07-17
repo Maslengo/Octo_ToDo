@@ -51,7 +51,7 @@ function E:func_Universal_08_BattleforAzeroth()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(173372),
+			icon = E:func_GetItemIconByID(173372),
 			textleft = E.Timers.BfA_Assault().."AssaultTheBlackEmpire",
 			name_save = "AssaultTheBlackEmpire",
 			reset = "Weekly",
@@ -65,7 +65,7 @@ function E:func_Universal_08_BattleforAzeroth()
 			max = 2,
 		},
 		{
-			icon = E.func_GetItemIconByID(174288),
+			icon = E:func_GetItemIconByID(174288),
 			textleft = "miniVision",
 			name_save = "miniVision",
 			reset = "Daily",
@@ -80,7 +80,7 @@ function E:func_Universal_08_BattleforAzeroth()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(164577),
+			icon = E:func_GetItemIconByID(164577),
 			textleft = "Warfront: Stromgarde",
 			name_save = "WarfrontStromgarde",
 			reset = "Weekly",
@@ -92,7 +92,7 @@ function E:func_Universal_08_BattleforAzeroth()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(164577),
+			icon = E:func_GetItemIconByID(164577),
 			textleft = "Warfront: Darkshore",
 			name_save = "WarfrontDarkshore",
 			reset = "Weekly",
@@ -104,7 +104,7 @@ function E:func_Universal_08_BattleforAzeroth()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(164577),
+			icon = E:func_GetItemIconByID(164577),
 			textleft = "Warfront: Heroic",
 			name_save = "WarfrontHeroic",
 			reset = "Weekly",

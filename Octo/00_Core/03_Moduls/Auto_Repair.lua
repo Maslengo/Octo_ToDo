@@ -25,7 +25,7 @@ tinsert(E.Modules, function()
 
 		-- Недостаточно золота
 		if repairAllCost > money then
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..C_CurrencyInfo.GetCoinTextureString(repairAllCost - money))
+			DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(L["We need more gold"], E.Addon_Left_Color, E.Addon_Right_Color).." "..C_CurrencyInfo.GetCoinTextureString(repairAllCost - money))
 			PlayNoGoldSound()
 			return
 		end

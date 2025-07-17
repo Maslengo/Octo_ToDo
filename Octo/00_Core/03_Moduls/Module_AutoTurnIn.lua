@@ -14,7 +14,7 @@ local events = {
 	"QUEST_PROGRESS",
 }
 
-E.RegisterMyEventsToFrames(Octo_EventFrame_AutoTurnIn, events)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_AutoTurnIn, events)
 
 function Octo_EventFrame_AutoTurnIn:BAG_UPDATE_DELAYED()
 	if not InCombatLockdown() then

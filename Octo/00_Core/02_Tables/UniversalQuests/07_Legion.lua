@@ -32,8 +32,8 @@ function E:func_Universal_07_Legion()
 	},
 
 	{
-		icon = E.func_GetItemIconByID(140307),
-		textleft = E.func_questName(43533),
+		icon = E:func_GetItemIconByID(140307),
+		textleft = E:func_questName(43533),
 		name_save = "BalanceofPower",
 		reset = "Once",
 		desc = "Legion",

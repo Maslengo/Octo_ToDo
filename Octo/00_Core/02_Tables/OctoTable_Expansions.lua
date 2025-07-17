@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
 E.OctoTable_Expansions = {
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_1.r, EXPANSION_COLOR_1.g, EXPANSION_COLOR_1.b) or]] E.WorldofWarcraft_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_1.r, EXPANSION_COLOR_1.g, EXPANSION_COLOR_1.b) or]] E.WorldofWarcraft_Color,
 		config = 1,
 		-- revers = 11,
 		name = EXPANSION_NAME0 or "World of Warcraft",
@@ -11,7 +11,7 @@ E.OctoTable_Expansions = {
 		icon = 1385726, --254094,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_2.r, EXPANSION_COLOR_2.g, EXPANSION_COLOR_2.b) or]] E.TheBurningCrusade_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_2.r, EXPANSION_COLOR_2.g, EXPANSION_COLOR_2.b) or]] E.TheBurningCrusade_Color,
 		config = 2,
 		-- revers = 10,
 		name = EXPANSION_NAME1 or "The Burning Crusade",
@@ -20,7 +20,7 @@ E.OctoTable_Expansions = {
 		icon = 1378987, --236415,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_3.r, EXPANSION_COLOR_3.g, EXPANSION_COLOR_3.b) or]] E.WrathoftheLichKing_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_3.r, EXPANSION_COLOR_3.g, EXPANSION_COLOR_3.b) or]] E.WrathoftheLichKing_Color,
 		config = 3,
 		-- revers = 9,
 		name = EXPANSION_NAME2 or "Wrath of the Lich King",
@@ -29,7 +29,7 @@ E.OctoTable_Expansions = {
 		icon = 607688, --341221,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_4.r, EXPANSION_COLOR_4.g, EXPANSION_COLOR_4.b) or]] E.Cataclysm_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_4.r, EXPANSION_COLOR_4.g, EXPANSION_COLOR_4.b) or]] E.Cataclysm_Color,
 		config = 4,
 		-- revers = 8,
 		name = EXPANSION_NAME3 or "Cataclysm",
@@ -38,7 +38,7 @@ E.OctoTable_Expansions = {
 		icon = 536055, --574788,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_5.r, EXPANSION_COLOR_5.g, EXPANSION_COLOR_5.b) or]] E.MistsofPandaria_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_5.r, EXPANSION_COLOR_5.g, EXPANSION_COLOR_5.b) or]] E.MistsofPandaria_Color,
 		config = 5,
 		-- revers = 7,
 		name = EXPANSION_NAME4 or "Mists of Pandaria",
@@ -47,7 +47,7 @@ E.OctoTable_Expansions = {
 		icon = 901157, -- 896622,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_6.r, EXPANSION_COLOR_6.g, EXPANSION_COLOR_6.b) or]] E.WarlordsofDraenor_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_6.r, EXPANSION_COLOR_6.g, EXPANSION_COLOR_6.b) or]] E.WarlordsofDraenor_Color,
 		config = 6,
 		-- revers = 6,
 		name = EXPANSION_NAME5 or "Warlords of Draenor",
@@ -56,7 +56,7 @@ E.OctoTable_Expansions = {
 		icon = 1134497, -- 1113431,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_7.r, EXPANSION_COLOR_7.g, EXPANSION_COLOR_7.b) or]] E.Legion_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_7.r, EXPANSION_COLOR_7.g, EXPANSION_COLOR_7.b) or]] E.Legion_Color,
 		config = 7,
 		-- revers = 5,
 		name = EXPANSION_NAME6 or "Legion",
@@ -65,7 +65,7 @@ E.OctoTable_Expansions = {
 		icon = 1715536, -- 1711335,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_8.r, EXPANSION_COLOR_8.g, EXPANSION_COLOR_8.b) or]] E.BattleforAzeroth_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_8.r, EXPANSION_COLOR_8.g, EXPANSION_COLOR_8.b) or]] E.BattleforAzeroth_Color,
 		config = 8,
 		-- revers = 4,
 		name = EXPANSION_NAME7 or "Battle for Azeroth",
@@ -74,7 +74,7 @@ E.OctoTable_Expansions = {
 		icon = 3256381, -- 3194610,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_9.r, EXPANSION_COLOR_9.g, EXPANSION_COLOR_9.b) or]] E.Shadowlands_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_9.r, EXPANSION_COLOR_9.g, EXPANSION_COLOR_9.b) or]] E.Shadowlands_Color,
 		config = 9,
 		-- revers = 3,
 		name = EXPANSION_NAME8 or "Shadowlands",
@@ -83,7 +83,7 @@ E.OctoTable_Expansions = {
 		icon = 4465334, -- 4254080,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_10.r, EXPANSION_COLOR_10.g, EXPANSION_COLOR_10.b) or]] E.Dragonflight_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_10.r, EXPANSION_COLOR_10.g, EXPANSION_COLOR_10.b) or]] E.Dragonflight_Color,
 		config = 10,
 		-- revers = 2,
 		name = EXPANSION_NAME9 or "Dragonflight",
@@ -92,7 +92,7 @@ E.OctoTable_Expansions = {
 		icon = 5409250, -- 5342925,
 	},
 	{
-		color = --[[E.func_rgb2hex(EXPANSION_COLOR_11.r, EXPANSION_COLOR_11.g, EXPANSION_COLOR_11.b) or]] E.TheWarWithin_Color,
+		color = --[[E:func_rgb2hex(EXPANSION_COLOR_11.r, EXPANSION_COLOR_11.g, EXPANSION_COLOR_11.b) or]] E.TheWarWithin_Color,
 		config = 11,
 		-- revers = 1,
 		name = EXPANSION_NAME10 or "The War Within",
@@ -101,7 +101,7 @@ E.OctoTable_Expansions = {
 		icon = 6377935, -- 5779391,
 	},
 	-- {
-	-- 	color = --[[E.func_rgb2hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b) or]] E.Midnight_Color,
+	-- 	color = --[[E:func_rgb2hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b) or]] E.Midnight_Color,
 	-- 	config = 12,
 	-- 	name = EXPANSION_NAME11 or "Midnight",
 	-- 	nameShort = "Midnight",
@@ -109,7 +109,7 @@ E.OctoTable_Expansions = {
 	-- 	icon = 132123,
 	-- },
 	-- {
-	-- 	color = --[[E.func_rgb2hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b) or]] E.TheLastTitan_Color,
+	-- 	color = --[[E:func_rgb2hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b) or]] E.TheLastTitan_Color,
 	-- 	config = 13,
 	-- 	name = EXPANSION_NAME12 or "The Last Titan",
 	-- 	nameShort = "TheLastTitan",

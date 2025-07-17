@@ -19,18 +19,26 @@ function E:Hide_CheckListText()
 	end
 end
 
-function E:Hide_SubscriptionInterstitialFrame()
-	local frame = SubscriptionInterstitialFrame
-	if frame and not self[frame] then
-		self[frame] = true
-		if frame:IsShown() then frame:Hide()
-		else frame:HookScript("OnShow", function(self, ...)
-				frame:UnregisterAllEvents()
-				frame:Hide()
-			end)
-		end
-	end
-end
+
+
+
+
+
+
+
+
+-- function E:Hide_SubscriptionInterstitialFrame()
+-- 	local frame = SubscriptionInterstitialFrame
+-- 	if frame and not self[frame] then
+-- 		self[frame] = true
+-- 		if frame:IsShown() then frame:Hide()
+-- 		else frame:HookScript("OnShow", function(self, ...)
+-- 				frame:UnregisterAllEvents()
+-- 				frame:Hide()
+-- 			end)
+-- 		end
+-- 	end
+-- end
 
 function E:Hide_ActionStatusText()
 	local frame = ActionStatus.Text
@@ -329,7 +337,7 @@ function E:Hide_OrderHallCommandBar()
 		end
 		if _G.OrderHallCommandBar then
 			HandleCommandBar()
-		elseif E.func_IsRetail() then
+		elseif E:func_IsRetail() then
 			local frame = CreateFrame("Frame")
 			frame:RegisterEvent("ADDON_LOADED")
 			frame:SetScript("OnEvent", function(Frame, event, addon)
@@ -420,9 +428,10 @@ local MyEventsTable = {
 	"PLAYER_REGEN_DISABLED",
 	"PLAYER_STARTED_MOVING",
 	"TALKINGHEAD_REQUESTED",
+	"SHOW_SUBSCRIPTION_INTERSTITIAL",
 }
 
-E.RegisterMyEventsToFrames(Octo_EventFrame_HideFrames, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_HideFrames, MyEventsTable)
 
 function Octo_EventFrame_HideFrames:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
@@ -433,7 +442,7 @@ end
 
 function Octo_EventFrame_HideFrames:START_HF_functions()
 	if Octo_ToDo_DB_Vars.Hide_CheckListText then E:Hide_CheckListText() end
-	if Octo_ToDo_DB_Vars.Hide_SubscriptionInterstitialFrame then E:Hide_SubscriptionInterstitialFrame() end
+	-- if Octo_ToDo_DB_Vars.Hide_SubscriptionInterstitialFrame then E:Hide_SubscriptionInterstitialFrame() end
 	if Octo_ToDo_DB_Vars.Hide_ActionStatusText then E:Hide_ActionStatusText() end
 	if Octo_ToDo_DB_Vars.Hide_SecondaryStatusTrackingBarContainer then E:Hide_SecondaryStatusTrackingBarContainer() end
 	if Octo_ToDo_DB_Vars.Hide_MainStatusTrackingBarContainer then E:Hide_MainStatusTrackingBarContainer() end
@@ -480,4 +489,17 @@ end
 
 function Octo_EventFrame_HideFrames:TALKINGHEAD_REQUESTED()
 	self:START_HF_functions()
+end
+
+
+function E:Hide_SubscriptionInterstitialFrame()
+	local frame = SubscriptionInterstitialFrame
+	if frame and not self[frame] then
+		self[frame] = true
+		SubscriptionInterstitialFrame:UnregisterAllEvents()
+	end
+end
+
+function Octo_EventFrame_HideFrames:SHOW_SUBSCRIPTION_INTERSTITIAL()
+	if Octo_ToDo_DB_Vars.Hide_SubscriptionInterstitialFrame then E:Hide_SubscriptionInterstitialFrame() end
 end

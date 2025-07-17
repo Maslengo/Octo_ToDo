@@ -78,8 +78,8 @@ function E:func_Universal_09_Shadowlands()
 	},
 
 	{
-		icon = E.func_GetCurrencyIcon(1977),
-		textleft = "Korthia: Weekly", --E.func_questName(63949),
+		icon = E:func_GetCurrencyIcon(1977),
+		textleft = "Korthia: Weekly", --E:func_questName(63949),
 		name_save = "kortiaweekly",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -90,8 +90,8 @@ function E:func_Universal_09_Shadowlands()
 	},
 
 	{
-		icon = E.func_GetCurrencyIcon(1813),
-		textleft = "1000 anima", -- E.func_questName(61981),
+		icon = E:func_GetCurrencyIcon(1813),
+		textleft = "1000 anima", -- E:func_questName(61981),
 		name_save = "anima1k",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -118,8 +118,8 @@ function E:func_Universal_09_Shadowlands()
 
 
 	{
-		icon = E.func_GetCurrencyIcon(1931),
-		textleft = "Korthia: Lost Research", -- E.func_questName(65266),
+		icon = E:func_GetCurrencyIcon(1931),
+		textleft = "Korthia: Lost Research", -- E:func_questName(65266),
 		name_save = "korthialostresearch",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -160,8 +160,8 @@ function E:func_Universal_09_Shadowlands()
 
 
 	{
-		icon = E.func_GetCurrencyIcon(2009),
-		textleft = "Zerith Mortis: Weekly", -- E.func_questName(66042),
+		icon = E:func_GetCurrencyIcon(2009),
+		textleft = "Zerith Mortis: Weekly", -- E:func_questName(66042),
 		name_save = "patternswithinpatterns",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -179,7 +179,7 @@ function E:func_Universal_09_Shadowlands()
 	----------------------------------------------------------------
 
 	{
-		icon = E.func_GetItemIconByID(187148),
+		icon = E:func_GetItemIconByID(187148),
 		textleft = "Torghast: Adamant Vaults",
 		name_save = "torghastav",
 		reset = "Weekly",
@@ -196,8 +196,8 @@ function E:func_Universal_09_Shadowlands()
 
 
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1810),
-	-- 	textleft = E.func_questName(62858),
+	-- 	icon = E:func_GetCurrencyIcon(1810),
+	-- 	textleft = E:func_questName(62858),
 	-- 	name_save = "ReturnLostSouls",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
@@ -218,7 +218,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 1,
 	-- },
 	-- {
-	-- 	icon = E.func_GetItemIconByID(184374),
+	-- 	icon = E:func_GetItemIconByID(184374),
 	-- 	textleft = "TradingFavors",
 	-- 	name_save = "TradingFavors",
 	-- 	reset = "Weekly",
@@ -244,8 +244,8 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 2,
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1880),
-	-- 	textleft = E.func_currencyName(1880),
+	-- 	icon = E:func_GetCurrencyIcon(1880),
+	-- 	textleft = E:func_currencyName(1880),
 	-- 	name_save = "MawQuest",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
@@ -265,7 +265,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 3,
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1977),
+	-- 	icon = E:func_GetCurrencyIcon(1977),
 	-- 	textleft = L["Daily quests"],
 	-- 	name_save = "KorthiaDailyQuest",
 	-- 	reset = "Daily",
@@ -279,8 +279,8 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 4,
 	-- },
 	-- {
-	-- 	icon = E.func_GetItemIconByID(187551),
-	-- 	textleft = E.func_questName(64522),
+	-- 	icon = E:func_GetItemIconByID(187551),
+	-- 	textleft = E:func_questName(64522),
 	-- 	name_save = "KorthiaStolenKorthianSupplies",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
@@ -327,7 +327,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 23,
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1767),
+	-- 	icon = E:func_GetCurrencyIcon(1767),
 	-- 	textleft = L["Purple Mobs"],
 	-- 	name_save = "KorthiaPurpleMobs",
 	-- 	reset = "Daily",
@@ -352,7 +352,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 15, -- 3?
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1767),
+	-- 	icon = E:func_GetCurrencyIcon(1767),
 	-- 	textleft = L["Relic Gorgers"],
 	-- 	name_save = "KorthiaRelicGorgers",
 	-- 	reset = "Daily",
@@ -366,7 +366,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 4,
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1767),
+	-- 	icon = E:func_GetCurrencyIcon(1767),
 	-- 	textleft = L["Mushrooms"],
 	-- 	name_save = "KorthiaCollectionMushrooms",
 	-- 	reset = "Daily",
@@ -381,7 +381,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 5,
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1767),
+	-- 	icon = E:func_GetCurrencyIcon(1767),
 	-- 	textleft = L["Nests"],
 	-- 	name_save = "KorthiaCollectionNests",
 	-- 	reset = "Daily",
@@ -396,7 +396,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 5,
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1767),
+	-- 	icon = E:func_GetCurrencyIcon(1767),
 	-- 	textleft = L["Mawsworn Caches"],
 	-- 	name_save = "KorthiaCollectionMawswornCaches",
 	-- 	reset = "Daily",
@@ -409,7 +409,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 3,
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1767),
+	-- 	icon = E:func_GetCurrencyIcon(1767),
 	-- 	textleft = L["Bones/Stones/Relics"],
 	-- 	name_save = "KorthiaCollectionBonesStonesRelics",
 	-- 	reset = "Daily",
@@ -424,7 +424,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 5,
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1767),
+	-- 	icon = E:func_GetCurrencyIcon(1767),
 	-- 	textleft = L["Spectral Bound Chest"],
 	-- 	name_save = "KorthiaRIFTSpectralBoundChest",
 	-- 	reset = "Daily",
@@ -435,7 +435,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 1,
 	-- },
 	-- {
-	-- 	icon = E.func_GetCurrencyIcon(1767),
+	-- 	icon = E:func_GetCurrencyIcon(1767),
 	-- 	textleft = L["Helsworn Chest"],
 	-- 	name_save = "MawHelswornChest",
 	-- 	reset = "Daily",
@@ -446,7 +446,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 1,
 	-- },
 	-- -- {
-	-- -- icon = E.func_GetCurrencyIcon(1767),
+	-- -- icon = E:func_GetCurrencyIcon(1767),
 	-- -- textleft = L["Anima Vessel"],
 	-- -- name_save = "KorthiaKorthianAnimaVessel",
 	-- -- reset = "Daily",
@@ -484,7 +484,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 4,
 	-- },
 	-- {
-	-- 	icon = E.func_GetItemIconByID(186731),
+	-- 	icon = E:func_GetItemIconByID(186731),
 	-- 	textleft = L["Zovaal's Vault"],
 	-- 	name_save = "KorthiaRIFTZovaalsVault",
 	-- 	reset = "Daily",
@@ -495,8 +495,8 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 1,
 	-- },
 	-- {
-	-- 	icon = E.func_GetItemIconByID(187216),
-	-- 	textleft = E.func_GetItemNameByID(187216),
+	-- 	icon = E:func_GetItemIconByID(187216),
+	-- 	textleft = E:func_GetItemNameByID(187216),
 	-- 	name_save = "KorthiaSoultwiningCrescent",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
@@ -506,7 +506,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 	max = 1,
 	-- },
 	-- -- {
-	-- -- icon = E.func_GetCurrencyIcon(1767),
+	-- -- icon = E:func_GetCurrencyIcon(1767),
 	-- -- textleft = "KorthiaITEMResearchReportRelicExaminationTechniques",
 	-- -- name_save = "KorthiaITEMResearchReportRelicExaminationTechniques",
 	-- -- reset = "Once",
@@ -517,7 +517,7 @@ function E:func_Universal_09_Shadowlands()
 	-- -- max = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E.func_GetCurrencyIcon(1767),
+	-- -- icon = E:func_GetCurrencyIcon(1767),
 	-- -- textleft = "KorthiaITEMVaultAnimaTracker",
 	-- -- name_save = "KorthiaITEMVaultAnimaTracker",
 	-- -- reset = "Once",
@@ -528,7 +528,7 @@ function E:func_Universal_09_Shadowlands()
 	-- -- max = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E.func_GetCurrencyIcon(1767),
+	-- -- icon = E:func_GetCurrencyIcon(1767),
 	-- -- textleft = "KorthiaITEMTreatiseRecognizingStygiaanditsUses",
 	-- -- name_save = "KorthiaITEMTreatiseRecognizingStygiaanditsUses",
 	-- -- reset = "Once",
@@ -539,7 +539,7 @@ function E:func_Universal_09_Shadowlands()
 	-- -- max = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E.func_GetCurrencyIcon(1767),
+	-- -- icon = E:func_GetCurrencyIcon(1767),
 	-- -- textleft = "KorthiaITEMTreatiseBondsofStygiainMortals",
 	-- -- name_save = "KorthiaITEMTreatiseBondsofStygiainMortals",
 	-- -- reset = "Once",
@@ -550,7 +550,7 @@ function E:func_Universal_09_Shadowlands()
 	-- -- max = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E.func_GetCurrencyIcon(1767),
+	-- -- icon = E:func_GetCurrencyIcon(1767),
 	-- -- textleft = "KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop",
 	-- -- name_save = "KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop",
 	-- -- reset = "Once",
@@ -561,7 +561,7 @@ function E:func_Universal_09_Shadowlands()
 	-- -- max = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E.func_GetCurrencyIcon(1767),
+	-- -- icon = E:func_GetCurrencyIcon(1767),
 	-- -- textleft = "KorthiaITEMTreatiseRelicsAboundintheShadowlands",
 	-- -- name_save = "KorthiaITEMTreatiseRelicsAboundintheShadowlands",
 	-- -- reset = "Once",
@@ -572,7 +572,7 @@ function E:func_Universal_09_Shadowlands()
 	-- -- max = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E.func_GetCurrencyIcon(1767),
+	-- -- icon = E:func_GetCurrencyIcon(1767),
 	-- -- textleft = "KorthiaITEMResearchReportAdaptiveAlloys",
 	-- -- name_save = "KorthiaITEMResearchReportAdaptiveAlloys",
 	-- -- reset = "Once",
@@ -583,7 +583,7 @@ function E:func_Universal_09_Shadowlands()
 	-- -- max = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E.func_GetCurrencyIcon(1767),
+	-- -- icon = E:func_GetCurrencyIcon(1767),
 	-- -- textleft = "KorthiaITEMResearchReportFirstAlloys",
 	-- -- name_save = "KorthiaITEMResearchReportFirstAlloys",
 	-- -- reset = "Once",

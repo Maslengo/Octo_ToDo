@@ -5,27 +5,17 @@ E.PromiseSpell = {}
 E.PromiseQuest = {}
 E.ActiveHoliday = {}
 E.Holiday = {}
-
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
 E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\LeftFrame.tga"
 E.TEXTURE_HIGHLIGHT_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
 E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
 E.TEXTURE_BLANK_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Blank.tga"
 E.HighlightTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
-
-
-
-
-
-
-
-
-E.Enable_Achievements = false
+E.Enable_Achievements = true
 E.Enable_AddonsManager = false
 E.Enable_QuestsChanged = true
 E.Enable_Minecraft = false
 E.Enable_Moduls = true
-
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 local LibStub = LibStub
@@ -34,7 +24,6 @@ local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
 -- Кеширование глобальных функций и таблиц
-local _G = _G
 local sort = table.sort
 local table_insert = table.insert
 local table_concat = table.concat
@@ -209,38 +198,40 @@ local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
 local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
 ----------------------------------------------------------------
 -- console -> export "art"
-function E.func_IsClassic() if E.interfaceVersion > 10000 and E.interfaceVersion < 20000 then return true else return false end end
-function E.func_IsBC() if E.interfaceVersion > 20000 and E.interfaceVersion < 30000 then return true else return false end end
-function E.func_IsWOTLK() if E.interfaceVersion > 30000 and E.interfaceVersion < 40000 then return true else return false end end
-function E.func_IsCataclysm() if E.interfaceVersion > 40000 and E.interfaceVersion < 50000 then return true else return false end end
-function E.func_IsMOP() if E.interfaceVersion > 50000 and E.interfaceVersion < 60000 then return true else return false end end
-function E.func_IsWOD() if E.interfaceVersion > 60000 and E.interfaceVersion < 70000 then return true else return false end end
-function E.func_IsLegion() if E.interfaceVersion > 70000 and E.interfaceVersion < 80000 then return true else return false end end
-function E.func_IsBFA() if E.interfaceVersion > 80000 and E.interfaceVersion < 90000 then return true else return false end end
-function E.func_IsShadowlands() if E.interfaceVersion > 90000 and E.interfaceVersion < 100000 then return true else return false end end
-function E.func_IsDragonflight() if E.interfaceVersion > 100000 and E.interfaceVersion < 110000 then return true else return false end end
-function E.func_IsTWW() if E.interfaceVersion > 110000 and E.interfaceVersion < 120000 then return true else return false end end
-function E.func_IsMidnight() if E.interfaceVersion > 120000 and E.interfaceVersion < 130000 then return true else return false end end
-function E.func_IsTLT() if E.interfaceVersion > 130000 and E.interfaceVersion < 140000 then return true else return false end end
-function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
-function E.func_IsPTR() return GetCurrentRegion() >= 72 end
+function E:func_IsClassic() if E.interfaceVersion > 10000 and E.interfaceVersion < 20000 then return true else return false end end
+function E:func_IsBC() if E.interfaceVersion > 20000 and E.interfaceVersion < 30000 then return true else return false end end
+function E:func_IsWOTLK() if E.interfaceVersion > 30000 and E.interfaceVersion < 40000 then return true else return false end end
+function E:func_IsCataclysm() if E.interfaceVersion > 40000 and E.interfaceVersion < 50000 then return true else return false end end
+function E:func_IsMOP() if E.interfaceVersion > 50000 and E.interfaceVersion < 60000 then return true else return false end end
+function E:func_IsWOD() if E.interfaceVersion > 60000 and E.interfaceVersion < 70000 then return true else return false end end
+function E:func_IsLegion() if E.interfaceVersion > 70000 and E.interfaceVersion < 80000 then return true else return false end end
+function E:func_IsBFA() if E.interfaceVersion > 80000 and E.interfaceVersion < 90000 then return true else return false end end
+function E:func_IsShadowlands() if E.interfaceVersion > 90000 and E.interfaceVersion < 100000 then return true else return false end end
+function E:func_IsDragonflight() if E.interfaceVersion > 100000 and E.interfaceVersion < 110000 then return true else return false end end
+function E:func_IsTWW() if E.interfaceVersion > 110000 and E.interfaceVersion < 120000 then return true else return false end end
+function E:func_IsMidnight() if E.interfaceVersion > 120000 and E.interfaceVersion < 130000 then return true else return false end end
+function E:func_IsTLT() if E.interfaceVersion > 130000 and E.interfaceVersion < 140000 then return true else return false end end
+function E:func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
+function E:func_IsPTR() return GetCurrentRegion() >= 72 end
 ----------------------------------------------------------------
-function E.func_GetItemIconByID(itemID)
+function E:func_GetItemIconByID(itemID)
 	return GetItemIconByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_GetItemNameByID(itemID)
+function E:func_GetItemNameByID(itemID)
 	table_insert(E.PromiseItem, itemID)
+	-- local info = C_AccountStore.GetItemInfo(itemID)
+	-- local itemName = C_AccountStore.GetItemInfo(itemID).name or UNKNOWN
 	local itemName = GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
 	local vivod = ""
-	local itemQuality = select(3, E.func_GetItemInfo(itemID)) or 0
+	local itemQuality = select(3, E:func_GetItemInfo(itemID)) or 0
 	if itemQuality then
-		vivod = vivod .. ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
+		vivod = vivod..ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
 	end
-	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
+	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
 ----------------------------------------------------------------
-function E.func_LFGdungName(dID)
+function E:func_LFGdungName(dID)
 	for i = 1, GetNumRandomDungeons() do
 		local dungeonID, name = GetLFGRandomDungeonInfo(i)
 		if dungeonID == dID then
@@ -250,69 +241,84 @@ function E.func_LFGdungName(dID)
 	return UNKNOWN-- Возвращаем значение по умолчанию только если ничего не найдено
 end
 ----------------------------------------------------------------
-function E.func_GetSpellIcon(spellID)
+function E:func_GetSpellIcon(spellID)
 	return GetSpellTexture(spellID)
 end
 ----------------------------------------------------------------
-function E.func_GetSpellName(spellID)
+function E:func_GetSpellName(spellID)
 	table_insert(E.PromiseSpell, spellID)
 	local vivod = GetSpellName(spellID)
-	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..spellID.."|r" or "")
+	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..spellID.."|r" or "")
 end
 ----------------------------------------------------------------
-function E.func_GetCurrencyIcon(currencyID)
+function E:func_GetCurrencyIcon(currencyID)
 	local info = GetCurrencyInfo(currencyID)
-	local iconFileID = E.Icon_QuestionMark
-	if info then
-		iconFileID = info.iconFileID
-	end
-	return iconFileID
+	return info and info.iconFileID or E.Icon_Empty --  E.Icon_QuestionMark
 end
 ----------------------------------------------------------------
-function E.func_currencyName_NOCOLOR(currencyID)
-	local vivod = ""
-	local AWide = ""
+function E:func_currencyName(currencyID)
+	-- ВАРИАНТ 1
+	-- local vivod = ""
+	-- local AWide = ""
+	-- if IsAccountTransferableCurrency(currencyID) then
+	--     AWide = E.Icon_AccountTransferable
+	-- elseif IsAccountWideCurrency(currencyID) then
+	--     AWide = E.Icon_AccountWide
+	-- end
+	-- local info = GetCurrencyInfo(currencyID)
+	-- if info then
+	--     local name = info.name
+	--     local quality = info.quality
+	--     local r, g, b = E:func_GetItemQualityColor(quality)
+	--     local color = CreateColor(r, g, b, 1)
+	--     local currencyName = color:WrapTextInColorCode(name)
+	--     vivod = AWide..currencyName
+	-- else
+	--     vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+	-- end
+	-- return vivod..(E.DebugIDs and E.Gray_Color.." id:"..currencyID.."|r" or "")
+	-- ВАРИАНТ 2
+	local WarbandIcon = ""
 	if IsAccountTransferableCurrency(currencyID) then
-		AWide = E.Icon_AccountTransferable
+		WarbandIcon = E.Icon_AccountTransferable
 	elseif IsAccountWideCurrency(currencyID) then
-		AWide = E.Icon_AccountWide
+		WarbandIcon = E.Icon_AccountWide
 	end
+	-- Получение информации о валюте
 	local info = GetCurrencyInfo(currencyID)
-	if info then
-		local name = info.name
-		vivod = AWide..name
-	else
-		vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+	if not info then
+		return WarbandIcon .. E.Red_Color .. RETRIEVING_ITEM_INFO .. "|r" .. (E.DebugIDs and E.Gray_Color .. " id:" .. currencyID .. "|r" or "")
 	end
-	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..currencyID.."|r" or "")
+	local name = info.name
+	local color = ITEM_QUALITY_COLORS[info.quality].hex or ITEM_QUALITY_COLORS[1]
+	return WarbandIcon .. color .. name .. "|r" .. (E.DebugIDs and E.Gray_Color .. " id:" .. currencyID .. "|r" or "")
+	-- ВАРИАНТ 3
+	-- local WarbandIcon = ""
+	-- if IsAccountTransferableCurrency(currencyID) then
+	--     WarbandIcon = E.Icon_AccountTransferable
+	-- elseif IsAccountWideCurrency(currencyID) then
+	--     WarbandIcon = E.Icon_AccountWide
+	-- end
+	-- local parts = { WarbandIcon } -- Инициализация с WarbandIcon
+	-- -- Обработка информации о валюте
+	-- if info then
+	--     parts[2] = ITEM_QUALITY_COLORS[info.quality].hex..info.name.."|r"
+	-- else
+	--     parts[2] = E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+	-- end
+	-- -- Добавление отладочной информации при необходимости
+	-- if E.DebugIDs then
+	--     parts[3] = E.Gray_Color.." id:"..currencyID.."|r"
+	-- end
+	-- return table.concat(parts)
+	-- ВАРИАНТ 4
+	-- return ((IsAccountTransferableCurrency(currencyID) and E.Icon_AccountWide or " ") ..C_AccountStore.GetCurrencyInfo(currencyID).name) or UNKNOWN
 end
 ----------------------------------------------------------------
-function E.func_currencyName(currencyID)
-	local vivod = ""
-	local AWide = ""
-	if IsAccountTransferableCurrency(currencyID) then
-		AWide = E.Icon_AccountTransferable
-	elseif IsAccountWideCurrency(currencyID) then
-		AWide = E.Icon_AccountWide
-	end
-	local info = GetCurrencyInfo(currencyID)
-	if info then
-		local name = info.name
-		local quality = info.quality
-		local r, g, b = E.func_GetItemQualityColor(quality)
-		local color = CreateColor(r, g, b, 1)
-		local currencyName = color:WrapTextInColorCode(name)
-		vivod = AWide..currencyName
-	else
-		vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-	end
-	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..currencyID.."|r" or "")
-end
-----------------------------------------------------------------
-function E.func_IsAccountQuest(questID)
+function E:func_IsAccountQuest(questID)
 	return IsAccountQuest(questID)
 end
-function E.func_IsQuestFlaggedCompletedOnAccount(questID)
+function E:func_IsQuestFlaggedCompletedOnAccount(questID)
 	return IsQuestFlaggedCompletedOnAccount(questID)
 end
 table_insert(E.PromiseQuest, questID)
@@ -326,26 +332,26 @@ setmetatable(E.quest_names, {__index = function(self, key)
 			end
 			return E.Red_Color..UNKNOWN.."|r"
 end,})
-function E.func_questName_SIMPLE(questID)
+function E:func_questName_SIMPLE(questID)
 	return E.quest_names[questID]
 end
 ----------------------------------------------------------------
-function E.func_questName(questID, useLargeIcon)
+function E:func_questName(questID, useLargeIcon)
 	table_insert(E.PromiseQuest, questID)
 	local title = E.quest_names[questID] -- GetTitleForQuestID(questID)
 	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false)
-	if E.func_IsAccountQuest(questID) or E.func_IsQuestFlaggedCompletedOnAccount(questID) then
+	if E:func_IsAccountQuest(questID) or E:func_IsQuestFlaggedCompletedOnAccount(questID) then
 		vivod = E.Icon_AccountWide..vivod
 	end
-	if E.func_IsAccountQuest(questID) then
+	if E:func_IsAccountQuest(questID) then
 		vivod = "|cffFFFF00"..vivod.."|r"
-	elseif E.func_IsQuestFlaggedCompletedOnAccount(questID) then
+	elseif E:func_IsQuestFlaggedCompletedOnAccount(questID) then
 		vivod = "|cff9fc5e8"..vivod.."|r"
 	end
-	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..questID.."|r" or "")
+	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..questID.."|r" or "")
 end
 ----------------------------------------------------------------
-function E.getMapFullNameInfo(mapID)
+function E:func_getMapFullNameInfo(mapID)
 	local mapInfo = C_Map.GetMapInfo(mapID)
 	local mapGroupID = C_Map.GetMapGroupID(mapID)
 	if mapGroupID then
@@ -362,7 +368,7 @@ function E.getMapFullNameInfo(mapID)
 	return mapInfo
 end
 ----------------------------------------------------------------
-function E.func_GetCurrentLocation()
+function E:func_GetCurrentLocation()
 	local curRealZone = GetRealZoneText()
 	local curSubZone = GetSubZoneText()
 	local FIRSTtext = curRealZone ~= "" and curRealZone or GetZoneText()
@@ -371,19 +377,19 @@ function E.func_GetCurrentLocation()
 	-- local uiMapID = GetBestMapForUnit("PLAYER") or 0
 	local uiMapID = MapUtil.GetDisplayableMapForPlayer()
 	if uiMapID ~= 0 then
-		local mapInfo = E.getMapFullNameInfo(uiMapID)
+		local mapInfo = E:func_getMapFullNameInfo(uiMapID)
 		if FIRSTtext == "" then
 			return E.Red_Color..mapInfo.name.."|r"
 		elseif FIRSTtext == SECONDtext then
 			return FIRSTtext
 		else
-			return SECONDtext ~= "" and FIRSTtext .. " (" .. SECONDtext .. ")" or FIRSTtext
+			return SECONDtext ~= "" and FIRSTtext.." ("..SECONDtext..")" or FIRSTtext
 		end
 	end
 	return UNKNOWN
 end
 ----------------------------------------------------------------
-function E.func_reputationName(reputationID)
+function E:func_reputationName(reputationID)
 	if reputationID then
 		local vivod = ""
 		-- local icon = E.OctoTable_ReputationsDB[reputationID].icon
@@ -405,24 +411,24 @@ function E.func_reputationName(reputationID)
 		end
 		----------------------------------------------------------------
 		if side == "Alliance" then
-			vivod = E.func_texturefromIcon(E.Icon_Alliance) .. vivod
+			vivod = E:func_texturefromIcon(E.Icon_Alliance)..vivod
 			vivod = E.Blue_Color..vivod.."|r"
 			-- vivod = "|cffC6D2FF"..vivod.."|r"
 		elseif side == "Horde" then
-			vivod = E.func_texturefromIcon(E.Icon_Horde) .. vivod
+			vivod = E:func_texturefromIcon(E.Icon_Horde)..vivod
 			vivod = E.Red_Color..vivod.."|r"
 			-- vivod = "|cffFFC6CB"..vivod.."|r"
 		end
 		----------------------------------------------------------------
 		-- if icon ~= E.Icon_QuestionMark then
-		--     vivod = E.func_texturefromIcon(icon)..vivod
+		-- vivod = E:func_texturefromIcon(icon)..vivod
 		-- end
 		----------------------------------------------------------------
 		local isAccountWide = IsAccountWideReputation(reputationID) or false
 		if isAccountWide == true then
 			vivod = E.Icon_AccountWide..vivod
 		end
-		return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..reputationID.."|r" or "")
+		return vivod..(E.DebugIDs and E.Gray_Color.." id:"..reputationID.."|r" or "")
 	else
 		return "|cffFF0000no reputationID|r"
 	end
@@ -430,115 +436,115 @@ end
 ----------------------------------------------------------------
 -- ITEM UTILS
 ----------------------------------------------------------------
-function E.func_GetItemInfo(itemInfo) -- Item ID, Link or name
+function E:func_GetItemInfo(itemInfo) -- Item ID, Link or name
 	return GetItemInfo(itemInfo)
 end
 ----------------------------------------------------------------
-function E.func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
+function E:func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
 	if not itemID then return 0 end
 	return GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_GetItemLink(itemID)
-	local _, link = E.func_GetItemInfo(itemID)
+function E:func_GetItemLink(itemID)
+	local _, link = E:func_GetItemInfo(itemID)
 	return link
 end
 ----------------------------------------------------------------
-function E.func_GetItemQuality(itemID)
+function E:func_GetItemQuality(itemID)
 	return GetItemQualityByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_GetItemQualityColorID(itemID)
-	return ITEM_QUALITY_COLORS[E.func_GetItemQuality(itemID)]
+function E:func_GetItemQualityColorID(itemID)
+	return ITEM_QUALITY_COLORS[E:func_GetItemQuality(itemID)]
 end
 ----------------------------------------------------------------
-function E.func_GetItemQualityColor(quality)
+function E:func_GetItemQualityColor(quality)
 	local r, g, b = GetItemQualityColor(quality)
 	return r, g, b
 end
 ----------------------------------------------------------------
-function E.func_IsAnimaItemByID(itemID)
+function E:func_IsAnimaItemByID(itemID)
 	return IsAnimaItemByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_GetDetailedItemLevelInfo(itemID)
+function E:func_GetDetailedItemLevelInfo(itemID)
 	return GetDetailedItemLevelInfo(itemID)
 end
 ----------------------------------------------------------------
-function E.func_GetItemMaxStackSize(itemID)
+function E:func_GetItemMaxStackSize(itemID)
 	return GetItemMaxStackSizeByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_IsItemStackable(itemID)
-	local maxStackSize = E.func_GetItemMaxStackSize(itemID)
+function E:func_IsItemStackable(itemID)
+	local maxStackSize = E:func_GetItemMaxStackSize(itemID)
 	return maxStackSize and maxStackSize > 1
 end
 ----------------------------------------------------------------
-function E.func_GetItemInventoryType(itemID)
+function E:func_GetItemInventoryType(itemID)
 	return GetItemInventoryTypeByID(itemID)
 end
 ----------------------------------------------------------------
-function E.func_GetItemInventoryTypeName(itemID)
+function E:func_GetItemInventoryTypeName(itemID)
 	local _, _, _, itemEquipLoc = GetItemInfoInstant(itemID)
 	return itemEquipLoc
 end
 ----------------------------------------------------------------
-function E.func_IsItemDataCached(itemID)
+function E:func_IsItemDataCached(itemID)
 	return IsItemDataCachedByID(itemID)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_spellTexture(spellID)
-	local icon = E.func_GetSpellIcon(spellID)
-	return E.func_texturefromIcon(icon)
+function E:func_spellTexture(spellID)
+	local icon = E:func_GetSpellIcon(spellID)
+	return E:func_texturefromIcon(icon)
 end
 ----------------------------------------------------------------
-function E.func_GetItemCooldown(itemID)
+function E:func_GetItemCooldown(itemID)
 	local start, duration = GetItemCooldown(itemID)
 	local vivod = 0
 	if start > 0 and duration > 0 then
 		vivod = (start + duration - GetTime())
 	end
-	return E.func_CompactNumberSimple(vivod)
+	return E:func_CompactNumberSimple(vivod)
 end
 ----------------------------------------------------------------
 -- SPELLS
 ----------------------------------------------------------------
-function E.func_GetSpellSubtext(spellID)
+function E:func_GetSpellSubtext(spellID)
 	local vivod = GetSpellSubtext(spellID)
 	return vivod
 end
 ----------------------------------------------------------------
-function E.func_GetSpellDescription(spellID)
+function E:func_GetSpellDescription(spellID)
 	return GetSpellDescription(spellID)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_GetSpellCooldown(spellID)
+function E:func_GetSpellCooldown(spellID)
 	local start = GetSpellCooldown(spellID).startTime
 	local duration = GetSpellCooldown(spellID).duration
 	local vivod = 0
 	if start > 0 and duration > 0 then
 		vivod = (start + duration - GetTime())
 	end
-	return E.func_CompactNumberSimple(vivod)
+	return E:func_CompactNumberSimple(vivod)
 end
 ----------------------------------------------------------------
-function E.COMPLETE()
+function E:func_COMPLETE()
 	-- return E.Purple_Color..">>".."Complete".."<<".."|r"
 	-- return E.Purple_Color..">"..COMPLETE.."<".."|r"
 	return E.Purple_Color..">"..QUEST_WATCH_QUEST_READY.."<".."|r"
 end
 ----------------------------------------------------------------
-function E.func_hex2rgb(hex)
+function E:func_hex2rgb(hex)
 	hex = hex:gsub("|cff", "")
 	return tonumber("0x"..hex:sub(1, 2)), tonumber("0x"..hex:sub(3, 4)), tonumber("0x"..hex:sub(5, 6))
 end
 ----------------------------------------------------------------
-function E.func_hex2rgbNUMBER(hex)
+function E:func_hex2rgbNUMBER(hex)
 	if hex and hex ~= "" then
 		hex = hex:gsub("|cff", "")
 		return tonumber("0x"..hex:sub(1, 2))/255, tonumber("0x"..hex:sub(3, 4))/255, tonumber("0x"..hex:sub(5, 6))/255, 1
@@ -547,7 +553,7 @@ function E.func_hex2rgbNUMBER(hex)
 	end
 end
 ----------------------------------------------------------------
-function E.func_rgb2hex(r, g, b, a)
+function E:func_rgb2hex(r, g, b, a)
 	local r = r or 1
 	local g = g or 1
 	local b = b or 1
@@ -558,7 +564,7 @@ function E.func_rgb2hex(r, g, b, a)
 	return "|c"..string_format("%02x", math_floor(a*255))..utf8upper(string_format("%02x%02x%02x", math_floor(r*255), math_floor(g*255), math_floor(b*255)))
 end
 ----------------------------------------------------------------
-function E.func_rgb2hexDEV(r, g, b, a)
+function E:func_rgb2hexDEV(r, g, b, a)
 	local r, g, b, a = r, g, b, a
 	if not a then
 		a = 1
@@ -566,7 +572,7 @@ function E.func_rgb2hexDEV(r, g, b, a)
 	return "|c"..string_format("%02x", math_floor(a*255))..utf8upper(string_format("%02x%02x%02x", math_floor(r*255), math_floor(g*255), math_floor(b*255)))
 end
 ----------------------------------------------------------------
-function E.func_rgb2hexSTRING(r, g, b, a)
+function E:func_rgb2hexSTRING(r, g, b, a)
 	local r, g, b, a = r, g, b, a
 	if not a then
 		a = 1
@@ -574,19 +580,19 @@ function E.func_rgb2hexSTRING(r, g, b, a)
 	return utf8upper(string_format("%02x%02x%02x", math_floor(r*255), math_floor(g*255), math_floor(b*255)))
 end
 ----------------------------------------------------------------
-function E.func_percent(percent, maxvalue)
+function E:func_percent(percent, maxvalue)
 	return (maxvalue*percent)/100
 end
 ----------------------------------------------------------------
-function E.func_Gradient(text, firstColor, secondColor)
+function E:func_Gradient(text, firstColor, secondColor)
 	if not firstColor then firstColor = "|cffD177FF" end
 	if not secondColor then secondColor = "|cff63A4E0" end
 	local vivod = ""
 	local str = ""
 	local total = utf8len(text)-1
 	if total > 0 then
-		local r1, g1, b1 = E.func_hex2rgb(firstColor)
-		local r2, g2, b2 = E.func_hex2rgb(secondColor)
+		local r1, g1, b1 = E:func_hex2rgb(firstColor)
+		local r2, g2, b2 = E:func_hex2rgb(secondColor)
 		local rdelta, gdelta, bdelta = (r2-r1)/total, (g2-g1)/total, (b2-b1)/total
 		local r3 = r1
 		local g3 = g1
@@ -604,7 +610,7 @@ function E.func_Gradient(text, firstColor, secondColor)
 	end
 end
 ----------------------------------------------------------------
-function E.func_GenerateUniqueID()
+function E:func_GenerateUniqueID()
 	local s = {}
 	for i=1, 11 do
 		table_insert(s, E.OctoTable_bytetoB64[math.random(0, 63)])
@@ -612,7 +618,7 @@ function E.func_GenerateUniqueID()
 	return table_concat(s)
 end
 ----------------------------------------------------------------
-function E.func_GenerateUniqueColor()
+function E:func_GenerateUniqueColor()
 	local s = {}
 	for i=1, 6 do
 		table_insert(s, E.OctoTable_bytetoB64Color[math.random(0, 15)])
@@ -620,7 +626,7 @@ function E.func_GenerateUniqueColor()
 	return table_concat(s)
 end
 ----------------------------------------------------------------
-function E.func_CompactNumberFormat(number)
+function E:func_CompactNumberFormat(number)
 	local number = number or 0
 	if number == 0 then
 		return 0
@@ -633,7 +639,7 @@ function E.func_CompactNumberFormat(number)
 	end
 end
 ----------------------------------------------------------------
-function E.func_CompactNumberSimple(number)
+function E:func_CompactNumberSimple(number)
 	local number = number or 0
 	if number == 0 then
 		return 0
@@ -642,13 +648,15 @@ function E.func_CompactNumberSimple(number)
 	end
 end
 ----------------------------------------------------------------
-function E.func_texturefromIcon(icon, iconWidth, iconHeight)
-	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth or 16)..":"..(iconHeight or iconWidth or 16)..":::64:64:4:60:4:60|t"
+function E:func_texturefromIcon(icon, iconWidth, iconHeight)
+	iconWidth = iconWidth or 16 or Octo_ToDo_DB_Vars.AddonHeight
+	iconHeight = iconHeight or 16 or Octo_ToDo_DB_Vars.AddonHeight
+	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight or iconWidth)..":::64:64:4:60:4:60|t"
 end
 ----------------------------------------------------------------
 E.curFaction = UnitFactionGroup("PLAYER")
 E.oppositeFaction = E.curFaction == "Alliance" and "Horde" or "Alliance"
-E.Icon_Alliance = 255140-- E.func_texturefromIcon(255140) -- 132486
+E.Icon_Alliance = 255140-- E:func_texturefromIcon(255140) -- 132486
 E.Icon_Horde = 255142 -- 132485
 E.Icon_Kyrian = 3641395
 E.Icon_Necrolord = 3641396
@@ -665,7 +673,7 @@ else
 	E.Icon_Faction = 620830
 end
 E.Icon_MailBox = "Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga"
-function E.func_texturefromIconEVENT(icon, iconSize)
+function E:func_texturefromIconEVENT(icon, iconSize)
 	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::128:128:0:91:0:91|t"
 end
 ----------------------------------------------------------------
@@ -674,16 +682,16 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_currencyIcon(currencyID)
+function E:func_currencyIcon(currencyID)
 	local info = GetCurrencyInfo(currencyID)
 	local iconFileID = E.Icon_QuestionMark
 	if info then
 		iconFileID = info.iconFileID
 	end
-	return E.func_texturefromIcon(iconFileID)
+	return E:func_texturefromIcon(iconFileID)
 end
 ----------------------------------------------------------------
-function E.func_currencyquantity(currencyID)
+function E:func_currencyquantity(currencyID)
 	local info = GetCurrencyInfo(currencyID)
 	local quantity
 	if info then
@@ -692,7 +700,7 @@ function E.func_currencyquantity(currencyID)
 	return quantity
 end
 ----------------------------------------------------------------
-function E.func_SecondsToClock(time)
+function E:func_SecondsToClock(time)
 	time = tonumber(time) or 0
 	if time <= 0 then
 		return "" -- "0"..(L["time_SECOND"])
@@ -726,7 +734,7 @@ function E.func_SecondsToClock(time)
 	return table_concat(parts)
 end
 ----------------------------------------------------------------
-function E.ChatFrame_TimeBreakDown(time)
+function E:func_ChatFrame_TimeBreakDown(time)
 	local days = floor(time / (60 * 60 * 24))
 	local hours = floor((time - (days * (60 * 60 * 24))) / (60 * 60))
 	local minutes = floor((time - (days * (60 * 60 * 24)) - (hours * (60 * 60))) / 60)
@@ -734,16 +742,16 @@ function E.ChatFrame_TimeBreakDown(time)
 	return days, hours, minutes, seconds
 end
 ----------------------------------------------------------------
-function E.func_tmstpDayReset(time)
+function E:func_tmstpDayReset(time)
 	local time = time or 1
 	return (math_ceil((tonumber(GetServerTime()) - E.thursdayReset)/(E.daytime*time))*E.daytime*time)+E.thursdayReset
 end
 ----------------------------------------------------------------
-function E.func_IsOnQuest(questID)
+function E:func_IsOnQuest(questID)
 	return IsOnQuest(questID)
 end
 ----------------------------------------------------------------
-function E.func_CheckCompletedByQuestID(questID)
+function E:func_CheckCompletedByQuestID(questID)
 	if IsFailed(questID) then
 		return "|cffFF0000>"..FAILED.."<|r"
 	end
@@ -751,9 +759,9 @@ function E.func_CheckCompletedByQuestID(questID)
 		return E.DONE
 	end
 	if IsComplete(questID) then
-		return E.COMPLETE()
+		return E:func_COMPLETE()
 	end
-	if not E.func_IsOnQuest(questID) then
+	if not E:func_IsOnQuest(questID) then
 		return E.NONE
 	end
 	-- Если мы дошли сюда, значит квест взят, но не завершен
@@ -779,19 +787,19 @@ function E.func_CheckCompletedByQuestID(questID)
 	return table_concat(parts, "»")
 end
 ----------------------------------------------------------------
-function E.func_OnlyFirstWord(text)
+function E:func_OnlyFirstWord(text)
 	local text = tostring(text)
 	local a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z = strsplit(" ", text)
 	return a or b or c or d or e or f or g or h or i or j or k or l or m or n or o or p or q or r or s or t or u or v or w or x or y or z
 end
 ----------------------------------------------------------------
-function E.func_OnlyLastWord(text)
+function E:func_OnlyLastWord(text)
 	local text = tostring(text)
 	local a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z = strsplit(" ", text)
 	return z or y or x or w or v or u or t or s or r or q or p or i or n or m or l or k or j or i or h or g or f or e or d or c or b or a
 end
 ----------------------------------------------------------------
-function E.func_InList(k, t, p)
+function E:func_InList(k, t, p)
 	for _, v in next, (t) do
 		if (p and v[p]==k) or (not p and v==k) then
 			return true
@@ -799,7 +807,7 @@ function E.func_InList(k, t, p)
 	end
 end
 ----------------------------------------------------------------
-function E.func_achievementComplete(achievementID)
+function E:func_achievementComplete(achievementID)
 	if not achievementID then
 		return false
 	end
@@ -807,22 +815,22 @@ function E.func_achievementComplete(achievementID)
 	return completed
 end
 ----------------------------------------------------------------
-function E.func_achievementName(achievementID)
+function E:func_achievementName(achievementID)
 	local vivod = select(2, GetAchievementInfo(achievementID))
-	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..achievementID.."|r" or "")
+	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..achievementID.."|r" or "")
 end
 ----------------------------------------------------------------
-function E.func_achievementIcon(achievementID)
+function E:func_achievementIcon(achievementID)
 	local Icon = select(10, GetAchievementInfo(achievementID))
 	return Icon
 end
 ----------------------------------------------------------------
-function E.func_achievementDescription(achievementID)
+function E:func_achievementDescription(achievementID)
 	local description = select(8, GetAchievementInfo(achievementID)) or ""
 	return description
 end
 ----------------------------------------------------------------
-function E.func_achievementvivod(achievementID)
+function E:func_achievementvivod(achievementID)
 	local name, _, _, completed, _, _, _, _, _, _, _, _, wasEarnedByMe, earnedBy = GetAchievementInfo(achievementID)
 	if completed then
 		return E.DONE
@@ -846,17 +854,17 @@ function E.func_achievementvivod(achievementID)
 	end
 end
 ----------------------------------------------------------------
--- function E.func_CurServerShort(text)
---     local text = (text):gsub("-", " "):gsub("'", " ")
---     local a, b = strsplit(" ", text)
---     if b then
---         text = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
---     else
---         text = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
---     end
---     return text
+-- function E:func_CurServerShort(text)
+-- local text = (text):gsub("-", " "):gsub("'", " ")
+-- local a, b = strsplit(" ", text)
+-- if b then
+-- text = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
+-- else
+-- text = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
 -- end
-function E.func_CurServerShort(text)
+-- return text
+-- end
+function E:func_CurServerShort(text)
 	local a, b = strsplit(" ", text:gsub("[-']", " "))
 	if b then
 		return utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
@@ -864,15 +872,15 @@ function E.func_CurServerShort(text)
 	return utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
 end
 ----------------------------------------------------------------
-function E.func_GetMapName(mapID)
+function E:func_GetMapName(mapID)
 	if not mapID then return end
 	local info = GetMapInfo(mapID)
 	if info then
-		return tostring(info.name) .. (E.DebugIDs and E.Gray_Color.." id:"..mapID.."|r" or "")
+		return tostring(info.name)..(E.DebugIDs and E.Gray_Color.." id:"..mapID.."|r" or "")
 	end
 end
 ----------------------------------------------------------------
-function E.func_GetMapNameFromID(mapID) -- ПОФИКСИТЬ
+function E:func_GetMapNameFromID(mapID) -- ПОФИКСИТЬ
 	if not mapID then
 		return UNKNOWN
 	end
@@ -892,11 +900,11 @@ function E.func_GetMapNameFromID(mapID) -- ПОФИКСИТЬ
 	return mapdata.name, ""
 end
 ----------------------------------------------------------------
-function E.func_GetCoord(x, y)
+function E:func_GetCoord(x, y)
 	return floor(x * 10000 + 0.5) * 10000 + floor(y * 10000 + 0.5)
 end
 ----------------------------------------------------------------
-function E.func_GetCoordFormated(x, y)
+function E:func_GetCoordFormated(x, y)
 	if not x or not y then return "" end
 	if x == 0 or y == 0 then
 		return ""
@@ -905,7 +913,7 @@ function E.func_GetCoordFormated(x, y)
 	return string.format("%.1f / %.1f", x * 100, y * 100)
 end
 ----------------------------------------------------------------
-function E.func_npcName(npcID)
+function E:func_npcName(npcID)
 	if not npcID then return E.NONE end
 	E.inspectScantipFUNC = E.inspectScantipFUNC or CreateFrame("GameTooltip", "OctoScanningTooltipFUNC", nil, "GameTooltipTemplate")
 	local tooltip = E.inspectScantipFUNC
@@ -916,10 +924,10 @@ function E.func_npcName(npcID)
 	if tooltip:NumLines() > 0 then
 		vivod = _G["OctoScanningTooltipFUNCTextLeft1"]:GetText()
 	end
-	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..npcID.."|r" or "")
+	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..npcID.."|r" or "")
 end
 ----------------------------------------------------------------
-function E.func_RIOColor(RIOscore)
+function E:func_RIOColor(RIOscore)
 	if not RIOscore or RIOscore == 0 then
 		return E.Gray_Color
 	end
@@ -927,13 +935,13 @@ function E.func_RIOColor(RIOscore)
 	for i = 1, #colors do
 		local v = colors[i]
 		if RIOscore <= v.score then
-			return E.func_rgb2hex(v.color[1], v.color[2], v.color[3])
+			return E:func_rgb2hex(v.color[1], v.color[2], v.color[3])
 		end
 	end
 	return E.Gray_Color
 end
 ----------------------------------------------------------------
-function E.func_encryption(text)
+function E:func_encryption(text)
 	-- Преобразуем в строку и переворачиваем
 	local reversed = utf8reverse(tostring(text))
 	-- Удаляем все цифры за одну операцию
@@ -946,15 +954,15 @@ E.className, E.classFilename, E.classId = UnitClass("PLAYER")
 E.classColor = RAID_CLASS_COLORS[E.classFilename] and RAID_CLASS_COLORS[E.classFilename].colorStr:sub(3) or "ffffff"
 local r, g, b = GetClassColor(E.classFilename)
 -- if (r == 1 and g == 1 and b == 1) then -- "|cff9659FF"--"|cff7157FF"
---     r = 150/255
---     g = 89/255
---     b = 255/255
+-- r = 150/255
+-- g = 89/255
+-- b = 255/255
 -- end
--- E.classColorHexCurrent = E.func_rgb2hex(r, g, b)
+-- E.classColorHexCurrent = E:func_rgb2hex(r, g, b)
 E.classColorHexCurrent = C_ClassColor.GetClassColor(E.classFilename):GenerateHexColorMarkup()
 E.curCharName = UnitFullName("PLAYER")
 E.curServer = GetRealmName()
-E.curServerShort = E.func_CurServerShort(GetRealmName())
+E.curServerShort = E:func_CurServerShort(GetRealmName())
 E.Class_Warrior_Color = C_ClassColor.GetClassColor("WARRIOR"):GenerateHexColorMarkup() --"|cffC69B6D"
 E.Class_Paladin_Color = C_ClassColor.GetClassColor("PALADIN"):GenerateHexColorMarkup() --"|cffF48CBA"
 E.Class_Hunter_Color = C_ClassColor.GetClassColor("HUNTER"):GenerateHexColorMarkup() --"|cffAAD372"
@@ -976,7 +984,7 @@ function E.func_Reverse_order(a, b)
 	return b < a
 end
 ----------------------------------------------------------------
-function E.func_CheckReputationNEW(reputationID)
+function E:func_CheckReputationNEW(reputationID)
 	-- Инициализация переменных по умолчанию
 	local SHOWFULL = false
 	local FIRST, SECOND = 0, 0
@@ -1018,7 +1026,7 @@ function E.func_CheckReputationNEW(reputationID)
 			color = E.Blue_Color
 			vivod = value.."/"..threshold
 			if tooLowLevelForParagon then
-				vivod = vivod .. E.Red_Color.."*|r"
+				vivod = vivod..E.Red_Color.."*|r"
 			end
 			FIRST, SECOND = value, threshold
 		end
@@ -1068,7 +1076,7 @@ function E.func_CheckReputationNEW(reputationID)
 	return FIRST.."#"..SECOND.."#"..vivod.."#"..color.."#"..standingTEXT
 end
 ----------------------------------------------------------------
-function E.func_CurrentNumQuests()
+function E:func_CurrentNumQuests()
 	local numQuests = 0
 	for i = 1, GetNumQuestLogEntries() do
 		local info = GetInfo(i)
@@ -1087,49 +1095,49 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_GetAddOnMetadata(name, variable)
+function E:func_GetAddOnMetadata(name, variable)
 	return GetAddOnMetadata(name, variable)
 end
 ----------------------------------------------------------------
-function E.func_IsAddOnLoaded(AddonNameOrIndex)
+function E:func_IsAddOnLoaded(AddonNameOrIndex)
 	return IsAddOnLoaded(AddonNameOrIndex)
 end
 ----------------------------------------------------------------
-function E.func_LoadAddOnFORCED(AddonName)
-	if DoesAddOnExist(AddonName) and not E.func_IsAddOnLoaded(AddonName) then
+function E:func_LoadAddOnFORCED(AddonName)
+	if DoesAddOnExist(AddonName) and not E:func_IsAddOnLoaded(AddonName) then
 		EnableAddOn(AddonName)
 		LoadAddOn(AddonName)
 	end
 end
 ----------------------------------------------------------------
-function E.func_AddonTitle(AddonName)
+function E:func_AddonTitle(AddonName)
 	local AddonTitle = GetAddOnMetadata(AddonName, "Title")
 	return AddonTitle
 end
 ----------------------------------------------------------------
-function E.func_AddonNotes(AddonName)
+function E:func_AddonNotes(AddonName)
 	local AddonNotes = GetAddOnMetadata(AddonName, "Notes")
 	return AddonNotes
 end
 ----------------------------------------------------------------
-function E.func_AddonAuthor(AddonName)
+function E:func_AddonAuthor(AddonName)
 	local AddonAuthor = GetAddOnMetadata(AddonName, "Author")
 	return AddonAuthor
 end
 ----------------------------------------------------------------
-function E.func_AddonVersion(AddonName)
+function E:func_AddonVersion(AddonName)
 	local AddonVersion = GetAddOnMetadata(AddonName, "Version")
 	return AddonVersion
 end
 ----------------------------------------------------------------
-function E.func_AddonIconTexture(AddonName)
+function E:func_AddonIconTexture(AddonName)
 	local AddonIconTexture = GetAddOnMetadata(AddonName, "IconTexture")
 	return AddonIconTexture
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.IsInArray(arr, subj)
+function E:func_IsInArray(arr, subj)
 	for i = 1, #arr do
 		if arr[i] == subj then
 			return i
@@ -1138,7 +1146,7 @@ function E.IsInArray(arr, subj)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_EmptyZero(value)
+function E:func_EmptyZero(value)
 	if tonumber(value) == 0 then
 		return "" --Red_Color.."NEEDDELETE|r"
 	end
@@ -1146,7 +1154,7 @@ function E.func_EmptyZero(value)
 end
 ----------------------------------------------------------------
 -- warcraft.wiki.gg/wiki/API_GetAccountExpansionLevel
-function E.func_CurrentExpansion()
+function E:func_CurrentExpansion()
 	if LE_EXPANSION_LEVEL_CURRENT ~= nil then
 		return LE_EXPANSION_LEVEL_CURRENT+1
 	else
@@ -1154,7 +1162,7 @@ function E.func_CurrentExpansion()
 	end
 end
 ----------------------------------------------------------------
-function E.func_EventName(eventID)
+function E:func_EventName(eventID)
 	local monthDay = GetCurrentCalendarTime().monthDay
 	local month = 0 -- Можно раскомментировать, если нужен текущий месяц
 	local numEvents = GetNumDayEvents(month, monthDay)
@@ -1162,73 +1170,73 @@ function E.func_EventName(eventID)
 		local event = GetDayEvent(month, monthDay, i)
 		if event.eventID == eventID then
 			local vivod = event.title
-			return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or "")
+			return vivod..(E.DebugIDs and E.Gray_Color.." id:"..eventID.."|r" or "")
 		end
 	end
 	return nil
 end
 ----------------------------------------------------------------
-function E.func_ProfessionName(skillLine)
+function E:func_ProfessionName(skillLine)
 	if not skillLine then return UNKNOWN end
 	local vivod = GetTradeSkillDisplayName(skillLine) or UNKNOWN
-	return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..skillLine.."|r" or "")
+	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..skillLine.."|r" or "")
 end
 ----------------------------------------------------------------
 -- Возвращает иконку профессии в виде текстуры
-function E.func_ProfessionIcon(skillLine)
-	return skillLine and E.func_texturefromIcon(GetTradeSkillTexture(skillLine)) or ""
+function E:func_ProfessionIcon(skillLine)
+	return skillLine and E:func_texturefromIcon(GetTradeSkillTexture(skillLine)) or ""
 end
 -- Возвращает текущий уровень навыка профессии
-function E.func_ProfessionSkillLevel(skillLine)
+function E:func_ProfessionSkillLevel(skillLine)
 	return skillLine and select(3, GetProfessionInfo(skillLine)) or ""
 end
 -- Возвращает максимальный уровень навыка профессии
-function E.func_ProfessionMaxSkillLevel(skillLine)
+function E:func_ProfessionMaxSkillLevel(skillLine)
 	return skillLine and select(4, GetProfessionInfo(skillLine)) or ""
 end
 ----------------------------------------------------------------
-function E.debugprofileSTART()
+function E:func_debugprofileSTART()
 	local timer = debugprofilestart()
 	return timer
 end
 ----------------------------------------------------------------
-function E.debugprofileSTOP()
-	local timer = E.func_CompactNumberSimple(debugprofilestop())
-	local vivod = E.func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")
+function E:func_debugprofileSTOP()
+	local timer = E:func_CompactNumberSimple(debugprofilestop())
+	local vivod = E:func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")
 	vivod = vivod..timer
 	return DEFAULT_CHAT_FRAME:AddMessage(vivod.. "|cff63A4E0 ms.|r")
 end
 ----------------------------------------------------------------
-function E.func_dungeonName(dungeonID)
+function E:func_dungeonName(dungeonID)
 	if dungeonID then
 		local vivod = GetMapUIInfo(dungeonID)
-		return vivod .. (E.DebugIDs and E.Gray_Color.." id:"..dungeonID.."|r" or "")
+		return vivod..(E.DebugIDs and E.Gray_Color.." id:"..dungeonID.."|r" or "")
 	end
 end
 ----------------------------------------------------------------
-function E.func_dungeontimeLimit(dungeonID)
+function E:func_dungeontimeLimit(dungeonID)
 	if dungeonID then
 		local timeLimit = select(3, GetMapUIInfo(dungeonID))
 		return timeLimit
 	end
 end
 ----------------------------------------------------------------
-function E.func_dungeonIcon(dungeonID)
+function E:func_dungeonIcon(dungeonID)
 	if dungeonID then
 		local texture = select(4, GetMapUIInfo(dungeonID))
 		return texture
 	end
 end
 ----------------------------------------------------------------
-function E.FriendsFrame_GetLastOnlineText(time, color)
+function E:func_FriendsFrame_GetLastOnlineText(time, color)
 	if not time then
 		return FRIENDS_LIST_OFFLINE
 	else
-		return string_format(BNET_LAST_ONLINE_TIME, color..E.FriendsFrame_GetLastOnline(time).."|r")
+		return string_format(BNET_LAST_ONLINE_TIME, color..E.func_FriendsFrame_GetLastOnline(time).."|r")
 	end
 end
 ----------------------------------------------------------------
-function E.FriendsFrame_GetLastOnline(timeDiff, isAbsolute)
+function E.func_FriendsFrame_GetLastOnline(timeDiff, isAbsolute)
 	if not isAbsolute then
 		timeDiff = time() - timeDiff
 	end
@@ -1247,20 +1255,20 @@ function E.FriendsFrame_GetLastOnline(timeDiff, isAbsolute)
 	end
 end
 ----------------------------------------------------------------
-function E.func_TableMerge(table1, table2)
+function E:func_TableMerge(table1, table2)
 	for k, v in pairs(table2) do
 		local t1_val = table1[k]
 		local t2_type = type(v)
 		if t1_val == nil or type(t1_val) ~= t2_type then
 			table1[k] = v
 		elseif t2_type == "table" then
-			E.func_TableMerge(t1_val, v)-- Рекурсивный вызов вместо MergeTable
+			E:func_TableMerge(t1_val, v)-- Рекурсивный вызов вместо MergeTable
 		end
 	end
 	return table1
 end
 ----------------------------------------------------------------
-function E.func_TableConcat(table1, table2)
+function E:func_TableConcat(table1, table2)
 	local len = #table1
 	for i = 1, #table2 do
 		len = len + 1
@@ -1269,26 +1277,26 @@ function E.func_TableConcat(table1, table2)
 	return table1
 end
 ----------------------------------------------------------------
-function E.MergeTableSFMICTpairs(table1, table2)
+function E:func_MergeTableSFMICTpairs(table1, table2)
 	for k, v in pairs(table2) do
 		table1[k] = v
 	end
 	return table1
 end
 ----------------------------------------------------------------
-function E.tinsertGPTipairs(table1, table2)
+function E:func_tinsertGPTipairs(table1, table2)
 	for _, value in ipairs(table2) do
 		table.insert(table1, value)
 	end
 end
--- function E.func_TableConcat(table1, table2)
---     for i = 1, #table2 do
---         table1[#table1+1] = table2[i]
---     end
---     return table1
+-- function E:func_TableConcat(table1, table2)
+-- for i = 1, #table2 do
+-- table1[#table1+1] = table2[i]
+-- end
+-- return table1
 -- end
 ----------------------------------------------------------------
-function E.func_TableRemoveDuplicates(table1)
+function E:func_TableRemoveDuplicates(table1)
 	if type(table1) ~= "table" then
 		return {}
 	end
@@ -1309,29 +1317,29 @@ function E.func_TableRemoveDuplicates(table1)
 	end
 	return table1
 end
--- function E.func_TableRemoveDuplicates(table1)
---     if type(table1) ~= "table" then
---         table1 = {}
---     end
---     local table2 = {}
---     local i = 1
---     while table1[i] do
---         local value = table1[i]
---         if table2[value] then
---             tremove(table1, i)
---         else
---             i = i + 1
---         end
---         table2[value] = true
---     end
+-- function E:func_TableRemoveDuplicates(table1)
+-- if type(table1) ~= "table" then
+-- table1 = {}
+-- end
+-- local table2 = {}
+-- local i = 1
+-- while table1[i] do
+-- local value = table1[i]
+-- if table2[value] then
+-- tremove(table1, i)
+-- else
+-- i = i + 1
+-- end
+-- table2[value] = true
+-- end
 -- end
 ----------------------------------------------------------------
-function E.func_coloredText(fontstring)
+function E:func_coloredText(fontstring)
 	if not fontstring then return nil end
 	local text = fontstring:GetText()
 	if not text or text == "" then return nil end-- Проверка на пустую строку
 	-- Получаем цвет и сразу конвертируем в hex
-	return E.func_rgb2hex(fontstring:GetTextColor()) .. text .. "|r"
+	return E:func_rgb2hex(fontstring:GetTextColor())..text.."|r"
 end
 ----------------------------------------------------------------
 function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
@@ -1436,25 +1444,25 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 			if SettingsPanel:IsVisible() and frame:IsVisible() then
 				HideUIPanel(SettingsPanel)
 			else
-				Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
+				Settings.OpenToCategory(E:func_AddonTitle(E.GlobalAddonName), true)
 			end
 		end
 	)
 	-- Abandon Button
 	local function f_AbandonQuests()
-		local numQuests = E.func_CurrentNumQuests()
+		local numQuests = E:func_CurrentNumQuests()
 		for i = 1, GetNumQuestLogEntries() do
 			if numQuests ~= 0 then
 				local info = GetInfo(i)
 				if info and not info.isHeader and not info.isHidden then
-					DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
+					DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(L["Abandon: "])..E:func_questName(info.questID))
 					SetSelectedQuest(info.questID)
 					SetAbandonQuest()
 					AbandonQuest()
 				end
 			end
 		end
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
 	end
 	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
 		text = E.WOW_Artifact_Color..L["Abandon All Quests"].."?|r",
@@ -1473,7 +1481,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	Octo_AbandonButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
-			local numQuests = E.func_CurrentNumQuests()
+			local numQuests = E:func_CurrentNumQuests()
 			if numQuests > 0 then
 				GameTooltip:AddLine(E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..numQuests..")")
 				GameTooltip:AddLine(" ")
@@ -1486,7 +1494,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 				end
 				sort(list, E.func_Reverse_order)
 				for _, questID in ipairs(list) do
-					GameTooltip:AddDoubleLine(E.func_questName(questID), E.func_CheckCompletedByQuestID(questID), 1, 1, 1, 1, 1, 1)
+					GameTooltip:AddDoubleLine(E:func_questName(questID), E:func_CheckCompletedByQuestID(questID), 1, 1, 1, 1, 1, 1)
 				end
 			else
 				GameTooltip:AddLine(L["No quests"], r, g, b)
@@ -1495,17 +1503,12 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	end)
 	Octo_AbandonButton:SetScript("OnLeave", GameTooltip_Hide)
 	Octo_AbandonButton:SetScript("OnClick", function()
-			if E.func_CurrentNumQuests() > 0 then
+			if E:func_CurrentNumQuests() > 0 then
 				StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
 			end
 	end)
 	-- Events Button
-	local Octo_EventsButton = CreateUtilButton(
-		"Octo_EventsButton",
-		frame,
-		-curHeight*3,
-		elvUIPath.."Arrow6.tga"
-	)
+	local Octo_EventsButton = CreateUtilButton("Octo_EventsButton", frame, -curHeight*3, elvUIPath.."Arrow6.tga")
 	Octo_EventsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
@@ -1522,7 +1525,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 			end)
 			for _, eventID in ipairs(sorted) do
 				local v = E.Holiday[eventID]
-				local titleText = v.invitedBy..E.func_texturefromIconEVENT(v.iconTexture)
+				local titleText = v.invitedBy..E:func_texturefromIconEVENT(v.iconTexture)
 				local timeText = v.startTime.." - "..v.endTime
 				if v.Active then
 					titleText = titleText..E.Green_Color..v.title.."|r"..E.White_Color.." ("..v.ENDS..")|r"
@@ -1564,7 +1567,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 end
 ----------------------------------------------------------------
 function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameString)
-	local MinimapName = E.func_AddonTitle(E.GlobalAddonName).." » "..title
+	local MinimapName = E:func_AddonTitle(E.GlobalAddonName).." » "..title
 	local info = {
 		type = "data source",
 		text = MinimapName,
@@ -1585,8 +1588,11 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 					func()
 				end
 				if frame then
-					tinsert(UISpecialFrames, frameString)
-					tinsert(E.OctoTable_Frames, frame)
+					if not frame.insertIn_SecuredFrames_SequredFrames then
+						frame.insertIn_SecuredFrames_SequredFrames = true
+						tinsert(UISpecialFrames, frameString)
+						tinsert(E.OctoTable_Frames, frame)
+					end
 					for index, frames in ipairs(E.OctoTable_Frames) do
 						if frame ~= frames and frames:IsShown() then
 							frames:Hide()
@@ -1608,7 +1614,7 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 			if SettingsPanel:IsVisible() and frame:IsVisible() then
 				HideUIPanel(SettingsPanel)
 			else
-				Settings.OpenToCategory(E.func_AddonTitle(E.GlobalAddonName), true)
+				Settings.OpenToCategory(E:func_AddonTitle(E.GlobalAddonName), true)
 			end
 		end
 	end
@@ -1618,7 +1624,7 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 	LibDBIcon:Show(MinimapName)
 end
 ----------------------------------------------------------------
-function E.func_TooltipOnEnter(frame, first, second)
+function E:func_TooltipOnEnter(frame, first, second)
 	local tooltip = frame.tooltip
 	if not tooltip or #tooltip == 0 then return end
 	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 0, 0)
@@ -1694,9 +1700,9 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 		frame.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.icon:SetAllPoints()
 		if curType == "item" or curType == "toy" then
-			frame.icon:SetTexture(E.func_GetItemIconByID(id))
+			frame.icon:SetTexture(E:func_GetItemIconByID(id))
 		else
-			frame.icon:SetTexture(E.func_GetSpellIcon(id))
+			frame.icon:SetTexture(E:func_GetSpellIcon(id))
 		end
 		frame.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		frame:SetBackdrop({
@@ -1728,10 +1734,10 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 					GameTooltip:ClearLines()
 					if curType == "item" or curType == "toy" then
-						GameTooltip:AddDoubleLine(E.func_GetItemNameByID(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
+						GameTooltip:AddDoubleLine(E:func_GetItemNameByID(id), E:func_SecondsToClock(E:func_GetItemCooldown(id)))
 					else
-						GameTooltip:AddDoubleLine(E.func_GetSpellName(id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
-						GameTooltip:AddDoubleLine(E.func_GetSpellSubtext(id))
+						GameTooltip:AddDoubleLine(E:func_GetSpellName(id), E:func_SecondsToClock(E:func_GetSpellCooldown(id)))
+						GameTooltip:AddDoubleLine(E:func_GetSpellSubtext(id))
 					end
 					GameTooltip:Show()
 			end)
@@ -1753,7 +1759,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 	end
 end
 ----------------------------------------------------------------
-function E.RegisterMyEventsToFrames(frame, MyEventsTable)
+function E:func_RegisterMyEventsToFrames(frame, MyEventsTable)
 	local stack = debugstack(2)
 	local STR = stack:match("Interface/AddOns/(.-):%d+") or UNKNOWN
 	local DebugPath = STR:gsub("]", "")
@@ -1771,7 +1777,7 @@ function E.RegisterMyEventsToFrames(frame, MyEventsTable)
 	end)
 end
 ----------------------------------------------------------------
-function E.func_Reason(reason)
+function E:func_Reason(reason)
 	local vivod = ""
 	if reason == "CORRUPT" then vivod = ADDON_CORRUPT end
 	if reason == "DEMAND_LOADED" then vivod = ADDON_DEMAND_LOADED end
@@ -1803,7 +1809,7 @@ function E.func_Reason(reason)
 	return vivod
 end
 ----------------------------------------------------------------
-function E.func_CreateInfoFrame(text, point, parent, rPoint, x, y, sizeW, sizeH, JustifyH)
+function E:func_CreateInfoFrame(text, point, parent, rPoint, x, y, sizeW, sizeH, JustifyH)
 	local frame = CreateFrame("frame", nil, parent, "BackDropTemplate")
 	frame:SetPoint(point, parent, rPoint, x, y)
 	frame:SetSize(sizeW, sizeH)
@@ -1830,15 +1836,12 @@ E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\03_Borders\\Oct
 E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\03_Borders\\Octo.tga"
 E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\02_Fonts\\Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
-
 E.fontObject11 = CreateFont("OctoFont11")
 E.fontObject11:CopyFontObject(GameTooltipText)-- local font = GameFontHighlightSmallLeft
 E.fontObject11:SetFont(E.Octo_font, 11, "OUTLINE")
-
 E.fontObject22 = CreateFont("OctoFont22")
 E.fontObject22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
 E.fontObject22:SetFont(E.Octo_font, 22, "OUTLINE")
-
 E.IconTexture = C_AddOns.GetAddOnMetadata(GlobalAddonName, "IconTexture")
 E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- GetExpansionLevel()
@@ -1982,11 +1985,10 @@ E.TRUE = E.Green_Color.."true|r"
 E.FALSE = E.Red_Color.."false|r"
 E.NIL = E.Red_Color.."nil|r"
 ----------------------------------------------------------------
-E.AccountWide = E.Blue_Color.."(A)".."|r"
-E.AccountTransferable = E.Red_Color.."(T)".."|r"
-E.Icon_AccountWide = CreateAtlasMarkup("warbands-icon", 16, 16)
+-- E.Icon_AccountWide = E:func_texturefromIcon(6124644) -- CreateAtlasMarkup("warbands-icon", 16, 16)
+E.Icon_AccountWide = CreateAtlasMarkup("warbands-icon", 16, 16) --     interface/warbands/uiwarbandsicons.blp
+E.Icon_AccountTransferable = CreateAtlasMarkup("warbands-icon", 16, 16) -- E.Red_Color.."(W)".."|r"
 E.Icon_Warbands = E.Blue_Color.."(A)".."|r"
-E.Icon_AccountTransferable = E.Red_Color.."(W)".."|r"
 E.Icon_QuestionMark = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.Icon_Empty = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Util_Icons\\Icon_Empty"
 E.Icon_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
@@ -2043,7 +2045,7 @@ E.menuBackdrop = {
 }
 E.OctoTable_Frames = {}
 E.listMaxSize = 30
-E.DEVTEXT = "|T".. E.IconTexture ..":14:14:::64:64:4:60:4:60|t" .. E.Green_Color.. "DebugInfo|r: "
+E.DEVTEXT = "|T".. E.IconTexture ..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.. "DebugInfo|r: "
 E.KILLTEXT = "|T".. "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\ElvUI\\Facepalm.tga" ..":14:14:::64:64:4:60:4:60|t"
 ----------------------------------------------------------------
 E.OctoTable_bytetoB64 = {
@@ -2222,84 +2224,84 @@ E.OctoTable_RIO_COLORS = {
 local AddonManager = CreateFrame("Frame")
 local profiles = {}
 local currentProfile = "default"
-function E.func_GetAddonIndex(name)
+function E:func_GetAddonIndex(name)
 	local index = Octo_AddonsTable.indexByName[name]
 	return tonumber(index)
 end
-function E.func_GetAddonName(index)
+function E:func_GetAddonName(index)
 	local name = select(1, GetAddOnInfo(index))
 	return name
 end
-function E.func_GetAddonTitle(index)
+function E:func_GetAddonTitle(index)
 	local title = select(2, GetAddOnInfo(index))
 	return title
 end
-function E.func_GetAddonNotes(index)
+function E:func_GetAddonNotes(index)
 	local notes = select(2, GetAddOnInfo(index))
 	return notes
 end
-function E.func_GetAddonReason(index, character)
+function E:func_GetAddonReason(index, character)
 	character = character or UnitName("player") -- ALL_CHARACTERS
 	local reason = select(2, IsAddOnLoadable(index, character));
 	return reason
 end
-function E.func_IsAddonInstalled(index) -- Исключаем отсутствующие аддоны
+function E:func_IsAddonInstalled(index) -- Исключаем отсутствующие аддоны
 	local reason = select(5, GetAddOnInfo(index))
 	return reason ~= "MISSING"
 end
-function E.func_GetAddonSecurity(index)
+function E:func_GetAddonSecurity(index)
 	local security = select(6, GetAddOnInfo(index))
 	return security
 end
-function E.func_GetAddonUpdateAvailable(index)
+function E:func_GetAddonUpdateAvailable(index)
 	local updateAvailable = select(7, GetAddOnInfo(index))
 	return updateAvailable
 end
-function E.func_GetAddonVersion(index)
+function E:func_GetAddonVersion(index)
 	local Version = GetAddOnMetadata(index, "Version") or 0
 	return Version
 end
-function E.func_GetAddonAuthor(index)
+function E:func_GetAddonAuthor(index)
 	local Author = GetAddOnMetadata(index, "Author") or ""
 	return Author
 end
-function E.func_GetAddoniconTexture(index)
+function E:func_GetAddoniconTexture(index)
 	local iconTexture = GetAddOnMetadata(index, "IconTexture")
 	return iconTexture
 end
-function E.func_GetAddoniconAtlas(index)
+function E:func_GetAddoniconAtlas(index)
 	local iconAtlas = GetAddOnMetadata(index, "IconAtlas")
 	return iconAtlas
 end
-function E.func_GetAddonCategory(index)
+function E:func_GetAddonCategory(index)
 	local Category = GetAddOnMetadata(index, "Category")
 	return Category
 end
-function E.func_GetAddonGroup(index)
+function E:func_GetAddonGroup(index)
 	local Group = GetAddOnMetadata(index, "Group")
 	return Group
 end
-function E.func_GetAddOnEnableState(i, character)
+function E:func_GetAddOnEnableState(i, character)
 	character = character or UnitName("player") -- ALL_CHARACTERS
 	return GetAddOnEnableState(i, character)
 end
-function E.func_IsAddOnLoadable(index, character)
+function E:func_IsAddOnLoadable(index, character)
 	local loadable = select(1, IsAddOnLoadable(index, character)) -- reason 2
 	return loadable
 end
-function E.func_DoesAddOnExist(index)
+function E:func_DoesAddOnExist(index)
 	return DoesAddOnExist(index)
 end
-function E.func_IsAddOnDefaultEnabled(index)
+function E:func_IsAddOnDefaultEnabled(index)
 	return IsAddOnDefaultEnabled(index)
 end
-function E.func_GetAddOnDependenciesTable(index)
+function E:func_GetAddOnDependenciesTable(index)
 	return {GetAddOnDependencies(index)}
 end
-function E.func_GetAddOnDependenciesSTR(index)
+function E:func_GetAddOnDependenciesSTR(index)
 	return GetAddOnDependencies(index)
 end
-function E.func_GetNumReps()
+function E:func_GetNumReps()
 	local LineNumber = 0
 	ExpandAllFactionHeaders()
 	for i = 1, GetNumFactions() do
@@ -2312,91 +2314,91 @@ function E.func_GetNumReps()
 	end
 	return LineNumber
 end
-function E.func_GetNumAddOns()
+function E:func_GetNumAddOns()
 	return GetNumAddOns()
 end
-function E.func_EnableAddOn(name, character)
+function E:func_EnableAddOn(name, character)
 	character = character or UnitName("player") -- ALL_CHARACTERS
 	return EnableAddOn(name, character)
 end
-function E.func_EnableAllAddOns(character) -- Включить все аддоны
+function E:func_EnableAllAddOns(character) -- Включить все аддоны
 	character = character or UnitName("player") -- ALL_CHARACTERS
 	return EnableAllAddOns(character)
 end
-function E.func_DisableAddOn(name, character)
+function E:func_DisableAddOn(name, character)
 	character = character or UnitName("player") -- ALL_CHARACTERS
 	return DisableAddOn(name, character)
 end
-function E.func_DisableAllAddons()
-	for index, name in ipairs(E.func_GetAllAddons()) do
+function E:func_DisableAllAddons()
+	for index, name in ipairs(E:func_GetAllAddons()) do
 		if not Octo_AddonsManager_DB.lock.addons[name] then
-			E.func_DisableAddOn(index)
+			E:func_DisableAddOn(index)
 		end
 	end
 end
-function E.func_IsProfilerEnabled()
+function E:func_IsProfilerEnabled()
 	return IsEnabled()
 end
-function E.UpdatePerformance()
-	if E.func_IsProfilerEnabled() then
+function E:func_UpdatePerformance()
+	if E:func_IsProfilerEnabled() then
 		UpdateAddOnMemoryUsage()
 		-- UpdateAddOnCPUUsage() -- НЕ РАБОТАЕТ?
 	end
 end
-function E.func_IsAddonVersionCheckEnabled()
+function E:func_IsAddonVersionCheckEnabled()
 	return IsAddonVersionCheckEnabled()
 end
-function E.func_AddonList_HasOutOfDate()
+function E:func_AddonList_HasOutOfDate()
 	return AddonList_HasOutOfDate()
 end
 -- Получить список всех аддонов
-function E.func_GetAllAddons()
+function E:func_GetAllAddons()
 	local addons = {}
-	for index = 1, E.func_GetNumAddOns() do
-		if E.func_IsAddonInstalled(index) then -- Исключаем отсутствующие аддоны
-			table.insert(addons, E.func_GetAddonName(index))
+	for index = 1, E:func_GetNumAddOns() do
+		if E:func_IsAddonInstalled(index) then -- Исключаем отсутствующие аддоны
+			table.insert(addons, E:func_GetAddonName(index))
 		end
 	end
 	return addons
 end
 -- Показать список аддонов с их статусом
-function E.func_ListAddons(filter)
-	local addons = E.func_GetAllAddons()
+function E:func_ListAddons(filter)
+	local addons = E:func_GetAllAddons()
 	DEFAULT_CHAT_FRAME:AddMessage("Список аддонов ("..#addons.."):")
 	for index, name in ipairs(addons) do
 		if not filter or string.find(string_lower(name), string_lower(filter)) then
-			local status = E.func_IsAddOnLoaded(index) and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r"
+			local status = E:func_IsAddOnLoaded(index) and "|cff00ff00ВКЛ|r" or "|cffff0000ВЫКЛ|r"
 			DEFAULT_CHAT_FRAME:AddMessage(string_format("%3d. %s - %s", index, name, status))
 		end
 	end
 end
-function E.AddonListEntry_SetEnabled(index, character, enabled)
+function E:func_AddonListEntry_SetEnabled(index, character, enabled)
 	if enabled == nil then
 		enabled = IsAddOnDefaultEnabled(index)
 	end
 	if enabled then
-		E.func_EnableAddOn(index, character)
+		E:func_EnableAddOn(index, character)
 	else
-		E.func_DisableAddOn(index, character)
+		E:func_DisableAddOn(index, character)
 	end
 end
-function E.AddonList_HasAnyChanged()
-	if (AddonList.outOfDate and not E.func_IsAddonVersionCheckEnabled() or (not AddonList.outOfDate and E.func_IsAddonVersionCheckEnabled() and E.func_AddonList_HasOutOfDate())) then
+function E:func_AddonList_HasAnyChanged()
+	if (AddonList.outOfDate and not E:func_IsAddonVersionCheckEnabled() or (not AddonList.outOfDate and E:func_IsAddonVersionCheckEnabled() and E:func_AddonList_HasOutOfDate())) then
 		return true
 	end
-	for i=1,E.func_GetNumAddOns() do
+	for i=1,E:func_GetNumAddOns() do
 		local character = nil
 		character = UnitName("player")
-		local enabled = (E.func_GetAddOnEnableState(i, character) > Enum.AddOnEnableState.None)
-		if ( enabled ~= AddonList.startStatus[i] and E.func_GetAddonReason(i) ~= "DEP_DISABLED" ) then
+		local enabled = (E:func_GetAddOnEnableState(i, character) > Enum.AddOnEnableState.None)
+		if ( enabled ~= AddonList.startStatus[i] and E:func_GetAddonReason(i) ~= "DEP_DISABLED" ) then
 			return true
 		end
 	end
 	return false
 end
-function E.AddonTooltipBuildDepsString(index, color)
+function E:func_AddonTooltipBuildDepsString(index, color)
 	color = color or "|cff000000"
-	local deps = E.func_GetAddOnDependenciesTable(index)
+	local deps = E:func_GetAddOnDependenciesTable(index)
 	local depsString = ""
 	for i, name in ipairs(deps) do
 		if i == 1 then
@@ -2406,112 +2408,112 @@ function E.AddonTooltipBuildDepsString(index, color)
 	end
 	return depsString
 end
-function E.IsAddonSelected(nameOrIndex, forSome, charGuid)
+function E:func_IsAddonSelected(nameOrIndex, forSome, charGuid)
 	if (forSome) then
-		local state = E.func_GetAddOnEnableState(nameOrIndex, nil)
+		local state = E:func_GetAddOnEnableState(nameOrIndex, nil)
 		return state == 1
 	end
-	-- local guid = charGuid or E.GetSelectedCharGuid()
+	-- local guid = charGuid or E:func_GetSelectedCharGuid()
 	-- if (charGuid == true) then
 	-- guid = nil
 	-- end
-	local state = E.func_GetAddOnEnableState(nameOrIndex, guid)
+	local state = E:func_GetAddOnEnableState(nameOrIndex, guid)
 	return state == 2
 end
--- function E.GetSelectedCharGuid()
+-- function E:func_GetSelectedCharGuid()
 -- if (selectedCharIndex >= 1) then return orderedCharList[selectedCharIndex + 1].guid end
 -- return nil
 -- end
-function E.LocalizeCategoryName(name, isUserCategory)
+function E:func_LocalizeCategoryName(name, isUserCategory)
 	if (isUserCategory) then
 		return name
 	end
 	return rawget(L, string_lower(name)) or name
 end
-function E.GetCategoryTables()
+function E:func_GetCategoryTables()
 	local db = self:GetDb()
 	local userCategories = db.categories
 	local tocCategories = categoryTocTable
 	return userCategories, tocCategories, fixedCategories
 end
-function E.CategoriesForAddon(name)
-	local userTable, tocTable, fixedTable = E.GetCategoryTables()
+function E:func_CategoriesForAddon(name)
+	local userTable, tocTable, fixedTable = E:func_GetCategoryTables()
 	local resultText = ""
 	local sep = ""
 	for _, categoryTable in pairs(userTable) do
 		if (categoryTable.addons[name]) then
-			resultText = resultText .. sep .. E.LocalizeCategoryName(categoryTable.name, userTable)
+			resultText = resultText..sep..E:func_LocalizeCategoryName(categoryTable.name, userTable)
 			sep = ", "
 		end
 	end
 	for _, categoryTable in pairs(tocTable) do
 		if (categoryTable.addons[name]) then
-			resultText = resultText .. sep .. E.LocalizeCategoryName(categoryTable.name, tocTable)
+			resultText = resultText..sep..E:func_LocalizeCategoryName(categoryTable.name, tocTable)
 			sep = ", "
 		end
 	end
 	for _, categoryTable in pairs(fixedTable) do
 		if (categoryTable.prepare) then categoryTable:prepare() end
 		if (categoryTable:addons(name)) then
-			resultText = resultText .. sep .. categoryTable.name
+			resultText = resultText..sep..categoryTable.name
 			sep = ", "
 		end
 	end
 	return resultText
 end
-function E.rec_toggle(index, state)
+function E:func_rec_toggle(index, state)
 	if state then
-		E.func_DisableAddOn(index)
+		E:func_DisableAddOn(index)
 	else
-		E.func_EnableAddOn(index)
+		E:func_EnableAddOn(index)
 	end
 	if Octo_AddonsTable.depsByIndex[index] and not IsModifierKeyDown() and not Octo_AddonsTable.recycleByIndex[index] then
 		for i, depIndex in ipairs(Octo_AddonsTable.depsByIndex[index]) do
-			E.rec_toggle(depIndex, state)
+			E:func_rec_toggle(depIndex, state)
 		end
 	end
 end
 -- Переключить аддон
-function E.func_ToggleAddon(index, state)
+function E:func_ToggleAddon(index, state)
 	local addonName = GetAddOnInfo(index)
-	local enabled = E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
-	E.rec_toggle(index, enabled)
+	local enabled = E:func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
+	E:func_rec_toggle(index, enabled)
 end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ / CALLBACK
-function E.func_LockAddon(index)
-	local name = E.func_GetAddonName(index)
+function E:func_LockAddon(index)
+	local name = E:func_GetAddonName(index)
 	if Octo_AddonsManager_DB.lock.addons[name] then
 		Octo_AddonsManager_DB.lock.addons[name] = false
 	else
 		Octo_AddonsManager_DB.lock.addons[name] = true
-		-- E.func_EnableAddOn(index)
+		-- E:func_EnableAddOn(index)
 	end
 end
-function E.rec_lock(index)
-	E.func_LockAddon(index)
+function E:func_rec_lock(index)
+	E:func_LockAddon(index)
 	if Octo_AddonsTable.depsByIndex[index] and not IsModifierKeyDown() then
 		for i, depIndex in ipairs(Octo_AddonsTable.depsByIndex[index]) do
-			E.rec_lock(depIndex)
+			E:func_rec_lock(depIndex)
 		end
 	end
 end
 -- Переключить аддон
-function E.func_lockAddonNEW(index, state)
+function E:func_lockAddonNEW(index, state)
 	local addonName = GetAddOnInfo(index)
-	local enabled = E.func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
-	E.rec_lock(index, enabled)
+	local enabled = E:func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
+	E:func_rec_lock(index, enabled)
 end
 -- Сохранить текущий профиль
-function E.func_SaveProfile(profileName)
+function E:func_SaveProfile(profileName)
 	if not profileName or profileName == "" then
 		profileName = currentProfile
 	end
 	Octo_AddonsManager_DB.profiles[profileName] = {}
-	local addons = E.func_GetAllAddons()
+	local addons = E:func_GetAllAddons()
 	for index, name in ipairs(addons) do
-		-- Octo_AddonsManager_DB.profiles[profileName][name] = E.func_IsAddOnLoaded(index)
-		local loadable = E.func_IsAddOnLoadable(index, character)
-		local reason = E.func_GetAddonReason(index, character) or ""
+		-- Octo_AddonsManager_DB.profiles[profileName][name] = E:func_IsAddOnLoaded(index)
+		local loadable = E:func_IsAddOnLoadable(index, character)
+		local reason = E:func_GetAddonReason(index, character) or ""
 		if loadable or reason == "DEMAND_LOADED" or reason == "DEP_DEMAND_LOADED" then
 			Octo_AddonsManager_DB.profiles[profileName][name] = true
 		else
@@ -2521,23 +2523,23 @@ function E.func_SaveProfile(profileName)
 	DEFAULT_CHAT_FRAME:AddMessage("Профиль '"..profileName.." сохранен ("..#addons.." аддонов)")
 end
 -- Загрузить профиль
-function E.func_LoadProfile(profileName)
+function E:func_LoadProfile(profileName)
 	if not Octo_AddonsManager_DB.profiles[profileName] then
 		DEFAULT_CHAT_FRAME:AddMessage("Профиль '"..profileName.." не найден")
 		return
 	end
 	for name, enabled in pairs(Octo_AddonsManager_DB.profiles[profileName]) do
 		if enabled then
-			E.func_EnableAddOn(name)
+			E:func_EnableAddOn(name)
 		else
-			E.func_DisableAddOn(name)
+			E:func_DisableAddOn(name)
 		end
 	end
 	currentProfile = profileName
 	DEFAULT_CHAT_FRAME:AddMessage("Профиль '"..profileName.." загружен")
 end
 -- Список профилей
-function E.func_ListProfiles()
+function E:func_ListProfiles()
 	DEFAULT_CHAT_FRAME:AddMessage("Доступные профили:")
 	for name, _ in pairs(Octo_AddonsManager_DB.profiles) do
 		DEFAULT_CHAT_FRAME:AddMessage("- "..name)
@@ -2547,19 +2549,19 @@ end
 local function func_HandleCommand(msg)
 	local command, arg1, arg2 = strsplit(" ", msg, 3)
 	if command == "list" then
-		E.func_ListAddons(arg1)
+		E:func_ListAddons(arg1)
 	elseif command == "toggle" then
-		E.func_ToggleAddon(arg1)
+		E:func_ToggleAddon(arg1)
 	elseif command == "enableall" then
-		E.func_EnableAllAddOns()
+		E:func_EnableAllAddOns()
 	elseif command == "disableall" then
-		E.func_DisableAllAddons()
+		E:func_DisableAllAddons()
 	elseif command == "save" then
-		E.func_SaveProfile(arg1)
+		E:func_SaveProfile(arg1)
 	elseif command == "load" then
-		E.func_LoadProfile(arg1)
+		E:func_LoadProfile(arg1)
 	elseif command == "profiles" then
-		E.func_ListProfiles()
+		E:func_ListProfiles()
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("Команды:")
 		DEFAULT_CHAT_FRAME:AddMessage("/uam list [фильтр] - список аддонов")
@@ -2575,8 +2577,8 @@ end
 -- Регистрируем команды
 SLASH_UNIVERSALADDONMANAGER1 = "/uam"
 SlashCmdList["UNIVERSALADDONMANAGER"] = func_HandleCommand
-function E.GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
-	if (not E.func_IsProfilerEnabled()) then
+function E:func_GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
+	if (not E:func_IsProfilerEnabled()) then
 		return def or ""
 	end
 	local overall = GetOverallMetric(metric)
@@ -2591,12 +2593,12 @@ function E.GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
 	end
 	local percent = addon / relative
 	if (warningInLeftSide) then
-		return E.GetWarningFor(percent)..E.FormatProfilerPercent(percent * 100.0)
+		return E:func_GetWarningFor(percent)..E:func_FormatProfilerPercent(percent * 100.0)
 	end
-	return E.FormatProfilerPercent(percent * 100.0)..E.GetWarningFor(percent)
+	return E:func_FormatProfilerPercent(percent * 100.0)..E:func_GetWarningFor(percent)
 end
 ----------------------------------------------------------------
-function E.FormatProfilerPercent(pct)
+function E:func_FormatProfilerPercent(pct)
 	local color = E.White_Color
 	if (pct > 25) then color = E.Yellow_Color end
 	if (pct > 50) then color = E.Orange_Color end
@@ -2606,15 +2608,15 @@ function E.FormatProfilerPercent(pct)
 	-- return color:WrapText(string_format("%.2f", pct))..E.White_Color:WrapText("%")
 end
 ----------------------------------------------------------------
-function E.GetCVarNumber(name)
+function E:func_GetCVarNumber(name)
 	-- if the CVar doesn't exist, the GetCVar returns "nothing" (not even nil) and the tonumber fails
 	local number = tonumber(GetCVar(name) or nil)
 	return number or tonumber(GetCVarDefault(name) or nil)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.GetWarningFor(percent)
-	local warningPercent = E.GetCVarNumber("addonPerformanceMsgWarning") or -1
+function E:func_GetWarningFor(percent)
+	local warningPercent = E:func_GetCVarNumber("addonPerformanceMsgWarning") or -1
 	if (warningPercent > 0.0 and warningPercent < 1.0 and percent > warningPercent) then
 		return " "..CreateSimpleTextureMarkup([[Interface\DialogFrame\DialogIcon-AlertNew-16]], 16, 16)
 	end
@@ -2622,8 +2624,8 @@ function E.GetWarningFor(percent)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.GetAddonMetricCount(addonName, metric)
-	if (not E.func_IsProfilerEnabled()) then
+function E:func_GetAddonMetricCount(addonName, metric)
+	if (not E:func_IsProfilerEnabled()) then
 		return ""
 	end
 	local count = GetAddOnMetric(addonName, metric) or 0
@@ -2632,7 +2634,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
--- function E.func_CompactMemory(memory)
+-- function E:func_CompactMemory(memory)
 -- if memory > 0 then
 -- if memory > 1024 then
 -- return string_format(ADDON_LIST_PERFORMANCE_MEMORY_MB, memory/1024)
@@ -2644,7 +2646,7 @@ end
 -- end
 -- end
 ----------------------------------------------------------------
-function E.AddonTooltip_BuildDeps(...)
+function E:func_AddonTooltip_BuildDeps(...)
 	local deps = ""
 	for i=1, select("#", ...) do
 		if i == 1 then
@@ -2656,14 +2658,14 @@ function E.AddonTooltip_BuildDeps(...)
 	return deps
 end
 ----------------------------------------------------------------
-function E.AddonList_IsAddOnLoadOnDemand(index)
+function E:func_AddonList_IsAddOnLoadOnDemand(index)
 	local lod = false
 	if IsAddOnLoadOnDemand(index) then
-		local deps = E.func_GetAddOnDependenciesSTR(index)
+		local deps = E:func_GetAddOnDependenciesSTR(index)
 		local okay = true
 		for i = 1, select('#', deps) do
 			local dep = select(i, deps)
-			if ( dep and not E.func_IsAddOnLoaded(select(i, deps)) ) then
+			if ( dep and not E:func_IsAddOnLoaded(select(i, deps)) ) then
 				okay = false
 				break
 			end
@@ -2676,7 +2678,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_NumPlayers()
+function E:func_NumPlayers()
 	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
 	local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
 	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
@@ -2715,7 +2717,7 @@ function E.func_NumPlayers()
 	end
 	return #sorted or 1
 end
-function E.sorted()
+function E:func_sorted()
 	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
 	local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
 	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
@@ -2784,7 +2786,7 @@ end
 -- Кэширование расчетов цветов:
 local function GetClassColorCache()
 	local r, g, b = GetClassColor(E.classFilename)
-	return {r = r, g = g, b = b, hex = E.func_rgb2hex(r, g, b)}
+	return {r = r, g = g, b = b, hex = E:func_rgb2hex(r, g, b)}
 end
 E.classColorCache = GetClassColorCache()
 ----------------------------------------------------------------
@@ -2820,14 +2822,14 @@ end
 -- Переиспользование объекта подсказки:
 local tooltip = E.tooltip or CreateFrame("GameTooltip", "OctoTooltip", nil, "GameTooltipTemplate")
 E.tooltip = tooltip
-function E.ShowTooltip(...)
+function E:func_ShowTooltip(...)
 	tooltip:ClearLines()
 	-- Добавление строк
 	tooltip:Show()
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_Universal(tbl, expansionID)
+function E:func_Universal(tbl, expansionID)
 	if not tbl then return end
 	if not Octo_ToDo_DB_Vars.Quests then return end
 	for expID, expDATA in ipairs(E.OctoTable_Expansions) do
@@ -2856,7 +2858,7 @@ function E.func_Universal(tbl, expansionID)
 								end
 								if CharInfo.PlayerData.GUID == E.curGUID then
 									for index, questID in ipairs(v.questID) do
-										tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+										tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
 									end
 								end
 							end
@@ -2874,7 +2876,7 @@ function E.func_Universal(tbl, expansionID)
 	end
 end
 ----------------------------------------------------------------
-function E.func_Universal_Holiday(tbl, Holiday, color)
+function E:func_Universal_Holiday(tbl, Holiday, color)
 	if not tbl then return end
 	for _, v in ipairs(E.OctoTable_UniversalQuest) do
 		if v.desc == Holiday then
@@ -2900,7 +2902,7 @@ function E.func_Universal_Holiday(tbl, Holiday, color)
 						end
 						if CharInfo.PlayerData.GUID == E.curGUID then
 							for index, questID in ipairs(v.questID) do
-								tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+								tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
 							end
 						end
 					end
@@ -2915,178 +2917,130 @@ function E.func_Universal_Holiday(tbl, Holiday, color)
 		end
 	end
 end
-
-
 --------------------------------------------------------------
-function E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
+function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 	----------------------------------------------------------------
 	local tooltip = {}
 	local total = 0
 	local sorted = {}
-
-	local sortedPlayersTBL = E.sorted()
-
+	local hasTotal = false
+	local sortedPlayersTBL = E:func_sorted()
 	local visiblePlayers = {}
+	local totalPersToShow = 30+2
 	for _, charInfo in ipairs(sortedPlayersTBL) do
 		visiblePlayers[charInfo.PlayerData.GUID] = true
 	end
 	----------------------------------------------------------------
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-	local specIcon, color, Name, RIGHT
-	local curServer, curPers = "", ""
-		if typeQ == "Currency" and CharInfo.MASLENGO.CurrencyID[ID] then
-			total = total + CharInfo.MASLENGO.CurrencyID[ID]
-			-- RIGHT = CharInfo.MASLENGO.CurrencyID[ID]
-			if CharInfo.MASLENGO.CurrencyID[ID] and CharInfo.MASLENGO.CurrencyID_Total[ID] then
-				RIGHT = CharInfo.MASLENGO.CurrencyID_Total[ID]
-				RIGHTforSORT = CharInfo.MASLENGO.CurrencyID[ID]
-			elseif CharInfo.MASLENGO.CurrencyID[ID] then
-				RIGHT = CharInfo.MASLENGO.CurrencyID[ID]
-				RIGHTforSORT = CharInfo.MASLENGO.CurrencyID[ID]
-			end
-
+		local specIcon, color, Name, RIGHT
+		local curServer, curPers = "", ""
+		if typeQ == "Currency" and CharInfo.MASLENGO.Currency[ID] and E:func_textCENT_Currency(CharInfo, ID) ~= "" then
+			RIGHT = E:func_textCENT_Currency(CharInfo, ID)
+			RIGHTforSORT = CharInfo.MASLENGO.Currency[ID].quantity or 0
+			total = total + (CharInfo.MASLENGO.Currency[ID].quantity or 0)
 		end
+		-- if typeQ == "Currency" and CharInfo.MASLENGO.Currency[ID] and CharInfo.MASLENGO.Currency[ID].quantity then
+		--     total = total + CharInfo.MASLENGO.Currency[ID].quantity
+		--     if CharInfo.MASLENGO.Currency[ID].quantity then
+		--         if CharInfo.MASLENGO.Currency[ID].maxQuantity and CharInfo.MASLENGO.Currency[ID].maxQuantity ~= 0 then
+		--             -- RIGHT = CharInfo.MASLENGO.Currency[ID].quantity.."/"..CharInfo.MASLENGO.Currency[ID].maxQuantity
+		--             hasTotal = true
+		--         else
+		--             -- RIGHT = CharInfo.MASLENGO.Currency[ID].quantity
+		--         end
+		--         RIGHTforSORT = CharInfo.MASLENGO.Currency[ID].quantity
+		--     end
+		-- end
 		if typeQ == "Item" and CharInfo.MASLENGO.ItemsInBag[ID] then
 			total = total + CharInfo.MASLENGO.ItemsInBag[ID]
 			RIGHT = CharInfo.MASLENGO.ItemsInBag[ID]
 			RIGHTforSORT = CharInfo.MASLENGO.ItemsInBag[ID]
 		end
-
 		if (typeQ == "Currency_Covenant_Anima" or typeQ == "Currency_Covenant_Renown") and CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] then
 			total = total + CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
 			RIGHT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
 			RIGHTforSORT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
 		end
 		if RIGHT then
-			specIcon = E.func_texturefromIcon(CharInfo.PlayerData.specIcon)
-
-			color = visiblePlayers[GUID] and CharInfo.PlayerData.classColorHex or E.Gray_Color
+			specIcon = E:func_texturefromIcon(CharInfo.PlayerData.specIcon)
+			colorPlayer = visiblePlayers[GUID] and CharInfo.PlayerData.classColorHex or E.Gray_Color
+			colorServer = visiblePlayers[GUID] and "|cffFFFFFF" or E.Gray_Color
 			-- color = CharInfo.PlayerData.isShownPLAYER and CharInfo.PlayerData.classColorHex or E.Gray_Color
 			-- color = E.Gray_Color
 			-- for CharIndex, CharInfo2 in ipairs(sortedPlayersTBL) do
-			-- 	if CharInfo.PlayerData.GUID == CharInfo2.PlayerData.GUID then
-			-- 		color = CharInfo.PlayerData.classColorHex
-			-- 	end
+			--     if CharInfo.PlayerData.GUID == CharInfo2.PlayerData.GUID then
+			--         color = CharInfo.PlayerData.classColorHex
+			--     end
 			-- end
 			Name = CharInfo.PlayerData.Name
 			if CharInfo.PlayerData.GUID == E.curGUID then
 				curPers = "---->"
 			end
 			if CharInfo.PlayerData.curServer ~= E.curServer then
-				curServer = "|r-"..CharInfo.PlayerData.curServer
+				curServer = "-"..CharInfo.PlayerData.curServer
 			end
-			sorted[#sorted+1] = {specIcon, curPers, color, Name, curServer, RIGHT, RIGHTforSORT}
+			sorted[#sorted+1] = {specIcon, curPers, colorPlayer, Name, colorServer, curServer, RIGHT, RIGHTforSORT}
 		end
 	end
-		----------------------------------------------------------------
-	sort(sorted, function(a, b)
-			if a[7] == b[7] then
-				return a[4] < b[4]
+	----------------------------------------------------------------
+	if hasTotal == true then
+		local index = 1
+		local info = sorted[index]
+		while info do
+			if type(info[7]) == "number" then
+				table.remove(sorted, index)
+			else
+				index = index + 1
 			end
-			return a[7] > b[7]
-	end)
-	----------------------------------------------------------------
-	if typeQ == "Currency" and total ~= 0 then
-		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetCurrencyIcon(ID)).." "..TOTAL, total}
-		tooltip[#tooltip+1] = {" ", " "}
+			info = sorted[index]
+		end
 	end
-	if typeQ == "Item" and total ~= 0 then
-		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(ID)).." "..TOTAL, total}
-		tooltip[#tooltip+1] = {" ", " "}
-	end
-	if typeQ == "Currency_Covenant_Anima" and total ~= 0 then
-		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
-		tooltip[#tooltip+1] = {" ", " "}
-	end
-	if typeQ == "Currency_Covenant_Renown" and total ~= 0 then
-		tooltip[#tooltip+1] = {E.func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
-		tooltip[#tooltip+1] = {" ", " "}
-	end
-
-
-
-
-
-
-
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	for _, v in ipairs(sorted) do
-		if #tooltip < 123 then
-			tooltip[#tooltip+1] = {v[1].." "..v[2]..v[3]..v[4]..v[5], v[6]}
+	if total ~= 0 then
+		sort(sorted, function(a, b)
+				if a[8] == b[8] then
+					return a[4] < b[4]
+				end
+				return a[8] > b[8]
+		end)
+		----------------------------------------------------------------
+		if typeQ == "Currency" then
+			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E:func_currencyName(ID), TOTAL..": "..total}
+			tooltip[#tooltip+1] = {" ", " "}
+		end
+		if typeQ == "Item" then
+			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), TOTAL..": "..total}
+			tooltip[#tooltip+1] = {" ", " "}
+		end
+		if typeQ == "Currency_Covenant_Anima" then
+			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
+			tooltip[#tooltip+1] = {" ", " "}
+		end
+		if typeQ == "Currency_Covenant_Renown" then
+			tooltip[#tooltip+1] = {E:func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
+			tooltip[#tooltip+1] = {" ", " "}
+		end
+		----------------------------------------------------------------
+		for _, v in ipairs(sorted) do
+			if #tooltip < totalPersToShow then
+				tooltip[#tooltip+1] = {v[1].." "..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[7]}
+			end
+		end
+		local hidden = #sorted - #tooltip
+		if hidden > 0 then
+			tooltip[#tooltip+1] = {" ", " "}
+			tooltip[#tooltip+1] = {E.Red_Color.."+" .. hidden.."|r", " "}
 		end
 	end
 	----------------------------------------------------------------
 	return tooltip
 end
--- function E.func_tooltipCurrencyAllPlayers(typeQ, ID)
--- 	local tooltip = {}
--- 	local total = 0
--- 	local sorted = {}
-
--- 	-- Предварительно вычисляем часто используемые значения
--- 	local isCurrency = (typeQ == "Currency")
--- 	local field = isCurrency and "CurrencyID" or "ItemsInBag"
--- 	local sortedPlayersTBL = E.sorted()
-
--- 	-- Создаем lookup-таблицу для видимых игроков
--- 	local visiblePlayers = {}
--- 	for _, charInfo in ipairs(sortedPlayersTBL) do
--- 		visiblePlayers[charInfo.PlayerData.GUID] = true
--- 	end
-
--- 	-- Основной цикл обработки данных
--- 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
--- 		local value = CharInfo.MASLENGO[field] and CharInfo.MASLENGO[field][ID]
--- 		if value and value > 0 then
--- 			total = total + value
--- 			local playerData = CharInfo.PlayerData
-
--- 			-- Определяем цвет имени
--- 			local color = visiblePlayers[GUID] and playerData.classColorHex or E.Gray_Color
--- 			local nameLine = format("%s%s|r - %s",
--- 				color,
--- 				playerData.Name,
--- 				playerData.curServerShort)
-
--- 			-- Добавляем в сортированный список
--- 			sorted[#sorted+1] = {
--- 				specIcon = E.func_texturefromIcon(playerData.specIcon),
--- 				nameLine = nameLine,
--- 				value = value,
--- 				name = playerData.Name  -- Для сортировки
--- 			}
--- 		end
--- 	end
-
--- 	-- Сортировка результатов
--- 	table.sort(sorted, function(a, b)
--- 		return a.value > b.value or (a.value == b.value and a.name < b.name)
--- 	end)
-
--- 	-- Формирование заголовка
--- 	if total > 0 then
--- 		local iconFunc = isCurrency and E.func_GetCurrencyIcon or E.func_GetItemIconByID
--- 		local icon = E.func_texturefromIcon(iconFunc(ID))
--- 		tooltip[#tooltip+1] = {icon .. " " .. TOTAL, total}
--- 		tooltip[#tooltip+1] = {" ", " "}
--- 	end
-
--- 	-- Добавление записей в тултип
--- 	-- for i = 1, math.min(#sorted, 123) do  -- Лимит 123 строки включая заголовок
--- 	for i = 1, #sorted do  -- Лимит 123 строки включая заголовок
--- 		local entry = sorted[i]
--- 		tooltip[#tooltip+1] = {entry.specIcon .. " " .. entry.nameLine, entry.value}
--- 	end
-
--- 	return tooltip
--- end
-
-function E.func_textCENT_Items(CharInfo, itemID, showIcon)
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+function E:func_textCENT_Items(CharInfo, itemID, showIcon)
 	if not itemID then return "" end
 	showIcon = showIcon or false
 	local vivod = ""
-
 	if type(itemID) == "number" then
 		vivod = vivod..(CharInfo.MASLENGO.ItemsInBag[itemID] or "")
 	elseif type(itemID) == "table" then
@@ -3094,90 +3048,50 @@ function E.func_textCENT_Items(CharInfo, itemID, showIcon)
 			vivod = vivod..(CharInfo.MASLENGO.ItemsInBag[v] or "")
 		end
 	end
-
 	if showIcon and vivod ~= "" then
-		vivod = " +"..vivod..E.func_texturefromIcon(E.func_GetItemIconByID(itemID))
+		vivod = " +"..vivod..E:func_texturefromIcon(E:func_GetItemIconByID(itemID))
 	end
-
-
 	return vivod
 end
-
--- function E.func_textCENT_Items(CharInfo, itemID)
--- 	if not itemID then return "" end
-
--- 	local ItemsInBag = CharInfo.MASLENGO.ItemsInBag
--- 	local vivod = {}
-
--- 	if type(itemID) == "number" then
--- 		local value = ItemsInBag[itemID]
--- 		if value then table.insert(vivod, value) end
--- 	elseif type(itemID) == "table" then
--- 		for _, v in ipairs(itemID) do
--- 			local value = ItemsInBag[v]
--- 			if value then table.insert(vivod, value) end
--- 		end
--- 	end
--- 	return table.concat(vivod)
--- end
-
-function E.func_textCENT_Currency(CharInfo, currencyID, itemID)
-	local MASLENGO = CharInfo.MASLENGO
-	local currency = MASLENGO.CurrencyID
-	local total = MASLENGO.CurrencyID_Total
-	local totalEarned = MASLENGO.CurrencyID_totalEarned
-
-	local vivod = total[currencyID] or currency[currencyID] or ""
-
-	if totalEarned and totalEarned[currencyID] then
-		vivod = vivod..E.Red_Color.." ("..totalEarned[currencyID]..")|r"
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+function E:func_textCENT_Currency(CharInfo, currencyID, itemID)
+	local data = CharInfo.MASLENGO.Currency
+	if not data[currencyID] then return "" end
+	local vivod = ""
+	local color = E.White_Color
+	if data[currencyID].quantity then
+		vivod = vivod .. data[currencyID].quantity
+		if data[currencyID].maxQuantity and data[currencyID].maxQuantity ~= 0 then
+			if data[currencyID].quantity == data[currencyID].maxQuantity then
+				color = E.Green_Color
+			end
+			vivod = color..vivod .. "/" ..data[currencyID].maxQuantity.."|r"
+		end
 	end
-	local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-	if currencyInfo.maxQuantity == (totalEarned and totalEarned[currencyID]) and not currency[currencyID] then
-		vivod = E.Red_Color.."max|r"
+	if data[currencyID].totalEarned and data[currencyID].maxQuantity then
+		-- color = E.Green_Color
+		local curQuantity = (data[currencyID].quantity or 0)
+		vivod = data[currencyID].totalEarned
+		vivod = " ("..vivod .. "/" ..data[currencyID].maxQuantity..")"
+		vivod = color.. curQuantity.. vivod .. "|r"
 	end
+	-- if data[currencyID].maxQuantity then
+	--     vivod = vivod .. E.Purple_Color.. "/" ..data[currencyID].maxQuantity.."|r"
+	-- end
+	--     vivod = data[currencyID].quantity
+	--     if data[currencyID].maxQuantity and data[currencyID].maxQuantity ~= 0 then
+	--         vivod = vivod.."/"..data[currencyID].maxQuantity
+	--     end
+	-- elseif data[currencyID].quantity and data[currencyID].maxQuantity and data[currencyID].totalEarned and (data[currencyID].maxQuantity ~= data[currencyID].totalEarned) then
+	--     vivod = E.Purple_Color..data[currencyID].quantity.."|r (" .. data[currencyID].maxQuantity .. "/" ..data[currencyID].totalEarned..")"
+	-- elseif not data[currencyID].quantity and data[currencyID].maxQuantity and data[currencyID].totalEarned and (data[currencyID].maxQuantity == data[currencyID].totalEarned) then
+	--     vivod = E.Red_Color.."can't earn|r" -- CURRENCY_SEASON_TOTAL_MAXIMUM:format(0, data[currencyID].maxQuantity, data[currencyID].totalEarned)
+	-- end
 	if itemID then
-		vivod = vivod..E.func_textCENT_Items(CharInfo, itemID, true)
+		vivod = vivod..E:func_textCENT_Items(CharInfo, itemID, true)
 	end
-
 	return vivod
 end
-
 ----------------------------------------------------------------
--- function E.func_textCENT_Currency(CharInfo, currencyID)
--- 	local vivod = ""
--- 	if CharInfo.MASLENGO.CurrencyID[currencyID] and CharInfo.MASLENGO.CurrencyID_Total[currencyID] then
--- 		vivod = CharInfo.MASLENGO.CurrencyID_Total[currencyID]
--- 	elseif CharInfo.MASLENGO.CurrencyID[currencyID] then
--- 		vivod = CharInfo.MASLENGO.CurrencyID[currencyID]
--- 	end
-
--- 	if CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] then
--- 		vivod = vivod..E.Red_Color.." ("..CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID]..")|r"
--- 	end
--- 	if C_CurrencyInfo.GetCurrencyInfo(currencyID).maxQuantity == CharInfo.MASLENGO.CurrencyID_totalEarned[currencyID] and not CharInfo.MASLENGO.CurrencyID[currencyID] then
--- 		vivod = E.Red_Color.."max|r"
--- 	end
-
--- 	return vivod
--- end
-
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
--- print (E.func_SecondsToClock(debugprofilestop()) , E.func_SecondsToClock(GetTime()) )

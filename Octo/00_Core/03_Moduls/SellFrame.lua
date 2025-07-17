@@ -37,7 +37,7 @@ tinsert(E.Modules, function()
 	end
 
 	local function CreateSellButton(name, texture, tooltip, x, y)
-		local button = CreateFrame("Button", E.func_AddonTitle(GlobalAddonName)..E.func_GenerateUniqueID(), UIParent, "BackdropTemplate")
+		local button = CreateFrame("Button", E:func_AddonTitle(GlobalAddonName)..E:func_GenerateUniqueID(), UIParent, "BackdropTemplate")
 		button:SetSize(size*E.scale, size*E.scale)
 		button:SetFrameStrata("LOW")
 		button:EnableMouse(true)
@@ -180,7 +180,7 @@ tinsert(E.Modules, function()
 				GameTooltip:AddLine("itemQuality < фиолет")
 				GameTooltip:AddLine(" ")
 				for _, itemID in next, E.OctoTable_itemID_Ignore_List do
-					GameTooltip:AddLine(E.func_GetItemIconByID(itemID)..E.func_GetItemNameByID(itemID))
+					GameTooltip:AddLine(E:func_GetItemIconByID(itemID)..E:func_GetItemNameByID(itemID))
 				end
 				GameTooltip:Show()
 			end)
@@ -200,7 +200,7 @@ tinsert(E.Modules, function()
 				GameTooltip:AddLine("itemQuality = фиолет")
 				GameTooltip:AddLine(" ")
 				for _, itemID in next, E.OctoTable_itemID_Ignore_List do
-					GameTooltip:AddLine(E.func_GetItemIconByID(itemID)..E.func_GetItemNameByID(itemID))
+					GameTooltip:AddLine(E:func_GetItemIconByID(itemID)..E:func_GetItemNameByID(itemID))
 				end
 				GameTooltip:Show()
 			end)

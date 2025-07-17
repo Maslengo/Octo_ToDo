@@ -12,7 +12,7 @@ tinsert(E.Modules, function()
 			if dialog.Hide then dialog:Hide() end
 			confirmButton:Click()
 			if message then
-				DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message, E.Addon_Left_Color, E.Addon_Right_Color))
+				DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(message, E.Addon_Left_Color, E.Addon_Right_Color))
 			end
 		end
 		local function OnKeyUp(self, key)

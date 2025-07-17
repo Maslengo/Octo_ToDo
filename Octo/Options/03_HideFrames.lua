@@ -37,7 +37,8 @@ function E.HideFrames()
 			-------------------------------------------------
 			Hide_SubscriptionInterstitialFrame = {
 				type = "toggle",
-				name = L["Hide: SubscriptionInterstitialFrame"],
+				-- name = Octo_ToDo_DB_Vars.Hide_SubscriptionInterstitialFrame and E.Green_Color..L["Hide: SubscriptionInterstitialFrame"].."|r" or E.Red_Color..L["Hide: SubscriptionInterstitialFrame"].."|r",
+				name = E.Green_Color..L["Hide: SubscriptionInterstitialFrame"].."|r",
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.Hide_SubscriptionInterstitialFrame
@@ -446,3 +447,91 @@ function E.HideFrames()
 	}
 	return HideFrames
 end
+
+
+
+
+
+
+
+
+
+
+
+-- local GlobalAddonName, E = ...
+-- local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+
+-- function E.HideFrames()
+-- 	local index = 0
+-- 	local function GetOrder()
+-- 		index = index + 1
+-- 		return index
+-- 	end
+
+-- 	local function CreateToggleOption(name, dbKey, funcName)
+-- 		return {
+-- 			type = "toggle",
+-- 			name = name:find("^Hide: ") and L[name] or name,
+-- 			desc = "",
+-- 			get = function() return Octo_ToDo_DB_Vars[dbKey] end,
+-- 			set = function(_, value)
+-- 				Octo_ToDo_DB_Vars[dbKey] = value
+-- 				E[funcName]()
+-- 			end,
+-- 			width = E.FULL_WIDTH/2,
+-- 			order = GetOrder(),
+-- 		}
+-- 	end
+
+-- 	local toggleOptions = {
+-- 		{name = "Hide: CheckListText", dbKey = "Hide_CheckListText", funcName = "Hide_CheckListText"},
+-- 		{name = "Hide: SubscriptionInterstitialFrame", dbKey = "Hide_SubscriptionInterstitialFrame", funcName = "Hide_SubscriptionInterstitialFrame"},
+-- 		{name = "Hide: ActionStatusText", dbKey = "Hide_ActionStatusText", funcName = "Hide_ActionStatusText"},
+-- 		{name = "Hide: SecondaryStatusTrackingBarContainer", dbKey = "Hide_SecondaryStatusTrackingBarContainer", funcName = "Hide_SecondaryStatusTrackingBarContainer"},
+-- 		{name = "Hide: MainStatusTrackingBarContainer", dbKey = "Hide_MainStatusTrackingBarContainer", funcName = "Hide_MainStatusTrackingBarContainer"},
+-- 		{name = "Hide: WeeklyRewardExpirationWarningDialog", dbKey = "Hide_WeeklyRewardExpirationWarningDialog", funcName = "Hide_WeeklyRewardExpirationWarningDialog"},
+-- 		{name = "Hide: MajorFactionsRenownToast", dbKey = "Hide_MajorFactionsRenownToast", funcName = "Hide_MajorFactionsRenownToast"},
+-- 		{name = "Hide: UIWidgetTopCenterContainerFrame", dbKey = "Hide_UIWidgetTopCenterContainerFrame", funcName = "Hide_UIWidgetTopCenterContainerFrame"},
+-- 		{name = "Hide: BossBanner", dbKey = "Hide_BossBanner", funcName = "Hide_BossBanner"},
+-- 		{name = "Hide: RaidWarningFrame", dbKey = "Hide_RaidWarningFrame", funcName = "Hide_RaidWarningFrame"},
+-- 		{name = "Hide: RaidBossEmoteFrame", dbKey = "Hide_RaidBossEmoteFrame", funcName = "Hide_RaidBossEmoteFrame"},
+-- 		{name = "Hide: PrivateRaidBossEmoteFrameAnchor", dbKey = "Hide_PrivateRaidBossEmoteFrameAnchor", funcName = "Hide_PrivateRaidBossEmoteFrameAnchor"},
+-- 		{name = "Hide: SplashFrame", dbKey = "Hide_SplashFrame", funcName = "Hide_SplashFrame"},
+-- 		{name = "Hide: PTRReporter", dbKey = "Hide_PTRReporter", funcName = "Hide_PTRReporter"},
+-- 		{name = "Hide: PTRIssueReporter", dbKey = "Hide_PTRIssueReporter", funcName = "Hide_PTRIssueReporter"},
+-- 		{name = "Hide: PTRIssueReporterAlertFrame", dbKey = "Hide_PTRIssueReporterAlertFrame", funcName = "Hide_PTRIssueReporterAlertFrame"},
+-- 		{name = "Hide: Bug", dbKey = "Hide_Bug", funcName = "Hide_Bug"},
+-- 		{name = "Hide: CovenantRenownToast", dbKey = "Hide_CovenantRenownToast", funcName = "Hide_CovenantRenownToast"},
+-- 		{name = "Hide: CovenantChoiceToast", dbKey = "Hide_CovenantChoiceToast", funcName = "Hide_CovenantChoiceToast"},
+-- 		{name = "Hide: ZoneTextFrame", dbKey = "Hide_ZoneTextFrame", funcName = "Hide_ZoneTextFrame"},
+-- 		{name = "Hide: SubZoneTextFrame", dbKey = "Hide_SubZoneTextFrame", funcName = "Hide_SubZoneTextFrame"},
+-- 		{name = "Hide: PVPArenaTextString", dbKey = "Hide_PVPArenaTextString", funcName = "Hide_PVPArenaTextString"},
+-- 		{name = "Hide: ZoneTextString", dbKey = "Hide_ZoneTextString", funcName = "Hide_ZoneTextString"},
+-- 		{name = "Hide: SubZoneTextString", dbKey = "Hide_SubZoneTextString", funcName = "Hide_SubZoneTextString"},
+-- 		{name = "Hide: OrderHallCommandBar", dbKey = "Hide_OrderHallCommandBar", funcName = "Hide_OrderHallCommandBar"},
+-- 		{name = "Hide: ErrorMessages", dbKey = "Hide_ErrorMessages", funcName = "Hide_ErrorMessages"},
+-- 		{name = "Hide: TalkingHeadFrame", dbKey = "Hide_TalkingHeadFrame", funcName = "Hide_TalkingHeadFrame"},
+-- 		{name = "Hide: EventToastManagerFrame", dbKey = "Hide_EventToastManagerFrame", funcName = "Hide_EventToastManagerFrame"},
+-- 	}
+
+-- 	local args = {
+-- 		Header1 = {
+-- 			type = "header",
+-- 			name = "",
+-- 			order = GetOrder(),
+-- 		},
+-- 	}
+
+-- 	for _, option in ipairs(toggleOptions) do
+-- 		args[option.dbKey] = CreateToggleOption(option.name, option.dbKey, option.funcName)
+-- 	end
+
+-- 	local HideFrames = {
+-- 		type = "group",
+-- 		childGroups = "tree",
+-- 		name = "HideFrames",
+-- 		args = args,
+-- 	}
+
+-- 	return HideFrames
+-- end

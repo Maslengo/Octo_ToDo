@@ -81,7 +81,7 @@ local function SetTextureByItemId(frame, itemId)
 	local item = Item:CreateFromItemID(itemId)
 	item:ContinueOnItemLoad(function()
 			local icon = item:GetItemIcon()
-			frame.Icon:SetTexture(E.func_GetItemIconByID(itemId))
+			frame.Icon:SetTexture(E:func_GetItemIconByID(itemId))
 	end)
 end
 
@@ -262,7 +262,7 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 
 
 		if curType == "spell" then
-			button.Icon:SetTexture(E.func_GetSpellIcon(id))
+			button.Icon:SetTexture(E:func_GetSpellIcon(id))
 		else -- item or toy
 			SetTextureByItemId(button, id)
 		end
@@ -340,7 +340,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 }
-E.RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
 
 ----------------------------------------------------------------
 function Octo_EventFrame:ADDON_LOADED(addonName)

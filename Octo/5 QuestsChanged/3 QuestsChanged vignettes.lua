@@ -23,7 +23,7 @@ function Octo_EventFrame_Vignettes:OnVignetteEvent()
 	local vignetteids = C_VignetteInfo.GetVignettes()
 	if not vignetteids then return end
 	-- print (GetZoneText(), GetSubZoneText(), GetRealZoneText())
-	-- print (E.func_GetCurrentLocation())
+	-- print (E:func_GetCurrentLocation())
 	for i, instanceid in ipairs(vignetteids) do
 		local vignetteInfo = C_VignetteInfo.GetVignetteInfo(instanceid)
 		if vignetteInfo and vignetteInfo.vignetteGUID and not log[vignetteInfo.vignetteGUID] then
@@ -37,7 +37,7 @@ function Octo_EventFrame_Vignettes:OnVignetteEvent()
 				playerName = E.curCharName,
 				curServer = GetRealmName(),
 				classColorHex = E.classColorHexCurrent,
-				curLocation = E.func_GetCurrentLocation(),
+				curLocation = E:func_GetCurrentLocation(),
 				specIcon = select(4, GetSpecializationInfo(GetSpecialization())),
 				guid = vignetteInfo.vignetteGUID,
 				name = vignetteInfo.name,
@@ -57,7 +57,7 @@ local MyEventsTable = {
 	"ZONE_CHANGED_NEW_AREA",
 	"ZONE_CHANGED_INDOORS",
 }
-E.RegisterMyEventsToFrames(Octo_EventFrame_Vignettes, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_Vignettes, MyEventsTable)
 
 -- function Octo_EventFrame_Vignettes:PLAYER_ENTERING_WORLD()
 	C_Timer.After(2, function()

@@ -21,16 +21,16 @@ local regions = {
 }
 local output_preffix = ""
 
-if E.func_IsRetail() == true then
+if E:func_IsRetail() == true then
 	E.baseWowheadUrl = "wowhead.com/%s%s=%s"
 end
-if E.func_IsClassic() == true then
+if E:func_IsClassic() == true then
 	E.baseWowheadUrl = "wowhead.com/classic/%s=%s%s"
 end
-if E.func_IsCataclysm() == true then
+if E:func_IsCataclysm() == true then
 	E.baseWowheadUrl = "wowhead.com/cata/%s=%s%s"
 end
-if E.func_IsPTR() then
+if E:func_IsPTR() then
 	E.baseWowheadUrl = "wowhead.com/ptr/%s%s=%s"
 end
 
@@ -85,7 +85,7 @@ function E.strategies.GetWowheadTradingPostActivityUrl(dataSources)
 	end
 end
 function E.strategies.GetArmoryUrl(dataSources)
-	if E.func_IsRetail() then
+	if E:func_IsRetail() then
 		for _, strategy in next, (strategies.armory) do
 			local _, locale, realm, name = strategy(dataSources)
 			if locale and realm and name then
@@ -100,7 +100,7 @@ function E.strategies.GetArmoryUrl(dataSources)
 	end
 end
 function E.altStrategies.GetRaiderIoUrl(dataSources)
-	if E.func_IsRetail() then
+	if E:func_IsRetail() then
 		for _, strategy in next, (strategies.armory) do
 			local region, _, realm, name = strategy(dataSources)
 			if region and realm and name then
@@ -256,7 +256,7 @@ function strategies.wowhead.GetTrackerFromFocus(data)
 	end
 end
 function strategies.wowhead.GetClassicQuestLog(data)
-	if not E.func_IsRetail() or not data.focus.info or not data.focus.info.questID then
+	if not E:func_IsRetail() or not data.focus.info or not data.focus.info.questID then
 		return
 	end
 	return data.focus.info.questID, "quest"
@@ -338,25 +338,25 @@ function strategies.wowhead.GetRecipeFromFocus(data)
 	return data.focus.tradeSkillInfo.recipeID, "spell"
 end
 function strategies.wowhead.GetRetailFactionFromFocus(data)
-	if not E.func_IsRetail() or not data.focus or not data.focus.factionID then
+	if not E:func_IsRetail() or not data.focus or not data.focus.factionID then
 		return
 	end
 	return data.focus.factionID, "faction"
 end
 function strategies.wowhead.GetClassicCataFactionFromFocus(data)
-	if E.func_IsRetail() or not data.focus.index or not data.focus.standingText then
+	if E:func_IsRetail() or not data.focus.index or not data.focus.standingText then
 		return
 	end
 	return C_Reputation.GetFactionDataByID(data.focus.index).name, "faction"
 end
 function strategies.wowhead.GetRetailCurrencyInTabFromFocus(data)
-	if not E.func_IsRetail() or not data.focus.elementData or not data.focus.elementData.currencyID then
+	if not E:func_IsRetail() or not data.focus.elementData or not data.focus.elementData.currencyID then
 		return
 	end
 	return data.focus.elementData.currencyID, "currency"
 end
 function strategies.wowhead.GetClassicCataCurrencyInTabFromFocus(data)
-	if E.func_IsRetail() or (data.focus.isUnused == nil and (not data.focus:GetParent() or data.focus:GetParent().isUnused == nil)) then
+	if E:func_IsRetail() or (data.focus.isUnused == nil and (not data.focus:GetParent() or data.focus:GetParent().isUnused == nil)) then
 		return
 	end
 	local index = data.focus.index or data.focus:GetParent().index
@@ -412,7 +412,7 @@ function strategies.wowheadAzEs.GetAzEsHyperlinkFromTooltip()
 	end
 end
 function strategies.wowheadTradingPostActivity.GetTradingPostActivity(data)
-	if not E.func_IsRetail() or not (data.focus.activityName and data.focus.requirementsList) then
+	if not E:func_IsRetail() or not (data.focus.activityName and data.focus.requirementsList) then
 		return
 	end
 	return data.focus.id
@@ -435,7 +435,7 @@ local function HookTooltip(tooltip)
 			tooltipStates[tooltip].hyperlink = hyperlink
 		end
 	)
-	if E.func_IsRetail() then
+	if E:func_IsRetail() then
 		hooksecurefunc(tooltip, "SetRecipeReagentItem", function(tooltip, recipeId, reagentIndex)
 				if C_TradeSkillUI.GetRecipeReagentItemLink then
 					tooltipStates[tooltip].hyperlink = C_TradeSkillUI.GetRecipeReagentItemLink(recipeId, reagentIndex)
@@ -444,7 +444,7 @@ local function HookTooltip(tooltip)
 		)
 	end
 	hooksecurefunc(tooltip, "SetUnitAura", function(tooltip, unit, index, filter)
-			if E.func_IsRetail() then
+			if E:func_IsRetail() then
 				local aura = C_UnitAuras.GetAuraDataByIndex(unit, index, filter)
 				if aura then
 					tooltipStates[tooltip].aura = aura.spellId

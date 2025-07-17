@@ -15,7 +15,7 @@ function E.CreateGeneralOptions()
 	local generalOptions = {
 		type = "group",
 		childGroups = "tree",
-		name = E.func_AddonTitle(GlobalAddonName).." "..E.Gray_Color..E.func_AddonVersion(GlobalAddonName) .. "|r",
+		name = E:func_AddonTitle(GlobalAddonName).." "..E.Gray_Color..E:func_AddonVersion(GlobalAddonName) .. "|r",
 		args = {
 			-------------------------------------------------
 			Header1 = {
@@ -94,7 +94,7 @@ function E.CreateGeneralOptions()
 				name = L["AddonCentralFrameWeight"],
 				desc = "AddonCentralFrameWeight",
 				min = 60,
-				max = 160,
+				max = 200,
 				step = 1,
 				get = function()
 					return Octo_ToDo_DB_Vars.AddonCentralFrameWeight
@@ -288,7 +288,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			PortalsButtons = {
 				type = "toggle",
-				name = E.func_texturefromIcon(3610528, 18)..L["Portals"],
+				name = E:func_texturefromIcon(3610528, 18)..L["Portals"],
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.PortalsButtons
@@ -302,7 +302,7 @@ function E.CreateGeneralOptions()
 			-------------------------------------------------
 			PortalsButtonsOnlyAvailable = {
 				type = "toggle",
-				name = E.func_texturefromIcon(3610528, 18).."PortalsButtonsOnlyAvailable",
+				name = E:func_texturefromIcon(3610528, 18).."PortalsButtonsOnlyAvailable",
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.PortalsButtonsOnlyAvailable

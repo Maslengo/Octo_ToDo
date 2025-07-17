@@ -22,7 +22,7 @@ tinsert(E.Modules, function()
 		local message = EVENT_MESSAGES[event] or ""
 		local currentTime = date("%m/%d/%y %H:%M:%S")
 
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message, E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..currentTime.."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(message, E.Addon_Left_Color, E.Addon_Right_Color).." "..E.Yellow_Color..currentTime.."|r")
 
 		C_Timer.After(1, function()
 			Screenshot()
@@ -30,7 +30,7 @@ tinsert(E.Modules, function()
 	end
 
 	-- Создаем и настраиваем фрейм
-	local eventFrame = CreateFrame("Frame", E.func_GenerateUniqueID())
+	local eventFrame = CreateFrame("Frame", E:func_GenerateUniqueID())
 
 	-- Регистрируем события
 	eventFrame:RegisterEvent("PLAYER_LEVEL_UP")
@@ -41,7 +41,7 @@ tinsert(E.Modules, function()
 	eventFrame:RegisterEvent("NEW_TOY_ADDED")
 	eventFrame:RegisterEvent("TRADE_ACCEPT_UPDATE")
 
-	if E.func_IsRetail() then
+	if E:func_IsRetail() then
 		eventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 	end
 

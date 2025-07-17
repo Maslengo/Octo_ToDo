@@ -46,9 +46,9 @@ local StartTracking = C_ContentTracking.StartTracking
 local StopTracking = C_ContentTracking.StopTracking
 ----------------------------------------------------------------
 local function ToggleAchievement(AchievementID)
-	if E.func_achievementComplete(AchievementID) and IsTracking(2, AchievementID) then
+	if E:func_achievementComplete(AchievementID) and IsTracking(2, AchievementID) then
 		return StopTracking(2, AchievementID, 2)
-	elseif E.func_achievementComplete(AchievementID) then
+	elseif E:func_achievementComplete(AchievementID) then
 		return
 	elseif IsTracking(2, AchievementID) then
 		return StopTracking(2, AchievementID, 2)
@@ -71,7 +71,7 @@ local func_OnAcquired do
 	end
 	------------------------------------------------
 	local function func_OnEnter(frame)
-		E.func_TooltipOnEnter(frame, false, false)
+		E:func_TooltipOnEnter(frame, false, false)
 	end
 	------------------------------------------------
 	local function func_OnOnLeave(frame)
@@ -138,7 +138,7 @@ local function CreateAchievementTooltip(achievementID)
 	local _, name, points, completed, month, day, year, description, _, icon, _, _, _, _, isStatistic = GetAchievementInfo(achievementID)
 	local color = completed and E.Green_Color or E.Red_Color
 	-- Build header line
-	local textLEFT = E.func_texturefromIcon(icon)..name
+	local textLEFT = E:func_texturefromIcon(icon)..name
 	if E.DebugIDs then
 		textLEFT = textLEFT..E.Gray_Color.." id:"..achievementID.."|r"
 	end
@@ -253,7 +253,7 @@ function Octo_EventFrame_Achievements:func_CreateMyDataProvider()
 							count = count + 1
 							Octo_EventFrame_Achievements.DataProvider:Insert({
 									textLEFT = textLEFT,
-									textRIGHT = E.func_achievementvivod(AchievementID),
+									textRIGHT = E:func_achievementvivod(AchievementID),
 									AchievementID = AchievementID,
 									icon = icon,
 							})
@@ -311,7 +311,7 @@ function Octo_EventFrame_Achievements:func_Create_DDframe_Achievements()
 			local categoryID = categories[i]
 			local _, parentCategoryID = GetCategoryInfo(categoryID)
 			if arg1 and cID == parentCategoryID and Octo_Achievements_DB.AchievementToShow[categoryID] == true then
-				return E.func_Gradient(arg1.name)..arg1.vivod
+				return E:func_Gradient(arg1.name)..arg1.vivod
 			end
 		end
 		return arg1.name..arg1.vivod
@@ -377,7 +377,7 @@ local MyEventsTable = {
 	"CONTENT_TRACKING_UPDATE",
 	"PLAYER_REGEN_DISABLED",
 }
-E.RegisterMyEventsToFrames(Octo_EventFrame_Achievements, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_Achievements, MyEventsTable)
 function Octo_EventFrame_Achievements:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
@@ -410,7 +410,7 @@ function Octo_EventFrame_Achievements:ADDON_LOADED(addonName)
 		self:func_CreateMyDataProvider()
 		self:func_Create_DDframe_Achievements()
 		E:func_CreateUtilsButton(Octo_MainFrame_Achievements, "Achievements", AddonHeight, 0)
-		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", Octo_Achievements_DB, Octo_MainFrame_Achievements, function() Octo_EventFrame_Achievements:Update() end)
+		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", Octo_Achievements_DB, Octo_MainFrame_Achievements, function() Octo_EventFrame_Achievements:Update() end, "Octo_MainFrame_Achievements")
 		Octo_MainFrame_Achievements:SetScript("OnShow", function()
 				Octo_EventFrame_Achievements.func_CreateMyDataProvider()
 		end)

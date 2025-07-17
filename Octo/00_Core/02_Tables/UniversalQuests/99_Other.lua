@@ -3,10 +3,10 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 function E:func_Universal_99_Other()
 	local OctoTable_Universal = {
-		-- E.func_EventName(181) (Noblegarden) (Сад чудес)
+		-- E:func_EventName(181) (Noblegarden) (Сад чудес)
 		{
-			icon = E.func_GetItemIconByID(45072),
-			textleft = E.func_questName(13503),
+			icon = E:func_GetItemIconByID(45072),
+			textleft = E:func_questName(13503),
 			name_save = "ATisketaTasketaNoblegardenBasket",
 			reset = "Month",
 			desc = "HolidaysNoblegarden",
@@ -16,8 +16,8 @@ function E:func_Universal_99_Other()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(45072),
-			textleft = E.func_questName(79575),
+			icon = E:func_GetItemIconByID(45072),
+			textleft = E:func_questName(79575),
 			name_save = "WhattheDuck",
 			reset = "Month",
 			desc = "HolidaysNoblegarden",
@@ -27,8 +27,8 @@ function E:func_Universal_99_Other()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(45072),
-			textleft = E.func_questName(13479),
+			icon = E:func_GetItemIconByID(45072),
+			textleft = E:func_questName(13479),
 			name_save = "TheGreatEggHunt",
 			reset = "Daily",
 			desc = "HolidaysNoblegarden",
@@ -38,8 +38,8 @@ function E:func_Universal_99_Other()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(45072),
-			textleft = E.func_questName(79576),
+			icon = E:func_GetItemIconByID(45072),
+			textleft = E:func_questName(79576),
 			name_save = "AFowlConcoction",
 			reset = "Month",
 			desc = "HolidaysNoblegarden",
@@ -49,8 +49,8 @@ function E:func_Universal_99_Other()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(45072),
-			textleft = E.func_questName(79577),
+			icon = E:func_GetItemIconByID(45072),
+			textleft = E:func_questName(79577),
 			name_save = "DuckTales",
 			reset = "Month",
 			desc = "HolidaysNoblegarden",
@@ -60,8 +60,8 @@ function E:func_Universal_99_Other()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(45072),
-			textleft = E.func_questName(79578),
+			icon = E:func_GetItemIconByID(45072),
+			textleft = E:func_questName(79578),
 			name_save = "JustaWaddleAway",
 			reset = "Month",
 			desc = "HolidaysNoblegarden",
@@ -72,8 +72,8 @@ function E:func_Universal_99_Other()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(45072),
-			textleft = E.func_questName(79558),
+			icon = E:func_GetItemIconByID(45072),
+			textleft = E:func_questName(79558),
 			name_save = "FeatheredFiend",
 			reset = "Daily",
 			desc = "HolidaysNoblegarden",
@@ -84,8 +84,8 @@ function E:func_Universal_99_Other()
 			max = 1,
 		},
 		{
-			icon = E.func_GetItemIconByID(45072),
-			textleft = E.func_questName(79135),
+			icon = E:func_GetItemIconByID(45072),
+			textleft = E:func_questName(79135),
 			name_save = "QuackingDown",
 			reset = "Daily",
 			desc = "HolidaysNoblegarden",
@@ -97,10 +97,10 @@ function E:func_Universal_99_Other()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		-- E.func_EventName(201) (ChildrensWeek) (Детская неделя)
+		-- E:func_EventName(201) (ChildrensWeek) (Детская неделя)
 		-- orgrimmar / Stormwind
 		{
-			icon = E.func_GetItemIconByID(132161),
+			icon = E:func_GetItemIconByID(132161),
 			textleft = "Orgrimmar/Stormwind",
 			name_save = "orgrimmarStormwind",
 			reset = "Month",
@@ -126,7 +126,7 @@ function E:func_Universal_99_Other()
 		},
 		----------------------------------------------------------------
 		{
-			icon = E.func_GetItemIconByID(132161),
+			icon = E:func_GetItemIconByID(132161),
 			textleft = "Shattrath",
 			name_save = "Shattrath", --
 			reset = "Month",
@@ -154,7 +154,7 @@ function E:func_Universal_99_Other()
 		},
 		----------------------------------------------------------------
 		{
-			icon = E.func_GetItemIconByID(23247),
+			icon = E:func_GetItemIconByID(23247),
 			textleft = L["Daily quests"],
 			name_save = "orgrimmarStormwindDAILY", --
 			reset = "Daily",
@@ -171,7 +171,7 @@ function E:func_Universal_99_Other()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		{
-			icon = E.func_GetCurrencyIcon(1166),
+			icon = E:func_GetCurrencyIcon(1166),
 			textleft = RAIDS,
 			name_save = "Raid",
 			reset = "Weekly",
@@ -185,7 +185,7 @@ function E:func_Universal_99_Other()
 			max = 1,
 		},
 		{
-			icon = E.func_GetCurrencyIcon(1166),
+			icon = E:func_GetCurrencyIcon(1166),
 			textleft = DUNGEONS,
 			name_save = "Dungeons",
 			reset = "Weekly",
@@ -215,8 +215,8 @@ function E:func_Universal_99_Other()
 			max = 1,
 		},
 		-- {
-		-- 	icon = E.func_GetItemIconByID(245589),
-		-- 	textleft = E.Timers.Treasure_Goblin()..E.func_npcName(205722), -- 205490
+		-- 	icon = E:func_GetItemIconByID(245589),
+		-- 	textleft = E.Timers.Treasure_Goblin()..E:func_npcName(205722), -- 205490
 		-- 	name_save = "TreasureGoblin",
 		-- 	reset = "Daily",
 		-- 	desc = "HolidaysAGreedyEmissary",
@@ -319,8 +319,8 @@ function E:func_Universal_99_Other()
 			max = 9,
 		},
 		{
-			icon = E.func_GetItemIconByID(92441),
-			textleft = E.func_GetItemNameByID(92441),
+			icon = E:func_GetItemIconByID(92441),
+			textleft = E:func_GetItemNameByID(92441),
 			name_save = "GreenFire",
 			reset = "Once",
 			desc = "Warlock",

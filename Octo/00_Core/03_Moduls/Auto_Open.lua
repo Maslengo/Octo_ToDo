@@ -3,7 +3,7 @@ if not E.Enable_Moduls then return end
 
 
 
-local Octo_AUTO_OPEN = CreateFrame("Frame", GlobalAddonName.."Auto_Open"..E.func_GenerateUniqueID())
+local Octo_AUTO_OPEN = CreateFrame("Frame", GlobalAddonName.."Auto_Open"..E:func_GenerateUniqueID())
 Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")
 Octo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
 Octo_AUTO_OPEN:RegisterEvent("LOOT_READY")
@@ -25,7 +25,7 @@ end
 local function OpenableScan()
 	local isDead = UnitIsDead("player") -- Локальная проверка вместо глобальной
 	-- Проверяем условия один раз перед сканированием
-	if InCombatLockdown() or isDead or not Octo_ToDo_DB_Vars.AutoOpen then
+	if InCombatLockdown() or isDead then
 		return
 	end
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
@@ -34,21 +34,21 @@ local function OpenableScan()
 			local containerInfo = GetContainerItemInfo(bag, slot)
 			if containerInfo and not containerInfo.isLocked and autoOpenItems[containerInfo.itemID] then
 				local itemLink = select(2, GetItemInfo(containerInfo.itemID))
-				if itemLink then
-					C_Timer.After(1, function()
-							if not InCombatLockdown() then
-								UseContainerItem(bag, slot)
-								DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Open Item ", E.Addon_Left_Color, E.Addon_Right_Color)..E.func_texturefromIcon(containerInfo.iconFileID)..itemLink)
-							end
-					end)
-				end
+				-- if itemLink then
+				-- 	C_Timer.After(1, function()
+				-- 			if not InCombatLockdown() then
+				-- 				UseContainerItem(bag, slot)
+				-- 				DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("Auto Open Item ", E.Addon_Left_Color, E.Addon_Right_Color)..E:func_texturefromIcon(containerInfo.iconFileID)..itemLink)
+				-- 			end
+				-- 	end)
+				-- end
 			end
 		end
 	end
 end
 local openableScanQueued = false
 Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event)
-		if not Octo_ToDo_DB_Vars.AutoOpen then return end
+		-- if not Octo_ToDo_DB_Vars.AutoOpen then return end
 		if event == "BAG_UPDATE_DELAYED" then
 			if not InCombatLockdown() and not UnitIsDead("player") then
 				C_Timer.After(0.1, OpenableScan)

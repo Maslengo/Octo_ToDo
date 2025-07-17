@@ -146,7 +146,7 @@ function E:CheckQuests()
 				playerName = E.curCharName,
 				curServer = GetRealmName(),
 				classColorHex = E.classColorHexCurrent,
-				curLocation = E.func_GetCurrentLocation(),
+				curLocation = E:func_GetCurrentLocation(),
 				specIcon = select(4, GetSpecializationInfo(GetSpecialization())),
 			}
 			table.insert(self.quests_completed, quest)
@@ -202,7 +202,7 @@ dataobject.OnClick = function(frame, button)
 		if IsShiftKeyDown() then
 			local data = E.Octo_QuestsChangedDB.QC_Quests[#E.Octo_QuestsChangedDB.QC_Quests]
 			StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d, label=\"\"},"):format(
-					E.func_GetCoord(data.x, data.y),
+					E:func_GetCoord(data.x, data.y),
 					(data.id or "nil")
 			))
 		else
@@ -220,7 +220,7 @@ dataobject.OnTooltipShow = function(tooltip)
 			mapID = quest.mapID
 			level = quest.level
 		else
-			mapID, level = E.func_GetMapNameFromID(quest.mapID)
+			mapID, level = E:func_GetMapNameFromID(quest.mapID)
 		end
 		tooltip:AddDoubleLine(
 			("%d: %s %s"):format(
@@ -238,7 +238,7 @@ dataobject.OnTooltipShow = function(tooltip)
 			x, y = position:GetXY()
 		end
 	end
-	local mapname, subname = E.func_GetMapNameFromID(mapID)
+	local mapname, subname = E:func_GetMapNameFromID(mapID)
 	tooltip:AddDoubleLine("Location", ("%s (%s) %.2f, %.2f"):format(mapID or UNKNOWN, mapname .. (subname and (' / ' .. subname) or ''), (x or 0) * 100, (y or 0) * 100), 1, 0, 1, 1, 0, 1)
 	tooltip:AddLine("Left-click to show your quest history", 0, 1, 1)
 	tooltip:AddLine("Shift-left-click to copy the last quest", 0, 1, 1)

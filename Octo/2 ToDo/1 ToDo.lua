@@ -38,22 +38,22 @@ end)
 E.OctoTable_Otrisovka = {}
 local function func_ConcatAtStart()
 	wipe(E.OctoTable_Otrisovka)
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_13_TheLastTitan())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_12_Midnight())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_11_TheWarWithin())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_10_Dragonflight())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_09_Shadowlands())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_08_BattleforAzeroth())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_07_Legion())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_06_WarlordsofDraenor())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_05_MistsofPandaria())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_04_Cataclysm())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_03_WrathoftheLichKing())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_02_TheBurningCrusade())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_01_WorldofWarcraft())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_13_TheLastTitan())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_12_Midnight())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_11_TheWarWithin())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_10_Dragonflight())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_09_Shadowlands())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_08_BattleforAzeroth())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_07_Legion())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_06_WarlordsofDraenor())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_05_MistsofPandaria())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_04_Cataclysm())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_03_WrathoftheLichKing())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_02_TheBurningCrusade())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_01_WorldofWarcraft())
 
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_90_Holidays())
-	E.func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_91_Other())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_90_Holidays())
+	E:func_TableConcat(E.OctoTable_Otrisovka, E:func_Otrisovka_91_Other())
 
 
 
@@ -82,25 +82,21 @@ do
 			"AdvancedInterfaceOptions",
 		}
 		for _, name in ipairs(addons) do
-			E.func_LoadAddOnFORCED(name)
+			E:func_LoadAddOnFORCED(name)
 		end
 		C_AddOns.SaveAddOns()
 	end
 end
 ----------------------------------------------------------------
 local function func_OnEnterFirst(frame)
-	-- E.func_TooltipOnEnter(frame, false, false)
-
-
-
 	local tooltip = frame.tooltip
 	if not tooltip or #tooltip == 0 then return end
 	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMLEFT", 0, AddonHeight)
-	if first then GameTooltip:AddLine(" ") end
+
+
 	for _, value in ipairs(tooltip) do
 		GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
 	end
-	if second then GameTooltip:AddLine(" ") end
 	GameTooltip:Show()
 end
 
@@ -166,22 +162,21 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 
 
 	local frameData = data.parent.dataProvider.linearized
-	-- frame:SetScript("OnEnter", func_OnEnterFirst)
 	frame:SetScript("OnLeave", GameTooltip_Hide)
 	frame:SetScript("OnHide", func_OnHideFirst)
 	frame:SetScript("OnShow", func_OnShowFirst)
 	-- Event handlers
 	-- ВЕРНУТЬ
-	-- frame:SetScript("OnEnter", function(self)
-	-- 		if not self.textLEFT:IsTruncated() then return end
-	-- 		GameTooltip:SetOwner(self, "ANCHOR_NONE")
-	-- 		GameTooltip:SetPoint("CENTER", self)
-	-- 		GameTooltip:SetText(E.func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText(), 1, 1, 1)
-	-- 		GameTooltip:Show()
-	-- end)
-	-- frame:SetScript("OnLeave", function(self)
-	-- 		GameTooltip:Hide()
-	-- end)
+	frame:SetScript("OnEnter", function(self)
+			if not self.textLEFT:IsTruncated() then return end
+			GameTooltip:SetOwner(self, "ANCHOR_NONE")
+			GameTooltip:SetPoint("CENTER", self)
+			GameTooltip:SetText(E:func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText(), 1, 1, 1)
+			GameTooltip:Show()
+	end)
+	frame:SetScript("OnLeave", function(self)
+			GameTooltip:Hide()
+	end)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -190,7 +185,7 @@ end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local func_OnAcquiredCENT do
 	local function func_OnEnterSecond(frame)
-		E.func_TooltipOnEnter(frame, true, true)
+		E:func_TooltipOnEnter(frame, true, true)
 	end
 	function func_OnAcquiredCENT(owner, frame, data, new)
 		if not new then return end
@@ -263,13 +258,8 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	local frameData = data.zxc
 	frame.textLEFT:SetText(frameData.textLEFT)
 	InitButtonTexture(frame.icon_1, frameData.iconLEFT, AddonHeight-2)
-	-- if C_Texture.GetAtlasInfo(frameData.iconLEFT) then
-	-- frame.icon_1:SetAtlas(frameData.iconLEFT)
-	-- else
-	-- frame.icon_1:SetTexture(frameData.iconLEFT)
-	-- end
 	if frameData.colorLEFT then
-		local r, g, b = E.func_hex2rgbNUMBER(frameData.colorLEFT)
+		local r, g, b = E:func_hex2rgbNUMBER(frameData.colorLEFT)
 		frame.textureLEFT:SetVertexColor(r, g, b, .2)
 		frame.textureLEFT:Show()
 	else
@@ -282,11 +272,10 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 		local tooltipOCTO = {}
 		if type(ID) == "table" then
 			for _, tblID in ipairs(ID) do
-				E.func_TableConcat(tooltipOCTO, E.func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
+				E:func_TableConcat(tooltipOCTO, E:func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
 			end
-			-- fpde(tooltipOCTO)
 		else
-			tooltipOCTO = E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
+			tooltipOCTO = E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 		end
 		frame.tooltip = tooltipOCTO
 		func_OnEnterFirst(frame)
@@ -319,7 +308,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			local SECOND = frameData.SECOND[i]
 			secondFrame.ReputTextureAndBG:Hide()
 			if frameData.colorCENT[i] then
-				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.colorCENT[i])
+				local r1, g1, b1 = E:func_hex2rgbNUMBER(frameData.colorCENT[i])
 				if not frameData.isReputations then
 					secondFrame.ReputTextureAndBG:SetWidth(AddonCentralFrameWeight)
 					secondFrame.ReputTextureAndBG:Show()
@@ -362,7 +351,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 			Octo_MainFrame_ToDo.resetFrame.text:SetText(resetText)
 			------------------------------------------------
 	end)
-	local NumPlayers = math_min(E.func_NumPlayers(), MaxNumCharacters)
+	local NumPlayers = math_min(E:func_NumPlayers(), MaxNumCharacters)
 	frame:SetSize(AddonLeftFrameWeight + AddonCentralFrameWeight * NumPlayers, AddonHeight * MainFrameDefaultLines)
 	frame:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
 	frame:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
@@ -490,14 +479,23 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+local function func_OnEnterChars(frame)
+	local tooltip = frame.tooltip
+	if not tooltip or #tooltip == 0 then return end
+	GameTooltip:SetOwner(frame, "ANCHOR_RIGHT", 0, 0)
+	for _, value in ipairs(tooltip) do
+		GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
+	end
+	GameTooltip:Show()
+end
 ----------------------------------------------------------------
 function E:func_CreateMyDataProvider()
 	E.Collect_All_Table()
-	local NumPlayers = math_min(E.func_NumPlayers(), MaxNumCharacters)
+	local NumPlayers = math_min(E:func_NumPlayers(), MaxNumCharacters)
 	local DataProvider = CreateTreeDataProvider()
 	local numlines = 0
 	-- Find current character index
-	local sortedPlayersTBL = E.sorted()
+	local sortedPlayersTBL = E:func_sorted()
 	local MyCharIndex
 	for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
 		if CharInfo.PlayerData.GUID == E.curGUID then
@@ -574,7 +572,7 @@ function E:func_CreateMyDataProvider()
 							local FIRST, SECOND, vivod, colorCENT = ("#"):split(CharInfo.MASLENGO.reputationNEW[v.id])
 							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
 							zxc.SECOND[CharIndex] = tonumber(SECOND) or 0
-							zxc.textLEFT = E.func_reputationName(v.id)
+							zxc.textLEFT = E:func_reputationName(v.id)
 							zxc.iconLEFT = repInfo.icon or E.Icon_Empty
 							zxc.colorLEFT = E.OctoTable_Expansions[index].color
 							zxc.textCENT[CharIndex] = vivod or "vivod"
@@ -601,7 +599,7 @@ function E:func_CreateMyDataProvider()
 		local width = AddonLeftFrameWeight + AddonCentralFrameWeight * NumPlayers
 		local height = AddonHeight * MainFrameDefaultLines + AddonHeight*2 -- ZXC
 		Octo_MainFrame_ToDo:SetSize(width, height)
-		Octo_MainFrame_ToDo.childCENT:SetSize(AddonCentralFrameWeight * E.func_NumPlayers(), height)
+		Octo_MainFrame_ToDo.childCENT:SetSize(AddonCentralFrameWeight * E:func_NumPlayers(), height)
 		-- Update character frames
 		Octo_MainFrame_ToDo.pool:ReleaseAll()
 		for count, CharInfo in ipairs(sortedPlayersTBL) do
@@ -614,17 +612,19 @@ function E:func_CreateMyDataProvider()
 			curCharFrame.text:SetJustifyV("MIDDLE")
 			curCharFrame.text:SetJustifyH("CENTER")
 			curCharFrame.text:SetMaxLines(3)
-			curCharFrame.text:SetText(E.func_textCENT_Chars(CharInfo))
+			curCharFrame.text:SetText(E:func_textCENT_Chars(CharInfo))
 			curCharFrame:SetPropagateMouseClicks(true)
 			curCharFrame:SetPropagateMouseMotion(true)
 			----------------------------------------------------------------
-			local charR, charG, charB = E.func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
-			curCharFrame.CharTexture:SetVertexColor(charR, charG, charB, E.bgCaOverlay) -- Плохо отрисовывает ПОФИКСИТЬ
-			-- curCharFrame.CharTexture:SetColorTexture(charR, charG, charB, E.bgCaOverlay) -- Плохо отрисовывает ПОФИКСИТЬ
+			local charR, charG, charB = E:func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
+			-- curCharFrame.CharTexture:SetVertexColor(charR, charG, charB, E.bgCaOverlay) -- Плохо отрисовывает ПОФИКСИТЬ
+			curCharFrame.CharTexture:SetColorTexture(charR, charG, charB, E.bgCaOverlay) -- Плохо отрисовывает ПОФИКСИТЬ
 			----------------------------------------------------------------
-			curCharFrame.tooltip = E.CreateTooltipPlayers(CharInfo)
 			----------------------------------------------------------------
-			curCharFrame:SetScript("OnEnter", function() E.func_TooltipOnEnter(curCharFrame, true, true) end)
+			curCharFrame:SetScript("OnEnter", function(self)
+				curCharFrame.tooltip = E:func_Tooltip_Chars(CharInfo)
+				func_OnEnterChars(curCharFrame)
+			end)
 			curCharFrame:SetScript("OnLeave", GameTooltip_Hide)
 			curCharFrame:Show()
 			----------------------------------------------------------------
@@ -642,14 +642,14 @@ function E.Update(event_name)
 					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
 						E:func_CreateMyDataProvider()
 						if E.DebugEvent then
-							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Green_Color, E.Yellow_Color)..event_name or ""..E.Yellow_Color..")|r")
+							DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E.Update(", E.Green_Color, E.Yellow_Color)..event_name or ""..E.Yellow_Color..")|r")
 						end
 					end
 			end)
 		end
 	else
 		if E.DebugEvent then
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name or ""..E.Addon_Right_Color..")|r")
+			DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E.Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name or ""..E.Addon_Right_Color..")|r")
 		end
 	end
 end
@@ -875,9 +875,9 @@ function E:func_Create_DD_ToDo(mainFrame)
 				info.notCheckable = false
 				info.isNotRadio = true
 				if E.curFaction == "Horde" then
-					info.text = E.func_texturefromIcon(E.Icon_Horde)..L["Only Horde"]
+					info.text = E:func_texturefromIcon(E.Icon_Horde)..L["Only Horde"]
 				else
-					info.text = E.func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"]
+					info.text = E:func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"]
 				end
 				info.icon = false
 				info.hasArrow = nil
@@ -948,6 +948,26 @@ function E:func_Create_DD_ToDo(mainFrame)
 				}
 				-- for expansionID, v in ipairs(E.OctoTable_Expansions) do
 				-- В ОБРАТНОМ ПОРЯДКЕ
+
+				info.widgets = {{
+					icon = "interface/worldmap/worldmappartyicon",
+					OnClick = function(btn)
+						PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+						-- journal:setAllFilters("selected", false)
+						for expansionID = #E.OctoTable_Expansions, 1, -1 do
+							Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
+						end
+						Octo_ToDo_DB_Vars.ExpansionToShow[btn.value] = true
+						-- journal:updateMountsList()
+						self:ddRefresh(level)
+						E:func_CreateMyDataProvider()
+					end,
+				}}
+
+				info.checked = function(btn)
+					return Octo_ToDo_DB_Vars.ExpansionToShow[btn.value]
+				end
+				info.func = selectFunctionExpansion
 				for expansionID = #E.OctoTable_Expansions, 1, -1 do
 					local v = E.OctoTable_Expansions[expansionID]
 					info.isNotRadio = true
@@ -956,15 +976,15 @@ function E:func_Create_DD_ToDo(mainFrame)
 					info.text = v.color..v.name.."|r"
 					info.value = expansionID
 					info.icon = v.icon
-					info.checked = Octo_ToDo_DB_Vars.ExpansionToShow[expansionID]
-					info.func = selectFunctionExpansion
 					self:ddAddButton(info, level)
 				end
+				info.widgets = nil
 				info.iconInfo = nil
+				info.checked = nil
 				--------------------------------------------------
 				self:ddAddSeparator(level)
 				--------------------------------------------------
-				info.keepShownOnClick = false
+				info.keepShownOnClick = true
 				info.notCheckable = true
 				info.text = INTERACT_ICONS_SHOW_ALL -- "Show all"
 				info.icon = false
@@ -972,11 +992,12 @@ function E:func_Create_DD_ToDo(mainFrame)
 					for expansionID, v in ipairs(E.OctoTable_Expansions) do
 						Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = true
 					end
+					self:ddRefresh(level)
 					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
 				--------------------------------------------------
-				info.keepShownOnClick = false
+				info.keepShownOnClick = true
 				info.notCheckable = true
 				info.text = HIDE -- INTERACT_ICONS_SHOW_NONE -- "Hide all"
 				info.icon = false
@@ -984,6 +1005,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 					for expansionID, v in ipairs(E.OctoTable_Expansions) do
 						Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
 					end
+					self:ddRefresh(level)
 					E:func_CreateMyDataProvider()
 				end
 				self:ddAddButton(info, level)
@@ -1107,16 +1129,16 @@ local MyEventsTable = {
 	"PLAYER_REGEN_DISABLED",
 	"READY_CHECK",
 }
-E.RegisterMyEventsToFrames(Octo_EventFrame_ToDo, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_ToDo, MyEventsTable)
 function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
-	if AddonMgrAddonList then
+	-- if AddonMgrAddonList then
 		-- tinsert(E.OctoTable_Frames, AddonMgrAddonList)
-		AddonMgrAddonList:SetScale(.9)
+		-- AddonMgrAddonList:SetScale(.9)
 		-- /run AddonMgrAddonList:SetScale(.8)
-	end
+	-- end
 	-- Load settings with defaults in a more concise way
 	local db = Octo_ToDo_DB_Vars
 	AddonHeight = db.AddonHeight or AddonHeight
@@ -1128,7 +1150,7 @@ function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 	local maxNum = math.floor((E.MonitorWidth - AddonLeftFrameWeight) / AddonCentralFrameWeight) - 1
 	MaxNumCharacters = db.MaxNumCharacters and math_min(db.MaxNumCharacters, maxNum) or MaxNumCharacters
 	local function ConcatAtStart()
-		E.func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
+		E:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
 		for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Other) do
 			E.OctoTable_itemID_ItemsUsable[itemID] = 1
 		end
@@ -1160,31 +1182,31 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	C_Timer.After(0, function()
 			self:LoadAssetsAsync()
 	end)
-	self:SetupPlayerSpellsFrame()
+	-- self:SetupPlayerSpellsFrame()
 end
 -- Helper functions
-function Octo_EventFrame_ToDo:SetupPlayerSpellsFrame()
-	if InCombatLockdown() then return end
-	if not PlayerSpellsFrame then
-		E.func_LoadAddOnFORCED("Blizzard_PlayerSpells")
-	end
-	if PlayerSpellsFrame then
-		PlayerSpellsFrame:HookScript("OnShow", function()
-				PlayerSpellsFrame:SetScale(0.8)
-		end)
-		PlayerSpellsFrame:EnableMouse(true)
-		PlayerSpellsFrame:SetMovable(true)
-		PlayerSpellsFrame:RegisterForDrag("LeftButton")
-		PlayerSpellsFrame:SetScript("OnDragStart", function()
-				PlayerSpellsFrame:SetAlpha(E.bgCa)
-				PlayerSpellsFrame:StartMoving()
-		end)
-		PlayerSpellsFrame:SetScript("OnDragStop", function()
-				PlayerSpellsFrame:SetAlpha(1)
-				PlayerSpellsFrame:StopMovingOrSizing()
-		end)
-	end
-end
+-- function Octo_EventFrame_ToDo:SetupPlayerSpellsFrame()
+-- 	if InCombatLockdown() then return end
+-- 	if not PlayerSpellsFrame then
+-- 		E:func_LoadAddOnFORCED("Blizzard_PlayerSpells")
+-- 	end
+-- 	if PlayerSpellsFrame then
+-- 		PlayerSpellsFrame:HookScript("OnShow", function()
+-- 				PlayerSpellsFrame:SetScale(0.8)
+-- 		end)
+-- 		PlayerSpellsFrame:EnableMouse(true)
+-- 		PlayerSpellsFrame:SetMovable(true)
+-- 		PlayerSpellsFrame:RegisterForDrag("LeftButton")
+-- 		PlayerSpellsFrame:SetScript("OnDragStart", function()
+-- 				PlayerSpellsFrame:SetAlpha(E.bgCa)
+-- 				PlayerSpellsFrame:StartMoving()
+-- 		end)
+-- 		PlayerSpellsFrame:SetScript("OnDragStop", function()
+-- 				PlayerSpellsFrame:SetAlpha(1)
+-- 				PlayerSpellsFrame:StopMovingOrSizing()
+-- 		end)
+-- 	end
+-- end
 function Octo_EventFrame_ToDo:DisplayCharacterStats_TEXT()
 	local totalMoney, realTotalTime, realLevelTime = 0, 0, 0
 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
@@ -1204,29 +1226,23 @@ function Octo_EventFrame_ToDo:DisplayCharacterStats_TEXT()
 	------------------------------------------------
 	-- Create info frames --------------------------
 	------------------------------------------------
-	local moneyText = format("Money: %s%s|r %s", E.classColorHexCurrent, E.func_CompactNumberFormat(totalMoney/10000), E.curServerShort)
-	local timePlayedText = format(TIME_PLAYED_TOTAL, E.classColorHexCurrent..E.func_SecondsToClock(realTotalTime).."|r")
-	local levelTimeText = format("realLevelTime: %s%s|r", E.classColorHexCurrent, E.func_SecondsToClock(realLevelTime))
-	-- E.func_CreateInfoFrame("     "..E.Timers.Daily_Reset(), "TOPLEFT", Octo_MainFrame_ToDo, "TOPLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight*2, "LEFT")
-	local weeklyReset = tonumber(E.func_tmstpDayReset(7)-GetServerTime())
-	local dailyReset = tonumber(E.func_tmstpDayReset(1)-GetServerTime())
-	local resetText =
-	"     "..E.func_SecondsToClock(weeklyReset)..E.Gray_Color.." Weekly reset|r|n"..
-	"     "..E.func_SecondsToClock(dailyReset)
-	if weeklyReset <= dailyReset then
-		resetText = "     "..E.Red_Color..E.func_SecondsToClock(weeklyReset).."|r"..E.Gray_Color.." Weekly reset|r"
-	end
+	local moneyText = format("Money: %s%s|r %s", E.classColorHexCurrent, E:func_CompactNumberFormat(totalMoney/10000), E.curServerShort)
+	local timePlayedText = format(TIME_PLAYED_TOTAL, E.classColorHexCurrent..E:func_SecondsToClock(realTotalTime).."|r")
+	local levelTimeText = format("realLevelTime: %s%s|r", E.classColorHexCurrent, E:func_SecondsToClock(realLevelTime))
+	-- E:func_CreateInfoFrame("     "..E.Timers.Daily_Reset(), "TOPLEFT", Octo_MainFrame_ToDo, "TOPLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight*2, "LEFT")
+	local weeklyReset = tonumber(E:func_tmstpDayReset(7)-GetServerTime())
+	local resetText = "      "..E:func_SecondsToClock(weeklyReset)..E.Gray_Color.." Weekly reset|r"
 	return moneyText, timePlayedText, levelTimeText, resetText
 end
 function Octo_EventFrame_ToDo:DisplayCharacterStats_CREATEFRAMES()
 	-- local moneyText, timePlayedText, levelTimeText, resetText = Octo_EventFrame_ToDo:DisplayCharacterStats_TEXT()
-	Octo_MainFrame_ToDo.moneyFrame = E.func_CreateInfoFrame(moneyText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*0, AddonLeftFrameWeight, AddonHeight, "LEFT")
+	Octo_MainFrame_ToDo.moneyFrame = E:func_CreateInfoFrame(moneyText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*0, AddonLeftFrameWeight, AddonHeight, "LEFT")
 	------------------------------------------------
-	Octo_MainFrame_ToDo.timePlayedFrame = E.func_CreateInfoFrame(timePlayedText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*1, AddonLeftFrameWeight, AddonHeight, "LEFT")
+	Octo_MainFrame_ToDo.timePlayedFrame = E:func_CreateInfoFrame(timePlayedText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*1, AddonLeftFrameWeight, AddonHeight, "LEFT")
 	------------------------------------------------
-	Octo_MainFrame_ToDo.levelTimeFrame = E.func_CreateInfoFrame(levelTimeText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight, "LEFT")
+	Octo_MainFrame_ToDo.levelTimeFrame = E:func_CreateInfoFrame(levelTimeText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight, "LEFT")
 	------------------------------------------------
-	Octo_MainFrame_ToDo.resetFrame = E.func_CreateInfoFrame(resetText, "TOPLEFT", Octo_MainFrame_ToDo, "TOPLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight*2, "LEFT")
+	Octo_MainFrame_ToDo.resetFrame = E:func_CreateInfoFrame(resetText, "TOPLEFT", Octo_MainFrame_ToDo, "TOPLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight*2, "LEFT")
 	------------------------------------------------
 end
 function Octo_EventFrame_ToDo:LoadAssetsAsync()
@@ -1281,8 +1297,8 @@ local slashCommands = {
 	FRAMESTK = {
 		commands = {"/fs"},
 		handler = function(msg)
-			if not E.func_IsAddOnLoaded("Blizzard_DebugTools") then
-				E.func_LoadAddOnFORCED("Blizzard_DebugTools")
+			if not E:func_IsAddOnLoaded("Blizzard_DebugTools") then
+				E:func_LoadAddOnFORCED("Blizzard_DebugTools")
 			end
 			FrameStackTooltip_Toggle(msg == "true", true, true)
 		end

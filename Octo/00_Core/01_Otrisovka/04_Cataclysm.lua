@@ -12,11 +12,11 @@ function E:func_Otrisovka_04_Cataclysm()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				textCENT = E.func_textCENT_Items(CharInfo, 52078)
+				textCENT = E:func_textCENT_Items(CharInfo, 52078)
 				myType = {"Item", 52078}
 				----------------------------------------------------------------
-				textLEFT =E.func_GetItemNameByID(52078)
-				iconLEFT =E.func_GetItemIconByID(52078)
+				textLEFT =E:func_GetItemNameByID(52078)
+				iconLEFT =E:func_GetItemIconByID(52078)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -26,11 +26,11 @@ function E:func_Otrisovka_04_Cataclysm()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				textCENT = E.func_textCENT_Items(CharInfo, 69237)
+				textCENT = E:func_textCENT_Items(CharInfo, 69237)
 				myType = {"Item", 69237}
 				----------------------------------------------------------------
-				textLEFT =E.func_GetItemNameByID(69237)
-				iconLEFT =E.func_GetItemIconByID(69237)
+				textLEFT =E:func_GetItemNameByID(69237)
+				iconLEFT =E:func_GetItemIconByID(69237)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -40,17 +40,17 @@ function E:func_Otrisovka_04_Cataclysm()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				textCENT = E.func_textCENT_Items(CharInfo, 71998)
+				textCENT = E:func_textCENT_Items(CharInfo, 71998)
 				myType = {"Item", 71998}
 				----------------------------------------------------------------
-				textLEFT =E.func_GetItemNameByID(71998)
-				iconLEFT =E.func_GetItemIconByID(71998)
+				textLEFT =E:func_GetItemNameByID(71998)
+				iconLEFT =E:func_GetItemIconByID(71998)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 			end)
-		E.func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
+		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

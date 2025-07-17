@@ -17,41 +17,44 @@ end
 local function CrTABLES()
 	-- E.isAccountWideCurrencyTABLE = {}
 	E.isAccountTransferableCurrencyTABLE = {}
-	for _, currencyID in ipairs(E.TESTCURR) do
-		-- if C_CurrencyInfo.IsAccountWideCurrency(currencyID) then
-		-- 	E.isAccountWideCurrencyTABLE[currencyID] = true --C_AccountStore.GetCurrencyInfo(currencyID).name
-		-- end
+	if Octo_Cache_DB.AllCurrencies then
+		for _, currencyID in ipairs(Octo_Cache_DB.AllCurrencies) do
+			-- if C_CurrencyInfo.IsAccountWideCurrency(currencyID) then
+			-- 	E.isAccountWideCurrencyTABLE[currencyID] = true --C_AccountStore.GetCurrencyInfo(currencyID).name
+			-- end
 
-		if C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) then
-			E.isAccountTransferableCurrencyTABLE[currencyID] = true --C_AccountStore.GetCurrencyInfo(currencyID).name
+			if C_CurrencyInfo.IsAccountTransferableCurrency(currencyID) then
+				E.isAccountTransferableCurrencyTABLE[currencyID] = true --C_AccountStore.GetCurrencyInfo(currencyID).name
+			end
 		end
 	end
 end
 
 
 local function updateChar(CharInfo)
-
-
-
-
-	-- IF < v95.6 CHAR
-	-- if compareVersion(95.6, CharInfo.PlayerData.DBVersion) then
-	if compareVersion(96.5, Octo_ToDo_DB_Vars.DBVersion) then
+	-- IF < v95.7 CHAR
+	-- if compareVersion(95.7, CharInfo.PlayerData.DBVersion) then
+	if compareVersion(96.7, Octo_ToDo_DB_Vars.DBVersion) then
 		print ("CLEAR?")
 		-- wipe(CharInfo.MASLENGO.UniversalQuest)
 
 		-- Чистка старой валюты (АККАУНТ ТРАНСФЕРС)
-		for currencyID in next, (E.isAccountTransferableCurrencyTABLE) do
-			if CharInfo.MASLENGO.CurrencyID[currencyID] then
-				CharInfo.MASLENGO.CurrencyID[currencyID] = nil
-				print (currencyID, CharInfo.MASLENGO.CurrencyID[currencyID])
-			end
-		end
-
-		-- if CharInfo.MASLENGO.CurrencyID_totalEarned then
-		-- 	print ("CharInfo.MASLENGO.CurrencyID_totalEarned")
-		-- 	CharInfo.MASLENGO.CurrencyID_totalEarned = nil
+		-- for currencyID in next, (E.isAccountTransferableCurrencyTABLE) do
+		-- 	if CharInfo.MASLENGO.CurrencyID[currencyID] then
+		-- 		CharInfo.MASLENGO.CurrencyID[currencyID] = nil
+		-- 		print (currencyID, CharInfo.MASLENGO.CurrencyID[currencyID])
+		-- 	end
 		-- end
+
+		if CharInfo.MASLENGO.CurrencyID then
+			CharInfo.MASLENGO.CurrencyID = nil
+		end
+		if CharInfo.MASLENGO.CurrencyID_Total then
+			CharInfo.MASLENGO.CurrencyID_Total = nil
+		end
+		if CharInfo.MASLENGO.CurrencyID_totalEarned then
+			CharInfo.MASLENGO.CurrencyID_totalEarned = nil
+		end
 	end
 end
 

@@ -78,7 +78,7 @@ local function UpdateColorDisplay(frame, color, text, colorPickerFrame)
 	if colorPickerFrame then
 		colorPickerFrame.color:SetColorTexture(color.r, color.g, color.b)
 	end
-	text:SetText(string.format("r: %s\ng: %s\nb: %s\n \n%s", color.r, color.g, color.b, E.func_rgb2hexSTRING(color.r, color.g, color.b)))
+	text:SetText(string.format("r: %s\ng: %s\nb: %s\n \n%s", color.r, color.g, color.b, E:func_rgb2hexSTRING(color.r, color.g, color.b)))
 end
 
 local function ColorSwatch_OnClick(color, updateFunc)
@@ -148,7 +148,7 @@ function Octo_EventFrame_Minecraft:CreateOcto_MinecraftFrameFG()
 end
 
 local MyEventsTable = {"ADDON_LOADED"}
-E.RegisterMyEventsToFrames(Octo_EventFrame_Minecraft, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_Minecraft, MyEventsTable)
 
 function Octo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then

@@ -14,11 +14,6 @@ local GetContainerNumSlots = C_Container.GetContainerNumSlots
 local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local GetItemCount = C_Item.GetItemCount
 local GetItemInfo = C_Item.GetItemInfo
--- Функции из основной таблицы аддона
-local GetItemLink = E.func_GetItemLink
-local GetItemQualityColorID = E.func_GetItemQualityColorID
-local itemName = E.func_GetItemNameByID
-local coloredText = E.func_coloredText
 -- Функции для работы с предметами
 local PickupContainerItem = C_Container.PickupContainerItem
 local DeleteCursorItem = DeleteCursorItem
@@ -40,7 +35,7 @@ function Octo_EventFrame_Items:CreateCommonButtonSettings(button, pointY, border
 	button.text = button:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	button.text:SetPoint("LEFT", button, "RIGHT")
 	button.text:SetFontObject(OctoFont22)
-	button.text:SetText(E.func_GetAddOnMetadata(GlobalAddonName, "Version"))
+	button.text:SetText(E:func_GetAddOnMetadata(GlobalAddonName, "Version"))
 	-- Иконка предмета на кнопке
 	button.icon = button:CreateTexture(nil, "BACKGROUND")
 	button.icon:SetAllPoints(button)
@@ -72,8 +67,8 @@ local function IsItemUsable(itemLink)
 	inspectScantipUsable:SetHyperlink(itemLink)
 	-- Проверяем все строки tooltip'а
 	for i = 1, inspectScantipUsable:NumLines() do
-		local leftText = coloredText(_G["OctoScanningTooltipUsableTextLeft"..i])
-		local rightText = coloredText(_G["OctoScanningTooltipUsableTextRight"..i])
+		local leftText = E:func_coloredText(_G["OctoScanningTooltipUsableTextLeft"..i])
+		local rightText = E:func_coloredText(_G["OctoScanningTooltipUsableTextRight"..i])
 		-- Ищем красный текст (признак того, что предмет нельзя использовать)
 		if leftText and (leftText:find("^|cffFF2020") or leftText:find("^|cffFF0000")) then
 			inspectScantipUsable:ClearLines()
@@ -104,7 +99,7 @@ function Octo_EventFrame_Items:UpdateItemsUsableFrame()
 				-- Проверяем, есть ли предмет в списке для использования
 				local requiredCount = E.OctoTable_itemID_ItemsUsable[itemID]
 				if requiredCount and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= requiredCount then
-					local itemLink = GetItemLink(itemID)
+					local itemLink = E:func_GetItemLink(itemID)
 					-- Проверяем, можно ли использовать предмет
 					if IsItemUsable(itemLink) then
 						-- Настраиваем кнопку
@@ -113,18 +108,18 @@ function Octo_EventFrame_Items:UpdateItemsUsableFrame()
 						local texture = select(10, GetItemInfo(itemID)) or 413587
 						Clickable_ItemsUsable.icon:SetTexture(texture)
 						-- Устанавливаем цвет границы по качеству предмета
-						local RGB = GetItemQualityColorID(itemID)
+						local RGB = E:func_GetItemQualityColorID(itemID)
 						if RGB then
 							Clickable_ItemsUsable:SetBackdropBorderColor(RGB.r, RGB.g, RGB.b, 1)
 						end
 						-- Устанавливаем текст с количеством и названием предмета
 						Clickable_ItemsUsable.itemID = itemID
-						Clickable_ItemsUsable.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..itemName(itemID))
+						Clickable_ItemsUsable.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E:func_GetItemNameByID(itemID))
 						return-- Нашли предмет - выходим
 					-- else
 					-- 	-- Если предмет нельзя использовать, добавляем его в список на удаление
 					-- 	if not E.OctoTable_itemID_ItemsDelete[itemID] then
-					-- 		DEFAULT_CHAT_FRAME:AddMessage(itemName(itemID), E.func_Gradient("mark to DELETE"))
+					-- 		DEFAULT_CHAT_FRAME:AddMessage(E:func_GetItemNameByID(itemID), E:func_Gradient("mark to DELETE"))
 					-- 		E.OctoTable_itemID_ItemsDelete[itemID] = true
 					-- 	end
 					end
@@ -160,7 +155,7 @@ function Octo_EventFrame_Items:UpdateItemsDeleteFrame()
 				Clickable_ItemsDelete.icon:SetTexture(itemTexture or 413587)
 				Clickable_ItemsDelete.itemID = itemID
 				-- Красный текст для предметов на удаление
-				Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, false, false, false).." "..E.Red_Color..itemName(itemID).."|r")
+				Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, false, false, false).." "..E.Red_Color..E:func_GetItemNameByID(itemID).."|r")
 				return-- Нашли предмет - выходим
 			end
 		end
@@ -174,7 +169,7 @@ local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",-- При выходе из боя
 }
 -- Регистрируем события
-E.RegisterMyEventsToFrames(Octo_EventFrame_Items, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_Items, MyEventsTable)
 -- Обработчик события загрузки аддона
 function Octo_EventFrame_Items:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end

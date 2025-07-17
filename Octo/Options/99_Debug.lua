@@ -58,6 +58,7 @@ function E.Debug()
 					Octo_AddonsManager_DB = {}
 					Octo_DEBUG = {}
 					Octo_QuestsChangedDB = {}
+					Octo_Cache_DB = {}
 					return ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,
@@ -146,6 +147,48 @@ function E.Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+			CurrencyID_Total = {
+				type = "execute",
+				name = "CurrencyID_Total",
+				desc = "CharInfo.MASLENGO.CurrencyID_Total = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.CurrencyID_Total= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			CurrencyID_totalEarned = {
+				type = "execute",
+				name = "CurrencyID_totalEarned",
+				desc = "CharInfo.MASLENGO.CurrencyID_totalEarned = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.CurrencyID_totalEarned= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Currency = {
+				type = "execute",
+				name = E.Purple_Color.."Currency|r",
+				desc = "CharInfo.MASLENGO.Currency = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.Currency= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
 			OctoTable_QuestID = {
 				type = "execute",
 				name = "OctoTable_QuestID",
@@ -195,20 +238,6 @@ function E.Debug()
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.MASLENGO.reputationNEW = {}
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			CurrencyID_Total = {
-				type = "execute",
-				name = "CurrencyID_Total",
-				desc = "CharInfo.MASLENGO.CurrencyID_Total = {}",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.CurrencyID_Total= {}
 					end
 					return
 				end,
@@ -480,5 +509,6 @@ function E.Debug()
 	add_args(Octo_AddonsManager_DB, "Octo_AddonsManager_DB")
 	add_args(Octo_DEBUG, "Octo_DEBUG")
 	add_args(Octo_QuestsChangedDB, "Octo_QuestsChangedDB")
+	add_args(Octo_Cache_DB, "Octo_Cache_DB")
 	return Debug
 end

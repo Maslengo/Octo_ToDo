@@ -21,7 +21,7 @@ function E:func_Universal_11_TheWarWithin()
 	},
 
 	{
-		icon = E.func_GetItemIconByID(224784),
+		icon = E:func_GetItemIconByID(224784),
 		textleft = "TheCalloftheWorldsoul",
 		name_save = "TheCalloftheWorldsoul",
 		reset = "Weekly",
@@ -73,7 +73,7 @@ function E:func_Universal_11_TheWarWithin()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(224784),
+		icon = E:func_GetItemIconByID(224784),
 		textleft = "Archives",
 		name_save = "Archives",
 		reset = "Weekly",
@@ -85,7 +85,7 @@ function E:func_Universal_11_TheWarWithin()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(224784),
+		icon = E:func_GetItemIconByID(224784),
 		textleft = "Delves",
 		name_save = "Delves",
 		reset = "Weekly",
@@ -127,8 +127,8 @@ function E:func_Universal_11_TheWarWithin()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(226263),
-		textleft = E.Timers.TWW_BeledarCycle()..E.func_questName(83240),
+		icon = E:func_GetItemIconByID(226263),
+		textleft = E.Timers.TWW_BeledarCycle()..E:func_questName(83240),
 		name_save = "TheTheaterTroupe",
 		reset = "Weekly",
 		desc = "TheWarWithin",
@@ -138,8 +138,8 @@ function E:func_Universal_11_TheWarWithin()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(220756),
-		textleft = E.func_questName(76586),
+		icon = E:func_GetItemIconByID(220756),
+		textleft = E:func_questName(76586),
 		name_save = "SpreadingtheLight",
 		reset = "Weekly",
 		desc = "TheWarWithin",
@@ -149,8 +149,8 @@ function E:func_Universal_11_TheWarWithin()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(226273),
-		textleft = E.func_questName(83333),
+		icon = E:func_GetItemIconByID(226273),
+		textleft = E:func_questName(83333),
 		name_save = "GearingUpforTrouble",
 		reset = "Weekly",
 		desc = "TheWarWithin",
@@ -178,8 +178,8 @@ function E:func_Universal_11_TheWarWithin()
 		max = 2,
 	},
 	{
-		icon = E.func_GetItemIconByID(227792),
-		textleft = E.func_questName(82946),
+		icon = E:func_GetItemIconByID(227792),
+		textleft = E:func_questName(82946),
 		name_save = "RollinDownintheDeeps",
 		reset = "Weekly",
 		desc = "TheWarWithin",
@@ -189,7 +189,7 @@ function E:func_Universal_11_TheWarWithin()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(237014),
+		icon = E:func_GetItemIconByID(237014),
 		textleft = "BiergothDungeonQuest",
 		name_save = "BiergothDungeonQuest",
 		reset = "Weekly",
@@ -208,8 +208,8 @@ function E:func_Universal_11_TheWarWithin()
 		max = 1,
 	},
 	{
-		icon = E.func_GetItemIconByID(227794),
-		textleft = E.func_questName(84370),
+		icon = E:func_GetItemIconByID(227794),
+		textleft = E:func_questName(84370),
 		name_save = "TheKeytoSuccess",
 		reset = "Weekly",
 		desc = "TheWarWithin",
@@ -219,7 +219,7 @@ function E:func_Universal_11_TheWarWithin()
 		max = 1,
 	},
 	{
-		icon = E.func_GetSpellIcon(2575), -- PROFESSION
+		icon = E:func_GetSpellIcon(2575), -- PROFESSION
 		textleft = "TWWProfessionWeeklies",
 		name_save = "TWWProfessionWeeklies",
 		reset = "Weekly",
@@ -254,7 +254,7 @@ function E:func_Universal_11_TheWarWithin()
 		max = 2,
 	},
 	{
-		icon = E.func_GetSpellIcon(2575), -- PROFESSION
+		icon = E:func_GetSpellIcon(2575), -- PROFESSION
 		textleft = "TWWAlgariTreatise",
 		name_save = "TWWAlgariTreatise",
 		reset = "Weekly",
@@ -275,7 +275,7 @@ function E:func_Universal_11_TheWarWithin()
 		max = 2,
 	},
 	{
-		icon = E.func_GetItemIconByID(224172),
+		icon = E:func_GetItemIconByID(224172),
 		textleft = "AnniversaryRestoredCofferKey",
 		name_save = "AnniversaryRestoredCofferKey",
 		reset = "Weekly",
@@ -313,7 +313,7 @@ function E:func_Universal_11_TheWarWithin()
 		max = 6,
 	},
 	{
-		icon = E.func_GetItemIconByID(142307),
+		icon = E:func_GetItemIconByID(142307),
 		textleft = "MajorKeyflames",
 		name_save = "MajorKeyflames",
 		reset = "Weekly",
@@ -331,7 +331,7 @@ function E:func_Universal_11_TheWarWithin()
 		max = 8,
 	},
 	{
-		icon = E.func_GetItemIconByID(142307),
+		icon = E:func_GetItemIconByID(142307),
 		textleft = "MinorKeyflames",
 		name_save = "MinorKeyflames",
 		reset = "Weekly",

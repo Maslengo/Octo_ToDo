@@ -6,6 +6,41 @@ function E:func_Otrisovka_11_TheWarWithin()
 	local OctoTable_Otrisovka = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
+	local enameDEBUGcurrency = true
+	if enameDEBUGcurrency then
+		local sortedCurrencyes = {}
+
+		for CurrencyID, cachedName in next, (Octo_Cache_DB.AllCurrencies) do
+			tinsert(sortedCurrencyes, CurrencyID)
+		end
+
+		sort(sortedCurrencyes, E.func_Reverse_order)
+		-- local sortedCurrencyes = {3309, 3137, 3132, 3023, 2813, 1792, 2123, 2409, 1904, 2653, 1101, 824, 2912}
+
+		for i, CurrencyID in ipairs(sortedCurrencyes) do
+
+			local name = C_AccountStore.GetCurrencyInfo(CurrencyID).name
+			if name ~= "" then
+				table.insert(OctoTable_Otrisovka, function(CharInfo)
+						----------------------------------------------------------------
+						local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+						----------------------------------------------------------------
+						textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
+						myType = {"Currency", CurrencyID}
+						----------------------------------------------------------------
+						textLEFT = E:func_currencyName(CurrencyID)
+						iconLEFT = E:func_GetCurrencyIcon(CurrencyID)
+						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+						----------------------------------------------------------------
+						return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+						----------------------------------------------------------------
+				end)
+			end
+		end
+	end
+
+
+
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
@@ -23,7 +58,7 @@ function E:func_Otrisovka_11_TheWarWithin()
 						-- CharInfo.MASLENGO.GreatVault[i] = CharInfo.MASLENGO.GreatVault[i] or {}
 						if CharInfo.MASLENGO.GreatVault[i].progress and CharInfo.MASLENGO.GreatVault[i].threshold then
 							if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING then
-								tooltipRIGHT[#tooltipRIGHT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING.."|r"}
+								tooltipRIGHT[#tooltipRIGHT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING.."|r"}
 							elseif CharInfo.MASLENGO.GreatVault[i].progress then
 								tooltipRIGHT[#tooltipRIGHT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold}
 							end
@@ -49,15 +84,15 @@ function E:func_Otrisovka_11_TheWarWithin()
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.CurrentKeyName then
-					tooltipRIGHT[#tooltipRIGHT+1] = {E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName.."|r", ""}
+					tooltipRIGHT[#tooltipRIGHT+1] = {E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName.."|r", ""}
 				end
 				if CharInfo.PlayerData.RIO_Score and CharInfo.PlayerData.RIO_weeklyBest then
 					tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
-					tooltipRIGHT[#tooltipRIGHT+1] = {"Weekly Best:", E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.RIO_weeklyBest.."|r"}
-					tooltipRIGHT[#tooltipRIGHT+1] = {"RIO Score:", E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.RIO_Score.."|r"}
+					tooltipRIGHT[#tooltipRIGHT+1] = {"Weekly Best:", E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.RIO_weeklyBest.."|r"}
+					tooltipRIGHT[#tooltipRIGHT+1] = {"RIO Score:", E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.RIO_Score.."|r"}
 				end
 				if CharInfo.PlayerData.CurrentKey then
-					textCENT = E.func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.CurrentKey.."|r"
+					textCENT = E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.CurrentKey.."|r"
 				end
 				----------------------------------------------------------------
 				textLEFT = E.WOW_Epic_Color..L["Mythic Keystone"].."|r"
@@ -74,17 +109,16 @@ function E:func_Otrisovka_11_TheWarWithin()
 					----------------------------------------------------------------
 					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 					----------------------------------------------------------------
-						textCENT = E.func_textCENT_Currency(CharInfo, CurrencyID)
+						textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
 						myType = {"Currency", CurrencyID}
 						----------------------------------------------------------------
-						textLEFT = E.func_currencyName(CurrencyID)
-						iconLEFT = E.func_GetCurrencyIcon(CurrencyID)
+						textLEFT = E:func_currencyName(CurrencyID)
+						iconLEFT = E:func_GetCurrencyIcon(CurrencyID)
 						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 					----------------------------------------------------------------
 					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 					----------------------------------------------------------------
 			end)
-
 		end
 
 
@@ -92,11 +126,11 @@ function E:func_Otrisovka_11_TheWarWithin()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				textCENT = E.func_textCENT_Currency(CharInfo, 2815)
+				textCENT = E:func_textCENT_Currency(CharInfo, 2815)
 				myType = {"Currency", 2815}
 				----------------------------------------------------------------
-				textLEFT = E.func_currencyName(2815)
-				iconLEFT = E.func_GetCurrencyIcon(2815)
+				textLEFT = E:func_currencyName(2815)
+				iconLEFT = E:func_GetCurrencyIcon(2815)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -119,7 +153,7 @@ function E:func_Otrisovka_11_TheWarWithin()
 
 
 
-		E.func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
+		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

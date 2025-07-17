@@ -8,7 +8,7 @@ function E:func_Otrisovka_13_TheLastTitan()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
-		E.func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
+		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

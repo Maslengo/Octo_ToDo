@@ -18,7 +18,7 @@ function E:func_Universal_06_WarlordsofDraenor()
 			max = 4,
 		},
 		{
-			icon = E.func_GetItemIconByID(110560),
+			icon = E:func_GetItemIconByID(110560),
 			textleft = GARRISON_LOCATION_TOOLTIP,
 			name_save = "GarrisonLevel",
 			reset = "Once",
