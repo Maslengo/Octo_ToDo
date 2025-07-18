@@ -6,7 +6,7 @@ function E:func_Otrisovka_11_TheWarWithin()
 	local OctoTable_Otrisovka = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	local enameDEBUGcurrency = true
+	local enameDEBUGcurrency = false
 	if enameDEBUGcurrency then
 		local sortedCurrencyes = {}
 
