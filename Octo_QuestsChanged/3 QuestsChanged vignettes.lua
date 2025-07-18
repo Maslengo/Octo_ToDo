@@ -1,5 +1,5 @@
-local GlobalAddonName, E = ...
-if not E.Enable_QuestsChanged then return end
+local GlobalAddonName, ns = ...
+E = _G.OctoEngine
 
 if not C_EventUtils.IsEventValid("VIGNETTE_MINIMAP_UPDATED") then return end
 

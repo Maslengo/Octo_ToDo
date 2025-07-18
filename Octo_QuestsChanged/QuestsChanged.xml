@@ -1,9 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-	<Script file="5 QuestsChanged\1 QuestsChanged addons.lua"/>
-	<Script file="5 QuestsChanged\2 QuestsChanged log.lua"/>
-	<Script file="5 QuestsChanged\3 QuestsChanged vignettes.lua"/>
-	<Script file="5 QuestsChanged\4 QuestChanged OCTO.lua"/>
+	<Script file="1 QuestsChanged addons.lua"/>
+	<Script file="2 QuestsChanged log.lua"/>
+	<Script file="3 QuestsChanged vignettes.lua"/>
+	<Script file="4 QuestChanged OCTO.lua"/>
 
 </Ui>

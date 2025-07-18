@@ -1,13 +1,8 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
-E.GlobalAddonName = GlobalAddonName
 
 local tooltip = E.tooltip or CreateFrame("GameTooltip", "OctoTooltip", nil, "GameTooltipTemplate")
 E.tooltip = tooltip
-
-
-
-
 
 E.PromiseItem = {}
 E.PromiseSpell = {}
@@ -28,7 +23,6 @@ E.TEXTURE_BLANK_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\04_Stat
 E.HighlightTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
 E.Enable_Achievements = true
 E.Enable_AddonsManager = false
-E.Enable_QuestsChanged = true
 E.Enable_Minecraft = false
 E.Enable_Moduls = true
 E.curFaction = UnitFactionGroup("PLAYER")

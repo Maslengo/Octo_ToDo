@@ -1,5 +1,5 @@
-local GlobalAddonName, E = ...
-if not E.Enable_QuestsChanged then return end
+local GlobalAddonName, ns = ...
+E = _G.OctoEngine
 
 local Octo_EventFrame_QuestsChanged = CreateFrame("FRAME")
 Octo_EventFrame_QuestsChanged:Hide()
@@ -359,9 +359,10 @@ function E:QuestsChanged_CreateMyDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	E.DataProvider_QuestsChanged = DataProvider
 	local times = {}
-	Octo_QuestsChangedDB = Octo_QuestsChangedDB or {}
-	Octo_QuestsChangedDB.QC_Quests = Octo_QuestsChangedDB.QC_Quests or {}
-	Octo_QuestsChangedDB.QC_Vignettes = Octo_QuestsChangedDB.QC_Vignettes or {}
+	-- Octo_QuestsChangedDB = Octo_QuestsChangedDB or {}
+	-- Octo_QuestsChangedDB.QC_Quests = Octo_QuestsChangedDB.QC_Quests or {}
+	-- Octo_QuestsChangedDB.QC_Vignettes = Octo_QuestsChangedDB.QC_Vignettes or {}
+
 
 	if Octo_ToDo_DB_Vars.QC_Quests then
 		for k, v in next, (Octo_QuestsChangedDB.QC_Quests) do

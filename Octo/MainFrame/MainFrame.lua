@@ -26,9 +26,6 @@ end
 local SFDropDownWeight = 100 -- Ширина выпадающего меню
 local MaxNumCharacters = 10 -- Максимальное количество отображаемых персонажей
 
--- Получаем цвет класса игрока
-local r, g, b = GetClassColor(E.classFilename)
-
 ----------------------------------------------------------------
 -- Подключаем необходимые библиотеки
 ----------------------------------------------------------------
@@ -57,7 +54,7 @@ end)
 ----------------------------------------------------------------
 E.OctoTable_Otrisovka = {} -- Таблица для хранения объединенных данных
 
-local function func_ConcatAtStart()
+local function func_ConcatAtStart_Otrisovka()
 	wipe(E.OctoTable_Otrisovka) -- Очищаем таблицу
 
 	-- Объединяем таблицы для каждого дополнения в обратном порядке (от нового к старому)
@@ -192,6 +189,10 @@ end
 -- Функция инициализации центральной панели
 ----------------------------------------------------------------
 local func_OnAcquiredCENT do
+
+	-- Получаем цвет класса игрока
+	local r, g, b = GetClassColor(E.classFilename)
+
 	local function func_OnEnterSecond(frame)
 		E:func_TooltipOnEnter(frame, true, true)
 	end
@@ -613,7 +614,7 @@ function E:func_CreateMyDataProvider()
 
 	-- Режим без репутаций
 	if not Octo_ToDo_DB_Vars.Reputations then
-		for index, func in ipairs(func_ConcatAtStart()) do
+		for index, func in ipairs(func_ConcatAtStart_Otrisovka()) do
 			numlines = numlines + 1
 			local zxc = CreateZxcTable(false)
 
@@ -735,34 +736,6 @@ function E:func_CreateMyDataProvider()
 
 			curCharFrame:SetScript("OnLeave", GameTooltip_Hide)
 			curCharFrame:Show()
-		end
-	end
-end
-
--- Функция обновления данных
-function E.Update(event_name)
-	local isMainFrameVisible = Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown()
-
-	if isMainFrameVisible then
-		if not E.updateScheduled then
-			E.updateScheduled = true
-
-			-- Обновляем данные с небольшой задержкой
-			C_Timer.After(0.1, function()
-					E.updateScheduled = false
-
-					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
-						E:func_CreateMyDataProvider()
-
-						if E.DebugEvent then
-							DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E.Update(", E.Green_Color, E.Yellow_Color)..event_name or ""..E.Yellow_Color..")|r")
-						end
-					end
-			end)
-		end
-	else
-		if E.DebugEvent then
-			DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E.Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name or ""..E.Addon_Right_Color..")|r")
 		end
 	end
 end

@@ -1,0 +1,19 @@
+local GlobalAddonName, E = ...
+
+
+function E.Collect_CurrentKey_ITEM_CHANGED(arg2)
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	----------------------------------------------------------------
+	local dungeonSTR = select(18, strsplit(":", arg2))
+	local lvl = select(20, strsplit(":", arg2))
+	local dungeonID = tonumber(dungeonSTR)
+	local KeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
+	collectPlayerData.CurrentKeyLevel = tonumber(lvl)
+	collectPlayerData.CurrentKeyName = KeyName
+	if E.OctoTable_KeystoneAbbr[dungeonID] then
+		collectPlayerData.CurrentKey = lvl.." "..E.OctoTable_KeystoneAbbr[dungeonID].abbreviation
+	else
+		collectPlayerData.CurrentKey = lvl.." "..KeyName
+	end
+end

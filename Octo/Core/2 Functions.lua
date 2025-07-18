@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 local LibStub = LibStub
@@ -2652,6 +2651,33 @@ function E:func_tToStr(t)
 	return "{"..str:sub(1, -2).."}"
 end
 ----------------------------------------------------------------
+-- Функция обновления данных
+function E:func_Update(event_name)
+	local isMainFrameVisible = Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown()
+
+	if isMainFrameVisible then
+		if not E.func_UpdateScheduled then
+			E.func_UpdateScheduled = true
+
+			-- Обновляем данные с небольшой задержкой
+			C_Timer.After(0.1, function()
+					E.func_UpdateScheduled = false
+
+					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
+						E:func_CreateMyDataProvider()
+
+						if E.DebugEvent then
+							DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E:func_Update(", E.Green_Color, E.Yellow_Color)..event_name or ""..E.Yellow_Color..")|r")
+						end
+					end
+			end)
+		end
+	else
+		if E.DebugEvent then
+			DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E:func_Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name or ""..E.Addon_Right_Color..")|r")
+		end
+	end
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

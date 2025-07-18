@@ -3,7 +3,7 @@
 ## Author: sfmict
 ## Version: r50
 ## Notes: Dropdown menu library
-## Category: Libraries
+## QWEQWEQWECategory: Libraries
 ## ЙУЦЙЦУCategory-deDE: Bibliotheken
 ## ЙУЦЙЦУCategory-esES: Bibliotecas
 ## ЙУЦЙЦУCategory-esMX: Bibliotecas

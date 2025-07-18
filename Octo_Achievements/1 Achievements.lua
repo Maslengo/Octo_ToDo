@@ -1,4 +1,5 @@
-local GlobalAddonName, E = ...
+local GlobalAddonName, ns = ...
+E = _G.Octo
 if not E.Enable_Achievements then return end
 
 local Octo_EventFrame_Achievements = CreateFrame("FRAME")

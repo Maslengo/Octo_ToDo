@@ -3,7 +3,7 @@
 ## Author: sfmict
 ## Version: r20
 ## Notes: Library for load quests, items and spells
-## Category: Libraries
+## QWEQWEQWECategory: Libraries
 ## ЙУЦЙЦУCategory-deDE: Bibliotheken
 ## ЙУЦЙЦУCategory-esES: Bibliotecas
 ## ЙУЦЙЦУCategory-esMX: Bibliotecas

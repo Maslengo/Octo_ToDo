@@ -1,5 +1,5 @@
-local GlobalAddonName, E = ...
-if not E.Enable_QuestsChanged then return end
+local GlobalAddonName, ns = ...
+E = _G.OctoEngine
 
 local icon = LibStub("LibDBIcon-1.0", true)
 local quests = {}

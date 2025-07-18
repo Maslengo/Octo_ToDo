@@ -1,0 +1,34 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Script file="Collect\Collect_All_BfA_Azerite.lua"/>
+	<Script file="Collect\Collect_All_BfA_Cloaklvl.lua"/>
+	<Script file="Collect\Collect_All_BfA_Island.lua"/>
+	<Script file="Collect\Collect_All_Chromie.lua"/>
+	<Script file="Collect\Collect_All_Covenant.lua"/>
+	<Script file="Collect\Collect_All_Currency.lua"/>
+	<Script file="Collect\Collect_All_GreatVault.lua"/>
+	<Script file="Collect\Collect_All_Holiday.lua"/>
+	<Script file="Collect\Collect_All_ItemLevel.lua"/>
+	<Script file="Collect\Collect_All_ItemsInBag.lua"/>
+	<Script file="Collect\Collect_All_JournalInstance.lua"/>
+	<Script file="Collect\Collect_All_Locations.lua"/>
+	<Script file="Collect\Collect_All_LoginTime.lua"/>
+	<Script file="Collect\Collect_All_Mail.lua"/>
+	<Script file="Collect\Collect_All_MoneyOnLogin.lua"/>
+	<Script file="Collect\Collect_All_MoneyUpdate.lua"/>
+	<Script file="Collect\Collect_All_Played.lua"/>
+	<Script file="Collect\Collect_All_PlayerDurability.lua"/>
+	<Script file="Collect\Collect_All_PlayerInfo.lua"/>
+	<Script file="Collect\Collect_All_PlayerLevel.lua"/>
+	<Script file="Collect\Collect_All_Professions.lua"/>
+	<Script file="Collect\Collect_All_Quests.lua"/>
+	<Script file="Collect\Collect_All_Reputations.lua"/>
+	<Script file="Collect\Collect_All_UNIVERSALQuestUpdate.lua"/>
+	<Script file="Collect\Collect_All_WarMode.lua"/>
+	<Script file="Collect\Collect_CurrentKey_ITEM_CHANGED.lua"/>
+
+
+	<Script file="Collect\Collect.lua"/>
+
+</Ui>

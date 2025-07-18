@@ -1,0 +1,62 @@
+
+----------------------------------------------------------------
+function E.LoadOctoUIforAddons()
+	if not Octo_DEBUG then return end
+	Octo_DEBUG.profileKeys = Octo_DEBUG.profileKeys or {}
+	local currentKey = E.curCharName.." - "..E.curServer
+	Octo_DEBUG.profileKeys[currentKey] = Octo_DEBUG.profileKeys[currentKey] or "OctoUI"
+	if ElvDB then
+		for name, v in next, (ElvDB.profileKeys) do
+			Octo_DEBUG.profileKeys[name] = "OctoUI"
+		end
+	end
+	local AddonsAndDB = {
+		{database = AddonCpuUsageDB, profileName = "OctoUI"}, -- ACU
+		{database = AddOnSkinsDB, profileName = "OctoUI"}, -- AddOnSkins
+		{database = Bartender4DB, profileName = "OctoUI"}, -- Bartender4
+		{database = ElvDB, profileName = "OctoUI"}, -- ElvUI
+		{database = ElvPrivateDB, profileName = "PRIVATEPROFILE"}, -- ElvUI
+		{database = MythicDungeonToolsDB, profileName = "OctoUI"}, -- MythicDungeonTools
+		{database = OmniCCDB, profileName = "OctoUI"}, -- OmniCC
+		{database = OmniCDDB, profileName = "OctoUI"}, -- OmniCD
+		{database = ParrotDB, profileName = "OctoUI"}, -- Parrot
+		{database = PlaterDB, profileName = "OctoUI"}, -- Plater
+		{database = RareScannerDB, profileName = "OctoUI"}, -- RareScanner
+		{database = RCLootCouncilDB, profileName = "OctoUI"}, -- RCLootCouncil
+		{database = RCLootCouncilLootDB, profileName = "OctoUI"}, -- RCLootCouncil
+		{database = SilverDragon3DB, profileName = "OctoUI"}, -- SilverDragon
+		{database = TomTomDB, profileName = "OctoUI"}, -- TomTom
+		{database = TomTomWaypointsM, profileName = "OctoUI"}, -- TomTom
+		{database = VMRT, profileName = "OctoUI"}, -- MRT
+		{database = WarpDepleteDB, profileName = "OctoUI"}, -- WarpDeplete
+		{database = GreatVaultList2DB, profileName = "OctoUI"}, -- GreatVaultList
+	}
+	for k, v in ipairs(AddonsAndDB) do
+		local addonName = v.addonName
+		local database = v.database
+		local profileName = v.profileName
+		if database then
+			database.profileKeys = database.profileKeys or {}
+			for name, OctoUI in next, Octo_DEBUG.profileKeys do
+				if database == VMRT then
+					local nameWithoutSpace = name:gsub(" ", "")
+					VMRT.ProfileKeys[nameWithoutSpace] = profileName
+				else
+					database.profileKeys[name] = profileName
+				end
+			end
+		end
+	end
+end
+
+
+
+
+function Octo_EventFrame_Collect:PLAYER_LOGIN()
+	RequestTimePlayed()
+	RequestRaidInfo()
+	self:UnregisterEvent("PLAYER_LOGIN")
+	self.PLAYER_LOGIN = nil
+	E.LoadOctoUIforAddons()
+	E:func_Update("PLAYER_LOGIN")
+end

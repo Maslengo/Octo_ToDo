@@ -1,4 +1,5 @@
-local GlobalAddonName, E = ...
+local GlobalAddonName, ns = ...
+E = _G.Octo
 if not E.Enable_AddonsManager then return end
 
 local Octo_EventFrame_AddonsManager = CreateFrame("FRAME")

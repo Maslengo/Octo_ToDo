@@ -1,7 +1,6 @@
-local GlobalAddonName, E = ...
-local function func_Reverse_order(a, b)
-	return b < a
-end
+local GlobalAddonName, ns = ...
+E = _G.OctoEngine
+----------------------------------------------------------------
 local editor_themes = {
 	["Standard"] = {
 		-- ["Table"] = "|c00ff3333",
@@ -48,6 +47,7 @@ local editor_themes = {
 		["String"] = "|cff829D61", -- Зелен
 	},
 }
+----------------------------------------------------------------
 local colorScheme = {
 	[IndentationLib.tokens.TOKEN_SPECIAL] = editor_themes["Sublime"]["Special"],
 	[IndentationLib.tokens.TOKEN_KEYWORD] = editor_themes["Sublime"]["Keyword"],
@@ -260,7 +260,7 @@ function E:func_mountslist(full)
 	local tbl, types, currentTier, t, c, w = {}, {}, tonumber(GetBuildInfo():match("(.-)%.")), {}, 0, {}
 	local i, j, str = 0, 0, ""
 	local mountsIDs = C_MountJournal.GetMountIDs()
-	sort(mountsIDs, func_Reverse_order)
+	sort(mountsIDs, E.func_Reverse_order)
 	for _, id in ipairs(mountsIDs) do
 		local mountType = select(5, C_MountJournal.GetMountInfoExtraByID(id))
 		if types[mountType] == nil then
@@ -320,12 +320,12 @@ function E:func_itemslist(msg)
 			tinsert(list2, ids2)
 	end)
 	promise1:Then(function()
-			sort(list1, func_Reverse_order)
+			sort(list1, E.func_Reverse_order)
 			for _, id1 in next, (list1) do
-				str = str..id1..", -- "..E:func_itemTexture(id1)..E:func_itemName(id1).."\n"
+				str = str..id1..", -- "..E:func_texturefromIcon(E:func_GetItemIconByID(id1))..E:func_GetItemNameByID(id1).."\n"
 			end
 			for _, id2 in next, (list2) do
-				str = str..id2..", -- "..E:func_itemTexture(id2)..E:func_itemName(id2).."\n"
+				str = str..id2..", -- "..E:func_texturefromIcon(E:func_GetItemIconByID(id2))..E:func_GetItemNameByID(id2).."\n"
 			end
 			editBox:SetText(str)
 			editFrame:Show()
@@ -343,7 +343,7 @@ function E:func_itemslistSort(msg)
 	end)
 	local count = 0
 	promise1:Then(function()
-			sort(list1, func_Reverse_order)
+			sort(list1, E.func_Reverse_order)
 			for _, id1 in next, (list1) do
 				count = count + 1
 				if count < 24 then
@@ -376,7 +376,7 @@ function E:func_itemslistSortBOOLEN(msg)
 	end)
 	local count = 0
 	promise1:Then(function()
-			sort(list1, func_Reverse_order)
+			sort(list1, E.func_Reverse_order)
 			for _, id1 in next, (list1) do
 				count = count + 1
 				if count < 8 then
@@ -401,11 +401,11 @@ function E:func_questslist(msg)
 	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID_Paragon):ThenForAllWithCached(function(_, ids1)
 			tinsert(list1, ids1)
 	end)
-	sort(list1, func_Reverse_order)
+	sort(list1, E.func_Reverse_order)
 	promise2:FailWithChecked(function(_, ids2)
 			tinsert(list2, ids2)
 	end)
-	sort(list2, func_Reverse_order)
+	sort(list2, E.func_Reverse_order)
 	promise2:Then(function()
 			for _, id1 in next, (list1) do
 				str = str..id1..", -- "..E:func_questName(id1).."\n"
@@ -445,7 +445,7 @@ function E:func_currencieslist(msg)
 	for CurrencyID,	cachedName in next, (Octo_Cache_DB.AllCurrencies) do
 		tinsert(list, CurrencyID)
 	end
-	sort(list, func_Reverse_order)
+	sort(list, E.func_Reverse_order)
 	for _, CurrencyID in ipairs(list) do
 
 	-- for CurrencyID = 3360, 1, -1 do
@@ -468,7 +468,7 @@ function E:func_reputationslist(msg)
 	for _, reputationID in next, (E.OctoTable_allfaction) do
 		tinsert(list, reputationID)
 	end
-	sort(list, func_Reverse_order)
+	sort(list, E.func_Reverse_order)
 	for _, reputationID in next, (list) do
 		if E:func_reputationName(reputationID) ~= (reputationID.. " (UNKNOWN)") then
 			str4 = str4..reputationID..", --" ..E:func_reputationName(reputationID).."|n"
@@ -491,7 +491,7 @@ function E:func_spellslist(msg)
 			tinsert(list, spellID)
 		end
 	end
-	sort(list, func_Reverse_order)
+	sort(list, E.func_Reverse_order)
 	for _, spellID in next, (list) do
 		if E:func_GetSpellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
 			str4 = str4..spellID..", --" ..E:func_GetSpellNameFull(spellID).."\n"
@@ -535,3 +535,34 @@ local function func_HandleCommand(msg)
 end
 SLASH_OCTOLIST1 = "/fp"
 SlashCmdList["OCTOLIST"] = func_HandleCommand
+
+local slashCommands = {
+	GSEARCH = {
+		commands = {"/gsearch", "/gs"},
+		handler = function(msg)
+			-- Поиск глобальных переменных по строке
+			local str = ""
+			local color = E.classColorHexCurrent
+			DEFAULT_CHAT_FRAME:AddMessage(color.."GSEARCH:|r "..msg)
+
+			for i, n in pairs(_G) do
+				if type(n) == "string" and n:find(msg) then
+					str = str..color..i.."|r - "..n.."\n"
+				end
+			end
+
+			local editBox = _G.editFrame.editFrame
+			editBox:SetText(str)
+			_G.editFrame:Show()
+		end
+	}
+}
+
+-- Регистрируем все slash-команды
+for name, data in pairs(slashCommands) do
+	SlashCmdList[name] = data.handler
+
+	for i, cmd in ipairs(data.commands) do
+		_G["SLASH_"..name..i] = cmd
+	end
+end

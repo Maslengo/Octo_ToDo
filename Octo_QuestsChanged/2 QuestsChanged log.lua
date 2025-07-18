@@ -1,5 +1,5 @@
-local GlobalAddonName, E = ...
-if not E.Enable_QuestsChanged then return end
+local GlobalAddonName, ns = ...
+E = _G.OctoEngine
 
 local floor = math.floor
 local QC_Quests, copybox
