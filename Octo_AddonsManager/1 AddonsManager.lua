@@ -165,7 +165,7 @@ local func_OnAcquired do
 	end
 	------------------------------------------------
 	local function func_OnEnter(frame)
-		--frame.texture_1:SetAlpha(E.BGALPHA)
+		--frame.texture_1:SetAlpha(E.bgCaOverlay)
 		--E:func_TooltipOnEnter(frame, false, false)
 	end
 	------------------------------------------------

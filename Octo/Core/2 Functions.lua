@@ -1331,7 +1331,6 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	local curHeight = height
 	local indent = indent or 0
 	local mediaPath = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\"
-	local elvUIPath = mediaPath.."ElvUI\\"
 	-- Helper function to create consistent buttons
 	local function CreateUtilButton(name, relativeTo, xOffset, texture, tooltip, onClick)
 		local button = CreateFrame("Button", name, frame)
@@ -1411,7 +1410,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		"Octo_AbandonButton",
 		frame,
 		-curHeight*2,
-		elvUIPath.."Arrow72.tga"
+		mediaPath.."Arrow72.tga"
 	)
 	Octo_AbandonButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
@@ -1443,7 +1442,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 			end
 	end)
 	-- Events Button
-	local Octo_EventsButton = CreateUtilButton("Octo_EventsButton", frame, -curHeight*3, elvUIPath.."Arrow6.tga")
+	local Octo_EventsButton = CreateUtilButton("Octo_EventsButton", frame, -curHeight*3, mediaPath.."Arrow6.tga")
 	Octo_EventsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 			GameTooltip:ClearLines()
@@ -2508,12 +2507,12 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 			-- end
 			Name = CharInfo.PlayerData.Name
 			if CharInfo.PlayerData.GUID == E.curGUID then
-				curPers = "---->"
+				curPers = ">> "
 			end
 			if CharInfo.PlayerData.curServer ~= E.curServer then
 				curServer = "-"..CharInfo.PlayerData.curServer
 			end
-			sorted[#sorted+1] = {specIcon, curPers, colorPlayer, Name, colorServer, curServer, RIGHT, RIGHTforSORT}
+			sorted[#sorted+1] = {curPers, specIcon, colorPlayer, Name, colorServer, curServer, RIGHT, RIGHTforSORT}
 		end
 	end
 	----------------------------------------------------------------
@@ -2538,7 +2537,8 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 		end)
 		----------------------------------------------------------------
 		if typeQ == "Currency" then
-			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E:func_currencyName(ID), TOTAL..": "..total}
+			-- tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E:func_currencyName(ID), TOTAL..": "..total}
+			tooltip[#tooltip+1] = {" ", TOTAL..": "..total}
 			tooltip[#tooltip+1] = {" ", " "}
 		end
 		if typeQ == "Item" then
@@ -2561,8 +2561,7 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 		end
 		local hidden = #sorted - #tooltip
 		if hidden > 0 then
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {E.Red_Color.."+" .. hidden.."|r", " "}
+			tooltip[#tooltip+1] = {E.Yellow_Color.."...(+|r" ..E.Red_Color.. hidden.."|r"..E.Yellow_Color..")|r", " "}
 		end
 	end
 	----------------------------------------------------------------

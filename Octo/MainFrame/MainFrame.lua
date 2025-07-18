@@ -135,7 +135,7 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
 	frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- Текстура выделения
 	frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-	frameFULL.HighlightTexture:SetAlpha(.2) -- Прозрачность выделения
+	frameFULL.HighlightTexture:SetAlpha(E.bgCaOverlay) -- Прозрачность выделения
 	frameFULL:SetPoint("LEFT", frame)
 	frameFULL:SetPoint("TOP", frame)
 	frameFULL:SetPoint("BOTTOM", frame)
@@ -215,18 +215,18 @@ local func_OnAcquiredCENT do
 						f:SetPoint("TOPLEFT", frame, "TOPLEFT", AddonCentralFrameWeight*(key-1), 0)
 						f:RegisterForClicks("LeftButtonUp")
 
-						-- Текстура репутации
-						f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-						f.ReputTextureAndBG:SetPoint("LEFT")
-						f.ReputTextureAndBG:SetHeight(AddonHeight)
-						f.ReputTextureAndBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
-
 						-- Текстура для текущего персонажа
 						f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
 						f.curCharTextureBG:SetAllPoints()
 						f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
 						f.curCharTextureBG:SetVertexColor(r, g, b, E.bgCaOverlay)
 						f.curCharTextureBG:Hide()
+
+						-- Текстура репутации
+						f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
+						f.ReputTextureAndBG:SetPoint("LEFT")
+						f.ReputTextureAndBG:SetHeight(AddonHeight)
+						f.ReputTextureAndBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
 
 						-- Текст в центре
 						f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -283,7 +283,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	-- Устанавливаем цвет фона если задан
 	if frameData.colorLEFT then
 		local r, g, b = E:func_hex2rgbNUMBER(frameData.colorLEFT)
-		frame.textureLEFT:SetVertexColor(r, g, b, .1)
+		frame.textureLEFT:SetVertexColor(r, g, b, E.bgCaOverlay)
 		frame.textureLEFT:Show()
 	else
 		frame.textureLEFT:Hide()
@@ -544,9 +544,9 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 		self.text:SetJustifyH("CENTER")
 		self.text:SetTextColor(1, 1, 1, 1)
 
-		self.CharTexture = self:CreateTexture(nil, "BACKGROUND", nil, -3)
-		self.CharTexture:SetAllPoints()
-		self.CharTexture:SetTexture(E.TEXTURE_CENTRAL_PATH)
+		self.charTexture = self:CreateTexture(nil, "BACKGROUND", nil, -3)
+		self.charTexture:SetAllPoints()
+		self.charTexture:SetTexture(E.TEXTURE_CHAR_PATH)
 	end
 
 	frame.pool = CreateFramePool("FRAME", childCENT, nil, resetFunc, false, initFunc)
@@ -724,7 +724,8 @@ function E:func_CreateMyDataProvider()
 
 			-- Устанавливаем цвет фона в зависимости от фракции
 			local charR, charG, charB = E:func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
-			curCharFrame.CharTexture:SetColorTexture(charR, charG, charB, E.bgCaOverlay)
+			curCharFrame.charTexture:SetVertexColor(charR, charG, charB, E.bgCaOverlay)
+
 
 			-- Обработчики событий для фрейма персонажа
 			curCharFrame:SetScript("OnEnter", function(self)

@@ -15,7 +15,13 @@ E.PromiseQuest = {}
 E.ActiveHoliday = {}
 E.Holiday = {}
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
+
+
+E.TEXTURE_REPUTATION_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Naowh.tga"
+
+
 E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\LeftFrame.tga"
+E.TEXTURE_CHAR_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CharFrame.tga"
 E.TEXTURE_HIGHLIGHT_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
 E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
 E.TEXTURE_BLANK_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Blank.tga"
@@ -152,9 +158,8 @@ E.bgCr = .08 -- 14/255
 E.bgCg = .08 -- 14/255
 E.bgCb = .08 -- 14/255
 E.bgCa = .8
-E.bgCaOverlay = .1
+E.bgCaOverlay = .2
 E.slider_scale = .8
-E.BGALPHA = .3
 E.multiplier = 2 - E.slider_scale
 E.WorldofWarcraft_Color = "|cffD6AB7D" -- "|cff68CCEF"
 E.TheBurningCrusade_Color = "|cffE43E5A" -- "|cff4FFF79"
