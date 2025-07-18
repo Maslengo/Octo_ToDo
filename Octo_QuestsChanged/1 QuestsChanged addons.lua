@@ -48,7 +48,7 @@ function E:TriggerEvent(...)
 end
 E:RegisterCallback("ADDON_LOADED", function(self, event, name)
 		if name ~= GlobalAddonName then return end
-		Octo_QuestsChangedDB = setmetatable(Octo_QuestsChangedDB or {}, {
+		Octo_QuestsChanged_DB = setmetatable(Octo_QuestsChanged_DB or {}, {
 				__index = {
 					minimap = false,
 					announce = false,
@@ -56,12 +56,12 @@ E:RegisterCallback("ADDON_LOADED", function(self, event, name)
 					showInCompartment=true,
 				},
 		})
-		if not Octo_QuestsChangedDB.QC_Quests then
-			Octo_QuestsChangedDB.QC_Quests = {}
+		if not Octo_QuestsChanged_DB.QC_Quests then
+			Octo_QuestsChanged_DB.QC_Quests = {}
 		end
-		E.Octo_QuestsChangedDB = Octo_QuestsChangedDB
+		E.Octo_QuestsChanged_DB = Octo_QuestsChanged_DB
 		if icon then
-			icon:Register(GlobalAddonName, E.dataobject, Octo_QuestsChangedDB)
+			icon:Register(GlobalAddonName, E.dataobject, Octo_QuestsChanged_DB)
 		end
 		self:UnregisterCallback("ADDON_LOADED")
 		if IsLoggedIn() then self:PLAYER_LOGIN() else self:RegisterCallback("PLAYER_LOGIN") end
@@ -150,13 +150,13 @@ function E:CheckQuests()
 				specIcon = select(4, GetSpecializationInfo(GetSpecialization())),
 			}
 			table.insert(self.quests_completed, quest)
-			table.insert(self.Octo_QuestsChangedDB.QC_Quests, quest)
+			table.insert(self.Octo_QuestsChanged_DB.QC_Quests, quest)
 			session_quests[questid] = true
-			self:TriggerEvent(self.Event.OnQuestAdded, quest, #self.Octo_QuestsChangedDB.QC_Quests)
+			self:TriggerEvent(self.Event.OnQuestAdded, quest, #self.Octo_QuestsChanged_DB.QC_Quests)
 		end
 		quests[questid] = true
 	end
-	if Octo_QuestsChangedDB.removed then
+	if Octo_QuestsChanged_DB.removed then
 		for questid in pairs(quests) do
 			if not new_quests_byid[questid] and not SPAM_QUESTS[questid] then
 				quests[questid] = nil
@@ -167,16 +167,16 @@ end
 function E:RemoveQuest(index)
 	if index == 0 then
 		table.wipe(self.quests_completed)
-		table.wipe(self.Octo_QuestsChangedDB.QC_Quests)
+		table.wipe(self.Octo_QuestsChanged_DB.QC_Quests)
 		self:TriggerEvent(self.Event.OnAllQuestsRemoved)
 	else
 		local quest
 		if type(index) == "table" then
 			quest = index
-			index = tIndexOf(self.Octo_QuestsChangedDB.QC_Quests, quest)
+			index = tIndexOf(self.Octo_QuestsChanged_DB.QC_Quests, quest)
 			if not index then return end
 		else
-			quest = self.Octo_QuestsChangedDB.QC_Quests[index]
+			quest = self.Octo_QuestsChanged_DB.QC_Quests[index]
 		end
 		for i, q in ipairs(self.quests_completed) do
 			if q.id == quest.id then
@@ -184,7 +184,7 @@ function E:RemoveQuest(index)
 				break
 			end
 		end
-		tremove(self.Octo_QuestsChangedDB.QC_Quests, index)
+		tremove(self.Octo_QuestsChanged_DB.QC_Quests, index)
 		self:TriggerEvent(self.Event.OnQuestRemoved, quest, index)
 	end
 end
@@ -200,7 +200,7 @@ dataobject.OnClick = function(frame, button)
 		table.wipe(E.quests_completed)
 	else
 		if IsShiftKeyDown() then
-			local data = E.Octo_QuestsChangedDB.QC_Quests[#E.Octo_QuestsChangedDB.QC_Quests]
+			local data = E.Octo_QuestsChanged_DB.QC_Quests[#E.Octo_QuestsChanged_DB.QC_Quests]
 			StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d, label=\"\"},"):format(
 					E:func_GetCoord(data.x, data.y),
 					(data.id or "nil")
@@ -253,16 +253,16 @@ SlashCmdList[GlobalAddonName:upper()] = function(msg)
 		E:ToggleLog()
 	elseif msg == "icon" then
 		if not icon then return end
-		Octo_QuestsChangedDB.hide = not Octo_QuestsChangedDB.hide
-		if Octo_QuestsChangedDB.hide then
+		Octo_QuestsChanged_DB.hide = not Octo_QuestsChanged_DB.hide
+		if Octo_QuestsChanged_DB.hide then
 			icon:Hide(GlobalAddonName)
 		else
 			icon:Show(GlobalAddonName)
 		end
 	elseif msg == "removed" then
-		Octo_QuestsChangedDB.removed = not Octo_QuestsChangedDB.removed
+		Octo_QuestsChanged_DB.removed = not Octo_QuestsChanged_DB.removed
 	elseif msg == "announce" then
-		Octo_QuestsChangedDB.announce = not Octo_QuestsChangedDB.announce
+		Octo_QuestsChanged_DB.announce = not Octo_QuestsChanged_DB.announce
 	end
 end
 StaticPopupDialogs["QuestsChanged_CopyBox"] = {

@@ -560,7 +560,12 @@ local function func_OnEnterChars(frame)
 	local tooltip = frame.tooltip
 	if not tooltip or #tooltip == 0 then return end
 
-	GameTooltip:SetOwner(frame, "ANCHOR_RIGHT", 0, 0)
+
+-- tt:SetOwner(self, self.Button and 'ANCHOR_CURSOR' or 'ANCHOR_RIGHT') -- 11.0 fix this more
+
+
+	-- GameTooltip:SetOwner(frame, "ANCHOR_CURSOR_RIGHT", 30, 30)
+	GameTooltip:SetOwner(frame, "ANCHOR_RIGHT", 0, 1)
 
 	for _, value in ipairs(tooltip) do
 		GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)

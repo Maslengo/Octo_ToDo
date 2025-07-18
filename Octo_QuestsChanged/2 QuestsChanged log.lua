@@ -168,7 +168,7 @@ function E:BuildQuestLog()
 		end
 		-- It's an append table, but I want this to be newest-first
 		-- (And the indexrange dataprovider doesn't have a sort comparator)
-		local quest = self.Octo_QuestsChangedDB.QC_Quests[#self.Octo_QuestsChangedDB.QC_Quests - (index - 1)]
+		local quest = self.Octo_QuestsChanged_DB.QC_Quests[#self.Octo_QuestsChanged_DB.QC_Quests - (index - 1)]
 		line.data = quest
 		local mapID, level
 		if type(quest.mapID) == 'string' then
@@ -192,12 +192,12 @@ function E:BuildQuestLog()
 		end
 	end
 	-- This is a vast table (my main has 18,586 entries in it), so use the IndexRange provider
-	local dataProvider = CreateIndexRangeDataProvider(#self.Octo_QuestsChangedDB.QC_Quests)
+	local dataProvider = CreateIndexRangeDataProvider(#self.Octo_QuestsChanged_DB.QC_Quests)
 	self:RegisterCallback(self.Event.OnQuestAdded, function(_, quest, index)
-			dataProvider:SetSize(#self.Octo_QuestsChangedDB.QC_Quests)
+			dataProvider:SetSize(#self.Octo_QuestsChanged_DB.QC_Quests)
 	end)
 	self:RegisterCallback(self.Event.OnQuestRemoved, function(_, quest, index)
-			dataProvider:SetSize(#self.Octo_QuestsChangedDB.QC_Quests)
+			dataProvider:SetSize(#self.Octo_QuestsChanged_DB.QC_Quests)
 	end)
 	self:RegisterCallback(self.Event.OnAllQuestsRemoved, function()
 			dataProvider:Flush()

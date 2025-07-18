@@ -21,10 +21,7 @@ E.TEXTURE_HIGHLIGHT_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUT
 E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
 E.TEXTURE_BLANK_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Blank.tga"
 E.HighlightTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
-E.Enable_Achievements = true
-E.Enable_AddonsManager = false
-E.Enable_Minecraft = false
-E.Enable_Moduls = true
+
 E.curFaction = UnitFactionGroup("PLAYER")
 E.oppositeFaction = E.curFaction == "Alliance" and "Horde" or "Alliance"
 E.Icon_Alliance = 255140-- E:func_texturefromIcon(255140) -- 132486
@@ -72,8 +69,6 @@ E.Horde_Color = "|cffC41E3A"
 -- E.Horde_Color = "|cfff01e38" -- было
 E.Alliance_Color = "|cff0070DD"
 E.ddMenuButtonHeight = 16
--- E.Modules = {}
--- E.spacer = ""
 -------------------------------------------------------------------------
 E.FULL_WIDTH = 3.60
 E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\03_Borders\\Octo.tga"

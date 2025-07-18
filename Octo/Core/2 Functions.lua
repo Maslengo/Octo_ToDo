@@ -1766,7 +1766,7 @@ local AddonManager = CreateFrame("Frame")
 local profiles = {}
 local currentProfile = "default"
 function E:func_GetAddonIndex(name)
-	local index = Octo_AddonsTable.indexByName[name]
+	local index = Octo_AddonsTable_DB.indexByName[name]
 	return tonumber(index)
 end
 function E:func_GetAddonName(index)
@@ -2008,8 +2008,8 @@ function E:func_rec_toggle(index, state)
 	else
 		E:func_EnableAddOn(index)
 	end
-	if Octo_AddonsTable.depsByIndex[index] and not IsModifierKeyDown() and not Octo_AddonsTable.recycleByIndex[index] then
-		for i, depIndex in ipairs(Octo_AddonsTable.depsByIndex[index]) do
+	if Octo_AddonsTable_DB.depsByIndex[index] and not IsModifierKeyDown() and not Octo_AddonsTable_DB.recycleByIndex[index] then
+		for i, depIndex in ipairs(Octo_AddonsTable_DB.depsByIndex[index]) do
 			E:func_rec_toggle(depIndex, state)
 		end
 	end
@@ -2032,8 +2032,8 @@ function E:func_LockAddon(index)
 end
 function E:func_rec_lock(index)
 	E:func_LockAddon(index)
-	if Octo_AddonsTable.depsByIndex[index] and not IsModifierKeyDown() then
-		for i, depIndex in ipairs(Octo_AddonsTable.depsByIndex[index]) do
+	if Octo_AddonsTable_DB.depsByIndex[index] and not IsModifierKeyDown() then
+		for i, depIndex in ipairs(Octo_AddonsTable_DB.depsByIndex[index]) do
 			E:func_rec_lock(depIndex)
 		end
 	end

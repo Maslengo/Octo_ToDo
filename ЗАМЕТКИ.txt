@@ -43,7 +43,8 @@ NEW_CAPS - НОВОЕ
 
 при кнопки отмены квестов не считается кол-во(либо не отрисовывается)
 
-
+UIParent:GetEffectiveScale()
+GetCursorPosition()
 
 
 

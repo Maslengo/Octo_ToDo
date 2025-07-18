@@ -1,0 +1,8 @@
+## Interface: 110200, 110107
+## Title: !|cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r LoadAddons
+## Author: Octo
+## Version: v1.00(11.1.7)(18.07.2025)
+## IconTexture: Interface\AddOns\Octo\Media\IconTexture\LoadAddons
+## Dependencies: Octo
+
+Octo_LoadAddons.lua

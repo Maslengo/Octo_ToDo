@@ -1,9 +1,10 @@
-local GlobalAddonName, E = ...
-if not E.Enable_Moduls then return end
+local GlobalAddonName, ns = ...
+E = _G.OctoEngine
 
 
 
-function E.LoadCVars()
+
+function E:func_LoadCVars()
 	-- Grouped CVars by functionality
 	local cvars = {
 		-- Performance and UI

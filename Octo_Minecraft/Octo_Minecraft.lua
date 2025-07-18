@@ -1,5 +1,5 @@
-local GlobalAddonName, E = ...
-if not E.Enable_Minecraft then return end
+local GlobalAddonName, ns = ...
+E = _G.OctoEngine
 
 local Octo_MinecraftFrameFG, frameLEFT, frameRIGHT
 local Octo_EventFrame_Minecraft = CreateFrame("Frame")
@@ -96,7 +96,7 @@ local function ColorSwatch_OnClick(color, updateFunc)
 end
 
 function Octo_EventFrame_Minecraft:CreateOcto_MinecraftFrameFG()
-	local colorFG, colorBG = Octo_ToDo_DB_Minecraft.ColorFG, Octo_ToDo_DB_Minecraft.ColorBG
+	local colorFG, colorBG = Octo_Minecraft_DB.ColorFG, Octo_Minecraft_DB.ColorBG
 
 	-- Main Frame
 	Octo_MinecraftFrameFG = CreateFrameWithTexture("Octo_MinecraftFrameFG", UIParent, SIZE, "HIGH", TEXTURE_PATH_FG, colorFG, {"TOPLEFT", 300, -100})
@@ -161,6 +161,6 @@ function Octo_EventFrame_Minecraft:ADDON_LOADED(addonName)
 		end
 
 		self:CreateOcto_MinecraftFrameFG()
-		E:func_CreateMinimapButton(GlobalAddonName, "Minecraft", Octo_ToDo_DB_Minecraft, Octo_MinecraftFrameFG, nil, "Octo_MinecraftFrameFG")
+		E:func_CreateMinimapButton(GlobalAddonName, "Minecraft", Octo_Minecraft_DB, Octo_MinecraftFrameFG, nil, "Octo_MinecraftFrameFG")
 	end
 end

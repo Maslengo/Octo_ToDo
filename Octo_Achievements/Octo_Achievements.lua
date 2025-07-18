@@ -1,6 +1,5 @@
 local GlobalAddonName, ns = ...
-E = _G.Octo
-if not E.Enable_Achievements then return end
+E = _G.OctoEngine
 
 local Octo_EventFrame_Achievements = CreateFrame("FRAME")
 Octo_EventFrame_Achievements:Hide()
@@ -25,20 +24,9 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
--- LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
--- 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
--- 		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
--- 		f:SetPoint("TOPLEFT", 8, -2)
--- 		f:SetPoint("BOTTOMRIGHT", -8, 2)
--- 		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
--- 		f:SetBackdropBorderColor(0, 0, 0, 1)
--- 		return f
--- end)
-----------------------------------------------------------------
 local table_insert = table.insert
 local table_concat = table.concat
 local CreateFrame = CreateFrame
-local r, g, b = GetClassColor(E.classFilename)
 local GetAchievementInfo = GetAchievementInfo
 local GetCategoryNumAchievements = GetCategoryNumAchievements
 local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo

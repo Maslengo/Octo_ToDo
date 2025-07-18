@@ -164,13 +164,13 @@ function Octo_EventFrame_WTF:DatabaseClear()
 
 		-- Очищаем другие таблицы БД от нулевых и ложных значений
 		-- replaceZeroWithNil(Octo_ToDo_DB_Other, {false, 0})
-		-- replaceZeroWithNil(Octo_ToDo_DB_Minecraft, {false, 0})
+		-- replaceZeroWithNil(Octo_Minecraft_DB, {false, 0})
 		-- replaceZeroWithNil(Octo_Achievements_DB, {false, 0})
-		-- replaceZeroWithNil(Octo_AddonsTable, {false, 0})
+		-- replaceZeroWithNil(Octo_AddonsTable_DB, {false, 0})
 		-- replaceZeroWithNil(Octo_AddonsManager_DB, {false, 0})
-		-- replaceZeroWithNil(Octo_DEBUG, {false, 0})
+		-- replaceZeroWithNil(Octo_Debug_DB, {false, 0})
 		-- replaceZeroWithNil(Octo_ToDo_DB_Vars, {false, 0})
-		-- replaceZeroWithNil(Octo_QuestsChangedDB, {false, 0})
+		-- replaceZeroWithNil(Octo_QuestsChanged_DB, {false, 0})
 		-- replaceZeroWithNil(Octo_Cache_DB, {false, 0})
 	end
 end
@@ -293,130 +293,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			MASLENGO.LFGInstance[dungeonID].donetoday = MASLENGO.LFGInstance[dungeonID].donetoday or nil
 		end
 
-		-- Очищаем устаревшие данные журнала инстансов
-		for instanceID, tbl in next, (MASLENGO.journalInstance) do
-			if instanceID then
-				for difficultyID, w in next, (tbl) do
-					if w.instanceReset and ServerTime >= w.instanceReset then
-						MASLENGO.journalInstance[instanceID] = {}
-					end
-				end
-			end
-		end
-
-		-- Переносим и очищаем данные из старых таблиц
-		local tablesToProcess = {
-			ItemsInBag = {cleanZeros = true},
-			LFGInstance = {cleanZeros = false},
-			GreatVault = {cleanZeros = false},
-			PVP = {cleanZeros = false},
-			journalInstance = {cleanZeros = false},
-			Currency = {cleanZeros = true},
-			CurrencyID = {cleanZeros = true}, -- Устаревшая
-			CurrencyID_Total = {cleanZeros = true, cleanNumber = true}, -- Устаревшая
-			CurrencyID_totalEarned = {cleanZeros = true}, -- Устаревшая
-			professions = {cleanZeros = false},
-			OctoTable_QuestID = {cleanZeros = false},
-		}
-
-		-- Обрабатываем каждую таблицу согласно настройкам
-		for tableName, options in next, (tablesToProcess) do
-			local sourceTable = CharInfo[tableName]
-			if sourceTable then
-				-- Переносим таблицу
-				MASLENGO[tableName] = sourceTable
-				CharInfo[tableName] = nil
-
-				-- Очищаем нулевые значения, если требуется
-				if options.cleanZeros and type(sourceTable) == "table" then
-					for k, v in next, (sourceTable) do
-						if type(v) == "number" and v == 0 then
-							sourceTable[k] = nil
-						end
-					end
-				elseif options.cleanNumber and type(sourceTable) == "table" then
-					for k, v in next, (sourceTable) do
-						if type(v) == "number" then
-							print(tableName, k, v)
-							sourceTable[k] = nil
-						end
-					end
-				end
-			end
-		end
-
-		-- Обрабатываем данные репутации
-		if CharInfo.reputationID then
-			for k, v in pairs(CharInfo.reputationID) do
-				if v and v ~= "" and v ~= 0 then
-					if v == "|cff4FFF79Done|r" then
-						CharInfo.MASLENGO.Reputation[k] = "1#1#"..E.DONE.."#"..E.Green_Color.."#"
-					else
-						local color = v:match("c%x%x%x%x%x%x%x%x")
-						local vivod, FIRST, SECOND, standingTEXT = v:gsub("|c%x%x%x%x%x%x%x%x", ""):match("((%d+)/(%d+)) ?%(?(.*)%)?")
-						CharInfo.MASLENGO.Reputation[k] = FIRST.."#"..SECOND.."#"..vivod.."#"..color.."#"..standingTEXT
-					end
-				end
-			end
-			CharInfo.reputationID = nil
-		end
-
-		-- Обрабатываем полные данные репутации
-		if CharInfo.MASLENGO.reputationFULL and CharInfo.MASLENGO.Reputation then
-			for k, v in pairs(CharInfo.MASLENGO.reputationFULL) do
-				local FIRST = v.FIRST or 0
-				local SECOND = v.SECOND or 0
-				local vivod = v.vivod or "-QWEQWEQWE"
-				local color = v.color or "|cffFF0000"
-				local standingTEXT = v.standingTEXT or ""
-				CharInfo.MASLENGO.Reputation[k] = FIRST.."#"..SECOND.."#"..vivod.."#"..color.."#"..standingTEXT
-			end
-			CharInfo.MASLENGO.reputationFULL = nil
-		end
-
-		-- Удаляем старые записи квестов
-		for k, v in next, (CharInfo) do
-			if type(v) ~= "table" then
-				if k and k:find("Octopussy_", 1, true) then
-					CharInfo[k] = nil
-				end
-			end
-		end
-
-		-- Удаляем устаревшие таблицы
-		local tablesToDelete = {
-			"bounty_BfA2_questID", "bounty_BfA1_end", "bounty_BfA3_icon",
-			"bounty_Legion2_icon", "bounty_Legion1_end", "bounty_BfA3_questID",
-			"bounty_BfA2_end", "bounty_BfA1_questID", "bounty_BfA3_end",
-			"bounty_BfA2_icon", "bounty_Legion3", "bounty_Legion1",
-			"bounty_Legion3_icon", "bounty_Legion2", "bounty_Legion1_icon",
-			"bounty_BfA2", "bounty_Legion1_questID", "bounty_Legion3_questID",
-			"bounty_Legion2_end", "bounty_BfA1_icon", "bounty_BfA3",
-			"bounty_BfA1", "bounty_Legion3_end", "bounty_Legion2_questID",
-			"CurrencyID_trackedQuantity", "STARTWEEK", "DreamsurgeInvestigation",
-		}
-
-		for _, key in ipairs(tablesToDelete) do
-			if CharInfo[key] ~= nil then
-				CharInfo[key] = nil
-			end
-		end
-
-		-- Переносим данные ковенантов
-		if CharInfo.curCovID and CharInfo.MASLENGO.CovenantAndAnima and
-		CharInfo.MASLENGO.CovenantAndAnima.curCovID ~= CharInfo.curCovID then
-			CharInfo.MASLENGO.CovenantAndAnima.curCovID = CharInfo.curCovID
-			CharInfo.curCovID = nil
-		end
-
-		-- Переносим Shadowland данных
-		if CharInfo.Shadowland then
-			CharInfo.MASLENGO.CovenantAndAnima[1] = {CharInfo.Shadowland[1], CharInfo.Shadowland[2]}
-			CharInfo.MASLENGO.CovenantAndAnima[2] = {CharInfo.Shadowland[3], CharInfo.Shadowland[4]}
-			CharInfo.MASLENGO.CovenantAndAnima[3] = {CharInfo.Shadowland[5], CharInfo.Shadowland[6]}
-			CharInfo.MASLENGO.CovenantAndAnima[4] = {CharInfo.Shadowland[7], CharInfo.Shadowland[8]}
-			CharInfo.Shadowland = nil
-		end
 	end
 end
 
@@ -465,12 +341,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 
 	-- Настройки функций аддона
 	local featureDefaults = {
-		Enable_ToDo = true, -- Включить ToDo
-		Enable_Moduls = true, -- Включить модули
-		Enable_Achievements = false, -- Включить достижения
-		Enable_AddonsManager = false, -- Включить менеджер аддонов
-		Enable_QuestsChanged = false, -- Включить отслеживание квестов
-		Enable_Minecraft = false, -- Включить Minecraft функции
 		Auto_SellGrey = false, -- Автопродажа серых предметов
 		Auto_Repair = false, -- Авторемонт
 		Auto_InputDelete = false, -- Автоочистка ввода
@@ -618,22 +488,22 @@ end
 Инициализирует таблицу Minecraft данных
 Содержит настройки цветов для Minecraft-стиля
 ]]
-function Octo_EventFrame_WTF:Octo_ToDo_DB_Minecraft()
-	Octo_ToDo_DB_Minecraft = E:func_InitTable(Octo_ToDo_DB_Minecraft)
+function Octo_EventFrame_WTF:Octo_Minecraft_DB()
+	Octo_Minecraft_DB = E:func_InitTable(Octo_Minecraft_DB)
 
 	-- Настройки цвета переднего плана
-	E:func_InitSubTable(Octo_ToDo_DB_Minecraft, "ColorFG")
-	E:func_InitField(Octo_ToDo_DB_Minecraft.ColorFG, "r", 1) -- Красный
-	E:func_InitField(Octo_ToDo_DB_Minecraft.ColorFG, "g", 1) -- Зеленый
-	E:func_InitField(Octo_ToDo_DB_Minecraft.ColorFG, "b", 1) -- Синий
-	E:func_InitField(Octo_ToDo_DB_Minecraft.ColorFG, "a", 1) -- Альфа
+	E:func_InitSubTable(Octo_Minecraft_DB, "ColorFG")
+	E:func_InitField(Octo_Minecraft_DB.ColorFG, "r", 1) -- Красный
+	E:func_InitField(Octo_Minecraft_DB.ColorFG, "g", 1) -- Зеленый
+	E:func_InitField(Octo_Minecraft_DB.ColorFG, "b", 1) -- Синий
+	E:func_InitField(Octo_Minecraft_DB.ColorFG, "a", 1) -- Альфа
 
 	-- Настройки цвета фона
-	E:func_InitSubTable(Octo_ToDo_DB_Minecraft, "ColorBG")
-	E:func_InitField(Octo_ToDo_DB_Minecraft.ColorBG, "r", 1) -- Красный
-	E:func_InitField(Octo_ToDo_DB_Minecraft.ColorBG, "g", 1) -- Зеленый
-	E:func_InitField(Octo_ToDo_DB_Minecraft.ColorBG, "b", 1) -- Синий
-	E:func_InitField(Octo_ToDo_DB_Minecraft.ColorBG, "a", 1) -- Альфа
+	E:func_InitSubTable(Octo_Minecraft_DB, "ColorBG")
+	E:func_InitField(Octo_Minecraft_DB.ColorBG, "r", 1) -- Красный
+	E:func_InitField(Octo_Minecraft_DB.ColorBG, "g", 1) -- Зеленый
+	E:func_InitField(Octo_Minecraft_DB.ColorBG, "b", 1) -- Синий
+	E:func_InitField(Octo_Minecraft_DB.ColorBG, "a", 1) -- Альфа
 end
 
 --[[
@@ -652,8 +522,8 @@ end
 Инициализирует таблицу аддонов
 Пустая таблица для хранения информации о аддонах
 ]]
-function Octo_EventFrame_WTF:Octo_AddonsTable()
-	Octo_AddonsTable = E:func_InitTable(Octo_AddonsTable)
+function Octo_EventFrame_WTF:Octo_AddonsTable_DB()
+	Octo_AddonsTable_DB = E:func_InitTable(Octo_AddonsTable_DB)
 end
 
 --[[
@@ -714,8 +584,8 @@ end
 Инициализирует таблицу отладки
 Пустая таблица для хранения отладочной информации
 ]]
-function Octo_EventFrame_WTF:Octo_DEBUG()
-	Octo_DEBUG = E:func_InitTable(Octo_DEBUG)
+function Octo_EventFrame_WTF:Octo_Debug_DB()
+	Octo_Debug_DB = E:func_InitTable(Octo_Debug_DB)
 end
 
 --[[
@@ -783,12 +653,12 @@ end
 Инициализирует таблицу измененных квестов
 Содержит данные о изменениях в квестах
 ]]
-function Octo_EventFrame_WTF:Octo_QuestsChangedDB()
-	Octo_QuestsChangedDB = E:func_InitTable(Octo_QuestsChangedDB)
+function Octo_EventFrame_WTF:Octo_QuestsChanged_DB()
+	Octo_QuestsChanged_DB = E:func_InitTable(Octo_QuestsChanged_DB)
 
 	-- Инициализация подтаблиц
-	E:func_InitSubTable(Octo_QuestsChangedDB, "QC_Quests")
-	E:func_InitSubTable(Octo_QuestsChangedDB, "QC_Vignettes")
+	E:func_InitSubTable(Octo_QuestsChanged_DB, "QC_Quests")
+	E:func_InitSubTable(Octo_QuestsChanged_DB, "QC_Vignettes")
 end
 
 --[[
@@ -924,12 +794,12 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:Octo_ToDo_DB_Levels() -- Данные персонажей
 		self:Octo_ToDo_DB_Vars() -- Настройки
 		self:Octo_ToDo_DB_Other() -- Другие данные
-		self:Octo_ToDo_DB_Minecraft() -- Minecraft стиль
+		self:Octo_Minecraft_DB() -- Minecraft стиль
 		self:Octo_Achievements_DB() -- Достижения
-		self:Octo_AddonsTable() -- Таблица аддонов
+		self:Octo_AddonsTable_DB() -- Таблица аддонов
 		self:Octo_AddonsManager_DB() -- Менеджер аддонов
-		self:Octo_DEBUG() -- Отладка
-		self:Octo_QuestsChangedDB() -- Изменения квестов
+		self:Octo_Debug_DB() -- Отладка
+		self:Octo_QuestsChanged_DB() -- Изменения квестов
 
 		-- Очистка и сброс данных
 		self:DatabaseClear()

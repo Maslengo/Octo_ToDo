@@ -359,13 +359,13 @@ function E:QuestsChanged_CreateMyDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	E.DataProvider_QuestsChanged = DataProvider
 	local times = {}
-	-- Octo_QuestsChangedDB = Octo_QuestsChangedDB or {}
-	-- Octo_QuestsChangedDB.QC_Quests = Octo_QuestsChangedDB.QC_Quests or {}
-	-- Octo_QuestsChangedDB.QC_Vignettes = Octo_QuestsChangedDB.QC_Vignettes or {}
+	-- Octo_QuestsChanged_DB = Octo_QuestsChanged_DB or {}
+	-- Octo_QuestsChanged_DB.QC_Quests = Octo_QuestsChanged_DB.QC_Quests or {}
+	-- Octo_QuestsChanged_DB.QC_Vignettes = Octo_QuestsChanged_DB.QC_Vignettes or {}
 
 
 	if Octo_ToDo_DB_Vars.QC_Quests then
-		for k, v in next, (Octo_QuestsChangedDB.QC_Quests) do
+		for k, v in next, (Octo_QuestsChanged_DB.QC_Quests) do
 			if v.time then tinsert(times, v.time) end
 			count = count + 1
 			local zxc = {
@@ -386,7 +386,7 @@ function E:QuestsChanged_CreateMyDataProvider()
 	end
 
 	if Octo_ToDo_DB_Vars.QC_Vignettes then
-		for k, v in next, (Octo_QuestsChangedDB.QC_Vignettes) do
+		for k, v in next, (Octo_QuestsChanged_DB.QC_Vignettes) do
 			if v.time then tinsert(times, v.time) end
 			count = count + 1
 			local zxc = {
@@ -467,7 +467,7 @@ function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
 		E:QuestsChanged_CreateMyDataProvider()
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(Octo_MainFrame_QuestsChanged, "QuestsChanged", AddonHeight, 0)
-		E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChangedDB, Octo_MainFrame_QuestsChanged, function() E:QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
+		E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChanged_DB, Octo_MainFrame_QuestsChanged, function() E:QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
 		-- Octo_MainFrame_QuestsChanged:SetScript("OnShow", function()
 		-- C_Timer.After(.1, function()
 		-- E:QuestsChanged_CreateMyDataProvider()

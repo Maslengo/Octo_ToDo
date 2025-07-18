@@ -52,12 +52,12 @@ function E.Debug()
 					Octo_ToDo_DB_Levels = {}
 					Octo_ToDo_DB_Vars = {}
 					Octo_ToDo_DB_Other = {}
-					Octo_ToDo_DB_Minecraft = {}
+					Octo_Minecraft_DB = {}
 					Octo_Achievements_DB = {}
-					Octo_AddonsTable = {}
+					Octo_AddonsTable_DB = {}
 					Octo_AddonsManager_DB = {}
-					Octo_DEBUG = {}
-					Octo_QuestsChangedDB = {}
+					Octo_Debug_DB = {}
+					Octo_QuestsChanged_DB = {}
 					Octo_Cache_DB = {}
 					return ReloadUI()
 				end,
@@ -505,10 +505,10 @@ function E.Debug()
 	add_args(Octo_ToDo_DB_Vars, "Octo_ToDo_DB_Vars")
 	add_args(Octo_ToDo_DB_Other, "Octo_ToDo_DB_Other")
 	add_args(Octo_Achievements_DB, "Octo_Achievements_DB")
-	add_args(Octo_AddonsTable, "Octo_AddonsTable")
+	add_args(Octo_AddonsTable_DB, "Octo_AddonsTable_DB")
 	add_args(Octo_AddonsManager_DB, "Octo_AddonsManager_DB")
-	add_args(Octo_DEBUG, "Octo_DEBUG")
-	add_args(Octo_QuestsChangedDB, "Octo_QuestsChangedDB")
+	add_args(Octo_Debug_DB, "Octo_Debug_DB")
+	add_args(Octo_QuestsChanged_DB, "Octo_QuestsChanged_DB")
 	add_args(Octo_Cache_DB, "Octo_Cache_DB")
 	return Debug
 end

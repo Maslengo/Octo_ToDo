@@ -1,6 +1,5 @@
 local GlobalAddonName, ns = ...
-E = _G.Octo
-if not E.Enable_AddonsManager then return end
+E = _G.OctoEngine
 
 local Octo_EventFrame_AddonsManager = CreateFrame("FRAME")
 Octo_EventFrame_AddonsManager:Hide()
@@ -46,11 +45,11 @@ local function GetAddonCharacter()
 	return addonCharacter
 end
 ----------------------------------------------------------------
-function E.AddDeps_RECURSION(i, groupNode)
-	for _, depIndex in ipairs(Octo_AddonsTable.depsByIndex[i]) do
+function Octo_EventFrame_AddonsManager:AddDeps_RECURSION(i, groupNode)
+	for _, depIndex in ipairs(Octo_AddonsTable_DB.depsByIndex[i]) do
 		local secondABOBUS = groupNode:Insert({index = depIndex})
-		if Octo_AddonsTable.depsByIndex[depIndex] and not Octo_AddonsTable.recycleByIndex[depIndex] then
-			E.AddDeps_RECURSION(depIndex, secondABOBUS)
+		if Octo_AddonsTable_DB.depsByIndex[depIndex] and not Octo_AddonsTable_DB.recycleByIndex[depIndex] then
+			Octo_EventFrame_AddonsManager:AddDeps_RECURSION(depIndex, secondABOBUS)
 		end
 	end
 end
@@ -104,7 +103,7 @@ function Octo_EventFrame_AddonsManager:createDDMenu()
 				info.func = function()
 					-- E:func_LockAddon(index)
 					E:func_lockAddonNEW(index)
-					E.AddonList_Update()
+					Octo_EventFrame_AddonsManager:AddonList_Update()
 				end
 				self:ddAddButton(info, level)
 				-- elseif value == ADD then
@@ -150,7 +149,7 @@ local function OnClick_third(frame, button)
 		DDFrame:ddToggle(level, value, "cursor")
 	end
 	Octo_EventFrame_AddonsManager:Octo_Frame_init(parent, node)
-	E.AddonList_Update()
+	Octo_EventFrame_AddonsManager:AddonList_Update()
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -354,9 +353,9 @@ function Octo_EventFrame_AddonsManager:CollectAddonInfo(index)
 			-- end
 			-- tooltipthird[#tooltipthird+1] = {" ", " "}
 			-- tooltipthird[#tooltipthird+1] = {E:func_AddonTooltipBuildDepsString(index, Parent_Color)}
-			-- if Octo_AddonsTable.depsByIndex[index] then
+			-- if Octo_AddonsTable_DB.depsByIndex[index] then
 			-- tooltipthird[#tooltipthird+1] = {"Дочернии аддоны"}
-			-- for _, depIndex in pairs(Octo_AddonsTable.depsByIndex[index]) do
+			-- for _, depIndex in pairs(Octo_AddonsTable_DB.depsByIndex[index]) do
 			-- tooltipthird[#tooltipthird+1] = {""..Child_Color..E:func_GetAddonName(depIndex).."|r"}
 			-- end
 			-- end
@@ -430,7 +429,7 @@ function Octo_EventFrame_AddonsManager:Octo_Frame_init(frame, node)
 	frame.icon_secondSlot:SetTexture(firsticonTexture)
 	if showExpandOrCollapseButton then
 		local tbl = {}
-		tbl = Octo_AddonsTable.depsByIndex
+		tbl = Octo_AddonsTable_DB.depsByIndex
 		if tbl[data.index] then
 			UpdateExpandOrCollapseButtonState(frame.icon_firstSlot, node:IsCollapsed(), node, name)
 		else
@@ -492,7 +491,7 @@ function Octo_EventFrame_AddonsManager:Octo_Create_MainFrame_AddonsManager()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_AddonsManager.ScrollBox, Octo_MainFrame_AddonsManager.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	----------------------------------------------------------------
 end
-function E.AddonList_Update()
+function Octo_EventFrame_AddonsManager:AddonList_Update()
 	if ( E:func_AddonList_HasAnyChanged() ) then
 		frame_OkayButton.text:SetText(RELOADUI)
 		Octo_EventFrame_AddonsManager.shouldReload = true
@@ -502,20 +501,20 @@ function E.AddonList_Update()
 	end
 	Octo_MainFrame_AddonsManager.view:SetDataProvider(E.DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
-function E.CreateMyDataProvider()
+function Octo_EventFrame_AddonsManager:CreateDataProvider_AddonsManage()
 	E:func_UpdatePerformance()
 	local DataProvider = CreateTreeDataProvider()
 	E.DataProvider = DataProvider
 	for index = 1, E:func_GetNumAddOns() do
-		if not Octo_AddonsTable.parentByIndex[index] or Octo_AddonsTable.recycleByIndex[index] then
+		if not Octo_AddonsTable_DB.parentByIndex[index] or Octo_AddonsTable_DB.recycleByIndex[index] then
 			local groupNode = DataProvider:Insert({index = index})
 			-- childrenNodes[#childrenNodes]:SetCollapsed(true) -- БРАТЬ ПОСЛЕДНЮЮ НОДУ И КОЛЛАПСИТЬ (ВЕСЬ СПИСОК ПРИ ЗАГРУЗКЕ)
-			if Octo_AddonsTable.depsByIndex[index] then
-				E.AddDeps_RECURSION(index, groupNode)
+			if Octo_AddonsTable_DB.depsByIndex[index] then
+				Octo_EventFrame_AddonsManager:AddDeps_RECURSION(index, groupNode)
 			end
 		end
 	end
-	E.AddonList_Update()
+	Octo_EventFrame_AddonsManager:AddonList_Update()
 end
 function Octo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	----------------------------------------------------------------
@@ -534,7 +533,7 @@ function Octo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	frame_EnableAll:RegisterForClicks("LeftButtonUp")
 	frame_EnableAll:SetScript("OnClick", function(self)
 			E:func_EnableAllAddOns()
-			E.AddonList_Update()
+			Octo_EventFrame_AddonsManager:AddonList_Update()
 	end)
 	----------------------------------------------------------------
 	local frame_DisableAll = CreateFrame("Button", "frame_DisableAll", Octo_MainFrame_AddonsManager)
@@ -552,7 +551,7 @@ function Octo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 	frame_DisableAll:RegisterForClicks("LeftButtonUp")
 	frame_DisableAll:SetScript("OnClick", function(self)
 			E:func_DisableAllAddons()
-			E.AddonList_Update()
+			Octo_EventFrame_AddonsManager:AddonList_Update()
 	end)
 	frame_DisableAll:SetScript("OnEnter", function(self)
 			local DisableAllTooltip = {}
@@ -659,7 +658,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 				info.checked = Octo_AddonsManager_DB.config.fullName
 				info.func = function(_, _, _, checked)
 					Octo_AddonsManager_DB.config.fullName = checked
-					E.AddonList_Update()
+					Octo_EventFrame_AddonsManager:AddonList_Update()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
@@ -673,7 +672,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 				info.checked = Octo_AddonsManager_DB.config.showIcons
 				info.func = function(_, _, _, checked)
 					Octo_AddonsManager_DB.config.showIcons = checked
-					E.AddonList_Update()
+					Octo_EventFrame_AddonsManager:AddonList_Update()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
@@ -686,7 +685,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 				info.checked = Octo_AddonsManager_DB.config.showVersion
 				info.func = function(_, _, _, checked)
 					Octo_AddonsManager_DB.config.showVersion = checked
-					E.AddonList_Update()
+					Octo_EventFrame_AddonsManager:AddonList_Update()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
@@ -699,7 +698,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 				info.checked = Octo_AddonsManager_DB.config.showIndex
 				info.func = function(_, _, _, checked)
 					Octo_AddonsManager_DB.config.showIndex = checked
-					E.AddonList_Update()
+					Octo_EventFrame_AddonsManager:AddonList_Update()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
@@ -712,7 +711,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 				info.checked = not E:func_IsAddonVersionCheckEnabled()
 				info.func = function(_, _, _, checked)
 					E.compat.SetAddonVersionCheck(not checked)
-					E.AddonList_Update()
+					Octo_EventFrame_AddonsManager:AddonList_Update()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
@@ -746,7 +745,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
 					E:func_EnableAllAddOns()
-					E.AddonList_Update()
+					Octo_EventFrame_AddonsManager:AddonList_Update()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
@@ -758,7 +757,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 				info.hasArrow = nil
 				info.func = function(_, _, _, checked)
 					E:func_DisableAllAddons()
-					E.AddonList_Update()
+					Octo_EventFrame_AddonsManager:AddonList_Update()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
@@ -828,7 +827,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 				info.checked = Octo_AddonsManager_DB.config.showIconsQuestionMark
 				info.func = function(_, _, _, checked)
 					Octo_AddonsManager_DB.config.showIconsQuestionMark = checked
-					E.AddonList_Update()
+					Octo_EventFrame_AddonsManager:AddonList_Update()
 				end
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
@@ -864,7 +863,7 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 					info.hasArrow = true
 					info.func = function()
 						E:func_LoadProfile(profileName)
-						E.AddonList_Update()
+						Octo_EventFrame_AddonsManager:AddonList_Update()
 					end
 					self:ddAddButton(info, level)
 				end
@@ -908,9 +907,9 @@ function Octo_EventFrame_AddonsManager:func_Create_DDframe_AddonsManager()
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E:GetCycleByIndexSFMICT(iChild, iParent)
-	if Octo_AddonsTable.depsByIndex[iChild] then
-		for _, depIndex in ipairs(Octo_AddonsTable.depsByIndex[iChild]) do
+function Octo_EventFrame_AddonsManager:GetCycleByIndexSFMICT(iChild, iParent)
+	if Octo_AddonsTable_DB.depsByIndex[iChild] then
+		for _, depIndex in ipairs(Octo_AddonsTable_DB.depsByIndex[iChild]) do
 			if depIndex == iParent then
 				DEFAULT_CHAT_FRAME:AddMessage(E.Red_Color.."НАЙДЕН АБОБУС: |r".. iChild .." "..E:func_GetAddonName(iChild).." / "..iParent.." "..E:func_GetAddonName(iParent))
 				return true
@@ -920,25 +919,25 @@ function E:GetCycleByIndexSFMICT(iChild, iParent)
 end
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
 function Octo_EventFrame_AddonsManager:CollectAllAddonsSFMICT()
-	Octo_AddonsTable = {}
-	Octo_AddonsTable.indexByName = {}
+	Octo_AddonsTable_DB = {}
+	Octo_AddonsTable_DB.indexByName = {}
 	for index = 1, E:func_GetNumAddOns() do
 		local name = E:func_GetAddonName(index)
-		Octo_AddonsTable.indexByName[name] = index
+		Octo_AddonsTable_DB.indexByName[name] = index
 	end
-	Octo_AddonsTable.depsByIndex = {}
-	Octo_AddonsTable.parentByIndex = {}
-	Octo_AddonsTable.recycleByIndex = {}
+	Octo_AddonsTable_DB.depsByIndex = {}
+	Octo_AddonsTable_DB.parentByIndex = {}
+	Octo_AddonsTable_DB.recycleByIndex = {}
 	for index = 1, E:func_GetNumAddOns() do
 		local deps = E:func_GetAddOnDependenciesTable(index)
 		for _, name in ipairs(deps) do
-			if Octo_AddonsTable.indexByName[name] then
-				Octo_AddonsTable.depsByIndex[Octo_AddonsTable.indexByName[name]] = Octo_AddonsTable.depsByIndex[Octo_AddonsTable.indexByName[name]] or {}
-				tinsert(Octo_AddonsTable.depsByIndex[Octo_AddonsTable.indexByName[name]], index)
-				Octo_AddonsTable.parentByIndex[index] = true
-				if E:GetCycleByIndexSFMICT(index, Octo_AddonsTable.indexByName[name]) then
-					Octo_AddonsTable.recycleByIndex[index] = true
-					Octo_AddonsTable.recycleByIndex[Octo_AddonsTable.indexByName[name]] = true
+			if Octo_AddonsTable_DB.indexByName[name] then
+				Octo_AddonsTable_DB.depsByIndex[Octo_AddonsTable_DB.indexByName[name]] = Octo_AddonsTable_DB.depsByIndex[Octo_AddonsTable_DB.indexByName[name]] or {}
+				tinsert(Octo_AddonsTable_DB.depsByIndex[Octo_AddonsTable_DB.indexByName[name]], index)
+				Octo_AddonsTable_DB.parentByIndex[index] = true
+				if Octo_EventFrame_AddonsManager:GetCycleByIndexSFMICT(index, Octo_AddonsTable_DB.indexByName[name]) then
+					Octo_AddonsTable_DB.recycleByIndex[index] = true
+					Octo_AddonsTable_DB.recycleByIndex[Octo_AddonsTable_DB.indexByName[name]] = true
 				end
 			end
 		end
@@ -996,14 +995,14 @@ function Octo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		self:Octo_Create_MainFrame_AddonsManager()
 		self:func_Create_AdditionalFrame()
 		self:func_Create_DDframe_AddonsManager()
-		E.CreateMyDataProvider()
+		self:CreateDataProvider_AddonsManage()
 		self:createDDMenu()
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(Octo_MainFrame_AddonsManager, "AddonsManager", AddonHeight, 0)
 		E:func_CreateMinimapButton(GlobalAddonName, "AddonsManager", Octo_AddonsManager_DB, Octo_MainFrame_AddonsManager, nil, "Octo_MainFrame_AddonsManager")
 		Octo_MainFrame_AddonsManager:SetScript("OnShow", function()
 				C_Timer.After(.1, function()
-						E.AddonList_Update()
+						Octo_EventFrame_AddonsManager:AddonList_Update()
 				end)
 		end)
 		----------------------------------------------------------------

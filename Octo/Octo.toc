@@ -1,16 +1,23 @@
 ## Interface: 110200, 110107
 ## Title: !|cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r
 ## Author: Octo
-## Version: v97.3(11.1.7)(19.07.2025)
+## Version: v97.4(11.1.7)(19.07.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Core
 
-## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other
-## SavedVariables: Octo_ToDo_DB_Minecraft
+## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other Octo_Cache_DB
+
+## SavedVariables: Octo_Minecraft_DB
+
 ## SavedVariables: Octo_Achievements_DB
-## SavedVariables: Octo_AddonsTable Octo_AddonsManager_DB
-## SavedVariables: Octo_DEBUG
-## SavedVariables: Octo_QuestsChangedDB
-## SavedVariables: Octo_Cache_DB
+
+## SavedVariables: Octo_AddonsTable_DB Octo_AddonsManager_DB
+
+## SavedVariables: Octo_Debug_DB
+
+## SavedVariables: Octo_QuestsChanged_DB
+
+## SavedVariables: Octo_LoadAddons_DB
+
 
 Init.lua
 

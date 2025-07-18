@@ -36,9 +36,9 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 				collectMASLENGO.UniversalQuest[questKey] = E:func_CheckCompletedByQuestID(questID)
 			end
 		end
-		-- if Octo_DEBUG then
-		-- Octo_DEBUG.UniversalQuest[v.desc] = Octo_DEBUG.UniversalQuest[v.desc] or {}
-		-- Octo_DEBUG.UniversalQuest[v.desc][i] = Octo_DEBUG.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest."..questKey)
+		-- if Octo_Debug_DB then
+		-- Octo_Debug_DB.UniversalQuest[v.desc] = Octo_Debug_DB.UniversalQuest[v.desc] or {}
+		-- Octo_Debug_DB.UniversalQuest[v.desc][i] = Octo_Debug_DB.UniversalQuest[v.desc][i] or tostringall("CharInfo.MASLENGO.UniversalQuest."..questKey)
 		-- end
 		if count > 0 then
 			collectMASLENGO.UniversalQuest[questKey] = count

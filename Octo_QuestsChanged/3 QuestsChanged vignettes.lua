@@ -44,7 +44,7 @@ function Octo_EventFrame_Vignettes:OnVignetteEvent()
 				atlas = vignetteInfo.atlasName,
 			}
 			table.insert(ordered, vignetteInfo.vignetteGUID)
-			table.insert(Octo_QuestsChangedDB.QC_Vignettes, log[vignetteInfo.vignetteGUID])
+			table.insert(Octo_QuestsChanged_DB.QC_Vignettes, log[vignetteInfo.vignetteGUID])
 			E:TriggerEvent(E.Event.OnVignetteAdded, log[vignetteInfo.vignetteGUID], vignetteInfo.vignetteGUID)
 		end
 	end
