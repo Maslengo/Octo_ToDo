@@ -21,7 +21,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -35,7 +35,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -49,7 +49,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -63,7 +63,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -77,7 +77,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -96,7 +96,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -111,7 +111,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------

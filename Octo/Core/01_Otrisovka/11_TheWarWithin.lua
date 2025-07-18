@@ -102,26 +102,22 @@ function E:func_Otrisovka_11_TheWarWithin()
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
-
-
 		for _, CurrencyID in ipairs(E.OctoTable_Catalysts) do
 			table.insert(OctoTable_Otrisovka, function(CharInfo)
 					----------------------------------------------------------------
 					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 					----------------------------------------------------------------
-						textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
-						myType = {"Currency", CurrencyID}
-						----------------------------------------------------------------
-						textLEFT = E:func_currencyName(CurrencyID)
-						iconLEFT = E:func_GetCurrencyIcon(CurrencyID)
-						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+					textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
+					myType = {"Currency", CurrencyID}
+					----------------------------------------------------------------
+					textLEFT = E:func_currencyName(CurrencyID)
+					iconLEFT = E:func_GetCurrencyIcon(CurrencyID)
+					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 					----------------------------------------------------------------
 					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 					----------------------------------------------------------------
 			end)
 		end
-
-
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -136,23 +132,6 @@ function E:func_Otrisovka_11_TheWarWithin()
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
@@ -160,4 +139,3 @@ function E:func_Otrisovka_11_TheWarWithin()
 	----------------------------------------------------------------
 	return OctoTable_Otrisovka
 end
-

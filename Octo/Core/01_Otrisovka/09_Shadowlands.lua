@@ -25,13 +25,13 @@ function E:func_Otrisovka_09_Shadowlands()
 						elseif kCovenant == 2 then
 							iconLEFT = E:func_GetCurrencyIcon(1813)
 							myType = {"Currency_Covenant_Anima", 1813, iANIMA, kCovenant}
-							 if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
+							if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
 								if CharInfo.PlayerData.Possible_Anima then
 									textCENT = textCENT..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
 								end
-							-- 	colorCENT = color
-							-- else
-							-- 	colorCENT = nil
+								--     colorCENT = color
+								-- else
+								--     colorCENT = nil
 							end
 						end
 						if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
@@ -47,7 +47,7 @@ function E:func_Otrisovka_09_Shadowlands()
 						----------------------------------------------------------------
 						return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 						----------------------------------------------------------------
-					end)
+				end)
 			end
 		end
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
@@ -63,7 +63,7 @@ function E:func_Otrisovka_09_Shadowlands()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -77,7 +77,7 @@ function E:func_Otrisovka_09_Shadowlands()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -91,7 +91,7 @@ function E:func_Otrisovka_09_Shadowlands()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -105,7 +105,7 @@ function E:func_Otrisovka_09_Shadowlands()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -122,7 +122,7 @@ function E:func_Otrisovka_09_Shadowlands()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -136,7 +136,7 @@ function E:func_Otrisovka_09_Shadowlands()
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
-			end)
+		end)
 		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------

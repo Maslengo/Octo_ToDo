@@ -228,6 +228,3 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 	----------------------------------------------------------------
 	return OctoTable_Otrisovka
 end
-
-
-
