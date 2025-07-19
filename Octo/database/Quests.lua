@@ -58,4 +58,6 @@ E.OctoTable_QuestID_Paragon = {
 E.OctoTable_QuestID = {
 	38242,
 	39246,
+
+	37485, --- 1000 RESOURS
 }

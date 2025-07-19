@@ -1,4 +1,8 @@
-local _, E = ...
+local GlobalAddonName, E = ...
+
+
+
+
 
 
 -- https://warcraft.wiki.gg/wiki/Catalyst

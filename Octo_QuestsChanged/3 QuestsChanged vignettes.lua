@@ -22,8 +22,6 @@ E.vignetteLogOrder = ordered
 function Octo_EventFrame_Vignettes:OnVignetteEvent()
 	local vignetteids = C_VignetteInfo.GetVignettes()
 	if not vignetteids then return end
-	-- print (GetZoneText(), GetSubZoneText(), GetRealZoneText())
-	-- print (E:func_GetCurrentLocation())
 	for i, instanceid in ipairs(vignetteids) do
 		local vignetteInfo = C_VignetteInfo.GetVignetteInfo(instanceid)
 		if vignetteInfo and vignetteInfo.vignetteGUID and not log[vignetteInfo.vignetteGUID] then

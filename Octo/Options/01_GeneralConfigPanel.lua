@@ -6,7 +6,7 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 -------------------------------------------------------------------------
-function E.CreateGeneralOptions()
+function E:CreateGeneralOptions()
 	local index = 0
 	local function GetOrder()
 		index = index + 1

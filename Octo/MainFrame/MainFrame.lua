@@ -284,7 +284,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	-- Устанавливаем цвет фона если задан
 	if frameData.colorLEFT then
 		local r, g, b = E:func_hex2rgbNUMBER(frameData.colorLEFT)
-		frame.textureLEFT:SetVertexColor(r, g, b, E.bgCaOverlay)
+		frame.textureLEFT:SetVertexColor(r, g, b, .2)
 		frame.textureLEFT:Show()
 	else
 		frame.textureLEFT:Hide()
@@ -386,12 +386,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 			E:func_CreateMyDataProvider()
 			RequestRaidInfo() -- Запрашиваем информацию о рейде
 
-			-- Обновляем текстовые поля
-			local moneyText, timePlayedText, levelTimeText, resetText = Octo_EventFrame_ToDo:DisplayCharacterStats_TEXT()
-			Octo_MainFrame_ToDo.moneyFrame.text:SetText(moneyText)
-			Octo_MainFrame_ToDo.timePlayedFrame.text:SetText(timePlayedText)
-			Octo_MainFrame_ToDo.levelTimeFrame.text:SetText(levelTimeText)
-			Octo_MainFrame_ToDo.resetFrame.text:SetText(resetText)
+			E:UpdateStatFrames(frame)
 	end)
 
 	-- Рассчитываем размеры фрейма
@@ -556,21 +551,64 @@ end
 ----------------------------------------------------------------
 -- Функция для отображения подсказки при наведении на персонажа
 ----------------------------------------------------------------
+
+
+
+
+
+
+
+
 local function func_OnEnterChars(frame)
 	local tooltip = frame.tooltip
 	if not tooltip or #tooltip == 0 then return end
+	----------------------------------------------------------------
+	E.tooltipTracker = E.tooltipTracker or {}
+	GameTooltip:SetOwner(frame)
+	----------------------------------------------------------------
+	-- if not E.tooltipTracker[frame] then
+	-- 	E.tooltipTracker[frame] = true
+	-- 	local tooltipTracker = CreateFrame("Frame")
+	-- 	tooltipTracker:SetScript("OnUpdate", function()
+	-- 		if GameTooltip:IsShown() and GameTooltip:GetOwner() == frame then
+	-- 			local mX, mY = GetCursorPosition()
+	-- 			local scale = UIParent:GetEffectiveScale()
+	-- 			GameTooltip:ClearAllPoints()
+	-- 			GameTooltip:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
+	-- 		end
+	-- 	end)
+	-- end
 
 
--- tt:SetOwner(self, self.Button and 'ANCHOR_CURSOR' or 'ANCHOR_RIGHT') -- 11.0 fix this more
+	if not E.tooltipTracker[frame] then
+		E.tooltipTracker[frame] = true
+		GameTooltip:HookScript("OnShow", function(self)
+			if self:GetOwner() == frame then
+				local mX, mY = GetCursorPosition()
+				local scale = UIParent:GetEffectiveScale()
+				self:ClearAllPoints()
+				self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
+			end
+		end)
+		local tooltipTracker = CreateFrame("Frame")
+		tooltipTracker:SetScript("OnUpdate", function()
+			if GameTooltip:IsShown() and GameTooltip:GetOwner() == frame then
+				local mX, mY = GetCursorPosition()
+				local scale = UIParent:GetEffectiveScale()
+				GameTooltip:ClearAllPoints()
+				GameTooltip:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
+			end
+		end)
+	end
 
 
-	-- GameTooltip:SetOwner(frame, "ANCHOR_CURSOR_RIGHT", 30, 30)
-	GameTooltip:SetOwner(frame, "ANCHOR_RIGHT", 0, 1)
 
+
+	----------------------------------------------------------------
 	for _, value in ipairs(tooltip) do
 		GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
 	end
-
+	----------------------------------------------------------------
 	GameTooltip:Show()
 end
 
@@ -739,11 +777,21 @@ function E:func_CreateMyDataProvider()
 					func_OnEnterChars(curCharFrame)
 			end)
 
+
 			curCharFrame:SetScript("OnLeave", GameTooltip_Hide)
 			curCharFrame:Show()
 		end
 	end
 end
+
+
+function E:reloadMenu(DD_ToDo, level, value)
+	DD_ToDo:ddCloseMenus(level)
+	local menu = LibSFDropDown:GetMenu(level)
+	DD_ToDo:ddToggle(level, value, menu.anchorFrame)
+end
+
+
 
 -- Функция создания выпадающего меню
 function E:func_Create_DD_ToDo(mainFrame)
@@ -786,9 +834,10 @@ function E:func_Create_DD_ToDo(mainFrame)
 		mainFrame.barPanelScroll:SetHorizontalScroll(0)
 	end
 
-	local function func_remove_GUID(menuButton)
+	local function func_remove_GUID(menuButton, arg1)
 		Octo_ToDo_DB_Levels[menuButton.value] = nil
 		E:func_CreateMyDataProvider()
+		E:reloadMenu(unpack(arg1))
 	end
 
 	local function selectFunctionExpansion(menuButton, _, _, checked)
@@ -929,6 +978,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 						info.value = GUID
 						info.func = selectFunctionisShownPLAYER
 						info.checked = Octo_ToDo_DB_Levels[GUID].PlayerData.isShownPLAYER
+						info.arg1 = {self, level, value}
 						info.remove = func_remove_GUID
 						info.removeDoNotHide = true
 						info.icon = Octo_ToDo_DB_Levels[GUID].PlayerData.specIcon
@@ -1027,6 +1077,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 				info.value = EXPANSION_FILTER_TEXT
 				info.icon = false
 				info.hasArrow = true
+				info.hasArrowUp = true
 				info.func = nil
 				self:ddAddButton(info, level)
 			elseif value == EXPANSION_FILTER_TEXT then
@@ -1049,6 +1100,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 				end
 
 				info.func = selectFunctionExpansion
+				info.iconInfo = {tSizeX = E.ddMenuButtonHeight*2, tSizeY = E.ddMenuButtonHeight}
 
 				-- Добавляем кнопки для каждого дополнения (в обратном порядке)
 				for expansionID = #E.OctoTable_Expansions, 1, -1 do
@@ -1199,7 +1251,7 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	-- Инициализируем основные системы
 	E:InitOptions()
 	self:Octo_Create_MainFrame_ToDo()
-	self:DisplayCharacterStats_CREATEFRAMES()
+	E:CreateStatFrames(Octo_MainFrame_ToDo)
 	E:func_Create_DD_ToDo(Octo_MainFrame_ToDo)
 
 	-- Создаем элементы интерфейса
@@ -1212,54 +1264,10 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	end)
 end
 
--- Функция для отображения статистики персонажей
-function Octo_EventFrame_ToDo:DisplayCharacterStats_TEXT()
-	local totalMoney, realTotalTime, realLevelTime = 0, 0, 0
-
-	-- Считаем общие деньги и время игры
-	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData.BattleTag == E.BattleTag then
-			if CharInfo.PlayerData.Money then
-				totalMoney = totalMoney + CharInfo.PlayerData.Money
-			end
-
-			if CharInfo.PlayerData.realTotalTime then
-				realTotalTime = realTotalTime + CharInfo.PlayerData.realTotalTime
-			end
-
-			if CharInfo.PlayerData.UnitLevel and (CharInfo.PlayerData.UnitLevel >= E.currentMaxLevel) then
-				realLevelTime = realLevelTime + CharInfo.PlayerData.realLevelTime
-			end
-		end
-	end
-
-	-- Форматируем текст для отображения
-	local moneyText = format("Money: %s%s|r %s", E.classColorHexCurrent, E:func_CompactNumberFormat(totalMoney/10000), E.curServerShort)
-	local timePlayedText = format(TIME_PLAYED_TOTAL, E.classColorHexCurrent..E:func_SecondsToClock(realTotalTime).."|r")
-	local levelTimeText = format("realLevelTime: %s%s|r", E.classColorHexCurrent, E:func_SecondsToClock(realLevelTime))
-
-	-- Время до сброса еженедельных заданий
-	local weeklyReset = tonumber(E:func_tmstpDayReset(7)-GetServerTime())
-	local resetText = E:func_texturefromIcon(E.Icon_Empty).." "..E:func_SecondsToClock(weeklyReset)..E.Gray_Color.." Weekly reset|r"
-
-	return moneyText, timePlayedText, levelTimeText, resetText
-end
-
--- Функция создания фреймов статистики
-function Octo_EventFrame_ToDo:DisplayCharacterStats_CREATEFRAMES()
-	local moneyText, timePlayedText, levelTimeText, resetText = Octo_EventFrame_ToDo:DisplayCharacterStats_TEXT()
-
-	-- Создаем фреймы для отображения статистики
-	Octo_MainFrame_ToDo.moneyFrame = E:func_CreateInfoFrame(moneyText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*0, AddonLeftFrameWeight, AddonHeight, "LEFT")
-	Octo_MainFrame_ToDo.timePlayedFrame = E:func_CreateInfoFrame(timePlayedText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*1, AddonLeftFrameWeight, AddonHeight, "LEFT")
-	Octo_MainFrame_ToDo.levelTimeFrame = E:func_CreateInfoFrame(levelTimeText, "TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT", 0, -AddonHeight*2, AddonLeftFrameWeight, AddonHeight, "LEFT")
-	Octo_MainFrame_ToDo.resetFrame = E:func_CreateInfoFrame(resetText, "TOPLEFT", Octo_MainFrame_ToDo, "TOPLEFT", 0, 0, AddonLeftFrameWeight, AddonHeight*2, "LEFT")
-end
 
 -- Функция асинхронной загрузки ресурсов
 function Octo_EventFrame_ToDo:LoadAssetsAsync()
 	local promise = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
-
 	-- Добавляем предметы, заклинания и квесты для загрузки
 	promise:AddItems(E.PromiseItem)
 	promise:AddSpells(E.PromiseSpell)

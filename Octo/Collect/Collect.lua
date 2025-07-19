@@ -12,6 +12,7 @@ local MyEventsTable = {
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
 	"BAG_UPDATE",
 	"ITEM_CHANGED",
+	"SHOW_LOOT_TOAST",
 	"COVENANT_CHOSEN",
 	"COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED",
 	"CURRENCY_DISPLAY_UPDATE",
@@ -71,6 +72,7 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_Professions() -- профессии
 	E.Collect_All_Reputations() -- репутации
 	E.Collect_All_Quests() -- квесты
+	E.Collect_All_Garrison()
 	E.Collect_All_UNIVERSALQuestUpdate() -- обновления квестов
 	-- Предметы и валюта
 	E.Collect_All_ItemsInBag() -- предметы в сумках
@@ -136,6 +138,7 @@ function Octo_EventFrame_Collect:QUEST_LOG_UPDATE()
 	self.QUEST_LOG_UPDATE_Pause = true
 	C_Timer.After(1, function()
 			E.Collect_All_Quests()
+			E.Collect_All_Garrison()
 			E.Collect_All_UNIVERSALQuestUpdate()
 			E.Collect_All_BfA_Island()
 			E.Collect_All_Chromie()
@@ -345,6 +348,7 @@ function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 	self.PLAYER_REGEN_ENABLED_pause = true
 	C_Timer.After(5, function()
 			E.Collect_All_Quests()
+			E.Collect_All_Garrison()
 			E.Collect_All_UNIVERSALQuestUpdate()
 			E.Collect_All_BfA_Island()
 			E.Collect_All_Reputations()
@@ -386,3 +390,12 @@ function Octo_EventFrame_Collect:QUEST_POI_UPDATE()
 	end)
 end
 
+function Octo_EventFrame_Collect:SHOW_LOOT_TOAST(rt, rl, q, _4, _5, _6, source)
+	if InCombatLockdown() or self.SHOW_LOOT_TOAST_pause then return end
+	self.SHOW_LOOT_TOAST_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_lastCacheTime(rt, rl, q, _4, _5, _6, source)
+			E:func_Update("SHOW_LOOT_TOAST")
+			self.SHOW_LOOT_TOAST_pause = nil-- Используем nil вместо false для экономии памяти
+	end)
+end

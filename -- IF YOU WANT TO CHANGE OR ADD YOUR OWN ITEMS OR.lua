@@ -5,7 +5,6 @@
 local aura_env = aura_env
 local LOG = function(...)
 	if aura_env.config.debug then
-		--print('|cff006effTrackablesLogger:|r '.. ...)
 		if IsAddOnLoaded("DevTool") then
 			DevTool:AddData(...)
 		end

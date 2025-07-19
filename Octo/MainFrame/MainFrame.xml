@@ -2,5 +2,6 @@
 ..\FrameXML\UI.xsd">
 
 	<Script file="MainFrame\MainFrame.lua"/>
+	<Script file="MainFrame\StatFrames.lua"/>
 
 </Ui>

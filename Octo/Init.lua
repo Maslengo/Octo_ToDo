@@ -1,6 +1,27 @@
-local GlobalAddonName, E = ...
+local GlobalAddonName, E = ... -- ns
 E.GlobalAddonName = GlobalAddonName
-_G.OctoEngine = E
+
+-- local E = {}
+OctoEngine = E -- в других аддонах
+-- ns.E = E
+
+
+-- local GlobalAddonName, E = ...
+-- local GlobalAddonName, ns = ... |n local E = ns.E
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 E.Modules = {}
 -- local OctoEngineFrame = CreateFrame("Frame", "OctoEngineFrame")

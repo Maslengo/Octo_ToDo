@@ -80,6 +80,17 @@ function E:func_Tooltip_Chars(CharInfo)
 		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
 		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(122284))..E:func_GetItemNameByID(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 	end
+
+
+
+	if CharInfo.PlayerData.tmstp_Daily then
+		tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Daily: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Daily-GetServerTime()).."|r", " "}
+	end
+	if CharInfo.PlayerData.tmstp_Weekly then
+		tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Weekly: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Weekly-GetServerTime()).."|r", " "}
+	end
+
+
 	-- Debug information
 	if E.DebugInfo then
 		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}

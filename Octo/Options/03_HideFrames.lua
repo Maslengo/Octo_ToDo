@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
-function E.HideFrames()
+function E:HideFrames()
 	local index = 0
 	local function GetOrder()
 		index = index + 1

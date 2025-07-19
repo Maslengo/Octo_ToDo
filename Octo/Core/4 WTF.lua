@@ -246,6 +246,20 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		LFGInstance = {}, -- Данные LFG
 	}
 
+	-- Стандартные значения для данных игрока
+	local GARRISON_default = {
+		lastCacheTime = 0,
+		cacheSize = 0,
+		curRes = 0,
+	}
+
+	-- Стандартные значения для GARRISON таблицы
+	local GARRISON_DEFAULTS = {
+		summary = {
+			inProgress = {},
+		},
+	}
+
 	-- Инициализация GreatVault
 	for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
 		MASLENGO_DEFAULTS.GreatVault[i] = {}
@@ -263,9 +277,17 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		E:func_InitSubTable(CharInfo, "PlayerData")
 		local PlayerData = CharInfo.PlayerData
 
+		E:func_InitSubTable(CharInfo, "GARRISON")
+		local GARRISON = CharInfo.GARRISON
+
 		-- Заполняем стандартные значения
 		for k, v in next, (defaults) do
 			E:func_InitField(PlayerData, k, v)
+		end
+
+		-- Заполняем стандартные значения
+		for k, v in next, (GARRISON_default) do
+			E:func_InitField(GARRISON, k, v)
 		end
 
 		-- Устанавливаем временные метки
@@ -276,6 +298,13 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		for k, v in next, (MASLENGO_DEFAULTS) do
 			if MASLENGO[k] == nil then
 				MASLENGO[k] = type(v) == "table" and CopyTable(v) or v
+			end
+		end
+
+		-- Заполняем GARRISON значениями по умолчанию
+		for k, v in next, (GARRISON_DEFAULTS) do
+			if GARRISON[k] == nil then
+				GARRISON[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
 
@@ -667,13 +696,13 @@ end
 ]]
 function Octo_EventFrame_WTF:Daily_Reset()
 	local ServerTime = GetServerTime()
-
+	local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
 	-- Обрабатываем всех персонажей
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- Проверяем нужно ли выполнить сброс
-		if (CharInfo.PlayerData.tmstp_Daily or 0) < ServerTime then
-			-- Устанавливаем новую временную метку
-			CharInfo.PlayerData.tmstp_Daily = E:func_tmstpDayReset(1)
+		if CharInfo.PlayerData.tmstp_Daily and CharInfo.PlayerData.tmstp_Daily < ServerTime then
+			-- Устанавливаем новую временную метку вне зависимости от региона
+			CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
 			CharInfo.PlayerData.needResetDaily = true
 
 			-- Сбрасываем ежедневные квесты
@@ -705,7 +734,11 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- Проверяем нужно ли выполнить сброс
-		if (CharInfo.PlayerData.tmstp_Weekly or 0) < ServerTime then
+		if CharInfo.PlayerData.tmstp_Weekly and CharInfo.PlayerData.tmstp_Weekly < ServerTime then
+			-- Устанавливаем новую временную метку вне зависимости от региона
+			CharInfo.PlayerData.tmstp_Weekly = CharInfo.PlayerData.tmstp_Weekly + 86400*7
+			CharInfo.PlayerData.needResetWeekly = true
+
 			-- Проверяем есть ли награды в Великом Хранилище
 			for i = 1, #CharInfo.MASLENGO.GreatVault do
 				if CharInfo.MASLENGO.GreatVault[i] and
@@ -716,9 +749,6 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 				end
 			end
 
-			-- Устанавливаем новую временную метку
-			CharInfo.PlayerData.tmstp_Weekly = E:func_tmstpDayReset(7)
-			CharInfo.PlayerData.needResetWeekly = true
 
 			-- Сбрасываем данные ключей
 			CharInfo.PlayerData.CurrentKey = nil
@@ -746,13 +776,13 @@ end
 Очищает ежемесячные квесты и другие временные данные
 ]]
 function Octo_EventFrame_WTF:Month_Reset()
-	local ServerTime = GetServerTime()
+	local tmstp_Month = E:func_tmstpDayReset(365/12)
 
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- Проверяем нужно ли выполнить сброс
-		if (CharInfo.PlayerData.tmstp_Month or 0) < ServerTime then
+		if (CharInfo.PlayerData.tmstp_Month or 0) < GetServerTime() then
 			-- Устанавливаем новую временную метку
-			CharInfo.PlayerData.tmstp_Month = E:func_tmstpDayReset(365/12)
+			CharInfo.PlayerData.tmstp_Month = tmstp_Month
 			CharInfo.PlayerData.needResetMonth = true
 
 			-- Сбрасываем ежемесячные квесты

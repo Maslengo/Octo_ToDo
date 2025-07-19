@@ -176,6 +176,15 @@ local GetMapGroupMembersInfo = GetMapGroupMembersInfo or C_Map.GetMapGroupMember
 local GetBestMapForUnit = GetBestMapForUnit or C_Map.GetBestMapForUnit
 -- Date/Time functions
 local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
+
+local GetSecondsUntilDailyReset = GetSecondsUntilDailyReset or C_DateAndTime.GetSecondsUntilDailyReset
+local GetSecondsUntilWeeklyReset = GetSecondsUntilWeeklyReset or C_DateAndTime.GetSecondsUntilWeeklyReset
+local GetWeeklyResetStartTime = GetWeeklyResetStartTime or C_DateAndTime.GetWeeklyResetStartTime
+
+
+
+
+
 -- Calendar functions
 local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
 local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
@@ -716,7 +725,23 @@ end
 ----------------------------------------------------------------
 function E:func_tmstpDayReset(time)
 	local time = time or 1
-	return (math_ceil((tonumber(GetServerTime()) - E.thursdayReset)/(E.daytime*time))*E.daytime*time)+E.thursdayReset
+	local daytime = 86400
+	-- https://www.epochconverter.com/
+	-- https://www.unixtimestamp.com/
+	local thursdayReset = GetWeeklyResetStartTime()
+	return (math_ceil((GetServerTime() - thursdayReset)/(daytime*time))*daytime*time)+thursdayReset
+end
+----------------------------------------------------------------
+function E:func_GetDailyReset()
+	return GetSecondsUntilDailyReset()
+end
+----------------------------------------------------------------
+function E:func_GetWeeklyReset()
+	return GetSecondsUntilWeeklyReset()
+end
+----------------------------------------------------------------
+function E:func_GetWeeklyResetStartTime()
+	return GetServerTime()-GetWeeklyResetStartTime()
 end
 ----------------------------------------------------------------
 function E:func_IsOnQuest(questID)
@@ -2594,19 +2619,19 @@ function E:func_textCENT_Currency(CharInfo, currencyID, itemID)
 	local vivod = ""
 	local color = E.White_Color
 	if data[currencyID].quantity then
-		vivod = vivod .. data[currencyID].quantity
+		vivod = vivod .. E:func_CompactNumberFormat(data[currencyID].quantity)
 		if data[currencyID].maxQuantity and data[currencyID].maxQuantity ~= 0 then
 			if data[currencyID].quantity == data[currencyID].maxQuantity then
 				color = E.Green_Color
 			end
-			vivod = color..vivod .. "/" ..data[currencyID].maxQuantity.."|r"
+			vivod = color.. vivod .. "/" ..E:func_CompactNumberFormat(data[currencyID].maxQuantity).."|r"
 		end
 	end
 	if data[currencyID].totalEarned and data[currencyID].maxQuantity then
 		-- color = E.Green_Color
-		local curQuantity = (data[currencyID].quantity or 0)
-		vivod = data[currencyID].totalEarned
-		vivod = " ("..vivod .. "/" ..data[currencyID].maxQuantity..")"
+		local curQuantity = E:func_CompactNumberFormat(data[currencyID].quantity or 0)
+		vivod = E:func_CompactNumberFormat(data[currencyID].totalEarned)
+		vivod = " ("..vivod .. "/" ..E:func_CompactNumberFormat(data[currencyID].maxQuantity)..")"
 		vivod = color.. curQuantity.. vivod .. "|r"
 	end
 	-- if data[currencyID].maxQuantity then
@@ -2678,7 +2703,7 @@ function E:func_Update(event_name)
 		end
 	end
 end
-----------------------------------------------------------------
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

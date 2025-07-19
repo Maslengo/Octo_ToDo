@@ -100,7 +100,7 @@ E.regionName = GetCurrentRegionName()
 if E.regionName == "" then
 	E.regionName = "US"
 end
-E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
+E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail" -- 90 xptr
 E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
 E.curGUID = UnitGUID("PLAYER")
 E.GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
@@ -110,12 +110,9 @@ E.baseArmoryUrl = "worldofwarcraft.blizzard.com/%s/character/%s/%s"
 E.baseRaiderIoUrl = "raider.io/characters/%s/%s/%s"
 E.strategies = {}
 E.altStrategies = {}
-E.thursdayReset = (1514358000-10800)
-E.thursdayResetDay0US = 1514300400
-E.daytime = 86400
--- E.currTime = tonumber(GetServerTime())
 E.curExpansionMaxLevel = 70
 E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
+
 E.MonitorWidth = GetPhysicalScreenSize()
 E.MonitorHeight = select(2, GetPhysicalScreenSize())
 E.Color_Quest_r = .3 -- 1
