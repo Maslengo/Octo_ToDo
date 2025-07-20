@@ -8,8 +8,8 @@ function Octo_EventFrame_LoadAddons:OnLoad()
 	local addons = {
 		"!BugGrabber",
 		"BugSack",
-		"HidingBar",
-		"HidingBar_Options",
+		-- "HidingBar",
+		-- "HidingBar_Options",
 		"SpeedyAutoLoot",
 		"AddonMrgl",
 		"SilverDragon",
@@ -36,6 +36,7 @@ function Octo_EventFrame_LoadAddons:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		E:func_CreateMinimapButton(GlobalAddonName, "LoadAddons", Octo_LoadAddons_DB)
 		if not WarmupSV then
 			self:OnLoad()
 		end

@@ -3,8 +3,6 @@ local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, stri
 ----------------------------------------------------------------
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-local LibDataBroker = LibStub("LibDataBroker-1.1")
-local LibDBIcon = LibStub("LibDBIcon-1.0")
 ----------------------------------------------------------------
 -- Кеширование глобальных функций и таблиц
 local sort = table.sort
@@ -1527,69 +1525,123 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 			text_fps:SetText(math_floor(GetFramerate()))
 	end)
 end
-----------------------------------------------------------------
-function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameString)
-	local MinimapName = E:func_AddonTitle(E.GlobalAddonName).." » "..title
-	local info = {
-		type = "data source",
-		text = MinimapName,
-		icon = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..title,
-		OnEnter = function(self)
-			local tooltip = {}
-			tooltip[#tooltip+1] = {MinimapName}
-			tooltip[#tooltip+1] = {L["Right Click:"], GAMEMENU_OPTIONS}
-			self.tooltip = tooltip
-			E:func_TooltipOnEnter(self)
 
-			-- GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-			-- GameTooltip_SetTitle(GameTooltip, MinimapName)
-			-- GameTooltip:Show()
-		end,
-		OnLeave = function()
-			GameTooltip_Hide()
-		end,
-	}
-	info.OnClick = function(_, button)
+
+
+
+
+
+
+
+
+----------------------------------------------------------------
+local indexOfCore
+local function loadAndEnableCore()
+	if indexOfCore then -- Repo users don't have separate addons
+		load(indexOfCore)
+	end
+	if not BigWigs then return end
+	loadAddons(loadOnCoreEnabled)
+	BigWigs:Enable()
+	return true
+end
+----------------------------------------------------------------
+local indexOfOptions
+local function loadCoreAndOptions()
+	loadAndEnableCore()
+	if indexOfOptions then -- Repo users don't have separate addons
+		load(indexOfOptions)
+	end
+end
+local function loadCoreAndOpenOptions()
+	loadCoreAndOptions()
+	if BigWigsOptions then
+		BigWigsOptions:Open()
+	end
+end
+----------------------------------------------------------------
+function E:func_CreateMinimapButton(AddonName, nameForIcon, SavedVariables, frame, func, frameString)
+	----------------------------------------------------------------
+	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName,
+		{
+			type = "data source", --"data source", "launcher"
+			-- text = AddonName,
+			label = AddonName,
+			icon = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..nameForIcon,
+		}
+	)
+	----------------------------------------------------------------
+	dataBroker.OnClick = function(self, button)
 		if button == "LeftButton" then
 			if not InCombatLockdown() then
-				if func then
-					func()
-				end
+				if func then func() end
+
 				if frame then
 					if not frame.insertIn_SecuredFrames_SequredFrames then
 						frame.insertIn_SecuredFrames_SequredFrames = true
 						tinsert(UISpecialFrames, frameString)
 						tinsert(E.OctoTable_Frames, frame)
 					end
-					for index, frames in ipairs(E.OctoTable_Frames) do
+
+					for _, frames in ipairs(E.OctoTable_Frames) do
 						if frame ~= frames and frames:IsShown() then
 							frames:Hide()
 						end
 					end
+
 					frame:SetShown(not frame:IsShown())
-				end
-				if SettingsPanel:IsVisible() and frame:IsVisible() then
-					HideUIPanel(SettingsPanel)
-				end
-				if GameMenuFrame:IsVisible() and frame:IsVisible() then
-					HideUIPanel(GameMenuFrame)
+
+					if frame:IsShown() then
+						if SettingsPanel:IsVisible() then
+							HideUIPanel(SettingsPanel)
+						end
+						if GameMenuFrame:IsVisible() then
+							HideUIPanel(GameMenuFrame)
+						end
+					end
 				end
 			end
 		elseif button == "RightButton" then
+			-- Hide frame if shown
 			if frame and frame:IsShown() then
 				frame:Hide()
 			end
-			if SettingsPanel:IsVisible() and frame:IsVisible() then
+
+			-- Toggle settings panel
+			if SettingsPanel:IsVisible() and frame and frame:IsVisible() then
 				HideUIPanel(SettingsPanel)
 			else
 				Settings.OpenToCategory(E:func_AddonTitle(E.GlobalAddonName), true)
 			end
+		elseif button == "MiddleButton" then
+			if frame and frame:IsShown() then
+				frame:Hide()
+			end
+			if SettingsPanel:IsVisible() then
+				HideUIPanel(SettingsPanel)
+			end
 		end
 	end
-	vars.minimapPos = vars.minimapPos or 244
-	local ldb_icon = LibDataBroker:NewDataObject(MinimapName, info)
-	LibDBIcon:Register(MinimapName, ldb_icon, vars.minimap)
-	LibDBIcon:Show(MinimapName)
+	----------------------------------------------------------------
+	-- OnTooltipShow
+	dataBroker.OnEnter = function(self)
+		local tooltip = {}
+		tooltip[#tooltip+1] = {E:func_AddonTitle(AddonName)}
+		tooltip[#tooltip+1] = {" ", " "}
+		tooltip[#tooltip+1] = {E.LEFT_MOUSE_ICON..L["Left Click:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING} -- SHOW
+		tooltip[#tooltip+1] = {E.RIGHT_MOUSE_ICON..L["Right Click:"], GAMEMENU_OPTIONS}
+		tooltip[#tooltip+1] = {E.MIDDLE_MOUSE_ICON..L["Middle Click:"], HIDE}
+		self.tooltip = tooltip
+		E:func_TooltipOnEnter(self)
+	end
+	----------------------------------------------------------------
+	dataBroker.OnLeave = GameTooltip_Hide
+	----------------------------------------------------------------
+	if type(SavedVariables) ~= "table" then SavedVariables = {} end
+	if not SavedVariables.minimapPos then SavedVariables.minimapPos = random(1, 365) end
+	LibStub("LibDBIcon-1.0"):Register(AddonName, dataBroker, SavedVariables)
+	-- ldbi:Show(AddonName)
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 function E:func_TooltipOnEnter(frame, first, second, point)
@@ -2083,7 +2135,7 @@ function E:func_rec_toggle(index, state)
 end
 -- Переключить аддон
 function E:func_ToggleAddon(index, state)
-	local addonName = GetAddOnInfo(index)
+	local AddonName = GetAddOnInfo(index)
 	local enabled = E:func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
 	E:func_rec_toggle(index, enabled)
 end
@@ -2107,7 +2159,7 @@ function E:func_rec_lock(index)
 end
 -- Переключить аддон
 function E:func_lockAddonNEW(index, state)
-	local addonName = GetAddOnInfo(index)
+	local AddonName = GetAddOnInfo(index)
 	local enabled = E:func_GetAddOnEnableState(index, UnitName("player")) > Enum.AddOnEnableState.None
 	E:func_rec_lock(index, enabled)
 end
@@ -2185,12 +2237,12 @@ end
 -- Регистрируем команды
 SLASH_UNIVERSALADDONMANAGER1 = "/uam"
 SlashCmdList["UNIVERSALADDONMANAGER"] = func_HandleCommand
-function E:func_GetAddonMetricPercent(addonName, metric, warningInLeftSide, def)
+function E:func_GetAddonMetricPercent(AddonName, metric, warningInLeftSide, def)
 	if (not E:func_IsProfilerEnabled()) then
 		return def or ""
 	end
 	local overall = GetOverallMetric(metric)
-	local addon = GetAddOnMetric(addonName, metric)
+	local addon = GetAddOnMetric(AddonName, metric)
 	local relative = overall
 	if GetApplicationMetric then
 		local app = GetApplicationMetric(metric)
@@ -2232,11 +2284,11 @@ function E:func_GetWarningFor(percent)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E:func_GetAddonMetricCount(addonName, metric)
+function E:func_GetAddonMetricCount(AddonName, metric)
 	if (not E:func_IsProfilerEnabled()) then
 		return ""
 	end
-	local count = GetAddOnMetric(addonName, metric) or 0
+	local count = GetAddOnMetric(AddonName, metric) or 0
 	return count
 end
 ----------------------------------------------------------------

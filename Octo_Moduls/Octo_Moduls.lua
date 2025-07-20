@@ -19,6 +19,9 @@ function Octo_EventFrame_Moduls:ADDON_LOADED(addonName)
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 
+
+		E:func_CreateMinimapButton(GlobalAddonName, "Moduls", Octo_Moduls_DB, Octo_MainFrame_Moduls, nil, "Octo_MainFrame_Moduls")
+
 		self:OnLoad()
 		E:func_LoadCVars()
 	end

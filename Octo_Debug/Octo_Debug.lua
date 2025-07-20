@@ -1,7 +1,8 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 
-
+local Octo_EventFrame_Debug = CreateFrame("FRAME")
+Octo_EventFrame_Debug:Hide()
 
 
 
@@ -572,3 +573,18 @@ for name, data in pairs(slashCommands) do
 		_G["SLASH_"..name..i] = cmd
 	end
 end
+
+
+
+local MyEventsTable = {
+	"ADDON_LOADED",
+}
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
+function Octo_EventFrame_Debug:ADDON_LOADED(addonName)
+	if addonName == GlobalAddonName then
+		self:UnregisterEvent("ADDON_LOADED")
+		self.ADDON_LOADED = nil
+		E:func_CreateMinimapButton(GlobalAddonName, "Debug", Octo_Debug_DB)
+	end
+end
+

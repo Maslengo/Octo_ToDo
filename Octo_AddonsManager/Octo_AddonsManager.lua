@@ -1,4 +1,5 @@
 local GlobalAddonName, ns = ...
+
 E = _G.OctoEngine
 
 local Octo_EventFrame_AddonsManager = CreateFrame("FRAME")
@@ -1000,6 +1001,7 @@ function Octo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		E:func_CreateUtilsButton(Octo_MainFrame_AddonsManager, "AddonsManager", AddonHeight, 0)
 		E:func_CreateMinimapButton(GlobalAddonName, "AddonsManager", Octo_AddonsManager_DB, Octo_MainFrame_AddonsManager, nil, "Octo_MainFrame_AddonsManager")
+		-- E:func_CreateMinimapButton(GlobalAddonName, "AddonsManager", Octo_AddonsManager_DB)
 		Octo_MainFrame_AddonsManager:SetScript("OnShow", function()
 				C_Timer.After(.1, function()
 						Octo_EventFrame_AddonsManager:AddonList_Update()

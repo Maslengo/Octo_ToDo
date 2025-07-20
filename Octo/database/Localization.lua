@@ -3,6 +3,9 @@ local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
 	L["Right Click:"] = true
+	L["Left Click:"] = true
+	L["Middle Click:"] = true
+
 	L["Auto Sell Grey"] = true
 	L["Auto Repair"] = true
 	L["Auto Input Delete"] = true
@@ -252,7 +255,8 @@ end
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
 	L["Right Click:"] = "ПКМ:"
-
+	L["Left Click:"] = "ЛКМ:"
+	L["Middle Click:"] = "СКМ:"
 
 	L["Auto Sell Grey"] = "Автопродажа серого хлама"
 	L["Auto Repair"] = "Автопочинка"

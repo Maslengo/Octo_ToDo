@@ -22,6 +22,16 @@ E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
 E.TEXTURE_BLANK_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Blank.tga"
 E.HighlightTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
 
+
+E.LEFT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-leftbutton") and "|A:newplayertutorial-icon-mouse-leftbutton:0:0|a " or ""
+E.RIGHT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-rightbutton") and "|A:newplayertutorial-icon-mouse-rightbutton:0:0|a " or ""
+E.MIDDLE_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-middlebutton") and "|A:newplayertutorial-icon-mouse-middlebutton:0:0|a " or ""
+
+
+
+
+
+
 E.curFaction = UnitFactionGroup("PLAYER")
 E.oppositeFaction = E.curFaction == "Alliance" and "Horde" or "Alliance"
 E.Icon_Alliance = 255140-- E:func_texturefromIcon(255140) -- 132486

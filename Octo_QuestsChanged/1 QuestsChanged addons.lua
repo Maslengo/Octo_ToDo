@@ -1,13 +1,12 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 
-local icon = LibStub("LibDBIcon-1.0", true)
+local LibDBIcon = LibStub("LibDBIcon-1.0", true)
 local quests = {}
 local new_quests = {}
 local new_quests_byid = {}
 local session_quests = {}
 E.quests_completed = {}
--- E.WARBANDS_ICON = CreateAtlasMarkup("warbands-icon", 16, 16)
 local SPAM_QUESTS = {
 	[32468] = true, -- Crystal Clarity
 	[32469] = true, -- Crystal Clarity
@@ -60,9 +59,9 @@ E:RegisterCallback("ADDON_LOADED", function(self, event, name)
 			Octo_QuestsChanged_DB.QC_Quests = {}
 		end
 		E.Octo_QuestsChanged_DB = Octo_QuestsChanged_DB
-		if icon then
-			icon:Register(GlobalAddonName, E.dataobject, Octo_QuestsChanged_DB)
-		end
+		-- if LibDBIcon then
+		-- 	LibDBIcon:Register(GlobalAddonName, E.dataobject, Octo_QuestsChanged_DB)
+		-- end
 		self:UnregisterCallback("ADDON_LOADED")
 		if IsLoggedIn() then self:PLAYER_LOGIN() else self:RegisterCallback("PLAYER_LOGIN") end
 end)
@@ -189,75 +188,75 @@ function E:RemoveQuest(index)
 	end
 end
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
-local dataobject = ldb:GetDataObjectByName("QuestsChanged") or ldb:NewDataObject("QuestsChanged", {
-		type = "data source",
-		label = "QuestsChanged",
-		icon = [[Interface\Minimap\Tracking\QuestBlob]],
-})
-dataobject.OnClick = function(frame, button)
-	if button == "RightButton" then
-		-- clear the current session
-		table.wipe(E.quests_completed)
-	else
-		if IsShiftKeyDown() then
-			local data = E.Octo_QuestsChanged_DB.QC_Quests[#E.Octo_QuestsChanged_DB.QC_Quests]
-			StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d, label=\"\"},"):format(
-					E:func_GetCoord(data.x, data.y),
-					(data.id or "nil")
-			))
-		else
-			E:ToggleLog()
-		end
-	end
-end
-dataobject.OnTooltipShow = function(tooltip)
-	E:CheckQuests() -- in case
-	tooltip:AddLine("QuestsChanged")
-	for _, quest in ipairs(E.quests_completed) do
-		local mapID, level
-		if type(quest.mapID) == 'string' then
-			-- pre-8.0 quest logging has mapFiles, just show them
-			mapID = quest.mapID
-			level = quest.level
-		else
-			mapID, level = E:func_GetMapNameFromID(quest.mapID)
-		end
-		tooltip:AddDoubleLine(
-			("%d: %s %s"):format(
-				quest.id, E.quest_names[quest.id] or UNKNOWN,
-				C_QuestLog.IsQuestFlaggedCompletedOnAccount and C_QuestLog.IsQuestFlaggedCompletedOnAccount(quest.id) and E.Icon_AccountWide or ""
-			),
-			("%s (%s) %.2f, %.2f"):format(quest.mapID, mapID .. (level and (' / ' .. level) or ''), quest.x * 100, quest.y * 100)
-		)
-	end
-	local x, y
-	local mapID = C_Map.GetBestMapForUnit('player')
-	if mapID then
-		local position = C_Map.GetPlayerMapPosition(mapID, 'player')
-		if position then
-			x, y = position:GetXY()
-		end
-	end
-	local mapname, subname = E:func_GetMapNameFromID(mapID)
-	tooltip:AddDoubleLine("Location", ("%s (%s) %.2f, %.2f"):format(mapID or UNKNOWN, mapname .. (subname and (' / ' .. subname) or ''), (x or 0) * 100, (y or 0) * 100), 1, 0, 1, 1, 0, 1)
-	tooltip:AddLine("Left-click to show your quest history", 0, 1, 1)
-	tooltip:AddLine("Shift-left-click to copy the last quest", 0, 1, 1)
-	tooltip:AddLine("Right-click to clear the current session", 0, 1, 1)
-end
-E.dataobject = dataobject
+-- local dataobject = ldb:GetDataObjectByName("QuestsChanged") or ldb:NewDataObject("QuestsChanged", {
+-- 		type = "data source",
+-- 		label = "QuestsChanged",
+-- 		icon = [[Interface\Minimap\Tracking\QuestBlob]],
+-- })
+-- dataobject.OnClick = function(frame, button)
+-- 	if button == "RightButton" then
+-- 		-- clear the current session
+-- 		table.wipe(E.quests_completed)
+-- 	else
+-- 		if IsShiftKeyDown() then
+-- 			local data = E.Octo_QuestsChanged_DB.QC_Quests[#E.Octo_QuestsChanged_DB.QC_Quests]
+-- 			StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d, label=\"\"},"):format(
+-- 					E:func_GetCoord(data.x, data.y),
+-- 					(data.id or "nil")
+-- 			))
+-- 		else
+-- 			E:ToggleLog()
+-- 		end
+-- 	end
+-- end
+-- dataobject.OnTooltipShow = function(tooltip)
+-- 	E:CheckQuests() -- in case
+-- 	tooltip:AddLine("QuestsChanged")
+-- 	for _, quest in ipairs(E.quests_completed) do
+-- 		local mapID, level
+-- 		if type(quest.mapID) == 'string' then
+-- 			-- pre-8.0 quest logging has mapFiles, just show them
+-- 			mapID = quest.mapID
+-- 			level = quest.level
+-- 		else
+-- 			mapID, level = E:func_GetMapNameFromID(quest.mapID)
+-- 		end
+-- 		tooltip:AddDoubleLine(
+-- 			("%d: %s %s"):format(
+-- 				quest.id, E.quest_names[quest.id] or UNKNOWN,
+-- 				C_QuestLog.IsQuestFlaggedCompletedOnAccount and C_QuestLog.IsQuestFlaggedCompletedOnAccount(quest.id) and E.Icon_AccountWide or ""
+-- 			),
+-- 			("%s (%s) %.2f, %.2f"):format(quest.mapID, mapID .. (level and (' / ' .. level) or ''), quest.x * 100, quest.y * 100)
+-- 		)
+-- 	end
+-- 	local x, y
+-- 	local mapID = C_Map.GetBestMapForUnit('player')
+-- 	if mapID then
+-- 		local position = C_Map.GetPlayerMapPosition(mapID, 'player')
+-- 		if position then
+-- 			x, y = position:GetXY()
+-- 		end
+-- 	end
+-- 	local mapname, subname = E:func_GetMapNameFromID(mapID)
+-- 	tooltip:AddDoubleLine("Location", ("%s (%s) %.2f, %.2f"):format(mapID or UNKNOWN, mapname .. (subname and (' / ' .. subname) or ''), (x or 0) * 100, (y or 0) * 100), 1, 0, 1, 1, 0, 1)
+-- 	tooltip:AddLine("Left-click to show your quest history", 0, 1, 1)
+-- 	tooltip:AddLine("Shift-left-click to copy the last quest", 0, 1, 1)
+-- 	tooltip:AddLine("Right-click to clear the current session", 0, 1, 1)
+-- end
+-- E.dataobject = dataobject
 -- slash
 _G["SLASH_".. GlobalAddonName:upper().."1"] = "/questschanged"
 SlashCmdList[GlobalAddonName:upper()] = function(msg)
 	msg = msg:trim()
 	if msg == "QC_Quests" or msg == "" then
 		E:ToggleLog()
-	elseif msg == "icon" then
-		if not icon then return end
+	elseif msg == "LibDBIcon" then
+		if not LibDBIcon then return end
 		Octo_QuestsChanged_DB.hide = not Octo_QuestsChanged_DB.hide
 		if Octo_QuestsChanged_DB.hide then
-			icon:Hide(GlobalAddonName)
+			LibDBIcon:Hide(GlobalAddonName)
 		else
-			icon:Show(GlobalAddonName)
+			LibDBIcon:Show(GlobalAddonName)
 		end
 	elseif msg == "removed" then
 		Octo_QuestsChanged_DB.removed = not Octo_QuestsChanged_DB.removed
