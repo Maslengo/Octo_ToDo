@@ -2574,54 +2574,56 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 	end
 	----------------------------------------------------------------
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		local specIcon, color, Name, RIGHT
-		local curServer, curPers = "", ""
-		if typeQ == "Currency" and CharInfo.MASLENGO.Currency[ID] and E:func_textCENT_Currency(CharInfo, ID) ~= "" then
-			RIGHT = E:func_textCENT_Currency(CharInfo, ID)
-			RIGHTforSORT = CharInfo.MASLENGO.Currency[ID].quantity or 0
-			total = total + (CharInfo.MASLENGO.Currency[ID].quantity or 0)
-		end
-		-- if typeQ == "Currency" and CharInfo.MASLENGO.Currency[ID] and CharInfo.MASLENGO.Currency[ID].quantity then
-		--     total = total + CharInfo.MASLENGO.Currency[ID].quantity
-		--     if CharInfo.MASLENGO.Currency[ID].quantity then
-		--         if CharInfo.MASLENGO.Currency[ID].maxQuantity and CharInfo.MASLENGO.Currency[ID].maxQuantity ~= 0 then
-		--             -- RIGHT = CharInfo.MASLENGO.Currency[ID].quantity.."/"..CharInfo.MASLENGO.Currency[ID].maxQuantity
-		--             hasTotal = true
-		--         else
-		--             -- RIGHT = CharInfo.MASLENGO.Currency[ID].quantity
-		--         end
-		--         RIGHTforSORT = CharInfo.MASLENGO.Currency[ID].quantity
-		--     end
-		-- end
-		if typeQ == "Item" and CharInfo.MASLENGO.ItemsInBag[ID] then
-			total = total + CharInfo.MASLENGO.ItemsInBag[ID]
-			RIGHT = CharInfo.MASLENGO.ItemsInBag[ID]
-			RIGHTforSORT = CharInfo.MASLENGO.ItemsInBag[ID]
-		end
-		if (typeQ == "Currency_Covenant_Anima" or typeQ == "Currency_Covenant_Renown") and CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] then
-			total = total + CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
-			RIGHT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
-			RIGHTforSORT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
-		end
-		if RIGHT then
-			specIcon = E:func_texturefromIcon(CharInfo.PlayerData.specIcon)
-			colorPlayer = visiblePlayers[GUID] and CharInfo.PlayerData.classColorHex or E.Gray_Color
-			colorServer = visiblePlayers[GUID] and "|cffFFFFFF" or E.Gray_Color
-			-- color = CharInfo.PlayerData.isShownPLAYER and CharInfo.PlayerData.classColorHex or E.Gray_Color
-			-- color = E.Gray_Color
-			-- for CharIndex, CharInfo2 in ipairs(sortedPlayersTBL) do
-			--     if CharInfo.PlayerData.GUID == CharInfo2.PlayerData.GUID then
-			--         color = CharInfo.PlayerData.classColorHex
+		if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+			local specIcon, color, Name, RIGHT
+			local curServer, curPers = "", ""
+			if typeQ == "Currency" and CharInfo.MASLENGO.Currency[ID] and E:func_textCENT_Currency(CharInfo, ID) ~= "" then
+				RIGHT = E:func_textCENT_Currency(CharInfo, ID)
+				RIGHTforSORT = CharInfo.MASLENGO.Currency[ID].quantity or 0
+				total = total + (CharInfo.MASLENGO.Currency[ID].quantity or 0)
+			end
+			-- if typeQ == "Currency" and CharInfo.MASLENGO.Currency[ID] and CharInfo.MASLENGO.Currency[ID].quantity then
+			--     total = total + CharInfo.MASLENGO.Currency[ID].quantity
+			--     if CharInfo.MASLENGO.Currency[ID].quantity then
+			--         if CharInfo.MASLENGO.Currency[ID].maxQuantity and CharInfo.MASLENGO.Currency[ID].maxQuantity ~= 0 then
+			--             -- RIGHT = CharInfo.MASLENGO.Currency[ID].quantity.."/"..CharInfo.MASLENGO.Currency[ID].maxQuantity
+			--             hasTotal = true
+			--         else
+			--             -- RIGHT = CharInfo.MASLENGO.Currency[ID].quantity
+			--         end
+			--         RIGHTforSORT = CharInfo.MASLENGO.Currency[ID].quantity
 			--     end
 			-- end
-			Name = CharInfo.PlayerData.Name
-			if CharInfo.PlayerData.GUID == E.curGUID then
-				curPers = ">> "
+			if typeQ == "Item" and CharInfo.MASLENGO.ItemsInBag[ID] then
+				total = total + CharInfo.MASLENGO.ItemsInBag[ID]
+				RIGHT = CharInfo.MASLENGO.ItemsInBag[ID]
+				RIGHTforSORT = CharInfo.MASLENGO.ItemsInBag[ID]
 			end
-			if CharInfo.PlayerData.curServer ~= E.curServer then
-				curServer = "-"..CharInfo.PlayerData.curServer
+			if (typeQ == "Currency_Covenant_Anima" or typeQ == "Currency_Covenant_Renown") and CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] then
+				total = total + CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
+				RIGHT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
+				RIGHTforSORT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
 			end
-			sorted[#sorted+1] = {curPers, specIcon, colorPlayer, Name, colorServer, curServer, RIGHT, RIGHTforSORT}
+			if RIGHT then
+				specIcon = E:func_texturefromIcon(CharInfo.PlayerData.specIcon)
+				colorPlayer = visiblePlayers[GUID] and CharInfo.PlayerData.classColorHex or E.Gray_Color
+				colorServer = visiblePlayers[GUID] and "|cffFFFFFF" or E.Gray_Color
+				-- color = CharInfo.PlayerData.isShownPLAYER and CharInfo.PlayerData.classColorHex or E.Gray_Color
+				-- color = E.Gray_Color
+				-- for CharIndex, CharInfo2 in ipairs(sortedPlayersTBL) do
+				--     if CharInfo.PlayerData.GUID == CharInfo2.PlayerData.GUID then
+				--         color = CharInfo.PlayerData.classColorHex
+				--     end
+				-- end
+				Name = CharInfo.PlayerData.Name
+				if CharInfo.PlayerData.GUID == E.curGUID then
+					curPers = E.Green_Color.."*|r"
+				end
+				if CharInfo.PlayerData.curServer ~= E.curServer then
+					curServer = "-"..CharInfo.PlayerData.curServer
+				end
+				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT, RIGHTforSORT}
+			end
 		end
 	end
 	----------------------------------------------------------------
@@ -2640,7 +2642,7 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 	if total ~= 0 then
 		table.sort(sorted, function(a, b)
 				if a[8] == b[8] then
-					return a[4] < b[4]
+					return a[3] < b[3]
 				end
 				return a[8] > b[8]
 		end)
@@ -2665,7 +2667,7 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 		----------------------------------------------------------------
 		for _, v in ipairs(sorted) do
 			if #tooltip < totalPersToShow then
-				tooltip[#tooltip+1] = {v[1].." "..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[7]}
+				tooltip[#tooltip+1] = {v[1]..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[7]}
 			end
 		end
 		local hidden = #sorted - #tooltip
