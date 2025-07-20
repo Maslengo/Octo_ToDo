@@ -89,20 +89,6 @@ local math_max = math.max
 -- Функции обработки событий для элементов интерфейса
 ----------------------------------------------------------------
 
--- Обработчик наведения на левый элемент
-local function func_OnEnterLEFT(frame)
-	local tooltip = frame.tooltip
-	if not tooltip or #tooltip == 0 then return end
-
-	-- Показываем подсказку снизу слева от элемента
-	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMLEFT", 0, AddonHeight)
-
-	-- Добавляем строки в подсказку
-	for _, value in ipairs(tooltip) do
-		GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
-	end
-	GameTooltip:Show()
-end
 
 -- Обработчики скрытия/показа для полного фрейма
 local function func_OnHideLEFT(frame)
@@ -171,14 +157,16 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frame:SetScript("OnHide", func_OnHideLEFT)
 	frame:SetScript("OnShow", func_OnShowLEFT)
 
-	-- Обработчик наведения (показываем подсказку если текст обрезан)
-	frame:SetScript("OnEnter", function(self)
-			if not self.textLEFT:IsTruncated() then return end
-			GameTooltip:SetOwner(self, "ANCHOR_NONE")
-			GameTooltip:SetPoint("CENTER", self)
-			GameTooltip:SetText(E:func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText(), 1, 1, 1)
-			GameTooltip:Show()
-	end)
+	-- -- Обработчик наведения (показываем подсказку если текст обрезан)
+	-- frame:SetScript("OnEnter", function(self)
+	-- 		if not self.textLEFT:IsTruncated() then return end
+	-- 		----------------------------------------------------------------
+	-- 		-- GameTooltip:SetOwner(self, "ANCHOR_NONE")
+	-- 		-- GameTooltip:SetPoint("CENTER", self)
+	-- 		----------------------------------------------------------------
+	-- 		GameTooltip:SetText(E:func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText(), 1, 1, 1)
+	-- 		GameTooltip:Show()
+	-- end)
 
 	frame:SetScript("OnLeave", function(self)
 			GameTooltip:Hide()
@@ -192,10 +180,6 @@ local func_OnAcquiredCENT do
 
 	-- Получаем цвет класса игрока
 	local r, g, b = GetClassColor(E.classFilename)
-
-	local function func_OnEnterSecond(frame)
-		E:func_TooltipOnEnter(frame, true, true)
-	end
 
 	function func_OnAcquiredCENT(owner, frame, data, new)
 		if not new then return end
@@ -239,7 +223,7 @@ local func_OnAcquiredCENT do
 						f.textCENT:SetTextColor(1, 1, 1, 1)
 
 						-- Обработчики событий
-						f:SetScript("OnEnter", func_OnEnterSecond)
+						f:SetScript("OnEnter", function() E:func_TooltipOnEnter(f) end)
 						f:SetScript("OnLeave", GameTooltip_Hide)
 						f:SetScript("OnHide", f.Hide)
 						f.curCharTextureBG:SetScript("OnHide", f.curCharTextureBG.Hide)
@@ -306,9 +290,8 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 			else
 				tooltipOCTO = E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 			end
-
 			frame.tooltip = tooltipOCTO
-			func_OnEnterLEFT(frame)
+			E:func_TooltipOnEnter(frame)
 	end)
 end
 
@@ -560,59 +543,6 @@ end
 
 
 
-local function func_OnEnterChars(frame)
-	local tooltip = frame.tooltip
-	if not tooltip or #tooltip == 0 then return end
-	----------------------------------------------------------------
-	E.tooltipTracker = E.tooltipTracker or {}
-	GameTooltip:SetOwner(frame)
-	----------------------------------------------------------------
-	-- if not E.tooltipTracker[frame] then
-	-- 	E.tooltipTracker[frame] = true
-	-- 	local tooltipTracker = CreateFrame("Frame")
-	-- 	tooltipTracker:SetScript("OnUpdate", function()
-	-- 		if GameTooltip:IsShown() and GameTooltip:GetOwner() == frame then
-	-- 			local mX, mY = GetCursorPosition()
-	-- 			local scale = UIParent:GetEffectiveScale()
-	-- 			GameTooltip:ClearAllPoints()
-	-- 			GameTooltip:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
-	-- 		end
-	-- 	end)
-	-- end
-
-
-	if not E.tooltipTracker[frame] then
-		E.tooltipTracker[frame] = true
-		GameTooltip:HookScript("OnShow", function(self)
-			if self:GetOwner() == frame then
-				local mX, mY = GetCursorPosition()
-				local scale = UIParent:GetEffectiveScale()
-				self:ClearAllPoints()
-				self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
-			end
-		end)
-		local tooltipTracker = CreateFrame("Frame")
-		tooltipTracker:SetScript("OnUpdate", function()
-			if GameTooltip:IsShown() and GameTooltip:GetOwner() == frame then
-				local mX, mY = GetCursorPosition()
-				local scale = UIParent:GetEffectiveScale()
-				GameTooltip:ClearAllPoints()
-				GameTooltip:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
-			end
-		end)
-	end
-
-
-
-
-	----------------------------------------------------------------
-	for _, value in ipairs(tooltip) do
-		GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
-	end
-	----------------------------------------------------------------
-	GameTooltip:Show()
-end
-
 ----------------------------------------------------------------
 -- Функция создания провайдера данных для отображения
 ----------------------------------------------------------------
@@ -775,7 +705,7 @@ function E:func_CreateMyDataProvider()
 			-- Обработчики событий для фрейма персонажа
 			curCharFrame:SetScript("OnEnter", function(self)
 					curCharFrame.tooltip = E:func_Tooltip_Chars(CharInfo)
-					func_OnEnterChars(curCharFrame)
+					E:func_TooltipOnEnter(curCharFrame)
 			end)
 
 
@@ -813,7 +743,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 	DD_ToDo.text:SetJustifyV("MIDDLE")
 	DD_ToDo.text:SetJustifyH("CENTER")
 	DD_ToDo.text:SetTextColor(1, 1, 1, 1)
-	DD_ToDo.text:SetText(E.Purple_Color..MAIN_MENU.."|r")
+	DD_ToDo.text:SetText(E.Purple_Color..GAMEMENU_OPTIONS.."|r")
 
 	-- Настраиваем библиотеку выпадающего меню
 	LibSFDropDown:SetMixin(DD_ToDo)
@@ -838,7 +768,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 	local function func_remove_GUID(menuButton, arg1)
 		Octo_ToDo_DB_Levels[menuButton.value] = nil
 		E:func_CreateMyDataProvider()
-		E:reloadMenu(unpack(arg1))
+		-- E:reloadMenu(unpack(arg1))
 	end
 
 	local function selectFunctionExpansion(menuButton, _, _, checked)
@@ -875,6 +805,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 						local info = {}
 						info.fontObject = OctoFont11
 						info.hasArrow = true
+						info.hasArrowUp = true
 						info.keepShownOnClick = true
 						info.notCheckable = true
 
@@ -918,6 +849,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 					local info = {}
 					info.fontObject = OctoFont11
 					info.hasArrow = true
+					info.hasArrowUp = true
 					info.keepShownOnClick = true
 					info.notCheckable = true
 

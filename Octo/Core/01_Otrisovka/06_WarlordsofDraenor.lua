@@ -51,7 +51,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 					if earnedSinceLastCollect ~= cacheSize then
 						tooltipRIGHT[#tooltipRIGHT+1] = {"Time to full: ", E:func_SecondsToClock(timeUntilFull)}
 					end
-					tooltipRIGHT[#tooltipRIGHT+1] = {"Was earned: ", E:func_SecondsToClock(GetServerTime()-CharInfo.GARRISON.lastCacheTime)}
+					tooltipRIGHT[#tooltipRIGHT+1] = {"Was earned: ", E:func_SecondsToClock(GetServerTime()-(CharInfo.GARRISON.lastCacheTime or time()))}
 				end
 				----------------------------------------------------------------
 				textLEFT = E:func_currencyName(824)

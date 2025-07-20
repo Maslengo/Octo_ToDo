@@ -2,6 +2,7 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
+	L["Right Click:"] = true
 	L["Auto Sell Grey"] = true
 	L["Auto Repair"] = true
 	L["Auto Input Delete"] = true
@@ -250,6 +251,9 @@ end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
+	L["Right Click:"] = "ПКМ:"
+
+
 	L["Auto Sell Grey"] = "Автопродажа серого хлама"
 	L["Auto Repair"] = "Автопочинка"
 	L["Auto Input Delete"] = "Автозаполнение 'УДАЛИТЬ'"

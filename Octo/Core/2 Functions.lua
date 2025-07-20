@@ -1356,16 +1356,17 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	local indent = indent or 0
 	local mediaPath = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\"
 	-- Helper function to create consistent buttons
-	local function CreateUtilButton(name, relativeTo, xOffset, texture, tooltip, onClick)
+	local function CreateUtilButton(name, relativeTo, xOffset, texture, tooltipText, onClick)
 		local button = CreateFrame("Button", name, frame)
 		button:SetSize(curHeight, curHeight)
 		button:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", xOffset, indent)
-		if tooltip then
+		if tooltipText then
+			local tooltip = {}
+			tooltip[#tooltip+1] = {E.WOW_Artifact_Color..tooltipText.."|r"}
 			button:SetScript("OnEnter", function(self)
-					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-					GameTooltip:ClearLines()
-					GameTooltip:AddLine(E.WOW_Artifact_Color..tooltip.."|r")
-					GameTooltip:Show()
+					-- GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+					button.tooltip = tooltip
+					E:func_TooltipOnEnter(button, false, false, "ANCHOR_CURSOR_RIGHT")
 			end)
 			button:SetScript("OnLeave", GameTooltip_Hide)
 		end
@@ -1437,12 +1438,11 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 		mediaPath.."Arrow72.tga"
 	)
 	Octo_AbandonButton:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
+			local tooltip = {}
 			local numQuests = E:func_CurrentNumQuests()
 			if numQuests > 0 then
-				GameTooltip:AddLine(E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..numQuests..")")
-				GameTooltip:AddLine(" ")
+				tooltip[#tooltip+1] = {E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..numQuests..")"}
+				tooltip[#tooltip+1] = {" ", " "}
 				local list = {}
 				for i = 1, GetNumQuestLogEntries() do
 					local info = GetInfo(i)
@@ -1452,12 +1452,13 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 				end
 				sort(list, E.func_Reverse_order)
 				for _, questID in ipairs(list) do
-					GameTooltip:AddDoubleLine(E:func_questName(questID), E:func_CheckCompletedByQuestID(questID), 1, 1, 1, 1, 1, 1)
+					tooltip[#tooltip+1] = {E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
 				end
 			else
-				GameTooltip:AddLine(L["No quests"], r, g, b)
+				tooltip[#tooltip+1] = {E.classColorHexCurrent..L["No quests"].."|r"}
 			end
-			GameTooltip:Show()
+			Octo_AbandonButton.tooltip = tooltip
+			E:func_TooltipOnEnter(Octo_AbandonButton, false, false, "ANCHOR_CURSOR_RIGHT")
 	end)
 	Octo_AbandonButton:SetScript("OnLeave", GameTooltip_Hide)
 	Octo_AbandonButton:SetScript("OnClick", function()
@@ -1468,12 +1469,11 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 	-- Events Button
 	local Octo_EventsButton = CreateUtilButton("Octo_EventsButton", frame, -curHeight*3, mediaPath.."Arrow6.tga")
 	Octo_EventsButton:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-			GameTooltip:ClearLines()
+			local tooltip = {}
 			local curdatetable = date("*t")
 			local curdate = FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year)
-			GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..L["Current Date"].."|r", E.WOW_Artifact_Color..curdate.."|r")
-			GameTooltip:AddDoubleLine(" ", " ")
+			tooltip[#tooltip+1] = {E.WOW_Artifact_Color..L["Current Date"].."|r", E.WOW_Artifact_Color..curdate.."|r"}
+			tooltip[#tooltip+1] = {" ", " "}
 			local sorted = {}
 			for k in pairs(E.Holiday) do
 				table_insert(sorted, k)
@@ -1495,13 +1495,15 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 				if E.DebugIDs then
 					titleText = titleText..E.Gray_Color.." id:"..eventID.."|r"
 				end
-				GameTooltip:AddDoubleLine(titleText, timeText)
+				tooltip[#tooltip+1] = {titleText, timeText}
+
 			end
 			if #sorted == 0 then
-				GameTooltip:AddLine("No Data")
+				tooltip[#tooltip+1] = {"No Data"}
 			end
-			GameTooltip:AddDoubleLine(" ", " ")
-			GameTooltip:Show()
+			tooltip[#tooltip+1] = {" ", " "}
+			Octo_EventsButton.tooltip = tooltip
+			E:func_TooltipOnEnter(Octo_EventsButton, false, false, "ANCHOR_CURSOR_RIGHT")
 	end)
 	Octo_EventsButton:SetScript("OnLeave", GameTooltip_Hide)
 	Octo_EventsButton:SetScript("OnClick", function()
@@ -1533,12 +1535,18 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 		text = MinimapName,
 		icon = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..title,
 		OnEnter = function(self)
-			GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
-			GameTooltip_SetTitle(GameTooltip, MinimapName)
-			GameTooltip:Show()
+			local tooltip = {}
+			tooltip[#tooltip+1] = {MinimapName}
+			tooltip[#tooltip+1] = {L["Right Click:"], GAMEMENU_OPTIONS}
+			self.tooltip = tooltip
+			E:func_TooltipOnEnter(self)
+
+			-- GameTooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT")
+			-- GameTooltip_SetTitle(GameTooltip, MinimapName)
+			-- GameTooltip:Show()
 		end,
 		OnLeave = function()
-			GameTooltip:Hide()
+			GameTooltip_Hide()
 		end,
 	}
 	info.OnClick = function(_, button)
@@ -1584,13 +1592,47 @@ function E:func_CreateMinimapButton(addonName, title, vars, frame, func, frameSt
 	LibDBIcon:Show(MinimapName)
 end
 ----------------------------------------------------------------
-function E:func_TooltipOnEnter(frame, first, second)
+function E:func_TooltipOnEnter(frame, first, second, point)
 	local tooltip = frame.tooltip
 	if not tooltip or #tooltip == 0 then return end
-	GameTooltip:SetOwner(frame, "ANCHOR_BOTTOMRIGHT", 0, 0)
+	GameTooltip:ClearLines()
+	----------------------------------------------------------------
+	if not point then
+		E.tooltipTracker = E.tooltipTracker or {}
+		GameTooltip:SetOwner(frame)
+		if not E.tooltipTracker[frame] then
+			E.tooltipTracker[frame] = true
+			GameTooltip:HookScript("OnShow", function(self)
+					if self:GetOwner() == frame then
+						local mX, mY = GetCursorPosition()
+						local scale = UIParent:GetEffectiveScale()
+						self:ClearAllPoints()
+						self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
+					end
+			end)
+			local tooltipTracker = CreateFrame("Frame")
+			tooltipTracker:SetScript("OnUpdate", function()
+					if GameTooltip:IsShown() and GameTooltip:GetOwner() == frame then
+						local mX, mY = GetCursorPosition()
+						local scale = UIParent:GetEffectiveScale()
+						GameTooltip:ClearAllPoints()
+						GameTooltip:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
+					end
+			end)
+		end
+	else
+		GameTooltip:SetOwner(frame, point, 32, 16) -- "ANCHOR_BOTTOMRIGHT"
+	end
+	----------------------------------------------------------------
+	--
+	----------------------------------------------------------------
 	if first then GameTooltip:AddLine(" ") end
 	for _, value in ipairs(tooltip) do
-		GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
+		if value[2] then
+			GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
+		else
+			GameTooltip:AddLine(tostring(value[1]))
+		end
 	end
 	if second then GameTooltip:AddLine(" ") end
 	GameTooltip:Show()
@@ -1691,21 +1733,21 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 			frame:SetScript("OnEnter", function(self)
 					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
 					E:FrameColor(self, id, curType)
-					GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-					GameTooltip:ClearLines()
+					-- GameTooltip:ClearLines()
+					-- GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
+					E:func_TooltipOnEnter(frame)
 					if curType == "item" or curType == "toy" then
 						GameTooltip:AddDoubleLine(E:func_GetItemNameByID(id), E:func_SecondsToClock(E:func_GetItemCooldown(id)))
 					else
 						GameTooltip:AddDoubleLine(E:func_GetSpellName(id), E:func_SecondsToClock(E:func_GetSpellCooldown(id)))
 						GameTooltip:AddDoubleLine(E:func_GetSpellSubtext(id))
 					end
-					GameTooltip:Show()
+					-- GameTooltip:Show()
 			end)
 			frame:SetScript("OnLeave", function(self)
 					self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 					E:FrameColor(self, id, curType)
-					GameTooltip:ClearLines()
-					GameTooltip:Hide()
+					GameTooltip_Hide()
 			end)
 			frame:SetScript("OnMouseDown", function(self)
 					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
@@ -1991,7 +2033,7 @@ end
 -- return nil
 -- end
 function E:func_LocalizeCategoryName(name, isUserCategory)
-	if (isUserCategory) then
+	if isUserCategory then
 		return name
 	end
 	return rawget(L, string_lower(name)) or name
