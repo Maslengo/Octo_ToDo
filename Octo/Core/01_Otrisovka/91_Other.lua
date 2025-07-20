@@ -83,18 +83,24 @@ function E:func_Tooltip_Chars(CharInfo)
 
 
 
-	if CharInfo.PlayerData.tmstp_Daily then
-		tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Daily: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Daily-GetServerTime()).."|r", " "}
-	end
-	if CharInfo.PlayerData.tmstp_Weekly then
-		tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Weekly: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Weekly-GetServerTime()).."|r", " "}
-	end
-
 
 	-- Debug information
 	if E.DebugInfo then
 		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
 		tooltip_Chars[#tooltip_Chars+1] = {E.DEVTEXT, " "}
+
+
+
+
+		if CharInfo.PlayerData.tmstp_Daily then
+			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Daily: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Daily-GetServerTime()).."|r", " "}
+		end
+		if CharInfo.PlayerData.tmstp_Weekly then
+			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Weekly: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Weekly-GetServerTime()).."|r", " "}
+		end
+
+
+
 		-- Character identification
 		tooltip_Chars[#tooltip_Chars+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.PlayerData.GUID.."|r"}
 		tooltip_Chars[#tooltip_Chars+1] = {"hasMail", CharInfo.PlayerData.hasMail and E:func_texturefromIcon(E.Icon_MailBox)..CharInfo.PlayerData.classColorHex.."true|r" or E.NIL}
@@ -124,19 +130,21 @@ function E:func_Tooltip_Chars(CharInfo)
 		tooltip_Chars[#tooltip_Chars+1] = {"IsPublicBuild", CharInfo.PlayerData.IsPublicBuild and E.TRUE or E.NIL}
 		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
 		-- Account limits
-		tooltip_Chars[#tooltip_Chars+1] = {"max LVL", CharInfo.PlayerData.GetRestrictedAccountData_rLevel and E.TRUE or E.NIL.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"max Money", CharInfo.PlayerData.GetRestrictedAccountData_rMoney and E.TRUE or E.NIL.."|r"}
+		tooltip_Chars[#tooltip_Chars+1] = {"max LVL", CharInfo.PlayerData.GetRestrictedAccountData_rLevel and E.TRUE or E.NIL}
+		tooltip_Chars[#tooltip_Chars+1] = {"max Money", CharInfo.PlayerData.GetRestrictedAccountData_rMoney and E.TRUE or E.NIL}
 		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
 		-- Account security
-		tooltip_Chars[#tooltip_Chars+1] = {"Authenticator", CharInfo.PlayerData.IsAccountSecured and E.TRUE or E.NIL.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"УЗ имеет ограничения пробной УЗ", CharInfo.PlayerData.IsRestrictedAccount and E.TRUE or E.NIL.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"Использует ли игрок пробную УЗ", CharInfo.PlayerData.IsTrialAccount and E.TRUE or E.NIL.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"Нет игрового времени", CharInfo.PlayerData.IsVeteranTrialAccount and E.TRUE or E.NIL.."|r"}
+		tooltip_Chars[#tooltip_Chars+1] = {"Authenticator", CharInfo.PlayerData.IsAccountSecured and E.TRUE or E.NIL}
+		tooltip_Chars[#tooltip_Chars+1] = {"УЗ имеет ограничения пробной УЗ", CharInfo.PlayerData.IsRestrictedAccount and E.TRUE or E.NIL}
+		tooltip_Chars[#tooltip_Chars+1] = {"Использует ли игрок пробную УЗ", CharInfo.PlayerData.IsTrialAccount and E.TRUE or E.NIL}
+		tooltip_Chars[#tooltip_Chars+1] = {"Нет игрового времени", CharInfo.PlayerData.IsVeteranTrialAccount and E.TRUE or E.NIL}
 		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
 		-- Durability
-		tooltip_Chars[#tooltip_Chars+1] = {"PlayerDurability", CharInfo.PlayerData.PlayerDurability.."%"}
+		tooltip_Chars[#tooltip_Chars+1] = {"PlayerDurability", CharInfo.PlayerData.PlayerDurability and E.TRUE or E.NIL}
 		-- DBVersion
 		tooltip_Chars[#tooltip_Chars+1] = {"DBVersion", CharInfo.PlayerData.DBVersion}
+		tooltip_Chars[#tooltip_Chars+1] = {"CurrentRegion", CharInfo.PlayerData.CurrentRegion}
+		tooltip_Chars[#tooltip_Chars+1] = {"CurrentRegionName", CharInfo.PlayerData.CurrentRegionName}
 	end
 	return tooltip_Chars
 end
@@ -160,6 +168,7 @@ function E:func_Otrisovka_91_Other()
 					textCENT = E.Green_Color.."Выполненные|r"
 				end
 				----------------------------------------------------------------
+				iconLEFT = E.IconTexture
 				textLEFT = E.DEVTEXT..E.Blue_Color.."ALL|r"
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -176,7 +185,6 @@ function E:func_Otrisovka_91_Other()
 					----------------------------------------------------------------
 					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 					----------------------------------------------------------------
-					tooltipRIGHT[#tooltipRIGHT+1] = {E.DEVTEXT, ""}
 					for _, v in next, (E.OctoTable_UniversalQuest) do
 						if v.desc == value then
 							tooltipRIGHT[#tooltipRIGHT+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
@@ -184,6 +192,7 @@ function E:func_Otrisovka_91_Other()
 						end
 					end
 					----------------------------------------------------------------
+					iconLEFT = E.IconTexture
 					textLEFT = E.DEVTEXT..i
 					----------------------------------------------------------------
 					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType

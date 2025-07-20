@@ -242,6 +242,23 @@ function E:CreateGeneralOptions()
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
+			-------------------------------------------------
+			MaxNumCharacters = {
+				type = "range",
+				name = "MaxNumCharacters",
+				desc = "",
+				min = 1,
+				max = 30,
+				step = 1,
+				get = function()
+					return Octo_ToDo_DB_Vars.MaxNumCharacters
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.MaxNumCharacters = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
 
 
 			-------------------------------------------------

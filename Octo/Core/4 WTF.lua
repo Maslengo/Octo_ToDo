@@ -211,12 +211,15 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		buildDate = E.buildDate, -- Дата сборки
 		interfaceVersion = E.interfaceVersion, -- Версия интерфейса
 		currentTier = E.currentTier, -- Текущий игровой тир
-		Name = "E.curCharName", -- Имя персонажа
+		Name = "WTF:"..E.curCharName, -- Имя персонажа
 		classColorHex = E.classColorHexCurrent, -- Цвет класса в HEX
 		loginDate = currentDateTime, -- Дата входа
 		loginDay = currentDate, -- День входа
 		loginHour = currentTime, -- Время входа
 		isShownPLAYER = true, -- Флаг отображения
+		CurrentRegion = E:func_GetCurrentRegion(),
+		CurrentRegionName = E:func_GetCurrentRegionName(),
+		PlayerDurability = 100,
 	}
 
 	-- Стандартные значения для MASLENGO таблицы
@@ -695,6 +698,7 @@ end
 Очищает ежедневные квесты и другие временные данные
 ]]
 function Octo_EventFrame_WTF:Daily_Reset()
+	if E:func_IsRetail() then
 	local ServerTime = GetServerTime()
 	local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
 	-- Обрабатываем всех персонажей
@@ -724,12 +728,14 @@ function Octo_EventFrame_WTF:Daily_Reset()
 		end
 	end
 end
+end
 
 --[[
 Выполняет еженедельный сброс данных
 Очищает еженедельные квесты и другие временные данные
 ]]
 function Octo_EventFrame_WTF:Weekly_Reset()
+	if E:func_IsRetail() then
 	local ServerTime = GetServerTime()
 
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -770,25 +776,28 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 		end
 	end
 end
+end
 
 --[[
 Выполняет ежемесячный сброс данных
 Очищает ежемесячные квесты и другие временные данные
 ]]
 function Octo_EventFrame_WTF:Month_Reset()
-	local tmstp_Month = E:func_tmstpDayReset(365/12)
+	if E:func_IsRetail() then
+		local tmstp_Month = E:func_tmstpDayReset(365/12)
 
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		-- Проверяем нужно ли выполнить сброс
-		if (CharInfo.PlayerData.tmstp_Month or 0) < GetServerTime() then
-			-- Устанавливаем новую временную метку
-			CharInfo.PlayerData.tmstp_Month = tmstp_Month
-			CharInfo.PlayerData.needResetMonth = true
+		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+			-- Проверяем нужно ли выполнить сброс
+			if (CharInfo.PlayerData.tmstp_Month or 0) < GetServerTime() then
+				-- Устанавливаем новую временную метку
+				CharInfo.PlayerData.tmstp_Month = tmstp_Month
+				CharInfo.PlayerData.needResetMonth = true
 
-			-- Сбрасываем ежемесячные квесты
-			for _, v in next, (E.OctoTable_UniversalQuest) do
-				if v.reset == "Month" then
-					CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Month"] = nil
+				-- Сбрасываем ежемесячные квесты
+				for _, v in next, (E.OctoTable_UniversalQuest) do
+					if v.reset == "Month" then
+						CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Month"] = nil
+					end
 				end
 			end
 		end
