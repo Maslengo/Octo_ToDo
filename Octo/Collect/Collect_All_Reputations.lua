@@ -13,7 +13,7 @@ function E.Collect_All_Reputations()
 				if C_Reputation.IsAccountWideReputation(reputationID) then
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.MASLENGO.Reputation[reputationID] = CharInfo.MASLENGO.Reputation[reputationID] or {}
-						if CharInfo.PlayerData.BattleTagLocal == E.BattleTagLocal then
+						if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 							CharInfo.MASLENGO.Reputation[reputationID] = vivod
 						end
 					end
@@ -22,20 +22,6 @@ function E.Collect_All_Reputations()
 				end
 			end
 		end
-		----------------------------------------------------------------
-		-- for reputationID, cachedName in next, (E.AllReputations) do
-		-- 	local vivod = E:func_CheckReputation(reputationID)
-		-- 	if C_Reputation.IsAccountWideReputation(reputationID) then
-		-- 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		-- 			CharInfo.MASLENGO.Reputation[reputationID] = CharInfo.MASLENGO.Reputation[reputationID] or {}
-		-- 			if CharInfo.PlayerData.BattleTagLocal == E.BattleTagLocal then
-		-- 				CharInfo.MASLENGO.Reputation[reputationID] = vivod
-		-- 			end
-		-- 		end
-		-- 	else
-		-- 		collectMASLENGO.Reputation[reputationID] = vivod
-		-- 	end
-		-- end
 		----------------------------------------------------------------
 	end
 end

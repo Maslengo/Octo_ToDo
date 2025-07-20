@@ -419,7 +419,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		OnlyCurrentFaction = false, -- Только текущая фракция
 		QuestsShowAllways = false, -- Всегда показывать квесты
 		QC_Vignettes = false, -- Вигнеты
-		ShowOnlyCurrentBattleTag = false, -- Только текущий BattleTag
+		ShowOnlyCurrentRegion = false, -- Только текущий BattleTag
 		ShowOnlyCurrentServer = false, -- Только текущий сервер
 	}
 	-- Устанавливаем значения по умолчанию
@@ -459,7 +459,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	Octo_ToDo_DB_Other = E:func_InitTable(Octo_ToDo_DB_Other)
 	-- Инициализация таблицы денег аккаунта
 	E:func_InitSubTable(Octo_ToDo_DB_Other, "AccountMoney")
-	E:func_InitField(Octo_ToDo_DB_Other.AccountMoney, E.BattleTagLocal, 0)
+	E:func_InitField(Octo_ToDo_DB_Other.AccountMoney, E.CurrentRegionName, 0)
 	-- Инициализация таблиц настроек
 	E:func_InitSubTable(Octo_ToDo_DB_Other, "CVar")
 	E:func_InitSubTable(Octo_ToDo_DB_Other, "Items")

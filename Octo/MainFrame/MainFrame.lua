@@ -168,9 +168,7 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	-- 		GameTooltip:Show()
 	-- end)
 
-	frame:SetScript("OnLeave", function(self)
-			GameTooltip:Hide()
-	end)
+	frame:SetScript("OnLeave", GameTooltip_Hide)
 end
 
 ----------------------------------------------------------------
@@ -780,28 +778,28 @@ function E:func_Create_DD_ToDo(mainFrame)
 	DD_ToDo:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
 			info.fontObject = OctoFont11
-			local count = 0
+			local countRegions = 0
 
 			if level == 1 then
-				-- Собираем список BattleTag'ов
-				local BnetList = {}
-				local Octo_BatlleNets = {}
+				-- Собираем список Region'ов
+				local RegionList = {}
+				local Octo_Regions = {}
 
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					if CharInfo.PlayerData then
-						if not BnetList[CharInfo.PlayerData.BattleTagLocal] then
-							count = count + 1
-							Octo_BatlleNets[count] = CharInfo.PlayerData.BattleTagLocal
+						if not RegionList[CharInfo.PlayerData.CurrentRegionName] then
+							countRegions = countRegions + 1
+							Octo_Regions[countRegions] = CharInfo.PlayerData.CurrentRegionName
 						end
-						BnetList[CharInfo.PlayerData.BattleTagLocal] = true
+						RegionList[CharInfo.PlayerData.CurrentRegionName] = true
 					end
 				end
 
-				sort(Octo_BatlleNets)
+				sort(Octo_Regions)
 
-				-- Если BattleTag'ов больше одного, создаем подменю
-				if count > 1 then
-					for i, Bnets in ipairs(Octo_BatlleNets) do
+				-- Если Region'ов больше одного, создаем подменю
+				if countRegions > 1 then
+					for i, Regions in ipairs(Octo_Regions) do
 						local info = {}
 						info.fontObject = OctoFont11
 						info.hasArrow = true
@@ -809,24 +807,20 @@ function E:func_Create_DD_ToDo(mainFrame)
 						info.keepShownOnClick = true
 						info.notCheckable = true
 
-						local vivod = Bnets
-						if Bnets == E.BattleTagLocal then
-							vivod = E.classColorHexCurrent..Bnets.."|r"
-						end
-
-						if Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag == true then
-							if Bnets ~= E.BattleTagLocal then
-								vivod = E.Gray_Color..vivod.."|r"
-							end
+						local vivod = Regions
+						if Regions == E.CurrentRegionName then
+							vivod = E.classColorHexCurrent..Regions.."|r"
+						elseif Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion then
+							vivod = E.Gray_Color..vivod.."|r"
 						end
 
 						info.text = vivod
-						info.value = Bnets
+						info.value = Regions
 						tinsert(list, info)
 					end
 				else
 					local GUID, CharInfo = next(Octo_ToDo_DB_Levels)
-					value = CharInfo.PlayerData.BattleTagLocal
+					value = CharInfo.PlayerData.CurrentRegionName
 				end
 			end
 
@@ -838,7 +832,7 @@ function E:func_Create_DD_ToDo(mainFrame)
 				local tbl_Players = {}
 
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-					if CharInfo.PlayerData and (CharInfo.PlayerData.BattleTagLocal == value or not value) then
+					if CharInfo.PlayerData and (CharInfo.PlayerData.CurrentRegionName == value or not value) then
 						tbl_Players[CharInfo.PlayerData.curServer] = tbl_Players[CharInfo.PlayerData.curServer] or {}
 						tbl_Players[CharInfo.PlayerData.curServer][GUID] = tbl_Players[CharInfo.PlayerData.curServer][GUID] or {}
 						tbl_Players[CharInfo.PlayerData.curServer][GUID] = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r"..(CharInfo.PlayerData.UnitLevel or 0)
@@ -856,8 +850,8 @@ function E:func_Create_DD_ToDo(mainFrame)
 					local vivod = Server
 
 					-- Подсвечиваем текущий сервер
-					if Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag and (value ~= E.BattleTagLocal or Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.curServer)
-					or not Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag and Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.curServer then
+					if Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and (value ~= E.CurrentRegionName or Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.curServer)
+					or not Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.curServer then
 						vivod = E.Gray_Color..vivod.."|r"
 					elseif Server == E.curServer then
 						vivod = E.classColorHexCurrent..vivod.."|r"
@@ -905,6 +899,10 @@ function E:func_Create_DD_ToDo(mainFrame)
 
 						if Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel ~= E.currentMaxLevel then
 							vivod = vivod.." "..E.Yellow_Color..(Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel or 0).."|r"
+						end
+
+						if Octo_ToDo_DB_Levels[GUID].PlayerData.Name == E.curCharName then
+							vivod = vivod..E.Green_Color.."*|r"
 						end
 
 						info.text = vivod
@@ -965,12 +963,12 @@ function E:func_Create_DD_ToDo(mainFrame)
 				end
 				self:ddAddButton(info, level)
 
-				-- Кнопка "Только текущий BattleTag" (если их несколько)
-				if count > 1 then
-					info.text = L["Only Current BattleTag"]
-					info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
+				-- Кнопка "Только текущий Region" (если их несколько)
+				if countRegions > 1 then
+					info.text = L["Only Current Region"]
+					info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 					info.func = function(_, _, _, checked)
-						Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag = checked
+						Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = checked
 						E:func_CreateMyDataProvider()
 					end
 					self:ddAddButton(info, level)

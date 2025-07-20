@@ -232,7 +232,7 @@ if L then
 	L["Current Date"] = true
 	-- Filters
 	L["Only Current Server"] = true
-	L["Only Current BattleTag"] = true
+	L["Only Current Region"] = true
 	L["Player level"] = true
 	L["Player MAX level"] = true
 	L["Only Current Realm"] = true
@@ -487,7 +487,7 @@ if L then
 	L["Current Date"] = "Текущая дата"
 	-- Filters
 	L["Only Current Server"] = "Только текущий сервер"
-	L["Only Current BattleTag"] = "Только текущий BattleTag"
+	L["Only Current Region"] = "Только текущий регион"
 	L["Player level"] = "Мин. уровень"
 	L["Player MAX level"] = "Макс. уровень"
 	L["Only Current Realm"] = "Только текущий сервер"

@@ -345,15 +345,15 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			ShowOnlyCurrentBattleTag = {
+			ShowOnlyCurrentRegion = {
 				type = "toggle",
-				name = L["Only Current BattleTag"],
+				name = L["Only Current Region"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
+					return Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag = value
+					Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),

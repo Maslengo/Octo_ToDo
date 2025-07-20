@@ -1448,7 +1448,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 						table_insert(list, info.questID)
 					end
 				end
-				sort(list, E.func_Reverse_order)
+				table.sort(list, E.func_Reverse_order)
 				for _, questID in ipairs(list) do
 					tooltip[#tooltip+1] = {E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
 				end
@@ -1476,7 +1476,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 			for k in pairs(E.Holiday) do
 				table_insert(sorted, k)
 			end
-			sort(sorted, function(a, b)
+			table.sort(sorted, function(a, b)
 					return E.Holiday[a].priority < E.Holiday[b].priority
 			end)
 			for _, eventID in ipairs(sorted) do
@@ -1865,18 +1865,7 @@ function E:func_Reason(reason)
 	return vivod
 end
 ----------------------------------------------------------------
-function E:func_CreateInfoFrame(text, point, parent, rPoint, x, y, sizeW, sizeH, JustifyH)
-	local frame = CreateFrame("frame", nil, parent, "BackDropTemplate")
-	frame:SetPoint(point, parent, rPoint, x, y)
-	frame:SetSize(sizeW, sizeH)
-	frame.text = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	frame.text:SetAllPoints()
-	frame.text:SetFontObject(OctoFont11)
-	frame.text:SetJustifyV("MIDDLE")
-	frame.text:SetJustifyH(JustifyH)
-	frame.text:SetTextColor(1, 1, 1, 1)
-	return frame
-end
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -2342,7 +2331,7 @@ end
 ----------------------------------------------------------------
 function E:func_NumPlayers()
 	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
-	local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
+	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
 	local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
 	local OnlyCurrentFaction = Octo_ToDo_DB_Vars.OnlyCurrentFaction
@@ -2354,14 +2343,14 @@ function E:func_NumPlayers()
 			end
 			local isShownPLAYER = CharInfo.PlayerData.isShownPLAYER --or false
 			local UnitLevel = CharInfo.PlayerData.UnitLevel --or 0
-			local BattleTagLocal = CharInfo.PlayerData.BattleTagLocal
+			local CurrentRegionName = CharInfo.PlayerData.CurrentRegionName
 			local curServer = CharInfo.PlayerData.curServer
 			local Faction = CharInfo.PlayerData.Faction --or "Horde"
-			if isShownPLAYER and UnitLevel and BattleTagLocal and curServer and Faction and E.curGUID ~= GUID then
+			if isShownPLAYER and UnitLevel and CurrentRegionName and curServer and Faction and E.curGUID ~= GUID then
 				if not OnlyCurrentFaction or (OnlyCurrentFaction and Faction == E.curFaction) then
-					if ShowOnlyCurrentBattleTag then
+					if ShowOnlyCurrentRegion then
 						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
-						and BattleTagLocal == E.BattleTagLocal
+						and CurrentRegionName == E.CurrentRegionName
 						and UnitLevel >= LevelToShow
 						and UnitLevel <= LevelToShowMAX then
 							sorted[#sorted+1] = CharInfo
@@ -2381,7 +2370,7 @@ function E:func_NumPlayers()
 end
 function E:func_sorted()
 	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
-	local ShowOnlyCurrentBattleTag = Octo_ToDo_DB_Vars.ShowOnlyCurrentBattleTag
+	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
 	local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
 	local OnlyCurrentFaction = Octo_ToDo_DB_Vars.OnlyCurrentFaction
@@ -2393,14 +2382,14 @@ function E:func_sorted()
 			end
 			local isShownPLAYER = CharInfo.PlayerData.isShownPLAYER --or false
 			local UnitLevel = CharInfo.PlayerData.UnitLevel --or 0
-			local BattleTagLocal = CharInfo.PlayerData.BattleTagLocal
+			local CurrentRegionName = CharInfo.PlayerData.CurrentRegionName
 			local curServer = CharInfo.PlayerData.curServer
 			local Faction = CharInfo.PlayerData.Faction --or "Horde"
-			if isShownPLAYER and UnitLevel and BattleTagLocal and curServer and Faction and E.curGUID ~= GUID then
+			if isShownPLAYER and UnitLevel and CurrentRegionName and curServer and Faction and E.curGUID ~= GUID then
 				if not OnlyCurrentFaction or (OnlyCurrentFaction and Faction == E.curFaction) then
-					if ShowOnlyCurrentBattleTag then
+					if ShowOnlyCurrentRegion then
 						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
-						and BattleTagLocal == E.BattleTagLocal
+						and CurrentRegionName == E.CurrentRegionName
 						and UnitLevel >= LevelToShow
 						and UnitLevel <= LevelToShowMAX
 						then
@@ -2417,7 +2406,7 @@ function E:func_sorted()
 				end
 			end
 		end
-		sort(sorted, function(a, b)
+		table.sort(sorted, function(a, b)
 				if not a or not b then return false end
 				local a_UnitLevel = a.PlayerData.UnitLevel or 0
 				local b_UnitLevel = b.PlayerData.UnitLevel or 0
@@ -2649,7 +2638,7 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 		end
 	end
 	if total ~= 0 then
-		sort(sorted, function(a, b)
+		table.sort(sorted, function(a, b)
 				if a[8] == b[8] then
 					return a[4] < b[4]
 				end
