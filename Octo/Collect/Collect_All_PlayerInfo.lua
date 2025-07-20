@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 
 function E.Collect_All_PlayerInfo()
-	print ("Collect_All_PlayerInfo")
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if collectPlayerData and not InCombatLockdown() then
 		local curServerShort = E:func_CurServerShort(E.curServer)

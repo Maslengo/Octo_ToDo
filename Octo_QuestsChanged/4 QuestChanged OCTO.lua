@@ -245,7 +245,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	local data = node:GetData()
 	if not data.zxc then return end
 	local frameData = data.zxc
-	local playerName = frameData.classColorHex..frameData.playerName.."|r-"..E:func_CurServerShort(frameData.curServer)
+	local playerName = (frameData.classColorHex or E.Red_Color)..(frameData.playerName or UNKNOWN).."|r-"..E:func_CurServerShort(frameData.curServer)
 
 
 

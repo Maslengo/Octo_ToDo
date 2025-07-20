@@ -2705,5 +2705,17 @@ function E:func_Update(event_name)
 end
 
 ----------------------------------------------------------------
+function E:func_GetCurrentRegion()
+	return GetCurrentRegion()
+
+end
+----------------------------------------------------------------
+function E:func_GetCurrentRegionName()
+	if GetCurrentRegionName() == "" then
+		return "PTR"
+	end
+	return GetCurrentRegionName()
+
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------

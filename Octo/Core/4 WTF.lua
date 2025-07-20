@@ -148,7 +148,7 @@ end
 Очищает базу данных от нулевых и неиспользуемых значений
 ]]
 function Octo_EventFrame_WTF:DatabaseClear()
-	local enable = false -- Флаг включения/отключения очистки
+	local enable = true -- Флаг включения/отключения очистки
 	if not enable then return end
 
 	if Octo_ToDo_DB_Levels then
@@ -160,7 +160,17 @@ function Octo_EventFrame_WTF:DatabaseClear()
 			if CharInfo.MASLENGO and CharInfo.MASLENGO.CurrencyID_Total then
 				replaceZeroWithNil(CharInfo.MASLENGO.CurrencyID_Total, "anynumber")
 			end
+
+			if string.find(CharInfo.PlayerData.Name, "^WTF:") then
+				print ("Remove: ", CharInfo.PlayerData.Name)
+				Octo_ToDo_DB_Levels[GUID] = nil
+			end
+
 		end
+
+
+
+
 
 		-- Очищаем другие таблицы БД от нулевых и ложных значений
 		-- replaceZeroWithNil(Octo_ToDo_DB_Other, {false, 0})
@@ -827,6 +837,8 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 
+		self:DatabaseClear()
+
 		-- Инициализация всех компонентов
 		self:Octo_Cache_DB() -- Кэш данных
 		self:DatabaseTransfer() -- Перенос данных
@@ -841,7 +853,6 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:Octo_QuestsChanged_DB() -- Изменения квестов
 
 		-- Очистка и сброс данных
-		self:DatabaseClear()
 		self:Daily_Reset()
 		self:Weekly_Reset()
 		self:Month_Reset()

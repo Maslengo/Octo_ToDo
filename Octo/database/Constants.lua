@@ -214,8 +214,8 @@ E.Venthyr_r_Color = 0.88
 E.Venthyr_g_Color = 0.40
 E.Venthyr_b_Color = 0.40
 ----------------------------------------------------------------
-E.DONE = E.Green_Color.."Done".."|r"
-E.NONE = E.Gray_Color.."None".."|r"
+E.DONE = E.Green_Color..DONE.."|r"
+E.NONE = E.Gray_Color..NONE.."|r"
 E.TRUE = E.Green_Color.."true|r"
 E.FALSE = E.Red_Color.."false|r"
 E.NIL = E.Red_Color.."nil|r"

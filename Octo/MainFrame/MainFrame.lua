@@ -293,6 +293,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	-- Получаем тип данных
 	local typeQ, ID, iANIMA, kCovenant = frameData.myType[1], frameData.myType[2], frameData.myType[3], frameData.myType[4]
 
+
 	-- Настраиваем подсказку в зависимости от типа данных
 	frame:SetScript("OnEnter", function()
 			local tooltipOCTO = {}
