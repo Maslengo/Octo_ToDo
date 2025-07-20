@@ -1560,89 +1560,91 @@ local function loadCoreAndOpenOptions()
 	end
 end
 ----------------------------------------------------------------
-function E:func_CreateMinimapButton(AddonName, nameForIcon, SavedVariables, frame, func, frameString)
+function E:func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, frame, func, frameString)
 	----------------------------------------------------------------
-	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName,
-		{
+	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
 			type = "data source", --"data source", "launcher"
 			-- text = AddonName,
-			label = AddonName,
+			-- label = AddonName,
 			icon = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..nameForIcon,
-		}
-	)
-	----------------------------------------------------------------
-	dataBroker.OnClick = function(self, button)
-		if button == "LeftButton" then
-			if not InCombatLockdown() then
-				if func then func() end
 
-				if frame then
-					if not frame.insertIn_SecuredFrames_SequredFrames then
-						frame.insertIn_SecuredFrames_SequredFrames = true
-						tinsert(UISpecialFrames, frameString)
-						tinsert(E.OctoTable_Frames, frame)
-					end
+			----------------------------------------------------------------
+			OnClick = function(self, button)
+				if button == "LeftButton" then
+					if not InCombatLockdown() then
+						if func then func() end
 
-					for _, frames in ipairs(E.OctoTable_Frames) do
-						if frame ~= frames and frames:IsShown() then
-							frames:Hide()
+						if frame then
+							if not frame.insertIn_SecuredFrames_SequredFrames then
+								frame.insertIn_SecuredFrames_SequredFrames = true
+								tinsert(UISpecialFrames, frameString)
+								tinsert(E.OctoTable_Frames, frame)
+							end
+
+							for _, frames in ipairs(E.OctoTable_Frames) do
+								if frame ~= frames and frames:IsShown() then
+									frames:Hide()
+								end
+							end
+
+							frame:SetShown(not frame:IsShown())
+
+							if frame:IsShown() then
+								if SettingsPanel:IsVisible() then
+									HideUIPanel(SettingsPanel)
+								end
+								if GameMenuFrame:IsVisible() then
+									HideUIPanel(GameMenuFrame)
+								end
+							end
 						end
 					end
+				elseif button == "RightButton" then
+					-- Hide frame if shown
+					if frame and frame:IsShown() then
+						frame:Hide()
+					end
 
-					frame:SetShown(not frame:IsShown())
-
-					if frame:IsShown() then
-						if SettingsPanel:IsVisible() then
-							HideUIPanel(SettingsPanel)
-						end
-						if GameMenuFrame:IsVisible() then
-							HideUIPanel(GameMenuFrame)
-						end
+					-- Toggle settings panel
+					if SettingsPanel:IsVisible() and frame and frame:IsVisible() then
+						HideUIPanel(SettingsPanel)
+					else
+						Settings.OpenToCategory(E:func_AddonTitle(E.GlobalAddonName), true)
+					end
+				elseif button == "MiddleButton" then
+					if frame and frame:IsShown() then
+						frame:Hide()
+					end
+					if SettingsPanel:IsVisible() then
+						HideUIPanel(SettingsPanel)
 					end
 				end
-			end
-		elseif button == "RightButton" then
-			-- Hide frame if shown
-			if frame and frame:IsShown() then
-				frame:Hide()
-			end
+			end,
+			----------------------------------------------------------------
+			-- OnTooltipShow
+			OnTooltipShow = function(tooltip)
+				tooltip:AddDoubleLine(E:func_AddonTitle(AddonName))
+				tooltip:AddLine(" ")
+				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["Left Click:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING) -- SHOW
+				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["Right Click:"], GAMEMENU_OPTIONS)
+				tooltip:AddDoubleLine(E.MIDDLE_MOUSE_ICON..L["Middle Click:"], HIDE)
+			end,
+			----------------------------------------------------------------
+		})
+	----------------------------------------------------------------
+	if type(Saved_Variables.LibDataBroker) ~= "table" then
+		Saved_Variables.LibDataBroker = {}
+	end
+	if not Saved_Variables.LibDataBroker.minimapPos then
+		Saved_Variables.LibDataBroker.minimapPos = random(1, 365)
+	end
 
-			-- Toggle settings panel
-			if SettingsPanel:IsVisible() and frame and frame:IsVisible() then
-				HideUIPanel(SettingsPanel)
-			else
-				Settings.OpenToCategory(E:func_AddonTitle(E.GlobalAddonName), true)
-			end
-		elseif button == "MiddleButton" then
-			if frame and frame:IsShown() then
-				frame:Hide()
-			end
-			if SettingsPanel:IsVisible() then
-				HideUIPanel(SettingsPanel)
-			end
-		end
-	end
-	----------------------------------------------------------------
-	-- OnTooltipShow
-	dataBroker.OnEnter = function(self)
-		local tooltip = {}
-		tooltip[#tooltip+1] = {E:func_AddonTitle(AddonName)}
-		tooltip[#tooltip+1] = {" ", " "}
-		tooltip[#tooltip+1] = {E.LEFT_MOUSE_ICON..L["Left Click:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING} -- SHOW
-		tooltip[#tooltip+1] = {E.RIGHT_MOUSE_ICON..L["Right Click:"], GAMEMENU_OPTIONS}
-		tooltip[#tooltip+1] = {E.MIDDLE_MOUSE_ICON..L["Middle Click:"], HIDE}
-		self.tooltip = tooltip
-		E:func_TooltipOnEnter(self)
-	end
-	----------------------------------------------------------------
-	dataBroker.OnLeave = GameTooltip_Hide
-	----------------------------------------------------------------
-	if type(SavedVariables) ~= "table" then SavedVariables = {} end
-	if not SavedVariables.minimapPos then SavedVariables.minimapPos = random(1, 365) end
-	LibStub("LibDBIcon-1.0"):Register(AddonName, dataBroker, SavedVariables)
+	LibStub("LibDBIcon-1.0"):Register(AddonName, dataBroker, Saved_Variables.LibDataBroker)
 	-- ldbi:Show(AddonName)
 	----------------------------------------------------------------
 end
+
+
 ----------------------------------------------------------------
 function E:func_TooltipOnEnter(frame, first, second, point)
 	local tooltip = frame.tooltip

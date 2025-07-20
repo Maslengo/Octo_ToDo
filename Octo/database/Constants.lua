@@ -107,6 +107,21 @@ E.BattleTag = select(2, BNGetInfo()) or "Trial Account"
 E.BTAG = tostringall(strsplit("#", E.BattleTag))
 E.regionID = GetCurrentRegion()
 E.regionName = GetCurrentRegionName()
+
+
+
+local function func_GetCurrentRegionName()
+	if GetCurrentRegionName() == "" then
+		return "PTR"
+	end
+	return GetCurrentRegionName()
+
+end
+E.CurrentRegionName = func_GetCurrentRegionName()
+
+
+
+
 if E.regionName == "" then
 	E.regionName = "US"
 end

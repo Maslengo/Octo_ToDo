@@ -237,7 +237,13 @@
         "UiMapPoint",
         "MYTHIC_DUNGEON_SEASON",
         "FACTION_ALLIANCE",
-        "FACTION_HORDE"
+        "FACTION_HORDE",
+        "GARRISON_CACHE",
+        "HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING",
+        "GAMEMENU_OPTIONS",
+        "SECONDARY",
+        "DONE",
+        "NONE"
     ],
     "Lua.type.weakUnionCheck": true
 }
