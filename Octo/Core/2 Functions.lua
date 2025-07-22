@@ -3,6 +3,7 @@ local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, stri
 ----------------------------------------------------------------
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local LibQTip = LibStub("LibQTip-1.0") -- Для тултипов
 ----------------------------------------------------------------
 -- Кеширование глобальных функций и таблиц
 local sort = table.sort
@@ -174,19 +175,12 @@ local GetMapGroupMembersInfo = GetMapGroupMembersInfo or C_Map.GetMapGroupMember
 local GetBestMapForUnit = GetBestMapForUnit or C_Map.GetBestMapForUnit
 -- Date/Time functions
 local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
-
 local GetSecondsUntilDailyReset = GetSecondsUntilDailyReset or C_DateAndTime.GetSecondsUntilDailyReset
 local GetSecondsUntilWeeklyReset = GetSecondsUntilWeeklyReset or C_DateAndTime.GetSecondsUntilWeeklyReset
 local GetWeeklyResetStartTime = GetWeeklyResetStartTime or C_DateAndTime.GetWeeklyResetStartTime
-
-
-
-
-
 -- Calendar functions
 local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
 local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
-
 ----------------------------------------------------------------
 local r, g, b = GetClassColor(E.classFilename)
 ----------------------------------------------------------------
@@ -385,17 +379,12 @@ end
 function E:func_reputationName(reputationID)
 	if reputationID then
 		local vivod = ""
-
 		local side = "-"
 		local name = UNKNOWN
-
 		if E.OctoTable_ReputationsDB[reputationID] then
 			side = E.OctoTable_ReputationsDB[reputationID].side
 			name = E.OctoTable_ReputationsDB[reputationID].name
 		end
-
-
-
 		local color = E.White_Color
 		local repInfo = GetFactionDataByID(reputationID)
 		if repInfo then
@@ -651,7 +640,6 @@ function E:func_texturefromIcon(icon, iconWidth, iconHeight)
 	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight or iconWidth)..":::64:64:4:60:4:60|t"
 end
 ----------------------------------------------------------------
-
 function E:func_texturefromIconEVENT(icon, iconSize)
 	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::128:128:0:91:0:91|t"
 end
@@ -1364,7 +1352,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 			button:SetScript("OnEnter", function(self)
 					-- GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 					button.tooltip = tooltip
-					E:func_TooltipOnEnter(button, false, false, "ANCHOR_CURSOR_RIGHT")
+					E:func_TooltipOnEnter(button, false, false, {"BOTTOMLEFT", "TOPRIGHT"})
 			end)
 			button:SetScript("OnLeave", GameTooltip_Hide)
 		end
@@ -1456,7 +1444,7 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 				tooltip[#tooltip+1] = {E.classColorHexCurrent..L["No quests"].."|r"}
 			end
 			Octo_AbandonButton.tooltip = tooltip
-			E:func_TooltipOnEnter(Octo_AbandonButton, false, false, "ANCHOR_CURSOR_RIGHT")
+			E:func_TooltipOnEnter(Octo_AbandonButton, false, false, {"BOTTOMLEFT", "TOPRIGHT"})
 	end)
 	Octo_AbandonButton:SetScript("OnLeave", GameTooltip_Hide)
 	Octo_AbandonButton:SetScript("OnClick", function()
@@ -1494,14 +1482,13 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 					titleText = titleText..E.Gray_Color.." id:"..eventID.."|r"
 				end
 				tooltip[#tooltip+1] = {titleText, timeText}
-
 			end
 			if #sorted == 0 then
 				tooltip[#tooltip+1] = {"No Data"}
 			end
 			tooltip[#tooltip+1] = {" ", " "}
 			Octo_EventsButton.tooltip = tooltip
-			E:func_TooltipOnEnter(Octo_EventsButton, false, false, "ANCHOR_CURSOR_RIGHT")
+			E:func_TooltipOnEnter(Octo_EventsButton, false, false, {"BOTTOMLEFT", "TOPRIGHT"})
 	end)
 	Octo_EventsButton:SetScript("OnLeave", GameTooltip_Hide)
 	Octo_EventsButton:SetScript("OnClick", function()
@@ -1525,15 +1512,6 @@ function E:func_CreateUtilsButton(frame, title, height, indent)
 			text_fps:SetText(math_floor(GetFramerate()))
 	end)
 end
-
-
-
-
-
-
-
-
-
 ----------------------------------------------------------------
 local indexOfCore
 local function loadAndEnableCore()
@@ -1567,28 +1545,23 @@ function E:func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 			-- text = AddonName,
 			-- label = AddonName,
 			icon = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..nameForIcon,
-
 			----------------------------------------------------------------
 			OnClick = function(self, button)
 				if button == "LeftButton" then
 					if not InCombatLockdown() then
 						if func then func() end
-
 						if frame then
 							if not frame.insertIn_SecuredFrames_SequredFrames then
 								frame.insertIn_SecuredFrames_SequredFrames = true
 								tinsert(UISpecialFrames, frameString)
 								tinsert(E.OctoTable_Frames, frame)
 							end
-
 							for _, frames in ipairs(E.OctoTable_Frames) do
 								if frame ~= frames and frames:IsShown() then
 									frames:Hide()
 								end
 							end
-
 							frame:SetShown(not frame:IsShown())
-
 							if frame:IsShown() then
 								if SettingsPanel:IsVisible() then
 									HideUIPanel(SettingsPanel)
@@ -1604,7 +1577,6 @@ function E:func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 					if frame and frame:IsShown() then
 						frame:Hide()
 					end
-
 					-- Toggle settings panel
 					if SettingsPanel:IsVisible() and frame and frame:IsVisible() then
 						HideUIPanel(SettingsPanel)
@@ -1630,7 +1602,7 @@ function E:func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 				tooltip:AddDoubleLine(E.MIDDLE_MOUSE_ICON..L["Middle Click:"], HIDE)
 			end,
 			----------------------------------------------------------------
-		})
+	})
 	----------------------------------------------------------------
 	if type(Saved_Variables.LibDataBroker) ~= "table" then
 		Saved_Variables.LibDataBroker = {}
@@ -1638,58 +1610,102 @@ function E:func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 	if not Saved_Variables.LibDataBroker.minimapPos then
 		Saved_Variables.LibDataBroker.minimapPos = random(1, 365)
 	end
-
 	LibStub("LibDBIcon-1.0"):Register(AddonName, dataBroker, Saved_Variables.LibDataBroker)
 	-- ldbi:Show(AddonName)
 	----------------------------------------------------------------
 end
-
-
 ----------------------------------------------------------------
+-- function E:func_TooltipOnEnter(frame, first, second, point)
+-- 	local tooltip = frame.tooltip
+-- 	if not tooltip or #tooltip == 0 then return end
+-- 	GameTooltip:ClearLines()
+-- 	----------------------------------------------------------------
+-- 	if not point then
+-- 		E.tooltipTracker = E.tooltipTracker or {}
+-- 		GameTooltip:SetOwner(frame)
+-- 		if not E.tooltipTracker[frame] then
+-- 			E.tooltipTracker[frame] = true
+-- 			GameTooltip:HookScript("OnShow", function(self)
+-- 					if self:GetOwner() == frame then
+-- 						local mX, mY = GetCursorPosition()
+-- 						local scale = UIParent:GetEffectiveScale()
+-- 						self:ClearAllPoints()
+-- 						self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
+-- 					end
+-- 			end)
+-- 			local tooltipTracker = CreateFrame("Frame")
+-- 			tooltipTracker:SetScript("OnUpdate", function()
+-- 					if GameTooltip:IsShown() and GameTooltip:GetOwner() == frame then
+-- 						local mX, mY = GetCursorPosition()
+-- 						local scale = UIParent:GetEffectiveScale()
+-- 						GameTooltip:ClearAllPoints()
+-- 						GameTooltip:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
+-- 					end
+-- 			end)
+-- 		end
+-- 	else
+-- 		GameTooltip:SetOwner(frame, point, 32, 16) -- "ANCHOR_BOTTOMRIGHT"
+-- 	end
+-- 	----------------------------------------------------------------
+-- 	----------------------------------------------------------------
+-- 	if first then GameTooltip:AddLine(" ") end
+-- 	for _, value in ipairs(tooltip) do
+-- 		if value[2] then
+-- 			GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
+-- 		else
+-- 			GameTooltip:AddLine(tostring(value[1]))
+-- 		end
+-- 	end
+-- 	if second then GameTooltip:AddLine(" ") end
+-- 	GameTooltip:Show()
+-- end
+	----------------------------------------------------------------
 function E:func_TooltipOnEnter(frame, first, second, point)
-	local tooltip = frame.tooltip
-	if not tooltip or #tooltip == 0 then return end
-	GameTooltip:ClearLines()
-	----------------------------------------------------------------
-	if not point then
-		E.tooltipTracker = E.tooltipTracker or {}
-		GameTooltip:SetOwner(frame)
-		if not E.tooltipTracker[frame] then
-			E.tooltipTracker[frame] = true
-			GameTooltip:HookScript("OnShow", function(self)
-					if self:GetOwner() == frame then
-						local mX, mY = GetCursorPosition()
-						local scale = UIParent:GetEffectiveScale()
-						self:ClearAllPoints()
-						self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
-					end
-			end)
-			local tooltipTracker = CreateFrame("Frame")
-			tooltipTracker:SetScript("OnUpdate", function()
-					if GameTooltip:IsShown() and GameTooltip:GetOwner() == frame then
-						local mX, mY = GetCursorPosition()
-						local scale = UIParent:GetEffectiveScale()
-						GameTooltip:ClearAllPoints()
-						GameTooltip:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", mX / scale + 30, (mY / scale) - 30)
-					end
-			end)
+	if not frame.tooltip or #frame.tooltip == 0 then return end
+	local tooltip = LibQTip:Acquire("FooBarTooltip", 3, "LEFT", "RIGHT", "RIGHT")
+	tooltip:Clear()
+
+	if frame.tooltip.Header then
+		tooltip:AddHeader(frame.tooltip.Header[1], frame.tooltip.Header[2], frame.tooltip.Header[3])
+		tooltip:AddSeparator()
+	end
+
+	for k, value in ipairs(frame.tooltip) do
+		if value[3] then
+			tooltip:AddLine(value[1], value[2], value[3])
+		elseif value[2] then
+			tooltip:AddLine(value[1], " ", value[2])
+		elseif value[1] then
+			tooltip:AddLine(value[1])
 		end
+		if value[1]:find("Маслен") then
+			print (value[1])
+		end
+	end
+
+
+
+	-- print (frame.tooltip.GUID)
+	tooltip:SetLineColor(5, 1, 0, 0, 1)
+
+
+
+	if point then
+		local first_point, second_point = unpack(point)
+		tooltip:SetPoint(first_point, frame, second_point)
 	else
-		GameTooltip:SetOwner(frame, point, 32, 16) -- "ANCHOR_BOTTOMRIGHT"
+		tooltip:SetPoint("RIGHT", frame, "LEFT")
 	end
-	----------------------------------------------------------------
-	--
-	----------------------------------------------------------------
-	if first then GameTooltip:AddLine(" ") end
-	for _, value in ipairs(tooltip) do
-		if value[2] then
-			GameTooltip:AddDoubleLine(tostring(value[1]), tostring(value[2]), 1, 1, 1, 1, 1, 1)
-		else
-			GameTooltip:AddLine(tostring(value[1]))
-		end
-	end
-	if second then GameTooltip:AddLine(" ") end
-	GameTooltip:Show()
+	-- tooltip:SmartAnchorTo(frame)
+	tooltip:UpdateScrolling(512)
+	tooltip:SetAutoHideDelay(.25, frame)
+
+	-- print ("GetFont:", tooltip:GetFont())
+	-- print ("GetHeaderFont:", tooltip:GetHeaderFont())
+	-- print ("GetLineCount:", tooltip:GetLineCount())
+	-- print ("GetColumnCount:", E.Green_Color..tooltip:GetColumnCount().."|r")
+
+	tooltip:Show()
 end
 ----------------------------------------------------------------
 function E:func_fixdate(date)
@@ -1865,12 +1881,10 @@ function E:func_Reason(reason)
 	return vivod
 end
 ----------------------------------------------------------------
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
 ----------------------------------------------------------------
 local AddonManager = CreateFrame("Frame")
 local profiles = {}
@@ -2560,7 +2574,7 @@ function E:func_Universal_Holiday(tbl, Holiday, color)
 	end
 end
 --------------------------------------------------------------
-function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
+function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 	----------------------------------------------------------------
 	local tooltip = {}
 	local total = 0
@@ -2568,53 +2582,125 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 	local hasTotal = false
 	local sortedPlayersTBL = E:func_sorted()
 	local visiblePlayers = {}
-	local totalPersToShow = 30+2
+	-- local totalPersToShow = 10+2
 	for _, charInfo in ipairs(sortedPlayersTBL) do
 		visiblePlayers[charInfo.PlayerData.GUID] = true
 	end
+	local minItemLevel, maxItemLevel, minMoney, maxMoney = 0, 0, 0, 0
+	local itemLevelsMinMax, MoneysMinMax = {}, {}
+	if myType == "ItemLevel" then
+		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+				table_insert(itemLevelsMinMax, CharInfo.PlayerData.avgItemLevelEquipped)
+			end
+		end
+		minItemLevel = math.min(unpack(itemLevelsMinMax))
+		maxItemLevel = math.max(unpack(itemLevelsMinMax))
+	end
+	if myType == "Money" then
+		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+				table_insert(MoneysMinMax, CharInfo.PlayerData.Money)
+			end
+		end
+		minMoney = math.min(unpack(MoneysMinMax))
+		maxMoney = math.max(unpack(MoneysMinMax))
+	end
+	-- if self.minTime then
+	--     local done = frameData.time - self.minTime
+	--     -- local total = self.maxTime - self.minTime
+	--     local total = time() - self.minTime
+	--     local red = min(255, (1 - done / total) * 510)
+	--     local green = min(255, (done / total) * 510)
+	--     local hexcolor = string.format("|cff%2x%2x00", red, green)
+	--     frame.seventh.text:SetText(hexcolor..E:func_SecondsToClock(time()-frameData.time).."|r")
+	-- end
 	----------------------------------------------------------------
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
-			local specIcon, color, Name, RIGHT
+			local specIcon, color, Name
+			local RIGHT1 = ""
+			local RIGHT2 = ""
 			local curServer, curPers = "", ""
-			if typeQ == "Currency" and CharInfo.MASLENGO.Currency[ID] and E:func_textCENT_Currency(CharInfo, ID) ~= "" then
-				RIGHT = E:func_textCENT_Currency(CharInfo, ID)
+			if myType == "professions" then
+				local charProf = CharInfo.MASLENGO.professions
+					if charProf[1] and charProf[1].skillLine then
+						local leftText = E:func_ProfessionIcon(charProf[1].skillLine)
+						local RightText = charProf[1].skillLevel.."/"..charProf[1].maxSkillLevel
+						if charProf[1].skillModifier then
+							RightText = charProf[1].skillLevel.."|cff00FF00+"..charProf[1].skillModifier.."|r".."/"..charProf[1].maxSkillLevel
+						end
+						RIGHT1 = RIGHT1..leftText..RightText
+						RIGHTforSORT = charProf[1].skillLine
+						total = total + 1
+					end
+
+					if charProf[2] and charProf[2].skillLine then
+						local leftText = E:func_ProfessionIcon(charProf[2].skillLine)
+						local RightText = charProf[2].skillLevel.."/"..charProf[2].maxSkillLevel
+						if charProf[2].skillModifier then
+							RightText = charProf[2].skillLevel.."|cff00FF00+"..charProf[2].skillModifier.."|r".."/"..charProf[2].maxSkillLevel
+						end
+						RIGHT2 = RIGHT2..leftText..RightText
+						RIGHTforSORT = charProf[2].skillLine
+						total = total + 2
+					end
+
+			elseif myType == "ItemLevel" and CharInfo.PlayerData.avgItemLevel then
+				local hexcolorItemLevel = "|cff000000"
+				local vivod = ""
+				if minItemLevel then
+					local done = CharInfo.PlayerData.avgItemLevelEquipped - minItemLevel
+					local totalIlevels = maxItemLevel - minItemLevel
+					local red = min(255, (1 - done / totalIlevels) * 510)
+					local green = min(255, (done / totalIlevels) * 510)
+					hexcolorItemLevel = string.format("|cff%2x%2x00", red, green)
+				end
+				if CharInfo.PlayerData.avgItemLevelEquipped and CharInfo.PlayerData.avgItemLevel then
+					vivod = hexcolorItemLevel..CharInfo.PlayerData.avgItemLevelEquipped
+					if CharInfo.PlayerData.avgItemLevel > CharInfo.PlayerData.avgItemLevelEquipped then
+						vivod = vivod.."/"..CharInfo.PlayerData.avgItemLevel.."|r"
+					end
+					if CharInfo.PlayerData.avgItemLevelPvp and CharInfo.PlayerData.avgItemLevelPvp > CharInfo.PlayerData.avgItemLevel then
+						vivod = vivod..E.Blue_Color.."+|r"
+					end
+				end
+				RIGHT1 = vivod
+				RIGHTforSORT = CharInfo.PlayerData.avgItemLevelEquipped
+				total = total + CharInfo.PlayerData.avgItemLevelEquipped
+			elseif myType == "Money" and CharInfo.PlayerData.Money then
+				local hexcolorMoney = "|cff000000"
+				if minMoney then
+					local done = CharInfo.PlayerData.Money - minMoney
+					local totalMoney = maxMoney - minMoney
+					local red = min(255, (1 - done / totalMoney) * 510)
+					local green = min(255, (done / totalMoney) * 510)
+					hexcolorMoney = string.format("|cff%2x%2x00", red, green)
+				end
+				RIGHT1 = hexcolorMoney..E:func_CompactNumberFormat(CharInfo.PlayerData.Money/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"
+				RIGHTforSORT = CharInfo.PlayerData.Money
+				total = total + CharInfo.PlayerData.Money
+			elseif myType == "Online" and CharInfo.PlayerData.realTotalTime then
+				RIGHT1 = E:func_SecondsToClock(CharInfo.PlayerData.realTotalTime)
+				RIGHTforSORT = CharInfo.PlayerData.realTotalTime
+				total = total + CharInfo.PlayerData.realTotalTime
+			elseif myType == "Currency" and CharInfo.MASLENGO.Currency[ID] and E:func_textCENT_Currency(CharInfo, ID) ~= "" then
+				RIGHT1 = E:func_textCENT_Currency(CharInfo, ID)
 				RIGHTforSORT = CharInfo.MASLENGO.Currency[ID].quantity or 0
 				total = total + (CharInfo.MASLENGO.Currency[ID].quantity or 0)
-			end
-			-- if typeQ == "Currency" and CharInfo.MASLENGO.Currency[ID] and CharInfo.MASLENGO.Currency[ID].quantity then
-			--     total = total + CharInfo.MASLENGO.Currency[ID].quantity
-			--     if CharInfo.MASLENGO.Currency[ID].quantity then
-			--         if CharInfo.MASLENGO.Currency[ID].maxQuantity and CharInfo.MASLENGO.Currency[ID].maxQuantity ~= 0 then
-			--             -- RIGHT = CharInfo.MASLENGO.Currency[ID].quantity.."/"..CharInfo.MASLENGO.Currency[ID].maxQuantity
-			--             hasTotal = true
-			--         else
-			--             -- RIGHT = CharInfo.MASLENGO.Currency[ID].quantity
-			--         end
-			--         RIGHTforSORT = CharInfo.MASLENGO.Currency[ID].quantity
-			--     end
-			-- end
-			if typeQ == "Item" and CharInfo.MASLENGO.ItemsInBag[ID] then
+			elseif myType == "Item" and CharInfo.MASLENGO.ItemsInBag[ID] then
 				total = total + CharInfo.MASLENGO.ItemsInBag[ID]
-				RIGHT = CharInfo.MASLENGO.ItemsInBag[ID]
+				RIGHT1 = CharInfo.MASLENGO.ItemsInBag[ID]
 				RIGHTforSORT = CharInfo.MASLENGO.ItemsInBag[ID]
-			end
-			if (typeQ == "Currency_Covenant_Anima" or typeQ == "Currency_Covenant_Renown") and CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] then
+			elseif (myType == "Currency_Covenant_Anima" or myType == "Currency_Covenant_Renown") and CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] then
 				total = total + CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
-				RIGHT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
+				RIGHT1 = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
 				RIGHTforSORT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
 			end
-			if RIGHT then
+			if RIGHT1 ~= "" then
 				specIcon = E:func_texturefromIcon(CharInfo.PlayerData.specIcon)
-				colorPlayer = visiblePlayers[GUID] and CharInfo.PlayerData.classColorHex or E.Gray_Color
-				colorServer = visiblePlayers[GUID] and "|cffFFFFFF" or E.Gray_Color
-				-- color = CharInfo.PlayerData.isShownPLAYER and CharInfo.PlayerData.classColorHex or E.Gray_Color
-				-- color = E.Gray_Color
-				-- for CharIndex, CharInfo2 in ipairs(sortedPlayersTBL) do
-				--     if CharInfo.PlayerData.GUID == CharInfo2.PlayerData.GUID then
-				--         color = CharInfo.PlayerData.classColorHex
-				--     end
-				-- end
+				local colorPlayer = visiblePlayers[GUID] and CharInfo.PlayerData.classColorHex or E.Gray_Color
+				local colorServer = visiblePlayers[GUID] and "|cffFFFFFF" or E.Gray_Color
 				Name = CharInfo.PlayerData.Name
 				if CharInfo.PlayerData.GUID == E.curGUID then
 					curPers = E.Green_Color.."*|r"
@@ -2622,7 +2708,10 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 				if CharInfo.PlayerData.curServer ~= E.curServer then
 					curServer = "-"..CharInfo.PlayerData.curServer
 				end
-				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT, RIGHTforSORT}
+				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT1, RIGHT2,    RIGHTforSORT}
+				if GUID == E.curGUID then
+					tooltip.GUID = GUID
+				end
 			end
 		end
 	end
@@ -2641,39 +2730,38 @@ function E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 	end
 	if total ~= 0 then
 		table.sort(sorted, function(a, b)
-				if a[8] == b[8] then
+				if a[9] == b[9] then
 					return a[3] < b[3]
 				end
-				return a[8] > b[8]
+				return a[9] > b[9]
 		end)
 		----------------------------------------------------------------
-		if typeQ == "Currency" then
-			-- tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E:func_currencyName(ID), TOTAL..": "..total}
-			tooltip[#tooltip+1] = {" ", TOTAL..": "..total}
-			tooltip[#tooltip+1] = {" ", " "}
-		end
-		if typeQ == "Item" then
-			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), TOTAL..": "..total}
-			tooltip[#tooltip+1] = {" ", " "}
-		end
-		if typeQ == "Currency_Covenant_Anima" then
-			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
-			tooltip[#tooltip+1] = {" ", " "}
-		end
-		if typeQ == "Currency_Covenant_Renown" then
-			tooltip[#tooltip+1] = {E:func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
-			tooltip[#tooltip+1] = {" ", " "}
+		if myType == "ItemLevel" then
+			tooltip.Header = {" ", " ", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
+		elseif myType == "Money" then
+			tooltip.Header = {" ", " ", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
+			-- tooltip[#tooltip+1] = {" ", TOTAL..": "..GetCoinTextureString(total)}
+		elseif myType == "Online" then
+			tooltip.Header = {" ", " ", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
+		elseif myType == "Currency" then
+			tooltip.Header = {" ", " ", TOTAL..": "..total}
+		elseif myType == "Item" then
+			tooltip.Header = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), " ", TOTAL..": "..total}
+		elseif myType == "Currency_Covenant_Anima" then
+			tooltip.Header = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", " ", total}
+		elseif myType == "Currency_Covenant_Renown" then
+			tooltip.Header = {E:func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", " ", total}
 		end
 		----------------------------------------------------------------
 		for _, v in ipairs(sorted) do
-			if #tooltip < totalPersToShow then
-				tooltip[#tooltip+1] = {v[1]..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[7]}
-			end
+			-- if #tooltip < totalPersToShow then
+				tooltip[#tooltip+1] = {v[1]..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[8], v[7]}
+			-- end
 		end
-		local hidden = #sorted - #tooltip
-		if hidden > 0 then
-			tooltip[#tooltip+1] = {E.Yellow_Color.."...(+|r" ..E.Red_Color.. hidden.."|r"..E.Yellow_Color..")|r", " "}
-		end
+		-- local hidden = #sorted - #tooltip
+		-- if hidden > 0 then
+		-- 	tooltip[#tooltip+1] = {E.Yellow_Color.."...(+|r" ..E.Red_Color.. hidden.."|r"..E.Yellow_Color..")|r", " "}
+		-- end
 	end
 	----------------------------------------------------------------
 	return tooltip
@@ -2766,18 +2854,14 @@ end
 -- Функция обновления данных
 function E:func_Update(event_name)
 	local isMainFrameVisible = Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown()
-
 	if isMainFrameVisible then
 		if not E.func_UpdateScheduled then
 			E.func_UpdateScheduled = true
-
 			-- Обновляем данные с небольшой задержкой
 			C_Timer.After(0.1, function()
 					E.func_UpdateScheduled = false
-
 					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
 						E:func_CreateMyDataProvider()
-
 						if E.DebugEvent then
 							DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E:func_Update(", E.Green_Color, E.Yellow_Color)..event_name or ""..E.Yellow_Color..")|r")
 						end
@@ -2790,11 +2874,9 @@ function E:func_Update(event_name)
 		end
 	end
 end
-
 ----------------------------------------------------------------
 function E:func_GetCurrentRegion()
 	return GetCurrentRegion()
-
 end
 ----------------------------------------------------------------
 function E:func_GetCurrentRegionName()
@@ -2802,7 +2884,6 @@ function E:func_GetCurrentRegionName()
 		return "PTR"
 	end
 	return GetCurrentRegionName()
-
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -328,37 +328,10 @@ function E:func_Otrisovka_91_Other()
 						end
 					end
 				end
+
 				----------------------------------------------------------------
 				textLEFT = PROFESSIONS_BUTTON
-				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
-				----------------------------------------------------------------
-		end)
-	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.Gold == true then
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
-				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
-				----------------------------------------------------------------
-				if CharInfo.PlayerData.Money then
-					textCENT = E:func_CompactNumberFormat(CharInfo.PlayerData.Money/10000)
-					if CharInfo.PlayerData.MoneyOnLogin then
-						if CharInfo.PlayerData.Money < CharInfo.PlayerData.MoneyOnLogin then
-							textCENT = textCENT..E.Red_Color.."-|r"
-							tooltipRIGHT[#tooltipRIGHT+1] = {"lost: ", E.Red_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
-						elseif CharInfo.PlayerData.Money > CharInfo.PlayerData.MoneyOnLogin then
-							textCENT = textCENT..E.Green_Color.."+|r"
-							tooltipRIGHT[#tooltipRIGHT+1] = {"received: ", E.Green_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
-						end
-					end
-				end
-				----------------------------------------------------------------
-				textLEFT = BONUS_ROLL_REWARD_MONEY
-				-- iconLEFT = E.Icon_Money
-				-- iconLEFT = "coin-gold"
+				myType = {"professions"}
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
@@ -397,6 +370,37 @@ function E:func_Otrisovka_91_Other()
 				end
 				----------------------------------------------------------------
 				textLEFT = STAT_AVERAGE_ITEM_LEVEL
+				myType = {"ItemLevel"}
+				----------------------------------------------------------------
+				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				----------------------------------------------------------------
+		end)
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	if Octo_ToDo_DB_Vars.Gold == true then
+		table.insert(OctoTable_Otrisovka, function(CharInfo)
+				----------------------------------------------------------------
+				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+				----------------------------------------------------------------
+				if CharInfo.PlayerData.Money then
+					textCENT = E:func_CompactNumberFormat(CharInfo.PlayerData.Money/10000)
+					if CharInfo.PlayerData.MoneyOnLogin then
+						if CharInfo.PlayerData.Money < CharInfo.PlayerData.MoneyOnLogin then
+							textCENT = textCENT..E.Red_Color.."-|r"
+							tooltipRIGHT[#tooltipRIGHT+1] = {"lost: ", E.Red_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
+						elseif CharInfo.PlayerData.Money > CharInfo.PlayerData.MoneyOnLogin then
+							textCENT = textCENT..E.Green_Color.."+|r"
+							tooltipRIGHT[#tooltipRIGHT+1] = {"received: ", E.Green_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
+						end
+					end
+				end
+				----------------------------------------------------------------
+				textLEFT = BONUS_ROLL_REWARD_MONEY
+				-- iconLEFT = E.Icon_Money
+				-- iconLEFT = "coin-gold"
+				myType = {"Money"}
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
@@ -430,6 +434,7 @@ function E:func_Otrisovka_91_Other()
 					end
 				end
 				textLEFT = L["Was online"]
+				myType = {"Online"}
 				----------------------------------------------------------------
 				----------------------------------------------------------------
 				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType

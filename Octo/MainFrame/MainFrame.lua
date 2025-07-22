@@ -367,8 +367,6 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	frame:SetScript("OnShow", function()
 			E:func_CreateMyDataProvider()
 			RequestRaidInfo() -- Запрашиваем информацию о рейде
-
-			E:UpdateStatFrames(frame)
 	end)
 
 	-- Рассчитываем размеры фрейма
@@ -1182,7 +1180,6 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	-- Инициализируем основные системы
 	E:InitOptions()
 	self:Octo_Create_MainFrame_ToDo()
-	E:CreateStatFrames(Octo_MainFrame_ToDo)
 	E:func_Create_DD_ToDo(Octo_MainFrame_ToDo)
 
 	-- Создаем элементы интерфейса

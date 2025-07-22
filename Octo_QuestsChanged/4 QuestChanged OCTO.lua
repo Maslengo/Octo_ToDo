@@ -301,7 +301,6 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 
 
 	if self.minTime then
-		-- local currentTime = time()
 		local done = frameData.time - self.minTime
 		-- local total = self.maxTime - self.minTime
 		local total = time() - self.minTime
