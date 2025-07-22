@@ -40,6 +40,7 @@ local MyEventsTable = {
 	"UPDATE_PENDING_MAIL",
 	"ZONE_CHANGED",
 	"ZONE_CHANGED_NEW_AREA",
+	"QUEST_REMOVED",
 }
 function E.Collect_All_Table(event)
 	E.Collect_All_PlayerLevel()
@@ -389,6 +390,23 @@ function Octo_EventFrame_Collect:QUEST_POI_UPDATE()
 			self.QUEST_POI_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
 	end)
 end
+function Octo_EventFrame_Collect:QUEST_REMOVED()
+	if InCombatLockdown() or self.QUEST_REMOVED_pause then return end
+	self.QUEST_REMOVED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Quests()
+			E:func_Update("QUEST_REMOVED")
+			self.QUEST_REMOVED_pause = nil-- Используем nil вместо false для экономии памяти
+	end)
+end
+
+
+
+
+
+
+
+
 
 function Octo_EventFrame_Collect:SHOW_LOOT_TOAST(rt, rl, q, _4, _5, _6, source)
 	if InCombatLockdown() or self.SHOW_LOOT_TOAST_pause then return end

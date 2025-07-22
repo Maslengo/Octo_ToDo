@@ -153,7 +153,9 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	local frameData = data.parent.dataProvider.linearized
 
 	-- Назначаем обработчики событий
-	frame:SetScript("OnLeave", GameTooltip_Hide)
+	frame:SetScript("OnLeave", function()
+		E:func_TooltipOnLeave(frame)
+	end)
 	frame:SetScript("OnHide", func_OnHideLEFT)
 	frame:SetScript("OnShow", func_OnShowLEFT)
 
@@ -168,7 +170,9 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	-- 		GameTooltip:Show()
 	-- end)
 
-	frame:SetScript("OnLeave", GameTooltip_Hide)
+	frame:SetScript("OnLeave", function()
+		E:func_TooltipOnLeave(frame)
+	end)
 end
 
 ----------------------------------------------------------------
@@ -222,7 +226,9 @@ local func_OnAcquiredCENT do
 
 						-- Обработчики событий
 						f:SetScript("OnEnter", function() E:func_TooltipOnEnter(f) end)
-						f:SetScript("OnLeave", GameTooltip_Hide)
+						f:SetScript("OnLeave", function()
+							E:func_TooltipOnLeave(f)
+						end)
 						f:SetScript("OnHide", f.Hide)
 						f.curCharTextureBG:SetScript("OnHide", f.curCharTextureBG.Hide)
 
@@ -705,7 +711,9 @@ function E:func_CreateMyDataProvider()
 			end)
 
 
-			curCharFrame:SetScript("OnLeave", GameTooltip_Hide)
+			curCharFrame:SetScript("OnLeave", function()
+				E:func_TooltipOnLeave(curCharFrame)
+			end)
 			curCharFrame:Show()
 		end
 	end
@@ -1182,8 +1190,6 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	self:Octo_Create_MainFrame_ToDo()
 	E:func_Create_DD_ToDo(Octo_MainFrame_ToDo)
 
-	-- Создаем элементы интерфейса
-	E:func_CreateUtilsButton(Octo_MainFrame_ToDo, "ToDo", AddonHeight, 0)
 	E:func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
 
 	-- Загружаем ресурсы с небольшой задержкой

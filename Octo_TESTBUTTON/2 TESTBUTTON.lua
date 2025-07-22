@@ -29,7 +29,6 @@ local GetProfessionInfo = GetProfessionInfo
 local BNGetInfo = BNGetInfo
 local PlayerHasToy = PlayerHasToy
 local CreateColor = CreateColor
-local GameTooltip_Hide = GameTooltip_Hide
 local StaticPopup_Show = StaticPopup_Show
 local Settings = Settings
 local SettingsPanel = SettingsPanel
@@ -199,7 +198,9 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 				end
 		end)
 
-		button:SetScript('OnLeave', GameTooltip_Hide)
+		button:SetScript("OnLeave", function()
+				E:func_TooltipOnLeave(button)
+			end)
 
 
 

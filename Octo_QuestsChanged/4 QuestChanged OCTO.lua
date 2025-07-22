@@ -465,7 +465,6 @@ function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
 		self:Octo_Create_MainFrame_QuestsChanged()
 		E:QuestsChanged_CreateMyDataProvider()
 		----------------------------------------------------------------
-		E:func_CreateUtilsButton(Octo_MainFrame_QuestsChanged, "QuestsChanged", AddonHeight, 0)
 		E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChanged_DB, Octo_MainFrame_QuestsChanged, function() E:QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
 		-- Octo_MainFrame_QuestsChanged:SetScript("OnShow", function()
 		-- C_Timer.After(.1, function()

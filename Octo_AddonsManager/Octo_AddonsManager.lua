@@ -157,22 +157,12 @@ end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local func_OnAcquired do
 	------------------------------------------------
-	local function func_OnClick(frame)
-		--if Octo_MainFrame_Achievements:IsDragging() then
-		--return
-		--end
-		--local AchievementID = frame:GetData().AchievementID
-		--ToggleAchievement(AchievementID)
-	end
-	------------------------------------------------
 	local function func_OnEnter(frame)
-		--frame.texture_1:SetAlpha(E.bgCaOverlay)
-		--E:func_TooltipOnEnter(frame, false, false)
+		E:func_TooltipOnEnter(frame)
 	end
 	------------------------------------------------
 	local function func_OnOnLeave(frame)
-		--frame.texture_1:SetAlpha(0)
-		--GameTooltip_Hide()
+		E:func_TooltipOnLeave(frame)
 	end
 	------------------------------------------------
 	function func_OnAcquired(owner, frame, data, new)
@@ -222,10 +212,8 @@ local func_OnAcquired do
 			frame.third:SetSize(AddonLeftFrameWeight*3, AddonHeight)
 			-- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 			frame.third:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-			frame.third:SetScript("OnEnter", function()
-					E:func_TooltipOnEnter(frame.third, true, true)
-			end)
-			frame.third:SetScript("OnLeave", GameTooltip_Hide)
+			frame.third:SetScript("OnEnter", func_OnEnter)
+			frame.third:SetScript("OnLeave", func_OnOnLeave)
 			frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+AddonHeight+2, 0)
 			frame.third.textLEFT:SetFontObject(OctoFont11)
@@ -242,10 +230,6 @@ local func_OnAcquired do
 			frame.third.textRIGHT:SetJustifyV("MIDDLE")
 			frame.third.textRIGHT:SetJustifyH("RIGHT")
 			frame.third.textRIGHT:SetTextColor(1, 1, 1, 1)
-			------------------------------------------------
-			frame:SetScript("OnClick", func_OnClick)
-			frame:SetScript("OnEnter", func_OnEnter)
-			frame:SetScript("OnLeave", func_OnOnLeave)
 			------------------------------------------------
 		end
 	end
@@ -569,7 +553,9 @@ function Octo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 			frame_DisableAll.tooltip = DisableAllTooltip
 			E:func_TooltipOnEnter(self, false, false)
 	end)
-	frame_DisableAll:SetScript("OnLeave", GameTooltip_Hide)
+	frame_DisableAll:SetScript("OnLeave", function()
+		E:func_TooltipOnLeave(frame_DisableAll)
+	end)
 	----------------------------------------------------------------
 	local frame_OkayButton = CreateFrame("Button", "frame_OkayButton", Octo_MainFrame_AddonsManager)
 	frame_OkayButton:SetPropagateMouseClicks(true)
@@ -999,7 +985,6 @@ function Octo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		self:CreateDataProvider_AddonsManage()
 		self:createDDMenu()
 		--------------------------------------------------------------
-		E:func_CreateUtilsButton(Octo_MainFrame_AddonsManager, "AddonsManager", AddonHeight, 0)
 		E:func_CreateMinimapButton(GlobalAddonName, "AddonsManager", Octo_AddonsManager_DB, Octo_MainFrame_AddonsManager, nil, "Octo_MainFrame_AddonsManager")
 		Octo_MainFrame_AddonsManager:SetScript("OnShow", function()
 				C_Timer.After(.1, function()

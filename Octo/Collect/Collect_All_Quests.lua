@@ -33,6 +33,8 @@ function E.Collect_All_Quests()
 	end
 	if numQuests ~= 0 then
 		collectPlayerData.numQuests = numQuests
+	else
+		collectPlayerData.numQuests = nil
 	end
 	if C_QuestLog.GetMaxNumQuestsCanAccept() then
 		collectPlayerData.maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()

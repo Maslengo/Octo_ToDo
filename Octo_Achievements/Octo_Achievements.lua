@@ -64,7 +64,7 @@ local func_OnAcquired do
 	end
 	------------------------------------------------
 	local function func_OnOnLeave(frame)
-		GameTooltip_Hide()
+		E:func_TooltipOnLeave(frame)
 	end
 	------------------------------------------------
 	function func_OnAcquired(owner, frame, data, new)
@@ -398,7 +398,6 @@ function Octo_EventFrame_Achievements:ADDON_LOADED(addonName)
 		self:Octo_Create_MainFrame_Achievements()
 		self:func_CreateMyDataProvider()
 		self:func_Create_DDframe_Achievements()
-		E:func_CreateUtilsButton(Octo_MainFrame_Achievements, "Achievements", AddonHeight, 0)
 		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", Octo_Achievements_DB, Octo_MainFrame_Achievements, function() Octo_EventFrame_Achievements:Update() end, "Octo_MainFrame_Achievements")
 		Octo_MainFrame_Achievements:SetScript("OnShow", function()
 				Octo_EventFrame_Achievements.func_CreateMyDataProvider()
