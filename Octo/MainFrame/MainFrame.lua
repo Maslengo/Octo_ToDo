@@ -707,7 +707,7 @@ function E:func_CreateMyDataProvider()
 			-- Обработчики событий для фрейма персонажа
 			curCharFrame:SetScript("OnEnter", function(self)
 					curCharFrame.tooltip = E:func_Tooltip_Chars(CharInfo)
-					E:func_TooltipOnEnter(curCharFrame)
+					E:func_TooltipOnEnter(curCharFrame, {"BOTTOM", "TOP"})
 			end)
 
 

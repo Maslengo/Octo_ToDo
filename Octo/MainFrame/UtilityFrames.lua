@@ -35,7 +35,7 @@ local function CreateUtilButton(name, frame, xOffset, texture, func_onEnter, fun
 	if func_onEnter then
 		button:SetScript("OnEnter", function(self)
 				button.tooltip = func_onEnter()
-				E:func_TooltipOnEnter(button, false, false, {"BOTTOMLEFT", "TOPRIGHT"})
+				E:func_TooltipOnEnter(button, {"BOTTOM", "TOP"})
 		end)
 		button:SetScript("OnLeave", function()
 				button.tooltip = nil
@@ -60,7 +60,7 @@ end
 function Octo_Event_UtilityFrames:Octo_CloseButton(frame, addonIconTexture)
 	local function func_onEnter()
 		local tooltip = {}
-		tooltip[#tooltip+1] = {E.WOW_Artifact_Color..CLOSE.."|r"}
+		tooltip[#tooltip+1] = {" ", E.WOW_Artifact_Color..CLOSE.."|r", " "}
 		return tooltip
 	end
 	local function func_onClick()
