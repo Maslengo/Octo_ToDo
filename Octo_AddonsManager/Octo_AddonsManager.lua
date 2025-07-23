@@ -158,11 +158,7 @@ end
 local func_OnAcquired do
 	------------------------------------------------
 	local function func_OnEnter(frame)
-		E:func_TooltipOnEnter(frame)
-	end
-	------------------------------------------------
-	local function func_OnOnLeave(frame)
-		E:func_TooltipOnLeave(frame)
+		E:func_OctoTooltip_OnEnter(frame)
 	end
 	------------------------------------------------
 	function func_OnAcquired(owner, frame, data, new)
@@ -213,7 +209,6 @@ local func_OnAcquired do
 			-- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 			frame.third:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 			frame.third:SetScript("OnEnter", func_OnEnter)
-			frame.third:SetScript("OnLeave", func_OnOnLeave)
 			frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+AddonHeight+AddonHeight+2, 0)
 			frame.third.textLEFT:SetFontObject(OctoFont11)
@@ -551,10 +546,7 @@ function Octo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 				DisableAllTooltip[#DisableAllTooltip+1] = {E:func_texturefromIcon(E:func_GetAddoniconTexture(name))..E:func_GetAddonTitle(name), E:func_texturefromIcon([[Interface\AddOns\Octo\Media\SimpleAddonManager\lock]])}
 			end
 			frame_DisableAll.tooltip = DisableAllTooltip
-			E:func_TooltipOnEnter(self, false, false)
-	end)
-	frame_DisableAll:SetScript("OnLeave", function()
-		E:func_TooltipOnLeave(frame_DisableAll)
+			E:func_OctoTooltip_OnEnter(self, false, false)
 	end)
 	----------------------------------------------------------------
 	local frame_OkayButton = CreateFrame("Button", "frame_OkayButton", Octo_MainFrame_AddonsManager)

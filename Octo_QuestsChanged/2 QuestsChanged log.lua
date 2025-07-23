@@ -84,26 +84,6 @@ end
 function E:BuildQuestLog()
 	local function Line_OnEnter(self)
 		local quest = self.data
-		if quest then
-			GameTooltip:SetOwner(self, "ANCHOR_LEFT")
-			GameTooltip:AddLine(E.quest_names[quest.id] or UNKNOWN)
-			GameTooltip:AddDoubleLine("id", quest.id)
-			GameTooltip:AddDoubleLine("mapID", quest.mapID)
-			if quest.level then
-				-- pre-8.0
-				GameTooltip:AddDoubleLine("level", quest.level)
-			end
-			GameTooltip:AddDoubleLine("coords", ("%.2f, %.2f"):format(quest.x * 100, quest.y * 100))
-			GameTooltip:AddDoubleLine("time", quest.time)
-			GameTooltip:AddDoubleLine(" ", date("%c", quest.time))
-			if C_QuestLog.IsQuestFlaggedCompletedOnAccount and C_QuestLog.IsQuestFlaggedCompletedOnAccount(quest.id) then
-				GameTooltip:AddLine(ACCOUNT_COMPLETED_QUEST_LABEL, ACCOUNT_WIDE_FONT_COLOR:GetRGB())
-			end
-			GameTooltip:AddLine("Left-click for waypoint", 0, 1, 1)
-			GameTooltip:AddLine("Shift-click to copy", 0, 1, 1)
-			GameTooltip:AddLine("Right-click to remove", 0, 1, 1)
-			GameTooltip:Show()
-		end
 	end
 	local function Line_OnClick(self, button, down)
 		local quest = self.data
@@ -161,9 +141,6 @@ function E:BuildQuestLog()
 			line.Divider:SetPoint("BOTTOMLEFT")
 			line.Divider:SetPoint("BOTTOMRIGHT")
 			line:SetScript("OnEnter", Line_OnEnter)
-			line:SetScript("OnLeave", function()
-				E:func_TooltipOnLeave(line)
-			end)
 			line:SetScript("OnClick", Line_OnClick)
 			line:SetScript("OnShow", Time_OnShow)
 			line:RegisterForClicks("LeftButtonUp","RightButtonUp")
@@ -209,20 +186,6 @@ end
 function E:BuildVignetteLog()
 	local function Line_OnEnter(self)
 		local vignette = self.data
-		if vignette then
-			GameTooltip:SetOwner(self, "ANCHOR_LEFT")
-			GameTooltip:AddLine(vignette.name or UNKNOWN)
-			GameTooltip:AddDoubleLine("id", vignette.id)
-			GameTooltip:AddDoubleLine("mapID", vignette.mapID)
-			GameTooltip:AddDoubleLine("atlas", vignette.atlas)
-			GameTooltip:AddDoubleLine("coords", ("%.2f, %.2f"):format(vignette.x * 100, vignette.y * 100))
-			GameTooltip:AddDoubleLine("time", vignette.time)
-			GameTooltip:AddDoubleLine(" ", date("%c", vignette.time))
-			GameTooltip:AddLine("Left-click for waypoint", 0, 1, 1)
-			GameTooltip:AddLine("Shift-click to copy", 0, 1, 1)
-			GameTooltip:AddLine("Right-click to remove", 0, 1, 1)
-			GameTooltip:Show()
-		end
 	end
 	local function Line_OnClick(self, button, down)
 		local vignette = self.data
@@ -274,9 +237,6 @@ function E:BuildVignetteLog()
 			line.Coords:SetPoint("TOPRIGHT", line.Location, "BOTTOMRIGHT")
 			line.Coords:SetPoint("BOTTOM")
 			line:SetScript("OnEnter", Line_OnEnter)
-			line:SetScript("OnLeave", function()
-				E:func_TooltipOnLeave(line)
-			end)
 			line:SetScript("OnClick", Line_OnClick)
 			line:SetScript("OnShow", function(self) if self.data then self.Time:SetText(E.FormatLastSeen(self.data.time)) end end)
 			line:RegisterForClicks("LeftButtonUp","RightButtonUp")

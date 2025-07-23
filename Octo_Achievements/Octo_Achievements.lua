@@ -60,11 +60,7 @@ local func_OnAcquired do
 	end
 	------------------------------------------------
 	local function func_OnEnter(frame)
-		E:func_TooltipOnEnter(frame, false, false)
-	end
-	------------------------------------------------
-	local function func_OnOnLeave(frame)
-		E:func_TooltipOnLeave(frame)
+		E:func_OctoTooltip_OnEnter(frame, false, false)
 	end
 	------------------------------------------------
 	function func_OnAcquired(owner, frame, data, new)
@@ -116,7 +112,6 @@ local func_OnAcquired do
 			------------------------------------------------
 			frame:SetScript("OnClick", func_OnClick)
 			frame:SetScript("OnEnter", func_OnEnter)
-			frame:SetScript("OnLeave", func_OnOnLeave)
 			------------------------------------------------
 		end
 	end
@@ -251,12 +246,13 @@ function Octo_EventFrame_Achievements:func_CreateMyDataProvider()
 				end
 			end
 		end
-		if count > 0 and count < MainFrameDefaultLines then
-			Octo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*count)
-		elseif count > MainFrameDefaultLines then
+
+		if count > MainFrameDefaultLines then
 			Octo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
 		elseif count == 0 then
 			Octo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*1)
+		else
+			Octo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*count)
 		end
 		Octo_EventFrame_Achievements:Update()
 	end

@@ -1440,10 +1440,7 @@ end
 
 ----------------------------------------------------------------
 function E:func_fixdate(date)
-	-- GameTooltip:AddDoubleLine(E.WOW_Artifact_Color..(L["Current Date"]).."|r", E.WOW_Artifact_Color..(date("%d/%m/%Y").."|r"))
-	-- local curdate = (FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year))
 	local vivod = ("%.2d"):format(date)
-	--return format("%.2d", date)
 	return vivod
 end
 ----------------------------------------------------------------
@@ -1534,21 +1531,17 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 			frame:SetScript("OnEnter", function(self)
 					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
 					E:FrameColor(self, id, curType)
-					-- GameTooltip:ClearLines()
-					-- GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
-					E:func_TooltipOnEnter(frame)
+					E:func_OctoTooltip_OnEnter(frame)
 					if curType == "item" or curType == "toy" then
 						GameTooltip:AddDoubleLine(E:func_GetItemNameByID(id), E:func_SecondsToClock(E:func_GetItemCooldown(id)))
 					else
 						GameTooltip:AddDoubleLine(E:func_GetSpellName(id), E:func_SecondsToClock(E:func_GetSpellCooldown(id)))
 						GameTooltip:AddDoubleLine(E:func_GetSpellSubtext(id))
 					end
-					-- GameTooltip:Show()
 			end)
 			frame:SetScript("OnLeave", function(self)
 					self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 					E:FrameColor(self, id, curType)
-					E:func_TooltipOnLeave(frame)
 			end)
 			frame:SetScript("OnMouseDown", function(self)
 					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
@@ -2351,17 +2344,23 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local specIcon, color, Name
 			local RIGHT1 = ""
+			local RIGHT2 = ""
 			local curServer, curPers = "", ""
 			if myType == "professions" then
 				local charProf = CharInfo.MASLENGO.professions
 				for i = 1, 2 do
 					if charProf[i] and charProf[i].skillLine then
-						local leftText = E:func_ProfessionIcon(charProf[i].skillLine)
-						local RightText = charProf[i].skillLevel.."/"..charProf[i].maxSkillLevel
+						local icon = E:func_ProfessionIcon(charProf[i].skillLine)
+						local vivod = charProf[i].skillLevel.."/"..charProf[i].maxSkillLevel
 						if charProf[i].skillModifier then
-							RightText = charProf[i].skillLevel.."|cff00FF00+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
+							vivod = charProf[i].skillLevel.."|cff00FF00+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
 						end
-						RIGHT1 = RIGHT1 .. leftText..RightText
+						if i == 1 then
+							RIGHT1 = RIGHT1 ..vivod.. icon
+						end
+						if i == 2 then
+							RIGHT2 = RIGHT2 ..vivod.. icon
+						end
 						RIGHTforSORT = charProf[i].skillLine
 						total = total + i
 					end
@@ -2429,7 +2428,7 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 				if CharInfo.PlayerData.curServer ~= E.curServer then
 					curServer = "-"..CharInfo.PlayerData.curServer
 				end
-				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT1, RIGHTforSORT}
+				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT1, RIGHT2, RIGHTforSORT}
 				if GUID == E.curGUID then
 					tooltip.GUID = GUID
 				end
@@ -2451,33 +2450,31 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 	end
 	if total ~= 0 then
 		table.sort(sorted, function(a, b)
-				if a[8] == b[8] then
+				if a[9] == b[9] then
 					return a[3] < b[3]
 				end
-				return a[8] > b[8]
+				return a[9] > b[9]
 		end)
 		----------------------------------------------------------------
 		if myType == "ItemLevel" then
-			tooltip.Header = {" ", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
+			tooltip.Header = {CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
 		elseif myType == "Money" then
-			tooltip.Header = {" ", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
-			-- tooltip[#tooltip+1] = {" ", TOTAL..": "..GetCoinTextureString(total)}
+			tooltip.Header = {TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
+			-- tooltip[#tooltip+1] = {TOTAL..": "..GetCoinTextureString(total)}
 		elseif myType == "Online" then
-			tooltip.Header = {" ", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
+			tooltip.Header = {TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
 		elseif myType == "Currency" then
-			tooltip.Header = {" ", TOTAL..": "..total}
+			tooltip.Header = {TOTAL..": "..total}
 		elseif myType == "Item" then
-			tooltip.Header = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), " ", TOTAL..": "..total}
+			tooltip.Header = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID),   TOTAL..": "..total}
 		elseif myType == "Currency_Covenant_Anima" then
-			tooltip.Header = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", " ", total}
+			tooltip.Header = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r",   total}
 		elseif myType == "Currency_Covenant_Renown" then
-			tooltip.Header = {E:func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", " ", total}
+			tooltip.Header = {E:func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r",   total}
 		end
 		----------------------------------------------------------------
 		for _, v in ipairs(sorted) do
-			-- if #tooltip < totalPersToShow then
-				tooltip[#tooltip+1] = {v[1]..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[7]}
-			-- end
+			tooltip[#tooltip+1] = {v[1]..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[7]..v[8]} -- 9 forSORT
 		end
 		-- local hidden = #sorted - #tooltip
 		-- if hidden > 0 then

@@ -152,10 +152,6 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 
 	local frameData = data.parent.dataProvider.linearized
 
-	-- Назначаем обработчики событий
-	frame:SetScript("OnLeave", function()
-		E:func_TooltipOnLeave(frame)
-	end)
 	frame:SetScript("OnHide", func_OnHideLEFT)
 	frame:SetScript("OnShow", func_OnShowLEFT)
 
@@ -170,9 +166,6 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	-- 		GameTooltip:Show()
 	-- end)
 
-	frame:SetScript("OnLeave", function()
-		E:func_TooltipOnLeave(frame)
-	end)
 end
 
 ----------------------------------------------------------------
@@ -225,10 +218,7 @@ local func_OnAcquiredCENT do
 						f.textCENT:SetTextColor(1, 1, 1, 1)
 
 						-- Обработчики событий
-						f:SetScript("OnEnter", function() E:func_TooltipOnEnter(f) end)
-						f:SetScript("OnLeave", function()
-							E:func_TooltipOnLeave(f)
-						end)
+						f:SetScript("OnEnter", function() E:func_OctoTooltip_OnEnter(f) end)
 						f:SetScript("OnHide", f.Hide)
 						f.curCharTextureBG:SetScript("OnHide", f.curCharTextureBG.Hide)
 
@@ -239,8 +229,8 @@ local func_OnAcquiredCENT do
 		})
 
 		-- Обработчики событий для основного фрейма
-		frame:SetScript("OnEnter", func_OnEnter)
-		frame:SetScript("OnLeave", func_OnLeave)
+		-- frame:SetScript("OnEnter", func_OnEnter)
+		-- frame:SetScript("OnLeave", func_OnLeave)
 	end
 end
 
@@ -295,7 +285,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 				tooltipOCTO = E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 			end
 			frame.tooltip = tooltipOCTO
-			E:func_TooltipOnEnter(frame)
+			E:func_OctoTooltip_OnEnter(frame)
 	end)
 end
 
@@ -707,13 +697,13 @@ function E:func_CreateMyDataProvider()
 			-- Обработчики событий для фрейма персонажа
 			curCharFrame:SetScript("OnEnter", function(self)
 					curCharFrame.tooltip = E:func_Tooltip_Chars(CharInfo)
-					E:func_TooltipOnEnter(curCharFrame, {"BOTTOM", "TOP"})
+					-- E:func_OctoTooltip_OnEnter(curCharFrame, {"BOTTOM", "TOP"})
+					E:func_OctoTooltip_OnEnter(curCharFrame)
+
+
 			end)
 
 
-			curCharFrame:SetScript("OnLeave", function()
-				E:func_TooltipOnLeave(curCharFrame)
-			end)
 			curCharFrame:Show()
 		end
 	end

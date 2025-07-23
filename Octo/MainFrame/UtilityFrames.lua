@@ -34,10 +34,7 @@ local function CreateUtilButton(name, frame, xOffset, texture, func_onEnter, fun
 	if func_onEnter then
 		button:SetScript("OnEnter", function(self)
 				button.tooltip = func_onEnter()
-				E:func_TooltipOnEnter(button, {"BOTTOM", "TOP"})
-		end)
-		button:SetScript("OnLeave", function()
-				E:func_TooltipOnLeave()
+				E:func_OctoTooltip_OnEnter(button, {"BOTTOM", "TOP"})
 		end)
 	end
 	if func_onClick then

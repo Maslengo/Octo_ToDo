@@ -223,7 +223,6 @@ local func_OnAcquired do
 
 
 
-			-- frame:SetScript("OnLeave", GameTooltip_Hide)
 			frame:SetScript("OnHide", func_OnHideFirst)
 			frame:SetScript("OnShow", func_OnShowFirst)
 
@@ -418,12 +417,13 @@ function E:QuestsChanged_CreateMyDataProvider()
 	DataProvider:Sort()
 	-- SetDataProvider триггерит создания фреймов
 	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
-	if count > 0 and count < MainFrameDefaultLines then
-		Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*count)
-	elseif count > MainFrameDefaultLines then
+
+	if count > MainFrameDefaultLines then
 		Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*MainFrameDefaultLines)
 	elseif count == 0 then
 		Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*1)
+	else
+		Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*count)
 	end
 end
 ----------------------------------------------------------------

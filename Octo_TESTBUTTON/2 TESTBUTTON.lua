@@ -2,12 +2,9 @@ local GlobalAddonName, E = ...
 -- if not Octo_ToDo_DB_Vars.Enable_ToDo then return end
 local Octo_EventFrame = CreateFrame("FRAME")
 Octo_EventFrame:Hide()
-
-
 -- надо добавить если нельзя юзать в комбате ПОФИКСИТЬ
 -- ActionButtonCastingAnimFrameTemplate
 -- self.SpellCastAnimFrame:Setup(actionButtonCastType)
-
 ----------------------------------------------------------------
 -- Frequently used functions and variables moved to the top
 ----------------------------------------------------------------
@@ -24,7 +21,6 @@ local C_Spell = C_Spell
 local C_Timer = C_Timer
 local GameTooltip = GameTooltip
 local C_TradeSkillUI = C_TradeSkillUI
-
 local GetProfessionInfo = GetProfessionInfo
 local BNGetInfo = BNGetInfo
 local PlayerHasToy = PlayerHasToy
@@ -37,7 +33,6 @@ local WorldFrame = WorldFrame
 local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-
 -- Spell functions
 local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
 local GetSpellDescription = GetSpellDescription or C_Spell.GetSpellDescription
@@ -59,22 +54,18 @@ local GetItemQualityColor = GetItemQualityColor or C_Item.GetItemQualityColor
 local IsItemDataCachedByID = IsItemDataCachedByID or C_Item.IsItemDataCachedByID
 local IsAnimaItemByID = IsAnimaItemByID or C_Item.IsAnimaItemByID
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
-
 local secureButtons = {}
 local secureButtonsPool = {}
-
 local MyTESTid = 26573 -- Лужа паладина
 local globalWidth, globalHeight = 40, 40 -- defaults
 local DEFAULT_ICON = "Interface\\Icons\\INV_Misc_QuestionMark"
 local HighlightTexture = "Interface\\AddOns\\Octo\\Media\\BUTTON\\GlowTexture.tga"
-
 ----------------------------------------------------------------
 -- Optimized helper functions
 ----------------------------------------------------------------
 local function IsItemEquipped(id)
 	return C_Item.IsEquippableItem(id) and C_Item.IsEquippedItem(id)
 end
-
 local function SetTextureByItemId(frame, itemId)
 	frame.Icon:SetTexture(DEFAULT_ICON) -- Temp while loading
 	local item = Item:CreateFromItemID(itemId)
@@ -83,11 +74,9 @@ local function SetTextureByItemId(frame, itemId)
 			frame.Icon:SetTexture(E:func_GetItemIconByID(itemId))
 	end)
 end
-
 local function ClearAllInvalidHighlights()
 	for _, button in pairs(secureButtons) do
 		-- button:ClearHighlightTexture()
-
 		if button:GetAttribute("item") ~= nil then
 			local id = string.match(button:GetAttribute("item"), "%d+")
 			if IsItemEquipped(id) then
@@ -103,7 +92,6 @@ local function createCooldownFrame(frame)
 	end
 	frame.cooldown = CreateFrame("Cooldown", nil, frame, "CooldownFrameTemplate")
 	frame.cooldown:SetAllPoints()
-
 	function frame.cooldown:CheckCooldown(id, curType)
 		if not id or not E:func_IsAvailable(id, curType) then return end
 		if frame:IsVisible() then
@@ -123,14 +111,10 @@ local function createCooldownFrame(frame)
 			end
 		end
 	end
-
 	return frame.cooldown
 end
-
 ----------------------------------------------------------------
 function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
-
-
 	-- local function CreateButton(parent, curType, text, id)
 	if id and type(id) == "number" then
 		local curType = curType or "spell"
@@ -145,7 +129,6 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 			button.Text:SetPoint("BOTTOM", button, "BOTTOM", 0, 5)
 			table_insert(secureButtons, button)
 		end
-
 		function button:Recycle()
 			self:SetParent(nil)
 			self:ClearAllPoints()
@@ -153,24 +136,16 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 			if curType == "item" and not C_Item.IsEquippedItem(id) then
 				-- self:ClearHighlightTexture()
 			end
-
 			table_insert(secureButtonsPool, self)
 		end
-
 		button:Hide()
 		-- button:EnableMouse(true)
-
-
-
-
 		button.Text:SetPoint('BOTTOMRIGHT', button, 'BOTTOMRIGHT', -1, 0)
 		button.Text:SetText(text)
-
 		button:SetScript("OnEnter", function(self)
 				GameTooltip:SetOwner(self, "ANCHOR_RIGHT", 10, 10)
 				GameTooltip:ClearLines()
 				-- self.Highlight:Show()
-
 				if curType == "item" then
 					GameTooltip:SetItemByID(id)
 				elseif curType == "item_teleports" then
@@ -197,14 +172,6 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 					GameTooltip:Show()
 				end
 		end)
-
-		button:SetScript("OnLeave", function()
-				E:func_TooltipOnLeave(button)
-			end)
-
-
-
-
 		button:SetScript("PostClick", function(self)
 				if curType == "item" and C_Item.IsEquippableItem(id) then
 					C_Timer.After(0.25, function()
@@ -215,18 +182,15 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 					end)
 				end
 		end)
-
 		button:SetScript("OnShow", function(self)
 				self.cooldown:CheckCooldown(id, curType)
 				self:RegisterEvent("ACTIONBAR_UPDATE_COOLDOWN")
 				-- self:RegisterEvent("PLAYER_REGEN_DISABLED")
 		end)
-
 		button:SetScript("OnHide", function(self)
 				self:UnregisterEvent("ACTIONBAR_UPDATE_COOLDOWN") -- ПОФИКСИТЬ
 				-- self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end)
-
 		button:SetScript("OnEvent", function(self, event)
 				if event == "ACTIONBAR_UPDATE_COOLDOWN" then
 					if curType == "spell" and IsSpellKnown(id) and C_Spell.GetSpellCharges(id) then
@@ -234,9 +198,7 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 					end
 					self.cooldown:CheckCooldown(id, curType)
 				end
-
 		end)
-
 		-- Textures
 		-- Icon
 		button.Icon = button:CreateTexture(nil, "BACKGROUND")
@@ -252,22 +214,16 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 		-- Highlight
 		-- button.Highlight = button:CreateTexture()
 		-- button.Highlight:SetAllPoints(button)
-
-
 		button:SetHighlightTexture(HighlightTexture)
 		button.HighlightTexture = button:GetHighlightTexture()
 		-- button.Highlight:Hide()
 		-- button:SetHighlightAtlas("UI-HUD-ActionBar-IconFrame-Mouseover", "ADD")
 		-- button.HighlightTexture:SetSize(size, size)
-
-
-
 		if curType == "spell" then
 			button.Icon:SetTexture(E:func_GetSpellIcon(id))
 		else -- item or toy
 			SetTextureByItemId(button, id)
 		end
-
 		-- Attribute
 		if E:func_IsAvailable(id, curType) == false then
 			button.Icon:SetDesaturated(true)
@@ -275,7 +231,6 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 		else
 			button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 			-- button:RegisterForClicks("AnyDown", "AnyUp")
-
 			if curType == "item" or curType == "toy" then
 				button:SetAttribute("type", "item")
 				button:SetAttribute("item", "item:"..id)
@@ -284,15 +239,12 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 				button:SetAttribute("spell", GetSpellName(id)) -- или button:SetAttribute("spell", id) для ID
 			end
 		end
-
-
 		-- Positioning/Size
 		button:SetParent(parent)
 		button:SetPoint(point, parent, rPoint, x, y)
 		button:SetSize(size, size)
 		button:SetFrameStrata("HIGH")
 		button:SetFrameLevel(102)
-
 		return button
 	end
 end
@@ -319,15 +271,13 @@ function Octo_EventFrame:ELVUI_STYLE()
 		skinButton(button)
 	end
 end
-
 function Octo_EventFrame:OnPlayerLogin()
 	if ElvDB then
 		C_Timer.After(1, function()
-			self:ELVUI_STYLE()
+				self:ELVUI_STYLE()
 		end)
 	end
 end
-
 function Octo_EventFrame:Update()
 	-- for _, frame in ipairs(secureButtons) do
 	-- if not frame:IsShown() then
@@ -335,21 +285,18 @@ function Octo_EventFrame:Update()
 	-- end
 	-- end
 end
-
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 }
 E:func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
-
 ----------------------------------------------------------------
 function Octo_EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 end
-
 function Octo_EventFrame:PLAYER_LOGIN()
 	self:OnPlayerLogin()
 end

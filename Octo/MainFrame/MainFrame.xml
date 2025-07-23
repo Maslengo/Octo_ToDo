@@ -4,6 +4,6 @@
 	<Script file="MainFrame\Tooltip.lua"/>
 	<Script file="MainFrame\MainFrame.lua"/>
 	<Script file="MainFrame\UtilityFrames.lua"/>
-	<Script file="MainFrame\TESTFRAME.lua"/>
+	<Script file="MainFrame\OctoTooltip.lua"/>
 
 </Ui>

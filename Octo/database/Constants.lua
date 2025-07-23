@@ -1,9 +1,6 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
 
-local tooltip = E.tooltip or CreateFrame("GameTooltip", "OctoTooltip", nil, "GameTooltipTemplate")
-E.tooltip = tooltip
-
 E.PromiseItem = {}
 E.PromiseSpell = {}
 E.PromiseQuest = {}
@@ -86,24 +83,14 @@ E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\03_Borders\\Octo.
 E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\02_Fonts\\Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
 
+E.OctoFont11 = CreateFont("OctoFont11")
+E.OctoFont11:CopyFontObject(GameTooltipText)-- local font = GameFontHighlightSmallLeft
+E.OctoFont11:SetFont(E.Octo_font, 11, "OUTLINE")
 
+E.OctoFont22 = CreateFont("OctoFont22")
+E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
+E.OctoFont22:SetFont(E.Octo_font, 22, "OUTLINE")
 
-
-
-
-E.fontObject11 = CreateFont("OctoFont11")
-E.fontObject11:CopyFontObject(GameTooltipText)-- local font = GameFontHighlightSmallLeft
-E.fontObject11:SetFont(E.Octo_font, 11, "OUTLINE")
-
-
-
-
-
-
-
-E.fontObject22 = CreateFont("OctoFont22")
-E.fontObject22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft
-E.fontObject22:SetFont(E.Octo_font, 22, "OUTLINE")
 E.IconTexture = C_AddOns.GetAddOnMetadata(GlobalAddonName, "IconTexture")
 E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- GetExpansionLevel()
