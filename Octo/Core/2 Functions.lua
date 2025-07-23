@@ -3,7 +3,6 @@ local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, stri
 ----------------------------------------------------------------
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-local LibQTip = LibStub("LibQTip-2.0") -- Для тултипов
 ----------------------------------------------------------------
 -- Кеширование глобальных функций и таблиц
 local sort = table.sort
@@ -2156,8 +2155,8 @@ function E:func_sorted()
 				if not a or not b then return false end
 				local a_UnitLevel = a.PlayerData.UnitLevel or 0
 				local b_UnitLevel = b.PlayerData.UnitLevel or 0
-				local a_avgItemLevel = a.PlayerData.avgItemLevel or 0
-				local b_avgItemLevel = b.PlayerData.avgItemLevel or 0
+				local a_avgItemLevelEquipped = a.PlayerData.avgItemLevelEquipped or 0
+				local b_avgItemLevelEquipped = b.PlayerData.avgItemLevelEquipped or 0
 				local a_Name = a.PlayerData.Name or "noname"
 				local b_Name = b.PlayerData.Name or "noname"
 				-- Сначала сортируем по серверу (в алфавитном порядке)
@@ -2168,9 +2167,9 @@ function E:func_sorted()
 				if a_UnitLevel ~= b_UnitLevel then
 					return a_UnitLevel > b_UnitLevel
 				end
-				-- Затем по уровню предметов (по убыванию) -- avgItemLevelEquipped
-				if a_avgItemLevel ~= b_avgItemLevel then
-					return a_avgItemLevel > b_avgItemLevel
+				-- Затем по уровню предметов (по убыванию) -- avgItemLevelEquippedEquipped
+				if a_avgItemLevelEquipped ~= b_avgItemLevelEquipped then
+					return a_avgItemLevelEquipped > b_avgItemLevelEquipped
 				end
 				-- В конце по имени (по возрастанию)
 				return a_Name < b_Name
@@ -2352,31 +2351,21 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local specIcon, color, Name
 			local RIGHT1 = ""
-			local RIGHT2 = ""
 			local curServer, curPers = "", ""
 			if myType == "professions" then
 				local charProf = CharInfo.MASLENGO.professions
-					if charProf[1] and charProf[1].skillLine then
-						local leftText = E:func_ProfessionIcon(charProf[1].skillLine)
-						local RightText = charProf[1].skillLevel.."/"..charProf[1].maxSkillLevel
-						if charProf[1].skillModifier then
-							RightText = charProf[1].skillLevel.."|cff00FF00+"..charProf[1].skillModifier.."|r".."/"..charProf[1].maxSkillLevel
+				for i = 1, 2 do
+					if charProf[i] and charProf[i].skillLine then
+						local leftText = E:func_ProfessionIcon(charProf[i].skillLine)
+						local RightText = charProf[i].skillLevel.."/"..charProf[i].maxSkillLevel
+						if charProf[i].skillModifier then
+							RightText = charProf[i].skillLevel.."|cff00FF00+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
 						end
-						RIGHT1 = RIGHT1..leftText..RightText
-						RIGHTforSORT = charProf[1].skillLine
-						total = total + 1
+						RIGHT1 = RIGHT1 .. leftText..RightText
+						RIGHTforSORT = charProf[i].skillLine
+						total = total + i
 					end
-
-					if charProf[2] and charProf[2].skillLine then
-						local leftText = E:func_ProfessionIcon(charProf[2].skillLine)
-						local RightText = charProf[2].skillLevel.."/"..charProf[2].maxSkillLevel
-						if charProf[2].skillModifier then
-							RightText = charProf[2].skillLevel.."|cff00FF00+"..charProf[2].skillModifier.."|r".."/"..charProf[2].maxSkillLevel
-						end
-						RIGHT2 = RIGHT2..leftText..RightText
-						RIGHTforSORT = charProf[2].skillLine
-						total = total + 2
-					end
+				end
 
 			elseif myType == "ItemLevel" and CharInfo.PlayerData.avgItemLevel then
 				local hexcolorItemLevel = "|cff000000"
@@ -2440,7 +2429,7 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 				if CharInfo.PlayerData.curServer ~= E.curServer then
 					curServer = "-"..CharInfo.PlayerData.curServer
 				end
-				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT1, RIGHT2,    RIGHTforSORT}
+				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT1, RIGHTforSORT}
 				if GUID == E.curGUID then
 					tooltip.GUID = GUID
 				end
@@ -2462,21 +2451,21 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 	end
 	if total ~= 0 then
 		table.sort(sorted, function(a, b)
-				if a[9] == b[9] then
+				if a[8] == b[8] then
 					return a[3] < b[3]
 				end
-				return a[9] > b[9]
+				return a[8] > b[8]
 		end)
 		----------------------------------------------------------------
 		if myType == "ItemLevel" then
-			tooltip.Header = {" ", " ", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
+			tooltip.Header = {" ", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
 		elseif myType == "Money" then
-			tooltip.Header = {" ", " ", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
+			tooltip.Header = {" ", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
 			-- tooltip[#tooltip+1] = {" ", TOTAL..": "..GetCoinTextureString(total)}
 		elseif myType == "Online" then
-			tooltip.Header = {" ", " ", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
+			tooltip.Header = {" ", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
 		elseif myType == "Currency" then
-			tooltip.Header = {" ", " ", TOTAL..": "..total}
+			tooltip.Header = {" ", TOTAL..": "..total}
 		elseif myType == "Item" then
 			tooltip.Header = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), " ", TOTAL..": "..total}
 		elseif myType == "Currency_Covenant_Anima" then
@@ -2487,7 +2476,7 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		----------------------------------------------------------------
 		for _, v in ipairs(sorted) do
 			-- if #tooltip < totalPersToShow then
-				tooltip[#tooltip+1] = {v[1]..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[8], v[7]}
+				tooltip[#tooltip+1] = {v[1]..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[7]}
 			-- end
 		end
 		-- local hidden = #sorted - #tooltip
@@ -2613,9 +2602,8 @@ end
 ----------------------------------------------------------------
 function E:func_GetCurrentRegionName()
 	if GetCurrentRegionName() == "" then
-		return "PTR"
+		return "PTR "..E.buildVersion
 	end
 	return GetCurrentRegionName()
 end
-----------------------------------------------------------------
 ----------------------------------------------------------------

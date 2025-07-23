@@ -8,7 +8,6 @@ local LibDBIcon = LibStub("LibDBIcon-1.0") -- Для иконки на мини�
 local LibSharedMedia = LibStub("LibSharedMedia-3.0") -- Для медиа-ресурсов
 local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронной загрузки
 local LibSFDropDown = LibStub("LibSFDropDown-1.5") -- Для выпадающих меню
-local LibQTip = LibStub("LibQTip-2.0") -- Для тултипов
 ----------------------------------------------------------------
 -- Создаем фреймы для работы аддона
 local Octo_Event_UtilityFrames = CreateFrame("FRAME") -- Фрейм для обработки событий
@@ -38,7 +37,7 @@ local function CreateUtilButton(name, frame, xOffset, texture, func_onEnter, fun
 				E:func_TooltipOnEnter(button, {"BOTTOM", "TOP"})
 		end)
 		button:SetScript("OnLeave", function()
-				button.tooltip = nil
+				E:func_TooltipOnLeave()
 		end)
 	end
 	if func_onClick then
@@ -60,7 +59,7 @@ end
 function Octo_Event_UtilityFrames:Octo_CloseButton(frame, addonIconTexture)
 	local function func_onEnter()
 		local tooltip = {}
-		tooltip[#tooltip+1] = {" ", E.WOW_Artifact_Color..CLOSE.."|r", " "}
+		tooltip[#tooltip+1] = {E.WOW_Artifact_Color..CLOSE.."|r"}
 		return tooltip
 	end
 	local function func_onClick()
