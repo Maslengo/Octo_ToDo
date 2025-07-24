@@ -240,6 +240,9 @@
         "NEVER",
         "OpenWorldMap",
         "UiMapPoint",
-        "MYTHIC_DUNGEON_SEASON"
-    ]
+        "MYTHIC_DUNGEON_SEASON",
+        "FRIENDS_LIST_ZONE",
+        "BIND_ZONE_DISPLAY"
+    ],
+    "Lua.type.weakUnionCheck": true
 }

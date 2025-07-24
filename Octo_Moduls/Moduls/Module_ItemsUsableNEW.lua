@@ -315,26 +315,40 @@ function ItemsUsable_EventFrame:func_ItemsUsable_OnStart(frame)
 				local itemID = containerInfo.itemID
 				local quality = containerInfo.quality
 				-- Проверяем предметы для использования
-				local requiredCount = E.OctoTable_itemID_ItemsUsable[itemID]
-				if requiredCount and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= requiredCount then
-					if not UsableTBL[itemID] then
-						UsableTBL[itemID] = {
-							count = E:func_GetItemCount(itemID, false, false, false, false),
-							quality = quality,
-							usable = true
-						}
-					end
-				end
-				-- Проверяем предметы для удаления
-				if E.OctoTable_itemID_ItemsDelete[itemID] then
-					if not UsableTBL[itemID] then
-						UsableTBL[itemID] = {
-							count = E:func_GetItemCount(itemID, false, false, false, false),
-							quality = quality,
-							usable = false
-						}
-					end
-				end
+				-- local requiredCount = E.OctoTable_itemID_ItemsUsable[itemID]
+				-- if requiredCount and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= requiredCount then
+				-- 	if not UsableTBL[itemID] then
+				-- 		UsableTBL[itemID] = {
+				-- 			count = E:func_GetItemCount(itemID, false, false, false, false),
+				-- 			quality = quality,
+				-- 			usable = true
+				-- 		}
+				-- 	end
+				-- end
+				-- -- Проверяем предметы для удаления
+				-- if E.OctoTable_itemID_ItemsDelete[itemID] then
+				-- 	if not UsableTBL[itemID] then
+				-- 		UsableTBL[itemID] = {
+				-- 			count = E:func_GetItemCount(itemID, false, false, false, false),
+				-- 			quality = quality,
+				-- 			usable = false
+				-- 		}
+				-- 	end
+				-- end
+
+
+
+					UsableTBL[itemID] = {
+						count = E:func_GetItemCount(itemID, false, false, false, false),
+						quality = quality,
+						usable = false
+					}
+
+
+
+
+
+
 			end
 		end
 	end
@@ -359,8 +373,9 @@ function ItemsUsable_EventFrame:func_ItemsUsable_OnStart(frame)
 		local itemID = item.itemID
 		NewTable[#NewTable + 1] = {
 			E:func_texturefromIcon(E:func_GetItemIconByID(itemID)) .. E:func_GetItemNameByID_MyQuality(itemID, item.quality),
-			item.usable and E.TRUE or E.FALSE,
-			E.Green_Color..item.count.."|r"  -- Используем уже подсчитанное количество
+			-- item.usable and E.TRUE or E.FALSE,
+			-- E.Green_Color..item.count.."|r",  -- Используем уже подсчитанное количество
+			E:func_ItemPriceTSM(itemID)
 		}
 	end
 	ItemsUsable_EventFrame:func_SmartAnchorTo(frame, point)

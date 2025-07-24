@@ -213,7 +213,7 @@ function E:func_GetItemNameByID(itemID)
 	if itemQuality then
 		vivod = vivod..ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
 	end
-	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
+	return vivod..E:func_ItemPriceTSM(itemID)..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E:func_GetItemNameByID_MyQuality(itemID, quality)
@@ -226,6 +226,29 @@ function E:func_GetItemNameByID_MyQuality(itemID, quality)
 		vivod = vivod..ITEM_QUALITY_COLORS[quality].color:WrapTextInColorCode(itemName)
 	end
 	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
+end
+----------------------------------------------------------------
+function E:func_ItemPriceTSM(itemID)
+	local vivod = ""
+	local count = E:func_GetItemCount(itemID, true, true, true, false)
+	if TSM_API then
+		local TSM_ItemIDtest = "i:"..itemID
+		-- /dump TSM_API.GetCustomPriceValue("DBMinBuyOut", "i:"..2589)
+		-- local CustomPriceValue = (TSM_API.GetCustomPriceValue("DBMinBuyOut", TSM_ItemIDtest)) or 0
+		local CustomPriceValue = (TSM_API.GetCustomPriceValue("DBMarket", TSM_ItemIDtest)) or 0
+		if count and count ~= 0 and CustomPriceValue ~= 0 then
+			if count ~= 1 then
+				vivod = vivod..E.Purple_Color.."x"..count.."|r "..C_CurrencyInfo.GetCoinTextureString(CustomPriceValue*count)
+			else
+				vivod = vivod..C_CurrencyInfo.GetCoinTextureString(CustomPriceValue)
+			end
+		end
+	end
+	if vivod ~= "" then
+		return " ("..vivod..")"
+	else
+		return ""
+	end
 end
 ----------------------------------------------------------------
 function E:func_LFGdungName(dID)
@@ -2458,7 +2481,7 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		if myType == "ItemLevel" then
 			tooltip.Header = {"", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
 		elseif myType == "Money" then
-			tooltip.Header = {"", TOTAL..": "..E:func_CompactNumberFormat(total/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+			tooltip.Header = {ACCOUNT_BANK_PANEL_TITLE..": "..E:func_CompactNumberFormat(C_Bank.FetchDepositedMoney(Enum.BankType.Account)/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t", TOTAL..": "..E:func_CompactNumberFormat(total/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
 			-- tooltip.Header = {"", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
 		elseif myType == "Online" then
 			tooltip.Header = {"", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
