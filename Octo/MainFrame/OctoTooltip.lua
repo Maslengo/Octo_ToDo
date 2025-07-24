@@ -113,11 +113,18 @@ function OctoTooltipEventFrame:Octo_Frame_init(frame, node)
 			end
 		end
 		lineFrames[i].text:SetJustifyH(justify)
+
+
+
+
 	end
 	-- Очищаем оставшиеся lineFrames (если данных меньше, чем фреймов)
 	for i = numData + 1, numLines do
 		lineFrames[i].text:SetText()
 	end
+
+
+
 end
 local function GetTipAnchor(frame)
 	local x, y = frame:GetCenter()
@@ -212,32 +219,100 @@ local function calculateColumnWidths(node)
 	end
 	return columnWidths
 end
+
+
+
+
+-- local function PrepareTableData(tbl)
+--     local lines = 0
+--     local columns = 0
+--     local DataProvider = CreateTreeDataProvider()
+--     local COLUMN_SIZES = {}
+
+--     -- Если есть заголовки, вычисляем их ширину, но не добавляем в DataProvider
+--     if tbl.Header then
+--         -- Создаем временный узел только для расчета ширины
+--         local tempHeaderNode = DataProvider:Insert(tbl.Header)
+--         for j, w in ipairs(calculateColumnWidths(tempHeaderNode)) do
+--             COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
+--         end
+--         DataProvider:Remove(tempHeaderNode) -- Удаляем, чтобы не мешал
+--     end
+
+--     -- Обрабатываем основные данные
+--     for q, v in ipairs(tbl) do
+--         local zxc = {}
+--         for i, value in ipairs(v) do
+--             if value ~= nil then
+--                 table.insert(zxc, value)
+--             end
+--         end
+--         if #zxc > 0 then
+--             local node = DataProvider:Insert(zxc)
+--             columns = #zxc
+--             for j, w in ipairs(calculateColumnWidths(node)) do
+--                 COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
+--             end
+--             lines = lines + 1
+--         end
+--     end
+
+--     -- Возвращаем DataProvider, Header (если есть) и размеры колонок
+--     return {
+--         DataProvider = DataProvider,
+--         Header = tbl.Header,  -- nil, если заголовков нет
+--         ColumnSizes = COLUMN_SIZES,
+--         LineCount = lines,
+--         ColumnCount = columns
+--     }
+-- end
+
+
+
+
+
+
 function OctoTooltipEventFrame:func_OctoTooltip_CreateDataProvider(tbl)
-	local lines = 0
-	local columns = 0
-	local DataProvider = CreateTreeDataProvider()
-	local COLUMN_SIZES = {}
-	for i, v in ipairs(tbl) do
-		local zxc = {}
-		for i, value in ipairs(v) do
-			if value ~= nil then
-				table.insert(zxc, value)
-			end
-		end
-		if #zxc > 0 then
-			local node = DataProvider:Insert(zxc)
-			columns = #zxc
-			for j, w in ipairs(calculateColumnWidths(node)) do
-				COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
-			end
-		end
+local lines = 0
+local columns = 0
+local DataProvider = CreateTreeDataProvider()
+local COLUMN_SIZES = {}
+
+	-- Вставляем заголовки, если они есть
+	if tbl.Header then
+	    local headerNode = DataProvider:Insert(tbl.Header)
+	    -- Вычисляем ширину колонок для заголовков
+	    for j, w in ipairs(calculateColumnWidths(headerNode)) do
+	        COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
+	    end
+	    lines = lines + 1
 	end
+
+	-- Вставляем остальные данные
+	for q, v in ipairs(tbl) do
+	    local zxc = {}
+	    for i, value in ipairs(v) do
+	        if value ~= nil then
+	            table.insert(zxc, value)
+	        end
+	    end
+	    if #zxc > 0 then
+	        local node = DataProvider:Insert(zxc)
+	        columns = #zxc
+	        for j, w in ipairs(calculateColumnWidths(node)) do
+	            COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
+	        end
+	        lines = lines + 1
+	    end
+	end
+
+
 	OctoTooltipEventFrame.COLUMN_SIZES = COLUMN_SIZES
 	local total_width = INDEND_TEST*2 -- ОТСТУП
 	for i = 1, columns do
 		total_width = total_width + OctoTooltipEventFrame.COLUMN_SIZES[i]
 	end
-	lines = #tbl
+	-- lines = #tbl
 	local shouldShowScrollBar = LINES_MAX < lines
 	OctoTooltipEventFrame.shouldShowScrollBar = shouldShowScrollBar
 	if shouldShowScrollBar then
@@ -269,70 +344,6 @@ function E:func_OctoTooltip_OnEnter(frame, point)
 		end)
 	end
 end
-local function Create_TestButton1()
-	local TestButton1 = CreateFrame("Button", "TestButton1", UIParent, "UIPanelButtonTemplate")
-	TestButton1:SetPoint("TOPLEFT", UIParent, 128, -64)
-	TestButton1:SetSize(100, 40)
-	TestButton1:SetText("ONE")
-	TestButton1:SetScript("OnEnter", function()
-			E:func_OctoTooltip_OnEnter(TestButton1)
-	end)
-	TestButton1:EnableMouse(true)
-	TestButton1:SetMovable(true)
-	TestButton1:SetScript("OnMouseDown", function(_, button)
-			if button == "LeftButton" then
-				TestButton1:SetAlpha(.5)
-				TestButton1:StartMoving()
-			end
-	end)
-	TestButton1:SetScript("OnMouseUp", function(_, button)
-			if button == "LeftButton" then
-				TestButton1:SetAlpha(1)
-				TestButton1:StopMovingOrSizing()
-			end
-	end)
-	local tooltip = {}
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		local data = CharInfo.PlayerData
-		tooltip[#tooltip+1] = {
-			data.classColorHex..data.Name.."|r",
-			data.specName,
-			data.loginDay,
-			data.curServerShort,
-			data.raceID
-		}
-		-- tooltip.ShownGUID = GUID
-	end
-	TestButton1.tooltip = tooltip
-end
-local function Create_TestButton2()
-	local TestButton2 = CreateFrame("Button", "TestButton2", UIParent, "UIPanelButtonTemplate")
-	TestButton2:SetPoint("TOPLEFT", UIParent, 128, -128)
-	TestButton2:SetSize(100, 40)
-	TestButton2:SetText("TWO")
-	TestButton2:SetScript("OnEnter", function()
-			E:func_OctoTooltip_OnEnter(TestButton2)
-	end)
-	TestButton2:EnableMouse(true)
-	TestButton2:SetMovable(true)
-	TestButton2:SetScript("OnMouseDown", function(_, button)
-			if button == "LeftButton" then
-				TestButton2:SetAlpha(.5)
-				TestButton2:StartMoving()
-			end
-	end)
-	TestButton2:SetScript("OnMouseUp", function(_, button)
-			if button == "LeftButton" then
-				TestButton2:SetAlpha(1)
-				TestButton2:StopMovingOrSizing()
-			end
-	end)
-	local tooltip = {}
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		tooltip[#tooltip+1] = {CharInfo.PlayerData.Name.."|r", E:func_CompactNumberFormat(CharInfo.PlayerData.Money/10000)}
-	end
-	TestButton2.tooltip = tooltip
-end
 local MyEventsTable = {
 	"ADDON_LOADED",
 }
@@ -341,8 +352,6 @@ function OctoTooltipEventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
-		Create_TestButton1()
-		Create_TestButton2()
 		self:Create_OctoTooltip()
 	end
 end

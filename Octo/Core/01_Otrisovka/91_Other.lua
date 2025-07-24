@@ -25,7 +25,8 @@ function E:func_Tooltip_Chars(CharInfo)
 	if CharInfo.PlayerData.classColorHex then
 		-- Name and guild info
 		if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer then
-			tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")"}
+			tooltip_Chars.Header = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")"}
+			-- tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")"}
 		end
 		if CharInfo.PlayerData.guildRankName and CharInfo.PlayerData.guildRankIndex then
 			tooltip_Chars[#tooltip_Chars+1] = {"<"..E.Green_Color..CharInfo.PlayerData.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.PlayerData.guildRankName.."|r".."]"}

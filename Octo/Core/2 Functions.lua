@@ -1436,8 +1436,7 @@ function E:func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 	-- ldbi:Show(AddonName)
 	----------------------------------------------------------------
 end
-	----------------------------------------------------------------
-
+----------------------------------------------------------------
 ----------------------------------------------------------------
 function E:func_fixdate(date)
 	local vivod = ("%.2d"):format(date)
@@ -2365,7 +2364,6 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 						total = total + i
 					end
 				end
-
 			elseif myType == "ItemLevel" and CharInfo.PlayerData.avgItemLevel then
 				local hexcolorItemLevel = "|cff000000"
 				local vivod = ""
@@ -2429,9 +2427,6 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 					curServer = "-"..CharInfo.PlayerData.curServer
 				end
 				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT1, RIGHT2, RIGHTforSORT}
-				if GUID == E.curGUID then
-					tooltip.GUID = GUID
-				end
 			end
 		end
 	end
@@ -2457,16 +2452,16 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		end)
 		----------------------------------------------------------------
 		if myType == "ItemLevel" then
-			tooltip.Header = {CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
+			tooltip.Header = {"", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
 		elseif myType == "Money" then
-			tooltip.Header = {TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
-			-- tooltip[#tooltip+1] = {TOTAL..": "..GetCoinTextureString(total)}
+			tooltip.Header = {"", TOTAL..": "..E:func_CompactNumberFormat(total/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+			-- tooltip.Header = {"", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
 		elseif myType == "Online" then
-			tooltip.Header = {TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
+			tooltip.Header = {"", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
 		elseif myType == "Currency" then
-			tooltip.Header = {TOTAL..": "..total}
+			tooltip.Header = {"", TOTAL..": "..total}
 		elseif myType == "Item" then
-			tooltip.Header = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID),   TOTAL..": "..total}
+			tooltip.Header = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), TOTAL..": "..total}
 		elseif myType == "Currency_Covenant_Anima" then
 			tooltip.Header = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r",   total}
 		elseif myType == "Currency_Covenant_Renown" then
@@ -2478,7 +2473,7 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		end
 		-- local hidden = #sorted - #tooltip
 		-- if hidden > 0 then
-		-- 	tooltip[#tooltip+1] = {E.Yellow_Color.."...(+|r" ..E.Red_Color.. hidden.."|r"..E.Yellow_Color..")|r", " "}
+		--     tooltip[#tooltip+1] = {E.Yellow_Color.."...(+|r" ..E.Red_Color.. hidden.."|r"..E.Yellow_Color..")|r", " "}
 		-- end
 	end
 	----------------------------------------------------------------
