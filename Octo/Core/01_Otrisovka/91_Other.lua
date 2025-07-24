@@ -267,7 +267,7 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				for index, itemID in ipairs(E.OctoTable_itemID_ALL) do
 					if CharInfo.MASLENGO.ItemsInBag[itemID] then
-						tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(itemID))..E:func_GetItemNameByID(itemID), CharInfo.MASLENGO.ItemsInBag[itemID]}
+						tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(itemID))..E:func_GetItemNameByID(itemID), CharInfo.MASLENGO.ItemsInBag[itemID], E:func_ItemPriceTSM(itemID, CharInfo.MASLENGO.ItemsInBag[itemID])}
 					end
 				end
 				if #tooltipRIGHT ~= 0 then

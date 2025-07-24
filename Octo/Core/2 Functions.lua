@@ -213,7 +213,7 @@ function E:func_GetItemNameByID(itemID)
 	if itemQuality then
 		vivod = vivod..ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
 	end
-	return vivod..E:func_ItemPriceTSM(itemID)..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
+	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E:func_GetItemNameByID_MyQuality(itemID, quality)
@@ -228,9 +228,14 @@ function E:func_GetItemNameByID_MyQuality(itemID, quality)
 	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
 ----------------------------------------------------------------
-function E:func_ItemPriceTSM(itemID)
+function E:func_ItemPriceTSM(itemID, myCount)
 	local vivod = ""
-	local count = E:func_GetItemCount(itemID, true, true, true, false)
+	local count = 0
+	if myCount then
+		count = myCount
+	else
+		count = E:func_GetItemCount(itemID, true, true, true, false)
+	end
 	if TSM_API then
 		local TSM_ItemIDtest = "i:"..itemID
 		-- /dump TSM_API.GetCustomPriceValue("DBMinBuyOut", "i:"..2589)
@@ -238,14 +243,14 @@ function E:func_ItemPriceTSM(itemID)
 		local CustomPriceValue = (TSM_API.GetCustomPriceValue("DBMarket", TSM_ItemIDtest)) or 0
 		if count and count ~= 0 and CustomPriceValue ~= 0 then
 			if count ~= 1 then
-				vivod = vivod..E.Purple_Color.."x"..count.."|r "..C_CurrencyInfo.GetCoinTextureString(CustomPriceValue*count)
+				vivod = vivod..E.Purple_Color.."*"..count.."|r ("..C_CurrencyInfo.GetCoinTextureString(CustomPriceValue*count)..")"
 			else
 				vivod = vivod..C_CurrencyInfo.GetCoinTextureString(CustomPriceValue)
 			end
 		end
 	end
 	if vivod ~= "" then
-		return " ("..vivod..")"
+		return vivod
 	else
 		return ""
 	end
@@ -2479,20 +2484,22 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		end)
 		----------------------------------------------------------------
 		if myType == "ItemLevel" then
-			tooltip.Header = {"", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
+			tooltip[#tooltip+1] = {"", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
 		elseif myType == "Money" then
-			tooltip.Header = {ACCOUNT_BANK_PANEL_TITLE..": "..E:func_CompactNumberFormat(C_Bank.FetchDepositedMoney(Enum.BankType.Account)/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t", TOTAL..": "..E:func_CompactNumberFormat(total/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
-			-- tooltip.Header = {"", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
+			tooltip[#tooltip+1] = {"", ACCOUNT_BANK_PANEL_TITLE..": "..E:func_CompactNumberFormat(C_Bank.FetchDepositedMoney(Enum.BankType.Account)/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+			tooltip[#tooltip+1] = {"", TOTAL..": "..E:func_CompactNumberFormat(total/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+
+			-- tooltip[#tooltip+1] = {"", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
 		elseif myType == "Online" then
-			tooltip.Header = {"", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
+			tooltip[#tooltip+1] = {"", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
 		elseif myType == "Currency" then
-			tooltip.Header = {"", TOTAL..": "..total}
+			tooltip[#tooltip+1] = {"", TOTAL..": "..total}
 		elseif myType == "Item" then
-			tooltip.Header = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), TOTAL..": "..total}
+			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), TOTAL..": "..total}
 		elseif myType == "Currency_Covenant_Anima" then
-			tooltip.Header = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
+			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
 		elseif myType == "Currency_Covenant_Renown" then
-			tooltip.Header = {E:func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
+			tooltip[#tooltip+1] = {E:func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
 		end
 		----------------------------------------------------------------
 		for _, v in ipairs(sorted) do
