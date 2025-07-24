@@ -1,0 +1,19 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Script file="UniversalQuests\01_WorldofWarcraft.lua"/>
+	<Script file="UniversalQuests\02_TheBurningCrusade.lua"/>
+	<Script file="UniversalQuests\03_WrathoftheLichKing.lua"/>
+	<Script file="UniversalQuests\04_Cataclysm.lua"/>
+	<Script file="UniversalQuests\05_MistsofPandaria.lua"/>
+	<Script file="UniversalQuests\06_WarlordsofDraenor.lua"/>
+	<Script file="UniversalQuests\07_Legion.lua"/>
+	<Script file="UniversalQuests\08_BattleforAzeroth.lua"/>
+	<Script file="UniversalQuests\09_Shadowlands.lua"/>
+	<Script file="UniversalQuests\10_Dragonflight.lua"/>
+	<Script file="UniversalQuests\11_TheWarWithin.lua"/>
+	<Script file="UniversalQuests\12_Midnight.lua"/>
+	<Script file="UniversalQuests\13_TheLastTitan.lua"/>
+	<Script file="UniversalQuests\99_Other.lua"/>
+
+</Ui>

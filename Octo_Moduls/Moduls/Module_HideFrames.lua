@@ -212,15 +212,23 @@ end
 
 function E:Hide_PTRIssueReporterAlertFrame()
 	local frame = PTRIssueReporterAlertFrame
-	if frame and not self[frame] then
-		self[frame] = true
-		if frame:IsShown() then frame:Hide()
-		else frame:HookScript("OnShow", function(self, ...)
-				frame:UnregisterAllEvents()
-				frame:Hide()
-			end)
-		end
+	if frame then
+		frame:SetScript("OnShow", function()
+			frame:Hide()
+		end)
 	end
+
+	-- if frame and not self[frame] then
+	-- 	print ("self[frame] = true")
+	-- 	self[frame] = true
+	-- 	if frame:IsShown() then frame:Hide()
+	-- 	else frame:HookScript("OnShow", function(self, ...)
+	-- 			print ("ONSHOW")
+	-- 			frame:UnregisterAllEvents()
+	-- 			frame:Hide()
+	-- 		end)
+	-- 	end
+	-- end
 end
 
 function E:Hide_Bug()

@@ -78,7 +78,7 @@ local func_OnAcquired do
 			textureFULL:Hide()
 			textureFULL:SetAllPoints()
 			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
-			textureFULL:SetVertexColor(r, g, b, E.bgCaOverlay)
+			textureFULL:SetVertexColor(1, 1, 1, .1) -- E.bgCaOverlay
 			frame.textureFULL = textureFULL
 			------------------------------------------------
 			------------------------------------------------

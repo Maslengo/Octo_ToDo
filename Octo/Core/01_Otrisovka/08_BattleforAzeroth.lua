@@ -203,16 +203,16 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(166846))..E:func_GetItemNameByID(166846), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[166846])}
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(169610))..E:func_GetItemNameByID(169610), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[169610])}
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(166970))..E:func_GetItemNameByID(166970), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[166970])}
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168327))..E:func_GetItemNameByID(168327), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168327])}
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168832))..E:func_GetItemNameByID(168832), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168832])}
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(166971))..E:func_GetItemNameByID(166971), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[166971])}
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168946))..E:func_GetItemNameByID(168946), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168946])}
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168215))..E:func_GetItemNameByID(168215), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168215])}
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168216))..E:func_GetItemNameByID(168216), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168216])}
-				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168217))..E:func_GetItemNameByID(168217), E:func_EmptyZero(CharInfo.MASLENGO.ItemsInBag[168217])}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(166846))..E:func_GetItemNameByID(166846), (CharInfo.MASLENGO.ItemsInBag[166846] or " ")}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(169610))..E:func_GetItemNameByID(169610), (CharInfo.MASLENGO.ItemsInBag[169610] or " ")}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(166970))..E:func_GetItemNameByID(166970), (CharInfo.MASLENGO.ItemsInBag[166970] or " ")}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168327))..E:func_GetItemNameByID(168327), (CharInfo.MASLENGO.ItemsInBag[168327] or " ")}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168832))..E:func_GetItemNameByID(168832), (CharInfo.MASLENGO.ItemsInBag[168832] or " ")}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(166971))..E:func_GetItemNameByID(166971), (CharInfo.MASLENGO.ItemsInBag[166971] or " ")}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168946))..E:func_GetItemNameByID(168946), (CharInfo.MASLENGO.ItemsInBag[168946] or " ")}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168215))..E:func_GetItemNameByID(168215), (CharInfo.MASLENGO.ItemsInBag[168215] or " ")}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168216))..E:func_GetItemNameByID(168216), (CharInfo.MASLENGO.ItemsInBag[168216] or " ")}
+				tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(168217))..E:func_GetItemNameByID(168217), (CharInfo.MASLENGO.ItemsInBag[168217] or " ")}
 				textCENT = "МЕХАГОН"
 				----------------------------------------------------------------
 				textLEFT = "МЕХАГОН"

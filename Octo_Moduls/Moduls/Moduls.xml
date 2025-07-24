@@ -14,6 +14,7 @@
 	<Script file="Moduls\Module_HideFrames.lua"/>
 	<Script file="Moduls\Module_ItemsDelete.lua"/>
 	<Script file="Moduls\Module_ItemsUsable.lua"/>
+	<Script file="Moduls\Module_ItemsUsableNEW.lua"/>
 	<Script file="Moduls\Module_UIErrorsFramePosition.lua"/>
 	<Script file="Moduls\Octo_WowheadQuickLink.lua"/>
 	<Script file="Moduls\Octo_WowheadQuickLinkStrategies.lua"/>

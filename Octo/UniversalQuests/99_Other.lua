@@ -195,7 +195,7 @@ function E:func_Universal_99_Other()
 				86556,
 				85949,
 				85948,
-				85947,
+				85947, -- classic
 				86564,
 				86563,
 				83365,

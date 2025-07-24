@@ -1,0 +1,380 @@
+local GlobalAddonName, ns = ...; E = _G.OctoEngine
+----------------------------------------------------------------
+local ItemsUsable_EventFrame = CreateFrame("FRAME")
+ItemsUsable_EventFrame:Hide()
+local ItemsUsable = CreateFrame("BUTTON", "ItemsUsable", UIParent, "BackdropTemplate")
+ItemsUsable:Hide()
+----------------------------------------------------------------
+-- Локальные переменные для работы с инвентарем
+local BACKPACK_CONTAINER = BACKPACK_CONTAINER
+local NUM_TOTAL_EQUIPPED_BAG_SLOTS = NUM_TOTAL_EQUIPPED_BAG_SLOTS
+local GetContainerNumSlots = C_Container.GetContainerNumSlots
+local GetContainerItemInfo = C_Container.GetContainerItemInfo
+local GetItemCount = C_Item.GetItemCount
+local GetItemInfo = C_Item.GetItemInfo
+----------------------------------------------------------------
+local font = OctoFont22
+local INDEND_TEST = 4
+local INDEND_SCROLL = 20
+local LINE_HEIGHT = 32
+local LINE_WIDTH = 256
+local LINES_MAX = 20
+local INDENT_BETWEEN_LINES = LINE_HEIGHT
+local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT))*.7)
+if LINES_MAX > LINES_TOTAL then
+	LINES_MAX = LINES_TOTAL
+end
+local classR, classG, classB = GetClassColor(E.classFilename)
+local function func_OnHide(frame)
+	frame.highlightFrame:Hide()
+end
+local function func_OnShow(frame)
+	frame.highlightFrame:Show()
+end
+local func_OnAcquired do
+	function func_OnAcquired(owner, frame, data, new)
+		if new then
+			frame:SetPropagateMouseClicks(true)
+			frame:SetPropagateMouseMotion(true)
+			----------------
+			local highlightFrame = CreateFrame("Button", nil, ItemsUsable)
+			highlightFrame:SetPropagateMouseClicks(true)
+			highlightFrame:SetPropagateMouseMotion(true)
+			highlightFrame:SetFrameLevel(frame:GetFrameLevel()+2)
+			highlightFrame:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+			highlightFrame.HighlightTexture = highlightFrame:GetHighlightTexture()
+			highlightFrame.HighlightTexture:SetAlpha(.2)
+			highlightFrame:SetPoint("LEFT", frame)
+			highlightFrame:SetPoint("TOP", frame)
+			highlightFrame:SetPoint("BOTTOM", frame)
+			highlightFrame:SetPoint("RIGHT")
+			frame.highlightFrame = highlightFrame
+			----------------
+			local textureFULL = highlightFrame:CreateTexture(nil, "BACKGROUND", nil, -3)
+			textureFULL:Hide()
+			textureFULL:SetAllPoints()
+			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
+			textureFULL:SetVertexColor(classR, classG, classB, E.bgCaOverlay)
+			frame.textureFULL = textureFULL
+			----------------
+			-- Создаем метатаблицу для дочерних фреймов
+			frame.lineFrames = setmetatable({}, {
+					__index = function(self, key)
+						if key then
+							-- Создаем новый фрейм для каждого элемента
+							local f = CreateFrame("BUTTON", "frame"..key, frame)
+							f:SetPropagateMouseClicks(true)
+							f:SetPropagateMouseMotion(true)
+							f:SetHeight(LINE_HEIGHT)
+							-- f:SetSize(LINE_WIDTH, LINE_HEIGHT)
+							-- f:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
+							if key == 1 then
+								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDEND_TEST, 0) -- ОТСТУП
+							else
+								local prevKey = key - 1
+								local prevFrame = rawget(self, prevKey) or self[prevKey] -- Получаем предыдущий фрейм
+								f:SetPoint("TOPLEFT", prevFrame, "TOPRIGHT", INDENT_BETWEEN_LINES, 0)
+							end
+							f:RegisterForClicks("LeftButtonUp")
+							-- Текст в центре
+							f.text = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+							f.text:SetAllPoints()
+							f.text:SetFontObject(font)
+							f.text:SetWordWrap(false)
+							f.text:SetJustifyV("MIDDLE") -- TOP, MIDDLE, BOTTOM
+							f.text:SetJustifyH("CENTER") -- LEFT, CENTER, RIGHT
+							f.text:SetTextColor(1, 1, 1, 1)
+							-- Обработчики событий
+							-- f:SetScript("OnHide", f.Hide)
+							rawset(self, key, f)
+							return f
+						end
+					end
+			})
+			frame:SetScript("OnHide", func_OnHide)
+			frame:SetScript("OnShow", func_OnShow)
+			----------------
+		end
+	end
+end
+function ItemsUsable_EventFrame:Octo_Frame_init(frame, node)
+	-- Получаем данные из узла и кэшируем часто используемые переменные
+	local frameData = node:GetData()
+	local lineFrames = frame.lineFrames  -- Кэшируем для быстрого доступа
+	local numData = #frameData           -- Количество элементов в данных
+	local numLines = #lineFrames         -- Количество доступных lineFrames
+	local columnSizes = ItemsUsable_EventFrame.COLUMN_SIZES  -- Размеры колонок (если есть)
+	-- Обрабатываем данные и обновляем соответствующие lineFrames
+	for i = 1, numData do
+		local currentText = frameData[i]
+		if currentText then
+			lineFrames[i].text:SetText(currentText)  -- Устанавливаем текст
+		end
+		-- Если заданы размеры колонок, применяем их
+		if columnSizes then
+			lineFrames[i]:SetWidth(columnSizes[i])
+		end
+		-- Определяем выравнивание текста (по умолчанию CENTER)
+		local justify = "CENTER"
+		if numData > 1 then
+			if i == 1 then          -- Первый элемент выравниваем по ЛЕВОМУ краю
+				justify = "LEFT"
+			elseif i == numData then -- Последний элемент — по ПРАВОМУ
+				justify = "RIGHT"
+			end
+		end
+		lineFrames[i].text:SetJustifyH(justify)
+	end
+	-- Очищаем оставшиеся lineFrames (если данных меньше, чем фреймов)
+	for i = numData + 1, numLines do
+		lineFrames[i].text:SetText()
+	end
+end
+local function GetTipAnchor(frame)
+	local x, y = frame:GetCenter()
+	if not x or not y then
+		return "TOPLEFT", "BOTTOMLEFT"
+	end
+	local hhalf = (x > UIParent:GetWidth() * 2 / 3) and "RIGHT" or (x < UIParent:GetWidth() / 3) and "LEFT" or ""
+	local vhalf = (y > UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
+	return vhalf .. hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP") .. hhalf
+end
+function ItemsUsable_EventFrame:func_SmartAnchorTo(frame, point)
+	if not frame then
+		return error("Invalid frame provided.", 2)
+	end
+	ItemsUsable:ClearAllPoints()
+	if point then
+		local left, right = unpack(point)
+		ItemsUsable:SetPoint(left, frame, right)
+	else
+		ItemsUsable:SetPoint("TOPLEFT", frame, "TOPRIGHT")
+		-- ItemsUsable:SetPoint(GetTipAnchor(frame))
+	end
+end
+-- local function TooltipOnEnter()
+--     if ItemsUsable_EventFrame.shouldShowScrollBar then
+--         ItemsUsable:Show()
+--         ItemsUsable:SetPropagateMouseMotion(true)
+--     else
+--         ItemsUsable:SetPropagateMouseMotion(true)
+--     end
+-- end
+-- local function TooltipOnLeave()
+--     ItemsUsable:Hide()
+-- end
+local function TooltipOnShow()
+	local scrollBar = ItemsUsable.ScrollBar
+	local shouldShow = ItemsUsable_EventFrame.shouldShowScrollBar
+	if shouldShow ~= scrollBar:IsShown() then
+		if shouldShow then
+			scrollBar:Show()
+		else
+			scrollBar:Hide()
+		end
+	end
+end
+function ItemsUsable_EventFrame:Create_ItemsUsable()
+	ItemsUsable:SetPropagateMouseClicks(true)
+	ItemsUsable:SetPropagateMouseMotion(true)
+	ItemsUsable:SetHitRectInsets(-1, -1, -1, -1) -- Коррекция области нажатия (-4 увеличение)
+	-- ItemsUsable:SetScript("OnEnter", TooltipOnEnter)
+	-- ItemsUsable:SetScript("OnLeave", TooltipOnLeave)
+	ItemsUsable:SetScript("OnShow", TooltipOnShow)
+	ItemsUsable:SetPoint("CENTER")
+	ItemsUsable:SetSize(1, LINE_HEIGHT*1)
+	ItemsUsable:SetClampedToScreen(true)
+	-- ItemsUsable:SetFrameStrata("BACKGROUND")
+	ItemsUsable:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
+	ItemsUsable:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa) -- E.bgCa
+	-- ItemsUsable:SetBackdropBorderColor(classR, classG, classB, 1)
+	ItemsUsable:SetBackdropBorderColor(0, 0, 0, 1)
+	ItemsUsable.ScrollBox = CreateFrame("FRAME", nil, ItemsUsable, "WowScrollBoxList")
+	ItemsUsable.ScrollBox:SetAllPoints()
+	ItemsUsable.ScrollBox:SetPropagateMouseClicks(true)
+	ItemsUsable.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
+	ItemsUsable.ScrollBox:SetPropagateMouseMotion(true)
+	ItemsUsable.ScrollBox:GetScrollTarget():SetPropagateMouseMotion(true)
+	ItemsUsable.ScrollBox:Layout()
+	ItemsUsable.ScrollBar = CreateFrame("EventFrame", nil, ItemsUsable, "MinimalScrollBar")
+	ItemsUsable.ScrollBar:SetPoint("TOPLEFT", ItemsUsable.ScrollBox, "TOPRIGHT", -15, -3)
+	ItemsUsable.ScrollBar:SetPoint("BOTTOMLEFT", ItemsUsable.ScrollBox, "BOTTOMRIGHT", -15, 3)
+	ItemsUsable.ScrollBar:SetPropagateMouseMotion(true)
+	ItemsUsable.ScrollBar.Back:SetPropagateMouseMotion(true)
+	ItemsUsable.ScrollBar.Forward:SetPropagateMouseMotion(true)
+	ItemsUsable.ScrollBar.Track:SetPropagateMouseMotion(true)
+	ItemsUsable.ScrollBar.Track.Thumb:SetPropagateMouseMotion(true)
+	-- ItemsUsable:SetPropagateMouseClicks(true)
+	-- ItemsUsable:SetPropagateMouseMotion(true)
+	ItemsUsable.view = CreateScrollBoxListTreeListView()
+	ItemsUsable.view:SetElementExtent(LINE_HEIGHT)
+	ItemsUsable.view:SetElementInitializer("BUTTON",
+		function(...)
+			self:Octo_Frame_init(...)
+	end)
+	ItemsUsable.view:RegisterCallback(ItemsUsable.view.Event.OnAcquiredFrame, func_OnAcquired, ItemsUsable)
+	ScrollUtil.InitScrollBoxListWithScrollBar(ItemsUsable.ScrollBox, ItemsUsable.ScrollBar, ItemsUsable.view)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(ItemsUsable.ScrollBox, ItemsUsable.ScrollBar)
+end
+local function calculateColumnWidths(node)
+	local zxc = node:GetData()
+	local frames = ItemsUsable.view:GetFrames()
+	if #frames == 0 then
+		ItemsUsable.view:AcquireInternal(1, node)
+		ItemsUsable.view:InvokeInitializers()
+	end
+	local columnWidths = {}
+	local sampleFrame = frames[1]
+	for i = 1, #zxc do
+		sampleFrame.lineFrames[i].text:SetText(zxc[i])
+		columnWidths[i] = sampleFrame.lineFrames[i].text:GetStringWidth()
+	end
+	return columnWidths
+end
+function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider(tbl)
+	local lines = 0
+	local columns = 0
+	local DataProvider = CreateTreeDataProvider()
+	local COLUMN_SIZES = {}
+	for _, v in ipairs(tbl) do
+		lines = lines + 1
+		local zxc = {}
+		for i, value in ipairs(v) do
+			if value ~= nil then
+				table.insert(zxc, value)
+			end
+		end
+		if #zxc > 0 then
+			local node = DataProvider:Insert(zxc)
+			columns = #zxc
+			for j, w in ipairs(calculateColumnWidths(node)) do
+				COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
+			end
+		end
+	end
+	ItemsUsable_EventFrame.COLUMN_SIZES = COLUMN_SIZES
+	local total_width = INDEND_TEST*2 + (INDENT_BETWEEN_LINES*(columns-1)) -- ОТСТУП
+	for i = 1, columns do
+		total_width = total_width + ItemsUsable_EventFrame.COLUMN_SIZES[i]
+	end
+	lines = #tbl
+	local shouldShowScrollBar = LINES_MAX < lines
+	ItemsUsable_EventFrame.shouldShowScrollBar = shouldShowScrollBar
+	if shouldShowScrollBar then
+		total_width = total_width + INDEND_SCROLL
+	end
+	ItemsUsable.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	if lines > LINES_MAX then
+		ItemsUsable:SetSize(total_width, LINE_HEIGHT*LINES_MAX)
+	elseif lines == 0 then
+		ItemsUsable:SetSize(total_width, LINE_HEIGHT*1)
+	else
+		ItemsUsable:SetSize(total_width, LINE_HEIGHT*lines)
+	end
+end
+local function Toggle_ItemsUsable(frame)
+	if not ItemsUsable:IsShown() then
+		ItemsUsable_EventFrame:func_ItemsUsable_OnStart(frame)
+	end
+	ItemsUsable:SetShown(not ItemsUsable:IsShown())
+end
+function ItemsUsable_EventFrame:CreateTestButton1()
+	local btn = CreateFrame("Button", nil, UIParent, "UIPanelButtonTemplate")
+	btn:SetClampedToScreen(true)
+	btn:SetPoint("TOPLEFT", 128, -128)
+	btn:SetSize(100, 40)
+	btn:SetText("Click me")
+	btn:EnableMouse(true)
+	btn:SetMovable(true)
+	-- Обработчики перемещения фрейма
+	btn:SetScript("OnMouseDown", function(_, button)
+			if button == "LeftButton" then
+				btn:SetAlpha(E.bgCa)
+				btn:StartMoving()
+			end
+	end)
+	btn:SetScript("OnMouseUp", function(_, button)
+			if button == "LeftButton" then
+				btn:SetAlpha(1)
+				btn:StopMovingOrSizing()
+			end
+	end)
+	btn:RegisterForClicks("LeftButtonUp")
+	btn:SetScript("OnClick", function(self)
+			Toggle_ItemsUsable(btn)
+	end)
+end
+function ItemsUsable_EventFrame:func_ItemsUsable_OnStart(frame)
+	-- Сначала соберем все предметы с их количеством
+	local UsableTBL = {}
+	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+		local numSlots = GetContainerNumSlots(bag)
+		for slot = numSlots, 1, -1 do
+			local containerInfo = GetContainerItemInfo(bag, slot)
+			if containerInfo and containerInfo.itemID then
+				local itemID = containerInfo.itemID
+				local quality = containerInfo.quality
+				-- Проверяем предметы для использования
+				local requiredCount = E.OctoTable_itemID_ItemsUsable[itemID]
+				if requiredCount and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= requiredCount then
+					if not UsableTBL[itemID] then
+						UsableTBL[itemID] = {
+							count = E:func_GetItemCount(itemID, false, false, false, false),
+							quality = quality,
+							usable = true
+						}
+					end
+				end
+				-- Проверяем предметы для удаления
+				if E.OctoTable_itemID_ItemsDelete[itemID] then
+					if not UsableTBL[itemID] then
+						UsableTBL[itemID] = {
+							count = E:func_GetItemCount(itemID, false, false, false, false),
+							quality = quality,
+							usable = false
+						}
+					end
+				end
+			end
+		end
+	end
+	-- Преобразуем в таблицу для сортировки
+	local sorted_itemList = {}
+	for itemID, v in next, (UsableTBL) do
+		table.insert(sorted_itemList, {itemID = itemID, count = v.count, quality = v.quality, usable = v.usable})
+	end
+	-- Сортируем сначала по quality (убывание), затем по count (убывание), затем по itemID (возрастание)
+	table.sort(sorted_itemList, function(a, b)
+			if a.quality ~= b.quality then
+				return a.quality > b.quality
+			elseif a.count ~= b.count then
+				return a.count > b.count
+			else
+				return a.itemID > b.itemID
+			end
+	end)
+	-- Создаем финальную таблицу для отображения
+	local NewTable = {}
+	for _, item in ipairs(sorted_itemList) do
+		local itemID = item.itemID
+		NewTable[#NewTable + 1] = {
+			E:func_texturefromIcon(E:func_GetItemIconByID(itemID)) .. E:func_GetItemNameByID_MyQuality(itemID, item.quality),
+			item.usable and E.TRUE or E.FALSE,
+			E.Green_Color..item.count.."|r"  -- Используем уже подсчитанное количество
+		}
+	end
+	ItemsUsable_EventFrame:func_SmartAnchorTo(frame, point)
+	ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider(NewTable)
+end
+local MyEventsTable = {
+	"ADDON_LOADED",
+}
+E:func_RegisterMyEventsToFrames(ItemsUsable_EventFrame, MyEventsTable)
+function ItemsUsable_EventFrame:ADDON_LOADED(addonName)
+	if addonName == GlobalAddonName then
+		self:UnregisterEvent("ADDON_LOADED")
+		self.ADDON_LOADED = nil
+		self:Create_ItemsUsable()
+		self:CreateTestButton1()
+	end
+end

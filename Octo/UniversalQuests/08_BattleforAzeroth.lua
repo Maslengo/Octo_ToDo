@@ -180,6 +180,126 @@ function E:func_Universal_08_BattleforAzeroth()
 
 
 
+
+
+
+		{
+			icon = E.Icon_Rares,
+			textleft = "MechagonRares",
+			name_save = "MechagonRares",
+			reset = "Daily",
+			desc = "BattleforAzeroth",
+			questID = {
+				55512,
+				55539,
+				55857,
+				55537,
+				56368,
+				55812,
+				55514,
+				55814,
+				56207,
+				55513,
+				55367,
+				55852,
+				55855,
+				56367,
+				55399,
+				55369,
+				55544,
+				55207,
+				55386,
+				55859,
+				55853,
+				55515,
+				55856,
+				55405,
+				55368,
+				55811,
+				56737,
+				55545,
+				55810,
+				55854,
+				56419,
+				55858,
+				56182,
+				55364,
+				55538,
+				55546,
+			},
+			max = 36,
+		},
+
+
+
+		{
+			icon = E.Icon_Rares,
+			textleft = "MechagonTREASURE",
+			name_save = "MechagonTREASURE",
+			reset = "Daily",
+			desc = "BattleforAzeroth",
+			questID = {
+				55547,
+				55548,
+				55549,
+				55550,
+				55551,
+				55552,
+				55553,
+				55554,
+				55555,
+				55556,
+			},
+			max = 10,
+		},
+
+
+
+		{
+			icon = E.Icon_Rares,
+			textleft = "MechagonTREASURE_MISCELLANEOUS",
+			name_save = "MechagonTREASURE_MISCELLANEOUS",
+			reset = "Daily",
+			desc = "BattleforAzeroth",
+			questID = {
+				55743,
+				56117,
+				57134,
+			},
+			max = 3,
+		},
+
+
+
+
+
+		{
+			icon = E.Icon_Rares,
+			textleft = "MechagonLOCKED_CHESTS1",
+			name_save = "MechagonLOCKED_CHESTS1",
+			reset = "Daily",
+			desc = "BattleforAzeroth",
+			questID = {
+				56907,
+			},
+			max = 1,
+		},
+
+
+
+		{
+			icon = E.Icon_Rares,
+			textleft = "MechagonLOCKED_CHESTS2",
+			name_save = "MechagonLOCKED_CHESTS2",
+			reset = "Daily",
+			desc = "BattleforAzeroth",
+			questID = {
+				57133,
+			},
+			max = 1,
+		},
+
+
 	}
 	return OctoTable_Universal
 end

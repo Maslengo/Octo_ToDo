@@ -216,6 +216,18 @@ function E:func_GetItemNameByID(itemID)
 	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
 ----------------------------------------------------------------
+function E:func_GetItemNameByID_MyQuality(itemID, quality)
+	table_insert(E.PromiseItem, itemID)
+	-- local info = C_AccountStore.GetItemInfo(itemID)
+	-- local itemName = C_AccountStore.GetItemInfo(itemID).name or UNKNOWN
+	local itemName = GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
+	local vivod = ""
+	if quality then
+		vivod = vivod..ITEM_QUALITY_COLORS[quality].color:WrapTextInColorCode(itemName)
+	end
+	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
+end
+----------------------------------------------------------------
 function E:func_LFGdungName(dID)
 	for i = 1, GetNumRandomDungeons() do
 		local dungeonID, name = GetLFGRandomDungeonInfo(i)
@@ -238,7 +250,7 @@ end
 ----------------------------------------------------------------
 function E:func_GetCurrencyIcon(currencyID)
 	local info = GetCurrencyInfo(currencyID)
-	return info and info.iconFileID or E.Icon_Empty --  E.Icon_QuestionMark
+	return info and info.iconFileID or E.Icon_Empty -- E.Icon_QuestionMark
 end
 ----------------------------------------------------------------
 function E:func_currencyName(currencyID)
@@ -246,20 +258,20 @@ function E:func_currencyName(currencyID)
 	-- local vivod = ""
 	-- local AWide = ""
 	-- if IsAccountTransferableCurrency(currencyID) then
-	--     AWide = E.Icon_AccountTransferable
+	-- AWide = E.Icon_AccountTransferable
 	-- elseif IsAccountWideCurrency(currencyID) then
-	--     AWide = E.Icon_AccountWide
+	-- AWide = E.Icon_AccountWide
 	-- end
 	-- local info = GetCurrencyInfo(currencyID)
 	-- if info then
-	--     local name = info.name
-	--     local quality = info.quality
-	--     local r, g, b = E:func_GetItemQualityColor(quality)
-	--     local color = CreateColor(r, g, b, 1)
-	--     local currencyName = color:WrapTextInColorCode(name)
-	--     vivod = AWide..currencyName
+	-- local name = info.name
+	-- local quality = info.quality
+	-- local r, g, b = E:func_GetItemQualityColor(quality)
+	-- local color = CreateColor(r, g, b, 1)
+	-- local currencyName = color:WrapTextInColorCode(name)
+	-- vivod = AWide..currencyName
 	-- else
-	--     vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+	-- vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	-- end
 	-- return vivod..(E.DebugIDs and E.Gray_Color.." id:"..currencyID.."|r" or "")
 	-- ВАРИАНТ 2
@@ -280,20 +292,20 @@ function E:func_currencyName(currencyID)
 	-- ВАРИАНТ 3
 	-- local WarbandIcon = ""
 	-- if IsAccountTransferableCurrency(currencyID) then
-	--     WarbandIcon = E.Icon_AccountTransferable
+	-- WarbandIcon = E.Icon_AccountTransferable
 	-- elseif IsAccountWideCurrency(currencyID) then
-	--     WarbandIcon = E.Icon_AccountWide
+	-- WarbandIcon = E.Icon_AccountWide
 	-- end
 	-- local parts = { WarbandIcon } -- Инициализация с WarbandIcon
 	-- -- Обработка информации о валюте
 	-- if info then
-	--     parts[2] = ITEM_QUALITY_COLORS[info.quality].hex..info.name.."|r"
+	-- parts[2] = ITEM_QUALITY_COLORS[info.quality].hex..info.name.."|r"
 	-- else
-	--     parts[2] = E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
+	-- parts[2] = E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
 	-- end
 	-- -- Добавление отладочной информации при необходимости
 	-- if E.DebugIDs then
-	--     parts[3] = E.Gray_Color.." id:"..currencyID.."|r"
+	-- parts[3] = E.Gray_Color.." id:"..currencyID.."|r"
 	-- end
 	-- return table.concat(parts)
 	-- ВАРИАНТ 4
@@ -1086,14 +1098,6 @@ function E:func_IsInArray(arr, subj)
 			return i
 		end
 	end
-end
-----------------------------------------------------------------
-----------------------------------------------------------------
-function E:func_EmptyZero(value)
-	if tonumber(value) == 0 then
-		return "" --Red_Color.."NEEDDELETE|r"
-	end
-	return value
 end
 ----------------------------------------------------------------
 -- warcraft.wiki.gg/wiki/API_GetAccountExpansionLevel
@@ -2330,13 +2334,13 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		maxMoney = math.max(unpack(MoneysMinMax))
 	end
 	-- if self.minTime then
-	--     local done = frameData.time - self.minTime
-	--     -- local total = self.maxTime - self.minTime
-	--     local total = time() - self.minTime
-	--     local red = min(255, (1 - done / total) * 510)
-	--     local green = min(255, (done / total) * 510)
-	--     local hexcolor = string.format("|cff%2x%2x00", red, green)
-	--     frame.seventh.text:SetText(hexcolor..E:func_SecondsToClock(time()-frameData.time).."|r")
+	-- local done = frameData.time - self.minTime
+	-- -- local total = self.maxTime - self.minTime
+	-- local total = time() - self.minTime
+	-- local red = min(255, (1 - done / total) * 510)
+	-- local green = min(255, (done / total) * 510)
+	-- local hexcolor = string.format("|cff%2x%2x00", red, green)
+	-- frame.seventh.text:SetText(hexcolor..E:func_SecondsToClock(time()-frameData.time).."|r")
 	-- end
 	----------------------------------------------------------------
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -2463,9 +2467,9 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		elseif myType == "Item" then
 			tooltip.Header = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), TOTAL..": "..total}
 		elseif myType == "Currency_Covenant_Anima" then
-			tooltip.Header = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r",   total}
+			tooltip.Header = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
 		elseif myType == "Currency_Covenant_Renown" then
-			tooltip.Header = {E:func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r",   total}
+			tooltip.Header = {E:func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
 		end
 		----------------------------------------------------------------
 		for _, v in ipairs(sorted) do
@@ -2473,7 +2477,7 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		end
 		-- local hidden = #sorted - #tooltip
 		-- if hidden > 0 then
-		--     tooltip[#tooltip+1] = {E.Yellow_Color.."...(+|r" ..E.Red_Color.. hidden.."|r"..E.Yellow_Color..")|r", " "}
+		-- tooltip[#tooltip+1] = {E.Yellow_Color.."...(+|r" ..E.Red_Color.. hidden.."|r"..E.Yellow_Color..")|r", " "}
 		-- end
 	end
 	----------------------------------------------------------------
@@ -2523,19 +2527,19 @@ function E:func_textCENT_Currency(CharInfo, currencyID, itemID)
 		vivod = color.. curQuantity.. vivod .. "|r"
 	end
 	-- if data[currencyID].maxQuantity then
-	--     vivod = vivod .. E.Purple_Color.. "/" ..data[currencyID].maxQuantity.."|r"
+	-- vivod = vivod .. E.Purple_Color.. "/" ..data[currencyID].maxQuantity.."|r"
 	-- end
-	--     vivod = data[currencyID].quantity
-	--     if data[currencyID].maxQuantity and data[currencyID].maxQuantity ~= 0 then
-	--         vivod = vivod.."/"..data[currencyID].maxQuantity
-	--     end
+	-- vivod = data[currencyID].quantity
+	-- if data[currencyID].maxQuantity and data[currencyID].maxQuantity ~= 0 then
+	-- vivod = vivod.."/"..data[currencyID].maxQuantity
+	-- end
 	-- elseif data[currencyID].quantity and data[currencyID].maxQuantity and data[currencyID].totalEarned and (data[currencyID].maxQuantity ~= data[currencyID].totalEarned) then
-	--     vivod = E.Purple_Color..data[currencyID].quantity.."|r (" .. data[currencyID].maxQuantity .. "/" ..data[currencyID].totalEarned..")"
+	-- vivod = E.Purple_Color..data[currencyID].quantity.."|r (" .. data[currencyID].maxQuantity .. "/" ..data[currencyID].totalEarned..")"
 	-- elseif not data[currencyID].quantity and data[currencyID].maxQuantity and data[currencyID].totalEarned and (data[currencyID].maxQuantity == data[currencyID].totalEarned) then
-	--     vivod = E.Red_Color.."can't earn|r" -- CURRENCY_SEASON_TOTAL_MAXIMUM:format(0, data[currencyID].maxQuantity, data[currencyID].totalEarned)
+	-- vivod = E.Red_Color.."can't earn|r" -- CURRENCY_SEASON_TOTAL_MAXIMUM:format(0, data[currencyID].maxQuantity, data[currencyID].totalEarned)
 	-- end
 	if itemID then
-		vivod = vivod..E:func_textCENT_Items(CharInfo, itemID, true)
+		vivod = vivod..E.Green_Color..E:func_textCENT_Items(CharInfo, itemID, true).."|r"
 	end
 	return vivod
 end

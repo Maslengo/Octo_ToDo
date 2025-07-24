@@ -32,7 +32,7 @@ function E:func_Tooltip_Chars(CharInfo)
 			tooltip_Chars[#tooltip_Chars+1] = {"<"..E.Green_Color..CharInfo.PlayerData.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.PlayerData.guildRankName.."|r".."]"}
 		end
 		-- War mode status
-		if CharInfo.PlayerData.WarMode == true then
+		if CharInfo.PlayerData.WarMode then
 			tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.WarMode and E.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or ""}
 		end
 		-- Level and race info
@@ -60,8 +60,6 @@ function E:func_Tooltip_Chars(CharInfo)
 	end
 	if CharInfo.PlayerData.curLocation then
 		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(132319)..FRIENDS_LIST_ZONE..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.curLocation.."|r", ""}
-
-
 	end
 	-- Inventory info
 	if CharInfo.PlayerData.usedSlots and CharInfo.PlayerData.totalSlots then
@@ -82,27 +80,16 @@ function E:func_Tooltip_Chars(CharInfo)
 		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(122284))..E:func_GetItemNameByID(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 	end
-
-
-
-
 	-- Debug information
 	if E.DebugInfo then
 		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		tooltip_Chars[#tooltip_Chars+1] = {E.DEVTEXT, ""}
-
-
-
-
 		if CharInfo.PlayerData.tmstp_Daily then
 			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Daily: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Daily-GetServerTime()).."|r", ""}
 		end
 		if CharInfo.PlayerData.tmstp_Weekly then
 			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Weekly: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Weekly-GetServerTime()).."|r", ""}
 		end
-
-
-
 		-- Character identification
 		tooltip_Chars[#tooltip_Chars+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.PlayerData.GUID.."|r"}
 		tooltip_Chars[#tooltip_Chars+1] = {"hasMail", CharInfo.PlayerData.hasMail and E:func_texturefromIcon(E.Icon_MailBox)..CharInfo.PlayerData.classColorHex.."true|r" or E.NIL}
@@ -156,7 +143,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.DebugInfo == true then
+	if Octo_ToDo_DB_Vars.DebugInfo then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -205,7 +192,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.Quests == true then
+	if Octo_ToDo_DB_Vars.Quests then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -233,7 +220,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.Dungeons == true then
+	if Octo_ToDo_DB_Vars.Dungeons then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -273,7 +260,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.Items == true then
+	if Octo_ToDo_DB_Vars.Items then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -296,7 +283,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.Professions == true then
+	if Octo_ToDo_DB_Vars.Professions then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -330,7 +317,6 @@ function E:func_Otrisovka_91_Other()
 						end
 					end
 				end
-
 				----------------------------------------------------------------
 				textLEFT = PROFESSIONS_BUTTON
 				myType = {"professions"}
@@ -342,7 +328,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.ItemLevel == true then
+	if Octo_ToDo_DB_Vars.ItemLevel then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -381,7 +367,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.Gold == true then
+	if Octo_ToDo_DB_Vars.Gold then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -411,7 +397,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.WasOnline == true then
+	if Octo_ToDo_DB_Vars.WasOnline then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
@@ -423,9 +409,9 @@ function E:func_Otrisovka_91_Other()
 						-- tooltipRIGHT[#tooltipRIGHT+1] = {"Время после релоуда: "..CharInfo.PlayerData.classColorHex.. E:func_SecondsToClock(GetServerTime() - CharInfo.PlayerData.time).."|r"}
 						-- tooltipRIGHT[#tooltipRIGHT+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(GetSessionTime()).."|r" )}
 					else
-						if CharInfo.PlayerData.needResetWeekly == true then
+						if CharInfo.PlayerData.needResetWeekly then
 							color = E.Gray_Color
-						elseif CharInfo.PlayerData.needResetDaily == true then
+						elseif CharInfo.PlayerData.needResetDaily then
 							color = E.Red_Color
 						end
 						textCENT = color..E.func_FriendsFrame_GetLastOnline(CharInfo.PlayerData.time).."|r"
