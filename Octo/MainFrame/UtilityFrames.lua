@@ -34,7 +34,7 @@ local function CreateUtilButton(name, frame, xOffset, texture, func_onEnter, fun
 	if func_onEnter then
 		button:SetScript("OnEnter", function(self)
 				button.tooltip = func_onEnter()
-				E:func_OctoTooltip_OnEnter(button, {"BOTTOM", "TOP"})
+				E:func_OctoTooltip_OnEnter(button, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
 	end
 	if func_onClick then
@@ -168,7 +168,6 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
 		local curdatetable = date("*t")
 		local curdate = FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year)
 		tooltip[#tooltip+1] = {E.WOW_Artifact_Color..L["Current Date"].."|r", E.WOW_Artifact_Color..curdate.."|r"}
-		tooltip[#tooltip+1] = {" ", " "}
 		local sorted = {}
 		for k in pairs(E.Holiday) do
 			table.insert(sorted, k)
@@ -195,7 +194,6 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
 		if #sorted == 0 then
 			tooltip[#tooltip+1] = {"No Data"}
 		end
-		tooltip[#tooltip+1] = {" ", " "}
 		return tooltip
 	end
 	local function func_onClick()

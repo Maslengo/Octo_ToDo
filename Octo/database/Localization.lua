@@ -127,7 +127,7 @@ if L then
 	L["Bind Location"] = true
 	L["Coins"] = true
 	L["Community Feast"] = true
-	L["Current Location"] = true
+	L["Chromie"] = true
 	L["Expire on"] = true
 	L["Fyrakk Asssaults"] = true
 	L["Grand Hunt"] = true
@@ -382,7 +382,7 @@ if L then
 	L["Bind Location"] = "Место привязки"
 	L["Coins"] = "Монетки"
 	L["Community Feast"] = "Большое пиршество"
-	L["Current Location"] = "Текущее местоположение"
+	L["Chromie"] = "Хроми"
 	L["Expire on"] = "Истекает"
 	L["Fyrakk Asssaults"] = "Налет Фиракка (Локалка)"
 	L["Grand Hunt"] = "Великая охота"

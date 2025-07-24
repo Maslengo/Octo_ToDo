@@ -25,11 +25,10 @@ function E:func_Tooltip_Chars(CharInfo)
 	if CharInfo.PlayerData.classColorHex then
 		-- Name and guild info
 		if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer then
-			if CharInfo.PlayerData.guildRankName and CharInfo.PlayerData.guildRankIndex then
-				tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")", "<"..E.Green_Color..CharInfo.PlayerData.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.PlayerData.guildRankName.."|r".."]"}
-			else
-				tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")", " "}
-			end
+			tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")"}
+		end
+		if CharInfo.PlayerData.guildRankName and CharInfo.PlayerData.guildRankIndex then
+			tooltip_Chars[#tooltip_Chars+1] = {"<"..E.Green_Color..CharInfo.PlayerData.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.PlayerData.guildRankName.."|r".."]"}
 		end
 		-- War mode status
 		if CharInfo.PlayerData.WarMode == true then
@@ -38,46 +37,48 @@ function E:func_Tooltip_Chars(CharInfo)
 		-- Level and race info
 		if CharInfo.PlayerData.RaceLocal then
 			if CharInfo.PlayerData.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerData.UnitXPPercent then
-				tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.RaceLocal.." "..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.UnitLevel.."-го|r уровня "..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.UnitXPPercent.."%|r", " "}
+				tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.RaceLocal.." "..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.UnitLevel.."-го|r уровня "..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.UnitXPPercent.."%|r", ""}
 			else
-				tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.RaceLocal, " "}
+				tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.RaceLocal, ""}
 			end
 		end
 		-- Spec and class info
 		if CharInfo.PlayerData.specName and CharInfo.PlayerData.specIcon then
-			tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(CharInfo.PlayerData.specIcon)..CharInfo.PlayerData.specName.." "..CharInfo.PlayerData.className, " "}
+			tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(CharInfo.PlayerData.specIcon)..CharInfo.PlayerData.specName.." "..CharInfo.PlayerData.className, ""}
 		end
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
 	end
 	-- Chromie time info
 	if CharInfo.PlayerData.Chromie_name and CharInfo.PlayerData.Chromie_name ~= "" then
-		tooltip_Chars[#tooltip_Chars+1] = {E.Red_Color..CharInfo.PlayerData.Chromie_name.."|r", " "}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
+		tooltip_Chars[#tooltip_Chars+1] = {L["Chromie"]..": "..E.Red_Color..CharInfo.PlayerData.Chromie_name.."|r", ""}
 	end
 	-- Location info
 	if CharInfo.PlayerData.BindLocation then
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(134414)..L["Bind Location"], CharInfo.PlayerData.BindLocation}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
+		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(134414)..string.format(BIND_ZONE_DISPLAY, CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.BindLocation.."|r"), ""}
 	end
 	if CharInfo.PlayerData.curLocation then
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(132319)..L["Current Location"], CharInfo.PlayerData.curLocation}
+		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(132319)..FRIENDS_LIST_ZONE..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.curLocation.."|r", ""}
+
+
 	end
 	-- Inventory info
 	if CharInfo.PlayerData.usedSlots and CharInfo.PlayerData.totalSlots then
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(133634)..L["Bags"], CharInfo.PlayerData.classColorHex..(CharInfo.PlayerData.usedSlots.."/"..CharInfo.PlayerData.totalSlots).."|r"}
+		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(133634)..L["Bags"]..": "..CharInfo.PlayerData.classColorHex..(CharInfo.PlayerData.usedSlots.."/"..CharInfo.PlayerData.totalSlots).."|r", ""}
 	end
 	-- Quests info
 	if CharInfo.PlayerData.numQuests and CharInfo.PlayerData.maxNumQuestsCanAccept then
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(236664)..QUESTS_LABEL, CharInfo.PlayerData.classColorHex..(CharInfo.PlayerData.numQuests.."/"..CharInfo.PlayerData.maxNumQuestsCanAccept).."|r"}
+		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(236664)..QUESTS_LABEL..": "..CharInfo.PlayerData.classColorHex..(CharInfo.PlayerData.numQuests.."/"..CharInfo.PlayerData.maxNumQuestsCanAccept).."|r", ""}
 	end
 	-- Play time info
 	if CharInfo.PlayerData.realTotalTime then
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
-		tooltip_Chars[#tooltip_Chars+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.realTotalTime)).."|r", " "}
-		tooltip_Chars[#tooltip_Chars+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.realLevelTime)).."|r", " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
+		tooltip_Chars[#tooltip_Chars+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.realTotalTime)).."|r", ""}
+		tooltip_Chars[#tooltip_Chars+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.realLevelTime)).."|r", ""}
 	end
 	-- Special item info
 	if CharInfo.MASLENGO.ItemsInBag[122284] then
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(122284))..E:func_GetItemNameByID(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 	end
 
@@ -86,17 +87,17 @@ function E:func_Tooltip_Chars(CharInfo)
 
 	-- Debug information
 	if E.DebugInfo then
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
-		tooltip_Chars[#tooltip_Chars+1] = {E.DEVTEXT, " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
+		tooltip_Chars[#tooltip_Chars+1] = {E.DEVTEXT, ""}
 
 
 
 
 		if CharInfo.PlayerData.tmstp_Daily then
-			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Daily: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Daily-GetServerTime()).."|r", " "}
+			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Daily: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Daily-GetServerTime()).."|r", ""}
 		end
 		if CharInfo.PlayerData.tmstp_Weekly then
-			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Weekly: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Weekly-GetServerTime()).."|r", " "}
+			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Weekly: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Weekly-GetServerTime()).."|r", ""}
 		end
 
 
@@ -113,32 +114,32 @@ function E:func_Tooltip_Chars(CharInfo)
 		-- BattleTag info
 		tooltip_Chars[#tooltip_Chars+1] = {"BattleTag", E.Blue_Color..CharInfo.PlayerData.BattleTag.."|r"}
 		tooltip_Chars[#tooltip_Chars+1] = {"BattleTagLocal", E.Blue_Color..CharInfo.PlayerData.BattleTagLocal.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		-- Account restrictions
 		tooltip_Chars[#tooltip_Chars+1] = {"GameLimitedMode_IsActive", CharInfo.PlayerData.GameLimitedMode_IsActive and E.TRUE or E.NIL}
 		tooltip_Chars[#tooltip_Chars+1] = {"levelCapped20", CharInfo.PlayerData.levelCapped20 and E.TRUE or E.NIL}
 		tooltip_Chars[#tooltip_Chars+1] = {"PlayerCanEarnExperience", CharInfo.PlayerData.PlayerCanEarnExperience and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		-- Build info
 		tooltip_Chars[#tooltip_Chars+1] = {"buildVersion", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.buildVersion.."|r"}
 		tooltip_Chars[#tooltip_Chars+1] = {"buildNumber", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.buildNumber.."|r"}
 		tooltip_Chars[#tooltip_Chars+1] = {"buildDate", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.buildDate.."|r"}
 		tooltip_Chars[#tooltip_Chars+1] = {"interfaceVersion", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.interfaceVersion.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		-- Version info
 		tooltip_Chars[#tooltip_Chars+1] = {"currentTier", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.currentTier.."|r"}
 		tooltip_Chars[#tooltip_Chars+1] = {"IsPublicBuild", CharInfo.PlayerData.IsPublicBuild and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		-- Account limits
 		tooltip_Chars[#tooltip_Chars+1] = {"max LVL", CharInfo.PlayerData.GetRestrictedAccountData_rLevel and E.TRUE or E.NIL}
 		tooltip_Chars[#tooltip_Chars+1] = {"max Money", CharInfo.PlayerData.GetRestrictedAccountData_rMoney and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		-- Account security
 		tooltip_Chars[#tooltip_Chars+1] = {"Authenticator", CharInfo.PlayerData.IsAccountSecured and E.TRUE or E.NIL}
 		tooltip_Chars[#tooltip_Chars+1] = {"УЗ имеет ограничения пробной УЗ", CharInfo.PlayerData.IsRestrictedAccount and E.TRUE or E.NIL}
 		tooltip_Chars[#tooltip_Chars+1] = {"Использует ли игрок пробную УЗ", CharInfo.PlayerData.IsTrialAccount and E.TRUE or E.NIL}
 		tooltip_Chars[#tooltip_Chars+1] = {"Нет игрового времени", CharInfo.PlayerData.IsVeteranTrialAccount and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
+		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		-- Durability
 		tooltip_Chars[#tooltip_Chars+1] = {"PlayerDurability", CharInfo.PlayerData.PlayerDurability and E.TRUE or E.NIL}
 		-- DBVersion
@@ -255,7 +256,7 @@ function E:func_Otrisovka_91_Other()
 				end
 				for worldBossID, v in next, (CharInfo.MASLENGO.SavedWorldBoss) do
 					if v then
-						tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E.Icon_WorldBoss).. v.name .." ".. E.Red_Color..E:func_SecondsToClock(v.reset).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..worldBossID.."|r" or ""), " "}
+						tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E.Icon_WorldBoss).. v.name .." ".. E.Red_Color..E:func_SecondsToClock(v.reset).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..worldBossID.."|r" or ""), ""}
 					end
 				end
 				if #tooltipRIGHT ~= 0 then
@@ -427,8 +428,8 @@ function E:func_Otrisovka_91_Other()
 							color = E.Red_Color
 						end
 						textCENT = color..E.func_FriendsFrame_GetLastOnline(CharInfo.PlayerData.time).."|r"
-						tooltipRIGHT[#tooltipRIGHT+1] = {color..E:func_FriendsFrame_GetLastOnlineText(CharInfo.PlayerData.time, CharInfo.PlayerData.classColorHex).."|r", " "}
-						tooltipRIGHT[#tooltipRIGHT+1] = {" ", " "}
+						tooltipRIGHT[#tooltipRIGHT+1] = {color..E:func_FriendsFrame_GetLastOnlineText(CharInfo.PlayerData.time, CharInfo.PlayerData.classColorHex).."|r", ""}
+						tooltipRIGHT[#tooltipRIGHT+1] = {" ", ""}
 						tooltipRIGHT[#tooltipRIGHT+1] = {" ", color..CharInfo.PlayerData.loginDay.."|r"}
 						tooltipRIGHT[#tooltipRIGHT+1] = {" ", color..CharInfo.PlayerData.loginHour.."|r"}
 					end

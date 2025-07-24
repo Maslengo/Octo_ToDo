@@ -285,7 +285,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 				tooltipOCTO = E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 			end
 			frame.tooltip = tooltipOCTO
-			E:func_OctoTooltip_OnEnter(frame)
+			E:func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
 	end)
 end
 
@@ -698,7 +698,7 @@ function E:func_CreateMyDataProvider()
 			curCharFrame:SetScript("OnEnter", function(self)
 					curCharFrame.tooltip = E:func_Tooltip_Chars(CharInfo)
 					-- E:func_OctoTooltip_OnEnter(curCharFrame, {"BOTTOM", "TOP"})
-					E:func_OctoTooltip_OnEnter(curCharFrame)
+					E:func_OctoTooltip_OnEnter(curCharFrame, {"BOTTOMLEFT", "TOPRIGHT"})
 
 
 			end)

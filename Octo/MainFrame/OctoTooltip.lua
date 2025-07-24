@@ -1,23 +1,23 @@
 local GlobalAddonName, E = ...
-local Octo_EventFrame_OCTOTOOLTIP = CreateFrame("FRAME")
-Octo_EventFrame_OCTOTOOLTIP:Hide()
+local OctoTooltipEventFrame = CreateFrame("FRAME")
+OctoTooltipEventFrame:Hide()
 local OctoTooltip = CreateFrame("BUTTON", "OctoTooltip", UIParent, "BackdropTemplate")
 OctoTooltip:Hide()
-local INDENT = 440
-local LINE_HEIGHT = 18
-local LINE_WEIGHT = 256
+local INDEND_TEST = 4
+local INDEND_SCROLL = 20
+local TOOLTIP_LINE_HEIGHT = 20
+local TOOLTIP_LINE_WIDTH = 256
 local LINES_MAX = 20
-local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT))*.7)
+local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / TOOLTIP_LINE_HEIGHT))*.7)
 if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
 end
-local r, g, b = GetClassColor(E.classFilename)
-local total_widthTOOLTIP = 10
-local function func_OnHideFirst(frame)
-	frame.frameFULL:Hide()
+local classR, classG, classB = GetClassColor(E.classFilename)
+local function func_OnHide(frame)
+	frame.highlightFrame:Hide()
 end
-local function func_OnShowFirst(frame)
-	frame.frameFULL:Show()
+local function func_OnShow(frame)
+	frame.highlightFrame:Show()
 end
 local func_OnAcquired do
 	function func_OnAcquired(owner, frame, data, new)
@@ -25,39 +25,39 @@ local func_OnAcquired do
 			frame:SetPropagateMouseClicks(false)
 			frame:SetPropagateMouseMotion(true)
 			----------------
-			local frameFULL = CreateFrame("Button", nil, OctoTooltip)
-			frameFULL:SetPropagateMouseClicks(false)
-			frameFULL:SetPropagateMouseMotion(true)
-			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-			frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
-			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-			frameFULL.HighlightTexture:SetAlpha(.2)
-			frameFULL:SetPoint("LEFT", frame)
-			frameFULL:SetPoint("TOP", frame)
-			frameFULL:SetPoint("BOTTOM", frame)
-			frameFULL:SetPoint("RIGHT")
-			frame.frameFULL = frameFULL
+			local highlightFrame = CreateFrame("Button", nil, OctoTooltip)
+			highlightFrame:SetPropagateMouseClicks(false)
+			highlightFrame:SetPropagateMouseMotion(true)
+			highlightFrame:SetFrameLevel(frame:GetFrameLevel()+2)
+			highlightFrame:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+			highlightFrame.HighlightTexture = highlightFrame:GetHighlightTexture()
+			highlightFrame.HighlightTexture:SetAlpha(.2)
+			highlightFrame:SetPoint("LEFT", frame)
+			highlightFrame:SetPoint("TOP", frame)
+			highlightFrame:SetPoint("BOTTOM", frame)
+			highlightFrame:SetPoint("RIGHT")
+			frame.highlightFrame = highlightFrame
 			----------------
-			local textureFULL = frameFULL:CreateTexture(nil, "BACKGROUND", nil, -3)
+			local textureFULL = highlightFrame:CreateTexture(nil, "BACKGROUND", nil, -3)
 			textureFULL:Hide()
 			textureFULL:SetAllPoints()
 			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
-			textureFULL:SetVertexColor(r, g, b, E.bgCaOverlay)
+			textureFULL:SetVertexColor(classR, classG, classB, E.bgCaOverlay)
 			frame.textureFULL = textureFULL
 			----------------
 			-- Создаем метатаблицу для дочерних фреймов
-			frame.pizda = setmetatable({}, {
+			frame.lineFrames = setmetatable({}, {
 					__index = function(self, key)
 						if key then
 							-- Создаем новый фрейм для каждого элемента
 							local f = CreateFrame("BUTTON", "frame"..key, frame)
 							f:SetPropagateMouseClicks(false)
 							f:SetPropagateMouseMotion(true)
-							f:SetHeight(LINE_HEIGHT)
-							-- f:SetSize(LINE_WEIGHT, LINE_HEIGHT)
+							f:SetHeight(TOOLTIP_LINE_HEIGHT)
+							-- f:SetSize(TOOLTIP_LINE_WIDTH, TOOLTIP_LINE_HEIGHT)
 							-- f:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
 							if key == 1 then
-								f:SetPoint("TOPLEFT", frame, "TOPLEFT", 2, 0)
+								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDEND_TEST, 0) -- ОТСТУП
 							else
 								local prevKey = key - 1
 								local prevFrame = rawget(self, prevKey) or self[prevKey] -- Получаем предыдущий фрейм
@@ -70,7 +70,7 @@ local func_OnAcquired do
 							f.text:SetFontObject(OctoFont11)
 							f.text:SetWordWrap(false)
 							f.text:SetJustifyV("MIDDLE") -- TOP, MIDDLE, BOTTOM
-							f.text:SetJustifyH("LEFT") -- LEFT, CENTER, RIGHT
+							f.text:SetJustifyH("CENTER") -- LEFT, CENTER, RIGHT
 							f.text:SetTextColor(1, 1, 1, 1)
 							-- Обработчики событий
 							-- f:SetScript("OnEnter", function() E:func_OctoTooltip_OnEnter(f) end)
@@ -80,35 +80,44 @@ local func_OnAcquired do
 						end
 					end
 			})
-			frame:SetScript("OnHide", func_OnHideFirst)
-			frame:SetScript("OnShow", func_OnShowFirst)
+			frame:SetScript("OnHide", func_OnHide)
+			frame:SetScript("OnShow", func_OnShow)
 			----------------
-			-- total_widthTOOLTIP = first_width + second_width + third_width
 		end
 	end
 end
-local countQWE = 0
-function Octo_EventFrame_OCTOTOOLTIP:Octo_Frame_init(frame, node)
-	countQWE = countQWE + 1
-	local zxc = node:GetData()
-	for i = 1, #zxc do
-		local pizdaFrame = frame.pizda[i]
-		local frameData = zxc
-		if frameData[i] then
-			frame.pizda[i].text:SetText(frameData[i])
+function OctoTooltipEventFrame:Octo_Frame_init(frame, node)
+	-- Получаем данные из узла и кэшируем часто используемые переменные
+	local frameData = node:GetData()
+	local lineFrames = frame.lineFrames  -- Кэшируем для быстрого доступа
+	local numData = #frameData           -- Количество элементов в данных
+	local numLines = #lineFrames         -- Количество доступных lineFrames
+	local columnSizes = OctoTooltipEventFrame.COLUMN_SIZES  -- Размеры колонок (если есть)
+	-- Обрабатываем данные и обновляем соответствующие lineFrames
+	for i = 1, numData do
+		local currentText = frameData[i]
+		if currentText then
+			lineFrames[i].text:SetText(currentText)  -- Устанавливаем текст
 		end
-		if Octo_EventFrame_OCTOTOOLTIP.COLUMN_SIZES then
-			frame.pizda[i]:SetWidth(Octo_EventFrame_OCTOTOOLTIP.COLUMN_SIZES[i])
+		-- Если заданы размеры колонок, применяем их
+		if columnSizes then
+			lineFrames[i]:SetWidth(columnSizes[i])
 		end
+		-- Определяем выравнивание текста (по умолчанию CENTER)
+		local justify = "CENTER"
+		if numData > 1 then
+			if i == 1 then          -- Первый элемент выравниваем по ЛЕВОМУ краю
+				justify = "LEFT"
+			elseif i == numData then -- Последний элемент — по ПРАВОМУ
+				justify = "RIGHT"
+			end
+		end
+		lineFrames[i].text:SetJustifyH(justify)
 	end
-	for i = #zxc + 1, #frame.pizda do
-		frame.pizda[i].text:SetText()
+	-- Очищаем оставшиеся lineFrames (если данных меньше, чем фреймов)
+	for i = numData + 1, numLines do
+		lineFrames[i].text:SetText()
 	end
-	-- if frameData.ShownGUID and frameData.ShownGUID == E.curGUID then
-	--     frame.textureFULL:Show()
-	-- else
-	--     frame.textureFULL:Hide()
-	-- end
 end
 local function GetTipAnchor(frame)
 	local x, y = frame:GetCenter()
@@ -119,7 +128,7 @@ local function GetTipAnchor(frame)
 	local vhalf = (y > UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
 	return vhalf .. hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP") .. hhalf
 end
-function Octo_EventFrame_OCTOTOOLTIP:func_SmartAnchorTo(frame, point)
+function OctoTooltipEventFrame:func_SmartAnchorTo(frame, point)
 	if not frame then
 		return error("Invalid frame provided.", 2)
 	end
@@ -132,57 +141,54 @@ function Octo_EventFrame_OCTOTOOLTIP:func_SmartAnchorTo(frame, point)
 		-- OctoTooltip:SetPoint(GetTipAnchor(frame))
 	end
 end
-function Octo_EventFrame_OCTOTOOLTIP:Create_OctoTooltip()
+
+
+local function TooltipOnEnter()
+	if OctoTooltipEventFrame.shouldShowScrollBar then
+		OctoTooltip:Show()
+		OctoTooltip:SetPropagateMouseMotion(false)
+	else
+		OctoTooltip:SetPropagateMouseMotion(true)
+	end
+end
+
+local function TooltipOnLeave()
+	OctoTooltip:Hide()
+end
+
+function OctoTooltipEventFrame:Create_OctoTooltip()
 	OctoTooltip:SetPropagateMouseClicks(false)
 	OctoTooltip:SetPropagateMouseMotion(false)
 	OctoTooltip:SetHitRectInsets(-1, -1, -1, -1) -- Коррекция области нажатия (-4 увеличение)
-
-	OctoTooltip:SetScript("OnEnter", function()
-		if Octo_EventFrame_OCTOTOOLTIP.ShowScroll then
-			OctoTooltip:Show()
-			OctoTooltip:SetPropagateMouseMotion(false)
-		else
-			OctoTooltip:SetPropagateMouseMotion(true)
-		end
-	end)
-	OctoTooltip:SetScript("OnLeave", function()
-		OctoTooltip:Hide()
-	end)
-
-
+	OctoTooltip:SetScript("OnEnter", TooltipOnEnter)
+	OctoTooltip:SetScript("OnLeave", TooltipOnLeave)
 	OctoTooltip:SetPoint("CENTER")
-	OctoTooltip:SetSize(1, LINE_HEIGHT*1)
+	OctoTooltip:SetSize(1, TOOLTIP_LINE_HEIGHT*1)
 	OctoTooltip:SetClampedToScreen(true)
 	OctoTooltip:SetFrameStrata("TOOLTIP")
 	OctoTooltip:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-	OctoTooltip:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, 1) -- E.bgCa
-	OctoTooltip:SetBackdropBorderColor(r, g, b, 1)
+	OctoTooltip:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa) -- E.bgCa
+	-- OctoTooltip:SetBackdropBorderColor(classR, classG, classB, 1)
+	OctoTooltip:SetBackdropBorderColor(0, 0, 0, 1)
 	OctoTooltip.ScrollBox = CreateFrame("FRAME", nil, OctoTooltip, "WowScrollBoxList")
 	OctoTooltip.ScrollBox:SetAllPoints()
-
 	OctoTooltip.ScrollBox:SetPropagateMouseClicks(false)
 	OctoTooltip.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(false)
-
 	OctoTooltip.ScrollBox:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBox:GetScrollTarget():SetPropagateMouseMotion(true)
-
-
 	OctoTooltip.ScrollBox:Layout()
 	OctoTooltip.ScrollBar = CreateFrame("EventFrame", nil, OctoTooltip, "MinimalScrollBar")
 	OctoTooltip.ScrollBar:SetPoint("TOPLEFT", OctoTooltip.ScrollBox, "TOPRIGHT", -15, -3)
 	OctoTooltip.ScrollBar:SetPoint("BOTTOMLEFT", OctoTooltip.ScrollBox, "BOTTOMRIGHT", -15, 3)
-
 	OctoTooltip.ScrollBar:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBar.Back:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBar.Forward:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBar.Track:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBar.Track.Thumb:SetPropagateMouseMotion(true)
-
 	-- OctoTooltip:SetPropagateMouseClicks(false)
 	-- OctoTooltip:SetPropagateMouseMotion(false)
-
 	OctoTooltip.view = CreateScrollBoxListTreeListView()
-	OctoTooltip.view:SetElementExtent(LINE_HEIGHT)
+	OctoTooltip.view:SetElementExtent(TOOLTIP_LINE_HEIGHT)
 	OctoTooltip.view:SetElementInitializer("BUTTON",
 		function(...)
 			self:Octo_Frame_init(...)
@@ -191,26 +197,22 @@ function Octo_EventFrame_OCTOTOOLTIP:Create_OctoTooltip()
 	ScrollUtil.InitScrollBoxListWithScrollBar(OctoTooltip.ScrollBox, OctoTooltip.ScrollBar, OctoTooltip.view)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoTooltip.ScrollBox, OctoTooltip.ScrollBar)
 end
-
-
-
-local function func_hz(node)
+local function calculateColumnWidths(node)
 	local zxc = node:GetData()
 	local frames = OctoTooltip.view:GetFrames()
 	if #frames == 0 then
 		OctoTooltip.view:AcquireInternal(1, node)
 		OctoTooltip.view:InvokeInitializers()
 	end
-	local shirina = {}
-	local btn = frames[1]
+	local columnWidths = {}
+	local sampleFrame = frames[1]
 	for i = 1, #zxc do
-		btn.pizda[i].text:SetText(zxc[i])
-		shirina[i] = btn.pizda[i].text:GetStringWidth()
+		sampleFrame.lineFrames[i].text:SetText(zxc[i])
+		columnWidths[i] = sampleFrame.lineFrames[i].text:GetStringWidth()
 	end
-	return shirina
+	return columnWidths
 end
-
-function Octo_EventFrame_OCTOTOOLTIP:func_OctoTooltip_CreateDataProvider(tbl)
+function OctoTooltipEventFrame:func_OctoTooltip_CreateDataProvider(tbl)
 	local lines = 0
 	local columns = 0
 	local DataProvider = CreateTreeDataProvider()
@@ -225,76 +227,68 @@ function Octo_EventFrame_OCTOTOOLTIP:func_OctoTooltip_CreateDataProvider(tbl)
 		if #zxc > 0 then
 			local node = DataProvider:Insert(zxc)
 			columns = #zxc
-
-			for j, w in ipairs(func_hz(node)) do
+			for j, w in ipairs(calculateColumnWidths(node)) do
 				COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
 			end
 		end
 	end
-	Octo_EventFrame_OCTOTOOLTIP.COLUMN_SIZES = COLUMN_SIZES
-	local total_width = 4
+	OctoTooltipEventFrame.COLUMN_SIZES = COLUMN_SIZES
+	local total_width = INDEND_TEST*2 -- ОТСТУП
 	for i = 1, columns do
-		total_width = total_width + Octo_EventFrame_OCTOTOOLTIP.COLUMN_SIZES[i]
+		total_width = total_width + OctoTooltipEventFrame.COLUMN_SIZES[i]
 	end
 	lines = #tbl
-
-	local ShowScroll = LINES_MAX < lines
-	Octo_EventFrame_OCTOTOOLTIP.ShowScroll = ShowScroll
-	if ShowScroll then
-		total_width = total_width + 24
+	local shouldShowScrollBar = LINES_MAX < lines
+	OctoTooltipEventFrame.shouldShowScrollBar = shouldShowScrollBar
+	if shouldShowScrollBar then
+		total_width = total_width + INDEND_SCROLL
 	end
 	OctoTooltip.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-
 	if lines > LINES_MAX then
-		OctoTooltip:SetSize(total_width, LINE_HEIGHT*LINES_MAX)
+		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*LINES_MAX)
 	elseif lines == 0 then
-		OctoTooltip:SetSize(total_width, LINE_HEIGHT*1)
+		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*1)
 	else
-		OctoTooltip:SetSize(total_width, LINE_HEIGHT*lines)
+		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*lines)
 	end
-
 end
 function E:func_OctoTooltip_OnEnter(frame, point)
 	if not frame.tooltip or #frame.tooltip == 0 then return end
-	Octo_EventFrame_OCTOTOOLTIP:func_SmartAnchorTo(frame, point)
-	Octo_EventFrame_OCTOTOOLTIP:func_OctoTooltip_CreateDataProvider(frame.tooltip)
+	OctoTooltipEventFrame:func_SmartAnchorTo(frame, point)
+	OctoTooltipEventFrame:func_OctoTooltip_CreateDataProvider(frame.tooltip)
 	OctoTooltip:Show()
 	if not frame.initScripts then
 		frame.initScripts = true
 		frame:SetScript("OnLeave", function()
-			if not Octo_EventFrame_OCTOTOOLTIP.ShowScroll or not OctoTooltip:IsMouseOver() then
-				OctoTooltip:Hide()
-			end
-			-- if not Octo_EventFrame_OCTOTOOLTIP.ShowScroll and not OctoTooltip:IsMouseOver() then
-			-- 	OctoTooltip:Hide()
-			-- end
+				if not OctoTooltipEventFrame.shouldShowScrollBar or not OctoTooltip:IsMouseOver() then
+					OctoTooltip:Hide()
+				end
 		end)
 		frame:SetScript("OnHide", function()
 				OctoTooltip:Hide()
 		end)
 	end
-
 end
-local function Create_MyTestButtonFrameONE()
-	local MyTestButtonFrameONE = CreateFrame("Button", "MyTestButtonFrameONE", UIParent, "UIPanelButtonTemplate")
-	MyTestButtonFrameONE:SetPoint("TOPLEFT", UIParent, 128, -64)
-	MyTestButtonFrameONE:SetSize(100, 40)
-	MyTestButtonFrameONE:SetText("ONE")
-	MyTestButtonFrameONE:SetScript("OnEnter", function()
-			E:func_OctoTooltip_OnEnter(MyTestButtonFrameONE)
+local function Create_TestButton1()
+	local TestButton1 = CreateFrame("Button", "TestButton1", UIParent, "UIPanelButtonTemplate")
+	TestButton1:SetPoint("TOPLEFT", UIParent, 128, -64)
+	TestButton1:SetSize(100, 40)
+	TestButton1:SetText("ONE")
+	TestButton1:SetScript("OnEnter", function()
+			E:func_OctoTooltip_OnEnter(TestButton1)
 	end)
-	MyTestButtonFrameONE:EnableMouse(true)
-	MyTestButtonFrameONE:SetMovable(true)
-	MyTestButtonFrameONE:SetScript("OnMouseDown", function(_, button)
+	TestButton1:EnableMouse(true)
+	TestButton1:SetMovable(true)
+	TestButton1:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				MyTestButtonFrameONE:SetAlpha(.5)
-				MyTestButtonFrameONE:StartMoving()
+				TestButton1:SetAlpha(.5)
+				TestButton1:StartMoving()
 			end
 	end)
-	MyTestButtonFrameONE:SetScript("OnMouseUp", function(_, button)
+	TestButton1:SetScript("OnMouseUp", function(_, button)
 			if button == "LeftButton" then
-				MyTestButtonFrameONE:SetAlpha(1)
-				MyTestButtonFrameONE:StopMovingOrSizing()
+				TestButton1:SetAlpha(1)
+				TestButton1:StopMovingOrSizing()
 			end
 	end)
 	local tooltip = {}
@@ -309,46 +303,46 @@ local function Create_MyTestButtonFrameONE()
 		}
 		-- tooltip.ShownGUID = GUID
 	end
-	MyTestButtonFrameONE.tooltip = tooltip
+	TestButton1.tooltip = tooltip
 end
-local function Create_MyTestButtonFrameTWO()
-	local MyTestButtonFrameTWO = CreateFrame("Button", "MyTestButtonFrameTWO", UIParent, "UIPanelButtonTemplate")
-	MyTestButtonFrameTWO:SetPoint("TOPLEFT", UIParent, 128, -128)
-	MyTestButtonFrameTWO:SetSize(100, 40)
-	MyTestButtonFrameTWO:SetText("TWO")
-	MyTestButtonFrameTWO:SetScript("OnEnter", function()
-			E:func_OctoTooltip_OnEnter(MyTestButtonFrameTWO)
+local function Create_TestButton2()
+	local TestButton2 = CreateFrame("Button", "TestButton2", UIParent, "UIPanelButtonTemplate")
+	TestButton2:SetPoint("TOPLEFT", UIParent, 128, -128)
+	TestButton2:SetSize(100, 40)
+	TestButton2:SetText("TWO")
+	TestButton2:SetScript("OnEnter", function()
+			E:func_OctoTooltip_OnEnter(TestButton2)
 	end)
-	MyTestButtonFrameTWO:EnableMouse(true)
-	MyTestButtonFrameTWO:SetMovable(true)
-	MyTestButtonFrameTWO:SetScript("OnMouseDown", function(_, button)
+	TestButton2:EnableMouse(true)
+	TestButton2:SetMovable(true)
+	TestButton2:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				MyTestButtonFrameTWO:SetAlpha(.5)
-				MyTestButtonFrameTWO:StartMoving()
+				TestButton2:SetAlpha(.5)
+				TestButton2:StartMoving()
 			end
 	end)
-	MyTestButtonFrameTWO:SetScript("OnMouseUp", function(_, button)
+	TestButton2:SetScript("OnMouseUp", function(_, button)
 			if button == "LeftButton" then
-				MyTestButtonFrameTWO:SetAlpha(1)
-				MyTestButtonFrameTWO:StopMovingOrSizing()
+				TestButton2:SetAlpha(1)
+				TestButton2:StopMovingOrSizing()
 			end
 	end)
 	local tooltip = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		tooltip[#tooltip+1] = {CharInfo.PlayerData.Name.."|r", E:func_CompactNumberFormat(CharInfo.PlayerData.Money/10000)}
 	end
-	MyTestButtonFrameTWO.tooltip = tooltip
+	TestButton2.tooltip = tooltip
 end
 local MyEventsTable = {
 	"ADDON_LOADED",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_OCTOTOOLTIP, MyEventsTable)
-function Octo_EventFrame_OCTOTOOLTIP:ADDON_LOADED(addonName)
+E:func_RegisterMyEventsToFrames(OctoTooltipEventFrame, MyEventsTable)
+function OctoTooltipEventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
-		Create_MyTestButtonFrameONE()
-		Create_MyTestButtonFrameTWO()
+		Create_TestButton1()
+		Create_TestButton2()
 		self:Create_OctoTooltip()
 	end
 end
