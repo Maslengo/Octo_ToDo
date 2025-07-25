@@ -25,6 +25,8 @@ if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
+
+
 local function func_OnHide(frame)
 	frame.highlightFrame:Hide()
 end
@@ -152,17 +154,6 @@ function ItemsUsable_EventFrame:func_SmartAnchorTo(frame, point)
 		-- ItemsUsable:SetPoint(GetTipAnchor(frame))
 	end
 end
--- local function TooltipOnEnter()
---     if ItemsUsable_EventFrame.shouldShowScrollBar then
---         ItemsUsable:Show()
---         ItemsUsable:SetPropagateMouseMotion(true)
---     else
---         ItemsUsable:SetPropagateMouseMotion(true)
---     end
--- end
--- local function TooltipOnLeave()
---     ItemsUsable:Hide()
--- end
 local function TooltipOnShow()
 	local scrollBar = ItemsUsable.ScrollBar
 	local shouldShow = ItemsUsable_EventFrame.shouldShowScrollBar
@@ -178,8 +169,6 @@ function ItemsUsable_EventFrame:Create_ItemsUsable()
 	ItemsUsable:SetPropagateMouseClicks(true)
 	ItemsUsable:SetPropagateMouseMotion(true)
 	ItemsUsable:SetHitRectInsets(-1, -1, -1, -1) -- Коррекция области нажатия (-4 увеличение)
-	-- ItemsUsable:SetScript("OnEnter", TooltipOnEnter)
-	-- ItemsUsable:SetScript("OnLeave", TooltipOnLeave)
 	ItemsUsable:SetScript("OnShow", TooltipOnShow)
 	ItemsUsable:SetPoint("CENTER")
 	ItemsUsable:SetSize(1, LINE_HEIGHT*1)
@@ -231,50 +220,138 @@ local function calculateColumnWidths(node)
 	end
 	return columnWidths
 end
-function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider(tbl)
-	local lines = 0
-	local columns = 0
-	local DataProvider = CreateTreeDataProvider()
-	local COLUMN_SIZES = {}
-	for _, v in ipairs(tbl) do
-		lines = lines + 1
-		local zxc = {}
-		for i, value in ipairs(v) do
-			if value ~= nil then
-				table.insert(zxc, value)
-			end
-		end
-		if #zxc > 0 then
-			local node = DataProvider:Insert(zxc)
-			columns = #zxc
-			for j, w in ipairs(calculateColumnWidths(node)) do
-				COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
-			end
-		end
-	end
-	ItemsUsable_EventFrame.COLUMN_SIZES = COLUMN_SIZES
-	local total_width = INDEND_TEST*2 + (INDENT_BETWEEN_LINES*(columns-1)) -- ОТСТУП
-	for i = 1, columns do
-		total_width = total_width + ItemsUsable_EventFrame.COLUMN_SIZES[i]
-	end
-	lines = #tbl
-	local shouldShowScrollBar = LINES_MAX < lines
-	ItemsUsable_EventFrame.shouldShowScrollBar = shouldShowScrollBar
-	if shouldShowScrollBar then
-		total_width = total_width + INDEND_SCROLL
-	end
-	ItemsUsable.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-	if lines > LINES_MAX then
-		ItemsUsable:SetSize(total_width, LINE_HEIGHT*LINES_MAX)
-	elseif lines == 0 then
-		ItemsUsable:SetSize(total_width, LINE_HEIGHT*1)
-	else
-		ItemsUsable:SetSize(total_width, LINE_HEIGHT*lines)
-	end
+function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
+    -- Сначала соберем все предметы с их количеством
+    local UsableTBL = {}
+
+    -- Оптимизация: вынесем часто используемые таблицы в локальные переменные
+    local OctoTable_itemID_ItemsUsable = E.OctoTable_itemID_ItemsUsable
+    local OctoTable_itemID_Ignore_List = E.OctoTable_itemID_Ignore_List
+    local OctoTable_itemID_ItemsDelete = E.OctoTable_itemID_ItemsDelete
+    local func_GetItemCount = function(...) return E:func_GetItemCount(...) end
+
+    -- Оптимизация: перебираем сумки только если есть что проверять
+    for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+        local numSlots = GetContainerNumSlots(bag)
+        if numSlots > 0 then -- Проверяем, есть ли слоты в сумке
+            for slot = 1, numSlots do -- Изменил порядок перебора (1..numSlots вместо numSlots..1)
+                local containerInfo = GetContainerItemInfo(bag, slot)
+                if containerInfo and containerInfo.itemID then
+                    local itemID = containerInfo.itemID
+                    local quality = containerInfo.quality
+
+                    -- Проверяем предметы для использования
+                    local requiredCount = OctoTable_itemID_ItemsUsable[itemID]
+                    if requiredCount and not OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= requiredCount then
+                        if not UsableTBL[itemID] then
+                            UsableTBL[itemID] = {
+                                count = func_GetItemCount(itemID, false, false, false, false),
+                                quality = quality,
+                                usable = true
+                            }
+                        end
+                    -- Проверяем предметы для удаления (только если предмет еще не добавлен)
+                    elseif not UsableTBL[itemID] and OctoTable_itemID_ItemsDelete[itemID] then
+                        UsableTBL[itemID] = {
+                            count = func_GetItemCount(itemID, false, false, false, false),
+                            quality = quality,
+                            usable = false
+                        }
+                    end
+                end
+            end
+        end
+    end
+
+    -- Преобразуем в таблицу для сортировки
+    local sorted_itemList = {}
+    for itemID, v in pairs(UsableTBL) do -- Используем pairs вместо next
+        sorted_itemList[#sorted_itemList + 1] = { -- Прямое добавление вместо table.insert
+            itemID = itemID,
+            count = v.count,
+            quality = v.quality,
+            usable = v.usable
+        }
+    end
+
+    -- Сортируем сначала по quality (убывание), затем по count (убывание), затем по itemID (возрастание)
+    table.sort(sorted_itemList, function(a, b)
+        if a.quality ~= b.quality then
+            return a.quality > b.quality
+        elseif a.count ~= b.count then
+            return a.count > b.count
+        else
+            return a.itemID < b.itemID -- Исправлено: должно быть возрастание по itemID (было ">")
+        end
+    end)
+
+    -- Создаем финальную таблицу для отображения
+    local NewTable = {}
+    local color, itemName, itemIcon -- Локальные переменные для повторного использования
+
+    for _, item in ipairs(sorted_itemList) do
+        local itemID = item.itemID
+        color = item.usable and E.Green_Color or E.Red_Color
+        itemIcon = E:func_texturefromIcon(E:func_GetItemIconByID(itemID))
+        itemName = E:func_GetItemNameByID_MyQuality(itemID, item.quality)
+
+        NewTable[#NewTable + 1] = {
+            itemIcon .. itemName,
+            item.usable and color.."USE|r" or color.."DELETE|r",
+            color..item.count.."|r"
+        }
+    end
+
+    -- Оптимизация: объединили расчеты размеров и создание DataProvider
+    local DataProvider = CreateTreeDataProvider()
+    local COLUMN_SIZES = {}
+    local maxColumns = 0
+    local lines = #NewTable
+
+    for _, v in ipairs(NewTable) do
+        local node = DataProvider:Insert(v)
+        maxColumns = math.max(maxColumns, #v)
+
+        -- Вычисляем ширину колонок (предполагается, что calculateColumnWidths существует)
+        local widths = calculateColumnWidths(node)
+        for j, w in ipairs(widths) do
+            COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
+        end
+    end
+
+    ItemsUsable_EventFrame.COLUMN_SIZES = COLUMN_SIZES
+
+    -- Вычисляем общую ширину
+    local total_width = INDEND_TEST * 2 + (INDENT_BETWEEN_LINES * (maxColumns - 1))
+    for i = 1, maxColumns do
+        total_width = total_width + (COLUMN_SIZES[i] or 0)
+    end
+
+    -- Определяем, нужно ли показывать скроллбар
+    local shouldShowScrollBar = LINES_MAX < lines
+    ItemsUsable_EventFrame.shouldShowScrollBar = shouldShowScrollBar
+
+    if shouldShowScrollBar then
+        total_width = total_width + INDEND_SCROLL
+    end
+
+    -- Устанавливаем DataProvider и размеры
+    ItemsUsable.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+
+    local height
+    if lines > LINES_MAX then
+        height = LINE_HEIGHT * LINES_MAX
+    elseif lines == 0 then
+        height = LINE_HEIGHT * 1
+    else
+        height = LINE_HEIGHT * lines
+    end
+
+    ItemsUsable:SetSize(total_width, height)
 end
 local function Toggle_ItemsUsable(frame)
 	if not ItemsUsable:IsShown() then
-		ItemsUsable_EventFrame:func_ItemsUsable_OnStart(frame)
+		ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
 	end
 	ItemsUsable:SetShown(not ItemsUsable:IsShown())
 end
@@ -300,90 +377,13 @@ function ItemsUsable_EventFrame:CreateTestButton1()
 			end
 	end)
 	btn:RegisterForClicks("LeftButtonUp")
-	btn:SetScript("OnClick", function(self)
-			Toggle_ItemsUsable(btn)
-	end)
-end
-function ItemsUsable_EventFrame:func_ItemsUsable_OnStart(frame)
-	-- Сначала соберем все предметы с их количеством
-	local UsableTBL = {}
-	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-		local numSlots = GetContainerNumSlots(bag)
-		for slot = numSlots, 1, -1 do
-			local containerInfo = GetContainerItemInfo(bag, slot)
-			if containerInfo and containerInfo.itemID then
-				local itemID = containerInfo.itemID
-				local quality = containerInfo.quality
-				-- Проверяем предметы для использования
-				local requiredCount = E.OctoTable_itemID_ItemsUsable[itemID]
-				if requiredCount and not E.OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= requiredCount then
-					if not UsableTBL[itemID] then
-						UsableTBL[itemID] = {
-							count = E:func_GetItemCount(itemID, false, false, false, false),
-							quality = quality,
-							usable = true
-						}
-					end
-				end
-				-- Проверяем предметы для удаления
-				if E.OctoTable_itemID_ItemsDelete[itemID] then
-					if not UsableTBL[itemID] then
-						UsableTBL[itemID] = {
-							count = E:func_GetItemCount(itemID, false, false, false, false),
-							quality = quality,
-							usable = false
-						}
-					end
-				end
-
-
-
-					-- UsableTBL[itemID] = {
-					-- 	count = E:func_GetItemCount(itemID, false, false, false, false),
-					-- 	quality = quality,
-					-- 	usable = false
-					-- }
-			end
-		end
-	end
-	-- Преобразуем в таблицу для сортировки
-	local sorted_itemList = {}
-	for itemID, v in next, (UsableTBL) do
-		table.insert(sorted_itemList, {itemID = itemID, count = v.count, quality = v.quality, usable = v.usable})
-	end
-	-- Сортируем сначала по quality (убывание), затем по count (убывание), затем по itemID (возрастание)
-	table.sort(sorted_itemList, function(a, b)
-			if a.quality ~= b.quality then
-				return a.quality > b.quality
-			elseif a.count ~= b.count then
-				return a.count > b.count
-			else
-				return a.itemID > b.itemID
-			end
-	end)
-	-- Создаем финальную таблицу для отображения
-	local NewTable = {}
-	local color = E.White_Color
-	for _, item in ipairs(sorted_itemList) do
-		local itemID = item.itemID
-		color = item.usable and E.Green_Color or E.Red_Color
-		NewTable[#NewTable + 1] = {
-			E:func_texturefromIcon(E:func_GetItemIconByID(itemID)) .. E:func_GetItemNameByID_MyQuality(itemID, item.quality),
-			-- E:func_ItemPriceTSM(itemID),
-			item.usable and color.."USE|r" or color.."DELETE|r",
-			color..item.count.."|r"
-		}
-	end
-
-
-
-	-- NewTable = E:func_tooltipRIGHT(CharInfo, TBL, needShowAllItems)
-
-	ItemsUsable_EventFrame:func_SmartAnchorTo(frame, point)
-	ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider(NewTable)
+	btn:SetScript("OnClick", Toggle_ItemsUsable)
+	ItemsUsable_EventFrame:func_SmartAnchorTo(btn)
 end
 local MyEventsTable = {
 	"ADDON_LOADED",
+	"BAG_UPDATE",
+	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",
 }
 E:func_RegisterMyEventsToFrames(ItemsUsable_EventFrame, MyEventsTable)
 function ItemsUsable_EventFrame:ADDON_LOADED(addonName)
@@ -392,5 +392,22 @@ function ItemsUsable_EventFrame:ADDON_LOADED(addonName)
 		self.ADDON_LOADED = nil
 		self:Create_ItemsUsable()
 		self:CreateTestButton1()
+		ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
 	end
+end
+function ItemsUsable_EventFrame:BAG_UPDATE()
+	if not ItemsUsable:IsShown() or self.BAG_UPDATE_pause then return end
+	self.BAG_UPDATE_pause = true
+	ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
+	C_Timer.After(2, function()
+			self.BAG_UPDATE_pause = nil -- Используем nil вместо false для экономии памяти
+	end)
+end
+function ItemsUsable_EventFrame:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
+	if not ItemsUsable:IsShown() or self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause then return end
+	self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = true
+	ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
+	C_Timer.After(2, function()
+			self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = nil -- Используем nil вместо false для экономии памяти
+	end)
 end

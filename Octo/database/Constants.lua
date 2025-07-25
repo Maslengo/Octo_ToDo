@@ -97,6 +97,7 @@ E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- Get
 ----------------------------------------------------------------
 E.IsPublicBuild = IsPublicBuild()
 E.buildVersion, E.buildNumber, E.buildDate, E.interfaceVersion = GetBuildInfo()
+E.interfaceVersion_PTR = 110200
 E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 E.GetRestrictedAccountData_rLevel, E.GetRestrictedAccountData_rMoney = GetRestrictedAccountData()
 E.IsAccountSecured = IsAccountSecured()

@@ -43,32 +43,46 @@ function RunAlternativeQuickLink()
 end
 
 
-StaticPopupDialogs["WowheadQuickLink_CopyBox"] = {
+
+----------------------------------------------------------------
+local dialogConfig = {
 	text = E.classColorHexCurrent.."CTRL-C|r|n"..CALENDAR_COPY_EVENT,
-	button1 = CLOSE,
+	-- button1 = CLOSE,
 	button2 = CANCEL,
-	hasEditBox = 1, -- true
-	whileDead = 1, -- true
+	hasEditBox = 1,
+	whileDead = 1,
 	maxLetters = 0,
 	timeout = 0,
 	EditBoxOnEscapePressed = StaticPopup_StandardEditBoxOnEscapePressed,
 	EditBoxOnEnterPressed = StaticPopup_StandardEditBoxOnEscapePressed,
-	hideOnEscape = 1, -- true
-
+	hideOnEscape = 1,
 	editBoxWidth = 256,
 	closeButton = false,
-
 	preferredIndex = 3,
-
-	OnShow = function(self, data)
-		if data then
-			self.editBox:SetText(data)
-			self.editBox:HighlightText()
-		end
-		self.editBox:SetScript("OnKeyUp", function(self, key)
-				if IsControlKeyDown() and key == "C" then
-					self:GetParent():Hide()
-				end
-		end)
-	end,
 }
+----------------------------------------------------------------
+-- local editBoxKey = E.interfaceVersion < 110200 and "editBox" or "EditBox"
+----------------------------------------------------------------
+local STATICPOPUP_NUMDIALOGS = STATICPOPUP_NUMDIALOGS or 1
+----------------------------------------------------------------
+dialogConfig.OnShow = function(self, data)
+	for i = 1, STATICPOPUP_NUMDIALOGS do
+		local popup = _G["StaticPopup"..i]
+		if not popup then break end
+		local editBox = _G["StaticPopup"..i.."EditBox"]
+		if editBox:IsShown() then
+			if data then
+				editBox:SetText(data)
+				editBox:HighlightText()
+			end
+			editBox:SetScript("OnKeyUp", function(self, key)
+					if IsControlKeyDown() and key == "C" then
+						self:GetParent():Hide()
+					end
+			end)
+		end
+	end
+end
+----------------------------------------------------------------
+StaticPopupDialogs["WowheadQuickLink_CopyBox"] = dialogConfig
+----------------------------------------------------------------

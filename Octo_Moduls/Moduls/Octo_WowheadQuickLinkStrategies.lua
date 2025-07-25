@@ -32,10 +32,8 @@ if E:func_IsCataclysm() == true then
 	E.baseWowheadUrl = "wowhead.com/cata/%s=%s%s"
 end
 if E:func_IsPTR() then
-	E.baseWowheadUrl = "wowhead.com/ptr/%s%s=%s"
+	E.baseWowheadUrl = E.interfaceVersion >= E.interfaceVersion_PTR and "wowhead.com/ptr-2/%s%s=%s" or "wowhead.com/ptr/%s%s=%s"
 end
-
-
 
 local function check_WTF()
 	if Octo_ToDo_DB_Vars.prefix == 1 then output_preffix = "ru/" -- Русский"
