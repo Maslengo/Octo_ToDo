@@ -243,9 +243,11 @@ function E:func_ItemPriceTSM(itemID, myCount)
 		local CustomPriceValue = (TSM_API.GetCustomPriceValue("DBMarket", TSM_ItemIDtest)) or 0
 		if count and count ~= 0 and CustomPriceValue ~= 0 then
 			if count ~= 1 then
-				vivod = vivod..E.Purple_Color.."*"..count.."|r ("..C_CurrencyInfo.GetCoinTextureString(CustomPriceValue*count)..")"
+				-- vivod = vivod..E.Purple_Color.."*"..count.."|r ("..C_CurrencyInfo.GetCoinTextureString(CustomPriceValue*count)..")"
+				vivod = vivod..E.Purple_Color.."*"..count.."|r ("..TSM_API.FormatMoneyString(CustomPriceValue*count)..")"
 			else
-				vivod = vivod..C_CurrencyInfo.GetCoinTextureString(CustomPriceValue)
+				-- vivod = vivod..C_CurrencyInfo.GetCoinTextureString(CustomPriceValue)
+				vivod = vivod..TSM_API.FormatMoneyString(CustomPriceValue)
 			end
 		end
 	end
@@ -341,12 +343,13 @@ function E:func_currencyName(currencyID)
 end
 ----------------------------------------------------------------
 function E:func_IsAccountQuest(questID)
+	table_insert(E.PromiseQuest, questID)
 	return IsAccountQuest(questID)
 end
 function E:func_IsQuestFlaggedCompletedOnAccount(questID)
+	table_insert(E.PromiseQuest, questID)
 	return IsQuestFlaggedCompletedOnAccount(questID)
 end
-table_insert(E.PromiseQuest, questID)
 ----------------------------------------------------------------
 E.quest_names = {}
 setmetatable(E.quest_names, {__index = function(self, key)
@@ -466,7 +469,7 @@ end
 ----------------------------------------------------------------
 function E:func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
 	if not itemID then return 0 end
-	return GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
+	return C_Item.GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -477,7 +480,7 @@ function E:func_GetItemLink(itemID)
 end
 ----------------------------------------------------------------
 function E:func_GetItemQuality(itemID)
-	return GetItemQualityByID(itemID)
+	return GetItemQualityByID(itemID) or 0
 end
 ----------------------------------------------------------------
 function E:func_GetItemQualityColorID(itemID)
@@ -548,8 +551,8 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E:func_GetSpellCooldown(spellID)
-	local start = GetSpellCooldown(spellID).startTime
-	local duration = GetSpellCooldown(spellID).duration
+	local start = C_Spell.GetSpellCooldown(spellID).startTime
+	local duration = C_Spell.GetSpellCooldown(spellID).duration
 	local vivod = 0
 	if start > 0 and duration > 0 then
 		vivod = (start + duration - GetTime())
@@ -2486,9 +2489,14 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		if myType == "ItemLevel" then
 			tooltip[#tooltip+1] = {"", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
 		elseif myType == "Money" then
-			tooltip[#tooltip+1] = {"", ACCOUNT_BANK_PANEL_TITLE..": "..E:func_CompactNumberFormat(C_Bank.FetchDepositedMoney(Enum.BankType.Account)/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+			local price, hz = C_WowTokenPublic.GetCurrentMarketPrice()
+			if C_WowTokenPublic.GetCurrentMarketPrice() then
+				tooltip[#tooltip+1] = {"", TOKEN_FILTER_LABEL..": "..E:func_CompactNumberFormat(C_WowTokenPublic.GetCurrentMarketPrice()/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+			end
+			if C_Bank.FetchDepositedMoney(Enum.BankType.Account) then
+				tooltip[#tooltip+1] = {"", ACCOUNT_BANK_PANEL_TITLE..": "..E:func_CompactNumberFormat(C_Bank.FetchDepositedMoney(Enum.BankType.Account)/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+			end
 			tooltip[#tooltip+1] = {"", TOTAL..": "..E:func_CompactNumberFormat(total/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
-
 			-- tooltip[#tooltip+1] = {"", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
 		elseif myType == "Online" then
 			tooltip[#tooltip+1] = {"", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
@@ -2633,3 +2641,53 @@ function E:func_GetCurrentRegionName()
 	return GetCurrentRegionName()
 end
 ----------------------------------------------------------------
+
+function E:func_tooltipRIGHT(CharInfo, TBL, needShowAllItems)
+    local tooltipRIGHT = {}
+    local sorted_itemList = {}
+    local ItemsInBag = CharInfo.MASLENGO.ItemsInBag
+
+    -- Правильно кэшируем методы через :
+    local GetItemQuality = function(id) return self:func_GetItemQuality(id) end
+    local GetItemIconByID = function(id) return self:func_GetItemIconByID(id) end
+    local GetItemNameByID = function(id) return self:func_GetItemNameByID(id) end
+    local ItemPriceTSM = function(id, count) return self:func_ItemPriceTSM(id, count) end
+    local texturefromIcon = function(icon) return self:func_texturefromIcon(icon) end
+
+    -- Filter and prepare items for sorting
+    for _, itemID in ipairs(TBL) do
+        local count = ItemsInBag[itemID]
+        if needShowAllItems or count then
+            table.insert(sorted_itemList, {
+                itemID = itemID,
+                quality = GetItemQuality(itemID),
+                count = count or 0
+            })
+        end
+    end
+
+    -- Sort items
+    table.sort(sorted_itemList, function(a, b)
+        if a.quality ~= b.quality then
+            return a.quality > b.quality
+        elseif a.count ~= b.count then
+            return a.count > b.count
+        end
+        return a.itemID > b.itemID
+    end)
+
+    -- Build tooltip
+    for _, item in ipairs(sorted_itemList) do
+        local itemID = item.itemID
+        local count = ItemsInBag[itemID] or ""
+        local icon = texturefromIcon(GetItemIconByID(itemID))
+        local name = GetItemNameByID(itemID)
+        local price = ItemPriceTSM(itemID, item.count)
+
+        tooltipRIGHT[#tooltipRIGHT + 1] = {icon..name, count, price}
+    end
+
+    return tooltipRIGHT
+end
+
+

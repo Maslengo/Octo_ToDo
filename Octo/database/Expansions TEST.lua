@@ -1,5 +1,5 @@
-function()
-	print ("START")
+local GlobalAddonName, E = ...
+--------------------------------------------------------------------------------
 	local Expansions = {
 		{
 			color = --[[E:func_rgb2hex(EXPANSION_COLOR_1.r, EXPANSION_COLOR_1.g, EXPANSION_COLOR_1.b) or]] E.WorldofWarcraft_Color,
@@ -91,9 +91,4 @@ function()
 			icon = 4622478,
 		},
 	}
-	for i, v in ipairs(Expansions) do
-		print (i, v.name)
-	end
-	print ("END")
 	return
-end

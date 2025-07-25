@@ -116,7 +116,7 @@ function Octo_EventFrame_Collect:TRADE_SKILL_SHOW()
 	end)
 end
 function Octo_EventFrame_Collect:PLAYER_XP_UPDATE()
-	if InCombatLockdown() or UnitLevel("player") == MAX_PLAYER_LEVEL or self.PLAYER_XP_UPDATE_pause then return end
+	if InCombatLockdown() or UnitLevel("player") == E.currentMaxLevel or self.PLAYER_XP_UPDATE_pause then return end
 	self.PLAYER_XP_UPDATE_pause = true
 	C_Timer.After(1, function()
 			E.Collect_All_PlayerLevel()

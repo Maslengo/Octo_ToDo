@@ -64,7 +64,9 @@ function E:func_Otrisovka_90_Holidays()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		local TimewalkHolidayTBL = {1583, 1265, 1063, 652, 622} -- 1458 Бурные потоки
+		-- 1583 EU classic
+		-- 1508 US classic
+		local TimewalkHolidayTBL = {1583, 1265, 1063, 652, 622, 1508} -- 1458 Бурные потоки
 		for _, HolidayID in ipairs(TimewalkHolidayTBL) do
 			if E.ActiveHoliday[HolidayID] then
 				E:func_Universal_Holiday(OctoTable_Otrisovka, "HolidaysTimewalk", E.Event_Color)

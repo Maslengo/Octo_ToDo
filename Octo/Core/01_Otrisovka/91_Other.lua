@@ -265,11 +265,7 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				for index, itemID in ipairs(E.OctoTable_itemID_ALL) do
-					if CharInfo.MASLENGO.ItemsInBag[itemID] then
-						tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(itemID))..E:func_GetItemNameByID(itemID), CharInfo.MASLENGO.ItemsInBag[itemID], E:func_ItemPriceTSM(itemID, CharInfo.MASLENGO.ItemsInBag[itemID])}
-					end
-				end
+				tooltipRIGHT = E:func_tooltipRIGHT(CharInfo, E.OctoTable_itemID_ALL)
 				if #tooltipRIGHT ~= 0 then
 					textCENT = E.Gray_Color..ITEMS.."|r"
 				end
