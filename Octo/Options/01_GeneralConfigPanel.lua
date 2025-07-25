@@ -157,6 +157,41 @@ function E:CreateGeneralOptions()
 			-- 	order = GetOrder(),
 			-- },
 
+
+			-------------------------------------------------
+			FrameScale = {
+				type = "range",
+				name = "FrameScale",
+				desc = "",
+				min = 0.5,
+				max = 2.5,
+				step = 0.1,
+				get = function()
+					return Octo_ToDo_DB_Vars.FrameScale
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.FrameScale = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			AlphaOnDrag = {
+				type = "range",
+				name = "AlphaOnDrag",
+				desc = "",
+				min = 0.1,
+				max = 1,
+				step = 0.1,
+				get = function()
+					return Octo_ToDo_DB_Vars.AlphaOnDrag
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.AlphaOnDrag = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
 			-------------------------------------------------
 			DontSavePosition = {
 				type = "toggle",
@@ -281,23 +316,6 @@ function E:CreateGeneralOptions()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.GameMenuFrameScale = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			FrameScale = {
-				type = "range",
-				name = "FrameScale",
-				desc = "",
-				min = 0.5,
-				max = 2.5,
-				step = 0.1,
-				get = function()
-					return Octo_ToDo_DB_Vars.FrameScale
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.FrameScale = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),

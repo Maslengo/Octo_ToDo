@@ -115,10 +115,6 @@ function OctoTooltip_EventFrame:Octo_Frame_init(frame, node)
 			end
 		end
 		lineFrames[i].text:SetJustifyH(justify)
-
-
-
-
 	end
 	-- Очищаем оставшиеся lineFrames (если данных меньше, чем фреймов)
 	for i = numData + 1, numLines do
@@ -219,7 +215,7 @@ function OctoTooltip_EventFrame:Create_OctoTooltip()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoTooltip.ScrollBox, OctoTooltip.ScrollBar)
 end
 local function calculateColumnWidths(node)
-	local zxc = node:GetData()
+	local frameData = node:GetData()
 	local frames = OctoTooltip.view:GetFrames()
 	if #frames == 0 then
 		OctoTooltip.view:AcquireInternal(1, node)
@@ -227,8 +223,8 @@ local function calculateColumnWidths(node)
 	end
 	local columnWidths = {}
 	local sampleFrame = frames[1]
-	for i = 1, #zxc do
-		sampleFrame.lineFrames[i].text:SetText(zxc[i])
+	for i = 1, #frameData do
+		sampleFrame.lineFrames[i].text:SetText(frameData[i])
 		columnWidths[i] = sampleFrame.lineFrames[i].text:GetStringWidth()
 	end
 	return columnWidths

@@ -311,7 +311,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		SFDropDownWeight = 100, -- Ширина выпадающих списков
 		MaxNumCharacters = 10, -- Макс. число отображаемых персонажей
 		FrameScale = 1, -- Масштаб фрейма
-		GameMenuFrameScale = 0.8, -- Масштаб меню игры
+		GameMenuFrameScale = 1, -- Масштаб меню игры
+		AlphaOnDrag = 0.8, -- Альфа при перетаскивании
 		LevelToShow = 1, -- Минимальный уровень для отображения
 		LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
 		prefix = 1, -- Префикс
@@ -601,6 +602,9 @@ function Octo_EventFrame_WTF:Daily_Reset()
 				-- Устанавливаем новую временную метку вне зависимости от региона
 				CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
 				CharInfo.PlayerData.needResetDaily = true
+				if CharInfo.PlayerData.UnitLevel <= 20 then
+					print (CharInfo.PlayerData.Name, "needResetDaily")
+				end
 				-- Сбрасываем ежедневные квесты
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					if v.reset == "Daily" then
@@ -629,6 +633,9 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 				-- Устанавливаем новую временную метку вне зависимости от региона
 				CharInfo.PlayerData.tmstp_Weekly = CharInfo.PlayerData.tmstp_Weekly + 86400*7
 				CharInfo.PlayerData.needResetWeekly = true
+				if CharInfo.PlayerData.UnitLevel <= 20 then
+					print (CharInfo.PlayerData.Name, "needResetWeekly")
+				end
 				-- Проверяем есть ли награды в Великом Хранилище
 				for i = 1, #CharInfo.MASLENGO.GreatVault do
 					if CharInfo.MASLENGO.GreatVault[i] and

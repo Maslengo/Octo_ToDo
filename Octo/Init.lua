@@ -15,7 +15,12 @@ OctoEngine = E -- в других аддонах
 
 
 
+E.whatShow = {
+	{name = "TODO", vars = TODO},
+	{name = "Reputations", vars = Reputations},
+	{name = "Currencies", vars = Currencies},
 
+}
 
 
 

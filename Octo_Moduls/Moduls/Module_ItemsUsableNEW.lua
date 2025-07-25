@@ -113,7 +113,7 @@ function ItemsUsable_EventFrame:Octo_Frame_init(frame, node)
 			lineFrames[i].text:SetText(currentText)  -- Устанавливаем текст
 		end
 		-- Если заданы размеры колонок, применяем их
-		if columnSizes then
+		if columnSizes and lineFrames[i] then
 			lineFrames[i]:SetWidth(columnSizes[i])
 		end
 		-- Определяем выравнивание текста (по умолчанию CENTER)

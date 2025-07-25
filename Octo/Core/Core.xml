@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 	<Script file="Core\2 Functions.lua"/>
+	<Script file="Core\3 Functions LibSFDropDown.lua"/>
 	<Script file="Core\4 WTF.lua"/>
 	<Script file="Core\5 WTF_OLD.lua"/>
 	<Script file="Core\7 SharedMedia.lua"/>

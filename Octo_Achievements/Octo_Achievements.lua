@@ -14,15 +14,12 @@ local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSi
 if MainFrameDefaultLines > MainFrameTotalLines then
 	MainFrameDefaultLines = MainFrameTotalLines
 end
-local SFDropDownWeight = 100
-local MaxNumCharacters = 10
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
 local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
-local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
 local table_insert = table.insert
 local table_concat = table.concat
@@ -217,7 +214,7 @@ end
 function Octo_EventFrame_Achievements:Update()
 	Octo_MainFrame_Achievements.view:SetDataProvider(Octo_EventFrame_Achievements.DataProvider, ScrollBoxConstants.RetainScrollPosition)
 end
-function Octo_EventFrame_Achievements:func_CreateMyDataProvider()
+function E:func_Achievements_CreateDataProvider()
 	if Octo_MainFrame_Achievements then
 		Octo_EventFrame_Achievements.DataProvider = CreateTreeDataProvider()
 		local count = 0
@@ -257,106 +254,6 @@ function Octo_EventFrame_Achievements:func_CreateMyDataProvider()
 		Octo_EventFrame_Achievements:Update()
 	end
 end
-function Octo_EventFrame_Achievements:func_Create_DDframe_Achievements()
-	local DD_Achievements = CreateFrame("Button", "DD_Achievements", Octo_MainFrame_Achievements, "SecureActionButtonTemplate, BackDropTemplate")
-	DD_Achievements:SetSize(SFDropDownWeight, AddonHeight)
-	E:func_SetBackdrop(DD_Achievements)
-	DD_Achievements.ExpandArrow = DD_Achievements:CreateTexture(nil, "ARTWORK")
-	DD_Achievements.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	--DD_Achievements.ExpandArrow:SetSize(AddonHeight, AddonHeight)
-	DD_Achievements.ExpandArrow:SetPoint("RIGHT", -4, 0)
-	DD_Achievements.text = DD_Achievements:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	DD_Achievements.text:SetAllPoints()
-	DD_Achievements.text:SetFontObject(OctoFont11)
-	DD_Achievements.text:SetJustifyV("MIDDLE")
-	DD_Achievements.text:SetJustifyH("CENTER")
-	DD_Achievements.text:SetTextColor(1, 1, 1, 1)
-	DD_Achievements.text:SetText(E.Lime_Color..MAIN_MENU.."|r")
-	LibSFDropDown:SetMixin(DD_Achievements)
-	DD_Achievements:SetPoint("BOTTOMLEFT", Octo_MainFrame_Achievements, "TOPLEFT", 0, 0)
-	DD_Achievements:ddSetDisplayMode(GlobalAddonName)
-	DD_Achievements:ddSetOpenMenuUp(true)
-	DD_Achievements:ddSetNoGlobalMouseEvent(true)
-	DD_Achievements:ddHideWhenButtonHidden()
-	DD_Achievements:RegisterForClicks("LeftButtonUp")
-	DD_Achievements:SetScript("OnClick", function(self)
-			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
-	end)
-	local function selectFunctionAchievementToShow(menuButton, _, arg2, checked)
-		Octo_Achievements_DB.AchievementToShow[menuButton.value] = checked or nil
-		if arg2 == 2 then
-			DD_Achievements:ddRefresh(arg2-1)
-		end
-		Octo_EventFrame_Achievements:func_CreateMyDataProvider()
-	end
-	local function TEST_FUNC(menuButton, arg1)
-		local categories = GetCategoryList()
-		local cID = menuButton.value
-		for i = 1, #categories do
-			local categoryID = categories[i]
-			local _, parentCategoryID = GetCategoryInfo(categoryID)
-			if arg1 and cID == parentCategoryID and Octo_Achievements_DB.AchievementToShow[categoryID] == true then
-				return E:func_Gradient(arg1.name)..arg1.vivod
-			end
-		end
-		return arg1.name..arg1.vivod
-	end
-	DD_Achievements:ddSetInitFunc(function(self, level, value)
-			local info, list = {}, {}
-			local categories = GetCategoryList()
-			for i = 1, #categories do
-				local info = {}
-				local categoryID = categories[i]
-				local name, parentCategoryID = GetCategoryInfo(categoryID)
-				local total, completed = GetCategoryNumAchievements(categoryID, true)
-				local vivod = " ("..completed.."/"..total..")"
-				if total == completed then
-					vivod = " "..E.DONE
-				else
-					if completed == 0 then
-						vivod = E.Red_Color..vivod.."|r"
-					else
-						vivod = E.Yellow_Color..vivod.."|r"
-					end
-				end
-				if parentCategoryID == value or parentCategoryID == -1 and not value then
-					info.fontObject = OctoFont11
-					info.hasArrow = parentCategoryID == -1 and categoryID ~= 92
-					info.keepShownOnClick = true
-					info.notCheckable = false
-					info.isNotRadio = true
-					if parentCategoryID == -1 then
-						info.text = TEST_FUNC
-					else
-						info.text = name..vivod
-					end
-					info.arg1 = {name = name, vivod = vivod}
-					info.arg2 = level
-					info.value = categoryID
-					info.checked = Octo_Achievements_DB.AchievementToShow[categoryID]
-					info.func = selectFunctionAchievementToShow
-					tinsert(list, info)
-				end
-			end
-			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
-			if level == 1 then
-				self:ddAddSeparator(level)
-				info.fontObject = OctoFont11
-				info.keepShownOnClick = true
-				info.notCheckable = false
-				info.isNotRadio = true
-				info.text = "Показывать завершенные"
-				info.hasArrow = nil
-				info.checked = Octo_Achievements_DB.AchievementShowCompleted
-				info.func = function(_, _, _, checked)
-					Octo_Achievements_DB.AchievementShowCompleted = checked
-					Octo_EventFrame_Achievements:func_CreateMyDataProvider()
-				end
-				self:ddAddButton(info, level)
-			end
-	end)
-	DD_Achievements:ddSetMenuButtonHeight(16)
-end
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"CONTENT_TRACKING_UPDATE",
@@ -382,21 +279,15 @@ function Octo_EventFrame_Achievements:ADDON_LOADED(addonName)
 		if Octo_ToDo_DB_Vars.MainFrameDefaultLines then
 			MainFrameDefaultLines = Octo_ToDo_DB_Vars.MainFrameDefaultLines
 		end
-		if Octo_ToDo_DB_Vars.SFDropDownWeight then
-			SFDropDownWeight = Octo_ToDo_DB_Vars.SFDropDownWeight
-		end
-		if Octo_ToDo_DB_Vars.MaxNumCharacters then
-			MaxNumCharacters = Octo_ToDo_DB_Vars.MaxNumCharacters
-		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		self:Octo_Create_MainFrame_Achievements()
-		self:func_CreateMyDataProvider()
-		self:func_Create_DDframe_Achievements()
+		E:func_Achievements_CreateDataProvider()
+		E:func_Create_DDframe_Achievements(Octo_MainFrame_Achievements, E.Lime_Color, function() E:func_Achievements_CreateDataProvider() end)
 		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", Octo_Achievements_DB, Octo_MainFrame_Achievements, function() Octo_EventFrame_Achievements:Update() end, "Octo_MainFrame_Achievements")
 		Octo_MainFrame_Achievements:SetScript("OnShow", function()
-				Octo_EventFrame_Achievements.func_CreateMyDataProvider()
+				E:func_Achievements_CreateDataProvider()
 		end)
 	end
 end

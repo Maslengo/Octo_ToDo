@@ -203,7 +203,7 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 
-				tooltipRIGHT = E:func_tooltipRIGHT(CharInfo, E.OctoTable_itemID_MECHAGON, true)
+				tooltipRIGHT = E:func_tooltipRIGHT_ITEMS(CharInfo, E.OctoTable_itemID_MECHAGON, true)
 
 
 				textCENT = "МЕХАГОН"

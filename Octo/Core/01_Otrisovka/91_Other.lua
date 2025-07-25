@@ -265,7 +265,7 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				tooltipRIGHT = E:func_tooltipRIGHT(CharInfo, E.OctoTable_itemID_ALL)
+				tooltipRIGHT = E:func_tooltipRIGHT_ITEMS(CharInfo, E.OctoTable_itemID_ALL, false)
 				if #tooltipRIGHT ~= 0 then
 					textCENT = E.Gray_Color..ITEMS.."|r"
 				end

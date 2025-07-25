@@ -2616,7 +2616,7 @@ function E:func_Update(event_name)
 			C_Timer.After(0.1, function()
 					E.func_UpdateScheduled = false
 					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
-						E:func_CreateMyDataProvider()
+						E:func_TODO_CreateDataProvider()
 						if E.DebugEvent then
 							DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E:func_Update(", E.Green_Color, E.Yellow_Color)..event_name or ""..E.Yellow_Color..")|r")
 						end
@@ -2642,52 +2642,57 @@ function E:func_GetCurrentRegionName()
 end
 ----------------------------------------------------------------
 
-function E:func_tooltipRIGHT(CharInfo, TBL, needShowAllItems)
-    local tooltipRIGHT = {}
-    local sorted_itemList = {}
-    local ItemsInBag = CharInfo.MASLENGO.ItemsInBag
+function E:func_tooltipRIGHT_ITEMS(CharInfo, TBL, needShowAllItems)
+	local tooltipRIGHT = {}
+	local sorted_itemList = {}
+	local ItemsInBag = CharInfo.MASLENGO.ItemsInBag
 
-    -- Правильно кэшируем методы через :
-    local GetItemQuality = function(id) return self:func_GetItemQuality(id) end
-    local GetItemIconByID = function(id) return self:func_GetItemIconByID(id) end
-    local GetItemNameByID = function(id) return self:func_GetItemNameByID(id) end
-    local ItemPriceTSM = function(id, count) return self:func_ItemPriceTSM(id, count) end
-    local texturefromIcon = function(icon) return self:func_texturefromIcon(icon) end
+	-- Правильно кэшируем методы через :
+	local GetItemQuality = function(id) return self:func_GetItemQuality(id) end
+	local GetItemIconByID = function(id) return self:func_GetItemIconByID(id) end
+	local GetItemNameByID = function(id) return self:func_GetItemNameByID(id) end
+	local ItemPriceTSM = function(id, count) return self:func_ItemPriceTSM(id, count) end
+	local texturefromIcon = function(icon) return self:func_texturefromIcon(icon) end
 
-    -- Filter and prepare items for sorting
-    for _, itemID in ipairs(TBL) do
-        local count = ItemsInBag[itemID]
-        if needShowAllItems or count then
-            table.insert(sorted_itemList, {
-                itemID = itemID,
-                quality = GetItemQuality(itemID),
-                count = count or 0
-            })
-        end
-    end
+	-- Filter and prepare items for sorting
+	for _, itemID in ipairs(TBL) do
+		local count = ItemsInBag[itemID]
+		if needShowAllItems or count then
+			table.insert(sorted_itemList, {
+				itemID = itemID,
+				quality = GetItemQuality(itemID),
+				count = count or 0
+			})
+		end
+	end
 
-    -- Sort items
-    table.sort(sorted_itemList, function(a, b)
-        if a.quality ~= b.quality then
-            return a.quality > b.quality
-        elseif a.count ~= b.count then
-            return a.count > b.count
-        end
-        return a.itemID > b.itemID
-    end)
+	-- Sort items
+	table.sort(sorted_itemList, function(a, b)
+		if a.quality ~= b.quality then
+			return a.quality > b.quality
+		elseif a.count ~= b.count then
+			return a.count > b.count
+		end
+		return a.itemID > b.itemID
+	end)
 
-    -- Build tooltip
-    for _, item in ipairs(sorted_itemList) do
-        local itemID = item.itemID
-        local count = ItemsInBag[itemID] or ""
-        local icon = texturefromIcon(GetItemIconByID(itemID))
-        local name = GetItemNameByID(itemID)
-        local price = ItemPriceTSM(itemID, item.count)
+	-- Build tooltip
+	for _, item in ipairs(sorted_itemList) do
+		local itemID = item.itemID
+		local count = ItemsInBag[itemID] or ""
+		local icon = texturefromIcon(GetItemIconByID(itemID))
+		local name = GetItemNameByID(itemID)
+		local price = ItemPriceTSM(itemID, item.count)
 
-        tooltipRIGHT[#tooltipRIGHT + 1] = {icon..name, count, price}
-    end
+		tooltipRIGHT[#tooltipRIGHT + 1] = {icon..name, count, price}
+	end
 
-    return tooltipRIGHT
+	return tooltipRIGHT
 end
 
 
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+---------------------------------------------------------------------

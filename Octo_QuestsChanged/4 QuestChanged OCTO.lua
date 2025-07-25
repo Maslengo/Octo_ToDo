@@ -23,16 +23,6 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
--- LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
--- 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
--- 		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
--- 		f:SetPoint("TOPLEFT", 8, -2)
--- 		f:SetPoint("BOTTOMRIGHT", -8, 2)
--- 		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
--- 		f:SetBackdropBorderColor(0, 0, 0, 1)
--- 		return f
--- end)
-----------------------------------------------------------------
 ----------------------------------------------------------------
 E.total_width = E.total_width or 500
 ----------------------------------------------------------------
@@ -479,5 +469,5 @@ function Octo_EventFrame_QuestsChanged:PLAYER_LOGIN()
 	-- Cleanup event
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
-	E:func_Create_DD_ToDo(Octo_MainFrame_QuestsChanged)
+	E:func_Create_DD_QuestsChanged(Octo_MainFrame_QuestsChanged, E.Blue_Color, function() E:QuestsChanged_CreateMyDataProvider() end)
 end

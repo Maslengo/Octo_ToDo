@@ -124,7 +124,6 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 		-- }
 
 		-- for i, curID in ipairs(draenorcurrencies) do
-		-- 	print (i, curID)
 		-- 	table.insert(OctoTable_Otrisovka, function(CharInfo)
 		-- 			----------------------------------------------------------------
 		-- 			local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
