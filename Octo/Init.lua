@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ... -- ns
-E.GlobalAddonName = GlobalAddonName
+E.MainAddonName = GlobalAddonName
 
 -- local E = {}
 OctoEngine = E -- в других аддонах

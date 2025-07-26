@@ -537,7 +537,7 @@ function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 	E:func_InitField(Octo_AddonsManager_DB, "isCategoryFrameVisible", true)
 	E:func_InitSubTable(Octo_AddonsManager_DB, "lock")
 	E:func_InitSubTable(Octo_AddonsManager_DB.lock, "addons")
-	E:func_InitField(Octo_AddonsManager_DB.lock.addons, E.GlobalAddonName, true)
+	E:func_InitField(Octo_AddonsManager_DB.lock.addons, E.MainAddonName, true)
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_AddonsTable_DB()

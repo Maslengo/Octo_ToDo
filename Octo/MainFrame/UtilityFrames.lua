@@ -86,7 +86,7 @@ function Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
 		if SettingsPanel:IsVisible() and frame:IsVisible() then
 			HideUIPanel(SettingsPanel)
 		else
-			Settings.OpenToCategory(E:func_AddonTitle(E.GlobalAddonName), true)
+			Settings.OpenToCategory(E:func_AddonTitle(E.MainAddonName), true)
 		end
 	end
 	-- Options Button

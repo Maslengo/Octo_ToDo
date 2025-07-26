@@ -14,7 +14,7 @@ local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSi
 if MainFrameDefaultLines > MainFrameTotalLines then
 	MainFrameDefaultLines = MainFrameTotalLines
 end
-local r, g, b = GetClassColor(E.classFilename)
+local classR, classG, classB = GetClassColor(E.classFilename)
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibDataBroker = LibStub("LibDataBroker-1.1")
@@ -314,7 +314,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	Octo_MainFrame_QuestsChanged:SetMovable(true)
 	Octo_MainFrame_QuestsChanged:RegisterForDrag("LeftButton")
 	Octo_MainFrame_QuestsChanged:SetScript("OnDragStart", function()
-			Octo_MainFrame_QuestsChanged:SetAlpha(E.bgCa)
+			Octo_MainFrame_QuestsChanged:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.bgCa)
 			Octo_MainFrame_QuestsChanged:StartMoving()
 	end)
 	Octo_MainFrame_QuestsChanged:SetScript("OnDragStop", function()

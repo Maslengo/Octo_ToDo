@@ -268,21 +268,21 @@ function Octo_EventFrame_AddonsManager:CollectAddonInfo(index)
 			-- end
 			-- end
 			if loadable then
-				firsticonTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonONgreen"
+				firsticonTexture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen"
 			else
-				firsticonTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonOFFblack"
+				firsticonTexture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFblack"
 			end
 			local needReload = false
 			if (enabled and not loadable) then
 				needReload = true
-				firsticonTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonOFFgreen"
+				firsticonTexture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFgreen"
 			end
 			if (not enabled and loadable) then
 				needReload = true
-				firsticonTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonOFFred"
+				firsticonTexture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
 			end
 			if reason == "DEMAND_LOADED" or reason == "DEP_DEMAND_LOADED" then
-				firsticonTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\buttonOFFyellow"
+				firsticonTexture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFyellow"
 			end
 			-- if E:func_IsAddonVersionCheckEnabled() and E.interfaceVersion > interfaceVersion and enabled then
 			-- colorAddon = "|cffFF0000"
@@ -301,7 +301,7 @@ function Octo_EventFrame_AddonsManager:CollectAddonInfo(index)
 			resonTEXT = ""
 		end
 		if Octo_AddonsManager_DB.lock.addons[name] then
-			textLEFT = CreateSimpleTextureMarkup([[Interface\AddOns\Octo\Media\SimpleAddonManager\lock]], AddonHeight, AddonHeight)..textLEFT
+			textLEFT = CreateSimpleTextureMarkup([[Interface\AddOns\Octo\Media\AddonsManager\lock]], AddonHeight, AddonHeight)..textLEFT
 		end
 		textRIGHT = colorAddon.. resonTEXT .."|r"
 		return firsticonTexture, iconTexture, colorAddon..textLEFT.."|r", textRIGHT, tooltipthird, colorAddon
@@ -310,11 +310,11 @@ end
 ----------------------------------------------------------------
 local function UpdateExpandOrCollapseButtonState(button, isCollapsed)
 	if (isCollapsed) then
-		button:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\zakrito")
+		button:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\zakrito")
 		button:SetVertexColor(1, 0, 0, 1)
 		-- button:SetTexture("Interface\\Buttons\\UI-PlusButton-Up")
 	else
-		button:SetTexture("Interface\\AddOns\\"..GlobalAddonName.."\\Media\\SimpleAddonManager\\otkrito")
+		button:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\otkrito")
 		button:SetVertexColor(1, 1, 1, 1)
 		-- button:SetTexture("Interface\\Buttons\\UI-MinusButton-Up")
 	end
@@ -373,7 +373,7 @@ function Octo_EventFrame_AddonsManager:Octo_Create_MainFrame_AddonsManager()
 	Octo_MainFrame_AddonsManager:SetMovable(true)
 	Octo_MainFrame_AddonsManager:RegisterForDrag("LeftButton")
 	Octo_MainFrame_AddonsManager:SetScript("OnDragStart", function()
-			Octo_MainFrame_AddonsManager:SetAlpha(E.bgCa)
+			Octo_MainFrame_AddonsManager:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.bgCa)
 			Octo_MainFrame_AddonsManager:StartMoving()
 	end)
 	Octo_MainFrame_AddonsManager:SetScript("OnDragStop", function()
@@ -471,7 +471,7 @@ function Octo_EventFrame_AddonsManager:func_Create_AdditionalFrame()
 			end
 			sort(sorted)
 			for index, name in ipairs(sorted) do
-				DisableAllTooltip[#DisableAllTooltip+1] = {E:func_texturefromIcon(E:func_GetAddoniconTexture(name))..E:func_GetAddonTitle(name), E:func_texturefromIcon([[Interface\AddOns\Octo\Media\SimpleAddonManager\lock]])}
+				DisableAllTooltip[#DisableAllTooltip+1] = {E:func_texturefromIcon(E:func_GetAddoniconTexture(name))..E:func_GetAddonTitle(name), E:func_texturefromIcon([[Interface\AddOns\Octo\Media\AddonsManager\lock]])}
 			end
 			frame_DisableAll.tooltip = DisableAllTooltip
 			E:func_OctoTooltip_OnEnter(self, false, false)

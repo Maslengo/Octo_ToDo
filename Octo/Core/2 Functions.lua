@@ -180,7 +180,7 @@ local GetWeeklyResetStartTime = GetWeeklyResetStartTime or C_DateAndTime.GetWeek
 local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
 local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
 ----------------------------------------------------------------
-local r, g, b = GetClassColor(E.classFilename)
+local classR, classG, classB = GetClassColor(E.classFilename)
 ----------------------------------------------------------------
 -- console -> export "art"
 function E:func_IsClassic() if E.interfaceVersion > 10000 and E.interfaceVersion < 20000 then return true else return false end end
@@ -1346,7 +1346,7 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 		-- Общие обработчики событий
 		frame:HookScript("OnEnter", function(self)
 				self:SetBackdropColor(self.r, self.g, self.b, self.a)
-				self:SetBackdropBorderColor(r, g, b, 1)
+				self:SetBackdropBorderColor(classR, classG, classB, 1)
 		end)
 		frame:HookScript("OnLeave", function(self)
 				self:SetBackdropColor(self.r, self.g, self.b, self.a)
@@ -1363,8 +1363,8 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
 			end)
 			frame:SetScript("OnMouseUp", function(self)
-					self.icon:SetVertexColor(r, g, b, 1)
-					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
+					self.icon:SetVertexColor(classR, classG, classB, 1)
+					self:SetBackdropBorderColor(classR, classG, classB, edgeAlpha)
 			end)
 		end
 	end
@@ -1438,7 +1438,7 @@ function E:func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 					if SettingsPanel:IsVisible() and frame and frame:IsVisible() then
 						HideUIPanel(SettingsPanel)
 					else
-						Settings.OpenToCategory(E:func_AddonTitle(E.GlobalAddonName), true)
+						Settings.OpenToCategory(E:func_AddonTitle(E.MainAddonName), true)
 					end
 				elseif button == "MiddleButton" then
 					if frame and frame:IsShown() then
@@ -1563,7 +1563,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 					E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnEnter", function(self)
-					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
+					self:SetBackdropBorderColor(classR, classG, classB, edgeAlpha)
 					E:FrameColor(self, id, curType)
 					E:func_OctoTooltip_OnEnter(frame)
 					if curType == "item" or curType == "toy" then
@@ -1582,7 +1582,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 					E:FrameColor(self, id, curType)
 			end)
 			frame:SetScript("OnMouseUp", function(self)
-					self:SetBackdropBorderColor(r, g, b, edgeAlpha)
+					self:SetBackdropBorderColor(classR, classG, classB, edgeAlpha)
 					E:FrameColor(self, id, curType)
 			end)
 		end
@@ -2489,8 +2489,10 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		if myType == "ItemLevel" then
 			tooltip[#tooltip+1] = {"", CLUB_FINDER_MEDIUM..": "..math_floor(total/#sorted)}
 		elseif myType == "Money" then
-			local price, hz = C_WowTokenPublic.GetCurrentMarketPrice()
+			-- Обновляем цену токена
+			C_WowTokenPublic.UpdateMarketPrice()
 			if C_WowTokenPublic.GetCurrentMarketPrice() then
+				local price, hz = C_WowTokenPublic.GetCurrentMarketPrice()
 				tooltip[#tooltip+1] = {"", TOKEN_FILTER_LABEL..": "..E:func_CompactNumberFormat(C_WowTokenPublic.GetCurrentMarketPrice()/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
 			end
 			if C_Bank.FetchDepositedMoney(Enum.BankType.Account) then

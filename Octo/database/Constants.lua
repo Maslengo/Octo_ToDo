@@ -29,24 +29,6 @@ E.MIDDLE_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-middl
 
 
 
-E.curFaction = UnitFactionGroup("PLAYER")
-E.oppositeFaction = E.curFaction == "Alliance" and "Horde" or "Alliance"
-E.Icon_Alliance = 255140-- E:func_texturefromIcon(255140) -- 132486
-E.Icon_Horde = 255142 -- 132485
-E.Icon_Kyrian = 3641395
-E.Icon_Necrolord = 3641396
-E.Icon_NightFae = 3641394
-E.Icon_Venthyr = 3641397
-E.Icon_WorldBoss = 3528312
-E.Icon_Rares = 135903
-E.Icon_Money = 133784
-if E.curFaction == "Horde" then
-	E.Icon_Faction = 2565244
-elseif E.curFaction == "Alliance" then
-	E.Icon_Faction = 2565243
-else
-	E.Icon_Faction = 620830
-end
 E.Icon_MailBox = "Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga"
 E.className, E.classFilename, E.classId = UnitClass("PLAYER")
 E.classColor = RAID_CLASS_COLORS[E.classFilename] and RAID_CLASS_COLORS[E.classFilename].colorStr:sub(3) or "ffffff"
@@ -72,15 +54,13 @@ E.Class_Druid_Color = C_ClassColor.GetClassColor("DRUID"):GenerateHexColorMarkup
 E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHexColorMarkup() --"|cffA330C9"
 E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup() --"|cffC41E3A"
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup() --"|cff33937F"
-E.Horde_Color = "|cffC41E3A"
--- E.Horde_Color = "|cfff01e38" -- было
-E.Alliance_Color = "|cff0070DD"
+
 E.ddMenuButtonHeight = 16
 -------------------------------------------------------------------------
 E.FULL_WIDTH = 3.60
-E.edgeFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\03_Borders\\Octo.tga"
-E.bgFile = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\03_Borders\\Octo.tga"
-E.Octo_font = "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\02_Fonts\\Octo.TTF"
+E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
+E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
+E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
 
 E.OctoFont11 = CreateFont("OctoFont11")
@@ -226,6 +206,36 @@ E.Brown_Color = "|cff964B00"
 E.Holiday_Color = "|cffFF8C00"
 E.Event_Color = "|cffFFF371"-- "|cff4682B3" КРАСИВОЕ
 E.Debug_Color = E.classColorHexCurrent -- "|cff4682B3"
+
+
+
+
+----------------------------------------------------------------
+E.curFaction = UnitFactionGroup("PLAYER")
+E.oppositeFaction = E.curFaction == "Alliance" and "Horde" or "Alliance"
+E.Icon_Alliance = 255140-- E:func_texturefromIcon(255140) -- 132486
+E.Icon_Horde = 255142 -- 132485
+E.Icon_Kyrian = 3641395
+E.Icon_Necrolord = 3641396
+E.Icon_NightFae = 3641394
+E.Icon_Venthyr = 3641397
+E.Icon_WorldBoss = 3528312
+E.Icon_Rares = 135903
+E.Icon_Money = 133784
+
+E.Horde_Color = "|cffC41E3A"
+E.Alliance_Color = "|cff0070DD"
+
+if E.curFaction == "Horde" then
+	E.Icon_Faction = 2565244
+	E.Faction_Color = E.Horde_Color
+elseif E.curFaction == "Alliance" then
+	E.Icon_Faction = 2565243
+	E.Faction_Color = E.Alliance_Color
+else
+	E.Icon_Faction = 620830
+	E.Faction_Color = E.Green_Color
+end
 ----------------------------------------------------------------
 E.Kyrian_r_Color = 0.44
 E.Kyrian_g_Color = 0.66
@@ -308,7 +318,7 @@ E.menuBackdrop = {
 E.OctoTable_Frames = {}
 E.listMaxSize = 30
 E.DEVTEXT = "|T".. E.IconTexture ..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.. "DebugInfo|r: "
-E.KILLTEXT = "|T".. "Interface\\Addons\\"..E.GlobalAddonName.."\\Media\\ElvUI\\Facepalm.tga" ..":14:14:::64:64:4:60:4:60|t"
+E.KILLTEXT = "|T".. "Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga" ..":14:14:::64:64:4:60:4:60|t"
 ----------------------------------------------------------------
 E.OctoTable_bytetoB64 = {
 	[0] =

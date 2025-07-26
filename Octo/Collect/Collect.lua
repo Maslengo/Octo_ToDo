@@ -42,7 +42,7 @@ local MyEventsTable = {
 	"ZONE_CHANGED_NEW_AREA",
 	"QUEST_REMOVED",
 }
-function E.Collect_All_Table(event)
+function E:func_Collect_All_Table()
 	E.Collect_All_PlayerLevel()
 	E.Collect_All_ItemLevel()
 	E.Collect_All_PlayerDurability()

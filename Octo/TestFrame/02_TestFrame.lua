@@ -260,7 +260,7 @@ function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
 				----------------------------------------------------------------
 				UsableTBL[itemID] = {
 					count = func_GetItemCount(itemID, false, false, false, false),
-					quality = quality,
+					quality = quality or 0,
 					usable = false
 				}
 				----------------------------------------------------------------
@@ -348,14 +348,14 @@ function ItemsUsable_EventFrame:CreateTestButton1()
 	local btn = CreateFrame("Button", nil, UIParent, "UIPanelButtonTemplate")
 	btn:SetClampedToScreen(true)
 	btn:SetPoint("TOPLEFT", 128, -128)
-	btn:SetSize(100, 40)
-	btn:SetText("Click me")
+	btn:SetSize(128, 32)
+	btn:SetText("Toggle_ItemsUsable")
 	btn:EnableMouse(true)
 	btn:SetMovable(true)
 	-- Обработчики перемещения фрейма
 	btn:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				btn:SetAlpha(E.bgCa)
+				btn:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.bgCa)
 				btn:StartMoving()
 			end
 	end)
