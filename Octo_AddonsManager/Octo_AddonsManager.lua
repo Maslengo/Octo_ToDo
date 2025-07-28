@@ -618,7 +618,7 @@ function Octo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		self:func_Create_AdditionalFrame()
 		E:func_Create_DDframe_AddonsManager(Octo_MainFrame_AddonsManager, E.Yellow_Color, function() E:AddonList_Update() end)
 		E:CreateDataProvider_AddonsManage()
-		E:func_createDDMenu()
+		E:func_Create_DDframe_AddonsManager_DDMenu()
 		--------------------------------------------------------------
 		E:func_CreateMinimapButton(GlobalAddonName, "AddonsManager", Octo_AddonsManager_DB, Octo_MainFrame_AddonsManager, nil, "Octo_MainFrame_AddonsManager")
 		Octo_MainFrame_AddonsManager:SetScript("OnShow", function()

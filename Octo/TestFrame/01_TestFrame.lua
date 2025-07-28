@@ -676,7 +676,7 @@ function Octo_Event_TestFrame:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
 
-	E:func_Create_DD_ToDo(Octo_Main_TestFrame, E.Faction_Color, function() Octo_Event_TestFrame:CreateDataProvider() end)
+	E:func_Create_DDframe_ToDo(Octo_Main_TestFrame, E.Faction_Color, function() Octo_Event_TestFrame:CreateDataProvider() end)
 
 end
 

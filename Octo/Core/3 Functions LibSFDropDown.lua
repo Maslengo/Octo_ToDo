@@ -3,14 +3,13 @@ local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, stri
 ----------------------------------------------------------------
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-
 local LibSFDropDown = LibStub("LibSFDropDown-1.5") -- Для выпадающих меню
 ----------------------------------------------------------------
 -- Настраиваем стиль выпадающего меню
 ----------------------------------------------------------------
 LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
-		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
+		f:SetBackdrop(E.menuBackdrop)
 		f:SetPoint("TOPLEFT", 8, -2)
 		f:SetPoint("BOTTOMRIGHT", -8, 2)
 		f:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
@@ -18,40 +17,38 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		return f
 end)
 ----------------------------------------------------------------
-
-function E:reloadMenu(DD_ToDo, level, value)
-	DD_ToDo:ddCloseMenus(level)
+function E:reloadMenu(DropDown, level, value)
+	DropDown:ddCloseMenus(level)
 	local menu = LibSFDropDown:GetMenu(level)
-	DD_ToDo:ddToggle(level, value, menu.anchorFrame)
+	DropDown:ddToggle(level, value, menu.anchorFrame)
 end
--- Функция создания выпадающего меню
-function E:func_Create_DD_ToDo(frame, hex, providerfunc)
+----------------------------------------------------------------
+function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
 	local AddonLeftFrameWeight = Octo_ToDo_DB_Vars.AddonLeftFrameWeight -- Ширина левой панели
 	local AddonHeight = Octo_ToDo_DB_Vars.AddonHeight
-
-	local DD_ToDo = CreateFrame("Button", "DD_ToDo", frame, "SecureActionButtonTemplate, BackDropTemplate")
-	DD_ToDo:SetSize(AddonLeftFrameWeight/2, AddonHeight) -- Octo_ToDo_DB_Vars.SFDropDownWeight
-	E:func_SetBackdrop(DD_ToDo) -- Устанавливаем фон
+	local DropDown = CreateFrame("Button", nil, frame, "SecureActionButtonTemplate, BackDropTemplate")
+	DropDown:SetSize(AddonLeftFrameWeight/2, AddonHeight) -- Octo_ToDo_DB_Vars.SFDropDownWeight
+	E:func_SetBackdrop(DropDown) -- Устанавливаем фон
 	-- Стрелка раскрытия меню
-	DD_ToDo.ExpandArrow = DD_ToDo:CreateTexture(nil, "ARTWORK")
-	DD_ToDo.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	DD_ToDo.ExpandArrow:SetPoint("RIGHT", -4, 0)
+	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
+	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
+	DropDown.ExpandArrow:SetPoint("RIGHT", -4, 0)
 	-- Текст меню
-	DD_ToDo.text = DD_ToDo:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	DD_ToDo.text:SetAllPoints()
-	DD_ToDo.text:SetFontObject(OctoFont11)
-	DD_ToDo.text:SetJustifyV("MIDDLE")
-	DD_ToDo.text:SetJustifyH("CENTER")
-	DD_ToDo.text:SetTextColor(1, 1, 1, 1)
-	DD_ToDo.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
+	DropDown.text = DropDown:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	DropDown.text:SetAllPoints()
+	DropDown.text:SetFontObject(OctoFont11)
+	DropDown.text:SetJustifyV("MIDDLE")
+	DropDown.text:SetJustifyH("CENTER")
+	DropDown.text:SetTextColor(1, 1, 1, 1)
+	DropDown.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
 	-- Настраиваем библиотеку выпадающего меню
-	LibSFDropDown:SetMixin(DD_ToDo)
-	DD_ToDo:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 0)
-	DD_ToDo:ddSetDisplayMode(GlobalAddonName)
-	DD_ToDo:ddSetNoGlobalMouseEvent(true)
-	DD_ToDo:ddHideWhenButtonHidden()
-	DD_ToDo:RegisterForClicks("LeftButtonUp")
-	DD_ToDo:SetScript("OnClick", function(self)
+	LibSFDropDown:SetMixin(DropDown)
+	DropDown:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 1)
+	DropDown:ddSetDisplayMode(GlobalAddonName)
+	DropDown:ddSetNoGlobalMouseEvent(true)
+	DropDown:ddHideWhenButtonHidden()
+	DropDown:RegisterForClicks("LeftButtonUp")
+	DropDown:SetScript("OnClick", function(self)
 			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 	end)
 	-- Функции для обработки выбора в меню
@@ -71,7 +68,7 @@ function E:func_Create_DD_ToDo(frame, hex, providerfunc)
 		providerfunc()
 	end
 	-- Функция инициализации меню
-	DD_ToDo:ddSetInitFunc(function(self, level, value)
+	DropDown:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
 			info.fontObject = OctoFont11
 			local countRegions = 0
@@ -355,43 +352,40 @@ function E:func_Create_DD_ToDo(frame, hex, providerfunc)
 				end
 			end
 	end)
-	DD_ToDo:ddSetOpenMenuUp(true)
-	DD_ToDo:ddSetMenuButtonHeight(E.ddMenuButtonHeight)
+	DropDown:ddSetOpenMenuUp(true)
+	DropDown:ddSetMenuButtonHeight(E.ddMenuButtonHeight)
 end
-----------------------------------------------------------------
 ----------------------------------------------------------------
 function E:func_Create_DDframe_Achievements(frame, hex, providerfunc)
 	local AddonLeftFrameWeight = Octo_ToDo_DB_Vars.AddonLeftFrameWeight -- Ширина левой панели
 	local AddonHeight = Octo_ToDo_DB_Vars.AddonHeight
-
-
-	local DD_Achievements = CreateFrame("Button", "DD_Achievements", frame, "SecureActionButtonTemplate, BackDropTemplate")
-	DD_Achievements:SetSize(AddonLeftFrameWeight/2, AddonHeight) -- Octo_ToDo_DB_Vars.SFDropDownWeight
-	E:func_SetBackdrop(DD_Achievements)
-	DD_Achievements.ExpandArrow = DD_Achievements:CreateTexture(nil, "ARTWORK")
-	DD_Achievements.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	DD_Achievements.ExpandArrow:SetPoint("RIGHT", -4, 0)
-	DD_Achievements.text = DD_Achievements:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	DD_Achievements.text:SetAllPoints()
-	DD_Achievements.text:SetFontObject(OctoFont11)
-	DD_Achievements.text:SetJustifyV("MIDDLE")
-	DD_Achievements.text:SetJustifyH("CENTER")
-	DD_Achievements.text:SetTextColor(1, 1, 1, 1)
-	DD_Achievements.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
-	LibSFDropDown:SetMixin(DD_Achievements)
-	DD_Achievements:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 0)
-	DD_Achievements:ddSetDisplayMode(GlobalAddonName)
-	DD_Achievements:ddSetOpenMenuUp(true)
-	DD_Achievements:ddSetNoGlobalMouseEvent(true)
-	DD_Achievements:ddHideWhenButtonHidden()
-	DD_Achievements:RegisterForClicks("LeftButtonUp")
-	DD_Achievements:SetScript("OnClick", function(self)
+	local DropDown = CreateFrame("Button", nil, frame, "SecureActionButtonTemplate, BackDropTemplate")
+	DropDown:SetSize(AddonLeftFrameWeight/2, AddonHeight) -- Octo_ToDo_DB_Vars.SFDropDownWeight
+	E:func_SetBackdrop(DropDown)
+	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
+	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
+	DropDown.ExpandArrow:SetPoint("RIGHT", -4, 0)
+	DropDown.text = DropDown:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	DropDown.text:SetAllPoints()
+	DropDown.text:SetFontObject(OctoFont11)
+	DropDown.text:SetJustifyV("MIDDLE")
+	DropDown.text:SetJustifyH("CENTER")
+	DropDown.text:SetTextColor(1, 1, 1, 1)
+	DropDown.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
+	LibSFDropDown:SetMixin(DropDown)
+	DropDown:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 1)
+	DropDown:ddSetDisplayMode(GlobalAddonName)
+	DropDown:ddSetOpenMenuUp(true)
+	DropDown:ddSetNoGlobalMouseEvent(true)
+	DropDown:ddHideWhenButtonHidden()
+	DropDown:RegisterForClicks("LeftButtonUp")
+	DropDown:SetScript("OnClick", function(self)
 			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 	end)
 	local function selectFunctionAchievementToShow(menuButton, _, arg2, checked)
 		Octo_Achievements_DB.AchievementToShow[menuButton.value] = checked or nil
 		if arg2 == 2 then
-			DD_Achievements:ddRefresh(arg2-1)
+			DropDown:ddRefresh(arg2-1)
 		end
 		providerfunc()
 	end
@@ -407,7 +401,7 @@ function E:func_Create_DDframe_Achievements(frame, hex, providerfunc)
 		end
 		return arg1.name..arg1.vivod
 	end
-	DD_Achievements:ddSetInitFunc(function(self, level, value)
+	DropDown:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
 			local categories = GetCategoryList()
 			for i = 1, #categories do
@@ -461,19 +455,17 @@ function E:func_Create_DDframe_Achievements(frame, hex, providerfunc)
 				self:ddAddButton(info, level)
 			end
 	end)
-	DD_Achievements:ddSetMenuButtonHeight(16)
+	DropDown:ddSetMenuButtonHeight(16)
 end
 ----------------------------------------------------------------
-
-
-function E:func_createDDMenu()
-	local DDFrame = CreateFrame("EventFrame", "DDFrame", UIParent)
-	DDFrame:Hide()
-	LibSFDropDown:SetMixin(DDFrame)
-	DDFrame:ddSetDisplayMode(GlobalAddonName)
-	DDFrame:ddSetInitFunc(function(self, level, value)
+function E:func_Create_DDframe_AddonsManager_DDMenu()
+	local DropDown = CreateFrame("EventFrame", nil, UIParent)
+	DropDown:Hide()
+	LibSFDropDown:SetMixin(DropDown)
+	DropDown:ddSetDisplayMode(GlobalAddonName)
+	DropDown:ddSetInitFunc(function(self, level, value)
 			local info = {}
-			local index = DDFrame.index
+			local index = DropDown.index
 			local addonName = E:func_GetAddonName(index)
 			----------------------------------------------------------------
 			if level == 1 then
@@ -529,38 +521,35 @@ function E:func_createDDMenu()
 			----------------------------------------------------------------
 	end)
 end
-
-
 ----------------------------------------------------------------
 function E:func_Create_DDframe_AddonsManager(frame, hex, providerfunc)
 	local AddonLeftFrameWeight = Octo_ToDo_DB_Vars.AddonLeftFrameWeight -- Ширина левой панели
 	local AddonHeight = Octo_ToDo_DB_Vars.AddonHeight
-
-	local DD_AddonsManager = CreateFrame("Button", "DD_AddonsManager", frame, "BackDropTemplate")
-	DD_AddonsManager:SetSize(AddonLeftFrameWeight/2, AddonHeight) -- Octo_ToDo_DB_Vars.SFDropDownWeight
-	E:func_SetBackdrop(DD_AddonsManager)
-	DD_AddonsManager.ExpandArrow = DD_AddonsManager:CreateTexture(nil, "ARTWORK")
-	DD_AddonsManager.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	--DD_AddonsManager.ExpandArrow:SetSize(AddonHeight, AddonHeight)
-	DD_AddonsManager.ExpandArrow:SetPoint("RIGHT", -4, 0)
-	DD_AddonsManager.text = DD_AddonsManager:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	DD_AddonsManager.text:SetAllPoints()
-	DD_AddonsManager.text:SetFontObject(OctoFont11)
-	DD_AddonsManager.text:SetJustifyV("MIDDLE")
-	DD_AddonsManager.text:SetJustifyH("CENTER")
-	DD_AddonsManager.text:SetTextColor(1, 1, 1, 1)
-	DD_AddonsManager.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
-	LibSFDropDown:SetMixin(DD_AddonsManager)
-	DD_AddonsManager:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 0)
-	DD_AddonsManager:ddSetDisplayMode(GlobalAddonName)
-	DD_AddonsManager:ddSetOpenMenuUp(true)
-	DD_AddonsManager:ddSetNoGlobalMouseEvent(true)
-	DD_AddonsManager:ddHideWhenButtonHidden()
-	DD_AddonsManager:RegisterForClicks("LeftButtonUp")
-	DD_AddonsManager:SetScript("OnClick", function(self)
+	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
+	DropDown:SetSize(AddonLeftFrameWeight/2, AddonHeight) -- Octo_ToDo_DB_Vars.SFDropDownWeight
+	E:func_SetBackdrop(DropDown)
+	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
+	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
+	--DropDown.ExpandArrow:SetSize(AddonHeight, AddonHeight)
+	DropDown.ExpandArrow:SetPoint("RIGHT", -4, 0)
+	DropDown.text = DropDown:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	DropDown.text:SetAllPoints()
+	DropDown.text:SetFontObject(OctoFont11)
+	DropDown.text:SetJustifyV("MIDDLE")
+	DropDown.text:SetJustifyH("CENTER")
+	DropDown.text:SetTextColor(1, 1, 1, 1)
+	DropDown.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
+	LibSFDropDown:SetMixin(DropDown)
+	DropDown:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 1)
+	DropDown:ddSetDisplayMode(GlobalAddonName)
+	DropDown:ddSetOpenMenuUp(true)
+	DropDown:ddSetNoGlobalMouseEvent(true)
+	DropDown:ddHideWhenButtonHidden()
+	DropDown:RegisterForClicks("LeftButtonUp")
+	DropDown:SetScript("OnClick", function(self)
 			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 	end)
-	DD_AddonsManager:ddSetInitFunc(function(self, level, value)
+	DropDown:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
 			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			if level == 1 then
@@ -799,44 +788,37 @@ function E:func_Create_DDframe_AddonsManager(frame, hex, providerfunc)
 			----------------------------------------------------------------
 			----------------------------------------------------------------
 	end)
-	DD_AddonsManager:ddSetMenuButtonHeight(16)
+	DropDown:ddSetMenuButtonHeight(16)
 end
 ----------------------------------------------------------------
-----------------------------------------------------------------
-
-
-
-
-function E:func_Create_DD_QuestsChanged(frame, hex, providerfunc)
+function E:func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
 	local AddonLeftFrameWeight = Octo_ToDo_DB_Vars.AddonLeftFrameWeight -- Ширина левой панели
 	local AddonHeight = Octo_ToDo_DB_Vars.AddonHeight
-
-
-	local DD_QuestsChanged = CreateFrame("Button", "DD_QuestsChanged", frame, "BackDropTemplate")
-	DD_QuestsChanged:SetSize(AddonLeftFrameWeight/2, AddonHeight) -- Octo_ToDo_DB_Vars.SFDropDownWeight
-	E:func_SetBackdrop(DD_QuestsChanged)
-	DD_QuestsChanged.ExpandArrow = DD_QuestsChanged:CreateTexture(nil, "ARTWORK")
-	DD_QuestsChanged.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	--DD_QuestsChanged.ExpandArrow:SetSize(AddonHeight, AddonHeight)
-	DD_QuestsChanged.ExpandArrow:SetPoint("RIGHT", -4, 0)
-	DD_QuestsChanged.text = DD_QuestsChanged:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	DD_QuestsChanged.text:SetAllPoints()
-	DD_QuestsChanged.text:SetFontObject(OctoFont11)
-	DD_QuestsChanged.text:SetJustifyV("MIDDLE")
-	DD_QuestsChanged.text:SetJustifyH("CENTER")
-	DD_QuestsChanged.text:SetTextColor(1, 1, 1, 1)
-	DD_QuestsChanged.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
-	LibSFDropDown:SetMixin(DD_QuestsChanged)
-	DD_QuestsChanged:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 0)
-	DD_QuestsChanged:ddSetDisplayMode(GlobalAddonName)
-	DD_QuestsChanged:ddSetOpenMenuUp(true)
-	DD_QuestsChanged:ddSetNoGlobalMouseEvent(true)
-	DD_QuestsChanged:ddHideWhenButtonHidden()
-	DD_QuestsChanged:RegisterForClicks("LeftButtonUp")
-	DD_QuestsChanged:SetScript("OnClick", function(self)
+	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
+	DropDown:SetSize(AddonLeftFrameWeight/2, AddonHeight) -- Octo_ToDo_DB_Vars.SFDropDownWeight
+	E:func_SetBackdrop(DropDown)
+	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
+	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
+	--DropDown.ExpandArrow:SetSize(AddonHeight, AddonHeight)
+	DropDown.ExpandArrow:SetPoint("RIGHT", -4, 0)
+	DropDown.text = DropDown:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	DropDown.text:SetAllPoints()
+	DropDown.text:SetFontObject(OctoFont11)
+	DropDown.text:SetJustifyV("MIDDLE")
+	DropDown.text:SetJustifyH("CENTER")
+	DropDown.text:SetTextColor(1, 1, 1, 1)
+	DropDown.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
+	LibSFDropDown:SetMixin(DropDown)
+	DropDown:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 1)
+	DropDown:ddSetDisplayMode(GlobalAddonName)
+	DropDown:ddSetOpenMenuUp(true)
+	DropDown:ddSetNoGlobalMouseEvent(true)
+	DropDown:ddHideWhenButtonHidden()
+	DropDown:RegisterForClicks("LeftButtonUp")
+	DropDown:SetScript("OnClick", function(self)
 			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 	end)
-	DD_QuestsChanged:ddSetInitFunc(function(self, level, value)
+	DropDown:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
 			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
 			if level == 1 then
@@ -870,14 +852,11 @@ function E:func_Create_DD_QuestsChanged(frame, hex, providerfunc)
 			----------------------------------------------------------------
 			----------------------------------------------------------------
 	end)
-	DD_QuestsChanged:ddSetMenuButtonHeight(16)
+	DropDown:ddSetMenuButtonHeight(16)
 end
-
-
-
-
-
 ----------------------------------------------------------------
+function E:func_Create_DDframe_editFrame(frame, hex, providerfunc)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

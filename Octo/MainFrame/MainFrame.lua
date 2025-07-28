@@ -607,7 +607,7 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	-- Инициализируем основные системы
 	E:InitOptions()
 	self:Octo_Create_MainFrame_ToDo()
-	E:func_Create_DD_ToDo(Octo_MainFrame_ToDo, E.Red_Color, function() E:func_TODO_CreateDataProvider() end)
+	E:func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.Red_Color, function() E:func_TODO_CreateDataProvider() end)
 	E:func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
 	-- Загружаем ресурсы с небольшой задержкой
 	C_Timer.After(0, function()

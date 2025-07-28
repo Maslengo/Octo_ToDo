@@ -470,5 +470,5 @@ function Octo_EventFrame_QuestsChanged:PLAYER_LOGIN()
 	-- Cleanup event
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
-	E:func_Create_DD_QuestsChanged(Octo_MainFrame_QuestsChanged, E.Blue_Color, function() E:QuestsChanged_CreateMyDataProvider() end)
+	E:func_Create_DDframe_QuestsChanged(Octo_MainFrame_QuestsChanged, E.Blue_Color, function() E:QuestsChanged_CreateMyDataProvider() end)
 end

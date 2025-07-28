@@ -330,6 +330,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		DebugEvent = false, -- Отладка событий
 		DebugFunction = false, -- Отладка функций
 		DebugButton = false, -- Отладка кнопок
+		editorFontSize = 14,
+		addonFontSize = 11,
 	}
 	for k, v in next, (debugDefaults) do
 		E:func_InitField(Octo_ToDo_DB_Vars, k, v)
@@ -548,7 +550,6 @@ end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Debug_DB()
 	Octo_Debug_DB = E:func_InitTable(Octo_Debug_DB)
-
 
 	if not Octo_Debug_DB then return end
 	Octo_Debug_DB.profileKeys = Octo_Debug_DB.profileKeys or {}

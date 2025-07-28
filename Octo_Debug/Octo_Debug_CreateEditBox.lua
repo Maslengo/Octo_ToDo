@@ -214,7 +214,7 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	local editBox = frame.editFrame:GetEditBox()
 	editBox:HookScript("OnEnterPressed", function(self) self:Insert("\n") end)
 	editBox:HookScript("OnEscapePressed", function(self) self:ClearFocus() end)
-	editBox:SetFont(E.Octo_font, 14, "OUTLINE")
+	editBox:SetFont(E.Octo_font, Octo_ToDo_DB_Vars.editorFontSize or 11, "OUTLINE")
 
 
 
