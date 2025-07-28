@@ -21,11 +21,7 @@ local LINE_WIDTH_CENT = 90 -- Ширина центральной панели A
 local LINES_MAX = 100 -- Количество строк по умолчанию MainFrameDefaultLines
 local ICON_INDENT = LINE_HEIGHT
 -- Автоматический расчет максимального количества строк
-local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT)*.7))
-	-- if LINES_MAX > LINES_TOTAL then
-	-- 	LINES_MAX = LINES_TOTAL
-	-- end
-local COLUMNS_MAX = 10 -- Максимальное количество отображаемых столбцов MaxNumCharacters
+Octo_Event_TestFrame.COLUMNS_MAX = 13 -- Максимальное количество отображаемых столбцов MaxNumCharacters
 local TEST_WIDTH = 0
 ----------------------------------------------------------------
 -- Константы цвета
@@ -276,7 +272,7 @@ function Octo_Event_TestFrame:Octo_Create_MainFrame_TestFrame()
 			RequestRaidInfo() -- Запрашиваем информацию о рейде
 	end)
 	-- Рассчитываем размеры фрейма
-	local NumPlayers = math_min(E:func_NumPlayers(), COLUMNS_MAX)
+	local NumPlayers = math_min(E:func_NumPlayers(), Octo_Event_TestFrame.COLUMNS_MAX)
 	Octo_Main_TestFrame:SetSize(LINE_WIDTH_LEFT + LINE_WIDTH_CENT * NumPlayers, LINE_HEIGHT * LINES_MAX)
 	-- Настройки поведения фрейма
 	Octo_Main_TestFrame:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
@@ -483,7 +479,7 @@ function Octo_Event_TestFrame:CreateDataProvider()
 	Octo_Event_TestFrame.COLUMN_SIZES_LEFT = Octo_Event_TestFrame.COLUMN_SIZES_LEFT or {}
 	Octo_Event_TestFrame.COLUMN_SIZES_RIGHT = Octo_Event_TestFrame.COLUMN_SIZES_RIGHT or {}
 
-	local NumPlayers = math_min(E:func_NumPlayers(), COLUMNS_MAX)
+	local NumPlayers = math_min(E:func_NumPlayers(), Octo_Event_TestFrame.COLUMNS_MAX)
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
 	local COLUMN_SIZES_LEFT = {}
@@ -547,8 +543,6 @@ function Octo_Event_TestFrame:CreateDataProvider()
 	Octo_Event_TestFrame.COLUMN_SIZES_LEFT = COLUMN_SIZES_LEFT
 	Octo_Event_TestFrame.COLUMN_SIZES_RIGHT = COLUMN_SIZES_RIGHT
 
-	-- Корректируем количество строк
-	LINES_MAX = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
 
 	if Octo_Main_TestFrame then
 		-- Устанавливаем провайдер данных
@@ -557,12 +551,27 @@ function Octo_Event_TestFrame:CreateDataProvider()
 
 		-- Рассчитываем общую ширину правой части
 		local totalRightWidth = 0
-		for i = 1, #COLUMN_SIZES_RIGHT do
+		for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_Event_TestFrame.COLUMNS_MAX) do
 			totalRightWidth = totalRightWidth + COLUMN_SIZES_RIGHT[i]
 		end
 
+		-- Корректируем количество строк
+		local LINES_TOTAL = math.floor((select(2, GetPhysicalScreenSize()) / LINE_HEIGHT)*.7)
+		LINES_MAX = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
+
+
 		-- Обновляем размеры фрейма
 		local width = (COLUMN_SIZES_LEFT[1] or LINE_WIDTH_LEFT) + totalRightWidth
+
+		-- Рассчитываем общее количество столбцов, которые поместятся на экране
+		local screenWidth = select(1, GetPhysicalScreenSize())
+		local columnWidth = COLUMN_SIZES_LEFT[1] or LINE_WIDTH_LEFT
+		local fillFactor = 1 -- Используем 70% ширины экрана
+		local COLUMNS_TOTAL = math.floor((screenWidth * fillFactor) / columnWidth)
+		Octo_Event_TestFrame.COLUMNS_MAX = math_min(COLUMNS_TOTAL, Octo_Event_TestFrame.COLUMNS_MAX)
+		print (COLUMNS_TOTAL)
+
+
 		local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
 		Octo_Main_TestFrame:SetSize(width, height)
 		Octo_Main_TestFrame.childCENT:SetSize(totalRightWidth, height)

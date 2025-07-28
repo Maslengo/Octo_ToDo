@@ -204,7 +204,7 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 				tooltipRIGHT = E:func_tooltipRIGHT_ITEMS(CharInfo, E.OctoTable_itemID_MECHAGON, true)
 
 
-				textCENT = "МЕХАГОН"
+				textCENT = "МЕХАГОНМЕХАГОНМЕХАГОН"
 				----------------------------------------------------------------
 				textLEFT = "МЕХАГОН"
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color

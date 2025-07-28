@@ -214,7 +214,11 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	local editBox = frame.editFrame:GetEditBox()
 	editBox:HookScript("OnEnterPressed", function(self) self:Insert("\n") end)
 	editBox:HookScript("OnEscapePressed", function(self) self:ClearFocus() end)
-	editBox:SetFontObject(OctoFont22)
+	editBox:SetFont(E.Octo_font, 14, "OUTLINE")
+
+
+
+
 	-- -- Обработчики событий
 	-- frame:SetScript("OnMouseDown", function(self, button)
 	--     if button == "LeftButton" then

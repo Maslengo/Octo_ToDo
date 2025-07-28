@@ -10,6 +10,7 @@ local ignoreNPCID = {
 	[208831] = true,
 	-- [207471] = true, -- wowhead.com/ptr-2/ru/quest=78392
 	[223754] = true,
+	[143925] = true,
 }
 -- IGNORE 120914
 local gossipOptionIDs = {
