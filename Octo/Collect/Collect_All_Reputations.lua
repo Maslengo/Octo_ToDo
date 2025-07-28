@@ -6,8 +6,8 @@ function E.Collect_All_Reputations()
 	C_Reputation.ExpandAllFactionHeaders()
 	if collectMASLENGO and not InCombatLockdown() then
 		----------------------------------------------------------------
-		for index, tbl in ipairs(E.OctoTable_Reputations) do
-			for i, v in ipairs(tbl) do
+		for _, tbl in ipairs(E.OctoTable_Reputations) do
+			for _, v in ipairs(tbl) do
 				local reputationID = v.id
 				local vivod = E:func_CheckReputation(reputationID)
 				if C_Reputation.IsAccountWideReputation(reputationID) then

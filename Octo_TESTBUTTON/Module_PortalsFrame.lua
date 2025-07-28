@@ -43,7 +43,7 @@ function Octo_EventFrame_PortalsFrame:PortalsFrame()
 
 	AnchorFrame.icon = AnchorFrame:CreateTexture()
 	AnchorFrame.icon:SetAllPoints(AnchorFrame)
-	AnchorFrame.icon:SetTexture(format("Interface\\AddOns\\%s\\Media\\ElvUI\\Arrow0.tga", GlobalAddonName))
+	AnchorFrame.icon:SetTexture("Interface\\Addons\\"..E.MainAddonName.."\\Media\\Arrow72.tga")
 	AnchorFrame.icon:SetRotation(math.pi * 0.75)
 	E:func_SetBackdrop(AnchorFrame)
 

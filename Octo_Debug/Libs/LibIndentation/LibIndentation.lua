@@ -1,55 +1,49 @@
--- For All Indents And Purposes
-local revision = 23
--- Maintainer: kristofer.karlsson@gmail.com
--- For All Indents And Purposes -
--- a indentation + syntax highlighting library
--- All valid lua code should be processed correctly.
--- Usage (for developers)
---------
--- Variant 1: - non embedded
--- 1) Add ForAllIndentsAndPurposes to your dependencies (or optional dependencies)
--- Variant 2: - embedded
--- 1.a) Copy indent.lua to your addon directory
--- 1.b) Put indent.lua first in your list of files in the TOC
--- For both variants:
--- 2) hook the editboxes that you want to have indentation like this:
--- IndentationLib.enable(editbox [, colorTable [, tabWidth] ])
--- if you don't select a color table, it will use the default.
--- Read through this code for further usage help.
--- (The documentation IS the code)
--- luacheck: globals IndentationLib
-if not IndentationLib then
-	IndentationLib = {}
-end
-if not IndentationLib.revision or revision > IndentationLib.revision then
-	local lib = IndentationLib
-	lib.revision = revision
-	local stringlen = string.len
-	local stringformat = string.format
-	local stringfind = string.find
-	local stringsub = string.sub
-	local stringbyte = string.byte
-	local stringchar = string.char
-	local stringrep = string.rep
-	local stringgsub = string.gsub
-	local defaultTabWidth = 2
-	local defaultColorTable
-	local workingTable = {}
-	local workingTable2 = {}
+local revision = 24
+local MAJOR_VERSION, MINOR_VERSION = "LibIndentation-1.0", revision
+local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
+if not lib then return end
+ 
+local next = next
+-- Локальные ссылки на функции string для оптимизации
+local stringlen = string.len
+local stringformat = string.format
+local stringfind = string.find
+local stringsub = string.sub
+local stringbyte = string.byte
+local stringchar = string.char
+local stringrep = string.rep
+local stringgsub = string.gsub
+
+-- Константы
+local defaultTabWidth = 4
+local defaultColorTable
+local workingTable = {} -- Рабочая таблица для временных данных
+local workingTable2 = {} -- Вторая рабочая таблица
+
+
+
+if not lib._listener then
+
+	-- Очистка таблицы
 	local function tableclear(t)
 		for k in next, (t) do
 			t[k] = nil
 		end
 	end
+
+	-- Вставка строки в позицию
 	local function stringinsert(s, pos, insertStr)
 		return stringsub(s, 1, pos) .. insertStr .. stringsub(s, pos + 1)
 	end
 	lib.stringinsert = stringinsert
+
+	-- Удаление части строки
 	local function stringdelete(s, pos1, pos2)
 		return stringsub(s, 1, pos1 - 1) .. stringsub(s, pos2 + 1)
 	end
 	lib.stringdelete = stringdelete
-	-- token types
+
+	-- Типы токенов
 	local tokens = {}
 	lib.tokens = tokens
 	tokens.TOKEN_UNKNOWN = 0
@@ -88,13 +82,14 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 	tokens.TOKEN_SPECIAL = 34
 	tokens.TOKEN_VERTICAL = 35
 	tokens.TOKEN_TILDE = 36
-	-- WoW specific tokens
+	-- WoW-специфичные токены
 	tokens.TOKEN_COLORCODE_START = 37
 	tokens.TOKEN_COLORCODE_STOP = 38
-	-- new as of lua 5.1
+	-- Новые в Lua 5.1
 	tokens.TOKEN_HASH = 39
 	tokens.TOKEN_PERCENT = 40
-	-- ascii codes
+
+	-- ASCII коды символов
 	local bytes = {}
 	lib.bytes = bytes
 	bytes.BYTE_LINEBREAK_UNIX = stringbyte("\n")
@@ -127,21 +122,25 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 	bytes.BYTE_ASTERISK = stringbyte("*")
 	bytes.BYTE_LESSTHAN = stringbyte("<")
 	bytes.BYTE_GREATERTHAN = stringbyte(">")
-	-- WoW specific chars
+	-- WoW-специфичные символы
 	bytes.BYTE_VERTICAL = stringbyte("|")
 	bytes.BYTE_r = stringbyte("r")
 	bytes.BYTE_c = stringbyte("c")
-	-- new as of lua 5.1
+	-- Новые в Lua 5.1
 	bytes.BYTE_HASH = stringbyte("#")
 	bytes.BYTE_PERCENT = stringbyte("%")
+
+	-- Таблицы для быстрой проверки символов
 	local linebreakCharacters = {}
 	lib.linebreakCharacters = linebreakCharacters
 	linebreakCharacters[bytes.BYTE_LINEBREAK_UNIX] = 1
 	linebreakCharacters[bytes.BYTE_LINEBREAK_MAC] = 1
+
 	local whitespaceCharacters = {}
 	lib.whitespaceCharacters = whitespaceCharacters
 	whitespaceCharacters[bytes.BYTE_SPACE] = 1
 	whitespaceCharacters[bytes.BYTE_TAB] = 1
+
 	local specialCharacters = {}
 	lib.specialCharacters = specialCharacters
 	specialCharacters[bytes.BYTE_PERIOD] = -1
@@ -165,11 +164,13 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 	specialCharacters[bytes.BYTE_RIGHTWING] = tokens.TOKEN_RIGHTWING
 	specialCharacters[bytes.BYTE_CIRCUMFLEX] = tokens.TOKEN_CIRCUMFLEX
 	specialCharacters[bytes.BYTE_ASTERISK] = tokens.TOKEN_ASTERISK
-	-- WoW specific
+	-- WoW-специфичные
 	specialCharacters[bytes.BYTE_VERTICAL] = -1
-	-- new as of lua 5.1
+	-- Новые в Lua 5.1
 	specialCharacters[bytes.BYTE_HASH] = tokens.TOKEN_HASH
 	specialCharacters[bytes.BYTE_PERCENT] = tokens.TOKEN_PERCENT
+
+	-- Функции для парсинга чисел
 	local function nextNumberExponentPartInt(text, pos)
 		while true do
 			local byte = stringbyte(text, pos)
@@ -183,14 +184,13 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			end
 		end
 	end
+
 	local function nextNumberExponentPart(text, pos)
 		local byte = stringbyte(text, pos)
 		if not byte then
 			return tokens.TOKEN_NUMBER, pos
 		end
 		if byte == bytes.BYTE_MINUS then
-			-- handle this case: a = 1.2e-- some comment
-			-- i decide to let 1.2e be parsed as a a number
 			byte = stringbyte(text, pos + 1)
 			if byte == bytes.BYTE_MINUS then
 				return tokens.TOKEN_NUMBER, pos
@@ -199,6 +199,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		end
 		return nextNumberExponentPartInt(text, pos)
 	end
+
 	local function nextNumberFractionPart(text, pos)
 		while true do
 			local byte = stringbyte(text, pos)
@@ -214,6 +215,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			end
 		end
 	end
+
 	local function nextNumberIntPart(text, pos)
 		while true do
 			local byte = stringbyte(text, pos)
@@ -231,6 +233,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			end
 		end
 	end
+
+	-- Парсинг идентификаторов
 	local function nextIdentifier(text, pos)
 		while true do
 			local byte = stringbyte(text, pos)
@@ -243,7 +247,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			pos = pos + 1
 		end
 	end
-	-- returns false or: true, nextPos, equalsCount
+
+	-- Проверка на строку в квадратных скобках
 	local function isBracketStringNext(text, pos)
 		local byte = stringbyte(text, pos)
 		if byte == bytes.BYTE_LEFTBRACKET then
@@ -262,7 +267,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			return false
 		end
 	end
-	-- Already parsed the [==[ part when get here
+
+	-- Парсинг строки в квадратных скобках
 	local function nextBracketString(text, pos, equalsCount)
 		local state = 0
 		while true do
@@ -288,16 +294,18 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			pos = pos + 1
 		end
 	end
+
+	-- Парсинг комментариев
 	local function nextComment(text, pos)
-		-- When we get here we have already parsed the "--"
-		-- Check for long comment
+		-- Проверка на длинный комментарий
 		local isBracketString, nextPos, equalsCount = isBracketStringNext(text, pos)
 		if isBracketString then
 			local tokenType, nextPos2 = nextBracketString(text, nextPos, equalsCount)
 			return tokens.TOKEN_COMMENT_LONG, nextPos2
 		end
+
+		-- Короткий комментарий - ищем перенос строки
 		local byte = stringbyte(text, pos)
-		-- Short comment, find the first linebreak
 		while true do
 			byte = stringbyte(text, pos)
 			if not byte then
@@ -309,6 +317,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			pos = pos + 1
 		end
 	end
+
+	-- Парсинг строк
 	local function nextString(text, pos, character)
 		local even = true
 		while true do
@@ -329,20 +339,20 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			pos = pos + 1
 		end
 	end
-	-- INPUT
-	-- 1: text: text to search in
-	-- 2: tokenPos: where to start searching
-	-- OUTPUT
-	-- 1: token type
-	-- 2: position after the last character of the token
+
+	-- Основная функция парсинга токенов
 	local function nextToken(text, pos)
 		local byte = stringbyte(text, pos)
 		if not byte then
 			return nil
 		end
+
+		-- Перенос строки
 		if linebreakCharacters[byte] then
 			return tokens.TOKEN_LINEBREAK, pos + 1
 		end
+
+		-- Пробельные символы
 		if whitespaceCharacters[byte] then
 			while true do
 				pos = pos + 1
@@ -352,12 +362,15 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 				end
 			end
 		end
+
+		-- Специальные символы
 		local token = specialCharacters[byte]
 		if token then
 			if token ~= -1 then
 				return token, pos + 1
 			end
-			-- WoW specific (for color codes)
+
+			-- WoW-специфичные символы (цветовые коды)
 			if byte == bytes.BYTE_VERTICAL then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_VERTICAL then
@@ -371,6 +384,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 				end
 				return tokens.TOKEN_UNKNOWN, pos + 1
 			end
+
+			-- Обработка минуса (может быть началом комментария)
 			if byte == bytes.BYTE_MINUS then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_MINUS then
@@ -378,12 +393,16 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 				end
 				return tokens.TOKEN_MINUS, pos + 1
 			end
+
+			-- Обработка строк
 			if byte == bytes.BYTE_SINGLE_QUOTE then
 				return nextString(text, pos + 1, bytes.BYTE_SINGLE_QUOTE)
 			end
 			if byte == bytes.BYTE_DOUBLE_QUOTE then
 				return nextString(text, pos + 1, bytes.BYTE_DOUBLE_QUOTE)
 			end
+
+			-- Обработка квадратных скобок
 			if byte == bytes.BYTE_LEFTBRACKET then
 				local isBracketString, nextPos, equalsCount = isBracketStringNext(text, pos)
 				if isBracketString then
@@ -392,6 +411,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 					return tokens.TOKEN_LEFTBRACKET, pos + 1
 				end
 			end
+
+			-- Обработка операторов сравнения и присваивания
 			if byte == bytes.BYTE_EQUALS then
 				byte = stringbyte(text, pos + 1)
 				if not byte then
@@ -402,6 +423,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 				end
 				return tokens.TOKEN_ASSIGNMENT, pos + 1
 			end
+
+			-- Обработка точек (многоточия, числа с плавающей точкой)
 			if byte == bytes.BYTE_PERIOD then
 				byte = stringbyte(text, pos + 1)
 				if not byte then
@@ -418,6 +441,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 				end
 				return tokens.TOKEN_PERIOD, pos + 1
 			end
+
+			-- Обработка операторов сравнения
 			if byte == bytes.BYTE_LESSTHAN then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_EQUALS then
@@ -425,6 +450,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 				end
 				return tokens.TOKEN_LT, pos + 1
 			end
+
 			if byte == bytes.BYTE_GREATERTHAN then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_EQUALS then
@@ -432,6 +458,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 				end
 				return tokens.TOKEN_GT, pos + 1
 			end
+
 			if byte == bytes.BYTE_TILDE then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_EQUALS then
@@ -439,18 +466,24 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 				end
 				return tokens.TOKEN_TILDE, pos + 1
 			end
+
 			return tokens.TOKEN_UNKNOWN, pos + 1
 		elseif byte >= bytes.BYTE_0 and byte <= bytes.BYTE_9 then
+			-- Числа
 			return nextNumberIntPart(text, pos + 1)
 		else
+			-- Идентификаторы
 			return nextIdentifier(text, pos + 1)
 		end
 	end
-	-- Cool stuff begins here! (indentation and highlighting)
+
+	-- Настройки отступов
 	local noIndentEffect = {0, 0}
 	local indentLeft = {-1, 0}
 	local indentRight = {0, 1}
 	local indentBoth = {-1, 1}
+
+	-- Ключевые слова Lua и их влияние на отступы
 	local keywords = {}
 	lib.keywords = keywords
 	keywords["and"] = noIndentEffect
@@ -474,6 +507,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 	keywords["repeat"] = indentRight
 	keywords["function"] = indentRight
 	keywords["else"] = indentBoth
+
+	-- Влияние токенов на отступы
 	local tokenIndentation = {}
 	lib.tokenIndentation = tokenIndentation
 	tokenIndentation[tokens.TOKEN_LEFTPAREN] = indentRight
@@ -482,17 +517,23 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 	tokenIndentation[tokens.TOKEN_RIGHTPAREN] = indentLeft
 	tokenIndentation[tokens.TOKEN_RIGHTBRACKET] = indentLeft
 	tokenIndentation[tokens.TOKEN_RIGHTWING] = indentLeft
+
+	-- Функции для создания отступов
 	local function fillWithTabs(n)
 		return stringrep("\t", n)
 	end
+
 	local function fillWithSpaces(a, b)
 		return stringrep(" ", a*b)
 	end
+
+	-- Функция для подсветки синтаксиса
 	function lib.colorCodeCode(code, colorTable, caretPosition)
 		local stopColor = colorTable and colorTable[0]
 		if not stopColor then
 			return code, caretPosition
 		end
+
 		local stopColorLen = stringlen(stopColor)
 		tableclear(workingTable)
 		local tsize = 0
@@ -503,6 +544,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		local prevTokenWidth = 0
 		local pos = 1
 		local level = 0
+
 		while true do
 			if caretPosition and not newCaretPosition and pos >= caretPosition then
 				if pos == caretPosition then
@@ -519,14 +561,17 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 					newCaretPosition = newCaretPosition - diff
 				end
 			end
+
 			prevTokenWasColored = false
 			prevTokenWidth = 0
 			local tokenType, nextPos = nextToken(code, pos)
 			if not tokenType then
 				break
 			end
+
+			-- Игнорирование цветовых кодов
 			if tokenType == tokens.TOKEN_COLORCODE_START or tokenType == tokens.TOKEN_COLORCODE_STOP or tokenType == tokens.TOKEN_UNKNOWN then
-				-- ignore color codes
+				-- пропускаем
 			elseif tokenType == tokens.TOKEN_LINEBREAK or tokenType == tokens.TOKEN_WHITESPACE then
 				if tokenType == tokens.TOKEN_LINEBREAK then
 					numLines = numLines + 1
@@ -539,10 +584,12 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			else
 				local str = stringsub(code, pos, nextPos - 1)
 				prevTokenWidth = nextPos - pos
-				-- Add coloring
+
+				-- Добавление подсветки
 				if keywords[str] then
 					tokenType = tokens.TOKEN_KEYWORD
 				end
+
 				local color
 				if stopColor then
 					color = colorTable[str]
@@ -557,6 +604,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 						end
 					end
 				end
+
 				if color then
 					tsize = tsize + 1
 					workingTable[tsize] = color
@@ -574,8 +622,11 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			end
 			pos = nextPos
 		end
+
 		return table.concat(workingTable), newCaretPosition, numLines
 	end
+
+	-- Функция для форматирования отступов
 	function lib.indentCode(code, tabWidth, colorTable, caretPosition)
 		local fillFunction
 		if tabWidth == nil then
@@ -586,6 +637,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		else
 			fillFunction = fillWithTabs
 		end
+
 		tableclear(workingTable)
 		local tsize = 0
 		local totalLen = 0
@@ -604,6 +656,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		local hitIndentRight = false
 		local preIndent = 0
 		local postIndent = 0
+
 		while true do
 			if caretPosition and not newCaretPosition and pos >= caretPosition then
 				if pos == caretPosition then
@@ -620,6 +673,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 					newCaretPosition = newCaretPosition - diff
 				end
 			end
+
 			prevTokenWasColored = false
 			prevTokenWidth = 0
 			local tokenType, nextPos = nextToken(code, pos)
@@ -630,18 +684,22 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 				tsize = tsize + 1
 				workingTable[tsize] = s
 				totalLen = totalLen + stringlen(s)
+
 				if newCaretPosition and not newCaretPositionFinalized then
 					newCaretPosition = newCaretPosition + stringlen(s)
 					newCaretPositionFinalized = true
 				end
+
 				for k, v in next, (workingTable2) do
 					tsize = tsize + 1
 					workingTable[tsize] = v
 					totalLen = totalLen + stringlen(v)
 				end
+
 				if not tokenType then
 					break
 				end
+
 				tsize = tsize + 1
 				workingTable[tsize] = stringsub(code, pos, nextPos - 1)
 				totalLen = totalLen + nextPos - pos
@@ -663,18 +721,20 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 					totalLen2 = totalLen2 + stringlen(s)
 				end
 			elseif tokenType == tokens.TOKEN_COLORCODE_START or tokenType == tokens.TOKEN_COLORCODE_STOP or tokenType == tokens.TOKEN_UNKNOWN then
-				-- skip these, though they shouldn't be encountered here anyway
+				-- пропускаем
 			else
 				hitNonWhitespace = true
 				local str = stringsub(code, pos, nextPos - 1)
 				prevTokenWidth = nextPos - pos
-				-- See if this is an indent-modifier
+
+				-- Проверка на модификаторы отступов
 				local indentTable
 				if tokenType == tokens.TOKEN_IDENTIFIER then
 					indentTable = keywords[str]
 				else
 					indentTable = lib.tokenIndentation[tokenType]
 				end
+
 				if indentTable then
 					if hitIndentRight then
 						postIndent = postIndent + indentTable[1] + indentTable[2]
@@ -688,10 +748,12 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 						postIndent = postIndent + post
 					end
 				end
-				-- Add coloring
+
+				-- Добавление подсветки
 				if keywords[str] then
 					tokenType = tokens.TOKEN_KEYWORD
 				end
+
 				local color
 				if stopColor then
 					color = colorTable[str]
@@ -706,6 +768,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 						end
 					end
 				end
+
 				if color then
 					tsize2 = tsize2 + 1
 					workingTable2[tsize2] = color
@@ -725,13 +788,16 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			end
 			pos = nextPos
 		end
+
 		return table.concat(workingTable), newCaretPosition
 	end
-	-- WoW specific code:
+
+	-- WoW-специфичный код:
 	local GetTime = GetTime
 	local editboxSetText
 	local editboxGetText
-	-- Caret code (thanks Tem!)
+
+	-- Код для работы с курсором (спасибо Tem!)
 	local function critical_enter(editbox)
 		local script = editbox:GetScript("OnTextSet")
 		if script then
@@ -739,11 +805,13 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		end
 		return script
 	end
+
 	local function critical_leave(editbox, script)
 		if script then
 			editbox:SetScript("OnTextSet", script)
 		end
 	end
+
 	local function setCaretPos_main(editbox, pos)
 		local text = editboxGetText(editbox)
 		if stringlen(text) > 0 then
@@ -752,6 +820,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			editbox:Insert("\0")
 		end
 	end
+
 	local function getCaretPos(editbox)
 		local script = critical_enter(editbox)
 		local text = editboxGetText(editbox)
@@ -764,17 +833,16 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		critical_leave(editbox, script)
 		return (pos or 0) - 1
 	end
+
 	local function setCaretPos(editbox, pos)
 		local script, script2 = critical_enter(editbox)
 		setCaretPos_main(editbox, pos)
 		critical_leave(editbox, script, script2)
 	end
-	-- end of caret code
+
+	-- Удаление WoW-цветовых кодов
 	function lib.stripWowColors(code)
-		-- HACK!
-		-- This is a fix for a bug, where an unfinished string causes a lot of newlines to be created.
-		-- The reason for the bug, is that a |r\n\n gets converted to \n\n|r after the next indent-run
-		-- The fix is to remove those last two linebreaks when stripping
+		-- Исправление бага с незавершенной строкой
 		code = stringgsub(code, "|r\n\n$", "|r")
 		tableclear(workingTable)
 		local tsize = 0
@@ -782,11 +850,13 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		local prevVertical = false
 		local even = true
 		local selectionStart = 1
+
 		while true do
 			local byte = stringbyte(code, pos)
 			if not byte then
 				break
 			end
+
 			if byte == bytes.BYTE_VERTICAL then
 				even = not even
 				prevVertical = true
@@ -812,12 +882,16 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			end
 			pos = pos + 1
 		end
+
 		if pos >= selectionStart then
 			tsize = tsize + 1
 			workingTable[tsize] = stringsub(code, selectionStart, pos - 1)
 		end
+
 		return table.concat(workingTable)
 	end
+
+	-- Декодирование текста (удаление цветовых кодов)
 	function lib.decode(code)
 		if code then
 			code = lib.stripWowColors(code)
@@ -825,12 +899,16 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		end
 		return code or ""
 	end
+
+	-- Кодирование текста (экранирование |)
 	function lib.encode(code)
 		if code then
 			code = stringgsub(code, "|", "||")
 		end
 		return code or ""
 	end
+
+	-- Удаление цветовых кодов с сохранением позиции
 	function lib.stripWowColorsWithPos(code, pos)
 		code = stringinsert(code, pos, "\2")
 		code = lib.stripWowColors(code)
@@ -838,22 +916,25 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		code = stringdelete(code, pos, pos)
 		return code, pos
 	end
-	-- returns the padded code, and true if modified, false if unmodified
+
+	-- Добавление переносов строк в конец
 	local linebreak = stringbyte("\n")
 	function lib.padWithLinebreaks(code)
 		local len = stringlen(code)
 		local linebreakcount = 0
+
 		while len > 0 and linebreakcount < 2 do
 			local b = stringbyte(code, len)
 			if b == linebreak then
 				linebreakcount = linebreakcount + 1
 			elseif whitespaceCharacters[b] then
-				-- Ignore whitespace characters
+				-- Игнорируем пробельные символы
 			else
 				break
 			end
 			len = len - 1
 		end
+
 		if linebreakcount == 0 then
 			return code .. "\n\n", true
 		elseif linebreakcount == 1 then
@@ -862,23 +943,27 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			return code, false
 		end
 	end
-	-- Data tables
-	-- No weak table magic, since editboxes can never be removed in WoW
-	local enabled = {}
-	local dirty = {}
-	local editboxIndentCache = {}
-	local decodeCache = {}
-	local editboxStringCache = {}
-	local editboxNumLinesCache = {}
+
+	-- Таблицы данных
+	local enabled = {} -- Включенные editbox'ы
+	local dirty = {} -- Флаги изменений
+	local editboxIndentCache = {} -- Кэш отступов
+	local decodeCache = {} -- Кэш декодированного текста
+	local editboxStringCache = {} -- Кэш строк
+	local editboxNumLinesCache = {} -- Кэш количества строк
+
+	-- Подсветка синтаксиса для editbox
 	function lib.colorCodeEditbox(editbox)
 		dirty[editbox] = nil
 		local colorTable = editbox.faiap_colorTable or defaultColorTable
 		local tabWidth = editbox.faiap_tabWidth
 		local orgCode = editboxGetText(editbox)
 		local prevCode = editboxStringCache[editbox]
+
 		if prevCode == orgCode then
 			return
 		end
+
 		local pos = getCaretPos(editbox)
 		local code
 		code, pos = lib.stripWowColorsWithPos(orgCode, pos)
@@ -886,6 +971,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		local newCode, newPos, numLines = lib.colorCodeCode(code, colorTable, pos)
 		newCode = lib.padWithLinebreaks(newCode)
 		editboxStringCache[editbox] = newCode
+
 		if orgCode ~= newCode then
 			local script, script2 = critical_enter(editbox)
 			decodeCache[editbox] = nil
@@ -898,20 +984,25 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			end
 			critical_leave(editbox, script, script2)
 		end
+
 		if editboxNumLinesCache[editbox] ~= numLines then
 			lib.indentEditbox(editbox)
 		end
 		editboxNumLinesCache[editbox] = numLines
 	end
+
+	-- Форматирование отступов для editbox
 	function lib.indentEditbox(editbox)
 		dirty[editbox] = nil
 		local colorTable = editbox.faiap_colorTable or defaultColorTable
 		local tabWidth = editbox.faiap_tabWidth
 		local orgCode = editboxGetText(editbox)
 		local prevCode = editboxIndentCache[editbox]
+
 		if prevCode == orgCode then
 			return
 		end
+
 		local pos = getCaretPos(editbox)
 		local code
 		code, pos = lib.stripWowColorsWithPos(orgCode, pos)
@@ -919,6 +1010,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		local newCode, newPos = lib.indentCode(code, tabWidth, colorTable, pos)
 		newCode = lib.padWithLinebreaks(newCode)
 		editboxIndentCache[editbox] = newCode
+
 		if code ~= newCode then
 			local script, script2 = critical_enter(editbox)
 			decodeCache[editbox] = nil
@@ -932,15 +1024,19 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			critical_leave(editbox, script, script2)
 		end
 	end
+
+	-- Хук для обработчиков событий
 	local function hookHandler(editbox, handler, newFun)
 		local oldFun = editbox:GetScript(handler)
 		if oldFun == newFun then
-			-- already hooked, ignore it
+			-- уже подключен, пропускаем
 			return
 		end
 		editbox["faiap_old_" .. handler] = oldFun
 		editbox:SetScript(handler, newFun)
 	end
+
+	-- Обработчик изменения текста
 	local function textChangedHook(editbox, ...)
 		local oldFun = editbox["faiap_old_OnTextChanged"]
 		if oldFun then
@@ -950,6 +1046,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			dirty[editbox] = GetTime()
 		end
 	end
+
+	-- Обработчик нажатия Tab
 	local function tabPressedHook(editbox, ...)
 		local oldFun = editbox["faiap_old_OnTabPressed"]
 		if oldFun then
@@ -959,6 +1057,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			return lib.indentEditbox(editbox)
 		end
 	end
+
+	-- Обработчик обновления
 	local function onUpdateHook(editbox, ...)
 		local oldFun = editbox["faiap_old_OnUpdate"]
 		if oldFun then
@@ -973,6 +1073,8 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			end
 		end
 	end
+
+	-- Новые методы GetText/SetText для editbox
 	local function newGetText(editbox)
 		local decoded = decodeCache[editbox]
 		if not decoded then
@@ -981,6 +1083,7 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		end
 		return decoded or ""
 	end
+
 	local function newSetText(editbox, text)
 		decodeCache[editbox] = nil
 		if text then
@@ -988,11 +1091,14 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			return editboxSetText(editbox, encoded)
 		end
 	end
+
+	-- Включение форматирования для editbox
 	function lib.enable(editbox, colorTable, tabWidth)
 		if not editboxSetText then
 			editboxSetText = editbox.SetText
 			editboxGetText = editbox.GetText
 		end
+
 		local modified
 		if editbox.faiap_colorTable ~= colorTable then
 			editbox.faiap_colorTable = colorTable
@@ -1002,13 +1108,15 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			editbox.faiap_tabWidth = tabWidth
 			modified = true
 		end
+
 		if enabled[editbox] then
 			if modified then
 				lib.indentEditbox(editbox)
 			end
 			return
 		end
-		-- Editbox is possibly hooked, but disabled
+
+		-- Editbox возможно подключен, но отключен
 		enabled[editbox] = true
 		editbox.oldMaxBytes = editbox:GetMaxBytes()
 		editbox.oldMaxLetters = editbox:GetMaxLetters()
@@ -1016,22 +1124,30 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 		editbox:SetMaxLetters(0)
 		editbox.GetText = newGetText
 		editbox.SetText = newSetText
+
 		hookHandler(editbox, "OnTextChanged", textChangedHook)
 		hookHandler(editbox, "OnTabPressed", tabPressedHook)
 		hookHandler(editbox, "OnUpdate", onUpdateHook)
+
 		lib.indentEditbox(editbox)
 	end
-	-- Deprecated function
+
+	-- Устаревшая функция (для совместимости)
 	lib.addSmartCode = lib.enable
+
+	-- Отключение форматирования для editbox
 	function lib.disable(editbox)
 		if not enabled[editbox] then
 			return
 		end
+
 		enabled[editbox] = nil
-		-- revert settings for max bytes / letters
+
+		-- Восстановление настроек максимального количества байт/символов
 		editbox:SetMaxBytes(editbox.oldMaxBytes)
 		editbox:SetMaxLetters(editbox.oldMaxLetters)
-		-- try a real unhooking, if possible
+
+		-- Отключение хуков, если возможно
 		if editbox:GetScript("OnTextChanged") == textChangedHook then
 			editbox:SetScript("OnTextChanged", editbox.faiap_old_OnTextChanged)
 			editbox.faiap_old_OnTextChanged = nil
@@ -1044,48 +1160,52 @@ if not IndentationLib.revision or revision > IndentationLib.revision then
 			editbox:SetScript("OnUpdate", editbox.faiap_old_OnUpdate)
 			editbox.faiap_old_OnUpdate = nil
 		end
+
 		editbox.GetText = nil
 		editbox.SetText = nil
-		-- change the text back to unformatted
+
+		-- Возврат текста в неформатированном виде
 		editbox:SetText(newGetText(editbox))
-		-- clear caches
+
+		-- Очистка кэшей
 		editboxIndentCache[editbox] = nil
 		decodeCache[editbox] = nil
 		editboxStringCache[editbox] = nil
 		editboxNumLinesCache[editbox] = nil
 	end
+
+	-- Таблица цветов по умолчанию
 	defaultColorTable = {}
 	lib.defaultColorTable = defaultColorTable
-	defaultColorTable[tokens.TOKEN_SPECIAL] = "|c00ff99ff"
-	defaultColorTable[tokens.TOKEN_KEYWORD] = "|c006666ff"
-	defaultColorTable[tokens.TOKEN_COMMENT_SHORT] = "|c00999999"
-	defaultColorTable[tokens.TOKEN_COMMENT_LONG] = "|c00999999"
-	local stringColor = "|c00ffff77"
+	defaultColorTable[tokens.TOKEN_SPECIAL] = "|c00ff99ff" -- розовый для спецсимволов
+	defaultColorTable[tokens.TOKEN_KEYWORD] = "|c006666ff" -- синий для ключевых слов
+	defaultColorTable[tokens.TOKEN_COMMENT_SHORT] = "|c00999999" -- серый для комментариев
+	defaultColorTable[tokens.TOKEN_COMMENT_LONG] = "|c00999999" -- серый для длинных комментариев
+	local stringColor = "|c00ffff77" -- желтый для строк
 	defaultColorTable[tokens.TOKEN_STRING] = stringColor
 	defaultColorTable[".."] = stringColor
-	local tableColor = "|c00ff9900"
+	local tableColor = "|c00ff9900" -- оранжевый для таблиц
 	defaultColorTable["..."] = tableColor
 	defaultColorTable["{"] = tableColor
 	defaultColorTable["}"] = tableColor
 	defaultColorTable["["] = tableColor
 	defaultColorTable["]"] = tableColor
-	local arithmeticColor = "|c0033ff55"
+	local arithmeticColor = "|c0033ff55" -- зеленый для арифметики
 	defaultColorTable[tokens.TOKEN_NUMBER] = arithmeticColor
 	defaultColorTable["+"] = arithmeticColor
 	defaultColorTable["-"] = arithmeticColor
 	defaultColorTable["/"] = arithmeticColor
 	defaultColorTable["*"] = arithmeticColor
-	local logicColor1 = "|c0055ff88"
+	local logicColor1 = "|c0055ff88" -- светло-зеленый для операторов сравнения
 	defaultColorTable["=="] = logicColor1
 	defaultColorTable["<"] = logicColor1
 	defaultColorTable["<="] = logicColor1
 	defaultColorTable[">"] = logicColor1
 	defaultColorTable[">="] = logicColor1
 	defaultColorTable["~="] = logicColor1
-	local logicColor2 = "|c0088ffbb"
+	local logicColor2 = "|c0088ffbb" -- бирюзовый для логических операторов
 	defaultColorTable["and"] = logicColor2
 	defaultColorTable["or"] = logicColor2
 	defaultColorTable["not"] = logicColor2
-	defaultColorTable[0] = "|r"
+	defaultColorTable[0] = "|r" -- сброс цвета
 end
-

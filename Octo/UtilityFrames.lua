@@ -56,7 +56,7 @@ end
 function Octo_Event_UtilityFrames:Octo_CloseButton(frame, addonIconTexture)
 	local function func_onEnter()
 		local tooltip = {}
-		tooltip[#tooltip+1] = {E.WOW_Artifact_Color..CLOSE.."|r"}
+		tooltip[#tooltip+1] = {E.classColorHexCurrent..CLOSE.."|r"}
 		return tooltip
 	end
 	local function func_onClick()
@@ -76,7 +76,7 @@ end
 function Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
 	local function func_onEnter()
 		local tooltip = {}
-		tooltip[#tooltip+1] = {E.WOW_Artifact_Color..OPTIONS.."|r"}
+		tooltip[#tooltip+1] = {E.classColorHexCurrent..OPTIONS.."|r"}
 		return tooltip
 	end
 	local function func_onClick(frame)
@@ -105,7 +105,7 @@ function Octo_Event_UtilityFrames:Octo_AbandonButton(frame, addonIconTexture)
 		local tooltip = {}
 		local numQuests = E:func_CurrentNumQuests()
 		if numQuests > 0 then
-			tooltip[#tooltip+1] = {E.WOW_Artifact_Color..L["Abandon All Quests"].."|r".." ("..numQuests..")"}
+			tooltip[#tooltip+1] = {E.classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..numQuests..")"}
 			tooltip[#tooltip+1] = {" ", " "}
 			local list = {}
 			for i = 1, GetNumQuestLogEntries() do
@@ -140,7 +140,7 @@ function Octo_Event_UtilityFrames:Octo_AbandonButton(frame, addonIconTexture)
 		DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
 	end
 	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
-		text = E.WOW_Artifact_Color..L["Abandon All Quests"].."?|r",
+		text = E.classColorHexCurrent..L["Abandon All Quests"].."?|r",
 		button1 = YES,
 		button2 = NO,
 		hideOnEscape = 1,
@@ -167,7 +167,7 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
 		local tooltip = {}
 		local curdatetable = date("*t")
 		local curdate = FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year)
-		tooltip[#tooltip+1] = {E.WOW_Artifact_Color..L["Current Date"].."|r", E.WOW_Artifact_Color..curdate.."|r"}
+		tooltip[#tooltip+1] = {E.classColorHexCurrent..L["Current Date"].."|r", E.classColorHexCurrent..curdate.."|r"}
 		local sorted = {}
 		for k in pairs(E.Holiday) do
 			table.insert(sorted, k)
@@ -215,8 +215,8 @@ end
 ----------------------------------------------------------------
 function Octo_Event_UtilityFrames:Octo_FramerateFrame(frame, addonIconTexture)
 	-- Framerate Frame
-	local Octo_FramerateFrame = CreateFrame("Frame", nil, frame)
-	Octo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -AddonHeight*4, 0)
+	local Octo_FramerateFrame = CreateFrame("Frame", nil, UIParent)
+	Octo_FramerateFrame:Hide()
 	Octo_FramerateFrame:SetSize(AddonHeight*2, AddonHeight)
 	Octo_FramerateFrame:SetFrameStrata("HIGH")
 	local text_fps = Octo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
@@ -227,6 +227,10 @@ function Octo_Event_UtilityFrames:Octo_FramerateFrame(frame, addonIconTexture)
 	Octo_FramerateFrame.text_fps = text_fps
 	C_Timer.NewTicker(1, function()
 			text_fps:SetText(math.floor(GetFramerate()))
+	end)
+	frame:HookScript("OnShow", function()
+		print (addonIconTexture, "OnShow")
+		Octo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -AddonHeight*4, 0)
 	end)
 end
 ----------------------------------------------------------------
@@ -253,10 +257,15 @@ function Octo_Event_UtilityFrames:ADDON_LOADED(addonName)
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	-- Создаем элементы интерфейса
+	-- local framesTBL = {}
 	C_Timer.After(0, function()
-		if Octo_MainFrame_ToDo then E:func_CreateUtilsButton(Octo_MainFrame_ToDo, "ToDo") end
-		if Octo_MainFrame_Achievements then E:func_CreateUtilsButton(Octo_MainFrame_Achievements, "Achievements") end
-		if Octo_MainFrame_AddonsManager then E:func_CreateUtilsButton(Octo_MainFrame_AddonsManager, "AddonsManager") end
-		if Octo_MainFrame_QuestsChanged then E:func_CreateUtilsButton(Octo_MainFrame_QuestsChanged, "QuestsChanged") end
+
+		print ("Итого: "..E.Green_Color..(#E.OctoTable_Frames or 0).." фреймов|r")
+
+	-- 	if Octo_MainFrame_ToDo then table.insert(framesTBL, {frame = Octo_MainFrame_ToDo, addonIconTexture = "ToDo",}) end
+	-- 	if Octo_MainFrame_Achievements then table.insert(framesTBL, {frame = Octo_MainFrame_Achievements, addonIconTexture = "Achievements",}) end
+	-- 	if Octo_MainFrame_AddonsManager then table.insert(framesTBL, {frame = Octo_MainFrame_AddonsManager, addonIconTexture = "AddonsManager",}) end
+	-- 	if Octo_MainFrame_QuestsChanged then table.insert(framesTBL, {frame = Octo_MainFrame_QuestsChanged, addonIconTexture = "QuestsChanged",}) end
+
 	end)
 end

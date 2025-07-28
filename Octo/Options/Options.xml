@@ -6,6 +6,7 @@
 	<Script file="Options\02_Automatization.lua"/>
 	<Script file="Options\03_HideFrames.lua"/>
 	<Script file="Options\04_Other.lua"/>
+	<Script file="Options\05_Cvars.lua"/>
 
 
 

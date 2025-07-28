@@ -5,11 +5,11 @@ OctoTooltip_EventFrame:Hide()
 local OctoTooltip = CreateFrame("BUTTON", "OctoTooltip", UIParent, "BackdropTemplate")
 OctoTooltip:Hide()
 ----------------------------------------------------------------
-local INDEND_TEST = 4
-local INDEND_SCROLL = 20
+local INDENT_TEST = 4
+local INDENT_SCROLL = 20
 local TOOLTIP_LINE_HEIGHT = 20
 local TOOLTIP_LINE_WIDTH = 256
-local LINES_MAX = 20
+local LINES_MAX = 30
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / TOOLTIP_LINE_HEIGHT))*.7)
 if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
@@ -44,7 +44,7 @@ local func_OnAcquired do
 			textureFULL:Hide()
 			textureFULL:SetAllPoints()
 			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
-			textureFULL:SetVertexColor(classR, classG, classB, E.bgCaOverlay)
+			textureFULL:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
 			frame.textureFULL = textureFULL
 			----------------
 			-- Создаем метатаблицу для дочерних фреймов
@@ -59,7 +59,7 @@ local func_OnAcquired do
 							-- f:SetSize(TOOLTIP_LINE_WIDTH, TOOLTIP_LINE_HEIGHT)
 							-- f:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
 							if key == 1 then
-								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDEND_TEST, 0) -- ОТСТУП
+								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDENT_TEST+1, 0) -- ОТСТУП
 							else
 								local prevKey = key - 1
 								local prevFrame = rawget(self, prevKey) or self[prevKey] -- Получаем предыдущий фрейм
@@ -182,8 +182,8 @@ function OctoTooltip_EventFrame:Create_OctoTooltip()
 	OctoTooltip:SetSize(1, TOOLTIP_LINE_HEIGHT*1)
 	OctoTooltip:SetClampedToScreen(true)
 	OctoTooltip:SetFrameStrata("TOOLTIP")
-	OctoTooltip:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-	OctoTooltip:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa) -- E.bgCa
+	OctoTooltip:SetBackdrop(E.menuBackdrop)
+	OctoTooltip:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA) -- E.backgroundColorA
 	-- OctoTooltip:SetBackdropBorderColor(classR, classG, classB, 1)
 	OctoTooltip:SetBackdropBorderColor(0, 0, 0, 1)
 	OctoTooltip.ScrollBox = CreateFrame("FRAME", nil, OctoTooltip, "WowScrollBoxList")
@@ -267,7 +267,7 @@ function OctoTooltip_EventFrame:func_OctoTooltip_CreateDataProvider(tbl)
 	end
 
 	OctoTooltip_EventFrame.COLUMN_SIZES = COLUMN_SIZES
-	local total_width = INDEND_TEST*2 -- ОТСТУП
+	local total_width = INDENT_TEST*2 -- ОТСТУП
 	for i = 1, columns do
 		total_width = total_width + OctoTooltip_EventFrame.COLUMN_SIZES[i]
 	end
@@ -275,7 +275,7 @@ function OctoTooltip_EventFrame:func_OctoTooltip_CreateDataProvider(tbl)
 	local shouldShowScrollBar = LINES_MAX < lines
 	OctoTooltip_EventFrame.shouldShowScrollBar = shouldShowScrollBar
 	if shouldShowScrollBar then
-		total_width = total_width + INDEND_SCROLL
+		total_width = total_width + INDENT_SCROLL
 	end
 	OctoTooltip.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	if lines > LINES_MAX then
@@ -290,7 +290,11 @@ function E:func_OctoTooltip_OnEnter(frame, point)
 
 
 	if not frame.tooltip or #frame.tooltip == 0 then return end
-	OctoTooltip_EventFrame:func_SmartAnchorTo(frame, point)
+	if point then
+		OctoTooltip_EventFrame:func_SmartAnchorTo(frame, point)
+	else
+		OctoTooltip_EventFrame:func_SmartAnchorTo(frame)
+	end
 	OctoTooltip_EventFrame:func_OctoTooltip_CreateDataProvider(frame.tooltip)
 	OctoTooltip:Show()
 	if not frame.initScripts then

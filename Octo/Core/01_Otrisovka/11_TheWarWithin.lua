@@ -118,20 +118,29 @@ function E:func_Otrisovka_11_TheWarWithin()
 					----------------------------------------------------------------
 			end)
 		end
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
-				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
-				----------------------------------------------------------------
-				textCENT = E:func_textCENT_Currency(CharInfo, 2815)
-				myType = {"Currency", 2815}
-				----------------------------------------------------------------
-				textLEFT = E:func_currencyName(2815)
-				iconLEFT = E:func_GetCurrencyIcon(2815)
-				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
-				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
-				----------------------------------------------------------------
-		end)
+
+
+
+		----------------------------------------------------------------
+		local CurrencyList = {2803, 2815, 3290, 3288, 3286}
+		----------------------------------------------------------------
+		for i, CurrencyID in ipairs(CurrencyList) do
+			table.insert(OctoTable_Otrisovka, function(CharInfo)
+					----------------------------------------------------------------
+					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+					----------------------------------------------------------------
+					textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
+					myType = {"Currency", CurrencyID}
+					----------------------------------------------------------------
+					textLEFT = E:func_currencyName(CurrencyID)
+					iconLEFT = E:func_GetCurrencyIcon(CurrencyID)
+					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+					----------------------------------------------------------------
+					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+					----------------------------------------------------------------
+			end)
+		end
+		----------------------------------------------------------------
 		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------

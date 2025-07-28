@@ -3,6 +3,7 @@ local Octo_EventFrame_ToDo = CreateFrame("FRAME") -- Фрейм для обра�
 Octo_EventFrame_ToDo:Hide()
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
 Octo_MainFrame_ToDo:Hide()
+E:func_InitFrame(Octo_MainFrame_ToDo)
 ----------------------------------------------------------------
 -- Настройки размеров интерфейса
 ----------------------------------------------------------------
@@ -17,7 +18,7 @@ local COLUMNS_MAX = 10 -- Максимальное количество отоб
 ----------------------------------------------------------------
 -- Константы цвета
 ----------------------------------------------------------------
-local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.bgCr, E.bgCg, E.bgCb, E.bgCa
+local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
 local textR, textG, textB, textA = 1, 1, 1, 1
 local classR, classG, classB = GetClassColor(E.classFilename)
@@ -85,7 +86,7 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
 	frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- Текстура выделения
 	frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-	frameFULL.HighlightTexture:SetAlpha(E.bgCaOverlay) -- Прозрачность выделения
+	frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay) -- Прозрачность выделения
 	frameFULL:SetPoint("LEFT", frame)
 	frameFULL:SetPoint("TOP", frame)
 	frameFULL:SetPoint("BOTTOM", frame)
@@ -152,7 +153,7 @@ local func_OnAcquiredCENT do
 						f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
 						f.curCharTextureBG:SetAllPoints()
 						f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
-						f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.bgCaOverlay)
+						f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
 						f.curCharTextureBG:Hide()
 						-- Текстура репутации
 						f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
@@ -368,15 +369,13 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	-- Инициализируем скроллбоксы с полосами прокрутки
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCENT, Octo_MainFrame_ToDo.viewLEFT)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCENT)
+
+
+
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT, Octo_MainFrame_ToDo.viewCENT)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT)
 	-- Настраиваем внешний вид основного фрейма
-	Octo_MainFrame_ToDo:SetBackdrop({
-			bgFile = E.bgFile,
-			edgeFile = E.edgeFile,
-			edgeSize = 1,
-			insets = {left = 0, right = 0, top = 0, bottom = 0}
-	})
+	Octo_MainFrame_ToDo:SetBackdrop(E.menuBackdrop)
 	Octo_MainFrame_ToDo:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
 	Octo_MainFrame_ToDo:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 	Octo_MainFrame_ToDo:EnableMouse(true)
@@ -384,7 +383,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	-- Обработчики перемещения фрейма
 	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.bgCa)
+				Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
 				Octo_MainFrame_ToDo:StartMoving()
 			end
 	end)
@@ -490,7 +489,7 @@ function E:func_TODO_CreateDataProvider()
 					local repInfo = E.OctoTable_ReputationsDB[v.id]
 					-- Проверяем соответствие фракции
 					local factionMatch = not Octo_ToDo_DB_Vars.OnlyCurrentFaction or
-					repInfo.side == E.curFaction or
+					-- repInfo.side == E.curFaction or
 					repInfo.side == "-"
 					if factionMatch then
 						numlines = numlines + 1
@@ -500,7 +499,11 @@ function E:func_TODO_CreateDataProvider()
 							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
 							zxc.SECOND[CharIndex] = tonumber(SECOND) or 0
 							zxc.textLEFT = E:func_reputationName(v.id)
-							zxc.iconLEFT = repInfo.icon or E.Icon_Empty
+							if repInfo then
+								zxc.iconLEFT = repInfo.icon
+							else
+								zxc.iconLEFT = E.Icon_Empty
+							end
 							zxc.colorLEFT = E.OctoTable_Expansions[index].color
 							zxc.textCENT[CharIndex] = vivod or "vivod"
 							zxc.tooltipRIGHT[CharIndex] = {}
@@ -545,7 +548,7 @@ function E:func_TODO_CreateDataProvider()
 			curCharFrame:SetHitRectInsets(1, 1, 1, 1)
 			-- Устанавливаем цвет фона в зависимости от фракции
 			local charR, charG, charB = E:func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
-			curCharFrame.charTexture:SetVertexColor(charR, charG, charB, E.bgCaOverlay)
+			curCharFrame.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
 			-- Обработчики событий для фрейма персонажа
 			curCharFrame:SetScript("OnEnter", function(self)
 					curCharFrame.tooltip = E:func_Tooltip_Chars(CharInfo)
@@ -559,16 +562,6 @@ end
 -- Открытие главного фрейма по /octo
 function Octo_EventFrame_ToDo:main_frame_toggle()
 	if Octo_MainFrame_ToDo then
-		if not Octo_MainFrame_ToDo.insertIn_SecuredFrames_SequredFrames then
-			Octo_MainFrame_ToDo.insertIn_SecuredFrames_SequredFrames = true
-			-- tinsert(UISpecialFrames, frameString)
-			tinsert(E.OctoTable_Frames, Octo_MainFrame_ToDo)
-		end
-		for index, frames in ipairs(E.OctoTable_Frames) do
-			if Octo_MainFrame_ToDo ~= frames and frames:IsShown() then
-				frames:Hide()
-			end
-		end
 		Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
 	end
 end
@@ -626,6 +619,7 @@ function Octo_EventFrame_ToDo:LoadAssetsAsync()
 	local promise = LibThingsLoad:Items(E.OctoTable_itemID_ALL)
 	-- Добавляем предметы, заклинания и квесты для загрузки
 	promise:AddItems(E.PromiseItem)
+	promise:AddItems(E.OctoTable_itemID_ALL)
 	promise:AddSpells(E.PromiseSpell)
 	promise:AddQuests(E.PromiseQuest)
 	promise:Then(function()
@@ -680,3 +674,4 @@ for name, data in pairs(slashCommands) do
 		_G["SLASH_"..name..i] = cmd
 	end
 end
+

@@ -31,7 +31,7 @@ function Octo_EventFrame_ItemsUsable:CreateCommonButtonSettings(button, pointY, 
 	button:SetSize(48, 48)-- Размер кнопки
 	button:SetPoint("TOPLEFT", 0, pointY)-- Позиция кнопки
 	-- Настройка фона и границы
-	button:SetBackdrop({edgeFile = E.edgeFile, edgeSize = 1})
+	button:SetBackdrop(E.menuBackdrop)
 	button:SetBackdropBorderColor(unpack(borderColor))
 	-- Текст рядом с кнопкой
 	button.text = button:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")

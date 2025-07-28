@@ -58,8 +58,29 @@ E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMark
 E.ddMenuButtonHeight = 16
 -------------------------------------------------------------------------
 E.FULL_WIDTH = 3.60
+
+
+-------------------------------------------------------------------------
+-- BACKDROP
+-------------------------------------------------------------------------
+E.backgroundColorR = .08 -- 14/255
+E.backgroundColorG = .08 -- 14/255
+E.backgroundColorB = .08 -- 14/255
+E.backgroundColorA = .8
+E.edgeSize = 1
 E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
 E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
+
+E.menuBackdrop = {
+	bgFile = E.bgFile,
+	edgeFile = E.edgeFile,
+	edgeSize = E.edgeSize,
+	insets = {left = E.edgeSize, right = E.edgeSize, top = E.edgeSize, bottom = E.edgeSize}
+}
+
+-------------------------------------------------------------------------
+
+
 E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
 
@@ -119,8 +140,7 @@ E.altStrategies = {}
 E.curExpansionMaxLevel = 70
 E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
 
-E.MonitorWidth = GetPhysicalScreenSize()
-E.MonitorHeight = select(2, GetPhysicalScreenSize())
+E.MonitorWidth, E.MonitorHeight = GetPhysicalScreenSize()
 E.Color_Quest_r = .3 -- 1
 E.Color_Quest_g = .1 -- .7
 E.Color_Quest_b = 0 -- 0
@@ -146,11 +166,7 @@ E.isPlater = select(4, C_AddOns.GetAddOnInfo("Plater"))
 E.isOmniCD = select(4, C_AddOns.GetAddOnInfo("OmniCD"))
 E.isOmniCC = select(4, C_AddOns.GetAddOnInfo("OmniCC"))
 E.isParrot = select(4, C_AddOns.GetAddOnInfo("Parrot"))
-E.bgCr = .08 -- 14/255
-E.bgCg = .08 -- 14/255
-E.bgCb = .08 -- 14/255
-E.bgCa = .8
-E.bgCaOverlay = .2
+E.backgroundColorAOverlay = .2
 E.slider_scale = .8
 E.multiplier = 2 - E.slider_scale
 E.WorldofWarcraft_Color = "|cffD6AB7D" -- "|cff68CCEF"
@@ -310,12 +326,6 @@ E.OctoTable_Covenant = {
 	},
 }
 ----------------------------------------------------------------
-E.menuBackdrop = {
-	bgFile = E.bgFile,
-	edgeFile = E.edgeFile,
-	edgeSize = 1,
-}
-E.OctoTable_Frames = {}
 E.listMaxSize = 30
 E.DEVTEXT = "|T".. E.IconTexture ..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.. "DebugInfo|r: "
 E.KILLTEXT = "|T".. "Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga" ..":14:14:::64:64:4:60:4:60|t"

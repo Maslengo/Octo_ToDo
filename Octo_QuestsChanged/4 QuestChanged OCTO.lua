@@ -5,6 +5,7 @@ local Octo_EventFrame_QuestsChanged = CreateFrame("FRAME")
 Octo_EventFrame_QuestsChanged:Hide()
 local Octo_MainFrame_QuestsChanged = CreateFrame("BUTTON", "Octo_MainFrame_QuestsChanged", UIParent, "BackdropTemplate")
 Octo_MainFrame_QuestsChanged:Hide()
+E:func_InitFrame(Octo_MainFrame_QuestsChanged)
 ----------------------------------------------------------------
 local AddonHeight = 20
 local AddonLeftFrameWeight = 200
@@ -24,7 +25,7 @@ local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-E.total_width = E.total_width or 500
+Octo_EventFrame_QuestsChanged.total_width = Octo_EventFrame_QuestsChanged.total_width or 500
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -68,7 +69,7 @@ local func_OnAcquired do
 			textureFULL:Hide()
 			textureFULL:SetAllPoints()
 			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
-			textureFULL:SetVertexColor(1, 1, 1, .1) -- E.bgCaOverlay
+			textureFULL:SetVertexColor(1, 1, 1, .1) -- E.backgroundColorAOverlay
 			frame.textureFULL = textureFULL
 			------------------------------------------------
 			------------------------------------------------
@@ -222,7 +223,7 @@ local func_OnAcquired do
 
 
 			------------------------------------------------
-			E.total_width = icon_1_width + first_width + icon_2_width + second_width + third_width + fourth_width + fifth_width + sixth_width + seventh_width -- + eighth_width
+			Octo_EventFrame_QuestsChanged.total_width = icon_1_width + first_width + icon_2_width + second_width + third_width + fourth_width + fifth_width + sixth_width + seventh_width -- + eighth_width
 			------------------------------------------------
 		end
 	end
@@ -303,18 +304,18 @@ end
 function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	Octo_MainFrame_QuestsChanged:SetPoint("CENTER", 0, 0)
 	-- Octo_MainFrame_QuestsChanged:SetSize(AddonCentralFrameWeight*7, AddonHeight*MainFrameDefaultLines)
-	Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*MainFrameDefaultLines)
+	Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, AddonHeight*MainFrameDefaultLines)
 	Octo_MainFrame_QuestsChanged:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
 	Octo_MainFrame_QuestsChanged:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
 	Octo_MainFrame_QuestsChanged:SetFrameStrata("HIGH")
-	Octo_MainFrame_QuestsChanged:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-	Octo_MainFrame_QuestsChanged:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+	Octo_MainFrame_QuestsChanged:SetBackdrop(E.menuBackdrop)
+	Octo_MainFrame_QuestsChanged:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 	Octo_MainFrame_QuestsChanged:SetBackdropBorderColor(0, 0, 0, 1)
 	Octo_MainFrame_QuestsChanged:EnableMouse(true)
 	Octo_MainFrame_QuestsChanged:SetMovable(true)
 	Octo_MainFrame_QuestsChanged:RegisterForDrag("LeftButton")
 	Octo_MainFrame_QuestsChanged:SetScript("OnDragStart", function()
-			Octo_MainFrame_QuestsChanged:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.bgCa)
+			Octo_MainFrame_QuestsChanged:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
 			Octo_MainFrame_QuestsChanged:StartMoving()
 	end)
 	Octo_MainFrame_QuestsChanged:SetScript("OnDragStop", function()
@@ -409,11 +410,11 @@ function E:QuestsChanged_CreateMyDataProvider()
 	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
 
 	if count > MainFrameDefaultLines then
-		Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*MainFrameDefaultLines)
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, AddonHeight*MainFrameDefaultLines)
 	elseif count == 0 then
-		Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*1)
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, AddonHeight*1)
 	else
-		Octo_MainFrame_QuestsChanged:SetSize(E.total_width, AddonHeight*count)
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, AddonHeight*count)
 	end
 end
 ----------------------------------------------------------------

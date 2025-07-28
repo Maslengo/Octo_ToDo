@@ -5,6 +5,7 @@ E.MainAddonName = GlobalAddonName
 OctoEngine = E -- в других аддонах
 -- ns.E = E
 
+E.OctoTable_Frames = E.OctoTable_Frames or {}
 
 -- local GlobalAddonName, E = ...
 -- local GlobalAddonName, ns = ... |n local E = ns.E
@@ -12,15 +13,14 @@ OctoEngine = E -- в других аддонах
 
 
 
+-- https://www.youtube.com/shorts/aYX0pShBYkU
 
 
-
-E.whatShow = {
-	{name = "TODO", vars = TODO},
-	{name = "Reputations", vars = Reputations},
-	{name = "Currencies", vars = Currencies},
-
-}
+-- E.whatShow = {
+-- 	{name = "TODO", vars = TODO},
+-- 	{name = "Reputations", vars = Reputations},
+-- 	{name = "Currencies", vars = Currencies},
+-- }
 
 
 

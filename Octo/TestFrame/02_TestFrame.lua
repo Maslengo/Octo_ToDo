@@ -2,8 +2,10 @@ local GlobalAddonName, ns = ...; E = _G.OctoEngine
 ----------------------------------------------------------------
 local ItemsUsable_EventFrame = CreateFrame("FRAME")
 ItemsUsable_EventFrame:Hide()
-local ItemsUsable = CreateFrame("BUTTON", "ItemsUsable", UIParent, "BackdropTemplate")
+local ItemsUsable = CreateFrame("BUTTON", "ItemsUsable", UIParent, "BackDropTemplate")
 ItemsUsable:Hide()
+local TestButton1 = CreateFrame("Button", "TestButton1", UIParent, "UIPanelButtonTemplate")
+E:func_InitFrame(ItemsUsable) -- С ДАТА ПРОВАЙДЕРОМ
 ----------------------------------------------------------------
 -- Локальные переменные для работы с инвентарем
 local BACKPACK_CONTAINER = BACKPACK_CONTAINER
@@ -25,8 +27,7 @@ if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
-
-
+----------------------------------------------------------------
 local function func_OnHide(frame)
 	frame.highlightFrame:Hide()
 end
@@ -40,6 +41,7 @@ local func_OnAcquired do
 			frame:SetPropagateMouseMotion(true)
 			----------------
 			local highlightFrame = CreateFrame("Button", nil, ItemsUsable)
+			highlightFrame:Hide()
 			highlightFrame:SetPropagateMouseClicks(true)
 			highlightFrame:SetPropagateMouseMotion(true)
 			highlightFrame:SetFrameLevel(frame:GetFrameLevel()+2)
@@ -56,7 +58,7 @@ local func_OnAcquired do
 			textureFULL:Hide()
 			textureFULL:SetAllPoints()
 			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
-			textureFULL:SetVertexColor(classR, classG, classB, E.bgCaOverlay)
+			textureFULL:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
 			frame.textureFULL = textureFULL
 			----------------
 			-- Создаем метатаблицу для дочерних фреймов
@@ -77,7 +79,7 @@ local func_OnAcquired do
 								local prevFrame = rawget(self, prevKey) or self[prevKey] -- Получаем предыдущий фрейм
 								f:SetPoint("TOPLEFT", prevFrame, "TOPRIGHT", INDENT_BETWEEN_LINES, 0)
 							end
-							f:RegisterForClicks("LeftButtonUp")
+
 							-- Текст в центре
 							f.text = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 							f.text:SetAllPoints()
@@ -93,6 +95,7 @@ local func_OnAcquired do
 						end
 					end
 			})
+			-- frame:SetScript("OnClick", func_OnClick)
 			frame:SetScript("OnHide", func_OnHide)
 			frame:SetScript("OnShow", func_OnShow)
 			----------------
@@ -113,7 +116,7 @@ function ItemsUsable_EventFrame:Octo_Frame_init(frame, node)
 			lineFrames[i].text:SetText(currentText)  -- Устанавливаем текст
 		end
 		-- Если заданы размеры колонок, применяем их
-		if columnSizes and lineFrames[i] then
+		if columnSizes and columnSizes[i] and lineFrames and lineFrames[i] then
 			lineFrames[i]:SetWidth(columnSizes[i])
 		end
 		-- Определяем выравнивание текста (по умолчанию CENTER)
@@ -131,7 +134,17 @@ function ItemsUsable_EventFrame:Octo_Frame_init(frame, node)
 	for i = numData + 1, numLines do
 		lineFrames[i].text:SetText()
 	end
+	local itemID = frameData.itemID
+	-- local itemID = frame.lineFrames[2].text:GetText()
+	-- frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+	frame:SetAttribute("useOnKeyDown", false)
+
+	frame:SetAttribute("type", "macro")
+	-- frame:SetAttribute("macrotext", "/say "..itemID)
+	frame:SetAttribute("macrotext", "/use item:"..itemID)
 end
+
+
 local function GetTipAnchor(frame)
 	local x, y = frame:GetCenter()
 	if not x or not y then
@@ -139,7 +152,7 @@ local function GetTipAnchor(frame)
 	end
 	local hhalf = (x > UIParent:GetWidth() * 2 / 3) and "RIGHT" or (x < UIParent:GetWidth() / 3) and "LEFT" or ""
 	local vhalf = (y > UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
-	return vhalf .. hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP") .. hhalf
+	return vhalf..hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP")..hhalf
 end
 function ItemsUsable_EventFrame:func_SmartAnchorTo(frame, point)
 	if not frame then
@@ -174,8 +187,8 @@ function ItemsUsable_EventFrame:Create_ItemsUsable()
 	ItemsUsable:SetSize(1, LINE_HEIGHT*1)
 	ItemsUsable:SetClampedToScreen(true)
 	-- ItemsUsable:SetFrameStrata("BACKGROUND")
-	ItemsUsable:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
-	ItemsUsable:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa) -- E.bgCa
+	ItemsUsable:SetBackdrop(E.menuBackdrop)
+	ItemsUsable:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA) -- E.backgroundColorA
 	-- ItemsUsable:SetBackdropBorderColor(classR, classG, classB, 1)
 	ItemsUsable:SetBackdropBorderColor(0, 0, 0, 1)
 	ItemsUsable.ScrollBox = CreateFrame("FRAME", nil, ItemsUsable, "WowScrollBoxList")
@@ -197,7 +210,7 @@ function ItemsUsable_EventFrame:Create_ItemsUsable()
 	-- ItemsUsable:SetPropagateMouseMotion(true)
 	ItemsUsable.view = CreateScrollBoxListTreeListView()
 	ItemsUsable.view:SetElementExtent(LINE_HEIGHT)
-	ItemsUsable.view:SetElementInitializer("BUTTON",
+	ItemsUsable.view:SetElementInitializer("SecureActionButtonTemplate",
 		function(...)
 			self:Octo_Frame_init(...)
 	end)
@@ -206,7 +219,7 @@ function ItemsUsable_EventFrame:Create_ItemsUsable()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(ItemsUsable.ScrollBox, ItemsUsable.ScrollBar)
 end
 local function calculateColumnWidths(node)
-	local zxc = node:GetData()
+	local tbl = node:GetData()
 	local frames = ItemsUsable.view:GetFrames()
 	if #frames == 0 then
 		ItemsUsable.view:AcquireInternal(1, node)
@@ -214,13 +227,15 @@ local function calculateColumnWidths(node)
 	end
 	local columnWidths = {}
 	local sampleFrame = frames[1]
-	for i = 1, #zxc do
-		sampleFrame.lineFrames[i].text:SetText(zxc[i])
+	for i = 1, #tbl do
+		sampleFrame.lineFrames[i].text:SetText(tbl[i])
 		columnWidths[i] = sampleFrame.lineFrames[i].text:GetStringWidth()
 	end
 	return columnWidths
 end
 function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
+
+	-- if not ItemsUsable:IsShown() then return end
 	-- Сначала соберем все предметы с их количеством
 	local UsableTBL = {}
 
@@ -238,16 +253,16 @@ function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
 				local itemID = containerInfo.itemID
 				local quality = containerInfo.quality
 				----------------------------------------------------------------
-				-- local requiredCount = OctoTable_itemID_ItemsUsable[itemID] -- Проверяем предметы для использования
-				-- if requiredCount and not OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= requiredCount then
-				-- 	if not UsableTBL[itemID] then
-				-- 		UsableTBL[itemID] = {
-				-- 			count = func_GetItemCount(itemID, false, false, false, false),
-				-- 			quality = quality,
-				-- 			usable = true
-				-- 		}
-				-- 	end
-				-- end
+				local requiredCount = OctoTable_itemID_ItemsUsable[itemID] -- Проверяем предметы для использования
+				if requiredCount and not OctoTable_itemID_Ignore_List[itemID] and GetItemCount(itemID) >= requiredCount then
+					if not UsableTBL[itemID] then
+						UsableTBL[itemID] = {
+							count = func_GetItemCount(itemID, false, false, false, false),
+							quality = quality,
+							usable = true
+						}
+					end
+				end
 				-- if OctoTable_itemID_ItemsDelete[itemID] then -- Проверяем предметы для удаления
 				-- 	if not UsableTBL[itemID] then
 				-- 		UsableTBL[itemID] = {
@@ -258,11 +273,11 @@ function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
 				-- 	end
 				-- end
 				----------------------------------------------------------------
-				UsableTBL[itemID] = {
-					count = func_GetItemCount(itemID, false, false, false, false),
-					quality = quality or 0,
-					usable = false
-				}
+				-- UsableTBL[itemID] = {
+				-- 	count = func_GetItemCount(itemID, false, false, false, false),
+				-- 	quality = quality or 0,
+				-- 	usable = false
+				-- }
 				----------------------------------------------------------------
 			end
 		end
@@ -282,48 +297,48 @@ function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
 				return a.itemID > b.itemID
 			end
 	end)
+
+	local lines = 0
+	local DataProvider = CreateTreeDataProvider()
+	local COLUMN_SIZES = {}
+
+
+
+
 	-- Создаем финальную таблицу для отображения
-	local tbl = {}
 	local color, itemName, itemIcon -- Локальные переменные для повторного использования
 	-- local color = E.White_Color
 	for _, item in ipairs(sorted_itemList) do
 		local itemID = item.itemID
-		color = item.usable and E.Green_Color or E.Red_Color
-		itemIcon = E:func_texturefromIcon(E:func_GetItemIconByID(itemID))
-		itemName = E:func_GetItemNameByID_MyQuality(itemID, item.quality)
+		if itemID then
+			color = item.usable and E.Green_Color or E.Red_Color
+			itemIcon = E:func_texturefromIcon(E:func_GetItemIconByID(itemID))
+			itemName = E:func_GetItemNameByID_MyQuality(itemID, item.quality)
+			lines = lines + 1
 
-		tbl[#tbl + 1] = {
-			itemIcon .. itemName,
-			item.usable and color.."USE|r" or color.."DELETE|r",
-			color..item.count.."|r"
-		}
-	end
-	local lines = 0
-	local columns = 0
-	local DataProvider = CreateTreeDataProvider()
-	local COLUMN_SIZES = {}
-	for _, v in ipairs(tbl) do
-		lines = lines + 1
-		local zxc = {}
-		for i, value in ipairs(v) do
-			if value ~= nil then
-				table.insert(zxc, value)
-			end
-		end
-		if #zxc > 0 then
-			local node = DataProvider:Insert(zxc)
-			columns = #zxc
+			local node = DataProvider:Insert({
+				itemIcon..itemName,
+				item.usable and color.."USE|r" or color.."DELETE|r",
+				color..item.count.."|r",
+				itemID = itemID,
+			})
+
+
 			for j, w in ipairs(calculateColumnWidths(node)) do
 				COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
 			end
 		end
 	end
+
+	local columns = 3
 	ItemsUsable_EventFrame.COLUMN_SIZES = COLUMN_SIZES
 	local total_width = INDEND_TEST*2 + (INDENT_BETWEEN_LINES*(columns-1)) -- ОТСТУП
-	for i = 1, columns do
-		total_width = total_width + ItemsUsable_EventFrame.COLUMN_SIZES[i]
+	if ItemsUsable_EventFrame.COLUMN_SIZES[1] then
+		for i = 1, columns do
+			total_width = total_width + ItemsUsable_EventFrame.COLUMN_SIZES[i]
+		end
 	end
-	lines = #tbl
+
 	local shouldShowScrollBar = LINES_MAX < lines
 	ItemsUsable_EventFrame.shouldShowScrollBar = shouldShowScrollBar
 	if shouldShowScrollBar then
@@ -345,58 +360,92 @@ local function Toggle_ItemsUsable()
 	ItemsUsable:SetShown(not ItemsUsable:IsShown())
 end
 function ItemsUsable_EventFrame:CreateTestButton1()
-	local btn = CreateFrame("Button", nil, UIParent, "UIPanelButtonTemplate")
-	btn:SetClampedToScreen(true)
-	btn:SetPoint("TOPLEFT", 128, -128)
-	btn:SetSize(128, 32)
-	btn:SetText("Toggle_ItemsUsable")
-	btn:EnableMouse(true)
-	btn:SetMovable(true)
+	TestButton1:SetClampedToScreen(true)
+	TestButton1:SetPoint("TOPLEFT", 128, -128)
+	TestButton1:SetSize(128, 32)
+	TestButton1:SetText("Toggle_ItemsUsable")
+	TestButton1:EnableMouse(true)
+	TestButton1:SetMovable(true)
 	-- Обработчики перемещения фрейма
-	btn:SetScript("OnMouseDown", function(_, button)
+	TestButton1:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				btn:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.bgCa)
-				btn:StartMoving()
+				TestButton1:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+				TestButton1:StartMoving()
 			end
 	end)
-	btn:SetScript("OnMouseUp", function(_, button)
+	TestButton1:SetScript("OnMouseUp", function(_, button)
 			if button == "LeftButton" then
-				btn:SetAlpha(1)
-				btn:StopMovingOrSizing()
+				TestButton1:SetAlpha(1)
+				TestButton1:StopMovingOrSizing()
 			end
 	end)
-	btn:RegisterForClicks("LeftButtonUp")
-	btn:SetScript("OnClick", Toggle_ItemsUsable)
-	ItemsUsable_EventFrame:func_SmartAnchorTo(btn)
+	TestButton1:RegisterForClicks("LeftButtonUp")
+	TestButton1:SetScript("OnClick", Toggle_ItemsUsable)
+	ItemsUsable_EventFrame:func_SmartAnchorTo(TestButton1)
 end
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"BAG_UPDATE",
 	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",
+	"ITEM_COUNT_CHANGED",
+	"BAG_UPDATE_DELAYED",
+	"PLAYER_REGEN_ENABLED",
+	"PLAYER_REGEN_DISABLED",
 }
 E:func_RegisterMyEventsToFrames(ItemsUsable_EventFrame, MyEventsTable)
 function ItemsUsable_EventFrame:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
-		self:Create_ItemsUsable()
-		self:CreateTestButton1()
-		ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
+			ItemsUsable_EventFrame:Create_ItemsUsable()
+			self:CreateTestButton1()
+			ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
 	end
 end
 function ItemsUsable_EventFrame:BAG_UPDATE()
 	if not ItemsUsable:IsShown() or self.BAG_UPDATE_pause then return end
 	self.BAG_UPDATE_pause = true
-	ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
-	C_Timer.After(2, function()
+	if ItemsUsable:IsShown() then
+		ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
+	end
+	C_Timer.After(1, function()
 			self.BAG_UPDATE_pause = nil -- Используем nil вместо false для экономии памяти
 	end)
 end
 function ItemsUsable_EventFrame:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
 	if not ItemsUsable:IsShown() or self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause then return end
 	self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = true
-	ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
-	C_Timer.After(2, function()
+	if ItemsUsable:IsShown() then
+		ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
+	end
+	C_Timer.After(1, function()
 			self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = nil -- Используем nil вместо false для экономии памяти
 	end)
 end
+
+
+function ItemsUsable_EventFrame:ITEM_COUNT_CHANGED()
+
+	if ItemsUsable:IsShown() then
+		ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
+	end
+end
+function ItemsUsable_EventFrame:BAG_UPDATE_DELAYED()
+	if ItemsUsable:IsShown() then
+		ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
+	end
+end
+
+
+
+
+function ItemsUsable_EventFrame:PLAYER_REGEN_ENABLED()
+	TestButton1:Show()
+end
+
+
+function ItemsUsable_EventFrame:PLAYER_REGEN_DISABLED()
+	ItemsUsable:Hide()
+	TestButton1:Hide()
+end
+

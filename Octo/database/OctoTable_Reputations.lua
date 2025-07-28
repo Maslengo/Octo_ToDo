@@ -1,142 +1,79 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
 E.OctoTable_Reputations = {
-	-- ["DONTWORK"] = {
-	-- { id = 2697, }, --name = "Chase's test faction (DNT)", side = "-", category = "Другое", }, --[faction=2697]
-	-- { id = 2645, }, --name = "Земельники", side = "-", category = "Совет Дорногала", }, --[faction=2645]
-	-- { id = 2604, }, --name = "Команда Бочконога (идеал)", side = "-", category = "Другое", }, --[faction=2604]
-	-- { id = 2569, }, --name = "The War Within", side = "-", category = "Другое", }, --[faction=2569] -- ХЕДЕР?
-	-- { id = 2554, }, --name = "Клан Тогус", side = "-", category = "Кентавры Маруук", }, --[faction=2554]
-	-- { id = 2522, }, --name = "Клан Тирай", side = "-", category = "Кентавры Маруук", }, --[faction=2522]
-	-- { id = 2513, }, --name = "Клан Он'ир", side = "-", category = "Кентавры Маруук", }, --[faction=2513]
-	-- { id = 2512, }, --name = "Клан Айлааг", side = "-", category = "Кентавры Маруук", }, --[faction=2512]
-	-- { id = 2509, }, --name = "Клан Шикаар", side = "-", category = "Кентавры Маруук", }, --[faction=2509]
-	-- { id = 2506, }, --name = "Dragonflight", side = "-", category = "Другое", }, --[faction=2506] -- ХЕДЕР?
-	-- { id = 2431, }, --name = "Owen Test", side = "-", category = "Другое", }, --[faction=2431]
-	-- { id = 2422, }, --name = "Ночной народец", side = "-", category = "Дикая Охота", }, --[faction=2422]
-	-- { id = 2414, }, --name = "Темные Земли", side = "-", category = "Другое", }, --[faction=2414] -- ХЕДЕР?
-	-- { id = 2265, }, --name = "Кул-Тирас - долина Штормов", side = "-", category = "Орден Возрождения Шторма", }, --[faction=2265]
-	-- { id = 2264, }, --name = "Кул-Тирас - Друствар", side = "-", category = "Орден Пылающих Углей", }, --[faction=2264]
-	-- { id = 2167, }, --name = "Защитники Аргуса (идеал)", side = "-", category = "Другое", }, --[faction=2167]
-	-- { id = 2120, }, --name = "Кул-Тирас - Тирагард", side = "Alliance", category = "Адмиралтейство Праудмуров", }, --[faction=2120]
-	-- { id = 2104, }, --name = "Battle for Azeroth", side = "-", category = "Другое", }, --[faction=2104] -- ХЕДЕР
-	-- { id = 2063, }, --name = "Arne Test - Paragon Reputation Stormwind", side = "-", category = "Другое", }, --[faction=2063]
-	-- { id = 1834, }, --name = "Legion", side = "-", category = "Другое", }, --[faction=1834] -- ХЕДЕР?
-	-- { id = 1444, }, --name = "Warlords of Draenor", side = "-", category = "Другое", }, --[faction=1444] -- ХЕДЕР?
-	-- { id = 1245, }, --name = "Mists of Pandaria", side = "-", category = "Другое", }, --[faction=1245] -- ХЕДЕР?
-	-- { id = 1162, }, --name = "Cataclysm", side = "-", category = "Другое", }, --[faction=1162] -- ХЕДЕР?
-	-- { id = 1118, }, --name = "World of Warcraft", side = "-", category = "Другое", }, --[faction=1118] -- ХЕДЕР?
-	-- { id = 1097, }, --name = "Wrath of the Lich King", side = "-", category = "Другое", }, --[faction=1097] -- ХЕДЕР?
-	-- { id = 1072, }, --name = "[DNT] AC Major Faction Child Renown Test", side = "-", category = "Кентавры Маруук", }, --[faction=1072]
-	-- { id = 949, }, --name = "Тестовая фракция 1", side = "-", category = "Другое", }, --[faction=949]
-	-- { id = 948, }, --name = "Тестовая фракция 2", side = "-", category = "Тестовая фракция 1", }, --[faction=948]
-	-- { id = 980, }, --name = "The Burning Crusade", side = "-", category = "Другое", }, --[faction=980] -- ХЕДЕР?
-	-- { id = 892, }, --name = "Силы Орды", side = "-", category = "World of Warcraft", }, --[faction=892] -- ВНУТРЕННИЙ ХЕДЕР
-	-- { id = 891, }, --name = "Силы Альянса", side = "-", category = "World of Warcraft", }, --[faction=891] -- ВНУТРЕННИЙ ХЕДЕР
-	-- { id = 2695, }, --name = "Test Account Wide Stormwind (DNT)", side = "Alliance", category = "Альянс", }, --[faction=2695]
-	-- { id = 1169, }, --name = "Гильдия", side = "-", category = "Другое", }, --[faction=1169] -- ХЕДЕР
-	-- { id = 2166, }, --name = "Армия Света (идеал)", side = "-", category = "Legion", }, --[faction=2166]
-	-- { id = 2091, }, --name = "Армия погибели Легиона (идеал)", side = "-", category = "Legion", }, --[faction=2091]
-	-- { id = 2090, }, --name = "Стражи (идеал)", side = "-", category = "Legion", }, --[faction=2090]
-	-- { id = 2089, }, --name = "Помраченные (идеал)", side = "-", category = "Legion", }, --[faction=2089]
-	-- { id = 2088, }, --name = "Ткачи Снов (идеал)", side = "-", category = "Legion", }, --[faction=2088]
-	-- { id = 2087, }, --name = "Двор Фарондиса (идеал)", side = "-", category = "Legion", }, --[faction=2087]
-	-- { id = 2086, }, --name = "Валарьяры (идеал)", side = "-", category = "Legion", }, --[faction=2086]
-	-- { id = 2085, }, --name = "Племена Крутогорья (идеал)", side = "-", category = "Legion", }, --[faction=2085]
-	-- { id = 1989, }, --name = "Лунные стражи", side = "-", category = "Legion", }, --[faction=1989]
-	-- { id = 1947, }, --name = "Иллидари", side = "-", category = "Legion", }, --[faction=1947]
-	-- { id = 1888, }, --name = "Яндвикские врайкулы", side = "-", category = "Legion", }, --[faction=1888]
-	-- { id = 2693, }, --name = "Путь участника вылазки (1-й сезон)", side = "-", category = "The War Within", }, --[faction=2693]
-	-- { id = 2683, }, --name = "Вылазки: 2-й сезон", side = "-", category = "The War Within", }, --[faction=2683]
-	-- { id = 2667, }, --name = "Картели Нижней Шахты (идеал)", side = "-", category = "The War Within", }, --[faction=2667]
-	-- { id = 2644, }, --name = "Вылазки: 1-й сезон", side = "-", category = "The War Within", }, --[faction=2644]
-	-- { id = 2613, }, --name = "Ассамблея глубин (идеал)", side = "-", category = "The War Within", }, --[faction=2613]
-	-- { id = 2612, }, --name = "Совет Дорногала (идеал)", side = "-", category = "The War Within", }, --[faction=2612]
-	-- { id = 2611, }, --name = "Арати Тайносводья (идеал)", side = "-", category = "The War Within", }, --[faction=2611]
-	-- { id = 2596, }, --name = "Отрезанные нити (идеал)", side = "-", category = "The War Within", }, --[faction=2596]
-	-- { id = 2649, }, --name = "Генерал (идеал)", side = "-", category = "Отрезанные нити", }, --[faction=2649]
-	-- { id = 2648, }, --name = "Прядильщица (идеал)", side = "-", category = "Отрезанные нити", }, --[faction=2648]
-	-- { id = 2647, }, --name = "Визирь (идеал)", side = "-", category = "Отрезанные нити", }, --[faction=2647]
-	-- { id = 2684, }, --name = "Клуб лояльности Галаджио (идеал)", side = "-", category = "Картели Нижней Шахты", }, --[faction=2684]
-	-- { id = 2676, }, --name = "Картель Хитрой Шестеренки (идеал)", side = "-", category = "Картели Нижней Шахты", }, --[faction=2676]
-	-- { id = 2674, }, --name = "Картель Черноводья (идеал)", side = "-", category = "Картели Нижней Шахты", }, --[faction=2674]
-	-- { id = 2672, }, --name = "Картель Трюмных Вод (идеал)", side = "-", category = "Картели Нижней Шахты", }, --[faction=2672]
-	-- { id = 2670, }, --name = "Торговая компания (идеал)", side = "-", category = "Картели Нижней Шахты", }, --[faction=2670]
-	-- { id = 2668, }, --name = "Мрачные Решалы (идеал)", side = "-", category = "Картели Нижней Шахты", }, --[faction=2668]
-	-- { id = 2575, }, --name = "Стражи Сна (идеал)", side = "-", category = "Dragonflight", }, --[faction=2575]
-	-- { id = 2565, }, --name = "Лоаммские ниффы (идеал)", side = "-", category = "Dragonflight", }, --[faction=2565]
-	-- { id = 2555, }, --name = "Клан Кейган", side = "-", category = "Dragonflight", }, --[faction=2555]
-	-- { id = 2552, }, --name = "Союз Вальдраккена (идеал)", side = "-", category = "Dragonflight", }, --[faction=2552]
-	-- { id = 2551, }, --name = "Искарские клыкарры (идеал)", side = "-", category = "Dragonflight", }, --[faction=2551]
-	-- { id = 2542, }, --name = "Клан Укхел", side = "-", category = "Dragonflight", }, --[faction=2542]
-	-- { id = 2521, }, --name = "Клан Нокуд (идеал)", side = "-", category = "Dragonflight", }, --[faction=2521]
-	-- { id = 2520, }, --name = "Клан Нокхуд", side = "-", category = "Dragonflight", }, --[faction=2520]
-	-- { id = 2508, }, --name = "Драконья экспедиция (идеал)", side = "-", category = "Dragonflight", }, --[faction=2508]
-	-- { id = 2504, }, --name = "Кентавры Маруук (идеал)", side = "-", category = "Dragonflight", }, --[faction=2504]
-	-- { id = 2479, }, --name = "Просветленные (идеал)", side = "-", category = "Темные Земли", }, --[faction=2479]
-	-- { id = 2474, }, --name = "Ве'нари (идеал)", side = "-", category = "Темные Земли", }, --[faction=2474]
-	-- { id = 2473, }, --name = "Кодекс архивариуса (идеал)", side = "-", category = "Темные Земли", }, --[faction=2473]
-	-- { id = 2471, }, --name = "Легион Смерти (идеал)", side = "-", category = "Темные Земли", }, --[faction=2471]
-	-- { id = 2444, }, --name = "Дикая Охота (Идеал)", side = "-", category = "Темные Земли", }, --[faction=2444]
-	-- { id = 2442, }, --name = "Двор Жнецов (Идеал)", side = "-", category = "Темные Земли", }, --[faction=2442]
-	-- { id = 2441, }, --name = "Перерожденные (Идеал)", side = "-", category = "Темные Земли", }, --[faction=2441]
-	-- { id = 2440, }, --name = "Неумирающая армия (Идеал)", side = "-", category = "Темные Земли", }, --[faction=2440]
-	-- { id = 2418, }, --name = "Ульдумский союз (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2418]
-	-- { id = 2416, }, --name = "Раджани (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2416]
-	-- { id = 2401, }, --name = "Анкоа из клана Клинков Волн (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2401]
-	-- { id = 2392, }, --name = "Ржавоболтское сопротивление (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2392]
-	-- { id = 2387, }, --name = "Тортолланские искатели (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2387]
-	-- { id = 2386, }, --name = "Защитники Азерот (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2386]
-	-- { id = 2385, }, --name = "Армия Чести (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2385]
-	-- { id = 2384, }, --name = "7-й легион (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2384]
-	-- { id = 2383, }, --name = "Орден Пылающих Углей (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2383]
-	-- { id = 2382, }, --name = "Жители Вол'дуна (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2382]
-	-- { id = 2381, }, --name = "Орден Возрождения Шторма (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2381]
-	-- { id = 2380, }, --name = "Экспедиция Таланджи (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2380]
-	-- { id = 2379, }, --name = "Адмиралтейство Праудмуров (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2379]
-	-- { id = 2378, }, --name = "Империя Зандалари (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2378]
-	-- { id = 2374, }, --name = "Освобожденные (идеал)", side = "-", category = "Battle for Azeroth", }, --[faction=2374]
-	-- { id = 1861, }, --name = "Arcane Thirst (Silgryn) DEPRECATED", side = "-", category = "Помраченные", }, --[faction=1861]
-	-- { id = 1815, }, --name = "Выжившие из Гилнеаса", side = "-", category = "Legion", }, --[faction=1815]
-	-- { id = 1984, }, --name = "Спасатели", side = "-", category = "Legion", }, --[faction=1984]
-	-- { id = 1899, }, --name = "Лунные стражи", side = "-", category = "Legion", }, --[faction=1899]
-	-- { id = 2111, }, --name = "Зандаларские динозавры", side = "-", category = "Battle for Azeroth", }, --[faction=2111]
-	-- { id = 1732, }, --name = "Дренорcкая Экспедиция Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1732]
-	-- { id = 1520, }, --name = "Изгнанники клана Призрачной Луны", side = "-", category = "Warlords of Draenor", }, --[faction=1520]
-	-- { id = 1735, }, --name = "Телохранители из казарм", side = "-", category = "Warlords of Draenor", }, --[faction=1735]
-	-- { id = 1351, }, --name = "Хмелевары", side = "-", category = "Mists of Pandaria", }, --[faction=1351]
-	-- { id = 1216, }, --name = "Академия Шан Си", side = "-", category = "Mists of Pandaria", }, --[faction=1216]
-		-- { id = 1440, }, --name = "Восстание Черного Копья", side = "-", category = "Mists of Pandaria", }, --[faction=1440]
-	-- },
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
 	[11] = {
 		-- header = {icon = E.OctoTable_Expansions[11].icon, name = E.OctoTable_Expansions[11].color..E.OctoTable_Expansions[11].name.."|r",},
 		-- ["The War Within"] = {
-		{ id = 2653, }, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
-		{ id = 2640, }, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
-		{ id = 2600, }, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
-		{ id = 2594, }, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
-		{ id = 2590, }, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
-		{ id = 2570, }, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
-		----------------------------------------------------------------
-		{ id = 2607, }, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
-		{ id = 2605, }, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
-		{ id = 2601, }, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
-		----------------------------------------------------------------
-		{ id = 2685, }, --name = "Клуб лояльности Галаджио", side = "-", category = "Картели Нижней Шахты", }, --[faction=2685]
-		{ id = 2677, }, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
-		{ id = 2675, }, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
-		{ id = 2673, }, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
-		{ id = 2671, }, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
-		{ id = 2669, }, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
+		{ id = 2669, },
+		{ id = 2677, },
+		{ id = 2685, },
+		{ id = 2675, },
+		{ id = 2673, },
+		{ id = 2671, },
+		{ id = 2653, },
+		{ id = 2688, },
+		{ id = 2570, },
+		{ id = 2601, },
+		{ id = 2594, },
+		{ id = 2590, },
+		{ id = 2640, },
+		{ id = 2600, },
+		{ id = 2668, },
+		{ id = 2607, },
+		{ id = 2605, },
+		{ id = 2645, },
+		{ id = 2693, },
+		{ id = 2658, },
+		{ id = 2689, },
+		{ id = 2667, },
+		{ id = 2684, },
+		{ id = 2683, },
+		{ id = 2676, },
+		{ id = 2670, },
+		{ id = 2736, },
+		{ id = 2674, },
+		{ id = 2672, },
+		{ id = 2612, },
+		{ id = 2611, },
+		{ id = 2648, },
+		{ id = 2659, },
+		{ id = 2647, },
+		{ id = 2739, },
+		{ id = 2722, },
+		{ id = 2644, },
+		{ id = 2613, },
+		{ id = 2649, },
+		{ id = 2596, },
+
+
+
+
+
+
+
+
+
+
+
+
+		-- { id = 2658, },
+		-- { id = 2653, }, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
+		-- { id = 2640, }, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
+		-- { id = 2600, }, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
+		-- { id = 2594, }, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
+		-- { id = 2590, }, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
+		-- { id = 2570, }, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
+		-- ----------------------------------------------------------------
+		-- { id = 2607, }, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
+		-- { id = 2605, }, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
+		-- { id = 2601, }, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
+		-- ----------------------------------------------------------------
+		-- { id = 2685, }, --name = "Клуб лояльности Галаджио", side = "-", category = "Картели Нижней Шахты", }, --[faction=2685]
+		-- { id = 2677, }, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
+		-- { id = 2675, }, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
+		-- { id = 2673, }, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
+		-- { id = 2671, }, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
+		-- { id = 2669, }, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
 	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------

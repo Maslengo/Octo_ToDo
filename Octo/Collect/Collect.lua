@@ -54,7 +54,6 @@ function Octo_EventFrame_Collect:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
-		E:func_ConcatAtStart_UniversalQuest()
 		OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
@@ -152,6 +151,8 @@ function Octo_EventFrame_Collect:BAG_UPDATE()
 	self.BAG_UPDATE_pause = true
 	C_Timer.After(1, function()
 			E.Collect_All_ItemsInBag()
+			E.Collect_All_BfA_Azerite()
+			E.Collect_All_BfA_Cloaklvl()
 			E:func_Update("BAG_UPDATE")
 			self.BAG_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
 	end)
@@ -215,6 +216,8 @@ function Octo_EventFrame_Collect:PLAYER_EQUIPMENT_CHANGED()
 	self.PLAYER_EQUIPMENT_CHANGED_pause = true
 	C_Timer.After(1, function()
 			E.Collect_All_ItemLevel()
+			E.Collect_All_BfA_Azerite()
+			E.Collect_All_BfA_Cloaklvl()
 			E:func_Update("PLAYER_EQUIPMENT_CHANGED")
 			self.PLAYER_EQUIPMENT_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
 	end)

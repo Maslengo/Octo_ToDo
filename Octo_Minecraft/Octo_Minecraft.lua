@@ -5,11 +5,26 @@ local Octo_MinecraftFrameFG, frameLEFT, frameRIGHT
 local Octo_EventFrame_Minecraft = CreateFrame("Frame")
 Octo_EventFrame_Minecraft:Hide()
 
+local Octo_MainFrame_Minecraft = CreateFrame("Button", "Octo_MainFrame_Minecraft", UIParent)
+Octo_MainFrame_Minecraft:Hide()
+E:func_InitFrame(Octo_MainFrame_Minecraft)
+
+
+
+
+
+
+
 -- Constants
 local SIZE = 64
 local HALF_SIZE = SIZE / 2
 local TEXTURE_PATH_FG = "Interface/AddOns/"..GlobalAddonName.."/Media/MINECRAFT/44.tga"
 local TEXTURE_PATH_BG = "Interface/AddOns/"..GlobalAddonName.."/Media/statusbar/02 Octo-Blank.tga"
+
+
+
+
+
 
 -- Helper functions
 local function CreateFrameWithTexture(name, parent, size, strata, texturePath, color, anchor, x, y)
@@ -97,9 +112,8 @@ end
 
 function Octo_EventFrame_Minecraft:CreateOcto_MinecraftFrameFG()
 	local colorFG, colorBG = Octo_Minecraft_DB.ColorFG, Octo_Minecraft_DB.ColorBG
-
-	-- Main Frame
 	Octo_MinecraftFrameFG = CreateFrameWithTexture("Octo_MinecraftFrameFG", UIParent, SIZE, "HIGH", TEXTURE_PATH_FG, colorFG, {"TOPLEFT", 300, -100})
+	-- Main Frame
 	Octo_MinecraftFrameFG:Hide()
 	Octo_MinecraftFrameFG:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
 	Octo_MinecraftFrameFG:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
@@ -108,7 +122,7 @@ function Octo_EventFrame_Minecraft:CreateOcto_MinecraftFrameFG()
 
 	Octo_MinecraftFrameFG:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				Octo_MinecraftFrameFG:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.bgCa)
+				Octo_MinecraftFrameFG:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
 				Octo_MinecraftFrameFG:StartMoving()
 			end
 	end)

@@ -203,15 +203,16 @@ function E:func_GetItemIconByID(itemID)
 	return GetItemIconByID(itemID)
 end
 ----------------------------------------------------------------
-function E:func_GetItemNameByID(itemID)
+function E:func_GetItemNameByID(itemID, newQuality)
 	table_insert(E.PromiseItem, itemID)
 	-- local info = C_AccountStore.GetItemInfo(itemID)
 	-- local itemName = C_AccountStore.GetItemInfo(itemID).name or UNKNOWN
 	local itemName = GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
 	local vivod = ""
-	local itemQuality = select(3, E:func_GetItemInfo(itemID)) or 0
-	if itemQuality then
-		vivod = vivod..ITEM_QUALITY_COLORS[itemQuality].color:WrapTextInColorCode(itemName)
+	local quality = newQuality or select(3, E:func_GetItemInfo(itemID)) or 0
+
+	if quality then
+		vivod = vivod..ITEM_QUALITY_COLORS[quality].color:WrapTextInColorCode(itemName)
 	end
 	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
@@ -663,6 +664,18 @@ function E:func_CompactNumberFormat(number)
 		return (math_floor(number/100)/10).."k"
 	else
 		return (math_floor(number/100000)/10).."m"
+	end
+end
+----------------------------------------------------------------
+function E:func_MoneyString(number)
+	if not number then return 0 end
+
+	if number > 10000 then
+		return E:func_CompactNumberFormat(number/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"
+	elseif number > 100 then
+		return E:func_CompactNumberFormat(number/100).."|r".."|TInterface\\MoneyFrame\\UI-SilverIcon:12:12|t"
+	else
+		return E:func_CompactNumberFormat(number).."|r".."|TInterface\\MoneyFrame\\UI-CopperIcon:12:12|t"
 	end
 end
 ----------------------------------------------------------------
@@ -1323,19 +1336,14 @@ end
 function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	-- Предварительная обработка параметров
 	edgeAlpha = edgeAlpha or 1
-	local bgCr, bgCg, bgCb = E.bgCr, E.bgCg, E.bgCb
-	local bgCa = BackdropAlpha or E.bgCa
+	local bgCr, bgCg, bgCb = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB
+	local bgCa = BackdropAlpha or E.backgroundColorA
 	-- Обработка цвета, если он передан
 	if hexcolor then
 		bgCr, bgCg, bgCb = self.func_hex2rgbNUMBER(hexcolor)
 	end
 	-- Установка фрейма
-	frame:SetBackdrop({
-			bgFile = E.bgFile,
-			edgeFile = E.edgeFile,
-			edgeSize = 1,
-			insets = {left = 0, right = 0, top = 0, bottom = 0},
-	})
+	frame:SetBackdrop(E.menuBackdrop)
 	-- Сохранение цветов во фрейме
 	frame.r, frame.g, frame.b, frame.a = bgCr, bgCg, bgCb, bgCa
 	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
@@ -1408,16 +1416,6 @@ function E:func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 					if not InCombatLockdown() then
 						if func then func() end
 						if frame then
-							if not frame.insertIn_SecuredFrames_SequredFrames then
-								frame.insertIn_SecuredFrames_SequredFrames = true
-								tinsert(UISpecialFrames, frameString)
-								tinsert(E.OctoTable_Frames, frame)
-							end
-							for _, frames in ipairs(E.OctoTable_Frames) do
-								if frame ~= frames and frames:IsShown() then
-									frames:Hide()
-								end
-							end
 							frame:SetShown(not frame:IsShown())
 							if frame:IsShown() then
 								if SettingsPanel:IsVisible() then
@@ -1539,12 +1537,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 			frame.icon:SetTexture(E:func_GetSpellIcon(id))
 		end
 		frame.icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		frame:SetBackdrop({
-				bgFile = E.bgFile,
-				edgeFile = E.edgeFile,
-				edgeSize = 1,
-				insets = {left = 0, right = 0, top = 0, bottom = 0},
-		})
+		frame:SetBackdrop(E.menuBackdrop)
 		frame:SetBackdropColor(0, 0, 0, 0)
 		frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 		frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
@@ -2270,10 +2263,12 @@ function E:func_Universal(tbl, expansionID)
 								elseif type(LeftData) == "string" then
 									textCENT = LeftData
 								end
-								if CharInfo.PlayerData.GUID == E.curGUID then
-									for index, questID in ipairs(v.questID) do
-										tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
-									end
+							end
+							if CharInfo.PlayerData.GUID == E.curGUID then
+								tooltipRIGHT[#tooltipRIGHT+1] = {"Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset, "MAX: "..v.max}
+								tooltipRIGHT[#tooltipRIGHT+1] = {" "}
+								for index, questID in ipairs(v.questID) do
+									tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
 								end
 							end
 							----------------------------------------------------------------
@@ -2430,7 +2425,7 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 					local green = min(255, (done / totalMoney) * 510)
 					hexcolorMoney = string.format("|cff%2x%2x00", red, green)
 				end
-				RIGHT1 = hexcolorMoney..E:func_CompactNumberFormat(CharInfo.PlayerData.Money/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"
+				RIGHT1 = hexcolorMoney..E:func_MoneyString(CharInfo.PlayerData.Money)
 				RIGHTforSORT = CharInfo.PlayerData.Money
 				total = total + CharInfo.PlayerData.Money
 			elseif myType == "Online" and CharInfo.PlayerData.realTotalTime then
@@ -2493,12 +2488,12 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 			C_WowTokenPublic.UpdateMarketPrice()
 			if C_WowTokenPublic.GetCurrentMarketPrice() then
 				local price, hz = C_WowTokenPublic.GetCurrentMarketPrice()
-				tooltip[#tooltip+1] = {"", TOKEN_FILTER_LABEL..": "..E:func_CompactNumberFormat(C_WowTokenPublic.GetCurrentMarketPrice()/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+				tooltip[#tooltip+1] = {"", TOKEN_FILTER_LABEL..": "..E:func_MoneyString(C_WowTokenPublic.GetCurrentMarketPrice())}
 			end
 			if C_Bank.FetchDepositedMoney(Enum.BankType.Account) then
-				tooltip[#tooltip+1] = {"", ACCOUNT_BANK_PANEL_TITLE..": "..E:func_CompactNumberFormat(C_Bank.FetchDepositedMoney(Enum.BankType.Account)/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+				tooltip[#tooltip+1] = {"", ACCOUNT_BANK_PANEL_TITLE..": "..E:func_MoneyString(C_Bank.FetchDepositedMoney(Enum.BankType.Account))}
 			end
-			tooltip[#tooltip+1] = {"", TOTAL..": "..E:func_CompactNumberFormat(total/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"}
+			tooltip[#tooltip+1] = {"", TOTAL..": "..E:func_MoneyString(total)}
 			-- tooltip[#tooltip+1] = {"", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
 		elseif myType == "Online" then
 			tooltip[#tooltip+1] = {"", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
@@ -2694,6 +2689,53 @@ end
 
 
 ---------------------------------------------------------------------
+function E:func_InitFrame(frame)
+    if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
+
+    -- Немедленная маркировка фрейма
+    frame.insertIn_SecuredFrames_SequredFrames = true
+    tinsert(E.OctoTable_Frames, frame)
+    tinsert(UISpecialFrames, frame:GetName())
+
+    -- Отложенная инициализация с защитой
+    C_Timer.After(0.5, function()
+        if not frame:IsForbidden() then  -- Проверка на валидность фрейма
+            local function CloseOtherFrames()
+                for i, other in ipairs(E.OctoTable_Frames) do
+                    if frame ~= other and other:IsShown() then
+                        print(E.Red_Color.."Закрытие фрейма:|r", other:GetName())
+                        other:Hide()
+
+                        -- Двойная проверка через 0.2 сек
+                        C_Timer.After(0.2, function()
+                            if other:IsShown() then
+                                other:SetShown(false)
+                            end
+                        end)
+                    end
+                end
+            end
+
+            -- Основной хук
+            frame:HookScript("OnShow", CloseOtherFrames)
+
+            -- Первичная проверка
+            if frame:IsShown() then
+                CloseOtherFrames()
+            end
+        end
+    end)
+end
+
+
+-- Подписаться на событие создания фрейма
+-- hooksecurefunc("CreateFrame", function(type, name, parent, template)
+--     if name == "ВашФрейм" then
+--         local frame = _G[name]
+--         -- Установить хуки ДО того, как он станет Protected
+--         frame:HookScript("OnShow", yourFunction)
+--     end
+-- end)
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------

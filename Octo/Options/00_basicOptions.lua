@@ -9,6 +9,7 @@ function E:InitOptions()
 	AceConfigRegistry:RegisterOptionsTable("Automatization", E:Automatization())
 	AceConfigRegistry:RegisterOptionsTable("HideFrames", E:HideFrames())
 	AceConfigRegistry:RegisterOptionsTable("myOther", E:myOther())
+	AceConfigRegistry:RegisterOptionsTable("Cvars", E:Cvars())
 
 	AceConfigRegistry:RegisterOptionsTable("Debug", E:Debug())
 	----------------------------------------------------------------
@@ -16,6 +17,7 @@ function E:InitOptions()
 	AceConfigDialog:AddToBlizOptions("Automatization", "Automatization", E:func_AddonTitle(GlobalAddonName))
 	AceConfigDialog:AddToBlizOptions("HideFrames", "HideFrames", E:func_AddonTitle(GlobalAddonName))
 	AceConfigDialog:AddToBlizOptions("myOther", "myOther", E:func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("Cvars", "Cvars", E:func_AddonTitle(GlobalAddonName))
 
 	AceConfigDialog:AddToBlizOptions("Debug", "Debug", E:func_AddonTitle(GlobalAddonName))
 	----------------------------------------------------------------

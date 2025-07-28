@@ -1,6 +1,9 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
+local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
+local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+-------------------------------------------------------------------------
 -------------------------------------------------------------------------
 function E:Debug()
 	local index = 0
@@ -362,6 +365,14 @@ function E:Debug()
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
+
+
+
+
+
+
+
+
 			-------------------------------------------------
 			ReloadHeaderDebugs = {
 				type = "header",

@@ -2,9 +2,6 @@
 ..\FrameXML\UI.xsd">
 
 
-	<Script file="MainFrame\01_MainFrame.lua"/>
-	<Script file="MainFrame\02_ReputationFrame.lua"/>
-	<Script file="MainFrame\UtilityFrames.lua"/>
-	<Script file="MainFrame\OctoTooltip.lua"/>
+	<Script file="MainFrame\MainFrame.lua"/>
 
 </Ui>

@@ -3,6 +3,12 @@ local Octo_Event_TestFrame = CreateFrame("FRAME")
 Octo_Event_TestFrame:Hide()
 local Octo_Main_TestFrame = CreateFrame("BUTTON", "Octo_Main_TestFrame", UIParent, "BackdropTemplate")
 Octo_Main_TestFrame:Hide()
+E:func_InitFrame(Octo_Main_TestFrame)
+
+
+
+
+local TestButton1 = CreateFrame("Button", "TestButton1", UIParent, "UIPanelButtonTemplate")
 -- Создаем хедер для левого фрейма
 local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_Main_TestFrame)
 ----------------------------------------------------------------
@@ -24,7 +30,7 @@ local TEST_WIDTH = 0
 ----------------------------------------------------------------
 -- Константы цвета
 ----------------------------------------------------------------
-local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.bgCr, E.bgCg, E.bgCb, E.bgCa
+local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
 local textR, textG, textB, textA = 1, 1, 1, 1
 local classR, classG, classB, colorHEXwithoutC = GetClassColor(E.classFilename)
@@ -51,7 +57,7 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
 	frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- Текстура выделения
 	frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-	frameFULL.HighlightTexture:SetAlpha(E.bgCaOverlay) -- Прозрачность выделения
+	frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay) -- Прозрачность выделения
 	frameFULL:SetPoint("LEFT", frame)
 	frameFULL:SetPoint("TOP", frame)
 	frameFULL:SetPoint("BOTTOM", frame)
@@ -113,7 +119,7 @@ local func_OnAcquiredCENT do
 						f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
 						f.curCharTextureBG:SetAllPoints()
 						f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
-						f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.bgCaOverlay)
+						f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
 						f.curCharTextureBG:Hide()
 						-- Текстура репутации
 						f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
@@ -157,7 +163,6 @@ end
 function Octo_Event_TestFrame:Octo_Frame_initLEFT(frame, node)
 	local frameData = node:GetData()
 
-	-- fpde(frame.frameFULL)
 	-- print (frame, frame:GetOrderIndex())
 	-- frame:SetWidth(555)
 
@@ -328,12 +333,7 @@ function Octo_Event_TestFrame:Octo_Create_MainFrame_TestFrame()
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_Main_TestFrame.ScrollBoxCENT, Octo_Main_TestFrame.ScrollBarCENT, Octo_Main_TestFrame.viewCENT)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_Main_TestFrame.ScrollBoxCENT, Octo_Main_TestFrame.ScrollBarCENT)
 	-- Настраиваем внешний вид основного фрейма
-	Octo_Main_TestFrame:SetBackdrop({
-			bgFile = E.bgFile,
-			edgeFile = E.edgeFile,
-			edgeSize = 1,
-			insets = {left = 0, right = 0, top = 0, bottom = 0}
-	})
+	Octo_Main_TestFrame:SetBackdrop(E.menuBackdrop)
 	Octo_Main_TestFrame:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
 	Octo_Main_TestFrame:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 	Octo_Main_TestFrame:EnableMouse(true)
@@ -341,7 +341,7 @@ function Octo_Event_TestFrame:Octo_Create_MainFrame_TestFrame()
 	-- Обработчики перемещения фрейма
 	Octo_Main_TestFrame:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				Octo_Main_TestFrame:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.bgCa)
+				Octo_Main_TestFrame:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
 				Octo_Main_TestFrame:StartMoving()
 			end
 	end)
@@ -514,7 +514,7 @@ function Octo_Event_TestFrame:CreateDataProvider()
 			HeaderFrameRIGHT:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
 			-- Устанавливаем цвет фона в зависимости от фракции
 			local charR, charG, charB = E:func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
-			HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.bgCaOverlay)
+			HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
 			-- Обработчики событий для фрейма персонажа
 			HeaderFrameRIGHT:SetScript("OnEnter", function(self)
 					HeaderFrameRIGHT.tooltip = E:func_Tooltip_Chars(CharInfo)
@@ -526,23 +526,12 @@ function Octo_Event_TestFrame:CreateDataProvider()
 	end
 end
 ----------------------------------------------------------------
-local function Toggle_Octo_Main_TestFrame()
+local function Toggle_Octo_Main_TestFrame(frame)
 	if Octo_Main_TestFrame then
-		if not Octo_Main_TestFrame.insertIn_SecuredFrames_SequredFrames then
-			Octo_Main_TestFrame.insertIn_SecuredFrames_SequredFrames = true
-			tinsert(UISpecialFrames, "Octo_Main_TestFrame")
-			tinsert(E.OctoTable_Frames, Octo_Main_TestFrame)
-		end
-		for index, frames in ipairs(E.OctoTable_Frames) do
-			if Octo_Main_TestFrame ~= frames and frames:IsShown() then
-				frames:Hide()
-			end
-		end
 		Octo_Main_TestFrame:SetShown(not Octo_Main_TestFrame:IsShown())
 	end
 end
 function Octo_Event_TestFrame:CreateTestButton1()
-	local TestButton1 = CreateFrame("Button", "TestButton1", UIParent, "UIPanelButtonTemplate")
 	TestButton1:SetClampedToScreen(true)
 	TestButton1:SetPoint("TOPLEFT", 128, -256)
 	TestButton1:SetSize(128, 32)
@@ -552,7 +541,7 @@ function Octo_Event_TestFrame:CreateTestButton1()
 	-- Обработчики перемещения фрейма
 	TestButton1:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				TestButton1:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.bgCa)
+				TestButton1:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
 				TestButton1:StartMoving()
 			end
 	end)
@@ -572,6 +561,8 @@ end
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
+	"PLAYER_REGEN_ENABLED",
+	"PLAYER_REGEN_DISABLED",
 }
 E:func_RegisterMyEventsToFrames(Octo_Event_TestFrame, MyEventsTable)
 -- Обработчик события загрузки аддона
@@ -592,3 +583,17 @@ function Octo_Event_TestFrame:PLAYER_LOGIN()
 	E:func_Create_DD_ToDo(Octo_Main_TestFrame, E.Faction_Color, function() Octo_Event_TestFrame:CreateDataProvider() end)
 
 end
+
+
+
+
+function Octo_Event_TestFrame:PLAYER_REGEN_ENABLED()
+	TestButton1:Show()
+end
+
+
+function Octo_Event_TestFrame:PLAYER_REGEN_DISABLED()
+	Octo_Main_TestFrame:Hide()
+	TestButton1:Hide()
+end
+

@@ -2,6 +2,21 @@ local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 
 
+local Octo_Event_Auto_CinematicCanceler = CreateFrame("FRAME")
+Octo_Event_Auto_CinematicCanceler:Hide()
+
+----------------------------------------------------------------
+-- Регистрация событий
+----------------------------------------------------------------
+local MyEventsTable = {
+	"CINEMATIC_START",
+}
+E:func_RegisterMyEventsToFrames(Octo_Event_Auto_CinematicCanceler, MyEventsTable)
+function Octo_Event_Auto_CinematicCanceler:CINEMATIC_START()
+	if Octo_ToDo_DB_Vars.Auto_CinematicCanceler then
+		CinematicFrame_CancelCinematic()
+	end
+end
 
 
 tinsert(E.Modules, function()

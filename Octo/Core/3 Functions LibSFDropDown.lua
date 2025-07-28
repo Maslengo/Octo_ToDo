@@ -13,7 +13,7 @@ LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
 		f:SetBackdrop({bgFile = E.bgFile, edgeFile = E.edgeFile, edgeSize = 1})
 		f:SetPoint("TOPLEFT", 8, -2)
 		f:SetPoint("BOTTOMRIGHT", -8, 2)
-		f:SetBackdropColor(E.bgCr, E.bgCg, E.bgCb, E.bgCa)
+		f:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 		f:SetBackdropBorderColor(0, 0, 0, 1)
 		return f
 end)
@@ -688,25 +688,6 @@ function E:func_Create_DDframe_AddonsManager(frame, hex, providerfunc)
 				self:ddAddButton(info, level)
 				----------------------------------------------------------------
 			elseif value == BINDING_HEADER_DEBUG then
-				----------------------------------------------------------------
-				-- info.fontObject = OctoFont11
-				-- info.keepShownOnClick = true
-				-- info.notCheckable = true -- TRUE убрать чекбокс
-				-- info.isNotRadio = true -- TRUE круг, а не квадрат
-				-- info.text = E.Debug_Color.."fpde(Octo_AddonsManager_DB)".."|r"
-				-- info.hasArrow = nil
-				-- info.func = function(_, _, _, checked)
-				-- 	fpde(Octo_AddonsManager_DB)
-				-- 	for k, v in ipairs(E.OctoTable_Frames) do
-				-- 		if v:IsShown() then
-				-- 			if k == 2 then
-				-- 				-- ПОФИКСИТЬ
-				-- 				v:Hide()
-				-- 			end
-				-- 		end
-				-- 	end
-				-- end
-				-- self:ddAddButton(info, level)
 				----------------------------------------------------------------
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = false

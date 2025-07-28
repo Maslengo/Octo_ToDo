@@ -139,12 +139,15 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.MASLENGO.ItemsInBag[158075] then
-					textCENT = E.Orange_Color.."neeed to equip|r"
-					if CharInfo.PlayerData.azeriteLVL then
-						textCENT = E.Green_Color..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.Gray_Color..CharInfo.PlayerData.azeriteEXP.."|r"
-					end
-				else
-					textCENT = E.Red_Color.."no neck|r"
+
+					-- if CharInfo.PlayerData.azeriteLVL then
+					-- 	textCENT = AZERITE_ESSENCE_RANK:format(CharInfo.PlayerData.azeriteLVL).."+"..E.Gray_Color..CharInfo.PlayerData.azeriteEXP.."|r"
+					-- else
+					-- 	textCENT = E.Orange_Color.."in bank|r"
+					-- end
+					textCENT = CharInfo.PlayerData.azeriteLVL and
+							   E.Green_Color..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.Gray_Color..CharInfo.PlayerData.azeriteEXP.."|r" or
+							   E.Orange_Color.."in bank|r"
 				end
 				myType = {"Item", 158075}
 				----------------------------------------------------------------
@@ -160,16 +163,11 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.MASLENGO.ItemsInBag[169223] then
-					textCENT = E.Orange_Color.."neeed to equip|r"
-					if CharInfo.PlayerData.cloak_lvl and CharInfo.PlayerData.cloak_res then
-						textCENT = CharInfo.PlayerData.cloak_lvl.." lvl"
-						if CharInfo.PlayerData.cloak_lvl == 15 then
-							textCENT = E.Green_Color..textCENT.."|r"
-						end
-						textCENT = textCENT.."+"..CharInfo.PlayerData.cloak_res
+					if CharInfo.PlayerData.cloak_lvl then
+						textCENT = E.Cyan_Color..AZERITE_ESSENCE_RANK:format(CharInfo.PlayerData.cloak_lvl).."|r"
+					else
+						textCENT = E.Orange_Color.."in bank|r"
 					end
-				else
-					textCENT = E.Red_Color.."no cloak|r"
 				end
 				myType = {"Item", 169223}
 				----------------------------------------------------------------

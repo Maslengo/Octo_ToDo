@@ -9,6 +9,8 @@ function E:BuildLog()
 	else
 		QC_Quests = CreateFrame("Frame", "QuestsChangedFrame", UIParent, "UIPanelDialogTemplate")
 	end
+
+
 	QC_Quests:EnableMouse(true)
 	QC_Quests:SetMovable(true)
 	QC_Quests:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
@@ -17,7 +19,9 @@ function E:BuildLog()
 	QC_Quests:SetSize(600, 500)
 	QC_Quests:SetPoint("TOP", 0, -80)
 	QC_Quests:Hide()
-	tinsert(UISpecialFrames, QC_Quests:GetName())
+
+
+
 	QC_Quests.Title:SetText(GlobalAddonName)
 	local drag = CreateFrame("Frame", "$parentTitleButton", QC_Quests, "TitleDragAreaTemplate")
 	drag:SetPoint("TOPLEFT", _G["QuestsChangedFrameTitleBG"])

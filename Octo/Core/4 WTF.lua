@@ -548,6 +548,12 @@ end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Debug_DB()
 	Octo_Debug_DB = E:func_InitTable(Octo_Debug_DB)
+
+
+	if not Octo_Debug_DB then return end
+	Octo_Debug_DB.profileKeys = Octo_Debug_DB.profileKeys or {}
+	local currentKey = E.curCharName.." - "..E.curServer
+	Octo_Debug_DB.profileKeys[currentKey] = Octo_Debug_DB.profileKeys[currentKey] or "OctoUI"
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -1,6 +1,6 @@
 <UI>
 
 	<Script file="LibStub\LibStub.lua"/>
-	<Script file="IndentationLib\IndentationLib.lua"/>
+	<Script file="LibIndentation\LibIndentation.lua"/>
 
 </UI>

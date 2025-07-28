@@ -6,4 +6,7 @@
 ## Dependencies: Octo
 Libs\embeds.xml
 
-Octo_Debug.lua
+
+
+Octo_Debug_CreateEditBox.lua
+Octo_Debug_LoadOctoUIforAddons.lua

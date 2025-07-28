@@ -7,7 +7,7 @@ E = _G.OctoEngine
 local Octo_EventFrame_AutoTurnIn = CreateFrame("Frame")
 Octo_EventFrame_AutoTurnIn:Hide()
 
-local events = {
+local MyEventsTable = {
 	"QUEST_DETAIL",
 	"QUEST_COMPLETE",
 	"QUEST_GREETING",
@@ -15,20 +15,10 @@ local events = {
 	"QUEST_PROGRESS",
 }
 
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_AutoTurnIn, events)
-
-function Octo_EventFrame_AutoTurnIn:BAG_UPDATE_DELAYED()
-	if not InCombatLockdown() then
-		self:ItemsUsableFrame()
-	end
-end
-
-function Octo_EventFrame_AutoTurnIn:ShouldProcess()
-	return not IsShiftKeyDown()
-end
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_AutoTurnIn, MyEventsTable)
 
 function Octo_EventFrame_AutoTurnIn:QUEST_DETAIL()
-	if self:ShouldProcess() then
+	if not IsShiftKeyDown() then
 		if QuestIsFromAreaTrigger() then
 			AcceptQuest()
 		elseif QuestGetAutoAccept() then
@@ -39,7 +29,7 @@ function Octo_EventFrame_AutoTurnIn:QUEST_DETAIL()
 end
 
 function Octo_EventFrame_AutoTurnIn:QUEST_COMPLETE()
-	if self:ShouldProcess() and GetNumQuestChoices() <= 1 then
+	if not IsShiftKeyDown() and GetNumQuestChoices() <= 1 then
 		GetQuestReward(1)
 	end
 end
@@ -64,28 +54,76 @@ function Octo_EventFrame_AutoTurnIn:ProcessAvailableQuests()
 end
 
 function Octo_EventFrame_AutoTurnIn:QUEST_GREETING()
-	if self:ShouldProcess() then
+	if IsShiftKeyDown() then return end
 		self:ProcessActiveQuests()
 		self:ProcessAvailableQuests()
-	end
 end
 
-function Octo_EventFrame_AutoTurnIn:GOSSIP_SHOW()
-	if not self:ShouldProcess() then return end
 
-	for _, info in ipairs(C_GossipInfo.GetActiveQuests() or {}) do
-		if info.isComplete and not C_QuestLog.IsWorldQuest(info.questID) then
-			C_GossipInfo.SelectActiveQuest(info.questID)
+
+
+
+
+-- questframecompletequestbutton
+
+
+
+function Octo_EventFrame_AutoTurnIn:Module_AutoTurnIn()
+	local NumActiveQuests = C_GossipInfo.GetNumActiveQuests()
+	local NumAvailableQuests = C_GossipInfo.GetNumAvailableQuests()
+	local ActiveQuests = C_GossipInfo.GetActiveQuests() or {}
+	local AvailableQuests = C_GossipInfo.GetAvailableQuests() or {}
+
+	for i = 1, NumActiveQuests do
+		local info = C_GossipInfo.GetActiveQuests()
+		if info then
+			local newInfo = info[i]
+			-- local title = newInfo.title
+			-- local questLevel = newInfo.questLevel
+			-- local isTrivial = newInfo.isTrivial
+			-- local frequency = newInfo.frequency
+			-- local repeatable = newInfo.repeatable
+			local isComplete = newInfo.isComplete
+			-- local isLegendary = newInfo.isLegendary
+			-- local isIgnored = newInfo.isIgnored
+			local questID = newInfo.questID
+			-- local isImportant = newInfo.isImportant
+			-- local isMeta = newInfo.isMeta
+			if isComplete and not C_QuestLog.IsWorldQuest(questID) then
+				C_GossipInfo.SelectActiveQuest(questID)
+			end
 		end
 	end
 
-	for _, info in ipairs(C_GossipInfo.GetAvailableQuests() or {}) do
-		C_GossipInfo.SelectAvailableQuest(info.questID)
+
+	for i = 1, NumAvailableQuests do
+		local info = C_GossipInfo.GetAvailableQuests()
+		if info then
+			local newInfo = info[i]
+			local title = newInfo.title
+			-- local questLevel = newInfo.questLevel
+			-- local isTrivial = newInfo.isTrivial
+			-- local frequency = newInfo.frequency
+			-- local repeatable = newInfo.repeatable
+			-- local isComplete = newInfo.isComplete
+			-- local isLegendary = newInfo.isLegendary
+			-- local isIgnored = newInfo.isIgnored
+			local questID = newInfo.questID
+			-- local isImportant = newInfo.isImportant
+			-- local isMeta = newInfo.isMeta
+			C_GossipInfo.SelectAvailableQuest(questID)
+		end
 	end
+
+end
+
+
+function Octo_EventFrame_AutoTurnIn:GOSSIP_SHOW()
+	if IsShiftKeyDown() then return end
+	Octo_EventFrame_AutoTurnIn:Module_AutoTurnIn()
 end
 
 function Octo_EventFrame_AutoTurnIn:QUEST_PROGRESS()
-	if self:ShouldProcess() then
+	if IsShiftKeyDown() then return end
 		CompleteQuest()
-	end
 end
