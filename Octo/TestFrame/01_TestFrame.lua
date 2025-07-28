@@ -105,47 +105,49 @@ local func_OnAcquiredCENT do
 		frame:SetPropagateMouseClicks(true)
 		-- Создаем метатаблицу для дочерних фреймов
 		frame.second = setmetatable({}, {
-				__index = function(self, key)
-					if key then
-						-- Создаем новый фрейм для каждого элемента
-						local f = CreateFrame("BUTTON", "frame.second"..key, frame)
-						f:SetPropagateMouseClicks(true)
-						f:SetPropagateMouseMotion(true)
-						f:SetSize(LINE_WIDTH_CENT, LINE_HEIGHT)
-						f:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
-						f:SetPoint("TOPLEFT", frame, "TOPLEFT", LINE_WIDTH_CENT*(key-1), 0)
-						f:RegisterForClicks("LeftButtonUp")
-						-- Текстура для текущего персонажа
-						f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-						f.curCharTextureBG:SetAllPoints()
-						f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
-						f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
-						f.curCharTextureBG:Hide()
-						-- Текстура репутации
-						f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-						f.ReputTextureAndBG:SetPoint("LEFT")
-						f.ReputTextureAndBG:SetHeight(LINE_HEIGHT)
-						f.ReputTextureAndBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
-						-- Текст в центре
-						f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-						f.textCENT:SetAllPoints()
-						f.textCENT:SetFontObject(OctoFont11)
-						f.textCENT:SetWordWrap(false)
-						f.textCENT:SetJustifyV("MIDDLE")
-						f.textCENT:SetJustifyH("CENTER")
-						f.textCENT:SetTextColor(textR, textG, textB, textA)
-						-- Обработчики событий
-						f:SetScript("OnEnter", function() E:func_OctoTooltip_OnEnter(f) end)
-						f:SetScript("OnHide", f.Hide)
-						f.curCharTextureBG:SetScript("OnHide", f.curCharTextureBG.Hide)
-						rawset(self, key, f)
-						return f
-					end
+			__index = function(self, key)
+				if key then
+					-- Создаем новый фрейм для каждого элемента
+					local f = CreateFrame("BUTTON", "frame.second"..key, frame)
+					f:SetPropagateMouseClicks(true)
+					f:SetPropagateMouseMotion(true)
+					f:SetHeight(LINE_HEIGHT)
+					f:SetHitRectInsets(1, 1, 1, 1)
+					-- Позиция будет обновляться динамически в Octo_Frame_initCENT
+					f:SetPoint("LEFT", frame, "LEFT", 0, 0)
+
+					-- Текстура для текущего персонажа
+					f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
+					f.curCharTextureBG:SetAllPoints()
+					f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
+					f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
+					f.curCharTextureBG:Hide()
+
+					-- Текстура репутации
+					f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
+					f.ReputTextureAndBG:SetPoint("LEFT")
+					f.ReputTextureAndBG:SetHeight(LINE_HEIGHT)
+					f.ReputTextureAndBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
+
+					-- Текст в центре
+					f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+					f.textCENT:SetAllPoints()
+					f.textCENT:SetFontObject(OctoFont11)
+					f.textCENT:SetWordWrap(false)
+					f.textCENT:SetJustifyV("MIDDLE")
+					f.textCENT:SetJustifyH("CENTER")
+					f.textCENT:SetTextColor(textR, textG, textB, textA)
+
+					-- Обработчики событий
+					f:SetScript("OnEnter", function() E:func_OctoTooltip_OnEnter(f) end)
+					f:SetScript("OnHide", f.Hide)
+					f.curCharTextureBG:SetScript("OnHide", f.curCharTextureBG.Hide)
+
+					rawset(self, key, f)
+					return f
 				end
+			end
 		})
-		-- Обработчики событий для основного фрейма
-		-- frame:SetScript("OnEnter", func_OnEnter)
-		-- frame:SetScript("OnLeave", func_OnLeave)
 	end
 end
 -- Функция для установки текстуры кнопки
@@ -206,37 +208,61 @@ end
 -- Функция обновления центральной панели
 function Octo_Event_TestFrame:Octo_Frame_initCENT(frame, node)
 	local frameData = node:GetData()
-	-- if not data then return end
-	-- Обрабатываем случай с несколькими персонажами
-	if frameData.totalColumns > 1 then
-		local current = frame.second[frameData.currentCharacterIndex]
-		if current then
-			current:Show()
-			current.curCharTextureBG:Show()
-			current.textCENT:SetText("")
-			current.ReputTextureAndBG:Hide()
-		end
-	end
-	-- Обрабатываем данные для правой панели
-	for i = 1, #frameData.textCENT do
+	local accumulatedWidth = 0
+
+	-- Защитная проверка на случай, если COLUMN_SIZES_RIGHT еще не инициализирован
+	local columnSizesRight = Octo_Event_TestFrame.COLUMN_SIZES_RIGHT or {}
+
+	-- Обрабатываем все колонки
+	for i = 1, (frameData.totalColumns or 0) do
 		local secondFrame = frame.second[i]
-		if frameData.textCENT[i] then
+		if not secondFrame then
+			secondFrame = frame.second[i] -- Это вызовет __index из метатаблицы
+		end
+
+		-- Устанавливаем позицию и размер
+		secondFrame:ClearAllPoints()
+		secondFrame:SetPoint("LEFT", frame, "LEFT", accumulatedWidth, 0)
+
+		-- Используем сохраненные размеры или значение по умолчанию
+		local columnWidth = columnSizesRight[i] or LINE_WIDTH_CENT
+		secondFrame:SetWidth(columnWidth)
+		accumulatedWidth = accumulatedWidth + columnWidth
+
+		-- Устанавливаем содержимое
+		if frameData.textCENT and frameData.textCENT[i] then
 			local textCENT = frameData.textCENT[i]
 			secondFrame.ReputTextureAndBG:Hide()
+
 			-- Устанавливаем цвет если задан
-			if frameData.colorCENT[i] then
+			if frameData.colorCENT and frameData.colorCENT[i] then
 				local r1, g1, b1 = E:func_hex2rgbNUMBER(frameData.colorCENT[i])
-				secondFrame.ReputTextureAndBG:SetWidth(LINE_WIDTH_CENT)
+				secondFrame.ReputTextureAndBG:SetWidth(columnWidth)
 				secondFrame.ReputTextureAndBG:Show()
 				secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3)
 			end
+
 			secondFrame.textCENT:SetText(textCENT)
+
+			-- Подсветка текущего персонажа
+			if i == frameData.currentCharacterIndex then
+				secondFrame.curCharTextureBG:Show()
+			else
+				secondFrame.curCharTextureBG:Hide()
+			end
 		else
 			secondFrame.textCENT:SetText("")
 			secondFrame.ReputTextureAndBG:SetVertexColor(0, 0, 0, 0)
+			secondFrame.curCharTextureBG:Hide()
 		end
+
+		if frameData.tooltipRIGHT and frameData.tooltipRIGHT[i] then
+			secondFrame.tooltip = frameData.tooltipRIGHT[i]
+		else
+			secondFrame.tooltip = nil
+		end
+
 		secondFrame:Show()
-		secondFrame.tooltip = frameData.tooltipRIGHT[i]
 	end
 end
 
@@ -416,27 +442,53 @@ end
 
 
 local function calculateColumnWidthsRIGHT(node, totalLines)
-	-- local frameData = node:GetData()
-	-- local framesCENT = Octo_Main_TestFrame.viewCENT:GetFrames()
-	-- if #framesCENT == 0 then
-	-- 	Octo_Main_TestFrame.viewCENT:AcquireInternal(1, node)
-	-- 	Octo_Main_TestFrame.viewCENT:InvokeInitializers()
-	-- end
-	-- local columnWidthsRIGHT = {}
-	-- local sampleFrameRIGHT = framesRIGHT[1]
+	local frameData = node:GetData()
+	local framesCENT = Octo_Main_TestFrame.viewCENT:GetFrames()
 
-	-- sampleFrameRIGHT.textRIGHT:SetText(frameData.textRIGHT)
-	-- columnWidthsRIGHT[1] = sampleFrameRIGHT.textRIGHT:GetStringWidth()
+	if #framesCENT == 0 then
+		Octo_Main_TestFrame.viewCENT:AcquireInternal(1, node)
+		Octo_Main_TestFrame.viewCENT:InvokeInitializers()
+		framesCENT = Octo_Main_TestFrame.viewCENT:GetFrames()
+	end
 
-	-- return columnWidthsRIGHT
+	local columnWidthsRIGHT = {}
+	local sampleFrameCENT = framesCENT[1]
+
+	-- Инициализируем все колонки
+	for i = 1, frameData.totalColumns do
+		if not sampleFrameCENT.second[i] then
+			sampleFrameCENT.second[i] = sampleFrameCENT.second[i] -- Вызовет __index
+		end
+	end
+
+	-- Рассчитываем ширину для каждой колонки
+	for i = 1, frameData.totalColumns do
+		if frameData.textCENT[i] then
+			sampleFrameCENT.second[i].textCENT:SetText(frameData.textCENT[i])
+			columnWidthsRIGHT[i] = math_max(
+				sampleFrameCENT.second[i].textCENT:GetStringWidth() + 10, -- минимальный отступ
+				LINE_WIDTH_CENT -- минимальная ширина
+			)
+		else
+			columnWidthsRIGHT[i] = LINE_WIDTH_CENT
+		end
+	end
+
+	return columnWidthsRIGHT
 end
 
 function Octo_Event_TestFrame:CreateDataProvider()
+
+	-- Инициализируем переменные размеров, если они еще не существуют
+	Octo_Event_TestFrame.COLUMN_SIZES_LEFT = Octo_Event_TestFrame.COLUMN_SIZES_LEFT or {}
+	Octo_Event_TestFrame.COLUMN_SIZES_RIGHT = Octo_Event_TestFrame.COLUMN_SIZES_RIGHT or {}
+
 	local NumPlayers = math_min(E:func_NumPlayers(), COLUMNS_MAX)
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
 	local COLUMN_SIZES_LEFT = {}
 	local COLUMN_SIZES_RIGHT = {}
+
 	-- Находим индекс текущего персонажа
 	local tbl = E:func_sorted()
 	local currentCharacterIndex
@@ -479,29 +531,52 @@ function Octo_Event_TestFrame:CreateDataProvider()
 		zxc.currentCharacterIndex = currentCharacterIndex
 		zxc.totalColumns = totalColumns
 		local node = DataProvider:Insert(zxc)
-			for j, w in ipairs(calculateColumnWidthsLEFT(node, totalLines)) do
-				COLUMN_SIZES_LEFT[j] = math_max(w, COLUMN_SIZES_LEFT[j] or HeaderFrameLEFT.text:GetWidth() or 0)
-			end
+
+		-- Рассчитываем ширину для левых колонок
+		for j, w in ipairs(calculateColumnWidthsLEFT(node, totalLines)) do
+			COLUMN_SIZES_LEFT[j] = math_max(w, COLUMN_SIZES_LEFT[j] or HeaderFrameLEFT.text:GetWidth() or 0)
+		end
+
+		-- Рассчитываем ширину для правых колонок
+		local rightWidths = calculateColumnWidthsRIGHT(node, totalLines)
+		for i, w in ipairs(rightWidths) do
+			COLUMN_SIZES_RIGHT[i] = math_max(w, COLUMN_SIZES_RIGHT[i] or LINE_WIDTH_CENT)
+		end
 	end
+
 	Octo_Event_TestFrame.COLUMN_SIZES_LEFT = COLUMN_SIZES_LEFT
 	Octo_Event_TestFrame.COLUMN_SIZES_RIGHT = COLUMN_SIZES_RIGHT
-	-- print ("totalColumns:", totalColumns, "totalLines:", totalLines)
+
 	-- Корректируем количество строк
 	LINES_MAX = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
+
 	if Octo_Main_TestFrame then
-		-- Устанавливаем провайдер данных (это запустит создание фреймов)
+		-- Устанавливаем провайдер данных
 		Octo_Main_TestFrame.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 		Octo_Main_TestFrame.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+
+		-- Рассчитываем общую ширину правой части
+		local totalRightWidth = 0
+		for i = 1, #COLUMN_SIZES_RIGHT do
+			totalRightWidth = totalRightWidth + COLUMN_SIZES_RIGHT[i]
+		end
+
 		-- Обновляем размеры фрейма
-		local width = (COLUMN_SIZES_LEFT[1] or LINE_WIDTH_LEFT) + LINE_WIDTH_CENT * NumPlayers
+		local width = (COLUMN_SIZES_LEFT[1] or LINE_WIDTH_LEFT) + totalRightWidth
 		local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
 		Octo_Main_TestFrame:SetSize(width, height)
-		Octo_Main_TestFrame.childCENT:SetSize(LINE_WIDTH_CENT * E:func_NumPlayers(), height)
-		-- Обновляем фреймы персонажей
+		Octo_Main_TestFrame.childCENT:SetSize(totalRightWidth, height)
+
+		-- Обновляем фреймы персонажей с новыми размерами
 		Octo_Main_TestFrame.pool:ReleaseAll()
+		local accumulatedWidth = 0
 		for count, CharInfo in ipairs(tbl) do
 			local HeaderFrameRIGHT = Octo_Main_TestFrame.pool:Acquire()
-			HeaderFrameRIGHT:SetPoint("BOTTOMLEFT", Octo_Main_TestFrame.childCENT, "TOPLEFT", LINE_WIDTH_CENT * (count - 1), -HEADER_HEIGHT)
+			local columnWidth = COLUMN_SIZES_RIGHT[count] or LINE_WIDTH_CENT
+			HeaderFrameRIGHT:SetPoint("BOTTOMLEFT", Octo_Main_TestFrame.childCENT, "TOPLEFT", accumulatedWidth, -HEADER_HEIGHT)
+			HeaderFrameRIGHT:SetSize(columnWidth, HEADER_HEIGHT)
+			accumulatedWidth = accumulatedWidth + columnWidth
+
 			HeaderFrameRIGHT.text:SetAllPoints()
 			HeaderFrameRIGHT.text:SetFontObject(OctoFont11)
 			HeaderFrameRIGHT.text:SetWordWrap(true)
@@ -511,17 +586,29 @@ function Octo_Event_TestFrame:CreateDataProvider()
 			HeaderFrameRIGHT.text:SetText(E:func_textCENT_Chars(CharInfo))
 			HeaderFrameRIGHT:SetPropagateMouseClicks(true)
 			HeaderFrameRIGHT:SetPropagateMouseMotion(true)
-			HeaderFrameRIGHT:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
-			-- Устанавливаем цвет фона в зависимости от фракции
+			HeaderFrameRIGHT:SetHitRectInsets(1, 1, 1, 1)
+
 			local charR, charG, charB = E:func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
 			HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
-			-- Обработчики событий для фрейма персонажа
+
 			HeaderFrameRIGHT:SetScript("OnEnter", function(self)
-					HeaderFrameRIGHT.tooltip = E:func_Tooltip_Chars(CharInfo)
-					-- E:func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOM", "TOP"})
-					E:func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
+				HeaderFrameRIGHT.tooltip = E:func_Tooltip_Chars(CharInfo)
+				E:func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
 			end)
 			HeaderFrameRIGHT:Show()
+		end
+
+		-- Обновляем размеры центральных фреймов
+		for _, frame in ipairs(Octo_Main_TestFrame.viewCENT:GetFrames()) do
+			local accumulatedWidth = 0
+			for i = 1, #COLUMN_SIZES_RIGHT do
+				if frame.second[i] then
+					frame.second[i]:ClearAllPoints()
+					frame.second[i]:SetPoint("LEFT", frame, "LEFT", accumulatedWidth, 0)
+					frame.second[i]:SetWidth(COLUMN_SIZES_RIGHT[i])
+					accumulatedWidth = accumulatedWidth + COLUMN_SIZES_RIGHT[i]
+				end
+			end
 		end
 	end
 end
