@@ -2,6 +2,7 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
+	L["Line"] = true
 	L["Right Click:"] = true
 	L["Left Click:"] = true
 	L["Middle Click:"] = true
@@ -15,6 +16,7 @@ if L then
 	L["Auto Clear Chat"] = true
 	L["Auto Screenshot"] = true
 	L["Auto Cinematic Canceler"] = true
+	L["Tab Size"] = true
 
 	-- UI elements
 	L["Hide: CheckListText"] = true
@@ -254,6 +256,7 @@ end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
+	L["Line"] = "Строка"
 	L["Right Click:"] = "ПКМ:"
 	L["Left Click:"] = "ЛКМ:"
 	L["Middle Click:"] = "СКМ:"
@@ -505,4 +508,5 @@ if L then
 	L["Riftbound Caches"] = "Тайник Разлома"
 	L["Zovaal's Vault"] = "Хранилище Зоваала"
 	L["Delver's Call"] = "Вызов в вылазку"
+	L["Tab Size"] = "Размер табуляции"
 end

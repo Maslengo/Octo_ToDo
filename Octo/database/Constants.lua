@@ -55,7 +55,7 @@ E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHe
 E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup() --"|cffC41E3A"
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup() --"|cff33937F"
 
-E.ddMenuButtonHeight = 16
+E.ddMenuButtonHeight = 20
 -------------------------------------------------------------------------
 E.FULL_WIDTH = 3.60
 

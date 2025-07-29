@@ -330,7 +330,10 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		DebugEvent = false, -- Отладка событий
 		DebugFunction = false, -- Отладка функций
 		DebugButton = false, -- Отладка кнопок
-		editorFontSize = 14,
+		editorFontSize = 12,
+		editorTabSpaces = 4,
+		editorTheme = "Twilight",
+
 		addonFontSize = 11,
 	}
 	for k, v in next, (debugDefaults) do

@@ -6,69 +6,62 @@ local Octo_EventFrame_Debug = CreateFrame("FRAME")
 Octo_EventFrame_Debug:Hide()
 ----------------------------------------------------------------
 -- Подключаем библиотеки
+local LibStub = LibStub
+local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibIndentation = LibStub("LibIndentation-1.0")
 ----------------------------------------------------------------
 -- Таблица цветовых схем для редактора
-local editor_themes = {
-	["Standard"] = {
-		["Special"] = "|c00ff3333",
-		["Keyword"] = "|c004444ff",
-		["Comment"] = "|c0000aa00",
-		["Number"] = "|c00ff9900",
-		["String"] = "|c00999999",
+E.editorThemes = {
+	["Twilight"] = {
+		-- ["Special"] = "|cff7587A6", -- спецсимволы (голубоватый)
+		["Special"] = "|cff66d9ef", -- спецсимволы (голубой)
+		["Keyword"] = "|cffCDA869", -- ключевые слова (золотисто-бежевый)
+		["Comment"] = "|cff5F5A60", -- комментарии (серо-фиолетовый)
+		["Number"] = "|cffCF6A4C", -- числа (оранжево-красный)
+		["String"] = "|cff8F9D6A", -- строки (травянисто-зелёный)
+		["Background"] = "|cff141414", -- тёмный фон
+		-- ["Foreground"] = "|cffF8F8F2", -- основной текст (не чисто белый, а слегка голубоватый)
+		["Function"] = "|cffDAD085", -- функции (жёлто-бежевый)
+		["Class"] = "|cff9B703F", -- классы/типы (коричневатый)
+		-- ["Operator"] = "|cffF8F8F2", -- операторы (как основной текст)
+		-- ["Bracket"] = "|cffF8F8F2", -- скобки (как основной текст)
+		["Tag"] = "|cffAC885B", -- теги (коричневатый)
+		["Attribute"] = "|cff7587A6", -- атрибуты (голубоватый)
+		["Constant"] = "|cffCF6A4C", -- константы (оранжево-красный)
+		["Error"] = "|cffCF6A4C", -- ошибки (оранжево-красный)
 	},
-	["Monokai"] = {
-		["Special"] = "|c0066d9ef",
-		["Keyword"] = "|c00f92672",
-		["Comment"] = "|c0075715e",
-		["Number"] = "|c00ae81ff",
-		["String"] = "|c00e6db74",
+	["Standard"] = {
+		["Special"] = "|c00ff3333", -- спецсимволы (ярко-красный)
+		["Keyword"] = "|c004444ff", -- ключевые слова (синий)
+		["Comment"] = "|c0000aa00", -- комментарии (зелёный)
+		["Number"] = "|c00ff9900", -- числа (оранжевый)
+		["String"] = "|c00999999", -- строки (серый)
 	},
 	["Obsidian"] = {
-		["Special"] = "|c00AFC0E5",
-		["Keyword"] = "|c0093C763",
-		["Comment"] = "|c0066747B",
-		["Number"] = "|c00FFCD22",
-		["String"] = "|c00EC7600",
+		["Special"] = "|c00AFC0E5", -- спецсимволы (голубой)
+		["Keyword"] = "|c0093C763", -- ключевые слова (зелёный)
+		["Comment"] = "|c0066747B", -- комментарии (серо-голубой)
+		["Number"] = "|c00FFCD22", -- числа (жёлтый)
+		["String"] = "|c00EC7600", -- строки (оранжевый)
 	},
-	["Sublime"] = {
-		["Special"] = "|cff66d9ef",
-		["Keyword"] = "|cffF9EE98",
-		["Comment"] = "|cff605A60",
-		["Number"] = "|cffCF6137",
-		["String"] = "|cff829D61",
+	["Monokai"] = {
+		["Special"] = "|c0066d9ef", -- спецсимволы (бирюзовый)
+		["Keyword"] = "|c00f92672", -- ключевые слова (розовый)
+		["Comment"] = "|c0075715e", -- комментарии (серо-коричневый)
+		["Number"] = "|c00ae81ff", -- числа (фиолетовый)
+		["String"] = "|c00e6db74", -- строки (жёлтый)
 	},
-	-- ["Twilight"] = {
-	--     ["Special"] = "|cff7587A6",  -- голубоватый для спецсимволов
-	--     ["Keyword"] = "|cffCDA869",  -- бежевый для ключевых слов
-	--     ["Comment"] = "|cff5F5A60",  -- серо-фиолетовый для комментариев
-	--     ["Number"] = "|cffCF6A4C",  -- оранжевый для чисел
-	--     ["String"] = "|cff8F9D6A",  -- зеленоватый для строк
-	--     ["Operator"] = "|cffF9EE98", -- желтый для операторов
-	--     ["Bracket"] = "|cffF8F8F8", -- белый для скобок
-	--     ["Identifier"] = "|cffF8F8F8", -- белый для идентификаторов
-	-- },
-	["Twilight"] = {
-		["Background"]   = "|cff141414",  -- тёмный фон
-		["Foreground"]   = "|cffF8F8F2",  -- основной текст (не чисто белый, а слегка голубоватый)
-		["Comment"]      = "|cff5F5A60",  -- комментарии (серо-фиолетовый)
-		["String"]       = "|cff8F9D6A",  -- строки (травянисто-зелёный)
-		["Number"]       = "|cffCF6A4C",  -- числа (оранжево-красный)
-		["Keyword"]      = "|cffCDA869",  -- ключевые слова (золотисто-бежевый)
-		["Function"]     = "|cffDAD085",  -- функции (жёлто-бежевый)
-		["Class"]        = "|cff9B703F",  -- классы/типы (коричневатый)
-		["Operator"]     = "|cffF8F8F2",  -- операторы (как основной текст)
-		["Bracket"]      = "|cffF8F8F2",  -- скобки (как основной текст)
-		["Tag"]          = "|cffAC885B",  -- теги (коричневатый)
-		["Attribute"]    = "|cff7587A6",  -- атрибуты (голубоватый)
-		["Special"]      = "|cff7587A6",  -- спецсимволы (голубоватый)
-		["Constant"]     = "|cffCF6A4C",  -- константы (оранжево-красный)
-		["Error"]        = "|cffCF6A4C",  -- ошибки (оранжево-красный)
+	["Sublime2"] = {
+		["Special"] = "|cff66d9ef", -- спецсимволы (голубой)
+		["Keyword"] = "|cffF9EE98", -- ключевые слова (светло-жёлтый)
+		["Comment"] = "|cff605A60", -- комментарии (серо-фиолетовый)
+		["Number"] = "|cffCF6137", -- числа (красно-оранжевый)
+		["String"] = "|cff829D61", -- строки (зелёный)
 	},
 }
-local function createColorScheme(themeName)
-	local theme = editor_themes[themeName] or editor_themes["Twilight"]
+function E:func_createColorScheme(themeName)
+	local theme = E.editorThemes[themeName] or E.editorThemes["Twilight"]
 	return {
 		-- Основные токены
 		[LibIndentation.tokens.TOKEN_UNKNOWN] = theme["Error"],
@@ -112,11 +105,11 @@ local function createColorScheme(themeName)
 		[LibIndentation.tokens.TOKEN_HASH] = theme["Operator"],
 		[LibIndentation.tokens.TOKEN_PERCENT] = theme["Operator"],
 		-- Дополнительные кастомные правила
-		["..."] = theme["Special"],  -- тройная точка
-		[".."] = theme["Operator"],  -- конкатенация строк
+		["..."] = theme["Special"], -- тройная точка
+		[".."] = theme["Operator"], -- конкатенация строк
 		-- WoW-специфичные токены
-		["|c"] = theme["Special"],   -- начало цветового кода
-		["|r"] = theme["Special"],   -- конец цветового кода
+		["|c"] = theme["Special"], -- начало цветового кода
+		["|r"] = theme["Special"], -- конец цветового кода
 		-- Ключевые слова Lua
 		["and"] = theme["Keyword"],
 		["break"] = theme["Keyword"],
@@ -139,11 +132,9 @@ local function createColorScheme(themeName)
 		["true"] = theme["Constant"],
 		["until"] = theme["Keyword"],
 		["while"] = theme["Keyword"],
-		[0] = "|r"  -- сброс цвета
+		[0] = "|r" -- сброс цвета
 	}
 end
--- Пример использования:
-local colorScheme = createColorScheme("Twilight") -- или "Sublime", "Monokai" и т.д.
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
@@ -161,16 +152,14 @@ local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
 local textR, textG, textB, textA = 1, 1, 1, 1
 local classR, classG, classB = GetClassColor(E.classFilename)
-
-
 local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	-- Создаем основной фрейм
 	local frame = CreateFrame("BUTTON", frameName, parent, "DialogBoxFrame")
 	E:func_InitFrame(frame)
-
-
-	local width = E.MonitorWidth/3
-	local height = E.MonitorHeight/1.5
+	-- local width = E.MonitorWidth/3
+	-- local height = E.MonitorHeight/1.5
+	local width = E.MonitorWidth/2
+	local height = E.MonitorHeight/2
 	frame:SetSize(width, height)
 	frame:SetResizable(true)
 	frame:SetDontSavePosition(true)
@@ -194,7 +183,6 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	frame.editFrame:SetPoint("BOTTOMRIGHT", -20, 60)
 	-- Настройка backdrop для editFrame
 	frame.editFrame:SetBackdrop(E.menuBackdrop)
-	-- frame.editFrame:SetBackdropColor(.008, .008, .05, 1)
 	frame.editFrame:SetBackdropColor(25/255, 25/255, 35/255, 1)
 	frame.editFrame:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 	-- Кнопка изменения размера
@@ -205,6 +193,13 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	frame.resize:SetHighlightTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
 	frame.resize:SetPushedTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
 	frame.resize:RegisterForDrag("LeftButton")
+	-- LINE
+	frame.lineText = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+	frame.lineText:SetPoint("BOTTOMLEFT", 20, 20)
+	frame.lineText:SetText(L["Line"])
+	-- HZ
+	frame.HZ = CreateFrame("Editbox", nil, frame, "InputBoxTemplate")
+	frame.HZ:Hide()
 	-- Настройка скроллинга
 	local scrollBox = frame.editFrame:GetScrollBox()
 	scrollBox:SetAllPoints(frame.editFrame)
@@ -214,25 +209,24 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	local editBox = frame.editFrame:GetEditBox()
 	editBox:HookScript("OnEnterPressed", function(self) self:Insert("\n") end)
 	editBox:HookScript("OnEscapePressed", function(self) self:ClearFocus() end)
-	editBox:SetFont(E.Octo_font, Octo_ToDo_DB_Vars.editorFontSize or 11, "OUTLINE")
-
-
-
-
-	-- -- Обработчики событий
-	-- frame:SetScript("OnMouseDown", function(self, button)
-	--     if button == "LeftButton" then
-	--         self:StartMoving()
-	--     elseif button == "TOGGLEGAMEMENU" then
-	--         self:Hide()
-	--         self:SetPropagateKeyboardInput(false)
-	--     else
-	--         self:SetPropagateKeyboardInput(true)
-	--     end
-	-- end)
-	-- frame:SetScript("OnMouseUp", function(self)
-	--     self:StopMovingOrSizing()
-	-- end)
+	editBox:SetFont(E.Octo_font, Octo_ToDo_DB_Vars.editorFontSize or 12, "")
+	editBox:HookScript("OnCursorChanged", function(editBox)
+			local text = frame.HZ.GetText(editBox)
+			local pos = editBox:GetCursorPosition()
+			local next = -1
+			local line = 0
+			-- Подсчет общего количества строк
+			local totalLines = 1 -- Минимум 1 строка
+			for _ in text:gmatch("\n") do
+				totalLines = totalLines + 1
+			end
+			-- Определение текущей строки
+			while next and pos >= next do
+				next = text:find("[\n]", next + 1)
+				line = line + 1
+			end
+			frame.lineText:SetText(L["Line"]..": "..line.."/"..totalLines)
+	end)
 	-- Обработчики перемещения фрейма
 	frame:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
@@ -257,13 +251,33 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 				end
 			end
 	end)
+	-- Минимальные размеры фрейма (нельзя сделать меньше)
+	local MIN_WIDTH = 400  -- Минимальная ширина
+	local MIN_HEIGHT = 300 -- Минимальная высота
+	-- Переменная для отслеживания, изменяем ли мы размер
+	local isResizing = false
 	frame.resize:SetScript("OnDragStart", function(self)
+			isResizing = true
 			self:GetParent():StartSizing("BOTTOMRIGHT", true)
 			self:GetParent():SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
 	end)
 	frame.resize:SetScript("OnDragStop", function(self)
+			isResizing = false
 			self:GetParent():StopMovingOrSizing()
 			self:GetParent():SetAlpha(1)
+	end)
+	-- Проверка размера в реальном времени (OnUpdate)
+	frame:SetScript("OnUpdate", function(self, elapsed)
+			if isResizing then
+				local currentWidth, currentHeight = self:GetSize()
+				if currentWidth < MIN_WIDTH or currentHeight < MIN_HEIGHT then
+					-- Принудительно устанавливаем минимальный размер
+					self:SetSize(
+						math.max(currentWidth, MIN_WIDTH),
+						math.max(currentHeight, MIN_HEIGHT)
+					)
+				end
+			end
 	end)
 	return frame
 end
@@ -312,7 +326,7 @@ local function dumpEdit(indent, msg, tables)
 		end
 	end
 	if indent == 0 then
-		LibIndentation.enable(editBox:GetEditBox(), colorScheme, 4) -- 4 - ширина табуляции в пробелах
+		LibIndentation.enable(editBox:GetEditBox(), E:func_createColorScheme(Octo_ToDo_DB_Vars.editorTheme or "Twilight"), Octo_ToDo_DB_Vars.editorTabSpaces) -- 4 - ширина табуляции в пробелах
 		editBox:SetText(str)
 		LibIndentation.indentEditbox(editBox:GetEditBox())
 		editFrame:Show()
@@ -617,7 +631,10 @@ for name, data in pairs(slashCommands) do
 	end
 end
 -- Регистрация событий
-local MyEventsTable = {"ADDON_LOADED"}
+local MyEventsTable = {
+	"ADDON_LOADED",
+	"PLAYER_LOGIN",
+}
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
 -- Обработчик события ADDON_LOADED
 function Octo_EventFrame_Debug:ADDON_LOADED(addonName)
@@ -626,4 +643,7 @@ function Octo_EventFrame_Debug:ADDON_LOADED(addonName)
 		self.ADDON_LOADED = nil
 		E:func_CreateMinimapButton(GlobalAddonName, "Debug", Octo_Debug_DB)
 	end
+end
+function Octo_EventFrame_Debug:PLAYER_LOGIN()
+	E:func_Create_DDframe_editFrame(editFrame, E.Blue_Color, nil)
 end

@@ -2,9 +2,9 @@ local revision = 24
 local MAJOR_VERSION, MINOR_VERSION = "LibIndentation-1.0", revision
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
- 
-local next = next
+
 -- Локальные ссылки на функции string для оптимизации
+local next = next
 local stringlen = string.len
 local stringformat = string.format
 local stringfind = string.find
@@ -14,36 +14,34 @@ local stringchar = string.char
 local stringrep = string.rep
 local stringgsub = string.gsub
 
--- Константы
+-- Настройки по умолчанию
 local defaultTabWidth = 4
 local defaultColorTable
-local workingTable = {} -- Рабочая таблица для временных данных
-local workingTable2 = {} -- Вторая рабочая таблица
+local workingTable = {} -- Рабочие таблицы для временного хранения данных
+local workingTable2 = {}
 
-
-
+-- Инициализация библиотеки
 if not lib._listener then
-
-	-- Очистка таблицы
+	-- Функция для очистки таблицы
 	local function tableclear(t)
 		for k in next, (t) do
 			t[k] = nil
 		end
 	end
 
-	-- Вставка строки в позицию
+	-- Вставка строки в указанную позицию
 	local function stringinsert(s, pos, insertStr)
 		return stringsub(s, 1, pos) .. insertStr .. stringsub(s, pos + 1)
 	end
 	lib.stringinsert = stringinsert
 
-	-- Удаление части строки
+	-- Удаление части строки между позициями
 	local function stringdelete(s, pos1, pos2)
 		return stringsub(s, 1, pos1 - 1) .. stringsub(s, pos2 + 1)
 	end
 	lib.stringdelete = stringdelete
 
-	-- Типы токенов
+	-- Определение типов токенов
 	local tokens = {}
 	lib.tokens = tokens
 	tokens.TOKEN_UNKNOWN = 0
@@ -82,14 +80,12 @@ if not lib._listener then
 	tokens.TOKEN_SPECIAL = 34
 	tokens.TOKEN_VERTICAL = 35
 	tokens.TOKEN_TILDE = 36
-	-- WoW-специфичные токены
 	tokens.TOKEN_COLORCODE_START = 37
 	tokens.TOKEN_COLORCODE_STOP = 38
-	-- Новые в Lua 5.1
 	tokens.TOKEN_HASH = 39
 	tokens.TOKEN_PERCENT = 40
 
-	-- ASCII коды символов
+	-- Таблица байтовых значений символов
 	local bytes = {}
 	lib.bytes = bytes
 	bytes.BYTE_LINEBREAK_UNIX = stringbyte("\n")
@@ -122,15 +118,13 @@ if not lib._listener then
 	bytes.BYTE_ASTERISK = stringbyte("*")
 	bytes.BYTE_LESSTHAN = stringbyte("<")
 	bytes.BYTE_GREATERTHAN = stringbyte(">")
-	-- WoW-специфичные символы
 	bytes.BYTE_VERTICAL = stringbyte("|")
 	bytes.BYTE_r = stringbyte("r")
 	bytes.BYTE_c = stringbyte("c")
-	-- Новые в Lua 5.1
 	bytes.BYTE_HASH = stringbyte("#")
 	bytes.BYTE_PERCENT = stringbyte("%")
 
-	-- Таблицы для быстрой проверки символов
+	-- Таблицы для классификации символов
 	local linebreakCharacters = {}
 	lib.linebreakCharacters = linebreakCharacters
 	linebreakCharacters[bytes.BYTE_LINEBREAK_UNIX] = 1
@@ -164,13 +158,11 @@ if not lib._listener then
 	specialCharacters[bytes.BYTE_RIGHTWING] = tokens.TOKEN_RIGHTWING
 	specialCharacters[bytes.BYTE_CIRCUMFLEX] = tokens.TOKEN_CIRCUMFLEX
 	specialCharacters[bytes.BYTE_ASTERISK] = tokens.TOKEN_ASTERISK
-	-- WoW-специфичные
 	specialCharacters[bytes.BYTE_VERTICAL] = -1
-	-- Новые в Lua 5.1
 	specialCharacters[bytes.BYTE_HASH] = tokens.TOKEN_HASH
 	specialCharacters[bytes.BYTE_PERCENT] = tokens.TOKEN_PERCENT
 
-	-- Функции для парсинга чисел
+	-- Функции для разбора чисел
 	local function nextNumberExponentPartInt(text, pos)
 		while true do
 			local byte = stringbyte(text, pos)
@@ -234,7 +226,7 @@ if not lib._listener then
 		end
 	end
 
-	-- Парсинг идентификаторов
+	-- Разбор идентификаторов
 	local function nextIdentifier(text, pos)
 		while true do
 			local byte = stringbyte(text, pos)
@@ -248,7 +240,7 @@ if not lib._listener then
 		end
 	end
 
-	-- Проверка на строку в квадратных скобках
+	-- Разбор строк в квадратных скобках
 	local function isBracketStringNext(text, pos)
 		local byte = stringbyte(text, pos)
 		if byte == bytes.BYTE_LEFTBRACKET then
@@ -268,7 +260,6 @@ if not lib._listener then
 		end
 	end
 
-	-- Парсинг строки в квадратных скобках
 	local function nextBracketString(text, pos, equalsCount)
 		local state = 0
 		while true do
@@ -295,16 +286,13 @@ if not lib._listener then
 		end
 	end
 
-	-- Парсинг комментариев
+	-- Разбор комментариев
 	local function nextComment(text, pos)
-		-- Проверка на длинный комментарий
 		local isBracketString, nextPos, equalsCount = isBracketStringNext(text, pos)
 		if isBracketString then
 			local tokenType, nextPos2 = nextBracketString(text, nextPos, equalsCount)
 			return tokens.TOKEN_COMMENT_LONG, nextPos2
 		end
-
-		-- Короткий комментарий - ищем перенос строки
 		local byte = stringbyte(text, pos)
 		while true do
 			byte = stringbyte(text, pos)
@@ -318,7 +306,7 @@ if not lib._listener then
 		end
 	end
 
-	-- Парсинг строк
+	-- Разбор строк в кавычках
 	local function nextString(text, pos, character)
 		local even = true
 		while true do
@@ -340,19 +328,15 @@ if not lib._listener then
 		end
 	end
 
-	-- Основная функция парсинга токенов
+	-- Основная функция токенизации
 	local function nextToken(text, pos)
 		local byte = stringbyte(text, pos)
 		if not byte then
 			return nil
 		end
-
-		-- Перенос строки
 		if linebreakCharacters[byte] then
 			return tokens.TOKEN_LINEBREAK, pos + 1
 		end
-
-		-- Пробельные символы
 		if whitespaceCharacters[byte] then
 			while true do
 				pos = pos + 1
@@ -362,15 +346,11 @@ if not lib._listener then
 				end
 			end
 		end
-
-		-- Специальные символы
 		local token = specialCharacters[byte]
 		if token then
 			if token ~= -1 then
 				return token, pos + 1
 			end
-
-			-- WoW-специфичные символы (цветовые коды)
 			if byte == bytes.BYTE_VERTICAL then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_VERTICAL then
@@ -384,8 +364,6 @@ if not lib._listener then
 				end
 				return tokens.TOKEN_UNKNOWN, pos + 1
 			end
-
-			-- Обработка минуса (может быть началом комментария)
 			if byte == bytes.BYTE_MINUS then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_MINUS then
@@ -393,16 +371,12 @@ if not lib._listener then
 				end
 				return tokens.TOKEN_MINUS, pos + 1
 			end
-
-			-- Обработка строк
 			if byte == bytes.BYTE_SINGLE_QUOTE then
 				return nextString(text, pos + 1, bytes.BYTE_SINGLE_QUOTE)
 			end
 			if byte == bytes.BYTE_DOUBLE_QUOTE then
 				return nextString(text, pos + 1, bytes.BYTE_DOUBLE_QUOTE)
 			end
-
-			-- Обработка квадратных скобок
 			if byte == bytes.BYTE_LEFTBRACKET then
 				local isBracketString, nextPos, equalsCount = isBracketStringNext(text, pos)
 				if isBracketString then
@@ -411,8 +385,6 @@ if not lib._listener then
 					return tokens.TOKEN_LEFTBRACKET, pos + 1
 				end
 			end
-
-			-- Обработка операторов сравнения и присваивания
 			if byte == bytes.BYTE_EQUALS then
 				byte = stringbyte(text, pos + 1)
 				if not byte then
@@ -423,8 +395,6 @@ if not lib._listener then
 				end
 				return tokens.TOKEN_ASSIGNMENT, pos + 1
 			end
-
-			-- Обработка точек (многоточия, числа с плавающей точкой)
 			if byte == bytes.BYTE_PERIOD then
 				byte = stringbyte(text, pos + 1)
 				if not byte then
@@ -441,8 +411,6 @@ if not lib._listener then
 				end
 				return tokens.TOKEN_PERIOD, pos + 1
 			end
-
-			-- Обработка операторов сравнения
 			if byte == bytes.BYTE_LESSTHAN then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_EQUALS then
@@ -450,7 +418,6 @@ if not lib._listener then
 				end
 				return tokens.TOKEN_LT, pos + 1
 			end
-
 			if byte == bytes.BYTE_GREATERTHAN then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_EQUALS then
@@ -458,7 +425,6 @@ if not lib._listener then
 				end
 				return tokens.TOKEN_GT, pos + 1
 			end
-
 			if byte == bytes.BYTE_TILDE then
 				byte = stringbyte(text, pos + 1)
 				if byte == bytes.BYTE_EQUALS then
@@ -466,18 +432,15 @@ if not lib._listener then
 				end
 				return tokens.TOKEN_TILDE, pos + 1
 			end
-
 			return tokens.TOKEN_UNKNOWN, pos + 1
 		elseif byte >= bytes.BYTE_0 and byte <= bytes.BYTE_9 then
-			-- Числа
 			return nextNumberIntPart(text, pos + 1)
 		else
-			-- Идентификаторы
 			return nextIdentifier(text, pos + 1)
 		end
 	end
 
-	-- Настройки отступов
+	-- Таблицы для управления отступами
 	local noIndentEffect = {0, 0}
 	local indentLeft = {-1, 0}
 	local indentRight = {0, 1}
@@ -527,13 +490,12 @@ if not lib._listener then
 		return stringrep(" ", a*b)
 	end
 
-	-- Функция для подсветки синтаксиса
+	-- Функция для подсветки кода цветами
 	function lib.colorCodeCode(code, colorTable, caretPosition)
 		local stopColor = colorTable and colorTable[0]
 		if not stopColor then
 			return code, caretPosition
 		end
-
 		local stopColorLen = stringlen(stopColor)
 		tableclear(workingTable)
 		local tsize = 0
@@ -546,6 +508,7 @@ if not lib._listener then
 		local level = 0
 
 		while true do
+			-- Обработка позиции курсора
 			if caretPosition and not newCaretPosition and pos >= caretPosition then
 				if pos == caretPosition then
 					newCaretPosition = totalLen
@@ -569,9 +532,8 @@ if not lib._listener then
 				break
 			end
 
-			-- Игнорирование цветовых кодов
+			-- Пропускаем цветовые коды и неизвестные токены
 			if tokenType == tokens.TOKEN_COLORCODE_START or tokenType == tokens.TOKEN_COLORCODE_STOP or tokenType == tokens.TOKEN_UNKNOWN then
-				-- пропускаем
 			elseif tokenType == tokens.TOKEN_LINEBREAK or tokenType == tokens.TOKEN_WHITESPACE then
 				if tokenType == tokens.TOKEN_LINEBREAK then
 					numLines = numLines + 1
@@ -584,12 +546,12 @@ if not lib._listener then
 			else
 				local str = stringsub(code, pos, nextPos - 1)
 				prevTokenWidth = nextPos - pos
-
-				-- Добавление подсветки
+				-- Проверяем, является ли токен ключевым словом
 				if keywords[str] then
 					tokenType = tokens.TOKEN_KEYWORD
 				end
 
+				-- Получаем цвет для токена
 				local color
 				if stopColor then
 					color = colorTable[str]
@@ -605,6 +567,7 @@ if not lib._listener then
 					end
 				end
 
+				-- Добавляем цветные токены в результат
 				if color then
 					tsize = tsize + 1
 					workingTable[tsize] = color
@@ -626,7 +589,7 @@ if not lib._listener then
 		return table.concat(workingTable), newCaretPosition, numLines
 	end
 
-	-- Функция для форматирования отступов
+	-- Функция для форматирования отступов в коде
 	function lib.indentCode(code, tabWidth, colorTable, caretPosition)
 		local fillFunction
 		if tabWidth == nil then
@@ -644,6 +607,7 @@ if not lib._listener then
 		tableclear(workingTable2)
 		local tsize2 = 0
 		local totalLen2 = 0
+
 		local stopColor = colorTable and colorTable[0]
 		local stopColorLen = not stopColor or stringlen(stopColor)
 		local newCaretPosition
@@ -658,6 +622,7 @@ if not lib._listener then
 		local postIndent = 0
 
 		while true do
+			-- Обработка позиции курсора
 			if caretPosition and not newCaretPosition and pos >= caretPosition then
 				if pos == caretPosition then
 					newCaretPosition = totalLen + totalLen2
@@ -677,19 +642,25 @@ if not lib._listener then
 			prevTokenWasColored = false
 			prevTokenWidth = 0
 			local tokenType, nextPos = nextToken(code, pos)
+
+			-- Обработка конца строки или файла
 			if not tokenType or tokenType == tokens.TOKEN_LINEBREAK then
 				level = level + preIndent
 				if level < 0 then level = 0 end
+
+				-- Добавляем отступы в начало строки
 				local s = fillFunction(level, tabWidth)
 				tsize = tsize + 1
 				workingTable[tsize] = s
 				totalLen = totalLen + stringlen(s)
 
+				-- Обновляем позицию курсора
 				if newCaretPosition and not newCaretPositionFinalized then
 					newCaretPosition = newCaretPosition + stringlen(s)
 					newCaretPositionFinalized = true
 				end
 
+				-- Добавляем накопленные токены строки
 				for k, v in next, (workingTable2) do
 					tsize = tsize + 1
 					workingTable[tsize] = v
@@ -700,11 +671,16 @@ if not lib._listener then
 					break
 				end
 
+				-- Добавляем символ перевода строки
 				tsize = tsize + 1
 				workingTable[tsize] = stringsub(code, pos, nextPos - 1)
 				totalLen = totalLen + nextPos - pos
+
+				-- Обновляем уровень отступа для следующей строки
 				level = level + postIndent
 				if level < 0 then level = 0 end
+
+				-- Сбрасываем временные данные для новой строки
 				tableclear(workingTable2)
 				tsize2 = 0
 				totalLen2 = 0
@@ -713,6 +689,7 @@ if not lib._listener then
 				preIndent = 0
 				postIndent = 0
 			elseif tokenType == tokens.TOKEN_WHITESPACE then
+				-- Пробелы добавляем только после первого не-пробельного символа
 				if hitNonWhitespace then
 					prevTokenWidth = nextPos - pos
 					tsize2 = tsize2 + 1
@@ -721,13 +698,13 @@ if not lib._listener then
 					totalLen2 = totalLen2 + stringlen(s)
 				end
 			elseif tokenType == tokens.TOKEN_COLORCODE_START or tokenType == tokens.TOKEN_COLORCODE_STOP or tokenType == tokens.TOKEN_UNKNOWN then
-				-- пропускаем
+				-- Пропускаем цветовые коды и неизвестные токены
 			else
 				hitNonWhitespace = true
 				local str = stringsub(code, pos, nextPos - 1)
 				prevTokenWidth = nextPos - pos
 
-				-- Проверка на модификаторы отступов
+				-- Определяем влияние токена на отступы
 				local indentTable
 				if tokenType == tokens.TOKEN_IDENTIFIER then
 					indentTable = keywords[str]
@@ -749,11 +726,12 @@ if not lib._listener then
 					end
 				end
 
-				-- Добавление подсветки
+				-- Проверяем, является ли токен ключевым словом
 				if keywords[str] then
 					tokenType = tokens.TOKEN_KEYWORD
 				end
 
+				-- Получаем цвет для токена
 				local color
 				if stopColor then
 					color = colorTable[str]
@@ -769,6 +747,7 @@ if not lib._listener then
 					end
 				end
 
+				-- Добавляем цветные токены в результат
 				if color then
 					tsize2 = tsize2 + 1
 					workingTable2[tsize2] = color
@@ -792,12 +771,11 @@ if not lib._listener then
 		return table.concat(workingTable), newCaretPosition
 	end
 
-	-- WoW-специфичный код:
+	-- Вспомогательные функции для работы с курсором
 	local GetTime = GetTime
 	local editboxSetText
 	local editboxGetText
 
-	-- Код для работы с курсором (спасибо Tem!)
 	local function critical_enter(editbox)
 		local script = editbox:GetScript("OnTextSet")
 		if script then
@@ -840,9 +818,8 @@ if not lib._listener then
 		critical_leave(editbox, script, script2)
 	end
 
-	-- Удаление WoW-цветовых кодов
+	-- Функция для удаления цветовых кодов WoW
 	function lib.stripWowColors(code)
-		-- Исправление бага с незавершенной строкой
 		code = stringgsub(code, "|r\n\n$", "|r")
 		tableclear(workingTable)
 		local tsize = 0
@@ -891,7 +868,7 @@ if not lib._listener then
 		return table.concat(workingTable)
 	end
 
-	-- Декодирование текста (удаление цветовых кодов)
+	-- Функции для работы с кодированием/декодированием текста
 	function lib.decode(code)
 		if code then
 			code = lib.stripWowColors(code)
@@ -900,7 +877,6 @@ if not lib._listener then
 		return code or ""
 	end
 
-	-- Кодирование текста (экранирование |)
 	function lib.encode(code)
 		if code then
 			code = stringgsub(code, "|", "||")
@@ -908,7 +884,7 @@ if not lib._listener then
 		return code or ""
 	end
 
-	-- Удаление цветовых кодов с сохранением позиции
+	-- Функция для удаления цветовых кодов с сохранением позиции
 	function lib.stripWowColorsWithPos(code, pos)
 		code = stringinsert(code, pos, "\2")
 		code = lib.stripWowColors(code)
@@ -917,18 +893,16 @@ if not lib._listener then
 		return code, pos
 	end
 
-	-- Добавление переносов строк в конец
+	-- Функция для добавления переводов строк в конец текста
 	local linebreak = stringbyte("\n")
 	function lib.padWithLinebreaks(code)
 		local len = stringlen(code)
 		local linebreakcount = 0
-
 		while len > 0 and linebreakcount < 2 do
 			local b = stringbyte(code, len)
 			if b == linebreak then
 				linebreakcount = linebreakcount + 1
 			elseif whitespaceCharacters[b] then
-				-- Игнорируем пробельные символы
 			else
 				break
 			end
@@ -944,15 +918,15 @@ if not lib._listener then
 		end
 	end
 
-	-- Таблицы данных
-	local enabled = {} -- Включенные editbox'ы
-	local dirty = {} -- Флаги изменений
-	local editboxIndentCache = {} -- Кэш отступов
-	local decodeCache = {} -- Кэш декодированного текста
-	local editboxStringCache = {} -- Кэш строк
-	local editboxNumLinesCache = {} -- Кэш количества строк
+	-- Кэши для работы с текстовыми полями
+	local enabled = {}
+	local dirty = {}
+	local editboxIndentCache = {}
+	local decodeCache = {}
+	local editboxStringCache = {}
+	local editboxNumLinesCache = {}
 
-	-- Подсветка синтаксиса для editbox
+	-- Функция для подсветки синтаксиса в текстовом поле
 	function lib.colorCodeEditbox(editbox)
 		dirty[editbox] = nil
 		local colorTable = editbox.faiap_colorTable or defaultColorTable
@@ -960,23 +934,30 @@ if not lib._listener then
 		local orgCode = editboxGetText(editbox)
 		local prevCode = editboxStringCache[editbox]
 
+		-- Если текст не изменился, выходим
 		if prevCode == orgCode then
 			return
 		end
 
+		-- Получаем позицию курсора
 		local pos = getCaretPos(editbox)
 		local code
 		code, pos = lib.stripWowColorsWithPos(orgCode, pos)
+
+		-- Подсвечиваем код
 		colorTable[0] = "|r"
 		local newCode, newPos, numLines = lib.colorCodeCode(code, colorTable, pos)
 		newCode = lib.padWithLinebreaks(newCode)
 		editboxStringCache[editbox] = newCode
 
+		-- Если текст изменился, обновляем поле ввода
 		if orgCode ~= newCode then
 			local script, script2 = critical_enter(editbox)
 			decodeCache[editbox] = nil
 			local stringlenNewCode = stringlen(newCode)
 			editboxSetText(editbox, newCode)
+
+			-- Восстанавливаем позицию курсора
 			if newPos then
 				if newPos < 0 then newPos = 0 end
 				if newPos > stringlenNewCode then newPos = stringlenNewCode end
@@ -985,13 +966,14 @@ if not lib._listener then
 			critical_leave(editbox, script, script2)
 		end
 
+		-- Если изменилось количество строк, обновляем отступы
 		if editboxNumLinesCache[editbox] ~= numLines then
 			lib.indentEditbox(editbox)
 		end
 		editboxNumLinesCache[editbox] = numLines
 	end
 
-	-- Форматирование отступов для editbox
+	-- Функция для форматирования отступов в текстовом поле
 	function lib.indentEditbox(editbox)
 		dirty[editbox] = nil
 		local colorTable = editbox.faiap_colorTable or defaultColorTable
@@ -999,23 +981,30 @@ if not lib._listener then
 		local orgCode = editboxGetText(editbox)
 		local prevCode = editboxIndentCache[editbox]
 
+		-- Если текст не изменился, выходим
 		if prevCode == orgCode then
 			return
 		end
 
+		-- Получаем позицию курсора
 		local pos = getCaretPos(editbox)
 		local code
 		code, pos = lib.stripWowColorsWithPos(orgCode, pos)
+
+		-- Форматируем отступы
 		colorTable[0] = "|r"
 		local newCode, newPos = lib.indentCode(code, tabWidth, colorTable, pos)
 		newCode = lib.padWithLinebreaks(newCode)
 		editboxIndentCache[editbox] = newCode
 
+		-- Если текст изменился, обновляем поле ввода
 		if code ~= newCode then
 			local script, script2 = critical_enter(editbox)
 			decodeCache[editbox] = nil
 			local stringlenNewCode = stringlen(newCode)
 			editboxSetText(editbox, newCode)
+
+			-- Восстанавливаем позицию курсора
 			if newPos then
 				if newPos < 0 then newPos = 0 end
 				if newPos > stringlenNewCode then newPos = stringlenNewCode end
@@ -1025,18 +1014,16 @@ if not lib._listener then
 		end
 	end
 
-	-- Хук для обработчиков событий
+	-- Функции для перехвата событий текстового поля
 	local function hookHandler(editbox, handler, newFun)
 		local oldFun = editbox:GetScript(handler)
 		if oldFun == newFun then
-			-- уже подключен, пропускаем
 			return
 		end
 		editbox["faiap_old_" .. handler] = oldFun
 		editbox:SetScript(handler, newFun)
 	end
 
-	-- Обработчик изменения текста
 	local function textChangedHook(editbox, ...)
 		local oldFun = editbox["faiap_old_OnTextChanged"]
 		if oldFun then
@@ -1047,7 +1034,6 @@ if not lib._listener then
 		end
 	end
 
-	-- Обработчик нажатия Tab
 	local function tabPressedHook(editbox, ...)
 		local oldFun = editbox["faiap_old_OnTabPressed"]
 		if oldFun then
@@ -1058,7 +1044,6 @@ if not lib._listener then
 		end
 	end
 
-	-- Обработчик обновления
 	local function onUpdateHook(editbox, ...)
 		local oldFun = editbox["faiap_old_OnUpdate"]
 		if oldFun then
@@ -1074,7 +1059,7 @@ if not lib._listener then
 		end
 	end
 
-	-- Новые методы GetText/SetText для editbox
+	-- Новые методы GetText/SetText для текстового поля
 	local function newGetText(editbox)
 		local decoded = decodeCache[editbox]
 		if not decoded then
@@ -1092,7 +1077,7 @@ if not lib._listener then
 		end
 	end
 
-	-- Включение форматирования для editbox
+	-- Включение функционала библиотеки для текстового поля
 	function lib.enable(editbox, colorTable, tabWidth)
 		if not editboxSetText then
 			editboxSetText = editbox.SetText
@@ -1109,6 +1094,7 @@ if not lib._listener then
 			modified = true
 		end
 
+		-- Если уже включено, просто обновляем настройки
 		if enabled[editbox] then
 			if modified then
 				lib.indentEditbox(editbox)
@@ -1116,38 +1102,40 @@ if not lib._listener then
 			return
 		end
 
-		-- Editbox возможно подключен, но отключен
 		enabled[editbox] = true
+
+		-- Сохраняем оригинальные ограничения на длину текста
 		editbox.oldMaxBytes = editbox:GetMaxBytes()
 		editbox.oldMaxLetters = editbox:GetMaxLetters()
 		editbox:SetMaxBytes(0)
 		editbox:SetMaxLetters(0)
+
+		-- Переопределяем методы GetText/SetText
 		editbox.GetText = newGetText
 		editbox.SetText = newSetText
 
+		-- Подключаем обработчики событий
 		hookHandler(editbox, "OnTextChanged", textChangedHook)
 		hookHandler(editbox, "OnTabPressed", tabPressedHook)
 		hookHandler(editbox, "OnUpdate", onUpdateHook)
 
+		-- Применяем форматирование
 		lib.indentEditbox(editbox)
 	end
-
-	-- Устаревшая функция (для совместимости)
 	lib.addSmartCode = lib.enable
 
-	-- Отключение форматирования для editbox
+	-- Отключение функционала библиотеки для текстового поля
 	function lib.disable(editbox)
 		if not enabled[editbox] then
 			return
 		end
-
 		enabled[editbox] = nil
 
-		-- Восстановление настроек максимального количества байт/символов
+		-- Восстанавливаем оригинальные ограничения на длину текста
 		editbox:SetMaxBytes(editbox.oldMaxBytes)
 		editbox:SetMaxLetters(editbox.oldMaxLetters)
 
-		-- Отключение хуков, если возможно
+		-- Восстанавливаем оригинальные обработчики событий
 		if editbox:GetScript("OnTextChanged") == textChangedHook then
 			editbox:SetScript("OnTextChanged", editbox.faiap_old_OnTextChanged)
 			editbox.faiap_old_OnTextChanged = nil
@@ -1161,51 +1149,50 @@ if not lib._listener then
 			editbox.faiap_old_OnUpdate = nil
 		end
 
+		-- Восстанавливаем оригинальные методы GetText/SetText
 		editbox.GetText = nil
 		editbox.SetText = nil
 
-		-- Возврат текста в неформатированном виде
+		-- Очищаем кэши
 		editbox:SetText(newGetText(editbox))
-
-		-- Очистка кэшей
 		editboxIndentCache[editbox] = nil
 		decodeCache[editbox] = nil
 		editboxStringCache[editbox] = nil
 		editboxNumLinesCache[editbox] = nil
 	end
 
-	-- Таблица цветов по умолчанию
+	-- Цветовая схема по умолчанию
 	defaultColorTable = {}
 	lib.defaultColorTable = defaultColorTable
-	defaultColorTable[tokens.TOKEN_SPECIAL] = "|c00ff99ff" -- розовый для спецсимволов
-	defaultColorTable[tokens.TOKEN_KEYWORD] = "|c006666ff" -- синий для ключевых слов
-	defaultColorTable[tokens.TOKEN_COMMENT_SHORT] = "|c00999999" -- серый для комментариев
-	defaultColorTable[tokens.TOKEN_COMMENT_LONG] = "|c00999999" -- серый для длинных комментариев
-	local stringColor = "|c00ffff77" -- желтый для строк
+	defaultColorTable[tokens.TOKEN_SPECIAL] = "|c00ff99ff" -- Розовый для специальных символов
+	defaultColorTable[tokens.TOKEN_KEYWORD] = "|c006666ff" -- Синий для ключевых слов
+	defaultColorTable[tokens.TOKEN_COMMENT_SHORT] = "|c00999999" -- Серый для комментариев
+	defaultColorTable[tokens.TOKEN_COMMENT_LONG] = "|c00999999" -- Серый для многострочных комментариев
+	local stringColor = "|c00ffff77" -- Желтый для строк
 	defaultColorTable[tokens.TOKEN_STRING] = stringColor
 	defaultColorTable[".."] = stringColor
-	local tableColor = "|c00ff9900" -- оранжевый для таблиц
+	local tableColor = "|c00ff9900" -- Оранжевый для таблиц
 	defaultColorTable["..."] = tableColor
 	defaultColorTable["{"] = tableColor
 	defaultColorTable["}"] = tableColor
 	defaultColorTable["["] = tableColor
 	defaultColorTable["]"] = tableColor
-	local arithmeticColor = "|c0033ff55" -- зеленый для арифметики
+	local arithmeticColor = "|c0033ff55" -- Зеленый для арифметических операций
 	defaultColorTable[tokens.TOKEN_NUMBER] = arithmeticColor
 	defaultColorTable["+"] = arithmeticColor
 	defaultColorTable["-"] = arithmeticColor
 	defaultColorTable["/"] = arithmeticColor
 	defaultColorTable["*"] = arithmeticColor
-	local logicColor1 = "|c0055ff88" -- светло-зеленый для операторов сравнения
+	local logicColor1 = "|c0055ff88" -- Светло-зеленый для операторов сравнения
 	defaultColorTable["=="] = logicColor1
 	defaultColorTable["<"] = logicColor1
 	defaultColorTable["<="] = logicColor1
 	defaultColorTable[">"] = logicColor1
 	defaultColorTable[">="] = logicColor1
 	defaultColorTable["~="] = logicColor1
-	local logicColor2 = "|c0088ffbb" -- бирюзовый для логических операторов
+	local logicColor2 = "|c0088ffbb" -- Голубой для логических операторов
 	defaultColorTable["and"] = logicColor2
 	defaultColorTable["or"] = logicColor2
 	defaultColorTable["not"] = logicColor2
-	defaultColorTable[0] = "|r" -- сброс цвета
+	defaultColorTable[0] = "|r" -- Код сброса цвета
 end
