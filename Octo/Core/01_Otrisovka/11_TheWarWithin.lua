@@ -5,47 +5,10 @@ local OCTOexpansionID = 11
 function E:func_Otrisovka_11_TheWarWithin()
 	local OctoTable_Otrisovka = {}
 	----------------------------------------------------------------
-	----------------------------------------------------------------
-	local enameDEBUGcurrency = false
-	if enameDEBUGcurrency then
-		local sortedCurrencyes = {}
-
-		for CurrencyID, cachedName in next, (E.AllCurrencies) do
-			tinsert(sortedCurrencyes, CurrencyID)
-		end
-
-		sort(sortedCurrencyes, E.func_Reverse_order)
-		-- local sortedCurrencyes = {3309, 3137, 3132, 3023, 2813, 1792, 2123, 2409, 1904, 2653, 1101, 824, 2912}
-
-		for i, CurrencyID in ipairs(sortedCurrencyes) do
-
-			local name = C_AccountStore.GetCurrencyInfo(CurrencyID).name
-			if name ~= "" then
-				table.insert(OctoTable_Otrisovka, function(CharInfo)
-						----------------------------------------------------------------
-						local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
-						----------------------------------------------------------------
-						textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
-						myType = {"Currency", CurrencyID}
-						----------------------------------------------------------------
-						textLEFT = E:func_currencyName(CurrencyID)
-						iconLEFT = E:func_GetCurrencyIcon(CurrencyID)
-						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
-						----------------------------------------------------------------
-						return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
-						----------------------------------------------------------------
-				end)
-			end
-		end
-	end
-
-
-
-	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				local Enum_Activities_table = {}
 				for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
@@ -69,19 +32,19 @@ function E:func_Otrisovka_11_TheWarWithin()
 					textCENT = E.Blue_Color..">"..REWARD.."<|r"
 				end
 				textLEFT = E.Blue_Color..RATED_PVP_WEEKLY_VAULT.."|r"-- DELVES_GREAT_VAULT_LABEL
-				iconLEFT = "greatVault-whole-normal"
+				-- iconLEFT = "greatVault-whole-normal"
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				-- CreateAtlasMarkup("greatVault-whole-normal", 20, 20)..
 				-- greatVault-handles-dis
 				-- greatVault-centerPlate-dis
 				-- greatVault-whole-normal
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.CurrentKeyName then
 					tooltipRIGHT[#tooltipRIGHT+1] = {E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName.."|r", ""}
@@ -96,51 +59,29 @@ function E:func_Otrisovka_11_TheWarWithin()
 				end
 				----------------------------------------------------------------
 				textLEFT = E.WOW_Epic_Color..L["Mythic Keystone"].."|r"
-				iconLEFT = 4352494
+				-- iconLEFT = 4352494
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 		for _, CurrencyID in ipairs(E.OctoTable_Catalysts) do
 			table.insert(OctoTable_Otrisovka, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 					----------------------------------------------------------------
 					textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
 					myType = {"Currency", CurrencyID}
 					----------------------------------------------------------------
 					textLEFT = E:func_currencyName(CurrencyID)
-					iconLEFT = E:func_GetCurrencyIcon(CurrencyID)
 					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
-					----------------------------------------------------------------
-			end)
-		end
-
-
-
-		----------------------------------------------------------------
-		local CurrencyList = {2803, 2815, 3290, 3288, 3286}
-		----------------------------------------------------------------
-		for i, CurrencyID in ipairs(CurrencyList) do
-			table.insert(OctoTable_Otrisovka, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
-					----------------------------------------------------------------
-					textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
-					myType = {"Currency", CurrencyID}
-					----------------------------------------------------------------
-					textLEFT = E:func_currencyName(CurrencyID)
-					iconLEFT = E:func_GetCurrencyIcon(CurrencyID)
-					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
-					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 					----------------------------------------------------------------
 			end)
 		end
 		----------------------------------------------------------------
+		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, OCTOexpansionID)
 		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------

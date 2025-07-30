@@ -37,6 +37,7 @@ function E:func_Universal_07_Legion()
 		name_save = "BalanceofPower",
 		reset = "Once",
 		desc = "Legion",
+		MainquestID = 43533,
 		questID = {
 			43496,
 			43503,

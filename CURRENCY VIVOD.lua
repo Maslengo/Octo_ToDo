@@ -47,5 +47,4 @@ local ItemList = {238920, 206350, 210814, 235897, 236096}
 OTHER
 
 local CurrencyList = {1754,515,402,81}
-
 local ItemList = {81055}

@@ -8,6 +8,7 @@ function E:func_Otrisovka_12_Midnight()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
+		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, OCTOexpansionID)
 		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------

@@ -1,7 +1,7 @@
 ## Interface: 110200, 110107
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r
 ## Author: Octo
-## Version: v100.2(11.1.7)(29.07.2025)
+## Version: v100.3(11.1.7)(30.07.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\ToDo
 
 ## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other Octo_Cache_DB
@@ -28,10 +28,10 @@ Templates.xml
 database\database.xml
 
 Core\Core.xml
+
+
 UniversalQuests\UniversalQuests.xml
 Collect\Collect.xml
-
-
 
 OctoTooltip.lua
 UtilityFrames.lua

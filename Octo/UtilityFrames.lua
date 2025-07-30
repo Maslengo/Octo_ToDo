@@ -15,7 +15,8 @@ Octo_Event_UtilityFrames:Hide()
 ----------------------------------------------------------------
 -- Настройки размеров интерфейса
 ----------------------------------------------------------------
-local AddonHeight = 20 -- Высота одной строки 
+local HEIGHT = 20 -- Высота одной строки
+local WIDTH = 20
 ----------------------------------------------------------------     
 -- Quest functions 
 local GetInfo = GetInfo or C_QuestLog.GetInfo
@@ -29,7 +30,7 @@ local GetNumQuestLogEntries = GetNumQuestLogEntries or C_QuestLog.GetNumQuestLog
 -- Helper function to create consistent buttons
 local function CreateUtilButton(name, frame, xOffset, texture, func_onEnter, func_onClick)
 	local button = CreateFrame("Button", nil, frame)
-	button:SetSize(AddonHeight, AddonHeight)
+	button:SetSize(WIDTH, HEIGHT)
 	button:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", xOffset, 0)
 	if func_onEnter then
 		button:SetScript("OnEnter", function(self)
@@ -93,7 +94,7 @@ function Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
 	CreateUtilButton(
 		"Octo_OptionsButton",
 		frame,
-		-AddonHeight,
+		-WIDTH,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\".."IconTexture\\"..addonIconTexture,
 		func_onEnter,
 		func_onClick
@@ -155,7 +156,7 @@ function Octo_Event_UtilityFrames:Octo_AbandonButton(frame, addonIconTexture)
 	CreateUtilButton(
 		"Octo_AbandonButton",
 		frame,
-		-AddonHeight*2,
+		-WIDTH*2,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\".."Arrow72.tga",
 		func_onEnter,
 		func_onClick
@@ -206,7 +207,7 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
 	CreateUtilButton(
 		"Octo_EventsButton",
 		frame,
-		-AddonHeight*3,
+		-WIDTH*3,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\".."Arrow6.tga",
 		func_onEnter,
 		func_onClick
@@ -217,7 +218,7 @@ function Octo_Event_UtilityFrames:Octo_FramerateFrame(frame, addonIconTexture)
 	-- Framerate Frame
 	local Octo_FramerateFrame = CreateFrame("Frame", nil, UIParent)
 	Octo_FramerateFrame:Hide()
-	Octo_FramerateFrame:SetSize(AddonHeight*2, AddonHeight)
+	Octo_FramerateFrame:SetSize(WIDTH*2, HEIGHT)
 	Octo_FramerateFrame:SetFrameStrata("HIGH")
 	local text_fps = Octo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 	text_fps:SetPoint("CENTER")
@@ -229,8 +230,7 @@ function Octo_Event_UtilityFrames:Octo_FramerateFrame(frame, addonIconTexture)
 			text_fps:SetText(math.floor(GetFramerate()))
 	end)
 	frame:HookScript("OnShow", function()
-		print (addonIconTexture, "OnShow")
-		Octo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -AddonHeight*4, 0)
+			Octo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -HEIGHT*4, 0)
 	end)
 end
 ----------------------------------------------------------------
@@ -257,15 +257,19 @@ function Octo_Event_UtilityFrames:ADDON_LOADED(addonName)
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	-- Создаем элементы интерфейса
-	-- local framesTBL = {}
+	-- E:func_CreateUtilsButton()
+
 	C_Timer.After(0, function()
+			for i, frame in ipairs(E.OctoTable_Frames) do
+				E:func_CreateUtilsButton(frame, "ToDo")
+			end
 
-		print ("Итого: "..E.Green_Color..(#E.OctoTable_Frames or 0).." фреймов|r")
+			-- print ("Итого: "..E.Green_Color..(#E.OctoTable_Frames or 0).." фреймов|r")
 
-	-- 	if Octo_MainFrame_ToDo then table.insert(framesTBL, {frame = Octo_MainFrame_ToDo, addonIconTexture = "ToDo",}) end
-	-- 	if Octo_MainFrame_Achievements then table.insert(framesTBL, {frame = Octo_MainFrame_Achievements, addonIconTexture = "Achievements",}) end
-	-- 	if Octo_MainFrame_AddonsManager then table.insert(framesTBL, {frame = Octo_MainFrame_AddonsManager, addonIconTexture = "AddonsManager",}) end
-	-- 	if Octo_MainFrame_QuestsChanged then table.insert(framesTBL, {frame = Octo_MainFrame_QuestsChanged, addonIconTexture = "QuestsChanged",}) end
+			--     if Octo_MainFrame_ToDo then table.insert(framesTBL, {frame = Octo_MainFrame_ToDo, addonIconTexture = "ToDo",}) end
+			--     if Octo_MainFrame_Achievements then table.insert(framesTBL, {frame = Octo_MainFrame_Achievements, addonIconTexture = "Achievements",}) end
+			--     if Octo_MainFrame_AddonsManager then table.insert(framesTBL, {frame = Octo_MainFrame_AddonsManager, addonIconTexture = "AddonsManager",}) end
+			--     if Octo_MainFrame_QuestsChanged then table.insert(framesTBL, {frame = Octo_MainFrame_QuestsChanged, addonIconTexture = "QuestsChanged",}) end
 
 	end)
 end

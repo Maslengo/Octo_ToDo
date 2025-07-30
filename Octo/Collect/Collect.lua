@@ -41,6 +41,10 @@ local MyEventsTable = {
 	"ZONE_CHANGED",
 	"ZONE_CHANGED_NEW_AREA",
 	"QUEST_REMOVED",
+
+
+	"BARBER_SHOP_APPEARANCE_APPLIED",
+	"VARIABLES_LOADED",
 }
 function E:func_Collect_All_Table()
 	E.Collect_All_PlayerLevel()
@@ -73,7 +77,7 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_Reputations() -- репутации
 	E.Collect_All_Quests() -- квесты
 	E.Collect_All_Garrison()
-	E.Collect_All_UNIVERSALQuestUpdate() -- обновления квестов
+	E:func_Collect_All_UNIVERSALQuestUpdate() -- обновления квестов
 	-- Предметы и валюта
 	E.Collect_All_ItemsInBag() -- предметы в сумках
 	-- E.Collect_All_Currency() -- валюта
@@ -139,7 +143,7 @@ function Octo_EventFrame_Collect:QUEST_LOG_UPDATE()
 	C_Timer.After(1, function()
 			E.Collect_All_Quests()
 			E.Collect_All_Garrison()
-			E.Collect_All_UNIVERSALQuestUpdate()
+			E:func_Collect_All_UNIVERSALQuestUpdate()
 			E.Collect_All_BfA_Island()
 			E.Collect_All_Chromie()
 			E:func_Update("QUEST_LOG_UPDATE")
@@ -353,7 +357,7 @@ function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 	C_Timer.After(5, function()
 			E.Collect_All_Quests()
 			E.Collect_All_Garrison()
-			E.Collect_All_UNIVERSALQuestUpdate()
+			E:func_Collect_All_UNIVERSALQuestUpdate()
 			E.Collect_All_BfA_Island()
 			E.Collect_All_Reputations()
 			E.Collect_All_Currency()
@@ -402,15 +406,6 @@ function Octo_EventFrame_Collect:QUEST_REMOVED()
 			self.QUEST_REMOVED_pause = nil-- Используем nil вместо false для экономии памяти
 	end)
 end
-
-
-
-
-
-
-
-
-
 function Octo_EventFrame_Collect:SHOW_LOOT_TOAST(rt, rl, q, _4, _5, _6, source)
 	if InCombatLockdown() or self.SHOW_LOOT_TOAST_pause then return end
 	self.SHOW_LOOT_TOAST_pause = true
@@ -420,3 +415,58 @@ function Octo_EventFrame_Collect:SHOW_LOOT_TOAST(rt, rl, q, _4, _5, _6, source)
 			self.SHOW_LOOT_TOAST_pause = nil-- Используем nil вместо false для экономии памяти
 	end)
 end
+function Octo_EventFrame_Collect:BARBER_SHOP_APPEARANCE_APPLIED()
+	if InCombatLockdown() or self.BARBER_SHOP_APPEARANCE_APPLIED_pause then return end
+	self.BARBER_SHOP_APPEARANCE_APPLIED_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_PlayerInfo()
+			E:func_Update("BARBER_SHOP_APPEARANCE_APPLIED")
+			self.BARBER_SHOP_APPEARANCE_APPLIED_pause = nil-- Используем nil вместо false для экономии памяти
+	end)
+end
+
+
+
+
+function Octo_EventFrame_Collect:VARIABLES_LOADED()
+	if E.DEBUG_TIMINGS_COLLECT then
+		wipe(Octo_Debug_DB.Functions)
+
+		local function TimeFunctionExecution(funcName, func)
+			Octo_Debug_DB.Functions[funcName] = {
+				count = 0,
+				minTime = math.huge,
+				maxTime = 0,
+				totalTime = 0,
+			}
+
+			return function(...)
+				local startTime = debugprofilestop()
+				local result = {func(...)}
+				local executionTime = (debugprofilestop() - startTime)
+
+				local stats = Octo_Debug_DB.Functions[funcName]
+				stats.count = stats.count + 1
+				stats.minTime = math.min(stats.minTime, executionTime)
+				stats.maxTime = math.max(stats.maxTime, executionTime)
+				stats.totalTime = stats.totalTime + executionTime
+				print (funcName, stats.count)
+
+				return unpack(result) -- table.unpack
+			end
+		end
+
+		-- for funcName, func in pairs(Octo_EventFrame_Collect) do
+		--     if type(func) == "function" and funcName ~= "OnEvent" and funcName ~= "OnUpdate" then
+		--         Octo_EventFrame_Collect[funcName] = TimeFunctionExecution(funcName, func)
+		--     end
+		-- end
+
+		for funcName, func in pairs(E) do
+			if type(func) == "function" and funcName ~= "OnEvent" and funcName ~= "OnUpdate" then
+				E[funcName] = TimeFunctionExecution(funcName, func)
+			end
+		end
+	end
+end
+

@@ -11,6 +11,13 @@ local ignoreNPCID = {
 	-- [207471] = true, -- wowhead.com/ptr-2/ru/quest=78392
 	[223754] = true,
 	[143925] = true,
+
+	[212407] = true, -- Enter Delve
+	[230495] = true, -- Enter Delve
+	[239700] = true, -- Enter Delve
+	[246671] = true, -- Enter Delve
+	[245822] = true, -- Enter Delve
+	[231036] = true, -- Enter Delve
 }
 -- IGNORE 120914
 local gossipOptionIDs = {
@@ -68,7 +75,7 @@ function Octo_EventFrame_Auto_Gossip:Auto_Gossip()
 		if option.gossipOptionID and not ignoreICONS[icon] then
 
 
-			print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, name)
+			-- print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E:func_texturefromIcon(icon),name)
 
 
 

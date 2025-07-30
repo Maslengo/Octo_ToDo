@@ -7,14 +7,16 @@ E:func_InitFrame(Octo_MainFrame_ToDo)
 ----------------------------------------------------------------
 -- Настройки размеров интерфейса
 ----------------------------------------------------------------
-local HEADER_HEIGHT = 40
+local INDENT_TEST = 4
 local LINE_HEIGHT = 20 -- Высота одной строки AddonHeight
+local HEADER_HEIGHT = LINE_HEIGHT*2
 local LINE_WIDTH_LEFT = 200 -- Ширина левой панели AddonLeftFrameWeight
-local LINE_WIDTH_CENT = 90 -- Ширина центральной панели AddonCentralFrameWeight
+local LINE_WIDTH_CENT = 110 -- Ширина центральной панели AddonCentralFrameWeight
 local LINES_MAX = 30 -- Количество строк по умолчанию MainFrameDefaultLines
 -- Автоматический расчет максимального количества строк
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT)*.7))
 local COLUMNS_MAX = 10 -- Максимальное количество отображаемых персонажей
+-- local TEXT_INDENT = " "
 ----------------------------------------------------------------
 -- Константы цвета
 ----------------------------------------------------------------
@@ -28,7 +30,6 @@ local LEFT_TEXTURE_ALPHA = 0.1
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo") -- Локализация
 local LibDataBroker = LibStub("LibDataBroker-1.1") -- Для брокера данных
-local LibDBIcon = LibStub("LibDBIcon-1.0") -- Для иконки на миникарте
 local LibSharedMedia = LibStub("LibSharedMedia-3.0") -- Для медиа-ресурсов
 local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронной загрузки
 ----------------------------------------------------------------
@@ -92,16 +93,10 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frameFULL:SetPoint("BOTTOM", frame)
 	frameFULL:SetPoint("RIGHT")
 	frame.frameFULL = frameFULL
-	-- Создаем иконку
-	local icon = frame:CreateTexture(nil, "BACKGROUND")
-	icon:SetSize(LINE_HEIGHT - 2, LINE_HEIGHT - 2)
-	icon:SetPoint("TOPLEFT", 1, -1)
-	icon:SetTexCoord(0.10, 0.90, 0.10, 0.90) -- Обрезаем края иконки
-	frame.icon_1 = icon
 	-- Текст слева
 	local textLeft = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	textLeft:SetPoint("LEFT", 2 + LINE_HEIGHT, 0)
-	textLeft:SetWidth(LINE_WIDTH_LEFT - 2 - LINE_HEIGHT)
+	textLeft:SetPoint("LEFT", 0, 0)
+	textLeft:SetWidth(LINE_WIDTH_LEFT - 2)
 	textLeft:SetFontObject(OctoFont11) -- Используем наш шрифт
 	textLeft:SetWordWrap(false) -- Запрещаем перенос слов
 	textLeft:SetJustifyV(JustifyV)
@@ -117,16 +112,7 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	local frameData = data.parent.dataProvider.linearized
 	frame:SetScript("OnHide", func_OnHideLEFT)
 	frame:SetScript("OnShow", func_OnShowLEFT)
-	-- -- Обработчик наведения (показываем подсказку если текст обрезан)
-	-- frame:SetScript("OnEnter", function(self)
-	-- 		if not self.textLEFT:IsTruncated() then return end
-	-- 		----------------------------------------------------------------
-	-- 		-- GameTooltip:SetOwner(self, "ANCHOR_NONE")
-	-- 		-- GameTooltip:SetPoint("CENTER", self)
-	-- 		----------------------------------------------------------------
-	-- 		GameTooltip:SetText(E:func_texturefromIcon(self.icon_1:GetTexture())..self.textLEFT:GetText(), 1, 1, 1)
-	-- 		GameTooltip:Show()
-	-- end)
+
 end
 ----------------------------------------------------------------
 -- Функция инициализации центральной панели
@@ -182,17 +168,6 @@ local func_OnAcquiredCENT do
 		-- frame:SetScript("OnLeave", func_OnLeave)
 	end
 end
--- Функция для установки текстуры кнопки
-local function InitButtonTexture(frame, texture, iconWidth)
-	if not frame or not texture then return end
-	if C_Texture.GetAtlasInfo(texture) then
-		frame:SetAtlas(texture, true) -- Используем атлас если доступен
-	else
-		frame:SetTexture(texture) -- Иначе обычную текстуру
-	end
-	frame:SetPoint("TOPLEFT", 2, 1)
-	frame:SetSize(iconWidth, iconWidth)
-end
 -- Функция обновления левой панели
 function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	local data = node:GetData()
@@ -200,7 +175,6 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	local frameData = data.zxc
 	-- Устанавливаем текст и иконку
 	frame.textLEFT:SetText(frameData.textLEFT)
-	InitButtonTexture(frame.icon_1, frameData.iconLEFT, LINE_HEIGHT-2)
 	-- Устанавливаем цвет фона если задан
 	if frameData.colorLEFT then
 		local r, g, b = E:func_hex2rgbNUMBER(frameData.colorLEFT)
@@ -369,9 +343,6 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	-- Инициализируем скроллбоксы с полосами прокрутки
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCENT, Octo_MainFrame_ToDo.viewLEFT)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCENT)
-
-
-
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT, Octo_MainFrame_ToDo.viewCENT)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT)
 	-- Настраиваем внешний вид основного фрейма
@@ -442,7 +413,6 @@ function E:func_TODO_CreateDataProvider()
 			FIRST = {},
 			SECOND = {},
 			textLEFT = {},
-			iconLEFT = {},
 			colorLEFT = {},
 			textCENT = {},
 			tooltipRIGHT = {},
@@ -460,7 +430,7 @@ function E:func_TODO_CreateDataProvider()
 			for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
 				zxc.FIRST[CharIndex] = 0
 				zxc.SECOND[CharIndex] = 0
-				local _, _, _, textCENT, tooltipRIGHT, colorCENT = func(CharInfo)
+				local _, _, textCENT, tooltipRIGHT, colorCENT = func(CharInfo)
 				zxc.textCENT[CharIndex] = textCENT
 				zxc.tooltipRIGHT[CharIndex] = tooltipRIGHT or {}
 				zxc.colorCENT[CharIndex] = colorCENT
@@ -468,9 +438,8 @@ function E:func_TODO_CreateDataProvider()
 			-- Получаем данные для левой панели от первого персонажа
 			local firstChar = sortedPlayersTBL[1]
 			if firstChar then
-				local textLEFT, iconLEFT, colorLEFT, _, _, _, myType = func(firstChar)
+				local textLEFT, colorLEFT, _, _, _, myType = func(firstChar)
 				zxc.textLEFT = textLEFT
-				zxc.iconLEFT = iconLEFT or E.Icon_Empty
 				zxc.colorLEFT = colorLEFT
 				zxc.myType = myType or {}
 			end
@@ -499,11 +468,11 @@ function E:func_TODO_CreateDataProvider()
 							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
 							zxc.SECOND[CharIndex] = tonumber(SECOND) or 0
 							zxc.textLEFT = E:func_reputationName(v.id)
-							if repInfo then
-								zxc.iconLEFT = repInfo.icon
-							else
-								zxc.iconLEFT = E.Icon_Empty
-							end
+							-- if repInfo then
+							-- 	zxc.iconLEFT = repInfo.icon
+							-- else
+							-- 	zxc.iconLEFT = E.Icon_Empty
+							-- end
 							zxc.colorLEFT = E.OctoTable_Expansions[index].color
 							zxc.textCENT[CharIndex] = vivod or "vivod"
 							zxc.tooltipRIGHT[CharIndex] = {}
@@ -581,14 +550,18 @@ function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	-- Загружаем настройки или устанавливаем значения по умолчанию
-	local db = Octo_ToDo_DB_Vars
-	LINE_HEIGHT = db.AddonHeight or LINE_HEIGHT
-	LINE_WIDTH_LEFT = db.AddonLeftFrameWeight or LINE_WIDTH_LEFT
-	LINE_WIDTH_CENT = db.LINE_WIDTH_CENT or LINE_WIDTH_CENT
-	LINES_MAX = db.AddonCentralFrameWeight or LINES_MAX
+	LINE_HEIGHT = Octo_ToDo_DB_Vars.AddonHeight or LINE_HEIGHT
+	LINE_WIDTH_LEFT = Octo_ToDo_DB_Vars.AddonLeftFrameWeight or LINE_WIDTH_LEFT
+	LINE_WIDTH_CENT = Octo_ToDo_DB_Vars.LINE_WIDTH_CENT or LINE_WIDTH_CENT
+	LINES_MAX = Octo_ToDo_DB_Vars.AddonCentralFrameWeight or LINES_MAX
+
+
+
+
+
 	-- Рассчитываем максимальное количество персонажей
 	local maxNum = math.floor((E.MonitorWidth - LINE_WIDTH_LEFT) / LINE_WIDTH_CENT) - 1
-	COLUMNS_MAX = db.MaxNumCharacters and math_min(db.MaxNumCharacters, maxNum) or COLUMNS_MAX
+	COLUMNS_MAX = Octo_ToDo_DB_Vars.MaxNumCharacters and math_min(Octo_ToDo_DB_Vars.MaxNumCharacters, maxNum) or COLUMNS_MAX
 	-- Объединяем таблицы квестов и предметов
 	local function ConcatAtStart()
 		E:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)

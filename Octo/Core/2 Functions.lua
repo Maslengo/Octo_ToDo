@@ -214,7 +214,8 @@ function E:func_GetItemNameByID(itemID, newQuality)
 	if quality then
 		vivod = vivod..ITEM_QUALITY_COLORS[quality].color:WrapTextInColorCode(itemName)
 	end
-	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
+	local icon = E:func_texturefromIcon(E:func_GetItemIconByID(itemID))
+	return icon..vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E:func_GetItemNameByID_MyQuality(itemID, quality)
@@ -226,7 +227,8 @@ function E:func_GetItemNameByID_MyQuality(itemID, quality)
 	if quality then
 		vivod = vivod..ITEM_QUALITY_COLORS[quality].color:WrapTextInColorCode(itemName)
 	end
-	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
+	local icon = E:func_texturefromIcon(E:func_GetItemIconByID(itemID))
+	return icon..vivod..(E.DebugIDs and E.Gray_Color.." id:"..itemID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E:func_ItemPriceTSM(itemID, myCount)
@@ -285,27 +287,6 @@ function E:func_GetCurrencyIcon(currencyID)
 end
 ----------------------------------------------------------------
 function E:func_currencyName(currencyID)
-	-- ВАРИАНТ 1
-	-- local vivod = ""
-	-- local AWide = ""
-	-- if IsAccountTransferableCurrency(currencyID) then
-	-- AWide = E.Icon_AccountTransferable
-	-- elseif IsAccountWideCurrency(currencyID) then
-	-- AWide = E.Icon_AccountWide
-	-- end
-	-- local info = GetCurrencyInfo(currencyID)
-	-- if info then
-	-- local name = info.name
-	-- local quality = info.quality
-	-- local r, g, b = E:func_GetItemQualityColor(quality)
-	-- local color = CreateColor(r, g, b, 1)
-	-- local currencyName = color:WrapTextInColorCode(name)
-	-- vivod = AWide..currencyName
-	-- else
-	-- vivod = AWide..E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-	-- end
-	-- return vivod..(E.DebugIDs and E.Gray_Color.." id:"..currencyID.."|r" or "")
-	-- ВАРИАНТ 2
 	local WarbandIcon = ""
 	if IsAccountTransferableCurrency(currencyID) then
 		WarbandIcon = E.Icon_AccountTransferable
@@ -315,32 +296,13 @@ function E:func_currencyName(currencyID)
 	-- Получение информации о валюте
 	local info = GetCurrencyInfo(currencyID)
 	if not info then
-		return WarbandIcon .. E.Red_Color .. RETRIEVING_ITEM_INFO .. "|r" .. (E.DebugIDs and E.Gray_Color .. " id:" .. currencyID .. "|r" or "")
+		return WarbandIcon .. E.Red_Color .. UNKNOWN .. "|r" .. (E.DebugIDs and E.Gray_Color .. " id:" .. currencyID .. "|r" or "")
 	end
 	local name = info.name
 	local color = ITEM_QUALITY_COLORS[info.quality].hex or ITEM_QUALITY_COLORS[1]
-	return WarbandIcon .. color .. name .. "|r" .. (E.DebugIDs and E.Gray_Color .. " id:" .. currencyID .. "|r" or "")
-	-- ВАРИАНТ 3
-	-- local WarbandIcon = ""
-	-- if IsAccountTransferableCurrency(currencyID) then
-	-- WarbandIcon = E.Icon_AccountTransferable
-	-- elseif IsAccountWideCurrency(currencyID) then
-	-- WarbandIcon = E.Icon_AccountWide
-	-- end
-	-- local parts = { WarbandIcon } -- Инициализация с WarbandIcon
-	-- -- Обработка информации о валюте
-	-- if info then
-	-- parts[2] = ITEM_QUALITY_COLORS[info.quality].hex..info.name.."|r"
-	-- else
-	-- parts[2] = E.Red_Color..RETRIEVING_ITEM_INFO.."|r"
-	-- end
-	-- -- Добавление отладочной информации при необходимости
-	-- if E.DebugIDs then
-	-- parts[3] = E.Gray_Color.." id:"..currencyID.."|r"
-	-- end
-	-- return table.concat(parts)
-	-- ВАРИАНТ 4
-	-- return ((IsAccountTransferableCurrency(currencyID) and E.Icon_AccountWide or " ") ..C_AccountStore.GetCurrencyInfo(currencyID).name) or UNKNOWN
+	local icon = E:func_texturefromIcon(E:func_GetCurrencyIcon(currencyID))
+	return icon  .. color .. name .. "|r" .. WarbandIcon .. (E.DebugIDs and E.Gray_Color .. " id:" .. currencyID .. "|r" or "")
+
 end
 ----------------------------------------------------------------
 function E:func_IsAccountQuest(questID)
@@ -368,15 +330,15 @@ end
 function E:func_questName(questID, useLargeIcon)
 	table_insert(E.PromiseQuest, questID)
 	local title = E.quest_names[questID] -- GetTitleForQuestID(questID)
-	local vivod = title and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false)
-	if E:func_IsAccountQuest(questID) or E:func_IsQuestFlaggedCompletedOnAccount(questID) then
-		vivod = E.Icon_AccountWide..vivod
-	end
-	if E:func_IsAccountQuest(questID) then
-		vivod = "|cffFFFF00"..vivod.."|r"
-	elseif E:func_IsQuestFlaggedCompletedOnAccount(questID) then
-		vivod = "|cff9fc5e8"..vivod.."|r"
-	end
+	local vivod = title -- and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false)
+	-- if E:func_IsAccountQuest(questID) or E:func_IsQuestFlaggedCompletedOnAccount(questID) then
+	-- 	vivod = E.Icon_AccountWide..vivod
+	-- end
+	-- if E:func_IsAccountQuest(questID) then
+	-- 	vivod = "|cffFFFF00"..vivod.."|r"
+	-- elseif E:func_IsQuestFlaggedCompletedOnAccount(questID) then
+	-- 	vivod = "|cff9fc5e8"..vivod.."|r"
+	-- end
 	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..questID.."|r" or "")
 end
 ----------------------------------------------------------------
@@ -469,7 +431,7 @@ function E:func_GetItemInfo(itemInfo) -- Item ID, Link or name
 end
 ----------------------------------------------------------------
 function E:func_GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
-	if not itemID then return 0 end
+	if not itemID then return end
 	return C_Item.GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
 end
 ----------------------------------------------------------------
@@ -689,13 +651,13 @@ function E:func_CompactNumberSimple(number)
 end
 ----------------------------------------------------------------
 function E:func_texturefromIcon(icon, iconWidth, iconHeight)
-	iconWidth = iconWidth or 16 or Octo_ToDo_DB_Vars.AddonHeight
-	iconHeight = iconHeight or 16 or Octo_ToDo_DB_Vars.AddonHeight
+	iconWidth = iconWidth or 18
+	iconHeight = iconHeight or 18
 	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight or iconWidth)..":::64:64:4:60:4:60|t"
 end
 ----------------------------------------------------------------
 function E:func_texturefromIconEVENT(icon, iconSize)
-	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize or 16)..":"..(iconSize or 16)..":::128:128:0:91:0:91|t"
+	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize or 18)..":"..(iconSize or 18)..":::128:128:0:91:0:91|t"
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -731,6 +693,7 @@ function E:func_SecondsToClock(time)
 	local hours = floor(time % 86400 / 3600)
 	local mins = floor(time % 3600 / 60)
 	local secs = floor(time % 60)
+	local ms = time - floor(time) -- Get the fractional part
 	local parts = {}
 	if years > 0 then
 		table.insert(parts, years..(L["time_YEAR"] or "y").." ")
@@ -749,8 +712,10 @@ function E:func_SecondsToClock(time)
 		if time < 600 then -- Только для 1-9 минут добавляем секунды
 			table.insert(parts, secs..(L["time_SECOND"] or "s"))
 		end
-	else
+	elseif time >= 1 then
 		table.insert(parts, secs..(L["time_SECOND"] or "s"))
+	else
+		table.insert(parts, string_format("%.3f", time).."ms")
 	end
 	return table_concat(parts)
 end
@@ -2235,17 +2200,32 @@ function E:func_ShowTooltip(...)
 	tooltip:Show()
 end
 ----------------------------------------------------------------
+local function func_OnceDailyWeeklyMonth_Format(text)
+	local vivod = ""
+	if text == "Once" then
+		vivod = E.Yellow_Color.."O|r"
+	elseif text == "Daily" then
+		vivod = E.Blue_Color.."D|r"
+	elseif text == "Weekly" then
+		vivod = E.Purple_Color.."W|r"
+	elseif text == "Month" then
+		vivod = E.Red_Color.."M|r"
+	end
+	return vivod
+
+end
 ----------------------------------------------------------------
 function E:func_Universal(tbl, expansionID)
 	if not tbl then return end
 	if not Octo_ToDo_DB_Vars.Quests then return end
 	for expID, expDATA in ipairs(E.OctoTable_Expansions) do
 		if expID == expansionID then
+			local expNameShort = expDATA.name:gsub(" ", "")
 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
-				if expDATA.nameShort == v.desc then
+				if expNameShort == v.desc then
 					table.insert(tbl, function(CharInfo)
 							----------------------------------------------------------------
-							local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+							local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 							----------------------------------------------------------------
 							local LeftData = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 							if LeftData then
@@ -2272,11 +2252,10 @@ function E:func_Universal(tbl, expansionID)
 								end
 							end
 							----------------------------------------------------------------
-							textLEFT = tostringall(v.textleft).."|r"
-							iconLEFT = v.icon
+							textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(v.reset).." "..v.textleft) -- v.icon
 							colorLEFT = expDATA.color
 							----------------------------------------------------------------
-							return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+							return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 							----------------------------------------------------------------
 					end)
 				end
@@ -2285,13 +2264,87 @@ function E:func_Universal(tbl, expansionID)
 	end
 end
 ----------------------------------------------------------------
+function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
+	if not OctoTable_Otrisovka or not E.OctoTable_Expansions[expansionID] then return end
+	if not (Octo_ToDo_DB_Vars.Currencies or Octo_ToDo_DB_Vars.Items) then return end
+
+	-- Создаем weak-таблицы для кеширования обработчиков
+	local itemProcessors = setmetatable({}, {__mode = "v"}) -- weak values
+	local currencyProcessors = setmetatable({}, {__mode = "v"}) -- weak values
+
+	local expansionData = E.OctoTable_Expansions[expansionID]
+	local Data = E.OctoTables_DataOtrisovka[expansionID]
+	if not Data then return end
+
+	-- Локальные ссылки на методы (через `:` для корректного self)
+	local func_textCENT_Items = function(...) return E:func_textCENT_Items(...) end
+	local func_GetItemNameByID = function(...) return E:func_GetItemNameByID(...) end
+	local func_GetItemIconByID = function(...) return E:func_GetItemIconByID(...) end
+	local func_textCENT_Currency = function(...) return E:func_textCENT_Currency(...) end
+	local func_currencyName = function(...) return E:func_currencyName(...) end
+	local func_GetCurrencyIcon = function(...) return E:func_GetCurrencyIcon(...) end
+	local Purple_Color = E.Purple_Color
+
+	-- Функция получения/создания обработчика предметов
+	local function getItemProcessor(itemID)
+		local processor = itemProcessors[itemID]
+		if not processor then
+			processor = function(CharInfo)
+				return func_GetItemNameByID(itemID),
+				expansionData.color,
+				func_textCENT_Items(CharInfo, itemID),
+				{},
+				nil,
+				{"Item", itemID}
+			end
+			itemProcessors[itemID] = processor
+		end
+		return processor
+	end
+
+	-- Функция получения/создания обработчика валют
+	local function getCurrencyProcessor(currencyID)
+		local processor = currencyProcessors[currencyID]
+		if not processor then
+			processor = function(CharInfo)
+				local textCENT = func_textCENT_Currency(CharInfo, currencyID)
+				if currencyID == 1931 and CharInfo.PlayerData.Possible_CatalogedResearch then
+					textCENT = string.format("%s%s +%d|r", textCENT, Purple_Color, CharInfo.PlayerData.Possible_CatalogedResearch)
+				end
+				return func_currencyName(currencyID),
+				expansionData.color,
+				textCENT,
+				{},
+				nil,
+				{"Currency", currencyID}
+			end
+			currencyProcessors[currencyID] = processor
+		end
+		return processor
+	end
+
+	if Octo_ToDo_DB_Vars.Items and Data.Items then
+		for _, itemID in ipairs(Data.Items) do
+			OctoTable_Otrisovka[#OctoTable_Otrisovka + 1] = getItemProcessor(itemID)
+		end
+	end
+
+	-- Обработка данных с использованием кешированных обработчиков
+	if Octo_ToDo_DB_Vars.Currencies and Data.Currencies then
+		for _, currencyID in ipairs(Data.Currencies) do
+			OctoTable_Otrisovka[#OctoTable_Otrisovka + 1] = getCurrencyProcessor(currencyID)
+		end
+	end
+
+end
+----------------------------------------------------------------
 function E:func_Universal_Holiday(tbl, Holiday, color)
 	if not tbl then return end
 	for _, v in ipairs(E.OctoTable_UniversalQuest) do
 		if v.desc == Holiday then
 			table.insert(tbl, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT = "", nil, nil, "", {}, nil, {}
+					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 					----------------------------------------------------------------
 					local LeftData = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
 					if LeftData then
@@ -2316,11 +2369,10 @@ function E:func_Universal_Holiday(tbl, Holiday, color)
 						end
 					end
 					----------------------------------------------------------------
-					textLEFT = tostringall(v.textleft).."|r"
-					iconLEFT = v.icon
+					textLEFT = tostringall(v.textleft).."|r" -- v.icon
 					colorLEFT = color
 					----------------------------------------------------------------
-					return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, tooltipLEFT
+					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 					----------------------------------------------------------------
 			end)
 		end
@@ -2500,7 +2552,7 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		elseif myType == "Currency" then
 			tooltip[#tooltip+1] = {"", TOTAL..": "..total}
 		elseif myType == "Item" then
-			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetItemIconByID(ID)).." "..E:func_GetItemNameByID(ID), TOTAL..": "..total}
+			tooltip[#tooltip+1] = {E:func_GetItemNameByID(ID), TOTAL..": "..total}
 		elseif myType == "Currency_Covenant_Anima" then
 			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
 		elseif myType == "Currency_Covenant_Renown" then
@@ -2677,65 +2729,41 @@ function E:func_tooltipRIGHT_ITEMS(CharInfo, TBL, needShowAllItems)
 	for _, item in ipairs(sorted_itemList) do
 		local itemID = item.itemID
 		local count = ItemsInBag[itemID] or ""
-		local icon = texturefromIcon(GetItemIconByID(itemID))
 		local name = GetItemNameByID(itemID)
 		local price = ItemPriceTSM(itemID, item.count)
 
-		tooltipRIGHT[#tooltipRIGHT + 1] = {icon..name, count, price}
+		tooltipRIGHT[#tooltipRIGHT + 1] = {name, count, price}
 	end
 
 	return tooltipRIGHT
 end
 
 
+
+
+
+
+local function CloseOtherFrames(frame)
+	for i, other in ipairs(E.OctoTable_Frames) do
+		if frame ~= other and other:IsShown() then
+			other:Hide()
+		end
+	end
+end
 ---------------------------------------------------------------------
 function E:func_InitFrame(frame)
-    if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
+	if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
+	print ("E:func_InitFrame", frame:GetName())
+	-- Немедленная маркировка фрейма
+	frame.insertIn_SecuredFrames_SequredFrames = true
+	tinsert(E.OctoTable_Frames, frame)
+	tinsert(UISpecialFrames, frame:GetName())
 
-    -- Немедленная маркировка фрейма
-    frame.insertIn_SecuredFrames_SequredFrames = true
-    tinsert(E.OctoTable_Frames, frame)
-    tinsert(UISpecialFrames, frame:GetName())
-
-    -- Отложенная инициализация с защитой
-    C_Timer.After(0.5, function()
-        if not frame:IsForbidden() then  -- Проверка на валидность фрейма
-            local function CloseOtherFrames()
-                for i, other in ipairs(E.OctoTable_Frames) do
-                    if frame ~= other and other:IsShown() then
-                        print(E.Red_Color.."Закрытие фрейма:|r", other:GetName())
-                        other:Hide()
-
-                        -- Двойная проверка через 0.2 сек
-                        C_Timer.After(0.2, function()
-                            if other:IsShown() then
-                                other:SetShown(false)
-                            end
-                        end)
-                    end
-                end
-            end
-
-            -- Основной хук
-            frame:HookScript("OnShow", CloseOtherFrames)
-
-            -- Первичная проверка
-            if frame:IsShown() then
-                CloseOtherFrames()
-            end
-        end
-    end)
+	-- Отложенная инициализация с защитой
+	C_Timer.After(0, function()
+			frame:HookScript("OnShow", CloseOtherFrames)
+	end)
 end
-
-
--- Подписаться на событие создания фрейма
--- hooksecurefunc("CreateFrame", function(type, name, parent, template)
---     if name == "ВашФрейм" then
---         local frame = _G[name]
---         -- Установить хуки ДО того, как он станет Protected
---         frame:HookScript("OnShow", yourFunction)
---     end
--- end)
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------

@@ -10,7 +10,7 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				textCENT = E:func_textCENT_Items(CharInfo, 23572)
 				myType = {"Item", 23572}
@@ -19,12 +19,12 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				iconLEFT = E:func_GetItemIconByID(23572)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				textCENT = E:func_textCENT_Items(CharInfo, 30183)
 				myType = {"Item", 30183}
@@ -33,12 +33,12 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				iconLEFT = E:func_GetItemIconByID(30183)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				textCENT = E:func_textCENT_Items(CharInfo, 32428)
 				myType = {"Item", 32428}
@@ -47,12 +47,12 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				iconLEFT = E:func_GetItemIconByID(32428)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				textCENT = E:func_textCENT_Items(CharInfo, 34664)
 				myType = {"Item", 34664}
@@ -61,12 +61,12 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				iconLEFT = E:func_GetItemIconByID(34664)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				textCENT = E:func_textCENT_Items(CharInfo, {24581, 24579}) -- HORDE, ALLIANCE
 				myType = {"Item", {24581, 24579}}
@@ -80,9 +80,10 @@ function E:func_Otrisovka_02_TheBurningCrusade()
 				end
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, iconLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
+		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, OCTOexpansionID)
 		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------

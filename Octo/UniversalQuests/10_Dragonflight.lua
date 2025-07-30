@@ -31,18 +31,6 @@ function E:func_Universal_10_Dragonflight()
 		},
 		max = 1,
 	},
-	{
-		icon = E:func_GetCurrencyIcon(1602),
-		textleft = E:func_questName(71026),
-		name_save = "AgainstOverwhelmingOdds",
-		reset = "Weekly",
-		desc = "Dragonflight",
-		questID = {
-			71026,
-		},
-		max = 1,
-	},
-
 
 	{
 		icon = E.Icon_Empty,
@@ -344,45 +332,45 @@ function E:func_Universal_10_Dragonflight()
 	},
 
 
-	{
-		icon = E:func_GetSpellIcon(393294),
-		textleft = E:func_GetSpellName(393294),
-		name_save = "CatchingUp",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			67100,
-			67137,
-			67295,
-			67564,
-			69946,
-			69979,
-		},
-		max = 6,
-	},
+	-- {
+	-- 	icon = E:func_GetSpellIcon(393294),
+	-- 	textleft = E:func_GetSpellName(393294),
+	-- 	name_save = "CatchingUp",
+	-- 	reset = "Once",
+	-- 	desc = "Dragonflight",
+	-- 	questID = {
+	-- 		67100,
+	-- 		67137,
+	-- 		67295,
+	-- 		67564,
+	-- 		69946,
+	-- 		69979,
+	-- 	},
+	-- 	max = 6,
+	-- },
 
-	{
-		icon = E:func_GetItemIconByID(204682),
-		textleft = E:func_questName(75694),
-		name_save = "AberrustheShadowedCrucibleSarkareth",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			75694,
-		},
-		max = 1,
-	},
-	{
-		icon = E:func_GetItemIconByID(197921),
-		textleft = E:func_questName(66847),
-		name_save = "VaultoftheIncarnatesFuryoftheStormEater",
-		reset = "Once",
-		desc = "Dragonflight",
-		questID = {
-			66847,
-		},
-		max = 1,
-	},
+	-- {
+	-- 	icon = E:func_GetItemIconByID(204682),
+	-- 	textleft = E:func_questName(75694),
+	-- 	name_save = "AberrustheShadowedCrucibleSarkareth",
+	-- 	reset = "Once",
+	-- 	desc = "Dragonflight",
+	-- 	questID = {
+	-- 		75694,
+	-- 	},
+	-- 	max = 1,
+	-- },
+	-- {
+	-- 	icon = E:func_GetItemIconByID(197921),
+	-- 	textleft = E:func_questName(66847),
+	-- 	name_save = "VaultoftheIncarnatesFuryoftheStormEater",
+	-- 	reset = "Once",
+	-- 	desc = "Dragonflight",
+	-- 	questID = {
+	-- 		66847,
+	-- 	},
+	-- 	max = 1,
+	-- },
 	{
 		icon = E:func_GetSpellIcon(343140),
 		textleft = E.Timers.DF_TimeRift().."TimeRift",
@@ -450,25 +438,6 @@ function E:func_Universal_10_Dragonflight()
 			76533,
 		},
 		max = 14,
-	},
-	{
-		icon = E:func_GetItemIconByID(93724),
-		textleft = E:func_GetItemNameByID(93724),
-		name_save = "DarkmoonFaire",
-		reset = "Daily",
-		desc = "Dragonflight",
-		questID = {
-			37911,
-			29438,
-			36481,
-			29463,
-			29436,
-			29434,
-			37910,
-			29455,
-			64783,
-		},
-		max = 9,
 	},
 	----------------------------------------------------------------
 	----------------------------------------------------------------

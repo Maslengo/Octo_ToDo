@@ -126,7 +126,7 @@ local function GetFromNameAndRealm(name, realm)
 	-- realm = realm:sub(1, index) .. "-" .. realm:sub(index + 1)
 	-- end
 	local region = GetCurrentRegion()
-	local locale = GetLocale()
+	local locale = E.curLocaleLang
 	local isEu = region == 3
 	if isEu and locale == "enUS" then
 		locale = "enGB"

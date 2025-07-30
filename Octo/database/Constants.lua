@@ -24,8 +24,7 @@ E.LEFT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-leftbut
 E.RIGHT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-rightbutton") and "|A:newplayertutorial-icon-mouse-rightbutton:0:0|a " or ""
 E.MIDDLE_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-middlebutton") and "|A:newplayertutorial-icon-mouse-middlebutton:0:0|a " or ""
 
-
-
+E.curLocaleLang = GetLocale()
 
 
 
@@ -98,6 +97,7 @@ E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] -- Get
 ----------------------------------------------------------------
 E.IsPublicBuild = IsPublicBuild()
 E.buildVersion, E.buildNumber, E.buildDate, E.interfaceVersion = GetBuildInfo()
+E.buildNumber = tonumber(E.buildNumber)
 E.interfaceVersion_PTR = 110200
 E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 E.GetRestrictedAccountData_rLevel, E.GetRestrictedAccountData_rMoney = GetRestrictedAccountData()
@@ -138,7 +138,7 @@ E.baseRaiderIoUrl = "raider.io/characters/%s/%s/%s"
 E.strategies = {}
 E.altStrategies = {}
 E.curExpansionMaxLevel = 70
-E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
+E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale() -- ТУТ ПЛОХО РАБОТАЕТ
 
 E.MonitorWidth, E.MonitorHeight = GetPhysicalScreenSize()
 E.Color_Quest_r = .3 -- 1
@@ -222,6 +222,7 @@ E.Brown_Color = "|cff964B00"
 E.Holiday_Color = "|cffFF8C00"
 E.Event_Color = "|cffFFF371"-- "|cff4682B3" КРАСИВОЕ
 E.Debug_Color = E.classColorHexCurrent -- "|cff4682B3"
+E.Function_Color = "|cff87CDEB"
 
 
 

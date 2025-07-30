@@ -15,14 +15,14 @@ local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local GetItemCount = C_Item.GetItemCount
 local GetItemInfo = C_Item.GetItemInfo
 ----------------------------------------------------------------
-local font = OctoFont22
+local font = OctoFont11
 local INDEND_TEST = 4
 local INDEND_SCROLL = 20
-local LINE_HEIGHT = 32
+local LINE_HEIGHT = 20
 local LINE_WIDTH = 256
 local LINES_MAX = 20
 local INDENT_BETWEEN_LINES = LINE_HEIGHT
-local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT))*.7)
+local LINES_TOTAL = math.floor(math.floor(E.MonitorHeight/LINE_HEIGHT)*.7)
 if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
 end
@@ -185,7 +185,7 @@ function ItemsUsable_EventFrame:Create_ItemsUsable()
 	ItemsUsable:SetScript("OnShow", TooltipOnShow)
 	ItemsUsable:SetPoint("CENTER")
 	ItemsUsable:SetSize(1, LINE_HEIGHT*1)
-	ItemsUsable:SetClampedToScreen(true)
+	ItemsUsable:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
 	-- ItemsUsable:SetFrameStrata("BACKGROUND")
 	ItemsUsable:SetBackdrop(E.menuBackdrop)
 	ItemsUsable:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA) -- E.backgroundColorA
@@ -306,18 +306,17 @@ function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
 
 
 	-- Создаем финальную таблицу для отображения
-	local color, itemName, itemIcon -- Локальные переменные для повторного использования
+	local color, itemName -- Локальные переменные для повторного использования
 	-- local color = E.White_Color
 	for _, item in ipairs(sorted_itemList) do
 		local itemID = item.itemID
 		if itemID then
 			color = item.usable and E.Green_Color or E.Red_Color
-			itemIcon = E:func_texturefromIcon(E:func_GetItemIconByID(itemID))
 			itemName = E:func_GetItemNameByID_MyQuality(itemID, item.quality)
 			lines = lines + 1
 
 			local node = DataProvider:Insert({
-				itemIcon..itemName,
+				itemName,
 				item.usable and color.."USE|r" or color.."DELETE|r",
 				color..item.count.."|r",
 				itemID = itemID,
@@ -360,7 +359,7 @@ local function Toggle_ItemsUsable()
 	ItemsUsable:SetShown(not ItemsUsable:IsShown())
 end
 function ItemsUsable_EventFrame:CreateTestButton1()
-	TestButton1:SetClampedToScreen(true)
+	TestButton1:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
 	TestButton1:SetPoint("TOPLEFT", 128, -128)
 	TestButton1:SetSize(128, 32)
 	TestButton1:SetText("Toggle_ItemsUsable")

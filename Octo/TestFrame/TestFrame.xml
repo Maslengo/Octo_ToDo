@@ -4,5 +4,8 @@
 
 	<Script file="TestFrame\01_TestFrame.lua"/>
 	<Script file="TestFrame\02_TestFrame.lua"/>
+	<Script file="TestFrame\03_TestFrame_DEBUGFUNCTIONS.lua"/>
+
+
 
 </Ui>

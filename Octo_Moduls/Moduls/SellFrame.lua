@@ -321,7 +321,7 @@ local function UpdateTooltip(button)
 							count = itemCount,
 							quality = quality,
 							sellPrice = sellPrice,
-							itemName = E:func_texturefromIcon(E:func_GetItemIconByID(itemID))..E:func_GetItemNameByID(itemID, quality),
+							itemName = E:func_GetItemNameByID(itemID, quality),
 							itemType = itemEquipLoc
 						}
 					end
@@ -375,33 +375,76 @@ end
 --- Продает предметы по качеству
 function Octo_EventFrame_SellFrame:func_SellItemsByQuality()
 	-- Защита от повторного клика
-	if not self.sellLock then
-		self.sellLock = true
-		C_Timer.After(1, function() Octo_EventFrame_SellFrame.sellLock = false end)
+	if self.sellLock then return end
+	self.sellLock = true
 
-		-- Добавляем подтверждение для массовой продажи
-		StaticPopup_Show("OCTO_CONFIRM_SELL_ITEMS", #self.BagAndSlot, nil, {
-				sellFunc = function()
-					for _, value in ipairs(Octo_EventFrame_SellFrame.BagAndSlot) do
-						C_Container.UseContainerItem(value[1], value[2])
-					end
-				end
-		})
+	-- Обновляем список предметов перед продажей
+	UpdateTooltip(activeTooltipButton)
+
+	local totalItems = #self.BagAndSlot
+	if totalItems == 0 then
+		print("Нет предметов для продажи.")
+		self.sellLock = false
+		return
 	end
-end
 
--- Диалог подтверждения продажи
-StaticPopupDialogs["OCTO_CONFIRM_SELL_ITEMS"] = {
-	text = "Вы уверены, что хотите продать %d предметов?",
-	button1 = YES,
-	button2 = NO,
-	OnAccept = function(self, data)
-		data.sellFunc()
-	end,
-	timeout = 0,
-	whileDead = true,
-	hideOnEscape = true
-}
+	-- Создаем свой фрейм для отображения прогресса
+	if not self.progressFrame then
+		self.progressFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+		self.progressFrame:SetSize(300, 80)
+		self.progressFrame:SetPoint("CENTER")
+		self.progressFrame:SetBackdrop({
+			bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+			tile = true, tileSize = 32, edgeSize = 32,
+			insets = { left = 11, right = 12, top = 12, bottom = 11 }
+		})
+
+		self.progressFrame.text = self.progressFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+		self.progressFrame.text:SetPoint("TOP", 0, -15)
+		self.progressFrame.text:SetText("Продажа предметов...")
+
+		self.progressFrame.progressText = self.progressFrame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+		self.progressFrame.progressText:SetPoint("CENTER", 0, 0)
+
+		self.progressFrame.cancelButton = CreateFrame("Button", nil, self.progressFrame, "UIPanelButtonTemplate")
+		self.progressFrame.cancelButton:SetSize(100, 25)
+		self.progressFrame.cancelButton:SetPoint("BOTTOM", 0, 10)
+		self.progressFrame.cancelButton:SetText("Отмена")
+		self.progressFrame.cancelButton:SetScript("OnClick", function()
+			self.sellLock = false
+			self.progressFrame:Hide()
+		end)
+	end
+
+	-- Показываем наш фрейм прогресса
+	self.progressFrame.progressText:SetFormattedText("Осталось: %d/%d", totalItems, totalItems)
+	self.progressFrame:Show()
+
+	-- Функция для продажи одного предмета
+	local function SellNextItem()
+		if #self.BagAndSlot == 0 or not self.sellLock then
+			-- Все продано или процесс отменен
+			self.progressFrame:Hide()
+			self.sellLock = false
+			print("Продажа завершена!")
+			return
+		end
+
+		-- Берем первый предмет из списка
+		local item = table.remove(self.BagAndSlot, 1)
+		C_Container.UseContainerItem(item[1], item[2])
+
+		-- Обновляем прогресс
+		self.progressFrame.progressText:SetFormattedText("Осталось: %d/%d", #self.BagAndSlot, totalItems)
+
+		-- Планируем следующую продажу через 0.3 секунды
+		C_Timer.After(0.3, SellNextItem)
+	end
+
+	-- Начинаем процесс продажи
+	SellNextItem()
+end
 
 ----------------------------------------------------------------
 -- Создание кнопок интерфейса
@@ -480,9 +523,9 @@ function Octo_EventFrame_SellFrame:ADDON_LOADED(addonName)
 	self.ADDON_LOADED = nil
 	self:func_CreateTradeButtons()
 	CreateBankButtons()
-	C_Timer.After(1, function()
-		fpde(Octo_EventFrame_SellFrame)
-	end)
+	-- C_Timer.After(1, function()
+	-- 	fpde(Octo_EventFrame_SellFrame)
+	-- end)
 end
 
 --- Обрабатывает событие обновления торговца

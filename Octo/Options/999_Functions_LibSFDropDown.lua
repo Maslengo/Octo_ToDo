@@ -30,7 +30,8 @@ end)
 local function CreateBaseDropDown(frame, hex, providerfunc)
 	local WIDTH = Octo_ToDo_DB_Vars.AddonLeftFrameWeight or 200
 	local HEIGHT = Octo_ToDo_DB_Vars.AddonHeight or 20
-	local DropDown = CreateFrame("Button", nil, frame, "SecureActionButtonTemplate, BackDropTemplate")
+	-- local DropDown = CreateFrame("Button", nil, frame, "SecureActionButtonTemplate, BackDropTemplate")
+	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
 
 	DropDown:SetSize(WIDTH/2, HEIGHT)
 	E:func_SetBackdrop(DropDown)
@@ -396,10 +397,12 @@ function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.isNotRadio = true
 
 				local filterButtons = {
+					{text = ITEMS, var = "Items"},
+					{text = CURRENCY, var = "Currencies"},
 					{text = QUESTS_LABEL, var = "Quests"},
+
 					{text = CALENDAR_FILTER_HOLIDAYS, var = "Holidays"},
 					{text = DUNGEONS, var = "Dungeons"},
-					{text = ITEMS, var = "Items"},
 					{text = TRADE_SKILLS, var = "Professions"},
 					{text = BONUS_ROLL_REWARD_MONEY, var = "Gold"},
 					{text = STAT_AVERAGE_ITEM_LEVEL, var = "ItemLevel"},

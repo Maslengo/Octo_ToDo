@@ -5,7 +5,21 @@ E.MainAddonName = GlobalAddonName
 OctoEngine = E -- в других аддонах
 -- ns.E = E
 
-E.OctoTable_Frames = E.OctoTable_Frames or {}
+E.DEBUG_TIMINGS_COLLECT = false
+E.DEBUG_TIMINGS_TESTFRAME1 = false
+E.OctoTable_Frames = {}
+E.OctoTable_UniversalQuest = {}
+E.Modules = {}
+
+
+
+
+
+
+
+
+
+
 
 -- local GlobalAddonName, E = ...
 -- local GlobalAddonName, ns = ... |n local E = ns.E
@@ -28,7 +42,6 @@ E.OctoTable_Frames = E.OctoTable_Frames or {}
 
 
 
-E.Modules = {}
 -- local OctoEngineFrame = CreateFrame("Frame", "OctoEngineFrame")
 -- E.OctoEngineFrame = OctoEngineFrame
 -- лучше вешать на кор обьект аддона функции а он уже в глобале а не на нс

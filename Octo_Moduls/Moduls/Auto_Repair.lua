@@ -9,7 +9,7 @@ tinsert(E.Modules, function()
 	if not Octo_ToDo_DB_Vars.AutoRepair then return end
 
 	local function PlayNoGoldSound()
-		local soundFile = GetLocale() == "ruRU" and
+		local soundFile = E.curLocaleLang == "ruRU" and
 			"Interface\\AddOns\\Octo\\Media\\sound\\Memes\\WeNeedMoreGold_RU.ogg" or
 			"Interface\\AddOns\\Octo\\Media\\sound\\Memes\\WeNeedMoreGold_ENG.ogg"
 		PlaySoundFile(soundFile, "Master")

@@ -52,7 +52,7 @@ E.editorThemes = {
 		["Number"] = "|c00ae81ff", -- числа (фиолетовый)
 		["String"] = "|c00e6db74", -- строки (жёлтый)
 	},
-	["Sublime2"] = {
+	["Sublime"] = {
 		["Special"] = "|cff66d9ef", -- спецсимволы (голубой)
 		["Keyword"] = "|cffF9EE98", -- ключевые слова (светло-жёлтый)
 		["Comment"] = "|cff605A60", -- комментарии (серо-фиолетовый)
@@ -155,7 +155,7 @@ local classR, classG, classB = GetClassColor(E.classFilename)
 local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	-- Создаем основной фрейм
 	local frame = CreateFrame("BUTTON", frameName, parent, "DialogBoxFrame")
-	E:func_InitFrame(frame)
+	-- E:func_InitFrame(frame)
 	-- local width = E.MonitorWidth/3
 	-- local height = E.MonitorHeight/1.5
 	local width = E.MonitorWidth/2
@@ -430,10 +430,10 @@ function Octo_EventFrame_Debug:func_itemslist(msg)
 	:Then(function()
 			sort(list1, E.func_Reverse_order)
 			for _, id1 in next, (list1) do
-				str = str..id1..", -- "..E:func_texturefromIcon(E:func_GetItemIconByID(id1))..E:func_GetItemNameByID(id1).."\n"
+				str = str..id1..", -- "..E:func_GetItemNameByID(id1).."\n"
 			end
 			for _, id2 in next, (list2) do
-				str = str..id2..", -- "..E:func_texturefromIcon(E:func_GetItemIconByID(id2))..E:func_GetItemNameByID(id2).."\n"
+				str = str..id2..", -- "..E:func_GetItemNameByID(id2).."\n"
 			end
 			editBox:SetText(str)
 			editFrame:Show()

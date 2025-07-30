@@ -1,8 +1,13 @@
 local GlobalAddonName, E = ...
 local Octo_EventFrame_WTF = CreateFrame("FRAME")
 Octo_EventFrame_WTF:Hide()
+
 ----------------------------------------------------------------
-function E:func_CurrencyCaching()
+
+
+----------------------------------------------------------------
+function Octo_EventFrame_WTF:func_CurrencyCaching()
+	local startTime = debugprofilestop()
 	-- Проверяем все возможные ID валют
 	for CurrencyID = 4000, 1, -1 do
 		local name = C_AccountStore.GetCurrencyInfo(CurrencyID).name
@@ -15,22 +20,49 @@ function E:func_CurrencyCaching()
 		end
 	end
 end
-----------------------------------------------------------------
-function E:func_ReputationsCaching()
-	for reputationID = 4000, 1, -1 do
+
+function Octo_EventFrame_WTF:func_ReputationsCaching()
+	local curLocaleLang = E.curLocaleLang or "enUS"
+
+	-- for reputationID = 4000, 1, -1 do
+	for reputationID = 1, 4000 do
 		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-		if repInfo then
-			local name = repInfo.name
-			if name and name ~= "" then
-				-- Если репутация новая - добавляем в кэш
-				if not Octo_Cache_DB.AllReputations[reputationID] then
-					print(E.Green_Color.."FIND NEW reputationID|r", E.Red_Color..reputationID.."|r", name)
-					Octo_Cache_DB.AllReputations[reputationID] = name .." id:".. tostring(reputationID)
+
+		if repInfo and repInfo.name and repInfo.name ~= "" then
+			local vivod_name = repInfo.name
+			if not Octo_Cache_DB.AllReputations[reputationID] or not Octo_Cache_DB.AllReputations[reputationID][curLocaleLang] then
+				print(E.Green_Color.."FIND NEW reputationID|r", E.Red_Color..reputationID.."|r", repInfo.name)
+				Octo_Cache_DB.AllReputations[reputationID] = Octo_Cache_DB.AllReputations[reputationID] or {}
+				Octo_Cache_DB.AllReputations[reputationID][curLocaleLang] = vivod_name
+
+
+				-- Получаем и кэшируем флаги типов
+				local isSimple = C_Reputation.GetFactionDataByID(reputationID) ~= nil
+				local isParagon = C_Reputation.IsFactionParagon(reputationID)
+				local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
+				local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
+				local isMajor = C_Reputation.IsMajorFaction(reputationID)
+
+				local vivod_type = ""
+				if isParagon then
+					vivod_type = "isParagon"
+				elseif isMajor then
+					vivod_type = "isMajor"
+				elseif isFriend then
+					vivod_type = "isFriend"
+				elseif isSimple then
+					vivod_type = "isSimple"
+				else
+					vivod_type = UNKNOWN
 				end
+				-- Octo_Cache_DB.AllReputations[reputationID].type = vivod_type
+				-- Octo_Cache_DB.AllReputations[reputationID][curLocaleLang] = vivod_name
+				Octo_Cache_DB.AllReputations[reputationID].repType = vivod_type
 			end
 		end
 	end
 end
+
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:DatabaseTransfer()
 	local enable = false -- Флаг для включения/отключения переноса
@@ -136,6 +168,32 @@ local function replaceZeroWithNil(tbl, smth)
 			end
 		end
 		return tbl
+	end
+end
+
+----------------------------------------------------------------
+function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
+	local enable = true -- Флаг включения/отключения очистки
+	if not enable then return end
+	if not Octo_ToDo_DB_Levels then return end
+
+	local seen = {}
+	local currentPlayerGUID = UnitGUID("player") -- GUID текущего персонажа
+
+	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+		if CharInfo.PlayerData and CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer then
+			local key = CharInfo.PlayerData.Name .. " - " .. CharInfo.PlayerData.curServer
+
+			-- Если это GUID текущего игрока, пропускаем удаление
+			if GUID == currentPlayerGUID then
+				seen[key] = true -- Помечаем, чтобы его дубликаты не удалялись
+			elseif seen[key] then
+				print (E.Red_Color.."REMOVE :|r ", E:func_texturefromIcon(CharInfo.PlayerData.specIcon)..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r" .. " - " .. CharInfo.PlayerData.curServer.." ("..GUID..")")
+				Octo_ToDo_DB_Levels[GUID] = nil -- Удаляем дубликат
+			else
+				seen[key] = true -- Запоминаем уникальную комбинацию
+			end
+		end
 	end
 end
 ----------------------------------------------------------------
@@ -411,6 +469,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		UIErrorsFramePosition = true, -- Позиция фрейма ошибок
 		WorldBoss_Weekly = true, -- Еженедельные мировые боссы
 		Quests = true, -- Квесты
+		Currencies = true, -- Квесты
 		Holidays = true, -- Праздники
 		Dungeons = true, -- Подземелья
 		Items = true, -- Предметы
@@ -475,18 +534,21 @@ end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Cache_DB()
 	Octo_Cache_DB = E:func_InitTable(Octo_Cache_DB)
+	E:func_InitField(Octo_Cache_DB, "lastBuildNumber", 1)
+	E:func_InitField(Octo_Cache_DB, "lastFaction", UNKNOWN)
 	-- Инициализация подтаблиц
+	E:func_InitSubTable(Octo_Cache_DB, E.curLocaleLang)
 	E:func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
 	E:func_InitSubTable(Octo_Cache_DB, "AllReputations")
+
 	-- Обновляем кэш валют и репутаций
-	if not Octo_Cache_DB.buildNumber then
-		Octo_Cache_DB.buildNumber = 1
-		if Octo_Cache_DB.buildNumber < tonumber(E.buildNumber) then
-			E:func_CurrencyCaching()
-			E:func_ReputationsCaching()
-			Octo_Cache_DB.buildNumber = E.buildNumber
-		end
-	end
+	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction then
+		-- print ("CHETONERAVNO")
+		self:func_CurrencyCaching()
+		self:func_ReputationsCaching()
+		Octo_Cache_DB.lastBuildNumber = E.buildNumber
+		Octo_Cache_DB.lastFaction = E.curFaction
+	-- end
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -553,6 +615,7 @@ end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Debug_DB()
 	Octo_Debug_DB = E:func_InitTable(Octo_Debug_DB)
+	E:func_InitSubTable(Octo_Debug_DB, "Functions")
 
 	if not Octo_Debug_DB then return end
 	Octo_Debug_DB.profileKeys = Octo_Debug_DB.profileKeys or {}
@@ -697,7 +760,7 @@ end
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED", -- Событие загрузки аддона
-	"VARIABLES_LOADED", -- Событие загрузки переменных
+	-- "VARIABLES_LOADED", -- Событие загрузки переменных
 }
 ----------------------------------------------------------------
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable)
@@ -708,6 +771,8 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
+		-- Чистка персонажей при старте
+		Octo_EventFrame_WTF:CleaningIdenticalCharacters()
 		-- self:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
 		-- Инициализация всех компонентов
 		self:Octo_Cache_DB() -- Кэш данных
@@ -731,11 +796,3 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		E:setOldChanges()
 	end
 end
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:VARIABLES_LOADED()
-	if not InCombatLockdown() then
-		self:UnregisterEvent("VARIABLES_LOADED")
-		self.VARIABLES_LOADED = nil
-	end
-end
-----------------------------------------------------------------

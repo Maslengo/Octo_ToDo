@@ -11,6 +11,7 @@ function E:func_Otrisovka_01_WorldofWarcraft()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
+		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, OCTOexpansionID)
 		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end
 	----------------------------------------------------------------

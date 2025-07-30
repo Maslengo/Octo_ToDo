@@ -8,8 +8,8 @@
 	<Script file="Options\04_Other.lua"/>
 	<Script file="Options\05_Cvars.lua"/>
 
-
-
 	<Script file="Options\99_Debug.lua"/>
+
+	<Script file="Options\999_Functions_LibSFDropDown.lua"/>
 
 </Ui>

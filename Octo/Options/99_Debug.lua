@@ -520,6 +520,6 @@ function E:Debug()
 	add_args(Octo_AddonsManager_DB, "Octo_AddonsManager_DB")
 	add_args(Octo_Debug_DB, "Octo_Debug_DB")
 	add_args(Octo_QuestsChanged_DB, "Octo_QuestsChanged_DB")
-	add_args(Octo_Cache_DB, "Octo_Cache_DB")
+	-- add_args(Octo_Cache_DB, "Octo_Cache_DB")
 	return Debug
 end
