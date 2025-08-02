@@ -10,6 +10,7 @@ local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibIndentation = LibStub("LibIndentation-1.0")
+local GLOBAL_TABLE_ITEMS = E.OctoTable_itemID_ItemsUsable_Other
 ----------------------------------------------------------------
 -- Таблица цветовых схем для редактора
 E.editorThemes = {
@@ -424,7 +425,7 @@ end
 function Octo_EventFrame_Debug:func_itemslist(msg)
 	local str = ""
 	local list1, list2 = {}, {}
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Other)
+	local promise1 = LibThingsLoad:Items(GLOBAL_TABLE_ITEMS)
 	:ThenForAllWithCached(function(_, ids1) tinsert(list1, ids1) end)
 	:FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
 	:Then(function()
@@ -439,36 +440,91 @@ function Octo_EventFrame_Debug:func_itemslist(msg)
 			editFrame:Show()
 	end)
 end
-function Octo_EventFrame_Debug:func_itemslistSort(msg)
-	local str = ""
-	local list1, list2 = {}, {}
-	local promise1 = LibThingsLoad:Items(E.OctoTable_itemID_ItemsUsable_Other)
-	:ThenForAllWithCached(function(_, ids1) tinsert(list1, ids1) end)
-	:FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
-	local count = 0
-	promise1:Then(function()
-			sort(list1, E.func_Reverse_order)
-			for _, id1 in next, (list1) do
-				count = count + 1
-				if count < 24 then
-					str = str..id1..", "
-				else
-					count = 0
-					str = str..id1..", |n"
-				end
-			end
-			for _, id2 in next, (list2) do
-				str = str..id2..", -- UNKNOWN|n"
-			end
-			editBox:SetText(str)
-			editFrame:Show()
+function Octo_EventFrame_Debug:func_itemslistSort24(msg)
+	local startTime = debugprofilestop()
+	editFrame:SetScript("OnShow", function()
+		local executionTime = (debugprofilestop() - startTime)
+		print (executionTime)
 	end)
+	----------------------------------------------------------------
+	-------------------------- СРЕДНЕЕ 15500ms ---------------------
+	----------------------------------------------------------------
+	-- local str = ""
+	-- local list1, list2 = {}, {}
+	-- local promise1 = LibThingsLoad:Items(GLOBAL_TABLE_ITEMS)
+	-- :ThenForAllWithCached(function(_, ids1) tinsert(list1, ids1) end)
+	-- :FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
+	-- local count = 0
+	-- promise1:Then(function()
+	-- 		sort(list1, E.func_Reverse_order)
+	-- 		for _, id1 in next, (list1) do
+	-- 			count = count + 1
+	-- 			if count < 24 then
+	-- 				str = str..id1..", "
+	-- 			else
+	-- 				count = 0
+	-- 				str = str..id1..", |n"
+	-- 			end
+	-- 		end
+	-- 		for _, id2 in next, (list2) do
+	-- 			str = str..id2..", -- UNKNOWN|n"
+	-- 		end
+	-- 		editBox:SetText(str)
+	-- 		editFrame:Show()
+	-- end)
+	----------------------------------------------------------------
+	-------------------------- СРЕДНЕЕ 80ms ------------------------
+	----------------------------------------------------------------
+	-- E:func_TableRemoveDuplicates(GLOBAL_TABLE_ITEMS)
+	-- table.sort(GLOBAL_TABLE_ITEMS, E.func_Reverse_order)
+
+	-- local vivod, count = "", 0
+	-- for _, itemID in ipairs(GLOBAL_TABLE_ITEMS) do
+	-- 	count = count + 1
+	-- 	if count < 24 then
+	-- 		vivod = vivod .. itemID..", "
+	-- 	else
+	-- 		count = 0
+	-- 		vivod = vivod .. itemID..",|n"
+	-- 	end
+	-- end
+	-- editBox:SetText(vivod)
+	-- editFrame:Show()
+	----------------------------------------------------------------
+	-------------------------- СРЕДНЕЕ 32ms ------------------------
+	----------------------------------------------------------------
+	if not tbl then
+		tbl = GLOBAL_TABLE_ITEMS
+	end
+	print (tbl)
+	E:func_TableRemoveDuplicates(tbl)
+	table.sort(tbl, E.func_Reverse_order)
+
+	local chunks = {}
+	local chunk_size = 24
+	local count = #tbl
+
+	for i = 1, count, chunk_size do
+		local chunk = {}
+		local last = math.min(i + chunk_size - 1, count)
+		for j = i, last do
+			table.insert(chunk, tostring(tbl[j]))
+		end
+		table.insert(chunks, table.concat(chunk, ", "))
+	end
+
+	editBox:SetText(table.concat(chunks, ",|n"))
+	editFrame:Show()
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+
 end
 function Octo_EventFrame_Debug:func_itemslistSortBOOLEN(msg)
 	local str = ""
 	local list1, list2 = {}, {}
 	local tbl = {}
-	for k, v in next, (E.OctoTable_itemID_ItemsUsable_Other) do
+	for k, v in next, (GLOBAL_TABLE_ITEMS) do
 		tinsert(tbl, k)
 	end
 	local promise1 = LibThingsLoad:Items(tbl)
@@ -577,9 +633,7 @@ end
 -- Обработчик команд для /fp
 local function func_HandleCommand(msg)
 	local command, arg1, arg2 = strsplit(" ", msg, 3)
-	if (command == "item" or command == "1") then
-		Octo_EventFrame_Debug:func_itemslist(arg1)
-	elseif (command == "quest" or command == "2") then
+	if (command == "quest" or command == "2") then
 		Octo_EventFrame_Debug:func_questslist(arg1)
 	elseif (command == "currency" or command == "3") then
 		Octo_EventFrame_Debug:func_currencieslist(arg1)
@@ -588,12 +642,11 @@ local function func_HandleCommand(msg)
 	elseif (command == "spell" or command == "5") then
 		Octo_EventFrame_Debug:func_spellslist(arg1)
 	elseif (command == "item2" or command == "6") then
-		Octo_EventFrame_Debug:func_itemslistSort(arg1)
+		Octo_EventFrame_Debug:func_itemslistSort24(arg1)
 	elseif (command == "item3" or command == "7") then
 		Octo_EventFrame_Debug:func_itemslistSortBOOLEN(arg1)
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("Команды:")
-		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."item".." (1)")
 		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."quest".." (2)")
 		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."currency".." (3)")
 		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."rep".." (4)")

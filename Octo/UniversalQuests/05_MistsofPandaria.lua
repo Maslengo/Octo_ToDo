@@ -1,23 +1,32 @@
-local GlobalAddonName, E = ...
+local GlobalAddonName,
+E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 function E:func_Universal_05_MistsofPandaria()
 	local OctoTable_Universal = {
 		{
-			icon = E.Icon_WorldBoss,
+
+			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
 			desc = "MistsofPandaria",
-			questID = {
-				33118,
-				33117,
-				32519, -- Undasta
-				33109,
-				32098,
-				32099,
+			quests = {
+				{33118, forcedText = {npcID = 72057},}, -- Ordos <Fire-God of the Yaungol>
+				{33117, forcedText = {itemID = 136984},}, -- Celestrials
+				{32519, forcedText = {npcID = 69161},}, -- "Oondasta"
+
+				-- {33109}, -- Nalak HIDDEN
+				{32518, forcedText = {npcID = 69099},}, -- "Nalak, The Storm Lord"
+
+				{32098, forcedText = {npcID = 62346},}, -- "Salyis's Warband"
+				{32099, forcedText = {npcID = 60491},}, -- "Sha of Anger"
+
+
+
+
 			},
-			max = 6,
+			-- forcedMaxQuest = 6,
 		},
 	}
 	return OctoTable_Universal

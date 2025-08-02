@@ -9,24 +9,24 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
-				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
-				----------------------------------------------------------------
-				if CharInfo.MASLENGO.OctoTable_QuestID[38242] then
-					textCENT = CharInfo.MASLENGO.OctoTable_QuestID[38242] and E.DONE
-				end
-				if CharInfo.MASLENGO.ItemsInBag[122457] then
-					textCENT = textCENT.."+"..CharInfo.MASLENGO.ItemsInBag[122457]..E:func_GetItemIconByID(122457)
-				end
-				myType = {"Item", 122457}
-				----------------------------------------------------------------
-				textLEFT = E:func_questName(38242).." (ап пета)"
-				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
-				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
-				----------------------------------------------------------------
-		end)
+		-- table.insert(OctoTable_Otrisovka, function(CharInfo)
+		-- 		----------------------------------------------------------------
+		-- 		local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+		-- 		----------------------------------------------------------------
+		-- 		if CharInfo.MASLENGO.OctoTable_QuestID[38242] then
+		-- 			textCENT = CharInfo.MASLENGO.OctoTable_QuestID[38242] and E.DONE
+		-- 		end
+		-- 		if CharInfo.MASLENGO.ItemsInBag[122457] then
+		-- 			textCENT = textCENT.."+"..CharInfo.MASLENGO.ItemsInBag[122457]..E:func_GetItemIconByID(122457)
+		-- 		end
+		-- 		myType = {"Item", 122457}
+		-- 		----------------------------------------------------------------
+		-- 		textLEFT = E:func_questName(38242).." (ап пета)"
+		-- 		colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+		-- 		----------------------------------------------------------------
+		-- 		return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+		-- 		----------------------------------------------------------------
+		-- end)
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}

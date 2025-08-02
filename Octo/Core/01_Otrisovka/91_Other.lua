@@ -51,7 +51,7 @@ function E:func_Tooltip_Chars(CharInfo)
 	-- Chromie time info
 	if CharInfo.PlayerData.Chromie_name and CharInfo.PlayerData.Chromie_name ~= "" then
 		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		tooltip_Chars[#tooltip_Chars+1] = {L["Chromie"]..": "..E.Red_Color..CharInfo.PlayerData.Chromie_name.."|r", ""}
+		tooltip_Chars[#tooltip_Chars+1] = {L["Chromie"]..": "..E.Green_Color..CharInfo.PlayerData.Chromie_name.."|r", ""}
 	end
 	-- Location info
 	if CharInfo.PlayerData.BindLocation then
@@ -149,8 +149,8 @@ function E:func_Otrisovka_91_Other()
 				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				for _, v in next, (E.OctoTable_UniversalQuest) do
-					if CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
-						tooltipRIGHT[#tooltipRIGHT+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
+					if CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
+						tooltipRIGHT[#tooltipRIGHT+1] = {tostringall(v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]}
 					end
 				end
 				if #tooltipRIGHT ~= 0 then
@@ -175,7 +175,7 @@ function E:func_Otrisovka_91_Other()
 					----------------------------------------------------------------
 					for _, v in next, (E.OctoTable_UniversalQuest) do
 						if v.desc == value then
-							tooltipRIGHT[#tooltipRIGHT+1] = {tostringall("Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]}
+							tooltipRIGHT[#tooltipRIGHT+1] = {tostringall(v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]}
 							textCENT = value
 						end
 					end

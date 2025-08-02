@@ -25,6 +25,7 @@ local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
 local textR, textG, textB, textA = 1, 1, 1, 1
 local classR, classG, classB = GetClassColor(E.classFilename)
 local LEFT_TEXTURE_ALPHA = 0.1
+local charR, charG, charB = 1, 1, 1
 ----------------------------------------------------------------
 -- Подключаем необходимые библиотеки
 ----------------------------------------------------------------
@@ -457,9 +458,9 @@ function E:func_TODO_CreateDataProvider()
 				for _, v in ipairs(tbl) do
 					local repInfo = E.OctoTable_ReputationsDB[v.id]
 					-- Проверяем соответствие фракции
-					local factionMatch = not Octo_ToDo_DB_Vars.OnlyCurrentFaction or
-					-- repInfo.side == E.curFaction or
-					repInfo.side == "-"
+					local factionMatch = not Octo_ToDo_DB_Vars.OnlyCurrentFaction
+					or repInfo.side == E.curFaction
+					or repInfo.side == "-"
 					if factionMatch then
 						numlines = numlines + 1
 						local zxc = CreateZxcTable(true)
@@ -467,14 +468,15 @@ function E:func_TODO_CreateDataProvider()
 							local FIRST, SECOND, vivod, colorCENT = ("#"):split(CharInfo.MASLENGO.Reputation[v.id])
 							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
 							zxc.SECOND[CharIndex] = tonumber(SECOND) or 0
-							zxc.textLEFT = E:func_reputationName(v.id)
+							-- zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_ReputationsDB[v.id].icon)..E:func_reputationName(v.id)
+							zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_Expansions[index].icon, 18, 32)..E:func_reputationName(v.id)
 							-- if repInfo then
 							-- 	zxc.iconLEFT = repInfo.icon
 							-- else
 							-- 	zxc.iconLEFT = E.Icon_Empty
 							-- end
 							zxc.colorLEFT = E.OctoTable_Expansions[index].color
-							zxc.textCENT[CharIndex] = vivod or "vivod"
+							zxc.textCENT[CharIndex] = vivod
 							zxc.tooltipRIGHT[CharIndex] = {}
 							zxc.colorCENT[CharIndex] = colorCENT
 							zxc.myType = {}
@@ -516,7 +518,16 @@ function E:func_TODO_CreateDataProvider()
 			curCharFrame:SetPropagateMouseMotion(true)
 			curCharFrame:SetHitRectInsets(1, 1, 1, 1)
 			-- Устанавливаем цвет фона в зависимости от фракции
-			local charR, charG, charB = E:func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
+			if CharInfo.PlayerData.Faction == "Horde" then
+				charR, charG, charB = E:func_hex2rgbNUMBER(E.Horde_Color)
+			elseif CharInfo.PlayerData.Faction == "Alliance" then
+				charR, charG, charB = E:func_hex2rgbNUMBER(E.Alliance_Color)
+			elseif CharInfo.PlayerData.Faction == "Neutral" then
+				charR, charG, charB = E:func_hex2rgbNUMBER(E.Neutral_Color)
+			end
+
+
+
 			curCharFrame.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
 			-- Обработчики событий для фрейма персонажа
 			curCharFrame:SetScript("OnEnter", function(self)

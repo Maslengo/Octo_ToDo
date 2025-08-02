@@ -11,7 +11,7 @@
 	<Script file="database\Constants.lua"/>
 
 	<Script file="database\AllCurrencies.lua"/>
-	<Script file="database\AllReputations.lua"/>
+
 	<Script file="database\Expansions.lua"/>
 	<Script file="database\Gossip.lua"/>
 	<Script file="database\Items.lua"/>

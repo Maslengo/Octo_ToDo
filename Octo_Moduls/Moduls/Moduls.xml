@@ -12,7 +12,6 @@
 	<Script file="Moduls\CVAR.lua"/>
 	<Script file="Moduls\Module_AutoTurnIn.lua"/>
 	<Script file="Moduls\Module_HideFrames.lua"/>
-	<Script file="Moduls\Module_ItemsDelete.lua"/>
 	<Script file="Moduls\Module_ItemsUsable.lua"/>
 	<Script file="Moduls\Module_UIErrorsFramePosition.lua"/>
 	<Script file="Moduls\Octo_WowheadQuickLink.lua"/>
@@ -20,6 +19,5 @@
 	<Script file="Moduls\PosFrame.lua"/>
 	<Script file="Moduls\SellFrame.lua"/>
 	<Script file="Moduls\SpeedFrame.lua"/>
-	<Script file="Moduls\StaticPopup1Button1.lua"/>
 
 </Ui>

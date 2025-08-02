@@ -5,170 +5,182 @@ function E:func_Universal_09_Shadowlands()
 	local OctoTable_Universal = {
 
 	{
-		icon = E.Icon_WorldBoss,
+
+		showTooltip = true,
 		textleft = L["World Boss"],
 		name_save = "WorldBoss",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			65143,
-			64531,
-			61813,
-			61816,
-			61815,
-			61814,
+		quests = {
+			{65143},
+			{64531},
+			{61813},
+			{61816},
+			{61815},
+			{61814},
 		},
-		max = 3,
+		forcedMaxQuest = 3,
 	},
 
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	{
-		icon = E.Icon_Empty,
+
+		showTooltip = true,
 		textleft = "Maw: Wrath of the Jailer",
 		name_save = "wrathofthejailer",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			63414,
+		quests = {
+			{63414},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 	{
-		icon = E.Icon_Empty,
+
+		showTooltip = true,
 		textleft = "Maw: The Hunt",
 		name_save = "mawhunt",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			63180,
-			63194,
-			63198,
-			63196,
-			63199,
+		quests = {
+			{63180},
+			{63194},
+			{63198},
+			{63196},
+			{63199},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 	{
-		icon = E.Icon_Empty,
+
+		showTooltip = true,
 		textleft = "Maw: Tormentors",
 		name_save = "mawtormentor",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			63854,
+		quests = {
+			{63854},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 
 	{
-		icon = E.Icon_Empty,
+
+		showTooltip = true,
 		textleft = E.Timers.SL_Maw_Assault().."Maw: Covenant Assault",
 		name_save = "mawassault",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			63822,
-			63823,
-			63824,
-			63543,
+		quests = {
+			{63822},
+			{63823},
+			{63824},
+			{63543},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 
 	{
-		icon = E:func_GetCurrencyIcon(1977),
+
+		showTooltip = true,
 		textleft = "Korthia: Weekly", --E:func_questName(63949),
 		name_save = "kortiaweekly",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			63949,
+		quests = {
+			{63949},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 
 	{
-		icon = E:func_GetCurrencyIcon(1813),
+
+		showTooltip = true,
 		textleft = "1000 anima", -- E:func_questName(61981),
 		name_save = "anima1k",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			61981,
-			61982,
-			61983,
-			61984,
+		quests = {
+			{61981},
+			{61982},
+			{61983},
+			{61984},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 	{
-		icon = E.Icon_WorldBoss,
+
+		showTooltip = true,
 		textleft = "Maw: World Boss",
 		name_save = "mawworldboss",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			64531,
+		quests = {
+			{64531},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 
 
 
 	{
-		icon = E:func_GetCurrencyIcon(1931),
+
+		showTooltip = true,
 		textleft = "Korthia: Lost Research", -- E:func_questName(65266),
 		name_save = "korthialostresearch",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			65266,
+		quests = {
+			{65266},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 
 
 	{
-		icon = E.Icon_Empty,
+
+		showTooltip = true,
 		textleft = "Korthia: anima table mission",
 		name_save = "korthiaanimatablemission",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			64551,
-			64549,
-			64552,
-			64553,
+		quests = {
+			{64551},
+			{64549},
+			{64552},
+			{64553},
 		},
-		max = 4,
+		forcedMaxQuest = 4,
 	},
 
 
 	{
-		icon = E.Icon_WorldBoss,
+
+		showTooltip = true,
 		textleft = "Zerith Mortis: World Boss",
 		name_save = "zerthworldboss",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			65143,
+		quests = {
+			{65143},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 
 
 	{
-		icon = E:func_GetCurrencyIcon(2009),
+
+		showTooltip = true,
 		textleft = "Zerith Mortis: Weekly", -- E:func_questName(66042),
 		name_save = "patternswithinpatterns",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			66042,
+		quests = {
+			{66042},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 
 
@@ -179,15 +191,16 @@ function E:func_Universal_09_Shadowlands()
 	----------------------------------------------------------------
 
 	{
-		icon = E:func_GetItemIconByID(187148),
+
+		showTooltip = true,
 		textleft = "Torghast: Adamant Vaults",
 		name_save = "torghastav",
 		reset = "Weekly",
 		desc = "Shadowlands",
-		questID = {
-			64347,
+		quests = {
+			{64347},
 		},
-		max = 1,
+		forcedMaxQuest = 1,
 	},
 
 
@@ -196,12 +209,13 @@ function E:func_Universal_09_Shadowlands()
 
 
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1810),
-	-- 	textleft = E:func_questName(62858),
+
+-- 	showTooltip = true,
+	-- textleft = E:func_questName(62858),
 	-- 	name_save = "ReturnLostSouls",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		62858,
 	-- 		62859,
 	-- 		62860,
@@ -215,15 +229,16 @@ function E:func_Universal_09_Shadowlands()
 	-- 		62868,
 	-- 		62869,
 	-- 	},
-	-- 	max = 1,
+	-- 	forcedMaxQuest = 1,
 	-- },
 	-- {
-	-- 	icon = E:func_GetItemIconByID(184374),
-	-- 	textleft = "TradingFavors",
+
+	-- showTooltip = true,
+	-- textleft = "TradingFavors",
 	-- 	name_save = "TradingFavors",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		60242,
 	-- 		60243,
 	-- 		60244,
@@ -241,15 +256,16 @@ function E:func_Universal_09_Shadowlands()
 	-- 		60256,
 	-- 		60257,
 	-- 	},
-	-- 	max = 2,
+	-- 	forcedMaxQuest = 2,
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1880),
-	-- 	textleft = E:func_currencyName(1880),
+
+	-- showTooltip = true,
+	-- textleft = E:func_currencyName(1880),
 	-- 	name_save = "MawQuest",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		60646,
 	-- 		60762,
 	-- 		60775,
@@ -262,40 +278,43 @@ function E:func_Universal_09_Shadowlands()
 	-- 		62214,
 	-- 		62234,
 	-- 	},
-	-- 	max = 3,
+	-- 	forcedMaxQuest = 3,
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1977),
-	-- 	textleft = L["Daily quests"],
+
+	-- showTooltip = true,
+	-- textleft = L["Daily quests"],
 	-- 	name_save = "KorthiaDailyQuest",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		63787,
 	-- 		64103,
 	-- 		63788,
 	-- 		63793,
 	-- 	},
-	-- 	max = 4,
+	-- 	forcedMaxQuest = 4,
 	-- },
 	-- {
-	-- 	icon = E:func_GetItemIconByID(187551),
-	-- 	textleft = E:func_questName(64522),
+
+	-- showTooltip = true,
+	-- textleft = E:func_questName(64522),
 	-- 	name_save = "KorthiaStolenKorthianSupplies",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64522,
 	-- 	},
-	-- 	max = 1,
+	-- 	forcedMaxQuest = 1,
 	-- },
 	-- {
-	-- 	icon = E.Icon_Rares,
-	-- 	textleft = "KorthiaRares",
+
+	-- showTooltip = true,
+	-- textleft = "KorthiaRares",
 	-- 	name_save = "KorthiaRares",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64457,
 	-- 		64338,
 	-- 		64442,
@@ -324,15 +343,16 @@ function E:func_Universal_09_Shadowlands()
 	-- 		64152,
 	-- 		64439,
 	-- 	},
-	-- 	max = 23,
+	-- 	forcedMaxQuest = 23,
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1767),
-	-- 	textleft = L["Purple Mobs"],
+
+	-- showTooltip = true,
+	-- textleft = L["Purple Mobs"],
 	-- 	name_save = "KorthiaPurpleMobs",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64341,
 	-- 		64342,
 	-- 		64343,
@@ -349,257 +369,278 @@ function E:func_Universal_09_Shadowlands()
 	-- 		64756,
 	-- 		64757,
 	-- 	},
-	-- 	max = 15, -- 3?
+	-- 	forcedMaxQuest = 15, -- 3?
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1767),
-	-- 	textleft = L["Relic Gorgers"],
+
+	-- showTooltip = true,
+	-- textleft = L["Relic Gorgers"],
 	-- 	name_save = "KorthiaRelicGorgers",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64433,
 	-- 		64434,
 	-- 		64435,
 	-- 		64436,
 	-- 	},
-	-- 	max = 4,
+	-- 	forcedMaxQuest = 4,
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1767),
-	-- 	textleft = L["Mushrooms"],
+
+	-- showTooltip = true,
+	-- textleft = L["Mushrooms"],
 	-- 	name_save = "KorthiaCollectionMushrooms",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64351,
 	-- 		64354,
 	-- 		64355,
 	-- 		64356,
 	-- 		64357,
 	-- 	},
-	-- 	max = 5,
+	-- 	forcedMaxQuest = 5,
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1767),
-	-- 	textleft = L["Nests"],
+
+	-- showTooltip = true,
+	-- textleft = L["Nests"],
 	-- 	name_save = "KorthiaCollectionNests",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64358,
 	-- 		64359,
 	-- 		64360,
 	-- 		64361,
 	-- 		64362,
 	-- 	},
-	-- 	max = 5,
+	-- 	forcedMaxQuest = 5,
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1767),
-	-- 	textleft = L["Mawsworn Caches"],
+
+	-- showTooltip = true,
+	-- textleft = L["Mawsworn Caches"],
 	-- 	name_save = "KorthiaCollectionMawswornCaches",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64021,
 	-- 		64363,
 	-- 		64364,
 	-- 	},
-	-- 	max = 3,
+	-- 	forcedMaxQuest = 3,
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1767),
-	-- 	textleft = L["Bones/Stones/Relics"],
+
+	-- showTooltip = true,
+	-- textleft = L["Bones/Stones/Relics"],
 	-- 	name_save = "KorthiaCollectionBonesStonesRelics",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64787,
 	-- 		64788,
 	-- 		64789,
 	-- 		64790,
 	-- 		64791,
 	-- 	},
-	-- 	max = 5,
+	-- 	forcedMaxQuest = 5,
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1767),
-	-- 	textleft = L["Spectral Bound Chest"],
+
+	-- showTooltip = true,
+	-- textleft = L["Spectral Bound Chest"],
 	-- 	name_save = "KorthiaRIFTSpectralBoundChest",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64247, -- Chest with 3 keys
 	-- 	},
-	-- 	max = 1,
+	-- 	forcedMaxQuest = 1,
 	-- },
 	-- {
-	-- 	icon = E:func_GetCurrencyIcon(1767),
-	-- 	textleft = L["Helsworn Chest"],
+
+	-- showTooltip = true,
+	-- textleft = L["Helsworn Chest"],
 	-- 	name_save = "MawHelswornChest",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64256, -- Maw chest in Desmotaeron
 	-- 	},
-	-- 	max = 1,
+	-- 	forcedMaxQuest = 1,
 	-- },
 	-- -- {
-	-- -- icon = E:func_GetCurrencyIcon(1767),
-	-- -- textleft = L["Anima Vessel"],
+
+	-- showTooltip = true,--
+	-- textleft = L["Anima Vessel"],
 	-- -- name_save = "KorthiaKorthianAnimaVessel",
 	-- -- reset = "Daily",
 	-- -- desc = "Shadowlands",
-	-- -- questID = {
+	-- -- quests = {
 	-- -- 64575,
 	-- -- },
-	-- -- max = 1,
+	-- -- forcedMaxQuest = 1,
 	-- -- },
 	-- {
-	-- 	icon = 528693,
-	-- 	textleft = L["Stolen Anima Vessel"],
+
+	-- showTooltip = true,
+	-- textleft = L["Stolen Anima Vessel"],
 	-- 	name_save = "KorthiaRIFTStolenAnimaVessel",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64265,
 	-- 		64269,
 	-- 		64270,
 	-- 	},
-	-- 	max = 3,
+	-- 	forcedMaxQuest = 3,
 	-- },
 	-- {
-	-- 	icon = 528693,
-	-- 	textleft = L["Riftbound Caches"],
+
+	-- showTooltip = true,
+	-- textleft = L["Riftbound Caches"],
 	-- 	name_save = "KorthiaRIFTRiftboundCaches",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64456,
 	-- 		64470,
 	-- 		64471,
 	-- 		64472,
 	-- 	},
-	-- 	max = 4,
+	-- 	forcedMaxQuest = 4,
 	-- },
 	-- {
-	-- 	icon = E:func_GetItemIconByID(186731),
-	-- 	textleft = L["Zovaal's Vault"],
+
+	-- showTooltip = true,
+	-- textleft = L["Zovaal's Vault"],
 	-- 	name_save = "KorthiaRIFTZovaalsVault",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64283,
 	-- 	},
-	-- 	max = 1,
+	-- 	forcedMaxQuest = 1,
 	-- },
 	-- {
-	-- 	icon = E:func_GetItemIconByID(187216),
-	-- 	textleft = E:func_GetItemNameByID(187216),
+
+	-- showTooltip = true,
+	-- textleft = E:func_GetItemNameByID(187216),
 	-- 	name_save = "KorthiaSoultwiningCrescent",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64572,
 	-- 	},
-	-- 	max = 1,
+	-- 	forcedMaxQuest = 1,
 	-- },
 	-- -- {
-	-- -- icon = E:func_GetCurrencyIcon(1767),
-	-- -- textleft = "KorthiaITEMResearchReportRelicExaminationTechniques",
+
+	-- showTooltip = true,--
+	-- textleft = "KorthiaITEMResearchReportRelicExaminationTechniques",
 	-- -- name_save = "KorthiaITEMResearchReportRelicExaminationTechniques",
 	-- -- reset = "Once",
 	-- -- desc = "Shadowlands",
-	-- -- questID = {
+	-- -- quests = {
 	-- -- 64367,
 	-- -- },
-	-- -- max = 1,
+	-- -- forcedMaxQuest = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E:func_GetCurrencyIcon(1767),
-	-- -- textleft = "KorthiaITEMVaultAnimaTracker",
+
+	-- showTooltip = true,--
+	-- textleft = "KorthiaITEMVaultAnimaTracker",
 	-- -- name_save = "KorthiaITEMVaultAnimaTracker",
 	-- -- reset = "Once",
 	-- -- desc = "Shadowlands",
-	-- -- questID = {
+	-- -- quests = {
 	-- -- 64061,
 	-- -- },
-	-- -- max = 1,
+	-- -- forcedMaxQuest = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E:func_GetCurrencyIcon(1767),
-	-- -- textleft = "KorthiaITEMTreatiseRecognizingStygiaanditsUses",
+
+	-- showTooltip = true,--
+	-- textleft = "KorthiaITEMTreatiseRecognizingStygiaanditsUses",
 	-- -- name_save = "KorthiaITEMTreatiseRecognizingStygiaanditsUses",
 	-- -- reset = "Once",
 	-- -- desc = "Shadowlands",
-	-- -- questID = {
+	-- -- quests = {
 	-- -- 64307,
 	-- -- },
-	-- -- max = 1,
+	-- -- forcedMaxQuest = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E:func_GetCurrencyIcon(1767),
-	-- -- textleft = "KorthiaITEMTreatiseBondsofStygiainMortals",
+
+	-- showTooltip = true,--
+	-- textleft = "KorthiaITEMTreatiseBondsofStygiainMortals",
 	-- -- name_save = "KorthiaITEMTreatiseBondsofStygiainMortals",
 	-- -- reset = "Once",
 	-- -- desc = "Shadowlands",
-	-- -- questID = {
+	-- -- quests = {
 	-- -- 64828,
 	-- -- },
-	-- -- max = 1,
+	-- -- forcedMaxQuest = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E:func_GetCurrencyIcon(1767),
-	-- -- textleft = "KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop",
+
+	-- showTooltip = true,--
+	-- textleft = "KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop",
 	-- -- name_save = "KorthiaITEMTreatiseTheStudyofAnimaandHarnessingEveryDrop",
 	-- -- reset = "Once",
 	-- -- desc = "Shadowlands",
-	-- -- questID = {
+	-- -- quests = {
 	-- -- 64027,
 	-- -- },
-	-- -- max = 1,
+	-- -- forcedMaxQuest = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E:func_GetCurrencyIcon(1767),
-	-- -- textleft = "KorthiaITEMTreatiseRelicsAboundintheShadowlands",
+
+	-- showTooltip = true,--
+	-- textleft = "KorthiaITEMTreatiseRelicsAboundintheShadowlands",
 	-- -- name_save = "KorthiaITEMTreatiseRelicsAboundintheShadowlands",
 	-- -- reset = "Once",
 	-- -- desc = "Shadowlands",
-	-- -- questID = {
+	-- -- quests = {
 	-- -- 64366,
 	-- -- },
-	-- -- max = 1,
+	-- -- forcedMaxQuest = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E:func_GetCurrencyIcon(1767),
-	-- -- textleft = "KorthiaITEMResearchReportAdaptiveAlloys",
+
+	-- showTooltip = true,--
+	-- textleft = "KorthiaITEMResearchReportAdaptiveAlloys",
 	-- -- name_save = "KorthiaITEMResearchReportAdaptiveAlloys",
 	-- -- reset = "Once",
 	-- -- desc = "Shadowlands",
-	-- -- questID = {
+	-- -- quests = {
 	-- -- 64300,
 	-- -- },
-	-- -- max = 1,
+	-- -- forcedMaxQuest = 1,
 	-- -- },
 	-- -- {
-	-- -- icon = E:func_GetCurrencyIcon(1767),
-	-- -- textleft = "KorthiaITEMResearchReportFirstAlloys",
+
+	-- showTooltip = true,--
+	-- textleft = "KorthiaITEMResearchReportFirstAlloys",
 	-- -- name_save = "KorthiaITEMResearchReportFirstAlloys",
 	-- -- reset = "Once",
 	-- -- desc = "Shadowlands",
-	-- -- questID = {
+	-- -- quests = {
 	-- -- 64303,
 	-- -- },
-	-- -- max = 1,
+	-- -- forcedMaxQuest = 1,
 	-- -- },
 	-- {
-	-- 	icon = E.Icon_Rares,
-	-- 	textleft = "ZMRares",
+
+	-- showTooltip = true,
+	-- textleft = "ZMRares",
 	-- 	name_save = "ZMRares",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		65557,
 	-- 		65547,
 	-- 		65581,
@@ -633,28 +674,30 @@ function E:func_Universal_09_Shadowlands()
 	-- 		65555,
 	-- 		65549,
 	-- 	},
-	-- 	max = 25,
+	-- 	forcedMaxQuest = 25,
 	-- },
 	-- {
-	-- 	icon = E.Icon_Rares,
-	-- 	textleft = "ZMDuneDominanceRares",
+
+	-- showTooltip = true,
+	-- textleft = "ZMDuneDominanceRares",
 	-- 	name_save = "ZMDuneDominanceRares",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		65585,
 	-- 		65586,
 	-- 		65587,
 	-- 	},
-	-- 	max = 3,
+	-- 	forcedMaxQuest = 3,
 	-- },
 	-- {
-	-- 	icon = E.Icon_Empty,
-	-- 	textleft = "ZMWorldQuests",
+
+	-- showTooltip = true,
+	-- textleft = "ZMWorldQuests",
 	-- 	name_save = "ZMWorldQuests",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		64960,
 	-- 		64974,
 	-- 		65081,
@@ -686,15 +729,16 @@ function E:func_Universal_09_Shadowlands()
 	-- 		65417,
 	-- 		65231,
 	-- 	},
-	-- 	max = 3,
+	-- 	forcedMaxQuest = 3,
 	-- },
 	-- {
-	-- 	icon = E.Icon_Empty,
-	-- 	textleft = "ZMTREASURES",
+
+	-- showTooltip = true,
+	-- textleft = "ZMTREASURES",
 	-- 	name_save = "ZMTREASURES",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		65520,
 	-- 		65573,
 	-- 		65489,
@@ -722,39 +766,42 @@ function E:func_Universal_09_Shadowlands()
 	-- 		65565,
 	-- 		65175,
 	-- 	},
-	-- 	max = 26,
+	-- 	forcedMaxQuest = 26,
 	-- },
 	-- {
-	-- 	icon = E.Icon_Empty,
-	-- 	textleft = "ZMUndulatingFoliage",
+
+	-- showTooltip = true,
+	-- textleft = "ZMUndulatingFoliage",
 	-- 	name_save = "ZMUndulatingFoliage",
 	-- 	reset = "Once",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		65572,
 	-- 	},
-	-- 	max = 1,
+	-- 	forcedMaxQuest = 1,
 	-- },
 	-- {
-	-- 	icon = E.Icon_Empty,
-	-- 	textleft = "ZMPryingEyeDiscovery",
+
+	-- showTooltip = true,
+	-- textleft = "ZMPryingEyeDiscovery",
 	-- 	name_save = "ZMPryingEyeDiscovery",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		65184,
 	-- 		65501,
 	-- 		65611,
 	-- 	},
-	-- 	max = 1,
+	-- 	forcedMaxQuest = 1,
 	-- },
 	-- {
-	-- 	icon = E.Icon_Empty,
-	-- 	textleft = "ZMPUZZLECACHES",
+
+	-- showTooltip = true,
+	-- textleft = "ZMPUZZLECACHES",
 	-- 	name_save = "ZMPUZZLECACHES",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		65094,
 	-- 		65323,
 	-- 		65318,
@@ -772,15 +819,16 @@ function E:func_Universal_09_Shadowlands()
 	-- 		65314,
 	-- 		65319,
 	-- 	},
-	-- 	max = 50,
+	-- 	forcedMaxQuest = 50,
 	-- },
 	-- {
-	-- 	icon = E.Icon_Empty,
-	-- 	textleft = "ZMConcordance",
+
+	-- showTooltip = true,
+	-- textleft = "ZMConcordance",
 	-- 	name_save = "ZMConcordance",
 	-- 	reset = "Once",
 	-- 	desc = "Shadowlands",
-	-- 	questID = {
+	-- 	quests = {
 	-- 		65179,
 	-- 		65213,
 	-- 		65216,
@@ -794,7 +842,7 @@ function E:func_Universal_09_Shadowlands()
 	-- 		65209,
 	-- 		65215,
 	-- 	},
-	-- 	max = 12,
+	-- 	forcedMaxQuest = 12,
 	-- },
 
 

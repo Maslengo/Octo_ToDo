@@ -45,6 +45,11 @@ local MyEventsTable = {
 
 	"BARBER_SHOP_APPEARANCE_APPLIED",
 	"VARIABLES_LOADED",
+
+	"PLAYER_FLAGS_CHANGED",
+	"UPDATE_FACTION",
+	-- "UNIT_FACTION",
+
 }
 function E:func_Collect_All_Table()
 	E.Collect_All_PlayerLevel()
@@ -62,6 +67,17 @@ function Octo_EventFrame_Collect:ADDON_LOADED(addonName)
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
+
+
+
+
+-- function Octo_EventFrame_Collect:UNIT_FACTION(...)
+-- 	if ... == "player" then
+-- 		E.Collect_All_PlayerInfo()
+-- 		print ("UNIT_FACTION", ...)
+-- 	end
+-- end
+
 function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	RequestTimePlayed()
 	RequestRaidInfo()
@@ -153,7 +169,7 @@ end
 function Octo_EventFrame_Collect:BAG_UPDATE()
 	if InCombatLockdown() or self.BAG_UPDATE_pause then return end
 	self.BAG_UPDATE_pause = true
-	C_Timer.After(1, function()
+	C_Timer.After(5, function()
 			E.Collect_All_ItemsInBag()
 			E.Collect_All_BfA_Azerite()
 			E.Collect_All_BfA_Cloaklvl()
@@ -354,7 +370,7 @@ end
 function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 	if InCombatLockdown() or self.PLAYER_REGEN_ENABLED_pause then return end
 	self.PLAYER_REGEN_ENABLED_pause = true
-	C_Timer.After(5, function()
+	C_Timer.After(1, function()
 			E.Collect_All_Quests()
 			E.Collect_All_Garrison()
 			E:func_Collect_All_UNIVERSALQuestUpdate()
@@ -470,3 +486,23 @@ function Octo_EventFrame_Collect:VARIABLES_LOADED()
 	end
 end
 
+
+
+
+
+function Octo_EventFrame_Collect:UPDATE_FACTION()
+	if InCombatLockdown() or self.UPDATE_FACTION_pause then return end
+	self.UPDATE_FACTION_pause = true
+	C_Timer.After(1, function()
+			E.Collect_All_Reputations()
+			E:func_Update("UPDATE_FACTION")
+			self.UPDATE_FACTION_pause = nil-- Используем nil вместо false для экономии памяти
+	end)
+end
+
+
+
+function Octo_EventFrame_Collect:PLAYER_FLAGS_CHANGED()
+	if InCombatLockdown() then return end
+	E.Collect_All_PlayerInfo()
+end

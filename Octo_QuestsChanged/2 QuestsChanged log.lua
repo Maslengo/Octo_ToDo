@@ -162,7 +162,7 @@ function E:BuildQuestLog()
 			mapID, level = self.func_GetMapNameFromID(quest.mapID)
 		end
 		line.Title:SetFormattedText("%d: %s %s",
-			quest.id, self.quest_names[quest.id] or UNKNOWN,
+			quest.id, E:func_questName(quest.id),
 			C_QuestLog.IsQuestFlaggedCompletedOnAccount and C_QuestLog.IsQuestFlaggedCompletedOnAccount(quest.id) and E.Icon_AccountWide or ""
 		)
 		line.Location:SetFormattedText("%s (%s)", quest.mapID, mapID .. (level and (' / ' .. level) or ''))

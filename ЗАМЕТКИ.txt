@@ -68,7 +68,6 @@ GetCursorPosition()
 -- ДАТА ПРОВАЙДЕР - ОБНОВЛЕНИЕ ПРИ КЛИКЕ
 QuestsChanged_CopyBox??
 Octo_ToDo_DB_Other.ActiveHoliday -> E.ActiveHoliday
-Octo_ToDo_DB_Other.Holiday -> E.Holiday
 центральный фрейм изменить текстуру
 UniversalQuest Переделать сохранения на цифру
 OctoTable_QuestID

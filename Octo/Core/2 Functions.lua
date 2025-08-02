@@ -210,7 +210,6 @@ function E:func_GetItemNameByID(itemID, newQuality)
 	local itemName = GetItemNameByID(itemID) or SEARCH_LOADING_TEXT
 	local vivod = ""
 	local quality = newQuality or select(3, E:func_GetItemInfo(itemID)) or 0
-
 	if quality then
 		vivod = vivod..ITEM_QUALITY_COLORS[quality].color:WrapTextInColorCode(itemName)
 	end
@@ -286,24 +285,148 @@ function E:func_GetCurrencyIcon(currencyID)
 	return info and info.iconFileID or E.Icon_Empty -- E.Icon_QuestionMark
 end
 ----------------------------------------------------------------
-function E:func_currencyName(currencyID)
+local function func_currencyName_CACHE(id)
+	if Octo_Cache_DB.AllCurrencies[id] and Octo_Cache_DB.AllCurrencies[id][E.curLocaleLang] then
+		return Octo_Cache_DB.AllCurrencies[id][E.curLocaleLang]
+	end
 	local WarbandIcon = ""
-	if IsAccountTransferableCurrency(currencyID) then
+	if IsAccountTransferableCurrency(id) then
 		WarbandIcon = E.Icon_AccountTransferable
-	elseif IsAccountWideCurrency(currencyID) then
+	elseif IsAccountWideCurrency(id) then
 		WarbandIcon = E.Icon_AccountWide
 	end
-	-- Получение информации о валюте
-	local info = GetCurrencyInfo(currencyID)
-	if not info then
-		return WarbandIcon .. E.Red_Color .. UNKNOWN .. "|r" .. (E.DebugIDs and E.Gray_Color .. " id:" .. currencyID .. "|r" or "")
+	local info = GetCurrencyInfo(id)
+	if info then
+		local name = info.name
+		local color = ITEM_QUALITY_COLORS[info.quality].hex or ITEM_QUALITY_COLORS[1]
+		local icon = E:func_texturefromIcon(E:func_GetCurrencyIcon(id))
+		Octo_Cache_DB.AllCurrencies[id] = Octo_Cache_DB.AllCurrencies[id] or {}
+		Octo_Cache_DB.AllCurrencies[id][E.curLocaleLang] = icon  .. color .. name .. "|r" .. WarbandIcon
+		print(E.Green_Color..CURRENCY.."|r", id, name)
 	end
-	local name = info.name
-	local color = ITEM_QUALITY_COLORS[info.quality].hex or ITEM_QUALITY_COLORS[1]
-	local icon = E:func_texturefromIcon(E:func_GetCurrencyIcon(currencyID))
-	return icon  .. color .. name .. "|r" .. WarbandIcon .. (E.DebugIDs and E.Gray_Color .. " id:" .. currencyID .. "|r" or "")
-
+	return Octo_Cache_DB.AllCurrencies[id] and Octo_Cache_DB.AllCurrencies[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r"
 end
+----------------------------------------------------------------
+function E:func_currencyName(id)
+	if not id then return end
+	return func_currencyName_CACHE(id) .. (E.DebugIDs and E.Gray_Color .. " id:" .. id .. "|r" or "")
+end
+----------------------------------------------------------------
+local function func_npcName_CACHE(id)
+	if Octo_Cache_DB.AllNPCs[id] and Octo_Cache_DB.AllNPCs[id][E.curLocaleLang] then
+		return Octo_Cache_DB.AllNPCs[id][E.curLocaleLang]
+	end
+	E.ScanningTooltipFUNC = E.ScanningTooltipFUNC or CreateFrame("GameTooltip", E.MainAddonName.."ScanningTooltipFUNC", nil, "GameTooltipTemplate")
+	local tooltip = E.ScanningTooltipFUNC
+	tooltip:Hide()
+	tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+	tooltip:ClearLines()
+	tooltip:SetHyperlink("unit:Creature-0-0-0-0-"..id)
+	if tooltip:NumLines() > 0 then
+		local name = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft1"]:GetText()
+		if name and name ~= "" then
+			Octo_Cache_DB.AllNPCs[id] = Octo_Cache_DB.AllNPCs[id] or {}
+			Octo_Cache_DB.AllNPCs[id][E.curLocaleLang] = name
+			print(E.Green_Color.."NPC|r", id, name)
+		end
+	end
+	return Octo_Cache_DB.AllNPCs[id] and Octo_Cache_DB.AllNPCs[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r"
+end
+----------------------------------------------------------------
+function E:func_npcName(id)
+	if not id then return end
+	return func_npcName_CACHE(id)..(E.DebugIDs and E.Gray_Color.." id:"..id.."|r" or "")
+end
+----------------------------------------------------------------
+local function func_questName_CACHE(id)
+	if Octo_Cache_DB.AllQuests[id] and Octo_Cache_DB.AllQuests[id][E.curLocaleLang] then
+		return Octo_Cache_DB.AllQuests[id][E.curLocaleLang]
+	end
+	local name = (GetTitleForQuestID or GetQuestInfo)(id)
+	if name and name ~= "" then
+			print (E.Green_Color..BATTLE_PET_SOURCE_2.."|r", id, name) -- LOOT_JOURNAL_LEGENDARIES_SOURCE_QUEST
+			Octo_Cache_DB.AllQuests[id] = Octo_Cache_DB.AllQuests[id] or {}
+			Octo_Cache_DB.AllQuests[id][E.curLocaleLang] = name
+	end
+	return Octo_Cache_DB.AllQuests[id] and Octo_Cache_DB.AllQuests[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r"
+end
+----------------------------------------------------------------
+function E:func_questName(id)
+	return func_questName_CACHE(id)..(E.DebugIDs and E.Gray_Color.." id:"..id.."|r" or "")
+end
+
+----------------------------------------------------------------
+-- function E:func_reputationName_SIMPLE(reputationID)
+-- 	if not reputationID then return "|cffFF0000no reputationID|r" end
+-- 	local repInfo = GetFactionDataByID(reputationID)
+-- 	if repInfo then
+-- 		return repInfo.name
+-- 	else
+-- 		local reputationInfo = GetFriendshipReputation(reputationID)
+-- 		if reputationInfo.name then
+-- 			return reputationInfo.name
+-- 		else
+-- 			return UNKNOWN
+-- 		end
+-- 	end
+-- end
+----------------------------------------------------------------
+local function func_reputationName_CACHE(id)
+	if Octo_Cache_DB.AllReputations[id] and Octo_Cache_DB.AllReputations[id][E.curLocaleLang] then
+		return Octo_Cache_DB.AllReputations[id][E.curLocaleLang]
+	end
+
+
+
+
+	local vivod = ""
+	local name = ""
+	local color = E.White_Color
+	local repInfo = GetFactionDataByID(id)
+	if repInfo then
+		vivod = vivod.. repInfo.name
+	else
+		local reputationInfo = GetFriendshipReputation(id)
+		if reputationInfo.name then
+			vivod = vivod.. reputationInfo.name
+		elseif name then
+			vivod = vivod.. name
+		end
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	if vivod ~= "" then
+		local isAccountWide = IsAccountWideReputation(id) or false
+		if isAccountWide == true then
+			vivod = E.Icon_AccountWide..vivod
+		end
+		print (E.Green_Color..REPUTATION.."|r", id, name)
+		Octo_Cache_DB.AllReputations[id] = Octo_Cache_DB.AllReputations[id] or {}
+		Octo_Cache_DB.AllReputations[id][E.curLocaleLang] = vivod
+	end
+
+	return Octo_Cache_DB.AllReputations[id] and Octo_Cache_DB.AllReputations[id][E.curLocaleLang] or E.Purple_Color..UNKNOWN.."|r"
+end
+----------------------------------------------------------------
+function E:func_reputationName(id)
+	if not id then return end
+	local sideIcon = ""
+	local side = "-"
+	if E.OctoTable_ReputationsDB[id] then
+		side = E.OctoTable_ReputationsDB[id].side
+	-- 	name = E.OctoTable_ReputationsDB[id].name
+	end
+	if side == "Alliance" then
+		sideIcon = E:func_texturefromIcon(E.Icon_Alliance)..sideIcon
+		sideIcon = E.Blue_Color..sideIcon.."|r"
+	elseif side == "Horde" then
+		sideIcon = E:func_texturefromIcon(E.Icon_Horde)..sideIcon
+		sideIcon = E.Red_Color..sideIcon.."|r"
+	end
+
+	return sideIcon..func_reputationName_CACHE(id)..(E.DebugIDs and E.Gray_Color.." id:"..id.."|r" or "")
+end
+
 ----------------------------------------------------------------
 function E:func_IsAccountQuest(questID)
 	table_insert(E.PromiseQuest, questID)
@@ -313,34 +436,10 @@ function E:func_IsQuestFlaggedCompletedOnAccount(questID)
 	table_insert(E.PromiseQuest, questID)
 	return IsQuestFlaggedCompletedOnAccount(questID)
 end
-----------------------------------------------------------------
-E.quest_names = {}
-setmetatable(E.quest_names, {__index = function(self, key)
-			local title = (C_QuestLog.GetTitleForQuestID or C_QuestLog.GetQuestInfo)(key)
-			if title then
-				self[key] = title
-				return title
-			end
-			return E.Red_Color..UNKNOWN.."|r"
-end,})
-function E:func_questName_SIMPLE(questID)
-	return E.quest_names[questID]
-end
-----------------------------------------------------------------
-function E:func_questName(questID, useLargeIcon)
-	table_insert(E.PromiseQuest, questID)
-	local title = E.quest_names[questID] -- GetTitleForQuestID(questID)
-	local vivod = title -- and QuestUtils_DecorateQuestText(questID, title, useLargeIcon ~= false)
-	-- if E:func_IsAccountQuest(questID) or E:func_IsQuestFlaggedCompletedOnAccount(questID) then
-	-- 	vivod = E.Icon_AccountWide..vivod
-	-- end
-	-- if E:func_IsAccountQuest(questID) then
-	-- 	vivod = "|cffFFFF00"..vivod.."|r"
-	-- elseif E:func_IsQuestFlaggedCompletedOnAccount(questID) then
-	-- 	vivod = "|cff9fc5e8"..vivod.."|r"
-	-- end
-	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..questID.."|r" or "")
-end
+
+
+
+
 ----------------------------------------------------------------
 function E:func_getMapFullNameInfo(mapID)
 	local mapInfo = C_Map.GetMapInfo(mapID)
@@ -378,50 +477,6 @@ function E:func_GetCurrentLocation()
 		end
 	end
 	return UNKNOWN
-end
-----------------------------------------------------------------
-function E:func_reputationName(reputationID)
-	if reputationID then
-		local vivod = ""
-		local side = "-"
-		local name = UNKNOWN
-		if E.OctoTable_ReputationsDB[reputationID] then
-			side = E.OctoTable_ReputationsDB[reputationID].side
-			name = E.OctoTable_ReputationsDB[reputationID].name
-		end
-		local color = E.White_Color
-		local repInfo = GetFactionDataByID(reputationID)
-		if repInfo then
-			vivod = vivod.. repInfo.name
-		else
-			local reputationInfo = GetFriendshipReputation(reputationID)
-			if reputationInfo.name then
-				vivod = vivod.. reputationInfo.name
-			elseif name then
-				vivod = vivod.. name
-			else
-				vivod = vivod.. reputationID.. "("..UNKNOWN..")"
-			end
-		end
-		----------------------------------------------------------------
-		if side == "Alliance" then
-			vivod = E:func_texturefromIcon(E.Icon_Alliance)..vivod
-			vivod = E.Blue_Color..vivod.."|r"
-			-- vivod = "|cffC6D2FF"..vivod.."|r"
-		elseif side == "Horde" then
-			vivod = E:func_texturefromIcon(E.Icon_Horde)..vivod
-			vivod = E.Red_Color..vivod.."|r"
-			-- vivod = "|cffFFC6CB"..vivod.."|r"
-		end
-		----------------------------------------------------------------
-		local isAccountWide = IsAccountWideReputation(reputationID) or false
-		if isAccountWide == true then
-			vivod = E.Icon_AccountWide..vivod
-		end
-		return vivod..(E.DebugIDs and E.Gray_Color.." id:"..reputationID.."|r" or "")
-	else
-		return "|cffFF0000no reputationID|r"
-	end
 end
 ----------------------------------------------------------------
 -- ITEM UTILS
@@ -631,7 +686,6 @@ end
 ----------------------------------------------------------------
 function E:func_MoneyString(number)
 	if not number then return 0 end
-
 	if number > 10000 then
 		return E:func_CompactNumberFormat(number/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"
 	elseif number > 100 then
@@ -904,20 +958,6 @@ function E:func_GetCoordFormated(x, y)
 	end
 	-- return ("%.2f, %.2f"):format(x * 100, y * 100)
 	return string.format("%.1f / %.1f", x * 100, y * 100)
-end
-----------------------------------------------------------------
-function E:func_npcName(npcID)
-	if not npcID then return E.NONE end
-	E.inspectScantipFUNC = E.inspectScantipFUNC or CreateFrame("GameTooltip", "OctoScanningTooltipFUNC", nil, "GameTooltipTemplate")
-	local tooltip = E.inspectScantipFUNC
-	tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-	tooltip:ClearLines()
-	tooltip:SetHyperlink("unit:Creature-0-0-0-0-"..npcID)
-	local vivod = UNKNOWN
-	if tooltip:NumLines() > 0 then
-		vivod = _G["OctoScanningTooltipFUNCTextLeft1"]:GetText()
-	end
-	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..npcID.."|r" or "")
 end
 ----------------------------------------------------------------
 function E:func_RIOColor(RIOscore)
@@ -2212,8 +2252,54 @@ local function func_OnceDailyWeeklyMonth_Format(text)
 		vivod = E.Red_Color.."M|r"
 	end
 	return vivod
-
 end
+----------------------------------------------------------------
+-- function E:func_UniversalOLD(tbl, expansionID)
+-- 	if not tbl then return end
+-- 	if not Octo_ToDo_DB_Vars.Quests then return end
+-- 	for expID, expDATA in ipairs(E.OctoTable_Expansions) do
+-- 		if expID == expansionID then
+-- 			local expNameShort = expDATA.name:gsub(" ", "")
+-- 			for _, v in ipairs(E.OctoTable_UniversalQuest) do
+-- 				if expNameShort == v.desc then
+-- 					table.insert(tbl, function(CharInfo)
+-- 							----------------------------------------------------------------
+-- 							local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+-- 							----------------------------------------------------------------
+-- 							local LeftData = CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]
+-- 							if LeftData then
+-- 								local max = v.max
+-- 								if type(LeftData) == "number" and max then
+-- 									if LeftData < max then
+-- 										textCENT = LeftData.."/"..max
+-- 									elseif LeftData >= max then
+-- 										textCENT = E.DONE
+-- 									else
+-- 										textCENT = E.DONE
+-- 									end
+-- 								elseif max ~= 1 then
+-- 									textCENT = "0/"..max
+-- 								elseif type(LeftData) == "string" then
+-- 									textCENT = LeftData
+-- 								end
+-- 							end
+-- 							tooltipRIGHT[#tooltipRIGHT+1] = {v.desc.."_"..v.name_save.."_"..v.reset, "MAX: "..v.max}
+-- 							tooltipRIGHT[#tooltipRIGHT+1] = {" "}
+-- 							for index, questID in ipairs(v.questID) do
+-- 								tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
+-- 							end
+-- 							----------------------------------------------------------------
+-- 							textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(v.reset).." "..v.textleft) -- v.icon
+-- 							colorLEFT = expDATA.color
+-- 							----------------------------------------------------------------
+-- 							return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+-- 							----------------------------------------------------------------
+-- 					end)
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- end
 ----------------------------------------------------------------
 function E:func_Universal(tbl, expansionID)
 	if not tbl then return end
@@ -2221,38 +2307,78 @@ function E:func_Universal(tbl, expansionID)
 	for expID, expDATA in ipairs(E.OctoTable_Expansions) do
 		if expID == expansionID then
 			local expNameShort = expDATA.name:gsub(" ", "")
-			for _, v in ipairs(E.OctoTable_UniversalQuest) do
-				if expNameShort == v.desc then
+			for _, data in ipairs(E.OctoTable_UniversalQuest) do
+				if data.quests and expNameShort == data.desc then
 					table.insert(tbl, function(CharInfo)
 							----------------------------------------------------------------
 							local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 							----------------------------------------------------------------
-							local LeftData = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
-							if LeftData then
-								local max = v.max
-								if type(LeftData) == "number" and max then
-									if LeftData < max then
-										textCENT = LeftData.."/"..max
-									elseif LeftData >= max then
-										textCENT = E.DONE
-									else
-										textCENT = E.DONE
+							local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+							local showTooltip = data.showTooltip or false
+							if CharInfo.MASLENGO.UniversalQuest[questKey] then
+								local LeftData = CharInfo.MASLENGO.UniversalQuest[questKey].textCENT
+								if LeftData then
+									local totalQuest = 0
+									local forcedMaxQuest = data.forcedMaxQuest
+									-- Сначала считаем общее количество релевантных квестов
+									for _, questData in ipairs(data.quests) do
+										local questID = questData[1]
+										local faction = questData.faction or nil -- nil = общий квест
+										if not faction or faction == CharInfo.PlayerData.Faction then
+											if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
+												totalQuest = totalQuest + 1
+											elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
+												totalQuest = forcedMaxQuest
+											else
+												totalQuest = totalQuest + 1
+											end
+										end
 									end
-								elseif max ~= 1 then
-									textCENT = "0/"..max
-								elseif type(LeftData) == "string" then
-									textCENT = LeftData
-								end
-							end
-							if CharInfo.PlayerData.GUID == E.curGUID then
-								tooltipRIGHT[#tooltipRIGHT+1] = {"Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset, "MAX: "..v.max}
-								tooltipRIGHT[#tooltipRIGHT+1] = {" "}
-								for index, questID in ipairs(v.questID) do
-									tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
+									forcedMaxQuest = totalQuest
+									if type(LeftData) == "number" and forcedMaxQuest then
+										if LeftData < forcedMaxQuest then
+											textCENT = LeftData.."/"..forcedMaxQuest
+										elseif LeftData >= forcedMaxQuest then
+											textCENT = E.DONE
+										else
+											textCENT = E.DONE
+										end
+									elseif forcedMaxQuest ~= 1 then
+										textCENT = "0/"..forcedMaxQuest
+									elseif type(LeftData) == "string" then
+										textCENT = LeftData
+									end
+									if showTooltip then
+										tooltipRIGHT[#tooltipRIGHT+1] = {questKey, "forcedMaxQuest: ".. totalQuest}
+										tooltipRIGHT[#tooltipRIGHT+1] = {" "}
+										local vivod_RIGHT = ""
+										local vivod_LEFT = ""
+										for _, questData in ipairs(data.quests) do
+											local questID = questData[1]
+											local faction = questData.faction or nil -- nil = общий квест
+											local forcedText = questData.forcedText or nil
+											vivod_RIGHT = CharInfo.MASLENGO.UniversalQuest[questKey][questID] or E.Gray_Color..NONE.."|r"
+											if not faction or faction == CharInfo.PlayerData.Faction then
+												if forcedText then
+													if forcedText.npcID then
+														vivod_LEFT = E:func_npcName(forcedText.npcID)
+													elseif forcedText.itemID then
+														vivod_LEFT = E:func_GetItemNameByID(forcedText.itemID)
+													end
+												else
+													vivod_LEFT = E:func_questName(questID)
+												end
+												if faction == CharInfo.PlayerData.Faction then
+													vivod_LEFT = E:func_texturefromIcon(E:func_FactionIconID(faction))..vivod_LEFT
+												end
+												tooltipRIGHT[#tooltipRIGHT+1] = {vivod_LEFT, vivod_RIGHT}
+											end
+										end
+									end
 								end
 							end
 							----------------------------------------------------------------
-							textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(v.reset).." "..v.textleft) -- v.icon
+							textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft) -- data.icon
 							colorLEFT = expDATA.color
 							----------------------------------------------------------------
 							return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -2263,19 +2389,28 @@ function E:func_Universal(tbl, expansionID)
 		end
 	end
 end
+function E:func_FactionIconID(faction)
+	if faction == "Horde" then
+		return 2565244
+		-- E.Faction_Color = E.Horde_Color
+	elseif faction == "Alliance" then
+		return 2565243
+		-- E.Faction_Color = E.Alliance_Color
+	else
+		return 775462
+		-- E.Faction_Color = E.Class_Monk_Color
+	end
+end
 ----------------------------------------------------------------
 function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
 	if not OctoTable_Otrisovka or not E.OctoTable_Expansions[expansionID] then return end
 	if not (Octo_ToDo_DB_Vars.Currencies or Octo_ToDo_DB_Vars.Items) then return end
-
 	-- Создаем weak-таблицы для кеширования обработчиков
 	local itemProcessors = setmetatable({}, {__mode = "v"}) -- weak values
 	local currencyProcessors = setmetatable({}, {__mode = "v"}) -- weak values
-
 	local expansionData = E.OctoTable_Expansions[expansionID]
 	local Data = E.OctoTables_DataOtrisovka[expansionID]
 	if not Data then return end
-
 	-- Локальные ссылки на методы (через `:` для корректного self)
 	local func_textCENT_Items = function(...) return E:func_textCENT_Items(...) end
 	local func_GetItemNameByID = function(...) return E:func_GetItemNameByID(...) end
@@ -2284,7 +2419,6 @@ function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
 	local func_currencyName = function(...) return E:func_currencyName(...) end
 	local func_GetCurrencyIcon = function(...) return E:func_GetCurrencyIcon(...) end
 	local Purple_Color = E.Purple_Color
-
 	-- Функция получения/создания обработчика предметов
 	local function getItemProcessor(itemID)
 		local processor = itemProcessors[itemID]
@@ -2301,7 +2435,6 @@ function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
 		end
 		return processor
 	end
-
 	-- Функция получения/создания обработчика валют
 	local function getCurrencyProcessor(currencyID)
 		local processor = currencyProcessors[currencyID]
@@ -2322,20 +2455,23 @@ function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
 		end
 		return processor
 	end
-
 	if Octo_ToDo_DB_Vars.Items and Data.Items then
 		for _, itemID in ipairs(Data.Items) do
-			OctoTable_Otrisovka[#OctoTable_Otrisovka + 1] = getItemProcessor(itemID)
+			if type(itemID) == "number" then
+				OctoTable_Otrisovka[#OctoTable_Otrisovka + 1] = getItemProcessor(itemID)
+			elseif type(itemID) == "table" then
+				for _, ItemID_new in ipairs(itemID) do
+					OctoTable_Otrisovka[#OctoTable_Otrisovka + 1] = getItemProcessor(ItemID_new) -- ПОФИКСИТЬ В САМОЙ ФУНКЦИИ
+				end
+			end
 		end
 	end
-
 	-- Обработка данных с использованием кешированных обработчиков
 	if Octo_ToDo_DB_Vars.Currencies and Data.Currencies then
 		for _, currencyID in ipairs(Data.Currencies) do
 			OctoTable_Otrisovka[#OctoTable_Otrisovka + 1] = getCurrencyProcessor(currencyID)
 		end
 	end
-
 end
 ----------------------------------------------------------------
 function E:func_Universal_Holiday(tbl, Holiday, color)
@@ -2346,7 +2482,7 @@ function E:func_Universal_Holiday(tbl, Holiday, color)
 					----------------------------------------------------------------
 					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 					----------------------------------------------------------------
-					local LeftData = CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset]
+					local LeftData = CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]
 					if LeftData then
 						local max = v.max
 						if type(LeftData) == "number" and max then
@@ -2657,25 +2793,21 @@ end
 ----------------------------------------------------------------
 -- Функция обновления данных
 function E:func_Update(event_name)
+	if not E.DebugEvent then return end
 	local isMainFrameVisible = Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown()
 	if isMainFrameVisible then
 		if not E.func_UpdateScheduled then
 			E.func_UpdateScheduled = true
-			-- Обновляем данные с небольшой задержкой
 			C_Timer.After(0.1, function()
-					E.func_UpdateScheduled = false
-					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
-						E:func_TODO_CreateDataProvider()
-						if E.DebugEvent then
-							DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E:func_Update(", E.Green_Color, E.Yellow_Color)..event_name or ""..E.Yellow_Color..")|r")
-						end
-					end
+				E.func_UpdateScheduled = false
+				if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
+					E:func_TODO_CreateDataProvider()
+					DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E:func_Update ", E.Green_Color, E.Yellow_Color)..event_name)
+				end
 			end)
 		end
 	else
-		if E.DebugEvent then
-			DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E:func_Update(", E.Addon_Left_Color, E.Addon_Right_Color)..event_name or ""..E.Addon_Right_Color..")|r")
-		end
+		DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E:func_Update ", E.Red_Color, E.Purple_Color)..event_name)
 	end
 end
 ----------------------------------------------------------------
@@ -2690,19 +2822,16 @@ function E:func_GetCurrentRegionName()
 	return GetCurrentRegionName()
 end
 ----------------------------------------------------------------
-
 function E:func_tooltipRIGHT_ITEMS(CharInfo, TBL, needShowAllItems)
 	local tooltipRIGHT = {}
 	local sorted_itemList = {}
 	local ItemsInBag = CharInfo.MASLENGO.ItemsInBag
-
 	-- Правильно кэшируем методы через :
 	local GetItemQuality = function(id) return self:func_GetItemQuality(id) end
 	local GetItemIconByID = function(id) return self:func_GetItemIconByID(id) end
 	local GetItemNameByID = function(id) return self:func_GetItemNameByID(id) end
 	local ItemPriceTSM = function(id, count) return self:func_ItemPriceTSM(id, count) end
 	local texturefromIcon = function(icon) return self:func_texturefromIcon(icon) end
-
 	-- Filter and prepare items for sorting
 	for _, itemID in ipairs(TBL) do
 		local count = ItemsInBag[itemID]
@@ -2714,7 +2843,6 @@ function E:func_tooltipRIGHT_ITEMS(CharInfo, TBL, needShowAllItems)
 			})
 		end
 	end
-
 	-- Sort items
 	table.sort(sorted_itemList, function(a, b)
 		if a.quality ~= b.quality then
@@ -2724,25 +2852,16 @@ function E:func_tooltipRIGHT_ITEMS(CharInfo, TBL, needShowAllItems)
 		end
 		return a.itemID > b.itemID
 	end)
-
 	-- Build tooltip
 	for _, item in ipairs(sorted_itemList) do
 		local itemID = item.itemID
 		local count = ItemsInBag[itemID] or ""
 		local name = GetItemNameByID(itemID)
 		local price = ItemPriceTSM(itemID, item.count)
-
 		tooltipRIGHT[#tooltipRIGHT + 1] = {name, count, price}
 	end
-
 	return tooltipRIGHT
 end
-
-
-
-
-
-
 local function CloseOtherFrames(frame)
 	for i, other in ipairs(E.OctoTable_Frames) do
 		if frame ~= other and other:IsShown() then
@@ -2753,13 +2872,9 @@ end
 ---------------------------------------------------------------------
 function E:func_InitFrame(frame)
 	if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
-	print ("E:func_InitFrame", frame:GetName())
-	-- Немедленная маркировка фрейма
 	frame.insertIn_SecuredFrames_SequredFrames = true
 	tinsert(E.OctoTable_Frames, frame)
 	tinsert(UISpecialFrames, frame:GetName())
-
-	-- Отложенная инициализация с защитой
 	C_Timer.After(0, function()
 			frame:HookScript("OnShow", CloseOtherFrames)
 	end)

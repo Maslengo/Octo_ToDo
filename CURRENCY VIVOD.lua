@@ -1,8 +1,8 @@
-
+WOTLK
+local CurrencyList = {241}
 
 --CATA
-
-local CurrencyList = {241}
+-- local CurrencyList = {}
 
 
 PANDA

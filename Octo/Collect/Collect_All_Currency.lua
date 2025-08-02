@@ -4,6 +4,7 @@ function E.Collect_All_Currency()
 	local list = {}
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO or InCombatLockdown() then return end
+	if not Octo_Cache_DB and not Octo_Cache_DB.AllCurrencies then return end
 		----------------------------------------------------------------
 		-- local listSize = C_CurrencyInfo.GetCurrencyListSize()
 		-- local headerIndex
@@ -27,7 +28,7 @@ function E.Collect_All_Currency()
 		-- НЕ УЧИТЫВАЕТ ТЕКУЩЕГО ПЕРСА?
 		local currencyCache = {}
 
-		for CurrencyID,	cachedName in next, (E.AllCurrencies) do
+		for CurrencyID,	cachedName in next, (Octo_Cache_DB.AllCurrencies) do
 			local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID)
 
 			collectMASLENGO.Currency[CurrencyID] = collectMASLENGO.Currency[CurrencyID] or {}

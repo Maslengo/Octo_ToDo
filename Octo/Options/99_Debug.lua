@@ -282,48 +282,6 @@ function E:Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			ItemsUsable = {
-				type = "toggle",
-				name = "ItemsUsable",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.ItemsUsable
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.ItemsUsable = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			ItemsDelete = {
-				type = "toggle",
-				name = "ItemsDelete",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.ItemsDelete
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.ItemsDelete = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			StaticPopup1Button1 = {
-				type = "toggle",
-				name = "StaticPopup1Button1",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.StaticPopup1Button1
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.StaticPopup1Button1 = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			CVar = {
 				type = "toggle",
 				name = "CVar",
@@ -347,6 +305,9 @@ function E:Debug()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.SpeedFrame.Shown = value
+					if Octo_MainFrame_SpeedFrame then
+						Octo_MainFrame_SpeedFrame:SetShown(value)
+					end
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -361,18 +322,22 @@ function E:Debug()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.SellFrame = value
+					if Octo_MainFrame_SellFrame1 then
+						Octo_MainFrame_SellFrame1:SetShown(value)
+					end
+					if Octo_MainFrame_SellFrame2 then
+						Octo_MainFrame_SellFrame2:SetShown(value)
+					end
+					if Octo_MainFrame_SellFrame3 then
+						Octo_MainFrame_SellFrame3:SetShown(value)
+					end
+					if Octo_MainFrame_SellFrame4 then
+						Octo_MainFrame_SellFrame4:SetShown(value)
+					end
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
-
-
-
-
-
-
-
-
 			-------------------------------------------------
 			ReloadHeaderDebugs = {
 				type = "header",

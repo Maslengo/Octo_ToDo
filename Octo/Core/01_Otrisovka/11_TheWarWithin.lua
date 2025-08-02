@@ -65,20 +65,22 @@ function E:func_Otrisovka_11_TheWarWithin()
 				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
-		for _, CurrencyID in ipairs(E.OctoTable_Catalysts) do
-			table.insert(OctoTable_Otrisovka, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
-					----------------------------------------------------------------
-					textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
-					myType = {"Currency", CurrencyID}
-					----------------------------------------------------------------
-					textLEFT = E:func_currencyName(CurrencyID)
-					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
-					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
-					----------------------------------------------------------------
-			end)
+		if Octo_ToDo_DB_Vars.Currencies then
+			for _, CurrencyID in ipairs(E.OctoTable_Catalysts) do
+				table.insert(OctoTable_Otrisovka, function(CharInfo)
+						----------------------------------------------------------------
+						local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+						----------------------------------------------------------------
+						textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
+						myType = {"Currency", CurrencyID}
+						----------------------------------------------------------------
+						textLEFT = E:func_currencyName(CurrencyID)
+						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+						----------------------------------------------------------------
+						return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+						----------------------------------------------------------------
+				end)
+			end
 		end
 		----------------------------------------------------------------
 		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, OCTOexpansionID)

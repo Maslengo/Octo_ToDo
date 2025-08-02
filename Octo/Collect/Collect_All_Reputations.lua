@@ -8,6 +8,33 @@ function E.Collect_All_Reputations()
 		-- fpde(Octo_Cache_DB.AllReputations)
 		-- local tbl = {}
 		-- ----------------------------------------------------------------
+
+
+
+		if Octo_Cache_DB and E.curLocaleLang and Octo_Cache_DB.AllReputations then
+
+			for reputationID, v in next, (Octo_Cache_DB.AllReputations) do
+				if reputationID then
+					local vivod = E:func_CheckReputation(reputationID)
+					if C_Reputation.IsAccountWideReputation(reputationID) then
+						for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+							CharInfo.MASLENGO.Reputation[reputationID] = CharInfo.MASLENGO.Reputation[reputationID] or {}
+							if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+								CharInfo.MASLENGO.Reputation[reputationID] = vivod
+							end
+						end
+					else
+						collectMASLENGO.Reputation[reputationID] = vivod
+					end
+
+				end
+			end
+		end
+
+
+
+
+
 		-- if Octo_Cache_DB and E.curLocaleLang and Octo_Cache_DB[E.curLocaleLang] and Octo_Cache_DB[E.curLocaleLang].AllReputations then
 		-- 	for reputationID, reputationName_DB in next, (Octo_Cache_DB[E.curLocaleLang].AllReputations) do
 		-- 		local vivod = E:func_CheckReputation(reputationID)
@@ -44,4 +71,10 @@ function E.Collect_All_Reputations()
 		-- end
 		----------------------------------------------------------------
 	end
+end
+
+
+
+function E.Collect_All_Reputations_TARGET(reputationID)
+	print (reputationID, E:func_CheckReputation(reputationID))
 end

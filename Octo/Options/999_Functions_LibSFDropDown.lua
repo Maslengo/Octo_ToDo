@@ -202,7 +202,7 @@ function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					if Octo_ToDo_DB_Levels[GUID].PlayerData then
 						local info = {}
 						info.fontObject = OctoFont11
-						info.keepShownOnClick = true
+						info.keepShownOnClick = false
 						info.isNotRadio = true
 						local vivod = Octo_ToDo_DB_Levels[GUID].PlayerData.classColorHex..Octo_ToDo_DB_Levels[GUID].PlayerData.Name.."|r"
 						if Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel ~= E.currentMaxLevel then
@@ -217,7 +217,7 @@ function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
 						info.checked = Octo_ToDo_DB_Levels[GUID].PlayerData.isShownPLAYER
 						info.arg1 = {self, level, value}
 						info.remove = func_remove_GUID
-						info.removeDoNotHide = true
+						info.removeDoNotHide = false
 						info.icon = Octo_ToDo_DB_Levels[GUID].PlayerData.specIcon
 						info.iconInfo = {tSizeX = 16, tSizeY = 16}
 						tinsert(list, info)

@@ -107,7 +107,9 @@ local function CreateSellButton(Parentframe, texture, text, quality)
 	local r, g, b = QUALITY_COLORS[quality].r, QUALITY_COLORS[quality].g, QUALITY_COLORS[quality].b
 
 	order = order + 1
-	local button = CreateFrame("Button", nil, Parentframe, "BackdropTemplate")
+	local button = CreateFrame("Button", "Octo_MainFrame_SellFrame"..order, Parentframe, "BackdropTemplate")
+	-- button:SetFrameStrata("BACKGROUND")
+	-- button:SetFrameLevel(button:GetParent():GetFrameLevel() + 10)
 	button:SetSize(BUTTON_SIZE, BUTTON_SIZE)
 	button:SetPoint("TOPRIGHT", 64, -((BUTTON_SIZE*2)*order))
 	button:SetBackdrop(E.menuBackdrop)
@@ -143,7 +145,6 @@ local function CreateSellButton(Parentframe, texture, text, quality)
 	button:SetScript("OnLeave", function(self)
 			self.icon:SetVertexColor(r, g, b, 1)
 	end)
-
 	return button
 end
 
@@ -200,9 +201,9 @@ local function BankTransfer(fromBank)
 	end
 
 	-- Защита от повторного клика
-	if not BankTransfer.lock then
-		BankTransfer.lock = true
-		C_Timer.After(1, function() BankTransfer.lock = false end)
+	if not E.fromBank_lock then
+		E.fromBank_lock = true
+		C_Timer.After(1, function() E.fromBank_lock = false end)
 
 		for bag = startBag, endBag do
 			for slot = 1, GetContainerNumSlots(bag) do
@@ -217,15 +218,15 @@ end
 
 --- Создает кнопки для работы с банком
 local function CreateBankButtons()
-	local OctoFrame_FROMBANK = CreateSellButton(BankFrame, "Arrow6.tga", "OctoFrame_FROMBANK")
+	local OctoFrame_FROMBANK = CreateSellButton(BankFrame, "FROMBANK.tga", "OctoFrame_FROMBANK")
 	OctoFrame_FROMBANK:SetScript("OnClick", function()
 			-- Добавляем подтверждение для массового перемещения
-			StaticPopup_Show("OCTO_CONFIRM_BANK_TRANSFER", nil, nil, {fromBank = true})
+			StaticPopup_Show("OCTO_CONFIRM_BANK_TRANSFER", nil, nil, {fromBank = false})
 	end)
 
-	local OctoFrame_TOBANK = CreateSellButton(BankFrame, "Arrow6.tga", "OctoFrame_TOBANK")
+	local OctoFrame_TOBANK = CreateSellButton(BankFrame, "TOBANK.tga", "OctoFrame_TOBANK")
 	OctoFrame_TOBANK:SetScript("OnClick", function()
-			StaticPopup_Show("OCTO_CONFIRM_BANK_TRANSFER", nil, nil, {fromBank = false})
+			StaticPopup_Show("OCTO_CONFIRM_BANK_TRANSFER", nil, nil, {fromBank = true})
 	end)
 
 	-- Диалог подтверждения
@@ -383,7 +384,7 @@ function Octo_EventFrame_SellFrame:func_SellItemsByQuality()
 
 	local totalItems = #self.BagAndSlot
 	if totalItems == 0 then
-		print("Нет предметов для продажи.")
+		-- print("Нет предметов для продажи.")
 		self.sellLock = false
 		return
 	end
@@ -427,7 +428,7 @@ function Octo_EventFrame_SellFrame:func_SellItemsByQuality()
 			-- Все продано или процесс отменен
 			self.progressFrame:Hide()
 			self.sellLock = false
-			print("Продажа завершена!")
+			-- print("Продажа завершена!")
 			return
 		end
 
@@ -453,7 +454,7 @@ end
 --- Создает кнопки для продажи предметов
 function Octo_EventFrame_SellFrame:func_CreateTradeButtons()
 	-- Создаем кнопки для разных качеств предметов
-	for _, i in ipairs({0, 3, 4}) do -- 0 COMMON, 3 RARE, 4 EPIC
+	for _, i in ipairs({3, 4}) do -- 0 COMMON, 3 RARE, 4 EPIC
 		local text = "OctoFrame_SellOtherBlue"
 		local Blue_quality = i
 		local OctoFrame_SellOtherBlue = CreateSellButton(MerchantFrame, "Arrow72.tga", nil, Blue_quality)
@@ -512,6 +513,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"MERCHANT_UPDATE",
 	"TOOLTIP_DATA_UPDATE",
+	"MERCHANT_CLOSED",
 }
 
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_SellFrame, MyEventsTable)
@@ -532,5 +534,13 @@ end
 function Octo_EventFrame_SellFrame:MERCHANT_UPDATE()
 	if activeTooltipButton and OctoTooltip:IsShown() then
 		UpdateTooltip(activeTooltipButton)
+	end
+end
+
+
+function Octo_EventFrame_SellFrame:MERCHANT_CLOSED()
+	if self.sellLock then
+		self.sellLock = false
+		self.progressFrame:Hide()
 	end
 end

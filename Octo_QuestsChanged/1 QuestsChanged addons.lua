@@ -107,7 +107,8 @@ end
 -- 			return false
 -- end,})
 function QuestsChangedGetQuestTitle(id)
-	return E.quest_names[id]
+	-- return E.quest_names[id]
+	E:func_questName(id)
 end
 function E:CheckQuests()
 	if not quests then
@@ -135,7 +136,7 @@ function E:CheckQuests()
 					end
 				end
 			end
-			local questName = self.quest_names[questid] -- prime it
+			local questName = E:func_questName(questid) -- self.quest_names[questid] -- prime it
 			local quest = {
 				id = questid,
 				time = time(),

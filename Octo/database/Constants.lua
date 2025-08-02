@@ -24,7 +24,7 @@ E.LEFT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-leftbut
 E.RIGHT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-rightbutton") and "|A:newplayertutorial-icon-mouse-rightbutton:0:0|a " or ""
 E.MIDDLE_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-middlebutton") and "|A:newplayertutorial-icon-mouse-middlebutton:0:0|a " or ""
 
-E.curLocaleLang = GetLocale()
+E.curLocaleLang = GetLocale() or "enUS"
 
 
 
@@ -242,6 +242,7 @@ E.Icon_Money = 133784
 
 E.Horde_Color = "|cffC41E3A"
 E.Alliance_Color = "|cff0070DD"
+E.Neutral_Color = E.Class_Monk_Color
 
 if E.curFaction == "Horde" then
 	E.Icon_Faction = 2565244
@@ -250,8 +251,8 @@ elseif E.curFaction == "Alliance" then
 	E.Icon_Faction = 2565243
 	E.Faction_Color = E.Alliance_Color
 else
-	E.Icon_Faction = 620830
-	E.Faction_Color = E.Green_Color
+	E.Icon_Faction = 775462
+	E.Faction_Color = E.Class_Monk_Color
 end
 ----------------------------------------------------------------
 E.Kyrian_r_Color = 0.44

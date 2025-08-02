@@ -5,7 +5,7 @@ function E:func_Universal_99_Other()
 	local OctoTable_Universal = {
 		-- E:func_EventName(181) (Noblegarden) (Сад чудес)
 		{
-			icon = E:func_GetItemIconByID(45072),
+
 			textleft = E:func_questName(13503),
 			name_save = "ATisketaTasketaNoblegardenBasket",
 			reset = "Month",
@@ -13,10 +13,10 @@ function E:func_Universal_99_Other()
 			questID = {
 				13503,
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
 		{
-			icon = E:func_GetItemIconByID(45072),
+
 			textleft = E:func_questName(79575),
 			name_save = "WhattheDuck",
 			reset = "Month",
@@ -24,10 +24,10 @@ function E:func_Universal_99_Other()
 			questID = {
 				79575,
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
 		{
-			icon = E:func_GetItemIconByID(45072),
+
 			textleft = E:func_questName(13479),
 			name_save = "TheGreatEggHunt",
 			reset = "Daily",
@@ -35,10 +35,10 @@ function E:func_Universal_99_Other()
 			questID = {
 				13479,
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
 		{
-			icon = E:func_GetItemIconByID(45072),
+
 			textleft = E:func_questName(79576),
 			name_save = "AFowlConcoction",
 			reset = "Month",
@@ -46,10 +46,10 @@ function E:func_Universal_99_Other()
 			questID = {
 				79576,
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
 		{
-			icon = E:func_GetItemIconByID(45072),
+
 			textleft = E:func_questName(79577),
 			name_save = "DuckTales",
 			reset = "Month",
@@ -57,10 +57,10 @@ function E:func_Universal_99_Other()
 			questID = {
 				79577,
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
 		{
-			icon = E:func_GetItemIconByID(45072),
+
 			textleft = E:func_questName(79578),
 			name_save = "JustaWaddleAway",
 			reset = "Month",
@@ -69,10 +69,10 @@ function E:func_Universal_99_Other()
 				79578, -- Horde
 				79331, -- Alliance
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
 		{
-			icon = E:func_GetItemIconByID(45072),
+
 			textleft = E:func_questName(79558),
 			name_save = "FeatheredFiend",
 			reset = "Daily",
@@ -81,10 +81,10 @@ function E:func_Universal_99_Other()
 				79558, -- Horde
 				73192, -- Alliance
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
 		{
-			icon = E:func_GetItemIconByID(45072),
+
 			textleft = E:func_questName(79135),
 			name_save = "QuackingDown",
 			reset = "Daily",
@@ -92,7 +92,7 @@ function E:func_Universal_99_Other()
 			questID = {
 				79135,
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
 		----------------------------------------------------------------
@@ -100,7 +100,7 @@ function E:func_Universal_99_Other()
 		-- E:func_EventName(201) (ChildrensWeek) (Детская неделя)
 		-- orgrimmar / Stormwind
 		{
-			icon = E:func_GetItemIconByID(132161),
+
 			textleft = "Orgrimmar/Stormwind",
 			name_save = "orgrimmarStormwind",
 			reset = "Month",
@@ -122,11 +122,11 @@ function E:func_Universal_99_Other()
 				-- 29119, -- ДУБЛЬ
 				171,
 			},
-			max = 7,
+			forcedMaxQuest = 7,
 		},
 		----------------------------------------------------------------
 		{
-			icon = E:func_GetItemIconByID(132161),
+
 			textleft = "Shattrath",
 			name_save = "Shattrath", --
 			reset = "Month",
@@ -150,11 +150,11 @@ function E:func_Universal_99_Other()
 				-- 10968, -- ЛИШНЕЕ?
 				10966,
 			},
-			max = 7,
+			forcedMaxQuest = 7,
 		},
 		----------------------------------------------------------------
 		{
-			icon = E:func_GetItemIconByID(23247),
+
 			textleft = L["Daily quests"],
 			name_save = "orgrimmarStormwindDAILY", --
 			reset = "Daily",
@@ -165,13 +165,13 @@ function E:func_Universal_99_Other()
 				-- 82080, -- daily ally
 				-- 11924, -- daily ally
 			},
-			max = 2,
+			forcedMaxQuest = 2,
 		},
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		{
-			icon = E:func_GetCurrencyIcon(1166),
+
 			textleft = RAIDS,
 			name_save = "Raid",
 			reset = "Weekly",
@@ -182,40 +182,69 @@ function E:func_Universal_99_Other()
 				47523,
 				82817,
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
 		{
-			icon = E:func_GetCurrencyIcon(1166),
+
 			textleft = DUNGEONS,
 			name_save = "Dungeons",
 			reset = "Weekly",
 			desc = "HolidaysTimewalk",
 			questID = {
+				88808,
+				86564,
+				86563,
 				86560,
 				86556,
 				85949,
 				85948,
-				85947, -- classic
-				86564,
-				86563,
+				85947,
+				83274,
 				83365,
 				83363,
-				83274,
+				72727,
+				72726,
+				72725,
+				72724,
+				72719,
 				40792,
 				39021,
 				39020,
-				72719,
-				72724,
-				72725,
-				72726,
-				72727,
-				72810,
-				86564,
 			},
-			max = 1,
+			forcedMaxQuest = 1,
 		},
+
+
+
+		{
+
+			textleft = "HZ",
+			name_save = "Dungeons",
+			reset = "Weekly",
+			desc = "HolidaysTimewalk",
+			questID = {
+				43117, -- CLASSIC
+				0, -- BC
+				5, -- WOTLK
+				618, -- CATA
+				619, -- CATA (Alliance)
+				5395, -- MOP
+				15330, -- WOD
+				24542, -- Legion
+				49055, -- BfA
+				49054, -- BfA (Alliance)
+				40168, -- HZ
+			},
+			forcedMaxQuest = 9,
+		},
+
+
+
+
+
+
 		-- {
-		-- 	icon = E:func_GetItemIconByID(245589),
+
 		-- 	textleft = E.Timers.Treasure_Goblin()..E:func_npcName(205722), -- 205490
 		-- 	name_save = "TreasureGoblin",
 		-- 	reset = "Daily",
@@ -230,10 +259,10 @@ function E:func_Universal_99_Other()
 		-- 		-- 91169, -- пал ->Открытие сундука
 		-- 		-- 91170, -- пал ->Открытие сундука
 		-- 	},
-		-- 	max = 1,
+		-- 	forcedMaxQuest = 1,
 		-- },
 		{
-			icon = 531974,
+
 			textleft = "Profession Monthlies",
 			name_save = "ProfessionMonthlies",
 			reset = "Month",
@@ -254,10 +283,10 @@ function E:func_Universal_99_Other()
 				29519,
 				29520,
 			},
-			max = 14,
+			forcedMaxQuest = 14,
 		},
 		{
-			icon = 531974,
+
 			textleft = "Monthly Quests",
 			name_save = "MonthlyQuests",
 			reset = "Month",
@@ -266,10 +295,10 @@ function E:func_Universal_99_Other()
 				33354,
 				29443,
 			},
-			max = 2,
+			forcedMaxQuest = 2,
 		},
 		{
-			icon = 531974,
+
 			textleft = "Acount-wide Dailies",
 			name_save = "AcountwideDailies",
 			reset = "Daily",
@@ -278,10 +307,10 @@ function E:func_Universal_99_Other()
 				32175,
 				36471,
 			},
-			max = 2,
+			forcedMaxQuest = 2,
 		},
 		{
-			icon = 531974,
+
 			textleft = "item turns ins",
 			name_save = "itemturnsins",
 			reset = "Daily",
@@ -297,10 +326,10 @@ function E:func_Universal_99_Other()
 				29464,
 				29451,
 			},
-			max = 9,
+			forcedMaxQuest = 9,
 		},
 		{
-			icon = E:func_GetItemIconByID(93724),
+
 			textleft = E:func_GetItemNameByID(93724),
 			name_save = "DarkmoonFaire",
 			reset = "Daily",
@@ -316,10 +345,10 @@ function E:func_Universal_99_Other()
 				29455,
 				64783,
 			},
-			max = 9,
+			forcedMaxQuest = 9,
 		},
 		{
-			icon = E:func_GetItemIconByID(92441),
+
 			textleft = E:func_GetItemNameByID(92441),
 			name_save = "GreenFire",
 			reset = "Once",
@@ -333,7 +362,7 @@ function E:func_Universal_99_Other()
 				32324,
 				32325,
 			},
-			max = 7,
+			forcedMaxQuest = 7,
 		},
 	}
 	return OctoTable_Universal

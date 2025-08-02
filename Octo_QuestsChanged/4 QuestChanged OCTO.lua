@@ -251,7 +251,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 		else
 			frame.icon_2:SetTexture(E.Icon_Empty)
 		end
-		frame.third.text:SetText(E:func_questName_SIMPLE(frameData.id))
+		frame.third.text:SetText(E:func_questName(frameData.id))
 	elseif frameData.type == "QC_Vignettes" then
 		if frameData.atlas then
 			frame.icon_2:SetAtlas(frameData.atlas)

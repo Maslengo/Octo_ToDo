@@ -16,32 +16,66 @@ local function func_ConcatAtStart_UniversalQuest()
 	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_13_TheLastTitan())
 	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_99_Other())
 end
+
+
 ----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
 function E:func_Collect_All_UNIVERSALQuestUpdate()
 	if not E.func_ConcatAtStart_UniversalQuest then
 		E.func_ConcatAtStart_UniversalQuest = true
 		func_ConcatAtStart_UniversalQuest()
 	end
+
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO or InCombatLockdown() then return end
-	for i, v in next, (E.OctoTable_UniversalQuest) do
-		local questKey = "Octopussy_"..v.desc.."_"..v.name_save.."_"..v.reset
-		if v.MainquestID and C_QuestLog.IsQuestFlaggedCompleted(v.MainquestID) then
-			collectMASLENGO.UniversalQuest[questKey] = v.max
-		else
-			local count = 0
-			for _, questID in next, (v.questID) do
-				if C_QuestLog.IsQuestFlaggedCompleted(questID) then
+
+	collectMASLENGO.UniversalQuest = {}
+
+	for _, data in ipairs(E.OctoTable_UniversalQuest) do
+		if not data.quests then
+			-- Пропускаем записи без квестов
+			break
+		end
+
+		local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+		collectMASLENGO.UniversalQuest[questKey] = collectMASLENGO.UniversalQuest[questKey] or {}
+		local count = 0
+		local forcedMaxQuest = data.forcedMaxQuest
+		local hasSingleQuestOutput = false
+
+		-- Обработка квестов
+		for _, questData in ipairs(data.quests) do
+			local questID = questData[1]
+			local faction = questData.faction -- может быть nil (общий)
+
+			-- Пропускаем квесты не нашей фракции
+			if faction and faction ~= E.curFaction then
+				-- Переходим к следующему квесту
+			else
+				-- Проверка завершенности квеста
+				local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
+				local status = E:func_CheckCompletedByQuestID(questID)
+
+				collectMASLENGO.UniversalQuest[questKey][questID] = status
+
+				if isCompleted then
 					count = count + 1
 				end
-				if v.max == 1 and E:func_IsOnQuest(questID) then
-					collectMASLENGO.UniversalQuest[questKey] = E:func_CheckCompletedByQuestID(questID)
+
+				-- Особый случай для forcedMaxQuest == 1
+				if forcedMaxQuest == 1 and E:func_IsOnQuest(questID) then
+					collectMASLENGO.UniversalQuest[questKey].textCENT = status
+					hasSingleQuestOutput = true
 				end
 			end
-			if count > 0 then
-				collectMASLENGO.UniversalQuest[questKey] = count
-			end
+		end
+
+		-- Устанавливаем счетчик, если не установлен в особом случае
+		if not hasSingleQuestOutput then
+			collectMASLENGO.UniversalQuest[questKey].textCENT = count
 		end
 	end
 end
-----------------------------------------------------------------

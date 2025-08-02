@@ -10,12 +10,17 @@ Octo_Event_Auto_CinematicCanceler:Hide()
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"CINEMATIC_START",
+	"PLAY_MOVIE",
 }
 E:func_RegisterMyEventsToFrames(Octo_Event_Auto_CinematicCanceler, MyEventsTable)
 function Octo_Event_Auto_CinematicCanceler:CINEMATIC_START()
 	if Octo_ToDo_DB_Vars.Auto_CinematicCanceler then
 		CinematicFrame_CancelCinematic()
 	end
+end
+
+function Octo_Event_Auto_CinematicCanceler:PLAY_MOVIE(...) -- movieID
+	Octo_Cache_DB.watchedMovies[...] = true
 end
 
 
@@ -28,7 +33,7 @@ tinsert(E.Modules, function()
 			if dialog.Hide then dialog:Hide() end
 			confirmButton:Click()
 			if message then
-				DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(message, E.Addon_Left_Color, E.Addon_Right_Color))
+				DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(message))
 			end
 		end
 		local function OnKeyUp(self, key)

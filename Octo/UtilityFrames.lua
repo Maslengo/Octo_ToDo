@@ -27,9 +27,17 @@ local GetNumQuestLogEntries = GetNumQuestLogEntries or C_QuestLog.GetNumQuestLog
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+
+
+
+
+
+
+
+
 -- Helper function to create consistent buttons
 local function CreateUtilButton(name, frame, xOffset, texture, func_onEnter, func_onClick)
-	local button = CreateFrame("Button", nil, frame)
+	local button = CreateFrame("Button", E.MainAddonName..name, frame)
 	button:SetSize(WIDTH, HEIGHT)
 	button:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", xOffset, 0)
 	if func_onEnter then
@@ -54,7 +62,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function Octo_Event_UtilityFrames:Octo_CloseButton(frame, addonIconTexture)
+function Octo_Event_UtilityFrames:Octo_CloseButton(frame)
 	local function func_onEnter()
 		local tooltip = {}
 		tooltip[#tooltip+1] = {E.classColorHexCurrent..CLOSE.."|r"}
@@ -65,7 +73,7 @@ function Octo_Event_UtilityFrames:Octo_CloseButton(frame, addonIconTexture)
 	end
 	-- Close Button
 	CreateUtilButton(
-		"Octo_CloseButton",
+		"CloseButton",
 		frame,
 		0,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\".."CloseTest.tga",
@@ -92,7 +100,7 @@ function Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
 	end
 	-- Options Button
 	CreateUtilButton(
-		"Octo_OptionsButton",
+		"OptionsButton",
 		frame,
 		-WIDTH,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\".."IconTexture\\"..addonIconTexture,
@@ -101,7 +109,7 @@ function Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
 	)
 end
 ----------------------------------------------------------------
-function Octo_Event_UtilityFrames:Octo_AbandonButton(frame, addonIconTexture)
+function Octo_Event_UtilityFrames:Octo_AbandonButton(frame)
 	local function func_onEnter()
 		local tooltip = {}
 		local numQuests = E:func_CurrentNumQuests()
@@ -154,7 +162,7 @@ function Octo_Event_UtilityFrames:Octo_AbandonButton(frame, addonIconTexture)
 		end
 	end
 	CreateUtilButton(
-		"Octo_AbandonButton",
+		"AbandonButton",
 		frame,
 		-WIDTH*2,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\".."Arrow72.tga",
@@ -163,8 +171,10 @@ function Octo_Event_UtilityFrames:Octo_AbandonButton(frame, addonIconTexture)
 	)
 end
 ----------------------------------------------------------------
-function Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
+function Octo_Event_UtilityFrames:Octo_EventsButton(frame)
 	local function func_onEnter()
+		wipe(E.Holiday)
+		E.Collect_All_Holiday()
 		local tooltip = {}
 		local curdatetable = date("*t")
 		local curdate = FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year)
@@ -176,9 +186,10 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
 		table.sort(sorted, function(a, b)
 				return E.Holiday[a].priority < E.Holiday[b].priority
 		end)
-		for _, eventID in ipairs(sorted) do
-			local v = E.Holiday[eventID]
-			local titleText = v.invitedBy..E:func_texturefromIconEVENT(v.iconTexture)
+		for _, eventKey in ipairs(sorted) do
+			local v = E.Holiday[eventKey]
+			local eventID = v.eventID
+			local titleText = E:func_texturefromIconEVENT(v.iconTexture)
 			local timeText = v.startTime.." - "..v.endTime
 			if v.Active then
 				titleText = titleText..E.Green_Color..v.title.."|r"..E.White_Color.." ("..v.ENDS..")|r"
@@ -192,9 +203,6 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
 			end
 			tooltip[#tooltip+1] = {titleText, timeText}
 		end
-		if #sorted == 0 then
-			tooltip[#tooltip+1] = {"No Data"}
-		end
 		return tooltip
 	end
 	local function func_onClick()
@@ -205,7 +213,7 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
 	end
 	-- Events Button
 	CreateUtilButton(
-		"Octo_EventsButton",
+		"EventsButton",
 		frame,
 		-WIDTH*3,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\".."Arrow6.tga",
@@ -214,41 +222,45 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
 	)
 end
 ----------------------------------------------------------------
-function Octo_Event_UtilityFrames:Octo_FramerateFrame(frame, addonIconTexture)
+function Octo_Event_UtilityFrames:Octo_FramerateFrame(frame)
 	-- Framerate Frame
-	local Octo_FramerateFrame = CreateFrame("Frame", nil, UIParent)
-	Octo_FramerateFrame:Hide()
+	local Octo_FramerateFrame = CreateFrame("Frame", nil, frame)
 	Octo_FramerateFrame:SetSize(WIDTH*2, HEIGHT)
 	Octo_FramerateFrame:SetFrameStrata("HIGH")
+	Octo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -WIDTH*4, 0)
 	local text_fps = Octo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	text_fps:SetPoint("CENTER")
+	-- text_fps:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -WIDTH*4, 0)
+	text_fps:SetAllPoints()
 	text_fps:SetFontObject(OctoFont11)
 	text_fps:SetJustifyH("CENTER")
-	text_fps:SetTextColor(0.31, 1, 0.47, 1)
-	Octo_FramerateFrame.text_fps = text_fps
+	local FPS = 0
 	C_Timer.NewTicker(1, function()
-			text_fps:SetText(math.floor(GetFramerate()))
-	end)
-	frame:HookScript("OnShow", function()
-			Octo_FramerateFrame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", -HEIGHT*4, 0)
+		FPS = math.floor(GetFramerate())
+		if FPS >= 144 then
+			text_fps:SetTextColor(0, 1, 1, 1)
+		elseif FPS >= 60 then
+			text_fps:SetTextColor(0.31, 1, 0.47, 1)
+		else
+			text_fps:SetTextColor(1, 0, 0, 1)
+		end
+		text_fps:SetText(FPS)
 	end)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E:func_CreateUtilsButton(frame, addonIconTexture)
-	Octo_Event_UtilityFrames:Octo_CloseButton(frame, addonIconTexture)
+	Octo_Event_UtilityFrames:Octo_CloseButton(frame)
 	Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
-	Octo_Event_UtilityFrames:Octo_AbandonButton(frame, addonIconTexture)
-	Octo_Event_UtilityFrames:Octo_EventsButton(frame, addonIconTexture)
-	Octo_Event_UtilityFrames:Octo_FramerateFrame(frame, addonIconTexture)
+	Octo_Event_UtilityFrames:Octo_AbandonButton(frame)
+	Octo_Event_UtilityFrames:Octo_EventsButton(frame)
+	Octo_Event_UtilityFrames:Octo_FramerateFrame(frame)
 end
 ----------------------------------------------------------------
 -- Регистрация событий
 ----------------------------------------------------------------
 local MyEventsTable = {
-	"ADDON_LOADED", -- Загрузка аддона
-	-- "PLAYER_LOGIN", -- Вход игрока
+	"ADDON_LOADED",
 }
 E:func_RegisterMyEventsToFrames(Octo_Event_UtilityFrames, MyEventsTable)
 -- Обработчик события загрузки аддона
@@ -256,20 +268,11 @@ function Octo_Event_UtilityFrames:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
-	-- Создаем элементы интерфейса
-	-- E:func_CreateUtilsButton()
-
 	C_Timer.After(0, function()
 			for i, frame in ipairs(E.OctoTable_Frames) do
 				E:func_CreateUtilsButton(frame, "ToDo")
+
+
 			end
-
-			-- print ("Итого: "..E.Green_Color..(#E.OctoTable_Frames or 0).." фреймов|r")
-
-			--     if Octo_MainFrame_ToDo then table.insert(framesTBL, {frame = Octo_MainFrame_ToDo, addonIconTexture = "ToDo",}) end
-			--     if Octo_MainFrame_Achievements then table.insert(framesTBL, {frame = Octo_MainFrame_Achievements, addonIconTexture = "Achievements",}) end
-			--     if Octo_MainFrame_AddonsManager then table.insert(framesTBL, {frame = Octo_MainFrame_AddonsManager, addonIconTexture = "AddonsManager",}) end
-			--     if Octo_MainFrame_QuestsChanged then table.insert(framesTBL, {frame = Octo_MainFrame_QuestsChanged, addonIconTexture = "QuestsChanged",}) end
-
 	end)
 end

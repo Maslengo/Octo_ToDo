@@ -4,64 +4,73 @@ Octo_EventFrame_WTF:Hide()
 
 ----------------------------------------------------------------
 
+local L = LibStub("AceLocale-3.0"):GetLocale("Octo") -- Локализация
+local LibDataBroker = LibStub("LibDataBroker-1.1") -- Для брокера данных
+local LibSharedMedia = LibStub("LibSharedMedia-3.0") -- Для медиа-ресурсов
+local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронной загрузки
 
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:func_CurrencyCaching()
-	local startTime = debugprofilestop()
-	-- Проверяем все возможные ID валют
-	for CurrencyID = 4000, 1, -1 do
-		local name = C_AccountStore.GetCurrencyInfo(CurrencyID).name
-		if name and name ~= "" then
-			-- Если валюта новая - добавляем в кэш
-			if not Octo_Cache_DB.AllCurrencies[CurrencyID] then
-				print(E.Green_Color.."FIND NEW CurrencyID|r", E.Red_Color..CurrencyID.."|r", name)
-				Octo_Cache_DB.AllCurrencies[CurrencyID] = name
-			end
-		end
-	end
-end
-
-function Octo_EventFrame_WTF:func_ReputationsCaching()
-	local curLocaleLang = E.curLocaleLang or "enUS"
-
-	-- for reputationID = 4000, 1, -1 do
-	for reputationID = 1, 4000 do
-		local repInfo = C_Reputation.GetFactionDataByID(reputationID)
-
-		if repInfo and repInfo.name and repInfo.name ~= "" then
-			local vivod_name = repInfo.name
-			if not Octo_Cache_DB.AllReputations[reputationID] or not Octo_Cache_DB.AllReputations[reputationID][curLocaleLang] then
-				print(E.Green_Color.."FIND NEW reputationID|r", E.Red_Color..reputationID.."|r", repInfo.name)
-				Octo_Cache_DB.AllReputations[reputationID] = Octo_Cache_DB.AllReputations[reputationID] or {}
-				Octo_Cache_DB.AllReputations[reputationID][curLocaleLang] = vivod_name
+-- function Octo_EventFrame_WTF:func_CurrencyCaching()
+	-- -- for CurrencyID = 4000, 1, -1 do
+	-- for CurrencyID = 1, 4000 do
+	-- 	-- local info = GetCurrencyInfo(currencyID) or false
+	-- 	-- if info and info.name and info.name ~= "" then
+	-- 	-- 	local name = info.name
 
 
-				-- Получаем и кэшируем флаги типов
-				local isSimple = C_Reputation.GetFactionDataByID(reputationID) ~= nil
-				local isParagon = C_Reputation.IsFactionParagon(reputationID)
-				local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
-				local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
-				local isMajor = C_Reputation.IsMajorFaction(reputationID)
+	-- 	local name = C_AccountStore.GetCurrencyInfo(CurrencyID).name
+	-- 	if name and name ~= "" then
 
-				local vivod_type = ""
-				if isParagon then
-					vivod_type = "isParagon"
-				elseif isMajor then
-					vivod_type = "isMajor"
-				elseif isFriend then
-					vivod_type = "isFriend"
-				elseif isSimple then
-					vivod_type = "isSimple"
-				else
-					vivod_type = UNKNOWN
-				end
-				-- Octo_Cache_DB.AllReputations[reputationID].type = vivod_type
-				-- Octo_Cache_DB.AllReputations[reputationID][curLocaleLang] = vivod_name
-				Octo_Cache_DB.AllReputations[reputationID].repType = vivod_type
-			end
-		end
-	end
-end
+
+	-- 		if not Octo_Cache_DB.AllCurrencies[CurrencyID] or not Octo_Cache_DB.AllCurrencies[CurrencyID][E.curLocaleLang] then
+	-- 			-- print(E.Green_Color.."CurrencyID|r", E.Red_Color..CurrencyID.."|r", name)
+	-- 			Octo_Cache_DB.AllCurrencies[CurrencyID] = Octo_Cache_DB.AllCurrencies[CurrencyID] or {}
+	-- 			Octo_Cache_DB.AllCurrencies[CurrencyID][E.curLocaleLang] = name
+	-- 		end
+	-- 	end
+	-- end
+-- end
+
+-- function Octo_EventFrame_WTF:func_ReputationsCaching()
+
+-- 	-- for reputationID = 4000, 1, -1 do
+-- 	for reputationID = 1, 4000 do
+-- 		local repNAME = E:func_reputationName(reputationID)
+-- 		if repNAME ~= UNKNOWN and repNAME ~= "" then
+-- 			if not Octo_Cache_DB.AllReputations[reputationID] or not Octo_Cache_DB.AllReputations[reputationID][E.curLocaleLang] then
+-- 				-- print(E.Green_Color.."reputationID|r", E.Red_Color..reputationID.."|r", repNAME)
+
+-- 				Octo_Cache_DB.AllReputations[reputationID] = Octo_Cache_DB.AllReputations[reputationID] or {}
+-- 				Octo_Cache_DB.AllReputations[reputationID][E.curLocaleLang] = repNAME
+
+-- 				-- Получаем и кэшируем флаги типов
+-- 				local isSimple = C_Reputation.GetFactionDataByID(reputationID) ~= nil
+-- 				local isParagon = C_Reputation.IsFactionParagon(reputationID)
+-- 				local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
+-- 				local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
+-- 				local isMajor = C_Reputation.IsMajorFaction(reputationID)
+
+-- 				local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID)
+-- 				if isAccountWide then
+-- 					Octo_Cache_DB.AllReputations[reputationID].isAccountWide = true
+-- 				end
+
+-- 				local vivod_type = UNKNOWN
+-- 				if isParagon then
+-- 					vivod_type = "isParagon"
+-- 				elseif isMajor then
+-- 					vivod_type = "isMajor"
+-- 				elseif isFriend then
+-- 					vivod_type = "isFriend"
+-- 				elseif isSimple then
+-- 					vivod_type = "isSimple"
+-- 				end
+
+-- 				Octo_Cache_DB.AllReputations[reputationID].repType = vivod_type
+-- 			end
+-- 		end
+-- 	end
+-- end
 
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:DatabaseTransfer()
@@ -173,25 +182,46 @@ end
 
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
-	local enable = true -- Флаг включения/отключения очистки
-	if not enable then return end
 	if not Octo_ToDo_DB_Levels then return end
 
-	local seen = {}
-	local currentPlayerGUID = UnitGUID("player") -- GUID текущего персонажа
+	-- Получаем данные текущего игрока
+	local currentGUID = E.curGUID
+	local currentName = E.curCharName
+	local currentRealm = E.curServer
+	local foundDuplicates = false
 
+	-- Проходим по всем записям
 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData and CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer then
-			local key = CharInfo.PlayerData.Name .. " - " .. CharInfo.PlayerData.curServer
+		if CharInfo.PlayerData then
+			-- Проверяем совпадение имени и сервера
+			if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer and
+			   CharInfo.PlayerData.Name == currentName and
+			   CharInfo.PlayerData.curServer == currentRealm then
 
-			-- Если это GUID текущего игрока, пропускаем удаление
-			if GUID == currentPlayerGUID then
-				seen[key] = true -- Помечаем, чтобы его дубликаты не удалялись
-			elseif seen[key] then
-				print (E.Red_Color.."REMOVE :|r ", E:func_texturefromIcon(CharInfo.PlayerData.specIcon)..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r" .. " - " .. CharInfo.PlayerData.curServer.." ("..GUID..")")
-				Octo_ToDo_DB_Levels[GUID] = nil -- Удаляем дубликат
-			else
-				seen[key] = true -- Запоминаем уникальную комбинацию
+				-- Если это НЕ текущий игрок - отмечаем найденный дубликат
+				if GUID ~= currentGUID then
+					foundDuplicates = true
+					break
+				end
+			end
+		end
+	end
+
+	-- Если дубликаты найдены - выполняем очистку
+	if foundDuplicates then
+		for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+			if CharInfo.PlayerData then
+				if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer and
+				   CharInfo.PlayerData.Name == currentName and
+				   CharInfo.PlayerData.curServer == currentRealm then
+
+					if GUID ~= currentGUID then
+						print(L["Removing duplicate: "], CharInfo.PlayerData.Name.."-"..CharInfo.PlayerData.curServer, "GUID:", GUID)
+						Octo_ToDo_DB_Levels[GUID] = nil
+					else
+						print(L["Keeping current: "], CharInfo.PlayerData.Name.."-"..CharInfo.PlayerData.curServer, "GUID:", GUID)
+					end
+				end
 			end
 		end
 	end
@@ -400,44 +430,44 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	end
 	-- Настройки функций аддона
 	local featureDefaults = {
-		Auto_SellGrey = false, -- Автопродажа серых предметов
-		Auto_Repair = false, -- Авторемонт
-		Auto_InputDelete = false, -- Автоочистка ввода
-		Auto_OpenItems = false, -- Автооткрытие предметов
-		Auto_Gossip = false, -- Автопропуск диалогов
-		Auto_TurnQuests = false, -- Автосдача квестов
+		Auto_SellGrey = true, -- Автопродажа серых предметов
+		Auto_Repair = true, -- Авторемонт
+		Auto_InputDelete = true, -- Автоочистка ввода
+		Auto_OpenItems = true, -- Автооткрытие предметов
+		Auto_Gossip = true, -- Автопропуск диалогов
+		Auto_TurnQuests = true, -- Автосдача квестов
 		Auto_ChatClearing = false, -- Автоочистка чата
-		Auto_Screenshot = false, -- Автоскриншоты
-		Auto_CinematicCanceler = false, -- Пропуск заставок
-		Auto_CinematicFastSkip = false, -- Быстрый пропуск заставок
-		Hide_CheckListText = false, -- Скрыть текст чеклиста
-		Hide_SubscriptionInterstitialFrame = false, -- Скрыть фрейм подписки
-		Hide_ActionStatusText = false, -- Скрыть текст статуса действий
-		Hide_SecondaryStatusTrackingBarContainer = false, -- Скрыть вторую полосу отслеживания
-		Hide_MainStatusTrackingBarContainer = false, -- Скрыть главную полосу отслеживания
-		Hide_WeeklyRewardExpirationWarningDialog = false, -- Скрыть предупреждение о наградах
-		Hide_MajorFactionsRenownToast = false, -- Скрыть тост репутации фракций
-		Hide_UIWidgetTopCenterContainerFrame = false, -- Скрыть верхний центр виджетов
-		Hide_BossBanner = false, -- Скрыть баннер босса
-		Hide_RaidWarningFrame = false, -- Скрыть предупреждения рейда
-		Hide_RaidBossEmoteFrame = false, -- Скрыть эмоции боссов
-		Hide_PrivateRaidBossEmoteFrameAnchor = false, -- Скрыть якорь эмоций
-		Hide_SplashFrame = false, -- Скрыть заставку
-		Hide_PTRReporter = false, -- Скрыть PTR репортер
-		Hide_PTRIssueReporter = false, -- Скрыть репортер проблем
-		Hide_PTRIssueReporterAlertFrame = false, -- Скрыть алерт репортера
-		Hide_Bug = false, -- Скрыть баг-репортер
-		Hide_CovenantRenownToast = false, -- Скрыть тост ковенанта
-		Hide_CovenantChoiceToast = false, -- Скрыть тост выбора ковенанта
-		Hide_ZoneTextFrame = false, -- Скрыть текст зоны
-		Hide_SubZoneTextFrame = false, -- Скрыть текст подзоны
-		Hide_PVPArenaTextString = false, -- Скрыть текст арены
-		Hide_ZoneTextString = false, -- Скрыть строку зоны
-		Hide_SubZoneTextString = false, -- Скрыть строку подзоны
-		Hide_OrderHallCommandBar = false, -- Скрыть панель команд
-		Hide_ErrorMessages = false, -- Скрыть сообщения об ошибках
-		Hide_TalkingHeadFrame = false, -- Скрыть говорящую голову
-		Hide_EventToastManagerFrame = false, -- Скрыть тосты событий
+		Auto_Screenshot = true, -- Автоскриншоты
+		Auto_CinematicCanceler = true, -- Пропуск заставок
+		Auto_CinematicFastSkip = true, -- Быстрый пропуск заставок
+		Hide_CheckListText = true, -- Скрыть текст чеклиста
+		Hide_SubscriptionInterstitialFrame = true, -- Скрыть фрейм подписки
+		Hide_ActionStatusText = true, -- Скрыть текст статуса действий
+		Hide_SecondaryStatusTrackingBarContainer = true, -- Скрыть вторую полосу отслеживания
+		Hide_MainStatusTrackingBarContainer = true, -- Скрыть главную полосу отслеживания
+		Hide_WeeklyRewardExpirationWarningDialog = true, -- Скрыть предупреждение о наградах
+		Hide_MajorFactionsRenownToast = true, -- Скрыть тост репутации фракций
+		Hide_UIWidgetTopCenterContainerFrame = true, -- Скрыть верхний центр виджетов
+		Hide_BossBanner = true, -- Скрыть баннер босса
+		Hide_RaidWarningFrame = true, -- Скрыть предупреждения рейда
+		Hide_RaidBossEmoteFrame = true, -- Скрыть эмоции боссов
+		Hide_PrivateRaidBossEmoteFrameAnchor = true, -- Скрыть якорь эмоций
+		Hide_SplashFrame = true, -- Скрыть заставку
+		Hide_PTRReporter = true, -- Скрыть PTR репортер
+		Hide_PTRIssueReporter = true, -- Скрыть репортер проблем
+		Hide_PTRIssueReporterAlertFrame = true, -- Скрыть алерт репортера
+		Hide_Bug = true, -- Скрыть баг-репортер
+		Hide_CovenantRenownToast = true, -- Скрыть тост ковенанта
+		Hide_CovenantChoiceToast = true, -- Скрыть тост выбора ковенанта
+		Hide_ZoneTextFrame = true, -- Скрыть текст зоны
+		Hide_SubZoneTextFrame = true, -- Скрыть текст подзоны
+		Hide_PVPArenaTextString = true, -- Скрыть текст арены
+		Hide_ZoneTextString = true, -- Скрыть строку зоны
+		Hide_SubZoneTextString = true, -- Скрыть строку подзоны
+		Hide_OrderHallCommandBar = true, -- Скрыть панель команд
+		Hide_ErrorMessages = true, -- Скрыть сообщения об ошибках
+		Hide_TalkingHeadFrame = true, -- Скрыть говорящую голову
+		Hide_EventToastManagerFrame = true, -- Скрыть тосты событий
 		AchievementShowCompleted = true, -- Показывать завершенные достижения
 		AidingtheAccord = true, -- Помощь Согласию
 		AnotherAddonsCasual = true, -- Другие аддоны (обычные)
@@ -460,7 +490,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		PortalsButtonsOnlyAvailable = true, -- Только доступные порталы
 		QC_Quests = true, -- Квесты
 		ShowIDS = true, -- Показывать ID
-		StaticPopup1Button1 = true, -- Кнопка попапа
 		TalentTreeTweaks = true, -- Настройки дерева талантов
 		TalentTreeTweaks_Alpha = 1, -- Прозрачность дерева
 		TalentTreeTweaks_Scale = 1, -- Масштаб дерева
@@ -480,12 +509,12 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Reputations = false, -- Репутация
 		CurrencyShowAllways = false, -- Всегда показывать валюту
 		ItemsShowAllways = false, -- Всегда показывать предметы
-		ItemsUsable = false, -- Только используемые предметы
 		OnlyCurrentFaction = false, -- Только текущая фракция
 		QuestsShowAllways = false, -- Всегда показывать квесты
 		QC_Vignettes = false, -- Вигнеты
 		ShowOnlyCurrentRegion = false, -- Только текущий BattleTag
 		ShowOnlyCurrentServer = false, -- Только текущий сервер
+		SellFrame = true,
 	}
 	-- Устанавливаем значения по умолчанию
 	for k, v in next, (featureDefaults) do
@@ -540,12 +569,15 @@ function Octo_EventFrame_WTF:Octo_Cache_DB()
 	E:func_InitSubTable(Octo_Cache_DB, E.curLocaleLang)
 	E:func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
 	E:func_InitSubTable(Octo_Cache_DB, "AllReputations")
+	E:func_InitSubTable(Octo_Cache_DB, "AllQuests")
+	E:func_InitSubTable(Octo_Cache_DB, "AllNPCs")
+
+	E:func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 
 	-- Обновляем кэш валют и репутаций
 	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction then
-		-- print ("CHETONERAVNO")
-		self:func_CurrencyCaching()
-		self:func_ReputationsCaching()
+		-- self:func_CurrencyCaching()
+		-- self:func_ReputationsCaching()
 		Octo_Cache_DB.lastBuildNumber = E.buildNumber
 		Octo_Cache_DB.lastFaction = E.curFaction
 	-- end
@@ -675,13 +707,11 @@ function Octo_EventFrame_WTF:Daily_Reset()
 				-- Устанавливаем новую временную метку вне зависимости от региона
 				CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
 				CharInfo.PlayerData.needResetDaily = true
-				if CharInfo.PlayerData.UnitLevel <= 20 then
-					print (CharInfo.PlayerData.Name, "needResetDaily")
-				end
 				-- Сбрасываем ежедневные квесты
-				for _, v in next, (E.OctoTable_UniversalQuest) do
-					if v.reset == "Daily" then
-						CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Daily"] = nil
+				for _, data in ipairs(E.OctoTable_UniversalQuest) do
+					if data.reset == "Daily" then
+						local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
 				-- Очищаем данные LFG
@@ -706,9 +736,6 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 				-- Устанавливаем новую временную метку вне зависимости от региона
 				CharInfo.PlayerData.tmstp_Weekly = CharInfo.PlayerData.tmstp_Weekly + 86400*7
 				CharInfo.PlayerData.needResetWeekly = true
-				if CharInfo.PlayerData.UnitLevel <= 20 then
-					print (CharInfo.PlayerData.Name, "needResetWeekly")
-				end
 				-- Проверяем есть ли награды в Великом Хранилище
 				for i = 1, #CharInfo.MASLENGO.GreatVault do
 					if CharInfo.MASLENGO.GreatVault[i] and
@@ -728,9 +755,10 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 				CharInfo.MASLENGO.SavedWorldBoss = {}
 				CharInfo.MASLENGO.GreatVault = {}
 				-- Сбрасываем еженедельные квесты
-				for _, v in next, (E.OctoTable_UniversalQuest) do
-					if v.reset == "Weekly" then
-						CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Weekly"] = nil
+				for _, data in ipairs(E.OctoTable_UniversalQuest) do
+					if data.reset == "Weekly" then
+						local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
 			end
@@ -748,9 +776,10 @@ function Octo_EventFrame_WTF:Month_Reset()
 				CharInfo.PlayerData.tmstp_Month = tmstp_Month
 				CharInfo.PlayerData.needResetMonth = true
 				-- Сбрасываем ежемесячные квесты
-				for _, v in next, (E.OctoTable_UniversalQuest) do
-					if v.reset == "Month" then
-						CharInfo.MASLENGO.UniversalQuest["Octopussy_"..v.desc.."_"..v.name_save.."_Month"] = nil
+				for _, data in ipairs(E.OctoTable_UniversalQuest) do
+					if data.reset == "Month" then
+						local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
 			end

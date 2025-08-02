@@ -2,6 +2,9 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
+	L["Removing duplicate: "] = true
+	L["Keeping current: "] = true
+
 	L["Line"] = true
 	L["Right Click:"] = true
 	L["Left Click:"] = true
@@ -256,6 +259,9 @@ end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
+	L["Removing duplicate: "] = "Удаляем дубликат: "
+	L["Keeping current: "] = "Оставляем текущего: "
+
 	L["Line"] = "Строка"
 	L["Right Click:"] = "ПКМ:"
 	L["Left Click:"] = "ЛКМ:"
