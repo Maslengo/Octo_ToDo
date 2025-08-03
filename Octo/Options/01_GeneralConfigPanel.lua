@@ -542,6 +542,34 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+
+			fontSIZE = {
+				type = "range",
+				name = "fontSIZE",
+				desc = "fontSIZE",
+				min = 6,
+				max = 72,
+				step = 1,
+				get = function()
+					return Octo_ToDo_DB_Vars.fontSIZE
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.fontSIZE = value
+					E.OctoFont11:SetFont("Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF", value, "")
+					for i, frame in ipairs(E.OctoTable_Frames) do
+						if frame:IsShown() then
+							print ("frame:Hide()")
+							frame:Hide()
+							frame:Show()
+						end
+					end
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+
+
+
 			-------------------------------------------------
 		},
 	}
@@ -549,6 +577,12 @@ function E:CreateGeneralOptions()
 	for index, name in ipairs(E.OctoTable_Prefixes) do
 		generalOptions.args.prefix.values[index] = name
 	end
+
+
+
+
+
+
 	-------------------------------------------------
 	return generalOptions
 end

@@ -71,7 +71,55 @@ local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронн�
 -- 		end
 -- 	end
 -- end
-
+function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
+	----------------------------------------------------------------
+	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
+		for _, currencyID in ipairs(v.Currencies) do
+			local currency =  E:func_currencyName(currencyID) -- "AllCurrencies"
+		end
+		for _, itemID in ipairs(v.Items) do
+			if type(itemID) == "number" then
+				local item = E:func_GetItemNameByID(itemID) -- "AllItems"
+			end
+		end
+	end
+	----------------------------------------------------------------
+	for _, currencyID in ipairs(E.OctoTable_Currencies) do
+		local currency = E:func_currencyName(currencyID) -- "AllCurrencies"
+	end
+	----------------------------------------------------------------
+	for _, expansionID in ipairs(E.OctoTable_Reputations) do
+		for k, v in next, (expansionID) do
+			local reputation = E:func_reputationName(v.id) -- "AllReputations"
+		end
+	end
+	E.Collect_All_Reputations()
+	----------------------------------------------------------------
+	for _, questID in ipairs(E.OctoTable_QuestID) do
+		local quest = E:func_questName(questID) -- "AllQuests"
+	end
+	for _, questID in ipairs(E.OctoTable_QuestID_Paragon) do
+		local quest = E:func_questName(questID) -- "AllQuests"
+	end
+	for _, data in ipairs(E.OctoTable_UniversalQuest) do
+		if not data.quests then
+			break -- Пропускаем записи без квестов
+		end
+		for _, questData in ipairs(data.quests) do
+			local quest = E:func_questName(questData[1]) -- "AllQuests"
+			if questData.forcedText and questData.forcedText.npcID then
+				local npc = E:func_npcName(questData.forcedText.npcID) -- "AllNPCs"
+			end
+		end
+	end
+	for i = 1, C_QuestLog.GetNumQuestLogEntries() do
+		local info = C_QuestLog.GetInfo(i)
+		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
+			local quest = E:func_questName(info.questID) -- "AllQuests"
+		end
+	end
+	----------------------------------------------------------------
+end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:DatabaseTransfer()
 	local enable = false -- Флаг для включения/отключения переноса
@@ -396,7 +444,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		AddonLeftFrameWeight = 256, -- Ширина левой панели
 		AddonCentralFrameWeight = 128, -- Ширина центральной панели
 		MainFrameDefaultLines = 30, -- Количество строк по умолчанию
-		SFDropDownWeight = 100, -- Ширина выпадающих списков
 		MaxNumCharacters = 10, -- Макс. число отображаемых персонажей
 		FrameScale = 1, -- Масштаб фрейма
 		GameMenuFrameScale = 1, -- Масштаб меню игры
@@ -404,6 +451,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		LevelToShow = 1, -- Минимальный уровень для отображения
 		LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
 		prefix = 1, -- Префикс
+		fontSIZE = 12, -- Префикс
 		DontSavePosition = true, -- Не сохранять позицию
 		ClampedToScreen = false, -- Не привязывать к границам экрана
 	}
@@ -570,17 +618,21 @@ function Octo_EventFrame_WTF:Octo_Cache_DB()
 	E:func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
 	E:func_InitSubTable(Octo_Cache_DB, "AllReputations")
 	E:func_InitSubTable(Octo_Cache_DB, "AllQuests")
+	E:func_InitSubTable(Octo_Cache_DB, "AllItems")
 	E:func_InitSubTable(Octo_Cache_DB, "AllNPCs")
 
 	E:func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 
 	-- Обновляем кэш валют и репутаций
-	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction then
+	if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction then
 		-- self:func_CurrencyCaching()
 		-- self:func_ReputationsCaching()
+		C_Timer.After(1, function()
+			self:func_CreateDataCacheAtStart()
+		end)
 		Octo_Cache_DB.lastBuildNumber = E.buildNumber
 		Octo_Cache_DB.lastFaction = E.curFaction
-	-- end
+	end
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -801,7 +853,7 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
 		-- Чистка персонажей при старте
-		Octo_EventFrame_WTF:CleaningIdenticalCharacters()
+		self:CleaningIdenticalCharacters()
 		-- self:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
 		-- Инициализация всех компонентов
 		self:Octo_Cache_DB() -- Кэш данных

@@ -18,6 +18,11 @@ local ignoreNPCID = {
 	[231036] = true, -- Enter Delve
 	-- [47502] = true,
 	[153993] = true, -- BfA Chromi
+
+
+
+	[77789] = true, -- 5000
+	[153897] = true, -- 7000
 }
 -- IGNORE 120914
 local gossipOptionIDs = {

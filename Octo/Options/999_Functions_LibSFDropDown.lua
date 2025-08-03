@@ -26,14 +26,14 @@ end)
 --     local menu = LibSFDropDown:GetMenu(level)
 --     DropDown:ddToggle(level, value, menu.anchorFrame)
 -- end
+local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT -- Octo_ToDo_DB_Vars.AddonHeight or 20
+local LINE_WIDTH = 200 -- Octo_ToDo_DB_Vars.AddonLeftFrameWeight or 200
 
 local function CreateBaseDropDown(frame, hex, providerfunc)
-	local WIDTH = Octo_ToDo_DB_Vars.AddonLeftFrameWeight or 200
-	local HEIGHT = Octo_ToDo_DB_Vars.AddonHeight or 20
 	-- local DropDown = CreateFrame("Button", nil, frame, "SecureActionButtonTemplate, BackDropTemplate")
 	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
 
-	DropDown:SetSize(WIDTH/2, HEIGHT)
+	DropDown:SetSize(LINE_WIDTH, LINE_HEIGHT)
 	E:func_SetBackdrop(DropDown)
 
 	-- Стрелка раскрытия меню
@@ -202,7 +202,7 @@ function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					if Octo_ToDo_DB_Levels[GUID].PlayerData then
 						local info = {}
 						info.fontObject = OctoFont11
-						info.keepShownOnClick = false
+						info.keepShownOnClick = true
 						info.isNotRadio = true
 						local vivod = Octo_ToDo_DB_Levels[GUID].PlayerData.classColorHex..Octo_ToDo_DB_Levels[GUID].PlayerData.Name.."|r"
 						if Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel ~= E.currentMaxLevel then
@@ -855,6 +855,28 @@ function E:func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
 					providerfunc()
 				end
 				self:ddAddButton(info, level)
+
+				self:ddAddSeparator(level)
+
+
+				info.text = "wipe QC_Quests"
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.func = function(_, _, _, checked)
+					wipe(Octo_QuestsChanged_DB.QC_Quests)
+					providerfunc()
+				end
+				self:ddAddButton(info, level)
+
+				info.text = "wipe QC_Vignettes"
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.func = function(_, _, _, checked)
+					wipe(Octo_QuestsChanged_DB.QC_Vignettes)
+					providerfunc()
+				end
+				self:ddAddButton(info, level)
+
 			end
 	end)
 

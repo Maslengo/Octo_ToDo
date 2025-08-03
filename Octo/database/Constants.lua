@@ -78,14 +78,22 @@ E.menuBackdrop = {
 }
 
 -------------------------------------------------------------------------
-
+E.GLOBAL_FONT_SIZE = 12
+E.GLOBAL_LINE_HEIGHT = E.GLOBAL_FONT_SIZE+10
 
 E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
-
+-- E.Octo_font = "Fonts\\FRIZQT___CYR.TTF"
 E.OctoFont11 = CreateFont("OctoFont11")
-E.OctoFont11:CopyFontObject(GameTooltipText)-- local font = GameFontHighlightSmallLeft
-E.OctoFont11:SetFont(E.Octo_font, 11, "OUTLINE")
+E.OctoFont11:CopyFontObject(GameFontNormal)-- local font = GameFontHighlightSmallLeft
+local fontFile, height, flags = E.OctoFont11:GetFont()
+E.OctoFont11:SetFont(fontFile, E.GLOBAL_FONT_SIZE, flags)
+
+-- GameFontNormalSmall
+-- GameTooltipText
+
+-- /dump GameFontNormalSmall:GetFonts()
+-- /dump GetFontInfo(GameFontNormalSmall)
 
 E.OctoFont22 = CreateFont("OctoFont22")
 E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)-- local font = GameFontHighlightSmallLeft

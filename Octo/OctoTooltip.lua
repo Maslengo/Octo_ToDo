@@ -7,7 +7,7 @@ OctoTooltip:Hide()
 ----------------------------------------------------------------
 local INDENT_TEST = 4
 local INDENT_SCROLL = 20
-local TOOLTIP_LINE_HEIGHT = 20
+local TOOLTIP_LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local TOOLTIP_LINE_WIDTH = 256
 local LINES_MAX = 30
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / TOOLTIP_LINE_HEIGHT))*.7)

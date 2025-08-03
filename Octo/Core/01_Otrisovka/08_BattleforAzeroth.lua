@@ -56,27 +56,6 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 					----------------------------------------------------------------
 			end)
 		end
-		if Octo_ToDo_DB_Vars.Quests then
-			table.insert(OctoTable_Otrisovka, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
-					----------------------------------------------------------------
-					if CharInfo.MASLENGO.islandBfA then
-						textCENT = CharInfo.MASLENGO.islandBfA
-					end
-					----------------------------------------------------------------
-					local questID = C_IslandsQueue.GetIslandsWeeklyQuestID()
-					if questID then
-						textLEFT = E:func_questName(questID)
-					else
-						textLEFT = "All_BfA_Island"
-					end
-					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
-					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
-					----------------------------------------------------------------
-			end)
-		end
 		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, OCTOexpansionID)
 		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
 	end

@@ -2,6 +2,10 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
+	L["Wrath of the Jailer"] = true
+	L["Tormentors of Torghast"] = true
+
+
 	L["Removing duplicate: "] = true
 	L["Keeping current: "] = true
 
@@ -89,7 +93,6 @@ if L then
 	L["AddonCentralFrameWeight"] = true
 	L["MainFrameDefaultLines"] = true
 	L["MaxNumCharacters"] = true
-	L["SFDropDownWeight"] = true
 	L["fullName"] = true
 	L["showIcons"] = true
 	L["showIconsQuestionMark"] = true
@@ -259,6 +262,10 @@ end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
+	L["Wrath of the Jailer"] = "Гнев Тюремщика"
+	L["Tormentors of Torghast"] = "Истязатели из Торгаста"
+
+
 	L["Removing duplicate: "] = "Удаляем дубликат: "
 	L["Keeping current: "] = "Оставляем текущего: "
 
@@ -348,7 +355,6 @@ if L then
 	L["AddonCentralFrameWeight"] = "Ширина строк"
 	L["MainFrameDefaultLines"] = "Количество строк"
 	L["MaxNumCharacters"] = "Количество персонажей"
-	L["SFDropDownWeight"] = "SFDropDownWeight"
 	L["fullName"] = "Полное название"
 	L["showIcons"] = "Показывать иконку"
 	L["showIconsQuestionMark"] = "Показывать иконку со знаком вопроса"

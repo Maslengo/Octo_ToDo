@@ -312,7 +312,7 @@ function ItemsUsable_EventFrame:func_ItemsUsable_CreateDataProvider()
 		local itemID = item.itemID
 		if itemID then
 			color = item.usable and E.Green_Color or E.Red_Color
-			itemName = E:func_GetItemNameByID_MyQuality(itemID, item.quality)
+			itemName = E:func_GetItemNameByID(itemID, item.quality)
 			lines = lines + 1
 
 			local node = DataProvider:Insert({

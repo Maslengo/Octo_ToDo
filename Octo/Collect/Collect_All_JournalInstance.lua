@@ -64,6 +64,7 @@ function E.Collect_All_JournalInstance()
 			for i = 1, NumSavedWorldBosses do
 				local name, worldBossID, reset = GetSavedWorldBossInfo(i)
 				-- collectMASLENGO.SavedWorldBoss[worldBossID] = collectMASLENGO.SavedWorldBoss[worldBossID] or {}
+				collectMASLENGO.SavedWorldBoss[worldBossID] = {}
 				collectMASLENGO.SavedWorldBoss[worldBossID].name = name
 				collectMASLENGO.SavedWorldBoss[worldBossID].reset = reset
 			end

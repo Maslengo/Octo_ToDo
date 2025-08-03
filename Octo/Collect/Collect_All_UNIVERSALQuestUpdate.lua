@@ -32,16 +32,17 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO or InCombatLockdown() then return end
 
-	collectMASLENGO.UniversalQuest = {}
+	-- Создаем таблицу только если есть данные для сохранения
+	local hasDataToSave = false
+	local tempUniversalQuest = {}
 
 	for _, data in ipairs(E.OctoTable_UniversalQuest) do
 		if not data.quests then
-			-- Пропускаем записи без квестов
-			break
+			break -- Пропускаем записи без квестов
 		end
 
 		local questKey = data.desc.."_"..data.name_save.."_"..data.reset
-		collectMASLENGO.UniversalQuest[questKey] = collectMASLENGO.UniversalQuest[questKey] or {}
+		local questDataTable = {}
 		local count = 0
 		local forcedMaxQuest = data.forcedMaxQuest
 		local hasSingleQuestOutput = false
@@ -49,33 +50,42 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 		-- Обработка квестов
 		for _, questData in ipairs(data.quests) do
 			local questID = questData[1]
-			local faction = questData.faction -- может быть nil (общий)
+			local faction = questData.faction
 
-			-- Пропускаем квесты не нашей фракции
-			if faction and faction ~= E.curFaction then
-				-- Переходим к следующему квесту
-			else
-				-- Проверка завершенности квеста
+			if not faction or faction == E.curFaction then
 				local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
 				local status = E:func_CheckCompletedByQuestID(questID)
 
-				collectMASLENGO.UniversalQuest[questKey][questID] = status
+				questDataTable[questID] = status
 
 				if isCompleted then
 					count = count + 1
 				end
 
-				-- Особый случай для forcedMaxQuest == 1
-				if forcedMaxQuest == 1 and E:func_IsOnQuest(questID) then
-					collectMASLENGO.UniversalQuest[questKey].textCENT = status
+				if (forcedMaxQuest == 1 or #data.quests) and E:func_IsOnQuest(questID) then
+					questDataTable.textCENT = status
 					hasSingleQuestOutput = true
 				end
 			end
 		end
 
-		-- Устанавливаем счетчик, если не установлен в особом случае
-		if not hasSingleQuestOutput then
-			collectMASLENGO.UniversalQuest[questKey].textCENT = count
+		-- Добавляем счетчик только если есть завершенные квесты или особый случай
+		if not hasSingleQuestOutput and count ~= 0 then
+			questDataTable.textCENT = count
 		end
+
+		-- Сохраняем данные только если есть хотя бы один квест
+		if next(questDataTable) ~= nil then
+			tempUniversalQuest[questKey] = questDataTable
+			hasDataToSave = true
+		end
+	end
+
+	-- Обновляем SavedVariables только если есть данные
+	if hasDataToSave then
+		collectMASLENGO.UniversalQuest = tempUniversalQuest
+	elseif collectMASLENGO.UniversalQuest then
+		-- Очищаем если ранее были данные, но теперь их нет
+		collectMASLENGO.UniversalQuest = nil
 	end
 end

@@ -270,12 +270,12 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	if frameData.id then
 		frame.second.text:SetText(E.Gray_Color.."id: "..frameData.id.."|r")
 	else
-		frame.second.text:SetText("QWEQWEQWEQWEQWEQWE")
+		frame.second.text:SetText("qwe")
 	end
 	if frameData.mapID then
 		frame.fourth.text:SetText(E.Gray_Color.."id: "..frameData.mapID.. "|r")
 	else
-		frame.second.text:SetText("QWEQWEQWEQWEQWEQWE")
+		frame.second.text:SetText("qwe")
 	end
 	----------------------------------------------------------------
 	if frameData.curLocation and frameData.curLocation ~= "" then
@@ -283,7 +283,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	elseif frameData.mapID then
 		frame.fifth.text:SetText(E:func_GetMapName(frameData.mapID))
 	else
-		frame.fifth.text:SetText("QWEQWEQWEQWEQWEQWE")
+		frame.fifth.text:SetText("qwe")
 	end
 	----------------------------------------------------------------
 	-- frame.sixth.text:SetText(E.Green_Color..E:func_GetCoordFormated(frameData.x, frameData.y).."|r")
@@ -434,24 +434,6 @@ function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		if Octo_ToDo_DB_Vars.AddonHeight then
-			AddonHeight = Octo_ToDo_DB_Vars.AddonHeight
-		end
-		if Octo_ToDo_DB_Vars.AddonLeftFrameWeight then
-			AddonLeftFrameWeight = Octo_ToDo_DB_Vars.AddonLeftFrameWeight
-		end
-		if Octo_ToDo_DB_Vars.AddonCentralFrameWeight then
-			AddonCentralFrameWeight = Octo_ToDo_DB_Vars.AddonCentralFrameWeight
-		end
-		if Octo_ToDo_DB_Vars.MainFrameDefaultLines then
-			MainFrameDefaultLines = Octo_ToDo_DB_Vars.MainFrameDefaultLines
-		end
-		if Octo_ToDo_DB_Vars.SFDropDownWeight then
-			SFDropDownWeight = Octo_ToDo_DB_Vars.SFDropDownWeight
-		end
-		if Octo_ToDo_DB_Vars.MaxNumCharacters then
-			MaxNumCharacters = Octo_ToDo_DB_Vars.MaxNumCharacters
-		end
 		----------------------------------------------------------------
 		self:Octo_Create_MainFrame_QuestsChanged()
 		E:QuestsChanged_CreateMyDataProvider()

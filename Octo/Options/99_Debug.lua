@@ -432,59 +432,81 @@ function E:Debug()
 			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------
-			-------------------------------------------------
 		},
 	}
-	local function add_args_recursive(tbl, text)
-		for k, v in next, (tbl) do
-			if type(v) == "table" and type(k) ~= "table" then
-				local order1 = GetOrder()
-				k = tostring(k)
-				Debug.args[k..order1] = {
+	-------------------------------------------------
+	-------------------------------------------------
+	-------------------------------------------------
+	local function add_args_recursive(tbl, parent_path, current_depth, max_depth)
+		if max_depth and current_depth > max_depth then return end
+		local key, value = next(tbl)
+		while key do
+			if type(value) == "table" and type(key) ~= "table" then
+				local order = GetOrder()
+				local str_key = tostring(key)
+				local path = parent_path.."."..str_key
+				Debug.args[str_key..order] = {
 					type = "execute",
-					name = k,
-					desc = text.."."..k.." = {}",
-					order = order1,
+					name = (max_depth and current_depth == max_depth) and "|cffff0000"..str_key.."|r"  -- Красный для последнего уровня
+					or "|cffFFF371"..str_key.."|r",  -- Жёлтый для остальных
+					desc = path.." = {}",
+					order = order,
 					width = E.FULL_WIDTH/4,
 					func = function()
-						tbl[k] = nil
-						return
+						tbl[key] = nil
 					end,
 				}
-				add_args_recursive(v, k)
+				add_args_recursive(value, path, current_depth + 1, max_depth)
 			end
+			key, value = next(tbl, key)
 		end
 	end
-	local function add_args(tbl, text)
-		local order2 = GetOrder()
-		Debug.args[text..order2] = {
+	local function add_args(tbl, name, max_depth)
+		local header_order = GetOrder()
+		Debug.args[name..header_order] = {
 			type = "header",
-			name = text,
-			order = order2,
+			name = "",
+			order = header_order,
 		}
-		local order3 = GetOrder()
-		Debug.args[text..order3] = {
+		local execute_order = GetOrder()
+		Debug.args[name..execute_order] = {
 			type = "execute",
-			name = "|cff4fff79"..text.."|r",
-			desc = text.." = {}",
-			order = order3,
-			width = E.FULL_WIDTH/4,
+			name = max_depth and "|cff00BFFF"..name.."|r"  -- Голубой, если есть ограничение глубины
+			or "|cff4fff79"..name.."|r",  -- Зеленый, если рекурсия без лимита
+			desc = name.." = {}",
+			order = execute_order,
+			width = E.FULL_WIDTH,
 			func = function()
 				wipe(tbl)
 				tbl = nil
-				return
 			end,
 		}
-		add_args_recursive(tbl, text)
+		add_args_recursive(tbl, name, 1, max_depth)
 	end
-	-- add_args(Octo_ToDo_DB_Levels, "Octo_ToDo_DB_Levels")
+	-------------------------------------------------
+	-------------------------------------------------
+	-------------------------------------------------
+	add_args(Octo_ToDo_DB_Levels, "Octo_ToDo_DB_Levels", 0)  -- 1
 	add_args(Octo_ToDo_DB_Vars, "Octo_ToDo_DB_Vars")
 	add_args(Octo_ToDo_DB_Other, "Octo_ToDo_DB_Other")
+	add_args(Octo_Cache_DB, "Octo_Cache_DB", 1) -- FALSE
+
 	add_args(Octo_Achievements_DB, "Octo_Achievements_DB")
-	add_args(Octo_AddonsTable_DB, "Octo_AddonsTable_DB")
+
 	add_args(Octo_AddonsManager_DB, "Octo_AddonsManager_DB")
+	add_args(Octo_AddonsTable_DB, "Octo_AddonsTable_DB", 1) -- 1
+
 	add_args(Octo_Debug_DB, "Octo_Debug_DB")
-	add_args(Octo_QuestsChanged_DB, "Octo_QuestsChanged_DB")
-	-- add_args(Octo_Cache_DB, "Octo_Cache_DB")
+
+	add_args(Octo_LoadAddons_DB, "Octo_LoadAddons_DB")
+
+	add_args(Octo_Minecraft_DB, "Octo_Minecraft_DB")
+
+	add_args(Octo_Moduls_DB, "Octo_Moduls_DB")
+
+	add_args(Octo_QuestsChanged_DB, "Octo_QuestsChanged_DB", 1) -- 1
+	-------------------------------------------------
+	-------------------------------------------------
+	-------------------------------------------------
 	return Debug
 end

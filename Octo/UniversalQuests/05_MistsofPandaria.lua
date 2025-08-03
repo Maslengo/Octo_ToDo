@@ -13,7 +13,7 @@ function E:func_Universal_05_MistsofPandaria()
 			desc = "MistsofPandaria",
 			quests = {
 				{33118, forcedText = {npcID = 72057},}, -- Ordos <Fire-God of the Yaungol>
-				{33117, forcedText = {itemID = 136984},}, -- Celestrials
+				{33117, forcedText = {achievementID = 7333},}, -- Celestrials
 				{32519, forcedText = {npcID = 69161},}, -- "Oondasta"
 
 				-- {33109}, -- Nalak HIDDEN

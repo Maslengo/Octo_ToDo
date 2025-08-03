@@ -213,7 +213,6 @@ function E:func_Otrisovka_91_Other()
 				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
-		E:func_Universal_Holiday(OctoTable_Otrisovka, "Storyline", E.Holiday_Color)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

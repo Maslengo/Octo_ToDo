@@ -11,7 +11,7 @@ function E:func_Otrisovka_90_Holidays()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if E.ActiveHoliday[181] then
-			E:func_Universal_Holiday(OctoTable_Otrisovka, "HolidaysNoblegarden", E.Holiday_Color)
+			E:func_Universal(OctoTable_Otrisovka, "HolidaysNoblegarden")
 			table.insert(OctoTable_Otrisovka, function(CharInfo)
 					----------------------------------------------------------------
 					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
@@ -49,7 +49,7 @@ function E:func_Otrisovka_90_Holidays()
 		local TimewalkHolidayTBL = {1583, 1265, 1063, 652, 622, 1508, 1667} -- 1458 Бурные потоки
 		for _, HolidayID in ipairs(TimewalkHolidayTBL) do
 			if E.ActiveHoliday[HolidayID] then
-				E:func_Universal_Holiday(OctoTable_Otrisovka, "HolidaysTimewalk", E.Event_Color)
+				E:func_Universal(OctoTable_Otrisovka, "HolidaysTimewalk", E.Event_Color)
 				table.insert(OctoTable_Otrisovka, function(CharInfo)
 						----------------------------------------------------------------
 						local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
@@ -69,13 +69,13 @@ function E:func_Otrisovka_90_Holidays()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if E.ActiveHoliday[201] then
-			E:func_Universal_Holiday(OctoTable_Otrisovka, "HolidaysChildrensWeek", E.Holiday_Color)
+			E:func_Universal(OctoTable_Otrisovka, "HolidaysChildrensWeek")
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if E.ActiveHoliday[341] then -- СОЛНЦЕВОРОТ
-			E:func_Universal_Holiday(OctoTable_Otrisovka, "HolidaysTheSpinnerofSummerTales", E.Holiday_Color)
+			E:func_Universal(OctoTable_Otrisovka, "HolidaysTheSpinnerofSummerTales")
 			table.insert(OctoTable_Otrisovka, function(CharInfo)
 					----------------------------------------------------------------
 					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
@@ -110,7 +110,7 @@ function E:func_Otrisovka_90_Holidays()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if E.ActiveHoliday[1691] then -- Алчный посланец
-			E:func_Universal_Holiday(OctoTable_Otrisovka, "HolidaysAGreedyEmissary", E.Red_Color)
+			E:func_Universal(OctoTable_Otrisovka, "HolidaysAGreedyEmissary", E.Red_Color)
 			table.insert(OctoTable_Otrisovka, function(CharInfo)
 					----------------------------------------------------------------
 					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
@@ -129,7 +129,7 @@ function E:func_Otrisovka_90_Holidays()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if E.ActiveHoliday[479] then -- Ярмарка новолунья
-			E:func_Universal_Holiday(OctoTable_Otrisovka, "HolidaysDarkmoonFaire", E.Purple_Color)
+			E:func_Universal(OctoTable_Otrisovka, "HolidaysDarkmoonFaire", E.Purple_Color)
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------

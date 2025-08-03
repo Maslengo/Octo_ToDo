@@ -3,6 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 function E:func_Universal_08_BattleforAzeroth()
 	local OctoTable_Universal = {
+
 		{
 
 			showTooltip = true,
@@ -27,6 +28,19 @@ function E:func_Universal_08_BattleforAzeroth()
 				{56056},
 			},
 			forcedMaxQuest = 4,
+		},
+		{
+			showTooltip = true,
+			textleft = E:func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID()),
+			name_save = "AzeriteForTheFaction",
+			reset = "Weekly",
+			desc = "BattleforAzeroth",
+			quests = {
+				-- {C_IslandsQueue.GetIslandsWeeklyQuestID()},
+				{53435, faction = "Horde",}, -- /dump C_QuestLog.IsOnQuest(53435)
+				{53436, faction = "Alliance",}, -- /dump C_QuestLog.IsOnQuest(53436)
+			},
+			-- forcedMaxQuest = 1,
 		},
 		{
 
@@ -125,6 +139,7 @@ function E:func_Universal_08_BattleforAzeroth()
 		},
 		{
 
+			sorted = true,
 			showTooltip = true,
 			textleft = "DarkshoreRares",
 			name_save = "DarkshoreRares",
@@ -241,52 +256,56 @@ function E:func_Universal_08_BattleforAzeroth()
 		},
 		{
 
+			sorted = true,
 			showTooltip = true,
 			textleft = "MechagonRares",
 			name_save = "MechagonRares",
 			reset = "Daily",
 			desc = "BattleforAzeroth",
 			quests = {
-				{55512}, -- MOUNT
-				{55539},
-				{55857},
-				{55537},
-				{56368},
-				{55812},
-				{55514},
-				{55814},
-				{56207},
-				{55513},
-				{55367},
-				{55852},
-				{55855},
-				{56367},
-				{55399},
-				{55369},
-				{55544},
-				{55207},
-				{55386},
-				{55859},
-				{55853},
-				{55515},
-				{55856},
-				{55405},
-				{55368},
-				{55811}, -- MOUNT
-				{56737},
-				{55545},
-				{55810},
-				{55854},
-				{56419},
-				{55858},
-				{56182},
-				{55364},
-				{55538},
-				{55546},
-				{56298}, -- MOUNT NEW???? https://wago.io/G7SoF6Zix
+				{55512, forcedText = {npcID = 151934},}, -- 154342  -- MOUNT
+				{55539, forcedText = {npcID = 151308},},
+				{55857, forcedText = {npcID = 153200},},
+				{55537, forcedText = {npcID = 152001},},
+				{56368, forcedText = {npcID = 154739},},
+				{55812, forcedText = {npcID = 149847},}, -- 152569
+				{55514, forcedText = {npcID = 151569},},
+				{55814, forcedText = {npcID = 150342},},
+				{56207, forcedText = {npcID = 154153},},
+				{55513, forcedText = {npcID = 151202},},
+				{55367, forcedText = {npcID = 151884},},
+				{55852, forcedText = {npcID = 153228},},
+				{55855, forcedText = {npcID = 153205},},
+				{56367, forcedText = {npcID = 154701},},
+				{55399, forcedText = {npcID = 151684},},
+				{55369, forcedText = {npcID = 152007},},
+				{55544, forcedText = {npcID = 151933},},
+				{55207, forcedText = {npcID = 151124},},
+				{55386, forcedText = {npcID = 151672},},
+				{55859, forcedText = {npcID = 151627},},
+				{55853, forcedText = {npcID = 153206},},
+				{55515, forcedText = {npcID = 151296},}, -- +QUEST 55918
+				{55856, forcedText = {npcID = 152764},},
+				{55405, forcedText = {npcID = 151702},},
+				{55368, forcedText = {npcID = 150575},},
+				{55811, forcedText = {npcID = 152182},}, -- MOUNT
+				{56737, forcedText = {npcID = 155583},},
+				{55545, forcedText = {npcID = 150937},},
+				{55810, forcedText = {npcID = 153000},},
+				{55854, forcedText = {npcID = 153226},},
+				{56419, forcedText = {npcID = 155060},},
+				{55858, forcedText = {npcID = 152113},},
+				{56182, forcedText = {npcID = 154225},},
+				{55364, forcedText = {npcID = 151623},}, -- 151625
+				{55538, forcedText = {npcID = 151940},},
+				{55546, forcedText = {npcID = 150394},}, -- 154968
+				{56298, forcedText = {npcID = 152290},}, -- MOUNT NEW???? https://wago.io/G7SoF6Zix
 			},
-			forcedMaxQuest = 36+1,
+			-- forcedMaxQuest = 36+1,
 		},
+
+
+
 		{
 
 			showTooltip = true,
@@ -347,7 +366,7 @@ function E:func_Universal_08_BattleforAzeroth()
 			forcedMaxQuest = 1,
 		},
 		{
-
+			sorted = false,
 			showTooltip = true,
 			textleft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 			name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
@@ -382,6 +401,7 @@ function E:func_Universal_08_BattleforAzeroth()
 			},
 		},
 		{
+			sorted = false,
 			showTooltip = true,
 			textleft = "UNLOCKING MECHAGON PART 2",
 			name_save = "UNLOCKING MECHAGON PART 2",
@@ -414,7 +434,7 @@ function E:func_Universal_08_BattleforAzeroth()
 		},
 
 		{
-
+			sorted = false,
 			showTooltip = true,
 			textleft = "THE MECHAGONIAN THREAT",
 			name_save = "THE MECHAGONIAN THREAT",

@@ -105,7 +105,6 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_JournalInstance() -- информация о подземельях/рейдах
 	E.Collect_All_WarMode() -- режим войны
 	E.Collect_All_Chromie() -- хроми
-	E.Collect_All_BfA_Island() -- острова Battle for Azeroth
 	-- Системные и служебные данные
 	E.Collect_All_LoginTime() -- время входа (УБРАТЬ?)
 	E.Collect_All_Holiday() -- праздничные события
@@ -160,7 +159,6 @@ function Octo_EventFrame_Collect:QUEST_LOG_UPDATE()
 			E.Collect_All_Quests()
 			E.Collect_All_Garrison()
 			E:func_Collect_All_UNIVERSALQuestUpdate()
-			E.Collect_All_BfA_Island()
 			E.Collect_All_Chromie()
 			E:func_Update("QUEST_LOG_UPDATE")
 			self.QUEST_LOG_UPDATE_Pause = nil-- Используем nil вместо false для экономии памяти
@@ -374,7 +372,6 @@ function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 			E.Collect_All_Quests()
 			E.Collect_All_Garrison()
 			E:func_Collect_All_UNIVERSALQuestUpdate()
-			E.Collect_All_BfA_Island()
 			E.Collect_All_Reputations()
 			E.Collect_All_Currency()
 			E:func_Update("PLAYER_REGEN_ENABLED")

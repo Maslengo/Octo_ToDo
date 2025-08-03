@@ -12,12 +12,12 @@ function E:func_Universal_09_Shadowlands()
 		reset = "Weekly",
 		desc = "Shadowlands",
 		quests = {
-			{65143},
-			{64531},
-			{61813},
-			{61816},
-			{61815},
-			{61814},
+			{65143, forcedText = {npcID = 182466},}, -- Drov the Ruiner
+			{64531, forcedText = {npcID = 178958},}, -- Mor'geth <Tormentor of the Damned>
+			{61813, forcedText = {npcID = 167524},}, -- Valinor <The Light of Eons>
+			{61816, forcedText = {npcID = 167525},}, -- Mortanis
+			{61815, forcedText = {npcID = 167527},}, -- Oranomonos the Everbranching
+			{61814, forcedText = {npcID = 167526},}, -- Nurgash Muckformed
 		},
 		forcedMaxQuest = 3,
 	},
@@ -28,12 +28,12 @@ function E:func_Universal_09_Shadowlands()
 	{
 
 		showTooltip = true,
-		textleft = "Maw: Wrath of the Jailer",
+		textleft = "Maw: "..L["Wrath of the Jailer"],
 		name_save = "wrathofthejailer",
 		reset = "Weekly",
 		desc = "Shadowlands",
 		quests = {
-			{63414},
+			{63414, forcedText = {text = L["Wrath of the Jailer"]},},
 		},
 		forcedMaxQuest = 1,
 	},
@@ -56,12 +56,12 @@ function E:func_Universal_09_Shadowlands()
 	{
 
 		showTooltip = true,
-		textleft = "Maw: Tormentors",
+		textleft = "Maw: "..L["Tormentors of Torghast"],
 		name_save = "mawtormentor",
 		reset = "Weekly",
 		desc = "Shadowlands",
 		quests = {
-			{63854},
+			{63854, forcedText = {text = L["Tormentors of Torghast"]}},
 		},
 		forcedMaxQuest = 1,
 	},

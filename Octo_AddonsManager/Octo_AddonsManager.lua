@@ -16,7 +16,6 @@ local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSi
 if MainFrameDefaultLines > MainFrameTotalLines then
 	MainFrameDefaultLines = MainFrameTotalLines
 end
-local SFDropDownWeight = 100
 local MaxNumCharacters = 10
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
@@ -577,24 +576,6 @@ function Octo_EventFrame_AddonsManager:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		if Octo_ToDo_DB_Vars.AddonHeight then
-			AddonHeight = Octo_ToDo_DB_Vars.AddonHeight
-		end
-		if Octo_ToDo_DB_Vars.AddonLeftFrameWeight then
-			AddonLeftFrameWeight = Octo_ToDo_DB_Vars.AddonLeftFrameWeight
-		end
-		if Octo_ToDo_DB_Vars.AddonCentralFrameWeight then
-			AddonCentralFrameWeight = Octo_ToDo_DB_Vars.AddonCentralFrameWeight
-		end
-		if Octo_ToDo_DB_Vars.MainFrameDefaultLines then
-			MainFrameDefaultLines = Octo_ToDo_DB_Vars.MainFrameDefaultLines
-		end
-		if Octo_ToDo_DB_Vars.SFDropDownWeight then
-			SFDropDownWeight = Octo_ToDo_DB_Vars.SFDropDownWeight
-		end
-		if Octo_ToDo_DB_Vars.MaxNumCharacters then
-			MaxNumCharacters = Octo_ToDo_DB_Vars.MaxNumCharacters
-		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------

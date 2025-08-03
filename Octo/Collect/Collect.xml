@@ -3,7 +3,6 @@
 
 	<Script file="Collect\Collect_All_BfA_Azerite.lua"/>
 	<Script file="Collect\Collect_All_BfA_Cloaklvl.lua"/>
-	<Script file="Collect\Collect_All_BfA_Island.lua"/>
 	<Script file="Collect\Collect_All_Chromie.lua"/>
 	<Script file="Collect\Collect_All_Covenant.lua"/>
 	<Script file="Collect\Collect_All_Currency.lua"/>

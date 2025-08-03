@@ -8,8 +8,8 @@ function Octo_EventFrame_LoadAddons:OnLoad()
 	local addons = {
 		"!BugGrabber",
 		"BugSack",
-		-- "HidingBar",
-		-- "HidingBar_Options",
+		"HidingBar",
+		"HidingBar_Options",
 		"SpeedyAutoLoot",
 		"AddonMrgl",
 		"SilverDragon",
@@ -21,6 +21,8 @@ function Octo_EventFrame_LoadAddons:OnLoad()
 		"MacroManager",
 		"MacroManagerData",
 		"AdvancedInterfaceOptions",
+		"Rarity",
+		"Rarity_Options",
 	}
 	for _, name in ipairs(addons) do
 		E:func_LoadAddOnFORCED(name)

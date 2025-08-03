@@ -14,15 +14,15 @@ local TestButton1 = CreateFrame("Button", "TestButton1", UIParent, "UIPanelButto
 local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_Main_TestFrame)
 
 -- Константы для настройки интерфейса
-local INDENT_TEST = 4                      -- Отступ для текста
-local LINE_HEIGHT = 20                     -- Высота одной строки
-local HEADER_HEIGHT = LINE_HEIGHT*2        -- Высота заголовка
-local MIN_LINE_WIDTH_LEFT = 200            -- Минимальная ширина левой колонки
-local MIN_LINE_WIDTH_CENT = 90             -- Минимальная ширина центральной колонки
-local LINES_MAX = 100                      -- Максимальное количество строк
-local MAX_FRAME_WIDTH = E.MonitorWidth*.8  -- Максимальная ширина фрейма (80% экрана)
-local MAX_FRAME_HEIGHT = E.MonitorHeight*.8 -- Максимальная высота фрейма (80% экрана)
-Octo_Event_TestFrame.COLUMNS_MAX = 113     -- Максимальное количество колонок
+local INDENT_TEST = 4                      		-- Отступ для текста
+local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT		-- Высота одной строки
+local HEADER_HEIGHT = LINE_HEIGHT*2        		-- Высота заголовка
+local MIN_LINE_WIDTH_LEFT = 200            		-- Минимальная ширина левой колонки
+local MIN_LINE_WIDTH_CENT = 90             		-- Минимальная ширина центральной колонки
+local LINES_MAX = 100                      		-- Максимальное количество строк
+local MAX_FRAME_WIDTH = E.MonitorWidth*.8  		-- Максимальная ширина фрейма (80% экрана)
+local MAX_FRAME_HEIGHT = E.MonitorHeight*.6 	-- Максимальная высота фрейма (60% экрана)
+Octo_Event_TestFrame.COLUMNS_MAX = 113     		-- Максимальное количество колонок
 
 -- Цветовые настройки
 local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
@@ -161,7 +161,7 @@ function Octo_Event_TestFrame:Octo_Frame_initLEFT(frame, node)
 
 	if frameData.colorLEFT then
 		local r, g, b = E:func_hex2rgbNUMBER(frameData.colorLEFT)
-		frame.textureLEFT:SetVertexColor(r, g, b, LEFT_TEXTURE_ALPHA)
+		frame.textureLEFT:SetVertexColor(r, g, b, 0) -- LEFT_TEXTURE_ALPHA
 		frame.textureLEFT:Show()
 	else
 		frame.textureLEFT:Hide()
@@ -458,12 +458,19 @@ local function calculateColumnWidthsLEFT(node, totalLines)
 
 	-- Расчет ширины на основе текста
 	local columnWidthsLEFT = {}
+	local columnHeightsLEFT = {}
 	local sampleFrameLEFT = framesLEFT[1]
 	sampleFrameLEFT.textLEFT:SetText(frameData.textLEFT)
 	columnWidthsLEFT[1] = math.ceil(sampleFrameLEFT.textLEFT:GetStringWidth())
 
+	-- print (sampleFrameLEFT.textLEFT:GetStringHeight())
+
 	return columnWidthsLEFT
 end
+
+
+
+
 
 -- Функция расчета ширины колонок для правой части
 local function calculateColumnWidthsRIGHT(node, totalLines)
@@ -505,8 +512,8 @@ end
 
 -- Функция создания и обновления провайдера данных
 function Octo_Event_TestFrame:CreateDataProvider()
-	Octo_Event_TestFrame.COLUMN_SIZES_LEFT = Octo_Event_TestFrame.COLUMN_SIZES_LEFT or {}
-	Octo_Event_TestFrame.COLUMN_SIZES_RIGHT = Octo_Event_TestFrame.COLUMN_SIZES_RIGHT or {}
+	-- Octo_Event_TestFrame.COLUMN_SIZES_LEFT = Octo_Event_TestFrame.COLUMN_SIZES_LEFT or {}
+	-- Octo_Event_TestFrame.COLUMN_SIZES_RIGHT = Octo_Event_TestFrame.COLUMN_SIZES_RIGHT or {}
 
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
@@ -588,7 +595,10 @@ function Octo_Event_TestFrame:CreateDataProvider()
 
 		-- Расчет общей ширины правой части
 		local totalRightWidth = 0
-		local maxRIGHT = MAX_FRAME_WIDTH - COLUMN_SIZES_LEFT[1]+INDENT_TEST
+		local maxRIGHT = MIN_LINE_WIDTH_LEFT
+		if COLUMN_SIZES_LEFT and COLUMN_SIZES_LEFT[1] then
+			maxRIGHT = MAX_FRAME_WIDTH - COLUMN_SIZES_LEFT[1]+INDENT_TEST
+		end
 
 		for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_Event_TestFrame.COLUMNS_MAX) do
 			if (totalRightWidth + COLUMN_SIZES_RIGHT[i]) <= maxRIGHT then
@@ -608,7 +618,10 @@ function Octo_Event_TestFrame:CreateDataProvider()
 		LINES_MAX = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
 
 		-- Установка размеров фрейма
-		local width = (COLUMN_SIZES_LEFT[1]+INDENT_TEST or MIN_LINE_WIDTH_LEFT) + totalRightWidth
+		local width = MIN_LINE_WIDTH_LEFT
+		if COLUMN_SIZES_LEFT and COLUMN_SIZES_LEFT[1] then
+			width = (COLUMN_SIZES_LEFT[1]+INDENT_TEST or MIN_LINE_WIDTH_LEFT) + totalRightWidth
+		end
 		local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
 
 		Octo_Main_TestFrame:SetSize(width, height)

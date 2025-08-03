@@ -8,7 +8,7 @@ E:func_InitFrame(Octo_MainFrame_ToDo)
 -- Настройки размеров интерфейса
 ----------------------------------------------------------------
 local INDENT_TEST = 4
-local LINE_HEIGHT = 20 -- Высота одной строки AddonHeight
+local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local HEADER_HEIGHT = LINE_HEIGHT*2
 local LINE_WIDTH_LEFT = 200 -- Ширина левой панели AddonLeftFrameWeight
 local LINE_WIDTH_CENT = 110 -- Ширина центральной панели AddonCentralFrameWeight
@@ -468,8 +468,8 @@ function E:func_TODO_CreateDataProvider()
 							local FIRST, SECOND, vivod, colorCENT = ("#"):split(CharInfo.MASLENGO.Reputation[v.id])
 							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
 							zxc.SECOND[CharIndex] = tonumber(SECOND) or 0
-							-- zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_ReputationsDB[v.id].icon)..E:func_reputationName(v.id)
-							zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_Expansions[index].icon, 18, 32)..E:func_reputationName(v.id)
+							zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_ReputationsDB[v.id].icon)..E:func_reputationName(v.id)
+							-- zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_Expansions[index].icon, 18, 32)..E:func_reputationName(v.id)
 							-- if repInfo then
 							-- 	zxc.iconLEFT = repInfo.icon
 							-- else
@@ -507,8 +507,9 @@ function E:func_TODO_CreateDataProvider()
 		for count, CharInfo in ipairs(sortedPlayersTBL) do
 			local curCharFrame = Octo_MainFrame_ToDo.pool:Acquire()
 			curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT", LINE_WIDTH_CENT * (count - 1), -HEADER_HEIGHT)
+			curCharFrame.text = curCharFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			curCharFrame.text:SetAllPoints()
-			curCharFrame.text:SetFontObject(OctoFont11)
+			-- curCharFrame.text:SetFontObject(OctoFont11)
 			curCharFrame.text:SetWordWrap(true)
 			curCharFrame.text:SetJustifyV("MIDDLE")
 			curCharFrame.text:SetJustifyH("CENTER")
@@ -614,9 +615,9 @@ function Octo_EventFrame_ToDo:LoadAssetsAsync()
 end
 -- Обработчик проверки готовности
 function Octo_EventFrame_ToDo:READY_CHECK()
-	if not InCombatLockdown() then
-		PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Other\\Readycheck.ogg", "Master")
-	end
+	if InCombatLockdown() then return end
+	PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Other\\Readycheck.ogg", "Master")
+
 end
 -- Обработчик входа в бой
 function Octo_EventFrame_ToDo:PLAYER_REGEN_DISABLED()
