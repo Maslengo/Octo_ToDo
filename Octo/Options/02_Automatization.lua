@@ -20,141 +20,141 @@ function E:Automatization()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_SellGrey = {
+			Config_Auto_SellGrey = {
 				type = "toggle",
 				name = L["Auto Sell Grey"], -- "AUTO "..SELL_ALL_JUNK_ITEMS_EXCLUDE_HEADER, --
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_SellGrey
+					return Octo_ToDo_DB_Vars.Config_Auto_SellGrey
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_SellGrey = value
+					Octo_ToDo_DB_Vars.Config_Auto_SellGrey = value
 				end,
 				width = E.FULL_WIDTH/2, -- "full",
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_Repair = {
+			Config_Auto_Repair = {
 				type = "toggle",
 				name = L["Auto Repair"], -- "AUTO "..REPAIR_ALL_ITEMS, --
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_Repair
+					return Octo_ToDo_DB_Vars.Config_Auto_Repair
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_Repair = value
+					Octo_ToDo_DB_Vars.Config_Auto_Repair = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_InputDelete = {
+			Config_Auto_InputDelete = {
 				type = "toggle",
 				name = L["Auto Input Delete"], -- "AUTO "..DELETE, --
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_InputDelete
+					return Octo_ToDo_DB_Vars.Config_Auto_InputDelete
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_InputDelete = value
+					Octo_ToDo_DB_Vars.Config_Auto_InputDelete = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_OpenItems = {
+			Config_Auto_OpenItems = {
 				type = "toggle",
 				name = L["Auto Open Items"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_OpenItems
+					return Octo_ToDo_DB_Vars.Config_Auto_OpenItems
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_OpenItems = value
+					Octo_ToDo_DB_Vars.Config_Auto_OpenItems = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_Gossip = {
+			Config_Auto_Gossip = {
 				type = "toggle",
 				name = L["Auto Gossip"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_Gossip
+					return Octo_ToDo_DB_Vars.Config_Auto_Gossip
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_Gossip = value
+					Octo_ToDo_DB_Vars.Config_Auto_Gossip = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_TurnQuests = {
+			Config_Auto_TurnQuests = {
 				type = "toggle",
 				name = L["Auto Turn Quests"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_TurnQuests
+					return Octo_ToDo_DB_Vars.Config_Auto_TurnQuests
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_TurnQuests = value
+					Octo_ToDo_DB_Vars.Config_Auto_TurnQuests = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_ChatClearing = {
+			Config_Auto_ChatClearing = {
 				type = "toggle",
 				name = L["Auto Clear Chat"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_ChatClearing
+					return Octo_ToDo_DB_Vars.Config_Auto_ChatClearing
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_ChatClearing = value
+					Octo_ToDo_DB_Vars.Config_Auto_ChatClearing = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_Screenshot = {
+			Config_Auto_Screenshot = {
 				type = "toggle",
 				name = L["Auto Screenshot"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_Screenshot
+					return Octo_ToDo_DB_Vars.Config_Auto_Screenshot
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_Screenshot = value
+					Octo_ToDo_DB_Vars.Config_Auto_Screenshot = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_CinematicCanceler = {
+			Config_Auto_CinematicCanceler = {
 				type = "toggle",
 				name = L["Auto Cinematic Canceler"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_CinematicCanceler
+					return Octo_ToDo_DB_Vars.Config_Auto_CinematicCanceler
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_CinematicCanceler = value
+					Octo_ToDo_DB_Vars.Config_Auto_CinematicCanceler = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Auto_CinematicFastSkip = {
+			Config_Auto_CinematicFastSkip = {
 				type = "toggle",
 				name = "Cinematic Fast Skip (ESC/Space/Enter)",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Auto_CinematicFastSkip
+					return Octo_ToDo_DB_Vars.Config_Auto_CinematicFastSkip
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Auto_CinematicFastSkip = value
+					Octo_ToDo_DB_Vars.Config_Auto_CinematicFastSkip = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),

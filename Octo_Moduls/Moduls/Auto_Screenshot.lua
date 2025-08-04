@@ -5,7 +5,7 @@ E = _G.OctoEngine
 
 
 tinsert(E.Modules, function()
-	if not Octo_ToDo_DB_Vars.Auto_Screenshot then return end
+	if not Octo_ToDo_DB_Vars.Config_Auto_Screenshot then return end
 
 	-- Создаем таблицу сообщений для разных событий
 	local EVENT_MESSAGES = {

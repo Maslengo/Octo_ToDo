@@ -156,7 +156,7 @@ function OctoDebugFunctions_EventFrame:Create_OctoDebugFunctions()
 	OctoDebugFunctions:SetScript("OnShow", TooltipOnShow)
 	OctoDebugFunctions:SetPoint("CENTER")
 	OctoDebugFunctions:SetSize(1, LINE_HEIGHT*1)
-	OctoDebugFunctions:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
+	OctoDebugFunctions:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	-- OctoDebugFunctions:SetFrameStrata("BACKGROUND")
 	OctoDebugFunctions:SetBackdrop(E.menuBackdrop)
 	OctoDebugFunctions:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA) -- E.backgroundColorA
@@ -283,7 +283,7 @@ local function Toggle_OctoDebugFunctions()
 	OctoDebugFunctions:SetShown(not OctoDebugFunctions:IsShown())
 end
 function OctoDebugFunctions_EventFrame:CreateTestButton3()
-	TestButton3:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
+	TestButton3:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	TestButton3:SetPoint("TOPLEFT", 128, -384)
 	TestButton3:SetSize(256, 32)
 	TestButton3:SetText("OctoDebugFunctions")
@@ -292,7 +292,7 @@ function OctoDebugFunctions_EventFrame:CreateTestButton3()
 	-- Обработчики перемещения фрейма
 	TestButton3:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				TestButton3:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+				TestButton3:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 				TestButton3:StartMoving()
 			end
 	end)

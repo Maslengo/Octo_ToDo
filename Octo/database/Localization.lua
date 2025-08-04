@@ -89,10 +89,7 @@ if L then
 	L["Abandon"] = true
 	-- Addon settings
 	L["AddonHeight"] = true
-	L["AddonLeftFrameWeight"] = true
-	L["AddonCentralFrameWeight"] = true
-	L["MainFrameDefaultLines"] = true
-	L["MaxNumCharacters"] = true
+	L["Config_MainFrameDefaultLines"] = true
 	L["fullName"] = true
 	L["showIcons"] = true
 	L["showIconsQuestionMark"] = true
@@ -216,7 +213,6 @@ if L then
 	L["Faction Assault"] = true
 	L["Legion Invasion"] = true
 	-- Functions/features
-	L["UIErrorsFramePosition"] = true
 	L["Functions"] = true
 	L["Modules"] = true
 	L["DisplaySettings"] = true
@@ -351,10 +347,7 @@ if L then
 	L["Abandon"] = "Отменено: "
 	-- Addon settings
 	L["AddonHeight"] = "Высота строк"
-	L["AddonLeftFrameWeight"] = "Ширина левого"
-	L["AddonCentralFrameWeight"] = "Ширина строк"
-	L["MainFrameDefaultLines"] = "Количество строк"
-	L["MaxNumCharacters"] = "Количество персонажей"
+	L["Config_MainFrameDefaultLines"] = "Количество строк"
 	L["fullName"] = "Полное название"
 	L["showIcons"] = "Показывать иконку"
 	L["showIconsQuestionMark"] = "Показывать иконку со знаком вопроса"
@@ -478,7 +471,6 @@ if L then
 	L["Faction Assault"] = "Вторжение Фракций"
 	L["Legion Invasion"] = "Вторжение Легиона"
 	-- Functions/features
-	L["UIErrorsFramePosition"] = "Смена позиции фрейма ошибок"
 	L["Functions"] = "Функции"
 	L["Modules"] = "Модули"
 	L["DisplaySettings"] = "Настройки отображения"

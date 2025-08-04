@@ -231,7 +231,7 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	-- Обработчики перемещения фрейма
 	frame:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				frame:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+				frame:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 				frame:StartMoving()
 			end
 	end)
@@ -260,7 +260,7 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	frame.resize:SetScript("OnDragStart", function(self)
 			isResizing = true
 			self:GetParent():StartSizing("BOTTOMRIGHT", true)
-			self:GetParent():SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+			self:GetParent():SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 	end)
 	frame.resize:SetScript("OnDragStop", function(self)
 			isResizing = false

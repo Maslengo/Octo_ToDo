@@ -7,12 +7,11 @@ E:func_InitFrame(Octo_MainFrame_ToDo)
 ----------------------------------------------------------------
 -- Настройки размеров интерфейса
 ----------------------------------------------------------------
-local INDENT_TEST = 4
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local HEADER_HEIGHT = LINE_HEIGHT*2
-local LINE_WIDTH_LEFT = 200 -- Ширина левой панели AddonLeftFrameWeight
-local LINE_WIDTH_CENT = 110 -- Ширина центральной панели AddonCentralFrameWeight
-local LINES_MAX = 30 -- Количество строк по умолчанию MainFrameDefaultLines
+local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT -- Ширина левой панели
+local LINE_WIDTH_RIGHT = E.GLOBAL_LINE_WIDTH_RIGHT
+local LINES_MAX = 30 -- Количество строк по умолчанию Config_MainFrameDefaultLines
 -- Автоматический расчет максимального количества строк
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT)*.7))
 local COLUMNS_MAX = 10 -- Максимальное количество отображаемых персонажей
@@ -132,9 +131,9 @@ local func_OnAcquiredCENT do
 						local f = CreateFrame("BUTTON", "frame"..key, frame)
 						f:SetPropagateMouseClicks(true)
 						f:SetPropagateMouseMotion(true)
-						f:SetSize(LINE_WIDTH_CENT, LINE_HEIGHT)
+						f:SetSize(LINE_WIDTH_RIGHT, LINE_HEIGHT)
 						f:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
-						f:SetPoint("TOPLEFT", frame, "TOPLEFT", LINE_WIDTH_CENT*(key-1), 0)
+						f:SetPoint("TOPLEFT", frame, "TOPLEFT", LINE_WIDTH_RIGHT*(key-1), 0)
 						f:RegisterForClicks("LeftButtonUp")
 						-- Текстура для текущего персонажа
 						f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
@@ -228,7 +227,7 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			if frameData.colorCENT[i] then
 				local r1, g1, b1 = E:func_hex2rgbNUMBER(frameData.colorCENT[i])
 				if not frameData.isReputations then
-					secondFrame.ReputTextureAndBG:SetWidth(LINE_WIDTH_CENT)
+					secondFrame.ReputTextureAndBG:SetWidth(LINE_WIDTH_RIGHT)
 					secondFrame.ReputTextureAndBG:Show()
 					secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3)
 				else
@@ -239,10 +238,10 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			-- Особый случай для репутации
 			if frameData.isReputations and FIRST ~= 0 then
 				if FIRST == SECOND then
-					secondFrame.ReputTextureAndBG:SetWidth(LINE_WIDTH_CENT)
+					secondFrame.ReputTextureAndBG:SetWidth(LINE_WIDTH_RIGHT)
 					secondFrame.ReputTextureAndBG:Show()
 				elseif FIRST >= 1 then
-					secondFrame.ReputTextureAndBG:SetWidth(LINE_WIDTH_CENT/SECOND*FIRST)
+					secondFrame.ReputTextureAndBG:SetWidth(LINE_WIDTH_RIGHT/SECOND*FIRST)
 					secondFrame.ReputTextureAndBG:Show()
 				end
 			end
@@ -265,10 +264,10 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	end)
 	-- Рассчитываем размеры фрейма
 	local NumPlayers = math_min(E:func_NumPlayers(), COLUMNS_MAX)
-	Octo_MainFrame_ToDo:SetSize(LINE_WIDTH_LEFT + LINE_WIDTH_CENT * NumPlayers, LINE_HEIGHT * LINES_MAX)
+	Octo_MainFrame_ToDo:SetSize(LINE_WIDTH_LEFT + LINE_WIDTH_RIGHT * NumPlayers, LINE_HEIGHT * LINES_MAX)
 	-- Настройки поведения фрейма
-	Octo_MainFrame_ToDo:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
-	Octo_MainFrame_ToDo:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
+	Octo_MainFrame_ToDo:SetDontSavePosition(Octo_ToDo_DB_Vars.Config_DontSavePosition)
+	Octo_MainFrame_ToDo:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame_ToDo:SetFrameStrata("HIGH")
 	-- Создаем скролл-фрейм
 	local barPanelScroll = CreateFrame("ScrollFrame", nil, Octo_MainFrame_ToDo)
@@ -355,7 +354,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 	-- Обработчики перемещения фрейма
 	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+				Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 				Octo_MainFrame_ToDo:StartMoving()
 			end
 	end)
@@ -373,7 +372,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_ToDo()
 		self:ClearAllPoints()
 	end
 	local function initFunc(self)
-		self:SetSize(LINE_WIDTH_CENT, HEADER_HEIGHT)
+		self:SetSize(LINE_WIDTH_RIGHT, HEADER_HEIGHT)
 		self.text = self:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 		self.text:SetPoint("CENTER")
 		self.text:SetFontObject(OctoFont11)
@@ -498,15 +497,15 @@ function E:func_TODO_CreateDataProvider()
 		Octo_MainFrame_ToDo.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 		Octo_MainFrame_ToDo.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 		-- Обновляем размеры фрейма
-		local width = LINE_WIDTH_LEFT + LINE_WIDTH_CENT * NumPlayers
+		local width = LINE_WIDTH_LEFT + LINE_WIDTH_RIGHT * NumPlayers
 		local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
 		Octo_MainFrame_ToDo:SetSize(width, height)
-		Octo_MainFrame_ToDo.childCENT:SetSize(LINE_WIDTH_CENT * E:func_NumPlayers(), height)
+		Octo_MainFrame_ToDo.childCENT:SetSize(LINE_WIDTH_RIGHT * E:func_NumPlayers(), height)
 		-- Обновляем фреймы персонажей
 		Octo_MainFrame_ToDo.pool:ReleaseAll()
 		for count, CharInfo in ipairs(sortedPlayersTBL) do
 			local curCharFrame = Octo_MainFrame_ToDo.pool:Acquire()
-			curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT", LINE_WIDTH_CENT * (count - 1), -HEADER_HEIGHT)
+			curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT", LINE_WIDTH_RIGHT * (count - 1), -HEADER_HEIGHT)
 			curCharFrame.text = curCharFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			curCharFrame.text:SetAllPoints()
 			-- curCharFrame.text:SetFontObject(OctoFont11)
@@ -561,19 +560,13 @@ function Octo_EventFrame_ToDo:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
-	-- Загружаем настройки или устанавливаем значения по умолчанию
-	LINE_HEIGHT = Octo_ToDo_DB_Vars.AddonHeight or LINE_HEIGHT
-	LINE_WIDTH_LEFT = Octo_ToDo_DB_Vars.AddonLeftFrameWeight or LINE_WIDTH_LEFT
-	LINE_WIDTH_CENT = Octo_ToDo_DB_Vars.LINE_WIDTH_CENT or LINE_WIDTH_CENT
-	LINES_MAX = Octo_ToDo_DB_Vars.AddonCentralFrameWeight or LINES_MAX
 
 
 
 
 
 	-- Рассчитываем максимальное количество персонажей
-	local maxNum = math.floor((E.MonitorWidth - LINE_WIDTH_LEFT) / LINE_WIDTH_CENT) - 1
-	COLUMNS_MAX = Octo_ToDo_DB_Vars.MaxNumCharacters and math_min(Octo_ToDo_DB_Vars.MaxNumCharacters, maxNum) or COLUMNS_MAX
+	local maxNum = math.floor((E.MonitorWidth - LINE_WIDTH_LEFT) / LINE_WIDTH_RIGHT) - 1
 	-- Объединяем таблицы квестов и предметов
 	local function ConcatAtStart()
 		E:func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
@@ -587,8 +580,6 @@ end
 function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
-	-- Устанавливаем масштаб меню игры
-	GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.GameMenuFrameScale or 1)
 	-- Инициализируем основные системы
 	E:InitOptions()
 	self:Octo_Create_MainFrame_ToDo()

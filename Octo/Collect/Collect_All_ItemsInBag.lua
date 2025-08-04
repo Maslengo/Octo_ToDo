@@ -15,7 +15,7 @@ function E.Collect_All_ItemsInBag()
 	local usedSlots, totalSlots, Possible_Anima, Possible_CatalogedResearch = 0, 0, 0, 0
 	local keystoneFound = false
 	local hasKeystone = false
-	for i, itemID in ipairs(E.KeyStoneTBL) do
+	for _, itemID in ipairs(E.KeyStoneTBL) do
 		if E:func_GetItemCount(itemID, false, false, false, false) ~= 0 then
 			hasKeystone = true
 			break

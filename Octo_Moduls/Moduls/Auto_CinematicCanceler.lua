@@ -2,8 +2,8 @@ local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 
 
-local Octo_Event_Auto_CinematicCanceler = CreateFrame("FRAME")
-Octo_Event_Auto_CinematicCanceler:Hide()
+local Octo_Event_Config_Auto_CinematicCanceler = CreateFrame("FRAME")
+Octo_Event_Config_Auto_CinematicCanceler:Hide()
 
 ----------------------------------------------------------------
 -- Регистрация событий
@@ -12,14 +12,14 @@ local MyEventsTable = {
 	"CINEMATIC_START",
 	"PLAY_MOVIE",
 }
-E:func_RegisterMyEventsToFrames(Octo_Event_Auto_CinematicCanceler, MyEventsTable)
-function Octo_Event_Auto_CinematicCanceler:CINEMATIC_START()
-	if Octo_ToDo_DB_Vars.Auto_CinematicCanceler then
+E:func_RegisterMyEventsToFrames(Octo_Event_Config_Auto_CinematicCanceler, MyEventsTable)
+function Octo_Event_Config_Auto_CinematicCanceler:CINEMATIC_START()
+	if Octo_ToDo_DB_Vars.Config_Auto_CinematicCanceler then
 		CinematicFrame_CancelCinematic()
 	end
 end
 
-function Octo_Event_Auto_CinematicCanceler:PLAY_MOVIE(...) -- movieID
+function Octo_Event_Config_Auto_CinematicCanceler:PLAY_MOVIE(...) -- movieID
 	Octo_Cache_DB.watchedMovies[...] = true
 end
 
@@ -54,7 +54,7 @@ tinsert(E.Modules, function()
 			end
 		end
 		-- Fast Skip functionality
-		if Octo_ToDo_DB_Vars.Auto_CinematicFastSkip then
+		if Octo_ToDo_DB_Vars.Config_Auto_CinematicFastSkip then
 			CinematicFrame:HookScript("OnKeyDown", function(self, key)
 					if key == "ESCAPE" then
 						HandleFrameAction(CinematicFrame, "closeDialog", "CloseDialogConfirmButton")
@@ -64,7 +64,7 @@ tinsert(E.Modules, function()
 			MovieFrame:HookScript("OnKeyUp", OnKeyUp)
 		end
 		-- Auto Canceler functionality
-		if Octo_ToDo_DB_Vars.Auto_CinematicCanceler then
+		if Octo_ToDo_DB_Vars.Config_Auto_CinematicCanceler then
 			CinematicFrame:HookScript("OnShow", OnFrameShow)
 			MovieFrame:HookScript("OnShow", OnFrameShow)
 		end

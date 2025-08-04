@@ -259,7 +259,8 @@
 		"CreateIndexRangeDataProvider",
 		"SecondsFormatterMixin",
 		"SecondsFormatter",
-		"NEVER"
+		"NEVER",
+		"BATTLE_PET_SOURCE_2"
 	],
 	"Lua.type.weakUnionCheck": true
 }

@@ -26,14 +26,15 @@ end)
 --     local menu = LibSFDropDown:GetMenu(level)
 --     DropDown:ddToggle(level, value, menu.anchorFrame)
 -- end
-local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT -- Octo_ToDo_DB_Vars.AddonHeight or 20
-local LINE_WIDTH = 200 -- Octo_ToDo_DB_Vars.AddonLeftFrameWeight or 200
+local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
+local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT/2
+local ddMenuButtonHeight = E.ddMenuButtonHeight
 
 local function CreateBaseDropDown(frame, hex, providerfunc)
 	-- local DropDown = CreateFrame("Button", nil, frame, "SecureActionButtonTemplate, BackDropTemplate")
 	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
 
-	DropDown:SetSize(LINE_WIDTH, LINE_HEIGHT)
+	DropDown:SetSize(LINE_WIDTH_LEFT, LINE_HEIGHT)
 	E:func_SetBackdrop(DropDown)
 
 	-- Стрелка раскрытия меню
@@ -63,7 +64,7 @@ local function CreateBaseDropDown(frame, hex, providerfunc)
 	end)
 
 	DropDown:ddSetOpenMenuUp(true)
-	DropDown:ddSetMenuButtonHeight(E.ddMenuButtonHeight)
+	DropDown:ddSetMenuButtonHeight(ddMenuButtonHeight)
 
 	return DropDown
 end
@@ -343,7 +344,7 @@ function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					return Octo_ToDo_DB_Vars.ExpansionToShow[btn.value]
 				end
 				info.func = selectFunctionExpansion
-				info.iconInfo = {tSizeX = E.ddMenuButtonHeight*2, tSizeY = E.ddMenuButtonHeight}
+				info.iconInfo = {tSizeX = ddMenuButtonHeight*2, tSizeY = ddMenuButtonHeight}
 
 				-- Добавляем кнопки для каждого дополнения (в обратном порядке)
 				for expansionID = #E.OctoTable_Expansions, 1, -1 do
@@ -406,7 +407,7 @@ function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					{text = TRADE_SKILLS, var = "Professions"},
 					{text = BONUS_ROLL_REWARD_MONEY, var = "Gold"},
 					{text = STAT_AVERAGE_ITEM_LEVEL, var = "ItemLevel"},
-					{text = L["Was online"], var = "WasOnline"},
+					{text = L["Was online"], var = "Config_WasOnline"},
 				}
 
 				for _, btn in ipairs(filterButtons) do
@@ -505,9 +506,9 @@ function E:func_Create_DDframe_Achievements(frame, hex, providerfunc)
 				info.isNotRadio = true
 				info.text = "Показывать завершенные"
 				info.hasArrow = nil
-				info.checked = Octo_Achievements_DB.AchievementShowCompleted
+				info.checked = Octo_Achievements_DB.Config_AchievementShowCompleted
 				info.func = function(_, _, _, checked)
-					Octo_Achievements_DB.AchievementShowCompleted = checked
+					Octo_Achievements_DB.Config_AchievementShowCompleted = checked
 					providerfunc()
 				end
 				self:ddAddButton(info, level)

@@ -185,7 +185,7 @@ function ItemsUsable_EventFrame:Create_ItemsUsable()
 	ItemsUsable:SetScript("OnShow", TooltipOnShow)
 	ItemsUsable:SetPoint("CENTER")
 	ItemsUsable:SetSize(1, LINE_HEIGHT*1)
-	ItemsUsable:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
+	ItemsUsable:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	-- ItemsUsable:SetFrameStrata("BACKGROUND")
 	ItemsUsable:SetBackdrop(E.menuBackdrop)
 	ItemsUsable:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA) -- E.backgroundColorA
@@ -359,7 +359,7 @@ local function Toggle_ItemsUsable()
 	ItemsUsable:SetShown(not ItemsUsable:IsShown())
 end
 function ItemsUsable_EventFrame:CreateTestButton1()
-	TestButton1:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
+	TestButton1:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	TestButton1:SetPoint("TOPLEFT", 128, -128)
 	TestButton1:SetSize(128, 32)
 	TestButton1:SetText("Toggle_ItemsUsable")
@@ -368,7 +368,7 @@ function ItemsUsable_EventFrame:CreateTestButton1()
 	-- Обработчики перемещения фрейма
 	TestButton1:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				TestButton1:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+				TestButton1:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 				TestButton1:StartMoving()
 			end
 	end)

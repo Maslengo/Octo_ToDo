@@ -10,67 +10,6 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0") -- Для медиа-рес
 local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронной загрузки
 
 ----------------------------------------------------------------
--- function Octo_EventFrame_WTF:func_CurrencyCaching()
-	-- -- for CurrencyID = 4000, 1, -1 do
-	-- for CurrencyID = 1, 4000 do
-	-- 	-- local info = GetCurrencyInfo(currencyID) or false
-	-- 	-- if info and info.name and info.name ~= "" then
-	-- 	-- 	local name = info.name
-
-
-	-- 	local name = C_AccountStore.GetCurrencyInfo(CurrencyID).name
-	-- 	if name and name ~= "" then
-
-
-	-- 		if not Octo_Cache_DB.AllCurrencies[CurrencyID] or not Octo_Cache_DB.AllCurrencies[CurrencyID][E.curLocaleLang] then
-	-- 			-- print(E.Green_Color.."CurrencyID|r", E.Red_Color..CurrencyID.."|r", name)
-	-- 			Octo_Cache_DB.AllCurrencies[CurrencyID] = Octo_Cache_DB.AllCurrencies[CurrencyID] or {}
-	-- 			Octo_Cache_DB.AllCurrencies[CurrencyID][E.curLocaleLang] = name
-	-- 		end
-	-- 	end
-	-- end
--- end
-
--- function Octo_EventFrame_WTF:func_ReputationsCaching()
-
--- 	-- for reputationID = 4000, 1, -1 do
--- 	for reputationID = 1, 4000 do
--- 		local repNAME = E:func_reputationName(reputationID)
--- 		if repNAME ~= UNKNOWN and repNAME ~= "" then
--- 			if not Octo_Cache_DB.AllReputations[reputationID] or not Octo_Cache_DB.AllReputations[reputationID][E.curLocaleLang] then
--- 				-- print(E.Green_Color.."reputationID|r", E.Red_Color..reputationID.."|r", repNAME)
-
--- 				Octo_Cache_DB.AllReputations[reputationID] = Octo_Cache_DB.AllReputations[reputationID] or {}
--- 				Octo_Cache_DB.AllReputations[reputationID][E.curLocaleLang] = repNAME
-
--- 				-- Получаем и кэшируем флаги типов
--- 				local isSimple = C_Reputation.GetFactionDataByID(reputationID) ~= nil
--- 				local isParagon = C_Reputation.IsFactionParagon(reputationID)
--- 				local friendData = C_GossipInfo.GetFriendshipReputation(reputationID)
--- 				local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
--- 				local isMajor = C_Reputation.IsMajorFaction(reputationID)
-
--- 				local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID)
--- 				if isAccountWide then
--- 					Octo_Cache_DB.AllReputations[reputationID].isAccountWide = true
--- 				end
-
--- 				local vivod_type = UNKNOWN
--- 				if isParagon then
--- 					vivod_type = "isParagon"
--- 				elseif isMajor then
--- 					vivod_type = "isMajor"
--- 				elseif isFriend then
--- 					vivod_type = "isFriend"
--- 				elseif isSimple then
--- 					vivod_type = "isSimple"
--- 				end
-
--- 				Octo_Cache_DB.AllReputations[reputationID].repType = vivod_type
--- 			end
--- 		end
--- 	end
--- end
 function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 	----------------------------------------------------------------
 	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
@@ -260,8 +199,8 @@ function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
 		for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 			if CharInfo.PlayerData then
 				if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer and
-				   CharInfo.PlayerData.Name == currentName and
-				   CharInfo.PlayerData.curServer == currentRealm then
+					CharInfo.PlayerData.Name == currentName and
+					CharInfo.PlayerData.curServer == currentRealm then
 
 					if GUID ~= currentGUID then
 						print(L["Removing duplicate: "], CharInfo.PlayerData.Name.."-"..CharInfo.PlayerData.curServer, "GUID:", GUID)
@@ -319,39 +258,48 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	local currentDateTime = date("%d.%m.%Y %H:%M:%S")
 	-- Стандартные значения для данных игрока
 	local defaults = {
-		className = E.className, -- Имя класса
-		classFilename = E.classFilename, -- Техническое имя класса
-		GUID = "curGUID", -- Идентификатор персонажа
-		classColor = E.classColor, -- Цвет класса
-		curServer = E.curServer, -- Текущий сервер
-		guildName = "", -- Название гильдии
-		guildRankName = "", -- Ранг в гильдии
-		curServerShort = E:func_CurServerShort(E.curServer), -- Короткое имя сервера
-		Faction = "Horde", -- Фракция
 		BattleTag = E.BattleTag, -- BattleTag
 		BattleTagLocal = E.BattleTagLocal, -- Локальный BattleTag
-		buildVersion = E.buildVersion, -- Версия сборки игры
-		buildNumber = E.buildNumber, -- Номер сборки
 		buildDate = E.buildDate, -- Дата сборки
-		interfaceVersion = E.interfaceVersion, -- Версия интерфейса
-		currentTier = E.currentTier, -- Текущий игровой тир
-		Name = "WTF:"..E.curCharName, -- Имя персонажа
+		buildNumber = E.buildNumber, -- Номер сборки
+		buildVersion = E.buildVersion, -- Версия сборки игры
+		classColor = E.classColor, -- Цвет класса
 		classColorHex = E.classColorHexCurrent, -- Цвет класса в HEX
+		className = E.className, -- Имя класса
+		classFilename = E.classFilename, -- Техническое имя класса
+		CurrentRegion = E:func_GetCurrentRegion(),
+		CurrentRegionName = E:func_GetCurrentRegionName(),
+		curServer = E.curServer, -- Текущий сервер
+		curServerShort = E:func_CurServerShort(E.curServer), -- Короткое имя сервера
+		currentTier = E.currentTier, -- Текущий игровой тир
+		Faction = "Horde", -- Фракция
+		GUID = "curGUID", -- Идентификатор персонажа
+		guildName = "", -- Название гильдии
+		guildRankName = "", -- Ранг в гильдии
+		interfaceVersion = E.interfaceVersion, -- Версия интерфейса
+		isShownPLAYER = true, -- Флаг отображения
 		loginDate = currentDateTime, -- Дата входа
 		loginDay = currentDate, -- День входа
 		loginHour = currentTime, -- Время входа
-		isShownPLAYER = true, -- Флаг отображения
-		CurrentRegion = E:func_GetCurrentRegion(),
-		CurrentRegionName = E:func_GetCurrentRegionName(),
+		Name = "WTF:"..E.curCharName, -- Имя персонажа
 		PlayerDurability = 100,
 	}
 	-- Стандартные значения для MASLENGO таблицы
 	local MASLENGO_DEFAULTS = {
-		Reputation = {}, -- Данные репутации
 		Currency = {}, -- Данные валют
-		UniversalQuest = {}, -- Универсальные квесты
-		OctoTable_QuestID = {}, -- Квесты по ID
+		CovenantAndAnima = { -- Ковенанты и анима
+			[1] = {},
+			[2] = {},
+			[3] = {},
+			[4] = {},
+		},
+		GARRISON = {},
+		GreatVault = {}, -- Данные Великого Хранилища
+		ItemsInBag = {}, -- Предметы в сумках
+		journalInstance = {}, -- Инстансы из журнала
+		LFGInstance = {}, -- Данные LFG
 		ListOfQuests = {}, -- Список квестов
+		OctoTable_QuestID = {}, -- Квесты по ID
 		professions = { -- Профессии
 			[1] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
 			[2] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
@@ -359,23 +307,15 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			[4] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
 			[5] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0}
 		},
-		ItemsInBag = {}, -- Предметы в сумках
-		GreatVault = {}, -- Данные Великого Хранилища
-		CovenantAndAnima = { -- Ковенанты и анима
-			[1] = {},
-			[2] = {},
-			[3] = {},
-			[4] = {},
-		},
-		journalInstance = {}, -- Инстансы из журнала
+		Reputation = {}, -- Данные репутации
 		SavedWorldBoss = {}, -- Сохраненные мировые боссы
-		LFGInstance = {}, -- Данные LFG
+		UniversalQuest = {}, -- Универсальные квесты
 	}
 	-- Стандартные значения для данных игрока
 	local GARRISON_default = {
-		lastCacheTime = 0,
 		cacheSize = 0,
 		curRes = 0,
+		lastCacheTime = 0,
 	}
 	-- Стандартные значения для GARRISON таблицы
 	local GARRISON_DEFAULTS = {
@@ -396,29 +336,30 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		local MASLENGO = CharInfo.MASLENGO
 		E:func_InitSubTable(CharInfo, "PlayerData")
 		local PlayerData = CharInfo.PlayerData
-		E:func_InitSubTable(CharInfo, "GARRISON")
-		local GARRISON = CharInfo.GARRISON
+
+
+
 		-- Заполняем стандартные значения
 		for k, v in next, (defaults) do
 			E:func_InitField(PlayerData, k, v)
 		end
-		-- Заполняем стандартные значения
-		for k, v in next, (GARRISON_default) do
-			E:func_InitField(GARRISON, k, v)
-		end
-		-- Устанавливаем временные метки
-		PlayerData.time = PlayerData.time or PlayerData.tmstp_Daily or ServerTime
-		PlayerData.MoneyOnLogin = PlayerData.MoneyOnLogin or PlayerData.Money
 		-- Заполняем MASLENGO значениями по умолчанию
 		for k, v in next, (MASLENGO_DEFAULTS) do
 			if MASLENGO[k] == nil then
 				MASLENGO[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
+		-- Заполняем стандартные значения
+		for k, v in next, (GARRISON_default) do
+			E:func_InitField(MASLENGO.GARRISON, k, v)
+		end
+		-- Устанавливаем временные метки
+		PlayerData.time = PlayerData.time or PlayerData.tmstp_Daily or ServerTime
+		PlayerData.MoneyOnLogin = PlayerData.MoneyOnLogin or PlayerData.Money
 		-- Заполняем GARRISON значениями по умолчанию
 		for k, v in next, (GARRISON_DEFAULTS) do
-			if GARRISON[k] == nil then
-				GARRISON[k] = type(v) == "table" and CopyTable(v) or v
+			if MASLENGO.GARRISON[k] == nil then
+				MASLENGO.GARRISON[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
 		-- Инициализируем данные репутации
@@ -438,39 +379,17 @@ end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars = E:func_InitTable(Octo_ToDo_DB_Vars)
-	-- Настройки размеров интерфейса
-	local uiDefaults = {
-		AddonHeight = 20, -- Высота аддона
-		AddonLeftFrameWeight = 256, -- Ширина левой панели
-		AddonCentralFrameWeight = 128, -- Ширина центральной панели
-		MainFrameDefaultLines = 30, -- Количество строк по умолчанию
-		MaxNumCharacters = 10, -- Макс. число отображаемых персонажей
-		FrameScale = 1, -- Масштаб фрейма
-		GameMenuFrameScale = 1, -- Масштаб меню игры
-		AlphaOnDrag = 0.8, -- Альфа при перетаскивании
-		LevelToShow = 1, -- Минимальный уровень для отображения
-		LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
-		prefix = 1, -- Префикс
-		fontSIZE = 12, -- Префикс
-		DontSavePosition = true, -- Не сохранять позицию
-		ClampedToScreen = false, -- Не привязывать к границам экрана
-	}
-	-- Устанавливаем значения по умолчанию
-	for k, v in next, (uiDefaults) do
-		E:func_InitField(Octo_ToDo_DB_Vars, k, v)
-	end
 	-- Настройки отладки
 	local debugDefaults = {
-		DebugIDs = false, -- Отладка ID
-		DebugInfo = false, -- Отладка информации
+		addonFontSize = 11,
+		DebugButton = false, -- Отладка кнопок
 		DebugEvent = false, -- Отладка событий
 		DebugFunction = false, -- Отладка функций
-		DebugButton = false, -- Отладка кнопок
+		DebugIDs = false, -- Отладка ID
+		DebugInfo = false, -- Отладка информации
 		editorFontSize = 12,
 		editorTabSpaces = 4,
 		editorTheme = "Twilight",
-
-		addonFontSize = 11,
 	}
 	for k, v in next, (debugDefaults) do
 		E:func_InitField(Octo_ToDo_DB_Vars, k, v)
@@ -478,91 +397,83 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	end
 	-- Настройки функций аддона
 	local featureDefaults = {
-		Auto_SellGrey = true, -- Автопродажа серых предметов
-		Auto_Repair = true, -- Авторемонт
-		Auto_InputDelete = true, -- Автоочистка ввода
-		Auto_OpenItems = true, -- Автооткрытие предметов
-		Auto_Gossip = true, -- Автопропуск диалогов
-		Auto_TurnQuests = true, -- Автосдача квестов
-		Auto_ChatClearing = false, -- Автоочистка чата
-		Auto_Screenshot = true, -- Автоскриншоты
-		Auto_CinematicCanceler = true, -- Пропуск заставок
-		Auto_CinematicFastSkip = true, -- Быстрый пропуск заставок
-		Hide_CheckListText = true, -- Скрыть текст чеклиста
-		Hide_SubscriptionInterstitialFrame = true, -- Скрыть фрейм подписки
-		Hide_ActionStatusText = true, -- Скрыть текст статуса действий
-		Hide_SecondaryStatusTrackingBarContainer = true, -- Скрыть вторую полосу отслеживания
-		Hide_MainStatusTrackingBarContainer = true, -- Скрыть главную полосу отслеживания
-		Hide_WeeklyRewardExpirationWarningDialog = true, -- Скрыть предупреждение о наградах
-		Hide_MajorFactionsRenownToast = true, -- Скрыть тост репутации фракций
-		Hide_UIWidgetTopCenterContainerFrame = true, -- Скрыть верхний центр виджетов
-		Hide_BossBanner = true, -- Скрыть баннер босса
-		Hide_RaidWarningFrame = true, -- Скрыть предупреждения рейда
-		Hide_RaidBossEmoteFrame = true, -- Скрыть эмоции боссов
-		Hide_PrivateRaidBossEmoteFrameAnchor = true, -- Скрыть якорь эмоций
-		Hide_SplashFrame = true, -- Скрыть заставку
-		Hide_PTRReporter = true, -- Скрыть PTR репортер
-		Hide_PTRIssueReporter = true, -- Скрыть репортер проблем
-		Hide_PTRIssueReporterAlertFrame = true, -- Скрыть алерт репортера
-		Hide_Bug = true, -- Скрыть баг-репортер
-		Hide_CovenantRenownToast = true, -- Скрыть тост ковенанта
-		Hide_CovenantChoiceToast = true, -- Скрыть тост выбора ковенанта
-		Hide_ZoneTextFrame = true, -- Скрыть текст зоны
-		Hide_SubZoneTextFrame = true, -- Скрыть текст подзоны
-		Hide_PVPArenaTextString = true, -- Скрыть текст арены
-		Hide_ZoneTextString = true, -- Скрыть строку зоны
-		Hide_SubZoneTextString = true, -- Скрыть строку подзоны
-		Hide_OrderHallCommandBar = true, -- Скрыть панель команд
-		Hide_ErrorMessages = true, -- Скрыть сообщения об ошибках
-		Hide_TalkingHeadFrame = true, -- Скрыть говорящую голову
-		Hide_EventToastManagerFrame = true, -- Скрыть тосты событий
-		AchievementShowCompleted = true, -- Показывать завершенные достижения
-		AidingtheAccord = true, -- Помощь Согласию
-		AnotherAddonsCasual = true, -- Другие аддоны (обычные)
-		AnotherAddonsDUNG = true, -- Другие аддоны (подземелья)
-		AnotherAddonsRAID = true, -- Другие аддоны (рейды)
-		BeledarCycle = true, -- Цикл Беледара
-		ChallengesKeystoneFrame = true, -- Фрейм ключей
+		AddonHeight = 20, -- Высота аддона
+		Config_AlphaOnDrag = 0.8, -- Альфа при перетаскивании
+		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
+		Config_Auto_ChatClearing = false, -- Автоочистка чата
+		Config_Auto_CinematicCanceler = true, -- Пропуск заставок
+		Config_Auto_CinematicFastSkip = true, -- Быстрый пропуск заставок
+		Config_Auto_Gossip = true, -- Автопропуск диалогов
+		Config_Auto_InputDelete = true, -- Автоочистка ввода
+		Config_Auto_OpenItems = true, -- Автооткрытие предметов
+		Config_Auto_Repair = true, -- Авторемонт
+		Config_Auto_Screenshot = true, -- Автоскриншоты
+		Config_Auto_SellGrey = true, -- Автопродажа серых предметов
+		Config_Auto_TurnQuests = true, -- Автосдача квестов
+		Config_ClampedToScreen = false, -- Не привязывать к границам экрана
+		Config_DontSavePosition = true, -- Не сохранять позицию
+		Config_Hide_ActionStatusText = true, -- Скрыть текст статуса действий
+		Config_Hide_BossBanner = true, -- Скрыть баннер босса
+		Config_Hide_Bug = true, -- Скрыть баг-репортер
+		Config_Hide_CheckListText = true, -- Скрыть текст чеклиста
+		Config_Hide_CovenantChoiceToast = true, -- Скрыть тост выбора ковенанта
+		Config_Hide_CovenantRenownToast = true, -- Скрыть тост ковенанта
+		Config_Hide_ErrorMessages = true, -- Скрыть сообщения об ошибках
+		Config_Hide_EventToastManagerFrame = true, -- Скрыть тосты событий
+		Config_Hide_MainStatusTrackingBarContainer = true, -- Скрыть главную полосу отслеживания
+		Config_Hide_MajorFactionsRenownToast = true, -- Скрыть тост репутации фракций
+		Config_Hide_OrderHallCommandBar = true, -- Скрыть панель команд
+		Config_Hide_PrivateRaidBossEmoteFrameAnchor = true, -- Скрыть якорь эмоций
+		Config_Hide_PTRReporter = true, -- Скрыть PTR репортер
+		Config_Hide_PTRIssueReporter = true, -- Скрыть репортер проблем
+		Config_Hide_PTRIssueReporterAlertFrame = true, -- Скрыть алерт репортера
+		Config_Hide_PVPArenaTextString = true, -- Скрыть текст арены
+		Config_Hide_RaidBossEmoteFrame = true, -- Скрыть эмоции боссов
+		Config_Hide_RaidWarningFrame = true, -- Скрыть предупреждения рейда
+		Config_Hide_SecondaryStatusTrackingBarContainer = true, -- Скрыть вторую полосу отслеживания
+		Config_Hide_SplashFrame = true, -- Скрыть заставку
+		Config_Hide_SubscriptionInterstitialFrame = true, -- Скрыть фрейм подписки
+		Config_Hide_SubZoneTextFrame = true, -- Скрыть текст подзоны
+		Config_Hide_SubZoneTextString = true, -- Скрыть строку подзоны
+		Config_Hide_TalkingHeadFrame = true, -- Скрыть говорящую голову
+		Config_Hide_UIWidgetTopCenterContainerFrame = true, -- Скрыть верхний центр виджетов
+		Config_Hide_WeeklyRewardExpirationWarningDialog = true, -- Скрыть предупреждение о наградах
+		Config_Hide_ZoneTextFrame = true, -- Скрыть текст зоны
+		Config_Hide_ZoneTextString = true, -- Скрыть строку зоны
+		Config_LevelToShow = 1, -- Минимальный уровень для отображения
+		Config_LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
+		Config_MainFrameDefaultLines = 30, -- Количество строк по умолчанию
+		Config_prefix = 1, -- Префикс
+		Currencies = true, -- Квесты
 		Currency = true, -- Валюта
 		CVar = true, -- CVar настройки
-		EmeraldDream_Dreamseeds = true, -- Сны Изумрудного Сна
-		EmeraldDream_Rares = true, -- Рейры Изумрудного Сна
-		EmeraldDream_Sparks = true, -- Искры Изумрудного Сна
-		EmeraldDream_WB = true, -- Мировые боссы Изумрудного Сна
-		LastUpdate = true, -- Последнее обновление
-		LootFrame = true, -- Фрейм лута
-		MajorKeyflames = true, -- Основные ключевые пламена
-		MinorKeyflames = true, -- Второстепенные ключевые пламена
-		MP_MythicKeystone = true, -- М+ ключи
-		PortalsButtons = true, -- Кнопки порталов
-		PortalsButtonsOnlyAvailable = true, -- Только доступные порталы
-		QC_Quests = true, -- Квесты
-		ShowIDS = true, -- Показывать ID
-		TalentTreeTweaks = true, -- Настройки дерева талантов
-		TalentTreeTweaks_Alpha = 1, -- Прозрачность дерева
-		TalentTreeTweaks_Scale = 1, -- Масштаб дерева
-		TWW_Delve_Weekly = true, -- Еженедельные исследования
-		TWW_DungeonQuest_Weekly = true, -- Еженедельные квесты подземелий
-		UIErrorsFramePosition = true, -- Позиция фрейма ошибок
-		WorldBoss_Weekly = true, -- Еженедельные мировые боссы
-		Quests = true, -- Квесты
-		Currencies = true, -- Квесты
-		Holidays = true, -- Праздники
 		Dungeons = true, -- Подземелья
-		Items = true, -- Предметы
-		Professions = true, -- Профессии
+		FontFlags = "OUTLINE",
+		FontSize = 11,
+		FrameScale = 1, -- Масштаб фрейма
 		Gold = true, -- Золото
+		Holidays = true, -- Праздники
 		ItemLevel = true, -- Уровень предметов
-		WasOnline = true, -- Был в сети
-		Reputations = false, -- Репутация
-		CurrencyShowAllways = false, -- Всегда показывать валюту
-		ItemsShowAllways = false, -- Всегда показывать предметы
+		Items = true, -- Предметы
 		OnlyCurrentFaction = false, -- Только текущая фракция
-		QuestsShowAllways = false, -- Всегда показывать квесты
+		Professions = true, -- Профессии
+		QC_Quests = true, -- Квесты
 		QC_Vignettes = false, -- Вигнеты
+		Quests = true, -- Квесты
+		QuestsShowAllways = false, -- Всегда показывать квесты
+		Reputations = false, -- Репутация
+		SellFrame = true,
+		ShowIDS = true, -- Показывать ID
 		ShowOnlyCurrentRegion = false, -- Только текущий BattleTag
 		ShowOnlyCurrentServer = false, -- Только текущий сервер
-		SellFrame = true,
+		-- TalentTreeTweaks = true, -- Настройки дерева талантов
+		-- TalentTreeTweaks_Alpha = 1, -- Прозрачность дерева
+		-- TalentTreeTweaks_Scale = 1, -- Масштаб дерева
+		-- TWW_Delve_Weekly = true, -- Еженедельные исследования
+		-- TWW_DungeonQuest_Weekly = true, -- Еженедельные квесты подземелий
+		-- UIErrorsFramePosition = true, -- Позиция фрейма ошибок
+		Config_WasOnline = true, -- Был в сети
+		-- WorldBoss_Weekly = true, -- Еженедельные мировые боссы
 	}
 	-- Устанавливаем значения по умолчанию
 	for k, v in next, (featureDefaults) do
@@ -603,10 +514,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
 	E:func_InitSubTable(Octo_ToDo_DB_Other, "AccountMoney")
 	E:func_InitField(Octo_ToDo_DB_Other.AccountMoney, E.CurrentRegionName, 0)
 	-- Инициализация таблиц настроек
-	E:func_InitSubTable(Octo_ToDo_DB_Other, "CVar")
-	E:func_InitSubTable(Octo_ToDo_DB_Other, "Items")
-	E:func_InitSubTable(Octo_ToDo_DB_Other, "Holiday")
-	E:func_InitSubTable(Octo_ToDo_DB_Other, "professions")
+	-- E:func_InitSubTable(Octo_ToDo_DB_Other, "CVar")
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Cache_DB()
@@ -614,7 +522,6 @@ function Octo_EventFrame_WTF:Octo_Cache_DB()
 	E:func_InitField(Octo_Cache_DB, "lastBuildNumber", 1)
 	E:func_InitField(Octo_Cache_DB, "lastFaction", UNKNOWN)
 	-- Инициализация подтаблиц
-	E:func_InitSubTable(Octo_Cache_DB, E.curLocaleLang)
 	E:func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
 	E:func_InitSubTable(Octo_Cache_DB, "AllReputations")
 	E:func_InitSubTable(Octo_Cache_DB, "AllQuests")
@@ -630,6 +537,18 @@ function Octo_EventFrame_WTF:Octo_Cache_DB()
 		C_Timer.After(1, function()
 			self:func_CreateDataCacheAtStart()
 		end)
+		C_Timer.After(2, function()
+			self:func_CreateDataCacheAtStart()
+		end)
+		C_Timer.After(3, function()
+			self:func_CreateDataCacheAtStart()
+		end)
+		C_Timer.After(4, function()
+			self:func_CreateDataCacheAtStart()
+		end)
+		C_Timer.After(5, function()
+			self:func_CreateDataCacheAtStart()
+		end)
 		Octo_Cache_DB.lastBuildNumber = E.buildNumber
 		Octo_Cache_DB.lastFaction = E.curFaction
 	end
@@ -640,7 +559,7 @@ end
 function Octo_EventFrame_WTF:Octo_Achievements_DB()
 	Octo_Achievements_DB = E:func_InitTable(Octo_Achievements_DB)
 	-- Настройки отображения достижений
-	E:func_InitField(Octo_Achievements_DB, "AchievementShowCompleted", true)
+	E:func_InitField(Octo_Achievements_DB, "Config_AchievementShowCompleted", true)
 	E:func_InitField(Octo_Achievements_DB, "AchievementToShow", {[92] = true})
 end
 ----------------------------------------------------------------
@@ -657,27 +576,27 @@ function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 	-- Настройки конфигурации
 	E:func_InitSubTable(Octo_AddonsManager_DB, "config")
 	local configDefaults = {
-		sorting = "title", -- Сортировка по названию
 		addonListStyle = "tree", -- Стиль списка как дерево
-		profilingcpuUpdate = nil, -- Обновление профилирования CPU
-		showIconsQuestionMark = nil, -- Показывать знаки вопроса у иконок
+		autofocusSearch = nil, -- Автофокус в поиске
+		fullName = nil, -- Полное имя
+		hookMenuButton = nil, -- Хук кнопки меню
+		localizeCategoryName = nil, -- Локализовать имена категорий
+		minimaphide = nil, -- Скрыть на миникарте
+		profilingcpuShowAverage = nil, -- Показывать среднюю нагрузку
 		profilingcpuShowCurrent = nil, -- Показывать текущую нагрузку CPU
 		profilingcpuShowEncounter = nil, -- Показывать нагрузку в бою
 		profilingcpuShowPeak = nil, -- Показывать пиковую нагрузку
-		profilingcpuShowAverage = nil, -- Показывать среднюю нагрузку
-		localizeCategoryName = nil, -- Локализовать имена категорий
-		showVersions = nil, -- Показывать версии
-		autofocusSearch = nil, -- Автофокус в поиске
-		showSecureAddons = nil, -- Показывать защищенные аддоны
-		showTocXCategory = nil, -- Показывать категории TOC
-		showTocCategory = nil, -- Показывать категории TOC
-		showMemoryInBrokerTtp = nil, -- Показывать память в брокере
-		fullName = nil, -- Полное имя
+		profilingcpuUpdate = nil, -- Обновление профилирования CPU
 		showIcons = nil, -- Показывать иконки
-		showVersion = nil, -- Показывать версию
+		showIconsQuestionMark = nil, -- Показывать знаки вопроса у иконок
 		showIndex = nil, -- Показывать индекс
-		minimaphide = nil, -- Скрыть на миникарте
-		hookMenuButton = nil, -- Хук кнопки меню
+		showMemoryInBrokerTtp = nil, -- Показывать память в брокере
+		showSecureAddons = nil, -- Показывать защищенные аддоны
+		showTocCategory = nil, -- Показывать категории TOC
+		showTocXCategory = nil, -- Показывать категории TOC
+		showVersion = nil, -- Показывать версию
+		showVersions = nil, -- Показывать версии
+		sorting = "title", -- Сортировка по названию
 		sortingCpu = nil, -- Сортировка по CPU
 	}
 	-- Устанавливаем значения по умолчанию
@@ -703,8 +622,13 @@ function Octo_EventFrame_WTF:Octo_Debug_DB()
 
 	if not Octo_Debug_DB then return end
 	Octo_Debug_DB.profileKeys = Octo_Debug_DB.profileKeys or {}
-	local currentKey = E.curCharName.." - "..E.curServer
-	Octo_Debug_DB.profileKeys[currentKey] = Octo_Debug_DB.profileKeys[currentKey] or "OctoUI"
+
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		if CharInfo.PlayerData then
+			local currentKey = CharInfo.PlayerData.Name.." - "..CharInfo.PlayerData.curServer
+			Octo_Debug_DB.profileKeys[currentKey] = "OctoUI"
+		end
+	end
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -841,7 +765,7 @@ end
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED", -- Событие загрузки аддона
-	-- "VARIABLES_LOADED", -- Событие загрузки переменных
+	"VARIABLES_LOADED", -- Событие загрузки переменных
 }
 ----------------------------------------------------------------
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable)
@@ -876,4 +800,11 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		-- Применяем старые изменения
 		E:setOldChanges()
 	end
+end
+
+function Octo_EventFrame_WTF:VARIABLES_LOADED()
+	E.OctoFont11:SetFont("Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF", Octo_ToDo_DB_Vars.FontSize, Octo_ToDo_DB_Vars.FontFlags)
+	E.GLOBAL_LINE_HEIGHT = Octo_ToDo_DB_Vars.AddonHeight
+	-- E.GLOBAL_LINE_WIDTH_LEFT = Octo_ToDo_DB_Vars.AddonLeftFrameWeight
+	-- E.GLOBAL_LINE_WIDTH_RIGHT = Octo_ToDo_DB_Vars.AddonCentralFrameWeight
 end

@@ -24,16 +24,16 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			["prefix"] = {
+			["Config_prefix"] = {
 				type = "select",
 				name = "wowhead",
 				values = {},
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.prefix
+					return Octo_ToDo_DB_Vars.Config_prefix
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.prefix = value
+					Octo_ToDo_DB_Vars.Config_prefix = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -72,92 +72,22 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			AddonLeftFrameWeight = {
+			Config_MainFrameDefaultLines = {
 				type = "range",
-				name = L["AddonLeftFrameWeight"],
-				desc = "AddonLeftFrameWeight",
-				min = 200,
-				max = 500,
-				step = 1,
-				get = function()
-					return Octo_ToDo_DB_Vars.AddonLeftFrameWeight
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.AddonLeftFrameWeight = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			AddonCentralFrameWeight = {
-				type = "range",
-				name = L["AddonCentralFrameWeight"],
-				desc = "AddonCentralFrameWeight",
-				min = 60,
-				max = 200,
-				step = 1,
-				get = function()
-					return Octo_ToDo_DB_Vars.AddonCentralFrameWeight
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.AddonCentralFrameWeight = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			MainFrameDefaultLines = {
-				type = "range",
-				name = L["MainFrameDefaultLines"],
-				desc = "MainFrameDefaultLines",
+				name = L["Config_MainFrameDefaultLines"],
+				desc = "Config_MainFrameDefaultLines",
 				min = 10,
 				max = 50,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.MainFrameDefaultLines
+					return Octo_ToDo_DB_Vars.Config_MainFrameDefaultLines
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.MainFrameDefaultLines = value
+					Octo_ToDo_DB_Vars.Config_MainFrameDefaultLines = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-			-------------------------------------------------
-			-- MaxNumCharacters = {
-			-- 	type = "range",
-			-- 	name = L["MaxNumCharacters"],
-			-- 	desc = "MaxNumCharacters",
-			-- 	min = 1,
-			-- 	max = 20,
-			-- 	step = 1,
-			-- 	get = function()
-			-- 		return Octo_ToDo_DB_Vars.MaxNumCharacters
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		Octo_ToDo_DB_Vars.MaxNumCharacters = value
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = GetOrder(),
-			-- },
-			-- -----------------------------------------------
-			-- SFDropDownWeight = {
-			-- 	type = "range",
-			-- 	name = L["SFDropDownWeight"],
-			-- 	desc = "SFDropDownWeight",
-			-- 	min = 50,
-			-- 	max = 200,
-			-- 	step = 1,
-			-- 	get = function()
-			-- 		return Octo_ToDo_DB_Vars.SFDropDownWeight
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		Octo_ToDo_DB_Vars.SFDropDownWeight = value
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = GetOrder(),
-			-- },
-
-
 			-------------------------------------------------
 			FrameScale = {
 				type = "range",
@@ -176,46 +106,46 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			AlphaOnDrag = {
+			Config_AlphaOnDrag = {
 				type = "range",
-				name = "AlphaOnDrag",
+				name = "Config_AlphaOnDrag",
 				desc = "",
 				min = 0.1,
 				max = 1,
 				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.AlphaOnDrag
+					return Octo_ToDo_DB_Vars.Config_AlphaOnDrag
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.AlphaOnDrag = value
+					Octo_ToDo_DB_Vars.Config_AlphaOnDrag = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			DontSavePosition = {
+			Config_DontSavePosition = {
 				type = "toggle",
 				name = "Dont Save Position",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.DontSavePosition
+					return Octo_ToDo_DB_Vars.Config_DontSavePosition
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.DontSavePosition = value
+					Octo_ToDo_DB_Vars.Config_DontSavePosition = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			ClampedToScreen = {
+			Config_ClampedToScreen = {
 				type = "toggle",
 				name = "Clamped To Screen",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.ClampedToScreen
+					return Octo_ToDo_DB_Vars.Config_ClampedToScreen
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.ClampedToScreen = value
+					Octo_ToDo_DB_Vars.Config_ClampedToScreen = value
 					if Octo_MainFrame_ToDo then
 						Octo_MainFrame_ToDo:SetClampedToScreen(value)
 					end
@@ -266,7 +196,7 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			LevelToShow = {
+			Config_LevelToShow = {
 				type = "range",
 				name = L["Player level"],
 				desc = "",
@@ -274,16 +204,16 @@ function E:CreateGeneralOptions()
 				max = 80,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.LevelToShow
+					return Octo_ToDo_DB_Vars.Config_LevelToShow
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.LevelToShow = value
+					Octo_ToDo_DB_Vars.Config_LevelToShow = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			LevelToShowMAX = {
+			Config_LevelToShowMAX = {
 				type = "range",
 				name = L["Player MAX level"],
 				desc = "",
@@ -291,16 +221,16 @@ function E:CreateGeneralOptions()
 				max = 80*2,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.LevelToShowMAX
+					return Octo_ToDo_DB_Vars.Config_LevelToShowMAX
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.LevelToShowMAX = value
+					Octo_ToDo_DB_Vars.Config_LevelToShowMAX = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			itemLevelToShow = {
+			itemConfig_LevelToShow = {
 				type = "range",
 				name = L["Item level: "],
 				desc = "",
@@ -308,83 +238,19 @@ function E:CreateGeneralOptions()
 				max = 560,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.itemLevelToShow
+					return Octo_ToDo_DB_Vars.itemConfig_LevelToShow
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.itemLevelToShow = value
+					Octo_ToDo_DB_Vars.itemConfig_LevelToShow = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-			-------------------------------------------------
-			MaxNumCharacters = {
-				type = "range",
-				name = "MaxNumCharacters",
-				desc = "",
-				min = 1,
-				max = 30,
-				step = 1,
-				get = function()
-					return Octo_ToDo_DB_Vars.MaxNumCharacters
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.MaxNumCharacters = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-
-
 			-------------------------------------------------
 			-------------------------------------------------
 			MainHeader24 = {
 				type = "header",
 				name = OTHER,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			GameMenuFrameScale = {
-				type = "range",
-				name = "GameMenuFrameScale",
-				desc = "",
-				min = 0.5,
-				max = 2.5,
-				step = 0.1,
-				get = function()
-					return Octo_ToDo_DB_Vars.GameMenuFrameScale
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.GameMenuFrameScale = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			PortalsButtons = {
-				type = "toggle",
-				name = E:func_texturefromIcon(3610528, 18)..L["Portals"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.PortalsButtons
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.PortalsButtons = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			PortalsButtonsOnlyAvailable = {
-				type = "toggle",
-				name = E:func_texturefromIcon(3610528, 18).."PortalsButtonsOnlyAvailable",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.PortalsButtonsOnlyAvailable
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.PortalsButtonsOnlyAvailable = value
-				end,
-				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -522,15 +388,15 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			WasOnline = {
+			Config_WasOnline = {
 				type = "toggle",
 				name = L["Was online"],
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.WasOnline
+					return Octo_ToDo_DB_Vars.Config_WasOnline
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.WasOnline = value
+					Octo_ToDo_DB_Vars.Config_WasOnline = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -543,22 +409,21 @@ function E:CreateGeneralOptions()
 			},
 			-------------------------------------------------
 
-			fontSIZE = {
+			FontSize = {
 				type = "range",
-				name = "fontSIZE",
-				desc = "fontSIZE",
-				min = 6,
-				max = 72,
+				name = "FontSize",
+				desc = "FontSize",
+				min = 8,
+				max = 32,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.fontSIZE
+					return Octo_ToDo_DB_Vars.FontSize
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.fontSIZE = value
-					E.OctoFont11:SetFont("Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF", value, "")
+					Octo_ToDo_DB_Vars.FontSize = value
+					E.OctoFont11:SetFont("Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF", value, Octo_ToDo_DB_Vars.FontFlags)
 					for i, frame in ipairs(E.OctoTable_Frames) do
 						if frame:IsShown() then
-							print ("frame:Hide()")
 							frame:Hide()
 							frame:Show()
 						end
@@ -570,15 +435,58 @@ function E:CreateGeneralOptions()
 
 
 
+
+			["FontFlags"] = {
+				type = "select",
+				name = "FontFlags",
+				values = {},
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.FontFlags
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.FontFlags = value
+					E.OctoFont11:SetFont("Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF", Octo_ToDo_DB_Vars.FontSize, value)
+					for i, frame in ipairs(E.OctoTable_Frames) do
+						if frame:IsShown() then
+							frame:Hide()
+							frame:Show()
+						end
+					end
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+
+
+
+
+
+
+
+
+
+
 			-------------------------------------------------
 		},
 	}
 	-------------------------------------------------
 	for index, name in ipairs(E.OctoTable_Prefixes) do
-		generalOptions.args.prefix.values[index] = name
+		generalOptions.args.Config_prefix.values[index] = name
 	end
 
 
+	local tblFontFlags = {
+		"",				-- The base font
+		"MONOCHROME",	-- Font is rendered without antialiasing
+		"OUTLINE",		-- Font is displayed with a black outline
+		"THICKOUTLINE",	-- Font is displayed with a thick black outline
+	}
+
+
+	for index, name in ipairs(tblFontFlags) do
+		generalOptions.args.FontFlags.values[name] = name
+	end
 
 
 

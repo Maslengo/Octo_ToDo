@@ -82,7 +82,6 @@ function E.Collect_All_Professions()
 			if collectENABLEmoreprof then
 				if i == 1 or i == 2 then
 					for index, skillLineID in ipairs(C_TradeSkillUI.GetAllProfessionTradeSkillLines()) do -- СОБИРАТЬ ТОЛЬКО ОСНОВНЫЕ
-						-- for skillLineID, j in next, (Octo_ToDo_DB_Other.professions.DEBUG) do -- СОБИРАТЬ ВСЁ
 						local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
 						local QWEprofessionName = info.professionName
 						local QWEskillLevel = info.skillLevel

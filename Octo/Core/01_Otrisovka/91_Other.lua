@@ -143,7 +143,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.DebugInfo then
+	if E.DebugInfo then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
@@ -388,7 +388,7 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.WasOnline then
+	if Octo_ToDo_DB_Vars.Config_WasOnline then
 		table.insert(OctoTable_Otrisovka, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}

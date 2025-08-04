@@ -134,8 +134,8 @@ function E:func_Otrisovka_90_Holidays()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, OCTOexpansionID)
-		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
+		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka)
+		E:func_Universal(OctoTable_Otrisovka)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

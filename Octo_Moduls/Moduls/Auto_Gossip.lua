@@ -1,7 +1,7 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-local Octo_EventFrame_Auto_Gossip = CreateFrame("FRAME")
-Octo_EventFrame_Auto_Gossip:Hide()
+local Octo_EventFrame_Config_Auto_Gossip = CreateFrame("FRAME")
+Octo_EventFrame_Config_Auto_Gossip:Hide()
 ----------------------------------------------------------------
 local targetNPCID = nil
 local ignoreNPCID = {
@@ -62,7 +62,7 @@ local function HELP_TEXT(i, icon, name)
 	return E:func_Gradient(GlobalAddonName)..E.Green_Color.." ("..i..")|r "..E:func_texturefromIcon(icon)..name
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_Auto_Gossip:Auto_Gossip()
+function Octo_EventFrame_Config_Auto_Gossip:Config_Auto_Gossip()
 	local guid = UnitGUID("TARGET")
 	-- if not guid or UnitGUID("TARGET"):match("%a+") == "Player" then return end
 	if guid then
@@ -122,12 +122,12 @@ end
 local MyEventsTable = {
 	"GOSSIP_SHOW",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_Auto_Gossip, MyEventsTable)
-function Octo_EventFrame_Auto_Gossip:GOSSIP_SHOW()
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_Config_Auto_Gossip, MyEventsTable)
+function Octo_EventFrame_Config_Auto_Gossip:GOSSIP_SHOW()
 	if IsShiftKeyDown() then return end
-	if not Octo_ToDo_DB_Vars.Auto_Gossip then return end
+	if not Octo_ToDo_DB_Vars.Config_Auto_Gossip then return end
 	C_Timer.After(.1, function()
-			Octo_EventFrame_Auto_Gossip:Auto_Gossip()
+			Octo_EventFrame_Config_Auto_Gossip:Config_Auto_Gossip()
 	end)
 end
 ----------------------------------------------------------------

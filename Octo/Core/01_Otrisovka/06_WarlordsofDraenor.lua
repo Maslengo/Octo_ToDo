@@ -39,14 +39,14 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				local MAX_CACHE_SIZE = 500
 				textCENT = E:func_textCENT_Currency(CharInfo, 824)
 				myType = {"Currency", 824}
-				if CharInfo.GARRISON.lastCacheTime and CharInfo.GARRISON.lastCacheTime ~= 0 then
+				if CharInfo.MASLENGO.GARRISON.lastCacheTime and CharInfo.MASLENGO.GARRISON.lastCacheTime ~= 0 then
 					local color = E.Gray_Color
 					-- максимальный запас ресурсов
 					-- Max resource capacity
-					local cacheSize = CharInfo.GARRISON.cacheSize or MAX_CACHE_SIZE
+					local cacheSize = CharInfo.MASLENGO.GARRISON.cacheSize or MAX_CACHE_SIZE
 					-- время последнего получения ресурсов
 					-- Last resource collection time
-					local lastCacheTime = CharInfo.GARRISON.lastCacheTime
+					local lastCacheTime = CharInfo.MASLENGO.GARRISON.lastCacheTime
 					-- это время, прошедшее с последнего сбора, в 10-минутных интервалах. Она нужна, чтобы рассчитать, сколько новых ресурсов (earnedSinceLastCollect) игрок мог получить за это время.
 					-- Time passed since last collection in 10-minute intervals
 					local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
@@ -72,7 +72,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 					if earnedSinceLastCollect ~= cacheSize then
 						tooltipRIGHT[#tooltipRIGHT+1] = {"Time to full: ", E:func_SecondsToClock(timeUntilFull)}
 					end
-					tooltipRIGHT[#tooltipRIGHT+1] = {"Was earned: ", E:func_SecondsToClock(GetServerTime()-(CharInfo.GARRISON.lastCacheTime or time()))}
+					tooltipRIGHT[#tooltipRIGHT+1] = {"Was earned: ", E:func_SecondsToClock(GetServerTime()-(CharInfo.MASLENGO.GARRISON.lastCacheTime or time()))}
 				end
 				----------------------------------------------------------------
 				textLEFT = E:func_currencyName(824)

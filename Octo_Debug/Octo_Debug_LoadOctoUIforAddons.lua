@@ -1,16 +1,17 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
--- Создаем фрейм для отладки
+----------------------------------------------------------------
 local Octo_EventFrame_Debug = CreateFrame("FRAME")
 Octo_EventFrame_Debug:Hide()
-
--- Функция для применения профиля OctoUI к другим аддонам
+----------------------------------------------------------------
 function Octo_EventFrame_Debug:LoadOctoUIforAddons()
+
 	if ElvDB then
 		for name, v in next, (ElvDB.profileKeys) do
 			Octo_Debug_DB.profileKeys[name] = "OctoUI"
 		end
 	end
+
 	local AddonsAndDB = {
 		{database = AddonCpuUsageDB, profileName = "OctoUI"},
 		{database = AddOnSkinsDB, profileName = "OctoUI"},
@@ -31,7 +32,9 @@ function Octo_EventFrame_Debug:LoadOctoUIforAddons()
 		{database = VMRT, profileName = "OctoUI"},
 		{database = WarpDepleteDB, profileName = "OctoUI"},
 		{database = GreatVaultList2DB, profileName = "OctoUI"},
+		{database = RarityDB, profileName = "OctoUI"},
 	}
+
 	for _, v in ipairs(AddonsAndDB) do
 		if v.database then
 			v.database.profileKeys = v.database.profileKeys or {}
@@ -45,18 +48,16 @@ function Octo_EventFrame_Debug:LoadOctoUIforAddons()
 			end
 		end
 	end
-end
 
--- Регистрация событий
+end
+----------------------------------------------------------------
 local MyEventsTable = {
-	"ADDON_LOADED"
+	"VARIABLES_LOADED",
 }
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
--- Обработчик события ADDON_LOADED
-function Octo_EventFrame_Debug:ADDON_LOADED(addonName)
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-	end
+function Octo_EventFrame_Debug:VARIABLES_LOADED()
+	self:UnregisterEvent("VARIABLES_LOADED")
+	self.VARIABLES_LOADED = nil
 	self:LoadOctoUIforAddons()
 end
+----------------------------------------------------------------

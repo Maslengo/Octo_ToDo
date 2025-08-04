@@ -7,13 +7,13 @@ local Octo_MainFrame_QuestsChanged = CreateFrame("BUTTON", "Octo_MainFrame_Quest
 Octo_MainFrame_QuestsChanged:Hide()
 E:func_InitFrame(Octo_MainFrame_QuestsChanged)
 ----------------------------------------------------------------
-local AddonHeight = 20
-local AddonLeftFrameWeight = 200
-local AddonCentralFrameWeight = 90
-local MainFrameDefaultLines = 30
-local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / AddonHeight))*.7)
-if MainFrameDefaultLines > MainFrameTotalLines then
-	MainFrameDefaultLines = MainFrameTotalLines
+local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
+local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
+local LINE_WIDTH_RIGHT = E.GLOBAL_LINE_WIDTH_RIGHT
+local Config_MainFrameDefaultLines = 30
+local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT))*.7)
+if Config_MainFrameDefaultLines > MainFrameTotalLines then
+	Config_MainFrameDefaultLines = MainFrameTotalLines
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
 ----------------------------------------------------------------
@@ -75,8 +75,8 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- Icon setup
 			local icon_1 = frame:CreateTexture(nil, "BACKGROUND")
-			local icon_1_width = AddonHeight - 2
-			local icon_1_height = AddonHeight - 2
+			local icon_1_width = LINE_HEIGHT - 2
+			local icon_1_height = LINE_HEIGHT - 2
 			icon_1:SetSize(icon_1_width, icon_1_height)
 			icon_1:SetPoint("TOPLEFT", 1, -1)
 			icon_1:SetTexCoord(0.10, 0.90, 0.10, 0.90) -- zoom 10%
@@ -84,8 +84,8 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- first
 			local first = CreateFrame("FRAME", nil, frame)
-			local first_width = AddonCentralFrameWeight
-			local first_height = AddonHeight
+			local first_width = LINE_WIDTH_RIGHT
+			local first_height = LINE_HEIGHT
 			first:SetSize(first_width, first_height)
 			first:SetPoint("TOPLEFT", icon_1, "TOPRIGHT")
 			first:SetPropagateMouseClicks(true)
@@ -100,8 +100,8 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- second
 			local second = CreateFrame("FRAME", nil, frame)
-			local second_width = AddonCentralFrameWeight
-			local second_height = AddonHeight
+			local second_width = LINE_WIDTH_RIGHT
+			local second_height = LINE_HEIGHT
 			second:SetSize(second_width, second_height)
 			second:SetPoint("TOPLEFT", first, "TOPRIGHT")
 			second:SetPropagateMouseClicks(true)
@@ -115,8 +115,8 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- Icon setup
 			local icon_2 = frame:CreateTexture(nil, "BACKGROUND")
-			local icon_2_width = AddonHeight - 2
-			local icon_2_height = AddonHeight - 2
+			local icon_2_width = LINE_HEIGHT - 2
+			local icon_2_height = LINE_HEIGHT - 2
 			icon_2:SetSize(icon_2_width, icon_2_height)
 			icon_2:SetPoint("TOPLEFT", second, "TOPRIGHT", 1, -1)
 			icon_2:SetTexCoord(0.10, 0.90, 0.10, 0.90) -- zoom 10%
@@ -124,8 +124,8 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- third
 			local third = CreateFrame("FRAME", nil, frame)
-			local third_width = AddonCentralFrameWeight*2
-			local third_height = AddonHeight
+			local third_width = LINE_WIDTH_RIGHT*2
+			local third_height = LINE_HEIGHT
 			third:SetSize(third_width, third_height)
 			third:SetPoint("TOPLEFT", icon_2, "TOPRIGHT")
 			third:SetPropagateMouseClicks(true)
@@ -139,8 +139,8 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- fourth
 			local fourth = CreateFrame("FRAME", nil, frame)
-			local fourth_width = AddonCentralFrameWeight
-			local fourth_height = AddonHeight
+			local fourth_width = LINE_WIDTH_RIGHT
+			local fourth_height = LINE_HEIGHT
 			fourth:SetSize(fourth_width, fourth_height)
 			fourth:SetPoint("TOPLEFT", third, "TOPRIGHT")
 			fourth:SetPropagateMouseClicks(true)
@@ -154,8 +154,8 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- fifth
 			local fifth = CreateFrame("FRAME", nil, frame)
-			local fifth_width = AddonCentralFrameWeight*2
-			local fifth_height = AddonHeight
+			local fifth_width = LINE_WIDTH_RIGHT*2
+			local fifth_height = LINE_HEIGHT
 			fifth:SetSize(fifth_width, fifth_height)
 			fifth:SetPoint("TOPLEFT", fourth, "TOPRIGHT")
 			fifth:SetPropagateMouseClicks(true)
@@ -169,8 +169,8 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- sixth
 			local sixth = CreateFrame("FRAME", nil, frame)
-			local sixth_width = AddonCentralFrameWeight
-			local sixth_height = AddonHeight
+			local sixth_width = LINE_WIDTH_RIGHT
+			local sixth_height = LINE_HEIGHT
 			sixth:SetSize(sixth_width, sixth_height)
 			sixth:SetPoint("TOPLEFT", fifth, "TOPRIGHT")
 			sixth:SetPropagateMouseClicks(true)
@@ -184,8 +184,8 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- seventh
 			local seventh = CreateFrame("FRAME", nil, frame)
-			local seventh_width = AddonCentralFrameWeight
-			local seventh_height = AddonHeight
+			local seventh_width = LINE_WIDTH_RIGHT
+			local seventh_height = LINE_HEIGHT
 			seventh:SetSize(seventh_width, seventh_height)
 			seventh:SetPoint("TOPLEFT", sixth, "TOPRIGHT")
 			seventh:SetPropagateMouseClicks(true)
@@ -199,8 +199,8 @@ local func_OnAcquired do
 			-- ------------------------------------------------
 			-- -- eighth
 			-- local eighth = CreateFrame("FRAME", nil, frame)
-			-- local eighth_width = AddonCentralFrameWeight
-			-- local eighth_height = AddonHeight
+			-- local eighth_width = LINE_WIDTH_RIGHT
+			-- local eighth_height = LINE_HEIGHT
 			-- eighth:SetSize(eighth_width, eighth_height)
 			-- eighth:SetPoint("TOPLEFT", seventh, "TOPRIGHT")
 			-- eighth:SetPropagateMouseClicks(true)
@@ -303,10 +303,10 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 end
 function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	Octo_MainFrame_QuestsChanged:SetPoint("CENTER", 0, 0)
-	-- Octo_MainFrame_QuestsChanged:SetSize(AddonCentralFrameWeight*7, AddonHeight*MainFrameDefaultLines)
-	Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, AddonHeight*MainFrameDefaultLines)
-	Octo_MainFrame_QuestsChanged:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
-	Octo_MainFrame_QuestsChanged:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
+	-- Octo_MainFrame_QuestsChanged:SetSize(LINE_WIDTH_RIGHT*7, LINE_HEIGHT*Config_MainFrameDefaultLines)
+	Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*Config_MainFrameDefaultLines)
+	Octo_MainFrame_QuestsChanged:SetDontSavePosition(Octo_ToDo_DB_Vars.Config_DontSavePosition)
+	Octo_MainFrame_QuestsChanged:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame_QuestsChanged:SetFrameStrata("HIGH")
 	Octo_MainFrame_QuestsChanged:SetBackdrop(E.menuBackdrop)
 	Octo_MainFrame_QuestsChanged:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
@@ -315,7 +315,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	Octo_MainFrame_QuestsChanged:SetMovable(true)
 	Octo_MainFrame_QuestsChanged:RegisterForDrag("LeftButton")
 	Octo_MainFrame_QuestsChanged:SetScript("OnDragStart", function()
-			Octo_MainFrame_QuestsChanged:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+			Octo_MainFrame_QuestsChanged:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 			Octo_MainFrame_QuestsChanged:StartMoving()
 	end)
 	Octo_MainFrame_QuestsChanged:SetScript("OnDragStop", function()
@@ -333,7 +333,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	Octo_MainFrame_QuestsChanged.ScrollBar:SetPoint("TOPLEFT", Octo_MainFrame_QuestsChanged.ScrollBox, "TOPRIGHT", 6, 0)
 	Octo_MainFrame_QuestsChanged.ScrollBar:SetPoint("BOTTOMLEFT", Octo_MainFrame_QuestsChanged.ScrollBox, "BOTTOMRIGHT", 6, 0)
 	Octo_MainFrame_QuestsChanged.view = CreateScrollBoxListTreeListView()
-	Octo_MainFrame_QuestsChanged.view:SetElementExtent(AddonHeight)
+	Octo_MainFrame_QuestsChanged.view:SetElementExtent(LINE_HEIGHT)
 	Octo_MainFrame_QuestsChanged.view:SetElementInitializer("BUTTON",
 		function(...)
 			self:Octo_Frame_init(...)
@@ -409,12 +409,12 @@ function E:QuestsChanged_CreateMyDataProvider()
 	-- SetDataProvider триггерит создания фреймов
 	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
 
-	if count > MainFrameDefaultLines then
-		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, AddonHeight*MainFrameDefaultLines)
+	if count > Config_MainFrameDefaultLines then
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*Config_MainFrameDefaultLines)
 	elseif count == 0 then
-		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, AddonHeight*1)
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*1)
 	else
-		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, AddonHeight*count)
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*count)
 	end
 end
 ----------------------------------------------------------------

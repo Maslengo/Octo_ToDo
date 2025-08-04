@@ -54,7 +54,6 @@ E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHe
 E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup() --"|cffC41E3A"
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup() --"|cff33937F"
 
-E.ddMenuButtonHeight = 20
 -------------------------------------------------------------------------
 E.FULL_WIDTH = 3.60
 
@@ -79,15 +78,19 @@ E.menuBackdrop = {
 
 -------------------------------------------------------------------------
 E.GLOBAL_FONT_SIZE = 12
-E.GLOBAL_LINE_HEIGHT = E.GLOBAL_FONT_SIZE+10
+
+E.ddMenuButtonHeight = 16
+E.GLOBAL_LINE_HEIGHT = 20
+E.GLOBAL_LINE_WIDTH_LEFT = 200
+E.GLOBAL_LINE_WIDTH_RIGHT = 90
 
 E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF"
 -- E.Octo_font = "Friz Quadrata TT"
 -- E.Octo_font = "Fonts\\FRIZQT___CYR.TTF"
 E.OctoFont11 = CreateFont("OctoFont11")
-E.OctoFont11:CopyFontObject(GameFontNormal)-- local font = GameFontHighlightSmallLeft
+E.OctoFont11:CopyFontObject(GameTooltipTextSmall)-- local font = GameFontHighlightSmallLeft
 local fontFile, height, flags = E.OctoFont11:GetFont()
-E.OctoFont11:SetFont(fontFile, E.GLOBAL_FONT_SIZE, flags)
+E.OctoFont11:SetFont(E.Octo_font, E.GLOBAL_FONT_SIZE, flags)
 
 -- GameFontNormalSmall
 -- GameTooltipText

@@ -93,7 +93,6 @@ function E.Collect_All_Holiday()
 
 	-- Инициализация backup
 	local backup = {}
-	Octo_ToDo_DB_Other.CVar = Octo_ToDo_DB_Other.CVar or {}
 
 	-- Сохраняем текущие настройки
 	backup = function_setBackup(backup)

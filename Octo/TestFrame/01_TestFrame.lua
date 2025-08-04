@@ -262,8 +262,8 @@ function Octo_Event_TestFrame:Octo_Create_MainFrame_TestFrame()
 	Octo_Main_TestFrame:SetSize(MIN_LINE_WIDTH_LEFT + MIN_LINE_WIDTH_CENT * NumPlayers, LINE_HEIGHT * LINES_MAX)
 
 	-- Настройки фрейма
-	Octo_Main_TestFrame:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
-	Octo_Main_TestFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
+	Octo_Main_TestFrame:SetDontSavePosition(Octo_ToDo_DB_Vars.Config_DontSavePosition)
+	Octo_Main_TestFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_Main_TestFrame:SetFrameStrata("HIGH")
 
 	-- Создание скроллфрейма для горизонтальной прокрутки
@@ -377,7 +377,7 @@ function Octo_Event_TestFrame:Octo_Create_MainFrame_TestFrame()
 	-- Обработчики перемещения фрейма
 	Octo_Main_TestFrame:SetScript("OnMouseDown", function(_, button)
 		if button == "LeftButton" then
-			Octo_Main_TestFrame:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+			Octo_Main_TestFrame:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 			Octo_Main_TestFrame:StartMoving()
 		end
 	end)
@@ -410,7 +410,8 @@ function Octo_Event_TestFrame:Octo_Create_MainFrame_TestFrame()
 
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLEFT:SetScript("OnShow", function()
-		HeaderFrameLEFT.text:SetText(E:func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E:func_SecondsToClock(E:func_GetWeeklyReset()).."|r")
+		-- HeaderFrameLEFT.text:SetText(E:func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E:func_SecondsToClock(E:func_GetWeeklyReset()).."|r")
+		HeaderFrameLEFT.text:SetText("  Weekly Reset: "..E.Faction_Color..E:func_SecondsToClock(E:func_GetWeeklyReset()).."|r  ")
 	end)
 
 	-- Функция сброса пула фреймов
@@ -713,7 +714,7 @@ end
 -- Функция создания тестовой кнопки
 function Octo_Event_TestFrame:CreateTestButton1()
 	-- Настройки кнопки
-	TestButton1:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
+	TestButton1:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	TestButton1:SetPoint("TOPLEFT", 128, -256)
 	TestButton1:SetSize(128, 32)
 	TestButton1:SetText("Toggle_Octo_Main_TestFrame")
@@ -725,7 +726,7 @@ function Octo_Event_TestFrame:CreateTestButton1()
 	-- Обработчики перемещения кнопки
 	TestButton1:SetScript("OnMouseDown", function(_, button)
 		if button == "LeftButton" then
-			TestButton1:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+			TestButton1:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 			TestButton1:StartMoving()
 		end
 	end)

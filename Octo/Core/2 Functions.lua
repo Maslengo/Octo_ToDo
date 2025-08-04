@@ -609,8 +609,8 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E:func_GetSpellCooldown(spellID)
-	local start = C_Spell.GetSpellCooldown(spellID).startTime
-	local duration = C_Spell.GetSpellCooldown(spellID).duration
+	local start = GetSpellCooldown(spellID).startTime
+	local duration = GetSpellCooldown(spellID).duration
 	local vivod = 0
 	if start > 0 and duration > 0 then
 		vivod = (start + duration - GetTime())
@@ -1429,31 +1429,6 @@ function E:func_SetBackdrop(frame, hexcolor, BackdropAlpha, edgeAlpha)
 	end
 end
 ----------------------------------------------------------------
-local indexOfCore
-local function loadAndEnableCore()
-	if indexOfCore then -- Repo users don't have separate addons
-		load(indexOfCore)
-	end
-	if not BigWigs then return end
-	loadAddons(loadOnCoreEnabled)
-	BigWigs:Enable()
-	return true
-end
-----------------------------------------------------------------
-local indexOfOptions
-local function loadCoreAndOptions()
-	loadAndEnableCore()
-	if indexOfOptions then -- Repo users don't have separate addons
-		load(indexOfOptions)
-	end
-end
-local function loadCoreAndOpenOptions()
-	loadCoreAndOptions()
-	if BigWigsOptions then
-		BigWigsOptions:Open()
-	end
-end
-----------------------------------------------------------------
 function E:func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, frame, func, frameString)
 	----------------------------------------------------------------
 	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
@@ -1651,46 +1626,11 @@ function E:func_RegisterMyEventsToFrames(frame, MyEventsTable)
 	end)
 end
 ----------------------------------------------------------------
-function E:func_Reason(reason)
-	local vivod = ""
-	if reason == "CORRUPT" then vivod = ADDON_CORRUPT end
-	if reason == "DEMAND_LOADED" then vivod = ADDON_DEMAND_LOADED end
-	if reason == "DEP_BANNED" then vivod = ADDON_DEP_BANNED end
-	if reason == "DEP_CORRUPT" then vivod = ADDON_DEP_CORRUPT end
-	if reason == "DEP_DEMAND_LOADED" then vivod = ADDON_DEP_DEMAND_LOADED end
-	if reason == "DEP_DISABLED" then vivod = ADDON_DEP_DISABLED end
-	if reason == "DEP_EXCLUDED_FROM_BUILD" then vivod = ADDON_DEP_EXCLUDED_FROM_BUILD end
-	if reason == "DEP_INSECURE" then vivod = ADDON_DEP_INSECURE end
-	if reason == "DEP_INTERFACE_VERSION" then vivod = ADDON_DEP_INTERFACE_VERSION end
-	if reason == "DEP_LOADABLE" then vivod = ADDON_DEP_LOADABLE end
-	if reason == "DEP_MISSING" then vivod = ADDON_DEP_MISSING end
-	if reason == "DEP_NO_ACTIVE_INTERFACE" then vivod = ADDON_DEP_NO_ACTIVE_INTERFACE end
-	if reason == "DEP_NOT_AVAILABLE" then vivod = ADDON_DEP_NOT_AVAILABLE end
-	if reason == "DEP_USER_ADDONS_DISABLED" then vivod = ADDON_DEP_USER_ADDONS_DISABLED end
-	if reason == "DEP_WRONG_ACTIVE_INTERFACE" then vivod = ADDON_DEP_WRONG_ACTIVE_INTERFACE end
-	if reason == "DEP_WRONG_GAME_TYPE" then vivod = ADDON_DEP_WRONG_GAME_TYPE end
-	if reason == "DEP_WRONG_LOAD_PHASE" then vivod = ADDON_DEP_WRONG_LOAD_PHASE end
-	if reason == "EXCLUDED_FROM_BUILD" then vivod = ADDON_EXCLUDED_FROM_BUILD end
-	if reason == "INSECURE" then vivod = ADDON_INSECURE end
-	if reason == "INTERFACE_VERSION" then vivod = ADDON_INTERFACE_VERSION end
-	if reason == "MISSING" then vivod = ADDON_MISSING end
-	if reason == "NO_ACTIVE_INTERFACE" then vivod = ADDON_NO_ACTIVE_INTERFACE end
-	if reason == "NOT_AVAILABLE" then vivod = ADDON_NOT_AVAILABLE end
-	if reason == "USER_ADDONS_DISABLED" then vivod = ADDON_USER_ADDONS_DISABLED end
-	if reason == "WRONG_ACTIVE_INTERFACE" then vivod = ADDON_WRONG_ACTIVE_INTERFACE end
-	if reason == "WRONG_GAME_TYPE" then vivod = ADDON_WRONG_GAME_TYPE end
-	if reason == "WRONG_LOAD_PHASE" then vivod = ADDON_WRONG_LOAD_PHASE end
-	return vivod
-end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-----------------------------------------------------------------
-local AddonManager = CreateFrame("Frame")
-local profiles = {}
-local currentProfile = "default"
 function E:func_GetAddonIndex(name)
 	local index = Octo_AddonsTable_DB.indexByName[name]
 	return tonumber(index)
@@ -1971,6 +1911,8 @@ function E:func_lockAddonNEW(index, state)
 	E:func_rec_lock(index, enabled)
 end
 -- Сохранить текущий профиль
+
+local currentProfile = "default"
 function E:func_SaveProfile(profileName)
 	if not profileName or profileName == "" then
 		profileName = currentProfile
@@ -2148,8 +2090,8 @@ end
 function E:func_NumPlayers()
 	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
-	local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
+	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
+	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
 	local OnlyCurrentFaction = Octo_ToDo_DB_Vars.OnlyCurrentFaction
 	local sorted = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -2167,14 +2109,14 @@ function E:func_NumPlayers()
 					if ShowOnlyCurrentRegion then
 						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
 						and CurrentRegionName == E.CurrentRegionName
-						and UnitLevel >= LevelToShow
-						and UnitLevel <= LevelToShowMAX then
+						and UnitLevel >= Config_LevelToShow
+						and UnitLevel <= Config_LevelToShowMAX then
 							sorted[#sorted+1] = CharInfo
 						end
 					else
 						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
-						and UnitLevel >= LevelToShow
-						and UnitLevel <= LevelToShowMAX then
+						and UnitLevel >= Config_LevelToShow
+						and UnitLevel <= Config_LevelToShowMAX then
 							sorted[#sorted+1] = CharInfo
 						end
 					end
@@ -2187,8 +2129,8 @@ end
 function E:func_sorted()
 	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-	local LevelToShow = Octo_ToDo_DB_Vars.LevelToShow
-	local LevelToShowMAX = Octo_ToDo_DB_Vars.LevelToShowMAX
+	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
+	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
 	local OnlyCurrentFaction = Octo_ToDo_DB_Vars.OnlyCurrentFaction
 	local sorted = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -2206,15 +2148,15 @@ function E:func_sorted()
 					if ShowOnlyCurrentRegion then
 						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
 						and CurrentRegionName == E.CurrentRegionName
-						and UnitLevel >= LevelToShow
-						and UnitLevel <= LevelToShowMAX
+						and UnitLevel >= Config_LevelToShow
+						and UnitLevel <= Config_LevelToShowMAX
 						then
 							sorted[#sorted+1] = CharInfo
 						end
 					else
 						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
-						and UnitLevel >= LevelToShow
-						and UnitLevel <= LevelToShowMAX
+						and UnitLevel >= Config_LevelToShow
+						and UnitLevel <= Config_LevelToShowMAX
 						then
 							sorted[#sorted+1] = CharInfo
 						end
@@ -2358,7 +2300,7 @@ function E:func_Universal(tbl, DESCRIPT)
 					end
 
 					forcedMaxQuest = totalQuest
-					if Octo_ToDo_DB_Vars.DebugInfo then
+					if E.DebugInfo then
 						tooltipRIGHT[#tooltipRIGHT+1] = {questKey, "forcedMaxQuest: "..totalQuest}
 					end
 					if totalQuest > 1 then

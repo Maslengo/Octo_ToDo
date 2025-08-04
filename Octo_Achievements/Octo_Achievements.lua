@@ -7,13 +7,13 @@ local Octo_MainFrame_Achievements = CreateFrame("BUTTON", "Octo_MainFrame_Achiev
 Octo_MainFrame_Achievements:Hide()
 E:func_InitFrame(Octo_MainFrame_Achievements)
 ----------------------------------------------------------------
-local AddonHeight = 20
-local AddonLeftFrameWeight = 200
-local AddonCentralFrameWeight = 90
-local MainFrameDefaultLines = 30
-local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / AddonHeight))*.7)
-if MainFrameDefaultLines > MainFrameTotalLines then
-	MainFrameDefaultLines = MainFrameTotalLines
+local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
+local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
+local LINE_WIDTH_RIGHT = E.GLOBAL_LINE_WIDTH_RIGHT
+local Config_MainFrameDefaultLines = 30
+local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT))*.7)
+if Config_MainFrameDefaultLines > MainFrameTotalLines then
+	Config_MainFrameDefaultLines = MainFrameTotalLines
 end
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
@@ -85,17 +85,17 @@ local func_OnAcquired do
 			------------------------------------------------
 			frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 			frame.icon_1:SetPoint("TOPLEFT", 1, -1)
-			frame.icon_1:SetSize(AddonHeight-2, AddonHeight-2)
+			frame.icon_1:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
 			frame.icon_1:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 			------------------------------------------------
 			frame.texture_2 = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
-			frame.texture_2:SetSize(AddonLeftFrameWeight*3, AddonHeight)
+			frame.texture_2:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT)
 			frame.texture_2:SetPoint("RIGHT")
 			frame.texture_2:SetTexture(E.TEXTURE_LEFT_PATH)
 			frame.texture_2:SetVertexColor(1, 1, 1, .1)
 			------------------------------------------------
 			frame.textLEFT = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			frame.textLEFT:SetPoint("LEFT", frame, "LEFT", AddonHeight+2, 0)
+			frame.textLEFT:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+2, 0)
 			frame.textLEFT:SetFontObject(OctoFont11)
 			frame.textLEFT:SetJustifyV("MIDDLE")
 			frame.textLEFT:SetJustifyH("LEFT")
@@ -174,9 +174,9 @@ end
 function Octo_EventFrame_Achievements:Octo_Create_MainFrame_Achievements()
 	Octo_MainFrame_Achievements:SetPoint("CENTER", 0, 0)
 	-- Octo_MainFrame_Achievements:SetPoint("TOP", 0, -200)
-	Octo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
-	Octo_MainFrame_Achievements:SetDontSavePosition(Octo_ToDo_DB_Vars.DontSavePosition)
-	Octo_MainFrame_Achievements:SetClampedToScreen(Octo_ToDo_DB_Vars.ClampedToScreen)
+	Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*Config_MainFrameDefaultLines)
+	Octo_MainFrame_Achievements:SetDontSavePosition(Octo_ToDo_DB_Vars.Config_DontSavePosition)
+	Octo_MainFrame_Achievements:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame_Achievements:SetFrameStrata("HIGH")
 	Octo_MainFrame_Achievements:SetBackdrop(E.menuBackdrop)
 	Octo_MainFrame_Achievements:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
@@ -185,7 +185,7 @@ function Octo_EventFrame_Achievements:Octo_Create_MainFrame_Achievements()
 	Octo_MainFrame_Achievements:SetMovable(true)
 	Octo_MainFrame_Achievements:RegisterForDrag("LeftButton")
 	Octo_MainFrame_Achievements:SetScript("OnDragStart", function()
-			Octo_MainFrame_Achievements:SetAlpha(Octo_ToDo_DB_Vars.AlphaOnDrag or E.backgroundColorA)
+			Octo_MainFrame_Achievements:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 			Octo_MainFrame_Achievements:StartMoving()
 	end)
 	Octo_MainFrame_Achievements:SetScript("OnDragStop", function()
@@ -203,7 +203,7 @@ function Octo_EventFrame_Achievements:Octo_Create_MainFrame_Achievements()
 	Octo_MainFrame_Achievements.ScrollBar:SetPoint("TOPLEFT", Octo_MainFrame_Achievements.ScrollBox, "TOPRIGHT", 6, 0)
 	Octo_MainFrame_Achievements.ScrollBar:SetPoint("BOTTOMLEFT", Octo_MainFrame_Achievements.ScrollBox, "BOTTOMRIGHT", 6, 0)
 	Octo_MainFrame_Achievements.view = CreateScrollBoxListTreeListView()
-	Octo_MainFrame_Achievements.view:SetElementExtent(AddonHeight)
+	Octo_MainFrame_Achievements.view:SetElementExtent(LINE_HEIGHT)
 	Octo_MainFrame_Achievements.view:SetElementInitializer("BUTTON",
 		function(...)
 			self:Octo_Frame_init(...)
@@ -225,7 +225,7 @@ function E:func_Achievements_CreateDataProvider()
 				for i = 1, total do
 					local AchievementID, name, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
 					if AchievementID then
-						if completedAchi == false or (completedAchi == Octo_Achievements_DB.AchievementShowCompleted) then
+						if completedAchi == false or (completedAchi == Octo_Achievements_DB.Config_AchievementShowCompleted) then
 							local color = E.Red_Color
 							if completedAchi then color = E.Green_Color end
 							local textLEFT = name
@@ -245,12 +245,12 @@ function E:func_Achievements_CreateDataProvider()
 			end
 		end
 
-		if count > MainFrameDefaultLines then
-			Octo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*MainFrameDefaultLines)
+		if count > Config_MainFrameDefaultLines then
+			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*Config_MainFrameDefaultLines)
 		elseif count == 0 then
-			Octo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*1)
+			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*1)
 		else
-			Octo_MainFrame_Achievements:SetSize(AddonLeftFrameWeight*3, AddonHeight*count)
+			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*count)
 		end
 		Octo_EventFrame_Achievements:Update()
 	end
@@ -268,18 +268,6 @@ function Octo_EventFrame_Achievements:ADDON_LOADED(addonName)
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		if Octo_ToDo_DB_Vars.AddonHeight then
-			AddonHeight = Octo_ToDo_DB_Vars.AddonHeight
-		end
-		if Octo_ToDo_DB_Vars.AddonLeftFrameWeight then
-			AddonLeftFrameWeight = Octo_ToDo_DB_Vars.AddonLeftFrameWeight
-		end
-		if Octo_ToDo_DB_Vars.AddonCentralFrameWeight then
-			AddonCentralFrameWeight = Octo_ToDo_DB_Vars.AddonCentralFrameWeight
-		end
-		if Octo_ToDo_DB_Vars.MainFrameDefaultLines then
-			MainFrameDefaultLines = Octo_ToDo_DB_Vars.MainFrameDefaultLines
-		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------

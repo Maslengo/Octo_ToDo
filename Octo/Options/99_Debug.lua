@@ -23,20 +23,6 @@ function E:Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			UIErrorsFramePosition = {
-				type = "toggle",
-				name = L["UIErrorsFramePosition"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.UIErrorsFramePosition
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.UIErrorsFramePosition = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			Reload = {
 				type = "execute",
 				name = RELOADUI,
@@ -74,48 +60,6 @@ function E:Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Octo_ToDo_DB_Levels = {
-				type = "execute",
-				name = "Levels",
-				desc = "Octo_ToDo_DB_Levels= {}",
-				func = function()
-					Octo_ToDo_DB_Levels= {}
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Octo_ToDo_DB_Other = {
-				type = "execute",
-				name = "Other",
-				desc = "Octo_ToDo_DB_Other= {}",
-				func = function()
-					Octo_ToDo_DB_Other= {}
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Octo_ToDo_DB_Vars = {
-				type = "execute",
-				name = "Vars",
-				desc = "Octo_ToDo_DB_Vars= {}",
-				func = function()
-					Octo_ToDo_DB_Vars= {}
-					return ReloadUI()
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			ReloadHeader3second221542 = {
-				type = "header",
-				name = OTHER,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			MASLENGO = {
 				type = "execute",
 				name = "MASLENGO",
@@ -126,13 +70,7 @@ function E:Debug()
 					end
 					return
 				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			ReloadHeader3second222154 = {
-				type = "header",
-				name = OTHER,
+				width = E.FULL_WIDTH,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -275,6 +213,22 @@ function E:Debug()
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
+
+			-------------------------------------------------
+			GARRISON = {
+				type = "execute",
+				name = "GARRISON",
+				desc = "CharInfo.GARRISON = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						-- CharInfo.GARRISON = {}
+						CharInfo.GARRISON = nil
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
 			-------------------------------------------------
 			ReloadHeader3second22154 = {
 				type = "header",
@@ -365,10 +319,9 @@ function E:Debug()
 				name = "DebugInfo",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.DebugInfo
+					return E.DebugInfo
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.DebugInfo = value
 					E.DebugInfo = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -395,10 +348,9 @@ function E:Debug()
 				name = "DebugFunction",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.DebugFunction
+					return E.DebugFunction
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.DebugFunction = value
 					E.DebugFunction = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -410,10 +362,9 @@ function E:Debug()
 				name = "DebugButton",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.DebugButton
+					return E.DebugButton
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.DebugButton = value
 					E.DebugButton = value
 				end,
 				width = E.FULL_WIDTH/2,
