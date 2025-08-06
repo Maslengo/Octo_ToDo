@@ -3,8 +3,7 @@
 	<Script file="Options\01_GeneralConfigPanel.lua"/>
 	<Script file="Options\02_Automatization.lua"/>
 	<Script file="Options\03_HideFrames.lua"/>
-	<Script file="Options\04_myOther.lua"/>
-	<Script file="Options\05_Cvars.lua"/>
+	<Script file="Options\04_Cvars.lua"/>
 
 	<Script file="Options\90_Debug.lua"/>
 	<Script file="Options\91_Functions_LibSFDropDown.lua"/>

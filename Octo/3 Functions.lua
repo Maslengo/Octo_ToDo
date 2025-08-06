@@ -2294,14 +2294,14 @@ function E:func_Universal(tbl, DESCRIPT)
 	for _, data in ipairs(E.OctoTable_UniversalQuest) do
 		if data.quests and descSTR == data.desc then
 			table.insert(tbl, function(CharInfo)
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				local questKey = data.desc.."_"..data.name_save.."_"..data.reset
 				local showTooltip = data.showTooltip or false
 				if not data.textleft then
 					fpde(data)
 				end
 				textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
-				-- Инициализация tooltipRIGHT даже если нет данных в UniversalQuest
+				-- Инициализация tooltipCENT даже если нет данных в UniversalQuest
 				if showTooltip then
 					local totalQuest = 0
 					local forcedMaxQuest = data.forcedMaxQuest
@@ -2321,11 +2321,11 @@ function E:func_Universal(tbl, DESCRIPT)
 					end
 					forcedMaxQuest = totalQuest
 					if E.DebugInfo then
-						tooltipRIGHT[#tooltipRIGHT+1] = {questKey, "forcedMaxQuest: "..totalQuest}
+						tooltipCENT[#tooltipCENT+1] = {questKey, "forcedMaxQuest: "..totalQuest}
 					end
 					if totalQuest > 1 then
-						tooltipRIGHT[#tooltipRIGHT+1] = {textLEFT, TOTAL..": "..totalQuest}
-						tooltipRIGHT[#tooltipRIGHT+1] = {" "}
+						tooltipCENT[#tooltipCENT+1] = {textLEFT, TOTAL..": "..totalQuest}
+						tooltipCENT[#tooltipCENT+1] = {" "}
 					end
 					local questsToShow = {}
 					for _, questData in ipairs(data.quests) do
@@ -2358,7 +2358,7 @@ function E:func_Universal(tbl, DESCRIPT)
 						if faction == CharInfo.PlayerData.Faction then
 							vivod_LEFT = E:func_texturefromIcon(E:func_FactionIconID(faction))..vivod_LEFT
 						end
-						tooltipRIGHT[#tooltipRIGHT+1] = {vivod_LEFT, vivod_RIGHT}
+						tooltipCENT[#tooltipCENT+1] = {vivod_LEFT, vivod_RIGHT}
 					end
 				end
 				-- Обработка данных, если они есть
@@ -2393,7 +2393,7 @@ function E:func_Universal(tbl, DESCRIPT)
 					end
 				end
 				colorLEFT = expColor
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 			end)
 		end
 	end
@@ -2412,8 +2412,8 @@ function E:func_FactionIconID(faction)
 	end
 end
 ----------------------------------------------------------------
-function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
-	if not OctoTable_Otrisovka or not E.OctoTable_Expansions[expansionID] then return end
+function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, expansionID)
+	if not OctoTable_Otrisovka_textCENT or not E.OctoTable_Expansions[expansionID] then return end
 	if not (Octo_ToDo_DB_Vars.Currencies or Octo_ToDo_DB_Vars.Items) then return end
 	-- Создаем weak-таблицы для кеширования обработчиков
 	local itemProcessors = setmetatable({}, {__mode = "v"}) -- weak values
@@ -2468,10 +2468,10 @@ function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
 	if Octo_ToDo_DB_Vars.Items and Data.Items then
 		for _, itemID in ipairs(Data.Items) do
 			if type(itemID) == "number" then
-				OctoTable_Otrisovka[#OctoTable_Otrisovka + 1] = getItemProcessor(itemID)
+				OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getItemProcessor(itemID)
 			elseif type(itemID) == "table" then
 				for _, ItemID_new in ipairs(itemID) do
-					OctoTable_Otrisovka[#OctoTable_Otrisovka + 1] = getItemProcessor(ItemID_new) -- ПОФИКСИТЬ В САМОЙ ФУНКЦИИ
+					OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getItemProcessor(ItemID_new) -- ПОФИКСИТЬ В САМОЙ ФУНКЦИИ
 				end
 			end
 		end
@@ -2479,7 +2479,7 @@ function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
 	-- Обработка данных с использованием кешированных обработчиков
 	if Octo_ToDo_DB_Vars.Currencies and Data.Currencies then
 		for _, currencyID in ipairs(Data.Currencies) do
-			OctoTable_Otrisovka[#OctoTable_Otrisovka + 1] = getCurrencyProcessor(currencyID)
+			OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getCurrencyProcessor(currencyID)
 		end
 	end
 end
@@ -2792,8 +2792,8 @@ function E:func_GetCurrentRegionName()
 	return GetCurrentRegionName()
 end
 ----------------------------------------------------------------
-function E:func_tooltipRIGHT_ITEMS(CharInfo, TBL, needShowAllItems)
-	local tooltipRIGHT = {}
+function E:func_tooltipCENT_ITEMS(CharInfo, TBL, needShowAllItems)
+	local tooltipCENT = {}
 	local sorted_itemList = {}
 	local ItemsInBag = CharInfo.MASLENGO.ItemsInBag
 	-- Правильно кэшируем методы через :
@@ -2828,9 +2828,9 @@ function E:func_tooltipRIGHT_ITEMS(CharInfo, TBL, needShowAllItems)
 		local count = ItemsInBag[itemID] or ""
 		local name = GetItemNameByID(itemID)
 		local price = ItemPriceTSM(itemID, item.count)
-		tooltipRIGHT[#tooltipRIGHT + 1] = {name, count, price}
+		tooltipCENT[#tooltipCENT + 1] = {name, count, price}
 	end
-	return tooltipRIGHT
+	return tooltipCENT
 end
 local function CloseOtherFrames(frame)
 	for i, other in ipairs(E.OctoTable_Frames) do

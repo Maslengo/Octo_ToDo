@@ -139,27 +139,29 @@ function E:func_Tooltip_Chars(CharInfo)
 end
 ----------------------------------------------------------------
 function E:func_Otrisovka_91_Other()
-	local OctoTable_Otrisovka = {}
+	local OctoTable_Otrisovka_textLEFT = {}
+	local OctoTable_Otrisovka_textCENT = {}
+	local OctoTable_Otrisovka_tooltipCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if E.DebugInfo then
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				for _, v in next, (E.OctoTable_UniversalQuest) do
 					if CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
-						tooltipRIGHT[#tooltipRIGHT+1] = {tostringall(v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]}
+						tooltipCENT[#tooltipCENT+1] = {tostringall(v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]}
 					end
 				end
-				if #tooltipRIGHT ~= 0 then
+				if #tooltipCENT ~= 0 then
 					textCENT = E.Green_Color.."Выполненные|r"
 				end
 				----------------------------------------------------------------
 				textLEFT = E.DEVTEXT..E.Blue_Color.."ALL|r"
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 		local list = {}
@@ -169,20 +171,20 @@ function E:func_Otrisovka_91_Other()
 		E:func_TableRemoveDuplicates(list)
 		table.sort(list)
 		for i, value in ipairs(list) do
-			table.insert(OctoTable_Otrisovka, function(CharInfo)
+			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 					----------------------------------------------------------------
 					for _, v in next, (E.OctoTable_UniversalQuest) do
 						if v.desc == value then
-							tooltipRIGHT[#tooltipRIGHT+1] = {tostringall(v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]}
+							tooltipCENT[#tooltipCENT+1] = {tostringall(v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]}
 							textCENT = value
 						end
 					end
 					----------------------------------------------------------------
 					textLEFT = E.DEVTEXT..i
 					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 					----------------------------------------------------------------
 			end)
 		end
@@ -191,9 +193,9 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.Quests then
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.numQuests then
 					textCENT = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.numQuests.."/"..CharInfo.PlayerData.maxNumQuestsCanAccept.."|r"
@@ -204,13 +206,13 @@ function E:func_Otrisovka_91_Other()
 					table.sort(questIDs, E.func_Reverse_order)
 					for i = 1, #questIDs do
 						local questID = questIDs[i]
-						tooltipRIGHT[i] = {E:func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
+						tooltipCENT[i] = {E:func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
 					end
 				end
 				----------------------------------------------------------------
 				textLEFT = QUESTS_LABEL
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 	end
@@ -218,16 +220,16 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.Dungeons then
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				local ServerTime = GetServerTime()
 				for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
 					if v then
 						for difficultyID, w in next, (v) do
 							if w.vivod then
-								tooltipRIGHT[#tooltipRIGHT+1] = {w.instanceName.."("..w.difficultyName..") "..E.Red_Color..E:func_SecondsToClock(w.instanceReset-ServerTime).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..instanceID.."|r" or ""), w.vivod}
+								tooltipCENT[#tooltipCENT+1] = {w.instanceName.."("..w.difficultyName..") "..E.Red_Color..E:func_SecondsToClock(w.instanceReset-ServerTime).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..instanceID.."|r" or ""), w.vivod}
 							end
 						end
 					end
@@ -235,22 +237,22 @@ function E:func_Otrisovka_91_Other()
 				for dungeonID, v in next, (CharInfo.MASLENGO.LFGInstance) do
 					if v then
 						if CharInfo.MASLENGO.LFGInstance[dungeonID].donetoday then
-							tooltipRIGHT[#tooltipRIGHT+1] = {CharInfo.MASLENGO.LFGInstance[dungeonID].D_name..(E.DebugIDs and E.Gray_Color.. " id:"..dungeonID.."|r" or ""), CharInfo.MASLENGO.LFGInstance[dungeonID].donetoday}
+							tooltipCENT[#tooltipCENT+1] = {CharInfo.MASLENGO.LFGInstance[dungeonID].D_name..(E.DebugIDs and E.Gray_Color.. " id:"..dungeonID.."|r" or ""), CharInfo.MASLENGO.LFGInstance[dungeonID].donetoday}
 						end
 					end
 				end
 				for worldBossID, v in next, (CharInfo.MASLENGO.SavedWorldBoss) do
 					if v then
-						tooltipRIGHT[#tooltipRIGHT+1] = {E:func_texturefromIcon(E.Icon_WorldBoss).. v.name .." ".. E.Red_Color..E:func_SecondsToClock(v.reset).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..worldBossID.."|r" or ""), ""}
+						tooltipCENT[#tooltipCENT+1] = {E:func_texturefromIcon(E.Icon_WorldBoss).. v.name .." ".. E.Red_Color..E:func_SecondsToClock(v.reset).."|r"..(E.DebugIDs and E.Gray_Color.. " id:"..worldBossID.."|r" or ""), ""}
 					end
 				end
-				if #tooltipRIGHT ~= 0 then
+				if #tooltipCENT ~= 0 then
 					textCENT = E.Gray_Color..DUNGEONS.."|r"
 				end
 				----------------------------------------------------------------
 				textLEFT = DUNGEONS
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 	end
@@ -258,18 +260,18 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.Items then
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
-				tooltipRIGHT = E:func_tooltipRIGHT_ITEMS(CharInfo, E.OctoTable_itemID_ALL, false)
-				if #tooltipRIGHT ~= 0 then
+				tooltipCENT = E:func_tooltipCENT_ITEMS(CharInfo, E.OctoTable_itemID_ALL, false)
+				if #tooltipCENT ~= 0 then
 					textCENT = E.Gray_Color..ITEMS.."|r"
 				end
 				----------------------------------------------------------------
 				textLEFT = ITEMS
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 	end
@@ -277,9 +279,9 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.Professions then
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				local charProf = CharInfo.MASLENGO.professions
 				for i = 1, 5 do
@@ -292,7 +294,7 @@ function E:func_Otrisovka_91_Other()
 						if charProf[i].skillModifier then
 							RightText = charProf[i].skillLevel.."|cff00FF00+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
 						end
-						tooltipRIGHT[#tooltipRIGHT+1] = {leftText, RightText}
+						tooltipCENT[#tooltipCENT+1] = {leftText, RightText}
 						if charProf[i].child then
 							-- for expIndex, v in ipairs(charProf[i].child) do
 							for expIndex = #charProf[i].child, 1, -1 do
@@ -302,7 +304,7 @@ function E:func_Otrisovka_91_Other()
 									-- for expI = #E.OctoTable_Expansions, 1, -1 do
 									-- local j = E.OctoTable_Expansions[expI]
 									local j = E.OctoTable_Expansions[expIndex]
-									tooltipRIGHT[#tooltipRIGHT+1] = {" "..E:func_texturefromIcon(j.icon, 16, 32).." "..j.color..j.nameVeryShort.."|r ", v.QWEskillLevel.."/"..v.QWEmaxSkillLevel}
+									tooltipCENT[#tooltipCENT+1] = {" "..E:func_texturefromIcon(j.icon, 16, 32).." "..j.color..j.nameVeryShort.."|r ", v.QWEskillLevel.."/"..v.QWEmaxSkillLevel}
 									-- end
 									-- end
 								end
@@ -314,7 +316,7 @@ function E:func_Otrisovka_91_Other()
 				textLEFT = PROFESSIONS_BUTTON
 				myType = {"professions"}
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 	end
@@ -322,9 +324,9 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ItemLevel then
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				local color = E.Red_Color
 				local ItemLevelGreen = 625
@@ -346,14 +348,14 @@ function E:func_Otrisovka_91_Other()
 					end
 					if CharInfo.PlayerData.avgItemLevelPvp and CharInfo.PlayerData.avgItemLevelPvp > CharInfo.PlayerData.avgItemLevel then
 						textCENT = textCENT..E.Green_Color.."+|r"
-						tooltipRIGHT[#tooltipRIGHT+1] = {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.PlayerData.avgItemLevelPvp)}
+						tooltipCENT[#tooltipCENT+1] = {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.PlayerData.avgItemLevelPvp)}
 					end
 				end
 				----------------------------------------------------------------
 				textLEFT = STAT_AVERAGE_ITEM_LEVEL
 				myType = {"ItemLevel"}
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 	end
@@ -361,19 +363,19 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.Gold then
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.Money then
 					textCENT = E:func_CompactNumberFormat(CharInfo.PlayerData.Money/10000)
 					if CharInfo.PlayerData.MoneyOnLogin then
 						if CharInfo.PlayerData.Money < CharInfo.PlayerData.MoneyOnLogin then
 							textCENT = textCENT..E.Red_Color.."-|r"
-							tooltipRIGHT[#tooltipRIGHT+1] = {"lost: ", E.Red_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
+							tooltipCENT[#tooltipCENT+1] = {"lost: ", E.Red_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
 						elseif CharInfo.PlayerData.Money > CharInfo.PlayerData.MoneyOnLogin then
 							textCENT = textCENT..E.Green_Color.."+|r"
-							tooltipRIGHT[#tooltipRIGHT+1] = {"received: ", E.Green_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
+							tooltipCENT[#tooltipCENT+1] = {"received: ", E.Green_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
 						end
 					end
 				end
@@ -381,7 +383,7 @@ function E:func_Otrisovka_91_Other()
 				textLEFT = BONUS_ROLL_REWARD_MONEY
 				myType = {"Money"}
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 	end
@@ -389,16 +391,16 @@ function E:func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.Config_WasOnline then
-		table.insert(OctoTable_Otrisovka, function(CharInfo)
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				local color = "|cffFFFFFF"
 				if CharInfo.PlayerData.loginHour and CharInfo.PlayerData.loginDay then
 					if CharInfo.PlayerData.GUID == E.curGUID then
 						textCENT = E.Green_Color..FRIENDS_LIST_ONLINE.."|r"
-						-- tooltipRIGHT[#tooltipRIGHT+1] = {"Время после релоуда: "..CharInfo.PlayerData.classColorHex.. E:func_SecondsToClock(GetServerTime() - CharInfo.PlayerData.time).."|r"}
-						-- tooltipRIGHT[#tooltipRIGHT+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(GetSessionTime()).."|r" )}
+						-- tooltipCENT[#tooltipCENT+1] = {"Время после релоуда: "..CharInfo.PlayerData.classColorHex.. E:func_SecondsToClock(GetServerTime() - CharInfo.PlayerData.time).."|r"}
+						-- tooltipCENT[#tooltipCENT+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(GetSessionTime()).."|r" )}
 					else
 						if CharInfo.PlayerData.needResetWeekly then
 							color = E.Gray_Color
@@ -406,23 +408,23 @@ function E:func_Otrisovka_91_Other()
 							color = E.Red_Color
 						end
 						textCENT = color..E.func_FriendsFrame_GetLastOnline(CharInfo.PlayerData.time).."|r"
-						tooltipRIGHT[#tooltipRIGHT+1] = {color..E:func_FriendsFrame_GetLastOnlineText(CharInfo.PlayerData.time, CharInfo.PlayerData.classColorHex).."|r", ""}
-						tooltipRIGHT[#tooltipRIGHT+1] = {" ", ""}
-						tooltipRIGHT[#tooltipRIGHT+1] = {" ", color..CharInfo.PlayerData.loginDay.."|r"}
-						tooltipRIGHT[#tooltipRIGHT+1] = {" ", color..CharInfo.PlayerData.loginHour.."|r"}
+						tooltipCENT[#tooltipCENT+1] = {color..E:func_FriendsFrame_GetLastOnlineText(CharInfo.PlayerData.time, CharInfo.PlayerData.classColorHex).."|r", ""}
+						tooltipCENT[#tooltipCENT+1] = {" ", ""}
+						tooltipCENT[#tooltipCENT+1] = {" ", color..CharInfo.PlayerData.loginDay.."|r"}
+						tooltipCENT[#tooltipCENT+1] = {" ", color..CharInfo.PlayerData.loginHour.."|r"}
 					end
 				end
 				textLEFT = L["Was online"]
 				myType = {"Online"}
 				----------------------------------------------------------------
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	return OctoTable_Otrisovka
+	return OctoTable_Otrisovka_textCENT
 end
 ----------------------------------------------------------------

@@ -3,16 +3,18 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 9
 function E:func_Otrisovka_09_Shadowlands()
-	local OctoTable_Otrisovka = {}
+	local OctoTable_Otrisovka_textLEFT = {}
+	local OctoTable_Otrisovka_textCENT = {}
+	local OctoTable_Otrisovka_tooltipCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 		for kCovenant = 1, 2 do
 			for iANIMA = 1, 4 do
-				table.insert(OctoTable_Otrisovka, function(CharInfo)
+				table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 						----------------------------------------------------------------
-						local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+						local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 						----------------------------------------------------------------
 						local color = E.OctoTable_Covenant[iANIMA].color
 						-- отриосвка всего по центру
@@ -42,16 +44,16 @@ function E:func_Otrisovka_09_Shadowlands()
 						textLEFT = vivodLeft
 						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 						----------------------------------------------------------------
-						return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+						return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 						----------------------------------------------------------------
 				end)
 			end
 		end
-		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, OCTOexpansionID)
-		E:func_Universal(OctoTable_Otrisovka, OCTOexpansionID)
+		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E:func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	return OctoTable_Otrisovka
+	return OctoTable_Otrisovka_textCENT
 end

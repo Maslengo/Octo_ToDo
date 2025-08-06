@@ -245,8 +245,8 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 		end
 
 		-- Установка тултипа для колонки, если он есть
-		if frameData.tooltipRIGHT and frameData.tooltipRIGHT[i] then
-			secondFrame.tooltip = frameData.tooltipRIGHT[i]
+		if frameData.tooltipCENT and frameData.tooltipCENT[i] then
+			secondFrame.tooltip = frameData.tooltipCENT[i]
 		else
 			secondFrame.tooltip = nil
 		end
@@ -583,7 +583,7 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 			textLEFT = {},
 			colorLEFT = {},
 			textCENT = {},
-			tooltipRIGHT = {},
+			tooltipCENT = {},
 			colorCENT = {},
 			myType = {},
 			totalPers = totalPers,
@@ -591,9 +591,9 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 
 		-- Заполнение данных для каждого персонажа
 		for CharIndex, CharInfo in ipairs(tbl) do
-			local _, _, textCENT, tooltipRIGHT, colorCENT = func(CharInfo)
+			local _, _, textCENT, tooltipCENT, colorCENT = func(CharInfo)
 			zxc.textCENT[CharIndex] = textCENT
-			zxc.tooltipRIGHT[CharIndex] = tooltipRIGHT or {}
+			zxc.tooltipCENT[CharIndex] = tooltipCENT or {}
 			zxc.colorCENT[CharIndex] = colorCENT
 		end
 
